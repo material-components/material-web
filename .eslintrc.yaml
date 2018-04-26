@@ -1,0 +1,42 @@
+extends: google
+globals:
+  goog: false
+env:
+  browser: true
+plugins:
+  - mocha
+parserOptions:
+  ecmaVersion: 2017
+  sourceType: module
+rules:
+  indent: [error, 2]
+  max-len: [error, 120]
+  no-new: warn
+  quotes: [error, single, {"avoidEscape": true}]
+  no-var: error
+  curly: error
+  no-floating-decimal: error
+  no-unused-vars:
+    - error
+    # Account for closure compiler conventions. See docs/closure-compiler.md
+    # Ignores: MDC[PascalCase]Adapter (records), [PascalCase]Type (typedefs)
+    - varsIgnorePattern: ^(?:(?:MDC(?:(?:[A-Z][a-z0-9]+)+)Adapter)|(?:(?:(?:[A-Z][a-z0-9]+)+)Type))$
+
+  # TODO: Enable once https://github.com/material-components/material-components-web/milestone/4
+  # is complete
+  require-jsdoc: off
+  valid-jsdoc: off
+
+  prefer-const: error
+
+  # Rules for our mocha unit tests. Note that even though we use mocha, we model our unit tests
+  # after frameworks such as tape and ava, which encourage modern paradigms, seek to minimize
+  # shared state across tests, and try and make tests look as simple as possible.
+  mocha/handle-done-callback: error
+  mocha/no-exclusive-tests: error
+  # mocha/no-hooks: error
+  mocha/no-identical-title: error
+  mocha/no-nested-tests: error
+  mocha/no-pending-tests: error
+  mocha/no-skipped-tests: error
+  mocha/valid-suite-description: [error, ^MDC.+|^webpack|^mwc-.+]

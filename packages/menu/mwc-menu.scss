@@ -1,0 +1,68 @@
+/**
+@license
+Copyright 2018 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+@import '@material/menu/mdc-menu.scss';
+
+// TODO(sorvell) #css: NOTE, these selectors are intended to target elements inside
+// the shadowRoot of the `mdc-list-item` element which won't work. However,
+// practically, this isn't a problem here because the styling is inherited properties.
+// Note also, skeezed this for `disabled`.
+/*
+
+  old:
+  .mdc-menu
+    .mdc-menu__items
+      .mdc-list-item
+
+  new:
+  <mdc-menu>
+    #shadowRoot
+      .mdc-menu__items
+        slot
+    <mdc-list-item>
+      #shadowRoot
+        .mdc-list-item
+*/
+
+// TODO(sorvell) #css: note, needs SASS changes in MDC
+.mdc-menu__items ::slotted(*) {
+  cursor: pointer;
+  // TODO(dfreedm): use `subtitle1` when MDC revs
+  @include mdc-typography(subtitle1);
+  // @include mdc-typography(subheading2);
+
+  position: relative;
+  outline: none;
+  color: inherit;
+  text-decoration: none;
+  user-select: none;
+}
+
+.mdc-menu ::slotted([aria-disabled="true"]) {
+  @include mdc-theme-prop(color, text-disabled-on-background);
+
+  cursor: default;
+  pointer-events: none;
+
+  &:focus::before {
+    opacity: 0;
+  }
+}
+
+.mdc-menu ::slotted([graphic]) {
+  @include mdc-theme-prop(color, text-secondary-on-background);
+}
