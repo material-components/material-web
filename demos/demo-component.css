@@ -1,0 +1,62 @@
+body {
+    font-family: Roboto, sans-serif;
+    margin: 0;
+  }
+
+  .unresolved {
+    opacity: 0;
+  }
+
+  body {
+    transition: opacity ease-in 0.2s;
+  }
+
+  header {
+    background-color: #6200ee;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    box-sizing: border-box;
+    font-family: "Roboto Mono", monospace;
+    -webkit-font-smoothing: antialiased;
+    font-size: 1.25rem;
+    line-height: 2rem;
+    letter-spacing: 0.02em;
+    color: white;
+    min-height: 64px;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  }
+
+  header > a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+  }
+
+  mwc-icon {
+    margin: 0 16px;
+  }
+
+  main {
+    margin-top: 64px;
+    padding: 16px;
+  }
+
+  .demo-group, .demo-group-spaced {
+    display: flex;
+    align-items: center;
+  }
+
+  .demo-group-spaced {
+    justify-content: space-around;
+  }
+
+  .demo-group > *, .demo-group-spaced > * {
+    margin: 0 8px;
+  }

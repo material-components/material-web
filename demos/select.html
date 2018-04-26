@@ -1,0 +1,102 @@
+<!doctype html>
+<!--
+@license
+Copyright 2018 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+<head>
+  <title>select demo</title>
+  <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-select/mwc-select.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
+  <link rel="stylesheet" href="demo-component.css">
+
+  <style>
+    body {
+      min-height: calc(100vh - 4em);
+    }
+
+    .abs {
+      position: absolute;
+      top: calc(100vh - 128px);
+      right: calc(100vw - 100% + 16px);
+    }
+
+  </style>
+</head>
+<body class="unresolved">
+  <header>
+    <a href="index.html"><mwc-icon></mwc-icon>
+    <span>Select</span></a>
+  </header>
+
+  <main>
+
+    <mwc-select label="Choose an item...">
+      <mwc-list-item label="this is choice one"></mwc-list-item>
+      <mwc-list-item label="this is choice two"></mwc-list-item>
+      <mwc-list-item label="this is choice three"></mwc-list-item>
+      <mwc-list-item disabled label="this is choice four"></mwc-list-item>
+      <mwc-list-item-separator></mwc-list-item-separator>
+      <mwc-list-item label="this is choice aaa"></mwc-list-item>
+      <mwc-list-item label="this is choice bbb"></mwc-list-item>
+    </mwc-select>
+
+    <h3>box</h3>
+
+    <mwc-select box label="Box: Choose an item...">
+      <mwc-list-item label="this is choice one"></mwc-list-item>
+      <mwc-list-item label="this is choice two"></mwc-list-item>
+      <mwc-list-item label="this is choice three"></mwc-list-item>
+      <mwc-list-item disabled label="this is choice four"></mwc-list-item>
+      <mwc-list-item-separator></mwc-list-item-separator>
+      <mwc-list-item label="this is choice aaa"></mwc-list-item>
+      <mwc-list-item label="this is choice bbb"></mwc-list-item>
+    </mwc-select>
+
+    <h3>box - sized</h3>
+
+    <mwc-select box style="width: 500px;" label="Box: Choose an item...">
+      <mwc-list-item label="this is choice one"></mwc-list-item>
+      <mwc-list-item label="this is choice two"></mwc-list-item>
+      <mwc-list-item label="this is choice three"></mwc-list-item>
+      <mwc-list-item disabled label="this is choice four"></mwc-list-item>
+      <mwc-list-item-separator></mwc-list-item-separator>
+      <mwc-list-item label="this is choice aaa"></mwc-list-item>
+      <mwc-list-item label="this is choice bbb"></mwc-list-item>
+    </mwc-select>
+
+    <h3>disabled</h3>
+
+    <mwc-select disabled label="Disabled...">
+      <mwc-list-item label="this is choice one"></mwc-list-item>
+      <mwc-list-item label="this is choice two"></mwc-list-item>
+    </mwc-select>
+
+    <mwc-select class="abs" label="Choose an item...">
+      <mwc-list-item label="this is choice one"></mwc-list-item>
+      <mwc-list-item label="this is choice two"></mwc-list-item>
+      <mwc-list-item label="this is choice three"></mwc-list-item>
+      <mwc-list-item label="this is choice four"></mwc-list-item>
+      <mwc-list-item-separator></mwc-list-item-separator>
+      <mwc-list-item label="this is choice aaa"></mwc-list-item>
+      <mwc-list-item label="this is choice bbb"></mwc-list-item>
+    </mwc-select>
+  </main>
+  <script>
+    addEventListener('load', () => document.body.classList.remove('unresolved'));
+  </script>
+</body>
+</html>

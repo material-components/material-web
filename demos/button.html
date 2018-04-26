@@ -1,0 +1,98 @@
+<!doctype html>
+<!--
+@license
+Copyright 2018 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+<head>
+  <title>button demo</title>
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-button/mwc-button.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
+  <link rel="stylesheet" href="demo-component.css">
+  <style>
+    .light {
+      --mdc-theme-on-primary: black;
+      --mdc-theme-primary: white;
+      --mdc-theme-on-secondary: black;
+      --mdc-theme-secondary: white;
+    }
+
+    .pink {
+      --mdc-theme-on-primary: white;
+      --mdc-theme-primary: #e9437a;
+      --mdc-theme-on-secondary: white;
+      --mdc-theme-secondary: #e9437a;
+    }
+
+    .wide {
+      width: 250px;
+    }
+  </style>
+</head>
+<body class="unresolved">
+  <header>
+    <a href="index.html"><mwc-icon></mwc-icon>
+    <span>Buttons</span></a>
+  </header>
+
+  <main>
+
+    <h4>labeled</h4>
+
+    <div class="demo-group-spaced">
+      <mwc-button label="Normal"></mwc-button>
+      <mwc-button class="light" raised label="raised"></mwc-button>
+      <mwc-button unelevated label="unelevated"></mwc-button>
+      <mwc-button class="pink" dense label="dense"></mwc-button>
+      <mwc-button compact label="compact"></mwc-button>
+      <mwc-button class="pink wide" raised label="wide"></mwc-button>
+      <mwc-button disabled label="disabled"></mwc-button>
+    </div>
+
+    <h4>icon labeled</h4>
+
+    <div class="demo-group-spaced">
+      <mwc-button label="Normal" icon="explore"></mwc-button>
+      <mwc-button class="light" raised label="raised" icon="code"></mwc-button>
+      <mwc-button unelevated label="unelevated" icon="check"></mwc-button>
+      <mwc-button class="pink" dense label="dense" icon="feedback"></mwc-button>
+      <mwc-button compact label="compact" icon="gavel"></mwc-button>
+      <mwc-button class="pink wide" raised label="wide" icon="code"></mwc-button>
+      <mwc-button disabled label="disabled" icon="fingerprint"></mwc-button>
+    </div>
+
+    <script type="module">
+      import {html} from '@polymer/lit-element/lit-element.js';
+      import {Button} from '@material/mwc-button/mwc-button.js';
+      class CustomButton extends Button {
+        _renderStyle(){
+          return html`${super._renderStyle()}<style>.mdc-button{border-radius: 8px}</style>`;
+        }
+      }
+      customElements.define('custom-button', CustomButton);
+    </script>
+
+    <h4>custom button</h4>
+
+    <custom-button label="Custom!" raised></custom-button>
+
+    <script>
+      addEventListener('load', () => document.body.classList.remove('unresolved'));
+    </script>
+
+  </main>
+</body>
+</html>

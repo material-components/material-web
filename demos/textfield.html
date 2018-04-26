@@ -1,0 +1,107 @@
+<!doctype html>
+<!--
+@license
+Copyright 2018 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+<head>
+  <title>textfield demo</title>
+  <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-textfield/mwc-textfield.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
+  <link rel="stylesheet" href="demo-component.css">
+</head>
+<body class="unresolved">
+  <header>
+    <a href="index.html"><mwc-icon></mwc-icon>
+    <span>Text Field</span></a>
+  </header>
+
+  <main>
+    <div class="demo-group-spaced">
+
+      <mwc-textfield></mwc-textfield>
+      <mwc-textfield label="Say something..."></mwc-textfield>
+      <mwc-textfield label="Say something..." value="hi"></mwc-textfield>
+      <mwc-textfield icon="event" label="Say something..." value="hi"></mwc-textfield>
+      <mwc-textfield icon="mail" iconTrailing label="Say something..." value="hi"></mwc-textfield>
+    </div>
+
+    <h4>box</h4>
+    <div class="demo-group-spaced">
+
+      <mwc-textfield box></mwc-textfield>
+      <mwc-textfield box label="Say something..."></mwc-textfield>
+      <mwc-textfield box label="Say something..." value="hi"></mwc-textfield>
+      <mwc-textfield box icon="event" label="Say something..." value="hi"></mwc-textfield>
+      <mwc-textfield box icon="event" iconTrailing label="Say something..." value="hi"></mwc-textfield>
+
+    </div>
+
+    <h4>box - required</h4>
+    <div class="demo-group-spaced">
+
+      <mwc-textfield required box></mwc-textfield>
+      <mwc-textfield required box label="Say something..."></mwc-textfield>
+      <mwc-textfield required box label="Say something..." value="hi"></mwc-textfield>
+      <mwc-textfield required box icon="event" label="Say something..." value="hi"></mwc-textfield>
+      <mwc-textfield required box iconTrailing icon="event" label="Say something..." value="hi"></mwc-textfield>
+    </div>
+
+    <h4>outlined</h4>
+    <div class="demo-group-spaced">
+
+      <mwc-textfield outlined></mwc-textfield>
+      <mwc-textfield outlined label="Say something..."></mwc-textfield>
+      <mwc-textfield outlined label="Say something..." value="hi"></mwc-textfield>
+      <mwc-textfield outlined icon="event" label="Say something..." value="hi"></mwc-textfield>
+      <mwc-textfield outlined iconTrailing icon="event" label="Say something..." value="hi"></mwc-textfield>
+    </div>
+
+    <h4>outlined - required - email - helperText</h4>
+    <div class="demo-group-spaced">
+
+      <mwc-textfield outlined required type="email" helperText="Make sure to include an @"></mwc-textfield>
+      <mwc-textfield outlined required type="email" label="Enter email..." helperText="Make sure to include an @"></mwc-textfield>
+      <mwc-textfield outlined required type="email"  label="Enter email..." value="hi" helperText="Make sure to include an @"></mwc-textfield>
+      <mwc-textfield outlined required type="email" icon="event" label="Say something..." value="hi" helperText="Make sure to include an @"></mwc-textfield>
+      <mwc-textfield outlined iconTrailing required type="email" icon="event" label="Say something..." value="hi" helperText="Make sure to include an @"></mwc-textfield>
+    </div>
+
+    <h4>box disabled</h4>
+    <div class="demo-group-spaced">
+
+      <mwc-textfield box disabled></mwc-textfield>
+      <mwc-textfield box disabled label="Say something..."></mwc-textfield>
+      <mwc-textfield box disabled label="Say something..." value="hi"></mwc-textfield>
+      <mwc-textfield box disabled icon="event" label="Say something..." value="hi"></mwc-textfield>
+      <mwc-textfield box disabled iconTrailing icon="event" label="Say something..." value="hi"></mwc-textfield>
+
+    </div>
+
+    <h4>fullWidth</h4>
+
+    <mwc-textfield fullwidth></mwc-textfield>
+    <mwc-textfield fullwidth placeholder="Say something.." ></mwc-textfield>
+    <mwc-textfield fullwidth label="Say something..."></mwc-textfield>
+    <mwc-textfield fullwidth label="Say something..." value="hi"></mwc-textfield>
+
+  </main>
+
+  <script>
+    addEventListener('load', () => document.body.classList.remove('unresolved'));
+  </script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<!--
+@license
+Copyright 2018 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+<head>
+  <title>fab demo</title>
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-fab/mwc-fab.js"></script>
+  <link rel="stylesheet" href="demo-component.css">
+  <style>
+    .light {
+      --mdc-theme-on-primary: black;
+      --mdc-theme-primary: white;
+      --mdc-theme-on-secondary: black;
+      --mdc-theme-secondary: white;
+    }
+
+    .pink {
+      --mdc-theme-on-primary: white;
+      --mdc-theme-primary: #e9437a;
+      --mdc-theme-on-secondary: white;
+      --mdc-theme-secondary: #e9437a;
+    }
+
+    .abs {
+      position: absolute;
+      left: calc(100vw - 128px);
+      top: calc(100vh - 128px);
+    }
+
+
+    .demo-fab-group {
+      max-width: 500px;
+    }
+  </style>
+</head>
+<body class="unresolved">
+  <header>
+    <a href="index.html"><mwc-icon></mwc-icon>
+    <span>FAB</span></a>
+  </header>
+
+  <main>
+
+    <div class="demo-fab-group demo-group-spaced">
+      <mwc-fab icon="explore"></mwc-fab>
+      <mwc-fab class="light" icon="code"></mwc-fab>
+      <mwc-fab icon="feedback"></mwc-fab>
+      <mwc-fab class="pink" icon="gavel" mini></mwc-fab>
+      <mwc-fab icon="fingerprint" disabled></mwc-fab>
+    </div>
+
+  </main>
+
+  <script type="module">
+    addEventListener('load', () => document.body.classList.remove('unresolved'));
+  </script>
+</body>
+</html>
