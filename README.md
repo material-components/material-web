@@ -1,8 +1,6 @@
 # Material Web Components
 
-<blockquote>
-    Warning: These components are still a work in progress.
-</blockquote>
+> Warning: These components are still a work in progress.
 
 Material Web Components helps developers execute [Material Design](https://www.material.io) using [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
 
