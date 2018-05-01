@@ -22,7 +22,7 @@ export class ListItemSeparator extends LitElement {
     return style;
   }
 
-  render() {
+  _render() {
     return html`
       ${style}
       <div class="mdc-list-divider" role="separator"></div>`;

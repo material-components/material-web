@@ -50,7 +50,7 @@ export class TabBar extends LitElement {
   }
 
   // TODO(sorvell) #css: wrapping
-  render() {
+  _render() {
     return html`
       ${this._renderStyle()}
       <nav class="mdc-tab-bar">
@@ -59,7 +59,7 @@ export class TabBar extends LitElement {
       </nav>`;
   }
 
-  didRender({activeTabIndex}, changed, old) {
+  _didRender({activeTabIndex}, changed, old) {
     if (this._mdcComponent && (!old || (activeTabIndex !== old.activeTabIndex))) {
       this._mdcComponent.activeTabIndex = activeTabIndex;
     }
@@ -69,7 +69,7 @@ export class TabBar extends LitElement {
     super.ready();
     await afterNextRender();
     this._makeComponent();
-    this.invalidate();
+    this._requestRender();
   }
 
   _makeComponent() {

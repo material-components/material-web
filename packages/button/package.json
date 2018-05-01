@@ -13,7 +13,7 @@
     "@material/mwc-base": "^0.1.0",
     "@material/mwc-icon": "^0.1.0",
     "@material/mwc-ripple": "^0.1.0",
-    "@polymer/lit-element": "^0.3.0"
+    "@polymer/lit-element": "^0.4.0"
   },
   "devDependencies": {
     "@material/mwc-sass-render": "^0.0.1"

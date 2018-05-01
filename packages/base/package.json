@@ -8,6 +8,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@polymer/lit-element": "^0.3.0"
+    "@polymer/lit-element": "^0.4.0"
   }
 }

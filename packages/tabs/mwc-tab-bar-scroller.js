@@ -63,7 +63,7 @@ export class TabBarScroller extends LitElement {
     return style;
   }
 
-  render() {
+  _render() {
     return html`
       ${this._renderStyle()}
       <div class="mdc-tab-bar-scroller">
@@ -89,7 +89,7 @@ export class TabBarScroller extends LitElement {
     await afterNextRender();
     await afterNextRender();
     this._makeComponent();
-    this.invalidate();
+    this._requestRender();
   }
 
   _makeComponent() {

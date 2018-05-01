@@ -66,7 +66,7 @@ export class IconToggle extends ComponentElement {
   }
 
   // TODO(sorvell) #css: added display
-  render({on, disabled, icon, offIcon, label, offLabel}) {
+  _render({on, disabled, icon, offIcon, label, offLabel}) {
     offIcon = offIcon || icon;
     return html`
       ${this._renderStyle()}
@@ -80,7 +80,7 @@ export class IconToggle extends ComponentElement {
       </span>`;
   }
 
-  didRender(props, changed) {
+  _didRender(props, changed) {
     if ('icon' in changed || 'label' in changed ||
       'offIcon' in changed || 'offLabel' in changed) {
       this.componentReady().then((component) => component.refreshToggleData());

@@ -39,7 +39,7 @@ export class ListItem extends LitElement {
   }
 
   // TODO(sorvell) #css: add styling for disabled.
-  render({label, icon, disabled}) {
+  _render({label, icon, disabled}) {
     renderAttributes(this, {'aria-disabled': disabled ? 'true' : null});
     return html`
       ${this._renderStyle()}

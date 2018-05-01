@@ -53,7 +53,7 @@ export class LinearProgress extends ComponentElement {
     return style;
   }
 
-  render() {
+  _render() {
     return html`
       ${this._renderStyle()}
       <div role="progressbar" class="mdc-linear-progress">
@@ -68,7 +68,7 @@ export class LinearProgress extends ComponentElement {
       </div>`;
   }
 
-  async didRender(props, changed, old) {
+  async _didRender(props, changed, old) {
     if ('determinate' in changed) {
       await this.componentReady();
       this._component.determinate = props.determinate;

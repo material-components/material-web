@@ -59,7 +59,7 @@ export class Checkbox extends FormableComponentElement {
     return style;
   }
 
-  render({checked, value}) {
+  _render({checked, value}) {
     return html`
       ${this._renderStyle()}
       <div class="mdc-checkbox">

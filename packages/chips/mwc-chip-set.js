@@ -53,7 +53,7 @@ export class ChipSet extends ComponentElement {
     return style;
   }
 
-  render({type}) {
+  _render({type}) {
     const hostClasses = c$({
       'mdc-chip-set--choice': type == 'choice',
       'mdc-chip-set--filter': type == 'filter',

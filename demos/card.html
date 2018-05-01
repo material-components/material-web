@@ -18,7 +18,7 @@ limitations under the License.
 <html>
 <head>
   <title>card demo</title>
-  <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+  <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <style>
     body {
       font-family: Arial, Helvetica, sans-serif;
@@ -54,7 +54,7 @@ limitations under the License.
     import '../node_modules/@material/mwc-ripple/mwc-ripple.js';
 
     class DemoCard extends LitElement {
-      render() {
+      _render() {
         return html`
           ${cardStyle}${typographyStyle}
           <style>
