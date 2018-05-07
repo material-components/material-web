@@ -15,5 +15,8 @@
   "devDependencies": {
     "@material/mwc-sass-render": "^0.0.1",
     "@material/switch": "^0.35.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
