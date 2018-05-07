@@ -77,7 +77,7 @@ export class Dialog extends ComponentElement {
   // TODO(sorvell): DialogFoundation's `isOff` method does not work with Shadow DOM
   // because it assumes a parentNode is parentElement (thing you can call getComputedStyle on)
   // TODO(sorvell) #css: added custom property
-  render({headerLabel, acceptLabel, declineLabel, scrollable}) {
+  _render({headerLabel, acceptLabel, declineLabel, scrollable}) {
     return html`
       ${this._renderStyle()}
       <aside

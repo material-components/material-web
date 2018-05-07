@@ -60,7 +60,7 @@ export class Button extends LitElement {
     return style;
   }
 
-  render({raised, unelevated, stroked, dense, compact, disabled, icon, label}) {
+  _render({raised, unelevated, stroked, dense, compact, disabled, icon, label}) {
     const hostClasses = c$({
       'mdc-button--raised': raised,
       'mdc-button--unelevated': unelevated,

@@ -34,7 +34,7 @@ export class Switch extends LitElement {
     return style;
   }
 
-  render({checked}) {
+  _render({checked}) {
     return html`
       ${this._renderStyle()}
       <div class="mdc-switch">

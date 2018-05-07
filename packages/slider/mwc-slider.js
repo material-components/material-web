@@ -70,7 +70,7 @@ export class Slider extends FormableComponentElement {
   }
 
   // TODO(sorvell) #css: needs a default width
-  render({disabled, step, min, max, value, discrete, markers}) {
+  _render({disabled, step, min, max, value, discrete, markers}) {
     const hostClasses = c$({
       'mdc-slider--discrete': discrete,
       'mdc-slider--display-markers': markers && discrete,

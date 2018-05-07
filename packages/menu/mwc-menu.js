@@ -81,7 +81,7 @@ export class Menu extends ComponentElement {
     return style;
   }
 
-  render() {
+  _render() {
     return html`
       ${this._renderStyle()}
       <div class="mdc-menu" tabindex="-1">
