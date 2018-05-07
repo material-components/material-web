@@ -5,12 +5,12 @@ A [Material Components](https://material.io/components/) icon implementation usi
 
  * The easiest way to try out mwc-icon is to use one of these online tools:
 
-* Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/lit-element-example?file=index.js), [Glitch](https://glitch.com/edit/#!/hello-lit-element?path=index.html)
+* Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-icon-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-icon-example?path=index.html)
 
-* Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/zezilad/edit?html,output),
-[CodePen](https://codepen.io/sorvell/pen/BxZgPN).
+* Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/qibisux/edit?html,output),
+[CodePen](https://codepen.io/azakus/pen/deZLja).
 
-* You can also copy [this HTML file](https://gist.githubusercontent.com/sorvell/48f4b7be35c8748e8f6db5c66d36ee29/raw/2427328cf1ebae5077902a6bff5ddd8db45e83e4/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
+* You can also copy [this HTML file](https://gist.githubusercontent.com/azakus/f01e9fc2ed04e781ad5a52ded7b296e7/raw/266f2f4f91cbfe89b2acc6ec63957b1a3cfe9b39/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
 
 * When you're ready to use mwc-icon in a project, install it via [npm](https://www.npmjs.com/). To run the project in the browser, a module-compatible toolctain is required. We recommend installing the [Polymer CLI](https://github.com/Polymer/polymer-cli) and using its development server as follows.
 
