@@ -84,7 +84,7 @@ export class Ripple extends LitElement {
   }
 
   // TODO(sorvell) #css: sizing.
-  render({primary, accent, unbounded}) {
+  _render({primary, accent, unbounded}) {
     const classes = c$({
       'mdc-ripple-surface--primary': primary,
       'mdc-ripple-surface--accent': accent,

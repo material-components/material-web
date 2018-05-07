@@ -51,7 +51,7 @@ export class Fab extends LitElement {
     return style;
   }
 
-  render({icon, mini, exited, disabled}) {
+  _render({icon, mini, exited, disabled}) {
     const hostClasses = c$({
       'mdc-fab--mini': mini,
       'mdc-fab--exited': exited,

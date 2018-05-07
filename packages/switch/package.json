@@ -10,10 +10,13 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/mwc-base": "^0.1.0",
-    "@polymer/lit-element": "^0.3.0"
+    "@polymer/lit-element": "^0.4.0"
   },
   "devDependencies": {
     "@material/mwc-sass-render": "^0.0.1",
     "@material/switch": "^0.35.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -73,7 +73,7 @@ export class Textfield extends ComponentElement {
   }
 
   // TODO(sorvell) #css: styling for fullwidth
-  render({value, label, box, outlined, disabled, icon, iconTrailing, fullWidth, required, placeHolder, helperText, type}) {
+  _render({value, label, box, outlined, disabled, icon, iconTrailing, fullWidth, required, placeHolder, helperText, type}) {
     const hostClasses = c$({
       'mdc-text-field--with-leading-icon': icon && !iconTrailing,
       'mdc-text-field--with-trailing-icon': icon && iconTrailing,

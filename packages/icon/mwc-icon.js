@@ -22,7 +22,7 @@ export class Icon extends LitElement {
   _renderStyle() {
     return style;
   }
-  render() {
+  _render() {
     return html`${this._renderStyle()}<slot></slot>`;
   }
 }

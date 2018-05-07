@@ -1,0 +1,30 @@
+{
+  "entrypoint": "build-entrypoint.html",
+  "fragments": [
+    "demos/index.html",
+    "demos/button.html",
+    "demos/card.html",
+    "demos/checkbox.html",
+    "demos/chips.html",
+    "demos/dialog.html",
+    "demos/fab.html",
+    "demos/formfield.html",
+    "demos/icon-toggle.html",
+    "demos/icon.html",
+    "demos/linear-progress.html",
+    "demos/menu.html",
+    "demos/radio.html",
+    "demos/ripple.html",
+    "demos/select.html",
+    "demos/slider.html",
+    "demos/snackbar.html",
+    "demos/switch.html",
+    "demos/tabs.html",
+    "demos/textfield.html"
+  ],
+  "builds": [
+    { "preset": "es5-unbundled" }
+  ],
+  "moduleResolution": "node",
+  "npm": true
+}

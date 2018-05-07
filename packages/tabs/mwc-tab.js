@@ -43,7 +43,7 @@ export class Tab extends LitElement {
   }
 
   // TODO(sorvell) #css: sizing with display:table!
-  render({icon, label, href}) {
+  _render({icon, label, href}) {
     return html`
       ${this._renderStyle()}
       <style>

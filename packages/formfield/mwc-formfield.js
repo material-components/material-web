@@ -53,7 +53,7 @@ export class Formfield extends ComponentElement {
     return style;
   }
 
-  render({label, alignEnd, _labelClickHandler}) {
+  _render({label, alignEnd, _labelClickHandler}) {
     return html`${this._renderStyle()}
       <div class$="mdc-form-field ${alignEnd ? 'mdc-form-field--align-end' : ''}">
         <slot></slot>
@@ -61,7 +61,7 @@ export class Formfield extends ComponentElement {
       </div>`;
   }
 
-  didRender(props, changed) {
+  _didRender(props, changed) {
     if ('label' in changed && this._input) {
       if (this._input.localName == 'input') {
         this._input.setAttribute('aria-label', props.label);

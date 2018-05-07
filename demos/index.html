@@ -18,18 +18,19 @@ limitations under the License.
 <html>
 <head>
   <title>Material Web Components Catalog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="demo-component.css">
 </head>
 <body>
   <demo-view></demo-view>
 
-  <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+  <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script type="module">
     import {LitElement, html} from '@polymer/lit-element';
     import {style as listStyle} from '@material/mwc-list/mwc-list-item-css.js';
 
     class DemoView extends LitElement {
-      render() {
+      _render() {
         return html`
           ${listStyle}
           <style>
@@ -105,20 +106,20 @@ limitations under the License.
                   <span class="mdc-list-item__secondary-text">Multi-selection controls</span>
                 </span>
               </a>
-              <a role="listitem" class="mdc-list-item" href="chips.html">
+              <!-- <a role="listitem" class="mdc-list-item" href="chips.html">
                 <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_chips_24dp.svg"></span>
                 <span class="mdc-list-item__text">
                   Chips
                   <span class="mdc-list-item__secondary-text">Chips for actions, selection, and input</span>
                 </span>
-              </a>
-              <a role="listitem" class="mdc-list-item" href="dialog.html">
+              </a> -->
+              <!-- <a role="listitem" class="mdc-list-item" href="dialog.html">
                 <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_dialog_24px.svg"></span>
                 <span class="mdc-list-item__text">
                   Dialog
                   <span class="mdc-list-item__secondary-text">Interactive presentation of important information</span>
                 </span>
-              </a>
+              </a> -->
               <a role="listitem" class="mdc-list-item" href="formfield.html">
                 <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_text_field_24px.svg"></span>
                 <span class="mdc-list-item__text">
@@ -147,13 +148,13 @@ limitations under the License.
                   <span class="mdc-list-item__secondary-text">Fills from 0% to 100%, represented by bars</span>
                 </span>
               </a>
-              <a role="listitem" class="mdc-list-item" href="menu.html">
+              <!-- <a role="listitem" class="mdc-list-item" href="menu.html">
                 <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_menu_24px.svg"></span>
                 <span class="mdc-list-item__text">
                   Menu
                   <span class="mdc-list-item__secondary-text">Pop over menus</span>
                 </span>
-              </a>
+              </a> -->
               <a role="listitem" class="mdc-list-item" href="radio.html">
                 <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_radio_button_24px.svg"></span>
                 <span class="mdc-list-item__text">
@@ -168,13 +169,13 @@ limitations under the License.
                   <span class="mdc-list-item__secondary-text">Touch ripple</span>
                 </span>
               </a>
-              <a role="listitem" class="mdc-list-item" href="select.html">
+              <!-- <a role="listitem" class="mdc-list-item" href="select.html">
                 <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_menu_24px.svg"></span>
                 <span class="mdc-list-item__text">
                   Select
                   <span class="mdc-list-item__secondary-text">Pop over selection menus</span>
                 </span>
-              </a>
+              </a> -->
               <a role="listitem" class="mdc-list-item" href="slider.html">
                 <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/slider.svg"></span>
                 <span class="mdc-list-item__text">
@@ -196,13 +197,13 @@ limitations under the License.
                   <span class="mdc-list-item__secondary-text">On off switches</span>
                 </span>
               </a>
-              <a role="listitem" class="mdc-list-item" href="tabs.html">
+              <!-- <a role="listitem" class="mdc-list-item" href="tabs.html">
                 <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_tabs_24px.svg"></span>
                 <span class="mdc-list-item__text">
                   Tabs
                   <span class="mdc-list-item__secondary-text">Tabs with support for icon and text labels</spandiv>
                 </span>
-              </a>
+              </a> -->
               <a role="listitem" class="mdc-list-item" href="textfield.html">
                 <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_text_field_24px.svg"></span>
                 <span class="mdc-list-item__text">

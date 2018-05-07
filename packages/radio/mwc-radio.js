@@ -66,7 +66,7 @@ export class Radio extends FormableComponentElement {
     return style;
   }
 
-  render({checked, value, name}) {
+  _render({checked, value, name}) {
     return html`
       ${this._renderStyle()}
       <div class="mdc-radio">

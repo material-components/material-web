@@ -53,7 +53,7 @@ export class Chip extends ComponentElement {
   }
 
   // TODO(sorvell): Note, nice to have vars for activated colors.
-  render({leadingIcon, trailingIcon, label}) {
+  _render({leadingIcon, trailingIcon, label}) {
     const leadingIconPart = leadingIcon ? html`<i class="material-icons mdc-chip__icon mdc-chip__icon--leading">${leadingIcon}</i>` : '';
     const trailingIconPart = trailingIcon ? html`<i class="material-icons mdc-chip__icon mdc-chip__icon--trailing">${trailingIcon}</i>` : '';
     // TODO(sorvell) #css: added display

@@ -56,7 +56,7 @@ export class Snackbar extends ComponentElement {
     return style;
   }
 
-  render({checked, value}) {
+  _render({checked, value}) {
     return html`${this._renderStyle()}
       <div class="mdc-snackbar"
         aria-live="assertive"

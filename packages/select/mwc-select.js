@@ -67,7 +67,7 @@ export class Select extends LitElement {
   }
 
   // TODO(sorvell) #css: flex for sizing
-  render({label, disabled, box}) {
+  _render({label, disabled, box}) {
     return html`
       <style>
         :host {

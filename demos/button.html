@@ -18,7 +18,8 @@ limitations under the License.
 <html>
 <head>
   <title>button demo</title>
-  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script type="module" src="../node_modules/@material/mwc-button/mwc-button.js"></script>
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
   <link rel="stylesheet" href="demo-component.css">
@@ -44,7 +45,7 @@ limitations under the License.
 </head>
 <body class="unresolved">
   <header>
-    <a href="index.html"><mwc-icon></mwc-icon>
+    <a href="index.html"><mwc-icon>arrow_back</mwc-icon>
     <span>Buttons</span></a>
   </header>
 
@@ -57,7 +58,6 @@ limitations under the License.
       <mwc-button class="light" raised label="raised"></mwc-button>
       <mwc-button unelevated label="unelevated"></mwc-button>
       <mwc-button class="pink" dense label="dense"></mwc-button>
-      <mwc-button compact label="compact"></mwc-button>
       <mwc-button class="pink wide" raised label="wide"></mwc-button>
       <mwc-button disabled label="disabled"></mwc-button>
     </div>
@@ -69,7 +69,6 @@ limitations under the License.
       <mwc-button class="light" raised label="raised" icon="code"></mwc-button>
       <mwc-button unelevated label="unelevated" icon="check"></mwc-button>
       <mwc-button class="pink" dense label="dense" icon="feedback"></mwc-button>
-      <mwc-button compact label="compact" icon="gavel"></mwc-button>
       <mwc-button class="pink wide" raised label="wide" icon="code"></mwc-button>
       <mwc-button disabled label="disabled" icon="fingerprint"></mwc-button>
     </div>
