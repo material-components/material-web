@@ -19,7 +19,7 @@
 set -e
 
 `npm bin`/lerna bootstrap --hoist
-`npm bin`/del-cli ${INIT_CWD}/packages/*/node_modules
+`npm bin`/lerna clean --yes
 
 packages=(`find packages -name "package.json" | xargs -I '{}' dirname '{}'`)
 
