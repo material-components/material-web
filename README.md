@@ -12,7 +12,7 @@ Web Components can be seamlessly incorporated into a wide range of usage context
 Insert screenshot of a demo page, including a code snippet.
 -->
 
-**[Demos](demos/)**
+**[Demos](https://material-components.github.io/material-components-web-components/demos/index.html)**
 
 ## Quick start
 
@@ -62,7 +62,7 @@ To compile the component SASS run:
 ## Useful Links
 
 - [All Components](packages/)
-- [Demos](demos/)
+- [Demos](https://material-components.github.io/material-components-web-components/demos/index.html)
 - [Contributing](CONTRIBUTING.md)
 - [Material.io](https://www.material.io) (external site)
 - [Material Design Guidelines](https://material.io/guidelines) (external site)
