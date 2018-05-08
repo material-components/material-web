@@ -23,7 +23,7 @@ rm -rf gh-pages
 # Get list of demos
 demos=`ls demos/*.html`
 # Clone gh-pages branch
-git worktree add gh-pages gh-pages
+git worktree add gh-pages origin/gh-pages
 # Copy built source to gh-pages
 cp -rf demos/* gh-pages/demos
 
@@ -40,7 +40,7 @@ read -p "Test build/gh-pages/demos/index.html, then press 'y' to publish to gh-p
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-  (cd build/gh-pages && git add -A && git commit -m 'Update gh-pages' && git push origin gh-pages)
+  (cd gh-pages && git add -A && git commit -m 'Update gh-pages' && git push origin HEAD:gh-pages)
 fi
 
 # Bundled/compiled build currently not working well....
