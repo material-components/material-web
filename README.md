@@ -20,7 +20,7 @@ Insert screenshot of a demo page, including a code snippet.
 
 The easiest way to try out the Material Web Components is to use one of these online tools:
 
-  * Runs in all supported browsers: StackBlitz, Glitch
+  * Runs in all supported browsers: StackBlitz, [Glitch](https://glitch.com/edit/#!/material-web-components)
 
   * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/gitufet/edit?html,output), [CodePen](https://codepen.io/sorvell/pen/MGrZqp?editors=1000).
   
