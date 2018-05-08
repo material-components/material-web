@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 ##
-# Copyright 2016 Google Inc. All Rights Reserved.
+# Copyright 2018 Google Inc. All Rights Reserved.
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -19,17 +19,21 @@
 set -e
 
 # Remove previous build
-rm -rf build
+rm -rf gh-pages
 # Get list of demos
 demos=`ls demos/*.html`
-# Transform demo list into list of --fragment flags
-fragments=`echo $demos | sed -E 's/([^ ]*)/--fragment \1/g'`
-# Run polymer build to do node module resolution on the demos, output to build/default
-polymer build --module-resolution=node $fragments
 # Clone gh-pages branch
-git clone git@github.com:material-components/material-components-web-components.git -b gh-pages build/gh-pages
+git worktree add gh-pages gh-pages
 # Copy built source to gh-pages
-cp -rf build/default/* build/gh-pages
+cp -rf demos/* gh-pages/demos
+
+# get list of demos to transform
+files=(`ls gh-pages/demos/*.html`)
+for file in ${files[@]}; do
+  # rollup bundle demos
+  node scripts/build/rollup-demos.js ${file}
+  # node scripts/build/rollup-demos.js gh-pages/demos/index.html
+done
 
 # Push to gh-pages
 read -p "Test build/gh-pages/demos/index.html, then press 'y' to publish to gh-pages: " -n 1 -r
