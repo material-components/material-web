@@ -20,11 +20,11 @@ Insert screenshot of a demo page, including a code snippet.
 
 The easiest way to try out the Material Web Components is to use one of these online tools:
 
-  * Runs in all supported browsers: StackBlitz, [Glitch](https://glitch.com/edit/#!/material-web-components)
+  * Runs in all [supported browsers](#browser-support): [Glitch](https://glitch.com/edit/#!/material-web-components)
 
   * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/gitufet/edit?html,output), [CodePen](https://codepen.io/sorvell/pen/MGrZqp?editors=1000).
-  
-Or you can also copy this HTML file into a local file and run it in any browser that supports JavaScript Modules.
+
+Or you can also copy [this HTML file](https://gist.githubusercontent.com/sorvell/2ec11ccde449815bc97edc1026be27a9/raw/8bab65dd5d15f657ae69493851690c5564367d13/index.html) into a local file and run it in any browser that supports JavaScript Modules.
 
 When you're ready to use the Material Web Components in your web application:
 
@@ -56,7 +56,7 @@ When you're ready to use the Material Web Components in your web application:
 
   1. Install the Polymer CLI:
 
-      ```npm i -g polymer-cli@next```
+      ```npm i -g polymer-cli```
 
   1. Run the development server and open a browser pointing to its URL:
 
@@ -68,7 +68,7 @@ When you're ready to use the Material Web Components in your web application:
   > However, since the Material Web Components use npm convention to reference dependencies by name, a light transform to rewrite specifiers to URLs is required to get it to run in the browser. The polymer-cli's development server `polymer serve` automatically handles this transform.
 
   Tools like [WebPack](https://webpack.js.org/) and [Rollup](https://rollupjs.org/) can also be used to serve and/or bundle.
-  
+
 ## Contributing guide
 Below are instructions for setting up project development.
 
