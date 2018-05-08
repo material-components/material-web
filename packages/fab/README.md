@@ -5,10 +5,10 @@ A [Material Components](https://material.io/components/) icon implementation usi
 
  * The easiest way to try out mwc-fab is to use one of these online tools:
 
-* Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-icon-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-icon-example?path=index.html)
+    * Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-icon-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-icon-example?path=index.html)
 
-* Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/qibisux/edit?html,output),
-[CodePen](https://codepen.io/azakus/pen/deZLja).
+    * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/qibisux/edit?html,output),
+    [CodePen](https://codepen.io/azakus/pen/deZLja).
 
 * You can also copy [this HTML file](https://gist.githubusercontent.com/azakus/f01e9fc2ed04e781ad5a52ded7b296e7/raw/266f2f4f91cbfe89b2acc6ec63957b1a3cfe9b39/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
 
@@ -42,7 +42,7 @@ A [Material Components](https://material.io/components/) icon implementation usi
 
   1. Install the Polymer CLI:
 
-      ```npm i -g polymer-cli@next```
+      ```npm i -g polymer-cli```
 
   1. Run the development server and open a browser pointing to its URL:
 

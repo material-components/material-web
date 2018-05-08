@@ -18,29 +18,57 @@ Insert screenshot of a demo page, including a code snippet.
 
 > Note: This guide assumes you have npm installed locally.
 
-To get started using one of the Material Web Components in your web application, simply:
+The easiest way to try out the Material Web Components is to use one of these online tools:
 
-1. Install each element you'd like to use:
+  * Runs in all [supported browsers](#browser-support): [Glitch](https://glitch.com/edit/#!/material-web-components)
 
-    ```
-    npm install @material/mwc-button
-    ```
+  * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/gitufet/edit?html,output), [CodePen](https://codepen.io/sorvell/pen/MGrZqp?editors=1000).
 
-1. Load the webcomponents polyfills (see the [webcomponents polyfill readme](https://github.com/webcomponents/webcomponentsjs/blob/v2/README.md) for more info).
+Or you can also copy [this HTML file](https://gist.githubusercontent.com/sorvell/2ec11ccde449815bc97edc1026be27a9/raw/8bab65dd5d15f657ae69493851690c5564367d13/index.html) into a local file and run it in any browser that supports JavaScript Modules.
 
-1. Import the element:
+When you're ready to use the Material Web Components in your web application:
 
-    ```html
-    <script type="module">
-      import {Button} from '@material/mwc-button';
-    </script>
-    ```
+1. Ensure the webcomponents polyfills are included in your HTML page
 
-1. Use the element on the page:
+      - Install webcomponents polyfills
 
-    ```html
-    <mwc-button label="Hi" icon="explore" raised></mwc-button>
-    ```
+          ```npm i @webcomponents/webcomponentsjs```
+
+      - Add webcomponents polyfills to your HTML page
+
+          ```<script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>```
+
+  1. Add one of the MWC elements to your project, for example for icon:
+
+      ```npm i @material/mwc-icon```
+
+  1. Import the element definition into your HTML page:
+
+      ```<script type="module" src="@material/mwc-icon/index.js"></script>```
+
+      Or into your module script:
+
+      ```import {Icon} from "@material/mwc-icon"```
+
+  1. Create an instance of element in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
+
+      ```<mwc-icon>sentiment_very_satisfied</mwc-icon>```
+
+  1. Install the Polymer CLI:
+
+      ```npm i -g polymer-cli```
+
+  1. Run the development server and open a browser pointing to its URL:
+
+      ```polymer serve```
+
+  > The Material Web Components are published on [npm](https://www.npmjs.com) using JavaScript Modules.
+  This means it can take advantage of the standard native JavaScript module loader available in all current major browsers.
+  >
+  > However, since the Material Web Components use npm convention to reference dependencies by name, a light transform to rewrite specifiers to URLs is required to get it to run in the browser. The polymer-cli's development server `polymer serve` automatically handles this transform.
+
+  Tools like [WebPack](https://webpack.js.org/) and [Rollup](https://rollupjs.org/) can also be used to serve and/or bundle.
+
 ## Contributing guide
 Below are instructions for setting up project development.
 
