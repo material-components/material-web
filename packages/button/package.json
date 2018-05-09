@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-button",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "mwc-button.js",
   "repository": {
@@ -15,8 +15,8 @@
   "dependencies": {
     "@material/button": "^0.35.0",
     "@material/mwc-base": "^0.1.0",
-    "@material/mwc-icon": "^0.1.0",
-    "@material/mwc-ripple": "^0.1.0",
+    "@material/mwc-icon": "^0.1.1",
+    "@material/mwc-ripple": "^0.1.1",
     "@polymer/lit-element": "^0.4.0"
   },
   "devDependencies": {
