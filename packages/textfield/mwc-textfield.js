@@ -86,7 +86,7 @@ export class Textfield extends ComponentElement {
       ${this._renderStyle()}
       <div class$="mdc-text-field mdc-text-field--upgraded ${hostClasses}">
         ${!fullWidth && icon ? html`<i class="material-icons mdc-text-field__icon" tabindex="0">${icon}</i>` : ''}
-        ${this._renderInput({value, required, type, placeHolder, label})}
+        ${this._renderInput({value, required, type, placeHolder, label, disabled})}
         ${!fullWidth && label ? html`<label class$="mdc-floating-label ${value ? 'mdc-floating-label--float-above' : ''}" for="text-field">${label}</label>` : ''}
         ${!fullWidth && outlined ? html`<div class="mdc-notched-outline">
             <svg><path class="mdc-notched-outline__path"/></svg>
@@ -97,8 +97,8 @@ export class Textfield extends ComponentElement {
       ${helperText ? html`<p class="mdc-text-field-helper-text" aria-hidden="true">${helperText}</p>` : ''}`;
   }
 
-  _renderInput({value, required, type, placeHolder, label}) {
-    return html`<input type="text" type$="${type}" placeholder$="${placeHolder}" required?="${required}" class$="mdc-text-field__input ${value ? 'mdc-text-field--upgraded' : ''}" id="text-field" value="${value}" aria-label$="${label}">`;
+  _renderInput({value, required, type, placeHolder, label, disabled}) {
+    return html`<input type="text" type$="${type}" placeholder$="${placeHolder}" disabled?="${disabled}" required?="${required}" class$="mdc-text-field__input ${value ? 'mdc-text-field--upgraded' : ''}" id="text-field" value="${value}" aria-label$="${label}">`;
   }
 
   ready() {
