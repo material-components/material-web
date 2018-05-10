@@ -8,7 +8,7 @@
 **What OS are you using?**
 <!-- Please include OS name and version -->
 
-** What browser(s) is this bug affecting:**
+**What browser(s) is this bug affecting:**
 <!-- Please include the browser version. A user-agent string is also quite helpful. -->
 
 **Current behavior:**
