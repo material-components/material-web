@@ -14,5 +14,9 @@
   "devDependencies": {
     "@material/card": "^0.35.0",
     "@material/mwc-sass-render": "^0.0.1"
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "private": true
 }
