@@ -15,7 +15,7 @@
  */
 
 export {Button} from '@material/mwc-button/mwc-button.js';
-export {Fab} from '@material/mwc-button/mwc-fab.js';
+export {Fab} from '@material/mwc-fab/mwc-fab.js';
 export {Checkbox} from '@material/mwc-checkbox/mwc-checkbox.js';
 export {Chip} from '@material/mwc-chips/mwc-chip.js';
 export {ChipSet} from '@material/mwc-chips/mwc-chip-set.js';
@@ -28,7 +28,6 @@ export {ListItem} from '@material/mwc-list/mwc-list-item.js';
 export {Menu} from '@material/mwc-menu/mwc-menu.js';
 export {Radio} from '@material/mwc-radio/mwc-radio.js';
 export {Ripple} from '@material/mwc-ripple/mwc-ripple.js';
-export {RippleSurface} from '@material/mwc-ripple/mwc-ripple-surface.js';
 export {Select} from '@material/mwc-select/mwc-select.js';
 export {Slider} from '@material/mwc-slider/mwc-slider.js';
 export {Snackbar} from '@material/mwc-snackbar/mwc-snackbar.js';
