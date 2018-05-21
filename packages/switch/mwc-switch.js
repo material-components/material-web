@@ -49,6 +49,11 @@ export class Switch extends LitElement {
     super.ready();
     await afterNextRender;
     this._input = this._root.querySelector('input');
+    //bug fix: forwarding the change event and setting the check property
+    this._input.addEventListener('change', event => {
+      this.checked = event.target.checked;
+      this.dispatchEvent(new CustomEvent('change', event));
+    });
   }
 
   click() {
