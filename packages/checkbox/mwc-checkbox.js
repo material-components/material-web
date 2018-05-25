@@ -51,9 +51,10 @@ export class Checkbox extends FormableComponentElement {
     this.checked = false;
     this.indeterminate = false;
     this.disabled = false;
-    this.value = '';
+    this.value = 'on';
     this.name = '';
     this._boundInputChangeHandler = this._inputChangeHandler.bind(this);
+    this._hasIronCheckedElementBehavior = true;
   }
 
   // TODO(sorvell) #css: add outline none to avoid focus decoration
