@@ -35,6 +35,7 @@ export class Checkbox extends FormableComponentElement {
       indeterminate: Boolean,
       disabled: Boolean,
       value: String,
+      name: String
     };
   }
 
@@ -51,6 +52,7 @@ export class Checkbox extends FormableComponentElement {
     this.indeterminate = false;
     this.disabled = false;
     this.value = '';
+    this.name = '';
     this._boundInputChangeHandler = this._inputChangeHandler.bind(this);
   }
 
@@ -65,7 +67,7 @@ export class Checkbox extends FormableComponentElement {
       <div class="mdc-checkbox">
         <input type="checkbox"
           class="mdc-checkbox__native-control"
-          checked="${checked}" value="${value}"
+          name$="${name}" checked="${checked}" value="${value}"
           on-change="${this._boundInputChangeHandler}">
         <div class="mdc-checkbox__background">
           <svg class="mdc-checkbox__checkmark"
