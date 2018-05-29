@@ -16,7 +16,7 @@
 
 import {assert} from 'chai';
 import {Button} from '@material/mwc-button';
-import {Fab} from '@material/mwc-button/mwc-fab.js';
+import {Fab} from '@material/mwc-fab';
 
 let element;
 

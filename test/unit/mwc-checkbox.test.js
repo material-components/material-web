@@ -41,11 +41,12 @@ test('element._formElement returns the native checkbox element', () => {
   assert.equal(element._formElement.localName, 'input');
 });
 
-test('element._component returns the mdc checkbox component', () => {
+test('element._component returns the mdc checkbox component', async () => {
+  await element.componentReady();
   assert.instanceOf(element._component, MDCCheckbox);
 });
 
-test('get/set checked updates the checked property on the native checkbox element', () => {
+test('get/set checked updates the checked property on the native checkbox element', async () => {
   element.checked = true;
   await element.componentReady();
   assert.equal(element._component.checked, true);
@@ -56,7 +57,7 @@ test('get/set checked updates the checked property on the native checkbox elemen
   assert.equal(element._formElement.checked, false);
 });
 
-test('get/set indeterminate updates the indeterminate property on the native checkbox element', () => {
+test('get/set indeterminate updates the indeterminate property on the native checkbox element', async () => {
   element.indeterminate = true;
   await element.componentReady();
   assert.equal(element._formElement.indeterminate, true);
@@ -65,7 +66,7 @@ test('get/set indeterminate updates the indeterminate property on the native che
   assert.equal(element._formElement.indeterminate, false);
 });
 
-test('get/set disabled updates the disabled property on the native checkbox element', () => {
+test('get/set disabled updates the disabled property on the native checkbox element', async () => {
   element.disabled = true;
   await element.componentReady();
   assert.equal(element._formElement.disabled, true);
@@ -74,7 +75,7 @@ test('get/set disabled updates the disabled property on the native checkbox elem
   assert.equal(element._formElement.disabled, false);
 });
 
-test('get/set value updates the value of the native checkbox element', () => {
+test('get/set value updates the value of the native checkbox element', async () => {
   let value = 'new value';
   element.value = value;
   await element.componentReady();

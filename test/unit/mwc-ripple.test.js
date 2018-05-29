@@ -16,7 +16,6 @@
 
 import {assert} from 'chai';
 import {Ripple} from '@material/mwc-ripple';
-import {RippleSurface} from '@material/mwc-ripple/mwc-ripple-surface.js';
 
 let element;
 
@@ -33,19 +32,4 @@ afterEach(() => {
 
 test('initializes as an mwc-ripple', () => {
   assert.instanceOf(element, Ripple);
-});
-
-suite('mwc-ripple-surface');
-
-beforeEach(() => {
-  element = document.createElement('mwc-ripple-surface');
-  document.body.appendChild(element);
-});
-
-afterEach(() => {
-  document.body.removeChild(element);
-});
-
-test('initializes as an mwc-ripple-surface', () => {
-  assert.instanceOf(element, RippleSurface);
 });
