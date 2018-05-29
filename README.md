@@ -1,6 +1,6 @@
 # Material Web Components
 
-> Warning: These components are still a work in progress.
+> :warning: These components are still a work in progress. Not all elements are available on NPM yet. We are working on the remaining elements and publish them to the NPM registry once we have a first working version. :warning:
 
 Material Web Components helps developers execute [Material Design](https://www.material.io) using [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
 
