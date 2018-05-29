@@ -17,6 +17,7 @@
 import {assert} from 'chai';
 import {Button} from '@material/mwc-button';
 import {Fab} from '@material/mwc-fab';
+import {afterNextRender} from '@material/mwc-base/utils.js';
 
 let element;
 
@@ -35,6 +36,17 @@ test('initializes as an mwc-button', () => {
   assert.instanceOf(element, Button);
 });
 
+test('get/set disabled updates the disabled property on the native button element', async () => {
+  element.disabled = true;
+  await afterNextRender();
+  const button = element.shadowRoot.querySelector('button');
+  assert.equal(button.hasAttribute('disabled'), true);
+
+  element.disabled = false;
+  await afterNextRender();
+  assert.equal(button.hasAttribute('disabled'), false);
+});
+
 suite('mwc-fab');
 
 beforeEach(() => {
@@ -48,4 +60,15 @@ afterEach(() => {
 
 test('initializes as an mwc-fab', () => {
   assert.instanceOf(element, Fab);
+});
+
+test('get/set disabled updates the disabled property on the native button element', async () => {
+  element.disabled = true;
+  await afterNextRender();
+  const button = element.shadowRoot.querySelector('button');
+  assert.equal(button.hasAttribute('disabled'), true);
+
+  element.disabled = false;
+  await afterNextRender();
+  assert.equal(button.hasAttribute('disabled'), false);
 });
