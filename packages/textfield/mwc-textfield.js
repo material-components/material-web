@@ -100,7 +100,7 @@ export class Textfield extends ComponentElement {
   }
 
   _renderInput({name, value, required, type, placeHolder, label}) {
-    return html`<input on-change="${(e) => this._updateValue(e)}" type="text" name$="${name}" type$="${type}" placeholder$="${placeHolder}" required?="${required}" class$="mdc-text-field__input ${value ? 'mdc-text-field--upgraded' : ''}" id="text-field" value="${value}" aria-label$="${label}">`;
+    return html`<input on-input="${(e) => this._updateValue(e)}" type="text" name$="${name}" type$="${type}" placeholder$="${placeHolder}" required?="${required}" class$="mdc-text-field__input ${value ? 'mdc-text-field--upgraded' : ''}" id="text-field" value="${value}" aria-label$="${label}">`;
   }
 
   ready() {
