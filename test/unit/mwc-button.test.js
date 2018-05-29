@@ -108,3 +108,31 @@ test('setting `icon` adds an icon to the fab', async () => {
   icon = element.shadowRoot.querySelector(ICON_SELECTOR);
   assert.equal(icon, null);
 });
+
+test('setting `icon` sets `aria-label` of the button', async () => {
+  const ICON_SELECTOR = '.mdc-fab__icon';
+
+  element.icon = 'check';
+  await afterNextRender();
+  const button = element.shadowRoot.querySelector('button');
+  assert.equal(button.getAttribute('aria-label'), 'check');
+});
+
+test('setting `label` sets `aria-label` of the button, overriding `icon`', async () => {
+  const ICON_SELECTOR = '.mdc-fab__icon';
+
+  element.icon = 'check';
+  await afterNextRender();
+  button = element.shadowRoot.querySelector('button');
+  assert.equal(button.getAttribute('aria-label'), 'check');
+
+  element.label = 'label text';
+  await afterNextRender();
+  let button = element.shadowRoot.querySelector('button');
+  assert.equal(button.getAttribute('aria-label'), 'label text');
+
+  element.label = undefined;
+  await afterNextRender();
+  button = element.shadowRoot.querySelector('button');
+  assert.equal(button.getAttribute('aria-label'), 'check');
+});
