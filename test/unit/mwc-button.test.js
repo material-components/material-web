@@ -47,6 +47,24 @@ test('get/set disabled updates the disabled property on the native button elemen
   assert.equal(button.hasAttribute('disabled'), false);
 });
 
+test('setting `icon` adds an icon to the button', async () => {
+  const ICON_SELECTOR = '.mdc-button__icon';
+
+  await afterNextRender();
+  let icon = element.shadowRoot.querySelector(ICON_SELECTOR);
+  assert.equal(icon, null);
+
+  element.icon = 'check';
+  await afterNextRender();
+  icon = element.shadowRoot.querySelector(ICON_SELECTOR);
+  assert.instanceOf(icon, Element);
+
+  element.icon = undefined;
+  await afterNextRender();
+  icon = element.shadowRoot.querySelector(ICON_SELECTOR);
+  assert.equal(icon, null);
+});
+
 suite('mwc-fab');
 
 beforeEach(() => {
@@ -71,4 +89,22 @@ test('get/set disabled updates the disabled property on the native button elemen
   element.disabled = false;
   await afterNextRender();
   assert.equal(button.hasAttribute('disabled'), false);
+});
+
+test('setting `icon` adds an icon to the fab', async () => {
+  const ICON_SELECTOR = '.mdc-fab__icon';
+
+  await afterNextRender();
+  let icon = element.shadowRoot.querySelector(ICON_SELECTOR);
+  assert.equal(icon, null);
+
+  element.icon = 'check';
+  await afterNextRender();
+  icon = element.shadowRoot.querySelector(ICON_SELECTOR);
+  assert.instanceOf(icon, Element);
+
+  element.icon = undefined;
+  await afterNextRender();
+  icon = element.shadowRoot.querySelector(ICON_SELECTOR);
+  assert.equal(icon, null);
 });
