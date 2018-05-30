@@ -4,10 +4,8 @@
   "description": "Material Components Web Components",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "npm run clean && mkdirp build && webpack --progress --colors",
-    "build:min": "mkdirp build && cross-env MDC_ENV=production webpack -p --progress --colors",
     "changelog": "standard-changelog -i CHANGELOG.md -k packages/material-components-web/package.json -w",
-    "clean": "del-cli build/** build .closure-tmp/** .closure-tmp packages/*/node_modules",
+    "clean": "del-cli build/** build .closure-tmp/** .closure-tmp packages/*/node_modules packages/*/package-lock.json",
     "dist": "npm run build && npm run build:min",
     "dev": "polyserve --npm --module-resolution=node",
     "fix": "npm-run-all --parallel fix:*",

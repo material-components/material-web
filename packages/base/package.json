@@ -11,7 +11,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@polymer/lit-element": "^0.4.0"
+    "@polymer/lit-element": "^0.5.1"
   },
   "publishConfig": {
     "access": "public"
