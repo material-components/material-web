@@ -18,6 +18,8 @@ import {assert} from 'chai';
 import {Fab} from '@material/mwc-fab';
 import {afterNextRender} from '@material/mwc-base/utils.js';
 
+const ICON_SELECTOR = '.mdc-fab__icon';
+
 let element;
 
 suite('mwc-fab');
@@ -47,8 +49,6 @@ test('get/set disabled updates the disabled property on the native button elemen
 });
 
 test('setting `icon` adds an icon to the fab', async () => {
-  const ICON_SELECTOR = '.mdc-fab__icon';
-
   await afterNextRender();
   let icon = element.shadowRoot.querySelector(ICON_SELECTOR);
   assert.equal(icon, null);
@@ -65,8 +65,6 @@ test('setting `icon` adds an icon to the fab', async () => {
 });
 
 test('setting `icon` sets `aria-label` of the button', async () => {
-  const ICON_SELECTOR = '.mdc-fab__icon';
-
   element.icon = 'check';
   await afterNextRender();
   const button = element.shadowRoot.querySelector('button');
@@ -74,8 +72,6 @@ test('setting `icon` sets `aria-label` of the button', async () => {
 });
 
 test('setting `label` sets `aria-label` of the button, overriding `icon`', async () => {
-  const ICON_SELECTOR = '.mdc-fab__icon';
-
   element.icon = 'check';
   await afterNextRender();
   button = element.shadowRoot.querySelector('button');

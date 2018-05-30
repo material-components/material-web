@@ -18,6 +18,8 @@ import {assert} from 'chai';
 import {Button} from '@material/mwc-button';
 import {afterNextRender} from '@material/mwc-base/utils.js';
 
+const ICON_SELECTOR = '.mdc-button__icon';
+
 let element;
 
 suite('mwc-button');
@@ -47,8 +49,6 @@ test('get/set disabled updates the disabled property on the native button elemen
 });
 
 test('setting `icon` adds an icon to the button', async () => {
-  const ICON_SELECTOR = '.mdc-button__icon';
-
   await afterNextRender();
   let icon = element.shadowRoot.querySelector(ICON_SELECTOR);
   assert.equal(icon, null);
