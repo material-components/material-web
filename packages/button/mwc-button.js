@@ -25,7 +25,7 @@ export class Button extends LitElement {
     return {
       raised: Boolean,
       unelevated: Boolean,
-      stroked: Boolean,
+      outlined: Boolean,
       dense: Boolean,
       disabled: Boolean,
       icon: String,
@@ -37,7 +37,7 @@ export class Button extends LitElement {
     super();
     this.raised = false;
     this.unelevated = false;
-    this.stroked = false;
+    this.outlined = false;
     this.dense = false;
     this.disabled = false;
     this.icon = '';
@@ -58,11 +58,11 @@ export class Button extends LitElement {
     return style;
   }
 
-  _render({raised, unelevated, stroked, dense, disabled, icon, label}) {
+  _render({raised, unelevated, outlined, dense, disabled, icon, label}) {
     const hostClasses = c$({
       'mdc-button--raised': raised,
       'mdc-button--unelevated': unelevated,
-      'mdc-button--stroked': stroked,
+      'mdc-button--outlined': outlined,
       'mdc-button--dense': dense,
     });
     return html`
