@@ -64,7 +64,7 @@ export class Button extends LitElement {
     const hostClasses = c$({
       'mdc-button--raised': raised,
       'mdc-button--unelevated': unelevated,
-      'mdc-button--outlined': stroked,
+      'mdc-button--stroked': stroked,
       'mdc-button--dense': dense,
       'mdc-button--compact': compact,
     });
