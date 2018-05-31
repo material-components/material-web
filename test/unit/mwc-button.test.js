@@ -16,7 +16,6 @@
 
 import {assert} from 'chai';
 import {Button} from '@material/mwc-button';
-import {afterNextRender} from '@material/mwc-base/utils.js';
 
 const ICON_SELECTOR = '.mdc-button__icon';
 
@@ -39,27 +38,27 @@ test('initializes as an mwc-button', () => {
 
 test('get/set disabled updates the disabled property on the native button element', async () => {
   element.disabled = true;
-  await afterNextRender();
+  await element.renderComplete;
   const button = element.shadowRoot.querySelector('button');
   assert.equal(button.hasAttribute('disabled'), true);
 
   element.disabled = false;
-  await afterNextRender();
+  await element.renderComplete;
   assert.equal(button.hasAttribute('disabled'), false);
 });
 
 test('setting `icon` adds an icon to the button', async () => {
-  await afterNextRender();
+  await element.renderComplete;
   let icon = element.shadowRoot.querySelector(ICON_SELECTOR);
   assert.equal(icon, null);
 
   element.icon = 'check';
-  await afterNextRender();
+  await element.renderComplete;
   icon = element.shadowRoot.querySelector(ICON_SELECTOR);
   assert.instanceOf(icon, Element);
 
   element.icon = undefined;
-  await afterNextRender();
+  await element.renderComplete;
   icon = element.shadowRoot.querySelector(ICON_SELECTOR);
   assert.equal(icon, null);
 });

@@ -16,7 +16,6 @@
 
 import {assert} from 'chai';
 import {Fab} from '@material/mwc-fab';
-import {afterNextRender} from '@material/mwc-base/utils.js';
 
 const ICON_SELECTOR = '.mdc-fab__icon';
 
@@ -39,51 +38,51 @@ test('initializes as an mwc-fab', () => {
 
 test('get/set disabled updates the disabled property on the native button element', async () => {
   element.disabled = true;
-  await afterNextRender();
+  await element.renderComplete;
   const button = element.shadowRoot.querySelector('button');
   assert.equal(button.hasAttribute('disabled'), true);
 
   element.disabled = false;
-  await afterNextRender();
+  await element.renderComplete;
   assert.equal(button.hasAttribute('disabled'), false);
 });
 
 test('setting `icon` adds an icon to the fab', async () => {
-  await afterNextRender();
+  await element.renderComplete;
   let icon = element.shadowRoot.querySelector(ICON_SELECTOR);
   assert.equal(icon, null);
 
   element.icon = 'check';
-  await afterNextRender();
+  await element.renderComplete;
   icon = element.shadowRoot.querySelector(ICON_SELECTOR);
   assert.instanceOf(icon, Element);
 
   element.icon = undefined;
-  await afterNextRender();
+  await element.renderComplete;
   icon = element.shadowRoot.querySelector(ICON_SELECTOR);
   assert.equal(icon, null);
 });
 
 test('setting `icon` sets `aria-label` of the button', async () => {
   element.icon = 'check';
-  await afterNextRender();
+  await element.renderComplete;
   const button = element.shadowRoot.querySelector('button');
   assert.equal(button.getAttribute('aria-label'), 'check');
 });
 
 test('setting `label` sets `aria-label` of the button, overriding `icon`', async () => {
   element.icon = 'check';
-  await afterNextRender();
+  await element.renderComplete;
   button = element.shadowRoot.querySelector('button');
   assert.equal(button.getAttribute('aria-label'), 'check');
 
   element.label = 'label text';
-  await afterNextRender();
+  await element.renderComplete;
   let button = element.shadowRoot.querySelector('button');
   assert.equal(button.getAttribute('aria-label'), 'label text');
 
   element.label = undefined;
-  await afterNextRender();
+  await element.renderComplete;
   button = element.shadowRoot.querySelector('button');
   assert.equal(button.getAttribute('aria-label'), 'check');
 });
