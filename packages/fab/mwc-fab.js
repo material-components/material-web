@@ -36,7 +36,7 @@ export class Fab extends LitElement {
     this.icon = '';
     this.mini = false;
     this.exited = false;
-    this.label = undefined;
+    this.label = '';
   }
 
   _createRoot() {
