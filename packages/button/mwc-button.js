@@ -18,7 +18,7 @@ import {LitElement, html, classString as c$} from '@polymer/lit-element/lit-elem
 import {style} from './mwc-button-css.js';
 import {MDCWCRipple} from '@material/mwc-ripple/mwc-ripple.js';
 import {afterNextRender} from '@material/mwc-base/utils.js';
-import '@material/mwc-icon/mwc-icon-font.js';
+//import '@material/mwc-icon/mwc-icon-font.js';
 
 export class Button extends LitElement {
   static get properties() {
