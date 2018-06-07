@@ -100,7 +100,7 @@ export class Textfield extends ComponentElement {
   }
 
   _renderInput({name, value, required, type, placeHolder, label}) {
-    return html`<input on-input="${(e) => this._updateValue(e)}" type="text" name$="${name}" type$="${type}" placeholder$="${placeHolder}" required?="${required}" class$="mdc-text-field__input ${value ? 'mdc-text-field--upgraded' : ''}" id="text-field" value="${value}" aria-label$="${label}">`;
+    return html `<input on-change="${(e) => this._onChange(e)}" on-input="${(e) => this._updateValue(e)}" type="text" name$="${name}" type$="${type}" placeholder$="${placeHolder}" required?="${required}" class$="mdc-text-field__input ${value ? 'mdc-text-field--upgraded' : ''}" id="text-field" value="${value}" aria-label$="${label}">`;
   }
 
   ready() {
@@ -127,8 +127,23 @@ export class Textfield extends ComponentElement {
   }
   
   _updateValue(e) {
-    this.value = e.target.value; 
+    this.value = e.target.value;
+    this.dispatchEvent(new CustomEvent("value-changed"));
   }
+
+  _onChange(e) {
+    if (this.shadowRoot) {
+      this.dispatchEvent(
+        new CustomEvent(
+          e.type, {
+            bubbles: e.bubbles,
+            cancelable: e.cancelable
+          }
+        )
+      );
+    }
+  }
+
 }
 
 customElements.define('mwc-textfield', Textfield);
