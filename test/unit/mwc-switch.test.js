@@ -16,6 +16,7 @@
 
 import {assert} from 'chai';
 import {Switch} from '@material/mwc-switch';
+import {afterNextRender} from '@material/mwc-base/utils.js';
 
 let element;
 
@@ -32,4 +33,14 @@ afterEach(() => {
 
 test('initializes as an mwc-switch', () => {
   assert.instanceOf(element, Switch);
+});
+
+test('setting `checked` checks the native input', async () => {
+  element.checked = true;
+  await afterNextRender;
+  assert(element._input.checked);
+
+  element.checked = false;
+  await afterNextRender;
+  assert(!element._input.checked);
 });
