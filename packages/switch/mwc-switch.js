@@ -22,23 +22,25 @@ export class Switch extends LitElement {
   static get properties() {
     return {
       checked: Boolean,
+      disabled: Boolean,
     };
   }
 
   constructor() {
     super();
     this.checked = false;
+    this.disabled = false;
   }
 
   _renderStyle() {
     return style;
   }
 
-  _render({checked}) {
+  _render({checked, disabled}) {
     return html`
       ${this._renderStyle()}
       <div class="mdc-switch">
-      <input type="checkbox" id="basic-switch" checked="${checked}" class="mdc-switch__native-control" />
+      <input type="checkbox" id="basic-switch" checked="${checked}" disabled?="${disabled}" class="mdc-switch__native-control" />
       <div class="mdc-switch__background">
         <div class="mdc-switch__knob"></div>
       </div>

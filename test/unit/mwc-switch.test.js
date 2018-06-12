@@ -44,3 +44,13 @@ test('setting `checked` checks the native input', async () => {
   await afterNextRender;
   assert(!element._input.checked);
 });
+
+test('setting `disabled` disables the native input', async () => {
+  element.disabled = true;
+  await afterNextRender;
+  assert(element._input.disabled);
+
+  element.disabled = false;
+  await afterNextRender;
+  assert(!element._input.disabled);
+});
