@@ -21,6 +21,7 @@ limitations under the License.
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script type="module" src="../node_modules/@material/mwc-textfield/mwc-textfield.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-textarea/mwc-textarea.js"></script>
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
   <link rel="stylesheet" href="demo-component.css">
 </head>
@@ -92,12 +93,29 @@ limitations under the License.
 
     </div>
 
-    <h4>fullWidth</h4>
+    <h4>Textarea</h4>
+    
+    <div class="demo-group-spaced">
+        <mwc-textarea label="Standard"></mwc-textarea>
+        <mwc-textarea dense label="Dense" ></mwc-textarea>
+        <mwc-textarea label="With helper text" helperText="Helper text"></mwc-textarea>
+    
+    </div>
+
+    <h4>Textfield fullWidth</h4>
+
 
     <mwc-textfield fullwidth></mwc-textfield>
     <mwc-textfield fullwidth placeholder="Say something.." ></mwc-textfield>
     <mwc-textfield fullwidth label="Say something..."></mwc-textfield>
     <mwc-textfield fullwidth label="Say something..." value="hi"></mwc-textfield>
+
+
+    <h4>Full Width Textarea</h4>
+
+    <mwc-textarea fullwidth label="Standard" ></mwc-textarea>
+    <mwc-textarea fullwidth dense label="Dense" ></mwc-textarea>
+    <mwc-textarea fullwidth label="With helper text" helperText="Helper text"></mwc-textarea>
 
   </main>
 
