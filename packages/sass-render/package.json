@@ -15,5 +15,9 @@
     "command-line-args": "^5.0.2",
     "command-line-usage": "^5.0.4",
     "node-sass": "^4.8.3"
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "private": true
 }
