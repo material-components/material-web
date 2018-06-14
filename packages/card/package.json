@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-card",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "",
   "main": "mwc-card.js",
   "scripts": {
@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@material/card": "^0.35.0",
-    "@material/mwc-sass-render": "^0.0.1"
+    "@material/mwc-sass-render": "^0.1.2"
   },
   "publishConfig": {
     "access": "public"
