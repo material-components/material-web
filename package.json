@@ -18,7 +18,7 @@
     "update-gh-pages": "npm run bootstrap && ./scripts/publish-demos.sh"
   },
   "devDependencies": {
-    "@webcomponents/webcomponentsjs": "^2.0.0-0",
+    "@webcomponents/webcomponentsjs": "^2.0.1",
     "babel-core": "^6.22.1",
     "babel-loader": "^7.0.0",
     "babel-plugin-transform-object-assign": "^6.8.0",
