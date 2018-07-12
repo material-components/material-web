@@ -1,5 +1,5 @@
 # mwc-button
-A [Material Components](https://material.io/components/) icon implementation using [Web Components](https://www.webcomponents.org/introduction)
+A [Material Components](https://material.io/components/) button implementation using [Web Components](https://www.webcomponents.org/introduction)
 
 ## Getting started
 
