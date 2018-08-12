@@ -37,6 +37,7 @@ export class Textfield extends ComponentElement {
   static get properties() {
     return {
       value: String,
+      name: String,
       label: String,
       icon: String,
       iconTrailing: Boolean,
@@ -56,6 +57,7 @@ export class Textfield extends ComponentElement {
     this._asyncComponent = true;
     this.required = false;
     this.value = '';
+    this.name = '';
     this.label = '';
     this.icon = '';
     this.iconTrailing = false;
@@ -73,7 +75,7 @@ export class Textfield extends ComponentElement {
   }
 
   // TODO(sorvell) #css: styling for fullwidth
-  _render({value, label, box, outlined, disabled, icon, iconTrailing, fullWidth, required, placeHolder, helperText, type}) {
+  _render({value, name, label, box, outlined, disabled, icon, iconTrailing, fullWidth, required, placeHolder, helperText, type}) {
     const hostClasses = c$({
       'mdc-text-field--with-leading-icon': icon && !iconTrailing,
       'mdc-text-field--with-trailing-icon': icon && iconTrailing,
@@ -122,6 +124,10 @@ export class Textfield extends ComponentElement {
 
   focus() {
     this._input.focus();
+  }
+    
+  validate(){
+    return this.valid=this._component.foundation_.adapter_.getNativeInput().checkValidity()
   }
 }
 
