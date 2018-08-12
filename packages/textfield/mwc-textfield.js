@@ -107,12 +107,12 @@ export class Textfield extends ComponentElement {
   }
 
   get valid() {
-    return this._component && this._component.isValid();
+    return this._component && this._component.foundation_.isValid();
   }
 
   set valid(value) {
     this.componentReady().then((component) => {
-      component.setValid(value);
+      component.foundation_.setValid(value);
     });
   }
 
