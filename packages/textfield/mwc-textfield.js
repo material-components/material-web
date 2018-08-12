@@ -42,6 +42,7 @@ export class Textfield extends ComponentElement {
       iconTrailing: Boolean,
       box: Boolean,
       outlined: Boolean,
+      dense: Boolean,
       disabled: Boolean,
       fullWidth: Boolean,
       required: Boolean,
@@ -62,6 +63,7 @@ export class Textfield extends ComponentElement {
     this.helperText = '';
     this.box = false;
     this.outlined = false;
+    this.dense = false;
     this.disabled = false;
     this.fullWidth = false;
     this.placeHolder = '';
@@ -73,12 +75,13 @@ export class Textfield extends ComponentElement {
   }
 
   // TODO(sorvell) #css: styling for fullwidth
-  _render({value, label, box, outlined, disabled, icon, iconTrailing, fullWidth, required, placeHolder, helperText, type}) {
+  _render({value, label, box, outlined, dense, disabled, icon, iconTrailing, fullWidth, required, placeHolder, helperText, type}) {
     const hostClasses = c$({
       'mdc-text-field--with-leading-icon': icon && !iconTrailing,
       'mdc-text-field--with-trailing-icon': icon && iconTrailing,
       'mdc-text-field--box': !fullWidth && box,
       'mdc-text-field--outlined': !fullWidth && outlined,
+      'mdc-text-field--dense': dense,
       'mdc-text-field--disabled': disabled,
       'mdc-text-field--fullwidth': fullWidth,
     });
