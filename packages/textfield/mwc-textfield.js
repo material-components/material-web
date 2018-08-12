@@ -115,6 +115,16 @@ export class Textfield extends ComponentElement {
       component.setValid(value);
     });
   }
+    
+  get value() {
+    return this._component && this._component.foundation_.getValue();
+  }
+    
+  set value(value) {
+    this.componentReady().then((component) => {
+      component.foundation_.setValue(value);
+    });
+  }
 
   click() {
     this._input.click();
