@@ -26,6 +26,7 @@ export class Fab extends LitElement {
       mini: Boolean,
       exited: Boolean,
       disabled: Boolean,
+      extended: Boolean,
       icon: String,
       label: String,
     };
@@ -36,6 +37,7 @@ export class Fab extends LitElement {
     this.icon = '';
     this.mini = false;
     this.exited = false;
+    this.extended = false;
     this.label = '';
   }
 
@@ -53,15 +55,17 @@ export class Fab extends LitElement {
     return style;
   }
 
-  _render({icon, mini, exited, disabled, label}) {
+  _render({icon, mini, exited, extended, disabled, label}) {
     const hostClasses = c$({
       'mdc-fab--mini': mini,
       'mdc-fab--exited': exited,
+      'mdc-fab--extended': extended,
     });
     return html`
       ${this._renderStyle()}
       <button class$="mdc-fab ${hostClasses}" disabled?="${disabled}" aria-label$="${label || icon}">
         ${icon ? html`<span class="material-icons mdc-fab__icon">${icon}</span>` : ''}
+        ${extended ? html`<span class="mdc-fab__label">${label || 'Label'}</span>` : ''}
       </button>`;
   }
 }
