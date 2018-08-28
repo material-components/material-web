@@ -65,7 +65,7 @@ export class Fab extends LitElement {
       ${this._renderStyle()}
       <button class$="mdc-fab ${hostClasses}" disabled?="${disabled}" aria-label$="${label || icon}">
         ${icon ? html`<span class="material-icons mdc-fab__icon">${icon}</span>` : ''}
-        ${extended ? html`<span class="mdc-fab__label">${label || 'Label'}</span>` : ''}
+        ${extended ? html`<span class="mdc-fab__label">${label || icon}</span>` : ''}
       </button>`;
   }
 }

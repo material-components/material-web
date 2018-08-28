@@ -86,3 +86,48 @@ test('setting `label` sets `aria-label` of the button, overriding `icon`', async
   button = element.shadowRoot.querySelector('button');
   assert.equal(button.getAttribute('aria-label'), 'check');
 });
+
+test('A Fab is not `extended` by default', async () => {
+  assert.equal(element.extended, false);
+});
+
+test('setting `label` and `extended` on the button creates a text only extended Fab', async () => {
+  element.label = 'label text';
+  element.extended = true;
+  await element.renderComplete;
+  
+  const button = element.shadowRoot.querySelector('button');
+  assert.equal(button.innerText.toLowerCase(), 'label text');
+
+  const icon = element.shadowRoot.querySelector(ICON_SELECTOR);
+  assert.equal(icon, null);
+});
+
+test('setting `extended` on the button uses the icon name as fallback if there is no label', async () => {
+  element.icon = 'check';
+  element.extended = true;
+  await element.renderComplete;
+
+  let button = element.shadowRoot.querySelector('button');
+  assert.equal(button.innerText.toLowerCase(), 'check');
+
+  element.label = 'label text';
+  await element.renderComplete;
+  button = element.shadowRoot.querySelector('button');
+  assert.equal(button.innerText.toLowerCase(), 'label text');
+
+  element.label = undefined;
+  await element.renderComplete;
+  button = element.shadowRoot.querySelector('button');
+  assert.equal(button.innerText.toLowerCase(), 'check');
+});
+
+test('Label on an `extended` button still applies an `aria-label`', async () => {
+  element.icon = 'check';
+  element.label = 'done';
+  element.extended = true;
+  await element.renderComplete;
+
+  const button = element.shadowRoot.querySelector('button');
+  assert.equal(button.getAttribute('aria-label'), 'done');
+});
