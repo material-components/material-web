@@ -14,7 +14,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {LitElement, html, classString as c$} from '@polymer/lit-element/lit-element.js';
+import {LitElement, html} from '@polymer/lit-element/lit-element.js';
+import {classString as c$} from '@polymer/lit-element/lib/render-helpers.js';
 import {MDCWebComponentMixin} from '@material/mwc-base/mdc-web-component.js';
 import {style} from './mwc-ripple-css.js';
 import {MDCRipple} from '@material/ripple';
@@ -66,9 +67,9 @@ export class MDCWCRippleContainer extends MDCWCRipple {
 export class Ripple extends LitElement {
   static get properties() {
     return {
-      primary: Boolean,
-      accent: Boolean,
-      unbounded: Boolean,
+      primary: { type: Boolean },
+      accent: { type: Boolean },
+      unbounded: { type: Boolean },
     };
   }
 
@@ -84,20 +85,19 @@ export class Ripple extends LitElement {
   }
 
   // TODO(sorvell) #css: sizing.
-  _render({primary, accent, unbounded}) {
+  render() {
+    const {primary, accent, unbounded} = this;
     const classes = c$({
       'mdc-ripple-surface--primary': primary,
       'mdc-ripple-surface--accent': accent,
     });
     return html`
       ${this._renderStyle()}
-      <div class$="mdc-ripple-surface ${classes}" data-mdc-ripple-is-unbounded?="${unbounded}"></div>`;
+      <div class="mdc-ripple-surface ${classes}" data-mdc-ripple-is-unbounded="${unbounded}"></div>`;
   }
 
-  async ready() {
-    super.ready();
-    await afterNextRender();
-    const surface = this._root.querySelector('.mdc-ripple-surface');
+  firstRendered() {
+    const surface = this.shadowRoot.querySelector('.mdc-ripple-surface');
     const container = this.parentNode || this;
     // TODO(sorvell) #css: this might be bad since the container might be positioned.
     container.style.position = 'relative';

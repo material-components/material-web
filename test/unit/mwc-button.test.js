@@ -38,27 +38,27 @@ test('initializes as an mwc-button', () => {
 
 test('get/set disabled updates the disabled property on the native button element', async () => {
   element.disabled = true;
-  await element.renderComplete;
+  await element.updateComplete;
   const button = element.shadowRoot.querySelector('button');
   assert.equal(button.hasAttribute('disabled'), true);
 
   element.disabled = false;
-  await element.renderComplete;
+  await element.updateComplete;
   assert.equal(button.hasAttribute('disabled'), false);
 });
 
 test('setting `icon` adds an icon to the button', async () => {
-  await element.renderComplete;
+  await element.updateComplete;
   let icon = element.shadowRoot.querySelector(ICON_SELECTOR);
   assert.equal(icon, null);
 
   element.icon = 'check';
-  await element.renderComplete;
+  await element.updateComplete;
   icon = element.shadowRoot.querySelector(ICON_SELECTOR);
   assert.instanceOf(icon, Element);
 
   element.icon = undefined;
-  await element.renderComplete;
+  await element.updateComplete;
   icon = element.shadowRoot.querySelector(ICON_SELECTOR);
   assert.equal(icon, null);
 });

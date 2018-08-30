@@ -53,11 +53,11 @@ export class Dialog extends ComponentElement {
 
   static get properties() {
     return {
-      headerLabel: String,
-      acceptLabel: String,
-      declineLabel: String,
-      scrollable: Boolean,
-      opened: Boolean,
+      headerLabel: {type: String},
+      acceptLabel: {type: String},
+      declineLabel: {type: String},
+      scrollable: {type: Boolean},
+      opened: {type: Boolean},
     };
   }
 
@@ -70,16 +70,17 @@ export class Dialog extends ComponentElement {
     this.scrollable = false;
   }
 
-  _renderStyle() {
+  renderStyle() {
     return style;
   }
 
   // TODO(sorvell): DialogFoundation's `isOff` method does not work with Shadow DOM
   // because it assumes a parentNode is parentElement (thing you can call getComputedStyle on)
   // TODO(sorvell) #css: added custom property
-  _render({headerLabel, acceptLabel, declineLabel, scrollable}) {
+  render() {
+    const {headerLabel, acceptLabel, declineLabel, scrollable} = this;
     return html`
-      ${this._renderStyle()}
+      ${this.renderStyle()}
       <aside
         class="mdc-dialog"
         role="alertdialog"
@@ -90,7 +91,7 @@ export class Dialog extends ComponentElement {
             <h2 id="my-mdc-dialog-label" class="mdc-dialog__header__title">${headerLabel}</h2>
             <slot name="header"></slot>
           </header>
-          <section id="my-mdc-dialog-description" class$="mdc-dialog__body ${scrollable ? 'mdc-dialog__body--scrollable' : ''}">
+          <section id="my-mdc-dialog-description" class="mdc-dialog__body ${scrollable ? 'mdc-dialog__body--scrollable' : ''}">
             <slot></slot>
           </section>
           <footer class="mdc-dialog__footer">
@@ -104,7 +105,7 @@ export class Dialog extends ComponentElement {
   }
 
   get _backDrop() {
-    return this.__backDrop || (this.__backDrop = this._root.querySelector('.mdc-dialog__backdrop'));
+    return this.__backDrop || (this.__backDrop = this.shadowRoot.querySelector('.mdc-dialog__backdrop'));
   }
 
   get opened() {

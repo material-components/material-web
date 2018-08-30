@@ -32,12 +32,12 @@ export class IconToggle extends ComponentElement {
 
   static get properties() {
     return {
-      disabled: Boolean,
-      on: Boolean,
-      icon: String,
-      offIcon: String,
-      label: '',
-      offLabel: '',
+      disabled: {type: Boolean},
+      on: {type: Boolean},
+      icon: {type: String},
+      offIcon: {type: String},
+      label: {type: String},
+      offLabel: {type: String},
     };
   }
 
@@ -57,36 +57,37 @@ export class IconToggle extends ComponentElement {
     return '.mdc-icon-toggle';
   }
 
-  _createRoot() {
+  createRenderRoot() {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
-  _renderStyle() {
+  renderStyle() {
     return style;
   }
 
   // TODO(sorvell) #css: added display
-  _render({on, disabled, icon, offIcon, label, offLabel}) {
-    offIcon = offIcon || icon;
+  render() {
+    const {disabled, icon, offIcon, label, offLabel} = this;
     return html`
-      ${this._renderStyle()}
-      <span class$="mdc-icon-toggle material-icons ${disabled ? 'mdc-icon-toggle--disabled' : ''}"
+      ${this.renderStyle()}
+      <span class="mdc-icon-toggle material-icons ${disabled ? 'mdc-icon-toggle--disabled' : ''}"
             role="button"
-            aria-disabled$="${disabled}"
+            aria-disabled="${disabled}"
             tabindex="0"
-            data-toggle-on$='{"label": "${label}", "content": "${icon}"}'
-            data-toggle-off$='{"label": "${offLabel}", "content": "${offIcon}"}'
-            on-MDCIconToggle:change="${this._boundChangeHandler}">
+            data-toggle-on='{"label": "${label}", "content": "${icon}"}'
+            data-toggle-off='{"label": "${offLabel}", "content": "${offIcon || icon}"}'
+            @MDCIconToggle:change="${this._boundChangeHandler}">
       </span>`;
   }
 
-  _didRender(props, changed) {
-    if ('icon' in changed || 'label' in changed ||
-      'offIcon' in changed || 'offLabel' in changed) {
+  update(changedProps) {
+    super.update(changedProps);
+    if (changedProps.has('icon') || changedProps.has('label') ||
+      changedProps.has('offIcon') || changedProps.has('offLabel')) {
       this.componentReady().then((component) => component.refreshToggleData());
     }
-    if ('on' in changed) {
-      this.componentReady().then((component) => component.on = props.on);
+    if (changedProps.has('on')) {
+      this.componentReady().then((component) => component.on = this.on);
     }
   }
 

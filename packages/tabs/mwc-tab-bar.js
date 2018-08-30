@@ -36,7 +36,7 @@ class MDCWCTabBar extends MDCWebComponentMixin(MDCTabBar) {
 export class TabBar extends LitElement {
   static get properties() {
     return {
-      activeTabIndex: Number,
+      activeTabIndex: {type: Number},
     };
   }
 
@@ -45,35 +45,35 @@ export class TabBar extends LitElement {
     this.activeTabIndex = 0;
   }
 
-  _renderStyle() {
+  renderStyle() {
     return style;
   }
 
   // TODO(sorvell) #css: wrapping
-  _render() {
+  render() {
     return html`
-      ${this._renderStyle()}
+      ${this.renderStyle()}
       <nav class="mdc-tab-bar">
         <slot></slot>
         <span class="mdc-tab-bar__indicator"></span>
       </nav>`;
   }
 
-  _didRender({activeTabIndex}, changed, old) {
-    if (this._mdcComponent && (!old || (activeTabIndex !== old.activeTabIndex))) {
-      this._mdcComponent.activeTabIndex = activeTabIndex;
+  update(changedProps) {
+    super.update(changedProps);
+    if (this._mdcComponent && (this.activeTabIndex !== changedProps.get('activeTabIndex'))) {
+      this._mdcComponent.activeTabIndex = this.activeTabIndex;
     }
   }
 
-  async ready() {
-    super.ready();
+  async firstRendered() {
     await afterNextRender();
     this._makeComponent();
-    this._requestRender();
+    this.invalidate();
   }
 
   _makeComponent() {
-    const mdcRoot = this._root.querySelector('nav');
+    const mdcRoot = this.shadowRoot.querySelector('nav');
     mdcRoot._host = this;
     this._mdcComponent = new MDCWCTabBar(mdcRoot);
   }

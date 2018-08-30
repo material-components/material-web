@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {ComponentElement, MDCWebComponentMixin, html} from '@material/mwc-base/component-element.js';
-import {classString as c$} from '@polymer/lit-element/lit-element.js';
+import {classString as c$} from '@polymer/lit-element/lib/render-helpers.js';
 import {style} from './mwc-chip-set-css.js';
 import {MDCChipSet} from '@material/chips';
 
@@ -39,7 +39,7 @@ export class ChipSet extends ComponentElement {
 
   static get properties() {
     return {
-      type: String,
+      type: {type: String},
     };
   }
 
@@ -49,23 +49,23 @@ export class ChipSet extends ComponentElement {
     this.type = '';
   }
 
-  _renderStyle() {
+  renderStyle() {
     return style;
   }
 
-  _render({type}) {
+  render() {
     const hostClasses = c$({
-      'mdc-chip-set--choice': type == 'choice',
-      'mdc-chip-set--filter': type == 'filter',
+      'mdc-chip-set--choice': this.type == 'choice',
+      'mdc-chip-set--filter': this.type == 'filter',
     });
     // TODO(sorvell) #css: added display
     return html`
-      ${this._renderStyle()}
-      <div class$="mdc-chip-set ${hostClasses}"><slot></slot></div>`;
+      ${this.renderStyle()}
+      <div class="mdc-chip-set ${hostClasses}"><slot></slot></div>`;
   }
 
-  ready() {
-    super.ready();
+  firstRendered() {
+    super.firstRendered();
     this._slot = this.shadowRoot.querySelector('slot');
   }
 

@@ -20,7 +20,7 @@ import {style} from './mwc-card-css.js';
 export class Card extends LitElement {
   static get properties() {
     return {
-      stroke: Boolean,
+      stroke: {type: Boolean},
     };
   }
 
@@ -29,14 +29,14 @@ export class Card extends LitElement {
     this.stroke = false;
   }
 
-  _renderStyle() {
+  renderStyle() {
     return style;
   }
 
-  _render({stroke}) {
+  render() {
     return html`
-      ${this._renderStyle()}
-      <div class$="mdc-card ${stroke ? 'mdc-card--stroked' : ''}">
+      ${this.renderStyle()}
+      <div class="mdc-card ${this.stroke ? 'mdc-card--stroked' : ''}">
         <slot></slot>
       </div>`;
   }

@@ -14,7 +14,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {LitElement, html, classString as c$} from '@polymer/lit-element/lit-element.js';
+import {LitElement, html} from '@polymer/lit-element/lit-element.js';
+import {classString as c$} from '@polymer/lit-element/lib/render-helpers.js';
 import {style} from './mwc-button-css.js';
 import {MDCWCRipple} from '@material/mwc-ripple/mwc-ripple.js';
 import {afterNextRender} from '@material/mwc-base/utils.js';
@@ -23,13 +24,13 @@ import '@material/mwc-icon/mwc-icon-font.js';
 export class Button extends LitElement {
   static get properties() {
     return {
-      raised: Boolean,
-      unelevated: Boolean,
-      outlined: Boolean,
-      dense: Boolean,
-      disabled: Boolean,
-      icon: String,
-      label: String,
+      raised: {type: Boolean},
+      unelevated: {type: Boolean},
+      outlined: {type: Boolean},
+      dense: {type: Boolean},
+      disabled: {type: Boolean},
+      icon: {type: String},
+      label: {type: String},
     };
   }
 
@@ -44,21 +45,20 @@ export class Button extends LitElement {
     this.label = '';
   }
 
-  _createRoot() {
+  createRenderRoot() {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
-  async ready() {
-    super.ready();
-    await afterNextRender();
-    this._ripple = new MDCWCRipple(this._root.querySelector('.mdc-button'));
+  firstRendered() {
+    this._ripple = new MDCWCRipple(this.shadowRoot.querySelector('.mdc-button'));
   }
 
-  _renderStyle() {
+  renderStyle() {
     return style;
   }
 
-  _render({raised, unelevated, outlined, dense, disabled, icon, label}) {
+  render() {
+    const {raised, unelevated, outlined, dense, disabled, icon, label} = this;
     const hostClasses = c$({
       'mdc-button--raised': raised,
       'mdc-button--unelevated': unelevated,
@@ -66,8 +66,8 @@ export class Button extends LitElement {
       'mdc-button--dense': dense,
     });
     return html`
-      ${this._renderStyle()}
-      <button class$="mdc-button ${hostClasses}" disabled?="${disabled}">
+      ${this.renderStyle()}
+      <button class="mdc-button ${hostClasses}" ?disabled="${disabled}">
         ${icon ? html`<span class="material-icons mdc-button__icon">${icon}</span>` : ''}
         ${label || ''}
         <slot></slot>

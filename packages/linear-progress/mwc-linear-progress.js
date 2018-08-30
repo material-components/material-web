@@ -31,11 +31,11 @@ export class LinearProgress extends ComponentElement {
 
   static get properties() {
     return {
-      determinate: Boolean,
-      progress: Number,
-      buffer: Number,
-      reverse: Boolean,
-      closed: Boolean,
+      determinate: {type: Boolean},
+      progress: {type: Number},
+      buffer: {type: Number},
+      reverse: {type: Boolean},
+      closed: {type: Boolean},
     };
   }
 
@@ -49,13 +49,13 @@ export class LinearProgress extends ComponentElement {
     this.closed = false;
   }
 
-  _renderStyle() {
+  renderStyle() {
     return style;
   }
 
-  _render() {
+  render() {
     return html`
-      ${this._renderStyle()}
+      ${this.renderStyle()}
       <div role="progressbar" class="mdc-linear-progress">
         <div class="mdc-linear-progress__buffering-dots"></div>
         <div class="mdc-linear-progress__buffer"></div>
@@ -68,25 +68,26 @@ export class LinearProgress extends ComponentElement {
       </div>`;
   }
 
-  async _didRender(props, changed, old) {
-    if ('determinate' in changed) {
+  async update(changedProps) {
+    super.update(changedProps);
+    if (changedProps.has('determinate')) {
       await this.componentReady();
-      this._component.determinate = props.determinate;
+      this._component.determinate = this.determinate;
     }
-    if ('progress' in changed) {
+    if (changedProps.has('progress')) {
       await this.componentReady();
-      this._component.progress = props.progress;
+      this._component.progress = this.progress;
     }
-    if ('buffer' in changed) {
+    if (changedProps.has('buffer')) {
       await this.componentReady();
-      this._component.buffer = props.buffer;
+      this._component.buffer = this.buffer;
     }
-    if ('reverse' in changed) {
+    if (changedProps.has('reverse')) {
       await this.componentReady();
-      this._component.reverse = props.reverse;
+      this._component.reverse = this.reverse;
     }
-    if ('closed' in changed) {
-      if (props.closed) {
+    if (changedProps.has('closed')) {
+      if (this.closed) {
         this.close();
       } else {
         this.open();

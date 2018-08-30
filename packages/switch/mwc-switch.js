@@ -21,8 +21,9 @@ import {afterNextRender} from '@material/mwc-base/utils.js';
 export class Switch extends LitElement {
   static get properties() {
     return {
-      checked: Boolean,
-      disabled: Boolean,
+      checked: { type: Boolean },
+      disabled: { type: Boolean },
+      _ariaLabel: { type: String }
     };
   }
 
@@ -36,21 +37,20 @@ export class Switch extends LitElement {
     return style;
   }
 
-  _render({checked, disabled}) {
+  render() {
+    const {checked, disabled, _ariaLabel} = this;
     return html`
       ${this._renderStyle()}
       <div class="mdc-switch">
-      <input type="checkbox" id="basic-switch" checked="${checked}" disabled?="${disabled}" class="mdc-switch__native-control" />
+      <input type="checkbox" id="basic-switch" .checked="${checked}" ?disabled="${disabled}" aria-label="${_ariaLabel}" class="mdc-switch__native-control" />
       <div class="mdc-switch__background">
         <div class="mdc-switch__knob"></div>
       </div>
     </div>`;
   }
 
-  async ready() {
-    super.ready();
-    await afterNextRender;
-    this._input = this._root.querySelector('input');
+  firstRendered() {
+    this._input = this.shadowRoot.querySelector('input');
   }
 
   click() {
@@ -62,7 +62,7 @@ export class Switch extends LitElement {
   }
 
   setAriaLabel(value) {
-    this._input.setAttribute('aria-label', value);
+    this._ariaLabel = value;
   }
 }
 

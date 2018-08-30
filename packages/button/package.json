@@ -17,7 +17,7 @@
     "@material/mwc-base": "^0.1.2",
     "@material/mwc-icon": "^0.1.2",
     "@material/mwc-ripple": "^0.1.2",
-    "@polymer/lit-element": "^0.5.2"
+    "@polymer/lit-element": "dev"
   },
   "devDependencies": {
     "@material/mwc-sass-render": "^0.1.2"

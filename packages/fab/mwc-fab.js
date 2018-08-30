@@ -14,7 +14,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {LitElement, html, classString as c$} from '@polymer/lit-element/lit-element.js';
+import {LitElement, html} from '@polymer/lit-element/lit-element.js';
+import {classString as c$} from '@polymer/lit-element/lib/render-helpers.js';
 import {style} from './mwc-fab-css.js';
 import {MDCWCRipple} from '@material/mwc-ripple/mwc-ripple.js';
 import {afterNextRender} from '@material/mwc-base/utils.js';
@@ -23,11 +24,11 @@ import '@material/mwc-icon/mwc-icon-font.js';
 export class Fab extends LitElement {
   static get properties() {
     return {
-      mini: Boolean,
-      exited: Boolean,
-      disabled: Boolean,
-      icon: String,
-      label: String,
+      mini: {type: Boolean},
+      exited: {type: Boolean},
+      disabled: {type: Boolean},
+      icon: {type: String},
+      label: {type: String},
     };
   }
 
@@ -39,28 +40,27 @@ export class Fab extends LitElement {
     this.label = '';
   }
 
-  _createRoot() {
+  createRenderRoot() {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
-  async ready() {
-    super.ready();
-    await afterNextRender();
-    this._ripple = new MDCWCRipple(this._root.querySelector('.mdc-fab'));
+  firstRendered() {
+    this._ripple = new MDCWCRipple(this.shadowRoot.querySelector('.mdc-fab'));
   }
 
-  _renderStyle() {
+  renderStyle() {
     return style;
   }
 
-  _render({icon, mini, exited, disabled, label}) {
+  render() {
+    const {icon, mini, exited, disabled, label} = this;
     const hostClasses = c$({
       'mdc-fab--mini': mini,
       'mdc-fab--exited': exited,
     });
     return html`
-      ${this._renderStyle()}
-      <button class$="mdc-fab ${hostClasses}" disabled?="${disabled}" aria-label$="${label || icon}">
+      ${this.renderStyle()}
+      <button class="mdc-fab ${hostClasses}" ?disabled="${disabled}" aria-label="${label || icon}">
         ${icon ? html`<span class="material-icons mdc-fab__icon">${icon}</span>` : ''}
       </button>`;
   }
