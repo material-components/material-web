@@ -68,8 +68,7 @@ export class LinearProgress extends ComponentElement {
       </div>`;
   }
 
-  async update(changedProps) {
-    super.update(changedProps);
+  async updated(changedProps) {
     if (changedProps.has('determinate')) {
       await this.componentReady();
       this._component.determinate = this.determinate;

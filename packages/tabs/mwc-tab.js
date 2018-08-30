@@ -56,7 +56,7 @@ export class Tab extends LitElement {
       </a>`;
   }
 
-  firstRendered() {
+  firstUpdated() {
     this._makeComponent();
   }
 

@@ -59,17 +59,16 @@ export class TabBar extends LitElement {
       </nav>`;
   }
 
-  update(changedProps) {
-    super.update(changedProps);
+  updated(changedProps) {
     if (this._mdcComponent && (this.activeTabIndex !== changedProps.get('activeTabIndex'))) {
       this._mdcComponent.activeTabIndex = this.activeTabIndex;
     }
   }
 
-  async firstRendered() {
+  async firstUpdated() {
     await afterNextRender();
     this._makeComponent();
-    this.invalidate();
+    this.requestUpdate();
   }
 
   _makeComponent() {

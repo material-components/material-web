@@ -64,8 +64,8 @@ export class ChipSet extends ComponentElement {
       <div class="mdc-chip-set ${hostClasses}"><slot></slot></div>`;
   }
 
-  firstRendered() {
-    super.firstRendered();
+  firstUpdated() {
+    super.firstUpdated();
     this._slot = this.shadowRoot.querySelector('slot');
   }
 

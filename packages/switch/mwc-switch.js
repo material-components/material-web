@@ -49,7 +49,7 @@ export class Switch extends LitElement {
     </div>`;
   }
 
-  firstRendered() {
+  firstUpdated() {
     this._input = this.shadowRoot.querySelector('input');
   }
 

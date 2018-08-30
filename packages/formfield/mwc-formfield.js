@@ -58,8 +58,7 @@ export class Formfield extends ComponentElement {
       </div>`;
   }
 
-  update(changedProps) {
-    super.update(changedProps);
+  updated(changedProps) {
     if (changedProps.has('label') && this._input) {
       if (this._input.localName == 'input') {
         this._input.setAttribute('aria-label', this.label);

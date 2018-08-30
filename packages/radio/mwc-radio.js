@@ -98,7 +98,7 @@ export class Radio extends FormableComponentElement {
   set checked(value) {
     const old = this.checked;
     this.__checked = value;
-    this.invalidateProperty('checked', old);
+    this.requestUpdate('checked', old);
     if (this._selectionController) {
       this._selectionController.update(this);
     }
@@ -126,7 +126,7 @@ export class Radio extends FormableComponentElement {
     }
     const old = this.name;
     this.__name = value;
-    this.invalidateProperty('name', old);
+    this.requestUpdate('name', old);
     if (this._selectionController) {
       this._selectionController.register(this);
       this._selectionController.update(this);

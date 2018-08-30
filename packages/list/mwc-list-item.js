@@ -67,7 +67,7 @@ export class ListItem extends LitElement {
       </div>`;
   }
 
-  firstRendered() {
+  firstUpdated() {
     this._listItem = this.shadowRoot.querySelector('.mdc-list-item');
   }
 

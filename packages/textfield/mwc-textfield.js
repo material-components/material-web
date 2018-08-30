@@ -102,8 +102,8 @@ export class Textfield extends ComponentElement {
     return html`<input type="${type}" placeholder="${placeHolder}" ?required="${required}" class="mdc-text-field__input ${value ? 'mdc-text-field--upgraded' : ''}" id="text-field" .value="${value}" aria-label="${label}">`;
   }
 
-  firstRendered() {
-    super.firstRendered();
+  firstUpdated() {
+    super.firstUpdated();
     this._input = this.shadowRoot.querySelector('input');
   }
 

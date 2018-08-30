@@ -44,7 +44,7 @@ export class Fab extends LitElement {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
-  firstRendered() {
+  firstUpdated() {
     this._ripple = new MDCWCRipple(this.shadowRoot.querySelector('.mdc-fab'));
   }
 

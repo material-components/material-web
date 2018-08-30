@@ -80,8 +80,7 @@ export class IconToggle extends ComponentElement {
       </span>`;
   }
 
-  update(changedProps) {
-    super.update(changedProps);
+  updated(changedProps) {
     if (changedProps.has('icon') || changedProps.has('label') ||
       changedProps.has('offIcon') || changedProps.has('offLabel')) {
       this.componentReady().then((component) => component.refreshToggleData());

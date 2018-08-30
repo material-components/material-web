@@ -96,7 +96,7 @@ export class Ripple extends LitElement {
       <div class="mdc-ripple-surface ${classes}" data-mdc-ripple-is-unbounded="${unbounded}"></div>`;
   }
 
-  firstRendered() {
+  firstUpdated() {
     const surface = this.shadowRoot.querySelector('.mdc-ripple-surface');
     const container = this.parentNode || this;
     // TODO(sorvell) #css: this might be bad since the container might be positioned.

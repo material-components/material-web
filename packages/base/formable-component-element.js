@@ -27,8 +27,8 @@ export class FormableComponentElement extends ComponentElement {
     this._asyncComponent = true;
   }
 
-  firstRendered() {
-    super.firstRendered();
+  firstUpdated() {
+    super.firstUpdated();
     this._formElement = this.shadowRoot.querySelector(this.constructor.formElementSelector);
   }
 

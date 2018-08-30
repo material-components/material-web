@@ -93,7 +93,7 @@ export class Select extends LitElement {
       </div>`;
   }
 
-  firstRendered() {
+  firstUpdated() {
     this._makeComponent();
   }
 

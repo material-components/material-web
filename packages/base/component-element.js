@@ -33,7 +33,7 @@ export class ComponentElement extends LitElement {
     this._asyncComponent = false;
   }
 
-  async firstRendered() {
+  async firstUpdated() {
     if (this._asyncComponent) {
       await afterNextRender();
     }

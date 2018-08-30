@@ -76,12 +76,12 @@ export class TabBarScroller extends LitElement {
       </div>`;
   }
 
-  async firstRendered() {
+  async firstUpdated() {
     // TODO(sorvell): hack push scroller creation after tabbar... could expose promise.
     await afterNextRender();
     await afterNextRender();
     this._makeComponent();
-    this.invalidate();
+    this.requestUpdate();
   }
 
   _makeComponent() {
