@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {ComponentElement, MDCWebComponentMixin, html} from '@material/mwc-base/component-element.js';
+import {classMap} from 'lit-html/directives/classMap.js';
 import {style} from './mwc-icon-toggle-css.js';
 import {MDCIconToggle} from '@material/icon-toggle';
 import '@material/mwc-icon/mwc-icon-font.js';
@@ -70,7 +71,7 @@ export class IconToggle extends ComponentElement {
     const {disabled, icon, offIcon, label, offLabel} = this;
     return html`
       ${this.renderStyle()}
-      <span class="mdc-icon-toggle material-icons ${disabled ? 'mdc-icon-toggle--disabled' : ''}"
+      <span class="mdc-icon-toggle material-icons ${classMap({'mdc-icon-toggle--disabled': disabled})}"
             role="button"
             aria-disabled="${disabled}"
             tabindex="0"
