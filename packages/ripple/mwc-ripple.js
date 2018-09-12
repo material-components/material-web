@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {LitElement, html} from '@polymer/lit-element/lit-element.js';
-import {classString as c$} from '@polymer/lit-element/lib/render-helpers.js';
+import {classMap} from 'lit-html/directives/classMap.js';
 import {MDCWebComponentMixin} from '@material/mwc-base/mdc-web-component.js';
 import {style} from './mwc-ripple-css.js';
 import {MDCRipple} from '@material/ripple';
@@ -87,13 +87,13 @@ export class Ripple extends LitElement {
   // TODO(sorvell) #css: sizing.
   render() {
     const {primary, accent, unbounded} = this;
-    const classes = c$({
+    const classInfo = {
       'mdc-ripple-surface--primary': primary,
       'mdc-ripple-surface--accent': accent,
-    });
+    };
     return html`
       ${this._renderStyle()}
-      <div class="mdc-ripple-surface ${classes}" data-mdc-ripple-is-unbounded="${unbounded}"></div>`;
+      <div class="mdc-ripple-surface ${classMap(classInfo)}" data-mdc-ripple-is-unbounded="${unbounded}"></div>`;
   }
 
   firstUpdated() {

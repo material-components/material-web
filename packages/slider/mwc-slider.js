@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {FormableComponentElement, MDCWebComponentMixin, html} from '@material/mwc-base/formable-component-element.js';
-import {classString as c$} from '@polymer/lit-element/lib/render-helpers.js';
+import {classMap} from 'lit-html/directives/classMap.js';
 import {style} from './mwc-slider-css.js';
 import {MDCSlider} from '@material/slider';
 
@@ -72,13 +72,13 @@ export class Slider extends FormableComponentElement {
   // TODO(sorvell) #css: needs a default width
   render() {
     const {disabled, step, min, max, value, discrete, markers} = this;
-    const hostClasses = c$({
+    const hostClassInfo = {
       'mdc-slider--discrete': discrete,
       'mdc-slider--display-markers': markers && discrete,
-    });
+    };
     return html`
       ${this.renderStyle()}
-      <div class="mdc-slider ${hostClasses}" tabindex="0" role="slider"
+      <div class="mdc-slider ${classMap(hostClassInfo)}" tabindex="0" role="slider"
         aria-valuemin="${min}" aria-valuemax="${max}" aria-valuenow="${value}"
         aria-disabled="${disabled}" data-step="${step}">
       <div class="mdc-slider__track-container">

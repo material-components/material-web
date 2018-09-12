@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {ComponentElement, html} from '@material/mwc-base/component-element.js';
-import {classString as c$} from '@polymer/lit-element/lib/render-helpers.js';
+import {classMap} from 'lit-html/directives/classMap.js';
 import {MDCWebComponentMixin} from '@material/mwc-base/mdc-web-component.js';
 import {MDCTextField} from '@material/textfield';
 import {style} from './mwc-textfield-css.js';
@@ -75,17 +75,17 @@ export class Textfield extends ComponentElement {
   // TODO(sorvell) #css: styling for fullwidth
   render() {
     const {value, label, box, outlined, disabled, icon, iconTrailing, fullWidth, required, placeHolder, helperText, type} = this;
-    const hostClasses = c$({
+    const hostClassInfo = {
       'mdc-text-field--with-leading-icon': icon && !iconTrailing,
       'mdc-text-field--with-trailing-icon': icon && iconTrailing,
       'mdc-text-field--box': !fullWidth && box,
       'mdc-text-field--outlined': !fullWidth && outlined,
       'mdc-text-field--disabled': disabled,
       'mdc-text-field--fullwidth': fullWidth,
-    });
+    };
     return html`
       ${this.renderStyle()}
-      <div class="mdc-text-field mdc-text-field--upgraded ${hostClasses}">
+      <div class="mdc-text-field mdc-text-field--upgraded ${classMap(hostClassInfo)}">
         ${!fullWidth && icon ? html`<i class="material-icons mdc-text-field__icon" tabindex="0">${icon}</i>` : ''}
         ${this._renderInput({value, required, type, placeHolder, label})}
         ${!fullWidth && label ? html`<label class="mdc-floating-label ${value ? 'mdc-floating-label--float-above' : ''}" for="text-field">${label}</label>` : ''}

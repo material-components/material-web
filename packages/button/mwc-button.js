@@ -15,10 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {LitElement, html} from '@polymer/lit-element/lit-element.js';
-import {classString as c$} from '@polymer/lit-element/lib/render-helpers.js';
+import {classMap} from 'lit-html/directives/classMap.js';
 import {style} from './mwc-button-css.js';
 import {MDCWCRipple} from '@material/mwc-ripple/mwc-ripple.js';
-import {afterNextRender} from '@material/mwc-base/utils.js';
 import '@material/mwc-icon/mwc-icon-font.js';
 
 export class Button extends LitElement {
@@ -59,15 +58,15 @@ export class Button extends LitElement {
 
   render() {
     const {raised, unelevated, outlined, dense, disabled, icon, label} = this;
-    const hostClasses = c$({
+    const hostClassInfo = {
       'mdc-button--raised': raised,
       'mdc-button--unelevated': unelevated,
       'mdc-button--outlined': outlined,
       'mdc-button--dense': dense,
-    });
+    };
     return html`
       ${this.renderStyle()}
-      <button class="mdc-button ${hostClasses}" ?disabled="${disabled}">
+      <button class="mdc-button ${classMap(hostClassInfo)}" ?disabled="${disabled}">
         ${icon ? html`<span class="material-icons mdc-button__icon">${icon}</span>` : ''}
         ${label || ''}
         <slot></slot>

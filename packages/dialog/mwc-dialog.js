@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {ComponentElement, MDCWebComponentMixin, html} from '@material/mwc-base/component-element.js';
+import {classMap} from 'lit-html/directives/classMap.js';
 import {MDCDialog} from './mdc-dialog.js';
 import {style} from './mwc-dialog-css.js';
 import 'wicg-inert/dist/inert.js';
@@ -91,7 +92,7 @@ export class Dialog extends ComponentElement {
             <h2 id="my-mdc-dialog-label" class="mdc-dialog__header__title">${headerLabel}</h2>
             <slot name="header"></slot>
           </header>
-          <section id="my-mdc-dialog-description" class="mdc-dialog__body ${scrollable ? 'mdc-dialog__body--scrollable' : ''}">
+          <section id="my-mdc-dialog-description" class="mdc-dialog__body ${classMap({'mdc-dialog__body--scrollable': scrollable})}">
             <slot></slot>
           </section>
           <footer class="mdc-dialog__footer">

@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {ComponentElement, html, MDCWebComponentMixin} from '@material/mwc-base/component-element.js';
+import {classMap} from 'lit-html/directives/classMap.js';
 import {callWhenReady, findAssignedNode} from '@material/mwc-base/utils.js';
 import {style} from './mwc-formfield-css.js';
 import {MDCFormField} from '@material/form-field';
@@ -52,7 +53,7 @@ export class Formfield extends ComponentElement {
   render() {
     const {label, alignEnd} = this;
     return html`${this.renderStyle()}
-      <div class="mdc-form-field ${alignEnd ? 'mdc-form-field--align-end' : ''}">
+      <div class="mdc-form-field ${classMap({'mdc-form-field--align-end': alignEnd})}">
         <slot></slot>
         <label class="mdc-label" @click="${(e) => this._labelClickHandler(e)}">${label}</label>
       </div>`;

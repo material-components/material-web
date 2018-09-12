@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {LitElement, html} from '@polymer/lit-element/lit-element.js';
+import {classMap} from 'lit-html/directives/classMap.js';
 import {style} from './mwc-card-css.js';
 
 export class Card extends LitElement {
@@ -36,7 +37,7 @@ export class Card extends LitElement {
   render() {
     return html`
       ${this.renderStyle()}
-      <div class="mdc-card ${this.stroke ? 'mdc-card--stroked' : ''}">
+      <div class="mdc-card ${classMap({'mdc-card--stroked': this.stroke})}">
         <slot></slot>
       </div>`;
   }

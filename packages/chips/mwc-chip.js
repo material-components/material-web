@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {ComponentElement, MDCWebComponentMixin, html} from '@material/mwc-base/component-element.js';
+import {classMap} from 'lit-html/directives/classMap.js';
 import {style} from './mwc-chip-css.js';
 import {MDCChip} from '@material/chips';
 import '@material/mwc-icon/mwc-icon-font.js';
@@ -62,7 +63,7 @@ export class Chip extends ComponentElement {
     // TODO(sorvell) #css: added display
     return html`
       ${this.renderStyle()}
-      <div class="mdc-chip ${this.active ? 'mdc-chip--activated' : ''}"
+      <div class="mdc-chip ${classMap({'mdc-chip--activated': this.active})}"
         @MDCChip:interaction="${this._boundInteractionHandler}">
         ${leadingIconPart}
         <div class="mdc-chip__text">${label}</div>

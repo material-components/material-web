@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {ComponentElement, MDCWebComponentMixin, html} from '@material/mwc-base/component-element.js';
-import {classString as c$} from '@polymer/lit-element/lib/render-helpers.js';
+import {classMap} from 'lit-html/directives/classMap.js';
 import {style} from './mwc-chip-set-css.js';
 import {MDCChipSet} from '@material/chips';
 
@@ -54,14 +54,14 @@ export class ChipSet extends ComponentElement {
   }
 
   render() {
-    const hostClasses = c$({
+    const hostClassInfo = {
       'mdc-chip-set--choice': this.type == 'choice',
       'mdc-chip-set--filter': this.type == 'filter',
-    });
+    };
     // TODO(sorvell) #css: added display
     return html`
       ${this.renderStyle()}
-      <div class="mdc-chip-set ${hostClasses}"><slot></slot></div>`;
+      <div class="mdc-chip-set ${classMap(hostClassInfo)}"><slot></slot></div>`;
   }
 
   firstUpdated() {

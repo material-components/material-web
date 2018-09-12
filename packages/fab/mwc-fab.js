@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {LitElement, html} from '@polymer/lit-element/lit-element.js';
-import {classString as c$} from '@polymer/lit-element/lib/render-helpers.js';
+import {classMap} from 'lit-html/directives/classMap.js';
 import {style} from './mwc-fab-css.js';
 import {MDCWCRipple} from '@material/mwc-ripple/mwc-ripple.js';
 import {afterNextRender} from '@material/mwc-base/utils.js';
@@ -54,13 +54,13 @@ export class Fab extends LitElement {
 
   render() {
     const {icon, mini, exited, disabled, label} = this;
-    const hostClasses = c$({
+    const hostClassInfo = {
       'mdc-fab--mini': mini,
       'mdc-fab--exited': exited,
-    });
+    };
     return html`
       ${this.renderStyle()}
-      <button class="mdc-fab ${hostClasses}" ?disabled="${disabled}" aria-label="${label || icon}">
+      <button class="mdc-fab ${classMap(hostClassInfo)}" ?disabled="${disabled}" aria-label="${label || icon}">
         ${icon ? html`<span class="material-icons mdc-fab__icon">${icon}</span>` : ''}
       </button>`;
   }

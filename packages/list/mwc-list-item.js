@@ -15,7 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {LitElement, html} from '@polymer/lit-element/lit-element.js';
-import {classString as c$} from '@polymer/lit-element/lib/render-helpers.js';
 import {style} from './mwc-list-item-css.js';
 import '@material/mwc-icon/mwc-icon-font.js';
 
