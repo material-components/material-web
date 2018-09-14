@@ -10,7 +10,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/mwc-icon": "^0.1.2",
-    "@polymer/lit-element": "dev"
+    "@polymer/lit-element": "^0.6.0"
   },
   "devDependencies": {
     "@material/mwc-sass-render": "^0.1.2",
