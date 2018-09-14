@@ -25,9 +25,9 @@ class MDCWCTab extends MDCWebComponentMixin(MDCTab) {}
 export class Tab extends LitElement {
   static get properties() {
     return {
-      href: String,
-      icon: String,
-      label: String,
+      href: {type: String},
+      icon: {type: String},
+      label: {type: String},
     };
   }
 
@@ -38,14 +38,15 @@ export class Tab extends LitElement {
     this.label = '';
   }
 
-  _renderStyle() {
+  renderStyle() {
     return style;
   }
 
   // TODO(sorvell) #css: sizing with display:table!
-  _render({icon, label, href}) {
+  render() {
+    const {icon, label, href} = this;
     return html`
-      ${this._renderStyle()}
+      ${this.renderStyle()}
       <style>
 
       </style>
@@ -55,13 +56,12 @@ export class Tab extends LitElement {
       </a>`;
   }
 
-  ready() {
-    super.ready();
+  firstUpdated() {
     this._makeComponent();
   }
 
   _makeComponent() {
-    this._mdcComponent = new MDCWCTab(this._root.querySelector('a'));
+    this._mdcComponent = new MDCWCTab(this.shadowRoot.querySelector('a'));
   }
 
   get isActive() {

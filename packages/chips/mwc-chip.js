@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {ComponentElement, MDCWebComponentMixin, html} from '@material/mwc-base/component-element.js';
+import {classMap} from 'lit-html/directives/classMap.js';
 import {style} from './mwc-chip-css.js';
 import {MDCChip} from '@material/chips';
 import '@material/mwc-icon/mwc-icon-font.js';
@@ -32,10 +33,10 @@ export class Chip extends ComponentElement {
 
   static get properties() {
     return {
-      leadingIcon: String,
-      trailingIcon: String,
-      label: String,
-      active: Boolean,
+      leadingIcon: {type: String},
+      trailingIcon: {type: String},
+      label: {type: String},
+      active: {type: Boolean},
     };
   }
 
@@ -48,19 +49,22 @@ export class Chip extends ComponentElement {
     this._boundInteractionHandler = this._interactionHandler.bind(this);
   }
 
-  _renderStyle() {
+  renderStyle() {
     return style;
   }
 
   // TODO(sorvell): Note, nice to have vars for activated colors.
-  _render({leadingIcon, trailingIcon, label}) {
-    const leadingIconPart = leadingIcon ? html`<i class="material-icons mdc-chip__icon mdc-chip__icon--leading">${leadingIcon}</i>` : '';
-    const trailingIconPart = trailingIcon ? html`<i class="material-icons mdc-chip__icon mdc-chip__icon--trailing">${trailingIcon}</i>` : '';
+  render() {
+    const {leadingIcon, trailingIcon, label} = this;
+    const leadingIconPart = leadingIcon ?
+      html`<i class="material-icons mdc-chip__icon mdc-chip__icon--leading">${leadingIcon}</i>` : '';
+    const trailingIconPart = trailingIcon ?
+      html`<i class="material-icons mdc-chip__icon mdc-chip__icon--trailing">${trailingIcon}</i>` : '';
     // TODO(sorvell) #css: added display
     return html`
-      ${this._renderStyle()}
-      <div class$="mdc-chip ${this.active ? 'mdc-chip--activated' : ''}"
-        on-MDCChip:interaction="${this._boundInteractionHandler}">
+      ${this.renderStyle()}
+      <div class="mdc-chip ${classMap({'mdc-chip--activated': this.active})}"
+        @MDCChip:interaction="${this._boundInteractionHandler}">
         ${leadingIconPart}
         <div class="mdc-chip__text">${label}</div>
         ${trailingIconPart}
@@ -73,7 +77,7 @@ export class Chip extends ComponentElement {
   //   this.componentReady().then((component) => component.toggleActive());
   // }
 
-  _interactionHandler(e) {
+  _interactionHandler() {
     requestAnimationFrame(() => {
       this.active = this._componentRoot.classList.contains('mdc-chip--activated');
     });

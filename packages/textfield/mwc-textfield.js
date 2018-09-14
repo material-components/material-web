@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {ComponentElement, html} from '@material/mwc-base/component-element.js';
-import {classString as c$} from '@polymer/lit-element/lit-element.js';
+import {classMap} from 'lit-html/directives/classMap.js';
 import {MDCWebComponentMixin} from '@material/mwc-base/mdc-web-component.js';
 import {MDCTextField} from '@material/textfield';
 import {style} from './mwc-textfield-css.js';
@@ -36,18 +36,18 @@ export class Textfield extends ComponentElement {
 
   static get properties() {
     return {
-      value: String,
-      label: String,
-      icon: String,
-      iconTrailing: Boolean,
-      box: Boolean,
-      outlined: Boolean,
-      disabled: Boolean,
-      fullWidth: Boolean,
-      required: Boolean,
-      helperText: '',
-      placeHolder: '',
-      type: '',
+      value: {type: String},
+      label: {type: String},
+      icon: {type: String},
+      iconTrailing: {type: Boolean},
+      box: {type: Boolean},
+      outlined: {type: Boolean},
+      disabled: {type: Boolean},
+      fullWidth: {type: Boolean},
+      required: {type: Boolean},
+      helperText: {type: String},
+      placeHolder: {type: String},
+      type: {type: String}
     };
   }
 
@@ -68,26 +68,27 @@ export class Textfield extends ComponentElement {
     this.type = '';
   }
 
-  _renderStyle() {
+  renderStyle() {
     return style;
   }
 
   // TODO(sorvell) #css: styling for fullwidth
-  _render({value, label, box, outlined, disabled, icon, iconTrailing, fullWidth, required, placeHolder, helperText, type}) {
-    const hostClasses = c$({
+  render() {
+    const {value, label, box, outlined, disabled, icon, iconTrailing, fullWidth, required, placeHolder, helperText, type} = this;
+    const hostClassInfo = {
       'mdc-text-field--with-leading-icon': icon && !iconTrailing,
       'mdc-text-field--with-trailing-icon': icon && iconTrailing,
       'mdc-text-field--box': !fullWidth && box,
       'mdc-text-field--outlined': !fullWidth && outlined,
       'mdc-text-field--disabled': disabled,
       'mdc-text-field--fullwidth': fullWidth,
-    });
+    };
     return html`
-      ${this._renderStyle()}
-      <div class$="mdc-text-field mdc-text-field--upgraded ${hostClasses}">
+      ${this.renderStyle()}
+      <div class="mdc-text-field mdc-text-field--upgraded ${classMap(hostClassInfo)}">
         ${!fullWidth && icon ? html`<i class="material-icons mdc-text-field__icon" tabindex="0">${icon}</i>` : ''}
         ${this._renderInput({value, required, type, placeHolder, label})}
-        ${!fullWidth && label ? html`<label class$="mdc-floating-label ${value ? 'mdc-floating-label--float-above' : ''}" for="text-field">${label}</label>` : ''}
+        ${!fullWidth && label ? html`<label class="mdc-floating-label ${value ? 'mdc-floating-label--float-above' : ''}" for="text-field">${label}</label>` : ''}
         ${!fullWidth && outlined ? html`<div class="mdc-notched-outline">
             <svg><path class="mdc-notched-outline__path"/></svg>
           </div>
@@ -98,12 +99,12 @@ export class Textfield extends ComponentElement {
   }
 
   _renderInput({value, required, type, placeHolder, label}) {
-    return html`<input type="text" type$="${type}" placeholder$="${placeHolder}" required?="${required}" class$="mdc-text-field__input ${value ? 'mdc-text-field--upgraded' : ''}" id="text-field" value="${value}" aria-label$="${label}">`;
+    return html`<input type="${type}" placeholder="${placeHolder}" ?required="${required}" class="mdc-text-field__input ${value ? 'mdc-text-field--upgraded' : ''}" id="text-field" .value="${value}" aria-label="${label}">`;
   }
 
-  ready() {
-    super.ready();
-    this._input = this._root.querySelector('input');
+  firstUpdated() {
+    super.firstUpdated();
+    this._input = this.shadowRoot.querySelector('input');
   }
 
   get valid() {

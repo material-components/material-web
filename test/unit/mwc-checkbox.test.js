@@ -36,7 +36,8 @@ test('initializes as an mwc-checkbox', () => {
 });
 
 
-test('element._formElement returns the native checkbox element', () => {
+test('element._formElement returns the native checkbox element', async () => {
+  await element.updateComplete;
   assert.isOk(element._formElement);
   assert.equal(element._formElement.localName, 'input');
 });

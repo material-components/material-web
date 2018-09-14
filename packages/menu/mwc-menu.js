@@ -77,13 +77,13 @@ export class Menu extends ComponentElement {
     this._asyncComponent = true;
   }
 
-  _renderStyle() {
+  renderStyle() {
     return style;
   }
 
-  _render() {
+  render() {
     return html`
-      ${this._renderStyle()}
+      ${this.renderStyle()}
       <div class="mdc-menu" tabindex="-1">
         <div class="mdc-menu__items mdc-list" role="menu" aria-hidden="true">
           <slot></slot>

@@ -19,11 +19,11 @@ import {style} from './mwc-icon-host-css.js';
 import './mwc-icon-font.js';
 
 export class Icon extends LitElement {
-  _renderStyle() {
+  renderStyle() {
     return style;
   }
-  _render() {
-    return html`${this._renderStyle()}<slot></slot>`;
+  render() {
+    return html`${this.renderStyle()}<slot></slot>`;
   }
 }
 
