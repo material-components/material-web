@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-linear-progress",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "",
   "main": "mwc-linear-progress.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/linear-progress": "^0.35.0",
-    "@material/mwc-base": "^0.1.2",
+    "@material/mwc-base": "^0.2.0",
     "@polymer/lit-element": "^0.6.0"
   },
   "devDependencies": {
