@@ -14,17 +14,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {LitElement, html, classString as c$} from '@polymer/lit-element/lit-element.js';
+import {LitElement, html} from '@polymer/lit-element/lit-element.js';
 import {style} from './mwc-list-item-separator-css.js';
 
 export class ListItemSeparator extends LitElement {
-  _renderStyle() {
+  renderStyle() {
     return style;
   }
 
-  _render() {
+  render() {
     return html`
-      ${style}
+      ${this.renderStyle()}
       <div class="mdc-list-divider" role="separator"></div>`;
   }
 }

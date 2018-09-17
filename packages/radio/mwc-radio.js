@@ -32,10 +32,10 @@ export class Radio extends FormableComponentElement {
 
   static get properties() {
     return {
-      checked: Boolean,
-      disabled: Boolean,
-      value: String,
-      name: String,
+      checked: {type: Boolean},
+      disabled: {type: Boolean},
+      value: {type: String},
+      name: {type: String},
     };
   }
 
@@ -62,19 +62,20 @@ export class Radio extends FormableComponentElement {
     this._selectionController.unregister(this);
   }
 
-  _renderStyle() {
+  renderStyle() {
     return style;
   }
 
-  _render({checked, value, name}) {
+  render() {
+    const {checked, value, name} = this;
     return html`
-      ${this._renderStyle()}
+      ${this.renderStyle()}
       <div class="mdc-radio">
         <input class="mdc-radio__native-control" type="radio"
-          checked="${checked}" name="${name}" value="${value}"
-          on-change="${this._boundInputChangeHandler}"
-          on-focus="${this._boundInputFocusHandler}"
-          on-blur="${this._boundInputBlurHandler}">
+          .checked="${checked}" .name="${name}" .value="${value}"
+          @change="${this._boundInputChangeHandler}"
+          @focus="${this._boundInputFocusHandler}"
+          @blur="${this._boundInputBlurHandler}">
         <div class="mdc-radio__background">
           <div class="mdc-radio__outer-circle"></div>
           <div class="mdc-radio__inner-circle"></div>
@@ -91,11 +92,13 @@ export class Radio extends FormableComponentElement {
   }
 
   get checked() {
-    return this._getProperty('checked');
+    return this.__checked;
   }
 
   set checked(value) {
-    this._setProperty('checked', value);
+    const old = this.checked;
+    this.__checked = value;
+    this.requestUpdate('checked', old);
     if (this._selectionController) {
       this._selectionController.update(this);
     }
@@ -114,14 +117,16 @@ export class Radio extends FormableComponentElement {
   }
 
   get name() {
-    return this._getProperty('name');
+    return this.__name;
   }
 
   set name(value) {
     if (this._selectionController) {
       this._selectionController.unregister(this);
     }
-    this._setProperty('name', value);
+    const old = this.name;
+    this.__name = value;
+    this.requestUpdate('name', old);
     if (this._selectionController) {
       this._selectionController.register(this);
       this._selectionController.update(this);

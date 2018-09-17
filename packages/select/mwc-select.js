@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {LitElement, html} from '@polymer/lit-element/lit-element.js';
+import {classMap} from 'lit-html/directives/classMap.js';
 import {MDCWebComponentMixin} from '@material/mwc-base/mdc-web-component.js';
 import {MDCWCMenu} from '@material/mwc-menu/mwc-menu.js';
 import {MDCSelect} from '@material/select';
@@ -53,9 +54,9 @@ class MDCWSelect extends MDCWebComponentMixin(MDCSelect) {
 export class Select extends LitElement {
   static get properties() {
     return {
-      label: String,
-      disabled: Boolean,
-      box: Boolean,
+      label: {type: String},
+      disabled: {type: Boolean},
+      box: {type: Boolean},
     };
   }
 
@@ -67,7 +68,8 @@ export class Select extends LitElement {
   }
 
   // TODO(sorvell) #css: flex for sizing
-  _render({label, disabled, box}) {
+  render() {
+    const {label, disabled, box} = this;
     return html`
       <style>
         :host {
@@ -78,7 +80,7 @@ export class Select extends LitElement {
         }
       </style>
       ${menuStyle}${style}
-      <div class$="mdc-select ${box ? 'mdc-select--box' : ''}" role="listbox" aria-disabled$="${disabled}">
+      <div class="mdc-select ${classMap({'mdc-select--box': box})}" role="listbox" aria-disabled="${disabled}">
         <div class="mdc-select__surface" tabindex="0">
           <div class="mdc-select__label">${label}</div>
           <div class="mdc-select__selected-text"></div>
@@ -92,14 +94,12 @@ export class Select extends LitElement {
       </div>`;
   }
 
-  async ready() {
-    super.ready();
-    await afterNextRender();
+  firstUpdated() {
     this._makeComponent();
   }
 
   _makeComponent() {
-    const root = this._root.querySelector('.mdc-select');
+    const root = this.shadowRoot.querySelector('.mdc-select');
     this._mdcComponent = new MDCWSelect(root);
   }
 

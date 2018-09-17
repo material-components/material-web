@@ -37,20 +37,20 @@ test('initializes as an mwc-switch', () => {
 
 test('setting `checked` checks the native input', async () => {
   element.checked = true;
-  await afterNextRender;
+  await element.updateComplete;
   assert(element._input.checked);
 
   element.checked = false;
-  await afterNextRender;
+  await element.updateComplete;
   assert(!element._input.checked);
 });
 
 test('setting `disabled` disables the native input', async () => {
   element.disabled = true;
-  await afterNextRender;
+  await element.updateComplete;
   assert(element._input.disabled);
 
   element.disabled = false;
-  await afterNextRender;
+  await element.updateComplete;
   assert(!element._input.disabled);
 });

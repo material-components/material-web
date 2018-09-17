@@ -31,12 +31,12 @@ export class Snackbar extends ComponentElement {
 
   static get properties() {
     return {
-      message: String,
-      timeout: Number,
-      multiline: Boolean,
-      actionText: String,
-      actionOnBottom: Boolean,
-      dismissesOnAction: Boolean,
+      message: {type: String},
+      timeout: {type: Number},
+      multiline: {type: Boolean},
+      actionText: {type: String},
+      actionOnBottom: {type: Boolean},
+      dismissesOnAction: {type: Boolean},
     };
   }
 
@@ -52,12 +52,12 @@ export class Snackbar extends ComponentElement {
     this._boundActionHandler = this._actionHandler.bind(this);
   }
 
-  _renderStyle() {
+  renderStyle() {
     return style;
   }
 
-  _render({checked, value}) {
-    return html`${this._renderStyle()}
+  render() {
+    return html`${this.renderStyle()}
       <div class="mdc-snackbar"
         aria-live="assertive"
         aria-atomic="true"

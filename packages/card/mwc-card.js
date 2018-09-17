@@ -15,12 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {LitElement, html} from '@polymer/lit-element/lit-element.js';
+import {classMap} from 'lit-html/directives/classMap.js';
 import {style} from './mwc-card-css.js';
 
 export class Card extends LitElement {
   static get properties() {
     return {
-      stroke: Boolean,
+      stroke: {type: Boolean},
     };
   }
 
@@ -29,14 +30,14 @@ export class Card extends LitElement {
     this.stroke = false;
   }
 
-  _renderStyle() {
+  renderStyle() {
     return style;
   }
 
-  _render({stroke}) {
+  render() {
     return html`
-      ${this._renderStyle()}
-      <div class$="mdc-card ${stroke ? 'mdc-card--stroked' : ''}">
+      ${this.renderStyle()}
+      <div class="mdc-card ${classMap({'mdc-card--stroked': this.stroke})}">
         <slot></slot>
       </div>`;
   }
