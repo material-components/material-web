@@ -16,3 +16,7 @@ limitations under the License.
 */
 
 @import '@material/switch/mdc-switch.scss';
+
+:host {
+  outline: none;
+}
