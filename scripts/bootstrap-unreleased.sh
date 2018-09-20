@@ -21,7 +21,7 @@ set -e
 `npm bin`/lerna bootstrap --hoist
 `npm bin`/lerna clean --yes
 
-packages=(`find packages -name "package.json" | xargs -I '{}' dirname '{}'`)
+packages=(`find packages -name "package.json" -maxdepth 2 | xargs -I '{}' dirname '{}'`)
 
 for package in ${packages[@]}; do
   npmname=`node -e "console.log(require(\"${INIT_CWD}/${package}/package.json\").name)"`

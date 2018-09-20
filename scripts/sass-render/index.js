@@ -15,10 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 const fs = require('fs');
-const path = require('path');
 const util = require('util');
 
 const sass = require('node-sass');
+const nodeSassImport = require('node-sass-import');
 
 const renderSass = util.promisify(sass.render);
 const readFile = util.promisify(fs.readFile);
@@ -26,30 +26,10 @@ const writeFile = util.promisify(fs.writeFile);
 
 const delim = /<%\s*content\s*%>/;
 
-function resolveNpmPath(packagePath) {
-  /** @type {Array<string>} */
-  const parts = packagePath.split('/');
-  let packageName;
-  if (parts[0][0] === '@') {
-    packageName = `${parts.shift()}/${parts.shift()}`;
-  } else {
-    packageName = parts.shift();
-  }
-  const pathToPackageJSON = require.resolve(`${packageName}/package.json`);
-  const pathToPackage = path.dirname(pathToPackageJSON);
-  return path.join(pathToPackage, ...parts);
-}
-
 async function sassToCss(sassFile) {
   const result = await renderSass({
     file: sassFile,
-    importer: (url) => {
-      if (url.indexOf('@material') === 0) {
-        return {file: resolveNpmPath(url)};
-      } else {
-        return null;
-      }
-    },
+    importer: nodeSassImport,
     outputStyle: 'compressed',
   });
   return result.css.toString();

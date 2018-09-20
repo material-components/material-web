@@ -14,8 +14,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 export class SelectionController {
-  static getController(element) {
+  static getController(element: HTMLElement) {
     const root = element.getRootNode();
     if (!root.__selectionController) {
       root.__selectionController = new SelectionController(root);

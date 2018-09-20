@@ -17,7 +17,6 @@
     "wicg-inert": "^1.1.6"
   },
   "devDependencies": {
-    "@material/mwc-sass-render": "^0.1.2"
   },
   "publishConfig": {
     "access": "public"

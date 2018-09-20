@@ -19,9 +19,6 @@
     "@material/mwc-ripple": "^0.2.0",
     "@polymer/lit-element": "^0.6.0"
   },
-  "devDependencies": {
-    "@material/mwc-sass-render": "^0.1.2"
-  },
   "publishConfig": {
     "access": "public"
   }
