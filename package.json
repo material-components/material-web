@@ -13,9 +13,9 @@
     "lint:imports": "node scripts/check-imports.js",
     "lint": "npm-run-all --parallel lint:*",
     "test": "karma start --single-run",
-    "bootstrap": "npm install && ./scripts/bootstrap-unreleased.sh",
-    "build": "tsc -b packages/base packages/switch",
-    "update-styling": "./scripts/update-styling.sh",
+    "bootstrap": "npm install && ./scripts/bootstrap.sh",
+    "build": "npm run build-styling && tsc -b packages/base packages/switch",
+    "build-styling": "./scripts/build-styling.sh",
     "update-gh-pages": "npm run bootstrap && ./scripts/publish-demos.sh"
   },
   "devDependencies": {

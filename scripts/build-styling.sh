@@ -25,7 +25,11 @@ for sassfile in ${sassfiles[@]}; do
   if [ `basename ${sassfile}` = "mwc-icon.scss" ]; then
     continue
   fi
-  cssjs=`echo ${sassfile} | sed -e 's/.scss/-css.ts/'`
-  echo "Generating ${cssjs}"
-  node scripts/sass-render/bin/sass-render.js -t sass-template.tmpl -s ${sassfile} -o ${cssjs}
+  cssts=`echo ${sassfile} | sed -e 's/.scss/-css.ts/'`
+  lastdir=`basename $(dirname ${cssts})`
+  if [[ ${lastdir} != "src" ]]; then
+    continue
+  fi
+  echo "Generating ${cssts}"
+  node scripts/sass-render/bin/sass-render.js -t sass-template.tmpl -s ${sassfile} -o ${cssts}
 done

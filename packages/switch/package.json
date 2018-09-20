@@ -7,20 +7,14 @@
     "type": "git",
     "url": "https://github.com/material-components/material-components-web-components.git"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build:styles": "../../scripts/sass-render/bin/sass-render.js -t ../../sass-template.tmpl -s src/mwc-switch.scss -o src/mwc-switch-css.ts",
-    "build:src": "tsc",
-    "build": "npm run build:styles && npm run build:src"
-  },
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
     "@material/mwc-base": "^0.2.0",
+    "@material/switch": "^0.39.3",
     "@polymer/lit-element": "^0.6.0"
   },
   "devDependencies": {
-    "@material/switch": "^0.39.3"
   },
   "publishConfig": {
     "access": "public"
