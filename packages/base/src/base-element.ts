@@ -15,21 +15,41 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {LitElement} from '@polymer/lit-element/lit-element.js';
+import {LitElement} from '@polymer/lit-element';
 import {TemplateResult} from 'lit-html';
 export {TemplateResult};
-export {html, property, customElement, query} from '@polymer/lit-element/lit-element.js';
-export {classMap} from 'lit-html/directives/classMap.js';
-export {observer} from './observer.js';
+export * from '@polymer/lit-element';
+export {classMap} from 'lit-html/directives/classMap';
+export {observer} from './observer';
 
-export abstract class MWCBaseElement extends LitElement {
+/**
+ * Base Adapter class for components.
+ *
+ * For your component extend this component,
+ * put the new element type in the constructor,
+ * and add additional adapters as needed.
+ */
+export class BaseAdapter {
+  constructor(readonly element: BaseElement) {}
+  addClass(className: string) {
+    this.element.mdcRoot.classList.add(className);
+  }
+  removeClass(className: string) {
+    this.element.mdcRoot.classList.remove(className);
+  }
+  hasClass(className: string) {
+    return this.element.mdcRoot.classList.contains(className);
+  }
+}
+
+export abstract class BaseElement extends LitElement {
 
   /**
    * Root element for MDC Foundation usage.
    *
    * Define in your component with the `@query` decorator
    */
-  protected abstract mdcRoot: HTMLElement;
+  abstract mdcRoot: HTMLElement;
 
   /**
    * Return the foundation class for this component
@@ -42,25 +62,18 @@ export abstract class MWCBaseElement extends LitElement {
   protected abstract mdcFoundation: any;
 
   /**
+   * Adapter class for use by `createAdapter`
+   *
+   * In your component, extend `BaseAdapter` and attach it here.
+   */
+  protected static readonly AdapterClass = BaseAdapter;
+
+  /**
    * Create the adapter for the `mdcFoundation`.
-   *
-   * When overriding, use the following pattern:
-   *
-   * `createAdapter() {return {...super.createAdapter(), () => {}}}`
    *
    */
   protected createAdapter() {
-    return {
-      addClass: (className: string) => {
-        this.mdcRoot.classList.add(className);
-      },
-      removeClass: (className: string) => {
-        this.mdcRoot.classList.remove(className);
-      },
-      hasClass: (className: string) => {
-        return this.mdcRoot.classList.contains(className);
-      }
-    }
+    return new (this.constructor as typeof BaseElement).AdapterClass(this);
   }
 
   /**

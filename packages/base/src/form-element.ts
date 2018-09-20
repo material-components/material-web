@@ -15,10 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {MWCBaseElement} from './mwc-base-element.js';
-export * from './mwc-base-element.js';
+import {BaseElement} from './base-element.js';
+export * from './base-element.js';
 
-export abstract class FormElement extends MWCBaseElement {
+export abstract class FormElement extends BaseElement {
   /**
    * Form-capable element in the component ShadowRoot.
    *

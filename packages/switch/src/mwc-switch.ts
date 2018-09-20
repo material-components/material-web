@@ -14,9 +14,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {FormElement, html, property, observer, query, customElement} from '@material/mwc-base/form-element.js';
-import {style} from './mwc-switch-css.js';
-import MDCSwitchFoundation from '@material/switch/foundation.js';
+import {FormElement, html, property, observer, query, customElement, BaseAdapter} from '@material/mwc-base/form-element';
+import {style} from './mwc-switch-css';
+import MDCSwitchFoundation from '@material/switch/foundation';
+
+export class SwitchAdapter extends BaseAdapter {
+  constructor(readonly element: Switch) {
+    super(element);
+  }
+  setNativeControlChecked(checked: boolean) {
+    this.element.formElement.checked = checked;
+  }
+  setNativeControlDisabled(disabled: boolean) {
+    this.element.formElement.disabled = disabled;
+  }
+}
 
 @customElement('mwc-switch' as any)
 export class Switch extends FormElement {
@@ -37,14 +49,14 @@ export class Switch extends FormElement {
   }
 
   @query('.mdc-switch')
-  protected mdcRoot!: HTMLElement;
+  mdcRoot!: HTMLElement;
 
   @query('input')
-  protected formElement!: HTMLInputElement;
+  formElement!: HTMLInputElement;
 
   protected mdcFoundation!: MDCSwitchFoundation;
 
-  protected _boundHandler = (e: Event) => {
+  private _changeHandler(e: Event) {
     this.mdcFoundation.handleChange(e);
     // catch "click" event and sync properties
     this.checked = this.formElement.checked;
@@ -54,17 +66,7 @@ export class Switch extends FormElement {
     return MDCSwitchFoundation;
   }
 
-  protected createAdapter() {
-    return {
-      ...super.createAdapter(),
-      setNativeControlChecked: (checked: boolean) => {
-        this.formElement.checked = checked;
-      },
-      setNativeControlDisabled: (disabled: boolean) => {
-        this.formElement.disabled = disabled;
-      }
-    };
-  }
+  protected static readonly AdapterClass = SwitchAdapter;
 
   render() {
     return html`
@@ -73,7 +75,7 @@ export class Switch extends FormElement {
         <div class="mdc-switch__track"></div>
         <div class="mdc-switch__thumb-underlay">
           <div class="mdc-switch__thumb">
-            <input type="checkbox" id="basic-switch" class="mdc-switch__native-control" role="switch" @change="${this._boundHandler}">
+            <input type="checkbox" id="basic-switch" class="mdc-switch__native-control" role="switch" @change="${this._changeHandler}">
           </div>
         </div>
       </div>

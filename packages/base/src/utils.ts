@@ -18,7 +18,7 @@ limitations under the License.
 /**
  * Return an element assigned to a given slot that matches the given selector
  */
-export function findMatchingAssignedElement(slot: HTMLSlotElement, selector: string) {
+export function findAssignedElement(slot: HTMLSlotElement, selector: string) {
   for (const node of slot.assignedNodes({flatten: true})) {
     if (node.nodeType === Node.ELEMENT_NODE) {
       const el = (node as HTMLElement);
