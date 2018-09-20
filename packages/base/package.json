@@ -2,10 +2,6 @@
   "name": "@material/mwc-base",
   "version": "0.2.0",
   "description": "",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/material-components/material-components-web-components.git"
