@@ -14,7 +14,25 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {html} from '@polymer/lit-element/lit-element.js';
+import {LitElement, html, customElement} from '@polymer/lit-element/lit-element.js';
+import {style} from './mwc-icon-host-css';
+import './mwc-icon-font.js';
 
-export const style = html`<style>:host{font-family:var(--mdc-icon-font, "Material Icons");font-weight:normal;font-style:normal;font-size:var(--mdc-icon-size, 24px);line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-feature-settings:'liga';-webkit-font-smoothing:antialiased}
-</style>`;
+@customElement('mwc-icon' as any)
+export class Icon extends LitElement {
+
+  renderStyle() {
+    return style;
+  }
+
+  render() {
+    return html`${this.renderStyle()}<slot></slot>`;
+  }
+
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'mwc-icon': Icon;
+  }
+}
