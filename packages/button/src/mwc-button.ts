@@ -62,7 +62,11 @@ export class Button extends LitElement {
     };
     return html`
       ${this.renderStyle()}
-      <button .ripple="${ripple()}" class="mdc-button ${classMap(classes)}" ?disabled="${this.disabled}">
+      <button
+          .ripple="${ripple()}"
+          class="mdc-button ${classMap(classes)}"
+          ?disabled="${this.disabled}"
+          aria-label="${this.label || this.icon}">
         ${this.icon ? html`<span class="material-icons mdc-button__icon">${this.icon}</span>` : ''}
         ${this.label}
         <slot></slot>
