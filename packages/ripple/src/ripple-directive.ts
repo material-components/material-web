@@ -36,7 +36,7 @@ export interface RippleNodeOptions extends RippleOptions {
 }
 
 /**
- * Applied a ripple to the node specified by {surfaceNode}
+ * Applied a ripple to the node specified by {surfaceNode}.
  * @param options {RippleNodeOptions}
  */
 export const rippleNode = (options: RippleNodeOptions) => {
