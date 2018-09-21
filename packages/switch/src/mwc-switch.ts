@@ -14,19 +14,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {FormElement, html, property, observer, query, customElement, BaseAdapter} from '@material/mwc-base/form-element';
+import {FormElement, html, property, observer, query, customElement, Adapter, Foundation} from '@material/mwc-base/form-element';
 import {style} from './mwc-switch-css';
 import MDCSwitchFoundation from '@material/switch/foundation';
 
-export class SwitchAdapter extends BaseAdapter {
-  constructor(readonly element: Switch) {
-    super(element);
-  }
-  setNativeControlChecked(checked: boolean) {
-    this.element.formElement.checked = checked;
-  }
-  setNativeControlDisabled(disabled: boolean) {
-    this.element.formElement.disabled = disabled;
+export interface SwitchFoundation extends Foundation {
+  setChecked(value: boolean): void;
+  setDisabled(value: boolean): void;
+  handleChange(e: Event): void;
+}
+
+export declare var SwitchFoundation: {
+  prototype: SwitchFoundation;
+  new(adapter: Adapter): SwitchFoundation;
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'mwc-switch': Switch;
   }
 }
 
@@ -54,19 +59,27 @@ export class Switch extends FormElement {
   @query('input')
   formElement!: HTMLInputElement;
 
-  protected mdcFoundation!: MDCSwitchFoundation;
+  protected mdcFoundation!: SwitchFoundation;
 
-  private _changeHandler(e: Event) {
+  private _changeHandler = (e: Event) => {
     this.mdcFoundation.handleChange(e);
     // catch "click" event and sync properties
     this.checked = this.formElement.checked;
-  }
+  };
 
-  protected get mdcFoundationClass() {
-    return MDCSwitchFoundation;
-  }
+  protected readonly mdcFoundationClass: typeof SwitchFoundation = MDCSwitchFoundation;
 
-  protected static readonly AdapterClass = SwitchAdapter;
+  protected createAdapter() {
+    return {
+      ...super.createAdapter(),
+      setNativeControlChecked: (checked: boolean) => {
+        this.formElement.checked = checked;
+      },
+      setNativeControlDisabled: (disabled: boolean) => {
+        this.formElement.disabled = disabled;
+      }
+    }
+  }
 
   render() {
     return html`
@@ -80,11 +93,5 @@ export class Switch extends FormElement {
         </div>
       </div>
       <slot></slot>`;
-  }
-}
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'mwc-switch': Switch;
   }
 }
