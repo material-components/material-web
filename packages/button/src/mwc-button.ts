@@ -38,10 +38,10 @@ export class Button extends LitElement {
   @property({type: Boolean})
   disabled = false;
 
-  @property({type: Boolean})
+  @property()
   icon = '';
 
-  @property({type: Boolean})
+  @property()
   label = '';
 
 
@@ -63,7 +63,7 @@ export class Button extends LitElement {
     return html`
       ${this.renderStyle()}
       <button
-          .ripple="${ripple()}"
+          .ripple="${ripple({unbounded: false})}"
           class="mdc-button ${classMap(classes)}"
           ?disabled="${this.disabled}"
           aria-label="${this.label || this.icon}">
