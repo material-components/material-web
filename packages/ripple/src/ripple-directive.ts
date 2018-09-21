@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {directive, PropertyPart} from 'lit-html/lit-html.js';
-import {MDCRippleFoundation} from '@material/ripple/foundation.js';
+import MDCRippleFoundation from '@material/ripple/foundation.js';
 import * as util from '@material/ripple/util.js';
 
 const MATCHES = util.getMatchesProperty(HTMLElement.prototype);
