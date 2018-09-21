@@ -16,32 +16,32 @@ limitations under the License.
 */
 import {LitElement, html, property, customElement} from '@polymer/lit-element/lit-element.js';
 import {classMap} from 'lit-html/directives/classMap.js';
-import {style} from './mwc-button-css';
+import {style} from './mwc-fab-css';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 import '@material/mwc-icon/mwc-icon-font.js';
 
-@customElement('mwc-button' as any)
-export class Button extends LitElement {
+@customElement('mwc-fab' as any)
+export class Fab extends LitElement {
 
   @property({type: Boolean})
-  raised = false;
+  mini = false;
 
   @property({type: Boolean})
-  unelevated = false;
-
-  @property({type: Boolean})
-  outlined = false;
-
-  @property({type: Boolean})
-  dense = false;
+  exited = false;
 
   @property({type: Boolean})
   disabled = false;
 
   @property({type: Boolean})
-  icon = '';
+  extended = false;
 
   @property({type: Boolean})
+  showIconAtEnd = false;
+
+  @property()
+  icon = '';
+
+  @property()
   label = '';
 
 
@@ -55,23 +55,27 @@ export class Button extends LitElement {
 
   render() {
     const classes = {
-      'mdc-button--raised': this.raised,
-      'mdc-button--unelevated': this.unelevated,
-      'mdc-button--outlined': this.outlined,
-      'mdc-button--dense': this.dense,
+      'mdc-fab--mini': this.mini,
+      'mdc-fab--exited': this.exited,
+      'mdc-fab--extended': this.extended,
     };
+    const showLabel = this.label !== '' && this.extended;
     return html`
       ${this.renderStyle()}
-      <button .ripple="${ripple()}" class="mdc-button ${classMap(classes)}" ?disabled="${this.disabled}">
-        ${this.icon ? html`<span class="material-icons mdc-button__icon">${this.icon}</span>` : ''}
-        ${this.label}
-        <slot></slot>
+      <button
+          .ripple="${ripple()}"
+          class="mdc-fab ${classMap(classes)}"
+          ?disabled="${this.disabled}"
+          aria-label="${this.label || this.icon}">
+        ${showLabel && this.showIconAtEnd ? this.label : ''}
+        ${this.icon ? html`<span class="material-icons mdc-fab__icon">${this.icon}</span>` : ''}
+        ${showLabel && !this.showIconAtEnd ? this.label : ''}
       </button>`;
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mwc-button': Button;
+    'mwc-fab': Fab;
   }
 }
