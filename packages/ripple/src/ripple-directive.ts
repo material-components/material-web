@@ -31,67 +31,91 @@ export interface RippleOptions {
   active?: boolean;
 }
 
+export interface RippleNodeOptions extends RippleOptions {
+  surfaceNode: HTMLElement;
+}
+
+/**
+ * Applied a ripple to the node specified by {surfaceNode}
+ * @param options {RippleNodeOptions}
+ */
+export const rippleNode = (options: RippleNodeOptions) => {
+  // TODO(sorvell): This directive requires bringing css yourself. We probably need to do this
+  // because of ShadyCSS, but on Safari, the keyframes styling must be global. Perhaps this
+  // directive could fix that.
+  const surfaceNode = options.surfaceNode;
+  const interactionNode = options.interactionNode || surfaceNode;
+  if (interactionNode.style.position === '') {
+    interactionNode.style.position = 'relative';
+  }
+  const adapter = {
+    browserSupportsCssVars: () => supportsCssVariables,
+    isUnbounded: () =>
+      options.unbounded === undefined ? true : options.unbounded,
+    isSurfaceActive: () => interactionNode![MATCHES](':active'),
+    isSurfaceDisabled: () => Boolean(options.disabled),
+    addClass: (className: string) => surfaceNode.classList.add(className),
+    removeClass: (className: string) =>
+      surfaceNode.classList.remove(className),
+    containsEventTarget: (target: HTMLElement) => interactionNode.contains(target),
+    registerInteractionHandler: (type: string, handler: Handler) =>
+      interactionNode.addEventListener(type, handler, util.applyPassive()),
+    deregisterInteractionHandler: (type: string, handler: Handler) =>
+      interactionNode.removeEventListener(type, handler, util.applyPassive()),
+    registerDocumentInteractionHandler: (evtType: string, handler: Handler) =>
+      document.documentElement.addEventListener(
+          evtType, handler, util.applyPassive()),
+    deregisterDocumentInteractionHandler: (evtType: string, handler: Handler) =>
+      document.documentElement.removeEventListener(
+          evtType, handler, util.applyPassive()),
+    registerResizeHandler: (handler: Handler) =>
+      window.addEventListener('resize', handler),
+    deregisterResizeHandler: (handler: Handler) =>
+      window.removeEventListener('resize', handler),
+    updateCssVariable: (varName: string, value: string) =>
+      surfaceNode.style.setProperty(varName, value),
+    computeBoundingRect: () => interactionNode.getBoundingClientRect(),
+    getWindowPageOffset: () => ({x: window.pageXOffset, y: window.pageYOffset}),
+  };
+  const rippleFoundation = new MDCRippleFoundation(adapter);
+  rippleFoundation.init();
+  return rippleFoundation
+}
+
 const rippleInteractionNodes = new WeakMap();
 
-// TODO(sorvell): This directive requires bringing css yourself. We probably need to do this
-// because of ShadyCSS, but on Safari, the keyframes styling must be global. Perhaps this
-// directive could fix that.
-export const ripple = (rippleOptions: RippleOptions = {}) => directive((part: PropertyPart) =>{
-  const rippleSurface = part.committer.element as HTMLElement;
-  const interactionNode = rippleOptions.interactionNode || rippleSurface;
+/**
+ * A directive that applies a Material ripple to a part node. The directive
+ * should be applied to a PropertyPart.
+ * @param options {RippleOptions}
+ */
+export const ripple = (options: RippleOptions = {}) => directive((part: PropertyPart) =>{
+  const surfaceNode = part.committer.element as HTMLElement;
+  const interactionNode = options.interactionNode || surfaceNode;
   let rippleFoundation = part.value;
+  // if the interaction node changes, destroy and invalidate the foundation.
   const existingInteractionNode = rippleInteractionNodes.get(rippleFoundation);
   if (existingInteractionNode !== undefined && existingInteractionNode !== interactionNode) {
     rippleFoundation.destroy();
-    rippleFoundation = undefined;
+    rippleFoundation = noChange;
   }
+  // make the ripple, if needed
   if (rippleFoundation === noChange) {
-    if (interactionNode.style.position === '') {
-      interactionNode.style.position = 'relative';
-    }
-    const adapter = {
-      browserSupportsCssVars: () => supportsCssVariables,
-      isUnbounded: () =>
-        rippleOptions.unbounded === undefined ? true : rippleOptions.unbounded,
-      isSurfaceActive: () => interactionNode![MATCHES](':active'),
-      isSurfaceDisabled: () => Boolean(rippleOptions.disabled),
-      addClass: (className: string) => rippleSurface.classList.add(className),
-      removeClass: (className: string) =>
-        rippleSurface.classList.remove(className),
-      containsEventTarget: (target: HTMLElement) => interactionNode.contains(target),
-      registerInteractionHandler: (type: string, handler: Handler) =>
-        interactionNode.addEventListener(type, handler, util.applyPassive()),
-      deregisterInteractionHandler: (type: string, handler: Handler) =>
-        interactionNode.removeEventListener(type, handler, util.applyPassive()),
-      registerDocumentInteractionHandler: (evtType: string, handler: Handler) =>
-        document.documentElement.addEventListener(
-            evtType, handler, util.applyPassive()),
-      deregisterDocumentInteractionHandler: (evtType: string, handler: Handler) =>
-        document.documentElement.removeEventListener(
-            evtType, handler, util.applyPassive()),
-      registerResizeHandler: (handler: Handler) =>
-        window.addEventListener('resize', handler),
-      deregisterResizeHandler: (handler: Handler) =>
-        window.removeEventListener('resize', handler),
-      updateCssVariable: (varName: string, value: string) =>
-        rippleSurface.style.setProperty(varName, value),
-      computeBoundingRect: () => interactionNode.getBoundingClientRect(),
-      getWindowPageOffset: () => ({x: window.pageXOffset, y: window.pageYOffset}),
-    };
-    rippleFoundation = new MDCRippleFoundation(adapter);
-    rippleFoundation.init();
+    rippleFoundation = rippleNode(Object.assign({}, options, {surfaceNode}));
+    rippleInteractionNodes.set(rippleFoundation, interactionNode);
     part.setValue(rippleFoundation);
+  // otherwise update settings as needed.
   } else {
-    if (rippleOptions.unbounded !== undefined) {
-      rippleFoundation.setUnbounded(rippleOptions.unbounded);
+    if (options.unbounded !== undefined) {
+      rippleFoundation.setUnbounded(options.unbounded);
     }
-    if (rippleOptions.disabled !== undefined) {
-      rippleFoundation.setUnbounded(rippleOptions.disabled);
+    if (options.disabled !== undefined) {
+      rippleFoundation.setUnbounded(options.disabled);
     }
   }
-  if (rippleOptions.active === true) {
+  if (options.active === true) {
     rippleFoundation.activate();
-  } else if (rippleOptions.active === false) {
+  } else if (options.active === false) {
     rippleFoundation.deactivate();
   }
 });
