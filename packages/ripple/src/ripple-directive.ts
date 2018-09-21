@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {directive, PropertyPart} from 'lit-html/lit-html.js';
+import {directive, PropertyPart, noChange} from 'lit-html/lit-html.js';
 import MDCRippleFoundation from '@material/ripple/foundation.js';
 import * as util from '@material/ripple/util.js';
 
@@ -31,7 +31,6 @@ export interface RippleOptions {
   active?: boolean;
 }
 
-const rippleParts = new WeakMap();
 const rippleInteractionNodes = new WeakMap();
 
 // TODO(sorvell): This directive requires bringing css yourself. We probably need to do this
@@ -40,13 +39,13 @@ const rippleInteractionNodes = new WeakMap();
 export const ripple = (rippleOptions: RippleOptions = {}) => directive((part: PropertyPart) =>{
   const rippleSurface = part.committer.element as HTMLElement;
   const interactionNode = rippleOptions.interactionNode || rippleSurface;
-  let rippleFoundation = rippleParts.get(rippleSurface);
+  let rippleFoundation = part.value;
   const existingInteractionNode = rippleInteractionNodes.get(rippleFoundation);
   if (existingInteractionNode !== undefined && existingInteractionNode !== interactionNode) {
     rippleFoundation.destroy();
     rippleFoundation = undefined;
   }
-  if (rippleFoundation === undefined) {
+  if (rippleFoundation === noChange) {
     if (interactionNode.style.position === '') {
       interactionNode.style.position = 'relative';
     }
@@ -82,7 +81,6 @@ export const ripple = (rippleOptions: RippleOptions = {}) => directive((part: Pr
     rippleFoundation = new MDCRippleFoundation(adapter);
     rippleFoundation.init();
     part.setValue(rippleFoundation);
-    rippleParts.set(rippleSurface, rippleFoundation);
   } else {
     if (rippleOptions.unbounded !== undefined) {
       rippleFoundation.setUnbounded(rippleOptions.unbounded);
