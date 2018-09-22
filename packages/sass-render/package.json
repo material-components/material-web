@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-sass-render",
-  "version": "0.1.2",
+  "version": "0.2.1",
   "description": "",
   "main": "index.js",
   "scripts": {
