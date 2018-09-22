@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {directive, PropertyPart, noChange} from 'lit-html/lit-html.js';
+import {Adapter, Foundation} from '@material/mwc-base/base-element';;
 import MDCRippleFoundation from '@material/ripple/foundation.js';
 import * as util from '@material/ripple/util.js';
 
@@ -35,6 +36,17 @@ export interface RippleNodeOptions extends RippleOptions {
   surfaceNode: HTMLElement;
 }
 
+export interface RippleFoundation extends Foundation {
+  setUnbounded(value: boolean): void;
+  activate(): void;
+  deactivate(): void;
+}
+
+export declare var RippleFoundation: {
+  prototype: RippleFoundation;
+  new(adapter: Adapter): RippleFoundation;
+}
+
 /**
  * Applied a ripple to the node specified by {surfaceNode}.
  * @param options {RippleNodeOptions}
@@ -48,7 +60,7 @@ export const rippleNode = (options: RippleNodeOptions) => {
   if (interactionNode.style.position === '') {
     interactionNode.style.position = 'relative';
   }
-  const adapter = {
+  const adapter: Adapter = {
     browserSupportsCssVars: () => supportsCssVariables,
     isUnbounded: () =>
       options.unbounded === undefined ? true : options.unbounded,
@@ -79,7 +91,7 @@ export const rippleNode = (options: RippleNodeOptions) => {
   };
   const rippleFoundation = new MDCRippleFoundation(adapter);
   rippleFoundation.init();
-  return rippleFoundation
+  return rippleFoundation;
 }
 
 const rippleInteractionNodes = new WeakMap();
