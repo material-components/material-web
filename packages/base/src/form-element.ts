@@ -24,7 +24,7 @@ export abstract class FormElement extends BaseElement {
    *
    * Define in your component with the `@query` decorator
    */
-  protected abstract formElement: HTMLInputElement;
+  protected abstract formElement: HTMLElement;
 
   createRenderRoot() {
     return this.attachShadow({mode: 'open', delegatesFocus: true});

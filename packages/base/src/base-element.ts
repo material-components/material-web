@@ -22,24 +22,19 @@ export * from '@polymer/lit-element';
 export {classMap} from 'lit-html/directives/classMap';
 export {observer} from './observer';
 
-/**
- * Base Adapter class for components.
- *
- * For your component extend this component,
- * put the new element type in the constructor,
- * and add additional adapters as needed.
- */
-export class BaseAdapter {
-  constructor(readonly element: BaseElement) {}
-  addClass(className: string) {
-    this.element.mdcRoot.classList.add(className);
-  }
-  removeClass(className: string) {
-    this.element.mdcRoot.classList.remove(className);
-  }
-  hasClass(className: string) {
-    return this.element.mdcRoot.classList.contains(className);
-  }
+export interface Adapter {
+  [name: string]: Function
+};
+
+/** Extend this Foundation with the functions you use */
+export interface Foundation {
+  init(): void;
+  destroy(): void;
+}
+
+export declare var Foundation: {
+  prototype: Foundation;
+  new(adapter: Adapter): Foundation;
 }
 
 export abstract class BaseElement extends LitElement {
@@ -54,26 +49,31 @@ export abstract class BaseElement extends LitElement {
   /**
    * Return the foundation class for this component
    */
-  protected abstract get mdcFoundationClass(): any;
+  protected abstract readonly mdcFoundationClass: typeof Foundation;
 
   /**
    * An instance of the MDC Foundation class to attach to the root element
    */
-  protected abstract mdcFoundation: any;
-
-  /**
-   * Adapter class for use by `createAdapter`
-   *
-   * In your component, extend `BaseAdapter` and attach it here.
-   */
-  protected static readonly AdapterClass = BaseAdapter;
+  protected abstract mdcFoundation: Foundation;
 
   /**
    * Create the adapter for the `mdcFoundation`.
    *
+   * To extend, spread the super class version into you class:
+   * `{...super.createAdapter(), foo() => {}}`
    */
-  protected createAdapter() {
-    return new (this.constructor as typeof BaseElement).AdapterClass(this);
+  protected createAdapter(): Adapter {
+    return {
+      addClass: (className: string) => {
+        this.mdcRoot.classList.add(className);
+      },
+      removeClass: (className: string) => {
+        this.mdcRoot.classList.remove(className);
+      },
+      hasClass: (className: string) => {
+        return this.mdcRoot.classList.contains(className);
+      }
+    };
   }
 
   /**
@@ -86,8 +86,7 @@ export abstract class BaseElement extends LitElement {
    * Create and attach the MDC Foundation to the instance
    */
   protected createFoundation() {
-    const foundationClass = this.mdcFoundationClass;
-    this.mdcFoundation = new foundationClass(this.createAdapter());
+    this.mdcFoundation = new this.mdcFoundationClass(this.createAdapter());
     this.mdcFoundation.init();
   }
 
