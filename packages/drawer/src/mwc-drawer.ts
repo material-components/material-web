@@ -14,48 +14,39 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {LitElement, html, property, query, customElement} from '@polymer/lit-element/lit-element.js';
+import {BaseElement, html, property, observer, query, customElement, Adapter, Foundation, PropertyValues} from '@material/mwc-base/base-element';
 import {classMap} from 'lit-html/directives/classMap.js';
-import {observer} from '@material/mwc-base/observer.js';
 import MDCModalDrawerFoundation from '@material/drawer/modal/foundation.js';
 import MDCDismissibleDrawerFoundation from '@material/drawer/dismissible/foundation.js';
 import {strings} from '@material/drawer/constants.js';
 //import {MDCModalDrawerFoundation, MDCDismissibleDrawerFoundation, strings, util, createFocusTrap} from '@material/drawer/foundation.js';
 import {style} from './mwc-drawer-css';
 
+export interface DrawerFoundation extends Foundation {
+  open(): void;
+  close(): void;
+}
+
+export declare var DrawerFoundation: {
+  prototype: DrawerFoundation;
+  new(adapter: Adapter): DrawerFoundation;
+}
+
 @customElement('mwc-drawer' as any)
-export class Drawer extends LitElement {
+export class Drawer extends BaseElement {
 
   @query('.mdc-drawer')
-  protected mdcRoot!: HTMLElement;
+  mdcRoot!: HTMLElement;
 
   protected mdcFoundation!: MDCDismissibleDrawerFoundation|MDCModalDrawerFoundation;
 
-  private _focusTrap = undefined;
-  private _previousFocus: HTMLElement|undefined = undefined;
+  protected get mdcFoundationClass(): typeof DrawerFoundation {
+    return this.modal ? MDCModalDrawerFoundation : MDCDismissibleDrawerFoundation;
+  }
 
-  @observer(function(value) {
-    if (value) {
-      this.mdcFoundation.open();
-    } else {
-      this.mdcFoundation.close();
-    }
-  })
-  @property({type: Boolean})
-  open = false;
-
-  @property({type: Boolean})
-  hasHeader = false;
-
-  @observer(function(this: Drawer, value: string) {
-    const Foundation = value ? MDCModalDrawerFoundation : MDCDismissibleDrawerFoundation;
-    if (this.mdcFoundation) {
-      this.mdcFoundation.destroy();
-    }
-    const adapter = {
-      addClass: (className) => this.mdcRoot.classList.add(className),
-      removeClass: (className) => this.mdcRoot.classList.remove(className),
-      hasClass: (className) => this.mdcRoot.classList.contains(className),
+  protected createAdapter() {
+    return {
+      ...super.createAdapter(),
       elementHasClass: (element, className) => element.classList.contains(className),
       computeBoundingRect: () => this.mdcRoot.getBoundingClientRect(),
       saveFocus: () => {
@@ -85,14 +76,30 @@ export class Drawer extends LitElement {
       },
       trapFocus: () => {/*this._focusTrap.activate()*/},
       releaseFocus: () => {/*this._focusTrap.deactivate()*/},
-    };
-    this.mdcFoundation = new Foundation(adapter);
-    this.mdcFoundation.init();
+    }
+  }
+
+  // TODO(sorvell): integrate focus trapping.
+  //private _focusTrap = undefined;
+  private _previousFocus: HTMLElement|undefined = undefined;
+
+  @observer(function(value) {
+    if (value) {
+      this.mdcFoundation.open();
+    } else {
+      this.mdcFoundation.close();
+    }
   })
-  @property({type: Boolean})
-  dismissable = false;
+  @property({type: Boolean, reflect: true})
+  open = false;
 
   @property({type: Boolean})
+  hasHeader = false;
+
+  @property({type: Boolean, reflect: true})
+  dismissible = false;
+
+  @property({type: Boolean, reflect: true})
   modal = false;
 
   renderStyle() {
@@ -103,7 +110,7 @@ export class Drawer extends LitElement {
     return html`
       ${this.renderStyle()}
       <aside class="mdc-drawer
-          ${classMap({'mdc-drawer--dismissable': this.dismissable, 'mdc-drawer--modal': this.modal})}">
+          ${classMap({'mdc-drawer--dismissible': this.dismissible, 'mdc-drawer--modal': this.modal})}">
         ${this.hasHeader ? html`
         <div class="mdc-drawer__header">
           <h3 class="mdc-drawer__title"><slot name="title"></slot></h3>
@@ -117,10 +124,17 @@ export class Drawer extends LitElement {
       `;
   }
 
+  // note, we avoid calling `super.firstUpdated()` to control when `createFoundation()` is called.
   firstUpdated() {
     this.mdcRoot.addEventListener('keydown', (e) => this.mdcFoundation.handleKeydown(e));
     this.mdcRoot.addEventListener('transitionend', (e) => this.mdcFoundation.handleTransitionEnd(e));
     //this._focusTrap = util.createFocusTrapInstance(this.mdcRoot, createFocusTrap);
+  }
+
+  updated(changedProperties: PropertyValues) {
+    if (changedProperties.has('modal')) {
+      this.createFoundation();
+    }
   }
 
 }

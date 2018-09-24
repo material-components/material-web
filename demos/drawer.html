@@ -28,6 +28,8 @@ limitations under the License.
       border: 1px solid gray;
       display: flex;
       margin-bottom: 36px;
+      position: relative;
+      overflow: hidden;
     }
 
     .drawerContent {
@@ -40,6 +42,10 @@ limitations under the License.
       position: relative;
       flex: 1;
     }
+
+    :not([modal])[dismissible][open] + .mainContent {
+      margin-left: 256px;
+    }
   </style>
 </head>
 <body class="unresolved">
@@ -51,17 +57,27 @@ limitations under the License.
   <main>
     <div class="drawerView">
 
-      <!-- <mwc-drawer hasHeader>
+      <mwc-drawer hasHeader>
         <span slot="title">Title!</span>
         <span slot="subtitle">subtitle</span>
         <div class="drawerContent">Drawer Content!</div>
       </mwc-drawer>
-      <div class="mainContent">Main Content!</div> -->
+      <div class="mainContent">Main Content!</div>
     </div>
 
     <div class="drawerView">
 
-      <mwc-drawer hasHeader dismissable>
+      <mwc-drawer hasHeader dismissible>
+        <span slot="title">Title!</span>
+        <span slot="subtitle">subtitle</span>
+        <div class="drawerContent">Drawer Content!</div>
+      </mwc-drawer>
+      <div class="mainContent">Main Content!</div>
+    </div>
+
+    <div class="drawerView">
+
+      <mwc-drawer hasHeader dismissible modal>
         <span slot="title">Title!</span>
         <span slot="subtitle">subtitle</span>
         <div class="drawerContent">Drawer Content!</div>
@@ -72,6 +88,20 @@ limitations under the License.
 
   <script>
     addEventListener('load', () => document.body.classList.remove('unresolved'));
+
+    Array.from(document.querySelectorAll('[dismissible]')).forEach((drawer) => {
+      const container = drawer.parentNode;
+      container.addEventListener('click', (e) => {
+        drawer.open = !drawer.open;
+      });
+      drawer.addEventListener('MDCDrawer:opened', (e) => {
+        e.target.nextElementSibling.style.marginLeft = e.g
+      });
+
+      drawer.addEventListener('MDCDrawer:closed', (e) => {
+
+      });
+    });
   </script>
 </body>
 </html>
