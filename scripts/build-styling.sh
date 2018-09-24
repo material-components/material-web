@@ -21,12 +21,13 @@ set -e
 sassfiles=(`find packages -name "*.scss"`)
 
 for sassfile in ${sassfiles[@]}; do
-  # skip mwc-icon, it is used as a partial
-  if [ `basename ${sassfile}` = "mwc-icon.scss" ]; then
+  # skip partials
+  if [[ `basename ${sassfile}` =~ ^_ ]]; then
     continue
   fi
   cssts=`echo ${sassfile} | sed -e 's/.scss/-css.ts/'`
   lastdir=`basename $(dirname ${cssts})`
+  # skip sass files outside of src folders
   if [[ ${lastdir} != "src" ]]; then
     continue
   fi

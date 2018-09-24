@@ -14,19 +14,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
-@import "@material/mwc-icon/mwc-icon.scss";
-@import "@material/button/mdc-button.scss";
-
-.material-icons {
-  @extend %material-icons;
-}
+@import "./_mwc-icon.scss";
 
 :host {
-  display: inline-flex;
-  outline: none;
-}
-
-.mdc-button {
-  flex: 1;
+  @extend %material-icons;
 }

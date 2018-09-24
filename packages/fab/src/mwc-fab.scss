@@ -14,6 +14,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {html} from '@polymer/lit-element/lit-element.js';
+@import "@material/mwc-icon/src/_mwc-icon.scss";
+@import "@material/fab/mdc-fab.scss";
 
-export const style = html`<style></style>`;
+.material-icons {
+  @extend %material-icons;
+}
+
+:host {
+  outline: none;
+}
