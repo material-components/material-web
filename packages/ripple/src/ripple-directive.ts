@@ -89,7 +89,7 @@ export const rippleNode = (options: RippleNodeOptions) => {
     computeBoundingRect: () => interactionNode.getBoundingClientRect(),
     getWindowPageOffset: () => ({x: window.pageXOffset, y: window.pageYOffset}),
   };
-  const rippleFoundation = new MDCRippleFoundation(adapter);
+  const rippleFoundation: RippleFoundation = new MDCRippleFoundation(adapter);
   rippleFoundation.init();
   return rippleFoundation;
 }
