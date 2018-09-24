@@ -43,7 +43,7 @@ limitations under the License.
       flex: 1;
     }
 
-    :not([modal])[dismissible][open] + .mainContent {
+    [type=dismissible][open] + .mainContent {
       margin-left: 256px;
     }
   </style>
@@ -67,7 +67,7 @@ limitations under the License.
 
     <div class="drawerView">
 
-      <mwc-drawer hasHeader dismissible>
+      <mwc-drawer hasHeader type="dismissible">
         <span slot="title">Title!</span>
         <span slot="subtitle">subtitle</span>
         <div class="drawerContent">Drawer Content!</div>
@@ -77,7 +77,7 @@ limitations under the License.
 
     <div class="drawerView">
 
-      <mwc-drawer hasHeader dismissible modal>
+      <mwc-drawer hasHeader type="modal">
         <span slot="title">Title!</span>
         <span slot="subtitle">subtitle</span>
         <div class="drawerContent">Drawer Content!</div>
@@ -89,7 +89,7 @@ limitations under the License.
   <script>
     addEventListener('load', () => document.body.classList.remove('unresolved'));
 
-    Array.from(document.querySelectorAll('[dismissible]')).forEach((drawer) => {
+    Array.from(document.querySelectorAll('mwc-drawer[type]')).forEach((drawer) => {
       const container = drawer.parentNode;
       container.addEventListener('click', (e) => {
         drawer.open = !drawer.open;

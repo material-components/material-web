@@ -38,10 +38,15 @@ export class Drawer extends BaseElement {
   @query('.mdc-drawer')
   mdcRoot!: HTMLElement;
 
-  protected mdcFoundation!: MDCDismissibleDrawerFoundation|MDCModalDrawerFoundation;
+  protected mdcFoundation: MDCDismissibleDrawerFoundation|MDCModalDrawerFoundation|undefined;
 
-  protected get mdcFoundationClass(): typeof DrawerFoundation {
-    return this.modal ? MDCModalDrawerFoundation : MDCDismissibleDrawerFoundation;
+  protected get mdcFoundationClass(): (typeof DrawerFoundation)|undefined {
+    if (this.type === 'modal') {
+      return MDCModalDrawerFoundation;
+    } else if (this.type === 'dismissible') {
+      return MDCDismissibleDrawerFoundation;
+    }
+    return undefined;
   }
 
   protected createAdapter() {
@@ -84,6 +89,9 @@ export class Drawer extends BaseElement {
   private _previousFocus: HTMLElement|undefined = undefined;
 
   @observer(function(value) {
+    if (this.mdcFoundation === undefined) {
+      return;
+    }
     if (value) {
       this.mdcFoundation.open();
     } else {
@@ -96,21 +104,20 @@ export class Drawer extends BaseElement {
   @property({type: Boolean})
   hasHeader = false;
 
-  @property({type: Boolean, reflect: true})
-  dismissible = false;
-
-  @property({type: Boolean, reflect: true})
-  modal = false;
+  @property({reflect: true})
+  type = '';
 
   renderStyle() {
     return style;
   }
 
   render() {
+    const dismissible = this.type === 'dismissible' || this.type === 'modal';
+    const modal = this.type === 'modal';
     return html`
       ${this.renderStyle()}
       <aside class="mdc-drawer
-          ${classMap({'mdc-drawer--dismissible': this.dismissible, 'mdc-drawer--modal': this.modal})}">
+          ${classMap({'mdc-drawer--dismissible': dismissible, 'mdc-drawer--modal': modal})}">
         ${this.hasHeader ? html`
         <div class="mdc-drawer__header">
           <h3 class="mdc-drawer__title"><slot name="title"></slot></h3>
@@ -120,20 +127,39 @@ export class Drawer extends BaseElement {
         ` : ''}
         <div class="mdc-drawer__content"><slot></slot></div>
       </aside>
-      ${this.modal ? html`<div class="mdc-drawer-scrim" @click="${() => this.mdcFoundation.handleScrimClick()}"></div>` : ''}
+      ${modal ? html`<div class="mdc-drawer-scrim" @click="${() => this.mdcFoundation.handleScrimClick()}"></div>` : ''}
       `;
   }
 
   // note, we avoid calling `super.firstUpdated()` to control when `createFoundation()` is called.
   firstUpdated() {
-    this.mdcRoot.addEventListener('keydown', (e) => this.mdcFoundation.handleKeydown(e));
-    this.mdcRoot.addEventListener('transitionend', (e) => this.mdcFoundation.handleTransitionEnd(e));
+    this.mdcRoot.addEventListener('keydown', (e) => {
+      if (this.mdcFoundation) {
+        this.mdcFoundation.handleKeydown(e);
+      }
+    });
+    this.mdcRoot.addEventListener('transitionend', (e) => {
+      if (this.mdcFoundation) {
+        this.mdcFoundation.handleTransitionEnd(e);
+      }
+    });
     //this._focusTrap = util.createFocusTrapInstance(this.mdcRoot, createFocusTrap);
   }
 
   updated(changedProperties: PropertyValues) {
-    if (changedProperties.has('modal')) {
+    if (changedProperties.has('type')) {
       this.createFoundation();
+    }
+  }
+
+  createFoundation() {
+    if (this.mdcFoundationClass !== undefined) {
+      super.createFoundation();
+    } else {
+      if (this.mdcFoundation !== undefined) {
+        this.mdcFoundation.destroy();
+        this.mdcFoundation = undefined;
+      }
     }
   }
 
