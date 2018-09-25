@@ -16,10 +16,9 @@
   "dependencies": {
     "@material/mwc-base": "^0.2",
     "@material/top-app-bar": "^0.39.3",
-    "@polymer/lit-element": "^0.6.0"
+    "@polymer/lit-element": "^0.6.1"
   },
   "devDependencies": {
-    "typescript": "^3.0.1"
   },
   "publishConfig": {
     "access": "public"

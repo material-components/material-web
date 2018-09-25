@@ -19,7 +19,6 @@
     "@polymer/lit-element": "^0.6.1"
   },
   "devDependencies": {
-    "typescript": "^3.0.1"
   },
   "publishConfig": {
     "access": "public"
