@@ -1,3 +1,9 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 /**
 @license
 Copyright 2018 Google Inc. All Rights Reserved.
@@ -14,56 +20,71 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {LitElement, html} from '@polymer/lit-element/lit-element.js';
-import {classMap} from 'lit-html/directives/classMap.js';
-import {style} from './mwc-fab-css.js';
-import {MDCWCRipple} from '@material/mwc-ripple/mwc-ripple.js';
-import {afterNextRender} from '@material/mwc-base/utils.js';
+import { LitElement, html, property, customElement } from '@polymer/lit-element/lit-element.js';
+import { classMap } from 'lit-html/directives/classMap.js';
+import { style } from './mwc-fab-css';
+import { ripple } from '@material/mwc-ripple/ripple-directive.js';
 import '@material/mwc-icon/mwc-icon-font.js';
-
-export class Fab extends LitElement {
-  static get properties() {
-    return {
-      mini: {type: Boolean},
-      exited: {type: Boolean},
-      disabled: {type: Boolean},
-      icon: {type: String},
-      label: {type: String},
-    };
-  }
-
-  constructor() {
-    super();
-    this.icon = '';
-    this.mini = false;
-    this.exited = false;
-    this.label = '';
-  }
-
-  createRenderRoot() {
-    return this.attachShadow({mode: 'open', delegatesFocus: true});
-  }
-
-  firstUpdated() {
-    this._ripple = new MDCWCRipple(this.shadowRoot.querySelector('.mdc-fab'));
-  }
-
-  renderStyle() {
-    return style;
-  }
-
-  render() {
-    const {icon, mini, exited, disabled, label} = this;
-    const hostClassInfo = {
-      'mdc-fab--mini': mini,
-      'mdc-fab--exited': exited,
-    };
-    return html`
+let Fab = class Fab extends LitElement {
+    constructor() {
+        super(...arguments);
+        this.mini = false;
+        this.exited = false;
+        this.disabled = false;
+        this.extended = false;
+        this.showIconAtEnd = false;
+        this.icon = '';
+        this.label = '';
+    }
+    createRenderRoot() {
+        return this.attachShadow({ mode: 'open', delegatesFocus: true });
+    }
+    renderStyle() {
+        return style;
+    }
+    render() {
+        const classes = {
+            'mdc-fab--mini': this.mini,
+            'mdc-fab--exited': this.exited,
+            'mdc-fab--extended': this.extended,
+        };
+        const showLabel = this.label !== '' && this.extended;
+        return html `
       ${this.renderStyle()}
-      <button class="mdc-fab ${classMap(hostClassInfo)}" ?disabled="${disabled}" aria-label="${label || icon}">
-        ${icon ? html`<span class="material-icons mdc-fab__icon">${icon}</span>` : ''}
+      <button
+          .ripple="${ripple()}"
+          class="mdc-fab ${classMap(classes)}"
+          ?disabled="${this.disabled}"
+          aria-label="${this.label || this.icon}">
+        ${showLabel && this.showIconAtEnd ? this.label : ''}
+        ${this.icon ? html `<span class="material-icons mdc-fab__icon">${this.icon}</span>` : ''}
+        ${showLabel && !this.showIconAtEnd ? this.label : ''}
       </button>`;
-  }
-}
-
-customElements.define('mwc-fab', Fab);
+    }
+};
+__decorate([
+    property({ type: Boolean })
+], Fab.prototype, "mini", void 0);
+__decorate([
+    property({ type: Boolean })
+], Fab.prototype, "exited", void 0);
+__decorate([
+    property({ type: Boolean })
+], Fab.prototype, "disabled", void 0);
+__decorate([
+    property({ type: Boolean })
+], Fab.prototype, "extended", void 0);
+__decorate([
+    property({ type: Boolean })
+], Fab.prototype, "showIconAtEnd", void 0);
+__decorate([
+    property()
+], Fab.prototype, "icon", void 0);
+__decorate([
+    property()
+], Fab.prototype, "label", void 0);
+Fab = __decorate([
+    customElement('mwc-fab')
+], Fab);
+export { Fab };
+//# sourceMappingURL=mwc-fab.js.map

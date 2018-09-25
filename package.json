@@ -14,7 +14,7 @@
     "lint": "npm-run-all --parallel lint:*",
     "test": "karma start --single-run",
     "bootstrap": "npm install && ./scripts/bootstrap.sh",
-    "build": "npm run build-styling && tsc -b packages/base packages/switch packages/ripple packages/drawer",
+    "build": "npm run build-styling && tsc -b packages/base packages/switch packages/ripple packages/button packages/fab packages/icon packages/checkbox packages/drawer packages/top-app-bar",
     "build-styling": "./scripts/build-styling.sh",
     "update-gh-pages": "npm run bootstrap && ./scripts/publish-demos.sh"
   },

@@ -1,3 +1,9 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 /**
 @license
 Copyright 2018 Google Inc. All Rights Reserved.
@@ -14,92 +20,83 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {FormableComponentElement, MDCWebComponentMixin, html} from '@material/mwc-base/formable-component-element.js';
-import {style} from './mwc-checkbox-css.js';
-import {MDCCheckbox} from '@material/checkbox';
-
-export class MDCWCCheckbox extends MDCWebComponentMixin(MDCCheckbox) {}
-
-export class Checkbox extends FormableComponentElement {
-  static get ComponentClass() {
-    return MDCWCCheckbox;
-  }
-
-  static get componentSelector() {
-    return '.mdc-checkbox';
-  }
-
-  static get properties() {
-    return {
-      checked: {type: Boolean},
-      indeterminate: {type: Boolean},
-      disabled: {type: Boolean},
-      value: {type: String},
-    };
-  }
-
-  // TODO(sorvell): need to add delegatesFocus to ShadyDOM. Using it here,
-  // allows tabIndex order to be changed (note, > 0 is dubious but -1 seems useful)
-  createRenderRoot() {
-    return this.attachShadow({mode: 'open', delegatesFocus: true});
-  }
-
-  constructor() {
-    super();
-    this._asyncComponent = true;
-    this.checked = false;
-    this.indeterminate = false;
-    this.disabled = false;
-    this.value = '';
-    this._boundInputChangeHandler = this._inputChangeHandler.bind(this);
-  }
-
-  // TODO(sorvell) #css: add outline none to avoid focus decoration
-  renderStyle() {
-    return style;
-  }
-
-  render() {
-    const {checked, value} = this;
-    return html`
+import { html, FormElement, customElement, property, query, observer } from '@material/mwc-base/form-element';
+import { style } from './mwc-checkbox-css';
+import MDCCheckboxFoundation from '@material/checkbox/foundation';
+let Checkbox = class Checkbox extends FormElement {
+    constructor() {
+        super(...arguments);
+        this.checked = false;
+        this.indeterminate = false;
+        this.disabled = false;
+        this.value = '';
+        this.mdcFoundationClass = MDCCheckboxFoundation;
+        this._changeHandler = () => {
+            this.mdcFoundation.handleChange();
+            this.checked = this.formElement.checked;
+            this.indeterminate = this.formElement.indeterminate;
+        };
+        this._animationEndHandler = () => {
+            this.mdcFoundation.handleAnimationEnd();
+        };
+    }
+    renderStyle() {
+        return style;
+    }
+    createAdapter() {
+        return Object.assign({}, super.createAdapter(), { getNativeControl: () => {
+                return this.formElement;
+            }, forceLayout: () => {
+                this.mdcRoot.offsetWidth;
+            }, isAttachedToDOM: () => this.isConnected, isIndeterminate: () => this.indeterminate, isChecked: () => this.checked, hasNativeControl: () => Boolean(this.formElement), setNativeControlDisabled: (disabled) => {
+                this.formElement.disabled = disabled;
+            } });
+    }
+    render() {
+        return html `
       ${this.renderStyle()}
-      <div class="mdc-checkbox">
+      <div class="mdc-checkbox" @animationend="${this._animationEndHandler}">
         <input type="checkbox"
-          class="mdc-checkbox__native-control"
-          .checked="${checked}" .value="${value}"
-          @change="${this._boundInputChangeHandler}">
+              class="mdc-checkbox__native-control"
+              id="checkbox-1" @change="${this._changeHandler}" .indeterminate="${this.indeterminate}">
         <div class="mdc-checkbox__background">
           <svg class="mdc-checkbox__checkmark"
               viewBox="0 0 24 24">
             <path class="mdc-checkbox__checkmark-path"
-              fill="none"
-              stroke="white"
-              d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                  fill="none"
+                  d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
           </svg>
           <div class="mdc-checkbox__mixedmark"></div>
         </div>
       </div>`;
-  }
-
-  get indeterminate() {
-    return this._component && this._component.indeterminate;
-  }
-
-  set indeterminate(value) {
-    this.componentReady().then((component) => component.indeterminate = value);
-  }
-
-  get disabled() {
-    return this._component && this._component.disabled;
-  }
-
-  set disabled(value) {
-    this.componentReady().then((component) => component.disabled = value);
-  }
-
-  _inputChangeHandler(e) {
-    this.checked = e.target.checked;
-  }
-}
-
-customElements.define('mwc-checkbox', Checkbox);
+    }
+};
+__decorate([
+    query('.mdc-checkbox')
+], Checkbox.prototype, "mdcRoot", void 0);
+__decorate([
+    query('input')
+], Checkbox.prototype, "formElement", void 0);
+__decorate([
+    property({ type: Boolean }),
+    observer(function (value) {
+        this.mdcFoundation.setChecked(value);
+    })
+], Checkbox.prototype, "checked", void 0);
+__decorate([
+    property({ type: Boolean })
+], Checkbox.prototype, "indeterminate", void 0);
+__decorate([
+    property({ type: Boolean }),
+    observer(function (value) {
+        this.mdcFoundation.setDisabled(value);
+    })
+], Checkbox.prototype, "disabled", void 0);
+__decorate([
+    property({ type: String })
+], Checkbox.prototype, "value", void 0);
+Checkbox = __decorate([
+    customElement('mwc-checkbox')
+], Checkbox);
+export { Checkbox };
+//# sourceMappingURL=mwc-checkbox.js.map

@@ -14,17 +14,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {LitElement, html} from '@polymer/lit-element/lit-element.js';
-import {style} from './mwc-icon-host-css.js';
-import './mwc-icon-font.js';
 
-export class Icon extends LitElement {
-  renderStyle() {
-    return style;
-  }
-  render() {
-    return html`${this.renderStyle()}<slot></slot>`;
-  }
+@import "@material/mwc-icon/src/_mwc-icon.scss";
+@import "@material/button/mdc-button.scss";
+
+.material-icons {
+  @extend %material-icons;
 }
 
-customElements.define('mwc-icon', Icon);
+:host {
+  display: inline-flex;
+  outline: none;
+}
+
+.mdc-button {
+  flex: 1;
+}
