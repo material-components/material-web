@@ -18,7 +18,7 @@ import {BaseElement, html, property, observer, query, customElement, Adapter, Fo
 import {TabIndicator} from '@material/mwc-tab-indicator/mwc-tab-indicator.js';
 import {classMap} from 'lit-html/directives/classMap.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
-import {MDCTabFoundation} from '@material/tab/foundation.js';
+import MDCTabFoundation from '@material/tab/foundation.js';
 import {style} from './mwc-tab-css';
 
 declare global {

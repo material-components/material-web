@@ -15,9 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {BaseElement, html, property, observer, query, customElement, Adapter, Foundation} from '@material/mwc-base/base-element';
-import {TabScroller} from '@material/mwc-tab-scroller/mwc-tab-scroller.js';
 import {Tab} from '@material/mwc-tab/mwc-tab.js';
-import {MDCTabBarFoundation} from '@material/tab-bar/foundation.js';
+import {TabScroller} from '@material/mwc-tab-scroller/mwc-tab-scroller.js';
+import MDCTabBarFoundation from '@material/tab-bar/foundation.js';
 import {style} from './mwc-tab-bar-css';
 
 declare global {
@@ -79,8 +79,9 @@ export class TabBar extends BaseElement {
       `;
   }
 
+  // TODO(sorvell): probably want to memoize this and use a `slotChange` event
   private _getTabs(): Array<Tab> {
-    return this.tabsSlot.assignedNodes({flatten: true}) as Array<Tab>;
+    return this.tabsSlot.assignedNodes({flatten: true}).filter((e: Node) => e instanceof Tab) as Array<Tab>;
   }
 
   createAdapter() {
@@ -93,11 +94,33 @@ export class TabBar extends BaseElement {
       getOffsetWidth: () => this.mdcRoot.offsetWidth,
       isRTL: () => window.getComputedStyle(this.mdcRoot).getPropertyValue('direction') === 'rtl',
       setActiveTab: (index) => this.mdcFoundation.activateTab(index),
-      activateTabAtIndex: (index, clientRect) => this._getTabs()[index].activate(clientRect),
-      deactivateTabAtIndex: (index) => this._getTabs()[index].deactivate(),
-      focusTabAtIndex: (index) => this._getTabs()[index].focus(),
-      getTabIndicatorClientRectAtIndex: (index) => this._getTabs()[index].computeIndicatorClientRect(),
-      getTabDimensionsAtIndex: (index) => this._getTabs()[index].computeDimensions(),
+      activateTabAtIndex: (index, clientRect) => {
+        const tab = this._getTabs()[index];
+        if (tab !== undefined) {
+          tab.activate(clientRect);
+        }
+      },
+      deactivateTabAtIndex: (index) => {
+        const tab = this._getTabs()[index];
+        if (tab !== undefined) {
+          tab.deactivate()
+        }
+      },
+      focusTabAtIndex: (index) => {
+        const tab = this._getTabs()[index];
+        if (tab !== undefined) {
+          tab.focus();
+        }
+      },
+      getTabIndicatorClientRectAtIndex: (index) => {
+        const tab = this._getTabs()[index];
+        return tab !== undefined ? tab.computeIndicatorClientRect() : new DOMRect();
+      },
+      getTabDimensionsAtIndex: (index) => {
+        const tab = this._getTabs()[index];
+        return tab !== undefined ? tab.computeDimensions() :
+            {rootLeft: 0, rootRight: 0, contentLeft: 0, contentRight: 0};
+      },
       getPreviousActiveTabIndex: () => {
         const tabs = this._getTabs();
         for (let i = 0; i < tabs.length; i++) {
