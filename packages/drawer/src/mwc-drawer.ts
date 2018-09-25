@@ -40,13 +40,12 @@ export class Drawer extends BaseElement {
 
   protected mdcFoundation: MDCDismissibleDrawerFoundation|MDCModalDrawerFoundation|undefined;
 
-  protected get mdcFoundationClass(): (typeof DrawerFoundation)|undefined {
+  protected get mdcFoundationClass(): (typeof DrawerFoundation) {
     if (this.type === 'modal') {
       return MDCModalDrawerFoundation;
-    } else if (this.type === 'dismissible') {
+    } else {
       return MDCDismissibleDrawerFoundation;
     }
-    return undefined;
   }
 
   protected createAdapter() {
@@ -60,7 +59,7 @@ export class Drawer extends BaseElement {
       restoreFocus: () => {
         const previousFocus = this._previousFocus && this._previousFocus.focus;
         if (this.mdcRoot.contains(document.activeElement) && previousFocus) {
-          this._previousFocus.focus();
+          this._previousFocus!.focus();
         }
       },
       // TODO(sorvell): List integration like this may not work. Need to understand
@@ -88,8 +87,8 @@ export class Drawer extends BaseElement {
   //private _focusTrap = undefined;
   private _previousFocus: HTMLElement|undefined = undefined;
 
-  @observer(function(value) {
-    if (this.mdcFoundation === undefined) {
+  @observer(function(this: Drawer, value: boolean) {
+    if (this.type === '') {
       return;
     }
     if (value) {
@@ -153,16 +152,11 @@ export class Drawer extends BaseElement {
   }
 
   createFoundation() {
-    if (this.mdcFoundationClass !== undefined) {
-      super.createFoundation();
-    } else {
-      if (this.mdcFoundation !== undefined) {
-        this.mdcFoundation.destroy();
-        this.mdcFoundation = undefined;
-      }
+    if (this.mdcFoundation !== undefined) {
+      this.mdcFoundation.destroy();
     }
+    super.createFoundation();
   }
-
 }
 
 declare global {

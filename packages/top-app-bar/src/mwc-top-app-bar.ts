@@ -44,10 +44,10 @@ export class TopAppBar extends BaseElement {
   mdcRoot!: HTMLElement;
 
   @query('[name="navigationIcon"]')
-  private _navIconSlot: HTMLSlotElement|null;
+  private _navIconSlot!: HTMLSlotElement;
 
   @query('[name="actionItems"]')
-  private _actionItemsSlot: HTMLSlotElement|null;
+  private _actionItemsSlot!: HTMLSlotElement;
 
   // type can be 'fixed' || 'prominent' || 'short' || 'shortCollapsed' || 'prominentFixed'
   @property({reflect: true})
