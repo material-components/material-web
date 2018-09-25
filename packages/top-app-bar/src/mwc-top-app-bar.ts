@@ -152,8 +152,11 @@ export class TopAppBar extends BaseElement {
       this.mdcFoundation.destroy();
     }
     super.createFoundation();
+    const windowScroller = this.scrollTarget === window;
     // we add support for top-app-bar's tied to an element scroller.
-    this.mdcRoot.style.position = this.scrollTarget !== window ? 'absolute' : '';
+    this.mdcRoot.style.position = windowScroller ? '' : 'absolute';
+    // TODO(sorvell): not sure why this is necessary but the MDC demo does it.
+    this.mdcRoot.style.top = windowScroller ? '0px' : '';
   }
 }
 
