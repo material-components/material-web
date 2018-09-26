@@ -14,10 +14,11 @@
     "lint": "npm-run-all --parallel lint:*",
     "test": "karma start --single-run",
     "bootstrap": "npm install && ./scripts/bootstrap.sh && npm run build",
-    "build": "npm run build-styling && tsc -b packages/base packages/switch packages/ripple packages/button packages/fab packages/icon packages/checkbox packages/drawer packages/top-app-bar packages/tab packages/tab-indicator packages/tab-scroller packages/tab-bar",
+    "build": "npm run build-styling && npm run build-typescript",
     "build-styling": "./scripts/build-styling.sh",
+    "build-typescript": "tsc -b --verbose packages/**/tsconfig.json",
     "update-gh-pages": "npm run bootstrap && ./scripts/publish-demos.sh",
-    "watch": "node scripts/watcher.js"
+    "watch": "npm run build && node scripts/watcher.js"
   },
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "^2.0.1",
@@ -56,6 +57,7 @@
     "mocha": "^5.0.0",
     "node-sass": "^4.9.3",
     "node-sass-import": "^2.0.1",
+    "node-watch": "^0.5.8",
     "npm-run-all": "^4.1.1",
     "parse5": "^4.0.0",
     "polyserve": "^0.27.10",
@@ -65,8 +67,7 @@
     "rollup-plugin-uglify": "^3.0.0",
     "typescript": "^3.0.3",
     "webpack": "^3.9.0",
-    "webpack-dev-server": "^2.4.3",
-    "node-watch": "^0.5.8"
+    "webpack-dev-server": "^2.4.3"
   },
   "babel": {
     "presets": [

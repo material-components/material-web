@@ -19,7 +19,7 @@
     "baseUrl": "./packages",
     "paths": {
       "@material/mwc-*": ["./*/src"]
-    }
+    },
   },
   "include": [
     "custom_typings/**/*.ts",
