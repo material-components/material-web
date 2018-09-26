@@ -65,7 +65,8 @@
     "rollup-plugin-uglify": "^3.0.0",
     "typescript": "^3.0.3",
     "webpack": "^3.9.0",
-    "webpack-dev-server": "^2.4.3"
+    "webpack-dev-server": "^2.4.3",
+    "node-watch": "^0.5.8"
   },
   "babel": {
     "presets": [
