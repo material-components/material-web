@@ -43,7 +43,6 @@ async function addToQueue(fileName) {
     return;
   }
   updating = true;
-  console.log('saw changes!');
   const buildSass = fileName.endsWith('scss');
   let execPromise;
   if (buildSass) {
@@ -54,9 +53,9 @@ async function addToQueue(fileName) {
   try {
     const {stdout} = await execPromise;
     console.log(stdout);
-  } catch ({stderr}) {
+  } catch ({stdout, stderr}) {
+    console.log(stdout);
     console.log('ERROR:', stderr);
   }
-  console.log('watcher build complete!');
   updating = false;
 }

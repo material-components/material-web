@@ -16,7 +16,7 @@
     "bootstrap": "npm install && ./scripts/bootstrap.sh && npm run build",
     "build": "npm run build-styling && npm run build-typescript",
     "build-styling": "./scripts/build-styling.sh",
-    "build-typescript": "tsc -b --verbose packages/base packages/switch packages/ripple packages/button packages/fab packages/icon packages/checkbox",
+    "build-typescript": "tsc -b --verbose packages/**/tsconfig.json",
     "update-gh-pages": "npm run bootstrap && ./scripts/publish-demos.sh",
     "watch": "npm run build && node scripts/watcher.js"
   },
