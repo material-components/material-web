@@ -13,10 +13,11 @@
     "lint:imports": "node scripts/check-imports.js",
     "lint": "npm-run-all --parallel lint:*",
     "test": "karma start --single-run",
-    "bootstrap": "npm install && ./scripts/bootstrap.sh",
+    "bootstrap": "npm install && ./scripts/bootstrap.sh && npm run build",
     "build": "npm run build-styling && tsc -b packages/base packages/switch packages/ripple packages/button packages/fab packages/icon packages/checkbox",
     "build-styling": "./scripts/build-styling.sh",
-    "update-gh-pages": "npm run bootstrap && ./scripts/publish-demos.sh"
+    "update-gh-pages": "npm run bootstrap && ./scripts/publish-demos.sh",
+    "watch": "node scripts/watcher.js"
   },
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "^2.0.1",

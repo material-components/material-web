@@ -76,6 +76,7 @@ Below are instructions for setting up project development.
 1. install dependencies by running `npm run bootstrap`
 1. to run a development server: `npm run dev` (view the demos by accessing `<dev server url>`/demos/index.html)
 1. to run tests: `npm run test`
+1. to watch for changes: `npm run watch`
 
 ### Rebuild CSS for components
 
