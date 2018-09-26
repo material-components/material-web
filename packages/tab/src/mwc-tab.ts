@@ -141,7 +141,7 @@ export class Tab extends BaseElement {
             composed: true,
             cancelable: true
           })),
-      getOffsetLeft: () => this.mdcRoot.offsetLeft,
+      getOffsetLeft: () => this.offsetLeft,
       getOffsetWidth: () => this.mdcRoot.offsetWidth,
       getContentOffsetLeft: () => this._contentElement.offsetLeft,
       getContentOffsetWidth: () => this._contentElement.offsetWidth,
