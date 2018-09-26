@@ -1,3 +1,9 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 /**
 @license
 Copyright 2018 Google Inc. All Rights Reserved.
@@ -14,124 +20,101 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {FormableComponentElement, MDCWebComponentMixin, html} from '@material/mwc-base/formable-component-element.js';
-import {style} from './mwc-radio-css.js';
-import {SelectionController} from '@material/mwc-base/selection-controller.js';
-import {MDCRadio} from '@material/radio';
-
-export class MDCWCRadio extends MDCWebComponentMixin(MDCRadio) {}
-
-export class Radio extends FormableComponentElement {
-  static get ComponentClass() {
-    return MDCWCRadio;
-  }
-
-  static get componentSelector() {
-    return '.mdc-radio';
-  }
-
-  static get properties() {
-    return {
-      checked: {type: Boolean},
-      disabled: {type: Boolean},
-      value: {type: String},
-      name: {type: String},
-    };
-  }
-
-  constructor() {
-    super();
-    this._asyncComponent = true;
-    this.checked = false;
-    this.disabled = false;
-    this.name = '';
-    this.value = '';
-    this._boundInputChangeHandler = this._inputChangeHandler.bind(this);
-    this._boundInputFocusHandler = this._inputFocusHandler.bind(this);
-    this._boundInputBlurHandler = this._inputBlurHandler.bind(this);
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    this._selectionController = SelectionController.getController(this);
-    this._selectionController.register(this);
-    this._selectionController.update(this);
-  }
-
-  disconnectedCallback() {
-    this._selectionController.unregister(this);
-  }
-
-  renderStyle() {
-    return style;
-  }
-
-  render() {
-    const {checked, value, name} = this;
-    return html`
+import { FormElement, query, customElement, property, html, observer } from '@material/mwc-base/form-element';
+import { style } from './mwc-radio-css';
+import { SelectionController } from './selection-controller';
+// import {ripple} from '@material/mwc-ripple/ripple-directive';
+import MDCRadioFoundation from '@material/radio/foundation';
+let Radio = class Radio extends FormElement {
+    constructor() {
+        super(...arguments);
+        this.checked = false;
+        this.disabled = false;
+        this.value = '';
+        this.name = '';
+        this.mdcFoundationClass = MDCRadioFoundation;
+        this._selectionController = SelectionController.getController(this);
+        this._changeHandler = () => {
+            this.checked = this.formElement.checked;
+            this._selectionController.update(this);
+        };
+        this._focusHandler = () => {
+            this._selectionController.focus(this);
+        };
+        this._blurHandler = () => {
+            // this._selectionController.blur();
+        };
+        this._clickHandler = () => {
+            // Firefox has weird behavior with radios if they are not focused
+            this.formElement.focus();
+        };
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        this._selectionController.register(this);
+    }
+    disconnectedCallback() {
+        this._selectionController.unregister(this);
+    }
+    renderStyle() {
+        return style;
+    }
+    createAdapter() {
+        return Object.assign({}, super.createAdapter(), { getNativeControl: () => {
+                return this.formElement;
+            } });
+    }
+    render() {
+        const { checked, name, value, _changeHandler: change, _focusHandler: focus, _blurHandler: blur, _clickHandler: click } = this;
+        return html `
       ${this.renderStyle()}
       <div class="mdc-radio">
-        <input class="mdc-radio__native-control" type="radio"
-          .checked="${checked}" .name="${name}" .value="${value}"
-          @change="${this._boundInputChangeHandler}"
-          @focus="${this._boundInputFocusHandler}"
-          @blur="${this._boundInputBlurHandler}">
+        <input class="mdc-radio__native-control" type="radio" name="${name}" .checked="${checked}" .value="${value}"
+        @change="${change}"
+        @focus="${focus}"
+        @blur="${blur}"
+        @click="${click}"
+        >
         <div class="mdc-radio__background">
           <div class="mdc-radio__outer-circle"></div>
           <div class="mdc-radio__inner-circle"></div>
         </div>
       </div>`;
-  }
-
-  get disabled() {
-    return this._component && this._component.disabled;
-  }
-
-  set disabled(value) {
-    this.componentReady().then((component) => component.disabled = value);
-  }
-
-  get checked() {
-    return this.__checked;
-  }
-
-  set checked(value) {
-    const old = this.checked;
-    this.__checked = value;
-    this.requestUpdate('checked', old);
-    if (this._selectionController) {
-      this._selectionController.update(this);
     }
-  }
-
-  _inputChangeHandler(e) {
-    this.checked = e.target.checked;
-  }
-
-  _inputFocusHandler(e) {
-    this._selectionController.focus(e, this);
-  }
-
-  _inputBlurHandler(e) {
-    this._selectionController.blur(this);
-  }
-
-  get name() {
-    return this.__name;
-  }
-
-  set name(value) {
-    if (this._selectionController) {
-      this._selectionController.unregister(this);
+    firstUpdated() {
+        super.firstUpdated();
+        this._selectionController.update(this);
     }
-    const old = this.name;
-    this.__name = value;
-    this.requestUpdate('name', old);
-    if (this._selectionController) {
-      this._selectionController.register(this);
-      this._selectionController.update(this);
-    }
-  }
-}
-
-customElements.define('mwc-radio', Radio);
+};
+__decorate([
+    query('.mdc-radio')
+], Radio.prototype, "mdcRoot", void 0);
+__decorate([
+    query('input')
+], Radio.prototype, "formElement", void 0);
+__decorate([
+    property({ type: Boolean }),
+    observer(function (checked) {
+        this.mdcFoundation.setChecked(checked);
+    })
+], Radio.prototype, "checked", void 0);
+__decorate([
+    property({ type: Boolean }),
+    observer(function (disabled) {
+        this.mdcFoundation.setDisabled(disabled);
+    })
+], Radio.prototype, "disabled", void 0);
+__decorate([
+    property({ type: String }),
+    observer(function (value) {
+        this.mdcFoundation.setValue(value);
+    })
+], Radio.prototype, "value", void 0);
+__decorate([
+    property({ type: String })
+], Radio.prototype, "name", void 0);
+Radio = __decorate([
+    customElement('mwc-radio')
+], Radio);
+export { Radio };
+//# sourceMappingURL=mwc-radio.js.map

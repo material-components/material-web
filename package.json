@@ -14,9 +14,10 @@
     "lint": "npm-run-all --parallel lint:*",
     "test": "karma start --single-run",
     "bootstrap": "npm install && ./scripts/bootstrap.sh",
-    "build": "npm run build-styling && tsc -b packages/base packages/switch packages/ripple packages/button packages/fab packages/icon packages/checkbox",
+    "build": "npm run build-styling && tsc -b packages/base packages/switch packages/ripple packages/button packages/fab packages/icon packages/checkbox packages/radio",
     "build-styling": "./scripts/build-styling.sh",
-    "update-gh-pages": "npm run bootstrap && ./scripts/publish-demos.sh"
+    "update-gh-pages": "npm run bootstrap && ./scripts/publish-demos.sh",
+    "watch": "node scripts/watcher.js"
   },
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "^2.0.1",
@@ -55,6 +56,7 @@
     "mocha": "^5.0.0",
     "node-sass": "^4.9.3",
     "node-sass-import": "^2.0.1",
+    "node-watch": "^0.5.8",
     "npm-run-all": "^4.1.1",
     "parse5": "^4.0.0",
     "polyserve": "^0.27.10",
