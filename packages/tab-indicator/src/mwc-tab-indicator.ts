@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, observer, query, customElement, Adapter, Foundation, PropertyValues} from '@material/mwc-base/base-element';
+import {BaseElement, html, property, query, customElement, Adapter, Foundation, PropertyValues} from '@material/mwc-base/base-element';
 import {classMap} from 'lit-html/directives/classMap.js';
 import MDCSlidingTabIndicatorFoundation from '@material/tab-indicator/sliding-foundation.js';
 import MDCFadingTabIndicatorFoundation from '@material/tab-indicator/fading-foundation.js';
@@ -58,19 +58,6 @@ export class TabIndicator extends BaseElement {
 
   @property({type: Boolean})
   fade = false;
-
-
-  // TODO(sorvell): may not work without clientRect in activate?
-  // private _previousIndicatorClientRect: DOMRect|undefined;
-  @observer(function(this: TabIndicator, value: boolean) {
-    if (value) {
-      this.activate();
-    } else {
-      this.deactivate();
-    }
-  })
-  @property({type: Boolean})
-  active = false;
 
   renderStyle() {
     return style;

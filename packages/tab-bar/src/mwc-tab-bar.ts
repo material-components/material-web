@@ -61,10 +61,16 @@ export class TabBar extends BaseElement {
 
   @observer(async function(this: TabBar, value: number) {
     await this.updateComplete;
-    this.mdcFoundation.activateTab(value);
+    // only provoke the foundation if we are out of sync with it, i.e.
+    // ignore an foundation generated set.
+    if (value !== this._previousActiveIndex) {
+      this.mdcFoundation.activateTab(value);
+    }
   })
   @property({type: Number})
   activeIndex = 0;
+
+  private _previousActiveIndex = -1;
 
   private _handleTabInteraction = (e) => this.mdcFoundation.handleTabInteraction(e);
 
@@ -74,6 +80,7 @@ export class TabBar extends BaseElement {
     return style;
   }
 
+  // TODO(sorvell): can scroller be optional for perf?
   render() {
     return html`
       ${this.renderStyle()}
@@ -90,6 +97,10 @@ export class TabBar extends BaseElement {
     return this.tabsSlot.assignedNodes({flatten: true}).filter((e: Node) => e instanceof Tab) as Tab[];
   }
 
+  private _getTab(index) {
+    return this._getTabs()[index];
+  }
+
   createAdapter() {
     return {
       ...super.createAdapter(),
@@ -101,19 +112,20 @@ export class TabBar extends BaseElement {
       isRTL: () => window.getComputedStyle(this.mdcRoot).getPropertyValue('direction') === 'rtl',
       setActiveTab: (index) => this.mdcFoundation.activateTab(index),
       activateTabAtIndex: (index, clientRect) => {
-        const tab = this._getTabs()[index];
+        const tab = this._getTab(index);
         if (tab !== undefined) {
           tab.activate(clientRect);
         }
+        this._previousActiveIndex = index;
       },
       deactivateTabAtIndex: (index) => {
-        const tab = this._getTabs()[index];
+        const tab = this._getTab(index);
         if (tab !== undefined) {
           tab.deactivate()
         }
       },
       focusTabAtIndex: (index) => {
-        const tab = this._getTabs()[index];
+        const tab = this._getTab(index);
         if (tab !== undefined) {
           tab.focus();
         }
@@ -122,22 +134,16 @@ export class TabBar extends BaseElement {
       // if an update is pending or it has not yet updated. If this is necessary,
       // LitElement may need a `forceUpdate` method.
       getTabIndicatorClientRectAtIndex: (index) => {
-        const tab = this._getTabs()[index];
+        const tab = this._getTab(index);
         return tab !== undefined ? tab.computeIndicatorClientRect() : new DOMRect();
       },
       getTabDimensionsAtIndex: (index) => {
-        const tab = this._getTabs()[index];
+        const tab = this._getTab(index);
         return tab !== undefined ? tab.computeDimensions() :
             {rootLeft: 0, rootRight: 0, contentLeft: 0, contentRight: 0};
       },
       getPreviousActiveTabIndex: () => {
-        const tabs = this._getTabs();
-        for (let i = 0; i < tabs.length; i++) {
-          if (tabs[i].active) {
-            return i;
-          }
-        }
-        return -1;
+        return this._previousActiveIndex;
       },
       getFocusedTabIndex: () => {
         const tabElements = this._getTabs();
@@ -146,14 +152,22 @@ export class TabBar extends BaseElement {
       },
       getIndexOfTab: (tabToFind) => this._getTabs().indexOf(tabToFind),
       getTabListLength: () => this._getTabs().length,
-      notifyTabActivated: (index) => this.dispatchEvent(
+      notifyTabActivated: (index) => {
+        // Synchronize the tabs `activeIndex` to the foundation.
+        // This is needed when a tab is changed via a click, for example.
+        this.activeIndex = index;
+        this.dispatchEvent(
           new CustomEvent(MDCTabBarFoundation.strings.TAB_ACTIVATED_EVENT,
-          {detail: {index}, bubbles: true, cancelable: true}))
+            {detail: {index}, bubbles: true, cancelable: true}))
+      }
     };
   }
 
   firstUpdated() {}
 
+  // NOTE: Delay creating foundation until scroller is fully updated.
+  // This is necessary because the foundation/adapter synchronously addresses
+  // the scroller element.
   get updateComplete() {
     return super.updateComplete
       .then(() => this.scrollerElement.updateComplete)
@@ -162,18 +176,6 @@ export class TabBar extends BaseElement {
           this.createFoundation();
         }
       });
-  }
-
-  createFoundation() {
-    super.createFoundation();
-    // TODO(sorvell): seems dubious that you can specify activeIndex OR active on a tab...
-    const tabs = this._getTabs();
-    for (let i = 0; i < tabs.length; i++) {
-      if (tabs[i].active) {
-        this.activeIndex = i;
-        break;
-      }
-    }
   }
 
   scrollIndexIntoView(index: number) {

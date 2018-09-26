@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, observer, query, customElement, Adapter, Foundation} from '@material/mwc-base/base-element';
+import {BaseElement, html, property, query, customElement, Adapter, Foundation} from '@material/mwc-base/base-element';
 import {TabIndicator} from '@material/mwc-tab-indicator/mwc-tab-indicator.js';
 
 // Make TypeScript not remove the import.
@@ -62,20 +62,6 @@ export class Tab extends BaseElement {
   @property()
   icon = '';
 
-
-  // TODO(sorvell): may not work without clientRect in activate?
-  // private _previousIndicatorClientRect: DOMRect|undefined;
-  @observer(function(this: Tab, value: boolean) {
-    if (value) {
-      this.activate();
-    } else {
-      this.deactivate();
-    }
-  })
-
-  @property({type: Boolean})
-  active = false;
-
   @property({type: Boolean})
   isFadingIndicator = false;
 
@@ -107,7 +93,6 @@ export class Tab extends BaseElement {
   // TODO(sorvell): is this needed?
   private _handleClick = (e) => {
     this.mdcFoundation.handleClick(e);
-    this.active = true;
   }
 
   renderStyle() {
@@ -129,7 +114,7 @@ export class Tab extends BaseElement {
           ${this.isMinWidthIndicator ? this.renderIndicator() : ''}
         </span>
         ${this.isMinWidthIndicator ? '' : this.renderIndicator()}
-        <span class="mdc-tab__ripple" .ripple="${ripple({interactionNode: this})}"></span>
+        <span class="mdc-tab__ripple" .ripple="${ripple({interactionNode: this, unbounded: false})}"></span>
       </button>`;
   }
 
@@ -138,16 +123,17 @@ export class Tab extends BaseElement {
     const indicatorContent = false;
     return html`<mwc-tab-indicator
         .icon="${indicatorContent}"
-        .fade="${this.isFadingIndicator}"
-        .active="${this.active}"></mwc-tab-indicator>`;
+        .fade="${this.isFadingIndicator}"></mwc-tab-indicator>`;
   }
 
   createAdapter() {
     return {
       ...super.createAdapter(),
       setAttr: (attr, value) => this.mdcRoot.setAttribute(attr, value),
-      activateIndicator: (previousIndicatorClientRect) => (this._tabIndicator as TabIndicator).activate(previousIndicatorClientRect),
-      deactivateIndicator: () => (this._tabIndicator as TabIndicator).deactivate(),
+      activateIndicator: (previousIndicatorClientRect) =>
+          (this._tabIndicator as TabIndicator).activate(previousIndicatorClientRect),
+      deactivateIndicator: () =>
+          (this._tabIndicator as TabIndicator).deactivate(),
       notifyInteracted: () => this.dispatchEvent(
           new CustomEvent(MDCTabFoundation.strings.INTERACTED_EVENT, {
             detail: {tab: this},
@@ -163,8 +149,7 @@ export class Tab extends BaseElement {
     }
   }
 
-  activate(clientRect?: DOMRect) {
-
+  activate(clientRect: DOMRect) {
     this.mdcFoundation.activate(clientRect);
   }
 
