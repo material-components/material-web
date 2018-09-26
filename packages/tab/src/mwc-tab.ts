@@ -71,8 +71,8 @@ export class Tab extends BaseElement {
   @property({type: Boolean})
   isMinWidthIndicator = false;
 
-  @property({type: Boolean})
-  isIconIndicator = false;
+  @property()
+  indicatorIcon = '';
 
   @property({type: Boolean})
   stacked = false;
@@ -119,12 +119,11 @@ export class Tab extends BaseElement {
   }
 
   renderIndicator() {
-    // TODO(sorvell): indicatorContent is in a <slot>
-    const indicatorContent = false;
     return html`<mwc-tab-indicator
-        .icon="${indicatorContent}"
+        .icon="${this.indicatorIcon}"
         .fade="${this.isFadingIndicator}"></mwc-tab-indicator>`;
   }
+
 
   createAdapter() {
     return {

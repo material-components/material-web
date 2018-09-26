@@ -21,3 +21,9 @@ limitations under the License.
 .material-icons {
   @extend %material-icons;
 }
+
+:host {
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+}

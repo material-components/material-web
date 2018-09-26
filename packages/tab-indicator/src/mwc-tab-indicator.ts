@@ -66,6 +66,7 @@ export class TabIndicator extends BaseElement {
   render() {
     const contentClasses = {
       'mdc-tab-indicator__content--icon': this.icon,
+      'material-icons': this.icon,
       'mdc-tab-indicator__content--underline': !this.icon
     };
     return html`

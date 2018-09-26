@@ -16,3 +16,11 @@ limitations under the License.
 */
 
 @import '@material/tab-scroller/mdc-tab-scroller.scss';
+
+:host {
+  display: flex;
+}
+
+.mdc-tab-scroller {
+  flex: 1;
+}
