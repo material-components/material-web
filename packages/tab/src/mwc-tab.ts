@@ -95,6 +95,10 @@ export class Tab extends BaseElement {
     this.mdcFoundation.handleClick(e);
   }
 
+  createRenderRoot() {
+    return this.attachShadow({mode: 'open', delegatesFocus: true});
+  }
+
   renderStyle() {
     return style;
   }

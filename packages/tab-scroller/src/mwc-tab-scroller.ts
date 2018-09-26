@@ -58,6 +58,8 @@ export class TabScroller extends BaseElement {
 
   private _handleTransitionEnd = (e) => this.mdcFoundation.handleTransitionEnd(e);
 
+  private _srollbarHeight = -1;
+
   renderStyle() {
     return style;
   }
@@ -96,7 +98,14 @@ export class TabScroller extends BaseElement {
       getScrollAreaOffsetWidth: () => this.scrollAreaElement.offsetWidth,
       computeScrollAreaClientRect: () => this.scrollAreaElement.getBoundingClientRect(),
       computeScrollContentClientRect: () => this.scrollContentElement.getBoundingClientRect(),
-      computeHorizontalScrollbarHeight: () => util.computeHorizontalScrollbarHeight(document),
+      computeHorizontalScrollbarHeight: () => {
+        if (this._srollbarHeight === -1) {
+          this.scrollAreaElement.style.overflowX = 'scroll';
+          this._srollbarHeight = this.scrollAreaElement.offsetHeight - this.scrollAreaElement.clientHeight;;
+          this.scrollAreaElement.style.overflowX = '';
+        }
+        return this._srollbarHeight;
+      },
     };
   }
 
