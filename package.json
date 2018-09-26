@@ -14,8 +14,9 @@
     "lint": "npm-run-all --parallel lint:*",
     "test": "karma start --single-run",
     "bootstrap": "npm install && ./scripts/bootstrap.sh && npm run build",
-    "build": "npm run build-styling && tsc -b packages/base packages/switch packages/ripple packages/button packages/fab packages/icon packages/checkbox",
+    "build": "npm run build-styling && npm run build-typescript",
     "build-styling": "./scripts/build-styling.sh",
+    "build-typescript": "tsc -b --verbose packages/base packages/switch packages/ripple packages/button packages/fab packages/icon packages/checkbox",
     "update-gh-pages": "npm run bootstrap && ./scripts/publish-demos.sh",
     "watch": "npm run build && node scripts/watcher.js"
   },

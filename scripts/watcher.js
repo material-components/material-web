@@ -32,22 +32,30 @@ const watchOptions = {
   },
 };
 
-watch('packages', watchOptions, function() {
-  addToQueue();
+watch('packages', watchOptions, function(_event, fileName) {
+  addToQueue(fileName);
 });
 
 let updating = false;
 
-async function addToQueue() {
+async function addToQueue(fileName) {
   if (updating) {
     return;
   }
-  console.log('saw changes!');
   updating = true;
-  const {stdout, stderr} = await exec('npm run build');
-  console.log(stdout);
-  if (stderr) {
-    console.error('ERROR:', stderr);
+  console.log('saw changes!');
+  const buildSass = fileName.endsWith('scss');
+  let execPromise;
+  if (buildSass) {
+    execPromise = exec('npm run build');
+  } else {
+    execPromise = exec('npm run build-typescript');
+  }
+  try {
+    const {stdout} = await execPromise;
+    console.log(stdout);
+  } catch ({stderr}) {
+    console.log('ERROR:', stderr);
   }
   console.log('watcher build complete!');
   updating = false;
