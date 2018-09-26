@@ -14,8 +14,9 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/mwc-base": "^0.2",
-    "@material/mwc-ripple": "^0.2",
+    "@material/mwc-base": "^0.2.0",
+    "@material/mwc-ripple": "^0.2.0",
+    "@material/mwc-icon": "^0.2.0",
     "@material/mwc-tab-indicator": "^0.2.0",
     "@material/tab": "^0.39.3",
     "@polymer/lit-element": "^0.6.1"

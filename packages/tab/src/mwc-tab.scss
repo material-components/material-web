@@ -16,3 +16,8 @@ limitations under the License.
 */
 
 @import '@material/tab/mdc-tab.scss';
+@import "@material/mwc-icon/src/_mwc-icon.scss";
+
+.material-icons {
+  @extend %material-icons;
+}

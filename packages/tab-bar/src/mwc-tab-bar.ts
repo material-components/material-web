@@ -17,6 +17,11 @@ limitations under the License.
 import {BaseElement, html, property, observer, query, customElement, Adapter, Foundation} from '@material/mwc-base/base-element';
 import {Tab} from '@material/mwc-tab/mwc-tab.js';
 import {TabScroller} from '@material/mwc-tab-scroller/mwc-tab-scroller.js';
+
+// Make TypeScript not remove the imports.
+import '@material/mwc-tab/mwc-tab.js';
+import '@material/mwc-tab-scroller/mwc-tab-scroller.js';
+
 import MDCTabBarFoundation from '@material/tab-bar/foundation.js';
 import {style} from './mwc-tab-bar-css';
 
@@ -41,7 +46,7 @@ export declare var TabBarFoundation: {
 @customElement('mwc-tab-bar' as any)
 export class TabBar extends BaseElement {
 
-  protected mdcFoundation!: MDCTabBarFoundation;
+  protected mdcFoundation!: TabBarFoundation;
 
   protected readonly mdcFoundationClass: typeof TabBarFoundation = MDCTabBarFoundation;
 
@@ -54,7 +59,8 @@ export class TabBar extends BaseElement {
   @query('slot')
   protected tabsSlot!: HTMLSlotElement
 
-  @observer(function(this: TabBar, value: number) {
+  @observer(async function(this: TabBar, value: number) {
+    await this.updateComplete;
     this.mdcFoundation.activateTab(value);
   })
   @property({type: Number})
@@ -80,14 +86,14 @@ export class TabBar extends BaseElement {
   }
 
   // TODO(sorvell): probably want to memoize this and use a `slotChange` event
-  private _getTabs(): Array<Tab> {
-    return this.tabsSlot.assignedNodes({flatten: true}).filter((e: Node) => e instanceof Tab) as Array<Tab>;
+  private _getTabs() {
+    return this.tabsSlot.assignedNodes({flatten: true}).filter((e: Node) => e instanceof Tab) as Tab[];
   }
 
   createAdapter() {
     return {
       ...super.createAdapter(),
-      scrollTo: (scrollX) => this.scrollerElement.scrollTo(scrollX),
+      scrollTo: (scrollX) => this.scrollerElement.scrollToPosition(scrollX),
       incrementScroll: (scrollXIncrement) => this.scrollerElement.incrementScrollPosition(scrollXIncrement),
       getScrollPosition: () => this.scrollerElement.getScrollPosition(),
       getScrollContentWidth: () => this.scrollerElement.getScrollContentWidth(),
@@ -112,6 +118,9 @@ export class TabBar extends BaseElement {
           tab.focus();
         }
       },
+      // TODO(sorvell): tab may not be able to synchronously answer `computeIndicatorClientRect`
+      // if an update is pending or it has not yet updated. If this is necessary,
+      // LitElement may need a `forceUpdate` method.
       getTabIndicatorClientRectAtIndex: (index) => {
         const tab = this._getTabs()[index];
         return tab !== undefined ? tab.computeIndicatorClientRect() : new DOMRect();
@@ -143,6 +152,18 @@ export class TabBar extends BaseElement {
     };
   }
 
+  firstUpdated() {}
+
+  get updateComplete() {
+    return super.updateComplete
+      .then(() => this.scrollerElement.updateComplete)
+      .then(() => {
+        if (this.mdcFoundation === undefined) {
+          this.createFoundation();
+        }
+      });
+  }
+
   createFoundation() {
     super.createFoundation();
     // TODO(sorvell): seems dubious that you can specify activeIndex OR active on a tab...
@@ -155,7 +176,7 @@ export class TabBar extends BaseElement {
     }
   }
 
-  scrollIndexIntoView(index: Number) {
+  scrollIndexIntoView(index: number) {
     this.mdcFoundation.scrollIntoView(index);
   }
 
