@@ -168,4 +168,9 @@ export class Tab extends BaseElement {
     return this.tabIndicator.computeContentClientRect();
   }
 
+  // NOTE: needed only for ShadyDOM where delegatesFocus is not implemented
+  focus() {
+    this.mdcRoot.focus();
+  }
+
 }
