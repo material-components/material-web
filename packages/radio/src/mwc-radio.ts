@@ -17,7 +17,7 @@ limitations under the License.
 import {FormElement, query, customElement, Foundation, Adapter, property, html, observer} from '@material/mwc-base/form-element';
 import {style} from './mwc-radio-css';
 import {SelectionController} from './selection-controller';
-// import {ripple} from '@material/mwc-ripple/ripple-directive';
+import {ripple} from '@material/mwc-ripple/ripple-directive';
 import MDCRadioFoundation from '@material/radio/foundation';
 
 declare global {
@@ -74,15 +74,27 @@ export class Radio extends FormElement {
 
   protected mdcFoundation!: RadioFoundation;
 
-  private _selectionController = SelectionController.getController(this);
+  private _selectionController: SelectionController | null = null;
+
+  constructor() {
+    super();
+    // Selection Controller is only needed for native ShadowDOM
+    if (!window['ShadyDOM'] || !window['ShadyDOM']['inUse']) {
+      this._selectionController = SelectionController.getController(this);
+    }
+  }
 
   connectedCallback() {
     super.connectedCallback();
-    this._selectionController.register(this);
+    if (this._selectionController) {
+      this._selectionController.register(this);
+    }
   }
 
   disconnectedCallback() {
-    this._selectionController.unregister(this);
+    if (this._selectionController) {
+      this._selectionController.unregister(this);
+    }
   }
 
   renderStyle() {
@@ -100,15 +112,15 @@ export class Radio extends FormElement {
 
   private _changeHandler = () => {
     this.checked = this.formElement.checked;
-    this._selectionController.update(this);
+    if (this._selectionController) {
+      this._selectionController.update(this);
+    }
   }
 
   private _focusHandler = () => {
-    this._selectionController.focus(this)
-  }
-
-  private _blurHandler = () => {
-    // this._selectionController.blur();
+    if (this._selectionController) {
+      this._selectionController.focus(this);
+    }
   }
 
   private _clickHandler = () => {
@@ -117,16 +129,14 @@ export class Radio extends FormElement {
   }
 
   render() {
-    const {checked, name, value, _changeHandler: change, _focusHandler: focus, _blurHandler: blur, _clickHandler: click} = this;
+    const {checked, name, value, _changeHandler: change, _focusHandler: focus, _clickHandler: click} = this;
     return html`
       ${this.renderStyle()}
-      <div class="mdc-radio">
+      <div class="mdc-radio" .ripple="${ripple()}">
         <input class="mdc-radio__native-control" type="radio" name="${name}" .checked="${checked}" .value="${value}"
         @change="${change}"
         @focus="${focus}"
-        @blur="${blur}"
-        @click="${click}"
-        >
+        @click="${click}">
         <div class="mdc-radio__background">
           <div class="mdc-radio__outer-circle"></div>
           <div class="mdc-radio__inner-circle"></div>
@@ -136,6 +146,8 @@ export class Radio extends FormElement {
 
   firstUpdated() {
     super.firstUpdated();
-    this._selectionController.update(this);
+    if (this._selectionController) {
+      this._selectionController.update(this);
+    }
   }
 }

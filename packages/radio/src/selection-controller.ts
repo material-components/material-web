@@ -64,7 +64,10 @@ export class SelectionController {
   }
 
   protected keyDownHandler(e: KeyboardEvent) {
-    const element = e.target as Radio;
+    if (!(e.target instanceof Radio)) {
+      return;
+    }
+    const element = e.target;
     if (!this.has(element)) {
       return;
     }
@@ -120,27 +123,7 @@ export class SelectionController {
     this.focusedSet = set;
     if (currentFocusedSet != set && set.selected && set.selected != element) {
       set.selected!.formElement.focus();
-      // TODO(sorvell): needed because MDC Ripple delays focus/blur until RAF.
-      requestAnimationFrame(() =>{
-        // console.log('focus', set.selected);
-        // set.selected!.focus();
-      });
     }
-  }
-
-  /**
-   * Helps track the focused selection group by setting it to null asynchronously
-   * on blur if no focus event is received.
-   */
-  blur() {
-    // Only manage focus state when using keyboard
-    if (this.mouseIsDown) {
-      return;
-    }
-    this.blurRaf = requestAnimationFrame(() => {
-      console.log('blur!');
-      this.focusedSet = null;
-    });
   }
 
   getOrdered(element: Radio) {
