@@ -28,3 +28,12 @@ limitations under the License.
   display: flex;
   justify-content: center;
 }
+
+.mdc-tab {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.mdc-tab::-moz-focus-inner {
+  border: 0;
+}
