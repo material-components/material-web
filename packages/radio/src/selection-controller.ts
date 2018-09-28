@@ -45,8 +45,6 @@ export class SelectionController {
 
   private mouseIsDown = false;
 
-  private blurRaf: number = 0;
-
   private updating = false;
 
   static getController(element: HTMLElement) {
@@ -117,7 +115,6 @@ export class SelectionController {
     if (this.mouseIsDown) {
       return;
     }
-    cancelAnimationFrame(this.blurRaf);
     const set = this.getSet(element.name);
     const currentFocusedSet = this.focusedSet;
     this.focusedSet = set;
