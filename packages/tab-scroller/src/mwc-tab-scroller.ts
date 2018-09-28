@@ -43,7 +43,7 @@ export class TabScroller extends BaseElement {
 
   protected mdcFoundation!: MDCTabScrollerFoundation;
 
-  protected mdcFoundationClass: (typeof TabScrollerFoundation) = MDCTabScrollerFoundation;
+  protected mdcFoundationClass: typeof TabScrollerFoundation = MDCTabScrollerFoundation;
 
   @query('.mdc-tab-scroller')
   mdcRoot!: HTMLElement;
@@ -69,7 +69,6 @@ export class TabScroller extends BaseElement {
       ${this.renderStyle()}
       <div class="mdc-tab-scroller">
         <div class="mdc-tab-scroller__scroll-area"
-            @wheel="${this._handleInteraction}"
             @touchstart="${this._handleInteraction}"
             @pointerdown="${this._handleInteraction}"
             @mousedown="${this._handleInteraction}"
@@ -84,15 +83,18 @@ export class TabScroller extends BaseElement {
   createAdapter() {
     return {
       ...super.createAdapter(),
-      eventTargetMatchesSelector: (evtTarget, selector) => {
+      eventTargetMatchesSelector: (evtTarget: EventTarget, selector: string) => {
         const MATCHES = util.getMatchesProperty(HTMLElement.prototype);
         return evtTarget[MATCHES](selector);
       },
-      addScrollAreaClass: (className) => this.scrollAreaElement.classList.add(className),
-      setScrollAreaStyleProperty: (prop, value) => this.scrollAreaElement.style.setProperty(prop, value),
-      setScrollContentStyleProperty: (prop, value) => this.scrollContentElement.style.setProperty(prop, value),
-      getScrollContentStyleValue: (propName) => window.getComputedStyle(this.scrollContentElement).getPropertyValue(propName),
-      setScrollAreaScrollLeft: (scrollX) => this.scrollAreaElement.scrollLeft = scrollX,
+      addScrollAreaClass: (className: string) => this.scrollAreaElement.classList.add(className),
+      setScrollAreaStyleProperty: (prop: string, value: string) =>
+          this.scrollAreaElement.style.setProperty(prop, value),
+      setScrollContentStyleProperty: (prop: string, value: string) =>
+          this.scrollContentElement.style.setProperty(prop, value),
+      getScrollContentStyleValue: (propName: string) =>
+          window.getComputedStyle(this.scrollContentElement).getPropertyValue(propName),
+      setScrollAreaScrollLeft: (scrollX: number) => this.scrollAreaElement.scrollLeft = scrollX,
       getScrollAreaScrollLeft: () => this.scrollAreaElement.scrollLeft,
       getScrollContentOffsetWidth: () => this.scrollContentElement.offsetWidth,
       getScrollAreaOffsetWidth: () => this.scrollAreaElement.offsetWidth,

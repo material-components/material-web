@@ -86,6 +86,9 @@ export abstract class BaseElement extends LitElement {
    * Create and attach the MDC Foundation to the instance
    */
   protected createFoundation() {
+    if (this.mdcFoundation) {
+      this.mdcFoundation.destroy();
+    }
     this.mdcFoundation = new this.mdcFoundationClass(this.createAdapter());
     this.mdcFoundation.init();
   }

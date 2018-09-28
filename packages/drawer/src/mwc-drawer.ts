@@ -19,8 +19,23 @@ import {classMap} from 'lit-html/directives/classMap.js';
 import MDCModalDrawerFoundation from '@material/drawer/modal/foundation.js';
 import MDCDismissibleDrawerFoundation from '@material/drawer/dismissible/foundation.js';
 import {strings} from '@material/drawer/constants.js';
-//import {MDCModalDrawerFoundation, MDCDismissibleDrawerFoundation, strings, util, createFocusTrap} from '@material/drawer/foundation.js';
 import {style} from './mwc-drawer-css';
+
+// TODO(dfreedm): Remove when typescript implements this interface (3.1)
+declare global {
+  interface GetRootNodeOptions {
+    composed?: boolean;
+  }
+  interface Node {
+    getRootNode(options?: GetRootNodeOptions): Node;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'mwc-drawer': Drawer;
+  }
+}
 
 export interface DrawerFoundation extends Foundation {
   open(): void;
@@ -38,37 +53,28 @@ export class Drawer extends BaseElement {
   @query('.mdc-drawer')
   mdcRoot!: HTMLElement;
 
-  protected mdcFoundation: MDCDismissibleDrawerFoundation|MDCModalDrawerFoundation|undefined;
+  protected mdcFoundation!: MDCDismissibleDrawerFoundation|MDCModalDrawerFoundation;
 
-  protected get mdcFoundationClass(): (typeof DrawerFoundation) {
-    if (this.type === 'modal') {
-      return MDCModalDrawerFoundation;
-    } else {
-      return MDCDismissibleDrawerFoundation;
-    }
+  protected get mdcFoundationClass(): typeof DrawerFoundation {
+    return this.type === 'modal' ? MDCModalDrawerFoundation : MDCDismissibleDrawerFoundation;
   }
 
   protected createAdapter() {
     return {
       ...super.createAdapter(),
-      elementHasClass: (element, className) => element.classList.contains(className),
+      elementHasClass: (element: HTMLElement, className: string) => element.classList.contains(className),
       computeBoundingRect: () => this.mdcRoot.getBoundingClientRect(),
       saveFocus: () => {
-        this._previousFocus = document.activeElement as HTMLElement;
+        // Note, casting to avoid cumbersome runtime check.
+        this._previousFocus = (this.getRootNode() as any as DocumentOrShadowRoot).activeElement as HTMLElement|null;
       },
       restoreFocus: () => {
         const previousFocus = this._previousFocus && this._previousFocus.focus;
-        if (this.mdcRoot.contains(document.activeElement) && previousFocus) {
+        // Note, casting to avoid cumbersome runtime check.
+        const activeElement = (this.getRootNode() as any as DocumentOrShadowRoot).activeElement;
+        if (activeElement && this.mdcRoot.contains(activeElement) && previousFocus) {
           this._previousFocus!.focus();
         }
-      },
-      // TODO(sorvell): List integration like this may not work. Need to understand
-      // why this is here.
-      focusActiveNavigationItem: () => {
-        // const activeNavItemEl = this._root.querySelector(`.${MDCListFoundation.cssClasses.LIST_ITEM_ACTIVATED_CLASS}`)!;
-        // if (activeNavItemEl) {
-        //   (activeNavItemEl as HTMLElement).focus();
-        // }
       },
       notifyClose: () => {
         this.open = false;
@@ -78,14 +84,19 @@ export class Drawer extends BaseElement {
         this.open = true;
         this.dispatchEvent(new Event(strings.OPEN_EVENT, {bubbles: true, cancelable: true}))
       },
-      trapFocus: () => {/*this._focusTrap.activate()*/},
-      releaseFocus: () => {/*this._focusTrap.deactivate()*/},
+      // TODO(sorvell): Implement list focusing integration.
+      focusActiveNavigationItem: () => {
+      },
+      // TODO(sorvell): integrate focus trapping.
+      trapFocus: () => {},
+      releaseFocus: () => {},
     }
   }
 
   // TODO(sorvell): integrate focus trapping.
-  //private _focusTrap = undefined;
-  private _previousFocus: HTMLElement|undefined = undefined;
+  private _previousFocus: HTMLElement|null = null;
+
+  private _handleScrimClick = () => this.mdcFoundation.handleScrimClick();
 
   @observer(function(this: Drawer, value: boolean) {
     if (this.type === '') {
@@ -113,54 +124,33 @@ export class Drawer extends BaseElement {
   render() {
     const dismissible = this.type === 'dismissible' || this.type === 'modal';
     const modal = this.type === 'modal';
+    const header = this.hasHeader ? html`
+      <div class="mdc-drawer__header">
+        <h3 class="mdc-drawer__title"><slot name="title"></slot></h3>
+        <h6 class="mdc-drawer__subtitle"><slot name="subtitle"></slot></h6>
+        <slot name="header"></slot>
+      </div>
+      ` : '';
     return html`
       ${this.renderStyle()}
       <aside class="mdc-drawer
           ${classMap({'mdc-drawer--dismissible': dismissible, 'mdc-drawer--modal': modal})}">
-        ${this.hasHeader ? html`
-        <div class="mdc-drawer__header">
-          <h3 class="mdc-drawer__title"><slot name="title"></slot></h3>
-          <h6 class="mdc-drawer__subtitle"><slot name="subtitle"></slot></h6>
-          <slot name="header"></slot>
-        </div>
-        ` : ''}
+        ${header}
         <div class="mdc-drawer__content"><slot></slot></div>
       </aside>
-      ${modal ? html`<div class="mdc-drawer-scrim" @click="${() => this.mdcFoundation.handleScrimClick()}"></div>` : ''}
+      ${modal ? html`<div class="mdc-drawer-scrim" @click="${this._handleScrimClick}"></div>` : ''}
       `;
   }
 
   // note, we avoid calling `super.firstUpdated()` to control when `createFoundation()` is called.
   firstUpdated() {
-    this.mdcRoot.addEventListener('keydown', (e) => {
-      if (this.mdcFoundation) {
-        this.mdcFoundation.handleKeydown(e);
-      }
-    });
-    this.mdcRoot.addEventListener('transitionend', (e) => {
-      if (this.mdcFoundation) {
-        this.mdcFoundation.handleTransitionEnd(e);
-      }
-    });
-    //this._focusTrap = util.createFocusTrapInstance(this.mdcRoot, createFocusTrap);
+    this.mdcRoot.addEventListener('keydown', (e) => this.mdcFoundation.handleKeydown(e));
+    this.mdcRoot.addEventListener('transitionend', (e) => this.mdcFoundation.handleTransitionEnd(e));
   }
 
   updated(changedProperties: PropertyValues) {
     if (changedProperties.has('type')) {
       this.createFoundation();
     }
-  }
-
-  createFoundation() {
-    if (this.mdcFoundation !== undefined) {
-      this.mdcFoundation.destroy();
-    }
-    super.createFoundation();
-  }
-}
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'mwc-drawer': Drawer;
   }
 }

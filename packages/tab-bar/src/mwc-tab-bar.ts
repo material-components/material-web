@@ -104,27 +104,27 @@ export class TabBar extends BaseElement {
   createAdapter() {
     return {
       ...super.createAdapter(),
-      scrollTo: (scrollX) => this.scrollerElement.scrollToPosition(scrollX),
-      incrementScroll: (scrollXIncrement) => this.scrollerElement.incrementScrollPosition(scrollXIncrement),
+      scrollTo: (scrollX: number) => this.scrollerElement.scrollToPosition(scrollX),
+      incrementScroll: (scrollXIncrement: number) => this.scrollerElement.incrementScrollPosition(scrollXIncrement),
       getScrollPosition: () => this.scrollerElement.getScrollPosition(),
       getScrollContentWidth: () => this.scrollerElement.getScrollContentWidth(),
       getOffsetWidth: () => this.mdcRoot.offsetWidth,
       isRTL: () => window.getComputedStyle(this.mdcRoot).getPropertyValue('direction') === 'rtl',
-      setActiveTab: (index) => this.mdcFoundation.activateTab(index),
-      activateTabAtIndex: (index, clientRect) => {
+      setActiveTab: (index: number) => this.mdcFoundation.activateTab(index),
+      activateTabAtIndex: (index: number, clientRect: ClientRect) => {
         const tab = this._getTab(index);
         if (tab !== undefined) {
           tab.activate(clientRect);
         }
         this._previousActiveIndex = index;
       },
-      deactivateTabAtIndex: (index) => {
+      deactivateTabAtIndex: (index: number) => {
         const tab = this._getTab(index);
         if (tab !== undefined) {
           tab.deactivate()
         }
       },
-      focusTabAtIndex: (index) => {
+      focusTabAtIndex: (index: number) => {
         const tab = this._getTab(index);
         if (tab !== undefined) {
           tab.focus();
@@ -133,11 +133,11 @@ export class TabBar extends BaseElement {
       // TODO(sorvell): tab may not be able to synchronously answer `computeIndicatorClientRect`
       // if an update is pending or it has not yet updated. If this is necessary,
       // LitElement may need a `forceUpdate` method.
-      getTabIndicatorClientRectAtIndex: (index) => {
+      getTabIndicatorClientRectAtIndex: (index: number) => {
         const tab = this._getTab(index);
         return tab !== undefined ? tab.computeIndicatorClientRect() : new DOMRect();
       },
-      getTabDimensionsAtIndex: (index) => {
+      getTabDimensionsAtIndex: (index: number) => {
         const tab = this._getTab(index);
         return tab !== undefined ? tab.computeDimensions() :
             {rootLeft: 0, rootRight: 0, contentLeft: 0, contentRight: 0};
@@ -150,9 +150,9 @@ export class TabBar extends BaseElement {
         const activeElement = (this as any).getRootNode().activeElement;
         return tabElements.indexOf(activeElement);
       },
-      getIndexOfTab: (tabToFind) => this._getTabs().indexOf(tabToFind),
+      getIndexOfTab: (tabToFind: Tab) => this._getTabs().indexOf(tabToFind),
       getTabListLength: () => this._getTabs().length,
-      notifyTabActivated: (index) => {
+      notifyTabActivated: (index: number) => {
         // Synchronize the tabs `activeIndex` to the foundation.
         // This is needed when a tab is changed via a click, for example.
         this.activeIndex = index;
@@ -163,11 +163,10 @@ export class TabBar extends BaseElement {
     };
   }
 
-  firstUpdated() {}
-
   // NOTE: Delay creating foundation until scroller is fully updated.
   // This is necessary because the foundation/adapter synchronously addresses
   // the scroller element.
+  firstUpdated() {}
   get updateComplete() {
     return super.updateComplete
       .then(() => this.scrollerElement.updateComplete)

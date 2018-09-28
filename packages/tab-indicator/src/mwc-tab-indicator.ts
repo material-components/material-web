@@ -43,7 +43,7 @@ export class TabIndicator extends BaseElement {
 
   protected mdcFoundation!: MDCSlidingTabIndicatorFoundation|MDCFadingTabIndicatorFoundation;
 
-  protected get mdcFoundationClass(): (typeof TabIndicatorFoundation) {
+  protected get mdcFoundationClass(): typeof TabIndicatorFoundation {
     return this.fade ? MDCFadingTabIndicatorFoundation : MDCSlidingTabIndicatorFoundation;
   }
 
@@ -87,7 +87,8 @@ export class TabIndicator extends BaseElement {
     return {
       ...super.createAdapter(),
       computeContentClientRect: () => this.contentElement.getBoundingClientRect(),
-      setContentStyleProperty: (prop, value) => this.contentElement.style.setProperty(prop, value)
+      setContentStyleProperty: (prop: string, value: string) =>
+          this.contentElement.style.setProperty(prop, value)
     };
   }
 
@@ -102,7 +103,7 @@ export class TabIndicator extends BaseElement {
     return this.mdcFoundation.computeContentClientRect();
   }
 
-  activate(previousIndicatorClientRect?: DOMRect) {
+  activate(previousIndicatorClientRect?: ClientRect) {
     this.mdcFoundation.activate(previousIndicatorClientRect);
   }
 

@@ -33,7 +33,7 @@ declare global {
 
 export interface TabFoundation extends Foundation {
   handleClick(): void;
-  activate(clientRect: DOMRect): void;
+  activate(clientRect: ClientRect): void;
   deactivate(): void;
   computeDimensions(): {rootLeft: number, rootRight: number, contentLeft: number, contentRight: number}
 }
@@ -90,7 +90,6 @@ export class Tab extends BaseElement {
   @query('.mdc-tab__content')
   private _contentElement!: HTMLElement;
 
-  // TODO(sorvell): is this needed?
   private _handleClick = (e) => {
     this.mdcFoundation.handleClick(e);
   }
@@ -132,8 +131,8 @@ export class Tab extends BaseElement {
   createAdapter() {
     return {
       ...super.createAdapter(),
-      setAttr: (attr, value) => this.mdcRoot.setAttribute(attr, value),
-      activateIndicator: (previousIndicatorClientRect) =>
+      setAttr: (attr: string, value: string) => this.mdcRoot.setAttribute(attr, value),
+      activateIndicator: (previousIndicatorClientRect: ClientRect) =>
           (this._tabIndicator as TabIndicator).activate(previousIndicatorClientRect),
       deactivateIndicator: () =>
           (this._tabIndicator as TabIndicator).deactivate(),
@@ -152,7 +151,7 @@ export class Tab extends BaseElement {
     }
   }
 
-  activate(clientRect: DOMRect) {
+  activate(clientRect: ClientRect) {
     this.mdcFoundation.activate(clientRect);
   }
 

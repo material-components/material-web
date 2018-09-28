@@ -22,6 +22,12 @@ import MDCFixedTopAppBarFoundation from '@material/top-app-bar/fixed/foundation.
 import {strings} from '@material/top-app-bar/constants.js';
 import {style} from './mwc-top-app-bar-css';
 
+declare global {
+  interface HTMLElementTagNameMap {
+    'mwc-top-app-bar': TopAppBar;
+  }
+}
+
 export interface TopAppBarFoundation extends Foundation {
 }
 
@@ -60,10 +66,10 @@ export class TopAppBar extends BaseElement {
   @property({type: Boolean, reflect: true})
   extraRow = false;
 
-  private _scrollTarget: HTMLElement|undefined;
+  private _scrollTarget!: HTMLElement|Window;
 
   get scrollTarget() {
-    return this._scrollTarget || window as any;
+    return this._scrollTarget || window as Window;
   }
 
   set scrollTarget(value) {
@@ -87,6 +93,12 @@ export class TopAppBar extends BaseElement {
       'mdc-top-app-bar--prominent': this.type === 'prominent' || this.type === 'prominentFixed',
       'mdc-top-app-bar--dense': this.dense
     };
+    const extraRow = this.extraRow ? html`
+      <div class="mdc-top-app-bar__row">
+        <section class="mdc-top-app-bar__section">
+          <slot name="extraRow"></slot>
+        </section>
+      </div>` : '';
     return html`
       ${this.renderStyle()}
       <header class="mdc-top-app-bar ${classMap(classes)}">
@@ -99,32 +111,17 @@ export class TopAppBar extends BaseElement {
           <slot name="actionItems"></slot>
         </section>
       </div>
-      ${this.extraRow ? html`
-        <div class="mdc-top-app-bar__row">
-          <section class="mdc-top-app-bar__section">
-            <slot name="extraRow"></slot>
-          </section>
-        </div>` : ''}
+      ${extraRow}
     </header>`;
-  }
-
-  // override that prevents `super.firstUpdated` since we are controlling when `createFoundation` is called.
-  firstUpdated() {}
-
-  updated(changedProperties: PropertyValues) {
-    // update foundation if `type` or `scrollTarget` changes
-    if (changedProperties.has('type') || changedProperties.has('scrollTarget')) {
-      this.createFoundation();
-    }
   }
 
   protected createAdapter() {
     return {
       ...super.createAdapter(),
-      setStyle: (property, value) => this.mdcRoot.style.setProperty(property, value),
+      setStyle: (property: string, value: string) => this.mdcRoot.style.setProperty(property, value),
       getTopAppBarHeight: () => this.mdcRoot.clientHeight,
       // TODO(sorvell): don't understand why the top-app-bar knows about navigation
-      registerNavigationIconInteractionHandler: (type, handler) => {
+      registerNavigationIconInteractionHandler: (type: string, handler: EventListenerOrEventListenerObject) => {
         if (this._navIconSlot) {
           this._navIconSlot.addEventListener(type, handler);
         }
@@ -137,31 +134,36 @@ export class TopAppBar extends BaseElement {
       notifyNavigationIconClicked: () => {
         this.dispatchEvent(new Event(strings.NAVIGATION_EVENT, {bubbles: true, cancelable: true}));
       },
-      registerScrollHandler: (handler) => this.scrollTarget.addEventListener('scroll', handler),
-      deregisterScrollHandler: (handler) => this.scrollTarget.removeEventListener('scroll', handler),
-      registerResizeHandler: (handler) => window.addEventListener('resize', handler),
-      deregisterResizeHandler: (handler) => window.removeEventListener('resize', handler),
+      registerScrollHandler: (handler: EventListenerOrEventListenerObject) =>
+          this.scrollTarget.addEventListener('scroll', handler),
+      deregisterScrollHandler: (handler: EventListenerOrEventListenerObject) =>
+          this.scrollTarget.removeEventListener('scroll', handler),
+      registerResizeHandler: (handler: EventListenerOrEventListenerObject) =>
+          window.addEventListener('resize', handler),
+      deregisterResizeHandler: (handler: EventListenerOrEventListenerObject) =>
+          window.removeEventListener('resize', handler),
       getViewportScrollY: () => this.scrollTarget[this.scrollTarget === window ? 'pageYOffset' : 'scrollTop'],
       getTotalActionItems: () =>
         this._actionItemsSlot.assignedNodes({flatten: true}).length,
     };
   }
 
-  createFoundation() {
-    if (this.mdcFoundation) {
-      this.mdcFoundation.destroy();
+  // override that prevents `super.firstUpdated` since we are controlling when `createFoundation` is called.
+  firstUpdated() {}
+
+  updated(changedProperties: PropertyValues) {
+    // update foundation if `type` or `scrollTarget` changes
+    if (changedProperties.has('type') || changedProperties.has('scrollTarget')) {
+      this.createFoundation();
     }
+  }
+
+  createFoundation() {
     super.createFoundation();
     const windowScroller = this.scrollTarget === window;
     // we add support for top-app-bar's tied to an element scroller.
     this.mdcRoot.style.position = windowScroller ? '' : 'absolute';
     // TODO(sorvell): not sure why this is necessary but the MDC demo does it.
     this.mdcRoot.style.top = windowScroller ? '0px' : '';
-  }
-}
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'mwc-top-app-bar': TopAppBar;
   }
 }
