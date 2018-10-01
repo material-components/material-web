@@ -13,7 +13,7 @@
     "@material/mwc-list": "^0.2.0",
     "@material/mwc-menu": "^0.2.0",
     "@material/select": "^0.35.0",
-    "@polymer/lit-element": "^0.6.0"
+    "@polymer/lit-element": "^0.6.1"
   },
   "devDependencies": {
   },

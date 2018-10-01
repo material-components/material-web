@@ -15,18 +15,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/tabs/mdc-tabs.scss';
-@import '@material/mwc-icon/mwc-icon.scss';
-
-.material-icons {
-  @extend %material-icons;
-}
+@import '@material/top-app-bar/mdc-top-app-bar.scss';
 
 :host {
-  display: table-cell;
+  display: inline-flex;
 }
 
-.mdc-tab {
-  display: inline-block;
-  padding-top: 6px;
+.mdc-top-app-bar {
+  flex: 1;
+}
+
+.mdc-top-app-bar--prominent {
+  slot[name="navigationIcon"]::slotted(*),
+  slot[name="actionItems"]::slotted(*) {
+    align-self: flex-start;
+  }
+}
+
+.mdc-top-app-bar--short-collapsed {
+  slot[name="actionItems"]::slotted(*) {
+    transition: padding 150ms $mdc-animation-standard-curve-timing-function;
+  }
 }

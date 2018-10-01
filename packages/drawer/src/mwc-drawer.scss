@@ -15,9 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/tabs/mdc-tabs.scss';
-
-:host {
-  display: block;
-  margin: auto;
-}
+@import '@material/drawer/mdc-drawer.scss';
+@import '@material/drawer/modal/mdc-drawer-modal.scss';
+@import '@material/drawer/dismissible/mdc-drawer-dismissible.scss';

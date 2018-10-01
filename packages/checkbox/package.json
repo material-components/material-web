@@ -15,7 +15,7 @@
   "dependencies": {
     "@material/checkbox": "^0.39.3",
     "@material/mwc-base": "^0.2.0",
-    "@polymer/lit-element": "^0.6.0"
+    "@polymer/lit-element": "^0.6.1"
   },
   "publishConfig": {
     "access": "public"

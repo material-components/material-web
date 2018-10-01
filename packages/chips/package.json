@@ -12,7 +12,7 @@
     "@material/chips": "^0.35.0",
     "@material/mwc-base": "^0.2.0",
     "@material/mwc-icon": "^0.2.0",
-    "@polymer/lit-element": "^0.6.0"
+    "@polymer/lit-element": "^0.6.1"
   },
   "devDependencies": {
   },

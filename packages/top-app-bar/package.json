@@ -1,0 +1,27 @@
+{
+  "name": "@material/mwc-top-app-bar",
+  "version": "0.2.0",
+  "description": "",
+  "main": "mwc-top-app-bar.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/material-components/material-components-web-components.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@material/mwc-base": "^0.2",
+    "@material/top-app-bar": "^0.39.3",
+    "@polymer/lit-element": "^0.6.1"
+  },
+  "devDependencies": {
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "private": true
+}

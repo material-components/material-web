@@ -15,9 +15,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/tabs/mdc-tabs.scss';
-@import '@material/mwc-icon/mwc-icon.scss';
+@import '@material/tab/mdc-tab.scss';
+@import "@material/mwc-icon/src/_mwc-icon.scss";
 
 .material-icons {
   @extend %material-icons;
+}
+
+:host {
+  outline: none;
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.mdc-tab {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.mdc-tab::-moz-focus-inner {
+  border: 0;
 }

@@ -1,0 +1,107 @@
+<!doctype html>
+<!--
+@license
+Copyright 2018 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+<head>
+  <title>drawer demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-drawer/mwc-drawer.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
+  <link rel="stylesheet" href="demo-component.css">
+  <style>
+    .drawerView {
+      border: 1px solid gray;
+      display: flex;
+      margin-bottom: 36px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .drawerContent {
+      padding: 24px 8px;
+    }
+
+    .mainContent {
+      min-height: 300px;
+      padding: 8px;
+      position: relative;
+      flex: 1;
+    }
+
+    [type=dismissible][open] + .mainContent {
+      margin-left: 256px;
+    }
+  </style>
+</head>
+<body class="unresolved">
+  <header>
+    <a href="index.html"><mwc-icon>arrow_back</mwc-icon>
+    <span>Drawer</span></a>
+  </header>
+
+  <main>
+    <div class="drawerView">
+
+      <mwc-drawer hasHeader>
+        <span slot="title">Title!</span>
+        <span slot="subtitle">subtitle</span>
+        <div class="drawerContent">Drawer Content!</div>
+      </mwc-drawer>
+      <div class="mainContent">Main Content!</div>
+    </div>
+
+    <div class="drawerView">
+
+      <mwc-drawer hasHeader type="dismissible">
+        <span slot="title">Title!</span>
+        <span slot="subtitle">subtitle</span>
+        <div class="drawerContent">Drawer Content!</div>
+      </mwc-drawer>
+      <div class="mainContent">Main Content!</div>
+    </div>
+
+    <div class="drawerView">
+
+      <mwc-drawer hasHeader type="modal">
+        <span slot="title">Title!</span>
+        <span slot="subtitle">subtitle</span>
+        <div class="drawerContent">Drawer Content!</div>
+      </mwc-drawer>
+      <div class="mainContent">Main Content!</div>
+    </div>
+  </main>
+
+  <script>
+    addEventListener('load', () => document.body.classList.remove('unresolved'));
+
+    Array.from(document.querySelectorAll('mwc-drawer[type]')).forEach((drawer) => {
+      const container = drawer.parentNode;
+      container.addEventListener('click', (e) => {
+        drawer.open = !drawer.open;
+      });
+      drawer.addEventListener('MDCDrawer:opened', (e) => {
+        e.target.nextElementSibling.style.marginLeft = e.g
+      });
+
+      drawer.addEventListener('MDCDrawer:closed', (e) => {
+
+      });
+    });
+  </script>
+</body>
+</html>

@@ -14,7 +14,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/mwc-base": "^0.2.0",
-    "@polymer/lit-element": "^0.6.0"
+    "@polymer/lit-element": "^0.6.1"
   },
   "devDependencies": {
   },

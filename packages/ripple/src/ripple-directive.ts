@@ -14,9 +14,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {directive, PropertyPart, noChange} from 'lit-html/lit-html.js';
+import {directive, PropertyPart, noChange, NodePart, templateFactory} from 'lit-html/lit-html.js';
 import {Adapter, Foundation} from '@material/mwc-base/base-element';;
 import MDCRippleFoundation from '@material/ripple/foundation.js';
+import {style} from '@material/mwc-ripple/mwc-ripple-global-css.js';
 import * as util from '@material/ripple/util.js';
 
 const MATCHES = util.getMatchesProperty(HTMLElement.prototype);
@@ -47,11 +48,27 @@ export declare var RippleFoundation: {
   new(adapter: Adapter): RippleFoundation;
 }
 
+// NOTE: This is a workaround for https://bugs.webkit.org/show_bug.cgi?id=173027.
+// Since keyframes on pseudo-elements (:after) are not supported in Shadow DOM,
+// we put the keyframe style into the <head> element.
+const isSafari = navigator.userAgent.match(/Safari/);
+let didApplyRippleStyle = false;
+const applyRippleStyle = () => {
+  didApplyRippleStyle = true;
+  const part = new NodePart(templateFactory);
+  part.appendInto(document.head);
+  part.setValue(style);
+  part.commit();
+}
+
 /**
  * Applied a ripple to the node specified by {surfaceNode}.
  * @param options {RippleNodeOptions}
  */
 export const rippleNode = (options: RippleNodeOptions) => {
+  if (isSafari && !didApplyRippleStyle) {
+    applyRippleStyle();
+  }
   // TODO(sorvell): This directive requires bringing css yourself. We probably need to do this
   // because of ShadyCSS, but on Safari, the keyframes styling must be global. Perhaps this
   // directive could fix that.
