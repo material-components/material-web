@@ -1,5 +1,5 @@
 # mwc-tab-indicator
-A [Material Components](https://material.io/components/) icon implementation using [Web Components](https://www.webcomponents.org/introduction)
+A [Material Components](https://material.io/develop/) tab indicator implementation using [Web Components](https://www.webcomponents.org/introduction)
 
 ## Getting started
 
