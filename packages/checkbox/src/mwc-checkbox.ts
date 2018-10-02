@@ -91,7 +91,8 @@ export class Checkbox extends FormElement {
       <div class="mdc-checkbox" @animationend="${this._animationEndHandler}">
         <input type="checkbox"
               class="mdc-checkbox__native-control"
-              id="checkbox-1" @change="${this._changeHandler}" .indeterminate="${this.indeterminate}">
+              @change="${this._changeHandler}"
+              .indeterminate="${this.indeterminate}">
         <div class="mdc-checkbox__background">
           <svg class="mdc-checkbox__checkmark"
               viewBox="0 0 24 24">
