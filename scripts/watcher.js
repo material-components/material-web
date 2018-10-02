@@ -57,5 +57,8 @@ async function addToQueue(fileName) {
     console.log(stdout);
     console.log('ERROR:', stderr);
   }
+  console.log('watcher build complete!');
   updating = false;
 }
+
+console.log('watcher started!');
