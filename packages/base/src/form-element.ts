@@ -15,8 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {BaseElement} from './base-element.js';
-export * from './base-element.js';
+import {BaseElement} from './base-element';
+export * from './base-element';
 
 export abstract class FormElement extends BaseElement {
   /**
