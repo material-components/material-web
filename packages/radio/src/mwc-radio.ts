@@ -129,14 +129,13 @@ export class Radio extends FormElement {
   }
 
   render() {
-    const {checked, name, value, _changeHandler: change, _focusHandler: focus, _clickHandler: click} = this;
     return html`
       ${this.renderStyle()}
       <div class="mdc-radio" .ripple="${ripple()}">
-        <input class="mdc-radio__native-control" type="radio" name="${name}" .checked="${checked}" .value="${value}"
-        @change="${change}"
-        @focus="${focus}"
-        @click="${click}">
+        <input class="mdc-radio__native-control" type="radio" name="${this.name}" .checked="${this.checked}" .value="${this.value}"
+        @change="${this._changeHandler}"
+        @focus="${this._focusHandler}"
+        @click="${this._clickHandler}">
         <div class="mdc-radio__background">
           <div class="mdc-radio__outer-circle"></div>
           <div class="mdc-radio__inner-circle"></div>
