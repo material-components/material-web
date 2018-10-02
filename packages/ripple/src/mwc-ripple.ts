@@ -14,9 +14,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {LitElement, html, property, customElement} from '@polymer/lit-element/lit-element.js';
-import {classMap} from 'lit-html/directives/classMap.js';
-import {ripple, RippleOptions} from './ripple-directive.js';
+import {LitElement, html, property, customElement} from '@polymer/lit-element';
+import {classMap} from 'lit-html/directives/classMap';
+import {ripple, RippleOptions} from './ripple-directive';
 import {style} from './mwc-ripple-css';
 
 @customElement('mwc-ripple' as any)

@@ -15,14 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {BaseElement, html, property, observer, query, customElement, Adapter, Foundation} from '@material/mwc-base/base-element';
-import {Tab} from '@material/mwc-tab/mwc-tab.js';
-import {TabScroller} from '@material/mwc-tab-scroller/mwc-tab-scroller.js';
+import {Tab} from '@material/mwc-tab/mwc-tab';
+import {TabScroller} from '@material/mwc-tab-scroller';
 
 // Make TypeScript not remove the imports.
-import '@material/mwc-tab/mwc-tab.js';
-import '@material/mwc-tab-scroller/mwc-tab-scroller.js';
+import '@material/mwc-tab';
+import '@material/mwc-tab-scroller';
 
-import MDCTabBarFoundation from '@material/tab-bar/foundation.js';
+import MDCTabBarFoundation from '@material/tab-bar/foundation';
 import {style} from './mwc-tab-bar-css';
 
 declare global {

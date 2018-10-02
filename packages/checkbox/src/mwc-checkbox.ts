@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {html, FormElement, customElement, property, query, Foundation, Adapter, observer} from '@material/mwc-base/form-element';
+import {html, FormElement, customElement, property, query, Foundation, Adapter} from '@material/mwc-base/form-element';
 import {style} from './mwc-checkbox-css';
 import MDCCheckboxFoundation from '@material/checkbox/foundation';
 
@@ -47,18 +47,12 @@ export class Checkbox extends FormElement {
   formElement!: HTMLInputElement;
 
   @property({type: Boolean})
-  @observer(function(this: Checkbox, value: boolean) {
-    this.mdcFoundation.setChecked(value);
-  })
   checked = false;
 
   @property({type: Boolean})
   indeterminate = false;
 
   @property({type: Boolean})
-  @observer(function(this: Checkbox, value: boolean) {
-    this.mdcFoundation.setDisabled(value);
-  })
   disabled = false;
 
   @property({type: String})
@@ -111,9 +105,9 @@ export class Checkbox extends FormElement {
   }
 
   private _changeHandler = () => {
-    this.mdcFoundation.handleChange();
     this.checked = this.formElement.checked;
     this.indeterminate = this.formElement.indeterminate;
+    this.mdcFoundation.handleChange();
   }
 
   private _animationEndHandler = () => {

@@ -15,14 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {BaseElement, html, property, query, customElement, Adapter, Foundation} from '@material/mwc-base/base-element';
-import {TabIndicator} from '@material/mwc-tab-indicator/mwc-tab-indicator.js';
+import {TabIndicator} from '@material/mwc-tab-indicator';
 
 // Make TypeScript not remove the import.
-import '@material/mwc-tab-indicator/mwc-tab-indicator.js';
+import '@material/mwc-tab-indicator';
 
-import {classMap} from 'lit-html/directives/classMap.js';
-import {ripple} from '@material/mwc-ripple/ripple-directive.js';
-import MDCTabFoundation from '@material/tab/foundation.js';
+import {classMap} from 'lit-html/directives/classMap';
+import {ripple} from '@material/mwc-ripple/ripple-directive';
+import MDCTabFoundation from '@material/tab/foundation';
 import {style} from './mwc-tab-css';
 
 declare global {
