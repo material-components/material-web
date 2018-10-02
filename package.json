@@ -18,7 +18,7 @@
     "build-styling": "./scripts/build-styling.sh",
     "build-typescript": "tsc -b --verbose packages/**/tsconfig.json",
     "update-gh-pages": "npm run bootstrap && ./scripts/publish-demos.sh",
-    "watch": "npm run build && node scripts/watcher.js"
+    "watch": "npm run bootstrap && node scripts/watcher.js"
   },
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "^2.0.1",
