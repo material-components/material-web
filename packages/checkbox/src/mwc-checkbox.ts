@@ -92,7 +92,9 @@ export class Checkbox extends FormElement {
         <input type="checkbox"
               class="mdc-checkbox__native-control"
               @change="${this._changeHandler}"
-              .indeterminate="${this.indeterminate}">
+              .indeterminate="${this.indeterminate}"
+              .checked="${this.checked}"
+              .value="${this.value}">
         <div class="mdc-checkbox__background">
           <svg class="mdc-checkbox__checkmark"
               viewBox="0 0 24 24">
