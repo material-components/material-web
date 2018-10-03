@@ -22,16 +22,6 @@ import {Radio} from './mwc-radio';
  */
 const selectionController = Symbol('selection controller');
 
-// TODO(dfreedm): Remove when typescript implements this interface (3.1)
-declare global {
-  interface GetRootNodeOptions {
-    composed?: boolean;
-  }
-  interface Node {
-    getRootNode(options?: GetRootNodeOptions): Node;
-  }
-}
-
 class SelectionSet {
   selected: Radio | null = null;
   ordered: Radio[] | null = null;

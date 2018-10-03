@@ -17,7 +17,7 @@ limitations under the License.
 const fs = require('fs');
 const util = require('util');
 
-const sass = require('node-sass');
+const sass = require('sass');
 const nodeSassImport = require('node-sass-import');
 
 const renderSass = util.promisify(sass.render);

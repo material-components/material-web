@@ -56,7 +56,7 @@ let didApplyRippleStyle = false;
 const applyRippleStyle = () => {
   didApplyRippleStyle = true;
   const part = new NodePart(templateFactory);
-  part.appendInto(document.head);
+  part.appendInto(document.head!);
   part.setValue(style);
   part.commit();
 }
@@ -92,10 +92,10 @@ export const rippleNode = (options: RippleNodeOptions) => {
     deregisterInteractionHandler: (type: string, handler: Handler) =>
       interactionNode.removeEventListener(type, handler, util.applyPassive()),
     registerDocumentInteractionHandler: (evtType: string, handler: Handler) =>
-      document.documentElement.addEventListener(
+      document.documentElement!.addEventListener(
           evtType, handler, util.applyPassive()),
     deregisterDocumentInteractionHandler: (evtType: string, handler: Handler) =>
-      document.documentElement.removeEventListener(
+      document.documentElement!.removeEventListener(
           evtType, handler, util.applyPassive()),
     registerResizeHandler: (handler: Handler) =>
       window.addEventListener('resize', handler),

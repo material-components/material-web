@@ -21,16 +21,6 @@ import MDCDismissibleDrawerFoundation from '@material/drawer/dismissible/foundat
 import {strings} from '@material/drawer/constants';
 import {style} from './mwc-drawer-css';
 
-// TODO(dfreedm): Remove when typescript implements this interface (3.1)
-declare global {
-  interface GetRootNodeOptions {
-    composed?: boolean;
-  }
-  interface Node {
-    getRootNode(options?: GetRootNodeOptions): Node;
-  }
-}
-
 declare global {
   interface HTMLElementTagNameMap {
     'mwc-drawer': Drawer;
