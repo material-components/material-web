@@ -15,8 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {BaseElement, html, property, observer, query, customElement, Adapter, Foundation} from '@material/mwc-base/base-element';
-import {style} from './mwc-linear-progress-css.js';
+import {style} from './mwc-linear-progress-css';
 import MDCLinearProgressFoundation from '@material/linear-progress/foundation';
+
+const {PRIMARY_BAR_SELECTOR, BUFFER_SELECTOR} = MDCLinearProgressFoundation.strings;
 
 export interface LinearProgressFoundation extends Foundation {
   setDeterminate(value: boolean): void;
@@ -47,10 +49,10 @@ export class LinearProgress extends BaseElement {
   @query('.mdc-linear-progress')
   mdcRoot!: HTMLElement
 
-  @query(MDCLinearProgressFoundation.strings.PRIMARY_BAR_SELECTOR)
+  @query(PRIMARY_BAR_SELECTOR)
   protected primaryBar!: HTMLElement
 
-  @query(MDCLinearProgressFoundation.strings.BUFFER_SELECTOR)
+  @query(BUFFER_SELECTOR)
   protected bufferElement!: HTMLElement
 
   @property({type: Boolean})
@@ -111,7 +113,7 @@ export class LinearProgress extends BaseElement {
       ...super.createAdapter(),
       getPrimaryBar: () => this.primaryBar,
       getBuffer: () => this.bufferElement,
-      setStyle: (el, styleProperty, value) => el.style[styleProperty] = value,
+      setStyle: (el: HTMLElement, property: string, value: string) => el.style[property] = value,
     };
   }
 
