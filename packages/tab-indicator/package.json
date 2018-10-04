@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-tab-indicator",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "",
   "main": "mwc-tab-indicator.js",
   "repository": {
@@ -14,11 +14,9 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/mwc-base": "^0.2.0",
+    "@material/mwc-base": "^0.3.0",
     "@material/tab-indicator": "^0.40.0",
     "@polymer/lit-element": "^0.6.1"
-  },
-  "devDependencies": {
   },
   "publishConfig": {
     "access": "public"

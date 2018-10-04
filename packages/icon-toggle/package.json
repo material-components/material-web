@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-icon-toggle",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "",
   "main": "mwc-icon-toggle.js",
   "scripts": {
@@ -10,11 +10,9 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/icon-toggle": "^0.35.0",
-    "@material/mwc-base": "^0.2.0",
-    "@material/mwc-icon": "^0.2.0",
+    "@material/mwc-base": "^0.3.0",
+    "@material/mwc-icon": "^0.3.0",
     "@polymer/lit-element": "^0.6.1"
-  },
-  "devDependencies": {
   },
   "publishConfig": {
     "access": "public"
