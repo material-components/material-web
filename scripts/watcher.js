@@ -42,12 +42,15 @@ async function addToQueue(fileName) {
   if (updating) {
     return;
   }
+  console.log(`saw change to ${fileName}`);
   updating = true;
   const buildSass = fileName.endsWith('scss');
   let execPromise;
   if (buildSass) {
+    console.log('building styles and typescript');
     execPromise = exec('npm run build');
   } else {
+    console.log('building typescript');
     execPromise = exec('npm run build-typescript');
   }
   try {

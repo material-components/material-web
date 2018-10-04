@@ -74,8 +74,11 @@ export const rippleNode = (options: RippleNodeOptions) => {
   // directive could fix that.
   const surfaceNode = options.surfaceNode;
   const interactionNode = options.interactionNode || surfaceNode;
-  if (interactionNode.style.position === '') {
-    interactionNode.style.position = 'relative';
+  // only style interaction node if not in the same root
+  if (interactionNode.getRootNode() !== surfaceNode.getRootNode()) {
+    if (interactionNode.style.position === '') {
+      interactionNode.style.position = 'relative';
+    }
   }
   const adapter: Adapter = {
     browserSupportsCssVars: () => supportsCssVariables,

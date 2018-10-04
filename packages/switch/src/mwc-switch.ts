@@ -14,9 +14,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {FormElement, html, property, observer, query, customElement, Adapter, Foundation} from '@material/mwc-base/form-element';
+import {FormElement, html, property, observer, query, customElement, Adapter, Foundation, HTMLElementWithRipple} from '@material/mwc-base/form-element';
 import {style} from './mwc-switch-css';
 import MDCSwitchFoundation from '@material/switch/foundation';
+import {ripple} from '@material/mwc-ripple/ripple-directive';
 
 export interface SwitchFoundation extends Foundation {
   setChecked(value: boolean): void;
@@ -81,12 +82,19 @@ export class Switch extends FormElement {
     }
   }
 
+  get ripple() {
+    return this.rippleNode.ripple;
+  }
+
+  @query('.mdc-switch__thumb-underlay')
+  protected rippleNode!: HTMLElementWithRipple;
+
   render() {
     return html`
       ${this.renderStyle()}
       <div class="mdc-switch">
         <div class="mdc-switch__track"></div>
-        <div class="mdc-switch__thumb-underlay">
+        <div class="mdc-switch__thumb-underlay" .ripple="${ripple()}">
           <div class="mdc-switch__thumb">
             <input type="checkbox" id="basic-switch" class="mdc-switch__native-control" role="switch" @change="${this._changeHandler}">
           </div>

@@ -16,3 +16,19 @@ limitations under the License.
 */
 
 @import '@material/form-field/mdc-form-field.scss';
+
+.mdc-form-field {
+  align-items: center;
+}
+
+::slotted(*) {
+  @include mdc-typography(body2);
+  @include mdc-theme-prop(color, text-primary-on-background);
+}
+
+::slotted(mwc-switch) {
+  margin-right: 10px;
+  @include mdc-rtl {
+    margin-left: 10px;
+  }
+}

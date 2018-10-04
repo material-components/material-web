@@ -18,6 +18,15 @@ limitations under the License.
 import {BaseElement} from './base-element';
 export * from './base-element';
 
+export interface RippleSurface {
+  activate(): void;
+  deactivate(): void;
+}
+
+export interface HTMLElementWithRipple extends HTMLElement {
+  ripple?: RippleSurface;
+}
+
 export abstract class FormElement extends BaseElement {
   /**
    * Form-capable element in the component ShadowRoot.
@@ -30,8 +39,14 @@ export abstract class FormElement extends BaseElement {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
+  /**
+   * Implement ripple getter for Ripple integration with mwc-formfield
+   */
+  readonly ripple?: RippleSurface;
+
   click() {
     if (this.formElement) {
+      this.formElement.focus();
       this.formElement.click();
     }
   }

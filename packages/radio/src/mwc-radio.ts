@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {FormElement, query, customElement, Foundation, Adapter, property, html, observer} from '@material/mwc-base/form-element';
+import {FormElement, query, customElement, Foundation, Adapter, property, html, observer, HTMLElementWithRipple} from '@material/mwc-base/form-element';
 import {style} from './mwc-radio-css';
 import {SelectionController} from './selection-controller';
 import {ripple} from '@material/mwc-ripple/ripple-directive';
@@ -44,7 +44,7 @@ export declare var RadioFoundation: {
 export class Radio extends FormElement {
 
   @query('.mdc-radio')
-  mdcRoot!: HTMLElement;
+  mdcRoot!: HTMLElementWithRipple;
 
   @query('input')
   formElement!: HTMLInputElement
@@ -99,6 +99,10 @@ export class Radio extends FormElement {
 
   renderStyle() {
     return style;
+  }
+
+  get ripple() {
+    return this.mdcRoot.ripple;
   }
 
   protected createAdapter(): Adapter {

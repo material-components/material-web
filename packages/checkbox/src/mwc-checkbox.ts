@@ -14,8 +14,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {html, FormElement, customElement, property, query, Foundation, Adapter} from '@material/mwc-base/form-element';
+import {html, FormElement, customElement, property, query, Foundation, Adapter, HTMLElementWithRipple} from '@material/mwc-base/form-element';
 import {style} from './mwc-checkbox-css';
+import {ripple} from '@material/mwc-ripple/ripple-directive';
 import MDCCheckboxFoundation from '@material/checkbox/foundation';
 
 declare global {
@@ -41,7 +42,7 @@ export declare var CheckboxFoundation: {
 export class Checkbox extends FormElement {
 
   @query('.mdc-checkbox')
-  mdcRoot!: HTMLElement;
+  mdcRoot!: HTMLElementWithRipple;
 
   @query('input')
   formElement!: HTMLInputElement;
@@ -66,6 +67,10 @@ export class Checkbox extends FormElement {
     return style;
   }
 
+  get ripple() {
+    return this.mdcRoot.ripple;
+  }
+
   protected createAdapter(): Adapter {
     return {
       ...super.createAdapter(),
@@ -86,9 +91,10 @@ export class Checkbox extends FormElement {
   }
 
   render() {
+    console.log('render', this.checked);
     return html`
       ${this.renderStyle()}
-      <div class="mdc-checkbox" @animationend="${this._animationEndHandler}">
+      <div class="mdc-checkbox" @animationend="${this._animationEndHandler}" .ripple="${ripple()}">
         <input type="checkbox"
               class="mdc-checkbox__native-control"
               @change="${this._changeHandler}"
@@ -108,8 +114,11 @@ export class Checkbox extends FormElement {
   }
 
   private _changeHandler = () => {
+    console.log('changed');
+    console.log('before sync', this.checked, this.formElement.checked);
     this.checked = this.formElement.checked;
     this.indeterminate = this.formElement.indeterminate;
+    console.log('after sync', this.checked, this.formElement.checked);
     this.mdcFoundation.handleChange();
   }
 
