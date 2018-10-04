@@ -72,21 +72,31 @@ When you're ready to use the Material Web Components in your web application:
 ## Contributing guide
 Below are instructions for setting up project development.
 
-1. `git clone` this repo
-1. install dependencies by running `npm run bootstrap`
-1. to run a development server: `npm run dev` (view the demos by accessing `<dev server url>`/demos/index.html)
-1. to run tests: `npm run test`
-1. to watch for changes: `npm run watch`
+1. Clone this repo with `git clone`.
+1. Install dependencies by running `npm run bootstrap`
+1. Run a development server with `npm run dev`
+    - View the demos by accessing `<dev server url>`/demos/index.html
+    - This will also build the project.
+1. Build the project with `npm run build`
+1. Run tests with `npm run test`
 
-### Rebuild CSS for components
+### Developing Components
 
-Components define their css using [SASS](http://sass-lang.com/). The SASS output is built into a javascript module which exports the component's styling as a [lit-html](https://github.com/Polymer/lit-html) template.
+Components are written in [Typescript](https://typescriptlang.org), and compiled to [Javascript Modules](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/).
 
-To compile the component SASS run:
+The output Javascript Modules can be used in every modern browser directly, and are supported a wide variety of popular bundler and build tools.
 
-  ```
-  npm run update-styling
-  ```
+The components render output structure, handle styling, and manage data flow with `lit-html` while integrating with Material Design's common logic library for each component.
+
+### Styling Components
+
+Components define their styling using [SASS](http://sass-lang.com/).
+
+The SASS output is built into a javascript module which exports the component's styling as a [lit-html](https://github.com/Polymer/lit-html) template.
+
+Component styling is compiled with both `npm run build` and `npm run watch`.
+
+To compile the component SASS manually, use `npm run build-styling`
 
 ## Useful Links
 
