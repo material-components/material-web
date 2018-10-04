@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-slider",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "",
   "main": "mwc-slider.js",
   "scripts": {
@@ -9,7 +9,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/mwc-base": "^0.2.0",
+    "@material/mwc-base": "^0.2.1",
     "@material/slider": "^0.35.0",
     "@polymer/lit-element": "^0.6.1"
   },
