@@ -41,7 +41,7 @@ export declare var DrawerFoundation: {
 export class Drawer extends BaseElement {
 
   @query('.mdc-drawer')
-  mdcRoot!: HTMLElement;
+  protected mdcRoot!: HTMLElement;
 
   protected mdcFoundation!: MDCDismissibleDrawerFoundation|MDCModalDrawerFoundation;
 

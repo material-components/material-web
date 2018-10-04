@@ -44,10 +44,10 @@ export declare var RadioFoundation: {
 export class Radio extends FormElement {
 
   @query('.mdc-radio')
-  mdcRoot!: HTMLElementWithRipple;
+  protected mdcRoot!: HTMLElementWithRipple;
 
   @query('input')
-  formElement!: HTMLInputElement
+  protected formElement!: HTMLInputElement
 
   @property({type: Boolean})
   @observer(function(this: Radio, checked: boolean) {
@@ -95,6 +95,10 @@ export class Radio extends FormElement {
     if (this._selectionController) {
       this._selectionController.unregister(this);
     }
+  }
+
+  focusNative() {
+    this.formElement.focus();
   }
 
   renderStyle() {

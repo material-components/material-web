@@ -47,7 +47,7 @@ export class LinearProgress extends BaseElement {
   protected readonly mdcFoundationClass: typeof LinearProgressFoundation = MDCLinearProgressFoundation;
 
   @query('.mdc-linear-progress')
-  mdcRoot!: HTMLElement
+  protected mdcRoot!: HTMLElement
 
   @query(PRIMARY_BAR_SELECTOR)
   protected primaryBar!: HTMLElement

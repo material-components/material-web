@@ -51,10 +51,10 @@ export class Tab extends BaseElement {
   protected readonly mdcFoundationClass: typeof TabFoundation = MDCTabFoundation;
 
   @query('.mdc-tab')
-  mdcRoot!: HTMLElement;
+  protected mdcRoot!: HTMLElement;
 
   @query('mwc-tab-indicator')
-  tabIndicator!: TabIndicator;
+  protected tabIndicator!: TabIndicator;
 
   @property()
   label = '';

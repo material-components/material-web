@@ -48,7 +48,7 @@ export class TabIndicator extends BaseElement {
   }
 
   @query('.mdc-tab-indicator')
-  mdcRoot!: HTMLElement;
+  protected mdcRoot!: HTMLElement;
 
   @query('.mdc-tab-indicator__content')
   protected contentElement!: HTMLElement;

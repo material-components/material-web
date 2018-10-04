@@ -54,7 +54,7 @@ export class Formfield extends BaseElement {
   label = '';
 
   @query('.mdc-form-field')
-  mdcRoot!: HTMLElement;
+  protected mdcRoot!: HTMLElement;
 
   protected mdcFoundation!: FormFieldFoundation;
 
