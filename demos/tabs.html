@@ -20,9 +20,8 @@ limitations under the License.
   <title>tabs demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-  <script type="module" src="../node_modules/@material/mwc-tabs/mwc-tab-bar-scroller.js"></script>
-  <script type="module" src="../node_modules/@material/mwc-tabs/mwc-tab-bar.js"></script>
-  <script type="module" src="../node_modules/@material/mwc-tabs/mwc-tab.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-tab/mwc-tab.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-tab-bar/mwc-tab-bar.js"></script>
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
   <link rel="stylesheet" href="demo-component.css">
 </head>
@@ -40,28 +39,96 @@ limitations under the License.
       <mwc-tab label="three"></mwc-tab>
     </mwc-tab-bar>
 
+    <h3>Fading indicator</h3>
+    <mwc-tab-bar>
+      <mwc-tab label="one" isFadingIndicator></mwc-tab>
+      <mwc-tab label="two" isFadingIndicator></mwc-tab>
+      <mwc-tab label="three" isFadingIndicator></mwc-tab>
+    </mwc-tab-bar>
+
+    <h3>Min Width Tab</h3>
+    <mwc-tab-bar>
+      <mwc-tab label="one" minWidth></mwc-tab>
+      <mwc-tab label="two" minWidth></mwc-tab>
+      <mwc-tab label="three" minWidth></mwc-tab>
+    </mwc-tab-bar>
+
+    <h3>Min Width Indicator</h3>
+    <mwc-tab-bar>
+      <mwc-tab label="one" isMinWidthIndicator></mwc-tab>
+      <mwc-tab label="two" isMinWidthIndicator></mwc-tab>
+      <mwc-tab label="three" isMinWidthIndicator></mwc-tab>
+    </mwc-tab-bar>
+
+    <h3>Min Width Tab - Min Width Indicator</h3>
+    <mwc-tab-bar>
+      <mwc-tab label="one" minWidth isMinWidthIndicator></mwc-tab>
+      <mwc-tab label="two" minWidth isMinWidthIndicator></mwc-tab>
+      <mwc-tab label="three" minWidth isMinWidthIndicator></mwc-tab>
+    </mwc-tab-bar>
+
     <h3>With Icons</h3>
-    <mwc-tab-bar activeTabIndex="1">
+    <mwc-tab-bar activeIndex="2">
       <mwc-tab label="one" icon="accessibility"></mwc-tab>
       <mwc-tab label="two" icon="exit_to_app"></mwc-tab>
       <mwc-tab label="three" icon="camera"></mwc-tab>
     </mwc-tab-bar>
 
+    <h3>Only Icons</h3>
+    <mwc-tab-bar activeIndex="2">
+      <mwc-tab icon="accessibility"></mwc-tab>
+      <mwc-tab icon="exit_to_app"></mwc-tab>
+      <mwc-tab icon="camera"></mwc-tab>
+    </mwc-tab-bar>
+
+    <h3>With Icons - Stacked</h3>
+    <mwc-tab-bar activeIndex="1">
+      <mwc-tab label="one" icon="accessibility" stacked></mwc-tab>
+      <mwc-tab label="two" icon="exit_to_app" stacked></mwc-tab>
+      <mwc-tab label="three" icon="camera" stacked></mwc-tab>
+    </mwc-tab-bar>
+
+    <h3>With Icons - Stacked - Min Width Indicator</h3>
+    <mwc-tab-bar>
+      <mwc-tab label="one" icon="accessibility" stacked isMinWidthIndicator></mwc-tab>
+      <mwc-tab label="two" icon="exit_to_app" stacked isMinWidthIndicator></mwc-tab>
+      <mwc-tab label="three" icon="camera" stacked isMinWidthIndicator></mwc-tab>
+    </mwc-tab-bar>
+
     <h3>Scrolling</h3>
-    <mwc-tab-bar-scroller>
-      <mwc-tab-bar>
-        <mwc-tab label="one"></mwc-tab>
-        <mwc-tab label="two"></mwc-tab>
-        <mwc-tab label="three"></mwc-tab>
-        <mwc-tab label="four"></mwc-tab>
-        <mwc-tab label="five"></mwc-tab>
-        <mwc-tab label="six"></mwc-tab>
-        <mwc-tab label="seven"></mwc-tab>
-        <mwc-tab label="eight"></mwc-tab>
-        <mwc-tab label="nine"></mwc-tab>
-        <mwc-tab label="ten"></mwc-tab>
-      </mwc-tab-bar>
-    </mwc-tab-bar-scroller>
+    <mwc-tab-bar>
+      <mwc-tab label="one"></mwc-tab>
+      <mwc-tab label="two"></mwc-tab>
+      <mwc-tab label="three"></mwc-tab>
+      <mwc-tab label="four"></mwc-tab>
+      <mwc-tab label="five"></mwc-tab>
+      <mwc-tab label="six"></mwc-tab>
+      <mwc-tab label="seven"></mwc-tab>
+      <mwc-tab label="eight"></mwc-tab>
+      <mwc-tab label="nine"></mwc-tab>
+      <mwc-tab label="ten"></mwc-tab>
+    </mwc-tab-bar>
+
+    <h3>Scrolling - Width Icons - Stacked - Min Width Indicator</h3>
+    <mwc-tab-bar>
+      <mwc-tab label="one" icon="camera" stacked isMinWidthIndicator></mwc-tab>
+      <mwc-tab label="two" icon="camera" stacked isMinWidthIndicator></mwc-tab>
+      <mwc-tab label="three" icon="camera" stacked isMinWidthIndicator ></mwc-tab>
+      <mwc-tab label="four" icon="camera" stacked isMinWidthIndicator></mwc-tab>
+      <mwc-tab label="five" icon="camera" stacked isMinWidthIndicator></mwc-tab>
+      <mwc-tab label="six" icon="camera" stacked isMinWidthIndicator></mwc-tab>
+      <mwc-tab label="seven" icon="camera" stacked isMinWidthIndicator></mwc-tab>
+      <mwc-tab label="eight" icon="camera" stacked isMinWidthIndicator></mwc-tab>
+      <mwc-tab label="nine" icon="camera"  stacked isMinWidthIndicator></mwc-tab>
+      <mwc-tab label="ten" icon="camera" stacked isMinWidthIndicator></mwc-tab>
+    </mwc-tab-bar>
+
+    <h3>Icon indicator</h3>
+    <mwc-tab-bar>
+      <mwc-tab icon="camera" isFadingIndicator indicatorIcon="donut_large"></mwc-tab>
+      <mwc-tab icon="accessibility" isFadingIndicator indicatorIcon="donut_large"></mwc-tab>
+      <mwc-tab icon="exit_to_app" isFadingIndicator indicatorIcon="donut_large"></mwc-tab>
+    </mwc-tab-bar>
   </main>
 
   <script>

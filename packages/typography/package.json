@@ -9,11 +9,10 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/mwc-icon": "^0.2.1",
-    "@polymer/lit-element": "^0.6.0"
+    "@material/mwc-icon": "^0.2.0",
+    "@polymer/lit-element": "^0.6.1"
   },
   "devDependencies": {
-    "@material/mwc-sass-render": "^0.2.1",
     "@material/typography": "^0.35.0"
   },
   "publishConfig": {

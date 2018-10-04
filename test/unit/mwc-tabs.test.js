@@ -15,9 +15,9 @@
  */
 
 import {assert} from 'chai';
-import {Tab} from '@material/mwc-tabs';
-import {TabBar} from '@material/mwc-tabs/mwc-tab-bar.js';
-import {TabBarScroller} from '@material/mwc-tabs/mwc-tab-bar-scroller.js';
+import {Tab} from '@material/mwc-tab';
+import {TabBar} from '@material/mwc-tab-bar/mwc-tab-bar.js';
+import {TabScroller} from '@material/mwc-tab-scroller/mwc-tab-scroller.js';
 
 let element;
 
@@ -51,10 +51,10 @@ test('initializes as an mwc-tab-bar', () => {
   assert.instanceOf(element, TabBar);
 });
 
-suite('mwc-tab-bar-scroller');
+suite('mwc-tab-scroller');
 
 beforeEach(() => {
-  element = document.createElement('mwc-tab-bar-scroller');
+  element = document.createElement('mwc-tab-scroller');
   document.body.appendChild(element);
 });
 
@@ -62,6 +62,6 @@ afterEach(() => {
   document.body.removeChild(element);
 });
 
-test('initializes as an mwc-tab-bar-scroller', () => {
-  assert.instanceOf(element, TabBarScroller);
+test('initializes as an mwc-tab-scroller', () => {
+  assert.instanceOf(element, TabScroller);
 });

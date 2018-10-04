@@ -9,11 +9,10 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@polymer/lit-element": "^0.6.0"
+    "@polymer/lit-element": "^0.6.1"
   },
   "devDependencies": {
-    "@material/card": "^0.35.0",
-    "@material/mwc-sass-render": "^0.2.1"
+    "@material/card": "^0.35.0"
   },
   "publishConfig": {
     "access": "public"

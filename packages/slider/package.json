@@ -11,10 +11,9 @@
   "dependencies": {
     "@material/mwc-base": "^0.2.1",
     "@material/slider": "^0.35.0",
-    "@polymer/lit-element": "^0.6.0"
+    "@polymer/lit-element": "^0.6.1"
   },
   "devDependencies": {
-    "@material/mwc-sass-render": "^0.2.1"
   },
   "publishConfig": {
     "access": "public"
