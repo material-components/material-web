@@ -92,7 +92,6 @@ export class SelectionController {
   }
 
   select(element: Radio) {
-    element.formElement.focus();
     element.click();
   }
 
@@ -109,7 +108,7 @@ export class SelectionController {
     const currentFocusedSet = this.focusedSet;
     this.focusedSet = set;
     if (currentFocusedSet != set && set.selected && set.selected != element) {
-      set.selected!.formElement.focus();
+      set.selected!.focusNative();
     }
   }
 

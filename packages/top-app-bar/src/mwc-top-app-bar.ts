@@ -47,7 +47,7 @@ export class TopAppBar extends BaseElement {
   }
 
   @query('.mdc-top-app-bar')
-  mdcRoot!: HTMLElement;
+  protected mdcRoot!: HTMLElement;
 
   @query('[name="navigationIcon"]')
   private _navIconSlot!: HTMLSlotElement;

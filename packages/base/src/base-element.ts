@@ -44,7 +44,7 @@ export abstract class BaseElement extends LitElement {
    *
    * Define in your component with the `@query` decorator
    */
-  abstract mdcRoot: HTMLElement;
+  protected abstract mdcRoot: HTMLElement;
 
   /**
    * Return the foundation class for this component

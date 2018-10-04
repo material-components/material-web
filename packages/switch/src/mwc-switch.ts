@@ -55,10 +55,10 @@ export class Switch extends FormElement {
   }
 
   @query('.mdc-switch')
-  mdcRoot!: HTMLElement;
+  protected mdcRoot!: HTMLElement;
 
   @query('input')
-  formElement!: HTMLInputElement;
+  protected formElement!: HTMLInputElement;
 
   protected mdcFoundation!: SwitchFoundation;
 

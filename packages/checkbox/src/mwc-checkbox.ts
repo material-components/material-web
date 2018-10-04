@@ -42,10 +42,10 @@ export declare var CheckboxFoundation: {
 export class Checkbox extends FormElement {
 
   @query('.mdc-checkbox')
-  mdcRoot!: HTMLElementWithRipple;
+  protected mdcRoot!: HTMLElementWithRipple;
 
   @query('input')
-  formElement!: HTMLInputElement;
+  protected formElement!: HTMLInputElement;
 
   @property({type: Boolean})
   checked = false;
@@ -114,11 +114,8 @@ export class Checkbox extends FormElement {
   }
 
   private _changeHandler = () => {
-    console.log('changed');
-    console.log('before sync', this.checked, this.formElement.checked);
     this.checked = this.formElement.checked;
     this.indeterminate = this.formElement.indeterminate;
-    console.log('after sync', this.checked, this.formElement.checked);
     this.mdcFoundation.handleChange();
   }
 

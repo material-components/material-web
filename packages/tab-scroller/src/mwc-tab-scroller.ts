@@ -46,7 +46,7 @@ export class TabScroller extends BaseElement {
   protected mdcFoundationClass: typeof TabScrollerFoundation = MDCTabScrollerFoundation;
 
   @query('.mdc-tab-scroller')
-  mdcRoot!: HTMLElement;
+  protected mdcRoot!: HTMLElement;
 
   @query('.mdc-tab-scroller__scroll-area')
   protected scrollAreaElement!: HTMLElement;
