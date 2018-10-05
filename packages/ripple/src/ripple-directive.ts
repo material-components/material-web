@@ -55,7 +55,7 @@ const isSafari = navigator.userAgent.match(/Safari/);
 let didApplyRippleStyle = false;
 const applyRippleStyle = () => {
   didApplyRippleStyle = true;
-  const part = new NodePart(templateFactory);
+  const part = new NodePart({templateFactory});
   part.appendInto(document.head!);
   part.setValue(style);
   part.commit();
