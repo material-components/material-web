@@ -122,4 +122,7 @@ async function separateScripts() {
   await writeFile(file, parse5.serialize(doc), 'utf-8');
 }
 
-separateScripts();
+separateScripts().catch((err) => {
+  console.error(err);
+  process.exit(-1);
+});

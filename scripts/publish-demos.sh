@@ -23,16 +23,38 @@ rm -rf gh-pages
 # Get list of demos
 demos=`ls demos/*.html`
 # Clone gh-pages branch
-git worktree add gh-pages origin/gh-pages
+git worktree add -f gh-pages origin/gh-pages
 # Copy built source to gh-pages
 cp -rf demos/* gh-pages/demos
+# install dependencies
+# convert list of packages to package.json dependency form: "@material/mwc-base": "*"
+packages=`npx lerna ls 2>/dev/null | grep -v private | sed 's/\(@material\/mwc-[a-z]\{1,\}\).*/"\1": "*",/'`
+# generate package.json with public releases
+cat <<-EOF >gh-pages/package.json
+{
+  "name": "demos",
+  "private": true,
+  "dependencies": {
+    ${packages}
+    "lit-html": "*",
+    "@polymer/lit-element": "*",
+    "@webcomponents/webcomponentsjs": "*"
+  }
+}
+EOF
+(cd gh-pages; rm -rf node_modules; npm install --no-package-lock)
 
 # get list of demos to transform
+public=(`npx lerna ls 2>/dev/null | grep -v private | sed 's/@material\/mwc-\([a-z]\{1,\}\)/\1/'`)
+public+=('index')
 files=(`ls gh-pages/demos/*.html`)
 for file in ${files[@]}; do
-  # rollup bundle demos
-  node scripts/build/rollup-demos.js ${file}
-  # node scripts/build/rollup-demos.js gh-pages/demos/index.html
+  if [[ ${public[*]} =~ `basename -s .html ${file}` ]]; then
+    echo "Rollup ${file}"
+    # rollup bundle demos
+    node scripts/build/rollup-demos.js ${file}
+    # node scripts/build/rollup-demos.js gh-pages/demos/index.html
+  fi
 done
 
 # Push to gh-pages
