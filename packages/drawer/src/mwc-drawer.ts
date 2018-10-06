@@ -14,12 +14,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, observer, query, customElement, Adapter, Foundation, PropertyValues} from '@material/mwc-base/base-element';
-import {classMap} from 'lit-html/directives/classMap';
-import MDCModalDrawerFoundation from '@material/drawer/modal/foundation';
-import MDCDismissibleDrawerFoundation from '@material/drawer/dismissible/foundation';
-import {strings} from '@material/drawer/constants';
-import {style} from './mwc-drawer-css';
+import {BaseElement, html, property, observer, query, customElement, Adapter, Foundation, PropertyValues} from '@material/mwc-base/base-element.js';
+import {classMap} from 'lit-html/directives/classMap.js';
+import MDCModalDrawerFoundation from '@material/drawer/modal/foundation.js';
+import MDCDismissibleDrawerFoundation from '@material/drawer/dismissible/foundation.js';
+import {strings} from '@material/drawer/constants.js';
+import {style} from './mwc-drawer-css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

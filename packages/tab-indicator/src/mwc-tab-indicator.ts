@@ -14,11 +14,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, query, customElement, Adapter, Foundation, PropertyValues} from '@material/mwc-base/base-element';
-import {classMap} from 'lit-html/directives/classMap';
-import MDCSlidingTabIndicatorFoundation from '@material/tab-indicator/sliding-foundation';
-import MDCFadingTabIndicatorFoundation from '@material/tab-indicator/fading-foundation';
-import {style} from './mwc-tab-indicator-css';
+import {BaseElement, html, property, query, customElement, Adapter, Foundation, PropertyValues} from '@material/mwc-base/base-element.js';
+import {classMap} from 'lit-html/directives/classMap.js';
+import MDCSlidingTabIndicatorFoundation from '@material/tab-indicator/sliding-foundation.js';
+import MDCFadingTabIndicatorFoundation from '@material/tab-indicator/fading-foundation.js';
+import {style} from './mwc-tab-indicator-css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -15,9 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {LitElement, html, property, customElement} from '@polymer/lit-element';
-import {classMap} from 'lit-html/directives/classMap';
-import {ripple, RippleOptions} from './ripple-directive';
-import {style} from './mwc-ripple-css';
+import {classMap} from 'lit-html/directives/classMap.js';
+import {ripple, RippleOptions} from './ripple-directive.js';
+import {style} from './mwc-ripple-css.js';
 
 @customElement('mwc-ripple' as any)
 export class Ripple extends LitElement {
