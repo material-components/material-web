@@ -19,8 +19,8 @@ import {LitElement} from '@polymer/lit-element';
 import {TemplateResult} from 'lit-html';
 export {TemplateResult};
 export * from '@polymer/lit-element';
-export {classMap} from 'lit-html/directives/classMap';
-export {observer} from './observer';
+export {classMap} from 'lit-html/directives/classMap.js';
+export {observer} from './observer.js';
 
 export interface Adapter {
   [name: string]: Function

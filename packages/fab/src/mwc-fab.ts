@@ -14,11 +14,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {LitElement, html, property, customElement} from '@polymer/lit-element/lit-element';
-import {classMap} from 'lit-html/directives/classMap';
-import {style} from './mwc-fab-css';
-import {ripple} from '@material/mwc-ripple/ripple-directive';
-import '@material/mwc-icon/mwc-icon-font';
+import {LitElement, html, property, customElement} from '@polymer/lit-element';
+import {classMap} from 'lit-html/directives/classMap.js';
+import {style} from './mwc-fab-css.js';
+import {ripple} from '@material/mwc-ripple/ripple-directive.js';
+import '@material/mwc-icon/mwc-icon-font.js';
 
 @customElement('mwc-fab' as any)
 export class Fab extends LitElement {
