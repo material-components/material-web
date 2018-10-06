@@ -14,10 +14,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {FormElement, html, property, observer, query, customElement, Adapter, Foundation, HTMLElementWithRipple} from '@material/mwc-base/form-element';
-import {style} from './mwc-switch-css';
-import MDCSwitchFoundation from '@material/switch/foundation';
-import {ripple} from '@material/mwc-ripple/ripple-directive';
+import {FormElement, html, property, observer, query, customElement, Adapter, Foundation, HTMLElementWithRipple} from '@material/mwc-base/form-element.js';
+import {style} from './mwc-switch-css.js';
+import MDCSwitchFoundation from '@material/switch/foundation.js';
+import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 
 export interface SwitchFoundation extends Foundation {
   setChecked(value: boolean): void;

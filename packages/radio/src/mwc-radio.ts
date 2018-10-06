@@ -14,11 +14,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {FormElement, query, customElement, Foundation, Adapter, property, html, observer, HTMLElementWithRipple} from '@material/mwc-base/form-element';
-import {style} from './mwc-radio-css';
-import {SelectionController} from './selection-controller';
-import {ripple} from '@material/mwc-ripple/ripple-directive';
-import MDCRadioFoundation from '@material/radio/foundation';
+import {FormElement, query, customElement, Foundation, Adapter, property, html, observer, HTMLElementWithRipple} from '@material/mwc-base/form-element.js';
+import {style} from './mwc-radio-css.js';
+import {SelectionController} from './selection-controller.js';
+import {ripple} from '@material/mwc-ripple/ripple-directive.js';
+import MDCRadioFoundation from '@material/radio/foundation.js';
 
 declare global {
   interface HTMLElementTagNameMap {

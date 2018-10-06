@@ -15,10 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {LitElement, html, property, customElement} from '@polymer/lit-element';
-import {classMap} from 'lit-html/directives/classMap';
-import {style} from './mwc-button-css';
-import {ripple} from '@material/mwc-ripple/ripple-directive';
-import '@material/mwc-icon/mwc-icon-font';
+import {classMap} from 'lit-html/directives/classMap.js';
+import {style} from './mwc-button-css.js';
+import {ripple} from '@material/mwc-ripple/ripple-directive.js';
+import '@material/mwc-icon/mwc-icon-font.js';
 
 @customElement('mwc-button' as any)
 export class Button extends LitElement {
