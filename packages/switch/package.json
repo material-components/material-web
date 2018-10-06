@@ -13,7 +13,7 @@
     "@material/mwc-base": "^0.3.0",
     "@material/mwc-ripple": "^0.3.0",
     "@material/switch": "^0.40.0",
-    "@polymer/lit-element": "^0.6.1"
+    "@polymer/lit-element": "^0.6.2"
   },
   "publishConfig": {
     "access": "public"
