@@ -36,9 +36,9 @@ cat <<-EOF >gh-pages/package.json
   "private": true,
   "dependencies": {
     ${packages}
-    "lit-html": "*",
-    "@polymer/lit-element": "*",
-    "@webcomponents/webcomponentsjs": "*"
+    "lit-html": "^0.11.0",
+    "@polymer/lit-element": "=0.6.1",
+    "@webcomponents/webcomponentsjs": "^2.0.0"
   }
 }
 EOF
