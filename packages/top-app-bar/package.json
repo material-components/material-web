@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-top-app-bar",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "",
   "main": "mwc-top-app-bar.js",
   "repository": {
@@ -14,7 +14,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/mwc-base": "^0.3.0",
+    "@material/mwc-base": "^0.3.1",
     "@material/top-app-bar": "^0.40.0",
     "@polymer/lit-element": "^0.6.2",
     "lit-html": "^0.12.0"
