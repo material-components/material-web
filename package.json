@@ -63,7 +63,6 @@
     "rollup": "^0.58.2",
     "rollup-plugin-babel": "^3.0.4",
     "rollup-plugin-node-resolve": "^3.3.0",
-    "rollup-plugin-uglify": "^3.0.0",
     "sass": "^1.14.1",
     "typescript": "^3.1.1",
     "webpack": "^3.9.0",
@@ -88,5 +87,6 @@
         ]
       }
     }
-  }
+  },
+  "dependencies": {}
 }
