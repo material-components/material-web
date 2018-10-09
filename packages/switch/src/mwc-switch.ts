@@ -62,7 +62,7 @@ export class Switch extends FormElement {
 
   protected mdcFoundation!: SwitchFoundation;
 
-  private _changeHandler = (e: Event) => {
+  protected changeHandler(e: Event) {
     this.mdcFoundation.handleChange(e);
     // catch "click" event and sync properties
     this.checked = this.formElement.checked;
@@ -96,7 +96,7 @@ export class Switch extends FormElement {
         <div class="mdc-switch__track"></div>
         <div class="mdc-switch__thumb-underlay" .ripple="${ripple()}">
           <div class="mdc-switch__thumb">
-            <input type="checkbox" id="basic-switch" class="mdc-switch__native-control" role="switch" @change="${this._changeHandler}">
+            <input type="checkbox" id="basic-switch" class="mdc-switch__native-control" role="switch" @change="${this.changeHandler}">
           </div>
         </div>
       </div>

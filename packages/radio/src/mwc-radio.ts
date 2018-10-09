@@ -118,20 +118,20 @@ export class Radio extends FormElement {
     };
   }
 
-  private _changeHandler = () => {
+  protected changeHandler = () => {
     this.checked = this.formElement.checked;
     if (this._selectionController) {
       this._selectionController.update(this);
     }
   }
 
-  private _focusHandler = () => {
+  protected focusHandler = () => {
     if (this._selectionController) {
       this._selectionController.focus(this);
     }
   }
 
-  private _clickHandler = () => {
+  protected clickHandler = () => {
     // Firefox has weird behavior with radios if they are not focused
     this.formElement.focus();
   }
@@ -141,9 +141,9 @@ export class Radio extends FormElement {
       ${this.renderStyle()}
       <div class="mdc-radio" .ripple="${ripple()}">
         <input class="mdc-radio__native-control" type="radio" name="${this.name}" .checked="${this.checked}" .value="${this.value}"
-        @change="${this._changeHandler}"
-        @focus="${this._focusHandler}"
-        @click="${this._clickHandler}">
+        @change="${this.changeHandler}"
+        @focus="${this.focusHandler}"
+        @click="${this.clickHandler}">
         <div class="mdc-radio__background">
           <div class="mdc-radio__outer-circle"></div>
           <div class="mdc-radio__inner-circle"></div>

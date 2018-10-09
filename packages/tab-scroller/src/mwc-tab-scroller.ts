@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, query, customElement, Adapter, Foundation} from '@material/mwc-base/base-element';
+import {BaseElement, html, query, customElement, Adapter, Foundation, eventOptions} from '@material/mwc-base/base-element';
 import MDCTabScrollerFoundation from '@material/tab-scroller/foundation.js';
 import * as util from '@material/tab-scroller/util.js';
 import {style} from './mwc-tab-scroller-css.js';
@@ -54,9 +54,14 @@ export class TabScroller extends BaseElement {
   @query('.mdc-tab-scroller__scroll-content')
   protected scrollContentElement!: HTMLElement;
 
-  private _handleInteraction = (e) => this.mdcFoundation.handleInteraction(e);
+  @eventOptions({passive: true})
+  protected handleInteraction(e) {
+    this.mdcFoundation.handleInteraction(e);
+  }
 
-  private _handleTransitionEnd = (e) => this.mdcFoundation.handleTransitionEnd(e);
+  protected handleTransitionEnd = (e) => {
+    this.mdcFoundation.handleTransitionEnd(e);
+  }
 
   private _srollbarHeight = -1;
 
@@ -69,11 +74,12 @@ export class TabScroller extends BaseElement {
       ${this.renderStyle()}
       <div class="mdc-tab-scroller">
         <div class="mdc-tab-scroller__scroll-area"
-            @touchstart="${this._handleInteraction}"
-            @pointerdown="${this._handleInteraction}"
-            @mousedown="${this._handleInteraction}"
-            @keydown="${this._handleInteraction}"
-            @transitionend="${this._handleTransitionEnd}">
+            @wheel="${this.handleInteraction}"
+            @touchstart="${this.handleInteraction}"
+            @pointerdown="${this.handleInteraction}"
+            @mousedown="${this.handleInteraction}"
+            @keydown="${this.handleInteraction}"
+            @transitionend="${this.handleTransitionEnd}">
           <div class="mdc-tab-scroller__scroll-content"><slot></slot></div>
         </div>
       </div>

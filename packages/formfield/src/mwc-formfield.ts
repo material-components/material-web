@@ -106,7 +106,7 @@ export class Formfield extends BaseElement {
       </div>`;
   }
 
-  protected labelClick = () => {
+  protected labelClick() {
     const input = this.input;
     if (input) {
       input.focus();

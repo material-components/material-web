@@ -86,7 +86,9 @@ export class Drawer extends BaseElement {
   // TODO(sorvell): integrate focus trapping.
   private _previousFocus: HTMLElement|null = null;
 
-  private _handleScrimClick = () => this.mdcFoundation.handleScrimClick();
+  protected handleScrimClick() {
+    this.mdcFoundation.handleScrimClick()
+  };
 
   @observer(function(this: Drawer, value: boolean) {
     if (this.type === '') {
@@ -128,7 +130,7 @@ export class Drawer extends BaseElement {
         ${header}
         <div class="mdc-drawer__content"><slot></slot></div>
       </aside>
-      ${modal ? html`<div class="mdc-drawer-scrim" @click="${this._handleScrimClick}"></div>` : ''}
+      ${modal ? html`<div class="mdc-drawer-scrim" @click="${this.handleScrimClick}"></div>` : ''}
       `;
   }
 
