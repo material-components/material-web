@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 <!-- add new unreleased changes here -->
+- Implement icon-button in typescript
 
 ## [0.3.1] - 2018-10-08
 - Fix demo publishing
