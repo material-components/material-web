@@ -19,7 +19,6 @@ import {classMap} from 'lit-html/directives/classMap.js';
 import {MDCWebComponentMixin} from '@material/mwc-base/mdc-web-component.js';
 import {MDCTextField} from '@material/textfield';
 import {style} from './mwc-textfield-css.js';
-import {afterNextRender} from '@material/mwc-base/utils.js';
 import '@material/mwc-icon/mwc-icon-font.js';
 
 class MDCWCTextField extends MDCWebComponentMixin(MDCTextField) {}

@@ -16,7 +16,6 @@
 
 import {assert} from 'chai';
 import {Switch} from '@material/mwc-switch';
-import {afterNextRender} from '@material/mwc-base/utils.js';
 
 let element;
 

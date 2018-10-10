@@ -21,7 +21,6 @@ import {MDCWCMenu} from '@material/mwc-menu/mwc-menu.js';
 import {MDCSelect} from '@material/select';
 import {style} from './mwc-select-css.js';
 import {style as menuStyle} from '@material/mwc-menu/mwc-menu-css.js';
-import {afterNextRender} from '@material/mwc-base/utils.js';
 
 // this element depend on the `mwc-list-item` and `mwc-list-item-separator`
 // elements to be registered ahead of time
