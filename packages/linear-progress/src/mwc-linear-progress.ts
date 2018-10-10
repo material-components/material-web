@@ -77,8 +77,9 @@ export class LinearProgress extends BaseElement {
   @observer(function(this: LinearProgress, value: boolean) {
     this.mdcFoundation.setReverse(value);
   })
-  reverse = 0;
+  reverse = false;
 
+  @property({type: Boolean, reflect: true})
   @observer(function(this: LinearProgress, value: boolean) {
     if (value) {
       this.mdcFoundation.close();
@@ -86,7 +87,6 @@ export class LinearProgress extends BaseElement {
       this.mdcFoundation.open();
     }
   })
-  @property({type: Boolean, reflect: true})
   closed = false;
 
   renderStyle() {
