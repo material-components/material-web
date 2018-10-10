@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 <!-- add new unreleased changes here -->
+- Move event listeners to the class with lit-element 0.6.2
+- Add `@eventOptions({passive: true})` to event handlers in tab-bar-scroller
+  - More efficient scrolling behavior, as `preventDefault` is never called
 
 ## [0.3.1] - 2018-10-08
 - Fix demo publishing
