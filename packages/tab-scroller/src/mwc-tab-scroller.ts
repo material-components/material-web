@@ -55,11 +55,11 @@ export class TabScroller extends BaseElement {
   protected scrollContentElement!: HTMLElement;
 
   @eventOptions({passive: true})
-  protected handleInteraction(e) {
+  protected handleInteraction(e: Event) {
     this.mdcFoundation.handleInteraction(e);
   }
 
-  protected handleTransitionEnd = (e) => {
+  protected handleTransitionEnd(e: Event) {
     this.mdcFoundation.handleTransitionEnd(e);
   }
 

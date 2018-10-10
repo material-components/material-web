@@ -118,7 +118,7 @@ export class Checkbox extends FormElement {
     this.mdcFoundation.handleChange();
   }
 
-  protected animationEndHandler () {
+  protected animationEndHandler() {
     this.mdcFoundation.handleAnimationEnd();
   }
 }

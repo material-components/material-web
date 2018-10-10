@@ -118,20 +118,20 @@ export class Radio extends FormElement {
     };
   }
 
-  protected changeHandler = () => {
+  protected changeHandler() {
     this.checked = this.formElement.checked;
     if (this._selectionController) {
       this._selectionController.update(this);
     }
   }
 
-  protected focusHandler = () => {
+  protected focusHandler() {
     if (this._selectionController) {
       this._selectionController.focus(this);
     }
   }
 
-  protected clickHandler = () => {
+  protected clickHandler() {
     // Firefox has weird behavior with radios if they are not focused
     this.formElement.focus();
   }

@@ -90,7 +90,7 @@ export class Tab extends BaseElement {
   @query('.mdc-tab__content')
   private _contentElement!: HTMLElement;
 
-  protected handleClick = (e) => {
+  protected handleClick = (e: Event) => {
     this.mdcFoundation.handleClick(e);
   }
 
