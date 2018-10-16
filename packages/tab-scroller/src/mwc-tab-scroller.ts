@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, query, customElement, Adapter, Foundation} from '@material/mwc-base/base-element';
+import {BaseElement, html, query, customElement, Adapter, Foundation, eventOptions} from '@material/mwc-base/base-element';
 import MDCTabScrollerFoundation from '@material/tab-scroller/foundation.js';
 import * as util from '@material/tab-scroller/util.js';
 import {style} from './mwc-tab-scroller-css.js';
@@ -54,11 +54,16 @@ export class TabScroller extends BaseElement {
   @query('.mdc-tab-scroller__scroll-content')
   protected scrollContentElement!: HTMLElement;
 
-  private _handleInteraction = (e) => this.mdcFoundation.handleInteraction(e);
+  @eventOptions({passive: true})
+  private _handleInteraction(e: Event) {
+    this.mdcFoundation.handleInteraction(e);
+  }
 
-  private _handleTransitionEnd = (e) => this.mdcFoundation.handleTransitionEnd(e);
+  private _handleTransitionEnd(e: Event) {
+    this.mdcFoundation.handleTransitionEnd(e);
+  }
 
-  private _srollbarHeight = -1;
+  private _scrollbarHeight = -1;
 
   renderStyle() {
     return style;
@@ -69,6 +74,7 @@ export class TabScroller extends BaseElement {
       ${this.renderStyle()}
       <div class="mdc-tab-scroller">
         <div class="mdc-tab-scroller__scroll-area"
+            @wheel="${this._handleInteraction}"
             @touchstart="${this._handleInteraction}"
             @pointerdown="${this._handleInteraction}"
             @mousedown="${this._handleInteraction}"
@@ -101,12 +107,12 @@ export class TabScroller extends BaseElement {
       computeScrollAreaClientRect: () => this.scrollAreaElement.getBoundingClientRect(),
       computeScrollContentClientRect: () => this.scrollContentElement.getBoundingClientRect(),
       computeHorizontalScrollbarHeight: () => {
-        if (this._srollbarHeight === -1) {
+        if (this._scrollbarHeight === -1) {
           this.scrollAreaElement.style.overflowX = 'scroll';
-          this._srollbarHeight = this.scrollAreaElement.offsetHeight - this.scrollAreaElement.clientHeight;;
+          this._scrollbarHeight = this.scrollAreaElement.offsetHeight - this.scrollAreaElement.clientHeight;;
           this.scrollAreaElement.style.overflowX = '';
         }
-        return this._srollbarHeight;
+        return this._scrollbarHeight;
       },
     };
   }

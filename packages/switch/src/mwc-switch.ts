@@ -62,7 +62,7 @@ export class Switch extends FormElement {
 
   protected mdcFoundation!: SwitchFoundation;
 
-  private _changeHandler = (e: Event) => {
+  private _changeHandler(e: Event) {
     this.mdcFoundation.handleChange(e);
     // catch "click" event and sync properties
     this.checked = this.formElement.checked;

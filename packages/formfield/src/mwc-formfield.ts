@@ -102,11 +102,11 @@ export class Formfield extends BaseElement {
     return html`${this.renderStyle()}
       <div class="mdc-form-field ${classMap({'mdc-form-field--align-end': this.alignEnd})}">
         <slot></slot>
-        <label class="mdc-label" @click="${this.labelClick}">${this.label}</label>
+        <label class="mdc-label" @click="${this._labelClick}">${this.label}</label>
       </div>`;
   }
 
-  protected labelClick = () => {
+  private _labelClick() {
     const input = this.input;
     if (input) {
       input.focus();
