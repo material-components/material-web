@@ -72,9 +72,13 @@ export class TabBar extends BaseElement {
 
   private _previousActiveIndex = -1;
 
-  private _handleTabInteraction = (e) => this.mdcFoundation.handleTabInteraction(e);
+  private _handleTabInteraction(e: Event) {
+    this.mdcFoundation.handleTabInteraction(e);
+  }
 
-  private _handleKeydown = (e) => this.mdcFoundation.handleKeyDown(e);
+  private _handleKeydown(e: Event) {
+    this.mdcFoundation.handleKeyDown(e);
+  }
 
   renderStyle() {
     return style;
