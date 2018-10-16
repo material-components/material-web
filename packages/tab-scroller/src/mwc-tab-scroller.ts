@@ -55,15 +55,15 @@ export class TabScroller extends BaseElement {
   protected scrollContentElement!: HTMLElement;
 
   @eventOptions({passive: true})
-  protected handleInteraction(e: Event) {
+  private _handleInteraction(e: Event) {
     this.mdcFoundation.handleInteraction(e);
   }
 
-  protected handleTransitionEnd(e: Event) {
+  private _handleTransitionEnd(e: Event) {
     this.mdcFoundation.handleTransitionEnd(e);
   }
 
-  private _srollbarHeight = -1;
+  private _scrollbarHeight = -1;
 
   renderStyle() {
     return style;
@@ -74,12 +74,12 @@ export class TabScroller extends BaseElement {
       ${this.renderStyle()}
       <div class="mdc-tab-scroller">
         <div class="mdc-tab-scroller__scroll-area"
-            @wheel="${this.handleInteraction}"
-            @touchstart="${this.handleInteraction}"
-            @pointerdown="${this.handleInteraction}"
-            @mousedown="${this.handleInteraction}"
-            @keydown="${this.handleInteraction}"
-            @transitionend="${this.handleTransitionEnd}">
+            @wheel="${this._handleInteraction}"
+            @touchstart="${this._handleInteraction}"
+            @pointerdown="${this._handleInteraction}"
+            @mousedown="${this._handleInteraction}"
+            @keydown="${this._handleInteraction}"
+            @transitionend="${this._handleTransitionEnd}">
           <div class="mdc-tab-scroller__scroll-content"><slot></slot></div>
         </div>
       </div>
@@ -107,12 +107,12 @@ export class TabScroller extends BaseElement {
       computeScrollAreaClientRect: () => this.scrollAreaElement.getBoundingClientRect(),
       computeScrollContentClientRect: () => this.scrollContentElement.getBoundingClientRect(),
       computeHorizontalScrollbarHeight: () => {
-        if (this._srollbarHeight === -1) {
+        if (this._scrollbarHeight === -1) {
           this.scrollAreaElement.style.overflowX = 'scroll';
-          this._srollbarHeight = this.scrollAreaElement.offsetHeight - this.scrollAreaElement.clientHeight;;
+          this._scrollbarHeight = this.scrollAreaElement.offsetHeight - this.scrollAreaElement.clientHeight;;
           this.scrollAreaElement.style.overflowX = '';
         }
-        return this._srollbarHeight;
+        return this._scrollbarHeight;
       },
     };
   }

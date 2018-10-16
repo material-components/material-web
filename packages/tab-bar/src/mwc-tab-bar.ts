@@ -72,11 +72,11 @@ export class TabBar extends BaseElement {
 
   private _previousActiveIndex = -1;
 
-  protected handleTabInteraction(e: Event) {
+  private _handleTabInteraction(e: Event) {
     this.mdcFoundation.handleTabInteraction(e);
   }
 
-  protected handleKeydown(e: Event) {
+  private _handleKeydown(e: Event) {
     this.mdcFoundation.handleKeyDown(e);
   }
 
@@ -89,8 +89,8 @@ export class TabBar extends BaseElement {
     return html`
       ${this.renderStyle()}
       <div class="mdc-tab-bar" role="tablist"
-          @MDCTab:interacted="${this.handleTabInteraction}"
-          @keydown="${this.handleKeydown}">
+          @MDCTab:interacted="${this._handleTabInteraction}"
+          @keydown="${this._handleKeydown}">
         <mwc-tab-scroller><slot></slot></mwc-tab-scroller>
       </div>
       `;

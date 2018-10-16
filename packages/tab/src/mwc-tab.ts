@@ -90,7 +90,7 @@ export class Tab extends BaseElement {
   @query('.mdc-tab__content')
   private _contentElement!: HTMLElement;
 
-  protected handleClick(e: Event) {
+  private _handleClick(e: Event) {
     this.mdcFoundation.handleClick(e);
   }
 
@@ -109,7 +109,7 @@ export class Tab extends BaseElement {
     };
     return html`
       ${this.renderStyle()}
-      <button @click="${this.handleClick}" class="mdc-tab ${classMap(classes)}" role="tab" aria-selected="false" tabindex="-1">
+      <button @click="${this._handleClick}" class="mdc-tab ${classMap(classes)}" role="tab" aria-selected="false" tabindex="-1">
         <span class="mdc-tab__content">
           <slot></slot>
           ${this.icon ? html`<span class="mdc-tab__icon material-icons">${this.icon}</span>` : ''}
