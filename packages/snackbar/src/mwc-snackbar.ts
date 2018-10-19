@@ -19,7 +19,7 @@ import {style} from './mwc-snackbar-css.js';
 import MDCSnackbarFoundation from '@material/snackbar/foundation.js';
 import {getCorrectEventName} from '@material/animation/index.js';
 
-const {ACTION_BUTTON_SELECTOR, TEXT_SELECTOR, SHOW_EVENT, HIDE_EVENT} = MDCSnackbarFoundation.strings;
+const {SHOW_EVENT, HIDE_EVENT} = MDCSnackbarFoundation.strings;
 
 export interface ActionData {
   message?: string;
@@ -56,10 +56,10 @@ export class Snackbar extends BaseElement {
   @query('.mdc-snackbar')
   protected mdcRoot!: HTMLElement
 
-  @query(ACTION_BUTTON_SELECTOR)
+  @query('.mdc-snackbar__action-button')
   protected actionButton!: HTMLElement
 
-  @query(TEXT_SELECTOR)
+  @query('.mdc-snackbar__text')
   protected textElement!: HTMLElement
 
   @property()
@@ -71,10 +71,10 @@ export class Snackbar extends BaseElement {
   @property({})
   actionText = '';
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   multiline = false;
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   actionOnBottom = false;
 
   protected boundActionHandler = this._actionHandler.bind(this);

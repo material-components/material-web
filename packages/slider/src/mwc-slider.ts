@@ -20,15 +20,7 @@ import {repeat} from 'lit-html/directives/repeat.js';
 import {style} from './mwc-slider-css.js';
 import MDCSliderFoundation from '@material/slider/foundation.js';
 
-const {
-  THUMB_CONTAINER_SELECTOR,
-  TRACK_SELECTOR,
-  PIN_VALUE_MARKER_SELECTOR,
-  TRACK_MARKER_CONTAINER_SELECTOR,
-  LAST_TRACK_MARKER_SELECTOR,
-  INPUT_EVENT,
-  CHANGE_EVENT
-} = MDCSliderFoundation.strings;
+const {INPUT_EVENT, CHANGE_EVENT} = MDCSliderFoundation.strings;
 
 export interface SliderFoundation extends Foundation {
   layout(): void;
@@ -68,20 +60,20 @@ export class Slider extends FormElement {
   @query('.mdc-slider')
   protected formElement!: HTMLElement;
 
-  @query(THUMB_CONTAINER_SELECTOR)
+  @query('.mdc-slider__thumb-container')
   protected thumbContainer!: HTMLElement;
 
-  @query(TRACK_SELECTOR)
+  @query('.mdc-slider__track')
   protected trackElement!: HTMLElement;
 
-  @query(PIN_VALUE_MARKER_SELECTOR)
+  @query('.mdc-slider__pin-value-marker')
   protected pinMarker!: HTMLElement;
 
-  @query(TRACK_MARKER_CONTAINER_SELECTOR)
+  @query('.mdc-slider__track-marker-container')
   protected trackMarkerContainer!: HTMLElement;
 
   @property({type: Number})
-  @observer(function(this: Slider, value: number) {
+  @observer(function(this: Slider, value: number) {1
     this.mdcFoundation.setValue(value);
   })
   value = 0;
@@ -104,16 +96,16 @@ export class Slider extends FormElement {
   })
   step = 0;
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   @observer(function(this: Slider, value: boolean) {
     this.mdcFoundation.setDisabled(value);
   })
   disabled = false;
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   discrete = false;
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   @observer(function(this: Slider) {
     this.mdcFoundation.setupTrackMarker();
   })
@@ -181,11 +173,13 @@ export class Slider extends FormElement {
       deregisterResizeHandler: (handler: EventListener) =>
         window.removeEventListener('resize', handler),
       notifyInput: () => {
-        this.value = this.mdcFoundation.getValue();
-        this.dispatchEvent(new CustomEvent(INPUT_EVENT, {detail: this, bubbles: true, cancelable: true}));
+        const value = this.mdcFoundation.getValue();
+        if (value !== this.value) {
+          this.value = value;
+          this.dispatchEvent(new CustomEvent(INPUT_EVENT, {detail: this, bubbles: true, cancelable: true}));
+        }
       },
       notifyChange: () => {
-        this.value = this.mdcFoundation.getValue();
         this.dispatchEvent(new CustomEvent(CHANGE_EVENT, {detail: this, bubbles: true, cancelable: true}));
       },
       setThumbContainerStyleProperty: (propertyName: string, value: string) =>
@@ -197,7 +191,8 @@ export class Slider extends FormElement {
       removeTrackMarkers: () => {},
       setLastTrackMarkersStyleProperty: (propertyName: string, value: string) =>
         // We remove and append new nodes, thus, the last track marker must be dynamically found.
-        this.mdcRoot.querySelector(LAST_TRACK_MARKER_SELECTOR).style.setProperty(propertyName, value),
+        (this.mdcRoot.querySelector('.mdc-slider__track-marker:last-child') as HTMLElement).
+            style.setProperty(propertyName, value),
       isRTL: () => getComputedStyle(this.mdcRoot).direction === 'rtl',
     };
   }
