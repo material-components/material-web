@@ -137,6 +137,7 @@ export class Slider extends FormElement {
         </div>` : ''}
       </div>
       <div class="mdc-slider__thumb-container">
+        <!-- TODO: use cache() directive -->
         ${discrete ? html`<div class="mdc-slider__pin">
           <span class="mdc-slider__pin-value-marker"></span>
         </div>` : ''}
