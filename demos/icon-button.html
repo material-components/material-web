@@ -17,16 +17,16 @@ limitations under the License.
 -->
 <html>
 <head>
-  <title>icon-toggle demo</title>
+  <title>icon-button demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-  <script type="module" src="../node_modules/@material/mwc-icon-toggle/mwc-icon-toggle.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-icon-button/mwc-icon-button.js"></script>
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
   <link rel="stylesheet" href="demo-component.css">
   <style>
 
     .color {
-      --mdc-theme-text-primary-on-light: tomato;
+      color: tomato;
     }
   </style>
 </head>
@@ -37,25 +37,29 @@ limitations under the License.
   </header>
 
   <main>
+    <h4>No Toggle</h4>
 
-    <mwc-icon-toggle icon="sentiment_very_satisfied" offIcon="sentiment_very_dissatisfied"></mwc-icon-toggle>
-    <mwc-icon-toggle icon="sentiment_satisfied" offIcon="sentiment_neutral"></mwc-icon-toggle>
+    <mwc-icon-button icon="error"></mwc-icon-button>
 
-    <h3>disabled</h3>
+    <h4>Toggle</h4>
 
-    <mwc-icon-toggle disabled icon="sentiment_very_satisfied" offIcon="sentiment_very_dissatisfied"></mwc-icon-toggle>
+    <mwc-icon-button icon="sentiment_very_satisfied" offIcon="sentiment_very_dissatisfied"></mwc-icon-button>
+    <mwc-icon-button icon="alarm_on" offIcon="alarm_off" on></mwc-icon-button>
 
-    <br><br>
-    <h4>color</h4>
+    <h4>Disabled</h3>
+
+    <mwc-icon-button disabled icon="sentiment_very_satisfied" offIcon="sentiment_very_dissatisfied"></mwc-icon-button>
+
+    <h4>Color</h4>
     <div class="color">
-      <mwc-icon-toggle icon="all_out" offIcon="accessibility"></mwc-icon-toggle>
-      <mwc-icon-toggle icon="exit_to_app" offIcon="camera"></mwc-icon-toggle>
+      <mwc-icon-button icon="all_out" offIcon="accessibility"></mwc-icon-button>
+      <mwc-icon-button icon="exit_to_app" offIcon="camera"></mwc-icon-button>
     </div>
   </main>
 
   <script type="module">
-    Array.from(document.querySelectorAll('mwc-icon-toggle')).forEach((e) => {
-      e.addEventListener('MDCIconToggle:change', (e) => console.log(e.type, e.target));
+    Array.from(document.querySelectorAll('mwc-icon-button')).forEach((e) => {
+      e.addEventListener('MDCIconButtonToggle:change', (e) => console.log(e.type, e.target));
     });
     addEventListener('load', () => document.body.classList.remove('unresolved'));
   </script>

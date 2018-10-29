@@ -15,14 +15,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/icon-toggle/mdc-icon-toggle.scss';
-@import '@material/mwc-icon/mwc-icon.scss';
+import {IconButtonBase} from './icon-button-base.js';
+import {style} from './mwc-icon-button-css.js';
+import {customElement} from '@material/mwc-base/base-element.js';
+import '@material/mwc-icon/mwc-icon-font.js';
 
-.material-icons {
-  @extend %material-icons;
+declare global {
+  interface HTMLElementTagNameMap {
+    'mwc-icon-button': IconButton
+  }
 }
 
-:host {
-  display: inline-block;
-  outline: none;
+@customElement('mwc-icon-button' as any)
+export class IconButton extends IconButtonBase {
+  renderStyle() {
+    return style;
+  }
 }
