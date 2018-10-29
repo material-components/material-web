@@ -18,8 +18,6 @@ import {BaseElement, html, property, observer, query, customElement, Adapter, Fo
 import {style} from './mwc-linear-progress-css.js';
 import MDCLinearProgressFoundation from '@material/linear-progress/foundation.js';
 
-const {PRIMARY_BAR_SELECTOR, BUFFER_SELECTOR} = MDCLinearProgressFoundation.strings;
-
 export interface LinearProgressFoundation extends Foundation {
   setDeterminate(value: boolean): void;
   setProgress(value: number): void;
@@ -49,13 +47,13 @@ export class LinearProgress extends BaseElement {
   @query('.mdc-linear-progress')
   protected mdcRoot!: HTMLElement
 
-  @query(PRIMARY_BAR_SELECTOR)
+  @query('.mdc-linear-progress__primary-bar')
   protected primaryBar!: HTMLElement
 
-  @query(BUFFER_SELECTOR)
+  @query('.mdc-linear-progress__buffer')
   protected bufferElement!: HTMLElement
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   @observer(function(this: LinearProgress, value: boolean) {
     this.mdcFoundation.setDeterminate(value);
   })
@@ -73,12 +71,13 @@ export class LinearProgress extends BaseElement {
   })
   buffer = 0;
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   @observer(function(this: LinearProgress, value: boolean) {
     this.mdcFoundation.setReverse(value);
   })
-  reverse = 0;
+  reverse = false;
 
+  @property({type: Boolean, reflect: true})
   @observer(function(this: LinearProgress, value: boolean) {
     if (value) {
       this.mdcFoundation.close();
@@ -86,7 +85,6 @@ export class LinearProgress extends BaseElement {
       this.mdcFoundation.open();
     }
   })
-  @property({type: Boolean, reflect: true})
   closed = false;
 
   renderStyle() {
