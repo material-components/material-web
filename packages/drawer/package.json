@@ -17,7 +17,7 @@
     "@material/drawer": "^0.40.0",
     "@material/mwc-base": "^0.3.1",
     "@polymer/lit-element": "^0.6.2",
-    "lit-html": "^0.12.0"
+    "lit-html": "^0.13.0"
   },
   "publishConfig": {
     "access": "public"
