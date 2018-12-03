@@ -20,7 +20,7 @@ import {TabIndicator} from '@material/mwc-tab-indicator';
 // Make TypeScript not remove the import.
 import '@material/mwc-tab-indicator';
 
-import {classMap} from 'lit-html/directives/classMap';
+import {classMap} from 'lit-html/directives/class-map';
 import {ripple} from '@material/mwc-ripple/ripple-directive';
 import MDCTabFoundation from '@material/tab/foundation';
 import {style} from './mwc-tab-css';

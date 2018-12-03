@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, query, customElement, Adapter, Foundation, eventOptions} from '@material/mwc-base/base-element';
+import {BaseElement, html, query, customElement, Adapter, Foundation} from '@material/mwc-base/base-element';
 import MDCTabScrollerFoundation from '@material/tab-scroller/foundation.js';
 import * as util from '@material/tab-scroller/util.js';
 import {style} from './mwc-tab-scroller-css.js';
@@ -54,7 +54,6 @@ export class TabScroller extends BaseElement {
   @query('.mdc-tab-scroller__scroll-content')
   protected scrollContentElement!: HTMLElement;
 
-  @eventOptions({passive: true})
   private _handleInteraction(e: Event) {
     this.mdcFoundation.handleInteraction(e);
   }
