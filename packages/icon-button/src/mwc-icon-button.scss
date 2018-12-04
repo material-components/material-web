@@ -15,14 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/icon-toggle/mdc-icon-toggle.scss';
-@import '@material/mwc-icon/mwc-icon.scss';
-
-.material-icons {
-  @extend %material-icons;
-}
+@import '@material/icon-button/mdc-icon-button.scss';
+@import '@material/mwc-icon/src/_mwc-icon.scss';
 
 :host {
   display: inline-block;
   outline: none;
+}
+
+.material-icons {
+  @extend %material-icons;
 }

@@ -86,7 +86,9 @@ export class Drawer extends BaseElement {
   // TODO(sorvell): integrate focus trapping.
   private _previousFocus: HTMLElement|null = null;
 
-  private _handleScrimClick = () => this.mdcFoundation.handleScrimClick();
+  private _handleScrimClick() {
+    this.mdcFoundation.handleScrimClick()
+  };
 
   @observer(function(this: Drawer, value: boolean) {
     if (this.type === '') {

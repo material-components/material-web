@@ -91,7 +91,6 @@ export class Checkbox extends FormElement {
   }
 
   render() {
-    console.log('render', this.checked);
     return html`
       ${this.renderStyle()}
       <div class="mdc-checkbox" @animationend="${this._animationEndHandler}" .ripple="${ripple()}">
@@ -113,13 +112,13 @@ export class Checkbox extends FormElement {
       </div>`;
   }
 
-  private _changeHandler = () => {
+  private _changeHandler() {
     this.checked = this.formElement.checked;
     this.indeterminate = this.formElement.indeterminate;
     this.mdcFoundation.handleChange();
   }
 
-  private _animationEndHandler = () => {
+  private _animationEndHandler() {
     this.mdcFoundation.handleAnimationEnd();
   }
 }
