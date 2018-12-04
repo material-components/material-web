@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-base",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "",
   "repository": {
     "type": "git",
@@ -8,7 +8,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@polymer/lit-element":"^0.6.4",
+    "@polymer/lit-element": "^0.6.4",
     "lit-html": "^0.14.0"
   },
   "publishConfig": {
