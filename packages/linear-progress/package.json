@@ -11,7 +11,7 @@
   "dependencies": {
     "@material/linear-progress": "^0.40.0",
     "@material/mwc-base": "^0.3.2",
-    "@polymer/lit-element": "^0.6.2"
+    "@polymer/lit-element":"^0.6.4"
   },
   "publishConfig": {
     "access": "public"

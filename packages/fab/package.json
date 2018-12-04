@@ -17,8 +17,8 @@
     "@material/mwc-base": "^0.3.2",
     "@material/mwc-icon": "^0.3.2",
     "@material/mwc-ripple": "^0.3.2",
-    "@polymer/lit-element": "^0.6.2",
-    "lit-html": "^0.13.0"
+    "@polymer/lit-element":"^0.6.4",
+    "lit-html": "^0.14.0"
   },
   "publishConfig": {
     "access": "public"

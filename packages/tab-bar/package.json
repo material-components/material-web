@@ -18,7 +18,7 @@
     "@material/mwc-tab": "^0.3.2",
     "@material/mwc-tab-scroller": "^0.3.2",
     "@material/tab-bar": "^0.40.0",
-    "@polymer/lit-element": "^0.6.2"
+    "@polymer/lit-element":"^0.6.4"
   },
   "publishConfig": {
     "access": "public"
