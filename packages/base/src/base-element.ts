@@ -19,7 +19,7 @@ import {LitElement} from '@polymer/lit-element';
 import {TemplateResult} from 'lit-html';
 export {TemplateResult};
 export * from '@polymer/lit-element';
-export {classMap} from 'lit-html/directives/classMap.js';
+export {classMap} from 'lit-html/directives/class-map.js';
 export {observer} from './observer.js';
 
 export interface Adapter {
