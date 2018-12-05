@@ -1,4 +1,4 @@
-import {BaseElement, html, property, observer, query, queryAll, customElement, Adapter, Foundation} from '@material/mwc-base/base-element.js';
+import {BaseElement, html, property, query, queryAll, customElement, Adapter, Foundation} from '@material/mwc-base/base-element.js';
 import {classMap} from 'lit-html/directives/class-map.js';
 import '@material/mwc-icon/mwc-icon-font.js';
 
