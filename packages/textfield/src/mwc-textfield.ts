@@ -1,5 +1,5 @@
-import {BaseElement, html, property, query, queryAll, customElement, Adapter, Foundation} from '@material/mwc-base/base-element.js';
-import {classMap} from 'lit-html/directives/classMap.js';
+import {BaseElement, html, property, observer, query, queryAll, customElement, Adapter, Foundation} from '@material/mwc-base/base-element.js';
+import {classMap} from 'lit-html/directives/class-map.js';
 import '@material/mwc-icon/mwc-icon-font.js';
 
 import MDCTextFieldFoundation from '@material/textfield/foundation.js';
@@ -81,10 +81,10 @@ export class TextField extends BaseElement {
   protected iconSelector!: HTMLElement[];
 
   @property({type: String})
-  value = ''
-
-  @property({type: String})
   label = ''
+
+  @property({type: String, reflect: true})
+  value = ''
 
   @property({type: String})
   icon = ''
@@ -163,12 +163,7 @@ export class TextField extends BaseElement {
   }
   
   _renderInput(value, required, type, placeHolder, label) {
-    return html`<input @input="${e => this._changeHandler(e)}" type="${type}" placeholder="${placeHolder}" ?required="${required}" class="mdc-text-field__input ${value ? 'mdc-text-field--upgraded' : ''}" id="text-field" .value="${value}" aria-label="${label}">`;
-  }
-
-  //Manually set property, as it is not properly reflected
-  _changeHandler(e) {
-    this.value = e.target.value;
+    return html`<input type="${type}" placeholder="${placeHolder}" ?required="${required}" class="mdc-text-field__input ${value ? 'mdc-text-field--upgraded' : ''}" id="text-field" .value="${value}" aria-label="${label}">`;
   }
 
   protected createAdapter() {
