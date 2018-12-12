@@ -16,7 +16,7 @@ limitations under the License.
 */
 import {html, BaseElement, Foundation, Adapter, property, query, observer} from '@material/mwc-base/base-element.js';
 import {FormElement} from '@material/mwc-base/form-element.js';
-import {classMap} from 'lit-html/directives/classMap.js';
+import {classMap} from 'lit-html/directives/class-map.js';
 import {findAssignedElement} from '@material/mwc-base/utils.js';
 import {style} from './mwc-formfield-css.js';
 import MDCFormFieldFoundation from '@material/form-field/foundation.js';

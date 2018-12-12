@@ -54,7 +54,7 @@ export class TabScroller extends BaseElement {
   @query('.mdc-tab-scroller__scroll-content')
   protected scrollContentElement!: HTMLElement;
 
-  @eventOptions({passive: true})
+  @eventOptions({passive: true} as EventListenerOptions)
   private _handleInteraction(e: Event) {
     this.mdcFoundation.handleInteraction(e);
   }
