@@ -12,7 +12,7 @@
     "@material/chips": "^0.35.0",
     "@material/mwc-base": "^0.3.3",
     "@material/mwc-icon": "^0.3.3",
-    "@polymer/lit-element": "^0.6.4"
+    "@polymer/lit-element": "^0.6.5"
   },
   "publishConfig": {
     "access": "public"
