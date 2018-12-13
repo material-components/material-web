@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-dialog",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "",
   "main": "mwc-dialog.js",
   "scripts": {
@@ -10,8 +10,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/dialog": "^0.35.0",
-    "@material/mwc-base": "^0.3.3",
-    "@material/mwc-button": "^0.3.3",
+    "@material/mwc-base": "^0.3.4",
+    "@material/mwc-button": "^0.3.4",
     "@polymer/lit-element": "^0.6.5",
     "blocking-elements": "^0.0.2",
     "wicg-inert": "^1.1.6"

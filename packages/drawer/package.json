@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-drawer",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "",
   "main": "mwc-drawer.js",
   "repository": {
@@ -15,7 +15,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/drawer": "^0.40.0",
-    "@material/mwc-base": "^0.3.3",
+    "@material/mwc-base": "^0.3.4",
     "@polymer/lit-element": "^0.6.5",
     "lit-html": "^1.0.0-rc.1"
   },
