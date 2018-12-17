@@ -15,8 +15,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// load material icons font
-const fontEl = document.createElement('link');
-fontEl.rel = 'stylesheet';
-fontEl.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
-document.head!.appendChild(fontEl);
+/**
+ * Check if material icons font already exists and 
+ * load it if not.
+ */
+
+if (typeof document !== 'undefined') {
+    const exists = document.getElementById('mwcFontRef');
+    if(!exists){
+        const fontEl = document.createElement('link');
+        fontEl.id = 'mwcFontRef';
+        fontEl.rel = 'stylesheet';
+        fontEl.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
+        document.head!.appendChild(fontEl);    
+    }
+}
+
