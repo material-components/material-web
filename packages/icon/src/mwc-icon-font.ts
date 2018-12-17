@@ -21,8 +21,8 @@ limitations under the License.
  */
 
 if (typeof document !== 'undefined') {
-    const exists = document.getElementById('mwcFontRef');
-    if(!exists){
+    const fontRefExists = document.getElementById('mwcFontRef');
+    if(!fontRefExists){
         const fontEl = document.createElement('link');
         fontEl.id = 'mwcFontRef';
         fontEl.rel = 'stylesheet';
