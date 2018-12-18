@@ -44,7 +44,7 @@ When you're ready to use the Material Web Components in your web application:
 
   1. Import the element definition into your HTML page:
 
-      ```<script type="module" src="@material/mwc-icon/index.js"></script>```
+      ```<script type="module" src="@material/mwc-icon/mwc-icon.js"></script>```
 
       Or into your module script:
 
