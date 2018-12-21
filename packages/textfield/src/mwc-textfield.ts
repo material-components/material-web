@@ -1,5 +1,5 @@
-import { html, query, observer, property, Adapter, Foundation, customElement } from '@authentic/mwc-base/base-element.js';
-import { FormElement } from '@authentic/mwc-base/form-element.js'
+import { html, query, observer, property, Adapter, Foundation, customElement } from '@material/mwc-base/base-element.js';
+import { FormElement } from '@material/mwc-base/form-element.js'
 import { classMap } from 'lit-html/directives/class-map.js';
 import { style } from './mwc-textfield-css.js';
 import MDCTextfieldFoundation from '@material/textfield/foundation.js';
