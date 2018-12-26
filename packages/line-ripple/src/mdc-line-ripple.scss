@@ -15,12 +15,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/textfield/mdc-text-field.scss';
-
-:host {
-  outline: none;
-}
-
-:host(:not([fullwidth])) {
-  display: inline-block;
-}
+@import '@material/line-ripple/mdc-line-ripple.scss';

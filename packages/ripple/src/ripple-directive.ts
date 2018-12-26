@@ -121,7 +121,7 @@ const rippleInteractionNodes = new WeakMap();
  * should be applied to a PropertyPart.
  * @param options {RippleOptions}
  */
-export const ripple = (options: RippleOptions = {}) => directive((part: PropertyPart) =>{
+export const ripple = directive((options: RippleOptions = {}) => (part: PropertyPart) =>{
   const surfaceNode = part.committer.element as HTMLElement;
   const interactionNode = options.interactionNode || surfaceNode;
   let rippleFoundation = part.value;
