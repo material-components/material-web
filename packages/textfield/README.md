@@ -34,7 +34,7 @@ A [Material Components](https://material.io/develop/) tab indicator implementati
 
       Or into your module script:
 
-      ```import {Switch} from "@authentic/mwc-textfield"```
+      ```import {TextField} from "@authentic/mwc-textfield"```
 
   1. Create an instance of mwc-textfield in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
 

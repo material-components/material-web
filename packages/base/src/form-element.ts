@@ -27,6 +27,10 @@ export interface HTMLElementWithRipple extends HTMLElement {
   ripple?: RippleSurface;
 }
 
+export interface HTMLElementWithLineRipple extends HTMLElement {
+  lineRipple?: RippleSurface;
+}
+
 export abstract class FormElement extends BaseElement {
   /**
    * Form-capable element in the component ShadowRoot.
@@ -43,6 +47,11 @@ export abstract class FormElement extends BaseElement {
    * Implement ripple getter for Ripple integration with mwc-formfield
    */
   readonly ripple?: RippleSurface;
+
+  /**
+   * Implement ripple getter for Ripple integration with mwc-textfield
+   */
+  readonly lineRipple?: RippleSurface;
 
   click() {
     if (this.formElement) {
