@@ -202,8 +202,7 @@ export class Textfield extends FormElement {
         return !fullWidth && outlined
             ? html`
                 <div class="mdc-notched-outline">
-                    <svg>
-                        <path class="mdc-notched-outline__path" /></svg>
+                    <svg><path class="mdc-notched-outline__path" /></svg>
                 </div>
                 <div class="mdc-notched-outline__idle"></div>
             `
