@@ -16,8 +16,8 @@ limitations under the License.
 */
 import { LitElement, html, property, customElement } from '@polymer/lit-element';
 import { classMap } from 'lit-html/directives/class-map.js';
-import { lineRipple, LineRippleOptions } from './line-ripple-directive.js';
-import { style } from './mwc-line-ripple-css.js';
+import { lineRipple, LineRippleOptions } from './line-ripple-directive';
+import { style } from './mwc-line-ripple-css';
 
 @customElement('mwc-line-ripple' as any)
 export class LineRipple extends LitElement {
