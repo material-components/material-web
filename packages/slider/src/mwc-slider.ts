@@ -118,29 +118,43 @@ export class Slider extends FormElement {
     return style;
   }
 
+  discretePin() {
+    return html`
+      <div class="mdc-slider__pin">
+        <span class="mdc-slider__pin-value-marker"></span>
+      </div>
+    `;
+  }
+  discreteMarkers(count) {
+    return html`
+      <div class="mdc-slider__track-marker-container">
+        ${repeat(new Array(count), () => html`<div class="mdc-slider__track-marker"></div>`)}
+      </div>
+    `;
+  }
+
+  sliderClass() {
+    return classMap({
+      'mdc-slider--discrete': this.discrete,
+      'mdc-slider--display-markers': this.markers && this.discrete,
+    });
+  }
+
   // TODO(sorvell) #css: needs a default width
   render() {
     const {value, min, max, step, disabled, discrete, markers, _numMarkers} = this;
-    const hostClassInfo = {
-      'mdc-slider--discrete': discrete,
-      'mdc-slider--display-markers': markers && discrete,
-    };
     return html`
       ${this.renderStyle()}
-      <div class="mdc-slider ${classMap(hostClassInfo)}" tabindex="0" role="slider"
+      <div class="mdc-slider ${this.sliderClass()}" tabindex="0" role="slider"
         aria-valuemin="${min}" aria-valuemax="${max}" aria-valuenow="${value}"
         aria-disabled="${disabled}" data-step="${step}">
       <div class="mdc-slider__track-container">
         <div class="mdc-slider__track"></div>
-        ${discrete && markers ? html`<div class="mdc-slider__track-marker-container">
-          ${repeat(new Array(_numMarkers), () => html`<div class="mdc-slider__track-marker"></div>`)}
-        </div>` : ''}
+        ${discrete && markers ? this.discreteMarkers(_numMarkers) : ''}
       </div>
       <div class="mdc-slider__thumb-container">
         <!-- TODO: use cache() directive -->
-        ${discrete ? html`<div class="mdc-slider__pin">
-          <span class="mdc-slider__pin-value-marker"></span>
-        </div>` : ''}
+        ${discrete ? this.discretePin() : ''}
         <svg class="mdc-slider__thumb" width="21" height="21">
           <circle cx="10.5" cy="10.5" r="7.875"></circle>
         </svg>
