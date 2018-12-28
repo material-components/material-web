@@ -20,6 +20,7 @@ import { classMap } from 'lit-html/directives/class-map.js';
 import { style } from './mwc-textfield-css.js';
 import { lineRipple } from '@material/mwc-line-ripple/line-ripple-directive';
 import MDCTextfieldFoundation from '@material/textfield/foundation.js';
+import {MDCNotchedOutline, MDCNotchedOutlineFoundation} from '@material/notched-outline/index';
 
 export interface TextfieldFoundation extends Foundation {
     setDisabled(value: boolean): void;
@@ -95,6 +96,14 @@ export class Textfield extends FormElement {
     protected mdcFoundation!: TextfieldFoundation;
     protected readonly mdcFoundationClass: typeof TextfieldFoundation = MDCTextfieldFoundation;
 
+    _notchedOutline!: MDCNotchedOutline;
+    get notchedOutline() {
+        if ( !this._notchedOutline ) {
+            this._notchedOutline = new MDCNotchedOutline(this.mdcRoot)
+        }
+        return this._notchedOutline;
+    }
+
     protected createAdapter() {
         return {
             ...super.createAdapter(),
@@ -141,7 +150,7 @@ export class Textfield extends FormElement {
             floatLabel: () => { },
             hasLabel: () => { },
             getLabelWidth: () => { },
-            hasOutline: () => { },
+            hasOutline: () => { !!this.notchedOutline() },
             notchOutline: () => { },
             closeOutline: () => { },
         }
