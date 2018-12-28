@@ -20,6 +20,7 @@ import { classMap } from 'lit-html/directives/class-map.js';
 import { style } from './mwc-textfield-css.js';
 import { lineRipple } from '@material/mwc-line-ripple/line-ripple-directive';
 import MDCTextfieldFoundation from '@material/textfield/foundation.js';
+import { MDCFloatingLabel } from '@material/floating-label/index';
 
 export interface TextfieldFoundation extends Foundation {
     setDisabled(value: boolean): void;
@@ -41,14 +42,17 @@ declare global {
 @customElement('mwc-textfield' as any)
 export class Textfield extends FormElement {
 
-    @query('.mdc-textfield')
+    @query('.mdc-text-field')
     protected mdcRoot!: HTMLElement;
 
     @query('input')
     protected formElement!: HTMLInputElement;
 
-    @query('label')
-    protected label!: HTMLLabelElement;
+    @query('.mdc-floating-label')
+    protected labelEl!: HTMLElement;
+
+    @property({ type: String })
+    label = '';
 
     @property({ type: String })
     @observer(function (this: Textfield, value: string) {
@@ -95,12 +99,18 @@ export class Textfield extends FormElement {
     protected mdcFoundation!: TextfieldFoundation;
     protected readonly mdcFoundationClass: typeof TextfieldFoundation = MDCTextfieldFoundation;
 
+    _floatingLabel!: MDCFloatingLabel;
+    get floatingLabel() {
+        if (!this._floatingLabel && this.labelEl) {
+            this._floatingLabel = new MDCFloatingLabel(this.labelEl)
+        }
+
+        return this._floatingLabel;
+    }
+
     protected createAdapter() {
         return {
             ...super.createAdapter(),
-            addClass: () => { },
-            removeClass: () => { },
-            hasClass: () => { },
             registerInputInteractionHandler: (type: string, handler: EventListener) => {
                 this.formElement.addEventListener(type, handler);
             },
@@ -114,18 +124,31 @@ export class Textfield extends FormElement {
                 this.formElement.removeEventListener(type, handler);
             },
             registerInteractionHandler: (type: string, handler: EventListener) => {
-                this.label.addEventListener(type, handler);
+                this.labelEl.addEventListener(type, handler);
             },
             deregisterInteractionHandler: (type: string, handler: EventListener) => {
-                this.label.removeEventListener(type, handler);
+                this.labelEl.removeEventListener(type, handler);
             },
-            registerValidationAttributeChangeHandler: () => { },
-            deregisterValidationAttributeChangeHandler: () => { },
+            registerValidationAttributeChangeHandler: (handler: EventListener) => {
+                const getAttributesList = (mutationsList) => mutationsList.map((mutation) => mutation.attributeName);
+                const observer = new MutationObserver((mutationsList) => handler(getAttributesList(mutationsList)));
+                const targetNode = this.formElement;
+                const config = { attributes: true };
+                observer.observe(targetNode, config);
+                return observer;
+            },
+            deregisterValidationAttributeChangeHandler: (observer) => {
+                observer.disconnect()
+            },
             getNativeInput: () => {
                 return this.formElement;
             },
-            isFocused: () => { },
-            isRtl: () => { },
+            isFocused: () => {
+                return document.activeElement === this.formElement;
+            },
+            isRtl: () => {
+                return window.getComputedStyle(this.formElement).getPropertyValue('direction') === 'rtl';
+            },
             activateLineRipple: () => {
                 if (this.lineRipple) {
                     this.lineRipple.activate();
@@ -136,11 +159,27 @@ export class Textfield extends FormElement {
                     this.lineRipple.deactivate();
                 }
             },
-            setLineRippleTransformOrigin: () => { },
-            shakeLabel: () => { },
-            floatLabel: () => { },
-            hasLabel: () => { },
-            getLabelWidth: () => { },
+            setLineRippleTransformOrigin: (normalizedX) => {
+                if (this.lineRipple) {
+                    this.lineRipple.setRippleCenter(normalizedX);
+                }
+            },
+            shakeLabel: (shouldShake) => {
+                if (this.floatingLabel) {
+                    this.floatingLabel.shake(shouldShake);
+                }
+            },
+            floatLabel: (shouldFloat) => {
+                if (this.floatingLabel) {
+                    this.floatingLabel.float(shouldFloat);
+                }
+            },
+            hasLabel: () => {
+                return !!this.floatingLabel;
+            },
+            getLabelWidth: () => {
+                return this.floatingLabel!.getWidth()
+            },
             hasOutline: () => { },
             notchOutline: () => { },
             closeOutline: () => { },
@@ -175,7 +214,7 @@ export class Textfield extends FormElement {
             <div class="mdc-text-field mdc-text-field--upgraded ${classMap(hostClassInfo)}">
                 ${this._renderIcon({ icon, fullWidth })}
                 ${this._renderInput({ value, required, type, placeHolder, label })}
-                ${this._renderLabel({ label, value, fullWidth })}
+                ${this._renderLabel({ label, fullWidth })}
                 ${this._renderSVG({ fullWidth, outlined })}
             </div>
             ${this._renderHelperText({ helperText })}
@@ -192,9 +231,9 @@ export class Textfield extends FormElement {
         return html`<input type="${type}" placeholder="${placeHolder}" ?required="${required}" class="mdc-text-field__input ${value ? 'mdc-text-field--upgraded' : ''}" id="text-field" .value="${value}" aria-label="${label}">`;
     }
 
-    _renderLabel({ label, value, fullWidth }) {
+    _renderLabel({ label, fullWidth }) {
         return !fullWidth && label
-            ? html`<label class="mdc-floating-label ${value ? 'mdc-floating-label--float-above' : ''} for=" text-field">${label}</label>`
+            ? html`<label class="mdc-floating-label">${label}</label>`
             : '';
     }
 
@@ -202,7 +241,8 @@ export class Textfield extends FormElement {
         return !fullWidth && outlined
             ? html`
                 <div class="mdc-notched-outline">
-                    <svg><path class="mdc-notched-outline__path" /></svg>
+                    <svg>
+                        <path class="mdc-notched-outline__path" /></svg>
                 </div>
                 <div class="mdc-notched-outline__idle"></div>
             `
