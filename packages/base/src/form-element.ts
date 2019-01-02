@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {BaseElement} from './base-element';
+import { BaseElement } from './base-element';
 export * from './base-element';
 
 export interface RippleSurface {
@@ -23,12 +23,18 @@ export interface RippleSurface {
   deactivate(): void;
 }
 
+export interface LineRippleSurface {
+  activate(): void;
+  deactivate(): void;
+  setRippleCenter(value: number): void;
+}
+
 export interface HTMLElementWithRipple extends HTMLElement {
   ripple?: RippleSurface;
 }
 
 export interface HTMLElementWithLineRipple extends HTMLElement {
-  lineRipple?: RippleSurface;
+  lineRipple?: LineRippleSurface;
 }
 
 export abstract class FormElement extends BaseElement {
@@ -40,7 +46,7 @@ export abstract class FormElement extends BaseElement {
   protected abstract formElement: HTMLElement;
 
   createRenderRoot() {
-    return this.attachShadow({mode: 'open', delegatesFocus: true});
+    return this.attachShadow({ mode: 'open', delegatesFocus: true });
   }
 
   /**

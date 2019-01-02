@@ -11,8 +11,10 @@
   "dependencies": {
     "@material/mwc-base": "^0.3.4",
     "@material/mwc-icon": "^0.3.4",
-    "@material/mwc-line-ripple": "^0.3.4",
     "@material/textfield": "^0.40.0",
+    "@material/line-ripple": "^0.35.0",
+    "@material/floating-label": "^0.35.0",
+    "@material/notched-outline": "^0.35.0",
     "@polymer/lit-element": "^0.6.5"
   },
   "publishConfig": {

@@ -16,9 +16,15 @@ limitations under the License.
 */
 
 @import '@material/textfield/mdc-text-field.scss';
+@import '@material/mwc-icon/src/mwc-icon-host.scss';
+
+.material-icons {
+  @extend %material-icons;
+}
 
 :host {
   outline: none;
+  display: block;
 }
 
 :host(:not([fullwidth])) {

@@ -38,7 +38,7 @@ A [Material Components](https://material.io/develop/) tab indicator implementati
 
   1. Create an instance of mwc-textfield in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
 
-      ```<mwc-textfield>sentiment_very_satisfied</mwc-textfield>```
+      ```<mwc-textfield></mwc-textfield>```
 
   1. Install the Polymer CLI:
 
