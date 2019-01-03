@@ -33,6 +33,9 @@ import { ripple } from '@material/mwc-ripple/ripple-directive.js';
 
 import { style } from './mwc-textfield-css.js';
 
+// elements to be registered ahead of time
+import '@material/mwc-icon/mwc-icon-font.js';
+
 export interface TextFieldFoundation extends Foundation {
   setValue(value: string): void;
   setDisabled(value: string): void;
