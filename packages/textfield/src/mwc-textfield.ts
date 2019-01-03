@@ -29,6 +29,7 @@ import MDCTextFieldFoundation from '@material/textfield/foundation.js';
 import { MDCLineRipple } from '@material/line-ripple';
 import { MDCFloatingLabel } from '@material/floating-label/index';
 import { MDCNotchedOutline } from '@material/notched-outline/index';
+import { ripple } from '@material/mwc-ripple/ripple-directive.js';
 
 import { style } from './mwc-textfield-css.js';
 
@@ -77,40 +78,60 @@ export class TextField extends FormElement {
   label = '';
 
   @property({ type: String })
-  icon = '';
+  icon;
 
   @property({ type: Boolean })
-  iconTrailing = false;
+  iconTrailing;
 
   @property({ type: Boolean })
-  box = false;
+  box;
 
   @property({ type: Boolean })
-  outlined = false;
+  outlined;
 
   @property({ type: Boolean })
   @observer(function(this: TextField, value: string) {
     this.mdcFoundation.setDisabled(value);
   })
-  disabled = false;
+  disabled;
 
   @property({ type: Boolean })
-  fullWidth = false;
+  fullWidth;
 
   @property({ type: Boolean })
-  required = false;
+  required;
 
   @property({ type: String })
   @observer(function(this: TextField, value: string) {
     this.mdcFoundation.setHelperTextContent(value);
   })
-  helperText = '';
+  helperText;
 
   @property({ type: String })
-  placeHolder = '';
+  placeHolder;
 
   @property({ type: String })
-  type = '';
+  type;
+
+  @property({ type: String })
+  pattern;
+
+  @property({ type: Number })
+  minLength;
+
+  @property({ type: Number })
+  maxLength;
+
+  // type can be 'number' || 'Date'
+  @property()
+  min;
+
+  // type can be 'number' || 'Date'
+  @property()
+  max;
+
+  @property({ type: Number })
+  step;
 
   private _lineRippleInstance!: MDCLineRipple;
   private get _lineRipple(): MDCLineRipple {
@@ -215,7 +236,13 @@ export class TextField extends FormElement {
       required,
       placeHolder,
       helperText,
-      type
+      type,
+      pattern,
+      minLength,
+      maxLength,
+      min,
+      max,
+      step
     } = this;
 
     const hostClassInfo = {
@@ -231,11 +258,26 @@ export class TextField extends FormElement {
       'mdc-floating-label--float-above': !!value
     }
 
+    const inputOptions = {
+      value,
+      required,
+      type,
+      placeHolder,
+      label,
+      disabled,
+      pattern,
+      minLength,
+      maxLength,
+      min,
+      max,
+      step
+    }
+
     return html`
       ${this.renderStyle()}
-      <div class="mdc-text-field mdc-text-field--upgraded ${classMap(hostClassInfo)}">
+      <div class="mdc-text-field mdc-text-field--upgraded ${classMap(hostClassInfo)}" .ripple="${!outlined ? ripple({ unbounded: false }) : undefined}">
         ${icon ? html`<i class="material-icons mdc-text-field__icon">${icon}</i>` : ''}
-        ${this._renderInput({ value, required, type, placeHolder, label })}
+        ${this._renderInput(inputOptions)}
         ${label ? html`<label class="mdc-floating-label ${classMap(labelClassInfo)}" for="text-field">${label}</label>` : ''}
         ${outlined
           ? html`
@@ -250,7 +292,40 @@ export class TextField extends FormElement {
     `;
   }
 
-  _renderInput({ value, required, type, placeHolder, label }) {
-    return html`<input type="${type}" placeholder="${placeHolder}" ?required="${required}" class="mdc-text-field__input ${value ? 'mdc-text-field--upgraded' : ''}" id="text-field" .value="${value}" aria-label="${label}">`;
+  _renderInput({ value,
+    required,
+    type,
+    placeHolder,
+    label,
+    disabled,
+    pattern,
+    minLength,
+    maxLength,
+    min,
+    max,
+    step
+  }) {
+    return html`<input
+      id="text-field"
+      class="mdc-text-field__input ${value ? 'mdc-text-field--upgraded' : ''}"
+      type="${type}"
+      placeholder="${placeHolder}"
+      aria-label="${label}"
+      .value="${value}"
+      ?required="${required}"
+      ?disabled="${disabled}"
+      ?pattern="${pattern}"
+      ?minlength="${minLength}"
+      ?maxlength="${maxLength}"
+      ?min="${min}"
+      ?max="${max}"
+      ?step="${step}"
+      @focus="${this.handleInteractiveEvent}"
+      @blur="${this.handleInteractiveEvent}">`;
+  }
+
+  handleInteractiveEvent(evt: MouseEvent) {
+    const event = new CustomEvent(evt.type);
+    this.mdcRoot.dispatchEvent(event);
   }
 }
