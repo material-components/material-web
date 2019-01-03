@@ -78,40 +78,40 @@ export class TextField extends FormElement {
   label = '';
 
   @property({ type: String })
-  icon;
+  icon = '';
 
   @property({ type: Boolean })
-  iconTrailing;
+  iconTrailing = false;
 
   @property({ type: Boolean })
-  box;
+  box = false;
 
   @property({ type: Boolean })
-  outlined;
+  outlined = false;
 
   @property({ type: Boolean })
   @observer(function(this: TextField, value: string) {
     this.mdcFoundation.setDisabled(value);
   })
-  disabled;
+  disabled = false;
 
   @property({ type: Boolean })
-  fullWidth;
+  fullWidth = false;
 
   @property({ type: Boolean })
-  required;
+  required = false;
 
   @property({ type: String })
   @observer(function(this: TextField, value: string) {
     this.mdcFoundation.setHelperTextContent(value);
   })
-  helperText;
+  helperText = '';
 
   @property({ type: String })
-  placeHolder;
+  placeHolder = '';
 
   @property({ type: String })
-  type;
+  type = 'input';
 
   @property({ type: String })
   pattern;
@@ -292,7 +292,8 @@ export class TextField extends FormElement {
     `;
   }
 
-  _renderInput({ value,
+  _renderInput({
+    value,
     required,
     type,
     placeHolder,
