@@ -1,0 +1,170 @@
+/**
+@license
+Copyright 2018 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+// @import "@material/theme/mixins";
+// @import "@material/shape/mixins";
+// @import "@material/shape/functions";
+// @import "@material/floating-label/mixins";
+@import '@material/select/mdc-select.scss';
+@import "@material/notched-outline/mdc-notched-outline.scss";
+
+// $mdc-select-height: 56px;
+// $mdc-select-label-position-y: 50%;
+// $mdc-select-dense-label-position-y: 70%;
+// $mdc-select-dense-label-scale: .923;
+// $mdc-select-outlined-label-position-y: 130%;
+// $mdc-select-outlined-dense-label-position-y: 110%;
+// $mdc-select-outlined-idle-border: rgba(mdc-theme-prop-value(on-surface), .24);
+// $mdc-select-outlined-disabled-border: rgba(mdc-theme-prop-value(on-surface), .06);
+// $mdc-select-outlined-hover-border: rgba(mdc-theme-prop-value(on-surface), .87);
+
+// @mixin mdc-select-fill-color_($color) {
+//   @include mdc-theme-prop(background-color, $color);
+// }
+
+// @mixin mdc-select-outline-color_($color) {
+//   // NOTE: outlined version of select wants the "idle" and
+//   // "notched" outline to have the same color. This covers two cases:
+//   // 1) select renders with NO value in the "idle" state
+//   // 2) select renders with a value in the "notched" state
+//   @include mdc-notched-outline-idle-color($color);
+//   @include mdc-notched-outline-color($color);
+// }
+
+// @mixin mdc-select-hover-outline-color_($color) {
+//   &:not(.mdc-select--focused) {
+//     .mdc-select__native-control:hover ~ {
+//       @include mdc-notched-outline-idle-color($color);
+
+//       // tldr; this doesn't break BEM:
+//       // We need to wrap this mixin with the .mdc-notched-outline
+//       // selector, because of the sibling selector '~'. The notched
+//       // outline html structure has .mdc-notched-outline
+//       // and .mdc-notched-outline__idle as siblings, while
+//       // .mdc-notched-outline__path is a child of .mdc-notched-outline
+//       .mdc-notched-outline {
+//         @include mdc-notched-outline-color($color);
+//       }
+//     }
+//   }
+// }
+
+// @mixin mdc-select-focused-outline-color_($color) {
+//   &.mdc-select--focused {
+//     @include mdc-notched-outline-color($color);
+//   }
+// }
+
+// @mixin mdc-select-outline-shape-radius($radius, $rtl-reflexive: false) {
+//   // NOTE: idle and notched state border radius mixins
+//   // are broken into 2 different mixins, otherwise
+//   // we would be overly specific (big no, no). The cause of
+//   // this is because .mdc-notched-outline and .mdc-notched-outline__idle
+//   // are siblings. .mdc-notched-outline__idle needs to be a child of
+//   // .mdc-notched-outline in order to remedy this issue.
+//   $resolved-radius: mdc-shape-resolve-percentage-radius($mdc-select-height, $radius);
+
+//   .mdc-notched-outline {
+//     // @include mdc-notched-outline-shape-radius($resolved-radius, $rtl-reflexive);
+//   }
+
+//   // @include mdc-notched-outline-idle-shape-radius($resolved-radius, $rtl-reflexive);
+// }
+
+// @mixin mdc-select-outline-color($color) {
+//   &:not(.mdc-select--disabled) {
+//     @include mdc-select-outline-color_($color);
+//   }
+// }
+
+// @mixin mdc-select-hover-outline-color($color) {
+//   &:not(.mdc-select--disabled) {
+//     @include mdc-select-hover-outline-color_($color);
+//   }
+// }
+
+// @mixin mdc-select-focused-outline-color($color) {
+//   &:not(.mdc-select--disabled) {
+//     @include mdc-select-focused-outline-color_($color);
+//   }
+// }
+
+// @mixin mdc-select-fill-color($color) {
+//   &:not(.mdc-select--disabled) {
+//     @include mdc-select-fill-color_($color);
+//   }
+// }
+
+// @mixin mdc-select-outlined_ {
+//   @include mdc-select-outline-color($mdc-select-outlined-idle-border);
+//   @include mdc-select-hover-outline-color($mdc-select-outlined-hover-border);
+//   @include mdc-select-focused-outline-color(primary);
+//   @include mdc-floating-label-float-position($mdc-select-outlined-label-position-y);
+//   @include mdc-floating-label-shake-animation(select-outlined);
+//   @include mdc-select-outline-shape-radius(small);
+//   @include mdc-states-base-color(transparent);
+//   @include mdc-select-fill-color(transparent);
+
+//   border: none;
+//   overflow: visible;
+
+//   // .mdc-select__native-control {
+//   //   display: flex;
+//   //   padding: 12px 16px 14px;
+//   //   border: none !important;  // FF adds unwanted border in HC mode on windows.
+//   //   background-color: transparent;
+//   //   z-index: 1;
+//   // }
+
+//   .mdc-floating-label {
+//     @include mdc-rtl-reflexive-position(left, 16px);
+
+//     width: auto;
+//   }
+// }
+
+:host {
+  outline: none;
+  display: block;
+}
+
+:host(:not([fullwidth])) {
+  display: inline-block;
+}
+
+.mdc-select {
+  width: 100%;
+  display: inline-block;
+
+  &__native-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  &--box {
+    .mdc-floating-label {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: calc(100% - #{$mdc-select-arrow-padding + $mdc-select-label-padding});
+    }
+  }
+
+  // &--outlined {
+  //   @include mdc-select-outlined_;
+  // }
+}
