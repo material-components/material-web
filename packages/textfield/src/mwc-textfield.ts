@@ -68,7 +68,7 @@ export class TextField extends FormElement {
   @query('.mdc-notched-outline')
   protected outlineElement!: HTMLElement;
 
-  @property({ type: String })
+  @property({ type: String, reflect: true })
   @observer(function(this: TextField, value: string) {
     this.mdcFoundation.setValue(value);
   })
@@ -194,10 +194,10 @@ export class TextField extends FormElement {
       getNativeInput: () => this.formElement,
 
       /* Floating Label Adapter Methods */
-      shakeLabel: (shouldShake) => this._label.shake(shouldShake),
-      floatLabel: (shouldFloat) => this._label.float(shouldFloat),
-      hasLabel: () => !!this._label,
-      getLabelWidth: () => this._label.getWidth(),
+      shakeLabel: (shouldShake) => this._label && this._label.shake(shouldShake),
+      floatLabel: (shouldFloat) => this._label && this._label.float(shouldFloat),
+      hasLabel: () => !!this._label || !!this.outlined, // due to notched outline
+      getLabelWidth: () => !!this._label ? this._label.getWidth() : -12, // due to notched outline label spacing
 
       /* Line Ripple Adapter Methods */
       activateLineRipple: () => {
