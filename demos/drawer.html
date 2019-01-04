@@ -24,27 +24,11 @@ limitations under the License.
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
   <link rel="stylesheet" href="demo-component.css">
   <style>
-    .drawerView {
+    iframe {
       border: 1px solid gray;
-      display: flex;
       margin-bottom: 36px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .drawerContent {
-      padding: 24px 8px;
-    }
-
-    .mainContent {
-      min-height: 300px;
-      padding: 8px;
-      position: relative;
-      flex: 1;
-    }
-
-    [type=dismissible][open] + .mainContent {
-      margin-left: 256px;
+      height: 300px;
+      width: 100%;
     }
   </style>
 </head>
@@ -55,53 +39,16 @@ limitations under the License.
   </header>
 
   <main>
-    <div class="drawerView">
-
-      <mwc-drawer hasHeader>
-        <span slot="title">Title!</span>
-        <span slot="subtitle">subtitle</span>
-        <div class="drawerContent">Drawer Content!</div>
-      </mwc-drawer>
-      <div class="mainContent">Main Content!</div>
-    </div>
-
-    <div class="drawerView">
-
-      <mwc-drawer hasHeader type="dismissible">
-        <span slot="title">Title!</span>
-        <span slot="subtitle">subtitle</span>
-        <div class="drawerContent">Drawer Content!</div>
-      </mwc-drawer>
-      <div class="mainContent">Main Content!</div>
-    </div>
-
-    <div class="drawerView">
-
-      <mwc-drawer hasHeader type="modal">
-        <span slot="title">Title!</span>
-        <span slot="subtitle">subtitle</span>
-        <div class="drawerContent">Drawer Content!</div>
-      </mwc-drawer>
-      <div class="mainContent">Main Content!</div>
-    </div>
+    <h2>Standard Drawer</h2>
+    <iframe src="drawer/standard.html" frameborder="0"></iframe>
+    <h2>Dismissible Drawer</h2>
+    <iframe src="drawer/dismissible.html" frameborder="0"></iframe>
+    <h2>Modal Drawer</h2>
+    <iframe src="drawer/modal.html" frameborder="0"></iframe>
   </main>
 
   <script>
     addEventListener('load', () => document.body.classList.remove('unresolved'));
-
-    Array.from(document.querySelectorAll('mwc-drawer[type]')).forEach((drawer) => {
-      const container = drawer.parentNode;
-      container.addEventListener('click', (e) => {
-        drawer.open = !drawer.open;
-      });
-      drawer.addEventListener('MDCDrawer:opened', (e) => {
-        e.target.nextElementSibling.style.marginLeft = e.g
-      });
-
-      drawer.addEventListener('MDCDrawer:closed', (e) => {
-
-      });
-    });
   </script>
 </body>
 </html>
