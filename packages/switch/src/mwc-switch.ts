@@ -66,6 +66,8 @@ export class Switch extends FormElement {
     this.mdcFoundation.handleChange(e);
     // catch "click" event and sync properties
     this.checked = this.formElement.checked;
+    // fire "checkedChange" event to notify any parent elements
+    this.dispatchEvent(new CustomEvent('checkedChange', {bubbles: true, composed: true, detail: {value: this.checked}}));
   };
 
   protected readonly mdcFoundationClass: typeof SwitchFoundation = MDCSwitchFoundation;
