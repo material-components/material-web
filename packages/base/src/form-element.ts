@@ -23,18 +23,8 @@ export interface RippleSurface {
   deactivate(): void;
 }
 
-export interface LineRippleSurface {
-  activate(): void;
-  deactivate(): void;
-  setRippleCenter(value: number): void;
-}
-
 export interface HTMLElementWithRipple extends HTMLElement {
   ripple?: RippleSurface;
-}
-
-export interface HTMLElementWithLineRipple extends HTMLElement {
-  lineRipple?: LineRippleSurface;
 }
 
 export abstract class FormElement extends BaseElement {
@@ -53,11 +43,6 @@ export abstract class FormElement extends BaseElement {
    * Implement ripple getter for Ripple integration with mwc-formfield
    */
   readonly ripple?: RippleSurface;
-
-  /**
-   * Implement ripple getter for Ripple integration with mwc-textfield
-   */
-  readonly lineRipple?: RippleSurface;
 
   click() {
     if (this.formElement) {
