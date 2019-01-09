@@ -30,3 +30,8 @@ limitations under the License.
 :host(:not([fullwidth])) {
   display: inline-block;
 }
+
+.mdc-text-field--outlined::before,
+.mdc-text-field--outlined::after {
+  display: none;
+}
