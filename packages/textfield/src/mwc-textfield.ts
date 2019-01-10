@@ -252,6 +252,7 @@ export class TextField extends FormElement {
       'mdc-text-field--with-leading-icon': icon && !iconTrailing,
       'mdc-text-field--with-trailing-icon': icon && iconTrailing,
       'mdc-text-field--box': box,
+      'mdc-text-field--no-label': !label,
       'mdc-text-field--outlined': outlined,
       'mdc-text-field--disabled': disabled,
       'mdc-text-field--fullwidth': fullWidth

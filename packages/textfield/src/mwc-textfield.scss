@@ -35,3 +35,18 @@ limitations under the License.
 .mdc-text-field--outlined::after {
   display: none;
 }
+
+.mdc-text-field--no-label .mdc-text-field__input {
+  padding: 12px 16px 14px;
+}
+
+  .mdc-text-field--fullwidth:not(.mdc-text-field--textarea):not(.mdc-text-field--no-label)
+.mdc-text-field__input {
+  // fixing the padding on the input so that it displays below the label
+  padding: 20px 0px 6px;
+}
+
+.mdc-text-field--fullwidth:not(.mdc-text-field--textarea):not(.mdc-text-field--no-label)
+.mdc-floating-label {
+  left: 0px;
+}
