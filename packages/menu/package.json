@@ -11,6 +11,7 @@
   "dependencies": {
     "@material/list": "^0.40.1",
     "@material/menu": "^0.40.1",
+    "@material/menu-surface": "^0.40.1",
     "@material/mwc-base": "^0.3.4",
     "@material/mwc-list": "^0.3.4",
     "@polymer/lit-element": "^0.6.5",
