@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-list",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "",
   "main": "mwc-list-item.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/list": "^0.35.0",
-    "@material/mwc-icon": "^0.3.4",
+    "@material/mwc-icon": "^0.3.5",
     "lit-element": "^2.0.0-rc.2"
   },
   "publishConfig": {
