@@ -9,12 +9,19 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
+    "@material/animation": "^0.40.1",
     "@material/floating-label": "^0.35.0",
+    "@material/line-ripple": "^0.35.0",
     "@material/mwc-base": "^0.3.4",
     "@material/mwc-list": "^0.3.4",
     "@material/mwc-menu": "^0.3.4",
     "@material/notched-outline": "^0.35.0",
+    "@material/ripple": "^0.40.1",
+    "@material/rtl": "^0.40.1",
     "@material/select": "^0.35.0",
+    "@material/shape": "^0.40.1",
+    "@material/theme": "^0.40.1",
+    "@material/typography": "^0.35.0",
     "@polymer/lit-element": "^0.6.5"
   },
   "publishConfig": {

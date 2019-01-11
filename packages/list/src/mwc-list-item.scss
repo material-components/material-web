@@ -16,12 +16,33 @@ limitations under the License.
 */
 
 @import '@material/list/mdc-list.scss';
-@import '@material/mwc-icon/mwc-icon.scss';
+@import "@material/ripple/mixins";
+@import '@material/mwc-icon/src/mwc-icon-host.scss';
 
 .material-icons {
   @extend %material-icons;
 }
 
+:host {
+  width: 100%;
+}
+
 :host([aria-disabled="true"]) > .mdc-list-item:focus::before {
   opacity: 0;
+}
+
+.mdc-list-item {
+  @include mdc-ripple-surface;
+  @include mdc-ripple-radius-bounded;
+  @include mdc-states;
+  @include mdc-states-activated(primary);
+  @include mdc-states-selected(primary);
+
+  white-space: nowrap;
+}
+
+.mdc-list-item--selected,
+.mdc-list-item--activated {
+  @include mdc-list-item-primary-text-ink-color(primary);
+  @include mdc-list-item-graphic-ink-color(primary);
 }

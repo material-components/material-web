@@ -16,10 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <html>
+
 <head>
   <title>select demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script type="module" src="../node_modules/@material/mwc-select/mwc-select.js"></script>
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
   <link rel="stylesheet" href="demo-component.css">
@@ -28,88 +29,221 @@ limitations under the License.
     body {
       min-height: calc(100vh - 4em);
     }
-
-    .abs {
-      position: absolute;
-      top: calc(100vh - 128px);
-      right: calc(100vw - 100% + 16px);
-    }
-
   </style>
 </head>
+
 <body class="unresolved">
   <header>
-    <a href="index.html"><mwc-icon>arrow_back</mwc-icon>
-    <span>Select</span></a>
+    <a href="index.html">
+      <mwc-icon>arrow_back</mwc-icon>
+      <span>Select</span>
+    </a>
   </header>
 
   <main>
 
-    <mwc-select label="Choose an item...">
-      <mwc-list-item label="this is choice one"></mwc-list-item>
-      <mwc-list-item label="this is choice two"></mwc-list-item>
-      <mwc-list-item label="this is choice three"></mwc-list-item>
-      <mwc-list-item disabled label="this is choice four"></mwc-list-item>
-      <mwc-list-item-separator></mwc-list-item-separator>
-      <mwc-list-item label="this is choice aaa"></mwc-list-item>
-      <mwc-list-item label="this is choice bbb"></mwc-list-item>
-    </mwc-select>
+    <div class="demo-group">
+      <div>
+        <h3>box</h3>
+        <mwc-select label="Choose an item...">
+          <select slot="select">
+            <option value="" disabled selected></option>
+            <option value="grains">
+              Bread and Cereal
+            </option>
+            <option value="vegetables">
+              Vegetables
+            </option>
+            <option value="fruit">
+              Fruit
+            </option>
+          </select>
+        </mwc-select>
+      </div>
 
-    <h3>box</h3>
+      <div>
+        <h3>box enhanced</h3>
+        <mwc-select label="Choose an item...">
+          <mwc-menu slot="menu">
+            <mwc-list-item label="this is choice one" value="one"></mwc-list-item>
+            <mwc-list-item label="this is choice two" value="two"></mwc-list-item>
+            <mwc-list-item label="this is choice three" value="three"></mwc-list-item>
+            <mwc-list-item disabled label="this is choice four" value="four"></mwc-list-item>
+            <mwc-list-item-separator></mwc-list-item-separator>
+            <mwc-list-item label="this is choice aaa" value="aaa"></mwc-list-item>
+            <mwc-list-item label="this is choice bbb" value="bbb"></mwc-list-item>
+          </mwc-menu>
+        </mwc-select>
+      </div>
 
-    <mwc-select box label="Box: Choose an item...">
-      <mwc-list-item label="this is choice one"></mwc-list-item>
-      <mwc-list-item label="this is choice two"></mwc-list-item>
-      <mwc-list-item label="this is choice three"></mwc-list-item>
-      <mwc-list-item disabled label="this is choice four"></mwc-list-item>
-      <mwc-list-item-separator></mwc-list-item-separator>
-      <mwc-list-item label="this is choice aaa"></mwc-list-item>
-      <mwc-list-item label="this is choice bbb"></mwc-list-item>
-    </mwc-select>
+      <div>
+        <h3>box dense</h3>
+        <mwc-select box dense label="Choose an item...">
+          <select slot="select">
+            <option value="" disabled selected></option>
+            <option value="grains">
+              Bread and Cereal
+            </option>
+            <option value="vegetables">
+              Vegetables
+            </option>
+            <option value="fruit">
+              Fruit
+            </option>
+          </select>
+        </mwc-select>
+      </div>
 
-    <h3>box - sized</h3>
+      <div>
+        <h3>box required</h3>
+        <mwc-select box required label="Choose an item...">
+          <select slot="select">
+            <option value="" disabled selected></option>
+            <option value="grains">
+              Bread and Cereal
+            </option>
+            <option value="vegetables">
+              Vegetables
+            </option>
+            <option value="fruit">
+              Fruit
+            </option>
+          </select>
+        </mwc-select>
+      </div>
 
-    <mwc-select box style="width: 500px;" label="Box: Choose an item...">
-      <mwc-list-item label="this is choice one"></mwc-list-item>
-      <mwc-list-item label="this is choice two"></mwc-list-item>
-      <mwc-list-item label="this is choice three"></mwc-list-item>
-      <mwc-list-item disabled label="this is choice four"></mwc-list-item>
-      <mwc-list-item-separator></mwc-list-item-separator>
-      <mwc-list-item label="this is choice aaa"></mwc-list-item>
-      <mwc-list-item label="this is choice bbb"></mwc-list-item>
-    </mwc-select>
+      <div>
+        <h3>box disabled</h3>
+      
+        <mwc-select box disabled label="Disabled...">
+          <mwc-menu slot="menu">
+            <mwc-list-item label="this is choice one" value="one"></mwc-list-item>
+            <mwc-list-item label="this is choice two" value="two"></mwc-list-item>
+          </mwc-menu>
+        </mwc-select>
+      </div>
+    </div>
 
-    <h3>outlined</h3>
+    <div class="demo-group">
+      <div>
+        <h3>outlined</h3>
+        <mwc-select outlined label="Choose an item...">
+          <select slot="select">
+            <option value="" disabled selected></option>
+            <option value="grains">
+              Bread and Cereal
+            </option>
+            <option value="vegetables">
+              Vegetables
+            </option>
+            <option value="fruit">
+              Fruit
+            </option>
+          </select>
+        </mwc-select>
+      </div>
 
-    <mwc-select outlined style="width: 500px;" label="Box: Choose an item...">
-      <mwc-list-item label="this is choice one"></mwc-list-item>
-      <mwc-list-item label="this is choice two"></mwc-list-item>
-      <mwc-list-item label="this is choice three"></mwc-list-item>
-      <mwc-list-item disabled label="this is choice four"></mwc-list-item>
-      <mwc-list-item-separator></mwc-list-item-separator>
-      <mwc-list-item label="this is choice aaa"></mwc-list-item>
-      <mwc-list-item label="this is choice bbb"></mwc-list-item>
-    </mwc-select>
+      <div>
+        <h3>outlined enhanced</h3>
+        <mwc-select outlined label="Choose an item...">
+          <mwc-menu slot="menu">
+            <mwc-list-item label="this is choice one" value="one"></mwc-list-item>
+            <mwc-list-item label="this is choice two" value="two"></mwc-list-item>
+            <mwc-list-item label="this is choice three" value="three"></mwc-list-item>
+            <mwc-list-item disabled label="this is choice four" value="four"></mwc-list-item>
+            <mwc-list-item-separator></mwc-list-item-separator>
+            <mwc-list-item label="this is choice aaa" value="aaa"></mwc-list-item>
+            <mwc-list-item label="this is choice bbb" value="bbb"></mwc-list-item>
+          </mwc-menu>
+        </mwc-select>
+      </div>
 
-    <h3>disabled</h3>
+      <div>
+        <h3>outlined dense</h3>
+        <mwc-select outlined dense label="Choose an item...">
+          <select slot="select">
+            <option value="" disabled selected></option>
+            <option value="grains">
+              Bread and Cereal
+            </option>
+            <option value="vegetables">
+              Vegetables
+            </option>
+            <option value="fruit">
+              Fruit
+            </option>
+          </select>
+        </mwc-select>
+      </div>
 
-    <mwc-select disabled label="Disabled...">
-      <mwc-list-item label="this is choice one"></mwc-list-item>
-      <mwc-list-item label="this is choice two"></mwc-list-item>
-    </mwc-select>
+      <div>
+        <h3>outlined disabled</h3>
 
-    <mwc-select class="abs" label="Choose an item...">
-      <mwc-list-item label="this is choice one"></mwc-list-item>
-      <mwc-list-item label="this is choice two"></mwc-list-item>
-      <mwc-list-item label="this is choice three"></mwc-list-item>
-      <mwc-list-item label="this is choice four"></mwc-list-item>
-      <mwc-list-item-separator></mwc-list-item-separator>
-      <mwc-list-item label="this is choice aaa"></mwc-list-item>
-      <mwc-list-item label="this is choice bbb"></mwc-list-item>
-    </mwc-select>
+        <mwc-select outlined disabled label="Disabled...">
+          <mwc-menu slot="menu">
+            <mwc-list-item label="this is choice one" value="one"></mwc-list-item>
+            <mwc-list-item label="this is choice two" value="two"></mwc-list-item>
+          </mwc-menu>
+        </mwc-select>
+      </div>
+    </div>
+
+    <h3>outlined - required - email - helperText</h3>
+
+    <div class="demo-group">
+      <div>
+        <mwc-select outlined label="Choose an item...">
+          <select slot="select">
+            <option value="" disabled selected></option>
+            <option value="grains">
+              Bread and Cereal
+            </option>
+            <option value="vegetables">
+              Vegetables
+            </option>
+            <option value="fruit">
+              Fruit
+            </option>
+          </select>
+        </mwc-select>
+      </div>
+
+      <div>
+        <mwc-select outlined label="Choose an item...">
+          <mwc-menu slot="menu">
+            <mwc-list-item label="this is choice one" value="one"></mwc-list-item>
+            <mwc-list-item label="this is choice two" value="two"></mwc-list-item>
+            <mwc-list-item label="this is choice three" value="three"></mwc-list-item>
+            <mwc-list-item disabled label="this is choice four" value="four"></mwc-list-item>
+            <mwc-list-item-separator></mwc-list-item-separator>
+            <mwc-list-item label="this is choice aaa" value="aaa"></mwc-list-item>
+            <mwc-list-item label="this is choice bbb" value="bbb"></mwc-list-item>
+          </mwc-menu>
+        </mwc-select>
+      </div>
+
+      <div>
+        <mwc-select outlined dense label="Choose an item...">
+          <select slot="select">
+            <option value="" disabled selected></option>
+            <option value="grains">
+              Bread and Cereal
+            </option>
+            <option value="vegetables">
+              Vegetables
+            </option>
+            <option value="fruit">
+              Fruit
+            </option>
+          </select>
+        </mwc-select>
+      </div>
+    </div>
+
   </main>
   <script>
     addEventListener('load', () => document.body.classList.remove('unresolved'));
   </script>
 </body>
+
 </html>

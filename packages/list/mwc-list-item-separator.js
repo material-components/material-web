@@ -1,3 +1,9 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 /**
 @license
 Copyright 2018 Google Inc. All Rights Reserved.
@@ -14,19 +20,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {LitElement, html} from '@polymer/lit-element/lit-element.js';
-import {style} from './mwc-list-item-separator-css.js';
-
-export class ListItemSeparator extends LitElement {
-  renderStyle() {
-    return style;
-  }
-
-  render() {
-    return html`
+import { LitElement, html, customElement } from '@polymer/lit-element';
+import { style } from './mwc-list-item-separator-css.js';
+let ListItemSeparator = class ListItemSeparator extends LitElement {
+    renderStyle() {
+        return style;
+    }
+    render() {
+        return html `
       ${this.renderStyle()}
       <div class="mdc-list-divider" role="separator"></div>`;
-  }
-}
-
-customElements.define('mwc-list-item-separator', ListItemSeparator);
+    }
+};
+ListItemSeparator = __decorate([
+    customElement('mwc-list-item-separator')
+], ListItemSeparator);
+export { ListItemSeparator };
+//# sourceMappingURL=mwc-list-item-separator.js.map

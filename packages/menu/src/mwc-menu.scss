@@ -15,7 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/menu/mdc-menu.scss';
+@import '@material/menu/mdc-menu';
+@import '@material/menu-surface/mdc-menu-surface';
+@import '@material/list/mdc-list';
+@import '@material/typography/mixins';
 
 // TODO(sorvell) #css: NOTE, these selectors are intended to target elements inside
 // the shadowRoot of the `mdc-list-item` element which won't work. However,
@@ -65,4 +68,13 @@ limitations under the License.
 
 .mdc-menu ::slotted([graphic]) {
   @include mdc-theme-prop(color, text-secondary-on-background);
+}
+
+.mdc-menu ::slotted(.mdc-menu-item--selected) {
+  color: red;
+}
+
+:host {
+  display: block;
+  position: relative;
 }

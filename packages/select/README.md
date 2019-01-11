@@ -38,7 +38,21 @@ A [Material Components](https://material.io/develop/) tab indicator implementati
 
   1. Create an instance of mwc-select in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
 
-      ```<mwc-select></mwc-select>```
+      ```
+        <mwc-select label="Choose an item...">
+            <select slot="select">
+                <option slot="option" value="one" disabled selected>this is choice one</option>
+            </select>
+        </mwc-select>
+      ```
+
+      ```
+        <mwc-select label="Choose an item...">
+            <mwc-menu slot="menu">
+                <mwc-list-item label="this is choice one" value="one"></mwc-list-item>
+            </mwc-menu>
+        </mwc-select>
+      ```
 
   1. Install the Polymer CLI:
 

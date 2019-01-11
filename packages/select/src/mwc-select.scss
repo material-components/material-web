@@ -15,131 +15,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// @import "@material/theme/mixins";
-// @import "@material/shape/mixins";
-// @import "@material/shape/functions";
-// @import "@material/floating-label/mixins";
-@import '@material/select/mdc-select.scss';
-@import "@material/notched-outline/mdc-notched-outline.scss";
-
-// $mdc-select-height: 56px;
-// $mdc-select-label-position-y: 50%;
-// $mdc-select-dense-label-position-y: 70%;
-// $mdc-select-dense-label-scale: .923;
-// $mdc-select-outlined-label-position-y: 130%;
-// $mdc-select-outlined-dense-label-position-y: 110%;
-// $mdc-select-outlined-idle-border: rgba(mdc-theme-prop-value(on-surface), .24);
-// $mdc-select-outlined-disabled-border: rgba(mdc-theme-prop-value(on-surface), .06);
-// $mdc-select-outlined-hover-border: rgba(mdc-theme-prop-value(on-surface), .87);
-
-// @mixin mdc-select-fill-color_($color) {
-//   @include mdc-theme-prop(background-color, $color);
-// }
-
-// @mixin mdc-select-outline-color_($color) {
-//   // NOTE: outlined version of select wants the "idle" and
-//   // "notched" outline to have the same color. This covers two cases:
-//   // 1) select renders with NO value in the "idle" state
-//   // 2) select renders with a value in the "notched" state
-//   @include mdc-notched-outline-idle-color($color);
-//   @include mdc-notched-outline-color($color);
-// }
-
-// @mixin mdc-select-hover-outline-color_($color) {
-//   &:not(.mdc-select--focused) {
-//     .mdc-select__native-control:hover ~ {
-//       @include mdc-notched-outline-idle-color($color);
-
-//       // tldr; this doesn't break BEM:
-//       // We need to wrap this mixin with the .mdc-notched-outline
-//       // selector, because of the sibling selector '~'. The notched
-//       // outline html structure has .mdc-notched-outline
-//       // and .mdc-notched-outline__idle as siblings, while
-//       // .mdc-notched-outline__path is a child of .mdc-notched-outline
-//       .mdc-notched-outline {
-//         @include mdc-notched-outline-color($color);
-//       }
-//     }
-//   }
-// }
-
-// @mixin mdc-select-focused-outline-color_($color) {
-//   &.mdc-select--focused {
-//     @include mdc-notched-outline-color($color);
-//   }
-// }
-
-// @mixin mdc-select-outline-shape-radius($radius, $rtl-reflexive: false) {
-//   // NOTE: idle and notched state border radius mixins
-//   // are broken into 2 different mixins, otherwise
-//   // we would be overly specific (big no, no). The cause of
-//   // this is because .mdc-notched-outline and .mdc-notched-outline__idle
-//   // are siblings. .mdc-notched-outline__idle needs to be a child of
-//   // .mdc-notched-outline in order to remedy this issue.
-//   $resolved-radius: mdc-shape-resolve-percentage-radius($mdc-select-height, $radius);
-
-//   .mdc-notched-outline {
-//     // @include mdc-notched-outline-shape-radius($resolved-radius, $rtl-reflexive);
-//   }
-
-//   // @include mdc-notched-outline-idle-shape-radius($resolved-radius, $rtl-reflexive);
-// }
-
-// @mixin mdc-select-outline-color($color) {
-//   &:not(.mdc-select--disabled) {
-//     @include mdc-select-outline-color_($color);
-//   }
-// }
-
-// @mixin mdc-select-hover-outline-color($color) {
-//   &:not(.mdc-select--disabled) {
-//     @include mdc-select-hover-outline-color_($color);
-//   }
-// }
-
-// @mixin mdc-select-focused-outline-color($color) {
-//   &:not(.mdc-select--disabled) {
-//     @include mdc-select-focused-outline-color_($color);
-//   }
-// }
-
-// @mixin mdc-select-fill-color($color) {
-//   &:not(.mdc-select--disabled) {
-//     @include mdc-select-fill-color_($color);
-//   }
-// }
-
-// @mixin mdc-select-outlined_ {
-//   @include mdc-select-outline-color($mdc-select-outlined-idle-border);
-//   @include mdc-select-hover-outline-color($mdc-select-outlined-hover-border);
-//   @include mdc-select-focused-outline-color(primary);
-//   @include mdc-floating-label-float-position($mdc-select-outlined-label-position-y);
-//   @include mdc-floating-label-shake-animation(select-outlined);
-//   @include mdc-select-outline-shape-radius(small);
-//   @include mdc-states-base-color(transparent);
-//   @include mdc-select-fill-color(transparent);
-
-//   border: none;
-//   overflow: visible;
-
-//   // .mdc-select__native-control {
-//   //   display: flex;
-//   //   padding: 12px 16px 14px;
-//   //   border: none !important;  // FF adds unwanted border in HC mode on windows.
-//   //   background-color: transparent;
-//   //   z-index: 1;
-//   // }
-
-//   .mdc-floating-label {
-//     @include mdc-rtl-reflexive-position(left, 16px);
-
-//     width: auto;
-//   }
-// }
+@import "@material/animation/variables";
+// @import '@material/select/mdc-select.scss';
+@import "@material/floating-label/mdc-floating-label";
+@import "@material/line-ripple/mdc-line-ripple";
+@import "@material/notched-outline/mdc-notched-outline";
+@import "@material/ripple/common";
+@import "@material/ripple/mixins";
+@import "@material/rtl/mixins";
+@import "@material/theme/variables";
+@import "@material/typography/mixins";
+@import "@material/typography/variables";
+@import "./variables";
+@import "./functions";
+@import "./mixins";
 
 :host {
-  outline: none;
   display: block;
+  outline: none;
 }
 
 :host(:not([fullwidth])) {
@@ -147,24 +40,149 @@ limitations under the License.
 }
 
 .mdc-select {
-  width: 100%;
-  display: inline-block;
+  @include mdc-ripple-surface;
+  // Text Field intentionally omits press ripple, so each state needs to be specified individually.
+  @include mdc-states-base-color($mdc-select-ink-color);
+  @include mdc-states-hover-opacity(mdc-states-opacity($mdc-select-ink-color, hover));
+  @include mdc-states-focus-opacity(mdc-states-opacity($mdc-select-ink-color, focus));
+  @include mdc-ripple-radius-bounded;
 
-  &__native-control {
-    -webkit-appearance: none;
-    -moz-appearance: none;
+  // Shape
+  @include mdc-select-shape-radius(small);
+
+  // Colors
+  @include mdc-select-label-color($mdc-select-label);
+  @include mdc-select-ink-color($mdc-select-ink-color);
+  @include mdc-select-caret-color(primary);
+  @include mdc-select-bottom-line-color($mdc-select-bottom-line-idle);
+  @include mdc-select-hover-bottom-line-color($mdc-select-bottom-line-hover);
+  @include mdc-select-line-ripple-color_(primary);
+  @include mdc-select-fullwidth-bottom-line-color($mdc-select-fullwidth-bottom-line-color);
+  @include mdc-select-fill-color($mdc-select-background);
+
+  // Floating Label
+  @include mdc-select-floating-label_;
+  // // The following mixins will be removed after select is updated to default to the box.
+  @include mdc-floating-label-float-position($mdc-select-label-position-y);
+  @include mdc-floating-label-shake-animation(select-box);
+  @include mdc-floating-label-shake-keyframes(select-box, $mdc-select-label-position-y);
+
+  // Arrow
+  @include mdc-select-dd-arrow-svg-bg_();
+
+  display: inline-flex;
+  position: relative;
+  box-sizing: border-box;
+  height: $mdc-select-height;
+  overflow: hidden;
+  will-change: opacity, transform, color;
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+
+  @include mdc-rtl {
+    background-position: left 16px center;
   }
 
-  &--box {
-    .mdc-floating-label {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      width: calc(100% - #{$mdc-select-arrow-padding + $mdc-select-label-padding});
-    }
-  }
+  .mdc-floating-label {
+    @include mdc-rtl-reflexive-position(left, 12px);
 
-  // &--outlined {
-  //   @include mdc-select-outlined_;
-  // }
+    pointer-events: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
 }
+
+@include native-control() {
+  @include mdc-typography(subtitle1);
+
+  align-self: flex-end;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 20px 48px 6px 12px;
+  transition: mdc-select-transition(opacity);
+  border: none;
+  border-bottom: 1px solid;
+  border-radius: 0;
+  background: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-align: left;
+  cursor: default;
+  -webkit-ser-select: none;
+  -moz-ser-select: none;
+  user-select: none;
+}
+@include native-control(':focus') {
+  outline: none;
+}
+@include native-control(':invalid') {
+  box-shadow: none;
+}
+// Move label when select gets auto-filled in Chrome.
+@include native-control(':-webkit-autofill + .mdc-floating-label') {
+  transform: translateY(-50%) scale(.75);
+  cursor: auto;
+}
+
+.mdc-select--outlined {
+  @include mdc-select-outlined_;
+}
+
+.mdc-select--outlined.mdc-select--focused {
+  @include mdc-select-outlined-focused_;
+}
+
+.mdc-select--outlined.mdc-select--disabled {
+  @include mdc-select-outlined-disabled_;
+}
+
+.mdc-select--outlined.mdc-select--dense {
+  @include mdc-select-outlined-dense_;
+}
+
+.mdc-select--dense {
+  @include mdc-select-dense_;
+}
+
+@include mdc-required-select-label-asterisk_ {
+  margin-left: 1px;
+  content: "*";
+}
+
+.mdc-select--fullwidth {
+  @include mdc-select-fullwidth_;
+}
+
+.mdc-select--fullwidth.mdc-select--invalid {
+  @include mdc-select-fullwidth-invalid_;
+}
+
+// mdc-form-field tweaks to align text field label correctly
+// stylelint-disable selector-max-type
+.mdc-form-field > .mdc-select + label {
+  align-self: flex-start;
+}
+// stylelint-enable selector-max-type
+
+.mdc-select--focused {
+  @include mdc-select-focused_;
+}
+
+.mdc-select--invalid {
+  @include mdc-select-invalid_;
+}
+
+.mdc-select--outlined.mdc-select--invalid {
+  @include mdc-select-outlined-invalid_;
+}
+
+.mdc-select--disabled {
+  @include mdc-select-disabled_;
+}
+
+@include mdc-floating-label-shake-keyframes(select-dense, $mdc-select-dense-label-position-y, 0%, $mdc-select-dense-label-scale);
+@include mdc-floating-label-shake-keyframes(select-outlined, $mdc-select-outlined-label-position-y);
+@include mdc-floating-label-shake-keyframes(select-outlined-dense, $mdc-select-outlined-dense-label-position-y, 0%, $mdc-select-dense-label-scale);
