@@ -34,11 +34,13 @@ A [Material Components](https://material.io/components/) icon implementation usi
 
       Or into your module script:
 
-      ```import {Radio} from "@material/mwc-menu"```
+      ```import {Menu} from "@material/mwc-menu"```
 
   1. Create an instance of mwc-menu in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
 
-      ```<mwc-menu></mwc-menu>```
+      ```<mwc-menu>
+        <mwc-list-item label="one"></mwc-list-item>
+      </mwc-menu>```
 
   1. Install the Polymer CLI:
 
