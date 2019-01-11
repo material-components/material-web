@@ -62,6 +62,9 @@ export class Chip extends BaseElement {
   @property({ type: String })
   label = "";
 
+  @property({ type: Boolean })
+  selected = false;
+
   createRenderRoot() {
     return this.attachShadow({ mode: "open", delegatesFocus: true });
   }
@@ -146,7 +149,10 @@ export class Chip extends BaseElement {
   getTrailingIcon(trailingIcon: string) {
     return trailingIcon
       ? html`
-          <span class="material-icons mdc-chip__icon mdc-chip__icon--trailing"
+          <span
+            class="material-icons mdc-chip__icon mdc-chip__icon--trailing"
+            tabindex="0"
+            role="button"
             >${trailingIcon}</span
           >
         `
@@ -156,7 +162,12 @@ export class Chip extends BaseElement {
   render() {
     return html`
       ${this.renderStyle()}
-      <div class="mdc-chip ${this.checkmark ? 'mdc-chip--selected' : ''}" .ripple="${ripple({ unbounded: false })}">
+      <div
+        class="mdc-chip 
+          ${this.selected ? "mdc-ripple-upgraded--background-focused" : ''}
+          ${this.checkmark ? "mdc-chip--selected" : ''}"
+        .ripple="${ripple({ unbounded: false })}"
+      >
         ${this.getLeadingIcon(this.leadingIcon, this.checkmark)}
         <span class="mdc-chip__text">${this.label}</span> <slot></slot> ${
           this.getTrailingIcon(this.trailingIcon)

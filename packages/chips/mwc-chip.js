@@ -33,6 +33,7 @@ let Chip = class Chip extends BaseElement {
         this.mdcFoundationClass = MDCChipFoundation;
         this.checkmark = false;
         this.label = "";
+        this.selected = false;
     }
     createRenderRoot() {
         return this.attachShadow({ mode: "open", delegatesFocus: true });
@@ -91,7 +92,10 @@ let Chip = class Chip extends BaseElement {
     getTrailingIcon(trailingIcon) {
         return trailingIcon
             ? html `
-          <span class="material-icons mdc-chip__icon mdc-chip__icon--trailing"
+          <span
+            class="material-icons mdc-chip__icon mdc-chip__icon--trailing"
+            tabindex="0"
+            role="button"
             >${trailingIcon}</span
           >
         `
@@ -100,7 +104,12 @@ let Chip = class Chip extends BaseElement {
     render() {
         return html `
       ${this.renderStyle()}
-      <div class="mdc-chip ${this.checkmark ? 'mdc-chip--selected' : ''}" .ripple="${ripple({ unbounded: false })}">
+      <div
+        class="mdc-chip 
+          ${this.selected ? "mdc-ripple-upgraded--background-focused" : ''}
+          ${this.checkmark ? "mdc-chip--selected" : ''}"
+        .ripple="${ripple({ unbounded: false })}"
+      >
         ${this.getLeadingIcon(this.leadingIcon, this.checkmark)}
         <span class="mdc-chip__text">${this.label}</span> <slot></slot> ${this.getTrailingIcon(this.trailingIcon)}
       </div>
@@ -122,6 +131,9 @@ __decorate([
 __decorate([
     property({ type: String })
 ], Chip.prototype, "label", void 0);
+__decorate([
+    property({ type: Boolean })
+], Chip.prototype, "selected", void 0);
 Chip = __decorate([
     customElement("mwc-chip")
 ], Chip);

@@ -16,7 +16,7 @@ limitations under the License.
 */
 import { LitElement, property, html, customElement } from "@polymer/lit-element";
 import { classMap } from 'lit-html/directives/class-map.js';
-import { style } from './mwc-chip-css.js';
+import { style } from './mwc-chip-set-css.js';
 
 @customElement('mwc-chip-set' as any)
 export class ChipSet extends LitElement {
