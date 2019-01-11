@@ -8,8 +8,8 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@polymer/lit-element": "^0.6.5",
-    "lit-html": "^1.0.0-rc.1"
+    "lit-element": "^2.0.0-rc.2",
+    "lit-html": "^1.0.0-rc.2"
   },
   "publishConfig": {
     "access": "public"

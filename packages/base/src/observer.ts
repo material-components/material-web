@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {PropertyValues} from '@polymer/lit-element/lib/updating-element';
+import {PropertyValues} from 'lit-element/lib/updating-element';
 
 export interface Observer {
   (value: any, old: any): void;
