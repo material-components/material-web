@@ -12,7 +12,7 @@
     "@material/dialog": "^0.35.0",
     "@material/mwc-base": "^0.3.4",
     "@material/mwc-button": "^0.3.4",
-    "@polymer/lit-element": "^0.6.5",
+    "lit-element": "^2.0.0-rc.2",
     "blocking-elements": "^0.0.2",
     "wicg-inert": "^1.1.6"
   },
