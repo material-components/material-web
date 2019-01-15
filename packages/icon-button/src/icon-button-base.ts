@@ -86,7 +86,6 @@ export abstract class IconButtonBase extends BaseElement {
 
   render() {
     return html`
-      ${this.renderStyle()}
       <button
         .ripple="${ripple()}"
         class="mdc-icon-button"
