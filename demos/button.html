@@ -79,8 +79,11 @@ limitations under the License.
       import {html} from 'lit-element/lit-element.js';
       import {Button} from '@material/mwc-button/mwc-button.js';
       class CustomButton extends Button {
-        _renderStyle(){
-          return html`${super._renderStyle()}<style>.mdc-button{border-radius: 8px}</style>`;
+        static get styles() {
+          return [
+            Button.styles,
+            css`.mdc-button{border-radius: 8px}`,
+          ];
         }
       }
       customElements.define('custom-button', CustomButton);
