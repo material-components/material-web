@@ -50,8 +50,8 @@ export class Switch extends FormElement {
   })
   disabled = false;
 
-  renderStyle() {
-    return style;
+  static get styles() {
+    return [style];
   }
 
   @query('.mdc-switch')
@@ -91,7 +91,6 @@ export class Switch extends FormElement {
 
   render() {
     return html`
-      ${this.renderStyle()}
       <div class="mdc-switch">
         <div class="mdc-switch__track"></div>
         <div class="mdc-switch__thumb-underlay" .ripple="${ripple()}">
