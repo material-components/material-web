@@ -65,13 +65,12 @@ export class TabScroller extends BaseElement {
 
   private _scrollbarHeight = -1;
 
-  renderStyle() {
-    return style;
+  static get styles() {
+    return [style];
   }
 
   render() {
     return html`
-      ${this.renderStyle()}
       <div class="mdc-tab-scroller">
         <div class="mdc-tab-scroller__scroll-area"
             @wheel="${this._handleInteraction}"
