@@ -94,12 +94,12 @@ export class Formfield extends BaseElement {
     return findAssignedElement(this.slotEl, '*');
   }
 
-  renderStyle() {
-    return style;
+  static get styles() {
+    return [style];
   }
 
   render() {
-    return html`${this.renderStyle()}
+    return html`
       <div class="mdc-form-field ${classMap({'mdc-form-field--align-end': this.alignEnd})}">
         <slot></slot>
         <label class="mdc-label" @click="${this._labelClick}">${this.label}</label>
