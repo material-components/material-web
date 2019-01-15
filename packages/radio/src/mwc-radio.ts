@@ -101,8 +101,8 @@ export class Radio extends FormElement {
     this.formElement.focus();
   }
 
-  renderStyle() {
-    return style;
+  static get styles() {
+    return [style];
   }
 
   get ripple() {
@@ -138,7 +138,6 @@ export class Radio extends FormElement {
 
   render() {
     return html`
-      ${this.renderStyle()}
       <div class="mdc-radio" .ripple="${ripple()}">
         <input class="mdc-radio__native-control" type="radio" name="${this.name}" .checked="${this.checked}" .value="${this.value}"
         @change="${this._changeHandler}"
