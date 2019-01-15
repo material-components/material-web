@@ -114,8 +114,8 @@ export class Slider extends FormElement {
   @property({type: Number})
   private _numMarkers = 0;
 
-  renderStyle() {
-    return style;
+  static get styles() {
+    return [style];
   }
 
   // TODO(sorvell) #css: needs a default width
@@ -126,7 +126,6 @@ export class Slider extends FormElement {
       'mdc-slider--display-markers': markers && discrete,
     };
     return html`
-      ${this.renderStyle()}
       <div class="mdc-slider ${classMap(hostClassInfo)}" tabindex="0" role="slider"
         aria-valuemin="${min}" aria-valuemax="${max}" aria-valuenow="${value}"
         aria-disabled="${disabled}" data-step="${step}">
