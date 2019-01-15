@@ -78,8 +78,8 @@ export class TopAppBar extends BaseElement {
     this.requestUpdate('scrollTarget', old);
   }
 
-  renderStyle() {
-    return style;
+  static get styles() {
+    return [style];
   }
 
   // TODO(sorvell): MDC decorates the navigation icon and action items with
@@ -100,7 +100,6 @@ export class TopAppBar extends BaseElement {
         </section>
       </div>` : '';
     return html`
-      ${this.renderStyle()}
       <header class="mdc-top-app-bar ${classMap(classes)}">
       <div class="mdc-top-app-bar__row">
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
