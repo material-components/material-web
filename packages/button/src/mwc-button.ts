@@ -49,8 +49,8 @@ export class Button extends LitElement {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
-  renderStyle() {
-    return style;
+  static get styles() {
+    return [style];
   }
 
   render() {
@@ -61,7 +61,6 @@ export class Button extends LitElement {
       'mdc-button--dense': this.dense,
     };
     return html`
-      ${this.renderStyle()}
       <button
           .ripple="${ripple({unbounded: false})}"
           class="mdc-button ${classMap(classes)}"
