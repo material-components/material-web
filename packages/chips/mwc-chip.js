@@ -20,20 +20,38 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { BaseElement, customElement, query, html, property } from "@material/mwc-base/base-element.js";
-// import { classMap } from 'lit-html/directives/class-map.js';
+import { BaseElement, customElement, query, html, property } from "@material/mwc-base/base-element";
+// import { emit } from '@material/mwc-base/utils';
+import { classMap } from "lit-html/directives/class-map";
 import { style } from "./mwc-chip-css.js";
-import { ripple } from "@material/mwc-ripple/ripple-directive.js";
-import "@material/mwc-icon/mwc-icon-font.js";
-import MDCChipFoundation from "@material/chips/chip/foundation.js";
+import { ripple } from "@material/mwc-ripple/ripple-directive";
+import MDCChipFoundation from "@material/chips/chip/foundation";
 import { strings } from "./constants";
+import "@material/mwc-icon/mwc-icon-font";
+function emit(target, evtType, evtData = {}, shouldBubble = false) {
+    let evt;
+    if (typeof CustomEvent === "function") {
+        evt = new CustomEvent(evtType, {
+            detail: evtData,
+            bubbles: shouldBubble
+        });
+    }
+    else {
+        evt = document.createEvent("CustomEvent");
+        evt.initCustomEvent(evtType, shouldBubble, false, evtData);
+    }
+    target.dispatchEvent(evt);
+}
 let Chip = class Chip extends BaseElement {
     constructor() {
         super(...arguments);
         this.mdcFoundationClass = MDCChipFoundation;
-        this.checkmark = false;
         this.label = "";
-        this.selected = false;
+        this.active = false;
+        this.checkmark = false;
+    }
+    get foundation() {
+        return this.mdcFoundation;
     }
     createRenderRoot() {
         return this.attachShadow({ mode: "open", delegatesFocus: true });
@@ -41,14 +59,21 @@ let Chip = class Chip extends BaseElement {
     renderStyle() {
         return style;
     }
+    remove() {
+        this.mdcRoot.parentNode
+            ? this.mdcRoot.parentNode.removeChild(this.mdcRoot)
+            : false;
+    }
     createAdapter() {
         return Object.assign({}, super.createAdapter(), { addClass: className => this.mdcRoot.classList.add(className), removeClass: className => this.mdcRoot.classList.remove(className), hasClass: className => this.mdcRoot.classList.contains(className), addClassToLeadingIcon: className => {
-                if (this.leadingIcon) {
-                    this.leadingIcon.classList.add(className);
+                const leadingIconEl = this.mdcRoot.querySelector(strings.LEADING_ICON_SELECTOR);
+                if (leadingIconEl) {
+                    leadingIconEl.classList.add(className);
                 }
             }, removeClassFromLeadingIcon: className => {
-                if (this.leadingIcon) {
-                    this.leadingIcon.classList.remove(className);
+                const leadingIconEl = this.mdcRoot.querySelector(strings.LEADING_ICON_SELECTOR);
+                if (leadingIconEl) {
+                    leadingIconEl.classList.remove(className);
                 }
             }, eventTargetHasClass: (target, className) => target.classList.contains(className), registerEventHandler: (evtType, handler) => this.mdcRoot.addEventListener(evtType, handler), deregisterEventHandler: (evtType, handler) => this.mdcRoot.removeEventListener(evtType, handler), registerTrailingIconInteractionHandler: (evtType, handler) => {
                 const trailingIconEl = this.mdcRoot.querySelector(strings.TRAILING_ICON_SELECTOR);
@@ -60,15 +85,28 @@ let Chip = class Chip extends BaseElement {
                 if (trailingIconEl) {
                     trailingIconEl.removeEventListener(evtType, handler);
                 }
-            }, 
-            // notifyInteraction: () => this.emit(strings.INTERACTION_EVENT, {chip: this}, true /* shouldBubble */),
-            // notifyTrailingIconInteraction: () => this.emit(
-            //   strings.TRAILING_ICON_INTERACTION_EVENT, {chip: this}, true /* shouldBubble */),
-            // notifyRemoval: () => this.emit(strings.REMOVAL_EVENT, {chip: this}, true /* shouldBubble */),
-            getComputedStyleValue: propertyName => window.getComputedStyle(this.mdcRoot).getPropertyValue(propertyName), setStyleProperty: (propertyName, value) => this.mdcRoot.style.setProperty(propertyName, value) });
+            }, notifyInteraction: () => {
+                emit(this, strings.INTERACTION_EVENT, { chip: this });
+            }, notifyTrailingIconInteraction: () => {
+                emit(this, strings.TRAILING_ICON_INTERACTION_EVENT, { chip: this });
+            }, notifyRemoval: () => {
+                emit(this, strings.REMOVAL_EVENT, { chip: this });
+            }, getComputedStyleValue: propertyName => window.getComputedStyle(this.mdcRoot).getPropertyValue(propertyName), setStyleProperty: (propertyName, value) => this.mdcRoot.style.setProperty(propertyName, value) });
     }
-    getLeadingIcon(leadingIcon, checkmark) {
-        if (checkmark)
+    getLeadingIcon(leadingIcon, active) {
+        return leadingIcon
+            ? html `
+          <span
+            class="material-icons mdc-chip__icon mdc-chip__icon--leading
+          ${active ? "mdc-chip__icon--leading-hidden" : ""}
+            "
+            >${leadingIcon}</span
+          >
+        `
+            : "";
+    }
+    getCheckmark(checkmark) {
+        if (checkmark) {
             return html `
         <div class="mdc-chip__checkmark">
           <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
@@ -81,12 +119,7 @@ let Chip = class Chip extends BaseElement {
           </svg>
         </div>
       `;
-        if (!checkmark && leadingIcon)
-            return html `
-        <span class="material-icons mdc-chip__icon mdc-chip__icon--leading"
-          >${leadingIcon}</span
-        >
-      `;
+        }
         return "";
     }
     getTrailingIcon(trailingIcon) {
@@ -101,16 +134,20 @@ let Chip = class Chip extends BaseElement {
         `
             : "";
     }
+    chipClasses(active) {
+        return {
+            "mdc-chip--selected": active
+        };
+    }
     render() {
         return html `
       ${this.renderStyle()}
       <div
-        class="mdc-chip 
-          ${this.selected ? "mdc-ripple-upgraded--background-focused" : ''}
-          ${this.checkmark ? "mdc-chip--selected" : ''}"
+        class="mdc-chip ${classMap(this.chipClasses(this.active))}"
         .ripple="${ripple({ unbounded: false })}"
       >
-        ${this.getLeadingIcon(this.leadingIcon, this.checkmark)}
+        ${this.getLeadingIcon(this.leadingIcon, this.active)}
+        ${this.getCheckmark(this.checkmark)}
         <span class="mdc-chip__text">${this.label}</span> <slot></slot> ${this.getTrailingIcon(this.trailingIcon)}
       </div>
     `;
@@ -120,20 +157,23 @@ __decorate([
     query(".mdc-chip")
 ], Chip.prototype, "mdcRoot", void 0);
 __decorate([
-    property({ type: String })
+    property()
 ], Chip.prototype, "leadingIcon", void 0);
 __decorate([
-    property({ type: String })
+    property()
 ], Chip.prototype, "trailingIcon", void 0);
-__decorate([
-    property({ type: Boolean })
-], Chip.prototype, "checkmark", void 0);
 __decorate([
     property({ type: String })
 ], Chip.prototype, "label", void 0);
 __decorate([
+    property({ type: Function })
+], Chip.prototype, "onClick", void 0);
+__decorate([
     property({ type: Boolean })
-], Chip.prototype, "selected", void 0);
+], Chip.prototype, "active", void 0);
+__decorate([
+    property({ type: Boolean })
+], Chip.prototype, "checkmark", void 0);
 Chip = __decorate([
     customElement("mwc-chip")
 ], Chip);

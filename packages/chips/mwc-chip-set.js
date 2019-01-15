@@ -20,34 +20,109 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { LitElement, property, html, customElement } from "@polymer/lit-element";
-import { classMap } from 'lit-html/directives/class-map.js';
-import { style } from './mwc-chip-set-css.js';
-let ChipSet = class ChipSet extends LitElement {
+import { BaseElement, customElement, query, html, property } from "@material/mwc-base/base-element";
+import { classMap } from "lit-html/directives/class-map.js";
+import { style } from "./mwc-chip-set-css.js";
+import MDCChipFoundation from "@material/chips/chip/foundation.js";
+import MDCChipSetFoundation from "@material/chips/chip-set/foundation.js";
+import { Chip as MWCChip } from "./mwc-chip";
+import { strings } from "./constants";
+// import { strings, cssClasses } from "./constants";
+function emit(target, evtType, evtData = {}, shouldBubble = false) {
+    let evt;
+    if (typeof CustomEvent === "function") {
+        evt = new CustomEvent(evtType, {
+            detail: evtData,
+            bubbles: shouldBubble
+        });
+    }
+    else {
+        evt = document.createEvent("CustomEvent");
+        evt.initCustomEvent(evtType, shouldBubble, false, evtData);
+    }
+    target.dispatchEvent(evt);
+}
+let ChipSet = class ChipSet extends BaseElement {
     constructor() {
         super(...arguments);
-        this.type = '';
+        this.type = "";
+        this.mdcFoundationClass = MDCChipSetFoundation;
+    }
+    get chips() {
+        return [...this.slotEl.assignedNodes()].filter(el => el instanceof MWCChip);
     }
     renderStyle() {
         return style;
     }
-    render() {
-        const hostClassInfo = {
-            'mdc-chip-set--choice': this.type === 'choice',
-            'mdc-chip-set--filter': this.type === 'filter',
+    get foundation() {
+        return this.mdcFoundation;
+    }
+    chipSetClasses(type) {
+        return {
+            "mdc-chip-set--choice": type === "choice",
+            "mdc-chip-set--filter": type === "filter"
         };
+    }
+    createAdapter() {
+        return Object.assign({}, super.createAdapter(), { hasClass: className => this.mdcRoot.classList.contains(className), registerInteractionHandler: (evtType, handler) => this.mdcRoot.addEventListener(evtType, handler), deregisterInteractionHandler: (evtType, handler) => this.mdcRoot.removeEventListener(evtType, handler), appendChip: (text, leadingIcon, trailingIcon) => {
+                const chipTextEl = document.createElement("div");
+                chipTextEl.classList.add(MDCChipFoundation.cssClasses.TEXT);
+                chipTextEl.appendChild(document.createTextNode(text));
+                const chipEl = document.createElement("div");
+                chipEl.classList.add(MDCChipFoundation.cssClasses.CHIP);
+                if (leadingIcon) {
+                    chipEl.appendChild(leadingIcon);
+                }
+                chipEl.appendChild(chipTextEl);
+                if (trailingIcon) {
+                    chipEl.appendChild(trailingIcon);
+                }
+                this.mdcRoot.appendChild(chipEl);
+                return chipEl;
+            }, removeChip: chip => {
+                const index = this.chips.indexOf(chip);
+                this.chips.splice(index, 1);
+                chip.remove();
+            } });
+    }
+    firstUpdated() {
+        super.firstUpdated();
+        this.chips.forEach(el => {
+            el.addEventListener(strings.INTERACTION_EVENT, this.interactionHandler.bind(this));
+            el.addEventListener(strings.TRAILING_ICON_INTERACTION_EVENT, this.interactionHandler.bind(this));
+        });
+    }
+    render() {
         return html `
       ${this.renderStyle()}
-      <div class="mdc-chip-set ${classMap(hostClassInfo)}">
+      <div class="mdc-chip-set ${classMap(this.chipSetClasses(this.type))}">
         <slot></slot>
-      </div>`;
+      </div>
+    `;
+    }
+    interactionHandler(e) {
+        if (e.type === strings.TRAILING_ICON_INTERACTION_EVENT) {
+            emit(this.mdcRoot, e.type, e.detail);
+            setTimeout(() => {
+                emit(this.mdcRoot, strings.REMOVAL_EVENT, e.detail);
+            }, 0);
+        }
+        else {
+            emit(this.mdcRoot, e.type, e.detail);
+        }
     }
 };
+__decorate([
+    query(".mdc-chip-set")
+], ChipSet.prototype, "mdcRoot", void 0);
+__decorate([
+    query("slot")
+], ChipSet.prototype, "slotEl", void 0);
 __decorate([
     property({ type: String })
 ], ChipSet.prototype, "type", void 0);
 ChipSet = __decorate([
-    customElement('mwc-chip-set')
+    customElement("mwc-chip-set")
 ], ChipSet);
 export { ChipSet };
 //# sourceMappingURL=mwc-chip-set.js.map

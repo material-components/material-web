@@ -15,8 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/chips/mdc-chips.scss';
-@import '@material/mwc-icon/src/mwc-icon-host.scss';
+@import "@material/chips/mdc-chips.scss";
+@import "@material/mwc-icon/src/mwc-icon-host.scss";
 
 .material-icons {
   @extend %material-icons;
@@ -27,7 +27,6 @@ limitations under the License.
   outline: none;
 }
 
-.mdc-chip.mdc-chip--activated {
-  background-color: var(--mdc-theme-primary, rgba(0, 0, 0, 0.08));
-  color: var(--mdc-theme-text-primary-on-primary, black);
+.mdc-ripple-upgraded {
+  transition: background 0.4s;
 }

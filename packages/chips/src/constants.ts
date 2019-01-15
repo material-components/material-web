@@ -36,6 +36,8 @@ const cssClasses = {
   TRAILING_ICON: 'mdc-chip__icon--trailing',
   SELECTED: 'mdc-chip--selected',
   TEXT: 'mdc-chip__text',
+  CHOICE: 'mdc-chip-set--choice',
+  FILTER: 'mdc-chip-set--filter',
 };
 
 export {strings, cssClasses};
