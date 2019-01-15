@@ -63,8 +63,8 @@ export class Checkbox extends FormElement {
 
   protected mdcFoundation!: CheckboxFoundation;
 
-  renderStyle() {
-    return style;
+  static get styles() {
+    return [style];
   }
 
   get ripple() {
@@ -92,7 +92,6 @@ export class Checkbox extends FormElement {
 
   render() {
     return html`
-      ${this.renderStyle()}
       <div class="mdc-checkbox" @animationend="${this._animationEndHandler}" .ripple="${ripple()}">
         <input type="checkbox"
               class="mdc-checkbox__native-control"
