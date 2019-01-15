@@ -98,8 +98,8 @@ export class Tab extends BaseElement {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
-  renderStyle() {
-    return style;
+  static get styles() {
+    return [style];
   }
 
   render() {
@@ -108,7 +108,6 @@ export class Tab extends BaseElement {
       'mdc-tab--stacked': this.stacked
     };
     return html`
-      ${this.renderStyle()}
       <button @click="${this._handleClick}" class="mdc-tab ${classMap(classes)}" role="tab" aria-selected="false" tabindex="-1">
         <span class="mdc-tab__content">
           <slot></slot>
