@@ -80,14 +80,13 @@ export class TabBar extends BaseElement {
     this.mdcFoundation.handleKeyDown(e);
   }
 
-  renderStyle() {
-    return style;
+  static get styles() {
+    return [style];
   }
 
   // TODO(sorvell): can scroller be optional for perf?
   render() {
     return html`
-      ${this.renderStyle()}
       <div class="mdc-tab-bar" role="tablist"
           @MDCTab:interacted="${this._handleTabInteraction}"
           @keydown="${this._handleKeydown}">
