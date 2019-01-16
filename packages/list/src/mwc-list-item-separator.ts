@@ -14,5 +14,25 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import { LitElement, html, customElement } from '@polymer/lit-element';
 
-@import '@material/select/mdc-select.scss';
+import { style } from './mwc-list-item-separator-css.js';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'mwc-list-item-separator': ListItemSeparator;
+  }
+}
+
+@customElement('mwc-list-item-separator' as any)
+export class ListItemSeparator extends LitElement {
+  renderStyle() {
+    return style;
+  }
+
+  render() {
+    return html`
+      ${this.renderStyle()}
+      <div class="mdc-list-divider" role="separator"></div>`;
+  }
+}
