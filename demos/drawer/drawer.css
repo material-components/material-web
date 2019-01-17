@@ -6,7 +6,6 @@ body {
 .mdc-drawer-app-content {
   flex: auto;
   overflow: auto;
-  position: relative;
 }
 
 mwc-top-app-bar {
@@ -22,9 +21,6 @@ mwc-top-app-bar {
 }
 
 .main-content {
-  overflow: auto;
   min-height: 300px;
   padding: 64px 18px 0 18px;
-  position: relative;
-  box-sizing: border-box;
 }
