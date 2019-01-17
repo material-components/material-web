@@ -39,28 +39,42 @@ limitations under the License.
 
   <main>
 
-  <mwc-chip-set>
-    <mwc-chip label="Chip"></mwc-chip>
-    <mwc-chip label="Leading Icon" leadingIcon="fingerprint"></mwc-chip>
-    <mwc-chip label="Trailing Icon" leadingIcon="language"></mwc-chip>
-  </mwc-chip-set>
-
   <h3>choice</h3>
 
   <mwc-chip-set type="choice">
-    <mwc-chip label="A"></mwc-chip>
-    <mwc-chip label="B" leadingIcon="fingerprint"></mwc-chip>
-    <mwc-chip label="C" leadingIcon="language"></mwc-chip>
+    <mwc-chip label="Option 1"></mwc-chip>
+    <mwc-chip label="Option 2"></mwc-chip>
+    <mwc-chip label="Option 3"></mwc-chip>
   </mwc-chip-set>
+
 
   <h3>filter</h3>
 
+  <p>No leading icon</p>
   <mwc-chip-set type="filter">
-    <mwc-chip label="1"></mwc-chip>
-    <mwc-chip label="2" leadingIcon="fingerprint"></mwc-chip>
-    <mwc-chip label="3" leadingIcon="language"></mwc-chip>
+    <mwc-chip label="Filter 1" checkmark active></mwc-chip>
+    <mwc-chip label="Filter 2" checkmark></mwc-chip>
+    <mwc-chip label="Filter 3" checkmark></mwc-chip>
+    <mwc-chip label="Filter 3" checkmark trailingIcon="clear"></mwc-chip>
   </mwc-chip-set>
 
+  <p>With leading icon</p>
+  <mwc-chip-set type="filter">
+    <mwc-chip label="Alice" leadingIcon="face" checkmark active></mwc-chip>
+    <mwc-chip label="Bob" leadingIcon="face" checkmark></mwc-chip>
+    <mwc-chip label="Charlie" leadingIcon="face" checkmark></mwc-chip>
+    <mwc-chip label="Charlie" leadingIcon="face" checkmark trailingIcon="clear"></mwc-chip>
+  </mwc-chip-set>
+
+
+  <h3>Action</h3>
+
+  <mwc-chip-set>
+    <mwc-chip label="Add to calendar" leadingIcon="calendar_today"></mwc-chip>
+    <mwc-chip label="Bookmark" leadingIcon="bookmarmk"></mwc-chip>
+    <mwc-chip label="Set alarm" leadingIcon=alarm_on"></mwc-chip>
+  </mwc-chip-set>
+ 
   </main>
 
   <script>
