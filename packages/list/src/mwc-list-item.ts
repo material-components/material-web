@@ -61,7 +61,7 @@ export class ListItem extends LitElement {
   }
 
   get setAttribute() {
-    return this.mdcRoot.setAttribute;
+    return this.mdcRoot ? this.mdcRoot.setAttribute : () => {};
   }
 
   renderStyle() {
