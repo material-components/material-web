@@ -3,15 +3,6 @@ A [Material Components](https://material.io/develop/) tab indicator implementati
 
 ## Getting started
 
- * The easiest way to try out mwc-textfield is to use one of these online tools:
-
-    * Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-icon-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-icon-example?path=index.html)
-
-    * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/qibisux/edit?html,output),
-    [CodePen](https://codepen.io/azakus/pen/deZLja).
-
-* You can also copy [this HTML file](https://gist.githubusercontent.com/azakus/f01e9fc2ed04e781ad5a52ded7b296e7/raw/266f2f4f91cbfe89b2acc6ec63957b1a3cfe9b39/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
-
 * When you're ready to use mwc-textfield in a project, install it via [npm](https://www.npmjs.com/). To run the project in the browser, a module-compatible toolctain is required. We recommend installing the [Polymer CLI](https://github.com/Polymer/polymer-cli) and using its development server as follows.
 
   1. Ensure the webcomponents polyfills are included in your HTML page
@@ -34,7 +25,7 @@ A [Material Components](https://material.io/develop/) tab indicator implementati
 
       Or into your module script:
 
-      ```import {TextField} from "@authentic/mwc-textfield"```
+      ```import { TextField } from "@authentic/mwc-textfield"```
 
   1. Create an instance of mwc-textfield in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
 
