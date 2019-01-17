@@ -30,6 +30,7 @@ import { MDCLineRipple } from '@material/line-ripple';
 import { MDCFloatingLabel } from '@material/floating-label/index';
 import { MDCNotchedOutline } from '@material/notched-outline/index';
 import { ripple } from '@material/mwc-ripple/ripple-directive.js';
+import { emit } from '@material/mwc-base/utils';
 
 import { style } from './mwc-textfield-css.js';
 
@@ -38,7 +39,7 @@ import '@material/mwc-icon/mwc-icon-font.js';
 
 export interface TextFieldFoundation extends Foundation {
   setValue(value: string): void;
-  setDisabled(value: string): void;
+  setDisabled(value: boolean): void;
   setHelperTextContent(value: string): void;
 }
 
@@ -93,7 +94,7 @@ export class TextField extends FormElement {
   outlined = false;
 
   @property({ type: Boolean })
-  @observer(function(this: TextField, value: string) {
+  @observer(function(this: TextField, value: boolean) {
     this.mdcFoundation.setDisabled(value);
   })
   disabled = false;
@@ -325,12 +326,13 @@ export class TextField extends FormElement {
       ?min="${min}"
       ?max="${max}"
       ?step="${step}"
-      @focus="${this.handleInteractiveEvent}"
-      @blur="${this.handleInteractiveEvent}">`;
+      @input="${this.handleInteractionEvent}"
+      @change="${this.handleInteractionEvent}"
+      @focus="${this.handleInteractionEvent}"
+      @blur="${this.handleInteractionEvent}">`;
   }
 
-  handleInteractiveEvent(evt: MouseEvent) {
-    const event = new CustomEvent(evt.type);
-    this.mdcRoot.dispatchEvent(event);
+  handleInteractionEvent(evt: Event) {
+    emit(this.mdcRoot, evt.type);
   }
 }
