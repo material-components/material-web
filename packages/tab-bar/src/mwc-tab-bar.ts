@@ -98,7 +98,7 @@ export class TabBar extends BaseElement {
 
   // TODO(sorvell): probably want to memoize this and use a `slotChange` event
   private _getTabs() {
-    return this.tabsSlot.assignedNodes({flatten: true}).filter((e: Node) => e instanceof Tab) as Tab[];
+    return this.tabsSlot.assignedNodes({flatten: true}).filter((e: unknown) => e instanceof Tab) as Tab[];
   }
 
   private _getTab(index) {
