@@ -333,6 +333,10 @@ export class TextField extends FormElement {
   }
 
   handleInteractionEvent(evt: Event) {
+    if (evt.type === 'input') {
+      this.value = this.formElement.value;
+    }
+
     emit(this.mdcRoot, evt.type);
   }
 }
