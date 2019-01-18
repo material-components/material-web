@@ -22,7 +22,7 @@ limitations under the License.
   <script src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script type="module" src="../../node_modules/@material/mwc-drawer/mwc-drawer.js"></script>
   <script type="module" src="../../node_modules/@material/mwc-top-app-bar/mwc-top-app-bar.js"></script>
-  <script type="module" src="../../node_modules/@material/mwc-icon/mwc-icon.js"></script>
+  <script type="module" src="../../node_modules/@material/mwc-icon-button/mwc-icon-button.js"></script>
   <link rel="stylesheet" href="../demo-component.css">
   <link rel="stylesheet" href="drawer.css">
 </head>
@@ -32,12 +32,16 @@ limitations under the License.
     <span slot="subtitle">subtitle</span>
     <div class="drawerContent">
       <p>Drawer content</p>
+      <mwc-icon-button icon="gesture"></mwc-icon-button>
+      <mwc-icon-button icon="gavel" id="gavel"></mwc-icon-button>
     </div>
   </mwc-drawer>
   <div class="mdc-drawer-app-content">
-      <mwc-icon slot="navigationIcon">menu</mwc-icon>
     <mwc-top-app-bar>
+      <mwc-icon-button slot="navigationIcon" icon="menu"></mwc-icon-button>
       <div slot="title">Title</div>
+      <mwc-icon-button slot="actionItems" icon="cast"></mwc-icon-button>
+      <mwc-icon-button slot="actionItems" icon="fingerprint" id="fingerprint"></mwc-icon-button>
     </mwc-top-app-bar>
     <div class="main-content">
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>

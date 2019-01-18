@@ -22,7 +22,7 @@ limitations under the License.
   <script src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script type="module" src="../../node_modules/@material/mwc-drawer/mwc-drawer.js"></script>
   <script type="module" src="../../node_modules/@material/mwc-top-app-bar/mwc-top-app-bar.js"></script>
-  <script type="module" src="../../node_modules/@material/mwc-icon/mwc-icon.js"></script>
+  <script type="module" src="../../node_modules/@material/mwc-icon-button/mwc-icon-button.js"></script>
   <link rel="stylesheet" href="../demo-component.css">
   <link rel="stylesheet" href="drawer.css">
 </head>
@@ -32,11 +32,13 @@ limitations under the License.
     <span slot="subtitle">subtitle</span>
     <div class="drawerContent">
       <p>Drawer content</p>
+      <mwc-icon-button icon="gesture"></mwc-icon-button>
+      <mwc-icon-button icon="gavel"></mwc-icon-button>
     </div>
   </mwc-drawer>
   <div class="mdc-drawer-app-content">
-      <mwc-icon slot="navigationIcon">menu</mwc-icon>
     <mwc-top-app-bar>
+      <mwc-icon-button slot="navigationIcon" icon="menu"></mwc-icon-button>
       <div slot="title">Title</div>
     </mwc-top-app-bar>
     <div class="main-content">
