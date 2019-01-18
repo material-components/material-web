@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-switch",
-  "version": "0.3.6",
+  "version": "0.3.5",
   "description": "",
   "main": "mwc-switch.js",
   "repository": {
@@ -13,7 +13,7 @@
     "@material/mwc-base": "^0.3.5",
     "@material/mwc-ripple": "^0.3.5",
     "@material/switch": "^0.40.0",
-    "@polymer/lit-element": "^0.6.5"
+    "lit-element": "^2.0.0-rc.2"
   },
   "publishConfig": {
     "access": "public"
