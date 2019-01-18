@@ -16,3 +16,12 @@ limitations under the License.
 */
 
 @import '@material/drawer/mdc-drawer.scss';
+
+.mdc-drawer-app-content {
+  flex: auto;
+  overflow: auto;
+}
+
+:host {
+  display: flex;
+}
