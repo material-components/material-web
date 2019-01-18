@@ -29,28 +29,7 @@ import MDCChipFoundation from "@material/chips/chip/foundation.js";
 import MDCChipSetFoundation from "@material/chips/chip-set/foundation.js";
 import { Chip as MWCChip } from "./mwc-chip";
 import { strings } from "./constants";
-// import { strings, cssClasses } from "./constants";
-
-function emit(
-  target: HTMLElement,
-  evtType: string,
-  evtData = {},
-  shouldBubble = false
-) {
-  let evt;
-
-  if (typeof CustomEvent === "function") {
-    evt = new CustomEvent(evtType, {
-      detail: evtData,
-      bubbles: shouldBubble
-    });
-  } else {
-    evt = document.createEvent("CustomEvent");
-    evt.initCustomEvent(evtType, shouldBubble, false, evtData);
-  }
-
-  target.dispatchEvent(evt);
-}
+import { emit } from '@material/mwc-base/utils';
 
 export interface ChipSetFoundation extends Foundation {
   init(): void;
