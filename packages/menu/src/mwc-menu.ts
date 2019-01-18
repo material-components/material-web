@@ -75,6 +75,9 @@ export class Menu extends BaseElement {
   @property({ type: Boolean })
   multiselect = false;
 
+  @property({ type: Boolean })
+  autofocus = false;
+
   protected _selectedIndex: number = -1;
   get selectedIndex() {
     return this._selectedIndex;
@@ -381,7 +384,7 @@ export class Menu extends BaseElement {
   }
 
   _afterOpenedCallback() {
-    if (this.enabledItems.length > 0) {
+    if (this.autofocus && this.enabledItems.length > 0) {
       this.items[this.selectedIndex !== -1 ? this.selectedIndex : 0].focus();
     }
 
