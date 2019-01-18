@@ -14,14 +14,25 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import { LitElement, html, customElement } from 'lit-element';
 
-@import '@material/list/mdc-list.scss';
-@import '@material/mwc-icon/mwc-icon.scss';
+import { style } from './mwc-list-item-separator-css.js';
 
-.material-icons {
-  @extend %material-icons;
+declare global {
+  interface HTMLElementTagNameMap {
+    'mwc-list-item-separator': ListItemSeparator;
+  }
 }
 
-:host([aria-disabled="true"]) > .mdc-list-item:focus::before {
-  opacity: 0;
+@customElement('mwc-list-item-separator' as any)
+export class ListItemSeparator extends LitElement {
+  renderStyle() {
+    return style;
+  }
+
+  render() {
+    return html`
+      ${this.renderStyle()}
+      <div class="mdc-list-divider" role="separator"></div>`;
+  }
 }

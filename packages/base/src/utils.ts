@@ -30,3 +30,22 @@ export function findAssignedElement(slot: HTMLSlotElement, selector: string) {
 
   return null;
 }
+
+/**
+ * Emits a Custom Event
+ */
+export function emit(target: HTMLElement, evtType: string, evtData = {}, shouldBubble = false) {
+  let evt;
+  
+  if (typeof CustomEvent === 'function') {
+    evt = new CustomEvent(evtType, {
+      detail: evtData,
+      bubbles: shouldBubble,
+    });
+  } else {
+    evt = document.createEvent('CustomEvent');
+    evt.initCustomEvent(evtType, shouldBubble, false, evtData);
+  }
+
+  target.dispatchEvent(evt);
+}
