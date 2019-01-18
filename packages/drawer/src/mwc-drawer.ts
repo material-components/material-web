@@ -134,6 +134,9 @@ export class Drawer extends BaseElement {
         <div class="mdc-drawer__content"><slot></slot></div>
       </aside>
       ${modal ? html`<div class="mdc-drawer-scrim" @click="${this._handleScrimClick}"></div>` : ''}
+      <div class="mdc-drawer-app-content">
+        <slot name="appContent"></slot>
+      </div>
       `;
   }
 
