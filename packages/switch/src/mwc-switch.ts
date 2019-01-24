@@ -50,9 +50,7 @@ export class Switch extends FormElement {
   })
   disabled = false;
 
-  static get styles() {
-    return [style];
-  }
+  static styles = style;
 
   @query('.mdc-switch')
   protected mdcRoot!: HTMLElement;

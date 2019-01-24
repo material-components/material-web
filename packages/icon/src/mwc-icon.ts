@@ -21,9 +21,7 @@ import './mwc-icon-font.js';
 @customElement('mwc-icon' as any)
 export class Icon extends LitElement {
 
-  static get styles() {
-    return [style];
-  }
+  static styles = style;
 
   render() {
     return html`<slot></slot>`;

@@ -94,9 +94,7 @@ export class Formfield extends BaseElement {
     return findAssignedElement(this.slotEl, '*');
   }
 
-  static get styles() {
-    return [style];
-  }
+  static styles = style;
 
   render() {
     return html`

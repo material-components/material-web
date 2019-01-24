@@ -40,9 +40,7 @@ export class Ripple extends LitElement {
   @property()
   protected interactionNode: HTMLElement = this;
 
-  static get styles() {
-    return [style];
-  }
+  static styles = style;
 
   connectedCallback() {
     this.interactionNode = this.parentNode as HTMLElement;

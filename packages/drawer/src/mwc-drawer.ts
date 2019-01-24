@@ -116,9 +116,7 @@ export class Drawer extends BaseElement {
   @property({reflect: true})
   type = '';
 
-  static get styles() {
-    return [style];
-  }
+  static styles = style;
 
   render() {
     const dismissible = this.type === 'dismissible' || this.type === 'modal';

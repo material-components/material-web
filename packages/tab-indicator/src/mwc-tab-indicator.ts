@@ -59,9 +59,7 @@ export class TabIndicator extends BaseElement {
   @property({type: Boolean})
   fade = false;
 
-  static get styles() {
-    return [style];
-  }
+  static styles = style;
 
   render() {
     const contentClasses = {

@@ -101,9 +101,7 @@ export class Radio extends FormElement {
     this.formElement.focus();
   }
 
-  static get styles() {
-    return [style];
-  }
+  static styles = style;
 
   get ripple() {
     return this.mdcRoot.ripple;

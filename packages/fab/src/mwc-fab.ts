@@ -49,9 +49,7 @@ export class Fab extends LitElement {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
-  static get styles() {
-    return [style];
-  }
+  static styles = style;
 
   render() {
     const classes = {

@@ -114,9 +114,7 @@ export class Slider extends FormElement {
   @property({type: Number})
   private _numMarkers = 0;
 
-  static get styles() {
-    return [style];
-  }
+  static styles = style;
 
   // TODO(sorvell) #css: needs a default width
   render() {

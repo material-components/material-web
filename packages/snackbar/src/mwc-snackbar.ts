@@ -79,9 +79,7 @@ export class Snackbar extends BaseElement {
 
   protected boundActionHandler = this._actionHandler.bind(this);
 
-  static get styles() {
-    return [style];
-  }
+  static styles = style;
 
   render() {
     return html`

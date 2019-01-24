@@ -87,9 +87,7 @@ export class LinearProgress extends BaseElement {
   })
   closed = false;
 
-  static get styles() {
-    return [style];
-  }
+  static styles = style;
 
   render() {
     return html`

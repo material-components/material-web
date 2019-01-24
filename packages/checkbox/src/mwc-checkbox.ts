@@ -63,9 +63,7 @@ export class Checkbox extends FormElement {
 
   protected mdcFoundation!: CheckboxFoundation;
 
-  static get styles() {
-    return [style];
-  }
+  static styles = style;
 
   get ripple() {
     return this.mdcRoot.ripple;

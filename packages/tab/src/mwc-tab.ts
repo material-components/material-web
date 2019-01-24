@@ -98,9 +98,7 @@ export class Tab extends BaseElement {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
-  static get styles() {
-    return [style];
-  }
+  static styles = style;
 
   render() {
     const classes = {

@@ -65,9 +65,7 @@ export class TabScroller extends BaseElement {
 
   private _scrollbarHeight = -1;
 
-  static get styles() {
-    return [style];
-  }
+  static styles = style;
 
   render() {
     return html`

@@ -80,9 +80,7 @@ export class TabBar extends BaseElement {
     this.mdcFoundation.handleKeyDown(e);
   }
 
-  static get styles() {
-    return [style];
-  }
+  static styles = style;
 
   // TODO(sorvell): can scroller be optional for perf?
   render() {

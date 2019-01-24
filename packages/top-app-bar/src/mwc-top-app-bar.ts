@@ -78,9 +78,7 @@ export class TopAppBar extends BaseElement {
     this.requestUpdate('scrollTarget', old);
   }
 
-  static get styles() {
-    return [style];
-  }
+  static styles = style;
 
   // TODO(sorvell): MDC decorates the navigation icon and action items with
   // ripples. Since these are slotted items here, the assumption is that the
