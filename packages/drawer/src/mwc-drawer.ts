@@ -20,10 +20,19 @@ import MDCModalDrawerFoundation from '@material/drawer/modal/foundation.js';
 import MDCDismissibleDrawerFoundation from '@material/drawer/dismissible/foundation.js';
 import {strings} from '@material/drawer/constants.js';
 import {style} from './mwc-drawer-css.js';
+import 'wicg-inert/dist/inert.js';
+import 'blocking-elements/blocking-elements.js';
 
 declare global {
   interface HTMLElementTagNameMap {
     'mwc-drawer': Drawer;
+  }
+
+  interface Document {
+    $blockingElements: {
+      push(HTMLElement): void;
+      remove(HTMLElement): Boolean;
+    }
   }
 }
 
@@ -59,10 +68,9 @@ export class Drawer extends BaseElement {
         this._previousFocus = (this.getRootNode() as any as DocumentOrShadowRoot).activeElement as HTMLElement|null;
       },
       restoreFocus: () => {
+        document.$blockingElements.remove(this);
         const previousFocus = this._previousFocus && this._previousFocus.focus;
-        // Note, casting to avoid cumbersome runtime check.
-        const activeElement = (this.getRootNode() as any as DocumentOrShadowRoot).activeElement;
-        if (activeElement && this.mdcRoot.contains(activeElement) && previousFocus) {
+        if (previousFocus) {
           this._previousFocus!.focus();
         }
       },
@@ -77,13 +85,12 @@ export class Drawer extends BaseElement {
       // TODO(sorvell): Implement list focusing integration.
       focusActiveNavigationItem: () => {
       },
-      // TODO(sorvell): integrate focus trapping.
-      trapFocus: () => {},
-      releaseFocus: () => {},
+      trapFocus: () => {
+        document.$blockingElements.push(this);
+      },
     }
   }
 
-  // TODO(sorvell): integrate focus trapping.
   private _previousFocus: HTMLElement|null = null;
 
   private _handleScrimClick() {
