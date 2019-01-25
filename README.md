@@ -90,13 +90,13 @@ The components render output structure, handle styling, and manage data flow wit
 
 ### Styling Components
 
-Components define their styling using [SASS](http://sass-lang.com/).
+Components define their styling using [Sass](http://sass-lang.com/).
 
-The SASS output is built into a javascript module which exports the component's styling as a [lit-html](https://github.com/Polymer/lit-html) template.
+The Sass output is built into a javascript module which exports the component's styling as a [lit-html](https://github.com/Polymer/lit-html) template.
 
 Component styling is compiled with both `npm run build` and `npm run watch`.
 
-To compile the component SASS manually, use `npm run build-styling`
+To compile the component Sass manually, use `npm run build-styling`
 
 ## Useful Links
 

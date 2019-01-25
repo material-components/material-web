@@ -38,7 +38,7 @@ limitations under the License.
         .mdc-list-item
 */
 
-// TODO(sorvell) #css: note, needs SASS changes in MDC
+// TODO(sorvell) #css: note, needs Sass changes in MDC
 .mdc-menu__items ::slotted(*) {
   cursor: pointer;
   // TODO(dfreedm): use `subtitle1` when MDC revs
