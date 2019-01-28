@@ -80,6 +80,24 @@ export class TabBar extends BaseElement {
     this.mdcFoundation.handleKeyDown(e);
   }
 
+  constructor() {
+    super();
+
+    const updateComplete = this.updateComplete;
+
+    Object.defineProperty(this, 'updateComplete', {
+      get() {
+        return updateComplete
+          .then(() => this.scrollerElement.updateComplete)
+          .then(() => {
+            if (this.mdcFoundation === undefined) {
+              this.createFoundation();
+            }
+          });
+      }
+    });
+  }
+
   renderStyle() {
     return style;
   }
@@ -171,15 +189,6 @@ export class TabBar extends BaseElement {
   // This is necessary because the foundation/adapter synchronously addresses
   // the scroller element.
   firstUpdated() {}
-  get updateComplete() {
-    return super.updateComplete
-      .then(() => this.scrollerElement.updateComplete)
-      .then(() => {
-        if (this.mdcFoundation === undefined) {
-          this.createFoundation();
-        }
-      });
-  }
 
   scrollIndexIntoView(index: number) {
     this.mdcFoundation.scrollIntoView(index);
