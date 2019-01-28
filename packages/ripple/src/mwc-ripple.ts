@@ -46,6 +46,7 @@ export class Ripple extends LitElement {
 
   connectedCallback() {
     this.interactionNode = this.parentNode as HTMLElement;
+    super.connectedCallback();
   }
 
   // TODO(sorvell) #css: sizing.
