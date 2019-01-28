@@ -40,9 +40,7 @@ export class Ripple extends LitElement {
   @property()
   protected interactionNode: HTMLElement = this;
 
-  renderStyle() {
-    return style;
-  }
+  static styles = style;
 
   connectedCallback() {
     this.interactionNode = this.parentNode as HTMLElement;
@@ -61,7 +59,6 @@ export class Ripple extends LitElement {
       rippleOptions.active = active;
     }
     return html`
-      ${this.renderStyle()}
       <div .ripple="${ripple(rippleOptions)}"
           class="mdc-ripple-surface ${classMap(classes)}"></div>`;
   }

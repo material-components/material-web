@@ -87,13 +87,10 @@ export class LinearProgress extends BaseElement {
   })
   closed = false;
 
-  renderStyle() {
-    return style;
-  }
+  static styles = style;
 
   render() {
     return html`
-      ${this.renderStyle()}
       <div role="progressbar" class="mdc-linear-progress">
         <div class="mdc-linear-progress__buffering-dots"></div>
         <div class="mdc-linear-progress__buffer"></div>

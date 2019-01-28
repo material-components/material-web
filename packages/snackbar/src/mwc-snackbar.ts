@@ -79,12 +79,10 @@ export class Snackbar extends BaseElement {
 
   protected boundActionHandler = this._actionHandler.bind(this);
 
-  renderStyle() {
-    return style;
-  }
+  static styles = style;
 
   render() {
-    return html`${this.renderStyle()}
+    return html`
       <div class="mdc-snackbar"
         aria-live="assertive"
         aria-atomic="true"

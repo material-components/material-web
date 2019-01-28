@@ -77,12 +77,6 @@ export abstract class BaseElement extends LitElement {
   }
 
   /**
-   * This function should be called in `render()` to add the styling for this
-   * component.
-   */
-  abstract renderStyle(): TemplateResult;
-
-  /**
    * Create and attach the MDC Foundation to the instance
    */
   protected createFoundation() {

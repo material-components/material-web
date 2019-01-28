@@ -49,9 +49,7 @@ export class Fab extends LitElement {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
-  renderStyle() {
-    return style;
-  }
+  static styles = style;
 
   render() {
     const classes = {
@@ -61,7 +59,6 @@ export class Fab extends LitElement {
     };
     const showLabel = this.label !== '' && this.extended;
     return html`
-      ${this.renderStyle()}
       <button
           .ripple="${ripple()}"
           class="mdc-fab ${classMap(classes)}"

@@ -116,9 +116,7 @@ export class Drawer extends BaseElement {
   @property({reflect: true})
   type = '';
 
-  renderStyle() {
-    return style;
-  }
+  static styles = style;
 
   render() {
     const dismissible = this.type === 'dismissible' || this.type === 'modal';
@@ -131,7 +129,6 @@ export class Drawer extends BaseElement {
       </div>
       ` : '';
     return html`
-      ${this.renderStyle()}
       <aside class="mdc-drawer
           ${classMap({'mdc-drawer--dismissible': dismissible, 'mdc-drawer--modal': modal})}">
         ${header}

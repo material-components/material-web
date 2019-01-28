@@ -26,14 +26,14 @@ limitations under the License.
 
   <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script type="module">
-    import {LitElement, html} from 'lit-element/lit-element.js';
+    import {LitElement, html, css} from 'lit-element/lit-element.js';
     import {style as listStyle} from './style/mwc-list-item-css.js';
 
     class DemoView extends LitElement {
-      render() {
-        return html`
-          ${listStyle}
-          <style>
+      static get styles() {
+        return [
+          listStyle,
+          css`
             header {
               background-color: #6200ee;
               position: fixed;
@@ -76,7 +76,12 @@ limitations under the License.
             .demo-heading {
               margin-left: 8px;
             }
-          </style>
+          `,
+        ];
+      }
+
+      render() {
+        return html`
           <header>
             <span class="demo-catalog-logo">
               <img src="https://material-components-web.appspot.com/images/ic_component_24px_white.svg">

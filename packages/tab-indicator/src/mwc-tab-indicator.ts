@@ -59,9 +59,7 @@ export class TabIndicator extends BaseElement {
   @property({type: Boolean})
   fade = false;
 
-  renderStyle() {
-    return style;
-  }
+  static styles = style;
 
   render() {
     const contentClasses = {
@@ -70,7 +68,6 @@ export class TabIndicator extends BaseElement {
       'mdc-tab-indicator__content--underline': !this.icon
     };
     return html`
-      ${this.renderStyle()}
       <span class="mdc-tab-indicator ${classMap({'mdc-tab-indicator--fade': this.fade})}">
         <span class="mdc-tab-indicator__content ${classMap(contentClasses)}">${this.icon}</span>
       </span>
