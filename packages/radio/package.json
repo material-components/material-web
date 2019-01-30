@@ -15,8 +15,7 @@
   "dependencies": {
     "@material/mwc-base": "^0.3.5",
     "@material/mwc-ripple": "^0.3.5",
-    "@material/radio": "^0.40.0",
-    "lit-element": "^2.0.0-rc.2"
+    "@material/radio": "^0.40.0"
   },
   "publishConfig": {
     "access": "public"

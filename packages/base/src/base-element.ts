@@ -16,8 +16,6 @@ limitations under the License.
 */
 
 import {LitElement} from 'lit-element';
-import {TemplateResult} from 'lit-html';
-export {TemplateResult};
 export * from 'lit-element';
 export {classMap} from 'lit-html/directives/class-map.js';
 export {observer} from './observer.js';
