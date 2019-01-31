@@ -97,6 +97,11 @@ export class Tab extends BaseElement {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
+  connectedCallback() {
+    this.dir = document.dir;
+    super.connectedCallback();
+  }
+
   static styles = style;
 
   render() {
