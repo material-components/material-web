@@ -24,6 +24,13 @@ limitations under the License.
   <script type="module" src="../node_modules/@material/mwc-tab-bar/mwc-tab-bar.js"></script>
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
   <link rel="stylesheet" href="demo-component.css">
+  <style>
+    iframe {
+      border: 1px solid gray;
+      height: 380px;
+      width: 100%;
+    }
+  </style>
 </head>
 <body class="unresolved">
   <header>
@@ -129,6 +136,9 @@ limitations under the License.
       <mwc-tab icon="accessibility" isFadingIndicator indicatorIcon="donut_large"></mwc-tab>
       <mwc-tab icon="exit_to_app" isFadingIndicator indicatorIcon="donut_large"></mwc-tab>
     </mwc-tab-bar>
+
+    <h3>RTL</h3>
+    <iframe src="tabs/rtl.html"></iframe>
   </main>
 
   <script>
