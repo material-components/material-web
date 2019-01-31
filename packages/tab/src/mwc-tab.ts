@@ -14,13 +14,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, query, customElement, Adapter, Foundation} from '@material/mwc-base/base-element.js';
+import {BaseElement, html, property, query, customElement, Adapter, Foundation, classMap} from '@material/mwc-base/base-element.js';
 import {TabIndicator} from '@material/mwc-tab-indicator';
 
 // Make TypeScript not remove the import.
 import '@material/mwc-tab-indicator';
 
-import {classMap} from 'lit-html/directives/class-map';
 import {ripple} from '@material/mwc-ripple/ripple-directive';
 import MDCTabFoundation from '@material/tab/foundation';
 import {style} from './mwc-tab-css';

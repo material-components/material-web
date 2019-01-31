@@ -14,8 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {LitElement, html, property, customElement} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
+import {LitElement, html, property, customElement, classMap} from '@material/mwc-base/base-element';
 import {style} from './mwc-button-css.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 import '@material/mwc-icon/mwc-icon-font.js';
