@@ -50,8 +50,6 @@ const rollupOptions = {
       module: true,
       jsnext: true,
       main: true,
-      browser: true,
-      modulesOnly: true,
     }),
     babel({
       presets: ['es2015-rollup'],
