@@ -88,7 +88,7 @@ export class TabBar extends BaseElement {
       <div class="mdc-tab-bar" role="tablist"
           @MDCTab:interacted="${this._handleTabInteraction}"
           @keydown="${this._handleKeydown}">
-        <mwc-tab-scroller><slot></slot></mwc-tab-scroller>
+        <mwc-tab-scroller dir="${this.dir}"><slot></slot></mwc-tab-scroller>
       </div>
       `;
   }
