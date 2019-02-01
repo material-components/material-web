@@ -66,6 +66,18 @@ const SL_LAUNCHERS = {
   },
 };
 
+const HEADLESS_LAUNCHERS = {
+  /** See https://github.com/travis-ci/travis-ci/issues/8836#issuecomment-348248951 */
+  'ChromeHeadlessNoSandbox': {
+    base: 'ChromeHeadless',
+    flags: ['--no-sandbox'],
+  },
+  'FirefoxHeadless': {
+    base: 'Firefox',
+    flags: ['-headless'],
+  },
+};
+
 module.exports = function(config) {
   config.set({
     basePath: '',
@@ -130,5 +142,11 @@ module.exports = function(config) {
 };
 
 function determineBrowsers() {
-  return USING_SL ? Object.keys(SL_LAUNCHERS) : ['Chrome', 'Firefox'];
+  if (USING_SL) {
+    return Object.keys(SL_LAUNCHERS);
+  } else if (USING_TRAVISCI) {
+    return Object.keys(HEADLESS_LAUNCHERS);
+  } else {
+    return ['Chrome', 'Firefox'];
+  }
 }
