@@ -114,7 +114,7 @@ module.exports = function(config) {
     browserNoActivityTimeout: 120000,
     captureTimeout: 240000,
     concurrency: USING_SL ? 10 : 1,
-    customLaunchers: SL_LAUNCHERS,
+    customLaunchers: Object.assign({}, SL_LAUNCHERS, HEADLESS_LAUNCHERS),
 
     client: {
       mocha: {
