@@ -66,6 +66,18 @@ const SL_LAUNCHERS = {
   },
 };
 
+const HEADLESS_LAUNCHERS = {
+  /** See https://github.com/travis-ci/travis-ci/issues/8836#issuecomment-348248951 */
+  'ChromeHeadlessNoSandbox': {
+    base: 'ChromeHeadless',
+    flags: ['--no-sandbox'],
+  },
+  'FirefoxHeadless': {
+    base: 'Firefox',
+    flags: ['-headless'],
+  },
+};
+
 module.exports = function(config) {
   config.set({
     basePath: '',
@@ -73,10 +85,10 @@ module.exports = function(config) {
     files: [
       {pattern: 'node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js', watched: false},
       {pattern: 'node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js', watched: false},
-      {pattern: 'test/unit/mwc-{button,fab,radio,ripple}*.js', watched: false},
+      {pattern: 'test/unit/mwc-{button,fab,formfield,icon,linear-progress,radio,ripple,switch}.test.js', watched: false},
     ],
     preprocessors: {
-      'test/unit/mwc-*.js': ['rollup'],
+      'test/unit/mwc-*.js': ['rollup', 'sourcemap'],
     },
 
     rollupPreprocessor: {
@@ -102,7 +114,7 @@ module.exports = function(config) {
     browserNoActivityTimeout: 120000,
     captureTimeout: 240000,
     concurrency: USING_SL ? 10 : 1,
-    customLaunchers: SL_LAUNCHERS,
+    customLaunchers: {...SL_LAUNCHERS, ...HEADLESS_LAUNCHERS},
 
     client: {
       mocha: {
@@ -110,6 +122,10 @@ module.exports = function(config) {
         ui: 'qunit',
       },
     },
+
+    mochaReporter: {
+      output: 'minimal'
+    }
   });
 
   // See https://github.com/karma-runner/karma-sauce-launcher/issues/73
@@ -130,5 +146,12 @@ module.exports = function(config) {
 };
 
 function determineBrowsers() {
-  return USING_SL ? Object.keys(SL_LAUNCHERS) : ['Chrome', 'Firefox'];
+  if (!USING_TRAVISCI) {
+    return ['Chrome', 'Firefox'];
+  }
+  const browsers = [...Object.keys(HEADLESS_LAUNCHERS)];
+  if (USING_SL) {
+    browsers.push(...Object.keys(SL_LAUNCHERS));
+  }
+  return browsers;
 }
