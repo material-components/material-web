@@ -124,7 +124,7 @@ const rippleInteractionNodes = new WeakMap();
 export const ripple = directive((options: RippleOptions = {}) => (part: PropertyPart) => {
   const surfaceNode = part.committer.element as HTMLElement;
   const interactionNode = options.interactionNode || surfaceNode;
-  let rippleFoundation = part.value;
+  let rippleFoundation = (part.value as any);
   // if the interaction node changes, destroy and invalidate the foundation.
   const existingInteractionNode = rippleInteractionNodes.get(rippleFoundation);
   if (existingInteractionNode !== undefined && existingInteractionNode !== interactionNode) {
