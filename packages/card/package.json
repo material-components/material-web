@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-card",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "",
   "main": "mwc-card.js",
   "scripts": {
