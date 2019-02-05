@@ -8,8 +8,8 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "lit-element": "^2.0.0-rc.2",
-    "lit-html": "^1.0.0-rc.2"
+    "lit-element": "^2.0.1",
+    "lit-html": "^1.0.0"
   },
   "publishConfig": {
     "access": "public"
