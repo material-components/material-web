@@ -11,7 +11,7 @@
   "dependencies": {
     "@material/mwc-base": "^0.3.5",
     "@material/slider": "^0.40.0",
-    "lit-html": "^1.0.0-rc.2"
+    "lit-html": "^1.0.0"
   },
   "publishConfig": {
     "access": "public"

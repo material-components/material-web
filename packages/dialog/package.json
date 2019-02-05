@@ -13,7 +13,7 @@
     "@material/mwc-base": "^0.3.5",
     "@material/mwc-button": "^0.3.5",
     "blocking-elements": "^0.0.2",
-    "lit-element": "^2.0.0-rc.2",
+    "lit-element": "^2.0.1",
     "wicg-inert": "^1.1.6"
   },
   "publishConfig": {
