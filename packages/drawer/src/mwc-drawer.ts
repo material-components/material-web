@@ -33,6 +33,10 @@ declare global {
       remove(HTMLElement): Boolean;
     }
   }
+
+  interface HTMLElement {
+    inert: Boolean;
+  }
 }
 
 export interface DrawerFoundation extends Foundation {
@@ -51,6 +55,9 @@ export class Drawer extends BaseElement {
   @query('.mdc-drawer')
   protected mdcRoot!: HTMLElement;
 
+  @query('.mdc-drawer-app-content')
+  protected appContent!: HTMLElement;
+
   protected mdcFoundation!: MDCDismissibleDrawerFoundation|MDCModalDrawerFoundation;
 
   protected get mdcFoundationClass(): typeof DrawerFoundation {
@@ -68,6 +75,7 @@ export class Drawer extends BaseElement {
       },
       restoreFocus: () => {
         document.$blockingElements.remove(this);
+        this.appContent.inert = false;
         const previousFocus = this._previousFocus && this._previousFocus.focus;
         if (previousFocus) {
           this._previousFocus!.focus();
@@ -86,6 +94,7 @@ export class Drawer extends BaseElement {
       },
       trapFocus: () => {
         document.$blockingElements.push(this);
+        this.appContent.inert = true;
       },
     }
   }
