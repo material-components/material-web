@@ -9,7 +9,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/icon-button": "^0.40.0",
+    "@material/icon-button": "^0.44.0",
     "@material/mwc-base": "^0.3.6",
     "@material/mwc-icon": "^0.3.6",
     "@material/mwc-ripple": "^0.3.6"

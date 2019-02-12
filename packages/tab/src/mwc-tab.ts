@@ -30,6 +30,9 @@ declare global {
   }
 }
 
+// used for generating unique id for each tab
+let tabIdCounter = 0;
+
 export interface TabFoundation extends Foundation {
   handleClick(): void;
   activate(clientRect: ClientRect): void;
@@ -104,6 +107,12 @@ export class Tab extends BaseElement {
 
   static styles = style;
 
+  constructor() {
+    super();
+    // create an unique id
+    this.id = this.id || `mdc-tab-${++tabIdCounter}`;
+  }
+
   render() {
     const classes = {
       'mdc-tab--min-width': this.minWidth,
@@ -139,7 +148,7 @@ export class Tab extends BaseElement {
           (this._tabIndicator as TabIndicator).deactivate(),
       notifyInteracted: () => this.dispatchEvent(
           new CustomEvent(MDCTabFoundation.strings.INTERACTED_EVENT, {
-            detail: {tab: this},
+            detail: {tabId: this.id},
             bubbles: true,
             composed: true,
             cancelable: true
