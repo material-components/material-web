@@ -27,12 +27,7 @@ declare global {
 }
 
 export interface RadioFoundation extends Foundation {
-  isChecked(): boolean;
-  setChecked(checked: boolean): void;
-  isDisabled(): boolean;
   setDisabled(disabled: boolean): void;
-  getValue(): string;
-  setValue(value: string): void;
 }
 
 export declare var RadioFoundation: {
@@ -51,7 +46,7 @@ export class Radio extends FormElement {
 
   @property({type: Boolean})
   @observer(function(this: Radio, checked: boolean) {
-    this.mdcFoundation.setChecked(checked);
+    this.formElement.checked = checked;
   })
   checked = false;
 
@@ -63,7 +58,7 @@ export class Radio extends FormElement {
 
   @property({type: String})
   @observer(function(this: Radio, value: string) {
-    this.mdcFoundation.setValue(value);
+    this.formElement.value = value;
   })
   value = '';
 
@@ -110,8 +105,8 @@ export class Radio extends FormElement {
   protected createAdapter(): Adapter {
     return {
       ...super.createAdapter(),
-      getNativeControl: () => {
-        return this.formElement;
+      setNativeControlDisabled: (disabled: boolean) => {
+        this.formElement.disabled = disabled;
       }
     };
   }
