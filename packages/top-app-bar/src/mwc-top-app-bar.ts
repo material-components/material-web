@@ -61,10 +61,6 @@ export class TopAppBar extends BaseElement {
   @property({type: Boolean, reflect: true})
   dense = false;
 
-  // does not work with prominent
-  @property({type: Boolean, reflect: true})
-  extraRow = false;
-
   private _scrollTarget!: HTMLElement|Window;
 
   get scrollTarget() {
@@ -90,12 +86,6 @@ export class TopAppBar extends BaseElement {
       'mdc-top-app-bar--prominent': this.type === 'prominent' || this.type === 'prominentFixed',
       'mdc-top-app-bar--dense': this.dense
     };
-    const extraRow = this.extraRow ? html`
-      <div class="mdc-top-app-bar__row">
-        <section class="mdc-top-app-bar__section">
-          <slot name="extraRow"></slot>
-        </section>
-      </div>` : '';
     return html`
       <header class="mdc-top-app-bar ${classMap(classes)}">
       <div class="mdc-top-app-bar__row">
@@ -107,7 +97,6 @@ export class TopAppBar extends BaseElement {
           <slot name="actionItems"></slot>
         </section>
       </div>
-      ${extraRow}
     </header>`;
   }
 
