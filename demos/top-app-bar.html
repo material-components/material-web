@@ -52,23 +52,14 @@ limitations under the License.
 
     mwc-top-app-bar[type="prominent"][dense] + .top-app-bar-adjust,
     mwc-top-app-bar[type="prominentFixed"][dense] + .top-app-bar-adjust,
-    mwc-top-app-bar[extraRow][dense] + .top-app-bar-adjust {
-      padding-top: 96px;
-    }
 
     mwc-top-app-bar[type="prominent"] + .top-app-bar-adjust,
     mwc-top-app-bar[type="prominentFixed"] + .top-app-bar-adjust,
-    mwc-top-app-bar[extraRow] + .top-app-bar-adjust {
-      padding-top: 128px;
-    }
 
     mwc-top-app-bar[type="short"] > mwc-icon-button:nth-of-type(2),
     mwc-top-app-bar[type="short"] > mwc-icon-button:nth-of-type(3),
     mwc-top-app-bar[type="shortCollapsed"] > mwc-icon-button:nth-of-type(2),
     mwc-top-app-bar[type="shortCollapsed"] > mwc-icon-button:nth-of-type(3),
-    mwc-top-app-bar[type="short"] > [slot="extraRow"] > span {
-      display: none;
-    }
 
     #controls {
       margin: 8px;
@@ -94,7 +85,6 @@ limitations under the License.
         <option value="shortCollapsed">Short Collapsed</option>
       </select>
       <label><input id="dense" type="checkbox"> Dense</label>
-      <label><input id="extraRow" type="checkbox"> Extra Row</label>
     </div>
     <div class="view">
       <mwc-top-app-bar>
@@ -103,7 +93,6 @@ limitations under the License.
         <mwc-icon-button icon="file_download" slot="actionItems"></mwc-icon-button>
         <mwc-icon-button icon="print" slot="actionItems"></mwc-icon-button>
         <mwc-icon-button icon="favorite" slot="actionItems"></mwc-icon-button>
-        <div slot="extraRow"><mwc-icon-button icon="gesture"></mwc-icon-button> <span>This is an extra row!</span></div>
       </mwc-top-app-bar>
       <div class="top-app-bar-adjust scroller">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -145,7 +134,6 @@ limitations under the License.
     });
 
     dense.addEventListener('change', (e) => bar.dense = e.target.checked);
-    extraRow.addEventListener('change', (e) => bar.extraRow = e.target.checked);
   </script>
 </body>
 </html>
