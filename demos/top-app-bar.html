@@ -95,6 +95,7 @@ limitations under the License.
       </select>
       <label><input id="dense" type="checkbox"> Dense</label>
       <label><input id="extraRow" type="checkbox"> Extra Row</label>
+      <label><input id="centerTitle" type="checkbox"> Center Title</label>
     </div>
     <div class="view">
       <mwc-top-app-bar>
@@ -146,6 +147,7 @@ limitations under the License.
 
     dense.addEventListener('change', (e) => bar.dense = e.target.checked);
     extraRow.addEventListener('change', (e) => bar.extraRow = e.target.checked);
+    centerTitle.addEventListener('change', (e) => bar.centerTitle = e.target.checked);
   </script>
 </body>
 </html>
