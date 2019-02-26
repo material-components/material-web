@@ -1,11 +1,11 @@
 # mwc-button
-A [Material Components](https://material.io/components/) icon implementation using [Web Components](https://www.webcomponents.org/introduction)
+A [Material Components](https://material.io/components/) button implementation using [Web Components](https://www.webcomponents.org/introduction)
 
 ## Getting started
 
 * The easiest way to try out mwc-button is to use one of these online tools:
 
-  * Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-icon-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-icon-example?path=index.html)
+  * Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-button-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-button-example?path=index.html)
 
   * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/qibisux/edit?html,output),
 [CodePen](https://codepen.io/azakus/pen/deZLja).
