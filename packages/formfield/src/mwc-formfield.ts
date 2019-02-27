@@ -14,9 +14,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {html, BaseElement, Foundation, Adapter, property, query, observer} from '@material/mwc-base/base-element.js';
+import {html, BaseElement, Foundation, Adapter, property, query, observer, classMap} from '@material/mwc-base/base-element.js';
 import {FormElement} from '@material/mwc-base/form-element.js';
-import {classMap} from 'lit-html/directives/class-map.js';
 import {findAssignedElement} from '@material/mwc-base/utils.js';
 import {style} from './mwc-formfield-css.js';
 import MDCFormFieldFoundation from '@material/form-field/foundation.js';
@@ -94,12 +93,10 @@ export class Formfield extends BaseElement {
     return findAssignedElement(this.slotEl, '*');
   }
 
-  renderStyle() {
-    return style;
-  }
+  static styles = style;
 
   render() {
-    return html`${this.renderStyle()}
+    return html`
       <div class="mdc-form-field ${classMap({'mdc-form-field--align-end': this.alignEnd})}">
         <slot></slot>
         <label class="mdc-label" @click="${this._labelClick}">${this.label}</label>

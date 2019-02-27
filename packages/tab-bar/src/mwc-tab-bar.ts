@@ -80,14 +80,11 @@ export class TabBar extends BaseElement {
     this.mdcFoundation.handleKeyDown(e);
   }
 
-  renderStyle() {
-    return style;
-  }
+  static styles = style;
 
   // TODO(sorvell): can scroller be optional for perf?
   render() {
     return html`
-      ${this.renderStyle()}
       <div class="mdc-tab-bar" role="tablist"
           @MDCTab:interacted="${this._handleTabInteraction}"
           @keydown="${this._handleKeydown}">
@@ -154,7 +151,15 @@ export class TabBar extends BaseElement {
         const activeElement = (this as any).getRootNode().activeElement;
         return tabElements.indexOf(activeElement);
       },
-      getIndexOfTab: (tabToFind: Tab) => this._getTabs().indexOf(tabToFind),
+      getIndexOfTabById: (id: string) => {
+        const tabElements = this._getTabs();
+        for (let i = 0; i < tabElements.length; i++) {
+          if (tabElements[i].id === id) {
+            return i;
+          }
+        }
+        return -1;
+      },
       getTabListLength: () => this._getTabs().length,
       notifyTabActivated: (index: number) => {
         // Synchronize the tabs `activeIndex` to the foundation.

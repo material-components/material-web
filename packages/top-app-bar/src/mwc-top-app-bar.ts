@@ -14,8 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, query, customElement, Adapter, Foundation, PropertyValues} from '@material/mwc-base/base-element.js';
-import {classMap} from 'lit-html/directives/class-map.js';
+import {BaseElement, html, property, query, customElement, Adapter, Foundation, PropertyValues, classMap} from '@material/mwc-base/base-element.js';
 import MDCTopAppBarFoundation from '@material/top-app-bar/standard/foundation.js';
 import MDCShortTopAppBarFoundation from '@material/top-app-bar/short/foundation.js';
 import MDCFixedTopAppBarFoundation from '@material/top-app-bar/fixed/foundation.js';
@@ -62,10 +61,6 @@ export class TopAppBar extends BaseElement {
   @property({type: Boolean, reflect: true})
   dense = false;
 
-  // does not work with prominent
-  @property({type: Boolean, reflect: true})
-  extraRow = false;
-
   private _scrollTarget!: HTMLElement|Window;
 
   get scrollTarget() {
@@ -78,9 +73,7 @@ export class TopAppBar extends BaseElement {
     this.requestUpdate('scrollTarget', old);
   }
 
-  renderStyle() {
-    return style;
-  }
+  static styles = style;
 
   // TODO(sorvell): MDC decorates the navigation icon and action items with
   // ripples. Since these are slotted items here, the assumption is that the
@@ -93,14 +86,7 @@ export class TopAppBar extends BaseElement {
       'mdc-top-app-bar--prominent': this.type === 'prominent' || this.type === 'prominentFixed',
       'mdc-top-app-bar--dense': this.dense
     };
-    const extraRow = this.extraRow ? html`
-      <div class="mdc-top-app-bar__row">
-        <section class="mdc-top-app-bar__section">
-          <slot name="extraRow"></slot>
-        </section>
-      </div>` : '';
     return html`
-      ${this.renderStyle()}
       <header class="mdc-top-app-bar ${classMap(classes)}">
       <div class="mdc-top-app-bar__row">
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
@@ -111,7 +97,6 @@ export class TopAppBar extends BaseElement {
           <slot name="actionItems"></slot>
         </section>
       </div>
-      ${extraRow}
     </header>`;
   }
 

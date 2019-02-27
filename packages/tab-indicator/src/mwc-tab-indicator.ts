@@ -14,8 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, query, customElement, Adapter, Foundation, PropertyValues} from '@material/mwc-base/base-element.js';
-import {classMap} from 'lit-html/directives/class-map.js';
+import {BaseElement, html, property, query, customElement, Adapter, Foundation, PropertyValues, classMap} from '@material/mwc-base/base-element.js';
 import MDCSlidingTabIndicatorFoundation from '@material/tab-indicator/sliding-foundation.js';
 import MDCFadingTabIndicatorFoundation from '@material/tab-indicator/fading-foundation.js';
 import {style} from './mwc-tab-indicator-css.js';
@@ -59,9 +58,7 @@ export class TabIndicator extends BaseElement {
   @property({type: Boolean})
   fade = false;
 
-  renderStyle() {
-    return style;
-  }
+  static styles = style;
 
   render() {
     const contentClasses = {
@@ -70,7 +67,6 @@ export class TabIndicator extends BaseElement {
       'mdc-tab-indicator__content--underline': !this.icon
     };
     return html`
-      ${this.renderStyle()}
       <span class="mdc-tab-indicator ${classMap({'mdc-tab-indicator--fade': this.fade})}">
         <span class="mdc-tab-indicator__content ${classMap(contentClasses)}">${this.icon}</span>
       </span>

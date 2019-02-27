@@ -14,16 +14,28 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, observer, query, customElement, Adapter, Foundation, PropertyValues} from '@material/mwc-base/base-element.js';
-import {classMap} from 'lit-html/directives/class-map.js';
+import {BaseElement, html, property, observer, query, customElement, Adapter, Foundation, PropertyValues, classMap} from '@material/mwc-base/base-element.js';
 import MDCModalDrawerFoundation from '@material/drawer/modal/foundation.js';
 import MDCDismissibleDrawerFoundation from '@material/drawer/dismissible/foundation.js';
 import {strings} from '@material/drawer/constants.js';
 import {style} from './mwc-drawer-css.js';
+import 'wicg-inert/dist/inert.js';
+import 'blocking-elements/blocking-elements.js';
 
 declare global {
   interface HTMLElementTagNameMap {
     'mwc-drawer': Drawer;
+  }
+
+  interface Document {
+    $blockingElements: {
+      push(HTMLElement): void;
+      remove(HTMLElement): Boolean;
+    }
+  }
+
+  interface HTMLElement {
+    inert: Boolean;
   }
 }
 
@@ -43,6 +55,9 @@ export class Drawer extends BaseElement {
   @query('.mdc-drawer')
   protected mdcRoot!: HTMLElement;
 
+  @query('.mdc-drawer-app-content')
+  protected appContent!: HTMLElement;
+
   protected mdcFoundation!: MDCDismissibleDrawerFoundation|MDCModalDrawerFoundation;
 
   protected get mdcFoundationClass(): typeof DrawerFoundation {
@@ -60,9 +75,7 @@ export class Drawer extends BaseElement {
       },
       restoreFocus: () => {
         const previousFocus = this._previousFocus && this._previousFocus.focus;
-        // Note, casting to avoid cumbersome runtime check.
-        const activeElement = (this.getRootNode() as any as DocumentOrShadowRoot).activeElement;
-        if (activeElement && this.mdcRoot.contains(activeElement) && previousFocus) {
+        if (previousFocus) {
           this._previousFocus!.focus();
         }
       },
@@ -77,13 +90,17 @@ export class Drawer extends BaseElement {
       // TODO(sorvell): Implement list focusing integration.
       focusActiveNavigationItem: () => {
       },
-      // TODO(sorvell): integrate focus trapping.
-      trapFocus: () => {},
-      releaseFocus: () => {},
+      trapFocus: () => {
+        document.$blockingElements.push(this);
+        this.appContent.inert = true;
+      },
+      releaseFocus: () => {
+        document.$blockingElements.remove(this);
+        this.appContent.inert = false;
+      },
     }
   }
 
-  // TODO(sorvell): integrate focus trapping.
   private _previousFocus: HTMLElement|null = null;
 
   private _handleScrimClick() {
@@ -109,9 +126,7 @@ export class Drawer extends BaseElement {
   @property({reflect: true})
   type = '';
 
-  renderStyle() {
-    return style;
-  }
+  static styles = style;
 
   render() {
     const dismissible = this.type === 'dismissible' || this.type === 'modal';
@@ -124,13 +139,15 @@ export class Drawer extends BaseElement {
       </div>
       ` : '';
     return html`
-      ${this.renderStyle()}
       <aside class="mdc-drawer
           ${classMap({'mdc-drawer--dismissible': dismissible, 'mdc-drawer--modal': modal})}">
         ${header}
         <div class="mdc-drawer__content"><slot></slot></div>
       </aside>
       ${modal ? html`<div class="mdc-drawer-scrim" @click="${this._handleScrimClick}"></div>` : ''}
+      <div class="mdc-drawer-app-content">
+        <slot name="appContent"></slot>
+      </div>
       `;
   }
 

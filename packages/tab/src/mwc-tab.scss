@@ -37,3 +37,24 @@ limitations under the License.
 .mdc-tab::-moz-focus-inner {
   border: 0;
 }
+
+/* Override mixin from mdc-tab to select for dir="rtl" on host rather than ancestor. */
+@mixin mdc-rtl($root-selector: null) {
+  @if ($root-selector) {
+    @at-root {
+      #{$root-selector}[dir="rtl"] &,
+      [dir="rtl"] #{$root-selector} & {
+        @content;
+      }
+    }
+  } @else {
+    :host([dir="rtl"]) & {
+      @content;
+    }
+  }
+}
+
+/* Declare rule from mdc-tab again to pick up mixin override. */
+.mdc-tab:not(.mdc-tab--stacked) .mdc-tab__icon + .mdc-tab__text-label {
+  @include mdc-rtl-reflexive-box(padding, left, 8px);
+}

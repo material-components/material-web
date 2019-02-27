@@ -51,7 +51,7 @@ async function addToQueue(fileName) {
     execPromise = exec('npm run build');
   } else {
     console.log('building typescript');
-    execPromise = exec('npm run build-typescript');
+    execPromise = exec('npm run build:typescript');
   }
   try {
     const {stdout} = await execPromise;

@@ -6,5 +6,10 @@
   },
   "include": [
     "src/*.ts"
+  ],
+  "references": [
+    {"path": "../base"},
+    {"path": "../ripple"},
+    {"path": "../icon"}
   ]
 }

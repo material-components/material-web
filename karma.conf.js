@@ -15,143 +15,117 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const path = require('path');
-const webpackConfig = require('./webpack.config')[0];
+const babel = require('rollup-plugin-babel');
+const resolve = require('rollup-plugin-node-resolve');
 
 const USING_TRAVISCI = Boolean(process.env.TRAVIS);
-const USING_SL = Boolean(process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY);
+const USING_SL = USING_TRAVISCI && Boolean(process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY);
 
 const SL_LAUNCHERS = {
-  'sl-chrome-stable': {
-    base: 'SauceLabs',
-    browserName: 'chrome',
-    version: 'latest',
-    platform: 'macOS 10.12',
-  },
-  'sl-chrome-beta': {
-    base: 'SauceLabs',
-    browserName: 'chrome',
-    version: 'dev',
-    platform: 'macOS 10.12',
-  },
-  'sl-chrome-previous': {
-    base: 'SauceLabs',
-    browserName: 'chrome',
-    version: 'latest-1',
-    platform: 'macOS 10.12',
-  },
-  'sl-firefox-stable': {
-    base: 'SauceLabs',
-    browserName: 'firefox',
-    version: 'latest',
-    platform: 'Windows 10',
-  },
-  'sl-firefox-previous': {
-    base: 'SauceLabs',
-    browserName: 'firefox',
-    version: 'latest-1',
-    platform: 'Windows 10',
-  },
   'sl-ie': {
     base: 'SauceLabs',
     browserName: 'internet explorer',
     version: '11',
     platform: 'Windows 8.1',
   },
-  // TODO(sgomes): Re-enable Edge and Safari after Sauce Labs problems are fixed.
-  // 'sl-edge': {
-  //   base: 'SauceLabs',
-  //   browserName: 'microsoftedge',
-  //   version: 'latest',
-  //   platform: 'Windows 10',
-  // },
-  // 'sl-safari-stable': {
-  //   base: 'SauceLabs',
-  //   browserName: 'safari',
-  //   version: 'latest',
-  //   platform: 'macOS 10.12',
-  // },
-  // 'sl-safari-previous': {
-  //   base: 'SauceLabs',
-  //   browserName: 'safari',
-  //   version: '9.0',
-  //   platform: 'OS X 10.11',
-  // },
-  'sl-ios-safari-latest': {
+  'sl-edge-17': {
     base: 'SauceLabs',
-    deviceName: 'iPhone Simulator',
-    platformVersion: '10.0',
-    platformName: 'iOS',
-    browserName: 'Safari',
+    browserName: 'microsoftedge',
+    version: '17',
+    platform: 'Windows 10',
   },
-  // 'sl-ios-safari-previous': {
-  //   base: 'SauceLabs',
-  //   deviceName: 'iPhone Simulator',
-  //   platformVersion: '9.3',
-  //   platformName: 'iOS',
-  //   browserName: 'Safari',
-  // },
+  'sl-edge-15': {
+    base: 'SauceLabs',
+    browserName: 'microsoftedge',
+    version: '15',
+    platform: 'Windows 10',
+  },
+  'sl-safari-11': {
+    base: 'SauceLabs',
+    browserName: 'safari',
+    version: '11',
+    platform: 'macOS 10.13',
+  },
+  'sl-safari-10': {
+    base: 'SauceLabs',
+    browserName: 'safari',
+    version: '10',
+    platform: 'OS X 10.12',
+  },
+  'sl-safari-9': {
+    base: 'SauceLabs',
+    browserName: 'safari',
+    version: '9',
+    platform: 'OS X 10.11',
+  },
+  'sl-chrome-41': {
+    base: 'SauceLabs',
+    browserName: 'chrome',
+    version: '41',
+    platform: 'Linux'
+  },
+};
+
+const HEADLESS_LAUNCHERS = {
+  /** See https://github.com/travis-ci/travis-ci/issues/8836#issuecomment-348248951 */
+  'ChromeHeadlessNoSandbox': {
+    base: 'ChromeHeadless',
+    flags: ['--no-sandbox'],
+  },
+  'FirefoxHeadless': {
+    base: 'Firefox',
+    flags: ['-headless'],
+  },
 };
 
 module.exports = function(config) {
   config.set({
     basePath: '',
-    frameworks: ['mocha'],
+    frameworks: ['mocha', 'chai'],
     files: [
       {pattern: 'node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js', watched: false},
-      'test/unit/index.js',
+      {pattern: 'node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js', watched: false},
+      {pattern: 'test/unit/mwc-{button,fab,formfield,icon,linear-progress,radio,ripple,switch}.test.js', watched: false},
     ],
     preprocessors: {
-      'test/unit/index.js': ['webpack', 'sourcemap'],
+      'test/unit/mwc-*.js': ['rollup', 'sourcemap'],
     },
-    reporters: ['dots', 'coverage'],
-    port: 9876,
-    colors: true,
-    logLevel: config.LOG_INFO,
+
+    rollupPreprocessor: {
+      external: ['chai'],
+      plugins: [
+        resolve({
+          module: true,
+          jsnext: true,
+          main: true,
+        }),
+        babel({
+          presets: ['es2015-rollup'],
+        }),
+      ],
+      output: {
+        format: 'iife',
+        sourceMap: 'inline',
+      },
+    },
+
     browsers: determineBrowsers(),
     browserDisconnectTimeout: 40000,
     browserNoActivityTimeout: 120000,
     captureTimeout: 240000,
-    concurrency: USING_SL ? 4 : Infinity,
-    customLaunchers: SL_LAUNCHERS,
-
-    coverageReporter: {
-      dir: 'coverage',
-      reporters: [
-        {type: 'lcovonly', subdir: '.'},
-        {type: 'json', subdir: '.', file: 'coverage.json'},
-        {type: 'html'},
-      ],
-    },
+    concurrency: USING_SL ? 10 : 1,
+    customLaunchers: {...SL_LAUNCHERS, ...HEADLESS_LAUNCHERS},
 
     client: {
       mocha: {
         reporter: 'html',
-        ui: 'qunit'
+        ui: 'qunit',
       },
     },
 
-    webpack: Object.assign({}, webpackConfig, {
-      devtool: 'inline-source-map',
-      module: Object.assign({}, webpackConfig.module, {
-        // Cover source files when not debugging tests. Otherwise, omit coverage instrumenting to get
-        // uncluttered source maps.
-        rules: webpackConfig.module.rules.concat([config.singleRun ? {
-          test: /\.js$/,
-          include: path.resolve('./packages'),
-          exclude: [
-            /node_modules/,
-            /adapter.js/,
-          ],
-          loader: 'istanbul-instrumenter-loader',
-          query: {esModules: true},
-        } : undefined]).filter(Boolean),
-      }),
-    }),
-
-    webpackMiddleware: {
-      noInfo: true,
-    },
+    mochaReporter: {
+      output: 'minimal'
+    }
   });
 
   // See https://github.com/karma-runner/karma-sauce-launcher/issues/73
@@ -172,5 +146,12 @@ module.exports = function(config) {
 };
 
 function determineBrowsers() {
-  return USING_SL ? Object.keys(SL_LAUNCHERS) : ['Chrome'];
+  if (!USING_TRAVISCI) {
+    return ['Chrome', 'Firefox'];
+  }
+  const browsers = [...Object.keys(HEADLESS_LAUNCHERS)];
+  if (USING_SL) {
+    browsers.push(...Object.keys(SL_LAUNCHERS));
+  }
+  return browsers;
 }

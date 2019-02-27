@@ -15,10 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {LitElement} from '@polymer/lit-element';
-import {TemplateResult} from 'lit-html';
-export {TemplateResult};
-export * from '@polymer/lit-element';
+import {LitElement} from 'lit-element';
+export * from 'lit-element';
 export {classMap} from 'lit-html/directives/class-map.js';
 export {observer} from './observer.js';
 
@@ -75,12 +73,6 @@ export abstract class BaseElement extends LitElement {
       }
     };
   }
-
-  /**
-   * This function should be called in `render()` to add the styling for this
-   * component.
-   */
-  abstract renderStyle(): TemplateResult;
 
   /**
    * Create and attach the MDC Foundation to the instance

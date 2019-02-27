@@ -14,13 +14,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, query, customElement, Adapter, Foundation} from '@material/mwc-base/base-element.js';
+import {BaseElement, html, property, query, customElement, Adapter, Foundation, classMap} from '@material/mwc-base/base-element.js';
 import {TabIndicator} from '@material/mwc-tab-indicator';
 
 // Make TypeScript not remove the import.
 import '@material/mwc-tab-indicator';
 
-import {classMap} from 'lit-html/directives/class-map';
 import {ripple} from '@material/mwc-ripple/ripple-directive';
 import MDCTabFoundation from '@material/tab/foundation';
 import {style} from './mwc-tab-css';
@@ -30,6 +29,9 @@ declare global {
     'mwc-tab': Tab;
   }
 }
+
+// used for generating unique id for each tab
+let tabIdCounter = 0;
 
 export interface TabFoundation extends Foundation {
   handleClick(): void;
@@ -98,8 +100,17 @@ export class Tab extends BaseElement {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
-  renderStyle() {
-    return style;
+  connectedCallback() {
+    this.dir = document.dir;
+    super.connectedCallback();
+  }
+
+  static styles = style;
+
+  constructor() {
+    super();
+    // create an unique id
+    this.id = this.id || `mdc-tab-${++tabIdCounter}`;
   }
 
   render() {
@@ -108,7 +119,6 @@ export class Tab extends BaseElement {
       'mdc-tab--stacked': this.stacked
     };
     return html`
-      ${this.renderStyle()}
       <button @click="${this._handleClick}" class="mdc-tab ${classMap(classes)}" role="tab" aria-selected="false" tabindex="-1">
         <span class="mdc-tab__content">
           <slot></slot>
@@ -138,7 +148,7 @@ export class Tab extends BaseElement {
           (this._tabIndicator as TabIndicator).deactivate(),
       notifyInteracted: () => this.dispatchEvent(
           new CustomEvent(MDCTabFoundation.strings.INTERACTED_EVENT, {
-            detail: {tab: this},
+            detail: {tabId: this.id},
             bubbles: true,
             composed: true,
             cancelable: true

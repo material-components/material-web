@@ -14,8 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {LitElement, html, property, customElement} from '@polymer/lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
+import {LitElement, html, property, customElement, classMap} from '@material/mwc-base/base-element';
 import {ripple, RippleOptions} from './ripple-directive.js';
 import {style} from './mwc-ripple-css.js';
 
@@ -40,12 +39,11 @@ export class Ripple extends LitElement {
   @property()
   protected interactionNode: HTMLElement = this;
 
-  renderStyle() {
-    return style;
-  }
+  static styles = style;
 
   connectedCallback() {
     this.interactionNode = this.parentNode as HTMLElement;
+    super.connectedCallback();
   }
 
   // TODO(sorvell) #css: sizing.
@@ -60,7 +58,6 @@ export class Ripple extends LitElement {
       rippleOptions.active = active;
     }
     return html`
-      ${this.renderStyle()}
       <div .ripple="${ripple(rippleOptions)}"
           class="mdc-ripple-surface ${classMap(classes)}"></div>`;
   }

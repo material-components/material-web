@@ -48,17 +48,18 @@ limitations under the License.
   <script type="module">
     import {style as cardStyle} from '../node_modules/@material/mwc-card/mwc-card-css.js';
     import {style as typographyStyle} from '../node_modules/@material/mwc-typography/mwc-typography-css.js';
-    import {LitElement, html} from '../node_modules/@polymer/lit-element/lit-element.js';
+    import {LitElement, html} from '../node_modules/lit-element/lit-element.js';
     import '../node_modules/@material/mwc-button/mwc-button.js';
     import '../node_modules/@material/mwc-icon/mwc-icon.js';
     import '../node_modules/@material/mwc-icon-toggle/mwc-icon-toggle.js';
     import '../node_modules/@material/mwc-ripple/mwc-ripple.js';
 
     class DemoCard extends LitElement {
-      render() {
-        return html`
-          ${cardStyle}${typographyStyle}
-          <style>
+      static get styles() {
+        return [
+          cardStyle,
+          typographyStyle,
+          css`
             :host {
               display: inline-block;
             }
@@ -78,7 +79,12 @@ limitations under the License.
             .subtext {
               color: rgba(0, 0, 0, 0.54);
             }
-          </style>
+          `,
+        ];
+      }
+
+      render() {
+        return html`
           <div class="mdc-card">
             <div class="mdc-card__primary-action">
               <div class="mdc-card__media mdc-card__media--16-9 my-media"></div>

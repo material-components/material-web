@@ -6,5 +6,8 @@
   },
   "include": [
     "src/*.ts"
+  ],
+  "references": [
+    {"path": "../base"}
   ]
 }

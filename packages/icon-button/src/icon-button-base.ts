@@ -78,6 +78,10 @@ export abstract class IconButtonBase extends BaseElement {
     }
   }
 
+  focus() {
+    this.mdcRoot.focus();
+  }
+
   updated() {
     if (this.offIcon === '') {
       this.on = true;
@@ -86,7 +90,6 @@ export abstract class IconButtonBase extends BaseElement {
 
   render() {
     return html`
-      ${this.renderStyle()}
       <button
         .ripple="${ripple()}"
         class="mdc-icon-button"
