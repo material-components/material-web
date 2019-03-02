@@ -64,7 +64,7 @@ export class Button extends LitElement {
           ?disabled="${this.disabled}"
           aria-label="${this.label || this.icon}">
         ${this.icon ? html`<span class="material-icons mdc-button__icon">${this.icon}</span>` : ''}
-        ${this.label}
+        <span class="mdc-button__label">${this.label}</span>
         <slot></slot>
       </button>`;
   }
