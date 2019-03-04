@@ -1,0 +1,19 @@
+{
+  "name": "@material/mwc-circular-progress",
+  "version": "0.3.6",
+  "description": "",
+  "main": "mwc-circular-progress.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@material/theme": "^0.40.1",
+    "@material/mwc-base": "^0.3.6"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "private": true
+}

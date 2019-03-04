@@ -1,0 +1,106 @@
+<!doctype html>
+<!--
+@license
+Copyright 2018 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+<head>
+  <title>circular-progress demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-circular-progress/mwc-circular-progress.js"></script>
+  <link rel="stylesheet" href="demo-component.css">
+  <style>
+    h3 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    mwc-circular-progress {
+      margin: 0 20px;
+    }
+
+    .inline {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+
+    .inline > * {
+      flex-grow: 0;
+    }
+  </style>
+</head>
+<body class="unresolved">
+  <header>
+    <a href="index.html"><mwc-icon>arrow_back</mwc-icon>
+    <span>Circular Progress</span></a>
+  </header>
+
+  <main>
+    <h3>Indeterminate</h3>
+    <div class="inline">
+      <mwc-circular-progress></mwc-circular-progress>
+      <mwc-circular-progress secondary></mwc-circular-progress>
+    </div>
+
+    <h3>Indeterminate - shrink disabled</h3>
+    <div class="inline">
+      <mwc-circular-progress disableShrink></mwc-circular-progress>
+      <mwc-circular-progress secondary disableShrink></mwc-circular-progress>
+    </div>
+
+    <h3>Determinate</h3>
+    <div class="inline">
+      <mwc-circular-progress determinate id="determinate1"></mwc-circular-progress>
+      <mwc-circular-progress secondary determinate id="determinate2"></mwc-circular-progress>
+    </div>
+
+    <h3>Fixed</h3>
+    <div class="inline">
+      <mwc-circular-progress fixed progress="5"></mwc-circular-progress>
+      <mwc-circular-progress fixed progress="25"></mwc-circular-progress>
+      <mwc-circular-progress fixed progress="50"></mwc-circular-progress>
+      <mwc-circular-progress fixed progress="75"></mwc-circular-progress>
+      <mwc-circular-progress fixed progress="100"></mwc-circular-progress>
+      <mwc-circular-progress id="fixed" fixed secondary progress="50"></mwc-circular-progress>
+    </div>
+
+    <h3>Custom color</h3>
+    <div class="inline">
+      <mwc-circular-progress color="tomato"></mwc-circular-progress>
+    </div>
+  </main>
+
+  <script>
+    determinateCompleted = 0;
+    determinateTimer = setInterval(determinateProgress, 20);
+    function determinateProgress() {
+      determinateCompleted = determinateCompleted >= 100 ? 0 : determinateCompleted + 1;
+      determinate1.progress = determinateCompleted;
+      determinate2.progress = determinateCompleted;
+    }
+    
+    fixedCompleted = 50;
+    fixedTimer = setInterval(fixedProgress, 1000);
+    function fixedProgress() {
+      fixedCompleted = fixedCompleted >= 100 ? 0 : fixedCompleted + 10;
+      fixed.progress = fixedCompleted;
+    }
+
+    addEventListener('load', () => document.body.classList.remove('unresolved'));
+  </script>
+</body>
+</html>
