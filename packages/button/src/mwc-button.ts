@@ -43,6 +43,8 @@ export class Button extends LitElement {
   @property()
   label = '';
 
+  @property()
+  href = '';
 
   createRenderRoot() {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
@@ -58,15 +60,32 @@ export class Button extends LitElement {
       'mdc-button--dense': this.dense,
     };
     return html`
-      <button
-          .ripple="${ripple({unbounded: false})}"
-          class="mdc-button ${classMap(classes)}"
-          ?disabled="${this.disabled}"
-          aria-label="${this.label || this.icon}">
-        ${this.icon ? html`<span class="material-icons mdc-button__icon">${this.icon}</span>` : ''}
-        ${this.label}
-        <slot></slot>
-      </button>`;
+      ${this.href ?
+        html`
+          <a
+              .ripple="${ripple({unbounded: false})}"
+              class="mdc-button ${classMap(classes)}"
+              ?disabled="${this.disabled}"
+              aria-label="${this.label || this.icon}"
+              href="${this.href}">
+            ${this.icon ? html`<span class="material-icons mdc-button__icon">${this.icon}</span>` : ''}
+            <span class="mdc-button__label">${this.label}</span>
+            <slot></slot>
+          </a>
+        ` :
+        html`
+          <button
+              .ripple="${ripple({unbounded: false})}"
+              class="mdc-button ${classMap(classes)}"
+              ?disabled="${this.disabled}"
+              aria-label="${this.label || this.icon}">
+            ${this.icon ? html`<span class="material-icons mdc-button__icon">${this.icon}</span>` : ''}
+            <span class="mdc-button__label">${this.label}</span>
+            <slot></slot>
+          </button>
+        `
+      }
+    `;
   }
 }
 
