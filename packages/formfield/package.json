@@ -3,6 +3,10 @@
   "version": "0.3.6",
   "description": "",
   "main": "mwc-formfield.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/material-components/material-components-web-components.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
