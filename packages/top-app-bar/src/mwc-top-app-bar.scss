@@ -25,6 +25,23 @@ limitations under the License.
   flex: 1;
 }
 
+.mdc-top-app-bar__section--align-center {
+  justify-content: center;
+
+  .mdc-top-app-bar__title {
+    padding-left: 0;
+  }
+}
+
+.mwc-top-app-bar--center-title {
+  .mdc-top-app-bar__section--align-start {
+    flex-basis: 0%;
+  }
+  .mdc-top-app-bar__section--align-end {
+    flex-basis: 0%;
+  }
+}
+
 .mdc-top-app-bar--prominent {
   slot[name="navigationIcon"]::slotted(*),
   slot[name="actionItems"]::slotted(*) {

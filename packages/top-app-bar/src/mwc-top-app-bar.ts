@@ -61,6 +61,9 @@ export class TopAppBar extends BaseElement {
   @property({type: Boolean, reflect: true})
   dense = false;
 
+  @property({type: Boolean, reflect: true})
+  centerTitle = false;
+
   private _scrollTarget!: HTMLElement|Window;
 
   get scrollTarget() {
@@ -84,15 +87,24 @@ export class TopAppBar extends BaseElement {
       'mdc-top-app-bar--short': this.type === 'shortCollapsed' || this.type === 'short',
       'mdc-top-app-bar--short-collapsed': this.type === 'shortCollapsed',
       'mdc-top-app-bar--prominent': this.type === 'prominent' || this.type === 'prominentFixed',
-      'mdc-top-app-bar--dense': this.dense
+      'mdc-top-app-bar--dense': this.dense,
+      'mwc-top-app-bar--center-title': this.centerTitle
     };
+    const alignStartTitle = !this.centerTitle ? html`
+      <span class="mdc-top-app-bar__title"><slot name="title"></slot></span>
+    ` : '';
+    const centerSection = this.centerTitle ? html`
+      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-center">
+        <span class="mdc-top-app-bar__title"><slot name="title"></slot></span>
+      </section>` : '';
     return html`
       <header class="mdc-top-app-bar ${classMap(classes)}">
       <div class="mdc-top-app-bar__row">
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
           <slot name="navigationIcon"></slot>
-          <span class="mdc-top-app-bar__title"><slot name="title"></slot></span>
+          ${alignStartTitle}
         </section>
+        ${centerSection}
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
           <slot name="actionItems"></slot>
         </section>
