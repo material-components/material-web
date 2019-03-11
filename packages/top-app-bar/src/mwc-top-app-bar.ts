@@ -61,10 +61,6 @@ export class TopAppBar extends BaseElement {
   @property({type: Boolean, reflect: true})
   dense = false;
 
-  // does not work with prominent
-  @property({type: Boolean, reflect: true})
-  extraRow = false;
-
   @property({type: Boolean, reflect: true})
   centerTitle = false;
 
@@ -94,12 +90,6 @@ export class TopAppBar extends BaseElement {
       'mdc-top-app-bar--dense': this.dense,
       'mwc-top-app-bar--center-title': this.centerTitle
     };
-    const extraRow = this.extraRow ? html`
-      <div class="mdc-top-app-bar__row">
-        <section class="mdc-top-app-bar__section">
-          <slot name="extraRow"></slot>
-        </section>
-      </div>` : '';
     const alignStartTitle = !this.centerTitle ? html`
       <span class="mdc-top-app-bar__title"><slot name="title"></slot></span>
     ` : '';
@@ -119,7 +109,6 @@ export class TopAppBar extends BaseElement {
           <slot name="actionItems"></slot>
         </section>
       </div>
-      ${extraRow}
     </header>`;
   }
 

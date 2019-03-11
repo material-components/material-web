@@ -74,8 +74,6 @@ export class Drawer extends BaseElement {
         this._previousFocus = (this.getRootNode() as any as DocumentOrShadowRoot).activeElement as HTMLElement|null;
       },
       restoreFocus: () => {
-        document.$blockingElements.remove(this);
-        this.appContent.inert = false;
         const previousFocus = this._previousFocus && this._previousFocus.focus;
         if (previousFocus) {
           this._previousFocus!.focus();
@@ -95,6 +93,10 @@ export class Drawer extends BaseElement {
       trapFocus: () => {
         document.$blockingElements.push(this);
         this.appContent.inert = true;
+      },
+      releaseFocus: () => {
+        document.$blockingElements.remove(this);
+        this.appContent.inert = false;
       },
     }
   }
