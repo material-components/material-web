@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-icon-button",
-  "version": "0.3.6",
+  "version": "0.4.0",
   "description": "",
   "main": "mwc-icon-button.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "@material/icon-button": "^0.44.0",
     "@material/mwc-base": "^0.3.6",
     "@material/mwc-icon": "^0.3.6",
-    "@material/mwc-ripple": "^0.3.6"
+    "@material/mwc-ripple": "^0.4.0"
   },
   "publishConfig": {
     "access": "public"

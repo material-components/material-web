@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-tab",
-  "version": "0.3.6",
+  "version": "0.4.0",
   "description": "",
   "main": "mwc-tab.js",
   "repository": {
@@ -16,8 +16,8 @@
   "dependencies": {
     "@material/mwc-base": "^0.3.6",
     "@material/mwc-icon": "^0.3.6",
-    "@material/mwc-ripple": "^0.3.6",
-    "@material/mwc-tab-indicator": "^0.3.6",
+    "@material/mwc-ripple": "^0.4.0",
+    "@material/mwc-tab-indicator": "^0.4.0",
     "@material/tab": "^0.44.0"
   },
   "publishConfig": {

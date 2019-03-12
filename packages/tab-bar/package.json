@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-tab-bar",
-  "version": "0.3.6",
+  "version": "0.4.0",
   "description": "",
   "main": "mwc-tab-bar.js",
   "repository": {
@@ -15,8 +15,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/mwc-base": "^0.3.6",
-    "@material/mwc-tab": "^0.3.6",
-    "@material/mwc-tab-scroller": "^0.3.6",
+    "@material/mwc-tab": "^0.4.0",
+    "@material/mwc-tab-scroller": "^0.4.0",
     "@material/tab-bar": "^0.44.0"
   },
   "publishConfig": {
