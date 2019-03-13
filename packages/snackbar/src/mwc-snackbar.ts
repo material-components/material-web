@@ -14,11 +14,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, query, observer, customElement, classMap} from '@material/mwc-base/base-element.js';
+import {BaseElement, html, property, query, observer, customElement, classMap, addHasRemoveClass} from '@material/mwc-base/base-element.js';
 import {style} from './mwc-snackbar-css.js';
 import MDCSnackbarFoundation from '@material/snackbar/foundation.js';
 import {MDCSnackbarCloseEventDetail} from '@material/snackbar/types';
 import * as util from '@material/snackbar/util';
+import { MDCSnackbarAdapter } from '@material/snackbar/adapter.js';
 
 const {OPENING_EVENT, OPENED_EVENT, CLOSING_EVENT, CLOSED_EVENT} = MDCSnackbarFoundation.strings;
 
@@ -87,9 +88,9 @@ export class Snackbar extends BaseElement {
       </div>`;
   }
 
-  protected createAdapter() {
+  protected createAdapter(): MDCSnackbarAdapter {
     return {
-      ...super.createAdapter(),
+      ...addHasRemoveClass(this.mdcRoot),
       announce: () => util.announce(this.labelElement),
       notifyClosed: (reason: String) => {
         this.isOpen = false;

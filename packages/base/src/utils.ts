@@ -30,3 +30,17 @@ export function findAssignedElement(slot: HTMLSlotElement, selector: string) {
 
   return null;
 }
+
+export type Constructor<T> = new (...args: any[]) => T;
+
+export function addHasRemoveClass(element: HTMLElement) {
+  return {
+    addClass: (className: string) => {
+      element.classList.add(className);
+    },
+    removeClass: (className: string) => {
+      element.classList.remove(className);
+    },
+    hasClass: (className: string) => element.classList.contains(className)
+  }
+}

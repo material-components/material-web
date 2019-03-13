@@ -14,10 +14,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, query, customElement, Adapter, Foundation, eventOptions} from '@material/mwc-base/base-element';
+import {BaseElement, html, query, customElement, eventOptions, addHasRemoveClass} from '@material/mwc-base/base-element';
 import MDCTabScrollerFoundation from '@material/tab-scroller/foundation.js';
 import {matches} from '@material/dom/ponyfill';
 import {style} from './mwc-tab-scroller-css.js';
+import { MDCTabScrollerAdapter } from '@material/tab-scroller/adapter';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -25,25 +26,12 @@ declare global {
   }
 }
 
-export interface TabScrollerFoundation extends Foundation {
-  handleInteraction(e: Event): void;
-  handleTransitionEnd(e: Event): void;
-  scrollTo(scrollX: number): void;
-  incrementScroll(scrollX: number): void;
-  getScrollPosition(): number;
-}
-
-export declare var TabScrollerFoundation: {
-  prototype: TabScrollerFoundation;
-  new(adapter: Adapter): TabScrollerFoundation;
-}
-
 @customElement('mwc-tab-scroller' as any)
 export class TabScroller extends BaseElement {
 
   protected mdcFoundation!: MDCTabScrollerFoundation;
 
-  protected mdcFoundationClass: typeof TabScrollerFoundation = MDCTabScrollerFoundation;
+  protected mdcFoundationClass = MDCTabScrollerFoundation;
 
   @query('.mdc-tab-scroller')
   protected mdcRoot!: HTMLElement;
@@ -83,9 +71,9 @@ export class TabScroller extends BaseElement {
       `;
   }
 
-  createAdapter() {
+  createAdapter(): MDCTabScrollerAdapter {
     return {
-      ...super.createAdapter(),
+      ...addHasRemoveClass(this.mdcRoot),
       eventTargetMatchesSelector: (evtTarget: EventTarget, selector: string) =>
           matches(evtTarget as Element, selector),
       addScrollAreaClass: (className: string) => this.scrollAreaElement.classList.add(className),
