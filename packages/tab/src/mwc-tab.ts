@@ -92,8 +92,8 @@ export class Tab extends BaseElement {
   @query('.mdc-tab__content')
   private _contentElement!: HTMLElement;
 
-  private _handleClick(e: Event) {
-    this.mdcFoundation.handleClick(e);
+  private _handleClick() {
+    this.mdcFoundation.handleClick();
   }
 
   createRenderRoot() {

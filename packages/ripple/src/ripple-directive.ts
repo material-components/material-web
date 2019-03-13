@@ -19,8 +19,7 @@ import {Adapter, Foundation} from '@material/mwc-base/base-element.js';
 import MDCRippleFoundation from '@material/ripple/foundation.js';
 import {style} from './mwc-ripple-global-css.js';
 import * as util from '@material/ripple/util.js';
-
-const MATCHES = util.getMatchesProperty(HTMLElement.prototype);
+import {matches} from '@material/dom/ponyfill';
 
 const supportsCssVariables = util.supportsCssVariables(window);
 
@@ -84,7 +83,7 @@ export const rippleNode = (options: RippleNodeOptions) => {
     browserSupportsCssVars: () => supportsCssVariables,
     isUnbounded: () =>
       options.unbounded === undefined ? true : options.unbounded,
-    isSurfaceActive: () => interactionNode![MATCHES](':active'),
+    isSurfaceActive: () => matches(interactionNode, ':active'),
     isSurfaceDisabled: () => Boolean(options.disabled),
     addClass: (className: string) => surfaceNode.classList.add(className),
     removeClass: (className: string) =>

@@ -38,7 +38,7 @@ export declare var TopAppBarFoundation: {
 @customElement('mwc-top-app-bar' as any)
 export class TopAppBar extends BaseElement {
 
-  protected mdcFoundation: MDCShortTopAppBarFoundation|MDCFixedTopAppBarFoundation|MDCTopAppBarFoundation;
+  protected mdcFoundation!: MDCShortTopAppBarFoundation|MDCFixedTopAppBarFoundation|MDCTopAppBarFoundation;
 
   protected get mdcFoundationClass(): typeof TopAppBarFoundation {
     return this.type === 'fixed' || this.type === 'prominentFixed' ? MDCFixedTopAppBarFoundation :

@@ -26,8 +26,6 @@ declare global {
 }
 
 export interface CheckboxFoundation extends Foundation {
-  isChecked(): boolean;
-  setChecked(value: boolean): void;
   setDisabled(disabled: boolean): void;
   handleAnimationEnd(): void;
   handleChange(): void

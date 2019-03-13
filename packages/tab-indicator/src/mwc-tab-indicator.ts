@@ -26,7 +26,6 @@ declare global {
 }
 
 export interface TabIndicatorFoundation extends Foundation {
-  handleTransitionEnd(e: Event): void;
   computeContentClientRect(): ClientRect;
   activate(previousIndicatorClientRect?: ClientRect): void;
   deactivate(): void;
