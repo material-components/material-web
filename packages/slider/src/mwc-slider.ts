@@ -72,7 +72,7 @@ export class Slider extends FormElement {
   protected trackMarkerContainer!: HTMLElement;
 
   @property({type: Number})
-  @observer(function(this: Slider, value: number) {1
+  @observer(function(this: Slider, value: number) {
     this.mdcFoundation.setValue(value);
   })
   value = 0;
