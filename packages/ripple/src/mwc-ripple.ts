@@ -49,6 +49,7 @@ export class Ripple extends LitElement {
   // TODO(sorvell) #css: sizing.
   render() {
     const classes = {
+      'mdc-ripple-surface': true,
       'mdc-ripple-surface--primary': this.primary,
       'mdc-ripple-surface--accent': this.accent,
     };
@@ -59,7 +60,7 @@ export class Ripple extends LitElement {
     }
     return html`
       <div .ripple="${ripple(rippleOptions)}"
-          class="mdc-ripple-surface ${classMap(classes)}"></div>`;
+          class=${classMap(classes)}></div>`;
   }
 
 }
