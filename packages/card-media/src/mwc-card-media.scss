@@ -16,16 +16,18 @@ limitations under the License.
 */
 @import '@material/card/mdc-card.scss';
 
-// TODO(sorvell): flex for sizing, border inherit
-
 :host {
-  display: inline-flex;
+  display: flex;
+  border-radius: 
+    var(--mwc-card-media-border-top-left-radius, 0) 
+    var(--mwc-card-media-border-top-right-radius, 0)
+    var(--mwc-card-media-border-bottom-right-radius, 0)
+    var(--mwc-card-media-border-bottom-left-radius, 0);
 }
 
-.mdc-card {
-  border-top-left-radius: inherit;
-  border-top-right-radius: inherit;
-  border-bottom-left-radius: inherit;
-  border-bottom-right-radius: inherit;
+.mdc-card__media {
   flex: 1;
+  background-color: inherit;
+  background-image: var(--mwc-card-media-background-image, none);
 }
+

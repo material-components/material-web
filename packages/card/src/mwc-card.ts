@@ -1,9 +1,3 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 /**
 @license
 Copyright 2018 Google Inc. All Rights Reserved.
@@ -22,28 +16,29 @@ limitations under the License.
 */
 import { LitElement, html, property, customElement, classMap } from '@material/mwc-base/base-element';
 import { style } from './mwc-card-css.js';
-let Card = class Card extends LitElement {
-    constructor() {
-        super(...arguments);
-        this.outlined = false;
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'mwc-card': Card;
     }
+}
+
+@customElement('mwc-card' as any)
+export class Card extends LitElement {
+
+    @property({ type: Boolean })
+    outlined = false;
+
+    static styles = style;
+
     render() {
         const classes = {
             'mdc-card': true,
             'mdc-card--outlined': this.outlined
         };
-        return html `
+        return html`
         <div class="${classMap(classes)}">
             <slot></slot>
         </div>`;
     }
-};
-Card.styles = style;
-__decorate([
-    property({ type: Boolean })
-], Card.prototype, "outlined", void 0);
-Card = __decorate([
-    customElement('mwc-card')
-], Card);
-export { Card };
-//# sourceMappingURL=mwc-card.js.map
+}

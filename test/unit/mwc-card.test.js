@@ -16,6 +16,9 @@
 
 import {assert} from 'chai';
 import {Card} from '@material/mwc-card';
+import {CardPrimaryAction} from '@material/mwc-card-primary-action';	
+import {CardMedia} from '@material/mwc-card-media';	
+import {CardActions} from '@material/mwc-card-actions';
 
 let element;
 
@@ -30,6 +33,51 @@ afterEach(() => {
   document.body.removeChild(element);
 });
 
-test('initializes as an mwc-button', () => {
+test('initializes as an mwc-card', () => {
   assert.instanceOf(element, Card);
 });
+
+suite('mwc-card-primary-action');	
+
+ beforeEach(() => {	
+  element = document.createElement('mwc-card-primary-action');	
+  document.body.appendChild(element);	
+});	
+
+ afterEach(() => {	
+  document.body.removeChild(element);	
+});	
+
+ test('initializes as an mwc-card-primary-action', () => {	
+  assert.instanceOf(element, CardPrimaryAction);	
+});	
+
+ suite('mwc-card-media');	
+
+ beforeEach(() => {	
+  element = document.createElement('mwc-card-media');	
+  document.body.appendChild(element);	
+});	
+
+ afterEach(() => {	
+  document.body.removeChild(element);	
+});	
+
+ test('initializes as an mwc-card-media', () => {	
+  assert.instanceOf(element, CardMedia);	
+});	
+
+ suite('mwc-card-actions');	
+
+ beforeEach(() => {	
+  element = document.createElement('mwc-card-actions');	
+  document.body.appendChild(element);	
+});	
+
+ afterEach(() => {	
+  document.body.removeChild(element);	
+});	
+
+ test('initializes as an mwc-card-actions', () => {	
+  assert.instanceOf(element, CardActions);	
+}); 
