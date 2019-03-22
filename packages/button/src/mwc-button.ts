@@ -34,10 +34,7 @@ export class Button extends LitElement {
   @property({type: Boolean})
   dense = false;
 
-  @observer(function(this: LitElement, value: boolean) {
-    this.style.pointerEvents = value ? 'none' : '';
-  })
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   disabled = false;
 
   @property({type: Boolean})
