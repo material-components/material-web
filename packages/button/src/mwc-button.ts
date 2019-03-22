@@ -34,7 +34,7 @@ export class Button extends LitElement {
   @property({type: Boolean})
   dense = false;
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   disabled = false;
 
   @property({type: Boolean})

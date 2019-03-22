@@ -27,6 +27,10 @@ limitations under the License.
   outline: none;
 }
 
+:host([disabled]) {
+  pointer-events: none;
+}
+
 .mdc-button {
   flex: 1;
 }
