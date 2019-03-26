@@ -14,28 +14,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {html, FormElement, customElement, property, query, Foundation, Adapter, HTMLElementWithRipple} from '@material/mwc-base/form-element.js';
+import {html, FormElement, customElement, property, query, HTMLElementWithRipple, addHasRemoveClass, RippleSurface} from '@material/mwc-base/form-element.js';
 import {style} from './mwc-checkbox-css.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 import MDCCheckboxFoundation from '@material/checkbox/foundation.js';
+import {MDCCheckboxAdapter} from '@material/checkbox/adapter.js';
 
 declare global {
   interface HTMLElementTagNameMap {
     'mwc-checkbox': Checkbox;
   }
-}
-
-export interface CheckboxFoundation extends Foundation {
-  isChecked(): boolean;
-  setChecked(value: boolean): void;
-  setDisabled(disabled: boolean): void;
-  handleAnimationEnd(): void;
-  handleChange(): void
-}
-
-export declare var CheckboxFoundation: {
-  prototype: CheckboxFoundation;
-  new (adapter: Adapter): CheckboxFoundation;
 }
 
 @customElement('mwc-checkbox' as any)
@@ -59,22 +47,19 @@ export class Checkbox extends FormElement {
   @property({type: String})
   value = ''
 
-  protected mdcFoundationClass: typeof CheckboxFoundation = MDCCheckboxFoundation;
+  protected mdcFoundationClass = MDCCheckboxFoundation;
 
-  protected mdcFoundation!: CheckboxFoundation;
+  protected mdcFoundation!: MDCCheckboxFoundation;
 
   static styles = style;
 
-  get ripple() {
+  get ripple(): RippleSurface | undefined {
     return this.mdcRoot.ripple;
   }
 
-  protected createAdapter(): Adapter {
+  protected createAdapter(): MDCCheckboxAdapter {
     return {
-      ...super.createAdapter(),
-      getNativeControl: () => {
-        return this.formElement;
-      },
+      ...addHasRemoveClass(this.mdcRoot),
       forceLayout: () => {
         this.mdcRoot.offsetWidth;
       },
@@ -84,7 +69,13 @@ export class Checkbox extends FormElement {
       hasNativeControl: () => Boolean(this.formElement),
       setNativeControlDisabled: (disabled: boolean) => {
         this.formElement.disabled = disabled;
-      }
+      },
+      setNativeControlAttr: (attr: string, value: string) => {
+        this.formElement.setAttribute(attr, value);
+      },
+      removeNativeControlAttr: (attr: string) => {
+        this.formElement.removeAttribute(attr);
+      },
     }
   }
 

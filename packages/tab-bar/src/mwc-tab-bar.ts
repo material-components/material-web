@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, observer, query, customElement, Adapter, Foundation} from '@material/mwc-base/base-element.js';
+import {BaseElement, html, property, observer, query, customElement} from '@material/mwc-base/base-element.js';
 import {Tab} from '@material/mwc-tab';
 import {TabScroller} from '@material/mwc-tab-scroller';
 
@@ -24,6 +24,8 @@ import '@material/mwc-tab-scroller';
 
 import MDCTabBarFoundation from '@material/tab-bar/foundation';
 import {style} from './mwc-tab-bar-css';
+import { MDCTabBarAdapter } from '@material/tab-bar/adapter';
+import { MDCTabInteractionEvent } from '@material/tab/types';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -31,24 +33,12 @@ declare global {
   }
 }
 
-export interface TabBarFoundation extends Foundation {
-  scrollIntoView(index: number): void;
-  activateTab(index: number): void;
-  handleTabInteraction(e: Event): void;
-  handleKeyDown(e: Event): void;
-}
-
-export declare var TabBarFoundation: {
-  prototype: TabBarFoundation;
-  new(adapter: Adapter): TabBarFoundation;
-}
-
 @customElement('mwc-tab-bar' as any)
 export class TabBar extends BaseElement {
 
-  protected mdcFoundation!: TabBarFoundation;
+  protected mdcFoundation!: MDCTabBarFoundation;
 
-  protected readonly mdcFoundationClass: typeof TabBarFoundation = MDCTabBarFoundation;
+  protected readonly mdcFoundationClass = MDCTabBarFoundation;
 
   @query('.mdc-tab-bar')
   protected mdcRoot!: HTMLElement
@@ -72,11 +62,11 @@ export class TabBar extends BaseElement {
 
   private _previousActiveIndex = -1;
 
-  private _handleTabInteraction(e: Event) {
+  private _handleTabInteraction(e: MDCTabInteractionEvent) {
     this.mdcFoundation.handleTabInteraction(e);
   }
 
-  private _handleKeydown(e: Event) {
+  private _handleKeydown(e: KeyboardEvent) {
     this.mdcFoundation.handleKeyDown(e);
   }
 
@@ -102,9 +92,8 @@ export class TabBar extends BaseElement {
     return this._getTabs()[index];
   }
 
-  createAdapter() {
+  createAdapter(): MDCTabBarAdapter {
     return {
-      ...super.createAdapter(),
       scrollTo: (scrollX: number) => this.scrollerElement.scrollToPosition(scrollX),
       incrementScroll: (scrollXIncrement: number) => this.scrollerElement.incrementScrollPosition(scrollXIncrement),
       getScrollPosition: () => this.scrollerElement.getScrollPosition(),

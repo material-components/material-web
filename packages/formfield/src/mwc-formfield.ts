@@ -14,19 +14,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {html, BaseElement, Foundation, Adapter, property, query, observer, classMap} from '@material/mwc-base/base-element.js';
+import {html, BaseElement, property, query, observer, classMap} from '@material/mwc-base/base-element.js';
 import {FormElement} from '@material/mwc-base/form-element.js';
 import {findAssignedElement} from '@material/mwc-base/utils.js';
 import {style} from './mwc-formfield-css.js';
 import MDCFormFieldFoundation from '@material/form-field/foundation.js';
-
-export interface FormFieldFoundation extends Foundation {
-}
-
-export declare var FormFieldFoundation: {
-  prototype: FormFieldFoundation;
-  new(adapter: Adapter): FormFieldFoundation;
-}
+import {MDCFormFieldAdapter} from '@material/form-field/adapter.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -55,13 +48,12 @@ export class Formfield extends BaseElement {
   @query('.mdc-form-field')
   protected mdcRoot!: HTMLElement;
 
-  protected mdcFoundation!: FormFieldFoundation;
+  protected mdcFoundation!: MDCFormFieldFoundation;
 
-  protected readonly mdcFoundationClass: typeof FormFieldFoundation = MDCFormFieldFoundation;
+  protected readonly mdcFoundationClass = MDCFormFieldFoundation;
 
-  protected createAdapter() {
+  protected createAdapter(): MDCFormFieldAdapter {
     return {
-      ...super.createAdapter(),
       registerInteractionHandler: (type: string, handler: EventListener) => {
         this.labelEl.addEventListener(type, handler);
       },

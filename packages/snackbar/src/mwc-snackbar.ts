@@ -14,32 +14,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, query, customElement, Adapter, Foundation} from '@material/mwc-base/base-element.js';
+import {BaseElement, html, property, query, observer, customElement, classMap, addHasRemoveClass} from '@material/mwc-base/base-element.js';
 import {style} from './mwc-snackbar-css.js';
 import MDCSnackbarFoundation from '@material/snackbar/foundation.js';
-import {getCorrectEventName} from '@material/animation/index.js';
+import {MDCSnackbarCloseEventDetail} from '@material/snackbar/types';
+import * as util from '@material/snackbar/util';
+import { MDCSnackbarAdapter } from '@material/snackbar/adapter.js';
 
-const {SHOW_EVENT, HIDE_EVENT} = MDCSnackbarFoundation.strings;
-
-export interface ActionData {
-  message?: string;
-  timeout?: number;
-  actionText?: string,
-  multiline?: boolean,
-  actionOnBottom?: boolean,
-  actionHandler?: Function,
-}
-
-export interface SnackbarFoundation extends Foundation {
-  dismissesOnAction(): boolean;
-  setDismissOnAction(value: boolean): void;
-  show(data: ActionData): void;
-}
-
-export declare var SnackbarFoundation: {
-  prototype: SnackbarFoundation;
-  new(adapter: Adapter): SnackbarFoundation;
-}
+const {OPENING_EVENT, OPENED_EVENT, CLOSING_EVENT, CLOSED_EVENT} = MDCSnackbarFoundation.strings;
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -49,109 +31,99 @@ declare global {
 
 @customElement('mwc-snackbar' as any)
 export class Snackbar extends BaseElement {
-  protected mdcFoundation!: SnackbarFoundation;
+  protected mdcFoundation!: MDCSnackbarFoundation;
 
-  protected readonly mdcFoundationClass: typeof SnackbarFoundation = MDCSnackbarFoundation;
+  protected readonly mdcFoundationClass = MDCSnackbarFoundation;
 
   @query('.mdc-snackbar')
   protected mdcRoot!: HTMLElement
 
-  @query('.mdc-snackbar__action-button')
-  protected actionButton!: HTMLElement
+  @query('.mdc-snackbar__label')
+  protected labelElement!: HTMLElement
 
-  @query('.mdc-snackbar__text')
-  protected textElement!: HTMLElement
+  @property({type: Boolean, reflect: true})
+  isOpen = false;
+
+  @observer(function(this: Snackbar, value: number) {
+    this.mdcFoundation.setTimeoutMs(value);
+  })
+  @property({type: Number})
+  timeoutMs = 5000;
+
+  @observer(function(this: Snackbar, value: boolean) {
+    this.mdcFoundation.setCloseOnEscape(value);
+  })
+  @property({type: Boolean})
+  closeOnEscape = false;
 
   @property()
-  message = '';
+  labelText = '';
 
-  @property({type: Number})
-  timeout = 0;
+  @property({type: Boolean})
+  stacked = false;
 
-  @property({})
-  actionText = '';
-
-  @property({type: Boolean, reflect: true})
-  multiline = false;
-
-  @property({type: Boolean, reflect: true})
-  actionOnBottom = false;
-
-  protected boundActionHandler = this._actionHandler.bind(this);
+  @property({type: Boolean})
+  leading = false;
 
   static styles = style;
 
   render() {
+    const classes = {
+      'mdc-snackbar--stacked': this.stacked,
+      'mdc-snackbar--leading': this.leading,
+    };
     return html`
-      <div class="mdc-snackbar"
-        aria-live="assertive"
-        aria-atomic="true"
-        aria-hidden="true">
-      <div class="mdc-snackbar__text"></div>
-      <div class="mdc-snackbar__action-wrapper">
-        <button type="button" class="mdc-snackbar__action-button"></button>
-      </div>
-    </div>`;
+      <div class="mdc-snackbar ${classMap(classes)}" @keydown="${this._handleKeydown}">
+        <div class="mdc-snackbar__surface">
+          <div class="mdc-snackbar__label"
+               role="status"
+               aria-live="polite">
+            ${this.labelText}
+          </div>
+          <div class="mdc-snackbar__actions">
+            <slot name="action" @click="${this._handleActionClick}"></slot>
+            <slot name="dismiss" @click="${this._handleDismissClick}"></slot>
+          </div>
+        </div>
+      </div>`;
   }
 
-  protected createAdapter() {
+  protected createAdapter(): MDCSnackbarAdapter {
     return {
-      ...super.createAdapter(),
-      setAriaHidden: () => this.mdcRoot.setAttribute('aria-hidden', 'true'),
-      unsetAriaHidden: () => this.mdcRoot.removeAttribute('aria-hidden'),
-      setActionAriaHidden: () => this.actionButton.setAttribute('aria-hidden', 'true'),
-      unsetActionAriaHidden: () => this.actionButton.removeAttribute('aria-hidden'),
-      setActionText: (text: string) => this.actionButton.textContent = text,
-      setMessageText: (text: string) => this.textElement.textContent = text,
-      setFocus: () => this.actionButton.focus(),
-      isFocused: () => this.shadowRoot!.activeElement === this.actionButton,
-      visibilityIsHidden: () => document.hidden,
-      registerCapturedBlurHandler: (handler: EventListener) =>
-        this.actionButton.addEventListener('blur', handler, true),
-      deregisterCapturedBlurHandler: (handler: EventListener) =>
-        this.actionButton.removeEventListener('blur', handler, true),
-      registerVisibilityChangeHandler: (handler: EventListener) =>
-        document.addEventListener('visibilitychange', handler),
-      deregisterVisibilityChangeHandler: (handler: EventListener) =>
-        document.removeEventListener('visibilitychange', handler),
-      registerCapturedInteractionHandler: (evtType: string, handler: EventListener) =>
-        document.body.addEventListener(evtType, handler, true),
-      deregisterCapturedInteractionHandler: (evtType: string, handler: EventListener) =>
-        document.body.removeEventListener(evtType, handler, true),
-      registerActionClickHandler: (handler: EventListener) =>
-        this.actionButton.addEventListener('click', handler),
-      deregisterActionClickHandler: (handler: EventListener) =>
-        this.actionButton.removeEventListener('click', handler),
-      registerTransitionEndHandler: (handler: EventListener) =>
-        this.mdcRoot.addEventListener(getCorrectEventName(window, 'transitionend'), handler),
-      deregisterTransitionEndHandler: (handler: EventListener) =>
-        this.mdcRoot.removeEventListener(getCorrectEventName(window, 'transitionend'), handler),
-      notifyShow: () => this.dispatchEvent(new CustomEvent(SHOW_EVENT, {bubbles: true, cancelable: true})),
-      notifyHide: () => this.dispatchEvent(new CustomEvent(HIDE_EVENT, {bubbles: true, cancelable: true})),
+      ...addHasRemoveClass(this.mdcRoot),
+      announce: () => util.announce(this.labelElement),
+      notifyClosed: (reason: String) => {
+        this.isOpen = false;
+        this.dispatchEvent(new CustomEvent(CLOSED_EVENT,
+          {bubbles: true, cancelable: true, detail: <MDCSnackbarCloseEventDetail>{reason: reason}}))
+      },
+      notifyClosing: (reason: String) => this.dispatchEvent(new CustomEvent(CLOSING_EVENT,
+          {bubbles: true, cancelable: true, detail: <MDCSnackbarCloseEventDetail>{reason: reason}})),
+      notifyOpened: () => {
+        this.isOpen = true;
+        this.dispatchEvent(new CustomEvent(OPENED_EVENT, {bubbles: true, cancelable: true}))
+      },
+      notifyOpening: () => this.dispatchEvent(new CustomEvent(OPENING_EVENT, {bubbles: true, cancelable: true})),
     };
   }
 
-  _actionHandler() {
-    this.dispatchEvent(new CustomEvent('MDCSnackbar:action'));
+  open() {
+    this.mdcFoundation.open();
   }
 
-  show(data: ActionData) {
-    const options: ActionData = {
-      message: this.message,
-      timeout: this.timeout,
-      actionText: this.actionText,
-      multiline: this.multiline,
-      actionOnBottom: this.actionOnBottom,
-      actionHandler: this.boundActionHandler,
-    };
-    this.mdcFoundation.show(Object.assign(options, data));
+  close(reason = '') {
+    this.mdcFoundation. close(reason);
   }
 
-  get dismissesOnAction() {
-    return this.mdcFoundation.dismissesOnAction();
+  _handleKeydown(e: KeyboardEvent) {
+    this.mdcFoundation.handleKeyDown(e);
   }
 
-  set dismissesOnAction(dismissesOnAction) {
-    this.mdcFoundation.setDismissOnAction(dismissesOnAction);
+  _handleActionClick(e: MouseEvent) {
+    this.mdcFoundation.handleActionButtonClick(e);
+  }
+
+  _handleDismissClick(e: MouseEvent) {
+    this.mdcFoundation.handleActionIconClick(e);
   }
 }

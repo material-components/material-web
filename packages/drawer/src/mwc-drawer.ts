@@ -14,9 +14,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, observer, query, customElement, Adapter, Foundation, PropertyValues, classMap} from '@material/mwc-base/base-element.js';
+import {BaseElement, html, property, observer, query, customElement, PropertyValues, classMap, addHasRemoveClass} from '@material/mwc-base/base-element.js';
 import MDCModalDrawerFoundation from '@material/drawer/modal/foundation.js';
 import MDCDismissibleDrawerFoundation from '@material/drawer/dismissible/foundation.js';
+import {MDCDrawerAdapter} from '@material/drawer/adapter.js';
 import {strings} from '@material/drawer/constants.js';
 import {style} from './mwc-drawer-css.js';
 import 'wicg-inert/dist/inert.js';
@@ -39,16 +40,6 @@ declare global {
   }
 }
 
-export interface DrawerFoundation extends Foundation {
-  open(): void;
-  close(): void;
-}
-
-export declare var DrawerFoundation: {
-  prototype: DrawerFoundation;
-  new(adapter: Adapter): DrawerFoundation;
-}
-
 @customElement('mwc-drawer' as any)
 export class Drawer extends BaseElement {
 
@@ -58,17 +49,16 @@ export class Drawer extends BaseElement {
   @query('.mdc-drawer-app-content')
   protected appContent!: HTMLElement;
 
-  protected mdcFoundation!: MDCDismissibleDrawerFoundation|MDCModalDrawerFoundation;
+  protected mdcFoundation!: MDCDismissibleDrawerFoundation;
 
-  protected get mdcFoundationClass(): typeof DrawerFoundation {
+  protected get mdcFoundationClass() {
     return this.type === 'modal' ? MDCModalDrawerFoundation : MDCDismissibleDrawerFoundation;
   }
 
-  protected createAdapter() {
+  protected createAdapter(): MDCDrawerAdapter {
     return {
-      ...super.createAdapter(),
+      ...addHasRemoveClass(this.mdcRoot),
       elementHasClass: (element: HTMLElement, className: string) => element.classList.contains(className),
-      computeBoundingRect: () => this.mdcRoot.getBoundingClientRect(),
       saveFocus: () => {
         // Note, casting to avoid cumbersome runtime check.
         this._previousFocus = (this.getRootNode() as any as DocumentOrShadowRoot).activeElement as HTMLElement|null;
@@ -104,7 +94,9 @@ export class Drawer extends BaseElement {
   private _previousFocus: HTMLElement|null = null;
 
   private _handleScrimClick() {
-    this.mdcFoundation.handleScrimClick()
+    if (this.mdcFoundation instanceof MDCModalDrawerFoundation) {
+      this.mdcFoundation.handleScrimClick();
+    }
   };
 
   @observer(function(this: Drawer, value: boolean) {

@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, query, customElement, Adapter, Foundation, classMap} from '@material/mwc-base/base-element.js';
+import {BaseElement, html, property, query, customElement, classMap, addHasRemoveClass} from '@material/mwc-base/base-element.js';
 import {TabIndicator} from '@material/mwc-tab-indicator';
 
 // Make TypeScript not remove the import.
@@ -23,6 +23,7 @@ import '@material/mwc-tab-indicator';
 import {ripple} from '@material/mwc-ripple/ripple-directive';
 import MDCTabFoundation from '@material/tab/foundation';
 import {style} from './mwc-tab-css';
+import { MDCTabAdapter } from '@material/tab/adapter';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -33,24 +34,12 @@ declare global {
 // used for generating unique id for each tab
 let tabIdCounter = 0;
 
-export interface TabFoundation extends Foundation {
-  handleClick(): void;
-  activate(clientRect: ClientRect): void;
-  deactivate(): void;
-  computeDimensions(): {rootLeft: number, rootRight: number, contentLeft: number, contentRight: number}
-}
-
-export declare var TabFoundation: {
-  prototype: TabFoundation;
-  new(adapter: Adapter): TabFoundation;
-}
-
 @customElement('mwc-tab' as any)
 export class Tab extends BaseElement {
 
   protected mdcFoundation!: MDCTabFoundation;
 
-  protected readonly mdcFoundationClass: typeof TabFoundation = MDCTabFoundation;
+  protected readonly mdcFoundationClass = MDCTabFoundation;
 
   @query('.mdc-tab')
   protected mdcRoot!: HTMLElement;
@@ -92,8 +81,8 @@ export class Tab extends BaseElement {
   @query('.mdc-tab__content')
   private _contentElement!: HTMLElement;
 
-  private _handleClick(e: Event) {
-    this.mdcFoundation.handleClick(e);
+  private _handleClick() {
+    this.mdcFoundation.handleClick();
   }
 
   createRenderRoot() {
@@ -138,9 +127,9 @@ export class Tab extends BaseElement {
   }
 
 
-  createAdapter() {
+  createAdapter(): MDCTabAdapter {
     return {
-      ...super.createAdapter(),
+      ...addHasRemoveClass(this.mdcRoot),
       setAttr: (attr: string, value: string) => this.mdcRoot.setAttribute(attr, value),
       activateIndicator: (previousIndicatorClientRect: ClientRect) =>
           (this._tabIndicator as TabIndicator).activate(previousIndicatorClientRect),

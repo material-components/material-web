@@ -14,21 +14,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {FormElement, html, property, observer, query, customElement, Adapter, Foundation, HTMLElementWithRipple} from '@material/mwc-base/form-element.js';
+import {FormElement, html, property, observer, query, customElement, HTMLElementWithRipple, addHasRemoveClass} from '@material/mwc-base/form-element.js';
 import {style} from './mwc-switch-css.js';
 import MDCSwitchFoundation from '@material/switch/foundation.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
-
-export interface SwitchFoundation extends Foundation {
-  setChecked(value: boolean): void;
-  setDisabled(value: boolean): void;
-  handleChange(e: Event): void;
-}
-
-export declare var SwitchFoundation: {
-  prototype: SwitchFoundation;
-  new(adapter: Adapter): SwitchFoundation;
-}
+import { MDCSwitchAdapter } from '@material/switch/adapter';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -58,7 +48,7 @@ export class Switch extends FormElement {
   @query('input')
   protected formElement!: HTMLInputElement;
 
-  protected mdcFoundation!: SwitchFoundation;
+  protected mdcFoundation!: MDCSwitchFoundation;
 
   private _changeHandler(e: Event) {
     this.mdcFoundation.handleChange(e);
@@ -66,11 +56,11 @@ export class Switch extends FormElement {
     this.checked = this.formElement.checked;
   };
 
-  protected readonly mdcFoundationClass: typeof SwitchFoundation = MDCSwitchFoundation;
+  protected readonly mdcFoundationClass = MDCSwitchFoundation;
 
-  protected createAdapter() {
+  protected createAdapter(): MDCSwitchAdapter {
     return {
-      ...super.createAdapter(),
+      ...addHasRemoveClass(this.mdcRoot),
       setNativeControlChecked: (checked: boolean) => {
         this.formElement.checked = checked;
       },

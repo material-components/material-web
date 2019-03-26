@@ -14,25 +14,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {FormElement, query, customElement, Foundation, Adapter, property, html, observer, HTMLElementWithRipple} from '@material/mwc-base/form-element.js';
+import {FormElement, query, customElement, property, html, observer, HTMLElementWithRipple, addHasRemoveClass} from '@material/mwc-base/form-element.js';
 import {style} from './mwc-radio-css.js';
 import {SelectionController} from './selection-controller.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 import MDCRadioFoundation from '@material/radio/foundation.js';
+import {MDCRadioAdapter} from '@material/radio/adapter.js';
 
 declare global {
   interface HTMLElementTagNameMap {
     'mwc-radio': Radio;
   }
-}
-
-export interface RadioFoundation extends Foundation {
-  setDisabled(disabled: boolean): void;
-}
-
-export declare var RadioFoundation: {
-  prototype: RadioFoundation;
-  new (adapter: Adapter): RadioFoundation;
 }
 
 @customElement('mwc-radio' as any)
@@ -65,9 +57,9 @@ export class Radio extends FormElement {
   @property({type: String})
   name = '';
 
-  protected mdcFoundationClass: typeof RadioFoundation = MDCRadioFoundation;
+  protected mdcFoundationClass = MDCRadioFoundation;
 
-  protected mdcFoundation!: RadioFoundation;
+  protected mdcFoundation!: MDCRadioFoundation;
 
   private _selectionController: SelectionController | null = null;
 
@@ -102,9 +94,9 @@ export class Radio extends FormElement {
     return this.mdcRoot.ripple;
   }
 
-  protected createAdapter(): Adapter {
+  protected createAdapter(): MDCRadioAdapter {
     return {
-      ...super.createAdapter(),
+      ...addHasRemoveClass(this.mdcRoot),
       setNativeControlDisabled: (disabled: boolean) => {
         this.formElement.disabled = disabled;
       }

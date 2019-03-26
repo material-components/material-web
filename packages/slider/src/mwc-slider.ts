@@ -14,32 +14,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {FormElement, html, property, observer, query, customElement, Adapter, Foundation, classMap} from '@material/mwc-base/form-element.js';
+import {FormElement, html, property, observer, query, customElement, classMap, SpecificEventListener, addHasRemoveClass} from '@material/mwc-base/form-element.js';
 import {repeat} from 'lit-html/directives/repeat.js';
 import {style} from './mwc-slider-css.js';
 import MDCSliderFoundation from '@material/slider/foundation.js';
+import {MDCSliderAdapter} from '@material/slider/adapter.js';
 
 const {INPUT_EVENT, CHANGE_EVENT} = MDCSliderFoundation.strings;
-
-export interface SliderFoundation extends Foundation {
-  layout(): void;
-  getValue(): number;
-  setValue(value: number): void;
-  getMax(): number;
-  setMax(value: number): void;
-  getMin(): number;
-  setMin(value: number): void;
-  getStep(): number;
-  setStep(value: number): void;
-  isDisabled(): boolean;
-  setDisabled(value: boolean): void;
-  setupTrackMarker(): void;
-}
-
-export declare var SliderFoundation: {
-  prototype: SliderFoundation;
-  new(adapter: Adapter): SliderFoundation;
-}
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -49,9 +30,9 @@ declare global {
 
 @customElement('mwc-slider' as any)
 export class Slider extends FormElement {
-  protected mdcFoundation!: SliderFoundation;
+  protected mdcFoundation!: MDCSliderFoundation;
 
-  protected readonly mdcFoundationClass: typeof SliderFoundation = MDCSliderFoundation;
+  protected readonly mdcFoundationClass = MDCSliderFoundation;
 
   @query('.mdc-slider')
   protected mdcRoot!: HTMLElement
@@ -72,7 +53,7 @@ export class Slider extends FormElement {
   protected trackMarkerContainer!: HTMLElement;
 
   @property({type: Number})
-  @observer(function(this: Slider, value: number) {1
+  @observer(function(this: Slider, value: number) {
     this.mdcFoundation.setValue(value);
   })
   value = 0;
@@ -145,9 +126,9 @@ export class Slider extends FormElement {
     </div>`;
   }
 
-  protected createAdapter() {
+  protected createAdapter(): MDCSliderAdapter {
     return {
-      ...super.createAdapter(),
+      ...addHasRemoveClass(this.mdcRoot),
       getAttribute: (name: string) => this.mdcRoot.getAttribute(name),
       setAttribute: (name: string, value: string) => this.mdcRoot.setAttribute(name, value),
       removeAttribute: (name: string) => this.mdcRoot.removeAttribute(name),
@@ -165,9 +146,9 @@ export class Slider extends FormElement {
         document.body.addEventListener(type, handler),
       deregisterBodyInteractionHandler: (type: string, handler: EventListener) =>
         document.body.removeEventListener(type, handler),
-      registerResizeHandler: (handler: EventListener) =>
+      registerResizeHandler: (handler: SpecificEventListener<'resize'>) =>
         window.addEventListener('resize', handler),
-      deregisterResizeHandler: (handler: EventListener) =>
+      deregisterResizeHandler: (handler: SpecificEventListener<'resize'>) =>
         window.removeEventListener('resize', handler),
       notifyInput: () => {
         const value = this.mdcFoundation.getValue();

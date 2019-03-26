@@ -14,12 +14,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, query, customElement, Adapter, Foundation, PropertyValues, classMap} from '@material/mwc-base/base-element.js';
+import {BaseElement, html, property, query, customElement, PropertyValues, classMap, SpecificEventListener, addHasRemoveClass} from '@material/mwc-base/base-element.js';
+import MDCTopAppBarBaseFoundation from '@material/top-app-bar/foundation';
 import MDCTopAppBarFoundation from '@material/top-app-bar/standard/foundation.js';
 import MDCShortTopAppBarFoundation from '@material/top-app-bar/short/foundation.js';
 import MDCFixedTopAppBarFoundation from '@material/top-app-bar/fixed/foundation.js';
 import {strings} from '@material/top-app-bar/constants.js';
 import {style} from './mwc-top-app-bar-css.js';
+import { MDCTopAppBarAdapter } from '@material/top-app-bar/adapter';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -27,20 +29,12 @@ declare global {
   }
 }
 
-export interface TopAppBarFoundation extends Foundation {
-}
-
-export declare var TopAppBarFoundation: {
-  prototype: TopAppBarFoundation;
-  new(adapter: Adapter): TopAppBarFoundation;
-}
-
 @customElement('mwc-top-app-bar' as any)
 export class TopAppBar extends BaseElement {
 
-  protected mdcFoundation: MDCShortTopAppBarFoundation|MDCFixedTopAppBarFoundation|MDCTopAppBarFoundation;
+  protected mdcFoundation!: MDCTopAppBarBaseFoundation;
 
-  protected get mdcFoundationClass(): typeof TopAppBarFoundation {
+  protected get mdcFoundationClass() {
     return this.type === 'fixed' || this.type === 'prominentFixed' ? MDCFixedTopAppBarFoundation :
         (this.type === 'short' || this.type === 'shortCollapsed' ? MDCShortTopAppBarFoundation : MDCTopAppBarFoundation);
   }
@@ -112,9 +106,9 @@ export class TopAppBar extends BaseElement {
     </header>`;
   }
 
-  protected createAdapter() {
+  protected createAdapter(): MDCTopAppBarAdapter {
     return {
-      ...super.createAdapter(),
+      ...addHasRemoveClass(this.mdcRoot),
       setStyle: (property: string, value: string) => this.mdcRoot.style.setProperty(property, value),
       getTopAppBarHeight: () => this.mdcRoot.clientHeight,
       // TODO(sorvell): don't understand why the top-app-bar knows about navigation
@@ -131,13 +125,13 @@ export class TopAppBar extends BaseElement {
       notifyNavigationIconClicked: () => {
         this.dispatchEvent(new Event(strings.NAVIGATION_EVENT, {bubbles: true, cancelable: true}));
       },
-      registerScrollHandler: (handler: EventListenerOrEventListenerObject) =>
-          this.scrollTarget.addEventListener('scroll', handler),
-      deregisterScrollHandler: (handler: EventListenerOrEventListenerObject) =>
-          this.scrollTarget.removeEventListener('scroll', handler),
-      registerResizeHandler: (handler: EventListenerOrEventListenerObject) =>
+      registerScrollHandler: (handler: SpecificEventListener<'scroll'>) =>
+          this.scrollTarget.addEventListener('scroll', handler as EventListenerOrEventListenerObject),
+      deregisterScrollHandler: (handler: SpecificEventListener<'scroll'>) =>
+          this.scrollTarget.removeEventListener('scroll', handler as EventListenerOrEventListenerObject),
+      registerResizeHandler: (handler: SpecificEventListener<'resize'>) =>
           window.addEventListener('resize', handler),
-      deregisterResizeHandler: (handler: EventListenerOrEventListenerObject) =>
+      deregisterResizeHandler: (handler: SpecificEventListener<'resize'>) =>
           window.removeEventListener('resize', handler),
       getViewportScrollY: () => this.scrollTarget[this.scrollTarget === window ? 'pageYOffset' : 'scrollTop'],
       getTotalActionItems: () =>
