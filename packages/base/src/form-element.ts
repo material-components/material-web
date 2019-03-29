@@ -56,4 +56,11 @@ export abstract class FormElement extends BaseElement {
       this.formElement.setAttribute('aria-label', label);
     }
   }
+
+  firstUpdated() {
+    super.firstUpdated();
+    this.mdcRoot.addEventListener('change', e => {
+      this.dispatchEvent(new Event('change', e));
+    });
+  }
 }
