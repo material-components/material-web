@@ -15,6 +15,7 @@
  */
 
 import {assert} from 'chai';
+import {fake} from 'sinon';
 import {Switch} from '@material/mwc-switch';
 
 let element;
@@ -52,4 +53,17 @@ test('setting `disabled` disables the native input', async () => {
   element.disabled = false;
   await element.updateComplete;
   assert(!element.formElement.disabled);
+});
+
+test('user input emits `change` event', async () => {
+  let callback = fake();
+  document.body.addEventListener('change', callback);
+  element.checked = false;
+  await element.updateComplete;
+
+  element.click();
+
+  expect(callback.callCount).to.equal(1);
+
+  document.body.removeEventListener('change', callback);
 });
