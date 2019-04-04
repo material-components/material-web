@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+- Upgrade lerna to 3.x
+- Upgrade typescript to 3.4, add config for tsbuildinfo files needed for incremental compilation mode
+
 ## [0.5.0] - 2019-03-26
 - Update to mdc 1.0
 - Rewrite Adapters and Foundations with Typescript types
