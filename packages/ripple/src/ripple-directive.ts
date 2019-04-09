@@ -96,7 +96,7 @@ export const rippleNode = (options: RippleNodeOptions) => {
       window.removeEventListener('resize', handler),
     updateCssVariable: (varName: string, value: string) =>
       surfaceNode.style.setProperty(varName, value),
-    computeBoundingRect: () => interactionNode.getBoundingClientRect(),
+    computeBoundingRect: () => surfaceNode.getBoundingClientRect(),
     getWindowPageOffset: () => ({x: window.pageXOffset, y: window.pageYOffset}),
   };
   const rippleFoundation = new MDCRippleFoundation(adapter);
