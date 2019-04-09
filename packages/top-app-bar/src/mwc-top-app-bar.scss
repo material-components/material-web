@@ -54,3 +54,9 @@ limitations under the License.
     transition: padding 150ms $mdc-animation-standard-curve-timing-function;
   }
 }
+
+// hack for icon-button ripple opacity
+slot[name="navigationIcon"]::slotted(*),
+slot[name="actionItems"]::slotted(*) {
+  --mdc-icon-button-ripple-opacity: 0.24;
+}
