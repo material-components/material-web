@@ -81,7 +81,7 @@ export class Switch extends FormElement {
     return html`
       <div class="mdc-switch">
         <div class="mdc-switch__track"></div>
-        <div class="mdc-switch__thumb-underlay" .ripple="${ripple()}">
+        <div class="mdc-switch__thumb-underlay" .ripple="${ripple({interactionNode: this})}">
           <div class="mdc-switch__thumb">
             <input type="checkbox" id="basic-switch" class="mdc-switch__native-control" role="switch" @change="${this._changeHandler}">
           </div>
