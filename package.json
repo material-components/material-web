@@ -18,7 +18,7 @@
     "watch": "npm run bootstrap && node scripts/watcher.js"
   },
   "devDependencies": {
-    "@webcomponents/webcomponentsjs": "^2.2.7",
+    "@webcomponents/webcomponentsjs": "^2.2.8",
     "babel-core": "^6.22.1",
     "babel-plugin-transform-object-assign": "^6.8.0",
     "babel-preset-es2015": "^6.9.0",
