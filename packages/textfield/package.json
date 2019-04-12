@@ -12,6 +12,7 @@
     "@material/mwc-base": "^0.5.0",
     "@material/mwc-icon": "^0.5.0",
     "@material/textfield": "^0.35.0",
+    "@material/mwc-ripple": "^0.5.0",
     "lit-element": "^2.0.1"
   },
   "publishConfig": {
