@@ -42,7 +42,9 @@ export class Ripple extends LitElement {
   static styles = style;
 
   connectedCallback() {
-    this.interactionNode = this.parentNode as HTMLElement;
+    if (this.interactionNode === this) {
+      this.interactionNode = this.parentNode as HTMLElement;
+    }
     super.connectedCallback();
   }
 
