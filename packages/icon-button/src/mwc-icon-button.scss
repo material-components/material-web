@@ -28,10 +28,10 @@ limitations under the License.
 }
 
 // hack for top-app-bar ripple coloring of icon-buttons
-.mdc-ripple-upgraded {
+.mdc-icon-button.mdc-ripple-upgraded {
+  --mdc-ripple-fg-opacity: var(--mdc-icon-button-ripple-opacity, 0.12);
   &:focus::before, &:focus::after {
     background-color: currentColor;
     background-color: var(--mdc-theme-on-primary, currentColor);
-    opacity: var(--mdc-icon-button-ripple-opacity, 0.12);
   }
 }
