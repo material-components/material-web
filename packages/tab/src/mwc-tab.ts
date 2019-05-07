@@ -96,12 +96,6 @@ export class Tab extends BaseElement {
 
   static styles = style;
 
-  constructor() {
-    super();
-    // create an unique id
-    this.id = this.id || `mdc-tab-${++tabIdCounter}`;
-  }
-
   render() {
     const classes = {
       'mdc-tab--min-width': this.minWidth,
@@ -124,6 +118,11 @@ export class Tab extends BaseElement {
     return html`<mwc-tab-indicator
         .icon="${this.indicatorIcon}"
         .fade="${this.isFadingIndicator}"></mwc-tab-indicator>`;
+  }
+
+  firstUpdated() {
+    super.firstUpdated();
+    this.id = this.id || `mdc-tab-${++tabIdCounter}`;
   }
 
 
