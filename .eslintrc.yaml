@@ -3,7 +3,9 @@ globals:
   goog: false
 env:
   browser: true
+parser: "@typescript-eslint/parser"
 plugins:
+  - "@typescript-eslint"
   - mocha
 parserOptions:
   ecmaVersion: 2017
