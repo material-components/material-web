@@ -1,2 +1,4 @@
 **/node_modules
 packages/*/dist
+packages/**/*.d.ts
+packages/*/src/*-css.ts
