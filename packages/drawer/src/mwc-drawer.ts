@@ -26,7 +26,5 @@ declare global {
 
 @customElement('mwc-drawer' as any)
 export class Drawer extends DrawerBase {
-
   static styles = style;
-
 }

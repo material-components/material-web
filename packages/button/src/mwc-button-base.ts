@@ -18,7 +18,6 @@ import {LitElement, html, property, classMap} from '@material/mwc-base/base-elem
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 
 export class ButtonBase extends LitElement {
-
   @property({type: Boolean})
   raised = false;
 
@@ -54,7 +53,7 @@ export class ButtonBase extends LitElement {
       'mdc-button--outlined': this.outlined,
       'mdc-button--dense': this.dense,
     };
-    const mdcButtonIcon = html`<span class="material-icons mdc-button__icon">${this.icon}</span>`
+    const mdcButtonIcon = html`<span class="material-icons mdc-button__icon">${this.icon}</span>`;
     return html`
       <button
           .ripple="${ripple({unbounded: false})}"

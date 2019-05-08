@@ -18,7 +18,6 @@ import {LitElement, html, property, classMap} from '@material/mwc-base/base-elem
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 
 export class FabBase extends LitElement {
-
   @property({type: Boolean})
   mini = false;
 
@@ -39,7 +38,6 @@ export class FabBase extends LitElement {
 
   @property()
   label = '';
-
 
   createRenderRoot() {
     return this.attachShadow({mode: 'open', delegatesFocus: true});

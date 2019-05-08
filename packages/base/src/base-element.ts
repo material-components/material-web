@@ -26,7 +26,6 @@ export {addHasRemoveClass} from './utils.js';
 export * from '@material/base/types.js';
 
 export abstract class BaseElement extends LitElement {
-
   /**
    * Root element for MDC Foundation usage.
    *

@@ -19,7 +19,7 @@ import MDCRippleFoundation from '@material/ripple/foundation.js';
 import {MDCRippleAdapter} from '@material/ripple/adapter.js';
 import {style} from './mwc-ripple-global-css.js';
 import {supportsCssVariables} from '@material/ripple/util.js';
-import {applyPassive} from '@material/dom/events'
+import {applyPassive} from '@material/dom/events';
 import {matches} from '@material/dom/ponyfill';
 
 import {EventType, SpecificEventListener} from '@material/mwc-base/base-element.js';
@@ -93,10 +93,10 @@ export const rippleNode = (options: RippleNodeOptions) => {
       interactionNode.removeEventListener(type, handler, applyPassive()),
     registerDocumentInteractionHandler: <K extends EventType>(evtType: K, handler: SpecificEventListener<K>) =>
       document.documentElement!.addEventListener(
-          evtType, handler, applyPassive()),
+        evtType, handler, applyPassive()),
     deregisterDocumentInteractionHandler: <K extends EventType>(evtType: string, handler: SpecificEventListener<K>) =>
       document.documentElement!.removeEventListener(
-          evtType, handler as EventListenerOrEventListenerObject, applyPassive()),
+        evtType, handler as EventListenerOrEventListenerObject, applyPassive()),
     registerResizeHandler: (handler: SpecificEventListener<'resize'>) =>
       window.addEventListener('resize', handler),
     deregisterResizeHandler: (handler: SpecificEventListener<'resize'>) =>
@@ -109,7 +109,7 @@ export const rippleNode = (options: RippleNodeOptions) => {
   const rippleFoundation = new MDCRippleFoundation(adapter);
   rippleFoundation.init();
   return rippleFoundation;
-}
+};
 
 const rippleInteractionNodes = new WeakMap();
 

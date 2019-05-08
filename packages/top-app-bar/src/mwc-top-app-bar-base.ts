@@ -14,23 +14,33 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, query, PropertyValues, classMap, addHasRemoveClass} from '@material/mwc-base/base-element.js';
+import {
+  BaseElement,
+  html,
+  property,
+  query,
+  PropertyValues,
+  classMap,
+  addHasRemoveClass,
+} from '@material/mwc-base/base-element.js';
 import MDCTopAppBarBaseFoundation from '@material/top-app-bar/foundation';
 import MDCTopAppBarFoundation from '@material/top-app-bar/standard/foundation.js';
 import MDCShortTopAppBarFoundation from '@material/top-app-bar/short/foundation.js';
 import MDCFixedTopAppBarFoundation from '@material/top-app-bar/fixed/foundation.js';
 import {strings} from '@material/top-app-bar/constants.js';
-import { MDCTopAppBarAdapter } from '@material/top-app-bar/adapter';
+import {MDCTopAppBarAdapter} from '@material/top-app-bar/adapter';
 
 type TopAppBarTypes = ''|'fixed'|'prominent'|'short'|'shortCollapsed'|'prominentFixed';
 
 export class TopAppBarBase extends BaseElement {
-
   protected mdcFoundation!: MDCTopAppBarBaseFoundation;
 
   protected get mdcFoundationClass() {
-    return this.type === 'fixed' || this.type === 'prominentFixed' ? MDCFixedTopAppBarFoundation :
-        (this.type === 'short' || this.type === 'shortCollapsed' ? MDCShortTopAppBarFoundation : MDCTopAppBarFoundation);
+    return this.type === 'fixed' || this.type === 'prominentFixed'
+      ? MDCFixedTopAppBarFoundation
+      : (this.type === 'short' || this.type === 'shortCollapsed'
+        ? MDCShortTopAppBarFoundation
+        : MDCTopAppBarFoundation);
   }
 
   @query('.mdc-top-app-bar')
@@ -70,7 +80,7 @@ export class TopAppBarBase extends BaseElement {
       'mdc-top-app-bar--short-collapsed': this.type === 'shortCollapsed',
       'mdc-top-app-bar--prominent': this.type === 'prominent' || this.type === 'prominentFixed',
       'mdc-top-app-bar--dense': this.dense,
-      'mwc-top-app-bar--center-title': this.centerTitle
+      'mwc-top-app-bar--center-title': this.centerTitle,
     };
     const alignStartTitle = !this.centerTitle ? html`
       <span class="mdc-top-app-bar__title"><slot name="title"></slot></span>
@@ -98,16 +108,16 @@ export class TopAppBarBase extends BaseElement {
     return {
       ...addHasRemoveClass(this.mdcRoot),
       setStyle: (property: string, value: string) =>
-          this.mdcRoot.style.setProperty(property, value),
+        this.mdcRoot.style.setProperty(property, value),
       getTopAppBarHeight: () => this.mdcRoot.clientHeight,
       notifyNavigationIconClicked: () => {
         this.dispatchEvent(new Event(strings.NAVIGATION_EVENT, {bubbles: true, cancelable: true}));
       },
       getViewportScrollY: () => this.scrollTarget instanceof Window ?
-          this.scrollTarget.pageYOffset :
-          this.scrollTarget.scrollTop,
+        this.scrollTarget.pageYOffset :
+        this.scrollTarget.scrollTop,
       getTotalActionItems: () =>
-          this._actionItemsSlot.assignedNodes({flatten: true}).length,
+        this._actionItemsSlot.assignedNodes({flatten: true}).length,
     };
   }
 

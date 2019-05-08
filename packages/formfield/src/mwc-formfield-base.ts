@@ -14,7 +14,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {html, BaseElement, property, query, observer, classMap, EventType, SpecificEventListener} from '@material/mwc-base/base-element.js';
+import {
+  html,
+  BaseElement,
+  property,
+  query,
+  observer,
+  classMap,
+  EventType,
+  SpecificEventListener,
+} from '@material/mwc-base/base-element.js';
 import {FormElement} from '@material/mwc-base/form-element.js';
 import {findAssignedElement} from '@material/mwc-base/utils.js';
 import MDCFormFieldFoundation from '@material/form-field/foundation.js';
@@ -64,8 +73,8 @@ export class FormfieldBase extends BaseElement {
         if (input instanceof FormElement && input.ripple) {
           input.ripple.deactivate();
         }
-      }
-    }
+      },
+    };
   }
 
   @query('slot')

@@ -14,11 +14,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, query, observer, classMap, addHasRemoveClass} from '@material/mwc-base/base-element.js';
+import {
+  BaseElement,
+  html,
+  property,
+  query,
+  observer,
+  classMap,
+  addHasRemoveClass,
+} from '@material/mwc-base/base-element.js';
 import MDCSnackbarFoundation from '@material/snackbar/foundation.js';
 import {MDCSnackbarCloseEventDetail} from '@material/snackbar/types';
 import * as util from '@material/snackbar/util';
-import { MDCSnackbarAdapter } from '@material/snackbar/adapter.js';
+import {MDCSnackbarAdapter} from '@material/snackbar/adapter.js';
 
 const {OPENING_EVENT, OPENED_EVENT, CLOSING_EVENT, CLOSED_EVENT} = MDCSnackbarFoundation.strings;
 
@@ -85,13 +93,13 @@ export class SnackbarBase extends BaseElement {
       notifyClosed: (reason: String) => {
         this.isOpen = false;
         this.dispatchEvent(new CustomEvent(CLOSED_EVENT,
-          {bubbles: true, cancelable: true, detail: <MDCSnackbarCloseEventDetail>{reason: reason}}))
+          {bubbles: true, cancelable: true, detail: <MDCSnackbarCloseEventDetail>{reason: reason}}));
       },
       notifyClosing: (reason: String) => this.dispatchEvent(new CustomEvent(CLOSING_EVENT,
-          {bubbles: true, cancelable: true, detail: <MDCSnackbarCloseEventDetail>{reason: reason}})),
+        {bubbles: true, cancelable: true, detail: <MDCSnackbarCloseEventDetail>{reason: reason}})),
       notifyOpened: () => {
         this.isOpen = true;
-        this.dispatchEvent(new CustomEvent(OPENED_EVENT, {bubbles: true, cancelable: true}))
+        this.dispatchEvent(new CustomEvent(OPENED_EVENT, {bubbles: true, cancelable: true}));
       },
       notifyOpening: () => this.dispatchEvent(new CustomEvent(OPENING_EVENT, {bubbles: true, cancelable: true})),
     };

@@ -14,10 +14,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {FormElement, html, property, observer, query, HTMLElementWithRipple, addHasRemoveClass} from '@material/mwc-base/form-element.js';
+import {
+  FormElement,
+  html,
+  property,
+  observer,
+  query,
+  HTMLElementWithRipple,
+  addHasRemoveClass,
+} from '@material/mwc-base/form-element.js';
 import MDCSwitchFoundation from '@material/switch/foundation.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
-import { MDCSwitchAdapter } from '@material/switch/adapter';
+import {MDCSwitchAdapter} from '@material/switch/adapter';
 
 export class SwitchBase extends FormElement {
   @property({type: Boolean})
@@ -56,8 +64,8 @@ export class SwitchBase extends FormElement {
       },
       setNativeControlDisabled: (disabled: boolean) => {
         this.formElement.disabled = disabled;
-      }
-    }
+      },
+    };
   }
 
   get ripple() {
@@ -73,7 +81,12 @@ export class SwitchBase extends FormElement {
         <div class="mdc-switch__track"></div>
         <div class="mdc-switch__thumb-underlay" .ripple="${ripple({interactionNode: this})}">
           <div class="mdc-switch__thumb">
-            <input type="checkbox" id="basic-switch" class="mdc-switch__native-control" role="switch" @change="${this._changeHandler}">
+            <input
+              type="checkbox"
+              id="basic-switch"
+              class="mdc-switch__native-control"
+              role="switch"
+              @change="${this._changeHandler}">
           </div>
         </div>
       </div>

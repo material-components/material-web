@@ -21,7 +21,6 @@ import {MDCIconButtonToggleAdapter} from '@material/icon-button/adapter.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 
 export class IconButtonBase extends BaseElement {
-
   protected mdcFoundationClass = MDCIconButtonToggleFoundation;
 
   protected mdcFoundation!: MDCIconButtonToggleFoundation;
@@ -58,8 +57,8 @@ export class IconButtonBase extends BaseElement {
           return;
         }
         this.dispatchEvent(new CustomEvent('MDCIconButtonToggle:change', {detail: evtData, bubbles: true}));
-      }
-    }
+      },
+    };
   }
 
   protected handleClick() {

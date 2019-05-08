@@ -37,7 +37,7 @@ export const observer = (observer: Observer) => (proto: any, propName: PropertyK
   // clone any existing observers (superclasses)
   } else if (!proto.constructor.hasOwnProperty('_observers')) {
     const observers = proto.constructor._observers;
-    proto.constructor._observers  = new Map();
+    proto.constructor._observers = new Map();
     observers.forEach((v: any, k: PropertyKey) => proto.constructor._observers.set(k, v));
   }
   // set this method

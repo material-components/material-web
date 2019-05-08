@@ -14,7 +14,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, observer, query} from '@material/mwc-base/base-element.js';
+import {
+  BaseElement,
+  html,
+  property,
+  observer,
+  query,
+} from '@material/mwc-base/base-element.js';
 import {Tab} from '@material/mwc-tab';
 import {TabScroller} from '@material/mwc-tab-scroller';
 
@@ -23,11 +29,10 @@ import '@material/mwc-tab';
 import '@material/mwc-tab-scroller';
 
 import MDCTabBarFoundation from '@material/tab-bar/foundation';
-import { MDCTabBarAdapter } from '@material/tab-bar/adapter';
-import { MDCTabInteractionEvent } from '@material/tab/types';
+import {MDCTabBarAdapter} from '@material/tab-bar/adapter';
+import {MDCTabInteractionEvent} from '@material/tab/types';
 
 export class TabBarBase extends BaseElement {
-
   protected mdcFoundation!: MDCTabBarFoundation;
 
   protected readonly mdcFoundationClass = MDCTabBarFoundation;
@@ -101,7 +106,7 @@ export class TabBarBase extends BaseElement {
       deactivateTabAtIndex: (index: number) => {
         const tab = this._getTab(index);
         if (tab !== undefined) {
-          tab.deactivate()
+          tab.deactivate();
         }
       },
       focusTabAtIndex: (index: number) => {
@@ -120,7 +125,7 @@ export class TabBarBase extends BaseElement {
       getTabDimensionsAtIndex: (index: number) => {
         const tab = this._getTab(index);
         return tab !== undefined ? tab.computeDimensions() :
-            {rootLeft: 0, rootRight: 0, contentLeft: 0, contentRight: 0};
+          {rootLeft: 0, rootRight: 0, contentLeft: 0, contentRight: 0};
       },
       getPreviousActiveTabIndex: () => {
         return this._previousActiveIndex;
@@ -146,8 +151,8 @@ export class TabBarBase extends BaseElement {
         this.activeIndex = index;
         this.dispatchEvent(
           new CustomEvent(MDCTabBarFoundation.strings.TAB_ACTIVATED_EVENT,
-            {detail: {index}, bubbles: true, cancelable: true}))
-      }
+            {detail: {index}, bubbles: true, cancelable: true}));
+      },
     };
   }
 
@@ -168,5 +173,4 @@ export class TabBarBase extends BaseElement {
   scrollIndexIntoView(index: number) {
     this.mdcFoundation.scrollIntoView(index);
   }
-
 }

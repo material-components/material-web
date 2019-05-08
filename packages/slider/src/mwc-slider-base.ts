@@ -14,7 +14,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {FormElement, html, property, observer, query, classMap, SpecificEventListener, addHasRemoveClass, EventType} from '@material/mwc-base/form-element.js';
+import {
+  FormElement,
+  html,
+  property,
+  observer,
+  query,
+  classMap,
+  SpecificEventListener,
+  addHasRemoveClass,
+  EventType,
+} from '@material/mwc-base/form-element.js';
 import {repeat} from 'lit-html/directives/repeat.js';
 import MDCSliderFoundation from '@material/slider/foundation.js';
 import {MDCSliderAdapter} from '@material/slider/adapter.js';
@@ -160,7 +170,7 @@ export class SliderBase extends FormElement {
       setLastTrackMarkersStyleProperty: (propertyName: string, value: string) =>
         // We remove and append new nodes, thus, the last track marker must be dynamically found.
         (this.mdcRoot.querySelector('.mdc-slider__track-marker:last-child') as HTMLElement).
-            style.setProperty(propertyName, value),
+          style.setProperty(propertyName, value),
       isRTL: () => getComputedStyle(this.mdcRoot).direction === 'rtl',
     };
   }
