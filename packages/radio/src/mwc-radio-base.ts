@@ -14,13 +14,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {FormElement, query, property, html, observer, HTMLElementWithRipple, addHasRemoveClass} from '@material/mwc-base/form-element.js';
+import {
+  FormElement,
+  query,
+  property,
+  html,
+  observer,
+  HTMLElementWithRipple,
+  addHasRemoveClass,
+} from '@material/mwc-base/form-element.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 import MDCRadioFoundation from '@material/radio/foundation.js';
 import {MDCRadioAdapter} from '@material/radio/adapter.js';
 
 export class RadioBase extends FormElement {
-
   @query('.mdc-radio')
   protected mdcRoot!: HTMLElementWithRipple;
 
@@ -88,7 +95,7 @@ export class RadioBase extends FormElement {
       ...addHasRemoveClass(this.mdcRoot),
       setNativeControlDisabled: (disabled: boolean) => {
         this.formElement.disabled = disabled;
-      }
+      },
     };
   }
 
@@ -113,10 +120,15 @@ export class RadioBase extends FormElement {
   render() {
     return html`
       <div class="mdc-radio" .ripple="${ripple()}">
-        <input class="mdc-radio__native-control" type="radio" name="${this.name}" .checked="${this.checked}" .value="${this.value}"
-        @change="${this._changeHandler}"
-        @focus="${this._focusHandler}"
-        @click="${this._clickHandler}">
+        <input
+          class="mdc-radio__native-control"
+          type="radio"
+          name="${this.name}"
+          .checked="${this.checked}"
+          .value="${this.value}"
+          @change="${this._changeHandler}"
+          @focus="${this._focusHandler}"
+          @click="${this._clickHandler}">
         <div class="mdc-radio__background">
           <div class="mdc-radio__outer-circle"></div>
           <div class="mdc-radio__inner-circle"></div>

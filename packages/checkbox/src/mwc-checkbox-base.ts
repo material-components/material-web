@@ -14,14 +14,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {html, FormElement, property, query, observer, HTMLElementWithRipple, addHasRemoveClass, RippleSurface} from '@material/mwc-base/form-element.js';
+import {
+  html,
+  FormElement,
+  property,
+  query,
+  observer,
+  HTMLElementWithRipple,
+  addHasRemoveClass,
+  RippleSurface,
+} from '@material/mwc-base/form-element.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 import MDCCheckboxFoundation from '@material/checkbox/foundation.js';
 import {MDCCheckboxAdapter} from '@material/checkbox/adapter.js';
 
-
 export class CheckboxBase extends FormElement {
-
   @query('.mdc-checkbox')
   protected mdcRoot!: HTMLElementWithRipple;
 
@@ -70,7 +77,7 @@ export class CheckboxBase extends FormElement {
       removeNativeControlAttr: (attr: string) => {
         this.formElement.removeAttribute(attr);
       },
-    }
+    };
   }
 
   render() {

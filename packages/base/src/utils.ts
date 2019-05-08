@@ -41,6 +41,6 @@ export function addHasRemoveClass(element: HTMLElement) {
     removeClass: (className: string) => {
       element.classList.remove(className);
     },
-    hasClass: (className: string) => element.classList.contains(className)
-  }
+    hasClass: (className: string) => element.classList.contains(className),
+  };
 }

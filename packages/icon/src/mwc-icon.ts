@@ -19,13 +19,11 @@ import {style} from './mwc-icon-host-css.js';
 
 @customElement('mwc-icon' as any)
 export class Icon extends LitElement {
-
   static styles = style;
 
   render() {
     return html`<slot></slot>`;
   }
-
 }
 
 declare global {

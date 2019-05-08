@@ -26,7 +26,5 @@ declare global {
 
 @customElement('mwc-ripple' as any)
 export class Ripple extends RippleBase {
-
   static styles = style;
-
 }

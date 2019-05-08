@@ -14,14 +14,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, query, PropertyValues, classMap, addHasRemoveClass} from '@material/mwc-base/base-element.js';
+import {
+  BaseElement,
+  html,
+  property,
+  query,
+  PropertyValues,
+  classMap,
+  addHasRemoveClass,
+} from '@material/mwc-base/base-element.js';
 import MDCTabIndicatorFoundation from '@material/tab-indicator/foundation';
 import MDCSlidingTabIndicatorFoundation from '@material/tab-indicator/sliding-foundation.js';
 import MDCFadingTabIndicatorFoundation from '@material/tab-indicator/fading-foundation.js';
-import { MDCTabIndicatorAdapter } from '@material/tab-indicator/adapter';
+import {MDCTabIndicatorAdapter} from '@material/tab-indicator/adapter';
 
 export class TabIndicatorBase extends BaseElement {
-
   protected mdcFoundation!: MDCTabIndicatorFoundation;
 
   protected get mdcFoundationClass() {
@@ -44,7 +51,7 @@ export class TabIndicatorBase extends BaseElement {
     const contentClasses = {
       'mdc-tab-indicator__content--icon': this.icon,
       'material-icons': this.icon,
-      'mdc-tab-indicator__content--underline': !this.icon
+      'mdc-tab-indicator__content--underline': !this.icon,
     };
     return html`
       <span class="mdc-tab-indicator ${classMap({'mdc-tab-indicator--fade': this.fade})}">
@@ -64,7 +71,7 @@ export class TabIndicatorBase extends BaseElement {
       ...addHasRemoveClass(this.mdcRoot),
       computeContentClientRect: () => this.contentElement.getBoundingClientRect(),
       setContentStyleProperty: (prop: string, value: string) =>
-          this.contentElement.style.setProperty(prop, value)
+        this.contentElement.style.setProperty(prop, value),
     };
   }
 

@@ -23,13 +23,12 @@ import '@material/mwc-tab-indicator';
 import {ripple} from '@material/mwc-ripple/ripple-directive';
 import MDCTabFoundation from '@material/tab/foundation';
 import {style} from './mwc-tab-css';
-import { MDCTabAdapter } from '@material/tab/adapter';
+import {MDCTabAdapter} from '@material/tab/adapter';
 
 // used for generating unique id for each tab
 let tabIdCounter = 0;
 
 export class TabBase extends BaseElement {
-
   protected mdcFoundation!: MDCTabFoundation;
 
   protected readonly mdcFoundationClass = MDCTabFoundation;
@@ -98,10 +97,15 @@ export class TabBase extends BaseElement {
   render() {
     const classes = {
       'mdc-tab--min-width': this.minWidth,
-      'mdc-tab--stacked': this.stacked
+      'mdc-tab--stacked': this.stacked,
     };
     return html`
-      <button @click="${this._handleClick}" class="mdc-tab ${classMap(classes)}" role="tab" aria-selected="false" tabindex="-1">
+      <button
+        @click="${this._handleClick}"
+        class="mdc-tab ${classMap(classes)}"
+        role="tab"
+        aria-selected="false"
+        tabindex="-1">
         <span class="mdc-tab__content">
           <slot></slot>
           ${this.icon ? html`<span class="mdc-tab__icon material-icons">${this.icon}</span>` : ''}
@@ -125,22 +129,22 @@ export class TabBase extends BaseElement {
       ...addHasRemoveClass(this.mdcRoot),
       setAttr: (attr: string, value: string) => this.mdcRoot.setAttribute(attr, value),
       activateIndicator: (previousIndicatorClientRect: ClientRect) =>
-          (this._tabIndicator as TabIndicator).activate(previousIndicatorClientRect),
+        (this._tabIndicator as TabIndicator).activate(previousIndicatorClientRect),
       deactivateIndicator: () =>
-          (this._tabIndicator as TabIndicator).deactivate(),
+        (this._tabIndicator as TabIndicator).deactivate(),
       notifyInteracted: () => this.dispatchEvent(
-          new CustomEvent(MDCTabFoundation.strings.INTERACTED_EVENT, {
-            detail: {tabId: this.id},
-            bubbles: true,
-            composed: true,
-            cancelable: true
-          })),
+        new CustomEvent(MDCTabFoundation.strings.INTERACTED_EVENT, {
+          detail: {tabId: this.id},
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        })),
       getOffsetLeft: () => this.offsetLeft,
       getOffsetWidth: () => this.mdcRoot.offsetWidth,
       getContentOffsetLeft: () => this._contentElement.offsetLeft,
       getContentOffsetWidth: () => this._contentElement.offsetWidth,
       focus: () => this.mdcRoot.focus(),
-    }
+    };
   }
 
   activate(clientRect: ClientRect) {
@@ -163,5 +167,4 @@ export class TabBase extends BaseElement {
   focus() {
     this.mdcRoot.focus();
   }
-
 }

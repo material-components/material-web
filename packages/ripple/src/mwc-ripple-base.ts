@@ -18,7 +18,6 @@ import {LitElement, html, property, classMap} from '@material/mwc-base/base-elem
 import {ripple, RippleOptions} from './ripple-directive.js';
 
 export class RippleBase extends LitElement {
-
   @property({type: Boolean})
   primary = false;
 
@@ -59,5 +58,4 @@ export class RippleBase extends LitElement {
       <div .ripple="${ripple(rippleOptions)}"
           class="mdc-ripple-surface ${classMap(classes)}"></div>`;
   }
-
 }

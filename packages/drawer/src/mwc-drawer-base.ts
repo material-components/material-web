@@ -14,7 +14,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, observer, query, PropertyValues, classMap, addHasRemoveClass} from '@material/mwc-base/base-element.js';
+import {
+  BaseElement,
+  html,
+  property,
+  observer,
+  query,
+  PropertyValues,
+  classMap,
+  addHasRemoveClass,
+} from '@material/mwc-base/base-element.js';
 import MDCModalDrawerFoundation from '@material/drawer/modal/foundation.js';
 import MDCDismissibleDrawerFoundation from '@material/drawer/dismissible/foundation.js';
 import {MDCDrawerAdapter} from '@material/drawer/adapter.js';
@@ -30,7 +39,6 @@ const blockingElements =
     (document as DocumentWithBlockingElements).$blockingElements;
 
 export class DrawerBase extends BaseElement {
-
   @query('.mdc-drawer')
   protected mdcRoot!: HTMLElement;
 
@@ -59,11 +67,11 @@ export class DrawerBase extends BaseElement {
       },
       notifyClose: () => {
         this.open = false;
-        this.dispatchEvent(new Event(strings.CLOSE_EVENT, {bubbles: true, cancelable: true}))
+        this.dispatchEvent(new Event(strings.CLOSE_EVENT, {bubbles: true, cancelable: true}));
       },
       notifyOpen: () => {
         this.open = true;
-        this.dispatchEvent(new Event(strings.OPEN_EVENT, {bubbles: true, cancelable: true}))
+        this.dispatchEvent(new Event(strings.OPEN_EVENT, {bubbles: true, cancelable: true}));
       },
       // TODO(sorvell): Implement list focusing integration.
       focusActiveNavigationItem: () => {
@@ -76,7 +84,7 @@ export class DrawerBase extends BaseElement {
         blockingElements.remove(this);
         this.appContent.inert = false;
       },
-    }
+    };
   }
 
   private _previousFocus: HTMLElement|null = null;
