@@ -65,14 +65,14 @@ export class Radio extends FormElement {
 
   constructor() {
     super();
-    // Selection Controller is only needed for native ShadowDOM
-    if (!window['ShadyDOM'] || !window['ShadyDOM']['inUse']) {
-      this._selectionController = SelectionController.getController(this);
-    }
   }
 
   connectedCallback() {
     super.connectedCallback();
+    // Selection Controller is only needed for native ShadowDOM
+    if (!window['ShadyDOM'] || !window['ShadyDOM']['inUse']) {
+      this._selectionController = SelectionController.getController(this);
+    }
     if (this._selectionController) {
       this._selectionController.register(this);
     }
