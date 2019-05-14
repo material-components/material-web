@@ -1,4 +1,6 @@
-extends: google
+extends:
+  - google
+  - plugin:wc/recommended
 globals:
   goog: false
 env:
@@ -7,6 +9,7 @@ parser: "@typescript-eslint/parser"
 plugins:
   - "@typescript-eslint"
   - mocha
+  - wc
 parserOptions:
   ecmaVersion: 2017
   sourceType: module
