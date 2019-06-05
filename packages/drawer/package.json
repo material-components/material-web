@@ -15,10 +15,11 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/drawer": "^1.0.0",
-    "@material/mwc-base": "^0.5.0"
+    "@material/mwc-base": "^0.5.0",
+    "blocking-elements": "^0.0.2",
+    "wicg-inert": "^2.1.0"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "private": true
+  }
 }

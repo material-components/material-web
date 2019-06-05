@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, query, customElement, PropertyValues, classMap, SpecificEventListener, addHasRemoveClass} from '@material/mwc-base/base-element.js';
+import {BaseElement, html, property, query, customElement, PropertyValues, classMap, SpecificEventListener, addHasRemoveClass, EventType} from '@material/mwc-base/base-element.js';
 import MDCTopAppBarBaseFoundation from '@material/top-app-bar/foundation';
 import MDCTopAppBarFoundation from '@material/top-app-bar/standard/foundation.js';
 import MDCShortTopAppBarFoundation from '@material/top-app-bar/short/foundation.js';
@@ -112,12 +112,12 @@ export class TopAppBar extends BaseElement {
       setStyle: (property: string, value: string) => this.mdcRoot.style.setProperty(property, value),
       getTopAppBarHeight: () => this.mdcRoot.clientHeight,
       // TODO(sorvell): don't understand why the top-app-bar knows about navigation
-      registerNavigationIconInteractionHandler: (type: string, handler: EventListenerOrEventListenerObject) => {
+      registerNavigationIconInteractionHandler: <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
         if (this._navIconSlot) {
           this._navIconSlot.addEventListener(type, handler);
         }
       },
-      deregisterNavigationIconInteractionHandler: (type, handler) => {
+      deregisterNavigationIconInteractionHandler: <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
         if (this._navIconSlot) {
           this._navIconSlot.removeEventListener(type, handler);
         }

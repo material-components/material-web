@@ -1,4 +1,4 @@
-# mwc-snackbar
+# mwc-linear-progress
 
 > :warning: These components are a work in progress. They are pre-release and should be considered experimental, as they may undergo major changes before release. We are experimenting with alternate architectures and approaches with the goal of allowing us to bring the most correct and optimal implementation of Material components to the widest possible audiences. Visible progress may be slow, as this research is across teams and repositories so is not consistently reflected in commits to this codebase. :warning:
 
@@ -6,7 +6,7 @@ A [Material Components](https://material.io/components/) icon implementation usi
 
 ## Getting started
 
- * The easiest way to try out mwc-snackbar is to use one of these online tools:
+ * The easiest way to try out mwc-linear-progress is to use one of these online tools:
 
     * Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-icon-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-icon-example?path=index.html)
 
@@ -15,7 +15,7 @@ A [Material Components](https://material.io/components/) icon implementation usi
 
 * You can also copy [this HTML file](https://gist.githubusercontent.com/azakus/f01e9fc2ed04e781ad5a52ded7b296e7/raw/266f2f4f91cbfe89b2acc6ec63957b1a3cfe9b39/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
 
-* When you're ready to use mwc-snackbar in a project, install it via [npm](https://www.npmjs.com/). To run the project in the browser, a module-compatible toolctain is required. We recommend installing the [Polymer CLI](https://github.com/Polymer/polymer-cli) and using its development server as follows.
+* When you're ready to use mwc-linear-progress in a project, install it via [npm](https://www.npmjs.com/). To run the project in the browser, a module-compatible toolctain is required. We recommend installing the [Polymer CLI](https://github.com/Polymer/polymer-cli) and using its development server as follows.
 
   1. Ensure the webcomponents polyfills are included in your HTML page
 
@@ -27,21 +27,21 @@ A [Material Components](https://material.io/components/) icon implementation usi
 
           ```<script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>```
 
-  1. Add mwc-snackbar to your project:
+  1. Add mwc-linear-progress to your project:
 
-      ```npm i @material/mwc-snackbar```
+      ```npm i @material/mwc-linear-progress```
 
-  1. Import the mwc-snackbar definition into your HTML page:
+  1. Import the mwc-linear-progress definition into your HTML page:
 
-      ```<script type="module" src="@material/mwc-snackbar/index.js"></script>```
+      ```<script type="module" src="@material/mwc-linear-progress/index.js"></script>```
 
       Or into your module script:
 
-      ```import {Snackbar} from "@material/mwc-snackbar"```
+      ```import {LinearProgress} from "@material/mwc-linear-progress"```
 
-  1. Create an instance of mwc-snackbar in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
+  1. Create an instance of mwc-linear-progress in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
 
-      ```<mwc-snackbar></mwc-snackbar>```
+      ```<mwc-linear-progress determinate progress="0.5" buffer="1"></mwc-linear-progress>```
 
   1. Install the Polymer CLI:
 
@@ -51,12 +51,12 @@ A [Material Components](https://material.io/components/) icon implementation usi
 
       ```polymer serve```
 
-  > mwc-snackbar is published on [npm](https://www.npmjs.com/package/@material/mwc-snackbar) using JavaScript Modules.
+  > mwc-linear-progress is published on [npm](https://www.npmjs.com/package/@material/mwc-linear-progress) using JavaScript Modules.
   This means it can take advantage of the standard native JavaScript module loader available in all current major browsers.
   >
-  > However, since mwc-snackbar uses npm convention to reference dependencies by name, a light transform to rewrite specifiers to URLs is required to get it to run in the browser. The polymer-cli's development server `polymer serve` automatically handles this transform.
+  > However, since mwc-linear-progress uses npm convention to reference dependencies by name, a light transform to rewrite specifiers to URLs is required to get it to run in the browser. The polymer-cli's development server `polymer serve` automatically handles this transform.
 
-  Tools like [WebPack](https://webpack.js.org/) and [Rollup](https://rollupjs.org/) can also be used to serve and/or bundle mwc-snackbar.
+  Tools like [WebPack](https://webpack.js.org/) and [Rollup](https://rollupjs.org/) can also be used to serve and/or bundle mwc-linear-progress.
 
 ## Supported Browsers
 

@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {FormElement, html, property, observer, query, customElement, classMap, SpecificEventListener, addHasRemoveClass} from '@material/mwc-base/form-element.js';
+import {FormElement, html, property, observer, query, customElement, classMap, SpecificEventListener, addHasRemoveClass, EventType} from '@material/mwc-base/form-element.js';
 import {repeat} from 'lit-html/directives/repeat.js';
 import {style} from './mwc-slider-css.js';
 import MDCSliderFoundation from '@material/slider/foundation.js';
@@ -134,17 +134,17 @@ export class Slider extends FormElement {
       removeAttribute: (name: string) => this.mdcRoot.removeAttribute(name),
       computeBoundingRect: () => this.mdcRoot.getBoundingClientRect(),
       getTabIndex: () => this.mdcRoot.tabIndex,
-      registerInteractionHandler: (type: string, handler: EventListener) =>
+      registerInteractionHandler: <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
         this.mdcRoot.addEventListener(type, handler),
-      deregisterInteractionHandler: (type: string, handler: EventListener) =>
+      deregisterInteractionHandler: <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
         this.mdcRoot.removeEventListener(type, handler),
-      registerThumbContainerInteractionHandler: (type: string, handler: EventListener) =>
+      registerThumbContainerInteractionHandler: <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
         this.thumbContainer.addEventListener(type, handler),
-      deregisterThumbContainerInteractionHandler: (type: string, handler: EventListener) =>
+      deregisterThumbContainerInteractionHandler: <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
         this.thumbContainer.removeEventListener(type, handler),
-      registerBodyInteractionHandler: (type: string, handler: EventListener) =>
+      registerBodyInteractionHandler: <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
         document.body.addEventListener(type, handler),
-      deregisterBodyInteractionHandler: (type: string, handler: EventListener) =>
+      deregisterBodyInteractionHandler: <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
         document.body.removeEventListener(type, handler),
       registerResizeHandler: (handler: SpecificEventListener<'resize'>) =>
         window.addEventListener('resize', handler),

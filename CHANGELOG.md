@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 - Upgrade lerna to 3.x
 - Upgrade typescript to 3.4, add config for tsbuildinfo files needed for incremental compilation mode
+- Add README notes that component set is in experimental status.
+- Remove draft components, simplify package listing.
+- Prepare drawer, icon-button, linear-progress, slider, snackbar, tab components, and top-app-bar for release.
+- Fix typing for event listeners in adapters due to typescript update.
+- Add wicg-inert and blocking-elements dependencies to mwc-drawer
 
 ## [0.5.0] - 2019-03-26
 - Update to mdc 1.0

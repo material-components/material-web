@@ -21,11 +21,9 @@ import {style} from './mwc-ripple-global-css.js';
 import * as util from '@material/ripple/util.js';
 import {matches} from '@material/dom/ponyfill';
 
-import {SpecificEventListener} from '@material/mwc-base/base-element.js';
+import {EventType, SpecificEventListener} from '@material/mwc-base/base-element.js';
 
 const supportsCssVariables = util.supportsCssVariables(window);
-
-type Handler = EventListenerOrEventListenerObject;
 
 export interface RippleOptions {
   interactionNode?: HTMLElement;
@@ -80,16 +78,16 @@ export const rippleNode = (options: RippleNodeOptions) => {
     removeClass: (className: string) =>
       surfaceNode.classList.remove(className),
     containsEventTarget: (target: HTMLElement) => interactionNode.contains(target),
-    registerInteractionHandler: (type: string, handler: Handler) =>
+    registerInteractionHandler: <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
       interactionNode.addEventListener(type, handler, util.applyPassive()),
-    deregisterInteractionHandler: (type: string, handler: Handler) =>
+    deregisterInteractionHandler: <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
       interactionNode.removeEventListener(type, handler, util.applyPassive()),
-    registerDocumentInteractionHandler: (evtType: string, handler: Handler) =>
+    registerDocumentInteractionHandler: <K extends EventType>(evtType: K, handler: SpecificEventListener<K>) =>
       document.documentElement!.addEventListener(
           evtType, handler, util.applyPassive()),
-    deregisterDocumentInteractionHandler: (evtType: string, handler: Handler) =>
+    deregisterDocumentInteractionHandler: <K extends EventType>(evtType: string, handler: SpecificEventListener<K>) =>
       document.documentElement!.removeEventListener(
-          evtType, handler, util.applyPassive()),
+          evtType, handler as EventListenerOrEventListenerObject, util.applyPassive()),
     registerResizeHandler: (handler: SpecificEventListener<'resize'>) =>
       window.addEventListener('resize', handler),
     deregisterResizeHandler: (handler: SpecificEventListener<'resize'>) =>
