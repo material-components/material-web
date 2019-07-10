@@ -14,12 +14,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {html, BaseElement, property, query, observer, classMap, EventType, SpecificEventListener} from '@material/mwc-base/base-element.js';
-import {FormElement} from '@material/mwc-base/form-element.js';
-import {findAssignedElement} from '@material/mwc-base/utils.js';
+import {FormfieldBase} from './mwc-formfield-base.js';
+import {customElement} from '@material/mwc-base/base-element.js';
 import {style} from './mwc-formfield-css.js';
-import MDCFormFieldFoundation from '@material/form-field/foundation.js';
-import {MDCFormFieldAdapter} from '@material/form-field/adapter.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -27,81 +24,9 @@ declare global {
   }
 }
 
-export class Formfield extends BaseElement {
-  @property({type: Boolean})
-  alignEnd = false;
-
-  @property({type: String})
-  @observer(async function(this: Formfield, label: string) {
-    const input = this.input;
-    if (input) {
-      if (input.localName === 'input') {
-        input.setAttribute('aria-label', label);
-      } else if (input instanceof FormElement) {
-        await input.updateComplete;
-        input.setAriaLabel(label);
-      }
-    }
-  })
-  label = '';
-
-  @query('.mdc-form-field')
-  protected mdcRoot!: HTMLElement;
-
-  protected mdcFoundation!: MDCFormFieldFoundation;
-
-  protected readonly mdcFoundationClass = MDCFormFieldFoundation;
-
-  protected createAdapter(): MDCFormFieldAdapter {
-    return {
-      registerInteractionHandler: <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
-        this.labelEl.addEventListener(type, handler);
-      },
-      deregisterInteractionHandler: <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
-        this.labelEl.removeEventListener(type, handler);
-      },
-      activateInputRipple: () => {
-        const input = this.input;
-        if (input instanceof FormElement && input.ripple) {
-          input.ripple.activate();
-        }
-      },
-      deactivateInputRipple: () => {
-        const input = this.input;
-        if (input instanceof FormElement && input.ripple) {
-          input.ripple.deactivate();
-        }
-      }
-    }
-  }
-
-  @query('slot')
-  protected slotEl!: HTMLSlotElement;
-
-  @query('label')
-  protected labelEl!: HTMLLabelElement;
-
-  protected get input() {
-    return findAssignedElement(this.slotEl, '*');
-  }
+@customElement('mwc-formfield' as any)
+export class Formfield extends FormfieldBase {
 
   static styles = style;
 
-  render() {
-    return html`
-      <div class="mdc-form-field ${classMap({'mdc-form-field--align-end': this.alignEnd})}">
-        <slot></slot>
-        <label class="mdc-label" @click="${this._labelClick}">${this.label}</label>
-      </div>`;
-  }
-
-  private _labelClick() {
-    const input = this.input;
-    if (input) {
-      input.focus();
-      input.click();
-    }
-  }
 }
-
-customElements.define('mwc-formfield', Formfield);

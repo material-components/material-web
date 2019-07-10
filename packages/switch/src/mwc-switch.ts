@@ -14,11 +14,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {FormElement, html, property, observer, query, customElement, HTMLElementWithRipple, addHasRemoveClass} from '@material/mwc-base/form-element.js';
+import {SwitchBase} from './mwc-switch-base.js';
+import {customElement} from '@material/mwc-base/form-element.js';
 import {style} from './mwc-switch-css.js';
-import MDCSwitchFoundation from '@material/switch/foundation.js';
-import {ripple} from '@material/mwc-ripple/ripple-directive.js';
-import { MDCSwitchAdapter } from '@material/switch/adapter';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -27,66 +25,6 @@ declare global {
 }
 
 @customElement('mwc-switch' as any)
-export class Switch extends FormElement {
-  @property({type: Boolean})
-  @observer(function(this: Switch, value: boolean) {
-    this.mdcFoundation.setChecked(value);
-  })
-  checked = false;
-
-  @property({type: Boolean})
-  @observer(function(this: Switch, value: boolean) {
-    this.mdcFoundation.setDisabled(value);
-  })
-  disabled = false;
-
+export class Switch extends SwitchBase {
   static styles = style;
-
-  @query('.mdc-switch')
-  protected mdcRoot!: HTMLElement;
-
-  @query('input')
-  protected formElement!: HTMLInputElement;
-
-  protected mdcFoundation!: MDCSwitchFoundation;
-
-  private _changeHandler(e: Event) {
-    this.mdcFoundation.handleChange(e);
-    // catch "click" event and sync properties
-    this.checked = this.formElement.checked;
-  };
-
-  protected readonly mdcFoundationClass = MDCSwitchFoundation;
-
-  protected createAdapter(): MDCSwitchAdapter {
-    return {
-      ...addHasRemoveClass(this.mdcRoot),
-      setNativeControlChecked: (checked: boolean) => {
-        this.formElement.checked = checked;
-      },
-      setNativeControlDisabled: (disabled: boolean) => {
-        this.formElement.disabled = disabled;
-      }
-    }
-  }
-
-  get ripple() {
-    return this.rippleNode.ripple;
-  }
-
-  @query('.mdc-switch__thumb-underlay')
-  protected rippleNode!: HTMLElementWithRipple;
-
-  render() {
-    return html`
-      <div class="mdc-switch">
-        <div class="mdc-switch__track"></div>
-        <div class="mdc-switch__thumb-underlay" .ripple="${ripple({interactionNode: this})}">
-          <div class="mdc-switch__thumb">
-            <input type="checkbox" id="basic-switch" class="mdc-switch__native-control" role="switch" @change="${this._changeHandler}">
-          </div>
-        </div>
-      </div>
-      <slot></slot>`;
-  }
 }
