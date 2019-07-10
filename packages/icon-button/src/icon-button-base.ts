@@ -20,7 +20,7 @@ import MDCIconButtonToggleFoundation from '@material/icon-button/foundation.js';
 import {MDCIconButtonToggleAdapter} from '@material/icon-button/adapter.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 
-export abstract class IconButtonBase extends BaseElement {
+export class IconButtonBase extends BaseElement {
 
   protected mdcFoundationClass = MDCIconButtonToggleFoundation;
 
