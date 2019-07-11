@@ -1,0 +1,23 @@
+{
+  "name": "@material/mwc-textfield",
+  "version": "0.6.0",
+  "description": "",
+  "main": "mwc-textfield.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@material/floating-label": "^1.0.0",
+    "@material/line-ripple": "^1.0.0",
+    "@material/mwc-base": "^0.6.0",
+    "@material/mwc-icon": "^0.6.0",
+    "@material/notched-outline": "1.0.0",
+    "@material/textfield": "^1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "private": true
+}

@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
 @license
-Copyright 2018 Google Inc. All Rights Reserved.
+Copyright 2019 Google Inc. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,8 +21,22 @@ limitations under the License.
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script type="module" src="../node_modules/@material/mwc-textfield/mwc-textfield.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-textfield/mwc-textarea.js"></script>
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
   <link rel="stylesheet" href="demo-component.css">
+  <style>
+    mwc-textfield {
+      min-width: 240px;
+    }
+    .shaped-filled {
+      --mwc-textfield-filled-border-radius: 16px 16px 0 0;
+    }
+    .shaped-outlined {
+      --mwc-textfield-outlined-leading-width: 28px;
+      --mwc-textfield-outlined-leading-border-radius: 28px 0 0 28px;
+      --mwc-textfield-outlined-trailing-border-radius: 0 28px 28px 0;
+    }
+  </style>
 </head>
 <body class="unresolved">
   <header>
@@ -31,74 +45,63 @@ limitations under the License.
   </header>
 
   <main>
+    <h4>Filled</h4>
     <div class="demo-group-spaced">
-
-      <mwc-textfield></mwc-textfield>
-      <mwc-textfield label="Say something..."></mwc-textfield>
-      <mwc-textfield label="Say something..." value="hi"></mwc-textfield>
-      <mwc-textfield icon="event" label="Say something..." value="hi"></mwc-textfield>
-      <mwc-textfield icon="mail" iconTrailing label="Say something..." value="hi"></mwc-textfield>
+      <mwc-textfield label="Standard"></mwc-textfield>
+      <mwc-textfield label="Standard" icon="event"></mwc-textfield>
+      <mwc-textfield label="Standard" iconTrailing="delete"></mwc-textfield>
     </div>
 
-    <h4>box</h4>
-    <div class="demo-group-spaced">
-
-      <mwc-textfield box></mwc-textfield>
-      <mwc-textfield box label="Say something..."></mwc-textfield>
-      <mwc-textfield box label="Say something..." value="hi"></mwc-textfield>
-      <mwc-textfield box icon="event" label="Say something..." value="hi"></mwc-textfield>
-      <mwc-textfield box icon="event" iconTrailing label="Say something..." value="hi"></mwc-textfield>
-
+    <h4>Shaped Filled</h4>
+    <div class="demo-group-spaced shaped-filled">
+      <mwc-textfield label="Standard"></mwc-textfield>
+      <mwc-textfield label="Standard" icon="event"></mwc-textfield>
+      <mwc-textfield label="Standard" iconTrailing="delete"></mwc-textfield>
     </div>
 
-    <h4>box - required</h4>
+    <h4>Outlined</h4>
     <div class="demo-group-spaced">
-
-      <mwc-textfield required box></mwc-textfield>
-      <mwc-textfield required box label="Say something..."></mwc-textfield>
-      <mwc-textfield required box label="Say something..." value="hi"></mwc-textfield>
-      <mwc-textfield required box icon="event" label="Say something..." value="hi"></mwc-textfield>
-      <mwc-textfield required box iconTrailing icon="event" label="Say something..." value="hi"></mwc-textfield>
+      <mwc-textfield outlined label="Standard"></mwc-textfield>
+      <mwc-textfield outlined label="Standard" icon="event"></mwc-textfield>
+      <mwc-textfield outlined label="Standard" iconTrailing="delete"></mwc-textfield>
     </div>
 
-    <h4>outlined</h4>
-    <div class="demo-group-spaced">
-
-      <mwc-textfield outlined></mwc-textfield>
-      <mwc-textfield outlined label="Say something..."></mwc-textfield>
-      <mwc-textfield outlined label="Say something..." value="hi"></mwc-textfield>
-      <mwc-textfield outlined icon="event" label="Say something..." value="hi"></mwc-textfield>
-      <mwc-textfield outlined iconTrailing icon="event" label="Say something..." value="hi"></mwc-textfield>
+    <h4>Shaped Outlined</h4>
+    <div class="demo-group-spaced shaped-outlined">
+      <mwc-textfield outlined label="Email" type="email"></mwc-textfield>
+      <mwc-textfield outlined label="Standard" icon="event"></mwc-textfield>
+      <mwc-textfield outlined label="Standard" iconTrailing="delete"></mwc-textfield>
     </div>
 
-    <h4>outlined - required - email - helperText</h4>
+    <h4>Text Field without label</h4>
     <div class="demo-group-spaced">
-
-      <mwc-textfield outlined required type="email" helperText="Make sure to include an @"></mwc-textfield>
-      <mwc-textfield outlined required type="email" label="Enter email..." helperText="Make sure to include an @"></mwc-textfield>
-      <mwc-textfield outlined required type="email"  label="Enter email..." value="hi" helperText="Make sure to include an @"></mwc-textfield>
-      <mwc-textfield outlined required type="email" icon="event" label="Say something..." value="hi" helperText="Make sure to include an @"></mwc-textfield>
-      <mwc-textfield outlined iconTrailing required type="email" icon="event" label="Say something..." value="hi" helperText="Make sure to include an @"></mwc-textfield>
+      <mwc-textfield helper="Helper Text"></mwc-textfield>
+      <mwc-textfield outlined helper="Helper Text"></mwc-textfield>
+      <mwc-textfield outlined helper="Helper Text" class="shaped-outlined"></mwc-textfield>
     </div>
 
-    <h4>box disabled</h4>
+    <h4>Text Field with Character Counter</h4>
     <div class="demo-group-spaced">
-
-      <mwc-textfield box disabled></mwc-textfield>
-      <mwc-textfield box disabled label="Say something..."></mwc-textfield>
-      <mwc-textfield box disabled label="Say something..." value="hi"></mwc-textfield>
-      <mwc-textfield box disabled icon="event" label="Say something..." value="hi"></mwc-textfield>
-      <mwc-textfield box disabled iconTrailing icon="event" label="Say something..." value="hi"></mwc-textfield>
-
+      <mwc-textfield label="Standard" helper="Helper Text" helperPersistent maxlength="18" charCounter></mwc-textfield>
+      <mwc-textfield outlined label="Standard" helper="Helper Text" helperPersistent maxlength="18" charCounter></mwc-textfield>
+      <mwc-textfield outlined label="Standard" helper="Helper Text" helperPersistent maxlength="18" charCounter class="shaped-outlined"></mwc-textfield>
     </div>
 
-    <h4>fullWidth</h4>
+    <h4>Textarea</h4>
+    <div class="demo-group-spaced">
+      <mwc-textarea outlined label="Standard"></mwc-textarea>
+    </div>
 
-    <mwc-textfield fullwidth></mwc-textfield>
-    <mwc-textfield fullwidth placeholder="Say something.." ></mwc-textfield>
-    <mwc-textfield fullwidth label="Say something..."></mwc-textfield>
-    <mwc-textfield fullwidth label="Say something..." value="hi"></mwc-textfield>
+    <h4>Textarea with Character Counter</h4>
+    <div class="demo-group-spaced">
+      <mwc-textarea outlined label="Standard" maxlength="18" charCounter></mwc-textarea>
+    </div>
 
+    <h4>Full Width</h4>
+    <mwc-textfield fullwidth placeholder="Standard" helper="Helper Text" helperpersistent></mwc-textfield>
+
+    <h4>Full Width Textarea</h4>
+    <mwc-textarea outlined fullwidth label="Standard" helper="Helper Text" helperpersistent></mwc-textarea>
   </main>
 
   <script>
