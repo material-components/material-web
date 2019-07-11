@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "."
+  },
+  "include": [
+    "src/*.ts"
+  ],
+  "references": [
+    {"path": "../base"},
+    {"path": "../ripple"},
+    {"path": "../icon"}
+  ]
+}
