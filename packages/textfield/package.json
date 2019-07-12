@@ -13,8 +13,8 @@
     "@material/line-ripple": "^3.0.0",
     "@material/mwc-base": "^0.6.0",
     "@material/mwc-icon": "^0.6.0",
-    "@material/notched-outline": "1.0.0",
-    "@material/textfield": "^1.0.0"
+    "@material/notched-outline": "^3.0.0",
+    "@material/textfield": "^3.0.0"
   },
   "publishConfig": {
     "access": "public"
