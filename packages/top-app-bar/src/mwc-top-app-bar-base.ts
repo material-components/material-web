@@ -14,13 +14,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, query, PropertyValues, classMap, SpecificEventListener, addHasRemoveClass, EventType} from '@material/mwc-base/base-element.js';
+import {BaseElement, html, property, query, PropertyValues, classMap, addHasRemoveClass} from '@material/mwc-base/base-element.js';
 import MDCTopAppBarBaseFoundation from '@material/top-app-bar/foundation';
 import MDCTopAppBarFoundation from '@material/top-app-bar/standard/foundation.js';
 import MDCShortTopAppBarFoundation from '@material/top-app-bar/short/foundation.js';
 import MDCFixedTopAppBarFoundation from '@material/top-app-bar/fixed/foundation.js';
 import {strings} from '@material/top-app-bar/constants.js';
 import { MDCTopAppBarAdapter } from '@material/top-app-bar/adapter';
+
+type TopAppBarTypes = ''|'fixed'|'prominent'|'short'|'shortCollapsed'|'prominentFixed';
 
 export class TopAppBarBase extends BaseElement {
 
@@ -40,9 +42,8 @@ export class TopAppBarBase extends BaseElement {
   @query('[name="actionItems"]')
   private _actionItemsSlot!: HTMLSlotElement;
 
-  // type can be 'fixed' || 'prominent' || 'short' || 'shortCollapsed' || 'prominentFixed'
   @property({reflect: true})
-  type = '';
+  type: TopAppBarTypes = '';
 
   @property({type: Boolean, reflect: true})
   dense = false;
@@ -101,28 +102,9 @@ export class TopAppBarBase extends BaseElement {
       ...addHasRemoveClass(this.mdcRoot),
       setStyle: (property: string, value: string) => this.mdcRoot.style.setProperty(property, value),
       getTopAppBarHeight: () => this.mdcRoot.clientHeight,
-      // TODO(sorvell): don't understand why the top-app-bar knows about navigation
-      registerNavigationIconInteractionHandler: <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
-        if (this._navIconSlot) {
-          this._navIconSlot.addEventListener(type, handler);
-        }
-      },
-      deregisterNavigationIconInteractionHandler: <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
-        if (this._navIconSlot) {
-          this._navIconSlot.removeEventListener(type, handler);
-        }
-      },
       notifyNavigationIconClicked: () => {
         this.dispatchEvent(new Event(strings.NAVIGATION_EVENT, {bubbles: true, cancelable: true}));
       },
-      registerScrollHandler: (handler: SpecificEventListener<'scroll'>) =>
-          this.scrollTarget.addEventListener('scroll', handler as EventListenerOrEventListenerObject),
-      deregisterScrollHandler: (handler: SpecificEventListener<'scroll'>) =>
-          this.scrollTarget.removeEventListener('scroll', handler as EventListenerOrEventListenerObject),
-      registerResizeHandler: (handler: SpecificEventListener<'resize'>) =>
-          window.addEventListener('resize', handler),
-      deregisterResizeHandler: (handler: SpecificEventListener<'resize'>) =>
-          window.removeEventListener('resize', handler),
       getViewportScrollY: () => this.scrollTarget[this.scrollTarget === window ? 'pageYOffset' : 'scrollTop'],
       getTotalActionItems: () =>
         this._actionItemsSlot.assignedNodes({flatten: true}).length,
@@ -139,6 +121,36 @@ export class TopAppBarBase extends BaseElement {
     }
   }
 
+  protected handleTargetScroll = () => {
+    this.mdcFoundation.handleTargetScroll();
+  }
+
+  protected handleResize = () => {
+    this.mdcFoundation.handleWindowResize();
+  }
+
+  protected handleNavigationClick = () => {
+    this.mdcFoundation.handleNavigationClick();
+  }
+
+  protected registerListeners() {
+    this._navIconSlot.addEventListener('click', this.handleNavigationClick);
+    this.scrollTarget.addEventListener('scroll', this.handleTargetScroll, {passive: true});
+
+    if (this.type !== 'short' && this.type !== 'fixed') {
+      window.addEventListener('resize', this.handleResize, {passive: true});
+    }
+  }
+
+  protected unregisterListeners() {
+    this._navIconSlot.removeEventListener('click', this.handleNavigationClick);
+    this.scrollTarget.removeEventListener('scroll', this.handleTargetScroll);
+
+    if (this.type !== 'short' && this.type !== 'fixed') {
+      window.removeEventListener('resize', this.handleResize);
+    }
+  }
+
   createFoundation() {
     super.createFoundation();
     const windowScroller = this.scrollTarget === window;
@@ -146,5 +158,12 @@ export class TopAppBarBase extends BaseElement {
     this.mdcRoot.style.position = windowScroller ? '' : 'absolute';
     // TODO(sorvell): not sure why this is necessary but the MDC demo does it.
     this.mdcRoot.style.top = windowScroller ? '0px' : '';
+    this.unregisterListeners();
+    this.registerListeners();
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.unregisterListeners();
   }
 }
