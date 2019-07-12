@@ -10,9 +10,8 @@ node_modules
 /packages/*/*.tgz
 /packages/*/src/*-css.ts
 /packages/*/package-lock.json
-.tsbuildinfo
-!packages/*/custom_types/**
-/test/benchmark/**/*.js
+**/*.tsbuildinfo
+!packages/*/custom_types/**/test/benchmark/**/*.js
 /test/benchmark/**/*.js.map
 /test/benchmark/**/*.d.ts
 /scripts/tsc-out/
