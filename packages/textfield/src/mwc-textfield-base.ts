@@ -22,6 +22,8 @@ import {MDCLineRipple} from '@material/line-ripple';
 import {MDCNotchedOutline} from '@material/notched-outline';
 import {MDCTextFieldCharacterCounter} from '@material/textfield/character-counter';
 
+const passiveEvents = ['touchstart', 'touchmove', 'scroll', 'mousewheel'];
+
 export abstract class TextFieldBase extends FormElement {
   protected mdcFoundation!: MDCTextFieldFoundation;
 
@@ -40,7 +42,7 @@ export abstract class TextFieldBase extends FormElement {
   protected lineRippleElement!: HTMLElement;
 
   @query('.mdc-notched-outline')
-  protected outlineLement!: HTMLElement;
+  protected outlineElement!: HTMLElement;
 
   @query('.mdc-text-field-character-counter')
   protected charCounterElement!: HTMLElement;
@@ -177,7 +179,7 @@ export abstract class TextFieldBase extends FormElement {
   protected createAdapter(): MDCTextFieldAdapter {
     this._floatingLabel = this.labelElement ? new MDCFloatingLabel(this.labelElement) : null;
     this._lineRipple = this.lineRippleElement ? new MDCLineRipple(this.lineRippleElement) : null;
-    this._outline = this.outlineLement ? new MDCNotchedOutline(this.outlineLement) : null;
+    this._outline = this.outlineElement ? new MDCNotchedOutline(this.outlineElement) : null;
     return {
       ...addHasRemoveClass(this.mdcRoot),
       ...this.getRootAdapterMethods(),
@@ -214,7 +216,7 @@ export abstract class TextFieldBase extends FormElement {
       getNativeInput: () => this.formElement,
       isFocused: () => this.shadowRoot!.activeElement === this.formElement,
       registerInputInteractionHandler: (evtType: string,
-          handler: any) => this.formElement.addEventListener(evtType, handler),
+          handler: any) => this.formElement.addEventListener(evtType, handler, {passive: evtType in passiveEvents}),
       deregisterInputInteractionHandler: (evtType: string,
           handler: any) => this.formElement.removeEventListener(evtType, handler),
     };
