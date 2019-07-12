@@ -35,7 +35,7 @@ export abstract class TextFieldBase extends FormElement {
   @query('input')
   protected formElement!: HTMLInputElement;
 
-  @query('label')
+  @query('.mdc-floating-label')
   protected labelElement!: HTMLLabelElement;
 
   @query('.mdc-line-ripple')
@@ -104,12 +104,12 @@ export abstract class TextFieldBase extends FormElement {
       'mdc-text-field--with-trailing-icon': this.iconTrailing,
     };
     return html`
-      <div class="mdc-text-field ${classMap(classes)}">
+      <label class="mdc-text-field ${classMap(classes)}">
         ${this.icon ? this.renderIcon(this.icon) : ''}
         ${this.renderInput()}
         ${this.iconTrailing ? this.renderIcon(this.iconTrailing) : ''}
-        ${this.outlined ? this.renderOutlined() : this.renderLabel()}
-      </div>
+        ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
+      </label>
       ${(this.helper || this.charCounter) ? this.renderHelperText() : ''}
     `;
   }
@@ -136,15 +136,15 @@ export abstract class TextFieldBase extends FormElement {
       <div class="mdc-notched-outline">
         <div class="mdc-notched-outline__leading"></div>
         ${this.label ? html`<div class="mdc-notched-outline__notch">
-          <label for="text-field" class="mdc-floating-label">${this.label}</label>
+          <span class="mdc-floating-label">${this.label}</span>
         </div>` : ''}
         <div class="mdc-notched-outline__trailing"></div>
       </div>`;
   }
 
-  protected renderLabel() {
+  protected renderLabelText() {
     return html`
-      ${this.label && !this.fullWidth ? html`<label class="mdc-floating-label" for="text-field">${this.label}</label>` : ''}
+      ${this.label && !this.fullWidth ? html`<span class="mdc-floating-label">${this.label}</span>` : ''}
       <div class="mdc-line-ripple"></div>
     `;
   }
