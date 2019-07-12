@@ -18,12 +18,13 @@ import {directive, PropertyPart, noChange, NodePart, templateFactory} from 'lit-
 import MDCRippleFoundation from '@material/ripple/foundation.js';
 import {MDCRippleAdapter} from '@material/ripple/adapter.js';
 import {style} from './mwc-ripple-global-css.js';
-import * as util from '@material/ripple/util.js';
+import {supportsCssVariables} from '@material/ripple/util.js';
+import {applyPassive} from '@material/dom/events'
 import {matches} from '@material/dom/ponyfill';
 
 import {EventType, SpecificEventListener} from '@material/mwc-base/base-element.js';
 
-const supportsCssVariables = util.supportsCssVariables(window);
+const supportsCssVariablesWin = supportsCssVariables(window);
 
 export interface RippleOptions {
   interactionNode?: HTMLElement;
@@ -69,7 +70,7 @@ export const rippleNode = (options: RippleNodeOptions) => {
     }
   }
   const adapter: MDCRippleAdapter = {
-    browserSupportsCssVars: () => supportsCssVariables,
+    browserSupportsCssVars: () => supportsCssVariablesWin,
     isUnbounded: () =>
       options.unbounded === undefined ? true : options.unbounded,
     isSurfaceActive: () => matches(interactionNode, ':active'),
@@ -79,15 +80,15 @@ export const rippleNode = (options: RippleNodeOptions) => {
       surfaceNode.classList.remove(className),
     containsEventTarget: (target: HTMLElement) => interactionNode.contains(target),
     registerInteractionHandler: <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
-      interactionNode.addEventListener(type, handler, util.applyPassive()),
+      interactionNode.addEventListener(type, handler, applyPassive()),
     deregisterInteractionHandler: <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
-      interactionNode.removeEventListener(type, handler, util.applyPassive()),
+      interactionNode.removeEventListener(type, handler, applyPassive()),
     registerDocumentInteractionHandler: <K extends EventType>(evtType: K, handler: SpecificEventListener<K>) =>
       document.documentElement!.addEventListener(
-          evtType, handler, util.applyPassive()),
+          evtType, handler, applyPassive()),
     deregisterDocumentInteractionHandler: <K extends EventType>(evtType: string, handler: SpecificEventListener<K>) =>
       document.documentElement!.removeEventListener(
-          evtType, handler as EventListenerOrEventListenerObject, util.applyPassive()),
+          evtType, handler as EventListenerOrEventListenerObject, applyPassive()),
     registerResizeHandler: (handler: SpecificEventListener<'resize'>) =>
       window.addEventListener('resize', handler),
     deregisterResizeHandler: (handler: SpecificEventListener<'resize'>) =>

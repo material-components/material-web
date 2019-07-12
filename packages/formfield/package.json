@@ -9,7 +9,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/form-field": "^1.0.0",
+    "@material/form-field": "^3.0.0",
     "@material/mwc-base": "^0.6.0"
   },
   "publishConfig": {

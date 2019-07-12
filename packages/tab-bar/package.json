@@ -17,7 +17,7 @@
     "@material/mwc-base": "^0.6.0",
     "@material/mwc-tab": "^0.6.0",
     "@material/mwc-tab-scroller": "^0.6.0",
-    "@material/tab-bar": "^1.0.0"
+    "@material/tab-bar": "^3.0.0"
   },
   "publishConfig": {
     "access": "public"
