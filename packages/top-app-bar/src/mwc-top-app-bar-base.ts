@@ -36,9 +36,6 @@ export class TopAppBarBase extends BaseElement {
   @query('.mdc-top-app-bar')
   protected mdcRoot!: HTMLElement;
 
-  @query('[name="navigationIcon"]')
-  private _navIconSlot!: HTMLSlotElement;
-
   @query('[name="actionItems"]')
   private _actionItemsSlot!: HTMLSlotElement;
 
@@ -86,7 +83,7 @@ export class TopAppBarBase extends BaseElement {
       <header class="mdc-top-app-bar ${classMap(classes)}">
       <div class="mdc-top-app-bar__row">
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-          <slot name="navigationIcon"></slot>
+          <slot name="navigationIcon" @click=${this.handleNavigationClick}></slot>
           ${alignStartTitle}
         </section>
         ${centerSection}
@@ -134,7 +131,6 @@ export class TopAppBarBase extends BaseElement {
   }
 
   protected registerListeners() {
-    this._navIconSlot.addEventListener('click', this.handleNavigationClick);
     this.scrollTarget.addEventListener('scroll', this.handleTargetScroll, {passive: true});
 
     if (this.type !== 'short' && this.type !== 'fixed') {
@@ -143,7 +139,6 @@ export class TopAppBarBase extends BaseElement {
   }
 
   protected unregisterListeners() {
-    this._navIconSlot.removeEventListener('click', this.handleNavigationClick);
     this.scrollTarget.removeEventListener('scroll', this.handleTargetScroll);
 
     if (this.type !== 'short' && this.type !== 'fixed') {
