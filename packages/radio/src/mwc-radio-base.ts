@@ -15,7 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {FormElement, query, property, html, observer, HTMLElementWithRipple, addHasRemoveClass} from '@material/mwc-base/form-element.js';
-import {SelectionController} from './selection-controller.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 import MDCRadioFoundation from '@material/radio/foundation.js';
 import {MDCRadioAdapter} from '@material/radio/adapter.js';
@@ -130,5 +129,150 @@ export class RadioBase extends FormElement {
     if (this._selectionController) {
       this._selectionController.update(this);
     }
+  }
+}
+
+/**
+ * Unique symbol for marking roots
+ */
+const selectionController = Symbol('selection controller');
+
+class SelectionSet {
+  selected: RadioBase | null = null;
+  ordered: RadioBase[] | null = null;
+  readonly set = new Set<RadioBase>();
+}
+
+export class SelectionController {
+  private sets: {[name: string]: SelectionSet} = {};
+
+  private focusedSet: SelectionSet | null = null;
+
+  private mouseIsDown = false;
+
+  private updating = false;
+
+  static getController(element: HTMLElement) {
+    const root = element.getRootNode() as Node &
+        {[selectionController]?: SelectionController};
+    if (!root[selectionController]) {
+      root[selectionController] = new SelectionController(root);
+    }
+    return root[selectionController] as SelectionController;
+  }
+
+  constructor(element: Node) {
+    element.addEventListener('keydown', (e: Event) => this.keyDownHandler(e as KeyboardEvent));
+    element.addEventListener('mousedown', () => this.mousedownHandler());
+    element.addEventListener('mouseup', () => this.mouseupHandler());
+  }
+
+  protected keyDownHandler(e: KeyboardEvent) {
+    if (!(e.target instanceof RadioBase)) {
+      return;
+    }
+    const element = e.target;
+    if (!this.has(element)) {
+      return;
+    }
+    if (e.key == 'ArrowRight' || e.key == 'ArrowDown') {
+      this.next(element);
+    } else if (e.key == 'ArrowLeft' || e.key == 'ArrowUp') {
+      this.previous(element);
+    }
+  }
+
+  protected mousedownHandler() {
+    this.mouseIsDown = true;
+  }
+
+  protected mouseupHandler() {
+    this.mouseIsDown = false;
+  }
+
+  has(element: RadioBase) {
+    const set = this.getSet(element.name);
+    return set.set.has(element);
+  }
+
+  previous(element: RadioBase) {
+    const order = this.getOrdered(element);
+    const i = order.indexOf(element);
+    this.select(order[i-1] || order[order.length-1]);
+  }
+
+  next(element: RadioBase) {
+    const order = this.getOrdered(element);
+    const i = order.indexOf(element);
+    this.select(order[i+1] || order[0]);
+  }
+
+  select(element: RadioBase) {
+    element.click();
+  }
+
+  /**
+   * Helps to track the focused selection group and if it changes, focuses
+   * the selected item in the group. This matches native radio button behavior.
+   */
+  focus(element: RadioBase) {
+    // Only manage focus state when using keyboard
+    if (this.mouseIsDown) {
+      return;
+    }
+    const set = this.getSet(element.name);
+    const currentFocusedSet = this.focusedSet;
+    this.focusedSet = set;
+    if (currentFocusedSet != set && set.selected && set.selected != element) {
+      set.selected!.focusNative();
+    }
+  }
+
+  getOrdered(element: RadioBase) {
+    const set = this.getSet(element.name);
+    if (!set.ordered) {
+      set.ordered = Array.from(set.set);
+      set.ordered.sort((a, b) =>
+        a.compareDocumentPosition(b) == Node.DOCUMENT_POSITION_PRECEDING ? 1 : 0
+      );
+    }
+    return set.ordered;
+  }
+
+  getSet(name: string) {
+    if (!this.sets[name]) {
+      this.sets[name] = new SelectionSet();
+    }
+    return this.sets[name];
+  }
+
+  register(element: RadioBase) {
+    const set = this.getSet(element.name);
+    set.set.add(element);
+    set.ordered = null;
+  }
+
+  unregister(element: RadioBase) {
+    const set = this.getSet(element.name);
+    set.set.delete(element);
+    set.ordered = null;
+    if (set.selected == element) {
+      set.selected = null;
+    }
+  }
+
+  update(element: RadioBase) {
+    if (this.updating) {
+      return;
+    }
+    this.updating = true;
+    if (element.checked) {
+      const set = this.getSet(element.name);
+      for (const e of set.set) {
+        e.checked = (e == element);
+      }
+      set.selected = element;
+    }
+    this.updating = false;
   }
 }
