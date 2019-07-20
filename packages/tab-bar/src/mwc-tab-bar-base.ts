@@ -78,7 +78,7 @@ export class TabBarBase extends BaseElement {
     return this.tabsSlot.assignedNodes({flatten: true}).filter((e: Node) => e instanceof Tab) as Tab[];
   }
 
-  private _getTab(index) {
+  private _getTab(index: number) {
     return this._getTabs()[index];
   }
 

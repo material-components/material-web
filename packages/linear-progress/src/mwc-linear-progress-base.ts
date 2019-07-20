@@ -85,7 +85,11 @@ export class LinearProgressBase extends BaseElement {
       ...addHasRemoveClass(this.mdcRoot),
       getPrimaryBar: () => this.primaryBar,
       getBuffer: () => this.bufferElement,
-      setStyle: (el: HTMLElement, property: string, value: string) => el.style[property] = value,
+      setStyle: (el: HTMLElement, property: string, value: string) =>
+          el.style
+              [property as
+               Exclude<keyof CSSStyleDeclaration, 'length'|'parentRule'>] =
+              value,
     };
   }
 

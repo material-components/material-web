@@ -25,8 +25,8 @@ import 'blocking-elements/blocking-elements.js';
 declare global {
   interface Document {
     $blockingElements: {
-      push(HTMLElement): void;
-      remove(HTMLElement): Boolean;
+      push(element: HTMLElement): void;
+      remove(element: HTMLElement): Boolean;
     }
   }
 
