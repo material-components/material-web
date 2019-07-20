@@ -24,7 +24,6 @@ const dom5 = require('dom5/lib/index-next.js');
 const parse5 = require('parse5');
 const babel = require('rollup-plugin-babel');
 const nodeRes = require('rollup-plugin-node-resolve');
-const uglify = require('rollup-plugin-uglify');
 
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
@@ -51,13 +50,11 @@ const rollupOptions = {
       module: true,
       jsnext: true,
       main: true,
-      browser: true,
-      modulesOnly: true,
     }),
     babel({
       presets: ['es2015-rollup'],
+      babelrc: false
     }),
-    uglify(),
   ],
 };
 
@@ -122,4 +119,7 @@ async function separateScripts() {
   await writeFile(file, parse5.serialize(doc), 'utf-8');
 }
 
-separateScripts();
+separateScripts().catch((err) => {
+  console.error(err);
+  process.exit(-1);
+});

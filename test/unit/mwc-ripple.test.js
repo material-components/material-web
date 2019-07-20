@@ -16,36 +16,44 @@
 
 import {assert} from 'chai';
 import {Ripple} from '@material/mwc-ripple';
-import {RippleSurface} from '@material/mwc-ripple/mwc-ripple-surface.js';
 
-let element;
+let element, container;
 
 suite('mwc-ripple');
 
 beforeEach(() => {
-  element = document.createElement('mwc-ripple');
-  document.body.appendChild(element);
+  container = document.createElement("div");
+  document.body.appendChild(container);
+  
+  element = document.createElement("mwc-ripple");
+  container.appendChild(element);
 });
 
 afterEach(() => {
-  document.body.removeChild(element);
+  document.body.removeChild(container);
 });
 
 test('initializes as an mwc-ripple', () => {
   assert.instanceOf(element, Ripple);
 });
 
-suite('mwc-ripple-surface');
-
-beforeEach(() => {
-  element = document.createElement('mwc-ripple-surface');
-  document.body.appendChild(element);
+test("sets interactionNode to parent", async () => {
+  await element.updateComplete;
+  assert(element.interactionNode == container);
 });
 
-afterEach(() => {
-  document.body.removeChild(element);
-});
+suite("mwc-ripple nested");
 
-test('initializes as an mwc-ripple-surface', () => {
-  assert.instanceOf(element, RippleSurface);
+test("respects interactionNode", async () => {
+  container = document.createElement("div");
+  document.body.appendChild(container);
+
+  element = document.createElement("mwc-ripple");
+  element.interactionNode = document.body
+  container.appendChild(element);
+
+  await element.updateComplete;
+  assert(element.interactionNode == document.body);
+
+  document.body.removeChild(container);
 });

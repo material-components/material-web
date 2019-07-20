@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-button",
-  "version": "0.1.1",
+  "version": "0.6.0",
   "description": "",
   "main": "mwc-button.js",
   "repository": {
@@ -13,14 +13,10 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/button": "^0.35.0",
-    "@material/mwc-base": "^0.1.0",
-    "@material/mwc-icon": "^0.1.1",
-    "@material/mwc-ripple": "^0.1.1",
-    "@polymer/lit-element": "^0.4.0"
-  },
-  "devDependencies": {
-    "@material/mwc-sass-render": "^0.0.1"
+    "@material/button": "^3.0.0",
+    "@material/mwc-base": "^0.6.0",
+    "@material/mwc-icon": "^0.6.0",
+    "@material/mwc-ripple": "^0.6.0"
   },
   "publishConfig": {
     "access": "public"

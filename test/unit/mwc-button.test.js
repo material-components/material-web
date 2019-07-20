@@ -16,7 +16,8 @@
 
 import {assert} from 'chai';
 import {Button} from '@material/mwc-button';
-import {Fab} from '@material/mwc-button/mwc-fab.js';
+
+const ICON_SELECTOR = '.mdc-button__icon';
 
 let element;
 
@@ -35,17 +36,29 @@ test('initializes as an mwc-button', () => {
   assert.instanceOf(element, Button);
 });
 
-suite('mwc-fab');
+test('get/set disabled updates the disabled property on the native button element', async () => {
+  element.disabled = true;
+  await element.updateComplete;
+  const button = element.shadowRoot.querySelector('button');
+  assert.equal(button.hasAttribute('disabled'), true);
 
-beforeEach(() => {
-  element = document.createElement('mwc-fab');
-  document.body.appendChild(element);
+  element.disabled = false;
+  await element.updateComplete;
+  assert.equal(button.hasAttribute('disabled'), false);
 });
 
-afterEach(() => {
-  document.body.removeChild(element);
-});
+test('setting `icon` adds an icon to the button', async () => {
+  await element.updateComplete;
+  let icon = element.shadowRoot.querySelector(ICON_SELECTOR);
+  assert.equal(icon, null);
 
-test('initializes as an mwc-fab', () => {
-  assert.instanceOf(element, Fab);
+  element.icon = 'check';
+  await element.updateComplete;
+  icon = element.shadowRoot.querySelector(ICON_SELECTOR);
+  assert.instanceOf(icon, Element);
+
+  element.icon = undefined;
+  await element.updateComplete;
+  icon = element.shadowRoot.querySelector(ICON_SELECTOR);
+  assert.equal(icon, null);
 });

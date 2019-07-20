@@ -1,17 +1,16 @@
 {
   "name": "@material/mwc-base",
-  "version": "0.1.0",
+  "version": "0.6.0",
   "description": "",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/material-components/material-components-web-components.git"
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@polymer/lit-element": "^0.4.0"
+    "@material/base": "^3.0.0",
+    "lit-element": "^2.0.1",
+    "lit-html": "^1.0.0"
   },
   "publishConfig": {
     "access": "public"

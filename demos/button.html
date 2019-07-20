@@ -57,6 +57,7 @@ limitations under the License.
       <mwc-button label="Normal"></mwc-button>
       <mwc-button class="light" raised label="raised"></mwc-button>
       <mwc-button unelevated label="unelevated"></mwc-button>
+      <mwc-button outlined label="outlined"></mwc-button>
       <mwc-button class="pink" dense label="dense"></mwc-button>
       <mwc-button class="pink wide" raised label="wide"></mwc-button>
       <mwc-button disabled label="disabled"></mwc-button>
@@ -68,17 +69,25 @@ limitations under the License.
       <mwc-button label="Normal" icon="explore"></mwc-button>
       <mwc-button class="light" raised label="raised" icon="code"></mwc-button>
       <mwc-button unelevated label="unelevated" icon="check"></mwc-button>
+      <mwc-button outlined label="outlined" icon="alarm"></mwc-button>
       <mwc-button class="pink" dense label="dense" icon="feedback"></mwc-button>
       <mwc-button class="pink wide" raised label="wide" icon="code"></mwc-button>
       <mwc-button disabled label="disabled" icon="fingerprint"></mwc-button>
     </div>
 
+    <h4>trailing icon labeled</h4>
+
+    <mwc-button label="Normal" icon="explore" trailingIcon></mwc-button>
+
     <script type="module">
-      import {html} from '@polymer/lit-element/lit-element.js';
+      import {html, css} from 'lit-element/lit-element.js';
       import {Button} from '@material/mwc-button/mwc-button.js';
       class CustomButton extends Button {
-        _renderStyle(){
-          return html`${super._renderStyle()}<style>.mdc-button{border-radius: 8px}</style>`;
+        static get styles() {
+          return [
+            Button.styles,
+            css`.mdc-button{border-radius: 8px}`,
+          ];
         }
       }
       customElements.define('custom-button', CustomButton);

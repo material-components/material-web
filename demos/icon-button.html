@@ -1,0 +1,67 @@
+<!doctype html>
+<!--
+@license
+Copyright 2018 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+<head>
+  <title>icon-button demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-icon-button/mwc-icon-button.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
+  <link rel="stylesheet" href="demo-component.css">
+  <style>
+
+    .color {
+      color: tomato;
+    }
+  </style>
+</head>
+<body class="unresolved">
+  <header>
+    <a href="index.html"><mwc-icon>arrow_back</mwc-icon>
+    <span>Icon Button</span></a>
+  </header>
+
+  <main>
+    <h4>No Toggle</h4>
+
+    <mwc-icon-button icon="error"></mwc-icon-button>
+
+    <h4>Toggle</h4>
+
+    <mwc-icon-button icon="sentiment_very_satisfied" offIcon="sentiment_very_dissatisfied"></mwc-icon-button>
+    <mwc-icon-button icon="alarm_on" offIcon="alarm_off" on></mwc-icon-button>
+
+    <h4>Disabled</h3>
+
+    <mwc-icon-button disabled icon="sentiment_very_satisfied" offIcon="sentiment_very_dissatisfied"></mwc-icon-button>
+
+    <h4>Color</h4>
+    <div class="color">
+      <mwc-icon-button icon="all_out" offIcon="accessibility"></mwc-icon-button>
+      <mwc-icon-button icon="exit_to_app" offIcon="camera"></mwc-icon-button>
+    </div>
+  </main>
+
+  <script type="module">
+    Array.from(document.querySelectorAll('mwc-icon-button')).forEach((e) => {
+      e.addEventListener('MDCIconButtonToggle:change', (e) => console.log(e.type, e.target));
+    });
+    addEventListener('load', () => document.body.classList.remove('unresolved'));
+  </script>
+</body>
+</html>

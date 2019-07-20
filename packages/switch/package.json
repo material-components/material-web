@@ -1,24 +1,18 @@
 {
   "name": "@material/mwc-switch",
-  "version": "0.1.1",
+  "version": "0.6.0",
   "description": "",
   "main": "mwc-switch.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/material-components/material-components-web-components.git"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/mwc-base": "^0.1.0",
-    "@polymer/lit-element": "^0.4.0"
-  },
-  "devDependencies": {
-    "@material/mwc-sass-render": "^0.0.1",
-    "@material/switch": "^0.35.0"
+    "@material/mwc-base": "^0.6.0",
+    "@material/mwc-ripple": "^0.6.0",
+    "@material/switch": "^3.0.0"
   },
   "publishConfig": {
     "access": "public"
