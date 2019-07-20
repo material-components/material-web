@@ -85,7 +85,7 @@ module.exports = function(config) {
     files: [
       {pattern: 'node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js', watched: false},
       {pattern: 'node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js', watched: false},
-      {pattern: 'test/unit/mwc-{button,fab,formfield,icon,linear-progress,radio,ripple,switch}.test.js', watched: false},
+      {pattern: 'test/unit/mwc-{button,checkbox,fab,formfield,icon,icon-button,linear-progress,radio,ripple,switch}.test.js', watched: false},
     ],
     preprocessors: {
       'test/unit/mwc-*.js': ['rollup', 'sourcemap'],

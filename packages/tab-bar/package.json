@@ -1,11 +1,12 @@
 {
   "name": "@material/mwc-tab-bar",
-  "version": "0.3.6",
+  "version": "0.6.0",
   "description": "",
   "main": "mwc-tab-bar.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/material-components/material-components-web-components.git"
+    "url": "https://github.com/material-components/material-components-web-components.git",
+    "directory": "packages/tab-bar"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -14,13 +15,12 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/mwc-base": "^0.3.6",
-    "@material/mwc-tab": "^0.3.6",
-    "@material/mwc-tab-scroller": "^0.3.6",
-    "@material/tab-bar": "^0.44.0"
+    "@material/mwc-base": "^0.6.0",
+    "@material/mwc-tab": "^0.6.0",
+    "@material/mwc-tab-scroller": "^0.6.0",
+    "@material/tab-bar": "^3.0.0"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "private": true
+  }
 }

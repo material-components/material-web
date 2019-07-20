@@ -1,11 +1,12 @@
 {
   "name": "@material/mwc-ripple",
-  "version": "0.3.6",
+  "version": "0.6.0",
   "description": "",
   "main": "mwc-ripple.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/material-components/material-components-web-components.git"
+    "url": "https://github.com/material-components/material-components-web-components.git",
+    "directory": "packages/ripple"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,8 +14,8 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/mwc-base": "^0.3.6",
-    "@material/ripple": "^0.44.0",
+    "@material/mwc-base": "^0.6.0",
+    "@material/ripple": "^3.0.0",
     "lit-html": "^1.0.0"
   },
   "publishConfig": {

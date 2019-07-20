@@ -15,16 +15,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {directive, PropertyPart, noChange, NodePart, templateFactory} from 'lit-html';
-import {Adapter, Foundation} from '@material/mwc-base/base-element.js';
 import MDCRippleFoundation from '@material/ripple/foundation.js';
+import {MDCRippleAdapter} from '@material/ripple/adapter.js';
 import {style} from './mwc-ripple-global-css.js';
-import * as util from '@material/ripple/util.js';
+import {supportsCssVariables} from '@material/ripple/util.js';
+import {applyPassive} from '@material/dom/events'
+import {matches} from '@material/dom/ponyfill';
 
-const MATCHES = util.getMatchesProperty(HTMLElement.prototype);
+import {EventType, SpecificEventListener} from '@material/mwc-base/base-element.js';
 
-const supportsCssVariables = util.supportsCssVariables(window);
-
-type Handler = EventListenerOrEventListenerObject;
+const supportsCssVariablesWin = supportsCssVariables(window);
 
 export interface RippleOptions {
   interactionNode?: HTMLElement;
@@ -35,17 +35,6 @@ export interface RippleOptions {
 
 export interface RippleNodeOptions extends RippleOptions {
   surfaceNode: HTMLElement;
-}
-
-export interface RippleFoundation extends Foundation {
-  setUnbounded(value: boolean): void;
-  activate(): void;
-  deactivate(): void;
-}
-
-export declare var RippleFoundation: {
-  prototype: RippleFoundation;
-  new(adapter: Adapter): RippleFoundation;
 }
 
 // NOTE: This is a workaround for https://bugs.webkit.org/show_bug.cgi?id=173027.
@@ -59,7 +48,7 @@ const applyRippleStyle = () => {
   part.appendInto(document.head!);
   part.setValue(style);
   part.commit();
-}
+};
 
 /**
  * Applied a ripple to the node specified by {surfaceNode}.
@@ -80,36 +69,36 @@ export const rippleNode = (options: RippleNodeOptions) => {
       interactionNode.style.position = 'relative';
     }
   }
-  const adapter: Adapter = {
-    browserSupportsCssVars: () => supportsCssVariables,
+  const adapter: MDCRippleAdapter = {
+    browserSupportsCssVars: () => supportsCssVariablesWin,
     isUnbounded: () =>
       options.unbounded === undefined ? true : options.unbounded,
-    isSurfaceActive: () => interactionNode![MATCHES](':active'),
+    isSurfaceActive: () => matches(interactionNode, ':active'),
     isSurfaceDisabled: () => Boolean(options.disabled),
     addClass: (className: string) => surfaceNode.classList.add(className),
     removeClass: (className: string) =>
       surfaceNode.classList.remove(className),
     containsEventTarget: (target: HTMLElement) => interactionNode.contains(target),
-    registerInteractionHandler: (type: string, handler: Handler) =>
-      interactionNode.addEventListener(type, handler, util.applyPassive()),
-    deregisterInteractionHandler: (type: string, handler: Handler) =>
-      interactionNode.removeEventListener(type, handler, util.applyPassive()),
-    registerDocumentInteractionHandler: (evtType: string, handler: Handler) =>
+    registerInteractionHandler: <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
+      interactionNode.addEventListener(type, handler, applyPassive()),
+    deregisterInteractionHandler: <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
+      interactionNode.removeEventListener(type, handler, applyPassive()),
+    registerDocumentInteractionHandler: <K extends EventType>(evtType: K, handler: SpecificEventListener<K>) =>
       document.documentElement!.addEventListener(
-          evtType, handler, util.applyPassive()),
-    deregisterDocumentInteractionHandler: (evtType: string, handler: Handler) =>
+          evtType, handler, applyPassive()),
+    deregisterDocumentInteractionHandler: <K extends EventType>(evtType: string, handler: SpecificEventListener<K>) =>
       document.documentElement!.removeEventListener(
-          evtType, handler, util.applyPassive()),
-    registerResizeHandler: (handler: Handler) =>
+          evtType, handler as EventListenerOrEventListenerObject, applyPassive()),
+    registerResizeHandler: (handler: SpecificEventListener<'resize'>) =>
       window.addEventListener('resize', handler),
-    deregisterResizeHandler: (handler: Handler) =>
+    deregisterResizeHandler: (handler: SpecificEventListener<'resize'>) =>
       window.removeEventListener('resize', handler),
     updateCssVariable: (varName: string, value: string) =>
       surfaceNode.style.setProperty(varName, value),
-    computeBoundingRect: () => interactionNode.getBoundingClientRect(),
+    computeBoundingRect: () => surfaceNode.getBoundingClientRect(),
     getWindowPageOffset: () => ({x: window.pageXOffset, y: window.pageYOffset}),
   };
-  const rippleFoundation: RippleFoundation = new MDCRippleFoundation(adapter);
+  const rippleFoundation = new MDCRippleFoundation(adapter);
   rippleFoundation.init();
   return rippleFoundation;
 }

@@ -1,6 +1,6 @@
 # Material Web Components
 
-> :warning: These components are still a work in progress. Not all elements are available on NPM yet. We are working on the remaining elements and publish them to the NPM registry once we have a first working version. :warning:
+> :warning: These components are a work in progress. They are pre-release and should be considered experimental, as they may undergo major changes before release. We are experimenting with alternate architectures and approaches with the goal of allowing us to bring the most correct and optimal implementation of Material components to the widest possible audiences. Visible progress may be slow, as this research is across teams and repositories so is not consistently reflected in commits to this codebase. :warning:
 
 Material Web Components helps developers execute [Material Design](https://www.material.io) using [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
 
@@ -44,7 +44,7 @@ When you're ready to use the Material Web Components in your web application:
 
   1. Import the element definition into your HTML page:
 
-      ```<script type="module" src="@material/mwc-icon/index.js"></script>```
+      ```<script type="module" src="@material/mwc-icon/mwc-icon.js"></script>```
 
       Or into your module script:
 

@@ -53,6 +53,7 @@ const rollupOptions = {
     }),
     babel({
       presets: ['es2015-rollup'],
+      babelrc: false
     }),
   ],
 };

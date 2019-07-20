@@ -17,19 +17,43 @@
 import {assert} from 'chai';
 import {Ripple} from '@material/mwc-ripple';
 
-let element;
+let element, container;
 
 suite('mwc-ripple');
 
 beforeEach(() => {
-  element = document.createElement('mwc-ripple');
-  document.body.appendChild(element);
+  container = document.createElement("div");
+  document.body.appendChild(container);
+  
+  element = document.createElement("mwc-ripple");
+  container.appendChild(element);
 });
 
 afterEach(() => {
-  document.body.removeChild(element);
+  document.body.removeChild(container);
 });
 
 test('initializes as an mwc-ripple', () => {
   assert.instanceOf(element, Ripple);
+});
+
+test("sets interactionNode to parent", async () => {
+  await element.updateComplete;
+  assert(element.interactionNode == container);
+});
+
+suite("mwc-ripple nested");
+
+test("respects interactionNode", async () => {
+  container = document.createElement("div");
+  document.body.appendChild(container);
+
+  element = document.createElement("mwc-ripple");
+  element.interactionNode = document.body
+  container.appendChild(element);
+
+  await element.updateComplete;
+  assert(element.interactionNode == document.body);
+
+  document.body.removeChild(container);
 });

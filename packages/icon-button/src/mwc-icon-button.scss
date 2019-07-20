@@ -26,3 +26,12 @@ limitations under the License.
 .material-icons {
   @extend %material-icons;
 }
+
+// hack for top-app-bar ripple coloring of icon-buttons
+.mdc-ripple-upgraded {
+  &:focus::before, &:focus::after {
+    background-color: currentColor;
+    background-color: var(--mdc-theme-on-primary, currentColor);
+    opacity: var(--mdc-icon-button-ripple-opacity, 0.12);
+  }
+}

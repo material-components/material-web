@@ -16,24 +16,14 @@ limitations under the License.
 */
 
 import {LitElement} from 'lit-element';
+import {MDCFoundation} from '@material/base';
+import {Constructor} from './utils.js';
+
 export * from 'lit-element';
 export {classMap} from 'lit-html/directives/class-map.js';
 export {observer} from './observer.js';
-
-export interface Adapter {
-  [name: string]: Function
-};
-
-/** Extend this Foundation with the functions you use */
-export interface Foundation {
-  init(): void;
-  destroy(): void;
-}
-
-export declare var Foundation: {
-  prototype: Foundation;
-  new(adapter: Adapter): Foundation;
-}
+export {addHasRemoveClass} from './utils.js';
+export * from '@material/base/types.js';
 
 export abstract class BaseElement extends LitElement {
 
@@ -47,38 +37,31 @@ export abstract class BaseElement extends LitElement {
   /**
    * Return the foundation class for this component
    */
-  protected abstract readonly mdcFoundationClass: typeof Foundation;
+  protected abstract readonly mdcFoundationClass: Constructor<MDCFoundation>;
 
   /**
    * An instance of the MDC Foundation class to attach to the root element
    */
-  protected abstract mdcFoundation: Foundation;
+  protected abstract mdcFoundation: MDCFoundation;
 
   /**
    * Create the adapter for the `mdcFoundation`.
    *
-   * To extend, spread the super class version into you class:
-   * `{...super.createAdapter(), foo() => {}}`
+   * Override and return an object with the Adapter's functions implemented:
+   *
+   *    {
+   *      addClass: () => {},
+   *      removeClass: () => {},
+   *      ...
+   *    }
    */
-  protected createAdapter(): Adapter {
-    return {
-      addClass: (className: string) => {
-        this.mdcRoot.classList.add(className);
-      },
-      removeClass: (className: string) => {
-        this.mdcRoot.classList.remove(className);
-      },
-      hasClass: (className: string) => {
-        return this.mdcRoot.classList.contains(className);
-      }
-    };
-  }
+  protected abstract createAdapter(): {}
 
   /**
    * Create and attach the MDC Foundation to the instance
    */
   protected createFoundation() {
-    if (this.mdcFoundation) {
+    if (this.mdcFoundation !== undefined) {
       this.mdcFoundation.destroy();
     }
     this.mdcFoundation = new this.mdcFoundationClass(this.createAdapter());

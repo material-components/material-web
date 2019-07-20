@@ -14,58 +14,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {LitElement, html, property, customElement, classMap} from '@material/mwc-base/base-element';
-import {ripple, RippleOptions} from './ripple-directive.js';
+import {RippleBase} from './mwc-ripple-base.js';
+import {customElement} from '@material/mwc-base/base-element';
 import {style} from './mwc-ripple-css.js';
-
-@customElement('mwc-ripple' as any)
-export class Ripple extends LitElement {
-
-  @property({type: Boolean})
-  primary = false;
-
-  @property({type: Boolean})
-  active: boolean|undefined;
-
-  @property({type: Boolean})
-  accent = false;
-
-  @property({type: Boolean})
-  unbounded = false;
-
-  @property({type: Boolean})
-  disabled = false;
-
-  @property()
-  protected interactionNode: HTMLElement = this;
-
-  static styles = style;
-
-  connectedCallback() {
-    this.interactionNode = this.parentNode as HTMLElement;
-    super.connectedCallback();
-  }
-
-  // TODO(sorvell) #css: sizing.
-  render() {
-    const classes = {
-      'mdc-ripple-surface--primary': this.primary,
-      'mdc-ripple-surface--accent': this.accent,
-    };
-    const {disabled, unbounded, active, interactionNode} = this;
-    const rippleOptions: RippleOptions = {disabled, unbounded, interactionNode};
-    if (active !== undefined) {
-      rippleOptions.active = active;
-    }
-    return html`
-      <div .ripple="${ripple(rippleOptions)}"
-          class="mdc-ripple-surface ${classMap(classes)}"></div>`;
-  }
-
-}
 
 declare global {
   interface HTMLElementTagNameMap {
     'mwc-ripple': Ripple;
   }
+}
+
+@customElement('mwc-ripple' as any)
+export class Ripple extends RippleBase {
+
+  static styles = style;
+
 }

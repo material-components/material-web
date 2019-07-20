@@ -22,8 +22,18 @@ limitations under the License.
   <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script type="module" src="../node_modules/@material/mwc-snackbar/mwc-snackbar.js"></script>
   <script type="module" src="../node_modules/@material/mwc-button/mwc-button.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-icon-button/mwc-icon-button.js"></script>
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
   <link rel="stylesheet" href="demo-component.css">
+  <style>
+    #actionButton {
+      --mdc-theme-on-primary: black;
+      --mdc-theme-primary: #bb86fc;
+    }
+    #iconButton {
+      color: white;
+    }
+  </style>
 </head>
 <body class="unresolved">
   <header>
@@ -33,38 +43,34 @@ limitations under the License.
 
   <main>
     <div class="demo-group">
-      <mwc-button id="snack1" raised ripple label="Snack 1"></mwc-button>
-      <mwc-button id="snack2" raised ripple label="Snack 2 (no dismiss)"></mwc-button>
-      <mwc-button id="snack3" raised ripple label="Snack 3 (multiline)"></mwc-button>
+      <mwc-button id="snack1" raised ripple label="DEFAULT"></mwc-button>
+      <mwc-button id="snack2" raised ripple label="LEADING"></mwc-button>
+      <mwc-button id="snack3" raised ripple label="STACKED"></mwc-button>
     </div>
 
-    <mwc-snackbar id="snack" message="Hi there snack 1!" actionText="Go"></mwc-snackbar>
+    <mwc-snackbar id="snack" labelText="Can't send photo. Retry in 5 seconds.">
+      <mwc-button id="actionButton" slot="action">RETRY</mwc-button>
+      <mwc-icon-button id="iconButton" icon="close" slot="dismiss"></mwc-icon-button>
+    </mwc-snackbar>
 
   </main>
-  <script type="module">
+  <script>
     snack1.onclick = () => {
-      snack.dismissesOnAction = true;
-      snack.show();
+      snack.stacked = false;
+      snack.leading = false;
+      snack.open();
     }
 
     snack2.onclick = () => {
-      snack.dismissesOnAction = false;
-      snack.show({
-        message: 'Hi there snack 2!',
-        actionText: 'Happy',
-        timeout: 5000
-      });
+      snack.stacked = false;
+      snack.leading = true;
+      snack.open();
     }
 
     snack3.onclick = () => {
-      snack.dismissesOnAction = true;
-      snack.show({
-        message: 'Hi there snack 3! This is a really long message that will probably wrap.',
-        actionText: 'Wow',
-        multiline: true,
-        actionOnBottom: true,
-        timeout: 5000
-      });
+      snack.stacked = true;
+      snack.leading = false;
+      snack.open();
     }
 
     addEventListener('load', () => document.body.classList.remove('unresolved'));

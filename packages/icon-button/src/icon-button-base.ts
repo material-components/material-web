@@ -15,25 +15,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {BaseElement, html, property, Foundation, Adapter, query, observer} from '@material/mwc-base/base-element.js';
+import {BaseElement, html, property, query, observer, addHasRemoveClass} from '@material/mwc-base/base-element.js';
 import MDCIconButtonToggleFoundation from '@material/icon-button/foundation.js';
+import {MDCIconButtonToggleAdapter} from '@material/icon-button/adapter.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 
-export interface IconButtonFoundation extends Foundation {
-  handleClick(): void;
-  toggle(isOn?: boolean): void;
-}
+export class IconButtonBase extends BaseElement {
 
-export declare var IconButtonFoundation: {
-  prototype: IconButtonFoundation;
-  new (adapter: Adapter): IconButtonFoundation;
-}
+  protected mdcFoundationClass = MDCIconButtonToggleFoundation;
 
-export abstract class IconButtonBase extends BaseElement {
-
-  protected mdcFoundationClass: typeof IconButtonFoundation = MDCIconButtonToggleFoundation;
-
-  protected mdcFoundation!: IconButtonFoundation;
+  protected mdcFoundation!: MDCIconButtonToggleFoundation;
 
   @query('.mdc-icon-button')
   protected mdcRoot!: HTMLElement;
@@ -56,9 +47,9 @@ export abstract class IconButtonBase extends BaseElement {
   })
   on = false;
 
-  protected createAdapter() {
+  protected createAdapter(): MDCIconButtonToggleAdapter {
     return {
-      ...super.createAdapter(),
+      ...addHasRemoveClass(this.mdcRoot),
       setAttr: (name: string, value: string) => {
         this.mdcRoot.setAttribute(name, value);
       },
