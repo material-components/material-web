@@ -48,7 +48,7 @@ const applyRippleStyle = () => {
   part.appendInto(document.head!);
   part.setValue(style);
   part.commit();
-}
+};
 
 /**
  * Applied a ripple to the node specified by {surfaceNode}.
