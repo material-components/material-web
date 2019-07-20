@@ -3,5 +3,13 @@
   "packages": [
     "packages/*"
   ],
-  "version": "0.1.1"
+  "command": {
+    "bootstrap": {
+      "hoist": true,
+      "npmClientArgs": [
+        "--no-package-lock"
+      ]
+    }
+  },
+  "version": "0.6.0"
 }

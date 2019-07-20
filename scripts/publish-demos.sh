@@ -20,20 +20,35 @@ set -e
 
 # Remove previous build
 rm -rf gh-pages
-# Get list of demos
-demos=`ls demos/*.html`
 # Clone gh-pages branch
-git worktree add gh-pages origin/gh-pages
+git worktree add -f gh-pages origin/gh-pages
 # Copy built source to gh-pages
 cp -rf demos/* gh-pages/demos
+# generate package.json with public releases
+cat <<-EOF >gh-pages/package.json
+{
+  "name": "demos",
+  "private": true,
+  "dependencies": {
+    "lit-element": "^2.0.0",
+    "@webcomponents/webcomponentsjs": "^2.0.0"
+  }
+}
+EOF
+# Link node_modules into gh-pages
+(cd gh-pages; rm -rf node_modules; ln -s ../node_modules node_modules)
 
 # get list of demos to transform
-files=(`ls gh-pages/demos/*.html`)
-for file in ${files[@]}; do
+demos=(index button checkbox drawer fab formfield icon-button icon linear-progress radio ripple slider switch tabs top-app-bar drawer/{dismissible,modal,standard} tabs/rtl)
+for demo in ${demos[@]}; do
+  file="gh-pages/demos/${demo}.html"
+  echo "Rollup ${file}"
   # rollup bundle demos
-  node scripts/build/rollup-demos.js ${file}
-  # node scripts/build/rollup-demos.js gh-pages/demos/index.html
+  node scripts/build/rollup-demos.js "${file}"
 done
+
+# Reset node_modules to minimal set needed
+(cd gh-pages; rm -rf node_modules; npm i --no-package-lock)
 
 # Push to gh-pages
 read -p "Test build/gh-pages/demos/index.html, then press 'y' to publish to gh-pages: " -n 1 -r

@@ -1,0 +1,10 @@
+language: node_js
+sudo: false
+dist: trusty
+node_js: '10'
+addons:
+  firefox: latest
+  chrome: stable
+
+before_script:
+  - npm run bootstrap

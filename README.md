@@ -1,6 +1,6 @@
 # Material Web Components
 
-> Warning: These components are still a work in progress.
+> :warning: These components are a work in progress. They are pre-release and should be considered experimental, as they may undergo major changes before release. We are experimenting with alternate architectures and approaches with the goal of allowing us to bring the most correct and optimal implementation of Material components to the widest possible audiences. Visible progress may be slow, as this research is across teams and repositories so is not consistently reflected in commits to this codebase. :warning:
 
 Material Web Components helps developers execute [Material Design](https://www.material.io) using [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
 
@@ -44,7 +44,7 @@ When you're ready to use the Material Web Components in your web application:
 
   1. Import the element definition into your HTML page:
 
-      ```<script type="module" src="@material/mwc-icon/index.js"></script>```
+      ```<script type="module" src="@material/mwc-icon/mwc-icon.js"></script>```
 
       Or into your module script:
 
@@ -72,20 +72,31 @@ When you're ready to use the Material Web Components in your web application:
 ## Contributing guide
 Below are instructions for setting up project development.
 
-1. `git clone` this repo
-1. install dependencies by running `npm run bootstrap`
-1. to run a development server: `npm run dev` (view the demos by accessing `<dev server url>`/demos/index.html)
-1. to run tests: `npm run test`
+1. Clone this repo with `git clone`.
+1. Install dependencies by running `npm run bootstrap`
+1. Run a development server with `npm run dev`
+    - View the demos by accessing `<dev server url>`/demos/index.html
+    - This will also build the project.
+1. Build the project with `npm run build`
+1. Run tests with `npm run test`
 
-### Rebuild CSS for components
+### Developing Components
 
-Components define their css using [SASS](http://sass-lang.com/). The SASS output is built into a javascript module which exports the component's styling as a [lit-html](https://github.com/Polymer/lit-html) template.
+Components are written in [Typescript](https://typescriptlang.org), and compiled to [Javascript Modules](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/).
 
-To compile the component SASS run:
+The output Javascript Modules can be used in every modern browser directly, and are supported a wide variety of popular bundler and build tools.
 
-  ```
-  npm run update-styling
-  ```
+The components render output structure, handle styling, and manage data flow with `lit-html` while integrating with Material Design's common logic library for each component.
+
+### Styling Components
+
+Components define their styling using [SASS](http://sass-lang.com/).
+
+The SASS output is built into a javascript module which exports the component's styling as a [lit-html](https://github.com/Polymer/lit-html) template.
+
+Component styling is compiled with both `npm run build` and `npm run watch`.
+
+To compile the component SASS manually, use `npm run build-styling`
 
 ## Useful Links
 

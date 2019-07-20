@@ -1,0 +1,60 @@
+/**
+@license
+Copyright 2018 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+@import '@material/tab/mdc-tab.scss';
+@import '@material/mwc-icon/src/_mwc-icon.scss';
+
+.material-icons {
+  @extend %material-icons;
+}
+
+:host {
+  outline: none;
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.mdc-tab {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.mdc-tab::-moz-focus-inner {
+  border: 0;
+}
+
+/* Override mixin from mdc-tab to select for dir="rtl" on host rather than ancestor. */
+@mixin mdc-rtl($root-selector: null) {
+  @if ($root-selector) {
+    @at-root {
+      #{$root-selector}[dir="rtl"] &,
+      [dir="rtl"] #{$root-selector} & {
+        @content;
+      }
+    }
+  } @else {
+    :host([dir="rtl"]) & {
+      @content;
+    }
+  }
+}
+
+/* Declare rule from mdc-tab again to pick up mixin override. */
+.mdc-tab:not(.mdc-tab--stacked) .mdc-tab__icon + .mdc-tab__text-label {
+  @include mdc-rtl-reflexive-box(padding, left, 8px);
+}
