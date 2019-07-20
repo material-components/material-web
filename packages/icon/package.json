@@ -5,7 +5,8 @@
   "main": "mwc-icon.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/material-components/material-components-web-components.git"
+    "url": "https://github.com/material-components/material-components-web-components.git",
+    "directory": "packages/icon"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
