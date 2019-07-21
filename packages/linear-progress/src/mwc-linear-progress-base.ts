@@ -87,6 +87,12 @@ export class LinearProgressBase extends BaseElement {
       getBuffer: () => this.bufferElement,
       setStyle: (el: HTMLElement, property: string, value: string) =>
           el.style
+              // TODO(aomarks) Consider moving this type to the
+              // MDCLinearProgressAdapter parameter type, but note that the
+              // "-webkit" prefixed CSS properties are not declared in
+              // CSSStyleDeclaration.
+              //
+              // Exclude read-only properties.
               [property as
                Exclude<keyof CSSStyleDeclaration, 'length'|'parentRule'>] =
               value,
