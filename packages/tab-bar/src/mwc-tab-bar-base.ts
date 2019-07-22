@@ -155,8 +155,8 @@ export class TabBarBase extends BaseElement {
   // This is necessary because the foundation/adapter synchronously addresses
   // the scroller element.
   firstUpdated() {}
-  protected getUpdateComplete() {
-    return super.getUpdateComplete()
+  protected _getUpdateComplete() {
+    return super._getUpdateComplete()
       .then(() => this.scrollerElement.updateComplete)
       .then(() => {
         if (this.mdcFoundation === undefined) {
