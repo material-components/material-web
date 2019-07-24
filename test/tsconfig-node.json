@@ -5,7 +5,6 @@
     "outDir": ".",
     "module": "commonjs",
     "tsBuildInfoFile": ".tsbuildinfo",
-    "declaration": false
   },
   "include": [
     "benchmark/cli.ts"
