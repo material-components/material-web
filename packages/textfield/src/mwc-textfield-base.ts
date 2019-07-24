@@ -16,16 +16,20 @@ limitations under the License.
 */
 import {FormElement, html, query, property, classMap, addHasRemoveClass} from '@material/mwc-base/form-element.js';
 import MDCTextFieldFoundation from '@material/textfield/foundation.js';
-import {MDCTextFieldAdapter} from '@material/textfield/adapter.js';
-import {MDCFloatingLabel} from '@material/floating-label';
-import {MDCLineRipple} from '@material/line-ripple';
-import {MDCNotchedOutline} from '@material/notched-outline';
+import {MDCTextFieldAdapter, MDCTextFieldLineRippleAdapter} from '@material/textfield/adapter.js';
+import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
+import {MDCFloatingLabelAdapter} from '@material/floating-label/adapter.js';
+import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
+import {MDCLineRippleAdapter} from '@material/line-ripple/adapter.js';
+import {MDCNotchedOutlineAdapter} from '@material/notched-outline/adapter.js';
+import {MDCNotchedOutlineFoundation} from '@material/notched-outline/foundation.js';
 import {MDCTextFieldCharacterCounter} from '@material/textfield/character-counter';
 
 const passiveEvents = ['touchstart', 'touchmove', 'scroll', 'mousewheel'];
 
 export abstract class TextFieldBase extends FormElement {
   protected mdcFoundation!: MDCTextFieldFoundation;
+  protected mdcFloatingLabelFoundation!: MDCFloatingLabelFoundation;
 
   protected readonly mdcFoundationClass = MDCTextFieldFoundation;
 
@@ -43,6 +47,9 @@ export abstract class TextFieldBase extends FormElement {
 
   @query('.mdc-notched-outline')
   protected outlineElement!: HTMLElement;
+
+  @query('.mdc-notched-outline__notch')
+  protected notchElement!: HTMLElement;
 
   @query('.mdc-text-field-character-counter')
   protected charCounterElement!: HTMLElement;
@@ -89,10 +96,10 @@ export abstract class TextFieldBase extends FormElement {
   @property({type: Boolean})
   charCounter = false;
 
-  protected _floatingLabel!: MDCFloatingLabel | null;
-  protected _lineRipple!: MDCLineRipple | null;
-  protected _outline!: MDCNotchedOutline | null;
-  protected _characterCounter!: MDCTextFieldCharacterCounter | null;
+  protected _floatingLabelFoundation: MDCFloatingLabelFoundation | null = null;
+  protected _lineRippleFoundation: MDCLineRippleFoundation | null = null;
+  protected _outlineFoundation: MDCNotchedOutlineFoundation | null = null;
+  protected _characterCounter: MDCTextFieldCharacterCounter | null = null;
 
   render() {
     const classes = {
@@ -166,6 +173,18 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   protected createFoundation() {
+    if (this.labelElement) {
+      this.createFloatingTextLabelFoundation();
+    }
+
+    if (this.lineRippleElement) {
+      this.createLineRippleFoundation();
+    }
+
+    if (this.outlineElement) {
+      this.createNotchedOutlineFoundation();
+    }
+
     if (this.mdcFoundation !== undefined) {
       this.mdcFoundation.destroy();
     }
@@ -176,10 +195,52 @@ export abstract class TextFieldBase extends FormElement {
     this.mdcFoundation.init();
   }
 
+  protected createFloatingTextLabelFoundation() {
+    const adapter = this.getFloatingLabelAdapter();
+    this._floatingLabelFoundation = new MDCFloatingLabelFoundation(adapter);
+  }
+
+  protected createLineRippleFoundation() {
+    const adapter = this.getLineRippleAdapter();
+    this._lineRippleFoundation = new MDCLineRippleFoundation(adapter);
+  }
+
+  protected createNotchedOutlineFoundation() {
+    const adapter = this.getNotchedOutlineAdapter();
+    this._outlineFoundation = new MDCNotchedOutlineFoundation(adapter);
+  }
+
+  protected getFloatingLabelAdapter(): MDCFloatingLabelAdapter {
+    return {
+      addClass: className => this.labelElement.classList.add(className),
+      removeClass: className => this.labelElement.classList.remove(className),
+      getWidth: () => this.labelElement ? this.labelElement.scrollWidth : 0,
+      registerInteractionHandler: (evtType, handler) => {this.labelElement.addEventListener(evtType, handler)},
+      deregisterInteractionHandler: (evtType, handler) => {this.labelElement.removeEventListener(evtType, handler)},
+    };
+  }
+
+  protected getLineRippleAdapter(): MDCLineRippleAdapter {
+    return {
+      addClass: className => this.lineRippleElement.classList.add(className),
+      removeClass: className => this.lineRippleElement.classList.remove(className),
+      hasClass: className => this.lineRippleElement.classList.contains(className),
+      setStyle: (propName, value) => this.lineRippleElement.style.setProperty(propName, value),
+      registerEventHandler: (evtType, handler) => {this.lineRippleElement.addEventListener(evtType, handler)},
+      deregisterEventHandler: (evtType, handler) => {this.lineRippleElement.removeEventListener(evtType, handler)},
+    };
+  }
+
+  protected getNotchedOutlineAdapter(): MDCNotchedOutlineAdapter {
+    return {
+      addClass: className => this.outlineElement.classList.add(className),
+      removeClass: className => this.outlineElement.classList.remove(className),
+      setNotchWidthProperty: width => this.notchElement ? this.notchElement.style.setProperty('width', `${width}px`) : null,
+      removeNotchWidthProperty: () => this.notchElement ? this.notchElement.style.removeProperty('width') : null,
+    };
+  }
+
   protected createAdapter(): MDCTextFieldAdapter {
-    this._floatingLabel = this.labelElement ? new MDCFloatingLabel(this.labelElement) : null;
-    this._lineRipple = this.lineRippleElement ? new MDCLineRipple(this.lineRippleElement) : null;
-    this._outline = this.outlineElement ? new MDCNotchedOutline(this.outlineElement) : null;
     return {
       ...addHasRemoveClass(this.mdcRoot),
       ...this.getRootAdapterMethods(),
@@ -224,28 +285,28 @@ export abstract class TextFieldBase extends FormElement {
 
   protected getLabelAdapterMethods() {
     return {
-      floatLabel: (shouldFloat: boolean) => this._floatingLabel && this._floatingLabel.float(shouldFloat),
-      getLabelWidth: () => this._floatingLabel ? this._floatingLabel.getWidth() : 0,
-      hasLabel: () => Boolean(this._floatingLabel),
-      shakeLabel: (shouldShake: boolean) => this._floatingLabel && this._floatingLabel.shake(shouldShake),
+      floatLabel: (shouldFloat: boolean) => this._floatingLabelFoundation && this._floatingLabelFoundation.float(shouldFloat),
+      getLabelWidth: () => this._floatingLabelFoundation ? this._floatingLabelFoundation.getWidth() : 0,
+      hasLabel: () => Boolean(this._floatingLabelFoundation),
+      shakeLabel: (shouldShake: boolean) => this._floatingLabelFoundation && this._floatingLabelFoundation.shake(shouldShake),
     };
   }
 
-  protected getLineRippleAdapterMethods() {
+  protected getLineRippleAdapterMethods(): MDCTextFieldLineRippleAdapter {
     return {
       activateLineRipple: () => {
-        if (this._lineRipple) {
-          this._lineRipple.activate();
+        if (this._lineRippleFoundation) {
+          this._lineRippleFoundation.activate();
         }
       },
       deactivateLineRipple: () => {
-        if (this._lineRipple) {
-          this._lineRipple.deactivate();
+        if (this._lineRippleFoundation) {
+          this._lineRippleFoundation.deactivate();
         }
       },
       setLineRippleTransformOrigin: (normalizedX: number) => {
-        if (this._lineRipple) {
-          this._lineRipple.setRippleCenter(normalizedX);
+        if (this._lineRippleFoundation) {
+          this._lineRippleFoundation.setRippleCenter(normalizedX);
         }
       },
     };
@@ -253,9 +314,9 @@ export abstract class TextFieldBase extends FormElement {
 
   protected getOutlineAdapterMethods() {
     return {
-      closeOutline: () => this._outline && this._outline.closeNotch(),
-      hasOutline: () => Boolean(this._outline),
-      notchOutline: (labelWidth: number) => this._outline && this._outline.notch(labelWidth),
+      closeOutline: () => this._outlineFoundation && this._outlineFoundation.closeNotch(),
+      hasOutline: () => Boolean(this._outlineFoundation),
+      notchOutline: (labelWidth: number) => this._outlineFoundation && this._outlineFoundation.notch(labelWidth),
     };
   }
 }
