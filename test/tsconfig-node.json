@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": ".",
+    "module": "commonjs",
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "declaration": false
+  },
+  "include": [
+    "benchmark/cli.ts"
+  ]
+}
