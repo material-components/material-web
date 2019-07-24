@@ -4,4 +4,4 @@ import { measureFixtureCreation } from '../helpers';
 
 measureFixtureCreation(html`
   <mwc-textfield value="Hello world!"></mwc-textfield>
-`);
+`,async () => {}, 1000);
