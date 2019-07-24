@@ -89,10 +89,10 @@ export abstract class TextFieldBase extends FormElement {
   @property({type: Boolean})
   charCounter = false;
 
-  private _floatingLabel!: MDCFloatingLabel | null;
-  private _lineRipple!: MDCLineRipple | null;
-  private _outline!: MDCNotchedOutline | null;
-  private _characterCounter!: MDCTextFieldCharacterCounter | null;
+  protected _floatingLabel!: MDCFloatingLabel | null;
+  protected _lineRipple!: MDCLineRipple | null;
+  protected _outline!: MDCNotchedOutline | null;
+  protected _characterCounter!: MDCTextFieldCharacterCounter | null;
 
   render() {
     const classes = {
@@ -190,7 +190,7 @@ export abstract class TextFieldBase extends FormElement {
     };
   }
 
-  private getRootAdapterMethods() {
+  protected getRootAdapterMethods() {
     return {
       registerTextFieldInteractionHandler: (evtType: string,
           handler: any) => this.addEventListener(evtType, handler),
@@ -211,7 +211,7 @@ export abstract class TextFieldBase extends FormElement {
     };
   }
 
-  private getInputAdapterMethods() {
+  protected getInputAdapterMethods() {
     return {
       getNativeInput: () => this.formElement,
       isFocused: () => this.shadowRoot!.activeElement === this.formElement,
@@ -222,7 +222,7 @@ export abstract class TextFieldBase extends FormElement {
     };
   }
 
-  private getLabelAdapterMethods() {
+  protected getLabelAdapterMethods() {
     return {
       floatLabel: (shouldFloat: boolean) => this._floatingLabel && this._floatingLabel.float(shouldFloat),
       getLabelWidth: () => this._floatingLabel ? this._floatingLabel.getWidth() : 0,
@@ -231,7 +231,7 @@ export abstract class TextFieldBase extends FormElement {
     };
   }
 
-  private getLineRippleAdapterMethods() {
+  protected getLineRippleAdapterMethods() {
     return {
       activateLineRipple: () => {
         if (this._lineRipple) {
@@ -251,7 +251,7 @@ export abstract class TextFieldBase extends FormElement {
     };
   }
 
-  private getOutlineAdapterMethods() {
+  protected getOutlineAdapterMethods() {
     return {
       closeOutline: () => this._outline && this._outline.closeNotch(),
       hasOutline: () => Boolean(this._outline),
