@@ -1,0 +1,13 @@
+<html>
+<head>
+  <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+</head>
+<body>
+  <script type="module">
+    const params = new URLSearchParams(window.location.search);
+    const pack = params.get('package');
+    const bench = params.get('bench');
+    import(`./${pack}/${bench}.js`);
+  </script>
+</body>
+</html>

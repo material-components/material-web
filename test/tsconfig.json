@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": ".",
+    "tsBuildInfoFile": ".tsbuildinfo",
+  },
+  "include": [
+    "benchmark/**/*.ts"
+  ],
+  "exclude": [
+    "benchmark/cli.ts"
+  ]
+}

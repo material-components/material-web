@@ -79,6 +79,7 @@ Below are instructions for setting up project development.
     - This will also build the project.
 1. Build the project with `npm run build`
 1. Run tests with `npm run test`
+1. Run benchmarks with `npm run build:tests && npm run test:bench`
 
 ### Developing Components
 

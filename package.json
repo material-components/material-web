@@ -10,14 +10,19 @@
     "dev": "polyserve --npm --module-resolution=node",
     "lint:imports": "node scripts/check-imports.js",
     "test": "karma start --single-run",
+    "test:bench": "node test/benchmark/cli.js",
     "bootstrap": "npm install && ./scripts/bootstrap.sh && npm run build",
     "build": "npm run build:styling && npm run build:typescript -- --verbose",
     "build:styling": "./scripts/build-styling.sh",
     "build:typescript": "tsc --build packages/**/tsconfig.json",
+    "build:tests": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json",
     "update-gh-pages": "npm run bootstrap && ./scripts/publish-demos.sh",
-    "watch": "npm run bootstrap && node scripts/watcher.js"
+    "watch": "npm run bootstrap && node scripts/watcher.js",
+    "watch:tests": "npm run bootstrap && tsc --build test/tsconfig.json -w & tsc --build test/tsconfig-node.json -w"
   },
   "devDependencies": {
+    "@types/command-line-args": "^5.0.0",
+    "@types/command-line-usage": "^5.0.1",
     "@webcomponents/webcomponentsjs": "^2.2.8",
     "babel-core": "^6.22.1",
     "babel-plugin-transform-object-assign": "^6.8.0",
@@ -51,6 +56,7 @@
     "rollup-plugin-node-resolve": "^4.0.1",
     "sass": "^1.17.4",
     "sinon": "^7.3.1",
+    "tachometer": "^0.4.9",
     "typescript": "^3.4.1"
   },
   "babel": {
