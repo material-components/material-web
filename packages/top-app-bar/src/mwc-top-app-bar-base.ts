@@ -97,14 +97,17 @@ export class TopAppBarBase extends BaseElement {
   protected createAdapter(): MDCTopAppBarAdapter {
     return {
       ...addHasRemoveClass(this.mdcRoot),
-      setStyle: (property: string, value: string) => this.mdcRoot.style.setProperty(property, value),
+      setStyle: (property: string, value: string) =>
+          this.mdcRoot.style.setProperty(property, value),
       getTopAppBarHeight: () => this.mdcRoot.clientHeight,
       notifyNavigationIconClicked: () => {
         this.dispatchEvent(new Event(strings.NAVIGATION_EVENT, {bubbles: true, cancelable: true}));
       },
-      getViewportScrollY: () => this.scrollTarget[this.scrollTarget === window ? 'pageYOffset' : 'scrollTop'],
+      getViewportScrollY: () => this.scrollTarget instanceof Window ?
+          this.scrollTarget.pageYOffset :
+          this.scrollTarget.scrollTop,
       getTotalActionItems: () =>
-        this._actionItemsSlot.assignedNodes({flatten: true}).length,
+          this._actionItemsSlot.assignedNodes({flatten: true}).length,
     };
   }
 
