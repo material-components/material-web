@@ -114,7 +114,7 @@ export const measureFixtureCreation = async (
     await (firstChild as LitElement).updateComplete;
     document.body.offsetWidth;
   } else {
-    await new Promise(res => requestAnimationFrame(() => res));
+    await new Promise(res => requestAnimationFrame(res));
   }
 
   if (opts.afterRender) {
