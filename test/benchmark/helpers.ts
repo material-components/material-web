@@ -1,5 +1,5 @@
 import { customElement, html, LitElement, property } from 'lit-element';
-import { TemplateResult } from 'lit-html';
+import { TemplateResult, render } from 'lit-html';
 
 declare global {
   interface Window {
@@ -90,27 +90,29 @@ export const fixture = (
 
 export const measureFixtureCreation = async (
     template: TemplateResult,
-    afterRender?: (fixture: TestFixture) => Promise<unknown>,
-    numRenders = 10) => {
-  const fixtures:TestFixture[] = [];
-  for (let i=0; i < numRenders; i++) {
-    const fixt = fixture(template, {shouldAttachContents: false});
+    afterRender?: (fixture: ShadowRoot) => Promise<unknown>,
+    numRenders = 100) => {
+  const templates = new Array<TemplateResult>(numRenders).fill(template);
+  const renderContainer = document.createElement('div');
+  const renderTargetRoot = renderContainer.attachShadow({mode: 'open'});
 
-    fixtures.push(fixt);
-  }
-
-  const renderPromises: Promise<unknown>[] = [];
+  document.body.appendChild(renderContainer);
   const start = performance.now();
-  for (const fixture of fixtures) {
-    const attachPromise = fixture.attachContents({awaitRender: true});
-    if (afterRender) {
-      attachPromise.then(() => afterRender(fixture));
-    }
-    renderPromises.push(attachPromise);
+  render(templates, renderTargetRoot);
+  const firstChild = renderTargetRoot.firstElementChild;
+
+  if (firstChild && 'updateComplete' in firstChild) {
+    await (firstChild as LitElement).updateComplete;
+    document.body.offsetWidth;
+  } else {
+    await new Promise(res => requestAnimationFrame(() => res));
   }
 
-  await Promise.all(renderPromises);
-  const end = performance.now();
+  if (afterRender) {
+    afterRender(renderTargetRoot);
+  }
 
+  const end = performance.now();
   window.tachometerResult = end - start;
+  return window.tachometerResult;
 }

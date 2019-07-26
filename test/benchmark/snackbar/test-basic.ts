@@ -9,7 +9,7 @@ measureFixtureCreation(html`
     <div id="actionButton" slot="action">RETRY</div>
     <div id="iconButton" slot="dismiss">DISMISS</div>
   </mwc-snackbar>
-`, async (fixture) => {
-  const snackbar = fixture.root.querySelector('#snack1') as Snackbar;
+`, async (root) => {
+  const snackbar = root.querySelector('#snack1') as Snackbar;
   snackbar.open();
 });
