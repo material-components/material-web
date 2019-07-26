@@ -1,0 +1,19 @@
+{
+  "name": "@material/mwc-floating-label",
+  "version": "0.6.0",
+  "description": "",
+  "main": "mwc-floating-label.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/material-components/material-components-web-components.git",
+    "directory": "packages/floating-label"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@material/floating-label": "^3.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
