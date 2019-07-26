@@ -88,11 +88,20 @@ export const fixture = (
   return tf;
 };
 
+interface MeasureFixtureCreationOpts {
+  afterRender?: (root: ShadowRoot) => Promise<unknown>;
+  numRenders: number;
+}
+
+const defaultMeasureOpts = {
+  numRenders: 10,
+}
+
 export const measureFixtureCreation = async (
     template: TemplateResult,
-    afterRender?: (fixture: ShadowRoot) => Promise<unknown>,
-    numRenders = 100) => {
-  const templates = new Array<TemplateResult>(numRenders).fill(template);
+    options?: Partial<MeasureFixtureCreationOpts>) => {
+  const opts: MeasureFixtureCreationOpts = {...defaultMeasureOpts, ...options};
+  const templates = new Array<TemplateResult>(opts.numRenders).fill(template);
   const renderContainer = document.createElement('div');
   const renderTargetRoot = renderContainer.attachShadow({mode: 'open'});
 
@@ -108,8 +117,8 @@ export const measureFixtureCreation = async (
     await new Promise(res => requestAnimationFrame(() => res));
   }
 
-  if (afterRender) {
-    afterRender(renderTargetRoot);
+  if (opts.afterRender) {
+    opts.afterRender(renderTargetRoot);
   }
 
   const end = performance.now();

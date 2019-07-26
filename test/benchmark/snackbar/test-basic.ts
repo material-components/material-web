@@ -9,7 +9,9 @@ measureFixtureCreation(html`
     <div id="actionButton" slot="action">RETRY</div>
     <div id="iconButton" slot="dismiss">DISMISS</div>
   </mwc-snackbar>
-`, async (root) => {
-  const snackbar = root.querySelector('#snack1') as Snackbar;
-  snackbar.open();
+`, {
+  afterRender: async (root) => {
+    const snackbar = root.querySelector('#snack1') as Snackbar;
+    snackbar.open();
+  }
 });
