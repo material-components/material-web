@@ -274,7 +274,6 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   protected getLabelAdapterMethods() {
-    console.log(this.outlined, this.labelElement)
     return {
       floatLabel: (shouldFloat: boolean) => this.labelElement && this.labelElement.float(shouldFloat),
       getLabelWidth: () => this.labelElement ? this.labelElement.getWidth() : 0,
