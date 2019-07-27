@@ -90,7 +90,6 @@ export class FloatingLabelBase extends BaseElement {
   }
 
   float(shouldFloat: boolean) {
-    console.log('floating')
     this.mdcFoundation.float(shouldFloat);
   }
 
