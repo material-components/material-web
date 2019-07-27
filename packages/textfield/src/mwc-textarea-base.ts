@@ -36,11 +36,11 @@ export abstract class TextAreaBase extends TextFieldBase {
       'mdc-text-field--fullwidth': this.fullWidth,
     };
     return html`
-      <label class="mdc-text-field mdc-text-field--textarea ${classMap(classes)}">
+      <div class="mdc-text-field mdc-text-field--textarea ${classMap(classes)}">
         ${this.charCounter ? html`<div class="mdc-text-field-character-counter"></div>` : ''}
         ${this.renderInput()}
         ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
-      </label>
+      </div>
       ${this.helper ? this.renderHelperText() : ''}
     `;
   }
