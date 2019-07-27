@@ -17,8 +17,7 @@ limitations under the License.
 import {FormElement, html, query, property, classMap, addHasRemoveClass} from '@material/mwc-base/form-element.js';
 import MDCTextFieldFoundation from '@material/textfield/foundation.js';
 import {MDCTextFieldAdapter, MDCTextFieldLineRippleAdapter} from '@material/textfield/adapter.js';
-import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
-import {MDCFloatingLabelAdapter} from '@material/floating-label/adapter.js';
+import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label/mwc-floating-label-directive';
 import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
 import {MDCLineRippleAdapter} from '@material/line-ripple/adapter.js';
 import {MDCNotchedOutlineAdapter} from '@material/notched-outline/adapter.js';
@@ -29,7 +28,6 @@ const passiveEvents = ['touchstart', 'touchmove', 'scroll', 'mousewheel'];
 
 export abstract class TextFieldBase extends FormElement {
   protected mdcFoundation!: MDCTextFieldFoundation;
-  protected mdcFloatingLabelFoundation!: MDCFloatingLabelFoundation;
 
   protected readonly mdcFoundationClass = MDCTextFieldFoundation;
 
@@ -40,7 +38,7 @@ export abstract class TextFieldBase extends FormElement {
   protected formElement!: HTMLInputElement;
 
   @query('.mdc-floating-label')
-  protected labelElement!: HTMLLabelElement;
+  protected labelElement!: FloatingLabel;
 
   @query('.mdc-line-ripple')
   protected lineRippleElement!: HTMLElement;
@@ -96,7 +94,6 @@ export abstract class TextFieldBase extends FormElement {
   @property({type: Boolean})
   charCounter = false;
 
-  protected _floatingLabelFoundation: MDCFloatingLabelFoundation | null = null;
   protected _lineRippleFoundation: MDCLineRippleFoundation | null = null;
   protected _outlineFoundation: MDCNotchedOutlineFoundation | null = null;
   protected _characterCounter: MDCTextFieldCharacterCounter | null = null;
@@ -111,12 +108,12 @@ export abstract class TextFieldBase extends FormElement {
       'mdc-text-field--with-trailing-icon': this.iconTrailing,
     };
     return html`
-      <label class="mdc-text-field ${classMap(classes)}">
+      <div class="mdc-text-field ${classMap(classes)}">
         ${this.icon ? this.renderIcon(this.icon) : ''}
         ${this.renderInput()}
         ${this.iconTrailing ? this.renderIcon(this.iconTrailing) : ''}
         ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
-      </label>
+      </div>
       ${(this.helper || this.charCounter) ? this.renderHelperText() : ''}
     `;
   }
@@ -143,7 +140,7 @@ export abstract class TextFieldBase extends FormElement {
       <div class="mdc-notched-outline">
         <div class="mdc-notched-outline__leading"></div>
         ${this.label ? html`<div class="mdc-notched-outline__notch">
-          <span class="mdc-floating-label">${this.label}</span>
+          <label .foundation=${floatingLabel()} for="text-field">${this.label}</label>
         </div>` : ''}
         <div class="mdc-notched-outline__trailing"></div>
       </div>`;
@@ -151,7 +148,7 @@ export abstract class TextFieldBase extends FormElement {
 
   protected renderLabelText() {
     return html`
-      ${this.label && !this.fullWidth ? html`<span class="mdc-floating-label">${this.label}</span>` : ''}
+      ${this.label && !this.fullWidth ? html`<label .foundation=${floatingLabel()} for="text-field">${this.label}</label>` : ''}
       <div class="mdc-line-ripple"></div>
     `;
   }
@@ -173,10 +170,6 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   protected createFoundation() {
-    if (this.labelElement) {
-      this.createFloatingTextLabelFoundation();
-    }
-
     if (this.lineRippleElement) {
       this.createLineRippleFoundation();
     }
@@ -195,11 +188,6 @@ export abstract class TextFieldBase extends FormElement {
     this.mdcFoundation.init();
   }
 
-  protected createFloatingTextLabelFoundation() {
-    const adapter = this.getFloatingLabelAdapter();
-    this._floatingLabelFoundation = new MDCFloatingLabelFoundation(adapter);
-  }
-
   protected createLineRippleFoundation() {
     const adapter = this.getLineRippleAdapter();
     this._lineRippleFoundation = new MDCLineRippleFoundation(adapter);
@@ -208,16 +196,6 @@ export abstract class TextFieldBase extends FormElement {
   protected createNotchedOutlineFoundation() {
     const adapter = this.getNotchedOutlineAdapter();
     this._outlineFoundation = new MDCNotchedOutlineFoundation(adapter);
-  }
-
-  protected getFloatingLabelAdapter(): MDCFloatingLabelAdapter {
-    return {
-      addClass: className => this.labelElement.classList.add(className),
-      removeClass: className => this.labelElement.classList.remove(className),
-      getWidth: () => this.labelElement ? this.labelElement.scrollWidth : 0,
-      registerInteractionHandler: (evtType, handler) => {this.labelElement.addEventListener(evtType, handler)},
-      deregisterInteractionHandler: (evtType, handler) => {this.labelElement.removeEventListener(evtType, handler)},
-    };
   }
 
   protected getLineRippleAdapter(): MDCLineRippleAdapter {
@@ -285,10 +263,10 @@ export abstract class TextFieldBase extends FormElement {
 
   protected getLabelAdapterMethods() {
     return {
-      floatLabel: (shouldFloat: boolean) => this._floatingLabelFoundation && this._floatingLabelFoundation.float(shouldFloat),
-      getLabelWidth: () => this._floatingLabelFoundation ? this._floatingLabelFoundation.getWidth() : 0,
-      hasLabel: () => Boolean(this._floatingLabelFoundation),
-      shakeLabel: (shouldShake: boolean) => this._floatingLabelFoundation && this._floatingLabelFoundation.shake(shouldShake),
+      floatLabel: (shouldFloat: boolean) => this.labelElement && this.labelElement.foundation.float(shouldFloat),
+      getLabelWidth: () => this.labelElement ? this.labelElement.foundation.getWidth() : 0,
+      hasLabel: () => Boolean(this.labelElement),
+      shakeLabel: (shouldShake: boolean) => this.labelElement && this.labelElement.foundation.shake(shouldShake),
     };
   }
 
