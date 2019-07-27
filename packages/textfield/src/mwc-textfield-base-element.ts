@@ -181,7 +181,7 @@ export abstract class TextFieldBase extends FormElement {
     this.value = this.formElement.value;
   }
 
-  protected createFoundation() {
+  protected async createFoundation() {
     if (this.lineRippleElement) {
       this.createLineRippleFoundation();
     }
@@ -197,6 +197,9 @@ export abstract class TextFieldBase extends FormElement {
     this.mdcFoundation = new this.mdcFoundationClass(this.createAdapter(), {
       characterCounter: this._characterCounter ? this._characterCounter.foundation : undefined
     });
+    if (this.labelElement) {
+      await this.labelElement.updateComplete;
+    }
     this.mdcFoundation.init();
   }
 

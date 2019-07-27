@@ -64,13 +64,10 @@ export class FloatingLabelBase extends BaseElement {
     this.forElement = value ? ownerDoc.querySelector(`#${value}`) : null;
 
     if (this.forElement) {
-      this.forElement.setAttribute('aria-labelledby', value);
+      this.forElement.setAttribute('aria-labelledby', this.labelId);
     }
   })
   for: string = '';
-
-  @query('.mdc-floating-label')
-  protected labelElement!: HTMLElement;
 
   protected forElement: HTMLElement|null = null;
   protected labelId: string = `mwc-floating-label-${window._labelNumber!++}`;
@@ -80,13 +77,9 @@ export class FloatingLabelBase extends BaseElement {
       addClass: className => this.classList.add(className),
       removeClass: className => this.classList.remove(className),
       getWidth: () => this.scrollWidth,
-      registerInteractionHandler: (evtType, handler) => {this.labelElement.addEventListener(evtType, handler)},
-      deregisterInteractionHandler: (evtType, handler) => {this.labelElement.removeEventListener(evtType, handler)},
+      registerInteractionHandler: (evtType, handler) => {this.mdcRoot.addEventListener(evtType, handler)},
+      deregisterInteractionHandler: (evtType, handler) => {this.mdcRoot.removeEventListener(evtType, handler)},
     }
-  }
-
-  protected createFoundation() {
-    this.mdcFoundation = new this.mdcFoundationClass(this.createAdapter());
   }
 
   float(shouldFloat: boolean) {
