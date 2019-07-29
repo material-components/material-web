@@ -103,6 +103,7 @@ export const fixture =
 interface MeasureFixtureCreationOpts {
   afterRender?: (root: ShadowRoot) => Promise<unknown>;
   numRenders: number;
+  renderCheck?: (root: ShadowRoot) => Promise<unknown>
 }
 
 const defaultMeasureOpts = {
@@ -121,8 +122,14 @@ export const measureFixtureCreation = async (
   const start = performance.now();
   render(templates, renderTargetRoot);
   const firstChild = renderTargetRoot.firstElementChild;
+  const lastChild = renderTargetRoot.lastElementChild;
 
-  if (firstChild && 'updateComplete' in firstChild) {
+  if (opts.renderCheck) {
+    await opts.renderCheck(renderTargetRoot);
+  } else if (lastChild && 'updateComplete' in lastChild) {
+    await (lastChild as LitElement).updateComplete;
+    document.body.offsetWidth;
+  } else if (firstChild && 'updateComplete' in firstChild) {
     await (firstChild as LitElement).updateComplete;
     document.body.offsetWidth;
   } else {
@@ -135,5 +142,7 @@ export const measureFixtureCreation = async (
 
   const end = performance.now();
   window.tachometerResult = end - start;
+  console.log(window.tachometerResult)
+  debugger;
   return window.tachometerResult;
 }
