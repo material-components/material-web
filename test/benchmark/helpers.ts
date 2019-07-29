@@ -1,5 +1,5 @@
 import { customElement, html, LitElement, property } from 'lit-element';
-import { TemplateResult } from 'lit-html';
+import { TemplateResult, render } from 'lit-html';
 
 declare global {
   interface Window {
@@ -88,29 +88,40 @@ export const fixture = (
   return tf;
 };
 
+interface MeasureFixtureCreationOpts {
+  afterRender?: (root: ShadowRoot) => Promise<unknown>;
+  numRenders: number;
+}
+
+const defaultMeasureOpts = {
+  numRenders: 10,
+}
+
 export const measureFixtureCreation = async (
     template: TemplateResult,
-    afterRender?: (fixture: TestFixture) => Promise<unknown>,
-    numRenders = 10) => {
-  const fixtures:TestFixture[] = [];
-  for (let i=0; i < numRenders; i++) {
-    const fixt = fixture(template, {shouldAttachContents: false});
+    options?: Partial<MeasureFixtureCreationOpts>) => {
+  const opts: MeasureFixtureCreationOpts = {...defaultMeasureOpts, ...options};
+  const templates = new Array<TemplateResult>(opts.numRenders).fill(template);
+  const renderContainer = document.createElement('div');
+  const renderTargetRoot = renderContainer.attachShadow({mode: 'open'});
 
-    fixtures.push(fixt);
-  }
-
-  const renderPromises: Promise<unknown>[] = [];
+  document.body.appendChild(renderContainer);
   const start = performance.now();
-  for (const fixture of fixtures) {
-    const attachPromise = fixture.attachContents({awaitRender: true});
-    if (afterRender) {
-      attachPromise.then(() => afterRender(fixture));
-    }
-    renderPromises.push(attachPromise);
+  render(templates, renderTargetRoot);
+  const firstChild = renderTargetRoot.firstElementChild;
+
+  if (firstChild && 'updateComplete' in firstChild) {
+    await (firstChild as LitElement).updateComplete;
+    document.body.offsetWidth;
+  } else {
+    await new Promise(res => requestAnimationFrame(res));
   }
 
-  await Promise.all(renderPromises);
-  const end = performance.now();
+  if (opts.afterRender) {
+    opts.afterRender(renderTargetRoot);
+  }
 
+  const end = performance.now();
   window.tachometerResult = end - start;
+  return window.tachometerResult;
 }
