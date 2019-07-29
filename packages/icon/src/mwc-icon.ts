@@ -16,7 +16,6 @@ limitations under the License.
 */
 import {LitElement, html, customElement} from '@material/mwc-base/base-element';
 import {style} from './mwc-icon-host-css.js';
-import './mwc-icon-font.js';
 
 @customElement('mwc-icon' as any)
 export class Icon extends LitElement {

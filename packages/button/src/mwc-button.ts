@@ -17,7 +17,6 @@ limitations under the License.
 import {ButtonBase} from './mwc-button-base.js';
 import {customElement} from '@material/mwc-base/base-element';
 import {style} from './mwc-button-css.js';
-import '@material/mwc-icon/mwc-icon-font.js';
 
 @customElement('mwc-button' as any)
 export class Button extends ButtonBase {
