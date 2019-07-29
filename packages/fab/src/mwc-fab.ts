@@ -17,7 +17,6 @@ limitations under the License.
 import {FabBase} from './mwc-fab-base.js';
 import {customElement} from '@material/mwc-base/base-element';
 import {style} from './mwc-fab-css.js';
-import '@material/mwc-icon/mwc-icon-font.js';
 
 declare global {
   interface HTMLElementTagNameMap {
