@@ -13,7 +13,7 @@ A [Material Components](https://material.io/components/) icon implementation usi
     * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](https://jsbin.com/qobefic/edit?html,output),
     [CodePen](https://codepen.io/jcrestel/pen/KGWBLd).
 
-* You can also copy <!-- TODO(elephants@google.com):update link -->[this HTML file](https://gist.githubusercontent.com/JCrestel/9ed0acbd4d372a174b89cd6c58457636/raw/eadc711e5c4b89d9de3dea0d89e1d3797e0eaba3/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
+* You can also copy [this HTML file](https://gist.githubusercontent.com/JCrestel/9ed0acbd4d372a174b89cd6c58457636/raw/eadc711e5c4b89d9de3dea0d89e1d3797e0eaba3/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
 
 * When you're ready to use mwc-checkbox in a project, install it via [npm](https://www.npmjs.com/). To run the project in the browser, a module-compatible toolctain is required. We recommend installing the [Polymer CLI](https://github.com/Polymer/polymer-cli) and using its development server as follows.
 
