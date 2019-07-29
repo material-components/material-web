@@ -2,7 +2,7 @@
   "name": "@material/mwc-floating-label",
   "version": "0.6.0",
   "description": "",
-  "main": "mwc-floating-label.js",
+  "main": "mwc-floating-label-directive.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/material-components/material-components-web-components.git",
