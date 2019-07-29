@@ -131,6 +131,6 @@ export const measureFixtureCreation = async (
   const end = performance.now();
   window.tachometerResult = end - start;
   console.log(window.tachometerResult)
-  debugger;
+
   return window.tachometerResult;
 }
