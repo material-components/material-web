@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+- Components no longer automatically load the Material Icons font, so that
+  users have control over how fonts are loaded. Users can still import the
+  `mwc-icon-font.js` module themselves to automatically load the font from
+  fonts.googleapis.com.
+
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x
 - Upgrade typescript to 3.4, add config for tsbuildinfo files needed for incremental compilation mode
