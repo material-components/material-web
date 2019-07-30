@@ -1,0 +1,19 @@
+{
+  "name": "@material/mwc-line-ripple",
+  "version": "0.6.0",
+  "description": "",
+  "main": "mwc-line-ripple-directive.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/material-components/material-components-web-components.git",
+    "directory": "packages/line-ripple"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@material/line-ripple": "^3.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
