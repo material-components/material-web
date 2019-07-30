@@ -10,7 +10,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/floating-label": "^3.0.0",
-    "@material/line-ripple": "^3.0.0",
+    "@material/mwc-line-ripple": "^0.6.0",
     "@material/mwc-base": "^0.6.0",
     "@material/mwc-floating-label": "^0.6.0",
     "@material/mwc-icon": "^0.6.0",
