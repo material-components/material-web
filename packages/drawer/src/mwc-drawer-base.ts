@@ -20,20 +20,14 @@ import MDCDismissibleDrawerFoundation from '@material/drawer/dismissible/foundat
 import {MDCDrawerAdapter} from '@material/drawer/adapter.js';
 import {strings} from '@material/drawer/constants.js';
 import 'wicg-inert/dist/inert.js';
-import 'blocking-elements/blocking-elements.js';
+import {DocumentWithBlockingElements} from 'blocking-elements';
 
-declare global {
-  interface Document {
-    $blockingElements: {
-      push(element: HTMLElement): void;
-      remove(element: HTMLElement): Boolean;
-    }
-  }
-
-  interface HTMLElement {
-    inert: Boolean;
-  }
+interface InertableHTMLElement extends HTMLElement {
+  inert?: boolean;
 }
+
+const blockingElements =
+    (document as DocumentWithBlockingElements).$blockingElements;
 
 export class DrawerBase extends BaseElement {
 
@@ -41,7 +35,7 @@ export class DrawerBase extends BaseElement {
   protected mdcRoot!: HTMLElement;
 
   @query('.mdc-drawer-app-content')
-  protected appContent!: HTMLElement;
+  protected appContent!: InertableHTMLElement;
 
   protected mdcFoundation!: MDCDismissibleDrawerFoundation;
 
@@ -75,11 +69,11 @@ export class DrawerBase extends BaseElement {
       focusActiveNavigationItem: () => {
       },
       trapFocus: () => {
-        document.$blockingElements.push(this);
+        blockingElements.push(this);
         this.appContent.inert = true;
       },
       releaseFocus: () => {
-        document.$blockingElements.remove(this);
+        blockingElements.remove(this);
         this.appContent.inert = false;
       },
     }
