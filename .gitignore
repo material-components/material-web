@@ -8,6 +8,7 @@ node_modules
 /packages/*/*.js.map
 /packages/*/*.d.ts
 /packages/*/*.tgz
+/packages/textfield/character-counter/*
 /packages/*/src/*-css.ts
 /packages/*/package-lock.json
 **/*.tsbuildinfo
