@@ -17,6 +17,7 @@ limitations under the License.
 
 import {html, property, query, classMap} from '@material/mwc-base/form-element.js';
 import {TextFieldBase} from './mwc-textfield-base.js';
+import {characterCounter} from './character-counter/mwc-character-counter-directive.js';
 
 export abstract class TextAreaBase extends TextFieldBase {
   @query('textarea')
@@ -37,7 +38,7 @@ export abstract class TextAreaBase extends TextFieldBase {
     };
     return html`
       <div class="mdc-text-field mdc-text-field--textarea ${classMap(classes)}">
-        ${this.charCounter ? html`<div class="mdc-text-field-character-counter"></div>` : ''}
+        ${this.charCounter ? html`<div .foundation=${characterCounter()}></div>` : ''}
         ${this.renderInput()}
         ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
       </div>
