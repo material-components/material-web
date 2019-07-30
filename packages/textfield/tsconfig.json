@@ -5,7 +5,7 @@
     "outDir": "."
   },
   "include": [
-    "src/*.ts"
+    "src/**/*.ts"
   ],
   "references": [
     {"path": "../base"},

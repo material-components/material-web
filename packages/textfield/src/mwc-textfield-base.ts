@@ -21,7 +21,7 @@ import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label/mwc-flo
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple/line-ripple-directive.js';
 import {MDCNotchedOutlineAdapter} from '@material/notched-outline/adapter.js';
 import {MDCNotchedOutlineFoundation} from '@material/notched-outline/foundation.js';
-import {MDCTextFieldCharacterCounter} from '@material/textfield/character-counter';
+import {characterCounter, CharacterCounter} from './character-counter/mwc-character-counter-directive.js';
 
 const passiveEvents = ['touchstart', 'touchmove', 'scroll', 'mousewheel'];
 
@@ -49,7 +49,7 @@ export abstract class TextFieldBase extends FormElement {
   protected notchElement!: HTMLElement;
 
   @query('.mdc-text-field-character-counter')
-  protected charCounterElement!: HTMLElement;
+  protected charCounterElement!: CharacterCounter;
 
   @property()
   value = '';
@@ -94,7 +94,6 @@ export abstract class TextFieldBase extends FormElement {
   charCounter = false;
 
   protected _outlineFoundation: MDCNotchedOutlineFoundation | null = null;
-  protected _characterCounter: MDCTextFieldCharacterCounter | null = null;
 
   render() {
     const classes = {
@@ -158,7 +157,7 @@ export abstract class TextFieldBase extends FormElement {
     return html`
       <div class="mdc-text-field-helper-line">
         <div class="mdc-text-field-helper-text ${classMap(classes)}">${this.helper}</div>
-        ${this.charCounter ? html`<div class="mdc-text-field-character-counter"></div>` : ''}
+        ${this.charCounter ? html`<div .foundation=${characterCounter()}></div>` : ''}
       </div>
     `;
   }
@@ -176,9 +175,8 @@ export abstract class TextFieldBase extends FormElement {
     if (this.mdcFoundation !== undefined) {
       this.mdcFoundation.destroy();
     }
-    this._characterCounter = this.charCounterElement ? new MDCTextFieldCharacterCounter(this.charCounterElement) : null;
     this.mdcFoundation = new this.mdcFoundationClass(this.createAdapter(), {
-      characterCounter: this._characterCounter ? this._characterCounter.foundation : undefined
+      characterCounter: this.charCounterElement ? this.charCounterElement.foundation : undefined
     });
     this.mdcFoundation.init();
   }
