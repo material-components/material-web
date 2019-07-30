@@ -18,8 +18,7 @@ import {FormElement, html, query, property, classMap, addHasRemoveClass} from '@
 import MDCTextFieldFoundation from '@material/textfield/foundation.js';
 import {MDCTextFieldAdapter, MDCTextFieldLineRippleAdapter} from '@material/textfield/adapter.js';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label/mwc-floating-label-directive';
-import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
-import {MDCLineRippleAdapter} from '@material/line-ripple/adapter.js';
+import {lineRipple, LineRipple} from '@material/mwc-line-ripple/line-ripple-directive.js';
 import {MDCNotchedOutlineAdapter} from '@material/notched-outline/adapter.js';
 import {MDCNotchedOutlineFoundation} from '@material/notched-outline/foundation.js';
 import {MDCTextFieldCharacterCounter} from '@material/textfield/character-counter';
@@ -41,7 +40,7 @@ export abstract class TextFieldBase extends FormElement {
   protected labelElement!: FloatingLabel;
 
   @query('.mdc-line-ripple')
-  protected lineRippleElement!: HTMLElement;
+  protected lineRippleElement!: LineRipple;
 
   @query('.mdc-notched-outline')
   protected outlineElement!: HTMLElement;
@@ -94,7 +93,6 @@ export abstract class TextFieldBase extends FormElement {
   @property({type: Boolean})
   charCounter = false;
 
-  protected _lineRippleFoundation: MDCLineRippleFoundation | null = null;
   protected _outlineFoundation: MDCNotchedOutlineFoundation | null = null;
   protected _characterCounter: MDCTextFieldCharacterCounter | null = null;
 
@@ -149,7 +147,7 @@ export abstract class TextFieldBase extends FormElement {
   protected renderLabelText() {
     return html`
       ${this.label && !this.fullWidth ? html`<label .foundation=${floatingLabel()} for="text-field">${this.label}</label>` : ''}
-      <div class="mdc-line-ripple"></div>
+      <div .foundation=${lineRipple()}></div>
     `;
   }
 
@@ -170,9 +168,6 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   protected createFoundation() {
-    if (this.lineRippleElement) {
-      this.createLineRippleFoundation();
-    }
 
     if (this.outlineElement) {
       this.createNotchedOutlineFoundation();
@@ -188,25 +183,9 @@ export abstract class TextFieldBase extends FormElement {
     this.mdcFoundation.init();
   }
 
-  protected createLineRippleFoundation() {
-    const adapter = this.getLineRippleAdapter();
-    this._lineRippleFoundation = new MDCLineRippleFoundation(adapter);
-  }
-
   protected createNotchedOutlineFoundation() {
     const adapter = this.getNotchedOutlineAdapter();
     this._outlineFoundation = new MDCNotchedOutlineFoundation(adapter);
-  }
-
-  protected getLineRippleAdapter(): MDCLineRippleAdapter {
-    return {
-      addClass: className => this.lineRippleElement.classList.add(className),
-      removeClass: className => this.lineRippleElement.classList.remove(className),
-      hasClass: className => this.lineRippleElement.classList.contains(className),
-      setStyle: (propName, value) => this.lineRippleElement.style.setProperty(propName, value),
-      registerEventHandler: (evtType, handler) => {this.lineRippleElement.addEventListener(evtType, handler)},
-      deregisterEventHandler: (evtType, handler) => {this.lineRippleElement.removeEventListener(evtType, handler)},
-    };
   }
 
   protected getNotchedOutlineAdapter(): MDCNotchedOutlineAdapter {
@@ -273,18 +252,18 @@ export abstract class TextFieldBase extends FormElement {
   protected getLineRippleAdapterMethods(): MDCTextFieldLineRippleAdapter {
     return {
       activateLineRipple: () => {
-        if (this._lineRippleFoundation) {
-          this._lineRippleFoundation.activate();
+        if (this.lineRippleElement) {
+          this.lineRippleElement.foundation.activate();
         }
       },
       deactivateLineRipple: () => {
-        if (this._lineRippleFoundation) {
-          this._lineRippleFoundation.deactivate();
+        if (this.lineRippleElement) {
+          this.lineRippleElement.foundation.deactivate();
         }
       },
       setLineRippleTransformOrigin: (normalizedX: number) => {
-        if (this._lineRippleFoundation) {
-          this._lineRippleFoundation.setRippleCenter(normalizedX);
+        if (this.lineRippleElement) {
+          this.lineRippleElement.foundation.setRippleCenter(normalizedX);
         }
       },
     };
