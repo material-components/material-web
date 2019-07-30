@@ -36,8 +36,12 @@ export class TopAppBarBase extends BaseElement {
   @query('.mdc-top-app-bar')
   protected mdcRoot!: HTMLElement;
 
+  // _actionItemsSlot should have type HTMLSlotElement, but when TypeScript's
+  // emitDecoratorMetadata is enabled, the HTMLSlotElement constructor will
+  // be emitted into the runtime, which will cause an "HTMLSlotElement is
+  // undefined" error in browsers that don't define it (e.g. Edge and IE11).
   @query('[name="actionItems"]')
-  private _actionItemsSlot!: HTMLSlotElement;
+  private _actionItemsSlot!: HTMLElement;
 
   @property({reflect: true})
   type: TopAppBarTypes = '';
@@ -106,8 +110,9 @@ export class TopAppBarBase extends BaseElement {
       getViewportScrollY: () => this.scrollTarget instanceof Window ?
           this.scrollTarget.pageYOffset :
           this.scrollTarget.scrollTop,
-      getTotalActionItems: () =>
-          this._actionItemsSlot.assignedNodes({flatten: true}).length,
+      getTotalActionItems: () => (this._actionItemsSlot as HTMLSlotElement)
+                                     .assignedNodes({flatten: true})
+                                     .length,
     };
   }
 
