@@ -37,6 +37,14 @@ export interface RippleNodeOptions extends RippleOptions {
   surfaceNode: HTMLElement;
 }
 
+declare global {
+  interface Element {
+    // This is not a super great thing to do, adding a new property onto
+    // arbitrary elements...
+    ripple?: unknown;
+  }
+}
+
 // NOTE: This is a workaround for https://bugs.webkit.org/show_bug.cgi?id=173027.
 // Since keyframes on pseudo-elements (:after) are not supported in Shadow DOM,
 // we put the keyframe style into the <head> element.
