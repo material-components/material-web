@@ -34,8 +34,8 @@ A [Material Components](https://material.io/components/) icon implementation usi
   1. Import the mwc-floating-label definition and styles into your module script:
 
       ```ts
-      import {LitElement, html} from "@material/mwc-floating-label"
-      import {floatingLabel} from "@material/mwc-floating-label"
+      import {LitElement, html} from "lit-element";
+      import {floatingLabel} from "@material/mwc-floating-label";
       import {style} from '@material/mwc-floating-label/mwc-floating-label-css.js';
       ```
 
