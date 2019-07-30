@@ -17,7 +17,7 @@
   "dependencies": {
     "@material/drawer": "^3.0.0",
     "@material/mwc-base": "^0.6.0",
-    "blocking-elements": "^0.0.2",
+    "blocking-elements": "^0.1.0",
     "wicg-inert": "^2.1.0"
   },
   "publishConfig": {
