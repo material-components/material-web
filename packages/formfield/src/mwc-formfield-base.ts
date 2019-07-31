@@ -14,24 +14,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {
-  html,
-  BaseElement,
-  property,
-  query,
-  observer,
-  classMap,
-  EventType,
-  SpecificEventListener,
-} from '@material/mwc-base/base-element.js';
+import {MDCFormFieldAdapter} from '@material/form-field/adapter.js';
+import MDCFormFieldFoundation from '@material/form-field/foundation.js';
+import {BaseElement, classMap, EventType, html, observer, property, query, SpecificEventListener,} from '@material/mwc-base/base-element.js';
 import {FormElement} from '@material/mwc-base/form-element.js';
 import {findAssignedElement} from '@material/mwc-base/utils.js';
-import MDCFormFieldFoundation from '@material/form-field/foundation.js';
-import {MDCFormFieldAdapter} from '@material/form-field/adapter.js';
 
 export class FormfieldBase extends BaseElement {
-  @property({type: Boolean})
-  alignEnd = false;
+  @property({type: Boolean}) alignEnd = false;
 
   @property({type: String})
   @observer(async function(this: FormfieldBase, label: string) {
@@ -47,8 +37,7 @@ export class FormfieldBase extends BaseElement {
   })
   label = '';
 
-  @query('.mdc-form-field')
-  protected mdcRoot!: HTMLElement;
+  @query('.mdc-form-field') protected mdcRoot!: HTMLElement;
 
   protected mdcFoundation!: MDCFormFieldFoundation;
 
@@ -56,12 +45,14 @@ export class FormfieldBase extends BaseElement {
 
   protected createAdapter(): MDCFormFieldAdapter {
     return {
-      registerInteractionHandler: <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
-        this.labelEl.addEventListener(type, handler);
-      },
-      deregisterInteractionHandler: <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
-        this.labelEl.removeEventListener(type, handler);
-      },
+      registerInteractionHandler:
+          <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
+            this.labelEl.addEventListener(type, handler);
+          },
+      deregisterInteractionHandler:
+          <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
+            this.labelEl.removeEventListener(type, handler);
+          },
       activateInputRipple: () => {
         const input = this.input;
         if (input instanceof FormElement && input.ripple) {
@@ -77,11 +68,9 @@ export class FormfieldBase extends BaseElement {
     };
   }
 
-  @query('slot')
-  protected slotEl!: HTMLSlotElement;
+  @query('slot') protected slotEl!: HTMLSlotElement;
 
-  @query('label')
-  protected labelEl!: HTMLLabelElement;
+  @query('label') protected labelEl!: HTMLLabelElement;
 
   protected get input() {
     return findAssignedElement(this.slotEl, '*');
@@ -89,9 +78,12 @@ export class FormfieldBase extends BaseElement {
 
   render() {
     return html`
-      <div class="mdc-form-field ${classMap({'mdc-form-field--align-end': this.alignEnd})}">
+      <div class="mdc-form-field ${classMap({
+      'mdc-form-field--align-end': this.alignEnd
+    })}">
         <slot></slot>
-        <label class="mdc-label" @click="${this._labelClick}">${this.label}</label>
+        <label class="mdc-label" @click="${this._labelClick}">${
+        this.label}</label>
       </div>`;
   }
 

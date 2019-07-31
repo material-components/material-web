@@ -15,8 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {LitElement} from 'lit-element';
 import {MDCFoundation} from '@material/base';
+import {LitElement} from 'lit-element';
+
 import {Constructor} from './utils.js';
 
 export * from 'lit-element';

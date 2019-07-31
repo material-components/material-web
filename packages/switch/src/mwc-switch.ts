@@ -14,8 +14,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {SwitchBase} from './mwc-switch-base.js';
 import {customElement} from '@material/mwc-base/form-element.js';
+
+import {SwitchBase} from './mwc-switch-base.js';
 import {style} from './mwc-switch-css.js';
 
 declare global {
