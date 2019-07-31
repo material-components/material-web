@@ -14,21 +14,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { MDCTextFieldCharacterCounterAdapter } from '@material/textfield/character-counter/adapter.js';
-import { MDCTextFieldCharacterCounterFoundation } from '@material/textfield/character-counter/foundation.js';
-import { directive, PropertyPart } from 'lit-html';
+import {MDCTextFieldCharacterCounterAdapter} from '@material/textfield/character-counter/adapter.js';
+import {MDCTextFieldCharacterCounterFoundation} from '@material/textfield/character-counter/foundation.js';
+import {directive, PropertyPart} from 'lit-html';
 
 export interface CharacterCounter extends HTMLElement {
   foundation: MDCTextFieldCharacterCounterFoundation;
 }
 
-const createAdapter = (hostElement: HTMLElement): MDCTextFieldCharacterCounterAdapter => {
-  return {
-    setContent: content => hostElement.textContent = content
-  }
-}
+const createAdapter =
+    (hostElement: HTMLElement): MDCTextFieldCharacterCounterAdapter => {
+      return {setContent: (content) => hostElement.textContent = content};
+    };
 
-const partToFoundationMap = new WeakMap<PropertyPart, MDCTextFieldCharacterCounterFoundation>();
+const partToFoundationMap =
+    new WeakMap<PropertyPart, MDCTextFieldCharacterCounterFoundation>();
 
 export const characterCounter = directive(() => (part: PropertyPart) => {
   const lastFoundation = partToFoundationMap.get(part);

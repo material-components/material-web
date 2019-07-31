@@ -14,9 +14,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { MDCFloatingLabelAdapter } from '@material/floating-label/adapter.js';
-import { MDCFloatingLabelFoundation } from '@material/floating-label/foundation.js';
-import { directive, PropertyPart } from 'lit-html';
+import {MDCFloatingLabelAdapter} from '@material/floating-label/adapter.js';
+import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
+import {directive, PropertyPart} from 'lit-html';
 
 export interface FloatingLabel extends HTMLLabelElement {
   foundation: MDCFloatingLabelFoundation;
@@ -24,15 +24,20 @@ export interface FloatingLabel extends HTMLLabelElement {
 
 const createAdapter = (labelElement: HTMLElement): MDCFloatingLabelAdapter => {
   return {
-    addClass: className => labelElement.classList.add(className),
-    removeClass: className => labelElement.classList.remove(className),
+    addClass: (className) => labelElement.classList.add(className),
+    removeClass: (className) => labelElement.classList.remove(className),
     getWidth: () => labelElement.scrollWidth,
-    registerInteractionHandler: (evtType, handler) => {labelElement.addEventListener(evtType, handler)},
-    deregisterInteractionHandler: (evtType, handler) => {labelElement.removeEventListener(evtType, handler)},
-  }
-}
+    registerInteractionHandler: (evtType, handler) => {
+      labelElement.addEventListener(evtType, handler);
+    },
+    deregisterInteractionHandler: (evtType, handler) => {
+      labelElement.removeEventListener(evtType, handler);
+    },
+  };
+};
 
-const partToFoundationMap = new WeakMap<PropertyPart, MDCFloatingLabelFoundation>();
+const partToFoundationMap =
+    new WeakMap<PropertyPart, MDCFloatingLabelFoundation>();
 
 export const floatingLabel = directive(() => (part: PropertyPart) => {
   const lastFoundation = partToFoundationMap.get(part);
