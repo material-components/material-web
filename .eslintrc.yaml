@@ -13,6 +13,9 @@ plugins:
 parserOptions:
   ecmaVersion: 2017
   sourceType: module
+settings:
+  wc:
+    elementBaseClasses: ["BaseElement", "LitElement", "FormElement"]
 rules:
   indent: off
   max-len: off # clang-format fixes line lengths
