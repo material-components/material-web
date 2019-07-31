@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {addHasRemoveClass, classMap, EventType, FormElement, html, observer, property, query, SpecificEventListener,} from '@material/mwc-base/form-element.js';
+import {addHasRemoveClass, classMap, EventType, FormElement, html, observer, property, query, SpecificEventListener} from '@material/mwc-base/form-element.js';
 import {MDCSliderAdapter} from '@material/slider/adapter.js';
 import MDCSliderFoundation from '@material/slider/foundation.js';
 import {repeat} from 'lit-html/directives/repeat.js';

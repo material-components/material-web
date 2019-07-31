@@ -16,7 +16,7 @@ limitations under the License.
 */
 import {MDCCheckboxAdapter} from '@material/checkbox/adapter.js';
 import MDCCheckboxFoundation from '@material/checkbox/foundation.js';
-import {addHasRemoveClass, FormElement, html, HTMLElementWithRipple, observer, property, query, RippleSurface,} from '@material/mwc-base/form-element.js';
+import {addHasRemoveClass, FormElement, html, HTMLElementWithRipple, observer, property, query, RippleSurface} from '@material/mwc-base/form-element.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 
 export class CheckboxBase extends FormElement {

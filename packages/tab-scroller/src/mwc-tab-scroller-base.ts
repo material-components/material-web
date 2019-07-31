@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {matches} from '@material/dom/ponyfill';
-import {addHasRemoveClass, BaseElement, eventOptions, html, query,} from '@material/mwc-base/base-element';
+import {addHasRemoveClass, BaseElement, eventOptions, html, query} from '@material/mwc-base/base-element';
 import {MDCTabScrollerAdapter} from '@material/tab-scroller/adapter';
 import MDCTabScrollerFoundation from '@material/tab-scroller/foundation.js';
 

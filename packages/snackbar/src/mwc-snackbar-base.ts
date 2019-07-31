@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {addHasRemoveClass, BaseElement, classMap, html, observer, property, query,} from '@material/mwc-base/base-element.js';
+import {addHasRemoveClass, BaseElement, classMap, html, observer, property, query} from '@material/mwc-base/base-element.js';
 import {MDCSnackbarAdapter} from '@material/snackbar/adapter.js';
 import MDCSnackbarFoundation from '@material/snackbar/foundation.js';
 import {MDCSnackbarCloseEventDetail} from '@material/snackbar/types';

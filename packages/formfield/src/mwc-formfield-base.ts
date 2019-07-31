@@ -16,7 +16,7 @@ limitations under the License.
 */
 import {MDCFormFieldAdapter} from '@material/form-field/adapter.js';
 import MDCFormFieldFoundation from '@material/form-field/foundation.js';
-import {BaseElement, classMap, EventType, html, observer, property, query, SpecificEventListener,} from '@material/mwc-base/base-element.js';
+import {BaseElement, classMap, EventType, html, observer, property, query, SpecificEventListener} from '@material/mwc-base/base-element.js';
 import {FormElement} from '@material/mwc-base/form-element.js';
 import {findAssignedElement} from '@material/mwc-base/utils.js';
 
