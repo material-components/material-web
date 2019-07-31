@@ -23,19 +23,18 @@ export class LinearProgressBase extends BaseElement {
 
   protected readonly mdcFoundationClass = MDCLinearProgressFoundation;
 
-  @query('.mdc-linear-progress')
-  protected mdcRoot!: HTMLElement
+  @query('.mdc-linear-progress') protected mdcRoot!: HTMLElement;
 
-      @query('.mdc-linear-progress__primary-bar') protected primaryBar
-      !: HTMLElement
+  @query('.mdc-linear-progress__primary-bar')
+  protected primaryBar!: HTMLElement;
 
-      @query('.mdc-linear-progress__buffer') protected bufferElement
-      !: HTMLElement
+  @query('.mdc-linear-progress__buffer') protected bufferElement!: HTMLElement;
 
-      @property({type: Boolean, reflect: true})
-      @observer(function(this: LinearProgressBase, value: boolean) {
-        this.mdcFoundation.setDeterminate(value);
-      }) determinate = false;
+  @property({type: Boolean, reflect: true})
+  @observer(function(this: LinearProgressBase, value: boolean) {
+    this.mdcFoundation.setDeterminate(value);
+  })
+  determinate = false;
 
   @property({type: Number})
   @observer(function(this: LinearProgressBase, value: number) {
@@ -84,16 +83,15 @@ export class LinearProgressBase extends BaseElement {
       ...addHasRemoveClass(this.mdcRoot),
       getPrimaryBar: () => this.primaryBar,
       getBuffer: () => this.bufferElement,
-      setStyle: (el: HTMLElement, property: string, value: string) =>
-          // TODO(aomarks) Consider moving this type to the
-          // MDCLinearProgressAdapter parameter type, but note that the
-          // "-webkit" prefixed CSS properties are not declared in
-          // CSSStyleDeclaration.
-          //
-          // Exclude read-only properties.
-      el.style
-          [property as
-           Exclude<keyof CSSStyleDeclaration, 'length'|'parentRule'>] = value,
+      setStyle: (el: HTMLElement, property: string, value: string) => {
+        // TODO(aomarks) Consider moving this type to the
+        // MDCLinearProgressAdapter parameter type, but note that the "-webkit"
+        // prefixed CSS properties are not declared in CSSStyleDeclaration.
+        //
+        // Exclude read-only properties.
+        el.style[property as Exclude<keyof CSSStyleDeclaration, 'length'|'parentRule'>] =
+            value;
+      },
     };
   }
 

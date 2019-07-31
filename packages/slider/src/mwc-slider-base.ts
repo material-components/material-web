@@ -97,22 +97,21 @@ export class SliderBase extends FormElement {
         <div class="mdc-slider__track"></div>
         ${
         discrete && markers ?
-        html
-    `<div class="mdc-slider__track-marker-container">
+            html`<div class="mdc-slider__track-marker-container">
           ${
-        repeat(
-            new Array(_numMarkers),
-            () => html`<div class="mdc-slider__track-marker"></div>`)}
-        </div>`: ''}
+                repeat(
+                    new Array(_numMarkers),
+                    () => html`<div class="mdc-slider__track-marker"></div>`)}
+        </div>` :
+            ''}
       </div>
       <div class="mdc-slider__thumb-container">
         <!-- TODO: use cache() directive -->
         ${
-        discrete ?
-        html`<div class="mdc-slider__pin">
+        discrete ? html`<div class="mdc-slider__pin">
           <span class="mdc-slider__pin-value-marker"></span>
         </div>` :
-        ''}
+                   ''}
         <svg class="mdc-slider__thumb" width="21" height="21">
           <circle cx="10.5" cy="10.5" r="7.875"></circle>
         </svg>
