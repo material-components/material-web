@@ -14,18 +14,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {customElement} from '@material/mwc-base/base-element.js';
-
-import {LinearProgressBase} from './mwc-linear-progress-base.js';
-import {style} from './mwc-linear-progress-css.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'mwc-linear-progress': LinearProgressBase;
-  }
-}
-
-@customElement('mwc-linear-progress' as any)
-export class LinearProgress extends LinearProgressBase {
-  static styles = style;
-}
+@import '@material/line-ripple/mdc-line-ripple.scss';
