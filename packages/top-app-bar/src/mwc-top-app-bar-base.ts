@@ -134,20 +134,17 @@ export class TopAppBarBase extends BaseElement {
     }
   }
 
-  protected handleTargetScroll =
-      () => {
-        this.mdcFoundation.handleTargetScroll();
-      }
+  protected handleTargetScroll = () => {
+    this.mdcFoundation.handleTargetScroll();
+  };
 
-  protected handleResize =
-      () => {
-        this.mdcFoundation.handleWindowResize();
-      }
+  protected handleResize = () => {
+    this.mdcFoundation.handleWindowResize();
+  };
 
-  protected handleNavigationClick =
-      () => {
-        this.mdcFoundation.handleNavigationClick();
-      }
+  protected handleNavigationClick = () => {
+    this.mdcFoundation.handleNavigationClick();
+  };
 
   protected registerListeners() {
     this.scrollTarget.addEventListener(
