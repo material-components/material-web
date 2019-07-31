@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {addHasRemoveClass, classMap, EventType, FormElement, html, observer, property, query, SpecificEventListener} from '@material/mwc-base/form-element.js';
+import {addHasRemoveClass, classMap, EventType, FormElement, html, observer, property, query, SpecificEventListener, TemplateResult} from '@material/mwc-base/form-element.js';
 import {MDCSliderAdapter} from '@material/slider/adapter.js';
 import MDCSliderFoundation from '@material/slider/foundation.js';
 import {repeat} from 'lit-html/directives/repeat.js';
@@ -87,6 +87,19 @@ export class SliderBase extends FormElement {
       'mdc-slider--discrete': discrete,
       'mdc-slider--display-markers': markers && discrete,
     };
+
+    let markersTemplate: TemplateResult|string = '';
+
+    if (discrete && markers) {
+      const markerEls = repeat(
+          new Array(_numMarkers),
+          () => html`<div class="mdc-slider__track-marker"></div>`);
+
+      markersTemplate = html`
+        <div class="mdc-slider__track-marker-container">
+          ${markerEls}
+        </div>`;
+    }
     return html`
       <div class="mdc-slider ${classMap(hostClassInfo)}"
            tabindex="0" role="slider"
@@ -95,15 +108,7 @@ export class SliderBase extends FormElement {
            data-step="${step}">
       <div class="mdc-slider__track-container">
         <div class="mdc-slider__track"></div>
-        ${
-        discrete && markers ?
-            html`<div class="mdc-slider__track-marker-container">
-          ${
-                repeat(
-                    new Array(_numMarkers),
-                    () => html`<div class="mdc-slider__track-marker"></div>`)}
-        </div>` :
-            ''}
+        ${markersTemplate}
       </div>
       <div class="mdc-slider__thumb-container">
         <!-- TODO: use cache() directive -->
