@@ -14,9 +14,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { MDCLineRippleAdapter } from '@material/line-ripple/adapter.js';
-import { MDCLineRippleFoundation } from '@material/line-ripple/foundation.js';
-import { directive, PropertyPart } from 'lit-html';
+import {MDCLineRippleAdapter} from '@material/line-ripple/adapter.js';
+import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
+import {directive, PropertyPart} from 'lit-html';
 
 export interface LineRipple extends HTMLElement {
   foundation: MDCLineRippleFoundation;
@@ -24,16 +24,22 @@ export interface LineRipple extends HTMLElement {
 
 const createAdapter = (lineElement: HTMLElement): MDCLineRippleAdapter => {
   return {
-    addClass: className => lineElement.classList.add(className),
-    removeClass: className => lineElement.classList.remove(className),
-    hasClass: className => lineElement.classList.contains(className),
-    setStyle: (propertyName, value) => lineElement.style.setProperty(propertyName, value),
-    registerEventHandler: (evtType, handler) => {lineElement.addEventListener(evtType, handler)},
-    deregisterEventHandler: (evtType, handler) => {lineElement.removeEventListener(evtType, handler)},
-  }
-}
+    addClass: (className) => lineElement.classList.add(className),
+    removeClass: (className) => lineElement.classList.remove(className),
+    hasClass: (className) => lineElement.classList.contains(className),
+    setStyle: (propertyName, value) =>
+        lineElement.style.setProperty(propertyName, value),
+    registerEventHandler: (evtType, handler) => {
+      lineElement.addEventListener(evtType, handler);
+    },
+    deregisterEventHandler: (evtType, handler) => {
+      lineElement.removeEventListener(evtType, handler);
+    },
+  };
+};
 
-const partToFoundationMap = new WeakMap<PropertyPart, MDCLineRippleFoundation>();
+const partToFoundationMap =
+    new WeakMap<PropertyPart, MDCLineRippleFoundation>();
 
 export const lineRipple = directive(() => (part: PropertyPart) => {
   const lastFoundation = partToFoundationMap.get(part);

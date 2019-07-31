@@ -15,19 +15,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {html, property, query, classMap} from '@material/mwc-base/form-element.js';
-import {TextFieldBase} from './mwc-textfield-base.js';
+import {classMap, html, property, query} from '@material/mwc-base/form-element.js';
 import {characterCounter} from './character-counter/mwc-character-counter-directive.js';
+import {TextFieldBase} from './mwc-textfield-base.js';
 
 export abstract class TextAreaBase extends TextFieldBase {
-  @query('textarea')
-  protected formElement!: HTMLInputElement;
+  @query('textarea') protected formElement!: HTMLInputElement;
 
-  @property({type: Number})
-  rows = 2;
+  @property({type: Number}) rows = 2;
 
-  @property({type: Number})
-  cols = 20;
+  @property({type: Number}) cols = 20;
 
   render() {
     const classes = {
@@ -38,7 +35,9 @@ export abstract class TextAreaBase extends TextFieldBase {
     };
     return html`
       <div class="mdc-text-field mdc-text-field--textarea ${classMap(classes)}">
-        ${this.charCounter ? html`<div .foundation=${characterCounter()}></div>` : ''}
+        ${
+        this.charCounter ? html`<div .foundation=${characterCounter()}></div>` :
+                           ''}
         ${this.renderInput()}
         ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
       </div>

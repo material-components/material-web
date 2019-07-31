@@ -15,8 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {TextAreaBase} from './mwc-textarea-base.js';
 import {customElement} from '@material/mwc-base/form-element.js';
+import {TextAreaBase} from './mwc-textarea-base.js';
 import {style} from './mwc-textfield-css.js';
 
 declare global {
