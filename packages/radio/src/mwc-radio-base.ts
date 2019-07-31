@@ -22,13 +22,13 @@ import MDCRadioFoundation from '@material/radio/foundation.js';
 export class RadioBase extends FormElement {
   @query('.mdc-radio') protected mdcRoot!: HTMLElementWithRipple;
 
-  @query('input')
-  protected formElement!: HTMLInputElement
+  @query('input') protected formElement!: HTMLInputElement;
 
-      @property({type: Boolean})
-      @observer(function(this: RadioBase, checked: boolean) {
-        this.formElement.checked = checked;
-      }) checked = false;
+  @property({type: Boolean})
+  @observer(function(this: RadioBase, checked: boolean) {
+    this.formElement.checked = checked;
+  })
+  checked = false;
 
   @property({type: Boolean})
   @observer(function(this: RadioBase, disabled: boolean) {

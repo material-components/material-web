@@ -50,9 +50,8 @@ export class DrawerBase extends BaseElement {
       saveFocus: () => {
         // Note, casting to avoid cumbersome runtime check.
         this._previousFocus =
-            (this.getRootNode() as any as DocumentOrShadowRoot).activeElement as
-                HTMLElement |
-            null;
+            (this.getRootNode() as any as DocumentOrShadowRoot)
+                .activeElement as (HTMLElement | null);
       },
       restoreFocus: () => {
         const previousFocus = this._previousFocus && this._previousFocus.focus;
@@ -129,8 +128,8 @@ export class DrawerBase extends BaseElement {
         <div class="mdc-drawer__content"><slot></slot></div>
       </aside>
       ${
-        modal ? html`<div class="mdc-drawer-scrim" @click="${
-                    this._handleScrimClick}"></div>` :
+        modal ? html`<div class="mdc-drawer-scrim"
+                          @click="${this._handleScrimClick}"></div>` :
                 ''}
       <div class="mdc-drawer-app-content">
         <slot name="appContent"></slot>

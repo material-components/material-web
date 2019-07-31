@@ -48,8 +48,7 @@ export class ButtonBase extends LitElement {
     const mdcButtonIcon =
         html`<span class="material-icons mdc-button__icon">${this.icon}</span>`;
     return html`
-      <button
-          .ripple="${ripple({
+      <button .ripple="${ripple({
       unbounded: false
     })}"
           class="mdc-button ${classMap(classes)}"

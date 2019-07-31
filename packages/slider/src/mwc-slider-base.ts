@@ -26,10 +26,9 @@ export class SliderBase extends FormElement {
 
   protected readonly mdcFoundationClass = MDCSliderFoundation;
 
-  @query('.mdc-slider')
-  protected mdcRoot!: HTMLElement
+  @query('.mdc-slider') protected mdcRoot!: HTMLElement;
 
-      @query('.mdc-slider') protected formElement!: HTMLElement;
+  @query('.mdc-slider') protected formElement!: HTMLElement;
 
   @query('.mdc-slider__thumb-container') protected thumbContainer!: HTMLElement;
 
@@ -89,10 +88,11 @@ export class SliderBase extends FormElement {
       'mdc-slider--display-markers': markers && discrete,
     };
     return html`
-      <div class="mdc-slider ${
-        classMap(hostClassInfo)}" tabindex="0" role="slider"
-        aria-valuemin="${min}" aria-valuemax="${max}" aria-valuenow="${value}"
-        aria-disabled="${disabled}" data-step="${step}">
+      <div class="mdc-slider ${classMap(hostClassInfo)}"
+           tabindex="0" role="slider"
+           aria-valuemin="${min}" aria-valuemax="${max}"
+           aria-valuenow="${value}" aria-disabled="${disabled}"
+           data-step="${step}">
       <div class="mdc-slider__track-container">
         <div class="mdc-slider__track"></div>
         ${

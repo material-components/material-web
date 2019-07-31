@@ -82,8 +82,8 @@ export class FormfieldBase extends BaseElement {
       'mdc-form-field--align-end': this.alignEnd
     })}">
         <slot></slot>
-        <label class="mdc-label" @click="${this._labelClick}">${
-        this.label}</label>
+        <label class="mdc-label"
+               @click="${this._labelClick}">${this.label}</label>
       </div>`;
   }
 
