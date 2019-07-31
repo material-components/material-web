@@ -1,5 +1,5 @@
-import { customElement, html, LitElement, property } from 'lit-element';
-import { TemplateResult, render } from 'lit-html';
+import {customElement, html, LitElement, property} from 'lit-element';
+import {render, TemplateResult} from 'lit-html';
 
 declare global {
   interface Window {
@@ -9,11 +9,9 @@ declare global {
 
 @customElement('test-fixture')
 export class TestFixture extends LitElement {
-  @property({ type: Boolean })
-  shouldAttachContents = true;
+  @property({type: Boolean}) shouldAttachContents = true;
 
-  @property({ type: Object })
-  template: TemplateResult = html``;
+  @property({type: Object}) template: TemplateResult = html``;
 
   remove(): boolean {
     const parent = this.parentNode;
@@ -74,19 +72,17 @@ interface FixtureOptions {
   document: Document;
 }
 
-export const fixture = (
-  template: TemplateResult,
-  options?: Partial<FixtureOptions>
-) => {
-  const opts: FixtureOptions = { ...defaultOpts, ...options };
-  const tf = opts.document.createElement('test-fixture') as TestFixture;
-  tf.shouldAttachContents = opts.shouldAttachContents;
-  tf.template = template;
+export const fixture =
+    (template: TemplateResult, options?: Partial<FixtureOptions>) => {
+      const opts: FixtureOptions = {...defaultOpts, ...options};
+      const tf = opts.document.createElement('test-fixture') as TestFixture;
+      tf.shouldAttachContents = opts.shouldAttachContents;
+      tf.template = template;
 
-  opts.document.body.appendChild(tf);
+      opts.document.body.appendChild(tf);
 
-  return tf;
-};
+      return tf;
+    };
 
 interface MeasureFixtureCreationOpts {
   afterRender?: (root: ShadowRoot) => Promise<unknown>;

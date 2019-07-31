@@ -1,7 +1,7 @@
 import '@material/mwc-tab-bar';
 import '@material/mwc-tab';
-import { html } from 'lit-html';
-import { measureFixtureCreation } from '../helpers';
+import {html} from 'lit-html';
+import {measureFixtureCreation} from '../helpers';
 
 measureFixtureCreation(html`
   <mwc-tab-bar>
