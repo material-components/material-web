@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {addHasRemoveClass, BaseElement, classMap, html, property, PropertyValues, query,} from '@material/mwc-base/base-element.js';
+import {addHasRemoveClass, BaseElement, classMap, html, property, PropertyValues, query} from '@material/mwc-base/base-element.js';
 import {MDCTopAppBarAdapter} from '@material/top-app-bar/adapter';
 import {strings} from '@material/top-app-bar/constants.js';
 import MDCFixedTopAppBarFoundation from '@material/top-app-bar/fixed/foundation.js';

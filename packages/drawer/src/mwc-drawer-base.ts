@@ -20,7 +20,7 @@ import {MDCDrawerAdapter} from '@material/drawer/adapter.js';
 import {strings} from '@material/drawer/constants.js';
 import MDCDismissibleDrawerFoundation from '@material/drawer/dismissible/foundation.js';
 import MDCModalDrawerFoundation from '@material/drawer/modal/foundation.js';
-import {addHasRemoveClass, BaseElement, classMap, html, observer, property, PropertyValues, query,} from '@material/mwc-base/base-element.js';
+import {addHasRemoveClass, BaseElement, classMap, html, observer, property, PropertyValues, query} from '@material/mwc-base/base-element.js';
 import {DocumentWithBlockingElements} from 'blocking-elements';
 
 interface InertableHTMLElement extends HTMLElement {
