@@ -14,32 +14,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {
-  html,
-  FormElement,
-  property,
-  query,
-  observer,
-  HTMLElementWithRipple,
-  addHasRemoveClass,
-  RippleSurface,
-} from '@material/mwc-base/form-element.js';
-import {ripple} from '@material/mwc-ripple/ripple-directive.js';
-import MDCCheckboxFoundation from '@material/checkbox/foundation.js';
 import {MDCCheckboxAdapter} from '@material/checkbox/adapter.js';
+import MDCCheckboxFoundation from '@material/checkbox/foundation.js';
+import {addHasRemoveClass, FormElement, html, HTMLElementWithRipple, observer, property, query, RippleSurface,} from '@material/mwc-base/form-element.js';
+import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 
 export class CheckboxBase extends FormElement {
-  @query('.mdc-checkbox')
-  protected mdcRoot!: HTMLElementWithRipple;
+  @query('.mdc-checkbox') protected mdcRoot!: HTMLElementWithRipple;
 
-  @query('input')
-  protected formElement!: HTMLInputElement;
+  @query('input') protected formElement!: HTMLInputElement;
 
-  @property({type: Boolean})
-  checked = false;
+  @property({type: Boolean}) checked = false;
 
-  @property({type: Boolean})
-  indeterminate = false;
+  @property({type: Boolean}) indeterminate = false;
 
   @property({type: Boolean})
   @observer(function(this: CheckboxBase, value: boolean) {
@@ -50,11 +37,11 @@ export class CheckboxBase extends FormElement {
   @property({type: String})
   value = ''
 
-  protected mdcFoundationClass = MDCCheckboxFoundation;
+      protected mdcFoundationClass = MDCCheckboxFoundation;
 
   protected mdcFoundation!: MDCCheckboxFoundation;
 
-  get ripple(): RippleSurface | undefined {
+  get ripple(): RippleSurface|undefined {
     return this.mdcRoot.ripple;
   }
 
@@ -82,7 +69,8 @@ export class CheckboxBase extends FormElement {
 
   render() {
     return html`
-      <div class="mdc-checkbox" @animationend="${this._animationEndHandler}" .ripple="${ripple()}">
+      <div class="mdc-checkbox" @animationend="${
+        this._animationEndHandler}" .ripple="${ripple()}">
         <input type="checkbox"
               class="mdc-checkbox__native-control"
               @change="${this._changeHandler}"

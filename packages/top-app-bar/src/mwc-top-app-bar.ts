@@ -14,8 +14,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {TopAppBarBase} from './mwc-top-app-bar-base.js';
 import {customElement} from '@material/mwc-base/base-element.js';
+
+import {TopAppBarBase} from './mwc-top-app-bar-base.js';
 import {style} from './mwc-top-app-bar-css.js';
 
 declare global {

@@ -14,30 +14,23 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {LitElement, html, property, classMap} from '@material/mwc-base/base-element';
+import {classMap, html, LitElement, property} from '@material/mwc-base/base-element';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 
 export class FabBase extends LitElement {
-  @property({type: Boolean})
-  mini = false;
+  @property({type: Boolean}) mini = false;
 
-  @property({type: Boolean})
-  exited = false;
+  @property({type: Boolean}) exited = false;
 
-  @property({type: Boolean})
-  disabled = false;
+  @property({type: Boolean}) disabled = false;
 
-  @property({type: Boolean})
-  extended = false;
+  @property({type: Boolean}) extended = false;
 
-  @property({type: Boolean})
-  showIconAtEnd = false;
+  @property({type: Boolean}) showIconAtEnd = false;
 
-  @property()
-  icon = '';
+  @property() icon = '';
 
-  @property()
-  label = '';
+  @property() label = '';
 
   createRenderRoot() {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
@@ -57,8 +50,13 @@ export class FabBase extends LitElement {
           ?disabled="${this.disabled}"
           aria-label="${this.label || this.icon}">
         ${showLabel && this.showIconAtEnd ? this.label : ''}
-        ${this.icon ? html`<span class="material-icons mdc-fab__icon">${this.icon}</span>` : ''}
-        ${showLabel && !this.showIconAtEnd ? this.label : ''}
+        ${
+        this.icon ?
+        html
+    `<span class="material-icons mdc-fab__icon">${this.icon}</span>`: ''}
+        ${
+        showLabel &&
+        !this.showIconAtEnd ? this.label : ''}
       </button>`;
   }
 }

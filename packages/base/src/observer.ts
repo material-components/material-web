@@ -20,26 +20,28 @@ export interface Observer {
   (value: any, old: any): void;
 }
 
-export const observer = (observer: Observer) => (proto: any, propName: PropertyKey) => {
-  // if we haven't wrapped `updated` in this class, do so
-  if (!proto.constructor._observers) {
-    proto.constructor._observers = new Map<PropertyKey, Observer>();
-    const userUpdated = proto.updated;
-    proto.updated = function(changedProperties: PropertyValues) {
-      userUpdated.call(this, changedProperties);
-      changedProperties.forEach((v, k) => {
-        const observer = this.constructor._observers.get(k);
-        if (observer !== undefined) {
-          observer.call(this, this[k], v);
-        }
-      });
+export const observer = (observer: Observer) =>
+    (proto: any, propName: PropertyKey) => {
+      // if we haven't wrapped `updated` in this class, do so
+      if (!proto.constructor._observers) {
+        proto.constructor._observers = new Map<PropertyKey, Observer>();
+        const userUpdated = proto.updated;
+        proto.updated = function(changedProperties: PropertyValues) {
+          userUpdated.call(this, changedProperties);
+          changedProperties.forEach((v, k) => {
+            const observer = this.constructor._observers.get(k);
+            if (observer !== undefined) {
+              observer.call(this, this[k], v);
+            }
+          });
+        };
+        // clone any existing observers (superclasses)
+      } else if (!proto.constructor.hasOwnProperty('_observers')) {
+        const observers = proto.constructor._observers;
+        proto.constructor._observers = new Map();
+        observers.forEach(
+            (v: any, k: PropertyKey) => proto.constructor._observers.set(k, v));
+      }
+      // set this method
+      proto.constructor._observers.set(propName, observer);
     };
-  // clone any existing observers (superclasses)
-  } else if (!proto.constructor.hasOwnProperty('_observers')) {
-    const observers = proto.constructor._observers;
-    proto.constructor._observers = new Map();
-    observers.forEach((v: any, k: PropertyKey) => proto.constructor._observers.set(k, v));
-  }
-  // set this method
-  proto.constructor._observers.set(propName, observer);
-};

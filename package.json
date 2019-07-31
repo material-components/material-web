@@ -8,7 +8,7 @@
     "clean:typescript": "npm run build:typescript -- --clean",
     "clean:styles": "del-cli packages/*/src/*-css.ts",
     "dev": "polyserve --npm --module-resolution=node",
-    "format": "clang-format --version; find packages | grep '\\.js$\\|\\.ts$' | xargs clang-format --style=file -i",
+    "format": "clang-format --version; find . -name '*.ts' | grep -v node_modules | xargs clang-format -style=file -i",
     "lint:imports": "node scripts/check-imports.js",
     "lint": "npm run lint:typescript",
     "lint:typescript": "eslint \"packages/**/*.ts\"",

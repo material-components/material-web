@@ -14,22 +14,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {
-  BaseElement,
-  html,
-  property,
-  observer,
-  query,
-} from '@material/mwc-base/base-element.js';
-import {Tab} from '@material/mwc-tab';
-import {TabScroller} from '@material/mwc-tab-scroller';
-
 // Make TypeScript not remove the imports.
 import '@material/mwc-tab';
 import '@material/mwc-tab-scroller';
 
-import MDCTabBarFoundation from '@material/tab-bar/foundation';
+import {BaseElement, html, observer, property, query,} from '@material/mwc-base/base-element.js';
+import {Tab} from '@material/mwc-tab';
+import {TabScroller} from '@material/mwc-tab-scroller';
 import {MDCTabBarAdapter} from '@material/tab-bar/adapter';
+import MDCTabBarFoundation from '@material/tab-bar/foundation';
 import {MDCTabInteractionEvent} from '@material/tab/types';
 
 export class TabBarBase extends BaseElement {
@@ -40,22 +33,18 @@ export class TabBarBase extends BaseElement {
   @query('.mdc-tab-bar')
   protected mdcRoot!: HTMLElement
 
-  @query('mwc-tab-scroller')
-  protected scrollerElement!: TabScroller
+      @query('mwc-tab-scroller') protected scrollerElement!: TabScroller
 
-  @query('slot')
-  protected tabsSlot!: HTMLSlotElement
+      @query('slot') protected tabsSlot!: HTMLSlotElement
 
-  @observer(async function(this: TabBarBase, value: number) {
-    await this.updateComplete;
-    // only provoke the foundation if we are out of sync with it, i.e.
-    // ignore an foundation generated set.
-    if (value !== this._previousActiveIndex) {
-      this.mdcFoundation.activateTab(value);
-    }
-  })
-  @property({type: Number})
-  activeIndex = 0;
+      @observer(async function(this: TabBarBase, value: number) {
+        await this.updateComplete;
+        // only provoke the foundation if we are out of sync with it, i.e.
+        // ignore an foundation generated set.
+        if (value !== this._previousActiveIndex) {
+          this.mdcFoundation.activateTab(value);
+        }
+      }) @property({type: Number}) activeIndex = 0;
 
   private _previousActiveIndex = -1;
 
@@ -80,7 +69,8 @@ export class TabBarBase extends BaseElement {
 
   // TODO(sorvell): probably want to memoize this and use a `slotChange` event
   private _getTabs() {
-    return this.tabsSlot.assignedNodes({flatten: true}).filter((e: Node) => e instanceof Tab) as Tab[];
+    return this.tabsSlot.assignedNodes({flatten: true})
+               .filter((e: Node) => e instanceof Tab) as Tab[];
   }
 
   private _getTab(index: number) {
@@ -89,12 +79,15 @@ export class TabBarBase extends BaseElement {
 
   createAdapter(): MDCTabBarAdapter {
     return {
-      scrollTo: (scrollX: number) => this.scrollerElement.scrollToPosition(scrollX),
-      incrementScroll: (scrollXIncrement: number) => this.scrollerElement.incrementScrollPosition(scrollXIncrement),
+      scrollTo: (scrollX: number) =>
+          this.scrollerElement.scrollToPosition(scrollX),
+      incrementScroll: (scrollXIncrement: number) =>
+          this.scrollerElement.incrementScrollPosition(scrollXIncrement),
       getScrollPosition: () => this.scrollerElement.getScrollPosition(),
       getScrollContentWidth: () => this.scrollerElement.getScrollContentWidth(),
       getOffsetWidth: () => this.mdcRoot.offsetWidth,
-      isRTL: () => window.getComputedStyle(this.mdcRoot).getPropertyValue('direction') === 'rtl',
+      isRTL: () => window.getComputedStyle(this.mdcRoot)
+                       .getPropertyValue('direction') === 'rtl',
       setActiveTab: (index: number) => this.mdcFoundation.activateTab(index),
       activateTabAtIndex: (index: number, clientRect: ClientRect) => {
         const tab = this._getTab(index);
@@ -115,17 +108,20 @@ export class TabBarBase extends BaseElement {
           tab.focus();
         }
       },
-      // TODO(sorvell): tab may not be able to synchronously answer `computeIndicatorClientRect`
-      // if an update is pending or it has not yet updated. If this is necessary,
-      // LitElement may need a `forceUpdate` method.
+      // TODO(sorvell): tab may not be able to synchronously answer
+      // `computeIndicatorClientRect` if an update is pending or it has not yet
+      // updated. If this is necessary, LitElement may need a `forceUpdate`
+      // method.
       getTabIndicatorClientRectAtIndex: (index: number) => {
         const tab = this._getTab(index);
-        return tab !== undefined ? tab.computeIndicatorClientRect() : new DOMRect();
+        return tab !== undefined ? tab.computeIndicatorClientRect() :
+                                   new DOMRect();
       },
       getTabDimensionsAtIndex: (index: number) => {
         const tab = this._getTab(index);
-        return tab !== undefined ? tab.computeDimensions() :
-          {rootLeft: 0, rootRight: 0, contentLeft: 0, contentRight: 0};
+        return tab !== undefined ?
+            tab.computeDimensions() :
+            {rootLeft: 0, rootRight: 0, contentLeft: 0, contentRight: 0};
       },
       getPreviousActiveTabIndex: () => {
         return this._previousActiveIndex;
@@ -149,8 +145,8 @@ export class TabBarBase extends BaseElement {
         // Synchronize the tabs `activeIndex` to the foundation.
         // This is needed when a tab is changed via a click, for example.
         this.activeIndex = index;
-        this.dispatchEvent(
-          new CustomEvent(MDCTabBarFoundation.strings.TAB_ACTIVATED_EVENT,
+        this.dispatchEvent(new CustomEvent(
+            MDCTabBarFoundation.strings.TAB_ACTIVATED_EVENT,
             {detail: {index}, bubbles: true, cancelable: true}));
       },
     };
@@ -159,15 +155,16 @@ export class TabBarBase extends BaseElement {
   // NOTE: Delay creating foundation until scroller is fully updated.
   // This is necessary because the foundation/adapter synchronously addresses
   // the scroller element.
-  firstUpdated() {}
+  firstUpdated() {
+  }
   protected _getUpdateComplete() {
     return super._getUpdateComplete()
-      .then(() => this.scrollerElement.updateComplete)
-      .then(() => {
-        if (this.mdcFoundation === undefined) {
-          this.createFoundation();
-        }
-      });
+        .then(() => this.scrollerElement.updateComplete)
+        .then(() => {
+          if (this.mdcFoundation === undefined) {
+            this.createFoundation();
+          }
+        });
   }
 
   scrollIndexIntoView(index: number) {

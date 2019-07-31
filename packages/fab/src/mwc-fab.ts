@@ -14,8 +14,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {FabBase} from './mwc-fab-base.js';
 import {customElement} from '@material/mwc-base/base-element';
+
+import {FabBase} from './mwc-fab-base.js';
 import {style} from './mwc-fab-css.js';
 
 declare global {

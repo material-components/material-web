@@ -14,21 +14,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {
-  BaseElement,
-  html,
-  property,
-  query,
-  observer,
-  classMap,
-  addHasRemoveClass,
-} from '@material/mwc-base/base-element.js';
+import {addHasRemoveClass, BaseElement, classMap, html, observer, property, query,} from '@material/mwc-base/base-element.js';
+import {MDCSnackbarAdapter} from '@material/snackbar/adapter.js';
 import MDCSnackbarFoundation from '@material/snackbar/foundation.js';
 import {MDCSnackbarCloseEventDetail} from '@material/snackbar/types';
 import * as util from '@material/snackbar/util';
-import {MDCSnackbarAdapter} from '@material/snackbar/adapter.js';
 
-const {OPENING_EVENT, OPENED_EVENT, CLOSING_EVENT, CLOSED_EVENT} = MDCSnackbarFoundation.strings;
+const {OPENING_EVENT, OPENED_EVENT, CLOSING_EVENT, CLOSED_EVENT} =
+    MDCSnackbarFoundation.strings;
 
 export class SnackbarBase extends BaseElement {
   protected mdcFoundation!: MDCSnackbarFoundation;
@@ -38,11 +31,9 @@ export class SnackbarBase extends BaseElement {
   @query('.mdc-snackbar')
   protected mdcRoot!: HTMLElement
 
-  @query('.mdc-snackbar__label')
-  protected labelElement!: HTMLElement
+      @query('.mdc-snackbar__label') protected labelElement!: HTMLElement
 
-  @property({type: Boolean, reflect: true})
-  isOpen = false;
+      @property({type: Boolean, reflect: true}) isOpen = false;
 
   @observer(function(this: SnackbarBase, value: number) {
     this.mdcFoundation.setTimeoutMs(value);
@@ -56,14 +47,11 @@ export class SnackbarBase extends BaseElement {
   @property({type: Boolean})
   closeOnEscape = false;
 
-  @property()
-  labelText = '';
+  @property() labelText = '';
 
-  @property({type: Boolean})
-  stacked = false;
+  @property({type: Boolean}) stacked = false;
 
-  @property({type: Boolean})
-  leading = false;
+  @property({type: Boolean}) leading = false;
 
   render() {
     const classes = {
@@ -71,7 +59,8 @@ export class SnackbarBase extends BaseElement {
       'mdc-snackbar--leading': this.leading,
     };
     return html`
-      <div class="mdc-snackbar ${classMap(classes)}" @keydown="${this._handleKeydown}">
+      <div class="mdc-snackbar ${classMap(classes)}" @keydown="${
+        this._handleKeydown}">
         <div class="mdc-snackbar__surface">
           <div class="mdc-snackbar__label"
                role="status"
@@ -92,16 +81,29 @@ export class SnackbarBase extends BaseElement {
       announce: () => util.announce(this.labelElement),
       notifyClosed: (reason: String) => {
         this.isOpen = false;
-        this.dispatchEvent(new CustomEvent(CLOSED_EVENT,
-          {bubbles: true, cancelable: true, detail: <MDCSnackbarCloseEventDetail>{reason: reason}}));
+        this.dispatchEvent(new CustomEvent(CLOSED_EVENT, {
+          bubbles: true,
+          cancelable: true,
+          detail: <MDCSnackbarCloseEventDetail> {
+            reason: reason
+          }
+        }));
       },
-      notifyClosing: (reason: String) => this.dispatchEvent(new CustomEvent(CLOSING_EVENT,
-        {bubbles: true, cancelable: true, detail: <MDCSnackbarCloseEventDetail>{reason: reason}})),
+      notifyClosing: (reason: String) =>
+          this.dispatchEvent(new CustomEvent(CLOSING_EVENT, {
+            bubbles: true,
+            cancelable: true,
+            detail: <MDCSnackbarCloseEventDetail> {
+              reason: reason
+            }
+          })),
       notifyOpened: () => {
         this.isOpen = true;
-        this.dispatchEvent(new CustomEvent(OPENED_EVENT, {bubbles: true, cancelable: true}));
+        this.dispatchEvent(
+            new CustomEvent(OPENED_EVENT, {bubbles: true, cancelable: true}));
       },
-      notifyOpening: () => this.dispatchEvent(new CustomEvent(OPENING_EVENT, {bubbles: true, cancelable: true})),
+      notifyOpening: () => this.dispatchEvent(
+          new CustomEvent(OPENING_EVENT, {bubbles: true, cancelable: true})),
     };
   }
 
@@ -110,7 +112,7 @@ export class SnackbarBase extends BaseElement {
   }
 
   close(reason = '') {
-    this.mdcFoundation. close(reason);
+    this.mdcFoundation.close(reason);
   }
 
   _handleKeydown(e: KeyboardEvent) {
