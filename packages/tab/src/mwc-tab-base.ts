@@ -98,22 +98,16 @@ export class TabBase extends BaseElement {
         <span class="mdc-tab__content">
           <slot></slot>
           ${
-        this.icon ?
-        html
-    `<span class="mdc-tab__icon material-icons">${this.icon}</span>`: ''}
+        this.icon ? html`<span class="mdc-tab__icon material-icons">${
+                        this.icon}</span>` :
+                    ''}
           ${
         this.label ?
-        html
-    `<span class="mdc-tab__text-label">${this.label}</span>`: ''}
-          ${
-        this.isMinWidthIndicator ?
-        this.renderIndicator() :
-        ''}
+            html`<span class="mdc-tab__text-label">${this.label}</span>` :
+            ''}
+          ${this.isMinWidthIndicator ? this.renderIndicator() : ''}
         </span>
-        ${
-        this.isMinWidthIndicator ?
-        '' :
-        this.renderIndicator()}
+        ${this.isMinWidthIndicator ? '' : this.renderIndicator()}
         <span class="mdc-tab__ripple" .ripple="${ripple({
       interactionNode: this,
       unbounded: false

@@ -51,12 +51,10 @@ export class FabBase extends LitElement {
           aria-label="${this.label || this.icon}">
         ${showLabel && this.showIconAtEnd ? this.label : ''}
         ${
-        this.icon ?
-        html
-    `<span class="material-icons mdc-fab__icon">${this.icon}</span>`: ''}
-        ${
-        showLabel &&
-        !this.showIconAtEnd ? this.label : ''}
+        this.icon ? html`<span class="material-icons mdc-fab__icon">${
+                        this.icon}</span>` :
+                    ''}
+        ${showLabel && !this.showIconAtEnd ? this.label : ''}
       </button>`;
   }
 }

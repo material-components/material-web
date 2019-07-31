@@ -34,10 +34,9 @@ export class CheckboxBase extends FormElement {
   })
   disabled = false;
 
-  @property({type: String})
-  value = ''
+  @property({type: String}) value = '';
 
-      protected mdcFoundationClass = MDCCheckboxFoundation;
+  protected mdcFoundationClass = MDCCheckboxFoundation;
 
   protected mdcFoundation!: MDCCheckboxFoundation;
 
