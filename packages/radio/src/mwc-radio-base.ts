@@ -14,24 +14,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {FormElement, query, property, html, observer, HTMLElementWithRipple, addHasRemoveClass} from '@material/mwc-base/form-element.js';
+import {addHasRemoveClass, FormElement, html, HTMLElementWithRipple, observer, property, query} from '@material/mwc-base/form-element.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
-import MDCRadioFoundation from '@material/radio/foundation.js';
 import {MDCRadioAdapter} from '@material/radio/adapter.js';
+import MDCRadioFoundation from '@material/radio/foundation.js';
 
 export class RadioBase extends FormElement {
-
-  @query('.mdc-radio')
-  protected mdcRoot!: HTMLElementWithRipple;
+  @query('.mdc-radio') protected mdcRoot!: HTMLElementWithRipple;
 
   @query('input')
   protected formElement!: HTMLInputElement
 
-  @property({type: Boolean})
-  @observer(function(this: RadioBase, checked: boolean) {
-    this.formElement.checked = checked;
-  })
-  checked = false;
+      @property({type: Boolean})
+      @observer(function(this: RadioBase, checked: boolean) {
+        this.formElement.checked = checked;
+      }) checked = false;
 
   @property({type: Boolean})
   @observer(function(this: RadioBase, disabled: boolean) {
@@ -45,14 +42,13 @@ export class RadioBase extends FormElement {
   })
   value = '';
 
-  @property({type: String})
-  name = '';
+  @property({type: String}) name = '';
 
   protected mdcFoundationClass = MDCRadioFoundation;
 
   protected mdcFoundation!: MDCRadioFoundation;
 
-  private _selectionController: SelectionController | null = null;
+  private _selectionController: SelectionController|null = null;
 
   constructor() {
     super();
@@ -88,7 +84,7 @@ export class RadioBase extends FormElement {
       ...addHasRemoveClass(this.mdcRoot),
       setNativeControlDisabled: (disabled: boolean) => {
         this.formElement.disabled = disabled;
-      }
+      },
     };
   }
 
@@ -113,10 +109,15 @@ export class RadioBase extends FormElement {
   render() {
     return html`
       <div class="mdc-radio" .ripple="${ripple()}">
-        <input class="mdc-radio__native-control" type="radio" name="${this.name}" .checked="${this.checked}" .value="${this.value}"
-        @change="${this._changeHandler}"
-        @focus="${this._focusHandler}"
-        @click="${this._clickHandler}">
+        <input
+          class="mdc-radio__native-control"
+          type="radio"
+          name="${this.name}"
+          .checked="${this.checked}"
+          .value="${this.value}"
+          @change="${this._changeHandler}"
+          @focus="${this._focusHandler}"
+          @click="${this._clickHandler}">
         <div class="mdc-radio__background">
           <div class="mdc-radio__outer-circle"></div>
           <div class="mdc-radio__inner-circle"></div>
@@ -138,15 +139,15 @@ export class RadioBase extends FormElement {
 const selectionController = Symbol('selection controller');
 
 class SelectionSet {
-  selected: RadioBase | null = null;
-  ordered: RadioBase[] | null = null;
+  selected: RadioBase|null = null;
+  ordered: RadioBase[]|null = null;
   readonly set = new Set<RadioBase>();
 }
 
 export class SelectionController {
   private sets: {[name: string]: SelectionSet} = {};
 
-  private focusedSet: SelectionSet | null = null;
+  private focusedSet: SelectionSet|null = null;
 
   private mouseIsDown = false;
 
@@ -162,7 +163,8 @@ export class SelectionController {
   }
 
   constructor(element: Node) {
-    element.addEventListener('keydown', (e: Event) => this.keyDownHandler(e as KeyboardEvent));
+    element.addEventListener(
+        'keydown', (e: Event) => this.keyDownHandler(e as KeyboardEvent));
     element.addEventListener('mousedown', () => this.mousedownHandler());
     element.addEventListener('mouseup', () => this.mouseupHandler());
   }
@@ -198,13 +200,13 @@ export class SelectionController {
   previous(element: RadioBase) {
     const order = this.getOrdered(element);
     const i = order.indexOf(element);
-    this.select(order[i-1] || order[order.length-1]);
+    this.select(order[i - 1] || order[order.length - 1]);
   }
 
   next(element: RadioBase) {
     const order = this.getOrdered(element);
     const i = order.indexOf(element);
-    this.select(order[i+1] || order[0]);
+    this.select(order[i + 1] || order[0]);
   }
 
   select(element: RadioBase) {
@@ -232,9 +234,11 @@ export class SelectionController {
     const set = this.getSet(element.name);
     if (!set.ordered) {
       set.ordered = Array.from(set.set);
-      set.ordered.sort((a, b) =>
-        a.compareDocumentPosition(b) == Node.DOCUMENT_POSITION_PRECEDING ? 1 : 0
-      );
+      set.ordered.sort(
+          (a, b) =>
+              a.compareDocumentPosition(b) == Node.DOCUMENT_POSITION_PRECEDING ?
+              1 :
+              0);
     }
     return set.ordered;
   }

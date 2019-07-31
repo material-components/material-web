@@ -15,31 +15,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {BaseElement, html, property, query, observer, addHasRemoveClass} from '@material/mwc-base/base-element.js';
-import MDCIconButtonToggleFoundation from '@material/icon-button/foundation.js';
 import {MDCIconButtonToggleAdapter} from '@material/icon-button/adapter.js';
+import MDCIconButtonToggleFoundation from '@material/icon-button/foundation.js';
+import {addHasRemoveClass, BaseElement, html, observer, property, query} from '@material/mwc-base/base-element.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 
 export class IconButtonBase extends BaseElement {
-
   protected mdcFoundationClass = MDCIconButtonToggleFoundation;
 
   protected mdcFoundation!: MDCIconButtonToggleFoundation;
 
-  @query('.mdc-icon-button')
-  protected mdcRoot!: HTMLElement;
+  @query('.mdc-icon-button') protected mdcRoot!: HTMLElement;
 
-  @property({type: String})
-  label = '';
+  @property({type: String}) label = '';
 
-  @property({type: Boolean, reflect: true})
-  disabled = false;
+  @property({type: Boolean, reflect: true}) disabled = false;
 
-  @property({type: String})
-  icon = '';
+  @property({type: String}) icon = '';
 
-  @property({type: String})
-  offIcon = '';
+  @property({type: String}) offIcon = '';
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: IconButtonBase, state: boolean) {
@@ -57,9 +51,10 @@ export class IconButtonBase extends BaseElement {
         if (this.offIcon === '') {
           return;
         }
-        this.dispatchEvent(new CustomEvent('MDCIconButtonToggle:change', {detail: evtData, bubbles: true}));
-      }
-    }
+        this.dispatchEvent(new CustomEvent(
+            'MDCIconButtonToggle:change', {detail: evtData, bubbles: true}));
+      },
+    };
   }
 
   protected handleClick() {
@@ -89,7 +84,8 @@ export class IconButtonBase extends BaseElement {
         aria-label="${this.label}"
         ?disabled="${this.disabled}">
         <i class="material-icons mdc-icon-button__icon">${this.offIcon}</i>
-        <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">${this.icon}</i>
+        <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">${
+        this.icon}</i>
       </button>`;
   }
 }

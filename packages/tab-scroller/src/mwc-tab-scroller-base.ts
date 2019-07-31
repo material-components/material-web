@@ -14,19 +14,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, query, eventOptions, addHasRemoveClass} from '@material/mwc-base/base-element';
-import MDCTabScrollerFoundation from '@material/tab-scroller/foundation.js';
 import {matches} from '@material/dom/ponyfill';
-import { MDCTabScrollerAdapter } from '@material/tab-scroller/adapter';
+import {addHasRemoveClass, BaseElement, eventOptions, html, query} from '@material/mwc-base/base-element';
+import {MDCTabScrollerAdapter} from '@material/tab-scroller/adapter';
+import MDCTabScrollerFoundation from '@material/tab-scroller/foundation.js';
 
 export class TabScrollerBase extends BaseElement {
-
   protected mdcFoundation!: MDCTabScrollerFoundation;
 
   protected mdcFoundationClass = MDCTabScrollerFoundation;
 
-  @query('.mdc-tab-scroller')
-  protected mdcRoot!: HTMLElement;
+  @query('.mdc-tab-scroller') protected mdcRoot!: HTMLElement;
 
   @query('.mdc-tab-scroller__scroll-area')
   protected scrollAreaElement!: HTMLElement;
@@ -66,23 +64,29 @@ export class TabScrollerBase extends BaseElement {
       ...addHasRemoveClass(this.mdcRoot),
       eventTargetMatchesSelector: (evtTarget: EventTarget, selector: string) =>
           matches(evtTarget as Element, selector),
-      addScrollAreaClass: (className: string) => this.scrollAreaElement.classList.add(className),
+      addScrollAreaClass: (className: string) =>
+          this.scrollAreaElement.classList.add(className),
       setScrollAreaStyleProperty: (prop: string, value: string) =>
           this.scrollAreaElement.style.setProperty(prop, value),
       setScrollContentStyleProperty: (prop: string, value: string) =>
           this.scrollContentElement.style.setProperty(prop, value),
       getScrollContentStyleValue: (propName: string) =>
-          window.getComputedStyle(this.scrollContentElement).getPropertyValue(propName),
-      setScrollAreaScrollLeft: (scrollX: number) => this.scrollAreaElement.scrollLeft = scrollX,
+          window.getComputedStyle(this.scrollContentElement)
+              .getPropertyValue(propName),
+      setScrollAreaScrollLeft: (scrollX: number) =>
+          this.scrollAreaElement.scrollLeft = scrollX,
       getScrollAreaScrollLeft: () => this.scrollAreaElement.scrollLeft,
       getScrollContentOffsetWidth: () => this.scrollContentElement.offsetWidth,
       getScrollAreaOffsetWidth: () => this.scrollAreaElement.offsetWidth,
-      computeScrollAreaClientRect: () => this.scrollAreaElement.getBoundingClientRect(),
-      computeScrollContentClientRect: () => this.scrollContentElement.getBoundingClientRect(),
+      computeScrollAreaClientRect: () =>
+          this.scrollAreaElement.getBoundingClientRect(),
+      computeScrollContentClientRect: () =>
+          this.scrollContentElement.getBoundingClientRect(),
       computeHorizontalScrollbarHeight: () => {
         if (this._scrollbarHeight === -1) {
           this.scrollAreaElement.style.overflowX = 'scroll';
-          this._scrollbarHeight = this.scrollAreaElement.offsetHeight - this.scrollAreaElement.clientHeight;;
+          this._scrollbarHeight = this.scrollAreaElement.offsetHeight -
+              this.scrollAreaElement.clientHeight;
           this.scrollAreaElement.style.overflowX = '';
         }
         return this._scrollbarHeight;
@@ -108,7 +112,8 @@ export class TabScrollerBase extends BaseElement {
 
   /**
    * Increments the scroll value by the given amount
-   * @param {number} scrollXIncrement The pixel value by which to increment the scroll value
+   * @param {number} scrollXIncrement The pixel value by which to increment the
+   *     scroll value
    */
   incrementScrollPosition(scrollXIncrement: number) {
     this.mdcFoundation.incrementScroll(scrollXIncrement);
@@ -121,5 +126,4 @@ export class TabScrollerBase extends BaseElement {
   scrollToPosition(scrollX: number) {
     this.mdcFoundation.scrollTo(scrollX);
   }
-
 }

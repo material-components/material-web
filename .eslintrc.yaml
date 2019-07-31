@@ -1,16 +1,21 @@
-extends: google
+extends:
+  - google
+  - plugin:wc/recommended
 globals:
   goog: false
 env:
   browser: true
+parser: "@typescript-eslint/parser"
 plugins:
+  - "@typescript-eslint"
   - mocha
+  - wc
 parserOptions:
   ecmaVersion: 2017
   sourceType: module
 rules:
-  indent: [error, 2]
-  max-len: [error, 120]
+  indent: off
+  max-len: off # clang-format fixes line lengths
   no-new: warn
   quotes: [error, single, {"avoidEscape": true}]
   no-var: error
@@ -28,6 +33,7 @@ rules:
   valid-jsdoc: off
 
   prefer-const: error
+  comma-dangle: off
 
   # Rules for our mocha unit tests. Note that even though we use mocha, we model our unit tests
   # after frameworks such as tape and ava, which encourage modern paradigms, seek to minimize
@@ -40,3 +46,9 @@ rules:
   mocha/no-pending-tests: error
   mocha/no-skipped-tests: error
   mocha/valid-suite-description: [error, ^MDC.+|^webpack|^mwc-.+]
+overrides:
+  - files: ["packages/**/*.ts"]
+    rules:
+      no-unused-vars: off
+      no-invalid-this: off
+      new-cap: off

@@ -14,8 +14,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {FormfieldBase} from './mwc-formfield-base.js';
 import {customElement} from '@material/mwc-base/base-element.js';
+
+import {FormfieldBase} from './mwc-formfield-base.js';
 import {style} from './mwc-formfield-css.js';
 
 declare global {
@@ -26,7 +27,5 @@ declare global {
 
 @customElement('mwc-formfield' as any)
 export class Formfield extends FormfieldBase {
-
   static styles = style;
-
 }

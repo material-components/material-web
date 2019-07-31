@@ -14,8 +14,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {DrawerBase} from './mwc-drawer-base.js';
 import {customElement} from '@material/mwc-base/base-element.js';
+
+import {DrawerBase} from './mwc-drawer-base.js';
 import {style} from './mwc-drawer-css.js';
 
 declare global {
@@ -26,7 +27,5 @@ declare global {
 
 @customElement('mwc-drawer' as any)
 export class Drawer extends DrawerBase {
-
   static styles = style;
-
 }

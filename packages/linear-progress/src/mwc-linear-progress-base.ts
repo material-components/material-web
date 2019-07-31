@@ -14,23 +14,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, observer, query, addHasRemoveClass} from '@material/mwc-base/base-element.js';
-import MDCLinearProgressFoundation from '@material/linear-progress/foundation.js';
 import {MDCLinearProgressAdapter} from '@material/linear-progress/adapter.js';
+import MDCLinearProgressFoundation from '@material/linear-progress/foundation.js';
+import {addHasRemoveClass, BaseElement, html, observer, property, query} from '@material/mwc-base/base-element.js';
 
 export class LinearProgressBase extends BaseElement {
   protected mdcFoundation!: MDCLinearProgressFoundation;
 
   protected readonly mdcFoundationClass = MDCLinearProgressFoundation;
 
-  @query('.mdc-linear-progress')
-  protected mdcRoot!: HTMLElement
+  @query('.mdc-linear-progress') protected mdcRoot!: HTMLElement;
 
   @query('.mdc-linear-progress__primary-bar')
-  protected primaryBar!: HTMLElement
+  protected primaryBar!: HTMLElement;
 
-  @query('.mdc-linear-progress__buffer')
-  protected bufferElement!: HTMLElement
+  @query('.mdc-linear-progress__buffer') protected bufferElement!: HTMLElement;
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: LinearProgressBase, value: boolean) {
@@ -85,17 +83,15 @@ export class LinearProgressBase extends BaseElement {
       ...addHasRemoveClass(this.mdcRoot),
       getPrimaryBar: () => this.primaryBar,
       getBuffer: () => this.bufferElement,
-      setStyle: (el: HTMLElement, property: string, value: string) =>
-          el.style
-              // TODO(aomarks) Consider moving this type to the
-              // MDCLinearProgressAdapter parameter type, but note that the
-              // "-webkit" prefixed CSS properties are not declared in
-              // CSSStyleDeclaration.
-              //
-              // Exclude read-only properties.
-              [property as
-               Exclude<keyof CSSStyleDeclaration, 'length'|'parentRule'>] =
-              value,
+      setStyle: (el: HTMLElement, property: string, value: string) => {
+        // TODO(aomarks) Consider moving this type to the
+        // MDCLinearProgressAdapter parameter type, but note that the "-webkit"
+        // prefixed CSS properties are not declared in CSSStyleDeclaration.
+        //
+        // Exclude read-only properties.
+        el.style[property as Exclude<keyof CSSStyleDeclaration, 'length'|'parentRule'>] =
+            value;
+      },
     };
   }
 

@@ -1,8 +1,8 @@
-import {main} from 'tachometer/lib/cli';
-import {readdirSync} from 'fs';
-import {join as pathjoin} from 'path';
 import * as commandLineArgs from 'command-line-args';
 import * as commandLineUsage from 'command-line-usage';
+import {readdirSync} from 'fs';
+import {join as pathjoin} from 'path';
+import {main} from 'tachometer/lib/cli';
 
 const optionDefinitions: commandLineUsage.OptionDefinition[] = [
   {
@@ -13,7 +13,7 @@ const optionDefinitions: commandLineUsage.OptionDefinition[] = [
   },
   {
     name: 'package',
-    description: 'Select which individual packages to benchmark.\ne.g.'+
+    description: 'Select which individual packages to benchmark.\ne.g.' +
         ' "-p button radio icon-button".\n(default runs all)',
     alias: 'p',
     type: String,
@@ -92,33 +92,34 @@ $ node test/benchmark/cli -n 20
   if (opts.package.length) {
     packages = opts.package;
   } else {
-    packages = readdirSync(pathjoin('test','benchmark'), {withFileTypes: true})
-      .filter(dirEntry => dirEntry.isDirectory())
-      .map(dirEntry => dirEntry.name);
+    packages = readdirSync(pathjoin('test', 'benchmark'), {withFileTypes: true})
+                   .filter(dirEntry => dirEntry.isDirectory())
+                   .map(dirEntry => dirEntry.name);
   }
 
 
   const printResults: string[] = [];
   for (const packageName of packages) {
-
     const runCommands: string[] = [];
 
-    const benchmarks = readdirSync(pathjoin('test','benchmark', packageName), {withFileTypes: true})
-        .filter(dirEntry => dirEntry.isFile() && dirEntry.name.endsWith('.js'))
-        .map(dirEntry => dirEntry.name.replace(/\.js$/, ''));
+    const benchmarks =
+        readdirSync(
+            pathjoin('test', 'benchmark', packageName), {withFileTypes: true})
+            .filter(
+                dirEntry => dirEntry.isFile() && dirEntry.name.endsWith('.js'))
+            .map(dirEntry => dirEntry.name.replace(/\.js$/, ''));
 
     for (const benchmark of benchmarks) {
       runCommands.push(
-        `${packageName}:${benchmark}=test/benchmark/bench-runner.html` +
-        `?bench=${benchmark}` +
-        `&package=${packageName}`
-      );
+          `${packageName}:${benchmark}=test/benchmark/bench-runner.html` +
+          `?bench=${benchmark}` +
+          `&package=${packageName}`);
     }
 
     const statResults = await main([
       ...runCommands,
       '--measure=global',
-      `--browser=${opts.browser}${opts.remote ? `@${opts.remote}`: ''}`,
+      `--browser=${opts.browser}${opts.remote ? `@${opts.remote}` : ''}`,
       `--sample-size=${opts['sample-size']}`
     ]);
 

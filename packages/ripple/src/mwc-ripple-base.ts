@@ -14,28 +14,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {LitElement, html, property, classMap} from '@material/mwc-base/base-element';
+import {classMap, html, LitElement, property} from '@material/mwc-base/base-element';
+
 import {ripple, RippleOptions} from './ripple-directive.js';
 
 export class RippleBase extends LitElement {
+  @property({type: Boolean}) primary = false;
 
-  @property({type: Boolean})
-  primary = false;
+  @property({type: Boolean}) active: boolean|undefined;
 
-  @property({type: Boolean})
-  active: boolean|undefined;
+  @property({type: Boolean}) accent = false;
 
-  @property({type: Boolean})
-  accent = false;
+  @property({type: Boolean}) unbounded = false;
 
-  @property({type: Boolean})
-  unbounded = false;
+  @property({type: Boolean}) disabled = false;
 
-  @property({type: Boolean})
-  disabled = false;
-
-  @property()
-  protected interactionNode: HTMLElement = this;
+  @property() protected interactionNode: HTMLElement = this;
 
   connectedCallback() {
     if (this.interactionNode === this) {
@@ -59,5 +53,4 @@ export class RippleBase extends LitElement {
       <div .ripple="${ripple(rippleOptions)}"
           class="mdc-ripple-surface ${classMap(classes)}"></div>`;
   }
-
 }

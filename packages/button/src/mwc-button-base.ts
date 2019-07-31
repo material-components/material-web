@@ -14,34 +14,25 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {LitElement, html, property, classMap} from '@material/mwc-base/base-element';
+import {classMap, html, LitElement, property} from '@material/mwc-base/base-element';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 
 export class ButtonBase extends LitElement {
+  @property({type: Boolean}) raised = false;
 
-  @property({type: Boolean})
-  raised = false;
+  @property({type: Boolean}) unelevated = false;
 
-  @property({type: Boolean})
-  unelevated = false;
+  @property({type: Boolean}) outlined = false;
 
-  @property({type: Boolean})
-  outlined = false;
+  @property({type: Boolean}) dense = false;
 
-  @property({type: Boolean})
-  dense = false;
+  @property({type: Boolean, reflect: true}) disabled = false;
 
-  @property({type: Boolean, reflect: true})
-  disabled = false;
+  @property({type: Boolean}) trailingIcon = false;
 
-  @property({type: Boolean})
-  trailingIcon = false;
+  @property() icon = '';
 
-  @property()
-  icon = '';
-
-  @property()
-  label = '';
+  @property() label = '';
 
   createRenderRoot() {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
@@ -54,10 +45,13 @@ export class ButtonBase extends LitElement {
       'mdc-button--outlined': this.outlined,
       'mdc-button--dense': this.dense,
     };
-    const mdcButtonIcon = html`<span class="material-icons mdc-button__icon">${this.icon}</span>`
+    const mdcButtonIcon =
+        html`<span class="material-icons mdc-button__icon">${this.icon}</span>`;
     return html`
       <button
-          .ripple="${ripple({unbounded: false})}"
+          .ripple="${ripple({
+      unbounded: false
+    })}"
           class="mdc-button ${classMap(classes)}"
           ?disabled="${this.disabled}"
           aria-label="${this.label || this.icon}">

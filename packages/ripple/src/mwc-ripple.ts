@@ -14,8 +14,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {RippleBase} from './mwc-ripple-base.js';
 import {customElement} from '@material/mwc-base/base-element';
+
+import {RippleBase} from './mwc-ripple-base.js';
 import {style} from './mwc-ripple-css.js';
 
 declare global {
@@ -26,7 +27,5 @@ declare global {
 
 @customElement('mwc-ripple' as any)
 export class Ripple extends RippleBase {
-
   static styles = style;
-
 }
