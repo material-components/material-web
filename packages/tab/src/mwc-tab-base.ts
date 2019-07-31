@@ -77,8 +77,8 @@ export class TabBase extends BaseElement {
 
   static styles = style;
 
-  constructor() {
-    super();
+  firstUpdated() {
+    super.firstUpdated();
     // create an unique id
     this.id = this.id || `mdc-tab-${++tabIdCounter}`;
   }
