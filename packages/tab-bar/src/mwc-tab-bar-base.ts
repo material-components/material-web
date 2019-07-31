@@ -30,21 +30,22 @@ export class TabBarBase extends BaseElement {
 
   protected readonly mdcFoundationClass = MDCTabBarFoundation;
 
-  @query('.mdc-tab-bar')
-  protected mdcRoot!: HTMLElement
+  @query('.mdc-tab-bar') protected mdcRoot!: HTMLElement;
 
-      @query('mwc-tab-scroller') protected scrollerElement!: TabScroller
+  @query('mwc-tab-scroller') protected scrollerElement!: TabScroller;
 
-      @query('slot') protected tabsSlot!: HTMLSlotElement
+  @query('slot') protected tabsSlot!: HTMLSlotElement;
 
-      @observer(async function(this: TabBarBase, value: number) {
-        await this.updateComplete;
-        // only provoke the foundation if we are out of sync with it, i.e.
-        // ignore an foundation generated set.
-        if (value !== this._previousActiveIndex) {
-          this.mdcFoundation.activateTab(value);
-        }
-      }) @property({type: Number}) activeIndex = 0;
+  @observer(async function(this: TabBarBase, value: number) {
+    await this.updateComplete;
+    // only provoke the foundation if we are out of sync with it, i.e.
+    // ignore an foundation generated set.
+    if (value !== this._previousActiveIndex) {
+      this.mdcFoundation.activateTab(value);
+    }
+  })
+  @property({type: Number})
+  activeIndex = 0;
 
   private _previousActiveIndex = -1;
 

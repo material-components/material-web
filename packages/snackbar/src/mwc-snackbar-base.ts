@@ -28,12 +28,11 @@ export class SnackbarBase extends BaseElement {
 
   protected readonly mdcFoundationClass = MDCSnackbarFoundation;
 
-  @query('.mdc-snackbar')
-  protected mdcRoot!: HTMLElement
+  @query('.mdc-snackbar') protected mdcRoot!: HTMLElement;
 
-      @query('.mdc-snackbar__label') protected labelElement!: HTMLElement
+  @query('.mdc-snackbar__label') protected labelElement!: HTMLElement;
 
-      @property({type: Boolean, reflect: true}) isOpen = false;
+  @property({type: Boolean, reflect: true}) isOpen = false;
 
   @observer(function(this: SnackbarBase, value: number) {
     this.mdcFoundation.setTimeoutMs(value);
