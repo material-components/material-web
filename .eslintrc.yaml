@@ -15,7 +15,7 @@ parserOptions:
   sourceType: module
 settings:
   wc:
-    elementBaseClasses: ["BaseElement"]
+    elementBaseClasses: ["BaseElement", "LitElement", "FormElement"]
 rules:
   indent: [warn, 2]
   max-len: [warn, 120]
