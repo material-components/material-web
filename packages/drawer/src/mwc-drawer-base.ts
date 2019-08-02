@@ -14,7 +14,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import 'wicg-inert/dist/inert.js';
+
+// Note this blocking-elements import is not redundant with the one below,
+// because we need to ensure we import this module at runtime for its
+// side-effects. See
+// https://github.com/Microsoft/TypeScript/wiki/FAQ#why-are-imports-being-elided-in-my-emit.
+import 'blocking-elements';
+import 'wicg-inert.js';
 
 import {MDCDrawerAdapter} from '@material/drawer/adapter.js';
 import {strings} from '@material/drawer/constants.js';
