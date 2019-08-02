@@ -20,7 +20,7 @@ limitations under the License.
 // side-effects. See
 // https://github.com/Microsoft/TypeScript/wiki/FAQ#why-are-imports-being-elided-in-my-emit.
 import 'blocking-elements';
-import 'wicg-inert.js';
+import 'wicg-inert';
 
 import {MDCDrawerAdapter} from '@material/drawer/adapter.js';
 import {strings} from '@material/drawer/constants.js';
