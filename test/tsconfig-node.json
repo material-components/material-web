@@ -4,7 +4,7 @@
     "composite": true,
     "outDir": ".",
     "module": "commonjs",
-    "tsBuildInfoFile": ".tsbuildinfo"
+    "tsBuildInfoFile": ".tsbuildinfo-node"
   },
   "include": [
     "benchmark/cli.ts"
