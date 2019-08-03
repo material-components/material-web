@@ -41,7 +41,16 @@ A [Material Components](https://material.io/components/) icon implementation usi
 
   1. Create an instance of mwc-notched-outline in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
 
-      ```<mwc-notched-outline></mwc-notched-outline>```
+      ```
+      <mwc-notched-outline
+          .width=${widthOfNotch}
+          .open=${shouldOpen}
+          class="mdc-notched-outline">
+        <label .foundation=${floatingLabel()} for="text-field">
+          This is my label that floats in my notched outline!
+        </label>
+      </mwc-notched-outline>
+      ```
 
   1. Install the Polymer CLI:
 
