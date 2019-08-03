@@ -144,12 +144,14 @@ export const measureFixtureCreation = async (
     }
 
     res();
-  }).then(async () => {
-    // this adds an extra microtask and thus awaits any trailing async updates
-  });
+  })
+      .then(
+          // this adds an extra microtask and awaits any trailing async updates
+          async () => {});
 
   performance.mark('measureFixture-end');
-  performance.measure('fixture-creation', 'measureFixture-start', 'measureFixture-end');
+  performance.measure(
+      'fixture-creation', 'measureFixture-start', 'measureFixture-end');
 
   const duration = performance.getEntriesByName('fixture-creation')[0].duration;
   window.tachometerResult = duration;
