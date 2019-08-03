@@ -14,7 +14,7 @@
     "@material/mwc-base": "^0.6.0",
     "@material/mwc-floating-label": "^0.6.0",
     "@material/mwc-icon": "^0.6.0",
-    "@material/notched-outline": "^3.0.0",
+    "@material/mwc-notched-outline": "^0.6.0",
     "@material/textfield": "^3.0.0"
   },
   "publishConfig": {
