@@ -34,15 +34,39 @@ limitations under the License.
 .mdc-text-field {
   width: 100%;
   border-radius: var(--mwc-textfield-filled-border-radius);
+}
 
-  .mdc-notched-outline {
-    & > .mdc-notched-outline__leading {
-      width: var(--mwc-textfield-outlined-leading-width, 12px);
-      border-radius: var(--mwc-textfield-outlined-leading-border-radius, 4px 0px 0px 4px);
+mwc-notched-outline {
+  --mwc-notched-outline-border-color: var(--mwc-text-field-outlined-idle-border-color, #{$mdc-text-field-outlined-idle-border});
+}
+
+:host(:not([disabled]):hover) :not(.mdc-text-field--focused) mwc-notched-outline {
+  --mwc-notched-outline-border-color: var(--mwc-text-field-outlined-hover-border-color, #{$mdc-text-field-outlined-hover-border});
+}
+
+:host([disabled]) mwc-notched-outline {
+  --mwc-notched-outline-border-color: var(--mwc-text-field-outlined-disabled-border-color, #{$mdc-text-field-outlined-disabled-border});
+}
+
+.mdc-text-field--invalid:not(.mdc-text-field--disabled) {
+  mwc-notched-outline {
+    --mwc-notched-outline-border-color: var(--mwc-text-field-error-color, var(--mdc-theme-error, #{$mdc-theme-error}));
+  }
+}
+
+.mdc-text-field--focused:not(.mdc-text-field--disabled) {
+  mwc-notched-outline {
+    --mwc-notched-outline-stroke-width: 2px;
+  }
+
+  &:not(.mdc-text-field--invalid) {
+    mwc-notched-outline {
+      --mwc-notched-outline-border-color: var(--mwc-text-field-focused-label-color, var(--mdc-theme-primary, #{$mdc-text-field-focused-label-color}));
     }
 
-    & > .mdc-notched-outline__trailing {
-      border-radius: var(--mwc-textfield-outlined-trailing-border-radius, 0px 4px 4px 0);
+    .mdc-floating-label, .mdc-floating-label::after {
+      color: var(--mwc-text-field-focused-label-color, var(--mdc-theme-primary, #{$mdc-text-field-focused-label-color}));
     }
   }
+
 }
