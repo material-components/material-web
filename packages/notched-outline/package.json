@@ -1,0 +1,24 @@
+{
+  "name": "@material/mwc-notched-outline",
+  "version": "0.6.0",
+  "description": "",
+  "main": "mwc-notched-outline.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/material-components/material-components-web-components.git",
+    "directory": "packages/notched-outline"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@material/notched-outline": "^3.0.0",
+    "@material/theme": "^3.0.0",
+    "@material/mwc-base": "^0.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
