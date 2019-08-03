@@ -18,7 +18,6 @@ import '@material/mwc-textfield/mwc-textfield';
 import {html} from 'lit-html';
 import {measureFixtureCreation} from '../helpers';
 
-measureFixtureCreation(
-    html`
+measureFixtureCreation(html`
   <mwc-textfield outlined label="my label" value="Hello world!"></mwc-textfield>
 `);

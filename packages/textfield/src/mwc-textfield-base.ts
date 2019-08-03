@@ -20,7 +20,7 @@ import {addHasRemoveClass, classMap, FormElement, html, property, query, Templat
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label/mwc-floating-label-directive';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple/line-ripple-directive.js';
 import {NotchedOutline} from '@material/mwc-notched-outline';
-import {MDCTextFieldAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldLabelAdapter, MDCTextFieldInputAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter.js';
+import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter.js';
 import MDCTextFieldFoundation from '@material/textfield/foundation.js';
 
 import {characterCounter, CharacterCounter} from './character-counter/mwc-character-counter-directive.js';
@@ -36,11 +36,11 @@ export abstract class TextFieldBase extends FormElement {
 
   @query('input') protected formElement!: HTMLInputElement;
 
-  @query('.mdc-floating-label') protected labelElement!: FloatingLabel | null;
+  @query('.mdc-floating-label') protected labelElement!: FloatingLabel|null;
 
-  @query('.mdc-line-ripple') protected lineRippleElement!: LineRipple | null;
+  @query('.mdc-line-ripple') protected lineRippleElement!: LineRipple|null;
 
-  @query('mwc-notched-outline') protected outlineElement!: NotchedOutline | null;
+  @query('mwc-notched-outline') protected outlineElement!: NotchedOutline|null;
 
   @query('.mdc-notched-outline__notch') protected notchElement!: HTMLElement;
 
@@ -273,8 +273,7 @@ export abstract class TextFieldBase extends FormElement {
 
   protected getOutlineAdapterMethods(): MDCTextFieldOutlineAdapter {
     return {
-      closeOutline: () =>
-          this.outlineElement && (this.outlineOpen = false),
+      closeOutline: () => this.outlineElement && (this.outlineOpen = false),
       hasOutline: () => Boolean(this.outlineElement),
       notchOutline: (labelWidth) => {
         const outlineElement = this.outlineElement;
