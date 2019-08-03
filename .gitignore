@@ -11,7 +11,7 @@ node_modules
 /packages/textfield/character-counter/*
 /packages/*/src/*-css.ts
 /packages/*/package-lock.json
-**/*.tsbuildinfo
+**/*.tsbuildinfo*
 !packages/*/custom_types/**
 /test/benchmark/**/*.js
 /test/benchmark/**/*.js.map
