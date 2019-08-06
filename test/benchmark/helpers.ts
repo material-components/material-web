@@ -136,6 +136,7 @@ export const measureFixtureCreation = async (
       document.body.offsetWidth;
     } else {
       await new Promise(res => requestAnimationFrame(res));
+      document.body.offsetWidth;
     }
 
 
