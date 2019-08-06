@@ -278,8 +278,8 @@ export abstract class TextFieldBase extends FormElement {
       notchOutline: (labelWidth) => {
         const outlineElement = this.outlineElement;
         if (outlineElement) {
-          outlineElement.width = labelWidth;
-          outlineElement.open = true;
+          this.outlineWidth = labelWidth;
+          this.outlineOpen = true;
         }
       }
     };
