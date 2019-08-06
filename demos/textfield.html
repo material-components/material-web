@@ -23,18 +23,19 @@ limitations under the License.
   <script type="module" src="../node_modules/@material/mwc-textfield/mwc-textfield.js"></script>
   <script type="module" src="../node_modules/@material/mwc-textfield/mwc-textarea.js"></script>
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon-font.js"></script>
   <link rel="stylesheet" href="demo-component.css">
   <style>
     mwc-textfield {
       min-width: 240px;
     }
     .shaped-filled {
-      --mwc-textfield-filled-border-radius: 16px 16px 0 0;
+      --mdc-textfield-filled-border-radius: 16px 16px 0 0;
     }
     .shaped-outlined {
-      --mwc-textfield-outlined-leading-width: 28px;
-      --mwc-textfield-outlined-leading-border-radius: 28px 0 0 28px;
-      --mwc-textfield-outlined-trailing-border-radius: 0 28px 28px 0;
+      --mdc-textfield-outlined-leading-width: 28px;
+      --mdc-textfield-outlined-leading-border-radius: 28px 0 0 28px;
+      --mdc-textfield-outlined-trailing-border-radius: 0 28px 28px 0;
     }
   </style>
 </head>
@@ -56,7 +57,7 @@ limitations under the License.
     <div class="demo-group-spaced shaped-filled">
       <mwc-textfield label="Standard"></mwc-textfield>
       <mwc-textfield label="Standard" icon="event"></mwc-textfield>
-      <mwc-textfield label="Standard" iconTrailing="delete"></mwc-textfield>
+      <mwc-textfield class="color" label="Standard" iconTrailing="delete"></mwc-textfield>
     </div>
 
     <h4>Outlined</h4>

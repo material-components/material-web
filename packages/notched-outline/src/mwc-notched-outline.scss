@@ -51,21 +51,21 @@ limitations under the License.
 
 .mdc-notched-outline--upgraded ::slotted(.mdc-floating-label--float-above) {
   max-width: calc(100% / .75);
-  color: var(--mwc-notched-outline-border-color);
+  color: var(--mdc-notched-outline-border-color, var(--mdc-theme-primary));
 }
 
 .mdc-notched-outline__leading {
-  width: var(--mwc-notched-outline-leading-width, 12px);
-  border-radius: var(--mwc-notched-outline-leading-border-radius, 4px 0px 0px 4px);
+  width: var(--mdc-notched-outline-leading-width, 12px);
+  border-radius: var(--mdc-notched-outline-leading-border-radius, 4px 0px 0px 4px);
 }
 
 .mdc-notched-outline__trailing {
-  border-radius: var(--mwc-notched-outline-trailing-border-radius, 0px 4px 4px 0);
+  border-radius: var(--mdc-notched-outline-trailing-border-radius, 0px 4px 4px 0);
 }
 
 .mdc-notched-outline__leading,
 .mdc-notched-outline__notch,
 .mdc-notched-outline__trailing {
-  @include mdc-theme-prop(border-color, var(--mwc-notched-outline-border-color));
-  border-width: var(--mwc-notched-outline-stroke-width, 1px);
+  @include mdc-theme-prop(border-color, var(--mdc-notched-outline-border-color, var(--mdc-theme-primary)));
+  border-width: var(--mdc-notched-outline-stroke-width, 1px);
 }
