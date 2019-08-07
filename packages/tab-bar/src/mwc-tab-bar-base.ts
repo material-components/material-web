@@ -34,7 +34,11 @@ export class TabBarBase extends BaseElement {
 
   @query('mwc-tab-scroller') protected scrollerElement!: TabScroller;
 
-  @query('slot') protected tabsSlot!: HTMLSlotElement;
+  // tabsSlot should have type HTMLSlotElement, but when TypeScript's
+  // emitDecoratorMetadata is enabled, the HTMLSlotElement constructor will
+  // be emitted into the runtime, which will cause an "HTMLSlotElement is
+  // undefined" error in browsers that don't define it (e.g. Edge and IE11).
+  @query('slot') protected tabsSlot!: HTMLElement;
 
   @observer(async function(this: TabBarBase, value: number) {
     await this.updateComplete;
@@ -70,7 +74,8 @@ export class TabBarBase extends BaseElement {
 
   // TODO(sorvell): probably want to memoize this and use a `slotChange` event
   private _getTabs() {
-    return this.tabsSlot.assignedNodes({flatten: true})
+    return (this.tabsSlot as HTMLSlotElement)
+               .assignedNodes({flatten: true})
                .filter((e: Node) => e instanceof Tab) as Tab[];
   }
 
