@@ -68,12 +68,16 @@ export class FormfieldBase extends BaseElement {
     };
   }
 
-  @query('slot') protected slotEl!: HTMLSlotElement;
+  // slotEl should have type HTMLSlotElement, but when TypeScript's
+  // emitDecoratorMetadata is enabled, the HTMLSlotElement constructor will
+  // be emitted into the runtime, which will cause an "HTMLSlotElement is
+  // undefined" error in browsers that don't define it (e.g. Edge and IE11).
+  @query('slot') protected slotEl!: HTMLElement;
 
   @query('label') protected labelEl!: HTMLLabelElement;
 
   protected get input() {
-    return findAssignedElement(this.slotEl, '*');
+    return findAssignedElement(this.slotEl as HTMLSlotElement, '*');
   }
 
   render() {
