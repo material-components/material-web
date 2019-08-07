@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   users have control over how fonts are loaded. Users can still import the
   `mwc-icon-font.js` module themselves to automatically load the font from
   fonts.googleapis.com.
+- Fix layout issue affecting scrolling `<mwc-tab-bar>` in Firefox.
 
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x

@@ -18,7 +18,7 @@ limitations under the License.
 @import '@material/tab-bar/mdc-tab-bar.scss';
 
 :host {
-  display: flex;
+  display: block;
 }
 
 .mdc-tab-bar {
