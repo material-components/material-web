@@ -65,6 +65,7 @@
     "rollup-plugin-babel": "^3.0.4",
     "rollup-plugin-node-resolve": "^4.0.1",
     "sass": "^1.17.4",
+    "shady-css-parser": "^0.1.0",
     "sinon": "^7.3.1",
     "tachometer": "^0.4.9",
     "typescript": "^3.4.1"
