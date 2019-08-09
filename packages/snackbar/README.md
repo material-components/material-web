@@ -1,64 +1,126 @@
-# mwc-snackbar
+# `<mwc-snackbar>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-snackbar.svg)](https://www.npmjs.com/package/@material/mwc-snackbar)
 
-> :warning: These components are a work in progress. They are pre-release and should be considered experimental, as they may undergo major changes before release. We are experimenting with alternate architectures and approaches with the goal of allowing us to bring the most correct and optimal implementation of Material components to the widest possible audiences. Visible progress may be slow, as this research is across teams and repositories so is not consistently reflected in commits to this codebase. :warning:
+> IMPORTANT: The Material Web Components are a work in progress and subject to
+> major changes until 1.0 release.
 
-A [Material Components](https://material.io/components/) icon implementation using [Web Components](https://www.webcomponents.org/introduction)
+Snackbars provide brief messages about app processes at the bottom of the
+screen.
 
-## Getting started
+![](images/action_button.png)
 
- * The easiest way to try out mwc-snackbar is to use one of these online tools:
+[Material Design Guidelines: Snackbars](https://material.io/design/components/snackbars.html)
 
-    * Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-icon-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-icon-example?path=index.html)
+## Installation
 
-    * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/qibisux/edit?html,output),
-    [CodePen](https://codepen.io/azakus/pen/deZLja).
+```sh
+npm install @material/mwc-snackbar
+```
 
-* You can also copy [this HTML file](https://gist.githubusercontent.com/azakus/f01e9fc2ed04e781ad5a52ded7b296e7/raw/266f2f4f91cbfe89b2acc6ec63957b1a3cfe9b39/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
+> NOTE: The Material Web Components are distributed as ES2017 JavaScript
+> Modules, and use the Custom Elements API. They are compatible with all modern
+> browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
+> tooling step is required to resolve *bare module specifiers*, as well as
+> transpilation and polyfills for Edge and IE11. See
+> [here](https://github.com/material-components/material-components-web-components#quick-start)
+> for detailed instructions.
 
-* When you're ready to use mwc-snackbar in a project, install it via [npm](https://www.npmjs.com/). To run the project in the browser, a module-compatible toolctain is required. We recommend installing the [Polymer CLI](https://github.com/Polymer/polymer-cli) and using its development server as follows.
+## Example usage
 
-  1. Ensure the webcomponents polyfills are included in your HTML page
+### Standard
 
-      - Install webcomponents polyfills
+![](images/standard.png)
 
-          ```npm i @webcomponents/webcomponentsjs```
+```html
+<mwc-snackbar id="photoErrorSnackbar"
+              labelText="Can't send photo. Retry in 5 seconds.">
+</mwc-snackbar>
 
-      - Add webcomponents polyfills to your HTML page
+<script type="module">
+  import '@material/mwc-snackbar';
+  const snackbar = document.querySelector('#photoErrorSnackbar');
+  sendPhoto.then(...).catch(() => snackbar.open());
+</script>
+```
 
-          ```<script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>```
+### Optional action and dismiss button
 
-  1. Add mwc-snackbar to your project:
+![](images/action_and_dismiss.png)
 
-      ```npm i @material/mwc-snackbar```
+```html
+<mwc-snackbar labelText="Can't send photo. Retry in 5 seconds.">
+  <mwc-button slot="action">RETRY</mwc-button>
+  <mwc-icon-button id="iconButton" icon="close" slot="dismiss"></mwc-icon-button>
+</mwc-snackbar>
+```
 
-  1. Import the mwc-snackbar definition into your HTML page:
+### Custom action button color
 
-      ```<script type="module" src="@material/mwc-snackbar/index.js"></script>```
+![](images/custom_action_color.png)
 
-      Or into your module script:
+```css
+mwc-snackbar {
+  --mdc-snackbar-action-color: #64dc17;
+}
+```
 
-      ```import {Snackbar} from "@material/mwc-snackbar"```
+## Variants
 
-  1. Create an instance of mwc-snackbar in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
+### Stacked
 
-      ```<mwc-snackbar></mwc-snackbar>```
+Action buttons with long text should be positioned below the label instead of
+alongside it. Set the `stacked` attribute or property to enable this layout.
 
-  1. Install the Polymer CLI:
+![](images/stacked.png)
 
-      ```npm i -g polymer-cli```
+### Leading
 
-  1. Run the development server and open a browser pointing to its URL:
+By default, snackbars are centered horizontally within the viewport. On larger
+screens, they can optionally be displayed on the leading edge of the screen
+(the left side in LTR, or the right side in RTL). Set the `leading`
+attribute or property to enable this layout.
 
-      ```polymer serve```
+## API
 
-  > mwc-snackbar is published on [npm](https://www.npmjs.com/package/@material/mwc-snackbar) using JavaScript Modules.
-  This means it can take advantage of the standard native JavaScript module loader available in all current major browsers.
-  >
-  > However, since mwc-snackbar uses npm convention to reference dependencies by name, a light transform to rewrite specifiers to URLs is required to get it to run in the browser. The polymer-cli's development server `polymer serve` automatically handles this transform.
+### Slots
 
-  Tools like [WebPack](https://webpack.js.org/) and [Rollup](https://rollupjs.org/) can also be used to serve and/or bundle mwc-snackbar.
+| Name      | Description
+| --------- | -----------
+| `action`  | Optional `<mwc-button>` which closes the snackbar with reason `'action'`.
+| `dismiss` | Optional `<mwc-icon-button>` which closes the snackbar with reason `'dismiss'`.
 
-## Supported Browsers
+### Properties/Attributes
 
-The last 2 versions of all modern browsers are supported, including
-Chrome, Safari, Opera, Firefox, Edge. In addition, Internet Explorer 11 is also supported.
+| Name                | Type                 | Description
+| ------------------- | -------------------- |------------
+| `isOpen`            | `number` (read-only) | Whether the snackbar is currently open.
+| `timeoutMs`         | `number`             | Automatic dismiss timeout in milliseconds. Value must be between `4000` and `10000` or an error will be thrown. Defaults to `5000` (5 seconds).
+| `closeOnEscape`     | `boolean`            | Whether the snackbar closes when it is focused and the user presses the ESC key. Defaults to `true`.
+| `labelText`         | `string`             | The text content the label element.
+| `stacked`           | `boolean`            | Enables the *stacked* layout (see above).
+| `leading`           | `boolean`            | Enables the *leading* layout (see above).
+
+### Methods
+
+| Name     | Description
+| -------- | -------------
+| `open() => void`   | Opens the snackbar.
+| `close(reason: string = '') => void` | Closes the snackbar, optionally with the specified reason indicating why it was closed.
+
+### Events
+
+| Name                  | Detail              | Description
+| --------------------- | ------------------- | -----------
+| `MDCSnackbar:opening` | `{}`                | Indicates when the snackbar begins its opening animation.
+| `MDCSnackbar:opened`  | `{}`                | Indicates when the snackbar finishes its opening animation.
+| `MDCSnackbar:closing` | `{reason?: string}` | Indicates when the snackbar begins its closing animation. `reason` contains the reason why the snackbar closed (`'dismiss'`, `'action'`, or a custom `string` via the `close` method).
+| `MDCSnackbar:closed`  | `{reason?: string}` | Indicates when the snackbar finishes its closing animation. `reason` contains the reason why the snackbar closed (`'dismiss'`, `'action'`, or a custom `string` via the `close` method).
+
+### CSS Custom Properties
+
+| Name                          | Default | Description
+| ----------------------------- | ------- |------------
+| `--mdc-snackbar-action-color` | ![](images/color_bb86fc.png) `#bb86fc` | Color of the action button text.
+
+## Additional references
+
+- [MDC Web Snackbars](https://material.io/develop/web/components/snackbars/)
