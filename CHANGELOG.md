@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   fonts.googleapis.com.
 - Fix layout issue affecting scrolling `<mwc-tab-bar>` in Firefox.
 - Fix bug where `<mwc-icon>` icons did not render in IE11.
+- Buttons slotted into `<mwc-snackbar>` now render with correct default styles.
+  Add `--mdc-snackbar-action-color` CSS custom property to override default
+  action button color.
 
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x

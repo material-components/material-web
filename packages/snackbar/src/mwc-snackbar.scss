@@ -15,3 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 @import '@material/snackbar/mdc-snackbar.scss';
+
+slot[name=action]::slotted(mwc-button) {
+  --mdc-theme-primary: var(--mdc-snackbar-action-color, #{$mdc-snackbar-action-ink-color});
+}
+
+slot[name=dismiss]::slotted(mwc-icon-button) {
+  --mdc-icon-size: #{$mdc-snackbar-dismiss-icon-size};
+  color: #{$mdc-snackbar-dismiss-ink-color};
+}
