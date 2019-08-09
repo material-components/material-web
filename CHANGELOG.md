@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Buttons slotted into `<mwc-snackbar>` now render with correct default styles.
   Add `--mdc-snackbar-action-color` CSS custom property to override default
   action button color.
+- Fix bug where `<mwc-snackbar>` `open` method threw if called immediately
+  after construction (before `firstUpdated`).
 
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x
