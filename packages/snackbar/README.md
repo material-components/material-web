@@ -49,7 +49,7 @@ npm install @material/mwc-snackbar
 ```html
 <mwc-snackbar labelText="Can't send photo. Retry in 5 seconds.">
   <mwc-button slot="action">RETRY</mwc-button>
-  <mwc-icon-button id="iconButton" icon="close" slot="dismiss"></mwc-icon-button>
+  <mwc-icon-button icon="close" slot="dismiss"></mwc-icon-button>
 </mwc-snackbar>
 ```
 
