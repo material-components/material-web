@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Buttons slotted into `<mwc-snackbar>` now render with correct default styles.
   Add `--mdc-snackbar-action-color` CSS custom property to override default
   action button color.
+- Add support for `<svg>` and `<img>` to `<mwc-icon-button>`
 
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x

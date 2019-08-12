@@ -27,7 +27,11 @@ export class IconButtonBase extends BaseElement {
 
   @query('.mdc-icon-button') protected mdcRoot!: HTMLElement;
 
-  @query('slot[name="offIcon"]') protected offIconSlot!: HTMLSlotElement;
+  // offIconSlot should have type HTMLSlotElement, but when TypeScript's
+  // emitDecoratorMetadata is enabled, the HTMLSlotElement constructor will
+  // be emitted into the runtime, which will cause an "HTMLSlotElement is
+  // undefined" error in browsers that don't define it (e.g. Edge and IE11).
+  @query('slot[name="offIcon"]') protected offIconSlot!: HTMLElement;
 
   @property({type: String}) label = '';
 
@@ -73,8 +77,8 @@ export class IconButtonBase extends BaseElement {
   }
 
   protected calculateShouldToggle() {
-    this.shouldToggle =
-        !(this.offIcon === '' && !this.offIconSlot.assignedNodes().length);
+    this.shouldToggle = this.offIcon !== '' ||
+        (this.offIconSlot as HTMLSlotElement).assignedNodes().length > 0;
   }
 
   focus() {
@@ -101,12 +105,14 @@ export class IconButtonBase extends BaseElement {
         aria-label="${this.label}"
         ?disabled="${this.disabled}">
         <span class="mdc-icon-button__icon">
-          <slot name="offIcon" @slotchange="${
-        this.calculateShouldToggle}"><i class="material-icons">${
-        this.offIcon}</i></slot>
+          <slot name="offIcon" @slotchange="${this.calculateShouldToggle}">
+            <i class="material-icons">${this.offIcon}</i>
+          </slot>
         </span>
         <span class="mdc-icon-button__icon mdc-icon-button__icon--on">
-          <slot name="onIcon"><i class="material-icons">${this.icon}</i></slot>
+          <slot name="icon">
+            <i class="material-icons">${this.icon}</i>
+          </slot>
         </span>
       </button>`;
   }
