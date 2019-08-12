@@ -8,3 +8,7 @@ addons:
 
 before_script:
   - npm run bootstrap
+
+script:
+  - npm run lint
+  - npm test
