@@ -52,6 +52,13 @@ export class SnackbarBase extends BaseElement {
 
   @property({type: Boolean}) leading = false;
 
+  /**
+   * We can't open the snackbar until the foundation is initialized, but that
+   * doesn't happen until firstUpdated. Keep track of early calls to open() and
+   * do so after we have a foundation.
+   */
+  private _earlyOpen: boolean|undefined;
+
   render() {
     const classes = {
       'mdc-snackbar--stacked': this.stacked,
@@ -107,11 +114,26 @@ export class SnackbarBase extends BaseElement {
   }
 
   open() {
-    this.mdcFoundation.open();
+    if (this.mdcFoundation !== undefined) {
+      this.mdcFoundation.open();
+    } else {
+      this._earlyOpen = true;
+    }
   }
 
   close(reason = '') {
-    this.mdcFoundation.close(reason);
+    if (this.mdcFoundation !== undefined) {
+      this.mdcFoundation.close(reason);
+    } else if (this._earlyOpen === true) {
+      this._earlyOpen = false;
+    }
+  }
+
+  firstUpdated() {
+    super.firstUpdated();
+    if (this._earlyOpen === true) {
+      this.mdcFoundation.open();
+    }
   }
 
   _handleKeydown(e: KeyboardEvent) {
