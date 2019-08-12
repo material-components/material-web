@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   after construction (before `firstUpdated`).
 - Add support for `<svg>` and `<img>` to `<mwc-icon-button>`
 - Add `lit-analyzer` to CI
+- Only set up structure in `bootstrap`, make `build` explicit.
+  Run `lint` and `format` in CI
 
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x
