@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   action button color.
 - Fix bug where `<mwc-snackbar>` `open` method threw if called immediately
   after construction (before `firstUpdated`).
+- Add support for `<svg>` and `<img>` to `<mwc-icon-button>`
 
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x

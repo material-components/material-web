@@ -17,6 +17,7 @@ limitations under the License.
 
 @import '@material/icon-button/mdc-icon-button.scss';
 @import '@material/mwc-icon/src/_mwc-icon.scss';
+@import '@material/theme/_mixins.scss';
 
 :host {
   display: inline-block;
@@ -30,8 +31,13 @@ limitations under the License.
 // hack for top-app-bar ripple coloring of icon-buttons
 .mdc-ripple-upgraded {
   &:focus::before, &:focus::after {
-    background-color: currentColor;
-    background-color: var(--mdc-theme-on-primary, currentColor);
-    opacity: var(--mdc-icon-button-ripple-opacity, 0.12);
+    @include mdc-theme-prop(background-color, (
+      varname: --mdc-theme-on-primary,
+      fallback: currentColor,
+    ));
+    @include mdc-theme-prop(opacity, (
+      varname: --mdc-icon-button-ripple-opacity,
+      fallback: 0.12,
+    ));
   }
 }

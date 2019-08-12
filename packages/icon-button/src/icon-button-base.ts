@@ -27,19 +27,31 @@ export class IconButtonBase extends BaseElement {
 
   @query('.mdc-icon-button') protected mdcRoot!: HTMLElement;
 
+  // offIconSlot should have type HTMLSlotElement, but when TypeScript's
+  // emitDecoratorMetadata is enabled, the HTMLSlotElement constructor will
+  // be emitted into the runtime, which will cause an "HTMLSlotElement is
+  // undefined" error in browsers that don't define it (e.g. Edge and IE11).
+  @query('slot[name="offIcon"]') protected offIconSlot!: HTMLElement;
+
   @property({type: String}) label = '';
 
   @property({type: Boolean, reflect: true}) disabled = false;
 
   @property({type: String}) icon = '';
 
-  @property({type: String}) offIcon = '';
+  @property({type: String})
+  @observer(function(this: IconButtonBase) {
+    this.calculateShouldToggle();
+  })
+  offIcon = '';
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: IconButtonBase, state: boolean) {
     this.mdcFoundation.toggle(state);
   })
   on = false;
+
+  protected shouldToggle = true;
 
   protected createAdapter(): MDCIconButtonToggleAdapter {
     return {
@@ -48,7 +60,7 @@ export class IconButtonBase extends BaseElement {
         this.mdcRoot.setAttribute(name, value);
       },
       notifyChange: (evtData: {isOn: boolean}) => {
-        if (this.offIcon === '') {
+        if (!this.shouldToggle) {
           return;
         }
         this.dispatchEvent(new CustomEvent(
@@ -58,18 +70,27 @@ export class IconButtonBase extends BaseElement {
   }
 
   protected handleClick() {
-    if (this.offIcon !== '') {
+    if (this.shouldToggle) {
       this.on = !this.on;
       this.mdcFoundation.handleClick();
     }
+  }
+
+  protected calculateShouldToggle() {
+    this.shouldToggle = this.offIcon !== '' ||
+        (this.offIconSlot as HTMLSlotElement).assignedNodes().length > 0;
   }
 
   focus() {
     this.mdcRoot.focus();
   }
 
-  updated() {
-    if (this.offIcon === '') {
+  // override firstUpdated to calculate if this button should be toggle-able
+  firstUpdated() {
+    super.firstUpdated();
+    this.calculateShouldToggle();
+    if (!this.shouldToggle) {
+      // if this shouldn't toggle, set to `on` to have correct styling
       this.on = true;
     }
   }
@@ -83,9 +104,16 @@ export class IconButtonBase extends BaseElement {
         aria-hidden="true"
         aria-label="${this.label}"
         ?disabled="${this.disabled}">
-        <i class="material-icons mdc-icon-button__icon">${this.offIcon}</i>
-        <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">${
-        this.icon}</i>
+        <span class="mdc-icon-button__icon">
+          <slot name="offIcon" @slotchange="${this.calculateShouldToggle}">
+            <i class="material-icons">${this.offIcon}</i>
+          </slot>
+        </span>
+        <span class="mdc-icon-button__icon mdc-icon-button__icon--on">
+          <slot name="icon">
+            <i class="material-icons">${this.icon}</i>
+          </slot>
+        </span>
       </button>`;
   }
 }
