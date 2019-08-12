@@ -232,7 +232,7 @@ export abstract class TextFieldBase extends FormElement {
 
   protected getLabelAdapterMethods(): MDCTextFieldLabelAdapter {
     return {
-      floatLabel: async (shouldFloat: boolean) =>
+      floatLabel: (shouldFloat: boolean) =>
           this.labelElement && this.labelElement.foundation.float(shouldFloat),
       getLabelWidth: () => {
         return this.labelElement ? this.labelElement.foundation.getWidth() : 0;
