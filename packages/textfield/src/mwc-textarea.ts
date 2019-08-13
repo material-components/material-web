@@ -19,6 +19,8 @@ import {customElement} from '@material/mwc-base/form-element.js';
 import {TextAreaBase} from './mwc-textarea-base.js';
 import {style} from './mwc-textfield-css.js';
 
+export {HTMLInputElementType} from './mwc-textfield-base.js'
+
 declare global {
   interface HTMLElementTagNameMap {
     'mwc-textarea': TextArea;
