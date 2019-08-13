@@ -74,7 +74,7 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: Boolean, reflect: true}) fullWidth = false;
 
-  @property() helper = '';
+  @property({type: String}) helper = '';
 
   @property({type: Boolean}) helperPersistent = false;
 
