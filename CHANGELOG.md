@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add `lit-analyzer` to CI
 - Only set up structure in `bootstrap`, make `build` explicit.
   Run `lint` and `format` in CI
+- Remove CHANGELOG files in packages
+- Add section about CHANGELOG entries to CONTRIBUTING guide
 
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x
