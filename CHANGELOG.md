@@ -30,6 +30,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   result in the other radios in the group becoming unchecked.
 - Fix bug where `<mwc-drawer>` did not work in IE (via
   [WICG/inert#129](https://github.com/WICG/inert/pull/129))
+- Implemented:
+  - mwc-textfield
+  - mwc-notched-outline
+  - mwc-line-ripple-directive
+  - mwc-floating-label-directive
 
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x
