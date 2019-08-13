@@ -1,64 +1,106 @@
-# mwc-fab
+# `<mwc-fab>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-fab.svg)](https://www.npmjs.com/package/@material/mwc-fab)
 
-> :warning: These components are a work in progress. They are pre-release and should be considered experimental, as they may undergo major changes before release. We are experimenting with alternate architectures and approaches with the goal of allowing us to bring the most correct and optimal implementation of Material components to the widest possible audiences. Visible progress may be slow, as this research is across teams and repositories so is not consistently reflected in commits to this codebase. :warning:
+> IMPORTANT: The Material Web Components are a work in progress and subject to
+> major changes until 1.0 release.
 
-A [Material Components](https://material.io/components/) icon implementation using [Web Components](https://www.webcomponents.org/introduction)
+A floating action button (FAB) represents the primary action of a screen.
 
-## Getting started
+![](images/standard.png)
+![](images/mini.png)
+![](images/extended.png)
+![](images/custom_color.png)
 
- * The easiest way to try out mwc-fab is to use one of these online tools:
+[Material Design Guidelines: Floating Action Button](https://material.io/design/components/buttons-floating-action-button.html)
 
-    * Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-icon-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-icon-example?path=index.html)
+## Installation
 
-    * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/qibisux/edit?html,output),
-    [CodePen](https://codepen.io/azakus/pen/deZLja).
+```sh
+npm install @material/mwc-fab
+```
 
-* You can also copy [this HTML file](https://gist.githubusercontent.com/azakus/f01e9fc2ed04e781ad5a52ded7b296e7/raw/266f2f4f91cbfe89b2acc6ec63957b1a3cfe9b39/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
+> NOTE: The Material Web Components are distributed as ES2017 JavaScript
+> Modules, and use the Custom Elements API. They are compatible with all modern
+> browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
+> tooling step is required to resolve *bare module specifiers*, as well as
+> transpilation and polyfills for Edge and IE11. See
+> [here](https://github.com/material-components/material-components-web-components#quick-start)
+> for detailed instructions.
 
-* When you're ready to use mwc-fab in a project, install it via [npm](https://www.npmjs.com/). To run the project in the browser, a module-compatible toolctain is required. We recommend installing the [Polymer CLI](https://github.com/Polymer/polymer-cli) and using its development server as follows.
+## Example usage
 
-  1. Ensure the webcomponents polyfills are included in your HTML page
+### Standard
 
-      - Install webcomponents polyfills
+![](images/standard.png)
 
-          ```npm i @webcomponents/webcomponentsjs```
+```html
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-      - Add webcomponents polyfills to your HTML page
+<mwc-fab icon="favorite"></mwc-fab>
 
-          ```<script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>```
+<script type="module">
+  import '@material/mwc-fab';
+  const fab = document.querySelector('mwc-fab');
+  fab.addEventListener('click', () => {
+    addFavorite();
+  });
+</script>
+```
 
-  1. Add mwc-fab to your project:
+### Mini
 
-      ```npm i @material/mwc-fab```
+![](images/mini.png)
 
-  1. Import the mwc-fab definition into your HTML page:
+```html
+<mwc-fab mini icon="add"></mwc-fab>
+```
 
-      ```<script type="module" src="@material/mwc-fab/index.js"></script>```
+### Extended
 
-      Or into your module script:
+![](images/extended.png)
 
-      ```import {Fab} from "@material/mwc-fab"```
+```html
+<mwc-fab extended icon="shopping_cart" label="Add to cart"></mwc-fab>
+```
+### Customize colors
 
-  1. Create an instance of mwc-fab in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
+![](images/custom_color.png)
 
-      ```<mwc-fab>sentiment_very_satisfied</mwc-fab>```
+```css
+mwc-fab {
+  --mdc-theme-secondary: white;
+  --mdc-theme-on-secondary: black;
+}
+```
 
-  1. Install the Polymer CLI:
+## API
 
-      ```npm i -g polymer-cli```
+### Slots
+*None*
 
-  1. Run the development server and open a browser pointing to its URL:
+### Properties/Attributes
 
-      ```polymer serve```
+| Name            | Type      | Description
+| --------------- | --------- |------------
+| `icon`          | `string`  | The icon to display.
+| `label`         | `string`  | The label to display when using the `extended` layout, and the `aria-label` attribute in all layouts.
+| `mini`          | `boolean` | Modifies the FAB to be a smaller size, for use on smaller screens. Defaults to `false`.
+| `extended`      | `boolean` | Enable the *extended* layout which includes a text label. Defaults to `false`.
+| `showIconAtEnd` | `boolean` | When in the *extended* layout, position the icon after the label, instead of before. Defaults to `false`.
 
-  > mwc-fab is published on [npm](https://www.npmjs.com/package/@material/mwc-fab) using JavaScript Modules.
-  This means it can take advantage of the standard native JavaScript module loader available in all current major browsers.
-  >
-  > However, since mwc-fab uses npm convention to reference dependencies by name, a light transform to rewrite specifiers to URLs is required to get it to run in the browser. The polymer-cli's development server `polymer serve` automatically handles this transform.
+### Methods
+*None*
 
-  Tools like [WebPack](https://webpack.js.org/) and [Rollup](https://rollupjs.org/) can also be used to serve and/or bundle mwc-fab.
+### Events
+*None*
 
-## Supported Browsers
+### CSS Custom Properties
 
-The last 2 versions of all modern browsers are supported, including
-Chrome, Safari, Opera, Firefox, Edge. In addition, Internet Explorer 11 is also supported.
+| Name                       | Default                                | Description
+| -------------------------- | -------------------------------------- |------------
+| `--mdc-icon-font`          | [`Material Icons`](https://google.github.io/material-design-icons/) | Font to use for the icon.
+| `--mdc-theme-on-secondary` | ![](images/color_ffffff.png) `#ffffff` | Foreground color of the label and icon.
+| `--mdc-theme-secondary`    | ![](images/color_018786.png) `#018786` | Background color of the FAB.
+
+## Additional references
+
+- [MDC Web: Floating Action Button](https://material.io/develop/web/components/buttons/floating-action-buttons/)
