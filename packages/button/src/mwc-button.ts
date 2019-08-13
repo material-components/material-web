@@ -19,7 +19,7 @@ import {customElement} from '@material/mwc-base/base-element';
 import {ButtonBase} from './mwc-button-base.js';
 import {style} from './mwc-button-css.js';
 
-@customElement('mwc-button' as any)
+@customElement('mwc-button')
 export class Button extends ButtonBase {
   static styles = style;
 }

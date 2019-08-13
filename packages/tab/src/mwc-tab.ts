@@ -25,7 +25,7 @@ declare global {
   }
 }
 
-@customElement('mwc-tab' as any)
+@customElement('mwc-tab')
 export class Tab extends TabBase {
   static styles = style;
 }

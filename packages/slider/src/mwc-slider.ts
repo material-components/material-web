@@ -25,7 +25,7 @@ declare global {
   }
 }
 
-@customElement('mwc-slider' as any)
+@customElement('mwc-slider')
 export class Slider extends SliderBase {
   static styles = style;
 }

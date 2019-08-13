@@ -25,7 +25,7 @@ declare global {
   }
 }
 
-@customElement('mwc-checkbox' as any)
+@customElement('mwc-checkbox')
 export class Checkbox extends CheckboxBase {
   static styles = style;
 }
