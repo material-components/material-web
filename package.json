@@ -4,9 +4,10 @@
   "description": "Material Components Web Components",
   "license": "Apache-2.0",
   "scripts": {
-    "clean": "del-cli packages/*/node_modules packages/*/package-lock.json && npm run clean:typescript && npm run clean:styles",
+    "clean": "del-cli packages/*/node_modules packages/*/package-lock.json && npm run clean:typescript && npm run clean:styles && npm run clean:scripts",
     "clean:typescript": "npm run build:typescript -- --clean",
     "clean:styles": "del-cli packages/*/src/*-css.ts",
+    "clean:scripts": "del-cli scripts/tsc-out",
     "dev": "polyserve --npm --module-resolution=node",
     "format": "clang-format --version; find . -name '*.ts' | grep -v node_modules | xargs clang-format -style=file -i",
     "lint:imports": "node scripts/check-imports.js",
@@ -20,7 +21,10 @@
     "build:styling": "./scripts/build-styling.sh",
     "build:typescript": "tsc --build packages/**/tsconfig.json",
     "build:tests": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json",
+    "build:scripts": "tsc --project scripts/tsconfig.json",
     "update-gh-pages": "npm run bootstrap && ./scripts/publish-demos.sh",
+    "static-urlify-readme-images": "npm run build:scripts && node scripts/tsc-out/static-urlify-readme-images.js packages/*/README.md",
+    "prepack": "npm run build && npm run static-urlify-readme-images",
     "watch": "npm run bootstrap && node scripts/watcher.js",
     "watch:tests": "npm run bootstrap && tsc --build test/tsconfig.json -w & tsc --build test/tsconfig-node.json -w"
   },

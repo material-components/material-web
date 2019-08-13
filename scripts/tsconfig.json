@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "moduleResolution": "node",
+
+    "outDir": "./tsc-out",
+
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "preserveConstEnums": true,
+
+    "lib": [
+      "es2017",
+      "esnext.asynciterable"
+    ],
+
+    "declaration": true,
+    "sourceMap": true,
+    "pretty": true
+  },
+  "include": [
+    "**/*.ts"
+  ]
+}
