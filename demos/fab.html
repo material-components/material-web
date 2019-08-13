@@ -24,29 +24,12 @@ limitations under the License.
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
   <link rel="stylesheet" href="demo-component.css">
   <style>
-    .light {
-      --mdc-theme-on-primary: black;
-      --mdc-theme-primary: white;
+    mwc-fab {
+      margin-right: 50px;
+    }
+    .blackAndWhite {
       --mdc-theme-on-secondary: black;
       --mdc-theme-secondary: white;
-    }
-
-    .pink {
-      --mdc-theme-on-primary: white;
-      --mdc-theme-primary: #e9437a;
-      --mdc-theme-on-secondary: white;
-      --mdc-theme-secondary: #e9437a;
-    }
-
-    .abs {
-      position: absolute;
-      left: calc(100vw - 128px);
-      top: calc(100vh - 128px);
-    }
-
-
-    .demo-fab-group {
-      max-width: 500px;
     }
   </style>
 </head>
@@ -57,15 +40,10 @@ limitations under the License.
   </header>
 
   <main>
-
-    <div class="demo-fab-group demo-group-spaced">
-      <mwc-fab icon="explore" label="Explore the world. (This is an example label.)"></mwc-fab>
-      <mwc-fab class="light" icon="code" label="Show me the code. (This is an example label.)"></mwc-fab>
-      <mwc-fab icon="feedback" label="Provide feedback. (This is an example label.)"></mwc-fab>
-      <mwc-fab class="pink" icon="gavel" mini></mwc-fab>
-      <mwc-fab icon="fingerprint" disabled></mwc-fab>
-    </div>
-
+    <mwc-fab icon="edit"></mwc-fab>
+    <mwc-fab icon="add" mini></mwc-fab>
+    <mwc-fab icon="shopping_cart" extended label="Add To Cart"></mwc-fab>
+    <mwc-fab icon="share" class="blackAndWhite"></mwc-fab>
   </main>
 
   <script>

@@ -7,6 +7,7 @@ node_modules
 /packages/*/*.js
 /packages/*/*.js.map
 /packages/*/*.d.ts
+/packages/*/*.tgz
 /packages/*/src/*-css.ts
 /packages/*/package-lock.json
 .tsbuildinfo
