@@ -16,7 +16,7 @@ limitations under the License.
 */
 import '@material/mwc-notched-outline';
 
-import {addHasRemoveClass, classMap, FormElement, html, property, query, TemplateResult} from '@material/mwc-base/form-element.js';
+import {addHasRemoveClass, classMap, FormElement, html, property, query, TemplateResult, PropertyValues} from '@material/mwc-base/form-element.js';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label/mwc-floating-label-directive';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple/mwc-line-ripple-directive.js';
 import {NotchedOutline} from '@material/mwc-notched-outline';
@@ -101,6 +101,15 @@ export abstract class TextFieldBase extends FormElement {
       </div>
       ${(this.helper || this.charCounter) ? this.renderHelperText() : ''}
     `;
+  }
+
+  updated(changedProperties: PropertyValues) {
+    const charCounter = changedProperties.get('charCounter') as boolean | undefined;
+
+    // update foundation only when charCounter goes from false to true
+    if (!charCounter && this.charCounter) {
+      this.createFoundation();
+    }
   }
 
   protected renderInput() {
