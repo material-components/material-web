@@ -15,8 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import "@material/theme/mixins";
 @import '@material/notched-outline/mdc-notched-outline.scss';
+@import '@material/theme/_mixins.scss';
+@import '@material/theme/_variables.scss';
+@import '@material/shape/_functions.scss';
 
 :host {
   display: block;
@@ -51,21 +53,39 @@ limitations under the License.
 
 .mdc-notched-outline--upgraded ::slotted(.mdc-floating-label--float-above) {
   max-width: calc(100% / .75);
-  color: var(--mdc-notched-outline-border-color, var(--mdc-theme-primary));
+
+  @include mdc-theme-prop(color, (
+    varname: --mdc-theme-primary,
+    fallback: $mdc-theme-primary
+  ));
 }
 
 .mdc-notched-outline__leading {
-  width: var(--mdc-notched-outline-leading-width, 12px);
-  border-radius: var(--mdc-notched-outline-leading-border-radius, 4px 0px 0px 4px);
+  @include mdc-theme-prop(width, (
+    varname: --mdc-notched-outline-leading-width,
+    fallback: $mdc-notched-outline-leading-width
+  ));
+
+  @include mdc-theme-prop(border-radius, (
+    varname: --mdc-notched-outline-leading-border-radius,
+    fallback: mdc-shape-mask-radius(mdc-shape-prop-value(small), 1 0 0 1)
+  ));
 }
 
 .mdc-notched-outline__trailing {
-  border-radius: var(--mdc-notched-outline-trailing-border-radius, 0px 4px 4px 0);
+  @include mdc-theme-prop(border-radius, (
+    varname: --mdc-notched-outline-trailing-border-radius,
+    fallback: mdc-shape-mask-radius(mdc-shape-prop-value(small), 0 1 1 0)
+  ));
 }
 
 .mdc-notched-outline__leading,
 .mdc-notched-outline__notch,
 .mdc-notched-outline__trailing {
-  @include mdc-theme-prop(border-color, var(--mdc-notched-outline-border-color, var(--mdc-theme-primary)));
-  border-width: var(--mdc-notched-outline-stroke-width, 1px);
+  border-color: var(--mdc-notched-outline-border-color, var(--mdc-theme-primary, #{$mdc-theme-primary}));
+
+  @include mdc-theme-prop(border-width, (
+    varname: --mdc-notched-outline-stroke-width,
+    fallback: 1px
+  ));
 }
