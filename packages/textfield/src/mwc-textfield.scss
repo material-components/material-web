@@ -17,6 +17,8 @@ limitations under the License.
 
 @import '@material/textfield/mdc-text-field.scss';
 @import "@material/mwc-icon/src/_mwc-icon.scss";
+@import '@material/theme/_mixins.scss';
+@import '@material/shape/_functions.scss';
 
 .material-icons {
   @extend %material-icons;
@@ -33,7 +35,11 @@ limitations under the License.
 
 .mdc-text-field {
   width: 100%;
-  border-radius: var(--mdc-textfield-filled-border-radius);
+  @include mdc-theme-prop(border-radius, (
+    varname: --mdc-textfield-filled-border-radius,
+    fallback: mdc-shape-mask-radius(mdc-shape-prop-value(small), 1 1 0 0)
+  ));
+
 }
 
 mwc-notched-outline {
@@ -65,7 +71,10 @@ mwc-notched-outline {
     }
 
     .mdc-floating-label, .mdc-floating-label::after {
-      color: var(--mdc-text-field-focused-label-color, var(--mdc-theme-primary, #{$mdc-text-field-focused-label-color}));
+      @include mdc-theme-prop(color, (
+        varname: --mdc-theme-primary,
+        fallback: $mdc-theme-primary
+      ));
     }
   }
 
