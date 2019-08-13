@@ -56,6 +56,13 @@ PR's are even better than issues. We gladly accept community pull requests. In g
 - Code!
 - Ideally, squash your commits into a single commit with a clear message of what the PR does. If it absolutely makes sense to keep multiple commits, that's OK - or perhaps consider making two separate PR's.
 - **Include tests that test the range of behavior that changes with your PR.** If you PR fixes a bug, make sure your tests capture that bug. If your PR adds new behavior, make sure that behavior is fully tested. Every PR *must* include associated tests. (See [Unit tests](#unit-tests) for more.)
+- Document the changes that you made into the `CHANGELOG.md` file in the with the format
+  ```md
+  ## Unreleased
+  - Package or Topic
+    - Change 1
+    - Change 2
+  ```
 - Submit your PR, making sure it references the issue you created.
 - If your PR fixes a bug, make sure the issue includes clear steps to reproduce the bug so we can test your fix.
 
