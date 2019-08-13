@@ -27,6 +27,11 @@ import {characterCounter, CharacterCounter} from './character-counter/mwc-charac
 
 const passiveEvents = ['touchstart', 'touchmove', 'scroll', 'mousewheel'];
 
+export type HTMLInputElementType =
+    'hidden'|'text'|'search'|'tel'|'url'|'email'|'password'|'datetime'|'date'|
+    'month'|'week'|'time'|'datetime-local'|'number'|'range'|'color'|'checkbox'|
+    'radio'|'file'|'submit'|'image'|'reset'|'button';
+
 export abstract class TextFieldBase extends FormElement {
   protected mdcFoundation!: MDCTextFieldFoundation;
 
@@ -47,17 +52,17 @@ export abstract class TextFieldBase extends FormElement {
   @query('.mdc-text-field-character-counter')
   protected charCounterElement!: CharacterCounter;
 
-  @property() value = '';
+  @property({type: String}) value = '';
 
-  @property() type = 'text';
+  @property({type: String}) type: HTMLInputElementType = 'text';
 
-  @property() placeholder = '';
+  @property({type: String}) placeholder = '';
 
-  @property() label = '';
+  @property({type: String}) label = '';
 
-  @property() icon = '';
+  @property({type: String}) icon = '';
 
-  @property() iconTrailing = '';
+  @property({type: String}) iconTrailing = '';
 
   @property({type: Boolean, reflect: true}) disabled = false;
 
