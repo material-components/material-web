@@ -18,7 +18,7 @@ import {customElement, html, LitElement} from '@material/mwc-base/base-element';
 
 import {style} from './mwc-icon-host-css.js';
 
-@customElement('mwc-icon' as any)
+@customElement('mwc-icon')
 export class Icon extends LitElement {
   static styles = style;
 

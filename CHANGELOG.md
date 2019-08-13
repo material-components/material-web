@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   Run `lint` and `format` in CI
 - Remove CHANGELOG files in packages
 - Add section about CHANGELOG entries to CONTRIBUTING guide
+- Remove `as any` from `@customElement` decorators
 
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x

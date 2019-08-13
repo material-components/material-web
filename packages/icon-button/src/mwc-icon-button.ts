@@ -26,7 +26,7 @@ declare global {
   }
 }
 
-@customElement('mwc-icon-button' as any)
+@customElement('mwc-icon-button')
 export class IconButton extends IconButtonBase {
   static styles = style;
 }
