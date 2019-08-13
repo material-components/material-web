@@ -47,15 +47,16 @@ export abstract class TextAreaBase extends TextFieldBase {
 
   protected renderInput() {
     return html`
-      <textarea id="text-field"
-                class="mdc-text-field__input"
-                .value="${this.value}"
-                rows="${this.rows}"
-                cols="${this.cols}"
-                ?disabled="${this.disabled}"
-                placeholder="${this.placeholder}"
-                ?required="${this.required}"
-                maxlength="${this.maxlength}"
-                @change="${this.handleInputChange}"></textarea>`;
+      <textarea
+          id="text-field"
+          class="mdc-text-field__input"
+          .value="${this.value}"
+          rows="${this.rows}"
+          cols="${this.cols}"
+          ?disabled="${this.disabled}"
+          placeholder="${this.placeholder}"
+          ?required="${this.required}"
+          maxlength="${this.maxlength}"
+          @change="${this.handleInputChange}"></textarea>`;
   }
 }
