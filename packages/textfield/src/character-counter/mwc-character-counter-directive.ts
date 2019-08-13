@@ -37,6 +37,7 @@ export const characterCounter = directive(() => (part: PropertyPart) => {
     hostElement.classList.add('mdc-text-field-character-counter');
     const adapter = createAdapter(hostElement);
     const foundation = new MDCTextFieldCharacterCounterFoundation(adapter);
+    foundation.init();
     part.setValue(foundation);
     partToFoundationMap.set(part, foundation);
   }

@@ -46,6 +46,7 @@ export const floatingLabel = directive(() => (part: PropertyPart) => {
     labelElement.classList.add('mdc-floating-label');
     const adapter = createAdapter(labelElement);
     const foundation = new MDCFloatingLabelFoundation(adapter);
+    foundation.init();
     part.setValue(foundation);
     partToFoundationMap.set(part, foundation);
   }
