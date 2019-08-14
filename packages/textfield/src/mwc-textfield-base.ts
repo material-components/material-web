@@ -17,8 +17,8 @@ limitations under the License.
 import '@material/mwc-notched-outline';
 
 import {addHasRemoveClass, classMap, FormElement, html, property, query, TemplateResult, PropertyValues} from '@material/mwc-base/form-element.js';
-import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label/mwc-floating-label-directive';
-import {lineRipple, LineRipple} from '@material/mwc-line-ripple/mwc-line-ripple-directive.js';
+import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
+import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter.js';
 import MDCTextFieldFoundation from '@material/textfield/foundation.js';
