@@ -39,7 +39,7 @@ limitations under the License.
   }
 }
 
-::slotted(.mdc-floating-label) {
+:host > .mdc-floating-label, ::slotted(.mdc-floating-label) {
   display: inline-block;
   position: relative;
   top: 17px;
@@ -47,10 +47,11 @@ limitations under the License.
   max-width: 100%;
 }
 
-::slotted(.mdc-floating-label--float-above) {
+:host > .mdc-floating-label--float-above, ::slotted(.mdc-floating-label--float-above) {
   text-overflow: clip;
 }
 
+.mdc-notched-outline--upgraded :host > .mdc-floating-label--float-above,
 .mdc-notched-outline--upgraded ::slotted(.mdc-floating-label--float-above) {
   max-width: calc(100% / .75);
 
