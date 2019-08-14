@@ -24,22 +24,12 @@ limitations under the License.
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
   <link rel="stylesheet" href="demo-component.css">
   <style>
-    .light {
-      --mdc-theme-on-primary: black;
-      --mdc-theme-primary: white;
-      --mdc-theme-on-secondary: black;
-      --mdc-theme-secondary: white;
+    mwc-button {
+      margin: 20px;
     }
-
     .pink {
       --mdc-theme-on-primary: white;
       --mdc-theme-primary: #e9437a;
-      --mdc-theme-on-secondary: white;
-      --mdc-theme-secondary: #e9437a;
-    }
-
-    .wide {
-      width: 250px;
     }
   </style>
 </head>
@@ -50,57 +40,24 @@ limitations under the License.
   </header>
 
   <main>
-
-    <h4>labeled</h4>
-
-    <div class="demo-group-spaced">
-      <mwc-button label="Normal"></mwc-button>
-      <mwc-button class="light" raised label="raised"></mwc-button>
-      <mwc-button unelevated label="unelevated"></mwc-button>
-      <mwc-button outlined label="outlined"></mwc-button>
-      <mwc-button class="pink" dense label="dense"></mwc-button>
-      <mwc-button class="pink wide" raised label="wide"></mwc-button>
-      <mwc-button disabled label="disabled"></mwc-button>
-    </div>
-
-    <h4>icon labeled</h4>
-
-    <div class="demo-group-spaced">
-      <mwc-button label="Normal" icon="explore"></mwc-button>
-      <mwc-button class="light" raised label="raised" icon="code"></mwc-button>
-      <mwc-button unelevated label="unelevated" icon="check"></mwc-button>
-      <mwc-button outlined label="outlined" icon="alarm"></mwc-button>
-      <mwc-button class="pink" dense label="dense" icon="feedback"></mwc-button>
-      <mwc-button class="pink wide" raised label="wide" icon="code"></mwc-button>
-      <mwc-button disabled label="disabled" icon="fingerprint"></mwc-button>
-    </div>
-
-    <h4>trailing icon labeled</h4>
-
-    <mwc-button label="Normal" icon="explore" trailingIcon></mwc-button>
-
-    <script type="module">
-      import {html, css} from 'lit-element/lit-element.js';
-      import {Button} from '@material/mwc-button/mwc-button.js';
-      class CustomButton extends Button {
-        static get styles() {
-          return [
-            Button.styles,
-            css`.mdc-button{border-radius: 8px}`,
-          ];
-        }
-      }
-      customElements.define('custom-button', CustomButton);
-    </script>
-
-    <h4>custom button</h4>
-
-    <custom-button label="Custom!" raised></custom-button>
-
-    <script>
-      addEventListener('load', () => document.body.classList.remove('unresolved'));
-    </script>
-
+    <mwc-button label="standard"></mwc-button>
+    <mwc-button label="standard" icon="code"></mwc-button>
+    <mwc-button outlined label="outlined"></mwc-button>
+    <mwc-button outlined label="outlined" icon="code"></mwc-button>
+    <mwc-button raised label="raised"></mwc-button>
+    <mwc-button raised label="raised" icon="code"></mwc-button>
+    <mwc-button unelevated label="unelevated"></mwc-button>
+    <mwc-button unelevated label="unelevated" icon="code"></mwc-button>
+    <mwc-button dense unelevated label="dense"></mwc-button>
+    <mwc-button dense unelevated label="dense" icon="code"></mwc-button>
+    <mwc-button label="trailing icon" icon="code" trailingIcon></mwc-button>
+    <mwc-button disabled label="disabled"></mwc-button>
+    <mwc-button disabled label="disabled" icon="code"></mwc-button>
+    <mwc-button raised class="pink" icon="code" label="custom color"></mwc-button>
   </main>
+
+  <script>
+    addEventListener('load', () => document.body.classList.remove('unresolved'));
+  </script>
 </body>
 </html>

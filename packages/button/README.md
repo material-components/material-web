@@ -1,64 +1,138 @@
-# mwc-button
+# `<mwc-button>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-button.svg)](https://www.npmjs.com/package/@material/mwc-button)
 
-> :warning: These components are a work in progress. They are pre-release and should be considered experimental, as they may undergo major changes before release. We are experimenting with alternate architectures and approaches with the goal of allowing us to bring the most correct and optimal implementation of Material components to the widest possible audiences. Visible progress may be slow, as this research is across teams and repositories so is not consistently reflected in commits to this codebase. :warning:
+> IMPORTANT: The Material Web Components are a work in progress and subject to
+> major changes until 1.0 release.
 
-A [Material Components](https://material.io/components/) button implementation using [Web Components](https://www.webcomponents.org/introduction)
+Buttons allow users to take actions, and make choices, with a single tap.
 
-## Getting started
+[Material Design Guidelines: Button](https://material.io/design/components/buttons.html)
 
-* The easiest way to try out mwc-button is to use one of these online tools:
+## Installation
 
-  * Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-button-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-button-example?path=index.html)
+```sh
+npm install @material/mwc-button
+```
 
-  * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/qibisux/edit?html,output),
-[CodePen](https://codepen.io/azakus/pen/deZLja).
+> NOTE: The Material Web Components are distributed as ES2017 JavaScript
+> Modules, and use the Custom Elements API. They are compatible with all modern
+> browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
+> tooling step is required to resolve *bare module specifiers*, as well as
+> transpilation and polyfills for Edge and IE11. See
+> [here](https://github.com/material-components/material-components-web-components#quick-start)
+> for detailed instructions.
 
-* You can also copy [this HTML file](https://gist.githubusercontent.com/azakus/f01e9fc2ed04e781ad5a52ded7b296e7/raw/266f2f4f91cbfe89b2acc6ec63957b1a3cfe9b39/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
+## Example Usage
 
-* When you're ready to use mwc-button in a project, install it via [npm](https://www.npmjs.com/). To run the project in the browser, a module-compatible toolctain is required. We recommend installing the [Polymer CLI](https://github.com/Polymer/polymer-cli) and using its development server as follows.
+### Standard
 
-  1. Ensure the webcomponents polyfills are included in your HTML page
+![](images/standard.png)
+![](images/standard_with_icon.png)
 
-      - Install webcomponents polyfills
+```html
+<mwc-button label="standard"></mwc-button>
+<mwc-button label="standard" icon="code"></mwc-button>
+```
 
-          ```npm i @webcomponents/webcomponentsjs```
+### Outlined
 
-      - Add webcomponents polyfills to your HTML page
+![](images/outlined.png)
+![](images/outlined_with_icon.png)
 
-          ```<script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>```
+```html
+<mwc-button outlined label="outlined"></mwc-button>
+<mwc-button outlined label="outlined" icon="code"></mwc-button>
+```
 
-  1. Add mwc-button to your project:
+### Raised
 
-      ```npm i @material/mwc-button```
+![](images/raised.png)
+![](images/raised_with_icon.png)
 
-  1. Import the mwc-button definition into your HTML page:
+```html
+<mwc-button raised label="raised"></mwc-button>
+<mwc-button raised label="raised" icon="code"></mwc-button>
+```
 
-      ```<script type="module" src="@material/mwc-button/index.js"></script>```
+### Unelevated
 
-      Or into your module script:
+![](images/unelevated.png)
+![](images/unelevated_with_icon.png)
 
-      ```import {Button} from "@material/mwc-button"```
+```html
+<mwc-button unelevated label="unelevated"></mwc-button>
+<mwc-button unelevated label="unelevated" icon="code"></mwc-button>
+```
 
-  1. Create an instance of mwc-button in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
+### Dense
 
-      ```<mwc-button>Click Here!</mwc-button>```
+![](images/dense.png)
+![](images/dense_with_icon.png)
 
-  1. Install the Polymer CLI:
+```html
+<mwc-button dense unelevated label="dense"></mwc-button>
+<mwc-button dense unelevated label="dense" icon="code"></mwc-button>
+```
 
-      ```npm i -g polymer-cli```
+### Trailing Icon
 
-  1. Run the development server and open a browser pointing to its URL:
+![](images/trailing_icon.png)
 
-      ```polymer serve```
+```html
+<mwc-button label="trailing icon" icon="code" trailingIcon></mwc-button>
+```
 
-  > mwc-button is published on [npm](https://www.npmjs.com/package/@material/mwc-button) using JavaScript Modules.
-  This means it can take advantage of the standard native JavaScript module loader available in all current major browsers.
-  >
-  > However, since mwc-button uses npm convention to reference dependencies by name, a light transform to rewrite specifiers to URLs is required to get it to run in the browser. The polymer-cli's development server `polymer serve` automatically handles this transform.
+### Disabled
 
-  Tools like [WebPack](https://webpack.js.org/) and [Rollup](https://rollupjs.org/) can also be used to serve and/or bundle mwc-button.
+![](images/disabled.png)
+![](images/disabled_with_icon.png)
 
-## Supported Browsers
+```html
+<mwc-button disabled label="disabled"></mwc-button>
+<mwc-button disabled label="disabled" icon="code"></mwc-button>
+```
 
-The last 2 versions of all modern browsers are supported, including
-Chrome, Safari, Opera, Firefox, Edge. In addition, Internet Explorer 11 is also supported.
+### Customize Colors
+
+![](images/custom_color.png)
+
+```css
+mwc-button {
+  --mdc-theme-primary: #e9437a;
+  --mdc-theme-on-primary: white;
+}
+```
+
+## API
+
+### Slots
+*None*
+
+### Properties/Attributes
+| Name | Type | Default | Description
+| ---- | ---- | ------- | -----------
+| `icon` | `string` | `''` | Icon to display, and `aria-label` value when `label` is not defined.
+| `label` | `string` | `''` | Label to display for the button, and `aria-label`
+| `raised` | `boolean` | `false` | Creates a contained button that is elevated above the surface.
+| `unelevated` | `boolean` | `false` | Creates a contained button that is flush with the surface.
+| `outlined` | `boolean` | `false` | Creates an outlined button that is flush with the surface.
+| `dense` | `boolean` | `false` | Makes the button text and container slightly smaller.
+| `disabled` | `boolean` | `false` | Disabled buttons cannot be interacted with and have no visual interaction effect.
+| `trailingIcon` | `boolean` | `false` | When `true`, `icon` will be displayed _after_ `label`
+
+### Methods
+*None*
+
+### Events
+*None*
+
+### CSS Custom Properties
+
+| Name | Default | Description
+| ---- | ------- | -----------
+| `--mdc-icon-font` | [`Material Icons`](https://google.github.io/material-design-icons/) | Font to use for the icon.
+| `--mdc-theme-primary` | ![](images/color_6200ee.png) `#6200ee` | Background color of the button
+| `--mdc-theme-on-primary` | ![](images/color_ffffff.png) `#ffffff` | Text color of the button
+
+## Additional references
+
+- [MDC Web: Button](https://material.io/develop/web/components/buttons/)
