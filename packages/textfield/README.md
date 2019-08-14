@@ -5,7 +5,7 @@
 
 Textfields let users enter and edit text.
 
-![](images/action.png)
+<img src="images/action.png" width="50%">
 
 [Material Design Guidelines: textfields](https://material.io/design/components/text-fields.html)
 
@@ -27,7 +27,7 @@ npm install @material/mwc-textfield
 
 ### Standard / Filled
 
-![](images/standard.png)
+<img src="images/standard.png" width="50%">
 
 ```html
 <mwc-textfield label="My Textfield"></mwc-textfield>
@@ -39,7 +39,7 @@ npm install @material/mwc-textfield
 
 ### Icon - Leading
 
-![](images/icon-leading.png)
+<img src="images/icon-leading.png" width="50%">
 
 ```html
 <mwc-textfield label="My Textfield" icon="event"></mwc-textfield>
@@ -52,7 +52,7 @@ npm install @material/mwc-textfield
 
 ### Icon - Trailing
 
-![](images/icon-trailing.png)
+<img src="images/icon-trailing.png" width="50%">
 
 ```html
 <mwc-textfield label="My Textfield" iconTrailing="delete"></mwc-textfield>
@@ -65,7 +65,7 @@ npm install @material/mwc-textfield
 
 ### Helper Text
 
-![](images/helper.png)
+<img src="images/helper.png" width="50%">
 
 ```html
 <mwc-textfield label="My Textfield" helper="Helper Text"></mwc-textfield>
@@ -77,7 +77,7 @@ npm install @material/mwc-textfield
 
 ### Primary Color
 
-![](images/color-primary.png)
+<img src="images/color-primary.png" width="50%">
 
 ```html
 <style>
@@ -100,7 +100,7 @@ npm install @material/mwc-textfield
 
 ### Error Color
 
-![](images/color-error.png)
+<img src="images/color-error.png" width="50%">
 
 ```html
 <style>
@@ -126,7 +126,7 @@ npm install @material/mwc-textfield
 ## Variants
 
 ### Textarea
-![](images/textarea.png)
+<img src="images/textarea.png" width="50%">
 
 ```html
 <mwc-textarea label="My Textarea"></mwc-textarea>
@@ -138,8 +138,8 @@ npm install @material/mwc-textfield
 
 ### Outlined
 
-![](images/outlined-textfield.png)
-![](images/outlined-textarea.png)
+<img src="images/outlined-textfield.png" width="50%">
+<img src="images/outlined-textarea.png" width="50%">
 
 ```html
 <mwc-textfield
@@ -161,9 +161,9 @@ npm install @material/mwc-textfield
 
 #### Shaping Outlined
 
-![](images/shape-left.png)
-![](images/shape-right.png)
-![](images/shape-left-right.png)
+<img src="images/shape-left.png" width="50%">
+<img src="images/shape-right.png" width="50%">
+<img src="images/shape-left-right.png" width="50%">
 
 ```html
 <style>
@@ -206,7 +206,7 @@ npm install @material/mwc-textfield
 
 ### Fullwidth
 
-![](images/fullwidth.png)
+<img src="images/fullwidth.png" width="50%">
 
 ```html
 <!-- Note: Fullwidth does not support label; only placeholder -->
