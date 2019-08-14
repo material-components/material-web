@@ -8,12 +8,12 @@ A [Material Components](https://material.io/components/) formfield implementatio
 
  * The easiest way to try out mwc-formfield is to use one of these online tools:
 
-    * Runs in all [supported](#supported-browsers) browsers: <!-- TODO(elephants@google.com):create demos -->[StackBlitz](https://stackblitz.com/edit/mwc-textfield-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-textfield-example?path=index.html)
+    * Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-icon-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-icon-example?path=index.html)
 
     * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/qibisux/edit?html,output),
     [CodePen](https://codepen.io/azakus/pen/deZLja).
 
-* You can also copy <!-- TODO(elephants@google.com):update link -->[this HTML file](https://gist.githubusercontent.com/JCrestel/9ed0acbd4d372a174b89cd6c58457636/raw/eadc711e5c4b89d9de3dea0d89e1d3797e0eaba3/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
+* You can also copy [this HTML file](https://gist.githubusercontent.com/azakus/f01e9fc2ed04e781ad5a52ded7b296e7/raw/266f2f4f91cbfe89b2acc6ec63957b1a3cfe9b39/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
 
 * When you're ready to use mwc-formfield in a project, install it via [npm](https://www.npmjs.com/). To run the project in the browser, a module-compatible toolctain is required. We recommend installing the [Polymer CLI](https://github.com/Polymer/polymer-cli) and using its development server as follows.
 
@@ -31,26 +31,17 @@ A [Material Components](https://material.io/components/) formfield implementatio
 
       ```npm i @material/mwc-formfield```
 
-  1. Import the mwc-textfield and mwc-textarea definitions into your HTML page:
+  1. Import the mwc-formfield definition into your HTML page:
 
-      ```
-      <script type="module" src="@material/mwc-textfield/mwc-textfield.js"></script>
-      <script type="module" src="@material/mwc-textfield/mwc-textarea.js"></script>
-      ```
+      ```<script type="module" src="@material/mwc-formfield/mwc-formfield.js"></script>```
 
       Or into your module script:
 
-      ```
-      import {TextField} from "@material/mwc-textfield"
-      import {TextArea} from "@material/mwc-textfield/mwc-textarea"
-      ```
+      ```import {Formfield} from "@material/mwc-formfield"```
 
-  1. Create an instance of mwc-textfield and mwc-textarea in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
+  1. Create an instance of mwc-formfield in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
 
-      ```
-      <mwc-textfield></mwc-textfield>
-      <mwc-textarea></mwc-textarea>
-      ```
+      ```<mwc-formfield>sentiment_very_satisfied</mwc-formfield>```
 
   1. Install the Polymer CLI:
 
