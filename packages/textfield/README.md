@@ -3,8 +3,7 @@
 > IMPORTANT: The Material Web Components are a work in progress and subject to
 > major changes until 1.0 release.
 
-textfields provide brief messages about app processes at the bottom of the
-screen.
+Textfields let users enter and edit text.
 
 ![](images/action.png)
 
