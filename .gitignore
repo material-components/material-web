@@ -15,4 +15,5 @@ node_modules
 !packages/*/custom_types/**
 /test/benchmark/**/*.js
 /test/benchmark/**/*.js.map
-/test/benchmark/**/*.d.ts/scripts/tsc-out/
+/test/benchmark/**/*.d.ts
+/scripts/tsc-out/
