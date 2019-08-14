@@ -1,73 +1,268 @@
-# mwc-textfield and mwc-textarea
+# `<mwc-textfield>` & `<mwc-textarea>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-textfield.svg)](https://www.npmjs.com/package/@material/mwc-textfield)
 
-> :warning: These components are a work in progress. They are pre-release and should be considered experimental, as they may undergo major changes before release. We are experimenting with alternate architectures and approaches with the goal of allowing us to bring the most correct and optimal implementation of Material components to the widest possible audiences. Visible progress may be slow, as this research is across teams and repositories so is not consistently reflected in commits to this codebase. :warning:
+> IMPORTANT: The Material Web Components are a work in progress and subject to
+> major changes until 1.0 release.
 
-A [Material Components](https://material.io/components/) icon implementation using [Web Components](https://www.webcomponents.org/introduction)
+textfields provide brief messages about app processes at the bottom of the
+screen.
 
-## Getting started
+![](images/action.png)
 
- * The easiest way to try out mwc-textfield & mwc-textarea is to use one of these online tools:
+[Material Design Guidelines: textfields](https://material.io/design/components/textfields.html)
 
-    * Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-textfield-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-textfield-example?path=index.html)
+## Installation
 
-    * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](https://jsbin.com/qobefic/edit?html,output),
-    [CodePen](https://codepen.io/jcrestel/pen/KGWBLd).
+```sh
+npm install @material/mwc-textfield
+```
 
-* You can also copy <!-- TODO(elephants@google.com):update link -->[this HTML file](https://gist.githubusercontent.com/JCrestel/9ed0acbd4d372a174b89cd6c58457636/raw/eadc711e5c4b89d9de3dea0d89e1d3797e0eaba3/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
+> NOTE: The Material Web Components are distributed as ES2017 JavaScript
+> Modules, and use the Custom Elements API. They are compatible with all modern
+> browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
+> tooling step is required to resolve *bare module specifiers*, as well as
+> transpilation and polyfills for Edge and IE11. See
+> [here](https://github.com/material-components/material-components-web-components#quick-start)
+> for detailed instructions.
 
-* When you're ready to use mwc-textfield or mwc-textarea in a project, install it via [npm](https://www.npmjs.com/). To run the project in the browser, a module-compatible toolctain is required. We recommend installing the [Polymer CLI](https://github.com/Polymer/polymer-cli) and using its development server as follows.
+## Example usage
 
-  1. Ensure the webcomponents polyfills are included in your HTML page
+### Standard / Filled
 
-      - Install webcomponents polyfills
+![](images/standard.png)
 
-          ```npm i @webcomponents/webcomponentsjs```
+```html
+<mwc-textfield label="My Textfield"></mwc-textfield>
 
-      - Add webcomponents polyfills to your HTML page
+<script type="module">
+  import '@material/mwc-textfield';
+</script>
+```
 
-          ```<script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>```
+### Icon - Leading
 
-  1. Add mwc-textfield to your project:
+![](images/icon-leading.png)
 
-      ```npm i @material/mwc-textfield```
+```html
+<mwc-textfield label="My Textfield" icon="event"></mwc-textfield>
 
-  1. Import the mwc-textfield or mwc-textarea definition into your HTML page:
+<script type="module">
+  import '@material/mwc-textfield';
+  import '@material/mwc-icon/mwc-icon-font.js';
+</script>
+```
 
-      ```
-      <script type="module" src="@material/mwc-textfield/mwc-textfield.js"></script>
-      <script type="module" src="@material/mwc-textfield/mwc-textarea.js"></script>
-      ```
+### Icon - Trailing
 
-      Or into your module script:
+![](images/icon-trailing.png)
 
-      ```
-      import {textfield} from "@material/mwc-textfield"
-      import {textfield} from "@material/mwc-textfield/mwc-textarea.js"
-      ```
+```html
+<mwc-textfield label="My Textfield" iconTrailing="delete"></mwc-textfield>
 
-  1. Create an instance of mwc-textfield in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
+<script type="module">
+  import '@material/mwc-textfield';
+  import '@material/mwc-icon/mwc-icon-font.js';
+</script>
+```
 
-      ```
-      <mwc-textfield></mwc-textfield>
-      <mwc-textarea></mwc-textarea>
-      ```
+### Helper Text
 
-  1. Install the Polymer CLI:
+![](images/helper.png)
 
-      ```npm i -g polymer-cli```
+```html
+<mwc-textfield label="My Textfield" helper="Helper Text"></mwc-textfield>
 
-  1. Run the development server and open a browser pointing to its URL:
+<script type="module">
+  import '@material/mwc-textfield';
+</script>
+```
 
-      ```polymer serve```
+### Primary Color
 
-  > mwc-textfield is published on [npm](https://www.npmjs.com/package/@material/mwc-textfield) using JavaScript Modules.
-  This means it can take advantage of the standard native JavaScript module loader available in all current major browsers.
-  >
-  > However, since mwc-textfield uses npm convention to reference dependencies by name, a light transform to rewrite specifiers to URLs is required to get it to run in the browser. The polymer-cli's development server `polymer serve` automatically handles this transform.
+![](images/color-primary.png)
 
-  Tools like [WebPack](https://webpack.js.org/) and [Rollup](https://rollupjs.org/) can also be used to serve and/or bundle mwc-textfield.
+```html
+<style>
+  mwc-textfield {
+    --mdc-theme-primary: green;
+  }
+</style>
 
-## Supported Browsers
+<mwc-textfield
+    label="My Textfield"
+    iconTrailing="delete"
+    required>
+</mwc-textfield>
 
-The last 2 versions of all modern browsers are supported, including
-Chrome, Safari, Opera, Firefox, Edge. In addition, Internet Explorer 11 is also supported.
+<script type="module">
+  import '@material/mwc-textfield';
+  import '@material/mwc-icon/mwc-icon-font.js';
+</script>
+```
+
+### Error Color
+
+![](images/color-error.png)
+
+```html
+<style>
+  mwc-textfield {
+    --mdc-theme-error: blue;
+  }
+</style>
+
+<mwc-textfield
+    label="My Textfield"
+    iconTrailing="delete"
+    required>
+</mwc-textfield>
+
+<script type="module">
+  import '@material/mwc-textfield';
+  import '@material/mwc-icon/mwc-icon-font.js';
+</script>
+```
+
+## Example usage (mwc-textfield)
+
+## Variants
+
+### Textarea
+![](images/textarea.png)
+
+```html
+<mwc-textarea label="My Textarea"></mwc-textarea>
+
+<script type="module">
+  import '@material/mwc-textfield/mwc-textarea.js';
+</script>
+```
+
+### Outlined
+
+![](images/outlined-textfield.png)
+![](images/outlined-textarea.png)
+
+```html
+<mwc-textfield
+    outlined
+    label="My Textfield"
+    iconTrailing="delete">
+</mwc-textfield>
+<mwc-textarea
+    outlined
+    label="My Textarea">
+</mwc-textarea>
+
+<script type="module">
+  import '@material/mwc-textfield';
+  import '@material/mwc-icon/mwc-icon-font.js';
+  import '@material/mwc-textfield/mwc-textarea.js';
+</script>
+```
+
+#### Shaping Outlined
+
+![](images/shape-left.png)
+![](images/shape-right.png)
+![](images/shape-left-right.png)
+
+```html
+<style>
+  mwc-textfield.left {
+    --mdc-notched-outline-leading-width: 28px;
+    --mdc-notched-outline-leading-border-radius: 28px 0 0 28px;
+  }
+
+  mwc-textfield.right {
+    --mdc-notched-outline-trailing-border-radius: 0 28px 28px 0;
+  }
+</style>
+
+<mwc-textfield
+    class="left";
+    label="My Textfield"
+    iconTrailing="delete"
+    outlined>
+</mwc-textfield>
+
+<mwc-textfield
+    class="right";
+    label="My Textfield"
+    iconTrailing="delete"
+    outlined>
+</mwc-textfield>
+
+<mwc-textfield
+    class="left right";
+    label="My Textfield"
+    iconTrailing="delete"
+    outlined>
+</mwc-textfield>
+
+<script type="module">
+  import '@material/mwc-textfield';
+  import '@material/mwc-icon/mwc-icon-font.js';
+</script>
+```
+
+### Fullwidth
+
+![](images/fullwidth.png)
+
+```html
+<!-- Note: Fullwidth does not support label; only placeholder -->
+<mwc-textfield fullwidth placeholder="My Textfield"></mwc-textfield>
+
+<script type="module">
+  import '@material/mwc-textfield';
+</script>
+```
+
+## API
+
+### Properties/Attributes
+
+| Name                | Type                   | Description
+| ------------------- | ---------------------- |------------
+| `value`             | `string`               | The input control's value.
+| `type`              | `HTMLInputElementType*`| A string specifying the type of control to render.
+| `label`             | `string`               | Sets floating label value.
+| `placeholder`       | `string`               | Sets disappearing input placeholder.
+| `icon`              | `string`               | Leading icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon).
+| `iconTrailing`      | `string`               | Trailing icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon).
+| `disabled`          | `boolean`              | Whether or not the input should be disabled.
+| `required`          | `boolean`              | Displays error state if value is empty and input is blurred.
+| `maxlength`         | `number`               | Maximum length to accept input.
+| `charCounter`       | `boolean`              | **Note: requries `maxlength` to be set.** Display character counter with max length.
+| `outlined`          | `boolean`              | Whether or not to show the material outlined variant.
+| `fullwidth`         | `boolean`              | Whether or not to make the input fullwidth. No longer displays `label`; only `placeholder` and `helper`.
+| `helper`            | `string`               | Helper text to display below the input. Display default only when focused.
+| `helperPersistent`  | `boolean`              | Always show the helper text despite focus.
+
+\*  `HTMLInputElementType` is exported by `mwc-textfield` and `mwc-textfield-base` and `mwc-textarea`
+```ts
+type HTMLInputElementType =
+    'hidden'|'text'|'search'|'tel'|'url'|'email'|'password'|'datetime'|'date'|
+    'month'|'week'|'time'|'datetime-local'|'number'|'range'|'color'|'checkbox'|
+    'radio'|'file'|'submit'|'image'|'reset'|'button';
+```
+
+### CSS Custom Properties
+
+Inherits CSS Custom properties from:
+* [`mwc-ripple`](https://github.com/material-components/material-components-web-components/tree/master/packages/ripple)
+* [`mwc-notched-outline`](https://github.com/material-components/material-components-web-components/tree/master/packages/notched-outline).
+* [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon)
+
+| Name                                              | Default               | Description
+| ------------------------------------------------- | --------------------- |------------
+| `--mdc-theme-primary`                             | `#6200ee`             | Color when active of the underline ripple, the outline, and the caret.
+| `--mdc-theme-error`                               | `#b00020`             | Color when errored of the underline, the outline, the caret, and the icons.
+| `--mdc-text-field-filled-border-radius`           | `4px 4px 0 0`         | Border radius of the standard / filled textfield's background filling.
+| `--mdc-text-field-outlined-idle-border-color`     | `rgba(0, 0, 0, 0.38)` | Color of the outlined textfield's  outline when idle.
+| `--mdc-text-field-outlined-hover-border-color`    | `rgba(0, 0, 0, 0.87)` | Color of the outlined textfield's outline when hovering.
+| `--mdc-text-field-outlined-disabled-border-color` | `rgba(0, 0, 0, 0.06)` | Color of the outlined textfield's outline when disabled.
+
+## Additional references
+
+- [MDC Web textfields](https://material.io/develop/web/components/input-controls/text-field/)
