@@ -8,7 +8,7 @@ screen.
 
 ![](images/action.png)
 
-[Material Design Guidelines: textfields](https://material.io/design/components/textfields.html)
+[Material Design Guidelines: textfields](https://material.io/design/components/text-fields.html)
 
 ## Installation
 
