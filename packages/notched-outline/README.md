@@ -31,6 +31,7 @@ import '@material/mwc-notched-outline';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {customElement, property, query, html, css, LitElement, PropertyValues} from 'lit-element';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
+import {style as floatingLabelStyles} from '@material/mwc-floating-label/mwc-floating-label-css.js';
 
 @customElement('my-outlined-input')
 class MyOutlinedInput extends LitElement {
@@ -41,11 +42,11 @@ class MyOutlinedInput extends LitElement {
   @query('label') protected labelElement: FloatingLabel!;
 
   static get styles() {
-    return css`
+    return [floatingLabelStyles, css`
       :host {
         position: relative;
       }
-    `;
+    `];
   }
 
   floatLabel(shouldFloat: boolean) {
