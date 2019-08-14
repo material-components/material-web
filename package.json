@@ -25,8 +25,8 @@
     "update-gh-pages": "npm run bootstrap && ./scripts/publish-demos.sh",
     "static-urlify-readme-images": "npm run build:scripts && node scripts/tsc-out/static-urlify-readme-images.js packages/*/README.md",
     "prepack": "npm run build && npm run static-urlify-readme-images",
-    "watch": "npm run bootstrap && node scripts/watcher.js",
-    "watch:tests": "npm run bootstrap && tsc --build test/tsconfig.json -w & tsc --build test/tsconfig-node.json -w"
+    "watch": "npm run build && node scripts/watcher.js",
+    "watch:tests": "npm run build && tsc --build test/tsconfig.json -w & tsc --build test/tsconfig-node.json -w"
   },
   "devDependencies": {
     "@types/command-line-args": "^5.0.0",
