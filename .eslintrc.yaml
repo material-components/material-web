@@ -28,7 +28,6 @@ rules:
   # Rules temporally disabled
   "@typescript-eslint/explicit-function-return-type": off
   "@typescript-eslint/explicit-member-accessibility": off
-  "@typescript-eslint/no-object-literal-type-assertion": off
 
   no-new: warn
   quotes: [error, single, {"avoidEscape": true}]
