@@ -32,12 +32,10 @@ export class TabScrollerBase extends BaseElement {
   @query('.mdc-tab-scroller__scroll-content')
   protected scrollContentElement!: HTMLElement;
 
-  /* eslint-disable @typescript-eslint/no-object-literal-type-assertion */
-  @eventOptions({passive: true} as EventListenerOptions)
+  @eventOptions({passive: true})
   private _handleInteraction() {
     this.mdcFoundation.handleInteraction();
   }
-  /* eslint-enable @typescript-eslint/no-object-literal-type-assertion */
 
   private _handleTransitionEnd(e: Event) {
     this.mdcFoundation.handleTransitionEnd(e);
