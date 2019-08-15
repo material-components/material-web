@@ -227,6 +227,7 @@ export class SelectionController {
     const currentFocusedSet = this.focusedSet;
     this.focusedSet = set;
     if (currentFocusedSet != set && set.selected && set.selected != element) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       set.selected!.focusNative();
     }
   }

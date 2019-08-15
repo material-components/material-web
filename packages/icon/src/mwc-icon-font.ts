@@ -19,4 +19,5 @@ limitations under the License.
 const fontEl = document.createElement('link');
 fontEl.rel = 'stylesheet';
 fontEl.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 document.head!.appendChild(fontEl);

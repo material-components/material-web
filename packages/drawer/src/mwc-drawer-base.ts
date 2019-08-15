@@ -62,6 +62,7 @@ export class DrawerBase extends BaseElement {
       restoreFocus: () => {
         const previousFocus = this._previousFocus && this._previousFocus.focus;
         if (previousFocus) {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           this._previousFocus!.focus();
         }
       },
