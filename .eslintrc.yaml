@@ -20,6 +20,9 @@ settings:
   wc:
     elementBaseClasses: ["BaseElement", "LitElement", "FormElement"]
 rules:
+  # Rules temporally disabled
+  "@typescript-eslint/explicit-function-return-type": off
+
   # Rules disabled in favor of clang-format
   "@typescript-eslint/indent": off
   indent: off
