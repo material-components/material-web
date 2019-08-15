@@ -267,7 +267,7 @@ export class SelectionController {
     }
   }
 
-  protected update(element: RadioBase) {
+  update(element: RadioBase) {
     if (this.updating) {
       return;
     }
