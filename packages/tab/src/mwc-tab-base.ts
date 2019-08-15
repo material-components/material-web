@@ -70,7 +70,7 @@ export class TabBase extends BaseElement {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
-  protected connectedCallback() {
+  connectedCallback() {
     this.dir = document.dir;
     super.connectedCallback();
   }
