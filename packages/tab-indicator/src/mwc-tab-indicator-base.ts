@@ -68,15 +68,15 @@ export class TabIndicatorBase extends BaseElement {
     };
   }
 
-  protected computeContentClientRect() {
+  computeContentClientRect() {
     return this.mdcFoundation.computeContentClientRect();
   }
 
-  protected activate(previousIndicatorClientRect?: ClientRect) {
+  activate(previousIndicatorClientRect?: ClientRect) {
     this.mdcFoundation.activate(previousIndicatorClientRect);
   }
 
-  protected deactivate() {
+  deactivate() {
     this.mdcFoundation.deactivate();
   }
 }
