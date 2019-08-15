@@ -87,34 +87,13 @@ export class SnackbarBase extends BaseElement {
       announce: () => util.announce(this.labelElement),
       notifyClosed: (reason: string) => {
         this.isOpen = false;
-        this.dispatchEvent(new CustomEvent(CLOSED_EVENT, {
-          bubbles: true,
-          cancelable: true,
-          /* eslint-disable
-             @typescript-eslint/no-angle-bracket-type-assertion,@typescript-eslint/no-object-literal-type-assertion
-           */
-          detail: <MDCSnackbarCloseEventDetail> {
-            reason: reason
-          }
-          /* eslint-enable
-             @typescript-eslint/no-angle-bracket-type-assertion,@typescript-eslint/no-object-literal-type-assertion
-           */
-        }));
+        this.dispatchEvent(new CustomEvent<MDCSnackbarCloseEventDetail>(
+            CLOSED_EVENT,
+            {bubbles: true, cancelable: true, detail: {reason: reason}}));
       },
-      notifyClosing: (
-          reason: string) => this.dispatchEvent(new CustomEvent(CLOSING_EVENT, {
-        bubbles: true,
-        cancelable: true,
-        /* eslint-disable
-           @typescript-eslint/no-angle-bracket-type-assertion,@typescript-eslint/no-object-literal-type-assertion
-         */
-        detail: <MDCSnackbarCloseEventDetail> {
-          reason: reason
-        }
-        /* eslint-enable
-           @typescript-eslint/no-angle-bracket-type-assertion,@typescript-eslint/no-object-literal-type-assertion
-         */
-      })),
+      notifyClosing: (reason: string) => this.dispatchEvent(new CustomEvent(
+          CLOSING_EVENT,
+          {bubbles: true, cancelable: true, detail: {reason: reason}})),
       notifyOpened: () => {
         this.isOpen = true;
         this.dispatchEvent(
