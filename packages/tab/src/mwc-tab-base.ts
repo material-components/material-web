@@ -147,19 +147,19 @@ export class TabBase extends BaseElement {
     };
   }
 
-  protected activate(clientRect: ClientRect) {
+  activate(clientRect: ClientRect) {
     this.mdcFoundation.activate(clientRect);
   }
 
-  protected deactivate() {
+  deactivate() {
     this.mdcFoundation.deactivate();
   }
 
-  protected computeDimensions() {
+  computeDimensions() {
     return this.mdcFoundation.computeDimensions();
   }
 
-  protected computeIndicatorClientRect() {
+  computeIndicatorClientRect() {
     return this.tabIndicator.computeContentClientRect();
   }
 
