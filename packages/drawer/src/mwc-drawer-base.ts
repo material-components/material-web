@@ -56,8 +56,8 @@ export class DrawerBase extends BaseElement {
       saveFocus: () => {
         // Note, casting to avoid cumbersome runtime check.
         this._previousFocus =
-            (this.getRootNode() as any as DocumentOrShadowRoot)
-                .activeElement as (HTMLElement | null);
+            (this.getRootNode() as DocumentOrShadowRoot).activeElement as (
+                HTMLElement | null);
       },
       restoreFocus: () => {
         const previousFocus = this._previousFocus && this._previousFocus.focus;

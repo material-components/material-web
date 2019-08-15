@@ -98,15 +98,13 @@ export const rippleNode = (options: RippleNodeOptions) => {
     registerDocumentInteractionHandler:
         <K extends EventType>(evtType: K, handler: SpecificEventListener<K>) =>
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            document.documentElement!.addEventListener(
-                evtType, handler, applyPassive()),
+    document.documentElement!.addEventListener(
+        evtType, handler, applyPassive()),
     deregisterDocumentInteractionHandler: <K extends EventType>(
         evtType: string, handler: SpecificEventListener<K>) =>
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        document.documentElement!.removeEventListener(
-            evtType,
-            handler as EventListenerOrEventListenerObject,
-            applyPassive()),
+    document.documentElement!.removeEventListener(
+        evtType, handler as EventListenerOrEventListenerObject, applyPassive()),
     registerResizeHandler: (handler: SpecificEventListener<'resize'>) =>
         window.addEventListener('resize', handler),
     deregisterResizeHandler: (handler: SpecificEventListener<'resize'>) =>
@@ -132,7 +130,7 @@ export const ripple =
     directive((options: RippleOptions = {}) => (part: PropertyPart) => {
       const surfaceNode = part.committer.element as HTMLElement;
       const interactionNode = options.interactionNode || surfaceNode;
-      let rippleFoundation = (part.value as any);
+      let rippleFoundation = part.value;
       // if the interaction node changes, destroy and invalidate the foundation.
       const existingInteractionNode =
           rippleInteractionNodes.get(rippleFoundation);

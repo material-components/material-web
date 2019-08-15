@@ -134,6 +134,7 @@ export class TabBarBase extends BaseElement {
       },
       getFocusedTabIndex: () => {
         const tabElements = this._getTabs();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const activeElement = (this as any).getRootNode().activeElement;
         return tabElements.indexOf(activeElement);
       },
