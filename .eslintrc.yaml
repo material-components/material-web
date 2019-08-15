@@ -25,10 +25,6 @@ rules:
   indent: off
   max-len: off
 
-  # Rules temporally disabled
-  "@typescript-eslint/explicit-function-return-type": off
-  "@typescript-eslint/explicit-member-accessibility": off
-
   no-new: warn
   quotes: [error, single, {"avoidEscape": true}]
   no-var: error

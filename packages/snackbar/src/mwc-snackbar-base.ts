@@ -32,25 +32,25 @@ export class SnackbarBase extends BaseElement {
 
   @query('.mdc-snackbar__label') protected labelElement!: HTMLElement;
 
-  @property({type: Boolean, reflect: true}) isOpen = false;
+  @property({type: Boolean, reflect: true}) public isOpen = false;
 
   @observer(function(this: SnackbarBase, value: number) {
     this.mdcFoundation.setTimeoutMs(value);
   })
   @property({type: Number})
-  timeoutMs = 5000;
+  public timeoutMs = 5000;
 
   @observer(function(this: SnackbarBase, value: boolean) {
     this.mdcFoundation.setCloseOnEscape(value);
   })
   @property({type: Boolean})
-  closeOnEscape = false;
+  public closeOnEscape = false;
 
-  @property() labelText = '';
+  @property() public labelText = '';
 
-  @property({type: Boolean}) stacked = false;
+  @property({type: Boolean}) public stacked = false;
 
-  @property({type: Boolean}) leading = false;
+  @property({type: Boolean}) public leading = false;
 
   /**
    * We can't open the snackbar until the foundation is initialized, but that
@@ -59,7 +59,7 @@ export class SnackbarBase extends BaseElement {
    */
   private _earlyOpen: boolean|undefined;
 
-  render() {
+  protected render() {
     const classes = {
       'mdc-snackbar--stacked': this.stacked,
       'mdc-snackbar--leading': this.leading,
@@ -90,21 +90,31 @@ export class SnackbarBase extends BaseElement {
         this.dispatchEvent(new CustomEvent(CLOSED_EVENT, {
           bubbles: true,
           cancelable: true,
-          // eslint-disable-next-line @typescript-eslint/no-angle-bracket-type-assertion, @typescript-eslint/no-object-literal-type-assertion
+          /* eslint-disable
+             @typescript-eslint/no-angle-bracket-type-assertion,@typescript-eslint/no-object-literal-type-assertion
+           */
           detail: <MDCSnackbarCloseEventDetail> {
             reason: reason
           }
+          /* eslint-enable
+             @typescript-eslint/no-angle-bracket-type-assertion,@typescript-eslint/no-object-literal-type-assertion
+           */
         }));
       },
-      notifyClosing: (reason: string) =>
-          this.dispatchEvent(new CustomEvent(CLOSING_EVENT, {
-            bubbles: true,
-            cancelable: true,
-            // eslint-disable-next-line @typescript-eslint/no-angle-bracket-type-assertion, @typescript-eslint/no-object-literal-type-assertion
-            detail: <MDCSnackbarCloseEventDetail> {
-              reason: reason
-            }
-          })),
+      notifyClosing: (
+          reason: string) => this.dispatchEvent(new CustomEvent(CLOSING_EVENT, {
+        bubbles: true,
+        cancelable: true,
+        /* eslint-disable
+           @typescript-eslint/no-angle-bracket-type-assertion,@typescript-eslint/no-object-literal-type-assertion
+         */
+        detail: <MDCSnackbarCloseEventDetail> {
+          reason: reason
+        }
+        /* eslint-enable
+           @typescript-eslint/no-angle-bracket-type-assertion,@typescript-eslint/no-object-literal-type-assertion
+         */
+      })),
       notifyOpened: () => {
         this.isOpen = true;
         this.dispatchEvent(
@@ -115,7 +125,7 @@ export class SnackbarBase extends BaseElement {
     };
   }
 
-  open() {
+  public open() {
     if (this.mdcFoundation !== undefined) {
       this.mdcFoundation.open();
     } else {
@@ -123,7 +133,7 @@ export class SnackbarBase extends BaseElement {
     }
   }
 
-  close(reason = '') {
+  public close(reason = '') {
     if (this.mdcFoundation !== undefined) {
       this.mdcFoundation.close(reason);
     } else if (this._earlyOpen === true) {
@@ -131,22 +141,22 @@ export class SnackbarBase extends BaseElement {
     }
   }
 
-  firstUpdated() {
+  protected firstUpdated() {
     super.firstUpdated();
     if (this._earlyOpen === true) {
       this.mdcFoundation.open();
     }
   }
 
-  _handleKeydown(e: KeyboardEvent) {
+  private _handleKeydown(e: KeyboardEvent) {
     this.mdcFoundation.handleKeyDown(e);
   }
 
-  _handleActionClick(e: MouseEvent) {
+  private _handleActionClick(e: MouseEvent) {
     this.mdcFoundation.handleActionButtonClick(e);
   }
 
-  _handleDismissClick(e: MouseEvent) {
+  private _handleDismissClick(e: MouseEvent) {
     this.mdcFoundation.handleActionIconClick(e);
   }
 }

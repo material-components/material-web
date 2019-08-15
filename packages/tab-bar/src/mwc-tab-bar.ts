@@ -27,5 +27,5 @@ declare global {
 
 @customElement('mwc-tab-bar')
 export class TabBar extends TabBarBase {
-  static styles = style;
+  protected static styles = style;
 }

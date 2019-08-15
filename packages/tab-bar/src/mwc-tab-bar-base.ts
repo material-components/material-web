@@ -49,7 +49,7 @@ export class TabBarBase extends BaseElement {
     }
   })
   @property({type: Number})
-  activeIndex = 0;
+  public activeIndex = 0;
 
   private _previousActiveIndex = -1;
 
@@ -62,7 +62,7 @@ export class TabBarBase extends BaseElement {
   }
 
   // TODO(sorvell): can scroller be optional for perf?
-  render() {
+  protected render() {
     return html`
       <div class="mdc-tab-bar" role="tablist"
           @MDCTab:interacted="${this._handleTabInteraction}"
@@ -83,7 +83,7 @@ export class TabBarBase extends BaseElement {
     return this._getTabs()[index];
   }
 
-  createAdapter(): MDCTabBarAdapter {
+  protected createAdapter(): MDCTabBarAdapter {
     return {
       scrollTo: (scrollX: number) =>
           this.scrollerElement.scrollToPosition(scrollX),
@@ -162,7 +162,7 @@ export class TabBarBase extends BaseElement {
   // NOTE: Delay creating foundation until scroller is fully updated.
   // This is necessary because the foundation/adapter synchronously addresses
   // the scroller element.
-  firstUpdated() {
+  protected firstUpdated() {
   }
   protected _getUpdateComplete() {
     return super._getUpdateComplete()
@@ -174,7 +174,7 @@ export class TabBarBase extends BaseElement {
         });
   }
 
-  scrollIndexIntoView(index: number) {
+  public scrollIndexIntoView(index: number) {
     this.mdcFoundation.scrollIntoView(index);
   }
 }

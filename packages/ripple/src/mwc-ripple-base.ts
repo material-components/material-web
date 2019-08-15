@@ -19,19 +19,19 @@ import {classMap, html, LitElement, property} from '@material/mwc-base/base-elem
 import {ripple, RippleOptions} from './ripple-directive.js';
 
 export class RippleBase extends LitElement {
-  @property({type: Boolean}) primary = false;
+  @property({type: Boolean}) public primary = false;
 
-  @property({type: Boolean}) active: boolean|undefined;
+  @property({type: Boolean}) public active: boolean|undefined;
 
-  @property({type: Boolean}) accent = false;
+  @property({type: Boolean}) public accent = false;
 
-  @property({type: Boolean}) unbounded = false;
+  @property({type: Boolean}) public unbounded = false;
 
-  @property({type: Boolean}) disabled = false;
+  @property({type: Boolean}) public disabled = false;
 
   @property() protected interactionNode: HTMLElement = this;
 
-  connectedCallback() {
+  protected connectedCallback() {
     if (this.interactionNode === this) {
       this.interactionNode = this.parentNode as HTMLElement;
     }
@@ -39,7 +39,7 @@ export class RippleBase extends LitElement {
   }
 
   // TODO(sorvell) #css: sizing.
-  render() {
+  protected render() {
     const classes = {
       'mdc-ripple-surface--primary': this.primary,
       'mdc-ripple-surface--accent': this.accent,

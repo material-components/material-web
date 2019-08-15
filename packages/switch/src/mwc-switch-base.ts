@@ -24,13 +24,13 @@ export class SwitchBase extends FormElement {
   @observer(function(this: SwitchBase, value: boolean) {
     this.mdcFoundation.setChecked(value);
   })
-  checked = false;
+  public checked = false;
 
   @property({type: Boolean})
   @observer(function(this: SwitchBase, value: boolean) {
     this.mdcFoundation.setDisabled(value);
   })
-  disabled = false;
+  public disabled = false;
 
   @query('.mdc-switch') protected mdcRoot!: HTMLElement;
 
@@ -58,14 +58,14 @@ export class SwitchBase extends FormElement {
     };
   }
 
-  get ripple() {
+  public get ripple() {
     return this.rippleNode.ripple;
   }
 
   @query('.mdc-switch__thumb-underlay')
   protected rippleNode!: HTMLElementWithRipple;
 
-  render() {
+  protected render() {
     return html`
       <div class="mdc-switch">
         <div class="mdc-switch__track"></div>

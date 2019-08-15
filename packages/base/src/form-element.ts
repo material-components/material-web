@@ -35,29 +35,29 @@ export abstract class FormElement extends BaseElement {
    */
   protected abstract formElement: HTMLElement;
 
-  createRenderRoot() {
+  protected createRenderRoot() {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
   /**
    * Implement ripple getter for Ripple integration with mwc-formfield
    */
-  readonly ripple?: RippleSurface;
+  public readonly ripple?: RippleSurface;
 
-  click() {
+  public click() {
     if (this.formElement) {
       this.formElement.focus();
       this.formElement.click();
     }
   }
 
-  setAriaLabel(label: string) {
+  public setAriaLabel(label: string) {
     if (this.formElement) {
       this.formElement.setAttribute('aria-label', label);
     }
   }
 
-  firstUpdated() {
+  protected firstUpdated() {
     super.firstUpdated();
     this.mdcRoot.addEventListener('change', (e) => {
       this.dispatchEvent(new Event('change', e));

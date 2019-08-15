@@ -34,25 +34,25 @@ export class LinearProgressBase extends BaseElement {
   @observer(function(this: LinearProgressBase, value: boolean) {
     this.mdcFoundation.setDeterminate(value);
   })
-  determinate = false;
+  public determinate = false;
 
   @property({type: Number})
   @observer(function(this: LinearProgressBase, value: number) {
     this.mdcFoundation.setProgress(value);
   })
-  progress = 0;
+  public progress = 0;
 
   @property({type: Number})
   @observer(function(this: LinearProgressBase, value: number) {
     this.mdcFoundation.setBuffer(value);
   })
-  buffer = 0;
+  public buffer = 0;
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: LinearProgressBase, value: boolean) {
     this.mdcFoundation.setReverse(value);
   })
-  reverse = false;
+  public reverse = false;
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: LinearProgressBase, value: boolean) {
@@ -62,9 +62,9 @@ export class LinearProgressBase extends BaseElement {
       this.mdcFoundation.open();
     }
   })
-  closed = false;
+  public closed = false;
 
-  render() {
+  protected render() {
     return html`
       <div role="progressbar" class="mdc-linear-progress">
         <div class="mdc-linear-progress__buffering-dots"></div>
@@ -95,11 +95,11 @@ export class LinearProgressBase extends BaseElement {
     };
   }
 
-  open() {
+  public open() {
     this.closed = false;
   }
 
-  close() {
+  public close() {
     this.closed = true;
   }
 }

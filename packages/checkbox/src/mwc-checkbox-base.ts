@@ -24,23 +24,23 @@ export class CheckboxBase extends FormElement {
 
   @query('input') protected formElement!: HTMLInputElement;
 
-  @property({type: Boolean}) checked = false;
+  @property({type: Boolean}) public checked = false;
 
-  @property({type: Boolean}) indeterminate = false;
+  @property({type: Boolean}) public indeterminate = false;
 
   @property({type: Boolean})
   @observer(function(this: CheckboxBase, value: boolean) {
     this.mdcFoundation.setDisabled(value);
   })
-  disabled = false;
+  public disabled = false;
 
-  @property({type: String}) value = '';
+  @property({type: String}) public value = '';
 
   protected mdcFoundationClass = MDCCheckboxFoundation;
 
   protected mdcFoundation!: MDCCheckboxFoundation;
 
-  get ripple(): RippleSurface|undefined {
+  public get ripple(): RippleSurface|undefined {
     return this.mdcRoot.ripple;
   }
 
@@ -66,7 +66,7 @@ export class CheckboxBase extends FormElement {
     };
   }
 
-  render() {
+  protected render() {
     return html`
       <div class="mdc-checkbox"
            @animationend="${this._animationEndHandler}"

@@ -32,11 +32,11 @@ export class TabIndicatorBase extends BaseElement {
 
   @query('.mdc-tab-indicator__content') protected contentElement!: HTMLElement;
 
-  @property() icon = '';
+  @property() public icon = '';
 
-  @property({type: Boolean}) fade = false;
+  @property({type: Boolean}) public fade = false;
 
-  render() {
+  protected render() {
     const contentClasses = {
       'mdc-tab-indicator__content--icon': this.icon,
       'material-icons': this.icon,
@@ -52,13 +52,13 @@ export class TabIndicatorBase extends BaseElement {
       `;
   }
 
-  updated(changedProperties: PropertyValues) {
+  protected updated(changedProperties: PropertyValues) {
     if (changedProperties.has('fade')) {
       this.createFoundation();
     }
   }
 
-  createAdapter(): MDCTabIndicatorAdapter {
+  protected createAdapter(): MDCTabIndicatorAdapter {
     return {
       ...addHasRemoveClass(this.mdcRoot),
       computeContentClientRect: () =>
@@ -68,15 +68,15 @@ export class TabIndicatorBase extends BaseElement {
     };
   }
 
-  computeContentClientRect() {
+  protected computeContentClientRect() {
     return this.mdcFoundation.computeContentClientRect();
   }
 
-  activate(previousIndicatorClientRect?: ClientRect) {
+  protected activate(previousIndicatorClientRect?: ClientRect) {
     this.mdcFoundation.activate(previousIndicatorClientRect);
   }
 
-  deactivate() {
+  protected deactivate() {
     this.mdcFoundation.deactivate();
   }
 }

@@ -21,7 +21,7 @@ import {style} from './mwc-button-css.js';
 
 @customElement('mwc-button')
 export class Button extends ButtonBase {
-  static styles = style;
+  protected static styles = style;
 }
 
 declare global {

@@ -28,21 +28,21 @@ export class RadioBase extends FormElement {
   @observer(function(this: RadioBase, checked: boolean) {
     this.formElement.checked = checked;
   })
-  checked = false;
+  public checked = false;
 
   @property({type: Boolean})
   @observer(function(this: RadioBase, disabled: boolean) {
     this.mdcFoundation.setDisabled(disabled);
   })
-  disabled = false;
+  public disabled = false;
 
   @property({type: String})
   @observer(function(this: RadioBase, value: string) {
     this.formElement.value = value;
   })
-  value = '';
+  public value = '';
 
-  @property({type: String}) name = '';
+  @property({type: String}) public name = '';
 
   protected mdcFoundationClass = MDCRadioFoundation;
 
@@ -50,7 +50,7 @@ export class RadioBase extends FormElement {
 
   private _selectionController: SelectionController|null = null;
 
-  constructor() {
+  public constructor() {
     super();
     // Selection Controller is only needed for native ShadowDOM
     if (!window['ShadyDOM'] || !window['ShadyDOM']['inUse']) {
@@ -59,24 +59,24 @@ export class RadioBase extends FormElement {
     }
   }
 
-  connectedCallback() {
+  protected connectedCallback() {
     super.connectedCallback();
     if (this._selectionController) {
       this._selectionController.register(this);
     }
   }
 
-  disconnectedCallback() {
+  protected disconnectedCallback() {
     if (this._selectionController) {
       this._selectionController.unregister(this);
     }
   }
 
-  focusNative() {
+  public focusNative() {
     this.formElement.focus();
   }
 
-  get ripple() {
+  public get ripple() {
     return this.mdcRoot.ripple;
   }
 
@@ -107,7 +107,7 @@ export class RadioBase extends FormElement {
     this.formElement.focus();
   }
 
-  render() {
+  protected render() {
     return html`
       <div class="mdc-radio" .ripple="${ripple()}">
         <input
@@ -126,7 +126,7 @@ export class RadioBase extends FormElement {
       </div>`;
   }
 
-  firstUpdated() {
+  protected firstUpdated() {
     super.firstUpdated();
     if (this._selectionController) {
       this._selectionController.update(this);
@@ -140,9 +140,9 @@ export class RadioBase extends FormElement {
 const selectionController = Symbol('selection controller');
 
 class SelectionSet {
-  selected: RadioBase|null = null;
-  ordered: RadioBase[]|null = null;
-  readonly set = new Set<RadioBase>();
+  public selected: RadioBase|null = null;
+  public ordered: RadioBase[]|null = null;
+  public readonly set = new Set<RadioBase>();
 }
 
 export class SelectionController {
@@ -154,7 +154,7 @@ export class SelectionController {
 
   private updating = false;
 
-  static getController(element: HTMLElement) {
+  public static getController(element: HTMLElement) {
     const root = element.getRootNode() as Node &
         {[selectionController]?: SelectionController};
     if (!root[selectionController]) {
@@ -163,7 +163,7 @@ export class SelectionController {
     return root[selectionController] as SelectionController;
   }
 
-  constructor(element: Node) {
+  public constructor(element: Node) {
     element.addEventListener(
         'keydown', (e: Event) => this.keyDownHandler(e as KeyboardEvent));
     element.addEventListener('mousedown', () => this.mousedownHandler());
@@ -193,24 +193,24 @@ export class SelectionController {
     this.mouseIsDown = false;
   }
 
-  has(element: RadioBase) {
+  public has(element: RadioBase) {
     const set = this.getSet(element.name);
     return set.set.has(element);
   }
 
-  previous(element: RadioBase) {
+  public previous(element: RadioBase) {
     const order = this.getOrdered(element);
     const i = order.indexOf(element);
     this.select(order[i - 1] || order[order.length - 1]);
   }
 
-  next(element: RadioBase) {
+  public next(element: RadioBase) {
     const order = this.getOrdered(element);
     const i = order.indexOf(element);
     this.select(order[i + 1] || order[0]);
   }
 
-  select(element: RadioBase) {
+  public select(element: RadioBase) {
     element.click();
   }
 
@@ -218,7 +218,7 @@ export class SelectionController {
    * Helps to track the focused selection group and if it changes, focuses
    * the selected item in the group. This matches native radio button behavior.
    */
-  focus(element: RadioBase) {
+  public focus(element: RadioBase) {
     // Only manage focus state when using keyboard
     if (this.mouseIsDown) {
       return;
@@ -232,7 +232,7 @@ export class SelectionController {
     }
   }
 
-  getOrdered(element: RadioBase) {
+  public getOrdered(element: RadioBase) {
     const set = this.getSet(element.name);
     if (!set.ordered) {
       set.ordered = Array.from(set.set);
@@ -245,20 +245,20 @@ export class SelectionController {
     return set.ordered;
   }
 
-  getSet(name: string) {
+  public getSet(name: string) {
     if (!this.sets[name]) {
       this.sets[name] = new SelectionSet();
     }
     return this.sets[name];
   }
 
-  register(element: RadioBase) {
+  public register(element: RadioBase) {
     const set = this.getSet(element.name);
     set.set.add(element);
     set.ordered = null;
   }
 
-  unregister(element: RadioBase) {
+  public unregister(element: RadioBase) {
     const set = this.getSet(element.name);
     set.set.delete(element);
     set.ordered = null;
@@ -267,7 +267,7 @@ export class SelectionController {
     }
   }
 
-  update(element: RadioBase) {
+  protected update(element: RadioBase) {
     if (this.updating) {
       return;
     }

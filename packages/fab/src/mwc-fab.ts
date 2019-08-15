@@ -27,5 +27,5 @@ declare global {
 
 @customElement('mwc-fab')
 export class Fab extends FabBase {
-  static styles = style;
+  protected static styles = style;
 }

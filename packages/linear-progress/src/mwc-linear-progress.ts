@@ -27,5 +27,5 @@ declare global {
 
 @customElement('mwc-linear-progress')
 export class LinearProgress extends LinearProgressBase {
-  static styles = style;
+  protected static styles = style;
 }

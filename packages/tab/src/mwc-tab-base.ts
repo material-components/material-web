@@ -37,19 +37,19 @@ export class TabBase extends BaseElement {
 
   @query('mwc-tab-indicator') protected tabIndicator!: TabIndicator;
 
-  @property() label = '';
+  @property() public label = '';
 
-  @property() icon = '';
+  @property() public icon = '';
 
-  @property({type: Boolean}) isFadingIndicator = false;
+  @property({type: Boolean}) public isFadingIndicator = false;
 
-  @property({type: Boolean}) minWidth = false;
+  @property({type: Boolean}) public minWidth = false;
 
-  @property({type: Boolean}) isMinWidthIndicator = false;
+  @property({type: Boolean}) public isMinWidthIndicator = false;
 
-  @property() indicatorIcon = '';
+  @property() public indicatorIcon = '';
 
-  @property({type: Boolean}) stacked = false;
+  @property({type: Boolean}) public stacked = false;
 
   /**
    * Other properties
@@ -66,24 +66,24 @@ export class TabBase extends BaseElement {
     this.mdcFoundation.handleClick();
   }
 
-  createRenderRoot() {
+  protected createRenderRoot() {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
-  connectedCallback() {
+  protected connectedCallback() {
     this.dir = document.dir;
     super.connectedCallback();
   }
 
-  static styles = style;
+  protected static styles = style;
 
-  firstUpdated() {
+  protected firstUpdated() {
     super.firstUpdated();
     // create an unique id
     this.id = this.id || `mdc-tab-${++tabIdCounter}`;
   }
 
-  render() {
+  protected render() {
     const classes = {
       'mdc-tab--min-width': this.minWidth,
       'mdc-tab--stacked': this.stacked,
@@ -115,14 +115,14 @@ export class TabBase extends BaseElement {
       </button>`;
   }
 
-  renderIndicator() {
+  protected renderIndicator() {
     return html`<mwc-tab-indicator
         .icon="${this.indicatorIcon}"
         .fade="${this.isFadingIndicator}"></mwc-tab-indicator>`;
   }
 
 
-  createAdapter(): MDCTabAdapter {
+  protected createAdapter(): MDCTabAdapter {
     return {
       ...addHasRemoveClass(this.mdcRoot),
       setAttr: (attr: string, value: string) =>
@@ -147,24 +147,24 @@ export class TabBase extends BaseElement {
     };
   }
 
-  activate(clientRect: ClientRect) {
+  protected activate(clientRect: ClientRect) {
     this.mdcFoundation.activate(clientRect);
   }
 
-  deactivate() {
+  protected deactivate() {
     this.mdcFoundation.deactivate();
   }
 
-  computeDimensions() {
+  protected computeDimensions() {
     return this.mdcFoundation.computeDimensions();
   }
 
-  computeIndicatorClientRect() {
+  protected computeIndicatorClientRect() {
     return this.tabIndicator.computeContentClientRect();
   }
 
   // NOTE: needed only for ShadyDOM where delegatesFocus is not implemented
-  focus() {
+  public focus() {
     this.mdcRoot.focus();
   }
 }

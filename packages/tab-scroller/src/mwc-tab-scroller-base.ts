@@ -32,11 +32,12 @@ export class TabScrollerBase extends BaseElement {
   @query('.mdc-tab-scroller__scroll-content')
   protected scrollContentElement!: HTMLElement;
 
-  // eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion
+  /* eslint-disable @typescript-eslint/no-object-literal-type-assertion */
   @eventOptions({passive: true} as EventListenerOptions)
   private _handleInteraction() {
     this.mdcFoundation.handleInteraction();
   }
+  /* eslint-enable @typescript-eslint/no-object-literal-type-assertion */
 
   private _handleTransitionEnd(e: Event) {
     this.mdcFoundation.handleTransitionEnd(e);
@@ -44,7 +45,7 @@ export class TabScrollerBase extends BaseElement {
 
   private _scrollbarHeight = -1;
 
-  render() {
+  protected render() {
     return html`
       <div class="mdc-tab-scroller">
         <div class="mdc-tab-scroller__scroll-area"
@@ -60,7 +61,7 @@ export class TabScrollerBase extends BaseElement {
       `;
   }
 
-  createAdapter(): MDCTabScrollerAdapter {
+  protected createAdapter(): MDCTabScrollerAdapter {
     return {
       ...addHasRemoveClass(this.mdcRoot),
       eventTargetMatchesSelector: (evtTarget: EventTarget, selector: string) =>
@@ -99,7 +100,7 @@ export class TabScrollerBase extends BaseElement {
    * Returns the current visual scroll position
    * @return {number}
    */
-  getScrollPosition() {
+  public getScrollPosition() {
     return this.mdcFoundation.getScrollPosition();
   }
 
@@ -107,7 +108,7 @@ export class TabScrollerBase extends BaseElement {
    * Returns the width of the scroll content
    * @return {number}
    */
-  getScrollContentWidth() {
+  public getScrollContentWidth() {
     return this.scrollContentElement.offsetWidth;
   }
 
@@ -116,7 +117,7 @@ export class TabScrollerBase extends BaseElement {
    * @param {number} scrollXIncrement The pixel value by which to increment the
    *     scroll value
    */
-  incrementScrollPosition(scrollXIncrement: number) {
+  public incrementScrollPosition(scrollXIncrement: number) {
     this.mdcFoundation.incrementScroll(scrollXIncrement);
   }
 
@@ -124,7 +125,7 @@ export class TabScrollerBase extends BaseElement {
    * Scrolls to the given pixel position
    * @param {number} scrollX The pixel value to scroll to
    */
-  scrollToPosition(scrollX: number) {
+  public scrollToPosition(scrollX: number) {
     this.mdcFoundation.scrollTo(scrollX);
   }
 }

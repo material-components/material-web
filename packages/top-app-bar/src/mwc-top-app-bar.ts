@@ -27,5 +27,5 @@ declare global {
 
 @customElement('mwc-top-app-bar')
 export class TopAppBar extends TopAppBarBase {
-  static styles = style;
+  protected static styles = style;
 }

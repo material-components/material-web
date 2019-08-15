@@ -43,44 +43,44 @@ export class SliderBase extends FormElement {
   @observer(function(this: SliderBase, value: number) {
     this.mdcFoundation.setValue(value);
   })
-  value = 0;
+  public value = 0;
 
   @property({type: Number})
   @observer(function(this: SliderBase, value: number) {
     this.mdcFoundation.setMin(value);
   })
-  min = 0;
+  public min = 0;
 
   @property({type: Number})
   @observer(function(this: SliderBase, value: number) {
     this.mdcFoundation.setMax(value);
   })
-  max = 100;
+  public max = 100;
 
   @property({type: Number})
   @observer(function(this: SliderBase, value: number) {
     this.mdcFoundation.setStep(value);
   })
-  step = 0;
+  public step = 0;
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: SliderBase, value: boolean) {
     this.mdcFoundation.setDisabled(value);
   })
-  disabled = false;
+  public disabled = false;
 
-  @property({type: Boolean, reflect: true}) discrete = false;
+  @property({type: Boolean, reflect: true}) public discrete = false;
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: SliderBase) {
     this.mdcFoundation.setupTrackMarker();
   })
-  markers = false;
+  public markers = false;
 
   @property({type: Number}) private _numMarkers = 0;
 
   // TODO(sorvell) #css: needs a default width
-  render() {
+  protected render() {
     const {value, min, max, step, disabled, discrete, markers, _numMarkers} =
         this;
     const hostClassInfo = {
@@ -186,7 +186,7 @@ export class SliderBase extends FormElement {
     };
   }
 
-  layout() {
+  public layout() {
     this.mdcFoundation.layout();
   }
 }
