@@ -42,7 +42,7 @@ export class SwitchBase extends FormElement {
     this.mdcFoundation.handleChange(e);
     // catch "click" event and sync properties
     this.checked = this.formElement.checked;
-  };
+  }
 
   protected readonly mdcFoundationClass = MDCSwitchFoundation;
 

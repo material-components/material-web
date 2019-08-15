@@ -94,7 +94,7 @@ export class DrawerBase extends BaseElement {
     if (this.mdcFoundation instanceof MDCModalDrawerFoundation) {
       this.mdcFoundation.handleScrimClick();
     }
-  };
+  }
 
   @observer(function(this: DrawerBase, value: boolean) {
     if (this.type === '') {

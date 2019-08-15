@@ -85,7 +85,7 @@ export class SnackbarBase extends BaseElement {
     return {
       ...addHasRemoveClass(this.mdcRoot),
       announce: () => util.announce(this.labelElement),
-      notifyClosed: (reason: String) => {
+      notifyClosed: (reason: string) => {
         this.isOpen = false;
         this.dispatchEvent(new CustomEvent(CLOSED_EVENT, {
           bubbles: true,
@@ -95,7 +95,7 @@ export class SnackbarBase extends BaseElement {
           }
         }));
       },
-      notifyClosing: (reason: String) =>
+      notifyClosing: (reason: string) =>
           this.dispatchEvent(new CustomEvent(CLOSING_EVENT, {
             bubbles: true,
             cancelable: true,

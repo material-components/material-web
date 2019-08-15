@@ -22,7 +22,7 @@ import {style} from './mwc-icon-button-css.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mwc-icon-button': IconButton
+    'mwc-icon-button': IconButton;
   }
 }
 
