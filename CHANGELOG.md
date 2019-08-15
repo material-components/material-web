@@ -23,6 +23,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Remove CHANGELOG files in packages
 - Add section about CHANGELOG entries to CONTRIBUTING guide
 - Remove `as any` from `@customElement` decorators
+- Improve README for `<mwc-button>`
+- Improve README for `<mwc-icon-button>`
+- Split toggling icon button out into `@material/mwc-icon-button-toggle` with tag name `<mwc-icon-button-toggle>`
 
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x

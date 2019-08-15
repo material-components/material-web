@@ -1,64 +1,94 @@
-# mwc-icon-button
+# `<mwc-icon-button>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-icon-button.svg)](https://www.npmjs.com/package/@material/mwc-icon-button)
 
-> :warning: These components are a work in progress. They are pre-release and should be considered experimental, as they may undergo major changes before release. We are experimenting with alternate architectures and approaches with the goal of allowing us to bring the most correct and optimal implementation of Material components to the widest possible audiences. Visible progress may be slow, as this research is across teams and repositories so is not consistently reflected in commits to this codebase. :warning:
+> IMPORTANT: The Material Web Components are a work in progress and subject to
+> major changes until 1.0 release.
 
-A [Material Components](https://material.io/components/) icon implementation using [Web Components](https://www.webcomponents.org/introduction)
+Icon buttons allow users to take actions, and make choices, with a single tap.
 
-## Getting started
+For the toggling version of this component, see [`<mwc-icon-button-toggle>`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon-button-toggle/)
 
- * The easiest way to try out mwc-icon-button is to use one of these online tools:
+[Material Design Guidelines: Button](https://material.io/design/components/buttons.html)
 
-    * Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-icon-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-icon-example?path=index.html)
+## Installation
 
-    * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/qibisux/edit?html,output),
-    [CodePen](https://codepen.io/azakus/pen/deZLja).
+```sh
+npm install @material/mwc-icon-button
+```
 
-* You can also copy [this HTML file](https://gist.githubusercontent.com/azakus/f01e9fc2ed04e781ad5a52ded7b296e7/raw/266f2f4f91cbfe89b2acc6ec63957b1a3cfe9b39/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
+> NOTE: The Material Web Components are distributed as ES2017 JavaScript
+> Modules, and use the Custom Elements API. They are compatible with all modern
+> browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
+> tooling step is required to resolve *bare module specifiers*, as well as
+> transpilation and polyfills for Edge and IE11. See
+> [here](https://github.com/material-components/material-components-web-components#quick-start)
+> for detailed instructions.
 
-* When you're ready to use mwc-icon-button in a project, install it via [npm](https://www.npmjs.com/). To run the project in the browser, a module-compatible toolctain is required. We recommend installing the [Polymer CLI](https://github.com/Polymer/polymer-cli) and using its development server as follows.
+## Example Usage
 
-  1. Ensure the webcomponents polyfills are included in your HTML page
+### Standard
 
-      - Install webcomponents polyfills
+![](images/standard.png)
 
-          ```npm i @webcomponents/webcomponentsjs```
+```html
+<mwc-icon-button icon="code"></mwc-icon-button>
+```
 
-      - Add webcomponents polyfills to your HTML page
+### SVG or Image
 
-          ```<script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>```
+![](images/svg.png)
 
-  1. Add mwc-icon-button to your project:
+```html
+<mwc-icon-button>
+  <svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+</mwc-icon-button>
+```
 
-      ```npm i @material/mwc-icon-button```
+### Disabled
 
-  1. Import the mwc-icon-button definition into your HTML page:
+![](images/disabled.png)
 
-      ```<script type="module" src="@material/mwc-icon-button/index.js"></script>```
+```html
+<mwc-icon-button icon="code" disabled></mwc-icon-button>
+```
 
-      Or into your module script:
+### Customize Colors
 
-      ```import {IconButton} from "@material/mwc-icon-button"```
+![](images/custom_color.png)
 
-  1. Create an instance of mwc-icon-button in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
+```css
+mwc-icon-button {
+  color: tomato;
+}
+```
 
-      ```<mwc-icon-button icon="sentiment_very_satisfied" offIcon="sentiment_very_dissatisfied"></mwc-icon-button>```
+## API
 
-  1. Install the Polymer CLI:
+### Slots
+| Name | Description
+| ---- | -----------
+| `icon` | Optional `<img>` or `<svg>` to display instead of using an icon font
 
-      ```npm i -g polymer-cli```
+### Properties/Attributes
+| Name | Type | Default | Description
+| ---- | ---- | ------- | -----------
+| `icon` | `string` | `''` | Icon to display, and `aria-label` value when `label` is not defined.
+| `label` | `string` | `''` | Accessible label for the button, sets `aria-label`.
+| `disabled` | `boolean` | `false` | Disabled buttons cannot be interacted with and have no visual interaction effect.
 
-  1. Run the development server and open a browser pointing to its URL:
+### Methods
+*None*
 
-      ```polymer serve```
+### Events
+*None*
 
-  > mwc-icon-button is published on [npm](https://www.npmjs.com/package/@material/mwc-icon-button) using JavaScript Modules.
-  This means it can take advantage of the standard native JavaScript module loader available in all current major browsers.
-  >
-  > However, since mwc-icon-button uses npm convention to reference dependencies by name, a light transform to rewrite specifiers to URLs is required to get it to run in the browser. The polymer-cli's development server `polymer serve` automatically handles this transform.
+### CSS Custom Properties
 
-  Tools like [WebPack](https://webpack.js.org/) and [Rollup](https://rollupjs.org/) can also be used to serve and/or bundle mwc-icon-button.
+| Name | Default | Description
+| ---- | ------- | -----------
+| `--mdc-icon-font` | [`Material Icons`](https://google.github.io/material-design-icons/) | Font to use for the icon.
+| `--mdc-theme-text-disabled-on-light` | `rgba(0, 0, 0, 0.38)` | Color of icon when `disabled` is `true`
+| `--mdc-icon-button-ripple-opacity` | `0.12` | Opacity of the ripple on the icon button
 
-## Supported Browsers
+## Additional references
 
-The last 2 versions of all modern browsers are supported, including
-Chrome, Safari, Opera, Firefox, Edge. In addition, Internet Explorer 11 is also supported.
+- [MDC Web: Icon Buttons](https://material.io/develop/web/components/buttons/icon-buttons/)
