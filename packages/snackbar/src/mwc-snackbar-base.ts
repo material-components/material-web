@@ -90,6 +90,7 @@ export class SnackbarBase extends BaseElement {
         this.dispatchEvent(new CustomEvent(CLOSED_EVENT, {
           bubbles: true,
           cancelable: true,
+          // eslint-disable-next-line @typescript-eslint/no-angle-bracket-type-assertion
           detail: <MDCSnackbarCloseEventDetail> {
             reason: reason
           }
@@ -99,6 +100,7 @@ export class SnackbarBase extends BaseElement {
           this.dispatchEvent(new CustomEvent(CLOSING_EVENT, {
             bubbles: true,
             cancelable: true,
+            // eslint-disable-next-line @typescript-eslint/no-angle-bracket-type-assertion
             detail: <MDCSnackbarCloseEventDetail> {
               reason: reason
             }
