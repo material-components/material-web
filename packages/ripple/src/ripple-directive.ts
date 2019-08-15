@@ -130,13 +130,13 @@ export const ripple =
     directive((options: RippleOptions = {}) => (part: PropertyPart) => {
       const surfaceNode = part.committer.element as HTMLElement;
       const interactionNode = options.interactionNode || surfaceNode;
-      let rippleFoundation = part.value as any;
+      let rippleFoundation = part.value as MDCRippleFoundation | typeof noChange;
       // if the interaction node changes, destroy and invalidate the foundation.
       const existingInteractionNode =
           rippleInteractionNodes.get(rippleFoundation);
       if (existingInteractionNode !== undefined &&
           existingInteractionNode !== interactionNode) {
-        rippleFoundation.destroy();
+        (rippleFoundation as MDCRippleFoundation).destroy();
         rippleFoundation = noChange;
       }
       // make the ripple, if needed
@@ -148,15 +148,15 @@ export const ripple =
         // otherwise update settings as needed.
       } else {
         if (options.unbounded !== undefined) {
-          rippleFoundation.setUnbounded(options.unbounded);
+          (rippleFoundation as MDCRippleFoundation).setUnbounded(options.unbounded);
         }
         if (options.disabled !== undefined) {
-          rippleFoundation.setUnbounded(options.disabled);
+          (rippleFoundation as MDCRippleFoundation).setUnbounded(options.disabled);
         }
       }
       if (options.active === true) {
-        rippleFoundation.activate();
+        (rippleFoundation as MDCRippleFoundation).activate();
       } else if (options.active === false) {
-        rippleFoundation.deactivate();
+        (rippleFoundation as MDCRippleFoundation).deactivate();
       }
     });
