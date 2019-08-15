@@ -20,7 +20,7 @@ import {style} from './mwc-icon-host-css.js';
 
 @customElement('mwc-icon')
 export class Icon extends LitElement {
-  protected static styles = style;
+  static styles = style;
 
   protected render() {
     return html`<slot></slot>`;

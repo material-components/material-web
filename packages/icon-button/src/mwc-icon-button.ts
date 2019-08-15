@@ -28,5 +28,5 @@ declare global {
 
 @customElement('mwc-icon-button')
 export class IconButton extends IconButtonBase {
-  protected static styles = style;
+  static styles = style;
 }

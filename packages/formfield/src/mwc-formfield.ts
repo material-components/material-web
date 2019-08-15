@@ -27,5 +27,5 @@ declare global {
 
 @customElement('mwc-formfield')
 export class Formfield extends FormfieldBase {
-  protected static styles = style;
+  static styles = style;
 }

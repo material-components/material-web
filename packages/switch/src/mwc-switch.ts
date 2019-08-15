@@ -27,5 +27,5 @@ declare global {
 
 @customElement('mwc-switch')
 export class Switch extends SwitchBase {
-  protected static styles = style;
+  static styles = style;
 }

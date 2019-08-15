@@ -75,7 +75,7 @@ export class TabBase extends BaseElement {
     super.connectedCallback();
   }
 
-  protected static styles = style;
+  static styles = style;
 
   protected firstUpdated() {
     super.firstUpdated();

@@ -27,5 +27,5 @@ declare global {
 
 @customElement('mwc-snackbar')
 export class Snackbar extends SnackbarBase {
-  protected static styles = style;
+  static styles = style;
 }
