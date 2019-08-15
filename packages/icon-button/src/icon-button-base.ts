@@ -24,7 +24,7 @@ export class IconButtonBase extends LitElement {
 
   @property({type: String}) label = '';
 
-  render() {
+  protected render() {
     return html`<button
     .ripple="${ripple()}"
     class="mdc-icon-button"
