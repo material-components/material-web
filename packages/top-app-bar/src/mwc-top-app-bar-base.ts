@@ -174,7 +174,7 @@ export class TopAppBarBase extends BaseElement {
     this.registerListeners();
   }
 
-  protected disconnectedCallback() {
+  disconnectedCallback() {
     super.disconnectedCallback();
     this.unregisterListeners();
   }

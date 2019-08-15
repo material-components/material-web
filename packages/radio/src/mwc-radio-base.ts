@@ -66,7 +66,7 @@ export class RadioBase extends FormElement {
     }
   }
 
-  protected disconnectedCallback() {
+  disconnectedCallback() {
     if (this._selectionController) {
       this._selectionController.unregister(this);
     }
