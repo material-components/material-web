@@ -27,7 +27,7 @@ declare global {
   }
 }
 
-@customElement('mwc-textarea' as any)
+@customElement('mwc-textarea')
 export class TextArea extends TextAreaBase {
   static styles = style;
 }
