@@ -42,16 +42,16 @@ export abstract class FormElement extends BaseElement {
   /**
    * Implement ripple getter for Ripple integration with mwc-formfield
    */
-  public readonly ripple?: RippleSurface;
+  readonly ripple?: RippleSurface;
 
-  public click() {
+  click() {
     if (this.formElement) {
       this.formElement.focus();
       this.formElement.click();
     }
   }
 
-  public setAriaLabel(label: string) {
+  setAriaLabel(label: string) {
     if (this.formElement) {
       this.formElement.setAttribute('aria-label', label);
     }

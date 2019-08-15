@@ -19,15 +19,15 @@ import {classMap, html, LitElement, property} from '@material/mwc-base/base-elem
 import {ripple, RippleOptions} from './ripple-directive.js';
 
 export class RippleBase extends LitElement {
-  @property({type: Boolean}) public primary = false;
+  @property({type: Boolean}) primary = false;
 
-  @property({type: Boolean}) public active: boolean|undefined;
+  @property({type: Boolean}) active: boolean|undefined;
 
-  @property({type: Boolean}) public accent = false;
+  @property({type: Boolean}) accent = false;
 
-  @property({type: Boolean}) public unbounded = false;
+  @property({type: Boolean}) unbounded = false;
 
-  @property({type: Boolean}) public disabled = false;
+  @property({type: Boolean}) disabled = false;
 
   @property() protected interactionNode: HTMLElement = this;
 

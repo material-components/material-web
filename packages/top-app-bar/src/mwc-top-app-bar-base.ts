@@ -44,19 +44,19 @@ export class TopAppBarBase extends BaseElement {
   // undefined" error in browsers that don't define it (e.g. Edge and IE11).
   @query('[name="actionItems"]') private _actionItemsSlot!: HTMLElement;
 
-  @property({reflect: true}) public type: TopAppBarTypes = '';
+  @property({reflect: true}) type: TopAppBarTypes = '';
 
-  @property({type: Boolean, reflect: true}) public dense = false;
+  @property({type: Boolean, reflect: true}) dense = false;
 
-  @property({type: Boolean, reflect: true}) public centerTitle = false;
+  @property({type: Boolean, reflect: true}) centerTitle = false;
 
   private _scrollTarget!: HTMLElement|Window;
 
-  public get scrollTarget() {
+  get scrollTarget() {
     return this._scrollTarget || window as Window;
   }
 
-  public set scrollTarget(value) {
+  set scrollTarget(value) {
     const old = this.scrollTarget;
     this._scrollTarget = value;
     this.requestUpdate('scrollTarget', old);

@@ -18,21 +18,21 @@ import {classMap, html, LitElement, property} from '@material/mwc-base/base-elem
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 
 export class ButtonBase extends LitElement {
-  @property({type: Boolean}) public raised = false;
+  @property({type: Boolean}) raised = false;
 
-  @property({type: Boolean}) public unelevated = false;
+  @property({type: Boolean}) unelevated = false;
 
-  @property({type: Boolean}) public outlined = false;
+  @property({type: Boolean}) outlined = false;
 
-  @property({type: Boolean}) public dense = false;
+  @property({type: Boolean}) dense = false;
 
-  @property({type: Boolean, reflect: true}) public disabled = false;
+  @property({type: Boolean, reflect: true}) disabled = false;
 
-  @property({type: Boolean}) public trailingIcon = false;
+  @property({type: Boolean}) trailingIcon = false;
 
-  @property() public icon = '';
+  @property() icon = '';
 
-  @property() public label = '';
+  @property() label = '';
 
   protected createRenderRoot() {
     return this.attachShadow({mode: 'open', delegatesFocus: true});

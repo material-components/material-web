@@ -32,25 +32,25 @@ export class SnackbarBase extends BaseElement {
 
   @query('.mdc-snackbar__label') protected labelElement!: HTMLElement;
 
-  @property({type: Boolean, reflect: true}) public isOpen = false;
+  @property({type: Boolean, reflect: true}) isOpen = false;
 
   @observer(function(this: SnackbarBase, value: number) {
     this.mdcFoundation.setTimeoutMs(value);
   })
   @property({type: Number})
-  public timeoutMs = 5000;
+  timeoutMs = 5000;
 
   @observer(function(this: SnackbarBase, value: boolean) {
     this.mdcFoundation.setCloseOnEscape(value);
   })
   @property({type: Boolean})
-  public closeOnEscape = false;
+  closeOnEscape = false;
 
-  @property() public labelText = '';
+  @property() labelText = '';
 
-  @property({type: Boolean}) public stacked = false;
+  @property({type: Boolean}) stacked = false;
 
-  @property({type: Boolean}) public leading = false;
+  @property({type: Boolean}) leading = false;
 
   /**
    * We can't open the snackbar until the foundation is initialized, but that
@@ -125,7 +125,7 @@ export class SnackbarBase extends BaseElement {
     };
   }
 
-  public open() {
+  open() {
     if (this.mdcFoundation !== undefined) {
       this.mdcFoundation.open();
     } else {
@@ -133,7 +133,7 @@ export class SnackbarBase extends BaseElement {
     }
   }
 
-  public close(reason = '') {
+  close(reason = '') {
     if (this.mdcFoundation !== undefined) {
       this.mdcFoundation.close(reason);
     } else if (this._earlyOpen === true) {

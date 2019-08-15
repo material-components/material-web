@@ -18,19 +18,19 @@ import {classMap, html, LitElement, property} from '@material/mwc-base/base-elem
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 
 export class FabBase extends LitElement {
-  @property({type: Boolean}) public mini = false;
+  @property({type: Boolean}) mini = false;
 
-  @property({type: Boolean}) public exited = false;
+  @property({type: Boolean}) exited = false;
 
-  @property({type: Boolean}) public disabled = false;
+  @property({type: Boolean}) disabled = false;
 
-  @property({type: Boolean}) public extended = false;
+  @property({type: Boolean}) extended = false;
 
-  @property({type: Boolean}) public showIconAtEnd = false;
+  @property({type: Boolean}) showIconAtEnd = false;
 
-  @property() public icon = '';
+  @property() icon = '';
 
-  @property() public label = '';
+  @property() label = '';
 
   protected createRenderRoot() {
     return this.attachShadow({mode: 'open', delegatesFocus: true});

@@ -24,13 +24,13 @@ export class SwitchBase extends FormElement {
   @observer(function(this: SwitchBase, value: boolean) {
     this.mdcFoundation.setChecked(value);
   })
-  public checked = false;
+  checked = false;
 
   @property({type: Boolean})
   @observer(function(this: SwitchBase, value: boolean) {
     this.mdcFoundation.setDisabled(value);
   })
-  public disabled = false;
+  disabled = false;
 
   @query('.mdc-switch') protected mdcRoot!: HTMLElement;
 
@@ -58,7 +58,7 @@ export class SwitchBase extends FormElement {
     };
   }
 
-  public get ripple() {
+  get ripple() {
     return this.rippleNode.ripple;
   }
 

@@ -108,11 +108,11 @@ export class DrawerBase extends BaseElement {
     }
   })
   @property({type: Boolean, reflect: true})
-  public open = false;
+  open = false;
 
-  @property({type: Boolean}) public hasHeader = false;
+  @property({type: Boolean}) hasHeader = false;
 
-  @property({reflect: true}) public type = '';
+  @property({reflect: true}) type = '';
 
   protected render() {
     const dismissible = this.type === 'dismissible' || this.type === 'modal';

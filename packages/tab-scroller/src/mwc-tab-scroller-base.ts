@@ -100,7 +100,7 @@ export class TabScrollerBase extends BaseElement {
    * Returns the current visual scroll position
    * @return {number}
    */
-  public getScrollPosition() {
+  getScrollPosition() {
     return this.mdcFoundation.getScrollPosition();
   }
 
@@ -108,7 +108,7 @@ export class TabScrollerBase extends BaseElement {
    * Returns the width of the scroll content
    * @return {number}
    */
-  public getScrollContentWidth() {
+  getScrollContentWidth() {
     return this.scrollContentElement.offsetWidth;
   }
 
@@ -117,7 +117,7 @@ export class TabScrollerBase extends BaseElement {
    * @param {number} scrollXIncrement The pixel value by which to increment the
    *     scroll value
    */
-  public incrementScrollPosition(scrollXIncrement: number) {
+  incrementScrollPosition(scrollXIncrement: number) {
     this.mdcFoundation.incrementScroll(scrollXIncrement);
   }
 
@@ -125,7 +125,7 @@ export class TabScrollerBase extends BaseElement {
    * Scrolls to the given pixel position
    * @param {number} scrollX The pixel value to scroll to
    */
-  public scrollToPosition(scrollX: number) {
+  scrollToPosition(scrollX: number) {
     this.mdcFoundation.scrollTo(scrollX);
   }
 }

@@ -43,39 +43,39 @@ export class SliderBase extends FormElement {
   @observer(function(this: SliderBase, value: number) {
     this.mdcFoundation.setValue(value);
   })
-  public value = 0;
+  value = 0;
 
   @property({type: Number})
   @observer(function(this: SliderBase, value: number) {
     this.mdcFoundation.setMin(value);
   })
-  public min = 0;
+  min = 0;
 
   @property({type: Number})
   @observer(function(this: SliderBase, value: number) {
     this.mdcFoundation.setMax(value);
   })
-  public max = 100;
+  max = 100;
 
   @property({type: Number})
   @observer(function(this: SliderBase, value: number) {
     this.mdcFoundation.setStep(value);
   })
-  public step = 0;
+  step = 0;
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: SliderBase, value: boolean) {
     this.mdcFoundation.setDisabled(value);
   })
-  public disabled = false;
+  disabled = false;
 
-  @property({type: Boolean, reflect: true}) public discrete = false;
+  @property({type: Boolean, reflect: true}) discrete = false;
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: SliderBase) {
     this.mdcFoundation.setupTrackMarker();
   })
-  public markers = false;
+  markers = false;
 
   @property({type: Number}) private _numMarkers = 0;
 
@@ -186,7 +186,7 @@ export class SliderBase extends FormElement {
     };
   }
 
-  public layout() {
+  layout() {
     this.mdcFoundation.layout();
   }
 }

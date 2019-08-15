@@ -28,21 +28,21 @@ export class RadioBase extends FormElement {
   @observer(function(this: RadioBase, checked: boolean) {
     this.formElement.checked = checked;
   })
-  public checked = false;
+  checked = false;
 
   @property({type: Boolean})
   @observer(function(this: RadioBase, disabled: boolean) {
     this.mdcFoundation.setDisabled(disabled);
   })
-  public disabled = false;
+  disabled = false;
 
   @property({type: String})
   @observer(function(this: RadioBase, value: string) {
     this.formElement.value = value;
   })
-  public value = '';
+  value = '';
 
-  @property({type: String}) public name = '';
+  @property({type: String}) name = '';
 
   protected mdcFoundationClass = MDCRadioFoundation;
 
@@ -50,7 +50,7 @@ export class RadioBase extends FormElement {
 
   private _selectionController: SelectionController|null = null;
 
-  public constructor() {
+  constructor() {
     super();
     // Selection Controller is only needed for native ShadowDOM
     if (!window['ShadyDOM'] || !window['ShadyDOM']['inUse']) {
@@ -72,11 +72,11 @@ export class RadioBase extends FormElement {
     }
   }
 
-  public focusNative() {
+  focusNative() {
     this.formElement.focus();
   }
 
-  public get ripple() {
+  get ripple() {
     return this.mdcRoot.ripple;
   }
 
@@ -140,9 +140,9 @@ export class RadioBase extends FormElement {
 const selectionController = Symbol('selection controller');
 
 class SelectionSet {
-  public selected: RadioBase|null = null;
-  public ordered: RadioBase[]|null = null;
-  public readonly set = new Set<RadioBase>();
+  selected: RadioBase|null = null;
+  ordered: RadioBase[]|null = null;
+  readonly set = new Set<RadioBase>();
 }
 
 export class SelectionController {
@@ -154,7 +154,7 @@ export class SelectionController {
 
   private updating = false;
 
-  public static getController(element: HTMLElement) {
+  static getController(element: HTMLElement) {
     const root = element.getRootNode() as Node &
         {[selectionController]?: SelectionController};
     if (!root[selectionController]) {
@@ -163,7 +163,7 @@ export class SelectionController {
     return root[selectionController] as SelectionController;
   }
 
-  public constructor(element: Node) {
+  constructor(element: Node) {
     element.addEventListener(
         'keydown', (e: Event) => this.keyDownHandler(e as KeyboardEvent));
     element.addEventListener('mousedown', () => this.mousedownHandler());
@@ -193,24 +193,24 @@ export class SelectionController {
     this.mouseIsDown = false;
   }
 
-  public has(element: RadioBase) {
+  has(element: RadioBase) {
     const set = this.getSet(element.name);
     return set.set.has(element);
   }
 
-  public previous(element: RadioBase) {
+  previous(element: RadioBase) {
     const order = this.getOrdered(element);
     const i = order.indexOf(element);
     this.select(order[i - 1] || order[order.length - 1]);
   }
 
-  public next(element: RadioBase) {
+  next(element: RadioBase) {
     const order = this.getOrdered(element);
     const i = order.indexOf(element);
     this.select(order[i + 1] || order[0]);
   }
 
-  public select(element: RadioBase) {
+  select(element: RadioBase) {
     element.click();
   }
 
@@ -218,7 +218,7 @@ export class SelectionController {
    * Helps to track the focused selection group and if it changes, focuses
    * the selected item in the group. This matches native radio button behavior.
    */
-  public focus(element: RadioBase) {
+  focus(element: RadioBase) {
     // Only manage focus state when using keyboard
     if (this.mouseIsDown) {
       return;
@@ -232,7 +232,7 @@ export class SelectionController {
     }
   }
 
-  public getOrdered(element: RadioBase) {
+  getOrdered(element: RadioBase) {
     const set = this.getSet(element.name);
     if (!set.ordered) {
       set.ordered = Array.from(set.set);
@@ -245,20 +245,20 @@ export class SelectionController {
     return set.ordered;
   }
 
-  public getSet(name: string) {
+  getSet(name: string) {
     if (!this.sets[name]) {
       this.sets[name] = new SelectionSet();
     }
     return this.sets[name];
   }
 
-  public register(element: RadioBase) {
+  register(element: RadioBase) {
     const set = this.getSet(element.name);
     set.set.add(element);
     set.ordered = null;
   }
 
-  public unregister(element: RadioBase) {
+  unregister(element: RadioBase) {
     const set = this.getSet(element.name);
     set.set.delete(element);
     set.ordered = null;

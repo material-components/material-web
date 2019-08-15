@@ -32,9 +32,9 @@ export class TabIndicatorBase extends BaseElement {
 
   @query('.mdc-tab-indicator__content') protected contentElement!: HTMLElement;
 
-  @property() public icon = '';
+  @property() icon = '';
 
-  @property({type: Boolean}) public fade = false;
+  @property({type: Boolean}) fade = false;
 
   protected render() {
     const contentClasses = {

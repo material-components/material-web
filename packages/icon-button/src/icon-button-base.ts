@@ -33,23 +33,23 @@ export class IconButtonBase extends BaseElement {
   // undefined" error in browsers that don't define it (e.g. Edge and IE11).
   @query('slot[name="offIcon"]') protected offIconSlot!: HTMLElement;
 
-  @property({type: String}) public label = '';
+  @property({type: String}) label = '';
 
-  @property({type: Boolean, reflect: true}) public disabled = false;
+  @property({type: Boolean, reflect: true}) disabled = false;
 
-  @property({type: String}) public icon = '';
+  @property({type: String}) icon = '';
 
   @property({type: String})
   @observer(function(this: IconButtonBase) {
     this.calculateShouldToggle();
   })
-  public offIcon = '';
+  offIcon = '';
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: IconButtonBase, state: boolean) {
     this.mdcFoundation.toggle(state);
   })
-  public on = false;
+  on = false;
 
   protected shouldToggle = true;
 
@@ -81,7 +81,7 @@ export class IconButtonBase extends BaseElement {
         (this.offIconSlot as HTMLSlotElement).assignedNodes().length > 0;
   }
 
-  public focus() {
+  focus() {
     this.mdcRoot.focus();
   }
 

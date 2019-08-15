@@ -21,7 +21,7 @@ import {FormElement} from '@material/mwc-base/form-element.js';
 import {findAssignedElement} from '@material/mwc-base/utils.js';
 
 export class FormfieldBase extends BaseElement {
-  @property({type: Boolean}) public alignEnd = false;
+  @property({type: Boolean}) alignEnd = false;
 
   @property({type: String})
   @observer(async function(this: FormfieldBase, label: string) {
@@ -35,7 +35,7 @@ export class FormfieldBase extends BaseElement {
       }
     }
   })
-  public label = '';
+  label = '';
 
   @query('.mdc-form-field') protected mdcRoot!: HTMLElement;
 

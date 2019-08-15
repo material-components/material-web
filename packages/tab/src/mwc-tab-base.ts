@@ -37,19 +37,19 @@ export class TabBase extends BaseElement {
 
   @query('mwc-tab-indicator') protected tabIndicator!: TabIndicator;
 
-  @property() public label = '';
+  @property() label = '';
 
-  @property() public icon = '';
+  @property() icon = '';
 
-  @property({type: Boolean}) public isFadingIndicator = false;
+  @property({type: Boolean}) isFadingIndicator = false;
 
-  @property({type: Boolean}) public minWidth = false;
+  @property({type: Boolean}) minWidth = false;
 
-  @property({type: Boolean}) public isMinWidthIndicator = false;
+  @property({type: Boolean}) isMinWidthIndicator = false;
 
-  @property() public indicatorIcon = '';
+  @property() indicatorIcon = '';
 
-  @property({type: Boolean}) public stacked = false;
+  @property({type: Boolean}) stacked = false;
 
   /**
    * Other properties
@@ -164,7 +164,7 @@ export class TabBase extends BaseElement {
   }
 
   // NOTE: needed only for ShadyDOM where delegatesFocus is not implemented
-  public focus() {
+  focus() {
     this.mdcRoot.focus();
   }
 }

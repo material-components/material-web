@@ -49,7 +49,7 @@ export class TabBarBase extends BaseElement {
     }
   })
   @property({type: Number})
-  public activeIndex = 0;
+  activeIndex = 0;
 
   private _previousActiveIndex = -1;
 
@@ -174,7 +174,7 @@ export class TabBarBase extends BaseElement {
         });
   }
 
-  public scrollIndexIntoView(index: number) {
+  scrollIndexIntoView(index: number) {
     this.mdcFoundation.scrollIntoView(index);
   }
 }
