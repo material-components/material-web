@@ -65,7 +65,7 @@ export class TopAppBarBase extends BaseElement {
   // TODO(sorvell): MDC decorates the navigation icon and action items with
   // ripples. Since these are slotted items here, the assumption is that the
   // user brings a web component with a ripple if rippling is desired.
-  render() {
+  protected render() {
     const classes = {
       'mdc-top-app-bar--fixed':
           this.type === 'fixed' || this.type === 'prominentFixed',
@@ -123,10 +123,10 @@ export class TopAppBarBase extends BaseElement {
 
   // override that prevents `super.firstUpdated` since we are controlling when
   // `createFoundation` is called.
-  firstUpdated() {
+  protected firstUpdated() {
   }
 
-  updated(changedProperties: PropertyValues) {
+  protected updated(changedProperties: PropertyValues) {
     // update foundation if `type` or `scrollTarget` changes
     if (changedProperties.has('type') ||
         changedProperties.has('scrollTarget')) {
@@ -163,7 +163,7 @@ export class TopAppBarBase extends BaseElement {
     }
   }
 
-  createFoundation() {
+  protected createFoundation() {
     super.createFoundation();
     const windowScroller = this.scrollTarget === window;
     // we add support for top-app-bar's tied to an element scroller.

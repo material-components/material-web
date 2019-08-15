@@ -32,7 +32,7 @@ export class TabScrollerBase extends BaseElement {
   @query('.mdc-tab-scroller__scroll-content')
   protected scrollContentElement!: HTMLElement;
 
-  @eventOptions({passive: true} as EventListenerOptions)
+  @eventOptions({passive: true})
   private _handleInteraction() {
     this.mdcFoundation.handleInteraction();
   }
@@ -43,7 +43,7 @@ export class TabScrollerBase extends BaseElement {
 
   private _scrollbarHeight = -1;
 
-  render() {
+  protected render() {
     return html`
       <div class="mdc-tab-scroller">
         <div class="mdc-tab-scroller__scroll-area"
@@ -59,7 +59,7 @@ export class TabScrollerBase extends BaseElement {
       `;
   }
 
-  createAdapter(): MDCTabScrollerAdapter {
+  protected createAdapter(): MDCTabScrollerAdapter {
     return {
       ...addHasRemoveClass(this.mdcRoot),
       eventTargetMatchesSelector: (evtTarget: EventTarget, selector: string) =>

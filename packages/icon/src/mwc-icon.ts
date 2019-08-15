@@ -22,7 +22,7 @@ import {style} from './mwc-icon-host-css.js';
 export class Icon extends LitElement {
   static styles = style;
 
-  render() {
+  protected render() {
     return html`<slot></slot>`;
   }
 }

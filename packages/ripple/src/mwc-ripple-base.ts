@@ -39,7 +39,7 @@ export class RippleBase extends LitElement {
   }
 
   // TODO(sorvell) #css: sizing.
-  render() {
+  protected render() {
     const classes = {
       'mdc-ripple-surface--primary': this.primary,
       'mdc-ripple-surface--accent': this.accent,

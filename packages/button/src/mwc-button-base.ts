@@ -34,11 +34,11 @@ export class ButtonBase extends LitElement {
 
   @property() label = '';
 
-  createRenderRoot() {
+  protected createRenderRoot() {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
-  render() {
+  protected render() {
     const classes = {
       'mdc-button--raised': this.raised,
       'mdc-button--unelevated': this.unelevated,

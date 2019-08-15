@@ -63,7 +63,7 @@ export class IconButtonToggleBase extends BaseElement {
     this.mdcRoot.focus();
   }
 
-  render() {
+  protected render() {
     return html`
       <button
         .ripple="${ripple()}"

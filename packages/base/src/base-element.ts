@@ -68,7 +68,7 @@ export abstract class BaseElement extends LitElement {
     this.mdcFoundation.init();
   }
 
-  firstUpdated() {
+  protected firstUpdated() {
     this.createFoundation();
   }
 }

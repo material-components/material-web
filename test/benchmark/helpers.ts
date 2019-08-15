@@ -71,7 +71,7 @@ export class TestFixture extends LitElement {
     }
   }
 
-  render() {
+  protected render() {
     return html`
       ${this.shouldAttachContents ? this.template : ''}
     `;

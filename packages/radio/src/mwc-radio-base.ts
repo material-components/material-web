@@ -89,6 +89,7 @@ export class RadioBase extends FormElement {
     super();
     // Selection Controller is only needed for native ShadowDOM
     if (!window['ShadyDOM'] || !window['ShadyDOM']['inUse']) {
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       this._selectionController = SelectionController.getController(this);
     }
   }
@@ -141,7 +142,7 @@ export class RadioBase extends FormElement {
     this.formElement.focus();
   }
 
-  render() {
+  protected render() {
     return html`
       <div class="mdc-radio" .ripple="${ripple()}">
         <input
@@ -160,7 +161,7 @@ export class RadioBase extends FormElement {
       </div>`;
   }
 
-  firstUpdated() {
+  protected firstUpdated() {
     super.firstUpdated();
     // We might not have been able to synchronize this from the checked setter
     // earlier, if checked was set before the input was stamped.
@@ -264,6 +265,7 @@ export class SelectionController {
     const currentFocusedSet = this.focusedSet;
     this.focusedSet = set;
     if (currentFocusedSet != set && set.selected && set.selected != element) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       set.selected!.focusNative();
     }
   }
