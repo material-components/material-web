@@ -27,7 +27,7 @@ declare global {
   }
 }
 
-@customElement('mwc-textfield' as any)
+@customElement('mwc-textfield')
 export class TextField extends TextFieldBase {
   static styles = style;
 }
