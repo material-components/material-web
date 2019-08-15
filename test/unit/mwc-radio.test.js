@@ -14,22 +14,65 @@
  * limitations under the License.
  */
 
-import {assert} from 'chai';
 import {Radio} from '@material/mwc-radio';
+import {assert} from 'chai';
+import {html, render} from 'lit-html';
 
-let element;
+let container;
 
 suite('mwc-radio');
 
-beforeEach(() => {
-  element = document.createElement('mwc-radio');
-  document.body.appendChild(element);
+before(() => {
+  container = document.createElement('main');
+  document.body.appendChild(container);
 });
 
 afterEach(() => {
-  document.body.removeChild(element);
+  render(html``, container);
+});
+
+after(() => {
+  document.body.removeChild(container);
 });
 
 test('initializes as an mwc-radio', () => {
-  assert.instanceOf(element, Radio);
+  const radio = document.createElement('mwc-radio');
+  container.appendChild(radio);
+  assert.instanceOf(radio, Radio);
+});
+
+test('radio group', async () => {
+  render(
+      html`
+      <mwc-radio name="a"></mwc-group>
+      <mwc-radio name="a"></mwc-group>
+      <mwc-radio name="b"></mwc-group>
+      `,
+      container);
+
+  const [a1, a2, b1] = [...container.querySelectorAll('mwc-radio')];
+  assert.isFalse(a1.checked);
+  assert.isFalse(a2.checked);
+  assert.isFalse(b1.checked);
+
+  a1.checked = true;
+  assert.isTrue(a1.checked);
+  assert.isFalse(a2.checked);
+  assert.isFalse(b1.checked);
+
+  a2.checked = true;
+  assert.isFalse(a1.checked);
+  assert.isTrue(a2.checked);
+  assert.isFalse(b1.checked);
+
+  b1.checked = true;
+  assert.isFalse(a1.checked);
+  assert.isTrue(a2.checked);
+  assert.isTrue(b1.checked);
+
+  a2.checked = false;
+  b1.checked = false;
+  assert.isFalse(a1.checked);
+  assert.isFalse(a2.checked);
+  assert.isFalse(b1.checked);
 });

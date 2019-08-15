@@ -24,11 +24,46 @@ export class RadioBase extends FormElement {
 
   @query('input') protected formElement!: HTMLInputElement;
 
-  @property({type: Boolean})
-  @observer(function(this: RadioBase, checked: boolean) {
-    this.formElement.checked = checked;
-  })
-  checked = false;
+  private _checked = false;
+
+  @property({type: Boolean, reflect: true})
+  get checked() {
+    return this._checked;
+  }
+
+  /**
+   * We define our own getter/setter for `checked` because we need to track
+   * changes to it synchronously.
+   *
+   * The order in which the `checked` property is set across radio buttons
+   * within the same group is very important. However, we can't rely on
+   * UpdatingElement's `updated` callback to observe these changes (which is
+   * also what the `@observer` decorator uses), because it batches changes to
+   * all properties.
+   *
+   * Consider:
+   *
+   *   radio1.disabled = true;
+   *   radio2.checked = true;
+   *   radio1.checked = true;
+   *
+   * In this case we'd first see all changes for radio1, and then for radio2,
+   * and we couldn't tell that radio1 was the most recently checked.
+   */
+  set checked(checked: boolean) {
+    const oldValue = this._checked;
+    if (!!checked === !!oldValue) {
+      return;
+    }
+    this._checked = checked;
+    if (this.formElement) {
+      this.formElement.checked = checked;
+    }
+    if (this._selectionController) {
+      this._selectionController.update(this);
+    }
+    this.requestUpdate('checked', oldValue);
+  }
 
   @property({type: Boolean})
   @observer(function(this: RadioBase, disabled: boolean) {
@@ -127,6 +162,9 @@ export class RadioBase extends FormElement {
 
   firstUpdated() {
     super.firstUpdated();
+    // We might not have been able to synchronize this from the checked setter
+    // earlier, if checked was set before the input was stamped.
+    this.formElement.checked = this.checked;
     if (this._selectionController) {
       this._selectionController.update(this);
     }
