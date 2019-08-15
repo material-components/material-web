@@ -54,6 +54,7 @@ export class RadioBase extends FormElement {
     super();
     // Selection Controller is only needed for native ShadowDOM
     if (!window['ShadyDOM'] || !window['ShadyDOM']['inUse']) {
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       this._selectionController = SelectionController.getController(this);
     }
   }
