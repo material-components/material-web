@@ -59,7 +59,7 @@ export class RadioBase extends FormElement {
     }
   }
 
-  protected connectedCallback() {
+  connectedCallback() {
     super.connectedCallback();
     if (this._selectionController) {
       this._selectionController.register(this);

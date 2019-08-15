@@ -31,7 +31,7 @@ export class RippleBase extends LitElement {
 
   @property() protected interactionNode: HTMLElement = this;
 
-  protected connectedCallback() {
+  connectedCallback() {
     if (this.interactionNode === this) {
       this.interactionNode = this.parentNode as HTMLElement;
     }
