@@ -3,11 +3,11 @@
 > IMPORTANT: The Material Web Components are a work in progress and subject to
 > major changes until 1.0 release.
 
-Textfields let users enter and edit text.
+Text fields let users enter and edit text.
 
 <img src="images/standard.png" width="50%">
 
-[Material Design Guidelines: textfields](https://material.io/design/components/text-fields.html)
+[Material Design Guidelines: text fields](https://material.io/design/components/text-fields.html)
 
 ## Installation
 
