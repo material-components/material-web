@@ -1,0 +1,19 @@
+{
+  "name": "@material/mwc-textarea",
+  "version": "0.6.0",
+  "description": "",
+  "main": "mwc-textarea.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@material/mwc-base": "^0.6.0",
+    "@material/mwc-textfield": "^0.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "private": true
+}
