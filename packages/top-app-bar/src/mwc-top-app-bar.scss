@@ -16,47 +16,37 @@ limitations under the License.
 */
 
 @import '@material/top-app-bar/mdc-top-app-bar.scss';
+@import '@material/theme/_mixins.scss';
 
 :host {
-  display: inline-flex;
+  display: block;
 }
 
+// this should be in mdc-top-app-bar
 .mdc-top-app-bar {
-  flex: 1;
-}
-
-.mdc-top-app-bar__section--align-center {
-  justify-content: center;
-
-  .mdc-top-app-bar__title {
-    padding-left: 0;
-  }
-}
-
-.mwc-top-app-bar--center-title {
-  .mdc-top-app-bar__section--align-start {
-    flex-basis: 0%;
-  }
-  .mdc-top-app-bar__section--align-end {
-    flex-basis: 0%;
-  }
+  @include mdc-theme-prop(color, (
+    varname: --mdc-theme-on-primary,
+    fallback: #fff
+  ))
 }
 
 .mdc-top-app-bar--prominent {
-  slot[name="navigationIcon"]::slotted(*),
-  slot[name="actionItems"]::slotted(*) {
-    align-self: flex-start;
-  }
-}
-
-.mdc-top-app-bar--short-collapsed {
-  slot[name="actionItems"]::slotted(*) {
-    transition: padding 150ms $mdc-animation-standard-curve-timing-function;
+  #navigation, #actions {
+    ::slotted(*) {
+      align-self: flex-start;
+    }
   }
 }
 
 // hack for icon-button ripple opacity
-slot[name="navigationIcon"]::slotted(*),
-slot[name="actionItems"]::slotted(*) {
-  --mdc-icon-button-ripple-opacity: 0.24;
+#navigation, #actions {
+  ::slotted(*) {
+    --mdc-icon-button-ripple-opacity: 0.24;
+  }
+}
+
+.mdc-top-app-bar--short-collapsed {
+  #actions ::slotted(*) {
+    transition: padding 150ms $mdc-animation-standard-curve-timing-function;
+  }
 }

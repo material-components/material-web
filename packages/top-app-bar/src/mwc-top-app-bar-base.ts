@@ -14,27 +14,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {addHasRemoveClass, BaseElement, classMap, html, property, PropertyValues, query} from '@material/mwc-base/base-element.js';
+import {addHasRemoveClass, BaseElement, classMap, html, property, query} from '@material/mwc-base/base-element';
+import {supportsPassiveEventListener} from '@material/mwc-base/utils';
 import {MDCTopAppBarAdapter} from '@material/top-app-bar/adapter';
-import {strings} from '@material/top-app-bar/constants.js';
-import MDCFixedTopAppBarFoundation from '@material/top-app-bar/fixed/foundation.js';
-import MDCTopAppBarBaseFoundation from '@material/top-app-bar/foundation';
-import MDCShortTopAppBarFoundation from '@material/top-app-bar/short/foundation.js';
-import MDCTopAppBarFoundation from '@material/top-app-bar/standard/foundation.js';
+import {strings} from '@material/top-app-bar/constants';
+import MDCTopAppBarFoundation from '@material/top-app-bar/standard/foundation';
 
-type TopAppBarTypes =
-    ''|'fixed'|'prominent'|'short'|'shortCollapsed'|'prominentFixed';
+const passive = supportsPassiveEventListener ? {passive: true} : undefined;
 
 export class TopAppBarBase extends BaseElement {
-  protected mdcFoundation!: MDCTopAppBarBaseFoundation;
+  protected mdcFoundation!: MDCTopAppBarFoundation;
 
-  protected get mdcFoundationClass() {
-    return this.type === 'fixed' || this.type === 'prominentFixed' ?
-        MDCFixedTopAppBarFoundation :
-        (this.type === 'short' || this.type === 'shortCollapsed' ?
-             MDCShortTopAppBarFoundation :
-             MDCTopAppBarFoundation);
-  }
+  protected mdcFoundationClass = MDCTopAppBarFoundation;
 
   @query('.mdc-top-app-bar') protected mdcRoot!: HTMLElement;
 
@@ -44,62 +35,68 @@ export class TopAppBarBase extends BaseElement {
   // undefined" error in browsers that don't define it (e.g. Edge and IE11).
   @query('[name="actionItems"]') private _actionItemsSlot!: HTMLElement;
 
-  @property({reflect: true}) type: TopAppBarTypes = '';
+  @property({type: Boolean, reflect: true}) prominent = false;
 
   @property({type: Boolean, reflect: true}) dense = false;
 
-  @property({type: Boolean, reflect: true}) centerTitle = false;
+  private _scrollTarget!: HTMLElement | Window;
 
-  private _scrollTarget!: HTMLElement|Window;
-
+  @property()
   get scrollTarget() {
-    return this._scrollTarget || window as Window;
+    return this._scrollTarget || window;
   }
 
   set scrollTarget(value) {
     const old = this.scrollTarget;
     this._scrollTarget = value;
+    this.updateRootPosition();
     this.requestUpdate('scrollTarget', old);
+  }
+
+  private updateRootPosition() {
+    if (this.mdcRoot) {
+      const windowScroller = this.scrollTarget === window;
+      // we add support for top-app-bar's tied to an element scroller.
+      this.mdcRoot.style.position = windowScroller ? '' : 'absolute';
+    }
+  }
+
+  get barClasses() {
+    return {
+      'mdc-top-app-bar--dense': this.dense,
+      'mdc-top-app-bar--prominent': this.prominent,
+    };
+  }
+
+  get contentClasses() {
+    return {
+      'mdc-top-app-bar--fixed-adjust': !this.dense && !this.prominent,
+      'mdc-top-app-bar--prominent-fixed-adjust': !this.dense && this.prominent,
+      'mdc-top-app-bar--dense-fixed-adjust': this.dense && !this.prominent,
+      'mdc-top-app-bar--dense-prominent-fixed-adjust': this.dense && this.prominent,
+    };
   }
 
   // TODO(sorvell): MDC decorates the navigation icon and action items with
   // ripples. Since these are slotted items here, the assumption is that the
   // user brings a web component with a ripple if rippling is desired.
   render() {
-    const classes = {
-      'mdc-top-app-bar--fixed':
-          this.type === 'fixed' || this.type === 'prominentFixed',
-      'mdc-top-app-bar--short':
-          this.type === 'shortCollapsed' || this.type === 'short',
-      'mdc-top-app-bar--short-collapsed': this.type === 'shortCollapsed',
-      'mdc-top-app-bar--prominent':
-          this.type === 'prominent' || this.type === 'prominentFixed',
-      'mdc-top-app-bar--dense': this.dense,
-      'mwc-top-app-bar--center-title': this.centerTitle,
-    };
-    const alignStartTitle = !this.centerTitle ? html`
-      <span class="mdc-top-app-bar__title"><slot name="title"></slot></span>
-    ` :
-                                                '';
-    const centerSection = this.centerTitle ? html`
-      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-center">
-        <span class="mdc-top-app-bar__title"><slot name="title"></slot></span>
-      </section>` :
-                                             '';
     return html`
-      <header class="mdc-top-app-bar ${classMap(classes)}">
+      <header class="mdc-top-app-bar ${classMap(this.barClasses)}">
       <div class="mdc-top-app-bar__row">
-        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-          <slot name="navigationIcon" @click=${
-        this.handleNavigationClick}></slot>
-          ${alignStartTitle}
+        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start" id="navigation">
+          <slot name="navigationIcon" @click=${this.handleNavigationClick}></slot>
+          <span class="mdc-top-app-bar__title"><slot name="title"></slot></span>
         </section>
-        ${centerSection}
-        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" id="actions" role="toolbar">
           <slot name="actionItems"></slot>
         </section>
       </div>
-    </header>`;
+    </header>
+    <div class="${classMap(this.contentClasses)}">
+      <slot></slot>
+    </div>
+    `;
   }
 
   protected createAdapter(): MDCTopAppBarAdapter {
@@ -121,19 +118,6 @@ export class TopAppBarBase extends BaseElement {
     };
   }
 
-  // override that prevents `super.firstUpdated` since we are controlling when
-  // `createFoundation` is called.
-  firstUpdated() {
-  }
-
-  updated(changedProperties: PropertyValues) {
-    // update foundation if `type` or `scrollTarget` changes
-    if (changedProperties.has('type') ||
-        changedProperties.has('scrollTarget')) {
-      this.createFoundation();
-    }
-  }
-
   protected handleTargetScroll = () => {
     this.mdcFoundation.handleTargetScroll();
   };
@@ -148,29 +132,18 @@ export class TopAppBarBase extends BaseElement {
 
   protected registerListeners() {
     this.scrollTarget.addEventListener(
-        'scroll', this.handleTargetScroll, {passive: true});
-
-    if (this.type !== 'short' && this.type !== 'fixed') {
-      window.addEventListener('resize', this.handleResize, {passive: true});
-    }
+        'scroll', this.handleTargetScroll, passive);
+    window.addEventListener('resize', this.handleResize, passive);
   }
 
   protected unregisterListeners() {
     this.scrollTarget.removeEventListener('scroll', this.handleTargetScroll);
-
-    if (this.type !== 'short' && this.type !== 'fixed') {
-      window.removeEventListener('resize', this.handleResize);
-    }
+    window.removeEventListener('resize', this.handleResize);
   }
 
-  createFoundation() {
-    super.createFoundation();
-    const windowScroller = this.scrollTarget === window;
-    // we add support for top-app-bar's tied to an element scroller.
-    this.mdcRoot.style.position = windowScroller ? '' : 'absolute';
-    // TODO(sorvell): not sure why this is necessary but the MDC demo does it.
-    this.mdcRoot.style.top = windowScroller ? '0px' : '';
-    this.unregisterListeners();
+  firstUpdated() {
+    super.firstUpdated();
+    this.updateRootPosition();
     this.registerListeners();
   }
 

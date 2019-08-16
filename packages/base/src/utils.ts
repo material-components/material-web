@@ -44,3 +44,36 @@ export function addHasRemoveClass(element: HTMLElement) {
     hasClass: (className: string) => element.classList.contains(className),
   };
 }
+
+/**
+ * Event listeners suport `passive` option
+ */
+export let supportsPassiveEventListener = false;
+/**
+ * Event listeners support `once` option
+ */
+export let supportsOnceEventListener = false;
+/**
+ * Event listeners suport `capture` option
+ */
+export let supportsCaptureEventListener = false;
+
+(() => {
+  const fn = ()=>{};
+  const optionsBlock: AddEventListenerOptions = {
+    get passive() {
+      supportsPassiveEventListener = true;
+      return false;
+    },
+    get capture() {
+      supportsCaptureEventListener = true;
+      return false;
+    },
+    get once() {
+      supportsOnceEventListener = true;
+      return false;
+    }
+  };
+  document.addEventListener('x', fn, optionsBlock);
+  document.removeEventListener('x', fn);
+})();
