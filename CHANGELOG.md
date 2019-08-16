@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Split toggling icon button out into `@material/mwc-icon-button-toggle` with tag name `<mwc-icon-button-toggle>`
 - Fix bug where setting the `checked` property on an `<mwc-radio>` did not
   result in the other radios in the group becoming unchecked.
+- Fix bug where `<mwc-drawer>` did not work in IE (via
+  [WICG/inert#129](https://github.com/WICG/inert/pull/129))
 
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x
