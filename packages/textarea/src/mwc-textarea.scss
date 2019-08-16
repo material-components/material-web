@@ -21,8 +21,6 @@ limitations under the License.
 
 .mdc-text-field:not(.mdc-text-field--outlined) {
   border-bottom: 1px solid;
-  height: 100%;
-  width: 100%;
 
   .mdc-line-ripple {
     bottom: -1px;
@@ -71,17 +69,21 @@ limitations under the License.
   }
 }
 
-.mdc-text-field.mdc-text-field--outlined {
-  .mdc-text-field__input {
-    margin-bottom: 14px;
-    padding-bottom: 0px;
-  }
+.mdc-text-field {
+  height: 100%;
 
-  .mdc-text-field-character-counter {
-    bottom: 14px;
+  &.mdc-text-field--outlined {
+    .mdc-text-field__input {
+      margin-bottom: 14px;
+      padding-bottom: 0px;
+    }
 
-    &+.mdc-text-field__input {
-      margin-bottom: 41px;
+    .mdc-text-field-character-counter {
+      bottom: 14px;
+
+      &+.mdc-text-field__input {
+        margin-bottom: 41px;
+      }
     }
   }
 }
