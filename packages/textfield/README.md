@@ -1,11 +1,11 @@
-# `<mwc-textfield>` & `<mwc-textarea>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-textfield.svg)](https://www.npmjs.com/package/@material/mwc-textfield)
+# `<mwc-textfield>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-textfield.svg)](https://www.npmjs.com/package/@material/mwc-textfield)
 
 > IMPORTANT: The Material Web Components are a work in progress and subject to
 > major changes until 1.0 release.
 
 Textfields let users enter and edit text.
 
-![](images/action.png)
+<img src="images/standard.png" width="50%">
 
 [Material Design Guidelines: textfields](https://material.io/design/components/text-fields.html)
 
@@ -27,7 +27,7 @@ npm install @material/mwc-textfield
 
 ### Standard / Filled
 
-![](images/standard.png)
+<img src="images/standard.png" width="50%">
 
 ```html
 <mwc-textfield label="My Textfield"></mwc-textfield>
@@ -39,7 +39,7 @@ npm install @material/mwc-textfield
 
 ### Icon - Leading
 
-![](images/icon-leading.png)
+<img src="images/icon-leading.png" width="50%">
 
 ```html
 <mwc-textfield label="My Textfield" icon="event"></mwc-textfield>
@@ -52,7 +52,7 @@ npm install @material/mwc-textfield
 
 ### Icon - Trailing
 
-![](images/icon-trailing.png)
+<img src="images/icon-trailing.png" width="50%">
 
 ```html
 <mwc-textfield label="My Textfield" iconTrailing="delete"></mwc-textfield>
@@ -65,7 +65,7 @@ npm install @material/mwc-textfield
 
 ### Helper Text
 
-![](images/helper.png)
+<img src="images/helper.png" width="50%">
 
 ```html
 <mwc-textfield label="My Textfield" helper="Helper Text"></mwc-textfield>
@@ -77,7 +77,7 @@ npm install @material/mwc-textfield
 
 ### Primary Color
 
-![](images/color-primary.png)
+<img src="images/color-primary.png" width="50%">
 
 ```html
 <style>
@@ -98,48 +98,11 @@ npm install @material/mwc-textfield
 </script>
 ```
 
-### Error Color
-
-![](images/color-error.png)
-
-```html
-<style>
-  mwc-textfield {
-    --mdc-theme-error: blue;
-  }
-</style>
-
-<mwc-textfield
-    label="My Textfield"
-    iconTrailing="delete"
-    required>
-</mwc-textfield>
-
-<script type="module">
-  import '@material/mwc-textfield';
-  import '@material/mwc-icon/mwc-icon-font.js';
-</script>
-```
-
-## Example usage (mwc-textfield)
-
 ## Variants
-
-### Textarea
-![](images/textarea.png)
-
-```html
-<mwc-textarea label="My Textarea"></mwc-textarea>
-
-<script type="module">
-  import '@material/mwc-textfield/mwc-textarea.js';
-</script>
-```
 
 ### Outlined
 
-![](images/outlined-textfield.png)
-![](images/outlined-textarea.png)
+<img src="images/outlined.png" width="50%">
 
 ```html
 <mwc-textfield
@@ -147,23 +110,18 @@ npm install @material/mwc-textfield
     label="My Textfield"
     iconTrailing="delete">
 </mwc-textfield>
-<mwc-textarea
-    outlined
-    label="My Textarea">
-</mwc-textarea>
 
 <script type="module">
   import '@material/mwc-textfield';
   import '@material/mwc-icon/mwc-icon-font.js';
-  import '@material/mwc-textfield/mwc-textarea.js';
 </script>
 ```
 
 #### Shaping Outlined
 
-![](images/shape-left.png)
-![](images/shape-right.png)
-![](images/shape-left-right.png)
+<img src="images/shape-left.png" width="50%">
+<img src="images/shape-right.png" width="50%">
+<img src="images/shape-left-right.png" width="50%">
 
 ```html
 <style>
@@ -206,11 +164,11 @@ npm install @material/mwc-textfield
 
 ### Fullwidth
 
-![](images/fullwidth.png)
+<img src="images/fullwidth.png" width="50%">
 
 ```html
 <!-- Note: Fullwidth does not support label; only placeholder -->
-<mwc-textfield fullwidth placeholder="My Textfield"></mwc-textfield>
+<mwc-textfield fullwidth placeholder="Standard" helper="Helper Text"></mwc-textfield>
 
 <script type="module">
   import '@material/mwc-textfield';
@@ -238,7 +196,7 @@ npm install @material/mwc-textfield
 | `helper`            | `string`       | Helper text to display below the input. Display default only when focused.
 | `helperPersistent`  | `boolean`      | Always show the helper text despite focus.
 
-\*  `TypeKeyword` is exported by `mwc-textfield` and `mwc-textfield-base` and `mwc-textarea`
+\*  `TypeKeyword` is exported by `mwc-textfield` and `mwc-textfield-base`
 ```ts
 type TypeKeyword =
     'hidden'|'text'|'search'|'tel'|'url'|'email'|'password'|'datetime'|'date'|
