@@ -165,7 +165,7 @@ npm install @material/mwc-textarea
 | `helper`            | `string`       | Helper text to display below the input. Display default only when focused.
 | `helperPersistent`  | `boolean`      | Always show the helper text despite focus.
 
-\*  `TypeKeyword` is exported by `mwc-textarea` and `mwc-textarea-base` and `mwc-textarea`
+\*  `TypeKeyword` is exported by `mwc-textarea` and `mwc-textarea-base`.
 ```ts
 type TypeKeyword =
     'hidden'|'text'|'search'|'tel'|'url'|'email'|'password'|'datetime'|'date'|
