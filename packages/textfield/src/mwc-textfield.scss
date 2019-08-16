@@ -35,7 +35,6 @@ limitations under the License.
 
 .mdc-text-field {
   width: 100%;
-  height: 100%;
 
   @include mdc-theme-prop(border-radius, (
     varname: --mdc-text-field-filled-border-radius,
