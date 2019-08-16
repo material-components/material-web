@@ -16,7 +16,7 @@ limitations under the License.
 */
 import '@material/mwc-notched-outline';
 
-import {addHasRemoveClass, classMap, FormElement, html, property, query, TemplateResult, PropertyValues} from '@material/mwc-base/form-element.js';
+import {addHasRemoveClass, classMap, FormElement, html, property, PropertyValues, query, TemplateResult} from '@material/mwc-base/form-element.js';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {NotchedOutline} from '@material/mwc-notched-outline';
@@ -27,7 +27,11 @@ import {characterCounter, CharacterCounter} from './character-counter/mwc-charac
 
 const passiveEvents = ['touchstart', 'touchmove', 'scroll', 'mousewheel'];
 
-export type HTMLInputElementType =
+/**
+ * This is the enumerated typeof HTMLInputElement.type as declared by
+ * lit-analyzer.
+ */
+export type TypeKeyword =
     'hidden'|'text'|'search'|'tel'|'url'|'email'|'password'|'datetime'|'date'|
     'month'|'week'|'time'|'datetime-local'|'number'|'range'|'color'|'checkbox'|
     'radio'|'file'|'submit'|'image'|'reset'|'button';
@@ -54,7 +58,7 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: String}) value = '';
 
-  @property({type: String}) type: HTMLInputElementType = 'text';
+  @property({type: String}) type: TypeKeyword = 'text';
 
   @property({type: String}) placeholder = '';
 
@@ -104,7 +108,8 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   updated(changedProperties: PropertyValues) {
-    const charCounter = changedProperties.get('charCounter') as boolean | undefined;
+    const charCounter =
+        changedProperties.get('charCounter') as boolean | undefined;
 
     // update foundation only when charCounter goes from false to true
     if (!charCounter && this.charCounter) {
