@@ -33,13 +33,13 @@ export class TopAppBarBase extends BaseElement {
   // emitDecoratorMetadata is enabled, the HTMLSlotElement constructor will
   // be emitted into the runtime, which will cause an "HTMLSlotElement is
   // undefined" error in browsers that don't define it (e.g. Edge and IE11).
-  @query('[name="actionItems"]') private _actionItemsSlot!: HTMLElement;
+  @query('slot[name="actionItems"]') private _actionItemsSlot!: HTMLElement;
 
   @property({type: Boolean, reflect: true}) prominent = false;
 
   @property({type: Boolean, reflect: true}) dense = false;
 
-  private _scrollTarget!: HTMLElement | Window;
+  private _scrollTarget!: HTMLElement|Window;
 
   @property()
   get scrollTarget() {
@@ -61,19 +61,20 @@ export class TopAppBarBase extends BaseElement {
     }
   }
 
-  get barClasses() {
+  protected get barClasses() {
     return {
       'mdc-top-app-bar--dense': this.dense,
       'mdc-top-app-bar--prominent': this.prominent,
     };
   }
 
-  get contentClasses() {
+  protected get contentClasses() {
     return {
       'mdc-top-app-bar--fixed-adjust': !this.dense && !this.prominent,
-      'mdc-top-app-bar--prominent-fixed-adjust': !this.dense && this.prominent,
       'mdc-top-app-bar--dense-fixed-adjust': this.dense && !this.prominent,
-      'mdc-top-app-bar--dense-prominent-fixed-adjust': this.dense && this.prominent,
+      'mdc-top-app-bar--prominent-fixed-adjust': !this.dense && this.prominent,
+      'mdc-top-app-bar--dense-prominent-fixed-adjust':
+          this.dense && this.prominent,
     };
   }
 
@@ -85,7 +86,8 @@ export class TopAppBarBase extends BaseElement {
       <header class="mdc-top-app-bar ${classMap(this.barClasses)}">
       <div class="mdc-top-app-bar__row">
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start" id="navigation">
-          <slot name="navigationIcon" @click=${this.handleNavigationClick}></slot>
+          <slot name="navigationIcon" @click=${
+        this.handleNavigationClick}></slot>
           <span class="mdc-top-app-bar__title"><slot name="title"></slot></span>
         </section>
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" id="actions" role="toolbar">
@@ -141,7 +143,7 @@ export class TopAppBarBase extends BaseElement {
     window.removeEventListener('resize', this.handleResize);
   }
 
-  firstUpdated() {
+  protected firstUpdated() {
     super.firstUpdated();
     this.updateRootPosition();
     this.registerListeners();

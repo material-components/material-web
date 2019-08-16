@@ -29,7 +29,7 @@ npm install @material/mwc-top-app-bar
 
 ### Standard
 
-![](images/standard.png)
+<img src="images/standard.png" height="542px">
 
 ```html
 <mwc-top-app-bar>
@@ -44,7 +44,7 @@ npm install @material/mwc-top-app-bar
 
 ### Dense
 
-![](images/dense.png)
+<img src="images/dense.png" height="542px">
 
 ```html
 <mwc-top-app-bar dense>
@@ -59,7 +59,7 @@ npm install @material/mwc-top-app-bar
 
 ### Prominent
 
-![](images/prominent.png)
+<img src="images/prominent.png" height="542px">
 
 ```html
 <mwc-top-app-bar prominent>
@@ -74,7 +74,7 @@ npm install @material/mwc-top-app-bar
 
 ### Prominent and Dense
 
-![](images/prominent_and_dense.png)
+<img src="images/prominent_and_dense.png" height="542px">
 
 ```html
 <mwc-top-app-bar prominent dense>
@@ -89,7 +89,7 @@ npm install @material/mwc-top-app-bar
 
 ### Customize Colors
 
-![](images/custom_colors.png)
+<img src="images/custom_colors.png" height="542px">
 
 ```css
 mwc-top-app-bar {

@@ -60,7 +60,7 @@ export let supportsOnceEventListener = false;
 export let supportsCaptureEventListener = false;
 
 (() => {
-  const fn = ()=>{};
+  const fn = () => {};
   const optionsBlock: AddEventListenerOptions = {
     get passive() {
       supportsPassiveEventListener = true;
