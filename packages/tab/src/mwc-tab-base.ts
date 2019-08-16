@@ -66,7 +66,7 @@ export class TabBase extends BaseElement {
     this.mdcFoundation.handleClick();
   }
 
-  createRenderRoot() {
+  protected createRenderRoot() {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
@@ -77,13 +77,13 @@ export class TabBase extends BaseElement {
 
   static styles = style;
 
-  firstUpdated() {
+  protected firstUpdated() {
     super.firstUpdated();
     // create an unique id
     this.id = this.id || `mdc-tab-${++tabIdCounter}`;
   }
 
-  render() {
+  protected render() {
     const classes = {
       'mdc-tab--min-width': this.minWidth,
       'mdc-tab--stacked': this.stacked,
@@ -115,14 +115,14 @@ export class TabBase extends BaseElement {
       </button>`;
   }
 
-  renderIndicator() {
+  protected renderIndicator() {
     return html`<mwc-tab-indicator
         .icon="${this.indicatorIcon}"
         .fade="${this.isFadingIndicator}"></mwc-tab-indicator>`;
   }
 
 
-  createAdapter(): MDCTabAdapter {
+  protected createAdapter(): MDCTabAdapter {
     return {
       ...addHasRemoveClass(this.mdcRoot),
       setAttr: (attr: string, value: string) =>

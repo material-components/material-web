@@ -22,7 +22,7 @@ import {IconButtonToggleBase} from './icon-button-toggle-base';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mwc-icon-button-toggle': IconButtonToggle
+    'mwc-icon-button-toggle': IconButtonToggle;
   }
 }
 

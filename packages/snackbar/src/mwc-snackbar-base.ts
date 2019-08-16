@@ -59,7 +59,7 @@ export class SnackbarBase extends BaseElement {
    */
   private _earlyOpen: boolean|undefined;
 
-  render() {
+  protected render() {
     const classes = {
       'mdc-snackbar--stacked': this.stacked,
       'mdc-snackbar--leading': this.leading,
@@ -85,24 +85,15 @@ export class SnackbarBase extends BaseElement {
     return {
       ...addHasRemoveClass(this.mdcRoot),
       announce: () => util.announce(this.labelElement),
-      notifyClosed: (reason: String) => {
+      notifyClosed: (reason: string) => {
         this.isOpen = false;
-        this.dispatchEvent(new CustomEvent(CLOSED_EVENT, {
-          bubbles: true,
-          cancelable: true,
-          detail: <MDCSnackbarCloseEventDetail> {
-            reason: reason
-          }
-        }));
+        this.dispatchEvent(new CustomEvent<MDCSnackbarCloseEventDetail>(
+            CLOSED_EVENT,
+            {bubbles: true, cancelable: true, detail: {reason: reason}}));
       },
-      notifyClosing: (reason: String) =>
-          this.dispatchEvent(new CustomEvent(CLOSING_EVENT, {
-            bubbles: true,
-            cancelable: true,
-            detail: <MDCSnackbarCloseEventDetail> {
-              reason: reason
-            }
-          })),
+      notifyClosing: (reason: string) => this.dispatchEvent(new CustomEvent(
+          CLOSING_EVENT,
+          {bubbles: true, cancelable: true, detail: {reason: reason}})),
       notifyOpened: () => {
         this.isOpen = true;
         this.dispatchEvent(
@@ -129,22 +120,22 @@ export class SnackbarBase extends BaseElement {
     }
   }
 
-  firstUpdated() {
+  protected firstUpdated() {
     super.firstUpdated();
     if (this._earlyOpen === true) {
       this.mdcFoundation.open();
     }
   }
 
-  _handleKeydown(e: KeyboardEvent) {
+  private _handleKeydown(e: KeyboardEvent) {
     this.mdcFoundation.handleKeyDown(e);
   }
 
-  _handleActionClick(e: MouseEvent) {
+  private _handleActionClick(e: MouseEvent) {
     this.mdcFoundation.handleActionButtonClick(e);
   }
 
-  _handleDismissClick(e: MouseEvent) {
+  private _handleDismissClick(e: MouseEvent) {
     this.mdcFoundation.handleActionIconClick(e);
   }
 }

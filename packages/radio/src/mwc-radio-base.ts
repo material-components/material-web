@@ -24,11 +24,44 @@ export class RadioBase extends FormElement {
 
   @query('input') protected formElement!: HTMLInputElement;
 
-  @property({type: Boolean})
-  @observer(function(this: RadioBase, checked: boolean) {
-    this.formElement.checked = checked;
-  })
-  checked = false;
+  private _checked = false;
+
+  @property({type: Boolean, reflect: true})
+  get checked() {
+    return this._checked;
+  }
+
+  /**
+   * We define our own getter/setter for `checked` because we need to track
+   * changes to it synchronously.
+   *
+   * The order in which the `checked` property is set across radio buttons
+   * within the same group is very important. However, we can't rely on
+   * UpdatingElement's `updated` callback to observe these changes (which is
+   * also what the `@observer` decorator uses), because it batches changes to
+   * all properties.
+   *
+   * Consider:
+   *
+   *   radio1.disabled = true;
+   *   radio2.checked = true;
+   *   radio1.checked = true;
+   *
+   * In this case we'd first see all changes for radio1, and then for radio2,
+   * and we couldn't tell that radio1 was the most recently checked.
+   */
+  set checked(checked: boolean) {
+    const oldValue = this._checked;
+    if (!!checked === !!oldValue) {
+      return;
+    }
+    this._checked = checked;
+    if (this.formElement) {
+      this.formElement.checked = checked;
+    }
+    this._selectionController.update(this);
+    this.requestUpdate('checked', oldValue);
+  }
 
   @property({type: Boolean})
   @observer(function(this: RadioBase, disabled: boolean) {
@@ -48,27 +81,20 @@ export class RadioBase extends FormElement {
 
   protected mdcFoundation!: MDCRadioFoundation;
 
-  private _selectionController: SelectionController|null = null;
-
-  constructor() {
-    super();
-    // Selection Controller is only needed for native ShadowDOM
-    if (!window['ShadyDOM'] || !window['ShadyDOM']['inUse']) {
-      this._selectionController = SelectionController.getController(this);
-    }
-  }
+  // Note if we aren't using native shadow DOM, then we don't technically need a
+  // SelectionController, because our inputs will share document-scoped native
+  // selection groups. However, it simplifies implementation and testing to use
+  // one in all cases. In particular, it means we correctly manage groups before
+  // the first update stamps the native input.
+  private _selectionController = SelectionController.getController(this);
 
   connectedCallback() {
     super.connectedCallback();
-    if (this._selectionController) {
-      this._selectionController.register(this);
-    }
+    this._selectionController.register(this);
   }
 
   disconnectedCallback() {
-    if (this._selectionController) {
-      this._selectionController.unregister(this);
-    }
+    this._selectionController.unregister(this);
   }
 
   focusNative() {
@@ -90,15 +116,10 @@ export class RadioBase extends FormElement {
 
   private _changeHandler() {
     this.checked = this.formElement.checked;
-    if (this._selectionController) {
-      this._selectionController.update(this);
-    }
   }
 
   private _focusHandler() {
-    if (this._selectionController) {
-      this._selectionController.focus(this);
-    }
+    this._selectionController.focus(this);
   }
 
   private _clickHandler() {
@@ -106,7 +127,7 @@ export class RadioBase extends FormElement {
     this.formElement.focus();
   }
 
-  render() {
+  protected render() {
     return html`
       <div class="mdc-radio" .ripple="${ripple()}">
         <input
@@ -125,11 +146,12 @@ export class RadioBase extends FormElement {
       </div>`;
   }
 
-  firstUpdated() {
+  protected firstUpdated() {
     super.firstUpdated();
-    if (this._selectionController) {
-      this._selectionController.update(this);
-    }
+    // We might not have been able to synchronize this from the checked setter
+    // earlier, if checked was set before the input was stamped.
+    this.formElement.checked = this.checked;
+    this._selectionController.update(this);
   }
 }
 
@@ -144,6 +166,13 @@ class SelectionSet {
   readonly set = new Set<RadioBase>();
 }
 
+/**
+ * Only one <input type="radio" name="group"> per group name can be checked at
+ * once. However, the scope of "name" is the document/shadow root, so built-in
+ * de-selection does not occur when two radio buttons are in different shadow
+ * roots. This class bridges the checked state of radio buttons with the same
+ * group name across different shadow roots.
+ */
 export class SelectionController {
   private sets: {[name: string]: SelectionSet} = {};
 
@@ -156,10 +185,12 @@ export class SelectionController {
   static getController(element: HTMLElement) {
     const root = element.getRootNode() as Node &
         {[selectionController]?: SelectionController};
-    if (!root[selectionController]) {
-      root[selectionController] = new SelectionController(root);
+    let controller = root[selectionController];
+    if (controller === undefined) {
+      controller = new SelectionController(root);
+      root[selectionController] = controller;
     }
-    return root[selectionController] as SelectionController;
+    return controller;
   }
 
   constructor(element: Node) {
@@ -226,6 +257,7 @@ export class SelectionController {
     const currentFocusedSet = this.focusedSet;
     this.focusedSet = set;
     if (currentFocusedSet != set && set.selected && set.selected != element) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       set.selected!.focusNative();
     }
   }

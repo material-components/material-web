@@ -1,5 +1,8 @@
 extends:
+  - eslint:recommended
   - google
+  - plugin:@typescript-eslint/eslint-recommended
+  - plugin:@typescript-eslint/recommended
   - plugin:wc/recommended
 globals:
   goog: false
@@ -17,8 +20,16 @@ settings:
   wc:
     elementBaseClasses: ["BaseElement", "LitElement", "FormElement"]
 rules:
+  # Rules temporally disabled
+  "@typescript-eslint/explicit-function-return-type": off
+
+  # Rules disabled in favor of clang-format
+  "@typescript-eslint/indent": off
   indent: off
-  max-len: off # clang-format fixes line lengths
+  max-len: off
+
+  "@typescript-eslint/explicit-member-accessibility": [error, {"accessibility": "no-public"}]
+
   no-new: warn
   quotes: [error, single, {"avoidEscape": true}]
   no-var: error

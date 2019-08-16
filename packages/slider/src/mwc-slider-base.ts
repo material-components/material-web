@@ -80,7 +80,7 @@ export class SliderBase extends FormElement {
   @property({type: Number}) private _numMarkers = 0;
 
   // TODO(sorvell) #css: needs a default width
-  render() {
+  protected render() {
     const {value, min, max, step, disabled, discrete, markers, _numMarkers} =
         this;
     const hostClassInfo = {

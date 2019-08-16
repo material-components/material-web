@@ -32,11 +32,11 @@ export class FabBase extends LitElement {
 
   @property() label = '';
 
-  createRenderRoot() {
+  protected createRenderRoot() {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
-  render() {
+  protected render() {
     const classes = {
       'mdc-fab--mini': this.mini,
       'mdc-fab--exited': this.exited,

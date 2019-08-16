@@ -26,6 +26,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Improve README for `<mwc-button>`
 - Improve README for `<mwc-icon-button>`
 - Split toggling icon button out into `@material/mwc-icon-button-toggle` with tag name `<mwc-icon-button-toggle>`
+- Fix bug where setting the `checked` property on an `<mwc-radio>` did not
+  result in the other radios in the group becoming unchecked.
 
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x

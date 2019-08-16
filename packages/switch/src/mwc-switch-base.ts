@@ -42,7 +42,7 @@ export class SwitchBase extends FormElement {
     this.mdcFoundation.handleChange(e);
     // catch "click" event and sync properties
     this.checked = this.formElement.checked;
-  };
+  }
 
   protected readonly mdcFoundationClass = MDCSwitchFoundation;
 
@@ -65,7 +65,7 @@ export class SwitchBase extends FormElement {
   @query('.mdc-switch__thumb-underlay')
   protected rippleNode!: HTMLElementWithRipple;
 
-  render() {
+  protected render() {
     return html`
       <div class="mdc-switch">
         <div class="mdc-switch__track"></div>

@@ -17,10 +17,12 @@ limitations under the License.
 import {PropertyValues} from 'lit-element/lib/updating-element';
 
 export interface Observer {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (value: any, old: any): void;
 }
 
 export const observer = (observer: Observer) =>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (proto: any, propName: PropertyKey) => {
       // if we haven't wrapped `updated` in this class, do so
       if (!proto.constructor._observers) {
@@ -40,6 +42,7 @@ export const observer = (observer: Observer) =>
         const observers = proto.constructor._observers;
         proto.constructor._observers = new Map();
         observers.forEach(
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (v: any, k: PropertyKey) => proto.constructor._observers.set(k, v));
       }
       // set this method

@@ -35,7 +35,7 @@ export abstract class FormElement extends BaseElement {
    */
   protected abstract formElement: HTMLElement;
 
-  createRenderRoot() {
+  protected createRenderRoot() {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
@@ -57,7 +57,7 @@ export abstract class FormElement extends BaseElement {
     }
   }
 
-  firstUpdated() {
+  protected firstUpdated() {
     super.firstUpdated();
     this.mdcRoot.addEventListener('change', (e) => {
       this.dispatchEvent(new Event('change', e));

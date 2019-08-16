@@ -66,7 +66,7 @@ export class CheckboxBase extends FormElement {
     };
   }
 
-  render() {
+  protected render() {
     return html`
       <div class="mdc-checkbox"
            @animationend="${this._animationEndHandler}"

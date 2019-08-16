@@ -64,7 +64,7 @@ export class LinearProgressBase extends BaseElement {
   })
   closed = false;
 
-  render() {
+  protected render() {
     return html`
       <div role="progressbar" class="mdc-linear-progress">
         <div class="mdc-linear-progress__buffering-dots"></div>

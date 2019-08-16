@@ -36,7 +36,7 @@ export class TabIndicatorBase extends BaseElement {
 
   @property({type: Boolean}) fade = false;
 
-  render() {
+  protected render() {
     const contentClasses = {
       'mdc-tab-indicator__content--icon': this.icon,
       'material-icons': this.icon,
@@ -52,13 +52,13 @@ export class TabIndicatorBase extends BaseElement {
       `;
   }
 
-  updated(changedProperties: PropertyValues) {
+  protected updated(changedProperties: PropertyValues) {
     if (changedProperties.has('fade')) {
       this.createFoundation();
     }
   }
 
-  createAdapter(): MDCTabIndicatorAdapter {
+  protected createAdapter(): MDCTabIndicatorAdapter {
     return {
       ...addHasRemoveClass(this.mdcRoot),
       computeContentClientRect: () =>

@@ -80,7 +80,7 @@ export class FormfieldBase extends BaseElement {
     return findAssignedElement(this.slotEl as HTMLSlotElement, '*');
   }
 
-  render() {
+  protected render() {
     return html`
       <div class="mdc-form-field ${classMap({
       'mdc-form-field--align-end': this.alignEnd

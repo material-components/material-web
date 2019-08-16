@@ -55,13 +55,12 @@ export class DrawerBase extends BaseElement {
           element.classList.contains(className),
       saveFocus: () => {
         // Note, casting to avoid cumbersome runtime check.
-        this._previousFocus =
-            (this.getRootNode() as any as DocumentOrShadowRoot)
-                .activeElement as (HTMLElement | null);
+        this._previousFocus = (this.getRootNode() as ShadowRoot).activeElement as HTMLElement;
       },
       restoreFocus: () => {
         const previousFocus = this._previousFocus && this._previousFocus.focus;
         if (previousFocus) {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           this._previousFocus!.focus();
         }
       },
@@ -94,7 +93,7 @@ export class DrawerBase extends BaseElement {
     if (this.mdcFoundation instanceof MDCModalDrawerFoundation) {
       this.mdcFoundation.handleScrimClick();
     }
-  };
+  }
 
   @observer(function(this: DrawerBase, value: boolean) {
     if (this.type === '') {
@@ -113,7 +112,7 @@ export class DrawerBase extends BaseElement {
 
   @property({reflect: true}) type = '';
 
-  render() {
+  protected render() {
     const dismissible = this.type === 'dismissible' || this.type === 'modal';
     const modal = this.type === 'modal';
     const header = this.hasHeader ? html`
@@ -145,14 +144,14 @@ export class DrawerBase extends BaseElement {
 
   // note, we avoid calling `super.firstUpdated()` to control when
   // `createFoundation()` is called.
-  firstUpdated() {
+  protected firstUpdated() {
     this.mdcRoot.addEventListener(
         'keydown', (e) => this.mdcFoundation.handleKeydown(e));
     this.mdcRoot.addEventListener(
         'transitionend', (e) => this.mdcFoundation.handleTransitionEnd(e));
   }
 
-  updated(changedProperties: PropertyValues) {
+  protected updated(changedProperties: PropertyValues) {
     if (changedProperties.has('type')) {
       this.createFoundation();
     }
