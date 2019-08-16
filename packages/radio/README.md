@@ -1,64 +1,81 @@
-# mwc-radio
+# `<mwc-radio>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-radio.svg)](https://www.npmjs.com/package/@material/mwc-radio)
 
-> :warning: These components are a work in progress. They are pre-release and should be considered experimental, as they may undergo major changes before release. We are experimenting with alternate architectures and approaches with the goal of allowing us to bring the most correct and optimal implementation of Material components to the widest possible audiences. Visible progress may be slow, as this research is across teams and repositories so is not consistently reflected in commits to this codebase. :warning:
+> IMPORTANT: The Material Web Components are a work in progress and subject to
+> major changes until 1.0 release.
 
-A [Material Components](https://material.io/components/) icon implementation using [Web Components](https://www.webcomponents.org/introduction)
+Radio buttons allow the user to select one option from a set. Use radio buttons when the user needs to see all available options.
 
-## Getting started
+<img src="images/standard.png" width="84px" height="48px">
 
- * The easiest way to try out mwc-radio is to use one of these online tools:
+[Material Design Guidelines: Radio buttons](https://material.io/design/components/selection-controls.html#radio-buttons)
 
-    * Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-icon-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-icon-example?path=index.html)
+## Installation
 
-    * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/qibisux/edit?html,output),
-    [CodePen](https://codepen.io/azakus/pen/deZLja).
+```sh
+npm install @material/mwc-radio
+```
 
-* You can also copy [this HTML file](https://gist.githubusercontent.com/azakus/f01e9fc2ed04e781ad5a52ded7b296e7/raw/266f2f4f91cbfe89b2acc6ec63957b1a3cfe9b39/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
+> NOTE: The Material Web Components are distributed as ES2017 JavaScript
+> Modules, and use the Custom Elements API. They are compatible with all modern
+> browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
+> tooling step is required to resolve *bare module specifiers*, as well as
+> transpilation and polyfills for Edge and IE11. See
+> [here](https://github.com/material-components/material-components-web-components#quick-start)
+> for detailed instructions.
 
-* When you're ready to use mwc-radio in a project, install it via [npm](https://www.npmjs.com/). To run the project in the browser, a module-compatible toolctain is required. We recommend installing the [Polymer CLI](https://github.com/Polymer/polymer-cli) and using its development server as follows.
+## Example usage
 
-  1. Ensure the webcomponents polyfills are included in your HTML page
+### Standard
 
-      - Install webcomponents polyfills
+<img src="images/standard.png" width="84px" height="48px">
 
-          ```npm i @webcomponents/webcomponentsjs```
+```html
+<mwc-radio name="myGroup" value="value1"></mwc-radio>
+<mwc-radio name="myGroup" value="value2" checked></mwc-radio>
 
-      - Add webcomponents polyfills to your HTML page
+<script type="module">
+  import '@material/mwc-radio';
+</script>
+```
 
-          ```<script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>```
+### Custom color
 
-  1. Add mwc-radio to your project:
+<img src="images/custom_color.png" width="84px" height="48px">
 
-      ```npm i @material/mwc-radio```
+```css
+mwc-radio {
+  --mdc-theme-secondary: #ff4081;
+}
+```
 
-  1. Import the mwc-radio definition into your HTML page:
+## API
 
-      ```<script type="module" src="@material/mwc-radio/index.js"></script>```
+### Slots
+*None*
 
-      Or into your module script:
+### Properties/Attributes
 
-      ```import {Radio} from "@material/mwc-radio"```
+| Name            | Type      | Default | Description
+| --------------- | --------- |-------- | -----------
+| `checked`       | `boolean` | `false` | Whether this radio button is the currently-selected one in its group. Maps to the native [`checked`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio#checked) attribute.
+| `disabled`      | `boolean` | `false` | If `true`, this radio button cannot be selected or de-selected. Maps to the native [`disabled`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#disabled) attribute.
+| `name`          | `string`  | `''`    | Name of the input for form submission, and identifier for the selection group. Only one radio button can be checked for a given selection group. Maps to the native [`name`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#name) attribute.
+| `value`         | `string`  | `''`    | Value of the input for form submission. Maps to the native [`value`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio#value) attribute.
 
-  1. Create an instance of mwc-radio in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
+### Methods
+*None*
 
-      ```<mwc-radio></mwc-radio>```
+### Events
+| Name     | Detail | Description
+| ---------| ------ | -----------
+| `change` | `{}`   | Indicates that the radio button's `checked` state has changed.
 
-  1. Install the Polymer CLI:
+### CSS Custom Properties
 
-      ```npm i -g polymer-cli```
+| Name                    | Default                                | Description
+| ----------------------- | -------------------------------------- |------------
+| `--mdc-theme-secondary` | ![](images/color_018786.png) `#018786` | Color of the radio button.
 
-  1. Run the development server and open a browser pointing to its URL:
+## Additional references
 
-      ```polymer serve```
-
-  > mwc-radio is published on [npm](https://www.npmjs.com/package/@material/mwc-radio) using JavaScript Modules.
-  This means it can take advantage of the standard native JavaScript module loader available in all current major browsers.
-  >
-  > However, since mwc-radio uses npm convention to reference dependencies by name, a light transform to rewrite specifiers to URLs is required to get it to run in the browser. The polymer-cli's development server `polymer serve` automatically handles this transform.
-
-  Tools like [WebPack](https://webpack.js.org/) and [Rollup](https://rollupjs.org/) can also be used to serve and/or bundle mwc-radio.
-
-## Supported Browsers
-
-The last 2 versions of all modern browsers are supported, including
-Chrome, Safari, Opera, Firefox, Edge. In addition, Internet Explorer 11 is also supported.
+- [MDC Web: Radio Buttons](https://material.io/develop/web/components/input-controls/radio-buttons/)
