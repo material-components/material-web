@@ -21,7 +21,6 @@ limitations under the License.
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script type="module" src="../node_modules/@material/mwc-textfield/mwc-textfield.js"></script>
-  <script type="module" src="../node_modules/@material/mwc-textfield/mwc-textarea.js"></script>
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon-font.js"></script>
   <link rel="stylesheet" href="demo-component.css">
@@ -30,7 +29,7 @@ limitations under the License.
       min-width: 240px;
     }
     .shaped-filled {
-      --mdc-textfield-filled-border-radius: 16px 16px 0 0;
+      --mdc-text-field-filled-border-radius: 32px 32px 0 0;
     }
     .shaped-outlined {
       --mdc-notched-outline-leading-width: 28px;
@@ -87,22 +86,8 @@ limitations under the License.
       <mwc-textfield outlined label="Standard" helper="Helper Text" helperPersistent maxlength="18" charCounter></mwc-textfield>
       <mwc-textfield outlined label="Standard" helper="Helper Text" helperPersistent maxlength="18" charCounter class="shaped-outlined"></mwc-textfield>
     </div>
-
-    <h4>Textarea</h4>
-    <div class="demo-group-spaced">
-      <mwc-textarea outlined label="Standard"></mwc-textarea>
-    </div>
-
-    <h4>Textarea with Character Counter</h4>
-    <div class="demo-group-spaced">
-      <mwc-textarea outlined label="Standard" maxlength="18" charCounter></mwc-textarea>
-    </div>
-
     <h4>Full Width</h4>
     <mwc-textfield fullwidth placeholder="Standard" helper="Helper Text" helperpersistent></mwc-textfield>
-
-    <h4>Full Width Textarea</h4>
-    <mwc-textarea outlined fullwidth label="Standard" helper="Helper Text" helperpersistent></mwc-textarea>
   </main>
 
   <script>

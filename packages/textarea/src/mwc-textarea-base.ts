@@ -16,8 +16,8 @@ limitations under the License.
 */
 
 import {classMap, html, property, query} from '@material/mwc-base/form-element.js';
-import {characterCounter} from './character-counter/mwc-character-counter-directive.js';
-import {TextFieldBase} from './mwc-textfield-base.js';
+import {characterCounter} from '@material/mwc-textfield/character-counter/mwc-character-counter-directive.js';
+import {TextFieldBase} from '@material/mwc-textfield/mwc-textfield-base.js';
 
 export abstract class TextAreaBase extends TextFieldBase {
   @query('textarea') protected formElement!: HTMLInputElement;
