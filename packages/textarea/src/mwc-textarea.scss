@@ -27,7 +27,9 @@ limitations under the License.
   }
 
   &:not(.mdc-text-field--disabled) {
-    @include mdc-text-field-fill-color($mdc-text-field-background);
+    &:not(.mdc-text-field--fullwidth) {
+      @include mdc-text-field-fill-color($mdc-text-field-background);
+    }
 
     &:not(.mdc-text-field--invalid){
       @include mdc-theme-prop(border-bottom-color, $mdc-text-field-bottom-line-idle);
