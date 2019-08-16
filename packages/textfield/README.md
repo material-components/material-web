@@ -221,26 +221,26 @@ npm install @material/mwc-textfield
 
 ### Properties/Attributes
 
-| Name                | Type                   | Description
-| ------------------- | ---------------------- |------------
-| `value`             | `string`               | The input control's value.
-| `type`              | `HTMLInputElementType*`| A string specifying the type of control to render.
-| `label`             | `string`               | Sets floating label value.
-| `placeholder`       | `string`               | Sets disappearing input placeholder.
-| `icon`              | `string`               | Leading icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon).
-| `iconTrailing`      | `string`               | Trailing icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon).
-| `disabled`          | `boolean`              | Whether or not the input should be disabled.
-| `required`          | `boolean`              | Displays error state if value is empty and input is blurred.
-| `maxlength`         | `number`               | Maximum length to accept input.
-| `charCounter`       | `boolean`              | **Note: requries `maxlength` to be set.** Display character counter with max length.
-| `outlined`          | `boolean`              | Whether or not to show the material outlined variant.
-| `fullwidth`         | `boolean`              | Whether or not to make the input fullwidth. No longer displays `label`; only `placeholder` and `helper`.
-| `helper`            | `string`               | Helper text to display below the input. Display default only when focused.
-| `helperPersistent`  | `boolean`              | Always show the helper text despite focus.
+| Name                | Type           | Description
+| ------------------- | -------------- |------------
+| `value`             | `string`       | The input control's value.
+| `type`              | `TypeKeyword*` | A string specifying the type of control to render.
+| `label`             | `string`       | Sets floating label value.
+| `placeholder`       | `string`       | Sets disappearing input placeholder.
+| `icon`              | `string`       | Leading icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon).
+| `iconTrailing`      | `string`       | Trailing icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon).
+| `disabled`          | `boolean`      | Whether or not the input should be disabled.
+| `required`          | `boolean`      | Displays error state if value is empty and input is blurred.
+| `maxlength`         | `number`       | Maximum length to accept input.
+| `charCounter`       | `boolean`      | **Note: requries `maxlength` to be set.** Display character counter with max length.
+| `outlined`          | `boolean`      | Whether or not to show the material outlined variant.
+| `fullwidth`         | `boolean`      | Whether or not to make the input fullwidth. No longer displays `label`; only `placeholder` and `helper`.
+| `helper`            | `string`       | Helper text to display below the input. Display default only when focused.
+| `helperPersistent`  | `boolean`      | Always show the helper text despite focus.
 
-\*  `HTMLInputElementType` is exported by `mwc-textfield` and `mwc-textfield-base` and `mwc-textarea`
+\*  `TypeKeyword` is exported by `mwc-textfield` and `mwc-textfield-base` and `mwc-textarea`
 ```ts
-type HTMLInputElementType =
+type TypeKeyword =
     'hidden'|'text'|'search'|'tel'|'url'|'email'|'password'|'datetime'|'date'|
     'month'|'week'|'time'|'datetime-local'|'number'|'range'|'color'|'checkbox'|
     'radio'|'file'|'submit'|'image'|'reset'|'button';

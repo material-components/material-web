@@ -19,7 +19,7 @@ import {customElement} from '@material/mwc-base/form-element.js';
 import {TextFieldBase} from './mwc-textfield-base.js';
 import {style} from './mwc-textfield-css.js';
 
-export {HTMLInputElementType} from './mwc-textfield-base.js'
+export {TypeKeyword} from './mwc-textfield-base.js'
 
 declare global {
   interface HTMLElementTagNameMap {
