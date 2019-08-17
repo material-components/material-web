@@ -11,7 +11,8 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/line-ripple": "^3.0.0"
+    "@material/line-ripple": "^3.0.0",
+    "lit-html": "^1.0.0"
   },
   "publishConfig": {
     "access": "public"

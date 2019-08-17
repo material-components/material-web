@@ -19,6 +19,8 @@ import {classMap, html, property, query} from '@material/mwc-base/form-element.j
 import {characterCounter} from '@material/mwc-textfield/character-counter/mwc-character-counter-directive.js';
 import {TextFieldBase} from '@material/mwc-textfield/mwc-textfield-base.js';
 
+export {TextFieldType} from '@material/mwc-textfield/mwc-textfield-base.js'
+
 export abstract class TextAreaBase extends TextFieldBase {
   @query('textarea') protected formElement!: HTMLInputElement;
 
