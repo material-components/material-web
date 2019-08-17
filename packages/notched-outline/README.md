@@ -1,4 +1,4 @@
-# `<mwc-notched-outline>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-line-ripple.svg)](https://www.npmjs.com/package/@material/mwc-line-ripple)
+# `<mwc-notched-outline>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-notched-outline.svg)](https://www.npmjs.com/package/@material/mwc-notched-outline)
 
 > IMPORTANT: The Material Web Components are a work in progress and subject to
 > major changes until 1.0 release.

@@ -31,10 +31,8 @@ const passiveEvents = ['touchstart', 'touchmove', 'scroll', 'mousewheel'];
  * This is the enumerated typeof HTMLInputElement.type as declared by
  * lit-analyzer.
  */
-export type TypeKeyword =
-    'hidden'|'text'|'search'|'tel'|'url'|'email'|'password'|'datetime'|'date'|
-    'month'|'week'|'time'|'datetime-local'|'number'|'range'|'color'|'checkbox'|
-    'radio'|'file'|'submit'|'image'|'reset'|'button';
+export type TextFieldType = 'text'|'search'|'tel'|'url'|'email'|'password'|
+    'date'|'month'|'week'|'time'|'datetime-local'|'number'|'color';
 
 export abstract class TextFieldBase extends FormElement {
   protected mdcFoundation!: MDCTextFieldFoundation;
@@ -58,7 +56,7 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: String}) value = '';
 
-  @property({type: String}) type: TypeKeyword = 'text';
+  @property({type: String}) type: TextFieldType = 'text';
 
   @property({type: String}) placeholder = '';
 

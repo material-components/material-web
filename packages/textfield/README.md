@@ -5,7 +5,7 @@
 
 Text fields let users enter and edit text.
 
-<img src="images/standard.png" width="50%">
+<img src="images/standard.png" width="244px">
 
 [Material Design Guidelines: text fields](https://material.io/design/components/text-fields.html)
 
@@ -27,7 +27,7 @@ npm install @material/mwc-textfield
 
 ### Standard / Filled
 
-<img src="images/standard.png" width="50%">
+<img src="images/standard.png" width="244px">
 
 ```html
 <mwc-textfield label="My Textfield"></mwc-textfield>
@@ -39,7 +39,7 @@ npm install @material/mwc-textfield
 
 ### Icon - Leading
 
-<img src="images/icon-leading.png" width="50%">
+<img src="images/icon-leading.png" width="244px">
 
 ```html
 <mwc-textfield label="My Textfield" icon="event"></mwc-textfield>
@@ -52,32 +52,23 @@ npm install @material/mwc-textfield
 
 ### Icon - Trailing
 
-<img src="images/icon-trailing.png" width="50%">
+<img src="images/icon-trailing.png" width="244px">
 
 ```html
 <mwc-textfield label="My Textfield" iconTrailing="delete"></mwc-textfield>
-
-<script type="module">
-  import '@material/mwc-textfield';
-  import '@material/mwc-icon/mwc-icon-font.js';
-</script>
 ```
 
 ### Helper Text
 
-<img src="images/helper.png" width="50%">
+<img src="images/helper.png" width="244px">
 
 ```html
 <mwc-textfield label="My Textfield" helper="Helper Text"></mwc-textfield>
-
-<script type="module">
-  import '@material/mwc-textfield';
-</script>
 ```
 
 ### Primary Color
 
-<img src="images/color-primary.png" width="50%">
+<img src="images/color-primary.png" width="244px">
 
 ```html
 <style>
@@ -91,18 +82,13 @@ npm install @material/mwc-textfield
     iconTrailing="delete"
     required>
 </mwc-textfield>
-
-<script type="module">
-  import '@material/mwc-textfield';
-  import '@material/mwc-icon/mwc-icon-font.js';
-</script>
 ```
 
 ## Variants
 
 ### Outlined
 
-<img src="images/outlined.png" width="50%">
+<img src="images/outlined.png" width="244px">
 
 ```html
 <mwc-textfield
@@ -110,18 +96,13 @@ npm install @material/mwc-textfield
     label="My Textfield"
     iconTrailing="delete">
 </mwc-textfield>
-
-<script type="module">
-  import '@material/mwc-textfield';
-  import '@material/mwc-icon/mwc-icon-font.js';
-</script>
 ```
 
 #### Shaping Outlined
 
-<img src="images/shape-left.png" width="50%">
-<img src="images/shape-right.png" width="50%">
-<img src="images/shape-left-right.png" width="50%">
+<img src="images/shape-left.png" width="244px">
+<img src="images/shape-right.png" width="244px">
+<img src="images/shape-left-right.png" width="244px">
 
 ```html
 <style>
@@ -155,53 +136,42 @@ npm install @material/mwc-textfield
     iconTrailing="delete"
     outlined>
 </mwc-textfield>
-
-<script type="module">
-  import '@material/mwc-textfield';
-  import '@material/mwc-icon/mwc-icon-font.js';
-</script>
 ```
 
 ### Fullwidth
 
-<img src="images/fullwidth.png" width="50%">
+<img src="images/fullwidth.png" width="777px">
 
 ```html
 <!-- Note: Fullwidth does not support label; only placeholder -->
 <mwc-textfield fullwidth placeholder="Standard" helper="Helper Text"></mwc-textfield>
-
-<script type="module">
-  import '@material/mwc-textfield';
-</script>
 ```
 
 ## API
 
 ### Properties/Attributes
 
-| Name                | Type           | Description
-| ------------------- | -------------- |------------
-| `value`             | `string`       | The input control's value.
-| `type`              | `TypeKeyword*` | A string specifying the type of control to render.
-| `label`             | `string`       | Sets floating label value.
-| `placeholder`       | `string`       | Sets disappearing input placeholder.
-| `icon`              | `string`       | Leading icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon).
-| `iconTrailing`      | `string`       | Trailing icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon).
-| `disabled`          | `boolean`      | Whether or not the input should be disabled.
-| `required`          | `boolean`      | Displays error state if value is empty and input is blurred.
-| `maxlength`         | `number`       | Maximum length to accept input.
-| `charCounter`       | `boolean`      | **Note: requries `maxlength` to be set.** Display character counter with max length.
-| `outlined`          | `boolean`      | Whether or not to show the material outlined variant.
-| `fullwidth`         | `boolean`      | Whether or not to make the input fullwidth. No longer displays `label`; only `placeholder` and `helper`.
-| `helper`            | `string`       | Helper text to display below the input. Display default only when focused.
-| `helperPersistent`  | `boolean`      | Always show the helper text despite focus.
+| Name                | Type             | Description
+| ------------------- | ---------------- |------------
+| `value`             | `string`         | The input control's value.
+| `type`              | `TextFieldType*` | A string specifying the type of control to render.
+| `label`             | `string`         | Sets floating label value.
+| `placeholder`       | `string`         | Sets disappearing input placeholder.
+| `icon`              | `string`         | Leading icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon).
+| `iconTrailing`      | `string`         | Trailing icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon).
+| `disabled`          | `boolean`        | Whether or not the input should be disabled.
+| `required`          | `boolean`        | Displays error state if value is empty and input is blurred.
+| `maxlength`         | `number`         | Maximum length to accept input.
+| `charCounter`       | `boolean`        | **Note: requries `maxlength` to be set.** Display character counter with max length.
+| `outlined`          | `boolean`        | Whether or not to show the material outlined variant.
+| `fullwidth`         | `boolean`        | Whether or not to make the input fullwidth. No longer displays `label`; only `placeholder` and `helper`.
+| `helper`            | `string`         | Helper text to display below the input. Display default only when focused.
+| `helperPersistent`  | `boolean`        | Always show the helper text despite focus.
 
-\*  `TypeKeyword` is exported by `mwc-textfield` and `mwc-textfield-base`
+\*  `TextFieldType` is exported by `mwc-textfield` and `mwc-textfield-base`
 ```ts
-type TypeKeyword =
-    'hidden'|'text'|'search'|'tel'|'url'|'email'|'password'|'datetime'|'date'|
-    'month'|'week'|'time'|'datetime-local'|'number'|'range'|'color'|'checkbox'|
-    'radio'|'file'|'submit'|'image'|'reset'|'button';
+type TextFieldType = 'text'|'search'|'tel'|'url'|'email'|'password'|
+    'date'|'month'|'week'|'time'|'datetime-local'|'number'|'color';
 ```
 
 ### CSS Custom Properties
