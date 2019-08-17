@@ -4,11 +4,10 @@ node_modules
 .DS_Store
 /lerna-debug.log
 /gh-pages
-/packages/*/*.js
-/packages/*/*.js.map
-/packages/*/*.d.ts
+/packages/**/*.js
+/packages/**/*.js.map
+/packages/**/*.d.ts
 /packages/*/*.tgz
-/packages/textfield/character-counter/*
 /packages/*/src/*-css.ts
 /packages/*/package-lock.json
 **/*.tsbuildinfo*
