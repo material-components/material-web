@@ -7,7 +7,6 @@ addons:
   chrome: stable
 
 before_script:
-  - npm run bootstrap
   - >-
   npm run format && git diff --exit-code || (echo -e '\n\033[31mERROR:\033[0m
   Project is not formatted. Please run "npm run format".' && false)
