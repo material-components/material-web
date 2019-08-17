@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   [WICG/inert#129](https://github.com/WICG/inert/pull/129))
 - Implemented:
   - mwc-textfield
+  - mwc-textarea
   - mwc-notched-outline
   - mwc-line-ripple-directive
   - mwc-floating-label-directive
