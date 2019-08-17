@@ -115,7 +115,7 @@ npm install @material/mwc-textarea
 
 ### Fullwidth
 
-<img src="images/fullwidth-outlined.png" width="782px">
+<img src="images/fullwidth-outlined.png" width="762px">
 
 ```html
 <!-- Note: Fullwidth does not support label; only placeholder -->

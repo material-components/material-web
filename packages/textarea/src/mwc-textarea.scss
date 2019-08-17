@@ -75,16 +75,18 @@ limitations under the License.
   height: 100%;
 
   &.mdc-text-field--outlined {
-    .mdc-text-field__input {
-      margin-bottom: 14px;
-      padding-bottom: 0px;
-    }
+    &:not(.mdc-text-field--fullwidth) {
+      .mdc-text-field__input {
+        margin-bottom: 14px;
+        padding-bottom: 0px;
+      }
 
-    .mdc-text-field-character-counter {
-      bottom: 14px;
+      .mdc-text-field-character-counter {
+        bottom: 14px;
 
-      &+.mdc-text-field__input {
-        margin-bottom: 41px;
+        &+.mdc-text-field__input {
+          margin-bottom: 41px;
+        }
       }
     }
   }
