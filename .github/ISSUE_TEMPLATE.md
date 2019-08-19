@@ -2,8 +2,8 @@
 
 **I'm submitting a:**
 <!-- (check one with "x") -->
-[ ] bug report
-[ ] feature request
+- [ ] bug report
+- [ ] feature request
 
 **What OS are you using?**
 <!-- Please include OS name and version -->
