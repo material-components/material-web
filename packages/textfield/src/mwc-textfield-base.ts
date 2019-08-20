@@ -17,6 +17,7 @@ limitations under the License.
 import '@material/mwc-notched-outline';
 
 import {addHasRemoveClass, classMap, FormElement, html, property, PropertyValues, query, TemplateResult} from '@material/mwc-base/form-element.js';
+import {ifDefined} from 'lit-html/directives/if-defined.js';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {NotchedOutline} from '@material/mwc-notched-outline';
@@ -27,12 +28,37 @@ import {characterCounter, CharacterCounter} from './character-counter/mwc-charac
 
 const passiveEvents = ['touchstart', 'touchmove', 'scroll', 'mousewheel'];
 
+const createValidityObj =
+    (customValidity: Partial<ValidityState> = {}): ValidityState => {
+      let objectifiedCustomValidity: Partial<ValidityState> = {};
+
+      for (const propName in customValidity) {
+        objectifiedCustomValidity[propName] = customValidity[propName];
+      }
+
+      return {
+        badInput: false,
+        customError: false,
+        patternMismatch: false,
+        rangeOverflow: false,
+        rangeUnderflow: false,
+        stepMismatch: false,
+        tooLong: false,
+        tooShort: false,
+        typeMismatch: false,
+        valid: true,
+        valueMissing: false,
+        ...objectifiedCustomValidity
+      };
+    };
+
 /**
  * This is the enumerated typeof HTMLInputElement.type as declared by
  * lit-analyzer.
  */
-export type TextFieldType = 'text'|'search'|'tel'|'url'|'email'|'password'|
-    'date'|'month'|'week'|'time'|'datetime-local'|'number'|'color';
+export type TextFieldType =
+    'text' | 'search' | 'tel' | 'url' | 'email' | 'password' | 'date' |
+    'month' | 'week' | 'time' | 'datetime-local' | 'number' | 'color';
 
 export abstract class TextFieldBase extends FormElement {
   protected mdcFoundation!: MDCTextFieldFoundation;
@@ -70,7 +96,7 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: Boolean}) required = false;
 
-  @property({type: Number}) maxlength = -1;
+  @property({type: Number}) maxLength = -1;
 
   @property({type: Boolean, reflect: true}) outlined = false;
 
@@ -78,12 +104,37 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: String}) helper = '';
 
+  @property({type: String}) validationMessage = '';
+
+  @property({type: String}) pattern = '';
+
+  @property({type: Number}) min: number | string = '';
+
+  @property({type: Number}) max: number | string = '';
+
+  @property({type: Number}) step: number | null = null;
+
   @property({type: Boolean}) helperPersistent = false;
 
   @property({type: Boolean}) charCounter = false;
 
   @property({type: Boolean}) protected outlineOpen = false;
   @property({type: Number}) protected outlineWidth = 0;
+  @property({type: Boolean}) protected isUiValid = true;
+
+  protected _validity: ValidityState = createValidityObj();
+
+  get validity(): ValidityState {
+    this._checkValidity(this.value);
+
+    return this._validity;
+  }
+
+  get willValidate(): boolean {
+    return this.formElement.willValidate;
+  }
+
+  validator: ((value: string, nativeValidity: ValidityState) => Partial<ValidityState>)|null = null;
 
   focus() {
     const focusEvt = new FocusEvent('focus');
@@ -111,7 +162,10 @@ export abstract class TextFieldBase extends FormElement {
         ${this.iconTrailing ? this.renderIcon(this.iconTrailing) : ''}
         ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
       </div>
-      ${(this.helper || this.charCounter) ? this.renderHelperText() : ''}
+      ${
+        (this.helper || this.validationMessage || this.charCounter) ?
+            this.renderHelperText() :
+            ''}
     `;
   }
 
@@ -135,8 +189,13 @@ export abstract class TextFieldBase extends FormElement {
           ?disabled="${this.disabled}"
           placeholder="${this.placeholder}"
           ?required="${this.required}"
-          maxlength="${this.maxlength}"
-          @change="${this.handleInputChange}">`;
+          maxlength="${this.maxLength}"
+          pattern="${ifDefined(this.pattern ? this.pattern : undefined)}"
+          min="${ifDefined(this.min === '' ? undefined: this.min as any)}"
+          max="${ifDefined(this.max === '' ? undefined: this.max as any)}"
+          step="${ifDefined(this.step === null ? undefined: this.step)}"
+          @change="${this.handleInputChange}"
+          @blur="${this.onInputBlur}">`;
   }
 
   protected renderIcon(icon: string) {
@@ -177,8 +236,10 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   protected renderHelperText() {
+    const showValidationMessage = this.validationMessage && !this.isUiValid;
     const classes = {
       'mdc-text-field-helper-text--persistent': this.helperPersistent,
+      'mdc-text-field-helper-text--validation-msg': showValidationMessage,
     };
 
     let charCounterTemplate: TemplateResult|string = '';
@@ -188,11 +249,59 @@ export abstract class TextFieldBase extends FormElement {
     return html`
       <div class="mdc-text-field-helper-line">
         <div class="mdc-text-field-helper-text ${classMap(classes)}">
-          ${this.helper}
+          ${showValidationMessage ? this.validationMessage : this.helper}
         </div>
         ${charCounterTemplate}
       </div>
     `;
+  }
+
+  protected onInputBlur() {
+    this.reportValidity();
+  }
+
+  checkValidity(): boolean {
+    const isValid = this._checkValidity(this.value);
+
+    if (!isValid) {
+      const invalidEvent =
+          new Event('invalid', {bubbles: false, cancelable: true});
+      this.dispatchEvent(invalidEvent);
+    }
+
+    return isValid;
+  }
+
+  reportValidity(): boolean {
+    const isValid = this.checkValidity();
+
+    this.mdcFoundation.setValid(isValid);
+    this.isUiValid = isValid;
+
+    return isValid;
+  }
+
+  protected _checkValidity(value: string) {
+    const nativeValidity = this.formElement.validity;
+
+    let validity = createValidityObj(nativeValidity);
+
+    if (this.validator) {
+      const customValidity = this.validator(value, validity);
+      validity = {...validity, ...customValidity};
+      this.mdcFoundation.setUseNativeValidation(false);
+    } else {
+      this.mdcFoundation.setUseNativeValidation(true);
+    }
+
+    this._validity = validity;
+
+    return this._validity.valid;
+  }
+
+  setCustomValidity(message: string) {
+    this.validationMessage = message;
+    this.formElement.setCustomValidity(message);
   }
 
   protected handleInputChange() {
