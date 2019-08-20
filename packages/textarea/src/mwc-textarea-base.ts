@@ -58,7 +58,9 @@ export abstract class TextAreaBase extends TextFieldBase {
           ?disabled="${this.disabled}"
           placeholder="${this.placeholder}"
           ?required="${this.required}"
-          maxlength="${this.maxlength}"
-          @change="${this.handleInputChange}"></textarea>`;
+          maxlength="${this.maxLength}"
+          @change="${this.handleInputChange}"
+          @blur="${this.onInputBlur}">
+      </textarea>`;
   }
 }
