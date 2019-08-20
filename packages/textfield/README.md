@@ -160,13 +160,13 @@ npm install @material/mwc-textfield
 | `icon`              | `string`         | Leading icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon).
 | `iconTrailing`      | `string`         | Trailing icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon).
 | `disabled`          | `boolean`        | Whether or not the input should be disabled.
-| `charCounter`       | `boolean`        | **Note: requries `maxlength` to be set.** Display character counter with max length.
+| `charCounter`       | `boolean`        | **Note: requries `maxLength` to be set.** Display character counter with max length.
 | `outlined`          | `boolean`        | Whether or not to show the material outlined variant.
 | `fullwidth`         | `boolean`        | Whether or not to make the input fullwidth. No longer displays `label`; only `placeholder` and `helper`.
 | `helper`            | `string`         | Helper text to display below the input. Display default only when focused.
 | `helperPersistent`  | `boolean`        | Always show the helper text despite focus.
 | `required`          | `boolean`        | Displays error state if value is empty and input is blurred.
-| `maxlength`         | `number`         | Maximum length to accept input.
+| `maxLength`         | `number`         | Maximum length to accept input.
 | `validationMessage` | `string`         | Message to show in the error color when the textfield is invalid. (Helper text will not be visible)
 | `pattern`           | `string`         | [`HTMLInputElement.prototype.pattern`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (empty string will unset attribute)
 | `min`               | `number|string`  | [`HTMLInputElement.prototype.min`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (empty string will unset attribute)
@@ -174,7 +174,8 @@ npm install @material/mwc-textfield
 | `step`              | `number|null`    | [`HTMLInputElement.prototype.step`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (null will unset attribute)
 | `validity`          | `ValidityState` (readonly) | The [`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState) of the textfield.
 | `willValidate`      | `boolean` (readonly)       | [`HTMLInputElement.prototype.willValidate`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement#Properties)
-| `validator`         | `Validator**|null`         | Callback called before each validation check. See the [validation section](#Validation) for more details.
+| `validityTransform` | `ValidityTransform**|null` | Callback called before each validation check. See the [validation section](#Validation) for more details.
+| `validateOnInitialRender` | `boolean`            | Runs validation check on inital render.
 
 \*  `TextFieldType` is exported by `mwc-textfield` and `mwc-textfield-base`
 ```ts
@@ -182,9 +183,9 @@ type TextFieldType = 'text'|'search'|'tel'|'url'|'email'|'password'|
     'date'|'month'|'week'|'time'|'datetime-local'|'number'|'color';
 ```
 
-\*\* `Validator` is not exported. See the [validation section](#Validation) for more details.
+\*\* `ValidityTransform` is not exported. See the [validation section](#Validation) for more details.
 ```ts
-type Validator = (value: string, nativeValidity: ValidityState) => Partial<ValidityState>
+type ValidityTransform = (value: string, nativeValidity: ValidityState) => Partial<ValidityState>
 ```
 
 ### Methods
@@ -212,6 +213,87 @@ Inherits CSS Custom properties from:
 | `--mdc-text-field-outlined-disabled-border-color` | `rgba(0, 0, 0, 0.06)` | Color of the outlined textfield's outline when disabled.
 
 ### Validation
+
+`<mwc-textfield>` follows the basic `<input>` [constraint validation model](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation).
+It exposes:
+
+* `required`
+* `maxLength`
+* `pattern`
+* `min`
+* `max`
+* `step`
+* `validity`
+* `willValidate`
+* `checkValidity()`
+* `reportValidity()`
+* `setCustomValidity(message)`
+
+Additionally, it implements further features such as:
+* `validationMessage`
+* `validateOnInitialRender`
+* and `validityTransform`
+
+By default, `<mwc-textfield>` will report validation on `blur`.
+
+#### Custom validation logic
+
+The `validityTransform` property is a function that can be set on `<mwc-textfield>` to
+implement custom validation logic that is not covered by the exposed properties
+and methods. The type of a `ValidityTransform` is the following:
+
+```ts
+(value: string, nativeValidity: ValidityState) => Partial<ValidityState>
+```
+
+Where `value` is the new value in the textfield to be validated and
+`nativeValidity` is an interface of
+[`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState)
+of the native input control. For example:
+
+```html
+<mwc-textfield
+    id="my-textfield"
+    pattern="[0-9]+"
+    value="doggos">
+</mwc-textfield>
+<script>
+  const textfield = document.querySelector('#my-textfield');
+  textfield.validityTransform = (newValue, nativeValidity) => {
+    if (!nativeValidity.valid) {
+      if (nativeValidity.patternMismatch) {
+        const hasDog = newValue.includes('dog');
+        // changes to make to the nativeValidity
+        return {
+          valid: hasDog,
+          patternMismatch: !hasDog;
+        };
+      } else {
+        // no changes
+        return {};
+      }
+    } else {
+      const isValid = someExpensiveOperation(newValue);
+      // changes to make to the native validity
+      return {
+        valid: isValid,
+        // or whatever type of ValidityState prop you would like to set
+        customError: !isValid,
+      };
+    }
+  }
+</script>
+```
+
+In this example we first check the native validity check which is invalid due to
+the pattern mismatching (the value is `doggos` which is not a number). The value
+includes `dog`, thus we make it valid and undo the pattern mismatch.
+
+In this example, we also skip an expensive validity check by short-circuiting
+the validation by checking the native validation.
+
+*Note:* the UI will only update as valid / invalid by checking the `valid`
+property
 
 ## Additional references
 

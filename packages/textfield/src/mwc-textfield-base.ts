@@ -136,7 +136,7 @@ export abstract class TextFieldBase extends FormElement {
     return this.formElement.willValidate;
   }
 
-  validator: ((value: string, nativeValidity: ValidityState) => Partial<ValidityState>)|null = null;
+  validityTransform: ((value: string, nativeValidity: ValidityState) => Partial<ValidityState>)|null = null;
 
   focus() {
     const focusEvt = new FocusEvent('focus');
@@ -288,8 +288,8 @@ export abstract class TextFieldBase extends FormElement {
 
     let validity = createValidityObj(nativeValidity);
 
-    if (this.validator) {
-      const customValidity = this.validator(value, validity);
+    if (this.validityTransform) {
+      const customValidity = this.validityTransform(value, validity);
       validity = {...validity, ...customValidity};
       this.mdcFoundation.setUseNativeValidation(false);
     } else {
