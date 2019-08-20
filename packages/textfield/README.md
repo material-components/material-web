@@ -229,7 +229,7 @@ It exposes:
 * `reportValidity()`
 * `setCustomValidity(message)`
 
-Additionally, it implements further features such as:
+Additionally, it implements more features such as:
 * `validationMessage`
 * `validateOnInitialRender`
 * and `validityTransform`
@@ -239,8 +239,8 @@ By default, `<mwc-textfield>` will report validation on `blur`.
 #### Custom validation logic
 
 The `validityTransform` property is a function that can be set on `<mwc-textfield>` to
-implement custom validation logic that is not covered by the exposed properties
-and methods. The type of a `ValidityTransform` is the following:
+implement custom validation logic that transforms the `ValidityState` of the
+input control. The type of a `ValidityTransform` is the following:
 
 ```ts
 (value: string, nativeValidity: ValidityState) => Partial<ValidityState>
@@ -285,15 +285,15 @@ of the native input control. For example:
 </script>
 ```
 
-In this example we first check the native validity check which is invalid due to
-the pattern mismatching (the value is `doggos` which is not a number). The value
+In this example we first check the native validity which is invalid due to the
+pattern mismatching (the value is `doggos` which is not a number). The value
 includes `dog`, thus we make it valid and undo the pattern mismatch.
 
 In this example, we also skip an expensive validity check by short-circuiting
 the validation by checking the native validation.
 
 *Note:* the UI will only update as valid / invalid by checking the `valid`
-property
+property of the transformed `ValidityState`.
 
 ## Additional references
 
