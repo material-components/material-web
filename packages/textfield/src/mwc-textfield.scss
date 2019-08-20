@@ -47,7 +47,7 @@ mwc-notched-outline {
   --mdc-notched-outline-border-color: var(--mdc-text-field-outlined-idle-border-color, #{$mdc-text-field-outlined-idle-border});
 }
 
-:host(:not([disabled]):hover) :not(.mdc-text-field--focused) mwc-notched-outline {
+:host(:not([disabled]):hover) :not(.mdc-text-field--invalid):not(.mdc-text-field--focused) mwc-notched-outline {
   --mdc-notched-outline-border-color: var(--mdc-text-field-outlined-hover-border-color, #{$mdc-text-field-outlined-hover-border});
 }
 
