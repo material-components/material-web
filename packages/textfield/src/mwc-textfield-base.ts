@@ -104,6 +104,8 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: String}) helper = '';
 
+  @property({type: Boolean}) validateOnInitialRender = false;
+
   @property({type: String}) validationMessage = '';
 
   @property({type: String}) pattern = '';
@@ -406,7 +408,12 @@ export abstract class TextFieldBase extends FormElement {
     if (outlineElement) {
       await outlineElement.updateComplete;
     }
+
     super.firstUpdated();
+
+    if (this.validateOnInitialRender) {
+      this.reportValidity();
+    }
   }
 
   protected getOutlineAdapterMethods(): MDCTextFieldOutlineAdapter {
