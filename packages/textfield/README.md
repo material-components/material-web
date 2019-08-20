@@ -277,7 +277,7 @@ of the native input control. For example:
       // changes to make to the native validity
       return {
         valid: isValid,
-        // or whatever type of ValidityState prop you would like to set
+        // or whatever type of ValidityState prop you would like to set (if any)
         customError: !isValid,
       };
     }
