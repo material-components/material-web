@@ -7,6 +7,6 @@
     "tsBuildInfoFile": ".tsbuildinfo-node"
   },
   "include": [
-    "benchmark/cli.ts"
+    "src/benchmark/cli.ts"
   ]
 }
