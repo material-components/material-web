@@ -30,8 +30,9 @@ const passiveEvents = ['touchstart', 'touchmove', 'scroll', 'mousewheel'];
 
 const createValidityObj =
     (customValidity: Partial<ValidityState> = {}): ValidityState => {
-      let objectifiedCustomValidity: Partial<ValidityState> = {};
+      const objectifiedCustomValidity: Partial<ValidityState> = {};
 
+      // eslint-disable-next-line guard-for-in
       for (const propName in customValidity) {
         objectifiedCustomValidity[propName] = customValidity[propName];
       }
@@ -194,8 +195,8 @@ export abstract class TextFieldBase extends FormElement {
           ?required="${this.required}"
           maxlength="${this.maxLength}"
           pattern="${ifDefined(this.pattern ? this.pattern : undefined)}"
-          min="${ifDefined(this.min === '' ? undefined : this.min as any)}"
-          max="${ifDefined(this.max === '' ? undefined : this.max as any)}"
+          min="${ifDefined(this.min === '' ? undefined : this.min as number)}"
+          max="${ifDefined(this.max === '' ? undefined : this.max as number)}"
           step="${ifDefined(this.step === null ? undefined : this.step)}"
           @change="${this.handleInputChange}"
           @blur="${this.onInputBlur}">`;
