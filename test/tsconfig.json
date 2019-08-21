@@ -2,7 +2,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "composite": true,
-    "outDir": "lib",
+    "outDir": "./lib",
     "tsBuildInfoFile": ".tsbuildinfo",
   },
   "include": [

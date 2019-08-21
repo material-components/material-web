@@ -15,7 +15,7 @@
     "lint:typescript": "eslint \"packages/**/*.ts\"",
     "lint:lit": "lit-analyzer \"packages/**/*.ts\" --strict --quiet",
     "test": "karma start --single-run",
-    "test:bench": "node test/benchmark/cli.js",
+    "test:bench": "node test/lib/benchmark/cli.js",
     "postinstall": "./scripts/bootstrap.sh",
     "build": "npm run build:styling && npm run build:typescript -- --verbose",
     "build:styling": "./scripts/build-styling.sh",

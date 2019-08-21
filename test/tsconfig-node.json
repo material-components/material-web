@@ -2,7 +2,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "composite": true,
-    "outDir": ".",
+    "outDir": "lib",
     "module": "commonjs",
     "tsBuildInfoFile": ".tsbuildinfo-node"
   },
