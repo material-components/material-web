@@ -15,9 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const babel = require('rollup-plugin-babel');
-const resolve = require('rollup-plugin-node-resolve');
-
 const USING_TRAVISCI = Boolean(process.env.TRAVIS);
 const USING_SL = USING_TRAVISCI && Boolean(process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY);
 
@@ -85,28 +82,11 @@ module.exports = function(config) {
     files: [
       {pattern: 'node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js', watched: false},
       {pattern: 'node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js', watched: false},
-      {pattern: 'test/lib/unit/mwc-{button,checkbox,fab,formfield,icon,icon-button,linear-progress,radio,ripple,switch,tabs}.test.js', watched: false},
+      {pattern: 'node_modules/**/*', included: false, watched: false},
+      {pattern: 'test/lib/unit/*.test.js', watched: false, type: 'module'},
     ],
     preprocessors: {
-      'test/lib/unit/mwc-*.js': ['rollup', 'sourcemap'],
-    },
-
-    rollupPreprocessor: {
-      external: ['chai'],
-      plugins: [
-        resolve({
-          module: true,
-          jsnext: true,
-          main: true,
-        }),
-        babel({
-          presets: ['es2015-rollup'],
-        }),
-      ],
-      output: {
-        format: 'iife',
-        sourceMap: 'inline',
-      },
+      'test/lib/unit/mwc-*.js': ['sourcemap'],
     },
 
     browsers: determineBrowsers(),

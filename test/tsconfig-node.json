@@ -4,9 +4,10 @@
     "composite": true,
     "outDir": "lib",
     "module": "commonjs",
-    "tsBuildInfoFile": ".tsbuildinfo-node"
+    "tsBuildInfoFile": ".tsbuildinfo-node",
+    "rootDir": "./src"
   },
   "include": [
-    "src/benchmark/cli.ts"
+    "src/benchmark/cli.ts",
   ]
 }
