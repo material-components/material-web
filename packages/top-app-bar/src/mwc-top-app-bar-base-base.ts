@@ -20,7 +20,7 @@ import {MDCTopAppBarAdapter} from '@material/top-app-bar/adapter';
 import {strings} from '@material/top-app-bar/constants';
 import MDCTopAppBarBaseFoundation from '@material/top-app-bar/foundation';
 
-export const passiveEventListener =
+export const passiveEventOptionsIfSupported =
     supportsPassiveEventListener ? {passive: true} : undefined;
 
 interface ClassInfo {
@@ -72,9 +72,6 @@ export abstract class TopAppBarBaseBase extends BaseElement {
    */
   protected abstract contentClasses: ClassInfo;
 
-  // TODO(sorvell): MDC decorates the navigation icon and action items with
-  // ripples. Since these are slotted items here, the assumption is that the
-  // user brings a web component with a ripple if rippling is desired.
   protected render() {
     return html`
       <header class="mdc-top-app-bar ${classMap(this.barClasses)}">
@@ -124,7 +121,7 @@ export abstract class TopAppBarBaseBase extends BaseElement {
 
   protected registerListeners() {
     this.scrollTarget.addEventListener(
-        'scroll', this.handleTargetScroll, passiveEventListener);
+        'scroll', this.handleTargetScroll, passiveEventOptionsIfSupported);
   }
 
   protected unregisterListeners() {

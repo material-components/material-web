@@ -105,7 +105,7 @@ mwc-top-app-bar {
 | ---- | -----------
 | `actionItems` | A number of `<mwc-icon-button>` elements to use for action icons on the right side.
 | `navigationIcon` | `<mwc-icon-button>` elements to use for the left icon.
-| `title` | Element that will be used as the title text.
+| `title` | A `<div>` or `<span>` that will be used as the title text.
 | _default_ | Scrollable content to display under the bar. This may be the entire application.
 
 ### Properties/Attributes
@@ -113,7 +113,7 @@ mwc-top-app-bar {
 | ---- | ---- | ------- | -----------
 | `dense` | `boolean` | `false` | Makes the bar a little smaller for higher density applications.
 | `prominent` | `boolean` | `false` | Makes the bar much taller, can be combined with `dense`.
-| `scrollTarget` | `HTMLElement | Window` | `window` | Element used to listen for `scroll` events.
+| `scrollTarget` | `HTMLElement` \| `Window` | `window` | Element used to listen for `scroll` events.
 
 ### Methods
 *None*

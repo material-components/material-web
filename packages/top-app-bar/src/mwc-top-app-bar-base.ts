@@ -17,7 +17,7 @@ limitations under the License.
 import {property} from '@material/mwc-base/base-element';
 import MDCTopAppBarFoundation from '@material/top-app-bar/standard/foundation';
 
-import {passiveEventListener, TopAppBarBaseBase} from './mwc-top-app-bar-base-base';
+import {passiveEventOptionsIfSupported, TopAppBarBaseBase} from './mwc-top-app-bar-base-base';
 
 export class TopAppBarBase extends TopAppBarBaseBase {
   protected mdcFoundationClass = MDCTopAppBarFoundation;
@@ -50,7 +50,7 @@ export class TopAppBarBase extends TopAppBarBaseBase {
 
   protected registerListeners() {
     super.registerListeners();
-    window.addEventListener('resize', this.handleResize, passiveEventListener);
+    window.addEventListener('resize', this.handleResize, passiveEventOptionsIfSupported);
   }
 
   protected unregisterListeners() {

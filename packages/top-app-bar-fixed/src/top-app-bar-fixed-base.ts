@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {TopAppBarBase} from '@material/mwc-top-app-bar/mwc-top-app-bar-base';
-import {passiveEventListener} from '@material/mwc-top-app-bar/mwc-top-app-bar-base-base';
+import {passiveEventOptionsIfSupported} from '@material/mwc-top-app-bar/mwc-top-app-bar-base-base';
 import MDCFixedTopAppBarFoundation from '@material/top-app-bar/fixed/foundation';
 
 export class TopAppBarFixedBase extends TopAppBarBase {
@@ -32,7 +32,7 @@ export class TopAppBarFixedBase extends TopAppBarBase {
 
   protected registerListeners() {
     this.scrollTarget.addEventListener(
-        'scroll', this.handleTargetScroll, passiveEventListener);
+        'scroll', this.handleTargetScroll, passiveEventOptionsIfSupported);
   }
 
   protected unregisterListeners() {
