@@ -134,7 +134,8 @@ export class TabBarBase extends BaseElement {
       },
       getFocusedTabIndex: () => {
         const tabElements = this._getTabs();
-        const activeElement = (this.getRootNode() as ShadowRoot).activeElement as Tab;
+        const activeElement =
+            (this.getRootNode() as ShadowRoot).activeElement as Tab;
         return tabElements.indexOf(activeElement);
       },
       getIndexOfTabById: (id: string) => {

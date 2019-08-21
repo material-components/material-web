@@ -81,12 +81,15 @@ export class RadioBase extends FormElement {
 
   protected mdcFoundation!: MDCRadioFoundation;
 
+  /* eslint-disable @typescript-eslint/no-use-before-define */
+
   // Note if we aren't using native shadow DOM, then we don't technically need a
   // SelectionController, because our inputs will share document-scoped native
   // selection groups. However, it simplifies implementation and testing to use
   // one in all cases. In particular, it means we correctly manage groups before
   // the first update stamps the native input.
   private _selectionController = SelectionController.getController(this);
+  /* eslint-enable @typescript-eslint/no-use-before-define */
 
   connectedCallback() {
     super.connectedCallback();
