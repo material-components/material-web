@@ -17,7 +17,7 @@ limitations under the License.
 import '@material/mwc-tab-bar';
 import '@material/mwc-tab';
 import {html} from 'lit-html';
-import {measureFixtureCreation} from '../helpers';
+import {measureFixtureCreation} from '../../util/helpers';
 
 measureFixtureCreation(html`
   <mwc-tab-bar>

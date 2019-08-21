@@ -16,7 +16,7 @@ limitations under the License.
 */
 import '@material/mwc-switch';
 import {html} from 'lit-html';
-import {measureFixtureCreation} from '../helpers';
+import {measureFixtureCreation} from '../../util/helpers';
 
 measureFixtureCreation(html`
   <mwc-switch checked></mwc-switch>

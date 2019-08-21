@@ -16,7 +16,7 @@ limitations under the License.
 */
 import '@material/mwc-textfield/mwc-textfield';
 import {html} from 'lit-html';
-import {measureFixtureCreation} from '../helpers';
+import {measureFixtureCreation} from '../../util/helpers';
 
 measureFixtureCreation(html`
   <mwc-textfield outlined label="my label" value="Hello world!"></mwc-textfield>

@@ -20,7 +20,7 @@ import '@material/mwc-checkbox';
 import {Snackbar} from '@material/mwc-snackbar';
 import {html} from 'lit-html';
 
-import {measureFixtureCreation} from '../helpers';
+import {measureFixtureCreation} from '../../util/helpers';
 
 measureFixtureCreation(
     html`
