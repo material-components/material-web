@@ -1,0 +1,103 @@
+/**
+@license
+Copyright 2019 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+@import '@material/mwc-textfield/src/mwc-textfield.scss';
+@import '@material/textfield/_mixins.scss';
+@import '@material/textfield/_variables.scss';
+
+.mdc-text-field:not(.mdc-text-field--outlined) {
+  border-bottom: 1px solid;
+
+  .mdc-line-ripple {
+    bottom: -1px;
+  }
+
+  &:not(.mdc-text-field--disabled) {
+    &:not(.mdc-text-field--fullwidth) {
+      @include mdc-text-field-fill-color($mdc-text-field-background);
+    }
+
+    &:not(.mdc-text-field--invalid){
+      @include mdc-theme-prop(border-bottom-color, $mdc-text-field-bottom-line-idle);
+
+      &:hover {
+        @include mdc-theme-prop(border-bottom-color, $mdc-text-field-bottom-line-hover);
+      }
+    }
+
+    &.mdc-text-field--invalid {
+      @include mdc-theme-prop(border-bottom-color, (
+        varname: --mdc-theme-error,
+        fallback: $mdc-theme-error
+      ));
+    }
+
+    .mdc-floating-label.mdc-floating-label--float-above {
+      transform: translateY(-50%) scale(0.75);
+      font-size: initial;
+    }
+  }
+
+  &.mdc-text-field--disabled {
+    @include mdc-theme-prop(border-bottom-color, $mdc-text-field-disabled-border);
+  }
+
+  .mdc-text-field__input {
+    padding: 0 16px 0 16px;
+    margin: 20px 0 1px 0;
+  }
+
+  .mdc-text-field-character-counter + .mdc-text-field__input {
+    margin-bottom: 28px;
+  }
+
+  .mdc-floating-label {
+    top: 18px;
+    left: 16px;
+  }
+}
+
+.mdc-text-field {
+  height: 100%;
+
+  &.mdc-text-field--outlined {
+    &:not(.mdc-text-field--fullwidth) {
+      .mdc-text-field__input {
+        margin-bottom: 14px;
+        padding-bottom: 0px;
+      }
+
+      .mdc-text-field-character-counter {
+        bottom: 14px;
+
+        &+.mdc-text-field__input {
+          margin-bottom: 41px;
+        }
+      }
+    }
+  }
+}
+
+.mdc-text-field__input {
+  -ms-overflow-style: none;
+  scrollbar-color: transparent transparent;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  resize: none;
+}

@@ -1,0 +1,53 @@
+/**
+@license
+Copyright 2018 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+import {MDCFloatingLabelAdapter} from '@material/floating-label/adapter.js';
+import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
+import {directive, PropertyPart} from 'lit-html';
+
+export interface FloatingLabel extends HTMLLabelElement {
+  foundation: MDCFloatingLabelFoundation;
+}
+
+const createAdapter = (labelElement: HTMLElement): MDCFloatingLabelAdapter => {
+  return {
+    addClass: (className) => labelElement.classList.add(className),
+    removeClass: (className) => labelElement.classList.remove(className),
+    getWidth: () => labelElement.scrollWidth,
+    registerInteractionHandler: (evtType, handler) => {
+      labelElement.addEventListener(evtType, handler);
+    },
+    deregisterInteractionHandler: (evtType, handler) => {
+      labelElement.removeEventListener(evtType, handler);
+    },
+  };
+};
+
+const partToFoundationMap =
+    new WeakMap<PropertyPart, MDCFloatingLabelFoundation>();
+
+export const floatingLabel = directive(() => (part: PropertyPart) => {
+  const lastFoundation = partToFoundationMap.get(part);
+  if (!lastFoundation) {
+    const labelElement = part.committer.element as FloatingLabel;
+    labelElement.classList.add('mdc-floating-label');
+    const adapter = createAdapter(labelElement);
+    const foundation = new MDCFloatingLabelFoundation(adapter);
+    foundation.init();
+    part.setValue(foundation);
+    partToFoundationMap.set(part, foundation);
+  }
+});

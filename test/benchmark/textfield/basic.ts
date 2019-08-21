@@ -14,10 +14,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import '@material/mwc-tab';
+import '@material/mwc-textfield/mwc-textfield';
 import {html} from 'lit-html';
 import {measureFixtureCreation} from '../helpers';
 
 measureFixtureCreation(html`
-  <mwc-tab label="one"></mwc-tab>
+  <mwc-textfield outlined label="my label" value="Hello world!"></mwc-textfield>
 `);

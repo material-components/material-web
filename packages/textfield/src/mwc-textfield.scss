@@ -1,0 +1,82 @@
+/**
+@license
+Copyright 2019 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+@import '@material/textfield/mdc-text-field.scss';
+@import "@material/mwc-icon/src/_mwc-icon.scss";
+@import '@material/theme/_mixins.scss';
+@import '@material/shape/_functions.scss';
+
+.material-icons {
+  @extend %material-icons;
+}
+
+:host {
+  display: inline-block;
+  outline: none;
+}
+
+:host([fullwidth]) {
+  display: block;
+}
+
+.mdc-text-field {
+  width: 100%;
+
+  @include mdc-theme-prop(border-radius, (
+    varname: --mdc-text-field-filled-border-radius,
+    fallback: mdc-shape-mask-radius(mdc-shape-prop-value(small), 1 1 0 0)
+  ));
+
+}
+
+mwc-notched-outline {
+  --mdc-notched-outline-border-color: var(--mdc-text-field-outlined-idle-border-color, #{$mdc-text-field-outlined-idle-border});
+}
+
+:host(:not([disabled]):hover) :not(.mdc-text-field--focused) mwc-notched-outline {
+  --mdc-notched-outline-border-color: var(--mdc-text-field-outlined-hover-border-color, #{$mdc-text-field-outlined-hover-border});
+}
+
+:host([disabled]) mwc-notched-outline {
+  --mdc-notched-outline-border-color: var(--mdc-text-field-outlined-disabled-border-color, #{$mdc-text-field-outlined-disabled-border});
+}
+
+.mdc-text-field--invalid:not(.mdc-text-field--disabled) {
+  mwc-notched-outline {
+    --mdc-notched-outline-border-color: var(--mdc-text-field-error-color, var(--mdc-theme-error, #{$mdc-theme-error}));
+  }
+}
+
+.mdc-text-field--focused:not(.mdc-text-field--disabled) {
+  mwc-notched-outline {
+    --mdc-notched-outline-stroke-width: 2px;
+  }
+
+  &:not(.mdc-text-field--invalid) {
+    mwc-notched-outline {
+      --mdc-notched-outline-border-color: var(--mdc-text-field-focused-label-color, var(--mdc-theme-primary, #{$mdc-text-field-focused-label-color}));
+    }
+
+    .mdc-floating-label, .mdc-floating-label::after {
+      @include mdc-theme-prop(color, (
+        varname: --mdc-theme-primary,
+        fallback: $mdc-theme-primary
+      ));
+    }
+  }
+
+}

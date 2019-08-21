@@ -14,10 +14,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import '@material/mwc-tab';
-import {html} from 'lit-html';
-import {measureFixtureCreation} from '../helpers';
 
-measureFixtureCreation(html`
-  <mwc-tab label="one"></mwc-tab>
-`);
+import {customElement} from '@material/mwc-base/form-element.js';
+import {TextAreaBase} from './mwc-textarea-base.js';
+import {style} from './mwc-textarea-css.js';
+
+export {TextFieldType} from '@material/mwc-textfield/mwc-textfield-base.js'
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'mwc-textarea': TextArea;
+  }
+}
+
+@customElement('mwc-textarea')
+export class TextArea extends TextAreaBase {
+  static styles = style;
+}

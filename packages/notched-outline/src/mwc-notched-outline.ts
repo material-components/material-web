@@ -14,10 +14,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import '@material/mwc-tab';
-import {html} from 'lit-html';
-import {measureFixtureCreation} from '../helpers';
+import {customElement} from '@material/mwc-base/form-element.js';
 
-measureFixtureCreation(html`
-  <mwc-tab label="one"></mwc-tab>
-`);
+import {NotchedOutlineBase} from './mwc-notched-outline-base.js';
+import {style} from './mwc-notched-outline-css.js';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'mwc-notched-outline': NotchedOutline;
+  }
+}
+
+@customElement('mwc-notched-outline')
+export class NotchedOutline extends NotchedOutlineBase {
+  static styles = style;
+}

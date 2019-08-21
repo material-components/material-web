@@ -1,0 +1,91 @@
+/**
+@license
+Copyright 2019 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+@import '@material/notched-outline/mdc-notched-outline.scss';
+@import '@material/theme/_mixins.scss';
+@import '@material/theme/_variables.scss';
+@import '@material/shape/_functions.scss';
+
+:host {
+  display: block;
+  position: absolute;
+  right: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  /* @noflip */
+  text-align: left;
+  pointer-events: none;
+
+  @include mdc-rtl {
+    /* @noflip */
+    text-align: right;
+  }
+}
+
+::slotted(.mdc-floating-label) {
+  display: inline-block;
+  position: relative;
+  top: 17px;
+  bottom: auto;
+  max-width: 100%;
+}
+
+::slotted(.mdc-floating-label--float-above) {
+  text-overflow: clip;
+}
+
+.mdc-notched-outline--upgraded ::slotted(.mdc-floating-label--float-above) {
+  max-width: calc(100% / .75);
+
+  @include mdc-theme-prop(color, (
+    varname: --mdc-theme-primary,
+    fallback: $mdc-theme-primary
+  ));
+}
+
+.mdc-notched-outline__leading {
+  @include mdc-theme-prop(width, (
+    varname: --mdc-notched-outline-leading-width,
+    fallback: $mdc-notched-outline-leading-width
+  ));
+
+  @include mdc-theme-prop(border-radius, (
+    varname: --mdc-notched-outline-leading-border-radius,
+    fallback: mdc-shape-mask-radius(mdc-shape-prop-value(small), 1 0 0 1)
+  ));
+}
+
+.mdc-notched-outline__trailing {
+  @include mdc-theme-prop(border-radius, (
+    varname: --mdc-notched-outline-trailing-border-radius,
+    fallback: mdc-shape-mask-radius(mdc-shape-prop-value(small), 0 1 1 0)
+  ));
+}
+
+.mdc-notched-outline__leading,
+.mdc-notched-outline__notch,
+.mdc-notched-outline__trailing {
+  border-color: var(--mdc-notched-outline-border-color, var(--mdc-theme-primary, #{$mdc-theme-primary}));
+
+  @include mdc-theme-prop(border-width, (
+    varname: --mdc-notched-outline-stroke-width,
+    fallback: 1px
+  ));
+}

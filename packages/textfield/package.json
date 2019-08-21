@@ -1,0 +1,27 @@
+{
+  "name": "@material/mwc-textfield",
+  "version": "0.6.0",
+  "description": "",
+  "main": "mwc-textfield.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@material/floating-label": "^3.0.0",
+    "@material/mwc-line-ripple": "^0.6.0",
+    "@material/mwc-base": "^0.6.0",
+    "@material/mwc-floating-label": "^0.6.0",
+    "@material/mwc-icon": "^0.6.0",
+    "@material/mwc-notched-outline": "^0.6.0",
+    "@material/textfield": "^3.0.0",
+    "@material/shape": "^3.0.0",
+    "@material/theme": "^3.0.0",
+    "lit-html": "^1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "private": true
+}

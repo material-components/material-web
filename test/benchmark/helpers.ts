@@ -103,6 +103,7 @@ export const fixture =
 interface MeasureFixtureCreationOpts {
   afterRender?: (root: ShadowRoot) => Promise<unknown>;
   numRenders: number;
+  renderCheck?: (root: ShadowRoot) => Promise<unknown>;
 }
 
 const defaultMeasureOpts = {
@@ -118,22 +119,43 @@ export const measureFixtureCreation = async (
   const renderTargetRoot = renderContainer.attachShadow({mode: 'open'});
 
   document.body.appendChild(renderContainer);
-  const start = performance.now();
-  render(templates, renderTargetRoot);
-  const firstChild = renderTargetRoot.firstElementChild;
 
-  if (firstChild && 'updateComplete' in firstChild) {
-    await (firstChild as LitElement).updateComplete;
-    document.body.offsetWidth;
-  } else {
-    await new Promise(res => requestAnimationFrame(res));
-  }
+  await new Promise(async res => {
+    performance.mark('measureFixture-start');
+    render(templates, renderTargetRoot);
+    const firstChild = renderTargetRoot.firstElementChild;
+    const lastChild = renderTargetRoot.lastElementChild;
 
-  if (opts.afterRender) {
-    opts.afterRender(renderTargetRoot);
-  }
+    if (opts.renderCheck) {
+      await opts.renderCheck(renderTargetRoot);
+    } else if (lastChild && 'updateComplete' in lastChild) {
+      await (lastChild as LitElement).updateComplete;
+      document.body.offsetWidth;
+    } else if (firstChild && 'updateComplete' in firstChild) {
+      await (firstChild as LitElement).updateComplete;
+      document.body.offsetWidth;
+    } else {
+      await new Promise(res => requestAnimationFrame(res));
+      document.body.offsetWidth;
+    }
 
-  const end = performance.now();
-  window.tachometerResult = end - start;
-  return window.tachometerResult;
+
+    if (opts.afterRender) {
+      await opts.afterRender(renderTargetRoot);
+    }
+
+    res();
+  })
+      .then(
+          // this adds an extra microtask and awaits any trailing async updates
+          async () => {});
+
+  performance.mark('measureFixture-end');
+  performance.measure(
+      'fixture-creation', 'measureFixture-start', 'measureFixture-end');
+
+  const duration = performance.getEntriesByName('fixture-creation')[0].duration;
+  window.tachometerResult = duration;
+
+  return renderTargetRoot;
 }
