@@ -129,7 +129,7 @@ export abstract class TextFieldBase extends FormElement {
           @change="${this.handleInputChange}">`;
   }
 
-  protected renderIcon(icon: String) {
+  protected renderIcon(icon: string) {
     return html`<i class="material-icons mdc-text-field__icon">${icon}</i>`;
   }
 
@@ -213,11 +213,11 @@ export abstract class TextFieldBase extends FormElement {
 
   protected getRootAdapterMethods(): MDCTextFieldRootAdapter {
     return {
-      registerTextFieldInteractionHandler: (evtType: string, handler: any) =>
+      registerTextFieldInteractionHandler: (evtType, handler) =>
           this.addEventListener(evtType, handler),
-      deregisterTextFieldInteractionHandler: (evtType: string, handler: any) =>
+      deregisterTextFieldInteractionHandler: (evtType, handler) =>
           this.removeEventListener(evtType, handler),
-      registerValidationAttributeChangeHandler: (handler: any) => {
+      registerValidationAttributeChangeHandler: (handler) => {
         const getAttributesList =
             (mutationsList: MutationRecord[]): string[] => {
               return mutationsList.map((mutation) => mutation.attributeName)
@@ -238,11 +238,13 @@ export abstract class TextFieldBase extends FormElement {
   protected getInputAdapterMethods(): MDCTextFieldInputAdapter {
     return {
       getNativeInput: () => this.formElement,
-      isFocused: () => this.shadowRoot!.activeElement === this.formElement,
-      registerInputInteractionHandler: (evtType: string, handler: any) =>
+      isFocused: () => this.shadowRoot ?
+          this.shadowRoot.activeElement === this.formElement :
+          false,
+      registerInputInteractionHandler: (evtType, handler) =>
           this.formElement.addEventListener(
               evtType, handler, {passive: evtType in passiveEvents}),
-      deregisterInputInteractionHandler: (evtType: string, handler: any) =>
+      deregisterInputInteractionHandler: (evtType, handler) =>
           this.formElement.removeEventListener(evtType, handler),
     };
   }
