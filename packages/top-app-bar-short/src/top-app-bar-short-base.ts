@@ -33,13 +33,11 @@ export class TopAppBarShortBase extends TopAppBarBaseBase {
   protected get barClasses() {
     return {
       'mdc-top-app-bar--short': true,
-    }
+    };
   }
 
   protected get contentClasses() {
-    return {
-      'mdc-top-app-bar--short-fixed-adjust': true
-    }
+    return {'mdc-top-app-bar--short-fixed-adjust': true};
   }
 
   protected handleTargetScroll = () => {

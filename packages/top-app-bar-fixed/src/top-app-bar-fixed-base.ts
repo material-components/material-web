@@ -25,8 +25,9 @@ export class TopAppBarFixedBase extends TopAppBarBase {
 
   protected get barClasses() {
     return {
-      ...super.barClasses, 'mdc-top-app-bar--fixed': true,
-    }
+      ...super.barClasses,
+      'mdc-top-app-bar--fixed': true,
+    };
   }
 
   protected registerListeners() {

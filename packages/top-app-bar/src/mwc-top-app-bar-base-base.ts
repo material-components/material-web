@@ -23,9 +23,9 @@ import MDCTopAppBarBaseFoundation from '@material/top-app-bar/foundation';
 export const passiveEventListener =
     supportsPassiveEventListener ? {passive: true} : undefined;
 
-type ClassInfo = {
-  [key: string]: boolean
-};
+interface ClassInfo {
+  [key: string]: boolean;
+}
 
 export abstract class TopAppBarBaseBase extends BaseElement {
   protected abstract mdcFoundation: MDCTopAppBarBaseFoundation;
