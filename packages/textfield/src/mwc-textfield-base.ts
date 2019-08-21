@@ -17,12 +17,12 @@ limitations under the License.
 import '@material/mwc-notched-outline';
 
 import {addHasRemoveClass, classMap, FormElement, html, property, PropertyValues, query, TemplateResult} from '@material/mwc-base/form-element.js';
-import {ifDefined} from 'lit-html/directives/if-defined.js';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter.js';
 import MDCTextFieldFoundation from '@material/textfield/foundation.js';
+import {ifDefined} from 'lit-html/directives/if-defined.js';
 
 import {characterCounter, CharacterCounter} from './character-counter/mwc-character-counter-directive.js';
 
@@ -56,9 +56,8 @@ const createValidityObj =
  * This is the enumerated typeof HTMLInputElement.type as declared by
  * lit-analyzer.
  */
-export type TextFieldType =
-    'text' | 'search' | 'tel' | 'url' | 'email' | 'password' | 'date' |
-    'month' | 'week' | 'time' | 'datetime-local' | 'number' | 'color';
+export type TextFieldType = 'text'|'search'|'tel'|'url'|'email'|'password'|
+    'date'|'month'|'week'|'time'|'datetime-local'|'number'|'color';
 
 export abstract class TextFieldBase extends FormElement {
   protected mdcFoundation!: MDCTextFieldFoundation;
@@ -110,11 +109,11 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: String}) pattern = '';
 
-  @property({type: Number}) min: number | string = '';
+  @property({type: Number}) min: number|string = '';
 
-  @property({type: Number}) max: number | string = '';
+  @property({type: Number}) max: number|string = '';
 
-  @property({type: Number}) step: number | null = null;
+  @property({type: Number}) step: number|null = null;
 
   @property({type: Boolean}) helperPersistent = false;
 
@@ -136,7 +135,9 @@ export abstract class TextFieldBase extends FormElement {
     return this.formElement.willValidate;
   }
 
-  validityTransform: ((value: string, nativeValidity: ValidityState) => Partial<ValidityState>)|null = null;
+  validityTransform:
+      ((value: string,
+        nativeValidity: ValidityState) => Partial<ValidityState>)|null = null;
 
   focus() {
     const focusEvt = new FocusEvent('focus');
@@ -193,9 +194,9 @@ export abstract class TextFieldBase extends FormElement {
           ?required="${this.required}"
           maxlength="${this.maxLength}"
           pattern="${ifDefined(this.pattern ? this.pattern : undefined)}"
-          min="${ifDefined(this.min === '' ? undefined: this.min as any)}"
-          max="${ifDefined(this.max === '' ? undefined: this.max as any)}"
-          step="${ifDefined(this.step === null ? undefined: this.step)}"
+          min="${ifDefined(this.min === '' ? undefined : this.min as any)}"
+          max="${ifDefined(this.max === '' ? undefined : this.max as any)}"
+          step="${ifDefined(this.step === null ? undefined : this.step)}"
           @change="${this.handleInputChange}"
           @blur="${this.onInputBlur}">`;
   }
