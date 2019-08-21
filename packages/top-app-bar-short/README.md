@@ -69,7 +69,7 @@ mwc-top-app-bar-short {
 ### Slots
 | Name | Description
 | ---- | -----------
-| `actionItems` | One `<mwc-icon-button>` elements to use for action icons on the right side.
+| `actionItems` | One `<mwc-icon-button>` element to use for action icons on the right side.
 | `navigationIcon` | One `<mwc-icon-button>` element to use for the left icon.
 | `title` | A `<div>` or `<span>` that will be used as the title text.
 | _default_ | Scrollable content to display under the bar. This may be the entire application.

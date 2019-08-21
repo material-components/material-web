@@ -104,7 +104,7 @@ mwc-top-app-bar-fixed {
 | Name | Description
 | ---- | -----------
 | `actionItems` | A number of `<mwc-icon-button>` elements to use for action icons on the right side.
-| `navigationIcon` | `<mwc-icon-button>` elements to use for the left icon.
+| `navigationIcon` | One `<mwc-icon-button>` element to use for the left icon.
 | `title` | A `<div>` or `<span>` that will be used as the title text.
 | _default_ | Scrollable content to display under the bar. This may be the entire application.
 
