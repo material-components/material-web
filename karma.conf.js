@@ -83,7 +83,9 @@ module.exports = function(config) {
       {pattern: 'node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js', watched: false},
       {pattern: 'node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js', watched: false},
       {pattern: 'node_modules/**/*', included: false, watched: false},
-      {pattern: 'test/lib/unit/*.test.js', watched: false, type: 'module'},
+      {pattern: 'test/lib/unit/*.test.js.map', included: false, watched: true},
+      {pattern: 'test/lib/unit/*.test.d.ts', included: false, watched: true},
+      {pattern: 'test/lib/unit/*.test.js', watched: true, type: 'module'},
     ],
     preprocessors: {
       'test/lib/unit/mwc-*.js': ['sourcemap'],
