@@ -18,11 +18,14 @@ limitations under the License.
 /**
  * Return an element assigned to a given slot that matches the given selector
  */
+
+import {matches} from '@material/dom/ponyfill';
+
 export function findAssignedElement(slot: HTMLSlotElement, selector: string) {
   for (const node of slot.assignedNodes({flatten: true})) {
     if (node.nodeType === Node.ELEMENT_NODE) {
       const el = (node as HTMLElement);
-      if (el.matches(selector)) {
+      if (matches(el, selector)) {
         return el;
       }
     }
