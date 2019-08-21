@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import {assert, expect} from 'chai';
 import {IconButton} from '@material/mwc-icon-button';
 
 const ICON_SELECTOR = '.mdc-icon-button__icon.mdc-icon-button__icon--on';

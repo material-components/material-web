@@ -15,7 +15,6 @@
  */
 
 import {Radio} from '@material/mwc-radio';
-import {assert} from 'chai';
 import {html, render} from 'lit-html';
 
 let container;

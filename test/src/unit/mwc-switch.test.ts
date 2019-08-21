@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import {assert, expect} from 'chai';
 import {fake} from 'sinon';
 import {Switch} from '@material/mwc-switch';
 

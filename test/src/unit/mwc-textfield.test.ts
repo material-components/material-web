@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import {assert} from 'chai';
 import {TextField} from '@material/mwc-textfield';
 
 let element;

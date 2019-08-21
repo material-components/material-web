@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import {assert} from 'chai';
 import {Icon} from '@material/mwc-icon';
 
 let element;

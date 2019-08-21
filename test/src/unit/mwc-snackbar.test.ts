@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import {assert} from 'chai';
 import {Snackbar} from '@material/mwc-snackbar';
 
 let element;

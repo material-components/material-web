@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import {assert} from 'chai';
 import {Ripple} from '@material/mwc-ripple';
 
 let element, container;
@@ -24,7 +23,7 @@ suite('mwc-ripple');
 beforeEach(() => {
   container = document.createElement("div");
   document.body.appendChild(container);
-  
+
   element = document.createElement("mwc-ripple");
   container.appendChild(element);
 });

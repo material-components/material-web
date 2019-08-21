@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import {assert} from 'chai';
 import {Tab} from '@material/mwc-tab';
 import {TabBar} from '@material/mwc-tab-bar/mwc-tab-bar.js';
 import {TabScroller} from '@material/mwc-tab-scroller/mwc-tab-scroller.js';

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import {assert} from 'chai';
 import {LinearProgress} from '@material/mwc-linear-progress';
 
 let element;

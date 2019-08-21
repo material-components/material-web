@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import {assert} from 'chai';
 import {Formfield} from '@material/mwc-formfield';
 
 let element;
