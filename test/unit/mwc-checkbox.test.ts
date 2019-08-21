@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {assert} from 'chai';
+import {assert, expect} from 'chai';
 import {fake} from 'sinon';
 import {Checkbox} from '@material/mwc-checkbox';
 

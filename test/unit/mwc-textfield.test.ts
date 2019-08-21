@@ -15,14 +15,14 @@
  */
 
 import {assert} from 'chai';
-import {Menu} from '@material/mwc-menu';
+import {TextField} from '@material/mwc-textfield';
 
 let element;
 
-suite('mwc-menu');
+suite('mwc-textfield');
 
 beforeEach(() => {
-  element = document.createElement('mwc-menu');
+  element = document.createElement('mwc-textfield');
   document.body.appendChild(element);
 });
 
@@ -30,6 +30,6 @@ afterEach(() => {
   document.body.removeChild(element);
 });
 
-test('initializes as an mwc-menu', () => {
-  assert.instanceOf(element, Menu);
+test('initializes as an mwc-textfield', () => {
+  assert.instanceOf(element, TextField);
 });

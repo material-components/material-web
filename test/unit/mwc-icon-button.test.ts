@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {assert} from 'chai';
+import {assert, expect} from 'chai';
 import {IconButton} from '@material/mwc-icon-button';
 
 const ICON_SELECTOR = '.mdc-icon-button__icon.mdc-icon-button__icon--on';
@@ -122,7 +122,14 @@ svgTemplate.innerHTML = `
 <svg slot="offIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z"/><path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>`;
 
 test('nodes with `slot=icon` will serve as the on icon', async () => {
-  const icon = svgTemplate.content.querySelector('svg[slot="icon"]').cloneNode(true);
+  const iconQuery = svgTemplate.content.querySelector('svg[slot="icon"]');
+  expect(iconQuery).to.be.ok;
+
+  if (!iconQuery) {
+    return;
+  }
+
+  const icon = iconQuery.cloneNode(true);
   element.appendChild(icon);
   await element.updateComplete;
   const iconSlot = element.shadowRoot.querySelector('slot[name="icon"]');
@@ -130,7 +137,14 @@ test('nodes with `slot=icon` will serve as the on icon', async () => {
 });
 
 test('nodes with `slot=offIcon` will serve as the off icon', async () => {
-  const icon = svgTemplate.content.querySelector('svg[slot="offIcon"]').cloneNode(true);
+  const iconQuery = svgTemplate.content.querySelector('svg[slot="offIcon"]');
+  expect(iconQuery).to.be.ok;
+
+  if (!iconQuery) {
+    return;
+  }
+
+  const icon = iconQuery.cloneNode(true);
   element.appendChild(icon);
   await element.updateComplete;
   const iconSlot = element.shadowRoot.querySelector('slot[name="offIcon"]');
@@ -138,7 +152,14 @@ test('nodes with `slot=offIcon` will serve as the off icon', async () => {
 });
 
 test('icon-button does not toggle with only slotted icon', async () => {
-  const icon = svgTemplate.content.querySelector('svg[slot="icon"]').cloneNode(true);
+  const iconQuery = svgTemplate.content.querySelector('svg[slot="icon"]');
+  expect(iconQuery).to.be.ok;
+
+  if (!iconQuery) {
+    return;
+  }
+
+  const icon = iconQuery.cloneNode(true);
   element.appendChild(icon);
   await element.updateComplete;
   assert.equal(element.on, true);

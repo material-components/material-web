@@ -6,7 +6,8 @@
     "tsBuildInfoFile": ".tsbuildinfo",
   },
   "include": [
-    "benchmark/**/*.ts"
+    "benchmark/**/*.ts",
+    "unit/**/*.ts"
   ],
   "exclude": [
     "benchmark/cli.ts"

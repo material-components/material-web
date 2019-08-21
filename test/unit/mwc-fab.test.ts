@@ -73,12 +73,12 @@ test('setting `icon` sets `aria-label` of the button', async () => {
 test('setting `label` sets `aria-label` of the button, overriding `icon`', async () => {
   element.icon = 'check';
   await element.updateComplete;
-  button = element.shadowRoot.querySelector('button');
+  let button = element.shadowRoot.querySelector('button');
   assert.equal(button.getAttribute('aria-label'), 'check');
 
   element.label = 'label text';
   await element.updateComplete;
-  let button = element.shadowRoot.querySelector('button');
+  button = element.shadowRoot.querySelector('button');
   assert.equal(button.getAttribute('aria-label'), 'label text');
 
   element.label = undefined;
