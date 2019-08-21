@@ -9,7 +9,9 @@
   ],
   "references": [
     {"path": "../base"},
-    {"path": "../ripple"},
-    {"path": "../icon"}
+    {"path": "../line-ripple"},
+    {"path": "../icon"},
+    {"path": "../notched-outline"},
+    {"path": "../floating-label"}
   ]
 }
