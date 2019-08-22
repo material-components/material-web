@@ -16,8 +16,9 @@
 
 import {TextField} from '@material/mwc-textfield';
 import {cssClasses} from '@material/textfield/constants';
+import {html} from 'lit-html';
+
 import {fixture, TestFixture} from '../util/helpers'
-import { html } from 'lit-html';
 
 let element: TextField;
 let fixt: TestFixture;
@@ -55,9 +56,10 @@ afterEach(() => {
   }
 });
 
-const isUiInvalid = (element: TextField) => {
-  return !!element.shadowRoot!.querySelector(`.${cssClasses.INVALID}`);
-}
+const isUiInvalid =
+    (element: TextField) => {
+      return !!element.shadowRoot!.querySelector(`.${cssClasses.INVALID}`);
+    }
 
 suite('mwc-textfield - validation:');
 

@@ -90,19 +90,19 @@ interface FixtureOptions {
 
 export const fixture =
     async (template: TemplateResult, options?: Partial<FixtureOptions>) => {
-      const opts: FixtureOptions = {...defaultOpts, ...options};
-      const tf = opts.document.createElement('test-fixture') as TestFixture;
-      tf.shouldAttachContents = opts.shouldAttachContents;
-      tf.template = template;
+  const opts: FixtureOptions = {...defaultOpts, ...options};
+  const tf = opts.document.createElement('test-fixture') as TestFixture;
+  tf.shouldAttachContents = opts.shouldAttachContents;
+  tf.template = template;
 
 
-      opts.document.body.appendChild(tf);
-      if (opts.shouldAttachContents) {
-        await tf.updateComplete;
-      }
+  opts.document.body.appendChild(tf);
+  if (opts.shouldAttachContents) {
+    await tf.updateComplete;
+  }
 
-      return tf;
-    };
+  return tf;
+};
 
 interface MeasureFixtureCreationOpts {
   afterRender?: (root: ShadowRoot) => Promise<unknown>;

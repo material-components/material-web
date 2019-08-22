@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {fake} from 'sinon';
 import {Switch} from '@material/mwc-switch';
+import {fake} from 'sinon';
 
 let element;
 

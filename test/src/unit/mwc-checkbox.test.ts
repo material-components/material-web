@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import {fake} from 'sinon';
 import {Checkbox} from '@material/mwc-checkbox';
+import {fake} from 'sinon';
 
 let element;
 
@@ -41,43 +41,51 @@ test('element.formElement returns the native checkbox element', async () => {
   assert.equal(element.formElement.localName, 'input');
 });
 
-test('get/set checked updates the checked property on the native checkbox element', async () => {
-  element.checked = true;
-  await element.updateComplete;
-  assert.equal(element.formElement.checked, true);
-  element.checked = false;
-  await element.updateComplete;
-  assert.equal(element.formElement.checked, false);
-});
+test(
+    'get/set checked updates the checked property on the native checkbox element',
+    async () => {
+      element.checked = true;
+      await element.updateComplete;
+      assert.equal(element.formElement.checked, true);
+      element.checked = false;
+      await element.updateComplete;
+      assert.equal(element.formElement.checked, false);
+    });
 
-test('get/set indeterminate updates the indeterminate property on the native checkbox element', async () => {
-  element.indeterminate = true;
-  await element.updateComplete;
-  assert.equal(element.formElement.indeterminate, true);
-  element.indeterminate = false;
-  await element.updateComplete;
-  assert.equal(element.formElement.indeterminate, false);
-});
+test(
+    'get/set indeterminate updates the indeterminate property on the native checkbox element',
+    async () => {
+      element.indeterminate = true;
+      await element.updateComplete;
+      assert.equal(element.formElement.indeterminate, true);
+      element.indeterminate = false;
+      await element.updateComplete;
+      assert.equal(element.formElement.indeterminate, false);
+    });
 
-test('get/set disabled updates the disabled property on the native checkbox element', async () => {
-  element.disabled = true;
-  await element.updateComplete;
-  assert.equal(element.formElement.disabled, true);
-  element.disabled = false;
-  await element.updateComplete;
-  assert.equal(element.formElement.disabled, false);
-});
+test(
+    'get/set disabled updates the disabled property on the native checkbox element',
+    async () => {
+      element.disabled = true;
+      await element.updateComplete;
+      assert.equal(element.formElement.disabled, true);
+      element.disabled = false;
+      await element.updateComplete;
+      assert.equal(element.formElement.disabled, false);
+    });
 
-test('get/set value updates the value of the native checkbox element', async () => {
-  let value = 'new value';
-  element.value = value;
-  await element.updateComplete;
-  assert.equal(element.formElement.value, value);
-  value = 'new value 2';
-  element.value = value;
-  await element.updateComplete;
-  assert.equal(element.formElement.value, value);
-});
+test(
+    'get/set value updates the value of the native checkbox element',
+    async () => {
+      let value = 'new value';
+      element.value = value;
+      await element.updateComplete;
+      assert.equal(element.formElement.value, value);
+      value = 'new value 2';
+      element.value = value;
+      await element.updateComplete;
+      assert.equal(element.formElement.value, value);
+    });
 
 test('user input emits `change` event', async () => {
   let callback = fake();

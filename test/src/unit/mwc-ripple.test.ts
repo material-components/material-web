@@ -21,10 +21,10 @@ let element, container;
 suite('mwc-ripple');
 
 beforeEach(() => {
-  container = document.createElement("div");
+  container = document.createElement('div');
   document.body.appendChild(container);
 
-  element = document.createElement("mwc-ripple");
+  element = document.createElement('mwc-ripple');
   container.appendChild(element);
 });
 
@@ -36,18 +36,18 @@ test('initializes as an mwc-ripple', () => {
   assert.instanceOf(element, Ripple);
 });
 
-test("sets interactionNode to parent", async () => {
+test('sets interactionNode to parent', async () => {
   await element.updateComplete;
   assert(element.interactionNode == container);
 });
 
-suite("mwc-ripple nested");
+suite('mwc-ripple nested');
 
-test("respects interactionNode", async () => {
-  container = document.createElement("div");
+test('respects interactionNode', async () => {
+  container = document.createElement('div');
   document.body.appendChild(container);
 
-  element = document.createElement("mwc-ripple");
+  element = document.createElement('mwc-ripple');
   element.interactionNode = document.body
   container.appendChild(element);
 
