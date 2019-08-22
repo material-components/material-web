@@ -36,6 +36,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - mwc-notched-outline
   - mwc-line-ripple-directive
   - mwc-floating-label-directive
+- Fix bug where setting the `<mwc-snackbar>` `labelText` property could throw
+  an exception and fail to render
+  ([#367](https://github.com/material-components/material-components-web-components/issues/367)).
 
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x
