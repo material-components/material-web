@@ -7,6 +7,8 @@ body {
 
 #content {
   height: 200vh;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 .custom {

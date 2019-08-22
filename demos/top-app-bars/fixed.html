@@ -41,10 +41,10 @@
       bar[parts[0]] = parts[1] || true;
     });
     if (bar.prominent || bar.dense) {
-      title.textContent += ` ${bar.prominent ? 'Prominent' : ''}${bar.dense && bar.prominent ? ' ' : ''}${bar.dense ? 'Dense' : ''}`;
+      title.textContent = `${bar.prominent ? 'Prominent' : ''}${bar.dense && bar.prominent ? ' ' : ''}${bar.dense ? 'Dense' : ''}`;
     }
     if (bar.custom) {
-      title.textContent += ' Custom Colors';
+      title.textContent = 'Custom Colors';
       bar.classList.add('custom');
     }
   </script>
