@@ -43,7 +43,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Testing Infra:
   - Tests now in TS
   - Tests now all pass
-  -
+  - Using Koa Karma proxy server and auto-amd-ifies files
+  - Can now run individual tests using npm run test -- --packages mwc-icon-button*,mwc-button
 
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x
