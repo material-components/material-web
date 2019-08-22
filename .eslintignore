@@ -2,3 +2,5 @@
 packages/*/dist
 packages/**/*.d.ts
 packages/*/src/*-css.ts
+
+karma.*.js
