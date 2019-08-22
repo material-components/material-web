@@ -85,6 +85,16 @@ export abstract class TextFieldBase extends FormElement {
   @property({type: Boolean}) protected outlineOpen = false;
   @property({type: Number}) protected outlineWidth = 0;
 
+  focus() {
+    const focusEvt = new FocusEvent('focus');
+    this.formElement.dispatchEvent(focusEvt);
+  }
+
+  blur() {
+    const blurEvt = new FocusEvent('blur');
+    this.formElement.dispatchEvent(blurEvt);
+  }
+
   render() {
     const classes = {
       'mdc-text-field--disabled': this.disabled,
