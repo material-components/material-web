@@ -5,6 +5,8 @@
 
 Short Top App Bars are a container for items such as application title, navigation icon, and an action item that shrinks into the corner.
 
+![](images/short.gif)
+
 For a fixed position version of this component, see [`<mwc-top-app-bar-fixed>`](http://github.com/material-components/material-components-web-components/tree/master/packages/top-app-bar-fixed)
 
 For a scrollable version of this component, see [`<mwc-top-app-bar>`](http://github.com/material-components/material-components-web-components/tree/master/packages/top-app-bar)
@@ -29,7 +31,7 @@ npm install @material/mwc-top-app-bar-short
 
 ### Standard
 
-<img src="images/standard.png" height="542px">
+<img src="images/standard.png" height="56px">
 
 ```html
 <mwc-top-app-bar-short>
@@ -42,7 +44,9 @@ npm install @material/mwc-top-app-bar-short
 
 ### Always Collapsed
 
-<img src="images/collapsed.png" height="542px">
+![](images/collapsed.gif)
+
+<img src="images/collapsed.png" height="56px">
 
 ```html
 <mwc-top-app-bar-short alwaysCollapsed>
@@ -55,7 +59,7 @@ npm install @material/mwc-top-app-bar-short
 
 ### Customize Colors
 
-<img src="images/custom_colors.png" height="542px">
+<img src="images/custom_colors.png" height="56px">
 
 ```css
 mwc-top-app-bar-short {

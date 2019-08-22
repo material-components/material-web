@@ -5,6 +5,8 @@
 
 Top App Bars are a container for items such as application title, navigation icon, and action items.
 
+![](images/standard.gif)
+
 For a fixed position version of this component, see [`<mwc-top-app-bar-fixed>`](http://github.com/material-components/material-components-web-components/tree/master/packages/top-app-bar-fixed)
 
 For a collapsable version of this component, see [`<mwc-top-app-bar-short>`](http://github.com/material-components/material-components-web-components/tree/master/packages/top-app-bar-short)
@@ -29,7 +31,7 @@ npm install @material/mwc-top-app-bar
 
 ### Standard
 
-<img src="images/standard.png" height="542px">
+<img src="images/standard.png" height="56px">
 
 ```html
 <mwc-top-app-bar>
@@ -44,7 +46,7 @@ npm install @material/mwc-top-app-bar
 
 ### Dense
 
-<img src="images/dense.png" height="542px">
+<img src="images/dense.png" height="48px">
 
 ```html
 <mwc-top-app-bar dense>
@@ -59,7 +61,7 @@ npm install @material/mwc-top-app-bar
 
 ### Prominent
 
-<img src="images/prominent.png" height="542px">
+<img src="images/prominent.png" height="128px">
 
 ```html
 <mwc-top-app-bar prominent>
@@ -74,7 +76,7 @@ npm install @material/mwc-top-app-bar
 
 ### Prominent and Dense
 
-<img src="images/prominent_and_dense.png" height="542px">
+<img src="images/prominent_and_dense.png" height="96px">
 
 ```html
 <mwc-top-app-bar prominent dense>
@@ -89,7 +91,7 @@ npm install @material/mwc-top-app-bar
 
 ### Customize Colors
 
-<img src="images/custom_colors.png" height="542px">
+<img src="images/custom_colors.png" height="56px">
 
 ```css
 mwc-top-app-bar {
