@@ -14,6 +14,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
+    "@material/dom": "^3.1.0",
     "@material/mwc-base": "^0.6.0",
     "@material/ripple": "^3.0.0",
     "lit-html": "^1.0.0"
