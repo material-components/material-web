@@ -23,10 +23,14 @@ limitations under the License.
 }
 
 :host {
-  display: inline-block;
+  display: inline-flex;
   outline: none;
 }
 
 :host([disabled]) {
   pointer-events: none;
+}
+
+.mdc-button {
+  flex: auto;
 }
