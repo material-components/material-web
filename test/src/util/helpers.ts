@@ -89,13 +89,17 @@ interface FixtureOptions {
 }
 
 export const fixture =
-    (template: TemplateResult, options?: Partial<FixtureOptions>) => {
+    async (template: TemplateResult, options?: Partial<FixtureOptions>) => {
       const opts: FixtureOptions = {...defaultOpts, ...options};
       const tf = opts.document.createElement('test-fixture') as TestFixture;
       tf.shouldAttachContents = opts.shouldAttachContents;
       tf.template = template;
 
+
       opts.document.body.appendChild(tf);
+      if (opts.shouldAttachContents) {
+        await tf.updateComplete;
+      }
 
       return tf;
     };

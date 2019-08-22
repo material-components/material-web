@@ -40,6 +40,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - mwc-floating-label-directive
   - mwc-top-app-bar-fixed
   - mwc-top-app-bar-short
+- Testing Infra:
+  - Tests now in TS
+  - Tests now all pass
+  -
 
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x
