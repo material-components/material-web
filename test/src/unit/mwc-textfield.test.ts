@@ -30,7 +30,7 @@ const required = html`
   <mwc-textfield label="I am required" required></mwc-textfield>
 `;
 
-suite('mwc-textfield - basic');
+suite('mwc-textfield - basic:');
 
 beforeEach(async () => {
   fixt = await fixture(basic);
@@ -59,18 +59,18 @@ const isUiInvalid = (element: TextField) => {
   return !!element.shadowRoot!.querySelector(`.${cssClasses.INVALID}`);
 }
 
-suite('mwc-textfield - validation');
+suite('mwc-textfield - validation:');
 
 before(async () => {
   fixt = await fixture(required);
   element = fixt.root.querySelector('mwc-textfield')!;
+  await element.updateComplete;
 });
 
 test('required invalidates on blur', async () => {
   expect(isUiInvalid(element)).to.be.false;
   element.focus();
   element.blur();
-  await element.requestUpdate();
   expect(isUiInvalid(element)).to.be.true;
 });
 
