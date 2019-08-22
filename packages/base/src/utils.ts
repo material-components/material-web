@@ -48,3 +48,18 @@ export function addHasRemoveClass(element: HTMLElement) {
     hasClass: (className: string) => element.classList.contains(className),
   };
 }
+
+/**
+ * Event listeners suport `passive` option
+ */
+export let supportsPassiveEventListener = false;
+
+const fn = () => {};
+const optionsBlock: AddEventListenerOptions = {
+  get passive() {
+    supportsPassiveEventListener = true;
+    return false;
+  }
+};
+document.addEventListener('x', fn, optionsBlock);
+document.removeEventListener('x', fn);

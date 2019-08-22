@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
 @license
-Copyright 2018 Google Inc. All Rights Reserved.
+Copyright 2019 Google Inc. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ limitations under the License.
 -->
 <html>
 <head>
-  <title>top app bar demo</title>
+  <title>top app bar fixed demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script type="module" src="../node_modules/@material/mwc-icon-button/mwc-icon-button.js"></script>
@@ -37,27 +37,25 @@ limitations under the License.
 <body class="unresolved">
   <header>
     <a href="index.html"><mwc-icon-button icon="arrow_back"></mwc-icon-button></a>
-    <span>Top App Bar</span>
+    <span>Top App Bar Fixed</span>
   </header>
-
   <main>
-    <div>
-      <iframe src="top-app-bars/standard.html"></iframe>
+  <div>
+      <iframe src="top-app-bars/fixed.html"></iframe>
     </div>
     <div>
-      <iframe src="top-app-bars/standard.html?dense"></iframe>
+      <iframe src="top-app-bars/fixed.html?prominent"></iframe>
     </div>
     <div>
-      <iframe src="top-app-bars/standard.html?prominent"></iframe>
+      <iframe src="top-app-bars/fixed.html?dense"></iframe>
     </div>
     <div>
-      <iframe src="top-app-bars/standard.html?prominent&dense"></iframe>
+      <iframe src="top-app-bars/fixed.html?prominent&dense"></iframe>
     </div>
     <div>
-      <iframe src="top-app-bars/standard.html?custom"></iframe>
+      <iframe src="top-app-bars/fixed.html?custom"></iframe>
     </div>
   </main>
-
   <script>
     addEventListener('load', () => document.body.classList.remove('unresolved'));
   </script>

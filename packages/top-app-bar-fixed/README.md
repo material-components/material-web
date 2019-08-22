@@ -1,13 +1,13 @@
-# `<mwc-top-app-bar>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-top-app-bar.svg)](https://www.npmjs.com/package/@material/mwc-top-app-bar)
+# `<mwc-top-app-bar-fixed>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-top-app-bar-fixed.svg)](https://www.npmjs.com/package/@material/mwc-top-app-bar-fixed)
 
 > IMPORTANT: The Material Web Components are a work in progress and subject to
 > major changes until 1.0 release.
 
-Top App Bars are a container for items such as application title, navigation icon, and action items.
+Fixed Top App Bars are a container for items such as application title, navigation icon, and action items that are always visible.
 
-![](images/standard.gif)
+![](images/fixed.gif)
 
-For a fixed position version of this component, see [`<mwc-top-app-bar-fixed>`](http://github.com/material-components/material-components-web-components/tree/master/packages/top-app-bar-fixed)
+For a version of this component that scrolls, see [`<mwc-top-app-bar>`](http://github.com/material-components/material-components-web-components/tree/master/packages/top-app-bar)
 
 For a collapsable version of this component, see [`<mwc-top-app-bar-short>`](http://github.com/material-components/material-components-web-components/tree/master/packages/top-app-bar-short)
 
@@ -16,7 +16,7 @@ For a collapsable version of this component, see [`<mwc-top-app-bar-short>`](htt
 ## Installation
 
 ```sh
-npm install @material/mwc-top-app-bar
+npm install @material/mwc-top-app-bar-fixed
 ```
 
 > NOTE: The Material Web Components are distributed as ES2017 JavaScript
@@ -34,14 +34,14 @@ npm install @material/mwc-top-app-bar
 <img src="images/standard.png" height="56px">
 
 ```html
-<mwc-top-app-bar>
+<mwc-top-app-bar-fixed>
     <mwc-icon-button icon="menu" slot="navigationIcon"></mwc-icon-button>
     <div slot="title">Title</div>
     <mwc-icon-button icon="file_download" slot="actionItems"></mwc-icon-button>
     <mwc-icon-button icon="print" slot="actionItems"></mwc-icon-button>
     <mwc-icon-button icon="favorite" slot="actionItems"></mwc-icon-button>
     <div><!-- content --></div>
-</mwc-top-app-bar>
+</mwc-top-app-bar-fixed>
 ```
 
 ### Dense
@@ -49,14 +49,14 @@ npm install @material/mwc-top-app-bar
 <img src="images/dense.png" height="48px">
 
 ```html
-<mwc-top-app-bar dense>
+<mwc-top-app-bar-fixed dense>
     <mwc-icon-button icon="menu" slot="navigationIcon"></mwc-icon-button>
     <div slot="title">Title</div>
     <mwc-icon-button icon="file_download" slot="actionItems"></mwc-icon-button>
     <mwc-icon-button icon="print" slot="actionItems"></mwc-icon-button>
     <mwc-icon-button icon="favorite" slot="actionItems"></mwc-icon-button>
     <div><!-- content --></div>
-</mwc-top-app-bar>
+</mwc-top-app-bar-fixed>
 ```
 
 ### Prominent
@@ -64,14 +64,14 @@ npm install @material/mwc-top-app-bar
 <img src="images/prominent.png" height="128px">
 
 ```html
-<mwc-top-app-bar prominent>
+<mwc-top-app-bar-fixed prominent>
     <mwc-icon-button icon="menu" slot="navigationIcon"></mwc-icon-button>
     <div slot="title">Title</div>
     <mwc-icon-button icon="file_download" slot="actionItems"></mwc-icon-button>
     <mwc-icon-button icon="print" slot="actionItems"></mwc-icon-button>
     <mwc-icon-button icon="favorite" slot="actionItems"></mwc-icon-button>
     <div><!-- content --></div>
-</mwc-top-app-bar>
+</mwc-top-app-bar-fixed>
 ```
 
 ### Prominent and Dense
@@ -79,14 +79,14 @@ npm install @material/mwc-top-app-bar
 <img src="images/prominent_and_dense.png" height="96px">
 
 ```html
-<mwc-top-app-bar prominent dense>
+<mwc-top-app-bar-fixed prominent dense>
     <mwc-icon-button icon="menu" slot="navigationIcon"></mwc-icon-button>
     <div slot="title">Title</div>
     <mwc-icon-button icon="file_download" slot="actionItems"></mwc-icon-button>
     <mwc-icon-button icon="print" slot="actionItems"></mwc-icon-button>
     <mwc-icon-button icon="favorite" slot="actionItems"></mwc-icon-button>
     <div><!-- content --></div>
-</mwc-top-app-bar>
+</mwc-top-app-bar-fixed>
 ```
 
 ### Customize Colors
@@ -94,7 +94,7 @@ npm install @material/mwc-top-app-bar
 <img src="images/custom_colors.png" height="56px">
 
 ```css
-mwc-top-app-bar {
+mwc-top-app-bar-fixed {
   --mdc-theme-primary: orange;
   --mdc-theme-on-primary: black;
 }

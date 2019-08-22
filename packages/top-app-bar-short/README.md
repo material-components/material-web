@@ -1,22 +1,22 @@
-# `<mwc-top-app-bar>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-top-app-bar.svg)](https://www.npmjs.com/package/@material/mwc-top-app-bar)
+# `<mwc-top-app-bar-short>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-top-app-bar-short.svg)](https://www.npmjs.com/package/@material/mwc-top-app-bar-short)
 
 > IMPORTANT: The Material Web Components are a work in progress and subject to
 > major changes until 1.0 release.
 
-Top App Bars are a container for items such as application title, navigation icon, and action items.
+Short Top App Bars are a container for items such as application title, navigation icon, and an action item that shrinks into the corner.
 
-![](images/standard.gif)
+![](images/short.gif)
 
 For a fixed position version of this component, see [`<mwc-top-app-bar-fixed>`](http://github.com/material-components/material-components-web-components/tree/master/packages/top-app-bar-fixed)
 
-For a collapsable version of this component, see [`<mwc-top-app-bar-short>`](http://github.com/material-components/material-components-web-components/tree/master/packages/top-app-bar-short)
+For a scrollable version of this component, see [`<mwc-top-app-bar>`](http://github.com/material-components/material-components-web-components/tree/master/packages/top-app-bar)
 
 [Material Design Guidelines: App Bars: Top](https://material.io/design/components/app-bars-top.html)
 
 ## Installation
 
 ```sh
-npm install @material/mwc-top-app-bar
+npm install @material/mwc-top-app-bar-short
 ```
 
 > NOTE: The Material Web Components are distributed as ES2017 JavaScript
@@ -34,59 +34,27 @@ npm install @material/mwc-top-app-bar
 <img src="images/standard.png" height="56px">
 
 ```html
-<mwc-top-app-bar>
+<mwc-top-app-bar-short>
     <mwc-icon-button icon="menu" slot="navigationIcon"></mwc-icon-button>
     <div slot="title">Title</div>
-    <mwc-icon-button icon="file_download" slot="actionItems"></mwc-icon-button>
     <mwc-icon-button icon="print" slot="actionItems"></mwc-icon-button>
-    <mwc-icon-button icon="favorite" slot="actionItems"></mwc-icon-button>
     <div><!-- content --></div>
-</mwc-top-app-bar>
+</mwc-top-app-bar-short>
 ```
 
-### Dense
+### Always Collapsed
 
-<img src="images/dense.png" height="48px">
+![](images/collapsed.gif)
 
-```html
-<mwc-top-app-bar dense>
-    <mwc-icon-button icon="menu" slot="navigationIcon"></mwc-icon-button>
-    <div slot="title">Title</div>
-    <mwc-icon-button icon="file_download" slot="actionItems"></mwc-icon-button>
-    <mwc-icon-button icon="print" slot="actionItems"></mwc-icon-button>
-    <mwc-icon-button icon="favorite" slot="actionItems"></mwc-icon-button>
-    <div><!-- content --></div>
-</mwc-top-app-bar>
-```
-
-### Prominent
-
-<img src="images/prominent.png" height="128px">
+<img src="images/collapsed.png" height="56px">
 
 ```html
-<mwc-top-app-bar prominent>
+<mwc-top-app-bar-short alwaysCollapsed>
     <mwc-icon-button icon="menu" slot="navigationIcon"></mwc-icon-button>
     <div slot="title">Title</div>
-    <mwc-icon-button icon="file_download" slot="actionItems"></mwc-icon-button>
     <mwc-icon-button icon="print" slot="actionItems"></mwc-icon-button>
-    <mwc-icon-button icon="favorite" slot="actionItems"></mwc-icon-button>
     <div><!-- content --></div>
-</mwc-top-app-bar>
-```
-
-### Prominent and Dense
-
-<img src="images/prominent_and_dense.png" height="96px">
-
-```html
-<mwc-top-app-bar prominent dense>
-    <mwc-icon-button icon="menu" slot="navigationIcon"></mwc-icon-button>
-    <div slot="title">Title</div>
-    <mwc-icon-button icon="file_download" slot="actionItems"></mwc-icon-button>
-    <mwc-icon-button icon="print" slot="actionItems"></mwc-icon-button>
-    <mwc-icon-button icon="favorite" slot="actionItems"></mwc-icon-button>
-    <div><!-- content --></div>
-</mwc-top-app-bar>
+</mwc-top-app-bar-short>
 ```
 
 ### Customize Colors
@@ -94,7 +62,7 @@ npm install @material/mwc-top-app-bar
 <img src="images/custom_colors.png" height="56px">
 
 ```css
-mwc-top-app-bar {
+mwc-top-app-bar-short {
   --mdc-theme-primary: orange;
   --mdc-theme-on-primary: black;
 }
@@ -105,7 +73,7 @@ mwc-top-app-bar {
 ### Slots
 | Name | Description
 | ---- | -----------
-| `actionItems` | A number of `<mwc-icon-button>` elements to use for action icons on the right side.
+| `actionItems` | One `<mwc-icon-button>` element to use for action icons on the right side.
 | `navigationIcon` | One `<mwc-icon-button>` element to use for the left icon.
 | `title` | A `<div>` or `<span>` that will be used as the title text.
 | _default_ | Scrollable content to display under the bar. This may be the entire application.
@@ -113,8 +81,8 @@ mwc-top-app-bar {
 ### Properties/Attributes
 | Name | Type | Default | Description
 | ---- | ---- | ------- | -----------
-| `dense` | `boolean` | `false` | Makes the bar a little smaller for higher density applications.
-| `prominent` | `boolean` | `false` | Makes the bar much taller, can be combined with `dense`.
+| `alwaysCollapsed` | `boolean` | `false` | Whether the short top app bar should always be collapsed.
+| `collapsed` | `boolean` (read-only) | `false` | Whether the short top app bar is currently collapsed.
 | `scrollTarget` | `HTMLElement` \| `Window` | `window` | Element used to listen for `scroll` events.
 
 ### Methods
