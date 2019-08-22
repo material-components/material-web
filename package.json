@@ -15,6 +15,7 @@
     "lint:typescript": "eslint \"packages/**/*.ts\"",
     "lint:lit": "lit-analyzer \"packages/**/*.ts\" --strict --quiet",
     "test": "karma-proxy start --single-run",
+    "test:debug": "karma-proxy start --single-run false --browsers Chrome",
     "test:bench": "node test/lib/benchmark/cli.js",
     "postinstall": "./scripts/bootstrap.sh",
     "build": "npm run build:styling && npm run build:typescript -- --verbose",
