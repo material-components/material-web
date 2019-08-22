@@ -4,7 +4,9 @@
     "composite": true,
     "outDir": "./lib",
     "tsBuildInfoFile": ".tsbuildinfo",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "sourceMap": false,
+    "inlineSources": false
   },
   "include": [
     "src/custom_typings/*.d.ts",
