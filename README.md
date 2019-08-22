@@ -81,7 +81,8 @@ Below are instructions for setting up project development.
 1. Run tests with `npm run build:tests && npm run test`
 1. Run benchmarks with `npm run build:tests && npm run test:bench`
 
-*Note:* You can debug specific tests by running `npm run test:debug -- --package mwc-button,mwc-fab`
+*Note:* You can debug specific tests by running `npm run test:debug -- --packages mwc-button,mwc-fab`
+or you may use wildcards such as `npm run test:debug -- --packages mwc-icon-button*`
 
 ### Developing Components
 
