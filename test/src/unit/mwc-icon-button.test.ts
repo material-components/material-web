@@ -16,11 +16,10 @@
 
 import {IconButton} from '@material/mwc-icon-button';
 
-const ICON_SELECTOR = '.mdc-icon-button__icon.mdc-icon-button__icon--on';
-const OFF_ICON_SELECTOR = '.mdc-icon-button__icon:not(.mdc-icon-button__icon--on)';
+const ICON_SELECTOR = 'i.material-icons';
 
 /** @type {HTMLElement} */
-let element;
+let element: IconButton;
 
 suite('mwc-icon-button');
 
@@ -41,78 +40,40 @@ test('setting `icon` updates the textContent inside <i class="mdc-icon-button__i
   let icon = 'check';
   element.icon = icon;
   await element.updateComplete;
-  const i = element.shadowRoot.querySelector(ICON_SELECTOR);
-  assert.match(i.textContent, new RegExp(`^\\s*${icon}\\s*$`));
+  const i = element.shadowRoot!.querySelector(ICON_SELECTOR);
+  expect(i).to.be.ok;
+  if (!i) {
+    return;
+  }
+
+  let content = i.textContent as string;
+
+  assert.match(content, new RegExp(`^\\s*${icon}\\s*$`));
 
   icon = 'menu';
   element.icon = icon;
   await element.updateComplete;
-  assert.match(i.textContent, new RegExp(`^\\s*${icon}\\s*$`));
-});
-
-test('setting `offIcon` updates the textContent inside <i class="mdc-icon-button__icon">', async () => {
-  let icon = 'check';
-  element.offIcon = icon;
-  await element.updateComplete;
-  const i = element.shadowRoot.querySelector(OFF_ICON_SELECTOR);
-  assert.match(i.textContent, new RegExp(`^\\s*${icon}\\s*$`));
-
-  icon = 'menu';
-  element.offIcon = icon;
-  await element.updateComplete;
-  assert.match(i.textContent, new RegExp(`^\\s*${icon}\\s*$`));
+  content = i.textContent as string;
+  assert.match(content, new RegExp(`^\\s*${icon}\\s*$`));
 });
 
 test('setting `label` updates the aria-label attribute on the native button element', async () => {
   let label = 'hello';
   element.label = label;
   await element.updateComplete;
-  const button = element.shadowRoot.querySelector('button');
+  const button = element.shadowRoot!.querySelector('button')!;
   assert.equal(button.getAttribute('aria-label'), label);
-});
-
-test('setting `on` updates the aria-pressed attribute on the native button element', async () => {
-  element.icon = 'alarm_on';
-  element.offIcon = 'alarm_off';
-
-  element.on = true;
-  await element.updateComplete;
-  let button = element.shadowRoot.querySelector('button');
-  assert.equal(button.getAttribute('aria-pressed'), 'true');
-
-  element.on = false;
-  await element.updateComplete;
-  assert.equal(button.getAttribute('aria-pressed'), 'false');
 });
 
 test('setting `disabled` updates the disabled attribute on the native button element', async () => {
   element.disabled = true;
   await element.updateComplete;
-  const button = element.shadowRoot.querySelector('button');
+  const button = element.shadowRoot!.querySelector('button')!;
   assert.equal(button.hasAttribute('disabled'), true);
 
   element.disabled = false;
   await element.updateComplete;
   assert.equal(button.hasAttribute('disabled'), false);
-});
-
-test('icon button does not toggle when clicked with only one icon', async () => {
-  element.icon = 'alarm_on';
-  await element.updateComplete;
-  assert.equal(element.on, true);
-  element.mdcRoot.click();
-  await element.updateComplete;
-  assert.equal(element.on, true);
-});
-
-test('icon button toggles when clicked with two icons', async () => {
-  element.icon = 'alarm_on';
-  element.offIcon = 'alarm_off';
-  await element.updateComplete;
-  assert.equal(element.on, false);
-  element.mdcRoot.click();
-  await element.updateComplete;
-  assert.equal(element.on, true);
 });
 
 const svgTemplate = document.createElement('template');
@@ -131,48 +92,6 @@ test('nodes with `slot=icon` will serve as the on icon', async () => {
   const icon = iconQuery.cloneNode(true);
   element.appendChild(icon);
   await element.updateComplete;
-  const iconSlot = element.shadowRoot.querySelector('slot[name="icon"]');
+  const iconSlot = element.shadowRoot!.querySelector('slot[name="icon"]') as HTMLSlotElement;
   assert.include(iconSlot.assignedNodes(), icon);
-});
-
-test('nodes with `slot=offIcon` will serve as the off icon', async () => {
-  const iconQuery = svgTemplate.content.querySelector('svg[slot="offIcon"]');
-  expect(iconQuery).to.be.ok;
-
-  if (!iconQuery) {
-    return;
-  }
-
-  const icon = iconQuery.cloneNode(true);
-  element.appendChild(icon);
-  await element.updateComplete;
-  const iconSlot = element.shadowRoot.querySelector('slot[name="offIcon"]');
-  assert.include(iconSlot.assignedNodes(), icon);
-});
-
-test('icon-button does not toggle with only slotted icon', async () => {
-  const iconQuery = svgTemplate.content.querySelector('svg[slot="icon"]');
-  expect(iconQuery).to.be.ok;
-
-  if (!iconQuery) {
-    return;
-  }
-
-  const icon = iconQuery.cloneNode(true);
-  element.appendChild(icon);
-  await element.updateComplete;
-  assert.equal(element.on, true);
-  element.mdcRoot.click();
-  await element.updateComplete;
-  assert.equal(element.on, true);
-});
-
-test('icon-button toggles with slotted icon and offIcon', async () => {
-  const fragment = svgTemplate.content.cloneNode(true);
-  element.appendChild(fragment);
-  await element.updateComplete;
-  assert.equal(element.on, false);
-  element.mdcRoot.click();
-  await element.updateComplete;
-  assert.equal(element.on, true);
 });

@@ -55,6 +55,13 @@ export class IconButtonToggleBase extends BaseElement {
   }
 
   protected handleClick() {
+    const onIconSlotted = this.querySelector('[slot="onIcon"]');
+    const offIconSlotted = this.querySelector('[slot="offIcon"]');
+
+    if (!(this.onIcon || onIconSlotted) || !(this.offIcon || offIconSlotted)) {
+      return;
+    }
+
     this.on = !this.on;
     this.mdcFoundation.handleClick();
   }

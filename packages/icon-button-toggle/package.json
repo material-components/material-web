@@ -2,7 +2,7 @@
   "name": "@material/mwc-icon-button-toggle",
   "version": "0.6.0",
   "description": "",
-  "main": "mwc-icon-button.js",
+  "main": "mwc-icon-button-toggle.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/material-components/material-components-web-components.git",
