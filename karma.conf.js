@@ -76,20 +76,25 @@ const HEADLESS_LAUNCHERS = {
 };
 
 module.exports = function(config) {
+  const packages = config.packages ? config.packages.split(',') : [];
+  const fileEntries = [];
+  const defaultFileEntry = {pattern: 'test/lib/unit/*.test.js', watched: true, type: 'module'};
+
+  for (const package of packages) {
+    const fileEntry = {pattern: `test/lib/unit/${package}.test.js`, watched: true, type:'module'};
+    fileEntries.push(fileEntry);
+  }
+
+  const testFileEntries = fileEntries.length ? fileEntries : [defaultFileEntry];
+
   config.set({
     basePath: '',
     frameworks: ['mocha', 'chai'],
     files: [
       {pattern: 'node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js', watched: false},
-      {pattern: 'node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js', watched: false},
-      {pattern: 'node_modules/**/*', included: false, watched: false},
-      {pattern: 'test/lib/unit/*.test.js.map', included: false, watched: true},
-      {pattern: 'test/lib/unit/*.test.d.ts', included: false, watched: true},
-      {pattern: 'test/lib/unit/*.test.js', watched: true, type: 'module'},
+      {pattern: 'node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js', watched: false},
+      ...testFileEntries
     ],
-    preprocessors: {
-      'test/lib/unit/mwc-*.js': ['sourcemap'],
-    },
 
     browsers: determineBrowsers(),
     browserDisconnectTimeout: 40000,
