@@ -78,8 +78,10 @@ Below are instructions for setting up project development.
 1. Run a development server with `npm run dev`
     - View the demos by accessing `<dev server url>`/demos/index.html
     - This will also build the project.
-1. Run tests with `npm run test`
+1. Run tests with `npm run build:tests && npm run test`
 1. Run benchmarks with `npm run build:tests && npm run test:bench`
+
+*Note:* You can debug specific tests by running `npm run test:debug -- --package mwc-button,mwc-fab`
 
 ### Developing Components
 
