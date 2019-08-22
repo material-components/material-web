@@ -15,20 +15,67 @@
  */
 
 import {TextField} from '@material/mwc-textfield';
+import {cssClasses} from '@material/textfield/constants';
+import {fixture, TestFixture} from '../util/helpers'
+import { html } from 'lit-html';
 
-let element;
+let element: TextField;
+let fixt: TestFixture;
 
-suite('mwc-textfield');
+const basic = html`
+  <mwc-textfield></mwc-textfield>
+`;
 
-beforeEach(() => {
-  element = document.createElement('mwc-textfield');
-  document.body.appendChild(element);
-});
+const required = html`
+  <mwc-textfield label="I am required" required></mwc-textfield>
+`;
 
-afterEach(() => {
-  document.body.removeChild(element);
+suite('mwc-textfield - basic');
+
+beforeEach(async () => {
+  fixt = await fixture(basic);
+
+  element = fixt.root.querySelector('mwc-textfield')!;
 });
 
 test('initializes as an mwc-textfield', () => {
   assert.instanceOf(element, TextField);
+});
+
+test('setting value sets on input', async () => {
+  element.value = 'my test value';
+
+  const inputElement = element.shadowRoot!.querySelector('input');
+  assert(inputElement, 'my test value');
+});
+
+afterEach(() => {
+  if (fixt) {
+    fixt.remove();
+  }
+});
+
+const isUiInvalid = (element: TextField) => {
+  return !!element.shadowRoot!.querySelector(`.${cssClasses.INVALID}`);
+}
+
+suite('mwc-textfield - validation');
+
+before(async () => {
+  fixt = await fixture(required);
+  element = fixt.root.querySelector('mwc-textfield')!;
+});
+
+test('required invalidates on blur', async () => {
+  expect(isUiInvalid(element)).to.be.false;
+  element.focus();
+  element.blur();
+  await element.requestUpdate();
+  expect(isUiInvalid(element)).to.be.true;
+});
+
+afterEach(() => {
+  if (fixt) {
+    fixt.remove();
+  }
 });
