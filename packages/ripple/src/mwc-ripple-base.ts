@@ -29,7 +29,7 @@ export class RippleBase extends LitElement {
 
   @property({type: Boolean}) disabled = false;
 
-  @property() protected interactionNode: HTMLElement = this;
+  @property({attribute: false}) protected interactionNode: HTMLElement = this;
 
   connectedCallback() {
     if (this.interactionNode === this) {
