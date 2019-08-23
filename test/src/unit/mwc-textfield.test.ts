@@ -20,8 +20,6 @@ import {html} from 'lit-html';
 
 import {fixture, TestFixture} from '../util/helpers'
 
-let element: TextField;
-let fixt: TestFixture;
 
 const basic = html`
   <mwc-textfield></mwc-textfield>
@@ -31,53 +29,59 @@ const required = html`
   <mwc-textfield label="I am required" required></mwc-textfield>
 `;
 
-suite('mwc-textfield - basic:');
-
-beforeEach(async () => {
-  fixt = await fixture(basic);
-
-  element = fixt.root.querySelector('mwc-textfield')!;
-});
-
-test('initializes as an mwc-textfield', () => {
-  assert.instanceOf(element, TextField);
-});
-
-test('setting value sets on input', async () => {
-  element.value = 'my test value';
-
-  const inputElement = element.shadowRoot!.querySelector('input');
-  assert(inputElement, 'my test value');
-});
-
-afterEach(() => {
-  if (fixt) {
-    fixt.remove();
-  }
-});
-
 const isUiInvalid =
     (element: TextField) => {
       return !!element.shadowRoot!.querySelector(`.${cssClasses.INVALID}`);
     }
 
-suite('mwc-textfield - validation:');
+suite('mwc-textfield:' , () => {
+  let element: TextField;
+  let fixt: TestFixture;
 
-before(async () => {
-  fixt = await fixture(required);
-  element = fixt.root.querySelector('mwc-textfield')!;
-  await element.updateComplete;
-});
+  suite('basic', () => {
 
-test('required invalidates on blur', async () => {
-  expect(isUiInvalid(element)).to.be.false;
-  element.focus();
-  element.blur();
-  expect(isUiInvalid(element)).to.be.true;
-});
+    setup(async () => {
+      fixt = await fixture(basic);
 
-afterEach(() => {
-  if (fixt) {
-    fixt.remove();
-  }
+      element = fixt.root.querySelector('mwc-textfield')!;
+    });
+
+    test('initializes as an mwc-textfield', () => {
+      assert.instanceOf(element, TextField);
+    });
+
+    test('setting value sets on input', async () => {
+      element.value = 'my test value';
+
+      const inputElement = element.shadowRoot!.querySelector('input');
+      assert(inputElement, 'my test value');
+    });
+
+    teardown(() => {
+      if (fixt) {
+        fixt.remove();
+      }
+    });
+  });
+
+  suite('validation', () => {
+    suiteSetup(async () => {
+      fixt = await fixture(required);
+      element = fixt.root.querySelector('mwc-textfield')!;
+      await element.updateComplete;
+    });
+
+    test('required invalidates on blur', async () => {
+      expect(isUiInvalid(element)).to.be.false;
+      element.focus();
+      element.blur();
+      expect(isUiInvalid(element)).to.be.true;
+    });
+
+    teardown(() => {
+      if (fixt) {
+        fixt.remove();
+      }
+    });
+  });
 });

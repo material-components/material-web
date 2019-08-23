@@ -108,7 +108,7 @@ module.exports = function(config) {
     client: {
       mocha: {
         reporter: 'html',
-        ui: 'qunit',
+        ui: 'tdd',
       },
     },
 

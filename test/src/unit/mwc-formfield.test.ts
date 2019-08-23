@@ -16,19 +16,19 @@
 
 import {Formfield} from '@material/mwc-formfield';
 
-let element;
 
-suite('mwc-formfield');
+suite('mwc-formfield', () => {
+  let element;
+  setup(() => {
+    element = document.createElement('mwc-formfield');
+    document.body.appendChild(element);
+  });
 
-beforeEach(() => {
-  element = document.createElement('mwc-formfield');
-  document.body.appendChild(element);
-});
+  teardown(() => {
+    document.body.removeChild(element);
+  });
 
-afterEach(() => {
-  document.body.removeChild(element);
-});
-
-test('initializes as an mwc-formfield', () => {
-  assert.instanceOf(element, Formfield);
+  test('initializes as an mwc-formfield', () => {
+    assert.instanceOf(element, Formfield);
+  });
 });

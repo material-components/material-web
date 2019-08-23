@@ -18,48 +18,49 @@ import {Button} from '@material/mwc-button';
 
 const ICON_SELECTOR = '.mdc-button__icon';
 
-let element;
 
-suite('mwc-button');
+suite('mwc-button', () => {
+  let element;
 
-beforeEach(() => {
-  element = document.createElement('mwc-button');
-  document.body.appendChild(element);
-});
+  setup(() => {
+    element = document.createElement('mwc-button');
+    document.body.appendChild(element);
+  });
 
-afterEach(() => {
-  document.body.removeChild(element);
-});
+  teardown(() => {
+    document.body.removeChild(element);
+  });
 
-test('initializes as an mwc-button', () => {
-  assert.instanceOf(element, Button);
-});
+  test('initializes as an mwc-button', () => {
+    assert.instanceOf(element, Button);
+  });
 
-test(
-    'get/set disabled updates the disabled property on the native button element',
-    async () => {
-      element.disabled = true;
-      await element.updateComplete;
-      const button = element.shadowRoot.querySelector('button');
-      assert.equal(button.hasAttribute('disabled'), true);
+  test(
+      'get/set disabled updates the disabled property on the native button element',
+      async () => {
+        element.disabled = true;
+        await element.updateComplete;
+        const button = element.shadowRoot.querySelector('button');
+        assert.equal(button.hasAttribute('disabled'), true);
 
-      element.disabled = false;
-      await element.updateComplete;
-      assert.equal(button.hasAttribute('disabled'), false);
-    });
+        element.disabled = false;
+        await element.updateComplete;
+        assert.equal(button.hasAttribute('disabled'), false);
+      });
 
-test('setting `icon` adds an icon to the button', async () => {
-  await element.updateComplete;
-  let icon = element.shadowRoot.querySelector(ICON_SELECTOR);
-  assert.equal(icon, null);
+  test('setting `icon` adds an icon to the button', async () => {
+    await element.updateComplete;
+    let icon = element.shadowRoot.querySelector(ICON_SELECTOR);
+    assert.equal(icon, null);
 
-  element.icon = 'check';
-  await element.updateComplete;
-  icon = element.shadowRoot.querySelector(ICON_SELECTOR);
-  assert.instanceOf(icon, Element);
+    element.icon = 'check';
+    await element.updateComplete;
+    icon = element.shadowRoot.querySelector(ICON_SELECTOR);
+    assert.instanceOf(icon, Element);
 
-  element.icon = undefined;
-  await element.updateComplete;
-  icon = element.shadowRoot.querySelector(ICON_SELECTOR);
-  assert.equal(icon, null);
+    element.icon = undefined;
+    await element.updateComplete;
+    icon = element.shadowRoot.querySelector(ICON_SELECTOR);
+    assert.equal(icon, null);
+  });
 });

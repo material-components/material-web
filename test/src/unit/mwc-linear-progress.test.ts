@@ -16,19 +16,21 @@
 
 import {LinearProgress} from '@material/mwc-linear-progress';
 
-let element;
 
-suite('mwc-linear-progress');
+suite('mwc-linear-progress', () => {
+  let element;
 
-beforeEach(() => {
-  element = document.createElement('mwc-linear-progress');
-  document.body.appendChild(element);
+  setup(() => {
+    element = document.createElement('mwc-linear-progress');
+    document.body.appendChild(element);
+  });
+
+  teardown(() => {
+    document.body.removeChild(element);
+  });
+
+  test('initializes as an mwc-linear-progress', () => {
+    assert.instanceOf(element, LinearProgress);
+  });
 });
 
-afterEach(() => {
-  document.body.removeChild(element);
-});
-
-test('initializes as an mwc-linear-progress', () => {
-  assert.instanceOf(element, LinearProgress);
-});

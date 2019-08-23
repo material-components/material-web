@@ -16,43 +16,56 @@
 
 import {Ripple} from '@material/mwc-ripple';
 
-let element, container;
+const getInteractionNode = (element: Ripple) => (element as any).interactionNode as HTMLElement;
+const setInteractionNode = (ripple: Ripple, element: HTMLElement) => {
+  (ripple as any).interactionNode = element;
+};
 
-suite('mwc-ripple');
+suite('mwc-ripple', () => {
+  let element: Ripple, container;
+  suite ('baisc', () => {
+    setup(() => {
+      container = document.createElement('div');
+      document.body.appendChild(container);
 
-beforeEach(() => {
-  container = document.createElement('div');
-  document.body.appendChild(container);
+      element = document.createElement('mwc-ripple');
+      container.appendChild(element);
+    });
 
-  element = document.createElement('mwc-ripple');
-  container.appendChild(element);
+    teardown(() => {
+      document.body.removeChild(container);
+    });
+
+    test('initializes as an mwc-ripple', () => {
+      assert.instanceOf(element, Ripple);
+    });
+
+    test('sets interactionNode to parent', async () => {
+      await element.updateComplete;
+      const interactionNode = getInteractionNode(element);
+
+      assert(interactionNode == container);
+    });
+  });
+
+  suite('nested', () => {
+    test('respects interactionNode', async () => {
+      container = document.createElement('div');
+      document.body.appendChild(container);
+
+      element = document.createElement('mwc-ripple');
+      setInteractionNode(element, document.body);
+
+      container.appendChild(element);
+
+      await element.updateComplete;
+      const interactionNode = getInteractionNode(element);
+
+      assert(interactionNode == document.body);
+
+      document.body.removeChild(container);
+    });
+  });
+
 });
 
-afterEach(() => {
-  document.body.removeChild(container);
-});
-
-test('initializes as an mwc-ripple', () => {
-  assert.instanceOf(element, Ripple);
-});
-
-test('sets interactionNode to parent', async () => {
-  await element.updateComplete;
-  assert(element.interactionNode == container);
-});
-
-suite('mwc-ripple nested');
-
-test('respects interactionNode', async () => {
-  container = document.createElement('div');
-  document.body.appendChild(container);
-
-  element = document.createElement('mwc-ripple');
-  element.interactionNode = document.body
-  container.appendChild(element);
-
-  await element.updateComplete;
-  assert(element.interactionNode == document.body);
-
-  document.body.removeChild(container);
-});

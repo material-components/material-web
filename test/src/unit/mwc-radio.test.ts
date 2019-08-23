@@ -17,125 +17,126 @@
 import {Radio} from '@material/mwc-radio';
 import {html, render} from 'lit-html';
 
-let container;
 
-suite('mwc-radio');
+suite('mwc-radio', () => {
+  let container;
 
-before(() => {
-  container = document.createElement('main');
-  document.body.appendChild(container);
-});
-
-afterEach(() => {
-  render(html``, container);
-});
-
-after(() => {
-  document.body.removeChild(container);
-});
-
-test('initializes as an mwc-radio', () => {
-  const radio = document.createElement('mwc-radio');
-  container.appendChild(radio);
-  assert.instanceOf(radio, Radio);
-});
-
-suite('manages selection groups', () => {
-  test('synchronously', async () => {
-    render(
-        html`
-        <mwc-radio id="a1" name="a"></mwc-group>
-        <mwc-radio id="a2" name="a"></mwc-group>
-        <mwc-radio id="b1" name="b"></mwc-group>
-        `,
-        container);
-
-    const [a1, a2, b1] = [...container.querySelectorAll('mwc-radio')];
-
-    assert.isFalse(a1.checked);
-    assert.isFalse(a2.checked);
-    assert.isFalse(b1.checked);
-
-    a2.checked = true;
-    a1.checked = true;
-    assert.isTrue(a1.checked);
-    assert.isFalse(a2.checked);
-    assert.isFalse(b1.checked);
-
-    a2.checked = true;
-    a1.checked = true;
-    a2.checked = true;
-    assert.isFalse(a1.checked);
-    assert.isTrue(a2.checked);
-    assert.isFalse(b1.checked);
-
-    a1.checked = true;
-    assert.isTrue(a1.checked);
-    assert.isFalse(a2.checked);
-    assert.isTrue(b1.checked);
-
-    b1.checked = true;
-    assert.isFalse(a1.checked);
-    assert.isTrue(a2.checked);
-    assert.isTrue(b1.checked);
-
-    a2.checked = false;
-    b1.checked = false;
-    assert.isFalse(a1.checked);
-    assert.isFalse(a2.checked);
-    assert.isFalse(b1.checked);
+  suiteSetup(() => {
+    container = document.createElement('main');
+    document.body.appendChild(container);
   });
 
-  test('after updates settle', async () => {
-    render(
-        html`
-        <mwc-radio id="a1" name="a"></mwc-group>
-        <mwc-radio id="a2" name="a"></mwc-group>
-        <mwc-radio id="b1" name="b"></mwc-group>
-        `,
-        container);
+  teardown(() => {
+    render(html``, container);
+  });
 
-    const radios = [...container.querySelectorAll('mwc-radio')];
-    const [a1, a2, b1] = radios;
-    const allUpdatesComplete = () =>
-        Promise.all(radios.map((radio) => radio.updateComplete));
+  suiteTeardown(() => {
+    document.body.removeChild(container);
+  });
 
-    await allUpdatesComplete();
-    assert.isFalse(a1.checked);
-    assert.isFalse(a2.checked);
-    assert.isFalse(b1.checked);
+  test('initializes as an mwc-radio', () => {
+    const radio = document.createElement('mwc-radio');
+    container.appendChild(radio);
+    assert.instanceOf(radio, Radio);
+  });
 
-    a2.checked = true;
-    a1.checked = true;
-    await allUpdatesComplete();
-    assert.isTrue(a1.checked);
-    assert.isFalse(a2.checked);
-    assert.isFalse(b1.checked);
+  suite('manages selection groups', () => {
+    test('synchronously', async () => {
+      render(
+          html`
+          <mwc-radio id="a1" name="a"></mwc-radio>
+          <mwc-radio id="a2" name="a"></mwc-radio>
+          <mwc-radio id="b1" name="b"></mwc-radio>
+          `,
+          container);
 
-    a2.checked = true;
-    a1.checked = true;
-    a2.checked = true;
-    await allUpdatesComplete();
-    assert.isFalse(a1.checked);
-    assert.isTrue(a2.checked);
-    assert.isFalse(b1.checked);
+      const [a1, a2, b1] = [...container.querySelectorAll('mwc-radio')];
 
-    a1.checked = true;
-    assert.isTrue(a1.checked);
-    assert.isFalse(a2.checked);
-    assert.isTrue(b1.checked);
+      assert.isFalse(a1.checked);
+      assert.isFalse(a2.checked);
+      assert.isFalse(b1.checked);
 
-    b1.checked = true;
-    await allUpdatesComplete();
-    assert.isFalse(a1.checked);
-    assert.isTrue(a2.checked);
-    assert.isTrue(b1.checked);
+      a2.checked = true;
+      a1.checked = true;
+      assert.isTrue(a1.checked);
+      assert.isFalse(a2.checked);
+      assert.isFalse(b1.checked);
 
-    a2.checked = false;
-    b1.checked = false;
-    await allUpdatesComplete();
-    assert.isFalse(a1.checked);
-    assert.isFalse(a2.checked);
-    assert.isFalse(b1.checked);
+      a2.checked = true;
+      a1.checked = true;
+      a2.checked = true;
+      assert.isFalse(a1.checked);
+      assert.isTrue(a2.checked);
+      assert.isFalse(b1.checked);
+
+      a1.checked = true;
+      assert.isTrue(a1.checked);
+      assert.isFalse(a2.checked);
+      assert.isFalse(b1.checked);
+
+      b1.checked = true;
+      assert.isTrue(a1.checked);
+      assert.isFalse(a2.checked);
+      assert.isTrue(b1.checked);
+
+      a1.checked = false;
+      b1.checked = false;
+      assert.isFalse(a1.checked);
+      assert.isFalse(a2.checked);
+      assert.isFalse(b1.checked);
+    });
+
+    test('after updates settle', async () => {
+      render(
+          html`
+          <mwc-radio id="a1" name="a"></mwc-radio>
+          <mwc-radio id="a2" name="a"></mwc-radio>
+          <mwc-radio id="b1" name="b"></mwc-radio>
+          `,
+          container);
+
+      const radios = [...container.querySelectorAll('mwc-radio')];
+      const [a1, a2, b1] = radios;
+      const allUpdatesComplete = () =>
+          Promise.all(radios.map((radio) => radio.updateComplete));
+
+      await allUpdatesComplete();
+      assert.isFalse(a1.checked);
+      assert.isFalse(a2.checked);
+      assert.isFalse(b1.checked);
+
+      a2.checked = true;
+      a1.checked = true;
+      await allUpdatesComplete();
+      assert.isTrue(a1.checked);
+      assert.isFalse(a2.checked);
+      assert.isFalse(b1.checked);
+
+      a2.checked = true;
+      a1.checked = true;
+      a2.checked = true;
+      await allUpdatesComplete();
+      assert.isFalse(a1.checked);
+      assert.isTrue(a2.checked);
+      assert.isFalse(b1.checked);
+
+      a1.checked = true;
+      assert.isTrue(a1.checked);
+      assert.isFalse(a2.checked);
+      assert.isFalse(b1.checked);
+
+      b1.checked = true;
+      await allUpdatesComplete();
+      assert.isTrue(a1.checked);
+      assert.isFalse(a2.checked);
+      assert.isTrue(b1.checked);
+
+      a1.checked = false;
+      b1.checked = false;
+      await allUpdatesComplete();
+      assert.isFalse(a1.checked);
+      assert.isFalse(a2.checked);
+      assert.isFalse(b1.checked);
+    });
   });
 });

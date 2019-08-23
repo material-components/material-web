@@ -16,19 +16,21 @@
 
 import {Icon} from '@material/mwc-icon';
 
-let element;
 
-suite('mwc-icon');
+suite('mwc-icon', () => {
+  let element;
 
-beforeEach(() => {
-  element = document.createElement('mwc-icon');
-  document.body.appendChild(element);
+  setup(() => {
+    element = document.createElement('mwc-icon');
+    document.body.appendChild(element);
+  });
+
+  teardown(() => {
+    document.body.removeChild(element);
+  });
+
+  test('initializes as an mwc-icon', () => {
+    assert.instanceOf(element, Icon);
+  });
 });
 
-afterEach(() => {
-  document.body.removeChild(element);
-});
-
-test('initializes as an mwc-icon', () => {
-  assert.instanceOf(element, Icon);
-});

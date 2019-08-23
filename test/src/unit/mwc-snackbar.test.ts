@@ -16,19 +16,21 @@
 
 import {Snackbar} from '@material/mwc-snackbar';
 
-let element;
 
-suite('mwc-snackbar');
+suite('mwc-snackbar', () => {
+  let element;
 
-beforeEach(() => {
-  element = document.createElement('mwc-snackbar');
-  document.body.appendChild(element);
+  setup(() => {
+    element = document.createElement('mwc-snackbar');
+    document.body.appendChild(element);
+  });
+
+  teardown(() => {
+    document.body.removeChild(element);
+  });
+
+  test('initializes as an mwc-snackbar', () => {
+    assert.instanceOf(element, Snackbar);
+  });
 });
 
-afterEach(() => {
-  document.body.removeChild(element);
-});
-
-test('initializes as an mwc-snackbar', () => {
-  assert.instanceOf(element, Snackbar);
-});
