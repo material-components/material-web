@@ -112,16 +112,6 @@ suite('mwc-icon-button-toggle', () => {
         assert.equal(button.hasAttribute('disabled'), false);
       });
 
-  test(
-      'icon button does not toggle when clicked with only one icon', async () => {
-        element.onIcon = 'alarm_on';
-        await element.updateComplete;
-        assert.equal(element.on, false);
-        ((element as any).mdcRoot as any).click();
-        await element.updateComplete;
-        assert.equal(element.on, false);
-      });
-
   test('icon button toggles when clicked with two icons', async () => {
     element.onIcon = 'alarm_on';
     element.offIcon = 'alarm_off';
@@ -167,23 +157,6 @@ suite('mwc-icon-button-toggle', () => {
     const iconSlot = element.shadowRoot!.querySelector('slot[name="offIcon"]') as
         HTMLSlotElement;
     assert.include(iconSlot.assignedNodes(), icon);
-  });
-
-  test('icon-button does not toggle with only slotted icon', async () => {
-    const iconQuery = svgTemplate.content.querySelector('svg[slot="onIcon"]');
-    expect(iconQuery).to.be.ok;
-
-    if (!iconQuery) {
-      return;
-    }
-
-    const icon = iconQuery.cloneNode(true);
-    element.appendChild(icon);
-    await element.updateComplete;
-    assert.equal(element.on, false);
-    ((element as any).mdcRoot).click();
-    await element.updateComplete;
-    assert.equal(element.on, false);
   });
 
   test('icon-button toggles with slotted icon and offIcon', async () => {
