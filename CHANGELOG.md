@@ -42,7 +42,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - mwc-top-app-bar-short
 - Testing Infra:
   - Tests now in TS
-  - Tests now all pass
+  - Tests now all pass in evergreens but still failing in IE and Safari 9
   - Using Koa Karma proxy server and auto-amd-ifies files
   - Can now run individual tests using npm run test -- --packages mwc-icon-button*,mwc-button
 
