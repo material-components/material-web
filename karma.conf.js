@@ -78,14 +78,16 @@ const HEADLESS_LAUNCHERS = {
 module.exports = function(config) {
   const packages = config.packages ? config.packages.split(',') : [];
   const fileEntries = [];
-  const defaultFileEntry = {pattern: 'test/lib/unit/*.test.js', watched: true, type: 'module'};
+  const defaultFileEntry = [
+    {pattern: 'test/lib/unit/*.test.js', watched: true, type: 'module' }
+  ];
 
   for (const package of packages) {
-    const fileEntry = {pattern: `test/lib/unit/${package}.test.js`, watched: true, type:'module'};
+    const fileEntry = {pattern: `test/lib/unit/${package}.test.js`, watched: true, type: 'module' };
     fileEntries.push(fileEntry);
   }
 
-  const testFileEntries = fileEntries.length ? fileEntries : [defaultFileEntry];
+  const testFileEntries = fileEntries.length ? fileEntries : defaultFileEntry;
 
   config.set({
     basePath: '',
@@ -97,10 +99,10 @@ module.exports = function(config) {
     ],
 
     browsers: determineBrowsers(),
-    browserDisconnectTimeout: 40000,
-    browserNoActivityTimeout: 120000,
-    captureTimeout: 240000,
-    concurrency: USING_SL ? 10 : 1,
+    browserDisconnectTimeout: 300000,
+    browserNoActivityTimeout: 360000,
+    captureTimeout: 420000,
+    concurrency: USING_SL ? 10 : 4,
     customLaunchers: {...SL_LAUNCHERS, ...HEADLESS_LAUNCHERS},
 
     client: {
@@ -119,6 +121,7 @@ module.exports = function(config) {
   if (USING_TRAVISCI) {
     config.set({
       sauceLabs: {
+        idleTimeout: 300,
         testName: 'Material Components Web Unit Tests - CI',
         tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
         username: process.env.SAUCE_USERNAME,
@@ -128,6 +131,7 @@ module.exports = function(config) {
       // Attempt to de-flake Sauce Labs tests on TravisCI.
       transports: ['polling'],
       browserDisconnectTolerance: 3,
+      reporters: ['saucelabs']
     });
   }
 };
