@@ -42,6 +42,19 @@ npm install @material/mwc-top-app-bar-short
 </mwc-top-app-bar-short>
 ```
 
+### Center Title
+
+<img src="images/center_title.png" height="56px">
+
+```html
+<mwc-top-app-bar-short centerTitle>
+    <mwc-icon-button icon="menu" slot="navigationIcon"></mwc-icon-button>
+    <div slot="title">Title</div>
+    <mwc-icon-button icon="print" slot="actionItems"></mwc-icon-button>
+    <div><!-- content --></div>
+</mwc-top-app-bar-short>
+```
+
 ### Always Collapsed
 
 ![](images/collapsed.gif)

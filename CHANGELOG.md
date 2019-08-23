@@ -30,12 +30,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   result in the other radios in the group becoming unchecked.
 - Fix bug where `<mwc-drawer>` did not work in IE (via
   [WICG/inert#129](https://github.com/WICG/inert/pull/129))
+- Split mwc-top-app-bar fixed and short variants into separate components
+- Removed, and readded mwc-top-app-bar `centerTitle`, fixing padding with `dense` and `prominent` setting
 - Implemented:
   - mwc-textfield
   - mwc-textarea
   - mwc-notched-outline
   - mwc-line-ripple-directive
   - mwc-floating-label-directive
+  - mwc-top-app-bar-fixed
+  - mwc-top-app-bar-short
 
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x

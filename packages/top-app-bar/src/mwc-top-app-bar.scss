@@ -50,3 +50,22 @@ limitations under the License.
     transition: padding 150ms $mdc-animation-standard-curve-timing-function;
   }
 }
+
+// add support for centered title
+%centerPadding {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.mdc-top-app-bar__section--align-center {
+  justify-content: center;
+
+  .mdc-top-app-bar__title {
+    @extend %centerPadding;
+  }
+}
+
+// dense & prominent theming needs a more specific override
+.mdc-top-app-bar--dense.mdc-top-app-bar--prominent .mdc-top-app-bar__section--align-center .mdc-top-app-bar__title {
+  @extend %centerPadding;
+}

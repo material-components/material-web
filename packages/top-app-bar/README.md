@@ -44,6 +44,19 @@ npm install @material/mwc-top-app-bar
 </mwc-top-app-bar>
 ```
 
+### Center Title
+
+<img src="images/center_title.png" height="56px">
+
+```html
+<mwc-top-app-bar centerTitle>
+    <mwc-icon-button icon="menu" slot="navigationIcon"></mwc-icon-button>
+    <div slot="title">Title</div>
+    <mwc-icon-button icon="favorite" slot="actionItems"></mwc-icon-button>
+    <div><!-- content --></div>
+</mwc-top-app-bar>
+```
+
 ### Dense
 
 <img src="images/dense.png" height="48px">

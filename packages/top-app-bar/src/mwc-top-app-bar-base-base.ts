@@ -42,6 +42,8 @@ export abstract class TopAppBarBaseBase extends BaseElement {
 
   private _scrollTarget!: HTMLElement|Window;
 
+  @property({type: Boolean, reflect: true}) centerTitle = false;
+
   @property()
   get scrollTarget() {
     return this._scrollTarget || window;
@@ -73,14 +75,21 @@ export abstract class TopAppBarBaseBase extends BaseElement {
   protected abstract contentClasses: ClassInfo;
 
   protected render() {
+    // clang-format off
+    let title = html`<span class="mdc-top-app-bar__title"><slot name="title"></slot></span>`;
+    if (this.centerTitle) {
+      title = html`<section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-center">${title}</section>`;
+    }
+    // clang-format on
     return html`
       <header class="mdc-top-app-bar ${classMap(this.barClasses)}">
       <div class="mdc-top-app-bar__row">
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start" id="navigation">
-          <slot name="navigationIcon" @click=${
-        this.handleNavigationClick}></slot>
-          <span class="mdc-top-app-bar__title"><slot name="title"></slot></span>
+          <slot name="navigationIcon"
+            @click=${this.handleNavigationClick}></slot>
+          ${this.centerTitle ? null : title}
         </section>
+        ${this.centerTitle ? title : null}
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" id="actions" role="toolbar">
           <slot name="actionItems"></slot>
         </section>
