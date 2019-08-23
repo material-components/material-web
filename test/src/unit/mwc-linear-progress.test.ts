@@ -33,4 +33,3 @@ suite('mwc-linear-progress', () => {
     assert.instanceOf(element, LinearProgress);
   });
 });
-

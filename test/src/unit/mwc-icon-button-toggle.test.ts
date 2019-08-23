@@ -154,8 +154,9 @@ suite('mwc-icon-button-toggle', () => {
     const icon = iconQuery.cloneNode(true);
     element.appendChild(icon);
     await element.updateComplete;
-    const iconSlot = element.shadowRoot!.querySelector('slot[name="offIcon"]') as
-        HTMLSlotElement;
+    const root = element.shadowRoot!;
+    const iconSlot =
+        root.querySelector('slot[name="offIcon"]') as HTMLSlotElement;
     assert.include(iconSlot.assignedNodes(), icon);
   });
 
@@ -169,4 +170,3 @@ suite('mwc-icon-button-toggle', () => {
     assert.equal(element.on, true);
   });
 });
-

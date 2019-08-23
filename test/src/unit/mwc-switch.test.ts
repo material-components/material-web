@@ -66,4 +66,3 @@ suite('mwc-switch', () => {
     document.body.removeEventListener('change', callback);
   });
 });
-

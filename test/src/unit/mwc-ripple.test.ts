@@ -16,14 +16,15 @@
 
 import {Ripple} from '@material/mwc-ripple';
 
-const getInteractionNode = (element: Ripple) => (element as any).interactionNode as HTMLElement;
+const getInteractionNode = (element: Ripple) =>
+    (element as any).interactionNode as HTMLElement;
 const setInteractionNode = (ripple: Ripple, element: HTMLElement) => {
   (ripple as any).interactionNode = element;
 };
 
 suite('mwc-ripple', () => {
   let element: Ripple, container;
-  suite ('baisc', () => {
+  suite('baisc', () => {
     setup(() => {
       container = document.createElement('div');
       document.body.appendChild(container);
@@ -66,6 +67,4 @@ suite('mwc-ripple', () => {
       document.body.removeChild(container);
     });
   });
-
 });
-

@@ -33,4 +33,3 @@ suite('mwc-icon', () => {
     assert.instanceOf(element, Icon);
   });
 });
-

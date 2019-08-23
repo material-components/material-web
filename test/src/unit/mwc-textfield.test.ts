@@ -34,12 +34,11 @@ const isUiInvalid =
       return !!element.shadowRoot!.querySelector(`.${cssClasses.INVALID}`);
     }
 
-suite('mwc-textfield:' , () => {
+suite('mwc-textfield:', () => {
   let element: TextField;
   let fixt: TestFixture;
 
   suite('basic', () => {
-
     setup(async () => {
       fixt = await fixture(basic);
 

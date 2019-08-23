@@ -33,4 +33,3 @@ suite('mwc-snackbar', () => {
     assert.instanceOf(element, Snackbar);
   });
 });
-

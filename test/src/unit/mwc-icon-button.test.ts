@@ -98,8 +98,8 @@ suite('mwc-icon-button', () => {
     const icon = iconQuery.cloneNode(true);
     element.appendChild(icon);
     await element.updateComplete;
-    const iconSlot =
-        element.shadowRoot!.querySelector('slot[name="icon"]') as HTMLSlotElement;
+    const root = element.shadowRoot!;
+    const iconSlot = root.querySelector('slot[name="icon"]') as HTMLSlotElement;
     assert.include(iconSlot.assignedNodes(), icon);
   });
 });

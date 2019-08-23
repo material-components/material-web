@@ -89,4 +89,3 @@ suite('mwc-fab', () => {
         assert.equal(button.getAttribute('aria-label'), 'check');
       });
 });
-

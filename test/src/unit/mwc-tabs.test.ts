@@ -34,8 +34,6 @@ suite('mwc-tab', () => {
   test('initializes as an mwc-tab', () => {
     assert.instanceOf(element, Tab);
   });
-
-
 });
 suite('mwc-tab-bar', () => {
   let element: TabBar;
@@ -69,4 +67,3 @@ suite('mwc-tab-scroller', () => {
     assert.instanceOf(element, TabScroller);
   });
 });
-
