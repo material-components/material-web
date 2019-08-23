@@ -83,6 +83,8 @@ Below are instructions for setting up project development.
 
 *Note:* You can debug specific tests by running `npm run test:debug -- --packages mwc-button,mwc-fab`
 or you may use wildcards such as `npm run test:debug -- --packages mwc-icon-button*`
+Additionally, you can run specific browsers with the `--browsers` flag. e.g.
+`npm run test:debug -- --browsers Firefox` or `npm run test -- --browsers ChromeHeadless`.
 
 ### Developing Components
 
