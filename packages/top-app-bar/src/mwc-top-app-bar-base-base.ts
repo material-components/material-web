@@ -42,7 +42,7 @@ export abstract class TopAppBarBaseBase extends BaseElement {
 
   private _scrollTarget!: HTMLElement|Window;
 
-  @property({type: Boolean, reflect: true}) centerTitle = false;
+  @property({type: Boolean}) centerTitle = false;
 
   @property()
   get scrollTarget() {
