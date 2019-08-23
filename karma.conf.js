@@ -19,12 +19,12 @@ const USING_TRAVISCI = Boolean(process.env.TRAVIS);
 const USING_SL = USING_TRAVISCI && Boolean(process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY);
 
 const SL_LAUNCHERS = {
-  'sl-ie': {
-    base: 'SauceLabs',
-    browserName: 'internet explorer',
-    version: '11',
-    platform: 'Windows 8.1',
-  },
+  // 'sl-ie': {
+  //   base: 'SauceLabs',
+  //   browserName: 'internet explorer',
+  //   version: '11',
+  //   platform: 'Windows 8.1',
+  // },
   'sl-edge-17': {
     base: 'SauceLabs',
     browserName: 'microsoftedge',
@@ -49,12 +49,12 @@ const SL_LAUNCHERS = {
     version: '10',
     platform: 'OS X 10.12',
   },
-  'sl-safari-9': {
-    base: 'SauceLabs',
-    browserName: 'safari',
-    version: '9',
-    platform: 'OS X 10.11',
-  },
+  // 'sl-safari-9': {
+  //   base: 'SauceLabs',
+  //   browserName: 'safari',
+  //   version: '9',
+  //   platform: 'OS X 10.11',
+  // },
   'sl-chrome-41': {
     base: 'SauceLabs',
     browserName: 'chrome',
