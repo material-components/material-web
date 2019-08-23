@@ -44,6 +44,19 @@ npm install @material/mwc-top-app-bar
 </mwc-top-app-bar>
 ```
 
+### Center Title
+
+<img src="images/center_title.png" height="56px">
+
+```html
+<mwc-top-app-bar centerTitle>
+    <mwc-icon-button icon="menu" slot="navigationIcon"></mwc-icon-button>
+    <div slot="title">Title</div>
+    <mwc-icon-button icon="favorite" slot="actionItems"></mwc-icon-button>
+    <div><!-- content --></div>
+</mwc-top-app-bar>
+```
+
 ### Dense
 
 <img src="images/dense.png" height="48px">
@@ -113,6 +126,7 @@ mwc-top-app-bar {
 ### Properties/Attributes
 | Name | Type | Default | Description
 | ---- | ---- | ------- | -----------
+| `centerTitle` | `boolean` | `false` | Centers the title horizontally. Only meant to be used with 0 or 1 `actionItems`.
 | `dense` | `boolean` | `false` | Makes the bar a little smaller for higher density applications.
 | `prominent` | `boolean` | `false` | Makes the bar much taller, can be combined with `dense`.
 | `scrollTarget` | `HTMLElement` \| `Window` | `window` | Element used to listen for `scroll` events.
