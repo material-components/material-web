@@ -2,11 +2,12 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "composite": true,
-    "outDir": ".",
+    "outDir": "lib",
     "module": "commonjs",
-    "tsBuildInfoFile": ".tsbuildinfo-node"
+    "tsBuildInfoFile": ".tsbuildinfo-node",
+    "rootDir": "./src"
   },
   "include": [
-    "benchmark/cli.ts"
+    "src/benchmark/cli.ts",
   ]
 }

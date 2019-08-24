@@ -1,7 +1,0 @@
-{
-  "files.exclude": {
-    "test/benchmark/**/*.js": true,
-    "test/benchmark/**/*.d.ts": true,
-    "test/benchmark/**/*.js.map": true,
-  }
-}

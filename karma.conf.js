@@ -15,19 +15,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const babel = require('rollup-plugin-babel');
-const resolve = require('rollup-plugin-node-resolve');
-
 const USING_TRAVISCI = Boolean(process.env.TRAVIS);
 const USING_SL = USING_TRAVISCI && Boolean(process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY);
 
 const SL_LAUNCHERS = {
-  'sl-ie': {
-    base: 'SauceLabs',
-    browserName: 'internet explorer',
-    version: '11',
-    platform: 'Windows 8.1',
-  },
+  // 'sl-ie': {
+  //   base: 'SauceLabs',
+  //   browserName: 'internet explorer',
+  //   version: '11',
+  //   platform: 'Windows 8.1',
+  // },
   'sl-edge-17': {
     base: 'SauceLabs',
     browserName: 'microsoftedge',
@@ -52,12 +49,12 @@ const SL_LAUNCHERS = {
     version: '10',
     platform: 'OS X 10.12',
   },
-  'sl-safari-9': {
-    base: 'SauceLabs',
-    browserName: 'safari',
-    version: '9',
-    platform: 'OS X 10.11',
-  },
+  // 'sl-safari-9': {
+  //   base: 'SauceLabs',
+  //   browserName: 'safari',
+  //   version: '9',
+  //   platform: 'OS X 10.11',
+  // },
   'sl-chrome-41': {
     base: 'SauceLabs',
     browserName: 'chrome',
@@ -79,59 +76,50 @@ const HEADLESS_LAUNCHERS = {
 };
 
 module.exports = function(config) {
+  const packages = config.packages ? config.packages.split(',') : [];
+  const fileEntries = [];
+  const defaultFileEntry = [
+    {pattern: 'test/lib/unit/*.test.js', watched: true, type: 'module' }
+  ];
+
+  for (const package of packages) {
+    const fileEntry = {pattern: `test/lib/unit/${package}.test.js`, watched: true, type: 'module' };
+    fileEntries.push(fileEntry);
+  }
+
+  const testFileEntries = fileEntries.length ? fileEntries : defaultFileEntry;
+
   config.set({
     basePath: '',
     frameworks: ['mocha', 'chai'],
     files: [
       {pattern: 'node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js', watched: false},
-      {pattern: 'node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js', watched: false},
-      {pattern: 'test/unit/mwc-{button,checkbox,fab,formfield,icon,icon-button,linear-progress,radio,ripple,switch,tabs}.test.js', watched: false},
+      {pattern: 'node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js', watched: false},
+      ...testFileEntries
     ],
-    preprocessors: {
-      'test/unit/mwc-*.js': ['rollup', 'sourcemap'],
-    },
-
-    rollupPreprocessor: {
-      external: ['chai'],
-      plugins: [
-        resolve({
-          module: true,
-          jsnext: true,
-          main: true,
-        }),
-        babel({
-          presets: ['es2015-rollup'],
-        }),
-      ],
-      output: {
-        format: 'iife',
-        sourceMap: 'inline',
-      },
-    },
 
     browsers: determineBrowsers(),
-    browserDisconnectTimeout: 40000,
-    browserNoActivityTimeout: 120000,
-    captureTimeout: 240000,
-    concurrency: USING_SL ? 10 : 1,
+    browserDisconnectTimeout: 300000,
+    browserNoActivityTimeout: 360000,
+    captureTimeout: 420000,
+    concurrency: USING_SL ? 10 : 4,
     customLaunchers: {...SL_LAUNCHERS, ...HEADLESS_LAUNCHERS},
 
     client: {
       mocha: {
         reporter: 'html',
-        ui: 'qunit',
+        ui: 'tdd',
       },
     },
 
-    mochaReporter: {
-      output: 'minimal'
-    }
+    reporters: ['mocha'],
   });
 
   // See https://github.com/karma-runner/karma-sauce-launcher/issues/73
   if (USING_TRAVISCI) {
     config.set({
       sauceLabs: {
+        idleTimeout: 300,
         testName: 'Material Components Web Unit Tests - CI',
         tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
         username: process.env.SAUCE_USERNAME,
@@ -141,6 +129,7 @@ module.exports = function(config) {
       // Attempt to de-flake Sauce Labs tests on TravisCI.
       transports: ['polling'],
       browserDisconnectTolerance: 3,
+      reporters: ['saucelabs', 'mocha'],
     });
   }
 };

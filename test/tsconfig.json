@@ -2,13 +2,17 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "composite": true,
-    "outDir": ".",
+    "outDir": "./lib",
     "tsBuildInfoFile": ".tsbuildinfo",
+    "rootDir": "./src",
+    "sourceMap": false,
+    "inlineSources": false
   },
   "include": [
-    "benchmark/**/*.ts"
+    "src/custom_typings/*.d.ts",
+    "src/**/*.ts",
   ],
   "exclude": [
-    "benchmark/cli.ts"
+    "src/benchmark/cli.ts"
   ]
 }

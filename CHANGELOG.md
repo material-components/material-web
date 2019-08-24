@@ -40,6 +40,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - mwc-floating-label-directive
   - mwc-top-app-bar-fixed
   - mwc-top-app-bar-short
+- Testing Infra:
+  - Tests now in TS
+  - Tests now all pass in evergreens but still failing in IE and Safari 9
+  - Using Koa Karma proxy server and auto-amd-ifies files
+  - Can now run individual tests using npm run test -- --packages mwc-icon-button*,mwc-button
 
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x

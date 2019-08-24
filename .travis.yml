@@ -10,4 +10,5 @@ script:
   - npm run build
   - npm run format && git diff --exit-code || (echo -e '\n\033[31mERROR:\033[0mProject is not formatted. Please run "npm run format".' && false)
   - npm run lint
+  - npm run build:tests
   - npm test
