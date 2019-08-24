@@ -102,7 +102,7 @@ module.exports = function(config) {
     browserDisconnectTimeout: 300000,
     browserNoActivityTimeout: 360000,
     captureTimeout: 420000,
-    concurrency: USING_SL ? 10 : 4,
+    concurrency: USING_SL ? 10 : 1,
     customLaunchers: {...SL_LAUNCHERS, ...HEADLESS_LAUNCHERS},
 
     client: {
