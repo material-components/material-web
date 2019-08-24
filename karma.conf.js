@@ -112,9 +112,7 @@ module.exports = function(config) {
       },
     },
 
-    mochaReporter: {
-      output: 'minimal'
-    }
+    reporters: ['mocha'],
   });
 
   // See https://github.com/karma-runner/karma-sauce-launcher/issues/73
@@ -131,6 +129,7 @@ module.exports = function(config) {
       // Attempt to de-flake Sauce Labs tests on TravisCI.
       transports: ['polling'],
       browserDisconnectTolerance: 3,
+      reporters: ['saucelabs', 'mocha'],
     });
   }
 };
