@@ -129,7 +129,7 @@ module.exports = function(config) {
       // Attempt to de-flake Sauce Labs tests on TravisCI.
       transports: ['polling'],
       browserDisconnectTolerance: 3,
-      reporters: ['saucelabs', 'mocha'],
+      reporters: ['saucelabs', 'mocha', 'dots'],
     });
   }
 };
