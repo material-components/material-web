@@ -138,18 +138,22 @@ suite('mwc-textfield:', () => {
       assert.isFalse(element.checkValidity());
 
       const transformFn =
-      (value: string, vState: ValidityState): Partial<ValidityState> => {
-        if (value.includes('dogs')) {
-          return {valid: true}
-        } else if (vState.valid) {
-          const numberifiedValue = Number(value);
-          if (numberifiedValue > 5) {
-            return {valid: false, rangeOverflow: true}
-          }
-        }
+          (value: string, vState: ValidityState): Partial<ValidityState> => {
+            if (value.includes('dogs')) {
+              return {
+                valid: true,
+              }
+            } else if (vState.valid) {
+              const numberifiedValue = Number(value);
+              if (numberifiedValue > 5) {
+                return {
+                  valid: false, rangeOverflow: true,
+                }
+              }
+            }
 
-        return {};
-      };
+            return {};
+          };
 
       element.validityTransform = transformFn;
 
