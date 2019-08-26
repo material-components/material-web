@@ -67,12 +67,12 @@ export abstract class TopAppBarBaseBase extends BaseElement {
   /**
    * classMap map for classes on the bar
    */
-  protected abstract barClasses: ClassInfo;
+  protected abstract barClasses(): ClassInfo;
 
   /**
    * classMap map for classes on the content slot
    */
-  protected abstract contentClasses: ClassInfo;
+  protected abstract contentClasses(): ClassInfo;
 
   protected render() {
     // clang-format off
@@ -82,7 +82,7 @@ export abstract class TopAppBarBaseBase extends BaseElement {
     }
     // clang-format on
     return html`
-      <header class="mdc-top-app-bar ${classMap(this.barClasses)}">
+      <header class="mdc-top-app-bar ${classMap(this.barClasses())}">
       <div class="mdc-top-app-bar__row">
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start" id="navigation">
           <slot name="navigationIcon"
@@ -95,7 +95,7 @@ export abstract class TopAppBarBaseBase extends BaseElement {
         </section>
       </div>
     </header>
-    <div class="${classMap(this.contentClasses)}">
+    <div class="${classMap(this.contentClasses())}">
       <slot></slot>
     </div>
     `;
