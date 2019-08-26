@@ -67,8 +67,8 @@ export class SnackbarBase extends BaseElement {
     return html`
       <div class="mdc-snackbar ${classMap(classes)}" @keydown="${
         this._handleKeydown}">
-        <div class="mdc-snackbar__surface">
-          ${accessibleLabel(this.labelText, this.isOpen)}
+        <div class="mdc-snackbar__surface">${
+        accessibleLabel(this.labelText, this.isOpen)}
           <div class="mdc-snackbar__actions">
             <slot name="action" @click="${this._handleActionClick}"></slot>
             <slot name="dismiss" @click="${this._handleDismissClick}"></slot>
@@ -140,15 +140,13 @@ export class SnackbarBase extends BaseElement {
 }
 
 /**
- * Maps an accessibleLabel container part to its label Element.
+ * Maps an accessibleLabel container part to its label element and the timeoutID
+ * of the task that restores its text content from ::before back to textContent.
  */
-const labelElements = new WeakMap<NodePart, Element>();
-
-/**
- * Maps an accessibleLabel container part to the timeoutID of the task that
- * restores its text content from ::before back to textContent.
- */
-const labelTextRestoreTimerIds = new WeakMap<NodePart, number>();
+const accessibleLabelState = new WeakMap<NodePart, {
+  labelEl: Element,
+  timerId: number | null,
+}>();
 
 /**
  * A lit directive implementation of @material/mdc-snackbar/util.ts#announce,
@@ -161,9 +159,16 @@ const labelTextRestoreTimerIds = new WeakMap<NodePart, number>();
  * the label div, but the MDC announce function then clears that text content,
  * and resets it after a timeout (see below for why). We do the same thing here,
  * but in a way that fits into Lit's lifecycle.
+ *
+ * TODO(aomarks) Investigate whether this can be simplified; but to do that we
+ * first need testing infrastructure to verify that it remains compatible with
+ * screen readers. For example, can we just create an entirely new label node
+ * every time we open or labelText changes? If not, and the async text/::before
+ * swap is strictly required, can we at elast make this directive more generic
+ * (e.g. so that we don't hard-code the name of the label class).
  */
-const accessibleLabel = directive(
-    (labelText: string, isOpen: boolean) => (containerPart: NodePart) => {
+const accessibleLabel =
+    directive((labelText: string, isOpen: boolean) => (part: NodePart) => {
       if (!isOpen) {
         // We never need to do anything if we're closed, even if the label also
         // changed in this batch of changes. We'll fully reset the label text
@@ -171,24 +176,28 @@ const accessibleLabel = directive(
         return;
       }
 
-      let maybeLabelEl = labelElements.get(containerPart);
-      if (maybeLabelEl === undefined) {
-        // Stamp the label element once, the first time we open.
-        const labelPart = new NodePart(containerPart.options);
-        labelPart.setValue(html`<div class="mdc-snackbar__label"
-                                     role="status" aria-live="polite"></div>`);
-        labelPart.appendIntoPart(containerPart);
-        labelPart.commit();
-        const labelEl = (labelPart.startNode as Comment).nextElementSibling!;
+      let maybeState = accessibleLabelState.get(part);
+      if (maybeState === undefined) {
+        // Create the label element once, the first time we open.
+        const labelEl = document.createElement('div');
+        labelEl.setAttribute('class', 'mdc-snackbar__label');
+        labelEl.setAttribute('role', 'status');
+        labelEl.setAttribute('aria-live', 'polite');
         labelEl.textContent = labelText;
-        labelElements.set(containerPart, labelEl);
-        // No need to do anything for ARIA the first time we open. We just
+        part.endNode.parentNode!.insertBefore(labelEl, part.endNode);
+        maybeState = {
+          labelEl,
+          timerId: null,
+        };
+        accessibleLabelState.set(part, maybeState);
+        // No need to do anything more for ARIA the first time we open. We just
         // created the element with the current label, so screen readers will
         // detect it fine.
         return;
       }
 
-      const labelEl = maybeLabelEl;
+      const state = maybeState;
+      const labelEl = state.labelEl;
 
       // Temporarily disable `aria-live` to prevent JAWS+Firefox from announcing
       // the message twice.
@@ -240,26 +249,24 @@ const accessibleLabel = directive(
       // by screen readers.
       labelEl.setAttribute(ARIA_LIVE_LABEL_TEXT_ATTR, labelText);
 
-      const prevTimerId = labelTextRestoreTimerIds.get(containerPart);
-      if (prevTimerId !== undefined) {
+      if (state.timerId !== null) {
         // We hadn't yet swapped the textContent back in since the last time we
         // opened or changed the label. Cancel that task so we don't clobber the
         // new label.
-        clearTimeout(prevTimerId);
+        clearTimeout(state.timerId);
       }
 
-      labelTextRestoreTimerIds.set(containerPart, window.setTimeout(() => {
-        labelTextRestoreTimerIds.delete(containerPart);
+      state.timerId = window.setTimeout(() => {
+        state.timerId = null;
 
         // Allow screen readers to announce changes to the DOM again.
         labelEl.setAttribute('aria-live', 'polite');
 
         // Remove the message from the ::before pseudo-element.
-        labelEl.removeAttribute('data-mdc-snackbar-label-text');
+        labelEl.removeAttribute(ARIA_LIVE_LABEL_TEXT_ATTR);
 
         // Restore the original label text, which will be announced by
         // screen readers.
-        labelEl.removeAttribute(ARIA_LIVE_LABEL_TEXT_ATTR);
         labelEl.textContent = labelText;
-      }, ARIA_LIVE_DELAY_MS));
+      }, ARIA_LIVE_DELAY_MS);
     });
