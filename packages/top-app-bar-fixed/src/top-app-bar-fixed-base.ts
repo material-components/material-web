@@ -23,9 +23,9 @@ export class TopAppBarFixedBase extends TopAppBarBase {
 
   protected mdcFoundationClass = MDCFixedTopAppBarFoundation;
 
-  protected get barClasses() {
+  protected barClasses() {
     return {
-      ...super.barClasses,
+      ...super.barClasses(),
       'mdc-top-app-bar--fixed': true,
     };
   }

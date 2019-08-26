@@ -30,13 +30,13 @@ export class TopAppBarShortBase extends TopAppBarBaseBase {
   })
   alwaysCollapsed = false;
 
-  protected get barClasses() {
+  protected barClasses() {
     return {
       'mdc-top-app-bar--short': true,
     };
   }
 
-  protected get contentClasses() {
+  protected contentClasses() {
     return {'mdc-top-app-bar--short-fixed-adjust': true};
   }
 

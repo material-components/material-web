@@ -31,14 +31,14 @@ export class TopAppBarBase extends TopAppBarBaseBase {
     this.mdcFoundation.handleWindowResize();
   };
 
-  protected get barClasses() {
+  protected barClasses() {
     return {
       'mdc-top-app-bar--dense': this.dense,
       'mdc-top-app-bar--prominent': this.prominent,
     };
   }
 
-  protected get contentClasses() {
+  protected contentClasses() {
     return {
       'mdc-top-app-bar--fixed-adjust': !this.dense && !this.prominent,
       'mdc-top-app-bar--dense-fixed-adjust': this.dense && !this.prominent,
