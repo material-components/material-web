@@ -15,8 +15,6 @@
  */
 
 import {Snackbar} from '@material/mwc-snackbar';
-import {assert} from 'chai';
-
 
 suite('mwc-snackbar', () => {
   let element;
@@ -33,27 +31,27 @@ suite('mwc-snackbar', () => {
   test('initializes as an mwc-snackbar', () => {
     assert.instanceOf(element, Snackbar);
   });
-});
 
-const findLabelText = () => {
-  // Note that label text can either be in the label's textContent, or in its
-  // ::before pseudo-element content (set via an attribute), for ARIA reasons.
-  const label = element.shadowRoot.querySelector('.mdc-snackbar__label');
-  return label.getAttribute('data-mdc-snackbar-label-text') ||
-      label.textContent;
-};
+  const findLabelText = () => {
+    // Note that label text can either be in the label's textContent, or in its
+    // ::before pseudo-element content (set via an attribute), for ARIA reasons.
+    const label = element.shadowRoot.querySelector('.mdc-snackbar__label');
+    return label.getAttribute('data-mdc-snackbar-label-text') ||
+        label.textContent;
+  };
 
-test('set label text after opening', async () => {
-  element.labelText = 'foo';
-  element.open();
-  await element.updateComplete;
-  assert.equal(findLabelText(), 'foo');
+  test('set label text after opening', async () => {
+    element.labelText = 'foo';
+    element.open();
+    await element.updateComplete;
+    assert.equal(findLabelText(), 'foo');
 
-  element.labelText = 'bar';
-  await element.updateComplete;
-  assert.equal(findLabelText(), 'bar');
+    element.labelText = 'bar';
+    await element.updateComplete;
+    assert.equal(findLabelText(), 'bar');
 
-  element.labelText = 'baz';
-  await element.updateComplete;
-  assert.equal(findLabelText(), 'baz');
+    element.labelText = 'baz';
+    await element.updateComplete;
+    assert.equal(findLabelText(), 'baz');
+  });
 });
