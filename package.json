@@ -14,8 +14,9 @@
     "lint": "npm run lint:typescript && npm run lint:lit",
     "lint:typescript": "eslint \"packages/**/*.ts\"",
     "lint:lit": "lit-analyzer \"packages/**/*.ts\" --strict --quiet",
-    "test": "karma start --single-run",
-    "test:bench": "node test/benchmark/cli.js",
+    "test": "karma-proxy start --single-run",
+    "test:debug": "npm run test -- --single-run false --browsers Chrome",
+    "test:bench": "node test/lib/benchmark/cli.js",
     "postinstall": "./scripts/bootstrap.sh",
     "build": "npm run build:styling && npm run build:typescript -- --verbose",
     "build:styling": "./scripts/build-styling.sh",
@@ -26,20 +27,16 @@
     "static-urlify-readme-images": "npm run build:scripts && node scripts/tsc-out/static-urlify-readme-images.js packages/*/README.md",
     "prepack": "npm run build && npm run static-urlify-readme-images",
     "watch": "npm run build && node scripts/watcher.js",
-    "watch:tests": "npm run build && tsc --build test/tsconfig.json -w & tsc --build test/tsconfig-node.json -w"
+    "watch:tests": "tsc --build test/tsconfig.json -w & tsc --build test/tsconfig-node.json -w"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.0",
     "@types/command-line-args": "^5.0.0",
     "@types/command-line-usage": "^5.0.1",
+    "@types/mocha": "^5.2.7",
     "@typescript-eslint/eslint-plugin": "^1.12.0",
     "@typescript-eslint/parser": "^1.12.0",
     "@webcomponents/webcomponentsjs": "^2.2.8",
-    "babel-core": "^6.22.1",
-    "babel-plugin-transform-object-assign": "^6.8.0",
-    "babel-preset-es2015": "^6.9.0",
-    "babel-preset-es2015-rollup": "^3.0.0",
-    "babel-traverse": "^6.24.1",
-    "babylon": "^6.16.1",
     "chai": "^4.2.0",
     "clang-format": "^1.2.4",
     "command-line-args": "^5.1.1",
@@ -57,9 +54,14 @@
     "karma-firefox-launcher": "^1.0.0",
     "karma-mocha": "^1.3.0",
     "karma-mocha-reporter": "^2.2.5",
-    "karma-rollup-preprocessor": "^6.1.2",
     "karma-sauce-launcher": "^2.0.2",
     "karma-sourcemap-loader": "^0.3.7",
+    "koa": "^2.8.1",
+    "koa-esm-transform": "^1.0.0-pre.1",
+    "koa-karma-proxy": "^1.0.0-pre.4",
+    "koa-mount": "^4.0.0",
+    "koa-node-resolve": "^1.0.0-pre.6",
+    "koa-static": "^5.0.0",
     "lerna": "^3.13.1",
     "lit-analyzer": "^1.1.7",
     "mocha": "^5.0.0",
@@ -67,34 +69,11 @@
     "node-watch": "^0.6.0",
     "parse5": "^5.1.0",
     "polyserve": "^0.27.15",
-    "rollup": "^0.58.2",
-    "rollup-plugin-babel": "^3.0.4",
-    "rollup-plugin-node-resolve": "^4.0.1",
     "sass": "^1.17.4",
     "shady-css-parser": "^0.1.0",
     "sinon": "^7.3.1",
     "tachometer": "^0.4.9",
     "typescript": "^3.4.1"
-  },
-  "babel": {
-    "presets": [
-      [
-        "es2015",
-        {
-          "modules": false
-        }
-      ]
-    ],
-    "plugins": [
-      "transform-object-assign"
-    ],
-    "env": {
-      "test": {
-        "presets": [
-          "es2015"
-        ]
-      }
-    }
   },
   "dependencies": {}
 }

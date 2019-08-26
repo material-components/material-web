@@ -12,7 +12,5 @@ node_modules
 /packages/*/package-lock.json
 **/*.tsbuildinfo*
 !packages/*/custom_types/**
-/test/benchmark/**/*.js
-/test/benchmark/**/*.js.map
-/test/benchmark/**/*.d.ts
+/test/lib/
 /scripts/tsc-out/

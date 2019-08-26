@@ -42,6 +42,19 @@ npm install @material/mwc-top-app-bar-short
 </mwc-top-app-bar-short>
 ```
 
+### Center Title
+
+<img src="images/center_title.png" height="56px">
+
+```html
+<mwc-top-app-bar-short centerTitle>
+    <mwc-icon-button icon="menu" slot="navigationIcon"></mwc-icon-button>
+    <div slot="title">Title</div>
+    <mwc-icon-button icon="print" slot="actionItems"></mwc-icon-button>
+    <div><!-- content --></div>
+</mwc-top-app-bar-short>
+```
+
 ### Always Collapsed
 
 ![](images/collapsed.gif)
@@ -81,6 +94,7 @@ mwc-top-app-bar-short {
 ### Properties/Attributes
 | Name | Type | Default | Description
 | ---- | ---- | ------- | -----------
+| `centerTitle` | `boolean` | `false` | Centers the title horizontally. Only meant to be used with 0 or 1 `actionItems`.
 | `alwaysCollapsed` | `boolean` | `false` | Whether the short top app bar should always be collapsed.
 | `collapsed` | `boolean` (read-only) | `false` | Whether the short top app bar is currently collapsed.
 | `scrollTarget` | `HTMLElement` \| `Window` | `window` | Element used to listen for `scroll` events.

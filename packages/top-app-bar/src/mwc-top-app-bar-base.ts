@@ -50,7 +50,8 @@ export class TopAppBarBase extends TopAppBarBaseBase {
 
   protected registerListeners() {
     super.registerListeners();
-    window.addEventListener('resize', this.handleResize, passiveEventOptionsIfSupported);
+    window.addEventListener(
+        'resize', this.handleResize, passiveEventOptionsIfSupported);
   }
 
   protected unregisterListeners() {
