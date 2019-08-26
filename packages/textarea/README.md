@@ -137,13 +137,13 @@ npm install @material/mwc-textarea
 | `icon`              | `string`         | Leading icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon).
 | `iconTrailing`      | `string`         | Trailing icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon).
 | `disabled`          | `boolean`        | Whether or not the input should be disabled.
-| `charCounter`       | `boolean`        | **Note: requries `maxLength` to be set.** Display character counter with max length.
+| `charCounter`       | `boolean`        | **Note: requires `maxLength` to be set.** Display character counter with max length.
 | `outlined`          | `boolean`        | Whether or not to show the material outlined variant.
 | `fullwidth`         | `boolean`        | Whether or not to make the input fullwidth. No longer displays `label`; only `placeholder` and `helper`.
 | `helper`            | `string`         | Helper text to display below the input. Display default only when focused.
 | `helperPersistent`  | `boolean`        | Always show the helper text despite focus.
 | `required`          | `boolean`        | Displays error state if value is empty and input is blurred.
-| `maxLength`         | `number`         | Maximum length to accept input.
+| `maxLength`         | `number`         | Maximum length input to accept.
 | `validationMessage` | `string`         | Message to show in the error color when the textarea is invalid. (Helper text will not be visible)
 | `validity`          | `ValidityState` (readonly) | The [`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState) of the textfield.
 | `willValidate`      | `boolean` (readonly)       | [`HTMLInputElement.prototype.willValidate`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement#Properties)
@@ -164,8 +164,8 @@ type ValidityTransform = (value: string, nativeValidity: ValidityState) => Parti
 | Name     | Description
 | -------- | -------------
 | `checkValidity() => boolean`   | Returns `true` if the textarea passes validity checks. Returns `false` and fires an [`invalid`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/invalid_event) event on the textarea otherwise.
-| `reportValidity() => boolean`   | Runs `checkValidity()` method, and if it returns false, then ir reports to the user that the input is invalid.
-| `setCustomValidity(message:string) => void`   | Sets a custom validity message (also overwrites `validationMessage`). If this message is not the empty string, then the element is suffering froma  custom validity error and does not validate.
+| `reportValidity() => boolean`   | Runs `checkValidity()` method, and if it returns false, then it reports to the user that the input is invalid.
+| `setCustomValidity(message:string) => void`   | Sets a custom validity message (also overwrites `validationMessage`). If this message is not the empty string, then the element is suffering from a  custom validity error and does not validate.
 
 ### CSS Custom Properties
 
