@@ -24,10 +24,12 @@ const {ARIA_LIVE_DELAY_MS} = MDCSnackbarFoundation.numbers;
  * Maps an accessibleLabel container part to its label element and the timeoutID
  * of the task that restores its text content from ::before back to textContent.
  */
-const accessibleLabelState = new WeakMap<NodePart, {
-  labelEl: Element,
-  timerId: number | null,
-}>();
+const stateMap = new WeakMap<NodePart, State>();
+
+interface State {
+  labelEl: Element;
+  timerId: number|null;
+}
 
 /**
  * A lit directive implementation of @material/mdc-snackbar/util.ts#announce,
@@ -57,7 +59,7 @@ export const accessibleSnackbarLabel =
         return;
       }
 
-      let maybeState = accessibleLabelState.get(part);
+      let maybeState = stateMap.get(part);
       if (maybeState === undefined) {
         // Create the label element once, the first time we open.
         const labelEl = document.createElement('div');
@@ -65,12 +67,14 @@ export const accessibleSnackbarLabel =
         labelEl.setAttribute('role', 'status');
         labelEl.setAttribute('aria-live', 'polite');
         labelEl.textContent = labelText;
+        // endNode can't be a Document, so it must have a parent.
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         part.endNode.parentNode!.insertBefore(labelEl, part.endNode);
         maybeState = {
           labelEl,
           timerId: null,
         };
-        accessibleLabelState.set(part, maybeState);
+        stateMap.set(part, maybeState);
         // No need to do anything more for ARIA the first time we open. We just
         // created the element with the current label, so screen readers will
         // detect it fine.
