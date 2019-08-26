@@ -45,6 +45,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Tests now all pass in evergreens but still failing in IE and Safari 9
   - Using Koa Karma proxy server and auto-amd-ifies files
   - Can now run individual tests using npm run test -- --packages mwc-icon-button*,mwc-button
+- Fix bug where setting the `<mwc-snackbar>` `labelText` property could throw
+  an exception and fail to render
+  ([#367](https://github.com/material-components/material-components-web-components/issues/367)).
 
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x

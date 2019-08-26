@@ -18,10 +18,15 @@ import {addHasRemoveClass, BaseElement, classMap, html, observer, property, quer
 import {MDCSnackbarAdapter} from '@material/snackbar/adapter.js';
 import MDCSnackbarFoundation from '@material/snackbar/foundation.js';
 import {MDCSnackbarCloseEventDetail} from '@material/snackbar/types';
-import * as util from '@material/snackbar/util';
 
-const {OPENING_EVENT, OPENED_EVENT, CLOSING_EVENT, CLOSED_EVENT} =
-    MDCSnackbarFoundation.strings;
+import {accessibleSnackbarLabel} from './accessible-snackbar-label-directive';
+
+const {
+  OPENING_EVENT,
+  OPENED_EVENT,
+  CLOSING_EVENT,
+  CLOSED_EVENT,
+} = MDCSnackbarFoundation.strings;
 
 export class SnackbarBase extends BaseElement {
   protected mdcFoundation!: MDCSnackbarFoundation;
@@ -46,18 +51,11 @@ export class SnackbarBase extends BaseElement {
   @property({type: Boolean})
   closeOnEscape = false;
 
-  @property() labelText = '';
+  @property({type: String}) labelText = '';
 
   @property({type: Boolean}) stacked = false;
 
   @property({type: Boolean}) leading = false;
-
-  /**
-   * We can't open the snackbar until the foundation is initialized, but that
-   * doesn't happen until firstUpdated. Keep track of early calls to open() and
-   * do so after we have a foundation.
-   */
-  private _earlyOpen: boolean|undefined;
 
   protected render() {
     const classes = {
@@ -68,11 +66,7 @@ export class SnackbarBase extends BaseElement {
       <div class="mdc-snackbar ${classMap(classes)}" @keydown="${
         this._handleKeydown}">
         <div class="mdc-snackbar__surface">
-          <div class="mdc-snackbar__label"
-               role="status"
-               aria-live="polite">
-            ${this.labelText}
-          </div>
+          ${accessibleSnackbarLabel(this.labelText, this.isOpen)}
           <div class="mdc-snackbar__actions">
             <slot name="action" @click="${this._handleActionClick}"></slot>
             <slot name="dismiss" @click="${this._handleDismissClick}"></slot>
@@ -84,45 +78,48 @@ export class SnackbarBase extends BaseElement {
   protected createAdapter(): MDCSnackbarAdapter {
     return {
       ...addHasRemoveClass(this.mdcRoot),
-      announce: () => util.announce(this.labelElement),
+      // We handle announce ourselves with the accessible directive.
+      announce: () => {},
       notifyClosed: (reason: string) => {
-        this.isOpen = false;
         this.dispatchEvent(new CustomEvent<MDCSnackbarCloseEventDetail>(
             CLOSED_EVENT,
             {bubbles: true, cancelable: true, detail: {reason: reason}}));
       },
-      notifyClosing: (reason: string) => this.dispatchEvent(new CustomEvent(
-          CLOSING_EVENT,
-          {bubbles: true, cancelable: true, detail: {reason: reason}})),
+      notifyClosing: (reason: string) => {
+        this.isOpen = false;
+        this.dispatchEvent(new CustomEvent(
+            CLOSING_EVENT,
+            {bubbles: true, cancelable: true, detail: {reason: reason}}));
+      },
       notifyOpened: () => {
-        this.isOpen = true;
         this.dispatchEvent(
             new CustomEvent(OPENED_EVENT, {bubbles: true, cancelable: true}));
       },
-      notifyOpening: () => this.dispatchEvent(
-          new CustomEvent(OPENING_EVENT, {bubbles: true, cancelable: true})),
+      notifyOpening: () => {
+        this.isOpen = true;
+        this.dispatchEvent(
+            new CustomEvent(OPENING_EVENT, {bubbles: true, cancelable: true}));
+      },
     };
   }
 
   open() {
+    this.isOpen = true;
     if (this.mdcFoundation !== undefined) {
       this.mdcFoundation.open();
-    } else {
-      this._earlyOpen = true;
     }
   }
 
   close(reason = '') {
+    this.isOpen = false;
     if (this.mdcFoundation !== undefined) {
       this.mdcFoundation.close(reason);
-    } else if (this._earlyOpen === true) {
-      this._earlyOpen = false;
     }
   }
 
   protected firstUpdated() {
     super.firstUpdated();
-    if (this._earlyOpen === true) {
+    if (this.isOpen) {
       this.mdcFoundation.open();
     }
   }
