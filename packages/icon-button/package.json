@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-icon-button",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "",
   "main": "mwc-icon-button.js",
   "repository": {
@@ -15,9 +15,9 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/icon-button": "^3.0.0",
-    "@material/mwc-base": "^0.6.0",
-    "@material/mwc-icon": "^0.6.0",
-    "@material/mwc-ripple": "^0.6.0"
+    "@material/mwc-base": "^0.7.0",
+    "@material/mwc-icon": "^0.7.0",
+    "@material/mwc-ripple": "^0.7.0"
   },
   "publishConfig": {
     "access": "public"
