@@ -30,7 +30,10 @@ const githubRaw =
     `https://raw.githubusercontent.com/material-components/material-components-web-components`;
 
 // Matches markdown image syntax like `![description](url "tooltip")`
-const imageRegexp = /(\!\[.*?\]\()([^) ]+)(.*?\))/g;
+const markdownImageRegexp = /(\!\[.*?\]\()([^) ]+)(.*?\))/g;
+
+// Matches (markdown-compatible) HTML image syntax like `<img src="url">`
+const htmlImageRegexp = /(<img .*?src=['"])(.+?)(['"])/g;
 
 function isUrl(str: string): boolean {
   try {
@@ -57,8 +60,8 @@ function main() {
 
   for (const fileName of fileNames) {
     const markdown = fs.readFileSync(fileName, 'utf8');
-    const updated = markdown.replace(
-        imageRegexp, (_, prefix: string, oldUrl: string, suffix: string) => {
+    const replacer =
+        (_: string, prefix: string, oldUrl: string, suffix: string) => {
           if (isUrl(oldUrl)) {
             // Only transform relative image paths, not fully qualified URLs.
             return prefix + oldUrl + suffix;
@@ -72,8 +75,10 @@ function main() {
           const relUrlPath = path.relative(mwcRepoRoot, absFilePath)
                                  .replace(path.win32.sep, '/');
           const newUrl = `${githubRaw}/${sha}/${relUrlPath}`;
-          return prefix + newUrl + suffix
-        });
+          return prefix + newUrl + suffix;
+        };
+    const updated = markdown.replace(markdownImageRegexp, replacer)
+                        .replace(htmlImageRegexp, replacer);
     fs.writeFileSync(fileName, updated, 'utf8');
   }
 }
