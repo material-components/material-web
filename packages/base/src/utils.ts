@@ -49,8 +49,6 @@ export function addHasRemoveClass(element: HTMLElement) {
   };
 }
 
-export let supportsPassiveEventListener = false;
-
 let supportsPassive = false;
 const fn = () => {};
 const optionsBlock: AddEventListenerOptions = {
