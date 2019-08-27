@@ -9,8 +9,6 @@ Top App Bars are a container for items such as application title, navigation ico
 
 For a fixed position version of this component, see [`<mwc-top-app-bar-fixed>`](http://github.com/material-components/material-components-web-components/tree/master/packages/top-app-bar-fixed)
 
-For a collapsable version of this component, see [`<mwc-top-app-bar-short>`](http://github.com/material-components/material-components-web-components/tree/master/packages/top-app-bar-short)
-
 [Material Design Guidelines: App Bars: Top](https://material.io/design/components/app-bars-top.html)
 
 ## Installation

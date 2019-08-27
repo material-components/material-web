@@ -211,13 +211,6 @@ class DemoView extends LitElement {
               <span class="mdc-list-item__secondary-text">Top App Bars are a container for items such as application title, navigation icon, and action items.</span>
             </span>
           </a>
-          <a role="listitem" class="mdc-list-item" href="top-app-bar-short.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_component_24px.svg"></span>
-            <span class="mdc-list-item__text">
-              Top App Bar Short
-              <span class="mdc-list-item__secondary-text">Top App Bars are a container for items such as application title, navigation icon, and action items.</span>
-            </span>
-          </a>
         </div>
       </div>
     `;
