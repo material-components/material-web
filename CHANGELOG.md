@@ -5,52 +5,91 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
-- Components no longer automatically load the Material Icons font, so that
-  users have control over how fonts are loaded. Users can still import the
-  `mwc-icon-font.js` module themselves to automatically load the font from
-  fonts.googleapis.com.
-- Fix layout issue affecting scrolling `<mwc-tab-bar>` in Firefox.
-- Fix bug where `<mwc-icon>` icons did not render in IE11.
-- Buttons slotted into `<mwc-snackbar>` now render with correct default styles.
-  Add `--mdc-snackbar-action-color` CSS custom property to override default
-  action button color.
-- Fix bug where `<mwc-snackbar>` `open` method threw if called immediately
-  after construction (before `firstUpdated`).
-- Add support for `<svg>` and `<img>` to `<mwc-icon-button>`
-- Add `lit-analyzer` to CI
-- Only set up structure in `bootstrap`, make `build` explicit.
-  Run `lint` and `format` in CI
-- Remove CHANGELOG files in packages
-- Add section about CHANGELOG entries to CONTRIBUTING guide
-- Remove `as any` from `@customElement` decorators
-- Improve README for `<mwc-button>`
-- Improve README for `<mwc-icon-button>`
-- Split toggling icon button out into `@material/mwc-icon-button-toggle` with tag name `<mwc-icon-button-toggle>`
-- Fix bug where setting the `checked` property on an `<mwc-radio>` did not
-  result in the other radios in the group becoming unchecked.
-- Fix bug where `<mwc-drawer>` did not work in IE (via
-  [WICG/inert#129](https://github.com/WICG/inert/pull/129))
-- Split mwc-top-app-bar fixed and short variants into separate components
-- Removed, and readded mwc-top-app-bar `centerTitle`, fixing padding with `dense` and `prominent` setting
-- Implemented:
-  - mwc-textfield
-  - mwc-textarea
-  - mwc-notched-outline
-  - mwc-line-ripple-directive
-  - mwc-floating-label-directive
-  - mwc-top-app-bar-fixed
-  - mwc-top-app-bar-short
-- Testing Infra:
-  - Tests now in TS
-  - Tests now all pass in evergreens but still failing in IE and Safari 9
-  - Using Koa Karma proxy server and auto-amd-ifies files
-  - Can now run individual tests using npm run test -- --packages mwc-icon-button*,mwc-button
-- Fix bug where setting the `<mwc-snackbar>` `labelText` property could throw
+
+### Added
+- New components:
+  - [`<mwc-textfield>`](https://github.com/material-components/material-components-web-components/tree/master/packages/textfield) ([#297](https://github.com/material-components/material-components-web-components/pull/297))
+  - [`<mwc-textarea>`](https://github.com/material-components/material-components-web-components/tree/master/packages/textarea) ([#297](https://github.com/material-components/material-components-web-components/pull/297))
+  - [`<mwc-icon-button-toggle>`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon-button-toggle) ([#370](https://github.com/material-components/material-components-web-components/pull/370))
+  - [`<mwc-top-app-bar-fixed>`](https://github.com/material-components/material-components-web-components/tree/master/packages/top-app-bar-fixed) ([#379](https://github.com/material-components/material-components-web-components/pull/379))
+
+- Added support for `<svg>` and `<img>` icons to `<mwc-icon-button>` and
+  `<mwc-icon-button-toggle>`.
+  ([#358](https://github.com/material-components/material-components-web-components/pull/358))
+
+- Added `--mdc-snackbar-action-color` CSS custom property to `<mwc-snackbar>` to
+  override the default action button color
+  ([#354](https://github.com/material-components/material-components-web-components/pull/354)).
+
+- Added a default slot to `<mwc-top-app-bar>` and `<mwc-top-app-bar-fixed>`
+  which takes page content and automatically applies the correct `padding-top`
+  ([#370](https://github.com/material-components/material-components-web-components/pull/370)).
+
+- Added documentation for:
+  - [`<mwc-button>`](https://github.com/material-components/material-components-web-components/tree/master/packages/button)
+    ([#366](https://github.com/material-components/material-components-web-components/pull/366))
+  - [`<mwc-fab>`](https://github.com/material-components/material-components-web-components/tree/master/packages/fab)
+    ([#361](https://github.com/material-components/material-components-web-components/pull/361))
+  - [`<mwc-icon-button>`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon-button)
+    ([#370](https://github.com/material-components/material-components-web-components/pull/370))
+  - [`<mwc-radio>`](https://github.com/material-components/material-components-web-components/tree/master/packages/radio)
+    ([#377](https://github.com/material-components/material-components-web-components/pull/377))
+  - [`<mwc-snackbar>`](https://github.com/material-components/material-components-web-components/tree/master/packages/snackbar)
+    ([#355](https://github.com/material-components/material-components-web-components/pull/355))
+  - [`<mwc-top-app-bar>`](https://github.com/material-components/material-components-web-components/tree/master/packages/top-app-bar)
+    ([#379](https://github.com/material-components/material-components-web-components/pull/379))
+
+### Changed
+- **BREAKING** The Material Icons font is no longer loaded automatically
+  ([#314](https://github.com/material-components/material-components-web-components/pull/314)).
+  This allows more control over how fonts are loaded (e.g. serving fonts from a
+  different server, or loading multiple fonts with a single request). Most users
+  should now add a tag like this to their HTML page:
+
+  ```html
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons" rel="stylesheet">
+  ```
+
+- **BREAKING** The *toggling* behavior of `<mwc-icon-button>` has been removed
+  (i.e. `offIcon`), and is now instead supported by the dedicated
+  [`<mwc-icon-button-toggle>`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon-button-toggle)
+  component
+  ([#370](https://github.com/material-components/material-components-web-components/pull/370)).
+
+
+- **BREAKING** The *short* layout for `<mwc-top-app-bar>` has been removed, and
+  is no longer supported because it is not part of the Material Design
+  specification
+  ([#422](https://github.com/material-components/material-components-web-components/pull/422)).
+
+
+- **BREAKING** The *fixed* layout for `<mwc-top-app-bar>` has been removed, and
+  is now instead implemented by the dedicated `<mwc-top-app-bar-fixed>`
+  component
+  ([#379](https://github.com/material-components/material-components-web-components/pull/379)).
+
+### Fixed
+
+- Fixed bug where `<mwc-snackbar>` `open` method threw if called immediately
+  after construction (before `firstUpdated`)
+  ([#356](https://github.com/material-components/material-components-web-components/pull/356)).
+- Fixed bug where setting the `<mwc-snackbar>` `labelText` property could throw
   an exception and fail to render
-  ([#367](https://github.com/material-components/material-components-web-components/issues/367)).
-- Removed:
-  - mwc-top-app-bar-short has been removed after guidance from the Material Design team.
-- Fix top-app-bar centering for multiple icons.
+  ([#412](https://github.com/material-components/material-components-web-components/pull/412)).
+- Buttons slotted into `<mwc-snackbar>` now render with the correct default
+  styles
+  ([#354](https://github.com/material-components/material-components-web-components/pull/354)).
+- Fixed layout issue affecting scrolling `<mwc-tab-bar>` in Firefox
+  ([#349](https://github.com/material-components/material-components-web-components/pull/349)).
+- Fixed bug where `<mwc-icon>` icons did not render in IE11
+  ([#353](https://github.com/material-components/material-components-web-components/pull/353)).
+- Fixed bug where setting the `checked` property on an `<mwc-radio>` did not
+  result in the other radios in the group becoming unchecked
+  ([#373](https://github.com/material-components/material-components-web-components/pull/373)).
+- Fixed bug where `<mwc-drawer>` did not work in IE
+  ([WICG/inert#129](https://github.com/WICG/inert/pull/129)).
+- Fixed `dense` and `prominent` styling bugs in `<mwc-top-app-bar>`
+  ([#379](https://github.com/material-components/material-components-web-components/pull/379)).
 
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x
