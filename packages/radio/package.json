@@ -3,6 +3,7 @@
   "version": "0.7.0",
   "description": "",
   "main": "mwc-radio.js",
+  "module": "mwc-radio.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/material-components/material-components-web-components.git",
