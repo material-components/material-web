@@ -21,6 +21,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   override the default action button color
   ([#354](https://github.com/material-components/material-components-web-components/pull/354)).
 
+- Added a default slot to `<mwc-top-app-bar>` and `<mwc-top-app-bar-fixed>`
+  which takes page content and automatically applies the correct `padding-top`
+  ([#370](https://github.com/material-components/material-components-web-components/pull/370)).
+
 - Added documentation for:
   - [`<mwc-button>`](https://github.com/material-components/material-components-web-components/tree/master/packages/button)
     ([#366](https://github.com/material-components/material-components-web-components/pull/366))
