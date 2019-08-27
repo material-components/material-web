@@ -148,7 +148,7 @@ npm install @material/mwc-textarea
 | `validity`          | `ValidityState` (readonly) | The [`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState) of the textfield.
 | `willValidate`      | `boolean` (readonly)       | [`HTMLInputElement.prototype.willValidate`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement#Properties)
 | `validityTransform` | `ValidityTransform**|null` | Callback called before each validation check. See the [validation section](#Validation) for more details.
-| `validateOnInitialRender` | `boolean`            | Runs validation check on inital render.
+| `validateOnInitialRender` | `boolean`            | Runs validation check on initial render.
 
 \*  `TextFieldType` is exported by `mwc-textarea` and `mwc-textarea-base`.
 ```ts
