@@ -35,6 +35,7 @@ export class TopAppBarBase extends TopAppBarBaseBase {
     return {
       'mdc-top-app-bar--dense': this.dense,
       'mdc-top-app-bar--prominent': this.prominent,
+      'center-title': this.centerTitle,
     };
   }
 

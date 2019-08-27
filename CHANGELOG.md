@@ -50,6 +50,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   ([#367](https://github.com/material-components/material-components-web-components/issues/367)).
 - Removed:
   - mwc-top-app-bar-short has been removed after guidance from the Material Design team.
+- Fix top-app-bar centering for multiple icons.
 
 ## [0.6.0] - 2019-06-05
 - Upgrade lerna to 3.x
