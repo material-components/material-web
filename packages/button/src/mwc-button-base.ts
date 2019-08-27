@@ -16,6 +16,7 @@ limitations under the License.
 */
 import {classMap, html, LitElement, property} from '@material/mwc-base/base-element';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
+import {CssClasses} from './mwc-button-constant';
 
 export class ButtonBase extends LitElement {
   @property({type: Boolean}) raised = false;
@@ -30,34 +31,67 @@ export class ButtonBase extends LitElement {
 
   @property({type: Boolean}) trailingIcon = false;
 
+  @property({type: String}) href = '';
+
   @property() icon = '';
 
   @property() label = '';
+
+  private renderChildren() {
+    const iconLabel = this.icon;
+    const icon = html`
+      <span class="material-icons ${CssClasses.ICON}">
+        ${iconLabel}
+      </span>
+    `;
+    return html`
+      ${iconLabel && !this.trailingIcon ? icon : ''}
+      <span class="${CssClasses.LABEL}">${this.label}</span>
+      ${iconLabel && this.trailingIcon ? icon : ''}
+      <slot></slot>
+    `;
+  }
 
   protected createRenderRoot() {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
+  get classes() {
+    return classMap({
+      [CssClasses.ROOT]: true,
+      [CssClasses.RAISED]: this.raised,
+      [CssClasses.UNELEVATED]: this.unelevated,
+      [CssClasses.OUTLINED]: this.outlined,
+      [CssClasses.DENSE]: this.dense,
+    });
+  }
+
+  get ariaLabel() {
+    return this.label || this.icon;
+  }
+
   protected render() {
-    const classes = {
-      'mdc-button--raised': this.raised,
-      'mdc-button--unelevated': this.unelevated,
-      'mdc-button--outlined': this.outlined,
-      'mdc-button--dense': this.dense,
-    };
-    const mdcButtonIcon =
-        html`<span class="material-icons mdc-button__icon">${this.icon}</span>`;
-    return html`
-      <button .ripple="${ripple({
-      unbounded: false
-    })}"
-          class="mdc-button ${classMap(classes)}"
+    const boundedRipple = ripple({unbounded: false});
+
+    return this.href ? (html`
+        <a
+          .ripple="${boundedRipple}"
+          class="${this.classes}"
+          href="${this.disabled ? '' : this.href}"
+          aria-label="${this.ariaLabel}"
+        >
+          ${this.renderChildren()}
+        </a>
+      `) :
+                       (html`
+        <button
+          .ripple="${boundedRipple}"
+          class="${this.classes}"
           ?disabled="${this.disabled}"
-          aria-label="${this.label || this.icon}">
-        ${this.icon && !this.trailingIcon ? mdcButtonIcon : ''}
-        <span class="mdc-button__label">${this.label}</span>
-        ${this.icon && this.trailingIcon ? mdcButtonIcon : ''}
-        <slot></slot>
-      </button>`;
+          aria-label="${this.ariaLabel}"
+        >
+          ${this.renderChildren()}
+        </button>
+      `);
   }
 }
