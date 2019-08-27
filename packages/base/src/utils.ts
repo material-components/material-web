@@ -49,17 +49,17 @@ export function addHasRemoveClass(element: HTMLElement) {
   };
 }
 
-/**
- * Event listeners suport `passive` option
- */
-export let supportsPassiveEventListener = false;
-
+let supportsPassive = false;
 const fn = () => {};
 const optionsBlock: AddEventListenerOptions = {
   get passive() {
-    supportsPassiveEventListener = true;
+    supportsPassive = true;
     return false;
   }
 };
 document.addEventListener('x', fn, optionsBlock);
 document.removeEventListener('x', fn);
+/**
+ * Do event listeners suport the `passive` option?
+ */
+export const supportsPassiveEventListener = supportsPassive;
