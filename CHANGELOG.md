@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 - Added "module" field in all packages' `package.json` manifests
+  ([#434](https://github.com/material-components/material-components-web-components/pull/434))
 
 ## [0.7.0] - 2019-08-27
 
