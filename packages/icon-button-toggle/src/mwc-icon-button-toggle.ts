@@ -18,7 +18,7 @@ limitations under the License.
 import {customElement} from '@material/mwc-base/base-element';
 import {style} from '@material/mwc-icon-button/mwc-icon-button-css';
 
-import {IconButtonToggleBase} from './icon-button-toggle-base';
+import {IconButtonToggleBase} from './mwc-icon-button-toggle-base';
 
 declare global {
   interface HTMLElementTagNameMap {
