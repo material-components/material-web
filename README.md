@@ -78,8 +78,12 @@ Below are instructions for setting up project development.
 1. Run a development server with `npm run dev`
     - View the demos by accessing `<dev server url>`/demos/index.html
     - This will also build the project.
-1. Run tests with `npm run build:tests && npm run test`
-1. Run benchmarks with `npm run build:tests && npm run test:bench`
+1. Run tests with `npm run test`
+1. Run benchmarks with `npm run test:bench`
+    - Specify packages to run wih the `-p` flag. e.g. `npm run test:bench -- -p icon ripple textfield`
+    - The benchmarker will use [tachometer](https://github.com/Polymer/tachometer) to compare all the benchmarks in a given package directory.
+      - e.g. `npm run test:bench -- -p my-package` will benchmark each file in `test/lib/benchmark/my-package`
+    - See the help information of the benchmarker cli with `npm run test:bench -- --help`
 
 *Note:* You can debug specific tests by running:
 
