@@ -23,7 +23,7 @@ limitations under the License.
     const params = new URLSearchParams(window.location.search);
     const pack = params.get('package');
     const bench = params.get('bench');
-    import(`./${pack}/${bench}.js`);
+    import(`./lib/benchmark/${pack}/${bench}.js`);
   </script>
 </body>
 </html>
