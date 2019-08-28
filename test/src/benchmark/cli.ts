@@ -82,17 +82,17 @@ interface Options {
       {
         header: 'Usage',
         content: `Run all benchmarks for all MWC components:
-$ node test/benchmark/cli
+$ node test/lib/benchmark/cli
 
 Run all benchmarks for specific components:
-$ node test/benchmark/cli -p button ripple
-$ node test/benchmark/cli -p button -p ripple
+$ node test/lib/benchmark/cli -p button ripple
+$ node test/lib/benchmark/cli -p button -p ripple
 
 Run benchmarks on remote Selenium server or SSH tunnel:
-$ node test/benchmark/cli -r http://localhost:4444/wd/hub
+$ node test/lib/benchmark/cli -r http://localhost:4444/wd/hub
 
 Run benchmarks n times on each package:
-$ node test/benchmark/cli -n 20
+$ node test/lib/benchmark/cli -n 20
 `,
       },
       {
@@ -118,16 +118,19 @@ $ node test/benchmark/cli -n 20
   for (const packageName of packages) {
     const runCommands: string[] = [];
 
-    const benchmarks =
+    const files =
         readdirSync(
-            pathjoin('test', 'benchmark', packageName), {withFileTypes: true})
+            pathjoin('test', 'lib', 'benchmark', packageName), {withFileTypes: true})
+    const benchmarks = files
             .filter(
                 dirEntry => dirEntry.isFile() && dirEntry.name.endsWith('.js'))
             .map(dirEntry => dirEntry.name.replace(/\.js$/, ''));
 
+            console.log(benchmarks)
+
     for (const benchmark of benchmarks) {
       runCommands.push(
-          `${packageName}:${benchmark}=test/benchmark/bench-runner.html` +
+          `${packageName}:${benchmark}=test/bench-runner.html` +
           `?bench=${benchmark}` +
           `&package=${packageName}`);
     }
