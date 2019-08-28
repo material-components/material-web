@@ -18,7 +18,8 @@
   "dependencies": {
     "@material/mwc-base": "^0.7.0",
     "@material/mwc-top-app-bar": "^0.7.1",
-    "@material/top-app-bar": "^3.0.0"
+    "@material/top-app-bar": "^3.0.0",
+    "tslib": "^1.10.0"
   },
   "publishConfig": {
     "access": "public"

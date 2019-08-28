@@ -4,7 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Changed
+
+- Published JavaScript files no longer include inlined TypeScript helpers such
+  as `__decorate`. Instead, helpers are now imported from the
+  [`tslib`](https://github.com/microsoft/tslib) module dependency. This reduces
+  code size by allowing multiple components to share the same helpers, and
+  eliminates *"this has been rewritten to undefined"* errors from Rollup.
+  ([#439](https://github.com/material-components/material-components-web-components/pull/439))
+
 ## [0.7.1] - 2019-08-27
 
 ### Added

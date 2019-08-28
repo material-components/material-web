@@ -19,7 +19,8 @@
     "@material/mwc-base": "^0.7.0",
     "@material/mwc-tab": "^0.7.1",
     "@material/mwc-tab-scroller": "^0.7.1",
-    "@material/tab-bar": "^3.0.0"
+    "@material/tab-bar": "^3.0.0",
+    "tslib": "^1.10.0"
   },
   "publishConfig": {
     "access": "public"
