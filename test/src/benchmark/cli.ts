@@ -118,15 +118,14 @@ $ node test/lib/benchmark/cli -n 20
   for (const packageName of packages) {
     const runCommands: string[] = [];
 
-    const files =
+    const benchmarks =
         readdirSync(
-            pathjoin('test', 'lib', 'benchmark', packageName), {withFileTypes: true})
-    const benchmarks = files
+            pathjoin('test', 'lib', 'benchmark', packageName),
+            {withFileTypes: true})
             .filter(
                 dirEntry => dirEntry.isFile() && dirEntry.name.endsWith('.js'))
             .map(dirEntry => dirEntry.name.replace(/\.js$/, ''));
 
-            console.log(benchmarks)
 
     for (const benchmark of benchmarks) {
       runCommands.push(
