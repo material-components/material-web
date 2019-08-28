@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-formfield",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "",
   "main": "mwc-formfield.js",
   "module": "mwc-formfield.js",

@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-fab",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "",
   "main": "mwc-fab.js",
   "module": "mwc-fab.js",
@@ -17,8 +17,8 @@
   "dependencies": {
     "@material/fab": "^3.0.0",
     "@material/mwc-base": "^0.7.0",
-    "@material/mwc-icon": "^0.7.0",
-    "@material/mwc-ripple": "^0.7.0"
+    "@material/mwc-icon": "^0.7.1",
+    "@material/mwc-ripple": "^0.7.1"
   },
   "publishConfig": {
     "access": "public"

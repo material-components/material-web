@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-tab-scroller",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "",
   "main": "mwc-tab-scroller.js",
   "module": "mwc-tab-scroller.js",

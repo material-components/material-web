@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-tab-indicator",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "",
   "main": "mwc-tab-indicator.js",
   "module": "mwc-tab-indicator.js",

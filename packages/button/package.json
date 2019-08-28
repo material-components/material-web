@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-button",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "",
   "main": "mwc-button.js",
   "module": "mwc-button.js",
@@ -17,8 +17,8 @@
   "dependencies": {
     "@material/button": "^3.0.0",
     "@material/mwc-base": "^0.7.0",
-    "@material/mwc-icon": "^0.7.0",
-    "@material/mwc-ripple": "^0.7.0"
+    "@material/mwc-icon": "^0.7.1",
+    "@material/mwc-ripple": "^0.7.1"
   },
   "publishConfig": {
     "access": "public"

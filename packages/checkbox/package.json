@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-checkbox",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "",
   "main": "mwc-checkbox.js",
   "module": "mwc-checkbox.js",
@@ -17,7 +17,7 @@
   "dependencies": {
     "@material/checkbox": "^3.0.0",
     "@material/mwc-base": "^0.7.0",
-    "@material/mwc-ripple": "^0.7.0"
+    "@material/mwc-ripple": "^0.7.1"
   },
   "publishConfig": {
     "access": "public"

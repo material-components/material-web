@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-switch",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "",
   "main": "mwc-switch.js",
   "module": "mwc-switch.js",
@@ -13,7 +13,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/mwc-base": "^0.7.0",
-    "@material/mwc-ripple": "^0.7.0",
+    "@material/mwc-ripple": "^0.7.1",
     "@material/switch": "^3.0.0"
   },
   "publishConfig": {

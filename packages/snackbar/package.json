@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-snackbar",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "",
   "main": "mwc-snackbar.js",
   "module": "mwc-snackbar.js",

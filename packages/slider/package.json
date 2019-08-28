@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-slider",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "",
   "main": "mwc-slider.js",
   "module": "mwc-slider.js",
