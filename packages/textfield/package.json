@@ -3,6 +3,7 @@
   "version": "0.7.0",
   "description": "",
   "main": "mwc-textfield.js",
+  "module": "mwc-textfield.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
