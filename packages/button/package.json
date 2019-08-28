@@ -3,6 +3,7 @@
   "version": "0.7.0",
   "description": "",
   "main": "mwc-button.js",
+  "module": "mwc-button.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/material-components/material-components-web-components.git",
