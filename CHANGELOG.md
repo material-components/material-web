@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- ## Unreleased -->
+## [0.7.1] - 2019-08-27
+
+### Added
+- Added "module" field in all packages' `package.json` manifests
 
 ## [0.7.0] - 2019-08-27
 
