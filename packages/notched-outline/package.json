@@ -18,7 +18,8 @@
     "@material/mwc-base": "^0.7.0",
     "@material/notched-outline": "^3.0.0",
     "@material/shape": "^3.0.0",
-    "@material/theme": "^3.0.0"
+    "@material/theme": "^3.0.0",
+    "tslib": "^1.10.0"
   },
   "publishConfig": {
     "access": "public"

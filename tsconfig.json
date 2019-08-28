@@ -20,7 +20,8 @@
     "paths": {
       "@material/mwc-*": ["./*/src"]
     },
-    "composite": true
+    "composite": true,
+    "importHelpers": true
   },
   "include": [
     "custom_typings/**/*.ts",
