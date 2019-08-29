@@ -1,0 +1,4 @@
+.tsbuildinfo
+tsconfig.json
+*.tgz
+images/*
