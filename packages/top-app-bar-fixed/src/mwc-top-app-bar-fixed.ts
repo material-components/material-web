@@ -17,7 +17,7 @@ limitations under the License.
 import {customElement} from '@material/mwc-base/base-element.js';
 import {style} from '@material/mwc-top-app-bar/mwc-top-app-bar-css';
 
-import {TopAppBarFixedBase} from './top-app-bar-fixed-base';
+import {TopAppBarFixedBase} from './mwc-top-app-bar-fixed-base';
 
 declare global {
   interface HTMLElementTagNameMap {

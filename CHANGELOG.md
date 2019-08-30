@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   eliminates *"this has been rewritten to undefined"* errors from Rollup.
   ([#439](https://github.com/material-components/material-components-web-components/pull/439))
 
+- **BREAKING** Renamed component *`base`* modules:
+  ([#440](https://github.com/material-components/material-components-web-components/pull/440)):
+  - `icon-button-toggle-base.ts` → `mwc-icon-button-toggle-base.ts`
+  - `icon-button-base.ts` → `mwc-icon-button-base.ts`
+  - `top-app-bar-fixed-base.ts` → `mwc-top-app-bar-fixed-base.ts`
+
 ## [0.7.1] - 2019-08-27
 
 ### Added
