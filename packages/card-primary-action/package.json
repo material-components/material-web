@@ -1,0 +1,20 @@
+{
+  "name": "@material/mwc-card-primary-action",
+  "version": "0.6.0",
+  "description": "",
+  "main": "mwc-card-primary-action.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@material/card": "^3.1.0",
+    "@material/mwc-base": "^0.7.0",
+    "@material/mwc-ripple": "^0.7.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "private": true
+}

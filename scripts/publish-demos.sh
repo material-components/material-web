@@ -39,7 +39,7 @@ EOF
 (cd gh-pages; rm -rf node_modules; ln -s ../node_modules node_modules)
 
 # get list of demos to transform
-demos=(index button checkbox drawer fab formfield icon-button icon linear-progress radio ripple slider switch tabs top-app-bar drawer/{dismissible,modal,standard} tabs/rtl)
+demos=(index button card checkbox drawer fab formfield icon-button icon linear-progress radio ripple slider switch tabs top-app-bar drawer/{dismissible,modal,standard} tabs/rtl)
 for demo in ${demos[@]}; do
   file="gh-pages/demos/${demo}.html"
   echo "Rollup ${file}"

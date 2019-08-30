@@ -1,0 +1,127 @@
+/**
+@license
+Copyright 2018 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+@import '@material/card/mdc-card.scss';
+@import '@material/theme/_mixins.scss';
+
+$query: mdc-feature-all();
+$feat-color: mdc-feature-create-target($query, color);
+$feat-structure: mdc-feature-create-target($query, structure);
+
+// TODO(sorvell): flex for sizing, border inherit
+
+
+:host {
+  display: inline-flex;
+  @include mdc-theme-prop(border-radius, (
+    varname: --mdc-card-border-radius,
+    fallback: 4px 4px 4px 4px
+  ));
+}
+
+.mdc-card {
+  border-radius: inherit;
+  flex: 1;
+}
+
+slot {
+  border-radius: inherit;
+}
+
+// ::slotted(mwc-card-media:first-child),
+::slotted(mwc-card-primary-action:first-child) {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+
+// ::slotted(mwc-card-media:last-child),
+::slotted(mwc-card-primary-action:last-child) {
+  border-bottom-right-radius: inherit;
+  border-bottom-left-radius: inherit;
+}
+
+/* Set styles for .mdc-card__action based on slot. Styles will not be available from Light DOM. */
+slot::slotted(.mdc-card__action) {
+  @include mdc-feature-targets($feat-structure) {
+    @include mdc-card-actions-layout_(inline-flex);
+
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+  }
+}
+
+/* Set styles for .mdc-card__action:focus based on slot. Styles will not be available from Light DOM. */
+slot::slotted(.mdc-card__action:focus) {
+  @include mdc-feature-targets($feat-structure) {
+    outline: none;
+  }
+}
+
+/* Set styles for .mdc-card__action--button based on slot. Styles will not be available from Light DOM. */
+slot[name="button"]::slotted(.mdc-card__action--button) {
+  @include mdc-feature-targets($feat-structure) {
+    @include mdc-rtl-reflexive-box(margin, right, 8px);
+  }
+}
+
+/* Set styles for .mdc-card__action--button:last-child based on slot. Styles will not be available from Light DOM. */
+slot[name="button"]::slotted(.mdc-card__action--button:last-child) {
+  @include mdc-feature-targets($feat-structure) {
+    @include mdc-rtl-reflexive-box(margin, right, 0);
+  }
+}
+
+/* Set styles for .mdc-card__actions-full-bleed .mdc-card__action--button based on slot. Styles will not be available from Light DOM. */
+.mdc-card__actions--full-bleed slot[name="button"]::slotted(.mdc-card__action--button) {
+  @include mdc-feature-targets($feat-structure) {
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    margin: 0;
+    // padding: 8px 16px;
+    /* @noflip */
+    text-align: left;
+  }
+
+  @include mdc-rtl {
+    @include mdc-feature-targets($feat-structure) {
+      /* @noflip */
+      text-align: right;
+    }
+  }
+}
+
+/* Set styles for .mdc-card__action--icon based on slot. Styles will not be available from Light DOM. */
+slot[name="icon"]::slotted(.mdc-card__action--icon) {
+  @include mdc-feature-targets($feat-structure) {
+    // Icon buttons are taller than buttons, so we need to adjust their margins to prevent the action row from expanding.
+    margin: -6px 0;
+
+    // Same padding as mdc-icon-button.
+    // padding: 12px;
+  }
+}
+
+/* Set styles for .mdc-card__action--icon:not(:disabled) based on slot. Styles will not be available from Light DOM. */
+slot[name="icon"]::slotted(.mdc-card__action--icon:not(:disabled)) {
+  @include mdc-feature-targets($feat-color) {
+    @include mdc-theme-prop(color, text-icon-on-background);
+  }
+}
+

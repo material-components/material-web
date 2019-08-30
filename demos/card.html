@@ -16,108 +16,373 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <html>
+
 <head>
   <title>card demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-card/mwc-card.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-card-primary-action/mwc-card-primary-action.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-card-media/mwc-card-media.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-card-actions/mwc-card-actions.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-button/mwc-button.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-icon-button/mwc-icon-button.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700">
+  <link rel="stylesheet" href="demo-component.css">
   <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: rgba(0, 0, 0, 0.05);
+
+    .demo-card {
+      width: 344px;
     }
 
-    .presentCard {
-      padding: 40px;
+    .demo-card--with-custom-borders {
+      --mdc-card-border-radius: 24px 8px;
+    }	
+
+    .demo-card--with-custom-media-borders {	
+      --mdc-card-media-border-radius: 48px 8px 48px 8px/24px 4px 24px 4px;
+    }
+
+    .demo-card__header {
       display: flex;
-      justify-content: center;
+      flex-direction: row;
+      padding: 16px;
     }
 
-    .content {
-      padding: 8px;
-      background-color: tomato;
+    .demo-card-thumbnail {
+      width: 40px;
+      height: 40px;
+      background-color: #666;
+      border-radius: 50%;
+      margin: 0 16px 0 0;
+      align-self: center;
     }
 
-    .rounded {
-      border-radius: 8px;
-      overflow: hidden;
+    .demo-card__header-text {
+      display: flex;
+      flex-direction: column;
     }
 
+    .demo-card__title,
+    .demo-card__subtitle,
+    .demo-card__secondary {
+      font-family: Roboto, sans-serif;
+    }
+
+    .demo-card__title {
+      font-size: 1.25rem;
+      font-weight: 500;
+      line-height: 2rem;
+      /* letter-spacing: 0.125em; */
+      color: rgba(0, 0, 0);
+    }
+
+    .demo-card__subtitle {
+      font-size: .875rem;
+      line-height: 1.375rem;
+      font-weight: 500;
+      /* letter-spacing: .0071428571em;       */
+      color: rgba(0, 0, 0, 0.54);
+      text-decoration: inherit;
+      text-decoration-line: inherit;
+      text-decoration-style: inherit;
+      text-decoration-color: inherit;
+    }
+
+    .demo-card__secondary {
+      font-size: .875rem;
+      line-height: 1.25rem;
+      font-weight: 400;
+      /* letter-spacing: .0178571429em; */
+      color: rgba(0, 0, 0, 0.54);
+      text-decoration: inherit;
+      text-transform: inherit;
+      /* top margin adjusted for 16px of line-height, length to baseline 28px*/
+      /* bottom margin adjusted for 2px of line-height, length to baseline */
+      /* padding: 12px 16px 22px; */
+      padding: 0 1rem 8px;
+    }
+
+    .demo-card--with-text-over-media .demo-card__secondary,
+    .demo-card--with-header .demo-card__secondary {
+      padding-top: 1rem;
+    }
+
+    .demo-card--with-media-header .demo-card__header {
+      padding: 0;
+      border-top-left-radius: inherit;
+      border-top-right-radius: inherit;
+    }
+
+    .demo-card--with-media-header .demo-card__media {
+      width: 110px;
+      border-top-left-radius: inherit;
+      border-top-right-radius: inherit;
+      /* --mwc-card-media-border-top-left-radius: 10px;
+      --mwc-card-media-border-top-right-radius: 10px; */
+    }
+
+    .demo-card--with-media-header .demo-card__header-text {
+      padding: 1rem;
+    }
+
+    .demo-card__media {
+      --mdc-card-media-background-image: url(https://material-components.github.io/material-components-web-catalog/static/media/photos/3x2/2.jpg);
+    }
+
+    .demo-card__media-content .demo-card__title,
+    .demo-card__media-content .demo-card__subtitle {
+      color: rgb(255, 255, 255);
+    }
+
+    .demo-card__media-content {
+      display: flex;
+      align-items: flex-end;
+      width: 100%;
+      height: 100%;
+    }
+
+    .demo-crop-image {
+      background-size: 200%;
+    }
   </style>
 </head>
+
 <body class="unresolved">
-  <script type="module">
-    import {style as cardStyle} from '../node_modules/@material/mwc-card/mwc-card-css.js';
-    import {style as typographyStyle} from '../node_modules/@material/mwc-typography/mwc-typography-css.js';
-    import {LitElement, html} from '../node_modules/lit-element/lit-element.js';
-    import '../node_modules/@material/mwc-button/mwc-button.js';
-    import '../node_modules/@material/mwc-icon/mwc-icon.js';
-    import '../node_modules/@material/mwc-icon-toggle/mwc-icon-toggle.js';
-    import '../node_modules/@material/mwc-ripple/mwc-ripple.js';
+  <header>
+    <a href="index.html">
+      <mwc-icon>arrow_back</mwc-icon>
+      <span>Card</span>
+    </a>
+  </header>
+  <main>
+    <div class="view">
 
-    class DemoCard extends LitElement {
-      static get styles() {
-        return [
-          cardStyle,
-          typographyStyle,
-          css`
-            :host {
-              display: inline-block;
-            }
-
-            .mdc-card {
-              max-width: 350px;
-            }
-
-            .my-media {
-              background-image: url('https://material-components-web.appspot.com/images/16-9.jpg');
-            }
-
-            .content {
-              padding: 1rem;
-            }
-
-            .subtext {
-              color: rgba(0, 0, 0, 0.54);
-            }
-          `,
-        ];
-      }
-
-      render() {
-        return html`
-          <div class="mdc-card">
-            <div class="mdc-card__primary-action">
-              <div class="mdc-card__media mdc-card__media--16-9 my-media"></div>
-              <div class="content">
-                <h2 class="mdc-typography--title">Our Changing Planet</h2>
-                <h3 class="mdc-typography--subheading1 subtext">by Kurt Wagner</h3>
-                <div class="mdc-typography--body1 subtext">Visit ten places on our planet that are undergoing the biggest changes today.</div>
-              </div>
-              <mdc-ripple></mdc-ripple>
-            </div>
-            <!-- ... content ... -->
-            <div class="mdc-card__actions">
-              <div class="mdc-card__action-buttons">
-                <mwc-button dense class="mdc-card__action--button">Read</mwc-button>
-                <mwc-button dense class="mdc-card__action--button">Save</mwc-button>
-              </div>
-              <div class="mdc-card__action-icons">
-                <mwc-icon-toggle title="Share" icon="share"></mwc-icon-toggle>
-                <mwc-icon-toggle title="More options" icon="more_vert"></mwc-icon-toggle>
-              </div>
+      <h4>Basic</h4>
+      <mwc-card class="demo-card">
+        <mwc-card-primary-action>
+          <mwc-card-media aspectRatio="16-9" class="demo-card__media demo-crop-image"></mwc-card-media>
+          <div class="demo-card__header">
+            <div class="demo-card__header-text">
+              <div class="demo-card__title">Our Changing Planet</div>
+              <div class="demo-card__subtitle">by Kurt Wagner</div>
             </div>
           </div>
-        `;
-      }
-    }
+          <div class="demo-card__secondary mdc-typography mdc-typography--body2">
+            Visit ten places on our planet that are undergoing the biggest changes today.
+          </div>
+        </mwc-card-primary-action>
+        <mwc-button slot="button">Read</mwc-button>
+        <mwc-button slot="button">Bookmark</mwc-button>
+        <mwc-icon-button slot="icon" icon="favorite"></mwc-icon-button>
+        <mwc-icon-button slot="icon" icon="share"></mwc-icon-button>
+        <mwc-icon-button slot="icon" icon="more_vert"></mwc-icon-button>
+      </mwc-card>
 
-    customElements.define('demo-card', DemoCard);
-  </script>
-  <div class="presentCard">
-    <demo-card></demo-card>
-  </div>
+      <h4>Basic w/ Outline</h4>	
+      <mwc-card class="demo-card" outlined>	
+        <mwc-card-primary-action>	
+          <mwc-card-media aspectRatio="16-9" class="demo-card__media demo-crop-image"></mwc-card-media>	
+          <div class="demo-card__header">	
+            <div class="demo-card__header-text">	
+              <div class="demo-card__title">Our Changing Planet</div>	
+              <div class="demo-card__subtitle">by Kurt Wagner</div>	
+            </div>	
+          </div>	
+          <div class="demo-card__secondary mdc-typography mdc-typography--body2">	
+            Visit ten places on our planet that are undergoing the biggest changes today.	
+          </div>	
+        </mwc-card-primary-action>
+        <mwc-button slot="button">Read</mwc-button>	
+        <mwc-button slot="button">Bookmark</mwc-button>	
+        <mwc-icon-button slot="icon" icon="favorite"></mwc-icon-button>	
+        <mwc-icon-button slot="icon" icon="share"></mwc-icon-button>	
+        <mwc-icon-button slot="icon" icon="more_vert"></mwc-icon-button>	
+      </mwc-card>
+
+      <h4>Basic w/ Text over Media</h4>
+      <mwc-card class="demo-card demo-card--with-text-over-media">
+        <mwc-card-primary-action>
+          <mwc-card-media aspectRatio="16-9" class="demo-card__media demo-crop-image">
+            <div class="demo-card__media-content">
+              <div class="demo-card__header">
+                <div class="demo-card__header-text">
+                  <div class="demo-card__title">Our Changing Planet</div>
+                  <div class="demo-card__subtitle">by Kurt Wagner</div>
+                </div>
+              </div>
+            </div>
+          </mwc-card-media>
+          <div class="demo-card__secondary mdc-typography mdc-typography--body2">
+            Visit ten places on our planet that are undergoing the biggest changes today.
+          </div>
+        </mwc-card-primary-action>
+        <mwc-button slot="button">Read</mwc-button>
+        <mwc-button slot="button">Bookmark</mwc-button>
+        <mwc-icon-button slot="icon" icon="favorite"></mwc-icon-button>
+        <mwc-icon-button slot="icon" icon="share"></mwc-icon-button>
+        <mwc-icon-button slot="icon" icon="more_vert"></mwc-icon-button>
+      </mwc-card>
+
+      <h4>Basic w/ Header</h4>
+      <mwc-card class="demo-card demo-card--with-header">
+        <div class="demo-card__header">
+          <div class="demo-card__header-text">
+            <div class="demo-card__title">Our Changing Planet</div>
+            <div class="demo-card__subtitle">by Kurt Wagner</div>
+          </div>
+        </div>
+        <mwc-card-primary-action>
+          <mwc-card-media aspectRatio="16-9" class="demo-card__media demo-crop-image"></mwc-card-media>
+          <div class="demo-card__secondary mdc-typography mdc-typography--body2">
+            Visit ten places on our planet that are undergoing the biggest changes today.
+          </div>
+        </mwc-card-primary-action>
+        <mwc-button slot="button">Read</mwc-button>
+        <mwc-button slot="button">Bookmark</mwc-button>
+        <mwc-icon-button slot="icon" icon="favorite"></mwc-icon-button>
+        <mwc-icon-button slot="icon" icon="share"></mwc-icon-button>
+        <mwc-icon-button slot="icon" icon="more_vert"></mwc-icon-button>
+      </mwc-card>
+
+      <h4>Basic w/ Header and Thumbnail</h4>
+      <mwc-card class="demo-card demo-card--with-header">
+        <div class="demo-card__header">
+          <div class="demo-card-thumbnail"></div>
+          <div class="demo-card__header-text">
+            <div class="demo-card__title">Our Changing Planet</div>
+            <div class="demo-card__subtitle">by Kurt Wagner</div>
+          </div>
+        </div>
+        <mwc-card-primary-action>
+          <mwc-card-media aspectRatio="16-9" class="demo-card__media demo-crop-image"></mwc-card-media>
+          <div class="demo-card__secondary mdc-typography mdc-typography--body2">
+            Visit ten places on our planet that are undergoing the biggest changes today.
+          </div>
+        </mwc-card-primary-action>
+        <mwc-button slot="button">Read</mwc-button>
+        <mwc-button slot="button">Bookmark</mwc-button>
+        <mwc-icon-button slot="icon" icon="favorite"></mwc-icon-button>
+        <mwc-icon-button slot="icon" icon="share"></mwc-icon-button>
+        <mwc-icon-button slot="icon" icon="more_vert"></mwc-icon-button>
+      </mwc-card>
+
+      <h4>Basic w/ Only Buttons</h4>
+      <mwc-card class="demo-card">
+        <mwc-card-primary-action>
+          <mwc-card-media aspectRatio="16-9" class="demo-card__media demo-crop-image"></mwc-card-media>
+          <div class="demo-card__header">
+            <div class="demo-card__header-text">
+              <div class="demo-card__title">Our Changing Planet</div>
+              <div class="demo-card__subtitle">by Kurt Wagner</div>
+            </div>
+          </div>
+          <div class="demo-card__secondary mdc-typography mdc-typography--body2">
+            Visit ten places on our planet that are undergoing the biggest changes today.
+          </div>
+        </mwc-card-primary-action>
+        <mwc-button slot="button">Read</mwc-button>
+        <mwc-button slot="button">Bookmark</mwc-button>
+      </mwc-card>
+
+      <h4>Basic w/ Only Icons</h4>
+      <mwc-card class="demo-card">
+        <mwc-card-primary-action>
+          <mwc-card-media aspectRatio="16-9" class="demo-card__media demo-crop-image"></mwc-card-media>
+          <div class="demo-card__header">
+            <div class="demo-card__header-text">
+              <div class="demo-card__title">Our Changing Planet</div>
+              <div class="demo-card__subtitle">by Kurt Wagner</div>
+            </div>
+          </div>
+          <div class="demo-card__secondary mdc-typography mdc-typography--body2">
+            Visit ten places on our planet that are undergoing the biggest changes today.
+          </div>
+        </mwc-card-primary-action>
+        <mwc-icon-button slot="icon" icon="favorite"></mwc-icon-button>
+        <mwc-icon-button slot="icon" icon="share"></mwc-icon-button>
+        <mwc-icon-button slot="icon" icon="more_vert"></mwc-icon-button>
+      </mwc-card>
+
+      <h4>Basic w/ Full Bleed</h4>	
+      <mwc-card class="demo-card" fullBleed>	
+        <mwc-card-primary-action>	
+          <mwc-card-media aspectRatio="16-9" class="demo-card__media demo-crop-image"></mwc-card-media>	
+          <div class="demo-card__header">	
+            <div class="demo-card__header-text">	
+              <div class="demo-card__title">Our Changing Planet</div>	
+              <div class="demo-card__subtitle">by Kurt Wagner</div>	
+            </div>	
+          </div>	
+          <div class="demo-card__secondary mdc-typography mdc-typography--body2">	
+            Visit ten places on our planet that are undergoing the biggest changes today.	
+          </div>	
+        </mwc-card-primary-action>	
+        <mwc-button slot="button">Bookmark</mwc-button>	
+      </mwc-card>
+
+      <h4>Horizontal Image and Text</h4>
+      <mwc-card class="demo-card demo-card--with-media-header">
+        <mwc-card-primary-action>
+          <div class="demo-card__header">
+            <mwc-card-media aspectRatio="square" class="demo-card__media demo-crop-image"></mwc-card-media>
+            <div class="demo-card__header-text">
+              <div class="demo-card__title">Our Changing Planet</div>
+              <div class="demo-card__subtitle">by Kurt Wagner</div>
+            </div>
+          </div>
+        </mwc-card-primary-action>
+        <mwc-button slot="button">Read</mwc-button>
+        <mwc-button slot="button">Bookmark</mwc-button>
+        <mwc-icon-button slot="icon" icon="favorite"></mwc-icon-button>
+        <mwc-icon-button slot="icon" icon="share"></mwc-icon-button>
+        <mwc-icon-button slot="icon" icon="more_vert"></mwc-icon-button>
+      </mwc-card>
+
+      <h4>Custom Card Borders</h4>	
+      <mwc-card class="demo-card demo-card--with-custom-borders">	
+        <mwc-card-primary-action>	
+          <div class="demo-card__header">	
+            <div class="demo-card__header-text">	
+              <div class="demo-card__title">Our Changing Planet</div>	
+              <div class="demo-card__subtitle">by Kurt Wagner</div>	
+            </div>	
+          </div>	
+        </mwc-card-primary-action>	
+        <mwc-button slot="button">Read</mwc-button>	
+        <mwc-button slot="button">Bookmark</mwc-button>	
+        <mwc-icon-button slot="icon" icon="favorite"></mwc-icon-button>	
+        <mwc-icon-button slot="icon" icon="share"></mwc-icon-button>	
+        <mwc-icon-button slot="icon" icon="more_vert"></mwc-icon-button>	
+      </mwc-card>	
+
+       <h4>Custom Card Media Borders</h4>	
+      <mwc-card class="demo-card demo-card--with-custom-media-borders">	
+        <div class="demo-card__header">	
+          <div class="demo-card__header-text">	
+            <div class="demo-card__title">Our Changing Planet</div>	
+            <div class="demo-card__subtitle">by Kurt Wagner</div>	
+          </div>	
+        </div>	
+        <mwc-card-primary-action>	
+          <mwc-card-media aspectRatio="16-9" class="demo-card__media demo-crop-image"></mwc-card-media>	
+          <div class="demo-card__secondary mdc-typography mdc-typography--body2">	
+            Visit ten places on our planet that are undergoing the biggest changes today.	
+          </div>	
+        </mwc-card-primary-action>	
+        <mwc-button slot="button">Read</mwc-button>	
+        <mwc-button slot="button">Bookmark</mwc-button>	
+        <mwc-icon-button slot="icon" icon="favorite"></mwc-icon-button>	
+        <mwc-icon-button slot="icon" icon="share"></mwc-icon-button>	
+        <mwc-icon-button slot="icon" icon="more_vert"></mwc-icon-button>	
+      </mwc-card>
+    </div>
+  </main>
+
   <script>
     addEventListener('load', function() { document.body.classList.remove('unresolved'); });
   </script>
 </body>
+
 </html>

@@ -244,6 +244,12 @@ class DemoView extends LitElement {
         href: 'top-app-bar-fixed.html',
         img: 'https://material-components-web.appspot.com/images/ic_toolbar_24px.svg',
       },
+      {
+        name: 'Card',
+        secondary: 'Cards contain content and actions about a single subject.',
+        href: 'card.html',
+        img: 'https://material-components-web.appspot.com/images/ic_card_24px.svg',
+      },
     ].sort(sortFn);
   }
 
