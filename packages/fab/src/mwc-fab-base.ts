@@ -43,18 +43,22 @@ export class FabBase extends LitElement {
       'mdc-fab--extended': this.extended,
     };
     const showLabel = this.label !== '' && this.extended;
+    const label = showLabel ? html`
+      <span class="mdc-fab__label">${this.label}</span>
+      ` :
+                              '';
     return html`
       <button
           .ripple="${ripple()}"
           class="mdc-fab ${classMap(classes)}"
           ?disabled="${this.disabled}"
           aria-label="${this.label || this.icon}">
-        ${showLabel && this.showIconAtEnd ? this.label : ''}
+        ${this.showIconAtEnd ? label : ''}
         ${
         this.icon ? html`
           <span class="material-icons mdc-fab__icon">${this.icon}</span>` :
                     ''}
-        ${showLabel && !this.showIconAtEnd ? this.label : ''}
+        ${!this.showIconAtEnd ? label : ''}
       </button>`;
   }
 }
