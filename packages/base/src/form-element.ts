@@ -16,9 +16,10 @@ limitations under the License.
 */
 
 import {BaseElement} from './base-element';
+import {MDCRippleFoundation} from '@material/ripple/foundation.js'
 export * from './base-element';
 
-export interface RippleSurface {
+export interface RippleSurface extends MDCRippleFoundation {
   activate(): void;
   deactivate(): void;
 }
