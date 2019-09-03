@@ -50,7 +50,7 @@ export class DialogBase extends BaseElement {
 
   @query('.mdc-container') protected conatinerElement!: HTMLDivElement;
 
-  @property({type: Boolean}) protected hasActions: boolean = false;
+  @property({type: Boolean}) hideActions: boolean = false;
 
   @property({type: Boolean}) protected actionsReversed: boolean = false;
 
@@ -170,14 +170,6 @@ export class DialogBase extends BaseElement {
     };
   }
 
-  onActionSlotchange() {
-    const primary = this.primarySlot;
-    const secondary = this.secondarySlot;
-
-    this.hasActions =
-        !!primary.assignedNodes().length || !!secondary.assignedNodes().length;
-  }
-
   protected render() {
     const classes = {
       [cssClasses.STACKED]: this.stacked,
@@ -188,10 +180,10 @@ export class DialogBase extends BaseElement {
                      html``;
 
     const actoinsClasses = {
-      'mdc-dialog__actions': this.hasActions,
+      'mdc-dialog__actions': !this.hideActions,
     }
 
-    let slotNames = ['secondaryButton', 'primaryButton'];
+    let slotNames = ['secondaryAction', 'primaryAction'];
 
     if (this.actionsReversed) {
       slotNames = slotNames.reverse();
@@ -216,8 +208,7 @@ export class DialogBase extends BaseElement {
           </div>
           <footer
               id="actions"
-              class="${classMap(actoinsClasses)}"
-              @slotchange=${this.onActionSlotchange}>
+              class="${classMap(actoinsClasses)}">
             ${actionSlots}
           </footer>
         </div>
