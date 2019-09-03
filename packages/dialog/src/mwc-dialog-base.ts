@@ -40,13 +40,15 @@ let originalOpen: null | (() => void) = null;
 export class DialogBase extends BaseElement {
   @query('.mdc-dialog') protected mdcRoot!: HTMLDivElement;
 
-  @query('[name="primaryButton"]') protected primarySlot!: HTMLSlotElement;
+  @query('slot[name="primaryButton"]') protected primarySlot!: HTMLSlotElement;
 
-  @query('[name="secondaryButton"]') protected secondarySlot!: HTMLSlotElement;
+  @query('slot[name="secondaryButton"]') protected secondarySlot!: HTMLSlotElement;
 
   @query('.mdc-dialog__content') protected contentElement!: HTMLDivElement;
 
   @query('.mdc-container') protected conatinerElement!: HTMLDivElement;
+
+  @property({type: Boolean}) protected hasActions: boolean = false;
 
   @property({type: Boolean}) stacked: boolean = false;
 
@@ -164,6 +166,13 @@ export class DialogBase extends BaseElement {
     };
   }
 
+  onActionSlotchange() {
+    const primary = this.primarySlot;
+    const secondary = this.secondarySlot;
+
+    this.hasActions = !!primary.assignedNodes().length || !!secondary.assignedNodes().length;
+  }
+
   protected render() {
     const classes = {
       [cssClasses.STACKED]: this.stacked,
@@ -173,6 +182,10 @@ export class DialogBase extends BaseElement {
     const title = this.title ?
         html`<h2 class="mdc-dialog__title">${this.title}</h2>` :
         html``;
+
+    const actoinsClasses = {
+      'mdc-dialog__actions': this.hasActions,
+    }
 
     return html`
     <div class="mdc-dialog ${classMap(classes)}"
@@ -187,7 +200,10 @@ export class DialogBase extends BaseElement {
           <div class="mdc-dialog__content">
             <slot></slot>
           </div>
-          <footer class="mdc-dialog__actions">
+          <footer
+              id="actions"
+              class="${classMap(actoinsClasses)}"
+              @slotchange=${this.onActionSlotchange}>
             <slot
                 name="secondaryButton">
             </slot>

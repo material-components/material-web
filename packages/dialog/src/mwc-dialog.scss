@@ -16,3 +16,7 @@ limitations under the License.
 */
 
 @import '@material/dialog/mdc-dialog.scss';
+
+#actions:not(.mdc-dialog__actions) {
+  display: none;
+}
