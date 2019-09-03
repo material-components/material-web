@@ -20,3 +20,32 @@ limitations under the License.
 #actions:not(.mdc-dialog__actions) {
   display: none;
 }
+
+#actions ::slotted(*) {
+  @include mdc-feature-targets($feat-structure) {
+    @include mdc-rtl-reflexive-box(margin, left, 8px);
+  }
+
+  &:first-child {
+    @include mdc-feature-targets($feat-structure) {
+      @include mdc-rtl-reflexive-box(margin, left, 0);
+    }
+  }
+
+  @include mdc-feature-targets($feat-structure) {
+    max-width: 100%; // Prevent long text from overflowing parent element in IE 11
+    /* @noflip */
+    text-align: right;
+
+    @include mdc-rtl(".mdc-dialog") {
+      /* @noflip */
+      text-align: left;
+    }
+  }
+
+  .mdc-dialog--stacked &:not(:first-child) {
+    @include mdc-feature-targets($feat-structure) {
+      margin-top: 12px;
+    }
+  }
+}

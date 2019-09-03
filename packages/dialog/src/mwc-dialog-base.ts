@@ -52,15 +52,15 @@ export class DialogBase extends BaseElement {
 
   @property({type: Boolean}) protected hasActions: boolean = false;
 
-  @property({type: Boolean}) stacked: boolean = false;
-
-  @property({type: String}) title: string = '';
+  @property({type: Boolean}) protected actionsReversed: boolean = false;
 
   @property({type: Boolean})
-  @observer(function(this: DialogBase, newValue: boolean) {
-    this.mdcFoundation.setAutoStackButtons(newValue);
+  @observer(function(this: DialogBase) {
+    this.forceLayout();
   })
-  autoStackButtons = false;
+  stacked: boolean = false;
+
+  @property({type: String}) title: string = '';
 
   @property({type: String})
   @observer(function(this: DialogBase, newAction: string) {
@@ -157,7 +157,7 @@ export class DialogBase extends BaseElement {
           this.emitNotification(strings.CLOSING_EVENT, action),
       notifyOpened: () => this.emitNotification(strings.OPENED_EVENT),
       notifyOpening: () => this.emitNotification(strings.OPENING_EVENT),
-      reverseButtons: () => this.stacked = !this.stacked,
+      reverseButtons: () => this.actionsReversed = !this.actionsReversed,
       releaseFocus: () => {
         blockingElements.remove(this);
       },
@@ -191,6 +191,16 @@ export class DialogBase extends BaseElement {
       'mdc-dialog__actions': this.hasActions,
     }
 
+    let slotNames = ['secondaryButton', 'primaryButton'];
+
+    if (this.actionsReversed) {
+      slotNames = slotNames.reverse();
+    }
+
+    let actionSlots = html`
+        <slot name="${slotNames[0]}"></slot>
+        <slot name="${slotNames[1]}"></slot>`;
+
     return html`
     <div class="mdc-dialog ${classMap(classes)}"
         role="alertdialog"
@@ -208,12 +218,7 @@ export class DialogBase extends BaseElement {
               id="actions"
               class="${classMap(actoinsClasses)}"
               @slotchange=${this.onActionSlotchange}>
-            <slot
-                name="secondaryButton">
-            </slot>
-            <slot
-                name="primaryButton">
-            </slot>
+            ${actionSlots}
           </footer>
         </div>
       </div>
@@ -223,6 +228,8 @@ export class DialogBase extends BaseElement {
 
   firstUpdated() {
     super.firstUpdated();
+    this.mdcFoundation.setAutoStackButtons(true);
+
     originalOpen = this.mdcFoundation.open.bind(this.mdcFoundation);
     originalClose = this.mdcFoundation.close.bind(this.mdcFoundation);
 
