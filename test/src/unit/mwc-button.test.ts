@@ -16,11 +16,12 @@
 
 import {Button} from '@material/mwc-button';
 import {html} from 'lit-html';
-import {fixture, TestFixture, rafPromise} from '../util/helpers';
+
+import {fixture, rafPromise, TestFixture} from '../util/helpers';
 
 const ICON_SELECTOR = '.mdc-button__icon';
 
-const basic = html `
+const basic = html`
   <mwc-button>this is a button</mwc-button>
 `;
 
@@ -81,7 +82,8 @@ suite('mwc-button', () => {
 
     test('focus fn highlights and blurs', async () => {
       const focusedClass = 'mdc-ripple-upgraded--background-focused';
-      const nativeButton = element.shadowRoot!.querySelector('#button') as HTMLButtonElement;
+      const nativeButton =
+          element.shadowRoot!.querySelector('#button') as HTMLButtonElement;
       expect(nativeButton.classList.contains(focusedClass)).to.be.false;
       element.focus();
       await element.requestUpdate();
