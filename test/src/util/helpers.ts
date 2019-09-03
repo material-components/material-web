@@ -163,3 +163,7 @@ export const measureFixtureCreation = async (
 
   return renderTargetRoot;
 }
+
+export const rafPromise = async () => new Promise(res => {
+  requestAnimationFrame(res);
+});
