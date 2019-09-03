@@ -54,8 +54,6 @@ export class DialogBase extends BaseElement {
 
   @property({type: Boolean}) stacked: boolean = false;
 
-  @property({type: Boolean}) scrollable: boolean = false;
-
   @property({type: String}) title: string = '';
 
   @property({type: Boolean})
@@ -183,7 +181,6 @@ export class DialogBase extends BaseElement {
   protected render() {
     const classes = {
       [cssClasses.STACKED]: this.stacked,
-      [cssClasses.SCROLLABLE]: this.scrollable,
     }
 
     const title =
@@ -272,7 +269,7 @@ export class DialogBase extends BaseElement {
         this.mdcFoundation.handleClick.bind(this.mdcFoundation);
     this.boundLayout = () => {
       if (this.open) {
-        this.mdcFoundation.layout.bind(this.mdcFoundation)
+        this.mdcFoundation.layout.bind(this.mdcFoundation);
       }
     };
     this.boundHandleKeydown =
