@@ -262,7 +262,7 @@ export class DialogBase extends BaseElement {
 
   protected setEventListeners() {
     this.boundHandleClick = this.mdcFoundation.handleClick.bind(this.mdcFoundation);
-    this.boundLayout = this.mdcFoundation.layout.bind(this.mdcFoundation);
+    this.boundLayout = () => {if (this.open) {this.mdcFoundation.layout.bind(this.mdcFoundation)}};
     this.boundHandleKeydown = this.mdcFoundation.handleKeydown.bind(this.mdcFoundation);
     this.boundHandleDocumentKeydown = this.mdcFoundation.handleDocumentKeydown.bind(this.mdcFoundation);
 
