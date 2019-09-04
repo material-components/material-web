@@ -28,8 +28,8 @@ export {MDCDialogCloseEventDetail} from '@material/dialog/types';
 const blockingElements =
     (document as DocumentWithBlockingElements).$blockingElements;
 
-const DIALOG_ACTION_ATTRIBUTE = 'mdc-dialog-action';
-const INTIAL_FOCUS_ATTRIBUTE = 'mdc-dialog-initial-focus';
+const DIALOG_ACTION_ATTRIBUTE = 'dialog-action';
+const INTIAL_FOCUS_ATTRIBUTE = 'dialog-initial-focus';
 
 let originalClose: null|((action?: string|undefined) => void) = null;
 let originalOpen: null|(() => void) = null;
