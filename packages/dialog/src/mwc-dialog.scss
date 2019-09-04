@@ -16,36 +16,47 @@ limitations under the License.
 */
 
 @import '@material/dialog/mdc-dialog.scss';
+@import '@material/feature-targeting/functions';
+@import '@material/feature-targeting/mixins';
 
 #actions:not(.mdc-dialog__actions) {
   display: none;
 }
 
-#actions ::slotted(*) {
-  @include mdc-feature-targets($feat-structure) {
-    @include mdc-rtl-reflexive-box(margin, left, 8px);
-  }
+@mixin mwc-dialog-core-styles($query: mdc-feature-all()) {
+  $feat-animation: mdc-feature-create-target($query, animation);
+  $feat-structure: mdc-feature-create-target($query, structure);
 
-  &:first-child {
-    @include mdc-feature-targets($feat-structure) {
-      @include mdc-rtl-reflexive-box(margin, left, 0);
+  #actions {
+    ::slotted(*) {
+      @include mdc-feature-targets($feat-structure) {
+        @include mdc-rtl-reflexive-box(margin, left, 8px);
+      }
+
+      @include mdc-feature-targets($feat-structure) {
+        max-width: 100%; // Prevent long text from overflowing parent element in IE 11
+        /* @noflip */
+        text-align: right;
+
+        @include mdc-rtl(".mdc-dialog") {
+          /* @noflip */
+          text-align: left;
+        }
+      }
     }
-  }
 
-  @include mdc-feature-targets($feat-structure) {
-    max-width: 100%; // Prevent long text from overflowing parent element in IE 11
-    /* @noflip */
-    text-align: right;
-
-    @include mdc-rtl(".mdc-dialog") {
-      /* @noflip */
-      text-align: left;
+    & *:first-child::slotted(*) {
+      @include mdc-feature-targets($feat-structure) {
+        @include mdc-rtl-reflexive-box(margin, left, 0);
+      }
     }
-  }
 
-  .mdc-dialog--stacked &:not(:first-child) {
-    @include mdc-feature-targets($feat-structure) {
-      margin-top: 12px;
+    .mdc-dialog--stacked & *:not(:first-child)::slotted(*) {
+      @include mdc-feature-targets($feat-structure) {
+        margin-top: 12px;
+      }
     }
   }
 }
+
+@include mwc-dialog-core-styles;
