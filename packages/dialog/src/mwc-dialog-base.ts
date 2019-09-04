@@ -28,9 +28,6 @@ export {MDCDialogCloseEventDetail} from '@material/dialog/types';
 const blockingElements =
     (document as DocumentWithBlockingElements).$blockingElements;
 
-const DIALOG_ACTION_ATTRIBUTE = 'dialog-action';
-const INTIAL_FOCUS_ATTRIBUTE = 'dialog-initial-focus';
-
 let originalClose: null|((action?: string|undefined) => void) = null;
 let originalOpen: null|(() => void) = null;
 
@@ -86,6 +83,9 @@ export class DialogBase extends BaseElement {
   open = false;
 
   defaultAction = 'close';
+  actionAttribute = 'dialog-action';
+  initialFocusAttribute = 'dialog-initial-focus';
+
   protected currentAction: string|undefined;
 
   get isVisible() {
@@ -113,7 +113,7 @@ export class DialogBase extends BaseElement {
   }
 
   protected getInitialFocusEl(): HTMLElement|null {
-    return this.querySelector(`[${INTIAL_FOCUS_ATTRIBUTE}]`);
+    return this.querySelector(`[${this.initialFocusAttribute}]`);
   }
 
   protected createAdapter(): MDCDialogAdapter {
@@ -136,8 +136,8 @@ export class DialogBase extends BaseElement {
         }
 
         const element =
-            (e.target as Element).closest(`[${DIALOG_ACTION_ATTRIBUTE}]`);
-        const action = element && element.getAttribute(DIALOG_ACTION_ATTRIBUTE);
+            (e.target as Element).closest(`[${this.actionAttribute}]`);
+        const action = element && element.getAttribute(this.actionAttribute);
         return action;
       },
       getInitialFocusEl: () => {
