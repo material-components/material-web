@@ -21,7 +21,7 @@ import {style} from './mwc-dialog-css.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mwc-checkbox': Dialog;
+    'mwc-dialog': Dialog;
   }
 }
 
