@@ -31,10 +31,6 @@ const blockingElements =
 const DIALOG_ACTION_ATTRIBUTE = 'mdc-dialog-action';
 const INTIAL_FOCUS_ATTRIBUTE = 'mdc-dialog-initial-focus';
 
-const styleElement = document.createElement('style');
-styleElement.innerText = `.mdc-dialog-scroll-lock{overflow:hidden}`;
-document.head.appendChild(styleElement);
-
 let originalClose: null|((action?: string|undefined) => void) = null;
 let originalOpen: null|(() => void) = null;
 
