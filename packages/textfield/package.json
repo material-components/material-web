@@ -23,7 +23,8 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@material/line-ripple": "^3.0.0"
+    "@material/line-ripple": "^3.0.0",
+    "@material/floating-label": "^3.0.0"
   },
   "publishConfig": {
     "access": "public"

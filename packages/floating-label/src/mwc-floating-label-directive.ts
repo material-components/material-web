@@ -19,7 +19,7 @@ import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js
 import {directive, PropertyPart} from 'lit-html';
 
 export interface FloatingLabel extends HTMLLabelElement {
-  foundation: MDCFloatingLabelFoundation;
+  floatingLabelFoundation: MDCFloatingLabelFoundation;
 }
 
 const createAdapter = (labelElement: HTMLElement): MDCFloatingLabelAdapter => {

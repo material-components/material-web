@@ -16,6 +16,7 @@ limitations under the License.
 */
 import '@material/mwc-notched-outline';
 
+import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
 import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
 import {addHasRemoveClass, classMap, FormElement, html, property, PropertyValues, query, TemplateResult} from '@material/mwc-base/form-element.js';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
@@ -31,16 +32,26 @@ import {characterCounter, CharacterCounter} from './character-counter/mwc-charac
 // must be done to get past lit-analyzer checks
 declare global {
   interface Element {
-    foundation?: MDCLineRippleFoundation|MDCTextFieldCharacterCounterFoundation;
+    floatingLabelFoundation?: MDCFloatingLabelFoundation;
+    lineRippleFoundation?: MDCLineRippleFoundation;
+    charCounterFoundation?: MDCTextFieldCharacterCounterFoundation;
   }
 }
 
-type ValidityStateProp =
-    'badInput'|'customError'|'patternMismatch'|'rangeOverflow'|'rangeUnderflow'|
-    'stepMismatch'|'tooLong'|'tooShort'|'typeMismatch'|'valid'|'valueMissing';
-type CustomValidityState = {
-  [prop in ValidityStateProp]: boolean;
-};
+interface CustomValidityState {
+  badInput: boolean;
+  customError: boolean;
+  patternMismatch: boolean;
+  rangeOverflow: boolean;
+  rangeUnderflow: boolean;
+  stepMismatch: boolean;
+  tooLong: boolean;
+  tooShort: boolean;
+  typeMismatch: boolean;
+  valid: boolean;
+  valueMissing: boolean;
+}
+
 
 const passiveEvents = ['touchstart', 'touchmove', 'scroll', 'mousewheel'];
 
@@ -50,7 +61,7 @@ const createValidityObj =
 
       // eslint-disable-next-line guard-for-in
       for (const propName in customValidity) {
-        objectifiedCustomValidity[propName as ValidityStateProp] =
+        objectifiedCustomValidity[propName as keyof CustomValidityState] =
             customValidity[propName as keyof ValidityState];
       }
 
@@ -227,7 +238,7 @@ export abstract class TextFieldBase extends FormElement {
     let labelTemplate: TemplateResult|string = '';
     if (this.label) {
       labelTemplate = html`
-        <label .foundation=${floatingLabel()} for="text-field">
+        <label .floatingLabelFoundation=${floatingLabel()} for="text-field">
           ${this.label}
         </label>
       `;
@@ -245,14 +256,14 @@ export abstract class TextFieldBase extends FormElement {
     let labelTemplate: TemplateResult|string = '';
     if (this.label && !this.fullWidth) {
       labelTemplate = html`
-      <label .foundation=${floatingLabel()} for="text-field">
+      <label .floatingLabelFoundation=${floatingLabel()} for="text-field">
         ${this.label}
       </label>`;
     }
 
     return html`
       ${labelTemplate}
-      <div .foundation=${lineRipple()}></div>
+      <div .lineRippleFoundation=${lineRipple()}></div>
     `;
   }
 
@@ -265,7 +276,8 @@ export abstract class TextFieldBase extends FormElement {
 
     let charCounterTemplate: TemplateResult|string = '';
     if (this.charCounter) {
-      charCounterTemplate = html`<div .foundation=${characterCounter()}></div>`;
+      charCounterTemplate = html`
+        <div .characterCounterFoundation=${characterCounter()}></div>`;
     }
     return html`
       <div class="mdc-text-field-helper-line">
@@ -335,7 +347,7 @@ export abstract class TextFieldBase extends FormElement {
     }
     this.mdcFoundation = new this.mdcFoundationClass(this.createAdapter(), {
       characterCounter: this.charCounterElement ?
-          this.charCounterElement.foundation :
+          this.charCounterElement.charCounterFoundation :
           undefined
     });
     this.mdcFoundation.init();
@@ -391,14 +403,16 @@ export abstract class TextFieldBase extends FormElement {
 
   protected getLabelAdapterMethods(): MDCTextFieldLabelAdapter {
     return {
-      floatLabel: (shouldFloat: boolean) =>
-          this.labelElement && this.labelElement.foundation.float(shouldFloat),
+      floatLabel: (shouldFloat: boolean) => this.labelElement &&
+          this.labelElement.floatingLabelFoundation.float(shouldFloat),
       getLabelWidth: () => {
-        return this.labelElement ? this.labelElement.foundation.getWidth() : 0;
+        return this.labelElement ?
+            this.labelElement.floatingLabelFoundation.getWidth() :
+            0;
       },
       hasLabel: () => Boolean(this.labelElement),
-      shakeLabel: (shouldShake: boolean) =>
-          this.labelElement && this.labelElement.foundation.shake(shouldShake),
+      shakeLabel: (shouldShake: boolean) => this.labelElement &&
+          this.labelElement.floatingLabelFoundation.shake(shouldShake),
     };
   }
 
@@ -406,17 +420,18 @@ export abstract class TextFieldBase extends FormElement {
     return {
       activateLineRipple: () => {
         if (this.lineRippleElement) {
-          this.lineRippleElement.foundation.activate();
+          this.lineRippleElement.lineRippleFoundation.activate();
         }
       },
       deactivateLineRipple: () => {
         if (this.lineRippleElement) {
-          this.lineRippleElement.foundation.deactivate();
+          this.lineRippleElement.lineRippleFoundation.deactivate();
         }
       },
       setLineRippleTransformOrigin: (normalizedX: number) => {
         if (this.lineRippleElement) {
-          this.lineRippleElement.foundation.setRippleCenter(normalizedX);
+          this.lineRippleElement.lineRippleFoundation.setRippleCenter(
+              normalizedX);
         }
       },
     };
