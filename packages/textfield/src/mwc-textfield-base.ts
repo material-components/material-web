@@ -16,25 +16,42 @@ limitations under the License.
 */
 import '@material/mwc-notched-outline';
 
+import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
 import {addHasRemoveClass, classMap, FormElement, html, property, PropertyValues, query, TemplateResult} from '@material/mwc-base/form-element.js';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter.js';
+import {MDCTextFieldCharacterCounterFoundation} from '@material/textfield/character-counter/foundation.js';
 import MDCTextFieldFoundation from '@material/textfield/foundation.js';
 import {ifDefined} from 'lit-html/directives/if-defined.js';
 
 import {characterCounter, CharacterCounter} from './character-counter/mwc-character-counter-directive.js';
 
+// must be done to get past lit-analyzer checks
+declare global {
+  interface Element {
+    foundation?: MDCLineRippleFoundation|MDCTextFieldCharacterCounterFoundation;
+  }
+}
+
+type ValidityStateProp =
+    'badInput'|'customError'|'patternMismatch'|'rangeOverflow'|'rangeUnderflow'|
+    'stepMismatch'|'tooLong'|'tooShort'|'typeMismatch'|'valid'|'valueMissing';
+type CustomValidityState = {
+  [prop in ValidityStateProp]: boolean;
+};
+
 const passiveEvents = ['touchstart', 'touchmove', 'scroll', 'mousewheel'];
 
 const createValidityObj =
     (customValidity: Partial<ValidityState> = {}): ValidityState => {
-      const objectifiedCustomValidity: Partial<ValidityState> = {};
+      const objectifiedCustomValidity: Partial<CustomValidityState> = {};
 
       // eslint-disable-next-line guard-for-in
       for (const propName in customValidity) {
-        objectifiedCustomValidity[propName] = customValidity[propName];
+        objectifiedCustomValidity[propName as ValidityStateProp] =
+            customValidity[propName as keyof ValidityState];
       }
 
       return {
