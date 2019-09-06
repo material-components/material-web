@@ -85,7 +85,7 @@ export class DialogBase extends BaseElement {
 
   protected get primaryButton(): HTMLElement|null {
     const assignedNodes = this.primarySlot.assignedNodes();
-    assignedNodes.filter(node => node instanceof HTMLElement);
+    assignedNodes.filter((node) => node instanceof HTMLElement);
     const button = assignedNodes[0] as HTMLElement | undefined;
     return button ? button : null;
   }
@@ -142,8 +142,8 @@ export class DialogBase extends BaseElement {
         const el = this.contentElement;
         return el ? el.scrollHeight > el.offsetHeight : false;
       },
-      notifyClosed: action => this.emitNotification('closed', action),
-      notifyClosing: action => this.emitNotification('closing', action),
+      notifyClosed: (action) => this.emitNotification('closed', action),
+      notifyClosing: (action) => this.emitNotification('closing', action),
       notifyOpened: () => this.emitNotification('opened'),
       notifyOpening: () => this.emitNotification('opening'),
       reverseButtons: () => this.actionsReversed = !this.actionsReversed,
@@ -162,15 +162,17 @@ export class DialogBase extends BaseElement {
   protected render() {
     const classes = {
       [cssClasses.STACKED]: this.stacked,
-    }
+    };
 
-    const title =
-        this.title ? html`<h2 class="mdc-dialog__title">${this.title}</h2>` :
-                     html``;
+    let title = html``;
+
+    if (this.title) {
+      title = html`<h2 class="mdc-dialog__title">${this.title}</h2>`;
+    }
 
     const actoinsClasses = {
       'mdc-dialog__actions': !this.hideActions,
-    }
+    };
 
     let slotNames = ['secondaryAction', 'primaryAction'];
 
@@ -178,7 +180,7 @@ export class DialogBase extends BaseElement {
       slotNames = slotNames.reverse();
     }
 
-    let actionSlots = html`
+    const actionSlots = html`
         <slot name="${slotNames[0]}"></slot>
         <slot name="${slotNames[1]}"></slot>`;
 
@@ -241,7 +243,11 @@ export class DialogBase extends BaseElement {
   }
 
   blur() {
-    const activeEl = this.shadowRoot!.activeElement;
+    if (!this.shadowRoot) {
+      return;
+    }
+
+    const activeEl = this.shadowRoot.activeElement;
     if (activeEl) {
       activeEl instanceof HTMLElement && activeEl.blur();
     } else {
