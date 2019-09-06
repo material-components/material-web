@@ -106,6 +106,13 @@ class DemoView extends LitElement {
               <span class="mdc-list-item__secondary-text">Multi-selection controls</span>
             </span>
           </a>
+          <a role="listitem" class="mdc-list-item" href="dialog.html">
+            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_dialog_24px.svg"></span>
+            <span class="mdc-list-item__text">
+              Dialog
+              <span class="mdc-list-item__secondary-text">Multi-selection controls</span>
+            </span>
+          </a>
           <a role="listitem" class="mdc-list-item" href="formfield.html">
             <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_text_field_24px.svg"></span>
             <span class="mdc-list-item__text">
@@ -198,14 +205,14 @@ class DemoView extends LitElement {
             </span>
           </a>
           <a role="listitem" class="mdc-list-item" href="top-app-bar.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_component_24px.svg"></span>
+            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_toolbar_24px.svg"></span>
             <span class="mdc-list-item__text">
               Top App Bar
               <span class="mdc-list-item__secondary-text">Top App Bars are a container for items such as application title, navigation icon, and action items.</span>
             </span>
           </a>
           <a role="listitem" class="mdc-list-item" href="top-app-bar-fixed.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_component_24px.svg"></span>
+            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_toolbar_24px.svg"></span>
             <span class="mdc-list-item__text">
               Top App Bar Fixed
               <span class="mdc-list-item__secondary-text">Top App Bars are a container for items such as application title, navigation icon, and action items.</span>
