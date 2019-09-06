@@ -299,8 +299,7 @@ suite('mwc-dialog:', () => {
 
       assert.isNull(fixt.root.activeElement);
 
-
-      button.toggleAttribute('dialog-initial-focus', true);
+      button.setAttribute('dialog-initial-focus', '');
 
       element.open = true;
 
@@ -365,9 +364,9 @@ suite('mwc-dialog:', () => {
       element.dispatchEvent(enterDown);
       element.dispatchEvent(enterUp);
 
-      assert.isTrue(clickCalled);
 
       const action = await awaitEvent(element, CLOSED_EVENT);
+      assert.isTrue(clickCalled);
 
       assert.strictEqual(action.detail.action, 'ok');
     });
