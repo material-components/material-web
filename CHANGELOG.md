@@ -6,15 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
-- **BREAKING** Changed interface to:
-  - LineRipple: foundation -> lineRippleFoundation
-  - CharCounter: foundation -> charCounterFoundation
-  - FloatingLabel: foundation -> floatingLabelFoundation
-- **BREAKING** added following properties to global `Element` interface
-  - lineRippleFoundation?: MDCLineRippleFoundation
-  - charCounterFoundation?: MDCTextFieldCharacterCounterFoundation
-  - floatingLabelFoundationtion?: MDCFloatingLabelFoundation
-- internal fixes to textfield's directives and removed implicit any's
+- textfield
+  - **BREAKING** added following properties to global `Element` interface
+    - lineRippleFoundation?: MDCLineRippleFoundation
+    - charCounterFoundation?: MDCTextFieldCharacterCounterFoundation
+    - floatingLabelFoundationtion?: MDCFloatingLabelFoundation
+  - compiles with more strict flags
 
 ## [0.8.0] - 2019-09-03
 
