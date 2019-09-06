@@ -18,7 +18,7 @@ import 'blocking-elements';
 import 'wicg-inert';
 
 import {MDCDialogAdapter} from '@material/dialog/adapter.js';
-import {cssClasses, strings} from '@material/dialog/constants.js';
+import {cssClasses} from '@material/dialog/constants.js';
 import MDCDialogFoundation from '@material/dialog/foundation.js';
 import {addHasRemoveClass, BaseElement, classMap, html, observer, property, query} from '@material/mwc-base/base-element.js';
 import {DocumentWithBlockingElements} from 'blocking-elements';
@@ -143,11 +143,11 @@ export class DialogBase extends BaseElement {
         return el ? el.scrollHeight > el.offsetHeight : false;
       },
       notifyClosed: action =>
-          this.emitNotification(strings.CLOSED_EVENT, action),
+          this.emitNotification('closed', action),
       notifyClosing: action =>
-          this.emitNotification(strings.CLOSING_EVENT, action),
-      notifyOpened: () => this.emitNotification(strings.OPENED_EVENT),
-      notifyOpening: () => this.emitNotification(strings.OPENING_EVENT),
+          this.emitNotification('closing', action),
+      notifyOpened: () => this.emitNotification('opened'),
+      notifyOpening: () => this.emitNotification('opening'),
       reverseButtons: () => this.actionsReversed = !this.actionsReversed,
       releaseFocus: () => {
         blockingElements.remove(this);
