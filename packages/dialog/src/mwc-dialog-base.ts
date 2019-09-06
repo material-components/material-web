@@ -34,18 +34,18 @@ let originalOpen: null|(() => void) = null;
 export class DialogBase extends BaseElement {
   @query('.mdc-dialog') protected mdcRoot!: HTMLDivElement;
 
-  @query('slot[name="primaryButton"]') protected primarySlot!: HTMLSlotElement;
+  @query('slot[name="primaryAction"]') protected primarySlot!: HTMLSlotElement;
 
-  @query('slot[name="secondaryButton"]')
+  @query('slot[name="secondaryAction"]')
   protected secondarySlot!: HTMLSlotElement;
 
   @query('.mdc-dialog__content') protected contentElement!: HTMLDivElement;
 
   @query('.mdc-container') protected conatinerElement!: HTMLDivElement;
 
-  @property({type: Boolean}) hideActions: boolean = false;
-
   @property({type: Boolean}) protected actionsReversed: boolean = false;
+
+  @property({type: Boolean}) hideActions: boolean = false;
 
   @property({type: Boolean})
   @observer(function(this: DialogBase) {
@@ -86,18 +86,13 @@ export class DialogBase extends BaseElement {
   actionAttribute = 'dialog-action';
   initialFocusAttribute = 'dialog-initial-focus';
 
-  protected currentAction: string|undefined;
-
-  get isVisible() {
-    return this.mdcFoundation.isOpen();
-  }
-
   protected get primaryButton(): HTMLElement|null {
     const button =
-        this.primarySlot.assignedElements()[0] as HTMLElement | undefined;
+    this.primarySlot.assignedElements()[0] as HTMLElement | undefined;
     return button ? button : null;
   }
 
+  protected currentAction: string|undefined;
   protected mdcFoundationClass = MDCDialogFoundation;
   protected mdcFoundation!: MDCDialogFoundation;
   protected boundLayout: (() => void)|null = null;
@@ -275,7 +270,7 @@ export class DialogBase extends BaseElement {
     window.addEventListener('resize', this.boundLayout, {passive: true});
     window.addEventListener(
         'orientationchange', this.boundLayout, {passive: true});
-    this.mdcRoot.addEventListener(
+    this.addEventListener(
         'keydown', this.boundHandleKeydown, {passive: true});
     document.addEventListener(
         'keydown', this.boundHandleDocumentKeydown, {passive: true});
