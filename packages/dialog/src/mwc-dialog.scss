@@ -73,12 +73,6 @@ limitations under the License.
       }
     }
 
-    & *:first-child::slotted(*) {
-      @include mdc-feature-targets($feat-structure) {
-        @include mdc-rtl-reflexive-box(margin, left, 0);
-      }
-    }
-
     .mdc-dialog--stacked & *:not(:first-child)::slotted(*) {
       @include mdc-feature-targets($feat-structure) {
         margin-top: 12px;
