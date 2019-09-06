@@ -84,8 +84,7 @@ export class DialogBase extends BaseElement {
   initialFocusAttribute = 'dialog-initial-focus';
 
   protected get primaryButton(): HTMLElement|null {
-    const assignedNodes =
-        this.primarySlot.assignedNodes();
+    const assignedNodes = this.primarySlot.assignedNodes();
     assignedNodes.filter(node => node instanceof HTMLElement);
     const button = assignedNodes[0] as HTMLElement | undefined;
     return button ? button : null;
