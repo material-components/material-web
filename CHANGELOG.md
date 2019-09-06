@@ -7,10 +7,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
 - textfield
-  - **BREAKING** added following properties to global `Element` interface
-    - lineRippleFoundation?: MDCLineRippleFoundation
-    - charCounterFoundation?: MDCTextFieldCharacterCounterFoundation
-    - floatingLabelFoundationtion?: MDCFloatingLabelFoundation
   - compiles with more strict flags
 
 ## [0.8.0] - 2019-09-03
