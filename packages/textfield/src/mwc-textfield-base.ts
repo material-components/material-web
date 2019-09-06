@@ -16,25 +16,57 @@ limitations under the License.
 */
 import '@material/mwc-notched-outline';
 
+import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
+import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
 import {addHasRemoveClass, classMap, FormElement, html, property, PropertyValues, query, TemplateResult} from '@material/mwc-base/form-element.js';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter.js';
+import {MDCTextFieldCharacterCounterFoundation} from '@material/textfield/character-counter/foundation.js';
 import MDCTextFieldFoundation from '@material/textfield/foundation.js';
 import {ifDefined} from 'lit-html/directives/if-defined.js';
 
 import {characterCounter, CharacterCounter} from './character-counter/mwc-character-counter-directive.js';
 
+// must be done to get past lit-analyzer checks
+declare global {
+  interface Element {
+    floatingLabelFoundation?: MDCFloatingLabelFoundation;
+    lineRippleFoundation?: MDCLineRippleFoundation;
+    charCounterFoundation?: MDCTextFieldCharacterCounterFoundation;
+  }
+}
+
+type CustomValidityState = {
+  -readonly[P in keyof ValidityState]: ValidityState[P]
+};
+
+
 const passiveEvents = ['touchstart', 'touchmove', 'scroll', 'mousewheel'];
 
 const createValidityObj =
     (customValidity: Partial<ValidityState> = {}): ValidityState => {
-      const objectifiedCustomValidity: Partial<ValidityState> = {};
+      /*
+       * We need to make ValidityState an object because it is readonly and
+       * we cannot use the spread operator. Also, we don't export
+       * `CustomValidityState` because it is a leaky implementation and the user
+       * already has access to `ValidityState` in lib.dom.ts. Also an interface
+       * {a: Type} can be casted to {readonly a: Type} so passing any object
+       * should be fine.
+       */
+      const objectifiedCustomValidity: Partial<CustomValidityState> = {};
 
       // eslint-disable-next-line guard-for-in
       for (const propName in customValidity) {
-        objectifiedCustomValidity[propName] = customValidity[propName];
+        /*
+         * Casting is needed because ValidityState's props are all readonly and
+         * thus cannot be set on `onjectifiedCustomValidity`. In the end, the
+         * interface is the same as ValidityState (but not readonly), but the
+         * function signature casts the output to ValidityState (thus readonly).
+         */
+        objectifiedCustomValidity[propName as keyof CustomValidityState] =
+            customValidity[propName as keyof ValidityState];
       }
 
       return {
@@ -210,7 +242,7 @@ export abstract class TextFieldBase extends FormElement {
     let labelTemplate: TemplateResult|string = '';
     if (this.label) {
       labelTemplate = html`
-        <label .foundation=${floatingLabel()} for="text-field">
+        <label .floatingLabelFoundation=${floatingLabel()} for="text-field">
           ${this.label}
         </label>
       `;
@@ -228,14 +260,14 @@ export abstract class TextFieldBase extends FormElement {
     let labelTemplate: TemplateResult|string = '';
     if (this.label && !this.fullWidth) {
       labelTemplate = html`
-      <label .foundation=${floatingLabel()} for="text-field">
+      <label .floatingLabelFoundation=${floatingLabel()} for="text-field">
         ${this.label}
       </label>`;
     }
 
     return html`
       ${labelTemplate}
-      <div .foundation=${lineRipple()}></div>
+      <div .lineRippleFoundation=${lineRipple()}></div>
     `;
   }
 
@@ -248,7 +280,8 @@ export abstract class TextFieldBase extends FormElement {
 
     let charCounterTemplate: TemplateResult|string = '';
     if (this.charCounter) {
-      charCounterTemplate = html`<div .foundation=${characterCounter()}></div>`;
+      charCounterTemplate = html`
+        <div .charCounterFoundation=${characterCounter()}></div>`;
     }
     return html`
       <div class="mdc-text-field-helper-line">
@@ -318,7 +351,7 @@ export abstract class TextFieldBase extends FormElement {
     }
     this.mdcFoundation = new this.mdcFoundationClass(this.createAdapter(), {
       characterCounter: this.charCounterElement ?
-          this.charCounterElement.foundation :
+          this.charCounterElement.charCounterFoundation :
           undefined
     });
     this.mdcFoundation.init();
@@ -374,14 +407,16 @@ export abstract class TextFieldBase extends FormElement {
 
   protected getLabelAdapterMethods(): MDCTextFieldLabelAdapter {
     return {
-      floatLabel: (shouldFloat: boolean) =>
-          this.labelElement && this.labelElement.foundation.float(shouldFloat),
+      floatLabel: (shouldFloat: boolean) => this.labelElement &&
+          this.labelElement.floatingLabelFoundation.float(shouldFloat),
       getLabelWidth: () => {
-        return this.labelElement ? this.labelElement.foundation.getWidth() : 0;
+        return this.labelElement ?
+            this.labelElement.floatingLabelFoundation.getWidth() :
+            0;
       },
       hasLabel: () => Boolean(this.labelElement),
-      shakeLabel: (shouldShake: boolean) =>
-          this.labelElement && this.labelElement.foundation.shake(shouldShake),
+      shakeLabel: (shouldShake: boolean) => this.labelElement &&
+          this.labelElement.floatingLabelFoundation.shake(shouldShake),
     };
   }
 
@@ -389,17 +424,18 @@ export abstract class TextFieldBase extends FormElement {
     return {
       activateLineRipple: () => {
         if (this.lineRippleElement) {
-          this.lineRippleElement.foundation.activate();
+          this.lineRippleElement.lineRippleFoundation.activate();
         }
       },
       deactivateLineRipple: () => {
         if (this.lineRippleElement) {
-          this.lineRippleElement.foundation.deactivate();
+          this.lineRippleElement.lineRippleFoundation.deactivate();
         }
       },
       setLineRippleTransformOrigin: (normalizedX: number) => {
         if (this.lineRippleElement) {
-          this.lineRippleElement.foundation.setRippleCenter(normalizedX);
+          this.lineRippleElement.lineRippleFoundation.setRippleCenter(
+              normalizedX);
         }
       },
     };

@@ -19,7 +19,7 @@ import {MDCTextFieldCharacterCounterFoundation} from '@material/textfield/charac
 import {directive, PropertyPart} from 'lit-html';
 
 export interface CharacterCounter extends HTMLElement {
-  foundation: MDCTextFieldCharacterCounterFoundation;
+  charCounterFoundation: MDCTextFieldCharacterCounterFoundation;
 }
 
 const createAdapter =
