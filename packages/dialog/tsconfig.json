@@ -10,7 +10,6 @@
     "src/*.ts"
   ],
   "references": [
-    {"path": "../base"},
-    {"path": "../button"}
+    {"path": "../base"}
   ]
 }
