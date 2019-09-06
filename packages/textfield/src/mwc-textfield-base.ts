@@ -57,10 +57,24 @@ const passiveEvents = ['touchstart', 'touchmove', 'scroll', 'mousewheel'];
 
 const createValidityObj =
     (customValidity: Partial<ValidityState> = {}): ValidityState => {
+      /*
+       * We need to make ValidityState an object because it is readonly and
+       * we cannot use the spread operator. Also, we don't export
+       * `CustomValidityState` because it is a leaky implementation and the user
+       * already has access to `ValidityState` in lib.dom.ts. Also an interface
+       * {a: Type} can be casted to {readonly a: Type} so passing any object
+       * should be fine.
+       */
       const objectifiedCustomValidity: Partial<CustomValidityState> = {};
 
       // eslint-disable-next-line guard-for-in
       for (const propName in customValidity) {
+        /*
+         * Casting is needed because ValidityState's props are all readonly and
+         * thus cannot be set on `onjectifiedCustomValidity`. In the end, the
+         * interface is the same as ValidityState (but not readonly), but the
+         * function signature casts the output to ValidityState (thus readonly).
+         */
         objectifiedCustomValidity[propName as keyof CustomValidityState] =
             customValidity[propName as keyof ValidityState];
       }
@@ -277,7 +291,7 @@ export abstract class TextFieldBase extends FormElement {
     let charCounterTemplate: TemplateResult|string = '';
     if (this.charCounter) {
       charCounterTemplate = html`
-        <div .characterCounterFoundation=${characterCounter()}></div>`;
+        <div .charCounterFoundation=${characterCounter()}></div>`;
     }
     return html`
       <div class="mdc-text-field-helper-line">
