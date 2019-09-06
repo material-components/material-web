@@ -4,7 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-<!--## Unreleased-->
+## Unreleased
+
+- **BREAKING** Changed interface to:
+  - LineRipple: foundation -> lineRippleFoundation
+  - CharCounter: foundation -> characterCounterFoundation
+  - FloatingLabel: foundation -> floatingLabelFoundation
+- **BREAKING** added following properties to global `Element` interface
+  - lineRippleFoundation?: MDCLineRippleFoundation
+  - characterCounterFoundation?: MDCTextFieldCharacterCounterFoundation
+  - floatingLabelFoundationtion?: MDCFloatingLabelFoundation
+- internal fixes to textfield's directives and removed implicit any's
 
 ## [0.8.0] - 2019-09-03
 
