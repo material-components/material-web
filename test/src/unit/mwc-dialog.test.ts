@@ -60,7 +60,7 @@ const withButtons = html`
   </mwc-dialog>
 `;
 
-suite('mwc-textfield:', () => {
+suite('mwc-dialog:', () => {
   let fixt: TestFixture;
 
   suite('basic', () => {
@@ -71,7 +71,7 @@ suite('mwc-textfield:', () => {
       element = fixt.root.querySelector('mwc-dialog')!;
     });
 
-    test('initializes as an mwc-textfield', () => {
+    test('initializes as an mwc-dialog', () => {
       assert.instanceOf(element, Dialog);
     });
 
