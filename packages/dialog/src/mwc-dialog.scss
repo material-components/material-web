@@ -41,7 +41,7 @@ limitations under the License.
         fallback: $mdc-dialog-max-width
       ));
 
-      max-height: var(--mdc-dialog-max-height);
+      max-height: var(--mdc-dialog-max-height, calc(100% - 32px));
 
       @include mdc-theme-prop(border-radius, (
         varname: --mdc-dialog-shape-radius,
