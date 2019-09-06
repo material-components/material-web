@@ -176,13 +176,12 @@ suite('mwc-dialog:', () => {
 
       await awaitEvent(element, OPENED_EVENT);
 
-      const escDown = new KeyboardEvent(
-          'keydown', {key: 'Escape', bubbles: true, composed: true});
-      const escUp = new KeyboardEvent(
-          'keyup', {key: 'Escape', bubbles: true, composed: true});
+      const init = {key: 'Escape', keyCode: 27, bubbles: true, composed: true};
+      const escDown = new KeyboardEvent('keydown', init);
+      const escUp = new KeyboardEvent('keyup', init);
 
-      element.dispatchEvent(escDown);
-      element.dispatchEvent(escUp);
+      document.dispatchEvent(escDown);
+      document.dispatchEvent(escUp);
 
       const event = await awaitEvent(element, CLOSED_EVENT);
 
