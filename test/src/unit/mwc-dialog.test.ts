@@ -28,6 +28,10 @@ const OPENED_EVENT = 'opened';
 const CLOSING_EVENT = 'closing';
 const CLOSED_EVENT = 'closed';
 
+interface HasKeyCode {
+  keyCode: number;
+}
+
 const awaitEvent =
     (element: Dialog, eventName: string): Promise<CustomEvent> => {
       return new Promise(res => {
@@ -176,9 +180,12 @@ suite('mwc-dialog:', () => {
 
       await awaitEvent(element, OPENED_EVENT);
 
-      const init = {key: 'Escape', keyCode: 27, bubbles: true, composed: true};
-      const escDown = new KeyboardEvent('keydown', init);
-      const escUp = new KeyboardEvent('keyup', init);
+      const init = {detail: 0, bubbles: true, cancelable: true, composed: true};
+      const escDown = new CustomEvent('keydown', init);
+      const escUp = new CustomEvent('keyup', init);
+
+      (escDown as unknown as HasKeyCode).keyCode = 27;
+      (escUp as unknown as HasKeyCode).keyCode = 27;
 
       document.dispatchEvent(escDown);
       document.dispatchEvent(escUp);
@@ -355,10 +362,12 @@ suite('mwc-dialog:', () => {
 
       assert.isFalse(clickCalled);
 
-      const enterDown = new KeyboardEvent(
-          'keydown', {key: 'Enter', bubbles: true, composed: true});
-      const enterUp = new KeyboardEvent(
-          'keyup', {key: 'Enter', bubbles: true, composed: true});
+      const init = {detail: 0, bubbles: true, cancelable: true, composed: true};
+      const enterDown = new CustomEvent('keydown', init);
+      const enterUp = new CustomEvent('keyup', init);
+
+      (enterDown as unknown as HasKeyCode).keyCode = 13;
+      (enterUp as unknown as HasKeyCode).keyCode = 13;
 
       element.dispatchEvent(enterDown);
       element.dispatchEvent(enterUp);
