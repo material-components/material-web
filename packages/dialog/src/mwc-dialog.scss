@@ -27,20 +27,23 @@ limitations under the License.
   $feat-animation: mdc-feature-create-target($query, animation);
   $feat-structure: mdc-feature-create-target($query, structure);
 
-    .mdc-dialog {
-      @include mwc-dialog-scrim-color($mdc-dialog-scrim-color, $query: $query);
-      @include mwc-dialog-title-ink-color($mdc-dialog-title-ink-color, $query: $query);
-      @include mwc-dialog-content-ink-color($mdc-dialog-content-ink-color, $query: $query);
-      @include mwc-dialog-scroll-divider-color($mdc-dialog-scroll-divider-color, $query: $query);
-      @include mwc-dialog-min-width($mdc-dialog-min-width, $query: $query);
+  @media (min-width: $mdc-dialog-max-width) {
+    .mdc-dialog .mdc-dialog__surface {
+      @include mdc-theme-prop(max-width, (
+        varname: --mdc-dialog-max-width,
+        fallback: $mdc-dialog-max-width
+      ));
+    }
+  }
 
-      .mdc-dialog__surface {
-        width: calc(100vw - 32px);
-        @include mdc-theme-prop(max-width, (
-          varname: --mdc-dialog-max-width,
-          fallback: $mdc-dialog-max-width
-        ));
+  .mdc-dialog {
+    @include mwc-dialog-scrim-color($mdc-dialog-scrim-color, $query: $query);
+    @include mwc-dialog-title-ink-color($mdc-dialog-title-ink-color, $query: $query);
+    @include mwc-dialog-content-ink-color($mdc-dialog-content-ink-color, $query: $query);
+    @include mwc-dialog-scroll-divider-color($mdc-dialog-scroll-divider-color, $query: $query);
+    @include mwc-dialog-min-width($mdc-dialog-min-width, $query: $query);
 
+    .mdc-dialog__surface {
       max-height: var(--mdc-dialog-max-height, calc(100% - 32px));
 
       @include mdc-theme-prop(border-radius, (
