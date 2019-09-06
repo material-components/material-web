@@ -28,9 +28,6 @@ export {MDCDialogCloseEventDetail} from '@material/dialog/types';
 const blockingElements =
     (document as DocumentWithBlockingElements).$blockingElements;
 
-let originalClose: null|((action?: string|undefined) => void) = null;
-let originalOpen: null|(() => void) = null;
-
 export class DialogBase extends BaseElement {
   @query('.mdc-dialog') protected mdcRoot!: HTMLDivElement;
 
@@ -70,12 +67,12 @@ export class DialogBase extends BaseElement {
   @property({type: Boolean, reflect: true})
   @observer(function(this: DialogBase, isOpen: boolean) {
     if (isOpen) {
-      if (originalOpen) {
-        originalOpen()
+      if (this.originalOpen) {
+        this.originalOpen();
       }
     } else {
-      if (originalClose) {
-        originalClose(this.currentAction || this.defaultAction);
+      if (this.originalClose) {
+        this.originalClose(this.currentAction || this.defaultAction);
         this.currentAction = undefined;
       }
     }
@@ -100,6 +97,8 @@ export class DialogBase extends BaseElement {
   protected boundHandleKeydown: ((ev: KeyboardEvent) => void)|null = null;
   protected boundHandleDocumentKeydown:
       ((ev: KeyboardEvent) => void)|null = null;
+  protected originalClose: null|((action?: string|undefined) => void) = null;
+  protected originalOpen: null|(() => void) = null;
 
   protected emitNotification(name: string, action?: string) {
     const init: CustomEventInit = {detail: action ? {action} : {}};
@@ -210,8 +209,8 @@ export class DialogBase extends BaseElement {
     super.firstUpdated();
     this.mdcFoundation.setAutoStackButtons(true);
 
-    originalOpen = this.mdcFoundation.open.bind(this.mdcFoundation);
-    originalClose = this.mdcFoundation.close.bind(this.mdcFoundation);
+    this.originalOpen = this.mdcFoundation.open.bind(this.mdcFoundation);
+    this.originalClose = this.mdcFoundation.close.bind(this.mdcFoundation);
 
     this.mdcFoundation.open = () => {
       this.open = true;
