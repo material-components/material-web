@@ -38,19 +38,9 @@ declare global {
   }
 }
 
-interface CustomValidityState {
-  badInput: boolean;
-  customError: boolean;
-  patternMismatch: boolean;
-  rangeOverflow: boolean;
-  rangeUnderflow: boolean;
-  stepMismatch: boolean;
-  tooLong: boolean;
-  tooShort: boolean;
-  typeMismatch: boolean;
-  valid: boolean;
-  valueMissing: boolean;
-}
+type CustomValidityState = {
+  -readonly[P in keyof ValidityState]: ValidityState[P]
+};
 
 
 const passiveEvents = ['touchstart', 'touchmove', 'scroll', 'mousewheel'];
