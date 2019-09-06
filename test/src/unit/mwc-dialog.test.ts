@@ -14,29 +14,31 @@
  * limitations under the License.
  */
 
-import {Dialog} from '@material/mwc-dialog';
 import '@material/mwc-button';
+
+import {Button} from '@material/mwc-button';
+import {Dialog} from '@material/mwc-dialog';
 // import {cssClasses} from '@material/dialog/constants';
 import {html} from 'lit-html';
 
-import {fixture, TestFixture, rafPromise} from '../util/helpers';
-import { Button } from '@material/mwc-button';
+import {fixture, rafPromise, TestFixture} from '../util/helpers';
 
 const OPENING_EVENT = 'opening';
 const OPENED_EVENT = 'opened';
 const CLOSING_EVENT = 'closing';
 const CLOSED_EVENT = 'closed';
 
-const awaitEvent = (element: Dialog, eventName: string): Promise<CustomEvent> => {
-  return new Promise(res => {
-    const listener = (e: CustomEvent) => {
-      element.removeEventListener(eventName, listener as EventListener);
-      res(e);
-    };
+const awaitEvent =
+    (element: Dialog, eventName: string): Promise<CustomEvent> => {
+      return new Promise(res => {
+        const listener = (e: CustomEvent) => {
+          element.removeEventListener(eventName, listener as EventListener);
+          res(e);
+        };
 
-    element.addEventListener(eventName, listener as EventListener);
-  });
-};
+        element.addEventListener(eventName, listener as EventListener);
+      });
+    };
 
 const basic = html`
   <mwc-dialog></mwc-dialog>
@@ -91,7 +93,8 @@ suite('mwc-dialog:', () => {
       let openedCalled = false;
       let closingCalled = false;
       let closedCalled = false;
-      const surfaceElement = element.shadowRoot!.querySelector('.mdc-dialog__surface') as HTMLDivElement;
+      const surfaceElement = element.shadowRoot!.querySelector(
+                                 '.mdc-dialog__surface') as HTMLDivElement;
 
       element.addEventListener(OPENING_EVENT, () => {
         openingCalled = true;
@@ -155,7 +158,8 @@ suite('mwc-dialog:', () => {
 
       await awaitEvent(element, OPENED_EVENT);
 
-      const scrim = element.shadowRoot!.querySelector('.mdc-dialog__scrim') as HTMLDivElement;
+      const scrim = element.shadowRoot!.querySelector('.mdc-dialog__scrim') as
+          HTMLDivElement;
 
       scrim.click();
 
@@ -172,8 +176,10 @@ suite('mwc-dialog:', () => {
 
       await awaitEvent(element, OPENED_EVENT);
 
-      const escDown = new KeyboardEvent('keydown', {key: 'Escape', bubbles: true, composed: true});
-      const escUp = new KeyboardEvent('keyup', {key: 'Escape', bubbles: true, composed: true});
+      const escDown = new KeyboardEvent(
+          'keydown', {key: 'Escape', bubbles: true, composed: true});
+      const escUp = new KeyboardEvent(
+          'keyup', {key: 'Escape', bubbles: true, composed: true});
 
       element.dispatchEvent(escDown);
       element.dispatchEvent(escUp);
@@ -185,10 +191,11 @@ suite('mwc-dialog:', () => {
     });
 
     test('Hide Actions hides empty whitespace', async () => {
-      const actionsFooter = element.shadowRoot!.querySelector('#actions') as HTMLElement;
+      const actionsFooter =
+          element.shadowRoot!.querySelector('#actions') as HTMLElement;
 
       element.open = true;
-      await awaitEvent(element,  OPENED_EVENT);
+      await awaitEvent(element, OPENED_EVENT);
 
       assert.isOk(actionsFooter.offsetWidth);
       assert.isOk(actionsFooter.offsetHeight);
@@ -199,7 +206,7 @@ suite('mwc-dialog:', () => {
       assert.strictEqual(actionsFooter.offsetHeight, 0);
     });
 
-    test('declaratively opens', async() => {
+    test('declaratively opens', async () => {
       const fixt = await fixture(opened);
       const element = fixt.root.firstElementChild as Dialog;
 
@@ -246,7 +253,8 @@ suite('mwc-dialog:', () => {
       });
 
       const primary = element.querySelector('[slot="primaryAction"]') as Button;
-      const secondary = element.querySelector('[slot="secondaryAction"]') as Button;
+      const secondary =
+          element.querySelector('[slot="secondaryAction"]') as Button;
 
       secondary.click();
 
@@ -287,7 +295,7 @@ suite('mwc-dialog:', () => {
 
       element.open = false;
 
-      await awaitEvent(element,CLOSED_EVENT);
+      await awaitEvent(element, CLOSED_EVENT);
 
       assert.isNull(fixt.root.activeElement);
 
@@ -301,14 +309,16 @@ suite('mwc-dialog:', () => {
       assert.strictEqual(fixt.root.activeElement, button);
     });
 
-    test('Stacking reverses actions', async() => {
+    test('Stacking reverses actions', async () => {
       const primary = element.querySelector('[slot="primaryAction"]') as Button;
-      const secondary = element.querySelector('[slot="secondaryAction"]') as Button;
+      const secondary =
+          element.querySelector('[slot="secondaryAction"]') as Button;
 
-      const getSlots = ():HTMLSlotElement[] => {
+      const getSlots = (): HTMLSlotElement[] => {
         const actionsFooter = element.shadowRoot!.querySelector('#actions')!;
-        return Array.from(actionsFooter.children) as unknown as HTMLSlotElement[];
-      }
+        return Array.from(actionsFooter.children) as unknown as
+            HTMLSlotElement[];
+      };
 
       element.open = true;
 
@@ -347,8 +357,10 @@ suite('mwc-dialog:', () => {
 
       assert.isFalse(clickCalled);
 
-      const enterDown = new KeyboardEvent('keydown', {key: 'Enter', bubbles: true, composed: true});
-      const enterUp = new KeyboardEvent('keyup', {key: 'Enter', bubbles: true, composed: true});
+      const enterDown = new KeyboardEvent(
+          'keydown', {key: 'Enter', bubbles: true, composed: true});
+      const enterUp = new KeyboardEvent(
+          'keyup', {key: 'Enter', bubbles: true, composed: true});
 
       element.dispatchEvent(enterDown);
       element.dispatchEvent(enterUp);

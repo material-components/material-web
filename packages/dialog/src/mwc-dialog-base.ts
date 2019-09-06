@@ -88,7 +88,7 @@ export class DialogBase extends BaseElement {
 
   protected get primaryButton(): HTMLElement|null {
     const button =
-    this.primarySlot.assignedElements()[0] as HTMLElement | undefined;
+        this.primarySlot.assignedElements()[0] as HTMLElement | undefined;
     return button ? button : null;
   }
 
@@ -142,10 +142,8 @@ export class DialogBase extends BaseElement {
         const el = this.contentElement;
         return el ? el.scrollHeight > el.offsetHeight : false;
       },
-      notifyClosed: action =>
-          this.emitNotification('closed', action),
-      notifyClosing: action =>
-          this.emitNotification('closing', action),
+      notifyClosed: action => this.emitNotification('closed', action),
+      notifyClosing: action => this.emitNotification('closing', action),
       notifyOpened: () => this.emitNotification('opened'),
       notifyOpening: () => this.emitNotification('opening'),
       reverseButtons: () => this.actionsReversed = !this.actionsReversed,
@@ -270,8 +268,7 @@ export class DialogBase extends BaseElement {
     window.addEventListener('resize', this.boundLayout, {passive: true});
     window.addEventListener(
         'orientationchange', this.boundLayout, {passive: true});
-    this.addEventListener(
-        'keydown', this.boundHandleKeydown, {passive: true});
+    this.addEventListener('keydown', this.boundHandleKeydown, {passive: true});
     document.addEventListener(
         'keydown', this.boundHandleDocumentKeydown, {passive: true});
   }
