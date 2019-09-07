@@ -27,7 +27,7 @@ npm install @material/mwc-dialog
 
 ### Simple
 
-<img src="images/simple.gif" width="596px">
+<img src="images/simple.gif" width="314px">
 
 ```html
 <mwc-dialog
@@ -63,7 +63,7 @@ npm install @material/mwc-dialog
   }
 </style>
 
-<mwc-dialog id="dialog1" title="Phone Ringtone" open>
+<mwc-dialog title="Phone Ringtone" open>
   <div>
     <mwc-radio id="a1" name="a" checked></mwc-radio>
     <label>Never Gonna Give You Up</label>
@@ -96,151 +96,158 @@ npm install @material/mwc-dialog
 </script>
 ```
 
-### Icon - Trailing
+### Alert
 
-<img src="images/icon-trailing.png" width="244px">
+<img src="images/alert.gif" width="308px">
 
 ```html
-<mwc-dialog label="My Dialog" iconTrailing="delete"></mwc-dialog>
+<mwc-dialog open>
+  <div>Discard draft?</div>
+  <mwc-button
+      slot="primaryAction"
+      dialog-action="discard">
+    Discard
+  </mwc-button>
+  <mwc-button
+      slot="secondaryAction"
+      dialog-action="cancel">
+    Cancel
+  </mwc-button>
+</mwc-dialog>
 ```
 
 ### Helper Text
 
-<img src="images/helper.png" width="244px">
+<video src="images/scrollable.webm" autoplay loop muted playsinline width="580px">
+</video>
+
+If the above video does not load, view the large gif [here](images/scrollable.gif).
 
 ```html
-<mwc-dialog label="My Dialog" helper="Helper Text"></mwc-dialog>
+<mwc-dialog title="Privacy Policy" open>
+  <div>
+    really large amount of text...
+  </div>
+  <mwc-button
+      slot="primaryAction"
+      dialog-action="accept">
+    Accept
+  </mwc-button>
+  <mwc-button
+      slot="secondaryAction"
+      dialog-action="decline"
+      disabled>
+    Decline
+  </mwc-button>
+</mwc-dialog>
 ```
 
-### Primary Color
+### Styled
 
-<img src="images/color-primary.png" width="244px">
+<img src="images/styled.png" width="543px">
 
 ```html
 <style>
-  mwc-dialog {
-    --mdc-theme-primary: green;
+  .styled {
+    --mdc-theme-surface: lightgreen;
+    --mdc-dialog-scrim-color: rgba(250, 128, 114, .32);
+    --mdc-dialog-title-ink-color: fuchsia;
+    --mdc-dialog-content-ink-color: firebrick;
+    --mdc-dialog-scroll-divider-color: red;
+    --mdc-dialog-min-width: 500px;
+    --mdc-dialog-max-width: 700px;
+    --mdc-dialog-max-height: 350px;
+    --mdc-dialog-shape-radius: 25px;
   }
 </style>
 
-<mwc-dialog
-    label="My Dialog"
-    iconTrailing="delete"
-    required>
+<!-- <mwc-button data-num="5" raised>Styled</mwc-button> -->
+<mwc-dialog title="Styled" class="styled" open>
+  <div>These are the current styles applied to this dialog</div>
+  <pre>
+--mdc-theme-surface: lightgreen;
+--mdc-dialog-scrim-color: rgba(250, 128, 114, .32);
+--mdc-dialog-title-ink-color: fuchsia;
+--mdc-dialog-content-ink-color: firebrick;
+--mdc-dialog-scroll-divider-color: red;
+--mdc-dialog-min-width: 500px;
+--mdc-dialog-max-width: 700px;
+--mdc-dialog-max-height: 350px;
+--mdc-dialog-shape-radius: 25px;
+  </pre>
+  <mwc-button slot="primaryAction" dialog-action="close">
+    Too stylish for me!
+  </mwc-button>
 </mwc-dialog>
 ```
 
-## Variants
+### Initial Focus
 
-### Outlined
-
-<img src="images/outlined.png" width="244px">
+<img src="images/initial-focus.png" width="594x">
 
 ```html
-<mwc-dialog
-    outlined
-    label="My Dialog"
-    iconTrailing="delete">
+<mwc-dialog title="Initial Focus">
+  <div>
+    In this example we set "dialog-initial-focus" on a focusable element.
+    When this dialog opens, the secondary button is focused.
+  </div>
+  </mwc-textfield>
+  <mwc-button
+      slot="primaryAction"
+      dialog-action="close">
+    Primary
+  </mwc-button>
+  <mwc-button
+      slot="secondaryAction"
+      dialog-action="close"
+      dialog-initial-focus>
+    Secondary
+  </mwc-button>
 </mwc-dialog>
 ```
 
-#### Shaping Outlined
+### Stacked
 
-<img src="images/shape-left.png" width="244px">
-<img src="images/shape-right.png" width="244px">
-<img src="images/shape-left-right.png" width="244px">
+<img src="images/stacked.png" width="594px">
 
 ```html
-<style>
-  mwc-dialog.left {
-    --mdc-notched-outline-leading-width: 28px;
-    --mdc-notched-outline-leading-border-radius: 28px 0 0 28px;
-  }
-
-  mwc-dialog.right {
-    --mdc-notched-outline-trailing-border-radius: 0 28px 28px 0;
-  }
-</style>
-
-<mwc-dialog
-    class="left";
-    label="My Dialog"
-    iconTrailing="delete"
-    outlined>
+<mwc-dialog title="Stacked" stacked>
+  <div>
+    This is what happens when you set the stacked property on mwc-dialog.
+    Notice that the primary action is now on top.
+  </div>
+  <mwc-button slot="primaryAction" dialog-action="close">
+    Primary
+  </mwc-button>
+  <mwc-button slot="secondaryAction" dialog-action="close">
+    Secondary
+  </mwc-button>
 </mwc-dialog>
-
-<mwc-dialog
-    class="right";
-    label="My Dialog"
-    iconTrailing="delete"
-    outlined>
-</mwc-dialog>
-
-<mwc-dialog
-    class="left right";
-    label="My Dialog"
-    iconTrailing="delete"
-    outlined>
-</mwc-dialog>
-```
-
-### Fullwidth
-
-<img src="images/fullwidth.png" width="777px">
-
-```html
-<!-- Note: Fullwidth does not support label; only placeholder -->
-<mwc-dialog fullwidth placeholder="Standard" helper="Helper Text"></mwc-dialog>
 ```
 
 ## API
 
 ### Properties/Attributes
 
-| Name                | Type             | Description
-| ------------------- | ---------------- |------------
-| `value`             | `string`         | The input control's value.
-| `type`              | `TextFieldType*` | A string specifying the type of control to render.
-| `label`             | `string`         | Sets floating label value.
-| `placeholder`       | `string`         | Sets disappearing input placeholder.
-| `icon`              | `string`         | Leading icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon).
-| `iconTrailing`      | `string`         | Trailing icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon).
-| `disabled`          | `boolean`        | Whether or not the input should be disabled.
-| `charCounter`       | `boolean`        | **Note: requries `maxLength` to be set.** Display character counter with max length.
-| `outlined`          | `boolean`        | Whether or not to show the material outlined variant.
-| `fullwidth`         | `boolean`        | Whether or not to make the input fullwidth. No longer displays `label`; only `placeholder` and `helper`.
-| `helper`            | `string`         | Helper text to display below the input. Display default only when focused.
-| `helperPersistent`  | `boolean`        | Always show the helper text despite focus.
-| `required`          | `boolean`        | Displays error state if value is empty and input is blurred.
-| `maxLength`         | `number`         | Maximum length to accept input.
-| `validationMessage` | `string`         | Message to show in the error color when the dialog is invalid. (Helper text will not be visible)
-| `pattern`           | `string`         | [`HTMLInputElement.prototype.pattern`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (empty string will unset attribute)
-| `min`               | `number|string`  | [`HTMLInputElement.prototype.min`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (empty string will unset attribute)
-| `max`               | `number|string`  | [`HTMLInputElement.prototype.max`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (empty string will unset attribute)
-| `step`              | `number|null`    | [`HTMLInputElement.prototype.step`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (null will unset attribute)
-| `validity`          | `ValidityState` (readonly) | The [`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState) of the dialog.
-| `willValidate`      | `boolean` (readonly)       | [`HTMLInputElement.prototype.willValidate`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement#Properties)
-| `validityTransform` | `ValidityTransform**|null` | Callback called before each validation check. See the [validation section](#Validation) for more details.
-| `validateOnInitialRender` | `boolean`            | Runs validation check on initial render.
-
-\*  `TextFieldType` is exported by `mwc-dialog` and `mwc-dialog-base`
-```ts
-type TextFieldType = 'text'|'search'|'tel'|'url'|'email'|'password'|
-    'date'|'month'|'week'|'time'|'datetime-local'|'number'|'color';
-```
-
-\*\* `ValidityTransform` is not exported. See the [validation section](#Validation) for more details.
-```ts
-type ValidityTransform = (value: string, nativeValidity: ValidityState) => Partial<ValidityState>
-```
+| Name                    | Type      | Description
+| ----------------------- | --------- |------------
+| `open`                  | `boolean` | Whether or not the dialog should open.
+| `hideActions`           | `boolean` | Hides the actions footer of the dialog. Needed to remove excess padding when no actions are slotted in.
+| `stacked`               | `boolean` | Whether or not to stack the action buttons.
+| `title`                 | `string`  | Title of the dialog.
+| `scrimClickAction`      | `string`  | _Default: 'close'_ – Action to be emitted when the dialog closes because the scrim was clicked (see [actions section](#actions)).
+| `escapeKeyAction`       | `string`  | _Default: 'close'_ – Action to be emitted when the dialog closes because the excape key was pressed (see [actions section](#actions)).
+| `defaultAction`         | `string`  | _Default: 'close'_ – Action emitted when `<mwc-dialog>.open` is toggled (see [actions section](#actions)).
+| `actionAttribute`       | `string`  | _Default: 'dialog-action'_ – Attribute to read in light dom of dialog for closing action value (see [actions section](#actions)).
+| `initialFocusAttribute` | `string`  | _Default: 'dialog-initial-focus'_ – Attribute to search for in light dom for initial focus on dialog open.
 
 ### Methods
 
 | Name     | Description
 | -------- | -------------
-| `checkValidity() => boolean`   | Returns `true` if the dialog passes validity checks. Returns `false` and fires an [`invalid`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/invalid_event) event on the dialog otherwise.
-| `reportValidity() => boolean`   | Runs `checkValidity()` method, and if it returns false, then ir reports to the user that the input is invalid.
-| `setCustomValidity(message:string) => void`   | Sets a custom validity message (also overwrites `validationMessage`). If this message is not the empty string, then the element is suffering froma  custom validity error and does not validate.
+| `forceLayout() => void` | Forces dialog to relayout (animation frame time). May be required if dialog size is incorrect or if stacked layout has not been triggered correctly.
+| `focus() => void` | Focuses on the initial focus element (see [focus section](#focus)).
+| `blur() => void` | Blurs the active element.
 
 ### CSS Custom Properties
 
