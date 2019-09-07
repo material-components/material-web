@@ -7,7 +7,7 @@ Dialogs inform users about a task and can contain critical information, require 
 
 <img src="images/standard.gif" width="607px">
 
-[Material Design Guidelines: text fields](https://material.io/design/components/text-fields.html)
+[Material Design Guidelines: dialogs](https://material.io/design/components/dialogs.html)
 
 ## Installation
 
@@ -191,7 +191,6 @@ If the above video does not load, view the large gif [here](images/scrollable.gi
     In this example we set "dialog-initial-focus" on a focusable element.
     When this dialog opens, the secondary button is focused.
   </div>
-  </mwc-textfield>
   <mwc-button
       slot="primaryAction"
       dialog-action="close">
@@ -227,6 +226,14 @@ If the above video does not load, view the large gif [here](images/scrollable.gi
 
 ## API
 
+### Slots
+
+| Name              |	Description
+| ----------------- | -------------
+| `primaryAction`   |	A focusable and clickable target. Typically a button such as  `<mwc-button>`. Placed on the bottom right of the dialog (LTR) or on the top when stacked. Automatically clicked when `Enter` key is pressed in the dialog.
+| `secondaryAction` |	A focusable and clickable target. Typically a button such as  `<mwc-button>`. Placed immediately to the left of the `primaryAction` (LTR) or below when stacked.
+| _default_         |	Content to display in the dialog's content area.
+
 ### Properties/Attributes
 
 | Name                    | Type      | Description
@@ -235,9 +242,9 @@ If the above video does not load, view the large gif [here](images/scrollable.gi
 | `hideActions`           | `boolean` | Hides the actions footer of the dialog. Needed to remove excess padding when no actions are slotted in.
 | `stacked`               | `boolean` | Whether or not to stack the action buttons.
 | `title`                 | `string`  | Title of the dialog.
-| `scrimClickAction`      | `string`  | _Default: 'close'_ – Action to be emitted when the dialog closes because the scrim was clicked (see [actions section](#actions)).
-| `escapeKeyAction`       | `string`  | _Default: 'close'_ – Action to be emitted when the dialog closes because the excape key was pressed (see [actions section](#actions)).
-| `defaultAction`         | `string`  | _Default: 'close'_ – Action emitted when `<mwc-dialog>.open` is toggled (see [actions section](#actions)).
+| `scrimClickAction`      | `string`  | _Default: 'close'_ – Action to be emitted with the `closing` and `closed` events when the dialog closes because the scrim was clicked (see [actions section](#actions)).
+| `escapeKeyAction`       | `string`  | _Default: 'close'_ – Action to be emitted with the `closing` and `closed` events when the dialog closes because the excape key was pressed (see [actions section](#actions)).
+| `defaultAction`         | `string`  | _Default: 'close'_ – Action to be emitted with the `closing` and `closed` events when `<mwc-dialog>.open` is toggled (see [actions section](#actions)).
 | `actionAttribute`       | `string`  | _Default: 'dialog-action'_ – Attribute to read in light dom of dialog for closing action value (see [actions section](#actions)).
 | `initialFocusAttribute` | `string`  | _Default: 'dialog-initial-focus'_ – Attribute to search for in light dom for initial focus on dialog open.
 
@@ -246,8 +253,26 @@ If the above video does not load, view the large gif [here](images/scrollable.gi
 | Name     | Description
 | -------- | -------------
 | `forceLayout() => void` | Forces dialog to relayout (animation frame time). May be required if dialog size is incorrect or if stacked layout has not been triggered correctly.
-| `focus() => void` | Focuses on the initial focus element (see [focus section](#focus)).
+| `focus() => void` | Focuses on the initial focus element if defined (see [focus section](#focus)).
 | `blur() => void` | Blurs the active element.
+
+### Listeners
+| Event Name          | Target       | Description
+| ------------------- | ------------ | -----------
+| `click`             | root element | Detects if clicked target is a dialog action.
+| `resize`            | `window `    | Performs dialog layout (passive).
+| `orientationchange` | `window`     | Performs dialog layout (passive).
+| `keydown`           | `mwc-dialog` | Listens for the enter key to click the default button (passive).
+| `keydown`           | `document`   | Listens for the escape key to close the dialog (see [`escapeKeyAction`](#properties)).
+
+### Events
+
+| Event Name | Target       | Detail             | Description
+| ---------- | ------------ | ------------------ | -----------
+| `opening`  | `mwc-dialog` | `{}`               | Fired when the dialog is beginning to open.
+| `opened`   | `mwc-dialog` | `{}`               | Fired once the dialog is finished opening (after animation).
+| `closing`  | `mwc-dialog` | `{action: string}` | Fired when the dialog is is beginning to close. Detail is the action that closed the dialog (see [actions section](#actions)).
+| `closed`   | `mwc-dialog` | `{action: string}` | Fired once the dialog is finished closing (after animation). Detail is the action that closed the dialog (see [actions section](#actions)).
 
 ### CSS Custom Properties
 
@@ -256,98 +281,118 @@ Inherits CSS Custom properties from:
 * [`mwc-notched-outline`](https://github.com/material-components/material-components-web-components/tree/master/packages/notched-outline).
 * [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon)
 
-| Name                                              | Default               | Description
-| ------------------------------------------------- | --------------------- |------------
-| `--mdc-theme-primary`                             | `#6200ee`             | Color when active of the underline ripple, the outline, and the caret.
-| `--mdc-theme-error`                               | `#b00020`             | Color when errored of the underline, the outline, the caret, and the icons.
-| `--mdc-text-field-filled-border-radius`           | `4px 4px 0 0`         | Border radius of the standard / filled dialog's background filling.
-| `--mdc-text-field-outlined-idle-border-color`     | `rgba(0, 0, 0, 0.38)` | Color of the outlined dialog's  outline when idle.
-| `--mdc-text-field-outlined-hover-border-color`    | `rgba(0, 0, 0, 0.87)` | Color of the outlined dialog's outline when hovering.
-| `--mdc-text-field-outlined-disabled-border-color` | `rgba(0, 0, 0, 0.06)` | Color of the outlined dialog's outline when disabled.
+| Name                                | Default               | Description
+| ----------------------------------- | --------------------- |------------
+| `--mdc-theme-surface`               | `#fff`                | Color of the dialog surface's background.
+| `--mdc-dialog-scrim-color`          | `rgba(0, 0, 0, 0.32)` | Color of the scrim. (**Note:** setting alpha to 0 will still make scrim clickable but transparent).
+| `--mdc-dialog-title-ink-color`      | `rgba(0, 0, 0, 0.87)` | Color of the title text.
+| `--mdc-dialog-content-ink-color`    | `rgba(0, 0, 0, 0.6)`  | Color applied to the projected content. (**Note:** it may also be possible to style the content via the light DOM since it is not encapsulated in a shadow root).
+| `--mdc-dialog-scroll-divider-color` | `rgba(0, 0, 0, 0.12)` | Color of the dividers present when dialog is scrollable.
+| `--mdc-dialog-min-width`            | `280px`               | min-width ofthe dialog surface.
+| `--mdc-dialog-max-width`            | `560px`               | max-width of the dialog surface. (**Note:** if max-width is < `560px`, there is a visual jank bug that will occur causing the max width to be `560px` when the window is sized to <= than `560px`).
+| `--mdc-dialog-max-height`           | `calc(100% - 32px)`   | Max height of the dialog surface.
+| `--mdc-dialog-shape-radius`         | `4px`                 | Corner radius of the dialog surface.
 
-### Validation
+### Actions
 
-`<mwc-dialog>` follows the basic `<input>` [constraint validation model](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation).
-It exposes:
+Actions close the dialog on click. You can define an action by slotting an
+element with the `dialog-action="..."` string attribute. The name of the
+attribute can be customized by the
+[`actionAttribute` property](#Properties/Attributes). When a clickable element
+with the `dialog-action` attribute is clicked, `mwc-dialog` will get the value
+of the attribute and fire the `closing` and subsequent `closed` events with a
+detail of `{action: <clickedElement.getAttribute('dialog-action')>}`.
 
-* `required`
-* `maxLength`
-* `pattern`
-* `min`
-* `max`
-* `step`
-* `validity`
-* `willValidate`
-* `checkValidity()`
-* `reportValidity()`
-* `setCustomValidity(message)`
+For example:
 
-Additionally, it implements more features such as:
-* `validationMessage`
-* `validateOnInitialRender`
-* and `validityTransform`
-
-By default, `<mwc-dialog>` will report validation on `blur`.
-
-#### Custom validation logic
-
-The `validityTransform` property is a function that can be set on `<mwc-dialog>` to
-implement custom validation logic that transforms the `ValidityState` of the
-input control. The type of a `ValidityTransform` is the following:
-
-```ts
-(value: string, nativeValidity: ValidityState) => Partial<ValidityState>
-```
-
-Where `value` is the new value in the dialog to be validated and
-`nativeValidity` is an interface of
-[`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState)
-of the native input control. For example:
+<img src="images/action.png" width="566px">
 
 ```html
-<mwc-dialog
-    id="my-dialog"
-    pattern="[0-9]+"
-    value="doggos">
+<mwc-dialog open>
+  <div>
+    <div>
+      This is my content. Here is an actionable button:
+      <button dialog-action="contentButton">button 1</button>
+    </div>
+    <div>
+      This is my content. Here is a diabled actionable button:
+      <button disabled dialog-action="disabledContentButton">button 2</button>
+    </div>
+  </div>
+  <mwc-button slot="primaryAction" dialog-action="ok">ok</mwc-button>
+  <mwc-button slot="secondaryAction">cancel</mwc-button>
 </mwc-dialog>
-<script>
-  const dialog = document.querySelector('#my-dialog');
-  dialog.validityTransform = (newValue, nativeValidity) => {
-    if (!nativeValidity.valid) {
-      if (nativeValidity.patternMismatch) {
-        const hasDog = newValue.includes('dog');
-        // changes to make to the nativeValidity
-        return {
-          valid: hasDog,
-          patternMismatch: !hasDog;
-        };
-      } else {
-        // no changes
-        return {};
-      }
-    } else {
-      const isValid = someExpensiveOperation(newValue);
-      // changes to make to the native validity
-      return {
-        valid: isValid,
-        // or whatever type of ValidityState prop you would like to set (if any)
-        customError: !isValid,
-      };
-    }
-  }
-</script>
 ```
 
-In this example we first check the native validity which is invalid due to the
-pattern mismatching (the value is `doggos` which is not a number). The value
-includes `dog`, thus we make it valid and undo the pattern mismatch.
+In this example we have 3 actionable elements:
+```html
+<button dialog-action="contentButton">button 1</button>
+```
 
-In this example, we also skip an expensive validity check by short-circuiting
-the validation by checking the native validation.
+```html
+<button disabled dialog-action="disabledContentButton">button 2</button>
+```
 
-*Note:* the UI will only update as valid / invalid by checking the `valid`
-property of the transformed `ValidityState`.
+```html
+<mwc-button slot="primaryAction" dialog-action="ok">ok</mwc-button>
+```
+
+* Clicking button 1 will close the dialog and fire a `closing` and subsequently
+a `closed` event with a detail of `{action: 'contentButton'}`.
+* Clicking button 2 will not close the dialog since it is disabled
+* Clicking the cancel `mwc-button` will not close the dialog as it does not have
+a `dialog-action` attribute set on it.
+* Clicking the ok `mwc-button` will close the dialog and fire a `closing` and
+subsequently a `closed` event with a detail of `{action: 'ok'}`.
+* Setting `document.querySelector('mwc-dialog').open = false;` will close the
+dialog and fire a `closing` and subsequently a `closed` event with a detail of
+`{action: 'close'}` (action is configurable via
+[`defaultAction` property](#Properties/Attributes)).
+
+### Focus
+
+Initial focus can be set on an element with the `dialog-initial-focus` boolean
+attribute (configurable via the
+[`initialFocusAttribute` property](#Properties/Attributes)).
+
+For example:
+
+<img src="images/initial-focus.png" width="594x">
+
+```html
+<mwc-dialog title="Initial Focus">
+  <div>
+    In this example we set "dialog-initial-focus" on a focusable element.
+    When this dialog opens, the secondary button is focused.
+  </div>
+  <mwc-button
+      slot="primaryAction"
+      dialog-action="close">
+    Primary
+  </mwc-button>
+  <mwc-button
+      slot="secondaryAction"
+      dialog-action="close"
+      dialog-initial-focus>
+    Secondary
+  </mwc-button>
+</mwc-dialog>
+```
+
+In this example we set `dialog-initial-focus` on the secondary action, so
+`mwc-button.focus()` will be called on the button. This attribute can also be
+set on anything in the light DOM of `mwc-dialog`. Only one element designated
+with this attribute will be focused.
+
+Calling `focus()` on the `mwc-dialog` itself will call `focus()` on any
+`dialog-initial-focus` element in the light DOM of `mwc-dialog`.
+
+Calling `blur()` on the `mwc-dialog` will attempt to blur the
+[`activeElement`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentOrShadowRoot/activeElement)
+of the shadow root of `mwc-dialog` or the
+[root node](https://developer.mozilla.org/en-US/docs/Web/API/Node/getRootNode)
+of the dialog.
 
 ## Additional references
 
-- [MDC Web dialogs](https://material.io/develop/web/components/input-controls/text-field/)
+- [MDC Web dialogs](https://material.io/develop/web/components/dialogs/)
