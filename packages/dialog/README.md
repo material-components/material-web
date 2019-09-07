@@ -161,7 +161,6 @@ If the above video does not load, view the large gif [here](images/scrollable.gi
   }
 </style>
 
-<!-- <mwc-button data-num="5" raised>Styled</mwc-button> -->
 <mwc-dialog title="Styled" class="styled" open>
   <div>These are the current styles applied to this dialog</div>
   <pre>
