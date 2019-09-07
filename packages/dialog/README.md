@@ -53,7 +53,7 @@ npm install @material/mwc-dialog
 
 ### Confirmation
 
-<img src="images/confirmation.gif" width="607px">
+<img src="images/confirmation.gif" width="312px">
 
 ```html
 <style>
