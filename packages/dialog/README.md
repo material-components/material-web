@@ -116,7 +116,7 @@ npm install @material/mwc-dialog
 </mwc-dialog>
 ```
 
-### Helper Text
+### Scrollable
 
 <video src="images/scrollable.webm" autoplay loop muted playsinline width="580px">
 </video>

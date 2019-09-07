@@ -4,7 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+- Implemented mwc-dialog
+- mwc-button
+  - Added custom focus and blur functions that cause ripple
+- mwc-textfield
+  - Focus function now focuses the native input and activates the caret
+  - Blur appropriately blurs the input
+
 
 ## [0.8.0] - 2019-09-03
 
