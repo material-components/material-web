@@ -40,8 +40,6 @@ export class DialogBase extends BaseElement {
 
   @query('.mdc-container') protected conatinerElement!: HTMLDivElement;
 
-  @property({type: Boolean}) protected actionsReversed: boolean = false;
-
   @property({type: Boolean}) hideActions: boolean = false;
 
   @property({type: Boolean})
@@ -150,7 +148,7 @@ export class DialogBase extends BaseElement {
         this.open = true;
         this.emitNotification('opening');
       },
-      reverseButtons: () => this.actionsReversed = !this.actionsReversed,
+      reverseButtons: () => {},
       releaseFocus: () => {
         blockingElements.remove(this);
       },
@@ -174,19 +172,14 @@ export class DialogBase extends BaseElement {
       title = html`<h2 class="mdc-dialog__title">${this.title}</h2>`;
     }
 
-    const actoinsClasses = {
+    const actionsClasses = {
       'mdc-dialog__actions': !this.hideActions,
+      'reversed': this.stacked,
     };
 
-    let slotNames = ['secondaryAction', 'primaryAction'];
-
-    if (this.actionsReversed) {
-      slotNames = slotNames.reverse();
-    }
-
     const actionSlots = html`
-        <slot name="${slotNames[0]}"></slot>
-        <slot name="${slotNames[1]}"></slot>`;
+        <slot name="secondaryAction"></slot>
+        <slot name="primaryAction"></slot>`;
 
     return html`
     <div class="mdc-dialog ${classMap(classes)}"
@@ -203,7 +196,7 @@ export class DialogBase extends BaseElement {
           </div>
           <footer
               id="actions"
-              class="${classMap(actoinsClasses)}">
+              class="${classMap(actionsClasses)}">
             ${actionSlots}
           </footer>
         </div>

@@ -71,11 +71,21 @@ limitations under the License.
       }
     }
 
-    .mdc-dialog--stacked & *:not(:first-child)::slotted(*) {
+    .mdc-dialog--stacked &:not(.reversed) *:not(:first-child)::slotted(*) {
       @include mdc-feature-targets($feat-structure) {
         margin-top: 12px;
       }
     }
+
+    .mdc-dialog--stacked &.reversed {
+      flex-direction: column-reverse;
+
+      *:not(:last-child)::slotted(*) {
+        @include mdc-feature-targets($feat-structure) {
+          margin-top: 12px;
+        }
+      }
+     }
   }
 }
 
