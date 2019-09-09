@@ -319,34 +319,27 @@ suite('mwc-dialog:', () => {
       const secondary =
           element.querySelector('[slot="secondaryAction"]') as Button;
 
-      const getSlots = (): HTMLSlotElement[] => {
-        const actionsFooter = element.shadowRoot!.querySelector('#actions')!;
-        return Array.from(actionsFooter.children) as unknown as
-            HTMLSlotElement[];
-      };
-
       element.open = true;
 
       await awaitEvent(element, OPENED_EVENT);
-      let [firstSlot, secondSlot] = getSlots();
+      const topDiff = primary.offsetTop - secondary.offsetTop;
 
-      let firstNode = firstSlot.assignedNodes()[0];
-      assert.strictEqual(firstNode, secondary);
-
-      let secondNode = secondSlot.assignedNodes()[0];
-      assert.strictEqual(secondNode, primary);
+      // tops are within about 5 px of each other
+      assert.isTrue(Math.abs(topDiff) < 5);
+      assert.isTrue(primary.offsetLeft > secondary.offsetLeft);
 
       element.stacked = true;
       await element.requestUpdate();
       await rafPromise();
 
-      [firstSlot, secondSlot] = getSlots();
+      const primaryRight = primary.offsetLeft + primary.offsetWidth;
+      const secondaryRight = secondary.offsetLeft + secondary.offsetWidth;
+      const rightDiff = primaryRight - secondaryRight;
 
-      firstNode = firstSlot.assignedNodes()[0];
-      assert.strictEqual(firstNode, primary);
-
-      secondNode = secondSlot.assignedNodes()[0];
-      assert.strictEqual(secondNode, secondary);
+      // rights are within about 5 px of each other: some browsers don't
+      // calculate offsetLeft+offsetWidth to necessarily equal right
+      assert.isTrue(Math.abs(rightDiff) < 5);
+      assert.isTrue(secondary.offsetTop > primary.offsetTop);
     });
 
     test('Enter clicks primary action', async () => {
