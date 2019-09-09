@@ -41,14 +41,30 @@ npm install @material/mwc-dialog
     <li dialog-action="item4">Item 4</li>
   </ul>
 </mwc-dialog>
-<style>
-  /* hover styling for the lists */
-  ...
-</style>
 
 <script type="module">
   import '@material/mwc-dialog';
 </script>
+
+<style>
+  /* styling for the list */
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    padding: 20px 16px 20px 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, .5);
+  }
+  li:last-child {
+    border-bottom: none;
+  }
+  li:hover, li:focus {
+    background-color: rgba(128, 128, 128, .25);
+    cursor: pointer;
+  }
+</style>
 ```
 
 ### Confirmation
