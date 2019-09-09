@@ -67,12 +67,12 @@ export class DialogBase extends BaseElement {
   @property({type: Boolean, reflect: true})
   @observer(function(this: DialogBase, isOpen: boolean) {
     if (isOpen) {
-      if (this.originalOpen) {
-        this.originalOpen();
+      if (this.mdcFoundation) {
+        this.mdcFoundation.open();
       }
     } else {
-      if (this.originalClose) {
-        this.originalClose(this.currentAction || this.defaultAction);
+      if (this.mdcFoundation) {
+        this.mdcFoundation.close(this.currentAction || this.defaultAction);
         this.currentAction = undefined;
       }
     }
@@ -98,8 +98,6 @@ export class DialogBase extends BaseElement {
   protected boundHandleKeydown: ((ev: KeyboardEvent) => void)|null = null;
   protected boundHandleDocumentKeydown:
       ((ev: KeyboardEvent) => void)|null = null;
-  protected originalClose: null|((action?: string|undefined) => void) = null;
-  protected originalOpen: null|(() => void) = null;
 
   protected emitNotification(name: string, action?: string) {
     const init: CustomEventInit = {detail: action ? {action} : {}};
@@ -143,9 +141,15 @@ export class DialogBase extends BaseElement {
         return el ? el.scrollHeight > el.offsetHeight : false;
       },
       notifyClosed: (action) => this.emitNotification('closed', action),
-      notifyClosing: (action) => this.emitNotification('closing', action),
+      notifyClosing: (action) => {
+        this.open = false;
+        this.emitNotification('closing', action);
+      },
       notifyOpened: () => this.emitNotification('opened'),
-      notifyOpening: () => this.emitNotification('opening'),
+      notifyOpening: () => {
+        this.open = true;
+        this.emitNotification('opening');
+      },
       reverseButtons: () => this.actionsReversed = !this.actionsReversed,
       releaseFocus: () => {
         blockingElements.remove(this);
@@ -211,18 +215,6 @@ export class DialogBase extends BaseElement {
   firstUpdated() {
     super.firstUpdated();
     this.mdcFoundation.setAutoStackButtons(true);
-
-    this.originalOpen = this.mdcFoundation.open.bind(this.mdcFoundation);
-    this.originalClose = this.mdcFoundation.close.bind(this.mdcFoundation);
-
-    this.mdcFoundation.open = () => {
-      this.open = true;
-    };
-
-    this.mdcFoundation.close = (action) => {
-      this.currentAction = action;
-      this.open = false;
-    };
 
     this.removeEventListeners();
     this.setEventListeners();
