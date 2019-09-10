@@ -200,30 +200,6 @@ npm install @material/mwc-dialog
 </mwc-dialog>
 ```
 
-### Initial Focus
-
-<img src="images/initial-focus.png" width="594x">
-
-```html
-<mwc-dialog title="Initial Focus">
-  <div>
-    In this example we set "dialog-initial-focus" on a focusable element.
-    When this dialog opens, the secondary button is focused.
-  </div>
-  <mwc-button
-      slot="primaryAction"
-      dialog-action="close">
-    Primary
-  </mwc-button>
-  <mwc-button
-      slot="secondaryAction"
-      dialog-action="close"
-      dialog-initial-focus>
-    Secondary
-  </mwc-button>
-</mwc-dialog>
-```
-
 ### Stacked
 
 <img src="images/stacked.png" width="594px">
