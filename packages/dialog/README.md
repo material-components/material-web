@@ -5,7 +5,7 @@
 
 Dialogs inform users about a task and can contain critical information, require decisions, or involve multiple tasks.
 
-<img src="images/standard.gif" width="607px">
+<img src="images/standard.png" width="397px">
 
 [Material Design Guidelines: dialogs](https://material.io/design/components/dialogs.html)
 
