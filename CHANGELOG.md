@@ -6,11 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
-- mwc-button
-  - Added custom focus and blur functions that cause ripple
-- mwc-textfield
-  - Focus function now focuses the native input and activates the caret
-  - Blur appropriately blurs the input
+### Changed
+
+- **BREAKING:** Added custom `.focus()` and `.blur()` functions to mwc-button
+  that cause the button to ripple as when tab focusing.
+- **BREAKING:** mwc-textfield's custom `.focus()` function will now call
+  `.focus()` on the native internal input causing the caret to appear instead of
+  just forcing focus styles to appear.
+- **BREAKING:** mwc-textfield's custom `.blur()` function will now call
+  `.blur()` on the native internal input instead of just forcing focus styles to
+  disapprear.
 
 ## [0.8.0] - 2019-09-03
 
