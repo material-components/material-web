@@ -135,27 +135,24 @@ npm install @material/mwc-dialog
 
 ### Scrollable
 
-<video src="images/scrollable.webm" autoplay loop muted playsinline width="580px">
-</video>
-
-If the above video does not load, view the large gif [here](images/scrollable.gif).
+<img src="images/scrollable.png" width="598px">
 
 ```html
 <mwc-dialog title="Privacy Policy" open>
-  <div>
-    really large amount of text...
-  </div>
-  <mwc-button
-      slot="primaryAction"
-      dialog-action="accept">
-    Accept
-  </mwc-button>
-  <mwc-button
-      slot="secondaryAction"
-      dialog-action="decline"
-      disabled>
-    Decline
-  </mwc-button>
+<div>
+  really large amount of text...
+</div>
+<mwc-button
+    slot="primaryAction"
+    dialog-action="accept">
+  Accept
+</mwc-button>
+<mwc-button
+    slot="secondaryAction"
+    dialog-action="decline"
+    disabled>
+  Decline
+</mwc-button>
 </mwc-dialog>
 ```
 
