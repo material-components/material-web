@@ -69,30 +69,30 @@ npm install @material/mwc-dialog
 
 ### Confirmation
 
-<img src="images/confirmation.gif" width="312px">
+<img src="images/confirmation.png" width="330px">
 
 ```html
 <style>
-  mwc-dialog > div, mwc-radio {
+  mwc-dialog div {
+    flex-direction: column;
+  }
+  mwc-dialog div, mwc-radio {
     display: flex;
-    align-items: center;
   }
 </style>
 
 <mwc-dialog title="Phone Ringtone" open>
   <div>
-    <mwc-radio id="a1" name="a" checked></mwc-radio>
-    <label>Never Gonna Give You Up</label>
+    <mwc-formfield label="Never Gonna Give You Up">
+      <mwc-radio id="a1" name="a" checked></mwc-radio>
+    </mwc-formfield>
+    <mwc-formfield label="Hot Cross Buns">
+      <mwc-radio name="a"></mwc-radio>
+    </mwc-formfield>
+    <mwc-formfield label="None">
+      <mwc-radio name="a"></mwc-radio>
+    </mwc-formfield>
   </div>
-  <div>
-    <mwc-radio name="a"></mwc-radio>
-    <label>Hot Cross Buns</label>
-  </div>
-  <div>
-    <mwc-radio name="a"></mwc-radio>
-    <label>None</label>
-  </div>
-
   <mwc-button
       dialog-action="ok"
       slot="primaryAction">
@@ -109,6 +109,7 @@ npm install @material/mwc-dialog
   import '@material/mwc-dialog';
   import '@material/mwc-button/mwc-button.js';
   import '@material/mwc-radio/mwc-radio.js';
+  import '@material/mwc-formfield/mwc-formfield.js';
 </script>
 ```
 
