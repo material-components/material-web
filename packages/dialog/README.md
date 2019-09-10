@@ -225,7 +225,7 @@ npm install @material/mwc-dialog
 
 | Name              |	Description
 | ----------------- | -------------
-| `primaryAction`   |	A focusable and clickable target. Typically a button such as  `<mwc-button>`. Placed on the bottom right of the dialog (LTR) or on the top when stacked. Automatically clicked when `Enter` key is pressed in the dialog.
+| `primaryAction`   |	A focusable and clickable target. Typically a button such as  `<mwc-button>`. Placed on the bottom right of the dialog (LTR) and above the secondary action when stacked. Automatically clicked when `Enter` key is pressed in the dialog.
 | `secondaryAction` |	A focusable and clickable target. Typically a button such as  `<mwc-button>`. Placed immediately to the left of the `primaryAction` (LTR) or below when stacked.
 | _default_         |	Content to display in the dialog's content area.
 
@@ -233,9 +233,9 @@ npm install @material/mwc-dialog
 
 | Name                    | Type      | Description
 | ----------------------- | --------- |------------
-| `open`                  | `boolean` | Whether or not the dialog should open.
+| `open`                  | `boolean` | Whether the dialog should open.
 | `hideActions`           | `boolean` | Hides the actions footer of the dialog. Needed to remove excess padding when no actions are slotted in.
-| `stacked`               | `boolean` | Whether or not to stack the action buttons.
+| `stacked`               | `boolean` | Whether to stack the action buttons.
 | `title`                 | `string`  | Title of the dialog.
 | `scrimClickAction`      | `string`  | _Default: 'close'_ – Action to be emitted with the `closing` and `closed` events when the dialog closes because the scrim was clicked (see [actions section](#actions)).
 | `escapeKeyAction`       | `string`  | _Default: 'close'_ – Action to be emitted with the `closing` and `closed` events when the dialog closes because the excape key was pressed (see [actions section](#actions)).
@@ -271,11 +271,6 @@ npm install @material/mwc-dialog
 
 ### CSS Custom Properties
 
-Inherits CSS Custom properties from:
-* [`mwc-ripple`](https://github.com/material-components/material-components-web-components/tree/master/packages/ripple)
-* [`mwc-notched-outline`](https://github.com/material-components/material-components-web-components/tree/master/packages/notched-outline).
-* [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon)
-
 | Name                                | Default               | Description
 | ----------------------------------- | --------------------- |------------
 | `--mdc-theme-surface`               | ![](images/color_fff.png) `#fff`                | Color of the dialog surface's background.
@@ -293,7 +288,7 @@ Inherits CSS Custom properties from:
 Actions close the dialog on click. You can define an action by slotting an
 element with the `dialog-action="..."` string attribute. The name of the
 attribute can be customized by the
-[`actionAttribute` property](#Properties/Attributes). When a clickable element
+[`actionAttribute` property](#propertiesattributes). When a clickable element
 with the `dialog-action` attribute is clicked, `mwc-dialog` will get the value
 of the attribute and fire the `closing` and subsequent `closed` events with a
 detail of `{action: <clickedElement.getAttribute('dialog-action')>}`.
@@ -342,13 +337,13 @@ subsequently a `closed` event with a detail of `{action: 'ok'}`.
 * Setting `document.querySelector('mwc-dialog').open = false;` will close the
 dialog and fire a `closing` and subsequently a `closed` event with a detail of
 `{action: 'close'}` (action is configurable via
-[`defaultAction` property](#Properties/Attributes)).
+[`defaultAction` property](#propertiesattributes)).
 
 ### Focus
 
 Initial focus can be set on an element with the `dialog-initial-focus` boolean
 attribute (configurable via the
-[`initialFocusAttribute` property](#Properties/Attributes)).
+[`initialFocusAttribute` property](#propertiesattributes)).
 
 For example:
 
