@@ -23,8 +23,6 @@ limitations under the License.
   <script type="module" src="../node_modules/@material/mwc-button/mwc-button.js"></script>
   <script type="module" src="../node_modules/@material/mwc-textfield/mwc-textfield.js"></script>
   <script type="module" src="../node_modules/@material/mwc-dialog/mwc-dialog.js"></script>
-  <script type="module" src="../node_modules/@material/mwc-radio/mwc-radio.js"></script>
-  <script type="module" src="../node_modules/@material/mwc-formfield/mwc-formfield.js"></script>
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
   <link rel="stylesheet" href="demo-component.css">
 
@@ -35,25 +33,138 @@ limitations under the License.
   </style>
 </head>
 <body class="unresolved">
+  <header>
+    <a href="index.html"><mwc-icon>arrow_back</mwc-icon>
+    <span>Dialog</span></a>
+  </header>
 
   <main>
+    <div class="demo-group">
 
-  <mwc-dialog title="Privacy Policy" open>
-    <div>
-        Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est. Lorem ipsum dolor sit. Nescio quid quod significat. Ego Linguam Latinam in Collegio didici, et inutilia est. Specta me; hoc modo tantum usus Linguae Latinae est.
-    </div>
-    <mwc-button
-        slot="primaryAction"
-        dialog-action="accept">
-      Accept
-    </mwc-button>
-    <mwc-button
-        slot="secondaryAction"
-        dialog-action="decline"
-        disabled>
-      Decline
-    </mwc-button>
-  </mwc-dialog>
+    <mwc-button data-num="1" raised>Basic</mwc-button>
+    <mwc-dialog id="dialog1" title="My Title">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Enim nec dui nunc mattis enim ut tellus elementum. Bibendum enim facilisis gravida neque convallis a cras semper. Posuere ac ut consequat semper viverra nam libero. Arcu ac tortor dignissim convallis aenean et tortor at risus. Leo duis ut diam quam nulla. Quis hendrerit dolor magna eget est lorem. Aenean euismod elementum nisi quis eleifend. Cursus vitae congue mauris rhoncus aenean vel elit scelerisque mauris. Nibh sit amet commodo nulla facilisi nullam vehicula. Massa tempor nec feugiat nisl pretium.
+      </p>
+      <mwc-textfield
+          outlined
+          label="hitting enter here will activate the primary action (ok)"
+          style="width:100%;">
+      </mwc-textfield>
+      <p>
+        More content text...
+      </p>
+      <mwc-button slot="primaryAction" dialog-action="ok">ok</mwc-button>
+      <mwc-button slot="secondaryAction" dialog-action="cancel">cancel</mwc-button>
+    </mwc-dialog>
+
+    <mwc-button data-num="2" raised>Actions</mwc-button>
+    <mwc-dialog id="dialog2" title="Actions">
+      <p>
+        By setting the dialog-action="my-action" attribute on any element projected into
+        mwc-dialog, you can close the dialog by clicking on that element. The
+        dialog will then fire a non-bubbling "closing" event and a non-bubbling
+        "closed" event with an event detail of {action: "my-action"}
+      </p>
+      <mwc-button slot="primaryAction" dialog-action="customAction">This has action</mwc-button>
+      <mwc-button slot="secondaryAction">this does not</mwc-button>
+    </mwc-dialog>
+
+    <mwc-button data-num="3" raised>Scrollable</mwc-button>
+    <mwc-dialog id="dialog3" title="My Title">
+      <p>
+        Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll.
+      </p>
+      <mwc-button slot="primaryAction" dialog-action="close">Close this!</mwc-button>
+    </mwc-dialog>
+
+    <mwc-button data-num="4" raised>Hide Actions</mwc-button>
+    <mwc-dialog id="dialog4" title="Hide Actions">
+      <p>
+        If you don't have actions, you may want to set the "hideActions" property.
+        This property will remove extra whitespace at the bottom of this dialog.
+        This button will toggle that whitespace:
+      </p>
+      <mwc-button raised id="toggleActions">Toggle hideActions</mwc-button>
+      <div>
+        mwc-dialog.hideActions is currently:
+        <span id="hideActionVal">
+          false
+        </span>
+      </div>
+    </mwc-dialog>
+
+    <style>
+      .styled {
+        --mdc-theme-surface: #FFF;
+        --mdc-dialog-scrim-color: rgba(35, 47, 52, .32);
+        --mdc-dialog-title-ink-color: #232F34;
+        --mdc-dialog-content-ink-color: #232F34;
+        --mdc-dialog-scroll-divider-color: transparent;
+        --mdc-dialog-min-width: 500px;
+        --mdc-dialog-max-width: 700px;
+        --mdc-dialog-max-height: 350px;
+        --mdc-dialog-shape-radius: 0px;
+
+        /* color buttons */
+        --mdc-theme-primary: #344955;
+      }
+    </style>
+
+    <mwc-button data-num="5" raised>Styled</mwc-button>
+    <mwc-dialog id="dialog5" title="Styled" class="styled">
+        <div>These are the current styles applied to this dialog</div>
+        <pre>
+--mdc-theme-surface: #FFF;
+--mdc-dialog-scrim-color: rgba(35, 47, 52, .32);
+--mdc-dialog-title-ink-color: #232F34;
+--mdc-dialog-content-ink-color: #232F34;
+--mdc-dialog-scroll-divider-color: transparent;
+--mdc-dialog-min-width: 500px;
+--mdc-dialog-max-width: 700px;
+--mdc-dialog-max-height: 350px;
+--mdc-dialog-shape-radius: 0px;
+
+/* color buttons */
+--mdc-theme-primary: #344955;
+        </pre>
+      <mwc-button slot="primaryAction" dialog-action="close">
+        Too stylish for me!
+      </mwc-button>
+    </mwc-dialog>
+
+    <mwc-button data-num="6" raised>Stacked</mwc-button>
+    <mwc-dialog id="dialog6" title="Stacked" stacked>
+      <div>
+        This is what happens when you set the stacked property on mwc-dialog.
+        Notice that the primary action is now on top.
+      </div>
+      <mwc-button slot="primaryAction" dialog-action="close">
+        Primary
+      </mwc-button>
+      <mwc-button slot="secondaryAction" dialog-action="close">
+        Secondary
+      </mwc-button>
+    </mwc-dialog>
+
+    <mwc-button data-num="7" raised>Initial Focus</mwc-button>
+    <mwc-dialog id="dialog7" title="Initial Focus">
+      <div>
+        In this example we set "dialog-initial-focus" on the mwc-textfield.
+        When this dialog opens, it is auto-focused.
+      </div>
+      <mwc-textfield
+          outlined
+          label="i am auto-focused"
+          dialog-initial-focus>
+      </mwc-textfield>
+      <mwc-button slot="primaryAction" dialog-action="close">
+        Primary
+      </mwc-button>
+      <mwc-button slot="secondaryAction" dialog-action="close">
+        Secondary
+      </mwc-button>
+    </mwc-dialog>
 
   <script>
     addEventListener('load', () => document.body.classList.remove('unresolved'));
@@ -70,14 +181,14 @@ limitations under the License.
       });
     }
 
-    // toggleActions.onclick = () => {
-    //   const dialog = document.body.querySelector('#dialog4');
-    //   const hideActionSpan = document.body.querySelector('#hideActionVal');
+    toggleActions.onclick = () => {
+      const dialog = document.body.querySelector('#dialog4');
+      const hideActionSpan = document.body.querySelector('#hideActionVal');
 
-    //   const hideAction = !dialog.hideActions;
-    //   dialog.hideActions = hideAction;
-    //   hideActionSpan.innerText = hideAction;
-    // }
+      const hideAction = !dialog.hideActions;
+      dialog.hideActions = hideAction;
+      hideActionSpan.innerText = hideAction;
+    }
   </script>
 </body>
 </html>
