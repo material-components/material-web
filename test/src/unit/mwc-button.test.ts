@@ -15,52 +15,88 @@
  */
 
 import {Button} from '@material/mwc-button';
+import {html} from 'lit-html';
+
+import {fixture, rafPromise, TestFixture} from '../util/helpers';
 
 const ICON_SELECTOR = '.mdc-button__icon';
 
+const basic = html`
+  <mwc-button>this is a button</mwc-button>
+`;
 
 suite('mwc-button', () => {
-  let element;
+  let element: Button;
 
-  setup(() => {
-    element = document.createElement('mwc-button');
-    document.body.appendChild(element);
-  });
+  suite('basic', () => {
+    setup(() => {
+      element = document.createElement('mwc-button');
+      document.body.appendChild(element);
+    });
 
-  teardown(() => {
-    document.body.removeChild(element);
-  });
+    teardown(() => {
+      document.body.removeChild(element);
+    });
 
-  test('initializes as an mwc-button', () => {
-    assert.instanceOf(element, Button);
-  });
+    test('initializes as an mwc-button', () => {
+      assert.instanceOf(element, Button);
+    });
 
-  test(
-      'get/set disabled updates the disabled property on the native button element',
-      async () => {
-        element.disabled = true;
-        await element.updateComplete;
-        const button = element.shadowRoot.querySelector('button');
-        assert.equal(button.hasAttribute('disabled'), true);
+    test(
+        'get/set disabled updates the disabled property on the native button element',
+        async () => {
+          element.disabled = true;
+          await element.updateComplete;
+          const button = element.shadowRoot!.querySelector('button')!;
+          assert.equal(button.hasAttribute('disabled'), true);
 
-        element.disabled = false;
-        await element.updateComplete;
-        assert.equal(button.hasAttribute('disabled'), false);
-      });
+          element.disabled = false;
+          await element.updateComplete;
+          assert.equal(button.hasAttribute('disabled'), false);
+        });
 
-  test('setting `icon` adds an icon to the button', async () => {
-    await element.updateComplete;
-    let icon = element.shadowRoot.querySelector(ICON_SELECTOR);
-    assert.equal(icon, null);
+    test('setting `icon` adds an icon to the button', async () => {
+      await element.updateComplete;
+      let icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
+      assert.equal(icon, null);
 
-    element.icon = 'check';
-    await element.updateComplete;
-    icon = element.shadowRoot.querySelector(ICON_SELECTOR);
-    assert.instanceOf(icon, Element);
+      element.icon = 'check';
+      await element.updateComplete;
+      icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
+      assert.instanceOf(icon, Element);
 
-    element.icon = undefined;
-    await element.updateComplete;
-    icon = element.shadowRoot.querySelector(ICON_SELECTOR);
-    assert.equal(icon, null);
-  });
+      element.icon = '';
+      await element.updateComplete;
+      icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
+      assert.equal(icon, null);
+    });
+  })
+
+  suite('focus', () => {
+    let fixt: TestFixture;
+    let element: Button;
+    setup(async () => {
+      fixt = await fixture(basic);
+      element = fixt.root.firstElementChild as Button;
+    });
+
+    test('focus fn highlights and blurs', async () => {
+      const focusedClass = 'mdc-ripple-upgraded--background-focused';
+      const nativeButton =
+          element.shadowRoot!.querySelector('#button') as HTMLButtonElement;
+      expect(nativeButton.classList.contains(focusedClass)).to.be.false;
+      element.focus();
+      await element.requestUpdate();
+      await rafPromise();
+      expect(nativeButton.classList.contains(focusedClass)).to.be.true;
+      element.blur();
+      await element.requestUpdate();
+      await rafPromise();
+      expect(nativeButton.classList.contains(focusedClass)).to.be.false;
+    });
+
+    teardown(async () => {
+      fixt.remove();
+    })
+  })
 });

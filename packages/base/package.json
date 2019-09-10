@@ -11,6 +11,7 @@
   "dependencies": {
     "@material/base": "^3.0.0",
     "@material/dom": "^3.1.0",
+    "@material/ripple": "^3.0.0",
     "lit-element": "^2.2.1",
     "lit-html": "^1.0.0",
     "tslib": "^1.10.0"

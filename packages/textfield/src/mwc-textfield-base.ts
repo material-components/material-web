@@ -175,11 +175,13 @@ export abstract class TextFieldBase extends FormElement {
   focus() {
     const focusEvt = new FocusEvent('focus');
     this.formElement.dispatchEvent(focusEvt);
+    this.formElement.focus();
   }
 
   blur() {
     const blurEvt = new FocusEvent('blur');
     this.formElement.dispatchEvent(blurEvt);
+    this.formElement.blur();
   }
 
   render() {

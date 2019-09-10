@@ -14,7 +14,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {classMap, html, LitElement, property} from '@material/mwc-base/base-element';
+import {classMap, html, LitElement, property, query} from '@material/mwc-base/base-element';
+import {HTMLElementWithRipple} from '@material/mwc-base/form-element';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 
 export class ButtonBase extends LitElement {
@@ -34,8 +35,34 @@ export class ButtonBase extends LitElement {
 
   @property() label = '';
 
+  @query('#button') buttonElement!: HTMLElementWithRipple;
+
   protected createRenderRoot() {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
+  }
+
+  focus() {
+    const buttonElement = this.buttonElement;
+    if (buttonElement) {
+      const ripple = buttonElement.ripple;
+      if (ripple) {
+        ripple.handleFocus();
+      }
+
+      buttonElement.focus();
+    }
+  }
+
+  blur() {
+    const buttonElement = this.buttonElement;
+    if (buttonElement) {
+      const ripple = buttonElement.ripple;
+      if (ripple) {
+        ripple.handleBlur();
+      }
+
+      buttonElement.blur();
+    }
   }
 
   protected render() {
@@ -48,7 +75,7 @@ export class ButtonBase extends LitElement {
     const mdcButtonIcon =
         html`<span class="material-icons mdc-button__icon">${this.icon}</span>`;
     return html`
-      <button .ripple="${ripple({
+      <button id="button" .ripple="${ripple({
       unbounded: false
     })}"
           class="mdc-button ${classMap(classes)}"
