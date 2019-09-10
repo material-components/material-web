@@ -347,32 +347,32 @@ attribute (configurable via the
 
 For example:
 
-<img src="images/initial-focus.png" width="594x">
+<img src="images/initial-focus.png" width="592px">
 
 ```html
 <mwc-dialog title="Initial Focus">
   <div>
-    In this example we set "dialog-initial-focus" on a focusable element.
-    When this dialog opens, the secondary button is focused.
+    In this example we set "dialog-initial-focus" on the mwc-textfield.
+    When this dialog opens, it is auto-focused.
   </div>
-  <mwc-button
-      slot="primaryAction"
-      dialog-action="close">
+  <mwc-textfield
+      label="i am auto-focused"
+      dialog-initial-focus>
+  </mwc-textfield>
+  <mwc-button slot="primaryAction" dialog-action="close">
     Primary
   </mwc-button>
-  <mwc-button
-      slot="secondaryAction"
-      dialog-action="close"
-      dialog-initial-focus>
+  <mwc-button slot="secondaryAction" dialog-action="close">
     Secondary
   </mwc-button>
 </mwc-dialog>
 ```
 
-In this example we set `dialog-initial-focus` on the secondary action, so
-`mwc-button.focus()` will be called on the button. This attribute can also be
-set on anything in the light DOM of `mwc-dialog`. Only one element designated
-with this attribute will be focused.
+In this example we set `dialog-initial-focus` on the `mwc-textfield`, so
+`mwc-textfield.focus()` will be called on the button. This attribute can also be
+set on anything in the light DOM of `mwc-dialog` including the primary and
+secondary actions. Only one element designated with this attribute will be
+focused.
 
 Calling `focus()` on the `mwc-dialog` itself will call `focus()` on any
 `dialog-initial-focus` element in the light DOM of `mwc-dialog`.
