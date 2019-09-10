@@ -25,7 +25,9 @@ npm install @material/mwc-dialog
 
 ## Example usage
 
-### Simple
+<!-- TODO(emarquez): reenable simple example when we get mwc-list -->
+
+<!-- ### Simple
 
 <img src="images/simple.gif" width="314px">
 
@@ -65,6 +67,26 @@ npm install @material/mwc-dialog
     cursor: pointer;
   }
 </style>
+``` -->
+
+### Alert
+
+<img src="images/alert.gif" width="308px">
+
+```html
+<mwc-dialog open>
+  <div>Discard draft?</div>
+  <mwc-button
+      slot="primaryAction"
+      dialog-action="discard">
+    Discard
+  </mwc-button>
+  <mwc-button
+      slot="secondaryAction"
+      dialog-action="cancel">
+    Cancel
+  </mwc-button>
+</mwc-dialog>
 ```
 
 ### Confirmation
@@ -111,26 +133,6 @@ npm install @material/mwc-dialog
   import '@material/mwc-radio/mwc-radio.js';
   import '@material/mwc-formfield/mwc-formfield.js';
 </script>
-```
-
-### Alert
-
-<img src="images/alert.gif" width="308px">
-
-```html
-<mwc-dialog open>
-  <div>Discard draft?</div>
-  <mwc-button
-      slot="primaryAction"
-      dialog-action="discard">
-    Discard
-  </mwc-button>
-  <mwc-button
-      slot="secondaryAction"
-      dialog-action="cancel">
-    Cancel
-  </mwc-button>
-</mwc-dialog>
 ```
 
 ### Scrollable
