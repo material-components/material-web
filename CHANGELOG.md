@@ -4,7 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Fixed
+
+- `<mwc-drawer>` can now be used with Rollup (via version bump to pick up
+  [WICG/inert#135](https://github.com/WICG/inert/pull/135)).
 
 ## [0.8.0] - 2019-09-03
 
