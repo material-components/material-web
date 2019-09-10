@@ -47,8 +47,9 @@ export class ButtonBase extends LitElement {
       const ripple = buttonElement.ripple;
       if (ripple) {
         ripple.handleFocus();
-        buttonElement.focus();
       }
+
+      buttonElement.focus();
     }
   }
 
@@ -58,8 +59,9 @@ export class ButtonBase extends LitElement {
       const ripple = buttonElement.ripple;
       if (ripple) {
         ripple.handleBlur();
-        buttonElement.blur();
       }
+
+      buttonElement.blur();
     }
   }
 
