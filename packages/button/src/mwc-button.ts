@@ -26,6 +26,6 @@ export class Button extends ButtonBase {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mwc-button': Button;
+    'x-mwc-button': Button;
   }
 }
