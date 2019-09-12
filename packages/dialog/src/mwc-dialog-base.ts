@@ -31,10 +31,18 @@ const blockingElements =
 export class DialogBase extends BaseElement {
   @query('.mdc-dialog') protected mdcRoot!: HTMLDivElement;
 
-  @query('slot[name="primaryAction"]') protected primarySlot!: HTMLSlotElement;
+  // _actionItemsSlot should have type HTMLSlotElement, but when TypeScript's
+  // emitDecoratorMetadata is enabled, the HTMLSlotElement constructor will
+  // be emitted into the runtime, which will cause an "HTMLSlotElement is
+  // undefined" error in browsers that don't define it (e.g. Edge and IE11).
+  @query('slot[name="primaryAction"]') protected primarySlot!: HTMLElement;
 
+  // _actionItemsSlot should have type HTMLSlotElement, but when TypeScript's
+  // emitDecoratorMetadata is enabled, the HTMLSlotElement constructor will
+  // be emitted into the runtime, which will cause an "HTMLSlotElement is
+  // undefined" error in browsers that don't define it (e.g. Edge and IE11).
   @query('slot[name="secondaryAction"]')
-  protected secondarySlot!: HTMLSlotElement;
+  protected secondarySlot!: HTMLElement;
 
   @query('.mdc-dialog__content') protected contentElement!: HTMLDivElement;
 
@@ -85,7 +93,7 @@ export class DialogBase extends BaseElement {
   initialFocusAttribute = 'dialog-initial-focus';
 
   protected get primaryButton(): HTMLElement|null {
-    const assignedNodes = this.primarySlot.assignedNodes();
+    const assignedNodes = (this.primarySlot as HTMLSlotElement).assignedNodes();
     assignedNodes.filter((node) => node instanceof HTMLElement);
     const button = assignedNodes[0] as HTMLElement | undefined;
     return button ? button : null;
