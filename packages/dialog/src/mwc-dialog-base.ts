@@ -66,10 +66,13 @@ export class DialogBase extends BaseElement {
   @observer(function(this: DialogBase, isOpen: boolean) {
     if (isOpen) {
       if (this.mdcFoundation) {
+        this.setEventListeners();
+
         this.mdcFoundation.open();
       }
     } else {
       if (this.mdcFoundation) {
+        this.removeEventListeners();
         this.mdcFoundation.close(this.currentAction || this.defaultAction);
         this.currentAction = undefined;
       }
@@ -208,9 +211,6 @@ export class DialogBase extends BaseElement {
   firstUpdated() {
     super.firstUpdated();
     this.mdcFoundation.setAutoStackButtons(true);
-
-    this.removeEventListeners();
-    this.setEventListeners();
   }
 
   disconnectedCallback() {
