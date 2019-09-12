@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - **BREAKING:** mwc-textfield's custom `.blur()` function will now call
   `.blur()` on the native internal input instead of just forcing focus styles to
   disapprear.
+- **BREAKING** `mwc-base/base-element` no longer exports any of the
+  `lit-element` or `lit-html` APIs (e.g. `LitElement`, `customElement`,
+  `classMap`). Users should import directly from the `lit-element` and
+  `lit-html` modules instead.
 
 ### Fixed
 

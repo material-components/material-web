@@ -17,6 +17,7 @@
   "dependencies": {
     "@material/linear-progress": "^3.0.0",
     "@material/mwc-base": "^0.8.0",
+    "lit-element": "^2.2.1",
     "tslib": "^1.10.0"
   },
   "publishConfig": {

@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {customElement, html, LitElement} from '@material/mwc-base/base-element';
+import {customElement, html, LitElement} from 'lit-element';
 
 import {style} from './mwc-icon-host-css.js';
 

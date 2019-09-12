@@ -14,9 +14,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {classMap, html, LitElement, property, query} from '@material/mwc-base/base-element';
 import {HTMLElementWithRipple} from '@material/mwc-base/form-element';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
+import {html, LitElement, property, query} from 'lit-element';
+import {classMap} from 'lit-html/directives/class-map';
 
 export class ButtonBase extends LitElement {
   @property({type: Boolean}) raised = false;

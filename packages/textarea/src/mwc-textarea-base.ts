@@ -15,9 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {classMap, html, property, query} from '@material/mwc-base/form-element.js';
 import {characterCounter} from '@material/mwc-textfield/character-counter/mwc-character-counter-directive.js';
 import {TextFieldBase} from '@material/mwc-textfield/mwc-textfield-base.js';
+import {html, property, query} from 'lit-element';
+import {classMap} from 'lit-html/directives/class-map';
 
 export {TextFieldType} from '@material/mwc-textfield/mwc-textfield-base.js';
 

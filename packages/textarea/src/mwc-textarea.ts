@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {customElement} from '@material/mwc-base/form-element.js';
+import {customElement} from 'lit-element';
 import {TextAreaBase} from './mwc-textarea-base.js';
 import {style} from './mwc-textarea-css.js';
 
