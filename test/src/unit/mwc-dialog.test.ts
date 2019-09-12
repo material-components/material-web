@@ -56,7 +56,7 @@ const withButtons = html`
   <mwc-dialog title="myTitle">
     <mwc-button
         slot="primaryAction"
-        dialog-action="ok">
+        dialogAction="ok">
       Ok
     </mwc-button>
     <mwc-button
@@ -278,7 +278,7 @@ suite('mwc-dialog:', () => {
       element.open = true;
       await awaitEvent(element, OPENED_EVENT);
 
-      secondary.setAttribute('dialog-action', 'cancel');
+      secondary.setAttribute('dialogAction', 'cancel');
 
       secondary.click();
 
@@ -305,7 +305,7 @@ suite('mwc-dialog:', () => {
 
       assert.isNull(fixt.root.activeElement);
 
-      button.setAttribute('dialog-initial-focus', '');
+      button.setAttribute('dialogInitialFocus', '');
 
       element.open = true;
 

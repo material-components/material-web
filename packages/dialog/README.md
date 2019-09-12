@@ -37,10 +37,10 @@ npm install @material/mwc-dialog
     open
     hideActions>
   <ul>
-    <li dialog-action="item1">Item 1</li>
-    <li dialog-action="item2">Item 2</li>
-    <li dialog-action="item3">Item 3</li>
-    <li dialog-action="item4">Item 4</li>
+    <li dialogAction="item1">Item 1</li>
+    <li dialogAction="item2">Item 2</li>
+    <li dialogAction="item3">Item 3</li>
+    <li dialogAction="item4">Item 4</li>
   </ul>
 </mwc-dialog>
 
@@ -78,12 +78,12 @@ npm install @material/mwc-dialog
   <div>Discard draft?</div>
   <mwc-button
       slot="primaryAction"
-      dialog-action="discard">
+      dialogAction="discard">
     Discard
   </mwc-button>
   <mwc-button
       slot="secondaryAction"
-      dialog-action="cancel">
+      dialogAction="cancel">
     Cancel
   </mwc-button>
 </mwc-dialog>
@@ -116,12 +116,12 @@ npm install @material/mwc-dialog
     </mwc-formfield>
   </div>
   <mwc-button
-      dialog-action="ok"
+      dialogAction="ok"
       slot="primaryAction">
     ok
   </mwc-button>
   <mwc-button
-      dialog-action="cancel"
+      dialogAction="cancel"
       slot="secondaryAction">
     cancel
   </mwc-button>
@@ -146,12 +146,12 @@ npm install @material/mwc-dialog
 </div>
 <mwc-button
     slot="primaryAction"
-    dialog-action="accept">
+    dialogAction="accept">
   Accept
 </mwc-button>
 <mwc-button
     slot="secondaryAction"
-    dialog-action="decline"
+    dialogAction="decline"
     disabled>
   Decline
 </mwc-button>
@@ -177,7 +177,7 @@ npm install @material/mwc-dialog
       In this dialog we have changed the button color and removed the border
       radius.
     </div>
-  <mwc-button slot="primaryAction" dialog-action="close">
+  <mwc-button slot="primaryAction" dialogAction="close">
     This button is bluish!
   </mwc-button>
 </mwc-dialog>
@@ -193,10 +193,10 @@ npm install @material/mwc-dialog
     This is what happens when you set the stacked property on mwc-dialog.
     Notice that the primary action is now on top.
   </div>
-  <mwc-button slot="primaryAction" dialog-action="close">
+  <mwc-button slot="primaryAction" dialogAction="close">
     Primary
   </mwc-button>
-  <mwc-button slot="secondaryAction" dialog-action="close">
+  <mwc-button slot="secondaryAction" dialogAction="close">
     Secondary
   </mwc-button>
 </mwc-dialog>
@@ -223,8 +223,8 @@ npm install @material/mwc-dialog
 | `scrimClickAction`      | `string`  | _Default: 'close'_ – Action to be emitted with the `closing` and `closed` events when the dialog closes because the scrim was clicked (see [actions section](#actions)).
 | `escapeKeyAction`       | `string`  | _Default: 'close'_ – Action to be emitted with the `closing` and `closed` events when the dialog closes because the excape key was pressed (see [actions section](#actions)).
 | `defaultAction`         | `string`  | _Default: 'close'_ – Action to be emitted with the `closing` and `closed` events when `<mwc-dialog>.open` is toggled (see [actions section](#actions)).
-| `actionAttribute`       | `string`  | _Default: 'dialog-action'_ – Attribute to read in light dom of dialog for closing action value (see [actions section](#actions)).
-| `initialFocusAttribute` | `string`  | _Default: 'dialog-initial-focus'_ – Attribute to search for in light dom for initial focus on dialog open.
+| `actionAttribute`       | `string`  | _Default: 'dialogAction'_ – Attribute to read in light dom of dialog for closing action value (see [actions section](#actions)).
+| `initialFocusAttribute` | `string`  | _Default: 'dialogInitialFocus'_ – Attribute to search for in light dom for initial focus on dialog open.
 
 ### Methods
 
@@ -269,12 +269,12 @@ npm install @material/mwc-dialog
 ### Actions
 
 Actions close the dialog on click. You can define an action by slotting an
-element with the `dialog-action="..."` string attribute. The name of the
+element with the `dialogAction="..."` string attribute. The name of the
 attribute can be customized by the
 [`actionAttribute` property](#propertiesattributes). When a clickable element
-with the `dialog-action` attribute is clicked, `mwc-dialog` will get the value
+with the `dialogAction` attribute is clicked, `mwc-dialog` will get the value
 of the attribute and fire the `closing` and subsequent `closed` events with a
-detail of `{action: <clickedElement.getAttribute('dialog-action')>}`.
+detail of `{action: <clickedElement.getAttribute('dialogAction')>}`.
 
 For example:
 
@@ -285,36 +285,36 @@ For example:
   <div>
     <div>
       This is my content. Here is an actionable button:
-      <button dialog-action="contentButton">button 1</button>
+      <button dialogAction="contentButton">button 1</button>
     </div>
     <div>
       This is my content. Here is a diabled actionable button:
-      <button disabled dialog-action="disabledContentButton">button 2</button>
+      <button disabled dialogAction="disabledContentButton">button 2</button>
     </div>
   </div>
-  <mwc-button slot="primaryAction" dialog-action="ok">ok</mwc-button>
+  <mwc-button slot="primaryAction" dialogAction="ok">ok</mwc-button>
   <mwc-button slot="secondaryAction">cancel</mwc-button>
 </mwc-dialog>
 ```
 
 In this example we have 3 actionable elements:
 ```html
-<button dialog-action="contentButton">button 1</button>
+<button dialogAction="contentButton">button 1</button>
 ```
 
 ```html
-<button disabled dialog-action="disabledContentButton">button 2</button>
+<button disabled dialogAction="disabledContentButton">button 2</button>
 ```
 
 ```html
-<mwc-button slot="primaryAction" dialog-action="ok">ok</mwc-button>
+<mwc-button slot="primaryAction" dialogAction="ok">ok</mwc-button>
 ```
 
 * Clicking button 1 will close the dialog and fire a `closing` and subsequently
 a `closed` event with a detail of `{action: 'contentButton'}`.
 * Clicking button 2 will not close the dialog since it is disabled
 * Clicking the cancel `mwc-button` will not close the dialog as it does not have
-a `dialog-action` attribute set on it.
+a `dialogAction` attribute set on it.
 * Clicking the ok `mwc-button` will close the dialog and fire a `closing` and
 subsequently a `closed` event with a detail of `{action: 'ok'}`.
 * Setting `document.querySelector('mwc-dialog').open = false;` will close the
@@ -324,41 +324,41 @@ dialog and fire a `closing` and subsequently a `closed` event with a detail of
 
 ### Focus
 
-Initial focus can be set on an element with the `dialog-initial-focus` boolean
+Initial focus can be set on an element with the `dialogInitialFocus` boolean
 attribute (configurable via the
 [`initialFocusAttribute` property](#propertiesattributes)).
 
 For example:
 
-<img src="images/initial-focus.png" width="592px">
+<img src="images/initial-focus.png" width="597px">
 
 ```html
-<mwc-dialog title="Initial Focus">
+<mwc-dialog title="Initial Focus" open>
   <div>
-    In this example we set "dialog-initial-focus" on the mwc-textfield.
+    In this example we set "dialogInitialFocus" on the mwc-textfield.
     When this dialog opens, it is auto-focused.
   </div>
   <mwc-textfield
       label="i am auto-focused"
-      dialog-initial-focus>
+      dialogInitialFocus>
   </mwc-textfield>
-  <mwc-button slot="primaryAction" dialog-action="close">
+  <mwc-button slot="primaryAction" dialogAction="close">
     Primary
   </mwc-button>
-  <mwc-button slot="secondaryAction" dialog-action="close">
+  <mwc-button slot="secondaryAction" dialogAction="close">
     Secondary
   </mwc-button>
 </mwc-dialog>
 ```
 
-In this example we set `dialog-initial-focus` on the `mwc-textfield`, so
+In this example we set `dialogInitialFocus` on the `mwc-textfield`, so
 `mwc-textfield.focus()` will be called on the button. This attribute can also be
 set on anything in the light DOM of `mwc-dialog` including the primary and
 secondary actions. Only one element designated with this attribute will be
 focused.
 
 Calling `focus()` on the `mwc-dialog` itself will call `focus()` on any
-`dialog-initial-focus` element in the light DOM of `mwc-dialog`.
+`dialogInitialFocus` element in the light DOM of `mwc-dialog`.
 
 Calling `blur()` on the `mwc-dialog` will attempt to blur the
 [`activeElement`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentOrShadowRoot/activeElement)
