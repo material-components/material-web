@@ -129,9 +129,9 @@ npm install @material/mwc-dialog
 
 <script type="module">
   import '@material/mwc-dialog';
-  import '@material/mwc-button/mwc-button.js';
-  import '@material/mwc-radio/mwc-radio.js';
-  import '@material/mwc-formfield/mwc-formfield.js';
+  import '@material/mwc-button/mwc-button';
+  import '@material/mwc-radio/mwc-radio';
+  import '@material/mwc-formfield/mwc-formfield';
 </script>
 ```
 
@@ -160,19 +160,11 @@ npm install @material/mwc-dialog
 
 ### Styled
 
-<img src="images/styled.png" width="550px">
+<img src="images/styled.png" width="601px">
 
 ```html
 <style>
   .styled {
-    --mdc-theme-surface: #FFF;
-    --mdc-dialog-scrim-color: rgba(35, 47, 52, .32);
-    --mdc-dialog-title-ink-color: #232F34;
-    --mdc-dialog-content-ink-color: #232F34;
-    --mdc-dialog-scroll-divider-color: transparent;
-    --mdc-dialog-min-width: 500px;
-    --mdc-dialog-max-width: 700px;
-    --mdc-dialog-max-height: 350px;
     --mdc-dialog-shape-radius: 0px;
 
     /* color buttons */
@@ -181,23 +173,12 @@ npm install @material/mwc-dialog
 </style>
 
 <mwc-dialog title="Styled" class="styled" open>
-  <div>These are the current styles applied to this dialog</div>
-  <pre>
---mdc-theme-surface: #FFF;
---mdc-dialog-scrim-color: rgba(35, 47, 52, .32);
---mdc-dialog-title-ink-color: #232F34;
---mdc-dialog-content-ink-color: #232F34;
---mdc-dialog-scroll-divider-color: transparent;
---mdc-dialog-min-width: 500px;
---mdc-dialog-max-width: 700px;
---mdc-dialog-max-height: 350px;
---mdc-dialog-shape-radius: 0px;
-
-/* color buttons */
---mdc-theme-primary: #344955;
-  </pre>
+    <div>
+      In this dialog we have changed the button color and removed the border
+      radius.
+    </div>
   <mwc-button slot="primaryAction" dialog-action="close">
-    Too stylish for me!
+    This button is bluish!
   </mwc-button>
 </mwc-dialog>
 ```
