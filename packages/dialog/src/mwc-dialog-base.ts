@@ -88,9 +88,9 @@ export class DialogBase extends BaseElement {
   })
   open = false;
 
-  defaultAction = 'close';
-  actionAttribute = 'dialog-action';
-  initialFocusAttribute = 'dialog-initial-focus';
+  @property() defaultAction = 'close';
+  @property() actionAttribute = 'dialog-action';
+  @property() initialFocusAttribute = 'dialog-initial-focus';
 
   protected get primaryButton(): HTMLElement|null {
     const assignedNodes = (this.primarySlot as HTMLSlotElement).assignedNodes();
