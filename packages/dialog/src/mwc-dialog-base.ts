@@ -197,8 +197,7 @@ export class DialogBase extends BaseElement {
         role="alertdialog"
         aria-modal="true"
         aria-labelledby="my-dialog-title"
-        aria-describedby="my-dialog-content"
-        mdc>
+        aria-describedby="my-dialog-content">
       <div class="mdc-dialog__container">
         <div class="mdc-dialog__surface">
           ${title}
@@ -242,11 +241,15 @@ export class DialogBase extends BaseElement {
 
     const activeEl = this.shadowRoot.activeElement;
     if (activeEl) {
-      activeEl instanceof HTMLElement && activeEl.blur();
+      if (activeEl instanceof HTMLElement) {
+        activeEl.blur();
+      }
     } else {
       const root = this.getRootNode();
       const activeEl = root instanceof Document ? root.activeElement : null;
-      activeEl instanceof HTMLElement && activeEl.blur();
+      if (activeEl instanceof HTMLElement) {
+        activeEl.blur();
+      }
     }
   }
 

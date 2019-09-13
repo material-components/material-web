@@ -35,9 +35,6 @@ const markdownImageRegexp = /(\!\[.*?\]\()([^) ]+)(.*?\))/g;
 // Matches (markdown-compatible) HTML image syntax like `<img src="url">`
 const htmlImageRegexp = /(<img .*?src=['"])(.+?)(['"])/g;
 
-// Matches (markdown-compatible) HTML image syntax like `<img src="url">`
-const htmlVideoRegexp = /(<video .*?src=['"])(.+?)(['"])/g;
-
 function isUrl(str: string): boolean {
   try {
     new URL(str);
@@ -81,8 +78,7 @@ function main() {
           return prefix + newUrl + suffix;
         };
     const updated = markdown.replace(markdownImageRegexp, replacer)
-                        .replace(htmlImageRegexp, replacer)
-                        .replace(htmlVideoRegexp, replacer);
+                        .replace(htmlImageRegexp, replacer);
     fs.writeFileSync(fileName, updated, 'utf8');
   }
 }
