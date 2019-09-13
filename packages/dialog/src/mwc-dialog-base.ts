@@ -20,8 +20,11 @@ import 'wicg-inert';
 import {MDCDialogAdapter} from '@material/dialog/adapter.js';
 import {cssClasses} from '@material/dialog/constants.js';
 import MDCDialogFoundation from '@material/dialog/foundation.js';
-import {addHasRemoveClass, BaseElement, classMap, html, observer, property, query} from '@material/mwc-base/base-element.js';
+import {addHasRemoveClass, BaseElement, observer} from '@material/mwc-base/base-element.js';
 import {DocumentWithBlockingElements} from 'blocking-elements';
+import {html, property, query} from 'lit-element';
+import {classMap} from 'lit-html/directives/class-map';
+
 
 export {MDCDialogCloseEventDetail} from '@material/dialog/types';
 
