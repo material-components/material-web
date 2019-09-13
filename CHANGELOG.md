@@ -6,12 +6,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
-- Implemented mwc-dialog
-- mwc-button
-  - Added custom focus and blur functions that cause ripple
-- mwc-textfield
-  - Focus function now focuses the native input and activates the caret
-  - Blur appropriately blurs the input
+### Added
+
+- Implemented `mwc-dialog`
+
+### Changed
+
+- **BREAKING:** Added custom `.focus()` and `.blur()` functions to mwc-button
+  that cause the button to ripple as when tab focusing.
+- **BREAKING:** mwc-textfield's custom `.focus()` function will now call
+  `.focus()` on the native internal input causing the caret to appear instead of
+  just forcing focus styles to appear.
+- **BREAKING:** mwc-textfield's custom `.blur()` function will now call
+  `.blur()` on the native internal input instead of just forcing focus styles to
+  disapprear.
+- **BREAKING** `mwc-base/base-element` no longer exports any of the
+  `lit-element` or `lit-html` APIs (e.g. `LitElement`, `customElement`,
+  `classMap`). Users should import directly from the `lit-element` and
+  `lit-html` modules instead.
+
+### Fixed
+
+- `<mwc-drawer>` can now be used with Rollup (via version bump to pick up
+  [WICG/inert#135](https://github.com/WICG/inert/pull/135)).
 
 
 ## [0.8.0] - 2019-09-03

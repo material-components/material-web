@@ -14,10 +14,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {addHasRemoveClass, FormElement, html, HTMLElementWithRipple, observer, property, query} from '@material/mwc-base/form-element.js';
+import {addHasRemoveClass, FormElement, HTMLElementWithRipple, observer} from '@material/mwc-base/form-element.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 import {MDCRadioAdapter} from '@material/radio/adapter.js';
 import MDCRadioFoundation from '@material/radio/foundation.js';
+import {html, property, query} from 'lit-element';
 
 export class RadioBase extends FormElement {
   @query('.mdc-radio') protected mdcRoot!: HTMLElementWithRipple;

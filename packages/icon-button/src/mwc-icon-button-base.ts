@@ -14,8 +14,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {html, LitElement, property} from '@material/mwc-base/base-element';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
+import {html, LitElement, property} from 'lit-element';
 
 export class IconButtonBase extends LitElement {
   @property({type: Boolean, reflect: true}) disabled = false;
