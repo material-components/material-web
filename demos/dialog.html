@@ -19,8 +19,9 @@ limitations under the License.
 <head>
   <title>dialog demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
   <script type="module" src="../node_modules/@material/mwc-button/mwc-button.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-textfield/mwc-textfield.js"></script>
   <script type="module" src="../node_modules/@material/mwc-dialog/mwc-dialog.js"></script>
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
   <link rel="stylesheet" href="demo-component.css">
@@ -29,11 +30,6 @@ limitations under the License.
     body {
       min-height: calc(100vh - 4em);
     }
-
-    body {
-      --mwc-dialog-maxHeight: calc(100vh - 200px);
-    }
-
   </style>
 </head>
 <body class="unresolved">
@@ -45,65 +41,143 @@ limitations under the License.
   <main>
     <div class="demo-group">
 
-    <mwc-button id="button" raised label="Dialog"></mwc-button>
-    <mwc-dialog id="dialog" headerLabel="Dialog Title" acceptLabel="OK" declineLabel="Cancel">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Enim nec dui nunc mattis enim ut tellus elementum. Bibendum enim facilisis gravida neque convallis a cras semper. Posuere ac ut consequat semper viverra nam libero. Arcu ac tortor dignissim convallis aenean et tortor at risus. Leo duis ut diam quam nulla. Quis hendrerit dolor magna eget est lorem. Aenean euismod elementum nisi quis eleifend. Cursus vitae congue mauris rhoncus aenean vel elit scelerisque mauris. Nibh sit amet commodo nulla facilisi nullam vehicula. Massa tempor nec feugiat nisl pretium.</p>
+    <mwc-button data-num="1" raised>Basic</mwc-button>
+    <mwc-dialog id="dialog1" title="Dialog header">
+      Dialog body text
+      <mwc-button slot="primaryAction" dialogAction="ok">Action 2</mwc-button>
+      <mwc-button slot="secondaryAction" dialogAction="cancel">Action 1</mwc-button>
     </mwc-dialog>
-    <script type="module">
-      button.addEventListener('click', (e) => {
-        dialog.opened = !dialog.opened;
-      });
 
-      dialog.addEventListener('MDCDialog:accept', (e) => {
-        console.log(e.type);
-      });
+    <mwc-button data-num="2" raised>Actions</mwc-button>
+    <mwc-dialog id="dialog2" title="Actions">
+      <p>
+        By setting the dialogAction="my-action" attribute on any element projected into
+        mwc-dialog, you can close the dialog by clicking on that element. The
+        dialog will then fire a non-bubbling "closing" event and a non-bubbling
+        "closed" event with an event detail of {action: "my-action"}
+      </p>
+      <mwc-button slot="primaryAction" dialogAction="customAction">This has action</mwc-button>
+      <mwc-button slot="secondaryAction">this does not</mwc-button>
+    </mwc-dialog>
 
-      dialog.addEventListener('MDCDialog:cancel', (e) => {
-        console.log(e.type);
-      });
-    </script>
+    <mwc-button data-num="3" raised>Scrollable</mwc-button>
+    <mwc-dialog id="dialog3" title="My Title">
+      <p>
+        Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll.
+      </p>
+      <mwc-button slot="primaryAction" dialogAction="close">Close this!</mwc-button>
+    </mwc-dialog>
 
-  <mwc-button id="scrollingButton" raised label="Scrolling Dialog"></mwc-button>
-  <mwc-dialog id="scrollingDialog" scrollable headerLabel="Scrolling Dialog Title" acceptLabel="OK" declineLabel="Cancel">
-      <span slot="header">More header stuff</span>
-      <span slot="footer">More footer stuff&nbsp;&nbsp;</span>
-      <mwc-button slot="footer" compact ripple label="Button" icon="mail"></mwc-button>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet luctus venenatis lectus magna fringilla urna porttitor. Risus quis varius quam quisque id diam vel quam elementum. Faucibus vitae aliquet nec ullamcorper sit amet risus. Laoreet sit amet cursus sit amet dictum sit. Non enim praesent elementum facilisis leo vel. Tincidunt nunc pulvinar sapien et ligula ullamcorper. Vel risus commodo viverra maecenas accumsan. Arcu felis bibendum ut tristique et egestas quis. Id leo in vitae turpis massa sed elementum tempus. Nunc congue nisi vitae suscipit. Vivamus at augue eget arcu dictum varius duis. Turpis egestas sed tempus urna et pharetra pharetra. Vivamus arcu felis bibendum ut tristique et egestas quis ipsum. Egestas purus viverra accumsan in nisl nisi. Arcu cursus vitae congue mauris rhoncus aenean. Sed turpis tincidunt id aliquet risus feugiat in ante metus. Faucibus a pellentesque sit amet porttitor. Mus mauris vitae ultricies leo.</p>
+    <mwc-button data-num="4" raised>Hide Actions</mwc-button>
+    <mwc-dialog id="dialog4" title="Hide Actions">
+      <p>
+        If you don't have actions, you may want to set the "hideActions" property.
+        This property will remove extra whitespace at the bottom of this dialog.
+        This button will toggle that whitespace:
+      </p>
+      <mwc-button raised id="toggleActions">Toggle hideActions</mwc-button>
+      <div>
+        mwc-dialog.hideActions is currently:
+        <span id="hideActionVal">
+          false
+        </span>
+      </div>
+    </mwc-dialog>
 
-  <p>Neque viverra justo nec ultrices dui. Vitae proin sagittis nisl rhoncus mattis. Varius morbi enim nunc faucibus a pellentesque sit. Netus et malesuada fames ac turpis egestas sed tempus urna. Volutpat consequat mauris nunc congue nisi vitae. Odio ut sem nulla pharetra. Ultricies mi eget mauris pharetra. Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque sit. Suscipit tellus mauris a diam maecenas sed enim ut. Facilisis sed odio morbi quis commodo odio aenean sed. Odio morbi quis commodo odio aenean sed adipiscing diam donec. Eget mi proin sed libero enim sed. Id aliquet risus feugiat in ante. Donec et odio pellentesque diam volutpat commodo sed egestas.</p>
+    <style>
+      .styled {
+        --mdc-theme-surface: #FFF;
+        --mdc-dialog-scrim-color: rgba(35, 47, 52, .32);
+        --mdc-dialog-title-ink-color: #232F34;
+        --mdc-dialog-content-ink-color: #232F34;
+        --mdc-dialog-scroll-divider-color: transparent;
+        --mdc-dialog-min-width: 500px;
+        --mdc-dialog-max-width: 700px;
+        --mdc-dialog-max-height: 350px;
+        --mdc-dialog-shape-radius: 0px;
 
-  <p>Tempor orci eu lobortis elementum. Sit amet consectetur adipiscing elit duis tristique sollicitudin nibh. Vitae semper quis lectus nulla at volutpat diam ut. Dignissim suspendisse in est ante in. Aliquam ultrices sagittis orci a scelerisque purus semper eget. Pretium aenean pharetra magna ac placerat vestibulum lectus mauris. Neque volutpat ac tincidunt vitae semper quis lectus nulla. Tempus quam pellentesque nec nam aliquam. Egestas pretium aenean pharetra magna ac. Venenatis lectus magna fringilla urna porttitor rhoncus. Morbi enim nunc faucibus a pellentesque sit. Purus gravida quis blandit turpis cursus in hac habitasse platea. Urna porttitor rhoncus dolor purus non enim. Vulputate enim nulla aliquet porttitor lacus luctus. Enim nulla aliquet porttitor lacus luctus. Sit amet facilisis magna etiam tempor orci eu. Neque aliquam vestibulum morbi blandit cursus risus. Amet dictum sit amet justo donec enim diam.</p>
+        /* color buttons */
+        --mdc-theme-primary: #344955;
+      }
+    </style>
 
-  <p>Amet luctus venenatis lectus magna fringilla urna porttitor. Facilisis gravida neque convallis a cras semper. Leo urna molestie at elementum eu. Id donec ultrices tincidunt arcu non. Sagittis eu volutpat odio facilisis mauris sit amet massa. Tristique senectus et netus et malesuada fames ac turpis. Sit amet facilisis magna etiam tempor orci eu lobortis. Nullam non nisi est sit amet facilisis magna etiam. Neque ornare aenean euismod elementum nisi quis eleifend quam adipiscing. Eu augue ut lectus arcu bibendum at varius vel. Eu nisl nunc mi ipsum. Urna nunc id cursus metus aliquam. Id porta nibh venenatis cras. Tortor aliquam nulla facilisi cras. Fringilla ut morbi tincidunt augue interdum velit euismod in pellentesque.</p>
+    <mwc-button data-num="5" raised>Styled</mwc-button>
+    <mwc-dialog id="dialog5" title="Styled" class="styled">
+        <div>These are the current styles applied to this dialog</div>
+        <pre>
+--mdc-theme-surface: #FFF;
+--mdc-dialog-scrim-color: rgba(35, 47, 52, .32);
+--mdc-dialog-title-ink-color: #232F34;
+--mdc-dialog-content-ink-color: #232F34;
+--mdc-dialog-scroll-divider-color: transparent;
+--mdc-dialog-min-width: 500px;
+--mdc-dialog-max-width: 700px;
+--mdc-dialog-max-height: 350px;
+--mdc-dialog-shape-radius: 0px;
 
-  <p>Ornare lectus sit amet est placerat in egestas. Maecenas volutpat blandit aliquam etiam erat velit scelerisque in dictum. Adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus. Scelerisque eu ultrices vitae auctor eu augue ut lectus. Mollis aliquam ut porttitor leo a diam sollicitudin tempor. Phasellus faucibus scelerisque eleifend donec pretium vulputate sapien nec sagittis. Scelerisque viverra mauris in aliquam sem fringilla ut morbi. Ipsum dolor sit amet consectetur adipiscing elit. Faucibus scelerisque eleifend donec pretium vulputate sapien nec. Arcu cursus vitae congue mauris. In tellus integer feugiat scelerisque varius morbi enim nunc. Condimentum mattis pellentesque id nibh tortor id aliquet. Urna et pharetra pharetra massa massa ultricies mi quis. Sollicitudin nibh sit amet commodo nulla facilisi. Magna sit amet purus gravida quis blandit turpis cursus. Eros in cursus turpis massa. Ut tellus elementum sagittis vitae.</p>
+/* color buttons */
+--mdc-theme-primary: #344955;
+        </pre>
+      <mwc-button slot="primaryAction" dialogAction="close">
+        Too stylish for me!
+      </mwc-button>
+    </mwc-dialog>
 
-  <p>Scelerisque eleifend donec pretium vulputate sapien nec sagittis aliquam malesuada. Aliquet nec ullamcorper sit amet risus nullam eget felis eget. Tortor posuere ac ut consequat semper viverra. Eu non diam phasellus vestibulum lorem. Parturient montes nascetur ridiculus mus. Laoreet non curabitur gravida arcu. Tincidunt arcu non sodales neque. In nulla posuere sollicitudin aliquam ultrices sagittis. Elit sed vulputate mi sit amet mauris. Auctor augue mauris augue neque.</p>
+    <mwc-button data-num="6" raised>Stacked</mwc-button>
+    <mwc-dialog id="dialog6" title="Stacked" stacked>
+      <div>
+        This is what happens when you set the stacked property on mwc-dialog.
+        Notice that the primary action is now on top.
+      </div>
+      <mwc-button slot="primaryAction" dialogAction="close">
+        Primary
+      </mwc-button>
+      <mwc-button slot="secondaryAction" dialogAction="close">
+        Secondary
+      </mwc-button>
+    </mwc-dialog>
 
-  <p>Id volutpat lacus laoreet non curabitur gravida arcu ac. Eget arcu dictum varius duis. Luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor. Ante in nibh mauris cursus mattis. Mauris vitae ultricies leo integer. Sit amet porttitor eget dolor morbi non. Fringilla ut morbi tincidunt augue interdum velit euismod in. Nulla at volutpat diam ut venenatis tellus in metus vulputate. Sagittis orci a scelerisque purus. Vulputate eu scelerisque felis imperdiet. Arcu vitae elementum curabitur vitae nunc sed velit dignissim. Ipsum dolor sit amet consectetur adipiscing elit. Est ultricies integer quis auctor elit sed vulputate. Nunc scelerisque viverra mauris in aliquam. Volutpat diam ut venenatis tellus in metus vulputate eu. Auctor urna nunc id cursus metus aliquam eleifend. Pharetra sit amet aliquam id diam maecenas ultricies mi eget. Orci nulla pellentesque dignissim enim sit amet venenatis urna. Sed viverra tellus in hac.</p>
-
-  <p>Sit amet consectetur adipiscing elit duis tristique sollicitudin nibh. Eget est lorem ipsum dolor sit amet consectetur adipiscing elit. Vitae elementum curabitur vitae nunc sed. Consectetur a erat nam at lectus urna duis convallis convallis. Enim blandit volutpat maecenas volutpat blandit aliquam etiam. Est lorem ipsum dolor sit amet consectetur adipiscing elit. Diam phasellus vestibulum lorem sed risus ultricies. Nibh nisl condimentum id venenatis a condimentum vitae sapien pellentesque. Suspendisse faucibus interdum posuere lorem ipsum dolor sit. Lacus vestibulum sed arcu non odio euismod lacinia. Nibh cras pulvinar mattis nunc sed blandit. Ultrices sagittis orci a scelerisque purus semper eget. Id velit ut tortor pretium viverra suspendisse potenti nullam ac. Quis ipsum suspendisse ultrices gravida dictum fusce ut placerat orci.</p>
-
-  </mwc-dialog>
-
-  </div>
-  <script type="module">
-    scrollingButton.addEventListener('click', (e) => {
-      scrollingDialog.opened = !scrollingDialog.opened;
-    });
-
-    scrollingDialog.addEventListener('MDCDialog:accept', (e) => {
-      console.log(e.type);
-    });
-
-    scrollingDialog.addEventListener('MDCDialog:cancel', (e) => {
-      console.log(e.type);
-    });
-  </script>
-  </main>
+    <mwc-button data-num="7" raised>Initial Focus</mwc-button>
+    <mwc-dialog id="dialog7" title="Initial Focus">
+      <div>
+        In this example we set "dialogInitialFocus" on the mwc-textfield.
+        When this dialog opens, it is auto-focused.
+      </div>
+      <mwc-textfield
+          label="i am auto-focused"
+          dialogInitialFocus>
+      </mwc-textfield>
+      <mwc-button slot="primaryAction" dialogAction="close">
+        Primary
+      </mwc-button>
+      <mwc-button slot="secondaryAction" dialogAction="close">
+        Secondary
+      </mwc-button>
+    </mwc-dialog>
 
   <script>
     addEventListener('load', () => document.body.classList.remove('unresolved'));
+
+    const buttons = document.body.querySelectorAll('mwc-button[data-num]');
+
+    for (let i = 0; i < buttons.length; i++) {
+      const button = buttons[i];
+      const buttonNum = button.dataset.num;
+
+      button.addEventListener('click', () => {
+        const dialog = document.body.querySelector('#dialog' + buttonNum);
+        dialog.open = true;
+      });
+    }
+
+    toggleActions.onclick = () => {
+      const dialog = document.body.querySelector('#dialog4');
+      const hideActionSpan = document.body.querySelector('#hideActionVal');
+
+      const hideAction = !dialog.hideActions;
+      dialog.hideActions = hideAction;
+      hideActionSpan.innerText = hideAction;
+    }
   </script>
 </body>
 </html>

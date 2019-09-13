@@ -15,6 +15,9 @@
     "lit-element": "^2.2.1",
     "tslib": "^1.10.0"
   },
+  "devDependencies": {
+    "@material/ripple": "^3.0.0"
+  },
   "publishConfig": {
     "access": "public"
   }

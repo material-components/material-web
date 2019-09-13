@@ -1,0 +1,170 @@
+/**
+@license
+Copyright 2019 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+@import '@material/dialog/mdc-dialog.scss';
+@import '@material/feature-targeting/functions';
+@import '@material/feature-targeting/mixins';
+
+#actions:not(.mdc-dialog__actions) {
+  display: none;
+}
+
+@mixin mwc-dialog-core-styles($query: mdc-feature-all()) {
+  $feat-animation: mdc-feature-create-target($query, animation);
+  $feat-structure: mdc-feature-create-target($query, structure);
+
+  @media (min-width: $mdc-dialog-max-width) {
+    .mdc-dialog .mdc-dialog__surface {
+      @include mdc-theme-prop(max-width, (
+        varname: --mdc-dialog-max-width,
+        fallback: $mdc-dialog-max-width
+      ));
+    }
+  }
+
+  .mdc-dialog {
+    @include mwc-dialog-scrim-color($mdc-dialog-scrim-color, $query: $query);
+    @include mwc-dialog-title-ink-color($mdc-dialog-title-ink-color, $query: $query);
+    @include mwc-dialog-content-ink-color($mdc-dialog-content-ink-color, $query: $query);
+    @include mwc-dialog-scroll-divider-color($mdc-dialog-scroll-divider-color, $query: $query);
+    @include mwc-dialog-min-width($mdc-dialog-min-width, $query: $query);
+
+    .mdc-dialog__surface {
+      max-height: var(--mdc-dialog-max-height, calc(100% - 32px));
+
+      @include mdc-theme-prop(border-radius, (
+        varname: --mdc-dialog-shape-radius,
+        fallback: mdc-shape-prop-value(medium)
+      ));
+    }
+  }
+
+  #actions {
+    ::slotted(*) {
+      @include mdc-feature-targets($feat-structure) {
+        @include mdc-rtl-reflexive-box(margin, left, 8px);
+      }
+
+      @include mdc-feature-targets($feat-structure) {
+        max-width: 100%; // Prevent long text from overflowing parent element in IE 11
+        /* @noflip */
+        text-align: right;
+
+        @include mdc-rtl(".mdc-dialog") {
+          /* @noflip */
+          text-align: left;
+        }
+      }
+    }
+
+    .mdc-dialog--stacked &:not(.reversed) *:not(:first-child)::slotted(*) {
+      @include mdc-feature-targets($feat-structure) {
+        margin-top: 12px;
+      }
+    }
+
+    .mdc-dialog--stacked &.reversed {
+      flex-direction: column-reverse;
+
+      *:not(:last-child)::slotted(*) {
+        @include mdc-feature-targets($feat-structure) {
+          margin-top: 12px;
+        }
+      }
+     }
+  }
+}
+
+@mixin mwc-dialog-scrim-color($color, $opacity: $mdc-dialog-scrim-opacity, $query: mdc-feature-all()) {
+  $feat-color: mdc-feature-create-target($query, color);
+
+  .mdc-dialog__scrim {
+    @include mdc-feature-targets($feat-color) {
+      @include mdc-theme-prop(background-color, (
+        varname: --mdc-dialog-scrim-color,
+        fallback: rgba(mdc-theme-prop-value($color), $opacity)
+      ));
+    }
+  }
+}
+
+@mixin mwc-dialog-title-ink-color($color, $opacity: $mdc-dialog-title-ink-opacity, $query: mdc-feature-all()) {
+  $feat-color: mdc-feature-create-target($query, color);
+
+  .mdc-dialog__title {
+    @include mdc-feature-targets($feat-color) {
+      @include mdc-theme-prop(color, (
+        varname: --mdc-dialog-title-ink-color,
+        fallback: rgba(mdc-theme-prop-value($color), $opacity)
+      ));
+    }
+  }
+}
+
+@mixin mwc-dialog-content-ink-color($color, $opacity: $mdc-dialog-content-ink-opacity, $query: mdc-feature-all()) {
+  $feat-color: mdc-feature-create-target($query, color);
+
+  .mdc-dialog__content {
+    @include mdc-feature-targets($feat-color) {
+      @include mdc-theme-prop(color, (
+        varname: --mdc-dialog-content-ink-color,
+        fallback: rgba(mdc-theme-prop-value($color), $opacity)
+      ));
+    }
+  }
+}
+
+@mixin mwc-dialog-scroll-divider-color(
+  $color,
+  $opacity: $mdc-dialog-scroll-divider-opacity,
+  $query: mdc-feature-all()
+) {
+  $feat-color: mdc-feature-create-target($query, color);
+
+  &.mdc-dialog--scrollable .mdc-dialog__title,
+  &.mdc-dialog--scrollable .mdc-dialog__actions {
+    @include mdc-feature-targets($feat-color) {
+      @include mdc-theme-prop(border-color, (
+        varname: --mdc-dialog-scroll-divider-color,
+        fallback: rgba(mdc-theme-prop-value($color), $opacity)
+      ));
+    }
+  }
+}
+
+@mixin mwc-dialog-shape-radius($radius, $rtl-reflexive: false, $query: mdc-feature-all()) {
+  $feat-structure: mdc-feature-create-target($query, structure);
+
+  .mdc-dialog__surface {
+    @include mdc-shape-radius($radius, $rtl-reflexive, $query: $query);
+  }
+}
+
+@mixin mwc-dialog-min-width($min-width, $query: mdc-feature-all()) {
+  $feat-structure: mdc-feature-create-target($query, structure);
+
+  .mdc-dialog__surface {
+    @include mdc-feature-targets($feat-structure) {
+      @include mdc-theme-prop(min-width, (
+        varname: --mdc-dialog-min-width,
+        fallback: $min-width
+      ));
+    }
+  }
+}
+
+@include mwc-dialog-core-styles;
