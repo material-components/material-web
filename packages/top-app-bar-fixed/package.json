@@ -19,6 +19,7 @@
     "@material/mwc-base": "^0.8.0",
     "@material/mwc-top-app-bar": "^0.8.0",
     "@material/top-app-bar": "^3.0.0",
+    "lit-element": "^2.2.1",
     "tslib": "^1.10.0"
   },
   "publishConfig": {

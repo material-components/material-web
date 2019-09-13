@@ -14,10 +14,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, query} from '@material/mwc-base/form-element.js';
+import {BaseElement} from '@material/mwc-base/form-element.js';
 import {MDCNotchedOutlineAdapter} from '@material/notched-outline/adapter.js';
 import {MDCNotchedOutlineFoundation} from '@material/notched-outline/foundation.js';
-
+import {html, property, query} from 'lit-element';
 
 export class NotchedOutlineBase extends BaseElement {
   @query('.mdc-notched-outline') protected mdcRoot!: HTMLElement;

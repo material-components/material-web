@@ -19,6 +19,8 @@
     "@material/mwc-base": "^0.8.0",
     "@material/mwc-icon": "^0.8.0",
     "@material/mwc-ripple": "^0.8.0",
+    "lit-element": "^2.2.1",
+    "lit-html": "^1.1.2",
     "tslib": "^1.10.0"
   },
   "publishConfig": {

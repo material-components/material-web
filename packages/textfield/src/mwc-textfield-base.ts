@@ -18,13 +18,15 @@ import '@material/mwc-notched-outline';
 
 import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
 import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
-import {addHasRemoveClass, classMap, FormElement, html, property, PropertyValues, query, TemplateResult} from '@material/mwc-base/form-element.js';
+import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element.js';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter.js';
 import {MDCTextFieldCharacterCounterFoundation} from '@material/textfield/character-counter/foundation.js';
 import MDCTextFieldFoundation from '@material/textfield/foundation.js';
+import {html, property, PropertyValues, query, TemplateResult} from 'lit-element';
+import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined.js';
 
 import {characterCounter, CharacterCounter} from './character-counter/mwc-character-counter-directive.js';
