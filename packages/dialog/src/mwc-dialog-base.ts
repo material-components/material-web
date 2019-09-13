@@ -41,8 +41,7 @@ export class DialogBase extends BaseElement {
   // emitDecoratorMetadata is enabled, the HTMLSlotElement constructor will
   // be emitted into the runtime, which will cause an "HTMLSlotElement is
   // undefined" error in browsers that don't define it (e.g. Edge and IE11).
-  @query('slot[name="secondaryAction"]')
-  protected secondarySlot!: HTMLElement;
+  @query('slot[name="secondaryAction"]') protected secondarySlot!: HTMLElement;
 
   @query('.mdc-dialog__content') protected contentElement!: HTMLDivElement;
 
