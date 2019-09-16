@@ -240,10 +240,12 @@ suite('mwc-textfield:', () => {
       element = fixt.root.querySelector('mwc-textfield')!;
     });
 
-    test('sets correct selection', () => {
+    test('sets correct selection', async () => {
       const input = element.shadowRoot!.querySelector('input')!;
 
       element.value = 'one two three';
+      await element.updateComplete;
+
       element.setSelectionRange(4, 6);
 
       assert.equal(input.selectionStart, 4);
