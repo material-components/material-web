@@ -221,7 +221,7 @@ suite('mwc-textfield:', () => {
       element.select();
 
       assert.equal(input.selectionStart, 0);
-      assert.equal(input.selectionEnd, 5);
+      assert.equal(input.selectionEnd, 6);
     });
 
     teardown(() => {
