@@ -214,10 +214,14 @@ suite('mwc-textfield:', () => {
     });
 
     test('selects the input text', () => {
-      const input = element.shadowRoot!.querySelector('input');
+      const input = element.shadowRoot!.querySelector('input')!;
+
+      input.value = 'foobar';
 
       element.select();
-      assert.equal(element.shadowRoot!.activeElement, input);
+
+      assert.equal(input.selectionStart, 0);
+      assert.equal(input.selectionEnd, 5);
     });
 
     teardown(() => {
