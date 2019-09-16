@@ -226,4 +226,32 @@ suite('mwc-textfield:', () => {
       }
     });
   });
+
+  suite('setSelectionRange', () => {
+    let element: TextField;
+
+    setup(async () => {
+      fixt = await fixture(basic);
+
+      element = fixt.root.querySelector('mwc-textfield')!;
+    });
+
+    test('sets correct selection', () => {
+      const input = element.shadowRoot!.querySelector('input')!;
+
+      element.value = 'one two three';
+      element.setSelectionRange(4, 6);
+
+      assert.equal(input.selectionStart, 4);
+      assert.equal(input.selectionEnd, 6);
+      assert.equal(element.selectionStart, 4);
+      assert.equal(element.selectionEnd, 6);
+    });
+
+    teardown(() => {
+      if (fixt) {
+        fixt.remove();
+      }
+    });
+  });
 });
