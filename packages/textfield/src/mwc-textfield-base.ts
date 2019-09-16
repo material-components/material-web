@@ -186,6 +186,10 @@ export abstract class TextFieldBase extends FormElement {
     this.formElement.blur();
   }
 
+  select() {
+    this.formElement.select();
+  }
+
   render() {
     const classes = {
       'mdc-text-field--disabled': this.disabled,

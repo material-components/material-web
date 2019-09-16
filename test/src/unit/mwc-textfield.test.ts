@@ -203,4 +203,27 @@ suite('mwc-textfield:', () => {
       }
     });
   });
+
+  suite('select', () => {
+    let element: TextField;
+
+    setup(async () => {
+      fixt = await fixture(basic);
+
+      element = fixt.root.querySelector('mwc-textfield')!;
+    });
+
+    test('selects the input text', () => {
+      const input = element.shadowRoot!.querySelector('input');
+
+      element.select();
+      assert.equal(element.shadowRoot!.activeElement, input);
+    });
+
+    teardown(() => {
+      if (fixt) {
+        fixt.remove();
+      }
+    });
+  });
 });
