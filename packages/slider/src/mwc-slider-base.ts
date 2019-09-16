@@ -176,14 +176,9 @@ export class SliderBase extends FormElement {
           this.trackElement.style.setProperty(propertyName, value),
       setMarkerValue: (value: number) => this.pinMarker.innerText =
           value.toString(),
-      appendTrackMarkers: (numMarkers: number) => this._numMarkers = numMarkers,
-      removeTrackMarkers: () => {},
-      setLastTrackMarkersStyleProperty: (propertyName: string, value: string) =>
-          // We remove and append new nodes, thus, the last track marker must be
-          // dynamically found.
-      (this.mdcRoot.querySelector('.mdc-slider__track-marker:last-child') as
-       HTMLElement)
-          .style.setProperty(propertyName, value),
+      setTrackMarkers: (_step: number, _max: number, _min: number) => {
+        // TODO(aomarks) What are we supposed to do here?
+      },
       isRTL: () => getComputedStyle(this.mdcRoot).direction === 'rtl',
     };
   }
