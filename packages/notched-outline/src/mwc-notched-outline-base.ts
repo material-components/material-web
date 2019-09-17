@@ -57,11 +57,7 @@ export class NotchedOutlineBase extends BaseElement {
   }
 
   render() {
-    if (this.open !== this.lastOpen) {
-      // workaround for possible bug in foundation causing recalculation
-      this.lastOpen = this.open;
-      this.openOrClose(this.open, this.width);
-    }
+    this.openOrClose(this.open, this.width);
 
     return html`
       <div class="mdc-notched-outline">

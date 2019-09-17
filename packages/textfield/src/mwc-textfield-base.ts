@@ -178,6 +178,14 @@ export abstract class TextFieldBase extends FormElement {
     return this.formElement.selectionEnd;
   }
 
+  protected get shouldRenderHelperText(): boolean {
+    return !!this.helper || !!this.validationMessage || this.charCounterVisible;
+  }
+
+  protected get charCounterVisible(): boolean {
+    return this.charCounter && this.maxLength !== -1;
+  }
+
   validityTransform:
       ((value: string,
         nativeValidity: ValidityState) => Partial<ValidityState>)|null = null;
@@ -221,19 +229,16 @@ export abstract class TextFieldBase extends FormElement {
         ${this.iconTrailing ? this.renderIcon(this.iconTrailing) : ''}
         ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
       </div>
-      ${
-        (this.helper || this.validationMessage || this.charCounter) ?
-            this.renderHelperText() :
-            ''}
+      ${this.renderHelperText()}
     `;
   }
 
   updated(changedProperties: PropertyValues) {
-    const charCounter =
-        changedProperties.get('charCounter') as boolean | undefined;
+    const maxLength = changedProperties.get('mexLength') as number | undefined;
 
-    // update foundation only when charCounter goes from false to true
-    if (!charCounter && this.charCounter) {
+    const maxLengthChanged = maxLength === -1 && this.maxLength !== -1;
+    // update foundation only when maxLength goes from undefined to true
+    if (maxLengthChanged) {
       this.createFoundation();
     }
   }
@@ -267,7 +272,10 @@ export abstract class TextFieldBase extends FormElement {
     let labelTemplate: TemplateResult|string = '';
     if (this.label) {
       labelTemplate = html`
-        <label .floatingLabelFoundation=${floatingLabel()} for="text-field">
+        <label
+            .floatingLabelFoundation=${floatingLabel(this.label)}
+            @labelchange=${this.onLabelChange}
+            for="text-field">
           ${this.label}
         </label>
       `;
@@ -285,7 +293,9 @@ export abstract class TextFieldBase extends FormElement {
     let labelTemplate: TemplateResult|string = '';
     if (this.label && !this.fullWidth) {
       labelTemplate = html`
-      <label .floatingLabelFoundation=${floatingLabel()} for="text-field">
+      <label
+          .floatingLabelFoundation=${floatingLabel(this.label)}
+          for="text-field">
         ${this.label}
       </label>`;
     }
@@ -303,13 +313,19 @@ export abstract class TextFieldBase extends FormElement {
       'mdc-text-field-helper-text--validation-msg': showValidationMessage,
     };
 
-    let charCounterTemplate: TemplateResult|string = '';
-    if (this.charCounter) {
-      charCounterTemplate = html`
-        <div .charCounterFoundation=${characterCounter()}></div>`;
-    }
+    const rootClasses = {hidden: !this.shouldRenderHelperText};
+
+    const counterClasses = {
+      hidden: this.charCounterVisible,
+    };
+
+    const charCounterTemplate: TemplateResult|string = html`
+      <div
+          class="${classMap(counterClasses)}"
+          .charCounterFoundation=${characterCounter()}>
+      </div>`;
     return html`
-      <div class="mdc-text-field-helper-line">
+      <div class="mdc-text-field-helper-line ${classMap(rootClasses)}">
         <div class="mdc-text-field-helper-text ${classMap(classes)}">
           ${showValidationMessage ? this.validationMessage : this.helper}
         </div>
@@ -376,7 +392,7 @@ export abstract class TextFieldBase extends FormElement {
       this.mdcFoundation.destroy();
     }
     this.mdcFoundation = new this.mdcFoundationClass(this.createAdapter(), {
-      characterCounter: this.charCounterElement ?
+      characterCounter: this.maxLength !== -1 ?
           this.charCounterElement.charCounterFoundation :
           undefined
     });
@@ -486,11 +502,29 @@ export abstract class TextFieldBase extends FormElement {
       hasOutline: () => Boolean(this.outlineElement),
       notchOutline: (labelWidth) => {
         const outlineElement = this.outlineElement;
-        if (outlineElement) {
+        if (outlineElement && !this.outlineOpen) {
           this.outlineWidth = labelWidth;
           this.outlineOpen = true;
         }
       }
     };
+  }
+
+  protected async onLabelChange() {
+    if (this.label) {
+      await this.layout();
+    }
+  }
+
+  async layout() {
+    await this.updateComplete;
+
+    if (this.labelElement && this.outlineElement) {
+      // sometimes notchOutline in adapter is called before label is rendered.
+      const labelWidth = this.labelElement.floatingLabelFoundation.getWidth();
+      if (this.outlineOpen) {
+        this.outlineWidth = labelWidth;
+      }
+    }
   }
 }

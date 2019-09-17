@@ -19,6 +19,7 @@ import {cssClasses} from '@material/textfield/constants';
 import {html} from 'lit-html';
 
 import {fixture, TestFixture} from '../util/helpers'
+import { FloatingLabel } from '@material/mwc-floating-label';
 
 
 const basic = html`
@@ -38,6 +39,20 @@ const reqInitialVal = html`
       label="I am required"
       required
       validateOnInitialRender>
+  </mwc-textfield>
+`;
+
+const makeOutlined = (isHidden: boolean) => html`
+  <style>
+    .hidden {
+      display: none;
+    }
+  </style>
+  <mwc-textfield
+      outlined
+      label="label"
+      class="${isHidden ? 'hidden' : ''}"
+      value="some value to notch label">
   </mwc-textfield>
 `;
 
@@ -204,6 +219,7 @@ suite('mwc-textfield:', () => {
     });
   });
 
+
   suite('select', () => {
     let element: TextField;
 
@@ -252,6 +268,69 @@ suite('mwc-textfield:', () => {
       assert.equal(input.selectionEnd, 6);
       assert.equal(element.selectionStart, 4);
       assert.equal(element.selectionEnd, 6);
+    });
+  });
+
+  suite('notch', () => {
+    let fixt: TestFixture;
+    test('notch is correct size', async () => {
+      fixt = await fixture(makeOutlined(true));
+      const element = fixt.root.querySelector('mwc-textfield')!;
+
+      const notchedOutline = element.shadowRoot!.querySelector('mwc-notched-outline')!;
+      const floatingLabel = element.shadowRoot!.querySelector('label') as FloatingLabel;
+
+      await element.requestUpdate();
+
+      let outlineWidth = notchedOutline.width;
+      assert.isTrue(notchedOutline.open);
+
+      assert.strictEqual(outlineWidth, 0);
+
+      element.classList.remove('hidden');
+      await element.requestUpdate();
+
+      outlineWidth = notchedOutline.width;
+      let labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
+      assert.strictEqual(outlineWidth, 0);
+      assert.isTrue(labelWidth > 0);
+
+      await element.layout();
+      await element.updateComplete;
+
+      outlineWidth = notchedOutline.width;
+      labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
+      assert.isTrue(outlineWidth >= labelWidth);
+
+      fixt.remove();
+    });
+
+    test('notch changes size with label change', async () => {
+      fixt = await fixture(makeOutlined(false));
+      const element = fixt.root.querySelector('mwc-textfield')!;
+
+      const notchedOutline = element.shadowRoot!.querySelector('mwc-notched-outline')!;
+      const floatingLabel = element.shadowRoot!.querySelector('label') as FloatingLabel;
+
+      await element.requestUpdate();
+
+      let outlineWidth = notchedOutline.width;
+      let labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
+      assert.isTrue(notchedOutline.open);
+      assert.isTrue(outlineWidth >= labelWidth);
+
+      element.label = 'this is some other label';
+
+      // wait for this label to finish updating
+      await element.updateComplete;
+      // wait for internal event listener to trigger layout method
+      await element.requestUpdate();
+
+      outlineWidth = notchedOutline.width;
+      labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
+      assert.isTrue(outlineWidth >= labelWidth);
+
+      fixt.remove();
     });
 
     teardown(() => {
