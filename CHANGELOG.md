@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Implemented `mwc-dialog`
+- `mwc-textfield.layout` method.
 
 ### Changed
 
