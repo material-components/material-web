@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
+import {FloatingLabel} from '@material/mwc-floating-label';
 import {TextField} from '@material/mwc-textfield';
 import {cssClasses} from '@material/textfield/constants';
 import {html} from 'lit-html';
 
 import {fixture, TestFixture} from '../util/helpers'
-import { FloatingLabel } from '@material/mwc-floating-label';
 
 
 const basic = html`
@@ -277,8 +277,10 @@ suite('mwc-textfield:', () => {
       fixt = await fixture(makeOutlined(true));
       const element = fixt.root.querySelector('mwc-textfield')!;
 
-      const notchedOutline = element.shadowRoot!.querySelector('mwc-notched-outline')!;
-      const floatingLabel = element.shadowRoot!.querySelector('label') as FloatingLabel;
+      const notchedOutline =
+          element.shadowRoot!.querySelector('mwc-notched-outline')!;
+      const floatingLabel =
+          element.shadowRoot!.querySelector('label') as FloatingLabel;
 
       await element.requestUpdate();
 
@@ -309,8 +311,10 @@ suite('mwc-textfield:', () => {
       fixt = await fixture(makeOutlined(false));
       const element = fixt.root.querySelector('mwc-textfield')!;
 
-      const notchedOutline = element.shadowRoot!.querySelector('mwc-notched-outline')!;
-      const floatingLabel = element.shadowRoot!.querySelector('label') as FloatingLabel;
+      const notchedOutline =
+          element.shadowRoot!.querySelector('mwc-notched-outline')!;
+      const floatingLabel =
+          element.shadowRoot!.querySelector('label') as FloatingLabel;
 
       await element.requestUpdate();
 

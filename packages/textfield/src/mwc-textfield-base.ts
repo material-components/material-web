@@ -313,7 +313,9 @@ export abstract class TextFieldBase extends FormElement {
       'mdc-text-field-helper-text--validation-msg': showValidationMessage,
     };
 
-    const rootClasses = {hidden: !this.shouldRenderHelperText};
+    const rootClasses = {
+      hidden: !this.shouldRenderHelperText,
+    };
 
     const counterClasses = {
       hidden: this.charCounterVisible,
