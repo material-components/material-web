@@ -273,7 +273,7 @@ suite('mwc-textfield:', () => {
 
   suite('notch', () => {
     let fixt: TestFixture;
-    test('notch is correct size', async () => {
+    test('notch can be layout-ed to correct size', async () => {
       fixt = await fixture(makeOutlined(true));
       const element = fixt.root.querySelector('mwc-textfield')!;
 
