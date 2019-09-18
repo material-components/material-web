@@ -39,7 +39,8 @@ export abstract class TextAreaBase extends TextFieldBase {
     return html`
       <div class="mdc-text-field mdc-text-field--textarea ${classMap(classes)}">
         ${
-        this.charCounter ? html`<div .foundation=${characterCounter()}></div>` :
+        this.charCounter ? html`
+            <div .charCounterFoundation=${characterCounter()}></div>` :
                            ''}
         ${this.renderInput()}
         ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
