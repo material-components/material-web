@@ -283,6 +283,8 @@ suite('mwc-textfield:', () => {
           element.shadowRoot!.querySelector('label') as FloatingLabel;
 
       await element.requestUpdate();
+      // needed for older browsers
+      await notchedOutline.requestUpdate();
 
       let outlineWidth = notchedOutline.width;
       assert.isTrue(notchedOutline.open);
@@ -291,7 +293,6 @@ suite('mwc-textfield:', () => {
 
       element.classList.remove('hidden');
       await element.requestUpdate();
-
       outlineWidth = notchedOutline.width;
       let labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
       assert.strictEqual(outlineWidth, 0);
@@ -302,7 +303,9 @@ suite('mwc-textfield:', () => {
 
       outlineWidth = notchedOutline.width;
       labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
-      assert.isTrue(outlineWidth >= labelWidth);
+
+      const diff = Math.abs(outlineWidth - labelWidth);
+      assert.isTrue(diff < 1);
 
       fixt.remove();
     });
@@ -315,13 +318,15 @@ suite('mwc-textfield:', () => {
           element.shadowRoot!.querySelector('mwc-notched-outline')!;
       const floatingLabel =
           element.shadowRoot!.querySelector('label') as FloatingLabel;
-
       await element.requestUpdate();
+      // needed for older browsers
+      await notchedOutline.requestUpdate();
 
       let outlineWidth = notchedOutline.width;
       let labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
       assert.isTrue(notchedOutline.open);
-      assert.isTrue(outlineWidth >= labelWidth);
+      let diff = Math.abs(outlineWidth - labelWidth);
+      assert.isTrue(diff < 1);
 
       element.label = 'this is some other label';
 
@@ -329,10 +334,13 @@ suite('mwc-textfield:', () => {
       await element.updateComplete;
       // wait for internal event listener to trigger layout method
       await element.requestUpdate();
+      // needed for older browsers
+      await notchedOutline.requestUpdate();
 
       outlineWidth = notchedOutline.width;
       labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
-      assert.isTrue(outlineWidth >= labelWidth);
+      diff = Math.abs(outlineWidth - labelWidth);
+      assert.isTrue(diff < 1);
 
       fixt.remove();
     });
