@@ -38,7 +38,7 @@ const createAdapter = (labelElement: HTMLElement): MDCFloatingLabelAdapter => {
 
 interface LabelAndLabelFoundation {
   label: string;
-  foundation: MDCFloatingLabelFoundation
+  foundation: MDCFloatingLabelFoundation;
 }
 
 const partToFoundationMap =
