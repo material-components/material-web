@@ -75,14 +75,14 @@ limitations under the License.
   height: 100%;
 
   &.mdc-text-field--outlined {
+    &.mdc-text-field--disabled {
+      @include mdc-text-field-fill-color_(transparent);
+    }
+
     &:not(.mdc-text-field--fullwidth) {
       .mdc-text-field__input {
         margin-bottom: 14px;
         padding-bottom: 0px;
-      }
-
-      &.mdc-text-field--disabled {
-        @include mdc-text-field-fill-color_(transparent);
       }
 
       .mdc-text-field-character-counter {
