@@ -51,6 +51,8 @@ export abstract class TextAreaBase extends TextFieldBase {
   }
 
   protected renderInput() {
+    const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
+
     return html`
       <textarea
           id="text-field"
@@ -61,7 +63,7 @@ export abstract class TextAreaBase extends TextFieldBase {
           ?disabled="${this.disabled}"
           placeholder="${this.placeholder}"
           ?required="${this.required}"
-          maxlength="${ifDefined(this.maxLength === -1 ? undefined : this.maxLength)}"
+          maxlength="${ifDefined(maxOrUndef)}"
           @change="${this.handleInputChange}"
           @blur="${this.onInputBlur}">
       </textarea>`;

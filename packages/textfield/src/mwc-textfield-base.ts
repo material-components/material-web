@@ -220,6 +220,8 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   protected renderInput() {
+    const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
+
     return html`
       <input
           id="text-field"
@@ -229,7 +231,7 @@ export abstract class TextFieldBase extends FormElement {
           ?disabled="${this.disabled}"
           placeholder="${this.placeholder}"
           ?required="${this.required}"
-          maxlength="${ifDefined(this.maxLength === -1 ? undefined : this.maxLength)}"
+          maxlength="${ifDefined(maxOrUndef)}"
           pattern="${ifDefined(this.pattern ? this.pattern : undefined)}"
           min="${ifDefined(this.min === '' ? undefined : this.min as number)}"
           max="${ifDefined(this.max === '' ? undefined : this.max as number)}"
