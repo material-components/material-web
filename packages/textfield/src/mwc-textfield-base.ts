@@ -170,6 +170,14 @@ export abstract class TextFieldBase extends FormElement {
     return this.formElement.willValidate;
   }
 
+  get selectionStart(): number|null {
+    return this.formElement.selectionStart;
+  }
+
+  get selectionEnd(): number|null {
+    return this.formElement.selectionEnd;
+  }
+
   validityTransform:
       ((value: string,
         nativeValidity: ValidityState) => Partial<ValidityState>)|null = null;
@@ -184,6 +192,17 @@ export abstract class TextFieldBase extends FormElement {
     const blurEvt = new FocusEvent('blur');
     this.formElement.dispatchEvent(blurEvt);
     this.formElement.blur();
+  }
+
+  select() {
+    this.formElement.select();
+  }
+
+  setSelectionRange(
+      selectionStart: number, selectionEnd: number,
+      selectionDirection?: 'forward'|'backward'|'none') {
+    this.formElement.setSelectionRange(
+        selectionStart, selectionEnd, selectionDirection);
   }
 
   render() {
