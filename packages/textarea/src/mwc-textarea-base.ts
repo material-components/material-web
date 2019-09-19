@@ -61,7 +61,7 @@ export abstract class TextAreaBase extends TextFieldBase {
           placeholder="${this.placeholder}"
           ?required="${this.required}"
           maxlength="${this.maxLength}"
-          @change="${this.handleInputChange}"
+          @input="${this.handleInputChange}"
           @blur="${this.onInputBlur}">
       </textarea>`;
   }
