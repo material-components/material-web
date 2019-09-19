@@ -19,6 +19,7 @@ import {characterCounter} from '@material/mwc-textfield/character-counter/mwc-ch
 import {TextFieldBase} from '@material/mwc-textfield/mwc-textfield-base.js';
 import {html, property, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
+import {ifDefined} from 'lit-html/directives/if-defined.js';
 
 export {TextFieldType} from '@material/mwc-textfield/mwc-textfield-base.js';
 
@@ -60,7 +61,7 @@ export abstract class TextAreaBase extends TextFieldBase {
           ?disabled="${this.disabled}"
           placeholder="${this.placeholder}"
           ?required="${this.required}"
-          maxlength="${this.maxLength}"
+          maxlength="${ifDefined(this.maxLength === -1 ? undefined : this.maxLength)}"
           @change="${this.handleInputChange}"
           @blur="${this.onInputBlur}">
       </textarea>`;

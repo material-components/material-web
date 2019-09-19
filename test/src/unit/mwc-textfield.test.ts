@@ -139,7 +139,7 @@ suite('mwc-textfield:', () => {
 
       const transformFn =
           (value: string, vState: ValidityState): Partial<ValidityState> => {
-            if (value.includes('dogs')) {
+            if (value.indexOf('dogs') !== -1) {
               return {
                 valid: true,
               }
