@@ -53,7 +53,7 @@ const isSafari = navigator.userAgent.match(/Safari/);
 let didApplyRippleStyle = false;
 const applyRippleStyle = () => {
   didApplyRippleStyle = true;
-  const part = new NodePart({templateFactory});
+  const part = new NodePart({templateFactory}, undefined);
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   part.appendInto(document.head!);
   part.setValue(style);
