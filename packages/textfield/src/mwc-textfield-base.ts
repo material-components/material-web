@@ -234,11 +234,14 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   updated(changedProperties: PropertyValues) {
-    const maxLength = changedProperties.get('mexLength') as number | undefined;
+    const maxLength = changedProperties.get('maxLength') as number | undefined;
 
-    const maxLengthChanged = maxLength === -1 && this.maxLength !== -1;
-    // update foundation only when maxLength goes from undefined to true
-    if (maxLengthChanged) {
+    const mLChangedFromUndef = maxLength === -1 && this.maxLength !== -1;
+    const mLChangedToUndef =
+        maxLength !== undefined && maxLength !== -1 && this.maxLength === -1;
+    // update foundation only when maxLength goes from undefined (-1) to true
+    // or vice versa
+    if (mLChangedFromUndef || mLChangedToUndef) {
       this.createFoundation();
     }
   }
@@ -318,7 +321,7 @@ export abstract class TextFieldBase extends FormElement {
     };
 
     const counterClasses = {
-      hidden: this.charCounterVisible,
+      hidden: !this.charCounterVisible,
     };
 
     const charCounterTemplate: TemplateResult|string = html`
