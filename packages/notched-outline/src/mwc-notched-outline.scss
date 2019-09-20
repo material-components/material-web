@@ -53,11 +53,6 @@ limitations under the License.
 
 .mdc-notched-outline--upgraded ::slotted(.mdc-floating-label--float-above) {
   max-width: calc(100% / .75);
-
-  @include mdc-theme-prop(color, (
-    varname: --mdc-theme-primary,
-    fallback: $mdc-theme-primary
-  ));
 }
 
 .mdc-notched-outline__leading {
