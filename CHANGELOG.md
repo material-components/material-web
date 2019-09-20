@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   their filled and outlined variants with helper text on older browsers.
 - `mwc-textfield[required]` and `mwc-textarea[required]` will now have their
   required asterisk colored correctly when customized.
+- `<mwc-textfield>` and `<mwc-textarea>` can now have basic usability in IE.
 
 
 ## [0.8.0] - 2019-09-03
