@@ -25,7 +25,7 @@ import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter.js';
 import {MDCTextFieldCharacterCounterFoundation} from '@material/textfield/character-counter/foundation.js';
 import MDCTextFieldFoundation from '@material/textfield/foundation.js';
-import {html, property, PropertyValues, query, TemplateResult} from 'lit-element';
+import {eventOptions, html, property, PropertyValues, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined.js';
 
@@ -170,20 +170,39 @@ export abstract class TextFieldBase extends FormElement {
     return this.formElement.willValidate;
   }
 
+  get selectionStart(): number|null {
+    return this.formElement.selectionStart;
+  }
+
+  get selectionEnd(): number|null {
+    return this.formElement.selectionEnd;
+  }
+
   validityTransform:
       ((value: string,
         nativeValidity: ValidityState) => Partial<ValidityState>)|null = null;
 
   focus() {
-    const focusEvt = new FocusEvent('focus');
+    const focusEvt = new CustomEvent('focus');
     this.formElement.dispatchEvent(focusEvt);
     this.formElement.focus();
   }
 
   blur() {
-    const blurEvt = new FocusEvent('blur');
+    const blurEvt = new CustomEvent('blur');
     this.formElement.dispatchEvent(blurEvt);
     this.formElement.blur();
+  }
+
+  select() {
+    this.formElement.select();
+  }
+
+  setSelectionRange(
+      selectionStart: number, selectionEnd: number,
+      selectionDirection?: 'forward'|'backward'|'none') {
+    this.formElement.setSelectionRange(
+        selectionStart, selectionEnd, selectionDirection);
   }
 
   render() {
@@ -220,6 +239,8 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   protected renderInput() {
+    const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
+
     return html`
       <input
           id="text-field"
@@ -229,12 +250,12 @@ export abstract class TextFieldBase extends FormElement {
           ?disabled="${this.disabled}"
           placeholder="${this.placeholder}"
           ?required="${this.required}"
-          maxlength="${this.maxLength}"
+          maxlength="${ifDefined(maxOrUndef)}"
           pattern="${ifDefined(this.pattern ? this.pattern : undefined)}"
           min="${ifDefined(this.min === '' ? undefined : this.min as number)}"
           max="${ifDefined(this.max === '' ? undefined : this.max as number)}"
           step="${ifDefined(this.step === null ? undefined : this.step)}"
-          @change="${this.handleInputChange}"
+          @input="${this.handleInputChange}"
           @blur="${this.onInputBlur}">`;
   }
 
@@ -345,6 +366,7 @@ export abstract class TextFieldBase extends FormElement {
     this.formElement.setCustomValidity(message);
   }
 
+  @eventOptions({passive: true})
   protected handleInputChange() {
     this.value = this.formElement.value;
   }

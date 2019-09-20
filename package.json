@@ -13,7 +13,7 @@
     "lint:imports": "node scripts/check-imports.js",
     "lint": "npm run lint:typescript && npm run lint:lit",
     "lint:typescript": "eslint \"packages/**/*.ts\"",
-    "lint:lit": "lit-analyzer \"packages/**/*.ts\" --strict --quiet",
+    "lint:lit": "lit-analyzer \"packages/**/*.ts\" --strict",
     "test": "npm run build:tests && karma-proxy start --single-run",
     "test:debug": "npm run test -- --single-run false --browsers Chrome",
     "test:bench": "npm run build:tests && node test/lib/benchmark/cli.js",
@@ -72,7 +72,7 @@
     "sass": "^1.17.4",
     "shady-css-parser": "^0.1.0",
     "sinon": "^7.3.1",
-    "tachometer": "^0.4.9",
+    "tachometer": "^0.4.13",
     "typescript": "^3.4.1"
   },
   "dependencies": {}
