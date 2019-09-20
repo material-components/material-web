@@ -36,6 +36,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `mwc-textfield[required]` and `mwc-textarea[required]` will now have their
   required asterisk colored correctly when customized.
 - `<mwc-textfield>` and `<mwc-textarea>` can now have basic usability in IE.
+- `mwc-textarea[disabled][outlined]` will no longer have a filled-in background
+  as is per material spec.
+- `mwc-textarea[disabled]label="string!"][value="string!"]` will now float the
+  label to the correct spot.
 
 
 ## [0.8.0] - 2019-09-03
