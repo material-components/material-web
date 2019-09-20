@@ -24,13 +24,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   `lit-element` or `lit-html` APIs (e.g. `LitElement`, `customElement`,
   `classMap`). Users should import directly from the `lit-element` and
   `lit-html` modules instead.
-- `mwc-input` and `mwc-textarea` now update `value` on `input` rather than on
-  `change`.
+- **BREAKING** `mwc-textfield` and `mwc-textarea` will now update their `.value`
+  on the native `input`'s `input` event instead of `change`.
 
 ### Fixed
 
 - `<mwc-drawer>` can now be used with Rollup (via version bump to pick up
   [WICG/inert#135](https://github.com/WICG/inert/pull/135)).
+- `<mwc-textfield>` and `<mwc-textarea>` will now have the same height between
+  their filled and outlined variants with helper text on older browsers.
+- `mwc-textfield[required]` and `mwc-textarea[required]` will now have their
+  required asterisk colored correctly when customized.
 - `<mwc-textfield>` and `<mwc-textarea>` can now have basic usability in IE.
 
 
