@@ -139,7 +139,7 @@ suite('mwc-textfield:', () => {
 
       const transformFn =
           (value: string, vState: ValidityState): Partial<ValidityState> => {
-            if (value.includes('dogs')) {
+            if (value.indexOf('dogs') !== -1) {
               return {
                 valid: true,
               }
@@ -195,6 +195,63 @@ suite('mwc-textfield:', () => {
       fixt = await fixture(validationRequired);
       element = fixt.root.querySelector('mwc-textfield')!;
       assert.isFalse(isUiInvalid(element));
+    });
+
+    teardown(() => {
+      if (fixt) {
+        fixt.remove();
+      }
+    });
+  });
+
+  suite('select', () => {
+    let element: TextField;
+
+    setup(async () => {
+      fixt = await fixture(basic);
+
+      element = fixt.root.querySelector('mwc-textfield')!;
+    });
+
+    test('selects the input text', () => {
+      const input = element.shadowRoot!.querySelector('input')!;
+
+      input.value = 'foobar';
+
+      element.select();
+
+      assert.equal(input.selectionStart, 0);
+      assert.equal(input.selectionEnd, 6);
+    });
+
+    teardown(() => {
+      if (fixt) {
+        fixt.remove();
+      }
+    });
+  });
+
+  suite('setSelectionRange', () => {
+    let element: TextField;
+
+    setup(async () => {
+      fixt = await fixture(basic);
+
+      element = fixt.root.querySelector('mwc-textfield')!;
+    });
+
+    test('sets correct selection', async () => {
+      const input = element.shadowRoot!.querySelector('input')!;
+
+      element.value = 'one two three';
+      await element.updateComplete;
+
+      element.setSelectionRange(4, 6);
+
+      assert.equal(input.selectionStart, 4);
+      assert.equal(input.selectionEnd, 6);
+      assert.equal(element.selectionStart, 4);
+      assert.equal(element.selectionEnd, 6);
     });
 
     teardown(() => {
