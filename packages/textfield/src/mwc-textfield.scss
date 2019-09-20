@@ -38,6 +38,8 @@ limitations under the License.
 }
 
 .mdc-text-field {
+  display: flex;
+
   width: 100%;
 
   @include mdc-theme-prop(border-radius, (
