@@ -99,8 +99,6 @@ export abstract class TextFieldBase extends FormElement {
 
   protected readonly mdcFoundationClass = MDCTextFieldFoundation;
 
-  @property({type: Boolean}) withInput = false;
-
   @query('.mdc-text-field') protected mdcRoot!: HTMLElement;
 
   @query('input') protected formElement!: HTMLInputElement;
