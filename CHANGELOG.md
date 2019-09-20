@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - `<mwc-drawer>` can now be used with Rollup (via version bump to pick up
   [WICG/inert#135](https://github.com/WICG/inert/pull/135)).
+- `<mwc-textfield>` and `<mwc-textarea>` can now have basic usability in IE.
 
 
 ## [0.8.0] - 2019-09-03

@@ -183,13 +183,13 @@ export abstract class TextFieldBase extends FormElement {
         nativeValidity: ValidityState) => Partial<ValidityState>)|null = null;
 
   focus() {
-    const focusEvt = new FocusEvent('focus');
+    const focusEvt = new CustomEvent('focus');
     this.formElement.dispatchEvent(focusEvt);
     this.formElement.focus();
   }
 
   blur() {
-    const blurEvt = new FocusEvent('blur');
+    const blurEvt = new CustomEvent('blur');
     this.formElement.dispatchEvent(blurEvt);
     this.formElement.blur();
   }
@@ -239,6 +239,8 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   protected renderInput() {
+    const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
+
     return html`
       <input
           id="text-field"
@@ -248,7 +250,7 @@ export abstract class TextFieldBase extends FormElement {
           ?disabled="${this.disabled}"
           placeholder="${this.placeholder}"
           ?required="${this.required}"
-          maxlength="${this.maxLength}"
+          maxlength="${ifDefined(maxOrUndef)}"
           pattern="${ifDefined(this.pattern ? this.pattern : undefined)}"
           min="${ifDefined(this.min === '' ? undefined : this.min as number)}"
           max="${ifDefined(this.max === '' ? undefined : this.max as number)}"
