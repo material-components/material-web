@@ -24,6 +24,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   `lit-element` or `lit-html` APIs (e.g. `LitElement`, `customElement`,
   `classMap`). Users should import directly from the `lit-element` and
   `lit-html` modules instead.
+- `mwc-input` and `mwc-textarea` now update `value` on `input` rather than on
+  `change`.
 
 ### Fixed
 

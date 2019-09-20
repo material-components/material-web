@@ -25,7 +25,7 @@ import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter.js';
 import {MDCTextFieldCharacterCounterFoundation} from '@material/textfield/character-counter/foundation.js';
 import MDCTextFieldFoundation from '@material/textfield/foundation.js';
-import {html, property, PropertyValues, query, TemplateResult} from 'lit-element';
+import {eventOptions, html, property, PropertyValues, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined.js';
 
@@ -255,7 +255,7 @@ export abstract class TextFieldBase extends FormElement {
           min="${ifDefined(this.min === '' ? undefined : this.min as number)}"
           max="${ifDefined(this.max === '' ? undefined : this.max as number)}"
           step="${ifDefined(this.step === null ? undefined : this.step)}"
-          @change="${this.handleInputChange}"
+          @input="${this.handleInputChange}"
           @blur="${this.onInputBlur}">`;
   }
 
@@ -366,6 +366,7 @@ export abstract class TextFieldBase extends FormElement {
     this.formElement.setCustomValidity(message);
   }
 
+  @eventOptions({passive: true})
   protected handleInputChange() {
     this.value = this.formElement.value;
   }
