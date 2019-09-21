@@ -247,25 +247,7 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   protected renderInput() {
-    if (this.maxLength === -1) {
-      return html`
-      <input
-          id="text-field"
-          class="mdc-text-field__input"
-          type="${this.type}"
-          .value="${this.value}"
-          ?disabled="${this.disabled}"
-          placeholder="${this.placeholder}"
-          ?required="${this.required}"
-          pattern="${ifDefined(this.pattern ? this.pattern : undefined)}"
-          min="${ifDefined(this.min === '' ? undefined : this.min as number)}"
-          max="${ifDefined(this.max === '' ? undefined : this.max as number)}"
-          step="${ifDefined(this.step === null ? undefined : this.step)}"
-          @input="${this.handleInputChange}"
-          @blur="${this.onInputBlur}">`;
-    }
-
-    // if defined
+    const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
     return html`
       <input
           id="text-field"
@@ -275,7 +257,7 @@ export abstract class TextFieldBase extends FormElement {
           ?disabled="${this.disabled}"
           placeholder="${this.placeholder}"
           ?required="${this.required}"
-          maxlength="${this.maxLength}"
+          maxlength="${ifDefined(maxOrUndef)}"
           pattern="${ifDefined(this.pattern ? this.pattern : undefined)}"
           min="${ifDefined(this.min === '' ? undefined : this.min as number)}"
           max="${ifDefined(this.max === '' ? undefined : this.max as number)}"
