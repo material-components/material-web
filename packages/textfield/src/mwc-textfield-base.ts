@@ -247,8 +247,25 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   protected renderInput() {
-    const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
+    if (this.maxLength === -1) {
+      return html`
+      <input
+          id="text-field"
+          class="mdc-text-field__input"
+          type="${this.type}"
+          .value="${this.value}"
+          ?disabled="${this.disabled}"
+          placeholder="${this.placeholder}"
+          ?required="${this.required}"
+          pattern="${ifDefined(this.pattern ? this.pattern : undefined)}"
+          min="${ifDefined(this.min === '' ? undefined : this.min as number)}"
+          max="${ifDefined(this.max === '' ? undefined : this.max as number)}"
+          step="${ifDefined(this.step === null ? undefined : this.step)}"
+          @input="${this.handleInputChange}"
+          @blur="${this.onInputBlur}">`;
+    }
 
+    // if defined
     return html`
       <input
           id="text-field"
@@ -258,7 +275,7 @@ export abstract class TextFieldBase extends FormElement {
           ?disabled="${this.disabled}"
           placeholder="${this.placeholder}"
           ?required="${this.required}"
-          maxlength="${ifDefined(maxOrUndef)}"
+          maxlength="${this.maxLength}"
           pattern="${ifDefined(this.pattern ? this.pattern : undefined)}"
           min="${ifDefined(this.min === '' ? undefined : this.min as number)}"
           max="${ifDefined(this.max === '' ? undefined : this.max as number)}"
@@ -362,7 +379,7 @@ export abstract class TextFieldBase extends FormElement {
     const isValid = this.checkValidity();
 
     this.mdcFoundation.setValid(isValid);
-    this.isUiValid = isValid;
+    console.log('setting validity') this.isUiValid = isValid;
 
     return isValid;
   }
@@ -423,14 +440,19 @@ export abstract class TextFieldBase extends FormElement {
           this.addEventListener(evtType, handler),
       deregisterTextFieldInteractionHandler: (evtType, handler) =>
           this.removeEventListener(evtType, handler),
-      registerValidationAttributeChangeHandler: (handler) => {
+      registerValidationAttributeChangeHandler: () => {
         const getAttributesList =
             (mutationsList: MutationRecord[]): string[] => {
               return mutationsList.map((mutation) => mutation.attributeName)
                          .filter((attributeName) => attributeName) as string[];
             };
-        const observer = new MutationObserver(
-            (mutationsList) => handler(getAttributesList(mutationsList)));
+        const observer = new MutationObserver((mutationsList) => {
+          const attributes = getAttributesList(mutationsList);
+          if (attributes.indexOf('maxlength') !== -1 && this.maxLength !== -1) {
+            this.charCounterElement.charCounterFoundation.setCounterValue(
+                this.value.length, this.maxLength);
+          }
+        });
         const config = {attributes: true};
         observer.observe(this.formElement, config);
         return observer;
