@@ -269,6 +269,12 @@ suite('mwc-textfield:', () => {
       assert.equal(element.selectionStart, 4);
       assert.equal(element.selectionEnd, 6);
     });
+
+    teardown(() => {
+      if (fixt) {
+        fixt.remove();
+      }
+    });
   });
 
   suite('notch', () => {
@@ -306,8 +312,6 @@ suite('mwc-textfield:', () => {
 
       const diff = Math.abs(outlineWidth - labelWidth);
       assert.isTrue(diff < 1);
-
-      fixt.remove();
     });
 
     test('notch changes size with label change', async () => {
@@ -341,8 +345,142 @@ suite('mwc-textfield:', () => {
       labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
       diff = Math.abs(outlineWidth - labelWidth);
       assert.isTrue(diff < 1);
+    });
 
-      fixt.remove();
+    teardown(() => {
+      if (fixt) {
+        fixt.remove();
+      }
+    });
+  });
+
+  suite('helper and char counter rendering', () => {
+    let fixt: TestFixture;
+
+    setup(async () => {
+      fixt = await fixture(basic);
+    });
+
+    test('createFoundation called an appropriate amount of times', async () => {
+      const element = fixt.root.querySelector('mwc-textfield')!;
+      element.helperPersistent = true;
+
+      const oldCreateFoundation =
+          (element as any).createFoundation.bind(element) as () => void;
+      let numTimesCreateFoundationCalled = 0;
+
+      ((element as any).createFoundation as () => void) = () => {
+        numTimesCreateFoundationCalled = numTimesCreateFoundationCalled + 1;
+        oldCreateFoundation();
+      };
+
+      const charCounters = element.shadowRoot!.querySelectorAll(
+          '.mdc-text-field-character-counter');
+
+      assert.strictEqual(charCounters.length, 1, 'only one char counter');
+
+      const charCounter = charCounters[0] as HTMLElement;
+      const helperText = element.shadowRoot!.querySelector(
+                             '.mdc-text-field-helper-text') as HTMLElement;
+      ;
+
+      assert.strictEqual(
+          charCounter.offsetWidth, 0, 'char counter initially hidden');
+      assert.strictEqual(
+          helperText.offsetWidth, 0, 'helper line initially hidden');
+
+      element.helper = 'my helper';
+      await element.requestUpdate();
+
+      assert.strictEqual(
+          numTimesCreateFoundationCalled,
+          0,
+          'foundation not recreated due to helper change');
+      assert.strictEqual(
+          charCounter.offsetWidth,
+          0,
+          'char counter hidden when only helper defined');
+      assert.isTrue(
+          helperText.offsetWidth > 0, 'helper text shown when defined');
+
+      element.helper = '';
+      await element.requestUpdate();
+
+      assert.strictEqual(
+          numTimesCreateFoundationCalled,
+          0,
+          'foundation not recreated due to helper change');
+      assert.strictEqual(
+          charCounter.offsetWidth,
+          0,
+          'char counter does not render on helper change');
+      assert.strictEqual(
+          helperText.offsetWidth, 0, 'helper line hides when reset to empty');
+
+      element.maxLength = 10;
+      await element.requestUpdate();
+
+      assert.strictEqual(
+          numTimesCreateFoundationCalled,
+          1,
+          'foundation created when maxlength changed from -1');
+      assert.strictEqual(
+          charCounter.offsetWidth,
+          0,
+          'char counter does not render without charCounter set');
+      assert.strictEqual(
+          helperText.offsetWidth,
+          0,
+          'helper line does not render on maxLength change');
+
+      numTimesCreateFoundationCalled = 0;
+      element.maxLength = -1;
+      await element.requestUpdate();
+
+      assert.strictEqual(
+          numTimesCreateFoundationCalled,
+          1,
+          'foundation created when maxlength changed to -1');
+
+      numTimesCreateFoundationCalled = 0;
+      element.charCounter = true;
+      await element.requestUpdate();
+
+      assert.strictEqual(
+          numTimesCreateFoundationCalled,
+          0,
+          'foundation not updated when charCounter changed');
+      assert.strictEqual(
+          charCounter.offsetWidth,
+          0,
+          'char counter does not render without maxLength set');
+      assert.strictEqual(
+          helperText.offsetWidth,
+          0,
+          'helper line does not render on charCounter change');
+
+      element.maxLength = 20;
+      await element.requestUpdate();
+
+      assert.strictEqual(
+          numTimesCreateFoundationCalled,
+          1,
+          'foundation created when maxlength changed from -1');
+      assert.isTrue(
+          charCounter.offsetWidth > 0,
+          'char counter renders when both charCounter and maxLength set');
+
+      numTimesCreateFoundationCalled = 0;
+      element.maxLength = 15;
+      await element.requestUpdate();
+
+      assert.strictEqual(
+          numTimesCreateFoundationCalled,
+          0,
+          'foundation not recreated when maxLength not changed to or from -1');
+      assert.isTrue(
+          charCounter.offsetWidth > 0,
+          'char counter still visible on maxLength change');
     });
 
     teardown(() => {
