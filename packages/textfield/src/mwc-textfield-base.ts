@@ -379,7 +379,7 @@ export abstract class TextFieldBase extends FormElement {
     const isValid = this.checkValidity();
 
     this.mdcFoundation.setValid(isValid);
-    console.log('setting validity') this.isUiValid = isValid;
+    this.isUiValid = isValid;
 
     return isValid;
   }
