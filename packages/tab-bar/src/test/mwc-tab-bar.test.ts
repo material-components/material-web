@@ -14,27 +14,9 @@
  * limitations under the License.
  */
 
-import {Tab} from '@material/mwc-tab';
 import {TabBar} from '@material/mwc-tab-bar/mwc-tab-bar.js';
-import {TabScroller} from '@material/mwc-tab-scroller/mwc-tab-scroller.js';
 
 
-suite('mwc-tab', () => {
-  let element: Tab;
-
-  setup(() => {
-    element = document.createElement('mwc-tab');
-    document.body.appendChild(element);
-  });
-
-  teardown(() => {
-    document.body.removeChild(element);
-  });
-
-  test('initializes as an mwc-tab', () => {
-    assert.instanceOf(element, Tab);
-  });
-});
 suite('mwc-tab-bar', () => {
   let element: TabBar;
   setup(() => {
@@ -48,22 +30,5 @@ suite('mwc-tab-bar', () => {
 
   test('initializes as an mwc-tab-bar', () => {
     assert.instanceOf(element, TabBar);
-  });
-});
-
-
-suite('mwc-tab-scroller', () => {
-  let element: TabScroller;
-  setup(() => {
-    element = document.createElement('mwc-tab-scroller');
-    document.body.appendChild(element);
-  });
-
-  teardown(() => {
-    document.body.removeChild(element);
-  });
-
-  test('initializes as an mwc-tab-scroller', () => {
-    assert.instanceOf(element, TabScroller);
   });
 });
