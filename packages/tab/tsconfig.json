@@ -10,8 +10,17 @@
     "src/*.ts"
   ],
   "references": [
-    {"path": "../base"},
-    {"path": "../tab-indicator"},
-    {"path": "../ripple"}
+    {
+      "path": "../base"
+    },
+    {
+      "path": "../tab-indicator"
+    },
+    {
+      "path": "../ripple"
+    }
+  ],
+  "exclude": [
+    "src/test/*.ts"
   ]
 }

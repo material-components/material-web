@@ -10,7 +10,14 @@
     "src/**/*.ts"
   ],
   "references": [
-    {"path": "../base"},
-    {"path": "../textfield"}
+    {
+      "path": "../base"
+    },
+    {
+      "path": "../textfield"
+    }
+  ],
+  "exclude": [
+    "src/test/*.ts"
   ]
 }

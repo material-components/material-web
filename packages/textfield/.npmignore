@@ -1,4 +1,4 @@
 .tsbuildinfo
 tsconfig.json
 *.tgz
-images/*
+images/*src/test

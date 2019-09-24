@@ -21,7 +21,7 @@ import {Dialog} from '@material/mwc-dialog';
 // import {cssClasses} from '@material/dialog/constants';
 import {html} from 'lit-html';
 
-import {fixture, rafPromise, TestFixture} from '../util/helpers';
+import {fixture, rafPromise, TestFixture} from '../../../../test/src/util/helpers';
 
 const OPENING_EVENT = 'opening';
 const OPENED_EVENT = 'opened';

@@ -10,6 +10,11 @@
     "src/*.ts"
   ],
   "references": [
-    {"path": "../base"}
+    {
+      "path": "../base"
+    }
+  ],
+  "exclude": [
+    "src/test/*.ts"
   ]
 }
