@@ -19,7 +19,7 @@ import {html, render} from 'lit-html';
 
 
 suite('mwc-radio', () => {
-  let container;
+  let container: HTMLElement;
 
   suiteSetup(() => {
     container = document.createElement('main');

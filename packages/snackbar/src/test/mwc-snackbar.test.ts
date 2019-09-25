@@ -17,7 +17,7 @@
 import {Snackbar} from '@material/mwc-snackbar';
 
 suite('mwc-snackbar', () => {
-  let element;
+  let element: Snackbar;
 
   setup(() => {
     element = document.createElement('mwc-snackbar');
@@ -35,7 +35,7 @@ suite('mwc-snackbar', () => {
   const findLabelText = () => {
     // Note that label text can either be in the label's textContent, or in its
     // ::before pseudo-element content (set via an attribute), for ARIA reasons.
-    const label = element.shadowRoot.querySelector('.mdc-snackbar__label');
+    const label = element.shadowRoot!.querySelector('.mdc-snackbar__label')!;
     return label.getAttribute('data-mdc-snackbar-label-text') ||
         label.textContent;
   };

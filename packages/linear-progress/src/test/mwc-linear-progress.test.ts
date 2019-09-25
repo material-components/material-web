@@ -18,7 +18,7 @@ import {LinearProgress} from '@material/mwc-linear-progress';
 
 
 suite('mwc-linear-progress', () => {
-  let element;
+  let element: LinearProgress;
 
   setup(() => {
     element = document.createElement('mwc-linear-progress');

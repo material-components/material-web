@@ -17,12 +17,17 @@
 import {Checkbox} from '@material/mwc-checkbox';
 import {fake} from 'sinon';
 
+interface CheckboxInternals {
+  formElement: HTMLInputElement;
+}
 
 suite('mwc-checkbox', () => {
-  let element;
+  let element: Checkbox;
+  let internals: CheckboxInternals;
 
   setup(() => {
     element = document.createElement('mwc-checkbox');
+    internals = element as unknown as CheckboxInternals;
     document.body.appendChild(element);
   });
 
@@ -37,8 +42,8 @@ suite('mwc-checkbox', () => {
 
   test('element.formElement returns the native checkbox element', async () => {
     await element.updateComplete;
-    assert.isOk(element.formElement);
-    assert.equal(element.formElement.localName, 'input');
+    assert.instanceOf(internals.formElement, HTMLElement);
+    assert.equal(internals.formElement.localName, 'input');
   });
 
   test(
@@ -46,10 +51,10 @@ suite('mwc-checkbox', () => {
       async () => {
         element.checked = true;
         await element.updateComplete;
-        assert.equal(element.formElement.checked, true);
+        assert.equal(internals.formElement.checked, true);
         element.checked = false;
         await element.updateComplete;
-        assert.equal(element.formElement.checked, false);
+        assert.equal(internals.formElement.checked, false);
       });
 
   test(
@@ -57,10 +62,10 @@ suite('mwc-checkbox', () => {
       async () => {
         element.indeterminate = true;
         await element.updateComplete;
-        assert.equal(element.formElement.indeterminate, true);
+        assert.equal(internals.formElement.indeterminate, true);
         element.indeterminate = false;
         await element.updateComplete;
-        assert.equal(element.formElement.indeterminate, false);
+        assert.equal(internals.formElement.indeterminate, false);
       });
 
   test(
@@ -68,10 +73,10 @@ suite('mwc-checkbox', () => {
       async () => {
         element.disabled = true;
         await element.updateComplete;
-        assert.equal(element.formElement.disabled, true);
+        assert.equal(internals.formElement.disabled, true);
         element.disabled = false;
         await element.updateComplete;
-        assert.equal(element.formElement.disabled, false);
+        assert.equal(internals.formElement.disabled, false);
       });
 
   test(
@@ -80,19 +85,19 @@ suite('mwc-checkbox', () => {
         let value = 'new value';
         element.value = value;
         await element.updateComplete;
-        assert.equal(element.formElement.value, value);
+        assert.equal(internals.formElement.value, value);
         value = 'new value 2';
         element.value = value;
         await element.updateComplete;
-        assert.equal(element.formElement.value, value);
+        assert.equal(internals.formElement.value, value);
       });
 
   test('user input emits `change` event', async () => {
-    let callback = fake();
+    const callback = fake();
     document.body.addEventListener('change', callback);
     element.checked = false;
     await element.updateComplete;
     element.click();
-    expect(callback.callCount).to.equal(1);
+    assert.equal(callback.callCount, 1);
   });
 });

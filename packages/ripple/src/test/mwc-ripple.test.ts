@@ -16,20 +16,22 @@
 
 import {Ripple} from '@material/mwc-ripple';
 
-const getInteractionNode = (element: Ripple) =>
-    (element as any).interactionNode as HTMLElement;
-const setInteractionNode = (ripple: Ripple, element: HTMLElement) => {
-  (ripple as any).interactionNode = element;
-};
+interface RippleInternals {
+  interactionNode: HTMLElement;
+}
 
 suite('mwc-ripple', () => {
-  let element: Ripple, container;
-  suite('baisc', () => {
+  let element: Ripple;
+  let internals: RippleInternals;
+  let container: HTMLDivElement;
+
+  suite('basic', () => {
     setup(() => {
       container = document.createElement('div');
       document.body.appendChild(container);
 
       element = document.createElement('mwc-ripple');
+      internals = element as unknown as RippleInternals;
       container.appendChild(element);
     });
 
@@ -43,9 +45,7 @@ suite('mwc-ripple', () => {
 
     test('sets interactionNode to parent', async () => {
       await element.updateComplete;
-      const interactionNode = getInteractionNode(element);
-
-      assert(interactionNode == container);
+      assert(internals.interactionNode == container);
     });
   });
 
@@ -54,15 +54,15 @@ suite('mwc-ripple', () => {
       container = document.createElement('div');
       document.body.appendChild(container);
 
-      element = document.createElement('mwc-ripple');
-      setInteractionNode(element, document.body);
+      const element2 = document.createElement('mwc-ripple');
+      const internals2 = element2 as unknown as RippleInternals;
+      internals2.interactionNode = document.body;
 
-      container.appendChild(element);
+      container.appendChild(element2);
 
-      await element.updateComplete;
-      const interactionNode = getInteractionNode(element);
+      await element2.updateComplete;
 
-      assert(interactionNode == document.body);
+      assert(internals2.interactionNode == document.body);
 
       document.body.removeChild(container);
     });

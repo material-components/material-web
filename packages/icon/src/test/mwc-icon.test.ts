@@ -18,7 +18,7 @@ import {Icon} from '@material/mwc-icon';
 
 
 suite('mwc-icon', () => {
-  let element;
+  let element: Icon;
 
   setup(() => {
     element = document.createElement('mwc-icon');

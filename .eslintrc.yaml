@@ -49,20 +49,18 @@ rules:
   prefer-const: error
   comma-dangle: off
 
-  # Rules for our mocha unit tests. Note that even though we use mocha, we model our unit tests
-  # after frameworks such as tape and ava, which encourage modern paradigms, seek to minimize
-  # shared state across tests, and try and make tests look as simple as possible.
   mocha/handle-done-callback: error
   mocha/no-exclusive-tests: error
-  # mocha/no-hooks: error
   mocha/no-identical-title: error
   mocha/no-nested-tests: error
   mocha/no-pending-tests: error
   mocha/no-skipped-tests: error
-  mocha/valid-suite-description: [error, ^MDC.+|^webpack|^mwc-.+]
 overrides:
   - files: ["packages/**/*.ts"]
     rules:
       no-unused-vars: off
       no-invalid-this: off
       new-cap: off
+  - files: ["packages/**/src/test/*.ts"]
+    rules:
+      "@typescript-eslint/no-non-null-assertion": off

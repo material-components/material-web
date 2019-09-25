@@ -21,13 +21,17 @@ const ICON_SELECTOR =
 const OFF_ICON_SELECTOR =
     '.mdc-icon-button__icon:not(.mdc-icon-button__icon--on) i.material-icons';
 
+interface IconButtonToggleInternals {
+  mdcRoot: HTMLElement;
+}
 
 suite('mwc-icon-button-toggle', () => {
-  /** @type {HTMLElement} */
   let element: IconButtonToggle;
+  let internals: IconButtonToggleInternals;
 
   setup(() => {
     element = document.createElement('mwc-icon-button-toggle');
+    internals = element as unknown as IconButtonToggleInternals;
     document.body.appendChild(element);
   });
 
@@ -76,7 +80,7 @@ suite('mwc-icon-button-toggle', () => {
   test(
       'setting `label` updates the aria-label attribute on the native button element',
       async () => {
-        let label = 'hello';
+        const label = 'hello';
         element.label = label;
         await element.updateComplete;
         const button = element.shadowRoot!.querySelector('button')!;
@@ -91,7 +95,7 @@ suite('mwc-icon-button-toggle', () => {
 
         element.on = true;
         await element.updateComplete;
-        let button = element.shadowRoot!.querySelector('button')!;
+        const button = element.shadowRoot!.querySelector('button')!;
         assert.equal(button.getAttribute('aria-pressed'), 'true');
 
         element.on = false;
@@ -117,7 +121,7 @@ suite('mwc-icon-button-toggle', () => {
     element.offIcon = 'alarm_off';
     await element.updateComplete;
     assert.equal(element.on, false);
-    ((element as any).mdcRoot as any).click();
+    internals.mdcRoot.click();
     await element.updateComplete;
     assert.equal(element.on, true);
   });
@@ -128,12 +132,8 @@ suite('mwc-icon-button-toggle', () => {
   <svg slot="offIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z"/><path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>`;
 
   test('nodes with `slot=onIcon` will serve as the on icon', async () => {
-    const iconQuery = svgTemplate.content.querySelector('svg[slot="onIcon"]');
-    expect(iconQuery).to.be.ok;
-
-    if (!iconQuery) {
-      return;
-    }
+    const iconQuery = svgTemplate.content.querySelector('svg[slot="onIcon"]')!;
+    assert.instanceOf(iconQuery, SVGElement);
 
     const icon = iconQuery.cloneNode(true);
     element.appendChild(icon);
@@ -144,12 +144,8 @@ suite('mwc-icon-button-toggle', () => {
   });
 
   test('nodes with `slot=offIcon` will serve as the off icon', async () => {
-    const iconQuery = svgTemplate.content.querySelector('svg[slot="offIcon"]');
-    expect(iconQuery).to.be.ok;
-
-    if (!iconQuery) {
-      return;
-    }
+    const iconQuery = svgTemplate.content.querySelector('svg[slot="offIcon"]')!;
+    assert.instanceOf(iconQuery, SVGElement);
 
     const icon = iconQuery.cloneNode(true);
     element.appendChild(icon);
@@ -165,7 +161,7 @@ suite('mwc-icon-button-toggle', () => {
     element.appendChild(fragment);
     await element.updateComplete;
     assert.equal(element.on, false);
-    ((element as any).mdcRoot).click();
+    internals.mdcRoot.click();
     await element.updateComplete;
     assert.equal(element.on, true);
   });

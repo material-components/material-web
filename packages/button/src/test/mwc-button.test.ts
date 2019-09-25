@@ -70,7 +70,7 @@ suite('mwc-button', () => {
       icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
       assert.equal(icon, null);
     });
-  })
+  });
 
   suite('focus', () => {
     let fixt: TestFixture;
@@ -84,19 +84,19 @@ suite('mwc-button', () => {
       const focusedClass = 'mdc-ripple-upgraded--background-focused';
       const nativeButton =
           element.shadowRoot!.querySelector('#button') as HTMLButtonElement;
-      expect(nativeButton.classList.contains(focusedClass)).to.be.false;
+      assert.isFalse(nativeButton.classList.contains(focusedClass));
       element.focus();
       await element.requestUpdate();
       await rafPromise();
-      expect(nativeButton.classList.contains(focusedClass)).to.be.true;
+      assert.isTrue(nativeButton.classList.contains(focusedClass));
       element.blur();
       await element.requestUpdate();
       await rafPromise();
-      expect(nativeButton.classList.contains(focusedClass)).to.be.false;
+      assert.isFalse(nativeButton.classList.contains(focusedClass));
     });
 
     teardown(async () => {
       fixt.remove();
-    })
-  })
+    });
+  });
 });

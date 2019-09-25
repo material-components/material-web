@@ -18,7 +18,7 @@ import {Formfield} from '@material/mwc-formfield';
 
 
 suite('mwc-formfield', () => {
-  let element;
+  let element: Formfield;
   setup(() => {
     element = document.createElement('mwc-formfield');
     document.body.appendChild(element);
