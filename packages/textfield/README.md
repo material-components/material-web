@@ -195,7 +195,7 @@ type ValidityTransform = (value: string, nativeValidity: ValidityState) => Parti
 | `checkValidity() => boolean`   | Returns `true` if the textfield passes validity checks. Returns `false` and fires an [`invalid`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/invalid_event) event on the textfield otherwise.
 | `reportValidity() => boolean`   | Runs `checkValidity()` method, and if it returns false, then ir reports to the user that the input is invalid.
 | `setCustomValidity(message:string) => void`   | Sets a custom validity message (also overwrites `validationMessage`). If this message is not the empty string, then the element is suffering froma  custom validity error and does not validate.
-| `layout() => Promise<void>`   | Used to recalculate the layout of the notched outline when the label is floated. e.g. The outlined element has `display: none`, the label is floating, and then changed to `display: block`. You must call `layout`.
+| `layout() => Promise<void>`   | Used to recalculate the layout of the notched outline when the label is floated. This would be used in situations when an outlined textfield has a floating label, but the outline notch is too small. Calling `layout` will resize the outline notch to fit the label.
 
 ### CSS Custom Properties
 
