@@ -236,12 +236,18 @@ export abstract class TextFieldBase extends FormElement {
   updated(changedProperties: PropertyValues) {
     const maxLength = changedProperties.get('maxLength') as number | undefined;
 
-    const mLChangedFromUndef = maxLength === -1 && this.maxLength !== -1;
-    const mLChangedToUndef =
+    const maxLengthBecameDefined = maxLength === -1 && this.maxLength !== -1;
+    const maxLengthBecameUndefined =
         maxLength !== undefined && maxLength !== -1 && this.maxLength === -1;
-    // update foundation only when maxLength goes from undefined (-1) to true
-    // or vice versa
-    if (mLChangedFromUndef || mLChangedToUndef) {
+
+    /* We want to recreate the foundation if maxLength changes to defined or
+     * undefined, because the textfield foundation needs to be instantiated with
+     * the char counter's foundation, and the char counter's foundation needs
+     * to have maxLength defined to be instantiated. Additionally, there is no
+     * exposed API on the MdcTextFieldFoundation to dynamically add a char
+     * counter foundation, so we must recreate it.
+     */
+    if (maxLengthBecameDefined || maxLengthBecameUndefined) {
       this.createFoundation();
     }
   }
@@ -532,7 +538,12 @@ export abstract class TextFieldBase extends FormElement {
     await this.updateComplete;
 
     if (this.labelElement && this.outlineElement) {
-      // sometimes notchOutline in adapter is called before label is rendered.
+      /* When the textfield automatically notches due to a value and label
+       * being defined, the textfield may be set to `display: none` by the user.
+       * this means that the notch is of size 0px. We provice this function so
+       * that the user may manually resize the notch to the floated label's
+       * width.
+       */
       const labelWidth = this.labelElement.floatingLabelFoundation.getWidth();
       if (this.outlineOpen) {
         this.outlineWidth = labelWidth;
