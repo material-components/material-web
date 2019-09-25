@@ -1,4 +1,5 @@
 /**
+ * @license
  * Copyright 2019 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,14 +15,13 @@
  * limitations under the License.
  */
 
-import {LinearProgress} from '@material/mwc-linear-progress';
+import {Tab} from '@material/mwc-tab';
 
-
-suite('mwc-linear-progress', () => {
-  let element;
+suite('mwc-tab', () => {
+  let element: Tab;
 
   setup(() => {
-    element = document.createElement('mwc-linear-progress');
+    element = document.createElement('mwc-tab');
     document.body.appendChild(element);
   });
 
@@ -29,7 +29,7 @@ suite('mwc-linear-progress', () => {
     document.body.removeChild(element);
   });
 
-  test('initializes as an mwc-linear-progress', () => {
-    assert.instanceOf(element, LinearProgress);
+  test('initializes as an mwc-tab', () => {
+    assert.instanceOf(element, Tab);
   });
 });

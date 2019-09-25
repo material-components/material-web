@@ -1,4 +1,5 @@
 /**
+ * @license
  * Copyright 2019 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +19,7 @@ import {TextField} from '@material/mwc-textfield';
 import {cssClasses} from '@material/textfield/constants';
 import {html} from 'lit-html';
 
-import {fixture, TestFixture} from '../util/helpers'
+import {fixture, TestFixture} from '../../../../test/src/util/helpers';
 
 
 const basic = html`
@@ -41,10 +42,9 @@ const reqInitialVal = html`
   </mwc-textfield>
 `;
 
-const isUiInvalid =
-    (element: TextField) => {
-      return !!element.shadowRoot!.querySelector(`.${cssClasses.INVALID}`);
-    }
+const isUiInvalid = (element: TextField) => {
+  return !!element.shadowRoot!.querySelector(`.${cssClasses.INVALID}`);
+};
 
 suite('mwc-textfield:', () => {
   let fixt: TestFixture;
@@ -80,10 +80,10 @@ suite('mwc-textfield:', () => {
       fixt = await fixture(validationRequired);
       const element = fixt.root.querySelector('mwc-textfield')!;
 
-      expect(isUiInvalid(element)).to.be.false;
+      assert.isFalse(isUiInvalid(element));
       element.focus();
       element.blur();
-      expect(isUiInvalid(element)).to.be.true;
+      assert.isTrue(isUiInvalid(element));
     });
 
     test('validity & checkValidity do not trigger ui', async () => {
@@ -114,7 +114,7 @@ suite('mwc-textfield:', () => {
       const element = fixt.root.querySelector('mwc-textfield')!;
 
       assert.isFalse(isUiInvalid(element));
-      assert.isEmpty(element.validationMessage);
+      assert.equal(element.validationMessage, '');
 
       const validationMsgProp = 'set on prop';
       element.validationMessage = validationMsgProp;
@@ -142,13 +142,14 @@ suite('mwc-textfield:', () => {
             if (value.indexOf('dogs') !== -1) {
               return {
                 valid: true,
-              }
+              };
             } else if (vState.valid) {
               const numberifiedValue = Number(value);
               if (numberifiedValue > 5) {
                 return {
-                  valid: false, rangeOverflow: true,
-                }
+                  valid: false,
+                  rangeOverflow: true,
+                };
               }
             }
 

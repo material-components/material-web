@@ -9,9 +9,18 @@
   "include": [
     "src/*.ts"
   ],
+  "exclude": [
+    "src/test/*.ts"
+  ],
   "references": [
-    {"path": "../base"},
-    {"path": "../ripple"},
-    {"path": "../icon"}
+    {
+      "path": "../base"
+    },
+    {
+      "path": "../ripple"
+    },
+    {
+      "path": "../icon"
+    }
   ]
 }

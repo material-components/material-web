@@ -10,8 +10,17 @@
     "src/*.ts"
   ],
   "references": [
-    {"path": "../base"},
-    {"path": "../tab"},
-    {"path": "../tab-scroller"}
+    {
+      "path": "../base"
+    },
+    {
+      "path": "../tab"
+    },
+    {
+      "path": "../tab-scroller"
+    }
+  ],
+  "exclude": [
+    "src/test/*.ts"
   ]
 }
