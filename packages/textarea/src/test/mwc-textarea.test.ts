@@ -17,7 +17,7 @@
 import {TextArea} from '@material/mwc-textarea';
 import {html} from 'lit-html';
 
-import {fixture, TestFixture} from '../util/helpers'
+import {fixture, TestFixture} from '../../../../test/src/util/helpers'
 
 
 const basic = html`
