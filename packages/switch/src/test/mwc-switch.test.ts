@@ -1,4 +1,5 @@
 /**
+ * @license
  * Copyright 2018 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,12 +17,17 @@
 import {Switch} from '@material/mwc-switch';
 import {fake} from 'sinon';
 
+interface SwitchInternals {
+  formElement: HTMLInputElement;
+}
 
 suite('mwc-switch', () => {
-  let element;
+  let element: Switch;
+  let internals: SwitchInternals;
 
   setup(() => {
     element = document.createElement('mwc-switch');
+    internals = element as unknown as SwitchInternals;
     document.body.appendChild(element);
   });
 
@@ -36,32 +42,32 @@ suite('mwc-switch', () => {
   test('setting `checked` checks the native input', async () => {
     element.checked = true;
     await element.updateComplete;
-    assert(element.formElement.checked);
+    assert(internals.formElement.checked);
 
     element.checked = false;
     await element.updateComplete;
-    assert(!element.formElement.checked);
+    assert(!internals.formElement.checked);
   });
 
   test('setting `disabled` disables the native input', async () => {
     element.disabled = true;
     await element.updateComplete;
-    assert(element.formElement.disabled);
+    assert(internals.formElement.disabled);
 
     element.disabled = false;
     await element.updateComplete;
-    assert(!element.formElement.disabled);
+    assert(!internals.formElement.disabled);
   });
 
   test('user input emits `change` event', async () => {
-    let callback = fake();
+    const callback = fake();
     document.body.addEventListener('change', callback);
     element.checked = false;
     await element.updateComplete;
 
     element.click();
 
-    expect(callback.callCount).to.equal(1);
+    assert.equal(callback.callCount, 1);
 
     document.body.removeEventListener('change', callback);
   });

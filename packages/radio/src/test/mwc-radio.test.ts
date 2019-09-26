@@ -1,4 +1,5 @@
 /**
+ * @license
  * Copyright 2019 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,7 +20,7 @@ import {html, render} from 'lit-html';
 
 
 suite('mwc-radio', () => {
-  let container;
+  let container: HTMLElement;
 
   suiteSetup(() => {
     container = document.createElement('main');
