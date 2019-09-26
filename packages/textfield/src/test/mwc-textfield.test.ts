@@ -383,7 +383,7 @@ suite('mwc-textfield:', () => {
       const charCounter = charCounters[0] as HTMLElement;
       const helperText = element.shadowRoot!.querySelector(
                              '.mdc-text-field-helper-text') as HTMLElement;
-      ;
+
 
       assert.strictEqual(
           charCounter.offsetWidth, 0, 'char counter initially hidden');

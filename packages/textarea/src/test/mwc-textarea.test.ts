@@ -17,7 +17,7 @@
 import {TextArea} from '@material/mwc-textarea';
 import {html} from 'lit-html';
 
-import {fixture, TestFixture} from '../../../../test/src/util/helpers'
+import {fixture, TestFixture} from '../../../../test/src/util/helpers';
 
 
 const basic = html`
@@ -83,7 +83,7 @@ suite('mwc-textarea:', () => {
           const charCounter = charCounters[0] as HTMLElement;
           const helperText = element.shadowRoot!.querySelector(
                                  '.mdc-text-field-helper-text') as HTMLElement;
-          ;
+
 
           assert.strictEqual(
               charCounter.offsetWidth, 0, 'char counter initially hidden');
