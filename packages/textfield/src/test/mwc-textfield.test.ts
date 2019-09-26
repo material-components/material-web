@@ -20,7 +20,7 @@ import {TextField} from '@material/mwc-textfield';
 import {cssClasses} from '@material/textfield/constants';
 import {html} from 'lit-html';
 
-import {fixture, TestFixture} from '../../../../test/src/util/helpers';
+import {fixture, TestFixture, rafPromise} from '../../../../test/src/util/helpers';
 
 
 const basic = html`
@@ -300,6 +300,7 @@ suite('mwc-textfield:', () => {
 
       element.classList.remove('hidden');
       await element.requestUpdate();
+      await rafPromise();
       outlineWidth = notchedOutline.width;
       let labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
       assert.strictEqual(outlineWidth, 0);
@@ -312,7 +313,7 @@ suite('mwc-textfield:', () => {
       labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
 
       const diff = Math.abs(outlineWidth - labelWidth);
-      assert.isTrue(diff < 1);
+      assert.isTrue(diff < 3);
     });
 
     test('notch changes size with label change', async () => {
@@ -331,7 +332,7 @@ suite('mwc-textfield:', () => {
       let labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
       assert.isTrue(notchedOutline.open);
       let diff = Math.abs(outlineWidth - labelWidth);
-      assert.isTrue(diff < 1);
+      assert.isTrue(diff < 3);
 
       element.label = 'this is some other label';
 
@@ -345,7 +346,7 @@ suite('mwc-textfield:', () => {
       outlineWidth = notchedOutline.width;
       labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
       diff = Math.abs(outlineWidth - labelWidth);
-      assert.isTrue(diff < 1);
+      assert.isTrue(diff < 3);
     });
 
     teardown(() => {
