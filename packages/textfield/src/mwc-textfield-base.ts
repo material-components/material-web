@@ -540,7 +540,7 @@ export abstract class TextFieldBase extends FormElement {
     if (this.labelElement && this.outlineElement) {
       /* When the textfield automatically notches due to a value and label
        * being defined, the textfield may be set to `display: none` by the user.
-       * this means that the notch is of size 0px. We provice this function so
+       * this means that the notch is of size 0px. We provide this function so
        * that the user may manually resize the notch to the floated label's
        * width.
        */
