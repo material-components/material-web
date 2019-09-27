@@ -75,13 +75,14 @@ export class ButtonBase extends LitElement {
     };
     const mdcButtonIcon =
         html`<span class="material-icons mdc-button__icon">${this.icon}</span>`;
+    const buttonRipple = ripple({unbounded: false});
     return html`
-      <button id="button" .ripple="${ripple({
-      unbounded: false
-    })}"
-          class="mdc-button ${classMap(classes)}"
-          ?disabled="${this.disabled}"
-          aria-label="${this.label || this.icon}">
+      <button id="button"
+              .ripple="${buttonRipple}"
+              class="mdc-button ${classMap(classes)}"
+              ?disabled="${this.disabled}"
+              aria-label="${this.label || this.icon}">
+        <div class="mdc-button__ripple"></div>
         ${this.icon && !this.trailingIcon ? mdcButtonIcon : ''}
         <span class="mdc-button__label">${this.label}</span>
         ${this.icon && this.trailingIcon ? mdcButtonIcon : ''}
