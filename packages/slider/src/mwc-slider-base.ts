@@ -19,6 +19,7 @@ import {MDCSliderAdapter} from '@material/slider/adapter.js';
 import MDCSliderFoundation from '@material/slider/foundation.js';
 import {html, property, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
+import {styleMap} from 'lit-html/directives/style-map';
 
 const {INPUT_EVENT, CHANGE_EVENT} = MDCSliderFoundation.strings;
 
@@ -33,12 +34,7 @@ export class SliderBase extends FormElement {
 
   @query('.mdc-slider__thumb-container') protected thumbContainer!: HTMLElement;
 
-  @query('.mdc-slider__track') protected trackElement!: HTMLElement;
-
   @query('.mdc-slider__pin-value-marker') protected pinMarker!: HTMLElement;
-
-  @query('.mdc-slider__track-marker-container')
-  protected trackMarkerContainer!: HTMLElement;
 
   @property({type: Number})
   @observer(function(this: SliderBase, value: number) {
@@ -79,6 +75,9 @@ export class SliderBase extends FormElement {
   markers = false;
 
   @property({type: String}) protected pinMarkerText = '';
+  @property({type: Object}) protected trackMarkerContainerStyles = {};
+  @property({type: Object}) protected thumbContainerStyles = {};
+  @property({type: Object}) protected trackStyles = {};
 
   // TODO(sorvell) #css: needs a default width
   protected render() {
@@ -91,7 +90,10 @@ export class SliderBase extends FormElement {
 
     if (this.discrete && this.markers) {
       markersTemplate = html`
-        <div class="mdc-slider__track-marker-container"></div>`;
+        <div
+            class="mdc-slider__track-marker-container"
+            style="${styleMap(this.trackMarkerContainerStyles)}">
+        </div>`;
     }
 
     let pin: TemplateResult|string = '';
@@ -102,6 +104,7 @@ export class SliderBase extends FormElement {
         <span class="mdc-slider__pin-value-marker">${this.pinMarkerText}</span>
       </div>`;
     }
+
     return html`
       <div class="mdc-slider ${classMap(hostClassInfo)}"
            tabindex="0" role="slider"
@@ -109,10 +112,15 @@ export class SliderBase extends FormElement {
            aria-valuenow="${this.value}" aria-disabled="${this.disabled}"
            data-step="${this.step}">
       <div class="mdc-slider__track-container">
-        <div class="mdc-slider__track"></div>
+        <div
+            class="mdc-slider__track"
+            style="${styleMap(this.trackStyles)}">
+        </div>
         ${markersTemplate}
       </div>
-      <div class="mdc-slider__thumb-container">
+      <div
+          class="mdc-slider__thumb-container"
+          style="${styleMap(this.thumbContainerStyles)}">
         <!-- TODO: use cache() directive -->
         ${pin}
         <svg class="mdc-slider__thumb" width="21" height="21">
@@ -121,6 +129,11 @@ export class SliderBase extends FormElement {
         <div class="mdc-slider__focus-ring"></div>
       </div>
     </div>`;
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.mdcFoundation.destroy();
   }
 
   protected createAdapter(): MDCSliderAdapter {
@@ -133,14 +146,18 @@ export class SliderBase extends FormElement {
       computeBoundingRect: () => this.mdcRoot.getBoundingClientRect(),
       getTabIndex: () => this.mdcRoot.tabIndex,
       registerInteractionHandler:
-          <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
-              this.mdcRoot.addEventListener(type, handler),
+          <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
+            const init = type === 'touchstart' ? {passive: true} : {};
+            this.mdcRoot.addEventListener(type, handler, init);
+          },
       deregisterInteractionHandler:
           <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
               this.mdcRoot.removeEventListener(type, handler),
       registerThumbContainerInteractionHandler:
-          <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
-              this.thumbContainer.addEventListener(type, handler),
+          <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
+            const init = type === 'touchstart' ? {passive: true} : {};
+            this.thumbContainer.addEventListener(type, handler, init);
+          },
       deregisterThumbContainerInteractionHandler:
           <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
               this.thumbContainer.removeEventListener(type, handler),
@@ -151,7 +168,7 @@ export class SliderBase extends FormElement {
           <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
               document.body.removeEventListener(type, handler),
       registerResizeHandler: (handler: SpecificEventListener<'resize'>) =>
-          window.addEventListener('resize', handler),
+          window.addEventListener('resize', handler, {passive: true}),
       deregisterResizeHandler: (handler: SpecificEventListener<'resize'>) =>
           window.removeEventListener('resize', handler),
       notifyInput: () => {
@@ -166,10 +183,13 @@ export class SliderBase extends FormElement {
         this.dispatchEvent(new CustomEvent(
             CHANGE_EVENT, {detail: this, bubbles: true, cancelable: true}));
       },
-      setThumbContainerStyleProperty: (propertyName: string, value: string) =>
-          this.thumbContainer.style.setProperty(propertyName, value),
-      setTrackStyleProperty: (propertyName: string, value: string) =>
-          this.trackElement.style.setProperty(propertyName, value),
+      setThumbContainerStyleProperty: (propertyName: string, value: string) => {
+        this.thumbContainerStyles[propertyName] = value;
+        this.requestUpdate();
+      },
+      setTrackStyleProperty: (propertyName: string, value: string) => {
+        this.trackStyles[propertyName] = value;
+      },
       setMarkerValue: (value: number) => this.pinMarkerText = value.toString(),
       setTrackMarkers: (step, max, min) => {
         const stepStr = step.toLocaleString();
@@ -183,8 +203,9 @@ export class SliderBase extends FormElement {
         const markerBkgdLayout = `0 center / calc((100% - ${markerWidth}) / ${
             markerAmount}) 100% repeat-x`;
         const markerBkgdShorthand = `${markerBkgdImage} ${markerBkgdLayout}`;
-        this.trackMarkerContainer.style.setProperty(
-            'background', markerBkgdShorthand);
+
+        this.trackMarkerContainerStyles['background'] = markerBkgdShorthand;
+        this.requestUpdate();
       },
       isRTL: () => getComputedStyle(this.mdcRoot).direction === 'rtl',
     };
