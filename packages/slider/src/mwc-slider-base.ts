@@ -94,13 +94,13 @@ export class SliderBase extends FormElement {
         <div class="mdc-slider__track-marker-container"></div>`;
     }
 
-    let pin: TemplateResult | string = '';
+    let pin: TemplateResult|string = '';
 
     if (this.discrete) {
       pin = html`
       <div class="mdc-slider__pin">
         <span class="mdc-slider__pin-value-marker">${this.pinMarkerText}</span>
-      </div>`
+      </div>`;
     }
     return html`
       <div class="mdc-slider ${classMap(hostClassInfo)}"
@@ -177,11 +177,14 @@ export class SliderBase extends FormElement {
         const minStr = min.toLocaleString();
         // keep calculation in css for better rounding/subpixel behavior
         const markerAmount = `((${maxStr} - ${minStr}) / ${stepStr})`;
-        const markerWidth = `2px`;
-        const markerBkgdImage = `linear-gradient(to right, currentColor ${markerWidth}, transparent 0)`;
-        const markerBkgdLayout = `0 center / calc((100% - ${markerWidth}) / ${markerAmount}) 100% repeat-x`;
+        const markerWidth = '2px';
+        const markerBkgdImage = `linear-gradient(to right, currentColor ${
+            markerWidth}, transparent 0)`;
+        const markerBkgdLayout = `0 center / calc((100% - ${markerWidth}) / ${
+            markerAmount}) 100% repeat-x`;
         const markerBkgdShorthand = `${markerBkgdImage} ${markerBkgdLayout}`;
-        this.trackMarkerContainer.style.setProperty('background', markerBkgdShorthand);
+        this.trackMarkerContainer.style.setProperty(
+            'background', markerBkgdShorthand);
       },
       isRTL: () => getComputedStyle(this.mdcRoot).direction === 'rtl',
     };
