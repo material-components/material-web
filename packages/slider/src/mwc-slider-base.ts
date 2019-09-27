@@ -14,6 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import {applyPassive} from '@material/dom/events.js';
 import {addHasRemoveClass, EventType, FormElement, observer, SpecificEventListener} from '@material/mwc-base/form-element.js';
 import {MDCSliderAdapter} from '@material/slider/adapter.js';
 import MDCSliderFoundation from '@material/slider/foundation.js';
@@ -147,7 +148,7 @@ export class SliderBase extends FormElement {
       getTabIndex: () => this.mdcRoot.tabIndex,
       registerInteractionHandler:
           <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
-            const init = type === 'touchstart' ? {passive: true} : {};
+            const init = type === 'touchstart' ? applyPassive() : {};
             this.mdcRoot.addEventListener(type, handler, init);
           },
       deregisterInteractionHandler:
@@ -155,7 +156,7 @@ export class SliderBase extends FormElement {
               this.mdcRoot.removeEventListener(type, handler),
       registerThumbContainerInteractionHandler:
           <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
-            const init = type === 'touchstart' ? {passive: true} : {};
+            const init = type === 'touchstart' ? applyPassive() : {};
             this.thumbContainer.addEventListener(type, handler, init);
           },
       deregisterThumbContainerInteractionHandler:
@@ -168,7 +169,7 @@ export class SliderBase extends FormElement {
           <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
               document.body.removeEventListener(type, handler),
       registerResizeHandler: (handler: SpecificEventListener<'resize'>) =>
-          window.addEventListener('resize', handler, {passive: true}),
+          window.addEventListener('resize', handler, applyPassive()),
       deregisterResizeHandler: (handler: SpecificEventListener<'resize'>) =>
           window.removeEventListener('resize', handler),
       notifyInput: () => {
