@@ -1,4 +1,5 @@
 /**
+ * @license
  * Copyright 2019 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +22,7 @@ import {Dialog} from '@material/mwc-dialog';
 // import {cssClasses} from '@material/dialog/constants';
 import {html} from 'lit-html';
 
-import {fixture, rafPromise, TestFixture} from '../util/helpers';
+import {fixture, rafPromise, TestFixture} from '../../../../test/src/util/helpers';
 
 const OPENING_EVENT = 'opening';
 const OPENED_EVENT = 'opened';
@@ -34,7 +35,7 @@ interface HasKeyCode {
 
 const awaitEvent =
     (element: Dialog, eventName: string): Promise<CustomEvent> => {
-      return new Promise(res => {
+      return new Promise((res) => {
         const listener = (e: CustomEvent) => {
           element.removeEventListener(eventName, listener as EventListener);
           res(e);
@@ -53,10 +54,10 @@ const opened = html`
 `;
 
 const withButtons = html`
-  <mwc-dialog title="myTitle">
+  <mwc-dialog title="myTitle" actionAttribute="data-dialogAction">
     <mwc-button
         slot="primaryAction"
-        dialogAction="ok">
+        data-dialogAction="ok">
       Ok
     </mwc-button>
     <mwc-button
@@ -83,13 +84,13 @@ suite('mwc-dialog:', () => {
 
     test('Title spacing is not displayed when there is no title', async () => {
       let titleTag = element.shadowRoot!.querySelector('.mdc-dialog__title');
-      assert.isNull(titleTag)
+      assert.isNull(titleTag);
 
       element.title = 'This is my Title';
       await element.requestUpdate();
       titleTag = element.shadowRoot!.querySelector('.mdc-dialog__title');
       assert.isOk(titleTag);
-      assert.strictEqual(titleTag!.textContent, 'This is my Title')
+      assert.strictEqual(titleTag!.textContent, 'This is my Title');
     });
 
     test('Dialog fires open and close events', async () => {
@@ -278,7 +279,7 @@ suite('mwc-dialog:', () => {
       element.open = true;
       await awaitEvent(element, OPENED_EVENT);
 
-      secondary.setAttribute('dialogAction', 'cancel');
+      secondary.setAttribute('data-dialogAction', 'cancel');
 
       secondary.click();
 

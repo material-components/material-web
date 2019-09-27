@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-slider",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "",
   "main": "mwc-slider.js",
   "module": "mwc-slider.js",
@@ -15,7 +15,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/mwc-base": "^0.8.0",
+    "@material/mwc-base": "^0.9.0",
     "@material/slider": "=4.0.0-canary.e851d4f40.0",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",

@@ -1,4 +1,5 @@
 /**
+ * @license
  * Copyright 2019 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,13 +15,14 @@
  * limitations under the License.
  */
 
-import {Formfield} from '@material/mwc-formfield';
+import {LinearProgress} from '@material/mwc-linear-progress';
 
 
-suite('mwc-formfield', () => {
-  let element;
+suite('mwc-linear-progress', () => {
+  let element: LinearProgress;
+
   setup(() => {
-    element = document.createElement('mwc-formfield');
+    element = document.createElement('mwc-linear-progress');
     document.body.appendChild(element);
   });
 
@@ -28,7 +30,7 @@ suite('mwc-formfield', () => {
     document.body.removeChild(element);
   });
 
-  test('initializes as an mwc-formfield', () => {
-    assert.instanceOf(element, Formfield);
+  test('initializes as an mwc-linear-progress', () => {
+    assert.instanceOf(element, LinearProgress);
   });
 });

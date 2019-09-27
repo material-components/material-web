@@ -1,4 +1,5 @@
 /**
+ * @license
  * Copyright 2019 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +21,7 @@ const ICON_SELECTOR = '.mdc-fab__icon';
 
 
 suite('mwc-fab', () => {
-  let element;
+  let element: Fab;
   setup(() => {
     element = document.createElement('mwc-fab');
     document.body.appendChild(element);
@@ -39,7 +40,7 @@ suite('mwc-fab', () => {
       async () => {
         element.disabled = true;
         await element.updateComplete;
-        const button = element.shadowRoot.querySelector('button');
+        const button = element.shadowRoot!.querySelector('button')!;
         assert.equal(button.hasAttribute('disabled'), true);
 
         element.disabled = false;
@@ -49,24 +50,24 @@ suite('mwc-fab', () => {
 
   test('setting `icon` adds an icon to the fab', async () => {
     await element.updateComplete;
-    let icon = element.shadowRoot.querySelector(ICON_SELECTOR);
+    let icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
     assert.equal(icon, null);
 
     element.icon = 'check';
     await element.updateComplete;
-    icon = element.shadowRoot.querySelector(ICON_SELECTOR);
+    icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
     assert.instanceOf(icon, Element);
 
-    element.icon = undefined;
+    element.icon = '';
     await element.updateComplete;
-    icon = element.shadowRoot.querySelector(ICON_SELECTOR);
+    icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
     assert.equal(icon, null);
   });
 
   test('setting `icon` sets `aria-label` of the button', async () => {
     element.icon = 'check';
     await element.updateComplete;
-    const button = element.shadowRoot.querySelector('button');
+    const button = element.shadowRoot!.querySelector('button')!;
     assert.equal(button.getAttribute('aria-label'), 'check');
   });
 
@@ -75,17 +76,17 @@ suite('mwc-fab', () => {
       async () => {
         element.icon = 'check';
         await element.updateComplete;
-        let button = element.shadowRoot.querySelector('button');
+        let button = element.shadowRoot!.querySelector('button')!;
         assert.equal(button.getAttribute('aria-label'), 'check');
 
         element.label = 'label text';
         await element.updateComplete;
-        button = element.shadowRoot.querySelector('button');
+        button = element.shadowRoot!.querySelector('button')!;
         assert.equal(button.getAttribute('aria-label'), 'label text');
 
-        element.label = undefined;
+        element.label = '';
         await element.updateComplete;
-        button = element.shadowRoot.querySelector('button');
+        button = element.shadowRoot!.querySelector('button')!;
         assert.equal(button.getAttribute('aria-label'), 'check');
       });
 });

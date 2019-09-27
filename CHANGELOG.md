@@ -4,11 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+<!-- ## Unreleased -->
+
+## [0.9.0] - 2019-09-26
 
 ### Added
 
 - Implemented `mwc-dialog`
+- `mwc-textfield.layout` method.
 
 ### Changed
 
@@ -24,11 +27,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   `lit-element` or `lit-html` APIs (e.g. `LitElement`, `customElement`,
   `classMap`). Users should import directly from the `lit-element` and
   `lit-html` modules instead.
+- **BREAKING** `mwc-textfield` and `mwc-textarea` will now update their `.value`
+  on the native `input`'s `input` event instead of `change`.
 
 ### Fixed
 
 - `<mwc-drawer>` can now be used with Rollup (via version bump to pick up
   [WICG/inert#135](https://github.com/WICG/inert/pull/135)).
+- `<mwc-textfield>` and `<mwc-textarea>` will now have the same height between
+  their filled and outlined variants with helper text on older browsers.
+- `mwc-textfield[required]` and `mwc-textarea[required]` will now have their
+  required asterisk colored correctly when customized.
+- `<mwc-textfield>` and `<mwc-textarea>` can now have basic usability in IE.
+- `mwc-textarea[disabled][outlined]` will no longer have a filled-in background
+  as is per material spec.
+- `mwc-textarea[disabled]label="string!"][value="string!"]` will now float the
+  label to the correct spot.
 
 
 ## [0.8.0] - 2019-09-03

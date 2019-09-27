@@ -1,4 +1,5 @@
 /**
+ * @license
  * Copyright 2019 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,14 +15,13 @@
  * limitations under the License.
  */
 
-import {Icon} from '@material/mwc-icon';
+import {TabBar} from '@material/mwc-tab-bar/mwc-tab-bar.js';
 
 
-suite('mwc-icon', () => {
-  let element;
-
+suite('mwc-tab-bar', () => {
+  let element: TabBar;
   setup(() => {
-    element = document.createElement('mwc-icon');
+    element = document.createElement('mwc-tab-bar');
     document.body.appendChild(element);
   });
 
@@ -29,7 +29,7 @@ suite('mwc-icon', () => {
     document.body.removeChild(element);
   });
 
-  test('initializes as an mwc-icon', () => {
-    assert.instanceOf(element, Icon);
+  test('initializes as an mwc-tab-bar', () => {
+    assert.instanceOf(element, TabBar);
   });
 });

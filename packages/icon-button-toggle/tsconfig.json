@@ -10,8 +10,17 @@
     "src/*.ts"
   ],
   "references": [
-    {"path": "../base"},
-    {"path": "../icon"},
-    {"path" : "../icon-button"}
+    {
+      "path": "../base"
+    },
+    {
+      "path": "../icon"
+    },
+    {
+      "path": "../icon-button"
+    }
+  ],
+  "exclude": [
+    "src/test/*.ts"
   ]
 }

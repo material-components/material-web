@@ -79,11 +79,16 @@ module.exports = function(config) {
   const packages = config.packages ? config.packages.split(',') : [];
   const fileEntries = [];
   const defaultFileEntry = [
-    {pattern: 'test/lib/unit/*.test.js', watched: true, type: 'module' }
+    {pattern: 'test/lib/packages/*/src/test/*.test.js', watched: true, type: 'module' }
   ];
 
   for (const package of packages) {
-    const fileEntry = {pattern: `test/lib/unit/${package}.test.js`, watched: true, type: 'module' };
+    const withoutMwcPrefix = package.replace(/^mwc-/, '');
+    const fileEntry = {
+      pattern: `test/lib/packages/${withoutMwcPrefix}/src/test/${package}.test.js`,
+      watched: true,
+      type: 'module',
+    };
     fileEntries.push(fileEntry);
   }
 
