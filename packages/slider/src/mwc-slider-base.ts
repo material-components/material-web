@@ -189,6 +189,7 @@ export class SliderBase extends FormElement {
       },
       setTrackStyleProperty: (propertyName: string, value: string) => {
         this.trackStyles[propertyName] = value;
+        this.requestUpdate();
       },
       setMarkerValue: (value: number) => this.pinMarkerText = value.toString(),
       setTrackMarkers: (step, max, min) => {
