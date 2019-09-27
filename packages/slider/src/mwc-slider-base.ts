@@ -78,38 +78,43 @@ export class SliderBase extends FormElement {
   })
   markers = false;
 
+  @property({type: String}) protected pinMarkerText = '';
+
   // TODO(sorvell) #css: needs a default width
   protected render() {
-    const {value, min, max, step, disabled, discrete, markers} =
-        this;
     const hostClassInfo = {
-      'mdc-slider--discrete': discrete,
-      'mdc-slider--display-markers': markers && discrete,
+      'mdc-slider--discrete': this.discrete,
+      'mdc-slider--display-markers': this.markers && this.discrete,
     };
 
     let markersTemplate: TemplateResult|string = '';
 
-    if (discrete && markers) {
+    if (this.discrete && this.markers) {
       markersTemplate = html`
         <div class="mdc-slider__track-marker-container"></div>`;
+    }
+
+    let pin: TemplateResult | string = '';
+
+    if (this.discrete) {
+      pin = html`
+      <div class="mdc-slider__pin">
+        <span class="mdc-slider__pin-value-marker">${this.pinMarkerText}</span>
+      </div>`
     }
     return html`
       <div class="mdc-slider ${classMap(hostClassInfo)}"
            tabindex="0" role="slider"
-           aria-valuemin="${min}" aria-valuemax="${max}"
-           aria-valuenow="${value}" aria-disabled="${disabled}"
-           data-step="${step}">
+           aria-valuemin="${this.min}" aria-valuemax="${this.max}"
+           aria-valuenow="${this.value}" aria-disabled="${this.disabled}"
+           data-step="${this.step}">
       <div class="mdc-slider__track-container">
         <div class="mdc-slider__track"></div>
         ${markersTemplate}
       </div>
       <div class="mdc-slider__thumb-container">
         <!-- TODO: use cache() directive -->
-        ${
-        discrete ? html`<div class="mdc-slider__pin">
-          <span class="mdc-slider__pin-value-marker"></span>
-        </div>` :
-                   ''}
+        ${pin}
         <svg class="mdc-slider__thumb" width="21" height="21">
           <circle cx="10.5" cy="10.5" r="7.875"></circle>
         </svg>
@@ -165,8 +170,7 @@ export class SliderBase extends FormElement {
           this.thumbContainer.style.setProperty(propertyName, value),
       setTrackStyleProperty: (propertyName: string, value: string) =>
           this.trackElement.style.setProperty(propertyName, value),
-      setMarkerValue: (value: number) => this.pinMarker.innerText =
-          value.toString(),
+      setMarkerValue: (value: number) => this.pinMarkerText = value.toString(),
       setTrackMarkers: (step, max, min) => {
         const stepStr = step.toLocaleString();
         const maxStr = max.toLocaleString();
