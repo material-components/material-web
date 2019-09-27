@@ -80,6 +80,8 @@ export class SliderBase extends FormElement {
   @property({type: Object}) protected thumbContainerStyles = {};
   @property({type: Object}) protected trackStyles = {};
 
+  protected isFoundationDestroyed = false;
+
   // TODO(sorvell) #css: needs a default width
   protected render() {
     const hostClassInfo = {
@@ -132,8 +134,17 @@ export class SliderBase extends FormElement {
     </div>`;
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    if (this.mdcRoot && this.isFoundationDestroyed) {
+      this.isFoundationDestroyed = false;
+      this.mdcFoundation.init();
+    }
+  }
+
   disconnectedCallback() {
     super.disconnectedCallback();
+    this.isFoundationDestroyed = true;
     this.mdcFoundation.destroy();
   }
 
