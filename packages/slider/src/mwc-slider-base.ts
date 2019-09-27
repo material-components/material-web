@@ -19,7 +19,6 @@ import {MDCSliderAdapter} from '@material/slider/adapter.js';
 import MDCSliderFoundation from '@material/slider/foundation.js';
 import {html, property, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
-import {repeat} from 'lit-html/directives/repeat.js';
 
 const {INPUT_EVENT, CHANGE_EVENT} = MDCSliderFoundation.strings;
 
@@ -79,11 +78,9 @@ export class SliderBase extends FormElement {
   })
   markers = false;
 
-  @property({type: Number}) private _numMarkers = 0;
-
   // TODO(sorvell) #css: needs a default width
   protected render() {
-    const {value, min, max, step, disabled, discrete, markers, _numMarkers} =
+    const {value, min, max, step, disabled, discrete, markers} =
         this;
     const hostClassInfo = {
       'mdc-slider--discrete': discrete,
@@ -93,14 +90,8 @@ export class SliderBase extends FormElement {
     let markersTemplate: TemplateResult|string = '';
 
     if (discrete && markers) {
-      const markerEls = repeat(
-          new Array(_numMarkers),
-          () => html`<div class="mdc-slider__track-marker"></div>`);
-
       markersTemplate = html`
-        <div class="mdc-slider__track-marker-container">
-          ${markerEls}
-        </div>`;
+        <div class="mdc-slider__track-marker-container"></div>`;
     }
     return html`
       <div class="mdc-slider ${classMap(hostClassInfo)}"
@@ -176,8 +167,17 @@ export class SliderBase extends FormElement {
           this.trackElement.style.setProperty(propertyName, value),
       setMarkerValue: (value: number) => this.pinMarker.innerText =
           value.toString(),
-      setTrackMarkers: (_step: number, _max: number, _min: number) => {
-        // TODO(aomarks) What are we supposed to do here?
+      setTrackMarkers: (step, max, min) => {
+        const stepStr = step.toLocaleString();
+        const maxStr = max.toLocaleString();
+        const minStr = min.toLocaleString();
+        // keep calculation in css for better rounding/subpixel behavior
+        const markerAmount = `((${maxStr} - ${minStr}) / ${stepStr})`;
+        const markerWidth = `2px`;
+        const markerBkgdImage = `linear-gradient(to right, currentColor ${markerWidth}, transparent 0)`;
+        const markerBkgdLayout = `0 center / calc((100% - ${markerWidth}) / ${markerAmount}) 100% repeat-x`;
+        const markerBkgdShorthand = `${markerBkgdImage} ${markerBkgdLayout}`;
+        this.trackMarkerContainer.style.setProperty('background', markerBkgdShorthand);
       },
       isRTL: () => getComputedStyle(this.mdcRoot).direction === 'rtl',
     };
