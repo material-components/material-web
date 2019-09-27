@@ -46,10 +46,10 @@ export class FabBase extends LitElement {
     const showLabel = this.label !== '' && this.extended;
     return html`
       <button
-          .ripple="${ripple()}"
           class="mdc-fab ${classMap(classes)}"
           ?disabled="${this.disabled}"
           aria-label="${this.label || this.icon}">
+        <div class="mdc-fab__ripple" .ripple="${ripple()}"></div>
         ${showLabel && this.showIconAtEnd ? this.label : ''}
         ${
         this.icon ? html`
