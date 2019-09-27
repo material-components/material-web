@@ -56,8 +56,9 @@ export class FabBase extends LitElement {
       <button
           class="mdc-fab ${classMap(classes)}"
           ?disabled="${this.disabled}"
-          aria-label="${this.label || this.icon}">
-        <div class="mdc-fab__ripple" .ripple="${ripple()}"></div>
+          aria-label="${this.label || this.icon}"
+          .ripple="${ripple()}">
+        <div class="mdc-fab__ripple"></div>
         ${showLabel && this.showIconAtEnd ? this.label : ''}
         ${iconTemplate}
         ${showLabel && !this.showIconAtEnd ? this.label : ''}
