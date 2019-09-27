@@ -166,6 +166,7 @@ type ValidityTransform = (value: string, nativeValidity: ValidityState) => Parti
 | `checkValidity() => boolean`   | Returns `true` if the textarea passes validity checks. Returns `false` and fires an [`invalid`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/invalid_event) event on the textarea otherwise.
 | `reportValidity() => boolean`   | Runs `checkValidity()` method, and if it returns false, then it reports to the user that the input is invalid.
 | `setCustomValidity(message:string) => void`   | Sets a custom validity message (also overwrites `validationMessage`). If this message is not the empty string, then the element is suffering from a  custom validity error and does not validate.
+| `layout() => Promise<void>`   | Re-calculate layout. If a textarea is styled with `display:none` before it is first rendered, and it has a label that is floating, then you must call `layout()` the first time you remove `display:none`, or else the notch surrounding the label will not render correctly.
 
 ### CSS Custom Properties
 

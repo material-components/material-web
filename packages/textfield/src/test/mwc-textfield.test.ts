@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
+import {FloatingLabel} from '@material/mwc-floating-label';
 import {TextField} from '@material/mwc-textfield';
 import {cssClasses} from '@material/textfield/constants';
 import {html} from 'lit-html';
 
-import {fixture, TestFixture} from '../../../../test/src/util/helpers';
+import {fixture, rafPromise, TestFixture} from '../../../../test/src/util/helpers';
 
 
 const basic = html`
@@ -39,6 +40,20 @@ const reqInitialVal = html`
       label="I am required"
       required
       validateOnInitialRender>
+  </mwc-textfield>
+`;
+
+const makeOutlined = (isHidden: boolean) => html`
+  <style>
+    .hidden {
+      display: none;
+    }
+  </style>
+  <mwc-textfield
+      outlined
+      label="label"
+      class="${isHidden ? 'hidden' : ''}"
+      value="some value to notch label">
   </mwc-textfield>
 `;
 
@@ -205,6 +220,7 @@ suite('mwc-textfield:', () => {
     });
   });
 
+
   suite('select', () => {
     let element: TextField;
 
@@ -253,6 +269,220 @@ suite('mwc-textfield:', () => {
       assert.equal(input.selectionEnd, 6);
       assert.equal(element.selectionStart, 4);
       assert.equal(element.selectionEnd, 6);
+    });
+
+    teardown(() => {
+      if (fixt) {
+        fixt.remove();
+      }
+    });
+  });
+
+  suite('notch', () => {
+    let fixt: TestFixture;
+    test('notch can be layout-ed to correct size', async () => {
+      fixt = await fixture(makeOutlined(true));
+      const element = fixt.root.querySelector('mwc-textfield')!;
+
+      const notchedOutline =
+          element.shadowRoot!.querySelector('mwc-notched-outline')!;
+      const floatingLabel =
+          element.shadowRoot!.querySelector('label') as FloatingLabel;
+
+      await element.requestUpdate();
+      // needed for older browsers
+      await notchedOutline.requestUpdate();
+
+      let outlineWidth = notchedOutline.width;
+      assert.isTrue(notchedOutline.open);
+
+      assert.strictEqual(outlineWidth, 0);
+
+      element.classList.remove('hidden');
+      await element.requestUpdate();
+      await rafPromise();
+      outlineWidth = notchedOutline.width;
+      let labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
+      assert.strictEqual(outlineWidth, 0);
+      assert.isTrue(labelWidth > 0);
+
+      await element.layout();
+      await element.updateComplete;
+
+      outlineWidth = notchedOutline.width;
+      labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
+
+      const diff = Math.abs(outlineWidth - labelWidth);
+      assert.isTrue(diff < 3);
+    });
+
+    test('notch changes size with label change', async () => {
+      fixt = await fixture(makeOutlined(false));
+      const element = fixt.root.querySelector('mwc-textfield')!;
+
+      const notchedOutline =
+          element.shadowRoot!.querySelector('mwc-notched-outline')!;
+      const floatingLabel =
+          element.shadowRoot!.querySelector('label') as FloatingLabel;
+      await element.requestUpdate();
+      // needed for older browsers
+      await notchedOutline.requestUpdate();
+
+      let outlineWidth = notchedOutline.width;
+      let labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
+      assert.isTrue(notchedOutline.open);
+      let diff = Math.abs(outlineWidth - labelWidth);
+      assert.isTrue(diff < 3);
+
+      element.label = 'this is some other label';
+
+      // wait for this label to finish updating
+      await element.updateComplete;
+      // wait for internal event listener to trigger layout method
+      await element.requestUpdate();
+      // needed for older browsers
+      await notchedOutline.requestUpdate();
+
+      outlineWidth = notchedOutline.width;
+      labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
+      diff = Math.abs(outlineWidth - labelWidth);
+      assert.isTrue(diff < 3);
+    });
+
+    teardown(() => {
+      if (fixt) {
+        fixt.remove();
+      }
+    });
+  });
+
+  suite('helper and char counter rendering', () => {
+    let fixt: TestFixture;
+
+    setup(async () => {
+      fixt = await fixture(basic);
+    });
+
+    test('createFoundation called an appropriate amount of times', async () => {
+      const element = fixt.root.querySelector('mwc-textfield')!;
+      element.helperPersistent = true;
+
+      const oldCreateFoundation =
+          (element as any).createFoundation.bind(element) as () => void;
+      let numTimesCreateFoundationCalled = 0;
+
+      ((element as any).createFoundation as () => void) = () => {
+        numTimesCreateFoundationCalled = numTimesCreateFoundationCalled + 1;
+        oldCreateFoundation();
+      };
+
+      const charCounters = element.shadowRoot!.querySelectorAll(
+          '.mdc-text-field-character-counter');
+
+      assert.strictEqual(charCounters.length, 1, 'only one char counter');
+
+      const charCounter = charCounters[0] as HTMLElement;
+      const helperText = element.shadowRoot!.querySelector(
+                             '.mdc-text-field-helper-text') as HTMLElement;
+
+
+      assert.strictEqual(
+          charCounter.offsetWidth, 0, 'char counter initially hidden');
+      assert.strictEqual(
+          helperText.offsetWidth, 0, 'helper line initially hidden');
+
+      element.helper = 'my helper';
+      await element.requestUpdate();
+
+      assert.strictEqual(
+          numTimesCreateFoundationCalled,
+          0,
+          'foundation not recreated due to helper change');
+      assert.strictEqual(
+          charCounter.offsetWidth,
+          0,
+          'char counter hidden when only helper defined');
+      assert.isTrue(
+          helperText.offsetWidth > 0, 'helper text shown when defined');
+
+      element.helper = '';
+      await element.requestUpdate();
+
+      assert.strictEqual(
+          numTimesCreateFoundationCalled,
+          0,
+          'foundation not recreated due to helper change');
+      assert.strictEqual(
+          charCounter.offsetWidth,
+          0,
+          'char counter does not render on helper change');
+      assert.strictEqual(
+          helperText.offsetWidth, 0, 'helper line hides when reset to empty');
+
+      element.maxLength = 10;
+      await element.requestUpdate();
+
+      assert.strictEqual(
+          numTimesCreateFoundationCalled,
+          1,
+          'foundation created when maxlength changed from -1');
+      assert.strictEqual(
+          charCounter.offsetWidth,
+          0,
+          'char counter does not render without charCounter set');
+      assert.strictEqual(
+          helperText.offsetWidth,
+          0,
+          'helper line does not render on maxLength change');
+
+      numTimesCreateFoundationCalled = 0;
+      element.maxLength = -1;
+      await element.requestUpdate();
+
+      assert.strictEqual(
+          numTimesCreateFoundationCalled,
+          1,
+          'foundation created when maxlength changed to -1');
+
+      numTimesCreateFoundationCalled = 0;
+      element.charCounter = true;
+      await element.requestUpdate();
+
+      assert.strictEqual(
+          numTimesCreateFoundationCalled,
+          0,
+          'foundation not updated when charCounter changed');
+      assert.strictEqual(
+          charCounter.offsetWidth,
+          0,
+          'char counter does not render without maxLength set');
+      assert.strictEqual(
+          helperText.offsetWidth,
+          0,
+          'helper line does not render on charCounter change');
+
+      element.maxLength = 20;
+      await element.requestUpdate();
+
+      assert.strictEqual(
+          numTimesCreateFoundationCalled,
+          1,
+          'foundation created when maxlength changed from -1');
+      assert.isTrue(
+          charCounter.offsetWidth > 0,
+          'char counter renders when both charCounter and maxLength set');
+
+      numTimesCreateFoundationCalled = 0;
+      element.maxLength = 15;
+      await element.requestUpdate();
+
+      assert.strictEqual(
+          numTimesCreateFoundationCalled,
+          0,
+          'foundation not recreated when maxLength not changed to or from -1');
+      assert.isTrue(
+          charCounter.offsetWidth > 0,
+          'char counter still visible on maxLength change');
     });
 
     teardown(() => {

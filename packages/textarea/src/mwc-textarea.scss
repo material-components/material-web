@@ -56,12 +56,12 @@ limitations under the License.
     @include mdc-theme-prop(border-bottom-color, $mdc-text-field-disabled-border);
   }
 
-  .mdc-text-field__input {
+  .mdc-text-field__input, .mdc-text-field-character-counter.hidden + .mdc-text-field__input {
     padding: 0 16px 0 16px;
     margin: 20px 0 1px 0;
   }
 
-  .mdc-text-field-character-counter + .mdc-text-field__input {
+  .mdc-text-field-character-counter:not(.hidden) + .mdc-text-field__input {
     margin-bottom: 28px;
   }
 
@@ -88,7 +88,7 @@ limitations under the License.
       .mdc-text-field-character-counter {
         bottom: 14px;
 
-        &+.mdc-text-field__input {
+        &:not(.hidden)+.mdc-text-field__input {
           margin-bottom: 41px;
         }
       }

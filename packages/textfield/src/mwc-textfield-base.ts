@@ -178,6 +178,14 @@ export abstract class TextFieldBase extends FormElement {
     return this.formElement.selectionEnd;
   }
 
+  protected get shouldRenderHelperText(): boolean {
+    return !!this.helper || !!this.validationMessage || this.charCounterVisible;
+  }
+
+  protected get charCounterVisible(): boolean {
+    return this.charCounter && this.maxLength !== -1;
+  }
+
   validityTransform:
       ((value: string,
         nativeValidity: ValidityState) => Partial<ValidityState>)|null = null;
@@ -221,26 +229,31 @@ export abstract class TextFieldBase extends FormElement {
         ${this.iconTrailing ? this.renderIcon(this.iconTrailing) : ''}
         ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
       </div>
-      ${
-        (this.helper || this.validationMessage || this.charCounter) ?
-            this.renderHelperText() :
-            ''}
+      ${this.renderHelperText(this.renderCharCounter())}
     `;
   }
 
   updated(changedProperties: PropertyValues) {
-    const charCounter =
-        changedProperties.get('charCounter') as boolean | undefined;
+    const maxLength = changedProperties.get('maxLength') as number | undefined;
 
-    // update foundation only when charCounter goes from false to true
-    if (!charCounter && this.charCounter) {
+    const maxLengthBecameDefined = maxLength === -1 && this.maxLength !== -1;
+    const maxLengthBecameUndefined =
+        maxLength !== undefined && maxLength !== -1 && this.maxLength === -1;
+
+    /* We want to recreate the foundation if maxLength changes to defined or
+     * undefined, because the textfield foundation needs to be instantiated with
+     * the char counter's foundation, and the char counter's foundation needs
+     * to have maxLength defined to be instantiated. Additionally, there is no
+     * exposed API on the MdcTextFieldFoundation to dynamically add a char
+     * counter foundation, so we must recreate it.
+     */
+    if (maxLengthBecameDefined || maxLengthBecameUndefined) {
       this.createFoundation();
     }
   }
 
   protected renderInput() {
     const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
-
     return html`
       <input
           id="text-field"
@@ -267,7 +280,10 @@ export abstract class TextFieldBase extends FormElement {
     let labelTemplate: TemplateResult|string = '';
     if (this.label) {
       labelTemplate = html`
-        <label .floatingLabelFoundation=${floatingLabel()} for="text-field">
+        <label
+            .floatingLabelFoundation=${floatingLabel(this.label)}
+            @labelchange=${this.onLabelChange}
+            for="text-field">
           ${this.label}
         </label>
       `;
@@ -285,7 +301,9 @@ export abstract class TextFieldBase extends FormElement {
     let labelTemplate: TemplateResult|string = '';
     if (this.label && !this.fullWidth) {
       labelTemplate = html`
-      <label .floatingLabelFoundation=${floatingLabel()} for="text-field">
+      <label
+          .floatingLabelFoundation=${floatingLabel(this.label)}
+          for="text-field">
         ${this.label}
       </label>`;
     }
@@ -296,26 +314,37 @@ export abstract class TextFieldBase extends FormElement {
     `;
   }
 
-  protected renderHelperText() {
+  protected renderHelperText(charCounterTemplate?: TemplateResult) {
     const showValidationMessage = this.validationMessage && !this.isUiValid;
     const classes = {
       'mdc-text-field-helper-text--persistent': this.helperPersistent,
       'mdc-text-field-helper-text--validation-msg': showValidationMessage,
     };
 
-    let charCounterTemplate: TemplateResult|string = '';
-    if (this.charCounter) {
-      charCounterTemplate = html`
-        <div .charCounterFoundation=${characterCounter()}></div>`;
-    }
+    const rootClasses = {
+      hidden: !this.shouldRenderHelperText,
+    };
+
     return html`
-      <div class="mdc-text-field-helper-line">
+      <div class="mdc-text-field-helper-line ${classMap(rootClasses)}">
         <div class="mdc-text-field-helper-text ${classMap(classes)}">
           ${showValidationMessage ? this.validationMessage : this.helper}
         </div>
         ${charCounterTemplate}
       </div>
     `;
+  }
+
+  protected renderCharCounter() {
+    const counterClasses = {
+      hidden: !this.charCounterVisible,
+    };
+
+    return html`
+      <div
+          class="${classMap(counterClasses)}"
+          .charCounterFoundation=${characterCounter()}>
+      </div>`;
   }
 
   protected onInputBlur() {
@@ -376,7 +405,7 @@ export abstract class TextFieldBase extends FormElement {
       this.mdcFoundation.destroy();
     }
     this.mdcFoundation = new this.mdcFoundationClass(this.createAdapter(), {
-      characterCounter: this.charCounterElement ?
+      characterCounter: this.maxLength !== -1 ?
           this.charCounterElement.charCounterFoundation :
           undefined
     });
@@ -399,14 +428,19 @@ export abstract class TextFieldBase extends FormElement {
           this.addEventListener(evtType, handler),
       deregisterTextFieldInteractionHandler: (evtType, handler) =>
           this.removeEventListener(evtType, handler),
-      registerValidationAttributeChangeHandler: (handler) => {
+      registerValidationAttributeChangeHandler: () => {
         const getAttributesList =
             (mutationsList: MutationRecord[]): string[] => {
               return mutationsList.map((mutation) => mutation.attributeName)
                          .filter((attributeName) => attributeName) as string[];
             };
-        const observer = new MutationObserver(
-            (mutationsList) => handler(getAttributesList(mutationsList)));
+        const observer = new MutationObserver((mutationsList) => {
+          const attributes = getAttributesList(mutationsList);
+          if (attributes.indexOf('maxlength') !== -1 && this.maxLength !== -1) {
+            this.charCounterElement.charCounterFoundation.setCounterValue(
+                this.value.length, this.maxLength);
+          }
+        });
         const config = {attributes: true};
         observer.observe(this.formElement, config);
         return observer;
@@ -486,11 +520,34 @@ export abstract class TextFieldBase extends FormElement {
       hasOutline: () => Boolean(this.outlineElement),
       notchOutline: (labelWidth) => {
         const outlineElement = this.outlineElement;
-        if (outlineElement) {
+        if (outlineElement && !this.outlineOpen) {
           this.outlineWidth = labelWidth;
           this.outlineOpen = true;
         }
       }
     };
+  }
+
+  protected async onLabelChange() {
+    if (this.label) {
+      await this.layout();
+    }
+  }
+
+  async layout() {
+    await this.updateComplete;
+
+    if (this.labelElement && this.outlineElement) {
+      /* When the textfield automatically notches due to a value and label
+       * being defined, the textfield may be set to `display: none` by the user.
+       * this means that the notch is of size 0px. We provide this function so
+       * that the user may manually resize the notch to the floated label's
+       * width.
+       */
+      const labelWidth = this.labelElement.floatingLabelFoundation.getWidth();
+      if (this.outlineOpen) {
+        this.outlineWidth = labelWidth;
+      }
+    }
   }
 }

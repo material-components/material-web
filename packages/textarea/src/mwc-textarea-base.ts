@@ -15,7 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {characterCounter} from '@material/mwc-textfield/character-counter/mwc-character-counter-directive.js';
 import {TextFieldBase} from '@material/mwc-textfield/mwc-textfield-base.js';
 import {html, property, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
@@ -30,6 +29,10 @@ export abstract class TextAreaBase extends TextFieldBase {
 
   @property({type: Number}) cols = 20;
 
+  protected get shouldRenderHelperText(): boolean {
+    return !!this.helper || !!this.validationMessage;
+  }
+
   render() {
     const classes = {
       'mdc-text-field--disabled': this.disabled,
@@ -37,16 +40,14 @@ export abstract class TextAreaBase extends TextFieldBase {
       'mdc-text-field--outlined': this.outlined,
       'mdc-text-field--fullwidth': this.fullWidth,
     };
+
     return html`
       <div class="mdc-text-field mdc-text-field--textarea ${classMap(classes)}">
-        ${
-        this.charCounter ? html`
-            <div .charCounterFoundation=${characterCounter()}></div>` :
-                           ''}
+        ${this.renderCharCounter()}
         ${this.renderInput()}
         ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
       </div>
-      ${this.helper ? this.renderHelperText() : ''}
+      ${this.renderHelperText()}
     `;
   }
 
