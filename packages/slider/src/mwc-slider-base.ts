@@ -148,7 +148,7 @@ export class SliderBase extends FormElement {
       getTabIndex: () => this.mdcRoot.tabIndex,
       registerInteractionHandler:
           <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
-            const init = type === 'touchstart' ? applyPassive() : {};
+            const init = type === 'touchstart' ? applyPassive() : undefined;
             this.mdcRoot.addEventListener(type, handler, init);
           },
       deregisterInteractionHandler:
@@ -156,7 +156,7 @@ export class SliderBase extends FormElement {
               this.mdcRoot.removeEventListener(type, handler),
       registerThumbContainerInteractionHandler:
           <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
-            const init = type === 'touchstart' ? applyPassive() : {};
+            const init = type === 'touchstart' ? applyPassive() : undefined;
             this.thumbContainer.addEventListener(type, handler, init);
           },
       deregisterThumbContainerInteractionHandler:
