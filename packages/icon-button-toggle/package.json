@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-icon-button-toggle",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "",
   "main": "mwc-icon-button-toggle.js",
   "module": "mwc-icon-button-toggle.js",
@@ -16,10 +16,10 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/icon-button": "^3.0.0",
-    "@material/mwc-base": "^0.8.0",
-    "@material/mwc-icon": "^0.8.0",
-    "@material/mwc-icon-button": "^0.8.0",
-    "@material/mwc-ripple": "^0.8.0",
+    "@material/mwc-base": "^0.9.0",
+    "@material/mwc-icon": "^0.9.0",
+    "@material/mwc-icon-button": "^0.9.0",
+    "@material/mwc-ripple": "^0.9.0",
     "lit-element": "^2.2.1",
     "tslib": "^1.10.0"
   },

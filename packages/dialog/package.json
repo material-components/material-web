@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-dialog",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "",
   "main": "mwc-dialog.js",
   "module": "mwc-dialog.js",
@@ -17,10 +17,10 @@
   "dependencies": {
     "@material/dialog": "^3.0.0",
     "blocking-elements": "^0.1.0",
-    "tslib": "^1.10.0",
-    "wicg-inert": "^3.0.0",
     "lit-element": "^2.2.1",
-    "lit-html": "^1.1.2"
+    "lit-html": "^1.1.2",
+    "tslib": "^1.10.0",
+    "wicg-inert": "^3.0.0"
   },
   "devDependencies": {
     "@material/feature-targeting": "^3.0.0"
