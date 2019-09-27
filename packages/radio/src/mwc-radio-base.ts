@@ -144,12 +144,13 @@ export class RadioBase extends FormElement {
           .value="${this.value}"
           @change="${this._changeHandler}"
           @focus="${this._focusHandler}"
-          @click="${this._clickHandler}">
+          @click="${this._clickHandler}"
+          .ripple=${ripple()}>
         <div class="mdc-radio__background">
           <div class="mdc-radio__outer-circle"></div>
           <div class="mdc-radio__inner-circle"></div>
         </div>
-        <div class="mdc-radio__ripple" .ripple=${ripple()}></div>
+        <div class="mdc-radio__ripple"></div>
       </div>`;
   }
 
