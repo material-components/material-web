@@ -20,11 +20,12 @@ import 'wicg-inert';
 import {MDCDialogAdapter} from '@material/dialog/adapter.js';
 import {cssClasses} from '@material/dialog/constants.js';
 import MDCDialogFoundation from '@material/dialog/foundation.js';
+import {applyPassive} from '@material/dom/events';
+import {closest, matches} from '@material/dom/ponyfill';
 import {addHasRemoveClass, BaseElement, observer} from '@material/mwc-base/base-element.js';
 import {DocumentWithBlockingElements} from 'blocking-elements';
 import {html, property, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
-
 
 export {MDCDialogCloseEventDetail} from '@material/dialog/types';
 
@@ -95,8 +96,8 @@ export class DialogBase extends BaseElement {
   @property() initialFocusAttribute = 'dialogInitialFocus';
 
   protected get primaryButton(): HTMLElement|null {
-    const assignedNodes = (this.primarySlot as HTMLSlotElement).assignedNodes();
-    assignedNodes.filter((node) => node instanceof HTMLElement);
+    let assignedNodes = (this.primarySlot as HTMLSlotElement).assignedNodes();
+    assignedNodes = assignedNodes.filter((node) => node instanceof HTMLElement);
     const button = assignedNodes[0] as HTMLElement | undefined;
     return button ? button : null;
   }
@@ -133,14 +134,14 @@ export class DialogBase extends BaseElement {
         }
       },
       eventTargetMatches: (target, selector) =>
-          target ? (target as Element).matches(selector) : false,
+          target ? matches(target as Element, selector) : false,
       getActionFromEvent: (e: Event) => {
         if (!e.target) {
           return '';
         }
 
         const element =
-            (e.target as Element).closest(`[${this.actionAttribute}]`);
+            closest(e.target as Element, `[${this.actionAttribute}]`);
         const action = element && element.getAttribute(this.actionAttribute);
         return action;
       },
@@ -187,12 +188,7 @@ export class DialogBase extends BaseElement {
 
     const actionsClasses = {
       'mdc-dialog__actions': !this.hideActions,
-      'reversed': this.stacked,
     };
-
-    const actionSlots = html`
-        <slot name="secondaryAction"></slot>
-        <slot name="primaryAction"></slot>`;
 
     return html`
     <div class="mdc-dialog ${classMap(classes)}"
@@ -209,7 +205,12 @@ export class DialogBase extends BaseElement {
           <footer
               id="actions"
               class="${classMap(actionsClasses)}">
-            ${actionSlots}
+            <span>
+              <slot name="secondaryAction"></slot>
+            </span>
+            <span>
+             <slot name="primaryAction"></slot>
+            </span>
           </footer>
         </div>
       </div>
@@ -256,25 +257,26 @@ export class DialogBase extends BaseElement {
   }
 
   protected setEventListeners() {
-    this.boundHandleClick =
-        this.mdcFoundation.handleClick.bind(this.mdcFoundation);
+    this.boundHandleClick = this.mdcFoundation.handleClick.bind(
+                                this.mdcFoundation) as EventListener;
     this.boundLayout = () => {
       if (this.open) {
         this.mdcFoundation.layout.bind(this.mdcFoundation);
       }
     };
-    this.boundHandleKeydown =
-        this.mdcFoundation.handleKeydown.bind(this.mdcFoundation);
+    this.boundHandleKeydown = this.mdcFoundation.handleKeydown.bind(
+                                  this.mdcFoundation) as EventListener;
     this.boundHandleDocumentKeydown =
-        this.mdcFoundation.handleDocumentKeydown.bind(this.mdcFoundation);
+        this.mdcFoundation.handleDocumentKeydown.bind(this.mdcFoundation) as
+        EventListener;
 
     this.mdcRoot.addEventListener('click', this.boundHandleClick);
-    window.addEventListener('resize', this.boundLayout, {passive: true});
+    window.addEventListener('resize', this.boundLayout, applyPassive());
     window.addEventListener(
-        'orientationchange', this.boundLayout, {passive: true});
-    this.addEventListener('keydown', this.boundHandleKeydown, {passive: true});
+        'orientationchange', this.boundLayout, applyPassive());
+    this.addEventListener('keydown', this.boundHandleKeydown, applyPassive());
     document.addEventListener(
-        'keydown', this.boundHandleDocumentKeydown, {passive: true});
+        'keydown', this.boundHandleDocumentKeydown, applyPassive());
   }
 
   protected removeEventListeners() {

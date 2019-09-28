@@ -89,7 +89,7 @@ suite('mwc-dialog:', () => {
       element.title = 'This is my Title';
       await element.requestUpdate();
       titleTag = element.shadowRoot!.querySelector('.mdc-dialog__title');
-      assert.isOk(titleTag);
+      assert.notStrictEqual(titleTag, null);
       assert.strictEqual(titleTag!.textContent, 'This is my Title');
     });
 
@@ -138,8 +138,8 @@ suite('mwc-dialog:', () => {
       assert.isFalse(closingCalled);
       assert.isFalse(closedCalled);
 
-      assert.isOk(surfaceElement.offsetWidth);
-      assert.isOk(surfaceElement.offsetHeight);
+      assert.isTrue(surfaceElement.offsetWidth > 0);
+      assert.isTrue(surfaceElement.offsetHeight > 0);
 
       openingCalled = false;
       openedCalled = false;
@@ -204,8 +204,8 @@ suite('mwc-dialog:', () => {
       element.open = true;
       await awaitEvent(element, OPENED_EVENT);
 
-      assert.isOk(actionsFooter.offsetWidth);
-      assert.isOk(actionsFooter.offsetHeight);
+      assert.isTrue(actionsFooter.offsetWidth > 0);
+      assert.isTrue(actionsFooter.offsetHeight > 0);
 
       element.hideActions = true;
       await element.requestUpdate();
