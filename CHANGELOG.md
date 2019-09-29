@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
 ### Fixed
+
 - Fixed missing `@material/mwc-base` dep on `@material/mwc-dialog`.
 
 ## [0.9.0] - 2019-09-26
