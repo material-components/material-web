@@ -161,6 +161,7 @@ type TextFieldType = 'text'|'search'|'tel'|'url'|'email'|'password'|
 type ValidityTransform = (value: string, nativeValidity: ValidityState) => Partial<ValidityState>
 ```
 ### Methods
+
 | Name     | Description
 | -------- | -------------
 | `checkValidity() => boolean`   | Returns `true` if the textarea passes validity checks. Returns `false` and fires an [`invalid`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/invalid_event) event on the textarea otherwise.
@@ -185,8 +186,10 @@ Inherits CSS Custom properties from:
 | `--mdc-text-area-outlined-disabled-border-color` | `rgba(0, 0, 0, 0.06)`  | Color of the outlined textarea's outline when disabled.
 
 ### Validation
+
 `<mwc-textarea>` follows the basic `<input>` [constraint validation model](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation).
 It exposes:
+
 * `required`
 * `maxLength`
 * `validity`
@@ -194,23 +197,29 @@ It exposes:
 * `checkValidity()`
 * `reportValidity()`
 * `setCustomValidity(message)`
+
 Additionally, it implements more features such as:
 * `validationMessage`
 * `validateOnInitialRender`
 * and `validityTransform`
 
 By default, `<mwc-textarea>` will report validation on `blur`.
+
 #### Custom validation logic
+
 The `validityTransform` property is a function that can be set on `<mwc-textarea>` to
 implement custom validation logic that transforms the `ValidityState` of the
 input control. The type of a `ValidityTransform` is the following:
+
 ```ts
 (value: string, nativeValidity: ValidityState) => Partial<ValidityState>
 ```
+
 Where `value` is the new value in the textarea to be validated and
 `nativeValidity` is an interface of
 [`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState)
 of the native input control. For example:
+
 ```html
 <mwc-textarea
     id="my-textarea"
