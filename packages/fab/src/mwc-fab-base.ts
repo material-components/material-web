@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
-import {html, LitElement, property} from 'lit-element';
+import {html, LitElement, property, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
 export class FabBase extends LitElement {
@@ -44,17 +44,23 @@ export class FabBase extends LitElement {
       'mdc-fab--extended': this.extended,
     };
     const showLabel = this.label !== '' && this.extended;
+
+    let iconTemplate: TemplateResult|string = '';
+
+    if (this.icon) {
+      iconTemplate = html`
+        <span class="material-icons mdc-fab__icon">${this.icon}</span>`;
+    }
+
     return html`
       <button
-          .ripple="${ripple()}"
           class="mdc-fab ${classMap(classes)}"
           ?disabled="${this.disabled}"
-          aria-label="${this.label || this.icon}">
+          aria-label="${this.label || this.icon}"
+          .ripple="${ripple()}">
+        <div class="mdc-fab__ripple"></div>
         ${showLabel && this.showIconAtEnd ? this.label : ''}
-        ${
-        this.icon ? html`
-          <span class="material-icons mdc-fab__icon">${this.icon}</span>` :
-                    ''}
+        ${iconTemplate}
         ${showLabel && !this.showIconAtEnd ? this.label : ''}
       </button>`;
   }
