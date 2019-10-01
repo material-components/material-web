@@ -200,6 +200,7 @@ type ValidityTransform = (value: string, nativeValidity: ValidityState) => Parti
 ### CSS Custom Properties
 
 Inherits CSS Custom properties from:
+
 * [`mwc-ripple`](https://github.com/material-components/material-components-web-components/tree/master/packages/ripple)
 * [`mwc-notched-outline`](https://github.com/material-components/material-components-web-components/tree/master/packages/notched-outline).
 * [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon)
@@ -231,6 +232,7 @@ It exposes:
 * `setCustomValidity(message)`
 
 Additionally, it implements more features such as:
+
 * `validationMessage`
 * `validateOnInitialRender`
 * and `validityTransform`
