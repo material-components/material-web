@@ -21,9 +21,11 @@ import MDCRadioFoundation from '@material/radio/foundation.js';
 import {html, property, query} from 'lit-element';
 
 export class RadioBase extends FormElement {
-  @query('.mdc-radio') protected mdcRoot!: HTMLElementWithRipple;
+  @query('.mdc-radio') protected mdcRoot!: HTMLElement;
 
   @query('input') protected formElement!: HTMLInputElement;
+
+  @query('.mdc-radio__ripple') protected rippleElement!: HTMLElementWithRipple;
 
   private _checked = false;
 
@@ -106,7 +108,7 @@ export class RadioBase extends FormElement {
   }
 
   get ripple() {
-    return this.mdcRoot.ripple;
+    return this.rippleElement.ripple;
   }
 
   protected createAdapter(): MDCRadioAdapter {
@@ -133,7 +135,7 @@ export class RadioBase extends FormElement {
 
   protected render() {
     return html`
-      <div class="mdc-radio" .ripple="${ripple()}">
+      <div class="mdc-radio" .ripple=${ripple()}>
         <input
           class="mdc-radio__native-control"
           type="radio"
@@ -147,6 +149,7 @@ export class RadioBase extends FormElement {
           <div class="mdc-radio__outer-circle"></div>
           <div class="mdc-radio__inner-circle"></div>
         </div>
+        <div class="mdc-radio__ripple"></div>
       </div>`;
   }
 
