@@ -70,22 +70,17 @@ limitations under the License.
         }
       }
     }
+  }
 
-    .mdc-dialog--stacked &:not(.reversed) *:not(:first-child)::slotted(*) {
+  .mdc-dialog--stacked #actions {
+    flex-direction: column-reverse;
+
+    *:not(:last-child) ::slotted(*) {
+      flex-basis: .000000001px;
       @include mdc-feature-targets($feat-structure) {
         margin-top: 12px;
       }
     }
-
-    .mdc-dialog--stacked &.reversed {
-      flex-direction: column-reverse;
-
-      *:not(:last-child)::slotted(*) {
-        @include mdc-feature-targets($feat-structure) {
-          margin-top: 12px;
-        }
-      }
-     }
   }
 }
 
