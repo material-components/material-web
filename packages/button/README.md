@@ -111,13 +111,13 @@ mwc-button {
 | Name | Type | Default | Description
 | ---- | ---- | ------- | -----------
 | `icon` | `string` | `''` | Icon to display, and `aria-label` value when `label` is not defined.
-| `label` | `string` | `''` | Label to display for the button, and `aria-label`
+| `label` | `string` | `''` | Label to display for the button, and `aria-label`.
 | `raised` | `boolean` | `false` | Creates a contained button that is elevated above the surface.
 | `unelevated` | `boolean` | `false` | Creates a contained button that is flush with the surface.
 | `outlined` | `boolean` | `false` | Creates an outlined button that is flush with the surface.
 | `dense` | `boolean` | `false` | Makes the button text and container slightly smaller.
 | `disabled` | `boolean` | `false` | Disabled buttons cannot be interacted with and have no visual interaction effect.
-| `trailingIcon` | `boolean` | `false` | When `true`, `icon` will be displayed _after_ `label`
+| `trailingIcon` | `boolean` | `false` | When `true`, `icon` will be displayed _after_ `label`.
 
 ### Methods
 *None*
