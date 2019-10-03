@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Implemented `mwc-dialog`
 - `mwc-textfield.layout` method.
 
+### Fixed
+
+- Fixed `mwc-dialog`'s issues with working on older browsers.
+
 ### Changed
 
 - **BREAKING:** Added custom `.focus()` and `.blur()` functions to mwc-button
