@@ -37,7 +37,7 @@ A [Material Components](https://material.io/develop/) drawer implementation usin
 
       Or into your module script:
 
-      ```import {Switch} from "@material/mwc-drawer"```
+      ```import {Drawer} from "@material/mwc-drawer"```
 
   1. Create an instance of mwc-drawer in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
 
