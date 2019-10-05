@@ -160,10 +160,10 @@ export class TabBarBase extends BaseElement {
     };
   }
 
-  // NOTE: Delay creating foundation until scroller is fully updated.
-  // This is necessary because the foundation/adapter synchronously addresses
-  // the scroller element.
   protected firstUpdated() {
+    // NOTE: Delay creating foundation until scroller is fully updated.
+    // This is necessary because the foundation/adapter synchronously addresses
+    // the scroller element.
   }
   protected _getUpdateComplete() {
     return super._getUpdateComplete()
