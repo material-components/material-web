@@ -51,15 +51,15 @@ export class DialogBase extends BaseElement {
 
   @query('.mdc-container') protected conatinerElement!: HTMLDivElement;
 
-  @property({type: Boolean}) hideActions: boolean = false;
+  @property({type: Boolean}) hideActions = false;
 
   @property({type: Boolean})
   @observer(function(this: DialogBase) {
     this.forceLayout();
   })
-  stacked: boolean = false;
+  stacked = false;
 
-  @property({type: String}) title: string = '';
+  @property({type: String}) title = '';
 
   @property({type: String})
   @observer(function(this: DialogBase, newAction: string) {

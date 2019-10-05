@@ -25,9 +25,9 @@ export class NotchedOutlineBase extends BaseElement {
 
   protected readonly mdcFoundationClass = MDCNotchedOutlineFoundation;
 
-  @property({type: Number}) width: number = 0;
+  @property({type: Number}) width = 0;
 
-  @property({type: Boolean, reflect: true}) open: boolean = false;
+  @property({type: Boolean, reflect: true}) open = false;
 
   protected lastOpen = this.open;
 
