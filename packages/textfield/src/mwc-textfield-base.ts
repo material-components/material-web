@@ -250,6 +250,11 @@ export abstract class TextFieldBase extends FormElement {
     if (maxLengthBecameDefined || maxLengthBecameUndefined) {
       this.createFoundation();
     }
+
+    if (changedProperties.has('value') &&
+        changedProperties.get('value') !== undefined) {
+      this.mdcFoundation.setValue(this.value);
+    }
   }
 
   protected renderInput() {

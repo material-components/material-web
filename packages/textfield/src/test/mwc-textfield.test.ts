@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import {cssClasses as floatingClasses} from '@material/floating-label/constants';
 import {FloatingLabel} from '@material/mwc-floating-label';
 import {TextField} from '@material/mwc-textfield';
 import {cssClasses} from '@material/textfield/constants';
@@ -55,6 +56,10 @@ const makeOutlined = (isHidden: boolean) => html`
       class="${isHidden ? 'hidden' : ''}"
       value="some value to notch label">
   </mwc-textfield>
+`;
+
+const withLabel = html`
+  <mwc-textfield label="a label"></mwc-textfield>
 `;
 
 const isUiInvalid = (element: TextField) => {
@@ -489,6 +494,36 @@ suite('mwc-textfield:', () => {
       if (fixt) {
         fixt.remove();
       }
+    });
+  });
+
+  suite('label', () => {
+    let element: TextField;
+
+    setup(async () => {
+      fixt = await fixture(withLabel);
+      element = fixt.root.querySelector('mwc-textfield')!;
+      await element.updateComplete;
+    });
+
+    teardown(() => {
+      if (fixt) {
+        fixt.remove();
+      }
+    });
+
+    test('label floats when value is set', async () => {
+      const floatingLabel =
+          element.shadowRoot!.querySelector('label') as FloatingLabel;
+
+      assert.isFalse(
+          floatingLabel.classList.contains(floatingClasses.LABEL_FLOAT_ABOVE));
+
+      element.value = 'foo bar';
+      await element.updateComplete;
+
+      assert.isTrue(
+          floatingLabel.classList.contains(floatingClasses.LABEL_FLOAT_ABOVE));
     });
   });
 });
