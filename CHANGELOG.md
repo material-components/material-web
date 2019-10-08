@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Changed
+
+- **BREAKING** Removed `mwc-icon-font.js` import. Most users should load the
+  Material Icons and Roboto fonts by adding the following to their HTML file:
+
+  ```html
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
+  ```
+
+  See the [Fonts](https://github.com/material-components/material-components-web-components#fonts)
+  section of the README for more details.
+
 ### Fixed
 
 - Fixed `mwc-dialog`'s issues with working on older browsers.
@@ -112,10 +125,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   ([#314](https://github.com/material-components/material-components-web-components/pull/314)).
   This allows more control over how fonts are loaded (e.g. serving fonts from a
   different server, or loading multiple fonts with a single request). Most users
-  should now add a tag like this to their HTML page:
+  should now add tags like this to their HTML page:
 
   ```html
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
   ```
 
 - **BREAKING** The *toggling* behavior of `<mwc-icon-button>` has been removed
