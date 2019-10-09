@@ -108,6 +108,10 @@ mwc-notched-outline {
     .mdc-text-field__input {
       color: var(--mdc-text-field-ink-color, #{$mdc-text-field-ink-color});
     }
+
+    .mdc-text-field__input::placeholder {
+      color: var(--mdc-text-field-label-ink-color, #{$mdc-text-field-label});
+    }
   }
 }
 
@@ -127,12 +131,12 @@ mwc-notched-outline {
 
     &:not(.mdc-text-field--invalid):not(.mdc-text-field--focused) {
       .mdc-floating-label, .mdc-floating-label::after {
-        color: var(--mdc-text-field-disabled-ink-color, $mdc-text-field-disabled-ink-color);
+        color: var(--mdc-text-field-disabled-ink-color, #{$mdc-text-field-disabled-ink-color});
       }
     }
 
-    .mdc-text-field__input {
-      color: var(--mdc-text-field-disabled-ink-color, $mdc-text-field-disabled-ink-color);
+    .mdc-text-field__input, .mdc-text-field__input::placeholder {
+      color: var(--mdc-text-field-disabled-ink-color, #{$mdc-text-field-disabled-ink-color});
     }
   }
 }
