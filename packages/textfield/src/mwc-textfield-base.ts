@@ -29,7 +29,7 @@ import {eventOptions, html, property, PropertyValues, query, TemplateResult} fro
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined.js';
 
-import {characterCounter, CharacterCounter} from './character-counter/mwc-character-counter-directive.js';
+import {characterCounter, CharacterCounter} from './mwc-character-counter-directive.js';
 
 // must be done to get past lit-analyzer checks
 declare global {

@@ -19,6 +19,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   See the [Fonts](https://github.com/material-components/material-components-web-components#fonts)
   section of the README for more details.
 
+- **BREAKING** Moved `@material/mwc-textfield/character-counter/mwc-character-counter-directive.js`
+  to `@material/mwc-textfield/mwc-character-counter-directive.js`.
+
 ### Fixed
 
 - Fixed `mwc-dialog`'s issues with working on older browsers.
