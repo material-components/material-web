@@ -78,7 +78,6 @@ mwc-notched-outline {
       }
     }
 
-
     &:not(.mdc-text-field--invalid):not(.mdc-text-field--focused) {
       .mdc-floating-label, .mdc-floating-label::after {
         color: var(--mdc-text-field-label-ink-color, #{$mdc-text-field-label});
@@ -113,6 +112,13 @@ mwc-notched-outline {
       color: var(--mdc-text-field-label-ink-color, #{$mdc-text-field-label});
     }
   }
+
+  .mdc-text-field-helper-line {
+    .mdc-text-field-helper-text:not(.mdc-text-field-helper-text--validation-msg),
+    &:not(.mdc-text-field--invalid) .mdc-text-field-character-counter {
+      color: var(--mdc-text-field-label-ink-color, #{$mdc-text-field-label});
+    }
+  }
 }
 
 :host([disabled]) {
@@ -135,7 +141,15 @@ mwc-notched-outline {
       }
     }
 
-    .mdc-text-field__input, .mdc-text-field__input::placeholder {
+    .mdc-text-field__input,
+    .mdc-text-field__input::placeholder {
+      color: var(--mdc-text-field-disabled-ink-color, #{$mdc-text-field-disabled-ink-color});
+    }
+  }
+
+  .mdc-text-field-helper-line {
+    .mdc-text-field-helper-text,
+    .mdc-text-field-character-counter {
       color: var(--mdc-text-field-disabled-ink-color, #{$mdc-text-field-disabled-ink-color});
     }
   }
