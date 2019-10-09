@@ -220,8 +220,8 @@ Inherits CSS Custom properties from:
 | `--mdc-text-field-outlined-disabled-fill-color`   | `rgba(250, 250, 250)` | Overrides `--mdc-text-field-disabled-fill-color` only for outlined textfields.
 | `--mdc-text-field-filled-disabled-fill-color`     | `transparent`         | Overrides `--mdc-text-field-disabled-fill-color` only for filled (non-outlined) textfields.
 | `--mdc-text-field-ink-color`                      | `rgba(0, 0, 0, 0.87)` | Color of the input text.
-| `--mdc-text-field-label-ink-color`                | `rgba(0, 0, 0, 0.6)`  | Color of the non-focused floating label, helper text, and placeholder.
-| `--mdc-text-field-disabled-ink-color`             | `rgba(0, 0, 0, 0.37)` | Color of the input text, the floating label, and placeholder of a disabled textfield.
+| `--mdc-text-field-label-ink-color`                | `rgba(0, 0, 0, 0.6)`  | Color of the non-focused floating label, helper text, char counter, and placeholder.
+| `--mdc-text-field-disabled-ink-color`             | `rgba(0, 0, 0, 0.37)` | Color of the input text, the floating label, helper text, char counter, and placeholder of a disabled textfield.
 
 ### Validation
 
