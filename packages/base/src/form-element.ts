@@ -21,13 +21,8 @@ import {BaseElement} from './base-element';
 
 export * from './base-element';
 
-export interface RippleSurface extends MDCRippleFoundation {
-  activate(): void;
-  deactivate(): void;
-}
-
 export interface HTMLElementWithRipple extends HTMLElement {
-  ripple?: RippleSurface;
+  ripple?: MDCRippleFoundation;
 }
 
 export abstract class FormElement extends BaseElement {
@@ -45,7 +40,7 @@ export abstract class FormElement extends BaseElement {
   /**
    * Implement ripple getter for Ripple integration with mwc-formfield
    */
-  readonly ripple?: RippleSurface;
+  readonly ripple?: MDCRippleFoundation;
 
   click() {
     if (this.formElement) {
