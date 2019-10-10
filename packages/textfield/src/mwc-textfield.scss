@@ -63,11 +63,7 @@ mwc-notched-outline {
 :host(:not([disabled])) {
   .mdc-text-field {
     &:not(.mdc-text-field--outlined) {
-      background-color: var(--mdc-text-field-filled-fill-color, var(--mdc-text-field-fill-color, #{$mdc-text-field-background}));
-    }
-
-    &.mdc-text-field--outlined {
-      --mdc-notched-outline-background-color: var(--mdc-text-field-outlined-fill-color, var(--mdc-text-field-fill-color, transparent));
+      background-color: var(--mdc-text-field-fill-color, #{$mdc-text-field-background});
     }
 
     &.mdc-text-field--invalid {
@@ -124,12 +120,10 @@ mwc-notched-outline {
 :host([disabled]) {
   .mdc-text-field {
     &:not(.mdc-text-field--outlined) {
-      background-color: var(--mdc-text-field-filled-disabled-fill-color, var(--mdc-text-field-disabled-fill-color, #{$mdc-text-field-disabled-background}));
+      background-color: var(--mdc-text-field-disabled-fill-color, #{$mdc-text-field-disabled-background});
     }
 
     &.mdc-text-field--outlined {
-      --mdc-notched-outline-background-color: var(--mdc-text-field-outlined-disabled-fill-color, var(--mdc-text-field-disabled-fill-color, transparent));
-
       mwc-notched-outline {
         --mdc-notched-outline-border-color: var(--mdc-text-field-outlined-disabled-border-color, #{$mdc-text-field-outlined-disabled-border});
       }
