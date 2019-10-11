@@ -20,6 +20,9 @@ import {html} from 'lit-html';
 
 import {fixture, TestFixture} from '../../../../test/src/util/helpers';
 
+interface TextareaInternals {
+  createFoundation: () => void;
+}
 
 const basic = html`
   <mwc-textarea></mwc-textarea>
@@ -65,13 +68,14 @@ suite('mwc-textarea:', () => {
         'createFoundation called an appropriate amount of times & render interactions',
         async () => {
           const element = fixt.root.querySelector('mwc-textarea')!;
+          const internals = element as unknown as TextareaInternals;
           element.helperPersistent = true;
 
           const oldCreateFoundation =
-              (element as any).createFoundation.bind(element) as () => void;
+              internals.createFoundation.bind(element) as () => void;
           let numTimesCreateFoundationCalled = 0;
 
-          ((element as any).createFoundation as () => void) = () => {
+          internals.createFoundation = () => {
             numTimesCreateFoundationCalled = numTimesCreateFoundationCalled + 1;
             oldCreateFoundation();
           };

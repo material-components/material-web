@@ -29,6 +29,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fixed `mwc-dialog`'s issues with working on older browsers.
+- `<mwc-radio>` groups are now correctly synchronized when stamped using a
+  lit-html `map` or `repeat`, and any other time the radio is not created and
+  connected at the same time ([#282](https://github.com/material-components/material-components-web-components/issues/282)).
 
 ## [0.9.0] - 2019-09-26
 
