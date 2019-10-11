@@ -213,6 +213,11 @@ Inherits CSS Custom properties from:
 | `--mdc-text-field-outlined-idle-border-color`     | `rgba(0, 0, 0, 0.38)` | Color of the outlined textfield's  outline when idle.
 | `--mdc-text-field-outlined-hover-border-color`    | `rgba(0, 0, 0, 0.87)` | Color of the outlined textfield's outline when hovering.
 | `--mdc-text-field-outlined-disabled-border-color` | `rgba(0, 0, 0, 0.06)` | Color of the outlined textfield's outline when disabled.
+| `--mdc-text-field-fill-color`                     | `rgb(245, 245, 245)`  | Color of the textfield's background fill (non-outlined).
+| `--mdc-text-field-disabled-fill-color`            | `rgb(250, 250, 250)`  | Color of the textfield's background fill (non-outlined) when disabled.
+| `--mdc-text-field-ink-color`                      | `rgba(0, 0, 0, 0.87)` | Color of the input text.
+| `--mdc-text-field-label-ink-color`                | `rgba(0, 0, 0, 0.6)`  | Color of the non-focused floating label, helper text, char counter, and placeholder.
+| `--mdc-text-field-disabled-ink-color`             | `rgba(0, 0, 0, 0.37)` | Color of the input text, the floating label, helper text, char counter, and placeholder of a disabled textfield.
 
 ### Validation
 

@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Added
+
+- `mwc-textfield` ink and fill css variables
+
 ### Changed
 
 - **BREAKING** Removed `mwc-icon-font.js` import. Most users should load the
