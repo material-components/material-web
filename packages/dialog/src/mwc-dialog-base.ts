@@ -183,7 +183,8 @@ export class DialogBase extends BaseElement {
     let heading = html``;
 
     if (this.heading) {
-      heading = html`<h2 class="mdc-dialog__title">${this.heading}</h2>`;
+      heading = html`
+        <h2 id="title" class="mdc-dialog__title">${this.heading}</h2>`;
     }
 
     const actionsClasses = {
@@ -195,11 +196,11 @@ export class DialogBase extends BaseElement {
         role="alertdialog"
         aria-modal="true"
         aria-labelledby="title"
-        aria-describedby="my-dialog-content">
+        aria-describedby="content">
       <div class="mdc-dialog__container">
         <div class="mdc-dialog__surface">
           ${heading}
-          <div class="mdc-dialog__content">
+          <div id="content" class="mdc-dialog__content">
             <slot></slot>
           </div>
           <footer
