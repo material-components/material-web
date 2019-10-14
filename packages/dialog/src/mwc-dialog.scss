@@ -103,7 +103,7 @@ limitations under the License.
   .mdc-dialog__title {
     @include mdc-feature-targets($feat-color) {
       @include mdc-theme-prop(color, (
-        varname: --mdc-dialog-title-ink-color,
+        varname: --mdc-dialog-heading-ink-color,
         fallback: rgba(mdc-theme-prop-value($color), $opacity)
       ));
     }

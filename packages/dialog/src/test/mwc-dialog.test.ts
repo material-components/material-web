@@ -54,7 +54,7 @@ const opened = html`
 `;
 
 const withButtons = html`
-  <mwc-dialog title="myTitle" actionAttribute="data-dialogAction">
+  <mwc-dialog heading="myTitle" actionAttribute="data-dialogAction">
     <mwc-button
         slot="primaryAction"
         data-dialogAction="ok">

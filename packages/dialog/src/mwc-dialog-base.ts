@@ -59,7 +59,7 @@ export class DialogBase extends BaseElement {
   })
   stacked = false;
 
-  @property({type: String}) title = '';
+  @property({type: String}) heading = '';
 
   @property({type: String})
   @observer(function(this: DialogBase, newAction: string) {
@@ -180,10 +180,10 @@ export class DialogBase extends BaseElement {
       [cssClasses.STACKED]: this.stacked,
     };
 
-    let title = html``;
+    let heading = html``;
 
-    if (this.title) {
-      title = html`<h2 class="mdc-dialog__title">${this.title}</h2>`;
+    if (this.heading) {
+      heading = html`<h2 class="mdc-dialog__title">${this.heading}</h2>`;
     }
 
     const actionsClasses = {
@@ -194,11 +194,11 @@ export class DialogBase extends BaseElement {
     <div class="mdc-dialog ${classMap(classes)}"
         role="alertdialog"
         aria-modal="true"
-        aria-labelledby="my-dialog-title"
+        aria-labelledby="title"
         aria-describedby="my-dialog-content">
       <div class="mdc-dialog__container">
         <div class="mdc-dialog__surface">
-          ${title}
+          ${heading}
           <div class="mdc-dialog__content">
             <slot></slot>
           </div>

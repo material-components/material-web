@@ -44,14 +44,14 @@ limitations under the License.
     <div>
 
     <mwc-button data-num="1" raised>Basic</mwc-button>
-    <mwc-dialog id="dialog1" title="Dialog header">
+    <mwc-dialog id="dialog1" heading="Dialog header">
       Dialog body text
       <mwc-button slot="primaryAction" dialogAction="ok">Action 2</mwc-button>
       <mwc-button slot="secondaryAction" dialogAction="cancel">Action 1</mwc-button>
     </mwc-dialog>
 
     <mwc-button data-num="2" raised>Actions</mwc-button>
-    <mwc-dialog id="dialog2" title="Actions">
+    <mwc-dialog id="dialog2" heading="Actions">
       <p>
         By setting the dialogAction="my-action" attribute on any element projected into
         mwc-dialog, you can close the dialog by clicking on that element. The
@@ -63,7 +63,7 @@ limitations under the License.
     </mwc-dialog>
 
     <mwc-button data-num="3" raised>Scrollable</mwc-button>
-    <mwc-dialog id="dialog3" title="My Title">
+    <mwc-dialog id="dialog3" heading="My Title">
       <p>
         Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really long text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll. Really log text will scroll.
       </p>
@@ -71,7 +71,7 @@ limitations under the License.
     </mwc-dialog>
 
     <mwc-button data-num="4" raised>Hide Actions</mwc-button>
-    <mwc-dialog id="dialog4" title="Hide Actions">
+    <mwc-dialog id="dialog4" heading="Hide Actions">
       <p>
         If you don't have actions, you may want to set the "hideActions" property.
         This property will remove extra whitespace at the bottom of this dialog.
@@ -90,7 +90,7 @@ limitations under the License.
       .styled {
         --mdc-theme-surface: #FFF;
         --mdc-dialog-scrim-color: rgba(35, 47, 52, .32);
-        --mdc-dialog-title-ink-color: #232F34;
+        --mdc-dialog-heading-ink-color: #232F34;
         --mdc-dialog-content-ink-color: #232F34;
         --mdc-dialog-scroll-divider-color: transparent;
         --mdc-dialog-min-width: 500px;
@@ -104,12 +104,12 @@ limitations under the License.
     </style>
 
     <mwc-button data-num="5" raised>Styled</mwc-button>
-    <mwc-dialog id="dialog5" title="Styled" class="styled">
+    <mwc-dialog id="dialog5" heading="Styled" class="styled">
         <div>These are the current styles applied to this dialog</div>
         <pre>
 --mdc-theme-surface: #FFF;
 --mdc-dialog-scrim-color: rgba(35, 47, 52, .32);
---mdc-dialog-title-ink-color: #232F34;
+--mdc-dialog-heading-ink-color: #232F34;
 --mdc-dialog-content-ink-color: #232F34;
 --mdc-dialog-scroll-divider-color: transparent;
 --mdc-dialog-min-width: 500px;
@@ -126,7 +126,7 @@ limitations under the License.
     </mwc-dialog>
 
     <mwc-button data-num="6" raised>Stacked</mwc-button>
-    <mwc-dialog id="dialog6" title="Stacked" stacked>
+    <mwc-dialog id="dialog6" heading="Stacked" stacked>
       <div>
         This is what happens when you set the stacked property on mwc-dialog.
         Notice that the primary action is now on top.
@@ -140,7 +140,7 @@ limitations under the License.
     </mwc-dialog>
 
     <mwc-button data-num="7" raised>Initial Focus</mwc-button>
-    <mwc-dialog id="dialog7" title="Initial Focus">
+    <mwc-dialog id="dialog7" heading="Initial Focus">
       <div>
         In this example we set "dialogInitialFocus" on the mwc-textfield.
         When this dialog opens, it is auto-focused.
