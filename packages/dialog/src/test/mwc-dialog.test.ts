@@ -86,7 +86,7 @@ suite('mwc-dialog:', () => {
       let titleTag = element.shadowRoot!.querySelector('.mdc-dialog__title');
       assert.isNull(titleTag);
 
-      element.title = 'This is my Title';
+      element.heading = 'This is my Title';
       await element.requestUpdate();
       titleTag = element.shadowRoot!.querySelector('.mdc-dialog__title');
       assert.notStrictEqual(titleTag, null);
@@ -128,7 +128,7 @@ suite('mwc-dialog:', () => {
       assert.strictEqual(surfaceElement.offsetWidth, 0);
       assert.strictEqual(surfaceElement.offsetHeight, 0);
 
-      element.title = 'Basic title';
+      element.heading = 'Basic title';
       element.hideActions = true;
       element.open = true;
       await openedPromise;
