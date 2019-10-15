@@ -33,7 +33,7 @@ npm install @material/mwc-dialog
 
 ```html
 <mwc-dialog
-    title="Simple Dialog"
+    heading="Simple Dialog"
     open
     hideActions>
   <ul>
@@ -103,7 +103,7 @@ npm install @material/mwc-dialog
   }
 </style>
 
-<mwc-dialog title="Phone Ringtone" open>
+<mwc-dialog heading="Phone Ringtone" open>
   <div>
     <mwc-formfield label="Never Gonna Give You Up">
       <mwc-radio id="a1" name="a" checked></mwc-radio>
@@ -140,7 +140,7 @@ npm install @material/mwc-dialog
 <img src="images/scrollable.png" width="598px">
 
 ```html
-<mwc-dialog title="Privacy Policy" open>
+<mwc-dialog heading="Privacy Policy" open>
 <div>
   really large amount of text...
 </div>
@@ -172,7 +172,7 @@ npm install @material/mwc-dialog
   }
 </style>
 
-<mwc-dialog title="Styled" class="styled" open>
+<mwc-dialog heading="Styled" class="styled" open>
     <div>
       In this dialog we have changed the button color and removed the border
       radius.
@@ -188,7 +188,7 @@ npm install @material/mwc-dialog
 <img src="images/stacked.png" width="594px">
 
 ```html
-<mwc-dialog title="Stacked" stacked>
+<mwc-dialog heading="Stacked" stacked>
   <div>
     This is what happens when you set the stacked property on mwc-dialog.
     Notice that the primary action is now on top.
@@ -219,7 +219,7 @@ npm install @material/mwc-dialog
 | `open`                  | `boolean` | Whether the dialog should open.
 | `hideActions`           | `boolean` | Hides the actions footer of the dialog. Needed to remove excess padding when no actions are slotted in.
 | `stacked`               | `boolean` | Whether to stack the action buttons.
-| `title`                 | `string`  | Title of the dialog.
+| `heading`               | `string`  | Heading text of the dialog.
 | `scrimClickAction`      | `string`  | _Default: 'close'_ – Action to be emitted with the `closing` and `closed` events when the dialog closes because the scrim was clicked (see [actions section](#actions)).
 | `escapeKeyAction`       | `string`  | _Default: 'close'_ – Action to be emitted with the `closing` and `closed` events when the dialog closes because the excape key was pressed (see [actions section](#actions)).
 | `defaultAction`         | `string`  | _Default: 'close'_ – Action to be emitted with the `closing` and `closed` events when `<mwc-dialog>.open` is toggled (see [actions section](#actions)).
@@ -258,7 +258,7 @@ npm install @material/mwc-dialog
 | ----------------------------------- | --------------------- |------------
 | `--mdc-theme-surface`               | ![](images/color_fff.png) `#fff`                | Color of the dialog surface's background.
 | `--mdc-dialog-scrim-color`          | ![](images/color_0,0,0,32.png) `rgba(0, 0, 0, 0.32)` | Color of the scrim. (**Note:** setting alpha to 0 will still make scrim clickable but transparent).
-| `--mdc-dialog-title-ink-color`      | ![](images/color_0,0,0,87.png) `rgba(0, 0, 0, 0.87)` | Color of the title text.
+| `--mdc-dialog-heading-ink-color`    | ![](images/color_0,0,0,87.png) `rgba(0, 0, 0, 0.87)` | Color of the heading text.
 | `--mdc-dialog-content-ink-color`    | ![](images/color_0,0,0,6.png) `rgba(0, 0, 0, 0.6)`  | Color applied to the projected content. (**Note:** it may also be possible to style the content via the light DOM since it is not encapsulated in a shadow root).
 | `--mdc-dialog-scroll-divider-color` | ![](images/color_0,0,0,12.png) `rgba(0, 0, 0, 0.12)` | Color of the dividers present when dialog is scrollable.
 | `--mdc-dialog-min-width`            | `280px`               | min-width ofthe dialog surface.
@@ -333,7 +333,7 @@ For example:
 <img src="images/initial-focus.png" width="597px">
 
 ```html
-<mwc-dialog title="Initial Focus" open>
+<mwc-dialog heading="Initial Focus" open>
   <div>
     In this example we set "dialogInitialFocus" on the mwc-textfield.
     When this dialog opens, it is auto-focused.
