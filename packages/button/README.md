@@ -132,6 +132,14 @@ mwc-button {
 | `--mdc-icon-font` | [`Material Icons`](https://google.github.io/material-design-icons/) | Font to use for the icon.
 | `--mdc-theme-primary` | ![](images/color_6200ee.png) `#6200ee` | Background color of the button
 | `--mdc-theme-on-primary` | ![](images/color_ffffff.png) `#ffffff` | Text color of the button
+| `--mdc-button-text-transform` | `uppercase` | Sets the text-transform on the button label.
+| `--mdc-button-letter-spacing` | `normal` | Sets the letter-spacing on the button label.
+| `--mdc-button-horizontal-padding` | filled: `16px` outlined: `15px` | Sets the padding to the left and right of the button label equal to this value on filled buttons and `--mdc-button-horizontal-padding - --mdc-outline-width` on outlined buttons.
+| `--mdc-button-outline-width` | `1px` | Sets the width of the outline of an outlined button and attempts to keep the component size constant.
+| `--mdc-button-outline-color` | ![](images/color_6200ee.png) `--mdc-theme-primary` | Sets the color of the outline of an outlined element. (Overrides `--mdc-theme-primary`)
+| `--mdc-button-disabled-fill-color` | ![](images/color_0,0,0,12.png) `rgba(0,0,0,0.12)` | Sets the background fill color of a disabled raised or unelevated button.
+| `--mdc-button-disabled-ink-color` | ![](images/color_0,0,0,37.png) `rgba(0,0,0,0.37)` | Sets the text color of a disabled button as well as the outline color of a disabled outlined button.
+| `--mdc-button-disabled-outline-color` | ![](images/color_0,0,0,37.png) `--mdc-button-disabled-ink-color` | Sets the color of the outline of a disabled outlined button. (Overrides `--mdc-button-disabled-ink-color`)
 
 ## Additional references
 
