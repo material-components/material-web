@@ -134,7 +134,7 @@ mwc-button {
 | `--mdc-theme-on-primary`              | ![](images/color_ffffff.png) `#ffffff`             | Text color of the button
 | `--mdc-button-text-transform`         | `uppercase`                                        | `text-transform` on the button label.
 | `--mdc-button-letter-spacing`         | `normal`                                           | `letter-spacing` on the button label.
-| `--mdc-button-horizontal-padding`     | filled: `16px` outlined: `15px`                    | `padding-left` and `padding-right` of the button label equal to `--mdc-button-horizontal-padding` on filled buttons and `--mdc-button-horizontal-padding - --mdc-outline-width` on outlined buttons.
+| `--mdc-button-horizontal-padding`     | filled: `16px` outlined: `15px`                    | Left and right padding of the button label (for outlined buttons the outline width is automatically subtracted).
 | `--mdc-button-outline-width`          | `1px`                                              | `width` of the outline of an outlined button and attempts to keep the component size constant.
 | `--mdc-button-outline-color`          | ![](images/color_6200ee.png) `--mdc-theme-primary` | Color of the outline of an outlined element. (Overrides `--mdc-theme-primary`)
 | `--mdc-button-disabled-fill-color`    | ![](images/color_0,0,0,12.png) `rgba(0,0,0,0.12)`  | Background fill color of a disabled raised or unelevated button.
