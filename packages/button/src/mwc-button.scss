@@ -67,7 +67,7 @@ limitations under the License.
     &.mdc-button--raised,
     &.mdc-button--unelevated {
       background-color: var(--mdc-button-disabled-fill-color, #{rgba(mdc-theme-prop-value(on-surface), .12)});
-      color: var(--mdc-button-disabled-filled-ink-color, #{$mdc-button-disabled-ink-color});
+      color: var(--mdc-button-disabled-ink-color, #{$mdc-button-disabled-ink-color});
     }
 
     &:not(.mdc-button--raised):not(.mdc-button--unelevated) {
@@ -80,3 +80,14 @@ limitations under the License.
     }
   }
 }
+
+/*
+--mdc-button-text-transform;
+--mdc-button-letter-spacing;
+--mdc-button-horizontal-padding;
+--mdc-button-outline-width;
+--mdc-button-outline-color;
+--mdc-button-disabled-fill-color;
+--mdc-button-disabled-ink-color;
+--mdc-button-disabled-outline-color;
+*/

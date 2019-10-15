@@ -89,8 +89,8 @@ limitations under the License.
 .main-colors {
   --mdc-theme-primary: darkgreen;
   --mdc-theme-on-primary: aqua;
-  --mdc-button-disabled-fill-color: palegreen;
-  --mdc-button-disabled-filled-ink-color: aliceblue;
+  --mdc-button-disabled-fill-color: darkseagreen;
+  --mdc-button-disabled-ink-color: aliceblue;
 }
     </style>
     <pre id="main-colors"></pre>
@@ -98,9 +98,9 @@ limitations under the License.
       <mwc-button icon="code" label="standard"></mwc-button>
       <mwc-button outlined icon="code" label="outlined"></mwc-button>
       <mwc-button raised icon="code" label="raised"></mwc-button>
-      <mwc-button raised icon="code" label="raised" disabled></mwc-button>
+      <mwc-button raised icon="code" label="raised-disabled" disabled></mwc-button>
       <mwc-button unelevated icon="code" label="unelevated"></mwc-button>
-      <mwc-button unelevated icon="code" label="unelevated" disabled></mwc-button>
+      <mwc-button unelevated icon="code" label="unelevated-disabled" disabled></mwc-button>
     </div>
 
     <style data-pre="text">
@@ -115,6 +115,19 @@ limitations under the License.
       <mwc-button outlined icon="code" label="lowerspace"></mwc-button>
       <mwc-button raised icon="code" label="lowerspace"></mwc-button>
       <mwc-button unelevated icon="code" label="lowerspace"></mwc-button>
+    </div>
+
+    <style data-pre="horizontal-padding">
+.horizontal-padding {
+  --mdc-button-horizontal-padding: 50px;
+}
+    </style>
+    <pre id="horizontal-padding"></pre>
+    <div class="demo-group wrap horizontal-padding">
+      <mwc-button icon="code" label="padding"></mwc-button>
+      <mwc-button outlined icon="code" label="padding"></mwc-button>
+      <mwc-button raised icon="code" label="padding"></mwc-button>
+      <mwc-button unelevated icon="code" label="padding"></mwc-button>
     </div>
 
     <style data-pre="outline">
