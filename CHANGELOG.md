@@ -40,11 +40,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   lit-html `map` or `repeat`, and any other time the radio is not created and
   connected at the same time ([#282](https://github.com/material-components/material-components-web-components/issues/282)).
 
-## [0.9.1] - 2019-09-30
+### Added
 
-### Fixed
+- CSS styling options to `mwc-button`
+- CSS styling options to `mwc-textfield`
 
-- Fixed missing `@material/mwc-base` dep on `@material/mwc-dialog`.
+### Changed
+
+- Updated material dependencies to `4.0.0-canary.735147131.0`.
 
 ## [0.9.0] - 2019-09-26
 
