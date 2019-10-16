@@ -53,7 +53,12 @@ limitations under the License.
   text-transform: var(--mdc-button-text-transform, uppercase);
   letter-spacing: var(--mdc-button-letter-spacing, mdc-typography-get-letter-spacing_(1.25, .875));
 
-  @include mdc-button-horizontal-padding(var(--mdc-button-horizontal-padding, #{$mdc-button-contained-horizontal-padding}));
+  @include mdc-button-horizontal-padding(var(--mdc-button-horizontal-padding, #{$mdc-button-horizontal-padding}));
+
+  &.mdc-button--raised,
+  &.mdc-button--unelevated {
+    @include mdc-button-horizontal-padding(var(--mdc-button-horizontal-padding, #{$mdc-button-contained-horizontal-padding}));
+  }
 
   &.mdc-button--outlined {
     @include mdc-button-outline-width-var-aware(var(--mdc-button-outline-width, #{$mdc-button-outlined-border-width}), var(--mdc-button-horizontal-padding, #{$mdc-button-contained-horizontal-padding}));
