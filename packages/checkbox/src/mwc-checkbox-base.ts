@@ -71,7 +71,7 @@ export class CheckboxBase extends FormElement {
     return html`
       <div class="mdc-checkbox"
            @animationend="${this._animationEndHandler}"
-           .ripple="${ripple()}">
+           .ripple="${ripple({interactionNode: this.formElement})}">
         <input type="checkbox"
               class="mdc-checkbox__native-control"
               @change="${this._changeHandler}"
