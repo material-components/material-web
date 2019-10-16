@@ -40,6 +40,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   lit-html `map` or `repeat`, and any other time the radio is not created and
   connected at the same time ([#282](https://github.com/material-components/material-components-web-components/issues/282)).
 
+## [0.9.1] - 2019-09-30
+
+### Fixed
+
+- Fixed missing `@material/mwc-base` dep on `@material/mwc-dialog`.
+
 ## [0.9.0] - 2019-09-26
 
 ### Added
