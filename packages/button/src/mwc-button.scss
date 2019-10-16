@@ -51,7 +51,7 @@ limitations under the License.
   flex: auto;
 
   text-transform: var(--mdc-button-text-transform, uppercase);
-  letter-spacing: var(--mdc-button-letter-spacing);
+  letter-spacing: var(--mdc-button-letter-spacing, mdc-typography-get-letter-spacing_(1.25, .875));
 
   @include mdc-button-horizontal-padding(var(--mdc-button-horizontal-padding, #{$mdc-button-contained-horizontal-padding}));
 
