@@ -53,6 +53,10 @@ main {
   align-items: center;
 }
 
+.wrap {
+  flex-wrap: wrap;
+}
+
 .demo-group-spaced {
   justify-content: space-around;
 }

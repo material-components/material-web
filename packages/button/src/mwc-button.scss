@@ -18,6 +18,22 @@ limitations under the License.
 @import '@material/button/mdc-button.scss';
 @import '@material/mwc-icon/src/_mwc-icon.scss';
 
+@mixin mdc-button-outline-width-var-aware(
+  $outline-width,
+  $padding: $mdc-button-contained-horizontal-padding,
+  $query: mdc-feature-all()
+) {
+  $feat-structure: mdc-feature-create-target($query, structure);
+  // Note: Adjust padding to maintain consistent width with non-outlined buttons
+  $padding-value: calc(#{$padding} - #{$outline-width});
+
+  @include mdc-button-horizontal-padding($padding-value, $query);
+
+  @include mdc-feature-targets($feat-structure) {
+    border-width: $outline-width;
+  }
+}
+
 .material-icons {
   @extend %material-icons;
 }
@@ -33,4 +49,39 @@ limitations under the License.
 
 .mdc-button {
   flex: auto;
+
+  text-transform: var(--mdc-button-text-transform, uppercase);
+  letter-spacing: var(--mdc-button-letter-spacing, mdc-typography-get-letter-spacing_(1.25, .875));
+
+  @include mdc-button-horizontal-padding(var(--mdc-button-horizontal-padding, #{$mdc-button-horizontal-padding}));
+
+  &.mdc-button--raised,
+  &.mdc-button--unelevated {
+    @include mdc-button-horizontal-padding(var(--mdc-button-horizontal-padding, #{$mdc-button-contained-horizontal-padding}));
+  }
+
+  &.mdc-button--outlined {
+    @include mdc-button-outline-width-var-aware(var(--mdc-button-outline-width, #{$mdc-button-outlined-border-width}), var(--mdc-button-horizontal-padding, #{$mdc-button-contained-horizontal-padding}));
+    border-color: var(--mdc-button-outline-color, var(--mdc-theme-primary, #{mdc-theme-prop-value(primary)}));
+  }
+}
+
+:host([disabled]) {
+  .mdc-button {
+
+    &.mdc-button--raised,
+    &.mdc-button--unelevated {
+      background-color: var(--mdc-button-disabled-fill-color, #{rgba(mdc-theme-prop-value(on-surface), .12)});
+      color: var(--mdc-button-disabled-ink-color, #{$mdc-button-disabled-ink-color});
+    }
+
+    &:not(.mdc-button--raised):not(.mdc-button--unelevated) {
+      color: var(--mdc-button-disabled-ink-color, #{$mdc-button-disabled-ink-color});
+    }
+
+    &.mdc-button--outlined {
+      border-color: var(--mdc-button-disabled-ink-color, #{$mdc-button-disabled-ink-color});
+      border-color: var(--mdc-button-disabled-outline-color, var(--mdc-button-disabled-ink-color, #{$mdc-button-disabled-ink-color}));
+    }
+  }
 }
