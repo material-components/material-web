@@ -82,6 +82,7 @@ export class LinearProgressBase extends BaseElement {
   protected createAdapter(): MDCLinearProgressAdapter {
     return {
       ...addHasRemoveClass(this.mdcRoot),
+      forceLayout: () => this.mdcRoot.offsetWidth,
       getPrimaryBar: () => this.primaryBar,
       getBuffer: () => this.bufferElement,
       setStyle: (el: HTMLElement, property: string, value: string) => {
