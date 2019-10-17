@@ -6,10 +6,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Added
+
+- CSS styling options to `mwc-button`
+- CSS styling options to `mwc-textfield`
+
 ### Changed
+
 - **BREAKING** `Dialog.title` renamed to `Dialog.heading` and
   `--mdc-dialog-title-ink-color` renamed to `--mdc-dialog-heading-ink-color` as
   it caused clashes with `HTMLElement.prototype.title`.
+- Updated material dependencies to `4.0.0-canary.735147131.0`.
 
 ## [0.10.0] - 2019-10-11
 
@@ -40,14 +47,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   lit-html `map` or `repeat`, and any other time the radio is not created and
   connected at the same time ([#282](https://github.com/material-components/material-components-web-components/issues/282)).
 
-### Added
+## [0.9.1] - 2019-09-30
 
-- CSS styling options to `mwc-button`
-- CSS styling options to `mwc-textfield`
+### Fixed
 
-### Changed
-
-- Updated material dependencies to `4.0.0-canary.735147131.0`.
+- Fixed missing `@material/mwc-base` dep on `@material/mwc-dialog`.
 
 ## [0.9.0] - 2019-09-26
 
