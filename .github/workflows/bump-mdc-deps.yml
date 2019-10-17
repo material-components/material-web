@@ -17,7 +17,8 @@ jobs:
           node-version: 10
       
     - name: NPM install
-      run: npm install
+      # Don't run postinstall because we don't need to install sub-packages.
+      run: npm ci --ignore-scripts
 
     - name: Build scripts
       run: npm run build:scripts
@@ -25,9 +26,9 @@ jobs:
     - name: Bump MDC deps
       run: npm run bump-all-mdc-web-deps
       
-    - name: Check if up to date
-      run: git diff --exit-code --quiet
+    - name: Check if changes made
+      run: echo ::set-output name=git_status::$(git status --porcelain)
     
     - name: Create PR
-      if: failure()
+      if: git_status != ""
       run: echo "TODO create PR"
