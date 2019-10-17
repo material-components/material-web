@@ -1,0 +1,26 @@
+name: bump-mdc-deps
+
+on:
+  schedule:
+    # Run at 12 AM PST every day.
+    - cron: '0 8 * * *'
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+          node-version: 10
+      
+    - name: Bump MDC deps
+      run: npm run bump-all-mdc-web-deps
+      
+    - name: Check if up to date
+      run: git diff --exit-code --quiet
+    
+    - name: Create PR
+      if: failure()
+      run: echo "TODO create PR"
