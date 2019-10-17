@@ -31,5 +31,5 @@ jobs:
       run: echo ::set-output name=status::$(git status --porcelain)
     
     - name: Create PR
-      if: steps.git_status.outputs.status != ""
+      if: steps.git_status.outputs.status != ''
       run: echo "TODO create PR"
