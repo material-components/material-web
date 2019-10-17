@@ -23,8 +23,8 @@ jobs:
     - name: Build scripts
       run: npm run build:scripts
 
-    - name: Bump MDC deps
-      run: npm run bump-all-mdc-web-deps
+   #- name: Bump MDC deps
+     #run: npm run bump-all-mdc-web-deps
       
     - name: Check if changes made
       id: git_status
