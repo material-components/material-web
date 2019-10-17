@@ -1,9 +1,10 @@
 name: bump-mdc-deps
 
 on:
-  schedule:
+  push
+  #schedule:
     # Run at 12 AM PST every day.
-    - cron: '0 8 * * *'
+    #- cron: '0 8 * * *'
 
 jobs:
   bump:
