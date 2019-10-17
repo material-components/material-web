@@ -65,6 +65,10 @@ function main() {
     }
   }
   if (anyChanged) {
+    // Set an output value for consumption by a GitHub Action.
+    // https://help.github.com/en/articles/development-tools-for-github-actions#set-an-output-parameter-set-output
+    console.log(
+        `::set-output name=new-mdc-version::${newVersion.substring(1)}`);
     console.log(`\nRemember to run npm install!`);
   }
 }
