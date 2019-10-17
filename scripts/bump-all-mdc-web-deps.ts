@@ -65,6 +65,8 @@ function main() {
     }
   }
   if (anyChanged) {
+    console.log(
+        `::set-output name=new-mdc-version::${newVersion.substring(1)}`);
     console.log(`\nRemember to run npm install!`);
   }
 }
