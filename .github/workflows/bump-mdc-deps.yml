@@ -16,6 +16,12 @@ jobs:
       with:
           node-version: 10
       
+    - name: NPM install
+      run: npm install
+
+    - name: Build scripts
+      run: npm run build:scripts
+
     - name: Bump MDC deps
       run: npm run bump-all-mdc-web-deps
       
