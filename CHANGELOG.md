@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   it caused clashes with `HTMLElement.prototype.title`.
 - Updated material dependencies to `4.0.0-canary.735147131.0`.
 
+### Fixed
+- Fixed checkbox ripple visibility when focused while being unchecked.
+
 ## [0.10.0] - 2019-10-11
 
 ### Added
