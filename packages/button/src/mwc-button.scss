@@ -18,6 +18,8 @@ limitations under the License.
 @import '@material/button/mdc-button.scss';
 @import '@material/mwc-icon/src/_mwc-icon.scss';
 
+@include mdc-ripple-common(mdc-feature-all());
+
 @mixin mdc-button-outline-width-var-aware(
   $outline-width,
   $padding: $mdc-button-contained-horizontal-padding,
