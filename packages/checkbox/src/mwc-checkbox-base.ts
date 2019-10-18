@@ -17,7 +17,7 @@ limitations under the License.
 import {MDCCheckboxAdapter} from '@material/checkbox/adapter.js';
 import MDCCheckboxFoundation from '@material/checkbox/foundation.js';
 import {addHasRemoveClass, FormElement, HTMLElementWithRipple, observer} from '@material/mwc-base/form-element.js';
-import {ripple} from '@material/mwc-ripple/ripple-directive.js';
+import {rippleNode} from '@material/mwc-ripple/ripple-directive.js';
 import {html, property, query} from 'lit-element';
 
 export class CheckboxBase extends FormElement {
@@ -70,8 +70,7 @@ export class CheckboxBase extends FormElement {
   protected render() {
     return html`
       <div class="mdc-checkbox"
-           @animationend="${this._animationEndHandler}"
-           .ripple="${ripple()}">
+           @animationend="${this._animationEndHandler}">
         <input type="checkbox"
               class="mdc-checkbox__native-control"
               @change="${this._changeHandler}"
@@ -87,7 +86,14 @@ export class CheckboxBase extends FormElement {
           </svg>
           <div class="mdc-checkbox__mixedmark"></div>
         </div>
+        <div class="mdc-checkbox__ripple"></div>
       </div>`;
+  }
+
+  firstUpdated() {
+    super.firstUpdated();
+    this.mdcRoot.ripple = rippleNode(
+        {surfaceNode: this.mdcRoot, interactionNode: this.formElement});
   }
 
   private _changeHandler() {
