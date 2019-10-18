@@ -17,6 +17,8 @@ limitations under the License.
 
 @import '@material/checkbox/mdc-checkbox.scss';
 
+@include mdc-ripple-common(mdc-feature-all());
+
 :host {
   outline: none;
 }

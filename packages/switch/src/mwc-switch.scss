@@ -17,6 +17,8 @@ limitations under the License.
 
 @import '@material/switch/mdc-switch.scss';
 
+@include mdc-ripple-common(mdc-feature-all());
+
 :host {
   outline: none;
 }
