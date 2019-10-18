@@ -23,6 +23,9 @@ import {html} from 'lit-html';
 
 import {fixture, rafPromise, TestFixture} from '../../../../test/src/util/helpers';
 
+interface TextfieldInternals {
+  createFoundation: () => void;
+}
 
 const basic = html`
   <mwc-textfield></mwc-textfield>
@@ -370,13 +373,14 @@ suite('mwc-textfield:', () => {
 
     test('createFoundation called an appropriate amount of times', async () => {
       const element = fixt.root.querySelector('mwc-textfield')!;
+      const internals = element as unknown as TextfieldInternals;
       element.helperPersistent = true;
 
       const oldCreateFoundation =
-          (element as any).createFoundation.bind(element) as () => void;
+          internals.createFoundation.bind(element) as () => void;
       let numTimesCreateFoundationCalled = 0;
 
-      ((element as any).createFoundation as () => void) = () => {
+      internals.createFoundation = () => {
         numTimesCreateFoundationCalled = numTimesCreateFoundationCalled + 1;
         oldCreateFoundation();
       };
