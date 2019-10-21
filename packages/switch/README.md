@@ -65,6 +65,7 @@ npm install @material/mwc-switch
 ## API
 
 ### Slots
+
 *None*
 
 ### Properties/Attributes
@@ -74,10 +75,14 @@ npm install @material/mwc-switch
 | `disabled` | `boolean` | `false` | Disables the input and sets the disabled styles.
 
 ### Methods
+
 *None*
 
 ### Events
-*None*
+
+| Event Name | Target         | Detail | Description
+| ---------- | -------------- | ------ | -----------
+| `change`   | `mwc-checkbox` | `{}`   | Fired when the user modifies the swtich `checked` state from an input device interaction. Note that, like [native `<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event), the `change` event is *not* fired when the `checked` property is set from JavaScript.
 
 ### CSS Custom Properties
 
