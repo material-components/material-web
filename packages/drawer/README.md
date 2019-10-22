@@ -34,8 +34,9 @@ npm install @material/mwc-drawer
         <mwc-top-app-bar>
             <div slot="title">Title</div>
         </mwc-top-app-bar>
-    <div>
-        <p>Main Content!</p>
+        <div>
+            <p>Main Content!</p>
+        </div>
     </div>
 </mwc-drawer>
 ```
@@ -54,8 +55,9 @@ npm install @material/mwc-drawer
         <mwc-top-app-bar>
             <div slot="title">Title</div>
         </mwc-top-app-bar>
-    <div>
-        <p>Main Content!</p>
+        <div>
+            <p>Main Content!</p>
+        </div>
     </div>
 </mwc-drawer>
 ```
@@ -70,15 +72,16 @@ npm install @material/mwc-drawer
     <div>
         <p>Drawer content!</p>
         <mwc-icon-button icon="gesture"></mwc-icon-button>
-        <mwc-icon-button icon="gavel" id="gavel"></mwc-icon-button>
+        <mwc-icon-button icon="gavel"></mwc-icon-button>
     </div>
     <div slot="appContent">
         <mwc-top-app-bar>
             <mwc-icon-button slot="navigationIcon" icon="menu"></mwc-icon-button>
             <div slot="title">Title</div>
         </mwc-top-app-bar>
-    <div>
-        <p>Main Content!</p>
+        <div>
+            <p>Main Content!</p>
+        </div>
     </div>
 </mwc-drawer>
 ```
@@ -93,15 +96,16 @@ npm install @material/mwc-drawer
     <div>
         <p>Drawer content!</p>
         <mwc-icon-button icon="gesture"></mwc-icon-button>
-        <mwc-icon-button icon="gavel" id="gavel"></mwc-icon-button>
+        <mwc-icon-button icon="gavel"></mwc-icon-button>
     </div>
     <div slot="appContent">
         <mwc-top-app-bar>
             <mwc-icon-button slot="navigationIcon" icon="menu"></mwc-icon-button>
             <div slot="title">Title</div>
         </mwc-top-app-bar>
-    <div>
-        <p>Main Content!</p>
+        <div>
+            <p>Main Content!</p>
+        </div>
     </div>
 </mwc-drawer>
 ```
@@ -123,7 +127,7 @@ Name | Description
 Name | Type | Default | Description
 ---- | ---- | ------- | -----------
 `open` | `boolean` | `false` | Whether the dialog is open
-`hasHeader` | `boolean` | `false` | When `true`, adds
+`hasHeader` | `boolean` | `false` | When `true`, displays the `title`, `subtitle`, and `header` slots.
 `type` | `string` | `string` | When set to `'dismissible'`, overlays the drawer on the content. When set to `'modal'`, also adds a scrim when the drawer is open.
 
 ### Methods
