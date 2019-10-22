@@ -82,7 +82,7 @@ npm install @material/mwc-switch
 
 | Event Name | Target         | Detail | Description
 | ---------- | -------------- | ------ | -----------
-| `change`   | `mwc-checkbox` | `{}`   | Fired when the user modifies the swtich `checked` state from an input device interaction. Note that, like [native `<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event), the `change` event is *not* fired when the `checked` property is set from JavaScript.
+| `change`   | `mwc-switch`   | `{}`   | Fired when the user modifies the switch `checked` state from an input device interaction. Note that, like [native `<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event), the `change` event is *not* fired when the `checked` property is set from JavaScript.
 
 ### CSS Custom Properties
 
