@@ -131,7 +131,7 @@ mwc-icon-button-toggle {
 
 | Name | Detail | Description
 | ---- | ------ | -----------
-| `MDCIconButtonToggle:change` | `{isOn: boolean}` | Indicates the snackbar has toggled. `isOn` indicates the `on` value of the toggle button.
+| `MDCIconButtonToggle:change` | `{isOn: boolean}` | Indicates the button has toggled. `isOn` indicates the `on` value of the toggle button.
 
 ### CSS Custom Properties
 
