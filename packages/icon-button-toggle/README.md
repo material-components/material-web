@@ -107,6 +107,25 @@ mwc-icon-button-toggle {
 }
 ```
 
+## Fonts
+
+Most users should include the following in their application HTML when using
+icons:
+
+```html
+<link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
+```
+
+This loads the *Material Icons* font, which is required to render icons, and is
+*not* loaded automatically. If you see plain text instead of an icon, then the
+most likely cause is that the Material Icons font is not loaded.
+
+To see all icons that are available in the Material Icons font, see
+[Material Icons](https://material.io/resources/icons/).
+
+For technical details about the Material Icons font, see the
+[Material Icons Developer Guide](https://google.github.io/material-design-icons/).
+
 ## API
 
 ### Slots
@@ -137,7 +156,7 @@ mwc-icon-button-toggle {
 
 | Name | Default | Description
 | ---- | ------- | -----------
-| `--mdc-icon-font` | [`Material Icons`](https://google.github.io/material-design-icons/) | Font to use for the icon.
+| `--mdc-icon-font` | [`Material Icons`](https://material.io/resources/icons/) | Font that supports *ligatures* and determines which icons are available (see [fonts](#fonts) above).
 | `--mdc-theme-text-disabled-on-light` | `rgba(0, 0, 0, 0.38)` | Color of icon when `disabled` is `true`
 | `--mdc-icon-button-ripple-opacity` | `0.12` | Opacity of the ripple on the icon button
 
