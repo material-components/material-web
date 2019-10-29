@@ -169,12 +169,12 @@ npm install @material/mwc-textfield
 | `maxLength`         | `number`         | Maximum length to accept input.
 | `validationMessage` | `string`         | Message to show in the error color when the textfield is invalid. (Helper text will not be visible)
 | `pattern`           | `string`         | [`HTMLInputElement.prototype.pattern`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (empty string will unset attribute)
-| `min`               | `number|string`  | [`HTMLInputElement.prototype.min`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (empty string will unset attribute)
-| `max`               | `number|string`  | [`HTMLInputElement.prototype.max`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (empty string will unset attribute)
-| `step`              | `number|null`    | [`HTMLInputElement.prototype.step`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (null will unset attribute)
+| `min`               | `number`\|`string`  | [`HTMLInputElement.prototype.min`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (empty string will unset attribute)
+| `max`               | `number`\|`string`  | [`HTMLInputElement.prototype.max`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (empty string will unset attribute)
+| `step`              | `number`\|`null`    | [`HTMLInputElement.prototype.step`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (null will unset attribute)
 | `validity`          | `ValidityState` (readonly) | The [`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState) of the textfield.
 | `willValidate`      | `boolean` (readonly)       | [`HTMLInputElement.prototype.willValidate`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement#Properties)
-| `validityTransform` | `ValidityTransform**|null` | Callback called before each validation check. See the [validation section](#Validation) for more details.
+| `validityTransform` | `ValidityTransform**`\|`null` | Callback called before each validation check. See the [validation section](#Validation) for more details.
 | `validateOnInitialRender` | `boolean`            | Runs validation check on initial render.
 
 \*  `TextFieldType` is exported by `mwc-textfield` and `mwc-textfield-base`
