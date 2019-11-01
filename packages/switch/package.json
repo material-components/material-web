@@ -14,7 +14,7 @@
   "dependencies": {
     "@material/mwc-base": "^0.10.0",
     "@material/mwc-ripple": "^0.10.0",
-    "@material/switch": "=4.0.0-canary.b5c6d66b.0",
+    "@material/switch": "=4.0.0-canary.cdf858ea.0",
     "lit-element": "^2.2.1",
     "tslib": "^1.10.0"
   },
