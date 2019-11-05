@@ -42,13 +42,13 @@ limitations under the License.
 }
 
 .mdc-icon-button {
-  display: flex;
-
   @include mdc-icon-button-size-var-aware(var(--mdc-icon-button-size, #{$mdc-icon-button-size}));
 
+  i,
   svg,
   img,
   ::slotted(*) {
+    display: block;
     $feat-structure: mdc-feature-create-target(mdc-feature-all(), structure);
     @include mdc-feature-targets($feat-structure) {
       width: var(--mdc-icon-size, #{$mdc-icon-button-icon-size});
