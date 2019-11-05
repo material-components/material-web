@@ -16,6 +16,7 @@
  */
 
 import {Ripple} from '@material/mwc-ripple';
+import assert = require('http-assert');
 
 interface RippleInternals {
   interactionNode: HTMLElement;
@@ -50,7 +51,7 @@ suite('mwc-ripple', () => {
     });
   });
 
-  suite('nested', () => {
+  suite('interactionNode', () => {
     test('respects interactionNode', async () => {
       container = document.createElement('div');
       document.body.appendChild(container);
@@ -67,5 +68,21 @@ suite('mwc-ripple', () => {
 
       document.body.removeChild(container);
     });
+
+    test('ripple whose parent is shadowRoot selects host', async () => {
+      container = document.createElement('div');
+      const root = container.attachShadow({mode: 'open'});
+      document.body.appendChild(container);
+
+      const ripple = document.createElement('mwc-ripple');
+      const internals = ripple as unknown as RippleInternals;
+
+      root.appendChild(ripple);
+
+      assert(internals.interactionNode instanceof HTMLElement);
+      assert(internals.interactionNode === container);
+
+      document.body.removeChild(container);
+    })
   });
 });
