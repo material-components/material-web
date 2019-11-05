@@ -84,6 +84,6 @@ suite('mwc-ripple', () => {
       assert(internals.interactionNode === container);
 
       document.body.removeChild(container);
-    })
+    });
   });
 });
