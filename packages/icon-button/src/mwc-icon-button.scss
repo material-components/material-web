@@ -44,7 +44,7 @@ limitations under the License.
 .mdc-icon-button {
   display: flex;
 
-  @include mdc-icon-button-size-var-aware(calc(var(--mdc-icon-size, #{$mdc-icon-button-icon-size}) * 2));
+  @include mdc-icon-button-size-var-aware(var(--mdc-icon-button-size, #{$mdc-icon-button-size}));
 
   svg,
   img,
