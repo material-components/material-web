@@ -16,7 +16,6 @@
  */
 
 import {Ripple} from '@material/mwc-ripple';
-import assert = require('http-assert');
 
 interface RippleInternals {
   interactionNode: HTMLElement;
@@ -79,7 +78,9 @@ suite('mwc-ripple', () => {
 
       root.appendChild(ripple);
 
-      assert(internals.interactionNode instanceof HTMLElement);
+      await ripple.updateComplete;
+
+      assert.instanceOf(internals.interactionNode, HTMLElement);
       assert(internals.interactionNode === container);
 
       document.body.removeChild(container);
