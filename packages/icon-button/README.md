@@ -106,7 +106,7 @@ For technical details about the Material Icons font, see the
 | Name | Default | Description
 | ---- | ------- | -----------
 | `--mdc-icon-font` | [`Material Icons`](https://material.io/resources/icons/) | Font that supports *ligatures* and determines which icons are available (see [fonts](#fonts) above).
-| `--mdc-icon-button-size` | `24px` | Sets the size of the button wrapping the icon.
+| `--mdc-icon-button-size` | `48px` | Sets the size of the button wrapping the icon.
 | `--mdc-icon-size` | `24px` | Sets the size of the icon.
 | `--mdc-theme-text-disabled-on-light` | `rgba(0, 0, 0, 0.38)` | Color of icon when `disabled` is `true`
 | `--mdc-icon-button-ripple-opacity` | `0.12` | Opacity of the ripple on the icon button
