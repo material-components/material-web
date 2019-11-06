@@ -167,8 +167,8 @@ export class DialogBase extends BaseElement {
         return node;
       } else {
         const selection = node.querySelector(`[${attribute}]`);
-        if (selection instanceof HTMLElement) {
-          return selection;
+        if (selection) {
+          return selection as HTMLElement;
         }
       }
     }
