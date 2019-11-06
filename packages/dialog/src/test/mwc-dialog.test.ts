@@ -19,6 +19,7 @@ import '@material/mwc-button';
 
 import {Button} from '@material/mwc-button';
 import {Dialog} from '@material/mwc-dialog';
+import {customElement, LitElement} from 'lit-element';
 // import {cssClasses} from '@material/dialog/constants';
 import {html} from 'lit-html';
 
@@ -33,6 +34,20 @@ interface HasKeyCode {
   keyCode: number;
 }
 
+@customElement('my-test-element')
+export class MyTestElement extends LitElement {
+  render() {
+    return html`
+      <mwc-dialog>
+        <slot></slot>
+        <slot name="primaryAction" slot="primaryAction"></slot>
+        <slot name="secondaryAction" slot="secondaryAction"></slot>
+      </mwc-dialog>
+    `;
+  }
+}
+
+
 const awaitEvent =
     (element: Dialog, eventName: string): Promise<CustomEvent> => {
       return new Promise((res) => {
@@ -44,6 +59,24 @@ const awaitEvent =
         element.addEventListener(eventName, listener as EventListener);
       });
     };
+
+const distributedFocusContent = html`
+  <my-test-element>
+    <div>
+      <mwc-button id="wrappedContentButton">wrapped content button</mwc-button>
+    </div>
+    <mwc-button id="contentButton">content button</mwc-button>
+    <mwc-button
+        slot="primaryAction"
+        data-dialogAction="ok">
+      Ok
+    </mwc-button>
+    <mwc-button
+        slot="secondaryAction">
+      Cancel
+    </mwc-button>
+  </my-test-element>
+`;
 
 const basic = html`
   <mwc-dialog></mwc-dialog>
@@ -243,10 +276,13 @@ suite('mwc-dialog:', () => {
 
   suite('with actions', () => {
     let element: Dialog;
+    let distFocusFixt: TestFixture;
 
     setup(async () => {
       fixt = await fixture(withButtons);
       element = fixt.root.firstElementChild as Dialog;
+
+      distFocusFixt = await fixture(distributedFocusContent);
     });
 
     test('Actions close dialog', async () => {
@@ -315,6 +351,98 @@ suite('mwc-dialog:', () => {
       assert.strictEqual(fixt.root.activeElement, button);
     });
 
+    test('initial focus not in light dom but still distributed', async () => {
+      const testElement = distFocusFixt.root.firstElementChild!;
+      const root = testElement.shadowRoot!;
+      element = root.querySelector('mwc-dialog')!;
+
+      await element.updateComplete;
+
+      // secondary
+      const primaryButton =
+          testElement.querySelector('[slot="primaryAction"]') as Button;
+
+      primaryButton.setAttribute('dialogInitialFocus', '');
+
+      element.open = true;
+
+      await awaitEvent(element, OPENED_EVENT);
+
+      assert.strictEqual(
+          primaryButton.shadowRoot!.activeElement,
+          primaryButton.shadowRoot!.querySelector('button'),
+          'root slotted primary action is focused');
+
+      element.open = false;
+
+      await awaitEvent(element, CLOSED_EVENT);
+
+      primaryButton.removeAttribute('dialogInitialFocus');
+
+      // secondary
+      const secondaryButton =
+          testElement.querySelector('[slot="secondaryAction"]') as Button;
+
+      secondaryButton.setAttribute('dialogInitialFocus', '');
+
+      element.open = true;
+
+      await awaitEvent(element, OPENED_EVENT);
+
+      assert.strictEqual(
+          secondaryButton.shadowRoot!.activeElement,
+          secondaryButton.shadowRoot!.querySelector('button'),
+          'root slotted secondary action is focused');
+
+      element.open = false;
+
+      await awaitEvent(element, CLOSED_EVENT);
+
+      secondaryButton.removeAttribute('dialogInitialFocus');
+
+      // secondary
+      const contentButton =
+          testElement.querySelector('#contentButton') as Button;
+
+      contentButton.setAttribute('dialogInitialFocus', '');
+
+      element.open = true;
+
+      await awaitEvent(element, OPENED_EVENT);
+
+      assert.strictEqual(
+          contentButton.shadowRoot!.activeElement,
+          contentButton.shadowRoot!.querySelector('button'),
+          'root slotted content focused');
+
+      element.open = false;
+
+      await awaitEvent(element, CLOSED_EVENT);
+
+      contentButton.removeAttribute('dialogInitialFocus');
+
+      // wrapped
+      const wrappedContentButton =
+          testElement.querySelector('#wrappedContentButton') as Button;
+
+      wrappedContentButton.setAttribute('dialogInitialFocus', '');
+
+      element.open = true;
+
+      await awaitEvent(element, OPENED_EVENT);
+
+      assert.strictEqual(
+          wrappedContentButton.shadowRoot!.activeElement,
+          wrappedContentButton.shadowRoot!.querySelector('button'),
+          'wrapped slotted content focused');
+
+      element.open = false;
+
+      await awaitEvent(element, CLOSED_EVENT);
+
+      wrappedContentButton.removeAttribute('dialogInitialFocus');
+    });
+
     test('Stacking reverses actions', async () => {
       const primary = element.querySelector('[slot="primaryAction"]') as Button;
       const secondary =
@@ -381,6 +509,10 @@ suite('mwc-dialog:', () => {
 
       if (fixt) {
         fixt.remove();
+      }
+
+      if (distFocusFixt) {
+        distFocusFixt.remove();
       }
     });
   });

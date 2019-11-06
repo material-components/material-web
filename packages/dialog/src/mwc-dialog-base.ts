@@ -47,6 +47,8 @@ export class DialogBase extends BaseElement {
   // undefined" error in browsers that don't define it (e.g. Edge and IE11).
   @query('slot[name="secondaryAction"]') protected secondarySlot!: HTMLElement;
 
+  @query('#content slot') protected contentSlot!: HTMLElement;
+
   @query('.mdc-dialog__content') protected contentElement!: HTMLDivElement;
 
   @query('.mdc-container') protected conatinerElement!: HTMLDivElement;
@@ -118,7 +120,58 @@ export class DialogBase extends BaseElement {
   }
 
   protected getInitialFocusEl(): HTMLElement|null {
-    return this.querySelector(`[${this.initialFocusAttribute}]`);
+    const initFocusSelector = `[${this.initialFocusAttribute}]`;
+
+    // only search light DOM. This typically handles all the cases
+    const lightDomQs = this.querySelector(initFocusSelector);
+
+    if (lightDomQs) {
+      return lightDomQs as HTMLElement;
+    }
+
+    // if not in light dom, search each flattened distributed node.
+    const content = this.contentSlot as HTMLSlotElement;
+    const primary = this.primarySlot as HTMLSlotElement;
+    const secondary = this.secondarySlot as HTMLSlotElement;
+
+    const contentNodes = content.assignedNodes({flatten: true});
+    const primaryNodes = primary.assignedNodes({flatten: true});
+    const secondaryNodes = secondary.assignedNodes({flatten: true});
+
+    const initFocusElement = this.searchNodeTreesForAttribute(
+        contentNodes, this.initialFocusAttribute);
+    if (initFocusElement) {
+      return initFocusElement;
+    }
+
+    const primaryFocusElement = this.searchNodeTreesForAttribute(
+        primaryNodes, this.initialFocusAttribute);
+    if (primaryFocusElement) {
+      return primaryFocusElement;
+    }
+    const secondaryFocusElement = this.searchNodeTreesForAttribute(
+        secondaryNodes, this.initialFocusAttribute);
+    return secondaryFocusElement;
+  }
+
+  private searchNodeTreesForAttribute(nodes: Node[], attribute: string):
+      HTMLElement|null {
+    for (const node of nodes) {
+      if (!(node instanceof HTMLElement)) {
+        continue;
+      }
+
+      if (node.hasAttribute(attribute)) {
+        return node;
+      } else {
+        const selection = node.querySelector(`[${attribute}]`);
+        if (selection instanceof HTMLElement) {
+          return selection;
+        }
+      }
+    }
+
+    return null;
   }
 
   protected createAdapter(): MDCDialogAdapter {

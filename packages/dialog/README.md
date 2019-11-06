@@ -353,9 +353,9 @@ For example:
 
 In this example we set `dialogInitialFocus` on the `mwc-textfield`, so
 `mwc-textfield.focus()` will be called on the button. This attribute can also be
-set on anything in the light DOM of `mwc-dialog` including the primary and
-secondary actions. Only one element designated with this attribute will be
-focused.
+set on anything in the light DOM of `mwc-dialog` or the light dom of the
+flattened, distributed nodes including the primary and secondary actions. Only
+one element designated with this attribute will be focused.
 
 Calling `focus()` on the `mwc-dialog` itself will call `focus()` on any
 `dialogInitialFocus` element in the light DOM of `mwc-dialog`.
