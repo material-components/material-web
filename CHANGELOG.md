@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed app content not being expanded inside drawer.
 - Fixed issue where slider when resized or scrolled will not respond to touch
   as expected.
+- Fixed issue where `mwc-ripple` would not ripple when parent was a shadow root
 
 ## [0.10.0] - 2019-10-11
 
