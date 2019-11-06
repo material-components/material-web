@@ -47,7 +47,7 @@ export class DialogBase extends BaseElement {
   // undefined" error in browsers that don't define it (e.g. Edge and IE11).
   @query('slot[name="secondaryAction"]') protected secondarySlot!: HTMLElement;
 
-  @query('#content slot') protected contentSlot!: HTMLElement;
+  @query('#contentSlot') protected contentSlot!: HTMLElement;
 
   @query('.mdc-dialog__content') protected contentElement!: HTMLDivElement;
 
@@ -254,7 +254,7 @@ export class DialogBase extends BaseElement {
         <div class="mdc-dialog__surface">
           ${heading}
           <div id="content" class="mdc-dialog__content">
-            <slot></slot>
+            <slot id="contentSlot"></slot>
           </div>
           <footer
               id="actions"
