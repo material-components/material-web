@@ -130,28 +130,30 @@ export class DialogBase extends BaseElement {
     }
 
     // if not in light dom, search each flattened distributed node.
-    const content = this.contentSlot as HTMLSlotElement;
     const primary = this.primarySlot as HTMLSlotElement;
     const secondary = this.secondarySlot as HTMLSlotElement;
+    const content = this.contentSlot as HTMLSlotElement;
 
-    const contentNodes = content.assignedNodes({flatten: true});
+
     const primaryNodes = primary.assignedNodes({flatten: true});
-    const secondaryNodes = secondary.assignedNodes({flatten: true});
-
-    const initFocusElement = this.searchNodeTreesForAttribute(
-        contentNodes, this.initialFocusAttribute);
-    if (initFocusElement) {
-      return initFocusElement;
-    }
-
     const primaryFocusElement = this.searchNodeTreesForAttribute(
         primaryNodes, this.initialFocusAttribute);
     if (primaryFocusElement) {
       return primaryFocusElement;
     }
+
+    const secondaryNodes = secondary.assignedNodes({flatten: true});
     const secondaryFocusElement = this.searchNodeTreesForAttribute(
         secondaryNodes, this.initialFocusAttribute);
-    return secondaryFocusElement;
+    if (secondaryFocusElement) {
+      return secondaryFocusElement;
+    }
+
+
+    const contentNodes = content.assignedNodes({flatten: true});
+    const initFocusElement = this.searchNodeTreesForAttribute(
+        contentNodes, this.initialFocusAttribute);
+    return initFocusElement;
   }
 
   private searchNodeTreesForAttribute(nodes: Node[], attribute: string):
