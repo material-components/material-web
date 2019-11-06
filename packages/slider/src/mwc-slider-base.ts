@@ -18,11 +18,12 @@ import {applyPassive} from '@material/dom/events.js';
 import {addHasRemoveClass, EventType, FormElement, observer, SpecificEventListener} from '@material/mwc-base/form-element.js';
 import {MDCSliderAdapter} from '@material/slider/adapter.js';
 import MDCSliderFoundation from '@material/slider/foundation.js';
-import {html, property, query, TemplateResult} from 'lit-element';
+import {eventOptions, html, property, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
 
-const {INPUT_EVENT, CHANGE_EVENT} = MDCSliderFoundation.strings;
+const INPUT_EVENT = 'input';
+const CHANGE_EVENT = 'change';
 
 export class SliderBase extends FormElement {
   protected mdcFoundation!: MDCSliderFoundation;
@@ -113,22 +114,24 @@ export class SliderBase extends FormElement {
            tabindex="0" role="slider"
            aria-valuemin="${this.min}" aria-valuemax="${this.max}"
            aria-valuenow="${this.value}" aria-disabled="${this.disabled}"
-           data-step="${this.step}">
-      <div class="mdc-slider__track-container">
-        <div
-            class="mdc-slider__track"
-            style="${styleMap(this.trackStyles)}">
+           data-step="${this.step}"
+           @mousedown=${this.layout}
+           @touchmove=${this.layout}>
+        <div class="mdc-slider__track-container">
+          <div
+              class="mdc-slider__track"
+              style="${styleMap(this.trackStyles)}">
+          </div>
+          ${markersTemplate}
         </div>
-        ${markersTemplate}
-      </div>
-      <div
-          class="mdc-slider__thumb-container"
-          style="${styleMap(this.thumbContainerStyles)}">
-        <!-- TODO: use cache() directive -->
-        ${pin}
-        <svg class="mdc-slider__thumb" width="21" height="21">
-          <circle cx="10.5" cy="10.5" r="7.875"></circle>
-        </svg>
+        <div
+            class="mdc-slider__thumb-container"
+            style="${styleMap(this.thumbContainerStyles)}">
+          <!-- TODO: use cache() directive -->
+          ${pin}
+          <svg class="mdc-slider__thumb" width="21" height="21">
+            <circle cx="10.5" cy="10.5" r="7.875"></circle>
+          </svg>
         <div class="mdc-slider__focus-ring"></div>
       </div>
     </div>`;
@@ -188,12 +191,14 @@ export class SliderBase extends FormElement {
         if (value !== this.value) {
           this.value = value;
           this.dispatchEvent(new CustomEvent(
-              INPUT_EVENT, {detail: this, bubbles: true, cancelable: true}));
+              INPUT_EVENT,
+              {detail: this, composed: true, bubbles: true, cancelable: true}));
         }
       },
       notifyChange: () => {
         this.dispatchEvent(new CustomEvent(
-            CHANGE_EVENT, {detail: this, bubbles: true, cancelable: true}));
+            CHANGE_EVENT,
+            {detail: this, composed: true, bubbles: true, cancelable: true}));
       },
       setThumbContainerStyleProperty: (propertyName: string, value: string) => {
         this.thumbContainerStyles[propertyName] = value;
@@ -226,6 +231,7 @@ export class SliderBase extends FormElement {
     };
   }
 
+  @eventOptions({capture: true, passive: true})
   layout() {
     this.mdcFoundation.layout();
   }
