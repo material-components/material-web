@@ -15,11 +15,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+@import '@material/icon-button/_variables.scss';
 @import '@material/icon-button/mdc-icon-button.scss';
 @import '@material/mwc-icon/src/_mwc-icon.scss';
 @import '@material/theme/_mixins.scss';
 
 @include mdc-ripple-common(mdc-feature-all());
+
+@mixin mdc-icon-button-size-var-aware($size, $query: mdc-feature-all()) {
+  $feat-structure: mdc-feature-create-target($query, structure);
+
+  @include mdc-feature-targets($feat-structure) {
+    width: $size;
+    height: $size;
+    padding: calc((#{$size} - var(--mdc-icon-size, #{$mdc-icon-button-icon-size})) / 2);
+  }
+}
 
 :host {
   display: inline-block;
@@ -28,6 +39,22 @@ limitations under the License.
 
 .material-icons {
   @extend %material-icons;
+}
+
+.mdc-icon-button {
+  @include mdc-icon-button-size-var-aware(var(--mdc-icon-button-size, #{$mdc-icon-button-size}));
+
+  i,
+  svg,
+  img,
+  ::slotted(*) {
+    display: block;
+    $feat-structure: mdc-feature-create-target(mdc-feature-all(), structure);
+    @include mdc-feature-targets($feat-structure) {
+      width: var(--mdc-icon-size, #{$mdc-icon-button-icon-size});
+      height: var(--mdc-icon-size, #{$mdc-icon-button-icon-size});
+    }
+  }
 }
 
 // hack for top-app-bar ripple coloring of icon-buttons
