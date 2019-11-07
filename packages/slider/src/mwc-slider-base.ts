@@ -67,7 +67,7 @@ export class SliderBase extends FormElement {
   })
   disabled = false;
 
-  @property({type: Boolean, reflect: true}) discrete = false;
+  @property({type: Boolean, reflect: true}) pin = false;
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: SliderBase) {
@@ -84,14 +84,15 @@ export class SliderBase extends FormElement {
 
   // TODO(sorvell) #css: needs a default width
   protected render() {
+    const isDiscrete = this.step !== 0;
     const hostClassInfo = {
-      'mdc-slider--discrete': this.discrete,
-      'mdc-slider--display-markers': this.markers && this.discrete,
+      'mdc-slider--discrete': isDiscrete,
+      'mdc-slider--display-markers': this.markers && isDiscrete,
     };
 
     let markersTemplate: TemplateResult|string = '';
 
-    if (this.discrete && this.markers) {
+    if (isDiscrete && this.markers) {
       markersTemplate = html`
         <div
             class="mdc-slider__track-marker-container"
@@ -101,7 +102,7 @@ export class SliderBase extends FormElement {
 
     let pin: TemplateResult|string = '';
 
-    if (this.discrete) {
+    if (this.pin) {
       pin = html`
       <div class="mdc-slider__pin">
         <span class="mdc-slider__pin-value-marker">${this.pinMarkerText}</span>
