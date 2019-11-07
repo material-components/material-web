@@ -41,7 +41,7 @@ npm install @material/mwc-slider
 
 ### Discrete
 
-<img src="images/discrete.gif" width="250px">
+<img src="images/discrete.gif" width="163px">
 
 ```html
 <mwc-slider
@@ -55,15 +55,21 @@ npm install @material/mwc-slider
 
 ### Styled
 
-<img src="images/discrete.gif" width="250px">
+<img src="images/styled.gif" width="188px">
 
 ```html
+<style>
+  mwc-slider {
+    --mdc-theme-secondary: orange;
+    --mdc-theme-text-primary-on-dark: green;
+  }
+</style>
 <mwc-slider
-    step="5"
     pin
     markers
     max="50"
-    value="10">
+    value="10"
+    step="5">
 </mwc-slider>
 ```
 
