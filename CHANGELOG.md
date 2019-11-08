@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   it caused clashes with `HTMLElement.prototype.title`.
 - Updated material dependencies to `4.0.0-canary.735147131.0`.
 - **BREAKING** `Slider.discrete` removed and `Slider.pin` added.
+- `mwc-dialog` will now search its flattened distributed nodes and their trees
+  for a focusable element.
 
 ### Fixed
 - Fixed checkbox ripple visibility when focused while being unchecked.
