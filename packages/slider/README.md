@@ -5,9 +5,7 @@
 
 Sliders allow users to make selections from a range of values.
 
-**Note: vertical sliders and range (multi-thumb) sliders are not supported, due to their absence from the material design spec.**
-
-<img src="images/standard.png" width="397px">
+<img src="images/basic.png" height="48px">
 
 [Material Design Guidelines: sliders](https://material.io/design/components/sliders.html)
 
@@ -29,7 +27,7 @@ npm install @material/mwc-slider
 
 ### Continuous
 
-<img src="images/basic.png" width="140px">
+<img src="images/basic.png" height="48pxx">
 
 ```html
 <script type="module">
@@ -41,7 +39,7 @@ npm install @material/mwc-slider
 
 ### Discrete
 
-<img src="images/discrete.gif" width="163px">
+<img src="images/discrete.gif" height="80.5px">
 
 ```html
 <mwc-slider
@@ -55,7 +53,7 @@ npm install @material/mwc-slider
 
 ### Styled
 
-<img src="images/styled.gif" width="188px">
+<img src="images/styled.gif" height="79px">
 
 ```html
 <style>
@@ -84,32 +82,21 @@ npm install @material/mwc-slider
 | `min`     | `number`  | `0`     | Minimum value of the slider.
 | `max`     | `number`  | `100`   | Maximum value of the slider.
 | `step`    | `number`  | `0`     | Sets the step of the slider making it discrete. Set to 0 to make continuous. Note: if `step` is greater than 0 but less than 1, it will be rounded up to 1.
-| `pin`     | `bookean` | `false` | Shows the thumb pin on a discrete slider.
-| `markers` | `bookean` | `false` | Shows the marker on the slider's track of a discrete slider.
+| `pin`     | `boolean` | `false` | Shows the thumb pin on a discrete slider.
+| `markers` | `boolean` | `false` | Shows the tick marks for each step on the track when the slider is discrete.
 
 ### Methods
 
 | Name     | Description
 | -------- | -------------
-| `layout() => void` | Updates the internal size model. May be required if the slider is resized or repositioned horizontally.
-
-### Listeners
-| Event Name    | Target   | Description
-| ------------- | -------- | -----------
-| `resize`      | `window` | Performs slider layout (passive).
-| `mousemove`   | `body`   | Move the slider thumb and set value after initial interaction (passive).
-| `mouseup`     | `body`   | Move the slider thumb and set value after initial interaction (passive).
-| `pointermove` | `body`   | Move the slider thumb and set value after initial interaction (passive).
-| `pointerup`   | `body`   | Move the slider thumb and set value after initial interaction (passive).
-| `touchmove`   | `body`   | Move the slider thumb and set value after initial interaction (passive).
-| `touchend`    | `body`   | Move the slider thumb and set value after initial interaction (passive).
+| `layout() => void` | Recomputes the dimensions and re-lays out the component. This should be called if the dimensions of the slider itself or any of its parent elements change programmatically (it is called automatically on resize and on mousedown / touchstart).
 
 ### Events
 
 | Event Name | Target       | Detail             | Description
 | ---------- | ------------ | ------------------ | -----------
-| `input`    | `mwc-slider` | `Slider`           | Fired when the slider is beginning to open.
-| `change`   | `mwc-slider` | `Slider`           | Fired once the slider is finished opening (after animation).
+| `input`    | `mwc-slider` | `Slider`           | Fired when the value changes due to user input. Similar to the [`input` event of the native `<input type="range">` element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event), the `input` event will not fire when `value` is modified via JavaScript.
+| `change`   | `mwc-slider` | `Slider`           | Fired when the value changes and the user has finished interacting with the slider. Similar to the [`change` event of the native `<input type="range">` element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event), the `change` event will not fire when `value` is modified via JavaScript.
 
 ### CSS Custom Properties
 
