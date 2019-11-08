@@ -19,7 +19,7 @@
     "@material/mwc-base": "^0.10.0",
     "@material/mwc-tab": "^0.10.0",
     "@material/mwc-tab-scroller": "^0.10.0",
-    "@material/tab-bar": "=5.0.0-canary.b5eb51e94.0",
+    "@material/tab-bar": "=5.0.0-canary.66299b646.0",
     "lit-element": "^2.2.1",
     "tslib": "^1.10.0"
   },
