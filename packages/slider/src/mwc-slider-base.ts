@@ -116,7 +116,7 @@ export class SliderBase extends FormElement {
            aria-valuenow="${this.value}" aria-disabled="${this.disabled}"
            data-step="${this.step}"
            @mousedown=${this.layout}
-           @touchmove=${this.layout}>
+           @touchstart=${this.layout}>
         <div class="mdc-slider__track-container">
           <div
               class="mdc-slider__track"
@@ -158,7 +158,19 @@ export class SliderBase extends FormElement {
       setAttribute: (name: string, value: string) =>
           this.mdcRoot.setAttribute(name, value),
       removeAttribute: (name: string) => this.mdcRoot.removeAttribute(name),
-      computeBoundingRect: () => this.mdcRoot.getBoundingClientRect(),
+      computeBoundingRect: () => {
+        const rect = this.mdcRoot.getBoundingClientRect();
+        const myRect: ClientRect = {
+          bottom: rect.bottom,
+          height: rect.height,
+          left: rect.left + window.pageXOffset,
+          right: rect.right,
+          top: rect.top,
+          width: rect.width,
+        };
+
+        return myRect;
+      },
       getTabIndex: () => this.mdcRoot.tabIndex,
       registerInteractionHandler:
           <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
