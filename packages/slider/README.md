@@ -102,7 +102,7 @@ npm install @material/mwc-slider
 
 | Name                                     | Default | Description
 | ---------------------------------------- | ------- |------------
-| `--mdc-theme-secondary`                  | ![](images/color_fff.png) `#018786` | Sets the color of the knob and filled track when slider is active.
+| `--mdc-theme-secondary`                  | ![](images/color_018786.png) `#018786` | Sets the color of the knob and filled track when slider is active.
 | `--mdc-theme-text-primary-on-dark`       | ![](images/color_fff.png) `white`   | Sets the color of the text in the pin.
 | `--mdc-slider-bg-color-behind-component` | ![](images/color_fff.png) `white`   | Sets the color of the circle around the knob on the disabled slider to make it seem cut-out. May be necessary when placing a disabled slider on a different-colored background.
 
