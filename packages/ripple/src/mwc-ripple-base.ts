@@ -34,9 +34,12 @@ export class RippleBase extends LitElement {
 
   connectedCallback() {
     if (this.interactionNode === this) {
-      const parent = this.parentNode as HTMLElement;
+      const parent = this.parentNode as HTMLElement | ShadowRoot | null;
       if (parent instanceof HTMLElement) {
         this.interactionNode = parent;
+      } else if (
+          parent instanceof ShadowRoot && parent.host instanceof HTMLElement) {
+        this.interactionNode = parent.host;
       }
     }
     super.connectedCallback();

@@ -50,7 +50,7 @@ suite('mwc-ripple', () => {
     });
   });
 
-  suite('nested', () => {
+  suite('interactionNode', () => {
     test('respects interactionNode', async () => {
       container = document.createElement('div');
       document.body.appendChild(container);
@@ -64,6 +64,24 @@ suite('mwc-ripple', () => {
       await element2.updateComplete;
 
       assert(internals2.interactionNode == document.body);
+
+      document.body.removeChild(container);
+    });
+
+    test('ripple whose parent is shadowRoot selects host', async () => {
+      container = document.createElement('div');
+      const root = container.attachShadow({mode: 'open'});
+      document.body.appendChild(container);
+
+      const ripple = document.createElement('mwc-ripple');
+      const internals = ripple as unknown as RippleInternals;
+
+      root.appendChild(ripple);
+
+      await ripple.updateComplete;
+
+      assert.instanceOf(internals.interactionNode, HTMLElement);
+      assert(internals.interactionNode === container);
 
       document.body.removeChild(container);
     });
