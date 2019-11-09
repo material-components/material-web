@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - CSS styling options to `mwc-button`
 - CSS styling options to `mwc-textfield`
 - README for `mwc-drawer`
+- README for `mwc-checkbox`
+- README for `mwc-formfield`
 - Demo for `mwc-drawer` without a header in the drawer
 
 ### Changed

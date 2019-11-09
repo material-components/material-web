@@ -33,7 +33,7 @@ npm install @material/mwc-checkbox
 <script type="module">
   import '@material/mwc-checkbox';
 
-  const checkbox = document.querySelector('mwc-checkbox')
+  const checkbox = document.body.querySelector('mwc-checkbox')
   checkbox.addEventListener('change', () => {
     console.log(`checkbox changed to ${checkbox.checked}`);
   });
@@ -69,7 +69,7 @@ npm install @material/mwc-checkbox
 </div>
 ```
 
-### Labels
+### With Form Field
 
 Most applications should use
 [`<mwc-formfield>`](https://github.com/material-components/material-components-web-components/tree/master/packages/formfield)
@@ -101,6 +101,7 @@ to associate an interactive label with the checkbox.
 
 <script type="module">
   import '@material/mwc-checkbox';
+  import '@material/mwc-formfield';
 </script>
 ```
 
@@ -113,7 +114,7 @@ Name            | Type      | Default | Description
 `checked`       | `boolean` | `false` | Whether the checkbox is checked.
 `indeterminate` | `boolean` | `false` | When a checkbox is the parent of a set of child checkboxes, the *indeterminate* state is used on the parent to indicate that some but not all of its children are checked.
 `disabled`      | `boolean` | `false` | When `true`, the checkbox cannot be interacted with, and renders in muted colors.
-`value`         | `string`  | `''`      | The value that will included if the checkbox is submitted in a form.
+`value`         | `string`  | `''`    | The value that will be included if the checkbox is submitted in a form.
 
 
 ### Methods

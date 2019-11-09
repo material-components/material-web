@@ -62,6 +62,25 @@ npm install @material/mwc-switch
 <mwc-switch checked></mwc-switch>
 ```
 
+### With Form Field
+
+Most applications should use
+[`<mwc-formfield>`](https://github.com/material-components/material-components-web-components/tree/master/packages/formfield)
+to associate an interactive label with the switch.
+
+<img src="images/formfield.png" width="160px" height="48px">
+
+```html
+<mwc-formfield label="Airplane mode">
+  <mwc-switch checked></mwc-switch>
+</mwc-formfield>
+
+<script type="module">
+  import '@material/mwc-switch';
+  import '@material/mwc-formfield';
+</script>
+```
+
 ## API
 
 ### Slots
