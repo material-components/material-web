@@ -103,6 +103,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   as is per material spec.
 - `mwc-textarea[disabled]label="string!"][value="string!"]` will now float the
   label to the correct spot.
+- `mwc-linear-progress` can now have its pin and markers added and changed
+  dynamically.
 
 
 ## [0.8.0] - 2019-09-03
