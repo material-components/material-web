@@ -5,7 +5,7 @@
 
 Progress indicators express an unspecified wait time or display the length of a process.
 
-<img src="images/standard.png" width="397px">
+<img src="images/showcase.gif" height="45px">
 
 [Material Design Guidelines: Progress Indicators](https://material.io/components/progress-indicators/#circular-progress-indicators)
 
