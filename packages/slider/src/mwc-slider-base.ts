@@ -209,7 +209,8 @@ export class SliderBase extends FormElement {
         this.trackStyles[propertyName] = value;
         this.requestUpdate();
       },
-      setMarkerValue: (value: number) => this.pinMarkerText = value.toLocaleString(),
+      setMarkerValue: (value: number) => this.pinMarkerText =
+          value.toLocaleString(),
       setTrackMarkers: (step, max, min) => {
         // calculates the CSS for the notches on the slider. Taken from
         // https://github.com/material-components/material-components-web/blob/8f851d9ed2f75dc8b8956d15b3bb2619e59fa8a9/packages/mdc-slider/component.ts#L122
