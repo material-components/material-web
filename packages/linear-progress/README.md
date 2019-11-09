@@ -74,6 +74,7 @@ npm install @material/mwc-linear-progress
   mwc-linear-progress {
     --mdc-theme-primary: red;
     --mdc-linear-progress-buffer-color: orange;
+    /* Note: all that was changed from default was "fill='orange'" */
     --mdc-linear-progress-buffering-dots-image:
         url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' enable-background='new 0 0 5 2' xml:space='preserve' viewBox='0 0 5 2' preserveAspectRatio='none slice'%3E%3Ccircle cx='1' cy='1' r='1' fill='orange'/%3E%3C/svg%3E");
   }
