@@ -86,6 +86,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   `lit-html` modules instead.
 - **BREAKING** `mwc-textfield` and `mwc-textarea` will now update their `.value`
   on the native `input`'s `input` event instead of `change`.
+- **BREAKING:VISUAL** `mwc-linear-progress` had `--mdc-theme-secondary` applied
+  to its buffer bar's background color. This custom property's name was changed
+  to `--mdc-linear-progress-buffer-color`.
 
 ### Fixed
 
