@@ -81,7 +81,7 @@ npm install @material/mwc-slider
 | `value`   | `number`  | `0`     | Current value of the slider.
 | `min`     | `number`  | `0`     | Minimum value of the slider.
 | `max`     | `number`  | `100`   | Maximum value of the slider.
-| `step`    | `number`  | `0`     | Sets the step of the slider making it discrete. Set to 0 to make continuous. Note: if `step` is greater than 0 but less than 1, it will be rounded up to 1.
+| `step`    | `number`  | `0`     | Sets the step of the slider making it discrete. Set to 0 to make continuous.<br> **Note:** If `step` is greater than 0 but less than 1, it will be rounded up to 1.<br> **Note:** Due to float math rounding issues, we recommend you set this to an integer if you also enable the pin.
 | `pin`     | `boolean` | `false` | Shows the thumb pin on a discrete slider.
 | `markers` | `boolean` | `false` | Shows the tick marks for each step on the track when the slider is discrete.
 
