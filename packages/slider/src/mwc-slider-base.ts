@@ -56,7 +56,12 @@ export class SliderBase extends FormElement {
   max = 100;
 
   @property({type: Number})
-  @observer(function(this: SliderBase, value: number) {
+  @observer(function(this: SliderBase, value: number, old: number) {
+    const oldWasDiscrete = old !== 0;
+    const newIsDiscrete = value !== 0;
+    if (oldWasDiscrete !== newIsDiscrete) {
+      this.resetFoundation();
+    }
     this.mdcFoundation.setStep(value);
   })
   step = 0;
@@ -225,6 +230,13 @@ export class SliderBase extends FormElement {
       },
       isRTL: () => getComputedStyle(this.mdcRoot).direction === 'rtl',
     };
+  }
+
+  protected resetFoundation() {
+    if (this.mdcFoundation) {
+      this.mdcFoundation.destroy();
+      this.mdcFoundation.init();
+    }
   }
 
   layout() {
