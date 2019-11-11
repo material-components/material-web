@@ -15,7 +15,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/fab": "=5.0.0-canary.491fddc31.0",
+    "@material/fab": "=5.0.0-canary.afe0dd1bc.0",
     "@material/mwc-base": "^0.10.0",
     "@material/mwc-icon": "^0.10.0",
     "@material/mwc-ripple": "^0.10.0",
