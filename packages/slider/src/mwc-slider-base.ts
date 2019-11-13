@@ -243,6 +243,14 @@ export class SliderBase extends FormElement {
     };
   }
 
+  /**
+   * Layout is called on mousedown / touchstart as the dragging animations of
+   * slider are calculated based off of the bounding rect which can change
+   * between interactions with this component, and this is the only location
+   * in the foundation that udpates the rects. e.g. scrolling horizontally
+   * causes adverse effects on the bounding rect vs mouse drag / touchmove
+   * location.
+   */
   @eventOptions({capture: true, passive: true})
   layout() {
     this.mdcFoundation.layout();
