@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Updated material dependencies to `4.0.0-canary.735147131.0`.
 - `mwc-dialog` will now search its flattened distributed nodes and their trees
   for a focusable element.
+- **BREAKING** `mwc-icon-button` will now use its default slot for `<img>` or
+  `<svg>` icons instead of a named "icon" slot.
 
 ### Fixed
 - Fixed checkbox ripple visibility when focused while being unchecked.
