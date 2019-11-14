@@ -52,6 +52,9 @@ export class FabBase extends LitElement {
         <span class="material-icons mdc-fab__icon">${this.icon}</span>`;
     }
 
+    const label = showLabel ? html
+        `<span class="mdc-fab__label">${this.label}</span>` :
+                              '';
     return html`
       <button
           class="mdc-fab ${classMap(classes)}"
@@ -59,9 +62,9 @@ export class FabBase extends LitElement {
           aria-label="${this.label || this.icon}"
           .ripple="${ripple()}">
         <div class="mdc-fab__ripple"></div>
-        ${showLabel && this.showIconAtEnd ? this.label : ''}
+        ${this.showIconAtEnd ? label : ''}
         ${iconTemplate}
-        ${showLabel && !this.showIconAtEnd ? this.label : ''}
+        ${!this.showIconAtEnd ? label : ''}
       </button>`;
   }
 }

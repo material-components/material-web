@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Fixed checkbox ripple visibility when focused while being unchecked.
 - Fixed app content not being expanded inside drawer.
+- Fixed `mwc-icon-button` icon at end layout.
 
 ## [0.10.0] - 2019-10-11
 
