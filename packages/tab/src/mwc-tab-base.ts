@@ -90,6 +90,19 @@ export class TabBase extends BaseElement {
       'mdc-tab--min-width': this.minWidth,
       'mdc-tab--stacked': this.stacked,
     };
+
+    let iconTemplate = html``;
+    if (this.icon) {
+      iconTemplate = html`
+        <span class="mdc-tab__icon material-icons">${this.icon}</span>`;
+    }
+
+    let labelTemplate = html``;
+    if (this.label) {
+      labelTemplate = html`
+        <span class="mdc-tab__text-label">${this.label}</span>`
+    }
+
     return html`
       <button
         @click="${this._handleClick}"
@@ -99,14 +112,8 @@ export class TabBase extends BaseElement {
         tabindex="-1">
         <span class="mdc-tab__content">
           <slot></slot>
-          ${
-        this.icon ? html`
-          <span class="mdc-tab__icon material-icons">${this.icon}</span>` :
-                    ''}
-          ${
-        this.label ? html`
-          <span class="mdc-tab__text-label">${this.label}</span>` :
-                     ''}
+          ${iconTemplate}
+          ${labelTemplate}
           ${this.isMinWidthIndicator ? this.renderIndicator() : ''}
         </span>
         ${this.isMinWidthIndicator ? '' : this.renderIndicator()}
