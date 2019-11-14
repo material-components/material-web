@@ -43,6 +43,8 @@ export class TabBase extends BaseElement {
 
   @property() icon = '';
 
+  @property({type: Boolean}) hasImageIcon = false;
+
   @property({type: Boolean}) isFadingIndicator = false;
 
   @property({type: Boolean}) minWidth = false;
@@ -92,9 +94,11 @@ export class TabBase extends BaseElement {
     };
 
     let iconTemplate = html``;
-    if (this.icon) {
+    if (this.hasImageIcon || this.icon) {
       iconTemplate = html`
-        <span class="mdc-tab__icon material-icons">${this.icon}</span>`;
+        <span class="mdc-tab__icon material-icons">
+          <slot name="icon">${this.icon}</slot>
+        </span>`;
     }
 
     let labelTemplate = html``;
@@ -116,7 +120,6 @@ export class TabBase extends BaseElement {
         aria-selected="false"
         tabindex="-1">
         <span class="mdc-tab__content">
-          <slot></slot>
           ${iconTemplate}
           ${labelTemplate}
           ${this.isMinWidthIndicator ? this.renderIndicator() : ''}
