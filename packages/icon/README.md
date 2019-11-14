@@ -1,64 +1,111 @@
-# mwc-icon
+# `<mwc-icon>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-icon.svg)](https://www.npmjs.com/package/@material/mwc-icon)
+> IMPORTANT: The Material Web Components are a work in progress and subject to
+> major changes until 1.0 release.
 
-> :warning: These components are a work in progress. They are pre-release and should be considered experimental, as they may undergo major changes before release. We are experimenting with alternate architectures and approaches with the goal of allowing us to bring the most correct and optimal implementation of Material components to the widest possible audiences. Visible progress may be slow, as this research is across teams and repositories so is not consistently reflected in commits to this codebase. :warning:
+Icon displays an icon with a chosen name from the [Material Icons](https://material.io/resources/icons/) font, or from any
+font that supports *ligatures*.
 
-A [Material Components](https://material.io/components/) icon implementation using [Web Components](https://www.webcomponents.org/introduction)
+[Material Design Guidelines: System icons](https://material.io/design/iconography/system-icons.html)
 
-## Getting started
+## Installation
 
- * The easiest way to try out mwc-icon is to use one of these online tools:
+```sh
+npm install @material/mwc-icon
+```
 
-    * Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-icon-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-icon-example?path=index.html)
+> NOTE: The Material Web Components are distributed as ES2017 JavaScript
+> Modules, and use the Custom Elements API. They are compatible with all modern
+> browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
+> tooling step is required to resolve *bare module specifiers*, as well as
+> transpilation and polyfills for Edge and IE11. See
+> [here](https://github.com/material-components/material-components-web-components#quick-start)
+> for detailed instructions.
 
-    * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/qibisux/edit?html,output),
-    [CodePen](https://codepen.io/azakus/pen/deZLja).
+## Example usage
 
-* You can also copy [this HTML file](https://gist.githubusercontent.com/azakus/f01e9fc2ed04e781ad5a52ded7b296e7/raw/266f2f4f91cbfe89b2acc6ec63957b1a3cfe9b39/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
+### Basic
 
-* When you're ready to use mwc-icon in a project, install it via [npm](https://www.npmjs.com/). To run the project in the browser, a module-compatible toolctain is required. We recommend installing the [Polymer CLI](https://github.com/Polymer/polymer-cli) and using its development server as follows.
+<img src="images/shopping_cart.png" width="32px" height="32px">
 
-  1. Ensure the webcomponents polyfills are included in your HTML page
+```html
+<link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
 
-      - Install webcomponents polyfills
+<mwc-icon>shopping_cart</mwc-icon>
 
-          ```npm i @webcomponents/webcomponentsjs```
+<script type="module">
+  import '@material/mwc-icon';
+</script>
+```
 
-      - Add webcomponents polyfills to your HTML page
+### As a link
 
-          ```<script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>```
+<img src="images/arrow_back.png" width="32px" height="32px">
 
-  1. Add mwc-icon to your project:
+```html
+<a href="index.html">
+  <mwc-icon>arrow_back</mwc-icon>
+</a>
+```
 
-      ```npm i @material/mwc-icon```
+### Styled
 
-  1. Import the mwc-icon definition into your HTML page:
+<img src="images/accessible_forward.png" width="64px" height="64px">
 
-      ```<script type="module" src="@material/mwc-icon/index.js"></script>```
+```html
+<style>
+  .fancy {
+    color: #03a9f4;
+    --mdc-icon-size: 64px;
+  }
+</style>
 
-      Or into your module script:
+<mwc-icon class="fancy">accessible_forward</mwc-icon>
+```
 
-      ```import {Icon} from "@material/mwc-icon"```
+## Fonts
 
-  1. Create an instance of mwc-icon in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
+Most users should include the following in their application HTML when using
+icons:
 
-      ```<mwc-icon>sentiment_very_satisfied</mwc-icon>```
+```html
+<link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
+```
 
-  1. Install the Polymer CLI:
+This loads the *Material Icons* font, which is required to render icons, and is
+*not* loaded automatically. If you see plain text instead of an icon, then the
+most likely cause is that the Material Icons font is not loaded.
 
-      ```npm i -g polymer-cli```
+To see all icons that are available in the Material Icons font, see
+[Material Icons](https://material.io/resources/icons/).
 
-  1. Run the development server and open a browser pointing to its URL:
+For technical details about the Material Icons font, see the
+[Material Icons Developer Guide](https://google.github.io/material-design-icons/).
 
-      ```polymer serve```
 
-  > mwc-icon is published on [npm](https://www.npmjs.com/package/@material/mwc-icon) using JavaScript Modules.
-  This means it can take advantage of the standard native JavaScript module loader available in all current major browsers.
-  >
-  > However, since mwc-icon uses npm convention to reference dependencies by name, a light transform to rewrite specifiers to URLs is required to get it to run in the browser. The polymer-cli's development server `polymer serve` automatically handles this transform.
+## API
 
-  Tools like [WebPack](https://webpack.js.org/) and [Rollup](https://rollupjs.org/) can also be used to serve and/or bundle mwc-icon.
+### Slots
 
-## Supported Browsers
+Name      | Description
+--------- | -----------
+*default* | The name of the icon to display (e.g. `shopping_cart`). See [Material Icons](https://material.io/resources/icons/) for an index of all available icons.
 
-The last 2 versions of all modern browsers are supported, including
-Chrome, Safari, Opera, Firefox, Edge. In addition, Internet Explorer 11 is also supported.
+
+### Properties/Attributes
+
+*None*
+
+### Methods
+
+*None*
+
+### Events
+
+*None*
+
+### CSS Custom Properties
+
+Name              | Default          | Description
+----------------- | ---------------- | -----------
+`--mdc-icon-font` | [`Material Icons`](https://material.io/resources/icons/) | Font that supports *ligatures* and determines which icons are available (see [fonts](#fonts) above).
+`--mdc-icon-size` | `24px`           | Size of the icon.

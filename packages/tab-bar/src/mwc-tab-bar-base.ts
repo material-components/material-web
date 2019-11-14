@@ -18,12 +18,13 @@ limitations under the License.
 import '@material/mwc-tab';
 import '@material/mwc-tab-scroller';
 
-import {BaseElement, html, observer, property, query} from '@material/mwc-base/base-element.js';
+import {BaseElement, observer} from '@material/mwc-base/base-element.js';
 import {Tab} from '@material/mwc-tab';
 import {TabScroller} from '@material/mwc-tab-scroller';
 import {MDCTabBarAdapter} from '@material/tab-bar/adapter';
 import MDCTabBarFoundation from '@material/tab-bar/foundation';
 import {MDCTabInteractionEvent} from '@material/tab/types';
+import {html, property, query} from 'lit-element';
 
 export class TabBarBase extends BaseElement {
   protected mdcFoundation!: MDCTabBarFoundation;
@@ -159,10 +160,10 @@ export class TabBarBase extends BaseElement {
     };
   }
 
-  // NOTE: Delay creating foundation until scroller is fully updated.
-  // This is necessary because the foundation/adapter synchronously addresses
-  // the scroller element.
   protected firstUpdated() {
+    // NOTE: Delay creating foundation until scroller is fully updated.
+    // This is necessary because the foundation/adapter synchronously addresses
+    // the scroller element.
   }
   protected _getUpdateComplete() {
     return super._getUpdateComplete()

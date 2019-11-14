@@ -1,136 +1,219 @@
-# Material Web Components
+# Material Web Components [![Build Status](https://travis-ci.org/material-components/material-components-web-components.svg?branch=master)](https://travis-ci.org/material-components/material-components-web-components)
 
-> :warning: These components are a work in progress. They are pre-release and should be considered experimental, as they may undergo major changes before release. We are experimenting with alternate architectures and approaches with the goal of allowing us to bring the most correct and optimal implementation of Material components to the widest possible audiences. Visible progress may be slow, as this research is across teams and repositories so is not consistently reflected in commits to this codebase. :warning:
+> IMPORTANT: The Material Web Components are a work in progress and subject to major changes until 1.0 release.
 
-Material Web Components helps developers execute [Material Design](https://www.material.io) using [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
+The Material Web Components (MWC) are a collection of [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) maintained by Google that implement [Material Design](https://material.io/design/).
 
-Built on top of the [Material Components Web](https://github.com/material-components/material-components-web) project and [LitElement](https://github.com/polymerlabs/lit-element), the Material Web Components enable a reliable development workflow to build beautiful and functional web projects.
+## Components
 
-Web Components can be seamlessly incorporated into a wide range of usage contexts. Whether you're already heavily invested in another framework or not, it's easy to incorporate Material Web Components into your site in a lightweight, idiomatic fashion.
-
-<!-- TODO
-Insert screenshot of a demo page, including a code snippet.
--->
-
-**[Demos](https://material-components.github.io/material-components-web-components/demos/index.html)**
+| Component | Status | Issues
+| ----------| ------ | ------
+| [`<mwc-button>`](https://github.com/material-components/material-components-web-components/tree/master/packages/button) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-button.svg)](https://www.npmjs.com/package/@material/mwc-button) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Button%22)
+| `<mwc-bottom-app-bar>` | [*Planned*](https://github.com/material-components/material-components-web-components/issues/298) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Bottom+App+Bar%22)
+| `<mwc-card>` | [*Planned*](https://github.com/material-components/material-components-web-components/issues/231) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Card%22)
+| [`<mwc-checkbox>`](https://github.com/material-components/material-components-web-components/tree/master/packages/checkbox) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-checkbox.svg)](https://www.npmjs.com/package/@material/mwc-fab) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Checkbox%22)
+| `<mwc-chip>` | [*Planned*](https://github.com/material-components/material-components-web-components/issues/418) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Chip%22)
+| `<mwc-circular-progress>` | [*Planned*](https://github.com/material-components/material-components-web-components/issues/500) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Circular+Progress%22)
+| `<mwc-data-table>` | [*Planned*](https://github.com/material-components/material-components-web-components/issues/386) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Data+Table%22)
+| [`<mwc-dialog>`](https://github.com/material-components/material-components-web-components/tree/master/packages/dialog) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-dialog.svg)](https://www.npmjs.com/package/@material/mwc-dialog) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Dialog%22)
+| [`<mwc-drawer>`](https://github.com/material-components/material-components-web-components/tree/master/packages/drawer) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-drawer.svg)](https://www.npmjs.com/package/@material/mwc-drawer) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Drawer%22)
+| [`<mwc-fab>`](https://github.com/material-components/material-components-web-components/tree/master/packages/fab) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-fab.svg)](https://www.npmjs.com/package/@material/mwc-fab) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Fab%22)
+| [`<mwc-formfield>`](https://github.com/material-components/material-components-web-components/tree/master/packages/formfield) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-formfield.svg)](https://www.npmjs.com/package/@material/mwc-formfield) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Form+Field%22)
+| [`<mwc-icon-button-toggle>`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon-button-toggle) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-icon-button-toggle.svg)](https://www.npmjs.com/package/@material/mwc-icon-button-toggle) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Icon+Button%22)
+| [`<mwc-icon-button>`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon-button) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-icon-button.svg)](https://www.npmjs.com/package/@material/mwc-icon-button) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Icon+Button%22)
+| [`<mwc-icon>`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-icon.svg)](https://www.npmjs.com/package/@material/mwc-icon) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Icon%22)
+| [`<mwc-linear-progress>`](https://github.com/material-components/material-components-web-components/tree/master/packages/linear-progress) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-linear-progress.svg)](https://www.npmjs.com/package/@material/mwc-linear-progress) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Linear+Progress%22)
+| `<mwc-list>` | [*Planned*](https://github.com/material-components/material-components-web-components/issues/190) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+List%22)
+| `<mwc-menu>` | [*Planned*](https://github.com/material-components/material-components-web-components/issues/212) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aopen+is%3Aissue+label%3A%22Component%3A+Menu%22)
+| [`<mwc-radio>`](https://github.com/material-components/material-components-web-components/tree/master/packages/radio) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-radio.svg)](https://www.npmjs.com/package/@material/mwc-radio) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Radio%22)
+| `<mwc-select>` | [*Planned*](https://github.com/material-components/material-components-web-components/issues/315) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Select%22)
+| [`<mwc-slider>`](https://github.com/material-components/material-components-web-components/tree/master/packages/slider) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-slider.svg)](https://www.npmjs.com/package/@material/mwc-slider) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Slider%22)
+| [`<mwc-snackbar>`](https://github.com/material-components/material-components-web-components/tree/master/packages/snackbar) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-snackbar.svg)](https://www.npmjs.com/package/@material/mwc-snackbar) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Snackbar%22)
+| [`<mwc-switch>`](https://github.com/material-components/material-components-web-components/tree/master/packages/switch) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-switch.svg)](https://www.npmjs.com/package/@material/mwc-switch) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Switch%22)
+| [`<mwc-tab-bar>`](https://github.com/material-components/material-components-web-components/tree/master/packages/tab-bar) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-tab-bar.svg)](https://www.npmjs.com/package/@material/mwc-tab-bar) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Tab%22)
+| [`<mwc-tab>`](https://github.com/material-components/material-components-web-components/tree/master/packages/tab) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-tab.svg)](https://www.npmjs.com/package/@material/mwc-tab) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Tab%22)
+| [`<mwc-textarea>`](https://github.com/material-components/material-components-web-components/tree/master/packages/textarea) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-textarea.svg)](https://www.npmjs.com/package/@material/mwc-textarea) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Text+Field%22)
+| [`<mwc-textfield>`](https://github.com/material-components/material-components-web-components/tree/master/packages/textfield) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-textfield.svg)](https://www.npmjs.com/package/@material/mwc-textfield) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Text+Field%22)
+| [`<mwc-top-app-bar-fixed>`](https://github.com/material-components/material-components-web-components/tree/master/packages/top-app-bar-fixed) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-top-app-bar-fixed.svg)](https://www.npmjs.com/package/@material/mwc-top-app-bar-fixed) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Top+App+bar%22)
+| [`<mwc-top-app-bar>`](https://github.com/material-components/material-components-web-components/tree/master/packages/top-app-bar) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-top-app-bar.svg)](https://www.npmjs.com/package/@material/mwc-top-app-bar) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Top+App+Bar%22)
 
 ## Quick start
 
-> Note: This guide assumes you have npm installed locally.
+#### 1) Install
 
-The easiest way to try out the Material Web Components is to use one of these online tools:
+Install a component from NPM:
 
-  * Runs in all [supported browsers](#browser-support): [Glitch](https://glitch.com/edit/#!/material-web-components)
+```sh
+npm install @material/mwc-button @webcomponents/webcomponentsjs
+```
 
-  * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/gitufet/edit?html,output), [CodePen](https://codepen.io/sorvell/pen/MGrZqp?editors=1000).
+#### 2) Write HTML and JavaScript
 
-Or you can also copy [this HTML file](https://gist.githubusercontent.com/sorvell/2ec11ccde449815bc97edc1026be27a9/raw/8bab65dd5d15f657ae69493851690c5564367d13/index.html) into a local file and run it in any browser that supports JavaScript Modules.
+Import the component's JavaScript module, use the component in your HTML, and control it with JavaScript, just like you would with a built-in element such as `<button>`:
 
-When you're ready to use the Material Web Components in your web application:
+```html
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My Example App</title>
 
-1. Ensure the webcomponents polyfills are included in your HTML page
+    <!-- Add support for Web Components to older browsers. -->
+    <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
 
-      - Install webcomponents polyfills
+    <!-- Your application must load the Roboto and Material Icons fonts. -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Use Web Components in your HTML like regular built-in elements. -->
+    <mwc-button id="myButton" label="Click Me!" raised></mwc-button>
 
-          ```npm i @webcomponents/webcomponentsjs```
+    <!-- The Material Web Components use standard JavaScript modules. -->
+    <script type="module">
 
-      - Add webcomponents polyfills to your HTML page
+      // Importing this module registers <mwc-button> as an element that you
+      // can use in this page.
+      //
+      // Note this import is a bare module specifier, so it must be converted
+      // to a path using a server such as es-dev-server.
+      import '@material/mwc-button';
 
-          ```<script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>```
+      // Standard DOM APIs work with Web Components just like they do for
+      // built-in elements.
+      const button = document.querySelector('#myButton');
+      button.addEventListener('click', () => {
+        alert('You clicked!');
+      });
+    </script>
+  </body>
+</html>
+```
 
-  1. Add one of the MWC elements to your project, for example for icon:
+#### 3) Serve
 
-      ```npm i @material/mwc-icon```
+Serve your HTML with any server or build process that supports *bare module specifier resolution* (see next section):
 
-  1. Import the element definition into your HTML page:
+```sh
+npm install -g es-dev-server
+es-dev-server --node-resolve
+```
 
-      ```<script type="module" src="@material/mwc-icon/mwc-icon.js"></script>```
+## Bare module specifiers
 
-      Or into your module script:
+The Material Web Components are published as standard [JavaScript modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) that use *bare module specifiers*. Bare module specifiers are not yet supported by browsers, so it is necessary to use a tool that transforms
+them to a *path* (for example from `@material/mwc-button` to `./node_modules/@material/mwc-button/mwc-button.js`).
 
-      ```import {Icon} from "@material/mwc-icon"```
+Two great choices for tools that do this are:
 
-  1. Create an instance of element in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
+- During local development, use open-wc's [`es-dev-server`](https://open-wc.org/developing/es-dev-server.html) with the `--node-resolve` flag.
+- For your production deployment, build your application with [Rollup](https://rollupjs.org/guide/en/) using the [`rollup-plugin-node-resolve`](https://github.com/rollup/rollup-plugin-node-resolve) plugin.
 
-      ```<mwc-icon>sentiment_very_satisfied</mwc-icon>```
 
-  1. Install the Polymer CLI:
+## Fonts
 
-      ```npm i -g polymer-cli```
+Most applications should include the following tags in their main HTML file to ensure that text and icons
+render correctly:
 
-  1. Run the development server and open a browser pointing to its URL:
+```html
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
+```
 
-      ```polymer serve```
+The Material Web Components default to using the [Roboto](https://fonts.google.com/specimen/Roboto) font for text, and the [Material Icons](https://google.github.io/material-design-icons/) font for icons. These fonts
+are *not* automatically loaded, so it is the application's responsiblity to ensure that they are loaded.
 
-  > The Material Web Components are published on [npm](https://www.npmjs.com) using JavaScript Modules.
-  This means it can take advantage of the standard native JavaScript module loader available in all current major browsers.
-  >
-  > However, since the Material Web Components use npm convention to reference dependencies by name, a light transform to rewrite specifiers to URLs is required to get it to run in the browser. The polymer-cli's development server `polymer serve` automatically handles this transform.
+Note that if you load the Material Icons font in a different way to the recommendation shown above, be sure to include [`font-display: block`](https://google.github.io/material-design-icons/) in your `@font-face` CSS rule. This prevents icons from initially displaying their raw *ligature* text before the font has loaded. The `<link>` tag recommended above automaticaly handles this setting.
 
-  Tools like [WebPack](https://webpack.js.org/) and [Rollup](https://rollupjs.org/) can also be used to serve and/or bundle.
 
-## Contributing guide
-Below are instructions for setting up project development.
+## Supporting older browsers
 
-1. Clone this repo with `git clone`.
-1. Install dependencies by running `npm install`
-1. Build the project with `npm run build`
-1. Run a development server with `npm run dev`
-    - View the demos by accessing `<dev server url>`/demos/index.html
-    - This will also build the project.
-1. Run tests with `npm run test`
-1. Run benchmarks with `npm run test:bench`
-    - Specify packages to run wih the `-p` flag. e.g. `npm run test:bench -- -p icon ripple textfield`
-    - The benchmarker will use [tachometer](https://github.com/Polymer/tachometer) to compare all the benchmarks in a given package directory.
-      - e.g. `npm run test:bench -- -p my-package` will benchmark each file in `test/lib/benchmark/my-package`
-    - See the help information of the benchmarker cli with `npm run test:bench -- --help`
+The Material Web Components use modern browser features that are natively supported in the latest versions of Chrome, Safari, and Firefox. Edge, IE11, and some older versions of other browsers are also supported, but they require additional build steps and polyfills.
 
-*Note:* You can debug specific tests by running:
+<table>
+  <tr>
+    <th><i>Feature</i></th>
+    <th><img src="images/chrome.png" width="20px" height="20px"><br>Chrome</th>
+    <th><img src="images/safari.png" width="20px" height="20px"><br>Safari</th>
+    <th><img src="images/firefox.png" width="19px" height="20px"><br>Firefox</th>
+    <th><img src="images/edge.png" width="19px" height="20px"><br>Edge</th>
+    <th><img src="images/ie.png" width="20px" height="20px"><br>IE11</th>
+  </tr>
+  <tr>
+    <td><a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components">Web Components</a></td>
+    <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
+    <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
+    <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
+    <td class="ie11"><img src="images/orange-check.png" width="20px" height="20px"class="check" alt="Polyfill"> <a href="#web-components">*</a></td>
+    <td class="ie11"><img src="images/orange-check.png" width="20px" height="20px"class="check" alt="Polyfill"> <a href="#web-components">*</a></td>
+  </tr>
+ <tr>
+    <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">Modules</a></td>
+    <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
+    <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
+    <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
+    <td class="ie11"><img src="images/orange-check.png" width="20px" height="20px"class="check" alt="Transform"> <a href="#modules">*</a></td>
+    <td class="ie11"><img src="images/orange-check.png" width="20px" height="20px"class="check" alt="Transform"> <a href="#modules">*</a></td>
+  </tr>
+ <tr>
+    <td><a href="https://developers.google.com/web/shows/ttt/series-2/es2015">ES2015</a></td>
+    <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
+    <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
+    <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
+    <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
+    <td class="ie11"><img src="images/orange-check.png" width="20px" height="20px"class="check" alt="Transpile"> <a href="#es2015">*</a></td>
+  </tr>
+</table>
 
-`npm run test:debug -- --packages mwc-button,mwc-fab`
+#### Web Components
 
-or you may use wildcards such as:
+To support Web Components in Edge, IE11, and other older browsers, install the [Web Components Polyfills](https://github.com/webcomponents/polyfills/tree/master/packages/webcomponentsjs):
 
-`npm run test:debug -- --packages mwc-icon-button*`
+```sh
+npm install @webcomponents/webcomponentsjs
+```
 
-Additionally, you can run specific browsers with the `--browsers` flag. e.g.
+And include the `webcomponents-loader.js` script in your HTML, which detects when polyfills are needed and loads them automatically:
 
-`npm run test:debug -- --browsers Firefox` or `npm run test -- --browsers ChromeHeadless`.
+```html
+<!-- Add support for Web Components to Edge and IE11. -->
+<script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+```
 
-### Developing Components
+#### Modules
 
-Components are written in [Typescript](https://typescriptlang.org), and compiled to [Javascript Modules](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/).
+To support Edge, IE11, or other older browsers that do not support JavaScript modules, you must transform JavaScript modules to classic JavaScript scripts. [Rollup](https://rollupjs.org/guide/en/) is a popular tool that can consume JavaScript modules and produce a number of other formats, such as AMD. Be sure to use the [`rollup-plugin-node-resolve`](https://github.com/rollup/rollup-plugin-node-resolve) plugin to resolve *bare module specifiers*, as mentioned [above](#bare-module-specifiers).
 
-The output Javascript Modules can be used in every modern browser directly, and are supported a wide variety of popular bundler and build tools.
+#### ES2015
 
-The components render output structure, handle styling, and manage data flow with `lit-html` while integrating with Material Design's common logic library for each component.
+If you support IE11 or other older browsers that do not support the latest version of JavaScript, you must *transpile* your application to ES5. [Babel](https://babeljs.io/) is a popular tool that does this. You can integrate Babel transpilation into a Rollup configuration using [rollup-plugin-babel](https://github.com/rollup/rollup-plugin-babel).
 
-### Styling Components
+## Contributing
 
-Components define their styling using [SASS](http://sass-lang.com/).
+Clone and setup the repo:
 
-The SASS output is built into a javascript module which exports the component's styling as a [lit-html](https://github.com/Polymer/lit-html) template.
+```sh
+git clone git@github.com:material-components/material-components-web-components.git mwc
+cd mwc
+npm install
+npm run build
+```
 
-Component styling is compiled with both `npm run build` and `npm run watch`.
+View the demos:
 
-To compile the component SASS manually, use `npm run build-styling`
+```sh
+npm run dev
+http://127.0.0.1:80801/demos
+```
 
-## Useful Links
+Run all tests:
 
-- [All Components](packages/)
-- [Demos](https://material-components.github.io/material-components-web-components/demos/index.html)
-- [Contributing](CONTRIBUTING.md)
-- [Material.io](https://www.material.io) (external site)
-- [Material Design Guidelines](https://material.io/guidelines) (external site)
+```sh
+npm run test
+```
 
-## Browser Support
+Run tests for a specific component:
 
-We officially support the last two versions of every major browser. Specifically, we test on the following browsers:
-
-- Chrome
-- Safari
-- Firefox
-- IE 11/Edge
-- Opera
-- Mobile Safari
-- Chrome on Android
+```sh
+npm run test -- --packages=mwc-button
+```

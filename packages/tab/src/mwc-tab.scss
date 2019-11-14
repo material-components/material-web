@@ -16,7 +16,11 @@ limitations under the License.
 */
 
 @import '@material/tab/mdc-tab.scss';
+@import '@material/tab/mixins';
+@import '@material/tab/variables';
 @import '@material/mwc-icon/src/_mwc-icon.scss';
+
+@include mdc-ripple-common(mdc-feature-all());
 
 .material-icons {
   @extend %material-icons;
@@ -30,8 +34,13 @@ limitations under the License.
 }
 
 .mdc-tab {
+  height: var(--mdc-tab-height, #{$mdc-tab-height});
   margin-left: 0;
   margin-right: 0;
+}
+
+.mdc-tab--stacked {
+  height: var(--mdc-tab-stacked-height, #{$mdc-tab-stacked-height});
 }
 
 .mdc-tab::-moz-focus-inner {

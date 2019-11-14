@@ -37,7 +37,7 @@ A [Material Components](https://material.io/develop/) tab implementation using [
 
       Or into your module script:
 
-      ```import {Switch} from "@material/mwc-tab"```
+      ```import {Tab} from "@material/mwc-tab"```
 
   1. Create an instance of mwc-tab in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
 

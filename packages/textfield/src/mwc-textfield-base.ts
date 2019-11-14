@@ -16,25 +16,59 @@ limitations under the License.
 */
 import '@material/mwc-notched-outline';
 
-import {addHasRemoveClass, classMap, FormElement, html, property, PropertyValues, query, TemplateResult} from '@material/mwc-base/form-element.js';
+import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
+import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
+import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element.js';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter.js';
+import {MDCTextFieldCharacterCounterFoundation} from '@material/textfield/character-counter/foundation.js';
 import MDCTextFieldFoundation from '@material/textfield/foundation.js';
+import {eventOptions, html, property, PropertyValues, query, TemplateResult} from 'lit-element';
+import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined.js';
 
-import {characterCounter, CharacterCounter} from './character-counter/mwc-character-counter-directive.js';
+import {characterCounter, CharacterCounter} from './mwc-character-counter-directive.js';
+
+// must be done to get past lit-analyzer checks
+declare global {
+  interface Element {
+    floatingLabelFoundation?: MDCFloatingLabelFoundation;
+    lineRippleFoundation?: MDCLineRippleFoundation;
+    charCounterFoundation?: MDCTextFieldCharacterCounterFoundation;
+  }
+}
+
+type CustomValidityState = {
+  -readonly[P in keyof ValidityState]: ValidityState[P]
+};
+
 
 const passiveEvents = ['touchstart', 'touchmove', 'scroll', 'mousewheel'];
 
 const createValidityObj =
     (customValidity: Partial<ValidityState> = {}): ValidityState => {
-      const objectifiedCustomValidity: Partial<ValidityState> = {};
+      /*
+       * We need to make ValidityState an object because it is readonly and
+       * we cannot use the spread operator. Also, we don't export
+       * `CustomValidityState` because it is a leaky implementation and the user
+       * already has access to `ValidityState` in lib.dom.ts. Also an interface
+       * {a: Type} can be casted to {readonly a: Type} so passing any object
+       * should be fine.
+       */
+      const objectifiedCustomValidity: Partial<CustomValidityState> = {};
 
       // eslint-disable-next-line guard-for-in
       for (const propName in customValidity) {
-        objectifiedCustomValidity[propName] = customValidity[propName];
+        /*
+         * Casting is needed because ValidityState's props are all readonly and
+         * thus cannot be set on `onjectifiedCustomValidity`. In the end, the
+         * interface is the same as ValidityState (but not readonly), but the
+         * function signature casts the output to ValidityState (thus readonly).
+         */
+        objectifiedCustomValidity[propName as keyof CustomValidityState] =
+            customValidity[propName as keyof ValidityState];
       }
 
       return {
@@ -136,18 +170,47 @@ export abstract class TextFieldBase extends FormElement {
     return this.formElement.willValidate;
   }
 
+  get selectionStart(): number|null {
+    return this.formElement.selectionStart;
+  }
+
+  get selectionEnd(): number|null {
+    return this.formElement.selectionEnd;
+  }
+
+  protected get shouldRenderHelperText(): boolean {
+    return !!this.helper || !!this.validationMessage || this.charCounterVisible;
+  }
+
+  protected get charCounterVisible(): boolean {
+    return this.charCounter && this.maxLength !== -1;
+  }
+
   validityTransform:
       ((value: string,
         nativeValidity: ValidityState) => Partial<ValidityState>)|null = null;
 
   focus() {
-    const focusEvt = new FocusEvent('focus');
+    const focusEvt = new CustomEvent('focus');
     this.formElement.dispatchEvent(focusEvt);
+    this.formElement.focus();
   }
 
   blur() {
-    const blurEvt = new FocusEvent('blur');
+    const blurEvt = new CustomEvent('blur');
     this.formElement.dispatchEvent(blurEvt);
+    this.formElement.blur();
+  }
+
+  select() {
+    this.formElement.select();
+  }
+
+  setSelectionRange(
+      selectionStart: number, selectionEnd: number,
+      selectionDirection?: 'forward'|'backward'|'none') {
+    this.formElement.setSelectionRange(
+        selectionStart, selectionEnd, selectionDirection);
   }
 
   render() {
@@ -166,24 +229,36 @@ export abstract class TextFieldBase extends FormElement {
         ${this.iconTrailing ? this.renderIcon(this.iconTrailing) : ''}
         ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
       </div>
-      ${
-        (this.helper || this.validationMessage || this.charCounter) ?
-            this.renderHelperText() :
-            ''}
+      ${this.renderHelperText(this.renderCharCounter())}
     `;
   }
 
   updated(changedProperties: PropertyValues) {
-    const charCounter =
-        changedProperties.get('charCounter') as boolean | undefined;
+    const maxLength = changedProperties.get('maxLength') as number | undefined;
 
-    // update foundation only when charCounter goes from false to true
-    if (!charCounter && this.charCounter) {
+    const maxLengthBecameDefined = maxLength === -1 && this.maxLength !== -1;
+    const maxLengthBecameUndefined =
+        maxLength !== undefined && maxLength !== -1 && this.maxLength === -1;
+
+    /* We want to recreate the foundation if maxLength changes to defined or
+     * undefined, because the textfield foundation needs to be instantiated with
+     * the char counter's foundation, and the char counter's foundation needs
+     * to have maxLength defined to be instantiated. Additionally, there is no
+     * exposed API on the MdcTextFieldFoundation to dynamically add a char
+     * counter foundation, so we must recreate it.
+     */
+    if (maxLengthBecameDefined || maxLengthBecameUndefined) {
       this.createFoundation();
+    }
+
+    if (changedProperties.has('value') &&
+        changedProperties.get('value') !== undefined) {
+      this.mdcFoundation.setValue(this.value);
     }
   }
 
   protected renderInput() {
+    const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
     return html`
       <input
           id="text-field"
@@ -193,12 +268,12 @@ export abstract class TextFieldBase extends FormElement {
           ?disabled="${this.disabled}"
           placeholder="${this.placeholder}"
           ?required="${this.required}"
-          maxlength="${this.maxLength}"
+          maxlength="${ifDefined(maxOrUndef)}"
           pattern="${ifDefined(this.pattern ? this.pattern : undefined)}"
           min="${ifDefined(this.min === '' ? undefined : this.min as number)}"
           max="${ifDefined(this.max === '' ? undefined : this.max as number)}"
           step="${ifDefined(this.step === null ? undefined : this.step)}"
-          @change="${this.handleInputChange}"
+          @input="${this.handleInputChange}"
           @blur="${this.onInputBlur}">`;
   }
 
@@ -210,7 +285,10 @@ export abstract class TextFieldBase extends FormElement {
     let labelTemplate: TemplateResult|string = '';
     if (this.label) {
       labelTemplate = html`
-        <label .foundation=${floatingLabel()} for="text-field">
+        <label
+            .floatingLabelFoundation=${floatingLabel(this.label)}
+            @labelchange=${this.onLabelChange}
+            for="text-field">
           ${this.label}
         </label>
       `;
@@ -228,36 +306,50 @@ export abstract class TextFieldBase extends FormElement {
     let labelTemplate: TemplateResult|string = '';
     if (this.label && !this.fullWidth) {
       labelTemplate = html`
-      <label .foundation=${floatingLabel()} for="text-field">
+      <label
+          .floatingLabelFoundation=${floatingLabel(this.label)}
+          for="text-field">
         ${this.label}
       </label>`;
     }
 
     return html`
       ${labelTemplate}
-      <div .foundation=${lineRipple()}></div>
+      <div .lineRippleFoundation=${lineRipple()}></div>
     `;
   }
 
-  protected renderHelperText() {
+  protected renderHelperText(charCounterTemplate?: TemplateResult) {
     const showValidationMessage = this.validationMessage && !this.isUiValid;
     const classes = {
       'mdc-text-field-helper-text--persistent': this.helperPersistent,
       'mdc-text-field-helper-text--validation-msg': showValidationMessage,
     };
 
-    let charCounterTemplate: TemplateResult|string = '';
-    if (this.charCounter) {
-      charCounterTemplate = html`<div .foundation=${characterCounter()}></div>`;
-    }
+    const rootClasses = {
+      hidden: !this.shouldRenderHelperText,
+    };
+
     return html`
-      <div class="mdc-text-field-helper-line">
+      <div class="mdc-text-field-helper-line ${classMap(rootClasses)}">
         <div class="mdc-text-field-helper-text ${classMap(classes)}">
           ${showValidationMessage ? this.validationMessage : this.helper}
         </div>
         ${charCounterTemplate}
       </div>
     `;
+  }
+
+  protected renderCharCounter() {
+    const counterClasses = {
+      hidden: !this.charCounterVisible,
+    };
+
+    return html`
+      <div
+          class="${classMap(counterClasses)}"
+          .charCounterFoundation=${characterCounter()}>
+      </div>`;
   }
 
   protected onInputBlur() {
@@ -308,6 +400,7 @@ export abstract class TextFieldBase extends FormElement {
     this.formElement.setCustomValidity(message);
   }
 
+  @eventOptions({passive: true})
   protected handleInputChange() {
     this.value = this.formElement.value;
   }
@@ -317,8 +410,8 @@ export abstract class TextFieldBase extends FormElement {
       this.mdcFoundation.destroy();
     }
     this.mdcFoundation = new this.mdcFoundationClass(this.createAdapter(), {
-      characterCounter: this.charCounterElement ?
-          this.charCounterElement.foundation :
+      characterCounter: this.maxLength !== -1 ?
+          this.charCounterElement.charCounterFoundation :
           undefined
     });
     this.mdcFoundation.init();
@@ -340,14 +433,19 @@ export abstract class TextFieldBase extends FormElement {
           this.addEventListener(evtType, handler),
       deregisterTextFieldInteractionHandler: (evtType, handler) =>
           this.removeEventListener(evtType, handler),
-      registerValidationAttributeChangeHandler: (handler) => {
+      registerValidationAttributeChangeHandler: () => {
         const getAttributesList =
             (mutationsList: MutationRecord[]): string[] => {
               return mutationsList.map((mutation) => mutation.attributeName)
                          .filter((attributeName) => attributeName) as string[];
             };
-        const observer = new MutationObserver(
-            (mutationsList) => handler(getAttributesList(mutationsList)));
+        const observer = new MutationObserver((mutationsList) => {
+          const attributes = getAttributesList(mutationsList);
+          if (attributes.indexOf('maxlength') !== -1 && this.maxLength !== -1) {
+            this.charCounterElement.charCounterFoundation.setCounterValue(
+                this.value.length, this.maxLength);
+          }
+        });
         const config = {attributes: true};
         observer.observe(this.formElement, config);
         return observer;
@@ -374,14 +472,16 @@ export abstract class TextFieldBase extends FormElement {
 
   protected getLabelAdapterMethods(): MDCTextFieldLabelAdapter {
     return {
-      floatLabel: (shouldFloat: boolean) =>
-          this.labelElement && this.labelElement.foundation.float(shouldFloat),
+      floatLabel: (shouldFloat: boolean) => this.labelElement &&
+          this.labelElement.floatingLabelFoundation.float(shouldFloat),
       getLabelWidth: () => {
-        return this.labelElement ? this.labelElement.foundation.getWidth() : 0;
+        return this.labelElement ?
+            this.labelElement.floatingLabelFoundation.getWidth() :
+            0;
       },
       hasLabel: () => Boolean(this.labelElement),
-      shakeLabel: (shouldShake: boolean) =>
-          this.labelElement && this.labelElement.foundation.shake(shouldShake),
+      shakeLabel: (shouldShake: boolean) => this.labelElement &&
+          this.labelElement.floatingLabelFoundation.shake(shouldShake),
     };
   }
 
@@ -389,17 +489,18 @@ export abstract class TextFieldBase extends FormElement {
     return {
       activateLineRipple: () => {
         if (this.lineRippleElement) {
-          this.lineRippleElement.foundation.activate();
+          this.lineRippleElement.lineRippleFoundation.activate();
         }
       },
       deactivateLineRipple: () => {
         if (this.lineRippleElement) {
-          this.lineRippleElement.foundation.deactivate();
+          this.lineRippleElement.lineRippleFoundation.deactivate();
         }
       },
       setLineRippleTransformOrigin: (normalizedX: number) => {
         if (this.lineRippleElement) {
-          this.lineRippleElement.foundation.setRippleCenter(normalizedX);
+          this.lineRippleElement.lineRippleFoundation.setRippleCenter(
+              normalizedX);
         }
       },
     };
@@ -424,11 +525,34 @@ export abstract class TextFieldBase extends FormElement {
       hasOutline: () => Boolean(this.outlineElement),
       notchOutline: (labelWidth) => {
         const outlineElement = this.outlineElement;
-        if (outlineElement) {
+        if (outlineElement && !this.outlineOpen) {
           this.outlineWidth = labelWidth;
           this.outlineOpen = true;
         }
       }
     };
+  }
+
+  protected async onLabelChange() {
+    if (this.label) {
+      await this.layout();
+    }
+  }
+
+  async layout() {
+    await this.updateComplete;
+
+    if (this.labelElement && this.outlineElement) {
+      /* When the textfield automatically notches due to a value and label
+       * being defined, the textfield may be set to `display: none` by the user.
+       * this means that the notch is of size 0px. We provide this function so
+       * that the user may manually resize the notch to the floated label's
+       * width.
+       */
+      const labelWidth = this.labelElement.floatingLabelFoundation.getWidth();
+      if (this.outlineOpen) {
+        this.outlineWidth = labelWidth;
+      }
+    }
   }
 }

@@ -37,7 +37,7 @@ A [Material Components](https://material.io/develop/) tab indicator implementati
 
       Or into your module script:
 
-      ```import {Switch} from "@material/mwc-tab-indicator"```
+      ```import {TabIndicator} from "@material/mwc-tab-indicator"```
 
   1. Create an instance of mwc-tab-indicator in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
 

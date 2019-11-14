@@ -14,8 +14,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {classMap, html, LitElement, property} from '@material/mwc-base/base-element';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
+import {html, LitElement, property, TemplateResult} from 'lit-element';
+import {classMap} from 'lit-html/directives/class-map';
 
 export class FabBase extends LitElement {
   @property({type: Boolean}) mini = false;
@@ -43,21 +44,26 @@ export class FabBase extends LitElement {
       'mdc-fab--extended': this.extended,
     };
     const showLabel = this.label !== '' && this.extended;
-    const label = showLabel ? html`
-      <span class="mdc-fab__label">${this.label}</span>
-      ` :
+
+    let iconTemplate: TemplateResult|string = '';
+
+    if (this.icon) {
+      iconTemplate = html`
+        <span class="material-icons mdc-fab__icon">${this.icon}</span>`;
+    }
+
+    const label = showLabel ? html
+        `<span class="mdc-fab__label">${this.label}</span>` :
                               '';
     return html`
       <button
-          .ripple="${ripple()}"
           class="mdc-fab ${classMap(classes)}"
           ?disabled="${this.disabled}"
-          aria-label="${this.label || this.icon}">
+          aria-label="${this.label || this.icon}"
+          .ripple="${ripple()}">
+        <div class="mdc-fab__ripple"></div>
         ${this.showIconAtEnd ? label : ''}
-        ${
-        this.icon ? html`
-          <span class="material-icons mdc-fab__icon">${this.icon}</span>` :
-                    ''}
+        ${iconTemplate}
         ${!this.showIconAtEnd ? label : ''}
       </button>`;
   }

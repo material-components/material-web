@@ -48,6 +48,35 @@ mwc-radio {
 }
 ```
 
+### With Form Field
+
+Most applications should use
+[`<mwc-formfield>`](https://github.com/material-components/material-components-web-components/tree/master/packages/formfield)
+to associate an interactive label with the radio.
+
+<img src="images/formfield.png" width="94px" height="80px">
+
+```html
+<style>
+  mwc-formfield {
+    display: block;
+  }
+</style>
+
+<mwc-formfield label="Home">
+  <mwc-radio name="location"></mwc-radio>
+</mwc-formfield>
+
+<mwc-formfield label="Work">
+  <mwc-radio name="location"></mwc-radio>
+</mwc-formfield>
+
+<script type="module">
+  import '@material/mwc-radio';
+  import '@material/mwc-formfield';
+</script>
+```
+
 ## API
 
 ### Slots

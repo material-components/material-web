@@ -15,16 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import {MDCRippleFoundation} from '@material/ripple/foundation.js';
+
 import {BaseElement} from './base-element';
+
 export * from './base-element';
 
-export interface RippleSurface {
-  activate(): void;
-  deactivate(): void;
-}
-
 export interface HTMLElementWithRipple extends HTMLElement {
-  ripple?: RippleSurface;
+  ripple?: MDCRippleFoundation;
 }
 
 export abstract class FormElement extends BaseElement {
@@ -42,7 +40,7 @@ export abstract class FormElement extends BaseElement {
   /**
    * Implement ripple getter for Ripple integration with mwc-formfield
    */
-  readonly ripple?: RippleSurface;
+  readonly ripple?: MDCRippleFoundation;
 
   click() {
     if (this.formElement) {

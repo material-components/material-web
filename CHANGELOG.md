@@ -6,6 +6,104 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Added
+
+- CSS styling options to `mwc-button`
+- CSS styling options to `mwc-textfield`
+- README for `mwc-drawer`
+- README for `mwc-checkbox`
+- README for `mwc-formfield`
+- Demo for `mwc-drawer` without a header in the drawer
+
+### Changed
+
+- **BREAKING** `Dialog.title` renamed to `Dialog.heading` and
+  `--mdc-dialog-title-ink-color` renamed to `--mdc-dialog-heading-ink-color` as
+  it caused clashes with `HTMLElement.prototype.title`.
+- Updated material dependencies to `4.0.0-canary.735147131.0`.
+- `mwc-dialog` will now search its flattened distributed nodes and their trees
+  for a focusable element.
+
+### Fixed
+- Fixed checkbox ripple visibility when focused while being unchecked.
+- Fixed app content not being expanded inside drawer.
+
+## [0.10.0] - 2019-10-11
+
+### Added
+
+- `mwc-textfield` ink and fill css variables
+
+### Changed
+
+- **BREAKING** Removed `mwc-icon-font.js` import. Most users should load the
+  Material Icons and Roboto fonts by adding the following to their HTML file:
+
+  ```html
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
+  ```
+
+  See the [Fonts](https://github.com/material-components/material-components-web-components#fonts)
+  section of the README for more details.
+
+- **BREAKING** Moved `@material/mwc-textfield/character-counter/mwc-character-counter-directive.js`
+  to `@material/mwc-textfield/mwc-character-counter-directive.js`.
+
+### Fixed
+
+- Fixed `mwc-dialog`'s issues with working on older browsers.
+- `<mwc-radio>` groups are now correctly synchronized when stamped using a
+  lit-html `map` or `repeat`, and any other time the radio is not created and
+  connected at the same time ([#282](https://github.com/material-components/material-components-web-components/issues/282)).
+
+## [0.9.1] - 2019-09-30
+
+### Fixed
+
+- Fixed missing `@material/mwc-base` dep on `@material/mwc-dialog`.
+
+## [0.9.0] - 2019-09-26
+
+### Added
+
+- Implemented `mwc-dialog`
+- `mwc-textfield.layout` method.
+
+### Changed
+
+- **BREAKING:** Added custom `.focus()` and `.blur()` functions to mwc-button
+  that cause the button to ripple as when tab focusing.
+- **BREAKING:** mwc-textfield's custom `.focus()` function will now call
+  `.focus()` on the native internal input causing the caret to appear instead of
+  just forcing focus styles to appear.
+- **BREAKING:** mwc-textfield's custom `.blur()` function will now call
+  `.blur()` on the native internal input instead of just forcing focus styles to
+  disapprear.
+- **BREAKING** `mwc-base/base-element` no longer exports any of the
+  `lit-element` or `lit-html` APIs (e.g. `LitElement`, `customElement`,
+  `classMap`). Users should import directly from the `lit-element` and
+  `lit-html` modules instead.
+- **BREAKING** `mwc-textfield` and `mwc-textarea` will now update their `.value`
+  on the native `input`'s `input` event instead of `change`.
+
+### Fixed
+
+- `<mwc-drawer>` can now be used with Rollup (via version bump to pick up
+  [WICG/inert#135](https://github.com/WICG/inert/pull/135)).
+- `<mwc-textfield>` and `<mwc-textarea>` will now have the same height between
+  their filled and outlined variants with helper text on older browsers.
+- `mwc-textfield[required]` and `mwc-textarea[required]` will now have their
+  required asterisk colored correctly when customized.
+- `<mwc-textfield>` and `<mwc-textarea>` can now have basic usability in IE.
+- `mwc-textarea[disabled][outlined]` will no longer have a filled-in background
+  as is per material spec.
+- `mwc-textarea[disabled]label="string!"][value="string!"]` will now float the
+  label to the correct spot.
+
+
+## [0.8.0] - 2019-09-03
+
 ### Changed
 
 - Published JavaScript files no longer include inlined TypeScript helpers such
@@ -67,10 +165,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   ([#314](https://github.com/material-components/material-components-web-components/pull/314)).
   This allows more control over how fonts are loaded (e.g. serving fonts from a
   different server, or loading multiple fonts with a single request). Most users
-  should now add a tag like this to their HTML page:
+  should now add tags like this to their HTML page:
 
   ```html
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
   ```
 
 - **BREAKING** The *toggling* behavior of `<mwc-icon-button>` has been removed

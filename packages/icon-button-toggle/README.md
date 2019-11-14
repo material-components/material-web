@@ -7,7 +7,7 @@ Toggle buttons can be used to group related options. To emphasize groups of rela
 
 Icons can be used as toggle buttons when they allow selection, or deselection, of a single choice, such as marking an item as a favorite.
 
-For the non-toggling version of this component, see [`<mwc-icon-button>`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon-button/)
+For the non-toggling version of this component, see [`<mwc-icon-button>`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon-button)
 
 [Material Design Guidelines: Toggle Button](https://material.io/design/components/buttons.html#toggle-button)
 
@@ -107,6 +107,25 @@ mwc-icon-button-toggle {
 }
 ```
 
+## Fonts
+
+Most users should include the following in their application HTML when using
+icons:
+
+```html
+<link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
+```
+
+This loads the *Material Icons* font, which is required to render icons, and is
+*not* loaded automatically. If you see plain text instead of an icon, then the
+most likely cause is that the Material Icons font is not loaded.
+
+To see all icons that are available in the Material Icons font, see
+[Material Icons](https://material.io/resources/icons/).
+
+For technical details about the Material Icons font, see the
+[Material Icons Developer Guide](https://google.github.io/material-design-icons/).
+
 ## API
 
 ### Slots
@@ -131,13 +150,13 @@ mwc-icon-button-toggle {
 
 | Name | Detail | Description
 | ---- | ------ | -----------
-| `MDCIconButtonToggle:change` | `{isOn: boolean}` | Indicates the snackbar has toggled. `isOn` indicates the `on` value of the toggle button.
+| `MDCIconButtonToggle:change` | `{isOn: boolean}` | Indicates the button has toggled. `isOn` indicates the `on` value of the toggle button.
 
 ### CSS Custom Properties
 
 | Name | Default | Description
 | ---- | ------- | -----------
-| `--mdc-icon-font` | [`Material Icons`](https://google.github.io/material-design-icons/) | Font to use for the icon.
+| `--mdc-icon-font` | [`Material Icons`](https://material.io/resources/icons/) | Font that supports *ligatures* and determines which icons are available (see [fonts](#fonts) above).
 | `--mdc-theme-text-disabled-on-light` | `rgba(0, 0, 0, 0.38)` | Color of icon when `disabled` is `true`
 | `--mdc-icon-button-ripple-opacity` | `0.12` | Opacity of the ripple on the icon button
 

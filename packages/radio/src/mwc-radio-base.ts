@@ -14,15 +14,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {addHasRemoveClass, FormElement, html, HTMLElementWithRipple, observer, property, query} from '@material/mwc-base/form-element.js';
+import {addHasRemoveClass, FormElement, HTMLElementWithRipple, observer} from '@material/mwc-base/form-element.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 import {MDCRadioAdapter} from '@material/radio/adapter.js';
 import MDCRadioFoundation from '@material/radio/foundation.js';
+import {html, property, query} from 'lit-element';
 
 export class RadioBase extends FormElement {
-  @query('.mdc-radio') protected mdcRoot!: HTMLElementWithRipple;
+  @query('.mdc-radio') protected mdcRoot!: HTMLElement;
 
   @query('input') protected formElement!: HTMLInputElement;
+
+  @query('.mdc-radio__ripple') protected rippleElement!: HTMLElementWithRipple;
 
   private _checked = false;
 
@@ -59,7 +62,9 @@ export class RadioBase extends FormElement {
     if (this.formElement) {
       this.formElement.checked = checked;
     }
-    this._selectionController.update(this);
+    if (this._selectionController !== undefined) {
+      this._selectionController.update(this);
+    }
     this.requestUpdate('checked', oldValue);
   }
 
@@ -81,23 +86,35 @@ export class RadioBase extends FormElement {
 
   protected mdcFoundation!: MDCRadioFoundation;
 
-  /* eslint-disable @typescript-eslint/no-use-before-define */
-
-  // Note if we aren't using native shadow DOM, then we don't technically need a
-  // SelectionController, because our inputs will share document-scoped native
-  // selection groups. However, it simplifies implementation and testing to use
-  // one in all cases. In particular, it means we correctly manage groups before
-  // the first update stamps the native input.
-  private _selectionController = SelectionController.getController(this);
-  /* eslint-enable @typescript-eslint/no-use-before-define */
+  private _selectionController?: SelectionController;
 
   connectedCallback() {
     super.connectedCallback();
+    // Note that we must defer creating the selection controller until the
+    // element has connected, because selection controllers are keyed by the
+    // radio's shadow root. For example, if we're stamping in a lit-html map
+    // or repeat, then we'll be constructed before we're added to a root node.
+    //
+    // Also note if we aren't using native shadow DOM, then we don't technically
+    // need a SelectionController, because our inputs will share document-scoped
+    // native selection groups. However, it simplifies implementation and
+    // testing to use one in all cases. In particular, it means we correctly
+    // manage groups before the first update stamps the native input.
+    //
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    this._selectionController = SelectionController.getController(this);
     this._selectionController.register(this);
+    // With native <input type="radio">, when a checked radio is added to the
+    // root, then it wins. Immediately update to emulate this behavior.
+    this._selectionController.update(this);
   }
 
   disconnectedCallback() {
-    this._selectionController.unregister(this);
+    // The controller is initialized in connectedCallback, so if we are in
+    // disconnectedCallback then it must be initialized.
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    this._selectionController!.unregister(this);
+    this._selectionController = undefined;
   }
 
   focusNative() {
@@ -105,7 +122,7 @@ export class RadioBase extends FormElement {
   }
 
   get ripple() {
-    return this.mdcRoot.ripple;
+    return this.rippleElement.ripple;
   }
 
   protected createAdapter(): MDCRadioAdapter {
@@ -122,7 +139,9 @@ export class RadioBase extends FormElement {
   }
 
   private _focusHandler() {
-    this._selectionController.focus(this);
+    if (this._selectionController !== undefined) {
+      this._selectionController.focus(this);
+    }
   }
 
   private _clickHandler() {
@@ -132,7 +151,7 @@ export class RadioBase extends FormElement {
 
   protected render() {
     return html`
-      <div class="mdc-radio" .ripple="${ripple()}">
+      <div class="mdc-radio" .ripple=${ripple()}>
         <input
           class="mdc-radio__native-control"
           type="radio"
@@ -146,6 +165,7 @@ export class RadioBase extends FormElement {
           <div class="mdc-radio__outer-circle"></div>
           <div class="mdc-radio__inner-circle"></div>
         </div>
+        <div class="mdc-radio__ripple"></div>
       </div>`;
   }
 
@@ -154,7 +174,9 @@ export class RadioBase extends FormElement {
     // We might not have been able to synchronize this from the checked setter
     // earlier, if checked was set before the input was stamped.
     this.formElement.checked = this.checked;
-    this._selectionController.update(this);
+    if (this._selectionController !== undefined) {
+      this._selectionController.update(this);
+    }
   }
 }
 

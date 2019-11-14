@@ -84,7 +84,7 @@ export const rippleNode = (options: RippleNodeOptions) => {
     isUnbounded: () =>
         options.unbounded === undefined ? true : options.unbounded,
     isSurfaceActive: () => matches(interactionNode, ':active'),
-    isSurfaceDisabled: () => Boolean(options.disabled),
+    isSurfaceDisabled: () => Boolean(interactionNode.hasAttribute('disabled')),
     addClass: (className: string) => surfaceNode.classList.add(className),
     removeClass: (className: string) => surfaceNode.classList.remove(className),
     containsEventTarget: (target: HTMLElement) =>

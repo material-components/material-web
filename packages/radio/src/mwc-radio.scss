@@ -17,6 +17,8 @@ limitations under the License.
 
 @import '@material/radio/mdc-radio.scss';
 
+@include mdc-ripple-common(mdc-feature-all());
+
 :host {
   display: inline-block;
   outline: none;

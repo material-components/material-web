@@ -33,7 +33,7 @@ npm install @material/mwc-fab
 ![](images/standard.png)
 
 ```html
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block">
 
 <mwc-fab icon="favorite"></mwc-fab>
 

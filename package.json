@@ -13,7 +13,7 @@
     "lint:imports": "node scripts/check-imports.js",
     "lint": "npm run lint:typescript && npm run lint:lit",
     "lint:typescript": "eslint \"packages/**/*.ts\"",
-    "lint:lit": "lit-analyzer \"packages/**/*.ts\" --strict --quiet",
+    "lint:lit": "lit-analyzer \"packages/**/*.ts\" --strict",
     "test": "npm run build:tests && karma-proxy start --single-run",
     "test:debug": "npm run test -- --single-run false --browsers Chrome",
     "test:bench": "npm run build:tests && node test/lib/benchmark/cli.js",
@@ -25,6 +25,7 @@
     "build:scripts": "tsc --project scripts/tsconfig.json",
     "update-gh-pages": "npm install && ./scripts/publish-demos.sh",
     "static-urlify-readme-images": "npm run build:scripts && node scripts/tsc-out/static-urlify-readme-images.js packages/*/README.md",
+    "bump-all-mdc-web-deps": "npm run build:scripts && node scripts/tsc-out/bump-all-mdc-web-deps.js packages/*/README.md",
     "prepack": "npm run build && npm run static-urlify-readme-images",
     "watch": "npm run build && node scripts/watcher.js",
     "watch:tests": "tsc --build test/tsconfig.json -w & tsc --build test/tsconfig-node.json -w"
@@ -34,8 +35,8 @@
     "@types/command-line-args": "^5.0.0",
     "@types/command-line-usage": "^5.0.1",
     "@types/mocha": "^5.2.7",
-    "@typescript-eslint/eslint-plugin": "^1.12.0",
-    "@typescript-eslint/parser": "^1.12.0",
+    "@typescript-eslint/eslint-plugin": "^2.3.2",
+    "@typescript-eslint/parser": "^2.3.2",
     "@webcomponents/webcomponentsjs": "^2.2.8",
     "chai": "^4.2.0",
     "clang-format": "^1.2.4",
@@ -72,7 +73,7 @@
     "sass": "^1.17.4",
     "shady-css-parser": "^0.1.0",
     "sinon": "^7.3.1",
-    "tachometer": "^0.4.9",
+    "tachometer": "^0.4.13",
     "typescript": "^3.4.1"
   },
   "dependencies": {}

@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-textarea",
-  "version": "0.7.1",
+  "version": "0.10.0",
   "description": "",
   "main": "mwc-textarea.js",
   "module": "mwc-textarea.js",
@@ -10,9 +10,11 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/mwc-base": "^0.7.0",
-    "@material/mwc-textfield": "^0.7.1",
-    "@material/textfield": "^3.0.0",
+    "@material/mwc-base": "^0.10.0",
+    "@material/mwc-textfield": "^0.10.0",
+    "@material/textfield": "=5.0.0-canary.afe0dd1bc.0",
+    "lit-element": "^2.2.1",
+    "lit-html": "^1.1.2",
     "tslib": "^1.10.0"
   },
   "publishConfig": {

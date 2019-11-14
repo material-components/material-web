@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 @import '@material/tab-bar/mdc-tab-bar.scss';
+@import '@material/tab/variables';
 
 :host {
   display: block;
@@ -23,4 +24,9 @@ limitations under the License.
 
 .mdc-tab-bar {
   flex: 1;
+}
+
+mwc-tab {
+  --mdc-tab-height: #{$mdc-tab-height};
+  --mdc-tab-stacked-height: #{$mdc-tab-stacked-height};
 }

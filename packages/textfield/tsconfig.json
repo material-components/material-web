@@ -8,10 +8,23 @@
     "src/**/*.ts"
   ],
   "references": [
-    {"path": "../base"},
-    {"path": "../line-ripple"},
-    {"path": "../icon"},
-    {"path": "../notched-outline"},
-    {"path": "../floating-label"}
+    {
+      "path": "../base"
+    },
+    {
+      "path": "../line-ripple"
+    },
+    {
+      "path": "../icon"
+    },
+    {
+      "path": "../notched-outline"
+    },
+    {
+      "path": "../floating-label"
+    }
+  ],
+  "exclude": [
+    "src/test/*.ts"
   ]
 }

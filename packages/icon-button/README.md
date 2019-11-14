@@ -27,7 +27,7 @@ npm install @material/mwc-icon-button
 
 ### Standard
 
-![](images/standard.png)
+<img src="images/standard.png" height="88px">
 
 ```html
 <mwc-icon-button icon="code"></mwc-icon-button>
@@ -35,7 +35,7 @@ npm install @material/mwc-icon-button
 
 ### SVG or Image
 
-![](images/svg.png)
+<img src="images/svg.png" height="88px">
 
 ```html
 <mwc-icon-button>
@@ -45,21 +45,41 @@ npm install @material/mwc-icon-button
 
 ### Disabled
 
-![](images/disabled.png)
+<img src="images/disabled.png" height="88px">
 
 ```html
 <mwc-icon-button icon="code" disabled></mwc-icon-button>
 ```
 
-### Customize Colors
+### Custom Style
 
-![](images/custom_color.png)
+<img src="images/custom_color.png" height="140px">
 
 ```css
 mwc-icon-button {
   color: tomato;
+  --mdc-icon-size: 50px;
 }
 ```
+
+## Fonts
+
+Most users should include the following in their application HTML when using
+icons:
+
+```html
+<link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
+```
+
+This loads the *Material Icons* font, which is required to render icons, and is
+*not* loaded automatically. If you see plain text instead of an icon, then the
+most likely cause is that the Material Icons font is not loaded.
+
+To see all icons that are available in the Material Icons font, see
+[Material Icons](https://material.io/resources/icons/).
+
+For technical details about the Material Icons font, see the
+[Material Icons Developer Guide](https://google.github.io/material-design-icons/).
 
 ## API
 
@@ -85,7 +105,9 @@ mwc-icon-button {
 
 | Name | Default | Description
 | ---- | ------- | -----------
-| `--mdc-icon-font` | [`Material Icons`](https://google.github.io/material-design-icons/) | Font to use for the icon.
+| `--mdc-icon-font` | [`Material Icons`](https://material.io/resources/icons/) | Font that supports *ligatures* and determines which icons are available (see [fonts](#fonts) above).
+| `--mdc-icon-button-size` | `48px` | Sets the size of the button wrapping the icon.
+| `--mdc-icon-size` | `24px` | Sets the size of the icon.
 | `--mdc-theme-text-disabled-on-light` | `rgba(0, 0, 0, 0.38)` | Color of icon when `disabled` is `true`
 | `--mdc-icon-button-ripple-opacity` | `0.12` | Opacity of the ripple on the icon button
 

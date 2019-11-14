@@ -1,64 +1,139 @@
-# mwc-checkbox
+# `<mwc-checkbox>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-checkbox.svg)](https://www.npmjs.com/package/@material/mwc-checkbox)
+> IMPORTANT: The Material Web Components are a work in progress and subject to
+> major changes until 1.0 release.
 
-> :warning: These components are a work in progress. They are pre-release and should be considered experimental, as they may undergo major changes before release. We are experimenting with alternate architectures and approaches with the goal of allowing us to bring the most correct and optimal implementation of Material components to the widest possible audiences. Visible progress may be slow, as this research is across teams and repositories so is not consistently reflected in commits to this codebase. :warning:
+Checkboxes allow the user to select one or more items from a set. Checkboxes can
+be used to turn an option on or off.
 
-A [Material Components](https://material.io/components/) icon implementation using [Web Components](https://www.webcomponents.org/introduction)
+[Material Design Guidelines: Checkboxes](https://material.io/components/selection-controls/#checkboxes)
 
-## Getting started
+## Installation
 
- * The easiest way to try out mwc-checkbox is to use one of these online tools:
+```sh
+npm install @material/mwc-checkbox
+```
 
-    * Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-checkbox-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-checkbox-example?path=index.html)
+> NOTE: The Material Web Components are distributed as ES2017 JavaScript
+> Modules, and use the Custom Elements API. They are compatible with all modern
+> browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
+> tooling step is required to resolve *bare module specifiers*, as well as
+> transpilation and polyfills for Edge and IE11. See
+> [here](https://github.com/material-components/material-components-web-components#quick-start)
+> for detailed instructions.
 
-    * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](https://jsbin.com/qobefic/edit?html,output),
-    [CodePen](https://codepen.io/jcrestel/pen/KGWBLd).
+## Example usage
 
-* You can also copy [this HTML file](https://gist.githubusercontent.com/JCrestel/9ed0acbd4d372a174b89cd6c58457636/raw/eadc711e5c4b89d9de3dea0d89e1d3797e0eaba3/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
+### Standard
 
-* When you're ready to use mwc-checkbox in a project, install it via [npm](https://www.npmjs.com/). To run the project in the browser, a module-compatible toolctain is required. We recommend installing the [Polymer CLI](https://github.com/Polymer/polymer-cli) and using its development server as follows.
+<img src="images/checked.png" width="29px" height="29px">
 
-  1. Ensure the webcomponents polyfills are included in your HTML page
+```html
+<mwc-checkbox checked></mwc-checkbox>
 
-      - Install webcomponents polyfills
+<script type="module">
+  import '@material/mwc-checkbox';
 
-          ```npm i @webcomponents/webcomponentsjs```
+  const checkbox = document.body.querySelector('mwc-checkbox')
+  checkbox.addEventListener('change', () => {
+    console.log(`checkbox changed to ${checkbox.checked}`);
+  });
+</script>
+```
 
-      - Add webcomponents polyfills to your HTML page
+### Standard, disabled, and custom styles
 
-          ```<script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>```
+<img src="images/standard_disabled_styled.png" width="132px" height="123px">
 
-  1. Add mwc-checkbox to your project:
+```html
+<div>
+  <mwc-checkbox></mwc-checkbox>
+  <mwc-checkbox checked></mwc-checkbox>
+  <mwc-checkbox indeterminate></mwc-checkbox>
+</div>
 
-      ```npm i @material/mwc-checkbox```
+<div>
+  <mwc-checkbox disabled></mwc-checkbox>
+  <mwc-checkbox disabled checked></mwc-checkbox>
+  <mwc-checkbox disabled indeterminate></mwc-checkbox>
+</div>
 
-  1. Import the mwc-checkbox definition into your HTML page:
+<div>
+  <style>
+    mwc-checkbox.pink {
+      --mdc-theme-secondary: #e91e63;
+    }
+  </style>
+  <mwc-checkbox class="pink"></mwc-checkbox>
+  <mwc-checkbox class="pink" checked></mwc-checkbox>
+  <mwc-checkbox class="pink" indeterminate></mwc-checkbox>
+</div>
+```
 
-      ```<script type="module" src="@material/mwc-checkbox/index.js"></script>```
+### With Form Field
 
-      Or into your module script:
+Most applications should use
+[`<mwc-formfield>`](https://github.com/material-components/material-components-web-components/tree/master/packages/formfield)
+to associate an interactive label with the checkbox.
 
-      ```import {Checkbox} from "@material/mwc-checkbox"```
+<img src="images/formfield.png" width="132px" height="123px">
 
-  1. Create an instance of mwc-checkbox in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
+```html
+<style>
+  mwc-formfield {
+    display: block;
+  }
+  .child {
+    margin-left: 20px;
+  }
+</style>
 
-      ```<mwc-checkbox></mwc-checkbox>```
+<mwc-formfield label="Additions">
+  <mwc-checkbox indeterminate></mwc-checkbox>
+</mwc-formfield>
 
-  1. Install the Polymer CLI:
+<mwc-formfield label="Pickles">
+  <mwc-checkbox class="child"></mwc-checkbox>
+</mwc-formfield>
 
-      ```npm i -g polymer-cli```
+<mwc-formfield label="Tomato">
+  <mwc-checkbox class="child" checked></mwc-checkbox>
+</mwc-formfield>
 
-  1. Run the development server and open a browser pointing to its URL:
+<script type="module">
+  import '@material/mwc-checkbox';
+  import '@material/mwc-formfield';
+</script>
+```
 
-      ```polymer serve```
+## API
 
-  > mwc-checkbox is published on [npm](https://www.npmjs.com/package/@material/mwc-checkbox) using JavaScript Modules.
-  This means it can take advantage of the standard native JavaScript module loader available in all current major browsers.
-  >
-  > However, since mwc-checkbox uses npm convention to reference dependencies by name, a light transform to rewrite specifiers to URLs is required to get it to run in the browser. The polymer-cli's development server `polymer serve` automatically handles this transform.
+### Properties/Attributes
 
-  Tools like [WebPack](https://webpack.js.org/) and [Rollup](https://rollupjs.org/) can also be used to serve and/or bundle mwc-checkbox.
+Name            | Type      | Default | Description
+--------------- | --------- | ------- | -----------
+`checked`       | `boolean` | `false` | Whether the checkbox is checked.
+`indeterminate` | `boolean` | `false` | When a checkbox is the parent of a set of child checkboxes, the *indeterminate* state is used on the parent to indicate that some but not all of its children are checked.
+`disabled`      | `boolean` | `false` | When `true`, the checkbox cannot be interacted with, and renders in muted colors.
+`value`         | `string`  | `''`    | The value that will be included if the checkbox is submitted in a form.
 
-## Supported Browsers
 
-The last 2 versions of all modern browsers are supported, including
-Chrome, Safari, Opera, Firefox, Edge. In addition, Internet Explorer 11 is also supported.
+### Methods
+
+*None*
+
+### Events
+
+| Event Name | Target         | Detail | Description
+| ---------- | -------------- | ------ | -----------
+| `change`   | `mwc-checkbox` | `{}`   | Fired when the user modifies the checkbox `checked` or `indeterminate` states from an input device interaction. Note that, like [native `<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event), the `change` event is *not* fired when the `checked` or `indeterminate` properties are set from JavaScript.
+
+### CSS Custom Properties
+
+
+| Name                    | Default   | Description                         |
+| ----------------------- | --------- | ----------------------------------- |
+| `--mdc-theme-secondary` | ![](images/color_018786.png) `#018786` | Background color when the checkbox is `checked` or `indeterminate`, and the base color of the ripple effect and focus halo.
+
+## Additional references
+
+-   [MDC Web Checkboxes](https://material.io/develop/web/components/input-controls/checkboxes/)

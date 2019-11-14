@@ -19,7 +19,7 @@ import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js
 import {directive, PropertyPart} from 'lit-html';
 
 export interface FloatingLabel extends HTMLLabelElement {
-  foundation: MDCFloatingLabelFoundation;
+  floatingLabelFoundation: MDCFloatingLabelFoundation;
 }
 
 const createAdapter = (labelElement: HTMLElement): MDCFloatingLabelAdapter => {
@@ -36,18 +36,28 @@ const createAdapter = (labelElement: HTMLElement): MDCFloatingLabelAdapter => {
   };
 };
 
-const partToFoundationMap =
-    new WeakMap<PropertyPart, MDCFloatingLabelFoundation>();
+interface LabelAndLabelFoundation {
+  label: string;
+  foundation: MDCFloatingLabelFoundation;
+}
 
-export const floatingLabel = directive(() => (part: PropertyPart) => {
-  const lastFoundation = partToFoundationMap.get(part);
-  if (!lastFoundation) {
-    const labelElement = part.committer.element as FloatingLabel;
-    labelElement.classList.add('mdc-floating-label');
-    const adapter = createAdapter(labelElement);
-    const foundation = new MDCFloatingLabelFoundation(adapter);
-    foundation.init();
-    part.setValue(foundation);
-    partToFoundationMap.set(part, foundation);
-  }
-});
+const partToFoundationMap =
+    new WeakMap<PropertyPart, LabelAndLabelFoundation>();
+
+export const floatingLabel =
+    directive((label: string) => (part: PropertyPart) => {
+      const lastFoundation = partToFoundationMap.get(part);
+      if (!lastFoundation) {
+        const labelElement = part.committer.element as FloatingLabel;
+        labelElement.classList.add('mdc-floating-label');
+        const adapter = createAdapter(labelElement);
+        const foundation = new MDCFloatingLabelFoundation(adapter);
+        foundation.init();
+        part.setValue(foundation);
+        partToFoundationMap.set(part, {label, foundation});
+      } else if (lastFoundation.label !== label) {
+        const labelElement = part.committer.element as FloatingLabel;
+        const labelChangeEvent = new Event('labelchange');
+        labelElement.dispatchEvent(labelChangeEvent);
+      }
+    });

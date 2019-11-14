@@ -14,11 +14,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {addHasRemoveClass, BaseElement, classMap, html, property, PropertyValues, query} from '@material/mwc-base/base-element.js';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
 import {MDCTabIndicatorAdapter} from '@material/tab-indicator/adapter';
 import MDCFadingTabIndicatorFoundation from '@material/tab-indicator/fading-foundation.js';
 import MDCTabIndicatorFoundation from '@material/tab-indicator/foundation';
 import MDCSlidingTabIndicatorFoundation from '@material/tab-indicator/sliding-foundation.js';
+import {html, property, PropertyValues, query} from 'lit-element';
+import {classMap} from 'lit-html/directives/class-map';
 
 export class TabIndicatorBase extends BaseElement {
   protected mdcFoundation!: MDCTabIndicatorFoundation;

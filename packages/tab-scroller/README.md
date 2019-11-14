@@ -37,7 +37,7 @@ A [Material Components](https://material.io/develop/) tab scroller implementatio
 
       Or into your module script:
 
-      ```import {Switch} from "@material/mwc-tab-scroller"```
+      ```import {TabScroller} from "@material/mwc-tab-scroller"```
 
   1. Create an instance of mwc-tab-scroller in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
 

@@ -19,7 +19,7 @@ import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
 import {directive, PropertyPart} from 'lit-html';
 
 export interface LineRipple extends HTMLElement {
-  foundation: MDCLineRippleFoundation;
+  lineRippleFoundation: MDCLineRippleFoundation;
 }
 
 const createAdapter = (lineElement: HTMLElement): MDCLineRippleAdapter => {

@@ -4,13 +4,14 @@
     "composite": true,
     "outDir": "./lib",
     "tsBuildInfoFile": ".tsbuildinfo",
-    "rootDir": "./src",
+    "rootDir": "../",
     "sourceMap": false,
     "inlineSources": false
   },
   "include": [
     "src/custom_typings/*.d.ts",
     "src/**/*.ts",
+    "../packages/*/src/test/*.ts"
   ],
   "exclude": [
     "src/benchmark/cli.ts"

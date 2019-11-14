@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {customElement} from '@material/mwc-base/base-element.js';
+import {customElement} from 'lit-element';
 
 import {IconButtonBase} from './mwc-icon-button-base.js';
 import {style} from './mwc-icon-button-css.js';

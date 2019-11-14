@@ -1,0 +1,34 @@
+{
+  "name": "@material/mwc-dialog",
+  "version": "0.10.0",
+  "description": "",
+  "main": "mwc-dialog.js",
+  "module": "mwc-dialog.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/material-components/material-components-web-components.git",
+    "directory": "packages/dialog"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@material/dialog": "=5.0.0-canary.afe0dd1bc.0",
+    "@material/dom": "=5.0.0-canary.afe0dd1bc.0",
+    "@material/mwc-base": "^0.10.0",
+    "@material/touch-target": "=5.0.0-canary.afe0dd1bc.0",
+    "blocking-elements": "^0.1.0",
+    "lit-element": "^2.2.1",
+    "lit-html": "^1.1.2",
+    "tslib": "^1.10.0",
+    "wicg-inert": "^3.0.0"
+  },
+  "devDependencies": {
+    "@material/feature-targeting": "^3.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

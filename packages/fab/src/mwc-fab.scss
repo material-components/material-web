@@ -17,6 +17,8 @@ limitations under the License.
 @import '@material/mwc-icon/src/_mwc-icon.scss';
 @import '@material/fab/mdc-fab.scss';
 
+@include mdc-ripple-common(mdc-feature-all());
+
 .material-icons {
   @extend %material-icons;
 }

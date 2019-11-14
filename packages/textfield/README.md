@@ -169,12 +169,12 @@ npm install @material/mwc-textfield
 | `maxLength`         | `number`         | Maximum length to accept input.
 | `validationMessage` | `string`         | Message to show in the error color when the textfield is invalid. (Helper text will not be visible)
 | `pattern`           | `string`         | [`HTMLInputElement.prototype.pattern`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (empty string will unset attribute)
-| `min`               | `number|string`  | [`HTMLInputElement.prototype.min`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (empty string will unset attribute)
-| `max`               | `number|string`  | [`HTMLInputElement.prototype.max`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (empty string will unset attribute)
-| `step`              | `number|null`    | [`HTMLInputElement.prototype.step`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (null will unset attribute)
+| `min`               | `number`\|`string`  | [`HTMLInputElement.prototype.min`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (empty string will unset attribute)
+| `max`               | `number`\|`string`  | [`HTMLInputElement.prototype.max`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (empty string will unset attribute)
+| `step`              | `number`\|`null`    | [`HTMLInputElement.prototype.step`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (null will unset attribute)
 | `validity`          | `ValidityState` (readonly) | The [`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState) of the textfield.
 | `willValidate`      | `boolean` (readonly)       | [`HTMLInputElement.prototype.willValidate`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement#Properties)
-| `validityTransform` | `ValidityTransform**|null` | Callback called before each validation check. See the [validation section](#Validation) for more details.
+| `validityTransform` | `ValidityTransform**`\|`null` | Callback called before each validation check. See the [validation section](#Validation) for more details.
 | `validateOnInitialRender` | `boolean`            | Runs validation check on initial render.
 
 \*  `TextFieldType` is exported by `mwc-textfield` and `mwc-textfield-base`
@@ -195,10 +195,12 @@ type ValidityTransform = (value: string, nativeValidity: ValidityState) => Parti
 | `checkValidity() => boolean`   | Returns `true` if the textfield passes validity checks. Returns `false` and fires an [`invalid`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/invalid_event) event on the textfield otherwise.
 | `reportValidity() => boolean`   | Runs `checkValidity()` method, and if it returns false, then ir reports to the user that the input is invalid.
 | `setCustomValidity(message:string) => void`   | Sets a custom validity message (also overwrites `validationMessage`). If this message is not the empty string, then the element is suffering froma  custom validity error and does not validate.
+| `layout() => Promise<void>`   | Re-calculate layout. If a textfield is styled with `display:none` before it is first rendered, and it has a label that is floating, then you must call `layout()` the first time you remove `display:none`, or else the notch surrounding the label will not render correctly.
 
 ### CSS Custom Properties
 
 Inherits CSS Custom properties from:
+
 * [`mwc-ripple`](https://github.com/material-components/material-components-web-components/tree/master/packages/ripple)
 * [`mwc-notched-outline`](https://github.com/material-components/material-components-web-components/tree/master/packages/notched-outline).
 * [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon)
@@ -211,6 +213,11 @@ Inherits CSS Custom properties from:
 | `--mdc-text-field-outlined-idle-border-color`     | `rgba(0, 0, 0, 0.38)` | Color of the outlined textfield's  outline when idle.
 | `--mdc-text-field-outlined-hover-border-color`    | `rgba(0, 0, 0, 0.87)` | Color of the outlined textfield's outline when hovering.
 | `--mdc-text-field-outlined-disabled-border-color` | `rgba(0, 0, 0, 0.06)` | Color of the outlined textfield's outline when disabled.
+| `--mdc-text-field-fill-color`                     | `rgb(245, 245, 245)`  | Color of the textfield's background fill (non-outlined).
+| `--mdc-text-field-disabled-fill-color`            | `rgb(250, 250, 250)`  | Color of the textfield's background fill (non-outlined) when disabled.
+| `--mdc-text-field-ink-color`                      | `rgba(0, 0, 0, 0.87)` | Color of the input text.
+| `--mdc-text-field-label-ink-color`                | `rgba(0, 0, 0, 0.6)`  | Color of the non-focused floating label, helper text, char counter, and placeholder.
+| `--mdc-text-field-disabled-ink-color`             | `rgba(0, 0, 0, 0.37)` | Color of the input text, the floating label, helper text, char counter, and placeholder of a disabled textfield.
 
 ### Validation
 
@@ -230,6 +237,7 @@ It exposes:
 * `setCustomValidity(message)`
 
 Additionally, it implements more features such as:
+
 * `validationMessage`
 * `validateOnInitialRender`
 * and `validityTransform`

@@ -14,10 +14,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, html, property, query} from '@material/mwc-base/form-element.js';
+import {BaseElement} from '@material/mwc-base/form-element.js';
 import {MDCNotchedOutlineAdapter} from '@material/notched-outline/adapter.js';
 import {MDCNotchedOutlineFoundation} from '@material/notched-outline/foundation.js';
-
+import {html, property, query} from 'lit-element';
 
 export class NotchedOutlineBase extends BaseElement {
   @query('.mdc-notched-outline') protected mdcRoot!: HTMLElement;
@@ -25,9 +25,9 @@ export class NotchedOutlineBase extends BaseElement {
 
   protected readonly mdcFoundationClass = MDCNotchedOutlineFoundation;
 
-  @property({type: Number}) width: number = 0;
+  @property({type: Number}) width = 0;
 
-  @property({type: Boolean, reflect: true}) open: boolean = false;
+  @property({type: Boolean, reflect: true}) open = false;
 
   protected lastOpen = this.open;
 
@@ -57,11 +57,7 @@ export class NotchedOutlineBase extends BaseElement {
   }
 
   render() {
-    if (this.open !== this.lastOpen) {
-      // workaround for possible bug in foundation causing recalculation
-      this.lastOpen = this.open;
-      this.openOrClose(this.open, this.width);
-    }
+    this.openOrClose(this.open, this.width);
 
     return html`
       <div class="mdc-notched-outline">
