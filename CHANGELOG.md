@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `mwc-dialog` will now search its flattened distributed nodes and their trees
   for a focusable element.
 - **BREAKING** `mwc-slider` now emits bubbling and composed `input` and `change`
-  events from `MDCSlider:input` and `MDCSlider:change`.
+  events instead of `MDCSlider:input` and `MDCSlider:change`.
 
 ### Fixed
 - Fixed checkbox ripple visibility when focused while being unchecked.
