@@ -103,6 +103,11 @@ export class TabBase extends BaseElement {
         <span class="mdc-tab__text-label">${this.label}</span>`
     }
 
+    const rippleDirective = ripple({
+      interactionNode: this,
+      unbounded: false
+    });
+
     return html`
       <button
         @click="${this._handleClick}"
@@ -117,10 +122,7 @@ export class TabBase extends BaseElement {
           ${this.isMinWidthIndicator ? this.renderIndicator() : ''}
         </span>
         ${this.isMinWidthIndicator ? '' : this.renderIndicator()}
-        <span class="mdc-tab__ripple" .ripple="${ripple({
-      interactionNode: this,
-      unbounded: false
-    })}"></span>
+        <span class="mdc-tab__ripple" .ripple="${rippleDirective}"></span>
       </button>`;
   }
 
