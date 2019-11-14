@@ -109,7 +109,7 @@ export class TabBase extends BaseElement {
 
     const rippleDirective = ripple({
       interactionNode: this,
-      unbounded: false
+      unbounded: false,
     });
 
     return html`
