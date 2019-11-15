@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Updated material dependencies to `4.0.0-canary.735147131.0`.
 - `mwc-dialog` will now search its flattened distributed nodes and their trees
   for a focusable element.
+- **BREAKING** `LinearProgress.determinate = false` removed in favor of `LinearProgres.indeterminate = false`.
+- **BREAKING** `LinearProgress.buffer = 0` default value changed to `1`.
 
 ### Fixed
 - Fixed checkbox ripple visibility when focused while being unchecked.
@@ -87,6 +89,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   `lit-html` modules instead.
 - **BREAKING** `mwc-textfield` and `mwc-textarea` will now update their `.value`
   on the native `input`'s `input` event instead of `change`.
+- **BREAKING:VISUAL** `mwc-linear-progress` had `--mdc-theme-secondary` applied
+  to its buffer bar's background color. This custom property's name was changed
+  to `--mdc-linear-progress-buffer-color`.
 
 ### Fixed
 
@@ -101,6 +106,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   as is per material spec.
 - `mwc-textarea[disabled]label="string!"][value="string!"]` will now float the
   label to the correct spot.
+- `mwc-linear-progress` can now have its pin and markers added and changed
+  dynamically.
 
 
 ## [0.8.0] - 2019-09-03

@@ -33,9 +33,9 @@ export class LinearProgressBase extends BaseElement {
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: LinearProgressBase, value: boolean) {
-    this.mdcFoundation.setDeterminate(value);
+    this.mdcFoundation.setDeterminate(!value);
   })
-  determinate = false;
+  indeterminate = false;
 
   @property({type: Number})
   @observer(function(this: LinearProgressBase, value: number) {
@@ -47,7 +47,7 @@ export class LinearProgressBase extends BaseElement {
   @observer(function(this: LinearProgressBase, value: number) {
     this.mdcFoundation.setBuffer(value);
   })
-  buffer = 0;
+  buffer = 1;
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: LinearProgressBase, value: boolean) {

@@ -1,64 +1,134 @@
-# mwc-linear-progress
+# `<mwc-linear-progress>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-linear-progress.svg)](https://www.npmjs.com/package/@material/mwc-linear-progress)
 
-> :warning: These components are a work in progress. They are pre-release and should be considered experimental, as they may undergo major changes before release. We are experimenting with alternate architectures and approaches with the goal of allowing us to bring the most correct and optimal implementation of Material components to the widest possible audiences. Visible progress may be slow, as this research is across teams and repositories so is not consistently reflected in commits to this codebase. :warning:
+> IMPORTANT: The Material Web Components are a work in progress and subject to
+> major changes until 1.0 release.
 
-A [Material Components](https://material.io/components/) linear-progress implementation using [Web Components](https://www.webcomponents.org/introduction)
+Progress indicators express an unspecified wait time or display the length of a process.
 
-## Getting started
+<img src="images/showcase.gif" height="45px">
 
- * The easiest way to try out mwc-linear-progress is to use one of these online tools:
+[Material Design Guidelines: Progress Indicators](https://material.io/components/progress-indicators/#circular-progress-indicators)
 
-    * Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-icon-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-icon-example?path=index.html)
+## Installation
 
-    * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/qibisux/edit?html,output),
-    [CodePen](https://codepen.io/azakus/pen/deZLja).
+```sh
+npm install @material/mwc-linear-progress
+```
 
-* You can also copy [this HTML file](https://gist.githubusercontent.com/azakus/f01e9fc2ed04e781ad5a52ded7b296e7/raw/266f2f4f91cbfe89b2acc6ec63957b1a3cfe9b39/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
+> NOTE: The Material Web Components are distributed as ES2017 JavaScript
+> Modules, and use the Custom Elements API. They are compatible with all modern
+> browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
+> tooling step is required to resolve *bare module specifiers*, as well as
+> transpilation and polyfills for Edge and IE11. See
+> [here](https://github.com/material-components/material-components-web-components#quick-start)
+> for detailed instructions.
 
-* When you're ready to use mwc-linear-progress in a project, install it via [npm](https://www.npmjs.com/). To run the project in the browser, a module-compatible toolctain is required. We recommend installing the [Polymer CLI](https://github.com/Polymer/polymer-cli) and using its development server as follows.
+## Example usage
 
-  1. Ensure the webcomponents polyfills are included in your HTML page
+### Determinate
 
-      - Install webcomponents polyfills
+<img src="images/determinate.png" height="34px">
 
-          ```npm i @webcomponents/webcomponentsjs```
+```html
+<script type="module">
+  import '@material/mwc-linear-progress';
+</script>
+<mwc-linear-progress progress="0.5"></mwc-linear-progress>
+```
 
-      - Add webcomponents polyfills to your HTML page
+### Indederminate
 
-          ```<script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>```
+<img src="images/indeterminate.gif" height="77px">
 
-  1. Add mwc-linear-progress to your project:
+```html
+<mwc-linear-progress indeterminate></mwc-linear-progress>
+```
 
-      ```npm i @material/mwc-linear-progress```
+### Determinate buffer
 
-  1. Import the mwc-linear-progress definition into your HTML page:
+<img src="images/determinate-buffer.gif" height="45px">
 
-      ```<script type="module" src="@material/mwc-linear-progress/index.js"></script>```
+```html
+<mwc-linear-progress progress="0.25" buffer="0.5"></mwc-linear-progress>
+```
 
-      Or into your module script:
+### Reversed
 
-      ```import {LinearProgress} from "@material/mwc-linear-progress"```
+<img src="images/reversed.gif" height="45px">
 
-  1. Create an instance of mwc-linear-progress in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
 
-      ```<mwc-linear-progress determinate progress="0.5" buffer="1"></mwc-linear-progress>```
+```html
+<mwc-linear-progress
+    reverse
+    progress="0.25"
+    buffer="0.5">
+</mwc-linear-progress>
+```
 
-  1. Install the Polymer CLI:
+### Styled
 
-      ```npm i -g polymer-cli```
+<img src="images/styled.gif" height="45px">
 
-  1. Run the development server and open a browser pointing to its URL:
+```html
+<style>
+  mwc-linear-progress {
+    --mdc-theme-primary: red;
+    --mdc-linear-progress-buffer-color: orange;
+    /* Note: all that was changed from default was "fill='orange'" */
+    --mdc-linear-progress-buffering-dots-image:
+        url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' enable-background='new 0 0 5 2' xml:space='preserve' viewBox='0 0 5 2' preserveAspectRatio='none slice'%3E%3Ccircle cx='1' cy='1' r='1' fill='orange'/%3E%3C/svg%3E");
+  }
+</style>
+<mwc-linear-progress progress="0.25" buffer="0.5"></mwc-linear-progress>
+```
 
-      ```polymer serve```
+## API
 
-  > mwc-linear-progress is published on [npm](https://www.npmjs.com/package/@material/mwc-linear-progress) using JavaScript Modules.
-  This means it can take advantage of the standard native JavaScript module loader available in all current major browsers.
-  >
-  > However, since mwc-linear-progress uses npm convention to reference dependencies by name, a light transform to rewrite specifiers to URLs is required to get it to run in the browser. The polymer-cli's development server `polymer serve` automatically handles this transform.
+### Slots
 
-  Tools like [WebPack](https://webpack.js.org/) and [Rollup](https://rollupjs.org/) can also be used to serve and/or bundle mwc-linear-progress.
+None
 
-## Supported Browsers
+### Properties/Attributes
 
-The last 2 versions of all modern browsers are supported, including
-Chrome, Safari, Opera, Firefox, Edge. In addition, Internet Explorer 11 is also supported.
+| Name            | Type      | Default | Description
+| --------------- | --------- | ------- |------------
+| `indeterminate` | `boolean` | `false` | Sets the linear-progress into its indeterminate state.
+| `progress`      | `number`  | `0`     | Sets the primary progress bar's value. Value should be between [0, 1].
+| `buffer`        | `number`  | `1`     | Sets the buffer progress bar's value. Value should be between [0, 1]. Setting this value to be less than 1 will reveal moving, buffering dots.
+| `reverse`       | `boolean` | `false` | Reverses the direction of the linear progress indicator.
+| `closed`        | `boolean` | `false` | Sets the progress indicator to the closed state. Sets content opactiy to 0. Typically should be set to true when loading has finished.
+
+### Methods
+
+| Name              | Description
+| ----------------- | -----------
+| `open() => void`  | Sets `Slider.closed` to `false`;
+| `close() => void` | Sets `Slider.closed` to `true`;
+
+### Events
+
+None
+
+### CSS Custom Properties
+
+| Name                                         | Default                                | Description
+| -------------------------------------------- | -------------------------------------- |------------
+| `--mdc-theme-primary`                        | ![](images/color_6200ee.png) `#6200EE` | Sets the color of primary progress bar.
+| `--mdc-linear-progress-buffer-color`         | ![](images/color_e6e6e6.png) `#E6E6E6` | Sets the color of the buffer progress bar.<br> **NOTE:** to change the color of the buffering dots, you must do so in the image of `--mdc-linear-progress-buffering-dots-image`.
+| `--mdc-linear-progress-buffering-dots-image` | `url("<svg data url>")` (see below for value) | Sets the image to use as the buffering dots. This pattern is then repeated horizontally and animated.
+
+Default value for `--mdc-linear-progress-buffering-dots-image`:
+
+```
+data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' enable-background='new 0 0 5 2' xml:space='preserve' viewBox='0 0 5 2' preserveAspectRatio='none slice'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23e6e6e6'/%3E%3C/svg%3E
+```
+
+If you paste that data url into your browser you can see and inspect the SVG.
+You may also notice that it is simply a colored circle with some transparent
+space to its right. If you would like to change the color of the circle, you can
+simply change the `fill="%23e6e6e6"` to any valid color property (n.b. `%23` is
+the url-encoded equivalent of `#`).
+
+## Additional references
+
+- [MDC Web linear-progresss](https://material-components.github.io/material-components-web-catalog/#/component/linear-progress-indicator)
