@@ -56,7 +56,12 @@ export class SliderBase extends FormElement {
   max = 100;
 
   @property({type: Number})
-  @observer(function(this: SliderBase, value: number) {
+  @observer(function(this: SliderBase, value: number, old: number) {
+    const oldWasDiscrete = old !== 0;
+    const newIsDiscrete = value !== 0;
+    if (oldWasDiscrete !== newIsDiscrete) {
+      this.resetFoundation();
+    }
     this.mdcFoundation.setStep(value);
   })
   step = 0;
@@ -67,7 +72,7 @@ export class SliderBase extends FormElement {
   })
   disabled = false;
 
-  @property({type: Boolean, reflect: true}) discrete = false;
+  @property({type: Boolean, reflect: true}) pin = false;
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: SliderBase) {
@@ -84,14 +89,15 @@ export class SliderBase extends FormElement {
 
   // TODO(sorvell) #css: needs a default width
   protected render() {
+    const isDiscrete = this.step !== 0;
     const hostClassInfo = {
-      'mdc-slider--discrete': this.discrete,
-      'mdc-slider--display-markers': this.markers && this.discrete,
+      'mdc-slider--discrete': isDiscrete,
+      'mdc-slider--display-markers': this.markers && isDiscrete,
     };
 
     let markersTemplate: TemplateResult|string = '';
 
-    if (this.discrete && this.markers) {
+    if (isDiscrete && this.markers) {
       markersTemplate = html`
         <div
             class="mdc-slider__track-marker-container"
@@ -101,7 +107,7 @@ export class SliderBase extends FormElement {
 
     let pin: TemplateResult|string = '';
 
-    if (this.discrete) {
+    if (this.pin) {
       pin = html`
       <div class="mdc-slider__pin">
         <span class="mdc-slider__pin-value-marker">${this.pinMarkerText}</span>
@@ -203,7 +209,8 @@ export class SliderBase extends FormElement {
         this.trackStyles[propertyName] = value;
         this.requestUpdate();
       },
-      setMarkerValue: (value: number) => this.pinMarkerText = value.toString(),
+      setMarkerValue: (value: number) => this.pinMarkerText =
+          value.toLocaleString(),
       setTrackMarkers: (step, max, min) => {
         // calculates the CSS for the notches on the slider. Taken from
         // https://github.com/material-components/material-components-web/blob/8f851d9ed2f75dc8b8956d15b3bb2619e59fa8a9/packages/mdc-slider/component.ts#L122
@@ -224,6 +231,13 @@ export class SliderBase extends FormElement {
       },
       isRTL: () => getComputedStyle(this.mdcRoot).direction === 'rtl',
     };
+  }
+
+  protected resetFoundation() {
+    if (this.mdcFoundation) {
+      this.mdcFoundation.destroy();
+      this.mdcFoundation.init();
+    }
   }
 
   layout() {
