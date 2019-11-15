@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - README for `mwc-checkbox`
 - README for `mwc-formfield`
 - Demo for `mwc-drawer` without a header in the drawer
+- `--mdc-icon-button-size` and `--mdc-icon-size` to `mwc-icon-button`
 
 ### Changed
 
@@ -24,6 +25,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - **BREAKING** `Slider.discrete` removed and `Slider.pin` added.
 - `mwc-dialog` will now search its flattened distributed nodes and their trees
   for a focusable element.
+- **BREAKING** `mwc-slider` now emits bubbling and composed `input` and `change`
+  events instead of `MDCSlider:input` and `MDCSlider:change`.
+- **BREAKING:VISUAL** the digits inside the `Slider`'s pin will be rounded to at
+  most 3 decimal digits.
+- **BREAKING** `LinearProgress.determinate = false` removed in favor of `LinearProgres.indeterminate = false`.
+- **BREAKING** `LinearProgress.buffer = 0` default value changed to `1`.
+- **BREAKING:VISUAL** `mwc-linear-progress` had `--mdc-theme-secondary` applied
+  to its buffer bar's background color. This custom property's name was changed
+  to `--mdc-linear-progress-buffer-color`.
 - **BREAKING:VISUAL** the digits inside the `Slider`'s pin will be rounded to at
   most 3 decimal digits.
 - **BREAKING** `LinearProgress.determinate = false` removed in favor of `LinearProgres.indeterminate = false`.
@@ -35,6 +45,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Fixed checkbox ripple visibility when focused while being unchecked.
 - Fixed app content not being expanded inside drawer.
+- Fixed issue where slider when resized or scrolled will not respond to touch
+  as expected.
+- Fixed issue where `mwc-ripple` would not ripple when parent was a shadow root
+- **BREAKING:VISUAL** Fixed sizing of the `mwc-icon-button` in `mwc-snackbar`
+- Fixed `mwc-icon-button` icon at end layout.
+- `mwc-slider` can now have its pin and markers added and changed
+  dynamically.
 - Fixed `mwc-icon-button` icon at end layout.
 - `mwc-slider` can now have its pin and markers added and changed
   dynamically.
