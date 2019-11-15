@@ -20,5 +20,10 @@ limitations under the License.
 @include mdc-ripple-common(mdc-feature-all());
 
 :host {
+  display: inline-block;
   outline: none;
+}
+
+.mdc-radio {
+  vertical-align: bottom;
 }
