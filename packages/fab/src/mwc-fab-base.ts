@@ -53,8 +53,7 @@ export class FabBase extends LitElement {
     }
 
     const label = showLabel ? html
-        `<span class="mdc-fab__label">${this.label}</span>` :
-                              '';
+    `<span class="mdc-fab__label">${this.label}</span>`: '';
     return html`
       <button
           class="mdc-fab ${classMap(classes)}"

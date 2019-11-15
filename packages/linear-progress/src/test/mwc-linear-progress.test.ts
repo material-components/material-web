@@ -34,10 +34,14 @@ suite('mwc-linear-progress', () => {
     assert.instanceOf(element, LinearProgress);
   });
 
-  test('sets `aria-label` of the progress bar when `ariaLabel` is set', async () => {
-    element.ariaLabel = 'Unit Test Progress Bar';
-    await element.updateComplete;
-    const progressBar = element.shadowRoot!.querySelector('.mdc-linear-progress');
-    assert.equal(progressBar!.getAttribute('aria-label'), 'Unit Test Progress Bar');
-  });
+  test(
+      'sets `aria-label` of the progress bar when `ariaLabel` is set',
+      async () => {
+        element.ariaLabel = 'Unit Test Progress Bar';
+        await element.updateComplete;
+        const progressBar =
+            element.shadowRoot!.querySelector('.mdc-linear-progress');
+        assert.equal(
+            progressBar!.getAttribute('aria-label'), 'Unit Test Progress Bar');
+      });
 });
