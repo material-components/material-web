@@ -55,6 +55,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed `mwc-icon-button` icon at end layout.
 - `mwc-slider` can now have its pin and markers added and changed
   dynamically.
+- **BREAKING:VISUAL** `mwc-radio`'s root element is now set to
+  `vertical-align: bottom` to fix alignment when element is set to
+  `display: block`.
 
 ## [0.10.0] - 2019-10-11
 
