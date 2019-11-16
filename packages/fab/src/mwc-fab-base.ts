@@ -52,8 +52,12 @@ export class FabBase extends LitElement {
         <span class="material-icons mdc-fab__icon">${this.icon}</span>`;
     }
 
-    const label = showLabel ? html
-    `<span class="mdc-fab__label">${this.label}</span>`: '';
+    let label = html``;
+
+    if (showLabel) {
+      label = html`<span class="mdc-fab__label">${this.label}</span>`;
+    }
+
     return html`
       <button
           class="mdc-fab ${classMap(classes)}"
