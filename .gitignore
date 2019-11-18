@@ -14,3 +14,4 @@ node_modules
 !packages/*/custom_types/**
 /test/lib/
 /scripts/tsc-out/
+.vscode

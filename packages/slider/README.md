@@ -1,64 +1,110 @@
-# mwc-slider
+# `<mwc-slider>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-slider.svg)](https://www.npmjs.com/package/@material/mwc-slider)
 
-> :warning: These components are a work in progress. They are pre-release and should be considered experimental, as they may undergo major changes before release. We are experimenting with alternate architectures and approaches with the goal of allowing us to bring the most correct and optimal implementation of Material components to the widest possible audiences. Visible progress may be slow, as this research is across teams and repositories so is not consistently reflected in commits to this codebase. :warning:
+> IMPORTANT: The Material Web Components are a work in progress and subject to
+> major changes until 1.0 release.
 
-A [Material Components](https://material.io/components/) icon implementation using [Web Components](https://www.webcomponents.org/introduction)
+Sliders allow users to make selections from a range of values.
 
-## Getting started
+<img src="images/basic.png" height="48px">
 
- * The easiest way to try out mwc-slider is to use one of these online tools:
+[Material Design Guidelines: sliders](https://material.io/design/components/sliders.html)
 
-    * Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-icon-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-icon-example?path=index.html)
+## Installation
 
-    * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/qibisux/edit?html,output),
-    [CodePen](https://codepen.io/azakus/pen/deZLja).
+```sh
+npm install @material/mwc-slider
+```
 
-* You can also copy [this HTML file](https://gist.githubusercontent.com/azakus/f01e9fc2ed04e781ad5a52ded7b296e7/raw/266f2f4f91cbfe89b2acc6ec63957b1a3cfe9b39/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
+> NOTE: The Material Web Components are distributed as ES2017 JavaScript
+> Modules, and use the Custom Elements API. They are compatible with all modern
+> browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
+> tooling step is required to resolve *bare module specifiers*, as well as
+> transpilation and polyfills for Edge and IE11. See
+> [here](https://github.com/material-components/material-components-web-components#quick-start)
+> for detailed instructions.
 
-* When you're ready to use mwc-slider in a project, install it via [npm](https://www.npmjs.com/). To run the project in the browser, a module-compatible toolctain is required. We recommend installing the [Polymer CLI](https://github.com/Polymer/polymer-cli) and using its development server as follows.
+## Example usage
 
-  1. Ensure the webcomponents polyfills are included in your HTML page
+### Continuous
 
-      - Install webcomponents polyfills
+<img src="images/basic.png" height="48pxx">
 
-          ```npm i @webcomponents/webcomponentsjs```
+```html
+<script type="module">
+  import '@material/mwc-slider';
+</script>
 
-      - Add webcomponents polyfills to your HTML page
+<mwc-slider value="25" min="10" max="50"></mwc-slider>
+```
 
-          ```<script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>```
+### Discrete
 
-  1. Add mwc-slider to your project:
+<img src="images/discrete.gif" height="80.5px">
 
-      ```npm i @material/mwc-slider```
+```html
+<mwc-slider
+    step="5"
+    pin
+    markers
+    max="50"
+    value="10">
+</mwc-slider>
+```
 
-  1. Import the mwc-slider definition into your HTML page:
+### Styled
 
-      ```<script type="module" src="@material/mwc-slider/index.js"></script>```
+<img src="images/styled.gif" height="79px">
 
-      Or into your module script:
+```html
+<style>
+  mwc-slider {
+    --mdc-theme-secondary: orange;
+    --mdc-theme-text-primary-on-dark: green;
+  }
+</style>
+<mwc-slider
+    pin
+    markers
+    max="50"
+    value="10"
+    step="5">
+</mwc-slider>
+```
 
-      ```import {Slider} from "@material/mwc-slider"```
+## API
 
-  1. Create an instance of mwc-slider in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
+### Properties/Attributes
 
-      ```<mwc-slider></mwc-slider>```
+| Name      | Type      | Default | Description
+| --------- | --------- |-------- | -----------
+| `value`   | `number`  | `0`     | Current value of the slider.
+| `min`     | `number`  | `0`     | Minimum value of the slider.
+| `max`     | `number`  | `100`   | Maximum value of the slider.
+| `step`    | `number`  | `0`     | When defined, the slider will quantize (round to the nearest multiple) all values to match that step value, except for the minimum and maximum values, which can always be set. When 0, quantization is disabled.<br> **NOTE:** Throws when <0.
+| `pin`     | `boolean` | `false` | Shows the thumb pin on a discrete slider.<br> **NOTE:** Numbers displayed inside the slider will be rounded to at most 3 decimal digits.
+| `markers` | `boolean` | `false` | Shows the tick marks for each step on the track when the slider is discrete.
 
-  1. Install the Polymer CLI:
+### Methods
 
-      ```npm i -g polymer-cli```
+| Name     | Description
+| -------- | -------------
+| `layout() => void` | Recomputes the dimensions and re-lays out the component. This should be called if the dimensions of the slider itself or any of its parent elements change programmatically (it is called automatically on resize and on mousedown / touchstart).
 
-  1. Run the development server and open a browser pointing to its URL:
+### Events
 
-      ```polymer serve```
+| Event Name | Target       | Detail             | Description
+| ---------- | ------------ | ------------------ | -----------
+| `input`    | `mwc-slider` | `Slider`           | Fired when the value changes due to user input. Similar to the [`input` event of the native `<input type="range">` element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event), the `input` event will not fire when `value` is modified via JavaScript.
+| `change`   | `mwc-slider` | `Slider`           | Fired when the value changes and the user has finished interacting with the slider. Similar to the [`change` event of the native `<input type="range">` element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event), the `change` event will not fire when `value` is modified via JavaScript.
 
-  > mwc-slider is published on [npm](https://www.npmjs.com/package/@material/mwc-slider) using JavaScript Modules.
-  This means it can take advantage of the standard native JavaScript module loader available in all current major browsers.
-  >
-  > However, since mwc-slider uses npm convention to reference dependencies by name, a light transform to rewrite specifiers to URLs is required to get it to run in the browser. The polymer-cli's development server `polymer serve` automatically handles this transform.
+### CSS Custom Properties
 
-  Tools like [WebPack](https://webpack.js.org/) and [Rollup](https://rollupjs.org/) can also be used to serve and/or bundle mwc-slider.
+| Name                                     | Default | Description
+| ---------------------------------------- | ------- |------------
+| `--mdc-theme-secondary`                  | ![](images/color_018786.png) `#018786` | Sets the color of the knob and filled track when slider is active.
+| `--mdc-theme-text-primary-on-dark`       | ![](images/color_fff.png) `white`   | Sets the color of the text in the pin.
+| `--mdc-slider-bg-color-behind-component` | ![](images/color_fff.png) `white`   | Sets the color of the circle around the knob on the disabled slider to make it seem cut-out. May be necessary when placing a disabled slider on a different-colored background.
 
-## Supported Browsers
+## Additional references
 
-The last 2 versions of all modern browsers are supported, including
-Chrome, Safari, Opera, Firefox, Edge. In addition, Internet Explorer 11 is also supported.
+- [MDC Web sliders](https://material-components.github.io/material-components-web-catalog/#/component/slider)

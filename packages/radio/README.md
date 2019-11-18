@@ -97,7 +97,8 @@ to associate an interactive label with the radio.
 ### Events
 | Name     | Detail | Description
 | ---------| ------ | -----------
-| `change` | `{}`   | Indicates that the radio button's `checked` state has changed.
+| `change` | `{}`   | Fired when the user modifies the radio `checked` state from an input device interaction on this radio. Note that, like [native `<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event), the `change` event is *not* fired when the `checked` property is set from JavaScript, nor is it fired when another radio in the same group becomes `checked`.
+
 
 ### CSS Custom Properties
 

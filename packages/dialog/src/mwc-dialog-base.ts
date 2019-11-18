@@ -77,14 +77,15 @@ export class DialogBase extends BaseElement {
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: DialogBase, isOpen: boolean) {
-    if (isOpen) {
-      if (this.mdcFoundation) {
+    // Check isConnected because we could have been disconnected before first
+    // update. If we're now closed, then we shouldn't start the MDC foundation
+    // opening animation. If we're now closed, then we've already closed the
+    // foundation in disconnectedCallback.
+    if (this.mdcFoundation && this.isConnected) {
+      if (isOpen) {
         this.setEventListeners();
-
         this.mdcFoundation.open();
-      }
-    } else {
-      if (this.mdcFoundation) {
+      } else {
         this.removeEventListeners();
         this.mdcFoundation.close(this.currentAction || this.defaultAction);
         this.currentAction = undefined;
@@ -96,6 +97,8 @@ export class DialogBase extends BaseElement {
   @property() defaultAction = 'close';
   @property() actionAttribute = 'dialogAction';
   @property() initialFocusAttribute = 'dialogInitialFocus';
+
+  private closingDueToDisconnect?: boolean;
 
   protected get primaryButton(): HTMLElement|null {
     let assignedNodes = (this.primarySlot as HTMLSlotElement).assignedNodes();
@@ -207,7 +210,12 @@ export class DialogBase extends BaseElement {
       },
       notifyClosed: (action) => this.emitNotification('closed', action),
       notifyClosing: (action) => {
-        this.open = false;
+        if (!this.closingDueToDisconnect) {
+          // Don't set our open state to closed just because we were
+          // disconnected. That way if we get reconnected, we'll know to
+          // re-open.
+          this.open = false;
+        }
         this.emitNotification('closing', action);
       },
       notifyOpened: () => this.emitNotification('opened'),
@@ -277,9 +285,37 @@ export class DialogBase extends BaseElement {
     this.mdcFoundation.setAutoStackButtons(true);
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    if (this.open && this.mdcFoundation && !this.mdcFoundation.isOpen()) {
+      // We probably got disconnected while we were still open. Re-open,
+      // matching the behavior of native <dialog>.
+      this.setEventListeners();
+      this.mdcFoundation.open();
+    }
+  }
+
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListeners();
+    if (this.open && this.mdcFoundation) {
+      // If this dialog is opened and then disconnected, we want to close
+      // the foundation, so that 1) any pending timers are cancelled
+      // (in particular for trapFocus), and 2) if we reconnect, we can open
+      // the foundation again to retrigger animations and focus.
+      this.removeEventListeners();
+      this.closingDueToDisconnect = true;
+      this.mdcFoundation.close(this.currentAction || this.defaultAction);
+      this.closingDueToDisconnect = false;
+      this.currentAction = undefined;
+
+      // When we close normally, the releaseFocus callback handles removing
+      // ourselves from the blocking elements stack. However, that callback
+      // happens on a delay, and when we are closing due to a disconnect we
+      // need to remove ourselves before the blocking element polyfill's
+      // mutation observer notices and logs a warning, since it's not valid to
+      // be in the blocking elements stack while disconnected.
+      blockingElements.remove(this);
+    }
   }
 
   forceLayout() {

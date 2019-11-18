@@ -71,6 +71,13 @@ suite('mwc-button', () => {
       icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
       assert.equal(icon, null);
     });
+
+    test('sets `aria-label` of the button when `label` is set', async () => {
+      element.label = 'Unit Test Button';
+      await element.updateComplete;
+      const button = element.shadowRoot!.querySelector('#button');
+      assert.equal(button!.getAttribute('aria-label'), 'Unit Test Button');
+    });
   });
 
   suite('focus', () => {

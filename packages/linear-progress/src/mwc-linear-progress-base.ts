@@ -33,9 +33,9 @@ export class LinearProgressBase extends BaseElement {
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: LinearProgressBase, value: boolean) {
-    this.mdcFoundation.setDeterminate(value);
+    this.mdcFoundation.setDeterminate(!value);
   })
-  determinate = false;
+  indeterminate = false;
 
   @property({type: Number})
   @observer(function(this: LinearProgressBase, value: number) {
@@ -47,7 +47,7 @@ export class LinearProgressBase extends BaseElement {
   @observer(function(this: LinearProgressBase, value: number) {
     this.mdcFoundation.setBuffer(value);
   })
-  buffer = 0;
+  buffer = 1;
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: LinearProgressBase, value: boolean) {
@@ -65,9 +65,16 @@ export class LinearProgressBase extends BaseElement {
   })
   closed = false;
 
+  @property() ariaLabel = '';
+
   protected render() {
     return html`
-      <div role="progressbar" class="mdc-linear-progress">
+      <div role="progressbar"
+        class="mdc-linear-progress"
+        aria-label="${this.ariaLabel}"
+        aria-valuemin="0"
+        aria-valuemax="1"
+        aria-valuenow="0">
         <div class="mdc-linear-progress__buffering-dots"></div>
         <div class="mdc-linear-progress__buffer"></div>
         <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
@@ -85,6 +92,12 @@ export class LinearProgressBase extends BaseElement {
       forceLayout: () => this.mdcRoot.offsetWidth,
       getPrimaryBar: () => this.primaryBar,
       getBuffer: () => this.bufferElement,
+      removeAttribute: (name: string) => {
+        this.mdcRoot.removeAttribute(name);
+      },
+      setAttribute: (name: string, value: string) => {
+        this.mdcRoot.setAttribute(name, value);
+      },
       setStyle: (el: HTMLElement, property: string, value: string) => {
         // TODO(aomarks) Consider moving this type to the
         // MDCLinearProgressAdapter parameter type, but note that the "-webkit"
