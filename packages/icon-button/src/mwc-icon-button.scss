@@ -47,8 +47,10 @@ limitations under the License.
   position: relative;
 
   i {
-    // Avoid pushing down slotted content when it's used
+    // Avoid pushing down slotted content when it's used by stacking <i> on top
     position: absolute;
+    top: 0;
+    padding-top: inherit;
   }
 
   i,
