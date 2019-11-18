@@ -30,9 +30,8 @@ export class IconButtonBase extends LitElement {
     class="mdc-icon-button"
     aria-label="${this.label || this.icon}"
     ?disabled="${this.disabled}">
-    <slot>
-      <i class="material-icons">${this.icon}</i>
-    </slot>
+    <i class="material-icons">${this.icon}</i>
+    <slot></slot>
   </button>`;
   }
 }

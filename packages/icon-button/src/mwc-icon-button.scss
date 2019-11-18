@@ -44,6 +44,13 @@ limitations under the License.
 .mdc-icon-button {
   @include mdc-icon-button-size-var-aware(var(--mdc-icon-button-size, #{$mdc-icon-button-size}));
 
+  position: relative;
+
+  i {
+    // Avoid pushing down slotted content when it's used
+    position: absolute;
+  }
+
   i,
   svg,
   img,
