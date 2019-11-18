@@ -55,6 +55,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed `mwc-icon-button` icon at end layout.
 - `mwc-slider` can now have its pin and markers added and changed
   dynamically.
+- Fixed `mwc-dialog` race-condition bug with the blocking elements polyfill that
+  could occur if the dialog was disconnected before it had finished opening.
 
 ## [0.10.0] - 2019-10-11
 

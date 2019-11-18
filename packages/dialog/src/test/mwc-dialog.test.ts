@@ -16,14 +16,18 @@
  */
 
 import '@material/mwc-button';
+import '@material/mwc-dialog';
 
 import {Button} from '@material/mwc-button';
 import {Dialog} from '@material/mwc-dialog';
+import {DocumentWithBlockingElements} from 'blocking-elements';
 import {customElement, LitElement} from 'lit-element';
-// import {cssClasses} from '@material/dialog/constants';
 import {html} from 'lit-html';
 
 import {fixture, rafPromise, TestFixture} from '../../../../test/src/util/helpers';
+
+const blockingElements =
+    (document as DocumentWithBlockingElements).$blockingElements;
 
 const OPENING_EVENT = 'opening';
 const OPENED_EVENT = 'opened';
@@ -514,6 +518,59 @@ suite('mwc-dialog:', () => {
       if (distFocusFixt) {
         distFocusFixt.remove();
       }
+    });
+  });
+
+  suite('disconnecting', () => {
+    let container: HTMLElement;
+
+    setup(() => {
+      container = document.createElement('div');
+      document.body.appendChild(container);
+    });
+
+    teardown(() => {
+      document.body.removeChild(container);
+    });
+
+    test('open event is cancelled when disconnected', async () => {
+      const dialog = document.createElement('mwc-dialog');
+      let sawOpenEvent = false;
+      dialog.addEventListener(OPENED_EVENT, () => {
+        sawOpenEvent = true;
+      });
+      container.appendChild(dialog);
+      dialog.open = true;
+      container.removeChild(dialog);
+      // Wait according to MDC implementation plus a little more.
+      await rafPromise();
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          resolve();
+        }, 150 + 10);
+      });
+      assert.isFalse(sawOpenEvent);
+    });
+
+    test('maintains open state when disconnected and reconnected', async () => {
+      const dialog = document.createElement('mwc-dialog');
+      container.appendChild(dialog);
+      dialog.open = true;
+      await awaitEvent(dialog, OPENED_EVENT);
+      assert.isTrue(dialog.open);
+      assert.strictEqual(blockingElements.top, dialog);
+
+      container.removeChild(dialog);
+      assert.isTrue(dialog.open);
+      assert.strictEqual(blockingElements.top, null);
+      await awaitEvent(dialog, CLOSED_EVENT);
+      assert.isTrue(dialog.open);
+      assert.strictEqual(blockingElements.top, null);
+
+      container.appendChild(dialog);
+      await awaitEvent(dialog, OPENED_EVENT);
+      assert.isTrue(dialog.open);
+      assert.strictEqual(blockingElements.top, dialog);
     });
   });
 });
