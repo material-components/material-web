@@ -25,7 +25,7 @@ npm install @material/mwc-radio
 
 ## Example usage
 
-### Standard
+### Standard test
 
 <img src="images/standard.png" width="84px" height="48px">
 
