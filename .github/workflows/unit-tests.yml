@@ -1,0 +1,35 @@
+name: unit-tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 12
+
+    - name: NPM install
+      # ignore-scripts so that we skip postinstall, because postinstall runs
+      # bootstrap, and it's a little nicer to see that here as its own step
+      # when debugging.
+      run: npm ci --ignore-scripts
+
+    - name: Lerna bootstrap
+      run: npm run bootstrap
+
+    - name: Build component Sass
+      run: npm run build:styling
+
+    - name: Compile component TypeScript
+      run: npm run build:typescript
+
+    - name: Compile test TypeScript
+      run: npm run build:tests
+
+    - name: Test Chrome/Firefox
+      # TODO Add SauceLabs.
+      run: npm test -- --browsers=ChromeHeadless,FirefoxHeadless --concurrency=2
