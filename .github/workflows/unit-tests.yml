@@ -10,7 +10,7 @@ jobs:
     - uses: actions/checkout@v1
     - uses: actions/setup-node@v1
       with:
-          node-version: 10
+        node-version: 12
 
     - name: NPM install
       # ignore-scripts so that we skip postinstall, because postinstall runs
@@ -30,8 +30,6 @@ jobs:
     - name: Compile test TypeScript
       run: npm run build:tests
 
-    - name: Test on Chrome headless
-      run: npm test -- --browsers=ChromeHeadless
-
-    - name: Test on Firefox headless
-      run: npm test -- --browsers=FirefoxHeadless
+    - name: Test Chrome/Firefox
+      # TODO Add SauceLabs.
+      run: npm test -- --browsers=ChromeHeadless,FirefoxHeadless --concurrency=2
