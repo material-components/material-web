@@ -37,21 +37,20 @@ limitations under the License.
   outline: none;
 }
 
+:host(:not([icon])) {
+  .mdc-icon-button {
+    i {
+      display: none;
+    }
+  }
+}
+
 .material-icons {
   @extend %material-icons;
 }
 
 .mdc-icon-button {
   @include mdc-icon-button-size-var-aware(var(--mdc-icon-button-size, #{$mdc-icon-button-size}));
-
-  position: relative;
-
-  i {
-    // Avoid pushing down slotted content when it's used by stacking <i> on top
-    position: absolute;
-    top: 0;
-    padding-top: inherit;
-  }
 
   i,
   svg,
