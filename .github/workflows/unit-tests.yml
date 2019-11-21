@@ -1,9 +1,23 @@
 name: unit-tests
 
-on: [push, pull_request]
+on: pull_request
 
 jobs:
-  test:
+  # TODO(aomarks) Remove this temporary test.
+  always-passes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Force pass
+        run: true
+
+  # TODO(aomarks) Remove this temporary test.
+  always-fails:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Force fail
+        run: sleep 10 && false
+
+  unit-tests:
     runs-on: ubuntu-latest
 
     steps:
