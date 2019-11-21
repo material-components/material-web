@@ -12,7 +12,7 @@ Radio buttons allow the user to select one option from a set. Use radio buttons 
 ## Installation
 
 ```sh
-npm install @material/mwc-radio
+npm install @material/mwc-radio second test
 ```
 
 > NOTE: The Material Web Components are distributed as ES2017 JavaScript
