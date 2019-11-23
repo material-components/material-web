@@ -128,7 +128,7 @@ module.exports = function(config) {
 
     config.set({
       sauceLabs: {
-        idleTimeout: 300,
+        idleTimeout: 600,
         testName: 'MWC Unit Tests',
         build: process.env.SAUCE_BUILD_ID,
         tunnelIdentifier: process.env.SAUCE_TUNNEL_ID,
