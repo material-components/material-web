@@ -1,4 +1,4 @@
-# Material Web Components [![Build Status](https://travis-ci.org/material-components/material-components-web-components.svg?branch=master)](https://travis-ci.org/material-components/material-components-web-components)
+# Material Web Components [![Test Status](https://github.com/material-components/material-components-web-components/workflows/tests/badge.svg?branch=master)](https://github.com/material-components/material-components-web-components/actions?query=workflow%3Atests+branch%3Amaster)
 
 > IMPORTANT: The Material Web Components are a work in progress and subject to major changes until 1.0 release.
 

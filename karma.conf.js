@@ -15,77 +15,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const USING_TRAVISCI = Boolean(process.env.TRAVIS);
-const USING_SL = USING_TRAVISCI && Boolean(process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY);
-
-const SL_LAUNCHERS = {
-  // 'sl-ie': {
-  //   base: 'SauceLabs',
-  //   browserName: 'internet explorer',
-  //   version: '11',
-  //   platform: 'Windows 8.1',
-  // },
-  'sl-edge-17': {
-    base: 'SauceLabs',
-    browserName: 'microsoftedge',
-    version: '17',
-    platform: 'Windows 10',
-  },
-  'sl-edge-15': {
-    base: 'SauceLabs',
-    browserName: 'microsoftedge',
-    version: '15',
-    platform: 'Windows 10',
-  },
-  'sl-safari-11': {
-    base: 'SauceLabs',
-    browserName: 'safari',
-    version: '11',
-    platform: 'macOS 10.13',
-  },
-  'sl-safari-10': {
-    base: 'SauceLabs',
-    browserName: 'safari',
-    version: '10',
-    platform: 'OS X 10.12',
-  },
-  // 'sl-safari-9': {
-  //   base: 'SauceLabs',
-  //   browserName: 'safari',
-  //   version: '9',
-  //   platform: 'OS X 10.11',
-  // },
-  'sl-chrome-41': {
-    base: 'SauceLabs',
-    browserName: 'chrome',
-    version: '41',
-    platform: 'Linux'
-  },
-};
-
-const HEADLESS_LAUNCHERS = {
-  /** See https://github.com/travis-ci/travis-ci/issues/8836#issuecomment-348248951 */
-  'ChromeHeadlessNoSandbox': {
-    base: 'ChromeHeadless',
-    flags: ['--no-sandbox'],
-  },
-  'FirefoxHeadless': {
-    base: 'Firefox',
-    flags: ['-headless'],
-  },
-};
-
 module.exports = function(config) {
   const packages = config.packages ? config.packages.split(',') : [];
   const fileEntries = [];
-  const defaultFileEntry = [
-    {pattern: 'test/lib/packages/*/src/test/*.test.js', watched: true, type: 'module' }
-  ];
+  const defaultFileEntry = [{
+    pattern: 'test/lib/packages/*/src/test/*.test.js',
+    watched: true,
+    type: 'module'
+  }];
 
   for (const package of packages) {
     const withoutMwcPrefix = package.replace(/^mwc-/, '');
     const fileEntry = {
-      pattern: `test/lib/packages/${withoutMwcPrefix}/src/test/${package}.test.js`,
+      pattern:
+          `test/lib/packages/${withoutMwcPrefix}/src/test/${package}.test.js`,
       watched: true,
       type: 'module',
     };
@@ -98,17 +41,23 @@ module.exports = function(config) {
     basePath: '',
     frameworks: ['mocha', 'chai'],
     files: [
-      {pattern: 'node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js', watched: false},
-      {pattern: 'node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js', watched: false},
+      {
+        pattern:
+            'node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js',
+        watched: false
+      },
+      {
+        pattern:
+            'node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js',
+        watched: false
+      },
       ...testFileEntries
     ],
 
-    browsers: determineBrowsers(),
     browserDisconnectTimeout: 300000,
     browserNoActivityTimeout: 360000,
     captureTimeout: 420000,
-    concurrency: USING_SL ? 10 : 1,
-    customLaunchers: {...SL_LAUNCHERS, ...HEADLESS_LAUNCHERS},
+    concurrency: 10,
 
     client: {
       mocha: {
@@ -118,33 +67,80 @@ module.exports = function(config) {
     },
 
     reporters: ['mocha'],
+
+    // Note setting --browsers on the command-line always overrides this list.
+    browsers: [
+      'ChromeHeadless',
+      'FirefoxHeadless',
+    ],
   });
 
-  // See https://github.com/karma-runner/karma-sauce-launcher/issues/73
-  if (USING_TRAVISCI) {
+  if (process.env.USE_SAUCE) {
+    if (!process.env.SAUCE_USERNAME || !process.env.SAUCE_ACCESS_KEY) {
+      throw new Error(
+          'SAUCE_USERNAME and SAUCE_ACCESS_KEY must be set with USE_SAUCE')
+    }
+
+    const SAUCE_LAUNCHERS = {
+      // 'sl-ie': {
+      //   base: 'SauceLabs',
+      //   browserName: 'internet explorer',
+      //   version: '11',
+      //   platform: 'Windows 8.1',
+      // },
+      'sl-edge-17': {
+        base: 'SauceLabs',
+        browserName: 'microsoftedge',
+        version: '17',
+        platform: 'Windows 10',
+      },
+      'sl-edge-15': {
+        base: 'SauceLabs',
+        browserName: 'microsoftedge',
+        version: '15',
+        platform: 'Windows 10',
+      },
+      'sl-safari-11': {
+        base: 'SauceLabs',
+        browserName: 'safari',
+        version: '11',
+        platform: 'macOS 10.13',
+      },
+      'sl-safari-10': {
+        base: 'SauceLabs',
+        browserName: 'safari',
+        version: '10',
+        platform: 'OS X 10.12',
+      },
+      // 'sl-safari-9': {
+      //   base: 'SauceLabs',
+      //   browserName: 'safari',
+      //   version: '9',
+      //   platform: 'OS X 10.11',
+      // },
+      'sl-chrome-41': {
+        base: 'SauceLabs',
+        browserName: 'chrome',
+        version: '41',
+        platform: 'Linux'
+      },
+    };
+
     config.set({
       sauceLabs: {
         idleTimeout: 300,
-        testName: 'Material Components Web Unit Tests - CI',
-        tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
-        username: process.env.SAUCE_USERNAME,
-        accessKey: process.env.SAUCE_ACCESS_KEY,
+        testName: 'MWC Unit Tests',
+        build: process.env.SAUCE_BUILD_ID,
+        tunnelIdentifier: process.env.SAUCE_TUNNEL_ID,
       },
       // Attempt to de-flake Sauce Labs tests on TravisCI.
       transports: ['polling'],
-      browserDisconnectTolerance: 3,
+      browserDisconnectTolerance: 1,
       reporters: ['saucelabs', 'mocha'],
+
+      // TODO(aomarks) Update the browser versions here.
+      customLaunchers: SAUCE_LAUNCHERS,
+      browsers: [...config.browsers, ...Object.keys(SAUCE_LAUNCHERS)],
     });
   }
 };
-
-function determineBrowsers() {
-  if (!USING_TRAVISCI) {
-    return ['Chrome', 'Firefox'];
-  }
-  const browsers = [...Object.keys(HEADLESS_LAUNCHERS)];
-  if (USING_SL) {
-    browsers.push(...Object.keys(SL_LAUNCHERS));
-  }
-  return browsers;
-}
