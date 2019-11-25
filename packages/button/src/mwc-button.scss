@@ -43,6 +43,12 @@ limitations under the License.
 :host {
   display: inline-flex;
   outline: none;
+  /**
+   * Override vertical-align with shortest value "top". Vertical-align's default
+   * "baseline" value causes buttons to be misaligned next to each other if one
+   * button has an icon and the other does not.
+   */
+  vertical-align: top;
 }
 
 :host([disabled]) {
