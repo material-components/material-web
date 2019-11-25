@@ -41,8 +41,36 @@ limitations under the License.
   @extend %material-icons;
 }
 
+:host,
+.mdc-icon-button {
+  /**
+   * Any vertical-align other than the default of "baseline" will work here (and
+   * "top" is the shortest).
+   *
+   * In general, when an inline-block element has vertical-align: baseline and
+   * also a fixed height, extra space may "appear" below it. This is because the
+   * baseline it is aligned to is not the very bottom of the line, it's the line
+   * above the "descenders" (e.g. the tail of a "y" or "j"). This means the
+   * container must grow to accomodate both the fixed height inline-element, and
+   * the descender height below it.
+   *
+   * For unknown reasons, in this particular case, this only causes incorrect
+   * alignment in IE/Edge.
+   *
+   * IE needs the vertical-align on both the button and the host element, while
+   * Edge only needs it on the button to fix the issue.
+   */
+  vertical-align: top;
+}
+
 .mdc-icon-button {
   @include mdc-icon-button-size-var-aware(var(--mdc-icon-button-size, #{$mdc-icon-button-size}));
+
+  > i {
+    position: absolute;
+    top: 0;
+    padding-top: inherit;
+  }
 
   i,
   svg,

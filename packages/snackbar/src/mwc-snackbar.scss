@@ -24,7 +24,7 @@ slot[name=action]::slotted(mwc-button) {
 
 slot[name=dismiss]::slotted(mwc-icon-button) {
   --mdc-icon-size: #{$mdc-snackbar-dismiss-icon-size};
-  --mdc-icon-button-size: #{$mdc-snackbar-dismiss-icon-size} * 2;
+  --mdc-icon-button-size: #{$mdc-snackbar-dismiss-icon-size * 2};
   color: #{$mdc-snackbar-dismiss-ink-color};
 
   $query: mdc-feature-all();

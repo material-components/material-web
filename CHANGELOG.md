@@ -41,6 +41,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - **BREAKING:VISUAL** `mwc-linear-progress` had `--mdc-theme-secondary` applied
   to its buffer bar's background color. This custom property's name was changed
   to `--mdc-linear-progress-buffer-color`.
+- **BREAKING** `mwc-icon-button` will now use its default slot for `<img>` or
+  `<svg>` icons instead of a named "icon" slot.
 
 ### Fixed
 - Fixed checkbox ripple visibility when focused while being unchecked.
