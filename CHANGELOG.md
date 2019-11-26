@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- ## Unreleased -->
+## [0.11.1] - 2019-11-26
+
+### Fixed
+
+- Restore removed code in linear progress adapter
+
 ## [0.11.0] - 2019-11-26
 
 ### Added
