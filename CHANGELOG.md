@@ -4,7 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+<!-- ## Unreleased -->
+## [0.11.0] - 2019-11-26
 
 ### Added
 
@@ -59,6 +60,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   dynamically.
 - Fixed `mwc-dialog` race-condition bug with the blocking elements polyfill that
   could occur if the dialog was disconnected before it had finished opening.
+- Fixed `mwc-button` alignment issues when some buttons have icons and others do
+  not.
 
 ## [0.10.0] - 2019-10-11
 
