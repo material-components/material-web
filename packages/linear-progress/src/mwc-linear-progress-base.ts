@@ -92,12 +92,6 @@ export class LinearProgressBase extends BaseElement {
       forceLayout: () => this.mdcRoot.offsetWidth,
       getPrimaryBar: () => this.primaryBar,
       getBuffer: () => this.bufferElement,
-      removeAttribute: (name: string) => {
-        this.mdcRoot.removeAttribute(name);
-      },
-      setAttribute: (name: string, value: string) => {
-        this.mdcRoot.setAttribute(name, value);
-      },
       setStyle: (el: HTMLElement, property: string, value: string) => {
         // TODO(aomarks) Consider moving this type to the
         // MDCLinearProgressAdapter parameter type, but note that the "-webkit"
