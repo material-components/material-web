@@ -85,9 +85,9 @@ export abstract class FormElement extends BaseElement {
     });
 
     if (this.checkValidity) {
-      let originCheck = this.checkValidity.bind(this);
+      const originCheck = this.checkValidity.bind(this);
       this.checkValidity = () => {
-        let isValid = originCheck();
+        const isValid = originCheck();
         this._internals.setValidity(
           (this.formElement as HTMLInputElement).validity,
           (this.formElement as HTMLInputElement).validationMessage
