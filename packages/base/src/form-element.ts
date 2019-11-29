@@ -61,7 +61,9 @@ export abstract class FormElement extends BaseElement {
     return this._internals.form;
   }
 
-  checkValidity() {}
+  checkValidity() {
+      // TODO: to make it overridable function
+  }
 
   click() {
     if (this.formElement) {
@@ -78,14 +80,14 @@ export abstract class FormElement extends BaseElement {
 
   protected firstUpdated() {
     super.firstUpdated();
-    this.mdcRoot.addEventListener('change', e => {
+    this.mdcRoot.addEventListener('change', (e) => {
       this.dispatchEvent(new Event('change', e));
     });
 
     if (this.checkValidity) {
-      var originCheck = this.checkValidity.bind(this);
+      let originCheck = this.checkValidity.bind(this);
       this.checkValidity = () => {
-        var isValid = originCheck();
+        let isValid = originCheck();
         this._internals.setValidity(
           (this.formElement as HTMLInputElement).validity,
           (this.formElement as HTMLInputElement).validationMessage
