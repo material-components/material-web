@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--
+@license
+Copyright 2018 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+  <head>
+    <title>textfield demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script
+      type="module"
+      src="../node_modules/@material/mwc-textfield/mwc-textfield.js"
+    ></script>
+    <script
+      type="module"
+      src="../node_modules/@material/mwc-icon/mwc-icon.js"
+    ></script>
+    <link rel="stylesheet" href="demo-component.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons&display=block"
+      rel="stylesheet"
+    />
+    <style>
+      mwc-textfield {
+        min-width: 240px;
+      }
+      .shaped-filled {
+        --mdc-text-field-filled-border-radius: 32px 32px 0 0;
+      }
+      .shaped-outlined {
+        --mdc-notched-outline-leading-width: 28px;
+        --mdc-notched-outline-leading-border-radius: 28px 0 0 28px;
+        --mdc-notched-outline-trailing-border-radius: 0 28px 28px 0;
+      }
+    </style>
+  </head>
+  <body class="unresolved">
+    <header>
+      <a href="index.html"
+        ><mwc-icon>arrow_back</mwc-icon> <span>Text Field</span></a
+      >
+    </header>
+
+    <main>
+      <form class="demo-group-spaced">
+        <mwc-textfield
+          label="first name"
+          name="firstname"
+          validateOnInitialRender
+          required
+        ></mwc-textfield>
+        <mwc-textfield
+          label="last name"
+          name="lastname"
+          validateOnInitialRender
+          required
+        ></mwc-textfield>
+        <button type="submit">Sumit</button>
+      </form>
+    </main>
+
+    <script>
+      addEventListener("load", () =>
+        document.body.classList.remove("unresolved")
+      );
+    </script>
+  </body>
+</html>
