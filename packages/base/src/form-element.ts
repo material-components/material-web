@@ -15,11 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MDCRippleFoundation } from "@material/ripple/foundation.js";
+import {MDCRippleFoundation} from '@material/ripple/foundation.js';
 
-import { BaseElement } from "./base-element";
+import {BaseElement} from './base-element';
 
-export * from "./base-element";
+export * from './base-element';
 
 export interface HTMLElementWithRipple extends HTMLElement {
   ripple?: MDCRippleFoundation;
@@ -39,7 +39,7 @@ export abstract class FormElement extends BaseElement {
   attachInternals: any; // TODO: remove this when https://github.com/microsoft/TypeScript/issues/33218 is fixed
 
   protected createRenderRoot() {
-    return this.attachShadow({ mode: "open", delegatesFocus: true });
+    return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
   /**
@@ -72,14 +72,14 @@ export abstract class FormElement extends BaseElement {
 
   setAriaLabel(label: string) {
     if (this.formElement) {
-      this.formElement.setAttribute("aria-label", label);
+      this.formElement.setAttribute('aria-label', label);
     }
   }
 
   protected firstUpdated() {
     super.firstUpdated();
-    this.mdcRoot.addEventListener("change", e => {
-      this.dispatchEvent(new Event("change", e));
+    this.mdcRoot.addEventListener('change', e => {
+      this.dispatchEvent(new Event('change', e));
     });
 
     if (this.checkValidity) {
@@ -96,7 +96,7 @@ export abstract class FormElement extends BaseElement {
     }
 
     if (this.formElement instanceof HTMLInputElement) {
-      this.formElement.addEventListener("change", () => {
+      this.formElement.addEventListener('change', () => {
         this._internals.setFormValue(
           (this.formElement as HTMLInputElement).value
         );
