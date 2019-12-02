@@ -104,7 +104,7 @@ export class TabBase extends BaseElement {
     let labelTemplate = html``;
     if (this.label) {
       labelTemplate = html`
-        <span class="mdc-tab__text-label">${this.label}</span>`
+        <span class="mdc-tab__text-label">${this.label}</span>`;
     }
 
     const rippleDirective = ripple({
