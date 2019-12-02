@@ -8,8 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- `mwc-tab` will now automatically size slotted images. Also slotted image will
-  override icon font.
+- **BREAKING:VISUAL** `mwc-tab` will now automatically size slotted images. Also
+  slotted image will override icon font.
+
+### Changed
+
+- **BREAKING** `mwc-tab` can now only have slotted content via the
+  `hasImageIcon` flag.
 
 ## [0.11.1] - 2019-11-26
 
