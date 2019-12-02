@@ -39,7 +39,11 @@ module.exports = function(config) {
 
   config.set({
     basePath: '',
-    frameworks: ['mocha', 'chai'],
+    plugins: [
+      require.resolve('@open-wc/karma-esm'),
+      'karma-*',
+    ],
+    frameworks: ['esm', 'mocha', 'chai'],
     files: [
       {
         pattern:
@@ -58,6 +62,12 @@ module.exports = function(config) {
     browserNoActivityTimeout: 360000,
     captureTimeout: 420000,
     concurrency: 10,
+
+    esm: {
+      nodeResolve: true,
+      compatibility: 'auto',
+      preserveSymlinks: true,
+    },
 
     client: {
       mocha: {
@@ -82,12 +92,12 @@ module.exports = function(config) {
     }
 
     const SAUCE_LAUNCHERS = {
-      // 'sl-ie': {
-      //   base: 'SauceLabs',
-      //   browserName: 'internet explorer',
-      //   version: '11',
-      //   platform: 'Windows 8.1',
-      // },
+      'sl-ie': {
+        base: 'SauceLabs',
+        browserName: 'internet explorer',
+        version: '11',
+        platform: 'Windows 8.1',
+      },
       'sl-edge-17': {
         base: 'SauceLabs',
         browserName: 'microsoftedge',
@@ -118,12 +128,12 @@ module.exports = function(config) {
       //   version: '9',
       //   platform: 'OS X 10.11',
       // },
-      'sl-chrome-41': {
-        base: 'SauceLabs',
-        browserName: 'chrome',
-        version: '41',
-        platform: 'Linux'
-      },
+      // 'sl-chrome-41': {
+      //   base: 'SauceLabs',
+      //   browserName: 'chrome',
+      //   version: '41',
+      //   platform: 'Linux'
+      // },
     };
 
     config.set({
