@@ -92,12 +92,12 @@ module.exports = function(config) {
     }
 
     const SAUCE_LAUNCHERS = {
-      // 'sl-ie': {
-      //   base: 'SauceLabs',
-      //   browserName: 'internet explorer',
-      //   version: '11',
-      //   platform: 'Windows 8.1',
-      // },
+      'sl-ie': {
+        base: 'SauceLabs',
+        browserName: 'internet explorer',
+        version: '11',
+        platform: 'Windows 8.1',
+      },
       'sl-edge-17': {
         base: 'SauceLabs',
         browserName: 'microsoftedge',
@@ -128,12 +128,12 @@ module.exports = function(config) {
       //   version: '9',
       //   platform: 'OS X 10.11',
       // },
-      'sl-chrome-41': {
-        base: 'SauceLabs',
-        browserName: 'chrome',
-        version: '41',
-        platform: 'Linux'
-      },
+      // 'sl-chrome-41': {
+      //   base: 'SauceLabs',
+      //   browserName: 'chrome',
+      //   version: '41',
+      //   platform: 'Linux'
+      // },
     };
 
     config.set({
