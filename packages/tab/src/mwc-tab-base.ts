@@ -97,7 +97,7 @@ export class TabBase extends BaseElement {
     if (this.hasImageIcon || this.icon) {
       iconTemplate = html`
         <span class="mdc-tab__icon material-icons">
-          <slot name="icon">${this.icon}</slot>
+          <slot>${this.icon}</slot>
         </span>`;
     }
 
