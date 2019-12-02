@@ -39,7 +39,11 @@ module.exports = function(config) {
 
   config.set({
     basePath: '',
-    frameworks: ['mocha', 'chai'],
+    plugins: [
+      require.resolve('@open-wc/karma-esm'),
+      'karma-*',
+    ],
+    frameworks: ['esm', 'mocha', 'chai'],
     files: [
       {
         pattern:
@@ -58,6 +62,12 @@ module.exports = function(config) {
     browserNoActivityTimeout: 360000,
     captureTimeout: 420000,
     concurrency: 10,
+
+    esm: {
+      nodeResolve: true,
+      compatibility: 'auto',
+      preserveSymlinks: true,
+    },
 
     client: {
       mocha: {
