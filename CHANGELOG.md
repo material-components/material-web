@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Added
+
+- CSS styling options to `mwc-tab`
+- `active` attribute to `mwc-tab` when (de)activated
+
 ## [0.11.1] - 2019-11-26
 
 ### Fixed
