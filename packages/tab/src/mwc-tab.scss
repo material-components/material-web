@@ -37,6 +37,7 @@ limitations under the License.
   height: var(--mdc-tab-height, #{$mdc-tab-height});
   margin-left: 0;
   margin-right: 0;
+  @include mdc-tab-horizontal-padding(var(--mdc-tab-horizontal-padding, #{$mdc-tab-horizontal-padding}));
 }
 
 .mdc-tab--stacked {
@@ -79,5 +80,5 @@ $mdc-tab-default-color: var(--mdc-tab-default-color, rgba(0, 0, 0, 0.6));
 
 :host,
 .mdc-tab__ripple {
-  border-radius: var(--mdc-tab-border-radius, 0 0 0 0);
+  border-radius: var(--mdc-tab-border-radius, 0px 0px 0px 0px);
 }
