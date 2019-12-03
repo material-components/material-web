@@ -35,6 +35,7 @@ limitations under the License.
 
 .mdc-tab {
   height: var(--mdc-tab-height, #{$mdc-tab-height});
+  text-transform: var(--mdc-tab-text-transform, uppercase);
   margin-left: 0;
   margin-right: 0;
 }
@@ -75,4 +76,9 @@ $mdc-tab-default-color: var(--mdc-tab-default-color, rgba(0, 0, 0, 0.6));
   .mdc-tab__icon {
     color: $mdc-tab-default-color;
   }
+}
+
+:host,
+.mdc-tab__ripple {
+  border-radius: var(--mdc-tab-border-radius, 0 0 0 0);
 }
