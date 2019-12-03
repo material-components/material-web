@@ -50,7 +50,7 @@ export class TabBase extends BaseElement {
   @property({type: Boolean}) isMinWidthIndicator = false;
 
   @property({type: Boolean, reflect: true, attribute: 'active'})
-  public get active(): boolean {
+  get active(): boolean {
     return this._active;
   }
 
