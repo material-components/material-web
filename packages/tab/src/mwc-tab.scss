@@ -70,12 +70,10 @@ limitations under the License.
   @include mdc-rtl-reflexive-box(padding, left, 8px);
 }
 
-$mdc-tab-default-color: var(--mdc-tab-default-color, rgba(0, 0, 0, 0.6));
-
 .mdc-tab:not(.mdc-tab--active) {
   .mdc-tab__text-label,
   .mdc-tab__icon {
-    color: $mdc-tab-default-color;
+    color: var(--mdc-tab-color-default, #{$mdc-tab-icon-color-default});
   }
 }
 
