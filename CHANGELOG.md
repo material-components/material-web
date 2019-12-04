@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Added
+
+- Added custom properties to style `mwc-radio`'s colors
+
 ### Fixed
 
 - **BREAKING:VISUAL** `mwc-tab` will now automatically size slotted images. Also
