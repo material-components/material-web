@@ -76,9 +76,16 @@ export class RadioBase extends FormElement {
 
   @property({type: String})
   @observer(function(this: RadioBase, value: string) {
-    this.formElement.value = value;
+    this._handleUpdatedValue(value);
   })
   value = '';
+
+  _handleUpdatedValue(newValue: string) {
+    // the observer function can't access protected fields (according to
+    // closure compiler) because it's not a method on the class, so we need this
+    // wrapper.
+    this.formElement.value = newValue;
+  }
 
   @property({type: String}) name = '';
 
