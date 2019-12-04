@@ -244,6 +244,9 @@ Additionally, it implements more features such as:
 
 By default, `<mwc-textfield>` will report validation on `blur`.
 
+**NOTE:** Every property or function that checks validity must await
+`<mwc-textfield>.updateComplete`.
+
 #### Custom validation logic
 
 The `validityTransform` property is a function that can be set on `<mwc-textfield>` to
