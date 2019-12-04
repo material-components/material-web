@@ -8,8 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+
 - CSS styling options to `mwc-tab`
 - `active` attribute to `mwc-tab` when (de)activated
+- Added  custom properties to style `mwc-checkbox`'s colors
+
 
 ### Fixed
 
@@ -20,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - **BREAKING** `mwc-tab` can now only have slotted content via the
   `hasImageIcon` flag.
+- **BREAKING:VISUAL** `mwc-checkbox` default display is changed from inline to inline-block.
 
 ## [0.11.1] - 2019-11-26
 

@@ -40,9 +40,9 @@ npm install @material/mwc-checkbox
 </script>
 ```
 
-### Standard, disabled, and custom styles
+### Standard, disabled
 
-<img src="images/standard_disabled_styled.png" width="132px" height="123px">
+<img src="images/standard_disabled.png" height="80px">
 
 ```html
 <div>
@@ -56,16 +56,36 @@ npm install @material/mwc-checkbox
   <mwc-checkbox disabled checked></mwc-checkbox>
   <mwc-checkbox disabled indeterminate></mwc-checkbox>
 </div>
+```
+
+### Styled standard, disabled
+
+<img src="images/styled_standard_disabled.png" height="80px">
+
+```html
+<style>
+  body {
+    background-color: #363636;
+
+    --mdc-theme-secondary: #ff2929;
+    --mdc-checkbox-unchecked-color: white;
+    /* Required for unchecked focus ripple */
+    --mdc-theme-on-surface: white;
+    --mdc-checkbox-disabled-color: #adadad;
+    --mdc-checkbox-mark-color: #363636;
+  }
+</style>
 
 <div>
-  <style>
-    mwc-checkbox.pink {
-      --mdc-theme-secondary: #e91e63;
-    }
-  </style>
-  <mwc-checkbox class="pink"></mwc-checkbox>
-  <mwc-checkbox class="pink" checked></mwc-checkbox>
-  <mwc-checkbox class="pink" indeterminate></mwc-checkbox>
+  <mwc-checkbox></mwc-checkbox>
+  <mwc-checkbox checked></mwc-checkbox>
+  <mwc-checkbox indeterminate></mwc-checkbox>
+</div>
+
+<div>
+  <mwc-checkbox disabled></mwc-checkbox>
+  <mwc-checkbox disabled checked></mwc-checkbox>
+  <mwc-checkbox disabled indeterminate></mwc-checkbox>
 </div>
 ```
 
@@ -133,6 +153,11 @@ Name            | Type      | Default | Description
 | Name                    | Default   | Description                         |
 | ----------------------- | --------- | ----------------------------------- |
 | `--mdc-theme-secondary` | ![](images/color_018786.png) `#018786` | Background color when the checkbox is `checked` or `indeterminate`, and the base color of the ripple effect and focus halo.
+| `--mdc-theme-on-surface` | ![](images/color_000.png) `#000` | Color of the unchecked focus ripple.
+| `--mdc-checkbox-mark-color` | ![](images/color_fff.png) `#fff` | Color of mark inside a `checked` or `indeterminate` checkbox (enabled or disabled).
+| `--mdc-checkbox-unchecked-color` | ![](images/color_0,0,0,54.png) `rgba(0, 0, 0, 0.54)` | Color of the unchecked box.
+| `--mdc-checkbox-disabled-color` | ![](images/color_0,0,0,38.png) `rgba(0, 0, 0, 0.38)` | Color of the checkbox box and fill when disabled.
+
 
 ## Additional references
 
