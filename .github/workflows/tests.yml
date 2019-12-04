@@ -40,12 +40,15 @@ jobs:
 
     - name: Unit tests
       env:
-        USE_SAUCE: true
         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
         SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
       run: |
-        # Note we can't interpolate other environment variables
-        # inside the env block, but we can just export vars here.
-        export SAUCE_BUILD_ID=mwc-tests-${GITHUB_EVENT_NAME}-${GITHUB_ACTION}-${GITHUB_SHA}
-        export SAUCE_TUNNEL_ID=${SAUCE_BUILD_ID}-tunnel
+        # Don't run Sauce from a forked repo, since the code may not be trusted
+        # and therefore secrets like the Sauce password are not available.
+        # GITHUB_HEAD_REF is only defined when building a fork.
+        if [ ! "$GITHUB_HEAD_REF" ]; then
+          export USE_SAUCE=true
+          export SAUCE_BUILD_ID=mwc-tests-${GITHUB_EVENT_NAME}-${GITHUB_ACTION}-${GITHUB_SHA}
+          export SAUCE_TUNNEL_ID=${SAUCE_BUILD_ID}-tunnel
+        fi
         npm test
