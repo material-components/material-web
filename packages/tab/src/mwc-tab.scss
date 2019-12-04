@@ -71,7 +71,10 @@ limitations under the License.
 }
 
 .mdc-tab:not(.mdc-tab--active) {
-  .mdc-tab__text-label,
+  .mdc-tab__text-label {
+    color: var(--mdc-tab-text-label-color-default, #{$mdc-tab-text-label-color-default});
+  }
+
   .mdc-tab__icon {
     color: var(--mdc-tab-color-default, #{$mdc-tab-icon-color-default});
   }
