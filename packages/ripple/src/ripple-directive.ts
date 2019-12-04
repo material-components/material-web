@@ -53,11 +53,13 @@ const isSafari = navigator.userAgent.match(/Safari/);
 let didApplyRippleStyle = false;
 const applyRippleStyle = () => {
   didApplyRippleStyle = true;
+  const styleElement = document.createElement('style');
   const part = new NodePart({templateFactory});
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  part.appendInto(document.head!);
+  part.appendInto(styleElement);
   part.setValue(style);
   part.commit();
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  document.head!.appendChild(styleElement);
 };
 
 /**
