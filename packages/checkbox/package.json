@@ -15,7 +15,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/checkbox": "=5.0.0-canary.f978109c3.0",
+    "@material/checkbox": "=5.0.0-canary.a5dbd8a2a.0",
     "@material/mwc-base": "^0.11.1",
     "@material/mwc-ripple": "^0.11.1",
     "lit-element": "^2.2.1",
