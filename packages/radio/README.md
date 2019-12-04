@@ -40,12 +40,37 @@ npm install @material/mwc-radio
 
 ### Custom color
 
-<img src="images/custom_color.png" width="84px" height="48px">
+<img src="images/custom_color.png" height="40px">
 
-```css
-mwc-radio {
-  --mdc-theme-secondary: #ff4081;
+```html
+<style>
+body {
+  background-color: #363636;
+
+  --mdc-theme-secondary: #ff2929;
+  --mdc-radio-unchecked-color: white;
 }
+</style>
+
+<mwc-radio name="myGroup" checked></mwc-radio>
+<mwc-radio name="myGroup"></mwc-radio>
+```
+
+### Disabled custom color
+
+<img src="images/disabled_custom_color.png" height="40px">
+
+```html
+<style>
+body {
+  background-color: #363636;
+
+  --mdc-radio-disabled-color: #adadad;
+}
+</style>
+
+<mwc-radio disabled name="myGroup"></mwc-radio>
+<mwc-radio disabled name="myGroup" checked></mwc-radio>
 ```
 
 ### With Form Field
@@ -105,6 +130,8 @@ to associate an interactive label with the radio.
 | Name                    | Default                                | Description
 | ----------------------- | -------------------------------------- |------------
 | `--mdc-theme-secondary` | ![](images/color_018786.png) `#018786` | Color of the radio button.
+| `--mdc-radio-unchecked-color` | ![](images/color_0,0,0,54.png) `rgba(0, 0, 0, 0.54)` | Color of the ring of an unchecked radio.
+| `--mdc-radio-disabled-color` | ![](images/color_0,0,0,38.png) `rgba(0, 0, 0, 0.38)` | Color of the ring and circle of a disabled radio.
 
 ## Additional references
 

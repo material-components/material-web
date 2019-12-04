@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Added color styling css custom properties to `mwc-checkbox`.
+- Added custom properties to style `mwc-radio`'s colors
+- Added  custom properties to style `mwc-checkbox`'s colors
 
 ### Fixed
 
