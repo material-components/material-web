@@ -43,6 +43,8 @@ export class TabBase extends BaseElement {
 
   @property() icon = '';
 
+  @property({type: Boolean}) hasImageIcon = false;
+
   @property({type: Boolean}) isFadingIndicator = false;
 
   @property({type: Boolean}) minWidth = false;
@@ -97,6 +99,27 @@ export class TabBase extends BaseElement {
       'mdc-tab--min-width': this.minWidth,
       'mdc-tab--stacked': this.stacked,
     };
+
+    let iconTemplate = html``;
+    if (this.hasImageIcon || this.icon) {
+      // NOTE: MUST be on same line as spaces will cause vert alignment issues
+      // in IE
+      iconTemplate = html`
+        <span class="mdc-tab__icon material-icons"><slot>${
+          this.icon}</slot></span>`;
+    }
+
+    let labelTemplate = html``;
+    if (this.label) {
+      labelTemplate = html`
+        <span class="mdc-tab__text-label">${this.label}</span>`;
+    }
+
+    const rippleDirective = ripple({
+      interactionNode: this,
+      unbounded: false,
+    });
+
     return html`
       <button
         @click="${this._handleClick}"
@@ -105,22 +128,12 @@ export class TabBase extends BaseElement {
         aria-selected="false"
         tabindex="-1">
         <span class="mdc-tab__content">
-          <slot></slot>
-          ${
-        this.icon ? html`
-          <span class="mdc-tab__icon material-icons">${this.icon}</span>` :
-                    ''}
-          ${
-        this.label ? html`
-          <span class="mdc-tab__text-label">${this.label}</span>` :
-                     ''}
+          ${iconTemplate}
+          ${labelTemplate}
           ${this.isMinWidthIndicator ? this.renderIndicator() : ''}
         </span>
         ${this.isMinWidthIndicator ? '' : this.renderIndicator()}
-        <span class="mdc-tab__ripple" .ripple="${ripple({
-      interactionNode: this,
-      unbounded: false
-    })}"></span>
+        <span class="mdc-tab__ripple" .ripple="${rippleDirective}"></span>
       </button>`;
   }
 
