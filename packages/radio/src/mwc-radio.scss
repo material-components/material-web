@@ -26,4 +26,8 @@ limitations under the License.
 
 .mdc-radio {
   vertical-align: bottom;
+  @include mdc-radio-unchecked-stroke-color(var(--mdc-radio-unchecked-color, #{$mdc-radio-unchecked-color}));
+  @include mdc-radio-disabled-unchecked-stroke-color(var(--mdc-radio-disabled-color, #{$mdc-radio-disabled-circle-color}));
+  @include mdc-radio-disabled-checked-stroke-color(var(--mdc-radio-disabled-color, #{$mdc-radio-disabled-circle-color}));
+  @include mdc-radio-disabled-ink-color(var(--mdc-radio-disabled-color, #{$mdc-radio-disabled-circle-color}));
 }
