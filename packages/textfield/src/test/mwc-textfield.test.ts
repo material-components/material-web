@@ -250,13 +250,6 @@ suite('mwc-textfield:', () => {
         assert.isTrue(isUiInvalid(element));
       });
 
-      test('switching to outlined checking validation', async () => {
-        fixt = await fixture(validationRequired());
-        const element = fixt.root.querySelector('mwc-textfield')!;
-        element.outlined = true;
-        element.checkValidity();
-      });
-
       test('validity & checkValidity do not trigger ui', async () => {
         fixt = await fixture(validationPattern(true));
         const element = fixt.root.querySelector('mwc-textfield')!;
