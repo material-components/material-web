@@ -51,9 +51,16 @@ export class TabBase extends BaseElement {
 
   @property({type: Boolean}) isMinWidthIndicator = false;
 
+  @property({type: Boolean, reflect: true, attribute: 'active'})
+  get active(): boolean {
+    return this._active;
+  }
+
   @property() indicatorIcon = '';
 
   @property({type: Boolean}) stacked = false;
+
+  protected _active = false;
 
   /**
    * Other properties
@@ -164,10 +171,21 @@ export class TabBase extends BaseElement {
 
   activate(clientRect: ClientRect) {
     this.mdcFoundation.activate(clientRect);
+    this.setActive(this.mdcFoundation.isActive());
   }
 
   deactivate() {
     this.mdcFoundation.deactivate();
+    this.setActive(this.mdcFoundation.isActive());
+  }
+
+  protected setActive(newValue: boolean) {
+    const oldValue = this.active;
+
+    if (oldValue !== newValue) {
+      this._active = newValue;
+      this.requestUpdate('active', oldValue);
+    }
   }
 
   computeDimensions() {

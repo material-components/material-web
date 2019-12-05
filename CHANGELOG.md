@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Added custom properties to style `mwc-radio`'s colors
+- CSS styling options to `mwc-tab`
+- `active` attribute to `mwc-tab` when (de)activated
 - Added  custom properties to style `mwc-checkbox`'s colors
 
 ### Fixed

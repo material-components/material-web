@@ -37,6 +37,8 @@ limitations under the License.
   height: var(--mdc-tab-height, #{$mdc-tab-height});
   margin-left: 0;
   margin-right: 0;
+  text-transform: var(--mdc-tab-text-transform, uppercase);
+  @include mdc-tab-horizontal-padding(var(--mdc-tab-horizontal-padding, #{$mdc-tab-horizontal-padding}));
 }
 
 .mdc-tab--stacked {
@@ -66,4 +68,19 @@ limitations under the License.
 /* Declare rule from mdc-tab again to pick up mixin override. */
 .mdc-tab:not(.mdc-tab--stacked) .mdc-tab__icon + .mdc-tab__text-label {
   @include mdc-rtl-reflexive-box(padding, left, 8px);
+}
+
+.mdc-tab:not(.mdc-tab--active) {
+  .mdc-tab__text-label {
+    color: var(--mdc-tab-text-label-color-default, #{$mdc-tab-text-label-color-default});
+  }
+
+  .mdc-tab__icon {
+    color: var(--mdc-tab-color-default, #{$mdc-tab-icon-color-default});
+  }
+}
+
+:host,
+.mdc-tab__ripple {
+  border-radius: var(--mdc-tab-border-radius, 0px);
 }
