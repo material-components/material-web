@@ -507,24 +507,18 @@ export abstract class TextFieldBase extends FormElement {
     };
   }
 
-  protected async outlineReady() {
-    const outlineElement = this.outlineElement;
-    if (outlineElement) {
-      if (!this._outlineUpdateComplete) {
-        this._outlineUpdateComplete = outlineElement.updateComplete;
-      }
-
-      await this._outlineUpdateComplete;
-    }
-  }
-
   async _getUpdateComplete() {
     await super._getUpdateComplete();
-    await this.outlineReady();
+    await this._outlineUpdateComplete;
   }
 
   async firstUpdated() {
-    await this.outlineReady();
+    const outlineElement = this.outlineElement;
+    if (outlineElement) {
+      this._outlineUpdateComplete = outlineElement.updateComplete;
+      await this._outlineUpdateComplete;
+    }
+
     super.firstUpdated();
 
     if (this.validateOnInitialRender) {
