@@ -159,7 +159,7 @@ export abstract class TextFieldBase extends FormElement {
   @property({type: Boolean}) protected isUiValid = true;
 
   protected _validity: ValidityState = createValidityObj();
-  protected _outlineUpdateComplete: null | Promise<unknown> = null;
+  protected _outlineUpdateComplete: null|Promise<unknown> = null;
 
   get validity(): ValidityState {
     this._checkValidity(this.value);
