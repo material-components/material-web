@@ -159,6 +159,7 @@ export abstract class TextFieldBase extends FormElement {
   @property({type: Boolean}) protected isUiValid = true;
 
   protected _validity: ValidityState = createValidityObj();
+  protected _outlineUpdateComplete: null|Promise<unknown> = null;
 
   get validity(): ValidityState {
     this._checkValidity(this.value);
@@ -506,10 +507,16 @@ export abstract class TextFieldBase extends FormElement {
     };
   }
 
+  async _getUpdateComplete() {
+    await super._getUpdateComplete();
+    await this._outlineUpdateComplete;
+  }
+
   async firstUpdated() {
     const outlineElement = this.outlineElement;
     if (outlineElement) {
-      await outlineElement.updateComplete;
+      this._outlineUpdateComplete = outlineElement.updateComplete;
+      await this._outlineUpdateComplete;
     }
 
     super.firstUpdated();

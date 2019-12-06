@@ -27,20 +27,29 @@ interface TextfieldInternals {
   createFoundation: () => void;
 }
 
-const basic = html`
-  <mwc-textfield></mwc-textfield>
+const basic = (outlined = false) => html`
+  <mwc-textfield ?outlined=${outlined}></mwc-textfield>
 `;
 
-const validationRequired = html`
-  <mwc-textfield label="I am required" required></mwc-textfield>
-`;
-
-const validationPattern = html`
-  <mwc-textfield pattern="[0-9]+" value="dogs"></mwc-textfield>
-`;
-
-const reqInitialVal = html`
+const validationRequired = (outlined = false) => html`
   <mwc-textfield
+      ?outlined=${outlined}
+      label="I am required"
+      required>
+  </mwc-textfield>
+`;
+
+const validationPattern = (outlined = false) => html`
+  <mwc-textfield
+      ?outlined=${outlined}
+      pattern="[0-9]+"
+      value="dogs">
+  </mwc-textfield>
+`;
+
+const reqInitialVal = (outlined = false) => html`
+  <mwc-textfield
+      ?outlined=${outlined}
       label="I am required"
       required
       validateOnInitialRender>
@@ -75,7 +84,7 @@ suite('mwc-textfield:', () => {
   suite('basic', () => {
     let element: TextField;
     setup(async () => {
-      fixt = await fixture(basic);
+      fixt = await fixture(basic());
 
       element = fixt.root.querySelector('mwc-textfield')!;
     });
@@ -99,132 +108,271 @@ suite('mwc-textfield:', () => {
   });
 
   suite('validation', () => {
-    test('required invalidates on blur', async () => {
-      fixt = await fixture(validationRequired);
-      const element = fixt.root.querySelector('mwc-textfield')!;
+    suite('standard', () => {
+      test('required invalidates on blur', async () => {
+        fixt = await fixture(validationRequired());
+        const element = fixt.root.querySelector('mwc-textfield')!;
 
-      assert.isFalse(isUiInvalid(element));
-      element.focus();
-      element.blur();
-      assert.isTrue(isUiInvalid(element));
-    });
+        assert.isFalse(isUiInvalid(element));
+        element.focus();
+        element.blur();
+        assert.isTrue(isUiInvalid(element));
+      });
 
-    test('validity & checkValidity do not trigger ui', async () => {
-      fixt = await fixture(validationPattern);
-      const element = fixt.root.querySelector('mwc-textfield')!;
+      test('validity & checkValidity do not trigger ui', async () => {
+        fixt = await fixture(validationPattern());
+        const element = fixt.root.querySelector('mwc-textfield')!;
 
-      assert.isFalse(isUiInvalid(element));
+        assert.isFalse(isUiInvalid(element));
 
-      let invalidCalled = false;
-      element.addEventListener('invalid', () => invalidCalled = true);
+        let invalidCalled = false;
+        element.addEventListener('invalid', () => invalidCalled = true);
 
-      const validity = element.validity;
+        const validity = element.validity;
 
-      assert.isTrue(validity.patternMismatch);
-      assert.isFalse(validity.valid);
-      assert.isFalse(invalidCalled);
-      assert.isFalse(isUiInvalid(element));
+        assert.isTrue(validity.patternMismatch);
+        assert.isFalse(validity.valid);
+        assert.isFalse(invalidCalled);
+        assert.isFalse(isUiInvalid(element));
 
-      const checkValidity = element.checkValidity();
+        const checkValidity = element.checkValidity();
 
-      assert.isFalse(checkValidity);
-      assert.isTrue(invalidCalled);
-      assert.isFalse(isUiInvalid(element));
-    });
+        assert.isFalse(checkValidity);
+        assert.isTrue(invalidCalled);
+        assert.isFalse(isUiInvalid(element));
+      });
 
-    test('setCustomValidity', async () => {
-      fixt = await fixture(basic);
-      const element = fixt.root.querySelector('mwc-textfield')!;
+      test('setCustomValidity', async () => {
+        fixt = await fixture(basic());
+        const element = fixt.root.querySelector('mwc-textfield')!;
 
-      assert.isFalse(isUiInvalid(element));
-      assert.equal(element.validationMessage, '');
+        assert.isFalse(isUiInvalid(element));
+        assert.equal(element.validationMessage, '');
 
-      const validationMsgProp = 'set on prop';
-      element.validationMessage = validationMsgProp;
-      assert.isFalse(isUiInvalid(element));
-      assert.equal(element.validationMessage, validationMsgProp);
+        const validationMsgProp = 'set on prop';
+        element.validationMessage = validationMsgProp;
+        assert.isFalse(isUiInvalid(element));
+        assert.equal(element.validationMessage, validationMsgProp);
 
-      const validationMsgFn = 'set by setCustomValidity';
-      element.setCustomValidity(validationMsgFn);
+        const validationMsgFn = 'set by setCustomValidity';
+        element.setCustomValidity(validationMsgFn);
 
-      assert.equal(element.validationMessage, validationMsgFn);
+        assert.equal(element.validationMessage, validationMsgFn);
 
-      const validity = element.validity;
-      assert.isTrue(validity.customError);
-      assert.isFalse(validity.valid);
-    });
+        const validity = element.validity;
+        assert.isTrue(validity.customError);
+        assert.isFalse(validity.valid);
+      });
 
-    test('validity transform', async () => {
-      fixt = await fixture(validationPattern);
-      const element = fixt.root.querySelector('mwc-textfield')!;
+      test('validity transform', async () => {
+        fixt = await fixture(validationPattern());
+        const element = fixt.root.querySelector('mwc-textfield')!;
 
-      assert.isFalse(element.checkValidity());
+        assert.isFalse(element.checkValidity());
 
-      const transformFn =
-          (value: string, vState: ValidityState): Partial<ValidityState> => {
-            if (value.indexOf('dogs') !== -1) {
-              return {
-                valid: true,
-              };
-            } else if (vState.valid) {
-              const numberifiedValue = Number(value);
-              if (numberifiedValue > 5) {
+        const transformFn =
+            (value: string, vState: ValidityState): Partial<ValidityState> => {
+              if (value.indexOf('dogs') !== -1) {
                 return {
-                  valid: false,
-                  rangeOverflow: true,
+                  valid: true,
                 };
+              } else if (vState.valid) {
+                const numberifiedValue = Number(value);
+                if (numberifiedValue > 5) {
+                  return {
+                    valid: false,
+                    rangeOverflow: true,
+                  };
+                }
               }
-            }
 
-            return {};
-          };
+              return {};
+            };
 
-      element.validityTransform = transformFn;
+        element.validityTransform = transformFn;
 
-      let validity = element.validity;
-      // true because dogs
-      assert.isTrue(validity.valid);
-      assert.isTrue(validity.patternMismatch);
-      assert.isTrue(element.checkValidity());
+        let validity = element.validity;
+        // true because dogs
+        assert.isTrue(validity.valid);
+        assert.isTrue(validity.patternMismatch);
+        assert.isTrue(element.checkValidity());
 
-      element.value = '6';
-      await element.updateComplete;
-      validity = element.validity;
-      // false because > 5
-      assert.isFalse(validity.valid);
-      assert.isTrue(validity.rangeOverflow);
-      assert.isFalse(element.reportValidity());
+        element.value = '6';
+        await element.updateComplete;
+        validity = element.validity;
+        // false because > 5
+        assert.isFalse(validity.valid);
+        assert.isTrue(validity.rangeOverflow);
+        assert.isFalse(element.reportValidity());
 
-      assert.isTrue(isUiInvalid(element));
+        assert.isTrue(isUiInvalid(element));
 
-      element.value = '1';
-      await element.updateComplete;
-      validity = element.validity;
-      // true because < 5
-      assert.isTrue(validity.valid);
-      assert.isFalse(validity.patternMismatch);
-      assert.isFalse(validity.rangeOverflow);
-      assert.isTrue(element.reportValidity());
+        element.value = '1';
+        await element.updateComplete;
+        validity = element.validity;
+        // true because < 5
+        assert.isTrue(validity.valid);
+        assert.isFalse(validity.patternMismatch);
+        assert.isFalse(validity.rangeOverflow);
+        assert.isTrue(element.reportValidity());
 
-      assert.isFalse(isUiInvalid(element));
-    });
+        assert.isFalse(isUiInvalid(element));
+      });
 
-    test('initial validation', async () => {
-      fixt = await fixture(reqInitialVal);
-      let element = fixt.root.querySelector('mwc-textfield')!;
-      assert.isTrue(isUiInvalid(element));
+      test('initial validation', async () => {
+        fixt = await fixture(reqInitialVal());
+        let element = fixt.root.querySelector('mwc-textfield')!;
+        assert.isTrue(isUiInvalid(element));
 
-      fixt.remove();
-
-      fixt = await fixture(validationRequired);
-      element = fixt.root.querySelector('mwc-textfield')!;
-      assert.isFalse(isUiInvalid(element));
-    });
-
-    teardown(() => {
-      if (fixt) {
         fixt.remove();
-      }
+
+        fixt = await fixture(validationRequired());
+        element = fixt.root.querySelector('mwc-textfield')!;
+        assert.isFalse(isUiInvalid(element));
+      });
+
+      teardown(() => {
+        if (fixt) {
+          fixt.remove();
+        }
+      });
+    });
+
+    suite('outlined', () => {
+      test('required invalidates on blur', async () => {
+        fixt = await fixture(validationRequired(true));
+        const element = fixt.root.querySelector('mwc-textfield')!;
+        await element.updateComplete;
+
+        assert.isFalse(isUiInvalid(element));
+        element.focus();
+        element.blur();
+        assert.isTrue(isUiInvalid(element));
+      });
+
+      test('validity & checkValidity do not trigger ui', async () => {
+        fixt = await fixture(validationPattern(true));
+        const element = fixt.root.querySelector('mwc-textfield')!;
+        await element.updateComplete;
+
+        assert.isFalse(isUiInvalid(element));
+
+        let invalidCalled = false;
+        element.addEventListener('invalid', () => invalidCalled = true);
+
+        const validity = element.validity;
+
+        assert.isTrue(validity.patternMismatch);
+        assert.isFalse(validity.valid);
+        assert.isFalse(invalidCalled);
+        assert.isFalse(isUiInvalid(element));
+
+
+        const checkValidity = element.checkValidity();
+
+        assert.isFalse(checkValidity);
+        assert.isTrue(invalidCalled);
+        assert.isFalse(isUiInvalid(element));
+      });
+
+      test('setCustomValidity', async () => {
+        fixt = await fixture(basic(true));
+        const element = fixt.root.querySelector('mwc-textfield')!;
+        await element.updateComplete;
+
+        assert.isFalse(isUiInvalid(element));
+        assert.equal(element.validationMessage, '');
+
+        const validationMsgProp = 'set on prop';
+        element.validationMessage = validationMsgProp;
+        assert.isFalse(isUiInvalid(element));
+        assert.equal(element.validationMessage, validationMsgProp);
+
+        const validationMsgFn = 'set by setCustomValidity';
+        element.setCustomValidity(validationMsgFn);
+
+        assert.equal(element.validationMessage, validationMsgFn);
+
+        const validity = element.validity;
+        assert.isTrue(validity.customError);
+        assert.isFalse(validity.valid);
+      });
+
+      test('validity transform', async () => {
+        fixt = await fixture(validationPattern(true));
+        const element = fixt.root.querySelector('mwc-textfield')!;
+        await element.updateComplete;
+
+        assert.isFalse(element.checkValidity());
+
+        const transformFn =
+            (value: string, vState: ValidityState): Partial<ValidityState> => {
+              if (value.indexOf('dogs') !== -1) {
+                return {
+                  valid: true,
+                };
+              } else if (vState.valid) {
+                const numberifiedValue = Number(value);
+                if (numberifiedValue > 5) {
+                  return {
+                    valid: false,
+                    rangeOverflow: true,
+                  };
+                }
+              }
+
+              return {};
+            };
+
+        element.validityTransform = transformFn;
+
+        let validity = element.validity;
+        // true because dogs
+        assert.isTrue(validity.valid);
+        assert.isTrue(validity.patternMismatch);
+        assert.isTrue(element.checkValidity());
+
+        element.value = '6';
+        await element.updateComplete;
+        validity = element.validity;
+        // false because > 5
+        assert.isFalse(validity.valid);
+        assert.isTrue(validity.rangeOverflow);
+        assert.isFalse(element.reportValidity());
+
+        assert.isTrue(isUiInvalid(element));
+
+        element.value = '1';
+        await element.updateComplete;
+        validity = element.validity;
+        // true because < 5
+        assert.isTrue(validity.valid);
+        assert.isFalse(validity.patternMismatch);
+        assert.isFalse(validity.rangeOverflow);
+        assert.isTrue(element.reportValidity());
+
+        assert.isFalse(isUiInvalid(element));
+      });
+
+      test('initial validation', async () => {
+        fixt = await fixture(reqInitialVal(true));
+        let element = fixt.root.querySelector('mwc-textfield')!;
+        await element.updateComplete;
+        assert.isTrue(isUiInvalid(element));
+
+        fixt.remove();
+
+        fixt = await fixture(validationRequired(true));
+        element = fixt.root.querySelector('mwc-textfield')!;
+        await element.updateComplete;
+        assert.isFalse(isUiInvalid(element));
+      });
+
+      teardown(() => {
+        if (fixt) {
+          fixt.remove();
+        }
+      });
     });
   });
 
@@ -233,7 +381,7 @@ suite('mwc-textfield:', () => {
     let element: TextField;
 
     setup(async () => {
-      fixt = await fixture(basic);
+      fixt = await fixture(basic());
 
       element = fixt.root.querySelector('mwc-textfield')!;
     });
@@ -260,7 +408,7 @@ suite('mwc-textfield:', () => {
     let element: TextField;
 
     setup(async () => {
-      fixt = await fixture(basic);
+      fixt = await fixture(basic());
 
       element = fixt.root.querySelector('mwc-textfield')!;
     });
@@ -368,7 +516,7 @@ suite('mwc-textfield:', () => {
     let fixt: TestFixture;
 
     setup(async () => {
-      fixt = await fixture(basic);
+      fixt = await fixture(basic());
     });
 
     test('createFoundation called an appropriate amount of times', async () => {
