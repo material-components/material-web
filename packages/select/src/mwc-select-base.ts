@@ -219,9 +219,9 @@ export abstract class SelectBase extends FormElement {
       hasLabel: () => {
         return !!this.label;
       },
-      floatLabel: () => {
+      floatLabel: (shouldFloat) => {
         if (this.labelElement) {
-          this.labelElement.floatingLabelFoundation.float(true);
+          this.labelElement.floatingLabelFoundation.float(shouldFloat);
         }
       },
       getLabelWidth: () => {
@@ -882,7 +882,6 @@ export abstract class SelectBase extends FormElement {
         }
 
         const anchorElement = mwcMenu.anchorElement(menuElement);
-        debugger;
 
         return anchorElement ? anchorElement.getBoundingClientRect() : null;
       },
