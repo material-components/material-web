@@ -143,11 +143,14 @@ export abstract class SelectBase extends FormElement {
             role="listbox"
             class="mdc-select__menu mdc-menu mdc-menu-surface"
             @selected=${this.onSelected}
+            @keydown=${this.menuSurfaceOnKeydown}
+            @opened=${this.menuSurfaceRegisterBodyClick}
+            @closed=${this.menuSurfaceDeregisterBodyClick}
+            @opened=${this.menuOnOpened}
+            @keydown=${this.menuOnKeydown}
+            @action=${this.menuOnAction}
             @opened=${this.onOpened}
-            @closed=${this.onClosed}
-            @keydown=${this.onMenuSurfaceKeydown}
-            @opened=${this.registerBodyClick}
-            @closed=${this.deregisterBodyClick}>
+            @closed=${this.onClosed}>
           <ul class="mdc-list">
             <slot></slot>
           </ul>
@@ -561,7 +564,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const init: CustomEventInit = {};
+        const init: CustomEventInit = {bubbles:true};
         init.detail = {index};
         const ev = new CustomEvent('action', init);
         this.listElement.dispatchEvent(ev);
@@ -958,7 +961,7 @@ export abstract class SelectBase extends FormElement {
     }
   }
 
-  protected onMenuSurfaceKeydown(evt: KeyboardEvent) {
+  protected menuSurfaceOnKeydown(evt: KeyboardEvent) {
     if (this.mdcMenuSurfaceFoundation) {
       this.mdcMenuSurfaceFoundation.handleKeydown(evt)
     }
@@ -970,12 +973,33 @@ export abstract class SelectBase extends FormElement {
     }
   }
 
-  protected registerBodyClick() {
+  protected menuSurfaceRegisterBodyClick() {
     document.body.addEventListener('click', this.onBodyClick);
   }
 
-  protected deregisterBodyClick() {
+  protected menuSurfaceDeregisterBodyClick() {
     document.body.removeEventListener('click', this.onBodyClick);
+  }
+
+  protected menuOnKeydown(evt: KeyboardEvent) {
+    if (this.mdcMenuFoundation) {
+      this.mdcMenuFoundation.handleKeydown(evt);
+    }
+  }
+
+  protected menuOnAction(evt: CustomEvent<{index: number}>) {
+    if (this.mdcMenuFoundation) {
+      const el = mwcList.getElementAtIndex(this.listElement!, evt.detail.index);
+      if (el) {
+        this.mdcMenuFoundation.handleItemAction(el);
+      }
+    }
+  }
+
+  menuOnOpened() {
+    if (this.mdcMenuFoundation) {
+      this.mdcMenuFoundation.handleMenuSurfaceOpened();
+    }
   }
 
   async firstUpdated() {
