@@ -15,21 +15,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {directive, PropertyPart} from 'lit-html';
-import { AnchorableElement } from './mwc-menu-ponyfill';
+import {AnchorableElement} from './mwc-menu-ponyfill';
 
 export interface MenuAnchor extends HTMLElement {
-  anchoring: Element | null;
+  anchoring: Element|null;
 }
 
-const partToTarget =
-    new WeakMap<PropertyPart, AnchorableElement | null>();
+const partToTarget = new WeakMap<PropertyPart, AnchorableElement|null>();
 
 export const menuAnchor =
     directive((forSelector: string) => (part: PropertyPart) => {
       const lastTarget = partToTarget.get(part);
       const anchorElement = part.committer.element;
       const root = anchorElement.getRootNode() as Document | ShadowRoot;
-      const target = root.querySelector(forSelector) as AnchorableElement | null;
+      const target =
+          root.querySelector(forSelector) as AnchorableElement | null;
 
       if (target !== lastTarget) {
         anchorElement.classList.add('mdc-menu-anchor');

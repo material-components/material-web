@@ -19,25 +19,25 @@ import '@material/mwc-notched-outline';
 import {closest} from '@material/dom/ponyfill';
 import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
 import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
-import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element.js';
-import MDCSelectFoundation from '@material/select/foundation.js';
-import MDCMenuFoundation from '@material/menu/foundation.js';
-import MDCMenuSurfaceFoundation from '@material/menu-surface/foundation.js';
+import {MDCListAdapter} from '@material/list/adapter';
 import MDCListFoundation from '@material/list/foundation.js';
-import {html, query, property, TemplateResult, PropertyValues} from 'lit-element';
-import { MDCSelectAdapter } from '@material/select/adapter';
-import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
+import {MDCMenuSurfaceAdapter} from '@material/menu-surface/adapter';
+import MDCMenuSurfaceFoundation from '@material/menu-surface/foundation.js';
+import {MDCMenuAdapter} from '@material/menu/adapter';
+import MDCMenuFoundation from '@material/menu/foundation.js';
+import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element.js';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
+import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {NotchedOutline} from '@material/mwc-notched-outline';
-import { MDCMenuAdapter } from '@material/menu/adapter';
-import { MDCMenuSurfaceAdapter } from '@material/menu-surface/adapter';
+import {MDCSelectAdapter} from '@material/select/adapter';
+import MDCSelectFoundation from '@material/select/foundation.js';
+import {html, property, PropertyValues, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
-import * as mwcMenu from './mwc-menu-ponyfill';
-import * as mwcList from './mwc-list-ponyfill';
 import * as mwcListItem from './mwc-list-item-ponyfill';
-import { MDCListAdapter } from '@material/list/adapter';
-import { menuAnchor } from './mwc-menu-surface-directive';
+import * as mwcList from './mwc-list-ponyfill';
+import * as mwcMenu from './mwc-menu-ponyfill';
+import {menuAnchor} from './mwc-menu-surface-directive';
 
 // must be done to get past lit-analyzer checks
 declare global {
@@ -78,11 +78,13 @@ export abstract class SelectBase extends FormElement {
 
   @query('.mdc-list') protected listElement!: HTMLDivElement|null;
 
-  @query('.mdc-select__selected-text') protected selectedTextElement!: HTMLDivElement | null;
+  @query('.mdc-select__selected-text')
+  protected selectedTextElement!: HTMLDivElement|null;
 
-  @query('.mdc-select__anchor') protected anchorElement!: HTMLDivElement | null;
+  @query('.mdc-select__anchor') protected anchorElement!: HTMLDivElement|null;
 
-  @property({type: Boolean, attribute: 'disabled', reflect: true}) disabled = false;
+  @property({type: Boolean, attribute: 'disabled', reflect: true})
+  disabled = false;
 
   @property({type: Boolean}) outlined = false;
 
@@ -100,7 +102,7 @@ export abstract class SelectBase extends FormElement {
 
   protected listeners = [];
 
-  render () {
+  render() {
     let outlinedOrUnderlined = html``;
 
     if (this.outlined) {
@@ -252,7 +254,7 @@ export abstract class SelectBase extends FormElement {
       },
       notifyChange: (value) => {
         this.value = value;
-        const ev = new Event('change', {bubbles:true});
+        const ev = new Event('change', {bubbles: true});
         this.dispatchEvent(ev);
       },
       setSelectedText: (value) => this.selectedText = value,
@@ -263,7 +265,8 @@ export abstract class SelectBase extends FormElement {
           return false;
         }
 
-        const rootNode = selectedTextElement.getRootNode() as ShadowRoot | Document;
+        const rootNode =
+            selectedTextElement.getRootNode() as ShadowRoot | Document;
 
         return rootNode.activeElement === selectedTextElement;
       },
@@ -656,7 +659,8 @@ export abstract class SelectBase extends FormElement {
 
         element.removeAttribute(attr);
       },
-      elementContainsClass: (element, className) => element.classList.contains(className),
+      elementContainsClass: (element, className) =>
+          element.classList.contains(className),
       closeSurface: () => {
         if (this.mdcMenuSurfaceFoundation) {
           mwcMenu.close(this.mdcMenuSurfaceFoundation);
@@ -675,10 +679,7 @@ export abstract class SelectBase extends FormElement {
         }
 
         const init: CustomEventInit = {};
-        init.detail = {
-          index: evtData.index,
-          item: evtData
-        };
+        init.detail = {index: evtData.index, item: evtData};
         const ev = new CustomEvent('selected', init);
         this.menuElement.dispatchEvent(ev);
       },
@@ -710,19 +711,22 @@ export abstract class SelectBase extends FormElement {
           return -1;
         }
 
-        const elementAtIndex = mwcList.getElementAtIndex(this.listElement, index);
+        const elementAtIndex =
+            mwcList.getElementAtIndex(this.listElement, index);
 
         if (!elementAtIndex) {
           return -1;
         }
 
-        const selectionGroupEl = closest(elementAtIndex, `.mdc-menu__selection-group`);
+        const selectionGroupEl =
+            closest(elementAtIndex, `.mdc-menu__selection-group`);
 
         if (!selectionGroupEl) {
           return -1;
         }
 
-        const selectedItemEl = selectionGroupEl.querySelector(`.mdc-menu-item--selected`);
+        const selectedItemEl =
+            selectionGroupEl.querySelector(`.mdc-menu-item--selected`);
 
         if (!selectedItemEl) {
           return -1;
@@ -731,14 +735,14 @@ export abstract class SelectBase extends FormElement {
         const elements = mwcList.listElements(this.listElement);
 
         return elements.indexOf(selectedItemEl);
-
       },
       isSelectableItemAtIndex: (index) => {
         if (!this.listElement) {
           return false;
-         }
+        }
 
-        const elementAtIndex = mwcList.getElementAtIndex(this.listElement, index);
+        const elementAtIndex =
+            mwcList.getElementAtIndex(this.listElement, index);
 
         if (!elementAtIndex) {
           return false;
@@ -887,8 +891,7 @@ export abstract class SelectBase extends FormElement {
       },
       getBodyDimensions: () => {
         return {
-          width: document.body.clientWidth,
-          height: document.body.clientHeight,
+          width: document.body.clientWidth, height: document.body.clientHeight,
         }
       },
       getWindowDimensions: () => {
@@ -919,7 +922,8 @@ export abstract class SelectBase extends FormElement {
         mdcRoot.style.left = 'left' in position ? `${position.left}px` : '';
         mdcRoot.style.right = 'right' in position ? `${position.right}px` : '';
         mdcRoot.style.top = 'top' in position ? `${position.top}px` : '';
-        mdcRoot.style.bottom = 'bottom' in position ? `${position.bottom}px` : '';
+        mdcRoot.style.bottom =
+            'bottom' in position ? `${position.bottom}px` : '';
       },
       setMaxHeight: (height) => {
         const menuElement = this.menuElement;
@@ -938,7 +942,8 @@ export abstract class SelectBase extends FormElement {
       },
     };
 
-    this.mdcMenuSurfaceFoundation = new MDCMenuSurfaceFoundation(mdcMenuSurfaceAdapter);
+    this.mdcMenuSurfaceFoundation =
+        new MDCMenuSurfaceFoundation(mdcMenuSurfaceAdapter);
     this.mdcMenuSurfaceFoundation.init();
   }
 
@@ -962,7 +967,8 @@ export abstract class SelectBase extends FormElement {
     // }
 
     // if (this.selectedText_.hasAttribute(strings.ARIA_CONTROLS)) {
-    //   const helperTextElement = document.getElementById(this.selectedText_.getAttribute(strings.ARIA_CONTROLS)!);
+    //   const helperTextElement =
+    //   document.getElementById(this.selectedText_.getAttribute(strings.ARIA_CONTROLS)!);
     //   if (helperTextElement) {
     //     this.helperText_ = helperTextFactory(helperTextElement);
     //   }
@@ -973,7 +979,6 @@ export abstract class SelectBase extends FormElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-
   }
 
   focus() {
@@ -1008,7 +1013,7 @@ export abstract class SelectBase extends FormElement {
     }
   }
 
-  protected onClick(evt: MouseEvent | TouchEvent) {
+  protected onClick(evt: MouseEvent|TouchEvent) {
     if (this.mdcFoundation) {
       this.focus();
       const targetClientRect = (evt.target as Element).getBoundingClientRect();
@@ -1031,7 +1036,7 @@ export abstract class SelectBase extends FormElement {
     }
   }
 
-  protected onSelected(evt: CustomEvent<{index:number}>) {
+  protected onSelected(evt: CustomEvent<{index: number}>) {
     if (this.mdcFoundation) {
       this.mdcFoundation.handleMenuItemAction(evt.detail.index);
     }

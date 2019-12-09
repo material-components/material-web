@@ -16,88 +16,102 @@
  */
 import MDCListFoundation from '@material/list/foundation';
 
-export const selected = (list: Element) => {
-  const children = assignedElements(list);
-  for (const child of children) {
-    const selected = child.querySelector('.mdc-list-item--selected');
-    if (selected) {
-      return selected;
-    }
-  }
+export const selected =
+    (list: Element) => {
+      const children = assignedElements(list);
+      for (const child of children) {
+        const selected = child.querySelector('.mdc-list-item--selected');
+        if (selected) {
+          return selected;
+        }
+      }
 
-  return null;
-}
-
-export const select = (list: Element, itemToSelect: Element) => {
-  const previouslySelected = selected(list);
-
-  if (previouslySelected) {
-    previouslySelected.classList.remove('mdc-list-item--selected');
-    previouslySelected.removeAttribute('aria-selected');
-  }
-
-  itemToSelect.classList.add('mdc-list-item--selected');
-  itemToSelect.removeAttribute('aria-selected');
-}
-
-export const assignedElements = (list: Element): Element[] => {
-  const slot = list.querySelector('slot');
-
-  if (slot) {
-    return slot.assignedNodes({flatten: true}).filter(node => (node instanceof Element)) as Element[];
-  }
-
-  return [];
-}
-
-export const listElements = (list: Element): Element[] => {
-  const nodes = assignedElements(list);
-  const listItems = nodes.map<Element|Element[]>((element) => {
-    if (element.classList.contains('mdc-list-item')) {
-      return element;
+      return null;
     }
 
-    return Array.from(element.querySelectorAll('.mdc-list-item'));
-  }).reduce<Element[]>((listItems, listItemResult) => {
-    return listItems.concat(listItemResult);
-  }, []);
+export const select =
+    (list: Element, itemToSelect: Element) => {
+      const previouslySelected = selected(list);
 
-  return listItems;
-}
+      if (previouslySelected) {
+        previouslySelected.classList.remove('mdc-list-item--selected');
+        previouslySelected.removeAttribute('aria-selected');
+      }
 
-export const mdcRoot = (list: Element) => {
-  return list.querySelector('.mdc-select') as HTMLElement;
-}
+      itemToSelect.classList.add('mdc-list-item--selected');
+      itemToSelect.removeAttribute('aria-selected');
+    }
 
-export const getSlottedActiveElement = (list: Element): Element|null => {
-  const first = getElementAtIndex(list, 0);
-  if (!first) {
-    return null;
-  }
+export const assignedElements = (list: Element):
+    Element[] => {
+      const slot = list.querySelector('slot');
 
-  const root = first.getRootNode() as unknown as DocumentOrShadowRoot;
-  return root ? root.activeElement : null;
-}
+      if (slot) {
+        return slot.assignedNodes({flatten: true})
+                   .filter(node => (node instanceof Element)) as Element[];
+      }
 
-export const doContentsHaveFocus = (list: Element): boolean => {
-  const activeElement = getSlottedActiveElement(list);
-  if (!activeElement) {
-    return false
-  }
+      return [];
+    }
 
-  const elements = assignedElements(list);
+export const listElements = (list: Element):
+    Element[] => {
+      const nodes = assignedElements(list);
+      const listItems =
+          nodes
+              .map<Element|Element[]>((element) => {
+                if (element.classList.contains('mdc-list-item')) {
+                  return element;
+                }
 
-  return elements.reduce((isContained: boolean, listItem) => {
-    return isContained || listItem === activeElement || listItem.contains(activeElement);
-  }, false);
-}
+                return Array.from(element.querySelectorAll('.mdc-list-item'));
+              })
+              .reduce<Element[]>((listItems, listItemResult) => {
+                return listItems.concat(listItemResult);
+              }, []);
 
-export const getElementAtIndex = (list: Element, index: number): Element|undefined  => {
-  const elements = listElements(list);
+      return listItems;
+    }
 
-  return elements[index] as Element | undefined;
-}
+export const mdcRoot =
+    (list: Element) => {
+      return list.querySelector('.mdc-select') as HTMLElement;
+    }
 
-export const wrapFocus = (foundation: MDCListFoundation, wrapFocus: boolean) => {
-  foundation.setWrapFocus(wrapFocus);
-}
+export const getSlottedActiveElement = (list: Element):
+    Element|null => {
+      const first = getElementAtIndex(list, 0);
+      if (!first) {
+        return null;
+      }
+
+      const root = first.getRootNode() as unknown as DocumentOrShadowRoot;
+      return root ? root.activeElement : null;
+    }
+
+export const doContentsHaveFocus = (list: Element):
+    boolean => {
+      const activeElement = getSlottedActiveElement(list);
+      if (!activeElement) {
+        return false
+      }
+
+      const elements = assignedElements(list);
+
+      return elements.reduce((isContained: boolean, listItem) => {
+        return isContained || listItem === activeElement ||
+            listItem.contains(activeElement);
+      }, false);
+    }
+
+export const getElementAtIndex = (list: Element, index: number):
+    Element|undefined => {
+      const elements = listElements(list);
+
+      return elements[index] as Element | undefined;
+    }
+
+export const wrapFocus =
+    (foundation: MDCListFoundation, wrapFocus: boolean) => {
+      foundation.setWrapFocus(wrapFocus);
+    }
