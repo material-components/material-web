@@ -127,6 +127,7 @@ export abstract class SelectBase extends FormElement {
           <!-- @ts-ignore -->
           <div
               class="mdc-select__selected-text"
+              tabIndex="0"
               role="button"
               aria-haspopup="listbox"
               aria-labelledby="label"
@@ -143,7 +144,10 @@ export abstract class SelectBase extends FormElement {
             class="mdc-select__menu mdc-menu mdc-menu-surface"
             @selected=${this.onSelected}
             @opened=${this.onOpened}
-            @closed=${this.onClosed}>
+            @closed=${this.onClosed}
+            @keydown=${this.onMenuSurfaceKeydown}
+            @opened=${this.registerBodyClick}
+            @closed=${this.deregisterBodyClick}>
           <ul class="mdc-list">
             <slot></slot>
           </ul>
@@ -954,6 +958,26 @@ export abstract class SelectBase extends FormElement {
     }
   }
 
+  protected onMenuSurfaceKeydown(evt: KeyboardEvent) {
+    if (this.mdcMenuSurfaceFoundation) {
+      this.mdcMenuSurfaceFoundation.handleKeydown(evt)
+    }
+  }
+
+  protected onBodyClick(evt: MouseEvent) {
+    if (this.mdcMenuSurfaceFoundation) {
+      this.mdcMenuSurfaceFoundation.handleBodyClick(evt);
+    }
+  }
+
+  protected registerBodyClick() {
+    document.body.addEventListener('click', this.onBodyClick);
+  }
+
+  protected deregisterBodyClick() {
+    document.body.removeEventListener('click', this.onBodyClick);
+  }
+
   async firstUpdated() {
     const outlineElement = this.outlineElement;
     if (outlineElement) {
@@ -965,16 +989,6 @@ export abstract class SelectBase extends FormElement {
     // if (this.validateOnInitialRender) {
     //   this.reportValidity();
     // }
-
-    // if (this.selectedText_.hasAttribute(strings.ARIA_CONTROLS)) {
-    //   const helperTextElement =
-    //   document.getElementById(this.selectedText_.getAttribute(strings.ARIA_CONTROLS)!);
-    //   if (helperTextElement) {
-    //     this.helperText_ = helperTextFactory(helperTextElement);
-    //   }
-    // }
-
-    // this.menu_ = new MdcMenu(this.menuElement_);
   }
 
   disconnectedCallback() {
