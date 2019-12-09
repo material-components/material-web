@@ -1,5 +1,4 @@
-<html>
-<!--
+/**
 @license
 Copyright 2019 Google Inc. All Rights Reserved.
 
@@ -14,16 +13,19 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<head>
-  <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
-</head>
-<body>
-  <script type="module">
-    const params = new URLSearchParams(window.location.search);
-    const pack = params.get('package');
-    const bench = params.get('bench');
-    import(`./lib/test/src/benchmark/${pack}/${bench}.js`);
-  </script>
-</body>
-</html>
+*/
+
+import {customElement} from 'lit-element';
+import {SelectBase} from './mwc-select-base.js';
+import {style} from './mwc-select-css.js';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'mwc-select': Select;
+  }
+}
+
+@customElement('mwc-select')
+export class Select extends SelectBase {
+  static styles = style;
+}
