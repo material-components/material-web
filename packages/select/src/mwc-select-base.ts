@@ -38,6 +38,7 @@ import * as mwcListItem from './mwc-list-item-ponyfill';
 import * as mwcList from './mwc-list-ponyfill';
 import * as mwcMenu from './mwc-menu-ponyfill';
 import {menuAnchor} from './mwc-menu-surface-directive';
+import {isElement} from './util';
 
 // must be done to get past lit-analyzer checks
 declare global {
@@ -100,7 +101,9 @@ export abstract class SelectBase extends FormElement {
 
   @property({type: String}) icon = '';
 
-  protected listeners = [];
+  protected listeners: ({target: Element, name: string, cb: any})[] = [];
+  protected onBodyClickBound: (evt: MouseEvent) => void = () => {};
+  protected _outlineUpdateComplete: null|Promise<unknown> = null;
 
   render() {
     let outlinedOrUnderlined = html``;
@@ -135,7 +138,7 @@ export abstract class SelectBase extends FormElement {
               @blur=${this.onBlur}
               @keydown=${this.onKeydown}
               @click=${this.onClick}>
-              ${this.selectedText}
+            ${this.selectedText}
           </div>
           ${outlinedOrUnderlined}
         </div>
@@ -143,15 +146,13 @@ export abstract class SelectBase extends FormElement {
             role="listbox"
             class="mdc-select__menu mdc-menu mdc-menu-surface"
             @selected=${this.onSelected}
-            @keydown=${this.menuSurfaceOnKeydown}
-            @opened=${this.menuSurfaceRegisterBodyClick}
-            @closed=${this.menuSurfaceDeregisterBodyClick}
-            @opened=${this.menuOnOpened}
-            @keydown=${this.menuOnKeydown}
-            @action=${this.menuOnAction}
-            @opened=${this.onOpened}
-            @closed=${this.onClosed}>
-          <ul class="mdc-list">
+            @action=${this.menuOnAction}>
+          <ul
+              class="mdc-list"
+              @keydown=${this.listOnKeydown}
+              @click=${this.listOnClick}
+              @focusin=${this.listOnFocusin}
+              @focusout=${this.listOnFocusout}>
             <slot></slot>
           </ul>
         </div>
@@ -306,7 +307,7 @@ export abstract class SelectBase extends FormElement {
         }
       },
       getAnchorElement: () => this.anchorElement,
-      setMenuAnchorElement: () => {},
+      setMenuAnchorElement: () => { /* Handled by anchor directive */ },
       setMenuAnchorCorner: (anchorCorner) => {
         if (this.mdcMenuSurfaceFoundation) {
           mwcMenu.setAnchorCorner(this.mdcMenuSurfaceFoundation, anchorCorner);
@@ -511,8 +512,8 @@ export abstract class SelectBase extends FormElement {
         }
 
         const element = mwcList.getElementAtIndex(this.listElement, index);
-        if (element && element instanceof HTMLElement) {
-          element.focus();
+        if (element && isElement(element)) {
+          (element as HTMLElement).focus();
         }
       },
       setTabIndexForListItemChildren: (index, tabIndex) => {
@@ -564,7 +565,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const init: CustomEventInit = {bubbles:true};
+        const init: CustomEventInit = {bubbles: true};
         init.detail = {index};
         const ev = new CustomEvent('action', init);
         this.listElement.dispatchEvent(ev);
@@ -704,8 +705,8 @@ export abstract class SelectBase extends FormElement {
 
         const element = mwcList.getElementAtIndex(this.listElement, index);
 
-        if (element && element instanceof HTMLElement) {
-          element.focus();
+        if (element && isElement(element)) {
+          (element as HTMLElement).focus();
         }
       },
       focusListRoot: () => {
@@ -893,6 +894,7 @@ export abstract class SelectBase extends FormElement {
         }
 
         const anchorElement = mwcMenu.anchorElement(menuElement);
+        debugger;
 
         return anchorElement ? anchorElement.getBoundingClientRect() : null;
       },
@@ -974,11 +976,12 @@ export abstract class SelectBase extends FormElement {
   }
 
   protected menuSurfaceRegisterBodyClick() {
-    document.body.addEventListener('click', this.onBodyClick);
+    this.onBodyClickBound = this.onBodyClick.bind(this);
+    document.body.addEventListener('click', this.onBodyClickBound);
   }
 
   protected menuSurfaceDeregisterBodyClick() {
-    document.body.removeEventListener('click', this.onBodyClick);
+    document.body.removeEventListener('click', this.onBodyClickBound);
   }
 
   protected menuOnKeydown(evt: KeyboardEvent) {
@@ -988,24 +991,66 @@ export abstract class SelectBase extends FormElement {
   }
 
   protected menuOnAction(evt: CustomEvent<{index: number}>) {
-    if (this.mdcMenuFoundation) {
-      const el = mwcList.getElementAtIndex(this.listElement!, evt.detail.index);
+    if (this.mdcMenuFoundation && this.listElement) {
+      const el = mwcList.getElementAtIndex(this.listElement, evt.detail.index);
       if (el) {
         this.mdcMenuFoundation.handleItemAction(el);
       }
     }
   }
 
-  menuOnOpened() {
+  protected menuOnOpened() {
     if (this.mdcMenuFoundation) {
       this.mdcMenuFoundation.handleMenuSurfaceOpened();
     }
   }
 
+  private listOnFocusin(evt: FocusEvent) {
+    if (this.mdcListFoundation && this.listElement) {
+      const index = mwcList.getIndexOfTarget(this.listElement, evt);
+      this.mdcListFoundation.handleFocusIn(evt, index);
+    }
+  }
+
+  private listOnFocusout(evt: FocusEvent) {
+    if (this.mdcListFoundation && this.listElement) {
+      const index = mwcList.getIndexOfTarget(this.listElement, evt);
+      this.mdcListFoundation.handleFocusOut(evt, index);
+    }
+  }
+
+  private listOnKeydown(evt: KeyboardEvent) {
+    if (this.mdcListFoundation && this.listElement) {
+      const index = mwcList.getIndexOfTarget(this.listElement, evt);
+      const target = evt.target as Element;
+      const elements = mwcList.listElements(this.listElement);
+      const isRootListItem = elements ? elements.indexOf(target) !== -1 : false;
+      this.mdcListFoundation.handleKeydown(evt, isRootListItem, index);
+    }
+  }
+
+  private listOnClick(evt: MouseEvent) {
+    if (this.mdcListFoundation && this.listElement) {
+      const index = mwcList.getIndexOfTarget(this.listElement, evt);
+      const target = evt.target as Element | null;
+      const toggleCheckbox = target && 'getAttribute' in target ?
+          target.getAttribute('role') === 'radio' &&
+              target.getAttribute('aria-checked') === 'true' :
+          false;
+      this.mdcListFoundation.handleClick(index, toggleCheckbox);
+    }
+  }
+
+  async _getUpdateComplete() {
+    await super._getUpdateComplete();
+    await this._outlineUpdateComplete;
+  }
+
   async firstUpdated() {
     const outlineElement = this.outlineElement;
     if (outlineElement) {
-      await outlineElement.updateComplete;
+      this._outlineUpdateComplete = outlineElement.updateComplete;
+      await this._outlineUpdateComplete;
     }
 
     super.firstUpdated();
@@ -1013,10 +1058,61 @@ export abstract class SelectBase extends FormElement {
     // if (this.validateOnInitialRender) {
     //   this.reportValidity();
     // }
+
+    const menuElement = this.menuElement;
+    if (!menuElement) {
+      return;
+    }
+
+    this.listeners = [
+      {
+        target: menuElement,
+        name: 'keydown',
+        cb: this.menuSurfaceOnKeydown.bind(this),
+      },
+      {
+        target: menuElement,
+        name: 'opened',
+        cb: this.menuSurfaceRegisterBodyClick.bind(this),
+      },
+      {
+        target: menuElement,
+        name: 'closed',
+        cb: this.menuSurfaceDeregisterBodyClick.bind(this),
+      },
+      {
+        target: menuElement,
+        name: 'opened',
+        cb: this.menuOnOpened.bind(this),
+      },
+      {
+        target: menuElement,
+        name: 'keydown',
+        cb: this.menuOnKeydown.bind(this),
+      },
+      {
+        target: menuElement,
+        name: 'opened',
+        cb: this.onOpened.bind(this),
+      },
+      {
+        target: menuElement,
+        name: 'closed',
+        cb: this.onClosed.bind(this),
+      }
+    ];
+
+    for (const listener of this.listeners) {
+      listener.target.addEventListener(listener.name as any, listener.cb);
+    }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
+
+    for (const listener of this.listeners) {
+      listener.target.removeEventListener(listener.name, listener.cb);
+    }
   }
 
   focus() {
