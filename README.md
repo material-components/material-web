@@ -203,7 +203,7 @@ View the demos:
 
 ```sh
 npm run dev
-http://127.0.0.1:80801/demos
+http://127.0.0.1:8001/demos
 ```
 
 Run all tests:
