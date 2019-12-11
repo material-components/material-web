@@ -57,7 +57,7 @@ limitations under the License.
 
 .mdc-button {
   flex: auto;
-
+  overflow: hidden;
   text-transform: var(--mdc-button-text-transform, uppercase);
   letter-spacing: var(--mdc-button-letter-spacing, mdc-typography-get-letter-spacing_(1.25, .875));
 
@@ -71,6 +71,10 @@ limitations under the License.
   &.mdc-button--outlined {
     @include mdc-button-outline-width-var-aware(var(--mdc-button-outline-width, #{$mdc-button-outlined-border-width}), var(--mdc-button-horizontal-padding, #{$mdc-button-contained-horizontal-padding}));
     border-color: var(--mdc-button-outline-color, var(--mdc-theme-primary, #{mdc-theme-prop-value(primary)}));
+  }
+
+  .mdc-button__ripple {
+    border-radius: 0;
   }
 }
 

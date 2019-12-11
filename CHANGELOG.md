@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Changed
+
+- **BREAKING:VISUAL** Wrap mwc-button label in a slot
+- Remove mwc-button border-radius from ripple
+- Make mwc-button internal button overflow none
+
 ### Added
 
 - Added custom properties to style `mwc-radio`'s colors
