@@ -816,7 +816,7 @@ export abstract class SelectBase extends FormElement {
       },
       setTransformOrigin: (origin) => {
         if (this.menuElement) {
-          mwcMenu.setTransformOrigin(this.menuElement, origin)
+          mwcMenu.setTransformOrigin(this.menuElement, origin);
         }
       },
       isFocused: () => {
@@ -894,7 +894,6 @@ export abstract class SelectBase extends FormElement {
         }
 
         const anchorElement = mwcMenu.anchorElement(menuElement);
-        debugger;
 
         return anchorElement ? anchorElement.getBoundingClientRect() : null;
       },
