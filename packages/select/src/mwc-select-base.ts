@@ -37,7 +37,7 @@ import {classMap} from 'lit-html/directives/class-map';
 import * as mwcListItem from './mwc-list-item-ponyfill';
 import * as mwcList from './mwc-list-ponyfill';
 import * as mwcMenu from './mwc-menu-ponyfill';
-import {menuAnchor} from './mwc-menu-surface-directive';
+import {menuAnchor} from './mwc-menu-surface-anchor-directive';
 import {isElement} from './util';
 
 // must be done to get past lit-analyzer checks
