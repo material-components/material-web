@@ -388,4 +388,12 @@ export class DialogBase extends BaseElement {
           'keydown', this.boundHandleDocumentKeydown);
     }
   }
+
+  close() {
+    this.open = false;
+  }
+
+  show() {
+    this.open = true;
+  }
 }

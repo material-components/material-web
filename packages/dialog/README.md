@@ -232,7 +232,10 @@ npm install @material/mwc-dialog
 | -------- | -------------
 | `forceLayout() => void` | Forces dialog to relayout (animation frame time). May be required if dialog size is incorrect or if stacked layout has not been triggered correctly.
 | `focus() => void` | Focuses on the initial focus element if defined (see [focus section](#focus)).
-| `blur() => void` | Blurs the active element.
+| `blur() => void`  | Blurs the active element.
+| `blur() => void`  | Blurs the active element.
+| `show() => void`  | Opens the dialog.
+| `close() => void` | Closes the dialog.
 
 ### Listeners
 | Event Name          | Target       | Description
