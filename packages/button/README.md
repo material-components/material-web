@@ -130,8 +130,8 @@ mwc-button {
 | Name | Default | Description
 | ------------------------------------- | -------------------------------------------------- | ---
 | `--mdc-icon-font` | [`Material Icons`](https://google.github.io/material-design-icons/)    | Font to use for the icon.
-| `--mdc-theme-primary`                 | ![](images/color_6200ee.png) `#6200ee`             | Background color of the button
-| `--mdc-theme-on-primary`              | ![](images/color_ffffff.png) `#ffffff`             | Text color of the button
+| `--mdc-theme-primary`                 | ![](images/color_6200ee.png) `#6200ee`             | Background color of the button.
+| `--mdc-theme-on-primary`              | ![](images/color_ffffff.png) `#ffffff`             | Text color of the button.
 | `--mdc-button-text-transform`         | `uppercase`                                        | `text-transform` on the button label.
 | `--mdc-button-letter-spacing`         | `0.0892857143em`                                   | `letter-spacing` on the button label.
 | `--mdc-button-horizontal-padding`     | filled: `16px` outlined: `15px` default: `8px`     | Left and right padding of the button label (for outlined buttons the outline width is automatically subtracted).
