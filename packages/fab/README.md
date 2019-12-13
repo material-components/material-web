@@ -100,6 +100,17 @@ mwc-fab {
 | `--mdc-icon-font`          | [`Material Icons`](https://google.github.io/material-design-icons/) | Font to use for the icon.
 | `--mdc-theme-on-secondary` | ![](images/color_ffffff.png) `#ffffff` | Foreground color of the label and icon.
 | `--mdc-theme-secondary`    | ![](images/color_018786.png) `#018786` | Background color of the FAB.
+| `--mdc-fab-box-shadow`        | mdc elevation 6  | Sets the box shadow of the fab.
+| `--mdc-fab-box-shadow-hover`  | mdc elevation 8  | Sets the box shadow of the fab when focused or hovered.
+| `--mdc-fab-box-shadow-active` | mdc elevation 12 | Sets the box shadow of the fab when active.
+
+#### Elevation values
+
+| Elevation Level | CSS Value
+| -- | -
+`6`  | `0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12)`
+`8`  | `0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)`
+`12` | `0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12)`
 
 ## Additional references
 

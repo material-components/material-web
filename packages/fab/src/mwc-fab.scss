@@ -14,6 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+@import '@material/mwc-base/src/elevation.scss';
 @import '@material/mwc-icon/src/_mwc-icon.scss';
 @import '@material/fab/mdc-fab.scss';
 
@@ -25,4 +26,17 @@ limitations under the License.
 
 :host {
   outline: none;
+}
+
+.mdc-fab {
+  box-shadow: var(--mdc-fab-box-shadow, #{elevation-box-shadow(6)});
+
+  &:hover,
+  &:focus {
+    box-shadow: var(--mdc-fab-box-shadow-hover, #{elevation-box-shadow(8)});
+  }
+
+  &:active {
+    box-shadow: var(--mdc-fab-box-shadow-active, #{elevation-box-shadow(12)});
+  }
 }
