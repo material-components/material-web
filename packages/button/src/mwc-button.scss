@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+@import '@material/mwc-base/src/elevation.scss';
 @import '@material/button/mdc-button.scss';
 @import '@material/mwc-icon/src/_mwc-icon.scss';
 
@@ -33,6 +34,24 @@ limitations under the License.
 
   @include mdc-feature-targets($feat-structure) {
     border-width: $outline-width;
+  }
+}
+
+.mdc-button--raised {
+
+  box-shadow: var(--mdc-button-raised-box-shadow, #{elevation-box-shadow(2)});
+
+  &:hover,
+  &:focus {
+    box-shadow: var(--mdc-button-raised-box-shadow-hover, #{elevation-box-shadow(4)});
+  }
+
+  &:active {
+    box-shadow: var(--mdc-button-raised-box-shadow-active, #{elevation-box-shadow(8)});
+  }
+
+  &:disabled {
+    box-shadow: var(--mdc-button-raised-box-shadow-disabled, #{elevation-box-shadow(0)});
   }
 }
 
