@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - CSS styling options to `mwc-tab`
 - `active` attribute to `mwc-tab` when (de)activated
 - Added  custom properties to style `mwc-checkbox`'s colors
+- Added `show` and `close` methods to `mwc-dialog`
 
 ### Fixed
 
