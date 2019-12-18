@@ -140,6 +140,19 @@ mwc-button {
 | `--mdc-button-disabled-fill-color`    | ![](images/color_0,0,0,12.png) `rgba(0,0,0,0.12)`  | Background fill color of a disabled raised or unelevated button.
 | `--mdc-button-disabled-ink-color`     | ![](images/color_0,0,0,37.png) `rgba(0,0,0,0.37)`  | Text color of a disabled button as well as the outline color of a disabled outlined button.
 | `--mdc-button-disabled-outline-color` | ![](images/color_0,0,0,37.png) `--mdc-button-disabled-ink-color` | Sets the color of the outline of a disabled outlined button. (Overrides `--mdc-button-disabled-ink-color`)
+| `--mdc-button-raised-box-shadow`          | mdc elevation 2 | Sets the box shadow of the raised button.
+| `--mdc-button-raised-box-shadow-hover`    | mdc elevation 4 | Sets the box shadow of the raised button when focused or hovered.
+| `--mdc-button-raised-box-shadow-active`   | mdc elevation 8 | Sets the box shadow of the raised button when active.
+| `--mdc-button-raised-box-shadow-disabled` | mdc elevation 0 | Sets the box shadow of the raised button when disabled.
+
+#### Elevation values
+
+| Elevation Level | CSS Value
+| - | -
+`2` | `0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12)`
+`4` | `0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)`
+`8` | `0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)`
+`0` | `0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12)`
 
 ## Additional references
 

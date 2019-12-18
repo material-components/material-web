@@ -267,6 +267,13 @@ npm install @material/mwc-dialog
 | `--mdc-dialog-max-width`            | `560px`               | max-width of the dialog surface. (**Note:** if max-width is < `560px`, there is a visual jank bug that will occur causing the max width to be `560px` when the window is sized to <= than `560px`).
 | `--mdc-dialog-max-height`           | `calc(100% - 32px)`   | Max height of the dialog surface.
 | `--mdc-dialog-shape-radius`         | `4px`                 | Corner radius of the dialog surface.
+| `--mdc-dialog-box-shadow`           | mdc elevation 24      | Sets the box shadow of the dialog.
+
+#### Elevation values
+
+| Elevation Level | CSS Value
+| -- | -
+`24` | `0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)`
 
 ### Actions
 

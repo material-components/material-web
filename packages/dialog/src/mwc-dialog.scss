@@ -15,12 +15,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+@import '@material/mwc-base/src/elevation.scss';
 @import '@material/dialog/mdc-dialog.scss';
 @import '@material/feature-targeting/functions';
 @import '@material/feature-targeting/mixins';
 
 #actions:not(.mdc-dialog__actions) {
   display: none;
+}
+
+.mdc-dialog__surface {
+  box-shadow: var(--mdc-dialog-box-shadow, #{elevation-box-shadow(24)});
 }
 
 @mixin mwc-dialog-core-styles($query: mdc-feature-all()) {
