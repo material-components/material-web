@@ -104,7 +104,7 @@ export abstract class SelectBase extends FormElement {
   protected listeners: ({
     target: Element;
     name: string;
-    cb: any
+    cb: any;
   })[] = [];
   protected onBodyClickBound: (evt: MouseEvent) => void = () => {};
   protected _outlineUpdateComplete: null|Promise<unknown> = null;
@@ -311,7 +311,7 @@ export abstract class SelectBase extends FormElement {
         }
       },
       getAnchorElement: () => this.anchorElement,
-      setMenuAnchorElement: () => { /* Handled by anchor directive */ },
+      setMenuAnchorElement: () => {/* Handled by anchor directive */},
       setMenuAnchorCorner: (anchorCorner) => {
         if (this.mdcMenuSurfaceFoundation) {
           mwcMenu.setAnchorCorner(this.mdcMenuSurfaceFoundation, anchorCorner);

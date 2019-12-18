@@ -16,6 +16,18 @@
  */
 import MDCListFoundation from '@material/list/foundation';
 
+export const assignedElements = (list: Element): Element[] => {
+  const slot = list.querySelector('slot');
+
+  if (slot) {
+    return slot.assignedNodes({flatten: true})
+               .filter((node) => (node.nodeType === Node.ELEMENT_NODE)) as
+        Element[];
+  }
+
+  return [];
+};
+
 export const selected = (list: Element) => {
   const children = assignedElements(list);
   for (const child of children) {
@@ -42,18 +54,6 @@ export const select = (list: Element, itemToSelect: Element) => {
   itemToSelect.removeAttribute('aria-selected');
 };
 
-export const assignedElements = (list: Element): Element[] => {
-  const slot = list.querySelector('slot');
-
-  if (slot) {
-    return slot.assignedNodes({flatten: true})
-               .filter((node) => (node.nodeType === Node.ELEMENT_NODE)) as
-        Element[];
-  }
-
-  return [];
-};
-
 export const listElements = (list: Element): Element[] => {
   const nodes = assignedElements(list);
   const listItems =
@@ -75,6 +75,13 @@ export const listElements = (list: Element): Element[] => {
 export const mdcRoot = (list: Element) => {
   return list as HTMLElement;
 };
+
+export const getElementAtIndex =
+    (list: Element, index: number): Element|undefined => {
+      const elements = listElements(list);
+
+      return elements[index] as Element | undefined;
+    };
 
 export const getSlottedActiveElement = (list: Element): Element|null => {
   const first = getElementAtIndex(list, 0);
@@ -99,13 +106,6 @@ export const doContentsHaveFocus = (list: Element): boolean => {
         listItem.contains(activeElement);
   }, false);
 };
-
-export const getElementAtIndex =
-    (list: Element, index: number): Element|undefined => {
-      const elements = listElements(list);
-
-      return elements[index] as Element | undefined;
-    };
 
 export const wrapFocus =
     (foundation: MDCListFoundation, wrapFocus: boolean) => {
