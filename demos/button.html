@@ -159,14 +159,14 @@ limitations under the License.
 
   <script>
     document.querySelectorAll('style[data-pre]').forEach(function(e) {
-      const preId = e.dataset.pre;
-      const pre = document.querySelector('#' + preId);
+      var preId = e.dataset.pre;
+      var pre = document.querySelector('#' + preId);
       if (pre) {
         pre.innerText = e.innerText;
       }
     });
 
-    addEventListener('load', () => document.body.classList.remove('unresolved'));
+    addEventListener('load', function() { document.body.classList.remove('unresolved'); });
   </script>
 </body>
 </html>

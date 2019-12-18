@@ -68,7 +68,7 @@ limitations under the License.
     <div class="demo-log" id="log"></div>
   </main>
   <script>
-    button.addEventListener('click', (e) => {
+    button.addEventListener('click', function (e) {
       menu.setAnchorCorner(menu.Corner.BOTTOM_START);
       menu.open = !menu.open;
     })
@@ -78,7 +78,7 @@ limitations under the License.
       log.textContent = `selected: ${detail.index}, ${detail.item.label}`;
     });
 
-    addEventListener('load', () => document.body.classList.remove('unresolved'));
+    addEventListener('load', function() { document.body.classList.remove('unresolved'); });
   </script>
 </body>
 </html>

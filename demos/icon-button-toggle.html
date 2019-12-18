@@ -59,10 +59,10 @@ limitations under the License.
   </main>
 
   <script type="module">
-    Array.from(document.querySelectorAll('mwc-icon-button-toggle')).forEach((e) => {
-      e.addEventListener('MDCIconButtonToggle:change', (e) => console.log(e.type, e.target));
+    Array.from(document.querySelectorAll('mwc-icon-button-toggle')).forEach(function(e) {
+      e.addEventListener('MDCIconButtonToggle:change', function(e) {console.log(e.type, e.target)});
     });
-    addEventListener('load', () => document.body.classList.remove('unresolved'));
+    addEventListener('load', function() { document.body.classList.remove('unresolved'); });
   </script>
 </body>
 </html>

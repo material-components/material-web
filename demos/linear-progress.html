@@ -61,11 +61,11 @@ limitations under the License.
   </main>
 
   <script>
-    toggle.onclick = (e) => {
+    toggle.onclick = function (e) {
       progress1.closed = !progress1.closed;
     }
 
-    addEventListener('load', () => document.body.classList.remove('unresolved'));
+    addEventListener('load', function() { document.body.classList.remove('unresolved'); });
   </script>
 </body>
 </html>
