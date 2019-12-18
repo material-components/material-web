@@ -23,3 +23,25 @@ limitations under the License.
 :host {
   display: inline-block;
 }
+
+.mdc-select--outlined {
+  &:not(.mdc-select--disabled) {
+    @include mdc-select-focused-outline-color(primary);
+
+    --mdc-notched-outline-border-color: var(--mdc-select-outlined-idle-border-color, #{$mdc-select-outlined-idle-border});
+
+    // stylelint-disable-next-line selector-combinator-space-after
+    &:not(.mdc-select--focused) .mdc-select__selected-text:hover ~ mwc-notched-outline {
+      --mdc-notched-outline-border-color: var(--mdc-select-outlined-hover-border-color, #{$mdc-select-outlined-hover-border});
+    }
+
+    &.mdc-select--focused mwc-notched-outline {
+      --mdc-notched-outline-stroke-width: 2px;
+      --mdc-notched-outline-border-color: var(--mdc-select-outlined-focused-border-color, var(--mdc-theme-primary, #{$mdc-theme-primary}));
+    }
+  }
+
+  &.mdc-select--disabled.mdc-select--outlined mwc-notched-outline {
+    --mdc-notched-outline-border-color: var(--mdc-select-outlined-disabled-border-color, #{$mdc-select-outlined-disabled-border});
+  }
+}
