@@ -19,7 +19,9 @@ import MDCListFoundation from '@material/list/foundation';
 export const selected = (list: Element) => {
   const children = assignedElements(list);
   for (const child of children) {
-    const selected = child.classList.contains('mdc-list-item--selected') ? child : child.querySelector('.mdc-list-item--selected');
+    const selected = child.classList.contains('mdc-list-item--selected') ?
+        child :
+        child.querySelector('.mdc-list-item--selected');
     if (selected) {
       return selected;
     }
@@ -45,7 +47,7 @@ export const assignedElements = (list: Element): Element[] => {
 
   if (slot) {
     return slot.assignedNodes({flatten: true})
-               .filter(node => (node.nodeType === Node.ELEMENT_NODE)) as
+               .filter((node) => (node.nodeType === Node.ELEMENT_NODE)) as
         Element[];
   }
 
@@ -87,7 +89,7 @@ export const getSlottedActiveElement = (list: Element): Element|null => {
 export const doContentsHaveFocus = (list: Element): boolean => {
   const activeElement = getSlottedActiveElement(list);
   if (!activeElement) {
-    return false
+    return false;
   }
 
   const elements = assignedElements(list);
@@ -114,7 +116,7 @@ export const getIndexOfElement = (list: Element, element: Element) => {
   const elements = listElements(list);
 
   return elements.indexOf(element);
-}
+};
 
 export const getIndexOfTarget = (list: Element, evt: Event) => {
   const elements = listElements(list);

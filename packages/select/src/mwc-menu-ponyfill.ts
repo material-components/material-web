@@ -16,9 +16,10 @@ limitations under the License.
 */
 import {Corner} from '@material/menu-surface/constants';
 import MDCMenuSurfaceFoundation from '@material/menu-surface/foundation';
+import {MDCMenuDistance} from '@material/menu-surface/types';
 import {getTransformPropertyName} from '@material/menu-surface/util';
+
 import {isElement} from './util';
-import { MDCMenuDistance } from '@material/menu-surface/types';
 
 export const open = (foundation: MDCMenuSurfaceFoundation) => {
   foundation.open();
@@ -40,7 +41,7 @@ const assignedElements = (menu: Element): Element[] => {
 
   if (slot) {
     return slot.assignedNodes({flatten: true})
-               .filter(node => (isElement(node))) as Element[];
+               .filter((node) => (isElement(node))) as Element[];
   }
 
   return [];
@@ -60,20 +61,21 @@ export const setTransformOrigin = (menu: HTMLElement, origin: string) => {
 };
 
 export const mdcRoot = (menu: Element) => {
-  return menu.classList.contains('mdc-menu') ? menu : menu.querySelector('.mdc-menu');
+  return menu.classList.contains('mdc-menu') ? menu :
+                                               menu.querySelector('.mdc-menu');
 };
 
-export const position = (menu: HTMLElement, position: Partial<MDCMenuDistance>) => {
-  menu.style.left = 'left' in position ? `${position.left}px` : '';
-  menu.style.right = 'right' in position ? `${position.right}px` : '';
-  menu.style.top = 'top' in position ? `${position.top}px` : '';
-  menu.style.bottom =
-      'bottom' in position ? `${position.bottom}px` : '';
-}
+export const position =
+    (menu: HTMLElement, position: Partial<MDCMenuDistance>) => {
+      menu.style.left = 'left' in position ? `${position.left}px` : '';
+      menu.style.right = 'right' in position ? `${position.right}px` : '';
+      menu.style.top = 'top' in position ? `${position.top}px` : '';
+      menu.style.bottom = 'bottom' in position ? `${position.bottom}px` : '';
+    };
 
 export const maxHeight = (menu: HTMLElement, height: string) => {
   menu.style.maxHeight = height;
-}
+};
 
 export const getDeepFocus = () => {
   let activeElement = document.activeElement;
@@ -96,7 +98,7 @@ export const getDeepFocus = () => {
 export const setPreviousFocus =
     (menu: Element, previouslyFocused: Element|null) => {
       (menu as Element & {
-        _previousFocus: HTMLElement | Element | null
+        _previousFocus: HTMLElement|Element|null;
       })._previousFocus = previouslyFocused;
     };
 

@@ -101,7 +101,11 @@ export abstract class SelectBase extends FormElement {
 
   @property({type: String}) icon = '';
 
-  protected listeners: ({target: Element, name: string, cb: any})[] = [];
+  protected listeners: ({
+    target: Element;
+    name: string;
+    cb: any
+  })[] = [];
   protected onBodyClickBound: (evt: MouseEvent) => void = () => {};
   protected _outlineUpdateComplete: null|Promise<unknown> = null;
 
@@ -379,7 +383,7 @@ export abstract class SelectBase extends FormElement {
 
         const items = mwcList.listElements(listElement);
 
-        return items.map(item => mwcListItem.value(item));
+        return items.map((item) => mwcListItem.value(item));
       },
       getMenuItemTextAtIndex: (index) => {
         const listElement = this.listElement;
@@ -438,7 +442,7 @@ export abstract class SelectBase extends FormElement {
 
     if (this.mdcListFoundation) {
       this.mdcListFoundation.destroy();
-    };
+    }
 
     const mdcListAdapter: MDCListAdapter = {
       getListItemCount: () => {
@@ -614,7 +618,7 @@ export abstract class SelectBase extends FormElement {
 
     if (this.mdcMenuFoundation) {
       this.mdcMenuFoundation.destroy();
-    };
+    }
 
     const mdcMenuAdapter: MDCMenuAdapter = {
       addClassToElementAtIndex: (index, className) => {
@@ -729,14 +733,14 @@ export abstract class SelectBase extends FormElement {
         }
 
         const selectionGroupEl =
-            closest(elementAtIndex, `.mdc-menu__selection-group`);
+            closest(elementAtIndex, '.mdc-menu__selection-group');
 
         if (!selectionGroupEl) {
           return -1;
         }
 
         const selectedItemEl =
-            selectionGroupEl.querySelector(`.mdc-menu-item--selected`);
+            selectionGroupEl.querySelector('.mdc-menu-item--selected');
 
         if (!selectedItemEl) {
           return -1;
@@ -773,7 +777,7 @@ export abstract class SelectBase extends FormElement {
 
     if (this.mdcMenuSurfaceFoundation) {
       this.mdcMenuSurfaceFoundation.destroy();
-    };
+    }
 
     const mdcMenuSurfaceAdapter: MDCMenuSurfaceAdapter = {
       ...addHasRemoveClass(this.menuElement),
@@ -901,8 +905,9 @@ export abstract class SelectBase extends FormElement {
       },
       getBodyDimensions: () => {
         return {
-          width: document.body.clientWidth, height: document.body.clientHeight,
-        }
+          width: document.body.clientWidth,
+          height: document.body.clientHeight,
+        };
       },
       getWindowDimensions: () => {
         return {
@@ -950,7 +955,7 @@ export abstract class SelectBase extends FormElement {
 
   protected menuSurfaceOnKeydown(evt: KeyboardEvent) {
     if (this.mdcMenuSurfaceFoundation) {
-      this.mdcMenuSurfaceFoundation.handleKeydown(evt)
+      this.mdcMenuSurfaceFoundation.handleKeydown(evt);
     }
   }
 
@@ -1156,7 +1161,7 @@ export abstract class SelectBase extends FormElement {
       }
 
       const normalizedX = xCoord - targetClientRect.left;
-      this.mdcFoundation.handleClick(normalizedX)
+      this.mdcFoundation.handleClick(normalizedX);
     }
   }
 
