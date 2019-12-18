@@ -921,17 +921,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const mdcRoot = mwcMenu.mdcRoot(menuElement) as HTMLElement;
-
-        if (!mdcRoot) {
-          return;
-        }
-
-        mdcRoot.style.left = 'left' in position ? `${position.left}px` : '';
-        mdcRoot.style.right = 'right' in position ? `${position.right}px` : '';
-        mdcRoot.style.top = 'top' in position ? `${position.top}px` : '';
-        mdcRoot.style.bottom =
-            'bottom' in position ? `${position.bottom}px` : '';
+        mwcMenu.position(menuElement, position);
       },
       setMaxHeight: (height) => {
         const menuElement = this.menuElement;
@@ -940,13 +930,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const mdcRoot = mwcMenu.mdcRoot(menuElement) as HTMLElement;
-
-        if (!mdcRoot) {
-          return;
-        }
-
-        mdcRoot.style.maxHeight = height;
+        mwcMenu.maxHeight(menuElement, height);
       },
     };
 
