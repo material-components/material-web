@@ -19,7 +19,7 @@ import MDCListFoundation from '@material/list/foundation';
 export const selected = (list: Element) => {
   const children = assignedElements(list);
   for (const child of children) {
-    const selected = child.querySelector('.mdc-list-item--selected');
+    const selected = child.classList.contains('mdc-list-item--selected') ? child : child.querySelector('.mdc-list-item--selected');
     if (selected) {
       return selected;
     }
@@ -109,6 +109,12 @@ export const wrapFocus =
     (foundation: MDCListFoundation, wrapFocus: boolean) => {
       foundation.setWrapFocus(wrapFocus);
     };
+
+export const getIndexOfElement = (list: Element, element: Element) => {
+  const elements = listElements(list);
+
+  return elements.indexOf(element);
+}
 
 export const getIndexOfTarget = (list: Element, evt: Event) => {
   const elements = listElements(list);

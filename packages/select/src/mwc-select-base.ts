@@ -395,11 +395,12 @@ export abstract class SelectBase extends FormElement {
 
         return element.textContent as string;
       },
-      getMenuItemAttr: (menuItem, attr) => {
-        return menuItem.getAttribute(attr);
+      getMenuItemAttr: (menuItem) => {
+        return mwcListItem.value(menuItem);
       },
       addClassAtIndex: (index, className) => {
         const listElement = this.listElement;
+
         if (!listElement) {
           return;
         }
@@ -414,6 +415,7 @@ export abstract class SelectBase extends FormElement {
       },
       removeClassAtIndex: (index, className) => {
         const listElement = this.listElement;
+
         if (!listElement) {
           return;
         }
@@ -1087,6 +1089,17 @@ export abstract class SelectBase extends FormElement {
 
     for (const listener of this.listeners) {
       listener.target.addEventListener(listener.name as any, listener.cb);
+    }
+
+    if (menuElement) {
+      const selected = mwcList.selected(menuElement);
+
+      if (selected) {
+        const index = mwcList.getIndexOfElement(menuElement, selected);
+        if (index !== -1 && this.mdcFoundation) {
+          this.mdcFoundation.setSelectedIndex(index);
+        }
+      }
     }
   }
 
