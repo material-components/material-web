@@ -311,7 +311,9 @@ export abstract class SelectBase extends FormElement {
         }
       },
       getAnchorElement: () => this.anchorElement,
-      setMenuAnchorElement: () => {/* Handled by anchor directive */},
+      setMenuAnchorElement: () => {
+        /* Handled by anchor directive */
+      },
       setMenuAnchorCorner: (anchorCorner) => {
         if (this.mdcMenuSurfaceFoundation) {
           mwcMenu.setAnchorCorner(this.mdcMenuSurfaceFoundation, anchorCorner);
