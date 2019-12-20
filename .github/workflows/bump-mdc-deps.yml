@@ -33,7 +33,7 @@ jobs:
       # https://github.com/github/hub instead?
       uses: peter-evans/create-pull-request@v1.5.2
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.TEDIUM_BOT_GITHUB_ACCESS_TOKEN }}
         COMMIT_MESSAGE: Auto bump MDC Web deps to ${{ steps.bump.outputs.new-mdc-version }}
         # TODO Find or make an account that is whitelisted to not trigger the# CLA check.
         COMMIT_AUTHOR_EMAIL: format-bot@polymer-project.org
