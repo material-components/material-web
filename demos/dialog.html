@@ -158,25 +158,25 @@ limitations under the License.
     </mwc-dialog>
 
   <script>
-    addEventListener('load', () => document.body.classList.remove('unresolved'));
+    addEventListener('load', function() { document.body.classList.remove('unresolved'); });
 
-    const buttons = document.body.querySelectorAll('mwc-button[data-num]');
+    var buttons = document.body.querySelectorAll('mwc-button[data-num]');
 
-    for (let i = 0; i < buttons.length; i++) {
-      const button = buttons[i];
-      const buttonNum = button.dataset.num;
+    for (var i = 0; i < buttons.length; i++) {
+      var button = buttons[i];
+      var buttonNum = button.dataset.num;
 
-      button.addEventListener('click', () => {
-        const dialog = document.body.querySelector('#dialog' + buttonNum);
+      button.addEventListener('click', function() {
+        var dialog = document.body.querySelector('#dialog' + buttonNum);
         dialog.open = true;
       });
     }
 
-    toggleActions.onclick = () => {
-      const dialog = document.body.querySelector('#dialog4');
-      const hideActionSpan = document.body.querySelector('#hideActionVal');
+    toggleActions.onclick = function() {
+      var dialog = document.body.querySelector('#dialog4');
+      var hideActionSpan = document.body.querySelector('#hideActionVal');
 
-      const hideAction = !dialog.hideActions;
+      var hideAction = !dialog.hideActions;
       dialog.hideActions = hideAction;
       hideActionSpan.innerText = hideAction;
     }

@@ -36,10 +36,10 @@
     </div>
   </mwc-top-app-bar-fixed>
   <script>
-    const flags = {};
+    var flags = {};
     // from url
     location.search.slice(1).split('&').forEach(function(option) {
-      const parts = option.split('=');
+      var parts = option.split('=');
       bar[parts[0]] = parts[1] || true;
     });
     if (bar.prominent || bar.dense) {
@@ -50,7 +50,9 @@
       bar.classList.add('custom');
     }
     if (bar.centerTitle) {
-      for (const node of bar.querySelectorAll('.notCenter')) {
+      var nodes = bar.querySelectorAll('.notCenter');
+      for (var i = 0; i < nodes.length; i++) {
+        var node = nodes[i];
         bar.removeChild(node);
       }
     }

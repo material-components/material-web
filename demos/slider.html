@@ -71,12 +71,12 @@ limitations under the License.
     function show(element, e) {
       element.textContent = `Value from ${e.type}: ${e.detail.value}`;
     }
-    Array.from(document.querySelectorAll('mwc-slider')).forEach((e) => {
-      e.addEventListener('MDCSlider:input', (e) => show(window.logInput, e));
-      e.addEventListener('MDCSlider:change', (e) => show(window.logChange, e));
+    Array.from(document.querySelectorAll('mwc-slider')).forEach(function(e) {
+      e.addEventListener('input', function(e) {show(window.logInput, e)});
+      e.addEventListener('change', function(e) {show(window.logChange, e)});
     });
 
-    addEventListener('load', () => document.body.classList.remove('unresolved'));
+    addEventListener('load', function() { document.body.classList.remove('unresolved'); });
   </script>
 </body>
 </html>

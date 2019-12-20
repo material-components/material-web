@@ -48,25 +48,25 @@ limitations under the License.
 
   </main>
   <script>
-    snack1.onclick = () => {
+    snack1.onclick = function() {
       snack.stacked = false;
       snack.leading = false;
       snack.open();
     }
 
-    snack2.onclick = () => {
+    snack2.onclick = function() {
       snack.stacked = false;
       snack.leading = true;
       snack.open();
     }
 
-    snack3.onclick = () => {
+    snack3.onclick = function() {
       snack.stacked = true;
       snack.leading = false;
       snack.open();
     }
 
-    addEventListener('load', () => document.body.classList.remove('unresolved'));
+    addEventListener('load', function() { document.body.classList.remove('unresolved'); });
   </script>
 </body>
 </html>
