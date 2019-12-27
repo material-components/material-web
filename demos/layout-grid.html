@@ -1,0 +1,159 @@
+<!doctype html>
+<!--
+@license
+Copyright 2018 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+<head>
+  <title>layout grid demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-layout-grid/mwc-layout-grid.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-button/mwc-button.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
+  <link rel="stylesheet" href="demo-component.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
+  <style>
+    mwc-layout-grid {
+      --mwc-layout-grid-background: #DDDDDD;
+      --mwc-layout-grid-max-width: 800px;
+      --mdc-layout-grid-columns: 8;
+      width: 100%;
+    }
+    .demo-cell {
+      height: 100px;
+      background: #AAAAAA;
+      text-align: center;
+    }
+    .demo-grid--cell-alignment {
+      --mwc-layout-grid-min-height: 200px;
+    }
+  </style>
+</head>
+<body class="unresolved">
+  <header>
+    <a href="index.html"><mwc-icon>arrow_back</mwc-icon>
+    <span>Layout Grid</span></a>
+  </header>
+
+  <main>
+    <h2>Default</h2>
+    <div class="demo-group wrap">
+      <p>Material design’s responsive UI is based on a column-variate grid layout. It has 12 columns on desktop, 8 columns on tablet and 4 columns on phone.</p>
+      <mwc-layout-grid>
+        <div class="demo-cell"></div>
+        <div class="demo-cell"></div>
+        <div class="demo-cell"></div>
+      </mwc-layout-grid>
+    </div>
+
+    <h2>Cell span</h2>
+    <div class="demo-group wrap">
+      <mwc-layout-grid>
+        <div class="demo-cell">Default span 4</div>
+        <mwc-layout-grid-cell span="1">
+          <div class="demo-cell">Span 1</div>
+        </mwc-layout-grid-cell>
+        <mwc-layout-grid-cell span='{"desktop":"3","tablet":"2","phone":"1"}'>
+          <div class="demo-cell">Span<br/>{"desktop":"3", "tablet":"2", "phone":"1"}</div>
+        </mwc-layout-grid-cell>
+        <div class="demo-cell">Default span 4</div>
+        <mwc-layout-grid-cell span="2">
+          <div class="demo-cell">Span 2</div>
+        </mwc-layout-grid-cell>
+        <mwc-layout-grid-cell span="5">
+          <div class="demo-cell">Span 5</div>
+        </mwc-layout-grid-cell>
+        <mwc-layout-grid-cell span="4">
+          <div class="demo-cell">Span 4</div>
+        </mwc-layout-grid-cell>
+        <mwc-layout-grid-cell span="1">
+          <div class="demo-cell">Span 1</div>
+        </mwc-layout-grid-cell>
+      </mwc-layout-grid>
+    </div>
+
+    <h2>Grid Left Alignment</h2>
+    <div class="demo-group wrap">
+      <mwc-layout-grid position="left" fixedColumnWidth>
+        <div class="demo-cell"></div>
+        <div class="demo-cell"></div>
+        <div class="demo-cell"></div>
+      </mwc-layout-grid>
+    </div>
+
+    <h2>Grid Right Alignment</h2>
+    <div class="demo-group wrap">
+      <mwc-layout-grid position="right" >
+        <div class="demo-cell"></div>
+        <div class="demo-cell"></div>
+        <div class="demo-cell"></div>
+      </mwc-layout-grid>
+    </div>
+
+    <h2>Cell Alignment</h2>
+    <div class="demo-group wrap">
+      <mwc-layout-grid class="demo-grid--cell-alignment">
+        <mwc-layout-grid-cell align="top">
+          <div class="demo-cell">Top</div>
+        </mwc-layout-grid-cell>
+        <mwc-layout-grid-cell align="middle">
+          <div class="demo-cell">Middle</div>
+        </mwc-layout-grid-cell>
+        <mwc-layout-grid-cell align="bottom">
+          <div class="demo-cell">Bottom</div>
+        </mwc-layout-grid-cell>
+      </mwc-layout-grid>
+    </div>
+
+    <h2>Styling</h2>
+    <style data-pre="main-colors">
+.variables {
+	--mdc-layout-grid-margin-desktop: 24px;
+	--mdc-layout-grid-gutter-desktop: 24px;
+	--mdc-layout-grid-column-width-desktop: 72px;
+	--mdc-layout-grid-margin-tablet: 16px;
+	--mdc-layout-grid-gutter-tablet: 16px;
+	--mdc-layout-grid-column-width-tablet: 72px;
+	--mdc-layout-grid-margin-phone: 16px;
+	--mdc-layout-grid-gutter-phone: 16px;
+	--mdc-layout-grid-column-width-phone: 72px;
+	--mwc-layout-grid-background: none;
+	--mwc-layout-grid-border: none;
+	--mwc-layout-grid-min-height: none;
+	--mwc-layout-grid-height: none;
+	--mwc-layout-grid-max-height: none
+}
+    </style>
+    <div class="demo-group wrap">
+      <p>Layout Grid web component is based on CSS styles defined by Material Web Components. See description of styles and examples at <a href="https://material-components.github.io/material-components-web-catalog/#/component/layout-grid">demo page</a> and <a href="https://material.io/develop/web/components/layout-grid/">documentation</a>.</p>
+    </div>
+    <pre id="main-colors"></pre>
+  </main>
+
+  <script>
+    document.querySelectorAll('style[data-pre]').forEach(function(e) {
+      var preId = e.dataset.pre;
+      var pre = document.querySelector('#' + preId);
+      if (pre) {
+        pre.innerText = e.innerText;
+      }
+    });
+
+    addEventListener('load', function() { document.body.classList.remove('unresolved'); });
+  </script>
+</body>
+</html>

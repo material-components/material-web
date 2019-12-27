@@ -218,6 +218,13 @@ class DemoView extends LitElement {
               <span class="mdc-list-item__secondary-text">Top App Bars are a container for items such as application title, navigation icon, and action items.</span>
             </span>
           </a>
+          <a role="listitem" class="mdc-list-item" href="layout-grid.html">
+            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material.io/develop/images/component_icons/responsive_layout.svg"></span>
+            <span class="mdc-list-item__text">
+              Layout Grid
+              <span class="mdc-list-item__secondary-text">Material design’s responsive UI is based on a column-variate grid layout.</span>
+            </span>
+          </a>
         </div>
       </div>
     `;
