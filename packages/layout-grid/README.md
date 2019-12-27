@@ -79,6 +79,7 @@ However, the Material Design guidelines do not recommend having a deeply nested 
 ### Properties/Attributes
 
 `mwc-layout-grid`
+
 | Name | Type | Default | Description
 | ---- | ---- | ------- | -----------
 | `inner` | `boolean` | `false` | Indicates whether `this` component is inner or outer one.
@@ -86,6 +87,7 @@ However, the Material Design guidelines do not recommend having a deeply nested 
 | `position` | `string` |  | The grid is by default center aligned. You can set values `left` or `right` to change this behavior. Note, these modifiers will have no effect when the grid already fills its container.
 
 `mwc-layout-grid-cell`
+
 | Name | Type | Default | Description
 | ---- | ---- | ------- | -----------
 | `span` | `object` |  | You can set the cells span by applying `span` attribute, where value is an integer between `1` and `12`. If the chosen span size is larger than the available number of columns at the current screen size, the cell behaves as if its chosen span size were equal to the available number of columns at that screen size. If the span classes are not set, value will fallback to a default span size of 4 columns. It is also possible to set `span` value for a specific type of device (desktop, tablet or phone). In that case value must be specified as an object in the JSON form with attribute names corresponding to device type, e.g. `{"desktop":"12", "tablet":"8", "phone":"4"}`.
