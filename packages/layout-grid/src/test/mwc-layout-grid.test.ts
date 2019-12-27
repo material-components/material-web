@@ -17,7 +17,7 @@
 
 import {LayoutGrid} from '@material/mwc-layout-grid';
 
-const SLOT_SELECTOR = "slot[name='slot0']";
+const SLOT_SELECTOR = 'slot[name=\'slot0\']';
 
 
 suite('mwc-layout-grid', () => {
@@ -42,26 +42,22 @@ suite('mwc-layout-grid', () => {
     assert.instanceOf(element, LayoutGrid);
   });
 
-  test(
-      'adding new content to grid',
-      async () => {
-        element.appendChild(content);
-        await element.updateComplete;
-        const i = element.shadowRoot!.querySelector(SLOT_SELECTOR)!;
-        assert.instanceOf(i, HTMLElement);
-        assert.equal(content.hasAttribute('slot'), true);
-        assert.equal(content.getAttribute('slot'), 'slot0');
-      });
+  test('adding new content to grid', async () => {
+    element.appendChild(content);
+    await element.updateComplete;
+    const i = element.shadowRoot!.querySelector(SLOT_SELECTOR)!;
+    assert.instanceOf(i, HTMLElement);
+    assert.equal(content.hasAttribute('slot'), true);
+    assert.equal(content.getAttribute('slot'), 'slot0');
+  });
 
-  test(
-      'removing content from grid',
-      async () => {
-        element.appendChild(content);
-        await element.updateComplete;
+  test('removing content from grid', async () => {
+    element.appendChild(content);
+    await element.updateComplete;
 
-        element.removeChild(content);
-        await element.updateComplete;
-        const i = element.shadowRoot!.querySelector(SLOT_SELECTOR);
-        assert.equal(i, null);
-      });
+    element.removeChild(content);
+    await element.updateComplete;
+    const i = element.shadowRoot!.querySelector(SLOT_SELECTOR);
+    assert.equal(i, null);
+  });
 });

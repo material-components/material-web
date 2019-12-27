@@ -31,8 +31,10 @@ export class LayoutGridBase extends LitElement {
     // Create an observer instance linked to the callback function
     const observer = new MutationObserver((mutationsList) => {
       for (const mutation of mutationsList) {
-        if (mutation.type === 'childList' && mutation.addedNodes && mutation.addedNodes.length > 0) {
-          // At least one cell was added - re-render grid to make sure all children elements are in right order and have own slots
+        if (mutation.type === 'childList' && mutation.addedNodes &&
+            mutation.addedNodes.length > 0) {
+          // At least one cell was added - re-render grid to make sure all
+          // children elements are in right order and have own slots
           this.requestUpdate();
         }
       }
@@ -55,13 +57,15 @@ export class LayoutGridBase extends LitElement {
     const classes = ['mdc-layout-grid__cell'];
 
     if (child instanceof LayoutGridCellBase) {
-      // Child is also a LayoutGridBase - get its attributes and set them to cell element
+      // Child is also a LayoutGridBase - get its attributes and set them to
+      // cell element
       if (child.span) {
         const childSpan = child.span;
         if (childSpan !== null && typeof childSpan === 'object') {
           // For each property in span add class to cell div
           Object.entries(childSpan).forEach((entry) => {
-            classes.push(' mdc-layout-grid__cell--span-' + entry[1] + '-' + entry[0]);
+            classes.push(
+                ' mdc-layout-grid__cell--span-' + entry[1] + '-' + entry[0]);
           });
         } else {
           classes.push(' mdc-layout-grid__cell--span-' + childSpan);
@@ -81,20 +85,28 @@ export class LayoutGridBase extends LitElement {
   render() {
     if (this.inner) {
       return html`
-        <div class="mdc-layout-grid__inner ${this.fixedColumnWidth?'mdc-layout-grid--fixed-column-width':''} ${this.position?'mdc-layout-grid--align-'+this.position:''}">
+        <div class="mdc-layout-grid__inner ${
+          this.fixedColumnWidth ? 'mdc-layout-grid--fixed-column-width' : ''} ${
+          this.position ? 'mdc-layout-grid--align-' + this.position : ''}">
             ${Array.from(this.children).map((element, i) => {
-                element.setAttribute('slot', 'slot' + i);
-                return html`<div class="${this.generateCellClasses(element)}" ><slot name="slot${i}" @slotchange=${(e) => this.removeCell(e)}></slot></div>`;
-            })}
+        element.setAttribute('slot', 'slot' + i);
+        return html`<div class="${
+            this.generateCellClasses(element)}" ><slot name="slot${
+            i}" @slotchange=${(e) => this.removeCell(e)}></slot></div>`;
+      })}
         </div>`;
     } else {
       return html`
-        <div class="mdc-layout-grid ${this.fixedColumnWidth?'mdc-layout-grid--fixed-column-width':''} ${this.position?'mdc-layout-grid--align-'+this.position:''}">
+        <div class="mdc-layout-grid ${
+          this.fixedColumnWidth ? 'mdc-layout-grid--fixed-column-width' : ''} ${
+          this.position ? 'mdc-layout-grid--align-' + this.position : ''}">
           <div class="mdc-layout-grid__inner">
             ${Array.from(this.children).map((element, i) => {
-                element.setAttribute('slot', 'slot' + i);
-                return html`<div class="${this.generateCellClasses(element)}" ><slot name="slot${i}" @slotchange=${(e) => this.removeCell(e)}></slot></div>`;
-            })}
+        element.setAttribute('slot', 'slot' + i);
+        return html`<div class="${
+            this.generateCellClasses(element)}" ><slot name="slot${
+            i}" @slotchange=${(e) => this.removeCell(e)}></slot></div>`;
+      })}
           </div>
         </div>`;
     }
