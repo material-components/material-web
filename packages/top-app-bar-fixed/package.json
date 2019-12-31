@@ -18,7 +18,7 @@
   "dependencies": {
     "@material/mwc-base": "^0.12.0",
     "@material/mwc-top-app-bar": "^0.12.0",
-    "@material/top-app-bar": "=5.0.0-canary.a08ccec35.0",
+    "@material/top-app-bar": "=5.0.0-canary.c92f038c3.0",
     "lit-element": "^2.2.1",
     "tslib": "^1.10.0"
   },
