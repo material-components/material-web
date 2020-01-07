@@ -22,6 +22,16 @@ limitations under the License.
 
 :host {
   display: inline-block;
+  vertical-align: top;
+}
+
+.mdc-select .mdc-select__anchor {
+  display: block;
+  overflow: hidden;
+
+  * {
+    display: inline-flex;
+  }
 }
 
 .mdc-select--outlined {
