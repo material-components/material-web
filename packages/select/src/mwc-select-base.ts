@@ -25,7 +25,7 @@ import {MDCMenuSurfaceAdapter} from '@material/menu-surface/adapter';
 import MDCMenuSurfaceFoundation from '@material/menu-surface/foundation.js';
 import {MDCMenuAdapter} from '@material/menu/adapter';
 import MDCMenuFoundation from '@material/menu/foundation.js';
-import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element.js';
+import {addHasRemoveClass, FormElement, observer} from '@material/mwc-base/form-element.js';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {NotchedOutline} from '@material/mwc-notched-outline';
@@ -85,6 +85,11 @@ export abstract class SelectBase extends FormElement {
   @query('.mdc-select__anchor') protected anchorElement!: HTMLDivElement|null;
 
   @property({type: Boolean, attribute: 'disabled', reflect: true})
+  @observer(function(this: SelectBase, value: boolean) {
+    if (this.mdcFoundation) {
+      this.mdcFoundation.setDisabled(value);
+    }
+  })
   disabled = false;
 
   @property({type: Boolean}) outlined = false;
@@ -134,7 +139,6 @@ export abstract class SelectBase extends FormElement {
           <!-- @ts-ignore -->
           <div
               class="mdc-select__selected-text"
-              tabIndex="0"
               role="button"
               aria-haspopup="listbox"
               aria-labelledby="label"
@@ -1046,6 +1050,12 @@ export abstract class SelectBase extends FormElement {
     }
 
     super.firstUpdated();
+
+    this.mdcFoundation.setDisabled(this.disabled);
+    const listElement = this.listElement;
+    if (listElement && this.mdcListFoundation) {
+      mwcList.layout(listElement, this.mdcListFoundation);
+    }
 
     // if (this.validateOnInitialRender) {
     //   this.reportValidity();

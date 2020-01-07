@@ -16,6 +16,8 @@
  */
 import MDCListFoundation from '@material/list/foundation';
 
+import * as mwcListItem from './mwc-list-item-ponyfill';
+
 export const assignedElements = (list: Element): Element[] => {
   const slot = list.querySelector('slot');
 
@@ -130,4 +132,14 @@ export const getIndexOfTarget = (list: Element, evt: Event) => {
   }
 
   return -1;
+};
+
+export const layout = (list: Element, foundation: MDCListFoundation) => {
+  const elements = listElements(list);
+
+  for (const element of elements) {
+    mwcListItem.init(element);
+  }
+
+  foundation.layout();
 };

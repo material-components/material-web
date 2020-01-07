@@ -14,6 +14,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
+const focusableChildSelector = `
+  button:not(:disabled),
+  a,
+  .radio:not([disabled]),
+  .checkbox:not([disabled]),
+  .tabbable:not([disabled])`;
 interface HasChecked extends Element {
   checked: boolean;
 }
@@ -29,8 +36,7 @@ export const value = (listItem: Element) => {
 };
 
 export const controlTabIndex = (listItem: Element, tabIndex: string) => {
-  const tabbables = listItem.querySelectorAll(
-      'button:not(:disabled),a,.radio:not([disabled]),.checkbox:not([disabled]),.tabbable:not([disabled])');
+  const tabbables = listItem.querySelectorAll(focusableChildSelector);
   tabbables.forEach((element) => element.setAttribute('tabindex', tabIndex));
 };
 
@@ -76,3 +82,11 @@ export const setChecked = (listItem: Element, isChecked: boolean) => {
 
 export const hasClass = (listItem: Element, className: string) =>
     listItem.classList.contains(className);
+
+export const init = (listItem: Element) => {
+  if (!listItem.hasAttribute('tabindex')) {
+    listItem.setAttribute('tabindex', '-1');
+  }
+
+  controlTabIndex(listItem, '-1');
+};
