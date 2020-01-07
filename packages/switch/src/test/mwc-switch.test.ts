@@ -49,6 +49,16 @@ suite('mwc-switch', () => {
     assert(!internals.formElement.checked);
   });
 
+  test('setting `checked` affects `aria-checked` of native input', async () => {
+    element.checked = true;
+    await element.updateComplete;
+    assert.equal(internals.formElement.getAttribute('aria-checked'), 'true');
+
+    element.checked = false;
+    await element.updateComplete;
+    assert.equal(internals.formElement.getAttribute('aria-checked'), 'false');
+  });
+
   test('setting `disabled` disables the native input', async () => {
     element.disabled = true;
     await element.updateComplete;

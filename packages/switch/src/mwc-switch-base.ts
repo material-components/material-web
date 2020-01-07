@@ -56,6 +56,9 @@ export class SwitchBase extends FormElement {
       setNativeControlDisabled: (disabled: boolean) => {
         this.formElement.disabled = disabled;
       },
+      setNativeControlAttr: (attr, value) => {
+        this.formElement.setAttribute(attr, value);
+      },
     };
   }
 
