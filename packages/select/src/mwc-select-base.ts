@@ -109,7 +109,7 @@ export abstract class SelectBase extends FormElement {
   protected listeners: ({
     target: Element;
     name: string;
-    cb: any;
+    cb: EventListenerOrEventListenerObject;
   })[] = [];
   protected onBodyClickBound: (evt: MouseEvent) => void = () => {};
   protected _outlineUpdateComplete: null|Promise<unknown> = null;
@@ -134,6 +134,7 @@ export abstract class SelectBase extends FormElement {
       <div class="mdc-select ${classMap(classes)}">
         <input class=".formElement" .value=${this.value} hidden>
         ${this.icon ? this.renderIcon(this.icon) : ''}
+        <!-- @ts-ignore -->
         <div class="mdc-select__anchor" .anchoring=${menuAnchor('.mdc-menu')}>
           <i class="mdc-select__dropdown-icon"></i>
           <!-- @ts-ignore -->
@@ -1070,7 +1071,8 @@ export abstract class SelectBase extends FormElement {
       {
         target: menuElement,
         name: 'keydown',
-        cb: this.menuSurfaceOnKeydown.bind(this),
+        cb: this.menuSurfaceOnKeydown.bind(this) as
+            EventListenerOrEventListenerObject,
       },
       {
         target: menuElement,
@@ -1090,7 +1092,7 @@ export abstract class SelectBase extends FormElement {
       {
         target: menuElement,
         name: 'keydown',
-        cb: this.menuOnKeydown.bind(this),
+        cb: this.menuOnKeydown.bind(this) as EventListenerOrEventListenerObject,
       },
       {
         target: menuElement,
@@ -1105,7 +1107,8 @@ export abstract class SelectBase extends FormElement {
     ];
 
     for (const listener of this.listeners) {
-      listener.target.addEventListener(listener.name as any, listener.cb);
+      listener.target.addEventListener(
+          listener.name, listener.cb as EventListenerOrEventListenerObject);
     }
 
     if (menuElement) {
