@@ -141,5 +141,6 @@ export const layout = (list: Element, foundation: MDCListFoundation) => {
     mwcListItem.init(element);
   }
 
+  foundation.setUseActivatedClass(true);
   foundation.layout();
 };
