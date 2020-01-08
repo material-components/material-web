@@ -227,7 +227,7 @@ export abstract class TextFieldBase extends FormElement {
       <div class="mdc-text-field ${classMap(classes)}">
         ${this.icon ? this.renderIcon(this.icon) : ''}
         ${this.renderInput()}
-        ${this.iconTrailing ? this.renderIcon(this.iconTrailing) : ''}
+        ${this.iconTrailing ? this.renderIcon(this.iconTrailing, true) : ''}
         ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
       </div>
       ${this.renderHelperText(this.renderCharCounter())}
@@ -278,8 +278,14 @@ export abstract class TextFieldBase extends FormElement {
           @blur="${this.onInputBlur}">`;
   }
 
-  protected renderIcon(icon: string) {
-    return html`<i class="material-icons mdc-text-field__icon">${icon}</i>`;
+  protected renderIcon(icon: string, isTrailingIcon = false) {
+    const classes = {
+      'mdc-text-field__icon--leading': !isTrailingIcon,
+      'mdc-text-field__icon--trailing': isTrailingIcon
+    };
+
+    return html`<i class="material-icons mdc-text-field__icon ${
+        classMap(classes)}">${icon}</i>`;
   }
 
   protected renderOutlined() {
