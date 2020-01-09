@@ -21,9 +21,18 @@ limitations under the License.
 
 import {matches} from '@material/dom/ponyfill';
 
+/**
+ * Determines whether a node is an element.
+ *
+ * @param node Node to check
+ */
+export const isNodeElement = (node: Node) => {
+  return node.nodeType === Node.ELEMENT_NODE;
+};
+
 export function findAssignedElement(slot: HTMLSlotElement, selector: string) {
   for (const node of slot.assignedNodes({flatten: true})) {
-    if (node.nodeType === Node.ELEMENT_NODE) {
+    if (isNodeElement(node)) {
       const el = (node as HTMLElement);
       if (matches(el, selector)) {
         return el;

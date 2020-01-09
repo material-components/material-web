@@ -15,11 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {Corner} from '@material/menu-surface/constants';
+import {isNodeElement} from '@material/mwc-base/utils';
 import MDCMenuSurfaceFoundation from '@material/menu-surface/foundation';
 import {MDCMenuDistance} from '@material/menu-surface/types';
 import {getTransformPropertyName} from '@material/menu-surface/util';
-
-import {isElement} from './util';
 
 export const open = (foundation: MDCMenuSurfaceFoundation) => {
   foundation.open();
@@ -41,7 +40,7 @@ const assignedElements = (menu: Element): Element[] => {
 
   if (slot) {
     return slot.assignedNodes({flatten: true})
-               .filter((node) => (isElement(node))) as Element[];
+               .filter((node) => (isNodeElement(node))) as Element[];
   }
 
   return [];

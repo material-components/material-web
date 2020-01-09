@@ -38,7 +38,7 @@ import * as mwcListItem from './mwc-list-item-ponyfill';
 import * as mwcList from './mwc-list-ponyfill';
 import * as mwcMenu from './mwc-menu-ponyfill';
 import {menuAnchor} from './mwc-menu-surface-anchor-directive';
-import {isElement} from './util';
+import {isNodeElement} from '@material/mwc-base/utils';
 
 // must be done to get past lit-analyzer checks
 declare global {
@@ -335,7 +335,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const element = mwcList.getElementAtIndex(listElement, index);
+        const element = mwcList.getItemAtIndex(listElement, index);
 
         if (!element) {
           return;
@@ -349,7 +349,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const element = mwcList.getElementAtIndex(listElement, index);
+        const element = mwcList.getItemAtIndex(listElement, index);
 
         if (!element) {
           return;
@@ -363,7 +363,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const element = mwcList.getElementAtIndex(listElement, index);
+        const element = mwcList.getItemAtIndex(listElement, index);
 
         if (!element) {
           return;
@@ -375,7 +375,7 @@ export abstract class SelectBase extends FormElement {
         const listElement = this.listElement;
 
         if (listElement) {
-          const elements = mwcList.listElements(listElement);
+          const elements = mwcList.items(listElement);
           return elements.length;
         }
 
@@ -388,7 +388,7 @@ export abstract class SelectBase extends FormElement {
           return [];
         }
 
-        const items = mwcList.listElements(listElement);
+        const items = mwcList.items(listElement);
 
         return items.map((item) => mwcListItem.value(item));
       },
@@ -398,7 +398,7 @@ export abstract class SelectBase extends FormElement {
           return '';
         }
 
-        const element = mwcList.getElementAtIndex(listElement, index);
+        const element = mwcList.getItemAtIndex(listElement, index);
 
         if (!element) {
           return '';
@@ -416,7 +416,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const element = mwcList.getElementAtIndex(listElement, index);
+        const element = mwcList.getItemAtIndex(listElement, index);
 
         if (!element) {
           return;
@@ -431,7 +431,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const element = mwcList.getElementAtIndex(listElement, index);
+        const element = mwcList.getItemAtIndex(listElement, index);
 
         if (!element) {
           return;
@@ -454,7 +454,7 @@ export abstract class SelectBase extends FormElement {
     const mdcListAdapter: MDCListAdapter = {
       getListItemCount: () => {
         if (this.listElement) {
-          const elements = mwcList.listElements(this.listElement);
+          const elements = mwcList.items(this.listElement);
           return elements.length;
         }
 
@@ -465,7 +465,7 @@ export abstract class SelectBase extends FormElement {
           return -1;
         }
 
-        const elements = mwcList.listElements(this.listElement);
+        const elements = mwcList.items(this.listElement);
 
         if (!elements.length) {
           return -1;
@@ -485,7 +485,7 @@ export abstract class SelectBase extends FormElement {
           return '';
         }
 
-        const element = mwcList.getElementAtIndex(listElement, index);
+        const element = mwcList.getItemAtIndex(listElement, index);
         return element ? element.getAttribute(attr) : '';
       },
       setAttributeForElementIndex: (index, attr, val) => {
@@ -493,7 +493,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const element = mwcList.getElementAtIndex(this.listElement, index);
+        const element = mwcList.getItemAtIndex(this.listElement, index);
 
         if (element) {
           element.setAttribute(attr, val);
@@ -504,7 +504,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const element = mwcList.getElementAtIndex(this.listElement, index);
+        const element = mwcList.getItemAtIndex(this.listElement, index);
         if (element) {
           element.classList.add(className);
         }
@@ -514,7 +514,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const element = mwcList.getElementAtIndex(this.listElement, index);
+        const element = mwcList.getItemAtIndex(this.listElement, index);
         if (element) {
           element.classList.remove(className);
         }
@@ -524,8 +524,8 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const element = mwcList.getElementAtIndex(this.listElement, index);
-        if (element && isElement(element)) {
+        const element = mwcList.getItemAtIndex(this.listElement, index);
+        if (element && isNodeElement(element)) {
           (element as HTMLElement).focus();
         }
       },
@@ -534,7 +534,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const element = mwcList.getElementAtIndex(this.listElement, index);
+        const element = mwcList.getItemAtIndex(this.listElement, index);
         if (element) {
           mwcListItem.controlTabIndex(element, tabIndex);
         }
@@ -544,7 +544,7 @@ export abstract class SelectBase extends FormElement {
           return false;
         }
 
-        const element = mwcList.getElementAtIndex(this.listElement, index);
+        const element = mwcList.getItemAtIndex(this.listElement, index);
         return element ? mwcListItem.hasCheckbox(element) : false;
       },
       hasRadioAtIndex: (index) => {
@@ -552,7 +552,7 @@ export abstract class SelectBase extends FormElement {
           return false;
         }
 
-        const element = mwcList.getElementAtIndex(this.listElement, index);
+        const element = mwcList.getItemAtIndex(this.listElement, index);
         return element ? mwcListItem.hasRadio(element) : false;
       },
       isCheckboxCheckedAtIndex: (index) => {
@@ -560,7 +560,7 @@ export abstract class SelectBase extends FormElement {
           return false;
         }
 
-        const element = mwcList.getElementAtIndex(this.listElement, index);
+        const element = mwcList.getItemAtIndex(this.listElement, index);
         return element ? mwcListItem.hasRadio(element) : false;
       },
       setCheckedCheckboxOrRadioAtIndex: (index, isChecked) => {
@@ -568,7 +568,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const element = mwcList.getElementAtIndex(this.listElement, index);
+        const element = mwcList.getItemAtIndex(this.listElement, index);
         if (element) {
           mwcListItem.setChecked(element, isChecked);
         }
@@ -604,7 +604,7 @@ export abstract class SelectBase extends FormElement {
           return false;
         }
 
-        const item = mwcList.getElementAtIndex(this.listElement, index);
+        const item = mwcList.getItemAtIndex(this.listElement, index);
 
         if (!item) {
           return false;
@@ -633,7 +633,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const element = mwcList.getElementAtIndex(this.listElement, index);
+        const element = mwcList.getItemAtIndex(this.listElement, index);
 
         if (!element) {
           return;
@@ -646,7 +646,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const element = mwcList.getElementAtIndex(this.listElement, index);
+        const element = mwcList.getItemAtIndex(this.listElement, index);
 
         if (!element) {
           return;
@@ -659,7 +659,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const element = mwcList.getElementAtIndex(this.listElement, index);
+        const element = mwcList.getItemAtIndex(this.listElement, index);
 
         if (!element) {
           return;
@@ -672,7 +672,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const element = mwcList.getElementAtIndex(this.listElement, index);
+        const element = mwcList.getItemAtIndex(this.listElement, index);
 
         if (!element) {
           return;
@@ -689,7 +689,7 @@ export abstract class SelectBase extends FormElement {
       },
       getElementIndex: (element) => {
         if (this.listElement) {
-          return mwcList.listElements(this.listElement).indexOf(element);
+          return mwcList.items(this.listElement).indexOf(element);
         }
 
         return -1;
@@ -709,16 +709,16 @@ export abstract class SelectBase extends FormElement {
           return 0;
         }
 
-        return mwcList.listElements(this.listElement).length;
+        return mwcList.items(this.listElement).length;
       },
       focusItemAtIndex: (index) => {
         if (!this.listElement) {
           return;
         }
 
-        const element = mwcList.getElementAtIndex(this.listElement, index);
+        const element = mwcList.getItemAtIndex(this.listElement, index);
 
-        if (element && isElement(element)) {
+        if (element && isNodeElement(element)) {
           (element as HTMLElement).focus();
         }
       },
@@ -733,7 +733,7 @@ export abstract class SelectBase extends FormElement {
         }
 
         const elementAtIndex =
-            mwcList.getElementAtIndex(this.listElement, index);
+            mwcList.getItemAtIndex(this.listElement, index);
 
         if (!elementAtIndex) {
           return -1;
@@ -753,7 +753,7 @@ export abstract class SelectBase extends FormElement {
           return -1;
         }
 
-        const elements = mwcList.listElements(this.listElement);
+        const elements = mwcList.items(this.listElement);
 
         return elements.indexOf(selectedItemEl);
       },
@@ -763,7 +763,7 @@ export abstract class SelectBase extends FormElement {
         }
 
         const elementAtIndex =
-            mwcList.getElementAtIndex(this.listElement, index);
+            mwcList.getItemAtIndex(this.listElement, index);
 
         if (!elementAtIndex) {
           return false;
@@ -989,7 +989,7 @@ export abstract class SelectBase extends FormElement {
 
   protected menuOnAction(evt: CustomEvent<{index: number}>) {
     if (this.mdcMenuFoundation && this.listElement) {
-      const el = mwcList.getElementAtIndex(this.listElement, evt.detail.index);
+      const el = mwcList.getItemAtIndex(this.listElement, evt.detail.index);
       if (el) {
         this.mdcMenuFoundation.handleItemAction(el);
       }
@@ -1020,7 +1020,7 @@ export abstract class SelectBase extends FormElement {
     if (this.mdcListFoundation && this.listElement) {
       const index = mwcList.getIndexOfTarget(this.listElement, evt);
       const target = evt.target as Element;
-      const elements = mwcList.listElements(this.listElement);
+      const elements = mwcList.items(this.listElement);
       const isRootListItem = elements ? elements.indexOf(target) !== -1 : false;
       this.mdcListFoundation.handleKeydown(evt, isRootListItem, index);
     }

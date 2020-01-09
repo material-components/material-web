@@ -56,7 +56,7 @@ export const select = (list: Element, itemToSelect: Element) => {
   itemToSelect.removeAttribute('aria-selected');
 };
 
-export const listElements = (list: Element): Element[] => {
+export const items = (list: Element): Element[] => {
   const nodes = assignedElements(list);
   const listItems =
       nodes
@@ -78,15 +78,15 @@ export const mdcRoot = (list: Element) => {
   return list as HTMLElement;
 };
 
-export const getElementAtIndex =
+export const getItemAtIndex =
     (list: Element, index: number): Element|undefined => {
-      const elements = listElements(list);
+      const elements = items(list);
 
       return elements[index] as Element | undefined;
     };
 
 export const getSlottedActiveElement = (list: Element): Element|null => {
-  const first = getElementAtIndex(list, 0);
+  const first = getItemAtIndex(list, 0);
   if (!first) {
     return null;
   }
@@ -115,13 +115,13 @@ export const wrapFocus =
     };
 
 export const getIndexOfElement = (list: Element, element: Element) => {
-  const elements = listElements(list);
+  const elements = items(list);
 
   return elements.indexOf(element);
 };
 
 export const getIndexOfTarget = (list: Element, evt: Event) => {
-  const elements = listElements(list);
+  const elements = items(list);
   const path = evt.composedPath();
 
   for (const pathItem of path) {
@@ -135,7 +135,7 @@ export const getIndexOfTarget = (list: Element, evt: Event) => {
 };
 
 export const layout = (list: Element, foundation: MDCListFoundation) => {
-  const elements = listElements(list);
+  const elements = items(list);
 
   for (const element of elements) {
     mwcListItem.init(element);
