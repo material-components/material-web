@@ -72,3 +72,27 @@ document.removeEventListener('x', fn);
  * Do event listeners suport the `passive` option?
  */
 export const supportsPassiveEventListener = supportsPassive;
+
+export const slotActiveElement = (slot: HTMLSlotElement): Element|null => {
+  const assignedElements =
+      slot.assignedNodes({flatten: true})
+          .filter((node) => isNodeElement(node)) as Element[];
+
+  const first = assignedElements[0];
+  if (!first) {
+    return null;
+  }
+
+  const root = first.getRootNode() as unknown as DocumentOrShadowRoot;
+  return root ? root.activeElement : null;
+};
+
+export const doesSlotContainElement =
+    (slot: HTMLSlotElement, element: Element) => {
+      return slot.assignedNodes({flatten: true})
+          .filter((node) => isNodeElement(node))
+          .reduce((isContained: boolean, assinedElement) => {
+            return isContained || assinedElement === element ||
+                assinedElement.contains(element);
+          }, false);
+    };

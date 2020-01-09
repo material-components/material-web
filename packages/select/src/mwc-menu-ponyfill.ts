@@ -15,10 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {Corner} from '@material/menu-surface/constants';
-import {isNodeElement} from '@material/mwc-base/utils';
 import MDCMenuSurfaceFoundation from '@material/menu-surface/foundation';
 import {MDCMenuDistance} from '@material/menu-surface/types';
 import {getTransformPropertyName} from '@material/menu-surface/util';
+import {isNodeElement} from '@material/mwc-base/utils';
 
 export const open = (foundation: MDCMenuSurfaceFoundation) => {
   foundation.open();

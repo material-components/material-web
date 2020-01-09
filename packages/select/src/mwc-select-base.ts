@@ -15,30 +15,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import '@material/mwc-notched-outline';
+import '@material/mwc-list';
 
 import {closest} from '@material/dom/ponyfill';
 import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
 import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
-import {MDCListAdapter} from '@material/list/adapter';
-import MDCListFoundation from '@material/list/foundation.js';
 import {MDCMenuSurfaceAdapter} from '@material/menu-surface/adapter';
 import MDCMenuSurfaceFoundation from '@material/menu-surface/foundation.js';
 import {MDCMenuAdapter} from '@material/menu/adapter';
 import MDCMenuFoundation from '@material/menu/foundation.js';
 import {addHasRemoveClass, FormElement, observer} from '@material/mwc-base/form-element.js';
+import {isNodeElement, slotActiveElement, doesSlotContainElement} from '@material/mwc-base/utils';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
+import {List} from '@material/mwc-list';
+import {ListItemBase} from '@material/mwc-list/mwc-list-item-base';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCSelectAdapter} from '@material/select/adapter';
 import MDCSelectFoundation from '@material/select/foundation.js';
-import {html, property, PropertyValues, query, TemplateResult} from 'lit-element';
+import {html, property, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
-import * as mwcListItem from './mwc-list-item-ponyfill';
-import * as mwcList from './mwc-list-ponyfill';
 import * as mwcMenu from './mwc-menu-ponyfill';
 import {menuAnchor} from './mwc-menu-surface-anchor-directive';
-import {isNodeElement} from '@material/mwc-base/utils';
 
 // must be done to get past lit-analyzer checks
 declare global {
@@ -53,8 +52,6 @@ export abstract class SelectBase extends FormElement {
 
   protected mdcMenuFoundation: MDCMenuFoundation|undefined;
 
-  protected mdcListFoundation: MDCListFoundation|undefined;
-
   protected mdcMenuSurfaceFoundation: MDCMenuSurfaceFoundation|undefined;
 
   protected readonly mdcFoundationClass = MDCSelectFoundation;
@@ -63,7 +60,7 @@ export abstract class SelectBase extends FormElement {
 
   @query('.formElement') protected formElement!: HTMLDivElement;
 
-  @query('#mainSlot') protected slotElement!: HTMLSlotElement|null;
+  @query('slot') protected slotElement!: HTMLSlotElement|null;
 
   @query('select') protected nativeSelectElement!: HTMLSelectElement|null;
 
@@ -77,7 +74,7 @@ export abstract class SelectBase extends FormElement {
 
   @query('.mdc-menu') protected menuElement!: HTMLDivElement|null;
 
-  @query('.mdc-list') protected listElement!: HTMLDivElement|null;
+  @query('mwc-list') protected listElement!: List|null;
 
   @query('.mdc-select__selected-text')
   protected selectedTextElement!: HTMLDivElement|null;
@@ -113,6 +110,7 @@ export abstract class SelectBase extends FormElement {
   })[] = [];
   protected onBodyClickBound: (evt: MouseEvent) => void = () => {};
   protected _outlineUpdateComplete: null|Promise<unknown> = null;
+  protected _listUpdateComplete: null|Promise<unknown> = null;
 
   render() {
     let outlinedOrUnderlined = html``;
@@ -156,14 +154,9 @@ export abstract class SelectBase extends FormElement {
             class="mdc-select__menu mdc-menu mdc-menu-surface"
             @selected=${this.onSelected}
             @action=${this.menuOnAction}>
-          <ul
-              class="mdc-list"
-              @keydown=${this.listOnKeydown}
-              @click=${this.listOnClick}
-              @focusin=${this.listOnFocusin}
-              @focusout=${this.listOnFocusout}>
+          <mwc-list class="mdc-list">
             <slot></slot>
-          </ul>
+          </mwc-list>
         </div>
       </div>`;
   }
@@ -210,7 +203,6 @@ export abstract class SelectBase extends FormElement {
   }
 
   createAdapter(): MDCSelectAdapter {
-    this.createListFoundation();
     this.createMenuSurfaceFoundation();
     this.createMenuFoundation();
 
@@ -233,7 +225,7 @@ export abstract class SelectBase extends FormElement {
           return null;
         }
 
-        return mwcList.selected(listElement);
+        return listElement.selected;
       },
       hasLabel: () => {
         return !!this.label;
@@ -325,8 +317,9 @@ export abstract class SelectBase extends FormElement {
         }
       },
       setMenuWrapFocus: (wrapFocus) => {
-        if (this.mdcListFoundation) {
-          mwcList.wrapFocus(this.mdcListFoundation, wrapFocus);
+        const listElement = this.listElement;
+        if (listElement) {
+          listElement.wrapFocus(wrapFocus);
         }
       },
       setAttributeAtIndex: (index: number, attr: string, value: string) => {
@@ -335,7 +328,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const element = mwcList.getItemAtIndex(listElement, index);
+        const element = listElement.items[index];
 
         if (!element) {
           return;
@@ -349,7 +342,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const element = mwcList.getItemAtIndex(listElement, index);
+        const element = listElement.items[index];
 
         if (!element) {
           return;
@@ -363,7 +356,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const element = mwcList.getItemAtIndex(listElement, index);
+        const element = listElement.items[index];
 
         if (!element) {
           return;
@@ -375,8 +368,7 @@ export abstract class SelectBase extends FormElement {
         const listElement = this.listElement;
 
         if (listElement) {
-          const elements = mwcList.items(listElement);
-          return elements.length;
+          return listElement.items.length;
         }
 
         return 0;
@@ -388,9 +380,9 @@ export abstract class SelectBase extends FormElement {
           return [];
         }
 
-        const items = mwcList.items(listElement);
+        const items = listElement.items;
 
-        return items.map((item) => mwcListItem.value(item));
+        return items.map((item) => item.value);
       },
       getMenuItemTextAtIndex: (index) => {
         const listElement = this.listElement;
@@ -398,16 +390,17 @@ export abstract class SelectBase extends FormElement {
           return '';
         }
 
-        const element = mwcList.getItemAtIndex(listElement, index);
+        const element = listElement.items[index];
 
         if (!element) {
           return '';
         }
 
-        return element.textContent as string;
+        return element.text;
       },
       getMenuItemAttr: (menuItem) => {
-        return mwcListItem.value(menuItem);
+        const listItem = menuItem as ListItemBase;
+        return listItem.value;
       },
       addClassAtIndex: (index, className) => {
         const listElement = this.listElement;
@@ -416,7 +409,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const element = mwcList.getItemAtIndex(listElement, index);
+        const element = listElement.items[index];
 
         if (!element) {
           return;
@@ -431,7 +424,7 @@ export abstract class SelectBase extends FormElement {
           return;
         }
 
-        const element = mwcList.getItemAtIndex(listElement, index);
+        const element = listElement.items[index];
 
         if (!element) {
           return;
@@ -440,182 +433,6 @@ export abstract class SelectBase extends FormElement {
         element.classList.remove(className);
       },
     };
-  }
-
-  createListFoundation() {
-    if (!this.listElement) {
-      return;
-    }
-
-    if (this.mdcListFoundation) {
-      this.mdcListFoundation.destroy();
-    }
-
-    const mdcListAdapter: MDCListAdapter = {
-      getListItemCount: () => {
-        if (this.listElement) {
-          const elements = mwcList.items(this.listElement);
-          return elements.length;
-        }
-
-        return 0;
-      },
-      getFocusedElementIndex: () => {
-        if (!this.listElement) {
-          return -1;
-        }
-
-        const elements = mwcList.items(this.listElement);
-
-        if (!elements.length) {
-          return -1;
-        }
-
-        const activeElement = mwcList.getSlottedActiveElement(this.listElement);
-
-        if (!activeElement) {
-          return -1;
-        }
-
-        return elements.indexOf(activeElement);
-      },
-      getAttributeForElementIndex: (index, attr) => {
-        const listElement = this.listElement;
-        if (!listElement) {
-          return '';
-        }
-
-        const element = mwcList.getItemAtIndex(listElement, index);
-        return element ? element.getAttribute(attr) : '';
-      },
-      setAttributeForElementIndex: (index, attr, val) => {
-        if (!this.listElement) {
-          return;
-        }
-
-        const element = mwcList.getItemAtIndex(this.listElement, index);
-
-        if (element) {
-          element.setAttribute(attr, val);
-        }
-      },
-      addClassForElementIndex: (index, className) => {
-        if (!this.listElement) {
-          return;
-        }
-
-        const element = mwcList.getItemAtIndex(this.listElement, index);
-        if (element) {
-          element.classList.add(className);
-        }
-      },
-      removeClassForElementIndex: (index, className) => {
-        if (!this.listElement) {
-          return;
-        }
-
-        const element = mwcList.getItemAtIndex(this.listElement, index);
-        if (element) {
-          element.classList.remove(className);
-        }
-      },
-      focusItemAtIndex: (index) => {
-        if (!this.listElement) {
-          return;
-        }
-
-        const element = mwcList.getItemAtIndex(this.listElement, index);
-        if (element && isNodeElement(element)) {
-          (element as HTMLElement).focus();
-        }
-      },
-      setTabIndexForListItemChildren: (index, tabIndex) => {
-        if (!this.listElement) {
-          return;
-        }
-
-        const element = mwcList.getItemAtIndex(this.listElement, index);
-        if (element) {
-          mwcListItem.controlTabIndex(element, tabIndex);
-        }
-      },
-      hasCheckboxAtIndex: (index) => {
-        if (!this.listElement) {
-          return false;
-        }
-
-        const element = mwcList.getItemAtIndex(this.listElement, index);
-        return element ? mwcListItem.hasCheckbox(element) : false;
-      },
-      hasRadioAtIndex: (index) => {
-        if (!this.listElement) {
-          return false;
-        }
-
-        const element = mwcList.getItemAtIndex(this.listElement, index);
-        return element ? mwcListItem.hasRadio(element) : false;
-      },
-      isCheckboxCheckedAtIndex: (index) => {
-        if (!this.listElement) {
-          return false;
-        }
-
-        const element = mwcList.getItemAtIndex(this.listElement, index);
-        return element ? mwcListItem.hasRadio(element) : false;
-      },
-      setCheckedCheckboxOrRadioAtIndex: (index, isChecked) => {
-        if (!this.listElement) {
-          return;
-        }
-
-        const element = mwcList.getItemAtIndex(this.listElement, index);
-        if (element) {
-          mwcListItem.setChecked(element, isChecked);
-        }
-      },
-      notifyAction: (index) => {
-        if (!this.listElement) {
-          return;
-        }
-
-        const init: CustomEventInit = {bubbles: true};
-        init.detail = {index};
-        const ev = new CustomEvent('action', init);
-        this.listElement.dispatchEvent(ev);
-      },
-      isFocusInsideList: () => {
-        if (!this.listElement) {
-          return false;
-        }
-
-        return mwcList.doContentsHaveFocus(this.listElement);
-      },
-      isRootFocused: () => {
-        if (!this.listElement) {
-          return false;
-        }
-
-        const mdcRoot = mwcList.mdcRoot(this.listElement);
-        const root = mdcRoot.getRootNode() as unknown as DocumentOrShadowRoot;
-        return root.activeElement === mdcRoot;
-      },
-      listItemAtIndexHasClass: (index, className) => {
-        if (!this.listElement) {
-          return false;
-        }
-
-        const item = mwcList.getItemAtIndex(this.listElement, index);
-
-        if (!item) {
-          return false;
-        }
-
-        return mwcListItem.hasClass(item, className);
-      },
-    };
-
-    this.mdcListFoundation = new MDCListFoundation(mdcListAdapter);
-    this.mdcListFoundation.init();
   }
 
   createMenuFoundation() {
@@ -629,11 +446,12 @@ export abstract class SelectBase extends FormElement {
 
     const mdcMenuAdapter: MDCMenuAdapter = {
       addClassToElementAtIndex: (index, className) => {
-        if (!this.listElement) {
+        const listElement = this.listElement;
+        if (!listElement) {
           return;
         }
 
-        const element = mwcList.getItemAtIndex(this.listElement, index);
+        const element = listElement.items[index];
 
         if (!element) {
           return;
@@ -642,11 +460,12 @@ export abstract class SelectBase extends FormElement {
         element.classList.add(className);
       },
       removeClassFromElementAtIndex: (index, className) => {
-        if (!this.listElement) {
+        const listElement = this.listElement;
+        if (!listElement) {
           return;
         }
 
-        const element = mwcList.getItemAtIndex(this.listElement, index);
+        const element = listElement.items[index];
 
         if (!element) {
           return;
@@ -655,11 +474,12 @@ export abstract class SelectBase extends FormElement {
         element.classList.remove(className);
       },
       addAttributeToElementAtIndex: (index, attr, value) => {
-        if (!this.listElement) {
+        const listElement = this.listElement;
+        if (!listElement) {
           return;
         }
 
-        const element = mwcList.getItemAtIndex(this.listElement, index);
+        const element = listElement.items[index];
 
         if (!element) {
           return;
@@ -668,11 +488,12 @@ export abstract class SelectBase extends FormElement {
         element.setAttribute(attr, value);
       },
       removeAttributeFromElementAtIndex: (index, attr) => {
-        if (!this.listElement) {
+        const listElement = this.listElement;
+        if (!listElement) {
           return;
         }
 
-        const element = mwcList.getItemAtIndex(this.listElement, index);
+        const element = listElement.items[index];
 
         if (!element) {
           return;
@@ -688,8 +509,9 @@ export abstract class SelectBase extends FormElement {
         }
       },
       getElementIndex: (element) => {
-        if (this.listElement) {
-          return mwcList.items(this.listElement).indexOf(element);
+        const listElement = this.listElement;
+        if (listElement) {
+          return listElement.items.indexOf(element as ListItemBase);
         }
 
         return -1;
@@ -705,18 +527,20 @@ export abstract class SelectBase extends FormElement {
         this.menuElement.dispatchEvent(ev);
       },
       getMenuItemCount: () => {
-        if (!this.listElement) {
+        const listElement = this.listElement;
+        if (!listElement) {
           return 0;
         }
 
-        return mwcList.items(this.listElement).length;
+        return listElement.items.length;
       },
       focusItemAtIndex: (index) => {
-        if (!this.listElement) {
+        const listElement = this.listElement;
+        if (!listElement) {
           return;
         }
 
-        const element = mwcList.getItemAtIndex(this.listElement, index);
+        const element = listElement.items[index];
 
         if (element && isNodeElement(element)) {
           (element as HTMLElement).focus();
@@ -728,12 +552,13 @@ export abstract class SelectBase extends FormElement {
         }
       },
       getSelectedSiblingOfItemAtIndex: (index) => {
-        if (!this.listElement) {
+        const listElement = this.listElement;
+
+        if (!listElement) {
           return -1;
         }
 
-        const elementAtIndex =
-            mwcList.getItemAtIndex(this.listElement, index);
+        const elementAtIndex = listElement.items[index];
 
         if (!elementAtIndex) {
           return -1;
@@ -747,23 +572,24 @@ export abstract class SelectBase extends FormElement {
         }
 
         const selectedItemEl =
-            selectionGroupEl.querySelector('.mdc-menu-item--selected');
+            selectionGroupEl.querySelector('[selected]') as ListItemBase | null;
 
         if (!selectedItemEl) {
           return -1;
         }
 
-        const elements = mwcList.items(this.listElement);
+        const elements = listElement.items;
 
         return elements.indexOf(selectedItemEl);
       },
       isSelectableItemAtIndex: (index) => {
-        if (!this.listElement) {
+        const listElement = this.listElement;
+
+        if (!listElement) {
           return false;
         }
 
-        const elementAtIndex =
-            mwcList.getItemAtIndex(this.listElement, index);
+        const elementAtIndex = listElement.items[index];
 
         if (!elementAtIndex) {
           return false;
@@ -860,28 +686,32 @@ export abstract class SelectBase extends FormElement {
       },
       restoreFocus: () => {
         const menuElement = this.menuElement;
+        const slotElement = this.slotElement;
 
-        if (!menuElement) {
+        if (!slotElement || !menuElement) {
           return;
         }
 
-        const activeElement = mwcMenu.shadowRoot(menuElement).activeElement;
+        const activeElement = slotActiveElement(slotElement);
 
         if (!activeElement) {
           return;
         }
 
-        const mdcRoot = mwcMenu.mdcRoot(menuElement);
-        const previousFocus = mwcMenu.getPreviousFocus(menuElement);
+        const menuHasFocus = doesSlotContainElement(slotElement, activeElement);
 
-        if (!previousFocus || !mdcRoot) {
+        if (!menuHasFocus) {
           return;
         }
 
-        if (mdcRoot.contains(previousFocus)) {
-          if ('focus' in previousFocus) {
-            previousFocus.focus();
-          }
+        const previousFocus = mwcMenu.getPreviousFocus(menuElement);
+
+        if (!previousFocus) {
+          return;
+        }
+
+        if ('focus' in previousFocus) {
+          previousFocus.focus();
         }
       },
       getInnerDimensions: () => {
@@ -953,13 +783,6 @@ export abstract class SelectBase extends FormElement {
     this.mdcMenuSurfaceFoundation.init();
   }
 
-  updated(changedProperties: PropertyValues) {
-    if (changedProperties.has('value') &&
-        changedProperties.get('value') !== undefined) {
-      this.mdcFoundation.setValue(this.value);
-    }
-  }
-
   protected menuSurfaceOnKeydown(evt: KeyboardEvent) {
     if (this.mdcMenuSurfaceFoundation) {
       this.mdcMenuSurfaceFoundation.handleKeydown(evt);
@@ -988,8 +811,9 @@ export abstract class SelectBase extends FormElement {
   }
 
   protected menuOnAction(evt: CustomEvent<{index: number}>) {
-    if (this.mdcMenuFoundation && this.listElement) {
-      const el = mwcList.getItemAtIndex(this.listElement, evt.detail.index);
+    const listElement = this.listElement;
+    if (this.mdcMenuFoundation && listElement) {
+      const el = listElement.items[evt.detail.index];
       if (el) {
         this.mdcMenuFoundation.handleItemAction(el);
       }
@@ -1002,61 +826,30 @@ export abstract class SelectBase extends FormElement {
     }
   }
 
-  private listOnFocusin(evt: FocusEvent) {
-    if (this.mdcListFoundation && this.listElement) {
-      const index = mwcList.getIndexOfTarget(this.listElement, evt);
-      this.mdcListFoundation.handleFocusIn(evt, index);
-    }
-  }
-
-  private listOnFocusout(evt: FocusEvent) {
-    if (this.mdcListFoundation && this.listElement) {
-      const index = mwcList.getIndexOfTarget(this.listElement, evt);
-      this.mdcListFoundation.handleFocusOut(evt, index);
-    }
-  }
-
-  private listOnKeydown(evt: KeyboardEvent) {
-    if (this.mdcListFoundation && this.listElement) {
-      const index = mwcList.getIndexOfTarget(this.listElement, evt);
-      const target = evt.target as Element;
-      const elements = mwcList.items(this.listElement);
-      const isRootListItem = elements ? elements.indexOf(target) !== -1 : false;
-      this.mdcListFoundation.handleKeydown(evt, isRootListItem, index);
-    }
-  }
-
-  private listOnClick(evt: MouseEvent) {
-    if (this.mdcListFoundation && this.listElement) {
-      const index = mwcList.getIndexOfTarget(this.listElement, evt);
-      const target = evt.target as Element | null;
-      const toggleCheckbox = target && 'getAttribute' in target ?
-          target.getAttribute('role') === 'radio' &&
-              target.getAttribute('aria-checked') === 'true' :
-          false;
-      this.mdcListFoundation.handleClick(index, toggleCheckbox);
-    }
-  }
-
   async _getUpdateComplete() {
     await super._getUpdateComplete();
-    await this._outlineUpdateComplete;
+    await Promise.all([
+      this._outlineUpdateComplete,
+      this._listUpdateComplete,
+    ]);
   }
 
   async firstUpdated() {
+    const listElement = this.listElement;
     const outlineElement = this.outlineElement;
     if (outlineElement) {
       this._outlineUpdateComplete = outlineElement.updateComplete;
       await this._outlineUpdateComplete;
     }
 
+    if (listElement) {
+      this._listUpdateComplete = listElement.updateComplete;
+      await this._listUpdateComplete;
+    }
+
     super.firstUpdated();
 
     this.mdcFoundation.setDisabled(this.disabled);
-    const listElement = this.listElement;
-    if (listElement && this.mdcListFoundation) {
-      mwcList.layout(listElement, this.mdcListFoundation);
-    }
 
     // if (this.validateOnInitialRender) {
     //   this.reportValidity();
@@ -1111,11 +904,12 @@ export abstract class SelectBase extends FormElement {
           listener.name, listener.cb as EventListenerOrEventListenerObject);
     }
 
-    if (menuElement) {
-      const selected = mwcList.selected(menuElement);
+    if (menuElement && listElement) {
+      const selected = listElement.selected;
 
       if (selected) {
-        const index = mwcList.getIndexOfElement(menuElement, selected);
+        const listIndex = listElement.index;
+        const index = listIndex instanceof Array ? listIndex[0] : listIndex;
         if (index !== -1 && this.mdcFoundation) {
           this.mdcFoundation.setSelectedIndex(index);
         }

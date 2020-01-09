@@ -16,11 +16,13 @@ limitations under the License.
 */
 import '@material/mwc-notched-outline';
 
-import {BaseElement} from '@material/mwc-base/base-element.js';
 import {MDCListAdapter} from '@material/list/adapter';
 import MDCListFoundation from '@material/list/foundation.js';
-import {html, query} from 'lit-element';
-import {isNodeElement} from '@material/mwc-base/utils';
+import {MDCListIndex} from '@material/list/types';
+import {BaseElement, observer} from '@material/mwc-base/base-element.js';
+import {isNodeElement, doesSlotContainElement} from '@material/mwc-base/utils';
+import {html, property, query} from 'lit-element';
+
 import {ListItemBase} from './mwc-list-item-base';
 
 export abstract class ListBase extends BaseElement {
@@ -32,12 +34,20 @@ export abstract class ListBase extends BaseElement {
 
   @query('slot') protected slotElement!: HTMLSlotElement|null;
 
+  @property({type: Boolean})
+  @observer(function(this: ListBase, value: boolean) {
+    if (this.mdcFoundation) {
+      this.mdcFoundation.setSingleSelection(!value);
+    }
+  })
+  multi = false;
+
   protected get assignedElements(): Element[] {
     const slot = this.slotElement;
 
     if (slot) {
       return slot.assignedNodes({flatten: true})
-                 .filter((node) => (node.nodeType === Node.ELEMENT_NODE)) as
+                 .filter((node) => isNodeElement(node)) as
           Element[];
     }
 
@@ -62,6 +72,20 @@ export abstract class ListBase extends BaseElement {
     return listItems as ListItemBase[];
   }
 
+  protected selected_: ListItemBase|null = null;
+
+  get selected(): ListItemBase|null {
+    return this.selected_;
+  }
+
+  get index(): MDCListIndex {
+    if (this.mdcFoundation) {
+      return this.mdcFoundation.getSelectedIndex();
+    }
+
+    return -1;
+  }
+
   render() {
     return html`
       <ul
@@ -73,6 +97,59 @@ export abstract class ListBase extends BaseElement {
         <slot></slot>
       </ul>
     `;
+  }
+
+  protected listOnFocusin(evt: FocusEvent) {
+    if (this.mdcFoundation && this.mdcRoot) {
+      const index = this.getIndexOfTarget(evt);
+      this.mdcFoundation.handleFocusIn(evt, index);
+    }
+  }
+
+  protected listOnFocusout(evt: FocusEvent) {
+    if (this.mdcFoundation && this.mdcRoot) {
+      const index = this.getIndexOfTarget(evt);
+      this.mdcFoundation.handleFocusOut(evt, index);
+    }
+  }
+
+  protected listOnKeydown(evt: KeyboardEvent) {
+    if (this.mdcFoundation && this.mdcRoot) {
+      const index = this.getIndexOfTarget(evt);
+      const target = evt.target as Element;
+      const isRootListItem = target instanceof ListItemBase;
+      this.mdcFoundation.handleKeydown(evt, isRootListItem, index);
+    }
+  }
+
+  protected listOnClick(evt: MouseEvent) {
+    if (this.mdcFoundation && this.mdcRoot) {
+      const index = this.getIndexOfTarget(evt);
+      const target = evt.target as Element | null;
+      const toggleCheckbox = target && 'getAttribute' in target ?
+          target.getAttribute('role') === 'radio' &&
+              target.getAttribute('aria-checked') === 'true' :
+          false;
+      this.mdcFoundation.handleClick(index, toggleCheckbox);
+    }
+  }
+
+  protected getIndexOfTarget(evt: Event): number {
+    const elements = this.items;
+    const path = evt.composedPath();
+
+    for (const pathItem of path) {
+      let index = -1;
+      if (pathItem instanceof ListItemBase) {
+        index = elements.indexOf(pathItem);
+      }
+
+      if (index !== -1) {
+        return index;
+      }
+    }
+
+    return -1;
   }
 
   createAdapter(): MDCListAdapter {
@@ -150,6 +227,11 @@ export abstract class ListBase extends BaseElement {
         const element = this.items[index];
         if (element) {
           element.classList.add(className);
+
+          if (className === 'mdc-list-item--selected' ||
+              className === 'mdc-list-item--activated') {
+            this.select(index);
+          }
         }
       },
       removeClassForElementIndex: (index, className) => {
@@ -204,7 +286,8 @@ export abstract class ListBase extends BaseElement {
         }
 
         const element = this.items[index];
-        return element ? element.hasCheckbox && element.isControlChecked() : false;
+        return element ? element.hasCheckbox && element.isControlChecked() :
+                         false;
       },
       setCheckedCheckboxOrRadioAtIndex: (index, isChecked) => {
         if (!this.mdcRoot) {
@@ -224,7 +307,7 @@ export abstract class ListBase extends BaseElement {
         const init: CustomEventInit = {bubbles: true};
         init.detail = {index};
         const ev = new CustomEvent('action', init);
-        this.mdcRoot.dispatchEvent(ev);
+        this.dispatchEvent(ev);
       },
       isFocusInsideList: () => {
         if (!this.mdcRoot) {
@@ -268,70 +351,43 @@ export abstract class ListBase extends BaseElement {
     return root ? root.activeElement : null;
   }
 
-  protected doContentsHaveFocus(): boolean {
+  doContentsHaveFocus(): boolean {
+    const slotElement = this.slotElement;
     const activeElement = this.getSlottedActiveElement();
-    if (!activeElement) {
+    if (!activeElement || !slotElement) {
       return false;
     }
 
-    const elements = this.assignedElements;
-
-    return elements.reduce((isContained: boolean, listItem) => {
-      return isContained || listItem === activeElement ||
-          listItem.contains(activeElement);
-    }, false);
+    return doesSlotContainElement(slotElement, activeElement);
   }
 
-  protected listOnFocusin(evt: FocusEvent) {
-    if (this.mdcFoundation && this.mdcRoot) {
-      const index = this.getIndexOfTarget(evt);
-      this.mdcFoundation.handleFocusIn(evt, index);
+  select(index: number) {
+    const previouslySelected = this.selected;
+    const itemToSelect = this.items[index];
+
+    if (!itemToSelect) {
+      return;
+    }
+
+    if (previouslySelected) {
+      previouslySelected.selected = false;
+    }
+
+
+    itemToSelect.selected = true;
+    this.selected_ = itemToSelect;
+  }
+
+  wrapFocus(wrapFocus: boolean) {
+    if (this.mdcFoundation) {
+      this.mdcFoundation.setWrapFocus(wrapFocus);
     }
   }
 
-  protected listOnFocusout(evt: FocusEvent) {
-    if (this.mdcFoundation && this.mdcRoot) {
-      const index = this.getIndexOfTarget(evt);
-      this.mdcFoundation.handleFocusOut(evt, index);
-    }
-  }
+  firstUpdated() {
+    super.firstUpdated();
 
-  protected listOnKeydown(evt: KeyboardEvent) {
-    if (this.mdcFoundation && this.mdcRoot) {
-      const index = this.getIndexOfTarget(evt);
-      const target = evt.target as Element;
-      const isRootListItem = target instanceof ListItemBase;
-      this.mdcFoundation.handleKeydown(evt, isRootListItem, index);
-    }
-  }
-
-  protected listOnClick(evt: MouseEvent) {
-    if (this.mdcFoundation && this.mdcRoot) {
-      const index = this.getIndexOfTarget(evt);
-      const target = evt.target as Element | null;
-      const toggleCheckbox = target && 'getAttribute' in target ?
-          target.getAttribute('role') === 'radio' &&
-              target.getAttribute('aria-checked') === 'true' :
-          false;
-      this.mdcFoundation.handleClick(index, toggleCheckbox);
-    }
-  }
-
-  protected getIndexOfTarget(evt: Event): number {
-    const elements = this.items;
-    const path = evt.composedPath();
-
-    for (const pathItem of path) {
-      let index = -1;
-      if (pathItem instanceof ListItemBase) {
-        index = elements.indexOf(pathItem);
-      }
-
-      if (index !== -1) {
-        return index;
-      }
-    }
-
-    return -1;
+    this.mdcFoundation.layout();
+    this.mdcFoundation.setSingleSelection(!this.multi);
   }
 }

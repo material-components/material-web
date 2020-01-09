@@ -15,7 +15,8 @@
  limitations under the License.
  */
 
-import {LitElement, query, html, property} from 'lit-element';
+import {observer} from '@material/mwc-base/observer';
+import {html, LitElement, property, query} from 'lit-element';
 
 interface HasChecked extends Element {
   checked: boolean;
@@ -27,7 +28,18 @@ export class ListItemBase extends LitElement {
   @property({type: String}) value = '';
   @property({type: Boolean}) hasCheckbox = false;
   @property({type: Boolean}) hasRadio = false;
-  @property({type: Boolean, reflect: true, attribute: 'disabled'}) disabled = false;
+  @property({type: Boolean, reflect: true, attribute: 'disabled'})
+  disabled = false;
+
+  @property({type: Boolean, reflect: true, attribute: 'selected'})
+  @observer(function(this: ListItemBase, value: boolean) {
+    if (value) {
+      this.setAttribute('aria-selected', 'true');
+    } else {
+      this.setAttribute('aria-selected', 'false');
+    }
+  })
+  selected = false;
 
   get text() {
     const textContent = this.textContent;
@@ -41,12 +53,14 @@ export class ListItemBase extends LitElement {
 
   render() {
     return html`
-      <label>
-        <slot></slot>
-      </label>`;
+      <li>
+        <label>
+          <slot></slot>
+        </label>
+      </li>`;
   }
 
-  protected getControl(): HasChecked | null {
+  protected getControl(): HasChecked|null {
     const label = this.labelElement;
 
     if (!label) {
@@ -79,6 +93,8 @@ export class ListItemBase extends LitElement {
   }
 
   firstUpdated() {
+    this.setAttribute('role', 'option');
+
     if (!this.hasAttribute('tabindex')) {
       this.setAttribute('tabindex', '-1');
     }
