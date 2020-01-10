@@ -53,11 +53,9 @@ export class ListItemBase extends LitElement {
 
   render() {
     return html`
-      <li>
-        <label>
-          <slot></slot>
-        </label>
-      </li>`;
+      <label>
+        <slot></slot>
+      </label>`;
   }
 
   protected getControl(): HasChecked|null {
@@ -100,5 +98,7 @@ export class ListItemBase extends LitElement {
     }
 
     this.setControlTabIndex('-1');
+
+    this.toggleAttribute('mwc-list-item', true);
   }
 }

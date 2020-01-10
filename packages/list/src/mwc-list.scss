@@ -15,123 +15,97 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import "@material/list/mdc-list.scss";
+@import "@material/list/_mixins.scss";
 
-// listitem
 $query: mdc-feature-all();
-$feat-structure: mdc-feature-create-target($query, structure);
+
 $feat-color: mdc-feature-create-target($query, color);
+$feat-structure: mdc-feature-create-target($query, structure);
+$feat-typography: mdc-feature-create-target($query, typography);
 $feat-animation: mdc-feature-create-target($query, animation);
+
 $item-primary-text-baseline-height: 32px;
 $item-secondary-text-baseline-height: 20px;
 $dense-item-primary-text-baseline-height: 24px;
+$divider-color: if(
+  mdc-theme-tone($mdc-theme-background) == "dark",
+  $mdc-list-divider-color-on-dark-bg,
+  $mdc-list-divider-color-on-light-bg
+);
 
-.mdc-list ::slotted(mwc-list-item,.list-item) {
-  @include mdc-list-item-base_;
-
-  outline: none;
-
-  $height: mdc-density-prop-value(
-    $density-config: $mdc-list-single-line-density-config,
-    $density-scale: $mdc-list-single-line-density-scale,
-    $property-name: height,
-  );
-
-  @include mdc-list-single-line-height($height, $query: $query);
+.mdc-list {
+  @include mdc-list-base_($query);
 }
 
-// "Selected" is ephemeral and likely to change soon. E.g., selecting one or more photos to share in Google Photos.
-// "Activated" is more permanent. E.g., the currently highlighted navigation destination in a drawer.
-::slotted([selected]),
-::slotted(.mdc-list-item--activated) {
-  @include mdc-list-item-primary-text-ink-color(primary, $query);
-  @include mdc-list-item-graphic-ink-color(primary, $query);
-}
+@include mdc-list-single-line-density($mdc-list-single-line-density-scale, $query: $query);
 
-::slotted(.mdc-list-item__graphic) {
+.mdc-list--dense {
   @include mdc-feature-targets($feat-structure) {
-    @include mdc-list-graphic-size_(24px);
-
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-    fill: currentColor;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    font-size: .812rem;
   }
 }
+// stylelint-enable selector-max-type,selector-no-qualifying-type
 
-// Extra specificity is to override .material-icons display style if used in
-// conjunction with mdc-list-item__graphic
-// stylelint-disable plugin/selector-bem-pattern
-.mdc-list ::slotted(.mdc-list-item__graphic) {
+.mdc-list-divider {
   @include mdc-feature-targets($feat-structure) {
-    display: inline-flex;
+    height: 0;
+    margin: 0;
+    border: none;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
   }
 }
-// stylelint-enable plugin/selector-bem-pattern
 
-::slotted(.mdc-list-item__meta) {
-  // stylelint-disable selector-class-pattern
-  &:not(.material-icons) {
-    @include mdc-typography(caption, $query);
-  }
-  // stylelint-enable selector-class-pattern
+// Note: ideally we'd be able to hoist this to the top-level `$feat-color`, but doing so
+// will cause the `border` declaration on `.mdc-list-divider` above to override it.
+@include mdc-list-divider-color($divider-color, $query);
 
+.mdc-list-divider--padded {
   @include mdc-feature-targets($feat-structure) {
-    @include mdc-rtl-reflexive-property(margin, auto, 0, "::slotted(mwc-list-item,.list-item)");
+    // Leave gaps on each side to match the padding on list items
+    margin: 0 $mdc-list-side-padding;
   }
 }
 
-::slotted(.mdc-list-item__text) {
-  @include mdc-typography-overflow-ellipsis($query);
-}
-
-// Disable interaction on label elements that may automatically
-// toggle corresponding checkbox / radio input.
-::slotted(.mdc-list-item__text)[for] {
+.mdc-list-divider--inset {
   @include mdc-feature-targets($feat-structure) {
-    pointer-events: none;
+    @include mdc-rtl-reflexive-box(margin, left, $mdc-list-text-offset, ".mdc-list-group");
+
+    width: calc(100% - #{$mdc-list-text-offset});
   }
 }
 
-::slotted(.mdc-list-item__primary-text) {
-  @include mdc-typography-overflow-ellipsis($query);
-  @include mdc-typography-baseline-top($item-primary-text-baseline-height, $query);
-  @include mdc-typography-baseline-bottom($item-secondary-text-baseline-height, $query);
-
+.mdc-list-divider--inset.mdc-list-divider--padded {
   @include mdc-feature-targets($feat-structure) {
-    display: block;
+    width: calc(100% - #{$mdc-list-text-offset} - #{$mdc-list-side-padding});
   }
-
-  // stylelint-disable plugin/selector-bem-pattern
-  .mdc-list--dense & {
-    @include mdc-typography-baseline-top($dense-item-primary-text-baseline-height, $query);
-    @include mdc-typography-baseline-bottom($item-secondary-text-baseline-height, $query);
-  }
-  // stylelint-enable plugin/selector-bem-pattern
 }
 
-::slotted(.mdc-list-item__secondary-text) {
-  @include mdc-typography(body2, $query);
-  @include mdc-typography-overflow-ellipsis($query);
-  @include mdc-typography-baseline-top($item-secondary-text-baseline-height, $query);
-
+.mdc-list-group {
   @include mdc-feature-targets($feat-structure) {
-    display: block;
-  }
-
-  // stylelint-disable plugin/selector-bem-pattern
-  .mdc-list--dense & {
-    @include mdc-typography-baseline-top($item-secondary-text-baseline-height, $query);
-
-    @include mdc-feature-targets($feat-structure) {
-      font-size: inherit;
+    // Cancel top/bottom padding on individual lists within group
+    .mdc-list {
+      padding: 0;
     }
   }
-  // stylelint-enable plugin/selector-bem-pattern
+}
+
+.mdc-list-group__subheader {
+  $mdc-list-subheader-virtual-height: 3rem;
+  $mdc-list-subheader-leading: map-get(map-get($mdc-typography-styles, body1), line-height);
+  $mdc-list-subheader-margin: ($mdc-list-subheader-virtual-height - $mdc-list-subheader-leading) / 2;
+
+  @include mdc-typography(subtitle1, $query);
+
+  @include mdc-feature-targets($feat-structure) {
+    margin: $mdc-list-subheader-margin $mdc-list-side-padding;
+  }
 }
 
 // stylelint-disable plugin/selector-bem-pattern
-.mdc-list--dense ::slotted(mwc-list-item,.list-item) {
+.mdc-list--dense ::slotted([mwc-list-item]) {
   @include mdc-feature-targets($feat-structure) {
     height: 40px;
   }
@@ -143,7 +117,7 @@ $dense-item-primary-text-baseline-height: 24px;
   }
 }
 
-.mdc-list--avatar-list ::slotted(mwc-list-item,.list-item) {
+.mdc-list--avatar-list ::slotted([mwc-list-item]) {
   @include mdc-feature-targets($feat-structure) {
     height: 56px;
   }
@@ -163,14 +137,14 @@ $dense-item-primary-text-baseline-height: 24px;
   }
 }
 
-.mdc-list--two-line ::slotted(mwc-list-item,.list-item) {
+.mdc-list--two-line ::slotted([mwc-list-item]) {
   @include mdc-feature-targets($feat-structure) {
     height: 72px;
   }
 }
 
-.mdc-list--two-line.mdc-list--dense ::slotted(mwc-list-item,.list-item),
-.mdc-list--avatar-list.mdc-list--dense ::slotted(mwc-list-item,.list-item) {
+.mdc-list--two-line.mdc-list--dense ::slotted([mwc-list-item]),
+.mdc-list--avatar-list.mdc-list--dense ::slotted([mwc-list-item]) {
   @include mdc-feature-targets($feat-structure) {
     height: 60px;
   }
@@ -183,18 +157,9 @@ $dense-item-primary-text-baseline-height: 24px;
 }
 
 // Only change mouse cursor for interactive list items which are not disabled.
-:not(.mdc-list--non-interactive) > :not(::slotted(.mdc-list-item--disabled))::slotted(mwc-list-item,.list-item) {
+:not(.mdc-list--non-interactive) > :not(::slotted([disabled]))::slotted([mwc-list-item]) {
   @include mdc-feature-targets($feat-structure) {
     cursor: pointer;
-  }
-}
-
-// Override anchor tag styles for the use-case of a list being used for navigation
-// stylelint-disable selector-max-type,selector-no-qualifying-type
-::slotted(amwc-list-item,.list-item) {
-  @include mdc-feature-targets($feat-structure) {
-    color: inherit;
-    text-decoration: none;
   }
 }
 
@@ -204,12 +169,12 @@ $dense-item-primary-text-baseline-height: 24px;
   $focus-opacity: mdc-states-opacity($states-color, focus);
   $press-opacity: mdc-states-opacity($states-color, press);
 
-  ::slotted(mwc-list-item,.list-item) {
+  ::slotted([mwc-list-item]) {
     cursor: pointer;
     user-select: none;
   }
 
-  ::slotted(.mdc-list-item:not(.mdc-list-item--disabled)) {
+  ::slotted([mwc-list-item]:not([disabled])) {
 
     @include mdc-ripple-surface($query);
     @include mdc-ripple-radius-bounded($query: $query);
@@ -218,13 +183,13 @@ $dense-item-primary-text-baseline-height: 24px;
     }
   }
 
-  ::slotted(.mdc-list-item.mdc-list-item--disabled) {
+  ::slotted([mwc-list-item][disabled]) {
     cursor: default;
   }
 
   // Hover
 
-  ::slotted(.mdc-list-item:not(.mdc-list-item--disabled):hover)::before {
+  ::slotted([mwc-list-item]:not([disabled]):hover)::before {
     // Opacity falls under color because the chosen opacity is color-dependent
     // in typical usage
     @include mdc-feature-targets($feat-color) {
@@ -234,8 +199,8 @@ $dense-item-primary-text-baseline-height: 24px;
 
   // Focus
 
-  ::slotted(.mdc-list-item:not(.mdc-list-item--disabled).mdc-ripple-upgraded--background-focused),
-  ::slotted(.mdc-list-item:not(.mdc-list-item--disabled):not(.mdc-ripple-upgraded):focus) {
+  ::slotted([mwc-list-item]:not([disabled]).mdc-ripple-upgraded--background-focused),
+  ::slotted([mwc-list-item]:not([disabled]):not(.mdc-ripple-upgraded):focus) {
     &::before {
       @include mdc-states-focus-opacity-properties_(
         $opacity: $focus-opacity, $query: $query);
@@ -244,7 +209,7 @@ $dense-item-primary-text-baseline-height: 24px;
 
   // Press
 
-  ::slotted(.mdc-list-item:not(.mdc-list-item--disabled):not(.mdc-ripple-upgraded)) {
+  ::slotted([mwc-list-item]:not([disabled]):not(.mdc-ripple-upgraded)) {
     // Apply press additively by using the ::after pseudo-element
     &::after {
       @include mdc-feature-targets($feat-animation) {
@@ -253,7 +218,7 @@ $dense-item-primary-text-baseline-height: 24px;
     }
   }
 
-  ::slotted(.mdc-list-item:not(.mdc-list-item--disabled):not(.mdc-ripple-upgraded):active) {
+  ::slotted([mwc-list-item]:not([disabled]):not(.mdc-ripple-upgraded):active) {
     &::after {
       @include mdc-feature-targets($feat-animation) {
         transition-duration: $mdc-ripple-fade-in-duration;
@@ -266,7 +231,7 @@ $dense-item-primary-text-baseline-height: 24px;
     }
   }
 
-  ::slotted(.mdc-list-item:not(.mdc-list-item--disabled).mdc-ripple-upgraded) {
+  ::slotted([mwc-list-item]:not([disabled]).mdc-ripple-upgraded) {
     @include mdc-feature-targets($feat-color) {
       --mdc-ripple-fg-opacity: #{$press-opacity};
     }
@@ -283,7 +248,7 @@ $dense-item-primary-text-baseline-height: 24px;
 
   // selected
 
-  ::slotted([selected]:not(.mdc-list-item--disabled)) {
+  ::slotted([selected]:not([disabled])) {
     &::before {
       // Opacity falls under color because the chosen opacity is color-dependent.
       @include mdc-feature-targets($feat-color) {
@@ -298,7 +263,7 @@ $dense-item-primary-text-baseline-height: 24px;
 
   // Hover-selected
 
-  ::slotted([selected].mdc-list-item:not(.mdc-list-item--disabled):hover)::before {
+  ::slotted([selected][mwc-list-item]:not([disabled]):hover)::before {
     // Opacity falls under color because the chosen opacity is color-dependent
     // in typical usage
     @include mdc-feature-targets($feat-color) {
@@ -308,8 +273,8 @@ $dense-item-primary-text-baseline-height: 24px;
 
   // Focus-selected
 
-  ::slotted([selected].mdc-list-item:not(.mdc-list-item--disabled).mdc-ripple-upgraded--background-focused),
-  ::slotted([selected].mdc-list-item:not(.mdc-list-item--disabled):not(.mdc-ripple-upgraded):focus) {
+  ::slotted([selected][mwc-list-item]:not([disabled]).mdc-ripple-upgraded--background-focused),
+  ::slotted([selected][mwc-list-item]:not([disabled]):not(.mdc-ripple-upgraded):focus) {
     &::before {
       @include mdc-states-focus-opacity-properties_(
         $opacity: $focus-opacity-primary + $selected-opacity, $query: $query);
@@ -317,7 +282,7 @@ $dense-item-primary-text-baseline-height: 24px;
   }
 
   // Press-selected
-  ::slotted([selected].mdc-list-item:not(.mdc-list-item--disabled):not(.mdc-ripple-upgraded):active) {
+  ::slotted([selected][mwc-list-item]:not([disabled]):not(.mdc-ripple-upgraded):active) {
     &::after {
       // Opacity falls under color because the chosen opacity is color-dependent in typical usage
       @include mdc-feature-targets($feat-color) {
@@ -326,7 +291,7 @@ $dense-item-primary-text-baseline-height: 24px;
     }
   }
 
-  ::slotted([selected].mdc-list-item:not(.mdc-list-item--disabled).mdc-ripple-upgraded) {
+  ::slotted([selected][mwc-list-item]:not([disabled]).mdc-ripple-upgraded) {
     @include mdc-feature-targets($feat-color) {
       --mdc-ripple-fg-opacity: #{$press-opacity-primary + $selected-opacity};
     }
@@ -334,7 +299,7 @@ $dense-item-primary-text-baseline-height: 24px;
 
   // Activated
 
-  ::slotted(.mdc-list-item--activated:not(.mdc-list-item--disabled)) {
+  ::slotted(.mdc-list-item--activated:not([disabled])) {
     &::before {
       @include mdc-feature-targets($feat-color) {
         opacity: $activated-opacity;
@@ -348,7 +313,7 @@ $dense-item-primary-text-baseline-height: 24px;
 
   // Hover-activated
 
-  ::slotted(.mdc-list-item--activated.mdc-list-item:not(.mdc-list-item--disabled):hover)::before {
+  ::slotted(.mdc-list-item--activated[mwc-list-item]:not([disabled]):hover)::before {
     // Opacity falls under color because the chosen opacity is color-dependent
     // in typical usage
     @include mdc-feature-targets($feat-color) {
@@ -358,8 +323,8 @@ $dense-item-primary-text-baseline-height: 24px;
 
   // Focus-activated
 
-  ::slotted(.mdc-list-item--activated.mdc-list-item:not(.mdc-list-item--disabled).mdc-ripple-upgraded--background-focused),
-  ::slotted(.mdc-list-item--activated.mdc-list-item:not(.mdc-list-item--disabled):not(.mdc-ripple-upgraded):focus) {
+  ::slotted(.mdc-list-item--activated[mwc-list-item]:not([disabled]).mdc-ripple-upgraded--background-focused),
+  ::slotted(.mdc-list-item--activated[mwc-list-item]:not([disabled]):not(.mdc-ripple-upgraded):focus) {
     &::before {
       @include mdc-states-focus-opacity-properties_(
         $opacity: $focus-opacity-primary + $activated-opacity, $query: $query);
@@ -367,7 +332,7 @@ $dense-item-primary-text-baseline-height: 24px;
   }
 
   // Press-activated
-  ::slotted(.mdc-list-item--activated.mdc-list-item:not(.mdc-list-item--disabled):not(.mdc-ripple-upgraded):active) {
+  ::slotted(.mdc-list-item--activated[mwc-list-item]:not([disabled]):not(.mdc-ripple-upgraded):active) {
     &::after {
       // Opacity falls under color because the chosen opacity is color-dependent in typical usage
       @include mdc-feature-targets($feat-color) {
@@ -376,9 +341,14 @@ $dense-item-primary-text-baseline-height: 24px;
     }
   }
 
-  ::slotted(.mdc-list-item--activated.mdc-list-item:not(.mdc-list-item--disabled).mdc-ripple-upgraded) {
+  ::slotted(.mdc-list-item--activated[mwc-list-item]:not([disabled]).mdc-ripple-upgraded) {
     @include mdc-feature-targets($feat-color) {
       --mdc-ripple-fg-opacity: #{$press-opacity-primary + $activated-opacity};
     }
   }
+}
+
+.mdc-list--dense ::slotted(.mdc-list-item__primary-text) {
+  @include mdc-typography-baseline-top($dense-item-primary-text-baseline-height, $query);
+  @include mdc-typography-baseline-bottom($item-secondary-text-baseline-height, $query);
 }
