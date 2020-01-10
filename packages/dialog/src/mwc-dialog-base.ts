@@ -364,7 +364,8 @@ export class DialogBase extends BaseElement {
     window.addEventListener('resize', this.boundLayout, applyPassive());
     window.addEventListener(
         'orientationchange', this.boundLayout, applyPassive());
-    this.addEventListener('keydown', this.boundHandleKeydown, applyPassive());
+    this.mdcRoot.addEventListener(
+        'keydown', this.boundHandleKeydown, applyPassive());
     document.addEventListener(
         'keydown', this.boundHandleDocumentKeydown, applyPassive());
   }

@@ -476,6 +476,9 @@ suite('mwc-dialog:', () => {
     });
 
     test('Enter clicks primary action', async () => {
+      const mdcRoot = element.shadowRoot!.querySelector('.mdc-dialog');
+      assert.isTrue(!!mdcRoot, 'root has rendered');
+
       let clickCalled = false;
       const primary = element.querySelector('[slot="primaryAction"]') as Button;
 
@@ -495,8 +498,8 @@ suite('mwc-dialog:', () => {
       (enterDown as unknown as HasKeyCode).keyCode = 13;
       (enterUp as unknown as HasKeyCode).keyCode = 13;
 
-      element.dispatchEvent(enterDown);
-      element.dispatchEvent(enterUp);
+      mdcRoot!.dispatchEvent(enterDown);
+      mdcRoot!.dispatchEvent(enterUp);
 
 
       const action = await awaitEvent(element, CLOSED_EVENT);
