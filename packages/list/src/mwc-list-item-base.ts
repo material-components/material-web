@@ -16,6 +16,7 @@
  */
 
 import {observer} from '@material/mwc-base/observer';
+import {findAssignedElement} from '@material/mwc-base/utils';
 import {html, LitElement, property, query} from 'lit-element';
 
 interface HasChecked extends Element {
@@ -23,9 +24,9 @@ interface HasChecked extends Element {
 }
 export class ListItemBase extends LitElement {
   @query('slot') protected slotElement!: HTMLSlotElement|null;
-  @query('label') protected labelElement!: HTMLLabelElement|null;
 
   @property({type: String}) value = '';
+  @property({type: String}) controlSelector = '.control';
   @property({type: Boolean}) hasCheckbox = false;
   @property({type: Boolean}) hasRadio = false;
   @property({type: Boolean, reflect: true, attribute: 'disabled'})
@@ -47,25 +48,18 @@ export class ListItemBase extends LitElement {
     return textContent ? textContent.trim() : '';
   }
 
-  protected createRenderRoot() {
-    return this.attachShadow({mode: 'open', delegatesFocus: true});
-  }
-
   render() {
-    return html`
-      <label>
-        <slot></slot>
-      </label>`;
+    return html`<slot></slot>`;
   }
 
   protected getControl(): HasChecked|null {
-    const label = this.labelElement;
+    const slot = this.slotElement;
 
-    if (!label) {
+    if (!slot) {
       return null;
     }
 
-    const control = label.control as HTMLElement | HasChecked | null;
+    const control = findAssignedElement(slot, this.controlSelector);
 
     return control && 'checked' in control ? control : null;
   }
@@ -90,15 +84,23 @@ export class ListItemBase extends LitElement {
     }
   }
 
-  firstUpdated() {
+  connectedCallback() {
+    super.connectedCallback();
+
     this.setAttribute('role', 'option');
 
     if (!this.hasAttribute('tabindex')) {
       this.setAttribute('tabindex', '-1');
     }
 
-    this.setControlTabIndex('-1');
-
     this.toggleAttribute('mwc-list-item', true);
+  }
+
+  firstUpdated() {
+    if (this.getAttribute('tabindex') === '-1') {
+      this.setControlTabIndex('-1');
+    }
+    this.dispatchEvent(
+        new Event('list-item-rendered', {bubbles: true, composed: true}));
   }
 }

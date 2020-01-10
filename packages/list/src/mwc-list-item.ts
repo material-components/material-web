@@ -17,8 +17,8 @@ limitations under the License.
 
 import {customElement} from 'lit-element';
 
-import {style} from './mwc-list-item-css.js';
 import {ListItemBase} from './mwc-list-item-base.js';
+import {style} from './mwc-list-item-css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -20,7 +20,7 @@ import {MDCListAdapter} from '@material/list/adapter';
 import MDCListFoundation from '@material/list/foundation.js';
 import {MDCListIndex} from '@material/list/types';
 import {BaseElement, observer} from '@material/mwc-base/base-element.js';
-import {isNodeElement, doesSlotContainElement} from '@material/mwc-base/utils';
+import {doesSlotContainElement, isNodeElement} from '@material/mwc-base/utils';
 import {html, property, query} from 'lit-element';
 
 import {ListItemBase} from './mwc-list-item-base';
@@ -47,29 +47,34 @@ export abstract class ListBase extends BaseElement {
 
     if (slot) {
       return slot.assignedNodes({flatten: true})
-                 .filter((node) => isNodeElement(node)) as
-          Element[];
+                 .filter((node) => isNodeElement(node)) as Element[];
     }
 
     return [];
   }
 
+  protected items_: ListItemBase[] = [];
+
   get items(): ListItemBase[] {
+    return this.items_;
+  }
+
+  protected updateItems() {
     const nodes = this.assignedElements;
     const listItems =
         nodes
             .map<Element|Element[]>((element) => {
-              if (element instanceof ListItemBase) {
+              if (element.hasAttribute('mwc-list-item')) {
                 return element;
               }
 
-              return Array.from(element.querySelectorAll('.list-item'));
+              return Array.from(element.querySelectorAll('[mwc-list-item]'));
             })
             .reduce<Element[]>((listItems, listItemResult) => {
               return listItems.concat(listItemResult);
             }, []);
 
-    return listItems as ListItemBase[];
+    this.items_ = listItems as ListItemBase[];
   }
 
   protected selected_: ListItemBase|null = null;
@@ -94,7 +99,10 @@ export abstract class ListBase extends BaseElement {
           @click=${this.listOnClick}
           @focusin=${this.listOnFocusin}
           @focusout=${this.listOnFocusout}>
-        <slot></slot>
+        <slot
+            @slotchange=${this.onSlotChange}
+            @list-item-rendered=${this.onListItemConnected}>
+        </slot>
       </ul>
     `;
   }
@@ -122,14 +130,28 @@ export abstract class ListBase extends BaseElement {
     }
   }
 
+  protected shouldToggleCheckbox(target: (Node&ParentNode)|Element|ListItemBase|
+                                 null) {
+    if (!target || !isNodeElement(target)) {
+      return false;
+    } else if ('checked' in target) {
+      return false;
+    } else if ((target as Element).hasAttribute('mwc-list-item')) {
+      const castedTarget = target as ListItemBase;
+
+      return castedTarget.hasRadio || castedTarget.hasCheckbox;
+    }
+
+    return this.shouldToggleCheckbox(target.parentNode);
+  }
+
   protected listOnClick(evt: MouseEvent) {
     if (this.mdcFoundation && this.mdcRoot) {
       const index = this.getIndexOfTarget(evt);
-      const target = evt.target as Element | null;
-      const toggleCheckbox = target && 'getAttribute' in target ?
-          target.getAttribute('role') === 'radio' &&
-              target.getAttribute('aria-checked') === 'true' :
-          false;
+      const target = evt.target as ListItemBase | Element | null;
+
+      const toggleCheckbox = this.shouldToggleCheckbox(target);
+
       this.mdcFoundation.handleClick(index, toggleCheckbox);
     }
   }
@@ -156,8 +178,7 @@ export abstract class ListBase extends BaseElement {
     return {
       getListItemCount: () => {
         if (this.mdcRoot) {
-          const elements = this.items;
-          return elements.length;
+          return this.items.length;
         }
 
         return 0;
@@ -167,9 +188,7 @@ export abstract class ListBase extends BaseElement {
           return -1;
         }
 
-        const elements = this.items;
-
-        if (!elements.length) {
+        if (!this.items.length) {
           return -1;
         }
 
@@ -197,7 +216,7 @@ export abstract class ListBase extends BaseElement {
 
         const activeListItem = activeItem as ListItemBase | null;
 
-        return activeListItem ? elements.indexOf(activeListItem) : -1;
+        return activeListItem ? this.items.indexOf(activeListItem) : -1;
       },
       getAttributeForElementIndex: (index, attr) => {
         const listElement = this.mdcRoot;
@@ -254,16 +273,7 @@ export abstract class ListBase extends BaseElement {
           (element as HTMLElement).focus();
         }
       },
-      setTabIndexForListItemChildren: (index, tabIndex) => {
-        if (!this.mdcRoot) {
-          return;
-        }
-
-        const element = this.items[index];
-        if (element) {
-          element.setControlTabIndex(tabIndex);
-        }
-      },
+      setTabIndexForListItemChildren: () => {},
       hasCheckboxAtIndex: (index) => {
         if (!this.mdcRoot) {
           return false;
@@ -387,7 +397,30 @@ export abstract class ListBase extends BaseElement {
   firstUpdated() {
     super.firstUpdated();
 
-    this.mdcFoundation.layout();
     this.mdcFoundation.setSingleSelection(!this.multi);
+  }
+
+  onSlotChange() {
+    this.updateItems();
+    this.layout();
+  }
+
+  onListItemConnected(e) {
+    const target = e.target as ListItemBase;
+
+    if (this.items.indexOf(target) === -1) {
+      this.updateItems();
+    }
+
+    this.layout();
+  }
+
+  layout() {
+    this.mdcFoundation.layout();
+    const first = this.items[0];
+
+    if (first) {
+      first.setAttribute('tabIndex', '0');
+    }
   }
 }

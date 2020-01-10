@@ -25,7 +25,7 @@ import MDCMenuSurfaceFoundation from '@material/menu-surface/foundation.js';
 import {MDCMenuAdapter} from '@material/menu/adapter';
 import MDCMenuFoundation from '@material/menu/foundation.js';
 import {addHasRemoveClass, FormElement, observer} from '@material/mwc-base/form-element.js';
-import {isNodeElement, slotActiveElement, doesSlotContainElement} from '@material/mwc-base/utils';
+import {doesSlotContainElement, isNodeElement, slotActiveElement} from '@material/mwc-base/utils';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {List} from '@material/mwc-list';
