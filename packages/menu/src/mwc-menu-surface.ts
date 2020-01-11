@@ -19,6 +19,9 @@ import {customElement} from 'lit-element';
 import {MenuSurfaceBase} from './mwc-menu-surface-base.js';
 import {style} from './mwc-menu-surface-css.js';
 
+export {MDCMenuDistance} from '@material/menu-surface/types';
+export {Corner} from './mwc-menu-surface-base';
+
 declare global {
   interface HTMLElementTagNameMap {
     'mwc-menu-surface': MenuSurface;
