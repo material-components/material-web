@@ -21,30 +21,11 @@ import {addHasRemoveClass, BaseElement, observer} from '@material/mwc-base/base-
 import {deepActiveElementPath, doesSlotContainElement, doesSlotContainFocus, isNodeElement} from '@material/mwc-base/utils';
 import {html, property, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
+import {Corner as CornerEnum} from '@material/menu-surface/constants';
+import {MDCMenuDistance} from '@material/menu-surface/types';
 
-enum CornerBit {
-  BOTTOM = 1,
-  CENTER = 2,
-  RIGHT = 4,
-  FLIP_RTL = 8,
-}
-
-export enum Corner {
-  TOP_LEFT = 0,
-  TOP_RIGHT = CornerBit.RIGHT,
-  BOTTOM_LEFT = CornerBit.BOTTOM,
-  BOTTOM_RIGHT =
-      CornerBit.BOTTOM | CornerBit.RIGHT,  // tslint:disable-line:no-bitwise
-  TOP_START = CornerBit.FLIP_RTL,
-  TOP_END =
-      CornerBit.FLIP_RTL | CornerBit.RIGHT,  // tslint:disable-line:no-bitwise
-  BOTTOM_START =
-      CornerBit.BOTTOM | CornerBit.FLIP_RTL,  // tslint:disable-line:no-bitwise
-  BOTTOM_END = CornerBit.BOTTOM | CornerBit.RIGHT |
-      CornerBit.FLIP_RTL,  // tslint:disable-line:no-bitwise
-}
-;
-
+export {MDCMenuDistance} from '@material/menu-surface/types';
+export type Corner = keyof typeof CornerEnum;
 export type AnchorableElement = HTMLElement&{anchorElement: Element | null};
 
 export abstract class MenuSurfaceBase extends BaseElement {
@@ -125,6 +106,18 @@ export abstract class MenuSurfaceBase extends BaseElement {
     }
   })
   quick = false;
+
+  @property({type: String})
+  @observer(function(this: MenuSurfaceBase, value: Corner|null) {
+    if (this.mdcFoundation) {
+      if (value) {
+        this.mdcFoundation.setAnchorCorner(CornerEnum[value]);
+      } else {
+        this.mdcFoundation.setAnchorCorner(CornerEnum.TOP_START);
+      }
+    }
+  })
+  corner: Corner | null = null;
 
   protected previouslyFocused: HTMLElement|Element|null = null;
   protected previousAnchor: HTMLElement|null = null;
@@ -376,5 +369,11 @@ export abstract class MenuSurfaceBase extends BaseElement {
 
   show() {
     this.open = true;
+  }
+
+  setAnchorMargin(margin: MDCMenuDistance) {
+    if (this.mdcFoundation) {
+      this.mdcFoundation.setAnchorMargin(margin);
+    }
   }
 }
