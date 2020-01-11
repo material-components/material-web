@@ -20,7 +20,7 @@ import {MDCListAdapter} from '@material/list/adapter';
 import MDCListFoundation from '@material/list/foundation.js';
 import {MDCListIndex} from '@material/list/types';
 import {BaseElement, observer} from '@material/mwc-base/base-element.js';
-import {doesSlotContainElement, isNodeElement} from '@material/mwc-base/utils';
+import {deepActiveElementPath, doesSlotContainFocus, isNodeElement} from '@material/mwc-base/utils';
 import {html, property, query} from 'lit-element';
 
 import {ListItemBase} from './mwc-list-item-base';
@@ -192,31 +192,21 @@ export abstract class ListBase extends BaseElement {
           return -1;
         }
 
-        const activeElement = this.getSlottedActiveElement();
+        const activeElementPath = deepActiveElementPath();
 
-        if (!activeElement) {
+        if (!activeElementPath.length) {
           return -1;
         }
 
-        let activeItem: ListItemBase|Element|null = activeElement;
+        for (let i = activeElementPath.length - 1; i >= 0; i--) {
+          const activeItem = activeElementPath[i];
 
-        while (activeItem && !(activeItem instanceof ListItemBase)) {
-          const parent = activeItem.parentNode;
-          if (!parent) {
-            activeItem = null;
-            continue;
-          }
-
-          if (parent.nodeType === Node.ELEMENT_NODE) {
-            activeItem = parent as Element;
-          } else {
-            activeItem = null;
+          if (activeItem.hasAttribute('mwc-list-item')) {
+            return this.items.indexOf(activeItem as ListItemBase);
           }
         }
 
-        const activeListItem = activeItem as ListItemBase | null;
-
-        return activeListItem ? this.items.indexOf(activeListItem) : -1;
+        return -1;
       },
       getAttributeForElementIndex: (index, attr) => {
         const listElement = this.mdcRoot;
@@ -351,24 +341,13 @@ export abstract class ListBase extends BaseElement {
     };
   }
 
-  protected getSlottedActiveElement(): Element|null {
-    const first = this.items[0];
-    if (!first) {
-      return null;
-    }
-
-    const root = first.getRootNode() as unknown as DocumentOrShadowRoot;
-    return root ? root.activeElement : null;
-  }
-
   doContentsHaveFocus(): boolean {
     const slotElement = this.slotElement;
-    const activeElement = this.getSlottedActiveElement();
-    if (!activeElement || !slotElement) {
+    if (!slotElement) {
       return false;
     }
 
-    return doesSlotContainElement(slotElement, activeElement);
+    return doesSlotContainFocus(slotElement);
   }
 
   select(index: number) {

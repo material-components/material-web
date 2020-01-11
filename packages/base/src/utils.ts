@@ -73,7 +73,7 @@ document.removeEventListener('x', fn);
  */
 export const supportsPassiveEventListener = supportsPassive;
 
-export const slotActiveElement = (slot: HTMLSlotElement): Element|null => {
+const slotActiveElement = (slot: HTMLSlotElement): Element|null => {
   const assignedElements =
       slot.assignedNodes({flatten: true})
           .filter((node) => isNodeElement(node)) as Element[];
@@ -88,7 +88,7 @@ export const slotActiveElement = (slot: HTMLSlotElement): Element|null => {
 };
 
 export const doesSlotContainElement =
-    (slot: HTMLSlotElement, element: Element) => {
+    (slot: HTMLSlotElement, element: Element): boolean => {
       return slot.assignedNodes({flatten: true})
           .filter((node) => isNodeElement(node))
           .reduce((isContained: boolean, assinedElement) => {
@@ -96,3 +96,29 @@ export const doesSlotContainElement =
                 assinedElement.contains(element);
           }, false);
     };
+
+export const doesSlotContainFocus = (slot: HTMLSlotElement): boolean => {
+  const activeElement = slotActiveElement(slot);
+
+  return activeElement ? doesSlotContainElement(slot, activeElement) : false;
+};
+
+export const deepActiveElementPath = (doc = window.document): Element[] => {
+  let activeElement = doc.activeElement;
+  const path: Element[] = [];
+
+  if (!activeElement) {
+    return path;
+  }
+
+  while (activeElement) {
+    path.push(activeElement);
+    if (activeElement.shadowRoot) {
+      activeElement = activeElement.shadowRoot.activeElement;
+    } else {
+      break;
+    }
+  }
+
+  return path;
+};
