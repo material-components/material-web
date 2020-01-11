@@ -19,6 +19,8 @@ import {customElement} from 'lit-element';
 import {ListBase} from './mwc-list-base.js';
 import {style} from './mwc-list-css.js';
 
+export {MDCListIndex} from '@material/list/types';
+
 declare global {
   interface HTMLElementTagNameMap {
     'mwc-list': List;

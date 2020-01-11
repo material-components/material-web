@@ -16,13 +16,10 @@
     "@material/mwc-base": "^0.12.0",
     "@material/mwc-floating-label": "^0.12.0",
     "@material/mwc-icon": "^0.12.0",
-    "@material/mwc-list": "^0.12.0",
     "@material/mwc-menu": "^0.12.0",
     "@material/mwc-line-ripple": "^0.12.0",
     "@material/mwc-notched-outline": "^0.12.0",
     "@material/select": "=5.0.0-canary.5ffe8f7e3.0",
-    "@material/menu": "=5.0.0-canary.5ffe8f7e3.0",
-    "@material/menu-surface": "=5.0.0-canary.5ffe8f7e3.0",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0"

@@ -58,11 +58,9 @@ export abstract class MenuSurfaceBase extends BaseElement {
       oldAnchor: HTMLElement|null) {
     if (oldAnchor) {
       oldAnchor.style.position = '';
-      oldAnchor.style.overflow = '';
     }
     if (newAnchor) {
       newAnchor.style.position = 'relative';
-      newAnchor.style.overflow = 'visible';
     }
   })
   anchor: HTMLElement|null = null;
@@ -147,28 +145,16 @@ export abstract class MenuSurfaceBase extends BaseElement {
     return {
       ...addHasRemoveClass(this.mdcRoot),
       hasAnchor: () => {
-        if (!this.mdcRoot) {
-          return false;
-        }
-
         return !!this.anchor;
       },
       notifyClose: () => {
-        if (!this.mdcRoot) {
-          return;
-        }
-
-        const init: CustomEventInit = {};
+        const init: CustomEventInit = {bubbles: true, composed: true};
         const ev = new CustomEvent('closed', init);
         this.open = false;
         this.mdcRoot.dispatchEvent(ev);
       },
       notifyOpen: () => {
-        if (!this.mdcRoot) {
-          return;
-        }
-
-        const init: CustomEventInit = {};
+        const init: CustomEventInit = {bubbles: true, composed: true};
         const ev = new CustomEvent('opened', init);
         this.open = true;
         this.mdcRoot.dispatchEvent(ev);
@@ -379,6 +365,12 @@ export abstract class MenuSurfaceBase extends BaseElement {
   setAnchorMargin(margin: MDCMenuDistance) {
     if (this.mdcFoundation) {
       this.mdcFoundation.setAnchorMargin(margin);
+    }
+  }
+
+  setAnchorCorner(corner: CornerEnum) {
+    if (this.mdcFoundation) {
+      this.mdcFoundation.setAnchorCorner(corner);
     }
   }
 }

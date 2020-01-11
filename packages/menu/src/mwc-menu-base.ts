@@ -17,19 +17,21 @@ limitations under the License.
 import '@material/mwc-list';
 import './mwc-menu-surface';
 
-import {Corner, MDCMenuDistance} from './mwc-menu-surface-base';
+import {Corner as CornerEnum} from '@material/menu-surface/constants';
 import {MDCMenuAdapter} from '@material/menu/adapter';
+import {DefaultFocusState} from '@material/menu/constants';
 import MDCMenuFoundation from '@material/menu/foundation.js';
 import {BaseElement, observer} from '@material/mwc-base/base-element.js';
 import {isNodeElement} from '@material/mwc-base/utils';
-import {List} from '@material/mwc-list';
+import {List, MDCListIndex} from '@material/mwc-list';
 import {ListItemBase} from '@material/mwc-list/src/mwc-list-item-base';
 import {html, property, query} from 'lit-element';
-import {MenuSurface} from './mwc-menu-surface';
-import {DefaultFocusState} from '@material/menu/constants';
 
-export {Corner} from './mwc-menu-surface-base';
+import {MenuSurface} from './mwc-menu-surface';
+import {Corner, MDCMenuDistance} from './mwc-menu-surface-base';
+
 export {DefaultFocusState} from '@material/menu/constants';
+export {Corner} from './mwc-menu-surface-base';
 
 /**
  * @fires selected
@@ -39,11 +41,11 @@ export abstract class MenuBase extends BaseElement {
 
   protected readonly mdcFoundationClass = MDCMenuFoundation;
 
+  protected listElement_: List|null = null;
+
   @query('.mdc-menu') mdcRoot!: MenuSurface;
 
-  @query('slot') slotElement!: HTMLSlotElement;
-
-  @query('.mdc-list') listElement!: List;
+  @query('slot') slotElement!: HTMLSlotElement|null;
 
   @property({type: Object}) anchor: HTMLElement|null = null;
 
@@ -71,7 +73,16 @@ export abstract class MenuBase extends BaseElement {
       this.mdcFoundation.setDefaultFocusState(value);
     }
   })
-  defaultFocus: DefaultFocusState = DefaultFocusState.LIST_ROOT;
+  defaultFocus: DefaultFocusState = DefaultFocusState.FIRST_ITEM;
+
+  protected get listElement() {
+    if (!this.listElement_) {
+      this.listElement_ = this.renderRoot.querySelector('mwc-list');
+      return this.listElement_;
+    }
+
+    return this.listElement_;
+  }
 
   get items(): ListItemBase[] {
     const listElement = this.listElement;
@@ -81,6 +92,16 @@ export abstract class MenuBase extends BaseElement {
     }
 
     return [];
+  }
+
+  get index(): MDCListIndex {
+    const listElement = this.listElement;
+
+    if (listElement) {
+      return listElement.index;
+    }
+
+    return -1;
   }
 
   get selected(): ListItemBase|null {
@@ -101,18 +122,18 @@ export abstract class MenuBase extends BaseElement {
           .anchor=${this.anchor}
           .open=${this.open}
           .quick=${this.quick}
-          .wrapFocus=${this.wrapFocus}
           .x=${this.x}
           .y=${this.y}
           .absolute=${this.absolute}
           .fixed=${this.fixed}
           class="mdc-menu mdc-menu-surface"
           @closed=${this.onClosed}
-          @opened=${this.onClosed}
+          @opened=${this.onOpened}
           @keydown=${this.onKeydown}>
-        <mwc-list
+          <mwc-list
             class="mdc-list"
             .itemRoles=${itemRoles}
+            .wrapFocus=${this.wrapFocus}
             @action=${this.onAction}>
           <slot></slot>
         </mwc-list>
@@ -191,11 +212,7 @@ export abstract class MenuBase extends BaseElement {
         return -1;
       },
       notifySelected: (evtData) => {
-        if (!this.mdcRoot) {
-          return;
-        }
-
-        const init: CustomEventInit = {};
+        const init: CustomEventInit = {bubbles: true, composed: true};
         init.detail = {index: evtData.index, item: evtData};
         const ev = new CustomEvent('selected', init);
         this.mdcRoot.dispatchEvent(ev);
@@ -213,10 +230,9 @@ export abstract class MenuBase extends BaseElement {
         if (!listElement) {
           return;
         }
-
         const element = listElement.items[index];
 
-        if (element && isNodeElement(element)) {
+        if (element) {
           (element as HTMLElement).focus();
         }
       },
@@ -322,6 +338,14 @@ export abstract class MenuBase extends BaseElement {
 
     if (listElement) {
       listElement.select(index);
+    }
+  }
+
+  setAnchorCorner(corner: CornerEnum) {
+    const surface = this.mdcRoot;
+
+    if (surface) {
+      surface.setAnchorCorner(corner);
     }
   }
 }

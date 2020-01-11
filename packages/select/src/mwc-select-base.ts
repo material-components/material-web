@@ -15,29 +15,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import '@material/mwc-notched-outline';
-import '@material/mwc-list';
+import '@material/mwc-menu';
 
-import {closest} from '@material/dom/ponyfill';
 import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
 import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
-import {MDCMenuSurfaceAdapter} from '@material/menu-surface/adapter';
-import MDCMenuSurfaceFoundation from '@material/menu-surface/foundation.js';
-import {MDCMenuAdapter} from '@material/menu/adapter';
-import MDCMenuFoundation from '@material/menu/foundation.js';
 import {addHasRemoveClass, FormElement, observer} from '@material/mwc-base/form-element.js';
-import {doesSlotContainFocus, isNodeElement} from '@material/mwc-base/utils';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
-import {List} from '@material/mwc-list';
 import {ListItemBase} from '@material/mwc-list/mwc-list-item-base';
+import {Menu} from '@material/mwc-menu';
+import {menuAnchor} from '@material/mwc-menu/mwc-menu-surface-anchor-directive';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCSelectAdapter} from '@material/select/adapter';
 import MDCSelectFoundation from '@material/select/foundation.js';
 import {html, property, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
-import * as mwcMenu from './mwc-menu-ponyfill';
-import {menuAnchor} from './mwc-menu-surface-anchor-directive';
 
 // must be done to get past lit-analyzer checks
 declare global {
@@ -49,10 +42,6 @@ declare global {
 
 export abstract class SelectBase extends FormElement {
   protected mdcFoundation!: MDCSelectFoundation;
-
-  protected mdcMenuFoundation: MDCMenuFoundation|undefined;
-
-  protected mdcMenuSurfaceFoundation: MDCMenuSurfaceFoundation|undefined;
 
   protected readonly mdcFoundationClass = MDCSelectFoundation;
 
@@ -72,9 +61,7 @@ export abstract class SelectBase extends FormElement {
 
   @query('mwc-notched-outline') protected outlineElement!: NotchedOutline|null;
 
-  @query('.mdc-menu') protected menuElement!: HTMLDivElement|null;
-
-  @query('mwc-list') protected listElement!: List|null;
+  @query('.mdc-menu') protected menuElement!: Menu|null;
 
   @query('.mdc-select__selected-text')
   protected selectedTextElement!: HTMLDivElement|null;
@@ -103,6 +90,8 @@ export abstract class SelectBase extends FormElement {
 
   @property({type: String}) icon = '';
 
+  @property({type: Boolean}) protected menuOpen = false;
+
   protected listeners: ({
     target: Element;
     name: string;
@@ -110,7 +99,7 @@ export abstract class SelectBase extends FormElement {
   })[] = [];
   protected onBodyClickBound: (evt: MouseEvent) => void = () => {};
   protected _outlineUpdateComplete: null|Promise<unknown> = null;
-  protected _listUpdateComplete: null|Promise<unknown> = null;
+  protected _menuUpdateComplete: null|Promise<unknown> = null;
 
   render() {
     let outlinedOrUnderlined = html``;
@@ -133,7 +122,7 @@ export abstract class SelectBase extends FormElement {
         <input class=".formElement" .value=${this.value} hidden>
         ${this.icon ? this.renderIcon(this.icon) : ''}
         <!-- @ts-ignore -->
-        <div class="mdc-select__anchor" .anchoring=${menuAnchor('.mdc-menu')}>
+        <div class="mdc-select__anchor" .anchoring=${menuAnchor('mwc-menu')}>
           <i class="mdc-select__dropdown-icon"></i>
           <!-- @ts-ignore -->
           <div
@@ -149,15 +138,15 @@ export abstract class SelectBase extends FormElement {
           </div>
           ${outlinedOrUnderlined}
         </div>
-        <div
+        <mwc-menu
             role="listbox"
             class="mdc-select__menu mdc-menu mdc-menu-surface"
+            .open=${this.menuOpen}
             @selected=${this.onSelected}
-            @action=${this.menuOnAction}>
-          <mwc-list class="mdc-list">
+            @opened=${this.onOpened}
+            @closed=${this.onClosed}>
             <slot></slot>
-          </mwc-list>
-        </div>
+        </mwc-menu>
       </div>`;
   }
 
@@ -203,9 +192,6 @@ export abstract class SelectBase extends FormElement {
   }
 
   createAdapter(): MDCSelectAdapter {
-    this.createMenuSurfaceFoundation();
-    this.createMenuFoundation();
-
     return {
       ...addHasRemoveClass(this.mdcRoot),
       activateBottomLine: () => {
@@ -219,13 +205,13 @@ export abstract class SelectBase extends FormElement {
         }
       },
       getSelectedMenuItem: () => {
-        const listElement = this.listElement;
+        const menuElement = this.menuElement;
 
-        if (!listElement) {
+        if (!menuElement) {
           return null;
         }
 
-        return listElement.selected;
+        return menuElement.selected;
       },
       hasLabel: () => {
         return !!this.label;
@@ -298,37 +284,34 @@ export abstract class SelectBase extends FormElement {
         return selectedTextElement.setAttribute(attr, value);
       },
       openMenu: () => {
-        if (this.mdcMenuSurfaceFoundation) {
-          mwcMenu.open(this.mdcMenuSurfaceFoundation);
-        }
+        this.menuOpen = true;
       },
       closeMenu: () => {
-        if (this.mdcMenuSurfaceFoundation) {
-          mwcMenu.close(this.mdcMenuSurfaceFoundation);
-        }
+        this.menuOpen = false;
       },
       getAnchorElement: () => this.anchorElement,
       setMenuAnchorElement: () => {
         /* Handled by anchor directive */
       },
       setMenuAnchorCorner: (anchorCorner) => {
-        if (this.mdcMenuSurfaceFoundation) {
-          mwcMenu.setAnchorCorner(this.mdcMenuSurfaceFoundation, anchorCorner);
+        const menuElement = this.menuElement;
+        if (menuElement) {
+          menuElement.setAnchorCorner(anchorCorner);
         }
       },
       setMenuWrapFocus: (wrapFocus) => {
-        const listElement = this.listElement;
-        if (listElement) {
-          listElement.wrapFocus = wrapFocus;
+        const menuElement = this.menuElement;
+        if (menuElement) {
+          menuElement.wrapFocus = wrapFocus;
         }
       },
       setAttributeAtIndex: (index: number, attr: string, value: string) => {
-        const listElement = this.listElement;
-        if (!listElement) {
+        const menuElement = this.menuElement;
+        if (!menuElement) {
           return;
         }
 
-        const element = listElement.items[index];
+        const element = menuElement.items[index];
 
         if (!element) {
           return;
@@ -337,12 +320,12 @@ export abstract class SelectBase extends FormElement {
         element.setAttribute(attr, value);
       },
       removeAttributeAtIndex: (index, attr) => {
-        const listElement = this.listElement;
-        if (!listElement) {
+        const menuElement = this.menuElement;
+        if (!menuElement) {
           return;
         }
 
-        const element = listElement.items[index];
+        const element = menuElement.items[index];
 
         if (!element) {
           return;
@@ -351,12 +334,12 @@ export abstract class SelectBase extends FormElement {
         element.removeAttribute(attr);
       },
       focusMenuItemAtIndex: (index) => {
-        const listElement = this.listElement;
-        if (!listElement) {
+        const menuElement = this.menuElement;
+        if (!menuElement) {
           return;
         }
 
-        const element = listElement.items[index];
+        const element = menuElement.items[index];
 
         if (!element) {
           return;
@@ -365,32 +348,32 @@ export abstract class SelectBase extends FormElement {
         (element as HTMLElement).focus();
       },
       getMenuItemCount: () => {
-        const listElement = this.listElement;
+        const menuElement = this.menuElement;
 
-        if (listElement) {
-          return listElement.items.length;
+        if (menuElement) {
+          return menuElement.items.length;
         }
 
         return 0;
       },
       getMenuItemValues: () => {
-        const listElement = this.listElement;
+        const menuElement = this.menuElement;
 
-        if (!listElement) {
+        if (!menuElement) {
           return [];
         }
 
-        const items = listElement.items;
+        const items = menuElement.items;
 
         return items.map((item) => item.value);
       },
       getMenuItemTextAtIndex: (index) => {
-        const listElement = this.listElement;
-        if (!listElement) {
+        const menuElement = this.menuElement;
+        if (!menuElement) {
           return '';
         }
 
-        const element = listElement.items[index];
+        const element = menuElement.items[index];
 
         if (!element) {
           return '';
@@ -403,13 +386,13 @@ export abstract class SelectBase extends FormElement {
         return listItem.value;
       },
       addClassAtIndex: (index, className) => {
-        const listElement = this.listElement;
+        const menuElement = this.menuElement;
 
-        if (!listElement) {
+        if (!menuElement) {
           return;
         }
 
-        const element = listElement.items[index];
+        const element = menuElement.items[index];
 
         if (!element) {
           return;
@@ -418,13 +401,13 @@ export abstract class SelectBase extends FormElement {
         element.classList.add(className);
       },
       removeClassAtIndex: (index, className) => {
-        const listElement = this.listElement;
+        const menuElement = this.menuElement;
 
-        if (!listElement) {
+        if (!menuElement) {
           return;
         }
 
-        const element = listElement.items[index];
+        const element = menuElement.items[index];
 
         if (!element) {
           return;
@@ -433,412 +416,27 @@ export abstract class SelectBase extends FormElement {
         element.classList.remove(className);
       },
     };
-  }
-
-  createMenuFoundation() {
-    if (!this.menuElement) {
-      return;
-    }
-
-    if (this.mdcMenuFoundation) {
-      this.mdcMenuFoundation.destroy();
-    }
-
-    const mdcMenuAdapter: MDCMenuAdapter = {
-      addClassToElementAtIndex: (index, className) => {
-        const listElement = this.listElement;
-        if (!listElement) {
-          return;
-        }
-
-        const element = listElement.items[index];
-
-        if (!element) {
-          return;
-        }
-
-        element.classList.add(className);
-      },
-      removeClassFromElementAtIndex: (index, className) => {
-        const listElement = this.listElement;
-        if (!listElement) {
-          return;
-        }
-
-        const element = listElement.items[index];
-
-        if (!element) {
-          return;
-        }
-
-        element.classList.remove(className);
-      },
-      addAttributeToElementAtIndex: (index, attr, value) => {
-        const listElement = this.listElement;
-        if (!listElement) {
-          return;
-        }
-
-        const element = listElement.items[index];
-
-        if (!element) {
-          return;
-        }
-
-        element.setAttribute(attr, value);
-      },
-      removeAttributeFromElementAtIndex: (index, attr) => {
-        const listElement = this.listElement;
-        if (!listElement) {
-          return;
-        }
-
-        const element = listElement.items[index];
-
-        if (!element) {
-          return;
-        }
-
-        element.removeAttribute(attr);
-      },
-      elementContainsClass: (element, className) =>
-          element.classList.contains(className),
-      closeSurface: () => {
-        if (this.mdcMenuSurfaceFoundation) {
-          mwcMenu.close(this.mdcMenuSurfaceFoundation);
-        }
-      },
-      getElementIndex: (element) => {
-        const listElement = this.listElement;
-        if (listElement) {
-          return listElement.items.indexOf(element as ListItemBase);
-        }
-
-        return -1;
-      },
-      notifySelected: (evtData) => {
-        if (!this.menuElement) {
-          return;
-        }
-
-        const init: CustomEventInit = {};
-        init.detail = {index: evtData.index, item: evtData};
-        const ev = new CustomEvent('selected', init);
-        this.menuElement.dispatchEvent(ev);
-      },
-      getMenuItemCount: () => {
-        const listElement = this.listElement;
-        if (!listElement) {
-          return 0;
-        }
-
-        return listElement.items.length;
-      },
-      focusItemAtIndex: (index) => {
-        const listElement = this.listElement;
-        if (!listElement) {
-          return;
-        }
-
-        const element = listElement.items[index];
-
-        if (element && isNodeElement(element)) {
-          (element as HTMLElement).focus();
-        }
-      },
-      focusListRoot: () => {
-        if (this.listElement) {
-          this.listElement.focus();
-        }
-      },
-      getSelectedSiblingOfItemAtIndex: (index) => {
-        const listElement = this.listElement;
-
-        if (!listElement) {
-          return -1;
-        }
-
-        const elementAtIndex = listElement.items[index];
-
-        if (!elementAtIndex) {
-          return -1;
-        }
-
-        const selectionGroupEl =
-            closest(elementAtIndex, '.mdc-menu__selection-group');
-
-        if (!selectionGroupEl) {
-          return -1;
-        }
-
-        const selectedItemEl =
-            selectionGroupEl.querySelector('[selected]') as ListItemBase | null;
-
-        if (!selectedItemEl) {
-          return -1;
-        }
-
-        const elements = listElement.items;
-
-        return elements.indexOf(selectedItemEl);
-      },
-      isSelectableItemAtIndex: (index) => {
-        const listElement = this.listElement;
-
-        if (!listElement) {
-          return false;
-        }
-
-        const elementAtIndex = listElement.items[index];
-
-        if (!elementAtIndex) {
-          return false;
-        }
-
-        return !!closest(elementAtIndex, '.mdc-menu__selection-group');
-      },
-    };
-
-    this.mdcMenuFoundation = new MDCMenuFoundation(mdcMenuAdapter);
-    this.mdcMenuFoundation.init();
-  }
-
-  createMenuSurfaceFoundation() {
-    if (!this.menuElement) {
-      return;
-    }
-
-    if (this.mdcMenuSurfaceFoundation) {
-      this.mdcMenuSurfaceFoundation.destroy();
-    }
-
-    const mdcMenuSurfaceAdapter: MDCMenuSurfaceAdapter = {
-      ...addHasRemoveClass(this.menuElement),
-      hasAnchor: () => {
-        if (!this.menuElement) {
-          return false;
-        }
-
-        return !!mwcMenu.anchorElement(this.menuElement);
-      },
-      notifyClose: () => {
-        if (!this.menuElement) {
-          return;
-        }
-
-        const init: CustomEventInit = {};
-        const ev = new CustomEvent('closed', init);
-        this.menuElement.dispatchEvent(ev);
-      },
-      notifyOpen: () => {
-        if (!this.menuElement) {
-          return;
-        }
-
-        const init: CustomEventInit = {};
-        const ev = new CustomEvent('opened', init);
-        this.menuElement.dispatchEvent(ev);
-      },
-      isElementInContainer: (element) => {
-        if (!this.menuElement) {
-          return false;
-        }
-
-        return mwcMenu.isElementInMenu(this.menuElement, element);
-      },
-      isRtl: () => {
-        if (this.menuElement) {
-          return getComputedStyle(this.menuElement).direction === 'rtl';
-        }
-
-        return false;
-      },
-      setTransformOrigin: (origin) => {
-        if (this.menuElement) {
-          mwcMenu.setTransformOrigin(this.menuElement, origin);
-        }
-      },
-      isFocused: () => {
-        const menuElement = this.menuElement;
-        if (!menuElement) {
-          return false;
-        }
-
-        const mdcRoot = mwcMenu.mdcRoot(menuElement);
-
-        if (!mdcRoot) {
-          return false;
-        }
-
-        const docRoot = mdcRoot.getRootNode() as Document | ShadowRoot;
-
-        return docRoot.activeElement === mdcRoot;
-      },
-      saveFocus: () => {
-        const menuElement = this.menuElement;
-
-        if (!menuElement) {
-          return;
-        }
-
-        const deepFocused = mwcMenu.getDeepFocus();
-        mwcMenu.setPreviousFocus(menuElement, deepFocused);
-      },
-      restoreFocus: () => {
-        const menuElement = this.menuElement;
-        const slotElement = this.slotElement;
-
-        if (!slotElement || !menuElement) {
-          return;
-        }
-
-        const menuHasFocus = doesSlotContainFocus(slotElement);
-
-        if (!menuHasFocus) {
-          return;
-        }
-
-        const previousFocus = mwcMenu.getPreviousFocus(menuElement);
-
-        if (!previousFocus) {
-          return;
-        }
-
-        if ('focus' in previousFocus) {
-          previousFocus.focus();
-        }
-      },
-      getInnerDimensions: () => {
-        const menuElement = this.menuElement;
-
-        if (!menuElement) {
-          return {width: 0, height: 0};
-        }
-
-        const mdcRoot = mwcMenu.mdcRoot(menuElement) as HTMLElement;
-
-        if (!mdcRoot) {
-          return {width: 0, height: 0};
-        }
-
-        return {width: mdcRoot.offsetWidth, height: mdcRoot.offsetHeight};
-      },
-      getAnchorDimensions: () => {
-        const menuElement = this.menuElement;
-
-        if (!menuElement) {
-          return null;
-        }
-
-        const anchorElement = mwcMenu.anchorElement(menuElement);
-
-        return anchorElement ? anchorElement.getBoundingClientRect() : null;
-      },
-      getBodyDimensions: () => {
-        return {
-          width: document.body.clientWidth,
-          height: document.body.clientHeight,
-        };
-      },
-      getWindowDimensions: () => {
-        return {
-          width: window.innerWidth,
-          height: window.innerHeight,
-        };
-      },
-      getWindowScroll: () => {
-        return {
-          x: window.pageXOffset,
-          y: window.pageYOffset,
-        };
-      },
-      setPosition: (position) => {
-        const menuElement = this.menuElement;
-
-        if (!menuElement) {
-          return;
-        }
-
-        mwcMenu.position(menuElement, position);
-      },
-      setMaxHeight: (height) => {
-        const menuElement = this.menuElement;
-
-        if (!menuElement) {
-          return;
-        }
-
-        mwcMenu.maxHeight(menuElement, height);
-      },
-    };
-
-    this.mdcMenuSurfaceFoundation =
-        new MDCMenuSurfaceFoundation(mdcMenuSurfaceAdapter);
-    this.mdcMenuSurfaceFoundation.init();
-  }
-
-  protected menuSurfaceOnKeydown(evt: KeyboardEvent) {
-    if (this.mdcMenuSurfaceFoundation) {
-      this.mdcMenuSurfaceFoundation.handleKeydown(evt);
-    }
-  }
-
-  protected onBodyClick(evt: MouseEvent) {
-    if (this.mdcMenuSurfaceFoundation) {
-      this.mdcMenuSurfaceFoundation.handleBodyClick(evt);
-    }
-  }
-
-  protected menuSurfaceRegisterBodyClick() {
-    this.onBodyClickBound = this.onBodyClick.bind(this);
-    document.body.addEventListener('click', this.onBodyClickBound);
-  }
-
-  protected menuSurfaceDeregisterBodyClick() {
-    document.body.removeEventListener('click', this.onBodyClickBound);
-  }
-
-  protected menuOnKeydown(evt: KeyboardEvent) {
-    if (this.mdcMenuFoundation) {
-      this.mdcMenuFoundation.handleKeydown(evt);
-    }
-  }
-
-  protected menuOnAction(evt: CustomEvent<{index: number}>) {
-    const listElement = this.listElement;
-    if (this.mdcMenuFoundation && listElement) {
-      const el = listElement.items[evt.detail.index];
-      if (el) {
-        this.mdcMenuFoundation.handleItemAction(el);
-      }
-    }
-  }
-
-  protected menuOnOpened() {
-    if (this.mdcMenuFoundation) {
-      this.mdcMenuFoundation.handleMenuSurfaceOpened();
-    }
   }
 
   async _getUpdateComplete() {
     await super._getUpdateComplete();
     await Promise.all([
       this._outlineUpdateComplete,
-      this._listUpdateComplete,
+      this._menuUpdateComplete,
     ]);
   }
 
   async firstUpdated() {
-    const listElement = this.listElement;
+    const menuElement = this.menuElement;
     const outlineElement = this.outlineElement;
     if (outlineElement) {
       this._outlineUpdateComplete = outlineElement.updateComplete;
       await this._outlineUpdateComplete;
     }
 
-    if (listElement) {
-      this._listUpdateComplete = listElement.updateComplete;
-      await this._listUpdateComplete;
+    if (menuElement) {
+      this._menuUpdateComplete = menuElement.updateComplete;
+      await this._menuUpdateComplete;
     }
 
     super.firstUpdated();
@@ -849,65 +447,22 @@ export abstract class SelectBase extends FormElement {
     //   this.reportValidity();
     // }
 
-    const menuElement = this.menuElement;
-    if (!menuElement) {
-      return;
-    }
-
-    this.listeners = [
-      {
-        target: menuElement,
-        name: 'keydown',
-        cb: this.menuSurfaceOnKeydown.bind(this) as
-            EventListenerOrEventListenerObject,
-      },
-      {
-        target: menuElement,
-        name: 'opened',
-        cb: this.menuSurfaceRegisterBodyClick.bind(this),
-      },
-      {
-        target: menuElement,
-        name: 'closed',
-        cb: this.menuSurfaceDeregisterBodyClick.bind(this),
-      },
-      {
-        target: menuElement,
-        name: 'opened',
-        cb: this.menuOnOpened.bind(this),
-      },
-      {
-        target: menuElement,
-        name: 'keydown',
-        cb: this.menuOnKeydown.bind(this) as EventListenerOrEventListenerObject,
-      },
-      {
-        target: menuElement,
-        name: 'opened',
-        cb: this.onOpened.bind(this),
-      },
-      {
-        target: menuElement,
-        name: 'closed',
-        cb: this.onClosed.bind(this),
-      }
-    ];
-
-    for (const listener of this.listeners) {
-      listener.target.addEventListener(
-          listener.name, listener.cb as EventListenerOrEventListenerObject);
-    }
-
-    if (menuElement && listElement) {
-      const selected = listElement.selected;
+    if (menuElement) {
+      const selected = menuElement.selected;
 
       if (selected) {
-        const listIndex = listElement.index;
+        const listIndex = menuElement.index;
         const index = listIndex instanceof Array ? listIndex[0] : listIndex;
-        if (index !== -1 && this.mdcFoundation) {
-          this.mdcFoundation.setSelectedIndex(index);
+        if (index !== -1) {
+          this.select(index);
         }
       }
+    }
+  }
+
+  select(index: number) {
+    if (this.mdcFoundation) {
+      this.mdcFoundation.setSelectedIndex(index);
     }
   }
 
@@ -982,12 +537,14 @@ export abstract class SelectBase extends FormElement {
 
   protected onOpened() {
     if (this.mdcFoundation) {
+      this.menuOpen = true;
       this.mdcFoundation.handleMenuOpened();
     }
   }
 
   protected onClosed() {
     if (this.mdcFoundation) {
+      this.menuOpen = false;
       this.mdcFoundation.handleMenuClosed();
     }
   }

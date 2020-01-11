@@ -25,6 +25,8 @@ import {html, property, query} from 'lit-element';
 
 import {ListItemBase} from './mwc-list-item-base';
 
+export {MDCListIndex} from '@material/list/types';
+
 export abstract class ListBase extends BaseElement {
   protected mdcFoundation!: MDCListFoundation;
 
@@ -112,10 +114,10 @@ export abstract class ListBase extends BaseElement {
     return html`
       <ul
           class="mdc-list"
-          @keydown=${this.listOnKeydown}
-          @click=${this.listOnClick}
-          @focusin=${this.listOnFocusin}
-          @focusout=${this.listOnFocusout}>
+          @keydown=${this.onKeydown}
+          @click=${this.onClick}
+          @focusin=${this.onFocusIn}
+          @focusout=${this.onFocusOut}>
         <slot
             @slotchange=${this.onSlotChange}
             @list-item-rendered=${this.onListItemConnected}>
@@ -124,21 +126,21 @@ export abstract class ListBase extends BaseElement {
     `;
   }
 
-  protected listOnFocusin(evt: FocusEvent) {
+  protected onFocusIn(evt: FocusEvent) {
     if (this.mdcFoundation && this.mdcRoot) {
       const index = this.getIndexOfTarget(evt);
       this.mdcFoundation.handleFocusIn(evt, index);
     }
   }
 
-  protected listOnFocusout(evt: FocusEvent) {
+  protected onFocusOut(evt: FocusEvent) {
     if (this.mdcFoundation && this.mdcRoot) {
       const index = this.getIndexOfTarget(evt);
       this.mdcFoundation.handleFocusOut(evt, index);
     }
   }
 
-  protected listOnKeydown(evt: KeyboardEvent) {
+  protected onKeydown(evt: KeyboardEvent) {
     if (this.mdcFoundation && this.mdcRoot) {
       const index = this.getIndexOfTarget(evt);
       const target = evt.target as Element;
@@ -162,7 +164,7 @@ export abstract class ListBase extends BaseElement {
     return this.shouldToggleCheckbox(target.parentNode);
   }
 
-  protected listOnClick(evt: MouseEvent) {
+  protected onClick(evt: MouseEvent) {
     if (this.mdcFoundation && this.mdcRoot) {
       const index = this.getIndexOfTarget(evt);
       const target = evt.target as ListItemBase | Element | null;
@@ -261,20 +263,12 @@ export abstract class ListBase extends BaseElement {
         }
       },
       removeClassForElementIndex: (index, className) => {
-        if (!this.mdcRoot) {
-          return;
-        }
-
         const element = this.items[index];
         if (element) {
           element.classList.remove(className);
         }
       },
       focusItemAtIndex: (index) => {
-        if (!this.mdcRoot) {
-          return;
-        }
-
         const element = this.items[index];
         if (element && isNodeElement(element)) {
           (element as HTMLElement).focus();
@@ -282,71 +276,39 @@ export abstract class ListBase extends BaseElement {
       },
       setTabIndexForListItemChildren: () => {},
       hasCheckboxAtIndex: (index) => {
-        if (!this.mdcRoot) {
-          return false;
-        }
-
         const element = this.items[index];
         return element ? element.hasCheckbox : false;
       },
       hasRadioAtIndex: (index) => {
-        if (!this.mdcRoot) {
-          return false;
-        }
-
         const element = this.items[index];
         return element ? element.hasRadio : false;
       },
       isCheckboxCheckedAtIndex: (index) => {
-        if (!this.mdcRoot) {
-          return false;
-        }
-
         const element = this.items[index];
         return element ? element.hasCheckbox && element.isControlChecked() :
                          false;
       },
       setCheckedCheckboxOrRadioAtIndex: (index, isChecked) => {
-        if (!this.mdcRoot) {
-          return;
-        }
-
         const element = this.items[index];
         if (element) {
           element.setControlChecked(isChecked);
         }
       },
       notifyAction: (index) => {
-        if (!this.mdcRoot) {
-          return;
-        }
-
         const init: CustomEventInit = {bubbles: true};
         init.detail = {index};
         const ev = new CustomEvent('action', init);
         this.dispatchEvent(ev);
       },
       isFocusInsideList: () => {
-        if (!this.mdcRoot) {
-          return false;
-        }
-
         return this.doContentsHaveFocus();
       },
       isRootFocused: () => {
-        if (!this.mdcRoot) {
-          return false;
-        }
-
         const mdcRoot = this.mdcRoot;
         const root = mdcRoot.getRootNode() as unknown as DocumentOrShadowRoot;
         return root.activeElement === mdcRoot;
       },
       listItemAtIndexHasClass: (index, className) => {
-        if (!this.mdcRoot) {
-          return false;
-        }
-
         const item = this.items[index];
 
         if (!item) {
@@ -411,6 +373,22 @@ export abstract class ListBase extends BaseElement {
 
     if (first) {
       first.setAttribute('tabIndex', '0');
+    }
+  }
+
+  focus() {
+    const root = this.mdcRoot;
+
+    if (root) {
+      root.focus();
+    }
+  }
+
+  blur() {
+    const root = this.mdcRoot;
+
+    if (root) {
+      root.blur();
     }
   }
 }

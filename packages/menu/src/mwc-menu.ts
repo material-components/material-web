@@ -16,11 +16,12 @@ limitations under the License.
 */
 
 import {customElement} from 'lit-element';
+
 import {MenuBase} from './mwc-menu-base.js';
 import {style} from './mwc-menu-css.js';
 
-export {Corner} from './mwc-menu-surface-base';
 export {DefaultFocusState} from '@material/menu/constants';
+export {Corner} from './mwc-menu-surface-base';
 
 declare global {
   interface HTMLElementTagNameMap {
