@@ -19,8 +19,31 @@ import MDCMenuSurfaceFoundation from '@material/menu-surface/foundation.js';
 import {getTransformPropertyName} from '@material/menu-surface/util';
 import {addHasRemoveClass, BaseElement, observer} from '@material/mwc-base/base-element.js';
 import {deepActiveElementPath, doesSlotContainElement, doesSlotContainFocus, isNodeElement} from '@material/mwc-base/utils';
-import {html, query, property} from 'lit-element';
+import {html, property, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
+
+enum CornerBit {
+  BOTTOM = 1,
+  CENTER = 2,
+  RIGHT = 4,
+  FLIP_RTL = 8,
+}
+
+export enum Corner {
+  TOP_LEFT = 0,
+  TOP_RIGHT = CornerBit.RIGHT,
+  BOTTOM_LEFT = CornerBit.BOTTOM,
+  BOTTOM_RIGHT =
+      CornerBit.BOTTOM | CornerBit.RIGHT,  // tslint:disable-line:no-bitwise
+  TOP_START = CornerBit.FLIP_RTL,
+  TOP_END =
+      CornerBit.FLIP_RTL | CornerBit.RIGHT,  // tslint:disable-line:no-bitwise
+  BOTTOM_START =
+      CornerBit.BOTTOM | CornerBit.FLIP_RTL,  // tslint:disable-line:no-bitwise
+  BOTTOM_END = CornerBit.BOTTOM | CornerBit.RIGHT |
+      CornerBit.FLIP_RTL,  // tslint:disable-line:no-bitwise
+}
+;
 
 export type AnchorableElement = HTMLElement&{anchorElement: Element | null};
 
@@ -44,7 +67,9 @@ export abstract class MenuSurfaceBase extends BaseElement {
   absolute = false;
 
   @property({type: Object})
-  @observer(function(this: MenuSurfaceBase, newAnchor: HTMLElement|null, oldAnchor: HTMLElement |null) {
+  @observer(function(
+      this: MenuSurfaceBase, newAnchor: HTMLElement|null,
+      oldAnchor: HTMLElement|null) {
     if (oldAnchor) {
       oldAnchor.style.position = '';
       oldAnchor.style.overflow = '';
@@ -71,7 +96,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
       this.mdcFoundation.setAbsolutePosition(value, this.y);
     }
   })
-  x: number | null = null;
+  x: number|null = null;
 
   @property({type: Number})
   @observer(function(this: MenuSurfaceBase, value: number|null) {
@@ -79,7 +104,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
       this.mdcFoundation.setAbsolutePosition(this.x, value);
     }
   })
-  y: number | null = null;
+  y: number|null = null;
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: MenuSurfaceBase, isOpen: boolean) {
@@ -307,7 +332,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
     document.body.removeEventListener('click', this.onBodyClickBound);
   }
 
-  protected getDefaultAnchor(): HTMLElement | null {
+  protected getDefaultAnchor(): HTMLElement|null {
     const defaultAnchor = this.parentNode;
 
     if (defaultAnchor) {
