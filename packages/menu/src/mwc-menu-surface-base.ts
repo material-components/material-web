@@ -15,19 +15,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {MDCMenuSurfaceAdapter} from '@material/menu-surface/adapter';
+import {Corner as CornerEnum} from '@material/menu-surface/constants';
 import MDCMenuSurfaceFoundation from '@material/menu-surface/foundation.js';
+import {MDCMenuDistance} from '@material/menu-surface/types';
 import {getTransformPropertyName} from '@material/menu-surface/util';
 import {addHasRemoveClass, BaseElement, observer} from '@material/mwc-base/base-element.js';
 import {deepActiveElementPath, doesSlotContainElement, doesSlotContainFocus, isNodeElement} from '@material/mwc-base/utils';
 import {html, property, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
-import {Corner as CornerEnum} from '@material/menu-surface/constants';
-import {MDCMenuDistance} from '@material/menu-surface/types';
 
 export {MDCMenuDistance} from '@material/menu-surface/types';
-export type Corner = keyof typeof CornerEnum;
-export type AnchorableElement = HTMLElement&{anchorElement: Element | null};
 
+export type Corner = keyof typeof CornerEnum;
+export type AnchorableElement = HTMLElement&{anchor: Element | null};
+
+/**
+ * @fires opened
+ * @fires closed
+ */
 export abstract class MenuSurfaceBase extends BaseElement {
   protected mdcFoundation!: MDCMenuSurfaceFoundation;
 
@@ -60,7 +65,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
       newAnchor.style.overflow = 'visible';
     }
   })
-  anchorElement: HTMLElement|null = null;
+  anchor: HTMLElement|null = null;
 
   @property({type: Boolean})
   @observer(function(this: MenuSurfaceBase, isFixed: boolean) {
@@ -117,7 +122,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
       }
     }
   })
-  corner: Corner | null = null;
+  corner: Corner|null = null;
 
   protected previouslyFocused: HTMLElement|Element|null = null;
   protected previousAnchor: HTMLElement|null = null;
@@ -146,7 +151,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
           return false;
         }
 
-        return !!this.anchorElement;
+        return !!this.anchor;
       },
       notifyClose: () => {
         if (!this.mdcRoot) {
@@ -257,7 +262,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
         return {width: mdcRoot.offsetWidth, height: mdcRoot.offsetHeight};
       },
       getAnchorDimensions: () => {
-        const anchorElement = this.anchorElement;
+        const anchorElement = this.anchor;
 
         return anchorElement ? anchorElement.getBoundingClientRect() : null;
       },
@@ -344,22 +349,22 @@ export abstract class MenuSurfaceBase extends BaseElement {
 
   protected saveOrRestoreAnchor(isAbsolute: boolean) {
     if (isAbsolute) {
-      this.previousAnchor = this.anchorElement;
-      this.anchorElement = null;
+      this.previousAnchor = this.anchor;
+      this.anchor = null;
     }
 
-    if (!isAbsolute && !this.anchorElement && !this.previousAnchor) {
-      this.anchorElement = this.getDefaultAnchor();
-    } else if (!isAbsolute && !this.anchorElement && this.previousAnchor) {
-      this.anchorElement = this.previousAnchor;
+    if (!isAbsolute && !this.anchor && !this.previousAnchor) {
+      this.anchor = this.getDefaultAnchor();
+    } else if (!isAbsolute && !this.anchor && this.previousAnchor) {
+      this.anchor = this.previousAnchor;
     }
   }
 
   firstUpdated() {
     super.firstUpdated();
 
-    if (!this.anchorElement && !this.absolute) {
-      this.anchorElement = this.getDefaultAnchor();
+    if (!this.anchor && !this.absolute) {
+      this.anchor = this.getDefaultAnchor();
     }
   }
 

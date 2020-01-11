@@ -35,7 +35,7 @@ export const menuAnchor =
         anchorElement.classList.add('mdc-menu-anchor');
 
         if (target) {
-          target.anchorElement = anchorElement;
+          target.anchor = anchorElement;
           partToTarget.set(part, target);
         }
 

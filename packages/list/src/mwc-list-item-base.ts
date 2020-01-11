@@ -87,8 +87,6 @@ export class ListItemBase extends LitElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this.setAttribute('role', 'option');
-
     if (!this.hasAttribute('tabindex')) {
       this.setAttribute('tabindex', '-1');
     }

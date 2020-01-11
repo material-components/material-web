@@ -42,6 +42,16 @@ export abstract class ListBase extends BaseElement {
   })
   multi = false;
 
+  @property({type: Boolean})
+  @observer(function(this: ListBase, value: boolean) {
+    if (this.mdcFoundation) {
+      this.mdcFoundation.setWrapFocus(!value);
+    }
+  })
+  wrapFocus = false;
+
+  @property({type: String}) itemRoles: string|null = null;
+
   protected get assignedElements(): Element[] {
     const slot = this.slotElement;
 
@@ -75,6 +85,13 @@ export abstract class ListBase extends BaseElement {
             }, []);
 
     this.items_ = listItems as ListItemBase[];
+    this.items_.forEach((item) => {
+      if (this.itemRoles) {
+        item.setAttribute('role', this.itemRoles);
+      } else {
+        item.removeAttribute('role');
+      }
+    });
   }
 
   protected selected_: ListItemBase|null = null;
@@ -365,12 +382,6 @@ export abstract class ListBase extends BaseElement {
 
     itemToSelect.selected = true;
     this.selected_ = itemToSelect;
-  }
-
-  wrapFocus(wrapFocus: boolean) {
-    if (this.mdcFoundation) {
-      this.mdcFoundation.setWrapFocus(wrapFocus);
-    }
   }
 
   firstUpdated() {

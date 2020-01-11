@@ -319,7 +319,7 @@ export abstract class SelectBase extends FormElement {
       setMenuWrapFocus: (wrapFocus) => {
         const listElement = this.listElement;
         if (listElement) {
-          listElement.wrapFocus(wrapFocus);
+          listElement.wrapFocus = wrapFocus;
         }
       },
       setAttributeAtIndex: (index: number, attr: string, value: string) => {
