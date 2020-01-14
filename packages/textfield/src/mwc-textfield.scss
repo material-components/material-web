@@ -96,7 +96,7 @@ mwc-notched-outline {
           @include mdc-theme-prop(color, primary);
         }
 
-        @include mdc-required-text-field-label-asterisk_ {
+        @include mdc-text-field-required-label-asterisk_ {
           @include mdc-theme-prop(color, primary);
         }
       }
