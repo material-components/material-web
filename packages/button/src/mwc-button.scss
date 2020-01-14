@@ -74,6 +74,10 @@ limitations under the License.
   pointer-events: none;
 }
 
+:host([fullwidth]) {
+  width: 100%;
+}
+
 .mdc-button {
   flex: auto;
   overflow: hidden;
