@@ -92,6 +92,10 @@ limitations under the License.
     border-color: var(--mdc-button-outline-color, var(--mdc-theme-primary, #{mdc-theme-prop-value(primary)}));
   }
 
+  &.mdc-button--dense {
+    @include mdc-button-density(-2);
+  }
+
   .mdc-button__ripple {
     border-radius: 0;
   }
