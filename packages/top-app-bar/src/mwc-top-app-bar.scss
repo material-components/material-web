@@ -15,10 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@use '@material/mwc-base/src/elevation.scss';
+@use '@material/mwc-base/src/elevation.scss' as elevation;
 @use '@material/top-app-bar/mdc-top-app-bar.scss';
 @use '@material/theme/_mixins.scss' as theme-mixins;
 @use '@material/animation/_variables.scss' as animation-vars;
+
 
 :host {
   display: block;
@@ -83,5 +84,5 @@ limitations under the License.
 
 
 .mdc-top-app-bar--fixed-scrolled {
-  box-shadow: var(--mdc-top-app-bar-fixed-box-shadow, #{elevation-box-shadow(4)});
+  box-shadow: var(--mdc-top-app-bar-fixed-box-shadow, #{elevation.elevation-box-shadow(4)});
 }

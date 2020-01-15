@@ -25,7 +25,7 @@ limitations under the License.
 @use "@material/ripple/common";
 @use '@material/theme/_mixins.scss' as theme-mixins;
 @use '@material/theme/_variables.scss' as theme-vars;
-@use '@material/shape/_functions.scss';
+@use '@material/shape/_functions.scss' as shape-fns;
 
 .material-icons {
   @extend %material-icons;
@@ -51,7 +51,7 @@ limitations under the License.
 
   @include theme-mixins.prop(border-radius, (
     varname: --mdc-text-field-filled-border-radius,
-    fallback: mdc-shape-mask-radius(mdc-shape-prop-value(small), 1 1 0 0)
+    fallback: shape-fns.mask-radius(shape-fns.prop-value(small), 1 1 0 0)
   ));
 }
 
