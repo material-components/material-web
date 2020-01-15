@@ -80,8 +80,9 @@ export class SnackbarBase extends BaseElement {
   protected createAdapter(): MDCSnackbarAdapter {
     return {
       ...addHasRemoveClass(this.mdcRoot),
-      // We handle announce ourselves with the accessible directive.
-      announce: () => {},
+      announce: () => {
+        /* We handle announce ourselves with the accessible directive. */
+      },
       notifyClosed: (reason: string) => {
         this.dispatchEvent(new CustomEvent<MDCSnackbarCloseEventDetail>(
             CLOSED_EVENT,
