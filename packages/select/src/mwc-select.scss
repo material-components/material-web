@@ -15,7 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import "@material/select/mdc-select.scss";
+@use "@material/select/mdc-select.scss";
+@use "@material/select/_mixins.scss" as mixins;
+@use "@material/select/_variables.scss" as vars;
+@use "@material/theme/_variables.scss" as theme-vars;
 
 :host {
   display: inline-block;
@@ -37,23 +40,23 @@ limitations under the License.
 
 .mdc-select--outlined {
   &:not(.mdc-select--disabled) {
-    @include mdc-select-focused-outline-color(primary);
+    @include mixins.focused-outline-color(primary);
 
-    --mdc-notched-outline-border-color: var(--mdc-select-outlined-idle-border-color, #{$mdc-select-outlined-idle-border});
+    --mdc-notched-outline-border-color: var(--mdc-select-outlined-idle-border-color, #{vars.$outlined-idle-border});
 
     // stylelint-disable-next-line selector-combinator-space-after
     &:not(.mdc-select--focused) .mdc-select__selected-text:hover ~ mwc-notched-outline {
-      --mdc-notched-outline-border-color: var(--mdc-select-outlined-hover-border-color, #{$mdc-select-outlined-hover-border});
+      --mdc-notched-outline-border-color: var(--mdc-select-outlined-hover-border-color, #{vars.$outlined-hover-border});
     }
 
     &.mdc-select--focused mwc-notched-outline {
       --mdc-notched-outline-stroke-width: 2px;
-      --mdc-notched-outline-border-color: var(--mdc-select-outlined-focused-border-color, var(--mdc-theme-primary, #{$mdc-theme-primary}));
+      --mdc-notched-outline-border-color: var(--mdc-select-outlined-focused-border-color, var(--mdc-theme-primary, #{theme-vars.$primary}));
     }
   }
 
   &.mdc-select--disabled.mdc-select--outlined mwc-notched-outline {
-    --mdc-notched-outline-border-color: var(--mdc-select-outlined-disabled-border-color, #{$mdc-select-outlined-disabled-border});
+    --mdc-notched-outline-border-color: var(--mdc-select-outlined-disabled-border-color, #{vars.$outlined-disabled-border});
   }
 }
 
