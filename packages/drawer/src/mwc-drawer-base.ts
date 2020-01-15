@@ -78,7 +78,7 @@ export class DrawerBase extends BaseElement {
             new Event(strings.OPEN_EVENT, {bubbles: true, cancelable: true}));
       },
       focusActiveNavigationItem:
-          () => {/* TODO(sorvell): Implement list focusing integration. */},
+          () => { /* TODO(sorvell): Implement list focusing integration. */ },
       trapFocus: () => {
         blockingElements.push(this);
         this.appContent.inert = true;

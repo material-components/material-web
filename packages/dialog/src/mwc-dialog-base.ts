@@ -223,7 +223,7 @@ export class DialogBase extends BaseElement {
         this.open = true;
         this.emitNotification('opening');
       },
-      reverseButtons: () => {/* handled by render fn */},
+      reverseButtons: () => { /* handled by render fn */ },
       releaseFocus: () => {
         blockingElements.remove(this);
       },
