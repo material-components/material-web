@@ -15,9 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/mwc-textfield/src/mwc-textfield.scss';
-@import '@material/textfield/_mixins.scss';
-@import '@material/textfield/_variables.scss';
+@use '@material/mwc-textfield/src/mwc-textfield.scss';
+@use '@material/textfield/_mixins.scss' as mixins;
+@use '@material/textfield/_variables.scss' as vars;
+@use '@material/theme/_mixins.scss' as theme-mixins;
+@use '@material/theme/_variables.scss' as theme-vars;
 
 .mdc-text-field:not(.mdc-text-field--outlined) {
   border-bottom: 1px solid;
@@ -28,17 +30,17 @@ limitations under the License.
 
   &:not(.mdc-text-field--disabled) {
     &:not(.mdc-text-field--invalid){
-      @include mdc-theme-prop(border-bottom-color, $mdc-text-field-bottom-line-idle);
+      @include theme-mixins.prop(border-bottom-color, vars.$bottom-line-idle);
 
       &:hover {
-        @include mdc-theme-prop(border-bottom-color, $mdc-text-field-bottom-line-hover);
+        @include theme-mixins.prop(border-bottom-color, vars.$bottom-line-hover);
       }
     }
 
     &.mdc-text-field--invalid {
-      @include mdc-theme-prop(border-bottom-color, (
+      @include theme-mixins.prop(border-bottom-color, (
         varname: --mdc-theme-error,
-        fallback: $mdc-theme-error
+        fallback: theme-vars.$error
       ));
     }
   }
@@ -49,7 +51,7 @@ limitations under the License.
   }
 
   &.mdc-text-field--disabled {
-    @include mdc-theme-prop(border-bottom-color, $mdc-text-field-disabled-border);
+    @include theme-mixins.prop(border-bottom-color, vars.$disabled-border);
   }
 
   .mdc-text-field__input, .mdc-text-field-character-counter.hidden + .mdc-text-field__input {
@@ -72,7 +74,7 @@ limitations under the License.
 
   &.mdc-text-field--outlined {
     &.mdc-text-field--disabled {
-      @include mdc-text-field-fill-color_(transparent);
+      @include mixins.fill-color_(transparent);
     }
 
     &:not(.mdc-text-field--fullwidth) {

@@ -27,6 +27,7 @@ rules:
   "@typescript-eslint/indent": off
   indent: off
   max-len: off
+  block-spacing: off
 
   "@typescript-eslint/explicit-member-accessibility": [error, {"accessibility": "no-public"}]
 

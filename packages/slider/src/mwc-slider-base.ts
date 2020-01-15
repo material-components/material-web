@@ -119,7 +119,8 @@ export class SliderBase extends FormElement {
       <div class="mdc-slider ${classMap(hostClassInfo)}"
            tabindex="0" role="slider"
            aria-valuemin="${this.min}" aria-valuemax="${this.max}"
-           aria-valuenow="${this.value}" aria-disabled="${this.disabled}"
+           aria-valuenow="${this.value}"
+           aria-disabled="${this.disabled.toString() as 'true' | 'false'}"
            data-step="${this.step}"
            @mousedown=${this.layout}
            @touchstart=${this.layout}>
