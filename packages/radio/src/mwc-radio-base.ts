@@ -20,6 +20,9 @@ import {MDCRadioAdapter} from '@material/radio/adapter.js';
 import MDCRadioFoundation from '@material/radio/foundation.js';
 import {html, property, query} from 'lit-element';
 
+/**
+ * @emits checked
+ */
 export class RadioBase extends FormElement {
   @query('.mdc-radio') protected mdcRoot!: HTMLElement;
 
@@ -28,6 +31,8 @@ export class RadioBase extends FormElement {
   @query('.mdc-radio__ripple') protected rippleElement!: HTMLElementWithRipple;
 
   private _checked = false;
+
+  @property({type: Boolean}) localRoot = false;
 
   @property({type: Boolean, reflect: true})
   get checked() {
@@ -66,6 +71,9 @@ export class RadioBase extends FormElement {
       this._selectionController.update(this);
     }
     this.requestUpdate('checked', oldValue);
+
+    // useful when unchecks self and wrapping element needs to synchronize
+    this.dispatchEvent(new Event('checked', {bubbles: true, composed: true}));
   }
 
   @property({type: Boolean})
@@ -214,9 +222,13 @@ export class SelectionController {
 
   private updating = false;
 
-  static getController(element: HTMLElement) {
-    const root = element.getRootNode() as Node &
-        {[selectionController]?: SelectionController};
+  static getController(element: HTMLElement|HTMLElement&{localRoot: boolean}) {
+    const useLocalRoot = !('localRoot' in element) ||
+        ('localRoot' in element && element.localRoot);
+    const root = useLocalRoot ?
+        element.getRootNode() as Node &
+            {[selectionController]?: SelectionController} :
+        document as Document & {[selectionController]?: SelectionController};
     let controller = root[selectionController];
     if (controller === undefined) {
       controller = new SelectionController(root);

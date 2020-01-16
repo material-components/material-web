@@ -108,7 +108,7 @@ export abstract class MenuBase extends BaseElement {
     const listElement = this.listElement;
 
     if (listElement) {
-      return listElement.selected;
+      return listElement.selected as ListItemBase | null;
     }
 
     return null;

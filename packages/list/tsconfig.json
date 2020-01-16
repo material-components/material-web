@@ -11,6 +11,12 @@
   "references": [
     {
       "path": "../base"
+    },
+    {
+      "path": "../checkbox"
+    },
+    {
+      "path": "../radio"
     }
   ],
   "exclude": [

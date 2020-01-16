@@ -18,12 +18,11 @@ import '@material/mwc-notched-outline';
 
 import {MDCListAdapter} from '@material/list/adapter';
 import MDCListFoundation from '@material/list/foundation.js';
-import {MDCListIndex} from '@material/list/types';
 import {BaseElement, observer} from '@material/mwc-base/base-element.js';
 import {deepActiveElementPath, doesSlotContainFocus, isNodeElement} from '@material/mwc-base/utils';
 import {html, property, query} from 'lit-element';
 
-import {ListItemBase} from './mwc-list-item-base';
+import {ListItemBase, RequestSelectedDetail} from './mwc-list-item-base';
 
 export {MDCListIndex} from '@material/list/types';
 
@@ -42,7 +41,7 @@ export abstract class ListBase extends BaseElement {
       this.mdcFoundation.setSingleSelection(!value);
     }
   })
-  multi = false;
+  selectable = false;
 
   @property({type: Boolean})
   @observer(function(this: ListBase, value: boolean) {
@@ -87,22 +86,42 @@ export abstract class ListBase extends BaseElement {
             }, []);
 
     this.items_ = listItems as ListItemBase[];
-    this.items_.forEach((item) => {
+    const selectedIndicies: number[] = [];
+
+    this.items_.forEach((item, index) => {
       if (this.itemRoles) {
         item.setAttribute('role', this.itemRoles);
       } else {
         item.removeAttribute('role');
       }
+
+      if (item.selected) {
+        selectedIndicies.push(index);
+      }
     });
+
+    if (selectedIndicies.length) {
+      const index = selectedIndicies.length === 1 ? selectedIndicies[0] :
+                                                    selectedIndicies;
+      this.select(index);
+    }
   }
 
-  protected selected_: ListItemBase|null = null;
+  get selected(): ListItemBase|ListItemBase[]|null {
+    const index = this.index;
 
-  get selected(): ListItemBase|null {
-    return this.selected_;
+    if (Number.isInteger(index as number)) {
+      if (index === -1) {
+        return null;
+      }
+
+      return this.items[index as number];
+    }
+
+    return (index as number[]).map((i) => this.items[i]);
   }
 
-  get index(): MDCListIndex {
+  get index(): number|number[] {
     if (this.mdcFoundation) {
       return this.mdcFoundation.getSelectedIndex();
     }
@@ -115,9 +134,9 @@ export abstract class ListBase extends BaseElement {
       <ul
           class="mdc-list"
           @keydown=${this.onKeydown}
-          @click=${this.onClick}
           @focusin=${this.onFocusIn}
-          @focusout=${this.onFocusOut}>
+          @focusout=${this.onFocusOut}
+          @request-selected=${this.onRequestSelected}>
         <slot
             @slotchange=${this.onSlotChange}
             @list-item-rendered=${this.onListItemConnected}>
@@ -149,27 +168,21 @@ export abstract class ListBase extends BaseElement {
     }
   }
 
-  protected shouldToggleCheckbox(target: (Node&ParentNode)|Element|ListItemBase|
-                                 null) {
-    if (!target || !isNodeElement(target)) {
-      return false;
-    } else if ('checked' in target) {
-      return false;
-    } else if ((target as Element).hasAttribute('mwc-list-item')) {
-      const castedTarget = target as ListItemBase;
-
-      return castedTarget.hasRadio || castedTarget.hasCheckbox;
-    }
-
-    return this.shouldToggleCheckbox(target.parentNode);
-  }
-
-  protected onClick(evt: MouseEvent) {
-    if (this.mdcFoundation && this.mdcRoot) {
+  protected onRequestSelected(evt: CustomEvent<RequestSelectedDetail>) {
+    if (this.mdcFoundation) {
       const index = this.getIndexOfTarget(evt);
-      const target = evt.target as ListItemBase | Element | null;
 
-      const toggleCheckbox = this.shouldToggleCheckbox(target);
+      if (index === -1) {
+        return;
+      }
+
+      const element = this.items[index];
+
+      if (element.disabled) {
+        return;
+      }
+
+      const toggleCheckbox = evt.detail.hasCheckboxOrRadio;
 
       this.mdcFoundation.handleClick(index, toggleCheckbox);
     }
@@ -258,14 +271,22 @@ export abstract class ListBase extends BaseElement {
 
           if (className === 'mdc-list-item--selected' ||
               className === 'mdc-list-item--activated') {
-            this.select(index);
+            this.selectUi(index);
           }
         }
       },
       removeClassForElementIndex: (index, className) => {
         const element = this.items[index];
-        if (element) {
-          element.classList.remove(className);
+
+        if (!element) {
+          this.remove;
+        }
+
+        element.classList.remove(className);
+
+        if (className === 'mdc-list-item--selected' ||
+            className === 'mdc-list-item--activated') {
+          this.deselectUi(index);
         }
       },
       focusItemAtIndex: (index) => {
@@ -277,21 +298,22 @@ export abstract class ListBase extends BaseElement {
       setTabIndexForListItemChildren: () => {},
       hasCheckboxAtIndex: (index) => {
         const element = this.items[index];
-        return element ? element.hasCheckbox : false;
+
+        return element ? element.hasAttribute('mwc-check-list-item') : false;
       },
       hasRadioAtIndex: (index) => {
         const element = this.items[index];
-        return element ? element.hasRadio : false;
+        return element ? element.hasAttribute('mwc-radio-list-item') : false;
       },
       isCheckboxCheckedAtIndex: (index) => {
         const element = this.items[index];
-        return element ? element.hasCheckbox && element.isControlChecked() :
-                         false;
+        const hasCheckbox = element.hasAttribute('mwc-check-list-item');
+        return element ? hasCheckbox && element.selected : false;
       },
       setCheckedCheckboxOrRadioAtIndex: (index, isChecked) => {
         const element = this.items[index];
         if (element) {
-          element.setControlChecked(isChecked);
+          element.selected = isChecked;
         }
       },
       notifyAction: (index) => {
@@ -329,27 +351,38 @@ export abstract class ListBase extends BaseElement {
     return doesSlotContainFocus(slotElement);
   }
 
-  select(index: number) {
-    const previouslySelected = this.selected;
-    const itemToSelect = this.items[index];
+  protected selectUi(index: number) {
+    const item = this.items[index];
+    if (item) {
+      item.selected = true;
+    }
+  }
 
-    if (!itemToSelect) {
+  protected deselectUi(index: number) {
+    const item = this.items[index];
+    if (item) {
+      item.selected = false;
+    }
+  }
+
+  select(index: number|number[]) {
+    if (!this.mdcFoundation) {
       return;
     }
 
-    if (previouslySelected) {
-      previouslySelected.selected = false;
+    this.mdcFoundation.setSelectedIndex(index);
+
+    if (Number.isInteger(index as number)) {
+      this.selectUi(index as number);
+    } else {
+      for (const i of index as number[]) {
+        this.selectUi(i);
+      }
     }
 
-
-    itemToSelect.selected = true;
-    this.selected_ = itemToSelect;
-  }
-
-  firstUpdated() {
-    super.firstUpdated();
-
-    this.mdcFoundation.setSingleSelection(!this.multi);
+    const selectedEv = new CustomEvent<{index: number | number[]}>(
+        'selected', {detail: {index}});
+    this.dispatchEvent(selectedEv);
   }
 
   onSlotChange() {

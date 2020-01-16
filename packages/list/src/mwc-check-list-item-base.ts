@@ -1,6 +1,6 @@
 /**
  @license
- Copyright 2019 Google Inc. All Rights Reserved.
+ Copyright 2020 Google Inc. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -15,25 +15,24 @@
  limitations under the License.
  */
 
+import '@material/mwc-checkbox';
+
 import {observer} from '@material/mwc-base/observer';
-import {html, LitElement, property, query} from 'lit-element';
+import {Checkbox} from '@material/mwc-checkbox';
+import {html, property, query} from 'lit-element';
+import {classMap} from 'lit-html/directives/class-map';
 
-export interface RequestSelectedDetail {
-  selected: boolean;
-  hasCheckboxOrRadio: boolean;
-}
+import {ListItemBase, RequestSelectedDetail} from './mwc-list-item-base';
 
-/**
- * @emits request-selected
- */
-export class ListItemBase extends LitElement {
+export class CheckListItemBase extends ListItemBase {
   @query('slot') protected slotElement!: HTMLSlotElement|null;
+  @query('mwc-checkbox') protected checkboxElement!: Checkbox;
 
-  @property({type: String}) value = '';
-  @property({type: Number, reflect: true}) tabindex = -1;
   @property({type: Boolean, reflect: true}) disabled = false;
 
-  @property({type: Boolean, reflect: true})
+  @property({type: Boolean}) left = false;
+
+  @property({type: Boolean, reflect: false})
   @observer(function(this: ListItemBase, value: boolean) {
     if (value) {
       this.setAttribute('aria-selected', 'true');
@@ -43,16 +42,23 @@ export class ListItemBase extends LitElement {
   })
   selected = false;
 
-  protected boundOnClick = this.onClick.bind(this);
-
-  get text() {
-    const textContent = this.textContent;
-
-    return textContent ? textContent.trim() : '';
-  }
-
   render() {
-    return html`<slot></slot>`;
+    const checkboxClasses = {
+      'mdc-list-item__graphic': this.left,
+      'mdc-list-item__meta': !this.left,
+    };
+
+    const slot = html`<slot></slot>`;
+
+    return html`
+      ${this.left ? '' : slot}
+      <mwc-checkbox
+          class=${classMap(checkboxClasses)}
+          tabindex=${this.tabindex}
+          .checked=${this.selected}
+          ?disabled=${this.disabled}>
+      </mwc-checkbox>
+      ${this.left ? slot : ''}`;
   }
 
   protected onClick() {
@@ -60,7 +66,7 @@ export class ListItemBase extends LitElement {
         new CustomEvent<RequestSelectedDetail>('request-selected', {
           bubbles: true,
           composed: true,
-          detail: {hasCheckboxOrRadio: false, selected: !this.selected}
+          detail: {hasCheckboxOrRadio: true, selected: !this.selected}
         });
 
     this.dispatchEvent(customEv);
@@ -68,19 +74,9 @@ export class ListItemBase extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+    this.addEventListener('click', this.boundOnClick);
 
     this.toggleAttribute('mwc-list-item', true);
-    this.addEventListener('click', this.boundOnClick);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-
-    this.removeEventListener('click', this.boundOnClick);
-  }
-
-  firstUpdated() {
-    this.dispatchEvent(
-        new Event('list-item-rendered', {bubbles: true, composed: true}));
+    this.toggleAttribute('mwc-check-list-item', true);
   }
 }

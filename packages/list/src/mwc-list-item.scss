@@ -54,7 +54,7 @@ $dense-item-primary-text-baseline-height: 24px;
   @include mdc-list-item-graphic-ink-color(primary, $query);
 }
 
-:host(.mdc-list-item__graphic) {
+.mdc-list-item__graphic {
   @include mdc-feature-targets($feat-structure) {
     @include mdc-list-graphic-size_(24px);
 
@@ -68,14 +68,14 @@ $dense-item-primary-text-baseline-height: 24px;
 // Extra specificity is to override .material-icons display style if used in
 // conjunction with mdc-list-item__graphic
 // stylelint-disable plugin/selector-bem-pattern
-:host(.mdc-list-item__graphic) {
+.mdc-list-item__graphic {
   @include mdc-feature-targets($feat-structure) {
     display: inline-flex;
   }
 }
 // stylelint-enable plugin/selector-bem-pattern
 
-:host(.mdc-list-item__meta) {
+.mdc-list-item__meta {
   // stylelint-disable selector-class-pattern
   &:not(.material-icons) {
     @include mdc-typography(caption, $query);
