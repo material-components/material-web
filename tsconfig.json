@@ -27,5 +27,37 @@
     "custom_typings/**/*.ts",
     "src/*.ts"
   ],
-  "exclude": []
+  "exclude": [],
+  "references": [
+    {"path": "packages/base"},
+    {"path": "packages/button"},
+    {"path": "packages/checkbox"},
+    {"path": "packages/dialog"},
+    {"path": "packages/drawer"},
+    {"path": "packages/fab"},
+    {"path": "packages/floating-label"},
+    {"path": "packages/formfield"},
+    {"path": "packages/icon"},
+    {"path": "packages/icon-button"},
+    {"path": "packages/icon-button-toggle"},
+    {"path": "packages/line-ripple"},
+    {"path": "packages/linear-progress"},
+    {"path": "packages/list"},
+    {"path": "packages/menu"},
+    {"path": "packages/notched-outline"},
+    {"path": "packages/radio"},
+    {"path": "packages/ripple"},
+    {"path": "packages/select"},
+    {"path": "packages/slider"},
+    {"path": "packages/snackbar"},
+    {"path": "packages/switch"},
+    {"path": "packages/tab"},
+    {"path": "packages/tab-bar"},
+    {"path": "packages/tab-indicator"},
+    {"path": "packages/tab-scroller"},
+    {"path": "packages/textarea"},
+    {"path": "packages/textfield"},
+    {"path": "packages/top-app-bar"},
+    {"path": "packages/top-app-bar-fixed"}
+  ]
 }
