@@ -371,8 +371,13 @@ export abstract class ListBase extends BaseElement {
       }
     }
 
-    const selectedEv = new CustomEvent<{index: number | number[]}>(
-        'selected', {detail: {index}});
+    const selectedEvInit = {
+      bubbles: true,
+      composed: true,
+      detail: {index},
+    };
+    const selectedEv =
+        new CustomEvent<{index: number | number[]}>('selected', selectedEvInit);
     this.dispatchEvent(selectedEv);
   }
 

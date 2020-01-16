@@ -446,18 +446,6 @@ export abstract class SelectBase extends FormElement {
     // if (this.validateOnInitialRender) {
     //   this.reportValidity();
     // }
-
-    if (menuElement) {
-      const selected = menuElement.selected;
-
-      if (selected) {
-        const listIndex = menuElement.index;
-        const index = listIndex instanceof Array ? listIndex[0] : listIndex;
-        if (index !== -1) {
-          this.select(index);
-        }
-      }
-    }
   }
 
   select(index: number) {
