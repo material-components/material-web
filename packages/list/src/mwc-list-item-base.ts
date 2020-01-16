@@ -16,6 +16,7 @@
  */
 
 import {observer} from '@material/mwc-base/observer';
+import {rippleNode} from '@material/mwc-ripple/ripple-directive';
 import {html, LitElement, property, query} from 'lit-element';
 
 export interface RequestSelectedDetail {
@@ -32,6 +33,7 @@ export class ListItemBase extends LitElement {
   @property({type: String}) value = '';
   @property({type: Number, reflect: true}) tabindex = -1;
   @property({type: Boolean, reflect: true}) disabled = false;
+  @property({type: Boolean, reflect: true}) twoline = false;
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: ListItemBase, value: boolean) {
@@ -52,7 +54,30 @@ export class ListItemBase extends LitElement {
   }
 
   render() {
+    return this.renderText();
+  }
+
+  protected renderText() {
+    const inner = this.twoline ? this.renderTwoline() : this.renderSingleLine();
+    return html`
+      <span class="mdc-list-item__text">
+        ${inner}
+      </span>`;
+  }
+
+  protected renderSingleLine() {
     return html`<slot></slot>`;
+  }
+
+  protected renderTwoline() {
+    return html`
+      <span class="mdc-list-item__primary-text">
+        <slot></slot>
+      </span>
+      <span class="mdc-list-item__secondary-text">
+        <slot name="secondary"></slot>
+      </span>
+    `;
   }
 
   protected onClick() {
@@ -82,5 +107,7 @@ export class ListItemBase extends LitElement {
   firstUpdated() {
     this.dispatchEvent(
         new Event('list-item-rendered', {bubbles: true, composed: true}));
+
+    rippleNode({surfaceNode: this});
   }
 }

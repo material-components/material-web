@@ -46,6 +46,14 @@ export abstract class ListBase extends BaseElement {
   @property({type: Boolean})
   @observer(function(this: ListBase, value: boolean) {
     if (this.mdcFoundation) {
+      this.mdcFoundation.setUseActivatedClass(value);
+    }
+  })
+  activatable = false;
+
+  @property({type: Boolean})
+  @observer(function(this: ListBase, value: boolean) {
+    if (this.mdcFoundation) {
       this.mdcFoundation.setWrapFocus(!value);
     }
   })

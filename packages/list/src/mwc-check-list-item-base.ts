@@ -48,17 +48,17 @@ export class CheckListItemBase extends ListItemBase {
       'mdc-list-item__meta': !this.left,
     };
 
-    const slot = html`<slot></slot>`;
+    const text = this.renderText();
 
     return html`
-      ${this.left ? '' : slot}
+      ${this.left ? '' : text}
       <mwc-checkbox
           class=${classMap(checkboxClasses)}
           tabindex=${this.tabindex}
           .checked=${this.selected}
           ?disabled=${this.disabled}>
       </mwc-checkbox>
-      ${this.left ? slot : ''}`;
+      ${this.left ? text : ''}`;
   }
 
   protected onClick() {

@@ -65,6 +65,8 @@ export abstract class MenuBase extends BaseElement {
 
   @property({type: Boolean}) absolute = false;
 
+  @property({type: Boolean}) activatable = false;
+
   @property({type: Boolean}) fixed = false;
 
   @property({type: Number})
@@ -134,6 +136,7 @@ export abstract class MenuBase extends BaseElement {
             class="mdc-list"
             .itemRoles=${itemRoles}
             .wrapFocus=${this.wrapFocus}
+            .activatable=${this.activatable}
             @action=${this.onAction}>
           <slot></slot>
         </mwc-list>

@@ -58,6 +58,10 @@ limitations under the License.
   &.mdc-select--disabled.mdc-select--outlined mwc-notched-outline {
     --mdc-notched-outline-border-color: var(--mdc-select-outlined-disabled-border-color, #{vars.$outlined-disabled-border});
   }
+
+  mwc-notched-outline {
+    top: 0;
+  }
 }
 
 // menu

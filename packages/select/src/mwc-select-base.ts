@@ -141,6 +141,7 @@ export abstract class SelectBase extends FormElement {
         <mwc-menu
             role="listbox"
             class="mdc-select__menu mdc-menu mdc-menu-surface"
+            activatable
             .open=${this.menuOpen}
             @selected=${this.onSelected}
             @opened=${this.onOpened}
@@ -500,7 +501,7 @@ export abstract class SelectBase extends FormElement {
       const targetClientRect = (evt.target as Element).getBoundingClientRect();
       let xCoord = 0;
 
-      if (evt instanceof TouchEvent) {
+      if ('touches' in evt) {
         xCoord = evt.touches[0].clientX;
       } else {
         xCoord = evt.clientX;

@@ -50,9 +50,9 @@ export class RadioListItemBase extends ListItemBase {
       'mdc-list-item__meta': !this.left,
     };
 
-    const slot = html`<slot></slot>`;
+    const text = this.renderText();
     return html`
-      ${this.left ? '' : slot}
+      ${this.left ? '' : text}
       <mwc-radio
           class=${classMap(radioClasses)}
           tabindex=${this.tabindex}
@@ -61,7 +61,7 @@ export class RadioListItemBase extends ListItemBase {
           ?disabled=${this.disabled}
           @checked=${this.onChecked}>
       </mwc-radio>
-      ${this.left ? slot : ''}`;
+      ${this.left ? text : ''}`;
   }
 
 

@@ -26,7 +26,21 @@ $item-primary-text-baseline-height: 32px;
 $item-secondary-text-baseline-height: 20px;
 $dense-item-primary-text-baseline-height: 24px;
 
+@mixin graphic-size_($size) {
+  $text-offset: 72px;
+  $side-padding: $mdc-list-side-padding;
+  $margin-value: calc($text-offset - $side-padding - $size);
+
+  @include mdc-rtl-reflexive-box(margin, right, $margin-value, "&");
+
+  width: $size;
+  height: $size;
+}
+
 :host {
+  cursor: pointer;
+  user-select: none;
+
   $height: mdc-density-prop-value(
     $density-config: $mdc-list-single-line-density-config,
     $density-scale: $mdc-list-single-line-density-scale,
@@ -44,11 +58,12 @@ $dense-item-primary-text-baseline-height: 24px;
   );
 
   @include mdc-list-single-line-height($height, $query: $query);
+  color: rgba(0,0,0,.87);
+  color: var(--mdc-theme-text-primary-on-background,rgba(0,0,0,.87));
 }
 
 // "Selected" is ephemeral and likely to change soon. E.g., selecting one or more photos to share in Google Photos.
 // "Activated" is more permanent. E.g., the currently highlighted navigation destination in a drawer.
-:host([selected]),
 :host(.mdc-list-item--activated) {
   @include mdc-list-item-primary-text-ink-color(primary, $query);
   @include mdc-list-item-graphic-ink-color(primary, $query);
@@ -56,7 +71,7 @@ $dense-item-primary-text-baseline-height: 24px;
 
 .mdc-list-item__graphic {
   @include mdc-feature-targets($feat-structure) {
-    @include mdc-list-graphic-size_(24px);
+    @include graphic-size_(var(--mdc-list-item-graphic-size, 24px));
 
     flex-shrink: 0;
     align-items: center;
@@ -87,19 +102,20 @@ $dense-item-primary-text-baseline-height: 24px;
   }
 }
 
-:host(.mdc-list-item__text) {
+.mdc-list-item__text {
   @include mdc-typography-overflow-ellipsis($query);
-}
 
-// Disable interaction on label elements that may automatically
-// toggle corresponding checkbox / radio input.
-:host(.mdc-list-item__text)[for] {
-  @include mdc-feature-targets($feat-structure) {
-    pointer-events: none;
+  // Disable interaction on label elements that may automatically
+  // toggle corresponding checkbox / radio input.
+  ::slotted([for]),
+  &[for] {
+    @include mdc-feature-targets($feat-structure) {
+      pointer-events: none;
+    }
   }
 }
 
-:host(.mdc-list-item__primary-text) {
+.mdc-list-item__primary-text {
   @include mdc-typography-overflow-ellipsis($query);
   @include mdc-typography-baseline-top($item-primary-text-baseline-height, $query);
   @include mdc-typography-baseline-bottom($item-secondary-text-baseline-height, $query);
@@ -109,7 +125,7 @@ $dense-item-primary-text-baseline-height: 24px;
   }
 }
 
-:host(.mdc-list-item__secondary-text) {
+.mdc-list-item__secondary-text {
   @include mdc-typography(body2, $query);
   @include mdc-typography-overflow-ellipsis($query);
   @include mdc-typography-baseline-top($item-secondary-text-baseline-height, $query);
@@ -133,35 +149,246 @@ $dense-item-primary-text-baseline-height: 24px;
 
 // Override anchor tag styles for the use-case of a list being used for navigation
 // stylelint-disable selector-max-type,selector-no-qualifying-type
-:host(a) {
+* ::slotted(a), a {
   @include mdc-feature-targets($feat-structure) {
     color: inherit;
     text-decoration: none;
   }
 }
 
-:host([toggleIcon]:not([selected])) .mdc-list-item__graphic {
+:host([toggleIcon]:not(.mdc-list-item--activated)) .mdc-list-item__graphic {
   display: none;
 }
 
 :host([toggleIcon]) #wrapper {
   // postcss-bem-linter: define menu
-    @include mdc-feature-targets($feat-structure) {
-      fill: currentColor;
-    }
+  @include mdc-feature-targets($feat-structure) {
+    fill: currentColor;
+  }
 
-    @include mdc-feature-targets($feat-structure) {
-      @include mdc-rtl-reflexive-property(padding, 56px, $mdc-list-side-padding);
-    }
+  @include mdc-feature-targets($feat-structure) {
+    @include mdc-rtl-reflexive-property(padding, 56px, $mdc-list-side-padding);
+  }
 
-    // Extra specificity required to override `display` property on `mdc-list-item__graphic`.
-    #iconWrapper {
-      @include mdc-feature-targets($feat-structure) {
-        @include mdc-rtl-reflexive-position(left, 16px);
-        position: absolute;
-        // IE11 requires the icon to be vertically centered due to its absolute positioning
-        top: 50%;
-        transform: translateY(-50%);
+  // Extra specificity required to override `display` property on `mdc-list-item__graphic`.
+  #iconWrapper {
+    @include mdc-feature-targets($feat-structure) {
+      @include mdc-rtl-reflexive-position(left, 16px);
+      position: absolute;
+      // IE11 requires the icon to be vertically centered due to its absolute positioning
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+:host([twoline]) {
+  .mdc-list-item__text {
+    @include mdc-feature-targets($feat-structure) {
+      align-self: flex-start;
+    }
+  }
+
+  @include mdc-feature-targets($feat-structure) {
+    height: 72px;
+  }
+}
+
+
+$states-color: mdc-theme-prop-value(on-surface);
+$hover-opacity: mdc-states-opacity($states-color, hover);
+$focus-opacity: mdc-states-opacity($states-color, focus);
+$press-opacity: mdc-states-opacity($states-color, press);
+
+:host(:not([disabled])) {
+
+  @include mdc-ripple-surface($query);
+  @include mdc-ripple-radius-bounded($query: $query);
+  @include mdc-ripple-target-selector("&") {
+    @include mdc-states-base-color($states-color, $query);
+  }
+}
+
+:host([disabled]) {
+  cursor: default;
+  pointer-events: none;
+
+  .mdc-list-item__text {
+    ::slotted(*) {
+      @include mdc-feature-targets($feat-color) {
+        opacity: $mdc-list-text-disabled-opacity;
       }
     }
+  }
+
+
+  .mdc-list-item__text,
+  .mdc-list-item__primary-text,
+  .mdc-list-item__secondary-text {
+    ::slotted(*) {
+      @include mdc-feature-targets($feat-color) {
+        @include mdc-theme-prop(color, $mdc-list-text-disabled-color);
+      }
+    }
+  }
+}
+
+// Hover
+
+:host(:not([disabled]):hover)::before {
+  // Opacity falls under color because the chosen opacity is color-dependent
+  // in typical usage
+  @include mdc-feature-targets($feat-color) {
+    opacity: $hover-opacity;
+  }
+}
+
+// Focus
+
+:host(:not([disabled]).mdc-ripple-upgraded--background-focused),
+:host(:not([disabled]):not(.mdc-ripple-upgraded):focus) {
+  &::before {
+    @include mdc-states-focus-opacity-properties_(
+      $opacity: $focus-opacity, $query: $query);
+  }
+}
+
+// Press
+
+:host(:not([disabled]):not(.mdc-ripple-upgraded)) {
+  // Apply press additively by using the ::after pseudo-element
+  &::after {
+    @include mdc-feature-targets($feat-animation) {
+      transition: opacity $mdc-ripple-fade-out-duration linear;
+    }
+  }
+}
+
+:host(:not([disabled]):not(.mdc-ripple-upgraded):active) {
+  &::after {
+    @include mdc-feature-targets($feat-animation) {
+      transition-duration: $mdc-ripple-fade-in-duration;
+    }
+
+    // Opacity falls under color because the chosen opacity is color-dependent in typical usage
+    @include mdc-feature-targets($feat-color) {
+      opacity: $press-opacity;
+    }
+  }
+}
+
+:host(:not([disabled]).mdc-ripple-upgraded) {
+  @include mdc-feature-targets($feat-color) {
+    --mdc-ripple-fg-opacity: #{$press-opacity};
+  }
+}
+
+// selected and active
+
+$selected-opacity: mdc-states-opacity(on-surface, selected);
+$activated-opacity: mdc-states-opacity(primary, activated);
+$states-color-primary: primary;
+$hover-opacity-primary: mdc-states-opacity($states-color-primary, hover);
+$focus-opacity-primary: mdc-states-opacity($states-color-primary, focus);
+$press-opacity-primary: mdc-states-opacity($states-color-primary, press);
+
+// Focus-selected
+
+:host(.mdc-list-item--activated:not([disabled]).mdc-ripple-upgraded--background-focused),
+:host(.mdc-list-item--activated:not([disabled]):not(.mdc-ripple-upgraded):focus) {
+  &::before {
+    @include mdc-states-focus-opacity-properties_(
+      $opacity: $focus-opacity-primary + $selected-opacity, $query: $query);
+  }
+}
+
+// Press-selected
+:host(.mdc-list-item--activated:not([disabled]):not(.mdc-ripple-upgraded):active) {
+  &::after {
+    // Opacity falls under color because the chosen opacity is color-dependent in typical usage
+    @include mdc-feature-targets($feat-color) {
+      opacity: $press-opacity-primary + $selected-opacity;
+    }
+  }
+}
+
+:host(.mdc-list-item--activated:not([disabled]).mdc-ripple-upgraded) {
+  @include mdc-feature-targets($feat-color) {
+    --mdc-ripple-fg-opacity: #{$press-opacity-primary + $selected-opacity};
+  }
+}
+
+// Activated
+
+:host(.mdc-list-item--activated:not([disabled])) {
+  &::before {
+    @include mdc-feature-targets($feat-color) {
+      opacity: $activated-opacity;
+    }
+  }
+
+  @include mdc-ripple-target-selector("&") {
+    @include mdc-states-base-color(primary, $query);
+  }
+}
+
+// Hover-activated
+
+:host(.mdc-list-item--activated:not([disabled]):hover)::before {
+  // Opacity falls under color because the chosen opacity is color-dependent
+  // in typical usage
+  @include mdc-feature-targets($feat-color) {
+    opacity: $hover-opacity-primary + $activated-opacity;
+  }
+}
+
+// Focus-activated
+
+:host(.mdc-list-item--activated:not([disabled]).mdc-ripple-upgraded--background-focused),
+:host(.mdc-list-item--activated:not([disabled]):not(.mdc-ripple-upgraded):focus) {
+  &::before {
+    @include mdc-states-focus-opacity-properties_(
+      $opacity: $focus-opacity-primary + $activated-opacity, $query: $query);
+  }
+}
+
+// Press-activated
+:host(.mdc-list-item--activated:not([disabled]):not(.mdc-ripple-upgraded):active) {
+  &::after {
+    // Opacity falls under color because the chosen opacity is color-dependent in typical usage
+    @include mdc-feature-targets($feat-color) {
+      opacity: $press-opacity-primary + $activated-opacity;
+    }
+  }
+}
+
+:host(.mdc-list-item--activated:not([disabled]).mdc-ripple-upgraded) {
+  @include mdc-feature-targets($feat-color) {
+    --mdc-ripple-fg-opacity: #{$press-opacity-primary + $activated-opacity};
+  }
+}
+
+.mdc-list-item__secondary-text ::slotted(*) {
+  @include mdc-feature-targets($feat-color) {
+    @include mdc-theme-prop(color, text-secondary-on-background);
+  }
+}
+
+.mdc-list-item__graphic ::slotted(*) {
+  @include mdc-feature-targets($feat-color) {
+    @include mdc-theme-prop(background-color, transparent);
+    @include mdc-theme-prop(color, text-icon-on-background);
+  }
+}
+
+.mdc-list-item__meta ::slotted(*) {
+  @include mdc-feature-targets($feat-color) {
+    @include mdc-theme-prop(color, text-hint-on-background);
+  }
+}
+
+.mdc-list-group__subheader ::slotted(*) {
+  @include mdc-feature-targets($feat-color) {
+    @include mdc-theme-prop(color, text-primary-on-background);
+  }
 }
