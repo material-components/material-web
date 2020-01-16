@@ -97,7 +97,7 @@ export abstract class SelectBase extends FormElement {
     name: string;
     cb: EventListenerOrEventListenerObject;
   })[] = [];
-  protected onBodyClickBound: (evt: MouseEvent) => void = () => {};
+  protected onBodyClickBound: (evt: MouseEvent) => void = () => { /* init */ };
   protected _outlineUpdateComplete: null|Promise<unknown> = null;
   protected _menuUpdateComplete: null|Promise<unknown> = null;
 

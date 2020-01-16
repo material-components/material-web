@@ -19,7 +19,7 @@ import '@material/mwc-notched-outline';
 import {MDCListAdapter} from '@material/list/adapter';
 import MDCListFoundation from '@material/list/foundation.js';
 import {BaseElement, observer} from '@material/mwc-base/base-element.js';
-import {deepActiveElementPath, doesSlotContainFocus, isNodeElement} from '@material/mwc-base/utils';
+import {deepActiveElementPath, doesElementContainFocus, isNodeElement} from '@material/mwc-base/utils';
 import {html, property, query} from 'lit-element';
 
 import {ListItemBase, RequestSelectedDetail} from './mwc-list-item-base';
@@ -295,7 +295,7 @@ export abstract class ListBase extends BaseElement {
           (element as HTMLElement).focus();
         }
       },
-      setTabIndexForListItemChildren: () => {},
+      setTabIndexForListItemChildren: () => { /* Handled by list-item-base */ },
       hasCheckboxAtIndex: (index) => {
         const element = this.items[index];
 
@@ -323,7 +323,7 @@ export abstract class ListBase extends BaseElement {
         this.dispatchEvent(ev);
       },
       isFocusInsideList: () => {
-        return this.doContentsHaveFocus();
+        return doesElementContainFocus(this);
       },
       isRootFocused: () => {
         const mdcRoot = this.mdcRoot;
@@ -340,15 +340,6 @@ export abstract class ListBase extends BaseElement {
         return item.classList.contains(className);
       },
     };
-  }
-
-  doContentsHaveFocus(): boolean {
-    const slotElement = this.slotElement;
-    if (!slotElement) {
-      return false;
-    }
-
-    return doesSlotContainFocus(slotElement);
   }
 
   protected selectUi(index: number) {

@@ -20,7 +20,7 @@ import MDCMenuSurfaceFoundation from '@material/menu-surface/foundation.js';
 import {MDCMenuDistance} from '@material/menu-surface/types';
 import {getTransformPropertyName} from '@material/menu-surface/util';
 import {addHasRemoveClass, BaseElement, observer} from '@material/mwc-base/base-element.js';
-import {deepActiveElementPath, doesSlotContainElement, doesSlotContainFocus, isNodeElement} from '@material/mwc-base/utils';
+import {deepActiveElementPath, doesElementContainFocus, isNodeElement} from '@material/mwc-base/utils';
 import {html, property, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
@@ -124,7 +124,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
 
   protected previouslyFocused: HTMLElement|Element|null = null;
   protected previousAnchor: HTMLElement|null = null;
-  protected onBodyClickBound: (evt: MouseEvent) => void = () => {};
+  protected onBodyClickBound: (evt: MouseEvent) => void = () => { /* init */ };
 
   render() {
     const classes = {
@@ -159,16 +159,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
         this.open = true;
         this.mdcRoot.dispatchEvent(ev);
       },
-      isElementInContainer: (element) => {
-        const root = this.mdcRoot;
-        const slotElement = this.slotElement;
-        if (!root || !slotElement) {
-          return false;
-        }
-
-        return element === this || element === root ||
-            doesSlotContainElement(slotElement, element);
-      },
+      isElementInContainer: () => false,
       isRtl: () => {
         if (this.mdcRoot) {
           return getComputedStyle(this.mdcRoot).direction === 'rtl';
@@ -186,28 +177,9 @@ export abstract class MenuSurfaceBase extends BaseElement {
         root.style.setProperty(propertyName, origin);
       },
       isFocused: () => {
-        const root = this.mdcRoot;
-        const slotElement = this.slotElement;
-        if (!root || !slotElement) {
-          return false;
-        }
-
-        const docRoot = root.getRootNode() as Document | ShadowRoot;
-        const elementIsFocused = docRoot.activeElement === root;
-
-        if (elementIsFocused) {
-          return true;
-        }
-
-        return doesSlotContainFocus(slotElement);
+        return doesElementContainFocus(this);
       },
       saveFocus: () => {
-        const mdcRoot = this.mdcRoot;
-
-        if (!mdcRoot) {
-          return;
-        }
-
         const activeElementPath = deepActiveElementPath();
         const pathLength = activeElementPath.length;
 
@@ -218,18 +190,6 @@ export abstract class MenuSurfaceBase extends BaseElement {
         this.previouslyFocused = activeElementPath[pathLength - 1];
       },
       restoreFocus: () => {
-        const mdcRoot = this.mdcRoot;
-        const slotElement = this.slotElement;
-
-        if (!slotElement || !mdcRoot) {
-          return;
-        }
-        const menuHasFocus = doesSlotContainFocus(slotElement);
-
-        if (!menuHasFocus) {
-          return;
-        }
-
         if (!this.previouslyFocused) {
           return;
         }
@@ -302,8 +262,9 @@ export abstract class MenuSurfaceBase extends BaseElement {
   }
 
   protected onBodyClick(evt: MouseEvent) {
-    if (this.mdcFoundation) {
-      this.mdcFoundation.handleBodyClick(evt);
+    const path = evt.composedPath();
+    if (path.indexOf(this) === -1) {
+      this.close();
     }
   }
 

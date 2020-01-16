@@ -73,36 +73,6 @@ document.removeEventListener('x', fn);
  */
 export const supportsPassiveEventListener = supportsPassive;
 
-const slotActiveElement = (slot: HTMLSlotElement): Element|null => {
-  const assignedElements =
-      slot.assignedNodes({flatten: true})
-          .filter((node) => isNodeElement(node)) as Element[];
-
-  const first = assignedElements[0];
-  if (!first) {
-    return null;
-  }
-
-  const root = first.getRootNode() as unknown as DocumentOrShadowRoot;
-  return root ? root.activeElement : null;
-};
-
-export const doesSlotContainElement =
-    (slot: HTMLSlotElement, element: Element): boolean => {
-      return slot.assignedNodes({flatten: true})
-          .filter((node) => isNodeElement(node))
-          .reduce((isContained: boolean, assinedElement) => {
-            return isContained || assinedElement === element ||
-                assinedElement.contains(element);
-          }, false);
-    };
-
-export const doesSlotContainFocus = (slot: HTMLSlotElement): boolean => {
-  const activeElement = slotActiveElement(slot);
-
-  return activeElement ? doesSlotContainElement(slot, activeElement) : false;
-};
-
 export const deepActiveElementPath = (doc = window.document): Element[] => {
   let activeElement = doc.activeElement;
   const path: Element[] = [];
@@ -121,4 +91,26 @@ export const deepActiveElementPath = (doc = window.document): Element[] => {
   }
 
   return path;
+};
+
+export const doesElementContainFocus = (element: HTMLElement): boolean => {
+  const activePath = deepActiveElementPath();
+
+  if (!activePath.length) {
+    return false;
+  }
+
+  const deepActiveElement = activePath[activePath.length - 1];
+  const focusEv =
+      new Event('check-if-focused', {bubbles: true, composed: true});
+  let composedPath: EventTarget[] = [];
+  const listener = (ev: Event) => {
+    composedPath = ev.composedPath();
+  };
+
+  document.body.addEventListener('check-if-focused', listener, {capture: true});
+  deepActiveElement.dispatchEvent(focusEv);
+  document.body.removeEventListener('check-if-focused', listener);
+
+  return composedPath.indexOf(element) !== -1;
 };
