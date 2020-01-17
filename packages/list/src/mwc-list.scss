@@ -48,7 +48,7 @@ $divider-color: if(
 }
 // stylelint-enable selector-max-type,selector-no-qualifying-type
 
-.mdc-list-divider {
+.mdc-list ::slotted([divider]) {
   @include mdc-feature-targets($feat-structure) {
     height: 0;
     margin: 0;
@@ -56,20 +56,18 @@ $divider-color: if(
     border-bottom-width: 1px;
     border-bottom-style: solid;
   }
+
+  @include mdc-theme-prop(border-bottom-color, $divider-color)
 }
 
-// Note: ideally we'd be able to hoist this to the top-level `$feat-color`, but doing so
-// will cause the `border` declaration on `.mdc-list-divider` above to override it.
-@include mdc-list-divider-color($divider-color, $query);
-
-.mdc-list-divider--padded {
+.mdc-list ::slotted([divider][padded]) {
   @include mdc-feature-targets($feat-structure) {
     // Leave gaps on each side to match the padding on list items
     margin: 0 $mdc-list-side-padding;
   }
 }
 
-.mdc-list-divider--inset {
+.mdc-list ::slotted([divider][inset]) {
   @include mdc-feature-targets($feat-structure) {
     @include mdc-rtl-reflexive-box(margin, left, $mdc-list-text-offset, ".mdc-list-group");
 
@@ -77,7 +75,7 @@ $divider-color: if(
   }
 }
 
-.mdc-list-divider--inset.mdc-list-divider--padded {
+.mdc-list ::slotted([divider][inset][padded]) {
   @include mdc-feature-targets($feat-structure) {
     width: calc(100% - #{$mdc-list-text-offset} - #{$mdc-list-side-padding});
   }

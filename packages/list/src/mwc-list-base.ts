@@ -86,6 +86,11 @@ export abstract class ListBase extends BaseElement {
                 return element;
               }
 
+              if (element.hasAttribute('divider') &&
+                  !element.hasAttribute('role')) {
+                element.setAttribute('role', 'separator');
+              }
+
               return Array.from(element.querySelectorAll('[mwc-list-item]'));
             })
             .reduce<Element[]>((listItems, listItemResult) => {
