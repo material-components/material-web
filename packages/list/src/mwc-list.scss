@@ -33,6 +33,10 @@ $divider-color: if(
   $mdc-list-divider-color-on-light-bg
 );
 
+:host {
+  display: block;
+}
+
 .mdc-list {
   @include mdc-list-base_($query);
 }
@@ -142,11 +146,9 @@ $divider-color: if(
   }
 }
 
-// Only change mouse cursor for interactive list items which are not disabled.
-:not(.mdc-list--non-interactive) > :not(::slotted([disabled]))::slotted([mwc-list-item]) {
-  @include mdc-feature-targets($feat-structure) {
-    cursor: pointer;
-  }
+:host([noninteractive]) {
+  pointer-events: none;
+  cursor: default;
 }
 
 .mdc-list--dense ::slotted(.mdc-list-item__primary-text) {

@@ -131,7 +131,8 @@ export abstract class MenuBase extends BaseElement {
           class="mdc-menu mdc-menu-surface"
           @closed=${this.onClosed}
           @opened=${this.onOpened}
-          @keydown=${this.onKeydown}>
+          @keydown=${this.onKeydown}
+          role="listbox">
           <mwc-list
             class="mdc-list"
             .itemRoles=${itemRoles}

@@ -18,8 +18,9 @@ limitations under the License.
 import {MDCListAdapter} from '@material/list/adapter';
 import MDCListFoundation from '@material/list/foundation.js';
 import {BaseElement, observer} from '@material/mwc-base/base-element.js';
-import {deepActiveElementPath, doesElementContainFocus, isNodeElement} from '@material/mwc-base/utils';
+import {deepActiveElementPath, doesElementContainFocus, isNodeElement, findAssignedElement} from '@material/mwc-base/utils';
 import {html, property, query} from 'lit-element';
+import {ifDefined} from 'lit-html/directives/if-defined';
 
 import {ListItemBase, RequestSelectedDetail} from './mwc-list-item-base';
 
@@ -58,14 +59,40 @@ export abstract class ListBase extends BaseElement {
   })
   wrapFocus = false;
 
-  @property({type: String}) itemRoles: string|null = null;
+  @property({type: String})
+  @observer(function(this: ListBase) {
+    this.updateItems();
+  })
+  itemRoles: string|null = null;
+
+  @property({type: String}) innerRole: string|null = null;
+
+
+  protected previousTabindex: Element|null = null;
+
+  @property({type: Boolean, reflect: true})
+  @observer(function(this: ListBase, value: boolean) {
+    const slot = this.slotElement;
+
+    if (value && slot) {
+      const tabbable = findAssignedElement(slot, '[tabindex="0"]');
+      this.previousTabindex = tabbable;
+      if (tabbable) {
+        tabbable.setAttribute('tabindex', '-1');
+      }
+    } else if (!value && this.previousTabindex) {
+      this.previousTabindex.setAttribute('tabindex', '0');
+      this.previousTabindex = null;
+    }
+  })
+  noninteractive = false;
 
   protected get assignedElements(): Element[] {
     const slot = this.slotElement;
 
     if (slot) {
       return slot.assignedNodes({flatten: true})
-                 .filter((node) => isNodeElement(node)) as Element[];
+      .filter((node) => isNodeElement(node)) as Element[];
     }
 
     return [];
@@ -144,6 +171,7 @@ export abstract class ListBase extends BaseElement {
   render() {
     return html`
       <ul
+          role="${ifDefined(this.innerRole)}"
           class="mdc-list"
           @keydown=${this.onKeydown}
           @focusin=${this.onFocusIn}
@@ -310,12 +338,25 @@ export abstract class ListBase extends BaseElement {
       setTabIndexForListItemChildren: () => { /* Handled by list-item-base */ },
       hasCheckboxAtIndex: (index) => {
         const element = this.items[index];
+        const isChecklist = element ? element.hasAttribute('mwc-check-list-item') : false;
 
-        return element ? element.hasAttribute('mwc-check-list-item') : false;
+        if (isChecklist) {
+          this.innerRole = 'group';
+          this.itemRoles = 'checkbox';
+        }
+
+        return isChecklist;
       },
       hasRadioAtIndex: (index) => {
         const element = this.items[index];
-        return element ? element.hasAttribute('mwc-radio-list-item') : false;
+        const isRadioList = element ? element.hasAttribute('mwc-radio-list-item') : false;
+
+        if (isRadioList) {
+          this.innerRole = 'radiogroup';
+          this.itemRoles = 'radio';
+        }
+
+        return isRadioList;
       },
       isCheckboxCheckedAtIndex: (index) => {
         const element = this.items[index];

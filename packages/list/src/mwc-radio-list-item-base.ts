@@ -35,9 +35,9 @@ export class RadioListItemBase extends ListItemBase {
   @property({type: Boolean, reflect: false})
   @observer(function(this: ListItemBase, value: boolean) {
     if (value) {
-      this.setAttribute('aria-selected', 'true');
+      this.setAttribute('aria-checked', 'true');
     } else {
-      this.setAttribute('aria-selected', 'false');
+      this.setAttribute('aria-checked', 'false');
     }
   })
   selected = false;
