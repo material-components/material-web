@@ -15,9 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/mwc-base/src/elevation.scss';
-@import '@material/top-app-bar/mdc-top-app-bar.scss';
-@import '@material/theme/_mixins.scss';
+@use '@material/mwc-base/src/elevation.scss' as elevation;
+@use '@material/top-app-bar/mdc-top-app-bar.scss';
+@use '@material/theme/_mixins.scss' as theme-mixins;
+@use '@material/animation/_variables.scss' as animation-vars;
+
 
 :host {
   display: block;
@@ -25,7 +27,7 @@ limitations under the License.
 
 // this should be in mdc-top-app-bar
 .mdc-top-app-bar {
-  @include mdc-theme-prop(color, (
+  @include theme-mixins.prop(color, (
     varname: --mdc-theme-on-primary,
     fallback: #fff
   ))
@@ -48,7 +50,7 @@ limitations under the License.
 
 .mdc-top-app-bar--short-collapsed {
   #actions ::slotted(*) {
-    transition: padding 150ms $mdc-animation-standard-curve-timing-function;
+    transition: padding 150ms animation-vars.$standard-curve-timing-function;
   }
 }
 
@@ -82,5 +84,5 @@ limitations under the License.
 
 
 .mdc-top-app-bar--fixed-scrolled {
-  box-shadow: var(--mdc-top-app-bar-fixed-box-shadow, #{elevation-box-shadow(4)});
+  box-shadow: var(--mdc-top-app-bar-fixed-box-shadow, #{elevation.elevation-box-shadow(4)});
 }
