@@ -82,7 +82,7 @@ export class CheckboxBase extends FormElement {
               viewBox="0 0 24 24">
             <path class="mdc-checkbox__checkmark-path"
                   fill="none"
-                  d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                  d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
           </svg>
           <div class="mdc-checkbox__mixedmark"></div>
         </div>
