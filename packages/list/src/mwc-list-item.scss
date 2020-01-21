@@ -64,7 +64,7 @@ $dense-item-primary-text-baseline-height: 24px;
 
 // "Selected" is ephemeral and likely to change soon. E.g., selecting one or more photos to share in Google Photos.
 // "Activated" is more permanent. E.g., the currently highlighted navigation destination in a drawer.
-:host(.mdc-list-item--activated) {
+:host([activated]) {
   @include mdc-list-item-primary-text-ink-color(primary, $query);
   @include mdc-list-item-graphic-ink-color(primary, $query);
 }
@@ -156,7 +156,7 @@ $dense-item-primary-text-baseline-height: 24px;
   }
 }
 
-:host([toggleIcon]:not(.mdc-list-item--activated)) .mdc-list-item__graphic {
+:host([toggleIcon]:not([activated])) .mdc-list-item__graphic {
   display: none;
 }
 
@@ -294,8 +294,8 @@ $press-opacity-primary: mdc-states-opacity($states-color-primary, press);
 
 // Focus-selected
 
-:host(.mdc-list-item--activated:not([disabled]).mdc-ripple-upgraded--background-focused),
-:host(.mdc-list-item--activated:not([disabled]):not(.mdc-ripple-upgraded):focus) {
+:host([activated]:not([disabled]).mdc-ripple-upgraded--background-focused),
+:host([activated]:not([disabled]):not(.mdc-ripple-upgraded):focus) {
   &::before {
     @include mdc-states-focus-opacity-properties_(
       $opacity: $focus-opacity-primary + $selected-opacity, $query: $query);
@@ -303,7 +303,7 @@ $press-opacity-primary: mdc-states-opacity($states-color-primary, press);
 }
 
 // Press-selected
-:host(.mdc-list-item--activated:not([disabled]):not(.mdc-ripple-upgraded):active) {
+:host([activated]:not([disabled]):not(.mdc-ripple-upgraded):active) {
   &::after {
     // Opacity falls under color because the chosen opacity is color-dependent in typical usage
     @include mdc-feature-targets($feat-color) {
@@ -312,7 +312,7 @@ $press-opacity-primary: mdc-states-opacity($states-color-primary, press);
   }
 }
 
-:host(.mdc-list-item--activated:not([disabled]).mdc-ripple-upgraded) {
+:host([activated]:not([disabled]).mdc-ripple-upgraded) {
   @include mdc-feature-targets($feat-color) {
     --mdc-ripple-fg-opacity: #{$press-opacity-primary + $selected-opacity};
   }
@@ -320,7 +320,7 @@ $press-opacity-primary: mdc-states-opacity($states-color-primary, press);
 
 // Activated
 
-:host(.mdc-list-item--activated:not([disabled])) {
+:host([activated]:not([disabled])) {
   &::before {
     @include mdc-feature-targets($feat-color) {
       opacity: $activated-opacity;
@@ -334,7 +334,7 @@ $press-opacity-primary: mdc-states-opacity($states-color-primary, press);
 
 // Hover-activated
 
-:host(.mdc-list-item--activated:not([disabled]):hover)::before {
+:host([activated]:not([disabled]):hover)::before {
   // Opacity falls under color because the chosen opacity is color-dependent
   // in typical usage
   @include mdc-feature-targets($feat-color) {
@@ -344,8 +344,8 @@ $press-opacity-primary: mdc-states-opacity($states-color-primary, press);
 
 // Focus-activated
 
-:host(.mdc-list-item--activated:not([disabled]).mdc-ripple-upgraded--background-focused),
-:host(.mdc-list-item--activated:not([disabled]):not(.mdc-ripple-upgraded):focus) {
+:host([activated]:not([disabled]).mdc-ripple-upgraded--background-focused),
+:host([activated]:not([disabled]):not(.mdc-ripple-upgraded):focus) {
   &::before {
     @include mdc-states-focus-opacity-properties_(
       $opacity: $focus-opacity-primary + $activated-opacity, $query: $query);
@@ -353,7 +353,7 @@ $press-opacity-primary: mdc-states-opacity($states-color-primary, press);
 }
 
 // Press-activated
-:host(.mdc-list-item--activated:not([disabled]):not(.mdc-ripple-upgraded):active) {
+:host([activated]:not([disabled]):not(.mdc-ripple-upgraded):active) {
   &::after {
     // Opacity falls under color because the chosen opacity is color-dependent in typical usage
     @include mdc-feature-targets($feat-color) {
@@ -362,7 +362,7 @@ $press-opacity-primary: mdc-states-opacity($states-color-primary, press);
   }
 }
 
-:host(.mdc-list-item--activated:not([disabled]).mdc-ripple-upgraded) {
+:host([activated]:not([disabled]).mdc-ripple-upgraded) {
   @include mdc-feature-targets($feat-color) {
     --mdc-ripple-fg-opacity: #{$press-opacity-primary + $activated-opacity};
   }

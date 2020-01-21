@@ -170,6 +170,7 @@ export abstract class ListBase extends BaseElement {
 
   render() {
     return html`
+      <!-- @ts-ignore -->
       <ul
           role="${ifDefined(this.innerRole)}"
           class="mdc-list"
@@ -307,11 +308,12 @@ export abstract class ListBase extends BaseElement {
 
         const element = this.items[index];
         if (element) {
-          element.classList.add(className);
-
-          if (className === 'mdc-list-item--selected' ||
-              className === 'mdc-list-item--activated') {
+          if (className === 'mdc-list-item--selected') {
             this.selectUi(index);
+          } else if (className === 'mdc-list-item--activated') {
+            this.selectUi(index, true);
+          } else {
+            element.classList.add(className);
           }
         }
       },
@@ -395,10 +397,11 @@ export abstract class ListBase extends BaseElement {
     };
   }
 
-  protected selectUi(index: number) {
+  protected selectUi(index: number, activate = false) {
     const item = this.items[index];
     if (item) {
       item.selected = true;
+      item.activated = activate;
     }
   }
 
@@ -406,6 +409,7 @@ export abstract class ListBase extends BaseElement {
     const item = this.items[index];
     if (item) {
       item.selected = false;
+      item.activated = false;
     }
   }
 

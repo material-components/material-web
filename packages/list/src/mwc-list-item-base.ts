@@ -34,6 +34,7 @@ export class ListItemBase extends LitElement {
   @property({type: Number, reflect: true}) tabindex = -1;
   @property({type: Boolean, reflect: true}) disabled = false;
   @property({type: Boolean, reflect: true}) twoline = false;
+  @property({type: Boolean, reflect: true}) activated = false;
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: ListItemBase, value: boolean) {
