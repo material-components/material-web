@@ -47,6 +47,7 @@ export class ListItemBase extends LitElement {
   selected = false;
 
   protected boundOnClick = this.onClick.bind(this);
+  protected boundOnKeydown = this.onKeydown.bind(this);
 
   get text() {
     const textContent = this.textContent;
@@ -92,17 +93,26 @@ export class ListItemBase extends LitElement {
     this.dispatchEvent(customEv);
   }
 
+  protected onKeydown(e: KeyboardEvent) {
+    if (this.disabled && e.key === 'Enter') {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }
+
   connectedCallback() {
     super.connectedCallback();
 
     this.toggleAttribute('mwc-list-item', true);
     this.addEventListener('click', this.boundOnClick);
+    this.addEventListener('keydown', this.boundOnKeydown);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
 
     this.removeEventListener('click', this.boundOnClick);
+    this.removeEventListener('keydown', this.boundOnKeydown);
   }
 
   firstUpdated() {

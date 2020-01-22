@@ -204,7 +204,7 @@ export abstract class ListBase extends BaseElement {
     if (this.mdcFoundation && this.mdcRoot) {
       const index = this.getIndexOfTarget(evt);
       const target = evt.target as Element;
-      const isRootListItem = target instanceof ListItemBase;
+      const isRootListItem = target.hasAttribute('mwc-list-item');
       this.mdcFoundation.handleKeydown(evt, isRootListItem, index);
     }
   }
@@ -235,8 +235,8 @@ export abstract class ListBase extends BaseElement {
 
     for (const pathItem of path) {
       let index = -1;
-      if (pathItem instanceof ListItemBase) {
-        index = elements.indexOf(pathItem);
+      if (isNodeElement(pathItem as Node) && (pathItem as HTMLElement).hasAttribute('mwc-list-item')) {
+        index = elements.indexOf(pathItem as ListItemBase);
       }
 
       if (index !== -1) {
