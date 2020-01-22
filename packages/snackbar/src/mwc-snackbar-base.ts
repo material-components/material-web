@@ -106,6 +106,7 @@ export class SnackbarBase extends BaseElement {
     };
   }
 
+  /** @export */
   open() {
     this.isOpen = true;
     if (this.mdcFoundation !== undefined) {
@@ -113,6 +114,7 @@ export class SnackbarBase extends BaseElement {
     }
   }
 
+  /** @export */
   close(reason = '') {
     this.isOpen = false;
     if (this.mdcFoundation !== undefined) {
