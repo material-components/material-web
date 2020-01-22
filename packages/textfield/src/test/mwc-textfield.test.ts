@@ -442,8 +442,8 @@ suite('mwc-textfield:', () => {
 
       const notchedOutline =
           element.shadowRoot!.querySelector('mwc-notched-outline')!;
-      const floatingLabel =
-          element.shadowRoot!.querySelector('label') as FloatingLabel;
+      const floatingLabel = element.shadowRoot!.querySelector(
+                                '.mdc-floating-label') as FloatingLabel;
 
       await element.requestUpdate();
       // needed for older browsers
@@ -478,8 +478,8 @@ suite('mwc-textfield:', () => {
 
       const notchedOutline =
           element.shadowRoot!.querySelector('mwc-notched-outline')!;
-      const floatingLabel =
-          element.shadowRoot!.querySelector('label') as FloatingLabel;
+      const floatingLabel = element.shadowRoot!.querySelector(
+                                '.mdc-floating-label') as FloatingLabel;
       await element.requestUpdate();
       // needed for older browsers
       await notchedOutline.requestUpdate();
@@ -665,8 +665,8 @@ suite('mwc-textfield:', () => {
     });
 
     test('label floats when value is set', async () => {
-      const floatingLabel =
-          element.shadowRoot!.querySelector('label') as FloatingLabel;
+      const floatingLabel = element.shadowRoot!.querySelector(
+                                '.mdc-floating-label') as FloatingLabel;
 
       assert.isFalse(
           floatingLabel.classList.contains(floatingClasses.LABEL_FLOAT_ABOVE));

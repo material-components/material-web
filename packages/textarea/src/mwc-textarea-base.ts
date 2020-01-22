@@ -42,11 +42,12 @@ export abstract class TextAreaBase extends TextFieldBase {
     };
 
     return html`
-      <div class="mdc-text-field mdc-text-field--textarea ${classMap(classes)}">
+      <label class="mdc-text-field mdc-text-field--textarea ${
+        classMap(classes)}">
         ${this.renderCharCounter()}
         ${this.renderInput()}
         ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
-      </div>
+      </label>
       ${this.renderHelperText()}
     `;
   }
@@ -56,7 +57,7 @@ export abstract class TextAreaBase extends TextFieldBase {
 
     return html`
       <textarea
-          id="text-field"
+          aria-labelledby="label"
           class="mdc-text-field__input"
           .value="${this.value}"
           rows="${this.rows}"

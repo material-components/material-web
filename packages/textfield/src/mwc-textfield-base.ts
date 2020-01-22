@@ -224,12 +224,12 @@ export abstract class TextFieldBase extends FormElement {
       'mdc-text-field--with-trailing-icon': this.iconTrailing,
     };
     return html`
-      <div class="mdc-text-field ${classMap(classes)}">
+      <label class="mdc-text-field ${classMap(classes)}">
         ${this.icon ? this.renderIcon(this.icon) : ''}
         ${this.renderInput()}
         ${this.iconTrailing ? this.renderIcon(this.iconTrailing, true) : ''}
         ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
-      </div>
+      </label>
       ${this.renderHelperText(this.renderCharCounter())}
     `;
   }
@@ -262,7 +262,7 @@ export abstract class TextFieldBase extends FormElement {
     const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
     return html`
       <input
-          id="text-field"
+          aria-labelledby="label"
           class="mdc-text-field__input"
           type="${this.type}"
           .value="${this.value}"
@@ -292,12 +292,12 @@ export abstract class TextFieldBase extends FormElement {
     let labelTemplate: TemplateResult|string = '';
     if (this.label) {
       labelTemplate = html`
-        <label
+        <span
             .floatingLabelFoundation=${floatingLabel(this.label)}
             @labelchange=${this.onLabelChange}
-            for="text-field">
+            id="label">
           ${this.label}
-        </label>
+        </span>
       `;
     }
     return html`
@@ -313,11 +313,11 @@ export abstract class TextFieldBase extends FormElement {
     let labelTemplate: TemplateResult|string = '';
     if (this.label && !this.fullWidth) {
       labelTemplate = html`
-      <label
+      <span
           .floatingLabelFoundation=${floatingLabel(this.label)}
-          for="text-field">
+          id="label">
         ${this.label}
-      </label>`;
+      </span>`;
     }
 
     return html`
