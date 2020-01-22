@@ -18,7 +18,7 @@ limitations under the License.
 import {MDCListAdapter} from '@material/list/adapter';
 import MDCListFoundation from '@material/list/foundation.js';
 import {BaseElement, observer} from '@material/mwc-base/base-element.js';
-import {deepActiveElementPath, doesElementContainFocus, isNodeElement, findAssignedElement} from '@material/mwc-base/utils';
+import {deepActiveElementPath, doesElementContainFocus, findAssignedElement, isNodeElement} from '@material/mwc-base/utils';
 import {html, property, query} from 'lit-element';
 import {ifDefined} from 'lit-html/directives/if-defined';
 
@@ -92,7 +92,7 @@ export abstract class ListBase extends BaseElement {
 
     if (slot) {
       return slot.assignedNodes({flatten: true})
-      .filter((node) => isNodeElement(node)) as Element[];
+                 .filter((node) => isNodeElement(node)) as Element[];
     }
 
     return [];
@@ -235,7 +235,8 @@ export abstract class ListBase extends BaseElement {
 
     for (const pathItem of path) {
       let index = -1;
-      if (isNodeElement(pathItem as Node) && (pathItem as HTMLElement).hasAttribute('mwc-list-item')) {
+      if (isNodeElement(pathItem as Node) &&
+          (pathItem as HTMLElement).hasAttribute('mwc-list-item')) {
         index = elements.indexOf(pathItem as ListItemBase);
       }
 
@@ -340,7 +341,8 @@ export abstract class ListBase extends BaseElement {
       setTabIndexForListItemChildren: () => { /* Handled by list-item-base */ },
       hasCheckboxAtIndex: (index) => {
         const element = this.items[index];
-        const isChecklist = element ? element.hasAttribute('mwc-check-list-item') : false;
+        const isChecklist =
+            element ? element.hasAttribute('mwc-check-list-item') : false;
 
         if (isChecklist) {
           this.innerRole = 'group';
@@ -351,7 +353,8 @@ export abstract class ListBase extends BaseElement {
       },
       hasRadioAtIndex: (index) => {
         const element = this.items[index];
-        const isRadioList = element ? element.hasAttribute('mwc-radio-list-item') : false;
+        const isRadioList =
+            element ? element.hasAttribute('mwc-radio-list-item') : false;
 
         if (isRadioList) {
           this.innerRole = 'radiogroup';

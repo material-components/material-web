@@ -13,6 +13,7 @@
     "format:check": "! find . -name '*.ts' | grep -v node_modules | grep -v .d.ts | grep -v -- -css.ts | xargs clang-format -style=file -output-replacements-xml | grep '<replacement '",
     "lint:imports": "node scripts/check-imports.js",
     "lint": "npm run lint:typescript && npm run lint:lit",
+    "lint:fix": "npm run lint:typescript -- --fix && npm run lint:lit -- --fix",
     "lint:typescript": "eslint \"packages/**/*.ts\"",
     "lint:lit": "lit-analyzer \"packages/**/*.ts\" --strict",
     "test": "npm run build:tests && karma start --single-run",
