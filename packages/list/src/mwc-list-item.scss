@@ -17,7 +17,6 @@ limitations under the License.
 
 @import "@material/list/_mixins.scss";
 
-// listitem
 $query: mdc-feature-all();
 $feat-structure: mdc-feature-create-target($query, structure);
 $feat-color: mdc-feature-create-target($query, color);
@@ -170,32 +169,6 @@ $dense-item-primary-text-baseline-height: 24px;
   @include mdc-feature-targets($feat-structure) {
     color: inherit;
     text-decoration: none;
-  }
-}
-
-:host([toggleIcon]:not([activated])) .mdc-list-item__graphic {
-  display: none;
-}
-
-:host([toggleIcon]) #wrapper {
-  // postcss-bem-linter: define menu
-  @include mdc-feature-targets($feat-structure) {
-    fill: currentColor;
-  }
-
-  @include mdc-feature-targets($feat-structure) {
-    @include mdc-rtl-reflexive-property(padding, 56px, $mdc-list-side-padding);
-  }
-
-  // Extra specificity required to override `display` property on `mdc-list-item__graphic`.
-  #iconWrapper {
-    @include mdc-feature-targets($feat-structure) {
-      @include mdc-rtl-reflexive-position(left, 16px);
-      position: absolute;
-      // IE11 requires the icon to be vertically centered due to its absolute positioning
-      top: 50%;
-      transform: translateY(-50%);
-    }
   }
 }
 

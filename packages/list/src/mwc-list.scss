@@ -39,6 +39,8 @@ $divider-color: if(
 
 .mdc-list {
   @include mdc-list-base_($query);
+
+  padding: var(--mdc-list-vertical-padding, 8px) 0;
 }
 
 @include mdc-list-single-line-density($mdc-list-single-line-density-scale, $query: $query);
@@ -67,42 +69,21 @@ $divider-color: if(
 .mdc-list ::slotted([divider][padded]) {
   @include mdc-feature-targets($feat-structure) {
     // Leave gaps on each side to match the padding on list items
-    margin: 0 $mdc-list-side-padding;
+    margin: 0 var(--mdc-list-side-padding, #{$mdc-list-side-padding});
   }
 }
 
 .mdc-list ::slotted([divider][inset]) {
   @include mdc-feature-targets($feat-structure) {
-    @include mdc-rtl-reflexive-box(margin, left, $mdc-list-text-offset, ".mdc-list-group");
+    @include mdc-rtl-reflexive-box(margin, left, var(--mdc-list-inset-margin, #{$mdc-list-text-offset}), ".mdc-list-group");
 
-    width: calc(100% - #{$mdc-list-text-offset});
+    width: calc(100% - var(--mdc-list-inset-margin, #{$mdc-list-text-offset}));
   }
 }
 
 .mdc-list ::slotted([divider][inset][padded]) {
   @include mdc-feature-targets($feat-structure) {
-    width: calc(100% - #{$mdc-list-text-offset} - #{$mdc-list-side-padding});
-  }
-}
-
-.mdc-list-group {
-  @include mdc-feature-targets($feat-structure) {
-    // Cancel top/bottom padding on individual lists within group
-    .mdc-list {
-      padding: 0;
-    }
-  }
-}
-
-.mdc-list-group__subheader {
-  $mdc-list-subheader-virtual-height: 3rem;
-  $mdc-list-subheader-leading: map-get(map-get($mdc-typography-styles, body1), line-height);
-  $mdc-list-subheader-margin: ($mdc-list-subheader-virtual-height - $mdc-list-subheader-leading) / 2;
-
-  @include mdc-typography(subtitle1, $query);
-
-  @include mdc-feature-targets($feat-structure) {
-    margin: $mdc-list-subheader-margin $mdc-list-side-padding;
+    width: calc(100% - var(--mdc-list-inset-margin, #{$mdc-list-text-offset}) - var(--mdc-list-side-padding, #{$mdc-list-side-padding}));
   }
 }
 
