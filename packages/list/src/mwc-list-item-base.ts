@@ -140,7 +140,9 @@ export class ListItemBase extends LitElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this.toggleAttribute('mwc-list-item', true);
+    if (!this.nonselectable) {
+      this.toggleAttribute('mwc-list-item', true);
+    }
     this.addEventListener('click', this.boundOnClick);
     this.addEventListener('keydown', this.boundOnKeydown);
   }
