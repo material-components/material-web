@@ -91,7 +91,7 @@ export abstract class ListBase extends BaseElement {
   @property({type: Boolean})
   @observer(function(this: ListBase, value: boolean) {
     ((this.mdcFoundation as unknown) as {
-      isCheckboxList_: boolean
+      isCheckboxList_: boolean;
     }).isCheckboxList_ = value;
     this.layout();
   })
