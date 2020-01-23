@@ -15,6 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-mwc-list ::slotted(*) {
+mwc-list ::slotted([mwc-list-item]:not([twoline])) {
   height: var(--mdc-menu-item-height, 48px);
+}
+
+mwc-list {
+  max-width: var(--mdc-menu-max-width, auto);
 }
