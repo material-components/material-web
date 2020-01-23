@@ -90,7 +90,9 @@ export abstract class ListBase extends BaseElement {
 
   @property({type: Boolean})
   @observer(function(this: ListBase, value: boolean) {
-    ((this.mdcFoundation as unknown) as {isCheckboxList_: boolean}).isCheckboxList_ = value;
+    ((this.mdcFoundation as unknown) as {
+      isCheckboxList_: boolean
+    }).isCheckboxList_ = value;
     this.layout();
   })
   multi = false;
@@ -183,8 +185,9 @@ export abstract class ListBase extends BaseElement {
     });
 
     if (selectedIndicies.length) {
-      const index = selectedIndicies.length === 1 && !this.multi ? selectedIndicies[0] :
-                                                    selectedIndicies;
+      const index = selectedIndicies.length === 1 && !this.multi ?
+          selectedIndicies[0] :
+          selectedIndicies;
       this.select(index);
     }
   }
@@ -466,7 +469,8 @@ export abstract class ListBase extends BaseElement {
 
     const previousWasArray = !Number.isInteger(this.index as number);
     const newIsArray = !Number.isInteger(index as number);
-    const arrayPrev = previousWasArray ? this.index as number[] : [this.index as number];
+    const arrayPrev =
+        previousWasArray ? this.index as number[] : [this.index as number];
     const arrayNew = newIsArray ? index as number[] : [index as number];
     const diff: IndexDiff = findIndexDiff(arrayPrev, arrayNew);
 

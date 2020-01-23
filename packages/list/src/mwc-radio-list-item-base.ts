@@ -20,8 +20,8 @@ import '@material/mwc-radio';
 import {observer} from '@material/mwc-base/observer';
 import {Radio} from '@material/mwc-radio';
 import {html, property, query} from 'lit-element';
-import {ifDefined} from 'lit-html/directives/if-defined';
 import {classMap} from 'lit-html/directives/class-map';
+import {ifDefined} from 'lit-html/directives/if-defined';
 
 import {GraphicType, ListItemBase, RequestSelectedDetail} from './mwc-list-item-base';
 

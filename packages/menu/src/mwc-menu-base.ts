@@ -146,7 +146,8 @@ export abstract class MenuBase extends BaseElement {
       </mwc-menu-surface>`;
   }
 
-  protected handleListSelection(listElement: List, index: number, removal = false) {
+  protected handleListSelection(
+      listElement: List, index: number, removal = false) {
     const selected = (this.index as number[]).concat();
     const indexWithinSelected = selected.indexOf(index);
     const element = this.items[index];
