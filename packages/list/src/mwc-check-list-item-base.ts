@@ -22,7 +22,7 @@ import {Checkbox} from '@material/mwc-checkbox';
 import {html, property, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
-import {ListItemBase, RequestSelectedDetail, GraphicType} from './mwc-list-item-base';
+import {GraphicType, ListItemBase, RequestSelectedDetail} from './mwc-list-item-base';
 
 export class CheckListItemBase extends ListItemBase {
   @query('slot') protected slotElement!: HTMLSlotElement|null;
@@ -48,7 +48,9 @@ export class CheckListItemBase extends ListItemBase {
     };
 
     const text = this.renderText();
-    const graphic = this.graphic && this.graphic !== 'control' && !this.left ? this.renderGraphic() : html``;
+    const graphic = this.graphic && this.graphic !== 'control' && !this.left ?
+        this.renderGraphic() :
+        html``;
     const meta = this.hasMeta && this.left ? this.renderMeta() : html``;
 
     return html`
