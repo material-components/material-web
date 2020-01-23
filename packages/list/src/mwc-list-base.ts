@@ -442,7 +442,6 @@ export abstract class ListBase extends BaseElement {
   }
 
   onSlotChange() {
-    this.updateItems();
     this.layout();
   }
 
@@ -453,10 +452,14 @@ export abstract class ListBase extends BaseElement {
       this.updateItems();
     }
 
-    this.layout();
+    this.layout(false);
   }
 
-  layout() {
+  layout(updateItems = true) {
+    if (updateItems) {
+      this.updateItems();
+    }
+
     this.mdcFoundation.layout();
     const first = this.items[0];
 

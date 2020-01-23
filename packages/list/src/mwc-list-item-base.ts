@@ -39,7 +39,19 @@ export class ListItemBase extends LitElement {
   @property({type: Boolean, reflect: true}) activated = false;
   @property({type: String, reflect: true}) graphic: GraphicType = null;
   @property({type: Boolean}) hasMeta = false;
-
+  @property({type: Boolean, reflect: true})
+  @observer(function(this: ListItemBase, value: boolean) {
+    if (value) {
+      this.removeAttribute('aria-checked');
+      this.removeAttribute('mwc-list-item');
+      this.selected = false;
+      this.activated = false;
+      this.tabIndex = -1;
+    } else {
+      this.toggleAttribute('mwc-list-item', true);
+    }
+  })
+  nonselectable = false;
   @property({type: Boolean, reflect: true})
   @observer(function(this: ListItemBase, value: boolean) {
     if (value) {

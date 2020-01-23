@@ -199,10 +199,12 @@ $press-opacity: mdc-states-opacity($states-color, press);
   }
 }
 
-:host([disabled]) {
+:host([disabled],[nonselectable]) {
   cursor: default;
   pointer-events: none;
+}
 
+  :host([disabled]) {
   .mdc-list-item__text {
     ::slotted(*) {
       @include mdc-feature-targets($feat-color) {
