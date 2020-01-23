@@ -416,11 +416,12 @@ $press-opacity-primary: mdc-states-opacity($states-color-primary, press);
 }
 
 :host([graphic="avatar"],[graphic="medium"],[graphic="large"],[graphic="control"]) .mdc-list-item__graphic {
-  @include mdc-rtl-reflexive-box(margin, right, 16px, ":host");
+  @include mdc-rtl-reflexive-box(margin, right, var(--mdc-list-item-graphic-margin, 16px), ":host");
 }
 
 :host([graphic="icon"]) .mdc-list-item__graphic {
-  @include mdc-rtl-reflexive-box(margin, right, 32px, ":host");
+  @include graphic-size_(var(--mdc-list-item-graphic-size, 24px));
+  @include mdc-rtl-reflexive-box(margin, right, var(--mdc-list-item-graphic-margin, 32px), ":host");
 }
 
 :host([graphic="avatar"]:not([twoLine])),
