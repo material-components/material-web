@@ -22,7 +22,6 @@ import {MDCMenuAdapter} from '@material/menu/adapter';
 import {DefaultFocusState} from '@material/menu/constants';
 import MDCMenuFoundation from '@material/menu/foundation.js';
 import {BaseElement, observer} from '@material/mwc-base/base-element.js';
-import {isNodeElement} from '@material/mwc-base/utils';
 import {List, MDCListIndex} from '@material/mwc-list';
 import {ListItemBase} from '@material/mwc-list/src/mwc-list-item-base';
 import {html, property, query} from 'lit-element';
@@ -65,6 +64,8 @@ export abstract class MenuBase extends BaseElement {
 
   @property({type: Boolean}) absolute = false;
 
+  @property({type: Boolean}) multi = false;
+
   @property({type: Boolean}) activatable = false;
 
   @property({type: Boolean}) fixed = false;
@@ -106,11 +107,11 @@ export abstract class MenuBase extends BaseElement {
     return -1;
   }
 
-  get selected(): ListItemBase|null {
+  get selected(): ListItemBase|ListItemBase[]|null {
     const listElement = this.listElement;
 
     if (listElement) {
-      return listElement.selected as ListItemBase | null;
+      return listElement.selected;
     }
 
     return null;
@@ -132,8 +133,9 @@ export abstract class MenuBase extends BaseElement {
           @closed=${this.onClosed}
           @opened=${this.onOpened}
           @keydown=${this.onKeydown}
-          role="listbox">
+          role=${this.role}>
           <mwc-list
+            .multi=${this.multi}
             class="mdc-list"
             .itemRoles=${itemRoles}
             .wrapFocus=${this.wrapFocus}
@@ -142,6 +144,23 @@ export abstract class MenuBase extends BaseElement {
           <slot></slot>
         </mwc-list>
       </mwc-menu-surface>`;
+  }
+
+  protected handleListSelection(listElement: List, index: number, removal = false) {
+    const selected = (this.index as number[]).concat();
+    const indexWithinSelected = selected.indexOf(index);
+    const element = this.items[index];
+
+    if (indexWithinSelected === -1 && (removal === element.selected)) {
+      selected.push(index);
+      listElement.select(selected);
+    } else {
+      if (indexWithinSelected !== -1) {
+        selected.splice(indexWithinSelected, 1);
+      }
+
+      listElement.select(selected);
+    }
   }
 
   createAdapter(): MDCMenuAdapter {
@@ -158,7 +177,11 @@ export abstract class MenuBase extends BaseElement {
           return;
         }
 
-        element.classList.add(className);
+        if (className === 'mdc-menu-item--selected' && this.multi) {
+          this.handleListSelection(listElement, index);
+        } else {
+          element.classList.add(className);
+        }
       },
       removeClassFromElementAtIndex: (index, className) => {
         const listElement = this.listElement;
@@ -172,7 +195,11 @@ export abstract class MenuBase extends BaseElement {
           return;
         }
 
-        element.classList.remove(className);
+        if (className === 'mdc-menu-item--selected' && this.multi) {
+          this.handleListSelection(listElement, index, true);
+        } else {
+          element.classList.remove(className);
+        }
       },
       addAttributeToElementAtIndex: (index, attr, value) => {
         const listElement = this.listElement;
@@ -254,28 +281,18 @@ export abstract class MenuBase extends BaseElement {
 
         const elementAtIndex = listElement.items[index];
 
-        if (!elementAtIndex) {
+        if (!elementAtIndex || !elementAtIndex.group) {
           return -1;
         }
 
-        const groupEl = elementAtIndex.parentNode as HTMLElement;
-
-        if (!isNodeElement(groupEl) &&
-            !groupEl.hasAttribute('mwc-menu-group')) {
-          return -1;
+        for (let i = 0; i < listElement.items.length; i++) {
+          const current = listElement.items[i];
+          if (current.selected && current.group === elementAtIndex.group) {
+            return i;
+          }
         }
 
-        const selectedItemEl =
-            groupEl.querySelector('[mwc-list-item][selected]') as ListItemBase |
-            null;
-
-        if (!selectedItemEl) {
-          return -1;
-        }
-
-        const elements = listElement.items;
-
-        return elements.indexOf(selectedItemEl);
+        return -1;
       },
       isSelectableItemAtIndex: (index) => {
         const listElement = this.listElement;
@@ -290,14 +307,7 @@ export abstract class MenuBase extends BaseElement {
           return false;
         }
 
-        const groupEl = elementAtIndex.parentNode as HTMLElement;
-
-        if (!isNodeElement(groupEl) &&
-            !groupEl.hasAttribute('mwc-menu-group')) {
-          return false;
-        } else {
-          return true;
-        }
+        return elementAtIndex.hasAttribute('group');
       },
     };
   }
@@ -337,7 +347,7 @@ export abstract class MenuBase extends BaseElement {
     }
   }
 
-  select(index: number) {
+  select(index: number|number[]) {
     const listElement = this.listElement;
 
     if (listElement) {

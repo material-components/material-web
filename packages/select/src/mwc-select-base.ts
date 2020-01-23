@@ -212,7 +212,7 @@ export abstract class SelectBase extends FormElement {
           return null;
         }
 
-        return menuElement.selected;
+        return menuElement.selected as ListItemBase | null;
       },
       hasLabel: () => {
         return !!this.label;

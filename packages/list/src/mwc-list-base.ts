@@ -26,6 +26,43 @@ import {ListItemBase, RequestSelectedDetail} from './mwc-list-item-base';
 
 export {MDCListIndex} from '@material/list/types';
 
+const findIndexDiff = (old: number[], newArr: number[]): IndexDiff => {
+  const diff: IndexDiff = {new: [], old: []};
+  const oldSorted = old.sort();
+  const newSorted = newArr.sort();
+
+  let i = 0;
+  let j = 0;
+  while (i < oldSorted.length || j < newSorted.length) {
+    const oldVal = oldSorted[i];
+    const newVal = newSorted[j];
+
+    if (oldVal === newVal) {
+      i++;
+      j++;
+      continue;
+    }
+
+    if (oldVal !== undefined && (newVal === undefined || oldVal < newVal)) {
+      diff.old.push(oldVal);
+      i++;
+      continue;
+    }
+
+    if (newVal !== undefined && (oldVal === undefined || newVal < oldVal)) {
+      diff.new.push(newVal);
+      j++;
+      continue;
+    }
+  }
+
+  return diff;
+};
+
+interface IndexDiff {
+  new: number[];
+  old: number[];
+}
 export abstract class ListBase extends BaseElement {
   protected mdcFoundation!: MDCListFoundation;
 
@@ -53,6 +90,13 @@ export abstract class ListBase extends BaseElement {
 
   @property({type: Boolean})
   @observer(function(this: ListBase, value: boolean) {
+    ((this.mdcFoundation as unknown) as {isCheckboxList_: boolean}).isCheckboxList_ = value;
+    this.layout();
+  })
+  multi = false;
+
+  @property({type: Boolean})
+  @observer(function(this: ListBase, value: boolean) {
     if (this.mdcFoundation) {
       this.mdcFoundation.setWrapFocus(!value);
     }
@@ -66,7 +110,6 @@ export abstract class ListBase extends BaseElement {
   itemRoles: string|null = null;
 
   @property({type: String}) innerRole: string|null = null;
-
 
   protected previousTabindex: Element|null = null;
 
@@ -140,7 +183,7 @@ export abstract class ListBase extends BaseElement {
     });
 
     if (selectedIndicies.length) {
-      const index = selectedIndicies.length === 1 ? selectedIndicies[0] :
+      const index = selectedIndicies.length === 1 && !this.multi ? selectedIndicies[0] :
                                                     selectedIndicies;
       this.select(index);
     }
@@ -349,7 +392,7 @@ export abstract class ListBase extends BaseElement {
           this.itemRoles = 'checkbox';
         }
 
-        return isChecklist;
+        return isChecklist || this.multi;
       },
       hasRadioAtIndex: (index) => {
         const element = this.items[index];
@@ -421,14 +464,20 @@ export abstract class ListBase extends BaseElement {
       return;
     }
 
+    const previousWasArray = !Number.isInteger(this.index as number);
+    const newIsArray = !Number.isInteger(index as number);
+    const arrayPrev = previousWasArray ? this.index as number[] : [this.index as number];
+    const arrayNew = newIsArray ? index as number[] : [index as number];
+    const diff: IndexDiff = findIndexDiff(arrayPrev, arrayNew);
+
     this.mdcFoundation.setSelectedIndex(index);
 
-    if (Number.isInteger(index as number)) {
-      this.selectUi(index as number);
-    } else {
-      for (const i of index as number[]) {
-        this.selectUi(i);
-      }
+    for (const old of diff.old) {
+      this.deselectUi(old);
+    }
+
+    for (const newVal of diff.new) {
+      this.selectUi(newVal);
     }
 
     const selectedEvInit = {
@@ -448,19 +497,15 @@ export abstract class ListBase extends BaseElement {
   onListItemConnected(e) {
     const target = e.target as ListItemBase;
 
-    if (this.items.indexOf(target) === -1) {
-      this.updateItems();
-    }
-
-    this.layout(false);
+    this.layout(this.items.indexOf(target) === -1);
   }
 
   layout(updateItems = true) {
+    this.mdcFoundation.layout();
+
     if (updateItems) {
       this.updateItems();
     }
-
-    this.mdcFoundation.layout();
     const first = this.items[0];
 
     if (first) {

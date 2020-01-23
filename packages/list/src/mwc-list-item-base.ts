@@ -33,6 +33,7 @@ export class ListItemBase extends LitElement {
   @query('slot') protected slotElement!: HTMLSlotElement|null;
 
   @property({type: String}) value = '';
+  @property({type: String, reflect: true}) group: string|null = null;
   @property({type: Number, reflect: true}) tabindex = -1;
   @property({type: Boolean, reflect: true}) disabled = false;
   @property({type: Boolean, reflect: true}) twoline = false;

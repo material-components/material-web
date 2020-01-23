@@ -20,6 +20,7 @@ import '@material/mwc-radio';
 import {observer} from '@material/mwc-base/observer';
 import {Radio} from '@material/mwc-radio';
 import {html, property, query} from 'lit-element';
+import {ifDefined} from 'lit-html/directives/if-defined';
 import {classMap} from 'lit-html/directives/class-map';
 
 import {GraphicType, ListItemBase, RequestSelectedDetail} from './mwc-list-item-base';
@@ -41,8 +42,6 @@ export class RadioListItemBase extends ListItemBase {
   })
   selected = false;
 
-  @property({type: String}) group = '';
-
   render() {
     const radioClasses = {
       'mdc-list-item__graphic': this.left,
@@ -61,7 +60,7 @@ export class RadioListItemBase extends ListItemBase {
       <mwc-radio
           class=${classMap(radioClasses)}
           tabindex=${this.tabindex}
-          name=${this.group}
+          name=${ifDefined(this.group === null ? undefined : this.group)}
           .checked=${this.selected}
           ?disabled=${this.disabled}
           @checked=${this.onChecked}>
