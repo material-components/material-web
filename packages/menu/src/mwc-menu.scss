@@ -16,5 +16,5 @@ limitations under the License.
 */
 
 mwc-list ::slotted(*) {
-  height: 48px;
+  height: var(--mdc-menu-item-height, 48px);
 }

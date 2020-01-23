@@ -1,6 +1,6 @@
 /**
 @license
-Copyright 2020 Google Inc. All Rights Reserved.
+Copyright 2019 Google Inc. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,19 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {customElement} from 'lit-element';
-
-import {style} from './mwc-list-item-css.js';
-import {RadioListItemBase} from './mwc-radio-list-item-base.js';
-import {style as controlStyle} from './mwc-control-list-item-css.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'mwc-radio-list-item': RadioListItem;
-  }
+:host(:not([twoline])) {
+  height: 56px;
 }
 
-@customElement('mwc-radio-list-item')
-export class RadioListItem extends RadioListItemBase {
-  static styles = [style, controlStyle];
+:host(:not([left])) .mdc-list-item__meta {
+  height: 40px;
+  width: 40px;
 }

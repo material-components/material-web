@@ -19,6 +19,7 @@ import {customElement} from 'lit-element';
 
 import {CheckListItemBase} from './mwc-check-list-item-base.js';
 import {style} from './mwc-list-item-css.js';
+import {style as controlStyle} from './mwc-control-list-item-css.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -28,5 +29,5 @@ declare global {
 
 @customElement('mwc-check-list-item')
 export class CheckListItem extends CheckListItemBase {
-  static styles = style;
+  static styles = [style, controlStyle];
 }
