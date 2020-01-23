@@ -39,7 +39,7 @@ header > a {
   align-items: center;
 }
 
-mwc-icon {
+header mwc-icon {
   margin: 0 16px;
 }
 

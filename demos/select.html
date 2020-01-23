@@ -18,9 +18,18 @@ limitations under the License.
 <html>
 <head>
   <title>select demo</title>
+  <script>
+    delete Document.prototype.adoptedStyleSheets;
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script type="module" src="../node_modules/@material/mwc-select/mwc-select.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-list/mwc-list-item.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-list/mwc-check-list-item.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-list/mwc-radio-list-item.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-checkbox/mwc-checkbox.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-menu/mwc-menu-surface.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-menu/mwc-menu.js"></script>
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
   <link rel="stylesheet" href="demo-component.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
@@ -37,6 +46,10 @@ limitations under the License.
       right: calc(100vw - 100% + 16px);
     }
 
+    [slot="graphic"].material-icons {
+      background-color: gray;
+      color: white;
+    }
   </style>
 </head>
 <body class="unresolved">
@@ -45,34 +58,227 @@ limitations under the License.
     <span>Select</span></a>
   </header>
 
+
   <main>
+    <button id="toggleOpen">toggle surface</button>
+    <div>
+      <mwc-menu-surface id="surface">
+        <div>HELLO!!!</div>
+        <div>ALKDJFL;KASDHGIABUEGIUABBJKFLHASDKJHFLKJSADH</div>
+        <div>HELLO!!!</div>
+        <div>HELLO!!!</div>
+        <div>HELLO!!!</div>
+        <div>HELLO!!!</div>
+        <button>Focusable!</button>
+      </mwc-menu-surface>
+    </div>
+
+
+    <button id="toggleMenu">toggle menu</button>
+    <mwc-menu id="menu">
+      <mwc-list-item selected value="" aria-selected="true"></mwc-list-item>
+      <mwc-list-item value="grains">
+        Bread, Cereal, Rice, and Pasta
+      </mwc-list-item>
+      <mwc-list-item value="vegetables">
+        Vegetables
+      </mwc-list-item>
+      <mwc-list-item value="fruit">
+        Fruit
+      </mwc-list-item>
+    </mwc-menu>
+
+    <mwc-list itemRoles="option">
+      <mwc-list-item value="">
+        <button>asdf</button>
+        <mwc-icon slot="icon">draft</mwc-icon>
+      </mwc-list-item>
+      <mwc-list-item value="grains">
+        <div>Bread, Cereal, Rice, and Pasta</div>
+        <button>asdf</button>
+      </mwc-list-item>
+      <li divider></li>
+      <mwc-list-item value="vegetables">
+        Vegetables
+        <button>asdf</button>
+      </mwc-list-item>
+      <mwc-list-item value="fruit">
+        Fruit
+        <button>asdf</button>
+      </mwc-list-item>
+    </mwc-list>
+
+    <mwc-list activatable>
+      <li divider></li>
+      <mwc-list-item value="vegetables" hasMeta>
+        <img src="jory.jpeg" slot="graphic" class="material-icons">
+        Vegetables
+        <img src="jory.jpeg" slot="meta" class="material-icons">
+      </mwc-list-item>
+      <li divider></li>
+      <mwc-list-item value="vegetables" graphic="avatar" hasMeta>
+        <img src="jory.jpeg" slot="graphic" class="material-icons">
+        Vegetables
+        <img src="jory.jpeg" slot="meta" class="material-icons">
+      </mwc-list-item>
+      <li divider></li>
+      <mwc-list-item value="vegetables" graphic="avatar" hasMeta>
+        <span slot="graphic" class="material-icons">folder</span>
+        Vegetables
+        <span slot="meta" class="material-icons">info</span>
+      </mwc-list-item>
+      <li divider></li>
+      <mwc-list-item value="fruit" graphic="icon" hasMeta>
+        <span slot="graphic" class="material-icons">folder</span>
+        Fruit
+        <mwc-icon slot="meta">menu</mwc-icon>
+      </mwc-list-item>
+      <li divider></li>
+      <mwc-radio-list-item group="b" value="fruit" hasMeta left>
+        <div slot="meta" class="material-icons">folder</div>
+        Fruit
+        <button>asdf</button>
+      </mwc-radio-list-item>
+      <li divider></li>
+      <mwc-list-item value="fruit" graphic="medium" hasMeta isImage>
+        <img src="jory.jpeg" slot="graphic" class="material-icons">
+        Fruit
+        <img src="jory.jpeg" slot="meta" class="material-icons">
+      </mwc-list-item>
+      <li divider></li>
+      <mwc-list-item value="fruit" graphic="large" hasMeta isImage>
+        <img src="jory.jpeg" slot="graphic" class="material-icons">
+        Fruit
+        <img src="jory.jpeg" slot="meta" class="material-icons">
+      </mwc-list-item>
+      <li divider></li>
+      <mwc-list-item value="fruit" graphic="icon" hasMeta twoline>
+        <span slot="graphic" class="material-icons">folder</span>
+        <span>Fruit</span>
+        <span slot="secondary">second</span>
+        <mwc-icon slot="meta">menu</mwc-icon>
+      </mwc-list-item>
+      <li divider></li>
+      <mwc-list-item value="fruit" graphic="avatar" hasMeta twoline>
+        <span slot="graphic" class="material-icons">folder</span>
+        <span>Fruit</span>
+        <span slot="secondary">second</span>
+        <mwc-icon slot="meta">menu</mwc-icon>
+      </mwc-list-item>
+      <li divider></li>
+      <mwc-list-item value="fruit" graphic="medium" hasMeta twoline>
+        <span slot="graphic" class="material-icons">folder</span>
+        <span>Fruit</span>
+        <span slot="secondary">second</span>
+        <mwc-icon slot="meta">menu</mwc-icon>
+      </mwc-list-item>
+      <li divider></li>
+      <mwc-list-item value="fruit" graphic="large" hasMeta twoline>
+        <span slot="graphic" class="material-icons">folder</span>
+        <span>Fruit</span>
+        <span slot="secondary">second</span>
+        <mwc-icon slot="meta">menu</mwc-icon>
+      </mwc-list-item>
+      <li divider></li>
+    </mwc-list>
+
+    <mwc-list itemRoles="option" noninteractive>
+      <mwc-list-item value="">
+      </mwc-list-item>
+      <mwc-list-item value="grains">
+        <div>Bread, Cereal, Rice, and Pasta</div>
+      </mwc-list-item>
+      <li divider></li>
+      <mwc-list-item value="vegetables">
+        Vegetables
+      </mwc-list-item>
+      <li divider></li>
+      <mwc-list-item value="fruit" graphic="avatar" hasMeta>
+        <span slot="graphic" class="material-icons">folder</span>
+        Fruit
+        <span slot="meta" class="material-icons">info</span>
+      </mwc-list-item>
+    </mwc-list>
+
+    <mwc-list>
+      <mwc-check-list-item value="">
+        <button>asdf</button>
+        <mwc-icon slot="icon">draft</mwc-icon>
+      </mwc-check-list-item>
+      <mwc-check-list-item value="grains" disabled>
+        <div>Bread, Cereal, Rice, and Pasta</div>
+        <button>asdf</button>
+      </mwc-check-list-item>
+      <mwc-check-list-item value="vegetables">
+        Vegetables
+        <button>asdf</button>
+      </mwc-check-list-item>
+      <mwc-check-list-item value="fruit" grraphic="icon" hasMeta>
+        <span slot="graphic" class="material-icons">folder</span>
+        Fruit
+        <button>asdf</button>
+        <span slot="meta" class="material-icons">info</span>
+      </mwc-check-list-item>
+    </mwc-list>
+
+    <mwc-list>
+      <mwc-radio-list-item group="a" value="">
+        <button>asdf</button>
+        <mwc-icon slot="icon">draft</mwc-icon>
+      </mwc-radio-list-item>
+      <mwc-radio-list-item group="a" value="grains">
+        <div>Bread, Cereal, Rice, and Pasta</div>
+        <button>asdf</button>
+      </mwc-radio-list-item>
+      <mwc-radio-list-item group="b" value="vegetables">
+        Vegetables
+        <button>asdf</button>
+      </mwc-radio-list-item>
+      <mwc-radio-list-item group="b" value="fruit" hasMeta left>
+        <div slot="meta" class="material-icons">folder</div>
+        Fruit
+        <button>asdf</button>
+      </mwc-radio-list-item>
+    </mwc-list>
+
     <mwc-select label="food">
-      <li role="option" class="mdc-list-item mdc-list-item--selected" data-value="" aria-selected="true"></li>
-      <li role="option" class="mdc-list-item" data-value="grains">
+      <mwc-list-item selected value=""></mwc-list-item>
+      <mwc-list-item value="grains">
         Bread, Cereal, Rice, and Pasta
-      </li>
-      <li role="option" class="mdc-list-item" data-value="vegetables">
+      </mwc-list-item>
+      <mwc-list-item value="vegetables">
         Vegetables
-      </li>
-      <li role="option" class="mdc-list-item" data-value="fruit">
+      </mwc-list-item>
+      <mwc-list-item value="fruit">
         Fruit
-      </li>
+      </mwc-list-item>
     </mwc-select>
-    <mwc-select outlined enhanced label="food">
-      <li role="option" class="mdc-list-item mdc-list-item--selected" data-value="" aria-selected="true"></li>
-      <li role="option" class="mdc-list-item" data-value="grains">
+    <mwc-select outlined label="food">
+      <mwc-list-item value=""></mwc-list-item>
+      <mwc-list-item value="grains" selected>
         Bread, Cereal, Rice, and Pasta
-      </li>
-      <li role="option" class="mdc-list-item" data-value="vegetables">
+      </mwc-list-item>
+      <mwc-list-item value="vegetables">
         Vegetables
-      </li>
-      <li role="option" class="mdc-list-item" data-value="fruit">
+      </mwc-list-item>
+      <mwc-list-item value="fruit">
         Fruit
-      </li>
+      </mwc-list-item>
     </mwc-select>
   </main>
   <script>
-    addEventListener('load', function() { document.body.classList.remove('unresolved'); });
+    addEventListener('load', () => document.body.classList.remove('unresolved'));
+    const button = document.querySelector('#toggleOpen');
+    const mButton = document.querySelector('#toggleMenu');
+    const surface = document.querySelector('#surface');
+    const menu = document.querySelector('#menu');
+    button.onclick = () => {
+      surface.open = !surface.open;
+    }
+
+    mButton.onclick = () => {
+      menu.open = !menu.open;
+    }
   </script>
 </body>
 </html>

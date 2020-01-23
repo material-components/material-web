@@ -121,6 +121,7 @@ export abstract class SelectBase extends FormElement {
       <div class="mdc-select ${classMap(classes)}">
         <input class=".formElement" .value=${this.value} hidden>
         ${this.icon ? this.renderIcon(this.icon) : ''}
+        <!-- @ts-ignore -->
         <div class="mdc-select__anchor" .anchoring=${menuAnchor('mwc-menu')}>
           <i class="mdc-select__dropdown-icon"></i>
           <!-- @ts-ignore -->
