@@ -24,6 +24,8 @@ export interface RequestSelectedDetail {
   hasCheckboxOrRadio: boolean;
 }
 
+export type GraphicType = 'avatar'|'icon'|'medium'|'large'|'control'|null;
+
 /**
  * @emits request-selected
  */
@@ -35,6 +37,8 @@ export class ListItemBase extends LitElement {
   @property({type: Boolean, reflect: true}) disabled = false;
   @property({type: Boolean, reflect: true}) twoline = false;
   @property({type: Boolean, reflect: true}) activated = false;
+  @property({type: String, reflect: true}) graphic: GraphicType = null;
+  @property({type: Boolean}) hasMeta = false;
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: ListItemBase, value: boolean) {
@@ -56,7 +60,28 @@ export class ListItemBase extends LitElement {
   }
 
   render() {
-    return this.renderText();
+    const text = this.renderText();
+    const graphic = this.graphic ? this.renderGraphic() : html``;
+    const meta = this.hasMeta ? this.renderMeta() : html``;
+
+    return html`
+      ${graphic}
+      ${text}
+      ${meta}`;
+  }
+
+  protected renderGraphic() {
+    return html`
+      <span class="mdc-list-item__graphic material-icons">
+        <slot name="graphic"></slot>
+      </span>`;
+  }
+
+  protected renderMeta() {
+    return html`
+      <span class="mdc-list-item__meta material-icons">
+        <slot name="meta"></slot>
+      </span>`;
   }
 
   protected renderText() {

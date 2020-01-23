@@ -26,15 +26,18 @@ $item-primary-text-baseline-height: 32px;
 $item-secondary-text-baseline-height: 20px;
 $dense-item-primary-text-baseline-height: 24px;
 
-@mixin graphic-size_($size) {
-  $text-offset: 72px;
-  $side-padding: $mdc-list-side-padding;
-  $margin-value: calc($text-offset - $side-padding - $size);
+@mixin graphic-size_($width, $height: $width) {
+  width: $width;
+  height: $height;
 
-  @include mdc-rtl-reflexive-box(margin, right, $margin-value, "&");
+  ::slotted(*) {
+    line-height: $height;
+  }
 
-  width: $size;
-  height: $size;
+  ::slotted(.material-icons),
+  ::slotted(mwc-icon) {
+    line-height: $height !important;
+  }
 }
 
 :host {
@@ -71,34 +74,48 @@ $dense-item-primary-text-baseline-height: 24px;
 
 .mdc-list-item__graphic {
   @include mdc-feature-targets($feat-structure) {
-    @include graphic-size_(var(--mdc-list-item-graphic-size, 24px));
-
     flex-shrink: 0;
     align-items: center;
     justify-content: center;
     fill: currentColor;
   }
-}
 
-// Extra specificity is to override .material-icons display style if used in
-// conjunction with mdc-list-item__graphic
-// stylelint-disable plugin/selector-bem-pattern
-.mdc-list-item__graphic {
   @include mdc-feature-targets($feat-structure) {
     display: inline-flex;
+  }
+
+  ::slotted(*) {
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    fill: currentColor;
+    width: 100%;
+    height: 100%;
+    text-align: center;
   }
 }
 // stylelint-enable plugin/selector-bem-pattern
 
 .mdc-list-item__meta {
+  @include graphic-size_(var(--mdc-list-item-meta-size, 24px));
+
   // stylelint-disable selector-class-pattern
-  &:not(.material-icons) {
+  ::slotted(:not(.material-icons):not(mwc-icon)) {
     @include mdc-typography(caption, $query);
   }
   // stylelint-enable selector-class-pattern
 
   @include mdc-feature-targets($feat-structure) {
     @include mdc-rtl-reflexive-property(margin, auto, 0, ":host");
+  }
+
+  @include mdc-feature-targets($feat-color) {
+    @include mdc-theme-prop(color, text-hint-on-background);
+  }
+
+  ::slotted(*) {
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -381,14 +398,49 @@ $press-opacity-primary: mdc-states-opacity($states-color-primary, press);
   }
 }
 
-.mdc-list-item__meta ::slotted(*) {
-  @include mdc-feature-targets($feat-color) {
-    @include mdc-theme-prop(color, text-hint-on-background);
-  }
-}
-
 .mdc-list-group__subheader ::slotted(*) {
   @include mdc-feature-targets($feat-color) {
     @include mdc-theme-prop(color, text-primary-on-background);
   }
+}
+
+:host([graphic="avatar"]) {
+  .mdc-list-item__graphic {
+    @include mdc-feature-targets($feat-structure) {
+      @include graphic-size_(var(--mdc-list-item-graphic-size, 40px));
+      ::slotted(*) {
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+:host([graphic="avatar"],[graphic="medium"],[graphic="large"],[graphic="control"]) .mdc-list-item__graphic {
+  @include mdc-rtl-reflexive-box(margin, right, 16px, ":host");
+}
+
+:host([graphic="icon"]) .mdc-list-item__graphic {
+  @include mdc-rtl-reflexive-box(margin, right, 32px, ":host");
+}
+
+:host([graphic="avatar"]:not([twoLine])),
+:host([graphic="icon"]:not([twoLine])) {
+  height: 56px;
+}
+
+:host([graphic="medium"]:not([twoLine])),
+:host([graphic="large"]:not([twoLine])) {
+  height: 72px;
+}
+
+:host([graphic="medium"]) .mdc-list-item__graphic {
+  @include graphic-size_(var(--mdc-list-item-graphic-size, 56px));
+}
+
+:host([graphic="large"]) .mdc-list-item__graphic {
+  @include graphic-size_(100px, var(--mdc-list-item-graphic-size, 56px));
+}
+
+:host([graphic="large"]) {
+  padding-left: 0px;
 }

@@ -119,20 +119,6 @@ $divider-color: if(
   }
 }
 
-.mdc-list--avatar-list ::slotted([mwc-list-item]) {
-  @include mdc-feature-targets($feat-structure) {
-    height: 56px;
-  }
-}
-
-.mdc-list--avatar-list ::slotted([mwc-list]) {
-  @include mdc-feature-targets($feat-structure) {
-    --mdc-list-item-graphic-size: 40px;
-
-    border-radius: 50%;
-  }
-}
-
 .mdc-list--two-line.mdc-list--dense ::slotted([mwc-list-item]),
 .mdc-list--avatar-list.mdc-list--dense ::slotted([mwc-list-item]) {
   @include mdc-feature-targets($feat-structure) {
