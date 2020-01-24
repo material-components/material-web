@@ -25,7 +25,7 @@ import MDCListFoundation, {isNumberSet} from './mwc-list-foundation';
 import {MWCListIndex} from './mwc-list-foundation';
 import {ListItemBase, RequestSelectedDetail} from './mwc-list-item-base';
 
-export {MWCListIndex, isNumberSet, createSetFromIndex} from './mwc-list-foundation';
+export {createSetFromIndex, isNumberSet, MWCListIndex} from './mwc-list-foundation';
 
 const isListItem = (element: Element): element is ListItemBase => {
   return element.hasAttribute('mwc-list-item');
@@ -155,7 +155,8 @@ export abstract class ListBase extends BaseElement {
     if (this.multi) {
       this.select(selectedIndices);
     } else {
-      const index = selectedIndices.size ? selectedIndices.entries().next().value[1] : -1;
+      const index =
+          selectedIndices.size ? selectedIndices.entries().next().value[1] : -1;
       this.select(index);
     }
   }
