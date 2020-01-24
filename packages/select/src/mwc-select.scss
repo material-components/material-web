@@ -60,7 +60,7 @@ mwc-notched-outline {
 
     &:not(.mdc-select--invalid):not(.mdc-select--focused) {
       .mdc-floating-label, .mdc-floating-label::after {
-        color: var(--mdc-select-label-ink-color, #{vars.$focused-label-color});
+        color: var(--mdc-select-label-ink-color, #{vars.$label-color});
       }
     }
 
