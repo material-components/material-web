@@ -245,7 +245,7 @@ export abstract class ListBase extends BaseElement {
 
       const selected = evt.detail.selected;
 
-      this.mdcFoundation.handleClick(index, selected);
+      this.mdcFoundation.handleSingleSelection(index, selected);
     }
   }
 

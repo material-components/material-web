@@ -283,7 +283,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
   /**
    * Click handler for the list.
    */
-  handleClick(index: number, force?: boolean) {
+  handleSingleSelection(index: number, force?: boolean) {
     if (index === numbers.UNSET_INDEX) {
       return;
     }
