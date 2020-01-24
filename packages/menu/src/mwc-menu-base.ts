@@ -22,7 +22,7 @@ import {MDCMenuAdapter} from '@material/menu/adapter';
 import {DefaultFocusState} from '@material/menu/constants';
 import MDCMenuFoundation from '@material/menu/foundation.js';
 import {BaseElement, observer} from '@material/mwc-base/base-element.js';
-import {List, MDCListIndex} from '@material/mwc-list';
+import {List, MWCListIndex} from '@material/mwc-list';
 import {ListItemBase} from '@material/mwc-list/src/mwc-list-item-base';
 import {html, property, query} from 'lit-element';
 
@@ -97,7 +97,7 @@ export abstract class MenuBase extends BaseElement {
     return [];
   }
 
-  get index(): MDCListIndex {
+  get index(): MWCListIndex {
     const listElement = this.listElement;
 
     if (listElement) {
@@ -135,6 +135,7 @@ export abstract class MenuBase extends BaseElement {
           @keydown=${this.onKeydown}
           role=${this.role}>
           <mwc-list
+            selectable
             .multi=${this.multi}
             class="mdc-list"
             .itemRoles=${itemRoles}
@@ -144,24 +145,6 @@ export abstract class MenuBase extends BaseElement {
           <slot></slot>
         </mwc-list>
       </mwc-menu-surface>`;
-  }
-
-  protected handleListSelection(
-      listElement: List, index: number, removal = false) {
-    const selected = (this.index as number[]).concat();
-    const indexWithinSelected = selected.indexOf(index);
-    const element = this.items[index];
-
-    if (indexWithinSelected === -1 && (removal === element.selected)) {
-      selected.push(index);
-      listElement.select(selected);
-    } else {
-      if (indexWithinSelected !== -1) {
-        selected.splice(indexWithinSelected, 1);
-      }
-
-      listElement.select(selected);
-    }
   }
 
   createAdapter(): MDCMenuAdapter {
@@ -178,8 +161,10 @@ export abstract class MenuBase extends BaseElement {
           return;
         }
 
-        if (className === 'mdc-menu-item--selected' && this.multi) {
-          this.handleListSelection(listElement, index);
+        if (className === 'mdc-menu-item--selected') {
+          if (this.multi) {
+            listElement.toggle(index, true);
+          }
         } else {
           element.classList.add(className);
         }
@@ -196,8 +181,10 @@ export abstract class MenuBase extends BaseElement {
           return;
         }
 
-        if (className === 'mdc-menu-item--selected' && this.multi) {
-          this.handleListSelection(listElement, index, true);
+        if (className === 'mdc-menu-item--selected') {
+          if (this.multi) {
+            listElement.toggle(index, false);
+          }
         } else {
           element.classList.remove(className);
         }
@@ -287,6 +274,10 @@ export abstract class MenuBase extends BaseElement {
         }
 
         for (let i = 0; i < listElement.items.length; i++) {
+          if (i === index) {
+            continue;
+          }
+
           const current = listElement.items[i];
           if (current.selected && current.group === elementAtIndex.group) {
             return i;
@@ -348,7 +339,7 @@ export abstract class MenuBase extends BaseElement {
     }
   }
 
-  select(index: number|number[]) {
+  select(index: MWCListIndex) {
     const listElement = this.listElement;
 
     if (listElement) {

@@ -23,13 +23,21 @@ import {html, property, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
 
-import {GraphicType, ListItemBase, RequestSelectedDetail} from './mwc-list-item-base';
+import {GraphicType, ListItemBase} from './mwc-list-item-base';
 
 export class RadioListItemBase extends ListItemBase {
   @query('slot') protected slotElement!: HTMLSlotElement|null;
   @query('mwc-radio') protected radioElement!: Radio;
 
-  @property({type: Boolean, reflect: true}) disabled = false;
+  @property({type: Boolean, reflect: true})
+  @observer(function(this: ListItemBase, value: boolean) {
+    if (value) {
+      this.setAttribute('aria-disabled', 'true');
+    } else {
+      this.setAttribute('aria-disabled', 'false');
+    }
+  })
+  disabled = false;
   @property({type: Boolean}) left = false;
   @property({type: String, reflect: true}) graphic: GraphicType = 'control';
   @property({type: Boolean, reflect: false})
@@ -71,21 +79,18 @@ export class RadioListItemBase extends ListItemBase {
 
 
   protected onClick() {
-    const customEv =
-        new CustomEvent<RequestSelectedDetail>('request-selected', {
-          bubbles: true,
-          composed: true,
-          detail: {hasCheckboxOrRadio: true, selected: !this.selected}
-        });
-
-    this.dispatchEvent(customEv);
+    this.fireRequestDetail(true, !this.selected);
   }
 
   protected onChecked(evt: Event) {
     const radio = evt.target as Radio;
 
-    // needed to reconcile radio unchecking itself. List doesn't seem to care
-    this.selected = radio.checked;
+    if (this.selected !== radio.checked) {
+      // needed to reconcile radio unchecking itself. List doesn't seem to care
+      this.selected = radio.checked;
+
+      this.fireRequestDetail(false, this.selected);
+    }
   }
 
   connectedCallback() {

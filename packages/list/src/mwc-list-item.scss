@@ -199,7 +199,7 @@ $press-opacity: mdc-states-opacity($states-color, press);
   }
 }
 
-:host([disabled],[nonselectable]) {
+:host([disabled],[noninteractive]) {
   cursor: default;
   pointer-events: none;
 }

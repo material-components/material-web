@@ -15,56 +15,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {MDCListAdapter} from '@material/list/adapter';
-import MDCListFoundation from '@material/list/foundation.js';
 import {BaseElement, observer} from '@material/mwc-base/base-element.js';
 import {deepActiveElementPath, doesElementContainFocus, findAssignedElement, isNodeElement} from '@material/mwc-base/utils';
 import {html, property, query} from 'lit-element';
 import {ifDefined} from 'lit-html/directives/if-defined';
 
+import {MDCListAdapter} from './mwc-list-adapter';
+import MDCListFoundation, {isNumberSet} from './mwc-list-foundation';
+import {MWCListIndex} from './mwc-list-foundation';
 import {ListItemBase, RequestSelectedDetail} from './mwc-list-item-base';
 
-export {MDCListIndex} from '@material/list/types';
+export {MWCListIndex, isNumberSet, createSetFromIndex} from './mwc-list-foundation';
 
-const findIndexDiff = (old: number[], newArr: number[]): IndexDiff => {
-  const diff: IndexDiff = {new: [], old: []};
-  const oldSorted = old.sort();
-  const newSorted = newArr.sort();
-
-  let i = 0;
-  let j = 0;
-  while (i < oldSorted.length || j < newSorted.length) {
-    const oldVal = oldSorted[i];
-    const newVal = newSorted[j];
-
-    if (oldVal === newVal) {
-      i++;
-      j++;
-      continue;
-    }
-
-    if (oldVal !== undefined && (newVal === undefined || oldVal < newVal)) {
-      diff.old.push(oldVal);
-      i++;
-      continue;
-    }
-
-    if (newVal !== undefined && (oldVal === undefined || newVal < oldVal)) {
-      diff.new.push(newVal);
-      j++;
-      continue;
-    }
-  }
-
-  return diff;
+const isListItem = (element: Element): element is ListItemBase => {
+  return element.hasAttribute('mwc-list-item');
 };
 
-interface IndexDiff {
-  new: number[];
-  old: number[];
-}
 export abstract class ListBase extends BaseElement {
   protected mdcFoundation!: MDCListFoundation;
+  protected mdcAdapter: MDCListAdapter|null = null;
 
   protected readonly mdcFoundationClass = MDCListFoundation;
 
@@ -75,7 +44,7 @@ export abstract class ListBase extends BaseElement {
   @property({type: Boolean})
   @observer(function(this: ListBase, value: boolean) {
     if (this.mdcFoundation) {
-      this.mdcFoundation.setSingleSelection(!value);
+      this.mdcFoundation.setSelectable(value);
     }
   })
   selectable = false;
@@ -89,11 +58,14 @@ export abstract class ListBase extends BaseElement {
   activatable = false;
 
   @property({type: Boolean})
-  @observer(function(this: ListBase, value: boolean) {
-    ((this.mdcFoundation as unknown) as {
-      isCheckboxList_: boolean;
-    }).isCheckboxList_ = value;
-    this.layout();
+  @observer(function(this: ListBase, newValue: boolean, oldValue: boolean) {
+    if (this.mdcFoundation) {
+      this.mdcFoundation.setMulti(newValue);
+    }
+
+    if (oldValue !== undefined) {
+      this.layout();
+    }
   })
   multi = false;
 
@@ -106,8 +78,10 @@ export abstract class ListBase extends BaseElement {
   wrapFocus = false;
 
   @property({type: String})
-  @observer(function(this: ListBase) {
-    this.updateItems();
+  @observer(function(this: ListBase, _newValue, oldValue: string|null) {
+    if (oldValue !== undefined) {
+      this.updateItems();
+    }
   })
   itemRoles: string|null = null;
 
@@ -136,8 +110,7 @@ export abstract class ListBase extends BaseElement {
     const slot = this.slotElement;
 
     if (slot) {
-      return slot.assignedNodes({flatten: true})
-                 .filter((node) => isNodeElement(node)) as Element[];
+      return slot.assignedNodes({flatten: true}).filter<Element>(isNodeElement);
     }
 
     return [];
@@ -151,26 +124,21 @@ export abstract class ListBase extends BaseElement {
 
   protected updateItems() {
     const nodes = this.assignedElements;
-    const listItems =
-        nodes
-            .map<Element|Element[]>((element) => {
-              if (element.hasAttribute('mwc-list-item')) {
-                return element;
-              }
 
-              if (element.hasAttribute('divider') &&
-                  !element.hasAttribute('role')) {
-                element.setAttribute('role', 'separator');
-              }
+    const listItems: ListItemBase[] = [];
 
-              return Array.from(element.querySelectorAll('[mwc-list-item]'));
-            })
-            .reduce<Element[]>((listItems, listItemResult) => {
-              return listItems.concat(listItemResult);
-            }, []);
+    for (const node of nodes) {
+      if (isListItem(node)) {
+        listItems.push(node);
+      }
 
-    this.items_ = listItems as ListItemBase[];
-    const selectedIndicies: number[] = [];
+      if (node.hasAttribute('divider') && !node.hasAttribute('role')) {
+        node.setAttribute('role', 'separator');
+      }
+    }
+
+    this.items_ = listItems;
+    const selectedIndices = new Set<number>();
 
     this.items_.forEach((item, index) => {
       if (this.itemRoles) {
@@ -180,14 +148,14 @@ export abstract class ListBase extends BaseElement {
       }
 
       if (item.selected) {
-        selectedIndicies.push(index);
+        selectedIndices.add(index);
       }
     });
 
-    if (selectedIndicies.length) {
-      const index = selectedIndicies.length === 1 && !this.multi ?
-          selectedIndicies[0] :
-          selectedIndicies;
+    if (this.multi) {
+      this.select(selectedIndices);
+    } else {
+      const index = selectedIndices.size ? selectedIndices.entries().next().value[1] : -1;
       this.select(index);
     }
   }
@@ -195,18 +163,24 @@ export abstract class ListBase extends BaseElement {
   get selected(): ListItemBase|ListItemBase[]|null {
     const index = this.index;
 
-    if (Number.isInteger(index as number)) {
+    if (!isNumberSet(index)) {
       if (index === -1) {
         return null;
       }
 
-      return this.items[index as number];
+      return this.items[index];
     }
 
-    return (index as number[]).map((i) => this.items[i]);
+    const selected: ListItemBase[] = [];
+
+    for (const entry of index) {
+      selected.push(this.items[entry]);
+    }
+
+    return selected;
   }
 
-  get index(): number|number[] {
+  get index(): MWCListIndex {
     if (this.mdcFoundation) {
       return this.mdcFoundation.getSelectedIndex();
     }
@@ -250,7 +224,7 @@ export abstract class ListBase extends BaseElement {
     if (this.mdcFoundation && this.mdcRoot) {
       const index = this.getIndexOfTarget(evt);
       const target = evt.target as Element;
-      const isRootListItem = target.hasAttribute('mwc-list-item');
+      const isRootListItem = isListItem(target);
       this.mdcFoundation.handleKeydown(evt, isRootListItem, index);
     }
   }
@@ -269,9 +243,9 @@ export abstract class ListBase extends BaseElement {
         return;
       }
 
-      const toggleCheckbox = evt.detail.hasCheckboxOrRadio;
+      const selected = evt.detail.selected;
 
-      this.mdcFoundation.handleClick(index, toggleCheckbox);
+      this.mdcFoundation.handleClick(index, selected);
     }
   }
 
@@ -279,11 +253,10 @@ export abstract class ListBase extends BaseElement {
     const elements = this.items;
     const path = evt.composedPath();
 
-    for (const pathItem of path) {
+    for (const pathItem of path as Node[]) {
       let index = -1;
-      if (isNodeElement(pathItem as Node) &&
-          (pathItem as HTMLElement).hasAttribute('mwc-list-item')) {
-        index = elements.indexOf(pathItem as ListItemBase);
+      if (isNodeElement(pathItem) && isListItem(pathItem)) {
+        index = elements.indexOf(pathItem);
       }
 
       if (index !== -1) {
@@ -295,7 +268,7 @@ export abstract class ListBase extends BaseElement {
   }
 
   createAdapter(): MDCListAdapter {
-    return {
+    this.mdcAdapter = {
       getListItemCount: () => {
         if (this.mdcRoot) {
           return this.items.length;
@@ -321,8 +294,8 @@ export abstract class ListBase extends BaseElement {
         for (let i = activeElementPath.length - 1; i >= 0; i--) {
           const activeItem = activeElementPath[i];
 
-          if (activeItem.hasAttribute('mwc-list-item')) {
-            return this.items.indexOf(activeItem as ListItemBase);
+          if (isListItem(activeItem)) {
+            return this.items.indexOf(activeItem);
           }
         }
 
@@ -348,76 +321,17 @@ export abstract class ListBase extends BaseElement {
           element.setAttribute(attr, val);
         }
       },
-      addClassForElementIndex: (index, className) => {
-        if (!this.mdcRoot) {
-          return;
-        }
-
-        const element = this.items[index];
-        if (element) {
-          if (className === 'mdc-list-item--selected') {
-            this.selectUi(index);
-          } else if (className === 'mdc-list-item--activated') {
-            this.selectUi(index, true);
-          } else {
-            element.classList.add(className);
-          }
-        }
-      },
-      removeClassForElementIndex: (index, className) => {
-        const element = this.items[index];
-
-        if (!element) {
-          this.remove;
-        }
-
-        element.classList.remove(className);
-
-        if (className === 'mdc-list-item--selected' ||
-            className === 'mdc-list-item--activated') {
-          this.deselectUi(index);
-        }
-      },
       focusItemAtIndex: (index) => {
         const element = this.items[index];
-        if (element && isNodeElement(element)) {
-          (element as HTMLElement).focus();
-        }
-      },
-      setTabIndexForListItemChildren: () => { /* Handled by list-item-base */ },
-      hasCheckboxAtIndex: (index) => {
-        const element = this.items[index];
-        const isChecklist =
-            element ? element.hasAttribute('mwc-check-list-item') : false;
-
-        if (isChecklist) {
-          this.innerRole = 'group';
-          this.itemRoles = 'checkbox';
-        }
-
-        return isChecklist || this.multi;
-      },
-      hasRadioAtIndex: (index) => {
-        const element = this.items[index];
-        const isRadioList =
-            element ? element.hasAttribute('mwc-radio-list-item') : false;
-
-        if (isRadioList) {
-          this.innerRole = 'radiogroup';
-          this.itemRoles = 'radio';
-        }
-
-        return isRadioList;
-      },
-      isCheckboxCheckedAtIndex: (index) => {
-        const element = this.items[index];
-        const hasCheckbox = element.hasAttribute('mwc-check-list-item');
-        return element ? hasCheckbox && element.selected : false;
-      },
-      setCheckedCheckboxOrRadioAtIndex: (index, isChecked) => {
-        const element = this.items[index];
         if (element) {
-          element.selected = isChecked;
+          element.focus();
+        }
+      },
+      setTabIndexForElementIndex: (index, value) => {
+        const item = this.items[index];
+
+        if (item) {
+          item.tabindex = value;
         }
       },
       notifyAction: (index) => {
@@ -434,16 +348,54 @@ export abstract class ListBase extends BaseElement {
         const root = mdcRoot.getRootNode() as unknown as DocumentOrShadowRoot;
         return root.activeElement === mdcRoot;
       },
-      listItemAtIndexHasClass: (index, className) => {
+      setDisabledStateForElementIndex: (index, value) => {
+        const item = this.items[index];
+
+        if (!item) {
+          return;
+        }
+
+        item.disabled = value;
+      },
+      getDisabledStateForElementIndex: (index) => {
         const item = this.items[index];
 
         if (!item) {
           return false;
         }
 
-        return item.classList.contains(className);
+        return item.disabled;
+      },
+      setSelectedStateForElementIndex: (index, value) => {
+        const item = this.items[index];
+
+        if (!item) {
+          return;
+        }
+
+        item.selected = value;
+      },
+      getSelectedStateForElementIndex: (index) => {
+        const item = this.items[index];
+
+        if (!item) {
+          return false;
+        }
+
+        return item.selected;
+      },
+      setActivatedStateForElementIndex: (index, value) => {
+        const item = this.items[index];
+
+        if (!item) {
+          return;
+        }
+
+        item.activated = value;
       },
     };
+
+    return this.mdcAdapter;
   }
 
   protected selectUi(index: number, activate = false) {
@@ -462,27 +414,12 @@ export abstract class ListBase extends BaseElement {
     }
   }
 
-  select(index: number|number[]) {
+  select(index: MWCListIndex) {
     if (!this.mdcFoundation) {
       return;
     }
 
-    const previousWasArray = !Number.isInteger(this.index as number);
-    const newIsArray = !Number.isInteger(index as number);
-    const arrayPrev =
-        previousWasArray ? this.index as number[] : [this.index as number];
-    const arrayNew = newIsArray ? index as number[] : [index as number];
-    const diff: IndexDiff = findIndexDiff(arrayPrev, arrayNew);
-
     this.mdcFoundation.setSelectedIndex(index);
-
-    for (const old of diff.old) {
-      this.deselectUi(old);
-    }
-
-    for (const newVal of diff.new) {
-      this.selectUi(newVal);
-    }
 
     const selectedEvInit = {
       bubbles: true,
@@ -490,23 +427,25 @@ export abstract class ListBase extends BaseElement {
       detail: {index},
     };
     const selectedEv =
-        new CustomEvent<{index: number | number[]}>('selected', selectedEvInit);
+        new CustomEvent<{index: MWCListIndex}>('selected', selectedEvInit);
     this.dispatchEvent(selectedEv);
+  }
+
+  toggle(index: number, force?: boolean) {
+    this.mdcFoundation.toggleMultiAtIndex(index, force);
   }
 
   onSlotChange() {
     this.layout();
   }
 
-  onListItemConnected(e) {
+  onListItemConnected(e: Event) {
     const target = e.target as ListItemBase;
 
     this.layout(this.items.indexOf(target) === -1);
   }
 
   layout(updateItems = true) {
-    this.mdcFoundation.layout();
-
     if (updateItems) {
       this.updateItems();
     }

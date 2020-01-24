@@ -26,7 +26,7 @@ import {matches} from '@material/dom/ponyfill';
  *
  * @param node Node to check
  */
-export const isNodeElement = (node: Node) => {
+export const isNodeElement = (node: Node): node is Element => {
   return node.nodeType === Node.ELEMENT_NODE;
 };
 

@@ -22,13 +22,21 @@ import {Checkbox} from '@material/mwc-checkbox';
 import {html, property, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
-import {GraphicType, ListItemBase, RequestSelectedDetail} from './mwc-list-item-base';
+import {GraphicType, ListItemBase} from './mwc-list-item-base';
 
 export class CheckListItemBase extends ListItemBase {
   @query('slot') protected slotElement!: HTMLSlotElement|null;
   @query('mwc-checkbox') protected checkboxElement!: Checkbox;
 
-  @property({type: Boolean, reflect: true}) disabled = false;
+  @property({type: Boolean, reflect: true})
+  @observer(function(this: ListItemBase, value: boolean) {
+    if (value) {
+      this.setAttribute('aria-disabled', 'true');
+    } else {
+      this.setAttribute('aria-disabled', 'false');
+    }
+  })
+  disabled = false;
   @property({type: Boolean}) left = false;
   @property({type: String, reflect: true}) graphic: GraphicType = 'control';
   @property({type: Boolean, reflect: false})
@@ -68,14 +76,7 @@ export class CheckListItemBase extends ListItemBase {
   }
 
   protected onClick() {
-    const customEv =
-        new CustomEvent<RequestSelectedDetail>('request-selected', {
-          bubbles: true,
-          composed: true,
-          detail: {hasCheckboxOrRadio: true, selected: !this.selected}
-        });
-
-    this.dispatchEvent(customEv);
+    this.fireRequestDetail(true, !this.selected);
   }
 
   connectedCallback() {

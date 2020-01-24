@@ -21,13 +21,13 @@ import {html, LitElement, property, query} from 'lit-element';
 
 export interface RequestSelectedDetail {
   selected: boolean;
-  hasCheckboxOrRadio: boolean;
+  isClick: boolean;
 }
 
 export type GraphicType = 'avatar'|'icon'|'medium'|'large'|'control'|null;
 
 /**
- * @emits request-selected
+ * @emits request-selected {RequestSelectedDetail}
  */
 export class ListItemBase extends LitElement {
   @query('slot') protected slotElement!: HTMLSlotElement|null;
@@ -35,7 +35,15 @@ export class ListItemBase extends LitElement {
   @property({type: String}) value = '';
   @property({type: String, reflect: true}) group: string|null = null;
   @property({type: Number, reflect: true}) tabindex = -1;
-  @property({type: Boolean, reflect: true}) disabled = false;
+  @property({type: Boolean, reflect: true})
+  @observer(function(this: ListItemBase, value: boolean) {
+    if (value) {
+      this.setAttribute('aria-disabled', 'true');
+    } else {
+      this.setAttribute('aria-disabled', 'false');
+    }
+  })
+  disabled = false;
   @property({type: Boolean, reflect: true}) twoline = false;
   @property({type: Boolean, reflect: true}) activated = false;
   @property({type: String, reflect: true}) graphic: GraphicType = null;
@@ -52,7 +60,7 @@ export class ListItemBase extends LitElement {
       this.toggleAttribute('mwc-list-item', true);
     }
   })
-  nonselectable = false;
+  noninteractive = false;
   @property({type: Boolean, reflect: true})
   @observer(function(this: ListItemBase, value: boolean) {
     if (value) {
@@ -64,7 +72,6 @@ export class ListItemBase extends LitElement {
   selected = false;
 
   protected boundOnClick = this.onClick.bind(this);
-  protected boundOnKeydown = this.onKeydown.bind(this);
 
   get text() {
     const textContent = this.textContent;
@@ -121,38 +128,30 @@ export class ListItemBase extends LitElement {
   }
 
   protected onClick() {
-    const customEv =
-        new CustomEvent<RequestSelectedDetail>('request-selected', {
-          bubbles: true,
-          composed: true,
-          detail: {hasCheckboxOrRadio: false, selected: !this.selected}
-        });
-
-    this.dispatchEvent(customEv);
+    this.fireRequestDetail(false, !this.selected);
   }
 
-  protected onKeydown(e: KeyboardEvent) {
-    if (this.disabled && e.key === 'Enter') {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+  protected fireRequestDetail(isClick: boolean, selected: boolean) {
+    const customEv = new CustomEvent<RequestSelectedDetail>(
+        'request-selected',
+        {bubbles: true, composed: true, detail: {isClick, selected}});
+
+    this.dispatchEvent(customEv);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    if (!this.nonselectable) {
+    if (!this.noninteractive) {
       this.toggleAttribute('mwc-list-item', true);
     }
     this.addEventListener('click', this.boundOnClick);
-    this.addEventListener('keydown', this.boundOnKeydown);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
 
     this.removeEventListener('click', this.boundOnClick);
-    this.removeEventListener('keydown', this.boundOnKeydown);
   }
 
   firstUpdated() {
