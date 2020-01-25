@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 @use "@material/select/mdc-select.scss";
+@use "@material/select/helper-text/mdc-select-helper-text.scss";
 @use "@material/select/_mixins.scss" as mixins;
 @use "@material/select/_variables.scss" as vars;
 @use "@material/theme/_variables.scss" as theme-vars;
@@ -25,6 +26,10 @@ limitations under the License.
   display: inline-block;
   vertical-align: top;
   outline: none;
+}
+
+.hidden, [hidden] {
+  display: none;
 }
 
 .mdc-select .mdc-select__anchor {
