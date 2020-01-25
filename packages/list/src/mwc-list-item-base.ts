@@ -158,6 +158,6 @@ export class ListItemBase extends LitElement {
     this.dispatchEvent(
         new Event('list-item-rendered', {bubbles: true, composed: true}));
 
-    rippleNode({surfaceNode: this});
+    rippleNode({surfaceNode: this, unbounded: false});
   }
 }
