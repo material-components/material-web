@@ -203,7 +203,11 @@ export abstract class SelectBase extends FormElement {
 
     return html`
       <div class="mdc-select ${classMap(classes)}">
-        <input class="formElement" .value=${this.value} hidden ?required=${this.required}>
+        <input
+            class="formElement"
+            .value=${this.value}
+            hidden
+            ?required=${this.required}>
         ${this.icon ? this.renderIcon(this.icon) : ''}
         <!-- @ts-ignore -->
         <div class="mdc-select__anchor" .anchoring=${menuAnchor('mwc-menu')}>
@@ -242,7 +246,8 @@ export abstract class SelectBase extends FormElement {
   protected renderHelperText() {
     const showValidationMessage = this.validationMessage && !this.isUiValid;
     const classes = {
-      'mdc-select-helper-text--persistent': this.helperPersistent || showValidationMessage,
+      'mdc-select-helper-text--persistent':
+          this.helperPersistent || showValidationMessage,
       'mdc-select-helper-text--validation-msg': showValidationMessage,
       'hidden': !this.shouldRenderHelperText,
     };
