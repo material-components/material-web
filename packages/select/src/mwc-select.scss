@@ -28,6 +28,7 @@ limitations under the License.
   outline: none;
 }
 
+
 .hidden, [hidden] {
   display: none;
 }
@@ -35,6 +36,17 @@ limitations under the License.
 .mdc-select .mdc-select__anchor {
   display: block;
   position: relative;
+
+  .mdc-select__dropdown-icon {
+    align-items: center;
+    justify-content: center;
+    background: none;
+    color: vars.$icon-color;
+
+    svg {
+      fill: currentColor;
+    }
+  }
 
   .mdc-select__selected-text {
     overflow: hidden;
@@ -59,13 +71,29 @@ mwc-notched-outline {
       @include mixins.container-fill-color(var(--mdc-select-fill-color, #{vars.$fill-color}));
     }
 
-    &.mdc-select--invalid mwc-notched-outline {
-      --mdc-notched-outline-border-color: var(--mdc-select-error-color, var(--mdc-theme-error, #{theme-vars.$error}));
+    &.mdc-select--invalid {
+      $select-error-color: var(--mdc-select-error-color, var(--mdc-theme-error, #{theme-vars.$error}));
+      .mdc-select__dropdown-icon {
+        color: $select-error-color;
+      }
+
+      .mdc-floating-label, .mdc-floating-label::after {
+        color: $select-error-color;
+      }
+
+      mwc-notched-outline {
+        --mdc-notched-outline-border-color: $select-error-color;
+      }
     }
 
     &:not(.mdc-select--invalid):not(.mdc-select--focused) {
       .mdc-floating-label, .mdc-floating-label::after {
         color: var(--mdc-select-label-ink-color, #{vars.$label-color});
+      }
+
+      .mdc-select__dropdown-icon {
+        color: var(--mdc-select-dropdown-icon-color, vars.$dropdown-color);
+        opacity: var(--mdc-select-dropdown-icon-opacity, vars.$dropdown-opacity);
       }
     }
 
@@ -79,6 +107,10 @@ mwc-notched-outline {
           --mdc-notched-outline-border-color: var(--mdc-select-focused-label-color, var(--mdc-theme-primary, #{vars.$focused-label-color}));
         }
 
+        .mdc-select__dropdown-icon {
+          color: var(--mdc-select-dropdown-icon-color, var(--mdc-theme-primary, #{vars.$focused-label-color}));
+        }
+
         .mdc-floating-label {
           @include theme-mixins.prop(color, primary);
 
@@ -88,14 +120,10 @@ mwc-notched-outline {
         }
       }
     }
-
-    .mdc-select__input {
-      color: var(--mdc-select-ink-color, #{vars.$ink-color});
-    }
   }
 
-  .mdc-select-helper-line .mdc-select-helper-text:not(.mdc-select-helper-text--validation-msg) {
-    color: var(--mdc-select-label-ink-color, #{vars.$focused-label-color});
+  .mdc-select-helper-text:not(.mdc-select-helper-text--validation-msg) {
+    color: var(--mdc-select-label-ink-color, #{vars.$label-color});
   }
 }
 
@@ -111,6 +139,10 @@ mwc-notched-outline {
       }
     }
 
+    .mdc-select__dropdown-icon {
+      opacity: var(--mdc-select-disabled-dropdown-opacity, vars.$disabled-dropdown-opacity);
+    }
+
     &:not(.mdc-select--invalid):not(.mdc-select--focused) {
       .mdc-floating-label, .mdc-floating-label::after {
         color: var(--mdc-select-disabled-ink-color, #{vars.$disabled-ink-color});
@@ -118,7 +150,7 @@ mwc-notched-outline {
     }
   }
 
-  .mdc-select-helper-line .mdc-select-helper-text {
+  .mdc-select-helper-text {
     color: var(--mdc-select-disabled-ink-color, #{vars.$disabled-ink-color});
   }
 }

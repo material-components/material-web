@@ -211,7 +211,23 @@ export abstract class SelectBase extends FormElement {
         ${this.icon ? this.renderIcon(this.icon) : ''}
         <!-- @ts-ignore -->
         <div class="mdc-select__anchor" .anchoring=${menuAnchor('mwc-menu')}>
-          <i class="mdc-select__dropdown-icon"></i>
+        <i class="mdc-select__dropdown-icon">
+          <svg
+              width="10px"
+              height="5px"
+              viewBox="7 10 10 5"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink">
+            <polygon
+                stroke="none"
+                fill-rule="evenodd"
+                points="7 10 12 15 17 10">
+            </polygon>
+          </svg>
+        </i>
+
+          </i>
           <!-- @ts-ignore -->
           <div
               class="mdc-select__selected-text"
