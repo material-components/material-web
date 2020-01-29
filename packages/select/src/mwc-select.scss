@@ -82,7 +82,11 @@ mwc-notched-outline {
       }
 
       mwc-notched-outline {
-        --mdc-notched-outline-border-color: $select-error-color;
+        --mdc-notched-outline-border-color: #{$select-error-color};
+      }
+
+      mwc-menu {
+        --mdc-theme-primary: #{$select-error-color};
       }
     }
 
