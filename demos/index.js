@@ -148,6 +148,13 @@ class DemoView extends LitElement {
               <span class="mdc-list-item__secondary-text">Fills from 0% to 100%, represented by bars</span>
             </span>
           </a>
+          <a role="listitem" class="mdc-list-item" href="list.html">
+            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material.io/develop/images/component_icons/list.svg"></span>
+            <span class="mdc-list-item__text">
+              List
+              <span class="mdc-list-item__secondary-text">Lists are continuous, vertical indexes of text or images.</span>
+            </span>
+          </a>
           <a role="listitem" class="mdc-list-item" href="radio.html">
             <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_radio_button_24px.svg"></span>
             <span class="mdc-list-item__text">
