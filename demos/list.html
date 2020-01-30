@@ -159,25 +159,29 @@ limitations under the License.
     <h1>Graphics (inset dividers)</h1>
 
     <mwc-list id="graphics" multi>
-      <mwc-list-item twoline graphic="avatar" noninteractive>
+      <mwc-list-item twoline graphic="avatar" noninteractive hasMeta>
         <span>Non-interactive two line avatar graphic</span>
         <span slot="secondary">email@domain.tld</span>
         <span slot="graphic" class="material-icons inverted">folder</span>
+        <span slot="meta" class="material-icons">info</span>
       </mwc-list-item>
       <li divider role="divider"></li>
-      <mwc-list-item graphic="icon">
+      <mwc-list-item graphic="icon" hasMeta>
         <span>Icon graphic</span>
         <span slot="graphic" class="material-icons inverted">folder</span>
+        <span slot="meta" class="material-icons">info</span>
       </mwc-list-item>
       <li divider inset role="divider"></li>
-      <mwc-list-item graphic="medium">
+      <mwc-list-item graphic="medium" hasMeta>
         <span>medium graphic</span>
         <span slot="graphic" class="material-icons inverted">folder</span>
+        <span slot="meta" class="material-icons">info</span>
       </mwc-list-item>
       <li divider inset role="divider"></li>
-      <mwc-list-item graphic="large">
+      <mwc-list-item graphic="large" hasMeta>
         <span>large graphic</span>
         <span slot="graphic" class="material-icons inverted">folder</span>
+        <span slot="meta" class="material-icons">info</span>
       </mwc-list-item>
     </mwc-list>
 
@@ -246,55 +250,55 @@ limitations under the License.
     </mwc-list>
   </main>
 
-  <script type="module">
-    addEventListener('load', () => document.body.classList.remove('unresolved'));
-    const basic = document.querySelector('#basic');
-    const basicOut = document.querySelector('#basicIndex');
+  <script>
+    addEventListener('load', function() {document.body.classList.remove('unresolved')});
+    var basic = document.querySelector('#basic');
+    var basicOut = document.querySelector('#basicIndex');
 
     basic.addEventListener('selected', function() {
       basicOut.innerText = basic.index;
     });
 
-    const multi = document.querySelector('#multi');
-    const multiOut = document.querySelector('#multiIndex');
+    var multi = document.querySelector('#multi');
+    var multiOut = document.querySelector('#multiIndex');
 
     multi.addEventListener('selected', function() {
-      multiOut.innerText = `{ ${Array.from(multi.index)} }`;
+      multiOut.innerText = '{ ' + Array.from(multi.index) + ' }';
     });
 
-    const activatable = document.querySelector('#activatable');
-    const activatableOut = document.querySelector('#activatableIndex');
+    var activatable = document.querySelector('#activatable');
+    var activatableOut = document.querySelector('#activatableIndex');
 
     activatable.addEventListener('selected', function() {
       activatableOut.innerText = activatable.index;
     });
 
-    const checklist = document.querySelector('#checklist');
-    const checklistOut = document.querySelector('#checklistIndex');
+    var checklist = document.querySelector('#checklist');
+    var checklistOut = document.querySelector('#checklistIndex');
 
     checklist.addEventListener('selected', function() {
-      checklistOut.innerText = `{ ${Array.from(checklist.index)} }`;
+      checklistOut.innerText = '{ ' + Array.from(checklist.index) + ' }';
     });
 
-    const radio = document.querySelector('#radio');
-    const radioOut = document.querySelector('#radioIndex');
+    var radio = document.querySelector('#radio');
+    var radioOut = document.querySelector('#radioIndex');
 
     radio.addEventListener('selected', function() {
       radioOut.innerText = radio.index;
     });
 
-    const multiRadio = document.querySelector('#multiRadio');
-    const multiRadioOut = document.querySelector('#multiRadioIndex');
+    var multiRadio = document.querySelector('#multiRadio');
+    var multiRadioOut = document.querySelector('#multiRadioIndex');
 
     multiRadio.addEventListener('selected', function() {
-      multiRadioOut.innerText = `{ ${Array.from(multiRadio.index)} }`;
+      multiRadioOut.innerText = '{ ' + Array.from(multiRadio.index) + ' }';
     });
 
-    const graphics = document.querySelector('#graphics');
-    const graphicsOut = document.querySelector('#graphicsIndex');
+    var graphics = document.querySelector('#graphics');
+    var graphicsOut = document.querySelector('#graphicsIndex');
 
     graphics.addEventListener('selected', function() {
-      graphicsOut.innerText = `{ ${Array.from(graphics.index)} }`;
+      graphicsOut.innerText = '{ ' + Array.from(graphics.index) + ' }';
     });
   </script>
 </body>
