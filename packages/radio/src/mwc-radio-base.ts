@@ -32,7 +32,7 @@ export class RadioBase extends FormElement {
 
   private _checked = false;
 
-  @property({type: Boolean}) localRoot = false;
+  @property({type: Boolean}) global = false;
 
   @property({type: Boolean, reflect: true})
   get checked() {
@@ -222,13 +222,13 @@ export class SelectionController {
 
   private updating = false;
 
-  static getController(element: HTMLElement|HTMLElement&{localRoot: boolean}) {
-    const useLocalRoot = !('localRoot' in element) ||
-        ('localRoot' in element && element.localRoot);
-    const root = useLocalRoot ?
+  static getController(element: HTMLElement|HTMLElement&{global: boolean}) {
+    const useGlobal =
+        !('global' in element) || ('global' in element && element.global);
+    const root = useGlobal ?
+        document as Document & {[selectionController]?: SelectionController} :
         element.getRootNode() as Node &
-            {[selectionController]?: SelectionController} :
-        document as Document & {[selectionController]?: SelectionController};
+            {[selectionController]?: SelectionController};
     let controller = root[selectionController];
     if (controller === undefined) {
       controller = new SelectionController(root);
