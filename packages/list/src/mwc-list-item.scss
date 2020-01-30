@@ -51,7 +51,8 @@ $dense-item-primary-text-baseline-height: 24px;
   @include mdc-list-single-line-height($height, $query: $query);
   @include mdc-list-item-base_;
 
-  padding: var(--mdc-list-side-padding, 0 16px);
+  padding-left: var(--mdc-list-side-padding, 16px);
+  padding-right: var(--mdc-list-side-padding, 16px);
 
   outline: none;
 
