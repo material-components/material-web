@@ -111,22 +111,22 @@ limitations under the License.
     <h1>Radio list</h1>
 
     <mwc-list id="radio">
-      <mwc-radio-list-item group="a" seslected>Item 0</mwc-radio-list-item>
+      <mwc-radio-list-item group="a" selected>Item 0</mwc-radio-list-item>
       <mwc-radio-list-item group="a">Item 1</mwc-radio-list-item>
+      <li divider padded role="separator"></li>
       <mwc-radio-list-item left group="a">Item 2 (left)</mwc-radio-list-item>
       <mwc-radio-list-item left group="a">Item 3 (left)</mwc-radio-list-item>
-      <mwc-radio-list-item disabled group="a"><span>disabled</span></mwc-radio-list-item>
     </mwc-list>
 
-    <div>Selected index (Set&lt;number&gt;): <span id="radioIndex"></span></div>
+    <div>Selected index: <span id="radioIndex"></span></div>
 
     <h1>Multi Radio list (with divider)</h1>
 
-    <mwc-list id="multiRadio" multi>
+    <mwc-list multi id="multiRadio">
       <mwc-radio-list-item group="b">Item 0</mwc-radio-list-item>
-      <mwc-radio-list-item group="b">Item 1</mwc-radio-list-item>
-      <li divider role="divider"></li>
-      <mwc-radio-list-item group="c">Item 2</mwc-radio-list-item>
+      <mwc-radio-list-item group="b" selected>Item 1</mwc-radio-list-item>
+      <li divider role="separator"></li>
+      <mwc-radio-list-item group="c" selected>Item 2</mwc-radio-list-item>
       <mwc-radio-list-item group="c">Item 3</mwc-radio-list-item>
     </mwc-list>
 
@@ -139,17 +139,17 @@ limitations under the License.
         <span>Item 0</span>
         <span slot="secondary">Secondary line</span>
       </mwc-list-item>
-      <li divider padded role="divider"></li>
+      <li divider padded role="separator"></li>
       <mwc-list-item twoline>
         <span>Item 1</span>
         <span slot="secondary">Secondary line</span>
       </mwc-list-item>
-      <li divider padded role="divider"></li>
+      <li divider padded role="separator"></li>
       <mwc-list-item twoline>
         <span>Item 2</span>
         <span slot="secondary">Secondary line</span>
       </mwc-list-item>
-      <li divider padded role="divider"></li>
+      <li divider padded role="separator"></li>
       <mwc-list-item twoline>
         <span>Item 3</span>
         <span slot="secondary">Secondary line</span>
@@ -165,19 +165,19 @@ limitations under the License.
         <span slot="graphic" class="material-icons inverted">folder</span>
         <span slot="meta" class="material-icons">info</span>
       </mwc-list-item>
-      <li divider role="divider"></li>
+      <li divider role="separator"></li>
       <mwc-list-item graphic="icon" hasMeta>
         <span>Icon graphic</span>
         <span slot="graphic" class="material-icons inverted">folder</span>
         <span slot="meta" class="material-icons">info</span>
       </mwc-list-item>
-      <li divider inset role="divider"></li>
+      <li divider inset role="separator"></li>
       <mwc-list-item graphic="medium" hasMeta>
         <span>medium graphic</span>
         <span slot="graphic" class="material-icons inverted">folder</span>
         <span slot="meta" class="material-icons">info</span>
       </mwc-list-item>
-      <li divider inset role="divider"></li>
+      <li divider inset role="separator"></li>
       <mwc-list-item graphic="large" hasMeta>
         <span>large graphic</span>
         <span slot="graphic" class="material-icons inverted">folder</span>
@@ -199,7 +199,7 @@ limitations under the License.
 
     <mwc-list activatable id="styled">
       <mwc-list-item selected>Item 0</mwc-list-item>
-      <li divider role="divider"></li>
+      <li divider role="separator"></li>
       <mwc-list-item>Item 1</mwc-list-item>
       <mwc-list-item>Item 2</mwc-list-item>
       <mwc-list-item>Item 3</mwc-list-item>
