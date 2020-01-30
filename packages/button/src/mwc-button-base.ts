@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {HTMLElementWithRipple} from '@material/mwc-base/form-element';
-import {ripple} from '@material/mwc-ripple/ripple-directive.js';
+import {rippleNode} from '@material/mwc-ripple/ripple-directive.js';
 import {html, LitElement, property, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
@@ -75,11 +75,9 @@ export class ButtonBase extends LitElement {
     };
     const mdcButtonIcon =
         html`<span class="material-icons mdc-button__icon">${this.icon}</span>`;
-    const buttonRipple = ripple({unbounded: false});
     return html`
       <button
           id="button"
-          .ripple="${buttonRipple}"
           class="mdc-button ${classMap(classes)}"
           ?disabled="${this.disabled}"
           aria-label="${this.label || this.icon}">
@@ -89,5 +87,10 @@ export class ButtonBase extends LitElement {
         ${this.icon && this.trailingIcon ? mdcButtonIcon : ''}
         <slot></slot>
       </button>`;
+  }
+
+  firstUpdated() {
+    this.buttonElement.ripple =
+        rippleNode({surfaceNode: this.buttonElement, unbounded: false});
   }
 }
