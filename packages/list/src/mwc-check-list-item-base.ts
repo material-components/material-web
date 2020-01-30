@@ -84,6 +84,5 @@ export class CheckListItemBase extends ListItemBase {
     this.addEventListener('click', this.boundOnClick);
 
     this.toggleAttribute('mwc-list-item', true);
-    this.toggleAttribute('mwc-check-list-item', true);
   }
 }

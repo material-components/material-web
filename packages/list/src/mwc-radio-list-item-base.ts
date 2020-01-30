@@ -99,6 +99,5 @@ export class RadioListItemBase extends ListItemBase {
     this.addEventListener('click', this.boundOnClick);
 
     this.toggleAttribute('mwc-list-item', true);
-    this.toggleAttribute('mwc-radio-list-item', true);
   }
 }
