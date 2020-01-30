@@ -1,0 +1,27 @@
+{
+  "name": "@material/mwc-chips",
+  "version": "0.12.0",
+  "description": "",
+  "main": "mwc-chips.js",
+  "module": "mwc-chips.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/material-components/material-components-web-components.git",
+    "directory": "packages/chips"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@material/mwc-base": "^0.12.0",
+    "@material/mwc-ripple": "^0.12.0",
+    "@material/chips": "=5.0.0-canary.d8d95020f.0",
+    "lit-element": "^2.2.1",
+    "tslib": "^1.10.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
