@@ -108,7 +108,7 @@ export const doesElementContainFocus = (element: HTMLElement): boolean => {
     composedPath = ev.composedPath();
   };
 
-  document.body.addEventListener('check-if-focused', listener, {capture: true});
+  document.body.addEventListener('check-if-focused', listener);
   deepActiveElement.dispatchEvent(focusEv);
   document.body.removeEventListener('check-if-focused', listener);
 
