@@ -21,11 +21,12 @@ import {html, property, query} from 'lit-element';
 import {ifDefined} from 'lit-html/directives/if-defined';
 
 import {MDCListAdapter} from './mwc-list-adapter';
-import MDCListFoundation, {isNumberSet} from './mwc-list-foundation';
+import MDCListFoundation, {isIndexSet, SelectedDetail} from './mwc-list-foundation';
 import {MWCListIndex} from './mwc-list-foundation';
 import {ListItemBase, RequestSelectedDetail} from './mwc-list-item-base';
 
-export {createSetFromIndex, isNumberSet, MWCListIndex} from './mwc-list-foundation';
+export {createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex} from './mwc-list-foundation';
+
 
 const isListItem = (element: Element): element is ListItemBase => {
   return element.hasAttribute('mwc-list-item');
@@ -156,7 +157,7 @@ export abstract class ListBase extends BaseElement {
   get selected(): ListItemBase|ListItemBase[]|null {
     const index = this.index;
 
-    if (!isNumberSet(index)) {
+    if (!isIndexSet(index)) {
       if (index === -1) {
         return null;
       }
@@ -327,10 +328,10 @@ export abstract class ListBase extends BaseElement {
           item.tabindex = value;
         }
       },
-      notifyAction: (index) => {
-        const init: CustomEventInit = {bubbles: true};
-        init.detail = {index};
-        const ev = new CustomEvent('action', init);
+      notifySelected: (index, diff) => {
+        const init: CustomEventInit = {bubbles: true, composed: true};
+        init.detail = {index, diff};
+        const ev = new CustomEvent<SelectedDetail>('selected', init);
         this.dispatchEvent(ev);
       },
       isFocusInsideList: () => {
@@ -413,15 +414,6 @@ export abstract class ListBase extends BaseElement {
     }
 
     this.mdcFoundation.setSelectedIndex(index);
-
-    const selectedEvInit = {
-      bubbles: true,
-      composed: true,
-      detail: {index},
-    };
-    const selectedEv =
-        new CustomEvent<{index: MWCListIndex}>('selected', selectedEvInit);
-    this.dispatchEvent(selectedEv);
   }
 
   toggle(index: number, force?: boolean) {
@@ -442,10 +434,13 @@ export abstract class ListBase extends BaseElement {
     if (updateItems) {
       this.updateItems();
     }
-    const first = this.items[0];
 
-    if (first) {
-      first.setAttribute('tabIndex', '0');
+    if (!this.noninteractive) {
+      const first = this.items[0];
+
+      if (first) {
+        first.setAttribute('tabIndex', '0');
+      }
     }
   }
 

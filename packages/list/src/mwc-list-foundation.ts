@@ -20,12 +20,21 @@ import {numbers, strings} from '@material/list/constants';
 
 import {MDCListAdapter} from './mwc-list-adapter';
 
-export type MWCListIndex = number|Set<number>
+export type MWCListIndex = number|Set<number>;
 
-    interface IndexDiff {
+export interface IndexDiff {
   added: number[];
   removed: number[];
 }
+
+export interface SelectedDetail<T extends MWCListIndex = MWCListIndex> {
+  index: T;
+  diff: T extends Set<number>? IndexDiff: undefined;
+}
+
+export type SingleSelectedEvent = CustomEvent<SelectedDetail<number>>;
+export type MultiSelectedEvent = CustomEvent<SelectedDetail<Set<number>>>;
+export type SelectedEvent = SingleSelectedEvent|MultiSelectedEvent;
 
 const findIndexDiff = (oldSet: Set<number>, newSet: Set<number>): IndexDiff => {
   const oldArr = Array.from(oldSet);
@@ -64,14 +73,18 @@ const findIndexDiff = (oldSet: Set<number>, newSet: Set<number>): IndexDiff => {
 
 const ELEMENTS_KEY_ALLOWED_IN = ['input', 'button', 'textarea', 'select'];
 
-export function isNumberSet(selectedIndex: MWCListIndex):
+export function isIndexSet(selectedIndex: MWCListIndex):
     selectedIndex is Set<number> {
   return selectedIndex instanceof Set;
 }
 
+export function isEventMulti(evt: SelectedEvent): evt is MultiSelectedEvent {
+  return isIndexSet(evt.detail.index);
+}
+
 export const createSetFromIndex = (index: MWCListIndex) => {
   const entry = index === numbers.UNSET_INDEX ? new Set<number>() : index;
-  return isNumberSet(entry) ? new Set(entry) : new Set([entry]);
+  return isIndexSet(entry) ? new Set(entry) : new Set([entry]);
 };
 
 export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
@@ -91,7 +104,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
       getListItemCount: () => 0,
       isFocusInsideList: () => false,
       isRootFocused: () => false,
-      notifyAction: () => undefined,
+      notifySelected: () => undefined,
       getSelectedStateForElementIndex: () => false,
       setDisabledStateForElementIndex: () => undefined,
       getDisabledStateForElementIndex: () => false,
@@ -249,8 +262,6 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
         this.preventDefaultEvent_(evt);
 
         this.setSelectedIndexOnAction_(currentIndex);
-
-        this.adapter_.notifyAction(currentIndex);
       }
     }
 
@@ -272,7 +283,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
 
     this.setSelectedIndexOnAction_(index, force);
 
-    this.adapter_.notifyAction(index);
+    this.adapter_.notifySelected(index);
 
     this.setTabindexAtIndex_(index);
     this.focusedItemIndex_ = index;
@@ -373,6 +384,8 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
     this.setAriaForSingleSelectionAtIndex_(index);
 
     this.selectedIndex_ = index;
+
+    this.adapter_.notifySelected(index);
   }
 
   private setMultiSelectionAtIndex_(newIndex: Set<number>) {
@@ -400,6 +413,8 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
     }
 
     this.selectedIndex_ = newIndex;
+
+    this.adapter_.notifySelected(newIndex, diff);
   }
 
   /**
@@ -449,7 +464,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
         this.selectedIndex_ !== numbers.UNSET_INDEX) {
       targetIndex = this.selectedIndex_;
     } else if (
-        isNumberSet(this.selectedIndex_) && this.selectedIndex_.size > 0) {
+        isIndexSet(this.selectedIndex_) && this.selectedIndex_.size > 0) {
       targetIndex = Math.min(...this.selectedIndex_);
     }
 

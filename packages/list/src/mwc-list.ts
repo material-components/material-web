@@ -20,7 +20,7 @@ import {customElement} from 'lit-element';
 import {ListBase} from './mwc-list-base.js';
 import {style} from './mwc-list-css.js';
 
-export {createSetFromIndex, isNumberSet, MWCListIndex} from './mwc-list-foundation';
+export {createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex} from './mwc-list-foundation';
 
 declare global {
   interface HTMLElementTagNameMap {

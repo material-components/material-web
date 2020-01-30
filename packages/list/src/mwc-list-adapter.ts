@@ -1,3 +1,5 @@
+import {IndexDiff, MWCListIndex} from './mwc-list-foundation';
+
 /**
  @license
  Copyright 2020 Google Inc. All Rights Reserved.
@@ -57,7 +59,7 @@ export interface MDCListAdapter {
   /**
    * Notifies user action on list item.
    */
-  notifyAction(index: number): void;
+  notifySelected(index: MWCListIndex, diff?: IndexDiff): void;
 
   /**
    * @return true when the current focused element is inside list root.

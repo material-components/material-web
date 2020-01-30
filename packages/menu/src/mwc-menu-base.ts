@@ -23,6 +23,7 @@ import {DefaultFocusState} from '@material/menu/constants';
 import MDCMenuFoundation from '@material/menu/foundation.js';
 import {BaseElement, observer} from '@material/mwc-base/base-element.js';
 import {List, MWCListIndex} from '@material/mwc-list';
+import {isEventMulti, SelectedEvent} from '@material/mwc-list/mwc-list-foundation';
 import {ListItemBase} from '@material/mwc-list/src/mwc-list-item-base';
 import {html, property, query} from 'lit-element';
 
@@ -30,6 +31,7 @@ import {MenuSurface} from './mwc-menu-surface';
 import {Corner, MDCMenuDistance} from './mwc-menu-surface-base';
 
 export {DefaultFocusState} from '@material/menu/constants';
+export {createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex} from '@material/mwc-list/mwc-list-foundation';
 export {Corner} from './mwc-menu-surface-base';
 
 /**
@@ -140,7 +142,7 @@ export abstract class MenuBase extends BaseElement {
             .itemRoles=${itemRoles}
             .wrapFocus=${this.wrapFocus}
             .activatable=${this.activatable}
-            @action=${this.onAction}>
+            @selected=${this.onSelected}>
           <slot></slot>
         </mwc-list>
       </mwc-menu-surface>`;
@@ -229,12 +231,7 @@ export abstract class MenuBase extends BaseElement {
 
         return -1;
       },
-      notifySelected: (evtData) => {
-        const init: CustomEventInit = {bubbles: true, composed: true};
-        init.detail = {index: evtData.index, item: evtData};
-        const ev = new CustomEvent('selected', init);
-        this.mdcRoot.dispatchEvent(ev);
-      },
+      notifySelected: () => { /** handled by list */ },
       getMenuItemCount: () => {
         const listElement = this.listElement;
         if (!listElement) {
@@ -309,11 +306,22 @@ export abstract class MenuBase extends BaseElement {
     }
   }
 
-  protected onAction(evt: CustomEvent<{index: number}>) {
+  protected onSelected(evt: SelectedEvent) {
     const listElement = this.listElement;
     if (this.mdcFoundation && listElement) {
-      const el = listElement.items[evt.detail.index];
-      if (el) {
+      let index = -1;
+
+      if (isEventMulti(evt)) {
+        if (evt.detail.diff.added.length) {
+          index = evt.detail.diff.added[0];
+        }
+      } else {
+        index = evt.detail.index;
+      }
+
+      const el = listElement.items[index];
+
+      if (el && index !== -1) {
         this.mdcFoundation.handleItemAction(el);
       }
     }
