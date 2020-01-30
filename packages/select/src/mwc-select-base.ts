@@ -24,7 +24,6 @@ import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {ListItemBase} from '@material/mwc-list/mwc-list-item-base';
 import {Menu} from '@material/mwc-menu';
-import {menuAnchor} from '@material/mwc-menu/mwc-menu-surface-anchor-directive';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCSelectAdapter} from '@material/select/adapter';
 import MDCSelectFoundation from '@material/select/foundation.js';
@@ -210,7 +209,7 @@ export abstract class SelectBase extends FormElement {
             ?required=${this.required}>
         ${this.icon ? this.renderIcon(this.icon) : ''}
         <!-- @ts-ignore -->
-        <div class="mdc-select__anchor" .anchoring=${menuAnchor('mwc-menu')}>
+        <div class="mdc-select__anchor">
         <i class="mdc-select__dropdown-icon">
           <svg
               width="10px"
@@ -251,6 +250,7 @@ export abstract class SelectBase extends FormElement {
             class="mdc-select__menu mdc-menu mdc-menu-surface"
             activatable
             .open=${this.menuOpen}
+            .anchor=${this.anchorElement}
             @selected=${this.onSelected}
             @opened=${this.onOpened}
             @closed=${this.onClosed}>
