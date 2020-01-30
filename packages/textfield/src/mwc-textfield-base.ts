@@ -154,6 +154,8 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: Boolean}) charCounter = false;
 
+  @property({type: Boolean}) endAligned = false;
+
   @property({type: Boolean}) protected outlineOpen = false;
   @property({type: Number}) protected outlineWidth = 0;
   @property({type: Boolean}) protected isUiValid = true;
@@ -222,6 +224,7 @@ export abstract class TextFieldBase extends FormElement {
       'mdc-text-field--fullwidth': this.fullWidth,
       'mdc-text-field--with-leading-icon': this.icon,
       'mdc-text-field--with-trailing-icon': this.iconTrailing,
+      'mdc-text-field--end-aligned': this.endAligned,
     };
     return html`
       <label class="mdc-text-field ${classMap(classes)}">
