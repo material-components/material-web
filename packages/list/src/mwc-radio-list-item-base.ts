@@ -66,6 +66,7 @@ export class RadioListItemBase extends ListItemBase {
       ${graphic}
       ${this.left ? '' : text}
       <mwc-radio
+          global
           class=${classMap(radioClasses)}
           tabindex=${this.tabindex}
           name=${ifDefined(this.group === null ? undefined : this.group)}
