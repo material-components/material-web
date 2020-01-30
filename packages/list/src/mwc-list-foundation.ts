@@ -16,7 +16,7 @@
  */
 
 import {MDCFoundation} from '@material/base/foundation';
-import {cssClasses, numbers, strings} from '@material/list/constants';
+import {numbers, strings} from '@material/list/constants';
 
 import {MDCListAdapter} from './mwc-list-adapter';
 
@@ -77,10 +77,6 @@ export const createSetFromIndex = (index: MWCListIndex) => {
 export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
   static get strings() {
     return strings;
-  }
-
-  static get cssClasses() {
-    return cssClasses;
   }
 
   static get numbers() {
