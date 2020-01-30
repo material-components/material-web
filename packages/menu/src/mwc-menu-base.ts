@@ -135,7 +135,6 @@ export abstract class MenuBase extends BaseElement {
           @keydown=${this.onKeydown}
           role=${this.role}>
           <mwc-list
-            selectable
             .multi=${this.multi}
             class="mdc-list"
             .itemRoles=${itemRoles}

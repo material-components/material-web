@@ -44,14 +44,6 @@ export abstract class ListBase extends BaseElement {
   @property({type: Boolean})
   @observer(function(this: ListBase, value: boolean) {
     if (this.mdcFoundation) {
-      this.mdcFoundation.setSelectable(value);
-    }
-  })
-  selectable = false;
-
-  @property({type: Boolean})
-  @observer(function(this: ListBase, value: boolean) {
-    if (this.mdcFoundation) {
       this.mdcFoundation.setUseActivatedClass(value);
     }
   })

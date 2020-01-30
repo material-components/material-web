@@ -83,10 +83,6 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
     return numbers;
   }
 
-  private get isSelectableList_() {
-    return this.isSelectable_ || this.isMulti_;
-  }
-
 
   static get defaultAdapter(): MDCListAdapter {
     return {
@@ -108,7 +104,6 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
   }
 
   private isMulti_ = false;
-  private isSelectable_ = false;
   private wrapFocus_ = false;
   private isVertical_ = true;
   private selectedIndex_: MWCListIndex = numbers.UNSET_INDEX;
@@ -139,13 +134,6 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
    */
   setVerticalOrientation(value: boolean) {
     this.isVertical_ = value;
-  }
-
-  /**
-   * Sets the isSingleSelectionList_ private variable.
-   */
-  setSelectable(value: boolean) {
-    this.isSelectable_ = value;
   }
 
   /**
@@ -260,9 +248,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
         }
         this.preventDefaultEvent_(evt);
 
-        if (this.isSelectableList_) {
-          this.setSelectedIndexOnAction_(currentIndex);
-        }
+        this.setSelectedIndexOnAction_(currentIndex);
 
         this.adapter_.notifyAction(currentIndex);
       }
@@ -284,9 +270,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
       return;
     }
 
-    if (this.isSelectableList_) {
-      this.setSelectedIndexOnAction_(index, force);
-    }
+    this.setSelectedIndexOnAction_(index, force);
 
     this.adapter_.notifyAction(index);
 
@@ -461,14 +445,12 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
   private setTabindexToFirstSelectedItem_() {
     let targetIndex = 0;
 
-    if (this.isSelectableList_) {
-      if (typeof this.selectedIndex_ === 'number' &&
-          this.selectedIndex_ !== numbers.UNSET_INDEX) {
-        targetIndex = this.selectedIndex_;
-      } else if (
-          isNumberSet(this.selectedIndex_) && this.selectedIndex_.size > 0) {
-        targetIndex = Math.min(...this.selectedIndex_);
-      }
+    if (typeof this.selectedIndex_ === 'number' &&
+        this.selectedIndex_ !== numbers.UNSET_INDEX) {
+      targetIndex = this.selectedIndex_;
+    } else if (
+        isNumberSet(this.selectedIndex_) && this.selectedIndex_.size > 0) {
+      targetIndex = Math.min(...this.selectedIndex_);
     }
 
     this.setTabindexAtIndex_(targetIndex);
