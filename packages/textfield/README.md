@@ -46,7 +46,7 @@ npm install @material/mwc-textfield
 
 <script type="module">
   import '@material/mwc-textfield';
-  import '@material/mwc-icon/mwc-icon-font.js';
+  import '@material/mwc-icon/mwc-icon-font'; // upstream .js
 </script>
 ```
 
