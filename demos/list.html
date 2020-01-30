@@ -17,7 +17,7 @@ limitations under the License.
 -->
 <html>
 <head>
-  <title>select demo</title>
+  <title>list demo</title>
   <script>
     delete Document.prototype.adoptedStyleSheets;
   </script>
@@ -208,6 +208,10 @@ limitations under the License.
       #styledr > *::before,
       #styledr > *::after {
         display: none;
+      }
+
+      #styledr > * {
+        transition: background-color .2s, color .2s;
       }
 
       #styledr [selected] {
