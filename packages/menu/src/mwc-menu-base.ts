@@ -364,4 +364,12 @@ export abstract class MenuBase extends BaseElement {
       surface.setAnchorCorner(corner);
     }
   }
+
+  close() {
+    this.open = false;
+  }
+
+  show() {
+    this.open = true;
+  }
 }
