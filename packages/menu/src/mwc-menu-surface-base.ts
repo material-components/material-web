@@ -20,7 +20,7 @@ import MDCMenuSurfaceFoundation from '@material/menu-surface/foundation.js';
 import {MDCMenuDistance} from '@material/menu-surface/types';
 import {getTransformPropertyName} from '@material/menu-surface/util';
 import {addHasRemoveClass, BaseElement, observer} from '@material/mwc-base/base-element.js';
-import {deepActiveElementPath, doesElementContainFocus, isNodeElement} from '@material/mwc-base/utils';
+import {deepActiveElementPath, doesElementContainFocus} from '@material/mwc-base/utils';
 import {html, property, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
@@ -278,41 +278,14 @@ export abstract class MenuSurfaceBase extends BaseElement {
     document.body.removeEventListener('click', this.onBodyClickBound);
   }
 
-  protected getDefaultAnchor(): HTMLElement|null {
-    const defaultAnchor = this.parentNode;
-
-    if (defaultAnchor) {
-      if (isNodeElement(defaultAnchor)) {
-        return defaultAnchor as HTMLElement;
-      } else if (defaultAnchor.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-        const anchorCasted = defaultAnchor as DocumentFragment | ShadowRoot;
-        if ('host' in anchorCasted) {
-          return anchorCasted.host as HTMLElement;
-        }
-      }
-    }
-
-    return null;
-  }
-
   protected saveOrRestoreAnchor(isAbsolute: boolean) {
     if (isAbsolute) {
       this.previousAnchor = this.anchor;
       this.anchor = null;
     }
 
-    if (!isAbsolute && !this.anchor && !this.previousAnchor) {
-      this.anchor = this.getDefaultAnchor();
-    } else if (!isAbsolute && !this.anchor && this.previousAnchor) {
+    if (!isAbsolute && !this.anchor && this.previousAnchor) {
       this.anchor = this.previousAnchor;
-    }
-  }
-
-  firstUpdated() {
-    super.firstUpdated();
-
-    if (!this.anchor && !this.absolute) {
-      this.anchor = this.getDefaultAnchor();
     }
   }
 
