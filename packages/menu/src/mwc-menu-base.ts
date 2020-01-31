@@ -28,7 +28,7 @@ import {ListItemBase} from '@material/mwc-list/src/mwc-list-item-base';
 import {html, property, query} from 'lit-element';
 
 import {MenuSurface} from './mwc-menu-surface';
-import {Corner, MDCMenuDistance} from './mwc-menu-surface-base';
+import {Corner} from './mwc-menu-surface-base';
 
 export {createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex} from '@material/mwc-list/mwc-list-foundation';
 export {Corner} from './mwc-menu-surface-base';
@@ -157,7 +157,7 @@ export abstract class MenuBase extends BaseElement {
       </mwc-menu-surface>`;
   }
 
-  createAdapter(): MDCMenuAdapter {
+  protected createAdapter(): MDCMenuAdapter {
     return {
       addClassToElementAtIndex: (index, className) => {
         const listElement = this.listElement;
@@ -338,13 +338,6 @@ export abstract class MenuBase extends BaseElement {
 
   protected onClosed() {
     this.open = false;
-  }
-
-  setAnchorMargin(margin: MDCMenuDistance) {
-    const surfaceElement = this.mdcRoot;
-    if (surfaceElement) {
-      surfaceElement.setAnchorMargin(margin);
-    }
   }
 
   select(index: MWCListIndex) {

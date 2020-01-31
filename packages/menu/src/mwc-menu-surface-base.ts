@@ -78,6 +78,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
   @observer(function(this: MenuSurfaceBase, value: number|null) {
     if (this.mdcFoundation && this.y !== null && value !== null) {
       this.mdcFoundation.setAbsolutePosition(value, this.y);
+      this.mdcFoundation.setAnchorMargin({left: value, top: this.y});
     }
   })
   x: number|null = null;
@@ -86,6 +87,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
   @observer(function(this: MenuSurfaceBase, value: number|null) {
     if (this.mdcFoundation && this.x !== null && value !== null) {
       this.mdcFoundation.setAbsolutePosition(this.x, value);
+      this.mdcFoundation.setAnchorMargin({left: this.x, top: value});
     }
   })
   y: number|null = null;
@@ -297,7 +299,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
     this.open = true;
   }
 
-  setAnchorMargin(margin: MDCMenuDistance) {
+  setAnchorMargin(margin: Partial<MDCMenuDistance>) {
     if (this.mdcFoundation) {
       this.mdcFoundation.setAnchorMargin(margin);
     }
