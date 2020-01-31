@@ -250,6 +250,7 @@ export abstract class SelectBase extends FormElement {
         ${this.renderHelperText()}
         <mwc-menu
             innerRole="listbox"
+            wrapFocus
             class="mdc-select__menu mdc-menu mdc-menu-surface"
             activatable
             .open=${this.menuOpen}
