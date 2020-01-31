@@ -129,6 +129,7 @@ export abstract class MenuBase extends BaseElement {
           .anchor=${this.anchor}
           .open=${this.open}
           .quick=${this.quick}
+          .corner=${this.corner}
           .x=${this.x}
           .y=${this.y}
           .absolute=${this.absolute}
