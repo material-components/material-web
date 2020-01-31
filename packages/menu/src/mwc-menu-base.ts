@@ -62,7 +62,7 @@ export abstract class MenuBase extends BaseElement {
 
   @property({type: String}) innerRole: 'menu'|'listbox' = 'menu';
 
-  @property({type: String}) corner: Corner|null = null;
+  @property({type: String}) corner: Corner = 'TOP_START';
 
   @property({type: Number}) x: number|null = null;
 

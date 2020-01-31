@@ -121,7 +121,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
       }
     }
   })
-  corner: Corner|null = null;
+  corner: Corner = 'TOP_START';
 
   protected previouslyFocused: HTMLElement|Element|null = null;
   protected previousAnchor: HTMLElement|null = null;
