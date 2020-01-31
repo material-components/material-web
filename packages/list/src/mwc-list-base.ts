@@ -34,6 +34,7 @@ const isListItem = (element: Element): element is ListItemBase => {
 
 /**
  * @fires selected {SelectedDetail}
+ * @fires action {ActionDetail}
  */
 export abstract class ListBase extends BaseElement {
   protected mdcFoundation!: MDCListFoundation;
@@ -332,6 +333,12 @@ export abstract class ListBase extends BaseElement {
         if (item) {
           item.tabindex = value;
         }
+      },
+      notifyAction: (index) => {
+        const init: CustomEventInit = {bubbles: true, composed: true};
+        init.detail = {index};
+        const ev = new CustomEvent<SelectedDetail>('action', init);
+        this.dispatchEvent(ev);
       },
       notifySelected: (index, diff) => {
         const init: CustomEventInit = {bubbles: true, composed: true};

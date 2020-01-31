@@ -23,7 +23,7 @@ import {DefaultFocusState} from '@material/menu/constants';
 import MDCMenuFoundation from '@material/menu/foundation.js';
 import {BaseElement, observer} from '@material/mwc-base/base-element.js';
 import {List, MWCListIndex} from '@material/mwc-list';
-import {isEventMulti, SelectedEvent} from '@material/mwc-list/mwc-list-foundation';
+import {ActionDetail} from '@material/mwc-list/mwc-list-foundation';
 import {ListItemBase} from '@material/mwc-list/src/mwc-list-item-base';
 import {html, property, query} from 'lit-element';
 
@@ -36,6 +36,7 @@ export {Corner} from './mwc-menu-surface-base';
 
 /**
  * @fires selected {SelectedDetail}
+ * @fires action {ActionDetail}
  * @fires opened
  * @fires closed
  */
@@ -145,7 +146,7 @@ export abstract class MenuBase extends BaseElement {
             .itemRoles=${itemRoles}
             .wrapFocus=${this.wrapFocus}
             .activatable=${this.activatable}
-            @selected=${this.onSelected}>
+            @action=${this.onAction}>
           <slot></slot>
         </mwc-list>
       </mwc-menu-surface>`;
@@ -165,11 +166,7 @@ export abstract class MenuBase extends BaseElement {
           return;
         }
 
-        if (className === 'mdc-menu-item--selected') {
-          if (this.multi) {
-            listElement.toggle(index, true);
-          }
-        } else {
+        if (className !== 'mdc-menu-item--selected') {
           element.classList.add(className);
         }
       },
@@ -186,7 +183,7 @@ export abstract class MenuBase extends BaseElement {
         }
 
         if (className === 'mdc-menu-item--selected') {
-          if (this.multi) {
+          if (element.selected) {
             listElement.toggle(index, false);
           }
         } else {
@@ -309,22 +306,14 @@ export abstract class MenuBase extends BaseElement {
     }
   }
 
-  protected onSelected(evt: SelectedEvent) {
+  protected onAction(evt: CustomEvent<ActionDetail>) {
     const listElement = this.listElement;
     if (this.mdcFoundation && listElement) {
-      let index = -1;
-
-      if (isEventMulti(evt)) {
-        if (evt.detail.diff.added.length) {
-          index = evt.detail.diff.added[0];
-        }
-      } else {
-        index = evt.detail.index;
-      }
+      const index = evt.detail.index;
 
       const el = listElement.items[index];
 
-      if (el && index !== -1) {
+      if (el) {
         this.mdcFoundation.handleItemAction(el);
       }
     }

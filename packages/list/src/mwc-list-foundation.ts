@@ -32,6 +32,10 @@ export interface SelectedDetail<T extends MWCListIndex = MWCListIndex> {
   diff: T extends Set<number>? IndexDiff: undefined;
 }
 
+export interface ActionDetail {
+  index: number;
+}
+
 export type SingleSelectedEvent = CustomEvent<SelectedDetail<number>>;
 export type MultiSelectedEvent = CustomEvent<SelectedDetail<Set<number>>>;
 export type SelectedEvent = SingleSelectedEvent|MultiSelectedEvent;
@@ -104,6 +108,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
       getListItemCount: () => 0,
       isFocusInsideList: () => false,
       isRootFocused: () => false,
+      notifyAction: () => undefined,
       notifySelected: () => undefined,
       getSelectedStateForElementIndex: () => false,
       setDisabledStateForElementIndex: () => undefined,
@@ -282,9 +287,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
     }
 
     this.setSelectedIndexOnAction_(index, force);
-
-    this.adapter_.notifySelected(index);
-
+    this.adapter_.notifyAction(index);
     this.setTabindexAtIndex_(index);
     this.focusedItemIndex_ = index;
   }

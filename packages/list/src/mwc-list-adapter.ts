@@ -59,6 +59,8 @@ export interface MDCListAdapter {
   /**
    * Notifies user action on list item.
    */
+  notifyAction(index: MWCListIndex): void;
+
   notifySelected(index: MWCListIndex, diff?: IndexDiff): void;
 
   /**
