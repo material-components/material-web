@@ -128,6 +128,7 @@ export abstract class MenuBase extends BaseElement {
 
     return html`
       <mwc-menu-surface
+          ?hidden=${!this.open}
           .anchor=${this.anchor}
           .open=${this.open}
           .quick=${this.quick}

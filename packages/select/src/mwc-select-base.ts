@@ -215,7 +215,7 @@ export abstract class SelectBase extends FormElement {
             hidden
             ?required=${this.required}>
         ${this.icon ? this.renderIcon(this.icon) : ''}
-        <div class="mdc-select__anchor">
+        <div class="mdc-select__anchor" @click=${this.onClick}>
           <i class="mdc-select__dropdown-icon">
             <svg
                 width="10px"
@@ -242,8 +242,7 @@ export abstract class SelectBase extends FormElement {
               aria-describedby=${ifDefined(describedby)}
               @focus=${this.onFocus}
               @blur=${this.onBlur}
-              @keydown=${this.onKeydown}
-              @click=${this.onClick}>
+              @keydown=${this.onKeydown}>
             ${this.selectedText}
           </div>
           ${outlinedOrUnderlined}
