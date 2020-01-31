@@ -20,28 +20,33 @@ limitations under the License.
   <title>menu demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-textfield/mwc-textfield.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-select/mwc-select.js"></script>
   <script type="module" src="../node_modules/@material/mwc-button/mwc-button.js"></script>
   <script type="module" src="../node_modules/@material/mwc-menu/mwc-menu.js"></script>
   <script type="module" src="../node_modules/@material/mwc-list/mwc-list-item.js"></script>
-  <script type="module" src="../node_modules/@material/mwc-list/mwc-list-item-separator.js"></script>
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
   <link rel="stylesheet" href="demo-component.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
 
   <style>
-    body {
-      min-height: calc(100vh - 4em);
+    main > div {
+      margin-bottom: 16px;
     }
 
-    .demo-mdc-menu-anchor {
-      display: inline-block;
-      position: relative;
-      overflow: visible;
+    .scrollable {
+      border: solid 1px black;
+      overflow-y: scroll;
+      height: 100px;
     }
 
-    .demo-log {
-      margin: 8px;
+    .scrollable .spacer {
+      height: 1000px;
+    }
+
+    #absoluteX, #absoluteY {
+      width: 100px;
     }
   </style>
 </head>
@@ -53,29 +58,275 @@ limitations under the License.
 
   <main>
 
-    <div class="demo-mdc-menu-anchor">
-      <mwc-button id="button" raised ripple label="Go"></mwc-button>
-      <mwc-menu id="menu">
-        <mwc-list-item label="one"></mwc-list-item>
-        <mwc-list-item label="two"></mwc-list-item>
-        <mwc-list-item label="three"></mwc-list-item>
-        <mwc-list-item disabled label="four"></mwc-list-item>
-        <mwc-list-item-separator></mwc-list-item-separator>
-        <mwc-list-item label="aaa"></mwc-list-item>
-        <mwc-list-item label="bbb"></mwc-list-item>
+    <div style="position:relative;">
+      <mwc-button id="basicButton" raised label="Open Basic Menu"></mwc-button>
+      <mwc-menu id="basicMenu">
+        <mwc-list-item>one</mwc-list-item>
+        <mwc-list-item>two</mwc-list-item>
+        <mwc-list-item>three</mwc-list-item>
+        <mwc-list-item disabled><div>four</div></mwc-list-item>
+        <li divider></li>
+        <mwc-list-item>aaa</mwc-list-item>
+        <mwc-list-item>bbb</mwc-list-item>
       </mwc-menu>
     </div>
-    <div class="demo-log" id="log"></div>
+
+    <div style="position:relative;">
+      <mwc-button
+          id="cornerButton"
+          raised
+          label="Open Menu With Corner">
+      </mwc-button>
+      <mwc-menu id="cornerMenu">
+        <mwc-list-item>one</mwc-list-item>
+        <mwc-list-item>two</mwc-list-item>
+        <mwc-list-item>three</mwc-list-item>
+        <mwc-list-item disabled><div>four</div></mwc-list-item>
+        <li divider></li>
+        <mwc-list-item>aaa</mwc-list-item>
+        <mwc-list-item>bbb</mwc-list-item>
+      </mwc-menu>
+
+      <mwc-select outlined id="cornerSelect" label="Menu Corner">
+        <mwc-list-item selected></mwc-list-item>
+        <mwc-list-item value="TOP_LEFT">TOP_LEFT</mwc-list-item>
+        <mwc-list-item value="TOP_RIGHT">TOP_RIGHT</mwc-list-item>
+        <mwc-list-item value="BOTTOM_LEFT">BOTTOM_LEFT</mwc-list-item>
+        <mwc-list-item value="BOTTOM_RIGHT">BOTTOM_RIGHT</mwc-list-item>
+        <mwc-list-item value="TOP_START">TOP_START</mwc-list-item>
+        <mwc-list-item value="TOP_END">TOP_END</mwc-list-item>
+        <mwc-list-item value="BOTTOM_START">BOTTOM_START</mwc-list-item>
+        <mwc-list-item value="BOTTOM_END">BOTTOM_END</mwc-list-item>
+      </mwc-select>
+    </div>
+
+    <div style="position:relative;">
+      <mwc-button id="quickButton" raised label="Open Quick Menu"></mwc-button>
+      <mwc-menu quick id="quickMenu">
+        <mwc-list-item>one</mwc-list-item>
+        <mwc-list-item>two</mwc-list-item>
+        <mwc-list-item>three</mwc-list-item>
+        <mwc-list-item disabled><div>four</div></mwc-list-item>
+        <li divider></li>
+        <mwc-list-item>aaa</mwc-list-item>
+        <mwc-list-item>bbb</mwc-list-item>
+      </mwc-menu>
+    </div>
+
+    <div class="scrollable" style="position:relative;">
+      <mwc-button id="fixedButton" raised label="Open Fixed Menu"></mwc-button>
+      <mwc-menu fixed id="fixedMenu">
+        <mwc-list-item>one</mwc-list-item>
+        <mwc-list-item>two</mwc-list-item>
+        <mwc-list-item>three</mwc-list-item>
+        <mwc-list-item disabled><div>four</div></mwc-list-item>
+        <li divider></li>
+        <mwc-list-item>aaa</mwc-list-item>
+        <mwc-list-item>bbb</mwc-list-item>
+      </mwc-menu>
+
+      <mwc-button id="nonfixedButton" raised label="Open Non-Fixed Menu"></mwc-button>
+      <mwc-menu id="nonfixedMenu">
+        <mwc-list-item>one</mwc-list-item>
+        <mwc-list-item>two</mwc-list-item>
+        <mwc-list-item>three</mwc-list-item>
+        <mwc-list-item disabled><div>four</div></mwc-list-item>
+        <li divider></li>
+        <mwc-list-item>aaa</mwc-list-item>
+        <mwc-list-item>bbb</mwc-list-item>
+      </mwc-menu>
+      <div>Open each menu and then scroll this div</div>
+      <div class="spacer"></div>
+    </div>
+
+    <div>
+      <mwc-button id="absoluteButton" raised label="Open Absolute Menu"></mwc-button>
+      <mwc-menu
+          absolute
+          x="0"
+          y="0"
+          id="absoluteMenu">
+        <mwc-list-item>one</mwc-list-item>
+        <mwc-list-item>two</mwc-list-item>
+        <mwc-list-item>three</mwc-list-item>
+        <mwc-list-item disabled><div>four</div></mwc-list-item>
+        <li divider></li>
+        <mwc-list-item>aaa</mwc-list-item>
+        <mwc-list-item>bbb</mwc-list-item>
+      </mwc-menu>
+
+      <mwc-textfield
+          type="number"
+          label="x"
+          outlined
+          id="absoluteX"
+          value="0">
+      </mwc-textfield>
+      <mwc-textfield
+          type="number"
+          label="y"
+          outlined
+          id="absoluteY"
+          value="0">
+      </mwc-textfield>
+    </div>
+
+    <div style="position:relative;">
+      <mwc-button id="activatableButton" raised label="Open Activatable Menu"></mwc-button>
+      <mwc-menu activatable id="activatableMenu">
+        <mwc-list-item>one</mwc-list-item>
+        <mwc-list-item>two</mwc-list-item>
+        <mwc-list-item>three</mwc-list-item>
+        <mwc-list-item disabled><div>four</div></mwc-list-item>
+        <li divider></li>
+        <mwc-list-item>aaa</mwc-list-item>
+        <mwc-list-item>bbb</mwc-list-item>
+      </mwc-menu>
+    </div>
+
+    <div style="position:relative;">
+      <mwc-button id="multiButton" raised label="Open Multi (activatable) Menu"></mwc-button>
+      <mwc-menu multi activatable id="multiMenu">
+        <mwc-list-item selected activated>one</mwc-list-item>
+        <mwc-list-item>two</mwc-list-item>
+        <mwc-list-item selected activated>three</mwc-list-item>
+        <mwc-list-item disabled><div>four</div></mwc-list-item>
+        <li divider></li>
+        <mwc-list-item>aaa</mwc-list-item>
+        <mwc-list-item>bbb</mwc-list-item>
+      </mwc-menu>
+    </div>
+
+    <div style="position:relative;">
+      <style>
+        #groupedMenu mwc-list-item:not([selected]) mwc-icon {
+          display: none;
+        }
+      </style>
+
+      <mwc-button id="groupedButton" raised label="Open Grouped Menu"></mwc-button>
+      <mwc-menu multi id="groupedMenu">
+        <mwc-list-item selected group="a" graphic="icon">
+          <mwc-icon slot="graphic">check</mwc-icon>
+          <span>a-one</span>
+        </mwc-list-item>
+        <mwc-list-item group="a" graphic="icon">
+          <mwc-icon slot="graphic">check</mwc-icon>
+          <span>a-two</span>
+        </mwc-list-item>
+        <mwc-list-item group="a" graphic="icon">
+          <mwc-icon slot="graphic">check</mwc-icon>
+          <span>a-three</span>
+        </mwc-list-item>
+        <li divider></li>
+        <mwc-list-item selected group="b" graphic="icon">
+          <mwc-icon slot="graphic">check</mwc-icon>
+          <span>b-one</span>
+        </mwc-list-item>
+        <mwc-list-item group="b" graphic="icon">
+          <mwc-icon slot="graphic">check</mwc-icon>
+          <span>b-two</span>
+        </mwc-list-item>
+      </mwc-menu>
+    </div>
+
+    <div style="position:relative;">
+      <mwc-button
+          id="dfsButton"
+          raised
+          label="Open Menu With Default Focus">
+      </mwc-button>
+      <mwc-menu id="dfsMenu">
+        <mwc-list-item>one</mwc-list-item>
+        <mwc-list-item>two</mwc-list-item>
+        <mwc-list-item>three</mwc-list-item>
+        <mwc-list-item disabled><div>four</div></mwc-list-item>
+        <li divider></li>
+        <mwc-list-item>aaa</mwc-list-item>
+        <mwc-list-item>bbb</mwc-list-item>
+      </mwc-menu>
+
+      <mwc-select outlined id="dfsSelect" label="Menu Default Focus">
+        <mwc-list-item value="NONE">NONE</mwc-list-item>
+        <mwc-list-item value="LIST_ROOT" selected>LIST_ROOT</mwc-list-item>
+        <mwc-list-item value="FIRST_ITEM">FIRST_ITEM</mwc-list-item>
+        <mwc-list-item value="LAST_ITEM">LAST_ITEM</mwc-list-item>
+      </mwc-select>
+    </div>
   </main>
   <script>
-    button.addEventListener('click', function (e) {
-      menu.setAnchorCorner(menu.Corner.BOTTOM_START);
-      menu.open = !menu.open;
-    })
+    basicMenu.anchor = basicButton;
 
-    menu.addEventListener('MDCMenu:selected', function(evt) {
-      var detail = evt.detail;
-      log.textContent = `selected: ${detail.index}, ${detail.item.label}`;
+    basicButton.addEventListener('click', function (e) {
+      basicMenu.open = !basicMenu.open;
+    });
+
+    cornerMenu.anchor = cornerButton;
+
+    cornerSelect.addEventListener('change', function () {
+      cornerMenu.corner = cornerSelect.value;
+    });
+
+    cornerButton.addEventListener('click', function (e) {
+      cornerMenu.open = !cornerMenu.open;
+    });
+
+    quickMenu.anchor = quickButton;
+
+    quickButton.addEventListener('click', function (e) {
+      quickMenu.open = !quickMenu.open;
+    });
+
+    fixedMenu.anchor = fixedButton;
+
+    fixedButton.addEventListener('click', function (e) {
+      fixedMenu.open = !fixedMenu.open;
+    });
+
+    nonfixedMenu.anchor = nonfixedButton;
+
+    nonfixedButton.addEventListener('click', function (e) {
+      nonfixedMenu.open = !nonfixedMenu.open;
+    });
+
+    absoluteButton.addEventListener('click', function (e) {
+      absoluteMenu.open = !absoluteMenu.open;
+    });
+
+    absoluteX.addEventListener('input', function (e) {
+      absoluteMenu.x = Number(absoluteX.value);
+    });
+
+    absoluteY.addEventListener('input', function (e) {
+      absoluteMenu.y = Number(absoluteY.value);
+    });
+
+    activatableMenu.anchor = activatableButton;
+
+    activatableButton.addEventListener('click', function (e) {
+      activatableMenu.open = !activatableMenu.open;
+    });
+
+    multiMenu.anchor = multiButton;
+
+    multiButton.addEventListener('click', function (e) {
+      multiMenu.open = !multiMenu.open;
+    });
+
+    groupedMenu.anchor = groupedButton;
+
+    groupedButton.addEventListener('click', function (e) {
+      groupedMenu.open = !groupedMenu.open;
+    });
+
+    dfsMenu.anchor = dfsButton;
+
+    dfsSelect.addEventListener('change', function () {
+      dfsMenu.defaultFocus = dfsSelect.value;
+    });
+
+    dfsButton.addEventListener('click', function (e) {
+      dfsMenu.open = !dfsMenu.open;
     });
 
     addEventListener('load', function() { document.body.classList.remove('unresolved'); });
