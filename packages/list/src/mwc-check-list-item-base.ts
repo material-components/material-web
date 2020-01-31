@@ -17,7 +17,6 @@
 
 import '@material/mwc-checkbox';
 
-import {observer} from '@material/mwc-base/observer';
 import {Checkbox} from '@material/mwc-checkbox';
 import {html, property, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
@@ -28,26 +27,8 @@ export class CheckListItemBase extends ListItemBase {
   @query('slot') protected slotElement!: HTMLSlotElement|null;
   @query('mwc-checkbox') protected checkboxElement!: Checkbox;
 
-  @property({type: Boolean, reflect: true})
-  @observer(function(this: ListItemBase, value: boolean) {
-    if (value) {
-      this.setAttribute('aria-disabled', 'true');
-    } else {
-      this.setAttribute('aria-disabled', 'false');
-    }
-  })
-  disabled = false;
   @property({type: Boolean}) left = false;
   @property({type: String, reflect: true}) graphic: GraphicType = 'control';
-  @property({type: Boolean, reflect: false})
-  @observer(function(this: ListItemBase, value: boolean) {
-    if (value) {
-      this.setAttribute('aria-checked', 'true');
-    } else {
-      this.setAttribute('aria-checked', 'false');
-    }
-  })
-  selected = false;
 
   render() {
     const checkboxClasses = {
