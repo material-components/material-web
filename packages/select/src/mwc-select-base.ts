@@ -375,8 +375,9 @@ export abstract class SelectBase extends FormElement {
           foundation.setRippleCenter(normalizedX);
         }
       },
-      notifyChange: (value) => {
+      notifyChange: async (value) => {
         this.value = value;
+        await this.updateComplete;
         const ev = new Event('change', {bubbles: true});
         this.dispatchEvent(ev);
       },
