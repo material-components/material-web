@@ -92,9 +92,6 @@ so its main slot has the same interface as the main slot of a `mwc-list`.
 
 ### Absolute
 
-With an absolute menu, associating an `anchor` with the menu will override the
-values of `x` and `y`. If an anchor is not associated with the
-
 <img src="images/absolute.png" width="155px">
 
 ```html
@@ -115,9 +112,6 @@ values of `x` and `y`. If an anchor is not associated with the
 ```
 
 ### Fixed
-
-Fixed menus follow a similar pattern to absolute menus as associating an
-`anchor` with the menu will override the values of `x` and `y`.
 
 <img src="images/fixed.png" width="154px">
 
@@ -228,53 +222,79 @@ and all CSS custom properties exposed by `mwc-list` apply here as well.
 | ----------------- | -------------
 | _default_         |	Content to display in the menus internal `<mwc-list>` element.
 
+`mwc-menu` internally uses
+[`mwc-list`](https://github.com/material-components/material-components-web-components/tree/master/packages/list),
+so the default slot has the same interface as the default slot of `mwc-list`.
+
 ### Properties/Attributes
 
-| Name             | Type           | Default | Description
-| ---------------- | -------------- | ------- |------------
-| `activatable`    | `boolean`      | `false` | Sets `activated` attribute on selected items which provides a focus-persistent highlight.
-| `rootTabbable`   | `boolean`      | `false` | When `true`, sets `tabindex="0"` on the internal menu. Otherwise sets `tabindex="-1"`.
-| `multi`          | `boolean`      | `false` | When `true`, enables selection of multiple items. This will result in `index` being of type `Set<number>` and selected returning `MenuItemBase[]`.
-| `wrapFocus`      | `boolean`      | `false` | When `true`, pressing `up` on the keyboard when focused on the first item will focus the last item and `down` when focused on the last item will focus the first item.
-| `itemRoles`      | `string|null`  | `null`  | Determines what `role` attribute to set on all menu items.
-| `innerRole`      | `string|null`  | `null`  | Role of the internal `<ul>` element.
-| `noninteractive` | `boolean`      | `false` | When `true`, disables focus and pointer events (thus ripples) on the menu. Used for display-only menus.
-| `items`          | `MenuItemBase[]` (readonly)* | `[]` | All menu items that are available for selection. Eligible items have the `[mwc-menu-item]` attribute.
-| `selected`       | `MenuItemBase|MenuItemBase[]|null` (readonly)* | `null` | Currently-selected menu item(s). When `multi` is `true`, `selected` is of type `MenuItemBase[]` and when `false`, `selected` is of type `MenuItemBase`. `selected` is `null` when no item is selected.
-| `index`          | `MWCMenuIndex` (readonly)**  | `-1` | Index / indices of selected item(s). When `multi` is `true`, `index` is of type `number` and when `false`, `index` is of type `Set<number>`. Unset indicies are `-1` and empty `Set<number>` for single and multi selection respectively.
+| Name                  | Type           | Default | Description
+| --------------------- | -------------- | ------- |------------
+| `open`                | `boolean`          | `false`  | Whether the menu should open and display.
+| `anchor`              | `HTMLElement|null` | `null`   | Determines which element the floating menu should anchor to. In the default case, both `mwc-menu` and the anchor should share a parent with `position:relative`.
+| `corner`              | `Corner`*          | `"TOP_START"` | Corner of the anchor from which the menu should position itself.
+| `quick`               | `boolean`          | `false`  | Whether to skip the opening animation.
+| `absolute`            | `boolean`          | `false`  | Makes the menu's position `absolute` which will be relative to whichever ancestor has `position:relative`. Setting `x` and `y` will modify the menu's `left` and `top`. Setting `anchor` will attempt to position the menu to the `anchor`.
+| `fixed`               | `boolean`          | `false`  | Makes the menu's position `fixed` which will be relative to the window. Setting `x` and `y` will modify the menu's `left` and `top`. Setting `anchor` will attempt to position the menu to the `anchor`'s immediate position before opening.
+| `x`                   | `number|null`      | `null`   | Modifies `left` on the menu. Requires `y` not to be null.
+| `y`                   | `number|null`      | `null`   | Modifies `top` on the menu. Requires `x` not to be null.
+| `forceGroupSelection` | `boolean`          | `false`  | Forces a menu group to have a selected item by preventing deselection of menu items in menu groups via user interaction.
+| `defaultFocus`        | `DefaultFocusState`**         | `"LIST_ROOT"` | Item to focus upon menu open.
+| `wrapFocus`           | `boolean`          | `false`  | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `wrapFocus` property.
+| `innerRole`           | `"menu"|"listbox"` | `"menu"` | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `innerRole` property.
+| `multi`               | `boolean`          | `false`  | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `multi` property.
+| `activatable`         | `boolean`          | `false`  | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `activatable` property.
+| `items`               | `ListItemBase[]` (readonly)       | `[]` | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `items` property.
+| `index`               | `MWCListIndex` (readonly)\*\*\*   | `-1` | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `index` property.
+| `selected`            | `SelectedType` (readonly)\*\*\*\* | `null` | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `selected` property.
 
-\* `MenuItemBase` is the base class of `mwc-menu-item` of which both
-`mwc-check-menu-item` and `mwc-radio-menu-item` also inherit from.
+\* `Corner` is equivalent to type
+`"TOP_LEFT"|"TOP_RIGHT"|"BOTTOM_LEFT"|"BOTTOM_RIGHT"|"TOP_START"|"TOP_END" |"BOTTOM_START"|"BOTTOM_END"`
 
-\** `MWCMenuIndex` is equivalent to type `number|Set<number>`.
+\** `DefaultFocusState` is equivalent to type
+`"NONE"|"LIST_ROOT"|"FIRST_ITEM"|"LAST_ITEM"`
 
+\*** `MWCListIndex` is equivalent to type `number|Set<number>`.
+
+\**** `SelectedType` is equivaalent to type `ListItemBase|ListItemBase[]|null`.
+`ListItemBase` is the base class of `mwc-list-item` of which both
+`mwc-check-list-item` and `mwc-radio-list-item` also inherit from.
 
 ### Methods
 
 | Name     | Description
 | -------- | -------------
+| `show() => void`  | Sets `open` to false.
+| `close() => void` | Sets `open` to true.
 | `select(index: MWCMenuIndex) => void` | Selects the elements at the given index / indices.
-| `toggle(index: number, force?: boolean) => void` | Toggles the selected index, and forcibly selects or deselects the value of `force` if attribtue is provided.
-| `layout(updateItems = true) => void` | Resets tabindex on all items and will update items model if provided true. It may be required to call layout if selectability of an element is dynamically changed. e.g. `[mwc-menu-item]` attribute is removed from a menu item or `noninteractive` is dynamically set on a menu item.
 
 ### Events
 
-| Event Name | Target       | Detail             | Description
-| ---------- | ------------ | ------------------ | -----------
-| `action`  | `mwc-menu`    | `ActionDetail`*    | Fired when a selection has been made via click or keyboard aciton.
-| `selected`  | `mwc-menu` | `SelectedDetail`**   | Fired when a selection has been made. `index` is the selected index (will be of type `Set<number>` if multi and `number` if single), and `diff` (of type `IndexDiff`**) represents the diff of added and removed indices from previous selection.
+| Event Name | Target             | Detail             | Description
+| ---------- | ------------------ | ------------------ | -----------
+| `opened`   | `mwc-menu-surface` | none               | Fired when opened.
+| `closed`   | `mwc-menu-surface` | none               | Fired when closed.
+| `action`   | `mwc-list`         | `ActionDetail`*    | Fired when a selection has been made via click or keyboard aciton.
+| `selected` | `mwc-list`         | `SelectedDetail`** | Fired when a selection has been made. `index` is the selected index (will be of type `Set<number>` if multi and `number` if single), and `diff` (of type `IndexDiff`**) represents the diff of added and removed indices from previous selection.
 
 \* `ActionDetail` is an interface of the following type:
 
 ### CSS Custom Properties
 
+`mwc-menu` inherits from `mwc-list`
 
-| Name                                | Default               | Description
-| ----------------------------------- | --------------------- |------------
-| `--mdc-theme-text-primary-on-background` | ![](images/color_0,0,0,87.png) `rgba(0, 0, 0, 0.87)` | Color of the primary text.
-| `--mdc-menu-vertical-padding` | `8px`    | Padding before and after the first and last menu items.
-| `--mdc-menu-side-padding`     | `16px`   | Adjusts the padding of the `[padded]` menu dividers (also propagates to `mwc-menu-item`).
-| `--mdc-menu-inset-margin`     | `72px`   | Adjusts the left inset padding of an `[inset]` menu divider. Typically used for dividing menu items with icons.
+| Name                     | Default | Description
+| ------------------------ | ------- |------------
+| `--mdc-menu-item-height` | `48px`  | Height of single-line list-items in the menu.
+| `--mdc-menu-min-width`   | `auto`  | Menu min-width.
+| `--mdc-menu-max-width`   | `auto`  | Menu max-width.
+| `--mdc-theme-surface`    | ![](images/color_fff.png) `#fff` | Color of the menu surface.
+
+`mwc-menu` internally uses
+[`mwc-list`](https://github.com/material-components/material-components-web-components/tree/master/packages/list#css-custom-properties),
+see the
+[styling documentation](https://github.com/material-components/material-components-web-components/tree/master/packages/list#css-custom-properties)
+for further details.
 
 ## Additional references
 
