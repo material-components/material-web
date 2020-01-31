@@ -159,6 +159,8 @@ export abstract class SelectBase extends FormElement {
 
   @property({type: Boolean}) required = false;
 
+  @property({type: Boolean}) naturalWidth = false;
+
   @property({type: Boolean}) protected isUiValid = true;
 
   protected listeners: ({
@@ -253,7 +255,7 @@ export abstract class SelectBase extends FormElement {
             wrapFocus
             class="mdc-select__menu mdc-menu mdc-menu-surface"
             activatable
-            fullwidth
+            .fullwidth=${!this.naturalWidth}
             .open=${this.menuOpen}
             .anchor=${this.anchorElement}
             @selected=${this.onSelected}
