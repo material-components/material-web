@@ -560,8 +560,8 @@ interface RequestSelectedDetail {
 | `--mdc-theme-hint-on-background`           | ![](images/color_0,0,0,38.png) `rgba(0, 0, 0, .38)` | Color of the meta (if is text or text icon).
 | `--mdc-list-side-padding`                  | `16px`               | Side padding of the list item.
 | `--mdc-list-item-meta-size`                | `24px`               | Line height of the meta icon or text and width & height of the slotted parent wrapper.
-| `--mdc-list-item-graphic-size`             | `24px`,`40px`,`56px` | Line height of the graphic and width & height of the slotted parent wrapper.
-| `--mdc-list-item-graphic-margin`           | `16px`,`32px`        | Margin between the text and graphic. `16px` when graphic is `"avatar"`, `"medium"`, `"large"`, `"control"`. `32px` when graphic is `"icon"`.
+| `--mdc-list-item-graphic-size`             | `24px`,`40px`,`56px` | Line height of the graphic and width & height of the slotted parent wrapper. `24px` when graphic is `"icon"`. `40px` when grpahic is `"avatar"`. `56px` when graphic is `"medium"`, and `"large"`.
+| `--mdc-list-item-graphic-margin`           | `16px`,`32px`        | Margin between the text and graphic. `16px` when graphic is `"avatar"`, `"medium"`, `"large"`, and `"control"`. `32px` when graphic is `"icon"`.
 
 ## Additional references
 
