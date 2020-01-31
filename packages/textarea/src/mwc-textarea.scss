@@ -22,11 +22,7 @@ limitations under the License.
 @use '@material/theme/_variables.scss' as theme-vars;
 
 .mdc-text-field:not(.mdc-text-field--outlined) {
-  border-bottom: 1px solid;
-
-  .mdc-line-ripple {
-    bottom: -1px;
-  }
+  padding-bottom: 1px;
 
   &:not(.mdc-text-field--disabled) {
     &:not(.mdc-text-field--invalid){
@@ -63,6 +59,10 @@ limitations under the License.
     margin-bottom: 28px;
   }
 
+  .mdc-text-field-character-counter {
+    bottom: 14px;
+  }
+
   .mdc-floating-label {
     top: 18px;
     left: 16px;
@@ -86,7 +86,7 @@ limitations under the License.
       .mdc-text-field-character-counter {
         bottom: 14px;
 
-        &:not(.hidden)+.mdc-text-field__input {
+        &:not(.hidden) + .mdc-text-field__input {
           margin-bottom: 41px;
         }
       }
