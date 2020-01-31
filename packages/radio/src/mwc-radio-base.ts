@@ -21,7 +21,7 @@ import MDCRadioFoundation from '@material/radio/foundation.js';
 import {html, property, query} from 'lit-element';
 
 /**
- * @emits checked
+ * @fires checked
  */
 export class RadioBase extends FormElement {
   @query('.mdc-radio') protected mdcRoot!: HTMLElement;

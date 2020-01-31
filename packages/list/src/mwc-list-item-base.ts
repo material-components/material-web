@@ -27,7 +27,7 @@ export interface RequestSelectedDetail {
 export type GraphicType = 'avatar'|'icon'|'medium'|'large'|'control'|null;
 
 /**
- * @emits request-selected {RequestSelectedDetail}
+ * @fires request-selected {RequestSelectedDetail}
  */
 export class ListItemBase extends LitElement {
   @query('slot') protected slotElement!: HTMLSlotElement|null;
