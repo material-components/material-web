@@ -90,6 +90,15 @@ export abstract class MenuSurfaceBase extends BaseElement {
   })
   y: number|null = null;
 
+  // must be defined before open or else race condition in foundation occurs.
+  @property({type: Boolean})
+  @observer(function(this: MenuSurfaceBase, value: boolean) {
+    if (this.mdcFoundation) {
+      this.mdcFoundation.setQuickOpen(value);
+    }
+  })
+  quick = false;
+
   @property({type: Boolean, reflect: true})
   @observer(function(this: MenuSurfaceBase, isOpen: boolean) {
     if (this.mdcFoundation) {
@@ -101,14 +110,6 @@ export abstract class MenuSurfaceBase extends BaseElement {
     }
   })
   open = false;
-
-  @property({type: Boolean})
-  @observer(function(this: MenuSurfaceBase, value: boolean) {
-    if (this.mdcFoundation) {
-      this.mdcFoundation.setQuickOpen(value);
-    }
-  })
-  quick = false;
 
   @property({type: String})
   @observer(function(this: MenuSurfaceBase, value: Corner|null) {
