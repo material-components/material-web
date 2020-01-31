@@ -439,10 +439,18 @@ export abstract class ListBase extends BaseElement {
     }
 
     if (!this.noninteractive) {
-      const first = this.items[0];
+      let first: ListItemBase|null = null;
 
-      if (first && !first.noninteractive) {
-        first.setAttribute('tabIndex', '0');
+      for (const item of this.items) {
+        if (!first && !item.noninteractive) {
+          first = item;
+        }
+
+        item.tabindex = -1;
+      }
+
+      if (first) {
+        first.tabindex = 0;
       }
     }
   }
