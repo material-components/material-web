@@ -21,4 +21,5 @@ mwc-list ::slotted([mwc-list-item]:not([twoline])) {
 
 mwc-list {
   max-width: var(--mdc-menu-max-width, auto);
+  min-width: var(--mdc-menu-min-width, auto);
 }
