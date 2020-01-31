@@ -103,14 +103,14 @@ class DemoView extends LitElement {
             <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_component_24px.svg"></span>
             <span class="mdc-list-item__text">
               Drawer
-              <span class="mdc-list-item__secondary-text">Multi-selection controls</span>
+              <span class="mdc-list-item__secondary-text">Navigation to provide access to destinations.</span>
             </span>
           </a>
           <a role="listitem" class="mdc-list-item" href="dialog.html">
             <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_dialog_24px.svg"></span>
             <span class="mdc-list-item__text">
               Dialog
-              <span class="mdc-list-item__secondary-text">Multi-selection controls</span>
+              <span class="mdc-list-item__secondary-text">Popup that gains user attention.</span>
             </span>
           </a>
           <a role="listitem" class="mdc-list-item" href="formfield.html">
@@ -153,6 +153,13 @@ class DemoView extends LitElement {
             <span class="mdc-list-item__text">
               List
               <span class="mdc-list-item__secondary-text">Lists are continuous, vertical indexes of text or images.</span>
+            </span>
+          </a>
+          <a role="listitem" class="mdc-list-item" href="menu.html">
+            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material.io/develop/images/component_icons/menu.svg"></span>
+            <span class="mdc-list-item__text">
+              Menu
+              <span class="mdc-list-item__secondary-text">Displays a list of choices on a temporary surface.</span>
             </span>
           </a>
           <a role="listitem" class="mdc-list-item" href="radio.html">
