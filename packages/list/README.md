@@ -393,7 +393,7 @@ For more-control on styling, you may want to disable the ripple which is set on
 | `itemRoles`      | `string|null`  | `null`  | Determines what `role` attribute to set on all list items.
 | `innerRole`      | `string|null`  | `null`  | Role of the internal `<ul>` element.
 | `noninteractive` | `boolean`      | `false` | When `true`, disables focus and pointer events (thus ripples) on the list. Used for display-only lists.
-| `items`          | `ListItemBase[]` (readonly)* | `[]` | All list items that are available for selection. Eligible items have the `[mwc-list-item]` attribute.
+| `items`          | `ListItemBase[]` (readonly)* | `[]` | All list items that are available for selection. Eligible items have the `[mwc-list-item]` attribute which `ListItemBase` applies automatically.
 | `selected`       | `ListItemBase|ListItemBase[]|null` (readonly)* | `null` | Currently-selected list item(s). When `multi` is `true`, `selected` is of type `ListItemBase[]` and when `false`, `selected` is of type `ListItemBase`. `selected` is `null` when no item is selected.
 | `index`          | `MWCListIndex` (readonly)**  | `-1` | Index / indices of selected item(s). When `multi` is `true`, `index` is of type `number` and when `false`, `index` is of type `Set<number>`. Unset indicies are `-1` and empty `Set<number>` for single and multi selection respectively.
 
