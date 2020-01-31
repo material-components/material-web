@@ -21,7 +21,7 @@ import {html, property, query} from 'lit-element';
 import {ifDefined} from 'lit-html/directives/if-defined';
 
 import {MDCListAdapter} from './mwc-list-adapter';
-import MDCListFoundation, {isIndexSet, SelectedDetail} from './mwc-list-foundation';
+import MDCListFoundation, {isIndexSet, SelectedDetail, ActionDetail} from './mwc-list-foundation';
 import {MWCListIndex} from './mwc-list-foundation';
 import {ListItemBase, RequestSelectedDetail} from './mwc-list-item-base';
 
@@ -337,7 +337,7 @@ export abstract class ListBase extends BaseElement {
       notifyAction: (index) => {
         const init: CustomEventInit = {bubbles: true, composed: true};
         init.detail = {index};
-        const ev = new CustomEvent<SelectedDetail>('action', init);
+        const ev = new CustomEvent<ActionDetail>('action', init);
         this.dispatchEvent(ev);
       },
       notifySelected: (index, diff) => {

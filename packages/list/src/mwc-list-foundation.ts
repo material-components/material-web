@@ -287,7 +287,6 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
     }
 
     this.setSelectedIndexOnAction_(index, force);
-    this.adapter_.notifyAction(index);
     this.setTabindexAtIndex_(index);
     this.focusedItemIndex_ = index;
   }
@@ -538,20 +537,22 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
     } else {
       this.setSingleSelectionAtIndex_(index);
     }
+
+    this.adapter_.notifyAction(index);
   }
 
   toggleMultiAtIndex(index: number, force?: boolean) {
-    let isSelected = false;
+    let newSelectionValue = false;
 
     if (force === undefined) {
-      isSelected = this.adapter_.getSelectedStateForElementIndex(index);
+      newSelectionValue = !this.adapter_.getSelectedStateForElementIndex(index);
     } else {
-      isSelected = force;
+      newSelectionValue = force;
     }
 
     const newSet = createSetFromIndex(this.selectedIndex_);
 
-    if (isSelected) {
+    if (newSelectionValue) {
       newSet.add(index);
     } else {
       newSet.delete(index);
