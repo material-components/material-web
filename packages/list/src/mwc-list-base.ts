@@ -264,7 +264,7 @@ export abstract class ListBase extends BaseElement {
     return -1;
   }
 
-  createAdapter(): MDCListAdapter {
+  protected createAdapter(): MDCListAdapter {
     this.mdcAdapter = {
       getListItemCount: () => {
         if (this.mdcRoot) {
@@ -423,11 +423,11 @@ export abstract class ListBase extends BaseElement {
     this.mdcFoundation.toggleMultiAtIndex(index, force);
   }
 
-  onSlotChange() {
+  protected onSlotChange() {
     this.layout();
   }
 
-  onListItemConnected(e: Event) {
+  protected onListItemConnected(e: Event) {
     const target = e.target as ListItemBase;
 
     this.layout(this.items.indexOf(target) === -1);
@@ -441,7 +441,7 @@ export abstract class ListBase extends BaseElement {
     if (!this.noninteractive) {
       const first = this.items[0];
 
-      if (first) {
+      if (first && !first.noninteractive) {
         first.setAttribute('tabIndex', '0');
       }
     }
