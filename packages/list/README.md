@@ -463,9 +463,18 @@ of `mwc-list-item`, so all properties in `mwc-list-item` will be available on
 
 | Event Name | Target       | Detail             | Description
 | ---------- | ------------ | ------------------ | -----------
-| `selected`  | `mwc-list` | `SelectedDetail`*   | Fired when a selection has been made. `index` is the selected index (will be of type `Set<number>` if multi and `number` if single), and `diff` (of type `IndexDiff`**) represents the diff of added and removed indices from previous selection.
+| `action`  | `mwc-list`    | `ActionDetail`*    | Fired when a selection has been made via click or keyboard aciton.
+| `selected`  | `mwc-list` | `SelectedDetail`**   | Fired when a selection has been made. `index` is the selected index (will be of type `Set<number>` if multi and `number` if single), and `diff` (of type `IndexDiff`**) represents the diff of added and removed indices from previous selection.
 
-\* `SelectedDetail` is an interface of the following type:
+\* `ActionDetail` is an interface of the following type:
+
+```ts
+interface ActionDetail {
+  index: number;
+}
+```
+
+\** `SelectedDetail` is an interface of the following type:
 
 ```ts
 interface SelectedDetail<T extends MWCListIndex = MWCListIndex> {
