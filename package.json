@@ -31,7 +31,7 @@
     "bump-all-mdc-web-deps": "npm run build:scripts && node scripts/tsc-out/bump-all-mdc-web-deps.js packages/*/README.md",
     "prepack": "npm run build && npm run static-urlify-readme-images",
     "powerwash:ts": "rm packages/*/*.js & rm packages/*/*.js.map & rm packages/*/*.d.ts & rm packages/*/.tsbuildinfo",
-    "powerwash:styling": "rm packagse/*/src/*-css.ts",
+    "powerwash:styling": "rm packages/*/src/*-css.ts",
     "powerwash": "npm run powerwash:ts & npm run powerwash:styling && rm -rf node_modules",
     "watch": "npm run build && node scripts/watcher.js",
     "watch:tests": "tsc --build test/tsconfig.json -w & tsc --build test/tsconfig-node.json -w"
