@@ -76,6 +76,8 @@ export abstract class MenuBase extends BaseElement {
 
   @property({type: Boolean}) fixed = false;
 
+  @property({type: Boolean}) forceGroupSelection = false;
+
   @property({type: String})
   @observer(function(this: MenuBase, value: DefaultFocusState) {
     if (this.mdcFoundation) {
@@ -169,7 +171,11 @@ export abstract class MenuBase extends BaseElement {
           return;
         }
 
-        if (className !== 'mdc-menu-item--selected') {
+        if (className === 'mdc-menu-item--selected') {
+          if (this.forceGroupSelection && !element.selected) {
+            listElement.toggle(index, true);
+          }
+        } else {
           element.classList.add(className);
         }
       },
