@@ -19,7 +19,7 @@ import './mwc-menu-surface';
 
 import {Corner as CornerEnum} from '@material/menu-surface/constants';
 import {MDCMenuAdapter} from '@material/menu/adapter';
-import {DefaultFocusState} from '@material/menu/constants';
+import {DefaultFocusState as DefaultFocusStateEnum} from '@material/menu/constants';
 import MDCMenuFoundation from '@material/menu/foundation.js';
 import {BaseElement, observer} from '@material/mwc-base/base-element.js';
 import {List, MWCListIndex} from '@material/mwc-list';
@@ -30,9 +30,10 @@ import {html, property, query} from 'lit-element';
 import {MenuSurface} from './mwc-menu-surface';
 import {Corner, MDCMenuDistance} from './mwc-menu-surface-base';
 
-export {DefaultFocusState} from '@material/menu/constants';
 export {createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex} from '@material/mwc-list/mwc-list-foundation';
 export {Corner} from './mwc-menu-surface-base';
+
+export type DefaultFocusState = keyof typeof DefaultFocusStateEnum;
 
 /**
  * @fires selected {SelectedDetail}
@@ -75,13 +76,13 @@ export abstract class MenuBase extends BaseElement {
 
   @property({type: Boolean}) fixed = false;
 
-  @property({type: Number})
+  @property({type: String})
   @observer(function(this: MenuBase, value: DefaultFocusState) {
     if (this.mdcFoundation) {
-      this.mdcFoundation.setDefaultFocusState(value);
+      this.mdcFoundation.setDefaultFocusState(DefaultFocusStateEnum[value]);
     }
   })
-  defaultFocus: DefaultFocusState = DefaultFocusState.FIRST_ITEM;
+  defaultFocus: DefaultFocusState = 'LIST_ROOT';
 
   protected get listElement() {
     if (!this.listElement_) {
@@ -138,9 +139,10 @@ export abstract class MenuBase extends BaseElement {
           class="mdc-menu mdc-menu-surface"
           @closed=${this.onClosed}
           @opened=${this.onOpened}
-          @keydown=${this.onKeydown}
-          role=${this.role}>
+          @keydown=${this.onKeydown}>
           <mwc-list
+            rootTabbable
+            .innerRole=${this.role}
             .multi=${this.multi}
             class="mdc-list"
             .itemRoles=${itemRoles}

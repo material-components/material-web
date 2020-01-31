@@ -54,6 +54,7 @@ export abstract class ListBase extends BaseElement {
   })
   activatable = false;
 
+
   @property({type: Boolean})
   @observer(function(this: ListBase, newValue: boolean, oldValue: boolean) {
     if (this.mdcFoundation) {
@@ -83,6 +84,8 @@ export abstract class ListBase extends BaseElement {
   itemRoles: string|null = null;
 
   @property({type: String}) innerRole: string|null = null;
+
+  @property({type: Boolean}) rootTabbable = false;
 
   protected previousTabindex: Element|null = null;
 
@@ -187,10 +190,13 @@ export abstract class ListBase extends BaseElement {
   }
 
   render() {
+    const role = this.innerRole === null ? undefined : this.innerRole;
+    const tabindex = this.rootTabbable ? '0' : '-1';
     return html`
       <!-- @ts-ignore -->
       <ul
-          role="${ifDefined(this.innerRole)}"
+          tabindex=${tabindex}
+          role="${ifDefined(role)}"
           class="mdc-list"
           @keydown=${this.onKeydown}
           @focusin=${this.onFocusIn}

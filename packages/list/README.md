@@ -387,6 +387,7 @@ For more-control on styling, you may want to disable the ripple which is set on
 | Name             | Type           | Default | Description
 | ---------------- | -------------- | ------- |------------
 | `activatable`    | `boolean`      | `false` | Sets `activated` attribute on selected items which provides a focus-persistent highlight.
+| `rootTabbable`   | `boolean`      | `false` | When `true`, sets `tabindex="0"` on the internal list. Otherwise sets `tabindex="-1"`.
 | `multi`          | `boolean`      | `false` | When `true`, enables selection of multiple items. This will result in `index` being of type `Set<number>` and selected returning `ListItemBase[]`.
 | `wrapFocus`      | `boolean`      | `false` | When `true`, pressing `up` on the keyboard when focused on the first item will focus the last item and `down` when focused on the last item will focus the first item.
 | `itemRoles`      | `string|null`  | `null`  | Determines what `role` attribute to set on all list items.
