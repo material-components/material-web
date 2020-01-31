@@ -485,12 +485,11 @@ $press-opacity-primary: mdc-states-opacity($states-color-primary, press);
   height: 72px;
 }
 
-:host([graphic="medium"]) .mdc-list-item__graphic {
-  @include graphic-size_(var(--mdc-list-item-graphic-size, 56px));
-}
-
-:host([graphic="large"]) .mdc-list-item__graphic {
-  @include graphic-size_(100px, var(--mdc-list-item-graphic-size, 56px));
+:host([graphic="medium"]),
+:host([graphic="large"]) {
+  .mdc-list-item__graphic {
+    @include graphic-size_(var(--mdc-list-item-graphic-size, 56px));
+  }
 }
 
 :host([graphic="large"]) {
