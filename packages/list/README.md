@@ -364,174 +364,204 @@ For more-control on styling, you may want to disable the ripple which is set on
 
 ### Slots
 
+#### mwc-list
+
 | Name              |	Description
 | ----------------- | -------------
-| `primaryAction`   |	A focusable and clickable target. Typically a button such as  `<mwc-button>`. Placed on the bottom right of the list (LTR) and above the secondary action when stacked. Automatically clicked when `Enter` key is pressed in the list.
-| `secondaryAction` |	A focusable and clickable target. Typically a button such as  `<mwc-button>`. Placed immediately to the left of the `primaryAction` (LTR) or below when stacked.
-| _default_         |	Content to display in the list's content area.
+| _default_         |	Content to display in the lists internal `<ul>` element.
+
+#### mwc-list-item
+
+| Name        | Description
+| ----------- | ---
+| `graphic`   | First tile graphic to display when `graphic` attribute is defined.
+| `meta`      | Last tile meta icon or text to display when `hasMeta` is true.
+| `secondary` | Secondary text displayed below primary text of a two-line list item.
+| _default_   |	Primary text to display in the list item. Note, text must be wrapped in an inline node to be styled for `disabled` variant.
+
 
 ### Properties/Attributes
 
-| Name                    | Type      | Description
-| ----------------------- | --------- |------------
-| `open`                  | `boolean` | Whether the list should open.
-| `hideActions`           | `boolean` | Hides the actions footer of the list. Needed to remove excess padding when no actions are slotted in.
-| `stacked`               | `boolean` | Whether to stack the action buttons.
-| `heading`               | `string`  | Heading text of the list.
-| `scrimClickAction`      | `string`  | _Default: 'close'_ – Action to be emitted with the `closing` and `closed` events when the list closes because the scrim was clicked (see [actions section](#actions)).
-| `escapeKeyAction`       | `string`  | _Default: 'close'_ – Action to be emitted with the `closing` and `closed` events when the list closes because the excape key was pressed (see [actions section](#actions)).
-| `defaultAction`         | `string`  | _Default: 'close'_ – Action to be emitted with the `closing` and `closed` events when `<mwc-list>.open` is toggled (see [actions section](#actions)).
-| `actionAttribute`       | `string`  | _Default: 'listAction'_ – Attribute to read in light dom of list for closing action value (see [actions section](#actions)).
-| `initialFocusAttribute` | `string`  | _Default: 'listInitialFocus'_ – Attribute to search for in light dom for initial focus on list open.
+#### mwc-list
+
+| Name             | Type           | Default | Description
+| ---------------- | -------------- | ------- |------------
+| `activatable`    | `boolean`      | `false` | Sets `activated` attribute on selected items which provides a focus-persistent highlight.
+| `multi`          | `boolean`      | `false` | When `true`, enables selection of multiple items. This will result in `index` being of type `Set<number>` and selected returning `ListItemBase[]`.
+| `wrapFocus`      | `boolean`      | `false` | When `true`, pressing `up` on the keyboard when focused on the first item will focus the last item and `down` when focused on the last item will focus the first item.
+| `itemRoles`      | `string|null`  | `null`  | Determines what `role` attribute to set on all list items.
+| `innerRole`      | `string|null`  | `null`  | Role of the internal `<ul>` element.
+| `noninteractive` | `boolean`      | `false` | When `true`, disables focus and pointer events (thus ripples) on the list. Used for display-only lists.
+| `items`          | `ListItemBase[]` (readonly)* | `[]` | All list items that are available for selection. Eligible items have the `[mwc-list-item]` attribute.
+| `selected`       | `ListItemBase|ListItemBase[]|null` (readonly)* | `null` | Currently-selected list item(s). When `multi` is `true`, `selected` is of type `ListItemBase[]` and when `false`, `selected` is of type `ListItemBase`. `selected` is `null` when no item is selected.
+| `index`          | `MWCListIndex` (readonly)**  | `-1` | Index / indices of selected item(s). When `multi` is `true`, `index` is of type `number` and when `false`, `index` is of type `Set<number>`. Unset indicies are `-1` and empty `Set<number>` for single and multi selection respectively.
+
+\* `ListItemBase` is the base class of `mwc-list-item` of which both
+`mwc-check-list-item` and `mwc-radio-list-item` also inherit from.
+
+\** `MWCListIndex` is equivalent to type `number|Set<number>`.
+
+#### mwc-list-item
+
+| Name             | Type                | Default | Description
+| ---------------- | ------------------- | ------- | -----------
+| `value`          | `string`            | `''`    | Value associated with this list item (used by `mwc-select`).
+| `group`          | `string|null`       | `null`  | Used to group items together (used by `mwc-menu` for menu selection groups and `mwc-radio-list-element`).
+| `tabindex`       | `number`            | `-1`    | Reflects `tabindex` and sets internal tab indices.
+| `disabled`       | `boolean`           | `false` | Reflects `disabled` and sets internal `disabled` attributes.
+| `twoline`        | `boolean`           | `false` | Activates the two-line variant and enables the `secondary` slot.
+| `activated`      | `boolean`           | `false` | Activates focus-persistent ripple.
+| `graphic`        | `GraphicType`*      | `null`  | Determines which graphic layout to show and enables the `graphic` slot.
+| `hasMeta`        | `boolean`           | `false` | Activates the meta layout tile and enables the `meta` slot.
+| `noninteractive` | `boolean`           | `false` | Disables focus and pointer events for the list item.
+| `selected`       | `boolean`           | `false` | Denotes that the list item is selected.
+| `text`           | `string` (readonly) | `''`    | Trimmed `textContent` of the list item.
+
+\* `GraphicType` is equivalent to the type
+`'avatar'|'icon'|'medium'|'large'|'control'|null`.
+
+#### mwc-check-list-item
+
+Note: `mwc-check-list-item` inherits from `ListItemBase` which is the base class
+of `mwc-list-item`, so all properties in `mwc-list-item` will be available on
+`mwc-check-list-item`.
+
+| Name             | Type           | Default     | Description
+| ---------------- | -------------- | ----------- | -----------
+| `left`           | `boolean`      | `false`     | Displays the checkbox on the left. Overrides `graphic`.
+| `graphic`        | `GraphicType`* | `'control'` | Determines which graphic layout to show and enables the `graphic` slot when value is not `control` or `null`.
+
+\* `GraphicType` is equivalent to the type
+`'avatar'|'icon'|'medium'|'large'|'control'|null`.
+
+### mwc-radio-list-item
+
+Note: `mwc-radio-list-item` inherits from `ListItemBase` which is the base class
+of `mwc-list-item`, so all properties in `mwc-list-item` will be available on
+`mwc-radio-list-item`.
+
+| Name             | Type           | Default     | Description
+| ---------------- | -------------- | ----------- | -----------
+| `left`           | `boolean`      | `false`     | Displays the checkbox on the left. Overrides `graphic`.
+| `graphic`        | `GraphicType`* | `'control'` | Determines which graphic layout to show and enables the `graphic` slot when value is not `control` or `null`.
+| `group`          | `string|null`  | `null`      | Used to group the internal `mwc-radio`s together (also used by `mwc-menu` for selection groups).
+
+\* `GraphicType` is equivalent to the type
+`'avatar'|'icon'|'medium'|'large'|'control'|null`.
 
 ### Methods
 
 | Name     | Description
 | -------- | -------------
-| `forceLayout() => void` | Forces list to relayout (animation frame time). May be required if list size is incorrect or if stacked layout has not been triggered correctly.
-| `focus() => void` | Focuses on the initial focus element if defined (see [focus section](#focus)).
-| `blur() => void`  | Blurs the active element.
-| `show() => void`  | Opens the list.
-| `close() => void` | Closes the list.
-
-### Listeners
-| Event Name          | Target       | Description
-| ------------------- | ------------ | -----------
-| `click`             | root element | Detects if clicked target is a list action.
-| `resize`            | `window `    | Performs list layout (passive).
-| `orientationchange` | `window`     | Performs list layout (passive).
-| `keydown`           | `mwc-list` | Listens for the enter key to click the default button (passive).
-| `keydown`           | `document`   | Listens for the escape key to close the list (see [`escapeKeyAction`](#properties)).
+| `select(index: MWCListIndex) => void` | Selects the elements at the given index / indices.
+| `toggle(index: number, force?: boolean) => void` | Toggles the selected index, and forcibly selects or deselects the value of `force` if attribtue is provided.
+| `layout(updateItems = true) => void` | Resets tabindex on all items and will update items model if provided true. It may be required to call layout if selectability of an element is dynamically changed. e.g. `[mwc-list-item]` attribute is removed from a list item or `noninteractive` is dynamically set on a list item.
 
 ### Events
 
+#### mwc-list
+
 | Event Name | Target       | Detail             | Description
 | ---------- | ------------ | ------------------ | -----------
-| `opening`  | `mwc-list` | `{}`               | Fired when the list is beginning to open.
-| `opened`   | `mwc-list` | `{}`               | Fired once the list is finished opening (after animation).
-| `closing`  | `mwc-list` | `{action: string}` | Fired when the list is is beginning to close. Detail is the action that closed the list (see [actions section](#actions)).
-| `closed`   | `mwc-list` | `{action: string}` | Fired once the list is finished closing (after animation). Detail is the action that closed the list (see [actions section](#actions)).
+| `selected`  | `mwc-list` | `SelectedDetail`*   | Fired when a selection has been made. `index` is the selected index (will be of type `Set<number>` if multi and `number` if single), and `diff` (of type `IndexDiff`**) represents the diff of added and removed indices from previous selection.
+
+\* `SelectedDetail` is an interface of the following type:
+
+```ts
+interface SelectedDetail<T extends MWCListIndex = MWCListIndex> {
+  index: T;
+  diff: T extends Set<number> ? IndexDiff: undefined;
+}
+```
+
+\** `IndexDiff` is an interface of the following type:
+
+```ts
+interface IndexDiff {
+  added: number[];
+  removed: number[];
+}
+```
+
+It may be easier to use `SelectedEvent` which is of type
+`SingleSelectedEvent|MultiSelectedEvent`.
+
+`SingleSelectedEvent` is of type `CustomEvent<SelectedDetail<number>>`
+
+`MultiSelectedEvent` is of type `CustomEvent<SelectedDetail<Set<number>>>`
+
+If you listen for a `selected` event you may be able to use the following
+pattern:
+
+```ts
+import '@material/mwc-list';
+import {isEventMulti} from '@material/mwc-list';
+
+const onSelected = (evt: SelectedEvent) => {
+  if (isEventMulti(evt)) {
+    // Typescript will infer evt as {index: Set<number>, diff: IndexDiff}
+    ...
+  } else {
+    // Typescript will infer evt as {index: number, diff: undefined}
+    ...
+  }
+};
+
+mwcList.addEventListener('selected', onSelected);
+```
+
+#### mwc-list-item
+
+| Event Name          | Target          | Detail                   | Description
+| ------------------- | --------------- | ------------------------ | -----------
+| `request-selected`  | `mwc-list-item` | `RequestSelectedDetail`* | Fired upon click. Requests selection from the `mwc-list`.
+
+\* `RequestSelectedDetail` is an interface of the following type:
+
+```ts
+interface RequestSelectedDetail {
+  selected: boolean;
+  isClick: boolean;
+}
+```
+
+#### mwc-check-list-item
+
+| Event Name          | Target          | Detail                  | Description
+| ------------------- | --------------- | ----------------------- | -----------
+| `request-selected`  | `mwc-list-item` | `RequestSelectedDetail` | Fired upon click. Requests selection from the `mwc-list`.
+
+#### mwc-radio-list-item
+
+| Event Name          | Target          | Detail                   | Description
+| ------------------- | --------------- | ------------------------ | -----------
+| `request-selected`  | `mwc-list-item` | `RequestSelectedDetail` | Fired upon click and on internal `mwc-radio`'s `checked` event. Requests selection from the `mwc-list`.
 
 ### CSS Custom Properties
 
+#### mwc-list
+
 | Name                                | Default               | Description
 | ----------------------------------- | --------------------- |------------
-| `--mdc-theme-surface`               | ![](images/color_fff.png) `#fff`                | Color of the list surface's background.
-| `--mdc-list-scrim-color`          | ![](images/color_0,0,0,32.png) `rgba(0, 0, 0, 0.32)` | Color of the scrim. (**Note:** setting alpha to 0 will still make scrim clickable but transparent).
-| `--mdc-list-heading-ink-color`    | ![](images/color_0,0,0,87.png) `rgba(0, 0, 0, 0.87)` | Color of the heading text.
-| `--mdc-list-content-ink-color`    | ![](images/color_0,0,0,6.png) `rgba(0, 0, 0, 0.6)`  | Color applied to the projected content. (**Note:** it may also be possible to style the content via the light DOM since it is not encapsulated in a shadow root).
-| `--mdc-list-scroll-divider-color` | ![](images/color_0,0,0,12.png) `rgba(0, 0, 0, 0.12)` | Color of the dividers present when list is scrollable.
-| `--mdc-list-min-width`            | `280px`               | min-width ofthe list surface.
-| `--mdc-list-max-width`            | `560px`               | max-width of the list surface. (**Note:** if max-width is < `560px`, there is a visual jank bug that will occur causing the max width to be `560px` when the window is sized to <= than `560px`).
-| `--mdc-list-max-height`           | `calc(100% - 32px)`   | Max height of the list surface.
-| `--mdc-list-shape-radius`         | `4px`                 | Corner radius of the list surface.
-| `--mdc-list-box-shadow`           | mdc elevation 24      | Sets the box shadow of the list.
+| `--mdc-theme-text-primary-on-background` | ![](images/color_0,0,0,87.png) `rgba(0, 0, 0, 0.87)` | Color of the primary text.
+| `--mdc-list-vertical-padding` | `8px`    | Padding before and after the first and last list items.
+| `--mdc-list-side-padding`     | `16px`   | Adjusts the padding of the `[padded]` list dividers (also propagates to `mwc-list-item`).
+| `--mdc-list-inset-margin`     | `72px`   | Adjusts the left inset padding of an `[inset]` list divider. Typically used for dividing list items with icons.
 
-#### Elevation values
+#### mwc-list-item
 
-| Elevation Level | CSS Value
-| -- | -
-`24` | `0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)`
-
-### Actions
-
-Actions close the list on click. You can define an action by slotting an
-element with the `listAction="..."` string attribute. The name of the
-attribute can be customized by the
-[`actionAttribute` property](#propertiesattributes). When a clickable element
-with the `listAction` attribute is clicked, `mwc-list` will get the value
-of the attribute and fire the `closing` and subsequent `closed` events with a
-detail of `{action: <clickedElement.getAttribute('listAction')>}`.
-
-For example:
-
-<img src="images/action.png" width="566px">
-
-```html
-<mwc-list open>
-  <div>
-    <div>
-      This is my content. Here is an actionable button:
-      <button listAction="contentButton">button 1</button>
-    </div>
-    <div>
-      This is my content. Here is a diabled actionable button:
-      <button disabled listAction="disabledContentButton">button 2</button>
-    </div>
-  </div>
-  <mwc-button slot="primaryAction" listAction="ok">ok</mwc-button>
-  <mwc-button slot="secondaryAction">cancel</mwc-button>
-</mwc-list>
-```
-
-In this example we have 3 actionable elements:
-```html
-<button listAction="contentButton">button 1</button>
-```
-
-```html
-<button disabled listAction="disabledContentButton">button 2</button>
-```
-
-```html
-<mwc-button slot="primaryAction" listAction="ok">ok</mwc-button>
-```
-
-* Clicking button 1 will close the list and fire a `closing` and subsequently
-a `closed` event with a detail of `{action: 'contentButton'}`.
-* Clicking button 2 will not close the list since it is disabled
-* Clicking the cancel `mwc-button` will not close the list as it does not have
-a `listAction` attribute set on it.
-* Clicking the ok `mwc-button` will close the list and fire a `closing` and
-subsequently a `closed` event with a detail of `{action: 'ok'}`.
-* Setting `document.querySelector('mwc-list').open = false;` will close the
-list and fire a `closing` and subsequently a `closed` event with a detail of
-`{action: 'close'}` (action is configurable via
-[`defaultAction` property](#propertiesattributes)).
-
-### Focus
-
-Initial focus can be set on an element with the `listInitialFocus` boolean
-attribute (configurable via the
-[`initialFocusAttribute` property](#propertiesattributes)).
-
-For example:
-
-<img src="images/initial-focus.png" width="597px">
-
-```html
-<mwc-list heading="Initial Focus" open>
-  <div>
-    In this example we set "listInitialFocus" on the mwc-textfield.
-    When this list opens, it is auto-focused.
-  </div>
-  <mwc-textfield
-      label="i am auto-focused"
-      listInitialFocus>
-  </mwc-textfield>
-  <mwc-button slot="primaryAction" listAction="close">
-    Primary
-  </mwc-button>
-  <mwc-button slot="secondaryAction" listAction="close">
-    Secondary
-  </mwc-button>
-</mwc-list>
-```
-
-In this example we set `listInitialFocus` on the `mwc-textfield`, so
-`mwc-textfield.focus()` will be called on the button. This attribute can also be
-set on anything in the light DOM of `mwc-list` or the light dom of the
-flattened, distributed nodes including the primary and secondary actions. Only
-one element designated with this attribute will be focused.
-
-Calling `focus()` on the `mwc-list` itself will call `focus()` on any
-`listInitialFocus` element in the light DOM of `mwc-list`.
-
-Calling `blur()` on the `mwc-list` will attempt to blur the
-[`activeElement`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentOrShadowRoot/activeElement)
-of the shadow root of `mwc-list` or the
-[root node](https://developer.mozilla.org/en-US/docs/Web/API/Node/getRootNode)
-of the list.
+| Name                                       | Default              | Description
+| ------------------------------------------ | -------------------- |------------
+| `--mdc-theme-primary`                      | ![](images/color_6200ee.png) `#6200ee` | Color of the activated ripple and primary text color when activated.
+| `--mdc-theme-on-surface`                   | ![](images/color_000.png) `#000`       | Disabled text color
+| `--mdc-theme-text-icon-on-background`      | ![](images/color_0,0,0,38.png) `rgba(0, 0, 0, .38)` | Color of the graphic icon (if graphic is text icon).
+| `--mdc-theme-text-primary-on-background`   | ![](images/color_0,0,0,87.png) `rgba(0, 0, 0, .87)` | Color of the primary text if not activated.
+| `--mdc-theme-text-secondary-on-background` | ![](images/color_0,0,0,54.png) `rgba(0, 0, 0, .54)` | Color of the secondary text if not activated.
+| `--mdc-theme-hint-on-background`           | ![](images/color_0,0,0,38.png) `rgba(0, 0, 0, .38)` | Color of the meta (if is text or text icon).
+| `--mdc-list-side-padding`                  | `16px`               | Side padding of the list item.
+| `--mdc-list-item-meta-size`                | `24px`               | Line height of the meta icon or text and width & height of the slotted parent wrapper.
+| `--mdc-list-item-graphic-size`             | `24px`,`40px`,`56px` | Line height of the graphic and width & height of the slotted parent wrapper.
+| `--mdc-list-item-graphic-margin`           | `16px`,`32px`        | Margin between the text and graphic. `16px` when graphic is `"avatar"`, `"medium"`, `"large"`, `"control"`. `32px` when graphic is `"icon"`.
 
 ## Additional references
 
