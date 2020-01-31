@@ -60,7 +60,7 @@ export abstract class MenuBase extends BaseElement {
 
   @property({type: Boolean}) wrapFocus = false;
 
-  @property({type: String, reflect: true}) role: 'menu'|'listbox' = 'menu';
+  @property({type: String}) innerRole: 'menu'|'listbox' = 'menu';
 
   @property({type: String}) corner: Corner|null = null;
 
@@ -126,7 +126,7 @@ export abstract class MenuBase extends BaseElement {
   }
 
   render() {
-    const itemRoles = this.role === 'menu' ? 'menuitem' : 'option';
+    const itemRoles = this.innerRole === 'menu' ? 'menuitem' : 'option';
 
     return html`
       <mwc-menu-surface
@@ -145,7 +145,7 @@ export abstract class MenuBase extends BaseElement {
           @keydown=${this.onKeydown}>
           <mwc-list
             rootTabbable
-            .innerRole=${this.role}
+            .innerRole=${this.innerRole}
             .multi=${this.multi}
             class="mdc-list"
             .itemRoles=${itemRoles}
