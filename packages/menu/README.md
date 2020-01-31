@@ -240,6 +240,7 @@ so the default slot has the same interface as the default slot of `mwc-list`.
 | `y`                   | `number|null`      | `null`   | Modifies `top` on the menu. Requires `x` not to be null.
 | `forceGroupSelection` | `boolean`          | `false`  | Forces a menu group to have a selected item by preventing deselection of menu items in menu groups via user interaction.
 | `defaultFocus`        | `DefaultFocusState`**         | `"LIST_ROOT"` | Item to focus upon menu open.
+| `fullwidth`           | `boolean`          | `false`  | Sets surface width to 100%.
 | `wrapFocus`           | `boolean`          | `false`  | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `wrapFocus` property.
 | `innerRole`           | `"menu"|"listbox"` | `"menu"` | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `innerRole` property.
 | `multi`               | `boolean`          | `false`  | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `multi` property.

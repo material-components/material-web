@@ -253,6 +253,7 @@ export abstract class SelectBase extends FormElement {
             wrapFocus
             class="mdc-select__menu mdc-menu mdc-menu-surface"
             activatable
+            fullwidth
             .open=${this.menuOpen}
             .anchor=${this.anchorElement}
             @selected=${this.onSelected}

@@ -77,6 +77,8 @@ export abstract class MenuBase extends BaseElement {
 
   @property({type: Boolean}) forceGroupSelection = false;
 
+  @property({type: Boolean}) fullwidth = false;
+
   @property({type: String})
   @observer(function(this: MenuBase, value: DefaultFocusState) {
     if (this.mdcFoundation) {
@@ -138,6 +140,7 @@ export abstract class MenuBase extends BaseElement {
           .y=${this.y}
           .absolute=${this.absolute}
           .fixed=${this.fixed}
+          .fullwidth=${this.fullwidth}
           class="mdc-menu mdc-menu-surface"
           @closed=${this.onClosed}
           @opened=${this.onOpened}

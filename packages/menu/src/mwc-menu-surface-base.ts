@@ -49,6 +49,8 @@ export abstract class MenuSurfaceBase extends BaseElement {
   })
   absolute = false;
 
+  @property({type: Boolean}) fullwidth = false;
+
   @property({type: Object})
   @observer(function(
       this: MenuSurfaceBase, newAnchor: HTMLElement|null,
@@ -129,6 +131,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
   render() {
     const classes = {
       'mdc-menu-surface--fixed': this.fixed,
+      'fullwidth': this.fullwidth,
     };
 
     return html`

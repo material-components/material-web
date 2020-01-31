@@ -19,3 +19,7 @@ limitations under the License.
 :host(:not([open])) {
   display: none;
 }
+
+.fullwidth {
+  width: 100%;
+}
