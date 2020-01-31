@@ -421,10 +421,10 @@ export abstract class SelectBase extends FormElement {
       setMenuAnchorElement: () => {
         /* Handled by anchor directive */
       },
-      setMenuAnchorCorner: (anchorCorner) => {
+      setMenuAnchorCorner: () => {
         const menuElement = this.menuElement;
         if (menuElement) {
-          menuElement.setAnchorCorner(anchorCorner);
+          menuElement.corner = 'BOTTOM_START';
         }
       },
       setMenuWrapFocus: (wrapFocus) => {

@@ -17,7 +17,6 @@ limitations under the License.
 import '@material/mwc-list';
 import './mwc-menu-surface';
 
-import {Corner as CornerEnum} from '@material/menu-surface/constants';
 import {MDCMenuAdapter} from '@material/menu/adapter';
 import {DefaultFocusState as DefaultFocusStateEnum} from '@material/menu/constants';
 import MDCMenuFoundation from '@material/menu/foundation.js';
@@ -345,14 +344,6 @@ export abstract class MenuBase extends BaseElement {
 
     if (listElement) {
       listElement.select(index);
-    }
-  }
-
-  setAnchorCorner(corner: CornerEnum) {
-    const surface = this.mdcRoot;
-
-    if (surface) {
-      surface.setAnchorCorner(corner);
     }
   }
 

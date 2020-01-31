@@ -17,14 +17,11 @@ limitations under the License.
 import {MDCMenuSurfaceAdapter} from '@material/menu-surface/adapter';
 import {Corner as CornerEnum} from '@material/menu-surface/constants';
 import MDCMenuSurfaceFoundation from '@material/menu-surface/foundation.js';
-import {MDCMenuDistance} from '@material/menu-surface/types';
 import {getTransformPropertyName} from '@material/menu-surface/util';
 import {addHasRemoveClass, BaseElement, observer} from '@material/mwc-base/base-element.js';
 import {deepActiveElementPath, doesElementContainFocus} from '@material/mwc-base/utils';
 import {html, property, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
-
-export {MDCMenuDistance} from '@material/menu-surface/types';
 
 export type Corner = keyof typeof CornerEnum;
 export type AnchorableElement = HTMLElement&{anchor: Element | null};
@@ -297,17 +294,5 @@ export abstract class MenuSurfaceBase extends BaseElement {
 
   show() {
     this.open = true;
-  }
-
-  setAnchorMargin(margin: Partial<MDCMenuDistance>) {
-    if (this.mdcFoundation) {
-      this.mdcFoundation.setAnchorMargin(margin);
-    }
-  }
-
-  setAnchorCorner(corner: CornerEnum) {
-    if (this.mdcFoundation) {
-      this.mdcFoundation.setAnchorCorner(corner);
-    }
   }
 }
