@@ -36,7 +36,7 @@ npm install @material/mwc-linear-progress
 <mwc-linear-progress progress="0.5"></mwc-linear-progress>
 ```
 
-### Indederminate
+### Indeterminate
 
 <img src="images/indeterminate.gif" height="77px">
 
