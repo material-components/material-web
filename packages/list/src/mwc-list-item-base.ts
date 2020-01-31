@@ -154,7 +154,7 @@ export class ListItemBase extends LitElement {
     this.removeEventListener('click', this.boundOnClick);
   }
 
-  firstUpdated() {
+  protected firstUpdated() {
     this.dispatchEvent(
         new Event('list-item-rendered', {bubbles: true, composed: true}));
 
