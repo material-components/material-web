@@ -32,6 +32,9 @@ const isListItem = (element: Element): element is ListItemBase => {
   return element.hasAttribute('mwc-list-item');
 };
 
+/**
+ * @fires selected {SelectedDetail}
+ */
 export abstract class ListBase extends BaseElement {
   protected mdcFoundation!: MDCListFoundation;
   protected mdcAdapter: MDCListAdapter|null = null;

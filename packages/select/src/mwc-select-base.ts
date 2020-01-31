@@ -84,6 +84,13 @@ const createValidityObj =
       };
     };
 
+/**
+ * @fires selected {SelectedDetail}
+ * @fires opened
+ * @fires closed
+ * @fires change
+ * @fires invalid
+ */
 export abstract class SelectBase extends FormElement {
   protected mdcFoundation!: MDCSelectFoundation;
 

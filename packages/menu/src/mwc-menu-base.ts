@@ -35,7 +35,9 @@ export {createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex} from '@mater
 export {Corner} from './mwc-menu-surface-base';
 
 /**
- * @fires selected
+ * @fires selected {SelectedDetail}
+ * @fires opened
+ * @fires closed
  */
 export abstract class MenuBase extends BaseElement {
   protected mdcFoundation!: MDCMenuFoundation;
