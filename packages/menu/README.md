@@ -284,7 +284,8 @@ so the default slot has the same interface as the default slot of `mwc-list`.
 
 ### CSS Custom Properties
 
-`mwc-menu` inherits from `mwc-list`
+`mwc-menu` inherits from `mwc-list`, so all custom properties from `mwc-list`
+propagate through `mwc-menu`.
 
 | Name                     | Default | Description
 | ------------------------ | ------- |------------
