@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - End-alignment to `mwc-textfield` and `mwc-textarea`
+- Implemented:
+  - `mwc-select`
+  - `mwc-menu`
+  - `mwc-menu-surface`
+  - `mwc-list`
+  - `mwc-list-item`
+- Base / utils.ts
+  - `isNodeElement` - performant node -> element checking
+  - `deepActiveElementPath` - finds the deepest `activeElement` node
+  - `doesElementContainFocus` - determines is ancestor of `activeElement`
+- `mwc-radio.global` - groups radios across document rather than shadow root
+- Style underline of filled textfield
+  - `--mdc-text-field-idle-line-color`
+  - `--mdc-text-field-hover-line-color`
 
 ### Fixed
 
