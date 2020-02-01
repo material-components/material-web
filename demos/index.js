@@ -176,6 +176,13 @@ class DemoView extends LitElement {
               <span class="mdc-list-item__secondary-text">Touch ripple</span>
             </span>
           </a>
+          <a role="listitem" class="mdc-list-item" href="select.html">
+            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material.io/develop/images/component_icons/menu.svg"></span>
+            <span class="mdc-list-item__text">
+              Select
+              <span class="mdc-list-item__secondary-text">Single option dropdown select menus</span>
+            </span>
+          </a>
           <a role="listitem" class="mdc-list-item" href="slider.html">
             <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/slider.svg"></span>
             <span class="mdc-list-item__text">
@@ -216,13 +223,6 @@ class DemoView extends LitElement {
             <span class="mdc-list-item__text">
               Text area
               <span class="mdc-list-item__secondary-text">Multiline text areas</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="select.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material.io/develop/images/component_icons/menu.svg"></span>
-            <span class="mdc-list-item__text">
-              Select
-              <span class="mdc-list-item__secondary-text">Single option dropdown select menus</span>
             </span>
           </a>
           <a role="listitem" class="mdc-list-item" href="top-app-bar.html">
