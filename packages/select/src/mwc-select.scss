@@ -69,12 +69,20 @@ mwc-notched-outline {
   .mdc-select {
     &:not(.mdc-select--outlined) {
       @include mixins.container-fill-color(var(--mdc-select-fill-color, #{vars.$fill-color}));
+
+      .mdc-select__selected-text {
+        border-bottom-color: var(--mdc-select-idle-line-color, rgb(0, 0, 0, 0.42));
+
+        &:hover {
+          border-bottom-color: var(--mdc-select-hover-line-color, rgba(0, 0, 0, 0.87));
+        }
+      }
     }
 
     &.mdc-select--invalid {
       $select-error-color: var(--mdc-select-error-color, var(--mdc-theme-error, #{theme-vars.$error}));
       .mdc-select__dropdown-icon {
-        color: $select-error-color;
+        color: var(--mdc-select-error-dropdown-icon-color, #{$select-error-color});
       }
 
       .mdc-floating-label, .mdc-floating-label::after {
@@ -112,7 +120,7 @@ mwc-notched-outline {
         }
 
         .mdc-select__dropdown-icon {
-          color: var(--mdc-select-dropdown-icon-color, var(--mdc-theme-primary, #{vars.$focused-label-color}));
+          color: var(--mdc-select-focused-dropdown-icon-color, var(--mdc-theme-primary, #{vars.$focused-label-color}));
         }
 
         .mdc-floating-label {
