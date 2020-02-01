@@ -87,6 +87,7 @@ const createValidityObj =
 
 /**
  * @fires selected {SelectedDetail}
+ * @fires action {ActionDetail}
  * @fires opened
  * @fires closed
  * @fires change
