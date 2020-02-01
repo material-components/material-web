@@ -82,6 +82,23 @@ so its main slot has the same interface as the main slot of a `mwc-list`.
 </mwc-select>
 ```
 
+### Icon
+
+Icon is a material-icons font name. Additionally, all options must have
+`graphic="icon"` defined to enable proper spacing.
+
+<img src="images/icon.png" width="235px">
+<br>
+<img src="images/icon_active.png" width="235px">
+
+```html
+<mwc-select label="has icon" icon="event">
+  <mwc-list-item graphic="icon" value="1">Option 1</mwc-list-item>
+  <mwc-list-item graphic="icon" value="2">Option 2</mwc-list-item>
+  <mwc-list-item graphic="icon" value="3">Option 3</mwc-list-item>
+</mwc-select>
+```
+
 ### Required (error, validation message)
 
 <img src="images/error.png" width="435px">
