@@ -16,6 +16,7 @@ limitations under the License.
 */
 import '@material/mwc-notched-outline';
 import '@material/mwc-menu';
+import '@material/mwc-icon';
 
 import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
 import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
@@ -131,9 +132,9 @@ export abstract class SelectBase extends FormElement {
 
   @property({type: String}) label = '';
 
-  @property({type: Boolean}) outlineOpen = false;
+  @property({type: Boolean}) protected outlineOpen = false;
 
-  @property({type: Number}) outlineWidth = 0;
+  @property({type: Number}) protected outlineWidth = 0;
 
   @property({type: String})
   @observer(function(this: SelectBase) {
@@ -319,7 +320,7 @@ export abstract class SelectBase extends FormElement {
   }
 
   protected renderIcon(icon: string) {
-    return html`<i class="material-icons mdc-select__icon">${icon}</i>`;
+  return html`<mwc-icon class="mdc-select__icon"><div>${icon}</div></mwc-icon>`;
   }
 
   createAdapter(): MDCSelectAdapter {

@@ -33,6 +33,14 @@ limitations under the License.
   display: none;
 }
 
+.mdc-select__icon {
+  z-index: 2;
+}
+
+.mdc-select--with-leading-icon {
+  --mdc-list-item-graphic-margin: calc(48px - var(--mdc-list-item-graphic-size, 24px) - var(--mdc-list-side-padding, 16px));
+}
+
 .mdc-select .mdc-select__anchor {
   display: block;
   position: relative;
