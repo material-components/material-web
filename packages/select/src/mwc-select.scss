@@ -78,7 +78,7 @@ mwc-notched-outline {
     &:not(.mdc-select--outlined) {
       @include mixins.container-fill-color(var(--mdc-select-fill-color, #{vars.$fill-color}));
 
-      .mdc-select__selected-text {
+      &:not(.mdc-select--invalid) .mdc-select__selected-text {
         border-bottom-color: var(--mdc-select-idle-line-color, rgb(0, 0, 0, 0.42));
 
         &:hover {
