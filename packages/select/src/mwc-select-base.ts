@@ -654,8 +654,10 @@ export abstract class SelectBase extends FormElement {
   }
 
   select(index: number) {
-    if (this.mdcFoundation) {
-      this.mdcFoundation.setSelectedIndex(index);
+    const menuElement = this.menuElement;
+
+    if (menuElement) {
+      menuElement.select(index);
     }
   }
 
