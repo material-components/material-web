@@ -277,9 +277,10 @@ so the default slot has the same interface as the default slot of `mwc-list`.
 | `opened`   | `mwc-menu-surface` | none               | Fired when opened.
 | `closed`   | `mwc-menu-surface` | none               | Fired when closed.
 | `action`   | `mwc-list`         | `ActionDetail`*    | Fired when a selection has been made via click or keyboard aciton.
-| `selected` | `mwc-list`         | `SelectedDetail`** | Fired when a selection has been made. `index` is the selected index (will be of type `Set<number>` if multi and `number` if single), and `diff` (of type `IndexDiff`**) represents the diff of added and removed indices from previous selection.
+| `selected` | `mwc-list`         | `SelectedDetail`*  | Fired when a selection has been made. `index` is the selected index (will be of type `Set<number>` if multi and `number` if single), and `diff` (of type `IndexDiff`**) represents the diff of added and removed indices from previous selection.
 
-\* `ActionDetail` is an interface of the following type:
+\* See
+[`mwc-list`'s Events section](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-2) for more details.
 
 ### CSS Custom Properties
 
