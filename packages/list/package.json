@@ -13,7 +13,7 @@
     "@material/mwc-base": "^0.12.0",
     "@material/mwc-checkbox": "^0.12.0",
     "@material/mwc-radio": "^0.12.0",
-    "@material/list": "=5.0.0-canary.faa9af310.0",
+    "@material/list": "=5.0.0-canary.a1a0deb3e.0",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0"
