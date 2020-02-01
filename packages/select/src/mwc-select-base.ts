@@ -177,7 +177,7 @@ export abstract class SelectBase extends FormElement {
   get selected(): ListItemBase|null {
     const menuElement = this.menuElement;
     if (menuElement) {
-      return menuElement.selected as ListItemBase|null;
+      return menuElement.selected as ListItemBase | null;
     }
 
     return null;
@@ -348,7 +348,8 @@ export abstract class SelectBase extends FormElement {
   }
 
   protected renderIcon(icon: string) {
-  return html`<mwc-icon class="mdc-select__icon"><div>${icon}</div></mwc-icon>`;
+    return html`<mwc-icon class="mdc-select__icon"><div>${
+        icon}</div></mwc-icon>`;
   }
 
   protected createAdapter(): MDCSelectAdapter {
