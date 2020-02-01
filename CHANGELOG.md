@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Added
+
+- End-alignment to `mwc-textfield` and `mwc-textarea`
+
 ### Fixed
 
 - Fixed mwc-dialog not removing keydown event listener on close.
