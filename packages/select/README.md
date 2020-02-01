@@ -185,7 +185,7 @@ focused:
 
 | Name              |	Description
 | ----------------- | -------------
-| _default_         |	Content to display in the selects internal `<mwc-list>` element.
+| _default_         |	Content to display in the selects internal `<mwc-menu>` element.
 
 `mwc-select` internally uses
 [`mwc-list`](https://github.com/material-components/material-components-web-components/tree/master/packages/list),
@@ -195,8 +195,8 @@ so the default slot has the same interface as the default slot of `mwc-list`.
 
 | Name                  | Type           | Default | Description
 | --------------------- | -------------- | ------- |------------
-| `open`                | `boolean`          | `false`  | Whether the select should open and display.
-| `anchor`              | `HTMLElement|null` | `null`   | Determines which element the floating select should anchor to. In the default case, both `mwc-select` and the anchor should share a parent with `position:relative`.
+| `outlined`                | `boolean`          | `false`  | Whether the select should open and display.
+| `label`              | `HTMLElement|null` | `null`   | Determines which element the floating select should anchor to. In the default case, both `mwc-select` and the anchor should share a parent with `position:relative`.
 | `corner`              | `Corner`*          | `"TOP_START"` | Corner of the anchor from which the select should position itself.
 | `quick`               | `boolean`          | `false`  | Whether to skip the opening animation.
 | `absolute`            | `boolean`          | `false`  | Makes the select's position `absolute` which will be relative to whichever ancestor has `position:relative`. Setting `x` and `y` will modify the select's `left` and `top`. Setting `anchor` will attempt to position the select to the `anchor`.
