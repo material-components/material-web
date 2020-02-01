@@ -750,18 +750,20 @@ export abstract class SelectBase extends FormElement {
 
   protected async onLabelChange() {
     if (this.label) {
-      await this.layout();
+      await this.layout(false);
     }
   }
 
-  async layout() {
+  async layout(updateItems = true) {
     if (this.mdcFoundation) {
       this.mdcFoundation.layout();
     }
 
     await this.updateComplete;
 
-    if (this.labelElement && this.outlineElement) {
+    const labelElement = this.labelElement;
+
+    if (labelElement && this.outlineElement) {
       /* When the textfield automatically notches due to a value and label
        * being defined, the textfield may be set to `display: none` by the user.
        * this means that the notch is of size 0px. We provide this function so
@@ -769,9 +771,15 @@ export abstract class SelectBase extends FormElement {
        * width.
        */
       if (this.outlineOpen) {
-        const labelWidth = this.labelElement.floatingLabelFoundation.getWidth();
+        const labelWidth = labelElement.floatingLabelFoundation.getWidth();
         this.outlineWidth = labelWidth;
       }
+    }
+
+    const menuElement = this.menuElement;
+
+    if (menuElement) {
+      menuElement.layout(updateItems);
     }
   }
 }

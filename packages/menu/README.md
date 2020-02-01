@@ -268,6 +268,7 @@ so the default slot has the same interface as the default slot of `mwc-list`.
 | `show() => void`  | Sets `open` to false.
 | `close() => void` | Sets `open` to true.
 | `select(index: MWCMenuIndex) => void` | Selects the elements at the given index / indices.
+| `layout(updateItems = true) => void` | Resets tabindex on all items and will update `items` model if provided true. It may be required to call layout if selectability of an element is dynamically changed. e.g. `[mwc-list-item]` attribute is removed from a list item or `noninteractive` is dynamically set on a list item.
 
 ### Events
 

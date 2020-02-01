@@ -357,4 +357,12 @@ export abstract class MenuBase extends BaseElement {
   show() {
     this.open = true;
   }
+
+  layout(updateItems = true) {
+    const listElement = this.listElement;
+
+    if (listElement) {
+      listElement.layout(updateItems);
+    }
+  }
 }
