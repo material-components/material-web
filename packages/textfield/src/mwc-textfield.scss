@@ -68,7 +68,7 @@ mwc-notched-outline {
     &:not(.mdc-text-field--outlined) {
       background-color: var(--mdc-text-field-fill-color, #{vars.$background});
 
-      .mdc-text-field__input {
+      &:not(.mdc-text-field--invalid) .mdc-text-field__input {
         border-bottom-color: var(--mdc-text-field-idle-line-color, rgba(0,0,0.42));
 
         &:hover {
