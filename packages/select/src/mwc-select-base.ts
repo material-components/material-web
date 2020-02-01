@@ -164,6 +164,33 @@ export abstract class SelectBase extends FormElement {
 
   @property({type: Boolean}) protected isUiValid = true;
 
+  get items(): ListItemBase[] {
+    const menuElement = this.menuElement;
+    if (menuElement) {
+      return menuElement.items;
+    }
+
+    return [];
+  }
+
+  get selected(): ListItemBase|null {
+    const menuElement = this.menuElement;
+    if (menuElement) {
+      return menuElement.selected as ListItemBase|null;
+    }
+
+    return null;
+  }
+
+  get index(): number {
+    const menuElement = this.menuElement;
+    if (menuElement) {
+      return menuElement.index as number;
+    }
+
+    return -1;
+  }
+
   protected listeners: ({
     target: Element;
     name: string;
@@ -323,7 +350,7 @@ export abstract class SelectBase extends FormElement {
   return html`<mwc-icon class="mdc-select__icon"><div>${icon}</div></mwc-icon>`;
   }
 
-  createAdapter(): MDCSelectAdapter {
+  protected createAdapter(): MDCSelectAdapter {
     return {
       ...addHasRemoveClass(this.mdcRoot),
       activateBottomLine: () => {
@@ -591,7 +618,7 @@ export abstract class SelectBase extends FormElement {
     this.formElement.setCustomValidity(message);
   }
 
-  async _getUpdateComplete() {
+  protected async _getUpdateComplete() {
     await super._getUpdateComplete();
     await Promise.all([
       this._outlineUpdateComplete,
@@ -599,7 +626,7 @@ export abstract class SelectBase extends FormElement {
     ]);
   }
 
-  async firstUpdated() {
+  protected async firstUpdated() {
     const menuElement = this.menuElement;
     const outlineElement = this.outlineElement;
     if (outlineElement) {
