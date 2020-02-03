@@ -1,0 +1,125 @@
+/**
+@license
+Copyright 2020 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+@import "@material/list/_mixins.scss";
+@import "@material/ripple/common";
+
+$query: mdc-feature-all();
+
+$feat-color: mdc-feature-create-target($query, color);
+$feat-structure: mdc-feature-create-target($query, structure);
+$feat-typography: mdc-feature-create-target($query, typography);
+$feat-animation: mdc-feature-create-target($query, animation);
+
+$item-primary-text-baseline-height: 32px;
+$item-secondary-text-baseline-height: 20px;
+$dense-item-primary-text-baseline-height: 24px;
+$divider-color: if(
+  mdc-theme-tone($mdc-theme-background) == "dark",
+  $mdc-list-divider-color-on-dark-bg,
+  $mdc-list-divider-color-on-light-bg
+);
+
+:host {
+  display: block;
+}
+
+.mdc-list {
+  @include mdc-list-base_($query);
+
+  padding: var(--mdc-list-vertical-padding, 8px) 0;
+}
+
+@include mdc-list-single-line-density($mdc-list-single-line-density-scale, $query: $query);
+
+.mdc-list--dense {
+  @include mdc-feature-targets($feat-structure) {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    font-size: .812rem;
+  }
+}
+// stylelint-enable selector-max-type,selector-no-qualifying-type
+
+.mdc-list ::slotted([divider]) {
+  @include mdc-feature-targets($feat-structure) {
+    height: 0;
+    margin: 0;
+    border: none;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+  }
+
+  @include mdc-theme-prop(border-bottom-color, $divider-color)
+}
+
+.mdc-list ::slotted([divider][padded]) {
+  @include mdc-feature-targets($feat-structure) {
+    // Leave gaps on each side to match the padding on list items
+    margin: 0 var(--mdc-list-side-padding, #{$mdc-list-side-padding});
+  }
+}
+
+.mdc-list ::slotted([divider][inset]) {
+  @include mdc-feature-targets($feat-structure) {
+    @include mdc-rtl-reflexive-box(margin, left, var(--mdc-list-inset-margin, #{$mdc-list-text-offset}), ".mdc-list-group");
+
+    width: calc(100% - var(--mdc-list-inset-margin, #{$mdc-list-text-offset}));
+  }
+}
+
+.mdc-list ::slotted([divider][inset][padded]) {
+  @include mdc-feature-targets($feat-structure) {
+    width: calc(100% - var(--mdc-list-inset-margin, #{$mdc-list-text-offset}) - var(--mdc-list-side-padding, #{$mdc-list-side-padding}));
+  }
+}
+
+// stylelint-disable plugin/selector-bem-pattern
+.mdc-list--dense ::slotted([mwc-list-item]) {
+  @include mdc-feature-targets($feat-structure) {
+    height: 40px;
+  }
+}
+
+.mdc-list--dense ::slotted([mwc-list]) {
+  @include mdc-feature-targets($feat-structure) {
+    --mdc-list-item-graphic-size: 20px;
+  }
+}
+
+.mdc-list--two-line.mdc-list--dense ::slotted([mwc-list-item]),
+.mdc-list--avatar-list.mdc-list--dense ::slotted([mwc-list-item]) {
+  @include mdc-feature-targets($feat-structure) {
+    height: 60px;
+  }
+}
+
+.mdc-list--avatar-list.mdc-list--dense ::slotted([mwc-list]) {
+  @include mdc-feature-targets($feat-structure) {
+    --mdc-list-item-graphic-size: 36px;
+  }
+}
+
+:host([noninteractive]) {
+  pointer-events: none;
+  cursor: default;
+}
+
+.mdc-list--dense ::slotted(.mdc-list-item__primary-text) {
+  @include mdc-typography-baseline-top($dense-item-primary-text-baseline-height, $query);
+  @include mdc-typography-baseline-bottom($item-secondary-text-baseline-height, $query);
+}

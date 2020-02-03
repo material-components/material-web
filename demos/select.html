@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
 @license
-Copyright 2018 Google Inc. All Rights Reserved.
+Copyright 2020 Google Inc. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,9 +18,14 @@ limitations under the License.
 <html>
 <head>
   <title>select demo</title>
+  <script>
+    delete Document.prototype.adoptedStyleSheets;
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script  src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script type="module" src="../node_modules/@material/mwc-select/mwc-select.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-list/mwc-list-item.js"></script>
+  <script type="module" src="../node_modules/@material/mwc-button/mwc-button.js"></script>
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
   <link rel="stylesheet" href="demo-component.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
@@ -37,6 +42,15 @@ limitations under the License.
       right: calc(100vw - 100% + 16px);
     }
 
+    [slot="graphic"].material-icons {
+      background-color: gray;
+      color: white;
+    }
+
+    mwc-select ~ div,
+    div ~ mwc-select {
+      margin-top: 8px;
+    }
   </style>
 </head>
 <body class="unresolved">
@@ -44,62 +58,152 @@ limitations under the License.
     <a href="index.html"><mwc-icon>arrow_back</mwc-icon>
     <span>Select</span></a>
   </header>
-
   <main>
+    <h2>Filled</h2>
+    <mwc-select label="filled" id="filled">
+      <mwc-list-item></mwc-list-item>
+      <mwc-list-item value="1">Option 1</mwc-list-item>
+      <mwc-list-item value="2">Option 2</mwc-list-item>
+      <mwc-list-item value="3">Option 3</mwc-list-item>
+    </mwc-select>
+    <div>Value: <span id="filledValue"></span></div>
 
-    <mwc-select label="Choose an item...">
-      <mwc-list-item label="this is choice one"></mwc-list-item>
-      <mwc-list-item label="this is choice two"></mwc-list-item>
-      <mwc-list-item label="this is choice three"></mwc-list-item>
-      <mwc-list-item disabled label="this is choice four"></mwc-list-item>
-      <mwc-list-item-separator></mwc-list-item-separator>
-      <mwc-list-item label="this is choice aaa"></mwc-list-item>
-      <mwc-list-item label="this is choice bbb"></mwc-list-item>
+    <h2>Outlined</h2>
+    <mwc-select outlined label="outlined" id="outlined">
+      <mwc-list-item></mwc-list-item>
+      <mwc-list-item value="1">Option 1</mwc-list-item>
+      <mwc-list-item value="2">Option 2</mwc-list-item>
+      <mwc-list-item value="3">Option 3</mwc-list-item>
+    </mwc-select>
+    <div>Value: <span id="outlinedValue"></span></div>
+
+    <h2>Preselected</h2>
+    <mwc-select label="preselected" id="preselected">
+      <mwc-list-item></mwc-list-item>
+      <mwc-list-item value="1">Option 1</mwc-list-item>
+      <mwc-list-item value="2" selected>Option 2</mwc-list-item>
+      <mwc-list-item value="3">Option 3</mwc-list-item>
+    </mwc-select>
+    <div>Value: <span id="preselectedValue"></span></div>
+
+    <h2>Icon</h2>
+    <mwc-select label="has icon" icon="event">
+      <mwc-list-item graphic="icon" value="1">Option 1</mwc-list-item>
+      <mwc-list-item graphic="icon" value="2">Option 2</mwc-list-item>
+      <mwc-list-item graphic="icon" value="3">Option 3</mwc-list-item>
     </mwc-select>
 
-    <h3>box</h3>
+    <h2>Required</h2>
+    <mwc-select required label="required filled" id="reqFilled">
+      <mwc-list-item></mwc-list-item>
+      <mwc-list-item value="1">Option 1</mwc-list-item>
+      <mwc-list-item value="2">Option 2</mwc-list-item>
+      <mwc-list-item value="3">Option 3</mwc-list-item>
+    </mwc-select>
+    <div>Value: <span id="reqFilledValue"></span></div>
+    <div>Valid: <span id="reqFilledValid"></span></div>
 
-    <mwc-select box label="Box: Choose an item...">
-      <mwc-list-item label="this is choice one"></mwc-list-item>
-      <mwc-list-item label="this is choice two"></mwc-list-item>
-      <mwc-list-item label="this is choice three"></mwc-list-item>
-      <mwc-list-item disabled label="this is choice four"></mwc-list-item>
-      <mwc-list-item-separator></mwc-list-item-separator>
-      <mwc-list-item label="this is choice aaa"></mwc-list-item>
-      <mwc-list-item label="this is choice bbb"></mwc-list-item>
+    <mwc-select outlined required label="required outlined" id="reqOutlined">
+      <mwc-list-item></mwc-list-item>
+      <mwc-list-item value="1">Option 1</mwc-list-item>
+      <mwc-list-item value="2">Option 2</mwc-list-item>
+      <mwc-list-item value="3">Option 3</mwc-list-item>
+    </mwc-select>
+    <div>Value: <span id="reqOutlinedValue"></span></div>
+    <div>Valid: <span id="reqOutlinedValid"></span></div>
+
+    <h2>Disabled</h2>
+    <mwc-select disabled label="disabled">
+      <mwc-list-item></mwc-list-item>
+      <mwc-list-item disabled value="1">Option 1</mwc-list-item>
+      <mwc-list-item value="2">Option 2</mwc-list-item>
+      <mwc-list-item value="3">Option 3</mwc-list-item>
     </mwc-select>
 
-    <h3>box - sized</h3>
-
-    <mwc-select box style="width: 500px;" label="Box: Choose an item...">
-      <mwc-list-item label="this is choice one"></mwc-list-item>
-      <mwc-list-item label="this is choice two"></mwc-list-item>
-      <mwc-list-item label="this is choice three"></mwc-list-item>
-      <mwc-list-item disabled label="this is choice four"></mwc-list-item>
-      <mwc-list-item-separator></mwc-list-item-separator>
-      <mwc-list-item label="this is choice aaa"></mwc-list-item>
-      <mwc-list-item label="this is choice bbb"></mwc-list-item>
+    <h2>Disabled Options</h2>
+    <mwc-select label="disabled" id="disabledOptions">
+      <mwc-list-item></mwc-list-item>
+      <mwc-list-item value="1">Option 1</mwc-list-item>
+      <mwc-list-item disabled value="2"><div>Option 2</div></mwc-list-item>
+      <mwc-list-item value="3">Option 3</mwc-list-item>
     </mwc-select>
+    <div>Value: <span id="disabledOptionsValue"></span></div>
 
-    <h3>disabled</h3>
+    <h2>Natural Menu Width</h2>
 
-    <mwc-select disabled label="Disabled...">
-      <mwc-list-item label="this is choice one"></mwc-list-item>
-      <mwc-list-item label="this is choice two"></mwc-list-item>
+    <style>
+      #naturalOptions {
+        max-width: 200px;
+      }
+    </style>
+    <mwc-select label="natural width (long)" id="naturalOptions">
+      <mwc-list-item></mwc-list-item>
+      <mwc-list-item value="1">Some Really Really Really long text</mwc-list-item>
+      <mwc-list-item value="2">Some Really Really Really long text</mwc-list-item>
+      <mwc-list-item value="3">Some Really Really Really long text</mwc-list-item>
     </mwc-select>
+    <div>
+      <mwc-button raised label="toggle naturalwidth" id="naturalButton">
+      </mwc-button>
+    </div>
+    <div>
+      <pre>mwc-select.natrualWidth</pre> value:
+      <span id="naturalValue">false</span>
+    </div>
 
-    <mwc-select class="abs" label="Choose an item...">
-      <mwc-list-item label="this is choice one"></mwc-list-item>
-      <mwc-list-item label="this is choice two"></mwc-list-item>
-      <mwc-list-item label="this is choice three"></mwc-list-item>
-      <mwc-list-item label="this is choice four"></mwc-list-item>
-      <mwc-list-item-separator></mwc-list-item-separator>
-      <mwc-list-item label="this is choice aaa"></mwc-list-item>
-      <mwc-list-item label="this is choice bbb"></mwc-list-item>
+    <mwc-select label="natural width (short)" id="shortNaturalOptions">
+      <mwc-list-item></mwc-list-item>
+      <mwc-list-item value="1">Short text</mwc-list-item>
+      <mwc-list-item value="2">Short text</mwc-list-item>
+      <mwc-list-item value="3">Short text</mwc-list-item>
     </mwc-select>
+    <div>
+      <mwc-button raised label="toggle shortNaturalwidth" id="shortNaturalButton">
+      </mwc-button>
+    </div>
+    <div>
+      <pre>mwc-select.natrualWidth</pre> value:
+      <span id="shortNaturalValue">false</span>
+    </div>
   </main>
   <script>
-    addEventListener('load', function() { document.body.classList.remove('unresolved'); });
+    addEventListener('load', () => document.body.classList.remove('unresolved'));
+
+    filled.addEventListener('change', function() {
+      filledValue.innerText = filled.value;
+    });
+
+    outlined.addEventListener('change', function() {
+      outlinedValue.innerText = outlined.value;
+    });
+
+    preselected.addEventListener('change', function() {
+      preselectedValue.innerText = preselected.value;
+    });
+
+    reqFilled.addEventListener('change', function() {
+      reqFilledValue.innerText = reqFilled.value;
+      reqFilledValid.innerText = reqFilled.validity.valid;
+    });
+
+    reqOutlined.addEventListener('change', function() {
+      reqOutlinedValue.innerText = reqOutlined.value;
+      reqOutlinedValid.innerText = reqOutlined.validity.valid;
+    });
+
+    disabledOptions.addEventListener('change', function() {
+      disabledOptionsValue.innerText = disabledOptions.value;
+    });
+
+    naturalButton.addEventListener('click', function() {
+      naturalOptions.naturalWidth = !naturalOptions.naturalWidth;
+      naturalValue.innerText = naturalOptions.naturalWidth;
+    });
+
+    shortNaturalButton.addEventListener('click', function() {
+      shortNaturalOptions.naturalWidth = !shortNaturalOptions.naturalWidth;
+      shortNaturalValue.innerText = shortNaturalOptions.naturalWidth;
+    });
   </script>
 </body>
 </html>

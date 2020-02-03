@@ -1,0 +1,186 @@
+/**
+@license
+Copyright 2020 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+@use "@material/select/mdc-select.scss";
+@use "@material/select/helper-text/mdc-select-helper-text.scss";
+@use "@material/select/_mixins.scss" as mixins;
+@use "@material/select/_variables.scss" as vars;
+@use "@material/theme/_variables.scss" as theme-vars;
+@use "@material/theme/_mixins.scss" as theme-mixins;
+@use "@material/floating-label/mdc-floating-label";
+@use "@material/line-ripple/mdc-line-ripple";
+@use "@material/notched-outline/mdc-notched-outline";
+
+
+:host {
+  display: inline-block;
+  vertical-align: top;
+  outline: none;
+}
+
+
+.hidden, [hidden] {
+  display: none;
+}
+
+.mdc-select__icon {
+  z-index: 2;
+}
+
+.mdc-select--with-leading-icon {
+  --mdc-list-item-graphic-margin: calc(48px - var(--mdc-list-item-graphic-size, 24px) - var(--mdc-list-side-padding, 16px));
+}
+
+.mdc-select .mdc-select__anchor {
+  display: flex;
+  position: relative;
+
+  .mdc-select__dropdown-icon {
+    align-items: center;
+    justify-content: center;
+    background: none;
+    color: vars.$icon-color;
+
+    svg {
+      fill: currentColor;
+    }
+  }
+
+  .mdc-select__selected-text {
+    overflow: hidden;
+  }
+
+  * {
+    display: inline-flex;
+  }
+}
+
+mwc-notched-outline {
+  --mdc-notched-outline-border-color: var(--mdc-select-outlined-idle-border-color, #{vars.$outlined-idle-border});
+}
+
+:host(:not([disabled]):hover) .mdc-select:not(.mdc-select--invalid):not(.mdc-select--focused) mwc-notched-outline {
+  --mdc-notched-outline-border-color: var(--mdc-select-outlined-hover-border-color, #{vars.$outlined-hover-border});
+}
+
+:host(:not([disabled])) {
+  .mdc-select {
+    &:not(.mdc-select--outlined) {
+      @include mixins.container-fill-color(var(--mdc-select-fill-color, #{vars.$fill-color}));
+
+      &:not(.mdc-select--invalid) .mdc-select__selected-text {
+        border-bottom-color: var(--mdc-select-idle-line-color, rgb(0, 0, 0, 0.42));
+
+        &:hover {
+          border-bottom-color: var(--mdc-select-hover-line-color, rgba(0, 0, 0, 0.87));
+        }
+      }
+    }
+
+    &.mdc-select--invalid {
+      $select-error-color: var(--mdc-select-error-color, var(--mdc-theme-error, #{theme-vars.$error}));
+      .mdc-select__dropdown-icon {
+        color: var(--mdc-select-error-dropdown-icon-color, #{$select-error-color});
+      }
+
+      .mdc-floating-label, .mdc-floating-label::after {
+        color: $select-error-color;
+      }
+
+      mwc-notched-outline {
+        --mdc-notched-outline-border-color: #{$select-error-color};
+      }
+
+      mwc-menu {
+        --mdc-theme-primary: #{$select-error-color};
+      }
+    }
+
+    &:not(.mdc-select--invalid):not(.mdc-select--focused) {
+      .mdc-floating-label, .mdc-floating-label::after {
+        color: var(--mdc-select-label-ink-color, #{vars.$label-color});
+      }
+
+      .mdc-select__dropdown-icon {
+        color: var(--mdc-select-dropdown-icon-color, vars.$dropdown-color);
+        opacity: var(--mdc-select-dropdown-icon-opacity, vars.$dropdown-opacity);
+      }
+    }
+
+    &.mdc-select--focused {
+      mwc-notched-outline {
+        --mdc-notched-outline-stroke-width: 2px;
+      }
+
+      &:not(.mdc-select--invalid) {
+        mwc-notched-outline {
+          --mdc-notched-outline-border-color: var(--mdc-select-focused-label-color, var(--mdc-theme-primary, #{vars.$focused-label-color}));
+        }
+
+        .mdc-select__dropdown-icon {
+          color: var(--mdc-select-focused-dropdown-icon-color, var(--mdc-theme-primary, #{vars.$focused-label-color}));
+        }
+
+        .mdc-floating-label {
+          @include theme-mixins.prop(color, primary);
+
+          &::after {
+            @include theme-mixins.prop(color, primary);
+          }
+        }
+      }
+    }
+  }
+
+  .mdc-select-helper-text:not(.mdc-select-helper-text--validation-msg) {
+    color: var(--mdc-select-label-ink-color, #{vars.$label-color});
+  }
+}
+
+:host([disabled]) {
+  .mdc-select {
+    &:not(.mdc-select--outlined) {
+      @include mixins.container-fill-color_(var(--mdc-select-disabled-fill-color, #{vars.$disabled-fill-color}));
+    }
+
+    &.mdc-select--outlined {
+      mwc-notched-outline {
+        --mdc-notched-outline-border-color: var(--mdc-select-outlined-disabled-border-color, #{vars.$outlined-disabled-border});
+      }
+    }
+
+    .mdc-select__dropdown-icon {
+      opacity: var(--mdc-select-disabled-dropdown-opacity, vars.$disabled-dropdown-opacity);
+    }
+
+    &:not(.mdc-select--invalid):not(.mdc-select--focused) {
+      .mdc-floating-label, .mdc-floating-label::after {
+        color: var(--mdc-select-disabled-ink-color, #{vars.$disabled-ink-color});
+      }
+    }
+  }
+
+  .mdc-select-helper-text {
+    color: var(--mdc-select-disabled-ink-color, #{vars.$disabled-ink-color});
+  }
+}
+
+// menu
+
+.mdc-menu {
+  width: 100%;
+}

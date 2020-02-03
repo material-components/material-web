@@ -1,0 +1,497 @@
+/**
+@license
+Copyright 2020 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+@import "@material/list/_mixins.scss";
+
+$query: mdc-feature-all();
+$feat-structure: mdc-feature-create-target($query, structure);
+$feat-color: mdc-feature-create-target($query, color);
+$feat-animation: mdc-feature-create-target($query, animation);
+$item-primary-text-baseline-height: 32px;
+$item-secondary-text-baseline-height: 20px;
+$dense-item-primary-text-baseline-height: 24px;
+
+@mixin graphic-size_($width, $height: $width) {
+  width: $width;
+  height: $height;
+
+  ::slotted(*) {
+    line-height: $height;
+  }
+
+  ::slotted(.material-icons),
+  ::slotted(mwc-icon) {
+    line-height: $height !important;
+  }
+}
+
+:host {
+  cursor: pointer;
+  user-select: none;
+
+  $height: mdc-density-prop-value(
+    $density-config: $mdc-list-single-line-density-config,
+    $density-scale: $mdc-list-single-line-density-scale,
+    $property-name: height,
+  );
+  @include mdc-list-single-line-height($height, $query: $query);
+  @include mdc-list-item-base_;
+
+  padding-left: var(--mdc-list-side-padding, 16px);
+  padding-right: var(--mdc-list-side-padding, 16px);
+
+  outline: none;
+
+  $height: mdc-density-prop-value(
+    $density-config: $mdc-list-single-line-density-config,
+    $density-scale: $mdc-list-single-line-density-scale,
+    $property-name: height,
+  );
+
+  @include mdc-list-single-line-height($height, $query: $query);
+  color: rgba(0,0,0,.87);
+  color: var(--mdc-theme-text-primary-on-background,rgba(0,0,0,.87));
+}
+
+// "Selected" is ephemeral and likely to change soon. E.g., selecting one or more photos to share in Google Photos.
+// "Activated" is more permanent. E.g., the currently highlighted navigation destination in a drawer.
+:host([activated]) {
+  @include mdc-list-item-primary-text-ink-color(primary, $query);
+  @include mdc-list-item-graphic-ink-color(primary, $query);
+}
+
+.mdc-list-item__graphic {
+  @include mdc-feature-targets($feat-structure) {
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    fill: currentColor;
+  }
+
+  @include mdc-feature-targets($feat-structure) {
+    display: inline-flex;
+  }
+
+  ::slotted(*) {
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    fill: currentColor;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  }
+}
+// stylelint-enable plugin/selector-bem-pattern
+
+.mdc-list-item__meta {
+  @include graphic-size_(var(--mdc-list-item-meta-size, 24px));
+
+  // stylelint-disable selector-class-pattern
+  ::slotted(:not(.material-icons):not(mwc-icon)) {
+    @include mdc-typography(caption, $query);
+  }
+  // stylelint-enable selector-class-pattern
+
+  @include mdc-feature-targets($feat-structure) {
+    @include mdc-rtl-reflexive-property(margin, auto, 0, ":host");
+  }
+
+  @include mdc-feature-targets($feat-color) {
+    @include mdc-theme-prop(color, text-hint-on-background);
+  }
+
+  ::slotted(*) {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.mdc-list-item__text {
+  @include mdc-typography-overflow-ellipsis($query);
+
+  // Disable interaction on label elements that may automatically
+  // toggle corresponding checkbox / radio input.
+  ::slotted([for]),
+  &[for] {
+    @include mdc-feature-targets($feat-structure) {
+      pointer-events: none;
+    }
+  }
+}
+
+.mdc-list-item__primary-text {
+  @include mdc-typography-overflow-ellipsis($query);
+  @include mdc-typography-baseline-top($item-primary-text-baseline-height, $query);
+  @include mdc-typography-baseline-bottom($item-secondary-text-baseline-height, $query);
+
+  @include mdc-feature-targets($feat-structure) {
+    display: block;
+  }
+}
+
+.mdc-list-item__secondary-text {
+  @include mdc-typography(body2, $query);
+  @include mdc-typography-overflow-ellipsis($query);
+  @include mdc-typography-baseline-top($item-secondary-text-baseline-height, $query);
+
+  @include mdc-feature-targets($feat-structure) {
+    display: block;
+  }
+
+  // stylelint-disable plugin/selector-bem-pattern
+  .mdc-list--dense & {
+    @include mdc-typography-baseline-top($item-secondary-text-baseline-height, $query);
+
+    @include mdc-feature-targets($feat-structure) {
+      font-size: inherit;
+    }
+  }
+  // stylelint-enable plugin/selector-bem-pattern
+}
+
+
+
+// Override anchor tag styles for the use-case of a list being used for navigation
+// stylelint-disable selector-max-type,selector-no-qualifying-type
+* ::slotted(a), a {
+  @include mdc-feature-targets($feat-structure) {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+:host([twoline]) {
+  .mdc-list-item__text {
+    @include mdc-feature-targets($feat-structure) {
+      align-self: flex-start;
+    }
+  }
+
+  @include mdc-feature-targets($feat-structure) {
+    height: 72px;
+  }
+}
+
+
+$states-color: mdc-theme-prop-value(on-surface);
+$hover-opacity: mdc-states-opacity($states-color, hover);
+$focus-opacity: mdc-states-opacity($states-color, focus);
+$press-opacity: mdc-states-opacity($states-color, press);
+
+:host(:not([disabled])) {
+  @include mdc-feature-targets($feat-structure) {
+    --mdc-ripple-fg-size: 0;
+    --mdc-ripple-left: 0;
+    --mdc-ripple-top: 0;
+    --mdc-ripple-fg-scale: 1;
+    --mdc-ripple-fg-translate-end: 0;
+    --mdc-ripple-fg-translate-start: 0;
+
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    // !!DO NOT REMOVE!! mdc-ripple-will-change-replacer
+  }
+
+  &::before,
+  &::after {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    content: "";
+    top: calc(50% - 100%);
+    /* @noflip */
+    left: calc(50% - 100%);
+    width: 100% * 2;
+    height: 100% * 2;
+  }
+
+  &::before {
+    // Also transition background-color to avoid unnatural color flashes when toggling activated/selected state
+    transition:
+      opacity 15ms linear,
+      background-color 15ms linear;
+
+    z-index: 1; // Ensure that the ripple wash for hover/focus states is displayed on top of positioned child elements
+  }
+
+  @include mdc-ripple-target-selector("&") {
+    @include mdc-states-base-color($states-color, $query);
+  }
+}
+
+:host(.mdc-ripple-upgraded:not([disabled])) {
+  &::before {
+    transform: scale(var(--mdc-ripple-fg-scale, 1));
+  }
+
+  &::after {
+    top: 0;
+    /* @noflip */
+    left: 0;
+    transform: scale(0);
+    transform-origin: center center;
+    width: var(--mdc-ripple-fg-size, 100%);
+    height: var(--mdc-ripple-fg-size, 100%);
+  }
+}
+
+:host(.mdc-ripple-upgraded--unbounded:not([disabled])) {
+  &::after {
+    top: var(--mdc-ripple-top, 0);
+    /* @noflip */
+    left: var(--mdc-ripple-left, 0);
+  }
+}
+
+:host(.mdc-ripple-upgraded--foreground-activation:not([disabled])) {
+  &::after {
+    animation:
+      mdc-ripple-fg-radius-in $mdc-ripple-translate-duration forwards,
+      mdc-ripple-fg-opacity-in $mdc-ripple-fade-in-duration forwards;
+  }
+}
+
+:host(.mdc-ripple-upgraded--foreground-deactivation:not([disabled])) {
+  &::after {
+    animation: mdc-ripple-fg-opacity-out $mdc-ripple-fade-out-duration;
+
+    // Retain transform from mdc-ripple-fg-radius-in activation
+    transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));
+  }
+}
+
+:host([disabled],[noninteractive]) {
+  cursor: default;
+  pointer-events: none;
+}
+
+  :host([disabled]) {
+  .mdc-list-item__text {
+    ::slotted(*) {
+      @include mdc-feature-targets($feat-color) {
+        opacity: $mdc-list-text-disabled-opacity;
+      }
+    }
+  }
+
+
+  .mdc-list-item__text,
+  .mdc-list-item__primary-text,
+  .mdc-list-item__secondary-text {
+    ::slotted(*) {
+      @include mdc-feature-targets($feat-color) {
+        @include mdc-theme-prop(color, $mdc-list-text-disabled-color);
+      }
+    }
+  }
+}
+
+// Hover
+
+:host(:not([disabled]):hover)::before {
+  // Opacity falls under color because the chosen opacity is color-dependent
+  // in typical usage
+  @include mdc-feature-targets($feat-color) {
+    opacity: $hover-opacity;
+  }
+}
+
+// Focus
+
+:host(:not([disabled]).mdc-ripple-upgraded--background-focused),
+:host(:not([disabled]):not(.mdc-ripple-upgraded):focus) {
+  &::before {
+    @include mdc-states-focus-opacity-properties_(
+      $opacity: $focus-opacity, $query: $query);
+  }
+}
+
+// Press
+
+:host(:not([disabled]):not(.mdc-ripple-upgraded)) {
+  // Apply press additively by using the ::after pseudo-element
+  &::after {
+    @include mdc-feature-targets($feat-animation) {
+      transition: opacity $mdc-ripple-fade-out-duration linear;
+    }
+  }
+}
+
+:host(:not([disabled]):not(.mdc-ripple-upgraded):active) {
+  &::after {
+    @include mdc-feature-targets($feat-animation) {
+      transition-duration: $mdc-ripple-fade-in-duration;
+    }
+
+    // Opacity falls under color because the chosen opacity is color-dependent in typical usage
+    @include mdc-feature-targets($feat-color) {
+      opacity: $press-opacity;
+    }
+  }
+}
+
+:host(:not([disabled]).mdc-ripple-upgraded) {
+  @include mdc-feature-targets($feat-color) {
+    --mdc-ripple-fg-opacity: #{$press-opacity};
+  }
+}
+
+// selected and active
+
+$selected-opacity: mdc-states-opacity(on-surface, selected);
+$activated-opacity: mdc-states-opacity(primary, activated);
+$states-color-primary: primary;
+$hover-opacity-primary: mdc-states-opacity($states-color-primary, hover);
+$focus-opacity-primary: mdc-states-opacity($states-color-primary, focus);
+$press-opacity-primary: mdc-states-opacity($states-color-primary, press);
+
+// Focus-selected
+
+:host([activated]:not([disabled]).mdc-ripple-upgraded--background-focused),
+:host([activated]:not([disabled]):not(.mdc-ripple-upgraded):focus) {
+  &::before {
+    @include mdc-states-focus-opacity-properties_(
+      $opacity: $focus-opacity-primary + $selected-opacity, $query: $query);
+  }
+}
+
+// Press-selected
+:host([activated]:not([disabled]):not(.mdc-ripple-upgraded):active) {
+  &::after {
+    // Opacity falls under color because the chosen opacity is color-dependent in typical usage
+    @include mdc-feature-targets($feat-color) {
+      opacity: $press-opacity-primary + $selected-opacity;
+    }
+  }
+}
+
+:host([activated]:not([disabled]).mdc-ripple-upgraded) {
+  @include mdc-feature-targets($feat-color) {
+    --mdc-ripple-fg-opacity: #{$press-opacity-primary + $selected-opacity};
+  }
+}
+
+// Activated
+
+:host([activated]:not([disabled])) {
+  &::before {
+    @include mdc-feature-targets($feat-color) {
+      opacity: $activated-opacity;
+    }
+  }
+
+  @include mdc-ripple-target-selector("&") {
+    @include mdc-states-base-color(primary, $query);
+  }
+}
+
+// Hover-activated
+
+:host([activated]:not([disabled]):hover)::before {
+  // Opacity falls under color because the chosen opacity is color-dependent
+  // in typical usage
+  @include mdc-feature-targets($feat-color) {
+    opacity: $hover-opacity-primary + $activated-opacity;
+  }
+}
+
+// Focus-activated
+
+:host([activated]:not([disabled]).mdc-ripple-upgraded--background-focused),
+:host([activated]:not([disabled]):not(.mdc-ripple-upgraded):focus) {
+  &::before {
+    @include mdc-states-focus-opacity-properties_(
+      $opacity: $focus-opacity-primary + $activated-opacity, $query: $query);
+  }
+}
+
+// Press-activated
+:host([activated]:not([disabled]):not(.mdc-ripple-upgraded):active) {
+  &::after {
+    // Opacity falls under color because the chosen opacity is color-dependent in typical usage
+    @include mdc-feature-targets($feat-color) {
+      opacity: $press-opacity-primary + $activated-opacity;
+    }
+  }
+}
+
+:host([activated]:not([disabled]).mdc-ripple-upgraded) {
+  @include mdc-feature-targets($feat-color) {
+    --mdc-ripple-fg-opacity: #{$press-opacity-primary + $activated-opacity};
+  }
+}
+
+.mdc-list-item__secondary-text ::slotted(*) {
+  @include mdc-feature-targets($feat-color) {
+    @include mdc-theme-prop(color, text-secondary-on-background);
+  }
+}
+
+.mdc-list-item__graphic ::slotted(*) {
+  @include mdc-feature-targets($feat-color) {
+    @include mdc-theme-prop(background-color, transparent);
+    @include mdc-theme-prop(color, text-icon-on-background);
+  }
+}
+
+.mdc-list-group__subheader ::slotted(*) {
+  @include mdc-feature-targets($feat-color) {
+    @include mdc-theme-prop(color, text-primary-on-background);
+  }
+}
+
+:host([graphic="avatar"]) {
+  .mdc-list-item__graphic {
+    @include mdc-feature-targets($feat-structure) {
+      @include graphic-size_(var(--mdc-list-item-graphic-size, 40px));
+      ::slotted(*) {
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+:host([graphic="avatar"],[graphic="medium"],[graphic="large"],[graphic="control"]) .mdc-list-item__graphic {
+  @include mdc-rtl-reflexive-box(margin, right, var(--mdc-list-item-graphic-margin, 16px), ":host");
+}
+
+:host([graphic="icon"]) .mdc-list-item__graphic {
+  @include graphic-size_(var(--mdc-list-item-graphic-size, 24px));
+  @include mdc-rtl-reflexive-box(margin, right, var(--mdc-list-item-graphic-margin, 32px), ":host");
+}
+
+:host([graphic="avatar"]:not([twoLine])),
+:host([graphic="icon"]:not([twoLine])) {
+  height: 56px;
+}
+
+:host([graphic="medium"]:not([twoLine])),
+:host([graphic="large"]:not([twoLine])) {
+  height: 72px;
+}
+
+:host([graphic="medium"]),
+:host([graphic="large"]) {
+  .mdc-list-item__graphic {
+    @include graphic-size_(var(--mdc-list-item-graphic-size, 56px));
+  }
+}
+
+:host([graphic="large"]) {
+  padding-left: 0px;
+}
