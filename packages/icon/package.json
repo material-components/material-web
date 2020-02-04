@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-icon",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "description": "",
   "main": "mwc-icon.js",
   "module": "mwc-icon.js",
@@ -15,7 +15,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/mwc-base": "^0.12.0",
+    "@material/mwc-base": "^0.13.0",
     "lit-element": "^2.2.1",
     "tslib": "^1.10.0"
   },
