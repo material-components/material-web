@@ -5,7 +5,7 @@
 
 Text areas let users enter and edit text.
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/textarea/images/standard.png" width="256px">
+<img src="images/standard.png" width="256px">
 
 [Material Design Guidelines: text areas](https://material.io/design/components/text-fields.html)
 
@@ -27,7 +27,7 @@ npm install @material/mwc-textarea
 
 ### Standard
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/textarea/images/standard.png" width="256px">
+<img src="images/standard.png" width="256px">
 
 ```html
 <mwc-textarea label="My Textarea"></mwc-textarea>
@@ -39,7 +39,7 @@ npm install @material/mwc-textarea
 
 ### Helper Text
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/textarea/images/helper.png" width="256px">
+<img src="images/helper.png" width="256px">
 
 ```html
 <mwc-textarea label="My Textarea" helper="Helper Text"></mwc-textarea>
@@ -47,7 +47,7 @@ npm install @material/mwc-textarea
 
 ### Primary Color
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/textarea/images/color-primary.png" width="256px">
+<img src="images/color-primary.png" width="256px">
 
 ```html
 <style>
@@ -67,7 +67,7 @@ npm install @material/mwc-textarea
 
 ### Outlined
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/textarea/images/outlined.png" width="256px">
+<img src="images/outlined.png" width="256px">
 
 ```html
 <mwc-textarea
@@ -78,9 +78,9 @@ npm install @material/mwc-textarea
 
 #### Shaping Outlined
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/textarea/images/shape-left.png" width="256px">
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/textarea/images/shape-right.png" width="256px">
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/textarea/images/shape-left-right.png" width="256px">
+<img src="images/shape-left.png" width="256px">
+<img src="images/shape-right.png" width="256px">
+<img src="images/shape-left-right.png" width="256px">
 
 ```html
 <style>
@@ -115,7 +115,7 @@ npm install @material/mwc-textarea
 
 ### Fullwidth
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/textarea/images/fullwidth-outlined.png" width="762px">
+<img src="images/fullwidth-outlined.png" width="762px">
 
 ```html
 <!-- Note: Fullwidth does not support label; only placeholder -->

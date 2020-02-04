@@ -25,8 +25,8 @@ npm install @material/mwc-button
 
 ### Standard
 
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/button/images/standard.png)
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/button/images/standard_with_icon.png)
+![](images/standard.png)
+![](images/standard_with_icon.png)
 
 ```html
 <mwc-button label="standard"></mwc-button>
@@ -35,8 +35,8 @@ npm install @material/mwc-button
 
 ### Outlined
 
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/button/images/outlined.png)
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/button/images/outlined_with_icon.png)
+![](images/outlined.png)
+![](images/outlined_with_icon.png)
 
 ```html
 <mwc-button outlined label="outlined"></mwc-button>
@@ -45,8 +45,8 @@ npm install @material/mwc-button
 
 ### Raised
 
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/button/images/raised.png)
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/button/images/raised_with_icon.png)
+![](images/raised.png)
+![](images/raised_with_icon.png)
 
 ```html
 <mwc-button raised label="raised"></mwc-button>
@@ -55,8 +55,8 @@ npm install @material/mwc-button
 
 ### Unelevated
 
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/button/images/unelevated.png)
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/button/images/unelevated_with_icon.png)
+![](images/unelevated.png)
+![](images/unelevated_with_icon.png)
 
 ```html
 <mwc-button unelevated label="unelevated"></mwc-button>
@@ -65,8 +65,8 @@ npm install @material/mwc-button
 
 ### Dense
 
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/button/images/dense.png)
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/button/images/dense_with_icon.png)
+![](images/dense.png)
+![](images/dense_with_icon.png)
 
 ```html
 <mwc-button dense unelevated label="dense"></mwc-button>
@@ -75,7 +75,7 @@ npm install @material/mwc-button
 
 ### Trailing Icon
 
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/button/images/trailing_icon.png)
+![](images/trailing_icon.png)
 
 ```html
 <mwc-button label="trailing icon" icon="code" trailingIcon></mwc-button>
@@ -83,8 +83,8 @@ npm install @material/mwc-button
 
 ### Disabled
 
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/button/images/disabled.png)
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/button/images/disabled_with_icon.png)
+![](images/disabled.png)
+![](images/disabled_with_icon.png)
 
 ```html
 <mwc-button disabled label="disabled"></mwc-button>
@@ -93,7 +93,7 @@ npm install @material/mwc-button
 
 ### Customize Colors
 
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/button/images/custom_color.png)
+![](images/custom_color.png)
 
 ```css
 mwc-button {
@@ -130,16 +130,16 @@ mwc-button {
 | Name | Default | Description
 | ------------------------------------- | -------------------------------------------------- | ---
 | `--mdc-icon-font` | [`Material Icons`](https://google.github.io/material-design-icons/)    | Font to use for the icon.
-| `--mdc-theme-primary`                 | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/button/images/color_6200ee.png) `#6200ee`             | Background color of the button.
-| `--mdc-theme-on-primary`              | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/button/images/color_ffffff.png) `#ffffff`             | Text color of the button.
+| `--mdc-theme-primary`                 | ![](images/color_6200ee.png) `#6200ee`             | Background color of the button.
+| `--mdc-theme-on-primary`              | ![](images/color_ffffff.png) `#ffffff`             | Text color of the button.
 | `--mdc-button-text-transform`         | `uppercase`                                        | `text-transform` on the button label.
 | `--mdc-button-letter-spacing`         | `0.0892857143em`                                   | `letter-spacing` on the button label.
 | `--mdc-button-horizontal-padding`     | filled: `16px` outlined: `15px` default: `8px`     | Left and right padding of the button label (for outlined buttons the outline width is automatically subtracted).
 | `--mdc-button-outline-width`          | `1px`                                              | `width` of the outline of an outlined button and attempts to keep the component size constant.
-| `--mdc-button-outline-color`          | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/button/images/color_6200ee.png) `--mdc-theme-primary` | Color of the outline of an outlined element. (Overrides `--mdc-theme-primary`)
-| `--mdc-button-disabled-fill-color`    | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/button/images/color_0,0,0,12.png) `rgba(0,0,0,0.12)`  | Background fill color of a disabled raised or unelevated button.
-| `--mdc-button-disabled-ink-color`     | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/button/images/color_0,0,0,37.png) `rgba(0,0,0,0.37)`  | Text color of a disabled button as well as the outline color of a disabled outlined button.
-| `--mdc-button-disabled-outline-color` | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/button/images/color_0,0,0,37.png) `--mdc-button-disabled-ink-color` | Sets the color of the outline of a disabled outlined button. (Overrides `--mdc-button-disabled-ink-color`)
+| `--mdc-button-outline-color`          | ![](images/color_6200ee.png) `--mdc-theme-primary` | Color of the outline of an outlined element. (Overrides `--mdc-theme-primary`)
+| `--mdc-button-disabled-fill-color`    | ![](images/color_0,0,0,12.png) `rgba(0,0,0,0.12)`  | Background fill color of a disabled raised or unelevated button.
+| `--mdc-button-disabled-ink-color`     | ![](images/color_0,0,0,37.png) `rgba(0,0,0,0.37)`  | Text color of a disabled button as well as the outline color of a disabled outlined button.
+| `--mdc-button-disabled-outline-color` | ![](images/color_0,0,0,37.png) `--mdc-button-disabled-ink-color` | Sets the color of the outline of a disabled outlined button. (Overrides `--mdc-button-disabled-ink-color`)
 | `--mdc-button-raised-box-shadow`          | mdc elevation 2 | Sets the box shadow of the raised button.
 | `--mdc-button-raised-box-shadow-hover`    | mdc elevation 4 | Sets the box shadow of the raised button when focused or hovered.
 | `--mdc-button-raised-box-shadow-active`   | mdc elevation 8 | Sets the box shadow of the raised button when active.

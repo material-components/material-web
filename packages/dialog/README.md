@@ -5,7 +5,7 @@
 
 Dialogs inform users about a task and can contain critical information, require decisions, or involve multiple tasks.
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/dialog/images/standard.png" width="397px">
+<img src="images/standard.png" width="397px">
 
 [Material Design Guidelines: dialogs](https://material.io/design/components/dialogs.html)
 
@@ -29,7 +29,7 @@ npm install @material/mwc-dialog
 
 <!-- ### Simple
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/dialog/images/simple.gif" width="314px">
+<img src="images/simple.gif" width="314px">
 
 ```html
 <mwc-dialog
@@ -71,7 +71,7 @@ npm install @material/mwc-dialog
 
 ### Alert
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/dialog/images/alert.gif" width="308px">
+<img src="images/alert.gif" width="308px">
 
 ```html
 <mwc-dialog open>
@@ -91,7 +91,7 @@ npm install @material/mwc-dialog
 
 ### Confirmation
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/dialog/images/confirmation.png" width="330px">
+<img src="images/confirmation.png" width="330px">
 
 ```html
 <style>
@@ -137,7 +137,7 @@ npm install @material/mwc-dialog
 
 ### Scrollable
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/dialog/images/scrollable.png" width="598px">
+<img src="images/scrollable.png" width="598px">
 
 ```html
 <mwc-dialog heading="Privacy Policy" open>
@@ -160,7 +160,7 @@ npm install @material/mwc-dialog
 
 ### Styled
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/dialog/images/styled.png" width="601px">
+<img src="images/styled.png" width="601px">
 
 ```html
 <style>
@@ -185,7 +185,7 @@ npm install @material/mwc-dialog
 
 ### Stacked
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/dialog/images/stacked.png" width="594px">
+<img src="images/stacked.png" width="594px">
 
 ```html
 <mwc-dialog heading="Stacked" stacked>
@@ -258,11 +258,11 @@ npm install @material/mwc-dialog
 
 | Name                                | Default               | Description
 | ----------------------------------- | --------------------- |------------
-| `--mdc-theme-surface`               | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/dialog/images/color_fff.png) `#fff`                | Color of the dialog surface's background.
-| `--mdc-dialog-scrim-color`          | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/dialog/images/color_0,0,0,32.png) `rgba(0, 0, 0, 0.32)` | Color of the scrim. (**Note:** setting alpha to 0 will still make scrim clickable but transparent).
-| `--mdc-dialog-heading-ink-color`    | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/dialog/images/color_0,0,0,87.png) `rgba(0, 0, 0, 0.87)` | Color of the heading text.
-| `--mdc-dialog-content-ink-color`    | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/dialog/images/color_0,0,0,6.png) `rgba(0, 0, 0, 0.6)`  | Color applied to the projected content. (**Note:** it may also be possible to style the content via the light DOM since it is not encapsulated in a shadow root).
-| `--mdc-dialog-scroll-divider-color` | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/dialog/images/color_0,0,0,12.png) `rgba(0, 0, 0, 0.12)` | Color of the dividers present when dialog is scrollable.
+| `--mdc-theme-surface`               | ![](images/color_fff.png) `#fff`                | Color of the dialog surface's background.
+| `--mdc-dialog-scrim-color`          | ![](images/color_0,0,0,32.png) `rgba(0, 0, 0, 0.32)` | Color of the scrim. (**Note:** setting alpha to 0 will still make scrim clickable but transparent).
+| `--mdc-dialog-heading-ink-color`    | ![](images/color_0,0,0,87.png) `rgba(0, 0, 0, 0.87)` | Color of the heading text.
+| `--mdc-dialog-content-ink-color`    | ![](images/color_0,0,0,6.png) `rgba(0, 0, 0, 0.6)`  | Color applied to the projected content. (**Note:** it may also be possible to style the content via the light DOM since it is not encapsulated in a shadow root).
+| `--mdc-dialog-scroll-divider-color` | ![](images/color_0,0,0,12.png) `rgba(0, 0, 0, 0.12)` | Color of the dividers present when dialog is scrollable.
 | `--mdc-dialog-min-width`            | `280px`               | min-width ofthe dialog surface.
 | `--mdc-dialog-max-width`            | `560px`               | max-width of the dialog surface. (**Note:** if max-width is < `560px`, there is a visual jank bug that will occur causing the max width to be `560px` when the window is sized to <= than `560px`).
 | `--mdc-dialog-max-height`           | `calc(100% - 32px)`   | Max height of the dialog surface.
@@ -287,7 +287,7 @@ detail of `{action: <clickedElement.getAttribute('dialogAction')>}`.
 
 For example:
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/dialog/images/action.png" width="566px">
+<img src="images/action.png" width="566px">
 
 ```html
 <mwc-dialog open>
@@ -339,7 +339,7 @@ attribute (configurable via the
 
 For example:
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/dialog/images/initial-focus.png" width="597px">
+<img src="images/initial-focus.png" width="597px">
 
 ```html
 <mwc-dialog heading="Initial Focus" open>

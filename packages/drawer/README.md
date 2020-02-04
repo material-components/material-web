@@ -23,7 +23,7 @@ npm install @material/mwc-drawer
 ## Example usage
 
 ### Standard
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/drawer/images/standard_no_header.png" width="552px">
+<img src="images/standard_no_header.png" width="552px">
 
 ```html
 <mwc-drawer>
@@ -42,7 +42,7 @@ npm install @material/mwc-drawer
 ```
 
 ### Standard with Header
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/drawer/images/standard.png" width="552px">
+<img src="images/standard.png" width="552px">
 
 ```html
 <mwc-drawer hasHeader>
@@ -63,7 +63,7 @@ npm install @material/mwc-drawer
 ```
 
 ### Dismissible
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/drawer/images/dismissible.gif" width="552px">
+<img src="images/dismissible.gif" width="552px">
 
 ```html
 <mwc-drawer hasHeader type="dismissible">
@@ -87,7 +87,7 @@ npm install @material/mwc-drawer
 ```
 
 ### Modal
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/drawer/images/modal.gif" width="552px">
+<img src="images/modal.gif" width="552px">
 
 ```html
 <mwc-drawer hasHeader type="modal">

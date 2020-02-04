@@ -5,10 +5,10 @@
 
 A floating action button (FAB) represents the primary action of a screen.
 
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/fab/images/standard.png)
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/fab/images/mini.png)
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/fab/images/extended.png)
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/fab/images/custom_color.png)
+![](images/standard.png)
+![](images/mini.png)
+![](images/extended.png)
+![](images/custom_color.png)
 
 [Material Design Guidelines: Floating Action Button](https://material.io/design/components/buttons-floating-action-button.html)
 
@@ -30,7 +30,7 @@ npm install @material/mwc-fab
 
 ### Standard
 
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/fab/images/standard.png)
+![](images/standard.png)
 
 ```html
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block">
@@ -48,7 +48,7 @@ npm install @material/mwc-fab
 
 ### Mini
 
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/fab/images/mini.png)
+![](images/mini.png)
 
 ```html
 <mwc-fab mini icon="add"></mwc-fab>
@@ -56,14 +56,14 @@ npm install @material/mwc-fab
 
 ### Extended
 
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/fab/images/extended.png)
+![](images/extended.png)
 
 ```html
 <mwc-fab extended icon="shopping_cart" label="Add to cart"></mwc-fab>
 ```
 ### Customize colors
 
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/fab/images/custom_color.png)
+![](images/custom_color.png)
 
 ```css
 mwc-fab {
@@ -98,8 +98,8 @@ mwc-fab {
 | Name                       | Default                                | Description
 | -------------------------- | -------------------------------------- |------------
 | `--mdc-icon-font`          | [`Material Icons`](https://google.github.io/material-design-icons/) | Font to use for the icon.
-| `--mdc-theme-on-secondary` | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/fab/images/color_ffffff.png) `#ffffff` | Foreground color of the label and icon.
-| `--mdc-theme-secondary`    | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/fab/images/color_018786.png) `#018786` | Background color of the FAB.
+| `--mdc-theme-on-secondary` | ![](images/color_ffffff.png) `#ffffff` | Foreground color of the label and icon.
+| `--mdc-theme-secondary`    | ![](images/color_018786.png) `#018786` | Background color of the FAB.
 | `--mdc-fab-box-shadow`        | mdc elevation 6  | Sets the box shadow of the fab.
 | `--mdc-fab-box-shadow-hover`  | mdc elevation 8  | Sets the box shadow of the fab when focused or hovered.
 | `--mdc-fab-box-shadow-active` | mdc elevation 12 | Sets the box shadow of the fab when active.

@@ -5,7 +5,7 @@
 
 Text fields let users enter and edit text.
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/textfield/images/standard.png" width="244px">
+<img src="images/standard.png" width="244px">
 
 [Material Design Guidelines: text fields](https://material.io/design/components/text-fields.html)
 
@@ -27,7 +27,7 @@ npm install @material/mwc-textfield
 
 ### Standard / Filled
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/textfield/images/standard.png" width="244px">
+<img src="images/standard.png" width="244px">
 
 ```html
 <mwc-textfield label="My Textfield"></mwc-textfield>
@@ -39,7 +39,7 @@ npm install @material/mwc-textfield
 
 ### Icon - Leading
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/textfield/images/icon-leading.png" width="244px">
+<img src="images/icon-leading.png" width="244px">
 
 ```html
 <mwc-textfield label="My Textfield" icon="event"></mwc-textfield>
@@ -52,7 +52,7 @@ npm install @material/mwc-textfield
 
 ### Icon - Trailing
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/textfield/images/icon-trailing.png" width="244px">
+<img src="images/icon-trailing.png" width="244px">
 
 ```html
 <mwc-textfield label="My Textfield" iconTrailing="delete"></mwc-textfield>
@@ -60,7 +60,7 @@ npm install @material/mwc-textfield
 
 ### Helper Text
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/textfield/images/helper.png" width="244px">
+<img src="images/helper.png" width="244px">
 
 ```html
 <mwc-textfield label="My Textfield" helper="Helper Text"></mwc-textfield>
@@ -68,7 +68,7 @@ npm install @material/mwc-textfield
 
 ### Primary Color
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/textfield/images/color-primary.png" width="244px">
+<img src="images/color-primary.png" width="244px">
 
 ```html
 <style>
@@ -88,7 +88,7 @@ npm install @material/mwc-textfield
 
 ### Outlined
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/textfield/images/outlined.png" width="244px">
+<img src="images/outlined.png" width="244px">
 
 ```html
 <mwc-textfield
@@ -100,9 +100,9 @@ npm install @material/mwc-textfield
 
 #### Shaping Outlined
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/textfield/images/shape-left.png" width="244px">
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/textfield/images/shape-right.png" width="244px">
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/textfield/images/shape-left-right.png" width="244px">
+<img src="images/shape-left.png" width="244px">
+<img src="images/shape-right.png" width="244px">
+<img src="images/shape-left-right.png" width="244px">
 
 ```html
 <style>
@@ -140,7 +140,7 @@ npm install @material/mwc-textfield
 
 ### Fullwidth
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/textfield/images/fullwidth.png" width="777px">
+<img src="images/fullwidth.png" width="777px">
 
 ```html
 <!-- Note: Fullwidth does not support label; only placeholder -->

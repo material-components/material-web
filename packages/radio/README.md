@@ -5,7 +5,7 @@
 
 Radio buttons allow the user to select one option from a set. Use radio buttons when the user needs to see all available options.
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/radio/images/standard.png" width="84px" height="48px">
+<img src="images/standard.png" width="84px" height="48px">
 
 [Material Design Guidelines: Radio buttons](https://material.io/design/components/selection-controls.html#radio-buttons)
 
@@ -27,7 +27,7 @@ npm install @material/mwc-radio
 
 ### Standard
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/radio/images/standard.png" width="84px" height="48px">
+<img src="images/standard.png" width="84px" height="48px">
 
 ```html
 <mwc-radio name="myGroup" value="value1"></mwc-radio>
@@ -40,7 +40,7 @@ npm install @material/mwc-radio
 
 ### Custom color
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/radio/images/custom_color.png" height="40px">
+<img src="images/custom_color.png" height="40px">
 
 ```html
 <style>
@@ -58,7 +58,7 @@ body {
 
 ### Disabled custom color
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/radio/images/disabled_custom_color.png" height="40px">
+<img src="images/disabled_custom_color.png" height="40px">
 
 ```html
 <style>
@@ -79,7 +79,7 @@ Most applications should use
 [`<mwc-formfield>`](https://github.com/material-components/material-components-web-components/tree/master/packages/formfield)
 to associate an interactive label with the radio.
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/radio/images/formfield.png" width="94px" height="80px">
+<img src="images/formfield.png" width="94px" height="80px">
 
 ```html
 <style>
@@ -130,9 +130,9 @@ to associate an interactive label with the radio.
 
 | Name                    | Default                                | Description
 | ----------------------- | -------------------------------------- |------------
-| `--mdc-theme-secondary` | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/radio/images/color_018786.png) `#018786` | Color of the radio button.
-| `--mdc-radio-unchecked-color` | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/radio/images/color_0,0,0,54.png) `rgba(0, 0, 0, 0.54)` | Color of the ring of an unchecked radio.
-| `--mdc-radio-disabled-color` | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/radio/images/color_0,0,0,38.png) `rgba(0, 0, 0, 0.38)` | Color of the ring and circle of a disabled radio.
+| `--mdc-theme-secondary` | ![](images/color_018786.png) `#018786` | Color of the radio button.
+| `--mdc-radio-unchecked-color` | ![](images/color_0,0,0,54.png) `rgba(0, 0, 0, 0.54)` | Color of the ring of an unchecked radio.
+| `--mdc-radio-disabled-color` | ![](images/color_0,0,0,38.png) `rgba(0, 0, 0, 0.38)` | Color of the ring and circle of a disabled radio.
 
 ## Additional references
 

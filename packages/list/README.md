@@ -5,7 +5,7 @@
 
 Lists are continuous, vertical indexes of text or images.
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/header.png" width="402px">
+<img src="images/header.png" width="402px">
 
 [Material Design Guidelines: lists](https://material.io/design/components/lists.html)
 
@@ -27,7 +27,7 @@ npm install @material/mwc-list
 
 ### Basic
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/basic.png" width="402px">
+<img src="images/basic.png" width="402px">
 
 ```html
 <mwc-list>
@@ -45,7 +45,7 @@ npm install @material/mwc-list
 
 ### Activatable
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/activatable.png" width="402px">
+<img src="images/activatable.png" width="402px">
 
 ```html
 <mwc-list activatable>
@@ -58,7 +58,7 @@ npm install @material/mwc-list
 
 ### Multi-selectable (activatable)
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/multi.png" width="402px">
+<img src="images/multi.png" width="402px">
 
 ```html
 <mwc-list activatable multi>
@@ -73,7 +73,7 @@ npm install @material/mwc-list
 
 _Note_: it is not recommended to mix graphic sizes in the same list.
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/leading_graphic.png" width="402px">
+<img src="images/leading_graphic.png" width="402px">
 
 ```html
 <style>
@@ -112,7 +112,7 @@ _Note_: it is not recommended to mix graphic sizes in the same list.
 
 ### Meta Icon
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/meta_icon.png" width="402px">
+<img src="images/meta_icon.png" width="402px">
 
 ```html
 <mwc-list>
@@ -137,7 +137,7 @@ _Note_: it is not recommended to mix graphic sizes in the same list.
 
 ### Two-Line
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/two_line.png" width="402px">
+<img src="images/two_line.png" width="402px">
 
 ```html
 <mwc-list>
@@ -167,7 +167,7 @@ Dividers must have the `divider` attribute and it is recommended to add
 full-width (default), padded (respects list padding), and inset (left-padding
 respects avatar and icon paddding). These variants can be mixed.
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/dividers.png" width="402px">
+<img src="images/dividers.png" width="402px">
 
 ```html
 <mwc-list>
@@ -197,7 +197,7 @@ respects avatar and icon paddding). These variants can be mixed.
 API to `mwc-list-item`. e.g. you can still add graphics and make them
 activatable but not two-lined.
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/check_list.png" width="402px">
+<img src="images/check_list.png" width="402px">
 
 ```html
 <mwc-list multi>
@@ -223,7 +223,7 @@ activatable but not two-lined.
 Setting `group` on the `radio-list-item` will group those `mwc-radio`s together
 across the same Document.
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/radio_list.png" width="402px">
+<img src="images/radio_list.png" width="402px">
 
 ```html
 <mwc-list>
@@ -239,7 +239,7 @@ across the same Document.
 
 A radio list can also have `multi`.
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/multi_radio_list.png" width="402px">
+<img src="images/multi_radio_list.png" width="402px">
 
 ```html
 <mwc-list multi>
@@ -260,7 +260,7 @@ A radio list can also have `multi`.
 Setting a list-item to non-interactive will disable focus and pointer events on
 the item, and it will no longer be considered for selection.
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/noninteractive.png" width="402px">
+<img src="images/noninteractive.png" width="402px">
 
 ```html
 <style>
@@ -289,7 +289,7 @@ the item, and it will no longer be considered for selection.
 
 ### Styled
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/styled.png" width="402px">
+<img src="images/styled.png" width="402px">
 
 ```html
 <style>
@@ -314,7 +314,7 @@ the item, and it will no longer be considered for selection.
 For more-control on styling, you may want to disable the ripple which is set on
 `mwc-list-item`'s `::before` and `::after` pseudo-elements.
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/styled_no_ripple.png" width="402px">
+<img src="images/styled_no_ripple.png" width="402px">
 
 ```html
 <style>
@@ -554,7 +554,7 @@ interface RequestSelectedDetail {
 
 | Name                                | Default               | Description
 | ----------------------------------- | --------------------- |------------
-| `--mdc-theme-text-primary-on-background` | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/color_0,0,0,87.png) `rgba(0, 0, 0, 0.87)` | Color of the primary text.
+| `--mdc-theme-text-primary-on-background` | ![](images/color_0,0,0,87.png) `rgba(0, 0, 0, 0.87)` | Color of the primary text.
 | `--mdc-list-vertical-padding` | `8px`    | Padding before and after the first and last list items.
 | `--mdc-list-side-padding`     | `16px`   | Adjusts the padding of the `[padded]` list dividers (also propagates to `mwc-list-item`).
 | `--mdc-list-inset-margin`     | `72px`   | Adjusts the left inset padding of an `[inset]` list divider. Typically used for dividing list items with icons.
@@ -563,12 +563,12 @@ interface RequestSelectedDetail {
 
 | Name                                       | Default              | Description
 | ------------------------------------------ | -------------------- |------------
-| `--mdc-theme-primary`                      | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/color_6200ee.png) `#6200ee` | Color of the activated ripple and primary text color when activated.
-| `--mdc-theme-on-surface`                   | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/color_000.png) `#000`       | Disabled text color
-| `--mdc-theme-text-icon-on-background`      | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/color_0,0,0,38.png) `rgba(0, 0, 0, .38)` | Color of the graphic icon (if graphic is text icon).
-| `--mdc-theme-text-primary-on-background`   | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/color_0,0,0,87.png) `rgba(0, 0, 0, .87)` | Color of the primary text if not activated.
-| `--mdc-theme-text-secondary-on-background` | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/color_0,0,0,54.png) `rgba(0, 0, 0, .54)` | Color of the secondary text if not activated.
-| `--mdc-theme-hint-on-background`           | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/list/images/color_0,0,0,38.png) `rgba(0, 0, 0, .38)` | Color of the meta (if is text or text icon).
+| `--mdc-theme-primary`                      | ![](images/color_6200ee.png) `#6200ee` | Color of the activated ripple and primary text color when activated.
+| `--mdc-theme-on-surface`                   | ![](images/color_000.png) `#000`       | Disabled text color
+| `--mdc-theme-text-icon-on-background`      | ![](images/color_0,0,0,38.png) `rgba(0, 0, 0, .38)` | Color of the graphic icon (if graphic is text icon).
+| `--mdc-theme-text-primary-on-background`   | ![](images/color_0,0,0,87.png) `rgba(0, 0, 0, .87)` | Color of the primary text if not activated.
+| `--mdc-theme-text-secondary-on-background` | ![](images/color_0,0,0,54.png) `rgba(0, 0, 0, .54)` | Color of the secondary text if not activated.
+| `--mdc-theme-hint-on-background`           | ![](images/color_0,0,0,38.png) `rgba(0, 0, 0, .38)` | Color of the meta (if is text or text icon).
 | `--mdc-list-side-padding`                  | `16px`               | Side padding of the list item.
 | `--mdc-list-item-meta-size`                | `24px`               | Line height of the meta icon or text and width & height of the slotted parent wrapper.
 | `--mdc-list-item-graphic-size`             | `24px`,`40px`,`56px` | Line height of the graphic and width & height of the slotted parent wrapper. `24px` when graphic is `"icon"`. `40px` when grpahic is `"avatar"`. `56px` when graphic is `"medium"`, and `"large"`.

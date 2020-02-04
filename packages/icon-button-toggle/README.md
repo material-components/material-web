@@ -30,14 +30,14 @@ npm install @material/mwc-icon-button-toggle
 ### Standard
 
 #### `on = false`
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/icon-button-toggle/images/standard_off.png)
+![](images/standard_off.png)
 
 ```html
 <mwc-icon-button-toggle onIcon="sentiment_very_satisfied" offIcon="sentiment_very_dissatisfied"></mwc-icon-button-toggle>
 ```
 
 #### `on = true`
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/icon-button-toggle/images/standard_on.png)
+![](images/standard_on.png)
 
 ```html
 <mwc-icon-button-toggle on onIcon="sentiment_very_satisfied" offIcon="sentiment_very_dissatisfied"></mwc-icon-button-toggle>
@@ -46,7 +46,7 @@ npm install @material/mwc-icon-button-toggle
 ### SVG
 
 #### `on = false`
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/icon-button-toggle/images/svg_off.png)
+![](images/svg_off.png)
 
 ```html
 <mwc-icon-button-toggle>
@@ -56,7 +56,7 @@ npm install @material/mwc-icon-button-toggle
 ```
 
 #### `on = true`
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/icon-button-toggle/images/svg_on.png)
+![](images/svg_on.png)
 
 ```html
 <mwc-icon-button-toggle on>
@@ -68,7 +68,7 @@ npm install @material/mwc-icon-button-toggle
 ### Image
 
 #### `on = false`
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/icon-button-toggle/images/image_off.png)
+![](images/image_off.png)
 
 ```html
 <mwc-icon-button-toggle>
@@ -78,7 +78,7 @@ npm install @material/mwc-icon-button-toggle
 ```
 
 #### `on = true`
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/icon-button-toggle/images/image_on.png)
+![](images/image_on.png)
 ```html
 <mwc-icon-button-toggle on>
   <img slot="onIcon" src="https://picsum.photos/id/28/24/24">
@@ -88,7 +88,7 @@ npm install @material/mwc-icon-button-toggle
 
 ### Disabled
 
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/icon-button-toggle/images/disabled.png)
+![](images/disabled.png)
 
 ```html
 <mwc-icon-button-toggle disabled onIcon="sentiment_very_satisfied" offIcon="sentiment_very_dissatisfied"></mwc-icon-button-toggle>
@@ -97,9 +97,9 @@ npm install @material/mwc-icon-button-toggle
 ### Customize Colors
 
 #### `on = false`
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/icon-button-toggle/images/custom_color_off.png)
+![](images/custom_color_off.png)
 #### `on = true`
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/icon-button-toggle/images/custom_color_on.png)
+![](images/custom_color_on.png)
 
 ```css
 mwc-icon-button-toggle {

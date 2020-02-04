@@ -5,7 +5,7 @@
 
 Fixed Top App Bars are a container for items such as application title, navigation icon, and action items that are always visible.
 
-![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/top-app-bar-fixed/images/fixed.gif)
+![](images/fixed.gif)
 
 For a version of this component that scrolls, see [`<mwc-top-app-bar>`](https://github.com/material-components/material-components-web-components/tree/master/packages/top-app-bar)
 
@@ -29,7 +29,7 @@ npm install @material/mwc-top-app-bar-fixed
 
 ### Standard
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/top-app-bar-fixed/images/standard.png" height="56px">
+<img src="images/standard.png" height="56px">
 
 ```html
 <mwc-top-app-bar-fixed>
@@ -44,7 +44,7 @@ npm install @material/mwc-top-app-bar-fixed
 
 ### Center Title
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/top-app-bar-fixed/images/center_title.png" height="56px">
+<img src="images/center_title.png" height="56px">
 
 ```html
 <mwc-top-app-bar-fixed centerTitle>
@@ -57,7 +57,7 @@ npm install @material/mwc-top-app-bar-fixed
 
 ### Dense
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/top-app-bar-fixed/images/dense.png" height="48px">
+<img src="images/dense.png" height="48px">
 
 ```html
 <mwc-top-app-bar-fixed dense>
@@ -72,7 +72,7 @@ npm install @material/mwc-top-app-bar-fixed
 
 ### Prominent
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/top-app-bar-fixed/images/prominent.png" height="128px">
+<img src="images/prominent.png" height="128px">
 
 ```html
 <mwc-top-app-bar-fixed prominent>
@@ -87,7 +87,7 @@ npm install @material/mwc-top-app-bar-fixed
 
 ### Prominent and Dense
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/top-app-bar-fixed/images/prominent_and_dense.png" height="96px">
+<img src="images/prominent_and_dense.png" height="96px">
 
 ```html
 <mwc-top-app-bar-fixed prominent dense>
@@ -102,7 +102,7 @@ npm install @material/mwc-top-app-bar-fixed
 
 ### Customize Colors
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/top-app-bar-fixed/images/custom_colors.png" height="56px">
+<img src="images/custom_colors.png" height="56px">
 
 ```css
 mwc-top-app-bar-fixed {
@@ -142,8 +142,8 @@ mwc-top-app-bar-fixed {
 
 | Name | Default | Description
 | ---- | ------- | -----------
-| `--mdc-theme-primary` | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/top-app-bar-fixed/images/color_6200ee.png) `#6200ee` | Background color of the bar
-| `--mdc-theme-on-primary` | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/top-app-bar-fixed/images/color_ffffff.png) `#ffffff` | Text color of the title, and icon colors
+| `--mdc-theme-primary` | ![](images/color_6200ee.png) `#6200ee` | Background color of the bar
+| `--mdc-theme-on-primary` | ![](images/color_ffffff.png) `#ffffff` | Text color of the title, and icon colors
 | `--mdc-top-app-bar-fixed-box-shadow` | mdc elevation 4 | Sets the box shadow of the fixed top app bar when scrolling.
 
 #### Elevation values

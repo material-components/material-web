@@ -32,7 +32,7 @@ npm install @material/mwc-formfield
 
 ### With checkbox
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/formfield/images/with_checkbox.png" width="105px" height="40px">
+<img src="images/with_checkbox.png" width="105px" height="40px">
 
 ```html
 <mwc-formfield label="Tomato">
@@ -47,7 +47,7 @@ npm install @material/mwc-formfield
 
 ### With Radio
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/formfield/images/with_radio.png" width="94px" height="80px">
+<img src="images/with_radio.png" width="94px" height="80px">
 
 ```html
 <style>
@@ -72,7 +72,7 @@ npm install @material/mwc-formfield
 
 ### With Switch
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/formfield/images/with_switch.png" width="160px" height="48px">
+<img src="images/with_switch.png" width="160px" height="48px">
 
 ```html
 <mwc-formfield label="Airplane mode">

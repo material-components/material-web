@@ -25,7 +25,7 @@ npm install @material/mwc-icon
 
 ### Basic
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/icon/images/shopping_cart.png" width="32px" height="32px">
+<img src="images/shopping_cart.png" width="32px" height="32px">
 
 ```html
 <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
@@ -39,7 +39,7 @@ npm install @material/mwc-icon
 
 ### As a link
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/icon/images/arrow_back.png" width="32px" height="32px">
+<img src="images/arrow_back.png" width="32px" height="32px">
 
 ```html
 <a href="index.html">
@@ -49,7 +49,7 @@ npm install @material/mwc-icon
 
 ### Styled
 
-<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/icon/images/accessible_forward.png" width="64px" height="64px">
+<img src="images/accessible_forward.png" width="64px" height="64px">
 
 ```html
 <style>
