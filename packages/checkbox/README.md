@@ -25,7 +25,7 @@ npm install @material/mwc-checkbox
 
 ### Standard
 
-<img src="images/checked.png" width="29px" height="29px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/checkbox/images/checked.png" width="29px" height="29px">
 
 ```html
 <mwc-checkbox checked></mwc-checkbox>
@@ -42,7 +42,7 @@ npm install @material/mwc-checkbox
 
 ### Standard, disabled
 
-<img src="images/standard_disabled.png" height="80px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/checkbox/images/standard_disabled.png" height="80px">
 
 ```html
 <div>
@@ -60,7 +60,7 @@ npm install @material/mwc-checkbox
 
 ### Styled standard, disabled
 
-<img src="images/styled_standard_disabled.png" height="80px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/checkbox/images/styled_standard_disabled.png" height="80px">
 
 ```html
 <style>
@@ -95,7 +95,7 @@ Most applications should use
 [`<mwc-formfield>`](https://github.com/material-components/material-components-web-components/tree/master/packages/formfield)
 to associate an interactive label with the checkbox.
 
-<img src="images/formfield.png" width="132px" height="123px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/checkbox/images/formfield.png" width="132px" height="123px">
 
 ```html
 <style>
@@ -152,11 +152,11 @@ Name            | Type      | Default | Description
 
 | Name                    | Default   | Description                         |
 | ----------------------- | --------- | ----------------------------------- |
-| `--mdc-theme-secondary` | ![](images/color_018786.png) `#018786` | Background color when the checkbox is `checked` or `indeterminate`, and the base color of the ripple effect and focus halo.
-| `--mdc-theme-on-surface` | ![](images/color_000.png) `#000` | Color of the unchecked focus ripple.
-| `--mdc-checkbox-mark-color` | ![](images/color_fff.png) `#fff` | Color of mark inside a `checked` or `indeterminate` checkbox (enabled or disabled).
-| `--mdc-checkbox-unchecked-color` | ![](images/color_0,0,0,54.png) `rgba(0, 0, 0, 0.54)` | Color of the unchecked box.
-| `--mdc-checkbox-disabled-color` | ![](images/color_0,0,0,38.png) `rgba(0, 0, 0, 0.38)` | Color of the checkbox box and fill when disabled.
+| `--mdc-theme-secondary` | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/checkbox/images/color_018786.png) `#018786` | Background color when the checkbox is `checked` or `indeterminate`, and the base color of the ripple effect and focus halo.
+| `--mdc-theme-on-surface` | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/checkbox/images/color_000.png) `#000` | Color of the unchecked focus ripple.
+| `--mdc-checkbox-mark-color` | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/checkbox/images/color_fff.png) `#fff` | Color of mark inside a `checked` or `indeterminate` checkbox (enabled or disabled).
+| `--mdc-checkbox-unchecked-color` | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/checkbox/images/color_0,0,0,54.png) `rgba(0, 0, 0, 0.54)` | Color of the unchecked box.
+| `--mdc-checkbox-disabled-color` | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/checkbox/images/color_0,0,0,38.png) `rgba(0, 0, 0, 0.38)` | Color of the checkbox box and fill when disabled.
 
 
 ## Additional references

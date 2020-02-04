@@ -5,7 +5,7 @@
 
 Menus display a list of choices on temporary surfaces.
 
-<img src="images/header.png" width="240px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/menu/images/header.png" width="240px">
 
 [Material Design Guidelines: menus](https://material.io/design/components/menus.html)
 
@@ -31,7 +31,7 @@ Note, `mwc-menu` internally uses
 [`mwc-list`](https://github.com/material-components/material-components-web-components/tree/master/packages/list),
 so its main slot has the same interface as the main slot of a `mwc-list`.
 
-<img src="images/basic.png" width="160px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/menu/images/basic.png" width="160px">
 
 ```html
 <div style="position: relative;">
@@ -60,7 +60,7 @@ so its main slot has the same interface as the main slot of a `mwc-list`.
 
 ### Activatable
 
-<img src="images/activatable.png" width="152px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/menu/images/activatable.png" width="152px">
 
 ```html
 <div style="position: relative;">
@@ -76,7 +76,7 @@ so its main slot has the same interface as the main slot of a `mwc-list`.
 
 ### Multi-selectable (activatable)
 
-<img src="images/multi.png" width="152px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/menu/images/multi.png" width="152px">
 
 ```html
 <div style="position: relative;">
@@ -92,7 +92,7 @@ so its main slot has the same interface as the main slot of a `mwc-list`.
 
 ### Absolute
 
-<img src="images/absolute.png" width="155px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/menu/images/absolute.png" width="155px">
 
 ```html
 <!--
@@ -113,7 +113,7 @@ so its main slot has the same interface as the main slot of a `mwc-list`.
 
 ### Fixed
 
-<img src="images/fixed.png" width="154px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/menu/images/fixed.png" width="154px">
 
 ```html
 <div>
@@ -144,7 +144,7 @@ Adding a `group` to your `mwc-list-item`s will associate them with other
 `[mwc-list-item]`s in the same group and make selection function similarly to
 a radio group.
 
-<img src="images/selection_group.png" width="170px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/menu/images/selection_group.png" width="170px">
 
 ```html
 <style>
@@ -188,7 +188,7 @@ a radio group.
 [`mwc-list`](https://github.com/material-components/material-components-web-components/tree/master/packages/list),
 and all CSS custom properties exposed by `mwc-list` apply here as well.
 
-<img src="images/styled.png" width="234px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/menu/images/styled.png" width="234px">
 
 ```html
 <style>
@@ -292,7 +292,7 @@ propagate through `mwc-menu`.
 | `--mdc-menu-item-height` | `48px`  | Height of single-line list-items in the menu.
 | `--mdc-menu-min-width`   | `auto`  | Menu min-width.
 | `--mdc-menu-max-width`   | `auto`  | Menu max-width.
-| `--mdc-theme-surface`    | ![](images/color_fff.png) `#fff` | Color of the menu surface.
+| `--mdc-theme-surface`    | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/menu/images/color_fff.png) `#fff` | Color of the menu surface.
 
 `mwc-menu` internally uses
 [`mwc-list`](https://github.com/material-components/material-components-web-components/tree/master/packages/list#css-custom-properties),

@@ -26,7 +26,7 @@ npm install @material/mwc-switch
 
 ### Standard
 
-<img src="images/standard.png" width="68px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/switch/images/standard.png" width="68px">
 
 ```html
 <mwc-switch></mwc-switch>
@@ -34,7 +34,7 @@ npm install @material/mwc-switch
 
 ### Checked by default
 
-<img src="images/on.png" width="68px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/switch/images/on.png" width="68px">
 
 ```html
 <mwc-switch checked></mwc-switch>
@@ -42,7 +42,7 @@ npm install @material/mwc-switch
 
 ### Disabled
 
-<img src="images/disabled.png" width="116px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/switch/images/disabled.png" width="116px">
 
 ```html
 <mwc-switch disabled></mwc-switch>
@@ -51,7 +51,7 @@ npm install @material/mwc-switch
 
 ### Styled
 
-<img src="images/styled.png" width="68px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/switch/images/styled.png" width="68px">
 
 ```html
 <style>
@@ -68,7 +68,7 @@ Most applications should use
 [`<mwc-formfield>`](https://github.com/material-components/material-components-web-components/tree/master/packages/formfield)
 to associate an interactive label with the switch.
 
-<img src="images/formfield.png" width="160px" height="48px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/switch/images/formfield.png" width="160px" height="48px">
 
 ```html
 <mwc-formfield label="Airplane mode">
@@ -107,7 +107,7 @@ to associate an interactive label with the switch.
 
 | Name | Default | Description
 | ----------------------- | -------------------------------------- | ---
-| `--mdc-theme-secondary` | ![](images/color_018786.png) `#018786` | Fill color of the thumb head and a lightened fill of the track.
+| `--mdc-theme-secondary` | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/switch/images/color_018786.png) `#018786` | Fill color of the thumb head and a lightened fill of the track.
 
 Also inherits styles from [ripple](../ripple/README.md)
 

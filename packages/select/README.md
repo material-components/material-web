@@ -5,7 +5,7 @@
 
 Selects display a list of choices on temporary surfaces.
 
-<img src="images/header.png" width="237px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/header.png" width="237px">
 
 [Material Design Guidelines: exposed dropdown menus](https://material.io/components/menus/#exposed-dropdown-menu)
 
@@ -31,9 +31,9 @@ Note, `mwc-select` internally uses
 [`mwc-list`](https://github.com/material-components/material-components-web-components/tree/master/packages/list),
 so its main slot has the same interface as the main slot of a `mwc-list`.
 
-<img src="images/basic.png" width="200px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/basic.png" width="200px">
 <br>
-<img src="images/basic_active.png" width="235px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/basic_active.png" width="235px">
 
 ```html
 <mwc-select label="filled">
@@ -52,9 +52,9 @@ so its main slot has the same interface as the main slot of a `mwc-list`.
 
 ### Outlined
 
-<img src="images/outlined.png" width="200px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/outlined.png" width="200px">
 <br>
-<img src="images/outlined_active.png" width="236px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/outlined_active.png" width="236px">
 
 ```html
 <mwc-select outlined label="outlined">
@@ -68,9 +68,9 @@ so its main slot has the same interface as the main slot of a `mwc-list`.
 
 ### Preselected
 
-<img src="images/preselected.png" width="200px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/preselected.png" width="200px">
 <br>
-<img src="images/preselected_active.png" width="235px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/preselected_active.png" width="235px">
 
 ```html
 <mwc-select label="preselected">
@@ -87,9 +87,9 @@ so its main slot has the same interface as the main slot of a `mwc-list`.
 Icon is a material-icons font name. Additionally, all options must have
 `graphic="icon"` defined to enable proper spacing.
 
-<img src="images/icon.png" width="235px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/icon.png" width="235px">
 <br>
-<img src="images/icon_active.png" width="235px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/icon_active.png" width="235px">
 
 ```html
 <mwc-select label="has icon" icon="event">
@@ -101,9 +101,9 @@ Icon is a material-icons font name. Additionally, all options must have
 
 ### Required (error, validation message)
 
-<img src="images/error.png" width="435px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/error.png" width="435px">
 <br>
-<img src="images/error_active.png" width="435px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/error_active.png" width="435px">
 
 ```html
 <mwc-select
@@ -131,13 +131,13 @@ Icon is a material-icons font name. Additionally, all options must have
 
 ### Helper Text
 
-<img src="images/helper.png" width="200px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/helper.png" width="200px">
 <br>
 focused:
 <br>
-<img src="images/helper_focused.png" width="201px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/helper_focused.png" width="201px">
 <br>
-<img src="images/helper_active.png" width="235px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/helper_active.png" width="235px">
 
 ```html
 <mwc-select
@@ -153,9 +153,9 @@ focused:
 
 ### Styled
 
-<img src="images/styled.png" width="445px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/styled.png" width="445px">
 <br>
-<img src="images/styled_active.png" width="445px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/styled_active.png" width="445px">
 
 ```html
 <style>
@@ -279,21 +279,21 @@ properties from `mwc-menu` and `mwc-list` propagate through `mwc-select`.
 
 | Name                                              | Default               | Description
 | ------------------------------------------------- | --------------------- |------------
-| `--mdc-theme-primary`                             | ![](images/color_6200ee.png) `#6200ee`             | Color when active of the underline ripple, the outline, the caret, the dropdown-icon, and the focused and activatd list items.
-| `--mdc-theme-error`                               | ![](images/color_b00020.png) `#b00020`             | Color when errored of the underline ripple, the outline, the caret, the dropdown-icon, and the focused and activatd list items.
+| `--mdc-theme-primary`                             | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/color_6200ee.png) `#6200ee`             | Color when active of the underline ripple, the outline, the caret, the dropdown-icon, and the focused and activatd list items.
+| `--mdc-theme-error`                               | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/color_b00020.png) `#b00020`             | Color when errored of the underline ripple, the outline, the caret, the dropdown-icon, and the focused and activatd list items.
 | `--mdc-select-error-color`                        | `--mdc-theme-error`   | Applies where --mdc-theme-error applies.
-| `--mdc-select-idle-line-color`                    | ![](images/color_0,0,0,42.png) `rgba(0, 0, 0, 0.42)` | Color of the filled select's  bottom line when idle.
-| `--mdc-select-hover-line-color`                   | ![](images/color_0,0,0,87.png) `rgba(0, 0, 0, 0.87)` | Color of the filled select's  bottom line when hovering.
-| `--mdc-select-outlined-idle-border-color`         | ![](images/color_0,0,0,38.png) `rgba(0, 0, 0, 0.38)` | Color of the outlined select's  outline when idle.
-| `--mdc-select-outlined-hover-border-color`        | ![](images/color_0,0,0,87.png) `rgba(0, 0, 0, 0.87)` | Color of the outlined select's outline when hovering.
-| `--mdc-select-outlined-disabled-border-color`     | ![](images/color_0,0,0,16.png) `rgba(0, 0, 0, 0.16)` | Color of the outlined select's outline when disabled.
-| `--mdc-select-fill-color`                         | ![](images/color_245,245,245.png) `rgb(245, 245, 245)`  | Color of the select's background fill (non-outlined).
-| `--mdc-select-disabled-fill-color`                | ![](images/color_250,250,250.png) `rgb(250, 250, 250)`  | Color of the select's background fill (non-outlined) when disabled.
-| `--mdc-select-ink-color`                          | ![](images/color_0,0,0,87.png) `rgba(0, 0, 0, 0.87)` | Color of the input text.
-| `--mdc-select-label-ink-color`                    | ![](images/color_0,0,0,60.png) `rgba(0, 0, 0, 0.6)`  | Color of the non-focused floating label, helper text, and placeholder.
+| `--mdc-select-idle-line-color`                    | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/color_0,0,0,42.png) `rgba(0, 0, 0, 0.42)` | Color of the filled select's  bottom line when idle.
+| `--mdc-select-hover-line-color`                   | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/color_0,0,0,87.png) `rgba(0, 0, 0, 0.87)` | Color of the filled select's  bottom line when hovering.
+| `--mdc-select-outlined-idle-border-color`         | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/color_0,0,0,38.png) `rgba(0, 0, 0, 0.38)` | Color of the outlined select's  outline when idle.
+| `--mdc-select-outlined-hover-border-color`        | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/color_0,0,0,87.png) `rgba(0, 0, 0, 0.87)` | Color of the outlined select's outline when hovering.
+| `--mdc-select-outlined-disabled-border-color`     | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/color_0,0,0,16.png) `rgba(0, 0, 0, 0.16)` | Color of the outlined select's outline when disabled.
+| `--mdc-select-fill-color`                         | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/color_245,245,245.png) `rgb(245, 245, 245)`  | Color of the select's background fill (non-outlined).
+| `--mdc-select-disabled-fill-color`                | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/color_250,250,250.png) `rgb(250, 250, 250)`  | Color of the select's background fill (non-outlined) when disabled.
+| `--mdc-select-ink-color`                          | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/color_0,0,0,87.png) `rgba(0, 0, 0, 0.87)` | Color of the input text.
+| `--mdc-select-label-ink-color`                    | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/color_0,0,0,60.png) `rgba(0, 0, 0, 0.6)`  | Color of the non-focused floating label, helper text, and placeholder.
 | `--mdc-select-focused-label-color`                | `--mdc-theme-primary` | Color of the focused floating label, helper text, and placeholder.
-| `--mdc-select-disabled-ink-color`                 | ![](images/color_0,0,0,37.png) `rgba(0, 0, 0, 0.37)` | Color of the input text, the floating label, helper text, and placeholder of a disabled select.
-| `--mdc-select-dropdown-icon-color`                | ![](images/color_000.png) `#000`                | Color of the dropdown icon when select is not activated.
+| `--mdc-select-disabled-ink-color`                 | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/color_0,0,0,37.png) `rgba(0, 0, 0, 0.37)` | Color of the input text, the floating label, helper text, and placeholder of a disabled select.
+| `--mdc-select-dropdown-icon-color`                | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/select/images/color_000.png) `#000`                | Color of the dropdown icon when select is not activated.
 | `--mdc-select-focused-dropdown-icon-color`        | `--mdc-theme-primary` | Color of the dropdown icon when select is activated.
 | `--mdc-select-error-dropdown-icon-color`          | `--mdc-select-error-color` | Color of the dropdown icon when select is invalid.
 | `--mdc-select-dropdown-icon-opacity`              | `0.54`               | opacity of the dropdown icon.

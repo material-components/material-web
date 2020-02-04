@@ -5,7 +5,7 @@
 
 Progress indicators express an unspecified wait time or display the length of a process.
 
-<img src="images/showcase.gif" height="45px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/linear-progress/images/showcase.gif" height="45px">
 
 [Material Design Guidelines: Progress Indicators](https://material.io/components/progress-indicators/#circular-progress-indicators)
 
@@ -27,7 +27,7 @@ npm install @material/mwc-linear-progress
 
 ### Determinate
 
-<img src="images/determinate.png" height="34px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/linear-progress/images/determinate.png" height="34px">
 
 ```html
 <script type="module">
@@ -38,7 +38,7 @@ npm install @material/mwc-linear-progress
 
 ### Indeterminate
 
-<img src="images/indeterminate.gif" height="77px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/linear-progress/images/indeterminate.gif" height="77px">
 
 ```html
 <mwc-linear-progress indeterminate></mwc-linear-progress>
@@ -46,7 +46,7 @@ npm install @material/mwc-linear-progress
 
 ### Determinate buffer
 
-<img src="images/determinate-buffer.gif" height="45px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/linear-progress/images/determinate-buffer.gif" height="45px">
 
 ```html
 <mwc-linear-progress progress="0.25" buffer="0.5"></mwc-linear-progress>
@@ -54,7 +54,7 @@ npm install @material/mwc-linear-progress
 
 ### Reversed
 
-<img src="images/reversed.gif" height="45px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/linear-progress/images/reversed.gif" height="45px">
 
 
 ```html
@@ -67,7 +67,7 @@ npm install @material/mwc-linear-progress
 
 ### Styled
 
-<img src="images/styled.gif" height="45px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/linear-progress/images/styled.gif" height="45px">
 
 ```html
 <style>
@@ -113,8 +113,8 @@ None
 
 | Name                                         | Default                                | Description
 | -------------------------------------------- | -------------------------------------- |------------
-| `--mdc-theme-primary`                        | ![](images/color_6200ee.png) `#6200EE` | Sets the color of primary progress bar.
-| `--mdc-linear-progress-buffer-color`         | ![](images/color_e6e6e6.png) `#E6E6E6` | Sets the color of the buffer progress bar.<br> **NOTE:** to change the color of the buffering dots, you must do so in the image of `--mdc-linear-progress-buffering-dots-image`.
+| `--mdc-theme-primary`                        | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/linear-progress/images/color_6200ee.png) `#6200EE` | Sets the color of primary progress bar.
+| `--mdc-linear-progress-buffer-color`         | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/linear-progress/images/color_e6e6e6.png) `#E6E6E6` | Sets the color of the buffer progress bar.<br> **NOTE:** to change the color of the buffering dots, you must do so in the image of `--mdc-linear-progress-buffering-dots-image`.
 | `--mdc-linear-progress-buffering-dots-image` | `url("<svg data url>")` (see below for value) | Sets the image to use as the buffering dots. This pattern is then repeated horizontally and animated.
 
 Default value for `--mdc-linear-progress-buffering-dots-image`:

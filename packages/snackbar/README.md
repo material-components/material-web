@@ -6,7 +6,7 @@
 Snackbars provide brief messages about app processes at the bottom of the
 screen.
 
-![](images/action_button.png)
+![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/snackbar/images/action_button.png)
 
 [Material Design Guidelines: Snackbars](https://material.io/design/components/snackbars.html)
 
@@ -28,7 +28,7 @@ npm install @material/mwc-snackbar
 
 ### Standard
 
-![](images/standard.png)
+![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/snackbar/images/standard.png)
 
 ```html
 <mwc-snackbar id="photoErrorSnackbar"
@@ -44,7 +44,7 @@ npm install @material/mwc-snackbar
 
 ### Optional action and dismiss button
 
-![](images/action_and_dismiss.png)
+![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/snackbar/images/action_and_dismiss.png)
 
 ```html
 <mwc-snackbar labelText="Can't send photo. Retry in 5 seconds.">
@@ -55,7 +55,7 @@ npm install @material/mwc-snackbar
 
 ### Custom action button color
 
-![](images/custom_action_color.png)
+![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/snackbar/images/custom_action_color.png)
 
 ```css
 mwc-snackbar {
@@ -70,7 +70,7 @@ mwc-snackbar {
 Action buttons with long text should be positioned below the label instead of
 alongside it. Set the `stacked` attribute or property to enable this layout.
 
-![](images/stacked.png)
+![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/snackbar/images/stacked.png)
 
 ### Leading
 
@@ -119,7 +119,7 @@ attribute or property to enable this layout.
 
 | Name                          | Default | Description
 | ----------------------------- | ------- |------------
-| `--mdc-snackbar-action-color` | ![](images/color_bb86fc.png) `#bb86fc` | Color of the action button text.
+| `--mdc-snackbar-action-color` | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/snackbar/images/color_bb86fc.png) `#bb86fc` | Color of the action button text.
 
 ## Additional references
 

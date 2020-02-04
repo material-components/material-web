@@ -5,7 +5,7 @@
 
 Sliders allow users to make selections from a range of values.
 
-<img src="images/basic.png" height="48px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/slider/images/basic.png" height="48px">
 
 [Material Design Guidelines: sliders](https://material.io/design/components/sliders.html)
 
@@ -27,7 +27,7 @@ npm install @material/mwc-slider
 
 ### Continuous
 
-<img src="images/basic.png" height="48pxx">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/slider/images/basic.png" height="48pxx">
 
 ```html
 <script type="module">
@@ -39,7 +39,7 @@ npm install @material/mwc-slider
 
 ### Discrete
 
-<img src="images/discrete.gif" height="80.5px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/slider/images/discrete.gif" height="80.5px">
 
 ```html
 <mwc-slider
@@ -53,7 +53,7 @@ npm install @material/mwc-slider
 
 ### Styled
 
-<img src="images/styled.gif" height="79px">
+<img src="https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/slider/images/styled.gif" height="79px">
 
 ```html
 <style>
@@ -101,9 +101,9 @@ npm install @material/mwc-slider
 
 | Name                                     | Default | Description
 | ---------------------------------------- | ------- |------------
-| `--mdc-theme-secondary`                  | ![](images/color_018786.png) `#018786` | Sets the color of the knob and filled track when slider is active.
-| `--mdc-theme-text-primary-on-dark`       | ![](images/color_fff.png) `white`   | Sets the color of the text in the pin.
-| `--mdc-slider-bg-color-behind-component` | ![](images/color_fff.png) `white`   | Sets the color of the circle around the knob on the disabled slider to make it seem cut-out. May be necessary when placing a disabled slider on a different-colored background.
+| `--mdc-theme-secondary`                  | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/slider/images/color_018786.png) `#018786` | Sets the color of the knob and filled track when slider is active.
+| `--mdc-theme-text-primary-on-dark`       | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/slider/images/color_fff.png) `white`   | Sets the color of the text in the pin.
+| `--mdc-slider-bg-color-behind-component` | ![](https://raw.githubusercontent.com/material-components/material-components-web-components/054d0d234704a274e8aaf7d8a8a0399f525914eb/packages/slider/images/color_fff.png) `white`   | Sets the color of the circle around the knob on the disabled slider to make it seem cut-out. May be necessary when placing a disabled slider on a different-colored background.
 
 ## Additional references
 
