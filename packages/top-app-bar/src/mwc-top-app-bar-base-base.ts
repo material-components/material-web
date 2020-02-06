@@ -52,10 +52,12 @@ export abstract class TopAppBarBaseBase extends BaseElement {
   }
 
   set scrollTarget(value) {
+    this.unregisterScrollListener();
     const old = this.scrollTarget;
     this._scrollTarget = value;
     this.updateRootPosition();
     this.requestUpdate('scrollTarget', old);
+    this.registerScrollListener();
   }
 
   private updateRootPosition() {
@@ -131,11 +133,19 @@ export abstract class TopAppBarBaseBase extends BaseElement {
   };
 
   protected registerListeners() {
-    this.scrollTarget.addEventListener(
-        'scroll', this.handleTargetScroll, passiveEventOptionsIfSupported);
+    this.registerScrollListener();
   }
 
   protected unregisterListeners() {
+    this.unregisterScrollListener();
+  }
+
+  protected registerScrollListener() {
+   this.scrollTarget.addEventListener(
+        'scroll', this.handleTargetScroll, passiveEventOptionsIfSupported);
+  }
+
+  protected unregisterScrollListener() {
     this.scrollTarget.removeEventListener('scroll', this.handleTargetScroll);
   }
 
