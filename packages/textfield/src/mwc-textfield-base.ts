@@ -156,6 +156,8 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: Boolean}) endAligned = false;
 
+  @property({type: String}) inputMode = '';
+
   @property({type: Boolean}) protected outlineOpen = false;
   @property({type: Number}) protected outlineWidth = 0;
   @property({type: Boolean}) protected isUiValid = true;
@@ -277,6 +279,7 @@ export abstract class TextFieldBase extends FormElement {
           min="${ifDefined(this.min === '' ? undefined : this.min as number)}"
           max="${ifDefined(this.max === '' ? undefined : this.max as number)}"
           step="${ifDefined(this.step === null ? undefined : this.step)}"
+          inputmode="${this.inputMode}"
           @input="${this.handleInputChange}"
           @blur="${this.onInputBlur}">`;
   }
