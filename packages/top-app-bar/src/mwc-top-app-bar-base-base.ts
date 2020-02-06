@@ -141,7 +141,7 @@ export abstract class TopAppBarBaseBase extends BaseElement {
   }
 
   protected registerScrollListener() {
-   this.scrollTarget.addEventListener(
+    this.scrollTarget.addEventListener(
         'scroll', this.handleTargetScroll, passiveEventOptionsIfSupported);
   }
 
