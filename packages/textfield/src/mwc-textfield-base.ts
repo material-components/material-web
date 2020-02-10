@@ -98,9 +98,9 @@ export type TextFieldType = 'text'|'search'|'tel'|'url'|'email'|'password'|
  * This is the enumerated typeof HTMLInputElement.inputMode as declared by
  * lit-analyzer.
  */
-export type TextFieldInputMode = 'verbatim'|'latin'|'latin-name'|'latin-prose'|
-    'full-width-latin'|'kana'|'kana-name'|'katakana'|'numeric'|'tel'|'email'|
-    'url';
+export type TextFieldInputMode =
+    'verbatim'|'latin'|'latin-name'|'latin-prose'|'full-width-latin'|'kana'|
+    'kana-name'|'katakana'|'numeric'|'tel'|'email'|'url';
 
 export abstract class TextFieldBase extends FormElement {
   protected mdcFoundation!: MDCTextFieldFoundation;
