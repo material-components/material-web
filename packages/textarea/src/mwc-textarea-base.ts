@@ -42,9 +42,12 @@ export abstract class TextAreaBase extends TextFieldBase {
       'mdc-text-field--end-aligned': this.endAligned,
     };
 
+    const ripple =
+        !this.outlined ? html`<div class="mdc-text-field__ripple"></div>` : '';
     return html`
       <label class="mdc-text-field mdc-text-field--textarea ${
         classMap(classes)}">
+        ${ripple}
         ${this.renderCharCounter()}
         ${this.renderInput()}
         ${this.outlined ? this.renderOutlined() : this.renderLabelText()}

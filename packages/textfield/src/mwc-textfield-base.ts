@@ -241,8 +241,12 @@ export abstract class TextFieldBase extends FormElement {
       'mdc-text-field--with-trailing-icon': this.iconTrailing,
       'mdc-text-field--end-aligned': this.endAligned,
     };
+
+    const ripple =
+        !this.outlined ? html`<div class="mdc-text-field__ripple"></div>` : '';
     return html`
       <label class="mdc-text-field ${classMap(classes)}">
+        ${ripple}
         ${this.icon ? this.renderIcon(this.icon) : ''}
         ${this.renderInput()}
         ${this.iconTrailing ? this.renderIcon(this.iconTrailing, true) : ''}
