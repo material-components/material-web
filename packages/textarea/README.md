@@ -107,7 +107,7 @@ npm install @material/mwc-textarea
 </mwc-textarea>
 
 <mwc-textarea
-    class="left right";
+    class="left right"
     label="My Textarea"
     outlined>
 </mwc-textarea>
