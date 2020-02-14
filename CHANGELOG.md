@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Added
+
+- `inputMode` to `mwc-textfield` and `mwc-textarea`
+
 ### Fixed
 
 - Setting `scrollTarget` on `mwc-top-app-bar` will update listeners

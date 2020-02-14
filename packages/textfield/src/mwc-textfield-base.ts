@@ -94,6 +94,14 @@ const createValidityObj =
 export type TextFieldType = 'text'|'search'|'tel'|'url'|'email'|'password'|
     'date'|'month'|'week'|'time'|'datetime-local'|'number'|'color';
 
+/**
+ * This is the enumerated typeof HTMLInputElement.inputMode as declared by
+ * lit-analyzer.
+ */
+export type TextFieldInputMode =
+    'verbatim'|'latin'|'latin-name'|'latin-prose'|'full-width-latin'|'kana'|
+    'kana-name'|'katakana'|'numeric'|'tel'|'email'|'url';
+
 export abstract class TextFieldBase extends FormElement {
   protected mdcFoundation!: MDCTextFieldFoundation;
 
@@ -155,6 +163,14 @@ export abstract class TextFieldBase extends FormElement {
   @property({type: Boolean}) charCounter = false;
 
   @property({type: Boolean}) endAligned = false;
+
+  // lit-analyzer requires specific string types, but TS does not compile since
+  // base class is unspecific "string". It also needs non-null coercion (!)
+  // since we don't want to provide a default value, but the base class is not
+  // typed to allow undefined.
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  @property({type: String}) inputMode!: TextFieldInputMode;
 
   @property({type: Boolean}) protected outlineOpen = false;
   @property({type: Number}) protected outlineWidth = 0;
@@ -281,6 +297,7 @@ export abstract class TextFieldBase extends FormElement {
           min="${ifDefined(this.min === '' ? undefined : this.min as number)}"
           max="${ifDefined(this.max === '' ? undefined : this.max as number)}"
           step="${ifDefined(this.step === null ? undefined : this.step)}"
+          inputmode="${ifDefined(this.inputMode)}"
           @input="${this.handleInputChange}"
           @blur="${this.onInputBlur}">`;
   }
