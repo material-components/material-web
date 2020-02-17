@@ -289,7 +289,7 @@ properties from `mwc-menu` and `mwc-list` propagate through `mwc-select`.
 | `--mdc-select-outlined-disabled-border-color`     | ![](images/color_0,0,0,16.png) `rgba(0, 0, 0, 0.16)` | Color of the outlined select's outline when disabled.
 | `--mdc-select-fill-color`                         | ![](images/color_245,245,245.png) `rgb(245, 245, 245)`  | Color of the select's background fill (non-outlined).
 | `--mdc-select-disabled-fill-color`                | ![](images/color_250,250,250.png) `rgb(250, 250, 250)`  | Color of the select's background fill (non-outlined) when disabled.
-| `--mdc-select-ink-color`                          | ![](images/color_0,0,0,87.png) `rgba(0, 0, 0, 0.87)` | Color of the input text.
+| `--mdc-select-ink-color`                          | ![](images/color_0,0,0,87.png) `rgba(0, 0, 0, 0.87)` | Color of the selected text in default and error states.
 | `--mdc-select-label-ink-color`                    | ![](images/color_0,0,0,60.png) `rgba(0, 0, 0, 0.6)`  | Color of the non-focused floating label, helper text, and placeholder.
 | `--mdc-select-focused-label-color`                | `--mdc-theme-primary` | Color of the focused floating label, helper text, and placeholder.
 | `--mdc-select-disabled-ink-color`                 | ![](images/color_0,0,0,37.png) `rgba(0, 0, 0, 0.37)` | Color of the input text, the floating label, helper text, and placeholder of a disabled select.
