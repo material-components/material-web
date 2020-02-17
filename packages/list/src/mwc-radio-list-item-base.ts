@@ -30,7 +30,6 @@ export class RadioListItemBase extends ListItemBase {
 
   @property({type: Boolean}) left = false;
   @property({type: String, reflect: true}) graphic: GraphicType = 'control';
-  @property({type: Boolean, reflect: false})
 
   render() {
     const radioClasses = {
@@ -62,7 +61,7 @@ export class RadioListItemBase extends ListItemBase {
 
 
   protected onClick() {
-    this.fireRequestDetail(true, !this.selected);
+    this.fireRequestDetail(!this.selected, 'interaction');
   }
 
   protected onChecked(evt: Event) {
@@ -72,7 +71,7 @@ export class RadioListItemBase extends ListItemBase {
       // needed to reconcile radio unchecking itself. List doesn't seem to care
       this.selected = radio.checked;
 
-      this.fireRequestDetail(false, this.selected);
+      this.fireRequestDetail(this.selected, 'interaction');
     }
   }
 

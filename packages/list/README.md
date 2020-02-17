@@ -465,8 +465,8 @@ of `mwc-list-item`, so all properties in `mwc-list-item` will be available on
 
 | Event Name | Target       | Detail             | Description
 | ---------- | ------------ | ------------------ | -----------
-| `action`  | `mwc-list`    | `ActionDetail`*    | Fired when a selection has been made via click or keyboard aciton.
-| `selected`  | `mwc-list` | `SelectedDetail`**   | Fired when a selection has been made. `index` is the selected index (will be of type `Set<number>` if multi and `number` if single), and `diff` (of type `IndexDiff`**) represents the diff of added and removed indices from previous selection.
+| `action`   | `mwc-list`   | `ActionDetail`*    | Fired when a selection has been made via click or keyboard aciton.
+| `selected` | `mwc-list`   | `SelectedDetail`** | Fired when a selection has been made. `index` is the selected index (will be of type `Set<number>` if multi and `number` if single), and `diff` (of type `IndexDiff`**) represents the diff of added and removed indices from previous selection.
 
 \* `ActionDetail` is an interface of the following type:
 
@@ -525,14 +525,14 @@ mwcList.addEventListener('selected', onSelected);
 
 | Event Name          | Target          | Detail                   | Description
 | ------------------- | --------------- | ------------------------ | -----------
-| `request-selected`  | `mwc-list-item` | `RequestSelectedDetail`* | Fired upon click. Requests selection from the `mwc-list`.
+| `request-selected`  | `mwc-list-item` | `RequestSelectedDetail`* | Fired upon click and when `selected` property is changed. Requests selection from the `mwc-list`.
 
 \* `RequestSelectedDetail` is an interface of the following type:
 
 ```ts
 interface RequestSelectedDetail {
   selected: boolean;
-  isClick: boolean;
+  source: 'interaction'|'property';
 }
 ```
 

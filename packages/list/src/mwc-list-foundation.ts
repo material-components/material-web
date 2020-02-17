@@ -266,7 +266,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
         }
         this.preventDefaultEvent_(evt);
 
-        this.setSelectedIndexOnAction_(currentIndex);
+        this.setSelectedIndexOnAction_(currentIndex, true);
       }
     }
 
@@ -281,12 +281,13 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
   /**
    * Click handler for the list.
    */
-  handleSingleSelection(index: number, force?: boolean) {
+  handleSingleSelection(
+      index: number, isInteraction: boolean, force?: boolean) {
     if (index === numbers.UNSET_INDEX) {
       return;
     }
 
-    this.setSelectedIndexOnAction_(index, force);
+    this.setSelectedIndexOnAction_(index, isInteraction, force);
     this.setTabindexAtIndex_(index);
     this.focusedItemIndex_ = index;
   }
@@ -363,7 +364,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
     }
   }
 
-  private setSingleSelectionAtIndex_(index: number) {
+  private setSingleSelectionAtIndex_(index: number, isInteraction = true) {
     if (this.selectedIndex_ === index) {
       return;
     }
@@ -379,7 +380,9 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
     }
 
     // set new
-    this.adapter_.setSelectedStateForElementIndex(index, true);
+    if (isInteraction) {
+      this.adapter_.setSelectedStateForElementIndex(index, true);
+    }
     if (this.useActivatedClass_) {
       this.adapter_.setActivatedStateForElementIndex(index, true);
     }
@@ -390,7 +393,8 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
     this.adapter_.notifySelected(index);
   }
 
-  private setMultiSelectionAtIndex_(newIndex: Set<number>) {
+  private setMultiSelectionAtIndex_(
+      newIndex: Set<number>, isInteraction = true) {
     const oldIndex = createSetFromIndex(this.selectedIndex_);
     const diff = findIndexDiff(oldIndex, newIndex);
 
@@ -399,7 +403,9 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
     }
 
     for (const removed of diff.removed) {
-      this.adapter_.setSelectedStateForElementIndex(removed, false);
+      if (isInteraction) {
+        this.adapter_.setSelectedStateForElementIndex(removed, false);
+      }
 
       if (this.useActivatedClass_) {
         this.adapter_.setActivatedStateForElementIndex(removed, false);
@@ -407,7 +413,9 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
     }
 
     for (const added of diff.added) {
-      this.adapter_.setSelectedStateForElementIndex(added, true);
+      if (isInteraction) {
+        this.adapter_.setSelectedStateForElementIndex(added, true);
+      }
 
       if (this.useActivatedClass_) {
         this.adapter_.setActivatedStateForElementIndex(added, true);
@@ -517,7 +525,8 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
    * toggleCheckbox value. User interaction should not toggle list item(s) when
    * disabled.
    */
-  private setSelectedIndexOnAction_(index: number, force?: boolean) {
+  private setSelectedIndexOnAction_(
+      index: number, isInteraction: boolean, force?: boolean) {
     if (this.adapter_.getDisabledStateForElementIndex(index)) {
       return;
     }
@@ -533,15 +542,24 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
     }
 
     if (this.isMulti_) {
-      this.toggleMultiAtIndex(index, force);
+      this.toggleMultiAtIndex(index, force, isInteraction);
     } else {
-      this.setSingleSelectionAtIndex_(index);
+      if (isInteraction || force) {
+        this.setSingleSelectionAtIndex_(index, isInteraction);
+      } else {
+        const isDeselection = this.selectedIndex_ === index;
+        if (isDeselection) {
+          this.setSingleSelectionAtIndex_(numbers.UNSET_INDEX);
+        }
+      }
     }
 
-    this.adapter_.notifyAction(index);
+    if (isInteraction) {
+      this.adapter_.notifyAction(index);
+    }
   }
 
-  toggleMultiAtIndex(index: number, force?: boolean) {
+  toggleMultiAtIndex(index: number, force?: boolean, isInteraction = true) {
     let newSelectionValue = false;
 
     if (force === undefined) {
@@ -558,7 +576,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
       newSet.delete(index);
     }
 
-    this.setMultiSelectionAtIndex_(newSet);
+    this.setMultiSelectionAtIndex_(newSet, isInteraction);
   }
 }
 
