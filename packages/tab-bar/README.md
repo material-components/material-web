@@ -248,7 +248,7 @@ _Note: example is in the state of hovering over the first tab._
 
 | Name              |	Description
 | ----------------- | -------------
-| _default_         |	[`mwc-tab`](https://github.com/material-components/material-components-web-components/blob/master/packages/tab/README.md) elements to display.
+| _default_         |	[`mwc-tab`](https://github.com/material-components/material-components-web-components/tree/master/packages/tab) elements to display.
 
 ### Properties/Attributes
 
