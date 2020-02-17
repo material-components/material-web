@@ -114,16 +114,14 @@ mwc-notched-outline {
       }
     }
 
-    &:not(.mdc-select--invalid){
-      &:not(.mdc-select--focused) {
-        .mdc-floating-label, .mdc-floating-label::after {
-          color: var(--mdc-select-label-ink-color, #{vars.$label-color});
-        }
+    &:not(.mdc-select--invalid):not(.mdc-select--focused) {
+      .mdc-floating-label, .mdc-floating-label::after {
+        color: var(--mdc-select-label-ink-color, #{vars.$label-color});
+      }
 
-        .mdc-select__dropdown-icon {
-          color: var(--mdc-select-dropdown-icon-color, vars.$dropdown-color);
-          opacity: var(--mdc-select-dropdown-icon-opacity, vars.$dropdown-opacity);
-        }
+      .mdc-select__dropdown-icon {
+        color: var(--mdc-select-dropdown-icon-color, vars.$dropdown-color);
+        opacity: var(--mdc-select-dropdown-icon-opacity, vars.$dropdown-opacity);
       }
     }
 
