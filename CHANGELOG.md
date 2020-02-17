@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Setting `scrollTarget` on `mwc-top-app-bar` will update listeners
 
+### Changed
+
+- **BREAKING:VISUAL** `mwc-tab`'s default slot now has name `icon`
+
 ## [0.13.0] - 2019-02-03
 
 ### Added
