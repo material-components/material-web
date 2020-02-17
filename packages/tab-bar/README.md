@@ -22,8 +22,224 @@ npm install @material/mwc-tab-bar
 
 ### Basic
 
+<img src="images/basic.png" width="600px">
+
 ```html
-<html>
+<mwc-tab-bar>
+  <mwc-tab label="Tab one"></mwc-tab>
+  <mwc-tab label="Tab two"></mwc-tab>
+  <mwc-tab label="Tab three"></mwc-tab>
+</mwc-tab-bar>
+
+<script type="module">
+  import '@material/mwc-tab-bar';
+  import '@material/mwc-tab';
+</script>
+```
+
+### Preselected
+
+<img src="images/active-index.png" width="600px">
+
+```html
+<mwc-tab-bar activeIndex="1">
+  <mwc-tab label="Tab one"></mwc-tab>
+  <mwc-tab label="Tab two"></mwc-tab>
+  <mwc-tab label="Tab three"></mwc-tab>
+</mwc-tab-bar>
+```
+
+### Icons
+
+<img src="images/icons.png" width="600px">
+
+```html
+<mwc-tab-bar>
+  <mwc-tab label="Tab one" icon="accessibility"></mwc-tab>
+  <mwc-tab label="Tab two" icon="exit_to_app"></mwc-tab>
+  <mwc-tab label="Tab three" icon="camera"></mwc-tab>
+</mwc-tab-bar>
+```
+
+### Image / Slotted Icons
+
+<img src="images/image-icons.png" width="600px">
+
+```html
+<mwc-tab-bar>
+  <mwc-tab label="Tab one" hasImageIcon>
+    <!-- margin bottom is (24px - height) / 2 -->
+    <svg
+        slot="icon"
+        width="10px"
+        height="10px"
+        style="margin-bottom:7px;">
+      <circle
+          r="5px"
+          cx="5px"
+          cy="5px"
+          color="red">
+      </circle>
+    </svg>
+  </mwc-tab>
+  <mwc-tab label="Tab two" hasImageIcon>
+    <svg
+        slot="icon"
+        width="10px"
+        height="10px"
+        style="margin-bottom:7px;">
+      <rect
+          width="10px"
+          height="10px"
+          color="green">
+      </rect>
+    </svg>
+  </mwc-tab>
+  <mwc-tab label="Tab three" hasImageIcon>
+    <svg
+        slot="icon"
+        width="14.143px"
+        height="14.143px"
+        style="margin-bottom:4.928px;">
+      <rect
+          width="10px"
+          height="10px"
+          color="blue"
+          y="2.071px"
+          x="2.071px"
+          style="transform:rotate(45deg);transform-origin:center;">
+      </rect>
+    </svg>
+  </mwc-tab>
+</mwc-tab-bar>
+```
+
+### Stacked Icons
+
+<img src="images/stacked-icons.png" width="600px">
+
+```html
+<mwc-tab-bar>
+  <mwc-tab label="tab one" icon="accessibility" stacked></mwc-tab>
+  <mwc-tab label="tab two" icon="exit_to_app" stacked></mwc-tab>
+  <mwc-tab label="tab three" icon="camera" stacked></mwc-tab>
+</mwc-tab-bar>
+```
+
+### Min-width Indicator (w/ stacked icon)
+
+<img src="images/min-width.png" width="600px">
+
+```html
+<mwc-tab-bar>
+  <mwc-tab
+      label="tab one"
+      icon="accessibility"
+      stacked
+      isMinWidthIndicator>
+  </mwc-tab>
+  <mwc-tab
+      label="tab two"
+      icon="exit_to_app"
+      stacked
+      isMinWidthIndicator>
+  </mwc-tab>
+  <mwc-tab
+      label="tab three"
+      icon="camera"
+      stacked
+      isMinWidthIndicator>
+  </mwc-tab>
+</mwc-tab-bar>
+```
+
+### Icon Indicator (w/ stacked icon)
+
+<img src="images/icon-indicator.png" width="600px">
+
+```html
+<mwc-tab-bar>
+  <mwc-tab
+      icon="camera"
+      indicatorIcon="donut_large">
+  </mwc-tab>
+  <mwc-tab
+      icon="accessibility"
+      indicatorIcon="donut_large">
+  </mwc-tab>
+  <mwc-tab
+      icon="exit_to_app"
+      indicatorIcon="donut_large">
+  </mwc-tab>
+</mwc-tab-bar>
+```
+
+### Scrollable
+
+When the contents of `mwc-tab-bar` exceed its width, the overflow tabs are made
+scrollable along the x axis.
+
+<img src="images/scrollable.png" width="600px">
+
+```html
+<style>
+  mwc-tab-bar {
+    border: solid black 1px;
+  }
+</style>
+<mwc-tab-bar>
+  <mwc-tab label="Tab one"></mwc-tab>
+  <mwc-tab label="Tab two"></mwc-tab>
+  <mwc-tab label="Tab three"></mwc-tab>
+  <mwc-tab label="Tab four"></mwc-tab>
+  <mwc-tab label="Tab five"></mwc-tab>
+  <mwc-tab label="Tab six"></mwc-tab>
+  <mwc-tab label="Tab seven"></mwc-tab>
+  <mwc-tab label="Tab eight"></mwc-tab>
+  <mwc-tab label="Tab nine"></mwc-tab>
+  <mwc-tab label="Tab ten"></mwc-tab>
+  <mwc-tab label="Tab eleven"></mwc-tab>
+  <mwc-tab label="Tab twelve"></mwc-tab>
+</mwc-tab-bar>
+```
+
+### Styled
+
+_Note: example is in the state of hovering over the first tab._
+
+<img src="images/styled.png" width="600px">
+
+```html
+<style>
+  mwc-tab-bar {
+    --mdc-theme-primary: red;
+    --mdc-text-transform: none;
+    --mdc-tab-border-radius: 20px 20px 0px 0px;
+    --mdc-tab-color-default: green;
+    --mdc-tab-text-label-color-default: green;
+    --mdc-tab-stacked-height: 100px;
+  }
+</style>
+<mwc-tab-bar>
+  <mwc-tab
+      label="tab one"
+      icon="accessibility"
+      stacked
+      isMinWidthIndicator>
+  </mwc-tab>
+  <mwc-tab
+      label="tab two"
+      icon="exit_to_app"
+      stacked
+      isMinWidthIndicator>
+  </mwc-tab>
+  <mwc-tab
+      label="tab three"
+      icon="camera"
+      stacked
+      isMinWidthIndicator>
+  </mwc-tab>
+</mwc-tab-bar>
 ```
 
 ## API
@@ -32,58 +248,29 @@ npm install @material/mwc-tab-bar
 
 | Name              |	Description
 | ----------------- | -------------
-| _default_         |	Slotted icon to display. Only available if `hasImageIcon` or `icon` are defined.
+| _default_         |	[`mwc-tab`](https://github.com/material-components/material-components-web-components/blob/master/packages/tab/README.md) elements to display.
 
 ### Properties/Attributes
 
-| Name                  | Type      | Default | Description
-| --------------------- | --------- | ------- | -----------
-| `label`               | `string`  | `''`    | Text label to display in tab-bar.
-| `icon`                | `string`  | `''`    | Material design icon name to display (overridden by slotted icon).
-| `hasImageIcon`        | `boolean` | `false` | Displays a slot to show an image icon.
-| `indicatorIcon`       | `string`  | `''`    | Material design icon name to display as the indicator.
-| `isFadingIndicator`   | `boolean` | `false` | Indicator fades in and out instead of sliding.
-| `minWidth`            | `boolean` | `false` | Shrinks tab-bar as narrow as possible without causing text to wrap.
-| `isMinWidthIndicator` | `boolean` | `false` | Shrinks indicator to be the size of the content.
-| `stacked`             | `boolean` | `false` | Stacks icon on top of label text.
-| `active`              | `boolean` (readonly) | `false` | Indicates whether the tab-bar's indicator is active.
-
+| Name          | Type     | Default | Description
+| ------------- | -------- | ------- | -----------
+| `activeIndex` | `number` | `0`     | Index of tab that is active.
 
 ### Methods
 
 | Name     | Description
 | -------- | -------------
-| `activate() => void` | Activates the indicator.
-| `deactivate() => void` | Deactivates the indicator.
-| `computeDimensions() => MDCTabDimensions`\* | Computes the dimensions of the content.
-| `computeIndicatorClientRect() => ClientRect` | Computes the dimensions of the indicator.
-
-\* See MDC's [`Tab` types](https://github.com/material-components/material-components-web/blob/master/packages/mdc-tab-bar/types.ts#L29) for definition.
+| `scrollIndexIntoView(index:number) => void` | For long, scrollable `tab-bar`s, scrolls the tab at the given index into view.
 
 ### Events
 
 | Event Name | Target             | Detail             | Description
 | ---------- | ------------------ | ------------------ | -----------
-| `MDCTab:interacted` | `mwc-tab-bar` | `{tab-barId: string}`  | Emitted when the Tab is interacted with, regardless of its active state. Used by parent components to know which Tab to activate.
+| `MDCTab:activated` | `mwc-tab-bar` | `{index: number}` | Emitted when a tab selection has been made.
 
 ### CSS Custom Properties
 
-`mwc-tab-bar` internally uses both `mwc-menu` and `mwc-list`, so all custom
-properties from `mwc-menu` and `mwc-list` propagate through `mwc-tab-bar`.
-
-| Name                                              | Default               | Description
-| ------------------------------------------------- | --------------------- |------------
-| `--mdc-theme-primary` | ![](images/color_6200ee.png) `#6200ee` | Color of the activated tab-bar's text, indicator, and ripple.
-| `--mdc-theme-secondary` | ![](images/color_018786.png) `#018786` | Color of the indicator icon if defined.
-| `--mdc-icon-font` | `"Material Icons"` | Icon font to use for `icon` and `indicatorIcon`.
-| `--mdc-icon-size` | `24px` | Size of the text icon.
-| `--mdc-tab-bar-height` | `48px` | Height of the tab-bar.
-| `--mdc-horizontal-padding` | `24px` | Horizontal padding on either side of the tab-bar.
-| `--mdc-tab-bar-stacked-height` | `24px` | Height of the tab-bar's stacked variant.
-| `--mdc-text-transform` | `uppercase` | Text transform of the label.
-| `--mdc-tab-bar-border-radius` | `0px` | Tab's border radius (does not clip indicator).
-| `--mdc-text-label-color-default` | ![](images/color_0,0,0,60.png) `rgba(0, 0, 0, 0.6)` | Color of an unactivated tab-bar label.
-| `--mdc-tab-bar-color-default` | ![](images/color_0,0,0,54.png) `rgba(0, 0, 0, 0.54)` | Color of an unactivated icon.
+None
 
 
 ## Additional references
