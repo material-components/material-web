@@ -248,8 +248,10 @@ export abstract class ListBase extends BaseElement {
       }
 
       const selected = evt.detail.selected;
+      const source = evt.detail.source;
 
-      this.mdcFoundation.handleSingleSelection(index, selected);
+      this.mdcFoundation.handleSingleSelection(
+          index, source === 'interaction', selected);
 
       evt.stopPropagation();
     }
@@ -435,7 +437,9 @@ export abstract class ListBase extends BaseElement {
   }
 
   toggle(index: number, force?: boolean) {
-    this.mdcFoundation.toggleMultiAtIndex(index, force);
+    if (this.multi) {
+      this.mdcFoundation.toggleMultiAtIndex(index, force);
+    }
   }
 
   protected onSlotChange() {

@@ -145,18 +145,18 @@ export abstract class MenuBase extends BaseElement {
           @closed=${this.onClosed}
           @opened=${this.onOpened}
           @keydown=${this.onKeydown}>
-          <mwc-list
-            rootTabbable
-            .innerRole=${this.innerRole}
-            .multi=${this.multi}
-            class="mdc-list"
-            .itemRoles=${itemRoles}
-            .wrapFocus=${this.wrapFocus}
-            .activatable=${this.activatable}
-            @action=${this.onAction}>
-          <slot></slot>
-        </mwc-list>
-      </mwc-menu-surface>`;
+        <mwc-list
+          rootTabbable
+          .innerRole=${this.innerRole}
+          .multi=${this.multi}
+          class="mdc-list"
+          .itemRoles=${itemRoles}
+          .wrapFocus=${this.wrapFocus}
+          .activatable=${this.activatable}
+          @action=${this.onAction}>
+        <slot></slot>
+      </mwc-list>
+    </mwc-menu-surface>`;
   }
 
   protected createAdapter(): MDCMenuAdapter {

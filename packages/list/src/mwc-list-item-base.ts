@@ -19,9 +19,10 @@ import {observer} from '@material/mwc-base/observer';
 import {rippleNode} from '@material/mwc-ripple/ripple-directive';
 import {html, LitElement, property, query} from 'lit-element';
 
+export type SelectionSource = 'interaction'|'property';
 export interface RequestSelectedDetail {
   selected: boolean;
-  isClick: boolean;
+  source: SelectionSource;
 }
 
 export type GraphicType = 'avatar'|'icon'|'medium'|'large'|'control'|null;
@@ -68,10 +69,17 @@ export class ListItemBase extends LitElement {
     } else {
       this.setAttribute('aria-selected', 'false');
     }
+
+    if (this._firstChanged) {
+      this._firstChanged = false;
+    } else {
+      this.fireRequestDetail(value, 'property');
+    }
   })
   selected = false;
 
   protected boundOnClick = this.onClick.bind(this);
+  protected _firstChanged = true;
 
   get text() {
     const textContent = this.textContent;
@@ -128,13 +136,13 @@ export class ListItemBase extends LitElement {
   }
 
   protected onClick() {
-    this.fireRequestDetail(false, !this.selected);
+    this.fireRequestDetail(!this.selected, 'interaction');
   }
 
-  protected fireRequestDetail(isClick: boolean, selected: boolean) {
+  protected fireRequestDetail(selected: boolean, source: SelectionSource) {
     const customEv = new CustomEvent<RequestSelectedDetail>(
         'request-selected',
-        {bubbles: true, composed: true, detail: {isClick, selected}});
+        {bubbles: true, composed: true, detail: {source, selected}});
 
     this.dispatchEvent(customEv);
   }

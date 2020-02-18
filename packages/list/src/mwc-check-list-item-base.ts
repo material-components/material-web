@@ -57,7 +57,7 @@ export class CheckListItemBase extends ListItemBase {
   }
 
   protected onClick() {
-    this.fireRequestDetail(true, !this.selected);
+    this.fireRequestDetail(!this.selected, 'interaction');
   }
 
   connectedCallback() {
