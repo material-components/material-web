@@ -1,64 +1,278 @@
-# mwc-tab-bar
+# `<mwc-tab-bar>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-tab-bar.svg)](https://www.npmjs.com/package/@material/mwc-tab-bar)
 
-> :warning: These components are a work in progress. They are pre-release and should be considered experimental, as they may undergo major changes before release. We are experimenting with alternate architectures and approaches with the goal of allowing us to bring the most correct and optimal implementation of Material components to the widest possible audiences. Visible progress may be slow, as this research is across teams and repositories so is not consistently reflected in commits to this codebase. :warning:
+> IMPORTANT: The Material Web Components are a work in progress and subject to
+> major changes until 1.0 release.
 
-A [Material Components](https://material.io/develop/) tab-bar implementation using [Web Components](https://www.webcomponents.org/introduction)
+Tabs organize content across different screens, data sets, and other interactions.
 
-## Getting started
+[Material Design Guidelines: tabs](https://material.io/components/tabs/)
 
- * The easiest way to try out mwc-tab-bar is to use one of these online tools:
+## Installation
 
-    * Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-icon-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-icon-example?path=index.html)
+```sh
+npm install @material/mwc-tab-bar
+```
 
-    * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/qibisux/edit?html,output),
-    [CodePen](https://codepen.io/azakus/pen/deZLja).
+> NOTE: The Material Web Components are distributed as ES2017 JavaScript
+> Modules, and use the Custom Elements API. They are compatible with all modern
+> browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
+> tooling step is required to resolve *bare module specifiers*, as well as
 
-* You can also copy [this HTML file](https://gist.githubusercontent.com/azakus/f01e9fc2ed04e781ad5a52ded7b296e7/raw/266f2f4f91cbfe89b2acc6ec63957b1a3cfe9b39/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
+## Example usage
 
-* When you're ready to use mwc-tab-bar in a project, install it via [npm](https://www.npmjs.com/). To run the project in the browser, a module-compatible toolctain is required. We recommend installing the [Polymer CLI](https://github.com/Polymer/polymer-cli) and using its development server as follows.
+### Basic
 
-  1. Ensure the webcomponents polyfills are included in your HTML page
+<img src="images/basic.png" width="600px">
 
-      - Install webcomponents polyfills
+```html
+<mwc-tab-bar>
+  <mwc-tab label="Tab one"></mwc-tab>
+  <mwc-tab label="Tab two"></mwc-tab>
+  <mwc-tab label="Tab three"></mwc-tab>
+</mwc-tab-bar>
 
-          ```npm i @webcomponents/webcomponentsjs```
+<script type="module">
+  import '@material/mwc-tab-bar';
+  import '@material/mwc-tab';
+</script>
+```
 
-      - Add webcomponents polyfills to your HTML page
+### Preselected
 
-          ```<script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>```
+<img src="images/active-index.png" width="600px">
 
-  1. Add mwc-tab-bar to your project:
+```html
+<mwc-tab-bar activeIndex="1">
+  <mwc-tab label="Tab one"></mwc-tab>
+  <mwc-tab label="Tab two"></mwc-tab>
+  <mwc-tab label="Tab three"></mwc-tab>
+</mwc-tab-bar>
+```
 
-      ```npm i @material/mwc-tab-bar```
+### Icons
 
-  1. Import the mwc-tab-bar definition into your HTML page:
+<img src="images/icons.png" width="600px">
 
-      ```<script type="module" src="@material/mwc-tab-bar/index.js"></script>```
+```html
+<mwc-tab-bar>
+  <mwc-tab label="Tab one" icon="accessibility"></mwc-tab>
+  <mwc-tab label="Tab two" icon="exit_to_app"></mwc-tab>
+  <mwc-tab label="Tab three" icon="camera"></mwc-tab>
+</mwc-tab-bar>
+```
 
-      Or into your module script:
+### Image / Slotted Icons
 
-      ```import {TabBar} from "@material/mwc-tab-bar"```
+<img src="images/image-icons.png" width="600px">
 
-  1. Create an instance of mwc-tab-bar in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
+```html
+<mwc-tab-bar>
+  <mwc-tab label="Tab one" hasImageIcon>
+    <!-- margin bottom is (24px - height) / 2 -->
+    <svg
+        slot="icon"
+        width="10px"
+        height="10px"
+        style="margin-bottom:7px;">
+      <circle
+          r="5px"
+          cx="5px"
+          cy="5px"
+          color="red">
+      </circle>
+    </svg>
+  </mwc-tab>
+  <mwc-tab label="Tab two" hasImageIcon>
+    <svg
+        slot="icon"
+        width="10px"
+        height="10px"
+        style="margin-bottom:7px;">
+      <rect
+          width="10px"
+          height="10px"
+          color="green">
+      </rect>
+    </svg>
+  </mwc-tab>
+  <mwc-tab label="Tab three" hasImageIcon>
+    <svg
+        slot="icon"
+        width="14.143px"
+        height="14.143px"
+        style="margin-bottom:4.928px;">
+      <rect
+          width="10px"
+          height="10px"
+          color="blue"
+          y="2.071px"
+          x="2.071px"
+          style="transform:rotate(45deg);transform-origin:center;">
+      </rect>
+    </svg>
+  </mwc-tab>
+</mwc-tab-bar>
+```
 
-      ```<mwc-tab-bar>sentiment_very_satisfied</mwc-tab-bar>```
+### Stacked Icons
 
-  1. Install the Polymer CLI:
+<img src="images/stacked-icons.png" width="600px">
 
-      ```npm i -g polymer-cli```
+```html
+<mwc-tab-bar>
+  <mwc-tab label="tab one" icon="accessibility" stacked></mwc-tab>
+  <mwc-tab label="tab two" icon="exit_to_app" stacked></mwc-tab>
+  <mwc-tab label="tab three" icon="camera" stacked></mwc-tab>
+</mwc-tab-bar>
+```
 
-  1. Run the development server and open a browser pointing to its URL:
+### Min-width Indicator (w/ stacked icon)
 
-      ```polymer serve```
+<img src="images/min-width.png" width="600px">
 
-  > mwc-tab-bar is published on [npm](https://www.npmjs.com/package/@material/mwc-tab-bar) using JavaScript Modules.
-  This means it can take advantage of the standard native JavaScript module loader available in all current major browsers.
-  >
-  > However, since mwc-tab-bar uses npm convention to reference dependencies by name, a light transform to rewrite specifiers to URLs is required to get it to run in the browser. The polymer-cli's development server `polymer serve` automatically handles this transform.
+```html
+<mwc-tab-bar>
+  <mwc-tab
+      label="tab one"
+      icon="accessibility"
+      stacked
+      isMinWidthIndicator>
+  </mwc-tab>
+  <mwc-tab
+      label="tab two"
+      icon="exit_to_app"
+      stacked
+      isMinWidthIndicator>
+  </mwc-tab>
+  <mwc-tab
+      label="tab three"
+      icon="camera"
+      stacked
+      isMinWidthIndicator>
+  </mwc-tab>
+</mwc-tab-bar>
+```
 
-  Tools like [WebPack](https://webpack.js.org/) and [Rollup](https://rollupjs.org/) can also be used to serve and/or bundle mwc-tab-bar.
+### Icon Indicator (w/ stacked icon)
 
-## Supported Browsers
+<img src="images/icon-indicator.png" width="600px">
 
-The last 2 versions of all modern browsers are supported, including
-Chrome, Safari, Opera, Firefox, Edge. In addition, Internet Explorer 11 is also supported.
+```html
+<mwc-tab-bar>
+  <mwc-tab
+      icon="camera"
+      indicatorIcon="donut_large">
+  </mwc-tab>
+  <mwc-tab
+      icon="accessibility"
+      indicatorIcon="donut_large">
+  </mwc-tab>
+  <mwc-tab
+      icon="exit_to_app"
+      indicatorIcon="donut_large">
+  </mwc-tab>
+</mwc-tab-bar>
+```
+
+### Scrollable
+
+When the contents of `mwc-tab-bar` exceed its width, the overflow tabs are made
+scrollable along the x axis.
+
+<img src="images/scrollable.png" width="600px">
+
+```html
+<style>
+  mwc-tab-bar {
+    border: solid black 1px;
+  }
+</style>
+<mwc-tab-bar>
+  <mwc-tab label="Tab one"></mwc-tab>
+  <mwc-tab label="Tab two"></mwc-tab>
+  <mwc-tab label="Tab three"></mwc-tab>
+  <mwc-tab label="Tab four"></mwc-tab>
+  <mwc-tab label="Tab five"></mwc-tab>
+  <mwc-tab label="Tab six"></mwc-tab>
+  <mwc-tab label="Tab seven"></mwc-tab>
+  <mwc-tab label="Tab eight"></mwc-tab>
+  <mwc-tab label="Tab nine"></mwc-tab>
+  <mwc-tab label="Tab ten"></mwc-tab>
+  <mwc-tab label="Tab eleven"></mwc-tab>
+  <mwc-tab label="Tab twelve"></mwc-tab>
+</mwc-tab-bar>
+```
+
+### Styled
+
+_Note: example is in the state of hovering over the first tab._
+
+<img src="images/styled.png" width="600px">
+
+```html
+<style>
+  mwc-tab-bar {
+    --mdc-theme-primary: red;
+    --mdc-text-transform: none;
+    --mdc-tab-border-radius: 20px 20px 0px 0px;
+    --mdc-tab-color-default: green;
+    --mdc-tab-text-label-color-default: green;
+    --mdc-tab-stacked-height: 100px;
+  }
+</style>
+<mwc-tab-bar>
+  <mwc-tab
+      label="tab one"
+      icon="accessibility"
+      stacked
+      isMinWidthIndicator>
+  </mwc-tab>
+  <mwc-tab
+      label="tab two"
+      icon="exit_to_app"
+      stacked
+      isMinWidthIndicator>
+  </mwc-tab>
+  <mwc-tab
+      label="tab three"
+      icon="camera"
+      stacked
+      isMinWidthIndicator>
+  </mwc-tab>
+</mwc-tab-bar>
+```
+
+## API
+
+### Slots
+
+| Name              |	Description
+| ----------------- | -------------
+| _default_         |	[`mwc-tab`](https://github.com/material-components/material-components-web-components/tree/master/packages/tab) elements to display.
+
+### Properties/Attributes
+
+| Name          | Type     | Default | Description
+| ------------- | -------- | ------- | -----------
+| `activeIndex` | `number` | `0`     | Index of tab that is active.
+
+### Methods
+
+| Name     | Description
+| -------- | -------------
+| `scrollIndexIntoView(index:number) => void` | For long, scrollable `tab-bar`s, scrolls the tab at the given index into view.
+
+### Events
+
+| Event Name | Target             | Detail             | Description
+| ---------- | ------------------ | ------------------ | -----------
+| `MDCTab:activated` | `mwc-tab-bar` | `{index: number}` | Emitted when a tab selection has been made.
+
+### CSS Custom Properties
+
+None
+
+
+## Additional references
+
+- [MDC Web tabs](https://material.io/components/tabs/)

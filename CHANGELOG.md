@@ -22,6 +22,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Setting `scrollTarget` on `mwc-top-app-bar` will update listeners
 - Fixed sass imports of `_index.scss` files
 
+### Changed
+
+- **BREAKING:VISUAL** `mwc-tab`'s default slot now has name `icon`
+
 ## [0.13.0] - 2019-02-03
 
 ### Added

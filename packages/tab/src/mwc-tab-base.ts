@@ -105,7 +105,7 @@ export class TabBase extends BaseElement {
       // NOTE: MUST be on same line as spaces will cause vert alignment issues
       // in IE
       iconTemplate = html`
-        <span class="mdc-tab__icon material-icons"><slot>${
+        <span class="mdc-tab__icon material-icons"><slot name="icon">${
           this.icon}</slot></span>`;
     }
 
