@@ -10,7 +10,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/list": "=5.0.0-canary.a1a0deb3e.0",
+    "@material/list": "=6.0.0-canary.6a56f387c.0",
     "@material/mwc-base": "^0.13.0",
     "@material/mwc-checkbox": "^0.13.0",
     "@material/mwc-radio": "^0.13.0",
