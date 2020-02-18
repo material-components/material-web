@@ -81,8 +81,6 @@ limitations under the License.
 .mdc-button {
   flex: auto;
   overflow: hidden;
-  text-transform: var(--mdc-button-text-transform, uppercase);
-  letter-spacing: var(--mdc-button-letter-spacing, mdc-typography-get-letter-spacing_(1.25, .875));
 
   @include mdc-button-horizontal-padding(var(--mdc-button-horizontal-padding, #{$mdc-button-horizontal-padding}));
 

@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - `inputMode` to `mwc-textfield` and `mwc-textarea`
+- CSS custom properties for typography
+
+### Changed
+
+- **BREAKING** `--mdc-button-text-transform` has been renamed to `--mdc-typography-button-text-transform`
+- **BREAKING** `--mdc-button-letter-spacing` has been renamed to `--mdc-typography-button-letter-spacing`
+- **BREAKING** `--mdc-tab-text-transform` has been renamed to `--mdc-typography-button-text-transform`
 
 ### Fixed
 

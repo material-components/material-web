@@ -37,7 +37,6 @@ limitations under the License.
   height: var(--mdc-tab-height, #{$mdc-tab-height});
   margin-left: 0;
   margin-right: 0;
-  text-transform: var(--mdc-tab-text-transform, uppercase);
   @include mdc-tab-horizontal-padding(var(--mdc-tab-horizontal-padding, #{$mdc-tab-horizontal-padding}));
 }
 
