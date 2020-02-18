@@ -150,6 +150,8 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: String}) validationMessage = '';
 
+  @property({type: Boolean}) autoValidate = false;
+
   @property({type: String}) pattern = '';
 
   @property({type: Number}) min: number|string = '';
@@ -436,6 +438,10 @@ export abstract class TextFieldBase extends FormElement {
   protected handleInputChange() {
     this._valueSetOnInputEvent = true;
     this.value = this.formElement.value;
+
+    if (this.autoValidate) {
+      this.reportValidity();
+    }
   }
 
   shouldUpdate(changedProperties: PropertyValues) {
