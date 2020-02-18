@@ -178,6 +178,7 @@ export abstract class TextFieldBase extends FormElement {
 
   protected _validity: ValidityState = createValidityObj();
   protected _outlineUpdateComplete: null|Promise<unknown> = null;
+  protected _valueSetOnInputEvent = false;
 
   get validity(): ValidityState {
     this._checkValidity(this.value);
@@ -433,7 +434,18 @@ export abstract class TextFieldBase extends FormElement {
 
   @eventOptions({passive: true})
   protected handleInputChange() {
+    this._valueSetOnInputEvent = true;
     this.value = this.formElement.value;
+  }
+
+  shouldUpdate(changedProperties: PropertyValues) {
+    // cannot set value on safari on input event as this causes caret to jump
+    if (changedProperties.has('value') && this._valueSetOnInputEvent) {
+      this._valueSetOnInputEvent = false;
+      return false;
+    }
+
+    return super.shouldUpdate(changedProperties);
   }
 
   protected createFoundation() {
