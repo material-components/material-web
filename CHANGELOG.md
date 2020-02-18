@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Setting `scrollTarget` on `mwc-top-app-bar` will update listeners
+- Fixed sass imports of `_index.scss` files
 
 ## [0.13.0] - 2019-02-03
 

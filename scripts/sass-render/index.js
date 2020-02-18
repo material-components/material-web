@@ -29,7 +29,12 @@ const delim = /<%\s*content\s*%>/;
 async function sassToCss(sassFile) {
   const result = await renderSass({
     file: sassFile,
-    importer: nodeSassImport,
+    importer: (url, ...otherArgs) => {
+      if (url.split('/').length === 2) {
+        url += '/_index.scss';
+      }
+      return nodeSassImport(url, ...otherArgs);
+    },
     outputStyle: 'compressed',
   });
   return result.css.toString();
