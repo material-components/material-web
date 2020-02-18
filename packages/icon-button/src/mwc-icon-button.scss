@@ -37,6 +37,10 @@ limitations under the License.
   outline: none;
 }
 
+:host([disabled]) {
+  pointer-events: none;
+}
+
 .material-icons {
   @extend %material-icons;
 }
