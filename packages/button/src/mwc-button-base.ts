@@ -32,6 +32,8 @@ export class ButtonBase extends LitElement {
 
   @property({type: Boolean}) trailingIcon = false;
 
+  @property({type: Boolean, reflect: true}) fullwidth = false;
+
   @property() icon = '';
 
   @property() label = '';
