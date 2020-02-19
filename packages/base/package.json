@@ -9,9 +9,9 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/base": "=6.0.0-canary.6a56f387c.0",
-    "@material/dom": "=6.0.0-canary.6a56f387c.0",
-    "@material/ripple": "=6.0.0-canary.6a56f387c.0",
+    "@material/base": "=6.0.0-canary.bdfd52632.0",
+    "@material/dom": "=6.0.0-canary.bdfd52632.0",
+    "@material/ripple": "=6.0.0-canary.bdfd52632.0",
     "lit-element": "^2.2.1",
     "tslib": "^1.10.0"
   },
