@@ -105,7 +105,11 @@ mwc-button {
 ## API
 
 ### Slots
-*None*
+| Name           | Description
+| -------------- | -----------
+| `icon`         | Leading icon. Overrides `icon` property. Use `label` or the `icon` property to set the `aria-label`.
+| `trailingIcon` | Icon to show _after_ the label. Overrides `trailingIcon` property. Use `label` or the `trailingIcon` property to set the `aria-label`.
+| _default_      | Default content to display between both icons and after label. __NOTE:__ It is highly recommended to set the `label` property instead of projecting text as it will also set the `aria-label`
 
 ### Properties/Attributes
 | Name | Type | Default | Description

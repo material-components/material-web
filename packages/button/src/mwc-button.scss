@@ -17,9 +17,23 @@ limitations under the License.
 
 @import '@material/mwc-base/src/elevation.scss';
 @import '@material/button/mdc-button.scss';
-@import '@material/mwc-icon/src/_mwc-icon.scss';
 
 @include mdc-ripple-common(mdc-feature-all());
+
+.trailing-icon,
+.leading-icon, {
+  ::slotted(*),
+  .mdc-button__icon {
+    @include mdc-button-icon_;
+  }
+}
+
+.trailing-icon, {
+  ::slotted(*),
+  .mdc-button__icon {
+    @include mdc-button-icon-trailing_;
+  }
+}
 
 @mixin mdc-button-outline-width-var-aware(
   $outline-width,
@@ -53,10 +67,6 @@ limitations under the License.
   &:disabled {
     box-shadow: var(--mdc-button-raised-box-shadow-disabled, #{elevation-box-shadow(0)});
   }
-}
-
-.material-icons {
-  @extend %material-icons;
 }
 
 :host {

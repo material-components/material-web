@@ -14,6 +14,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import '@material/mwc-icon';
+
 import {HTMLElementWithRipple} from '@material/mwc-base/form-element';
 import {rippleNode} from '@material/mwc-ripple/ripple-directive.js';
 import {html, LitElement, property, query} from 'lit-element';
@@ -34,9 +36,9 @@ export class ButtonBase extends LitElement {
 
   @property({type: Boolean, reflect: true}) fullwidth = false;
 
-  @property() icon = '';
+  @property({type: String}) icon = '';
 
-  @property() label = '';
+  @property({type: String}) label = '';
 
   @query('#button') buttonElement!: HTMLElementWithRipple;
 
@@ -75,8 +77,6 @@ export class ButtonBase extends LitElement {
       'mdc-button--outlined': this.outlined,
       'mdc-button--dense': this.dense,
     };
-    const mdcButtonIcon =
-        html`<span class="material-icons mdc-button__icon">${this.icon}</span>`;
     return html`
       <button
           id="button"
@@ -84,11 +84,26 @@ export class ButtonBase extends LitElement {
           ?disabled="${this.disabled}"
           aria-label="${this.label || this.icon}">
         <div class="mdc-button__ripple"></div>
-        ${this.icon && !this.trailingIcon ? mdcButtonIcon : ''}
+        <span class="leading-icon">
+          <slot name="icon">
+            ${this.icon && !this.trailingIcon ? this.renderIcon(this.icon) : ''}
+          </slot>
+        </span>
         <span class="mdc-button__label">${this.label}</span>
-        ${this.icon && this.trailingIcon ? mdcButtonIcon : ''}
         <slot></slot>
+        <span class="trailing-icon">
+          <slot name="trailingIcon">
+            ${this.icon && this.trailingIcon ? this.renderIcon(this.icon) : ''}
+          </slot>
+        </span>
       </button>`;
+  }
+
+  protected renderIcon(icon: string) {
+    return html`
+      <mwc-icon class="mdc-button__icon">
+        ${icon}
+      </mwc-icon>`;
   }
 
   firstUpdated() {

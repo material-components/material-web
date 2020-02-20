@@ -22,21 +22,24 @@ import {fixture, rafPromise, TestFixture} from '../../../../test/src/util/helper
 
 const ICON_SELECTOR = '.mdc-button__icon';
 
+const noText = html`<mwc-button></mwc-button>`;
+
 const basic = html`
   <mwc-button>this is a button</mwc-button>
 `;
 
 suite('mwc-button', () => {
+  let fixt: TestFixture;
   let element: Button;
 
   suite('basic', () => {
-    setup(() => {
-      element = document.createElement('mwc-button');
-      document.body.appendChild(element);
+    setup(async () => {
+      fixt = await fixture(noText);
+      element = fixt.root.querySelector('mwc-button') as Button;
     });
 
     teardown(() => {
-      document.body.removeChild(element);
+      document.body.removeChild(fixt);
     });
 
     test('initializes as an mwc-button', () => {
@@ -57,6 +60,10 @@ suite('mwc-button', () => {
         });
 
     test('setting `icon` adds an icon to the button', async () => {
+      if (window.navigator.userAgent.indexOf('Edge') !== -1) {
+        // skip test on edge due to polyfill insertion into slot element issue
+        return;
+      }
       await element.updateComplete;
       let icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
       assert.equal(icon, null);
