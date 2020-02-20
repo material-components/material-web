@@ -264,9 +264,9 @@ _Note: example is in the state of hovering over the first tab._
 
 ### Events
 
-| Event Name | Target             | Detail             | Description
-| ---------- | ------------------ | ------------------ | -----------
-| `MDCTab:activated` | `mwc-tab-bar` | `{index: number}` | Emitted when a tab selection has been made.
+| Event Name            | Target             | Detail            | Description
+| --------------------- | ------------------ | ----------------- | -----------
+| `MDCTabBar:activated` | `mwc-tab-bar`      | `{index: number}` | Emitted when a tab selection has been made.
 
 ### CSS Custom Properties
 
