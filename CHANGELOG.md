@@ -7,13 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ## Unreleased -->
 ### Added
 
-- `mwc-button` now has a slot for `icon` and `trailingIcon`
-
-### Added
-
 - `inputMode` to `mwc-textfield` and `mwc-textarea`
 - CSS custom properties for typography
 - Added `autoValidate` property on textfield
+- `mwc-button` now has a slot for `icon` and `trailingIcon`
 
 ### Changed
 
@@ -21,16 +18,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - **BREAKING** `--mdc-button-letter-spacing` has been renamed to `--mdc-typography-button-letter-spacing`
 - **BREAKING** `--mdc-tab-text-transform` has been renamed to `--mdc-typography-button-text-transform`
 - **BREAKING:VISUAL** textfield will now only validate on blur instead of input without `autoValidate` prop
+- **BREAKING:VISUAL** `mwc-tab`'s default slot now has name `icon`
+- `mdcFoundation` and `mdcFoundationClass` are now optional in BaseElement.
+- Remove `export *` from BaseElement and FormElement.
 
 ### Fixed
 
 - Setting `scrollTarget` on `mwc-top-app-bar` will update listeners
 - Fixed sass imports of `_index.scss` files
 - Fixed issue with caret jumping to end of input on textfield
-
-### Changed
-
-- **BREAKING:VISUAL** `mwc-tab`'s default slot now has name `icon`
 
 ## [0.13.0] - 2019-02-03
 

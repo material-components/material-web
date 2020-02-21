@@ -19,9 +19,10 @@ import {MDCFoundation} from '@material/base';
 import {LitElement} from 'lit-element';
 
 import {Constructor} from './utils.js';
+
+export {CustomEventListener, EventType, SpecificEventListener} from '@material/base/types.js';
 export {observer} from './observer.js';
 export {addHasRemoveClass} from './utils.js';
-export * from '@material/base/types.js';
 
 export abstract class BaseElement extends LitElement {
   /**
@@ -34,12 +35,12 @@ export abstract class BaseElement extends LitElement {
   /**
    * Return the foundation class for this component
    */
-  protected abstract readonly mdcFoundationClass: Constructor<MDCFoundation>;
+  protected abstract readonly mdcFoundationClass?: Constructor<MDCFoundation>;
 
   /**
    * An instance of the MDC Foundation class to attach to the root element
    */
-  protected abstract mdcFoundation: MDCFoundation;
+  protected abstract mdcFoundation?: MDCFoundation;
 
   /**
    * Create the adapter for the `mdcFoundation`.
@@ -61,8 +62,10 @@ export abstract class BaseElement extends LitElement {
     if (this.mdcFoundation !== undefined) {
       this.mdcFoundation.destroy();
     }
-    this.mdcFoundation = new this.mdcFoundationClass(this.createAdapter());
-    this.mdcFoundation.init();
+    if (this.mdcFoundationClass) {
+      this.mdcFoundation = new this.mdcFoundationClass(this.createAdapter());
+      this.mdcFoundation.init();
+    }
   }
 
   protected firstUpdated() {
