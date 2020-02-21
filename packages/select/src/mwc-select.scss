@@ -79,16 +79,26 @@ mwc-notched-outline {
 
 :host(:not([disabled])) {
   .mdc-select {
+    @include mixins.ink-color((
+      varname: --mdc-select-ink-color,
+      fallback: vars.$ink-color
+    ));
+
+    @include mixins.bottom-line-color((
+      varname: --mdc-select-idle-line-color,
+      fallback: vars.$bottom-line-idle-color
+    ));
+
+    @include mixins.hover-bottom-line-color((
+      varname: --mdc-select-hover-line-color,
+      fallback: vars.$bottom-line-hover-color
+    ));
+
     &:not(.mdc-select--outlined) {
-      @include mixins.container-fill-color(var(--mdc-select-fill-color, #{vars.$fill-color}));
-
-      &:not(.mdc-select--invalid) .mdc-select__selected-text {
-        border-bottom-color: var(--mdc-select-idle-line-color, rgb(0, 0, 0, 0.42));
-
-        &:hover {
-          border-bottom-color: var(--mdc-select-hover-line-color, rgba(0, 0, 0, 0.87));
-        }
-      }
+      @include mixins.container-fill-color((
+        varname: --mdc-select-fill-color,
+        fallback: vars.$fill-color
+      ));
     }
 
     &.mdc-select--invalid {
