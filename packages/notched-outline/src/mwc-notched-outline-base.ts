@@ -60,12 +60,12 @@ export class NotchedOutlineBase extends BaseElement {
     this.openOrClose(this.open, this.width);
 
     return html`
-      <div class="mdc-notched-outline">
-        <div class="mdc-notched-outline__leading"></div>
-        <div class="mdc-notched-outline__notch">
+      <span class="mdc-notched-outline">
+        <span class="mdc-notched-outline__leading"></span>
+        <span class="mdc-notched-outline__notch">
           <slot></slot>
-        </div>
-        <div class="mdc-notched-outline__trailing"></div>
-      </div>`;
+        </span>
+        <span class="mdc-notched-outline__trailing"></span>
+      </span>`;
   }
 }

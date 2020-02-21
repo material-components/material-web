@@ -349,7 +349,7 @@ export abstract class TextFieldBase extends FormElement {
 
     return html`
       ${labelTemplate}
-      <div .lineRippleFoundation=${lineRipple()}></div>
+      <span .lineRippleFoundation=${lineRipple()}></span>
     `;
   }
 
