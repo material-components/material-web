@@ -94,10 +94,12 @@ mwc-notched-outline {
       fallback: vars.$bottom-line-hover-color
     ));
 
-    @include mixins.container-fill-color((
-      varname: --mdc-select-fill-color,
-      fallback: vars.$fill-color
-    ));
+    &:not(.mdc-select--outlined) {
+      @include mixins.container-fill-color((
+        varname: --mdc-select-fill-color,
+        fallback: vars.$fill-color
+      ));
+    }
 
     &.mdc-select--invalid {
       $select-error-color: var(--mdc-select-error-color, var(--mdc-theme-error, #{theme-vars.$error}));
