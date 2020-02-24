@@ -100,6 +100,14 @@ export abstract class MenuSurfaceBase extends BaseElement {
   })
   quick = false;
 
+  @property({type: Boolean})
+  @observer(function(this: MenuSurfaceBase, value: boolean) {
+    if (this.mdcFoundation) {
+      this.mdcFoundation.setIsHoisted(value);
+    }
+  })
+  hoisted = false;
+
   @property({type: Boolean, reflect: true})
   @observer(function(this: MenuSurfaceBase, isOpen: boolean) {
     if (this.mdcFoundation) {

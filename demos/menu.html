@@ -257,6 +257,32 @@ limitations under the License.
         <mwc-list-item value="LAST_ITEM">LAST_ITEM</mwc-list-item>
       </mwc-select>
     </div>
+
+    <div>
+      <div>
+        Hoisted menu. Clicking either of these buttons also sets the anchor of
+        the menu to the clicked button.
+      </div>
+      <mwc-button
+          id="hoistedLeftButton"
+          raised
+          label="hoisted left">
+      </mwc-button>
+      <mwc-button
+          id="hoistedRightButton"
+          raised
+          label="hoisted right">
+      </mwc-button>
+      <mwc-menu hoisted id="hoistedMenu">
+        <mwc-list-item>one</mwc-list-item>
+        <mwc-list-item>two</mwc-list-item>
+        <mwc-list-item>three</mwc-list-item>
+        <mwc-list-item disabled><div>four</div></mwc-list-item>
+        <li divider></li>
+        <mwc-list-item>aaa</mwc-list-item>
+        <mwc-list-item>bbb</mwc-list-item>
+      </mwc-menu>
+    </div>
   </main>
   <script>
     basicMenu.anchor = basicButton;
@@ -331,6 +357,16 @@ limitations under the License.
 
     dfsButton.addEventListener('click', function (e) {
       dfsMenu.open = !dfsMenu.open;
+    });
+
+    hoistedLeftButton.addEventListener('click', function (e) {
+      hoistedMenu.anchor = hoistedLeftButton;
+      hoistedMenu.open = !hoistedMenu.open;
+    });
+
+    hoistedRightButton.addEventListener('click', function (e) {
+      hoistedMenu.anchor = hoistedRightButton;
+      hoistedMenu.open = !hoistedMenu.open;
     });
 
     addEventListener('load', function() { document.body.classList.remove('unresolved'); });

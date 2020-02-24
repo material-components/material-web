@@ -7,10 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ## Unreleased -->
 ### Added
 
+- `mwc-button` now has a slot for `icon` and `trailingIcon`
 - `inputMode` to `mwc-textfield` and `mwc-textarea`
 - CSS custom properties for typography
 - Added `autoValidate` property on textfield
-- `mwc-button` now has a slot for `icon` and `trailingIcon`
+- Added `hoisted` property on menu
 
 ### Changed
 
