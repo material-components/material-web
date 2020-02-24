@@ -228,8 +228,8 @@ so the default slot has the same interface as the default slot of `mwc-list`.
 
 ### Properties/Attributes
 
-| Name                  | Type           | Default | Description
-| --------------------- | -------------- | ------- |------------
+| Name                  | Type               | Default  | Description
+| --------------------- | ------------------ | -------- |------------
 | `open`                | `boolean`          | `false`  | Whether the menu should open and display.
 | `anchor`              | `HTMLElement|null` | `null`   | Determines from which element the floating menu should calculate sizing and position offsets. In the default case, both `mwc-menu` and the anchor should share a parent with `position:relative`. Changing anchor typically requires `absolute` or `fixed`.
 | `corner`              | `Corner`*          | `"TOP_START"` | Corner of the anchor from which the menu should position itself.
