@@ -231,12 +231,12 @@ so the default slot has the same interface as the default slot of `mwc-list`.
 | Name                  | Type               | Default | Description
 | --------------------- | ------------------ | ------- |------------
 | `open`                | `boolean`          | `false`  | Whether the menu should open and display.
-| `anchor`              | `HTMLElement|null` | `null`   | Determines which element the floating menu should size and position relateive to. In the default case, both `mwc-menu` and the anchor should share a parent with `position:relative`.
-| `hoisted`             | `boolean`          | `false`   | If `true`, positions the menu relative to the body rather than the parent.
+| `anchor`              | `HTMLElement|null` | `null`   | Determines from which element the floating menu should calculate sizing and position offsets. In the default case, both `mwc-menu` and the anchor should share a parent with `position:relative`.
+| `hoisted`             | `boolean`          | `false`   | If `true`, positions the menu anchor offsets relative to the body. Typically necessary when changing anchors or if anchor and menu are not the only elements in a node.
 | `corner`              | `Corner`*          | `"TOP_START"` | Corner of the anchor from which the menu should position itself.
 | `quick`               | `boolean`          | `false`  | Whether to skip the opening animation.
-| `absolute`            | `boolean`          | `false`  | Makes the menu's position `absolute` which will be relative to whichever ancestor has `position:relative`. Setting `x` and `y` will modify the menu's `left` and `top`. Setting `anchor` will attempt to position the menu to the `anchor`.
-| `fixed`               | `boolean`          | `false`  | Makes the menu's position `fixed` which will be relative to the window. Setting `x` and `y` will modify the menu's `left` and `top`. Setting `anchor` will attempt to position the menu to the `anchor`'s immediate position before opening.
+| `absolute`            | `boolean`          | `false`  | Makes the menu's position `absolute` which will be relative to whichever ancestor has `position:relative`. Setting `x` and `y` will modify the menu's `left` and `top`. Setting `anchor` will attempt to position the menu to the `anchor` (automatically sets `hoisted` on change).
+| `fixed`               | `boolean`          | `false`  | Makes the menu's position `fixed` which will be relative to the window. Setting `x` and `y` will modify the menu's `left` and `top`. Setting `anchor` will attempt to position the menu to the `anchor`'s immediate position before opening (automatically sets `hoisted` on change).
 | `x`                   | `number|null`      | `null`   | Modifies `left` on the menu. Requires `y` not to be null.
 | `y`                   | `number|null`      | `null`   | Modifies `top` on the menu. Requires `x` not to be null.
 | `forceGroupSelection` | `boolean`          | `false`  | Forces a menu group to have a selected item by preventing deselection of menu items in menu groups via user interaction.
