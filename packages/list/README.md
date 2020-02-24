@@ -390,8 +390,8 @@ For more-control on styling, you may want to disable the ripple which is set on
 | `rootTabbable`   | `boolean`      | `false` | When `true`, sets `tabindex="0"` on the internal list. Otherwise sets `tabindex="-1"`.
 | `multi`          | `boolean`      | `false` | When `true`, enables selection of multiple items. This will result in `index` being of type `Set<number>` and selected returning `ListItemBase[]`.
 | `wrapFocus`      | `boolean`      | `false` | When `true`, pressing `up` on the keyboard when focused on the first item will focus the last item and `down` when focused on the last item will focus the first item.
-| `itemRoles`      | `string|null`  | `null`  | Determines what `role` attribute to set on all list items.
-| `innerRole`      | `string|null`  | `null`  | Role of the internal `<ul>` element.
+| `itemRoles`      | `string\|null` | `null`  | Determines what `role` attribute to set on all list items.
+| `innerRole`      | `string\|null` | `null`  | Role of the internal `<ul>` element.
 | `noninteractive` | `boolean`      | `false` | When `true`, disables focus and pointer events (thus ripples) on the list. Used for display-only lists.
 | `items`          | `ListItemBase[]` (readonly)* | `[]` | All list items that are available for selection. Eligible items have the `[mwc-list-item]` attribute which `ListItemBase` applies automatically.
 | `selected`       | `SelectedType` (readonly)* | `null` | Currently-selected list item(s). When `multi` is `true`, `selected` is of type `ListItemBase[]` and when `false`, `selected` is of type `ListItemBase`. `selected` is `null` when no item is selected.
@@ -408,7 +408,7 @@ For more-control on styling, you may want to disable the ripple which is set on
 | Name             | Type                | Default | Description
 | ---------------- | ------------------- | ------- | -----------
 | `value`          | `string`            | `''`    | Value associated with this list item (used by `mwc-select`).
-| `group`          | `string|null`       | `null`  | Used to group items together (used by `mwc-menu` for menu selection groups and `mwc-radio-list-element`).
+| `group`          | `string\|null`      | `null`  | Used to group items together (used by `mwc-menu` for menu selection groups and `mwc-radio-list-element`).
 | `tabindex`       | `number`            | `-1`    | Reflects `tabindex` and sets internal tab indices.
 | `disabled`       | `boolean`           | `false` | Reflects `disabled` and sets internal `disabled` attributes.
 | `twoline`        | `boolean`           | `false` | Activates the two-line variant and enables the `secondary` slot.
@@ -446,7 +446,7 @@ of `mwc-list-item`, so all properties in `mwc-list-item` will be available on
 | ---------------- | -------------- | ----------- | -----------
 | `left`           | `boolean`      | `false`     | Displays the checkbox on the left. Overrides `graphic`.
 | `graphic`        | `GraphicType`* | `'control'` | Determines which graphic layout to show and enables the `graphic` slot when value is not `control` or `null`.
-| `group`          | `string|null`  | `null`      | Used to group the internal `mwc-radio`s together (also used by `mwc-menu` for selection groups).
+| `group`          | `string\|null`  | `null`      | Used to group the internal `mwc-radio`s together (also used by `mwc-menu` for selection groups).
 
 \* `GraphicType` is equivalent to the type
 `'avatar'|'icon'|'medium'|'large'|'control'|null`.
