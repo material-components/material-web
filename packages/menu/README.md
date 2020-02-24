@@ -231,13 +231,13 @@ so the default slot has the same interface as the default slot of `mwc-list`.
 | Name                  | Type               | Default  | Description
 | --------------------- | ------------------ | -------- |------------
 | `open`                | `boolean`          | `false`  | Whether the menu should open and display.
-| `anchor`              | `HTMLElement|null` | `null`   | Determines from which element the floating menu should calculate sizing and position offsets. In the default case, both `mwc-menu` and the anchor should share a parent with `position:relative`. Changing anchor typically requires `absolute` or `fixed`.
+| `anchor`              | `HTMLElement\|null` | `null`   | Determines from which element the floating menu should calculate sizing and position offsets. In the default case, both `mwc-menu` and the anchor should share a parent with `position:relative`. Changing anchor typically requires `absolute` or `fixed`.
 | `corner`              | `Corner`*          | `"TOP_START"` | Corner of the anchor from which the menu should position itself.
 | `quick`               | `boolean`          | `false`  | Whether to skip the opening animation.
 | `absolute`            | `boolean`          | `false`  | Makes the menu's position `absolute` which will be relative to whichever ancestor has `position:relative`. Setting `x` and `y` will modify the menu's `left` and `top`. Setting `anchor` will attempt to position the menu to the `anchor`.
 | `fixed`               | `boolean`          | `false`  | Makes the menu's position `fixed` which will be relative to the window. Setting `x` and `y` will modify the menu's `left` and `top`. Setting `anchor` will attempt to position the menu to the `anchor`'s immediate position before opening.
-| `x`                   | `number|null`      | `null`   | Modifies `left` on the menu. Requires `y` not to be null.
-| `y`                   | `number|null`      | `null`   | Modifies `top` on the menu. Requires `x` not to be null.
+| `x`                   | `number\|null`      | `null`   | Modifies `left` on the menu. Requires `y` not to be null.
+| `y`                   | `number\|null`      | `null`   | Modifies `top` on the menu. Requires `x` not to be null.
 | `forceGroupSelection` | `boolean`          | `false`  | Forces a menu group to have a selected item by preventing deselection of menu items in menu groups via user interaction.
 | `defaultFocus`        | `DefaultFocusState`**         | `"LIST_ROOT"` | Item to focus upon menu open.
 | `fullwidth`           | `boolean`          | `false`  | Sets surface width to 100%.
