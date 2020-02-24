@@ -42,8 +42,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
   @property({type: Boolean})
   @observer(function(this: MenuSurfaceBase, isAbsolute: boolean) {
     if (this.mdcFoundation && !this.fixed) {
-      this.mdcFoundation.setIsHoisted(isAbsolute);
-
+      this.hoisted = isAbsolute;
       this.saveOrRestoreAnchor(isAbsolute);
     }
   })
@@ -67,7 +66,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
   @property({type: Boolean})
   @observer(function(this: MenuSurfaceBase, isFixed: boolean) {
     if (this.mdcFoundation && !this.absolute) {
-      this.mdcFoundation.setIsHoisted(isFixed);
+      this.hoisted = isFixed;
       this.saveOrRestoreAnchor(isFixed);
     }
   })
