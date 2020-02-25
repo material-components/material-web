@@ -194,8 +194,7 @@ respects avatar and icon paddding). These variants can be mixed.
 ### Checklist
 
 `mwc-check-list-item` inherits from `mwc-list-item`, so it will share a similar
-API to `mwc-list-item`. e.g. you can still add graphics and make them
-activatable but not two-lined.
+API to `mwc-list-item`.
 
 <img src="images/check_list.png" width="402px">
 
@@ -217,8 +216,7 @@ activatable but not two-lined.
 ### Radio List
 
 `mwc-radio-list-item` inherits from `mwc-list-item`, so it will share a similar
-API to `mwc-list-item`. e.g. you can still add graphics and make them
-activatable but not two-lined.
+API to `mwc-list-item`.
 
 Setting `group` on the `radio-list-item` will group those `mwc-radio`s together
 across the same Document.
