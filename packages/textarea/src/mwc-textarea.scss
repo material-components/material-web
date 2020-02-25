@@ -95,11 +95,5 @@ limitations under the License.
 }
 
 .mdc-text-field__input {
-  -ms-overflow-style: none;
-  scrollbar-color: transparent transparent;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
   resize: none;
 }
