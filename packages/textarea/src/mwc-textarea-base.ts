@@ -17,7 +17,7 @@ limitations under the License.
 
 import {TextFieldBase} from '@material/mwc-textfield/mwc-textfield-base.js';
 import {html, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
+import {classMap} from 'lit-html/directives/class-map.js';
 import {ifDefined} from 'lit-html/directives/if-defined.js';
 
 export {TextFieldType} from '@material/mwc-textfield/mwc-textfield-base.js';

@@ -18,7 +18,7 @@
 import {MDCFoundation} from '@material/base/foundation';
 import {numbers, strings} from '@material/list/constants';
 
-import {MDCListAdapter} from './mwc-list-adapter';
+import {MDCListAdapter} from './mwc-list-adapter.js';
 
 export type MWCListIndex = number|Set<number>;
 

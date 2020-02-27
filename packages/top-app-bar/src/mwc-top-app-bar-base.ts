@@ -14,10 +14,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import MDCTopAppBarFoundation from '@material/top-app-bar/standard/foundation';
+import MDCTopAppBarFoundation from '@material/top-app-bar/standard/foundation.js';
 import {property} from 'lit-element';
 
-import {passiveEventOptionsIfSupported, TopAppBarBaseBase} from './mwc-top-app-bar-base-base';
+import {passiveEventOptionsIfSupported, TopAppBarBaseBase} from './mwc-top-app-bar-base-base.js';
 
 export class TopAppBarBase extends TopAppBarBaseBase {
   protected mdcFoundationClass = MDCTopAppBarFoundation;

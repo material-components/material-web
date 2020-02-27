@@ -19,8 +19,8 @@ import {addHasRemoveClass, EventType, FormElement, observer, SpecificEventListen
 import {MDCSliderAdapter} from '@material/slider/adapter.js';
 import MDCSliderFoundation from '@material/slider/foundation.js';
 import {eventOptions, html, property, query, TemplateResult} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
-import {styleMap} from 'lit-html/directives/style-map';
+import {classMap} from 'lit-html/directives/class-map.js';
+import {styleMap} from 'lit-html/directives/style-map.js';
 
 const INPUT_EVENT = 'input';
 const CHANGE_EVENT = 'change';

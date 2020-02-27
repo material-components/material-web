@@ -17,11 +17,11 @@ limitations under the License.
 import {addHasRemoveClass, BaseElement, observer} from '@material/mwc-base/base-element.js';
 import {MDCSnackbarAdapter} from '@material/snackbar/adapter.js';
 import MDCSnackbarFoundation from '@material/snackbar/foundation.js';
-import {MDCSnackbarCloseEventDetail} from '@material/snackbar/types';
+import {MDCSnackbarCloseEventDetail} from '@material/snackbar/types.js';
 import {html, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
+import {classMap} from 'lit-html/directives/class-map.js';
 
-import {accessibleSnackbarLabel} from './accessible-snackbar-label-directive';
+import {accessibleSnackbarLabel} from './accessible-snackbar-label-directive.js';
 
 const {
   OPENING_EVENT,

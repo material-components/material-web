@@ -20,7 +20,7 @@ import {BaseElement, EventType, observer, SpecificEventListener} from '@material
 import {FormElement} from '@material/mwc-base/form-element.js';
 import {findAssignedElement} from '@material/mwc-base/utils.js';
 import {html, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
+import {classMap} from 'lit-html/directives/class-map.js';
 
 export class FormfieldBase extends BaseElement {
   @property({type: Boolean}) alignEnd = false;
