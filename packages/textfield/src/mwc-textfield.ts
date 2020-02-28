@@ -31,5 +31,3 @@ declare global {
 export class TextField extends TextFieldBase {
   static styles = style;
 }
-
-// Force canary publish
