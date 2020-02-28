@@ -36,7 +36,7 @@ jobs:
           npm install
       - name: Create canary release
         run: |
-          npx lerna version premajor --no-git-tag-version --no-push --preid canary.$(git rev-parse --short HEAD) --yes --exact
+          npx lerna version preminor --no-git-tag-version --no-push --preid canary.$(git rev-parse --short HEAD) --yes --exact
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -am "chore: Publish"
