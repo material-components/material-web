@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed sass imports of `_index.scss` files
 - Fixed issue with caret jumping to end of input on textfield
 
-## [0.13.0] - 2019-02-03
+## [0.13.0] - 2020-02-03
 
 ### Added
 
