@@ -120,6 +120,9 @@ $divider-color: if(
 }
 
 .mdc-list--dense ::slotted(.mdc-list-item__primary-text) {
-  @include mdc-typography-baseline-top($dense-item-primary-text-baseline-height, $query);
-  @include mdc-typography-baseline-bottom($item-secondary-text-baseline-height, $query);
+  @include mdc-typography-text-baseline(
+    $top: $dense-item-primary-text-baseline-height,
+    $bottom: $item-secondary-text-baseline-height,
+    $query: $query
+  );
 }

@@ -136,8 +136,11 @@ $dense-item-primary-text-baseline-height: 24px;
 
 .mdc-list-item__primary-text {
   @include mdc-typography-overflow-ellipsis($query);
-  @include mdc-typography-baseline-top($item-primary-text-baseline-height, $query);
-  @include mdc-typography-baseline-bottom($item-secondary-text-baseline-height, $query);
+  @include mdc-typography-text-baseline(
+    $top: $item-primary-text-baseline-height,
+    $bottom: $item-secondary-text-baseline-height,
+    $query: $query
+  );
 
   @include mdc-feature-targets($feat-structure) {
     display: block;
@@ -147,7 +150,10 @@ $dense-item-primary-text-baseline-height: 24px;
 .mdc-list-item__secondary-text {
   @include mdc-typography(body2, $query);
   @include mdc-typography-overflow-ellipsis($query);
-  @include mdc-typography-baseline-top($item-secondary-text-baseline-height, $query);
+  @include mdc-typography-text-baseline(
+    $top: $item-secondary-text-baseline-height,
+    $query: $query
+  );
 
   @include mdc-feature-targets($feat-structure) {
     display: block;
@@ -155,8 +161,6 @@ $dense-item-primary-text-baseline-height: 24px;
 
   // stylelint-disable plugin/selector-bem-pattern
   .mdc-list--dense & {
-    @include mdc-typography-baseline-top($item-secondary-text-baseline-height, $query);
-
     @include mdc-feature-targets($feat-structure) {
       font-size: inherit;
     }
