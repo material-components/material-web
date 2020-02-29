@@ -201,13 +201,22 @@ export abstract class ListBase extends BaseElement {
           @keydown=${this.onKeydown}
           @focusin=${this.onFocusIn}
           @focusout=${this.onFocusOut}
-          @request-selected=${this.onRequestSelected}>
-        <slot
-            @slotchange=${this.onSlotChange}
-            @list-item-rendered=${this.onListItemConnected}>
-        </slot>
+          @request-selected=${this.onRequestSelected}
+          @list-item-rendered=${this.onListItemConnected}>
+        <slot></slot>
       </ul>
     `;
+  }
+
+  firstUpdated() {
+    super.firstUpdated();
+
+    if (!this.items.length) {
+      // required because this is called before observers
+      this.mdcFoundation.setMulti(this.multi);
+      // for when children upgrade before list
+      this.layout();
+    }
   }
 
   protected onFocusIn(evt: FocusEvent) {

@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - CSS custom properties for typography
 - Added `autoValidate` property on textfield
 - `mwc-button` now has a slot for `icon` and `trailingIcon`
+- **BREAKING** setting `mwc-list-item.selected` will update selection in the parent list
 
 ### Changed
 
@@ -22,12 +23,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - **BREAKING:VISUAL** `mwc-tab`'s default slot now has name `icon`
 - `mdcFoundation` and `mdcFoundationClass` are now optional in BaseElement.
 - Remove `export *` from BaseElement and FormElement.
+- **BREAKING:A11Y** mwc-list will no longer update items on slotchange but on first render and on list item connect meaning list dividers will only add role="separator" in those cases
 
 ### Fixed
 
 - Setting `scrollTarget` on `mwc-top-app-bar` will update listeners
 - Fixed sass imports of `_index.scss` files
 - Fixed issue with caret jumping to end of input on textfield
+- mwc-list-item now works on IE
+- mwc-select's `updateComplete` will now properly await child custom elements' `updateComplete`s
+- **BREAKING** Disabled icon buttons no longer have pointer events
+- `mwc-textfield` will not set `value` on the internal input tag on `input` event causing caret jumping in Safari
+- `mwc-select`'s `--mdc-select-ink-color` actually does something now
 
 ## [0.13.0] - 2020-02-03
 

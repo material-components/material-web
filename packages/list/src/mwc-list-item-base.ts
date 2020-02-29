@@ -58,7 +58,7 @@ export class ListItemBase extends LitElement {
       this.activated = false;
       this.tabIndex = -1;
     } else {
-      this.toggleAttribute('mwc-list-item', true);
+      this.setAttribute('mwc-list-item', '');
     }
   })
   noninteractive = false;
@@ -151,7 +151,7 @@ export class ListItemBase extends LitElement {
     super.connectedCallback();
 
     if (!this.noninteractive) {
-      this.toggleAttribute('mwc-list-item', true);
+      this.setAttribute('mwc-list-item', '');
     }
     this.addEventListener('click', this.boundOnClick);
   }

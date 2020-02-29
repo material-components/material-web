@@ -290,7 +290,7 @@ export abstract class SelectBase extends FormElement {
             @selected=${this.onSelected}
             @opened=${this.onOpened}
             @closed=${this.onClosed}>
-            <slot></slot>
+          <slot></slot>
         </mwc-menu>
       </div>`;
   }
@@ -409,6 +409,10 @@ export abstract class SelectBase extends FormElement {
         }
       },
       notifyChange: async (value) => {
+        if (value === this.value) {
+          return;
+        }
+
         this.value = value;
         await this.updateComplete;
         const ev = new Event('change', {bubbles: true});
@@ -621,11 +625,11 @@ export abstract class SelectBase extends FormElement {
   }
 
   protected async _getUpdateComplete() {
-    await super._getUpdateComplete();
     await Promise.all([
       this._outlineUpdateComplete,
       this._menuUpdateComplete,
     ]);
+    await super._getUpdateComplete();
   }
 
   protected async firstUpdated() {
