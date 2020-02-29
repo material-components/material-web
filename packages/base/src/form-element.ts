@@ -52,7 +52,7 @@ export abstract class FormElement extends BaseElement {
   /**
    * Implement ripple getter for Ripple integration with mwc-formfield
    */
-  readonly ripple?: RippleInterface;
+  readonly ripple?: RippleInterface|Promise<RippleInterface|null>;
 
   click() {
     if (this.formElement) {

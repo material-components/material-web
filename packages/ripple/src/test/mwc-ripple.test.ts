@@ -18,7 +18,15 @@
 import {Ripple} from '@material/mwc-ripple';
 
 interface RippleInternals {
-  interactionNode: HTMLElement;
+  hovering: boolean;
+  bgFocused: boolean;
+  fgActivation: boolean;
+}
+
+function animationTimer(): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, 200);
+  });
 }
 
 suite('mwc-ripple', () => {
@@ -27,13 +35,14 @@ suite('mwc-ripple', () => {
   let container: HTMLDivElement;
 
   suite('basic', () => {
-    setup(() => {
+    setup(async () => {
       container = document.createElement('div');
       document.body.appendChild(container);
 
       element = document.createElement('mwc-ripple');
       internals = element as unknown as RippleInternals;
       container.appendChild(element);
+      await element.updateComplete;
     });
 
     teardown(() => {
@@ -44,46 +53,46 @@ suite('mwc-ripple', () => {
       assert.instanceOf(element, Ripple);
     });
 
-    test('sets interactionNode to parent', async () => {
+    test('sets activation class when activated', async () => {
+      element.activate();
       await element.updateComplete;
-      assert(internals.interactionNode == container);
-    });
-  });
-
-  suite('interactionNode', () => {
-    test('respects interactionNode', async () => {
-      container = document.createElement('div');
-      document.body.appendChild(container);
-
-      const element2 = document.createElement('mwc-ripple');
-      const internals2 = element2 as unknown as RippleInternals;
-      internals2.interactionNode = document.body;
-
-      container.appendChild(element2);
-
-      await element2.updateComplete;
-
-      assert(internals2.interactionNode == document.body);
-
-      document.body.removeChild(container);
+      assert.equal(internals.fgActivation, true);
     });
 
-    test('ripple whose parent is shadowRoot selects host', async () => {
-      container = document.createElement('div');
-      const root = container.attachShadow({mode: 'open'});
-      document.body.appendChild(container);
+    test('removes activation class when deactivated', async () => {
+      element.activate();
+      await animationTimer();
+      element.deactivate();
+      await animationTimer();
+      assert.equal(internals.fgActivation, false);
+    });
 
-      const ripple = document.createElement('mwc-ripple');
-      const internals = ripple as unknown as RippleInternals;
+    test('sets focused class when focused', async () => {
+      element.handleFocus();
+      await animationTimer();
+      assert.equal(internals.bgFocused, true);
+    });
 
-      root.appendChild(ripple);
+    test('removes focused class when blurred', async () => {
+      element.handleFocus();
+      await animationTimer();
+      element.handleBlur();
+      await animationTimer();
+      assert.equal(internals.bgFocused, false);
+    });
 
-      await ripple.updateComplete;
+    test('sets hover class on mouseenter', async () => {
+      element.handleMouseEnter();
+      await element.updateComplete;
+      assert.equal(internals.hovering, true);
+    });
 
-      assert.instanceOf(internals.interactionNode, HTMLElement);
-      assert(internals.interactionNode === container);
-
-      document.body.removeChild(container);
+    test('removes hover class on mouseleave', async () => {
+      element.handleMouseEnter();
+      await element.updateComplete;
+      element.handleMouseLeave();
+      await element.updateComplete;
+      assert.equal(internals.hovering, false);
     });
   });
 });

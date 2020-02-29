@@ -55,16 +55,22 @@ export class FormfieldBase extends BaseElement {
           <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
             this.labelEl.removeEventListener(type, handler);
           },
-      activateInputRipple: () => {
+      activateInputRipple: async () => {
         const input = this.input;
-        if (input instanceof FormElement && input.ripple) {
-          input.ripple.activate();
+        if (input instanceof FormElement) {
+          const ripple = await input.ripple;
+          if (ripple) {
+            ripple.activate();
+          }
         }
       },
-      deactivateInputRipple: () => {
+      deactivateInputRipple: async () => {
         const input = this.input;
-        if (input instanceof FormElement && input.ripple) {
-          input.ripple.deactivate();
+        if (input instanceof FormElement) {
+          const ripple = await input.ripple;
+          if (ripple) {
+            ripple.deactivate();
+          }
         }
       },
     };

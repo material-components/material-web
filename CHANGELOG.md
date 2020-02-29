@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added `autoValidate` property on textfield
 - `mwc-button` now has a slot for `icon` and `trailingIcon`
 - **BREAKING** setting `mwc-list-item.selected` will update selection in the parent list
+- `mwc-ripple` now has CSS properties `--mdc-ripple-color`, `--mdc-ripple-fg-opacity`, and `--mdc-ripple-hover-opacity`
+- Added `RippleHandlers` to `mwc-ripple` to provide an easy integration point for calling ripple API.
+- Added `light` property to `mwc-ripple` to help style ripples on dark surfaces.
 
 ### Changed
 
@@ -24,6 +27,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `mdcFoundation` and `mdcFoundationClass` are now optional in BaseElement.
 - Remove `export *` from BaseElement and FormElement.
 - **BREAKING:A11Y** mwc-list will no longer update items on slotchange but on first render and on list item connect meaning list dividers will only add role="separator" in those cases
+- Make FormElement and `mwc-formfield` support asynchronous ripple properties
+- **BREAKING** Remove `active` property from `mwc-ripple`.
+  - Use `activate()` and `deactivate()` methods instead
+- **BREAKING** `mwc-ripple` now requires implementing event handlers manually in the parent component.
 
 ### Fixed
 
@@ -35,6 +42,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - **BREAKING** Disabled icon buttons no longer have pointer events
 - `mwc-textfield` will not set `value` on the internal input tag on `input` event causing caret jumping in Safari
 - `mwc-select`'s `--mdc-select-ink-color` actually does something now
+- Setting `disabled` on `mwc-ripple` will hide the ripple
 
 ## [0.13.0] - 2020-02-03
 

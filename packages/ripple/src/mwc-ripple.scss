@@ -15,7 +15,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+@use '@material/ripple';
 @import '@material/ripple/mdc-ripple.scss';
+
+:host {
+  --mdc-ripple-fg-opacity: #{map-get($mdc-ripple-dark-ink-opacities, press)};
+}
+
+/*
+ * Use custom primary and accent classes because mdc-ripple-surface--primary
+ * and --secondary override opacity
+ */
+.primary {
+  --mdc-ripple-color: var(--mdc-theme-primary, #{mdc-theme-prop-value(primary)});
+}
+
+.accent {
+  --mdc-ripple-color: var(--mdc-theme-secondary, #{mdc-theme-prop-value(secondary)});
+}
+
+/*
+ * Hide the ripple if disabled
+ */
+.disabled {
+  --mdc-ripple-color: transparent;
+}
 
 .mdc-ripple-surface {
   pointer-events: none;
@@ -24,4 +48,44 @@ limitations under the License.
   right: 0;
   bottom: 0;
   left: 0;
+
+  &.mdc-ripple-upgraded {
+    /* use inherit keyword to "reset" definition from mdc-ripple styles */
+    --mdc-ripple-fg-opacity: inherit;
+  }
+
+  @include ripple.states-base-color((
+    varname: --mdc-ripple-color,
+    fallback: #000
+  ));
+}
+
+.hover::before {
+  @include mdc-theme-prop(opacity, (
+    varname: --mdc-ripple-hover-opacity,
+    fallback: map-get($mdc-ripple-dark-ink-opacities, hover)
+  ));
+}
+
+/*
+ * Overrides for "light" ripples on dark surfaces
+ */
+.light {
+  --mdc-ripple-fg-opacity: #{map-get($mdc-ripple-light-ink-opacities, press)};
+  --mdc-ripple-color: #fff;
+
+  &.hover::before {
+    @include mdc-theme-prop(opacity, (
+      varname: --mdc-ripple-hover-opacity,
+      fallback: map-get($mdc-ripple-light-ink-opacities, hover)
+    ));
+  }
+
+  &.primary {
+    --mdc-ripple-color: var(--mdc-theme-on-primary, #{mdc-theme-prop-value(on-primary)});
+  }
+
+  &.accent {
+    --mdc-ripple-color: var(--mdc-theme-on-secondary, #{mdc-theme-prop-value(on-secondary)});
+  }
 }
