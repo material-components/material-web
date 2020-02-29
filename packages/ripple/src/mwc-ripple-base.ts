@@ -18,7 +18,7 @@ import {BaseElement} from '@material/mwc-base/base-element.js';
 import {MDCRippleAdapter} from '@material/ripple/adapter.js';
 import MDCRippleFoundation from '@material/ripple/foundation.js';
 import {html, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
+import {classMap} from 'lit-html/directives/class-map.js';
 import {styleMap} from 'lit-html/directives/style-map';
 
 /** @soyCompatible */

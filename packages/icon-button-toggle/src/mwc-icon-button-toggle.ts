@@ -18,7 +18,7 @@ limitations under the License.
 import {style} from '@material/mwc-icon-button/mwc-icon-button-css';
 import {customElement} from 'lit-element';
 
-import {IconButtonToggleBase} from './mwc-icon-button-toggle-base';
+import {IconButtonToggleBase} from './mwc-icon-button-toggle-base.js';
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -23,9 +23,9 @@ import {TabIndicator} from '@material/mwc-tab-indicator';
 import {MDCTabAdapter} from '@material/tab/adapter';
 import MDCTabFoundation from '@material/tab/foundation';
 import {html, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
+import {classMap} from 'lit-html/directives/class-map.js';
 
-import {style} from './mwc-tab-css';
+import {style} from './mwc-tab-css.js';
 
 // used for generating unique id for each tab
 let tabIdCounter = 0;

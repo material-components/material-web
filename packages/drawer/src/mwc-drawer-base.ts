@@ -29,7 +29,7 @@ import MDCModalDrawerFoundation from '@material/drawer/modal/foundation.js';
 import {addHasRemoveClass, BaseElement, observer} from '@material/mwc-base/base-element.js';
 import {DocumentWithBlockingElements} from 'blocking-elements';
 import {html, property, PropertyValues, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
+import {classMap} from 'lit-html/directives/class-map.js';
 
 interface InertableHTMLElement extends HTMLElement {
   inert?: boolean;

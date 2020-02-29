@@ -20,9 +20,9 @@ import {customElement} from 'lit-element';
 import {MenuBase} from './mwc-menu-base.js';
 import {style} from './mwc-menu-css.js';
 
-export {DefaultFocusState} from '@material/menu/constants';
-export {createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex} from '@material/mwc-list/mwc-list-foundation';
-export {Corner} from './mwc-menu-surface-base';
+export {DefaultFocusState} from '@material/menu/constants.js';
+export {createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex} from '@material/mwc-list/mwc-list-foundation.js';
+export {Corner} from './mwc-menu-surface-base.js';
 
 declare global {
   interface HTMLElementTagNameMap {

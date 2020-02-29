@@ -19,7 +19,7 @@ import '@material/mwc-icon';
 import {HTMLElementWithRipple} from '@material/mwc-base/form-element';
 import {rippleNode} from '@material/mwc-ripple/ripple-directive.js';
 import {html, LitElement, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
+import {classMap} from 'lit-html/directives/class-map.js';
 
 export class ButtonBase extends LitElement {
   @property({type: Boolean}) raised = false;

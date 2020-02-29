@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {addHasRemoveClass, BaseElement, CustomEventListener, EventType, observer, SpecificEventListener} from './base-element';
+import {addHasRemoveClass, BaseElement, CustomEventListener, EventType, observer, SpecificEventListener} from './base-element.js';
 
 export {
   addHasRemoveClass,

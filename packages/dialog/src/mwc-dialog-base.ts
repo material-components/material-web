@@ -25,7 +25,7 @@ import {closest, matches} from '@material/dom/ponyfill';
 import {addHasRemoveClass, BaseElement, observer} from '@material/mwc-base/base-element.js';
 import {DocumentWithBlockingElements} from 'blocking-elements';
 import {html, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
+import {classMap} from 'lit-html/directives/class-map.js';
 
 export {MDCDialogCloseEventDetail} from '@material/dialog/types';
 

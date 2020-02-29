@@ -21,7 +21,7 @@ import {getTransformPropertyName} from '@material/menu-surface/util';
 import {addHasRemoveClass, BaseElement, observer} from '@material/mwc-base/base-element.js';
 import {deepActiveElementPath, doesElementContainFocus} from '@material/mwc-base/utils';
 import {html, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
+import {classMap} from 'lit-html/directives/class-map.js';
 
 export type Corner = keyof typeof CornerEnum;
 export type AnchorableElement = HTMLElement&{anchor: Element | null};

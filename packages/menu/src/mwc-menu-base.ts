@@ -17,13 +17,13 @@ limitations under the License.
 import '@material/mwc-list';
 import './mwc-menu-surface';
 
-import {MDCMenuAdapter} from '@material/menu/adapter';
-import {DefaultFocusState as DefaultFocusStateEnum} from '@material/menu/constants';
+import {MDCMenuAdapter} from '@material/menu/adapter.js';
+import {DefaultFocusState as DefaultFocusStateEnum} from '@material/menu/constants.js';
 import MDCMenuFoundation from '@material/menu/foundation.js';
 import {BaseElement, observer} from '@material/mwc-base/base-element.js';
 import {List, MWCListIndex} from '@material/mwc-list';
-import {ActionDetail} from '@material/mwc-list/mwc-list-foundation';
-import {ListItemBase} from '@material/mwc-list/mwc-list-item-base';
+import {ActionDetail} from '@material/mwc-list/mwc-list-foundation.js';
+import {ListItemBase} from '@material/mwc-list/mwc-list-item-base.js';
 import {html, property, query} from 'lit-element';
 
 import {MenuSurface} from './mwc-menu-surface';
