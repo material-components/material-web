@@ -22,7 +22,7 @@ import {ListItem} from '@material/mwc-list/mwc-list-item';
 import {Select} from '@material/mwc-select';
 import {html} from 'lit-html';
 
-import {fixture, TestFixture, rafPromise} from '../../../../test/src/util/helpers';
+import {fixture, rafPromise, TestFixture} from '../../../../test/src/util/helpers';
 
 interface WithSelectedText {
   selectedText: string;
