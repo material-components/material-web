@@ -22,7 +22,7 @@ import {ListItem} from '@material/mwc-list/mwc-list-item';
 import {Select} from '@material/mwc-select';
 import {html} from 'lit-html';
 
-import {fixture, TestFixture} from '../../../../test/src/util/helpers';
+import {fixture, TestFixture, rafPromise} from '../../../../test/src/util/helpers';
 
 interface WithSelectedText {
   selectedText: string;
@@ -150,6 +150,10 @@ suite('mwc-select:', () => {
       test('setCustomValidity', async () => {
         fixt = await fixture(basic());
         const element = fixt.root.querySelector('mwc-select')!;
+
+        // deflake shady dom (IE)
+        await rafPromise();
+        await element.layout();
 
         assert.isFalse(isUiInvalid(element), 'ui initially valid');
         assert.equal(element.validationMessage, '');
@@ -338,6 +342,10 @@ suite('mwc-select:', () => {
         fixt = await fixture(basic(true));
         const element = fixt.root.querySelector('mwc-select')! as Select;
 
+        // deflake shady dom (IE)
+        await rafPromise();
+        await element.layout();
+
         assert.isTrue(element.checkValidity(), 'element is initially valid');
 
         const transformFn =
@@ -411,6 +419,11 @@ suite('mwc-select:', () => {
         fixt = await fixture(reqInitialVal(true));
         let element = fixt.root.querySelector('mwc-select')!;
         await element.updateComplete;
+
+        // deflake shady dom (IE)
+        await rafPromise();
+        await element.layout();
+
         assert.isTrue(isUiInvalid(element), 'initial render is invalid');
 
         fixt.remove();
@@ -447,6 +460,10 @@ suite('mwc-select:', () => {
     });
 
     test('selection via index', async () => {
+      // deflake shady dom (IE)
+      await rafPromise();
+      await element.layout();
+
       assert.equal(changeCalls, 0, 'change evt not called on startup');
       assert.equal(element.value, '', 'initial value is blank');
       assert.equal(
@@ -514,6 +531,10 @@ suite('mwc-select:', () => {
       fixt.remove();
       fixt = await fixture(lazy());
       element = fixt.root.querySelector('mwc-select')!;
+
+      // deflake shady dom (IE)
+      await rafPromise();
+      await element.layout();
 
       assert.equal(element.index, -1, 'unselected index when no children');
 
