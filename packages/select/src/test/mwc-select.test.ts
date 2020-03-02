@@ -186,6 +186,10 @@ suite('mwc-select:', () => {
         fixt = await fixture(basic());
         const element = fixt.root.querySelector('mwc-select')! as Select;
 
+        // deflake shady dom (IE)
+        await rafPromise();
+        await element.layout();
+
         assert.isTrue(element.checkValidity(), 'element is initially valid');
 
         const transformFn =
@@ -390,6 +394,13 @@ suite('mwc-select:', () => {
         await element.updateComplete;
         validity = element.validity;
 
+        if (validity.valid) {
+          debugger;
+          debugger;
+          debugger;
+          debugger;
+        }
+
         assert.isFalse(validity.valid, 'explicitly false case returns false');
         assert.isTrue(
             validity.rangeOverflow, 'explicit reason for invalid set');
@@ -496,6 +507,10 @@ suite('mwc-select:', () => {
     });
 
     test('selection via element', async () => {
+      // deflake shady dom (IE)
+      await rafPromise();
+      await element.layout();
+
       assert.equal(changeCalls, 0, 'change evt not called on startup');
       assert.equal(element.value, '', 'initial value is blank');
       assert.isTrue(
