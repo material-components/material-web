@@ -114,10 +114,9 @@ const defaultMeasureOpts = {
   numRenders: 10,
 };
 
-export const measureFixtureCreation =
-    async (
-        template: TemplateResult,
-        options?: Partial<MeasureFixtureCreationOpts>) => {
+export const measureFixtureCreation = async (
+    template: TemplateResult,
+    options?: Partial<MeasureFixtureCreationOpts>) => {
   const opts: MeasureFixtureCreationOpts = {...defaultMeasureOpts, ...options};
   const templates = new Array<TemplateResult>(opts.numRenders).fill(template);
   const renderContainer = document.createElement('div');
