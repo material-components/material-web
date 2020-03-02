@@ -40,14 +40,14 @@ export class TestFixture extends LitElement {
   }
 
   get root(): ShadowRoot {
-    return this.shadowRoot!;
+    return this.shadowRoot as ShadowRoot;
   }
 
   attachContents(options = {awaitRender: false}) {
     this.shouldAttachContents = true;
 
     if (options.awaitRender) {
-      const rendered = new Promise(res => {
+      const rendered = new Promise((res) => {
         requestAnimationFrame(res);
       });
 
@@ -61,7 +61,7 @@ export class TestFixture extends LitElement {
     this.shouldAttachContents = false;
 
     if (options.awaitRender) {
-      const rendered = new Promise(res => {
+      const rendered = new Promise((res) => {
         requestAnimationFrame(res);
       });
 
@@ -112,7 +112,7 @@ interface MeasureFixtureCreationOpts {
 
 const defaultMeasureOpts = {
   numRenders: 10,
-}
+};
 
 export const measureFixtureCreation =
     async (
@@ -125,7 +125,7 @@ export const measureFixtureCreation =
 
   document.body.appendChild(renderContainer);
 
-  await new Promise(async res => {
+  await new Promise(async (res) => {
     performance.mark('measureFixture-start');
     render(templates, renderTargetRoot);
     const firstChild = renderTargetRoot.firstElementChild;
@@ -140,7 +140,7 @@ export const measureFixtureCreation =
       await (firstChild as LitElement).updateComplete;
       document.body.offsetWidth;
     } else {
-      await new Promise(res => requestAnimationFrame(res));
+      await new Promise((res) => requestAnimationFrame(res));
       document.body.offsetWidth;
     }
 
@@ -153,7 +153,7 @@ export const measureFixtureCreation =
   })
       .then(
           // this adds an extra microtask and awaits any trailing async updates
-          async () => {});
+          async () => undefined);
 
   performance.mark('measureFixture-end');
   performance.measure(
@@ -163,8 +163,8 @@ export const measureFixtureCreation =
   window.tachometerResult = duration;
 
   return renderTargetRoot;
-}
+};
 
-export const rafPromise = async () => new Promise(res => {
+export const rafPromise = async () => new Promise((res) => {
   requestAnimationFrame(res);
 });
