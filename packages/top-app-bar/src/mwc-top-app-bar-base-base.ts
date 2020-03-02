@@ -39,7 +39,7 @@ export abstract class TopAppBarBaseBase extends BaseElement {
   // _actionItemsSlot should have type HTMLSlotElement, but when TypeScript's
   // emitDecoratorMetadata is enabled, the HTMLSlotElement constructor will
   // be emitted into the runtime, which will cause an "HTMLSlotElement is
-  // undefined" error in browsers that don't define it (e.g. Edge and IE11).
+  // undefined" error in browsers that don't define it (e.g. IE11).
   @query('slot[name="actionItems"]') private _actionItemsSlot!: HTMLElement;
 
   private _scrollTarget!: HTMLElement|Window;

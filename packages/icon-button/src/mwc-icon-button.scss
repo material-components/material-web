@@ -59,10 +59,9 @@ limitations under the License.
    * the descender height below it.
    *
    * For unknown reasons, in this particular case, this only causes incorrect
-   * alignment in IE/Edge.
+   * alignment in IE.
    *
-   * IE needs the vertical-align on both the button and the host element, while
-   * Edge only needs it on the button to fix the issue.
+   * IE needs the vertical-align on both the button and the host element.
    */
   vertical-align: top;
 }
