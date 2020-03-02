@@ -394,13 +394,6 @@ suite('mwc-select:', () => {
         await element.updateComplete;
         validity = element.validity;
 
-        if (validity.valid) {
-          debugger;
-          debugger;
-          debugger;
-          debugger;
-        }
-
         assert.isFalse(validity.valid, 'explicitly false case returns false');
         assert.isTrue(
             validity.rangeOverflow, 'explicit reason for invalid set');
