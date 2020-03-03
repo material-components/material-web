@@ -60,10 +60,6 @@ suite('mwc-button', () => {
         });
 
     test('setting `icon` adds an icon to the button', async () => {
-      if (window.navigator.userAgent.indexOf('Edge') !== -1) {
-        // skip test on edge due to polyfill insertion into slot element issue
-        return;
-      }
       await element.updateComplete;
       let icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
       assert.equal(icon, null);
