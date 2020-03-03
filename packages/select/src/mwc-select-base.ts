@@ -611,7 +611,8 @@ export abstract class SelectBase extends FormElement {
 
     // init with value set
     if (this.value && !this.selected) {
-      if (this.slotElement?.assignedNodes({flatten: true}).length && !this.items.length) {
+      if (!this.items.length && this.slotElement &&
+          this.slotElement.assignedNodes({flatten: true}).length) {
         // Shady DOM initial render fix
         await new Promise((res) => requestAnimationFrame(res));
         await this.layout();
