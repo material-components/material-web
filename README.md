@@ -130,15 +130,15 @@ Note that if you load the Material Icons font in a different way to the recommen
 
 ## Supporting older browsers
 
-The Material Web Components use modern browser features that are natively supported in the latest versions of Chrome, Safari, and Firefox. Edge, IE11, and some older versions of other browsers are also supported, but they require additional build steps and polyfills.
+The Material Web Components use modern browser features that are natively supported in the latest versions of Chrome, Safari, Firefox, and Edge. IE11 and some older versions of other browsers are also supported, but they require additional build steps and polyfills.
 
 <table>
   <tr>
     <th><i>Feature</i></th>
     <th><img src="images/chrome.png" width="20px" height="20px"><br>Chrome</th>
     <th><img src="images/safari.png" width="20px" height="20px"><br>Safari</th>
-    <th><img src="images/firefox.png" width="19px" height="20px"><br>Firefox</th>
-    <th><img src="images/edge.png" width="19px" height="20px"><br>Edge</th>
+    <th><img src="images/firefox.png" width="20px" height="20px"><br>Firefox</th>
+    <th><img src="images/edge.png" width="20px" height="20px"><br>Edge</th>
     <th><img src="images/ie.png" width="20px" height="20px"><br>IE11</th>
   </tr>
   <tr>
@@ -146,7 +146,7 @@ The Material Web Components use modern browser features that are natively suppor
     <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
     <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
     <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
-    <td class="ie11"><img src="images/orange-check.png" width="20px" height="20px"class="check" alt="Polyfill"> <a href="#web-components">*</a></td>
+    <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
     <td class="ie11"><img src="images/orange-check.png" width="20px" height="20px"class="check" alt="Polyfill"> <a href="#web-components">*</a></td>
   </tr>
  <tr>
@@ -154,7 +154,7 @@ The Material Web Components use modern browser features that are natively suppor
     <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
     <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
     <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
-    <td class="ie11"><img src="images/orange-check.png" width="20px" height="20px"class="check" alt="Transform"> <a href="#modules">*</a></td>
+    <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
     <td class="ie11"><img src="images/orange-check.png" width="20px" height="20px"class="check" alt="Transform"> <a href="#modules">*</a></td>
   </tr>
  <tr>
@@ -169,7 +169,7 @@ The Material Web Components use modern browser features that are natively suppor
 
 #### Web Components
 
-To support Web Components in Edge, IE11, and other older browsers, install the [Web Components Polyfills](https://github.com/webcomponents/polyfills/tree/master/packages/webcomponentsjs):
+To support Web Components in IE11 and other older browsers, install the [Web Components Polyfills](https://github.com/webcomponents/polyfills/tree/master/packages/webcomponentsjs):
 
 ```sh
 npm install @webcomponents/webcomponentsjs
@@ -178,13 +178,13 @@ npm install @webcomponents/webcomponentsjs
 And include the `webcomponents-loader.js` script in your HTML, which detects when polyfills are needed and loads them automatically:
 
 ```html
-<!-- Add support for Web Components to Edge and IE11. -->
+<!-- Add support for Web Components to IE11. -->
 <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
 ```
 
 #### Modules
 
-To support Edge, IE11, or other older browsers that do not support JavaScript modules, you must transform JavaScript modules to classic JavaScript scripts. [Rollup](https://rollupjs.org/guide/en/) is a popular tool that can consume JavaScript modules and produce a number of other formats, such as AMD. Be sure to use the [`rollup-plugin-node-resolve`](https://github.com/rollup/rollup-plugin-node-resolve) plugin to resolve *bare module specifiers*, as mentioned [above](#bare-module-specifiers).
+To support IE11 or other older browsers that do not support JavaScript modules, you must transform JavaScript modules to classic JavaScript scripts. [Rollup](https://rollupjs.org/guide/en/) is a popular tool that can consume JavaScript modules and produce a number of other formats, such as AMD. Be sure to use the [`rollup-plugin-node-resolve`](https://github.com/rollup/rollup-plugin-node-resolve) plugin to resolve *bare module specifiers*, as mentioned [above](#bare-module-specifiers).
 
 #### ES2015
 
