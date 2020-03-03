@@ -92,6 +92,12 @@ module.exports = function(config) {
     }
 
     const SAUCE_LAUNCHERS = {
+      'sl-edge': {
+        base: 'SauceLabs',
+        browserName: 'microsoftedge',
+        version: 'latest',
+        platform: 'Windows 10',
+      },
       'sl-ie': {
         base: 'SauceLabs',
         browserName: 'internet explorer',
