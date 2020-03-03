@@ -138,8 +138,14 @@ export abstract class SelectBase extends FormElement {
   @property({type: Number}) protected outlineWidth = 0;
 
   @property({type: String})
-  @observer(function(this: SelectBase) {
+  @observer(function(this: SelectBase, value: string) {
     if (this.mdcFoundation) {
+      const initialization = this.selected === null && !!value;
+      const valueSetByUser = this.selected && this.selected.value !== value;
+
+      if (initialization || valueSetByUser) {
+        this.selectByValue(value);
+      }
       this.reportValidity();
     }
   })
@@ -205,6 +211,7 @@ export abstract class SelectBase extends FormElement {
   }
 
   protected renderReady = false;
+  private valueSetDirectly = false;
 
   validityTransform:
       ((value: string,
@@ -409,10 +416,11 @@ export abstract class SelectBase extends FormElement {
         }
       },
       notifyChange: async (value) => {
-        if (value === this.value) {
+        if (!this.valueSetDirectly && value === this.value) {
           return;
         }
 
+        this.valueSetDirectly = false;
         this.value = value;
         await this.updateComplete;
         const ev = new Event('change', {bubbles: true});
@@ -471,34 +479,8 @@ export abstract class SelectBase extends FormElement {
           menuElement.wrapFocus = wrapFocus;
         }
       },
-      setAttributeAtIndex: (index: number, attr: string, value: string) => {
-        const menuElement = this.menuElement;
-        if (!menuElement) {
-          return;
-        }
-
-        const element = menuElement.items[index];
-
-        if (!element) {
-          return;
-        }
-
-        element.setAttribute(attr, value);
-      },
-      removeAttributeAtIndex: (index, attr) => {
-        const menuElement = this.menuElement;
-        if (!menuElement) {
-          return;
-        }
-
-        const element = menuElement.items[index];
-
-        if (!element) {
-          return;
-        }
-
-        element.removeAttribute(attr);
-      },
+      setAttributeAtIndex: () => undefined,
+      removeAttributeAtIndex: () => undefined,
       focusMenuItemAtIndex: (index) => {
         const menuElement = this.menuElement;
         if (!menuElement) {
@@ -551,36 +533,8 @@ export abstract class SelectBase extends FormElement {
         const listItem = menuItem as ListItemBase;
         return listItem.value;
       },
-      addClassAtIndex: (index, className) => {
-        const menuElement = this.menuElement;
-
-        if (!menuElement) {
-          return;
-        }
-
-        const element = menuElement.items[index];
-
-        if (!element) {
-          return;
-        }
-
-        element.classList.add(className);
-      },
-      removeClassAtIndex: (index, className) => {
-        const menuElement = this.menuElement;
-
-        if (!menuElement) {
-          return;
-        }
-
-        const element = menuElement.items[index];
-
-        if (!element) {
-          return;
-        }
-
-        element.classList.remove(className);
-      },
+      addClassAtIndex: () => undefined,
+      removeClassAtIndex: () => undefined,
     };
   }
 
@@ -651,9 +605,19 @@ export abstract class SelectBase extends FormElement {
     this.mdcFoundation.setValid = () => undefined;
     this.mdcFoundation.setDisabled(this.disabled);
 
-
     if (this.validateOnInitialRender) {
       this.reportValidity();
+    }
+
+    // init with value set
+    if (this.value && !this.selected) {
+      if (this.slotElement?.assignedNodes({flatten: true}).length && !this.items.length) {
+        // Shady DOM initial render fix
+        await new Promise((res) => requestAnimationFrame(res));
+        await this.layout();
+      }
+
+      this.selectByValue(this.value);
     }
 
     this.renderReady = true;
@@ -665,6 +629,21 @@ export abstract class SelectBase extends FormElement {
     if (menuElement) {
       menuElement.select(index);
     }
+  }
+
+  protected selectByValue(value: string) {
+    let indexToSelect = -1;
+    for (let i = 0; i < this.items.length; i++) {
+      const item = this.items[i];
+      if (item.value === value) {
+        indexToSelect = i;
+        break;
+      }
+    }
+
+    this.valueSetDirectly = true;
+    this.select(indexToSelect);
+    this.mdcFoundation.handleChange();
   }
 
   disconnectedCallback() {

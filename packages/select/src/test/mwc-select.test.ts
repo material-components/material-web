@@ -74,6 +74,15 @@ const lazy = (template = html``) => html`
   </mwc-select>
 `;
 
+const valueInit = html`
+  <mwc-select value="c">
+    <mwc-list-item></mwc-list-item>
+    <mwc-list-item value="a">Apple</mwc-list-item>
+    <mwc-list-item value="b">Banana</mwc-list-item>
+    <mwc-list-item value="c">Cucumber</mwc-list-item>
+  </mwc-select>
+`;
+
 const isUiInvalid = (element: Select) => {
   return !!element.shadowRoot!.querySelector('.mdc-select--invalid');
 };
@@ -93,11 +102,25 @@ suite('mwc-select:', () => {
       assert.instanceOf(element, Select);
     });
 
-    test('setting value sets on input', async () => {
-      element.value = 'my test value';
+    test('initialize with value', async () => {
+      fixt.remove();
+      fixt = await fixture(valueInit);
 
-      const inputElement = element.shadowRoot!.querySelector('input');
-      assert(inputElement, 'my test value');
+      // deflake shady dom (IE)
+      await rafPromise();
+      await element.layout();
+
+      element = fixt.root.querySelector('mwc-select')!;
+      const cElement = element.querySelector('[value="c"]') as ListItem;
+
+      await element.updateComplete;
+      await cElement.updateComplete;
+
+      assert.equal(element.value, 'c', 'value stays the same as init');
+      assert.equal(
+          cElement, element.selected, 'selected element matches list item');
+      assert.isTrue(cElement.selected, 'prop sets on list item');
+      assert.equal(element.index, 3, 'index is correctly set');
     });
 
     teardown(() => {
@@ -497,6 +520,19 @@ suite('mwc-select:', () => {
       assert.isTrue(
           aElement === element.selected,
           'element with selected prop is the same as selected on mwc-select');
+
+      element.select(-1);
+      await element.updateComplete;
+      assert.equal(changeCalls, 1, 'change event called once on selection');
+      changeCalls = 0;
+
+      assert.equal(element.value, '', 'deselection clears value');
+      assert.isTrue(
+          (element as unknown as WithSelectedText).selectedText === '',
+          'selectedText is cleared on deselection');
+      assert.isFalse(!!element.selected, 'selected element is cleared');
+
+      assert.isFalse(aElement.selected, 'the previous has be deselected');
     });
 
     test('selection via element', async () => {
@@ -552,6 +588,63 @@ suite('mwc-select:', () => {
 
       assert.equal(element.index, 3, 'index updates when lazily slotted');
       assert.equal(element.value, 'c', 'value updates when lazily slotted');
+    });
+
+    test('selection via value prop', async () => {
+      // deflake shady dom (IE)
+      await rafPromise();
+      await element.layout();
+
+      assert.equal(changeCalls, 0, 'change evt not called on startup');
+      assert.equal(element.value, '', 'initial value is blank');
+      assert.equal(
+          (element as unknown as WithSelectedText).selectedText,
+          '',
+          'selectedText is blank');
+      assert.isTrue(!!element.selected, 'there is a selected element');
+
+      const firstElement = element.querySelector('mwc-list-item')!;
+      assert.isTrue(firstElement.selected, 'the element has selected prop');
+      const aElement = element.querySelector('[value="a"]') as ListItem;
+
+      element.value = 'a';
+      await aElement.updateComplete;
+      await element.updateComplete;
+      assert.equal(changeCalls, 1, 'change event called once on selection');
+      changeCalls = 0;
+
+      assert.equal(element.value, 'a', 'setting value prop sets value prop');
+      assert.equal(element.index, 1, 'updates the index when matches');
+      assert.isTrue(
+          (element as unknown as WithSelectedText).selectedText === 'Apple',
+          'selectedText is updated');
+      assert.isTrue(
+          !!element.selected, 'there is a selected element after select');
+
+      assert.isFalse(firstElement.selected, 'the previous has be deselected');
+      assert.isTrue(aElement.selected, 'the element has selected prop');
+      assert.isTrue(
+          aElement === element.selected,
+          'element with selected prop is the same as selected on mwc-select');
+
+      element.value = 'nonexistent';
+      await element.updateComplete;
+      await aElement.updateComplete;
+      assert.equal(changeCalls, 1, 'change event called once on selection');
+      changeCalls = 0;
+
+      assert.equal(element.value, '', 'setting value prop sets value prop');
+      assert.equal(element.index, -1, 'nonexistent value sets index to -1');
+      assert.isTrue(
+          (element as unknown as WithSelectedText).selectedText === '',
+          'selectedText is empty when value doesn\'t match');
+      assert.isFalse(
+          !!element.selected,
+          'there is no selected element when value doesn\'t match');
+
+      assert.isFalse(
+          aElement.selected,
+          'the previous element is deselcted when doesn\'t match');
     });
 
     teardown(() => {
