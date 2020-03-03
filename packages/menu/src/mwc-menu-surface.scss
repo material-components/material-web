@@ -14,7 +14,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-@import "@material/menu-surface/mdc-menu-surface.scss";
+@use '@material/menu-surface/mixins';
+@use '@material/shape/variables' as shape-variables;
+
+@include mixins.core-styles;
 
 :host(:not([open])) {
   display: none;
@@ -22,4 +25,8 @@ limitations under the License.
 
 .fullwidth {
   width: 100%;
+}
+
+.mdc-menu-surface {
+  border-radius: var(--mdc-shape-medium, #{shape-variables.$medium-component-radius});
 }

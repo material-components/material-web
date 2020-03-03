@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added `RippleHandlers` to `mwc-ripple` to provide an easy integration point for calling ripple API.
 - Added `light` property to `mwc-ripple` to help style ripples on dark surfaces.
 - `mwc-select` can now select items by setting `mwc-select.value`.
+- Exposed --mdc-shape-medium on mwc-menu-surface
 
 ### Changed
 

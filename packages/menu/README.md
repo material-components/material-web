@@ -289,6 +289,7 @@ propagate through `mwc-menu`.
 
 | Name                     | Default | Description
 | ------------------------ | ------- |------------
+| `--mdc-shape-medium`     | `4px`   | Border radius of the dropdown.
 | `--mdc-menu-item-height` | `48px`  | Height of single-line list-items in the menu.
 | `--mdc-menu-min-width`   | `auto`  | Menu min-width.
 | `--mdc-menu-max-width`   | `auto`  | Menu max-width.
