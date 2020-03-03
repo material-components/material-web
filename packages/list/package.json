@@ -11,6 +11,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/list": "=6.0.0-canary.9372e4939.0",
+    "@material/base": "=6.0.0-canary.9372e4939.0",
     "@material/mwc-base": "^0.13.0",
     "@material/mwc-checkbox": "^0.13.0",
     "@material/mwc-radio": "^0.13.0",
