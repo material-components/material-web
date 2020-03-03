@@ -509,7 +509,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
             'MDCListFoundation: Expected array of index for checkbox based list but got number: ' +
             index);
       }
-      return this.isIndexInRange_(index);
+      return index === numbers.UNSET_INDEX || this.isIndexInRange_(index);
     } else {
       return false;
     }
