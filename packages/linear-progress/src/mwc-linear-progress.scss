@@ -22,11 +22,11 @@ limitations under the License.
 
 // TODO(sorvell) #css: demo styles inner nodes via descendant selector.
 // putting in custom properties as a stand in.
-.mdc-linear-progress__buffer-bar {
+.mdc-linear-progress__buffer {
   background-color: #e6e6e6;
   background-color: var(--mdc-linear-progress-buffer-color, #e6e6e6);
 }
-.mdc-linear-progress__buffer-dots {
+.mdc-linear-progress__buffering-dots {
   background-image: url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' enable-background='new 0 0 5 2' xml:space='preserve' viewBox='0 0 5 2' preserveAspectRatio='none slice'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23e6e6e6'/%3E%3C/svg%3E");
   background-image: var(--mdc-linear-progress-buffering-dots-image, url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' enable-background='new 0 0 5 2' xml:space='preserve' viewBox='0 0 5 2' preserveAspectRatio='none slice'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23e6e6e6'/%3E%3C/svg%3E"));
 }
