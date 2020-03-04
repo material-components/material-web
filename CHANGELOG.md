@@ -45,6 +45,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `mwc-textfield` will not set `value` on the internal input tag on `input` event causing caret jumping in Safari
 - `mwc-select`'s `--mdc-select-ink-color` actually does something now
 - Setting `disabled` on `mwc-ripple` will hide the ripple
+- mwc-menu's x and y anchor margins now work for all corners
 
 ## [0.13.0] - 2020-02-03
 

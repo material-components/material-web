@@ -26,6 +26,18 @@ import {classMap} from 'lit-html/directives/class-map.js';
 export type Corner = keyof typeof CornerEnum;
 export type AnchorableElement = HTMLElement&{anchor: Element | null};
 
+// required for closure compiler
+const stringToCorner = {
+  'TOP_LEFT': CornerEnum.TOP_LEFT,
+  'TOP_RIGHT': CornerEnum.TOP_RIGHT,
+  'BOTTOM_LEFT': CornerEnum.BOTTOM_LEFT,
+  'BOTTOM_RIGHT': CornerEnum.BOTTOM_RIGHT,
+  'TOP_START': CornerEnum.TOP_START,
+  'TOP_END': CornerEnum.TOP_END,
+  'BOTTOM_START': CornerEnum.BOTTOM_START,
+  'BOTTOM_END': CornerEnum.BOTTOM_END,
+};
+
 /**
  * @fires opened
  * @fires closed
@@ -77,7 +89,8 @@ export abstract class MenuSurfaceBase extends BaseElement {
   @observer(function(this: MenuSurfaceBase, value: number|null) {
     if (this.mdcFoundation && this.y !== null && value !== null) {
       this.mdcFoundation.setAbsolutePosition(value, this.y);
-      this.mdcFoundation.setAnchorMargin({left: value, top: this.y});
+      this.mdcFoundation.setAnchorMargin(
+          {left: value, top: this.y, right: -value, bottom: this.y});
     }
   })
   x: number|null = null;
@@ -86,7 +99,8 @@ export abstract class MenuSurfaceBase extends BaseElement {
   @observer(function(this: MenuSurfaceBase, value: number|null) {
     if (this.mdcFoundation && this.x !== null && value !== null) {
       this.mdcFoundation.setAbsolutePosition(this.x, value);
-      this.mdcFoundation.setAnchorMargin({left: this.x, top: value});
+      this.mdcFoundation.setAnchorMargin(
+          {left: this.x, top: value, right: -this.x, bottom: value});
     }
   })
   y: number|null = null;
@@ -113,10 +127,10 @@ export abstract class MenuSurfaceBase extends BaseElement {
   open = false;
 
   @property({type: String})
-  @observer(function(this: MenuSurfaceBase, value: Corner|null) {
+  @observer(function(this: MenuSurfaceBase, value: Corner) {
     if (this.mdcFoundation) {
       if (value) {
-        this.mdcFoundation.setAnchorCorner(CornerEnum[value]);
+        this.mdcFoundation.setAnchorCorner(stringToCorner[value]);
       } else {
         this.mdcFoundation.setAnchorCorner(CornerEnum.TOP_START);
       }
