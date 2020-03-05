@@ -18,7 +18,7 @@
     "lint:lit": "lit-analyzer \"packages/**/*.ts\" --strict",
     "test": "npm run build:tests && karma start --single-run",
     "test:debug": "npm run test -- --single-run false --browsers Chrome",
-    "test:bench": "npm run build:tests && node test/lib/benchmark/cli.js",
+    "test:bench": "npm run build:tests && node test/lib/test/src/benchmark/cli.js",
     "postinstall": "npm run bootstrap",
     "bootstrap": "./scripts/bootstrap.sh",
     "build": "npm run build:styling && npm run build:typescript -- --verbose",
@@ -32,7 +32,8 @@
     "prepack": "npm run build && npm run static-urlify-readme-images",
     "powerwash:ts": "rm packages/*/*.js & rm packages/*/*.js.map & rm packages/*/*.d.ts & rm packages/*/.tsbuildinfo",
     "powerwash:styling": "rm packages/*/src/*-css.ts",
-    "powerwash": "npm run powerwash:ts & npm run powerwash:styling && rm -rf node_modules",
+    "powerwash:bench": "rm -rf test/lib & rm test/.tsbuildinfo*",
+    "powerwash": "npm run powerwash:ts & npm run powerwash:styling * npm run powerwash:bench && rm -rf node_modules",
     "watch": "npm run build && node scripts/watcher.js",
     "watch:tests": "tsc --build test/tsconfig.json -w & tsc --build test/tsconfig-node.json -w"
   },
