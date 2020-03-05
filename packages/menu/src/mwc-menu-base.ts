@@ -311,22 +311,6 @@ export abstract class MenuBase extends BaseElement {
     };
   }
 
-  protected async _getUpdateComplete() {
-    const listElement = this.listElement;
-    const listUpdateComplete =
-        listElement ? listElement.updateComplete : Promise.resolve();
-
-    const menuSurface = this.mdcRoot;
-    const surfaceUpdateComplete =
-        menuSurface ? menuSurface.updateComplete : Promise.resolve();
-
-    await Promise.all([
-      listUpdateComplete,
-      surfaceUpdateComplete,
-    ]);
-    await super._getUpdateComplete();
-  }
-
   protected onKeydown(evt: KeyboardEvent) {
     if (this.mdcFoundation) {
       this.mdcFoundation.handleKeydown(evt);

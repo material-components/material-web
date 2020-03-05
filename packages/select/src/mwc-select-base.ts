@@ -203,9 +203,7 @@ export abstract class SelectBase extends FormElement {
     name: string;
     cb: EventListenerOrEventListenerObject;
   })[] = [];
-  protected onBodyClickBound: (evt: MouseEvent) => void = () => { /* init */ };
-  protected _outlineUpdateComplete: null|Promise<unknown> = null;
-  protected _menuUpdateComplete: null|Promise<unknown> = null;
+  protected onBodyClickBound: (evt: MouseEvent) => void = () => undefined;
   protected get shouldRenderHelperText(): boolean {
     return !!this.helper || !!this.validationMessage;
   }
@@ -578,27 +576,7 @@ export abstract class SelectBase extends FormElement {
     this.formElement.setCustomValidity(message);
   }
 
-  protected async _getUpdateComplete() {
-    await Promise.all([
-      this._outlineUpdateComplete,
-      this._menuUpdateComplete,
-    ]);
-    await super._getUpdateComplete();
-  }
-
   protected async firstUpdated() {
-    const menuElement = this.menuElement;
-    const outlineElement = this.outlineElement;
-    if (outlineElement) {
-      this._outlineUpdateComplete = outlineElement.updateComplete;
-      await this._outlineUpdateComplete;
-    }
-
-    if (menuElement) {
-      this._menuUpdateComplete = menuElement.updateComplete;
-      await this._menuUpdateComplete;
-    }
-
     super.firstUpdated();
 
     this.mdcFoundation.isValid = () => true;
