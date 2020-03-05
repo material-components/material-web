@@ -29,7 +29,8 @@ export class LinearProgressBase extends BaseElement {
   @query('.mdc-linear-progress__primary-bar')
   protected primaryBar!: HTMLElement;
 
-  @query('.mdc-linear-progress__buffer') protected bufferElement!: HTMLElement;
+  @query('.mdc-linear-progress__buffer-bar')
+  protected bufferElement!: HTMLElement;
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: LinearProgressBase, value: boolean) {
@@ -75,8 +76,10 @@ export class LinearProgressBase extends BaseElement {
         aria-valuemin="0"
         aria-valuemax="1"
         aria-valuenow="0">
-        <div class="mdc-linear-progress__buffering-dots"></div>
-        <div class="mdc-linear-progress__buffer"></div>
+        <div class="mdc-linear-progress__buffer">
+          <div class="mdc-linear-progress__buffer-bar"></div>
+          <div class="mdc-linear-progress__buffer-dots"></div>
+        </div>
         <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
           <span class="mdc-linear-progress__bar-inner"></span>
         </div>
@@ -90,21 +93,30 @@ export class LinearProgressBase extends BaseElement {
     return {
       ...addHasRemoveClass(this.mdcRoot),
       forceLayout: () => this.mdcRoot.offsetWidth,
-      getPrimaryBar: () => this.primaryBar,
-      getBuffer: () => this.bufferElement,
       removeAttribute: (name: string) => {
         this.mdcRoot.removeAttribute(name);
       },
       setAttribute: (name: string, value: string) => {
         this.mdcRoot.setAttribute(name, value);
       },
-      setStyle: (el: HTMLElement, property: string, value: string) => {
+      setBufferBarStyle: (property: string, value: string) => {
         // TODO(aomarks) Consider moving this type to the
         // MDCLinearProgressAdapter parameter type, but note that the "-webkit"
         // prefixed CSS properties are not declared in CSSStyleDeclaration.
         //
         // Exclude read-only properties.
-        el.style[property as Exclude<keyof CSSStyleDeclaration, 'length'|'parentRule'>] =
+        this.bufferElement
+            .style[property as Exclude<keyof CSSStyleDeclaration, 'length'|'parentRule'>] =
+            value;
+      },
+      setPrimaryBarStyle: (property: string, value: string) => {
+        // TODO(aomarks) Consider moving this type to the
+        // MDCLinearProgressAdapter parameter type, but note that the "-webkit"
+        // prefixed CSS properties are not declared in CSSStyleDeclaration.
+        //
+        // Exclude read-only properties.
+        this.primaryBar
+            .style[property as Exclude<keyof CSSStyleDeclaration, 'length'|'parentRule'>] =
             value;
       },
     };
