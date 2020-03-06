@@ -55,32 +55,16 @@ export abstract class MenuSurfaceBase extends BaseElement {
   @observer(function(this: MenuSurfaceBase, isAbsolute: boolean) {
     if (this.mdcFoundation && !this.fixed) {
       this.mdcFoundation.setIsHoisted(isAbsolute);
-
-      this.saveOrRestoreAnchor(isAbsolute);
     }
   })
   absolute = false;
 
   @property({type: Boolean}) fullwidth = false;
 
-  @property({type: Object})
-  @observer(function(
-      this: MenuSurfaceBase, newAnchor: HTMLElement|null,
-      oldAnchor: HTMLElement|null) {
-    if (oldAnchor) {
-      oldAnchor.style.position = '';
-    }
-    if (newAnchor) {
-      newAnchor.style.position = 'relative';
-    }
-  })
-  anchor: HTMLElement|null = null;
-
   @property({type: Boolean})
   @observer(function(this: MenuSurfaceBase, isFixed: boolean) {
     if (this.mdcFoundation && !this.absolute) {
       this.mdcFoundation.setIsHoisted(isFixed);
-      this.saveOrRestoreAnchor(isFixed);
     }
   })
   fixed = false;
@@ -115,11 +99,12 @@ export abstract class MenuSurfaceBase extends BaseElement {
   quick = false;
 
   @property({type: Boolean, reflect: true})
-  @observer(function(this: MenuSurfaceBase, isOpen: boolean) {
+  @observer(function(this: MenuSurfaceBase, isOpen: boolean, wasOpen: boolean) {
     if (this.mdcFoundation) {
       if (isOpen) {
         this.mdcFoundation.open();
-      } else {
+        // wasOpen helps with first render (when it is `undefined`) perf
+      } else if (wasOpen !== undefined) {
         this.mdcFoundation.close();
       }
     }
@@ -138,9 +123,11 @@ export abstract class MenuSurfaceBase extends BaseElement {
   })
   corner: Corner = 'TOP_START';
 
+  anchor: HTMLElement|null = null;
+
   protected previouslyFocused: HTMLElement|Element|null = null;
   protected previousAnchor: HTMLElement|null = null;
-  protected onBodyClickBound: (evt: MouseEvent) => void = () => { /* init */ };
+  protected onBodyClickBound: (evt: MouseEvent) => void = () => undefined;
 
   render() {
     const classes = {
@@ -292,17 +279,6 @@ export abstract class MenuSurfaceBase extends BaseElement {
 
   protected deregisterBodyClick() {
     document.body.removeEventListener('click', this.onBodyClickBound);
-  }
-
-  protected saveOrRestoreAnchor(isAbsolute: boolean) {
-    if (isAbsolute) {
-      this.previousAnchor = this.anchor;
-      this.anchor = null;
-    }
-
-    if (!isAbsolute && !this.anchor && this.previousAnchor) {
-      this.anchor = this.previousAnchor;
-    }
   }
 
   close() {

@@ -87,6 +87,8 @@ export abstract class MenuBase extends BaseElement {
   })
   defaultFocus: DefaultFocusState = 'LIST_ROOT';
 
+  protected _listUpdateComplete: null|Promise<unknown> = null;
+
   protected get listElement() {
     if (!this.listElement_) {
       this.listElement_ = this.renderRoot.querySelector('mwc-list');
@@ -311,22 +313,6 @@ export abstract class MenuBase extends BaseElement {
     };
   }
 
-  protected async _getUpdateComplete() {
-    const listElement = this.listElement;
-    const listUpdateComplete =
-        listElement ? listElement.updateComplete : Promise.resolve();
-
-    const menuSurface = this.mdcRoot;
-    const surfaceUpdateComplete =
-        menuSurface ? menuSurface.updateComplete : Promise.resolve();
-
-    await Promise.all([
-      listUpdateComplete,
-      surfaceUpdateComplete,
-    ]);
-    await super._getUpdateComplete();
-  }
-
   protected onKeydown(evt: KeyboardEvent) {
     if (this.mdcFoundation) {
       this.mdcFoundation.handleKeydown(evt);
@@ -356,6 +342,20 @@ export abstract class MenuBase extends BaseElement {
 
   protected onClosed() {
     this.open = false;
+  }
+
+  protected async _getUpdateComplete() {
+    await this._listUpdateComplete;
+    await super._getUpdateComplete();
+  }
+
+  protected async firstUpdated() {
+    const listElement = this.listElement;
+
+    if (listElement) {
+      this._listUpdateComplete = listElement.updateComplete;
+      await this._listUpdateComplete;
+    }
   }
 
   select(index: MWCListIndex) {

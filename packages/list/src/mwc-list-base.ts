@@ -451,10 +451,6 @@ export abstract class ListBase extends BaseElement {
     }
   }
 
-  protected onSlotChange() {
-    this.layout();
-  }
-
   protected onListItemConnected(e: Event) {
     const target = e.target as ListItemBase;
 
