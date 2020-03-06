@@ -16,11 +16,11 @@
  */
 import '@material/mwc-list/mwc-list-item';
 
-import {measureFixtureCreation} from '../../util/helpers';
 import {html} from 'lit-html';
 
-measureFixtureCreation(
-  html`<mwc-list-item selected activated>Apple</mwc-list-item>`, {
-    numRenders: 100,
-  });
+import {measureFixtureCreation} from '../../util/helpers';
 
+measureFixtureCreation(
+    html`<mwc-list-item selected activated>Apple</mwc-list-item>`, {
+      numRenders: 100,
+    });
