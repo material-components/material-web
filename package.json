@@ -33,7 +33,7 @@
     "powerwash:ts": "rm packages/*/*.js & rm packages/*/*.js.map & rm packages/*/*.d.ts & rm packages/*/.tsbuildinfo",
     "powerwash:styling": "rm packages/*/src/*-css.ts",
     "powerwash:bench": "rm -rf test/lib & rm test/.tsbuildinfo*",
-    "powerwash": "npm run powerwash:ts & npm run powerwash:styling * npm run powerwash:bench && rm -rf node_modules",
+    "powerwash": "npm run powerwash:ts & npm run powerwash:styling & npm run powerwash:bench && rm -rf node_modules",
     "watch": "npm run build && node scripts/watcher.js",
     "watch:tests": "tsc --build test/tsconfig.json -w & tsc --build test/tsconfig-node.json -w"
   },
