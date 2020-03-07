@@ -20,6 +20,7 @@ import {customElement} from 'lit-element';
 import {ListItemBase} from './mwc-list-item-base.js';
 import {style} from './mwc-list-item-css.js';
 
+export {GraphicType, RequestSelectedDetail} from './mwc-list-item-base.js';
 declare global {
   interface HTMLElementTagNameMap {
     'mwc-list-item': ListItem;

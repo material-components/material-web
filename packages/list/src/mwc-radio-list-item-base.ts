@@ -61,7 +61,7 @@ export class RadioListItemBase extends ListItemBase {
 
 
   protected onClick() {
-    this.fireRequestDetail(!this.selected, 'interaction');
+    this.fireRequestSelected(!this.selected, 'interaction');
   }
 
   protected onChecked(evt: Event) {
@@ -71,7 +71,7 @@ export class RadioListItemBase extends ListItemBase {
       // needed to reconcile radio unchecking itself. List doesn't seem to care
       this.selected = radio.checked;
 
-      this.fireRequestDetail(this.selected, 'interaction');
+      this.fireRequestSelected(this.selected, 'interaction');
     }
   }
 
