@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - `inputMode` to `mwc-textfield` and `mwc-textarea`
+- `readOnly` to `mwc-textfield` and `mwc-textarea`
 - CSS custom properties for typography
 - Added `autoValidate` property on textfield
 - `mwc-button` now has a slot for `icon` and `trailingIcon`

@@ -174,6 +174,8 @@ export abstract class TextFieldBase extends FormElement {
   // @ts-ignore
   @property({type: String}) inputMode!: TextFieldInputMode;
 
+  @property({type: Boolean}) readOnly = false;
+
   @property({type: Boolean}) protected outlineOpen = false;
   @property({type: Number}) protected outlineWidth = 0;
   @property({type: Boolean}) protected isUiValid = true;
@@ -295,6 +297,7 @@ export abstract class TextFieldBase extends FormElement {
           ?disabled="${this.disabled}"
           placeholder="${this.placeholder}"
           ?required="${this.required}"
+          ?readonly="${this.readOnly}"
           maxlength="${ifDefined(maxOrUndef)}"
           pattern="${ifDefined(this.pattern ? this.pattern : undefined)}"
           min="${ifDefined(this.min === '' ? undefined : this.min as number)}"

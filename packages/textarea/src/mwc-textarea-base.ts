@@ -69,6 +69,7 @@ export abstract class TextAreaBase extends TextFieldBase {
           ?disabled="${this.disabled}"
           placeholder="${this.placeholder}"
           ?required="${this.required}"
+          ?readonly="${this.readOnly}"
           maxlength="${ifDefined(maxOrUndef)}"
           @input="${this.handleInputChange}"
           @blur="${this.onInputBlur}">
