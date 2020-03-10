@@ -109,7 +109,7 @@ to associate an interactive label with the switch.
 | ----------------------- | -------------------------------------- | ---
 | `--mdc-theme-secondary` | ![](images/color_018786.png) `#018786` | Fill color of the thumb head and a lightened fill of the track.
 
-Also inherits styles from [ripple](../ripple/README.md)
+Also inherits styles from [ripple](https://github.com/material-components/material-components-web-components/tree/master/packages/ripple)
 
 ## Additional references
 
