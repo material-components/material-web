@@ -17,7 +17,7 @@
   "dependencies": {
     "@material/mwc-base": "^0.13.0",
     "@material/mwc-ripple": "^0.13.0",
-    "@material/radio": "=6.0.0-canary.26c049afa.0",
+    "@material/radio": "=6.0.0-canary.1db5c9fc8.0",
     "lit-element": "^2.2.1",
     "tslib": "^1.10.0"
   },
