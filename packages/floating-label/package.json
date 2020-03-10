@@ -12,7 +12,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/floating-label": "=6.0.0-canary.26c049afa.0",
+    "@material/floating-label": "=6.0.0-canary.1db5c9fc8.0",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0"
