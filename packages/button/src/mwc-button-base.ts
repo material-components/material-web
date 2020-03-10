@@ -77,6 +77,7 @@ export class ButtonBase extends LitElement {
       'mdc-button--outlined': this.outlined,
       'mdc-button--dense': this.dense,
     };
+    this.label = this.label.replace(/(&#(\d+);)/g, (_match, _capture, charCode) => String.fromCharCode(charCode));
     return html`
       <button
           id="button"
