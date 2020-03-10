@@ -73,14 +73,20 @@ export class ListItemBase extends LitElement {
 
     if (this._firstChanged) {
       this._firstChanged = false;
-    } else {
-      this.fireRequestSelected(value, 'property');
+      return;
     }
+
+    if (this._skipPropRequest) {
+      return;
+    }
+
+    this.fireRequestSelected(value, 'property');
   })
   selected = false;
 
   protected boundOnClick = this.onClick.bind(this);
   protected _firstChanged = true;
+  protected _skipPropRequest = false;
 
   get text() {
     const textContent = this.textContent;

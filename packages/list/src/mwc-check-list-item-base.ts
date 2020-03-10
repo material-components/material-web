@@ -49,21 +49,23 @@ export class CheckListItemBase extends ListItemBase {
         <mwc-checkbox
             tabindex=${this.tabindex}
             .checked=${this.selected}
-            ?disabled=${this.disabled}>
+            ?disabled=${this.disabled}
+            @change=${this.onChange}>
         </mwc-checkbox>
       </span>
       ${this.left ? text : ''}
       ${meta}`;
   }
 
-  protected onClick() {
-    this.fireRequestSelected(!this.selected, 'interaction');
-  }
+  protected async onChange(evt: Event) {
+    const checkbox = evt.target as Checkbox;
+    const changeFromProp = this.selected === checkbox.checked;
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.addEventListener('click', this.boundOnClick);
-
-    this.setAttribute('mwc-list-item', '');
+    if (!changeFromProp) {
+      this._skipPropRequest = true;
+      this.selected = checkbox.checked;
+      await this.updateComplete;
+      this._skipPropRequest = false;
+    }
   }
 }

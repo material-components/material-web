@@ -31,6 +31,8 @@ export class RadioListItemBase extends ListItemBase {
   @property({type: Boolean}) left = false;
   @property({type: String, reflect: true}) graphic: GraphicType = 'control';
 
+  protected _changeFromClick = false;
+
   render() {
     const radioClasses = {
       'mdc-list-item__graphic': this.left,
@@ -53,32 +55,32 @@ export class RadioListItemBase extends ListItemBase {
           name=${ifDefined(this.group === null ? undefined : this.group)}
           .checked=${this.selected}
           ?disabled=${this.disabled}
-          @checked=${this.onChecked}>
+          @checked=${this.onChange}>
       </mwc-radio>
       ${this.left ? text : ''}
       ${meta}`;
   }
 
-
   protected onClick() {
-    this.fireRequestSelected(!this.selected, 'interaction');
+    this._changeFromClick = true;
+    super.onClick();
   }
 
-  protected onChecked(evt: Event) {
-    const radio = evt.target as Radio;
+  protected async onChange(evt: Event) {
+    const checkbox = evt.target as Radio;
+    const changeFromProp = this.selected === checkbox.checked;
 
-    if (this.selected !== radio.checked) {
-      // needed to reconcile radio unchecking itself. List doesn't seem to care
-      this.selected = radio.checked;
+    if (!changeFromProp) {
+      this._skipPropRequest = true;
+      this.selected = checkbox.checked;
+      await this.updateComplete;
+      this._skipPropRequest = false;
 
-      this.fireRequestSelected(this.selected, 'interaction');
+      if (!this._changeFromClick) {
+        this.fireRequestSelected(this.selected, 'interaction');
+      }
     }
-  }
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.addEventListener('click', this.boundOnClick);
-
-    this.setAttribute('mwc-list-item', '');
+    this._changeFromClick = false;
   }
 }
