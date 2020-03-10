@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added `light` property to `mwc-ripple` to help style ripples on dark surfaces.
 - `mwc-select` can now select items by setting `mwc-select.value`.
 - Exposed --mdc-shape-medium on mwc-menu-surface
+- Added `focusOnActivate` property to `mwc-tab`
+  - `true` by default, set to `false` to disable focusing on tab activation
 
 ### Changed
 

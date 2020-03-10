@@ -17,15 +17,13 @@ limitations under the License.
 // Make TypeScript not remove the import.
 import '@material/mwc-tab-indicator';
 
-import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
+import {addHasRemoveClass, BaseElement, observer} from '@material/mwc-base/base-element.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive';
 import {TabIndicator} from '@material/mwc-tab-indicator';
 import {MDCTabAdapter} from '@material/tab/adapter';
 import MDCTabFoundation from '@material/tab/foundation';
 import {html, property, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map.js';
-
-import {style} from './mwc-tab-css.js';
 
 // used for generating unique id for each tab
 let tabIdCounter = 0;
@@ -60,6 +58,13 @@ export class TabBase extends BaseElement {
 
   @property({type: Boolean}) stacked = false;
 
+  @observer(async function(this: TabBase, value: boolean) {
+    await this.updateComplete;
+    this.mdcFoundation.setFocusOnActivate(value);
+  })
+  @property({type: Boolean})
+  focusOnActivate = true;
+
   protected _active = false;
 
   /**
@@ -85,8 +90,6 @@ export class TabBase extends BaseElement {
     this.dir = document.dir;
     super.connectedCallback();
   }
-
-  static styles = style;
 
   protected firstUpdated() {
     super.firstUpdated();
