@@ -350,6 +350,7 @@ export abstract class MenuBase extends BaseElement {
   }
 
   protected async firstUpdated() {
+    super.firstUpdated();
     const listElement = this.listElement;
 
     if (listElement) {
