@@ -49,6 +49,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `mwc-select`'s `--mdc-select-ink-color` actually does something now
 - Setting `disabled` on `mwc-ripple` will hide the ripple
 - mwc-menu's x and y anchor margins now work for all corners
+- mwc-select's --mdc-select-disabled-ink-color now colors the selected text
 
 ## [0.13.0] - 2020-02-03
 
