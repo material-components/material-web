@@ -187,6 +187,13 @@ mwc-notched-outline {
   .mdc-select-helper-text {
     color: var(--mdc-select-disabled-ink-color, #{vars.$disabled-ink-color});
   }
+
+  .mdc-select__selected-text {
+    @include theme-mixins.prop(color, (
+      varname: --mdc-select-disabled-ink-color,
+      fallback: vars.$disabled-ink-color
+    ));
+   }
 }
 
 // menu
