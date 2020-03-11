@@ -36,17 +36,16 @@ limitations under the License.
 }
 
 :host {
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: column;
   outline: none;
 }
 
 :host([fullwidth]) {
-  display: block;
+  display: flex;
 }
 
 .mdc-text-field {
-  display: flex;
-
   width: 100%;
 
   @include theme-mixins.prop(border-radius, (
