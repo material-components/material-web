@@ -145,6 +145,26 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
    */
   setMulti(value: boolean) {
     this.isMulti_ = value;
+
+    const currentIndex = this.selectedIndex_;
+
+    if (value) {
+      // number to set
+      if (!isIndexSet(currentIndex)) {
+        const isUnset = currentIndex === numbers.UNSET_INDEX;
+        this.selectedIndex_ = isUnset ? new Set() : new Set([currentIndex]);
+      }
+    } else {
+      // set to first sorted number in set
+      if (isIndexSet(currentIndex)) {
+        if (currentIndex.size) {
+          const vals = Array.from(currentIndex).sort();
+          this.selectedIndex_ = vals[0];
+        } else {
+          this.selectedIndex_ = numbers.UNSET_INDEX;
+        }
+      }
+    }
   }
 
   /**
