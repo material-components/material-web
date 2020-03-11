@@ -16,17 +16,20 @@
  */
 // taze: chai from //third_party/javascript/chai:closure_chai
 
+import '@material/mwc-list';
 import '@material/mwc-list/mwc-list-item';
 import '@material/mwc-list/mwc-check-list-item';
 import '@material/mwc-list/mwc-radio-list-item';
 import '@material/mwc-icon';
 
 import {isNodeElement} from '@material/mwc-base/utils';
+import {List} from '@material/mwc-list';
 import {CheckListItem} from '@material/mwc-list/mwc-check-list-item';
 import {GraphicType, ListItem, RequestSelectedDetail} from '@material/mwc-list/mwc-list-item';
 import {ListItemBase} from '@material/mwc-list/mwc-list-item-base';
 import {RadioListItem} from '@material/mwc-list/mwc-radio-list-item';
-import {html} from 'lit-html';
+import {isIndexSet} from '@material/mwc-menu';
+import {html, TemplateResult} from 'lit-html';
 
 import {fixture, TestFixture} from '../../../../test/src/util/helpers';
 
@@ -113,781 +116,1107 @@ const radioListItem = (propsInit: Partial<ListItemProps> = {}) => {
     </mwc-radio-list-item>`;
 };
 
+const defaultListProps = {
+  multi: false,
+  wrapFocus: false,
+  rootTabbable: false,
+  noninteractive: false,
+  itemRoles: null,
+  innerRole: null,
+  items: [] as TemplateResult[],
+};
+
+type ListProps = typeof defaultListProps;
+
+const listTemplate = (propsInit: Partial<ListProps> = {}) => {
+  const props: ListProps = {...defaultListProps, ...propsInit};
+
+  return html`
+    <mwc-list
+        ?multi=${props.multi}
+        ?wrapFocus=${props.wrapFocus}
+        ?rootTabbable=${props.rootTabbable}
+        ?noninteractive=${props.noninteractive}
+        .itemRoles=${props.itemRoles}
+        .innerRole=${props.innerRole}>
+      ${props.items}
+    </mwc-list>
+  `;
+};
+
 suite('mwc-list:', () => {
   let fixt: TestFixture;
 
-  suite('mwc-list-item: initialization', () => {
-    let element: ListItem;
-
-    test('initializes as an mwc-list-item', async () => {
-      fixt = await fixture(listItem());
-      element = fixt.root.querySelector('mwc-list-item')!;
-      assert.instanceOf(element, ListItem);
-      assert.instanceOf(element, ListItemBase);
-    });
-
-    test('sets attribute on connection', async () => {
-      fixt = await fixture(listItem());
-      element = fixt.root.querySelector('mwc-list-item')!;
-
-      assert.isTrue(element.hasAttribute('mwc-list-item'));
-    });
-
-    test('noninteractive does not set attribute on connection', async () => {
-      fixt = await fixture(listItem({noninteractive: true}));
-      element = fixt.root.querySelector('mwc-list-item')!;
-
-      assert.isFalse(element.hasAttribute('mwc-list-item'));
-    });
-
-    teardown(() => {
-      if (fixt) {
-        fixt.remove();
-      }
-    });
-  });
-
-  suite('mwc-list-item: variants', () => {
-    let element: ListItem;
-
-    test('single line renders correctly', async () => {
-      fixt = await fixture(listItem({
-        primary: html`<span class="primary">Apple</span>`,
-        secondary: html`<span slot="secondary">This is a Fruit</span>`,
-        graphicSlot: html`<mwc-icon slot="graphic">done</mwc-icon>`,
-        meta: html`<mwc-icon slot="meta">code</mwc-icon>`,
-      }));
-      element = fixt.root.querySelector('mwc-list-item')!;
-
-      const root = (element.shadowRoot as ShadowRoot);
-      const defaultSlot =
-          root.querySelector('.mdc-list-item__text > slot') as HTMLSlotElement;
-      const primaryTextWrapper =
-          root.querySelector('.mdc-list-item__primaray-text');
-      const secondaryTextWrapper =
-          root.querySelector('.mdc-list-item__secondary-text');
-      const metaWrapper = root.querySelector('.mdc-list-item__meta');
-      const graphicWrapper = root.querySelector('.mdc-list-item__graphic');
-
-      assert.notEqual(defaultSlot, null, 'default slot exists with no wrapper');
-      assert.equal(
-          primaryTextWrapper, null, 'no primary-text wrapper (only two line)');
-      assert.equal(
-          secondaryTextWrapper,
-          null,
-          'no secondary-text wrapper (only two line)');
-      assert.equal(metaWrapper, null, 'no meta wrapper (only two line)');
-      assert.equal(graphicWrapper, null, 'no graphic wrapper (only two line)');
-
-      const primaryTextElement = element.querySelector('.primary') as Element;
-      const projectedElements =
-          defaultSlot.assignedNodes({flatten: true}).filter(isNodeElement);
-
-      assert.equal(
-          projectedElements.length, 1, 'there is only one projected element');
-      assert.equal(
-          primaryTextElement,
-          projectedElements[0],
-          'primary text is projected');
-    });
-
-    test('two line renders correctly', async () => {
-      fixt = await fixture(listItem({
-        primary: html`<span class="primary">Apple</span>`,
-        secondary: html`<span slot="secondary">This is a Fruit</span>`,
-        graphicSlot: html`<mwc-icon slot="graphic">done</mwc-icon>`,
-        meta: html`<mwc-icon slot="meta">code</mwc-icon>`,
-        twoLine: true,
-      }));
-      element = fixt.root.querySelector('mwc-list-item')!;
-
-      const root = (element.shadowRoot as ShadowRoot);
-      const defaultSlot = root.querySelector('.mdc-list-item__text > slot');
-      const primaryTextSlot =
-          root.querySelector('.mdc-list-item__primary-text > slot') as
-          HTMLSlotElement;
-      const secondaryTextSlot =
-          root.querySelector('.mdc-list-item__secondary-text > slot') as
-          HTMLSlotElement;
-      const metaWrapper = root.querySelector('.mdc-list-item__meta');
-      const graphicWrapper = root.querySelector('.mdc-list-item__graphic');
-
-      assert.equal(
-          defaultSlot, null, 'default slot doesnt exist (single line only)');
-      assert.notEqual(primaryTextSlot, null, 'primary text slot exists');
-      assert.notEqual(secondaryTextSlot, null, 'secondary text slot exists');
-      assert.equal(metaWrapper, null, 'no meta wrapper (only two line)');
-      assert.equal(graphicWrapper, null, 'no graphic wrapper (only two line)');
-
-      const primaryTextElement = element.querySelector('.primary') as Element;
-      const secondaryTextElement =
-          element.querySelector('[slot="secondary"]') as Element;
-      const primaryProjEls =
-          primaryTextSlot.assignedNodes({flatten: true}).filter(isNodeElement);
-      const secondaryProjEls = secondaryTextSlot.assignedNodes({flatten: true})
-                                   .filter(isNodeElement);
-
-      assert.equal(
-          primaryProjEls.length,
-          1,
-          'there is only one projected primary text element');
-      assert.equal(
-          primaryTextElement, primaryProjEls[0], 'primary text is projected');
-      assert.equal(
-          secondaryProjEls.length,
-          1,
-          'there is only one projected secondary text element');
-      assert.equal(
-          secondaryTextElement,
-          secondaryProjEls[0],
-          'secondary text is projected');
-    });
-
-    test('meta renders correctly', async () => {
-      fixt = await fixture(listItem({
-        primary: html`<span class="primary">Apple</span>`,
-        secondary: html`<span slot="secondary">This is a Fruit</span>`,
-        graphicSlot: html`<mwc-icon slot="graphic">done</mwc-icon>`,
-        meta: html`<mwc-icon slot="meta">code</mwc-icon>`,
-        hasMeta: true,
-      }));
-      element = fixt.root.querySelector('mwc-list-item')!;
-
-      const root = (element.shadowRoot as ShadowRoot);
-      const defaultSlot = root.querySelector('.mdc-list-item__text > slot');
-      const primaryTextWrapper =
-          root.querySelector('.mdc-list-item__primaray-text');
-      const secondaryTextWrapper =
-          root.querySelector('.mdc-list-item__secondary-text');
-      const metaWrapper = root.querySelector('.mdc-list-item__meta');
-      const metaSlot =
-          root.querySelector('slot[name="meta"]') as HTMLSlotElement;
-      const graphicWrapper = root.querySelector('.mdc-list-item__graphic');
-
-      assert.notEqual(defaultSlot, null, 'default slot exists with no wrapper');
-      assert.equal(
-          primaryTextWrapper, null, 'no primary-text wrapper (only two line)');
-      assert.equal(
-          secondaryTextWrapper,
-          null,
-          'no secondary-text wrapper (only two line)');
-      assert.notEqual(metaWrapper, null, 'meta wrapper exists');
-      assert.notEqual(metaSlot, null, 'meta slot exists');
-      assert.equal(graphicWrapper, null, 'no graphic wrapper (only two line)');
-
-      const metaElement = element.querySelector('[slot="meta"]') as Element;
-      const projectedElements =
-          metaSlot.assignedNodes({flatten: true}).filter(isNodeElement);
-
-      assert.equal(
-          projectedElements.length, 1, 'there is only one projected element');
-      assert.equal(metaElement, projectedElements[0], 'meta icon is projected');
-    });
-
-    test('graphic renders correctly', async () => {
-      fixt = await fixture(listItem({
-        primary: html`<span class="primary">Apple</span>`,
-        secondary: html`<span slot="secondary">This is a Fruit</span>`,
-        graphicSlot: html`<mwc-icon slot="graphic">done</mwc-icon>`,
-        meta: html`<mwc-icon slot="meta">code</mwc-icon>`,
-        graphic: 'icon',
-      }));
-      element = fixt.root.querySelector('mwc-list-item')!;
-
-      const root = (element.shadowRoot as ShadowRoot);
-      const defaultSlot = root.querySelector('.mdc-list-item__text > slot');
-      const primaryTextWrapper =
-          root.querySelector('.mdc-list-item__primaray-text');
-      const secondaryTextWrapper =
-          root.querySelector('.mdc-list-item__secondary-text');
-      const metaWrapper = root.querySelector('.mdc-list-item__meta');
-      const graphicWrapper = root.querySelector('.mdc-list-item__graphic');
-      const graphicSlot =
-          root.querySelector('slot[name="graphic"]') as HTMLSlotElement;
-
-      assert.notEqual(defaultSlot, null, 'default slot exists with no wrapper');
-      assert.equal(
-          primaryTextWrapper, null, 'no primary-text wrapper (only two line)');
-      assert.equal(
-          secondaryTextWrapper,
-          null,
-          'no secondary-text wrapper (only two line)');
-      assert.equal(metaWrapper, null, 'meta wrapper exists');
-      assert.notEqual(
-          graphicWrapper, null, 'no graphic wrapper (only two line)');
-      assert.notEqual(graphicSlot, null, 'graphic slot exists');
-
-      const graphicElement =
-          element.querySelector('[slot="graphic"]') as Element;
-      const projectedElements =
-          graphicSlot.assignedNodes({flatten: true}).filter(isNodeElement);
-
-      assert.equal(
-          projectedElements.length, 1, 'there is only one projected element');
-      assert.equal(
-          graphicElement, projectedElements[0], 'meta icon is projected');
-    });
-
-    test('noninteractive removes props and attrs on bootup', async () => {
-      fixt = await fixture(listItem({
-        noninteractive: true,
-        selected: true,
-        activated: true,
-      }));
-      element = fixt.root.querySelector('mwc-list-item')!;
-
-      assert.isTrue(element.noninteractive, 'is noninteractive');
-      assert.isFalse(element.activated, 'removes activated on boot up');
-      assert.isFalse(element.selected, 'removes selected on boot up');
-      assert.isFalse(
-          element.hasAttribute('mwc-list-item'),
-          'removes selectability on boot up');
-    });
-
-    test('noninteractive +/- props and attrs on change', async () => {
-      fixt = await fixture(listItem({
-        noninteractive: false,
-        selected: true,
-        activated: true,
-      }));
-      element = fixt.root.querySelector('mwc-list-item')!;
-
-      assert.isFalse(element.noninteractive, 'is interactive');
-      assert.isTrue(element.activated, 'activated on boot up');
-      assert.isTrue(element.selected, 'selected on boot up');
-      assert.isTrue(
-          element.hasAttribute('mwc-list-item'), 'selectability on boot up');
-
-      element.noninteractive = true;
-      await element.updateComplete;
-
-      assert.isTrue(element.noninteractive, 'is noninteractive');
-      assert.isFalse(element.activated, 'removes activated on prop change');
-      assert.isFalse(element.selected, 'removes selected on prop change');
-      assert.isFalse(
-          element.hasAttribute('mwc-list-item'),
-          'removes selectability on prop change');
-
-      element.noninteractive = false;
-      await element.updateComplete;
-
-      assert.isFalse(element.noninteractive, 'is interactive');
-      assert.isFalse(
-          element.activated, 'does not add activated on prop change');
-      assert.isFalse(element.selected, 'does not add selected on prop change');
-      assert.isTrue(
-          element.hasAttribute('mwc-list-item'),
-          'adds selectability on prop change');
-    });
-
-    teardown(() => {
-      if (fixt) {
-        fixt.remove();
-      }
-    });
-  });
-
-  suite('mwc-list-item: interaction', () => {
-    let element: ListItem;
-
-    test('rendered event fires', async () => {
-      let numRenderCalls = 0;
-      fixt = await fixture(listItem({
-        onListItemRendered: () => numRenderCalls++,
-      }));
-
-      assert.equal(
-          numRenderCalls, 1, 'list-item-rendered called only once on bootup');
-    });
-
-    test('request selected event', async () => {
-      let numReqSelectedCalls = 0;
-      let lastReqSelectedEv = {detail: {}} as
-          CustomEvent<RequestSelectedDetail>;
-      fixt = await fixture(listItem({
-        onRequestSelected: (ev) => {
-          numReqSelectedCalls++;
-          lastReqSelectedEv = ev;
-        },
-        noninteractive: true,
-      }));
-      element = fixt.root.querySelector('mwc-list-item')!;
-
-      assert.isFalse(element.selected, 'element is not selected');
-      assert.equal(
-          numReqSelectedCalls, 0, 'request-selected not called on bootup');
-
-      element.click();
-      assert.equal(
-          numReqSelectedCalls,
-          0,
-          'request-selected not called on click on noninteractive');
-
-      element.selected = true;
-      await element.updateComplete;
-
-      assert.isTrue(element.selected, 'element is selected');
-      assert.equal(
-          numReqSelectedCalls,
-          0,
-          'request-selected not called on noninteractive selected prop');
-
-      element.noninteractive = false;
-      await element.updateComplete;
-
-      element.click();
-      assert.equal(numReqSelectedCalls, 1, 'request-selected called on click');
-      numReqSelectedCalls = 0;
-      assert.equal(
-          lastReqSelectedEv.detail.source,
-          'interaction',
-          'interaction event on click');
-      assert.notEqual(
-          lastReqSelectedEv.detail.selected,
-          element.selected,
-          'click ev has selected opposite of state');
-
-      await element.updateComplete;
-
-      assert.isTrue(
-          element.selected, 'element does not change selected on click');
-
-      element.selected = false;
-      await element.updateComplete;
-
-      assert.isFalse(element.selected, 'element is not selected');
-      assert.equal(
-          numReqSelectedCalls, 1, 'request-selected called on selected prop');
-      numReqSelectedCalls = 0;
-      assert.equal(
-          lastReqSelectedEv.detail.source,
-          'property',
-          'property event on click');
-      assert.equal(
-          lastReqSelectedEv.detail.selected,
-          element.selected,
-          'property request selected ev requests for the same as selected state');
-    });
-
-    teardown(() => {
-      if (fixt) {
-        fixt.remove();
-      }
-    });
-  });
-
-  suite('mwc-check-list-item: initialization', () => {
-    let element: CheckListItem;
-
-    test('initializes as an mwc-check-list-item', async () => {
-      fixt = await fixture(checkListItem());
-      element = fixt.root.querySelector('mwc-check-list-item')!;
-      assert.instanceOf(element, CheckListItem, 'is checklsit item');
-      assert.instanceOf(element, ListItemBase, 'inherits base');
-    });
-
-    test('sets attribute on connection', async () => {
-      fixt = await fixture(checkListItem());
-      element = fixt.root.querySelector('mwc-check-list-item')!;
-
-      assert.isTrue(element.hasAttribute('mwc-list-item'));
-    });
-
-    test('left functions as intended', async () => {
-      fixt = await fixture(checkListItem({
-        left: true,
-      }));
-      element = fixt.root.querySelector('mwc-check-list-item')!;
-      const checkbox = element.shadowRoot!.querySelector('mwc-checkbox')!;
-      let slot = element.shadowRoot!.querySelector('slot')!;
-
-      let childrenColl = element.shadowRoot!.children;
-      let children = Array.from(childrenColl).filter(isNodeElement);
-
-      let first = children[0].firstElementChild;
-      let second = children[1].firstElementChild;
-
-      assert.equal(first, checkbox, 'checkbox is first when left');
-      assert.equal(second, slot, 'slot is second when left');
-
-      element.left = false;
-      await element.updateComplete;
-
-      // technically a new node must be queried again
-      slot = element.shadowRoot!.querySelector('slot')!;
-
-      childrenColl = element.shadowRoot!.children;
-      children = Array.from(childrenColl).filter(isNodeElement);
-      first = children[0].firstElementChild;
-      second = children[1].firstElementChild;
-
-      assert.equal(first, slot, 'slot is first when not left');
-      assert.equal(second, checkbox, 'checkbox is second when not left');
-    });
-
-    teardown(() => {
-      if (fixt) {
-        fixt.remove();
-      }
-    });
-  });
-
-  suite('mwc-check-list-item: interaction', () => {
-    let element: CheckListItem;
-
-    test('request selected event', async () => {
-      let numReqSelectedCalls = 0;
-      let lastReqSelectedEv = {detail: {}} as
-          CustomEvent<RequestSelectedDetail>;
-      fixt = await fixture(checkListItem({
-        onRequestSelected: (ev) => {
-          numReqSelectedCalls++;
-          lastReqSelectedEv = ev;
-        },
-        noninteractive: true,
-      }));
-      element = fixt.root.querySelector('mwc-check-list-item')!;
-      const checkbox = element.shadowRoot!.querySelector('mwc-checkbox')!;
-
-      assert.isFalse(element.selected, 'element is not selected');
-      assert.isFalse(checkbox.checked, 'checkbox is not selected');
-      assert.equal(
-          numReqSelectedCalls, 0, 'request-selected not called on bootup');
-
-      element.click();
-      assert.equal(
-          numReqSelectedCalls,
-          0,
-          'request-selected not called on click on noninteractive');
-
-      checkbox.click();
-      assert.equal(
-          numReqSelectedCalls,
-          0,
-          'request-selected not called on checkbox click on noninteractive');
-
-      element.selected = true;
-      await element.updateComplete;
-
-      assert.isTrue(element.selected, 'element is selected');
-      assert.isTrue(checkbox.checked, 'checkbox is selected');
-      assert.equal(
-          numReqSelectedCalls,
-          0,
-          'request-selected not called on noninteractive selected prop');
-
-      element.noninteractive = false;
-      await element.updateComplete;
-
-      element.click();
-      assert.equal(numReqSelectedCalls, 1, 'request-selected called on click');
-      numReqSelectedCalls = 0;
-      assert.equal(
-          lastReqSelectedEv.detail.source,
-          'interaction',
-          'interaction event on click');
-      assert.notEqual(
-          lastReqSelectedEv.detail.selected,
-          element.selected,
-          'click ev has selected opposite of state');
-
-      await element.updateComplete;
-
-      assert.isTrue(
-          element.selected, 'element does not change selected on click');
-
-      element.selected = false;
-      await element.updateComplete;
-
-      assert.isFalse(element.selected, 'element is not selected');
-      assert.isFalse(
-          checkbox.checked, 'checkbox mirrors element selection state on prop');
-      assert.equal(
-          numReqSelectedCalls, 1, 'request-selected called on selected prop');
-      numReqSelectedCalls = 0;
-      assert.equal(
-          lastReqSelectedEv.detail.source,
-          'property',
-          'property event on click');
-      assert.equal(
-          lastReqSelectedEv.detail.selected,
-          element.selected,
-          'property request selected ev requests for the same as selected state');
-
-      checkbox.click();
-
-      await element.updateComplete;
-      await checkbox.updateComplete;
-
-      assert.isTrue(element.selected, 'element is selected on checkbox click');
-      assert.equal(
-          element.selected,
-          checkbox.checked,
-          'checkbox mirrors element selection state on prop');
-      assert.equal(
-          numReqSelectedCalls, 1, 'request-selected called on selected prop');
-      numReqSelectedCalls = 0;
-      assert.equal(
-          lastReqSelectedEv.detail.source,
-          'interaction',
-          'interaction event on checkbox click');
-    });
-
-    teardown(() => {
-      if (fixt) {
-        fixt.remove();
-      }
-    });
-  });
-
-  suite('mwc-radio-list-item: initialization', () => {
-    let element: RadioListItem;
-
-    test('initializes as an mwc-radio-list-item', async () => {
-      fixt = await fixture(radioListItem());
-      element = fixt.root.querySelector('mwc-radio-list-item')!;
-      assert.instanceOf(element, RadioListItem, 'is checklsit item');
-      assert.instanceOf(element, ListItemBase, 'inherits base');
-    });
-
-    test('sets attribute on connection', async () => {
-      fixt = await fixture(radioListItem());
-      element = fixt.root.querySelector('mwc-radio-list-item')!;
-
-      assert.isTrue(element.hasAttribute('mwc-list-item'));
-    });
-
-    test('left functions as intended', async () => {
-      fixt = await fixture(radioListItem({
-        left: true,
-      }));
-      element = fixt.root.querySelector('mwc-radio-list-item')!;
-      const checkbox = element.shadowRoot!.querySelector('mwc-checkbox')!;
-      let slot = element.shadowRoot!.querySelector('slot')!;
-
-      let childrenColl = element.shadowRoot!.children;
-      let children = Array.from(childrenColl).filter(isNodeElement);
-
-      let first = children[0].firstElementChild;
-      let second = children[1].firstElementChild;
-
-      assert.equal(first, checkbox, 'checkbox is first when left');
-      assert.equal(second, slot, 'slot is second when left');
-
-      element.left = false;
-      await element.updateComplete;
-
-      // technically a new node must be queried again
-      slot = element.shadowRoot!.querySelector('slot')!;
-
-      childrenColl = element.shadowRoot!.children;
-      children = Array.from(childrenColl).filter(isNodeElement);
-      first = children[0].firstElementChild;
-      second = children[1].firstElementChild;
-
-      assert.equal(first, slot, 'slot is first when not left');
-      assert.equal(second, checkbox, 'checkbox is second when not left');
-    });
-
-    teardown(() => {
-      if (fixt) {
-        fixt.remove();
-      }
-    });
-  });
-
-  suite('mwc-radio-list-item: interaction', () => {
-    let firstElement: RadioListItem;
-    let secondElement: RadioListItem;
-
-    test('request selected event', async () => {
-      let reqSelectedEvts = [] as CustomEvent<RequestSelectedDetail>[];
-      const radioItem = radioListItem({
-        onRequestSelected: (ev) => {
-          reqSelectedEvts.push(ev);
-        },
-        noninteractive: true,
+  suite('mwc-list-item', () => {
+    suite('initialization', () => {
+      let element: ListItem;
+
+      test('initializes as an mwc-list-item', async () => {
+        fixt = await fixture(listItem());
+        element = fixt.root.querySelector('mwc-list-item')!;
+        assert.instanceOf(element, ListItem);
+        assert.instanceOf(element, ListItemBase);
       });
-      fixt = await fixture(html`${radioItem}${radioItem}`);
-      firstElement =
-          fixt.root.querySelectorAll('mwc-radio-list-item')[0] as RadioListItem;
-      secondElement =
-          fixt.root.querySelectorAll('mwc-radio-list-item')[1] as RadioListItem;
-      const firstRadio = firstElement.shadowRoot!.querySelector('mwc-radio')!;
-      const secondRadio = secondElement.shadowRoot!.querySelector('mwc-radio')!;
 
-      assert.isFalse(
-          firstElement.selected, 'first element is not selected on bootup');
-      assert.isFalse(
-          firstRadio.checked, 'first radio is not selected on bootup');
-      assert.isFalse(
-          secondElement.selected, 'second element is not selected on bootup');
-      assert.isFalse(
-          secondRadio.checked, 'second radio is not selected on bootup');
-      assert.equal(
-          reqSelectedEvts.length, 0, 'request-selected not called on bootup');
+      test('sets attribute on connection', async () => {
+        fixt = await fixture(listItem());
+        element = fixt.root.querySelector('mwc-list-item')!;
 
-      firstElement.click();
-      assert.equal(
-          reqSelectedEvts.length,
-          0,
-          'request-selected not called on click on noninteractive');
+        assert.isTrue(element.hasAttribute('mwc-list-item'));
+      });
 
-      firstRadio.click();
-      assert.equal(
-          reqSelectedEvts.length,
-          0,
-          'request-selected not called on radio click on noninteractive');
+      test('noninteractive does not set attribute on connection', async () => {
+        fixt = await fixture(listItem({noninteractive: true}));
+        element = fixt.root.querySelector('mwc-list-item')!;
 
-      firstElement.selected = true;
-      await firstElement.updateComplete;
-      await secondElement.updateComplete;
+        assert.isFalse(element.hasAttribute('mwc-list-item'));
+      });
 
-      assert.isTrue(
-          firstElement.selected,
-          'first element is selected on noninteractive prop set');
-      assert.isTrue(
-          firstRadio.checked,
-          'first radio is selected on noninteractive prop set');
-      assert.equal(
-          reqSelectedEvts.length,
-          0,
-          'request-selected not called on noninteractive selected prop');
-
-      assert.isFalse(
-          secondElement.selected,
-          'second element is not selected when first prop is set noninteractive');
-      assert.isFalse(
-          secondRadio.checked,
-          'second radio is not selected when first prop is set noninteractive');
-
-      secondElement.selected = true;
-      await secondElement.updateComplete;
-      await firstElement.updateComplete;
-
-      assert.isTrue(
-          secondElement.selected,
-          'second element is selected on noninteractive prop set');
-      assert.isTrue(
-          secondRadio.checked,
-          'second radio is selected on noninteractive prop set');
-      assert.equal(
-          reqSelectedEvts.length,
-          0,
-          'request-selected not called on noninteractive selected prop');
-
-      assert.notEqual(
-          firstElement.selected,
-          secondElement.selected,
-          'first element is deselected when second prop is set noninteractive');
-      assert.notEqual(
-          firstRadio.checked,
-          secondElement.selected,
-          'first radio is deselected when second prop is set noninteractive');
-
-      firstElement.noninteractive = false;
-      secondElement.noninteractive = false;
-      await firstElement.updateComplete;
-      await secondElement.updateComplete;
-
-      firstElement.click();
-
-      await firstElement.updateComplete;
-      await secondElement.updateComplete;
-
-      assert.equal(
-          reqSelectedEvts.length,
-          1,
-          'request-selected called on click of first');
-      assert.equal(
-          reqSelectedEvts[0].detail.source,
-          'interaction',
-          'interaction event on click');
-      assert.notEqual(
-          reqSelectedEvts[0].detail.selected,
-          firstElement.selected,
-          'click ev has selected opposite of state');
-      reqSelectedEvts = [];
-
-      assert.isFalse(
-          firstElement.selected, 'element does not change selected on click');
-
-      firstElement.selected = true;
-      await firstElement.updateComplete;
-      await secondElement.updateComplete;
-
-
-      assert.isTrue(
-          firstElement.selected,
-          'first element is not selected when set with prop');
-      assert.equal(
-          firstRadio.checked,
-          firstElement.selected,
-          'radio mirrors element selection state on prop');
-      assert.notEqual(
-          secondElement.selected,
-          firstElement.selected,
-          'second element is deselected on first element prop set');
-      assert.equal(
-          secondRadio.checked,
-          secondElement.selected,
-          'radio mirrors element selection state on prop');
-      assert.equal(
-          reqSelectedEvts.length,
-          2,
-          'two request-selected called on selected prop, prop set and interaction');
-      assert.equal(
-          reqSelectedEvts[0].detail.source,
-          'property',
-          'property event on click');
-      assert.equal(
-          reqSelectedEvts[0].detail.selected,
-          firstElement.selected,
-          'property request selected ev requests for the same as selected state');
-      assert.equal(
-          reqSelectedEvts[1].detail.source,
-          'interaction',
-          'interaction event on radio deselection on first prop set');
-      reqSelectedEvts = [];
-
-      secondRadio.click();
-
-      await secondRadio.updateComplete;
-      await secondElement.updateComplete;
-      await firstRadio.updateComplete;
-      await firstElement.updateComplete;
-
-      assert.isTrue(
-          secondElement.selected, 'second element is selected on radio click');
-      assert.equal(
-          secondRadio.checked,
-          secondElement.selected,
-          'radio mirrors element selection state on click');
-      assert.notEqual(
-          firstElement.selected,
-          secondElement.selected,
-          'element is deselected on radio click');
-      assert.equal(
-          secondRadio.checked,
-          secondElement.selected,
-          'radio mirrors element selection state on interaction');
-      assert.equal(
-          reqSelectedEvts.length, 2, 'request-selected called on radio click');
-      assert.equal(
-          reqSelectedEvts[0].detail.source,
-          'interaction',
-          'interaction event on radio click');
-      assert.equal(
-          reqSelectedEvts[1].detail.source,
-          'interaction',
-          'interaction event on radio click');
-      reqSelectedEvts = [];
+      teardown(() => {
+        if (fixt) {
+          fixt.remove();
+        }
+      });
     });
 
-    teardown(() => {
-      if (fixt) {
+    suite('variants', () => {
+      let element: ListItem;
+
+      test('single line renders correctly', async () => {
+        fixt = await fixture(listItem({
+          primary: html`<span class="primary">Apple</span>`,
+          secondary: html`<span slot="secondary">This is a Fruit</span>`,
+          graphicSlot: html`<mwc-icon slot="graphic">done</mwc-icon>`,
+          meta: html`<mwc-icon slot="meta">code</mwc-icon>`,
+        }));
+        element = fixt.root.querySelector('mwc-list-item')!;
+
+        const root = (element.shadowRoot as ShadowRoot);
+        const defaultSlot = root.querySelector('.mdc-list-item__text > slot') as
+            HTMLSlotElement;
+        const primaryTextWrapper =
+            root.querySelector('.mdc-list-item__primaray-text');
+        const secondaryTextWrapper =
+            root.querySelector('.mdc-list-item__secondary-text');
+        const metaWrapper = root.querySelector('.mdc-list-item__meta');
+        const graphicWrapper = root.querySelector('.mdc-list-item__graphic');
+
+        assert.notEqual(
+            defaultSlot, null, 'default slot exists with no wrapper');
+        assert.equal(
+            primaryTextWrapper,
+            null,
+            'no primary-text wrapper (only two line)');
+        assert.equal(
+            secondaryTextWrapper,
+            null,
+            'no secondary-text wrapper (only two line)');
+        assert.equal(metaWrapper, null, 'no meta wrapper (only two line)');
+        assert.equal(
+            graphicWrapper, null, 'no graphic wrapper (only two line)');
+
+        const primaryTextElement = element.querySelector('.primary') as Element;
+        const projectedElements =
+            defaultSlot.assignedNodes({flatten: true}).filter(isNodeElement);
+
+        assert.equal(
+            projectedElements.length, 1, 'there is only one projected element');
+        assert.equal(
+            primaryTextElement,
+            projectedElements[0],
+            'primary text is projected');
+      });
+
+      test('two line renders correctly', async () => {
+        fixt = await fixture(listItem({
+          primary: html`<span class="primary">Apple</span>`,
+          secondary: html`<span slot="secondary">This is a Fruit</span>`,
+          graphicSlot: html`<mwc-icon slot="graphic">done</mwc-icon>`,
+          meta: html`<mwc-icon slot="meta">code</mwc-icon>`,
+          twoLine: true,
+        }));
+        element = fixt.root.querySelector('mwc-list-item')!;
+
+        const root = (element.shadowRoot as ShadowRoot);
+        const defaultSlot = root.querySelector('.mdc-list-item__text > slot');
+        const primaryTextSlot =
+            root.querySelector('.mdc-list-item__primary-text > slot') as
+            HTMLSlotElement;
+        const secondaryTextSlot =
+            root.querySelector('.mdc-list-item__secondary-text > slot') as
+            HTMLSlotElement;
+        const metaWrapper = root.querySelector('.mdc-list-item__meta');
+        const graphicWrapper = root.querySelector('.mdc-list-item__graphic');
+
+        assert.equal(
+            defaultSlot, null, 'default slot doesnt exist (single line only)');
+        assert.notEqual(primaryTextSlot, null, 'primary text slot exists');
+        assert.notEqual(secondaryTextSlot, null, 'secondary text slot exists');
+        assert.equal(metaWrapper, null, 'no meta wrapper (only two line)');
+        assert.equal(
+            graphicWrapper, null, 'no graphic wrapper (only two line)');
+
+        const primaryTextElement = element.querySelector('.primary') as Element;
+        const secondaryTextElement =
+            element.querySelector('[slot="secondary"]') as Element;
+        const primaryProjEls = primaryTextSlot.assignedNodes({flatten: true})
+                                   .filter(isNodeElement);
+        const secondaryProjEls =
+            secondaryTextSlot.assignedNodes({flatten: true})
+                .filter(isNodeElement);
+
+        assert.equal(
+            primaryProjEls.length,
+            1,
+            'there is only one projected primary text element');
+        assert.equal(
+            primaryTextElement, primaryProjEls[0], 'primary text is projected');
+        assert.equal(
+            secondaryProjEls.length,
+            1,
+            'there is only one projected secondary text element');
+        assert.equal(
+            secondaryTextElement,
+            secondaryProjEls[0],
+            'secondary text is projected');
+      });
+
+      test('meta renders correctly', async () => {
+        fixt = await fixture(listItem({
+          primary: html`<span class="primary">Apple</span>`,
+          secondary: html`<span slot="secondary">This is a Fruit</span>`,
+          graphicSlot: html`<mwc-icon slot="graphic">done</mwc-icon>`,
+          meta: html`<mwc-icon slot="meta">code</mwc-icon>`,
+          hasMeta: true,
+        }));
+        element = fixt.root.querySelector('mwc-list-item')!;
+
+        const root = (element.shadowRoot as ShadowRoot);
+        const defaultSlot = root.querySelector('.mdc-list-item__text > slot');
+        const primaryTextWrapper =
+            root.querySelector('.mdc-list-item__primaray-text');
+        const secondaryTextWrapper =
+            root.querySelector('.mdc-list-item__secondary-text');
+        const metaWrapper = root.querySelector('.mdc-list-item__meta');
+        const metaSlot =
+            root.querySelector('slot[name="meta"]') as HTMLSlotElement;
+        const graphicWrapper = root.querySelector('.mdc-list-item__graphic');
+
+        assert.notEqual(
+            defaultSlot, null, 'default slot exists with no wrapper');
+        assert.equal(
+            primaryTextWrapper,
+            null,
+            'no primary-text wrapper (only two line)');
+        assert.equal(
+            secondaryTextWrapper,
+            null,
+            'no secondary-text wrapper (only two line)');
+        assert.notEqual(metaWrapper, null, 'meta wrapper exists');
+        assert.notEqual(metaSlot, null, 'meta slot exists');
+        assert.equal(
+            graphicWrapper, null, 'no graphic wrapper (only two line)');
+
+        const metaElement = element.querySelector('[slot="meta"]') as Element;
+        const projectedElements =
+            metaSlot.assignedNodes({flatten: true}).filter(isNodeElement);
+
+        assert.equal(
+            projectedElements.length, 1, 'there is only one projected element');
+        assert.equal(
+            metaElement, projectedElements[0], 'meta icon is projected');
+      });
+
+      test('graphic renders correctly', async () => {
+        fixt = await fixture(listItem({
+          primary: html`<span class="primary">Apple</span>`,
+          secondary: html`<span slot="secondary">This is a Fruit</span>`,
+          graphicSlot: html`<mwc-icon slot="graphic">done</mwc-icon>`,
+          meta: html`<mwc-icon slot="meta">code</mwc-icon>`,
+          graphic: 'icon',
+        }));
+        element = fixt.root.querySelector('mwc-list-item')!;
+
+        const root = (element.shadowRoot as ShadowRoot);
+        const defaultSlot = root.querySelector('.mdc-list-item__text > slot');
+        const primaryTextWrapper =
+            root.querySelector('.mdc-list-item__primaray-text');
+        const secondaryTextWrapper =
+            root.querySelector('.mdc-list-item__secondary-text');
+        const metaWrapper = root.querySelector('.mdc-list-item__meta');
+        const graphicWrapper = root.querySelector('.mdc-list-item__graphic');
+        const graphicSlot =
+            root.querySelector('slot[name="graphic"]') as HTMLSlotElement;
+
+        assert.notEqual(
+            defaultSlot, null, 'default slot exists with no wrapper');
+        assert.equal(
+            primaryTextWrapper,
+            null,
+            'no primary-text wrapper (only two line)');
+        assert.equal(
+            secondaryTextWrapper,
+            null,
+            'no secondary-text wrapper (only two line)');
+        assert.equal(metaWrapper, null, 'meta wrapper exists');
+        assert.notEqual(
+            graphicWrapper, null, 'no graphic wrapper (only two line)');
+        assert.notEqual(graphicSlot, null, 'graphic slot exists');
+
+        const graphicElement =
+            element.querySelector('[slot="graphic"]') as Element;
+        const projectedElements =
+            graphicSlot.assignedNodes({flatten: true}).filter(isNodeElement);
+
+        assert.equal(
+            projectedElements.length, 1, 'there is only one projected element');
+        assert.equal(
+            graphicElement, projectedElements[0], 'meta icon is projected');
+      });
+
+      test('noninteractive removes props and attrs on bootup', async () => {
+        fixt = await fixture(listItem({
+          noninteractive: true,
+          selected: true,
+          activated: true,
+        }));
+        element = fixt.root.querySelector('mwc-list-item')!;
+
+        assert.isTrue(element.noninteractive, 'is noninteractive');
+        assert.isFalse(element.activated, 'removes activated on boot up');
+        assert.isFalse(element.selected, 'removes selected on boot up');
+        assert.isFalse(
+            element.hasAttribute('mwc-list-item'),
+            'removes selectability on boot up');
+      });
+
+      test('noninteractive +/- props and attrs on change', async () => {
+        fixt = await fixture(listItem({
+          noninteractive: false,
+          selected: true,
+          activated: true,
+        }));
+        element = fixt.root.querySelector('mwc-list-item')!;
+
+        assert.isFalse(element.noninteractive, 'is interactive');
+        assert.isTrue(element.activated, 'activated on boot up');
+        assert.isTrue(element.selected, 'selected on boot up');
+        assert.isTrue(
+            element.hasAttribute('mwc-list-item'), 'selectability on boot up');
+
+        element.noninteractive = true;
+        await element.updateComplete;
+
+        assert.isTrue(element.noninteractive, 'is noninteractive');
+        assert.isFalse(element.activated, 'removes activated on prop change');
+        assert.isFalse(element.selected, 'removes selected on prop change');
+        assert.isFalse(
+            element.hasAttribute('mwc-list-item'),
+            'removes selectability on prop change');
+
+        element.noninteractive = false;
+        await element.updateComplete;
+
+        assert.isFalse(element.noninteractive, 'is interactive');
+        assert.isFalse(
+            element.activated, 'does not add activated on prop change');
+        assert.isFalse(
+            element.selected, 'does not add selected on prop change');
+        assert.isTrue(
+            element.hasAttribute('mwc-list-item'),
+            'adds selectability on prop change');
+      });
+
+      teardown(() => {
+        if (fixt) {
+          fixt.remove();
+        }
+      });
+    });
+
+    suite('interaction', () => {
+      let element: ListItem;
+
+      test('rendered event fires', async () => {
+        let numRenderCalls = 0;
+        fixt = await fixture(listItem({
+          onListItemRendered: () => numRenderCalls++,
+        }));
+
+        assert.equal(
+            numRenderCalls, 1, 'list-item-rendered called only once on bootup');
+      });
+
+      test('request selected event', async () => {
+        let numReqSelectedCalls = 0;
+        let lastReqSelectedEv = {detail: {}} as
+            CustomEvent<RequestSelectedDetail>;
+        fixt = await fixture(listItem({
+          onRequestSelected: (ev) => {
+            numReqSelectedCalls++;
+            lastReqSelectedEv = ev;
+          },
+          noninteractive: true,
+        }));
+        element = fixt.root.querySelector('mwc-list-item')!;
+
+        assert.isFalse(element.selected, 'element is not selected');
+        assert.equal(
+            numReqSelectedCalls, 0, 'request-selected not called on bootup');
+
+        element.click();
+        assert.equal(
+            numReqSelectedCalls,
+            0,
+            'request-selected not called on click on noninteractive');
+
+        element.selected = true;
+        await element.updateComplete;
+
+        assert.isTrue(element.selected, 'element is selected');
+        assert.equal(
+            numReqSelectedCalls,
+            0,
+            'request-selected not called on noninteractive selected prop');
+
+        element.noninteractive = false;
+        await element.updateComplete;
+
+        element.click();
+        assert.equal(
+            numReqSelectedCalls, 1, 'request-selected called on click');
+        numReqSelectedCalls = 0;
+        assert.equal(
+            lastReqSelectedEv.detail.source,
+            'interaction',
+            'interaction event on click');
+        assert.notEqual(
+            lastReqSelectedEv.detail.selected,
+            element.selected,
+            'click ev has selected opposite of state');
+
+        await element.updateComplete;
+
+        assert.isTrue(
+            element.selected, 'element does not change selected on click');
+
+        element.selected = false;
+        await element.updateComplete;
+
+        assert.isFalse(element.selected, 'element is not selected');
+        assert.equal(
+            numReqSelectedCalls, 1, 'request-selected called on selected prop');
+        numReqSelectedCalls = 0;
+        assert.equal(
+            lastReqSelectedEv.detail.source,
+            'property',
+            'property event on click');
+        assert.equal(
+            lastReqSelectedEv.detail.selected,
+            element.selected,
+            'property request selected ev requests for the same as selected state');
+      });
+
+      teardown(() => {
+        if (fixt) {
+          fixt.remove();
+        }
+      });
+    });
+  });
+
+  suite('mwc-check-list-item', () => {
+    suite('initialization', () => {
+      let element: CheckListItem;
+
+      test('initializes as an mwc-check-list-item', async () => {
+        fixt = await fixture(checkListItem());
+        element = fixt.root.querySelector('mwc-check-list-item')!;
+        assert.instanceOf(element, CheckListItem, 'is checklsit item');
+        assert.instanceOf(element, ListItemBase, 'inherits base');
+      });
+
+      test('sets attribute on connection', async () => {
+        fixt = await fixture(checkListItem());
+        element = fixt.root.querySelector('mwc-check-list-item')!;
+
+        assert.isTrue(element.hasAttribute('mwc-list-item'));
+      });
+
+      test('left functions as intended', async () => {
+        fixt = await fixture(checkListItem({
+          left: true,
+        }));
+        element = fixt.root.querySelector('mwc-check-list-item')!;
+        const checkbox = element.shadowRoot!.querySelector('mwc-checkbox')!;
+        let slot = element.shadowRoot!.querySelector('slot')!;
+
+        let childrenColl = element.shadowRoot!.children;
+        let children = Array.from(childrenColl).filter(isNodeElement);
+
+        let first = children[0].firstElementChild;
+        let second = children[1].firstElementChild;
+
+        assert.equal(first, checkbox, 'checkbox is first when left');
+        assert.equal(second, slot, 'slot is second when left');
+
+        element.left = false;
+        await element.updateComplete;
+
+        // technically a new node must be queried again
+        slot = element.shadowRoot!.querySelector('slot')!;
+
+        childrenColl = element.shadowRoot!.children;
+        children = Array.from(childrenColl).filter(isNodeElement);
+        first = children[0].firstElementChild;
+        second = children[1].firstElementChild;
+
+        assert.equal(first, slot, 'slot is first when not left');
+        assert.equal(second, checkbox, 'checkbox is second when not left');
+      });
+
+      teardown(() => {
+        if (fixt) {
+          fixt.remove();
+        }
+      });
+    });
+
+    suite('interaction', () => {
+      let element: CheckListItem;
+
+      test('request selected event', async () => {
+        let numReqSelectedCalls = 0;
+        let lastReqSelectedEv = {detail: {}} as
+            CustomEvent<RequestSelectedDetail>;
+        fixt = await fixture(checkListItem({
+          onRequestSelected: (ev) => {
+            numReqSelectedCalls++;
+            lastReqSelectedEv = ev;
+          },
+          noninteractive: true,
+        }));
+        element = fixt.root.querySelector('mwc-check-list-item')!;
+        const checkbox = element.shadowRoot!.querySelector('mwc-checkbox')!;
+
+        assert.isFalse(element.selected, 'element is not selected');
+        assert.isFalse(checkbox.checked, 'checkbox is not selected');
+        assert.equal(
+            numReqSelectedCalls, 0, 'request-selected not called on bootup');
+
+        element.click();
+        assert.equal(
+            numReqSelectedCalls,
+            0,
+            'request-selected not called on click on noninteractive');
+
+        checkbox.click();
+        assert.equal(
+            numReqSelectedCalls,
+            0,
+            'request-selected not called on checkbox click on noninteractive');
+
+        element.selected = true;
+        await element.updateComplete;
+
+        assert.isTrue(element.selected, 'element is selected');
+        assert.isTrue(checkbox.checked, 'checkbox is selected');
+        assert.equal(
+            numReqSelectedCalls,
+            0,
+            'request-selected not called on noninteractive selected prop');
+
+        element.noninteractive = false;
+        await element.updateComplete;
+
+        element.click();
+        assert.equal(
+            numReqSelectedCalls, 1, 'request-selected called on click');
+        numReqSelectedCalls = 0;
+        assert.equal(
+            lastReqSelectedEv.detail.source,
+            'interaction',
+            'interaction event on click');
+        assert.notEqual(
+            lastReqSelectedEv.detail.selected,
+            element.selected,
+            'click ev has selected opposite of state');
+
+        await element.updateComplete;
+
+        assert.isTrue(
+            element.selected, 'element does not change selected on click');
+
+        element.selected = false;
+        await element.updateComplete;
+
+        assert.isFalse(element.selected, 'element is not selected');
+        assert.isFalse(
+            checkbox.checked,
+            'checkbox mirrors element selection state on prop');
+        assert.equal(
+            numReqSelectedCalls, 1, 'request-selected called on selected prop');
+        numReqSelectedCalls = 0;
+        assert.equal(
+            lastReqSelectedEv.detail.source,
+            'property',
+            'property event on click');
+        assert.equal(
+            lastReqSelectedEv.detail.selected,
+            element.selected,
+            'property request selected ev requests for the same as selected state');
+
+        checkbox.click();
+
+        await element.updateComplete;
+        await checkbox.updateComplete;
+
+        assert.isTrue(
+            element.selected, 'element is selected on checkbox click');
+        assert.equal(
+            element.selected,
+            checkbox.checked,
+            'checkbox mirrors element selection state on prop');
+        assert.equal(
+            numReqSelectedCalls, 1, 'request-selected called on selected prop');
+        numReqSelectedCalls = 0;
+        assert.equal(
+            lastReqSelectedEv.detail.source,
+            'interaction',
+            'interaction event on checkbox click');
+      });
+
+      teardown(() => {
+        if (fixt) {
+          fixt.remove();
+        }
+      });
+    });
+  });
+
+  suite('mwc-radio-list-item', () => {
+    suite('mwc-radio-list-item: initialization', () => {
+      let element: RadioListItem;
+
+      test('initializes as an mwc-radio-list-item', async () => {
+        fixt = await fixture(radioListItem());
+        element = fixt.root.querySelector('mwc-radio-list-item')!;
+        assert.instanceOf(element, RadioListItem, 'is checklsit item');
+        assert.instanceOf(element, ListItemBase, 'inherits base');
+      });
+
+      test('sets attribute on connection', async () => {
+        fixt = await fixture(radioListItem());
+        element = fixt.root.querySelector('mwc-radio-list-item')!;
+
+        assert.isTrue(element.hasAttribute('mwc-list-item'));
+      });
+
+      test('left functions as intended', async () => {
+        fixt = await fixture(radioListItem({
+          left: true,
+        }));
+        element = fixt.root.querySelector('mwc-radio-list-item')!;
+        const checkbox = element.shadowRoot!.querySelector('mwc-checkbox')!;
+        let slot = element.shadowRoot!.querySelector('slot')!;
+
+        let childrenColl = element.shadowRoot!.children;
+        let children = Array.from(childrenColl).filter(isNodeElement);
+
+        let first = children[0].firstElementChild;
+        let second = children[1].firstElementChild;
+
+        assert.equal(first, checkbox, 'checkbox is first when left');
+        assert.equal(second, slot, 'slot is second when left');
+
+        element.left = false;
+        await element.updateComplete;
+
+        // technically a new node must be queried again
+        slot = element.shadowRoot!.querySelector('slot')!;
+
+        childrenColl = element.shadowRoot!.children;
+        children = Array.from(childrenColl).filter(isNodeElement);
+        first = children[0].firstElementChild;
+        second = children[1].firstElementChild;
+
+        assert.equal(first, slot, 'slot is first when not left');
+        assert.equal(second, checkbox, 'checkbox is second when not left');
+      });
+
+      teardown(() => {
+        if (fixt) {
+          fixt.remove();
+        }
+      });
+    });
+
+    suite('mwc-radio-list-item: interaction', () => {
+      let firstElement: RadioListItem;
+      let secondElement: RadioListItem;
+
+      test('request selected event', async () => {
+        let reqSelectedEvts = [] as CustomEvent<RequestSelectedDetail>[];
+        const radioItem = radioListItem({
+          onRequestSelected: (ev) => {
+            reqSelectedEvts.push(ev);
+          },
+          noninteractive: true,
+        });
+        fixt = await fixture(html`${radioItem}${radioItem}`);
+        firstElement = fixt.root.querySelectorAll('mwc-radio-list-item')[0] as
+            RadioListItem;
+        secondElement = fixt.root.querySelectorAll('mwc-radio-list-item')[1] as
+            RadioListItem;
+        const firstRadio = firstElement.shadowRoot!.querySelector('mwc-radio')!;
+        const secondRadio =
+            secondElement.shadowRoot!.querySelector('mwc-radio')!;
+
+        assert.isFalse(
+            firstElement.selected, 'first element is not selected on bootup');
+        assert.isFalse(
+            firstRadio.checked, 'first radio is not selected on bootup');
+        assert.isFalse(
+            secondElement.selected, 'second element is not selected on bootup');
+        assert.isFalse(
+            secondRadio.checked, 'second radio is not selected on bootup');
+        assert.equal(
+            reqSelectedEvts.length, 0, 'request-selected not called on bootup');
+
+        firstElement.click();
+        assert.equal(
+            reqSelectedEvts.length,
+            0,
+            'request-selected not called on click on noninteractive');
+
+        firstRadio.click();
+        assert.equal(
+            reqSelectedEvts.length,
+            0,
+            'request-selected not called on radio click on noninteractive');
+
+        firstElement.selected = true;
+        await firstElement.updateComplete;
+        await secondElement.updateComplete;
+
+        assert.isTrue(
+            firstElement.selected,
+            'first element is selected on noninteractive prop set');
+        assert.isTrue(
+            firstRadio.checked,
+            'first radio is selected on noninteractive prop set');
+        assert.equal(
+            reqSelectedEvts.length,
+            0,
+            'request-selected not called on noninteractive selected prop');
+
+        assert.isFalse(
+            secondElement.selected,
+            'second element is not selected when first prop is set noninteractive');
+        assert.isFalse(
+            secondRadio.checked,
+            'second radio is not selected when first prop is set noninteractive');
+
+        secondElement.selected = true;
+        await secondElement.updateComplete;
+        await firstElement.updateComplete;
+
+        assert.isTrue(
+            secondElement.selected,
+            'second element is selected on noninteractive prop set');
+        assert.isTrue(
+            secondRadio.checked,
+            'second radio is selected on noninteractive prop set');
+        assert.equal(
+            reqSelectedEvts.length,
+            0,
+            'request-selected not called on noninteractive selected prop');
+
+        assert.notEqual(
+            firstElement.selected,
+            secondElement.selected,
+            'first element is deselected when second prop is set noninteractive');
+        assert.notEqual(
+            firstRadio.checked,
+            secondElement.selected,
+            'first radio is deselected when second prop is set noninteractive');
+
+        firstElement.noninteractive = false;
+        secondElement.noninteractive = false;
+        await firstElement.updateComplete;
+        await secondElement.updateComplete;
+
+        firstElement.click();
+
+        await firstElement.updateComplete;
+        await secondElement.updateComplete;
+
+        assert.equal(
+            reqSelectedEvts.length,
+            1,
+            'request-selected called on click of first');
+        assert.equal(
+            reqSelectedEvts[0].detail.source,
+            'interaction',
+            'interaction event on click');
+        assert.notEqual(
+            reqSelectedEvts[0].detail.selected,
+            firstElement.selected,
+            'click ev has selected opposite of state');
+        reqSelectedEvts = [];
+
+        assert.isFalse(
+            firstElement.selected, 'element does not change selected on click');
+
+        firstElement.selected = true;
+        await firstElement.updateComplete;
+        await secondElement.updateComplete;
+
+
+        assert.isTrue(
+            firstElement.selected,
+            'first element is not selected when set with prop');
+        assert.equal(
+            firstRadio.checked,
+            firstElement.selected,
+            'radio mirrors element selection state on prop');
+        assert.notEqual(
+            secondElement.selected,
+            firstElement.selected,
+            'second element is deselected on first element prop set');
+        assert.equal(
+            secondRadio.checked,
+            secondElement.selected,
+            'radio mirrors element selection state on prop');
+        assert.equal(
+            reqSelectedEvts.length,
+            2,
+            'two request-selected called on selected prop, prop set and interaction');
+        assert.equal(
+            reqSelectedEvts[0].detail.source,
+            'property',
+            'property event on click');
+        assert.equal(
+            reqSelectedEvts[0].detail.selected,
+            firstElement.selected,
+            'property request selected ev requests for the same as selected state');
+        assert.equal(
+            reqSelectedEvts[1].detail.source,
+            'interaction',
+            'interaction event on radio deselection on first prop set');
+        reqSelectedEvts = [];
+
+        secondRadio.click();
+
+        await secondRadio.updateComplete;
+        await secondElement.updateComplete;
+        await firstRadio.updateComplete;
+        await firstElement.updateComplete;
+
+        assert.isTrue(
+            secondElement.selected,
+            'second element is selected on radio click');
+        assert.equal(
+            secondRadio.checked,
+            secondElement.selected,
+            'radio mirrors element selection state on click');
+        assert.notEqual(
+            firstElement.selected,
+            secondElement.selected,
+            'element is deselected on radio click');
+        assert.equal(
+            secondRadio.checked,
+            secondElement.selected,
+            'radio mirrors element selection state on interaction');
+        assert.equal(
+            reqSelectedEvts.length,
+            2,
+            'request-selected called on radio click');
+        assert.equal(
+            reqSelectedEvts[0].detail.source,
+            'interaction',
+            'interaction event on radio click');
+        assert.equal(
+            reqSelectedEvts[1].detail.source,
+            'interaction',
+            'interaction event on radio click');
+        reqSelectedEvts = [];
+      });
+
+      teardown(() => {
+        if (fixt) {
+          fixt.remove();
+        }
+      });
+    });
+  });
+
+
+  suite('mwc-list', () => {
+    let element: List;
+
+    suite('initialization', () => {
+      test('initializes as an mwc-list', async () => {
+        fixt = await fixture(listTemplate());
+        element = fixt.root.querySelector('mwc-list')!;
+        assert.instanceOf(element, List);
+      });
+
+      test('with no children', async () => {
+        fixt = await fixture(listTemplate());
+        element = fixt.root.querySelector('mwc-list')!;
+
+        assert.equal(
+            element.selected,
+            null,
+            'empty list `selected` initializes as `null`');
+        assert.equal(
+            element.items.length, 0, 'empty list `items` initializes as `[]`');
+        assert.equal(
+            element.index, -1, 'empty list `index` initializes as `-1`');
+
+        element.multi = true;
+        await element.updateComplete;
+
+        const selected = element.selected as ListItem[];
+
+        assert.equal(
+            selected.length,
+            0,
+            'empty multi list `selected` initializes as `[]`');
+        assert.equal(
+            element.items.length,
+            0,
+            'empty multi list `items` initializes as `[]`');
+
+        const index = element.index as Set<number>;
+        assert.isTrue(
+            isIndexSet(index), 'empty multi list `index` initializes as a Set');
+        assert.equal(index.size, 0, 'empty multi list `index` Set is empty');
+
+        element.multi = false;
+        await element.updateComplete;
+
+        assert.equal(
+            element.selected,
+            null,
+            'multi -> not list `selected` initializes as `null`');
+        assert.equal(
+            element.items.length,
+            0,
+            'multi -> not list `items` initializes as `[]`');
+        assert.equal(
+            element.index, -1, 'multi -> not list `index` initializes as `-1`');
+      });
+
+      test('single with unselected children', async () => {
+        const itemsTemplates = [listItem(), listItem(), listItem()];
+        fixt = await fixture(listTemplate({items: itemsTemplates}));
+        element = fixt.root.querySelector('mwc-list')!;
+
+        assert.equal(
+            element.selected, null, '`selected` initializes as `null`');
+        assert.equal(
+            element.items.length, 3, '`items` are enumerated correctly');
+        assert.equal(
+            element.index,
+            -1,
+            'list with no selected children `index` initializes as `-1`');
+      });
+
+      test('single with selected child', async () => {
+        const itemsTemplates =
+            [listItem(), listItem({selected: true}), listItem()];
+        fixt = await fixture(listTemplate({items: itemsTemplates}));
+        element = fixt.root.querySelector('mwc-list')!;
+        const items = Array.from(element.querySelectorAll('mwc-list-item'));
+
+        assert.equal(
+            element.selected, items[1], 'second item is selected on startup');
+        assert.equal(element.items.length, 3, 'list has three items');
+        assert.equal(element.index, 1, 'second item is index');
+      });
+
+      test('single lazy', async () => {
+        const itemsTemplates =
+            [listItem(), listItem({selected: true}), listItem()];
+        fixt = await fixture(listTemplate());
+        element = fixt.root.querySelector('mwc-list')!;
+
+        assert.equal(
+            element.selected,
+            null,
+            'empty list `selected` initializes as `null`');
+        assert.equal(
+            element.items.length, 0, 'empty list `items` initializes as `[]`');
+        assert.equal(
+            element.index, -1, 'empty list `index` initializes as `-1`');
+
+        fixt.template = listTemplate({items: itemsTemplates});
+
+        await fixt.updateComplete;
+        await element.updateComplete;
+        const items = Array.from(element.querySelectorAll('mwc-list-item'));
+        await items[2].updateComplete;
+
+        assert.equal(
+            element.selected,
+            items[1],
+            'second item is selected on lazy startup');
+        assert.equal(
+            element.items.length, 3, 'list has three items on lazy startup');
+        assert.equal(element.index, 1, 'second item is index on lazy startup');
+      });
+
+      test('multi with unselected children', async () => {
+        const itemsTemplates = [listItem(), listItem(), listItem()];
+        fixt =
+            await fixture(listTemplate({items: itemsTemplates, multi: true}));
+        element = fixt.root.querySelector('mwc-list')!;
+
+        const selected = element.selected as ListItem[];
+        const index = element.index as Set<number>;
+
+        assert.equal(selected.length, 0, '`selected` initializes as `[]`');
+        assert.equal(
+            element.items.length, 3, '`items` are enumerated correctly');
+        assert.equal(
+            index.size,
+            0,
+            'multi list with no selected children `index` initializes as empty set');
+      });
+
+      test('multi with selected children', async () => {
+        let itemsTemplates = [
+          listItem(),
+          listItem({selected: true}),
+          listItem(),
+        ];
+        fixt =
+            await fixture(listTemplate({items: itemsTemplates, multi: true}));
+        element = fixt.root.querySelector('mwc-list')!;
+        let items = Array.from(element.querySelectorAll('mwc-list-item'));
+
+        let selected = element.selected as ListItem[];
+        let index = element.index as Set<number>;
+
+        assert.equal(
+            selected.length,
+            1,
+            '`selected` initializes as correctly with single preselection');
+        assert.isTrue(
+            selected.indexOf(items[1]) !== -1, 'selected value is correct');
+        assert.equal(
+            element.items.length, 3, '`items` are enumerated correctly');
+        assert.equal(
+            index.size,
+            1,
+            'multi list with selected child `index` initializes as correctly sized set');
+        assert.isTrue(
+            index.has(1), 'multi list with selected child `index` is correct');
+
         fixt.remove();
-      }
+
+        itemsTemplates = [
+          listItem({selected: true}),
+          listItem(),
+          listItem({selected: true}),
+        ];
+        fixt =
+            await fixture(listTemplate({items: itemsTemplates, multi: true}));
+        element = fixt.root.querySelector('mwc-list')!;
+        items = Array.from(element.querySelectorAll('mwc-list-item'));
+
+        selected = element.selected as ListItem[];
+        index = element.index as Set<number>;
+
+        assert.equal(
+            selected.length,
+            2,
+            '`selected` initializes as correctly with multiple preselections');
+        assert.isTrue(
+            selected.indexOf(items[0]) !== -1, 'selected values are correct');
+        assert.isTrue(
+            selected.indexOf(items[2]) !== -1, 'selected values are correct');
+        assert.equal(
+            index.size,
+            2,
+            'multi list with selected child `index` initializes as correctly sized set');
+        assert.isTrue(
+            index.has(0),
+            'multi list with selected children `index` is correct');
+        assert.isTrue(
+            index.has(2),
+            'multi list with selected children `index` is correct');
+      });
+
+      test('multi lazy', async () => {
+        const itemsTemplates = [
+          listItem(),
+          listItem({selected: true}),
+          listItem({selected: true})
+        ];
+        fixt = await fixture(listTemplate({multi: true}));
+        element = fixt.root.querySelector('mwc-list')!;
+
+        let selected = element.selected as ListItem[];
+        let index = element.index as Set<number>;
+
+        assert.equal(
+            selected.length, 0, 'empty list `selected` initializes as `[]`');
+        assert.equal(
+            element.items.length, 0, 'empty list `items` initializes as `[]`');
+        assert.equal(
+            index.size, 0, 'empty list `index` initializes as empty set');
+
+        fixt.template = listTemplate({multi: true, items: itemsTemplates});
+
+        await fixt.updateComplete;
+        await element.updateComplete;
+        const items = Array.from(element.querySelectorAll('mwc-list-item'));
+        await items[2].updateComplete;
+
+        selected = element.selected as ListItem[];
+        index = element.index as Set<number>;
+
+        assert.equal(
+            selected.length,
+            2,
+            'list has correct num of selections on lazy startup');
+        assert.isTrue(
+            selected.indexOf(items[1]) !== -1,
+            'list selections correct on lazy startup');
+        assert.isTrue(
+            selected.indexOf(items[2]) !== -1,
+            'list selections correct on lazy startup');
+        assert.equal(
+            element.items.length, 3, 'list has three items on lazy startup');
+        assert.equal(
+            index.size,
+            2,
+            'list has correct number of indices on lazy startup');
+        assert.isTrue(index.has(1), 'indicies are correct on lazy startup');
+        assert.isTrue(index.has(2), 'indicies are correct on lazy startup');
+      });
+
+      teardown(() => {
+        if (fixt) {
+          fixt.remove();
+        }
+      });
+    });
+
+    suite('next', () => {
+      test('test', async () => {
+        fixt = await fixture(listTemplate());
+        element = fixt.root.querySelector('mwc-list')!;
+      });
+
+      teardown(() => {
+        if (fixt) {
+          fixt.remove();
+        }
+      });
     });
   });
 });
