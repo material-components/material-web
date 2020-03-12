@@ -462,18 +462,18 @@ export abstract class ListBase extends BaseElement {
       this.updateItems();
     }
 
-    if (!this.noninteractive) {
-      let first: ListItemBase|null = null;
+    const first: ListItemBase|undefined = this.items[0];
 
-      for (const item of this.items) {
-        if (!first && !item.noninteractive) {
-          first = item;
+    for (const item of this.items) {
+      item.tabindex = -1;
+    }
+
+    if (first) {
+      if (this.noninteractive) {
+        if (!this.previousTabindex) {
+          this.previousTabindex = first;
         }
-
-        item.tabindex = -1;
-      }
-
-      if (first) {
+      } else {
         first.tabindex = 0;
       }
     }
