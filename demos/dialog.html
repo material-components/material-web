@@ -166,10 +166,16 @@ limitations under the License.
       var button = buttons[i];
       var buttonNum = button.dataset.num;
 
-      button.addEventListener('click', function() {
-        var dialog = document.body.querySelector('#dialog' + buttonNum);
-        dialog.open = true;
-      });
+      function listenerFactory (numButton) {
+        return function() {
+          var dialog = document.body.querySelector('#dialog' + numButton);
+          dialog.open = true;
+        }
+      };
+
+      const listener = listenerFactory(buttonNum);
+
+      button.addEventListener('click', listener);
     }
 
     toggleActions.onclick = function() {
