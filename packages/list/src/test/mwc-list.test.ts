@@ -624,41 +624,12 @@ suite('mwc-list:', () => {
           onRequestSelected: (ev) => {
             numReqSelectedCalls++;
             lastReqSelectedEv = ev;
-          },
-          noninteractive: true,
+          }
         }));
         element = fixt.root.querySelector('mwc-check-list-item')!;
         const checkbox = element.shadowRoot!.querySelector('mwc-checkbox')!;
 
-        assert.isFalse(element.selected, 'element is not selected');
-        assert.isFalse(checkbox.checked, 'checkbox is not selected');
-        assert.equal(
-            numReqSelectedCalls, 0, 'request-selected not called on bootup');
-
-        element.click();
-        assert.equal(
-            numReqSelectedCalls,
-            0,
-            'request-selected not called on click on noninteractive');
-
-        checkbox.click();
-        assert.equal(
-            numReqSelectedCalls,
-            0,
-            'request-selected not called on checkbox click on noninteractive');
-
-        element.selected = true;
-        await element.updateComplete;
-
-        assert.isTrue(element.selected, 'element is selected');
-        assert.isTrue(checkbox.checked, 'checkbox is selected');
-        assert.equal(
-            numReqSelectedCalls,
-            0,
-            'request-selected not called on noninteractive selected prop');
-
-        element.noninteractive = false;
-        await element.updateComplete;
+        await checkbox.updateComplete;
 
         element.click();
         assert.equal(
@@ -675,14 +646,15 @@ suite('mwc-list:', () => {
 
         await element.updateComplete;
 
-        assert.isTrue(
+        assert.isFalse(
             element.selected, 'element does not change selected on click');
 
-        element.selected = false;
+        element.selected = true;
         await element.updateComplete;
+        await checkbox.updateComplete;
 
-        assert.isFalse(element.selected, 'element is not selected');
-        assert.isFalse(
+        assert.isTrue(element.selected, 'element is selected on prop');
+        assert.isTrue(
             checkbox.checked,
             'checkbox mirrors element selection state on prop');
         assert.equal(
@@ -702,8 +674,8 @@ suite('mwc-list:', () => {
         await element.updateComplete;
         await checkbox.updateComplete;
 
-        assert.isTrue(
-            element.selected, 'element is selected on checkbox click');
+        assert.isFalse(
+            element.selected, 'element is deselected on checkbox click');
         assert.equal(
             element.selected,
             checkbox.checked,
@@ -791,8 +763,7 @@ suite('mwc-list:', () => {
         const radioItem = radioListItem({
           onRequestSelected: (ev) => {
             reqSelectedEvts.push(ev);
-          },
-          noninteractive: true,
+          }
         });
         fixt = await fixture(html`${radioItem}${radioItem}`);
         firstElement = fixt.root.querySelectorAll('mwc-radio-list-item')[0] as
@@ -803,79 +774,8 @@ suite('mwc-list:', () => {
         const secondRadio =
             secondElement.shadowRoot!.querySelector('mwc-radio')!;
 
-        assert.isFalse(
-            firstElement.selected, 'first element is not selected on bootup');
-        assert.isFalse(
-            firstRadio.checked, 'first radio is not selected on bootup');
-        assert.isFalse(
-            secondElement.selected, 'second element is not selected on bootup');
-        assert.isFalse(
-            secondRadio.checked, 'second radio is not selected on bootup');
-        assert.equal(
-            reqSelectedEvts.length, 0, 'request-selected not called on bootup');
-
-        firstElement.click();
-        assert.equal(
-            reqSelectedEvts.length,
-            0,
-            'request-selected not called on click on noninteractive');
-
-        firstRadio.click();
-        assert.equal(
-            reqSelectedEvts.length,
-            0,
-            'request-selected not called on radio click on noninteractive');
-
-        firstElement.selected = true;
-        await firstElement.updateComplete;
-        await secondElement.updateComplete;
-
-        assert.isTrue(
-            firstElement.selected,
-            'first element is selected on noninteractive prop set');
-        assert.isTrue(
-            firstRadio.checked,
-            'first radio is selected on noninteractive prop set');
-        assert.equal(
-            reqSelectedEvts.length,
-            0,
-            'request-selected not called on noninteractive selected prop');
-
-        assert.isFalse(
-            secondElement.selected,
-            'second element is not selected when first prop is set noninteractive');
-        assert.isFalse(
-            secondRadio.checked,
-            'second radio is not selected when first prop is set noninteractive');
-
-        secondElement.selected = true;
-        await secondElement.updateComplete;
-        await firstElement.updateComplete;
-
-        assert.isTrue(
-            secondElement.selected,
-            'second element is selected on noninteractive prop set');
-        assert.isTrue(
-            secondRadio.checked,
-            'second radio is selected on noninteractive prop set');
-        assert.equal(
-            reqSelectedEvts.length,
-            0,
-            'request-selected not called on noninteractive selected prop');
-
-        assert.notEqual(
-            firstElement.selected,
-            secondElement.selected,
-            'first element is deselected when second prop is set noninteractive');
-        assert.notEqual(
-            firstRadio.checked,
-            secondElement.selected,
-            'first radio is deselected when second prop is set noninteractive');
-
-        firstElement.noninteractive = false;
-        secondElement.noninteractive = false;
-        await firstElement.updateComplete;
-        await secondElement.updateComplete;
+        await firstRadio.updateComplete;
+        await secondRadio.updateComplete;
 
         firstElement.click();
 
@@ -900,9 +800,11 @@ suite('mwc-list:', () => {
             firstElement.selected, 'element does not change selected on click');
 
         firstElement.selected = true;
+
         await firstElement.updateComplete;
         await secondElement.updateComplete;
-
+        await firstRadio.updateComplete;
+        await secondRadio.updateComplete;
 
         assert.isTrue(
             firstElement.selected,
@@ -921,8 +823,8 @@ suite('mwc-list:', () => {
             'radio mirrors element selection state on prop');
         assert.equal(
             reqSelectedEvts.length,
-            2,
-            'two request-selected called on selected prop, prop set and interaction');
+            1,
+            'request-selected called on selected prop, prop set');
         assert.equal(
             reqSelectedEvts[0].detail.source,
             'property',
@@ -931,33 +833,69 @@ suite('mwc-list:', () => {
             reqSelectedEvts[0].detail.selected,
             firstElement.selected,
             'property request selected ev requests for the same as selected state');
+        reqSelectedEvts = [];
+
+        secondElement.selected = true;
+
+        await firstElement.updateComplete;
+        await secondElement.updateComplete;
+        await firstRadio.updateComplete;
+        await secondRadio.updateComplete;
+
+        assert.isTrue(
+            secondElement.selected,
+            'second element is not selected when set with prop');
+        assert.equal(
+            secondRadio.checked,
+            secondElement.selected,
+            'radio mirrors element selection state on prop');
+        assert.notEqual(
+            secondElement.selected,
+            firstElement.selected,
+            'first element is deselected on first element prop set');
+        assert.equal(
+            firstRadio.checked,
+            firstElement.selected,
+            'radio mirrors element selection state on prop');
+        assert.equal(
+            reqSelectedEvts.length,
+            2,
+            'request-selected called on selected prop, prop set and interaction');
+        assert.equal(
+            reqSelectedEvts[0].detail.source,
+            'property',
+            'property event on click');
+        assert.equal(
+            reqSelectedEvts[0].detail.selected,
+            secondElement.selected,
+            'property request selected ev requests for the same as selected state');
         assert.equal(
             reqSelectedEvts[1].detail.source,
             'interaction',
             'interaction event on radio deselection on first prop set');
         reqSelectedEvts = [];
 
-        secondRadio.click();
+        firstRadio.click();
 
-        await secondRadio.updateComplete;
-        await secondElement.updateComplete;
         await firstRadio.updateComplete;
         await firstElement.updateComplete;
+        await secondRadio.updateComplete;
+        await secondElement.updateComplete;
 
         assert.isTrue(
-            secondElement.selected,
-            'second element is selected on radio click');
+            firstElement.selected,
+            'first element is selected on radio click');
         assert.equal(
-            secondRadio.checked,
-            secondElement.selected,
+            firstRadio.checked,
+            firstElement.selected,
             'radio mirrors element selection state on click');
         assert.notEqual(
             firstElement.selected,
             secondElement.selected,
             'element is deselected on radio click');
         assert.equal(
-            secondRadio.checked,
-            secondElement.selected,
+            firstRadio.checked,
+            firstElement.selected,
             'radio mirrors element selection state on interaction');
         assert.equal(
             reqSelectedEvts.length,
