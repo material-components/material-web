@@ -122,8 +122,8 @@ const defaultListProps = {
   rootTabbable: false,
   noninteractive: false,
   activatable: false,
-  itemRoles: null as string|null,
-  innerRole: null as string|null,
+  itemRoles: null as string | null,
+  innerRole: null as string | null,
   items: [] as TemplateResult[],
 };
 
@@ -1018,12 +1018,10 @@ suite('mwc-list:', () => {
 
         assert.equal(
             element.selected, null, '`selected` initializes as `null`');
-            assert.equal(
-              element.items[0].tabIndex, 0, 'tabindex set to 0 on first');
-              assert.equal(
-                element.items[1].tabIndex, -1, 'tabindex on others -1');
-                assert.equal(
-                  element.items[2].tabIndex, -1, 'tabindex on others -1');
+        assert.equal(
+            element.items[0].tabIndex, 0, 'tabindex set to 0 on first');
+        assert.equal(element.items[1].tabIndex, -1, 'tabindex on others -1');
+        assert.equal(element.items[2].tabIndex, -1, 'tabindex on others -1');
         assert.equal(
             element.items.length, 3, '`items` are enumerated correctly');
         assert.equal(
@@ -1209,30 +1207,49 @@ suite('mwc-list:', () => {
 
       test('a11y roles are set', async () => {
         const itemsTemplate = [listItem(), html`<li divider></li>`, listItem()];
-        fixt = await fixture(listTemplate({items: itemsTemplate, itemRoles: 'option'}));
+        fixt = await fixture(
+            listTemplate({items: itemsTemplate, itemRoles: 'option'}));
         element = fixt.root.querySelector('mwc-list')!;
         const items = element.items;
         const divider = element.querySelector('li')!;
 
-        assert.equal(items[0].getAttribute('role'), 'option', 'item role propagates correctly');
-        assert.equal(items[1].getAttribute('role'), 'option', 'item role propagates correctly');
-        assert.equal(divider.getAttribute('role'), 'separator', 'divider role propagates correctly');
+        assert.equal(
+            items[0].getAttribute('role'),
+            'option',
+            'item role propagates correctly');
+        assert.equal(
+            items[1].getAttribute('role'),
+            'option',
+            'item role propagates correctly');
+        assert.equal(
+            divider.getAttribute('role'),
+            'separator',
+            'divider role propagates correctly');
       });
 
       test('noninteractive', async () => {
         const itemsTemplate = [listItem(), listItem()];
-        fixt = await fixture(listTemplate({items: itemsTemplate, noninteractive: true}));
+        fixt = await fixture(
+            listTemplate({items: itemsTemplate, noninteractive: true}));
         element = fixt.root.querySelector('mwc-list')!;
         const items = element.items;
 
-        assert.equal(items[0].tabIndex, -1, 'noninteractive sets tabindex -1 on previously tabbable');
-        assert.equal(items[1].tabIndex, -1, 'other items are still tabindex -1');
+        assert.equal(
+            items[0].tabIndex,
+            -1,
+            'noninteractive sets tabindex -1 on previously tabbable');
+        assert.equal(
+            items[1].tabIndex, -1, 'other items are still tabindex -1');
 
         element.noninteractive = false;
         await element.updateComplete;
 
-        assert.equal(items[0].tabIndex, 0, 'previously tabbable element is now set to tabbable again');
-        assert.equal(items[1].tabIndex, -1, 'other items are still tabindex -1');
+        assert.equal(
+            items[0].tabIndex,
+            0,
+            'previously tabbable element is now set to tabbable again');
+        assert.equal(
+            items[1].tabIndex, -1, 'other items are still tabindex -1');
       });
 
       teardown(() => {
@@ -1244,8 +1261,13 @@ suite('mwc-list:', () => {
 
     suite('single', () => {
       test('click selection', async () => {
-        const itemsTemplates = [listItem(), listItem({selected: true, activated: true}), listItem()];
-        fixt = await fixture(listTemplate({items: itemsTemplates, activatable: true}));
+        const itemsTemplates = [
+          listItem(),
+          listItem({selected: true, activated: true}),
+          listItem()
+        ];
+        fixt = await fixture(
+            listTemplate({items: itemsTemplates, activatable: true}));
         element = fixt.root.querySelector('mwc-list')!;
         const items = element.items;
 
@@ -1254,16 +1276,27 @@ suite('mwc-list:', () => {
         await element.updateComplete;
 
         assert.isTrue(items[2].selected, 'third item is selected after click');
-        assert.isTrue(items[2].activated, 'third item is activated after click');
-        assert.isFalse(items[1].selected, 'second item is deselected after other is clicked');
-        assert.isFalse(items[1].activated, 'second item is deactivated after other is clicked');
+        assert.isTrue(
+            items[2].activated, 'third item is activated after click');
+        assert.isFalse(
+            items[1].selected,
+            'second item is deselected after other is clicked');
+        assert.isFalse(
+            items[1].activated,
+            'second item is deactivated after other is clicked');
         assert.equal(element.index, 2, 'index is correct after click');
-        assert.equal(element.selected, items[2], 'selected is correct after click');
+        assert.equal(
+            element.selected, items[2], 'selected is correct after click');
       });
 
       test('no deselection on click', async () => {
-        const itemsTemplates = [listItem(), listItem({selected: true, activated: true}), listItem()];
-        fixt = await fixture(listTemplate({items: itemsTemplates, activatable: true}));
+        const itemsTemplates = [
+          listItem(),
+          listItem({selected: true, activated: true}),
+          listItem()
+        ];
+        fixt = await fixture(
+            listTemplate({items: itemsTemplates, activatable: true}));
         element = fixt.root.querySelector('mwc-list')!;
         const items = element.items;
 
@@ -1271,15 +1304,23 @@ suite('mwc-list:', () => {
         await items[1].updateComplete;
         await element.updateComplete;
 
-        assert.isTrue(items[1].selected, 'second item stays selected after click');
-        assert.isTrue(items[1].activated, 'second item stays activated after click');
+        assert.isTrue(
+            items[1].selected, 'second item stays selected after click');
+        assert.isTrue(
+            items[1].activated, 'second item stays activated after click');
         assert.equal(element.index, 1, 'index is correct after click');
-        assert.equal(element.selected, items[1], 'selected is correct after click');
+        assert.equal(
+            element.selected, items[1], 'selected is correct after click');
       });
 
       test('prop selection', async () => {
-        const itemsTemplates = [listItem(), listItem({selected: true, activated: true}), listItem()];
-        fixt = await fixture(listTemplate({items: itemsTemplates, activatable: true}));
+        const itemsTemplates = [
+          listItem(),
+          listItem({selected: true, activated: true}),
+          listItem()
+        ];
+        fixt = await fixture(
+            listTemplate({items: itemsTemplates, activatable: true}));
         element = fixt.root.querySelector('mwc-list')!;
         const items = element.items;
 
@@ -1287,17 +1328,31 @@ suite('mwc-list:', () => {
         await items[2].updateComplete;
         await element.updateComplete;
 
-        assert.isTrue(items[2].selected, 'third item is selected after prop set');
-        assert.isTrue(items[2].activated, 'third item is activated after prop set');
-        assert.isFalse(items[1].selected, 'second item is deselected after other is selected');
-        assert.isFalse(items[1].activated, 'second item is deactivated after other is selected');
+        assert.isTrue(
+            items[2].selected, 'third item is selected after prop set');
+        assert.isTrue(
+            items[2].activated, 'third item is activated after prop set');
+        assert.isFalse(
+            items[1].selected,
+            'second item is deselected after other is selected');
+        assert.isFalse(
+            items[1].activated,
+            'second item is deactivated after other is selected');
         assert.equal(element.index, 2, 'index is correct after prop selection');
-        assert.equal(element.selected, items[2], 'selected is correct after prop selection');
+        assert.equal(
+            element.selected,
+            items[2],
+            'selected is correct after prop selection');
       });
 
       test('prop deselection', async () => {
-        const itemsTemplates = [listItem(), listItem({selected: true, activated: true}), listItem()];
-        fixt = await fixture(listTemplate({items: itemsTemplates, activatable: true}));
+        const itemsTemplates = [
+          listItem(),
+          listItem({selected: true, activated: true}),
+          listItem()
+        ];
+        fixt = await fixture(
+            listTemplate({items: itemsTemplates, activatable: true}));
         element = fixt.root.querySelector('mwc-list')!;
         const items = element.items;
 
@@ -1305,15 +1360,25 @@ suite('mwc-list:', () => {
         await items[1].updateComplete;
         await element.updateComplete;
 
-        assert.isFalse(items[1].selected, 'second item is deselected after prop deselection');
-        assert.isFalse(items[1].activated, 'second item is deactivated after prop deselection');
+        assert.isFalse(
+            items[1].selected,
+            'second item is deselected after prop deselection');
+        assert.isFalse(
+            items[1].activated,
+            'second item is deactivated after prop deselection');
         assert.equal(element.index, -1, 'index is set to -1 prop deselection');
-        assert.equal(element.selected, null, 'selected is null prop deselection');
+        assert.equal(
+            element.selected, null, 'selected is null prop deselection');
       });
 
       test('index selection', async () => {
-        const itemsTemplates = [listItem(), listItem({selected: true, activated: true}), listItem()];
-        fixt = await fixture(listTemplate({items: itemsTemplates, activatable: true}));
+        const itemsTemplates = [
+          listItem(),
+          listItem({selected: true, activated: true}),
+          listItem()
+        ];
+        fixt = await fixture(
+            listTemplate({items: itemsTemplates, activatable: true}));
         element = fixt.root.querySelector('mwc-list')!;
         const items = element.items;
 
@@ -1321,17 +1386,33 @@ suite('mwc-list:', () => {
         await items[2].updateComplete;
         await element.updateComplete;
 
-        assert.isTrue(items[2].selected, 'third item is selected after index selection');
-        assert.isTrue(items[2].activated, 'third item is activated after index selection');
-        assert.isFalse(items[1].selected, 'second item is deselected after other is selected');
-        assert.isFalse(items[1].activated, 'second item is deactivated after other is selected');
-        assert.equal(element.index, 2, 'index is correct after index selection');
-        assert.equal(element.selected, items[2], 'selected is correct after index selection');
+        assert.isTrue(
+            items[2].selected, 'third item is selected after index selection');
+        assert.isTrue(
+            items[2].activated,
+            'third item is activated after index selection');
+        assert.isFalse(
+            items[1].selected,
+            'second item is deselected after other is selected');
+        assert.isFalse(
+            items[1].activated,
+            'second item is deactivated after other is selected');
+        assert.equal(
+            element.index, 2, 'index is correct after index selection');
+        assert.equal(
+            element.selected,
+            items[2],
+            'selected is correct after index selection');
       });
 
       test('index deselection', async () => {
-        const itemsTemplates = [listItem(), listItem({selected: true, activated: true}), listItem()];
-        fixt = await fixture(listTemplate({items: itemsTemplates, activatable: true}));
+        const itemsTemplates = [
+          listItem(),
+          listItem({selected: true, activated: true}),
+          listItem()
+        ];
+        fixt = await fixture(
+            listTemplate({items: itemsTemplates, activatable: true}));
         element = fixt.root.querySelector('mwc-list')!;
         const items = element.items;
 
@@ -1339,20 +1420,30 @@ suite('mwc-list:', () => {
         await items[1].updateComplete;
         await element.updateComplete;
 
-        assert.isFalse(items[1].selected, 'second item is deselected after index deselection');
-        assert.isFalse(items[1].activated, 'second item is deactivated after index deselection');
+        assert.isFalse(
+            items[1].selected,
+            'second item is deselected after index deselection');
+        assert.isFalse(
+            items[1].activated,
+            'second item is deactivated after index deselection');
         assert.equal(element.index, -1, 'index is set to -1 index deselection');
-        assert.equal(element.selected, null, 'selected is null index deselection');
+        assert.equal(
+            element.selected, null, 'selected is null index deselection');
       });
 
       test('single to multi', async () => {
-        const itemsTemplates = [listItem(), listItem({selected: true, activated: true}), listItem()];
+        const itemsTemplates = [
+          listItem(),
+          listItem({selected: true, activated: true}),
+          listItem()
+        ];
         fixt = await fixture(listTemplate({items: itemsTemplates}));
         element = fixt.root.querySelector('mwc-list')!;
         const items = element.items;
 
         assert.equal(element.index, 1, 'index is initially correct');
-        assert.equal(element.selected, items[1], 'selected is initially correct');
+        assert.equal(
+            element.selected, items[1], 'selected is initially correct');
 
         element.multi = true;
         await element.updateComplete;
@@ -1375,8 +1466,13 @@ suite('mwc-list:', () => {
 
     suite('multi', () => {
       test('click selection', async () => {
-        const itemsTemplates = [listItem(), listItem({selected: true, activated: true}), listItem()];
-        fixt = await fixture(listTemplate({multi: true, items: itemsTemplates, activatable: true}));
+        const itemsTemplates = [
+          listItem(),
+          listItem({selected: true, activated: true}),
+          listItem()
+        ];
+        fixt = await fixture(listTemplate(
+            {multi: true, items: itemsTemplates, activatable: true}));
         element = fixt.root.querySelector('mwc-list')!;
         const items = element.items;
 
@@ -1388,20 +1484,35 @@ suite('mwc-list:', () => {
         const selected = element.selected as ListItem[];
 
         assert.isTrue(items[2].selected, 'third item is selected after click');
-        assert.isTrue(items[2].activated, 'third item is activated after click');
-        assert.isTrue(items[1].selected, 'second item is not deselected after other is clicked');
-        assert.isTrue(items[1].activated, 'second item is not deactivated after other is clicked');
+        assert.isTrue(
+            items[2].activated, 'third item is activated after click');
+        assert.isTrue(
+            items[1].selected,
+            'second item is not deselected after other is clicked');
+        assert.isTrue(
+            items[1].activated,
+            'second item is not deactivated after other is clicked');
         assert.equal(index.size, 2, 'correct amount of indices after click');
         assert.isTrue(index.has(1), 'index is correct after click');
         assert.isTrue(index.has(2), 'index is correct after click');
-        assert.equal(selected.length, 2, 'correct number of selected after click');
-        assert.isTrue(selected.indexOf(items[1]) !== -1, 'selected is correct after click');
-        assert.isTrue(selected.indexOf(items[2]) !== -1, 'selected is correct after click');
+        assert.equal(
+            selected.length, 2, 'correct number of selected after click');
+        assert.isTrue(
+            selected.indexOf(items[1]) !== -1,
+            'selected is correct after click');
+        assert.isTrue(
+            selected.indexOf(items[2]) !== -1,
+            'selected is correct after click');
       });
 
       test('deselection on click', async () => {
-        const itemsTemplates = [listItem(), listItem({selected: true, activated: true}), listItem()];
-        fixt = await fixture(listTemplate({multi: true, items: itemsTemplates, activatable: true}));
+        const itemsTemplates = [
+          listItem(),
+          listItem({selected: true, activated: true}),
+          listItem()
+        ];
+        fixt = await fixture(listTemplate(
+            {multi: true, items: itemsTemplates, activatable: true}));
         element = fixt.root.querySelector('mwc-list')!;
         const items = element.items;
 
@@ -1412,15 +1523,22 @@ suite('mwc-list:', () => {
         const index = element.index as Set<number>;
         const selected = element.selected as ListItem[];
 
-        assert.isFalse(items[1].selected, 'second item is deselected after click');
-        assert.isFalse(items[1].activated, 'second item is deactivated after click');
+        assert.isFalse(
+            items[1].selected, 'second item is deselected after click');
+        assert.isFalse(
+            items[1].activated, 'second item is deactivated after click');
         assert.equal(index.size, 0, 'index is empty after click');
         assert.equal(selected.length, 0, 'nothing is selected after click');
       });
 
       test('prop selection', async () => {
-        const itemsTemplates = [listItem(), listItem({selected: true, activated: true}), listItem()];
-        fixt = await fixture(listTemplate({multi: true, items: itemsTemplates, activatable: true}));
+        const itemsTemplates = [
+          listItem(),
+          listItem({selected: true, activated: true}),
+          listItem()
+        ];
+        fixt = await fixture(listTemplate(
+            {multi: true, items: itemsTemplates, activatable: true}));
         element = fixt.root.querySelector('mwc-list')!;
         const items = element.items;
 
@@ -1431,21 +1549,40 @@ suite('mwc-list:', () => {
         const index = element.index as Set<number>;
         const selected = element.selected as ListItem[];
 
-        assert.isTrue(items[2].selected, 'third item is selected after prop selection');
-        assert.isTrue(items[2].activated, 'third item is activated after prop selection');
-        assert.isTrue(items[1].selected, 'second item is not deselected after other is selected');
-        assert.isTrue(items[1].activated, 'second item is not deactivated after other is selected');
-        assert.equal(index.size, 2, 'correct amount of indices after prop selection');
+        assert.isTrue(
+            items[2].selected, 'third item is selected after prop selection');
+        assert.isTrue(
+            items[2].activated, 'third item is activated after prop selection');
+        assert.isTrue(
+            items[1].selected,
+            'second item is not deselected after other is selected');
+        assert.isTrue(
+            items[1].activated,
+            'second item is not deactivated after other is selected');
+        assert.equal(
+            index.size, 2, 'correct amount of indices after prop selection');
         assert.isTrue(index.has(1), 'index is correct after prop selection');
         assert.isTrue(index.has(2), 'index is correct after prop selection');
-        assert.equal(selected.length, 2, 'correct number of selected after prop selection');
-        assert.isTrue(selected.indexOf(items[1]) !== -1, 'selected is correct after prop selection');
-        assert.isTrue(selected.indexOf(items[2]) !== -1, 'selected is correct after prop selection');
+        assert.equal(
+            selected.length,
+            2,
+            'correct number of selected after prop selection');
+        assert.isTrue(
+            selected.indexOf(items[1]) !== -1,
+            'selected is correct after prop selection');
+        assert.isTrue(
+            selected.indexOf(items[2]) !== -1,
+            'selected is correct after prop selection');
       });
 
       test('prop deselection', async () => {
-        const itemsTemplates = [listItem(), listItem({selected: true, activated: true}), listItem()];
-        fixt = await fixture(listTemplate({multi: true, items: itemsTemplates, activatable: true}));
+        const itemsTemplates = [
+          listItem(),
+          listItem({selected: true, activated: true}),
+          listItem()
+        ];
+        fixt = await fixture(listTemplate(
+            {multi: true, items: itemsTemplates, activatable: true}));
         element = fixt.root.querySelector('mwc-list')!;
         const items = element.items;
 
@@ -1456,42 +1593,75 @@ suite('mwc-list:', () => {
         const index = element.index as Set<number>;
         const selected = element.selected as ListItem[];
 
-        assert.isFalse(items[1].selected, 'second item is deselected after prop deselection');
-        assert.isFalse(items[1].activated, 'second item is deactivated after prop deselection');
+        assert.isFalse(
+            items[1].selected,
+            'second item is deselected after prop deselection');
+        assert.isFalse(
+            items[1].activated,
+            'second item is deactivated after prop deselection');
         assert.equal(index.size, 0, 'index is empty after prop deselection');
-        assert.equal(selected.length, 0, 'nothing is selected after prop deselection');
+        assert.equal(
+            selected.length, 0, 'nothing is selected after prop deselection');
       });
 
       test('index selection', async () => {
-        const itemsTemplates = [listItem(), listItem({selected: true, activated: true}), listItem()];
-        fixt = await fixture(listTemplate({multi: true, items: itemsTemplates, activatable: true}));
+        const itemsTemplates = [
+          listItem(),
+          listItem({selected: true, activated: true}),
+          listItem()
+        ];
+        fixt = await fixture(listTemplate(
+            {multi: true, items: itemsTemplates, activatable: true}));
         element = fixt.root.querySelector('mwc-list')!;
         const items = element.items;
 
-        element.select(new Set([0,2]));
+        element.select(new Set([0, 2]));
         await items[2].updateComplete;
         await element.updateComplete;
 
         const index = element.index as Set<number>;
         const selected = element.selected as ListItem[];
 
-        assert.isTrue(items[0].selected, 'first item is selected after index selection');
-        assert.isTrue(items[0].activated, 'first item is activated after index selection');
-        assert.isTrue(items[2].selected, 'third item is selected after index selection');
-        assert.isTrue(items[2].activated, 'third item is activated after index selection');
-        assert.isFalse(items[1].selected, 'second item deselected after others are selected');
-        assert.isFalse(items[1].activated, 'second item deactivated after others are selected');
-        assert.equal(index.size, 2, 'correct amount of indices after index selection');
+        assert.isTrue(
+            items[0].selected, 'first item is selected after index selection');
+        assert.isTrue(
+            items[0].activated,
+            'first item is activated after index selection');
+        assert.isTrue(
+            items[2].selected, 'third item is selected after index selection');
+        assert.isTrue(
+            items[2].activated,
+            'third item is activated after index selection');
+        assert.isFalse(
+            items[1].selected,
+            'second item deselected after others are selected');
+        assert.isFalse(
+            items[1].activated,
+            'second item deactivated after others are selected');
+        assert.equal(
+            index.size, 2, 'correct amount of indices after index selection');
         assert.isTrue(index.has(0), 'index is correct after index selection');
         assert.isTrue(index.has(2), 'index is correct after index selection');
-        assert.equal(selected.length, 2, 'correct number of selected after index selection');
-        assert.isTrue(selected.indexOf(items[0]) !== -1, 'selected is correct after index selection');
-        assert.isTrue(selected.indexOf(items[2]) !== -1, 'selected is correct after index selection');
+        assert.equal(
+            selected.length,
+            2,
+            'correct number of selected after index selection');
+        assert.isTrue(
+            selected.indexOf(items[0]) !== -1,
+            'selected is correct after index selection');
+        assert.isTrue(
+            selected.indexOf(items[2]) !== -1,
+            'selected is correct after index selection');
       });
 
       test('index deselection', async () => {
-        const itemsTemplates = [listItem(), listItem({selected: true, activated: true}), listItem()];
-        fixt = await fixture(listTemplate({multi: true, items: itemsTemplates, activatable: true}));
+        const itemsTemplates = [
+          listItem(),
+          listItem({selected: true, activated: true}),
+          listItem()
+        ];
+        fixt = await fixture(listTemplate(
+            {multi: true, items: itemsTemplates, activatable: true}));
         element = fixt.root.querySelector('mwc-list')!;
         const items = element.items;
 
@@ -1502,15 +1672,25 @@ suite('mwc-list:', () => {
         const index = element.index as Set<number>;
         const selected = element.selected as ListItem[];
 
-        assert.isFalse(items[1].selected, 'second item is deselected after index deselection');
-        assert.isFalse(items[1].activated, 'second item is deactivated after index deselection');
+        assert.isFalse(
+            items[1].selected,
+            'second item is deselected after index deselection');
+        assert.isFalse(
+            items[1].activated,
+            'second item is deactivated after index deselection');
         assert.equal(index.size, 0, 'index is empty after index deselection');
-        assert.equal(selected.length, 0, 'nothing is selected after index deselection');
+        assert.equal(
+            selected.length, 0, 'nothing is selected after index deselection');
       });
 
       test('multi to single', async () => {
-        const itemsTemplates = [listItem(), listItem({selected: true}), listItem({selected: true})];
-        fixt = await fixture(listTemplate({multi: true, items: itemsTemplates}));
+        const itemsTemplates = [
+          listItem(),
+          listItem({selected: true}),
+          listItem({selected: true})
+        ];
+        fixt =
+            await fixture(listTemplate({multi: true, items: itemsTemplates}));
         element = fixt.root.querySelector('mwc-list')!;
         const items = element.items;
 
