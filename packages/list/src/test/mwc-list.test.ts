@@ -53,15 +53,19 @@ const defaultListItemProps = {
 
 type ListItemProps = typeof defaultListItemProps;
 
+const dividerTempl = html`
+  <!-- @ts-ignore -->
+  <li divider></li>`;
+
 const listItem = (propsInit: Partial<ListItemProps> = {}) => {
   const props: ListItemProps = {...defaultListItemProps, ...propsInit};
 
   return html`
     <mwc-list-item
-        ?twoline=${props.twoLine}
-        ?selected=${props.selected}
-        ?activated=${props.activated}
-        ?hasMeta=${props.hasMeta}
+        .twoline=${props.twoLine}
+        .selected=${props.selected}
+        .activated=${props.activated}
+        .hasMeta=${props.hasMeta}
         .graphic=${props.graphic}
         .noninteractive=${props.noninteractive}
         @request-selected=${props.onRequestSelected}
@@ -78,11 +82,11 @@ const checkListItem = (propsInit: Partial<ListItemProps> = {}) => {
 
   return html`
     <mwc-check-list-item
-        ?twoline=${props.twoLine}
-        ?selected=${props.selected}
-        ?activated=${props.activated}
-        ?hasMeta=${props.hasMeta}
-        ?left=${props.left}
+        .twoline=${props.twoLine}
+        .selected=${props.selected}
+        .activated=${props.activated}
+        .hasMeta=${props.hasMeta}
+        .left=${props.left}
         .graphic=${props.graphic}
         .noninteractive=${props.noninteractive}
         @request-selected=${props.onRequestSelected}
@@ -99,11 +103,11 @@ const radioListItem = (propsInit: Partial<ListItemProps> = {}) => {
 
   return html`
     <mwc-radio-list-item
-        ?twoline=${props.twoLine}
-        ?selected=${props.selected}
-        ?activated=${props.activated}
-        ?hasMeta=${props.hasMeta}
-        ?left=${props.left}
+        .twoline=${props.twoLine}
+        .selected=${props.selected}
+        .activated=${props.activated}
+        .hasMeta=${props.hasMeta}
+        .left=${props.left}
         .graphic=${props.graphic}
         .group=${props.group}
         .noninteractive=${props.noninteractive}
@@ -134,11 +138,11 @@ const listTemplate = (propsInit: Partial<ListProps> = {}) => {
 
   return html`
     <mwc-list
-        ?multi=${props.multi}
-        ?wrapFocus=${props.wrapFocus}
-        ?rootTabbable=${props.rootTabbable}
-        ?noninteractive=${props.noninteractive}
-        ?activatable=${props.activatable}
+        .multi=${props.multi}
+        .wrapFocus=${props.wrapFocus}
+        .rootTabbable=${props.rootTabbable}
+        .noninteractive=${props.noninteractive}
+        .activatable=${props.activatable}
         .itemRoles=${props.itemRoles}
         .innerRole=${props.innerRole}>
       ${props.items}
@@ -194,8 +198,10 @@ suite('mwc-list:', () => {
         element = fixt.root.querySelector('mwc-list-item')!;
 
         const root = (element.shadowRoot as ShadowRoot);
-        const defaultSlot = root.querySelector('.mdc-list-item__text > slot') as
-            HTMLSlotElement;
+        const mdcRoot =
+            root.querySelector('.mdc-list-item__text') as HTMLElement;
+        const defaultSlot =
+            root.querySelector('slot:not([name])') as HTMLSlotElement;
         const primaryTextWrapper =
             root.querySelector('.mdc-list-item__primaray-text');
         const secondaryTextWrapper =
@@ -205,6 +211,10 @@ suite('mwc-list:', () => {
 
         assert.notEqual(
             defaultSlot, null, 'default slot exists with no wrapper');
+        assert.equal(
+            defaultSlot.parentNode,
+            mdcRoot,
+            'default slot exists with no wrapper');
         assert.equal(
             primaryTextWrapper,
             null,
@@ -240,19 +250,22 @@ suite('mwc-list:', () => {
         element = fixt.root.querySelector('mwc-list-item')!;
 
         const root = (element.shadowRoot as ShadowRoot);
-        const defaultSlot = root.querySelector('.mdc-list-item__text > slot');
-        const primaryTextSlot =
-            root.querySelector('.mdc-list-item__primary-text > slot') as
-            HTMLSlotElement;
+        const defaultSlot =
+            root.querySelector('slot:not([name])') as HTMLSlotElement;
+        const primaryTextWrapper =
+            root.querySelector('.mdc-list-item__primary-text') as HTMLElement;
         const secondaryTextSlot =
-            root.querySelector('.mdc-list-item__secondary-text > slot') as
-            HTMLSlotElement;
+            root.querySelector('slot[name="secondary"]') as HTMLSlotElement;
         const metaWrapper = root.querySelector('.mdc-list-item__meta');
         const graphicWrapper = root.querySelector('.mdc-list-item__graphic');
 
+        assert.notEqual(defaultSlot, null, 'default slot exists');
+        assert.notEqual(
+            primaryTextWrapper, null, 'primary text slot wrapper exists');
         assert.equal(
-            defaultSlot, null, 'default slot doesnt exist (single line only)');
-        assert.notEqual(primaryTextSlot, null, 'primary text slot exists');
+            defaultSlot.parentNode,
+            primaryTextWrapper,
+            'primary text slot exists');
         assert.notEqual(secondaryTextSlot, null, 'secondary text slot exists');
         assert.equal(metaWrapper, null, 'no meta wrapper (only two line)');
         assert.equal(
@@ -261,8 +274,8 @@ suite('mwc-list:', () => {
         const primaryTextElement = element.querySelector('.primary') as Element;
         const secondaryTextElement =
             element.querySelector('[slot="secondary"]') as Element;
-        const primaryProjEls = primaryTextSlot.assignedNodes({flatten: true})
-                                   .filter(isNodeElement);
+        const primaryProjEls =
+            defaultSlot.assignedNodes({flatten: true}).filter(isNodeElement);
         const secondaryProjEls =
             secondaryTextSlot.assignedNodes({flatten: true})
                 .filter(isNodeElement);
@@ -293,8 +306,13 @@ suite('mwc-list:', () => {
         }));
         element = fixt.root.querySelector('mwc-list-item')!;
 
+        await element.updateComplete;
+
         const root = (element.shadowRoot as ShadowRoot);
-        const defaultSlot = root.querySelector('.mdc-list-item__text > slot');
+        const mdcRoot =
+            root.querySelector('.mdc-list-item__text') as HTMLElement;
+        const defaultSlot =
+            root.querySelector('slot:not([name])') as HTMLSlotElement;
         const primaryTextWrapper =
             root.querySelector('.mdc-list-item__primaray-text');
         const secondaryTextWrapper =
@@ -306,6 +324,10 @@ suite('mwc-list:', () => {
 
         assert.notEqual(
             defaultSlot, null, 'default slot exists with no wrapper');
+        assert.equal(
+            defaultSlot.parentNode,
+            mdcRoot,
+            'default slot exists with no wrapper');
         assert.equal(
             primaryTextWrapper,
             null,
@@ -340,7 +362,10 @@ suite('mwc-list:', () => {
         element = fixt.root.querySelector('mwc-list-item')!;
 
         const root = (element.shadowRoot as ShadowRoot);
-        const defaultSlot = root.querySelector('.mdc-list-item__text > slot');
+        const mdcRoot =
+            root.querySelector('.mdc-list-item__text') as HTMLElement;
+        const defaultSlot =
+            root.querySelector('slot:not([name])') as HTMLSlotElement;
         const primaryTextWrapper =
             root.querySelector('.mdc-list-item__primaray-text');
         const secondaryTextWrapper =
@@ -352,6 +377,10 @@ suite('mwc-list:', () => {
 
         assert.notEqual(
             defaultSlot, null, 'default slot exists with no wrapper');
+        assert.equal(
+            defaultSlot.parentNode,
+            mdcRoot,
+            'default slot exists with no wrapper');
         assert.equal(
             primaryTextWrapper,
             null,
@@ -1206,7 +1235,7 @@ suite('mwc-list:', () => {
       });
 
       test('a11y roles are set', async () => {
-        const itemsTemplate = [listItem(), html`<li divider></li>`, listItem()];
+        const itemsTemplate = [listItem(), dividerTempl, listItem()];
         fixt = await fixture(
             listTemplate({items: itemsTemplate, itemRoles: 'option'}));
         element = fixt.root.querySelector('mwc-list')!;
