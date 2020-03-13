@@ -883,8 +883,7 @@ suite('mwc-list:', () => {
         await secondElement.updateComplete;
 
         assert.isTrue(
-            firstElement.selected,
-            'first element is selected on radio click');
+            firstElement.selected, 'first element is selected on radio click');
         assert.equal(
             firstRadio.checked,
             firstElement.selected,
