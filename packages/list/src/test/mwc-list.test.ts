@@ -669,24 +669,46 @@ suite('mwc-list:', () => {
             element.selected,
             'property request selected ev requests for the same as selected state');
 
+        // old versions of safari have a broken click event that does not
+        // compose the click event.
+        let skipOldSafari = false;
+
+        const formElement = (checkbox as unknown as {
+                              formElement: HTMLInputElement;
+                            }).formElement;
+
+        const detectOldSafari = (e: MouseEvent) => {
+          if (!e.composed) {
+            skipOldSafari = true;
+          }
+        };
+
+        formElement.addEventListener(
+            'click',
+            detectOldSafari as unknown as EventListenerOrEventListenerObject);
+
         checkbox.click();
 
         await element.updateComplete;
         await checkbox.updateComplete;
 
-        assert.isFalse(
-            element.selected, 'element is deselected on checkbox click');
-        assert.equal(
-            element.selected,
-            checkbox.checked,
-            'checkbox mirrors element selection state on prop');
-        assert.equal(
-            numReqSelectedCalls, 1, 'request-selected called on selected prop');
-        numReqSelectedCalls = 0;
-        assert.equal(
-            lastReqSelectedEv.detail.source,
-            'interaction',
-            'interaction event on checkbox click');
+        if (!skipOldSafari) {
+          assert.isFalse(
+              element.selected, 'element is deselected on checkbox click');
+          assert.equal(
+              element.selected,
+              checkbox.checked,
+              'checkbox mirrors element selection state on prop');
+          assert.equal(
+              numReqSelectedCalls,
+              1,
+              'request-selected called on checkbox click');
+          numReqSelectedCalls = 0;
+          assert.equal(
+              lastReqSelectedEv.detail.source,
+              'interaction',
+              'interaction event on checkbox click');
+        }
       });
 
       teardown(() => {
