@@ -50,6 +50,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Setting `disabled` on `mwc-ripple` will hide the ripple
 - mwc-menu's x and y anchor margins now work for all corners
 - mwc-select's --mdc-select-disabled-ink-color now colors the selected text
+- inconsistencies on how `<contol>-list-item`s' state of controls and element
+- `list` sets initial `tabindex` when initialized with `noninteractive` and then set to false
 
 ## [0.13.0] - 2020-02-03
 

@@ -29,6 +29,7 @@ export type GraphicType = 'avatar'|'icon'|'medium'|'large'|'control'|null;
 
 /**
  * @fires request-selected {RequestSelectedDetail}
+ * @fires list-item-rendered
  */
 export class ListItemBase extends LitElement {
   @query('slot') protected slotElement!: HTMLSlotElement|null;
@@ -72,14 +73,20 @@ export class ListItemBase extends LitElement {
 
     if (this._firstChanged) {
       this._firstChanged = false;
-    } else {
-      this.fireRequestDetail(value, 'property');
+      return;
     }
+
+    if (this._skipPropRequest) {
+      return;
+    }
+
+    this.fireRequestSelected(value, 'property');
   })
   selected = false;
 
   protected boundOnClick = this.onClick.bind(this);
   protected _firstChanged = true;
+  protected _skipPropRequest = false;
 
   get text() {
     const textContent = this.textContent;
@@ -136,10 +143,14 @@ export class ListItemBase extends LitElement {
   }
 
   protected onClick() {
-    this.fireRequestDetail(!this.selected, 'interaction');
+    this.fireRequestSelected(!this.selected, 'interaction');
   }
 
-  protected fireRequestDetail(selected: boolean, source: SelectionSource) {
+  protected fireRequestSelected(selected: boolean, source: SelectionSource) {
+    if (this.noninteractive) {
+      return;
+    }
+
     const customEv = new CustomEvent<RequestSelectedDetail>(
         'request-selected',
         {bubbles: true, composed: true, detail: {source, selected}});
