@@ -15,7 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {applyPassive} from '@material/dom/events.js';
-import {addHasRemoveClass, EventType, FormElement, observer, SpecificEventListener} from '@material/mwc-base/form-element.js';
+import {addHasRemoveClass, EventType, FormElement, SpecificEventListener} from '@material/mwc-base/form-element.js';
+import {observer} from '@material/mwc-base/observer.js';
 import {MDCSliderAdapter} from '@material/slider/adapter.js';
 import MDCSliderFoundation from '@material/slider/foundation.js';
 import {eventOptions, html, property, query, TemplateResult} from 'lit-element';

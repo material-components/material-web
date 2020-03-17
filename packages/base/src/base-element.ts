@@ -21,7 +21,6 @@ import {LitElement} from 'lit-element';
 import {Constructor} from './utils.js';
 
 export {CustomEventListener, EventType, SpecificEventListener} from '@material/base/types.js';
-export {observer} from './observer.js';
 export {addHasRemoveClass} from './utils.js';
 
 export abstract class BaseElement extends LitElement {

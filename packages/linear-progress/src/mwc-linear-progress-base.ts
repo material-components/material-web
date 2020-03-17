@@ -16,7 +16,8 @@ limitations under the License.
 */
 import {MDCLinearProgressAdapter} from '@material/linear-progress/adapter.js';
 import MDCLinearProgressFoundation from '@material/linear-progress/foundation.js';
-import {addHasRemoveClass, BaseElement, observer} from '@material/mwc-base/base-element.js';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
+import {observer} from '@material/mwc-base/observer.js';
 import {html, property, query} from 'lit-element';
 
 export class LinearProgressBase extends BaseElement {

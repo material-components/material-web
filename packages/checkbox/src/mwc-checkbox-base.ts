@@ -16,7 +16,8 @@ limitations under the License.
 */
 import {MDCCheckboxAdapter} from '@material/checkbox/adapter.js';
 import MDCCheckboxFoundation from '@material/checkbox/foundation.js';
-import {addHasRemoveClass, FormElement, HTMLElementWithRipple, observer} from '@material/mwc-base/form-element.js';
+import {addHasRemoveClass, FormElement, HTMLElementWithRipple} from '@material/mwc-base/form-element.js';
+import {observer} from '@material/mwc-base/observer.js';
 import {rippleNode} from '@material/mwc-ripple/ripple-directive.js';
 import {html, property, query} from 'lit-element';
 

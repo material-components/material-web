@@ -18,7 +18,8 @@ limitations under the License.
 import '@material/mwc-tab';
 import '@material/mwc-tab-scroller';
 
-import {BaseElement, observer} from '@material/mwc-base/base-element.js';
+import {BaseElement} from '@material/mwc-base/base-element.js';
+import {observer} from '@material/mwc-base/observer.js';
 import {Tab} from '@material/mwc-tab';
 import {TabScroller} from '@material/mwc-tab-scroller';
 import {MDCTabBarAdapter} from '@material/tab-bar/adapter';

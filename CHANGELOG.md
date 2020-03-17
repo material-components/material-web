@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - **BREAKING** Remove `active` property from `mwc-ripple`.
   - Use `activate()` and `deactivate()` methods instead
 - **BREAKING** `mwc-ripple` now requires implementing event handlers manually in the parent component.
+- **BREAKING** Components must now import `@observer` manually from `@material/mwc-base/observer`;
 
 ### Fixed
 

@@ -17,7 +17,8 @@ limitations under the License.
 // Make TypeScript not remove the import.
 import '@material/mwc-tab-indicator';
 
-import {addHasRemoveClass, BaseElement, observer} from '@material/mwc-base/base-element.js';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
+import {observer} from '@material/mwc-base/observer.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive';
 import {TabIndicator} from '@material/mwc-tab-indicator';
 import {MDCTabAdapter} from '@material/tab/adapter';

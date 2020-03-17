@@ -20,7 +20,8 @@ import '@material/mwc-icon';
 
 import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
 import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
-import {addHasRemoveClass, FormElement, observer} from '@material/mwc-base/form-element.js';
+import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element.js';
+import {observer} from '@material/mwc-base/observer.js';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {ListItemBase} from '@material/mwc-list/mwc-list-item-base';
