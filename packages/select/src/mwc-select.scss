@@ -187,8 +187,12 @@ mwc-notched-outline {
     }
 
     .mdc-select__dropdown-icon {
+      @include theme-mixins.prop(color, (
+        varname: --mdc-select-disabled-dropdown-icon-color,
+        fallback: vars.$dropdown-color
+      ));
       @include theme-mixins.prop(opacity, (
-        varname: --mdc-select-disabled-dropdown-opacity,
+        varname: --mdc-select-disabled-dropdown-icon-opacity,
         fallback: vars.$disabled-dropdown-opacity
       ));
     }
