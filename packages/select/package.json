@@ -21,7 +21,7 @@
     "@material/mwc-notched-outline": "^0.14.0",
     "@material/select": "=6.0.0-canary.a88c8e4dc.0",
     "@material/theme": "=6.0.0-canary.a88c8e4dc.0",
-    "lit-element": "^2.2.1",
+    "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0"
   },
