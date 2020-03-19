@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-notched-outline",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "",
   "main": "mwc-notched-outline.js",
   "module": "mwc-notched-outline.js",
@@ -15,7 +15,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/mwc-base": "^0.13.0",
+    "@material/mwc-base": "^0.14.0",
     "@material/notched-outline": "=6.0.0-canary.a88c8e4dc.0",
     "@material/shape": "=6.0.0-canary.a88c8e4dc.0",
     "@material/theme": "=6.0.0-canary.a88c8e4dc.0",

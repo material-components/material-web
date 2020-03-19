@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-top-app-bar",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "",
   "main": "mwc-top-app-bar.js",
   "module": "mwc-top-app-bar.js",
@@ -16,7 +16,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/mwc-base": "^0.13.0",
+    "@material/mwc-base": "^0.14.0",
     "@material/top-app-bar": "=6.0.0-canary.a88c8e4dc.0",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
