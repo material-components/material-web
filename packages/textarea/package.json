@@ -12,7 +12,7 @@
   "dependencies": {
     "@material/mwc-base": "^0.13.0",
     "@material/mwc-textfield": "^0.13.0",
-    "@material/textfield": "=6.0.0-canary.6b48781bf.0",
+    "@material/textfield": "=6.0.0-canary.a88c8e4dc.0",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0"
