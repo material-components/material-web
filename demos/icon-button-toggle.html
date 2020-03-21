@@ -22,6 +22,7 @@ limitations under the License.
   <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script type="module" src="../node_modules/@material/mwc-icon-button-toggle/mwc-icon-button-toggle.js"></script>
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
+  <script type="module" src="demo-header.js"></script>
   <link rel="stylesheet" href="demo-component.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
@@ -35,10 +36,7 @@ limitations under the License.
   </style>
 </head>
 <body class="unresolved">
-  <header>
-    <a href="index.html"><mwc-icon>arrow_back</mwc-icon>
-    <span>Icon Button Toggle</span></a>
-  </header>
+  <demo-header component="Icon Button Toggle" source="icon-button-toggle.html"></demo-header>
 
   <main>
     <mwc-icon-button-toggle onIcon="sentiment_very_satisfied" offIcon="sentiment_very_dissatisfied"></mwc-icon-button-toggle>
