@@ -127,12 +127,13 @@ export class DrawerBase extends BaseElement {
       </div>
       ` :
                                     '';
-    return html`
-      <aside class="mdc-drawer
-          ${classMap({
+    const classes = {
       'mdc-drawer--dismissible': dismissible,
-      'mdc-drawer--modal': modal
-    })}">
+      'mdc-drawer--modal': modal,
+    };
+
+    return html`
+      <aside class="mdc-drawer ${classMap(classes)}">
         ${header}
         <div class="mdc-drawer__content"><slot></slot></div>
       </aside>

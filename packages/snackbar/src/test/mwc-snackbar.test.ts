@@ -16,17 +16,23 @@
  */
 
 import {Snackbar} from '@material/mwc-snackbar';
+import {fake, restore, SinonFakeTimers, useFakeTimers} from 'sinon';
+
+import {rafPromise} from '../../../../test/src/util/helpers';
 
 suite('mwc-snackbar', () => {
   let element: Snackbar;
+  let clock: SinonFakeTimers;
 
   setup(() => {
     element = document.createElement('mwc-snackbar');
     document.body.appendChild(element);
+    clock = useFakeTimers({toFake: ['setTimeout']});
   });
 
   teardown(() => {
-    document.body.removeChild(element);
+    restore();
+    element.remove();
   });
 
   test('initializes as an mwc-snackbar', () => {
@@ -54,5 +60,92 @@ suite('mwc-snackbar', () => {
     element.labelText = 'baz';
     await element.updateComplete;
     assert.equal(findLabelText(), 'baz');
+  });
+
+  test('`open()` opens snack bar', async () => {
+    const handler = fake();
+    const openingHandler = fake();
+    element.addEventListener('MDCSnackbar:opened', handler);
+    element.addEventListener('MDCSnackbar:opening', openingHandler);
+    assert.equal(element.isOpen, false);
+    element.open();
+    await element.updateComplete;
+    assert.isTrue(openingHandler.called);
+    await rafPromise();
+    clock.next();
+    clock.next();
+    assert.isTrue(element.isOpen);
+    assert.isTrue(handler.called);
+  });
+
+  test('`close()` closes snack bar', async () => {
+    const handler = fake();
+    element.addEventListener('MDCSnackbar:closed', handler);
+    element.isOpen = true;
+    await element.updateComplete;
+    element.close();
+    clock.runAll();
+    assert.isFalse(element.isOpen);
+    assert.isTrue(handler.called);
+  });
+
+  test('closes when dismissed', async () => {
+    const handler = fake();
+    element.addEventListener('MDCSnackbar:closed', handler);
+    const close = document.createElement('span');
+    close.slot = 'dismiss';
+    element.appendChild(close);
+    element.open();
+    await element.updateComplete;
+    close.click();
+    clock.runAll();
+    assert.isFalse(element.isOpen);
+    assert.equal(handler.lastCall.args[0].detail.reason, 'dismiss');
+  });
+
+  test('closes when actioned', async () => {
+    const handler = fake();
+    element.addEventListener('MDCSnackbar:closed', handler);
+    const action = document.createElement('span');
+    action.slot = 'action';
+    element.appendChild(action);
+    element.open();
+    await element.updateComplete;
+    action.click();
+    clock.runAll();
+    assert.isFalse(element.isOpen);
+    assert.equal(handler.lastCall.args[0].detail.reason, 'action');
+  });
+
+  suite('`closedOnEscape`', () => {
+    test('does not close when unset and esc is pressed', async () => {
+      element.closeOnEscape = false;
+      element.timeoutMs = -1;
+      element.isOpen = true;
+      await element.updateComplete;
+      await rafPromise();
+      clock.runAll();
+      const bar = element.shadowRoot!.querySelector('.mdc-snackbar')!;
+      assert.equal(element.isOpen, true);
+      bar.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape'}));
+      clock.runAll();
+      await element.updateComplete;
+      assert.equal(element.isOpen, true);
+    });
+
+    test('closes when set and esc is pressed', async () => {
+      element.closeOnEscape = true;
+      element.timeoutMs = -1;
+      element.isOpen = true;
+      await element.updateComplete;
+      await rafPromise();
+      clock.runAll();
+      const bar = element.shadowRoot!.querySelector('.mdc-snackbar')!;
+      assert.equal(element.isOpen, true);
+      bar.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape'}));
+      clock.runAll();
+      await element.updateComplete;
+      assert.equal(element.isOpen, false);
+    });
   });
 });

@@ -17,6 +17,8 @@
 
 import {LinearProgress} from '@material/mwc-linear-progress';
 
+const INDETERMINATE_CLASS = 'mdc-linear-progress--indeterminate';
+const REVERSE_CLASS = 'mdc-linear-progress--reversed';
 
 suite('mwc-linear-progress', () => {
   let element: LinearProgress;
@@ -44,4 +46,44 @@ suite('mwc-linear-progress', () => {
         assert.equal(
             progressBar!.getAttribute('aria-label'), 'Unit Test Progress Bar');
       });
+
+  test('open sets closed to false', async () => {
+    element.closed = true;
+    element.open();
+    assert.equal(element.closed, false);
+  });
+
+  test('close sets closed to true', async () => {
+    element.closed = false;
+    element.close();
+    assert.equal(element.closed, true);
+  });
+
+  test('`progress` sets inner progress', async () => {
+    element.progress = 0.5;
+    await element.updateComplete;
+    const progressBar =
+        element.shadowRoot!.querySelector('.mdc-linear-progress')!;
+    assert.equal(progressBar.getAttribute('aria-valuenow'), '0.5');
+  });
+
+  test('`indeterminate` sets correct inner class', async () => {
+    await element.updateComplete;
+    const progressBar =
+        element.shadowRoot!.querySelector('.mdc-linear-progress')!;
+    assert.isFalse(progressBar.classList.contains(INDETERMINATE_CLASS));
+    element.indeterminate = true;
+    await element.updateComplete;
+    assert.isTrue(progressBar.classList.contains(INDETERMINATE_CLASS));
+  });
+
+  test('`reverse` sets correct inner class', async () => {
+    await element.updateComplete;
+    const progressBar =
+        element.shadowRoot!.querySelector('.mdc-linear-progress')!;
+    assert.isFalse(progressBar.classList.contains(REVERSE_CLASS));
+    element.reverse = true;
+    await element.updateComplete;
+    assert.isTrue(progressBar.classList.contains(REVERSE_CLASS));
+  });
 });

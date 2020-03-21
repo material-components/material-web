@@ -75,11 +75,68 @@ suite('mwc-button', () => {
       assert.equal(icon, null);
     });
 
+    test(
+        'setting `trailingIcon` displays `icon` in a trailing position',
+        async () => {
+          element.icon = 'check';
+          element.trailingIcon = true;
+          await element.updateComplete;
+          const leadingIcon = element.shadowRoot!.querySelector(
+              `.leading-icon ${ICON_SELECTOR}`);
+          const trailingIcon = element.shadowRoot!.querySelector(
+              `.trailing-icon ${ICON_SELECTOR}`);
+          assert.equal(leadingIcon, null);
+          assert.instanceOf(trailingIcon, Element);
+        });
+
     test('sets `aria-label` of the button when `label` is set', async () => {
       element.label = 'Unit Test Button';
       await element.updateComplete;
       const button = element.shadowRoot!.querySelector('#button');
       assert.equal(button!.getAttribute('aria-label'), 'Unit Test Button');
+    });
+
+    test('sets `aria-label` of the button when `icon` is set', async () => {
+      element.icon = 'check';
+      await element.updateComplete;
+      const button = element.shadowRoot!.querySelector('#button');
+      assert.equal(button!.getAttribute('aria-label'), 'check');
+    });
+
+    test('raised sets correct internal button style', async () => {
+      const button = element.shadowRoot!.querySelector('#button')!;
+      const raisedClass = 'mdc-button--raised';
+      assert.isFalse(button.classList.contains(raisedClass));
+      element.raised = true;
+      await element.updateComplete;
+      assert.isTrue(button.classList.contains(raisedClass));
+    });
+
+    test('unelevated sets correct internal button style', async () => {
+      const button = element.shadowRoot!.querySelector('#button')!;
+      const unelevatedClass = 'mdc-button--unelevated';
+      assert.isFalse(button.classList.contains(unelevatedClass));
+      element.unelevated = true;
+      await element.updateComplete;
+      assert.isTrue(button.classList.contains(unelevatedClass));
+    });
+
+    test('outlined sets correct internal button style', async () => {
+      const button = element.shadowRoot!.querySelector('#button')!;
+      const outlinedClass = 'mdc-button--outlined';
+      assert.isFalse(button.classList.contains(outlinedClass));
+      element.outlined = true;
+      await element.updateComplete;
+      assert.isTrue(button.classList.contains(outlinedClass));
+    });
+
+    test('dense sets correct internal button style', async () => {
+      const button = element.shadowRoot!.querySelector('#button')!;
+      const denseClass = 'mdc-button--dense';
+      assert.isFalse(button.classList.contains(denseClass));
+      element.dense = true;
+      await element.updateComplete;
+      assert.isTrue(button.classList.contains(denseClass));
     });
   });
 
@@ -94,7 +151,7 @@ suite('mwc-button', () => {
     test('focus fn highlights and blurs', async () => {
       const focusedClass = 'mdc-ripple-upgraded--background-focused';
       const nativeButton =
-          element.shadowRoot!.querySelector('#button') as HTMLButtonElement;
+          element.shadowRoot!.querySelector<HTMLButtonElement>('#button')!;
       assert.isFalse(nativeButton.classList.contains(focusedClass));
       element.focus();
       await element.requestUpdate();

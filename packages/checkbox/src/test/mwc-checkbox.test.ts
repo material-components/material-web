@@ -103,4 +103,12 @@ suite('mwc-checkbox', () => {
     element.click();
     assert.equal(callback.callCount, 1);
   });
+
+  test('user input updates checked state', async () => {
+    element.checked = false;
+    await element.updateComplete;
+    element.click();
+    await element.updateComplete;
+    assert.equal(element.checked, true);
+  });
 });
