@@ -22,51 +22,89 @@ import {fixture, rafPromise, TestFixture} from '../../../../test/src/util/helper
 
 const ICON_SELECTOR = '.mdc-button__icon';
 
-const noText = html`<mwc-button></mwc-button>`;
+interface ButtonProps {
+  disabled: boolean;
+  unelevated: boolean;
+  raised: boolean;
+  dense: boolean;
+  outlined: boolean;
+  text: string;
+  label: string;
+  icon: string;
+  trailingIcon: boolean;
+}
 
-const basic = html`
-  <mwc-button>this is a button</mwc-button>
-`;
+const button = (propsInit: Partial<ButtonProps> = {}) => {
+  return html`
+    <mwc-button
+      ?disabled=${propsInit.disabled === true}
+      ?unelevated=${propsInit.unelevated === true}
+      ?raised=${propsInit.raised === true}
+      ?dense=${propsInit.dense === true}
+      ?outlined=${propsInit.outlined === true}
+      ?trailingIcon=${propsInit.trailingIcon === true}
+      label=${propsInit.label ?? ''}
+      icon=${propsInit.icon ?? ''}>${propsInit.text ?? ''}</mwc-button>
+  `;
+};
 
 suite('mwc-button', () => {
   let fixt: TestFixture;
   let element: Button;
 
+  teardown(() => {
+    fixt.remove();
+  });
+
   suite('basic', () => {
     setup(async () => {
-      fixt = await fixture(noText);
-      element = fixt.root.querySelector('mwc-button') as Button;
-    });
-
-    teardown(() => {
-      document.body.removeChild(fixt);
+      fixt = await fixture(button());
+      element = fixt.root.querySelector('mwc-button')!;
     });
 
     test('initializes as an mwc-button', () => {
       assert.instanceOf(element, Button);
+      assert.isFalse(element.raised);
+      assert.isFalse(element.unelevated);
+      assert.isFalse(element.outlined);
+      assert.isFalse(element.dense);
+      assert.isFalse(element.disabled);
+      assert.isFalse(element.trailingIcon);
+      assert.isFalse(element.fullwidth);
+      assert.equal(element.icon, '');
+      assert.equal(element.label, '');
+    });
+  });
+
+  suite('disabled', () => {
+    setup(async () => {
+      fixt = await fixture(button({disabled: true}));
+      element = fixt.root.querySelector('mwc-button')!;
+      await element.updateComplete;
     });
 
     test(
-        'get/set disabled updates the disabled property on the native button element',
+        'updates the disabled property on the native button element',
         async () => {
-          element.disabled = true;
-          await element.updateComplete;
           const button = element.shadowRoot!.querySelector('button')!;
-          assert.equal(button.hasAttribute('disabled'), true);
+
+          assert.isTrue(button.hasAttribute('disabled'));
 
           element.disabled = false;
           await element.updateComplete;
-          assert.equal(button.hasAttribute('disabled'), false);
+          assert.isFalse(button.hasAttribute('disabled'));
         });
+  });
 
-    test('setting `icon` adds an icon to the button', async () => {
+  suite('icon', () => {
+    setup(async () => {
+      fixt = await fixture(button({icon: 'check'}));
+      element = fixt.root.querySelector('mwc-button')!;
       await element.updateComplete;
+    });
+
+    test('adds an icon to the button', async () => {
       let icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
-      assert.equal(icon, null);
-
-      element.icon = 'check';
-      await element.updateComplete;
-      icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
       assert.instanceOf(icon, Element);
 
       element.icon = '';
@@ -76,11 +114,11 @@ suite('mwc-button', () => {
     });
 
     test(
-        'setting `trailingIcon` displays `icon` in a trailing position',
+        'setting `trailingIcon` displays icon in a trailing position',
         async () => {
-          element.icon = 'check';
           element.trailingIcon = true;
           await element.updateComplete;
+
           const leadingIcon = element.shadowRoot!.querySelector(
               `.leading-icon ${ICON_SELECTOR}`);
           const trailingIcon = element.shadowRoot!.querySelector(
@@ -89,66 +127,100 @@ suite('mwc-button', () => {
           assert.instanceOf(trailingIcon, Element);
         });
 
-    test('sets `aria-label` of the button when `label` is set', async () => {
-      element.label = 'Unit Test Button';
-      await element.updateComplete;
-      const button = element.shadowRoot!.querySelector('#button');
-      assert.equal(button!.getAttribute('aria-label'), 'Unit Test Button');
-    });
-
     test('sets `aria-label` of the button when `icon` is set', async () => {
-      element.icon = 'check';
-      await element.updateComplete;
       const button = element.shadowRoot!.querySelector('#button');
       assert.equal(button!.getAttribute('aria-label'), 'check');
     });
+  });
 
-    test('raised sets correct internal button style', async () => {
+  suite('label', () => {
+    setup(async () => {
+      fixt = await fixture(button({label: 'Unit Test Button'}));
+      element = fixt.root.querySelector('mwc-button')!;
+      await element.updateComplete;
+    });
+
+    test('sets `aria-label` of the button when `label` is set', async () => {
+      const button = element.shadowRoot!.querySelector('#button');
+      assert.equal(button!.getAttribute('aria-label'), 'Unit Test Button');
+    });
+  });
+
+  suite('raised', () => {
+    setup(async () => {
+      fixt = await fixture(button({raised: true}));
+      element = fixt.root.querySelector('mwc-button')!;
+      await element.updateComplete;
+    });
+
+    test('sets correct internal button style', async () => {
       const button = element.shadowRoot!.querySelector('#button')!;
       const raisedClass = 'mdc-button--raised';
-      assert.isFalse(button.classList.contains(raisedClass));
-      element.raised = true;
-      await element.updateComplete;
       assert.isTrue(button.classList.contains(raisedClass));
+      element.raised = false;
+      await element.updateComplete;
+      assert.isFalse(button.classList.contains(raisedClass));
+    });
+  });
+
+  suite('unelevated', () => {
+    setup(async () => {
+      fixt = await fixture(button({unelevated: true}));
+      element = fixt.root.querySelector('mwc-button')!;
+      await element.updateComplete;
     });
 
-    test('unelevated sets correct internal button style', async () => {
+    test('sets correct internal button style', async () => {
       const button = element.shadowRoot!.querySelector('#button')!;
       const unelevatedClass = 'mdc-button--unelevated';
-      assert.isFalse(button.classList.contains(unelevatedClass));
-      element.unelevated = true;
-      await element.updateComplete;
       assert.isTrue(button.classList.contains(unelevatedClass));
+      element.unelevated = false;
+      await element.updateComplete;
+      assert.isFalse(button.classList.contains(unelevatedClass));
+    });
+  });
+
+  suite('outlined', () => {
+    setup(async () => {
+      fixt = await fixture(button({outlined: true}));
+      element = fixt.root.querySelector('mwc-button')!;
+      await element.updateComplete;
     });
 
-    test('outlined sets correct internal button style', async () => {
+    test('sets correct internal button style', async () => {
       const button = element.shadowRoot!.querySelector('#button')!;
       const outlinedClass = 'mdc-button--outlined';
-      assert.isFalse(button.classList.contains(outlinedClass));
-      element.outlined = true;
-      await element.updateComplete;
       assert.isTrue(button.classList.contains(outlinedClass));
+      element.outlined = false;
+      await element.updateComplete;
+      assert.isFalse(button.classList.contains(outlinedClass));
+    });
+  });
+
+  suite('dense', () => {
+    setup(async () => {
+      fixt = await fixture(button({dense: true}));
+      element = fixt.root.querySelector('mwc-button')!;
+      await element.updateComplete;
     });
 
-    test('dense sets correct internal button style', async () => {
+    test('sets correct internal button style', async () => {
       const button = element.shadowRoot!.querySelector('#button')!;
       const denseClass = 'mdc-button--dense';
-      assert.isFalse(button.classList.contains(denseClass));
-      element.dense = true;
-      await element.updateComplete;
       assert.isTrue(button.classList.contains(denseClass));
+      element.dense = false;
+      await element.updateComplete;
+      assert.isFalse(button.classList.contains(denseClass));
     });
   });
 
   suite('focus', () => {
-    let fixt: TestFixture;
-    let element: Button;
     setup(async () => {
-      fixt = await fixture(basic);
-      element = fixt.root.firstElementChild as Button;
+      fixt = await fixture(button());
+      element = fixt.root.querySelector('mwc-button')!;
     });
 
-    test('focus fn highlights and blurs', async () => {
+    test('highlights and blurs', async () => {
       const focusedClass = 'mdc-ripple-upgraded--background-focused';
       const nativeButton =
           element.shadowRoot!.querySelector<HTMLButtonElement>('#button')!;
@@ -161,10 +233,6 @@ suite('mwc-button', () => {
       await element.requestUpdate();
       await rafPromise();
       assert.isFalse(nativeButton.classList.contains(focusedClass));
-    });
-
-    teardown(async () => {
-      fixt.remove();
     });
   });
 });
