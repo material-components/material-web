@@ -167,3 +167,19 @@ export const measureFixtureCreation = async (
 export const rafPromise = async () => new Promise((res) => {
   requestAnimationFrame(res);
 });
+
+export class Fake<TArgs extends any[], TReturn> {
+  public calls: Set<{args: TArgs}> = new Set();
+  public get called(): boolean {
+    return this.calls.size > 0;
+  }
+  public returnValue?: TReturn;
+  public handler: (...args: TArgs) => TReturn;
+
+  public constructor() {
+    this.handler = (...args: TArgs) => {
+      this.calls.add({args});
+      return this.returnValue as TReturn;
+    };
+  }
+}

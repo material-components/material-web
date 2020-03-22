@@ -16,9 +16,8 @@
  */
 
 import {Slider} from '@material/mwc-slider/mwc-slider';
-import {fake} from 'sinon';
 
-import {rafPromise} from '../../../../test/src/util/helpers';
+import {Fake, rafPromise} from '../../../../test/src/util/helpers';
 
 suite('mwc-slider', () => {
   let element: Slider;
@@ -55,15 +54,16 @@ suite('mwc-slider', () => {
 
   test('key events change value and fire events', async () => {
     const slider = element.shadowRoot!.querySelector('.mdc-slider')!;
-    const handler = fake();
-    const changeHandler = fake();
-    element.addEventListener('input', handler);
-    element.addEventListener('change', changeHandler);
+    const inputHandler = new Fake<[], void>();
+    const changeHandler = new Fake<[], void>();
+    element.addEventListener('input', inputHandler.handler);
+    element.addEventListener('change', changeHandler.handler);
 
     slider.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowUp'}));
     await element.updateComplete;
     await rafPromise();
-    assert.isTrue(handler.called);
+    assert.isTrue(inputHandler.called);
+    assert.isTrue(changeHandler.called);
     assert.equal(element.value, 1);
 
     slider.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));

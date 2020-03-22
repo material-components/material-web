@@ -19,9 +19,8 @@ import {List} from '@material/mwc-list';
 import {ListItem} from '@material/mwc-list/mwc-list-item';
 import {Menu} from '@material/mwc-menu';
 import {MenuSurface} from '@material/mwc-menu/mwc-menu-surface';
-import {fake} from 'sinon';
 
-import {rafPromise} from '../../../../test/src/util/helpers';
+import {Fake, rafPromise} from '../../../../test/src/util/helpers';
 
 suite('mwc-menu', () => {
   let element: Menu;
@@ -259,8 +258,8 @@ suite('mwc-menu-surface', () => {
   });
 
   test('closing fires the closed event', async () => {
-    const handler = fake();
-    element.addEventListener('closed', handler);
+    const fake = new Fake<[], void>();
+    element.addEventListener('closed', fake.handler);
     element.quick = true;
     element.open = true;
     await element.updateComplete;
@@ -268,17 +267,17 @@ suite('mwc-menu-surface', () => {
     element.open = false;
     await element.updateComplete;
     await rafPromise();
-    assert.isTrue(handler.called);
+    assert.isTrue(fake.called);
   });
 
   test('opening fires the opened event', async () => {
-    const handler = fake();
-    element.addEventListener('opened', handler);
+    const fake = new Fake<[], void>();
+    element.addEventListener('opened', fake.handler);
     element.quick = true;
     element.open = true;
     await element.updateComplete;
     await rafPromise();
-    assert.isTrue(handler.called);
+    assert.isTrue(fake.called);
   });
 
   test('escape key closes surface', async () => {
