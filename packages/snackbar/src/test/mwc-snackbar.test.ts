@@ -16,17 +16,48 @@
  */
 
 import {Snackbar} from '@material/mwc-snackbar';
+import {html, TemplateResult} from 'lit-html';
 import {fake, restore, SinonFakeTimers, useFakeTimers} from 'sinon';
 
-import {rafPromise} from '../../../../test/src/util/helpers';
+import {fixture, rafPromise, TestFixture} from '../../../../test/src/util/helpers';
+
+interface SnackBarProps {
+  timeoutMs: number;
+  closeOnEscape: boolean;
+  labelText: string;
+  actionElement: TemplateResult;
+  dismissElement: TemplateResult;
+}
+
+const snackBar = (propsInit?: Partial<SnackBarProps>) => {
+  if (!propsInit) {
+    return html`<mwc-snackbar></mwc-snackbar>`;
+  }
+  return html`
+    <mwc-snackbar
+      .timeoutMs=${propsInit.timeoutMs ?? -1}
+      ?closeOnEscape=${propsInit.closeOnEscape === true}
+      .labelText=${propsInit.labelText ?? ''}>
+      ${propsInit.actionElement ?? html``}
+      ${propsInit.dismissElement ?? html``}
+    </mwc-snackbar>
+  `;
+};
+
+const findLabelText = (element: Element) => {
+  // Note that label text can either be in the label's textContent, or in its
+  // ::before pseudo-element content (set via an attribute), for ARIA reasons.
+  const label = element.shadowRoot!.querySelector('.mdc-snackbar__label')!;
+  return label.getAttribute('data-mdc-snackbar-label-text') ||
+      label.textContent;
+};
 
 suite('mwc-snackbar', () => {
+  let fixt: TestFixture;
   let element: Snackbar;
   let clock: SinonFakeTimers;
 
   setup(() => {
-    element = document.createElement('mwc-snackbar');
-    document.body.appendChild(element);
     clock = useFakeTimers({toFake: ['setTimeout']});
   });
 
@@ -35,93 +66,134 @@ suite('mwc-snackbar', () => {
     element.remove();
   });
 
-  test('initializes as an mwc-snackbar', () => {
-    assert.instanceOf(element, Snackbar);
+  suite('basic', () => {
+    setup(async () => {
+      fixt = await fixture(snackBar());
+      element = fixt.root.querySelector('mwc-snackbar')!;
+      await element.updateComplete;
+    });
+
+    test('initializes as an mwc-snackbar', () => {
+      assert.instanceOf(element, Snackbar);
+      assert.isFalse(element.isOpen);
+      assert.equal(element.timeoutMs, 5000);
+      assert.isFalse(element.closeOnEscape);
+      assert.equal(element.labelText, '');
+      assert.isFalse(element.stacked);
+      assert.isFalse(element.leading);
+    });
   });
 
-  const findLabelText = () => {
-    // Note that label text can either be in the label's textContent, or in its
-    // ::before pseudo-element content (set via an attribute), for ARIA reasons.
-    const label = element.shadowRoot!.querySelector('.mdc-snackbar__label')!;
-    return label.getAttribute('data-mdc-snackbar-label-text') ||
-        label.textContent;
-  };
+  suite('open/close', () => {
+    setup(async () => {
+      fixt = await fixture(snackBar({timeoutMs: -1}));
+      element = fixt.root.querySelector('mwc-snackbar')!;
+      await element.updateComplete;
+    });
 
-  test('set label text after opening', async () => {
-    element.labelText = 'foo';
-    element.open();
-    await element.updateComplete;
-    assert.equal(findLabelText(), 'foo');
+    test('`open()` opens snack bar', async () => {
+      const handler = fake();
+      const openingHandler = fake();
+      element.addEventListener('MDCSnackbar:opened', handler);
+      element.addEventListener('MDCSnackbar:opening', openingHandler);
+      assert.equal(element.isOpen, false);
+      element.open();
+      await element.updateComplete;
+      assert.isTrue(openingHandler.called);
+      await rafPromise();
+      clock.runAll();
+      assert.isTrue(element.isOpen);
+      assert.isTrue(handler.called);
+    });
 
-    element.labelText = 'bar';
-    await element.updateComplete;
-    assert.equal(findLabelText(), 'bar');
-
-    element.labelText = 'baz';
-    await element.updateComplete;
-    assert.equal(findLabelText(), 'baz');
+    test('`close()` closes snack bar', async () => {
+      const handler = fake();
+      element.addEventListener('MDCSnackbar:closed', handler);
+      element.open();
+      await element.updateComplete;
+      await rafPromise();
+      clock.runAll();
+      element.close();
+      clock.runAll();
+      assert.isFalse(element.isOpen);
+      assert.isTrue(handler.called);
+    });
   });
 
-  test('`open()` opens snack bar', async () => {
-    const handler = fake();
-    const openingHandler = fake();
-    element.addEventListener('MDCSnackbar:opened', handler);
-    element.addEventListener('MDCSnackbar:opening', openingHandler);
-    assert.equal(element.isOpen, false);
-    element.open();
-    await element.updateComplete;
-    assert.isTrue(openingHandler.called);
-    await rafPromise();
-    clock.next();
-    clock.next();
-    assert.isTrue(element.isOpen);
-    assert.isTrue(handler.called);
+  suite('labelText', () => {
+    setup(async () => {
+      fixt = await fixture(snackBar({labelText: 'foo'}));
+      element = fixt.root.querySelector('mwc-snackbar')!;
+      await element.updateComplete;
+    });
+
+    test('set label text after opening', async () => {
+      element.open();
+      await element.updateComplete;
+      assert.equal(findLabelText(element), 'foo');
+
+      element.labelText = 'bar';
+      await element.updateComplete;
+      assert.equal(findLabelText(element), 'bar');
+
+      element.labelText = 'baz';
+      await element.updateComplete;
+      assert.equal(findLabelText(element), 'baz');
+    });
   });
 
-  test('`close()` closes snack bar', async () => {
-    const handler = fake();
-    element.addEventListener('MDCSnackbar:closed', handler);
-    element.isOpen = true;
-    await element.updateComplete;
-    element.close();
-    clock.runAll();
-    assert.isFalse(element.isOpen);
-    assert.isTrue(handler.called);
+  suite('dismiss', () => {
+    setup(async () => {
+      fixt = await fixture(
+          snackBar({dismissElement: html`<span slot="dismiss">test</span>`}));
+      element = fixt.root.querySelector('mwc-snackbar')!;
+      await element.updateComplete;
+    });
+
+    test('closes when dismissed', async () => {
+      const close = element.querySelector<HTMLElement>('[slot="dismiss"]')!;
+      const handler = fake();
+      element.addEventListener('MDCSnackbar:closed', handler);
+      element.open();
+      await element.updateComplete;
+      close.click();
+      clock.runAll();
+      assert.isFalse(element.isOpen);
+      assert.equal(handler.lastCall.args[0].detail.reason, 'dismiss');
+    });
   });
 
-  test('closes when dismissed', async () => {
-    const handler = fake();
-    element.addEventListener('MDCSnackbar:closed', handler);
-    const close = document.createElement('span');
-    close.slot = 'dismiss';
-    element.appendChild(close);
-    element.open();
-    await element.updateComplete;
-    close.click();
-    clock.runAll();
-    assert.isFalse(element.isOpen);
-    assert.equal(handler.lastCall.args[0].detail.reason, 'dismiss');
+  suite('action', () => {
+    setup(async () => {
+      fixt = await fixture(
+          snackBar({actionElement: html`<span slot="action">test</span>`}));
+      element = fixt.root.querySelector('mwc-snackbar')!;
+      await element.updateComplete;
+    });
+
+    test('closes when actioned', async () => {
+      const action = element.querySelector<HTMLElement>('[slot="action"]')!;
+      const handler = fake();
+      element.addEventListener('MDCSnackbar:closed', handler);
+      element.open();
+      await element.updateComplete;
+      action.click();
+      clock.runAll();
+      assert.isFalse(element.isOpen);
+      assert.equal(handler.lastCall.args[0].detail.reason, 'action');
+    });
   });
 
-  test('closes when actioned', async () => {
-    const handler = fake();
-    element.addEventListener('MDCSnackbar:closed', handler);
-    const action = document.createElement('span');
-    action.slot = 'action';
-    element.appendChild(action);
-    element.open();
-    await element.updateComplete;
-    action.click();
-    clock.runAll();
-    assert.isFalse(element.isOpen);
-    assert.equal(handler.lastCall.args[0].detail.reason, 'action');
-  });
+  suite('`closeOnEscape`', () => {
+    setup(async () => {
+      fixt = await fixture(snackBar({closeOnEscape: true}));
+      element = fixt.root.querySelector('mwc-snackbar')!;
+      await element.updateComplete;
+    });
 
-  suite('`closedOnEscape`', () => {
     test('does not close when unset and esc is pressed', async () => {
       element.closeOnEscape = false;
-      element.timeoutMs = -1;
-      element.isOpen = true;
+      element.open();
       await element.updateComplete;
       await rafPromise();
       clock.runAll();
@@ -134,9 +206,7 @@ suite('mwc-snackbar', () => {
     });
 
     test('closes when set and esc is pressed', async () => {
-      element.closeOnEscape = true;
-      element.timeoutMs = -1;
-      element.isOpen = true;
+      element.open();
       await element.updateComplete;
       await rafPromise();
       clock.runAll();

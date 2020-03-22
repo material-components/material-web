@@ -34,7 +34,10 @@ interface ButtonProps {
   trailingIcon: boolean;
 }
 
-const button = (propsInit: Partial<ButtonProps> = {}) => {
+const button = (propsInit?: Partial<ButtonProps>) => {
+  if (!propsInit) {
+    return html`<mwc-button></mwc-button>`;
+  }
   return html`
     <mwc-button
       ?disabled=${propsInit.disabled === true}
