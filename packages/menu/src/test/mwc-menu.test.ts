@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import '@material/mwc-list/mwc-list-item';
+
 import {List} from '@material/mwc-list';
 import {ListItem} from '@material/mwc-list/mwc-list-item';
 import {Menu} from '@material/mwc-menu';
@@ -63,7 +65,7 @@ suite('mwc-menu', () => {
   });
 
   test('`items` returns list items', async () => {
-    element.innerHTML = '<mwc-list-item mwc-list-item>1</mwc-list-item>';
+    element.innerHTML = '<mwc-list-item>1</mwc-list-item>';
     element.layout(true);
     await element.updateComplete;
     const items = element.items;
@@ -184,8 +186,8 @@ suite('mwc-menu', () => {
   suite('selection', () => {
     setup(async () => {
       element.innerHTML = `
-        <mwc-list-item mwc-list-item>1</mwc-list-item>
-        <mwc-list-item mwc-list-item>2</mwc-list-item>`;
+        <mwc-list-item>1</mwc-list-item>
+        <mwc-list-item>2</mwc-list-item>`;
       element.layout(true);
       await element.updateComplete;
     });
