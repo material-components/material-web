@@ -14,8 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// taze: chai from //third_party/javascript/chai:closure_chai
-// taze: sinon from //third_party/javascript/sinon:sinon_lib
 
 import {Checkbox} from '@material/mwc-checkbox';
 import {fake} from 'sinon';

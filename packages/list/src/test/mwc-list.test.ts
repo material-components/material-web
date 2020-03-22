@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// taze: chai from //third_party/javascript/chai:closure_chai
 
 import '@material/mwc-list';
 import '@material/mwc-list/mwc-list-item';
