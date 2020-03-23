@@ -15,71 +15,99 @@
  * limitations under the License.
  */
 import {Switch} from '@material/mwc-switch';
+import {html} from 'lit-html';
 
-import {Fake} from '../../../../test/src/util/helpers';
+import {Fake, fixture, TestFixture} from '../../../../test/src/util/helpers';
 
-interface SwitchInternals {
-  formElement: HTMLInputElement;
+interface SwitchProps {
+  checked: boolean;
+  disabled: boolean;
 }
 
-suite('mwc-switch', () => {
-  let element: Switch;
-  let internals: SwitchInternals;
+const switchElement = (propsInit?: Partial<SwitchProps>) => {
+  if (!propsInit) {
+    return html`<mwc-switch></mwc-switch>`;
+  }
+  return html`
+    <mwc-switch
+      ?checked=${propsInit.checked === true}
+      ?disabled=${propsInit.disabled === true}></mwc-switch>
+  `;
+};
 
-  setup(() => {
-    element = document.createElement('mwc-switch');
-    internals = element as unknown as SwitchInternals;
-    document.body.appendChild(element);
-  });
+suite('mwc-switch', () => {
+  let fixt: TestFixture;
+  let element: Switch;
 
   teardown(() => {
-    document.body.removeChild(element);
+    fixt.remove();
   });
 
-  test('initializes as an mwc-switch', () => {
-    assert.instanceOf(element, Switch);
+  suite('basic', () => {
+    setup(async () => {
+      fixt = await fixture(switchElement());
+      element = fixt.root.querySelector('mwc-switch')!;
+      await element.updateComplete;
+    });
+
+    test('initializes as an mwc-switch', () => {
+      assert.instanceOf(element, Switch);
+      assert.equal(element.checked, false);
+      assert.equal(element.disabled, false);
+    });
+
+    test('user input emits `change` event', async () => {
+      const callback = new Fake<[], void>();
+      element.addEventListener('change', callback.handler);
+
+      element.click();
+
+      assert.equal(callback.callCount, 1);
+    });
   });
 
-  test('setting `checked` checks the native input', async () => {
-    element.checked = true;
-    await element.updateComplete;
-    assert(internals.formElement.checked);
+  suite('checked', () => {
+    setup(async () => {
+      fixt = await fixture(switchElement({checked: true}));
+      element = fixt.root.querySelector('mwc-switch')!;
+      await element.updateComplete;
+    });
 
-    element.checked = false;
-    await element.updateComplete;
-    assert(!internals.formElement.checked);
+    test('checks the native input', async () => {
+      const input = element.shadowRoot!.querySelector('input')!;
+      assert(input.checked);
+
+      element.checked = false;
+      await element.updateComplete;
+      assert(!input.checked);
+    });
+
+    test(
+        'setting `checked` affects `aria-checked` of native input',
+        async () => {
+          const input = element.shadowRoot!.querySelector('input')!;
+          assert.equal(input.getAttribute('aria-checked'), 'true');
+
+          element.checked = false;
+          await element.updateComplete;
+          assert.equal(input.getAttribute('aria-checked'), 'false');
+        });
   });
 
-  test('setting `checked` affects `aria-checked` of native input', async () => {
-    element.checked = true;
-    await element.updateComplete;
-    assert.equal(internals.formElement.getAttribute('aria-checked'), 'true');
+  suite('disabled', () => {
+    setup(async () => {
+      fixt = await fixture(switchElement({disabled: true}));
+      element = fixt.root.querySelector('mwc-switch')!;
+      await element.updateComplete;
+    });
 
-    element.checked = false;
-    await element.updateComplete;
-    assert.equal(internals.formElement.getAttribute('aria-checked'), 'false');
-  });
+    test('disables the native input', async () => {
+      const input = element.shadowRoot!.querySelector('input')!;
+      assert(input.disabled);
 
-  test('setting `disabled` disables the native input', async () => {
-    element.disabled = true;
-    await element.updateComplete;
-    assert(internals.formElement.disabled);
-
-    element.disabled = false;
-    await element.updateComplete;
-    assert(!internals.formElement.disabled);
-  });
-
-  test('user input emits `change` event', async () => {
-    const callback = new Fake<[], void>();
-    document.body.addEventListener('change', callback.handler);
-    element.checked = false;
-    await element.updateComplete;
-
-    element.click();
-
-    assert.equal(callback.callCount, 1);
-
-    document.body.removeEventListener('change', callback.handler);
+      element.disabled = false;
+      await element.updateComplete;
+      assert(!input.disabled);
+    });
   });
 });
