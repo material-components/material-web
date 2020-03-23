@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-menu",
-  "version": "0.14.0",
+  "version": "0.14.1",
   "description": "",
   "main": "mwc-menu.js",
   "module": "mwc-menu.js",
@@ -12,8 +12,8 @@
   "dependencies": {
     "@material/menu": "=6.0.0-canary.35a32aaea.0",
     "@material/menu-surface": "=6.0.0-canary.35a32aaea.0",
-    "@material/mwc-base": "^0.14.0",
-    "@material/mwc-list": "^0.14.0",
+    "@material/mwc-base": "^0.14.1",
+    "@material/mwc-list": "^0.14.1",
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0"

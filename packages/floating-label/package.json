@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-floating-label",
-  "version": "0.14.0",
+  "version": "0.14.1",
   "description": "",
   "main": "mwc-floating-label-directive.js",
   "module": "mwc-floating-label-directive.js",

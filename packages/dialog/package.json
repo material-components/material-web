@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-dialog",
-  "version": "0.14.0",
+  "version": "0.14.1",
   "description": "",
   "main": "mwc-dialog.js",
   "module": "mwc-dialog.js",
@@ -17,7 +17,7 @@
   "dependencies": {
     "@material/dialog": "=6.0.0-canary.35a32aaea.0",
     "@material/dom": "=6.0.0-canary.35a32aaea.0",
-    "@material/mwc-base": "^0.14.0",
+    "@material/mwc-base": "^0.14.1",
     "@material/touch-target": "=6.0.0-canary.35a32aaea.0",
     "blocking-elements": "^0.1.0",
     "lit-element": "^2.3.0",
