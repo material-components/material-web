@@ -169,16 +169,19 @@ export const rafPromise = async () => new Promise((res) => {
 });
 
 export class Fake<TArgs extends any[], TReturn> {
-  public calls: Set<{args: TArgs}> = new Set();
+  public calls: Array<{args: TArgs}> = [];
   public get called(): boolean {
-    return this.calls.size > 0;
+    return this.calls.length > 0;
+  }
+  public get callCount(): number {
+    return this.calls.length;
   }
   public returnValue?: TReturn;
   public handler: (...args: TArgs) => TReturn;
 
   public constructor() {
     this.handler = (...args: TArgs) => {
-      this.calls.add({args});
+      this.calls.push({args});
       return this.returnValue as TReturn;
     };
   }

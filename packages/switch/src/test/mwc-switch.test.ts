@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 import {Switch} from '@material/mwc-switch';
-import {fake} from 'sinon';
+
+import {Fake} from '../../../../test/src/util/helpers';
 
 interface SwitchInternals {
   formElement: HTMLInputElement;
@@ -70,8 +71,8 @@ suite('mwc-switch', () => {
   });
 
   test('user input emits `change` event', async () => {
-    const callback = fake();
-    document.body.addEventListener('change', callback);
+    const callback = new Fake<[], void>();
+    document.body.addEventListener('change', callback.handler);
     element.checked = false;
     await element.updateComplete;
 
@@ -79,6 +80,6 @@ suite('mwc-switch', () => {
 
     assert.equal(callback.callCount, 1);
 
-    document.body.removeEventListener('change', callback);
+    document.body.removeEventListener('change', callback.handler);
   });
 });

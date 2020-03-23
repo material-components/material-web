@@ -16,7 +16,8 @@
  */
 
 import {Checkbox} from '@material/mwc-checkbox';
-import {fake} from 'sinon';
+
+import {Fake} from '../../../../test/src/util/helpers';
 
 interface CheckboxInternals {
   formElement: HTMLInputElement;
@@ -94,8 +95,8 @@ suite('mwc-checkbox', () => {
       });
 
   test('user input emits `change` event', async () => {
-    const callback = fake();
-    document.body.addEventListener('change', callback);
+    const callback = new Fake<[], void>();
+    document.body.addEventListener('change', callback.handler);
     element.checked = false;
     await element.updateComplete;
     element.click();
