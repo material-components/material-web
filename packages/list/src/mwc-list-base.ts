@@ -86,6 +86,8 @@ export abstract class ListBase extends BaseElement {
 
   @property({type: String}) innerRole: string|null = null;
 
+  @property({type: String}) innerAriaLabel: string|null = null;
+
   @property({type: Boolean}) rootTabbable = false;
 
   protected previousTabindex: Element|null = null;
@@ -192,12 +194,15 @@ export abstract class ListBase extends BaseElement {
 
   render() {
     const role = this.innerRole === null ? undefined : this.innerRole;
+    const ariaLabel =
+        this.innerAriaLabel === null ? undefined : this.innerAriaLabel;
     const tabindex = this.rootTabbable ? '0' : '-1';
     return html`
       <!-- @ts-ignore -->
       <ul
           tabindex=${tabindex}
           role="${ifDefined(role)}"
+          aria-label="${ifDefined(ariaLabel)}"
           class="mdc-list"
           @keydown=${this.onKeydown}
           @focusin=${this.onFocusIn}

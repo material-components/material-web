@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- `innerAriaLabel` to `mwc-list` to set `aria-label`.
+
 ### Changed
 
 - Update `lit-element` dependency to `2.3.0` for all components.
