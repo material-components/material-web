@@ -24,10 +24,11 @@ limitations under the License.
   <script type="module" src="../node_modules/@material/mwc-textfield/mwc-textfield.js"></script>
   <script type="module" src="../node_modules/@material/mwc-dialog/mwc-dialog.js"></script>
   <script type="module" src="../node_modules/@material/mwc-icon/mwc-icon.js"></script>
+  <script type="module" src="demo-header.js"></script>
   <link rel="stylesheet" href="demo-component.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
-
+  <script type="module" src="demo-header.js"></script>
   <style>
     body {
       min-height: calc(100vh - 4em);
@@ -35,10 +36,7 @@ limitations under the License.
   </style>
 </head>
 <body class="unresolved">
-  <header>
-    <a href="index.html"><mwc-icon>arrow_back</mwc-icon>
-    <span>Dialog</span></a>
-  </header>
+  <demo-header component="Dialog" source="dialog.html"></demo-header>
 
   <main>
     <div>

@@ -15,12 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {LitElement, html, css} from 'lit-element/lit-element.js';
-import {style as listStyle} from './style/mwc-list-item-css.js';
+import '@material/mwc-button';
+import '@material/mwc-list';
+import '@material/mwc-list/mwc-list-item';
 
 class DemoView extends LitElement {
   static get styles() {
     return [
-      listStyle,
       css`
         header {
           background-color: #6200ee;
@@ -53,7 +54,7 @@ class DemoView extends LitElement {
           box-sizing: border-box;
         }
 
-        .demo-list {
+        mwc-list {
           margin-top: 64px;
         }
 
@@ -64,184 +65,225 @@ class DemoView extends LitElement {
         .demo-heading {
           margin-left: 8px;
         }
-      `,
+
+        mwc-list-item {
+          --mdc-list-side-padding: 28px;
+          --mdc-list-item-graphic-margin: 24px;
+        }
+
+        .demo-source {
+          display: flex;
+          flex-direction: column;
+          flex-grow: 1;
+        }
+
+        .demo-source > a {
+          text-decoration: none;
+          align-self: flex-end;
+        }
+
+        mwc-button {
+          --mdc-theme-primary: white;
+        }`,
     ];
   }
 
+  constructor() {
+    super();
+
+    const sortFn = (first, second) => {
+      const isEqual = first.name === second.name;
+
+      if (isEqual) {
+        return 0;
+      }
+
+      if (first.name < second.name) {
+        return -1;
+      } else {
+        return 1;
+      }
+    };
+
+    this.listItems = [
+      {
+        name: 'Button',
+        secondary: 'Raised and flat buttons',
+        href: 'button.html',
+        img: 'https://material-components-web.appspot.com/images/ic_button_24px.svg',
+      },
+      {
+        name: 'Floating action button',
+        secondary: 'The primary action in an application',
+        href: 'fab.html',
+        img: 'https://material-components-web.appspot.com/images/ic_button_24px.svg',
+      },
+      {
+        name: 'Checkbox',
+        secondary: 'Multi-selection controls',
+        href: 'checkbox.html',
+        img: 'https://material-components-web.appspot.com/images/ic_selection_control_24px.svg',
+      },
+      {
+        name: 'Drawer',
+        secondary: 'Navigation to provide access to destinations.',
+        href: 'drawer.html',
+        img: 'https://material-components-web.appspot.com/images/ic_component_24px.svg',
+      },
+      {
+        name: 'Dialog',
+        secondary: 'Popup that gains user attention.',
+        href: 'dialog.html',
+        img: 'https://material-components-web.appspot.com/images/ic_dialog_24px.svg',
+      },
+      {
+        name: 'Formfield',
+        secondary: 'Layout form fields with labels',
+        href: 'formfield.html',
+        img: 'https://material-components-web.appspot.com/images/ic_text_field_24px.svg',
+      },
+      {
+        name: 'Icon',
+        secondary: 'Material design icons',
+        href: 'icon.html',
+        img: 'https://material-components-web.appspot.com/images/ic_component_24px.svg',
+      },
+      {
+        name: 'Icon Button',
+        secondary: 'Icon buttons allow users to take actions, and make choices, with a single tap.',
+        href: 'icon-button.html',
+        img: 'https://material-components-web.appspot.com/images/ic_component_24px.svg',
+      },
+      {
+        name: 'Icon Button Toggle',
+        secondary: 'Toggling icon states',
+        href: 'icon-button-toggle.html',
+        img: 'https://material-components-web.appspot.com/images/ic_component_24px.svg',
+      },
+      {
+        name: 'Linear Progress',
+        secondary: 'Fills from 0% to 100%, represented by bars',
+        href: 'linear-progress.html',
+        img: 'https://material-components-web.appspot.com/images/ic_progress_activity.svg',
+      },
+      {
+        name: 'List',
+        secondary: 'Continuous, vertical indexes of text or images.',
+        href: 'list.html',
+        img: 'https://material.io/develop/images/component_icons/list.svg',
+      },
+      {
+        name: 'Menu',
+        secondary: 'Displays a list of choices on a temporary surface.',
+        href: 'menu.html',
+        img: 'https://material.io/develop/images/component_icons/menu.svg',
+      },
+      {
+        name: 'Radio buttons',
+        secondary: 'Single selection controls',
+        href: 'radio.html',
+        img: 'https://material-components-web.appspot.com/images/ic_radio_button_24px.svg',
+      },
+      {
+        name: 'Ripple',
+        secondary: 'Touch ripple',
+        href: 'ripple.html',
+        img: 'https://material-components-web.appspot.com/images/ic_ripple_24px.svg',
+      },
+      {
+        name: 'Select',
+        secondary: 'Single option dropdown select menus',
+        href: 'select.html',
+        img: 'https://material.io/develop/images/component_icons/menu.svg',
+      },
+      {
+        name: 'Slider',
+        secondary: 'Range controls',
+        href: 'slider.html',
+        img: 'https://material-components-web.appspot.com/images/slider.svg',
+      },
+      {
+        name: 'Snackbar',
+        secondary: 'Transient messages',
+        href: 'snackbar.html',
+        img: 'https://material-components-web.appspot.com/images/ic_toast_24px.svg',
+      },
+      {
+        name: 'Switch',
+        secondary: 'On off controls',
+        href: 'switch.html',
+        img: 'https://material-components-web.appspot.com/images/ic_switch_24px.svg',
+      },
+      {
+        name: 'Tabs',
+        secondary: 'Tabs with support for icon and text labels',
+        href: 'tabs.html',
+        img: 'https://material-components-web.appspot.com/images/ic_tabs_24px.svg',
+      },
+      {
+        name: 'Textfield',
+        secondary: 'Single line text input',
+        href: 'textfield.html',
+        img: 'https://material-components-web.appspot.com/images/ic_text_field_24px.svg',
+      },
+      {
+        name: 'Textarea',
+        secondary: 'Multiline text input',
+        href: 'textarea.html',
+        img: 'https://material-components-web.appspot.com/images/ic_text_field_24px.svg',
+      },
+      {
+        name: 'Top App Bar',
+        secondary: 'Container for items such as application title, navigation icon, and action items.',
+        href: 'top-app-bar.html',
+        img: 'https://material-components-web.appspot.com/images/ic_toolbar_24px.svg',
+      },
+      {
+        name: 'Top App Bar Fixed',
+        secondary: 'Container for items such as application title, navigation icon, and action items.',
+        href: 'top-app-bar-fixed.html',
+        img: 'https://material-components-web.appspot.com/images/ic_toolbar_24px.svg',
+      },
+    ].sort(sortFn);
+  }
+
+
   render() {
+    const listItems = this.listItems.map((item) => {
+      return html`
+        <mwc-list-item twoline graphic="icon" data-href=${item.href}>
+          <span>${item.name}</span>
+          <span slot="secondary">${item.secondary}</span>
+          <img slot="graphic" src=${item.img} aria-hidden="true">
+        </mwc-list-item>`;
+    });
+
     return html`
       <header>
         <span class="demo-catalog-logo">
           <img src="https://material-components-web.appspot.com/images/ic_component_24px_white.svg">
         </span>
         <span class="demo-heading">Material Web Components Catalog</span>
-      </header>
-      <div class="demo-list">
-        <div role="list" class="mdc-list mdc-list--two-line">
-          <a role="listitem" class="mdc-list-item" href="button.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_button_24px.svg"></span>
-            <span class="mdc-list-item__text">
-              Button
-              <span class="mdc-list-item__secondary-text">Raised and flat buttons</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="fab.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_button_24px.svg"></span>
-            <span class="mdc-list-item__text">
-              Floating action button
-              <span class="mdc-list-item__secondary-text">The primary action in an application</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="checkbox.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_selection_control_24px.svg"></span>
-            <span class="mdc-list-item__text">
-              Checkbox
-              <span class="mdc-list-item__secondary-text">Multi-selection controls</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="drawer.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_component_24px.svg"></span>
-            <span class="mdc-list-item__text">
-              Drawer
-              <span class="mdc-list-item__secondary-text">Navigation to provide access to destinations.</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="dialog.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_dialog_24px.svg"></span>
-            <span class="mdc-list-item__text">
-              Dialog
-              <span class="mdc-list-item__secondary-text">Popup that gains user attention.</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="formfield.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_text_field_24px.svg"></span>
-            <span class="mdc-list-item__text">
-              Form field
-              <span class="mdc-list-item__secondary-text">Layout form fields with labels</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="icon.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_component_24px.svg"></span>
-            <span class="mdc-list-item__text">
-              Icon
-              <span class="mdc-list-item__secondary-text">Material design icons</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="icon-button.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_component_24px.svg"></span>
-            <span class="mdc-list-item__text">
-              Icon Button
-              <span class="mdc-list-item__secondary-text">Icon buttons allow users to take actions, and make choices, with a single tap.</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="icon-button-toggle.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_component_24px.svg"></span>
-            <span class="mdc-list-item__text">
-              Icon Button Toggle
-              <span class="mdc-list-item__secondary-text">Toggling icon states</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="linear-progress.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_progress_activity.svg"></span>
-            <span class="mdc-list-item__text">
-              Linear Progress
-              <span class="mdc-list-item__secondary-text">Fills from 0% to 100%, represented by bars</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="list.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material.io/develop/images/component_icons/list.svg"></span>
-            <span class="mdc-list-item__text">
-              List
-              <span class="mdc-list-item__secondary-text">Lists are continuous, vertical indexes of text or images.</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="menu.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material.io/develop/images/component_icons/menu.svg"></span>
-            <span class="mdc-list-item__text">
-              Menu
-              <span class="mdc-list-item__secondary-text">Displays a list of choices on a temporary surface.</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="radio.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_radio_button_24px.svg"></span>
-            <span class="mdc-list-item__text">
-              Radio buttons
-              <span class="mdc-list-item__secondary-text">Single selection controls</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="ripple.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_ripple_24px.svg"></span>
-            <span class="mdc-list-item__text">
-              Ripple
-              <span class="mdc-list-item__secondary-text">Touch ripple</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="select.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material.io/develop/images/component_icons/menu.svg"></span>
-            <span class="mdc-list-item__text">
-              Select
-              <span class="mdc-list-item__secondary-text">Single option dropdown select menus</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="slider.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/slider.svg"></span>
-            <span class="mdc-list-item__text">
-              Slider
-              <span class="mdc-list-item__secondary-text">Range controls</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="snackbar.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_toast_24px.svg"></span>
-            <span class="mdc-list-item__text">
-              Snackbar
-              <span class="mdc-list-item__secondary-text">Transient messages</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="switch.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_switch_24px.svg"></span>
-            <span class="mdc-list-item__text">
-              Switch
-              <span class="mdc-list-item__secondary-text">On off switches</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="tabs.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_tabs_24px.svg"></span>
-            <span class="mdc-list-item__text">
-              Tabs
-              <span class="mdc-list-item__secondary-text">Tabs with support for icon and text labels</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="textfield.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_text_field_24px.svg"></span>
-            <span class="mdc-list-item__text">
-              Text field
-              <span class="mdc-list-item__secondary-text">Single line text fields</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="textarea.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_text_field_24px.svg"></span>
-            <span class="mdc-list-item__text">
-              Text area
-              <span class="mdc-list-item__secondary-text">Multiline text areas</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="top-app-bar.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_toolbar_24px.svg"></span>
-            <span class="mdc-list-item__text">
-              Top App Bar
-              <span class="mdc-list-item__secondary-text">Top App Bars are a container for items such as application title, navigation icon, and action items.</span>
-            </span>
-          </a>
-          <a role="listitem" class="mdc-list-item" href="top-app-bar-fixed.html">
-            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_toolbar_24px.svg"></span>
-            <span class="mdc-list-item__text">
-              Top App Bar Fixed
-              <span class="mdc-list-item__secondary-text">Top App Bars are a container for items such as application title, navigation icon, and action items.</span>
-            </span>
+        <div class="demo-source">
+          <a href="https://glitch.com/edit/#!/mwc-demos?path=demos/index.js">
+            <mwc-button outlined label="Edit Source"></mwc-button>
           </a>
         </div>
+      </header>
+      <div class="demo-list">
+        <mwc-list wrapFocus innerRole="navigation" innerAriaLabel="Material Web Component Demos" itemRoles="link" rootTabbable @selected=${this.onSelected}>
+          ${listItems}
+        </mwc-list>
       </div>
     `;
+  }
+
+  onSelected(e) {
+    const list = this.shadowRoot.querySelector('mwc-list');
+    const index = e.detail.index;
+    const item = list.items[index];
+    const href = item.dataset.href;
+    window.location.href = `${window.location.href}/../${href}`;
   }
 }
 
