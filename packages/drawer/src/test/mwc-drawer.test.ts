@@ -16,12 +16,32 @@
  */
 
 import {Drawer} from '@material/mwc-drawer';
+import {html} from 'lit-html';
+
+import {fixture, TestFixture} from '../../../../test/src/util/helpers';
 
 const SCRIM_SELECTOR = '.mdc-drawer-scrim';
 const HEADER_SELECTOR = '.mdc-drawer__header';
 const DISMISSIBLE_CLASS = 'mdc-drawer--dismissible';
 
+interface DrawerProps {
+  hasHeader: boolean;
+  type: string;
+}
+
+const defaultDrawer = html`<mwc-drawer></mwc-drawer>`;
+
+const drawer = (propsInit: Partial<DrawerProps>) => {
+  return html`
+    <mwc-drawer
+      ?hasHeader=${propsInit.hasHeader === true}
+      .type=${propsInit.type ?? ''}>
+    </mwc-drawer>
+  `;
+}
+
 suite('mwc-drawer', () => {
+  let fixt: TestFixture;
   let element: Drawer;
 
   setup(async () => {
@@ -31,43 +51,65 @@ suite('mwc-drawer', () => {
   });
 
   teardown(() => {
-    element.remove();
+    fixt.remove();
   });
 
-  test('initializes as an mwc-drawer', () => {
-    assert.instanceOf(element, Drawer);
+  suite('basic', () => {
+    setup(async () => {
+      fixt = await fixture(defaultDrawer);
+      element = fixt.root.querySelector('mwc-drawer')!;
+    });
+
+    test('initializes as an mwc-drawer', () => {
+      assert.instanceOf(element, Drawer);
+      assert.equal(element.type, '');
+      assert.equal(element.open, false);
+      assert.equal(element.hasHeader, false);
+    });
   });
 
-  test('`hasHeader` should display a header if set', async () => {
-    let header = element.shadowRoot!.querySelector(HEADER_SELECTOR);
-    assert.equal(header, null);
-    element.hasHeader = true;
-    await element.updateComplete;
-    header = element.shadowRoot!.querySelector(HEADER_SELECTOR);
-    assert.instanceOf(header, Element);
-    element.hasHeader = false;
-    await element.updateComplete;
-    header = element.shadowRoot!.querySelector(HEADER_SELECTOR);
-    assert.equal(header, null);
+  suite('hasHeader', () => {
+    setup(async () => {
+      fixt = await fixture(drawer({hasHeader: true}));
+      element = fixt.root.querySelector('mwc-drawer')!;
+      await element.updateComplete;
+    });
+
+    test('displays a header if set', async () => {
+      let header = element.shadowRoot!.querySelector(HEADER_SELECTOR);
+      assert.instanceOf(header, Element);
+      element.hasHeader = false;
+      await element.updateComplete;
+      header = element.shadowRoot!.querySelector(HEADER_SELECTOR);
+      assert.equal(header, null);
+    });
   });
 
-  test('modal `type` should display scrim', async () => {
-    const drawer = element.shadowRoot!.querySelector('.mdc-drawer')!;
-    let scrim = element.shadowRoot!.querySelector(SCRIM_SELECTOR)!;
-    assert.equal(scrim, null);
-    assert.isFalse(drawer.classList.contains('mdc-drawer--modal'));
-    element.type = 'modal';
-    await element.updateComplete;
-    scrim = element.shadowRoot!.querySelector(SCRIM_SELECTOR)!;
-    assert.instanceOf(scrim, Element);
-    assert.isTrue(drawer.classList.contains('mdc-drawer--modal'));
+  suite('modal type', () => {
+    setup(async () => {
+      fixt = await fixture(drawer({type: 'modal'}));
+      element = fixt.root.querySelector('mwc-drawer')!;
+      await element.updateComplete;
+    });
+
+    test('displays scrim', async () => {
+      const drawer = element.shadowRoot!.querySelector('.mdc-drawer')!;
+      const scrim = element.shadowRoot!.querySelector(SCRIM_SELECTOR)!;
+      assert.instanceOf(scrim, Element);
+      assert.isTrue(drawer.classList.contains('mdc-drawer--modal'));
+    });
   });
 
-  test('dismissible `type` should set correct classes', async () => {
-    const drawer = element.shadowRoot!.querySelector('.mdc-drawer')!;
-    assert.isFalse(drawer.classList.contains(DISMISSIBLE_CLASS));
-    element.type = 'dismissible';
-    await element.updateComplete;
-    assert.isTrue(drawer.classList.contains(DISMISSIBLE_CLASS));
+  suite('dismissible type', () => {
+    setup(async () => {
+      fixt = await fixture(drawer({type: 'dismissible'}));
+      element = fixt.root.querySelector('mwc-drawer')!;
+      await element.updateComplete;
+    });
+
+    test('sets correct classes', async () => {
+      const drawer = element.shadowRoot!.querySelector('.mdc-drawer')!;
+      assert.isTrue(drawer.classList.contains(DISMISSIBLE_CLASS));
+    });
   });
 });
