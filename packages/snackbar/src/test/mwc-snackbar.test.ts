@@ -29,10 +29,9 @@ interface SnackBarProps {
   dismissElement: TemplateResult;
 }
 
-const snackBar = (propsInit?: Partial<SnackBarProps>) => {
-  if (!propsInit) {
-    return html`<mwc-snackbar></mwc-snackbar>`;
-  }
+const defaultSnackBar = html`<mwc-snackbar></mwc-snackbar>`;
+
+const snackBar = (propsInit: Partial<SnackBarProps>) => {
   return html`
     <mwc-snackbar
       .timeoutMs=${propsInit.timeoutMs ?? -1}
@@ -68,7 +67,7 @@ suite('mwc-snackbar', () => {
 
   suite('basic', () => {
     setup(async () => {
-      fixt = await fixture(snackBar());
+      fixt = await fixture(defaultSnackBar);
       element = fixt.root.querySelector('mwc-snackbar')!;
       await element.updateComplete;
     });

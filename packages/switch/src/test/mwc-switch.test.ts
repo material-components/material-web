@@ -24,10 +24,9 @@ interface SwitchProps {
   disabled: boolean;
 }
 
-const switchElement = (propsInit?: Partial<SwitchProps>) => {
-  if (!propsInit) {
-    return html`<mwc-switch></mwc-switch>`;
-  }
+const defaultSwitchElement = html`<mwc-switch></mwc-switch>`;
+
+const switchElement = (propsInit: Partial<SwitchProps>) => {
   return html`
     <mwc-switch
       ?checked=${propsInit.checked === true}
@@ -45,7 +44,7 @@ suite('mwc-switch', () => {
 
   suite('basic', () => {
     setup(async () => {
-      fixt = await fixture(switchElement());
+      fixt = await fixture(defaultSwitchElement);
       element = fixt.root.querySelector('mwc-switch')!;
       await element.updateComplete;
     });

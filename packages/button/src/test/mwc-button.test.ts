@@ -34,10 +34,9 @@ interface ButtonProps {
   trailingIcon: boolean;
 }
 
-const button = (propsInit?: Partial<ButtonProps>) => {
-  if (!propsInit) {
-    return html`<mwc-button></mwc-button>`;
-  }
+const defaultButton = html`<mwc-button></mwc-button>`;
+
+const button = (propsInit: Partial<ButtonProps>) => {
   return html`
     <mwc-button
       ?disabled=${propsInit.disabled === true}
@@ -61,7 +60,7 @@ suite('mwc-button', () => {
 
   suite('basic', () => {
     setup(async () => {
-      fixt = await fixture(button());
+      fixt = await fixture(defaultButton);
       element = fixt.root.querySelector('mwc-button')!;
     });
 
@@ -219,7 +218,7 @@ suite('mwc-button', () => {
 
   suite('focus', () => {
     setup(async () => {
-      fixt = await fixture(button());
+      fixt = await fixture(defaultButton);
       element = fixt.root.querySelector('mwc-button')!;
     });
 
