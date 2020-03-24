@@ -17,6 +17,7 @@ limitations under the License.
 import {applyPassive} from '@material/dom/events';
 import {matches} from '@material/dom/ponyfill';
 import {EventType, SpecificEventListener} from '@material/mwc-base/base-element.js';
+import {RippleInterface} from '@material/mwc-base/form-element.js';
 import {MDCRippleAdapter} from '@material/ripple/adapter.js';
 import MDCRippleFoundation from '@material/ripple/foundation.js';
 import {supportsCssVariables} from '@material/ripple/util.js';
@@ -35,6 +36,36 @@ export interface RippleOptions {
 
 export interface RippleNodeOptions extends RippleOptions {
   surfaceNode: HTMLElement;
+}
+
+/**
+ * force the ripple directive to share API names with `mwc-ripple` after Closure
+ * Compiler.
+ */
+class RippleIntermediate implements RippleInterface {
+  private readonly foundation: MDCRippleFoundation;
+
+  constructor(foundation: MDCRippleFoundation) {
+    this.foundation = foundation;
+  }
+  activate() {
+    this.foundation.activate();
+  }
+  deactivate() {
+    this.foundation.deactivate();
+  }
+  handleFocus() {
+    this.foundation.handleFocus();
+  }
+  handleBlur() {
+    this.foundation.handleBlur();
+  }
+  destroy() {
+    this.foundation.destroy();
+  }
+  setUnbounded(value: boolean) {
+    this.foundation.setUnbounded(value);
+  }
 }
 
 declare global {
@@ -118,7 +149,7 @@ export const rippleNode = (options: RippleNodeOptions) => {
   };
   const rippleFoundation = new MDCRippleFoundation(adapter);
   rippleFoundation.init();
-  return rippleFoundation;
+  return new RippleIntermediate(rippleFoundation);
 };
 
 const rippleInteractionNodes = new WeakMap();
@@ -132,14 +163,13 @@ export const ripple =
     directive((options: RippleOptions = {}) => (part: PropertyPart) => {
       const surfaceNode = part.committer.element as HTMLElement;
       const interactionNode = options.interactionNode || surfaceNode;
-      let rippleFoundation =
-          part.value as MDCRippleFoundation | typeof noChange;
+      let rippleFoundation = part.value as RippleIntermediate | typeof noChange;
       // if the interaction node changes, destroy and invalidate the foundation.
       const existingInteractionNode =
           rippleInteractionNodes.get(rippleFoundation);
       if (existingInteractionNode !== undefined &&
           existingInteractionNode !== interactionNode) {
-        (rippleFoundation as MDCRippleFoundation).destroy();
+        (rippleFoundation as RippleIntermediate).destroy();
         rippleFoundation = noChange;
       }
       // make the ripple, if needed
@@ -151,17 +181,17 @@ export const ripple =
         // otherwise update settings as needed.
       } else {
         if (options.unbounded !== undefined) {
-          (rippleFoundation as MDCRippleFoundation)
+          (rippleFoundation as RippleIntermediate)
               .setUnbounded(options.unbounded);
         }
         if (options.disabled !== undefined) {
-          (rippleFoundation as MDCRippleFoundation)
+          (rippleFoundation as RippleIntermediate)
               .setUnbounded(options.disabled);
         }
       }
       if (options.active === true) {
-        (rippleFoundation as MDCRippleFoundation).activate();
+        (rippleFoundation as RippleIntermediate).activate();
       } else if (options.active === false) {
-        (rippleFoundation as MDCRippleFoundation).deactivate();
+        (rippleFoundation as RippleIntermediate).deactivate();
       }
     });

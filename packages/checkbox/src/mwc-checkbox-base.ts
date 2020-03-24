@@ -14,70 +14,127 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {MDCCheckboxAdapter} from '@material/checkbox/adapter.js';
-import MDCCheckboxFoundation from '@material/checkbox/foundation.js';
-import {addHasRemoveClass, FormElement, HTMLElementWithRipple} from '@material/mwc-base/form-element.js';
-import {observer} from '@material/mwc-base/observer.js';
-import {rippleNode} from '@material/mwc-ripple/ripple-directive.js';
-import {html, property, query} from 'lit-element';
+import '@material/mwc-ripple/mwc-ripple.js';
+
+import {FormElement} from '@material/mwc-base/form-element.js';
+import {Ripple} from '@material/mwc-ripple/mwc-ripple.js';
+import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers.js';
+import {html, internalProperty, property, PropertyValues, query, queryAsync} from 'lit-element';
+import {classMap} from 'lit-html/directives/class-map.js';
+import {ifDefined} from 'lit-html/directives/if-defined.js';
 
 export class CheckboxBase extends FormElement {
-  @query('.mdc-checkbox') protected mdcRoot!: HTMLElementWithRipple;
+  @query('.mdc-checkbox') protected mdcRoot!: HTMLElement;
 
   @query('input') protected formElement!: HTMLInputElement;
 
-  @property({type: Boolean}) checked = false;
+  @property({type: Boolean, reflect: true}) checked = false;
 
   @property({type: Boolean}) indeterminate = false;
 
-  @property({type: Boolean})
-  @observer(function(this: CheckboxBase, value: boolean) {
-    this.mdcFoundation.setDisabled(value);
-  })
-  disabled = false;
+  @property({type: Boolean, reflect: true}) disabled = false;
 
   @property({type: String}) value = '';
 
-  protected mdcFoundationClass = MDCCheckboxFoundation;
+  @internalProperty() protected animationClass = '';
 
-  protected mdcFoundation!: MDCCheckboxFoundation;
+  @internalProperty() protected shouldRenderRipple = false;
 
-  get ripple() {
-    return this.mdcRoot.ripple;
+  @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
+
+  // MDC Foundation is unused
+  protected mdcFoundationClass = undefined;
+
+  protected mdcFoundation = undefined;
+
+  protected createAdapter() {
+    return {};
   }
 
-  protected createAdapter(): MDCCheckboxAdapter {
-    return {
-      ...addHasRemoveClass(this.mdcRoot),
-      forceLayout: () => {
-        this.mdcRoot.offsetWidth;
-      },
-      isAttachedToDOM: () => this.isConnected,
-      isIndeterminate: () => this.indeterminate,
-      isChecked: () => this.checked,
-      hasNativeControl: () => Boolean(this.formElement),
-      setNativeControlDisabled: (disabled: boolean) => {
-        this.formElement.disabled = disabled;
-      },
-      setNativeControlAttr: (attr: string, value: string) => {
-        this.formElement.setAttribute(attr, value);
-      },
-      removeNativeControlAttr: (attr: string) => {
-        this.formElement.removeAttribute(attr);
-      },
-    };
+  protected update(changedProperties: PropertyValues) {
+    const oldIndeterminate = changedProperties.get('indeterminate');
+    const oldChecked = changedProperties.get('checked');
+    if (oldIndeterminate !== undefined || oldChecked !== undefined) {
+      const oldState =
+          this.calculateAnimationStateName(!!oldChecked, !!oldIndeterminate);
+      const newState =
+          this.calculateAnimationStateName(this.checked, this.indeterminate);
+      this.animationClass = `${oldState}-${newState}`;
+    }
+    super.update(changedProperties);
+  }
+
+  protected calculateAnimationStateName(
+      checked: boolean, indeterminate: boolean): string {
+    if (indeterminate) {
+      return 'indeterminate';
+    } else if (checked) {
+      return 'checked';
+    } else {
+      return 'unchecked';
+    }
+  }
+
+  protected rippleHandlers: RippleHandlers = new RippleHandlers(() => {
+    this.shouldRenderRipple = true;
+    return this.ripple;
+  });
+
+  // TODO(dfreedm): Make this use selected as a param after Polymer/internal#739
+  /** @soyCompatible */
+  protected renderRipple() {
+    const selected = this.indeterminate || this.checked;
+    return html`${
+        this.shouldRenderRipple ?
+            html`<mwc-ripple .accent="${selected}" .disabled="${
+                this.disabled}" .unbounded="${true}"></mwc-ripple>` :
+            ''}`;
   }
 
   protected render() {
+    const selected = this.indeterminate || this.checked;
+    /* eslint-disable eqeqeq */
+    // tslint:disable:triple-equals
+    /** @classMap */
+    const classes = {
+      'mdc-checkbox--disabled': this.disabled,
+      'mdc-checkbox--selected': selected,
+      // transition animiation classes
+      'mdc-checkbox--anim-checked-indeterminate':
+          this.animationClass == 'checked-indeterminate',
+      'mdc-checkbox--anim-checked-unchecked':
+          this.animationClass == 'checked-unchecked',
+      'mdc-checkbox--anim-indeterminate-checked':
+          this.animationClass == 'indeterminate-checked',
+      'mdc-checkbox--anim-indeterminate-unchecked':
+          this.animationClass == 'indeterminate-unchecked',
+      'mdc-checkbox--anim-unchecked-checked':
+          this.animationClass == 'unchecked-checked',
+      'mdc-checkbox--anim-unchecked-indeterminate':
+          this.animationClass == 'unchecked-indeterminate',
+    };
+    // tslint:enable:triple-equals
+    /* eslint-enable eqeqeq */
+    const ariaChecked = this.indeterminate ? 'mixed' : undefined;
     return html`
-      <div class="mdc-checkbox"
-           @animationend="${this._animationEndHandler}">
+      <div class="mdc-checkbox mdc-checkbox--upgraded ${classMap(classes)}">
         <input type="checkbox"
               class="mdc-checkbox__native-control"
-              @change="${this._changeHandler}"
+              aria-checked="${ifDefined(ariaChecked)}"
+              ?disabled="${this.disabled}"
               .indeterminate="${this.indeterminate}"
               .checked="${this.checked}"
-              .value="${this.value}">
+              .value="${this.value}"
+              @change="${this._changeHandler}"
+              @focus="${this._handleFocus}"
+              @blur="${this._handleBlur}"
+              @mousedown="${this._activateRipple}"
+              @mouseup="${this._deactivateRipple}"
+              @mouseenter="${this._handleMouseEnter}"
+              @mouseleave="${this._handleMouseLeave}"
+              @touchstart="${this._activateRipple}"
+              @touchend="${this._deactivateRipple}"
+              @touchcancel="${this._deactivateRipple}">
         <div class="mdc-checkbox__background">
           <svg class="mdc-checkbox__checkmark"
               viewBox="0 0 24 24">
@@ -87,23 +144,36 @@ export class CheckboxBase extends FormElement {
           </svg>
           <div class="mdc-checkbox__mixedmark"></div>
         </div>
-        <div class="mdc-checkbox__ripple"></div>
+        ${this.renderRipple()}
       </div>`;
   }
 
-  firstUpdated() {
-    super.firstUpdated();
-    this.mdcRoot.ripple = rippleNode(
-        {surfaceNode: this.mdcRoot, interactionNode: this.formElement});
+  private _handleFocus() {
+    this.rippleHandlers.handleFocus();
+  }
+
+  private _handleBlur() {
+    this.rippleHandlers.handleBlur();
+  }
+
+  private _activateRipple() {
+    this.rippleHandlers.activate();
+  }
+
+  private _deactivateRipple() {
+    this.rippleHandlers.deactivate();
+  }
+
+  private _handleMouseEnter() {
+    this.rippleHandlers.handleMouseEnter();
+  }
+
+  private _handleMouseLeave() {
+    this.rippleHandlers.handleMouseLeave();
   }
 
   private _changeHandler() {
     this.checked = this.formElement.checked;
     this.indeterminate = this.formElement.indeterminate;
-    this.mdcFoundation.handleChange();
-  }
-
-  private _animationEndHandler() {
-    this.mdcFoundation.handleAnimationEnd();
   }
 }

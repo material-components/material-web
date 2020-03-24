@@ -19,10 +19,11 @@ import {MDCRippleAdapter} from '@material/ripple/adapter.js';
 import MDCRippleFoundation from '@material/ripple/foundation.js';
 import {html, property, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map.js';
-import {styleMap} from 'lit-html/directives/style-map';
+import {styleMap} from 'lit-html/directives/style-map.js';
+import {RippleAPI} from './ripple-handlers.js';
 
 /** @soyCompatible */
-export class RippleBase extends BaseElement {
+export class RippleBase extends BaseElement implements RippleAPI {
   @query('.mdc-ripple-surface') mdcRoot!: HTMLElement;
 
   @property({type: Boolean}) primary = false;

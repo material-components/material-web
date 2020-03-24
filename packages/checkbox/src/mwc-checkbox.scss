@@ -15,9 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/checkbox/mdc-checkbox.scss';
+@import '@material/checkbox/mixins';
 
-@include mdc-ripple-common(mdc-feature-all());
+@include mdc-checkbox-without-ripple(mdc-feature-all());
 
 :host {
   outline: none;
@@ -27,6 +27,10 @@ limitations under the License.
 .mdc-checkbox {
   .mdc-checkbox__native-control:focus ~ .mdc-checkbox__background::before {
     background-color: var(--mdc-checkbox-unchecked-color, #{$mdc-checkbox-border-color});
+  }
+  /* disable non-upgraded ripple on checkbox backround */
+  .mdc-checkbox__background::before {
+    content: none;
   }
 }
 

@@ -4,7 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Added
+
+### Changed
+
+- Refactor `mwc-checkbox`
+  - Remove usage of `MDCCheckboxFoundation`
+  - Replace `ripple-directive` with lazy `mwc-ripple`
+
+### Fixed
+
+- Fix property renaming issues with Closure Compiler
+  - Use `RippleAPI` interface between `RippleHandlers` and `mwc-ripple`
+  - Use `RippleInterface` interface for `ripple-directive`
 
 ## [v0.14.1] - 2020-03-23
 

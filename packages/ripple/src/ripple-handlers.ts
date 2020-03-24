@@ -14,7 +14,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {Ripple} from './mwc-ripple.js';
+
+import {RippleInterface} from '@material/mwc-base/utils.js';
+
+export interface RippleAPI extends RippleInterface {
+  handleMouseEnter: () => void;
+  handleMouseLeave: () => void;
+}
 
 /**
  * Class that encapsulates the events handlers for `mwc-ripple`
@@ -39,7 +45,7 @@ import {Ripple} from './mwc-ripple.js';
  * }
  * ```
  */
-export class RippleHandlers {
+export class RippleHandlers implements RippleAPI {
   activate: (ev?: Event) => void;
   deactivate: () => void;
   handleFocus: () => void;
@@ -49,7 +55,7 @@ export class RippleHandlers {
 
   constructor(
       /** Function that returns a `mwc-ripple` */
-      rippleFn: () => Promise<Ripple|null>) {
+      rippleFn: () => Promise<RippleAPI|null>) {
     this.activate = (ev?: Event) => {
       rippleFn().then((r) => {
         r && r.activate(ev);
