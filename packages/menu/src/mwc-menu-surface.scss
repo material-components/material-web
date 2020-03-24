@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 @use '@material/menu-surface/mixins';
+@use '@material/menu-surface/variables';
 @use '@material/shape/variables' as shape-variables;
 
 @include mixins.core-styles;
@@ -29,4 +30,5 @@ limitations under the License.
 
 .mdc-menu-surface {
   border-radius: var(--mdc-shape-medium, #{shape-variables.$medium-component-radius});
+  z-index: var(--mdc-menu-z-index, #{variables.$z-index});
 }
