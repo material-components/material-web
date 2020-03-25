@@ -253,24 +253,8 @@ Name                                          | Description
 | ---------- | -------------------- | ----------------- | -------------------- |
 | `opened`   | `mwc-select-surface` | none              | Fired menu opens.    |
 | `closed`   | `mwc-select-surface` | none              | Fired menu closes.   |
-| `action`   | `mwc-list`           | `ActionDetail`*   | Fired when a         |
-:            :                      :                   : selection has been   :
-:            :                      :                   : made via click or    :
-:            :                      :                   : keyboard aciton.     :
-| `selected` | `mwc-list`           | `SelectedDetail`* | Fired when a         |
-:            :                      :                   : selection has been   :
-:            :                      :                   : made. `index` is the :
-:            :                      :                   : selected index (will :
-:            :                      :                   : be of type           :
-:            :                      :                   : `Set<number>` if     :
-:            :                      :                   : multi and `number`   :
-:            :                      :                   : if single), and      :
-:            :                      :                   : `diff` (of type      :
-:            :                      :                   : `IndexDiff`**)       :
-:            :                      :                   : represents the diff  :
-:            :                      :                   : of added and removed :
-:            :                      :                   : indices from         :
-:            :                      :                   : previous selection.  :
+| `action`   | `mwc-list`           | `ActionDetail`*   | Fired when a selection has been made via click or keyboard aciton. |
+| `selected` | `mwc-list`           | `SelectedDetail`* | Fired when a selection has been made. `index` is the selected index (will be of type `Set<number>` if multi and `number`if single), and `diff` (of type `IndexDiff`**) represents the diff of added and removed indices from previous selection. |
 
 \* See
 [`mwc-list`'s Events section](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-2)
