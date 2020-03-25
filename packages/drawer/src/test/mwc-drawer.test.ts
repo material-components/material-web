@@ -18,7 +18,7 @@
 import {Drawer} from '@material/mwc-drawer';
 import {html} from 'lit-html';
 
-import {fixture, TestFixture} from '../../../../test/src/util/helpers';
+import {fixture, TestFixture, waitForEvent} from '../../../../test/src/util/helpers';
 
 const SCRIM_SELECTOR = '.mdc-drawer-scrim';
 const HEADER_SELECTOR = '.mdc-drawer__header';
@@ -38,7 +38,7 @@ const drawer = (propsInit: Partial<DrawerProps>) => {
       .type=${propsInit.type ?? ''}>
     </mwc-drawer>
   `;
-}
+};
 
 suite('mwc-drawer', () => {
   let fixt: TestFixture;
@@ -65,6 +65,25 @@ suite('mwc-drawer', () => {
       assert.equal(element.type, '');
       assert.equal(element.open, false);
       assert.equal(element.hasHeader, false);
+    });
+
+    test('opening/closing events are fired', async () => {
+      const drawer = element.shadowRoot!.querySelector('.mdc-drawer')!;
+      let openedFired = false;
+      let closedFired = false;
+      element.addEventListener('MDCDrawer:opened', () => {
+        openedFired = true;
+      });
+      element.addEventListener('MDCDrawer:closed', () => {
+        closedFired = true;
+      });
+      element.type = 'dismissible';
+      element.open = true;
+      await waitForEvent(drawer, 'transitionend');
+      assert.equal(openedFired, true);
+      element.open = false;
+      await waitForEvent(drawer, 'transitionend');
+      assert.equal(closedFired, true);
     });
   });
 
@@ -97,6 +116,17 @@ suite('mwc-drawer', () => {
       const scrim = element.shadowRoot!.querySelector(SCRIM_SELECTOR)!;
       assert.instanceOf(scrim, Element);
       assert.isTrue(drawer.classList.contains('mdc-drawer--modal'));
+    });
+
+    test('closes on scrim click', async () => {
+      const drawer = element.shadowRoot!.querySelector('.mdc-drawer')!;
+      const scrim =
+          element.shadowRoot!.querySelector<HTMLElement>(SCRIM_SELECTOR)!;
+      element.open = true;
+      await waitForEvent(drawer, 'transitionend');
+      scrim.click();
+      await waitForEvent(drawer, 'transitionend');
+      assert.equal(element.open, false);
     });
   });
 

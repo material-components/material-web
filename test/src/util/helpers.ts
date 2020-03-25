@@ -186,3 +186,9 @@ export class Fake<TArgs extends any[], TReturn> {
     };
   }
 }
+
+export const waitForEvent = (el: Element, ev: string) => new Promise((res) => {
+  el.addEventListener(ev, () => {
+    res();
+  }, {once: true});
+});
