@@ -207,16 +207,6 @@ suite('mwc-menu', () => {
       assert.equal(list.itemRoles, 'option');
     });
 
-    test('`multi` is set on inner list', async () => {
-      const list = element.shadowRoot!.querySelector<List>('.mdc-list')!;
-      assert.equal(element.multi, false);
-      assert.equal(list.multi, false);
-      element.multi = true;
-      await element.updateComplete;
-      assert.equal(element.multi, true);
-      assert.equal(list.multi, true);
-    });
-
     test('`activatable` is set on inner list', async () => {
       const list = element.shadowRoot!.querySelector<List>('.mdc-list')!;
       assert.equal(element.activatable, false);
@@ -225,6 +215,40 @@ suite('mwc-menu', () => {
       await element.updateComplete;
       assert.equal(element.activatable, true);
       assert.equal(list.activatable, true);
+    });
+  });
+
+  suite('multi', () => {
+    setup(async () => {
+      fixt = await fixture(menu({
+        multi: true,
+        open: true,
+        contents: html`
+          <mwc-list-item>1</mwc-list-item>
+          <mwc-list-item>2</mwc-list-item>`
+      }));
+      element = fixt.root.querySelector('mwc-menu')!;
+      await element.updateComplete;
+    });
+
+    test('`multi` is set on inner list', async () => {
+      const list = element.shadowRoot!.querySelector<List>('.mdc-list')!;
+      assert.equal(element.multi, true);
+      assert.equal(list.multi, true);
+      element.multi = false;
+      await element.updateComplete;
+      assert.equal(element.multi, false);
+      assert.equal(list.multi, false);
+    });
+
+    test('clicking items sets selection', async () => {
+      const item0 = element.children[0] as ListItem;
+      const item1 = element.children[1] as ListItem;
+      item0.click();
+      item1.click();
+      const items = element.selected!;
+      assert.equal(items[0], item0);
+      assert.equal(items[1], item1);
     });
   });
 
@@ -291,6 +315,7 @@ suite('mwc-menu', () => {
       const item = element.children[1] as ListItem;
       item.click();
       assert.equal(element.open, false);
+      assert.equal(element.selected, item);
     });
   });
 });
