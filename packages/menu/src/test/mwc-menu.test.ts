@@ -20,175 +20,251 @@ import '@material/mwc-list/mwc-list-item';
 import {List} from '@material/mwc-list';
 import {ListItem} from '@material/mwc-list/mwc-list-item';
 import {Menu} from '@material/mwc-menu';
-import {MenuSurface} from '@material/mwc-menu/mwc-menu-surface';
+import {Corner, MenuSurface} from '@material/mwc-menu/mwc-menu-surface';
+import {html, TemplateResult} from 'lit-html';
 
-import {Fake, rafPromise} from '../../../../test/src/util/helpers';
+import {Fake, fixture, rafPromise, TestFixture} from '../../../../test/src/util/helpers';
+
+const defaultMenu = html`<mwc-menu></mwc-menu>`;
+
+interface MenuProps {
+  open: boolean;
+  quick: boolean;
+  wrapFocus: boolean;
+  innerRole: 'menu'|'listbox';
+  corner: Corner;
+  x: number;
+  y: number;
+  absolute: boolean;
+  multi: boolean;
+  activatable: boolean;
+  fixed: boolean;
+  fullwidth: boolean;
+  forceGroupSelection: boolean;
+  contents: TemplateResult;
+}
+
+const menu = (propsInit: Partial<MenuProps>) => {
+  return html`
+    <mwc-menu
+      ?open=${propsInit.open === true}
+      ?quick=${propsInit.quick === true}
+      ?wrapFocus=${propsInit.wrapFocus === true}
+      .innerRole=${propsInit.innerRole ?? 'menu'}
+      .corner=${propsInit.corner ?? 'TOP_START'}
+      .x=${propsInit.x ?? null}
+      .y=${propsInit.y ?? null}
+      ?absolute=${propsInit.absolute === true}
+      ?multi=${propsInit.multi === true}
+      ?activatable=${propsInit.activatable === true}
+      ?fixed=${propsInit.fixed === true}
+      ?fullwidth=${propsInit.fullwidth === true}
+      .forceGroupSelection=${propsInit.forceGroupSelection === true}>
+      ${propsInit.contents ?? html``}
+    </mwc-menu>
+  `;
+};
 
 suite('mwc-menu', () => {
+  let fixt: TestFixture;
   let element: Menu;
 
-  setup(async () => {
-    element = document.createElement('mwc-menu');
-    document.body.appendChild(element);
-    await element.updateComplete;
-  });
-
   teardown(() => {
-    element.remove();
+    fixt.remove();
   });
 
-  test('initializes as an mwc-menu', () => {
-    assert.instanceOf(element, Menu);
+  suite('basic', () => {
+    setup(async () => {
+      fixt = await fixture(defaultMenu);
+      element = fixt.root.querySelector('mwc-menu')!;
+      await element.updateComplete;
+    });
+
+    test('initializes as an mwc-menu', () => {
+      assert.instanceOf(element, Menu);
+      assert.equal(element.open, false);
+      assert.equal(element.quick, false);
+      assert.equal(element.wrapFocus, false);
+      assert.equal(element.innerRole, 'menu');
+      assert.equal(element.corner, 'TOP_START');
+      assert.equal(element.x, null);
+      assert.equal(element.y, null);
+      assert.equal(element.absolute, false);
+      assert.equal(element.multi, false);
+      assert.equal(element.activatable, false);
+      assert.equal(element.fixed, false);
+      assert.equal(element.forceGroupSelection, false);
+      assert.equal(element.fullwidth, false);
+    });
+
+    test('surface is visible when open', async () => {
+      const surface =
+          element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
+      assert.isTrue(surface.hasAttribute('hidden'));
+      assert.isFalse(surface.open);
+      element.open = true;
+      await element.updateComplete;
+      assert.isFalse(surface.hasAttribute('hidden'));
+      assert.isTrue(surface.open);
+    });
+
+    test('`items` returns list items', async () => {
+      element.innerHTML = '<mwc-list-item>1</mwc-list-item>';
+      element.layout(true);
+      await element.updateComplete;
+      const items = element.items;
+      assert.equal(items.length, 1);
+      assert.equal(items[0], element.children[0] as ListItem);
+    });
+
+    test('`anchor` is passed to surface', async () => {
+      const surface =
+          element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
+      assert.equal(element.anchor, null);
+      assert.equal(surface.anchor, null);
+      element.anchor = document.body;
+      await element.updateComplete;
+      assert.equal(surface.anchor, document.body);
+    });
+
+    test('`quick` is passed to surface', async () => {
+      const surface =
+          element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
+      assert.equal(element.quick, false);
+      assert.equal(surface.quick, false);
+      element.quick = true;
+      await element.updateComplete;
+      assert.equal(surface.quick, true);
+    });
+
+    test('`corner` is passed to surface', async () => {
+      const surface =
+          element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
+      assert.equal(element.corner, 'TOP_START');
+      assert.equal(surface.corner, 'TOP_START');
+      element.corner = 'BOTTOM_START';
+      await element.updateComplete;
+      assert.equal(surface.corner, 'BOTTOM_START');
+    });
+
+    test('`x` and `y` are passed to surface', async () => {
+      const surface =
+          element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
+      assert.equal(element.x, null);
+      assert.equal(element.y, null);
+      assert.equal(surface.x, null);
+      assert.equal(surface.y, null);
+      element.x = 111;
+      element.y = 101;
+      await element.updateComplete;
+      assert.equal(element.x, 111);
+      assert.equal(element.y, 101);
+      assert.equal(surface.x, 111);
+      assert.equal(surface.y, 101);
+    });
+
+    test('`absolute` is passed to surface', async () => {
+      const surface =
+          element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
+      assert.equal(element.absolute, false);
+      assert.equal(surface.absolute, false);
+      element.absolute = true;
+      await element.updateComplete;
+      assert.equal(element.absolute, true);
+      assert.equal(surface.absolute, true);
+    });
+
+    test('`fixed` is passed to surface', async () => {
+      const surface =
+          element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
+      assert.equal(element.fixed, false);
+      assert.equal(surface.fixed, false);
+      element.fixed = true;
+      await element.updateComplete;
+      assert.equal(element.fixed, true);
+      assert.equal(surface.fixed, true);
+    });
+
+    test('`fullwidth` is passed to surface', async () => {
+      const surface =
+          element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
+      assert.equal(element.fullwidth, false);
+      assert.equal(surface.fullwidth, false);
+      element.fullwidth = true;
+      await element.updateComplete;
+      assert.equal(element.fullwidth, true);
+      assert.equal(surface.fullwidth, true);
+    });
+
+    test('correct roles are passed to inner list', async () => {
+      const list = element.shadowRoot!.querySelector<List>('.mdc-list')!;
+      assert.equal(element.innerRole, 'menu');
+      assert.equal(list.innerRole, 'menu');
+      assert.equal(list.itemRoles, 'menuitem');
+      element.innerRole = 'listbox';
+      await element.updateComplete;
+      assert.equal(list.innerRole, 'listbox');
+      assert.equal(list.itemRoles, 'option');
+    });
+
+    test('`multi` is set on inner list', async () => {
+      const list = element.shadowRoot!.querySelector<List>('.mdc-list')!;
+      assert.equal(element.multi, false);
+      assert.equal(list.multi, false);
+      element.multi = true;
+      await element.updateComplete;
+      assert.equal(element.multi, true);
+      assert.equal(list.multi, true);
+    });
+
+    test('`activatable` is set on inner list', async () => {
+      const list = element.shadowRoot!.querySelector<List>('.mdc-list')!;
+      assert.equal(element.activatable, false);
+      assert.equal(list.activatable, false);
+      element.activatable = true;
+      await element.updateComplete;
+      assert.equal(element.activatable, true);
+      assert.equal(list.activatable, true);
+    });
   });
 
-  test('surface is visible when open', async () => {
-    const surface =
-        element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
-    assert.isTrue(surface.hasAttribute('hidden'));
-    assert.isFalse(surface.open);
-    element.open = true;
-    await element.updateComplete;
-    assert.isFalse(surface.hasAttribute('hidden'));
-    assert.isTrue(surface.open);
+  suite('show()', () => {
+    setup(async () => {
+      fixt = await fixture(defaultMenu);
+      element = fixt.root.querySelector('mwc-menu')!;
+      await element.updateComplete;
+    });
+
+    test('opens the menu', async () => {
+      assert.isFalse(element.open);
+      element.show();
+      assert.isTrue(element.open);
+    });
   });
 
-  test('`show()` opens the menu', async () => {
-    assert.isFalse(element.open);
-    element.show();
-    assert.isTrue(element.open);
-  });
+  suite('close()', () => {
+    setup(async () => {
+      fixt = await fixture(menu({open: true}));
+      element = fixt.root.querySelector('mwc-menu')!;
+      await element.updateComplete;
+    });
 
-  test('`close()` closes the menu', async () => {
-    element.open = true;
-    element.close();
-    assert.isFalse(element.open);
-  });
-
-  test('`items` returns list items', async () => {
-    element.innerHTML = '<mwc-list-item>1</mwc-list-item>';
-    element.layout(true);
-    await element.updateComplete;
-    const items = element.items;
-    assert.equal(items.length, 1);
-    assert.equal(items[0], element.children[0] as ListItem);
-  });
-
-  test('`anchor` is passed to surface', async () => {
-    const surface =
-        element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
-    assert.equal(element.anchor, null);
-    assert.equal(surface.anchor, null);
-    element.anchor = document.body;
-    await element.updateComplete;
-    assert.equal(surface.anchor, document.body);
-  });
-
-  test('`quick` is passed to surface', async () => {
-    const surface =
-        element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
-    assert.equal(element.quick, false);
-    assert.equal(surface.quick, false);
-    element.quick = true;
-    await element.updateComplete;
-    assert.equal(surface.quick, true);
-  });
-
-  test('`corner` is passed to surface', async () => {
-    const surface =
-        element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
-    assert.equal(element.corner, 'TOP_START');
-    assert.equal(surface.corner, 'TOP_START');
-    element.corner = 'BOTTOM_START';
-    await element.updateComplete;
-    assert.equal(surface.corner, 'BOTTOM_START');
-  });
-
-  test('`x` and `y` are passed to surface', async () => {
-    const surface =
-        element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
-    assert.equal(element.x, null);
-    assert.equal(element.y, null);
-    assert.equal(surface.x, null);
-    assert.equal(surface.y, null);
-    element.x = 111;
-    element.y = 101;
-    await element.updateComplete;
-    assert.equal(element.x, 111);
-    assert.equal(element.y, 101);
-    assert.equal(surface.x, 111);
-    assert.equal(surface.y, 101);
-  });
-
-  test('`absolute` is passed to surface', async () => {
-    const surface =
-        element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
-    assert.equal(element.absolute, false);
-    assert.equal(surface.absolute, false);
-    element.absolute = true;
-    await element.updateComplete;
-    assert.equal(element.absolute, true);
-    assert.equal(surface.absolute, true);
-  });
-
-  test('`fixed` is passed to surface', async () => {
-    const surface =
-        element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
-    assert.equal(element.fixed, false);
-    assert.equal(surface.fixed, false);
-    element.fixed = true;
-    await element.updateComplete;
-    assert.equal(element.fixed, true);
-    assert.equal(surface.fixed, true);
-  });
-
-  test('`fullwidth` is passed to surface', async () => {
-    const surface =
-        element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
-    assert.equal(element.fullwidth, false);
-    assert.equal(surface.fullwidth, false);
-    element.fullwidth = true;
-    await element.updateComplete;
-    assert.equal(element.fullwidth, true);
-    assert.equal(surface.fullwidth, true);
-  });
-
-  test('correct roles are passed to inner list', async () => {
-    const list = element.shadowRoot!.querySelector<List>('.mdc-list')!;
-    assert.equal(element.innerRole, 'menu');
-    assert.equal(list.innerRole, 'menu');
-    assert.equal(list.itemRoles, 'menuitem');
-    element.innerRole = 'listbox';
-    await element.updateComplete;
-    assert.equal(list.innerRole, 'listbox');
-    assert.equal(list.itemRoles, 'option');
-  });
-
-  test('`multi` is set on inner list', async () => {
-    const list = element.shadowRoot!.querySelector<List>('.mdc-list')!;
-    assert.equal(element.multi, false);
-    assert.equal(list.multi, false);
-    element.multi = true;
-    await element.updateComplete;
-    assert.equal(element.multi, true);
-    assert.equal(list.multi, true);
-  });
-
-  test('`activatable` is set on inner list', async () => {
-    const list = element.shadowRoot!.querySelector<List>('.mdc-list')!;
-    assert.equal(element.activatable, false);
-    assert.equal(list.activatable, false);
-    element.activatable = true;
-    await element.updateComplete;
-    assert.equal(element.activatable, true);
-    assert.equal(list.activatable, true);
+    test('closes the menu', async () => {
+      assert.isTrue(element.open);
+      element.close();
+      assert.isFalse(element.open);
+    });
   });
 
   suite('selection', () => {
     setup(async () => {
-      element.innerHTML = `
-        <mwc-list-item>1</mwc-list-item>
-        <mwc-list-item>2</mwc-list-item>`;
-      element.layout(true);
+      fixt = await fixture(menu({
+        open: true,
+        contents: html`
+          <mwc-list-item>1</mwc-list-item>
+          <mwc-list-item>2</mwc-list-item>`
+      }));
+      element = fixt.root.querySelector('mwc-menu')!;
       await element.updateComplete;
     });
 
@@ -209,6 +285,12 @@ suite('mwc-menu', () => {
       await element.updateComplete;
       assert.equal(element.selected, item);
       assert.equal(list.selected, item);
+    });
+
+    test('clicking an item closes the menu', async () => {
+      const item = element.children[1] as ListItem;
+      item.click();
+      assert.equal(element.open, false);
     });
   });
 });
