@@ -211,8 +211,9 @@ Inherits CSS Custom properties from:
 | `--mdc-theme-primary`                             | `#6200ee`             | Color when active of the underline ripple, the outline, and the caret.
 | `--mdc-theme-error`                               | `#b00020`             | Color when errored of the underline, the outline, the caret, and the icons.
 | `--mdc-text-field-filled-border-radius`           | `4px 4px 0 0`         | Border radius of the standard / filled textfield's background filling.
-| `--mdc-text-field-idle-line-color`                | `rgba(0, 0, 0, 0.42)` | Color of the filled textfield's  bottom line when idle.
-| `--mdc-text-field-hover-line-color`               | `rgba(0, 0, 0, 0.87)` | Color of the filled textfield's  bottom line when hovering.
+| `--mdc-text-field-idle-line-color`                | `rgba(0, 0, 0, 0.42)` | Color of the filled textfield's bottom line when idle.
+| `--mdc-text-field-hover-line-color`               | `rgba(0, 0, 0, 0.87)` | Color of the filled textfield's bottom line when hovering.
+| `--mdc-text-field-disabled-line-color`            | `rgba(0, 0, 0, 0.06)` | Color of the filled textfield's bottom line when disabled.
 | `--mdc-text-field-outlined-idle-border-color`     | `rgba(0, 0, 0, 0.38)` | Color of the outlined textfield's  outline when idle.
 | `--mdc-text-field-outlined-hover-border-color`    | `rgba(0, 0, 0, 0.87)` | Color of the outlined textfield's outline when hovering.
 | `--mdc-text-field-outlined-disabled-border-color` | `rgba(0, 0, 0, 0.06)` | Color of the outlined textfield's outline when disabled.

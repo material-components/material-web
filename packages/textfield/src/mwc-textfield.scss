@@ -52,6 +52,25 @@ limitations under the License.
     varname: --mdc-text-field-filled-border-radius,
     fallback: shape-fns.mask-radius(shape-fns.prop-value(small), 1 1 0 0)
   ));
+
+  @include mixins.bottom-line-color((
+    varname: --mdc-text-field-idle-line-color,
+    fallback: vars.$bottom-line-idle
+  ));
+
+  @include mixins.hover-bottom-line-color((
+    varname: --mdc-text-field-hover-line-color,
+    fallback: vars.$bottom-line-hover
+  ));
+
+  @include mixins.disabled-bottom-line-color((
+    varname: --mdc-text-field-disabled-line-color,
+    fallback: vars.$disabled-border
+  ));
+
+  &.mdc-text-field--invalid {
+    @include mixins.bottom-line-color(vars.$error);
+  }
 }
 
 mwc-notched-outline {
@@ -66,14 +85,6 @@ mwc-notched-outline {
   .mdc-text-field {
     &:not(.mdc-text-field--outlined) {
       background-color: var(--mdc-text-field-fill-color, #{vars.$background});
-
-      &:not(.mdc-text-field--invalid) .mdc-text-field__input {
-        border-bottom-color: var(--mdc-text-field-idle-line-color, rgba(0,0,0.42));
-
-        &:hover {
-          border-bottom-color: var(--mdc-text-field-hover-line-color, rgba(0,0,0.87));
-        }
-      }
     }
 
     &.mdc-text-field--invalid {

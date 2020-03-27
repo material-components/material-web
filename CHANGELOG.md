@@ -21,12 +21,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix property renaming issues with Closure Compiler
   - Use `RippleAPI` interface between `RippleHandlers` and `mwc-ripple`
   - Use `RippleInterface` interface for `ripple-directive`
+- Fix regression in textfield line color custom properties
 
 ## [v0.14.1] - 2020-03-23
 
 ### Added
 
 - `innerAriaLabel` to `mwc-list` to set `aria-label`.
+- `--mdc-text-field-disabled-line-color` added
 
 ### Changed
 
