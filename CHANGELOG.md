@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Added --mdc-menu-z-index to menu-surface
+- Added surface/on-surface theme properties for mwc-switch
 
 ### Changed
 
