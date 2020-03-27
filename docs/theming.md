@@ -224,6 +224,8 @@ html {
 
 ## Shape
 
+MWC doesn't currently support shape customization.
+
 <!-- 
 Material components are all basically rectangular, but allow for some customization of the corner shape. 
 
@@ -257,11 +259,6 @@ Most MWC components that can display an icon let you specify an icon by name:
 ```html
 <mwc-button icon="playlist_add">Add To Playlist</mwc-button>
 ```
-
-<!-- 
-The following section should perhaps be down below, in a new "Iconography properties" section ... 
-Except that it's just the one property and that feels a little silly.
--->
 
 To load an alternate icon font:
 
