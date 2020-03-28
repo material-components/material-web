@@ -44,12 +44,6 @@ suite('mwc-drawer', () => {
   let fixt: TestFixture;
   let element: Drawer;
 
-  setup(async () => {
-    element = document.createElement('mwc-drawer');
-    document.body.appendChild(element);
-    await element.updateComplete;
-  });
-
   teardown(() => {
     fixt.remove();
   });
