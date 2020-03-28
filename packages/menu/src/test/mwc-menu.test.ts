@@ -26,6 +26,7 @@ import {html, TemplateResult} from 'lit-html';
 import {Fake, fixture, rafPromise, TestFixture} from '../../../../test/src/util/helpers';
 
 const defaultMenu = html`<mwc-menu></mwc-menu>`;
+const defaultSurface = html`<mwc-menu-surface></mwc-menu-surface>`;
 
 interface MenuProps {
   open: boolean;
@@ -42,6 +43,13 @@ interface MenuProps {
   fullwidth: boolean;
   forceGroupSelection: boolean;
   contents: TemplateResult;
+}
+
+interface SurfaceProps {
+  quick: boolean;
+  open: boolean;
+  fixed: boolean;
+  fullwidth: boolean;
 }
 
 const menu = (propsInit: Partial<MenuProps>) => {
@@ -63,6 +71,16 @@ const menu = (propsInit: Partial<MenuProps>) => {
       ${propsInit.contents ?? html``}
     </mwc-menu>
   `;
+};
+
+const surface = (propsInit: Partial<SurfaceProps>) => {
+  return html`
+    <mwc-menu-surface
+      ?quick=${propsInit.quick === true}
+      ?fixed=${propsInit.fixed === true}
+      ?fullwidth=${propsInit.fullwidth === true}
+      ?open=${propsInit.open === true}>
+    </mwc-menu-surface>`;
 };
 
 suite('mwc-menu', () => {
@@ -257,7 +275,12 @@ suite('mwc-menu', () => {
 
     setup(async () => {
       oldSetTimeout = window.setTimeout;
-      (window as any).setTimeout = (fn) => { fn(); };
+      // TODO (43081j): mock this properly
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (window as any).setTimeout = (fn: Function) => {
+        fn();
+        return -1;
+      };
       fixt = await fixture(menu({
         multi: true,
         open: true,
@@ -275,29 +298,20 @@ suite('mwc-menu', () => {
       window.setTimeout = oldSetTimeout;
     });
 
-    test('clicking items within one group overrides previous selection',
-      async () => {
-        const [item1a, item1b, item2a, item2b] =
-          element.children as unknown as ListItem[];
-        item1a.click();
-        assert.deepEqual(element.selected!, [
-          item1a
-        ]);
-        item1b.click();
-        assert.deepEqual(element.selected!, [
-          item1b
-        ]);
-        item2a.click();
-        assert.deepEqual(element.selected!, [
-          item1b,
-          item2a
-        ]);
-        item2b.click();
-        assert.deepEqual(element.selected!, [
-          item1b,
-          item2b
-        ]);
-      });
+    test(
+        'clicking items within one group overrides previous selection',
+        async () => {
+          const [item1a, item1b, item2a, item2b] =
+              element.children as unknown as ListItem[];
+          item1a.click();
+          assert.deepEqual(element.selected!, [item1a]);
+          item1b.click();
+          assert.deepEqual(element.selected!, [item1b]);
+          item2a.click();
+          assert.deepEqual(element.selected!, [item1b, item2a]);
+          item2b.click();
+          assert.deepEqual(element.selected!, [item1b, item2b]);
+        });
   });
 
   suite('show()', () => {
@@ -369,94 +383,160 @@ suite('mwc-menu', () => {
 });
 
 suite('mwc-menu-surface', () => {
+  let fixt: TestFixture;
   let element: MenuSurface;
 
-  setup(async () => {
-    element = document.createElement('mwc-menu-surface');
-    document.body.appendChild(element);
-    await element.updateComplete;
-  });
-
   teardown(() => {
-    element.remove();
+    fixt.remove();
   });
 
-  test('initializes as an mwc-menu-surface', () => {
-    assert.instanceOf(element, MenuSurface);
+  suite('basic', () => {
+    setup(async () => {
+      fixt = await fixture(defaultSurface);
+      element = fixt.root.querySelector('mwc-menu-surface')!;
+      await element.updateComplete;
+    });
+
+    test('initializes as an mwc-menu-surface', () => {
+      assert.instanceOf(element, MenuSurface);
+      assert.equal(element.absolute, false);
+      assert.equal(element.fullwidth, false);
+      assert.equal(element.fixed, false);
+      assert.equal(element.x, null);
+      assert.equal(element.y, null);
+      assert.equal(element.quick, false);
+      assert.equal(element.open, false);
+      assert.equal(element.corner, 'TOP_START');
+    });
   });
 
-  test('initializes defaults', () => {
-    assert.equal(element.absolute, false);
-    assert.equal(element.fullwidth, false);
-    assert.equal(element.fixed, false);
-    assert.equal(element.x, null);
-    assert.equal(element.y, null);
-    assert.equal(element.quick, false);
-    assert.equal(element.open, false);
-    assert.equal(element.corner, 'TOP_START');
+  suite('fixed', () => {
+    setup(async () => {
+      fixt = await fixture(surface({fixed: true}));
+      element = fixt.root.querySelector('mwc-menu-surface')!;
+      await element.updateComplete;
+    });
+
+    test('sets correct class', async () => {
+      const fixedClass = 'mdc-menu-surface--fixed';
+      const surface = element.shadowRoot!.querySelector('.mdc-menu-surface')!;
+      assert.isTrue(surface.classList.contains(fixedClass));
+      element.fixed = false;
+      await element.updateComplete;
+      assert.isFalse(surface.classList.contains(fixedClass));
+    });
   });
 
-  test('`fixed` sets correct class', async () => {
-    const fixedClass = 'mdc-menu-surface--fixed';
-    const surface = element.shadowRoot!.querySelector('.mdc-menu-surface')!;
-    assert.isFalse(surface.classList.contains(fixedClass));
-    element.fixed = true;
-    await element.updateComplete;
-    assert.isTrue(surface.classList.contains(fixedClass));
+  suite('fullwidth', () => {
+    setup(async () => {
+      fixt = await fixture(surface({fullwidth: true}));
+      element = fixt.root.querySelector('mwc-menu-surface')!;
+      await element.updateComplete;
+    });
+
+    test('sets correct class', async () => {
+      const fullwidthClass = 'fullwidth';
+      const surface = element.shadowRoot!.querySelector('.mdc-menu-surface')!;
+      assert.isTrue(surface.classList.contains(fullwidthClass));
+      element.fullwidth = false;
+      await element.updateComplete;
+      assert.isFalse(surface.classList.contains(fullwidthClass));
+    });
   });
 
-  test('`fullwidth` sets correct class', async () => {
-    const fullwidthClass = 'fullwidth';
-    const surface = element.shadowRoot!.querySelector('.mdc-menu-surface')!;
-    assert.isFalse(surface.classList.contains(fullwidthClass));
-    element.fullwidth = true;
-    await element.updateComplete;
-    assert.isTrue(surface.classList.contains(fullwidthClass));
+  suite('open/close', () => {
+    setup(async () => {
+      fixt = await fixture(surface({quick: true}));
+      element = fixt.root.querySelector('mwc-menu-surface')!;
+      await element.updateComplete;
+    });
+
+    test('`show()` opens surface', async () => {
+      element.show();
+      await element.updateComplete;
+      assert.equal(element.open, true);
+    });
+
+    test('`close()` closes surface', async () => {
+      element.show();
+      await element.updateComplete;
+      element.close();
+      assert.equal(element.open, false);
+    });
+
+    test('closing fires the closed event', async () => {
+      const fake = new Fake<[], void>();
+      element.addEventListener('closed', fake.handler);
+      element.show();
+      await element.updateComplete;
+      await rafPromise();
+      element.close();
+      await element.updateComplete;
+      await rafPromise();
+      assert.isTrue(fake.called);
+    });
+
+    test('opening fires the opened event', async () => {
+      const fake = new Fake<[], void>();
+      element.addEventListener('opened', fake.handler);
+      element.show();
+      await element.updateComplete;
+      await rafPromise();
+      assert.isTrue(fake.called);
+    });
+
+    test('escape key closes surface', async () => {
+      const surface = element.shadowRoot!.querySelector('.mdc-menu-surface')!;
+      element.show();
+      await element.updateComplete;
+      await rafPromise();
+      surface.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape'}));
+      await rafPromise();
+      await element.updateComplete;
+      assert.isFalse(element.open);
+    });
+
+    test('clicking outside the surface closes surface', async () => {
+      element.show();
+      await element.updateComplete;
+      await rafPromise();
+      document.body.dispatchEvent(new MouseEvent('click'));
+      await rafPromise();
+      await element.updateComplete;
+      assert.isFalse(element.open);
+    });
   });
 
-  test('closing fires the closed event', async () => {
-    const fake = new Fake<[], void>();
-    element.addEventListener('closed', fake.handler);
-    element.quick = true;
-    element.open = true;
-    await element.updateComplete;
-    await rafPromise();
-    element.open = false;
-    await element.updateComplete;
-    await rafPromise();
-    assert.isTrue(fake.called);
-  });
+  suite('focus', () => {
+    let focusedElement;
+    let innerFocusedElement;
 
-  test('opening fires the opened event', async () => {
-    const fake = new Fake<[], void>();
-    element.addEventListener('opened', fake.handler);
-    element.quick = true;
-    element.open = true;
-    await element.updateComplete;
-    await rafPromise();
-    assert.isTrue(fake.called);
-  });
+    setup(async () => {
+      focusedElement = document.createElement('input');
+      innerFocusedElement = document.createElement('input');
+      document.body.appendChild(focusedElement);
+      fixt = await fixture(surface({quick: true}));
+      element = fixt.root.querySelector('mwc-menu-surface')!;
+      element.appendChild(innerFocusedElement);
+      await element.updateComplete;
+    });
 
-  test('escape key closes surface', async () => {
-    const surface = element.shadowRoot!.querySelector('.mdc-menu-surface')!;
-    element.quick = true;
-    element.open = true;
-    await element.updateComplete;
-    await rafPromise();
-    surface.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape'}));
-    await rafPromise();
-    await element.updateComplete;
-    assert.isFalse(element.open);
-  });
+    teardown(() => {
+      focusedElement.remove();
+    });
 
-  test('clicking outside the surface closes surface', async () => {
-    element.quick = true;
-    element.open = true;
-    await element.updateComplete;
-    await rafPromise();
-    document.body.dispatchEvent(new MouseEvent('click'));
-    await rafPromise();
-    await element.updateComplete;
-    assert.isFalse(element.open);
+    test('focus is restored after closing', async () => {
+      focusedElement.focus();
+      element.show();
+      await element.updateComplete;
+      await rafPromise();
+      innerFocusedElement.focus();
+      assert.equal(document.activeElement, fixt);
+      assert.equal(fixt.shadowRoot!.activeElement, innerFocusedElement);
+      element.close();
+      await rafPromise();
+      await element.updateComplete;
+      assert.equal(document.activeElement, focusedElement);
+    });
   });
 });
