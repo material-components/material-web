@@ -252,6 +252,54 @@ suite('mwc-menu', () => {
     });
   });
 
+  suite('grouped', () => {
+    let oldSetTimeout;
+
+    setup(async () => {
+      oldSetTimeout = window.setTimeout;
+      (window as any).setTimeout = (fn) => { fn(); };
+      fixt = await fixture(menu({
+        multi: true,
+        open: true,
+        contents: html`
+          <mwc-list-item group="a">1a</mwc-list-item>
+          <mwc-list-item group="a">1b</mwc-list-item>
+          <mwc-list-item group="b">2a</mwc-list-item>
+          <mwc-list-item group="b">2b</mwc-list-item>`
+      }));
+      element = fixt.root.querySelector('mwc-menu')!;
+      await element.updateComplete;
+    });
+
+    teardown(() => {
+      window.setTimeout = oldSetTimeout;
+    });
+
+    test('clicking items within one group overrides previous selection',
+      async () => {
+        const [item1a, item1b, item2a, item2b] =
+          element.children as unknown as ListItem[];
+        item1a.click();
+        assert.deepEqual(element.selected!, [
+          item1a
+        ]);
+        item1b.click();
+        assert.deepEqual(element.selected!, [
+          item1b
+        ]);
+        item2a.click();
+        assert.deepEqual(element.selected!, [
+          item1b,
+          item2a
+        ]);
+        item2b.click();
+        assert.deepEqual(element.selected!, [
+          item1b,
+          item2b
+        ]);
+      });
+  });
+
   suite('show()', () => {
     setup(async () => {
       fixt = await fixture(defaultMenu);
