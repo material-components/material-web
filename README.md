@@ -4,7 +4,9 @@
 
 The Material Web Components (MWC) are a collection of [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) maintained by Google that implement [Material Design](https://material.io/design/).
 
-[Demos on Glitch](https://mwc-demos.glitch.me/demos/).
+[Demos on Glitch](https://mwc-demos.glitch.me/demos/)
+
+[Contributing Guide](#Contributing)
 
 ## Components
 
@@ -218,4 +220,29 @@ Run tests for a specific component:
 
 ```sh
 npm run test -- --packages=mwc-button
+```
+
+Run benchmarks for a specific component:
+
+```sh
+npm run test:bench -- --package list
+```
+
+Advanced developer workflow:
+
+```sh
+npm install
+
+# (persistent) build source files on change
+npm run watch
+
+# another terminal (persistent) - viewing auto-reload demos
+npm run dev -- --watch -p <optional port>
+
+# for testing:
+# another terminal (persistent) - build tests (must run after normal watch)
+npm run watch:tests
+
+# another terminal (persistent) - debug tests
+npm run test:debug -- --autoWatch --packages <comma sepaarated package names> # e.g. mwc-switch,mwc-text*
 ```
