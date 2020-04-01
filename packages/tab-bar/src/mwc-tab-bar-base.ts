@@ -42,12 +42,14 @@ export class TabBarBase extends BaseElement {
   // undefined" error in browsers that don't define it (e.g. IE11).
   @query('slot') protected tabsSlot!: HTMLElement;
 
-  @observer(async function(this: TabBarBase, value: number) {
+  @observer(async function(this: TabBarBase) {
     await this.updateComplete;
     // only provoke the foundation if we are out of sync with it, i.e.
     // ignore an foundation generated set.
-    if (value !== this._previousActiveIndex) {
-      this.mdcFoundation.activateTab(value);
+    // use `activeIndex` directly to avoid staleness if it was set before the
+    // first render.
+    if (this.activeIndex !== this._previousActiveIndex) {
+      this.mdcFoundation.activateTab(this.activeIndex);
     }
   })
   @property({type: Number})

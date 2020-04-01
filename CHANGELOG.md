@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Use `RippleAPI` interface between `RippleHandlers` and `mwc-ripple`
   - Use `RippleInterface` interface for `ripple-directive`
 - Fix regression in textfield line color custom properties
+- Fix infinite loop bug in `mwc-tab-bar` when `activeIndex` is set in first render
 
 ## [v0.14.1] - 2020-03-23
 
