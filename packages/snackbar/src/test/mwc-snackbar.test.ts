@@ -17,7 +17,6 @@
 
 import {Snackbar} from '@material/mwc-snackbar';
 import {html, TemplateResult} from 'lit-html';
-import {restore, SinonFakeTimers, useFakeTimers} from 'sinon';
 
 import {Fake, fixture, rafPromise, TestFixture} from '../../../../test/src/util/helpers';
 
@@ -54,14 +53,18 @@ const findLabelText = (element: Element) => {
 suite('mwc-snackbar', () => {
   let fixt: TestFixture;
   let element: Snackbar;
-  let clock: SinonFakeTimers;
+  let originalSetTimeout: typeof window.setTimeout;
 
   setup(() => {
-    clock = useFakeTimers({toFake: ['setTimeout']});
+    originalSetTimeout = window.setTimeout;
+    (window as any).setTimeout = (fn: Function) => {
+      fn();
+      return -1;
+    };
   });
 
   teardown(() => {
-    restore();
+    window.setTimeout = originalSetTimeout;
     element.remove();
   });
 
@@ -100,7 +103,6 @@ suite('mwc-snackbar', () => {
       await element.updateComplete;
       assert.isTrue(openingHandler.called);
       await rafPromise();
-      clock.runAll();
       assert.isTrue(element.isOpen);
       assert.isTrue(openedHandler.called);
     });
@@ -111,9 +113,7 @@ suite('mwc-snackbar', () => {
       element.open();
       await element.updateComplete;
       await rafPromise();
-      clock.runAll();
       element.close();
-      clock.runAll();
       assert.isFalse(element.isOpen);
       assert.isTrue(closedHandler.called);
     });
@@ -156,7 +156,6 @@ suite('mwc-snackbar', () => {
       element.open();
       await element.updateComplete;
       close.click();
-      clock.runAll();
       assert.isFalse(element.isOpen);
       const ev = closedHandler.calls[0].args[0] as CustomEvent;
       assert.equal(ev.detail.reason, 'dismiss');
@@ -178,7 +177,6 @@ suite('mwc-snackbar', () => {
       element.open();
       await element.updateComplete;
       action.click();
-      clock.runAll();
       assert.isFalse(element.isOpen);
       const ev = closedHandler.calls[0].args[0] as CustomEvent;
       assert.equal(ev.detail.reason, 'action');
@@ -197,11 +195,9 @@ suite('mwc-snackbar', () => {
       element.open();
       await element.updateComplete;
       await rafPromise();
-      clock.runAll();
       const bar = element.shadowRoot!.querySelector('.mdc-snackbar')!;
       assert.equal(element.isOpen, true);
       bar.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape'}));
-      clock.runAll();
       await element.updateComplete;
       assert.equal(element.isOpen, true);
     });
@@ -210,11 +206,9 @@ suite('mwc-snackbar', () => {
       element.open();
       await element.updateComplete;
       await rafPromise();
-      clock.runAll();
       const bar = element.shadowRoot!.querySelector('.mdc-snackbar')!;
       assert.equal(element.isOpen, true);
       bar.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape'}));
-      clock.runAll();
       await element.updateComplete;
       assert.equal(element.isOpen, false);
     });

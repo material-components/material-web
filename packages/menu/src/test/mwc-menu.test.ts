@@ -22,7 +22,6 @@ import {ListItem} from '@material/mwc-list/mwc-list-item';
 import {Menu} from '@material/mwc-menu';
 import {Corner, MenuSurface} from '@material/mwc-menu/mwc-menu-surface';
 import {html, TemplateResult} from 'lit-html';
-import {restore, SinonFakeTimers, useFakeTimers} from 'sinon';
 
 import {Fake, fixture, rafPromise, TestFixture} from '../../../../test/src/util/helpers';
 
@@ -272,10 +271,14 @@ suite('mwc-menu', () => {
   });
 
   suite('grouped', () => {
-    let clock: SinonFakeTimers;
+    let originalSetTimeout: typeof window.setTimeout;
 
     setup(async () => {
-      clock = useFakeTimers({toFake: ['setTimeout']});
+      originalSetTimeout = window.setTimeout;
+      (window as any).setTimeout = (fn: Function) => {
+        fn();
+        return -1;
+      };
       fixt = await fixture(menu({
         multi: true,
         open: true,
@@ -290,7 +293,7 @@ suite('mwc-menu', () => {
     });
 
     teardown(() => {
-      restore();
+      window.setTimeout = originalSetTimeout;
     });
 
     test(
@@ -299,16 +302,12 @@ suite('mwc-menu', () => {
           const [item1a, item1b, item2a, item2b] =
               element.children as unknown as ListItem[];
           item1a.click();
-          clock.runAll();
           assert.deepEqual(element.selected!, [item1a]);
           item1b.click();
-          clock.runAll();
           assert.deepEqual(element.selected!, [item1b]);
           item2a.click();
-          clock.runAll();
           assert.deepEqual(element.selected!, [item1b, item2a]);
           item2b.click();
-          clock.runAll();
           assert.deepEqual(element.selected!, [item1b, item2b]);
         });
   });
