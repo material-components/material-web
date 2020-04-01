@@ -15,7 +15,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/linear-progress": "=6.0.0-canary.4b45b6620.0",
+    "@material/linear-progress": "=6.0.0-canary.e84b9c8.0",
     "@material/mwc-base": "^0.14.1",
     "lit-element": "^2.3.0",
     "tslib": "^1.10.0"
