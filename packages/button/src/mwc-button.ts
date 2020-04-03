@@ -19,6 +19,7 @@ import {customElement} from 'lit-element';
 import {ButtonBase} from './mwc-button-base.js';
 import {style} from './mwc-button-css.js';
 
+/** @soyCompatible */
 @customElement('mwc-button')
 export class Button extends ButtonBase {
   static styles = style;

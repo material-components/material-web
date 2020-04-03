@@ -93,17 +93,17 @@ suite('mwc-button', () => {
 
     test('focus fn highlights and blurs', async () => {
       const focusedClass = 'mdc-ripple-upgraded--background-focused';
-      const nativeButton =
-          element.shadowRoot!.querySelector('#button') as HTMLButtonElement;
-      assert.isFalse(nativeButton.classList.contains(focusedClass));
       element.focus();
+      const rippleElement = await element.ripple;
+      const nativeRipple = rippleElement!.shadowRoot!.querySelector(
+                               '.mdc-ripple-surface') as HTMLDivElement;
       await element.requestUpdate();
       await rafPromise();
-      assert.isTrue(nativeButton.classList.contains(focusedClass));
+      assert.isTrue(nativeRipple.classList.contains(focusedClass));
       element.blur();
       await element.requestUpdate();
       await rafPromise();
-      assert.isFalse(nativeButton.classList.contains(focusedClass));
+      assert.isFalse(nativeRipple.classList.contains(focusedClass));
     });
 
     teardown(async () => {

@@ -16,9 +16,10 @@ limitations under the License.
 */
 
 @import '@material/mwc-base/src/elevation.scss';
-@import '@material/button/mdc-button.scss';
+@import '@material/button/mixins';
 
-@include mdc-ripple-common(mdc-feature-all());
+@include mdc-button-without-ripple();
+@include mdc-button-theme-baseline();
 
 .trailing-icon,
 .leading-icon, {
@@ -97,19 +98,32 @@ limitations under the License.
   &.mdc-button--raised,
   &.mdc-button--unelevated {
     @include mdc-button-horizontal-padding(var(--mdc-button-horizontal-padding, #{$mdc-button-contained-horizontal-padding}));
+    // NOTE(dfreedm): Replace hardcoded opacities when
+    // https://github.com/material-components/material-components-web-components/issues/1072
+    // is resolved
+    mwc-ripple {
+      --mdc-ripple-color: var(--mdc-theme-on-primary, #{mdc-theme-prop-value(on-primary)});
+      --mdc-ripple-hover-opacity: .08;
+      --mdc-ripple-fg-opacity: .24;
+      --mdc-ripple-focus-opacity: .24;
+    }
   }
 
   &.mdc-button--outlined {
     @include mdc-button-outline-width-var-aware(var(--mdc-button-outline-width, #{$mdc-button-outlined-border-width}), var(--mdc-button-horizontal-padding, #{$mdc-button-contained-horizontal-padding}));
     border-color: var(--mdc-button-outline-color, var(--mdc-theme-primary, #{mdc-theme-prop-value(primary)}));
+    mwc-ripple {
+      top: -1px;
+      left: -1px;
+      border: 1px solid transparent;
+      --mdc-ripple-surface-top: -1px;
+      --mdc-ripple-surface-left: -1px;
+      --mdc-ripple-surface-border: 1px solid transparent;
+    }
   }
 
   &.mdc-button--dense {
     @include mdc-button-density(-2);
-  }
-
-  .mdc-button__ripple {
-    border-radius: 0;
   }
 }
 

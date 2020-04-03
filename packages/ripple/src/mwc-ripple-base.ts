@@ -34,8 +34,6 @@ export class RippleBase extends BaseElement implements RippleAPI {
 
   @property({type: Boolean}) disabled = false;
 
-  @property({type: Boolean}) light = false;
-
   @property({attribute: false}) private hovering = false;
 
   @property({attribute: false}) private bgFocused = false;
@@ -191,7 +189,6 @@ export class RippleBase extends BaseElement implements RippleAPI {
       'primary': this.primary,
       'accent': this.accent,
       'disabled': this.disabled,
-      'light': this.light,
     };
     return html`
         <div class="mdc-ripple-surface mdc-ripple-upgraded ${classMap(classes)}"

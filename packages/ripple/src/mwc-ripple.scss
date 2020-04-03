@@ -18,8 +18,34 @@ limitations under the License.
 @use '@material/ripple';
 @import '@material/ripple/mdc-ripple.scss';
 
+@mixin sizing() {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+
+  @include mdc-theme-prop(top, (
+    varname: --mdc-ripple-surface-top,
+    fallback: 0
+  ));
+
+  @include mdc-theme-prop(left, (
+    varname: --mdc-ripple-surface-left,
+    fallback: 0
+  ));
+
+  @include mdc-theme-prop(border, (
+    varname: --mdc-ripple-surface-border,
+    fallback: initial
+  ));
+}
+
 :host {
+  display: block;
   --mdc-ripple-fg-opacity: #{map-get($mdc-ripple-dark-ink-opacities, press)};
+  @include sizing();
 }
 
 /*
@@ -42,12 +68,7 @@ limitations under the License.
 }
 
 .mdc-ripple-surface {
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  @include sizing();
 
   &.mdc-ripple-upgraded {
     /* use inherit keyword to "reset" definition from mdc-ripple styles */
@@ -58,6 +79,13 @@ limitations under the License.
     varname: --mdc-ripple-color,
     fallback: #000
   ));
+
+  &.mdc-ripple-upgraded--background-focused::before {
+    @include mdc-theme-prop(opacity, (
+      varname: --mdc-ripple-focus-opacity,
+      fallback: map-get($mdc-ripple-dark-ink-opacities, focus)
+    ));
+  }
 }
 
 .hover::before {
@@ -65,27 +93,4 @@ limitations under the License.
     varname: --mdc-ripple-hover-opacity,
     fallback: map-get($mdc-ripple-dark-ink-opacities, hover)
   ));
-}
-
-/*
- * Overrides for "light" ripples on dark surfaces
- */
-.light {
-  --mdc-ripple-fg-opacity: #{map-get($mdc-ripple-light-ink-opacities, press)};
-  --mdc-ripple-color: #fff;
-
-  &.hover::before {
-    @include mdc-theme-prop(opacity, (
-      varname: --mdc-ripple-hover-opacity,
-      fallback: map-get($mdc-ripple-light-ink-opacities, hover)
-    ));
-  }
-
-  &.primary {
-    --mdc-ripple-color: var(--mdc-theme-on-primary, #{mdc-theme-prop-value(on-primary)});
-  }
-
-  &.accent {
-    --mdc-ripple-color: var(--mdc-theme-on-secondary, #{mdc-theme-prop-value(on-secondary)});
-  }
 }
