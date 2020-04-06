@@ -41,21 +41,40 @@ export class SliderBase extends FormElement {
 
   @property({type: Number})
   @observer(function(this: SliderBase, value: number) {
-    this.mdcFoundation.setValue(value);
-  })
-  value = 0;
+    // if setting both min and max at the same time, foundation values may be
+    // dirty, so must set both so they can be set correctly internally
+    try {
+      this.mdcFoundation.setMax(this.max);
+    } catch (e) { /**/ }
 
-  @property({type: Number})
-  @observer(function(this: SliderBase, value: number) {
-    this.mdcFoundation.setMin(value);
+    try {
+      this.mdcFoundation.setMin(value);
+    } catch (e) { /**/ }
   })
   min = 0;
 
   @property({type: Number})
   @observer(function(this: SliderBase, value: number) {
-    this.mdcFoundation.setMax(value);
+    // if setting both min and max at the same time, foundation values may be
+    // dirty, so must set both so they can be set correctly internally
+
+    try {
+      this.mdcFoundation.setMin(this.min);
+    } catch (e) { /**/ }
+
+    try {
+      this.mdcFoundation.setMax(value);
+    } catch (e) { /**/ }
   })
   max = 100;
+
+  // value observer MUST come after min and max observers to actually set when
+  // initialized outside of [0,100]
+  @property({type: Number})
+  @observer(function(this: SliderBase, value: number) {
+    this.mdcFoundation.setValue(value);
+  })
+  value = 0;
 
   @property({type: Number})
   @observer(function(this: SliderBase, value: number, old: number) {
