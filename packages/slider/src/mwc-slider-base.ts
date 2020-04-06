@@ -45,11 +45,15 @@ export class SliderBase extends FormElement {
     // dirty, so must set both so they can be set correctly internally
     try {
       this.mdcFoundation.setMax(this.max);
-    } catch (e) { /**/ }
+    } catch (e) {
+      // needed for formatter
+    }
 
     try {
       this.mdcFoundation.setMin(value);
-    } catch (e) { /**/ }
+    } catch (e) {
+      // needed for formatter
+    }
   })
   min = 0;
 
@@ -60,11 +64,15 @@ export class SliderBase extends FormElement {
 
     try {
       this.mdcFoundation.setMin(this.min);
-    } catch (e) { /**/ }
+    } catch (e) {
+      // needed for formatter
+    }
 
     try {
       this.mdcFoundation.setMax(value);
-    } catch (e) { /**/ }
+    } catch (e) {
+      // needed for formatter
+    }
   })
   max = 100;
 

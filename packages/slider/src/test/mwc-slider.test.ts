@@ -18,7 +18,7 @@
 import {Slider} from '@material/mwc-slider/mwc-slider';
 import {html} from 'lit-html';
 
-import {Fake, ieSafeKeyboardEvent, rafPromise, fixture, TestFixture} from '../../../../test/src/util/helpers';
+import {Fake, fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../../test/src/util/helpers';
 
 const defaultSliderProps = {
   min: 0,
