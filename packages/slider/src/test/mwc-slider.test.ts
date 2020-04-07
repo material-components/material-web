@@ -46,6 +46,7 @@ const slider = (propsInit: Partial<SliderProps> = {}) => {
 
 const afterRender = async (root: ShadowRoot) => {
   const slider = root.querySelector('mwc-slider')!;
+  await slider.updateComplete;
   slider.layout();
   await rafPromise();
   await rafPromise();
