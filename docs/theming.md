@@ -98,10 +98,10 @@ These custom properties used by MWC set the main colors for an application:
 
 | Custom property               | Description                                 | Default |
 | ----------------------------- | ------------------------------------------- | ------- |
-| `--mdc-theme-primary`         | The theme primary color.                    | #6200ee ![](images/color_#6200ee.png) |
-| `--mdc-theme-secondary`       | The theme secondary color.                  | #018786 ![](images/color_#018786.png) |
-| `--mdc-theme-surface`         | The theme surface color.                    | #ffffff ![](images/color_#ffffff.png) |
-| `--mdc-theme-background`      | The theme background color.                 | #ffffff ![](images/color_#ffffff.png) |
+| `--mdc-theme-primary`         | The theme primary color.                    | ![](images/color_6200ee.png) `#6200ee` |
+| `--mdc-theme-secondary`       | The theme secondary color.                  | ![](images/color_018786.png) `#018786` |
+| `--mdc-theme-surface`         | The theme surface color.                    | ![](images/color_ffffff.png) `#ffffff` |
+| `--mdc-theme-background`      | The theme background color.                 | ![](images/color_ffffff.png) `#ffffff` |
 
 When you set the main colors, you may need to change the default colors for text and iconography,
 making sure the colors have enough contrast to meet the [Web Content Accessibility Guidelines (WCAG)](https://material.io/design/color/text-legibility.html#legibility-standards).
@@ -110,9 +110,9 @@ The default colors for text and icons are also controlled by custom properties:
 
 | Custom property                               | Description                                                      | Default |
 | --------------------------------------------- | ---------------------------------------------------------------- | ------- |
-| `--mdc-theme-on-primary`                      | Text and icons on top of a theme primary color background.       | #ffffff ![](images/color_#ffffff.png) |
-| `--mdc-theme-on-secondary`                    | Text and icons on top of a theme secondary color background.     | #ffffff ![](images/color_#ffffff.png) |
-| `--mdc-theme-on-surface`                      | Text and icons on top of a theme surface color background.       | #000000 ![](images/color_#000000.png) |
+| `--mdc-theme-on-primary`                      | Text and icons on top of a theme primary color background.       | ![](images/color_ffffff.png) `#ffffff`  |
+| `--mdc-theme-on-secondary`                    | Text and icons on top of a theme secondary color background.     | ![](images/color_ffffff.png) `#ffffff`  |
+| `--mdc-theme-on-surface`                      | Text and icons on top of a theme surface color background.       | ![](images/color_000000.png) `#000000` |
 
 <!-- Add these back in when they are more widely used.
 
@@ -120,11 +120,11 @@ The same pattern is followed for text colors on _background_:
 
 | Custom property                            | Description                                                | Default | 
 | ------------------------------------------ | ---------------------------------------------------------- | ------- |
-| `--mdc-theme-text-primary-on-background`   | High-emphasis text on top of the theme background color.   | rgba(0,0,0,.87) ![](images/color_rgba(0,0,0,.87).png) |
-| `--mdc-theme-text-secondary-on-background` | Medium-emphasis text on top of the theme background color. | rgba(0,0,0,.60) ![](images/color_rgba(0,0,0,.60).png) |
-| `--mdc-theme-text-hint-on-background`      | Hint text on top of the theme background color.            | rgba(0,0,0,.60) ![](images/color_rgba(0,0,0,.60).png) |
-| `--mdc-theme-text-disabled-on-background`  | Disabled text on top of the theme background color.        | rgba(0,0,0,.38) ![](images/color_rgba(0,0,0,.38).png) |
-| `--mdc-theme-text-icon-on-background`      | Icons on top of the theme background color.                | rgba(0,0,0,.60) ![](images/color_rgba(0,0,0,.60).png) |
+| `--mdc-theme-text-primary-on-background`   | High-emphasis text on top of the theme background color.   | rgba(0,0,0,.87) ![](images/color_0,0,0,87.png) |
+| `--mdc-theme-text-secondary-on-background` | Medium-emphasis text on top of the theme background color. | rgba(0,0,0,.60) ![](images/color_0,0,0,60.png) |
+| `--mdc-theme-text-hint-on-background`      | Hint text on top of the theme background color.            | rgba(0,0,0,.60) ![](images/color_0,0,0,60.png) |
+| `--mdc-theme-text-disabled-on-background`  | Disabled text on top of the theme background color.        | rgba(0,0,0,.38) ![](images/color_0,0,0,38.png) |
+| `--mdc-theme-text-icon-on-background`      | Icons on top of the theme background color.                | rgba(0,0,0,.60) ![](images/color_0,0,0,60.png) |
 
 -->
 
