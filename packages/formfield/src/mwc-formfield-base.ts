@@ -25,6 +25,7 @@ import {classMap} from 'lit-html/directives/class-map.js';
 
 export class FormfieldBase extends BaseElement {
   @property({type: Boolean}) alignEnd = false;
+  @property({type: Boolean}) spaceBetween = false;
 
   @property({type: String})
   @observer(async function(this: FormfieldBase, label: string) {
@@ -90,10 +91,13 @@ export class FormfieldBase extends BaseElement {
   }
 
   protected render() {
+    const classes = {
+      'mdc-form-field--align-end': this.alignEnd,
+      'mdc-form-field--space-between': this.spaceBetween
+    };
+
     return html`
-      <div class="mdc-form-field ${classMap({
-      'mdc-form-field--align-end': this.alignEnd
-    })}">
+      <div class="mdc-form-field ${classMap(classes)}">
         <slot></slot>
         <label class="mdc-label"
                @click="${this._labelClick}">${this.label}</label>

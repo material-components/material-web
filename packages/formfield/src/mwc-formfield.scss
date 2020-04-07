@@ -17,8 +17,12 @@ limitations under the License.
 
 @import '@material/form-field/mdc-form-field.scss';
 
+:host {
+  display: inline-flex;
+}
+
 .mdc-form-field {
-  align-items: center;
+  width: 100%;
 }
 
 ::slotted(*) {

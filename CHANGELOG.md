@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added surface/on-surface theme properties for mwc-switch
 - Added overrides for ripple focus and hover opacities
   - `--mdc-ripple-focus-opacity` and `--mdc-ripple-hover-opacity` respectively
+- Added `spaceBetween` to mwc-formfield
 
 ### Changed
 

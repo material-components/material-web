@@ -99,6 +99,8 @@ Name      | Description
 Name    | Type     | Description
 ------- | -------- | ----------------------------------
 `label` | `string` | The text to display for the label.
+`alignEnd` | `boolean` | Align the component at the end of the label.
+`spaceBetween` | `boolean` | Add space between the component and the label as the formfield grows.
 
 ### Methods
 
