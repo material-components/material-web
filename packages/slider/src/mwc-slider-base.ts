@@ -43,8 +43,6 @@ export class SliderBase extends FormElement {
 
   @property({type: Number}) max = 100;
 
-  // value observer MUST come after min and max observers to actually set when
-  // initialized outside of [0,100]
   @property({type: Number})
   @observer(function(this: SliderBase, value: number) {
     this.mdcFoundation.setValue(value);
