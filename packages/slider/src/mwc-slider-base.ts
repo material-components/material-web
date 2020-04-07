@@ -150,7 +150,6 @@ export class SliderBase extends FormElement {
   updated(changed: PropertyValues) {
     const minChanged = changed.has('min');
     const maxChanged = changed.has('max');
-    // const valChanged = changed.has('value');
 
     if (minChanged && maxChanged) {
       if (this.max < this.mdcFoundation.getMin()) {
