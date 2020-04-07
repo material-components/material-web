@@ -18,8 +18,8 @@ MWC supports theming using [CSS custom properties](https://developer.mozilla.org
 Custom properties are set just like standard CSS properties:
 
 ```css
-html, body  {
-    --mdc-theme-primary: fuchsia;
+html {
+  --mdc-theme-primary: fuchsia;
 }
 ```
 
@@ -28,7 +28,7 @@ use them to style your own components (or generic HTML elements):
 
 ```css
 div.myCard {
-    background-color: var(--mdc-theme-primary);
+  background-color: var(--mdc-theme-primary);
 }
 ```
 
@@ -45,8 +45,8 @@ you'll need to take a few extra steps. (These steps primarily apply to Internet 
     <script src="@webcomponents/shadycss/custom-style-interface.min.js"></script>
     ```
 
-3.  Identify any document level style elements that define custom properties 
-    (for example, by adding a class): 
+3.  Identify any top-level style elements that define custom properties. Add
+    a class to these style elements so you can easily locate them from script.
 
     ```html
     <style class="document-style">
@@ -62,8 +62,9 @@ you'll need to take a few extra steps. (These steps primarily apply to Internet 
     window.ShadyCSS.CustomStyleInterface.addCustomStyle(document.querySelector('style.document-style'));
     ```
 
-    This code assumes a single document-level style element. If you have more than one, you'll need to modify the code.
-    See []()
+    This code assumes a single top-level style element. If you have more than one, you'll need to modify the code.
+    See [About CustomStyleInterface](https://github.com/webcomponents/polyfills/tree/master/packages/shadycss#about-customstyleinterface)
+    in the Shady CSS README for more examples of using `CustomStyleInterface`.
 
 With these steps, the polyfills provide limited support for CSS custom properties. 
 See [Limitations](https://github.com/webcomponents/polyfills/tree/master/packages/shadycss#limitations)
@@ -76,14 +77,12 @@ throughout most of the application and components, as the main color for your ap
 for floating action buttons and other interactive elements, serving as visual contrast to the primary.
 
 In addition to the primary and secondary colors, Material Theming also defines a _background_ color for the app, 
-as well as a _surface_ color, which is used used as a background in components.
+as well as a _surface_ color, which is used as a background in components.
 
-Finally, Material Theming has a number of text colors, which are used for rendering text and other shapes on top of the primary,
-secondary and background colors. These are specified as either dark or light, in order to provide sufficient contrast to
-what's behind them, and have
-[different levels of opacity depending on usage](https://material.io/design/color/the-color-system.html#):
-- Primary, used for most text.
-- Secondary, used for text which is lower in the visual hierarchy.
+Finally, Material Theming has a number of text colors, which are used for rendering text and other shapes.
+
+- High-emphasis, used for the most important text.
+- Medium-emphasis, used for text which is lower in the visual hierarchy.
 - Hint, used for text hints (such as those in text fields and labels).
 - Disabled, used for text in disabled components and content.
 - Icon, used for icons.
@@ -91,53 +90,43 @@ what's behind them, and have
 - On-secondary, used for text that is on top of a secondary background.
 - On-primary, used for text that is on top of a primary background.
 
+For information on choosing foreground and background colors, see [Text legibility](https://material.io/design/color/text-legibility.html#text-backgrounds) in the material design guidelines.
+
 ### Color properties
 
 These custom properties used by MWC set the main colors for an application:
 
-| Custom property               | Description                                 |
-| ----------------------------- | ------------------------------------------- |
-| `--mdc-theme-primary`         | The theme primary color.                    |
-| `--mdc-theme-secondary`       | The theme secondary color.                  |
-| `--mdc-theme-surface`         | The theme surface color.                    |
-| `--mdc-theme-background`      | The theme background color.                 |
+| Custom property               | Description                                 | Default |
+| ----------------------------- | ------------------------------------------- | ------- |
+| `--mdc-theme-primary`         | The theme primary color.                    | #6200ee ![](images/color_#6200ee.png) |
+| `--mdc-theme-secondary`       | The theme secondary color.                  | #018786 ![](images/color_#018786.png) |
+| `--mdc-theme-surface`         | The theme surface color.                    | #ffffff ![](images/color_#ffffff.png) |
+| `--mdc-theme-background`      | The theme background color.                 | #ffffff ![](images/color_#ffffff.png) |
 
-When you set the main colors, you'll also have to set contrasting colors for text and iconography:
+When you set the main colors, you may need to change the default colors for text and iconography,
+making sure the colors have enough contrast to meet the [Web Content Accessibility Guidelines (WCAG)](https://material.io/design/color/text-legibility.html#legibility-standards).
 
-| Custom property                               | Description                                                                |
-| --------------------------------------------- | -------------------------------------------------------------------------- |
-| `--mdc-theme-on-primary`                      | Text and icons on top of a theme primary color background.                   |
-| `--mdc-theme-on-secondary`                    | Text and icons on top of a theme secondary color background.                 |
-| `--mdc-theme-on-surface`                      | Text and icons on top of a theme surface color background.                      |
+The default colors for text and icons are also controlled by custom properties:
+
+| Custom property                               | Description                                                      | Default |
+| --------------------------------------------- | ---------------------------------------------------------------- | ------- |
+| `--mdc-theme-on-primary`                      | Text and icons on top of a theme primary color background.       | #ffffff ![](images/color_#ffffff.png) |
+| `--mdc-theme-on-secondary`                    | Text and icons on top of a theme secondary color background.     | #ffffff ![](images/color_#ffffff.png) |
+| `--mdc-theme-on-surface`                      | Text and icons on top of a theme surface color background.       | #000000 ![](images/color_#000000.png) |
+
+<!-- Add these back in when they are more widely used.
 
 The same pattern is followed for text colors on _background_:
 
-| Custom property                            | Description                                                |
-| ------------------------------------------ | ---------------------------------------------------------- |
-| `--mdc-theme-text-primary-on-background`   | Primary text on top of the theme background color.         |
-| `--mdc-theme-text-secondary-on-background` | Secondary text on top of the theme background color.       |
-| `--mdc-theme-text-hint-on-background`      | Hint text on top of the theme background color.            |
-| `--mdc-theme-text-disabled-on-background`  | Disabled text on top of the theme background color.        |
-| `--mdc-theme-text-icon-on-background`      | Icons on top of the theme background color.                |
+| Custom property                            | Description                                                | Default | 
+| ------------------------------------------ | ---------------------------------------------------------- | ------- |
+| `--mdc-theme-text-primary-on-background`   | High-emphasis text on top of the theme background color.   | rgba(0,0,0,.87) ![](images/color_rgba(0,0,0,.87).png) |
+| `--mdc-theme-text-secondary-on-background` | Medium-emphasis text on top of the theme background color. | rgba(0,0,0,.60) ![](images/color_rgba(0,0,0,.60).png) |
+| `--mdc-theme-text-hint-on-background`      | Hint text on top of the theme background color.            | rgba(0,0,0,.60) ![](images/color_rgba(0,0,0,.60).png) |
+| `--mdc-theme-text-disabled-on-background`  | Disabled text on top of the theme background color.        | rgba(0,0,0,.38) ![](images/color_rgba(0,0,0,.38).png) |
+| `--mdc-theme-text-icon-on-background`      | Icons on top of the theme background color.                | rgba(0,0,0,.60) ![](images/color_rgba(0,0,0,.60).png) |
 
-In addition, MWC supports custom properties for known dark and light backgrounds:
-
-| Custom property                            | Description                                                |
-| ------------------------------------------ | ---------------------------------------------------------- |
-| `--mdc-theme-text-primary-on-light`        | Primary text on top of a light-colored background.         |
-| `--mdc-theme-text-secondary-on-light`      | Secondary text on top of a light-colored background.       |
-| `--mdc-theme-text-hint-on-light`           | Hint text on top of a light-colored background.            |
-| `--mdc-theme-text-disabled-on-light`       | Disabled text on top of a light-colored background.        |
-| `--mdc-theme-text-icon-on-light`           | Icons on top of a light-colored background.                |
-
-| Custom property                            | Description                                                |
-| ------------------------------------------ | ---------------------------------------------------------- |
-| `--mdc-theme-text-primary-on-dark`        | Primary text on top of a dark-colored background.         |
-| `--mdc-theme-text-secondary-on-dark`      | Secondary text on top of a dark-colored background.       |
-| `--mdc-theme-text-hint-on-dark`           | Hint text on top of a dark-colored background.            |
-| `--mdc-theme-text-disabled-on-dark`       | Disabled text on top of a dark-colored background.        |
-| `--mdc-theme-text-icon-on-dark`           | Icons on top of a dark-colored background.                |
-
+-->
 
 ## Typography
 
@@ -153,7 +142,7 @@ See also: [Material design type system](https://material.io/design/typography/th
 
 MWC provides a set of CSS custom properties to define typography for your application. 
 
-The `--mdc-typeography-font-family` property sets the default font family for all components.
+The `--mdc-typography-font-family` property sets the default font family for all components.
 
 For more granular control, you can set individual type properties for each of the styles 
 used in the type system:
@@ -178,7 +167,7 @@ For a given style, MWC supports the following custom properties (where `<STYLE>`
 
 CSS custom property | Description
 --- | ---
-`--mdc-typography-font-family` | The base font-family
+`--mdc-typography-font-family` | The base font-family. 
 `--mdc-typography-<STYLE>-font-family` | The font-family for `<STYLE>`. 
 `--mdc-typography-<STYLE>-font-size` | The font-size for `<STYLE>`. 
 `--mdc-typography-<STYLE>-line-height` | The line-height for `<STYLE>`.  
@@ -187,7 +176,10 @@ CSS custom property | Description
 `--mdc-typography-<STYLE>-text-decoration` | The text-decoration for `<STYLE>`. 
 `--mdc-typography-<STYLE>-text-transform` | The text-transform for `<STYLE>`. 
 
-For example, to set typeography properties for a button, you might use the following CSS:
+
+**Example:** Overriding type properties for a button
+
+To set typography properties for a button, you might use the following CSS:
 
 ```css
 html {
@@ -195,7 +187,6 @@ html {
   --mdc-typography-button-text-transform: none;
 }
 ```
-
 
 **Example:** Overriding the global `font-family` property.
 
@@ -248,10 +239,7 @@ icon font, or specify SVG icons inline for many components.
 To use the Material icons, you need to load the icon font:
 
 ```html
-<link
-    href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    rel="stylesheet"
-/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 ```
 
 Most MWC components that can display an icon let you specify an icon by name:
@@ -266,10 +254,20 @@ To load an alternate icon font:
 2.  Set the default icon font:
 
     ```css
-    html, body {
+    html {
       --mdc-icon-font: 'My Icons';
     }
     ```
+**Example:** Using the outlined variant of Material icons
+
+```html
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<style>
+  html {
+    --mdc-icon-font: 'Material Icons Outlined';
+  }
+</style>
+```
 
 ## Theming components
 
