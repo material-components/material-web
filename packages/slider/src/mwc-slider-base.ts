@@ -19,7 +19,7 @@ import {addHasRemoveClass, EventType, FormElement, SpecificEventListener} from '
 import {observer} from '@material/mwc-base/observer.js';
 import {MDCSliderAdapter} from '@material/slider/adapter.js';
 import MDCSliderFoundation from '@material/slider/foundation.js';
-import {eventOptions, html, property, query, TemplateResult} from 'lit-element';
+import {eventOptions, html, property, PropertyValues, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map.js';
 import {styleMap} from 'lit-html/directives/style-map.js';
 
@@ -39,42 +39,9 @@ export class SliderBase extends FormElement {
 
   @query('.mdc-slider__pin-value-marker') protected pinMarker!: HTMLElement;
 
-  @property({type: Number})
-  @observer(function(this: SliderBase, value: number) {
-    // if setting both min and max at the same time, foundation values may be
-    // dirty, so must set both so they can be set correctly internally
-    try {
-      this.mdcFoundation.setMax(this.max);
-    } catch (e) {
-      // needed for formatter
-    }
+  @property({type: Number}) min = 0;
 
-    try {
-      this.mdcFoundation.setMin(value);
-    } catch (e) {
-      // needed for formatter
-    }
-  })
-  min = 0;
-
-  @property({type: Number})
-  @observer(function(this: SliderBase, value: number) {
-    // if setting both min and max at the same time, foundation values may be
-    // dirty, so must set both so they can be set correctly internally
-
-    try {
-      this.mdcFoundation.setMin(this.min);
-    } catch (e) {
-      // needed for formatter
-    }
-
-    try {
-      this.mdcFoundation.setMax(value);
-    } catch (e) {
-      // needed for formatter
-    }
-  })
-  max = 100;
+  @property({type: Number}) max = 100;
 
   // value observer MUST come after min and max observers to actually set when
   // initialized outside of [0,100]
@@ -178,6 +145,28 @@ export class SliderBase extends FormElement {
       this.isFoundationDestroyed = false;
       this.mdcFoundation.init();
     }
+  }
+
+  updated(changed: PropertyValues) {
+    const minChanged = changed.has('min');
+    const maxChanged = changed.has('max');
+    // const valChanged = changed.has('value');
+
+    if (minChanged && maxChanged) {
+      if (this.max < this.mdcFoundation.getMin()) {
+        this.mdcFoundation.setMin(this.min);
+        this.mdcFoundation.setMax(this.max);
+      } else {
+        this.mdcFoundation.setMax(this.max);
+        this.mdcFoundation.setMin(this.min);
+      }
+    } else if (minChanged) {
+      this.mdcFoundation.setMin(this.min);
+    } else if (maxChanged) {
+      this.mdcFoundation.setMax;
+    }
+
+    super.updated(changed);
   }
 
   disconnectedCallback() {
