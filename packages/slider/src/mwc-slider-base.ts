@@ -163,9 +163,11 @@ export class SliderBase extends FormElement {
 
     if (minChanged && maxChanged) {
       if (this.max < this.mdcFoundation.getMin()) {
+        // for when min is above previous max
         this.mdcFoundation.setMin(this.min);
         this.mdcFoundation.setMax(this.max);
       } else {
+        // for when max is below previous min
         this.mdcFoundation.setMax(this.max);
         this.mdcFoundation.setMin(this.min);
       }
