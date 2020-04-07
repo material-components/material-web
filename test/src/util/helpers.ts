@@ -91,7 +91,7 @@ const defaultOpts = {
 interface FixtureOptions {
   shouldAttachContents: boolean;
   document: Document;
-  afterRender: ((root: ShadowRoot) => Promise<void>) | null;
+  afterRender: ((root: ShadowRoot) => Promise<void>)|null;
 }
 
 export const fixture =
