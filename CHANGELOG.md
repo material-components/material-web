@@ -28,7 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Use `RippleInterface` interface for `ripple-directive`
 - Fix regression in textfield line color custom properties
 - Fix infinite loop bug in `mwc-tab-bar` when `activeIndex` is set in first render
-- fixed bug in `mwc-slider` where initializing min and max over `100` would not set correct bounds on UI.
+- Fixed bug in `mwc-slider` where initializing min and max over `100` would not set correct bounds on UI.
 
 ## [v0.14.1] - 2020-03-23
 

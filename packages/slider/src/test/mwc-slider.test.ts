@@ -44,16 +44,11 @@ const slider = (propsInit: Partial<SliderProps> = {}) => {
   `;
 };
 
-const upAndDown = async (slider: Slider) => {
-  // arrow up keycode
-  const upEv = ieSafeKeyboardEvent('keydown', 38);
-  slider.dispatchEvent(upEv);
-
-  await slider.updateComplete;
-
-  // arrow down keycode
-  const downEv = ieSafeKeyboardEvent('keydown', 40);
-  slider.dispatchEvent(downEv);
+const afterRender = async (root: ShadowRoot) => {
+  const slider = root.querySelector('mwc-slider')!;
+  slider.layout();
+  await rafPromise();
+  await rafPromise();
 };
 
 suite('mwc-slider', () => {
@@ -158,11 +153,8 @@ suite('mwc-slider', () => {
     });
 
     test('vals set correctly when explicitly set to defaults', async () => {
-      fixt = await fixture(slider());
+      fixt = await fixture(slider(), {afterRender});
       element = fixt.root.querySelector('mwc-slider')!;
-
-      // trigger ui recalculation
-      await upAndDown(element);
 
       assert.equal(element.min, 0);
       assert.equal(element.max, 100);
@@ -170,11 +162,8 @@ suite('mwc-slider', () => {
     });
 
     test('can set min max over 100', async () => {
-      fixt = await fixture(slider({min: 101, max: 103, value: 102}));
+      fixt = await fixture(slider({min: 101, max: 103, value: 102}), {afterRender});
       element = fixt.root.querySelector('mwc-slider')!;
-
-      // trigger ui recalculation
-      await upAndDown(element);
 
       assert.equal(element.min, 101);
       assert.equal(element.max, 103);
@@ -182,15 +171,30 @@ suite('mwc-slider', () => {
     });
 
     test('can set min max below 0', async () => {
-      fixt = await fixture(slider({min: -3, max: -1, value: -2}));
+      fixt = await fixture(slider({min: -3, max: -1, value: -2}), {afterRender});
       element = fixt.root.querySelector('mwc-slider')!;
-
-      // trigger ui recalculation
-      await upAndDown(element);
 
       assert.equal(element.min, -3);
       assert.equal(element.max, -1);
       assert.equal(element.value, -2);
+    });
+
+    test('value below min', async () => {
+      fixt = await fixture(slider({min: 101, max: 103, value: 99}), {afterRender});
+      element = fixt.root.querySelector('mwc-slider')!;
+
+      assert.equal(element.min, 101);
+      assert.equal(element.max, 103);
+      assert.equal(element.value, 101);
+    });
+
+    test('value above max', async () => {
+      fixt = await fixture(slider({min: -3, max: -1, value: 1}), {afterRender});
+      element = fixt.root.querySelector('mwc-slider')!;
+
+      assert.equal(element.min, -3);
+      assert.equal(element.max, -1);
+      assert.equal(element.value, -1);
     });
   });
 });

@@ -43,11 +43,23 @@ export class SliderBase extends FormElement {
 
   @property({type: Number}) max = 100;
 
+  protected _value = 0;
+  set value(value: number) {
+    if (this.mdcFoundation) {
+      this.mdcFoundation.setValue(value);
+    }
+    this._value = value;
+    this.requestUpdate('value', value);
+  }
+
   @property({type: Number})
-  @observer(function(this: SliderBase, value: number) {
-    this.mdcFoundation.setValue(value);
-  })
-  value = 0;
+  get value() {
+    if (this.mdcFoundation) {
+      return this.mdcFoundation.getValue();
+    } else {
+      return this._value;
+    }
+  }
 
   @property({type: Number})
   @observer(function(this: SliderBase, value: number, old: number) {
@@ -160,7 +172,7 @@ export class SliderBase extends FormElement {
     } else if (minChanged) {
       this.mdcFoundation.setMin(this.min);
     } else if (maxChanged) {
-      this.mdcFoundation.setMax;
+      this.mdcFoundation.setMax(this.max);
     }
 
     super.updated(changed);
@@ -221,7 +233,7 @@ export class SliderBase extends FormElement {
           window.removeEventListener('resize', handler),
       notifyInput: () => {
         const value = this.mdcFoundation.getValue();
-        if (value !== this.value) {
+        if (value !== this._value) {
           this.value = value;
           this.dispatchEvent(new CustomEvent(
               INPUT_EVENT,
@@ -270,6 +282,12 @@ export class SliderBase extends FormElement {
       this.mdcFoundation.destroy();
       this.mdcFoundation.init();
     }
+  }
+
+  protected async firstUpdated() {
+    await super.firstUpdated();
+
+    this.mdcFoundation.setValue(this._value);
   }
 
   /**
