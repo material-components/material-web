@@ -84,12 +84,14 @@ export class TestFixture extends LitElement {
 
 const defaultOpts = {
   shouldAttachContents: true,
-  document: document
+  document: document,
+  afterRender: null,
 };
 
 interface FixtureOptions {
   shouldAttachContents: boolean;
   document: Document;
+  afterRender: ((root: ShadowRoot) => Promise<void>)|null;
 }
 
 export const fixture =
@@ -103,6 +105,10 @@ export const fixture =
   opts.document.body.appendChild(tf);
   if (opts.shouldAttachContents) {
     await tf.updateComplete;
+  }
+
+  if (opts.afterRender) {
+    await opts.afterRender(tf.root);
   }
 
   return tf;

@@ -19,7 +19,7 @@ import {addHasRemoveClass, EventType, FormElement, SpecificEventListener} from '
 import {observer} from '@material/mwc-base/observer.js';
 import {MDCSliderAdapter} from '@material/slider/adapter.js';
 import MDCSliderFoundation from '@material/slider/foundation.js';
-import {eventOptions, html, property, query, TemplateResult} from 'lit-element';
+import {eventOptions, html, property, PropertyValues, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map.js';
 import {styleMap} from 'lit-html/directives/style-map.js';
 
@@ -39,23 +39,27 @@ export class SliderBase extends FormElement {
 
   @query('.mdc-slider__pin-value-marker') protected pinMarker!: HTMLElement;
 
-  @property({type: Number})
-  @observer(function(this: SliderBase, value: number) {
-    this.mdcFoundation.setValue(value);
-  })
-  value = 0;
+  @property({type: Number}) min = 0;
+
+  @property({type: Number}) max = 100;
+
+  protected _value = 0;
+  set value(value: number) {
+    if (this.mdcFoundation) {
+      this.mdcFoundation.setValue(value);
+    }
+    this._value = value;
+    this.requestUpdate('value', value);
+  }
 
   @property({type: Number})
-  @observer(function(this: SliderBase, value: number) {
-    this.mdcFoundation.setMin(value);
-  })
-  min = 0;
-
-  @property({type: Number})
-  @observer(function(this: SliderBase, value: number) {
-    this.mdcFoundation.setMax(value);
-  })
-  max = 100;
+  get value() {
+    if (this.mdcFoundation) {
+      return this.mdcFoundation.getValue();
+    } else {
+      return this._value;
+    }
+  }
 
   @property({type: Number})
   @observer(function(this: SliderBase, value: number, old: number) {
@@ -153,6 +157,27 @@ export class SliderBase extends FormElement {
     }
   }
 
+  updated(changed: PropertyValues) {
+    const minChanged = changed.has('min');
+    const maxChanged = changed.has('max');
+
+    if (minChanged && maxChanged) {
+      if (this.max < this.mdcFoundation.getMin()) {
+        this.mdcFoundation.setMin(this.min);
+        this.mdcFoundation.setMax(this.max);
+      } else {
+        this.mdcFoundation.setMax(this.max);
+        this.mdcFoundation.setMin(this.min);
+      }
+    } else if (minChanged) {
+      this.mdcFoundation.setMin(this.min);
+    } else if (maxChanged) {
+      this.mdcFoundation.setMax(this.max);
+    }
+
+    super.updated(changed);
+  }
+
   disconnectedCallback() {
     super.disconnectedCallback();
     this.isFoundationDestroyed = true;
@@ -208,7 +233,7 @@ export class SliderBase extends FormElement {
           window.removeEventListener('resize', handler),
       notifyInput: () => {
         const value = this.mdcFoundation.getValue();
-        if (value !== this.value) {
+        if (value !== this._value) {
           this.value = value;
           this.dispatchEvent(new CustomEvent(
               INPUT_EVENT,
@@ -257,6 +282,12 @@ export class SliderBase extends FormElement {
       this.mdcFoundation.destroy();
       this.mdcFoundation.init();
     }
+  }
+
+  protected async firstUpdated() {
+    await super.firstUpdated();
+
+    this.mdcFoundation.setValue(this._value);
   }
 
   /**
