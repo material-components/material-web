@@ -10,7 +10,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/card": "=6.0.0-canary.6a40ef217.0",
-    "@material/mwc-base": "^0.14.1"
+    "lit-element": "^2.3.0",
+    "lit-html": "^1.1.2"
   },
   "publishConfig": {
     "access": "public"

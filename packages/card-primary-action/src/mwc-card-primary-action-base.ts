@@ -14,8 +14,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {html, LitElement, property} from '@material/mwc-base/base-element';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
+import {html, LitElement, property} from 'lit-element';
 
 export class CardPrimaryActionBase extends LitElement {
   @property() label = '';
@@ -26,12 +26,12 @@ export class CardPrimaryActionBase extends LitElement {
 
   render() {
     return html`
-      <div 
-        .ripple="${ripple({
+      <div
+        .ripple=${ripple({
       unbounded: false
-    })}"
-        class="mdc-card__primary-action" 
-        tabindex="0"          
+    })}
+        class="mdc-card__primary-action"
+        tabindex="0"
         aria-label="${this.label}">
           <slot></slot>
       </div>`;

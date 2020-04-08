@@ -14,7 +14,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {classMap, html, LitElement, property, query, TemplateResult} from '@material/mwc-base/base-element';
+import {LitElement, property, query} from 'lit-element';
+import {html, TemplateResult} from 'lit-html';
+import {classMap} from 'lit-html/directives/class-map';
 
 export class CardBase extends LitElement {
   @query('[name="icon"]') protected _iconSlot!: HTMLSlotElement;
@@ -64,7 +66,7 @@ export class CardBase extends LitElement {
   }
 
   protected renderActions() {
-    const buttonSlotTemplate = `html<slot name="button" @slotchange=${
+    const buttonSlotTemplate = html`<slot name="button" @slotchange=${
         this.onButtonSlotChanged}></slot>`;
     const iconSlotTemplate =
         html`<slot name="icon" @slotchange=${this.onIconSlotChanged}></slot>`;
