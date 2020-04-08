@@ -225,7 +225,7 @@ across the same Document.
 
 ```html
 <mwc-list>
-  <mwc-radio-list-item group="a" seslected>Item 0</mwc-radio-list-item>
+  <mwc-radio-list-item group="a" selected>Item 0</mwc-radio-list-item>
   <mwc-radio-list-item group="a">Item 1</mwc-radio-list-item>
   <li divider padded role="separator"></li>
   <mwc-radio-list-item left group="a">Item 2 (left)</mwc-radio-list-item>
