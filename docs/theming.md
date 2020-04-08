@@ -73,11 +73,11 @@ in the ShadyCSS README for details.
 ## Colors
 
 Material Design theming uses two main colors: **primary** and **secondary**. The primary color is used
-throughout most of the application and components, as the main color for your application. The secondary color is used
+throughout most of the application and components as the main color for your application. The secondary color is used
 for floating action buttons and other interactive elements, serving as visual contrast to the primary.
 
 In addition to the primary and secondary colors, Material Theming also defines a _background_ color for the app, 
-as well as a _surface_ color, which is used as a background in components.
+as well as a _surface_ color, which is used as a background in components on top of the app's background.
 
 Finally, Material Theming has a number of text colors, which are used for rendering text and other shapes.
 
@@ -87,8 +87,8 @@ Finally, Material Theming has a number of text colors, which are used for render
 - Disabled, used for text in disabled components and content.
 - Icon, used for icons.
 - On-surface, used for text that is on top of a surface background.
-- On-secondary, used for text that is on top of a secondary background.
 - On-primary, used for text that is on top of a primary background.
+- On-secondary, used for text that is on top of a secondary background.
 
 For information on choosing foreground and background colors, see [Text legibility](https://material.io/design/color/text-legibility.html#text-backgrounds) in the material design guidelines.
 
@@ -292,6 +292,6 @@ component properties for certain components.
 
 ```css
 mwc-button.action {
-    --mdc-theme-primary: red;
+  --mdc-theme-primary: red;
 }
 ```
