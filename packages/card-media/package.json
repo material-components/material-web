@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-card-media",
-  "version": "0.6.0",
+  "version": "0.14.1",
   "description": "",
   "main": "mwc-card-media.js",
   "scripts": {
@@ -9,8 +9,8 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/card": "^3.1.0",
-    "@material/mwc-base": "^0.7.0"
+    "@material/card": "=6.0.0-canary.6a40ef217.0",
+    "@material/mwc-base": "^0.14.1"
   },
   "publishConfig": {
     "access": "public"
