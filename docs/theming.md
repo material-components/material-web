@@ -81,20 +81,22 @@ as well as a _surface_ color, which is used as a background in components on top
 
 Finally, Material Theming has a number of text colors, which are used for rendering text and other shapes.
 
+<!-- Add these back in when we include the properties for setting them
 - High-emphasis, used for the most important text.
 - Medium-emphasis, used for text which is lower in the visual hierarchy.
 - Hint, used for text hints (such as those in text fields and labels).
 - Disabled, used for text in disabled components and content.
 - Icon, used for icons.
+-->
 - On-surface, used for text that is on top of a surface background.
 - On-primary, used for text that is on top of a primary background.
 - On-secondary, used for text that is on top of a secondary background.
 
-For information on choosing foreground and background colors, see [Text legibility](https://material.io/design/color/text-legibility.html#text-backgrounds) in the material design guidelines.
+For information on choosing foreground and background colors, see [Text legibility](https://material.io/design/color/text-legibility.html#text-backgrounds) in the Material Design guidelines.
 
-### Color properties
+### Color custom properties
 
-These custom properties used by MWC set the main colors for an application:
+MWC provides a set of custom properties to set the main colors for an application:
 
 | Custom property               | Description                                 | Default |
 | ----------------------------- | ------------------------------------------- | ------- |
@@ -136,9 +138,9 @@ The default Material Design theme uses the Roboto font for all of these styles.
 The easiest way to customize your application is to set a new default font family. If necessary, you
 can also set individual properties for each of the named type styles.
 
-See also: [Material design type system](https://material.io/design/typography/the-type-system.html#)
+See also: [Material Design type system](https://material.io/design/typography/the-type-system.html#)
 
-### Typography properties
+### Typography custom properties
 
 MWC provides a set of CSS custom properties to define typography for your application. 
 
@@ -225,7 +227,7 @@ By default, components have a rounded corner. The default radius depends on the 
 
 MWC doesn't support cut corners.
 
-See also: [Material design shape](https://material.io/design/shape/applying-shape-to-ui.html#).
+See also: [Material Design shape](https://material.io/design/shape/applying-shape-to-ui.html#).
 -->
 
 ## Iconography
