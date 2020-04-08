@@ -1,64 +1,91 @@
-# mwc-ripple
+# `<mwc-ripple>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-button.svg)](https://www.npmjs.com/package/@material/mwc-ripple)
 
-> :warning: These components are a work in progress. They are pre-release and should be considered experimental, as they may undergo major changes before release. We are experimenting with alternate architectures and approaches with the goal of allowing us to bring the most correct and optimal implementation of Material components to the widest possible audiences. Visible progress may be slow, as this research is across teams and repositories so is not consistently reflected in commits to this codebase. :warning:
+> IMPORTANT: The Material Web Components are a work in progress and subject to
+> major changes until 1.0 release.
 
-A [Material Components](https://material.io/components/) icon implementation using [Web Components](https://www.webcomponents.org/introduction)
+Ripple provides the JavaScript and CSS required to provide components (or any element at all) with a material "ink ripple" interaction effect.
 
-## Getting started
+[Material Design Guidelines: States](https://material.io/design/interaction/states.html)
 
- * The easiest way to try out mwc-ripple is to use one of these online tools:
+## Installation
 
-    * Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-icon-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-icon-example?path=index.html)
+```sh
+npm install @material/mwc-ripple
+```
 
-    * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/qibisux/edit?html,output),
-    [CodePen](https://codepen.io/azakus/pen/deZLja).
+> NOTE: The Material Web Components are distributed as ES2017 JavaScript
+> Modules, and use the Custom Elements API. They are compatible with all modern
+> browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
+> tooling step is required to resolve *bare module specifiers*, as well as
+> transpilation and polyfills for IE11. See
+> [here](https://github.com/material-components/material-components-web-components#quick-start)
+> for detailed instructions.
 
-* You can also copy [this HTML file](https://gist.githubusercontent.com/azakus/f01e9fc2ed04e781ad5a52ded7b296e7/raw/266f2f4f91cbfe89b2acc6ec63957b1a3cfe9b39/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
+## Example Usage
 
-* When you're ready to use mwc-ripple in a project, install it via [npm](https://www.npmjs.com/). To run the project in the browser, a module-compatible toolctain is required. We recommend installing the [Polymer CLI](https://github.com/Polymer/polymer-cli) and using its development server as follows.
+### Standard
 
-  1. Ensure the webcomponents polyfills are included in your HTML page
+![](images/standard.gif)
 
-      - Install webcomponents polyfills
+```html
+<mwc-ripple></mwc-ripple>
+```
 
-          ```npm i @webcomponents/webcomponentsjs```
+### Unbounded
 
-      - Add webcomponents polyfills to your HTML page
+![](images/unbound.gif)
 
-          ```<script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>```
+```html
+<mwc-ripple unbounded></mwc-ripple>
+```
 
-  1. Add mwc-ripple to your project:
+<!--
+TODO(dfreedm): add examples when list-item has activated and selected states
+### Selected
 
-      ```npm i @material/mwc-ripple```
+```html
+<mwc-ripple selected></mwc-ripple>
+```
 
-  1. Import the mwc-ripple definition into your HTML page:
+### Activated
 
-      ```<script type="module" src="@material/mwc-ripple/index.js"></script>```
+```html
+<mwc-ripple activated></mwc-ripple>
+```
+-->
 
-      Or into your module script:
+## API
 
-      ```import {Ripple} from "@material/mwc-ripple"```
+### Properties/Attributes
 
-  1. Create an instance of mwc-ripple in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
+Name | Type | Default | Description
+---- | ---- | ------- | -----------
+`primary` | `boolean` | `false` | When true, sets the ripple color to `--mdc-theme-primary`. Will be overridden by `--mdc-ripple-color` if set.
+`accent` | `boolean` | `false` | When true, sets the ripple color to `--mdc-theme-secondary`. Will be overridden by `--mdc-ripple-color` if set.
+`unbounded` | `boolean` | `false` | When true, the ripple will flow outside the component in a circle.
+`activated` | `boolean` | `false` | Set true when the container of the ripple should be in an [`activated`](https://material.io/design/interaction/states.html#activated) state.
+`selected` | `boolean` | `false` | Set true when the container of the ripple should be in a [`selected`](https://material.io/design/interaction/states.html#selected) state.
+`disabled` | `boolean` | `false` | Set true to disable the ripple when the container of the ripple is disabled.
 
-      ```<mwc-ripple></mwc-ripple>```
+### Methods
 
-  1. Install the Polymer CLI:
+| Name | Description
+| ---- | -----------
+| `startPress(event?: Event) => void` | Begin the `press` state of the ripple. Optional `Event` will be used to determine the beginning coordinates of the ripple animation when `unbounded` is false.
+| `endPress() => void` | End the `press` state of the ripple.
+| `startFocus() => void` | Begin the `focus` state of the ripple.
+| `endFocus() => void` | End the `focus` state of the ripple.
+| `startHover() => void` | Begin the `hover` state of the ripple.
+| `endHover() => void` | End the `hover` state of the ripple.
 
-      ```npm i -g polymer-cli```
 
-  1. Run the development server and open a browser pointing to its URL:
+### CSS Custom Properties
 
-      ```polymer serve```
-
-  > mwc-ripple is published on [npm](https://www.npmjs.com/package/@material/mwc-ripple) using JavaScript Modules.
-  This means it can take advantage of the standard native JavaScript module loader available in all current major browsers.
-  >
-  > However, since mwc-ripple uses npm convention to reference dependencies by name, a light transform to rewrite specifiers to URLs is required to get it to run in the browser. The polymer-cli's development server `polymer serve` automatically handles this transform.
-
-  Tools like [WebPack](https://webpack.js.org/) and [Rollup](https://rollupjs.org/) can also be used to serve and/or bundle mwc-ripple.
-
-## Supported Browsers
-
-The last 2 versions of all modern browsers are supported, including
-Chrome, Safari, Opera, Firefox, Edge. In addition, Internet Explorer 11 is also supported.
+| Name | Default | Description
+| ---- | ------- | -----------
+| `--mdc-ripple-color` | ![](images/color_000.png) `#000` | Color of the ripple will have when activated.
+| `--mdc-ripple-press-opacity` | `0.12` | Opacity of the ripple when pressed.
+| `--mdc-ripple-hover-opacity` | `0.04` | Opacity of the ripple when hovered.
+| `--mdc-ripple-focus-opacity` | `0.12` | Opacity of the ripple when focused.
+| `--mdc-ripple-selected-opacity` | `0.08` | Opacity of the ripple when the host component is "selected". This opacity is added to `press`, `hover`, and `focus` states.
+| `--mdc-ripple-activated-opacity` | `0.12` | Opacity of the ripple when the host component is "activated". This opacity is added to `press`, `hover`, and `focus` states.

@@ -62,7 +62,7 @@ export class FormfieldBase extends BaseElement {
         if (input instanceof FormElement) {
           const ripple = await input.ripple;
           if (ripple) {
-            ripple.activate();
+            ripple.startPress();
           }
         }
       },
@@ -71,7 +71,7 @@ export class FormfieldBase extends BaseElement {
         if (input instanceof FormElement) {
           const ripple = await input.ripple;
           if (ripple) {
-            ripple.deactivate();
+            ripple.endPress();
           }
         }
       },

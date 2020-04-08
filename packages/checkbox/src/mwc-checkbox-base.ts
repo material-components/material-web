@@ -149,27 +149,27 @@ export class CheckboxBase extends FormElement {
   }
 
   private _handleFocus() {
-    this.rippleHandlers.handleFocus();
+    this.rippleHandlers.startFocus();
   }
 
   private _handleBlur() {
-    this.rippleHandlers.handleBlur();
+    this.rippleHandlers.endFocus();
   }
 
   private _activateRipple() {
-    this.rippleHandlers.activate();
+    this.rippleHandlers.startPress();
   }
 
   private _deactivateRipple() {
-    this.rippleHandlers.deactivate();
+    this.rippleHandlers.endPress();
   }
 
   private _handleMouseEnter() {
-    this.rippleHandlers.handleMouseEnter();
+    this.rippleHandlers.startHover();
   }
 
   private _handleMouseLeave() {
-    this.rippleHandlers.handleMouseLeave();
+    this.rippleHandlers.endHover();
   }
 
   private _changeHandler() {

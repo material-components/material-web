@@ -53,44 +53,44 @@ suite('mwc-ripple', () => {
       assert.instanceOf(element, Ripple);
     });
 
-    test('sets activation class when activated', async () => {
-      element.activate();
+    test('sets pressed class on startPress()', async () => {
+      element.startPress();
       await element.updateComplete;
       assert.equal(internals.fgActivation, true);
     });
 
-    test('removes activation class when deactivated', async () => {
-      element.activate();
+    test('removes pressed class on endPress()', async () => {
+      element.startPress();
       await animationTimer();
-      element.deactivate();
+      element.endPress();
       await animationTimer();
       assert.equal(internals.fgActivation, false);
     });
 
-    test('sets focused class when focused', async () => {
-      element.handleFocus();
+    test('sets focused class on startFocus()', async () => {
+      element.startFocus();
       await animationTimer();
       assert.equal(internals.bgFocused, true);
     });
 
-    test('removes focused class when blurred', async () => {
-      element.handleFocus();
+    test('removes focused class on endFocus()', async () => {
+      element.startFocus();
       await animationTimer();
-      element.handleBlur();
+      element.endFocus();
       await animationTimer();
       assert.equal(internals.bgFocused, false);
     });
 
-    test('sets hover class on mouseenter', async () => {
-      element.handleMouseEnter();
+    test('sets hover class on startHover()', async () => {
+      element.startHover();
       await element.updateComplete;
       assert.equal(internals.hovering, true);
     });
 
-    test('removes hover class on mouseleave', async () => {
-      element.handleMouseEnter();
+    test('removes hover class on endHover()', async () => {
+      element.startHover();
       await element.updateComplete;
-      element.handleMouseLeave();
+      element.endHover();
       await element.updateComplete;
       assert.equal(internals.hovering, false);
     });

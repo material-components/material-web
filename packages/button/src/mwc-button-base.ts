@@ -59,7 +59,7 @@ export class ButtonBase extends LitElement {
     return html`${
         this.shouldRenderRipple ?
             html`<mwc-ripple .primary="${!filled}" .disabled="${
-                this.disabled}"></mwc-ripple>"` :
+                this.disabled}"></mwc-ripple>` :
             ''}`;
   }
 
@@ -70,7 +70,7 @@ export class ButtonBase extends LitElement {
   focus() {
     const buttonElement = this.buttonElement;
     if (buttonElement) {
-      this.rippleHandlers.handleFocus();
+      this.rippleHandlers.startFocus();
       buttonElement.focus();
     }
   }
@@ -78,7 +78,7 @@ export class ButtonBase extends LitElement {
   blur() {
     const buttonElement = this.buttonElement;
     if (buttonElement) {
-      this.rippleHandlers.handleBlur();
+      this.rippleHandlers.endFocus();
       buttonElement.blur();
     }
   }
@@ -132,26 +132,26 @@ export class ButtonBase extends LitElement {
   }
 
   private handleRippleActivate(evt?: Event) {
-    this.rippleHandlers.activate(evt);
+    this.rippleHandlers.startPress(evt);
   }
 
   private handleRippleDeactivate() {
-    this.rippleHandlers.deactivate();
+    this.rippleHandlers.endPress();
   }
 
   private handleRippleMouseEnter() {
-    this.rippleHandlers.handleMouseEnter();
+    this.rippleHandlers.startHover();
   }
 
   private handleRippleMouseLeave() {
-    this.rippleHandlers.handleMouseLeave();
+    this.rippleHandlers.endHover();
   }
 
   private handleRippleFocus() {
-    this.rippleHandlers.handleFocus();
+    this.rippleHandlers.startFocus();
   }
 
   private handleRippleBlur() {
-    this.rippleHandlers.handleBlur();
+    this.rippleHandlers.endFocus();
   }
 }

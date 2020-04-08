@@ -48,16 +48,16 @@ class RippleIntermediate implements RippleInterface {
   constructor(foundation: MDCRippleFoundation) {
     this.foundation = foundation;
   }
-  activate() {
+  startPress() {
     this.foundation.activate();
   }
-  deactivate() {
+  endPress() {
     this.foundation.deactivate();
   }
-  handleFocus() {
+  startFocus() {
     this.foundation.handleFocus();
   }
-  handleBlur() {
+  endFocus() {
     this.foundation.handleBlur();
   }
   destroy() {
@@ -190,8 +190,8 @@ export const ripple =
         }
       }
       if (options.active === true) {
-        (rippleFoundation as RippleIntermediate).activate();
+        (rippleFoundation as RippleIntermediate).startPress();
       } else if (options.active === false) {
-        (rippleFoundation as RippleIntermediate).deactivate();
+        (rippleFoundation as RippleIntermediate).endPress();
       }
     });

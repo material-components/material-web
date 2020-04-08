@@ -13,7 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added overrides for ripple focus and hover opacities
   - `--mdc-ripple-focus-opacity` and `--mdc-ripple-hover-opacity` respectively
 - Added `spaceBetween` to mwc-formfield
-
+- Added `activated` and `selected` states for ripple
+- Added documentation for ripple
 ### Changed
 
 - Refactor `mwc-checkbox`
@@ -21,6 +22,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Replace `ripple-directive` with lazy `mwc-ripple`
 - Refactor `mwc-button`
   - Replace `ripple-directive` with lazy `mwc-ripple`
+- Refactor `mwc-ripple`
+  - Normalized API to `start${state}` `end${state}` naming
 
 ### Fixed
 
@@ -30,6 +33,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix regression in textfield line color custom properties
 - Fix infinite loop bug in `mwc-tab-bar` when `activeIndex` is set in first render
 - Fixed bug in `mwc-slider` where initializing min and max over `100` would not set correct bounds on UI.
+- Fixed `"` showing up in mwc-button when the ripple activates
 
 ## [v0.14.1] - 2020-03-23
 
