@@ -22,7 +22,7 @@ import {html, property, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map.js';
 import {ifDefined} from 'lit-html/directives/if-defined.js';
 
-import {GraphicType, ListItemBase} from './mwc-list-item-base.js';
+import {GraphicType, ListItemBase} from './mwc-list-item-base-master.js';
 
 export class RadioListItemBase extends ListItemBase {
   @query('slot') protected slotElement!: HTMLSlotElement|null;
