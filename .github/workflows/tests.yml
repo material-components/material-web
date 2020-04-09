@@ -1,0 +1,54 @@
+name: tests
+
+on: [push, pull_request]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 12
+
+    - name: NPM install
+      # ignore-scripts so that we skip postinstall, because postinstall runs
+      # bootstrap, and it's a little nicer to see that here as its own step
+      # when debugging.
+      run: npm ci --ignore-scripts
+
+    - name: Lerna bootstrap
+      run: npm run bootstrap
+
+    - name: Check format
+      run: npm run format:check
+
+    - name: Build component Sass
+      run: npm run build:styling
+
+    - name: Compile component TypeScript
+      run: npm run build:typescript
+
+    # TODO(aomarks) Once b/144957560 is fixed, move lint and format into their
+    # own workflows or jobs so that they can run in parallel.
+    - name: Check lint
+      run: npm run lint
+
+    - name: Compile test TypeScript
+      run: npm run build:tests
+
+    - name: Unit tests
+      env:
+        SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+        SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+      run: |
+        # Don't run Sauce from a forked repo, since the code may not be trusted
+        # and therefore secrets like the Sauce password are not available.
+        # GITHUB_HEAD_REF is only defined when building a fork.
+        if [ ! "$GITHUB_HEAD_REF" ]; then
+          export USE_SAUCE=true
+          export SAUCE_BUILD_ID=mwc-tests-${GITHUB_EVENT_NAME}-${GITHUB_ACTION}-${GITHUB_SHA}
+          export SAUCE_TUNNEL_ID=${SAUCE_BUILD_ID}-tunnel
+        fi
+        npm test

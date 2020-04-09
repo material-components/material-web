@@ -24,7 +24,7 @@ import {ifDefined} from 'lit-html/directives/if-defined.js';
 import {MDCListAdapter} from './mwc-list-adapter.js';
 import MDCListFoundation, {ActionDetail, isIndexSet, SelectedDetail} from './mwc-list-foundation.js';
 import {MWCListIndex} from './mwc-list-foundation.js';
-import {ListItemBase, RequestSelectedDetail} from './mwc-list-item-base-master.js';
+import {ListItemBase, RequestSelectedDetail} from './mwc-list-item-base.js';
 
 export {createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex} from './mwc-list-foundation.js';
 
