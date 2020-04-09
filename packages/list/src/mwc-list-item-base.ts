@@ -51,13 +51,7 @@ export class ListItemBase extends LitElement {
   })
   disabled = false;
   @property({type: Boolean, reflect: true}) twoline = false;
-  @property({type: Boolean, reflect: true})
-  @observer(function(this: ListItemBase, value: boolean) {
-    if (value) {
-      this.shouldRenderRipple = true;
-    }
-  })
-  activated = false;
+  @property({type: Boolean, reflect: true}) activated = false;
   @property({type: String, reflect: true}) graphic: GraphicType = null;
   @property({type: Boolean}) hasMeta = false;
   @property({type: Boolean, reflect: true})
@@ -162,11 +156,16 @@ export class ListItemBase extends LitElement {
   }
 
   protected renderRipple() {
-    return this.shouldRenderRipple ? html`
+    if (this.shouldRenderRipple) {
+      return html`
       <mwc-ripple
         .activated=${this.activated}>
-      </mwc-ripple>` :
-                                     html``;
+      </mwc-ripple>`;
+    } else if (this.activated) {
+      return html`<div class="fake-activated-ripple"></div>`;
+    } else {
+      return html``;
+    }
   }
 
   protected renderGraphic() {
@@ -231,7 +230,8 @@ export class ListItemBase extends LitElement {
 
     for (const listener of this.listeners) {
       for (const eventName of listener.eventNames) {
-        listener.target.addEventListener(eventName, listener.cb);
+        listener.target.addEventListener(
+            eventName, listener.cb, {passive: true});
       }
     }
   }
