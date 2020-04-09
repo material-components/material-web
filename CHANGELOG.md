@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added `spaceBetween` to mwc-formfield
 - Added `activated` and `selected` states for ripple
 - Added documentation for ripple
+- Prefix and suffix to mwc-textfield
+
 ### Changed
 
 - Refactor `mwc-checkbox`

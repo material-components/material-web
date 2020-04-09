@@ -166,6 +166,10 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: Boolean}) endAligned = false;
 
+  @property({type: String}) prefix = '';
+
+  @property({type: String}) suffix = '';
+
   // lit-analyzer requires specific string types, but TS does not compile since
   // base class is unspecific "string". It also needs non-null coercion (!)
   // since we don't want to provide a default value, but the base class is not
@@ -254,7 +258,9 @@ export abstract class TextFieldBase extends FormElement {
       <label class="mdc-text-field ${classMap(classes)}">
         ${ripple}
         ${this.icon ? this.renderIcon(this.icon) : ''}
+        ${this.prefix ? this.renderAffix(this.prefix) : ''}
         ${this.renderInput()}
+        ${this.suffix ? this.renderAffix(this.suffix, true) : ''}
         ${this.iconTrailing ? this.renderIcon(this.iconTrailing, true) : ''}
         ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
       </label>
@@ -306,6 +312,16 @@ export abstract class TextFieldBase extends FormElement {
           inputmode="${ifDefined(this.inputMode)}"
           @input="${this.handleInputChange}"
           @blur="${this.onInputBlur}">`;
+  }
+
+  protected renderAffix(content: string, isSuffix = false) {
+    const classes = {
+      'mdc-text-field__affix--prefix': !isSuffix,
+      'mdc-text-field__affix--suffix': isSuffix
+    };
+
+    return html`<span class="mdc-text-field__affix ${classMap(classes)}">
+        ${content}</span>`;
   }
 
   protected renderIcon(icon: string, isTrailingIcon = false) {
