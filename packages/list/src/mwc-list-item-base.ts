@@ -15,12 +15,12 @@
  limitations under the License.
  */
 
+import '@material/mwc-ripple';
+
 import {observer} from '@material/mwc-base/observer';
-import {html, internalProperty, LitElement, property, query, queryAsync} from 'lit-element';
 import {Ripple} from '@material/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-
-import '@material/mwc-ripple';
+import {html, internalProperty, LitElement, property, query, queryAsync} from 'lit-element';
 
 export type SelectionSource = 'interaction'|'property';
 export interface RequestSelectedDetail {
@@ -107,43 +107,40 @@ export class ListItemBase extends LitElement {
     target: Element;
     eventNames: string[];
     cb: EventListenerOrEventListenerObject;
-  })[] = [
-    {
-      target: this,
-      eventNames: ['click'],
-      cb: () => this.onClick()
-    },
-    {
-      target: this,
-      eventNames: ['mouseenter'],
-      cb: this.rippleHandlers.startHover,
-    },
-    {
-      target: this,
-      eventNames: ['mouseleave'],
-      cb: this.rippleHandlers.endHover,
-    },
-    {
-      target: this,
-      eventNames: ['focus'],
-      cb: this.rippleHandlers.startFocus,
-    },
-    {
-      target: this,
-      eventNames: ['blur'],
-      cb: this.rippleHandlers.endFocus,
-    },
-    {
-      target: this,
-      eventNames: ['mousedown', 'touchstart'],
-      cb: this.rippleHandlers.startPress,
-    },
-    {
-      target: this,
-      eventNames: ['mouseup', 'touchend'],
-      cb: this.rippleHandlers.endPress,
-    }
-  ];
+  })[] =
+      [
+        {target: this, eventNames: ['click'], cb: () => this.onClick()},
+        {
+          target: this,
+          eventNames: ['mouseenter'],
+          cb: this.rippleHandlers.startHover,
+        },
+        {
+          target: this,
+          eventNames: ['mouseleave'],
+          cb: this.rippleHandlers.endHover,
+        },
+        {
+          target: this,
+          eventNames: ['focus'],
+          cb: this.rippleHandlers.startFocus,
+        },
+        {
+          target: this,
+          eventNames: ['blur'],
+          cb: this.rippleHandlers.endFocus,
+        },
+        {
+          target: this,
+          eventNames: ['mousedown', 'touchstart'],
+          cb: this.rippleHandlers.startPress,
+        },
+        {
+          target: this,
+          eventNames: ['mouseup', 'touchend'],
+          cb: this.rippleHandlers.endPress,
+        }
+      ];
 
   get text() {
     const textContent = this.textContent;
@@ -168,7 +165,8 @@ export class ListItemBase extends LitElement {
     return this.shouldRenderRipple ? html`
       <mwc-ripple
         .activated=${this.activated}>
-      </mwc-ripple>` : html``;
+      </mwc-ripple>` :
+                                     html``;
   }
 
   protected renderGraphic() {
