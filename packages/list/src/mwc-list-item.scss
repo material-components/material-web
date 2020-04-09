@@ -15,12 +15,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import "@material/list/_mixins.scss";
+@use "@material/list" as list;
+@use "@material/theme" as theme;
+@use "@material/rtl" as rtl;
+@use "@material/typography" as typography;
+@use "@material/feature-targeting" as feature;
+@use "@material/density" as density;
+@use "@material/ripple" as ripple;
 
-$query: mdc-feature-all();
-$feat-structure: mdc-feature-create-target($query, structure);
-$feat-color: mdc-feature-create-target($query, color);
-$feat-animation: mdc-feature-create-target($query, animation);
+$query: feature.all();
+$feat-structure: feature.create-target($query, structure);
+$feat-color: feature.create-target($query, color);
+$feat-animation: feature.create-target($query, animation);
 $item-primary-text-baseline-height: 32px;
 $item-secondary-text-baseline-height: 20px;
 $dense-item-primary-text-baseline-height: 24px;
@@ -43,26 +49,26 @@ $dense-item-primary-text-baseline-height: 24px;
   cursor: pointer;
   user-select: none;
 
-  $height: mdc-density-prop-value(
-    $density-config: $mdc-list-single-line-density-config,
-    $density-scale: $mdc-list-single-line-density-scale,
+  $height: density.prop-value(
+    $density-config: list.$single-line-density-config,
+    $density-scale: list.$single-line-density-scale,
     $property-name: height,
   );
-  @include mdc-list-single-line-height($height, $query: $query);
-  @include mdc-list-item-base_;
+  @include list.single-line-height($height, $query: $query);
+  @include list.item-base_;
 
   padding-left: var(--mdc-list-side-padding, 16px);
   padding-right: var(--mdc-list-side-padding, 16px);
 
   outline: none;
 
-  $height: mdc-density-prop-value(
-    $density-config: $mdc-list-single-line-density-config,
-    $density-scale: $mdc-list-single-line-density-scale,
+  $height: density.prop-value(
+    $density-config: list.$single-line-density-config,
+    $density-scale: list.$single-line-density-scale,
     $property-name: height,
   );
 
-  @include mdc-list-single-line-height($height, $query: $query);
+  @include list.single-line-height($height, $query: $query);
   color: rgba(0,0,0,.87);
   color: var(--mdc-theme-text-primary-on-background,rgba(0,0,0,.87));
 }
@@ -70,10 +76,10 @@ $dense-item-primary-text-baseline-height: 24px;
 // "Selected" is ephemeral and likely to change soon. E.g., selecting one or more photos to share in Google Photos.
 // "Activated" is more permanent. E.g., the currently highlighted navigation destination in a drawer.
 :host([activated]) {
-  @include mdc-list-item-primary-text-ink-color(primary, $query);
-  @include mdc-list-item-graphic-ink-color(primary, $query);
+  @include list.item-primary-text-ink-color(primary, $query);
+  @include list.item-graphic-ink-color(primary, $query);
 
-  --mdc-ripple-color: var(--mdc-theme-primary, #{mdc-theme-prop-value(primary)});
+  --mdc-ripple-color: var(--mdc-theme-primary, #{theme.prop-value(primary)});
 
   .fake-activated-ripple::before {
     position: absolute;
@@ -88,20 +94,20 @@ $dense-item-primary-text-baseline-height: 24px;
     z-index: 1;
     content: "";
     opacity: .12;
-    opacity: var(--mdc-ripple-activated-opacity, .12);
-    background-color: var(--mdc-theme-primary, #{mdc-theme-prop-value(primary)});
+    opacity: var(--mdc-ripple-activated-opacity, #{map-get(ripple.$dark-ink-opacities, activated)});
+    background-color: var(--mdc-theme-primary, #{theme.prop-value(primary)});
   }
 }
 
 .mdc-list-item__graphic {
-  @include mdc-feature-targets($feat-structure) {
+  @include feature.targets($feat-structure) {
     flex-shrink: 0;
     align-items: center;
     justify-content: center;
     fill: currentColor;
   }
 
-  @include mdc-feature-targets($feat-structure) {
+  @include feature.targets($feat-structure) {
     display: inline-flex;
   }
 
@@ -122,16 +128,16 @@ $dense-item-primary-text-baseline-height: 24px;
 
   // stylelint-disable selector-class-pattern
   ::slotted(:not(.material-icons):not(mwc-icon)) {
-    @include mdc-typography(caption, $query);
+    @include typography.typography(caption, $query);
   }
   // stylelint-enable selector-class-pattern
 
-  @include mdc-feature-targets($feat-structure) {
-    @include mdc-rtl-reflexive-property(margin, auto, 0, ":host");
+  @include feature.targets($feat-structure) {
+    @include rtl.reflexive-property(margin, auto, 0, ":host");
   }
 
-  @include mdc-feature-targets($feat-color) {
-    @include mdc-theme-prop(color, text-hint-on-background);
+  @include feature.targets($feat-color) {
+    @include theme.prop(color, text-hint-on-background);
   }
 
   ::slotted(*) {
@@ -141,46 +147,46 @@ $dense-item-primary-text-baseline-height: 24px;
 }
 
 .mdc-list-item__text {
-  @include mdc-typography-overflow-ellipsis($query);
+  @include typography.overflow-ellipsis($query);
 
   // Disable interaction on label elements that may automatically
   // toggle corresponding checkbox / radio input.
   ::slotted([for]),
   &[for] {
-    @include mdc-feature-targets($feat-structure) {
+    @include feature.targets($feat-structure) {
       pointer-events: none;
     }
   }
 }
 
 .mdc-list-item__primary-text {
-  @include mdc-typography-overflow-ellipsis($query);
-  @include mdc-typography-text-baseline(
+  @include typography.overflow-ellipsis($query);
+  @include typography.text-baseline(
     $top: $item-primary-text-baseline-height,
     $bottom: $item-secondary-text-baseline-height,
     $query: $query
   );
 
-  @include mdc-feature-targets($feat-structure) {
+  @include feature.targets($feat-structure) {
     display: block;
   }
 }
 
 .mdc-list-item__secondary-text {
-  @include mdc-typography(body2, $query);
-  @include mdc-typography-overflow-ellipsis($query);
-  @include mdc-typography-text-baseline(
+  @include typography.typography(body2, $query);
+  @include typography.overflow-ellipsis($query);
+  @include typography.text-baseline(
     $top: $item-secondary-text-baseline-height,
     $query: $query
   );
 
-  @include mdc-feature-targets($feat-structure) {
+  @include feature.targets($feat-structure) {
     display: block;
   }
 
   // stylelint-disable plugin/selector-bem-pattern
   .mdc-list--dense & {
-    @include mdc-feature-targets($feat-structure) {
+    @include feature.targets($feat-structure) {
       font-size: inherit;
     }
   }
@@ -192,7 +198,7 @@ $dense-item-primary-text-baseline-height: 24px;
 // Override anchor tag styles for the use-case of a list being used for navigation
 // stylelint-disable selector-max-type,selector-no-qualifying-type
 * ::slotted(a), a {
-  @include mdc-feature-targets($feat-structure) {
+  @include feature.targets($feat-structure) {
     color: inherit;
     text-decoration: none;
   }
@@ -200,12 +206,12 @@ $dense-item-primary-text-baseline-height: 24px;
 
 :host([twoline]) {
   .mdc-list-item__text {
-    @include mdc-feature-targets($feat-structure) {
+    @include feature.targets($feat-structure) {
       align-self: flex-start;
     }
   }
 
-  @include mdc-feature-targets($feat-structure) {
+  @include feature.targets($feat-structure) {
     height: 72px;
   }
 }
@@ -219,8 +225,8 @@ $dense-item-primary-text-baseline-height: 24px;
 :host([disabled]) {
   .mdc-list-item__text {
     ::slotted(*) {
-      @include mdc-feature-targets($feat-color) {
-        opacity: $mdc-list-text-disabled-opacity;
+      @include feature.targets($feat-color) {
+        opacity: list.$text-disabled-opacity;
       }
     }
   }
@@ -229,35 +235,35 @@ $dense-item-primary-text-baseline-height: 24px;
   .mdc-list-item__primary-text,
   .mdc-list-item__secondary-text {
     ::slotted(*) {
-      @include mdc-feature-targets($feat-color) {
-        @include mdc-theme-prop(color, $mdc-list-text-disabled-color);
+      @include feature.targets($feat-color) {
+        @include theme.prop(color, list.$text-disabled-color);
       }
     }
   }
 }
 
 .mdc-list-item__secondary-text ::slotted(*) {
-  @include mdc-feature-targets($feat-color) {
-    @include mdc-theme-prop(color, text-secondary-on-background);
+  @include feature.targets($feat-color) {
+    @include theme.prop(color, text-secondary-on-background);
   }
 }
 
 .mdc-list-item__graphic ::slotted(*) {
-  @include mdc-feature-targets($feat-color) {
-    @include mdc-theme-prop(background-color, transparent);
-    @include mdc-theme-prop(color, text-icon-on-background);
+  @include feature.targets($feat-color) {
+    @include theme.prop(background-color, transparent);
+    @include theme.prop(color, text-icon-on-background);
   }
 }
 
 .mdc-list-group__subheader ::slotted(*) {
-  @include mdc-feature-targets($feat-color) {
-    @include mdc-theme-prop(color, text-primary-on-background);
+  @include feature.targets($feat-color) {
+    @include theme.prop(color, text-primary-on-background);
   }
 }
 
 :host([graphic="avatar"]) {
   .mdc-list-item__graphic {
-    @include mdc-feature-targets($feat-structure) {
+    @include feature.targets($feat-structure) {
       @include graphic-size_(var(--mdc-list-item-graphic-size, 40px));
       ::slotted(*) {
         border-radius: 50%;
@@ -267,12 +273,12 @@ $dense-item-primary-text-baseline-height: 24px;
 }
 
 :host([graphic="avatar"],[graphic="medium"],[graphic="large"],[graphic="control"]) .mdc-list-item__graphic {
-  @include mdc-rtl-reflexive-box(margin, right, var(--mdc-list-item-graphic-margin, 16px), ":host");
+  @include rtl.reflexive-box(margin, right, var(--mdc-list-item-graphic-margin, 16px), ":host");
 }
 
 :host([graphic="icon"]) .mdc-list-item__graphic {
   @include graphic-size_(var(--mdc-list-item-graphic-size, 24px));
-  @include mdc-rtl-reflexive-box(margin, right, var(--mdc-list-item-graphic-margin, 32px), ":host");
+  @include rtl.reflexive-box(margin, right, var(--mdc-list-item-graphic-margin, 32px), ":host");
 }
 
 :host([graphic="avatar"]:not([twoLine])),

@@ -12,6 +12,12 @@
   "dependencies": {
     "@material/base": "=6.0.0-canary.05f5e1583.0",
     "@material/list": "=6.0.0-canary.05f5e1583.0",
+    "@material/theme": "=6.0.0-canary.05f5e1583.0",
+    "@material/feature-targeting": "=6.0.0-canary.05f5e1583.0",
+    "@material/density": "=6.0.0-canary.05f5e1583.0",
+    "@material/ripple": "=6.0.0-canary.05f5e1583.0",
+    "@material/typography": "=6.0.0-canary.05f5e1583.0",
+    "@material/rtl": "=6.0.0-canary.05f5e1583.0",
     "@material/mwc-base": "^0.14.1",
     "@material/mwc-checkbox": "^0.14.1",
     "@material/mwc-radio": "^0.14.1",
