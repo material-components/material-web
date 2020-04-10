@@ -309,17 +309,18 @@ the item, and it will no longer be considered for selection.
 
 ### Styled No-ripple
 
-For more-control on styling, you may want to disable the ripple which is set on
-`mwc-list-item`'s `::before` and `::after` pseudo-elements.
+For more-control on styling, you may want to disable the ripple. Internally
+`list-item` uses `mwc-ripple`. You can make the ripple invisible using its
+custom properties detailed in [`mwc-ripple`'s documentation](https://github.com/material-components/material-components-web-components/tree/master/packages/list). In this case,
+it may be simple to just set `--mdc-ripple-color` to `transparent`.
 
 <img src="images/styled_no_ripple.png" width="402px">
 
 ```html
 <style>
   /* disable ripple */
-  #styledr > *::before,
-  #styledr > *::after {
-    display: none;
+  #styledr {
+    --mdc-ripple-color: transparent;
   }
 
   #styledr > * {
@@ -571,6 +572,11 @@ interface RequestSelectedDetail {
 | `--mdc-list-item-meta-size`                | `24px`               | Line height of the meta icon or text and width & height of the slotted parent wrapper.
 | `--mdc-list-item-graphic-size`             | `24px`,`40px`,`56px` | Line height of the graphic and width & height of the slotted parent wrapper. `24px` when graphic is `"icon"`. `40px` when grpahic is `"avatar"`. `56px` when graphic is `"medium"`, and `"large"`.
 | `--mdc-list-item-graphic-margin`           | `16px`,`32px`        | Margin between the text and graphic. `16px` when graphic is `"avatar"`, `"medium"`, `"large"`, and `"control"`. `32px` when graphic is `"icon"`.
+
+`mwc-list-item` internally uses [`mwc-ripple`](https://github.com/material-components/material-components-web-components/tree/master/packages/list)
+and thus exposes all of the custom properties in `mwc-ripple`'s documentation
+with the exception of `--mdc-ripple-color` being overriden as
+`--mdc-theme-primary` when `mwc-list-item` is `activated`.
 
 ## Additional references
 

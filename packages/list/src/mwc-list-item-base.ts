@@ -15,9 +15,12 @@
  limitations under the License.
  */
 
+import '@material/mwc-ripple';
+
 import {observer} from '@material/mwc-base/observer';
-import {rippleNode} from '@material/mwc-ripple/ripple-directive';
-import {html, LitElement, property, query} from 'lit-element';
+import {Ripple} from '@material/mwc-ripple';
+import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
+import {html, internalProperty, LitElement, property, query, queryAsync} from 'lit-element';
 
 export type SelectionSource = 'interaction'|'property';
 export interface RequestSelectedDetail {
@@ -33,6 +36,7 @@ export type GraphicType = 'avatar'|'icon'|'medium'|'large'|'control'|null;
  */
 export class ListItemBase extends LitElement {
   @query('slot') protected slotElement!: HTMLSlotElement|null;
+  @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 
   @property({type: String}) value = '';
   @property({type: String, reflect: true}) group: string|null = null;
@@ -84,9 +88,60 @@ export class ListItemBase extends LitElement {
   })
   selected = false;
 
+  @internalProperty() protected shouldRenderRipple = false;
+
   protected boundOnClick = this.onClick.bind(this);
   protected _firstChanged = true;
   protected _skipPropRequest = false;
+  protected rippleHandlers: RippleHandlers = new RippleHandlers(() => {
+    this.shouldRenderRipple = true;
+    return this.ripple;
+  });
+  protected listeners: ({
+    target: Element;
+    eventNames: string[];
+    cb: EventListenerOrEventListenerObject;
+  })[] =
+      [
+        {
+          target: this,
+          eventNames: ['click'],
+          cb:
+              () => {
+                this.onClick()
+              }
+        },
+        {
+          target: this,
+          eventNames: ['mouseenter'],
+          cb: this.rippleHandlers.startHover,
+        },
+        {
+          target: this,
+          eventNames: ['mouseleave'],
+          cb: this.rippleHandlers.endHover,
+        },
+        {
+          target: this,
+          eventNames: ['focus'],
+          cb: this.rippleHandlers.startFocus,
+        },
+        {
+          target: this,
+          eventNames: ['blur'],
+          cb: this.rippleHandlers.endFocus,
+        },
+        {
+          target: this,
+          eventNames: ['mousedown', 'touchstart'],
+          cb: this.rippleHandlers.startPress,
+        },
+        {
+          target: this,
+          eventNames: ['mouseup', 'touchend'],
+          cb: this.rippleHandlers.endPress,
+        }
+      ];
 
   get text() {
     const textContent = this.textContent;
@@ -100,9 +155,23 @@ export class ListItemBase extends LitElement {
     const meta = this.hasMeta ? this.renderMeta() : html``;
 
     return html`
+      ${this.renderRipple()}
       ${graphic}
       ${text}
       ${meta}`;
+  }
+
+  protected renderRipple() {
+    if (this.shouldRenderRipple) {
+      return html`
+      <mwc-ripple
+        .activated=${this.activated}>
+      </mwc-ripple>`;
+    } else if (this.activated) {
+      return html`<div class="fake-activated-ripple"></div>`;
+    } else {
+      return html``;
+    }
   }
 
   protected renderGraphic() {
@@ -164,18 +233,27 @@ export class ListItemBase extends LitElement {
     if (!this.noninteractive) {
       this.setAttribute('mwc-list-item', '');
     }
-    this.addEventListener('click', this.boundOnClick);
+
+    for (const listener of this.listeners) {
+      for (const eventName of listener.eventNames) {
+        listener.target.addEventListener(
+            eventName, listener.cb, {passive: true});
+      }
+    }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
 
-    this.removeEventListener('click', this.boundOnClick);
+    for (const listener of this.listeners) {
+      for (const eventName of listener.eventNames) {
+        listener.target.removeEventListener(eventName, listener.cb);
+      }
+    }
   }
 
   protected firstUpdated() {
     this.dispatchEvent(
         new Event('list-item-rendered', {bubbles: true, composed: true}));
-    rippleNode({surfaceNode: this, unbounded: false});
   }
 }

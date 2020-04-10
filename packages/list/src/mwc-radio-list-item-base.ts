@@ -44,8 +44,10 @@ export class RadioListItemBase extends ListItemBase {
         this.renderGraphic() :
         html``;
     const meta = this.hasMeta && this.left ? this.renderMeta() : html``;
+    const ripple = this.renderRipple();
 
     return html`
+      ${ripple}
       ${graphic}
       ${this.left ? '' : text}
       <mwc-radio

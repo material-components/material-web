@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Replace `ripple-directive` with lazy `mwc-ripple`
 - Refactor `mwc-ripple`
   - Normalized API to `start${state}` `end${state}` naming
+- **BREAKING:VISUAL:** mwc-list-item now internally uses mwc-ripple instead of styling ripple on host
 
 ### Fixed
 
