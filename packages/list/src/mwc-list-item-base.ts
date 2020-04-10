@@ -108,7 +108,7 @@ export class ListItemBase extends LitElement {
           eventNames: ['click'],
           cb:
               () => {
-                this.onClick()
+                this.onClick();
               }
         },
         {

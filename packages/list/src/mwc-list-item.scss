@@ -19,7 +19,8 @@ limitations under the License.
 @use "@material/theme";
 @use "@material/rtl";
 @use "@material/typography";
-@use "@material/feature-targeting";
+// name is transformed by copybara so `as` is needed
+@use "@material/feature-targeting" as featuretargeting;
 @use "@material/density";
 @use "@material/ripple";
 @use "sass:map";
