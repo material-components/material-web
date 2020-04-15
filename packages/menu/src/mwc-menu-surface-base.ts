@@ -275,7 +275,9 @@ export abstract class MenuSurfaceBase extends BaseElement {
 
   protected registerBodyClick() {
     this.onBodyClickBound = this.onBodyClick.bind(this);
-    document.body.addEventListener('click', this.onBodyClickBound);
+    // capture otherwise listener closes menu after quick menu opens
+    document.body.addEventListener(
+        'click', this.onBodyClickBound, {passive: true, capture: true});
   }
 
   protected deregisterBodyClick() {
