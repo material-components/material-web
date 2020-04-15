@@ -15,7 +15,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/form-field": "=6.0.0-canary.05f5e1583.0",
+    "@material/form-field": "=6.0.0-canary.f172b0f90.0",
     "@material/mwc-base": "^0.14.1",
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
