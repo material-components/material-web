@@ -46,6 +46,9 @@ export class IconButtonToggleBase extends BaseElement {
   protected createAdapter(): MDCIconButtonToggleAdapter {
     return {
       ...addHasRemoveClass(this.mdcRoot),
+      getAttr: (name: string) => {
+        return this.mdcRoot.getAttribute(name);
+      },
       setAttr: (name: string, value: string) => {
         this.mdcRoot.setAttribute(name, value);
       },
