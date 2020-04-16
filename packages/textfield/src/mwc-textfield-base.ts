@@ -286,9 +286,8 @@ export abstract class TextFieldBase extends FormElement {
       this.createFoundation();
     }
 
-    if (changedProperties.has('value') &&
-        this.value !== undefined) {
-      this.mdcFoundation.setValue(this.value);
+    if (changedProperties.has('value')) {
+      this.mdcFoundation.setValue(this.value === undefined ? '' : this.value);
     }
   }
 
