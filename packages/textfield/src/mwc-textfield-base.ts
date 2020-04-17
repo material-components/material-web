@@ -245,6 +245,7 @@ export abstract class TextFieldBase extends FormElement {
     const classes = {
       'mdc-text-field--disabled': this.disabled,
       'mdc-text-field--no-label': !this.label,
+      'mdc-text-field--filled': !this.outlined,
       'mdc-text-field--outlined': this.outlined,
       'mdc-text-field--fullwidth': this.fullWidth,
       'mdc-text-field--with-leading-icon': this.icon,

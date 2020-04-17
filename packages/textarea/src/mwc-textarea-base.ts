@@ -37,6 +37,7 @@ export abstract class TextAreaBase extends TextFieldBase {
     const classes = {
       'mdc-text-field--disabled': this.disabled,
       'mdc-text-field--no-label': !this.label,
+      'mdc-text-field--filled': !this.outlined,
       'mdc-text-field--outlined': this.outlined,
       'mdc-text-field--fullwidth': this.fullWidth,
       'mdc-text-field--end-aligned': this.endAligned,

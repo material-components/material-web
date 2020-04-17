@@ -24,6 +24,10 @@ limitations under the License.
 .mdc-text-field:not(.mdc-text-field--outlined) {
   padding-bottom: 1px;
 
+  .mdc-text-field__input {
+    height: auto;
+  }
+
   &:not(.mdc-text-field--disabled) {
     &:not(.mdc-text-field--invalid){
       @include theme-mixins.prop(border-bottom-color, vars.$bottom-line-idle);
