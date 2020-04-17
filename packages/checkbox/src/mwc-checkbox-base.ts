@@ -121,6 +121,7 @@ export class CheckboxBase extends FormElement {
         <input type="checkbox"
               class="mdc-checkbox__native-control"
               aria-checked="${ifDefined(ariaChecked)}"
+              data-indeterminate="${this.indeterminate ? 'true' : 'false'}"
               ?disabled="${this.disabled}"
               .indeterminate="${this.indeterminate}"
               .checked="${this.checked}"
