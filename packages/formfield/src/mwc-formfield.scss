@@ -15,7 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/form-field/mdc-form-field.scss';
+@use '@material/form-field' as formfield;
+@use '@material/typography';
+@use '@material/theme';
+@use '@material/rtl';
+
+@include formfield.core-styles();
 
 :host {
   display: inline-flex;
@@ -26,13 +31,13 @@ limitations under the License.
 }
 
 ::slotted(*) {
-  @include mdc-typography(body2);
-  @include mdc-theme-prop(color, text-primary-on-background);
+  @include typography.typography(body2);
+  @include theme.prop(color, text-primary-on-background);
 }
 
 ::slotted(mwc-switch) {
   margin-right: 10px;
-  @include mdc-rtl {
+  @include rtl.rtl {
     margin-left: 10px;
   }
 }
