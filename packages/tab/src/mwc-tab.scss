@@ -15,12 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/tab/mdc-tab.scss';
-@import '@material/tab/mixins';
-@import '@material/tab/variables';
-@import '@material/mwc-icon/src/_mwc-icon.scss';
+@use '@material/tab';
+@use '@material/mwc-icon/src/_mwc-icon';
+@use '@material/ripple';
+@use '@material/rtl';
 
-@include mdc-ripple-common(mdc-feature-all());
+@include tab.core-styles();
+@include ripple.common();
 
 .material-icons {
   @extend %material-icons;
@@ -34,14 +35,14 @@ limitations under the License.
 }
 
 .mdc-tab {
-  height: var(--mdc-tab-height, #{$mdc-tab-height});
+  height: var(--mdc-tab-height, #{tab.$height});
   margin-left: 0;
   margin-right: 0;
-  @include mdc-tab-horizontal-padding(var(--mdc-tab-horizontal-padding, #{$mdc-tab-horizontal-padding}));
+  @include tab.horizontal-padding(var(--mdc-tab-horizontal-padding, #{tab.$horizontal-padding}));
 }
 
 .mdc-tab--stacked {
-  height: var(--mdc-tab-stacked-height, #{$mdc-tab-stacked-height});
+  height: var(--mdc-tab-stacked-height, #{tab.$stacked-height});
 }
 
 .mdc-tab::-moz-focus-inner {
@@ -66,16 +67,16 @@ limitations under the License.
 
 /* Declare rule from mdc-tab again to pick up mixin override. */
 .mdc-tab:not(.mdc-tab--stacked) .mdc-tab__icon + .mdc-tab__text-label {
-  @include mdc-rtl-reflexive-box(padding, left, 8px);
+  @include rtl.reflexive-box(padding, left, 8px);
 }
 
 .mdc-tab:not(.mdc-tab--active) {
   .mdc-tab__text-label {
-    color: var(--mdc-tab-text-label-color-default, #{$mdc-tab-text-label-color-default});
+    color: var(--mdc-tab-text-label-color-default, #{tab.$text-label-color-default});
   }
 
   .mdc-tab__icon {
-    color: var(--mdc-tab-color-default, #{$mdc-tab-icon-color-default});
+    color: var(--mdc-tab-color-default, #{tab.$icon-color-default});
   }
 }
 

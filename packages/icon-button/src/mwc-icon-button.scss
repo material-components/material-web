@@ -15,20 +15,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/icon-button/_variables.scss';
-@import '@material/icon-button/mdc-icon-button.scss';
-@import '@material/mwc-icon/src/_mwc-icon.scss';
-@import '@material/theme/_mixins.scss';
+@use '@material/icon-button' as iconbutton;
+@use '@material/mwc-icon/src/_mwc-icon';
+@use '@material/theme';
+@use '@material/feature-targeting' as feature;
+@use '@material/ripple';
 
-@include mdc-ripple-common(mdc-feature-all());
+@include iconbutton.core-styles();
+@include ripple.common();
 
-@mixin mdc-icon-button-size-var-aware($size, $query: mdc-feature-all()) {
-  $feat-structure: mdc-feature-create-target($query, structure);
+@mixin mdc-icon-button-size-var-aware($size, $query: feature.all()) {
+  $feat-structure: feature.create-target($query, structure);
 
-  @include mdc-feature-targets($feat-structure) {
+  @include feature.targets($feat-structure) {
     width: $size;
     height: $size;
-    padding: calc((#{$size} - var(--mdc-icon-size, #{$mdc-icon-button-icon-size})) / 2);
+    padding: calc((#{$size} - var(--mdc-icon-size, #{iconbutton.$icon-size})) / 2);
   }
 }
 
@@ -67,7 +69,7 @@ limitations under the License.
 }
 
 .mdc-icon-button {
-  @include mdc-icon-button-size-var-aware(var(--mdc-icon-button-size, #{$mdc-icon-button-size}));
+  @include mdc-icon-button-size-var-aware(var(--mdc-icon-button-size, #{iconbutton.$size}));
 
   > i {
     position: absolute;
@@ -80,10 +82,10 @@ limitations under the License.
   img,
   ::slotted(*) {
     display: block;
-    $feat-structure: mdc-feature-create-target(mdc-feature-all(), structure);
-    @include mdc-feature-targets($feat-structure) {
-      width: var(--mdc-icon-size, #{$mdc-icon-button-icon-size});
-      height: var(--mdc-icon-size, #{$mdc-icon-button-icon-size});
+    $feat-structure: feature.create-target(feature.all(), structure);
+    @include feature.targets($feat-structure) {
+      width: var(--mdc-icon-size, #{iconbutton.$icon-size});
+      height: var(--mdc-icon-size, #{iconbutton.$icon-size});
     }
   }
 }
@@ -91,11 +93,11 @@ limitations under the License.
 // hack for top-app-bar ripple coloring of icon-buttons
 .mdc-ripple-upgraded {
   &:focus::before, &:focus::after {
-    @include mdc-theme-prop(background-color, (
+    @include theme.prop(background-color, (
       varname: --mdc-theme-on-primary,
       fallback: currentColor,
     ));
-    @include mdc-theme-prop(opacity, (
+    @include theme.prop(opacity, (
       varname: --mdc-icon-button-ripple-opacity,
       fallback: 0.12,
     ));

@@ -15,10 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/notched-outline/mdc-notched-outline.scss';
-@import '@material/theme/_mixins.scss';
-@import '@material/theme/_variables.scss';
-@import '@material/shape/_functions.scss';
+@use '@material/notched-outline' as notchedoutline;
+@use '@material/theme';
+@use '@material/shape';
+@use '@material/rtl';
+
+@include notchedoutline.core-styles();
 
 :host {
   display: block;
@@ -33,7 +35,7 @@ limitations under the License.
   text-align: left;
   pointer-events: none;
 
-  @include mdc-rtl {
+  @include rtl.rtl() {
     /* @noflip */
     text-align: right;
   }
@@ -56,30 +58,30 @@ limitations under the License.
 }
 
 .mdc-notched-outline__leading {
-  @include mdc-theme-prop(width, (
+  @include theme.prop(width, (
     varname: --mdc-notched-outline-leading-width,
-    fallback: $mdc-notched-outline-leading-width
+    fallback: notchedoutline.$leading-width
   ));
 
-  @include mdc-theme-prop(border-radius, (
+  @include theme.prop(border-radius, (
     varname: --mdc-notched-outline-leading-border-radius,
-    fallback: mdc-shape-mask-radius(mdc-shape-prop-value(small), 1 0 0 1)
+    fallback: shape.mask-radius(shape.prop-value(small), 1 0 0 1)
   ));
 }
 
 .mdc-notched-outline__trailing {
-  @include mdc-theme-prop(border-radius, (
+  @include theme.prop(border-radius, (
     varname: --mdc-notched-outline-trailing-border-radius,
-    fallback: mdc-shape-mask-radius(mdc-shape-prop-value(small), 0 1 1 0)
+    fallback: shape.mask-radius(shape.prop-value(small), 0 1 1 0)
   ));
 }
 
 .mdc-notched-outline__leading,
 .mdc-notched-outline__notch,
 .mdc-notched-outline__trailing {
-  border-color: var(--mdc-notched-outline-border-color, var(--mdc-theme-primary, #{$mdc-theme-primary}));
+  border-color: var(--mdc-notched-outline-border-color, var(--mdc-theme-primary, #{theme.$primary}));
 
-  @include mdc-theme-prop(border-width, (
+  @include theme.prop(border-width, (
     varname: --mdc-notched-outline-stroke-width,
     fallback: 1px
   ));

@@ -15,9 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/checkbox/mixins';
+@use '@material/checkbox';
+@use '@material/theme';
 
-@include mdc-checkbox-without-ripple(mdc-feature-all());
+@include checkbox.without-ripple();
 
 :host {
   outline: none;
@@ -26,7 +27,10 @@ limitations under the License.
 
 .mdc-checkbox {
   .mdc-checkbox__native-control:focus ~ .mdc-checkbox__background::before {
-    background-color: var(--mdc-checkbox-unchecked-color, #{$mdc-checkbox-border-color});
+    @include theme.prop(background-color, (
+      varname: --mdc-checkbox-unchecked-color,
+      fallback: checkbox.$border-color
+    ));
   }
   /* disable non-upgraded ripple on checkbox backround */
   .mdc-checkbox__background::before {
@@ -34,10 +38,12 @@ limitations under the License.
   }
 }
 
-@include mdc-checkbox-disabled-container-colors(
-  $unmarked-stroke-color: var(--mdc-checkbox-disabled-color, #{$mdc-checkbox-disabled-color}),
-  $marked-fill-color: var(--mdc-checkbox-disabled-color, #{$mdc-checkbox-disabled-color}),
+@include checkbox.disabled-container-colors(
+  $unmarked-stroke-color: var(--mdc-checkbox-disabled-color, #{checkbox.$disabled-color}),
+  $marked-fill-color: var(--mdc-checkbox-disabled-color, #{checkbox.$disabled-color}),
 );
-@include mdc-checkbox-container-colors($unmarked-stroke-color: var(--mdc-checkbox-unchecked-color, #{$mdc-checkbox-border-color}));
-@include mdc-checkbox-ink-color(var(--mdc-checkbox-mark-color, #{$mdc-checkbox-mark-color}));
-@include mdc-checkbox-disabled-ink-color(var(--mdc-checkbox-mark-color, #{$mdc-checkbox-mark-color}));
+@include checkbox.container-colors(
+  $unmarked-stroke-color: var(--mdc-checkbox-unchecked-color, #{checkbox.$border-color}),
+);
+@include checkbox.ink-color(var(--mdc-checkbox-mark-color, #{checkbox.$mark-color}));
+@include checkbox.disabled-ink-color(var(--mdc-checkbox-mark-color, #{checkbox.$mark-color}));

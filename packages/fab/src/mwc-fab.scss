@@ -14,11 +14,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-@import '@material/mwc-base/src/elevation.scss';
-@import '@material/mwc-icon/src/_mwc-icon.scss';
-@import '@material/fab/mdc-fab.scss';
+@use '@material/mwc-base/src/elevation';
+@use '@material/mwc-icon/src/_mwc-icon';
+@use '@material/fab';
+@use '@material/ripple';
 
-@include mdc-ripple-common(mdc-feature-all());
+@include fab.core-styles();
+@include ripple.common();
 
 .material-icons {
   @extend %material-icons;
@@ -29,14 +31,14 @@ limitations under the License.
 }
 
 .mdc-fab {
-  box-shadow: var(--mdc-fab-box-shadow, #{elevation-box-shadow(6)});
+  box-shadow: var(--mdc-fab-box-shadow, #{elevation.elevation-box-shadow(6)});
 
   &:hover,
   &:focus {
-    box-shadow: var(--mdc-fab-box-shadow-hover, #{elevation-box-shadow(8)});
+    box-shadow: var(--mdc-fab-box-shadow-hover, #{elevation.elevation-box-shadow(8)});
   }
 
   &:active {
-    box-shadow: var(--mdc-fab-box-shadow-active, #{elevation-box-shadow(12)});
+    box-shadow: var(--mdc-fab-box-shadow-active, #{elevation.elevation-box-shadow(12)});
   }
 }

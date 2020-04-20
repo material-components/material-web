@@ -14,22 +14,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-@import '@material/snackbar/mdc-snackbar.scss';
-@import '@material/feature-targeting/_mixins.scss';
-@import '@material/rtl/_mixins.scss';
+@use '@material/snackbar';
+@use '@material/feature-targeting' as feature;
+@use '@material/rtl';
+
+@include snackbar.core-styles();
 
 slot[name=action]::slotted(mwc-button) {
-  --mdc-theme-primary: var(--mdc-snackbar-action-color, #{$mdc-snackbar-action-ink-color});
+  --mdc-theme-primary: var(--mdc-snackbar-action-color, #{snackbar.$action-ink-color});
 }
 
 slot[name=dismiss]::slotted(mwc-icon-button) {
-  --mdc-icon-size: #{$mdc-snackbar-dismiss-icon-size};
-  --mdc-icon-button-size: #{$mdc-snackbar-dismiss-icon-size * 2};
-  color: #{$mdc-snackbar-dismiss-ink-color};
+  --mdc-icon-size: #{snackbar.$dismiss-icon-size};
+  --mdc-icon-button-size: #{snackbar.$dismiss-icon-size * 2};
+  color: #{snackbar.$dismiss-ink-color};
 
-  $query: mdc-feature-all();
-  $feat-structure: mdc-feature-create-target($query, structure);
-  @include mdc-feature-targets($feat-structure) {
-    @include mdc-rtl-reflexive-property(margin, $mdc-snackbar-padding, 0);
+  $query: feature.all();
+  $feat-structure: feature.create-target($query, structure);
+  @include feature.targets($feat-structure) {
+    @include rtl.reflexive-property(margin, snackbar.$padding, 0);
   }
 }

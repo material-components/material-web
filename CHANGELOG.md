@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Normalized API to `start${state}` `end${state}` naming
 - **BREAKING:VISUAL:** mwc-list-item now internally uses mwc-ripple instead of styling ripple on host
 - `mwc-menu`'s `quick` variant now opens synchronously
+- Convert to [Sass modules](https://sass-lang.com/documentation/at-rules/use)
 
 ### Fixed
 

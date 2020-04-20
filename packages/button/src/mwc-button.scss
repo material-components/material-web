@@ -15,58 +15,60 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/mwc-base/src/elevation.scss';
-@import '@material/button/mixins';
+@use '@material/mwc-base/src/elevation';
+@use '@material/button';
+@use '@material/feature-targeting' as feature;
+@use '@material/theme';
 
-@include mdc-button-without-ripple();
-@include mdc-button-theme-baseline();
+@include button.without-ripple();
+@include button.theme-baseline();
 
 .trailing-icon,
 .leading-icon, {
   ::slotted(*),
   .mdc-button__icon {
-    @include mdc-button-icon_;
+    @include button.icon_();
   }
 }
 
 .trailing-icon, {
   ::slotted(*),
   .mdc-button__icon {
-    @include mdc-button-icon-trailing_;
+    @include button.icon-trailing_();
   }
 }
 
 @mixin mdc-button-outline-width-var-aware(
   $outline-width,
-  $padding: $mdc-button-contained-horizontal-padding,
-  $query: mdc-feature-all()
+  $padding: button.$contained-horizontal-padding,
+  $query: feature.all()
 ) {
-  $feat-structure: mdc-feature-create-target($query, structure);
+  $feat-structure: feature.create-target($query, structure);
   // Note: Adjust padding to maintain consistent width with non-outlined buttons
   $padding-value: calc(#{$padding} - #{$outline-width});
 
-  @include mdc-button-horizontal-padding($padding-value, $query);
+  @include button.horizontal-padding($padding-value, $query);
 
-  @include mdc-feature-targets($feat-structure) {
+  @include feature.targets($feat-structure) {
     border-width: $outline-width;
   }
 }
 
 .mdc-button--raised {
 
-  box-shadow: var(--mdc-button-raised-box-shadow, #{elevation-box-shadow(2)});
+  box-shadow: var(--mdc-button-raised-box-shadow, #{elevation.elevation-box-shadow(2)});
 
   &:hover,
   &:focus {
-    box-shadow: var(--mdc-button-raised-box-shadow-hover, #{elevation-box-shadow(4)});
+    box-shadow: var(--mdc-button-raised-box-shadow-hover, #{elevation.elevation-box-shadow(4)});
   }
 
   &:active {
-    box-shadow: var(--mdc-button-raised-box-shadow-active, #{elevation-box-shadow(8)});
+    box-shadow: var(--mdc-button-raised-box-shadow-active, #{elevation.elevation-box-shadow(8)});
   }
 
   &:disabled {
-    box-shadow: var(--mdc-button-raised-box-shadow-disabled, #{elevation-box-shadow(0)});
+    box-shadow: var(--mdc-button-raised-box-shadow-disabled, #{elevation.elevation-box-shadow(0)});
   }
 }
 
@@ -93,16 +95,16 @@ limitations under the License.
   flex: auto;
   overflow: hidden;
 
-  @include mdc-button-horizontal-padding(var(--mdc-button-horizontal-padding, #{$mdc-button-horizontal-padding}));
+  @include button.horizontal-padding(var(--mdc-button-horizontal-padding, #{button.$horizontal-padding}));
 
   &.mdc-button--raised,
   &.mdc-button--unelevated {
-    @include mdc-button-horizontal-padding(var(--mdc-button-horizontal-padding, #{$mdc-button-contained-horizontal-padding}));
+    @include button.horizontal-padding(var(--mdc-button-horizontal-padding, #{button.$contained-horizontal-padding}));
     // NOTE(dfreedm): Replace hardcoded opacities when
     // https://github.com/material-components/material-components-web-components/issues/1072
     // is resolved
     mwc-ripple {
-      --mdc-ripple-color: var(--mdc-theme-on-primary, #{mdc-theme-prop-value(on-primary)});
+      --mdc-ripple-color: var(--mdc-theme-on-primary, #{theme.prop-value(on-primary)});
       --mdc-ripple-hover-opacity: .08;
       --mdc-ripple-press-opacity: .24;
       --mdc-ripple-focus-opacity: .24;
@@ -110,8 +112,8 @@ limitations under the License.
   }
 
   &.mdc-button--outlined {
-    @include mdc-button-outline-width-var-aware(var(--mdc-button-outline-width, #{$mdc-button-outlined-border-width}), var(--mdc-button-horizontal-padding, #{$mdc-button-contained-horizontal-padding}));
-    border-color: var(--mdc-button-outline-color, var(--mdc-theme-primary, #{mdc-theme-prop-value(primary)}));
+    @include mdc-button-outline-width-var-aware(var(--mdc-button-outline-width, #{button.$outlined-border-width}), var(--mdc-button-horizontal-padding, #{button.$contained-horizontal-padding}));
+    border-color: var(--mdc-button-outline-color, var(--mdc-theme-primary, #{theme.prop-value(primary)}));
     mwc-ripple {
       top: -1px;
       left: -1px;
@@ -120,7 +122,7 @@ limitations under the License.
   }
 
   &.mdc-button--dense {
-    @include mdc-button-density(-2);
+    @include button.density(-2);
   }
 }
 
@@ -129,17 +131,17 @@ limitations under the License.
 
     &.mdc-button--raised,
     &.mdc-button--unelevated {
-      background-color: var(--mdc-button-disabled-fill-color, #{rgba(mdc-theme-prop-value(on-surface), .12)});
-      color: var(--mdc-button-disabled-ink-color, #{$mdc-button-disabled-ink-color});
+      background-color: var(--mdc-button-disabled-fill-color, #{rgba(theme.prop-value(on-surface), .12)});
+      color: var(--mdc-button-disabled-ink-color, #{button.$disabled-ink-color});
     }
 
     &:not(.mdc-button--raised):not(.mdc-button--unelevated) {
-      color: var(--mdc-button-disabled-ink-color, #{$mdc-button-disabled-ink-color});
+      color: var(--mdc-button-disabled-ink-color, #{button.$disabled-ink-color});
     }
 
     &.mdc-button--outlined {
-      border-color: var(--mdc-button-disabled-ink-color, #{$mdc-button-disabled-ink-color});
-      border-color: var(--mdc-button-disabled-outline-color, var(--mdc-button-disabled-ink-color, #{$mdc-button-disabled-ink-color}));
+      border-color: var(--mdc-button-disabled-ink-color, #{button.$disabled-ink-color});
+      border-color: var(--mdc-button-disabled-outline-color, var(--mdc-button-disabled-ink-color, #{button.$disabled-ink-color}));
     }
   }
 }
