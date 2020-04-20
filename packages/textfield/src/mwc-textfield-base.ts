@@ -386,9 +386,8 @@ export abstract class TextFieldBase extends FormElement {
 
     return html`
       <div class="mdc-text-field-helper-line ${classMap(rootClasses)}">
-        <div class="mdc-text-field-helper-text ${classMap(classes)}">
-          ${showValidationMessage ? this.validationMessage : this.helper}
-        </div>
+        <div class="mdc-text-field-helper-text ${classMap(classes)}">${
+        showValidationMessage ? this.validationMessage : this.helper}</div>
         ${charCounterTemplate}
       </div>
     `;
