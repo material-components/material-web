@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added documentation for ripple
 - Prefix and suffix to mwc-textfield
 - `mwc-formfield` now has a nowrap property
+- mdc-button now has --mdc-shape-small for border radii
 
 ### Changed
 

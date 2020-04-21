@@ -97,6 +97,8 @@ limitations under the License.
 
   @include button.horizontal-padding(var(--mdc-button-horizontal-padding, #{button.$horizontal-padding}));
 
+  border-radius: var(--mdc-shape-small, 4px);
+
   &.mdc-button--raised,
   &.mdc-button--unelevated {
     @include button.horizontal-padding(var(--mdc-button-horizontal-padding, #{button.$contained-horizontal-padding}));
