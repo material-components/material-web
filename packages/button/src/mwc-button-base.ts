@@ -19,7 +19,7 @@ import '@material/mwc-ripple/mwc-ripple.js';
 
 import {Ripple} from '@material/mwc-ripple/mwc-ripple.js';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers.js';
-import {html, internalProperty, LitElement, property, query, queryAsync} from 'lit-element';
+import {eventOptions, html, internalProperty, LitElement, property, query, queryAsync} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map.js';
 
 /** @soyCompatible */
@@ -131,6 +131,7 @@ export class ButtonBase extends LitElement {
     </mwc-icon>`;
   }
 
+  @eventOptions({passive: true})
   private handleRippleActivate(evt?: Event) {
     this.rippleHandlers.startPress(evt);
   }
