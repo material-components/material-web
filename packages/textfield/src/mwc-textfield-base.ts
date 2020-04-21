@@ -160,6 +160,8 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: Number}) step: number|null = null;
 
+  @property({type: Number}) size: number|null = null;
+
   @property({type: Boolean}) helperPersistent = false;
 
   @property({type: Boolean}) charCounter = false;
@@ -310,6 +312,7 @@ export abstract class TextFieldBase extends FormElement {
           min="${ifDefined(this.min === '' ? undefined : this.min as number)}"
           max="${ifDefined(this.max === '' ? undefined : this.max as number)}"
           step="${ifDefined(this.step === null ? undefined : this.step)}"
+          size="${ifDefined(this.size === null ? undefined : this.size)}"
           inputmode="${ifDefined(this.inputMode)}"
           @input="${this.handleInputChange}"
           @blur="${this.onInputBlur}">`;
