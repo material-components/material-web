@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Prefix and suffix to mwc-textfield
 - `mwc-formfield` now has a nowrap property
 - mdc-button now has --mdc-shape-small for border radii
+- Added `size` property to `mwc-textfield`
 
 ### Changed
 
