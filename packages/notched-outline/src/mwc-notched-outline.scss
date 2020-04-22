@@ -86,3 +86,15 @@ limitations under the License.
     fallback: 1px
   ));
 }
+
+.mdc-notched-outline--notched .mdc-notched-outline__notch {
+  @include theme.prop(padding-top, (
+    // TODO: Collapse this to also use the --mdc-notched-outline-stroke-width
+    // variable and update default value to 1px to correct textfield notched
+    // label misalignment (currently ~1px higher than center-aligned).
+    // Currently this is only overridden in mwc-select.
+    // Context: go/mwc-textfield-label-misalignment
+    varname: --mdc-notched-outline-notch-offset,
+    fallback: 0
+  ));
+}

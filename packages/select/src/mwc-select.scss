@@ -71,6 +71,7 @@ limitations under the License.
 
 mwc-notched-outline {
   --mdc-notched-outline-border-color: var(--mdc-select-outlined-idle-border-color, #{vars.$outlined-idle-border});
+  --mdc-notched-outline-notch-offset: 1px;
 }
 
 :host(:not([disabled]):hover) .mdc-select:not(.mdc-select--invalid):not(.mdc-select--focused) mwc-notched-outline {
@@ -143,6 +144,7 @@ mwc-notched-outline {
     &.mdc-select--focused {
       mwc-notched-outline {
         --mdc-notched-outline-stroke-width: 2px;
+        --mdc-notched-outline-notch-offset: 2px;
       }
 
       &:not(.mdc-select--invalid) {

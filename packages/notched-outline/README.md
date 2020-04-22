@@ -20,4 +20,5 @@ outlined textfields and dropdown menus.
 | `--mdc-notched-outline-leading-border-radius`  | `4px 0 0 4px` | Radius of the border on the leading end. **May require setting `--mdc-notched-outline-leading-width` to accommodate for the new radius**
 | `--mdc-notched-outline-trailing-border-radius` | `0 4px 4px 0` | Radius of the border on the trailing end.
 | `--mdc-notched-outline-stroke-width`           | `1px`         | Outline width.
+| `--mdc-notched-outline-notch-offset`           | `0`           | Padding-top to apply to notch when open to compensate for border width box size
 | `--mdc-notched-outline-border-color`           | none          | Sets the border / outline color.
