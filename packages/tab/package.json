@@ -20,7 +20,7 @@
     "@material/mwc-icon": "^0.14.1",
     "@material/mwc-ripple": "^0.14.1",
     "@material/mwc-tab-indicator": "^0.14.1",
-    "@material/tab": "=6.0.0-canary.c141801d5.0",
+    "@material/tab": "=6.0.0-canary.28d10a96e.0",
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0"
