@@ -142,13 +142,22 @@ suite('mwc-fab', () => {
     element.showIconAtEnd = false;
     await element.updateComplete;
 
-    let node = element.shadowRoot!.querySelector(
-        `${ICON_SELECTOR} + ${LABEL_SELECTOR}`)!;
-    assert.instanceOf(node, Element);
+    const root = element.shadowRoot!.querySelector('.mdc-fab')!;
+    const LABEL_CLASS = 'mdc-fab__label';
+    const ICON_CLASS = 'mdc-fab__icon';
+
+    const children = root.children;
+
+    assert.equal(children.length, 3);
+    assert.isTrue(children[1].querySelector(ICON_SELECTOR)!.classList.contains(
+        ICON_CLASS));
+    assert.isTrue(children[2].classList.contains(LABEL_CLASS));
+
     element.showIconAtEnd = true;
     await element.updateComplete;
-    node = element.shadowRoot!.querySelector(
-        `${LABEL_SELECTOR} + ${ICON_SELECTOR}`)!;
-    assert.instanceOf(node, Element);
+
+    assert.isTrue(children[2].querySelector(ICON_SELECTOR)!.classList.contains(
+        ICON_CLASS));
+    assert.isTrue(children[1].classList.contains(LABEL_CLASS));
   });
 });
