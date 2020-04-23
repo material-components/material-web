@@ -28,6 +28,7 @@ export {
   SpecificEventListener,
 };
 
+/** @soyCompatible */
 export abstract class FormElement extends BaseElement {
   /**
    * Form-capable element in the component ShadowRoot.

@@ -23,6 +23,7 @@ import {html, internalProperty, property, PropertyValues, query, queryAsync} fro
 import {classMap} from 'lit-html/directives/class-map.js';
 import {ifDefined} from 'lit-html/directives/if-defined.js';
 
+/** @soyCompatible */
 export class CheckboxBase extends FormElement {
   @query('.mdc-checkbox') protected mdcRoot!: HTMLElement;
 
@@ -91,6 +92,10 @@ export class CheckboxBase extends FormElement {
             ''}`;
   }
 
+  /**
+   * @soyCompatible
+   * @soyAttributes checkboxAttributes: input
+   */
   protected render() {
     const selected = this.indeterminate || this.checked;
     /* eslint-disable eqeqeq */

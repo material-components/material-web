@@ -23,6 +23,7 @@ import {Constructor} from './utils.js';
 export {CustomEventListener, EventType, SpecificEventListener} from '@material/base/types.js';
 export {addHasRemoveClass} from './utils.js';
 
+/** @soyCompatible */
 export abstract class BaseElement extends LitElement {
   /**
    * Root element for MDC Foundation usage.
