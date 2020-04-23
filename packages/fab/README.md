@@ -35,16 +35,35 @@ npm install @material/mwc-fab
 ```html
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block">
 
-<mwc-fab icon="favorite"></mwc-fab>
+<mwc-fab icon="edit"></mwc-fab>
 
 <script type="module">
   import '@material/mwc-fab';
   const fab = document.querySelector('mwc-fab');
   fab.addEventListener('click', () => {
-    addFavorite();
+    edit();
   });
 </script>
 ```
+
+### Standard - slotted
+
+![](images/standard.png)
+
+```html
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block">
+
+<mwc-fab label="edit">
+  <mwc-icon slot="icon">edit</mwc-icon>
+</mwc-fab>
+
+<script type="module">
+  import '@material/mwc-fab';
+  import '@material/mwc-icon';
+</script>
+```
+
+_Note: `label` should still be set for button accessibility purposes._
 
 ### Mini
 
@@ -75,7 +94,10 @@ mwc-fab {
 ## API
 
 ### Slots
-*None*
+
+| Name     | Description
+| -------- | ---
+| `icon`   | An icon to be slotted into the fab. _Note:_ the `label` property should still be set for button accessibility.
 
 ### Properties/Attributes
 

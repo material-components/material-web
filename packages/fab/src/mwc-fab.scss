@@ -17,6 +17,8 @@ limitations under the License.
 @use '@material/mwc-base/src/elevation';
 @use '@material/mwc-icon/src/_mwc-icon';
 @use '@material/fab';
+@use '@material/rtl';
+@use '@material/animation';
 @use '@material/ripple';
 
 @include fab.core-styles();
@@ -41,4 +43,29 @@ limitations under the License.
   &:active {
     box-shadow: var(--mdc-fab-box-shadow-active, #{elevation.elevation-box-shadow(12)});
   }
+
+  ::slotted([slot="icon"]) {
+    @include fab.icon-size(24px);
+    @include fab.icon_();
+    @include fab.icon-overrides_();
+  }
+
+  &.mdc-fab--extended {
+    ::slotted([slot="icon"]) {
+      @include rtl.reflexive-property(margin, fab.$extended-icon-padding - fab.$extended-label-padding, fab.$extended-icon-padding);
+    }
+
+    &.icon-end {
+      .mdc-fab__icon,
+      ::slotted([slot="icon"]) {
+        @include rtl.reflexive-property(margin, fab.$extended-icon-padding, fab.$extended-icon-padding - fab.$extended-label-padding);
+      }
+    }
+  }
+
+  &.mdc-fab--exited ::slotted([slot="icon"]) {
+    transform: scale(0);
+    transition: animation.exit-permanent(transform, 135ms);
+  }
 }
+

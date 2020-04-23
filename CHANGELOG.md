@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `mwc-formfield` now has a nowrap property
 - mdc-button now has --mdc-shape-small for border radii
 - Added `size` property to `mwc-textfield`
+- `mwc-fab` now has a slot of icons
 
 ### Changed
 

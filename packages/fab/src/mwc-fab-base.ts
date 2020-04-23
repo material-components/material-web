@@ -42,6 +42,7 @@ export class FabBase extends LitElement {
       'mdc-fab--mini': this.mini,
       'mdc-fab--exited': this.exited,
       'mdc-fab--extended': this.extended,
+      'icon-end': this.showIconAtEnd,
     };
     const showLabel = this.label !== '' && this.extended;
 
@@ -66,7 +67,9 @@ export class FabBase extends LitElement {
           .ripple="${ripple()}">
         <div class="mdc-fab__ripple"></div>
         ${this.showIconAtEnd ? label : ''}
-        ${iconTemplate}
+        <slot name="icon">
+          ${iconTemplate}
+        </slot>
         ${!this.showIconAtEnd ? label : ''}
       </button>`;
   }
