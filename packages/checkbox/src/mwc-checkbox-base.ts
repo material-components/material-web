@@ -76,8 +76,11 @@ export class CheckboxBase extends FormElement {
     }
   }
 
+  private rippleElement: Ripple|null = null;
+
   protected rippleHandlers: RippleHandlers = new RippleHandlers(() => {
     this.shouldRenderRipple = true;
+    this.ripple.then((v) => this.rippleElement = v);
     return this.ripple;
   });
 
@@ -88,7 +91,8 @@ export class CheckboxBase extends FormElement {
     return html`${
         this.shouldRenderRipple ?
             html`<mwc-ripple .accent="${selected}" .disabled="${
-                this.disabled}" .unbounded="${true}"></mwc-ripple>` :
+                this.disabled}" .unbounded="${
+                true}" class="mdc-checkbox__ripple"></mwc-ripple>` :
             ''}`;
   }
 
@@ -181,5 +185,9 @@ export class CheckboxBase extends FormElement {
   private _changeHandler() {
     this.checked = this.formElement.checked;
     this.indeterminate = this.formElement.indeterminate;
+  }
+
+  get isRippleActive() {
+    return this.rippleElement?.isActive || false;
   }
 }

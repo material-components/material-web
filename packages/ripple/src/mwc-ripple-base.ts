@@ -62,13 +62,15 @@ export class RippleBase extends BaseElement implements RippleAPI {
 
   protected mdcFoundation!: MDCRippleFoundation;
 
+  get isActive() {
+    return (this.parentElement || this).matches(':active');
+  }
+
   createAdapter(): MDCRippleAdapter {
     return {
       browserSupportsCssVars: () => true,
       isUnbounded: () => this.unbounded,
-      isSurfaceActive: () => {
-        return (this.parentElement || this).matches(':active');
-      },
+      isSurfaceActive: () => this.isActive,
       isSurfaceDisabled: () => this.disabled,
       addClass: (className: string) => {
         switch (className) {
