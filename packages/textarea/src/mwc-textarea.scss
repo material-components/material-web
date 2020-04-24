@@ -16,42 +16,27 @@ limitations under the License.
 */
 
 @use '@material/mwc-textfield/src/mwc-textfield.scss';
-@use '@material/textfield/_mixins.scss' as mixins;
-@use '@material/textfield/_variables.scss' as vars;
-@use '@material/theme/_mixins.scss' as theme-mixins;
-@use '@material/theme/_variables.scss' as theme-vars;
+@use '@material/textfield';
+@use '@material/theme';
 
-.mdc-text-field:not(.mdc-text-field--outlined) {
+.mdc-text-field.mdc-text-field--filled {
+  overflow: hidden;
   padding-bottom: 1px;
 
   .mdc-text-field__input {
     height: auto;
   }
 
-  &:not(.mdc-text-field--disabled) {
-    &:not(.mdc-text-field--invalid){
-      @include theme-mixins.prop(border-bottom-color, vars.$bottom-line-idle);
-
-      &:hover {
-        @include theme-mixins.prop(border-bottom-color, vars.$bottom-line-hover);
-      }
-    }
-
-    &.mdc-text-field--invalid {
-      @include theme-mixins.prop(border-bottom-color, (
-        varname: --mdc-theme-error,
-        fallback: theme-vars.$error
-      ));
-    }
+  &.mdc-text-field--invalid {
+    @include textfield.bottom-line-color((
+      varname: --mdc-theme-error,
+      fallback: theme.$error
+    ));
   }
 
   .mdc-floating-label.mdc-floating-label--float-above {
     transform: translateY(-50%) scale(0.75);
     font-size: initial;
-  }
-
-  &.mdc-text-field--disabled {
-    @include theme-mixins.prop(border-bottom-color, vars.$disabled-border);
   }
 
   .mdc-text-field__input, .mdc-text-field-character-counter.hidden + .mdc-text-field__input {
@@ -77,10 +62,6 @@ limitations under the License.
   height: 100%;
 
   &.mdc-text-field--outlined {
-    &.mdc-text-field--disabled {
-      @include mixins.fill-color_(transparent);
-    }
-
     &:not(.mdc-text-field--fullwidth) {
       .mdc-text-field__input {
         margin-bottom: 14px;
