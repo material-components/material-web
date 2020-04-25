@@ -133,7 +133,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
   render() {
     const classes = {
       'mdc-menu-surface--fixed': this.fixed,
-      'fullwidth': this.fullwidth,
+      'mdc-menu-surface--fullwidth': this.fullwidth,
     };
 
     return html`

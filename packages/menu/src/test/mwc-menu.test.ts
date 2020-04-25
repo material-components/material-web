@@ -439,7 +439,7 @@ suite('mwc-menu-surface', () => {
     });
 
     test('sets correct class', async () => {
-      const fullwidthClass = 'fullwidth';
+      const fullwidthClass = 'mdc-menu-surface--fullwidth';
       const surface = element.shadowRoot!.querySelector('.mdc-menu-surface')!;
       assert.isTrue(surface.classList.contains(fullwidthClass));
       element.fullwidth = false;

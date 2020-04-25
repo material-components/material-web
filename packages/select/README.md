@@ -213,7 +213,7 @@ Name                      | Type                          | Default            |
 ------------------------- | ----------------------------- | ------------------ | -----------
 `value`                   | `string`                      | `""`               | The select control's value determined by the `value` property of the currently selected list item. Setting value will attempt to select a list-item with the same value. If one does not match, it will set itself to `""` and the `index` to `-1`. Setting `value` before the list item is attached will not select the item.
 `label`                   | `string`                      | `""`               | Sets floating label value. __NOTE:__ The label will not float if the selected item has a falsey value property.
-`naturalWidth`            | `string`                      | `false`            | Sets the dropdown menu's width to `auto`.
+`naturalMenuWidth`        | `string`                      | `false`            | Sets the dropdown menu's width to `auto`.
 `icon`                    | `string`                      | `""`               | Leading icon to display in select. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon). _Note_: for proper list spacing, each list item must have `graphic="icon"` or `graphic="avatar"` to be set.
 `disabled`                | `boolean`                     | `false`            | Whether or not the select should be disabled.
 `outlined`                | `boolean`                     | `false`            | Whether or not to show the material outlined variant.

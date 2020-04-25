@@ -24,10 +24,6 @@ limitations under the License.
   display: none;
 }
 
-.fullwidth {
-  width: 100%;
-}
-
 .mdc-menu-surface {
   border-radius: var(--mdc-shape-medium, #{shape-variables.$medium-component-radius});
   z-index: var(--mdc-menu-z-index, #{variables.$z-index});

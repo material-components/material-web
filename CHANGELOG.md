@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - mdc-button now has --mdc-shape-small for border radii
 - Added `size` property to `mwc-textfield`
 - `mwc-fab` now has a slot of icons
+- Added `fullwidth` property to `mwc-select`.
 
 ### Changed
 
@@ -33,6 +34,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - **BREAKING:VISUAL:** mwc-list-item now internally uses mwc-ripple instead of styling ripple on host
 - `mwc-menu`'s `quick` variant now opens synchronously
 - Convert to [Sass modules](https://sass-lang.com/documentation/at-rules/use)
+- `mwc-select`'s `naturalWidth` property renamed to `naturalMenuWidth` for clarity.
 
 ### Fixed
 
