@@ -16,7 +16,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/mwc-base": "^0.14.1",
-    "@material/slider": "=7.0.0-canary.8540808be.0",
+    "@material/slider": "=7.0.0-canary.28d32f8e0.0",
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0"
