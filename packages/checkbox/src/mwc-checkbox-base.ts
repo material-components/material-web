@@ -91,8 +91,7 @@ export class CheckboxBase extends FormElement {
     return html`${
         this.shouldRenderRipple ?
             html`<mwc-ripple .accent="${selected}" .disabled="${
-                this.disabled}" .unbounded="${
-                true}" class="mdc-checkbox__ripple"></mwc-ripple>` :
+                this.disabled}" .unbounded="${true}"></mwc-ripple>` :
             ''}`;
   }
 
