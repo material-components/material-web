@@ -23,20 +23,17 @@ import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter.js';
-import {MDCTextFieldCharacterCounterFoundation} from '@material/textfield/character-counter/foundation.js';
 import MDCTextFieldFoundation from '@material/textfield/foundation.js';
 import {eventOptions, html, property, PropertyValues, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map.js';
 import {ifDefined} from 'lit-html/directives/if-defined.js';
-
-import {characterCounter, CharacterCounter} from './mwc-character-counter-directive.js';
+import {live} from 'lit-html/directives/live.js';
 
 // must be done to get past lit-analyzer checks
 declare global {
   interface Element {
     floatingLabelFoundation?: MDCFloatingLabelFoundation;
     lineRippleFoundation?: MDCLineRippleFoundation;
-    charCounterFoundation?: MDCTextFieldCharacterCounterFoundation;
   }
 }
 
@@ -119,9 +116,6 @@ export abstract class TextFieldBase extends FormElement {
 
   @query('.mdc-notched-outline__notch') protected notchElement!: HTMLElement;
 
-  @query('.mdc-text-field-character-counter')
-  protected charCounterElement!: CharacterCounter;
-
   @property({type: String}) value = '';
 
   @property({type: String}) type: TextFieldType = 'text';
@@ -137,6 +131,8 @@ export abstract class TextFieldBase extends FormElement {
   @property({type: Boolean, reflect: true}) disabled = false;
 
   @property({type: Boolean}) required = false;
+
+  @property({type: Number}) minLength = -1;
 
   @property({type: Number}) maxLength = -1;
 
@@ -188,7 +184,6 @@ export abstract class TextFieldBase extends FormElement {
 
   protected _validity: ValidityState = createValidityObj();
   protected _outlineUpdateComplete: null|Promise<unknown> = null;
-  protected _valueSetOnInputEvent = false;
 
   get validity(): ValidityState {
     this._checkValidity(this.value);
@@ -272,23 +267,6 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   updated(changedProperties: PropertyValues) {
-    const maxLength = changedProperties.get('maxLength') as number | undefined;
-
-    const maxLengthBecameDefined = maxLength === -1 && this.maxLength !== -1;
-    const maxLengthBecameUndefined =
-        maxLength !== undefined && maxLength !== -1 && this.maxLength === -1;
-
-    /* We want to recreate the foundation if maxLength changes to defined or
-     * undefined, because the textfield foundation needs to be instantiated with
-     * the char counter's foundation, and the char counter's foundation needs
-     * to have maxLength defined to be instantiated. Additionally, there is no
-     * exposed API on the MdcTextFieldFoundation to dynamically add a char
-     * counter foundation, so we must recreate it.
-     */
-    if (maxLengthBecameDefined || maxLengthBecameUndefined) {
-      this.createFoundation();
-    }
-
     if (changedProperties.has('value') &&
         changedProperties.get('value') !== undefined) {
       this.mdcFoundation.setValue(this.value);
@@ -296,17 +274,21 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   protected renderInput() {
+    const minOrUndef = this.minLength === -1 ? undefined : this.minLength;
     const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
+    // TODO: live() directive needs casting for lit-analyzer
+    // https://github.com/runem/lit-analyzer/pull/91/files
     return html`
       <input
           aria-labelledby="label"
           class="mdc-text-field__input"
           type="${this.type}"
-          .value="${this.value}"
+          .value="${live(this.value) as unknown as string}"
           ?disabled="${this.disabled}"
           placeholder="${this.placeholder}"
           ?required="${this.required}"
           ?readonly="${this.readOnly}"
+          minlength="${ifDefined(minOrUndef)}"
           maxlength="${ifDefined(maxOrUndef)}"
           pattern="${ifDefined(this.pattern ? this.pattern : undefined)}"
           min="${ifDefined(this.min === '' ? undefined : this.min as number)}"
@@ -377,18 +359,18 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   protected renderHelperText(charCounterTemplate?: TemplateResult) {
+    if (!this.shouldRenderHelperText) {
+      return undefined;
+    }
+
     const showValidationMessage = this.validationMessage && !this.isUiValid;
     const classes = {
       'mdc-text-field-helper-text--persistent': this.helperPersistent,
       'mdc-text-field-helper-text--validation-msg': showValidationMessage,
     };
 
-    const rootClasses = {
-      hidden: !this.shouldRenderHelperText,
-    };
-
     return html`
-      <div class="mdc-text-field-helper-line ${classMap(rootClasses)}">
+      <div class="mdc-text-field-helper-line">
         <div class="mdc-text-field-helper-text ${classMap(classes)}">${
         showValidationMessage ? this.validationMessage : this.helper}</div>
         ${charCounterTemplate}
@@ -397,15 +379,13 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   protected renderCharCounter() {
-    const counterClasses = {
-      hidden: !this.charCounterVisible,
-    };
+    if (!this.charCounterVisible) {
+      return undefined;
+    }
 
-    return html`
-      <div
-          class="${classMap(counterClasses)}"
-          .charCounterFoundation=${characterCounter()}>
-      </div>`;
+    const length = Math.min(this.value.length, this.maxLength);
+    return html`<span class="mdc-text-field-character-counter">${length} / ${
+        this.maxLength}</span>`;
   }
 
   protected onInputBlur() {
@@ -458,7 +438,6 @@ export abstract class TextFieldBase extends FormElement {
 
   @eventOptions({passive: true})
   protected handleInputChange() {
-    this._valueSetOnInputEvent = true;
     this.value = this.formElement.value;
 
     if (this.autoValidate) {
@@ -466,25 +445,11 @@ export abstract class TextFieldBase extends FormElement {
     }
   }
 
-  shouldUpdate(changedProperties: PropertyValues) {
-    // cannot set value on safari on input event as this causes caret to jump
-    if (changedProperties.has('value') && this._valueSetOnInputEvent) {
-      this._valueSetOnInputEvent = false;
-      return false;
-    }
-
-    return super.shouldUpdate(changedProperties);
-  }
-
   protected createFoundation() {
     if (this.mdcFoundation !== undefined) {
       this.mdcFoundation.destroy();
     }
-    this.mdcFoundation = new this.mdcFoundationClass(this.createAdapter(), {
-      characterCounter: this.maxLength !== -1 ?
-          this.charCounterElement.charCounterFoundation :
-          undefined
-    });
+    this.mdcFoundation = new this.mdcFoundationClass(this.createAdapter());
     this.mdcFoundation.init();
   }
 
@@ -504,18 +469,14 @@ export abstract class TextFieldBase extends FormElement {
           this.addEventListener(evtType, handler),
       deregisterTextFieldInteractionHandler: (evtType, handler) =>
           this.removeEventListener(evtType, handler),
-      registerValidationAttributeChangeHandler: () => {
+      registerValidationAttributeChangeHandler: (handler) => {
         const getAttributesList =
             (mutationsList: MutationRecord[]): string[] => {
               return mutationsList.map((mutation) => mutation.attributeName)
                          .filter((attributeName) => attributeName) as string[];
             };
         const observer = new MutationObserver((mutationsList) => {
-          const attributes = getAttributesList(mutationsList);
-          if (attributes.indexOf('maxlength') !== -1 && this.maxLength !== -1) {
-            this.charCounterElement.charCounterFoundation.setCounterValue(
-                this.value.length, this.maxLength);
-          }
+          handler(getAttributesList(mutationsList));
         });
         const config = {attributes: true};
         observer.observe(this.formElement, config);

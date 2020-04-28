@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added `size` property to `mwc-textfield`
 - `mwc-fab` now has a slot of icons
 - Added `fullwidth` property to `mwc-select`.
+- Added `minLength` to `mwc-textfield`
 
 ### Changed
 
@@ -35,6 +36,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `mwc-menu`'s `quick` variant now opens synchronously
 - Convert to [Sass modules](https://sass-lang.com/documentation/at-rules/use)
 - `mwc-select`'s `naturalWidth` property renamed to `naturalMenuWidth` for clarity.
+- **BREAKING** removed textfield's character counter foundation directive
 
 ### Fixed
 
@@ -45,6 +47,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix infinite loop bug in `mwc-tab-bar` when `activeIndex` is set in first render
 - Fixed bug in `mwc-slider` where initializing min and max over `100` would not set correct bounds on UI.
 - Fixed `"` showing up in mwc-button when the ripple activates
+- Changing an invalid textfield's validation properties to valid values will update styles automatically
 
 ## [v0.14.1] - 2020-03-23
 

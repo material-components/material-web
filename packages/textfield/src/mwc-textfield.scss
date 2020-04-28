@@ -31,16 +31,6 @@ limitations under the License.
   @extend %material-icons;
 }
 
-// TODO: MDC expects elements to be removed from DOM, we should avoid
-// display: none as this can cause unintended side effects with sibling
-// selectors
-.hidden, .hidden::before, .hidden::after,
-.mdc-text-field-helper-line.hidden {
-  // mdc-text-field-helper-line specificity needed since the rule is loaded
-  // after these
-  display: none;
-}
-
 :host {
   display: inline-flex;
   flex-direction: column;
