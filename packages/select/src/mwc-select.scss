@@ -171,6 +171,9 @@ mwc-notched-outline {
 }
 
 :host([disabled]) {
+
+  pointer-events: none;
+
   .mdc-select {
     &:not(.mdc-select--outlined) {
       @include mixins.container-fill-color_((
