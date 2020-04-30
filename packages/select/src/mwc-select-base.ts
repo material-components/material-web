@@ -638,7 +638,6 @@ export abstract class SelectBase extends FormElement {
         break;
       }
     }
-
     this.valueSetDirectly = true;
     this.select(indexToSelect);
     this.mdcFoundation.handleChange();
@@ -713,10 +712,12 @@ export abstract class SelectBase extends FormElement {
     }
   }
 
-  protected onSelected(evt: CustomEvent<{index: number}>) {
-    if (this.mdcFoundation) {
-      this.mdcFoundation.handleMenuItemAction(evt.detail.index);
+  protected async onSelected(evt: CustomEvent<{index: number}>) {
+    if (!this.mdcFoundation) {
+      await this.updateComplete;
     }
+
+    this.mdcFoundation.handleMenuItemAction(evt.detail.index);
   }
 
   protected onOpened() {
