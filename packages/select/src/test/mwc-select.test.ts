@@ -111,6 +111,8 @@ suite('mwc-select:', () => {
 
       element = fixt.root.querySelector('mwc-select')!;
       const cElement = element.querySelector('[value="c"]') as ListItem;
+      const anchor = element.shadowRoot!.querySelector<HTMLElement>(
+          '.mdc-select__anchor')!;
 
       await element.updateComplete;
       await cElement.updateComplete;
@@ -120,6 +122,10 @@ suite('mwc-select:', () => {
           cElement, element.selected, 'selected element matches list item');
       assert.isTrue(cElement.selected, 'prop sets on list item');
       assert.equal(element.index, 3, 'index is correctly set');
+      assert.equal(anchor.getAttribute('aria-invalid'), 'false');
+      assert.equal(anchor.getAttribute('aria-haspopup'), 'listbox');
+      assert.equal(anchor.getAttribute('aria-labelledby'), 'label');
+      assert.isFalse(anchor.hasAttribute('aria-describedby'));
     });
 
     teardown(() => {

@@ -259,7 +259,6 @@ export abstract class SelectBase extends FormElement {
               aria-invalid=${!this.isUiValid}
               aria-haspopup="listbox"
               aria-labelledby="label"
-              aria-required=${this.required}
               aria-describedby=${ifDefined(describedby)}
               @click=${this.onClick}
               @focus=${this.onFocus}
