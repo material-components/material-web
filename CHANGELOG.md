@@ -45,6 +45,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - **BREAKING** mwc-snackbar `isOpen` property is now called `open`
   - **BREAKING** mwc-snackbar `open()` method is now called `show()`
   - **BREAKING** mwc-snackbar's isOpen -> open property is now editable
+- Removed default slot from switch
 
 ### Fixed
 

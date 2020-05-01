@@ -86,7 +86,6 @@ export class SwitchBase extends FormElement {
               @change="${this._changeHandler}">
           </div>
         </div>
-      </div>
-      <slot></slot>`;
+      </div>`;
   }
 }
