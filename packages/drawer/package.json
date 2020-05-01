@@ -16,7 +16,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/drawer": "=7.0.0-canary.28d32f8e0.0",
+    "@material/drawer": "=7.0.0-canary.b0f83d2fd.0",
     "@material/mwc-base": "^0.14.1",
     "blocking-elements": "^0.1.0",
     "lit-element": "^2.3.0",
