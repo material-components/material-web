@@ -255,16 +255,18 @@ export abstract class SelectBase extends FormElement {
             ?required=${this.required}>
         <!-- @ts-ignore -->
         <div class="mdc-select__anchor"
-              role="button"
-              aria-invalid=${!this.isUiValid}
-              aria-haspopup="listbox"
-              aria-labelledby="label"
-              aria-required=${this.required}
-              aria-describedby=${ifDefined(describedby)}
-              @click=${this.onClick}
-              @focus=${this.onFocus}
-              @blur=${this.onBlur}
-              @keydown=${this.onKeydown}>
+            aria-autocomplete="none"
+            role="combobox"
+            aria-expanded=${this.menuOpen}
+            aria-invalid=${!this.isUiValid}
+            aria-haspopup="listbox"
+            aria-labelledby="label"
+            aria-required=${this.required}
+            aria-describedby=${ifDefined(describedby)}
+            @click=${this.onClick}
+            @focus=${this.onFocus}
+            @blur=${this.onBlur}
+            @keydown=${this.onKeydown}>
           ${this.icon ? this.renderIcon(this.icon) : ''}
           <input
             type="text"
