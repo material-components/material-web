@@ -272,21 +272,10 @@ export abstract class SelectBase extends FormElement {
             readonly
             class="mdc-select__selected-text"
             value="${this.selectedText}">
-          <i class="mdc-select__dropdown-icon">
-            <svg
-                width="10px"
-                height="5px"
-                viewBox="7 10 10 5"
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink">
-              <polygon
-                  stroke="none"
-                  fill-rule="evenodd"
-                  points="7 10 12 15 17 10">
-              </polygon>
-            </svg>
-          </i>
+          <span class="mdc-select__dropdown-icon">
+            <i class="material-icons mdc-select__dropdown-icon-inactive">arrow_drop_down</i>
+            <i class="material-icons mdc-select__dropdown-icon-active">arrow_drop_up</i>
+          </span>
           ${outlinedOrUnderlined}
         </div>
         ${this.renderHelperText()}

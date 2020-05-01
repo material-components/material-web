@@ -281,12 +281,10 @@ Name                                          | Default                         
 `--mdc-select-label-ink-color`                | ![](images/color_0,0,0,60.png) `rgba(0, 0, 0, 0.6)`    | Color of the non-focused floating label, helper text, and placeholder.
 `--mdc-select-focused-label-color`            | `--mdc-theme-primary`                                         | Color of the focused floating label, helper text, and placeholder.
 `--mdc-select-disabled-ink-color`             | ![](images/color_0,0,0,37.png) `rgba(0, 0, 0, 0.37)`   | Color of the input text, the floating label, helper text, and placeholder of a disabled select.
-`--mdc-select-dropdown-icon-color`            | ![](images/color_000.png) `#000`                       | Color of the dropdown icon when select is not activated.
+`--mdc-select-dropdown-icon-color`            | `rgba(0, 0, 0, 0.54)`                                         | Color of the dropdown icon when select is not activated.
 `--mdc-select-focused-dropdown-icon-color`    | `--mdc-theme-primary`                                         | Color of the dropdown icon when select is activated.
-`--mdc-select-disabled-dropdown-icon-color`   | ![](images/color_000.png) `#000`                       | Opacity of the dropdown icon when disabled.
+`--mdc-select-disabled-dropdown-icon-color`   | ![](images/color_0,0,0,38.png) `rgba(0, 0, 0, 0.38)`   | Opacity of the dropdown icon when disabled.
 `--mdc-select-error-dropdown-icon-color`      | `--mdc-select-error-color`                                    | Color of the dropdown icon when select is invalid.
-`--mdc-select-dropdown-icon-opacity`          | `0.54`                                                        | opacity of the dropdown icon.
-`--mdc-select-disabled-dropdown-icon-opacity` | `0.38`                                                        | Opacity of the dropdown icon when disabled.
 
 `mwc-select` internally uses
 [`mwc-list`](https://github.com/material-components/material-components-web-components/tree/master/packages/list#css-custom-properties),

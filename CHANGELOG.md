@@ -37,6 +37,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Convert to [Sass modules](https://sass-lang.com/documentation/at-rules/use)
 - `mwc-select`'s `naturalWidth` property renamed to `naturalMenuWidth` for clarity.
 - **BREAKING** removed textfield's character counter foundation directive
+- Refactor `mwc-select`
+  - `naturalWidth` property renamed to `naturalMenuWidth` for clarity.
+  - `--mdc-select-dropdown-icon-opacity` and `--mdc-select-disabled-dropdown-icon-opacity` removed; opacity is now expressed in alpha channel of color
+  - **BREAKING:VISUAL:** Dropdown arrow icon motion updated.
 - Refactor snackbar to conform to other elements' `.open` `.show()` `.close()` APIs
   - **BREAKING** mwc-snackbar `isOpen` property is now called `open`
   - **BREAKING** mwc-snackbar `open()` method is now called `show()`
