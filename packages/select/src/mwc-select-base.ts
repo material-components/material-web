@@ -158,8 +158,6 @@ export abstract class SelectBase extends FormElement {
 
   @property({type: String}) helper = '';
 
-  @property({type: Boolean}) helperPersistent = false;
-
   @property({type: Boolean}) validateOnInitialRender = false;
 
   @property({type: String}) validationMessage = '';
@@ -300,8 +298,6 @@ export abstract class SelectBase extends FormElement {
   protected renderHelperText() {
     const showValidationMessage = this.validationMessage && !this.isUiValid;
     const classes = {
-      'mdc-select-helper-text--persistent':
-          this.helperPersistent || showValidationMessage,
       'mdc-select-helper-text--validation-msg': showValidationMessage,
       'hidden': !this.shouldRenderHelperText,
     };

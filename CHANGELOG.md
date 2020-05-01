@@ -35,12 +35,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - **BREAKING:VISUAL:** mwc-list-item now internally uses mwc-ripple instead of styling ripple on host
 - `mwc-menu`'s `quick` variant now opens synchronously
 - Convert to [Sass modules](https://sass-lang.com/documentation/at-rules/use)
-- `mwc-select`'s `naturalWidth` property renamed to `naturalMenuWidth` for clarity.
 - **BREAKING** removed textfield's character counter foundation directive
 - Refactor `mwc-select`
-  - `naturalWidth` property renamed to `naturalMenuWidth` for clarity.
-  - `--mdc-select-dropdown-icon-opacity` and `--mdc-select-disabled-dropdown-icon-opacity` removed; opacity is now expressed in alpha channel of color
+  - **BREAKING** `naturalWidth` property renamed to `naturalMenuWidth` for clarity.
+  - **BREAKING:** `--mdc-select-dropdown-icon-opacity` and `--mdc-select-disabled-dropdown-icon-opacity` removed; opacity is now expressed in alpha channel of color
   - **BREAKING:VISUAL:** Dropdown arrow icon motion updated.
+  - **BREAKING** remove `helperPersistent` property; helper text now persistent by default if included.
 - Refactor snackbar to conform to other elements' `.open` `.show()` `.close()` APIs
   - **BREAKING** mwc-snackbar `isOpen` property is now called `open`
   - **BREAKING** mwc-snackbar `open()` method is now called `show()`
