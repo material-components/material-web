@@ -15,10 +15,10 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/dialog": "=7.0.0-canary.15d65448e.0",
-    "@material/dom": "=7.0.0-canary.15d65448e.0",
+    "@material/dialog": "=7.0.0-canary.142b1549e.0",
+    "@material/dom": "=7.0.0-canary.142b1549e.0",
     "@material/mwc-base": "^0.14.1",
-    "@material/touch-target": "=7.0.0-canary.15d65448e.0",
+    "@material/touch-target": "=7.0.0-canary.142b1549e.0",
     "blocking-elements": "^0.1.0",
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
