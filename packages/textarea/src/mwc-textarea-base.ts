@@ -41,6 +41,7 @@ export abstract class TextAreaBase extends TextFieldBase {
       'mdc-text-field--outlined': this.outlined,
       'mdc-text-field--fullwidth': this.fullWidth,
       'mdc-text-field--end-aligned': this.endAligned,
+      'mdc-text-field--with-internal-counter': this.charCounterVisible,
     };
 
     const ripple =
@@ -49,8 +50,8 @@ export abstract class TextAreaBase extends TextFieldBase {
       <label class="mdc-text-field mdc-text-field--textarea ${
         classMap(classes)}">
         ${ripple}
-        ${this.renderCharCounter()}
         ${this.renderInput()}
+        ${this.renderCharCounter()}
         ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
       </label>
       ${this.renderHelperText()}

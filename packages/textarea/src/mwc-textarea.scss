@@ -21,10 +21,21 @@ limitations under the License.
 
 .mdc-text-field.mdc-text-field--filled {
   overflow: hidden;
-  padding-bottom: 1px;
+
+  &::before {
+    display: none;
+  }
 
   .mdc-text-field__input {
     height: auto;
+    margin-top: 23px;
+    margin-bottom: 9px;
+  }
+
+  &.mdc-text-field--no-label {
+    .mdc-text-field__input {
+      margin-top: 15px;
+    }
   }
 
   &.mdc-text-field--invalid {
@@ -39,19 +50,6 @@ limitations under the License.
     font-size: initial;
   }
 
-  .mdc-text-field__input, .mdc-text-field-character-counter.hidden + .mdc-text-field__input {
-    padding: 0 16px 0 16px;
-    margin: 20px 0 1px 0;
-  }
-
-  .mdc-text-field-character-counter:not(.hidden) + .mdc-text-field__input {
-    margin-bottom: 28px;
-  }
-
-  .mdc-text-field-character-counter {
-    bottom: 14px;
-  }
-
   .mdc-floating-label {
     top: 18px;
     left: 16px;
@@ -60,23 +58,6 @@ limitations under the License.
 
 .mdc-text-field {
   height: 100%;
-
-  &.mdc-text-field--outlined {
-    &:not(.mdc-text-field--fullwidth) {
-      .mdc-text-field__input {
-        margin-bottom: 14px;
-        padding-bottom: 0px;
-      }
-
-      .mdc-text-field-character-counter {
-        bottom: 14px;
-
-        &:not(.hidden) + .mdc-text-field__input {
-          margin-bottom: 41px;
-        }
-      }
-    }
-  }
 }
 
 .mdc-text-field__input {
