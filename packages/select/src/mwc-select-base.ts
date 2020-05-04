@@ -266,15 +266,25 @@ export abstract class SelectBase extends FormElement {
             @blur=${this.onBlur}
             @keydown=${this.onKeydown}>
           ${this.icon ? this.renderIcon(this.icon) : ''}
-          <input
-            type="text"
-            disabled
-            readonly
-            class="mdc-select__selected-text"
-            value="${this.selectedText}">
+          <span class="mdc-select__selected-text">${this.selectedText}</span>
           <span class="mdc-select__dropdown-icon">
-            <i class="material-icons mdc-select__dropdown-icon-inactive">arrow_drop_down</i>
-            <i class="material-icons mdc-select__dropdown-icon-active">arrow_drop_up</i>
+            <svg
+                width="10px"
+                height="5px"
+                viewBox="7 10 10 5">
+              <polygon
+                  class="mdc-select__dropdown-icon-inactive"
+                  stroke="none"
+                  fill-rule="evenodd"
+                  points="7 10 12 15 17 10">
+              </polygon>
+              <polygon
+                  class="mdc-select__dropdown-icon-active"
+                  stroke="none"
+                  fill-rule="evenodd"
+                  points="7 15 12 10 17 15">
+              </polygon>
+            </svg>
           </span>
           ${outlinedOrUnderlined}
         </div>

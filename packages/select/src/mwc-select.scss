@@ -96,7 +96,7 @@ mwc-notched-outline {
     &.mdc-select--invalid {
       $select-error-color: var(--mdc-select-error-color, var(--mdc-theme-error, #{theme-vars.$error}));
       .mdc-select__dropdown-icon {
-        color: var(--mdc-select-error-dropdown-icon-color, #{$select-error-color});
+        fill: var(--mdc-select-error-dropdown-icon-color, #{$select-error-color});
       }
 
       .mdc-floating-label, .mdc-floating-label::after {
@@ -121,7 +121,7 @@ mwc-notched-outline {
       }
 
       .mdc-select__dropdown-icon {
-        @include theme-mixins.prop(color, (
+        @include theme-mixins.prop(fill, (
           varname: --mdc-select-dropdown-icon-color,
           fallback: vars.$dropdown-icon-color
         ));
@@ -179,7 +179,7 @@ mwc-notched-outline {
     }
 
     .mdc-select__dropdown-icon {
-      @include theme-mixins.prop(color, (
+      @include theme-mixins.prop(fill, (
         varname: --mdc-select-disabled-dropdown-icon-color,
         fallback: vars.$disabled-dropdown-icon-color
       ));
