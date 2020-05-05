@@ -10,8 +10,8 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/menu": "=7.0.0-canary.142b1549e.0",
-    "@material/menu-surface": "=7.0.0-canary.142b1549e.0",
+    "@material/menu": "=7.0.0-canary.03dec929e.0",
+    "@material/menu-surface": "=7.0.0-canary.03dec929e.0",
     "@material/mwc-base": "^0.14.1",
     "@material/mwc-list": "^0.14.1",
     "lit-element": "^2.3.0",
