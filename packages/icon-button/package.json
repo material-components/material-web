@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-icon-button",
-  "version": "0.14.1",
+  "version": "0.15.0",
   "description": "",
   "main": "mwc-icon-button.js",
   "module": "mwc-icon-button.js",
@@ -16,9 +16,9 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/icon-button": "=7.0.0-canary.d92d8c93e.0",
-    "@material/mwc-base": "^0.14.1",
-    "@material/mwc-icon": "^0.14.1",
-    "@material/mwc-ripple": "^0.14.1",
+    "@material/mwc-base": "^0.15.0",
+    "@material/mwc-icon": "^0.15.0",
+    "@material/mwc-ripple": "^0.15.0",
     "lit-element": "^2.3.0",
     "tslib": "^1.10.0"
   },

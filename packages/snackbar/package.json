@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-snackbar",
-  "version": "0.14.1",
+  "version": "0.15.0",
   "description": "",
   "main": "mwc-snackbar.js",
   "module": "mwc-snackbar.js",
@@ -15,7 +15,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/mwc-base": "^0.14.1",
+    "@material/mwc-base": "^0.15.0",
     "@material/snackbar": "=7.0.0-canary.d92d8c93e.0",
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
