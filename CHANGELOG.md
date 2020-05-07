@@ -4,7 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Fixed
+
+- `mwc-list-item`
+  - get rid of mobile os glow on tap
+  - do not set aria-selected on incompatible roles
+  - ripple will unrip if unclick or touchend is outside of list-item
+
 ## [v0.15.0] - 2020-05-05
 
 ### Added
