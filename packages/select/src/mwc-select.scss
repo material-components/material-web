@@ -174,7 +174,7 @@ mwc-notched-outline {
 
     &.mdc-select--outlined {
       mwc-notched-outline {
-        --mdc-notched-outline-border-color: var(--mdc-select-outlined-disabled-border-color, #{vars.$outlined-disabled-border});
+        --mdc-notched-outline-border-color: var(--mdc-select-outlined-disabled-border-color, #{vars.$disabled-outline-color});
       }
     }
 
