@@ -17,23 +17,46 @@ limitations under the License.
 -->
 <html lang="en">
 <head>
-  <title>Material Web Components Catalog</title>
+  <title>MWC Radio Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-  <script type="module" src="./index.js"></script>
-  <script nomodule src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script type="module" src="index.js"></script>
+  <script nomodule src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script nomodule src="index.es5.js"></script>
   <style>
     .unresolved main {
       opacity: 0;
     }
   </style>
-  <link rel="preload" href="./shared/shared.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="../shared/shared.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <link rel="preload" href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <script nomodlue src="./shared/ie-style-transform.js"></script>
+  <script nomodlue src="../shared/ie-style-transform.js"></script>
+  <style>
+    .styled {
+      display: inline-block;
+      background-color: #363636;
+
+      --mdc-theme-secondary: #ff2929;
+      --mdc-radio-unchecked-color: white;
+      /* Required for unchecked focus ripple */
+      --mdc-theme-on-surface: white;
+      --mdc-radio-disabled-color: #adadad;
+    }
+  </style>
 </head>
-<body>
-  <demo-view></demo-view>
+<body class="unresolved">
+  <demo-header component="Radio" package="radio"></demo-header>
+
+  <main>
+    <mwc-radio id="a1" name="a" checked></mwc-radio>
+    <mwc-radio id="a2" name="a"></mwc-radio>
+    <mwc-radio id="a3" name="a" disabled></mwc-radio>
+    <span class="styled">
+      <mwc-radio id="b1" name="b"></mwc-radio>
+      <mwc-radio id="b2" name="b" checked></mwc-radio>
+      <mwc-radio id="b3" name="b" disabled></mwc-radio>
+    </span>
+  </main>
 </body>
 </html>

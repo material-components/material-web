@@ -15,7 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {LitElement, html, css} from 'lit-element/lit-element.js';
-import '@material/mwc-button';
 import '@material/mwc-list';
 import '@material/mwc-list/mwc-list-item';
 
@@ -71,17 +70,6 @@ class DemoView extends LitElement {
           --mdc-list-item-graphic-margin: 24px;
         }
 
-        .demo-source {
-          display: flex;
-          flex-direction: column;
-          flex-grow: 1;
-        }
-
-        .demo-source > a {
-          text-decoration: none;
-          align-self: flex-end;
-        }
-
         mwc-button {
           --mdc-theme-primary: white;
         }`,
@@ -109,139 +97,139 @@ class DemoView extends LitElement {
       {
         name: 'Button',
         secondary: 'Raised and flat buttons',
-        href: 'button.html',
+        href: 'button/',
         img: 'https://material-components-web.appspot.com/images/ic_button_24px.svg',
       },
       {
         name: 'Floating action button',
         secondary: 'The primary action in an application',
-        href: 'fab.html',
+        href: 'fab/',
         img: 'https://material-components-web.appspot.com/images/ic_button_24px.svg',
       },
       {
         name: 'Checkbox',
         secondary: 'Multi-selection controls',
-        href: 'checkbox.html',
+        href: 'checkbox/',
         img: 'https://material-components-web.appspot.com/images/ic_selection_control_24px.svg',
       },
       {
         name: 'Drawer',
         secondary: 'Navigation to provide access to destinations.',
-        href: 'drawer.html',
+        href: 'drawer/',
         img: 'https://material-components-web.appspot.com/images/ic_component_24px.svg',
       },
       {
         name: 'Dialog',
         secondary: 'Popup that gains user attention.',
-        href: 'dialog.html',
+        href: 'dialog/',
         img: 'https://material-components-web.appspot.com/images/ic_dialog_24px.svg',
       },
       {
         name: 'Formfield',
         secondary: 'Layout form fields with labels',
-        href: 'formfield.html',
+        href: 'formfield/',
         img: 'https://material-components-web.appspot.com/images/ic_text_field_24px.svg',
       },
       {
         name: 'Icon',
         secondary: 'Material design icons',
-        href: 'icon.html',
+        href: 'icon/',
         img: 'https://material-components-web.appspot.com/images/ic_component_24px.svg',
       },
       {
         name: 'Icon Button',
         secondary: 'Icon buttons allow users to take actions, and make choices, with a single tap.',
-        href: 'icon-button.html',
+        href: 'icon-button/',
         img: 'https://material-components-web.appspot.com/images/ic_component_24px.svg',
       },
       {
         name: 'Icon Button Toggle',
         secondary: 'Toggling icon states',
-        href: 'icon-button-toggle.html',
+        href: 'icon-button-toggle/',
         img: 'https://material-components-web.appspot.com/images/ic_component_24px.svg',
       },
       {
         name: 'Linear Progress',
         secondary: 'Fills from 0% to 100%, represented by bars',
-        href: 'linear-progress.html',
+        href: 'linear-progress/',
         img: 'https://material-components-web.appspot.com/images/ic_progress_activity.svg',
       },
       {
         name: 'List',
         secondary: 'Continuous, vertical indexes of text or images.',
-        href: 'list.html',
+        href: 'list/',
         img: 'https://material.io/develop/images/component_icons/list.svg',
       },
       {
         name: 'Menu',
         secondary: 'Displays a list of choices on a temporary surface.',
-        href: 'menu.html',
+        href: 'menu/',
         img: 'https://material.io/develop/images/component_icons/menu.svg',
       },
       {
         name: 'Radio buttons',
         secondary: 'Single selection controls',
-        href: 'radio.html',
+        href: 'radio/',
         img: 'https://material-components-web.appspot.com/images/ic_radio_button_24px.svg',
       },
       {
         name: 'Ripple',
         secondary: 'Touch ripple',
-        href: 'ripple.html',
+        href: 'ripple/',
         img: 'https://material-components-web.appspot.com/images/ic_ripple_24px.svg',
       },
       {
         name: 'Select',
         secondary: 'Single option dropdown select menus',
-        href: 'select.html',
+        href: 'select/',
         img: 'https://material.io/develop/images/component_icons/menu.svg',
       },
       {
         name: 'Slider',
         secondary: 'Range controls',
-        href: 'slider.html',
+        href: 'slider/',
         img: 'https://material-components-web.appspot.com/images/slider.svg',
       },
       {
         name: 'Snackbar',
         secondary: 'Transient messages',
-        href: 'snackbar.html',
+        href: 'snackbar/',
         img: 'https://material-components-web.appspot.com/images/ic_toast_24px.svg',
       },
       {
         name: 'Switch',
         secondary: 'On off controls',
-        href: 'switch.html',
+        href: 'switch/',
         img: 'https://material-components-web.appspot.com/images/ic_switch_24px.svg',
       },
       {
         name: 'Tabs',
         secondary: 'Tabs with support for icon and text labels',
-        href: 'tabs.html',
+        href: 'tabs/',
         img: 'https://material-components-web.appspot.com/images/ic_tabs_24px.svg',
       },
       {
         name: 'Textfield',
         secondary: 'Single line text input',
-        href: 'textfield.html',
+        href: 'textfield/',
         img: 'https://material-components-web.appspot.com/images/ic_text_field_24px.svg',
       },
       {
         name: 'Textarea',
         secondary: 'Multiline text input',
-        href: 'textarea.html',
+        href: 'textarea/',
         img: 'https://material-components-web.appspot.com/images/ic_text_field_24px.svg',
       },
       {
         name: 'Top App Bar',
         secondary: 'Container for items such as application title, navigation icon, and action items.',
-        href: 'top-app-bar.html',
+        href: 'top-app-bar/',
         img: 'https://material-components-web.appspot.com/images/ic_toolbar_24px.svg',
       },
       {
         name: 'Top App Bar Fixed',
         secondary: 'Container for items such as application title, navigation icon, and action items.',
-        href: 'top-app-bar-fixed.html',
+        href: 'top-app-bar-fixed/',
         img: 'https://material-components-web.appspot.com/images/ic_toolbar_24px.svg',
       },
     ].sort(sortFn);
@@ -254,21 +242,22 @@ class DemoView extends LitElement {
         <mwc-list-item twoline graphic="icon" data-href=${item.href}>
           <span>${item.name}</span>
           <span slot="secondary">${item.secondary}</span>
-          <img slot="graphic" src=${item.img} aria-hidden="true">
+          <img
+              slot="graphic"
+              alt="${item.name}
+              icon" src=${item.img}
+              aria-hidden="true">
         </mwc-list-item>`;
     });
 
     return html`
       <header>
         <span class="demo-catalog-logo">
-          <img src="https://material-components-web.appspot.com/images/ic_component_24px_white.svg">
+          <img
+              alt="Generic component icon"
+              src="https://material-components-web.appspot.com/images/ic_component_24px_white.svg">
         </span>
         <span class="demo-heading">Material Web Components Catalog</span>
-        <div class="demo-source">
-          <a href="https://glitch.com/edit/#!/mwc-demos?path=demos/index.js">
-            <mwc-button outlined label="Edit Source"></mwc-button>
-          </a>
-        </div>
       </header>
       <div class="demo-list">
         <mwc-list wrapFocus innerRole="navigation" innerAriaLabel="Material Web Component Demos" itemRoles="link" rootTabbable @selected=${this.onSelected}>
