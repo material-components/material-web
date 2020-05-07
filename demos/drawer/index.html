@@ -17,23 +17,41 @@ limitations under the License.
 -->
 <html lang="en">
 <head>
-  <title>Material Web Components Catalog</title>
+  <title>MWC Drawer Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-  <script type="module" src="./index.js"></script>
-  <script nomodule src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-  <script nomodule src="index.es5.js"></script>
+  <script type="module" src="index.js"></script>
+  <script nomodule src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <style>
     .unresolved main {
       opacity: 0;
     }
   </style>
-  <link rel="preload" href="./shared/shared.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="../shared/shared.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <link rel="preload" href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <script nomodlue src="./shared/ie-style-transform.js"></script>
+  <script nomodlue src="../shared/ie-style-transform.js"></script>
+  <style>
+    iframe {
+      margin-bottom: 36px;
+      height: 300px;
+      width: 100%;
+    }
+  </style>
 </head>
-<body>
-  <demo-view></demo-view>
+<body class="unresolved">
+  <demo-header component="Drawer" package="drawer"></demo-header>
+
+  <main>
+    <h2>Standard Drawer</h2>
+    <iframe src="../drawer_standard_no_header/index.html" frameborder="0"></iframe>
+    <h2>Standard Drawer with Header</h2>
+    <iframe src="../drawer_standard/index.html" frameborder="0"></iframe>
+    <h2>Dismissible Drawer with header</h2>
+    <iframe src="../drawer_dismissible/index.html" frameborder="0"></iframe>
+    <h2>Modal Drawer with header</h2>
+    <iframe src="../drawer_modal/index.html" frameborder="0"></iframe>
+  </main>
+  <script nomodule src="index.es5.js"></script>
 </body>
 </html>

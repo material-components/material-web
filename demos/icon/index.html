@@ -17,23 +17,47 @@ limitations under the License.
 -->
 <html lang="en">
 <head>
-  <title>Material Web Components Catalog</title>
+  <title>MWC Icon Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-  <script type="module" src="./index.js"></script>
-  <script nomodule src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script type="module" src="index.js"></script>
+  <script nomodule src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script nomodule src="index.es5.js"></script>
   <style>
     .unresolved main {
       opacity: 0;
     }
   </style>
-  <link rel="preload" href="./shared/shared.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="../shared/shared.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <link rel="preload" href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <script nomodlue src="./shared/ie-style-transform.js"></script>
+  <script nomodlue src="../shared/ie-style-transform.js"></script>
+  <style>
+    .color-size {
+      color: tomato;
+      --mdc-icon-size: 4em;
+    }
+  </style>
 </head>
-<body>
-  <demo-view></demo-view>
+<body class="unresolved">
+  <demo-header component="Icon" package="icon"></demo-header>
+
+  <main>
+    <div class="demo-group">
+      <mwc-icon>sentiment_very_dissatisfied</mwc-icon>
+      <mwc-icon>sentiment_dissatisfied</mwc-icon>
+      <mwc-icon>sentiment_neutral</mwc-icon>
+      <mwc-icon>sentiment_satisfied</mwc-icon>
+      <mwc-icon>sentiment_very_satisfied</mwc-icon>
+    </div>
+
+    <h4>color and size</h4>
+    <div class="demo-group color-size">
+      <mwc-icon>all_out</mwc-icon>
+      <mwc-icon>accessibility</mwc-icon>
+      <mwc-icon>exit_to_app</mwc-icon>
+      <mwc-icon>camera</mwc-icon>
+    </div>
+  </main>
 </body>
 </html>

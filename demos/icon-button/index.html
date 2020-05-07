@@ -17,23 +17,40 @@ limitations under the License.
 -->
 <html lang="en">
 <head>
-  <title>Material Web Components Catalog</title>
+  <title>MWC Icon Button Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-  <script type="module" src="./index.js"></script>
-  <script nomodule src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script type="module" src="index.js"></script>
+  <script nomodule src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script nomodule src="index.es5.js"></script>
   <style>
     .unresolved main {
       opacity: 0;
     }
   </style>
-  <link rel="preload" href="./shared/shared.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="../shared/shared.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <link rel="preload" href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <script nomodlue src="./shared/ie-style-transform.js"></script>
+  <script nomodlue src="../shared/ie-style-transform.js"></script>
+  <style>
+    mwc-icon-button {
+      padding: 20px;
+    }
+    .color {
+      color: tomato;
+    }
+  </style>
 </head>
-<body>
-  <demo-view></demo-view>
+<body class="unresolved">
+  <demo-header component="Icon Button" package="icon-button"></demo-header>
+
+  <main>
+    <mwc-icon-button icon="code"></mwc-icon-button>
+    <mwc-icon-button>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+    </mwc-icon-button>
+    <mwc-icon-button icon="code" disabled></mwc-icon-button>
+    <mwc-icon-button icon="code" class="color"></mwc-icon-button>
+  </main>
 </body>
 </html>

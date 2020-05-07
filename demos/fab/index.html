@@ -17,23 +17,40 @@ limitations under the License.
 -->
 <html lang="en">
 <head>
-  <title>Material Web Components Catalog</title>
+  <title>MWC FAB Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-  <script type="module" src="./index.js"></script>
-  <script nomodule src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script type="module" src="index.js"></script>
+  <script nomodule src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script nomodule src="index.es5.js"></script>
+
   <style>
     .unresolved main {
       opacity: 0;
     }
   </style>
-  <link rel="preload" href="./shared/shared.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="../shared/shared.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <link rel="preload" href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <script nomodlue src="./shared/ie-style-transform.js"></script>
+  <script nomodlue src="../shared/ie-style-transform.js"></script>
+  <style>
+    mwc-fab {
+      margin-right: 50px;
+    }
+    .blackAndWhite {
+      --mdc-theme-on-secondary: black;
+      --mdc-theme-secondary: white;
+    }
+  </style>
 </head>
-<body>
-  <demo-view></demo-view>
+<body class="unresolved">
+  <demo-header component="FAB" package="fab"></demo-header>
+
+  <main>
+    <mwc-fab icon="edit"></mwc-fab>
+    <mwc-fab icon="add" mini></mwc-fab>
+    <mwc-fab icon="shopping_cart" extended label="Add To Cart"></mwc-fab>
+    <mwc-fab icon="share" class="blackAndWhite"></mwc-fab>
+  </main>
 </body>
 </html>
