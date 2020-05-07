@@ -15,7 +15,7 @@ jobs:
         run: |
           npm install
           npm run build
-          npm rum build:demos
+          npm run build:demos
 
       - name: Deploy Demos
         uses: JamesIves/github-pages-deploy-action@3.4.9
