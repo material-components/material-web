@@ -50,6 +50,7 @@ $dense-item-primary-text-baseline-height: 24px;
 :host {
   cursor: pointer;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
 
   $height: density.prop-value(
     $density-config: list.$single-line-density-config,

@@ -69,9 +69,13 @@ export class ListItemBase extends LitElement {
   noninteractive = false;
   @property({type: Boolean, reflect: true})
   @observer(function(this: ListItemBase, value: boolean) {
-    if (value) {
+    const role = this.getAttribute('role');
+    const isAriaSelectable = role === 'gridcell' || role === 'option' ||
+        role === 'row' || role === 'tab';
+
+    if (isAriaSelectable && value) {
       this.setAttribute('aria-selected', 'true');
-    } else {
+    } else if (isAriaSelectable) {
       this.setAttribute('aria-selected', 'false');
     }
 
@@ -109,7 +113,7 @@ export class ListItemBase extends LitElement {
           cb:
               () => {
                 this.onClick();
-              }
+              },
         },
         {
           target: this,
@@ -134,13 +138,12 @@ export class ListItemBase extends LitElement {
         {
           target: this,
           eventNames: ['mousedown', 'touchstart'],
-          cb: this.rippleHandlers.startPress,
+          cb:
+              (e: Event) => {
+                const name = e.type;
+                this.onDown(name === 'mousedown' ? 'mouseup' : 'touchend', e);
+              },
         },
-        {
-          target: this,
-          eventNames: ['mouseup', 'touchend'],
-          cb: this.rippleHandlers.endPress,
-        }
       ];
 
   get text() {
@@ -213,6 +216,16 @@ export class ListItemBase extends LitElement {
 
   protected onClick() {
     this.fireRequestSelected(!this.selected, 'interaction');
+  }
+
+  protected onDown(upName: string, evt: Event) {
+    const onUp = () => {
+      window.removeEventListener(upName, onUp);
+      this.rippleHandlers.endPress();
+    };
+
+    window.addEventListener(upName, onUp);
+    this.rippleHandlers.startPress(evt);
   }
 
   protected fireRequestSelected(selected: boolean, source: SelectionSource) {
