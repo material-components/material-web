@@ -8,6 +8,8 @@ Selects display a list of choices on temporary surfaces.
 
 [Material Design Guidelines: exposed dropdown menus](https://material.io/components/menus/#exposed-dropdown-menu)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/select/)
+
 ## Installation
 
 ```sh

@@ -7,6 +7,8 @@ Buttons allow users to take actions, and make choices, with a single tap.
 
 [Material Design Guidelines: Button](https://material.io/design/components/buttons.html)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/button/)
+
 ## Installation
 
 ```sh

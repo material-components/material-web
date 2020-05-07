@@ -6,6 +6,8 @@ The Navigation Drawer is used to organize access to destinations and other funct
 
 [Material Design Guidelines: Navigation Drawer](https://material.io/components/navigation-drawer/)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/drawer/)
+
 ## Installation
 
 ```sh

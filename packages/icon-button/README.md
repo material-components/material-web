@@ -9,6 +9,8 @@ For the toggling version of this component, see [`<mwc-icon-button-toggle>`](htt
 
 [Material Design Guidelines: Button](https://material.io/design/components/buttons.html)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/icon-button/)
+
 ## Installation
 
 ```sh

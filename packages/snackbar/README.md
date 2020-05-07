@@ -10,6 +10,8 @@ screen.
 
 [Material Design Guidelines: Snackbars](https://material.io/design/components/snackbars.html)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/snackbar/)
+
 ## Installation
 
 ```sh

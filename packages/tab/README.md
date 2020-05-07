@@ -7,6 +7,8 @@ Tabs organize content across different screens, data sets, and other interaction
 
 [Material Design Guidelines: tabs](https://material.io/components/tabs/)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/tabs/)
+
 ## Installation
 
 ```sh

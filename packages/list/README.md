@@ -9,6 +9,8 @@ Lists are continuous, vertical indexes of text or images.
 
 [Material Design Guidelines: lists](https://material.io/design/components/lists.html)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/list/)
+
 ## Installation
 
 ```sh
