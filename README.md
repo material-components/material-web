@@ -4,7 +4,8 @@
 
 The Material Web Components (MWC) are a collection of [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) maintained by Google that implement [Material Design](https://material.io/design/).
 
-[Demos on Glitch](https://mwc-demos.glitch.me/demos/)
+[API demos](https://material-components.github.io/material-components-web-components/demos/index.html)
+[Sandbox demo on Glitch](https://mwc-demos.glitch.me/)
 
 [Contributing Guide](#Contributing)
 

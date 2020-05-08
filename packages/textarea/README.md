@@ -9,6 +9,8 @@ Text areas let users enter and edit text.
 
 [Material Design Guidelines: text areas](https://material.io/design/components/text-fields.html)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/textarea/)
+
 ## Installation
 
 ```sh

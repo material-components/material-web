@@ -14,6 +14,8 @@ element in that it forwards user interaction events to the input element. For ex
 
 [Material Design Guidelines: Selection controls](https://material.io/components/selection-controls/)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/formfield/)
+
 ## Installation
 
 ```sh

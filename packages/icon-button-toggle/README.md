@@ -11,6 +11,8 @@ For the non-toggling version of this component, see [`<mwc-icon-button>`](https:
 
 [Material Design Guidelines: Toggle Button](https://material.io/design/components/buttons.html#toggle-button)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/icon-button-toggle/)
+
 ## Installation
 
 ```sh

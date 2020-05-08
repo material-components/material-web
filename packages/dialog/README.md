@@ -9,6 +9,8 @@ Dialogs inform users about a task and can contain critical information, require 
 
 [Material Design Guidelines: dialogs](https://material.io/design/components/dialogs.html)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/dialog/)
+
 ## Installation
 
 ```sh

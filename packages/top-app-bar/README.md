@@ -11,6 +11,8 @@ For a fixed position version of this component, see [`<mwc-top-app-bar-fixed>`](
 
 [Material Design Guidelines: App Bars: Top](https://material.io/design/components/app-bars-top.html)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/top-app-bar/)
+
 ## Installation
 
 ```sh
