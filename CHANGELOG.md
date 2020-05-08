@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - get rid of mobile os glow on tap
   - do not set aria-selected on incompatible roles
   - ripple will unrip if unclick or touchend is outside of list-item
+- Tabs no longer focus on initialization
 
 ## [v0.15.0] - 2020-05-05
 
