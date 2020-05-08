@@ -39,11 +39,26 @@ limitations under the License.
 }
 
 @include checkbox.disabled-container-colors(
-  $unmarked-stroke-color: var(--mdc-checkbox-disabled-color, #{checkbox.$disabled-color}),
-  $marked-fill-color: var(--mdc-checkbox-disabled-color, #{checkbox.$disabled-color}),
+  $unmarked-stroke-color: (
+    varname: --mdc-checkbox-disabled-color,
+    fallback: checkbox.$disabled-color
+  ),
+  $marked-fill-color: (
+    varname: --mdc-checkbox-disabled-color,
+    fallback: checkbox.$disabled-color
+  ),
 );
 @include checkbox.container-colors(
-  $unmarked-stroke-color: var(--mdc-checkbox-unchecked-color, #{checkbox.$border-color}),
+  $unmarked-stroke-color: (
+    varname: --mdc-checkbox-unchecked-color,
+    fallback: checkbox.$border-color
+  ),
 );
-@include checkbox.ink-color(var(--mdc-checkbox-mark-color, #{checkbox.$mark-color}));
-@include checkbox.disabled-ink-color(var(--mdc-checkbox-mark-color, #{checkbox.$mark-color}));
+@include checkbox.ink-color((
+  varname: --mdc-checkbox-mark-color,
+  fallback: checkbox.$mark-color
+));
+@include checkbox.disabled-ink-color((
+  varname: --mdc-checkbox-mark-color,
+  fallback: checkbox.$mark-color
+));
