@@ -112,10 +112,6 @@ mwc-notched-outline {
         .mdc-floating-label {
           @include theme-mixins.prop(color, primary);
         }
-
-        @include mixins.required-label-asterisk_ {
-          @include theme-mixins.prop(color, primary);
-        }
       }
     }
 
