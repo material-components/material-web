@@ -37,7 +37,13 @@ async function sassToCss(sassFile) {
     },
     outputStyle: 'compressed',
   });
-  return result.css.toString();
+    
+  // Strip any Byte Order Marking from output CSS
+  let cssStr = result.css.toString();
+  if (cssStr.charCodeAt(0) === 0xFEFF) {
+    cssStr = cssStr.substr(1);
+  }
+  return cssStr;
 }
 
 async function sassRender(sourceFile, templateFile, outputFile) {
