@@ -514,6 +514,10 @@ export abstract class TextFieldBase extends FormElement {
       hasLabel: () => Boolean(this.labelElement),
       shakeLabel: (shouldShake: boolean) => this.labelElement &&
           this.labelElement.floatingLabelFoundation.shake(shouldShake),
+      setLabelRequired: (isRequired: boolean) => {
+        this.labelElement &&
+            this.labelElement.floatingLabelFoundation.setRequired(isRequired)
+      },
     };
   }
 
