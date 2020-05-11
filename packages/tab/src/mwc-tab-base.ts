@@ -68,6 +68,8 @@ export class TabBase extends BaseElement {
 
   protected _active = false;
 
+  protected initFocus = false;
+
   /**
    * Other properties
    * indicatorContent <slot>
@@ -169,11 +171,21 @@ export class TabBase extends BaseElement {
       getOffsetWidth: () => this.mdcRoot.offsetWidth,
       getContentOffsetLeft: () => this._contentElement.offsetLeft,
       getContentOffsetWidth: () => this._contentElement.offsetWidth,
-      focus: () => this.mdcRoot.focus(),
+      focus: () => {
+        if (this.initFocus) {
+          this.initFocus = false;
+        } else {
+          this.mdcRoot.focus();
+        }
+      },
     };
   }
 
   activate(clientRect: ClientRect) {
+    // happens only on initialization. We don't want to focus to prevent scroll
+    if (!clientRect) {
+      this.initFocus = true;
+    }
     this.mdcFoundation.activate(clientRect);
     this.setActive(this.mdcFoundation.isActive());
   }

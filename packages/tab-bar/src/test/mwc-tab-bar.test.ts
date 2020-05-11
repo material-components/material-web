@@ -20,7 +20,7 @@ import '@material/mwc-tab';
 import {TabBar} from '@material/mwc-tab-bar/mwc-tab-bar.js';
 import {html, TemplateResult} from 'lit-html';
 
-import {fixture, ieSafeKeyboardEvent, TestFixture} from '../../../../test/src/util/helpers';
+import {fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../../test/src/util/helpers';
 
 interface TabBarProps {
   activeIndex: number;
@@ -28,6 +28,11 @@ interface TabBarProps {
 }
 
 const defaultTabBar = html`<mwc-tab-bar></mwc-tab-bar>`;
+
+const defaultTabBarWithTabs = html`
+  <mwc-tab-bar>
+    <mwc-tab></mwc-tab>
+  </mwc-tab-bar>`;
 
 const tabBar = (propsInit: Partial<TabBarProps>) => {
   return html`
@@ -54,6 +59,24 @@ suite('mwc-tab-bar', () => {
 
     test('initializes as an mwc-tab-bar', () => {
       assert.instanceOf(element, TabBar);
+      assert.equal(element.activeIndex, 0);
+    });
+
+    test('activates but does not focus tab on init', async () => {
+      fixt.remove();
+      fixt = await fixture(defaultTabBarWithTabs);
+      const tab = fixt.root.querySelector('mwc-tab')!;
+      element = fixt.root.querySelector('mwc-tab-bar')!;
+
+      await rafPromise();
+
+      const focusedEl = document.activeElement;
+      // IE is null every other browser is body
+      const bodyOrNullIsFocused =
+          focusedEl === document.body || focusedEl === null;
+
+      assert.isTrue(bodyOrNullIsFocused);
+      assert.isTrue(tab.active);
       assert.equal(element.activeIndex, 0);
     });
   });
@@ -86,6 +109,7 @@ suite('mwc-tab-bar', () => {
       const bar = element.shadowRoot!.querySelector('.mdc-tab-bar')!;
       const tab1 = element.children[0] as HTMLElement;
       const tab2 = element.children[1] as HTMLElement;
+      tab1.focus();
 
       // right arrow keybode
       const rightEv = ieSafeKeyboardEvent('keydown', 39);
