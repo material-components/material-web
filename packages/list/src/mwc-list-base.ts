@@ -250,10 +250,17 @@ export abstract class ListBase extends BaseElement {
 
   protected onRequestSelected(evt: CustomEvent<RequestSelectedDetail>) {
     if (this.mdcFoundation) {
-      const index = this.getIndexOfTarget(evt);
+      let index = this.getIndexOfTarget(evt);
 
+      // might happen in shady dom slowness. Recalc children
       if (index === -1) {
-        return;
+        this.layout();
+        index = this.getIndexOfTarget(evt);
+
+        // still not found; may not be mwc-list-item. Unsupported case.
+        if (index === -1) {
+          return;
+        }
       }
 
       const element = this.items[index];
