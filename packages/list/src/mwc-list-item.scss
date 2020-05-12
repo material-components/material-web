@@ -100,7 +100,9 @@ $dense-item-primary-text-baseline-height: 24px;
       varname: --mdc-ripple-activated-opacity,
       fallback: map.get(ripple.$dark-ink-opacities, activated)
     ));
-    background-color: var(--mdc-theme-primary, #{theme.prop-value(primary)});
+    background-color: theme.prop-value(primary);
+    /** @alternate */
+    background-color: var(--mdc-ripple-color, var(--mdc-theme-primary, #{theme.prop-value(primary)}));
   }
 }
 

@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `mwc-list`
   - fixed regression in list that broke mwc-select in IE or shady dom.
 - Tabs no longer focus on initialization
+- mwc-list-item ripple color will now change based off of --mdc-ripple-color on initialization
 
 ## [v0.15.0] - 2020-05-05
 
