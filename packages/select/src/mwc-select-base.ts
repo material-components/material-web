@@ -288,7 +288,6 @@ export abstract class SelectBase extends FormElement {
           </span>
           ${outlinedOrUnderlined}
         </div>
-        ${this.renderHelperText()}
         <mwc-menu
             innerRole="listbox"
             wrapFocus
@@ -302,7 +301,8 @@ export abstract class SelectBase extends FormElement {
             @closed=${this.onClosed}>
           <slot></slot>
         </mwc-menu>
-      </div>`;
+      </div>
+      ${this.renderHelperText()}`;
   }
 
   protected renderHelperText() {
