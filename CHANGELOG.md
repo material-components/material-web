@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Tabs no longer focus on initialization
 - mwc-list-item ripple color will now change based off of --mdc-ripple-color on initialization
 
+### Added
+
+- `--mdc-drawer-width` Drawer width is now configurable.
+
 ## [v0.15.0] - 2020-05-05
 
 ### Added

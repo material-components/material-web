@@ -130,19 +130,23 @@ Name | Type | Default | Description
 ---- | ---- | ------- | -----------
 `open` | `boolean` | `false` | Whether the dialog is open
 `hasHeader` | `boolean` | `false` | When `true`, displays the `title`, `subtitle`, and `header` slots.
-`type` | `string` | `string` | When set to `'dismissible'`, overlays the drawer on the content. When set to `'modal'`, also adds a scrim when the drawer is open.
+`type` | `string` | `''` | When set to `'dismissible'`, overlays the drawer on the content. When set to `'modal'`, also adds a scrim when the drawer is open. When set to empty string, it is inlined with the page and displaces app content.
 
 ### Methods
 *None*
 
 ### Events
+
 Name | Detail | Description
 ---- | ------ | -----------
 `MDCDrawer:opened` | `{}` | Fired when the drawer opens.
 `MDCDrawer:closed` | `{}` | Fired when the drawer closes.
 
 ### CSS Custom Properties
-*None*
+
+| Name                 | Default   | Description
+| -------------------- | --------- | -----------
+| `--mdc-drawer-width` | `256px`   | Width of the side drawer when opened.
 
 ### Additional References
 

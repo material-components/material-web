@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 @use '@material/drawer';
+@use '@material/theme';
 
 @include drawer.core-styles();
 @include drawer.dismissible-core-styles();
@@ -29,4 +30,11 @@ limitations under the License.
 :host {
   display: flex;
   height: 100%;
+}
+
+.mdc-drawer {
+  @include theme.prop(width, (
+    varname: --mdc-drawer-width,
+    fallback: drawer.$width,
+  ));
 }
