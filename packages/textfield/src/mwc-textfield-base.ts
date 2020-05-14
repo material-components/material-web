@@ -238,6 +238,14 @@ export abstract class TextFieldBase extends FormElement {
         selectionStart, selectionEnd, selectionDirection);
   }
 
+  update(changedProperties: PropertyValues) {
+    if (changedProperties.has('value') && typeof this.value !== 'string') {
+      this.value = `${this.value}`;
+    }
+
+    super.update(changedProperties);
+  }
+
   render() {
     const classes = {
       'mdc-text-field--disabled': this.disabled,

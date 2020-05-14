@@ -96,6 +96,24 @@ suite('mwc-textfield:', () => {
       assert(inputElement, 'my test value');
     });
 
+    test('setting non-string values stringifies values', async () => {
+      (element.value as unknown as undefined) = undefined;
+      await element.updateComplete;
+      assert.equal(element.value, 'undefined');
+
+      (element.value as unknown as null) = null;
+      await element.updateComplete;
+      assert.equal(element.value, 'null');
+
+      (element.value as unknown as number) = 15;
+      await element.updateComplete;
+      assert.equal(element.value, '15');
+
+      (element.value as unknown as {}) = {};
+      await element.updateComplete;
+      assert.equal(element.value, '[object Object]');
+    });
+
     teardown(() => {
       if (fixt) {
         fixt.remove();
