@@ -73,6 +73,7 @@ export abstract class TextAreaBase extends TextFieldBase {
           ?required="${this.required}"
           ?readonly="${this.readOnly}"
           maxlength="${ifDefined(maxOrUndef)}"
+          name="${ifDefined(this.name === '' ? undefined : this.name)}"
           @input="${this.handleInputChange}"
           @blur="${this.onInputBlur}">
       </textarea>`;

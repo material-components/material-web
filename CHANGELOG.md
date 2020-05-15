@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - `--mdc-drawer-width` Drawer width is now configurable.
+- Added `name` property `mwc-textfield` & `mwc-textarea` for browser autofill.
 
 ## [v0.15.0] - 2020-05-05
 

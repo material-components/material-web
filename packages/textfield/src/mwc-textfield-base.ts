@@ -168,6 +168,8 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: String}) suffix = '';
 
+  @property({type: String}) name = '';
+
   // lit-analyzer requires specific string types, but TS does not compile since
   // base class is unspecific "string". It also needs non-null coercion (!)
   // since we don't want to provide a default value, but the base class is not
@@ -303,6 +305,7 @@ export abstract class TextFieldBase extends FormElement {
           max="${ifDefined(this.max === '' ? undefined : this.max as number)}"
           step="${ifDefined(this.step === null ? undefined : this.step)}"
           size="${ifDefined(this.size === null ? undefined : this.size)}"
+          name="${ifDefined(this.name === '' ? undefined : this.name)}"
           inputmode="${ifDefined(this.inputMode)}"
           @input="${this.handleInputChange}"
           @blur="${this.onInputBlur}">`;

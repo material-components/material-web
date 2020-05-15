@@ -151,6 +151,7 @@ npm install @material/mwc-textarea
 | `willValidate`      | `boolean` (readonly)       | [`HTMLInputElement.prototype.willValidate`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement#Properties)
 | `validityTransform` | `ValidityTransform**`\|`null` | Callback called before each validation check. See the [validation section](#Validation) for more details.
 | `validateOnInitialRender` | `boolean`            | Runs validation check on initial render.
+`name`                | `string`         | Sets the `name` attribute on the internal textarea.\*\*\*
 
 \*  `TextFieldType` is exported by `mwc-textarea` and `mwc-textarea-base`.
 ```ts
@@ -162,6 +163,9 @@ type TextFieldType = 'text'|'search'|'tel'|'url'|'email'|'password'|
 ```ts
 type ValidityTransform = (value: string, nativeValidity: ValidityState) => Partial<ValidityState>
 ```
+
+\*\*\* The `name` property should only be used for browser autofill as webcomponent form participation does not currently consider the `name` attribute. See [#289](https://github.com/material-components/material-components-web-components/issues/289).
+
 ### Methods
 
 | Name     | Description
