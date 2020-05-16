@@ -406,19 +406,20 @@ it may be simple to just set `--mdc-ripple-color` to `transparent`.
 
 #### mwc-list-item
 
-| Name             | Type                | Default | Description
-| ---------------- | ------------------- | ------- | -----------
-| `value`          | `string`            | `''`    | Value associated with this list item (used by `mwc-select`).
-| `group`          | `string\|null`      | `null`  | Used to group items together (used by `mwc-menu` for menu selection groups and `mwc-radio-list-element`).
-| `tabindex`       | `number`            | `-1`    | Reflects `tabindex` and sets internal tab indices.
-| `disabled`       | `boolean`           | `false` | Reflects `disabled` and sets internal `disabled` attributes.
-| `twoline`        | `boolean`           | `false` | Activates the two-line variant and enables the `secondary` slot.
-| `activated`      | `boolean`           | `false` | Activates focus-persistent ripple.
-| `graphic`        | `GraphicType`*      | `null`  | Determines which graphic layout to show and enables the `graphic` slot.
-| `hasMeta`        | `boolean`           | `false` | Activates the meta layout tile and enables the `meta` slot.
-| `noninteractive` | `boolean`           | `false` | Disables focus and pointer events for the list item.
-| `selected`       | `boolean`           | `false` | Denotes that the list item is selected.
-| `text`           | `string` (readonly) | `''`    | Trimmed `textContent` of the list item.
+| Name               | Type                | Default | Description
+| ------------------ | ------------------- | ------- | -----------
+| `value`            | `string`            | `''`    | Value associated with this list item (used by `mwc-select`).
+| `group`            | `string\|null`      | `null`  | Used to group items together (used by `mwc-menu` for menu selection groups and `mwc-radio-list-element`).
+| `tabindex`         | `number`            | `-1`    | Reflects `tabindex` and sets internal tab indices.
+| `disabled`         | `boolean`           | `false` | Reflects `disabled` and sets internal `disabled` attributes.
+| `twoline`          | `boolean`           | `false` | Activates the two-line variant and enables the `secondary` slot.
+| `activated`        | `boolean`           | `false` | Activates focus-persistent ripple.
+| `graphic`          | `GraphicType`*      | `null`  | Determines which graphic layout to show and enables the `graphic` slot.
+| `multipleGraphics` | `boolean`           | `false` | Allows arbitrary width for multiple slotted graphics.
+| `hasMeta`          | `boolean`           | `false` | Activates the meta layout tile and enables the `meta` slot.
+| `noninteractive`   | `boolean`           | `false` | Disables focus and pointer events for the list item.
+| `selected`         | `boolean`           | `false` | Denotes that the list item is selected.
+| `text`             | `string` (readonly) | `''`    | Trimmed `textContent` of the list item.
 
 \* `GraphicType` is equivalent to the type
 `'avatar'|'icon'|'medium'|'large'|'control'|null`.
@@ -572,7 +573,7 @@ interface RequestSelectedDetail {
 | `--mdc-theme-hint-on-background`           | ![](images/color_0,0,0,38.png) `rgba(0, 0, 0, .38)` | Color of the meta (if is text or text icon).
 | `--mdc-list-side-padding`                  | `16px`               | Side padding of the list item.
 | `--mdc-list-item-meta-size`                | `24px`               | Line height of the meta icon or text and width & height of the slotted parent wrapper.
-| `--mdc-list-item-graphic-size`             | `24px`,`40px`,`56px` | Line height of the graphic and width & height of the slotted parent wrapper. `24px` when graphic is `"icon"`. `40px` when grpahic is `"avatar"`. `56px` when graphic is `"medium"`, and `"large"`.
+| `--mdc-list-item-graphic-size`             | `24px`,`40px`,`56px` | Line height of the graphic and width & height of the slotted parent wrapper. `24px` when graphic is `"icon"`. `40px` when graphic is `"avatar"`. `56px` when graphic is `"medium"`, and `"large"`.
 | `--mdc-list-item-graphic-margin`           | `16px`,`32px`        | Margin between the text and graphic. `16px` when graphic is `"avatar"`, `"medium"`, `"large"`, and `"control"`. `32px` when graphic is `"icon"`.
 
 `mwc-list-item` internally uses [`mwc-ripple`](https://github.com/material-components/material-components-web-components/tree/master/packages/list)

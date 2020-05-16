@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - `--mdc-drawer-width` Drawer width is now configurable.
 - Added `name` property `mwc-textfield` & `mwc-textarea` for browser autofill.
+- `ListItem.multipleGraphics` list-item graphic width now configuratble for multiple graphics
 
 ## [v0.15.0] - 2020-05-05
 

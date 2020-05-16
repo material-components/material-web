@@ -37,7 +37,12 @@ $dense-item-primary-text-baseline-height: 24px;
   width: $width;
   height: $height;
 
+  &.multi {
+    width: auto;
+  }
+
   ::slotted(*) {
+    width: $width;
     line-height: $height;
   }
 
@@ -128,7 +133,6 @@ $dense-item-primary-text-baseline-height: 24px;
     text-align: center;
   }
 }
-// stylelint-enable plugin/selector-bem-pattern
 
 .mdc-list-item__meta {
   @include graphic-size_(var(--mdc-list-item-meta-size, 24px));
@@ -272,6 +276,7 @@ $dense-item-primary-text-baseline-height: 24px;
   .mdc-list-item__graphic {
     @include featuretargeting.targets($feat-structure) {
       @include graphic-size_(var(--mdc-list-item-graphic-size, 40px));
+
       ::slotted(*) {
         border-radius: 50%;
       }

@@ -21,6 +21,7 @@ import {observer} from '@material/mwc-base/observer';
 import {Ripple} from '@material/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {html, internalProperty, LitElement, property, query, queryAsync} from 'lit-element';
+import {classMap} from 'lit-html/directives/class-map';
 
 export type SelectionSource = 'interaction'|'property';
 export interface RequestSelectedDetail {
@@ -53,6 +54,7 @@ export class ListItemBase extends LitElement {
   @property({type: Boolean, reflect: true}) twoline = false;
   @property({type: Boolean, reflect: true}) activated = false;
   @property({type: String, reflect: true}) graphic: GraphicType = null;
+  @property({type: Boolean}) multipleGraphics = false;
   @property({type: Boolean}) hasMeta = false;
   @property({type: Boolean, reflect: true})
   @observer(function(this: ListItemBase, value: boolean) {
@@ -178,8 +180,13 @@ export class ListItemBase extends LitElement {
   }
 
   protected renderGraphic() {
+    const graphicClasses = {
+      multi: this.multipleGraphics,
+    };
+
     return html`
-      <span class="mdc-list-item__graphic material-icons">
+      <span class="mdc-list-item__graphic material-icons ${
+        classMap(graphicClasses)}">
         <slot name="graphic"></slot>
       </span>`;
   }
