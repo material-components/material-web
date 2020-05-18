@@ -482,7 +482,6 @@ export abstract class SelectBase extends FormElement {
         }
       },
       setAttributeAtIndex: () => undefined,
-      removeAttributeAtIndex: () => undefined,
       focusMenuItemAtIndex: (index) => {
         const menuElement = this.menuElement;
         if (!menuElement) {
