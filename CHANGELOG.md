@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `--mdc-drawer-width` Drawer width is now configurable.
 - Added `name` property `mwc-textfield` & `mwc-textarea` for browser autofill.
 - `ListItem.multipleGraphics` list-item graphic width now configuratble for multiple graphics
+- `Menu.menuCorner` can now configure from which horizontal corner should the menu anchor from.
 
 ## [v0.15.0] - 2020-05-05
 

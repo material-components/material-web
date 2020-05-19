@@ -20,7 +20,7 @@ import {MenuSurfaceBase} from './mwc-menu-surface-base.js';
 import {style} from './mwc-menu-surface-css.js';
 
 export {MDCMenuDistance} from '@material/menu-surface/types.js';
-export {Corner} from './mwc-menu-surface-base.js';
+export {Corner, MenuCorner} from './mwc-menu-surface-base.js';
 
 declare global {
   interface HTMLElementTagNameMap {

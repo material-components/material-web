@@ -17,16 +17,22 @@
 
 import '@material/mwc-list/mwc-list-item';
 
+import {Corner as CornerEnum} from '@material/menu-surface/constants';
 import {List} from '@material/mwc-list';
 import {ListItem} from '@material/mwc-list/mwc-list-item';
 import {Menu} from '@material/mwc-menu';
-import {Corner, MenuSurface} from '@material/mwc-menu/mwc-menu-surface';
+import {Corner, MenuCorner, MenuSurface} from '@material/mwc-menu/mwc-menu-surface';
 import {html, TemplateResult} from 'lit-html';
 
 import {Fake, fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../../test/src/util/helpers';
 
 const defaultMenu = html`<mwc-menu></mwc-menu>`;
 const defaultSurface = html`<mwc-menu-surface></mwc-menu-surface>`;
+
+interface MenuCornerInternals {
+  previousMenuCorner: MenuCorner|null;
+  bitwiseCorner: CornerEnum;
+}
 
 interface MenuProps {
   open: boolean;
@@ -51,6 +57,7 @@ interface SurfaceProps {
   fixed: boolean;
   fullwidth: boolean;
   contents: TemplateResult;
+  menuCorner: MenuCorner;
 }
 
 type WindowWithShadyDOM = {
@@ -83,6 +90,7 @@ const surface = (propsInit: Partial<SurfaceProps>) => {
     <mwc-menu-surface
       .quick=${propsInit.quick === true}
       .fixed=${propsInit.fixed === true}
+      .menuCorner=${propsInit.menuCorner ?? 'START'}
       .fullwidth=${propsInit.fullwidth === true}
       .open=${propsInit.open === true}>
       ${propsInit.contents}
@@ -169,6 +177,16 @@ suite('mwc-menu', () => {
       element.corner = 'BOTTOM_START';
       await element.updateComplete;
       assert.equal(surface.corner, 'BOTTOM_START');
+    });
+
+    test('`menuCorner` is passed to surface', async () => {
+      const surface =
+          element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
+      assert.equal(element.menuCorner, 'START');
+      assert.equal(surface.menuCorner, 'START');
+      element.menuCorner = 'END';
+      await element.updateComplete;
+      assert.equal(surface.menuCorner, 'END');
     });
 
     test('`x` and `y` are passed to surface', async () => {
@@ -302,20 +320,18 @@ suite('mwc-menu', () => {
       window.setTimeout = originalSetTimeout;
     });
 
-    test(
-        'clicking items within one group overrides previous selection',
-        async () => {
-          const [item1a, item1b, item2a, item2b] =
-              element.children as unknown as ListItem[];
-          item1a.click();
-          assert.deepEqual(element.selected!, [item1a]);
-          item1b.click();
-          assert.deepEqual(element.selected!, [item1b]);
-          item2a.click();
-          assert.deepEqual(element.selected!, [item1b, item2a]);
-          item2b.click();
-          assert.deepEqual(element.selected!, [item1b, item2b]);
-        });
+    test('clicking items within one group overrides prev sel', async () => {
+      const [item1a, item1b, item2a, item2b] =
+          element.children as unknown as ListItem[];
+      item1a.click();
+      assert.deepEqual(element.selected!, [item1a]);
+      item1b.click();
+      assert.deepEqual(element.selected!, [item1b]);
+      item2a.click();
+      assert.deepEqual(element.selected!, [item1b, item2a]);
+      item2b.click();
+      assert.deepEqual(element.selected!, [item1b, item2b]);
+    });
   });
 
   suite('show()', () => {
@@ -411,6 +427,10 @@ suite('mwc-menu-surface', () => {
       assert.equal(element.quick, false);
       assert.equal(element.open, false);
       assert.equal(element.corner, 'TOP_START');
+      assert.equal(element.menuCorner, 'START');
+      assert.equal(
+          (element as unknown as MenuCornerInternals).bitwiseCorner,
+          CornerEnum.TOP_START);
     });
   });
 
@@ -512,6 +532,125 @@ suite('mwc-menu-surface', () => {
       await rafPromise();
       await element.updateComplete;
       assert.isFalse(element.open);
+    });
+  });
+
+  suite('menuCorner', () => {
+    setup(async () => {
+      fixt = await fixture(surface({quick: true}));
+      element = fixt.root.querySelector('mwc-menu-surface')!;
+      await element.updateComplete;
+    });
+
+    test('`menuCorner` doesnt flip corners on init', async () => {
+      const internals = element as unknown as MenuCornerInternals;
+      assert.equal(internals.previousMenuCorner, null);
+      assert.equal(internals.bitwiseCorner, CornerEnum.TOP_START);
+      assert.equal(element.corner, 'TOP_START');
+    });
+
+    test('`menuCorner` flips corners on init with `END`', async () => {
+      await fixt.remove();
+      fixt = await fixture(surface({quick: true, menuCorner: 'END'}));
+      element = fixt.root.querySelector('mwc-menu-surface')!;
+      await element.updateComplete;
+      const internals = element as unknown as MenuCornerInternals;
+      assert.equal(internals.previousMenuCorner, 'END');
+      assert.equal(internals.bitwiseCorner, CornerEnum.TOP_END);
+      assert.equal(element.corner, 'TOP_START');
+    });
+
+    test('`menuCorner` flips after initialization', async () => {
+      const internals = element as unknown as MenuCornerInternals;
+
+      element.menuCorner = 'END';
+
+      await element.updateComplete;
+
+      assert.equal(internals.previousMenuCorner, 'END');
+      assert.equal(internals.bitwiseCorner, CornerEnum.TOP_END);
+      assert.equal(element.corner, 'TOP_START');
+
+      element.menuCorner = 'START';
+
+      await element.updateComplete;
+
+      assert.equal(internals.previousMenuCorner, 'START');
+      assert.equal(internals.bitwiseCorner, CornerEnum.TOP_START);
+      assert.equal(element.corner, 'TOP_START');
+    });
+
+    test('`menuCorner` doesnt flip if set to invalid val or same val',
+       async () => {
+         const internals = element as unknown as MenuCornerInternals;
+
+         (element as unknown as {menuCorner: 'end'}).menuCorner = 'end';
+
+         await element.updateComplete;
+
+         assert.equal(internals.previousMenuCorner, null);
+         assert.equal(internals.bitwiseCorner, CornerEnum.TOP_START);
+         assert.equal(element.corner, 'TOP_START');
+
+         element.menuCorner = 'START';
+
+         await element.updateComplete;
+
+         assert.equal(internals.previousMenuCorner, null);
+         assert.equal(internals.bitwiseCorner, CornerEnum.TOP_START);
+         assert.equal(element.corner, 'TOP_START');
+
+         element.menuCorner = 'END';
+
+         await element.updateComplete;
+
+         assert.equal(internals.previousMenuCorner, 'END');
+         assert.equal(internals.bitwiseCorner, CornerEnum.TOP_END);
+         assert.equal(element.corner, 'TOP_START');
+
+         (element as unknown as {menuCorner: 'start'}).menuCorner = 'start';
+
+         await element.updateComplete;
+
+         assert.equal(internals.previousMenuCorner, 'END');
+         assert.equal(internals.bitwiseCorner, CornerEnum.TOP_END);
+         assert.equal(element.corner, 'TOP_START');
+
+         element.menuCorner = 'END';
+
+         await element.updateComplete;
+
+         assert.equal(internals.previousMenuCorner, 'END');
+         assert.equal(internals.bitwiseCorner, CornerEnum.TOP_END);
+         assert.equal(element.corner, 'TOP_START');
+       });
+
+    test('`corner` internals flip when `menuCorner` flipped', async () => {
+      const internals = element as unknown as MenuCornerInternals;
+
+      element.corner = 'TOP_END';
+
+      await element.updateComplete;
+
+      assert.equal(internals.previousMenuCorner, null);
+      assert.equal(internals.bitwiseCorner, CornerEnum.TOP_END);
+      assert.equal(element.corner, 'TOP_END');
+
+      element.menuCorner = 'END';
+
+      await element.updateComplete;
+
+      assert.equal(internals.previousMenuCorner, 'END');
+      assert.equal(internals.bitwiseCorner, CornerEnum.TOP_START);
+      assert.equal(element.corner, 'TOP_END');
+
+      element.corner = 'TOP_START';
+
+      await element.updateComplete;
+
+      assert.equal(internals.previousMenuCorner, 'END');
+      assert.equal(internals.bitwiseCorner, CornerEnum.TOP_END);
+      assert.equal(element.corner, 'TOP_START');
     });
   });
 

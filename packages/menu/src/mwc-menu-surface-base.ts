@@ -15,17 +15,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {MDCMenuSurfaceAdapter} from '@material/menu-surface/adapter';
-import {Corner as CornerEnum} from '@material/menu-surface/constants';
+import {Corner as CornerEnum, CornerBit} from '@material/menu-surface/constants';
 import MDCMenuSurfaceFoundation from '@material/menu-surface/foundation.js';
 import {getTransformPropertyName} from '@material/menu-surface/util';
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
 import {observer} from '@material/mwc-base/observer.js';
 import {deepActiveElementPath, doesElementContainFocus} from '@material/mwc-base/utils';
-import {html, property, query} from 'lit-element';
+import {html, internalProperty, property, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map.js';
 
 export type Corner = keyof typeof CornerEnum;
 export type AnchorableElement = HTMLElement&{anchor: Element | null};
+export type MenuCorner = 'START'|'END';
 
 // required for closure compiler
 const stringToCorner = {
@@ -112,13 +113,52 @@ export abstract class MenuSurfaceBase extends BaseElement {
   })
   open = false;
 
+  @internalProperty()
+  @observer(function(this: MenuSurfaceBase, value: CornerEnum) {
+    if (this.mdcFoundation) {
+      if (value) {
+        this.mdcFoundation.setAnchorCorner(value);
+      } else {
+        this.mdcFoundation.setAnchorCorner(value);
+      }
+    }
+  })
+
+  protected bitwiseCorner: CornerEnum = CornerEnum.TOP_START;
+  protected previousMenuCorner: MenuCorner|null = null;
+
+  // must be defined before observer of anchor corner for initialization
+  @property({type: String})
+  @observer(function(this: MenuSurfaceBase, value: MenuCorner) {
+    if (this.mdcFoundation) {
+      const isValidValue = value === 'START' || value === 'END';
+      const isFirstTimeSet = this.previousMenuCorner === null;
+      const cornerChanged =
+          !isFirstTimeSet && value !== this.previousMenuCorner;
+      const initiallySetToEnd = isFirstTimeSet && value === 'END';
+
+      if (isValidValue && (cornerChanged || initiallySetToEnd)) {
+        this.bitwiseCorner =
+            this.bitwiseCorner ^  // tslint:disable-line:no-bitwise
+            CornerBit.RIGHT;
+        this.mdcFoundation.flipCornerHorizontally();
+        this.previousMenuCorner = value;
+      }
+    }
+  })
+  menuCorner: MenuCorner = 'START';
+
   @property({type: String})
   @observer(function(this: MenuSurfaceBase, value: Corner) {
     if (this.mdcFoundation) {
       if (value) {
-        this.mdcFoundation.setAnchorCorner(stringToCorner[value]);
-      } else {
-        this.mdcFoundation.setAnchorCorner(CornerEnum.TOP_START);
+        let newCorner = stringToCorner[value];
+        if (this.menuCorner === 'END') {
+          newCorner =
+              newCorner ^ CornerBit.RIGHT;  // tslint:disable-line:no-bitwise
+        }
+
+        this.bitwiseCorner = newCorner;
       }
     }
   })
