@@ -580,50 +580,51 @@ suite('mwc-menu-surface', () => {
       assert.equal(element.corner, 'TOP_START');
     });
 
-    test('`menuCorner` doesnt flip if set to invalid val or same val',
-       async () => {
-         const internals = element as unknown as MenuCornerInternals;
+    test(
+        '`menuCorner` doesnt flip if set to invalid val or same val',
+        async () => {
+          const internals = element as unknown as MenuCornerInternals;
 
-         (element as unknown as {menuCorner: 'end'}).menuCorner = 'end';
+          (element as unknown as {menuCorner: 'end'}).menuCorner = 'end';
 
-         await element.updateComplete;
+          await element.updateComplete;
 
-         assert.equal(internals.previousMenuCorner, null);
-         assert.equal(internals.bitwiseCorner, CornerEnum.TOP_START);
-         assert.equal(element.corner, 'TOP_START');
+          assert.equal(internals.previousMenuCorner, null);
+          assert.equal(internals.bitwiseCorner, CornerEnum.TOP_START);
+          assert.equal(element.corner, 'TOP_START');
 
-         element.menuCorner = 'START';
+          element.menuCorner = 'START';
 
-         await element.updateComplete;
+          await element.updateComplete;
 
-         assert.equal(internals.previousMenuCorner, null);
-         assert.equal(internals.bitwiseCorner, CornerEnum.TOP_START);
-         assert.equal(element.corner, 'TOP_START');
+          assert.equal(internals.previousMenuCorner, null);
+          assert.equal(internals.bitwiseCorner, CornerEnum.TOP_START);
+          assert.equal(element.corner, 'TOP_START');
 
-         element.menuCorner = 'END';
+          element.menuCorner = 'END';
 
-         await element.updateComplete;
+          await element.updateComplete;
 
-         assert.equal(internals.previousMenuCorner, 'END');
-         assert.equal(internals.bitwiseCorner, CornerEnum.TOP_END);
-         assert.equal(element.corner, 'TOP_START');
+          assert.equal(internals.previousMenuCorner, 'END');
+          assert.equal(internals.bitwiseCorner, CornerEnum.TOP_END);
+          assert.equal(element.corner, 'TOP_START');
 
-         (element as unknown as {menuCorner: 'start'}).menuCorner = 'start';
+          (element as unknown as {menuCorner: 'start'}).menuCorner = 'start';
 
-         await element.updateComplete;
+          await element.updateComplete;
 
-         assert.equal(internals.previousMenuCorner, 'END');
-         assert.equal(internals.bitwiseCorner, CornerEnum.TOP_END);
-         assert.equal(element.corner, 'TOP_START');
+          assert.equal(internals.previousMenuCorner, 'END');
+          assert.equal(internals.bitwiseCorner, CornerEnum.TOP_END);
+          assert.equal(element.corner, 'TOP_START');
 
-         element.menuCorner = 'END';
+          element.menuCorner = 'END';
 
-         await element.updateComplete;
+          await element.updateComplete;
 
-         assert.equal(internals.previousMenuCorner, 'END');
-         assert.equal(internals.bitwiseCorner, CornerEnum.TOP_END);
-         assert.equal(element.corner, 'TOP_START');
-       });
+          assert.equal(internals.previousMenuCorner, 'END');
+          assert.equal(internals.bitwiseCorner, CornerEnum.TOP_END);
+          assert.equal(element.corner, 'TOP_START');
+        });
 
     test('`corner` internals flip when `menuCorner` flipped', async () => {
       const internals = element as unknown as MenuCornerInternals;
