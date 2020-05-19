@@ -29,7 +29,7 @@ jobs:
       if: steps.ifChange.outputs.changed == 'yes'
       uses: peter-evans/create-pull-request@v1.7.3
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.TEDIUM_BOT_GITHUB_ACCESS_TOKEN }}
         commit-message: Auto-format
         # TODO Find or make an account that is whitelisted to not trigger the CLA check.
         author-email: format-bot@polymer-project.org
