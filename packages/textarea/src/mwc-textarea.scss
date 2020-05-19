@@ -16,45 +16,6 @@ limitations under the License.
 */
 
 @use '@material/mwc-textfield/src/mwc-textfield.scss';
-@use '@material/textfield';
-@use '@material/theme';
-
-.mdc-text-field.mdc-text-field--filled {
-  overflow: hidden;
-
-  &::before {
-    display: none;
-  }
-
-  .mdc-text-field__input {
-    height: auto;
-    margin-top: 23px;
-    margin-bottom: 9px;
-  }
-
-  &.mdc-text-field--no-label {
-    .mdc-text-field__input {
-      margin-top: 15px;
-    }
-  }
-
-  &.mdc-text-field--invalid {
-    @include textfield.bottom-line-color((
-      varname: --mdc-theme-error,
-      fallback: theme.$error
-    ));
-  }
-
-  .mdc-floating-label.mdc-floating-label--float-above {
-    transform: translateY(-50%) scale(0.75);
-    font-size: initial;
-  }
-
-  .mdc-floating-label {
-    top: 18px;
-    left: 16px;
-  }
-}
 
 .mdc-text-field {
   height: 100%;
