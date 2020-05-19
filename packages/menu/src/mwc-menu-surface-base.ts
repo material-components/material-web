@@ -139,7 +139,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
 
       if (isValidValue && (cornerChanged || initiallySetToEnd)) {
         this.bitwiseCorner =
-            this.bitwiseCorner ^  // tslint:disable-line:no-bitwise
+            this.bitwiseCorner ^ // tslint:disable-line:no-bitwise
             CornerBit.RIGHT;
         this.mdcFoundation.flipCornerHorizontally();
         this.previousMenuCorner = value;
@@ -155,7 +155,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
         let newCorner = stringToCorner[value];
         if (this.menuCorner === 'END') {
           newCorner =
-              newCorner ^ CornerBit.RIGHT;  // tslint:disable-line:no-bitwise
+              newCorner ^ CornerBit.RIGHT; // tslint:disable-line:no-bitwise
         }
 
         this.bitwiseCorner = newCorner;
