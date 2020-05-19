@@ -334,6 +334,7 @@ suite('mwc-menu', () => {
     });
   });
 
+  
   suite('show()', () => {
     setup(async () => {
       fixt = await fixture(defaultMenu);
