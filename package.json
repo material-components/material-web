@@ -33,6 +33,7 @@
     "watch:tests": "tsc --build test/tsconfig.json -w & tsc --build test/tsconfig-node.json -w"
   },
   "devDependencies": {
+    "@babel/helper-compilation-targets": "7.9.6",
     "@open-wc/karma-esm": "^2.11.1",
     "@types/chai": "^4.2.0",
     "@types/command-line-args": "^5.0.0",

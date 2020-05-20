@@ -22,13 +22,10 @@ limitations under the License.
 
 :host {
   /* See mwc-icon-button.scss for explanation. */
+  display: inline-block;
   vertical-align: top;
 }
 
 .material-icons {
   @extend %material-icons;
-}
-
-.fake-chip-set {
-  display: inline-block;
 }

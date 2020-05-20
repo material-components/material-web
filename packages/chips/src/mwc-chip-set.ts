@@ -14,10 +14,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {customElement} from 'lit-element';
+import { customElement } from 'lit-element';
 
-import {ChipSetBase} from './mwc-chip-set-base.js';
-import {style} from './mwc-chip-css.js'; // TODO: split chip-set and chip styles in MDC
+import { ChipSetBase } from './mwc-chip-set-base.js';
+import { style } from './mwc-chip-set-css.js'; // TODO: split chip-set and chip styles in MDC
 
 @customElement('mwc-chip-set')
 export class ChipSet extends ChipSetBase {

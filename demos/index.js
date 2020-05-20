@@ -14,8 +14,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {LitElement, html, css} from 'lit-element/lit-element.js';
-import {style as listStyle} from './style/mwc-list-item-css.js';
+import { LitElement, html, css } from 'lit-element/lit-element.js';
+import { style as listStyle } from './style/mwc-list-item-css.js';
 
 class DemoView extends LitElement {
   static get styles() {
@@ -96,6 +96,13 @@ class DemoView extends LitElement {
             <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_selection_control_24px.svg"></span>
             <span class="mdc-list-item__text">
               Checkbox
+              <span class="mdc-list-item__secondary-text">Multi-selection controls</span>
+            </span>
+          </a>
+          <a role="listitem" class="mdc-list-item" href="chips.html">
+            <span class="demo-catalog-list-icon mdc-list-item__graphic"><img src="https://material-components-web.appspot.com/images/ic_component_24px.svg"></span>
+            <span class="mdc-list-item__text">
+              Chip
               <span class="mdc-list-item__secondary-text">Multi-selection controls</span>
             </span>
           </a>
