@@ -28,6 +28,8 @@ export type Corner = keyof typeof CornerEnum;
 export type AnchorableElement = HTMLElement&{anchor: Element | null};
 export type MenuCorner = 'START'|'END';
 
+// tslint:disable:no-bitwise
+
 // required for closure compiler
 const stringToCorner = {
   'TOP_LEFT': CornerEnum.TOP_LEFT,
@@ -138,9 +140,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
       const initiallySetToEnd = isFirstTimeSet && value === 'END';
 
       if (isValidValue && (cornerChanged || initiallySetToEnd)) {
-        this.bitwiseCorner =
-            this.bitwiseCorner ^ // tslint:disable-line:no-bitwise
-            CornerBit.RIGHT;
+        this.bitwiseCorner = this.bitwiseCorner ^ CornerBit.RIGHT;
         this.mdcFoundation.flipCornerHorizontally();
         this.previousMenuCorner = value;
       }
@@ -154,8 +154,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
       if (value) {
         let newCorner = stringToCorner[value];
         if (this.menuCorner === 'END') {
-          newCorner =
-              newCorner ^ CornerBit.RIGHT; // tslint:disable-line:no-bitwise
+          newCorner = newCorner ^ CornerBit.RIGHT;
         }
 
         this.bitwiseCorner = newCorner;
