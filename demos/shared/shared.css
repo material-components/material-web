@@ -1,0 +1,26 @@
+body {
+  font-family: Roboto, sans-serif;
+  margin: 0;
+  transition: opacity ease-in 0.2s;
+}
+
+main {
+  padding: 16px;
+}
+
+.demo-group, .demo-group-spaced {
+  display: flex;
+  align-items: center;
+}
+
+.wrap {
+  flex-wrap: wrap;
+}
+
+.demo-group-spaced {
+  justify-content: space-around;
+}
+
+.demo-group > *, .demo-group-spaced > * {
+  margin: 0 8px;
+}

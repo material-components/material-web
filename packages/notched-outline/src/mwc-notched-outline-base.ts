@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement} from '@material/mwc-base/form-element.js';
+import {BaseElement} from '@material/mwc-base/base-element.js';
 import {MDCNotchedOutlineAdapter} from '@material/notched-outline/adapter.js';
 import {MDCNotchedOutlineFoundation} from '@material/notched-outline/foundation.js';
 import {html, property, query} from 'lit-element';
@@ -60,12 +60,12 @@ export class NotchedOutlineBase extends BaseElement {
     this.openOrClose(this.open, this.width);
 
     return html`
-      <div class="mdc-notched-outline">
-        <div class="mdc-notched-outline__leading"></div>
-        <div class="mdc-notched-outline__notch">
+      <span class="mdc-notched-outline">
+        <span class="mdc-notched-outline__leading"></span>
+        <span class="mdc-notched-outline__notch">
           <slot></slot>
-        </div>
-        <div class="mdc-notched-outline__trailing"></div>
-      </div>`;
+        </span>
+        <span class="mdc-notched-outline__trailing"></span>
+      </span>`;
   }
 }

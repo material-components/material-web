@@ -14,14 +14,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {applyPassive} from '@material/dom/events.js';
-import {addHasRemoveClass, EventType, FormElement, observer, SpecificEventListener} from '@material/mwc-base/form-element.js';
-import {MDCSliderAdapter} from '@material/slider/adapter.js';
+import { applyPassive } from '@material/dom/events.js';
+import { addHasRemoveClass, EventType, FormElement, SpecificEventListener } from '@material/mwc-base/form-element.js';
+import { observer } from '@material/mwc-base/observer.js';
+import { MDCSliderAdapter } from '@material/slider/adapter.js';
 import MDCSliderFoundation from '@material/slider/foundation.js';
-import {eventOptions, html, property, query, TemplateResult} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
-import {styleMap} from 'lit-html/directives/style-map';
-import {isRTL} from '@material/mwc-base/src/utils';
+import { eventOptions, html, property, PropertyValues, query, TemplateResult } from 'lit-element';
+import { classMap } from 'lit-html/directives/class-map.js';
+import { styleMap } from 'lit-html/directives/style-map.js';
+import { isRTL } from '@material/mwc-base/utils.js';
 
 const INPUT_EVENT = 'input';
 const CHANGE_EVENT = 'change';
@@ -39,26 +40,30 @@ export class SliderBase extends FormElement {
 
   @query('.mdc-slider__pin-value-marker') protected pinMarker!: HTMLElement;
 
-  @property({type: Number})
-  @observer(function(this: SliderBase, value: number) {
-    this.mdcFoundation.setValue(value);
-  })
-  value = 0;
+  @property({ type: Number }) min = 0;
 
-  @property({type: Number})
-  @observer(function(this: SliderBase, value: number) {
-    this.mdcFoundation.setMin(value);
-  })
-  min = 0;
+  @property({ type: Number }) max = 100;
 
-  @property({type: Number})
-  @observer(function(this: SliderBase, value: number) {
-    this.mdcFoundation.setMax(value);
-  })
-  max = 100;
+  protected _value = 0;
+  set value(value: number) {
+    if (this.mdcFoundation) {
+      this.mdcFoundation.setValue(value);
+    }
+    this._value = value;
+    this.requestUpdate('value', value);
+  }
 
-  @property({type: Number})
-  @observer(function(this: SliderBase, value: number, old: number) {
+  @property({ type: Number })
+  get value() {
+    if (this.mdcFoundation) {
+      return this.mdcFoundation.getValue();
+    } else {
+      return this._value;
+    }
+  }
+
+  @property({ type: Number })
+  @observer(function (this: SliderBase, value: number, old: number) {
     const oldWasDiscrete = old !== 0;
     const newIsDiscrete = value !== 0;
     if (oldWasDiscrete !== newIsDiscrete) {
@@ -68,24 +73,24 @@ export class SliderBase extends FormElement {
   })
   step = 0;
 
-  @property({type: Boolean, reflect: true})
-  @observer(function(this: SliderBase, value: boolean) {
+  @property({ type: Boolean, reflect: true })
+  @observer(function (this: SliderBase, value: boolean) {
     this.mdcFoundation.setDisabled(value);
   })
   disabled = false;
 
-  @property({type: Boolean, reflect: true}) pin = false;
+  @property({ type: Boolean, reflect: true }) pin = false;
 
-  @property({type: Boolean, reflect: true})
-  @observer(function(this: SliderBase) {
+  @property({ type: Boolean, reflect: true })
+  @observer(function (this: SliderBase) {
     this.mdcFoundation.setupTrackMarker();
   })
   markers = false;
 
-  @property({type: String}) protected pinMarkerText = '';
-  @property({type: Object}) protected trackMarkerContainerStyles = {};
-  @property({type: Object}) protected thumbContainerStyles = {};
-  @property({type: Object}) protected trackStyles = {};
+  @property({ type: String }) protected pinMarkerText = '';
+  @property({ type: Object }) protected trackMarkerContainerStyles = {};
+  @property({ type: Object }) protected thumbContainerStyles = {};
+  @property({ type: Object }) protected trackStyles = {};
 
   protected isFoundationDestroyed = false;
 
@@ -97,7 +102,7 @@ export class SliderBase extends FormElement {
       'mdc-slider--display-markers': this.markers && isDiscrete,
     };
 
-    let markersTemplate: TemplateResult|string = '';
+    let markersTemplate: TemplateResult | string = '';
 
     if (isDiscrete && this.markers) {
       markersTemplate = html`
@@ -107,7 +112,7 @@ export class SliderBase extends FormElement {
         </div>`;
     }
 
-    let pin: TemplateResult|string = '';
+    let pin: TemplateResult | string = '';
 
     if (this.pin) {
       pin = html`
@@ -153,6 +158,29 @@ export class SliderBase extends FormElement {
     }
   }
 
+  updated(changed: PropertyValues) {
+    const minChanged = changed.has('min');
+    const maxChanged = changed.has('max');
+
+    if (minChanged && maxChanged) {
+      if (this.max < this.mdcFoundation.getMin()) {
+        // for when min is above previous max
+        this.mdcFoundation.setMin(this.min);
+        this.mdcFoundation.setMax(this.max);
+      } else {
+        // for when max is below previous min
+        this.mdcFoundation.setMax(this.max);
+        this.mdcFoundation.setMin(this.min);
+      }
+    } else if (minChanged) {
+      this.mdcFoundation.setMin(this.min);
+    } else if (maxChanged) {
+      this.mdcFoundation.setMax(this.max);
+    }
+
+    super.updated(changed);
+  }
+
   disconnectedCallback() {
     super.disconnectedCallback();
     this.isFoundationDestroyed = true;
@@ -164,7 +192,7 @@ export class SliderBase extends FormElement {
       ...addHasRemoveClass(this.mdcRoot),
       getAttribute: (name: string) => this.mdcRoot.getAttribute(name),
       setAttribute: (name: string, value: string) =>
-          this.mdcRoot.setAttribute(name, value),
+        this.mdcRoot.setAttribute(name, value),
       removeAttribute: (name: string) => this.mdcRoot.removeAttribute(name),
       computeBoundingRect: () => {
         const rect = this.mdcRoot.getBoundingClientRect();
@@ -181,44 +209,44 @@ export class SliderBase extends FormElement {
       },
       getTabIndex: () => this.mdcRoot.tabIndex,
       registerInteractionHandler:
-          <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
-            const init = type === 'touchstart' ? applyPassive() : undefined;
-            this.mdcRoot.addEventListener(type, handler, init);
-          },
+        <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
+          const init = type === 'touchstart' ? applyPassive() : undefined;
+          this.mdcRoot.addEventListener(type, handler, init);
+        },
       deregisterInteractionHandler:
-          <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
-              this.mdcRoot.removeEventListener(type, handler),
+        <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
+          this.mdcRoot.removeEventListener(type, handler),
       registerThumbContainerInteractionHandler:
-          <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
-            const init = type === 'touchstart' ? applyPassive() : undefined;
-            this.thumbContainer.addEventListener(type, handler, init);
-          },
+        <K extends EventType>(type: K, handler: SpecificEventListener<K>) => {
+          const init = type === 'touchstart' ? applyPassive() : undefined;
+          this.thumbContainer.addEventListener(type, handler, init);
+        },
       deregisterThumbContainerInteractionHandler:
-          <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
-              this.thumbContainer.removeEventListener(type, handler),
+        <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
+          this.thumbContainer.removeEventListener(type, handler),
       registerBodyInteractionHandler:
-          <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
-              document.body.addEventListener(type, handler),
+        <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
+          document.body.addEventListener(type, handler),
       deregisterBodyInteractionHandler:
-          <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
-              document.body.removeEventListener(type, handler),
+        <K extends EventType>(type: K, handler: SpecificEventListener<K>) =>
+          document.body.removeEventListener(type, handler),
       registerResizeHandler: (handler: SpecificEventListener<'resize'>) =>
-          window.addEventListener('resize', handler, applyPassive()),
+        window.addEventListener('resize', handler, applyPassive()),
       deregisterResizeHandler: (handler: SpecificEventListener<'resize'>) =>
-          window.removeEventListener('resize', handler),
+        window.removeEventListener('resize', handler),
       notifyInput: () => {
         const value = this.mdcFoundation.getValue();
-        if (value !== this.value) {
+        if (value !== this._value) {
           this.value = value;
           this.dispatchEvent(new CustomEvent(
-              INPUT_EVENT,
-              {detail: this, composed: true, bubbles: true, cancelable: true}));
+            INPUT_EVENT,
+            { detail: this, composed: true, bubbles: true, cancelable: true }));
         }
       },
       notifyChange: () => {
         this.dispatchEvent(new CustomEvent(
-            CHANGE_EVENT,
-            {detail: this, composed: true, bubbles: true, cancelable: true}));
+          CHANGE_EVENT,
+          { detail: this, composed: true, bubbles: true, cancelable: true }));
       },
       setThumbContainerStyleProperty: (propertyName: string, value: string) => {
         this.thumbContainerStyles[propertyName] = value;
@@ -229,7 +257,7 @@ export class SliderBase extends FormElement {
         this.requestUpdate();
       },
       setMarkerValue: (value: number) => this.pinMarkerText =
-          value.toLocaleString(),
+        value.toLocaleString(),
       setTrackMarkers: (step, max, min) => {
         // calculates the CSS for the notches on the slider. Taken from
         // https://github.com/material-components/material-components-web/blob/8f851d9ed2f75dc8b8956d15b3bb2619e59fa8a9/packages/mdc-slider/component.ts#L122
@@ -240,9 +268,9 @@ export class SliderBase extends FormElement {
         const markerAmount = `((${maxStr} - ${minStr}) / ${stepStr})`;
         const markerWidth = '2px';
         const markerBkgdImage = `linear-gradient(to right, currentColor ${
-            markerWidth}, transparent 0)`;
+          markerWidth}, transparent 0)`;
         const markerBkgdLayout = `0 center / calc((100% - ${markerWidth}) / ${
-            markerAmount}) 100% repeat-x`;
+          markerAmount}) 100% repeat-x`;
         const markerBkgdShorthand = `${markerBkgdImage} ${markerBkgdLayout}`;
 
         this.trackMarkerContainerStyles['background'] = markerBkgdShorthand;
@@ -259,6 +287,12 @@ export class SliderBase extends FormElement {
     }
   }
 
+  protected async firstUpdated() {
+    await super.firstUpdated();
+
+    this.mdcFoundation.setValue(this._value);
+  }
+
   /**
    * Layout is called on mousedown / touchstart as the dragging animations of
    * slider are calculated based off of the bounding rect which can change
@@ -267,7 +301,7 @@ export class SliderBase extends FormElement {
    * causes adverse effects on the bounding rect vs mouse drag / touchmove
    * location.
    */
-  @eventOptions({capture: true, passive: true})
+  @eventOptions({ capture: true, passive: true })
   layout() {
     this.mdcFoundation.layout();
   }

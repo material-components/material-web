@@ -15,10 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/switch/mdc-switch.scss';
+@use '@material/switch';
+@use '@material/ripple';
 
-@include mdc-ripple-common(mdc-feature-all());
+@include ripple.common();
+@include switch.core-styles();
 
 :host {
+  display: inline-flex;
   outline: none;
 }

@@ -15,8 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/tab-indicator/mdc-tab-indicator.scss';
-@import '@material/mwc-icon/src/_mwc-icon.scss';
+@use '@material/tab-indicator' as tabindicator;
+@use '@material/mwc-icon/src/_mwc-icon.scss';
+
+@include tabindicator.core-styles();
 
 .material-icons {
   @extend %material-icons;

@@ -20,7 +20,7 @@ import {MDCTopAppBarAdapter} from '@material/top-app-bar/adapter';
 import {strings} from '@material/top-app-bar/constants';
 import MDCTopAppBarBaseFoundation from '@material/top-app-bar/foundation';
 import {html, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
+import {classMap} from 'lit-html/directives/class-map.js';
 
 export const passiveEventOptionsIfSupported =
     supportsPassiveEventListener ? {passive: true} : undefined;
@@ -39,7 +39,7 @@ export abstract class TopAppBarBaseBase extends BaseElement {
   // _actionItemsSlot should have type HTMLSlotElement, but when TypeScript's
   // emitDecoratorMetadata is enabled, the HTMLSlotElement constructor will
   // be emitted into the runtime, which will cause an "HTMLSlotElement is
-  // undefined" error in browsers that don't define it (e.g. Edge and IE11).
+  // undefined" error in browsers that don't define it (e.g. IE11).
   @query('slot[name="actionItems"]') private _actionItemsSlot!: HTMLElement;
 
   private _scrollTarget!: HTMLElement|Window;
@@ -52,10 +52,12 @@ export abstract class TopAppBarBaseBase extends BaseElement {
   }
 
   set scrollTarget(value) {
+    this.unregisterScrollListener();
     const old = this.scrollTarget;
     this._scrollTarget = value;
     this.updateRootPosition();
     this.requestUpdate('scrollTarget', old);
+    this.registerScrollListener();
   }
 
   private updateRootPosition() {
@@ -131,11 +133,19 @@ export abstract class TopAppBarBaseBase extends BaseElement {
   };
 
   protected registerListeners() {
+    this.registerScrollListener();
+  }
+
+  protected unregisterListeners() {
+    this.unregisterScrollListener();
+  }
+
+  protected registerScrollListener() {
     this.scrollTarget.addEventListener(
         'scroll', this.handleTargetScroll, passiveEventOptionsIfSupported);
   }
 
-  protected unregisterListeners() {
+  protected unregisterScrollListener() {
     this.scrollTarget.removeEventListener('scroll', this.handleTargetScroll);
   }
 

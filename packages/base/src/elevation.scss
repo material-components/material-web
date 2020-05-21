@@ -15,11 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/theme/_variables.scss';
-@import '@material/elevation/_variables.scss';
+@use 'sass:map';
+@use '@material/theme';
+@use '@material/elevation';
+@use '@material/feature-targeting' as feature;
 
 /* Extracted from mdc-elevation */
-@function elevation-box-shadow($z-value, $color: $mdc-elevation-baseline-color, $opacity-boost: 0, $query: mdc-feature-all()) {
+@function elevation-box-shadow($z-value, $color: elevation.$baseline-color, $opacity-boost: 0, $query: feature.all()) {
   @if type-of($z-value) != number or not unitless($z-value) {
     @error "$z-value must be a unitless number, but received '#{$z-value}'";
   }
@@ -28,17 +30,17 @@ limitations under the License.
     @error "$z-value must be between 0 and 24, but received '#{$z-value}'";
   }
 
-  $feat-color: mdc-feature-create-target($query, color);
+  $feat-color: feature.create-target($query, color);
 
-  $color: mdc-theme-prop-value($color);
+  $color: theme.prop-value($color);
 
-  $umbra-z-value: map-get($mdc-elevation-umbra-map, $z-value);
-  $penumbra-z-value: map-get($mdc-elevation-penumbra-map, $z-value);
-  $ambient-z-value: map-get($mdc-elevation-ambient-map, $z-value);
+  $umbra-z-value: map.get(elevation.$umbra-map, $z-value);
+  $penumbra-z-value: map.get(elevation.$penumbra-map, $z-value);
+  $ambient-z-value: map.get(elevation.$ambient-map, $z-value);
 
-  $umbra-color: rgba($color, $mdc-elevation-umbra-opacity + $opacity-boost);
-  $penumbra-color: rgba($color, $mdc-elevation-penumbra-opacity + $opacity-boost);
-  $ambient-color: rgba($color, $mdc-elevation-ambient-opacity + $opacity-boost);
+  $umbra-color: rgba($color, elevation.$umbra-opacity + $opacity-boost);
+  $penumbra-color: rgba($color, elevation.$penumbra-opacity + $opacity-boost);
+  $ambient-color: rgba($color, elevation.$ambient-opacity + $opacity-boost);
 
   $box-shadow: (
     #{"#{$umbra-z-value} #{$umbra-color}"},

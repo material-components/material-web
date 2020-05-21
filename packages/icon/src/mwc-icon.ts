@@ -18,10 +18,12 @@ import {customElement, html, LitElement} from 'lit-element';
 
 import {style} from './mwc-icon-host-css.js';
 
+/** @soyCompatible */
 @customElement('mwc-icon')
 export class Icon extends LitElement {
   static styles = style;
 
+  /** @soyCompatible */
   protected render() {
     return html`<slot></slot>`;
   }

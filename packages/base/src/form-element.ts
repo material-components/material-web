@@ -15,16 +15,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {MDCRippleFoundation} from '@material/ripple/foundation.js';
+import {addHasRemoveClass, BaseElement, CustomEventListener, EventType, SpecificEventListener} from './base-element.js';
+import {HTMLElementWithRipple, RippleInterface} from './utils.js';
 
-import {BaseElement} from './base-element';
+export {
+  addHasRemoveClass,
+  BaseElement,
+  CustomEventListener,
+  EventType,
+  HTMLElementWithRipple,
+  RippleInterface,
+  SpecificEventListener,
+};
 
-export * from './base-element';
-
-export interface HTMLElementWithRipple extends HTMLElement {
-  ripple?: MDCRippleFoundation;
-}
-
+/** @soyCompatible */
 export abstract class FormElement extends BaseElement {
   /**
    * Form-capable element in the component ShadowRoot.
@@ -40,7 +44,7 @@ export abstract class FormElement extends BaseElement {
   /**
    * Implement ripple getter for Ripple integration with mwc-formfield
    */
-  readonly ripple?: MDCRippleFoundation;
+  readonly ripple?: RippleInterface|Promise<RippleInterface|null>;
 
   click() {
     if (this.formElement) {

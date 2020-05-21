@@ -7,6 +7,9 @@ be used to turn an option on or off.
 
 [Material Design Guidelines: Checkboxes](https://material.io/components/selection-controls/#checkboxes)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/checkbox/)
+
+
 ## Installation
 
 ```sh
@@ -17,7 +20,7 @@ npm install @material/mwc-checkbox
 > Modules, and use the Custom Elements API. They are compatible with all modern
 > browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
 > tooling step is required to resolve *bare module specifiers*, as well as
-> transpilation and polyfills for Edge and IE11. See
+> transpilation and polyfills for IE11. See
 > [here](https://github.com/material-components/material-components-web-components#quick-start)
 > for detailed instructions.
 

@@ -11,6 +11,8 @@ For the non-toggling version of this component, see [`<mwc-icon-button>`](https:
 
 [Material Design Guidelines: Toggle Button](https://material.io/design/components/buttons.html#toggle-button)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/icon-button-toggle/)
+
 ## Installation
 
 ```sh
@@ -21,7 +23,7 @@ npm install @material/mwc-icon-button-toggle
 > Modules, and use the Custom Elements API. They are compatible with all modern
 > browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
 > tooling step is required to resolve *bare module specifiers*, as well as
-> transpilation and polyfills for Edge and IE11. See
+> transpilation and polyfills for IE11. See
 > [here](https://github.com/material-components/material-components-web-components#quick-start)
 > for detailed instructions.
 

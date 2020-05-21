@@ -1,0 +1,74 @@
+<!doctype html>
+<!--
+@license
+Copyright 2018 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html lang="en">
+<head>
+  <title>MWC Slider Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+  <script type="module" src="index.js"></script>
+  <script nomodule src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <style>
+    .unresolved main {
+      opacity: 0;
+    }
+  </style>
+  <link rel="preload" href="../shared/shared.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <script nomodlue src="../shared/ie-style-transform.js"></script>
+  <style>
+    .demo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .demo-container > * {
+      width: 50%;
+    }
+
+    .demo-colory {
+      --mdc-theme-secondary: orange;
+      --mdc-theme-text-primary-on-dark: green;
+    }
+  </style>
+</head>
+<body class="unresolved">
+  <demo-header component="Slider" package="slider"></demo-header>
+
+  <main>
+    <h3>Continuous</h3>
+    <div class="demo-container">
+      <mwc-slider></mwc-slider>
+    </div>
+
+    <h3>Discrete</h3>
+    <div class="demo-container demo-colory">
+      <mwc-slider pin markers max="50" value="10" step="5"></mwc-slider>
+    </div>
+
+    <h3>Disabled</h3>
+    <div class="demo-container">
+      <mwc-slider disabled></mwc-slider>
+    </div>
+
+    <div>Value from input: <span id="logInput"></span></div>
+    <div>Value from change: <span id="logChange"></span></div>
+  </main>
+  <script nomodule src="index.es5.js"></script>
+</body>
+</html>

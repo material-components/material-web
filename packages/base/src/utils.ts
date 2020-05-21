@@ -21,9 +21,18 @@ limitations under the License.
 
 import {matches} from '@material/dom/ponyfill';
 
+/**
+ * Determines whether a node is an element.
+ *
+ * @param node Node to check
+ */
+export const isNodeElement = (node: Node): node is Element => {
+  return node.nodeType === Node.ELEMENT_NODE;
+};
+
 export function findAssignedElement(slot: HTMLSlotElement, selector: string) {
   for (const node of slot.assignedNodes({flatten: true})) {
-    if (node.nodeType === Node.ELEMENT_NODE) {
+    if (isNodeElement(node)) {
       const el = (node as HTMLElement);
       if (matches(el, selector)) {
         return el;
@@ -67,3 +76,56 @@ document.removeEventListener('x', fn);
  * Do event listeners suport the `passive` option?
  */
 export const supportsPassiveEventListener = supportsPassive;
+
+export const deepActiveElementPath = (doc = window.document): Element[] => {
+  let activeElement = doc.activeElement;
+  const path: Element[] = [];
+
+  if (!activeElement) {
+    return path;
+  }
+
+  while (activeElement) {
+    path.push(activeElement);
+    if (activeElement.shadowRoot) {
+      activeElement = activeElement.shadowRoot.activeElement;
+    } else {
+      break;
+    }
+  }
+
+  return path;
+};
+
+export const doesElementContainFocus = (element: HTMLElement): boolean => {
+  const activePath = deepActiveElementPath();
+
+  if (!activePath.length) {
+    return false;
+  }
+
+  const deepActiveElement = activePath[activePath.length - 1];
+  const focusEv =
+      new Event('check-if-focused', {bubbles: true, composed: true});
+  let composedPath: EventTarget[] = [];
+  const listener = (ev: Event) => {
+    composedPath = ev.composedPath();
+  };
+
+  document.body.addEventListener('check-if-focused', listener);
+  deepActiveElement.dispatchEvent(focusEv);
+  document.body.removeEventListener('check-if-focused', listener);
+
+  return composedPath.indexOf(element) !== -1;
+};
+
+export interface HTMLElementWithRipple extends HTMLElement {
+  ripple?: RippleInterface;
+}
+
+export interface RippleInterface {
+  startPress: (e?: Event) => void;
+  endPress: () => void;
+  startFocus: () => void;
+  endFocus: () => void;
+}

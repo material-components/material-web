@@ -16,7 +16,7 @@ limitations under the License.
 */
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 import {html, LitElement, property, TemplateResult} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
+import {classMap} from 'lit-html/directives/class-map.js';
 
 export class FabBase extends LitElement {
   @property({type: Boolean}) mini = false;
@@ -42,6 +42,7 @@ export class FabBase extends LitElement {
       'mdc-fab--mini': this.mini,
       'mdc-fab--exited': this.exited,
       'mdc-fab--extended': this.extended,
+      'icon-end': this.showIconAtEnd,
     };
     const showLabel = this.label !== '' && this.extended;
 
@@ -66,7 +67,9 @@ export class FabBase extends LitElement {
           .ripple="${ripple()}">
         <div class="mdc-fab__ripple"></div>
         ${this.showIconAtEnd ? label : ''}
-        ${iconTemplate}
+        <slot name="icon">
+          ${iconTemplate}
+        </slot>
         ${!this.showIconAtEnd ? label : ''}
       </button>`;
   }

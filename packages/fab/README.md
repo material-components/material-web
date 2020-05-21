@@ -12,6 +12,8 @@ A floating action button (FAB) represents the primary action of a screen.
 
 [Material Design Guidelines: Floating Action Button](https://material.io/design/components/buttons-floating-action-button.html)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/fab/)
+
 ## Installation
 
 ```sh
@@ -22,7 +24,7 @@ npm install @material/mwc-fab
 > Modules, and use the Custom Elements API. They are compatible with all modern
 > browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
 > tooling step is required to resolve *bare module specifiers*, as well as
-> transpilation and polyfills for Edge and IE11. See
+> transpilation and polyfills for IE11. See
 > [here](https://github.com/material-components/material-components-web-components#quick-start)
 > for detailed instructions.
 
@@ -35,16 +37,35 @@ npm install @material/mwc-fab
 ```html
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block">
 
-<mwc-fab icon="favorite"></mwc-fab>
+<mwc-fab icon="edit"></mwc-fab>
 
 <script type="module">
   import '@material/mwc-fab';
   const fab = document.querySelector('mwc-fab');
   fab.addEventListener('click', () => {
-    addFavorite();
+    edit();
   });
 </script>
 ```
+
+### Standard - slotted
+
+![](images/standard.png)
+
+```html
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block">
+
+<mwc-fab label="edit">
+  <mwc-icon slot="icon">edit</mwc-icon>
+</mwc-fab>
+
+<script type="module">
+  import '@material/mwc-fab';
+  import '@material/mwc-icon';
+</script>
+```
+
+_Note: `label` should still be set for button accessibility purposes._
 
 ### Mini
 
@@ -75,7 +96,10 @@ mwc-fab {
 ## API
 
 ### Slots
-*None*
+
+| Name     | Description
+| -------- | ---
+| `icon`   | An icon to be slotted into the fab. _Note:_ the `label` property should still be set for button accessibility.
 
 ### Properties/Attributes
 

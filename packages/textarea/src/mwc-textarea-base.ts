@@ -17,7 +17,7 @@ limitations under the License.
 
 import {TextFieldBase} from '@material/mwc-textfield/mwc-textfield-base.js';
 import {html, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
+import {classMap} from 'lit-html/directives/class-map.js';
 import {ifDefined} from 'lit-html/directives/if-defined.js';
 
 export {TextFieldType} from '@material/mwc-textfield/mwc-textfield-base.js';
@@ -37,15 +37,21 @@ export abstract class TextAreaBase extends TextFieldBase {
     const classes = {
       'mdc-text-field--disabled': this.disabled,
       'mdc-text-field--no-label': !this.label,
+      'mdc-text-field--filled': !this.outlined,
       'mdc-text-field--outlined': this.outlined,
       'mdc-text-field--fullwidth': this.fullWidth,
+      'mdc-text-field--end-aligned': this.endAligned,
+      'mdc-text-field--with-internal-counter': this.charCounterVisible,
     };
 
+    const ripple =
+        !this.outlined ? html`<div class="mdc-text-field__ripple"></div>` : '';
     return html`
       <label class="mdc-text-field mdc-text-field--textarea ${
         classMap(classes)}">
-        ${this.renderCharCounter()}
+        ${ripple}
         ${this.renderInput()}
+        ${this.renderCharCounter()}
         ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
       </label>
       ${this.renderHelperText()}
@@ -65,7 +71,9 @@ export abstract class TextAreaBase extends TextFieldBase {
           ?disabled="${this.disabled}"
           placeholder="${this.placeholder}"
           ?required="${this.required}"
+          ?readonly="${this.readOnly}"
           maxlength="${ifDefined(maxOrUndef)}"
+          name="${ifDefined(this.name === '' ? undefined : this.name)}"
           @input="${this.handleInputChange}"
           @blur="${this.onInputBlur}">
       </textarea>`;

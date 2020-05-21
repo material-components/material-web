@@ -9,6 +9,8 @@ Progress indicators express an unspecified wait time or display the length of a 
 
 [Material Design Guidelines: Progress Indicators](https://material.io/components/progress-indicators/#circular-progress-indicators)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/linear-progress/)
+
 ## Installation
 
 ```sh
@@ -19,7 +21,7 @@ npm install @material/mwc-linear-progress
 > Modules, and use the Custom Elements API. They are compatible with all modern
 > browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
 > tooling step is required to resolve *bare module specifiers*, as well as
-> transpilation and polyfills for Edge and IE11. See
+> transpilation and polyfills for IE11. See
 > [here](https://github.com/material-components/material-components-web-components#quick-start)
 > for detailed instructions.
 
@@ -36,7 +38,7 @@ npm install @material/mwc-linear-progress
 <mwc-linear-progress progress="0.5"></mwc-linear-progress>
 ```
 
-### Indederminate
+### Indeterminate
 
 <img src="images/indeterminate.gif" height="77px">
 

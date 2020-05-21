@@ -14,7 +14,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {addHasRemoveClass, FormElement, HTMLElementWithRipple, observer} from '@material/mwc-base/form-element.js';
+import {addHasRemoveClass, FormElement, HTMLElementWithRipple} from '@material/mwc-base/form-element.js';
+import {observer} from '@material/mwc-base/observer.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 import {MDCSwitchAdapter} from '@material/switch/adapter';
 import MDCSwitchFoundation from '@material/switch/foundation.js';
@@ -85,7 +86,6 @@ export class SwitchBase extends FormElement {
               @change="${this._changeHandler}">
           </div>
         </div>
-      </div>
-      <slot></slot>`;
+      </div>`;
   }
 }

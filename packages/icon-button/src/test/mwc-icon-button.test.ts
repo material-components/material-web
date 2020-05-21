@@ -40,21 +40,14 @@ suite('mwc-icon-button', () => {
   test(
       'setting `icon` updates the textContent inside <i class="mdc-icon-button__icon mdc-icon-button__icon--on">',
       async () => {
-        let icon = 'check';
-        element.icon = icon;
+        element.icon = 'check';
         await element.updateComplete;
-        const i = element.shadowRoot!.querySelector(ICON_SELECTOR)!;
-        assert.instanceOf(i, HTMLElement);
-
-        let content = i.textContent as string;
-
-        assert.match(content, new RegExp(`^\\s*${icon}\\s*$`));
-
-        icon = 'menu';
-        element.icon = icon;
+        const icon = element.shadowRoot!.querySelector(ICON_SELECTOR)!;
+        assert.instanceOf(icon, HTMLElement);
+        assert.equal(icon.textContent!.trim(), 'check');
+        element.icon = 'menu';
         await element.updateComplete;
-        content = i.textContent as string;
-        assert.match(content, new RegExp(`^\\s*${icon}\\s*$`));
+        assert.equal(icon.textContent!.trim(), 'menu');
       });
 
   test(

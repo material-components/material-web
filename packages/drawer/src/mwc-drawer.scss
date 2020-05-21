@@ -15,7 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/drawer/mdc-drawer.scss';
+@use '@material/drawer';
+@use '@material/theme';
+
+@include drawer.core-styles();
+@include drawer.dismissible-core-styles();
+@include drawer.modal-core-styles();
 
 .mdc-drawer-app-content {
   overflow: auto;
@@ -25,4 +30,18 @@ limitations under the License.
 :host {
   display: flex;
   height: 100%;
+}
+
+.mdc-drawer {
+  @include theme.prop(width, (
+    varname: --mdc-drawer-width,
+    fallback: drawer.$width,
+  ));
+
+  &.mdc-drawer--open:not(.mdc-drawer--closing) + .mdc-drawer-app-content {
+    @include theme.prop(margin-left, (
+      varname: --mdc-drawer-width,
+      fallback: drawer.$width,
+    ));
+  }
 }

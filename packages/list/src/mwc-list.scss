@@ -1,0 +1,133 @@
+/**
+@license
+Copyright 2020 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+@use "@material/list";
+@use "@material/ripple";
+@use "@material/feature-targeting" as feature;
+@use '@material/theme';
+@use '@material/typography';
+@use '@material/rtl';
+
+@include ripple.common();
+$query: feature.all();
+
+$feat-color: feature.create-target($query, color);
+$feat-structure: feature.create-target($query, structure);
+$feat-typography: feature.create-target($query, typography);
+$feat-animation: feature.create-target($query, animation);
+
+$item-primary-text-baseline-height: 32px;
+$item-secondary-text-baseline-height: 20px;
+$dense-item-primary-text-baseline-height: 24px;
+$divider-color: if(
+  theme.tone(theme.$background) == "dark",
+  list.$divider-color-on-dark-bg,
+  list.$divider-color-on-light-bg
+);
+
+:host {
+  display: block;
+}
+
+.mdc-list {
+  @include list.base_($query);
+
+  padding: var(--mdc-list-vertical-padding, 8px) 0;
+}
+
+@include list.single-line-density(list.$single-line-density-scale, $query: $query);
+
+.mdc-list--dense {
+  @include feature.targets($feat-structure) {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    font-size: .812rem;
+  }
+}
+// stylelint-enable selector-max-type,selector-no-qualifying-type
+
+.mdc-list ::slotted([divider]) {
+  @include feature.targets($feat-structure) {
+    height: 0;
+    margin: 0;
+    border: none;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+  }
+
+  @include theme.prop(border-bottom-color, $divider-color)
+}
+
+.mdc-list ::slotted([divider][padded]) {
+  @include feature.targets($feat-structure) {
+    // Leave gaps on each side to match the padding on list items
+    margin: 0 var(--mdc-list-side-padding, #{list.$side-padding});
+  }
+}
+
+.mdc-list ::slotted([divider][inset]) {
+  @include feature.targets($feat-structure) {
+    @include rtl.reflexive-box(margin, left, var(--mdc-list-inset-margin, #{list.$text-offset}), ".mdc-list-group");
+
+    width: calc(100% - var(--mdc-list-inset-margin, #{list.$text-offset}));
+  }
+}
+
+.mdc-list ::slotted([divider][inset][padded]) {
+  @include feature.targets($feat-structure) {
+    width: calc(100% - var(--mdc-list-inset-margin, #{list.$text-offset}) - var(--mdc-list-side-padding, #{list.$side-padding}));
+  }
+}
+
+// stylelint-disable plugin/selector-bem-pattern
+.mdc-list--dense ::slotted([mwc-list-item]) {
+  @include feature.targets($feat-structure) {
+    height: 40px;
+  }
+}
+
+.mdc-list--dense ::slotted([mwc-list]) {
+  @include feature.targets($feat-structure) {
+    --mdc-list-item-graphic-size: 20px;
+  }
+}
+
+.mdc-list--two-line.mdc-list--dense ::slotted([mwc-list-item]),
+.mdc-list--avatar-list.mdc-list--dense ::slotted([mwc-list-item]) {
+  @include feature.targets($feat-structure) {
+    height: 60px;
+  }
+}
+
+.mdc-list--avatar-list.mdc-list--dense ::slotted([mwc-list]) {
+  @include feature.targets($feat-structure) {
+    --mdc-list-item-graphic-size: 36px;
+  }
+}
+
+:host([noninteractive]) {
+  pointer-events: none;
+  cursor: default;
+}
+
+.mdc-list--dense ::slotted(.mdc-list-item__primary-text) {
+  @include typography.text-baseline(
+    $top: $dense-item-primary-text-baseline-height,
+    $bottom: $item-secondary-text-baseline-height,
+    $query: $query
+  );
+}

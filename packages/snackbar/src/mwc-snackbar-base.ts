@@ -14,14 +14,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {addHasRemoveClass, BaseElement, observer} from '@material/mwc-base/base-element.js';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
+import {observer} from '@material/mwc-base/observer.js';
 import {MDCSnackbarAdapter} from '@material/snackbar/adapter.js';
 import MDCSnackbarFoundation from '@material/snackbar/foundation.js';
-import {MDCSnackbarCloseEventDetail} from '@material/snackbar/types';
+import {MDCSnackbarCloseEventDetail} from '@material/snackbar/types.js';
 import {html, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
+import {classMap} from 'lit-html/directives/class-map.js';
 
-import {accessibleSnackbarLabel} from './accessible-snackbar-label-directive';
+import {accessibleSnackbarLabel} from './accessible-snackbar-label-directive.js';
 
 const {
   OPENING_EVENT,
@@ -39,7 +40,18 @@ export class SnackbarBase extends BaseElement {
 
   @query('.mdc-snackbar__label') protected labelElement!: HTMLElement;
 
-  @property({type: Boolean, reflect: true}) isOpen = false;
+  @property({type: Boolean, reflect: true})
+  @observer(function(this: SnackbarBase, value: boolean) {
+    if (this.mdcFoundation) {
+      if (value) {
+        this.mdcFoundation.open();
+      } else {
+        this.mdcFoundation.close(this.reason);
+        this.reason = '';
+      }
+    }
+  })
+  open = false;
 
   @observer(function(this: SnackbarBase, value: number) {
     this.mdcFoundation.setTimeoutMs(value);
@@ -59,6 +71,8 @@ export class SnackbarBase extends BaseElement {
 
   @property({type: Boolean}) leading = false;
 
+  protected reason = '';
+
   protected render() {
     const classes = {
       'mdc-snackbar--stacked': this.stacked,
@@ -68,7 +82,7 @@ export class SnackbarBase extends BaseElement {
       <div class="mdc-snackbar ${classMap(classes)}" @keydown="${
         this._handleKeydown}">
         <div class="mdc-snackbar__surface">
-          ${accessibleSnackbarLabel(this.labelText, this.isOpen)}
+          ${accessibleSnackbarLabel(this.labelText, this.open)}
           <div class="mdc-snackbar__actions">
             <slot name="action" @click="${this._handleActionClick}"></slot>
             <slot name="dismiss" @click="${this._handleDismissClick}"></slot>
@@ -89,7 +103,7 @@ export class SnackbarBase extends BaseElement {
             {bubbles: true, cancelable: true, detail: {reason: reason}}));
       },
       notifyClosing: (reason: string) => {
-        this.isOpen = false;
+        this.open = false;
         this.dispatchEvent(new CustomEvent(
             CLOSING_EVENT,
             {bubbles: true, cancelable: true, detail: {reason: reason}}));
@@ -99,7 +113,7 @@ export class SnackbarBase extends BaseElement {
             new CustomEvent(OPENED_EVENT, {bubbles: true, cancelable: true}));
       },
       notifyOpening: () => {
-        this.isOpen = true;
+        this.open = true;
         this.dispatchEvent(
             new CustomEvent(OPENING_EVENT, {bubbles: true, cancelable: true}));
       },
@@ -107,24 +121,19 @@ export class SnackbarBase extends BaseElement {
   }
 
   /** @export */
-  open() {
-    this.isOpen = true;
-    if (this.mdcFoundation !== undefined) {
-      this.mdcFoundation.open();
-    }
+  show() {
+    this.open = true;
   }
 
   /** @export */
   close(reason = '') {
-    this.isOpen = false;
-    if (this.mdcFoundation !== undefined) {
-      this.mdcFoundation.close(reason);
-    }
+    this.reason = reason;
+    this.open = false;
   }
 
   protected firstUpdated() {
     super.firstUpdated();
-    if (this.isOpen) {
+    if (this.open) {
       this.mdcFoundation.open();
     }
   }

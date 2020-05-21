@@ -17,7 +17,8 @@ limitations under the License.
 
 import {MDCIconButtonToggleAdapter} from '@material/icon-button/adapter.js';
 import MDCIconButtonToggleFoundation from '@material/icon-button/foundation.js';
-import {addHasRemoveClass, BaseElement, observer} from '@material/mwc-base/base-element.js';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
+import {observer} from '@material/mwc-base/observer.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 import {html, property, query} from 'lit-element';
 
@@ -45,6 +46,9 @@ export class IconButtonToggleBase extends BaseElement {
   protected createAdapter(): MDCIconButtonToggleAdapter {
     return {
       ...addHasRemoveClass(this.mdcRoot),
+      getAttr: (name: string) => {
+        return this.mdcRoot.getAttribute(name);
+      },
       setAttr: (name: string, value: string) => {
         this.mdcRoot.setAttribute(name, value);
       },

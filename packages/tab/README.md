@@ -1,64 +1,87 @@
-# mwc-tab
+# `<mwc-tab>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-tab.svg)](https://www.npmjs.com/package/@material/mwc-tab)
 
-> :warning: These components are a work in progress. They are pre-release and should be considered experimental, as they may undergo major changes before release. We are experimenting with alternate architectures and approaches with the goal of allowing us to bring the most correct and optimal implementation of Material components to the widest possible audiences. Visible progress may be slow, as this research is across teams and repositories so is not consistently reflected in commits to this codebase. :warning:
+> IMPORTANT: The Material Web Components are a work in progress and subject to
+> major changes until 1.0 release.
 
-A [Material Components](https://material.io/develop/) tab implementation using [Web Components](https://www.webcomponents.org/introduction)
+Tabs organize content across different screens, data sets, and other interactions.
 
-## Getting started
+[Material Design Guidelines: tabs](https://material.io/components/tabs/)
 
- * The easiest way to try out mwc-tab is to use one of these online tools:
+[Demo](https://material-components.github.io/material-components-web-components/demos/tabs/)
 
-    * Runs in all [supported](#supported-browsers) browsers: [StackBlitz](https://stackblitz.com/edit/mwc-icon-example?file=index.js), [Glitch](https://glitch.com/edit/#!/mwc-icon-example?path=index.html)
+## Installation
 
-    * Runs in browsers with [JavaScript Modules](https://caniuse.com/#search=modules): [JSBin](http://jsbin.com/qibisux/edit?html,output),
-    [CodePen](https://codepen.io/azakus/pen/deZLja).
+```sh
+npm install @material/mwc-tab
+```
 
-* You can also copy [this HTML file](https://gist.githubusercontent.com/azakus/f01e9fc2ed04e781ad5a52ded7b296e7/raw/266f2f4f91cbfe89b2acc6ec63957b1a3cfe9b39/index.html) into a local file and run it in any browser that supports [JavaScript Modules]((https://caniuse.com/#search=modules)).
+> NOTE: The Material Web Components are distributed as ES2017 JavaScript
+> Modules, and use the Custom Elements API. They are compatible with all modern
+> browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
+> tooling step is required to resolve *bare module specifiers*, as well as
+> transpilation and polyfills for IE11. See
+> [here](https://github.com/material-components/material-components-web-components#quick-start)
+> for detailed instructions.
 
-* When you're ready to use mwc-tab in a project, install it via [npm](https://www.npmjs.com/). To run the project in the browser, a module-compatible toolctain is required. We recommend installing the [Polymer CLI](https://github.com/Polymer/polymer-cli) and using its development server as follows.
+## Example usage
 
-  1. Ensure the webcomponents polyfills are included in your HTML page
+For usage please see [mwc-tab-bar](https://github.com/material-components/material-components-web-components/tree/master/packages/tab-bar)
 
-      - Install webcomponents polyfills
+## API
 
-          ```npm i @webcomponents/webcomponentsjs```
+### Slots
 
-      - Add webcomponents polyfills to your HTML page
+| Name              |	Description
+| ----------------- | -------------
+| `icon`            |	Slotted icon to display. Only available if `hasImageIcon` or `icon` are defined.
 
-          ```<script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>```
+### Properties/Attributes
 
-  1. Add mwc-tab to your project:
+| Name                  | Type      | Default | Description
+| --------------------- | --------- | ------- | -----------
+| `label`               | `string`  | `''`    | Text label to display in tab.
+| `icon`                | `string`  | `''`    | Material design icon name to display (overridden by slotted icon).
+| `hasImageIcon`        | `boolean` | `false` | Displays a slot to show an image icon.
+| `indicatorIcon`       | `string`  | `''`    | Material design icon name to display as the indicator.
+| `isFadingIndicator`   | `boolean` | `false` | Indicator fades in and out instead of sliding.
+| `minWidth`            | `boolean` | `false` | Shrinks tab as narrow as possible without causing text to wrap.
+| `isMinWidthIndicator` | `boolean` | `false` | Shrinks indicator to be the size of the content.
+| `stacked`             | `boolean` | `false` | Stacks icon on top of label text.
+| `active`              | `boolean` (readonly) | `false` | Indicates whether the tab's indicator is active.
 
-      ```npm i @material/mwc-tab```
 
-  1. Import the mwc-tab definition into your HTML page:
+### Methods
 
-      ```<script type="module" src="@material/mwc-tab/index.js"></script>```
+| Name     | Description
+| -------- | -------------
+| `activate() => void` | Activates the indicator.
+| `deactivate() => void` | Deactivates the indicator.
+| `computeDimensions() => MDCTabDimensions`\* | Computes the dimensions of the content.
+| `computeIndicatorClientRect() => ClientRect` | Computes the dimensions of the indicator.
 
-      Or into your module script:
+\* See MDC's [`Tab` types](https://github.com/material-components/material-components-web/blob/master/packages/mdc-tab/types.ts#L29) for definition.
 
-      ```import {Tab} from "@material/mwc-tab"```
+### Events
 
-  1. Create an instance of mwc-tab in your HTML page, or via any framework that [supports rendering Custom Elements](https://custom-elements-everywhere.com/):
+| Event Name | Target             | Detail             | Description
+| ---------- | ------------------ | ------------------ | -----------
+| `MDCTab:interacted` | `mwc-tab` | `{tabId: string}`  | Emitted when the Tab is interacted with, regardless of its active state. Used by parent components to know which Tab to activate.
 
-      ```<mwc-tab>sentiment_very_satisfied</mwc-tab>```
+### CSS Custom Properties
 
-  1. Install the Polymer CLI:
+Name                                 | Default                                                  | Description
+------------------------------------ | -------------------------------------------------------- | -----------
+`--mdc-theme-primary`                | ![](images/color_6200ee.png) `#6200ee`               | Color of the activated tab's text, indicator, and ripple.
+`--mdc-theme-secondary`              | ![](images/color_018786.png) `#018786`               | Color of the indicator icon if defined.
+`--mdc-icon-font`                    | `"Material Icons"`                                       | Icon font to use for `icon` and `indicatorIcon`.
+`--mdc-icon-size`                    | `24px`                                                   | Size of the text icon.
+`--mdc-tab-height`                   | `48px`                                                   | Height of the tab.
+`--mdc-tab-horizontal-padding`       | `24px`                                                   | Horizontal padding on either side of the tab.
+`--mdc-tab-stacked-height`           | `72px`                                                   | Height of the tab's stacked variant.
+`--mdc-tab-border-radius`            | `0px`                                                    | Tab's border radius (does not clip indicator).
+`--mdc-tab-text-label-color-default` | ![](images/color_0,0,0,60.png) `rgba(0, 0, 0, 0.6)`  | Color of an unactivated tab label.
+`--mdc-tab-color-default`            | ![](images/color_0,0,0,54.png) `rgba(0, 0, 0, 0.54)` | Color of an unactivated icon.
 
-      ```npm i -g polymer-cli```
+## Additional references
 
-  1. Run the development server and open a browser pointing to its URL:
-
-      ```polymer serve```
-
-  > mwc-tab is published on [npm](https://www.npmjs.com/package/@material/mwc-tab) using JavaScript Modules.
-  This means it can take advantage of the standard native JavaScript module loader available in all current major browsers.
-  >
-  > However, since mwc-tab uses npm convention to reference dependencies by name, a light transform to rewrite specifiers to URLs is required to get it to run in the browser. The polymer-cli's development server `polymer serve` automatically handles this transform.
-
-  Tools like [WebPack](https://webpack.js.org/) and [Rollup](https://rollupjs.org/) can also be used to serve and/or bundle mwc-tab.
-
-## Supported Browsers
-
-The last 2 versions of all modern browsers are supported, including
-Chrome, Safari, Opera, Firefox, Edge. In addition, Internet Explorer 11 is also supported.
+- [MDC Web tabs](https://material.io/components/tabs/)

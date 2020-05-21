@@ -1,0 +1,25 @@
+name: Build and Deploy Demos
+on:
+  push:
+    branches: master
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+            node-version: 10
+
+      - name: Install and Build
+        run: |
+          npm install
+          npm run build
+          npm run build:demos
+
+      - name: Deploy Demos
+        uses: JamesIves/github-pages-deploy-action@3.4.9
+        with:
+          ACCESS_TOKEN: ${{ secrets.TEDIUM_BOT_GITHUB_ACCESS_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: dist

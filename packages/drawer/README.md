@@ -6,6 +6,8 @@ The Navigation Drawer is used to organize access to destinations and other funct
 
 [Material Design Guidelines: Navigation Drawer](https://material.io/components/navigation-drawer/)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/drawer/)
+
 ## Installation
 
 ```sh
@@ -16,7 +18,7 @@ npm install @material/mwc-drawer
 > Modules, and use the Custom Elements API. They are compatible with all modern
 > browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
 > tooling step is required to resolve *bare module specifiers*, as well as
-> transpilation and polyfills for Edge and IE11. See
+> transpilation and polyfills for IE11. See
 > [here](https://github.com/material-components/material-components-web-components#quick-start)
 > for detailed instructions.
 
@@ -128,19 +130,23 @@ Name | Type | Default | Description
 ---- | ---- | ------- | -----------
 `open` | `boolean` | `false` | Whether the dialog is open
 `hasHeader` | `boolean` | `false` | When `true`, displays the `title`, `subtitle`, and `header` slots.
-`type` | `string` | `string` | When set to `'dismissible'`, overlays the drawer on the content. When set to `'modal'`, also adds a scrim when the drawer is open.
+`type` | `string` | `''` | When set to `'dismissible'`, overlays the drawer on the content. When set to `'modal'`, also adds a scrim when the drawer is open. When set to empty string, it is inlined with the page and displaces app content.
 
 ### Methods
 *None*
 
 ### Events
+
 Name | Detail | Description
 ---- | ------ | -----------
 `MDCDrawer:opened` | `{}` | Fired when the drawer opens.
 `MDCDrawer:closed` | `{}` | Fired when the drawer closes.
 
 ### CSS Custom Properties
-*None*
+
+| Name                 | Default   | Description
+| -------------------- | --------- | -----------
+| `--mdc-drawer-width` | `256px`   | Width of the side drawer when opened.
 
 ### Additional References
 

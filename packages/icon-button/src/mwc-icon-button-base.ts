@@ -17,6 +17,7 @@ limitations under the License.
 import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 import {html, LitElement, property} from 'lit-element';
 
+/** @soyCompatible */
 export class IconButtonBase extends LitElement {
   @property({type: Boolean, reflect: true}) disabled = false;
 
@@ -24,6 +25,7 @@ export class IconButtonBase extends LitElement {
 
   @property({type: String}) label = '';
 
+  /** @soyCompatible */
   protected render() {
     return html`<button
     .ripple="${ripple()}"

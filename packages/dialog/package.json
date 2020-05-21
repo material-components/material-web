@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-dialog",
-  "version": "0.12.0",
+  "version": "0.15.0",
   "description": "",
   "main": "mwc-dialog.js",
   "module": "mwc-dialog.js",
@@ -15,12 +15,12 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/dialog": "=5.0.0-canary.d8d95020f.0",
-    "@material/dom": "=5.0.0-canary.d8d95020f.0",
-    "@material/mwc-base": "^0.12.0",
-    "@material/touch-target": "=5.0.0-canary.d8d95020f.0",
+    "@material/dialog": "=7.0.0-canary.e3eacefcc.0",
+    "@material/dom": "=7.0.0-canary.e3eacefcc.0",
+    "@material/mwc-base": "^0.15.0",
+    "@material/touch-target": "=7.0.0-canary.e3eacefcc.0",
     "blocking-elements": "^0.1.0",
-    "lit-element": "^2.2.1",
+    "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0",
     "wicg-inert": "^3.0.0"

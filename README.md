@@ -4,17 +4,23 @@
 
 The Material Web Components (MWC) are a collection of [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) maintained by Google that implement [Material Design](https://material.io/design/).
 
+[API demos](https://material-components.github.io/material-components-web-components/demos/index.html)
+
+[Sandbox demo on Glitch](https://mwc-demos.glitch.me/)
+
+[Contributing Guide](#Contributing)
+
 ## Components
 
 | Component | Status | Issues
 | ----------| ------ | ------
 | [`<mwc-button>`](https://github.com/material-components/material-components-web-components/tree/master/packages/button) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-button.svg)](https://www.npmjs.com/package/@material/mwc-button) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Button%22)
-| `<mwc-bottom-app-bar>` | [*Planned*](https://github.com/material-components/material-components-web-components/issues/298) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Bottom+App+Bar%22)
-| `<mwc-card>` | [*Planned*](https://github.com/material-components/material-components-web-components/issues/231) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Card%22)
+| `<mwc-bottom-app-bar>` | [*Start in Q3-2020*](https://github.com/material-components/material-components-web-components/issues/298) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Bottom+App+Bar%22)
+| `<mwc-card>` | [*Start in Q3-2020*](https://github.com/material-components/material-components-web-components/issues/231) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Card%22)
 | [`<mwc-checkbox>`](https://github.com/material-components/material-components-web-components/tree/master/packages/checkbox) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-checkbox.svg)](https://www.npmjs.com/package/@material/mwc-fab) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Checkbox%22)
-| `<mwc-chip>` | [*Planned*](https://github.com/material-components/material-components-web-components/issues/418) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Chip%22)
-| `<mwc-circular-progress>` | [*Planned*](https://github.com/material-components/material-components-web-components/issues/500) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Circular+Progress%22)
-| `<mwc-data-table>` | [*Planned*](https://github.com/material-components/material-components-web-components/issues/386) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Data+Table%22)
+| `<mwc-chip>` | [*Start in Q3-2020*](https://github.com/material-components/material-components-web-components/issues/418) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Chip%22)
+| `<mwc-circular-progress>` | [*Start in Q3-2020*](https://github.com/material-components/material-components-web-components/issues/500) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Circular+Progress%22)
+| `<mwc-data-table>` | [*Start in Q3-2020*](https://github.com/material-components/material-components-web-components/issues/386) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Data+Table%22)
 | [`<mwc-dialog>`](https://github.com/material-components/material-components-web-components/tree/master/packages/dialog) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-dialog.svg)](https://www.npmjs.com/package/@material/mwc-dialog) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Dialog%22)
 | [`<mwc-drawer>`](https://github.com/material-components/material-components-web-components/tree/master/packages/drawer) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-drawer.svg)](https://www.npmjs.com/package/@material/mwc-drawer) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Drawer%22)
 | [`<mwc-fab>`](https://github.com/material-components/material-components-web-components/tree/master/packages/fab) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-fab.svg)](https://www.npmjs.com/package/@material/mwc-fab) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Fab%22)
@@ -23,10 +29,10 @@ The Material Web Components (MWC) are a collection of [Web Components](https://d
 | [`<mwc-icon-button>`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon-button) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-icon-button.svg)](https://www.npmjs.com/package/@material/mwc-icon-button) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Icon+Button%22)
 | [`<mwc-icon>`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-icon.svg)](https://www.npmjs.com/package/@material/mwc-icon) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Icon%22)
 | [`<mwc-linear-progress>`](https://github.com/material-components/material-components-web-components/tree/master/packages/linear-progress) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-linear-progress.svg)](https://www.npmjs.com/package/@material/mwc-linear-progress) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Linear+Progress%22)
-| `<mwc-list>` | [*Planned*](https://github.com/material-components/material-components-web-components/issues/190) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+List%22)
-| `<mwc-menu>` | [*Planned*](https://github.com/material-components/material-components-web-components/issues/212) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aopen+is%3Aissue+label%3A%22Component%3A+Menu%22)
+| [`<mwc-list>`](https://github.com/material-components/material-components-web-components/tree/master/packages/list) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-list.svg)](https://www.npmjs.com/package/@material/mwc-list)  | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+List%22)
+| [`<mwc-menu>`](https://github.com/material-components/material-components-web-components/tree/master/packages/menu) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-menu.svg)](https://www.npmjs.com/package/@material/mwc-menu) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aopen+is%3Aissue+label%3A%22Component%3A+Menu%22)
 | [`<mwc-radio>`](https://github.com/material-components/material-components-web-components/tree/master/packages/radio) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-radio.svg)](https://www.npmjs.com/package/@material/mwc-radio) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Radio%22)
-| `<mwc-select>` | [*Planned*](https://github.com/material-components/material-components-web-components/issues/315) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Select%22)
+| [`<mwc-select>`](https://github.com/material-components/material-components-web-components/tree/master/packages/select) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-select.svg)](https://www.npmjs.com/package/@material/mwc-select) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Select%22)
 | [`<mwc-slider>`](https://github.com/material-components/material-components-web-components/tree/master/packages/slider) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-slider.svg)](https://www.npmjs.com/package/@material/mwc-slider) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Slider%22)
 | [`<mwc-snackbar>`](https://github.com/material-components/material-components-web-components/tree/master/packages/snackbar) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-snackbar.svg)](https://www.npmjs.com/package/@material/mwc-snackbar) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Snackbar%22)
 | [`<mwc-switch>`](https://github.com/material-components/material-components-web-components/tree/master/packages/switch) | [![Published on npm](https://img.shields.io/npm/v/@material/mwc-switch.svg)](https://www.npmjs.com/package/@material/mwc-switch) | [*Issues*](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Component%3A+Switch%22)
@@ -128,15 +134,15 @@ Note that if you load the Material Icons font in a different way to the recommen
 
 ## Supporting older browsers
 
-The Material Web Components use modern browser features that are natively supported in the latest versions of Chrome, Safari, and Firefox. Edge, IE11, and some older versions of other browsers are also supported, but they require additional build steps and polyfills.
+The Material Web Components use modern browser features that are natively supported in the latest versions of Chrome, Safari, Firefox, and Edge. IE11 and some older versions of other browsers are also supported, but they require additional build steps and polyfills.
 
 <table>
   <tr>
     <th><i>Feature</i></th>
     <th><img src="images/chrome.png" width="20px" height="20px"><br>Chrome</th>
     <th><img src="images/safari.png" width="20px" height="20px"><br>Safari</th>
-    <th><img src="images/firefox.png" width="19px" height="20px"><br>Firefox</th>
-    <th><img src="images/edge.png" width="19px" height="20px"><br>Edge</th>
+    <th><img src="images/firefox.png" width="20px" height="20px"><br>Firefox</th>
+    <th><img src="images/edge.png" width="20px" height="20px"><br>Edge</th>
     <th><img src="images/ie.png" width="20px" height="20px"><br>IE11</th>
   </tr>
   <tr>
@@ -144,7 +150,7 @@ The Material Web Components use modern browser features that are natively suppor
     <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
     <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
     <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
-    <td class="ie11"><img src="images/orange-check.png" width="20px" height="20px"class="check" alt="Polyfill"> <a href="#web-components">*</a></td>
+    <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
     <td class="ie11"><img src="images/orange-check.png" width="20px" height="20px"class="check" alt="Polyfill"> <a href="#web-components">*</a></td>
   </tr>
  <tr>
@@ -152,7 +158,7 @@ The Material Web Components use modern browser features that are natively suppor
     <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
     <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
     <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
-    <td class="ie11"><img src="images/orange-check.png" width="20px" height="20px"class="check" alt="Transform"> <a href="#modules">*</a></td>
+    <td><img src="images/check-green.png" width="20px" height="20px"class="check" alt="Yes"></td>
     <td class="ie11"><img src="images/orange-check.png" width="20px" height="20px"class="check" alt="Transform"> <a href="#modules">*</a></td>
   </tr>
  <tr>
@@ -167,7 +173,7 @@ The Material Web Components use modern browser features that are natively suppor
 
 #### Web Components
 
-To support Web Components in Edge, IE11, and other older browsers, install the [Web Components Polyfills](https://github.com/webcomponents/polyfills/tree/master/packages/webcomponentsjs):
+To support Web Components in IE11 and other older browsers, install the [Web Components Polyfills](https://github.com/webcomponents/polyfills/tree/master/packages/webcomponentsjs):
 
 ```sh
 npm install @webcomponents/webcomponentsjs
@@ -176,13 +182,13 @@ npm install @webcomponents/webcomponentsjs
 And include the `webcomponents-loader.js` script in your HTML, which detects when polyfills are needed and loads them automatically:
 
 ```html
-<!-- Add support for Web Components to Edge and IE11. -->
+<!-- Add support for Web Components to IE11. -->
 <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
 ```
 
 #### Modules
 
-To support Edge, IE11, or other older browsers that do not support JavaScript modules, you must transform JavaScript modules to classic JavaScript scripts. [Rollup](https://rollupjs.org/guide/en/) is a popular tool that can consume JavaScript modules and produce a number of other formats, such as AMD. Be sure to use the [`rollup-plugin-node-resolve`](https://github.com/rollup/rollup-plugin-node-resolve) plugin to resolve *bare module specifiers*, as mentioned [above](#bare-module-specifiers).
+To support IE11 or other older browsers that do not support JavaScript modules, you must transform JavaScript modules to classic JavaScript scripts. [Rollup](https://rollupjs.org/guide/en/) is a popular tool that can consume JavaScript modules and produce a number of other formats, such as AMD. Be sure to use the [`rollup-plugin-node-resolve`](https://github.com/rollup/rollup-plugin-node-resolve) plugin to resolve *bare module specifiers*, as mentioned [above](#bare-module-specifiers).
 
 #### ES2015
 
@@ -216,4 +222,29 @@ Run tests for a specific component:
 
 ```sh
 npm run test -- --packages=mwc-button
+```
+
+Run benchmarks for a specific component:
+
+```sh
+npm run test:bench -- --package list
+```
+
+Advanced developer workflow:
+
+```sh
+npm install
+
+# (persistent) build source files on change
+npm run watch
+
+# another terminal (persistent) - viewing auto-reload demos
+npm run dev -- --watch -p <optional port>
+
+# for testing:
+# another terminal (persistent) - build tests (must run after normal watch)
+npm run watch:tests
+
+# another terminal (persistent) - debug tests
+npm run test:debug -- --autoWatch --packages <comma sepaarated package names> # e.g. mwc-switch,mwc-text*
 ```

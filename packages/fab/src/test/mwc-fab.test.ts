@@ -18,7 +18,7 @@
 import {Fab} from '@material/mwc-fab';
 
 const ICON_SELECTOR = '.mdc-fab__icon';
-
+const LABEL_SELECTOR = '.mdc-fab__label';
 
 suite('mwc-fab', () => {
   let element: Fab;
@@ -89,4 +89,75 @@ suite('mwc-fab', () => {
         button = element.shadowRoot!.querySelector('button')!;
         assert.equal(button.getAttribute('aria-label'), 'check');
       });
+
+  test('setting `mini` sets the correct inner class', async () => {
+    await element.updateComplete;
+    const miniClass = 'mdc-fab--mini';
+    const button = element.shadowRoot!.querySelector('.mdc-fab')!;
+    assert.isFalse(button.classList.contains(miniClass));
+    element.mini = true;
+    await element.updateComplete;
+    assert.isTrue(button.classList.contains(miniClass));
+  });
+
+  test('setting `exited` sets the correct inner class', async () => {
+    await element.updateComplete;
+    const exitedClass = 'mdc-fab--exited';
+    const button = element.shadowRoot!.querySelector('.mdc-fab')!;
+    assert.isFalse(button.classList.contains(exitedClass));
+    element.exited = true;
+    await element.updateComplete;
+    assert.isTrue(button.classList.contains(exitedClass));
+  });
+
+  test('setting `extended` sets the correct inner class', async () => {
+    await element.updateComplete;
+    const extendedClass = 'mdc-fab--extended';
+    const button = element.shadowRoot!.querySelector('.mdc-fab')!;
+    assert.isFalse(button.classList.contains(extendedClass));
+    element.extended = true;
+    await element.updateComplete;
+    assert.isTrue(button.classList.contains(extendedClass));
+  });
+
+  test('displays label only if extended', async () => {
+    await element.updateComplete;
+    let label = element.shadowRoot!.querySelector(LABEL_SELECTOR);
+    assert.equal(label, null);
+    element.label = 'foo';
+    await element.updateComplete;
+    label = element.shadowRoot!.querySelector(LABEL_SELECTOR);
+    assert.equal(label, null);
+    element.extended = true;
+    await element.updateComplete;
+    label = element.shadowRoot!.querySelector(LABEL_SELECTOR);
+    assert.instanceOf(label, Element);
+    assert.equal(label!.textContent, 'foo');
+  });
+
+  test('`showIconAtEnd` displays icon after label', async () => {
+    element.icon = 'check';
+    element.label = 'foo';
+    element.extended = true;
+    element.showIconAtEnd = false;
+    await element.updateComplete;
+
+    const root = element.shadowRoot!.querySelector('.mdc-fab')!;
+    const LABEL_CLASS = 'mdc-fab__label';
+    const ICON_CLASS = 'mdc-fab__icon';
+
+    const children = root.children;
+
+    assert.equal(children.length, 3);
+    assert.isTrue(children[1].querySelector(ICON_SELECTOR)!.classList.contains(
+        ICON_CLASS));
+    assert.isTrue(children[2].classList.contains(LABEL_CLASS));
+
+    element.showIconAtEnd = true;
+    await element.updateComplete;
+
+    assert.isTrue(children[2].querySelector(ICON_SELECTOR)!.classList.contains(
+        ICON_CLASS));
+    assert.isTrue(children[1].classList.contains(LABEL_CLASS));
+  });
 });

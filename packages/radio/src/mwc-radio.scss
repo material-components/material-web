@@ -15,9 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/radio/mdc-radio.scss';
+@use '@material/radio';
+@use '@material/ripple';
 
-@include mdc-ripple-common(mdc-feature-all());
+@include radio.core-styles();
+@include ripple.common();
 
 :host {
   display: inline-block;
@@ -26,8 +28,8 @@ limitations under the License.
 
 .mdc-radio {
   vertical-align: bottom;
-  @include mdc-radio-unchecked-stroke-color(var(--mdc-radio-unchecked-color, #{$mdc-radio-unchecked-color}));
-  @include mdc-radio-disabled-unchecked-stroke-color(var(--mdc-radio-disabled-color, #{$mdc-radio-disabled-circle-color}));
-  @include mdc-radio-disabled-checked-stroke-color(var(--mdc-radio-disabled-color, #{$mdc-radio-disabled-circle-color}));
-  @include mdc-radio-disabled-ink-color(var(--mdc-radio-disabled-color, #{$mdc-radio-disabled-circle-color}));
+  @include radio.unchecked-stroke-color(var(--mdc-radio-unchecked-color, #{radio.$unchecked-color}));
+  @include radio.disabled-unchecked-stroke-color(var(--mdc-radio-disabled-color, #{radio.$disabled-circle-color}));
+  @include radio.disabled-checked-stroke-color(var(--mdc-radio-disabled-color, #{radio.$disabled-circle-color}));
+  @include radio.disabled-ink-color(var(--mdc-radio-disabled-color, #{radio.$disabled-circle-color}));
 }

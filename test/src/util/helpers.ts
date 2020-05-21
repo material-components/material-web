@@ -17,6 +17,10 @@ limitations under the License.
 import {customElement, html, LitElement, property} from 'lit-element';
 import {render, TemplateResult} from 'lit-html';
 
+interface HasKeyCode {
+  keyCode: number;
+}
+
 declare global {
   interface Window {
     tachometerResult: undefined|number;
@@ -40,14 +44,14 @@ export class TestFixture extends LitElement {
   }
 
   get root(): ShadowRoot {
-    return this.shadowRoot!;
+    return this.shadowRoot as ShadowRoot;
   }
 
   attachContents(options = {awaitRender: false}) {
     this.shouldAttachContents = true;
 
     if (options.awaitRender) {
-      const rendered = new Promise(res => {
+      const rendered = new Promise((res) => {
         requestAnimationFrame(res);
       });
 
@@ -61,7 +65,7 @@ export class TestFixture extends LitElement {
     this.shouldAttachContents = false;
 
     if (options.awaitRender) {
-      const rendered = new Promise(res => {
+      const rendered = new Promise((res) => {
         requestAnimationFrame(res);
       });
 
@@ -80,12 +84,14 @@ export class TestFixture extends LitElement {
 
 const defaultOpts = {
   shouldAttachContents: true,
-  document: document
+  document: document,
+  afterRender: null,
 };
 
 interface FixtureOptions {
   shouldAttachContents: boolean;
   document: Document;
+  afterRender: ((root: ShadowRoot) => Promise<void>)|null;
 }
 
 export const fixture =
@@ -101,6 +107,10 @@ export const fixture =
     await tf.updateComplete;
   }
 
+  if (opts.afterRender) {
+    await opts.afterRender(tf.root);
+  }
+
   return tf;
 };
 
@@ -112,12 +122,11 @@ interface MeasureFixtureCreationOpts {
 
 const defaultMeasureOpts = {
   numRenders: 10,
-}
+};
 
-export const measureFixtureCreation =
-    async (
-        template: TemplateResult,
-        options?: Partial<MeasureFixtureCreationOpts>) => {
+export const measureFixtureCreation = async (
+    template: TemplateResult,
+    options?: Partial<MeasureFixtureCreationOpts>) => {
   const opts: MeasureFixtureCreationOpts = {...defaultMeasureOpts, ...options};
   const templates = new Array<TemplateResult>(opts.numRenders).fill(template);
   const renderContainer = document.createElement('div');
@@ -125,7 +134,7 @@ export const measureFixtureCreation =
 
   document.body.appendChild(renderContainer);
 
-  await new Promise(async res => {
+  await new Promise(async (res) => {
     performance.mark('measureFixture-start');
     render(templates, renderTargetRoot);
     const firstChild = renderTargetRoot.firstElementChild;
@@ -140,7 +149,7 @@ export const measureFixtureCreation =
       await (firstChild as LitElement).updateComplete;
       document.body.offsetWidth;
     } else {
-      await new Promise(res => requestAnimationFrame(res));
+      await new Promise((res) => requestAnimationFrame(res));
       document.body.offsetWidth;
     }
 
@@ -153,7 +162,7 @@ export const measureFixtureCreation =
   })
       .then(
           // this adds an extra microtask and awaits any trailing async updates
-          async () => {});
+          async () => undefined);
 
   performance.mark('measureFixture-end');
   performance.measure(
@@ -163,8 +172,44 @@ export const measureFixtureCreation =
   window.tachometerResult = duration;
 
   return renderTargetRoot;
-}
+};
 
-export const rafPromise = async () => new Promise(res => {
+export const rafPromise = async () => new Promise((res) => {
   requestAnimationFrame(res);
 });
+
+export class Fake<TArgs extends any[], TReturn> {
+  public calls: Array<{args: TArgs}> = [];
+  public get called(): boolean {
+    return this.calls.length > 0;
+  }
+  public get callCount(): number {
+    return this.calls.length;
+  }
+  public returnValue?: TReturn;
+  public handler: (...args: TArgs) => TReturn;
+
+  public constructor() {
+    this.handler = (...args: TArgs) => {
+      this.calls.push({args});
+      return this.returnValue as TReturn;
+    };
+  }
+}
+
+export const waitForEvent = (el: Element, ev: string) => new Promise((res) => {
+  el.addEventListener(ev, () => {
+    res();
+  }, {once: true});
+});
+
+export const ieSafeKeyboardEvent = (type: string, keycode: number) => {
+  // IE es5 fix
+  const init = {detail: 0, bubbles: true, cancelable: true, composed: true};
+  const ev = new CustomEvent(type, init);
+
+  // esc key
+  (ev as unknown as HasKeyCode).keyCode = keycode;
+
+  return ev;
+}

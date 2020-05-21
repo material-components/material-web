@@ -21,22 +21,22 @@ jobs:
     - name: Lerna bootstrap
       run: npm run bootstrap
 
+    - name: Check format
+      run: npm run format:check
+
     - name: Build component Sass
       run: npm run build:styling
 
     - name: Compile component TypeScript
       run: npm run build:typescript
 
-    - name: Compile test TypeScript
-      run: npm run build:tests
-
     # TODO(aomarks) Once b/144957560 is fixed, move lint and format into their
     # own workflows or jobs so that they can run in parallel.
     - name: Check lint
       run: npm run lint
 
-    - name: Check format
-      run: npm run format:check
+    - name: Compile test TypeScript
+      run: npm run build:tests
 
     - name: Unit tests
       env:

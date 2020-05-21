@@ -18,14 +18,13 @@ limitations under the License.
 import '@material/mwc-tab-indicator';
 
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
+import {observer} from '@material/mwc-base/observer.js';
 import {ripple} from '@material/mwc-ripple/ripple-directive';
 import {TabIndicator} from '@material/mwc-tab-indicator';
 import {MDCTabAdapter} from '@material/tab/adapter';
 import MDCTabFoundation from '@material/tab/foundation';
 import {html, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
-
-import {style} from './mwc-tab-css';
+import {classMap} from 'lit-html/directives/class-map.js';
 
 // used for generating unique id for each tab
 let tabIdCounter = 0;
@@ -60,7 +59,16 @@ export class TabBase extends BaseElement {
 
   @property({type: Boolean}) stacked = false;
 
+  @observer(async function(this: TabBase, value: boolean) {
+    await this.updateComplete;
+    this.mdcFoundation.setFocusOnActivate(value);
+  })
+  @property({type: Boolean})
+  focusOnActivate = true;
+
   protected _active = false;
+
+  protected initFocus = false;
 
   /**
    * Other properties
@@ -86,8 +94,6 @@ export class TabBase extends BaseElement {
     super.connectedCallback();
   }
 
-  static styles = style;
-
   protected firstUpdated() {
     super.firstUpdated();
     // create an unique id
@@ -105,7 +111,7 @@ export class TabBase extends BaseElement {
       // NOTE: MUST be on same line as spaces will cause vert alignment issues
       // in IE
       iconTemplate = html`
-        <span class="mdc-tab__icon material-icons"><slot>${
+        <span class="mdc-tab__icon material-icons"><slot name="icon">${
           this.icon}</slot></span>`;
     }
 
@@ -165,11 +171,21 @@ export class TabBase extends BaseElement {
       getOffsetWidth: () => this.mdcRoot.offsetWidth,
       getContentOffsetLeft: () => this._contentElement.offsetLeft,
       getContentOffsetWidth: () => this._contentElement.offsetWidth,
-      focus: () => this.mdcRoot.focus(),
+      focus: () => {
+        if (this.initFocus) {
+          this.initFocus = false;
+        } else {
+          this.mdcRoot.focus();
+        }
+      },
     };
   }
 
   activate(clientRect: ClientRect) {
+    // happens only on initialization. We don't want to focus to prevent scroll
+    if (!clientRect) {
+      this.initFocus = true;
+    }
     this.mdcFoundation.activate(clientRect);
     this.setActive(this.mdcFoundation.isActive());
   }

@@ -15,20 +15,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import "@material/animation/variables";
-@import "@material/base/mixins";
-@import "@material/rtl/mixins";
-@import "@material/theme/variables";
-@import "@material/theme/mixins";
-@import "@material/typography/mixins";
-@import "@material/floating-label/mixins";
-@import "@material/floating-label/variables";
+@use "@material/animation";
+@use "@material/base";
+@use "@material/rtl";
+@use "@material/typography";
+@use "@material/floating-label" as floatinglabel;
 
 // Floating Label is intended for use by multiple components, but its styles should only be emitted once when bundled
-@include mdc-base-emit-once("mdc-floating-label") {
+@include base.emit-once("mdc-floating-label") {
   // postcss-bem-linter: define floating-label
   :host {
-    @include mdc-typography(subtitle1);
+    @include typography.typography(subtitle1);
 
     position: absolute;
     /* @noflip */
@@ -36,8 +33,8 @@ limitations under the License.
     /* @noflip */
     transform-origin: left top;
     transition:
-      transform $mdc-floating-label-transition-duration $mdc-animation-standard-curve-timing-function,
-      color $mdc-floating-label-transition-duration $mdc-animation-standard-curve-timing-function;
+      transform floatinglabel.$transition-duration animation.$standard-curve-timing-function,
+      color floatinglabel.$transition-duration animation.$standard-curve-timing-function;
     /* @alternate */
     line-height: 1.15rem;
     text-align: left;
@@ -49,7 +46,7 @@ limitations under the License.
     // when the ripple is activated behind it.
     will-change: transform;
 
-    @include mdc-rtl {
+    @include rtl.rtl() {
       /* @noflip */
       right: 0;
       /* @noflip */
@@ -66,9 +63,9 @@ limitations under the License.
   }
 
   @at-root {
-    @include mdc-floating-label-float-position($mdc-floating-label-position-y);
-    @include mdc-floating-label-shake-animation(standard);
+    @include floatinglabel.float-position(floatinglabel.$position-y);
+    @include floatinglabel.shake-animation(standard);
   }
 
-  @include mdc-floating-label-shake-keyframes(standard, $mdc-floating-label-position-y);
+  @include floatinglabel.shake-keyframes(standard, floatinglabel.$position-y);
 }

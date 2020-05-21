@@ -18,7 +18,8 @@ limitations under the License.
 import '@material/mwc-tab';
 import '@material/mwc-tab-scroller';
 
-import {BaseElement, observer} from '@material/mwc-base/base-element.js';
+import {BaseElement} from '@material/mwc-base/base-element.js';
+import {observer} from '@material/mwc-base/observer.js';
 import {Tab} from '@material/mwc-tab';
 import {TabScroller} from '@material/mwc-tab-scroller';
 import {MDCTabBarAdapter} from '@material/tab-bar/adapter';
@@ -39,15 +40,17 @@ export class TabBarBase extends BaseElement {
   // tabsSlot should have type HTMLSlotElement, but when TypeScript's
   // emitDecoratorMetadata is enabled, the HTMLSlotElement constructor will
   // be emitted into the runtime, which will cause an "HTMLSlotElement is
-  // undefined" error in browsers that don't define it (e.g. Edge and IE11).
+  // undefined" error in browsers that don't define it (e.g. IE11).
   @query('slot') protected tabsSlot!: HTMLElement;
 
-  @observer(async function(this: TabBarBase, value: number) {
+  @observer(async function(this: TabBarBase) {
     await this.updateComplete;
     // only provoke the foundation if we are out of sync with it, i.e.
     // ignore an foundation generated set.
-    if (value !== this._previousActiveIndex) {
-      this.mdcFoundation.activateTab(value);
+    // use `activeIndex` directly to avoid staleness if it was set before the
+    // first render.
+    if (this.activeIndex !== this._previousActiveIndex) {
+      this.mdcFoundation.activateTab(this.activeIndex);
     }
   })
   @property({type: Number})

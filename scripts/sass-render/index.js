@@ -29,10 +29,21 @@ const delim = /<%\s*content\s*%>/;
 async function sassToCss(sassFile) {
   const result = await renderSass({
     file: sassFile,
-    importer: nodeSassImport,
+    importer: (url, ...otherArgs) => {
+      if (url.split('/').length === 2) {
+        url += '/_index.scss';
+      }
+      return nodeSassImport(url, ...otherArgs);
+    },
     outputStyle: 'compressed',
   });
-  return result.css.toString();
+    
+  // Strip any Byte Order Marking from output CSS
+  let cssStr = result.css.toString();
+  if (cssStr.charCodeAt(0) === 0xFEFF) {
+    cssStr = cssStr.substr(1);
+  }
+  return cssStr;
 }
 
 async function sassRender(sourceFile, templateFile, outputFile) {

@@ -1,0 +1,315 @@
+/**
+@license
+Copyright 2020 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+@use "@material/list";
+@use "@material/theme";
+@use "@material/rtl";
+@use "@material/typography";
+// name is transformed by copybara so `as` is needed
+@use "@material/feature-targeting" as featuretargeting;
+@use "@material/density";
+@use "@material/ripple";
+@use "sass:map";
+
+$query: featuretargeting.all();
+$feat-structure: featuretargeting.create-target($query, structure);
+$feat-color: featuretargeting.create-target($query, color);
+$feat-animation: featuretargeting.create-target($query, animation);
+$item-primary-text-baseline-height: 32px;
+$item-secondary-text-baseline-height: 20px;
+$dense-item-primary-text-baseline-height: 24px;
+
+@mixin graphic-size_($width, $height: $width) {
+  width: $width;
+  height: $height;
+
+  &.multi {
+    width: auto;
+  }
+
+  ::slotted(*) {
+    width: $width;
+    line-height: $height;
+  }
+
+  ::slotted(.material-icons),
+  ::slotted(mwc-icon) {
+    line-height: $height !important;
+  }
+}
+
+:host {
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  $height: density.prop-value(
+    $density-config: list.$single-line-density-config,
+    $density-scale: list.$single-line-density-scale,
+    $property-name: height,
+  );
+  @include list.single-line-height($height, $query: $query);
+  @include list.item-base_;
+
+  padding-left: var(--mdc-list-side-padding, 16px);
+  padding-right: var(--mdc-list-side-padding, 16px);
+
+  outline: none;
+
+  $height: density.prop-value(
+    $density-config: list.$single-line-density-config,
+    $density-scale: list.$single-line-density-scale,
+    $property-name: height,
+  );
+
+  @include list.single-line-height($height, $query: $query);
+  color: rgba(0,0,0,.87);
+  color: var(--mdc-theme-text-primary-on-background,rgba(0,0,0,.87));
+}
+
+// "Selected" is ephemeral and likely to change soon. E.g., selecting one or more photos to share in Google Photos.
+// "Activated" is more permanent. E.g., the currently highlighted navigation destination in a drawer.
+:host([activated]) {
+  @include list.item-primary-text-ink-color(primary, $query);
+  @include list.item-graphic-ink-color(primary, $query);
+
+  --mdc-ripple-color: var(--mdc-theme-primary, #{theme.prop-value(primary)});
+
+  .fake-activated-ripple::before {
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    content: "";
+    @include theme.prop(opacity, (
+      varname: --mdc-ripple-activated-opacity,
+      fallback: map.get(ripple.$dark-ink-opacities, activated)
+    ));
+    background-color: theme.prop-value(primary);
+    /** @alternate */
+    background-color: var(--mdc-ripple-color, var(--mdc-theme-primary, #{theme.prop-value(primary)}));
+  }
+}
+
+.mdc-list-item__graphic {
+  @include featuretargeting.targets($feat-structure) {
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    fill: currentColor;
+  }
+
+  @include featuretargeting.targets($feat-structure) {
+    display: inline-flex;
+  }
+
+  ::slotted(*) {
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    fill: currentColor;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  }
+}
+
+.mdc-list-item__meta {
+  @include graphic-size_(var(--mdc-list-item-meta-size, 24px));
+
+  // stylelint-disable selector-class-pattern
+  ::slotted(:not(.material-icons):not(mwc-icon)) {
+    @include typography.typography(caption, $query);
+  }
+  // stylelint-enable selector-class-pattern
+
+  @include featuretargeting.targets($feat-structure) {
+    @include rtl.reflexive-property(margin, auto, 0, ":host");
+  }
+
+  @include featuretargeting.targets($feat-color) {
+    @include theme.prop(color, text-hint-on-background);
+  }
+
+  ::slotted(*) {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.mdc-list-item__text {
+  @include typography.overflow-ellipsis($query);
+
+  // Disable interaction on label elements that may automatically
+  // toggle corresponding checkbox / radio input.
+  ::slotted([for]),
+  &[for] {
+    @include featuretargeting.targets($feat-structure) {
+      pointer-events: none;
+    }
+  }
+}
+
+.mdc-list-item__primary-text {
+  @include typography.overflow-ellipsis($query);
+  @include typography.text-baseline(
+    $top: $item-primary-text-baseline-height,
+    $bottom: $item-secondary-text-baseline-height,
+    $query: $query
+  );
+
+  @include featuretargeting.targets($feat-structure) {
+    display: block;
+  }
+}
+
+.mdc-list-item__secondary-text {
+  @include typography.typography(body2, $query);
+  @include typography.overflow-ellipsis($query);
+  @include typography.text-baseline(
+    $top: $item-secondary-text-baseline-height,
+    $query: $query
+  );
+
+  @include featuretargeting.targets($feat-structure) {
+    display: block;
+  }
+
+  // stylelint-disable plugin/selector-bem-pattern
+  .mdc-list--dense & {
+    @include featuretargeting.targets($feat-structure) {
+      font-size: inherit;
+    }
+  }
+  // stylelint-enable plugin/selector-bem-pattern
+}
+
+
+
+// Override anchor tag styles for the use-case of a list being used for navigation
+// stylelint-disable selector-max-type,selector-no-qualifying-type
+* ::slotted(a), a {
+  @include featuretargeting.targets($feat-structure) {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+:host([twoline]) {
+  .mdc-list-item__text {
+    @include featuretargeting.targets($feat-structure) {
+      align-self: flex-start;
+    }
+  }
+
+  @include featuretargeting.targets($feat-structure) {
+    height: 72px;
+  }
+}
+
+:host([disabled]),
+:host([noninteractive]) {
+  cursor: default;
+  pointer-events: none;
+}
+
+:host([disabled]) {
+  .mdc-list-item__text {
+    ::slotted(*) {
+      @include featuretargeting.targets($feat-color) {
+        opacity: list.$text-disabled-opacity;
+      }
+    }
+  }
+
+  .mdc-list-item__text,
+  .mdc-list-item__primary-text,
+  .mdc-list-item__secondary-text {
+    ::slotted(*) {
+      @include featuretargeting.targets($feat-color) {
+        @include theme.prop(color, list.$text-disabled-color);
+      }
+    }
+  }
+}
+
+.mdc-list-item__secondary-text ::slotted(*) {
+  @include featuretargeting.targets($feat-color) {
+    @include theme.prop(color, text-secondary-on-background);
+  }
+}
+
+.mdc-list-item__graphic ::slotted(*) {
+  @include featuretargeting.targets($feat-color) {
+    @include theme.prop(background-color, transparent);
+    @include theme.prop(color, text-icon-on-background);
+  }
+}
+
+.mdc-list-group__subheader ::slotted(*) {
+  @include featuretargeting.targets($feat-color) {
+    @include theme.prop(color, text-primary-on-background);
+  }
+}
+
+:host([graphic="avatar"]) {
+  .mdc-list-item__graphic {
+    @include featuretargeting.targets($feat-structure) {
+      @include graphic-size_(var(--mdc-list-item-graphic-size, 40px));
+
+      ::slotted(*) {
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+:host([graphic="avatar"],[graphic="medium"],[graphic="large"],[graphic="control"]) .mdc-list-item__graphic {
+  @include rtl.reflexive-box(margin, right, var(--mdc-list-item-graphic-margin, 16px), ":host");
+}
+
+:host([graphic="icon"]) .mdc-list-item__graphic {
+  @include graphic-size_(var(--mdc-list-item-graphic-size, 24px));
+  @include rtl.reflexive-box(margin, right, var(--mdc-list-item-graphic-margin, 32px), ":host");
+}
+
+:host([graphic="avatar"]:not([twoLine])),
+:host([graphic="icon"]:not([twoLine])) {
+  height: 56px;
+}
+
+:host([graphic="medium"]:not([twoLine])),
+:host([graphic="large"]:not([twoLine])) {
+  height: 72px;
+}
+
+:host([graphic="medium"]),
+:host([graphic="large"]) {
+  .mdc-list-item__graphic {
+    @include graphic-size_(var(--mdc-list-item-graphic-size, 56px));
+  }
+}
+
+:host([graphic="large"]) {
+  padding-left: 0px;
+}

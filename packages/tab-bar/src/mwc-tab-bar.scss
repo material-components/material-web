@@ -15,8 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/tab-bar/mdc-tab-bar.scss';
-@import '@material/tab/variables';
+@use '@material/tab-bar' as tabbar;
+@use '@material/tab';
+
+@include tabbar.core-styles();
 
 :host {
   display: block;
@@ -27,6 +29,6 @@ limitations under the License.
 }
 
 mwc-tab {
-  --mdc-tab-height: #{$mdc-tab-height};
-  --mdc-tab-stacked-height: #{$mdc-tab-stacked-height};
+  --mdc-tab-height: #{tab.$height};
+  --mdc-tab-stacked-height: #{tab.$stacked-height};
 }

@@ -7,6 +7,8 @@ font that supports *ligatures*.
 
 [Material Design Guidelines: System icons](https://material.io/design/iconography/system-icons.html)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/icon/)
+
 ## Installation
 
 ```sh
@@ -17,7 +19,7 @@ npm install @material/mwc-icon
 > Modules, and use the Custom Elements API. They are compatible with all modern
 > browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
 > tooling step is required to resolve *bare module specifiers*, as well as
-> transpilation and polyfills for Edge and IE11. See
+> transpilation and polyfills for IE11. See
 > [here](https://github.com/material-components/material-components-web-components#quick-start)
 > for detailed instructions.
 

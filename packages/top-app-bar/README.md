@@ -11,6 +11,8 @@ For a fixed position version of this component, see [`<mwc-top-app-bar-fixed>`](
 
 [Material Design Guidelines: App Bars: Top](https://material.io/design/components/app-bars-top.html)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/top-app-bar/)
+
 ## Installation
 
 ```sh
@@ -21,7 +23,7 @@ npm install @material/mwc-top-app-bar
 > Modules, and use the Custom Elements API. They are compatible with all modern
 > browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
 > tooling step is required to resolve *bare module specifiers*, as well as
-> transpilation and polyfills for Edge and IE11. See
+> transpilation and polyfills for IE11. See
 > [here](https://github.com/material-components/material-components-web-components#quick-start)
 > for detailed instructions.
 

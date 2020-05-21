@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-line-ripple",
-  "version": "0.12.0",
+  "version": "0.15.0",
   "description": "",
   "main": "mwc-line-ripple-directive.js",
   "module": "mwc-line-ripple-directive.js",
@@ -12,8 +12,8 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/line-ripple": "=5.0.0-canary.d8d95020f.0",
-    "lit-element": "^2.2.1",
+    "@material/line-ripple": "=7.0.0-canary.e3eacefcc.0",
+    "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0"
   },

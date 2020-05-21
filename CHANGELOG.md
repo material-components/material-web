@@ -8,6 +8,165 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- `mwc-list-item`
+  - get rid of mobile os glow on tap
+  - do not set aria-selected on incompatible roles
+  - ripple will unrip if unclick or touchend is outside of list-item
+- `mwc-list`
+  - fixed regression in list that broke mwc-select in IE or shady dom.
+- Tabs no longer focus on initialization
+- mwc-list-item ripple color will now change based off of --mdc-ripple-color on initialization
+- Fix issue where textfield would throw an error when fed a non-string value
+
+### Added
+
+- `--mdc-drawer-width` Drawer width is now configurable.
+- Added `name` property `mwc-textfield` & `mwc-textarea` for browser autofill.
+- `ListItem.multipleGraphics` list-item graphic width now configuratble for multiple graphics
+- `Menu.menuCorner` can now configure from which horizontal corner should the menu anchor from.
+
+## [v0.15.0] - 2020-05-05
+
+### Added
+
+- Added --mdc-menu-z-index to menu-surface
+- Added surface/on-surface theme properties for mwc-switch
+- Added overrides for ripple focus and hover opacities
+  - `--mdc-ripple-focus-opacity` and `--mdc-ripple-hover-opacity` respectively
+- Added `spaceBetween` to mwc-formfield
+- Added `activated` and `selected` states for ripple
+- Added documentation for ripple
+- Prefix and suffix to mwc-textfield
+- `mwc-formfield` now has a nowrap property
+- mdc-button now has --mdc-shape-small for border radii
+- Added `size` property to `mwc-textfield`
+- `mwc-fab` now has a slot of icons
+- Added `fullwidth` property to `mwc-select`.
+- Added `minLength` to `mwc-textfield`
+
+### Changed
+
+- Refactor `mwc-checkbox`
+  - Remove usage of `MDCCheckboxFoundation`
+  - Replace `ripple-directive` with lazy `mwc-ripple`
+- Refactor `mwc-button`
+  - Replace `ripple-directive` with lazy `mwc-ripple`
+- Refactor `mwc-ripple`
+  - Normalized API to `start${state}` `end${state}` naming
+- **BREAKING:VISUAL:** mwc-list-item now internally uses mwc-ripple instead of styling ripple on host
+- `mwc-menu`'s `quick` variant now opens synchronously
+- Convert to [Sass modules](https://sass-lang.com/documentation/at-rules/use)
+- **BREAKING** removed textfield's character counter foundation directive
+- Refactor `mwc-select`
+  - **BREAKING:VISUAL** internal structure of select anchor updated.
+  - **BREAKING** `naturalWidth` property renamed to `naturalMenuWidth` for clarity.
+  - **BREAKING:** `--mdc-select-dropdown-icon-opacity` and `--mdc-select-disabled-dropdown-icon-opacity` removed; opacity is now expressed in alpha channel of color.
+  - **BREAKING:VISUAL:** Dropdown arrow icon motion updated.
+  - **BREAKING** remove `helperPersistent` property; helper text now persistent by default if included.
+- Refactor snackbar to conform to other elements' `.open` `.show()` `.close()` APIs
+  - **BREAKING** mwc-snackbar `isOpen` property is now called `open`
+  - **BREAKING** mwc-snackbar `open()` method is now called `show()`
+  - **BREAKING** mwc-snackbar's isOpen -> open property is now editable
+- Removed default slot from switch
+- mwc-select's button role changed to combobox
+
+### Fixed
+
+- Fix property renaming issues with Closure Compiler
+  - Use `RippleAPI` interface between `RippleHandlers` and `mwc-ripple`
+  - Use `RippleInterface` interface for `ripple-directive`
+- Fix regression in textfield line color custom properties
+- Fix infinite loop bug in `mwc-tab-bar` when `activeIndex` is set in first render
+- Fixed bug in `mwc-slider` where initializing min and max over `100` would not set correct bounds on UI.
+- Fixed `"` showing up in mwc-button when the ripple activates
+- Changing an invalid textfield's validation properties to valid values will update styles automatically
+
+## [v0.14.1] - 2020-03-23
+
+### Added
+
+- `innerAriaLabel` to `mwc-list` to set `aria-label`.
+- `--mdc-text-field-disabled-line-color` added
+
+### Changed
+
+- Update `lit-element` dependency to `2.3.0` for all components.
+
+### Fixed
+
+## [v0.14.0] - 2020-03-19
+
+### Added
+
+- `inputMode` to `mwc-textfield` and `mwc-textarea`
+- `readOnly` to `mwc-textfield` and `mwc-textarea`
+- CSS custom properties for typography
+- Added `autoValidate` property on textfield
+- `mwc-button` now has a slot for `icon` and `trailingIcon`
+- **BREAKING** setting `mwc-list-item.selected` will update selection in the parent list
+- `mwc-ripple` now has CSS properties `--mdc-ripple-color`, `--mdc-ripple-fg-opacity`, and `--mdc-ripple-hover-opacity`
+- Added `RippleHandlers` to `mwc-ripple` to provide an easy integration point for calling ripple API.
+- Added `light` property to `mwc-ripple` to help style ripples on dark surfaces.
+- `mwc-select` can now select items by setting `mwc-select.value`.
+- Exposed --mdc-shape-medium on mwc-menu-surface
+- Added `focusOnActivate` property to `mwc-tab`
+  - `true` by default, set to `false` to disable focusing on tab activation
+- mwc-select now has --mdc-select-disabled-dropdown-icon-color
+
+### Changed
+
+- **BREAKING** `--mdc-button-text-transform` has been renamed to `--mdc-typography-button-text-transform`
+- **BREAKING** `--mdc-button-letter-spacing` has been renamed to `--mdc-typography-button-letter-spacing`
+- **BREAKING** `--mdc-tab-text-transform` has been renamed to `--mdc-typography-button-text-transform`
+- **BREAKING:VISUAL** textfield will now only validate on blur instead of input without `autoValidate` prop
+- **BREAKING:VISUAL** `mwc-tab`'s default slot now has name `icon`
+- `mdcFoundation` and `mdcFoundationClass` are now optional in BaseElement.
+- Remove `export *` from BaseElement and FormElement.
+- **BREAKING:A11Y** mwc-list will no longer update items on slotchange but on first render and on list item connect meaning list dividers will only add role="separator" in those cases
+- Make FormElement and `mwc-formfield` support asynchronous ripple properties
+- **BREAKING** Remove `active` property from `mwc-ripple`.
+  - Use `activate()` and `deactivate()` methods instead
+- **BREAKING** `mwc-ripple` now requires implementing event handlers manually in the parent component.
+- **BREAKING** Components must now import `@observer` manually from `@material/mwc-base/observer`;
+
+### Fixed
+
+- Setting `scrollTarget` on `mwc-top-app-bar` will update listeners
+- Fixed sass imports of `_index.scss` files
+- Fixed issue with caret jumping to end of input on textfield
+- mwc-list-item now works on IE
+- mwc-select's `updateComplete` will now properly await child custom elements' `updateComplete`s
+- **BREAKING** Disabled icon buttons no longer have pointer events
+- `mwc-textfield` will not set `value` on the internal input tag on `input` event causing caret jumping in Safari
+- `mwc-select`'s `--mdc-select-ink-color` actually does something now
+- Setting `disabled` on `mwc-ripple` will hide the ripple
+- mwc-menu's x and y anchor margins now work for all corners
+- mwc-select's --mdc-select-disabled-ink-color now colors the selected text
+- inconsistencies on how `<contol>-list-item`s' state of controls and element
+- `list` sets initial `tabindex` when initialized with `noninteractive` and then set to false
+
+## [0.13.0] - 2020-02-03
+
+### Added
+
+- End-alignment to `mwc-textfield` and `mwc-textarea`
+- Implemented:
+  - `mwc-select`
+  - `mwc-menu`
+  - `mwc-menu-surface`
+  - `mwc-list`
+  - `mwc-list-item`
+- Base / utils.ts
+  - `isNodeElement` - performant node -> element checking
+  - `deepActiveElementPath` - finds the deepest `activeElement` node
+  - `doesElementContainFocus` - determines is ancestor of `activeElement`
+- `mwc-radio.global` - groups radios across document rather than shadow root
+- Style underline of filled textfield
+  - `--mdc-text-field-idle-line-color`
+  - `--mdc-text-field-hover-line-color`
+
+### Fixed
+
 - Fixed mwc-dialog not removing keydown event listener on close.
 
 ## [0.12.0] - 2019-12-16

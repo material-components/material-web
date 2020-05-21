@@ -15,6 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import '@material/ripple/_keyframes.scss';
+@use '@material/ripple';
 
-@include mdc-ripple-keyframes_;
+@include ripple.keyframes_();

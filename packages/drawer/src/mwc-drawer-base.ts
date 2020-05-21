@@ -26,10 +26,11 @@ import {MDCDrawerAdapter} from '@material/drawer/adapter.js';
 import {strings} from '@material/drawer/constants.js';
 import MDCDismissibleDrawerFoundation from '@material/drawer/dismissible/foundation.js';
 import MDCModalDrawerFoundation from '@material/drawer/modal/foundation.js';
-import {addHasRemoveClass, BaseElement, observer} from '@material/mwc-base/base-element.js';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
+import {observer} from '@material/mwc-base/observer.js';
 import {DocumentWithBlockingElements} from 'blocking-elements';
 import {html, property, PropertyValues, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
+import {classMap} from 'lit-html/directives/class-map.js';
 
 interface InertableHTMLElement extends HTMLElement {
   inert?: boolean;
@@ -126,12 +127,13 @@ export class DrawerBase extends BaseElement {
       </div>
       ` :
                                     '';
-    return html`
-      <aside class="mdc-drawer
-          ${classMap({
+    const classes = {
       'mdc-drawer--dismissible': dismissible,
-      'mdc-drawer--modal': modal
-    })}">
+      'mdc-drawer--modal': modal,
+    };
+
+    return html`
+      <aside class="mdc-drawer ${classMap(classes)}">
         ${header}
         <div class="mdc-drawer__content"><slot></slot></div>
       </aside>

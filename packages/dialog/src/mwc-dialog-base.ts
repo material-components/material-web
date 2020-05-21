@@ -22,10 +22,11 @@ import {cssClasses} from '@material/dialog/constants.js';
 import MDCDialogFoundation from '@material/dialog/foundation.js';
 import {applyPassive} from '@material/dom/events';
 import {closest, matches} from '@material/dom/ponyfill';
-import {addHasRemoveClass, BaseElement, observer} from '@material/mwc-base/base-element.js';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
+import {observer} from '@material/mwc-base/observer.js';
 import {DocumentWithBlockingElements} from 'blocking-elements';
 import {html, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
+import {classMap} from 'lit-html/directives/class-map.js';
 
 export {MDCDialogCloseEventDetail} from '@material/dialog/types';
 
@@ -38,13 +39,13 @@ export class DialogBase extends BaseElement {
   // _actionItemsSlot should have type HTMLSlotElement, but when TypeScript's
   // emitDecoratorMetadata is enabled, the HTMLSlotElement constructor will
   // be emitted into the runtime, which will cause an "HTMLSlotElement is
-  // undefined" error in browsers that don't define it (e.g. Edge and IE11).
+  // undefined" error in browsers that don't define it (e.g. IE11).
   @query('slot[name="primaryAction"]') protected primarySlot!: HTMLElement;
 
   // _actionItemsSlot should have type HTMLSlotElement, but when TypeScript's
   // emitDecoratorMetadata is enabled, the HTMLSlotElement constructor will
   // be emitted into the runtime, which will cause an "HTMLSlotElement is
-  // undefined" error in browsers that don't define it (e.g. Edge and IE11).
+  // undefined" error in browsers that don't define it (e.g. IE11).
   @query('slot[name="secondaryAction"]') protected secondarySlot!: HTMLElement;
 
   @query('#contentSlot') protected contentSlot!: HTMLElement;

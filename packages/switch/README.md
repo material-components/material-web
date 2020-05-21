@@ -8,6 +8,8 @@ way to adjust settings on mobile.
 
 [Material Design Guidelines: Switch](https://material.io/components/selection-controls/#switches)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/switch/)
+
 ## Installation
 
 ```sh
@@ -18,7 +20,7 @@ npm install @material/mwc-switch
 > Modules, and use the Custom Elements API. They are compatible with all modern
 > browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
 > tooling step is required to resolve *bare module specifiers*, as well as
-> transpilation and polyfills for Edge and IE11. See
+> transpilation and polyfills for IE11. See
 > [here](https://github.com/material-components/material-components-web-components#quick-start)
 > for detailed instructions.
 
@@ -51,14 +53,17 @@ npm install @material/mwc-switch
 
 ### Styled
 
-<img src="images/styled.png" width="68px">
+<img src="images/styled.png" width="116px">
 
 ```html
 <style>
   mwc-switch {
+    --mdc-theme-surface: blue;
+    --mdc-theme-on-surface: blue;
     --mdc-theme-secondary: red;
   }
 </style>
+<mwc-switch></mwc-switch>
 <mwc-switch checked></mwc-switch>
 ```
 
@@ -107,9 +112,11 @@ to associate an interactive label with the switch.
 
 | Name | Default | Description
 | ----------------------- | -------------------------------------- | ---
-| `--mdc-theme-secondary` | ![](images/color_018786.png) `#018786` | Fill color of the thumb head and a lightened fill of the track.
+| `--mdc-theme-surface` | ![](images/color_ffffff.png) `#ffffff` | Fill color of the thumb head when unchecked.
+| `--mdc-theme-on-surface` | ![](images/color_000000.png) `#000000` | 38% fill color of the track when unchecked.
+| `--mdc-theme-secondary` | ![](images/color_018786.png) `#018786` | Fill color of the thumb head and 38% fill color of the track when checked.
 
-Also inherits styles from [ripple](../ripple/README.md)
+Also inherits styles from [ripple](https://github.com/material-components/material-components-web-components/tree/master/packages/ripple)
 
 ## Additional references
 

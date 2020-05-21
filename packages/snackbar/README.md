@@ -10,6 +10,8 @@ screen.
 
 [Material Design Guidelines: Snackbars](https://material.io/design/components/snackbars.html)
 
+[Demo](https://material-components.github.io/material-components-web-components/demos/snackbar/)
+
 ## Installation
 
 ```sh
@@ -20,7 +22,7 @@ npm install @material/mwc-snackbar
 > Modules, and use the Custom Elements API. They are compatible with all modern
 > browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
 > tooling step is required to resolve *bare module specifiers*, as well as
-> transpilation and polyfills for Edge and IE11. See
+> transpilation and polyfills for IE11. See
 > [here](https://github.com/material-components/material-components-web-components#quick-start)
 > for detailed instructions.
 
@@ -38,7 +40,7 @@ npm install @material/mwc-snackbar
 <script type="module">
   import '@material/mwc-snackbar';
   const snackbar = document.querySelector('#photoErrorSnackbar');
-  sendPhoto.then(...).catch(() => snackbar.open());
+  sendPhoto.then(...).catch(() => snackbar.show());
 </script>
 ```
 
@@ -92,8 +94,8 @@ attribute or property to enable this layout.
 
 | Name                | Type                  | Description
 | ------------------- | --------------------- |------------
-| `isOpen`            | `boolean` (read-only) | Whether the snackbar is currently open.
-| `timeoutMs`         | `number`              | Automatic dismiss timeout in milliseconds. Value must be between `4000` and `10000` or an error will be thrown. Defaults to `5000` (5 seconds).
+| `open`              | `boolean`             | Whether the snackbar is currently open.
+| `timeoutMs`         | `number`              | Automatic dismiss timeout in milliseconds. Value must be between `4000` and `10000`  (or `-1` to disable the timeout completely) or an error will be thrown. Defaults to `5000` (5 seconds).
 | `closeOnEscape`     | `boolean`             | Whether the snackbar closes when it is focused and the user presses the ESC key. Defaults to `true`.
 | `labelText`         | `string`              | The text content of the label element.
 | `stacked`           | `boolean`             | Enables the *stacked* layout (see above).
@@ -103,7 +105,7 @@ attribute or property to enable this layout.
 
 | Name     | Description
 | -------- | -------------
-| `open() => void`   | Opens the snackbar.
+| `show() => void`   | Opens the snackbar.
 | `close(reason: string = '') => void` | Closes the snackbar, optionally with the specified reason indicating why it was closed.
 
 ### Events
