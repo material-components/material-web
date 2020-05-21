@@ -14,14 +14,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, observer} from '@material/mwc-base/form-element.js';
-import {addHasRemoveClass, isRTL} from '@material/mwc-base/utils.js';
-import {MDCChipInteractionEvent, MDCChipSelectionEvent, MDCChipRemovalEvent, MDCChipNavigationEvent} from '@material/chips/chip/types';
-import {MDCChipSetAdapter} from '@material/chips/chip-set/adapter.js';
-import {MDCChipSetFoundation} from '@material/chips/chip-set/foundation.js';
-import {html, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
-import {ChipBase, ChipType} from './mwc-chip-base.js';
+import { BaseElement } from '@material/mwc-base/base-element.js';
+import { observer } from '@material/mwc-base/observer.js';
+import { addHasRemoveClass, isRTL } from '@material/mwc-base/utils.js';
+import { MDCChipInteractionEvent, MDCChipSelectionEvent, MDCChipRemovalEvent, MDCChipNavigationEvent } from '@material/chips/chip/types';
+import { MDCChipSetAdapter } from '@material/chips/chip-set/adapter.js';
+import { MDCChipSetFoundation } from '@material/chips/chip-set/foundation.js';
+import { html, property, query } from 'lit-element';
+import { classMap } from 'lit-html/directives/class-map';
+import { ChipBase, ChipType } from './mwc-chip-base.js';
 
 let chipIdCounter = 0;
 
@@ -31,7 +32,7 @@ export class ChipSetBase extends BaseElement {
   protected readonly mdcFoundationClass = MDCChipSetFoundation;
 
   @property()
-  @observer(function(this: ChipSetBase, value: ChipType) {
+  @observer(function (this: ChipSetBase, value: ChipType) {
     for (let chip of this.chipsArray) {
       chip.type = value;
     }
@@ -167,7 +168,7 @@ export class ChipSetBase extends BaseElement {
   }
 
   private handleChipSelection(e: MDCChipSelectionEvent) {
-    const {chipId, selected, shouldIgnore} = e.detail;
+    const { chipId, selected, shouldIgnore } = e.detail;
     this.mdcFoundation.handleChipSelection(chipId, selected, shouldIgnore);
   }
 
@@ -176,7 +177,7 @@ export class ChipSetBase extends BaseElement {
   }
 
   private handleChipNavigation(e: MDCChipNavigationEvent) {
-    const {chipId, key, source} = e.detail;
+    const { chipId, key, source } = e.detail;
     this.mdcFoundation.handleChipNavigation(chipId, key, source);
   }
 }

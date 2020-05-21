@@ -14,16 +14,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement, observer} from '@material/mwc-base/form-element.js';
-import {addHasRemoveClass, isRTL} from '@material/mwc-base/utils.js';
-import {ripple} from '@material/mwc-ripple/ripple-directive.js';
-import {MDCChipAdapter} from '@material/chips/chip/adapter.js';
-import {MDCChipFoundation} from '@material/chips/chip/foundation.js';
-import {MDCChipInteractionEventDetail, MDCChipSelectionEventDetail, MDCChipRemovalEventDetail, MDCChipNavigationEventDetail} from '@material/chips/chip/types';
-import {html, property, query} from 'lit-element';
-import {nothing} from 'lit-html';
-import {classMap} from 'lit-html/directives/class-map';
-import {ifDefined} from 'lit-html/directives/if-defined';
+import { BaseElement } from '@material/mwc-base/base-element.js';
+import { observer } from '@material/mwc-base/observer.js';
+import { addHasRemoveClass, isRTL } from '@material/mwc-base/utils.js';
+import { ripple } from '@material/mwc-ripple/ripple-directive.js';
+import { MDCChipAdapter } from '@material/chips/chip/adapter.js';
+import { MDCChipFoundation } from '@material/chips/chip/foundation.js';
+import { MDCChipInteractionEventDetail, MDCChipSelectionEventDetail, MDCChipRemovalEventDetail, MDCChipNavigationEventDetail } from '@material/chips/chip/types';
+import { html, property, query } from 'lit-element';
+import { nothing } from 'lit-html';
+import { classMap } from 'lit-html/directives/class-map';
+import { ifDefined } from 'lit-html/directives/if-defined';
 
 export class ChipBase extends BaseElement {
   @query('.mdc-chip') protected mdcRoot!: HTMLElement;
@@ -32,9 +33,9 @@ export class ChipBase extends BaseElement {
 
   @property()
   label = '';
-  @property({reflect: true})
+  @property({ reflect: true })
   type?: ChipType;
-  @property({type: Boolean})
+  @property({ type: Boolean })
   get selected() {
     return this._selected;
   }
@@ -50,8 +51,8 @@ export class ChipBase extends BaseElement {
   icon = '';
   @property()
   iconClass = 'material-icons';
-  @property({type: Boolean})
-  @observer(function(this: ChipBase, value: boolean) {
+  @property({ type: Boolean })
+  @observer(function (this: ChipBase, value: boolean) {
     this.mdcFoundation.setShouldRemoveOnTrailingIconClick(value);
   })
   removable = false;
@@ -59,7 +60,7 @@ export class ChipBase extends BaseElement {
   removeIcon = 'close';
   @property()
   removeIconClass = 'material-icons';
-  @property({type: Boolean})
+  @property({ type: Boolean })
   removeIconFocusable = false;
 
   @query(MDCChipFoundation.strings.LEADING_ICON_SELECTOR)
@@ -86,7 +87,7 @@ export class ChipBase extends BaseElement {
       },
       eventTargetHasClass: (target, className) => target ? (target as Element).classList.contains(className) : false,
       notifyInteraction: () => {
-        const detail: MDCChipInteractionEventDetail = {chipId: this.id};
+        const detail: MDCChipInteractionEventDetail = { chipId: this.id };
         this.dispatchEvent(new CustomEvent(MDCChipFoundation.strings.INTERACTION_EVENT, {
           detail,
           bubbles: true,
@@ -94,7 +95,7 @@ export class ChipBase extends BaseElement {
         }));
       },
       notifySelection: (selected, shouldIgnore) => {
-        const detail: MDCChipSelectionEventDetail = {chipId: this.id, selected, shouldIgnore};
+        const detail: MDCChipSelectionEventDetail = { chipId: this.id, selected, shouldIgnore };
         this.dispatchEvent(new CustomEvent(MDCChipFoundation.strings.SELECTION_EVENT, {
           detail,
           bubbles: true,
@@ -102,7 +103,7 @@ export class ChipBase extends BaseElement {
         }));
       },
       notifyTrailingIconInteraction: () => {
-        const detail: MDCChipInteractionEventDetail = {chipId: this.id};
+        const detail: MDCChipInteractionEventDetail = { chipId: this.id };
         this.dispatchEvent(new CustomEvent(MDCChipFoundation.strings.TRAILING_ICON_INTERACTION_EVENT, {
           detail,
           bubbles: true,
@@ -111,7 +112,7 @@ export class ChipBase extends BaseElement {
       },
       notifyRemoval: () => this.dispatchRemovalEvent(),
       notifyNavigation: (key, source) => {
-        const detail: MDCChipNavigationEventDetail = {chipId: this.id, key, source};
+        const detail: MDCChipNavigationEventDetail = { chipId: this.id, key, source };
         this.dispatchEvent(new CustomEvent(MDCChipFoundation.strings.NAVIGATION_EVENT, {
           detail,
           bubbles: true,
@@ -265,7 +266,7 @@ export class ChipBase extends BaseElement {
   }
 
   private dispatchRemovalEvent() {
-    const detail: MDCChipRemovalEventDetail = {chipId: this.id, root: this};
+    const detail: MDCChipRemovalEventDetail = { chipId: this.id, root: this };
     this.dispatchEvent(new CustomEvent(MDCChipFoundation.strings.REMOVAL_EVENT, {
       detail,
       bubbles: true,
