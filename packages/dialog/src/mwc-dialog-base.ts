@@ -245,8 +245,7 @@ export class DialogBase extends BaseElement {
     let heading = html``;
 
     if (this.heading) {
-      heading = html`
-        <h2 id="title" class="mdc-dialog__title">${this.heading}</h2>`;
+      heading = this.renderHeading();
     }
 
     const actionsClasses = {
@@ -279,6 +278,11 @@ export class DialogBase extends BaseElement {
       </div>
       <div class="mdc-dialog__scrim"></div>
     </div>`;
+  }
+
+  protected renderHeading() {
+    return html`
+      <h2 id="title" class="mdc-dialog__title">${this.heading}</h2>`;
   }
 
   firstUpdated() {
