@@ -135,9 +135,6 @@ mwc-button {
 
 | Name | Default | Description
 | ------------------------------------- | -------------------------------------------------- | ---
-| `--mdc-icon-font` | [`Material Icons`](https://google.github.io/material-design-icons/)    | Font to use for the icon.
-| `--mdc-theme-primary`                 | ![](images/color_6200ee.png) `#6200ee`             | Color of a flat or outlined button. Background color of a raised button.
-| `--mdc-theme-on-primary`              | ![](images/color_ffffff.png) `#ffffff`             | Text color of a raised button.
 | `--mdc-button-horizontal-padding`     | filled: `16px` outlined: `15px` default: `8px`     | Left and right padding of the button label (for outlined buttons the outline width is automatically subtracted).
 | `--mdc-button-outline-width`          | `1px`                                              | `width` of the outline of an outlined button and attempts to keep the component size constant.
 | `--mdc-button-outline-color`          | ![](images/color_6200ee.png) `--mdc-theme-primary` | Color of the outline of an outlined element. (Overrides `--mdc-theme-primary`)
@@ -148,6 +145,18 @@ mwc-button {
 | `--mdc-button-raised-box-shadow-hover`    | mdc elevation 4 | Sets the box shadow of the raised button when focused or hovered.
 | `--mdc-button-raised-box-shadow-active`   | mdc elevation 8 | Sets the box shadow of the raised button when active.
 | `--mdc-button-raised-box-shadow-disabled` | mdc elevation 0 | Sets the box shadow of the raised button when disabled.
+
+#### Global Custom Properties
+
+This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+custom properties.
+
+| Name                                 | Description
+| ------------------------------------ | -----------
+| `--mdc-theme-primary`                | Color of a flat or outlined button. Background color of a raised button.
+| `--mdc-theme-on-primary`             | Text color of a raised button.
+| `--mdc-icon-font`                    | Font to use for the icon.
+| `--mdc-typography-button-<PROPERTY>` | Styles the typography of the button label.
 
 #### Elevation values
 
