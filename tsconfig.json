@@ -32,6 +32,7 @@
     {"path": "packages/base"},
     {"path": "packages/button"},
     {"path": "packages/checkbox"},
+    {"path": "packages/chips"},
     {"path": "packages/dialog"},
     {"path": "packages/drawer"},
     {"path": "packages/fab"},
