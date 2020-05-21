@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {LitElement, html, css} from 'lit-element/lit-element.js';
+import { LitElement, html, css } from 'lit-element/lit-element.js';
 import '@material/mwc-list';
 import '@material/mwc-list/mwc-list-item';
 
@@ -111,6 +111,12 @@ class DemoView extends LitElement {
         secondary: 'Multi-selection controls',
         href: 'checkbox/',
         img: 'https://material-components-web.appspot.com/images/ic_selection_control_24px.svg',
+      },
+      {
+        name: 'Chip',
+        secondary: 'Chip controls',
+        href: 'chip/',
+        img: 'https://material-components-web.appspot.com/images/ic_component_24px.svg',
       },
       {
         name: 'Drawer',
