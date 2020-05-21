@@ -14,12 +14,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {addHasRemoveClass, FormElement, HTMLElementWithRipple} from '@material/mwc-base/form-element.js';
-import {observer} from '@material/mwc-base/observer.js';
-import {ripple} from '@material/mwc-ripple/ripple-directive.js';
-import {MDCRadioAdapter} from '@material/radio/adapter.js';
-import MDCRadioFoundation from '@material/radio/foundation.js';
+import {addHasRemoveClass, FormElement, HTMLElementWithRipple} from '@material/mwc-base/form-element';
+import {observer} from '@material/mwc-base/observer';
+import {ripple} from '@material/mwc-ripple/ripple-directive';
+import {MDCRadioAdapter} from '@material/radio/adapter';
+import MDCRadioFoundation from '@material/radio/foundation';
 import {html, property, query} from 'lit-element';
+import {SingleSelectionController} from './single-selection-controller';
 
 /**
  * @fires checked
@@ -102,7 +103,7 @@ export class RadioBase extends FormElement {
 
   protected mdcFoundation!: MDCRadioFoundation;
 
-  private _selectionController?: SelectionController;
+  private _selectionController?: SingleSelectionController;
 
   connectedCallback() {
     super.connectedCallback();
@@ -118,7 +119,7 @@ export class RadioBase extends FormElement {
     // manage groups before the first update stamps the native input.
     //
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    this._selectionController = SelectionController.getController(this);
+    this._selectionController = SingleSelectionController.getController(this);
     this._selectionController.register(this);
     // With native <input type="radio">, when a checked radio is added to the
     // root, then it wins. Immediately update to emulate this behavior.
@@ -131,6 +132,10 @@ export class RadioBase extends FormElement {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this._selectionController!.unregister(this);
     this._selectionController = undefined;
+  }
+
+  focus() {
+    this.focusNative();
   }
 
   focusNative() {
@@ -193,167 +198,5 @@ export class RadioBase extends FormElement {
     if (this._selectionController !== undefined) {
       this._selectionController.update(this);
     }
-  }
-}
-
-/**
- * Unique symbol for marking roots
- */
-const selectionController = Symbol('selection controller');
-
-class SelectionSet {
-  selected: RadioBase|null = null;
-  ordered: RadioBase[]|null = null;
-  readonly set = new Set<RadioBase>();
-}
-
-/**
- * Only one <input type="radio" name="group"> per group name can be checked at
- * once. However, the scope of "name" is the document/shadow root, so built-in
- * de-selection does not occur when two radio buttons are in different shadow
- * roots. This class bridges the checked state of radio buttons with the same
- * group name across different shadow roots.
- */
-export class SelectionController {
-  private sets: {[name: string]: SelectionSet} = {};
-
-  private focusedSet: SelectionSet|null = null;
-
-  private mouseIsDown = false;
-
-  private updating = false;
-
-  static getController(element: HTMLElement|HTMLElement&{global: boolean}) {
-    const useGlobal =
-        !('global' in element) || ('global' in element && element.global);
-    const root = useGlobal ?
-        document as Document & {[selectionController]?: SelectionController} :
-        element.getRootNode() as Node &
-            {[selectionController]?: SelectionController};
-    let controller = root[selectionController];
-    if (controller === undefined) {
-      controller = new SelectionController(root);
-      root[selectionController] = controller;
-    }
-    return controller;
-  }
-
-  constructor(element: Node) {
-    element.addEventListener(
-        'keydown', (e: Event) => this.keyDownHandler(e as KeyboardEvent));
-    element.addEventListener('mousedown', () => this.mousedownHandler());
-    element.addEventListener('mouseup', () => this.mouseupHandler());
-  }
-
-  protected keyDownHandler(e: KeyboardEvent) {
-    if (!(e.target instanceof RadioBase)) {
-      return;
-    }
-    const element = e.target;
-    if (!this.has(element)) {
-      return;
-    }
-    if (e.key == 'ArrowRight' || e.key == 'ArrowDown') {
-      this.next(element);
-    } else if (e.key == 'ArrowLeft' || e.key == 'ArrowUp') {
-      this.previous(element);
-    }
-  }
-
-  protected mousedownHandler() {
-    this.mouseIsDown = true;
-  }
-
-  protected mouseupHandler() {
-    this.mouseIsDown = false;
-  }
-
-  has(element: RadioBase) {
-    const set = this.getSet(element.name);
-    return set.set.has(element);
-  }
-
-  previous(element: RadioBase) {
-    const order = this.getOrdered(element);
-    const i = order.indexOf(element);
-    this.select(order[i - 1] || order[order.length - 1]);
-  }
-
-  next(element: RadioBase) {
-    const order = this.getOrdered(element);
-    const i = order.indexOf(element);
-    this.select(order[i + 1] || order[0]);
-  }
-
-  select(element: RadioBase) {
-    element.click();
-  }
-
-  /**
-   * Helps to track the focused selection group and if it changes, focuses
-   * the selected item in the group. This matches native radio button behavior.
-   */
-  focus(element: RadioBase) {
-    // Only manage focus state when using keyboard
-    if (this.mouseIsDown) {
-      return;
-    }
-    const set = this.getSet(element.name);
-    const currentFocusedSet = this.focusedSet;
-    this.focusedSet = set;
-    if (currentFocusedSet != set && set.selected && set.selected != element) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      set.selected!.focusNative();
-    }
-  }
-
-  getOrdered(element: RadioBase) {
-    const set = this.getSet(element.name);
-    if (!set.ordered) {
-      set.ordered = Array.from(set.set);
-      set.ordered.sort(
-          (a, b) =>
-              a.compareDocumentPosition(b) == Node.DOCUMENT_POSITION_PRECEDING ?
-              1 :
-              0);
-    }
-    return set.ordered;
-  }
-
-  getSet(name: string) {
-    if (!this.sets[name]) {
-      this.sets[name] = new SelectionSet();
-    }
-    return this.sets[name];
-  }
-
-  register(element: RadioBase) {
-    const set = this.getSet(element.name);
-    set.set.add(element);
-    set.ordered = null;
-  }
-
-  unregister(element: RadioBase) {
-    const set = this.getSet(element.name);
-    set.set.delete(element);
-    set.ordered = null;
-    if (set.selected == element) {
-      set.selected = null;
-    }
-  }
-
-  update(element: RadioBase) {
-    if (this.updating) {
-      return;
-    }
-    this.updating = true;
-    if (element.checked) {
-      const set = this.getSet(element.name);
-      for (const e of set.set) {
-        e.checked = (e == element);
-      }
-      set.selected = element;
-    }
-    this.updating = false;
   }
 }

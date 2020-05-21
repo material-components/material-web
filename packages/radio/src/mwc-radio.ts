@@ -16,8 +16,10 @@ limitations under the License.
 */
 import {customElement} from 'lit-element';
 
-import {RadioBase} from './mwc-radio-base.js';
-import {style} from './mwc-radio-css.js';
+import {RadioBase} from './mwc-radio-base';
+import {style} from './mwc-radio-css';
+
+export {SingleSelectionController} from './single-selection-controller';
 
 declare global {
   interface HTMLElementTagNameMap {

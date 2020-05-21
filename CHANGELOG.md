@@ -25,6 +25,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `ListItem.multipleGraphics` list-item graphic width now configuratble for multiple graphics
 - `Menu.menuCorner` can now configure from which horizontal corner should the menu anchor from.
 
+### Changed
+
+- `radio`
+  - **BREAKING** renamed `SelectionController` to `SingleSelectionController`
+  - **BREAKING** moved `SingleSelectionController` to `@material/mwc-radio/single-selection-controller.ts`
+  - `SingleSelectionController` now accepts `CheckableElements` rather than just MWC Radio elements
+
 ## [v0.15.0] - 2020-05-05
 
 ### Added
