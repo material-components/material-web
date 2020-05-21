@@ -16,6 +16,7 @@ limitations under the License.
 */
 import { BaseElement } from '@material/mwc-base/base-element.js';
 import { observer } from '@material/mwc-base/observer.js';
+import { announce } from '@material/dom/announce.js';
 import { addHasRemoveClass, isRTL } from '@material/mwc-base/utils.js';
 import { MDCChipInteractionEvent, MDCChipSelectionEvent, MDCChipRemovalEvent, MDCChipNavigationEvent } from '@material/chips/chip/types';
 import { MDCChipSetAdapter } from '@material/chips/chip-set/adapter.js';
@@ -49,6 +50,9 @@ export class ChipSetBase extends BaseElement {
   protected createAdapter(): MDCChipSetAdapter {
     return {
       hasClass: addHasRemoveClass(this.mdcRoot).hasClass,
+      announceMessage: message => {
+        announce(message);
+      },
       removeChipAtIndex: index => {
         const chip = this.chipsArray[index];
         if (chip) {
@@ -164,20 +168,18 @@ export class ChipSetBase extends BaseElement {
   }
 
   private handleChipInteraction(e: MDCChipInteractionEvent) {
-    this.mdcFoundation.handleChipInteraction(e.detail.chipId);
+    this.mdcFoundation.handleChipInteraction(e.detail);
   }
 
   private handleChipSelection(e: MDCChipSelectionEvent) {
-    const { chipId, selected, shouldIgnore } = e.detail;
-    this.mdcFoundation.handleChipSelection(chipId, selected, shouldIgnore);
+    this.mdcFoundation.handleChipSelection(e.detail);
   }
 
   private handleChipRemoval(e: MDCChipRemovalEvent) {
-    this.mdcFoundation.handleChipRemoval(e.detail.chipId);
+    this.mdcFoundation.handleChipRemoval(e.detail);
   }
 
   private handleChipNavigation(e: MDCChipNavigationEvent) {
-    const { chipId, key, source } = e.detail;
-    this.mdcFoundation.handleChipNavigation(chipId, key, source);
+    this.mdcFoundation.handleChipNavigation(e.detail);
   }
 }
