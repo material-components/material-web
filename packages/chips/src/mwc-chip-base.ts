@@ -248,7 +248,7 @@ export class ChipBase extends BaseElement {
     const ariaChecked = isFilter ? String(this.selected) : undefined;
     return html`
       <span class="mdc-chip__text mdc-chip__primary-action" role="${
-      role}" tabindex="0" aria-checked="${Boolean(ifDefined(ariaChecked))}">
+        role}" tabindex="0" aria-checked="${Boolean(ifDefined(ariaChecked))}">
         ${this.renderLabel()}
       </span>`;
   }

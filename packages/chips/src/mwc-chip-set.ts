@@ -17,7 +17,7 @@ limitations under the License.
 import {customElement} from 'lit-element';
 
 import {ChipSetBase} from './mwc-chip-set-base.js';
-import {style} from './mwc-chip-set-css.js'; // TODO: split chip-set and chip styles in MDC
+import {style} from './mwc-chip-set-css.js';  // TODO: split chip-set and chip styles in MDC
 
 @customElement('mwc-chip-set')
 export class ChipSet extends ChipSetBase {
