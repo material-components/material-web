@@ -192,7 +192,7 @@ export class ChipBase extends BaseElement {
     };
 
     return html`
-      <div class="fake-chip-set ${classMap(chipsetClasses)}">
+      <div class="${classMap(chipsetClasses)}">
         <div class="mdc-chip ${classMap(classes)}"
           role="row"
           .ripple=${ripple()}
