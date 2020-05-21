@@ -35,7 +35,7 @@ export class ChipSetBase extends BaseElement {
 
   @property()
   @observer(function(this: ChipSetBase, value: ChipType) {
-    for (let chip of this.chipsArray) {
+    for (const chip of this.chipsArray) {
       chip.type = value;
     }
   })
@@ -51,10 +51,10 @@ export class ChipSetBase extends BaseElement {
   protected createAdapter(): MDCChipSetAdapter {
     return {
       hasClass: addHasRemoveClass(this.mdcRoot).hasClass,
-      announceMessage: message => {
+      announceMessage: (message) => {
         announce(message);
       },
-      removeChipAtIndex: index => {
+      removeChipAtIndex: (index) => {
         const chip = this.chipsArray[index];
         if (chip) {
           if (chip.parentNode) {
@@ -70,7 +70,7 @@ export class ChipSetBase extends BaseElement {
           chip.setSelectedFromChipSet(isSelected, shouldNotifyClients);
         }
       },
-      getIndexOfChipById: chipId => {
+      getIndexOfChipById: (chipId) => {
         for (let i = 0; i < this.chipsArray.length; i++) {
           if (this.chipsArray[i].id === chipId) {
             return i;
@@ -79,19 +79,19 @@ export class ChipSetBase extends BaseElement {
 
         return -1;
       },
-      focusChipPrimaryActionAtIndex: index => {
+      focusChipPrimaryActionAtIndex: (index) => {
         const chip = this.chipsArray[index];
         if (chip) {
           chip.focusPrimaryAction();
         }
       },
-      focusChipTrailingActionAtIndex: index => {
+      focusChipTrailingActionAtIndex: (index) => {
         const chip = this.chipsArray[index];
         if (chip) {
           this.chipsArray[index].focusTrailingAction();
         }
       },
-      removeFocusFromChipAtIndex: index => {
+      removeFocusFromChipAtIndex: (index) => {
         const chip = this.chipsArray[index];
         if (chip) {
           this.chipsArray[index].removeFocus();
@@ -134,7 +134,7 @@ export class ChipSetBase extends BaseElement {
 
   protected syncChips() {
     const chips = this.queryChips();
-    for (let chip of chips) {
+    for (const chip of chips) {
       chip.type = this.type;
       chip.id = chip.id || this.nextChipId();
       if (chip.selected) {
@@ -152,7 +152,7 @@ export class ChipSetBase extends BaseElement {
   protected queryChips() {
     const chips: ChipBase[] = [];
     const collectChips = (root: Element) => {
-      for (let child of Array.from(root.children)) {
+      for (const child of Array.from(root.children)) {
         if (child instanceof ChipBase) {
           chips.push(child);
         } else {

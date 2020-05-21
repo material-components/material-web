@@ -59,7 +59,7 @@ export function addHasRemoveClass(element: HTMLElement) {
 }
 
 export function isRTL(element: HTMLElement) {
-  return getComputedStyle(element).getPropertyValue('direction') === 'rtl'
+  return getComputedStyle(element).getPropertyValue('direction') === 'rtl';
 }
 
 let supportsPassive = false;

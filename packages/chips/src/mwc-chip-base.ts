@@ -63,10 +63,10 @@ export class ChipBase extends BaseElement {
   @query(MDCChipFoundation.strings.PRIMARY_ACTION_SELECTOR)
   protected primaryActionElement!: HTMLElement|null;
   @query(MDCChipFoundation.strings.TRAILING_ACTION_SELECTOR)
-  protected trailingActionElement!: HTMLElement|any;
+  protected trailingActionElement!: HTMLElement|null;
 
   protected createAdapter(): MDCChipAdapter {
-    return <MDCChipAdapter>{
+    return ({
       ...addHasRemoveClass(this.mdcRoot),
       addClassToLeadingIcon: (className: string) => {
         if (this.leadingIconElement) {
@@ -80,7 +80,7 @@ export class ChipBase extends BaseElement {
       },
       removeTrailingActionFocus: () => {
         if (this.trailingActionElement) {
-          this.trailingActionElement.removeFocus();
+          this.trailingActionElement.blur();
         }
       },
       eventTargetHasClass: (target, className) =>
@@ -120,7 +120,7 @@ export class ChipBase extends BaseElement {
       setStyleProperty: (propertyName, value) =>
           this.mdcRoot.style.setProperty(propertyName, value),
       hasLeadingIcon: () => !!this.leadingIconElement,
-      getAttribute: attr => this.mdcRoot.getAttribute(attr),
+      getAttribute: (attr) => this.mdcRoot.getAttribute(attr),
       getRootBoundingClientRect: () => this.mdcRoot.getBoundingClientRect(),
       getCheckmarkBoundingClientRect: () => this.checkmarkElement &&
           this.checkmarkElement.getBoundingClientRect(),
@@ -148,11 +148,12 @@ export class ChipBase extends BaseElement {
       isRTL: () => isRTL(this.mdcRoot),
       isTrailingActionNavigable: () => {
         if (this.trailingActionElement) {
-          return this.trailingActionElement.isNavigable();
+          // return this.trailingActionElement.isNavigable();
+          return false;
         }
         return false;
       }
-    };
+    } as MDCChipAdapter);
   }
 
   focusPrimaryAction() {
@@ -247,7 +248,7 @@ export class ChipBase extends BaseElement {
     const ariaChecked = isFilter ? String(this.selected) : undefined;
     return html`
       <span class="mdc-chip__text mdc-chip__primary-action" role="${
-        role}" tabindex="0" aria-checked=${ifDefined(ariaChecked)}>
+      role}" tabindex="0" aria-checked="${Boolean(ifDefined(ariaChecked))}">
         ${this.renderLabel()}
       </span>`;
   }

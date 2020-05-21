@@ -299,7 +299,7 @@ suite('mwc-menu', () => {
 
     setup(async () => {
       originalSetTimeout = window.setTimeout;
-      (window as any).setTimeout = (fn: Function) => {
+      (window as Window).setTimeout = (fn: Function) => {
         fn();
         return -1;
       };
