@@ -20,13 +20,13 @@ import '@material/mwc-tab-scroller';
 
 import {BaseElement} from '@material/mwc-base/base-element.js';
 import {observer} from '@material/mwc-base/observer.js';
+import {isRTL} from '@material/mwc-base/utils';
 import {Tab} from '@material/mwc-tab';
 import {TabScroller} from '@material/mwc-tab-scroller';
 import {MDCTabBarAdapter} from '@material/tab-bar/adapter';
 import MDCTabBarFoundation from '@material/tab-bar/foundation';
 import {MDCTabInteractionEvent} from '@material/tab/types';
 import {html, property, query} from 'lit-element';
-import {isRTL} from '@material/mwc-base/utils';
 
 export class TabBarBase extends BaseElement {
   protected mdcFoundation!: MDCTabBarFoundation;

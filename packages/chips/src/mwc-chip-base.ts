@@ -14,28 +14,26 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { BaseElement } from '@material/mwc-base/base-element.js';
-import { observer } from '@material/mwc-base/observer.js';
-import { addHasRemoveClass, isRTL } from '@material/mwc-base/utils.js';
-import { ripple } from '@material/mwc-ripple/ripple-directive.js';
-import { MDCChipAdapter } from '@material/chips/chip/adapter.js';
-import { MDCChipFoundation } from '@material/chips/chip/foundation.js';
-import { MDCChipInteractionEventDetail, MDCChipSelectionEventDetail, MDCChipRemovalEventDetail, MDCChipNavigationEventDetail } from '@material/chips/chip/types';
-import { html, property, query } from 'lit-element';
-import { nothing } from 'lit-html';
-import { classMap } from 'lit-html/directives/class-map';
-import { ifDefined } from 'lit-html/directives/if-defined';
+import {MDCChipAdapter} from '@material/chips/chip/adapter.js';
+import {MDCChipFoundation} from '@material/chips/chip/foundation.js';
+import {MDCChipInteractionEventDetail, MDCChipNavigationEventDetail, MDCChipRemovalEventDetail, MDCChipSelectionEventDetail} from '@material/chips/chip/types';
+import {BaseElement} from '@material/mwc-base/base-element.js';
+import {observer} from '@material/mwc-base/observer.js';
+import {addHasRemoveClass, isRTL} from '@material/mwc-base/utils.js';
+import {ripple} from '@material/mwc-ripple/ripple-directive.js';
+import {html, property, query} from 'lit-element';
+import {nothing} from 'lit-html';
+import {classMap} from 'lit-html/directives/class-map';
+import {ifDefined} from 'lit-html/directives/if-defined';
 
 export class ChipBase extends BaseElement {
   @query('.mdc-chip') protected mdcRoot!: HTMLElement;
   protected mdcFoundation!: MDCChipFoundation;
   protected readonly mdcFoundationClass = MDCChipFoundation;
 
-  @property()
-  label = '';
-  @property({ reflect: true })
-  type?: ChipType;
-  @property({ type: Boolean })
+  @property() label = '';
+  @property({reflect: true}) type?: ChipType;
+  @property({type: Boolean})
   get selected() {
     return this._selected;
   }
@@ -47,30 +45,25 @@ export class ChipBase extends BaseElement {
 
   private _selected = false;
 
-  @property()
-  icon = '';
-  @property()
-  iconClass = 'material-icons';
-  @property({ type: Boolean })
-  @observer(function (this: ChipBase, value: boolean) {
+  @property() icon = '';
+  @property() iconClass = 'material-icons';
+  @property({type: Boolean})
+  @observer(function(this: ChipBase, value: boolean) {
     this.mdcFoundation.setShouldRemoveOnTrailingIconClick(value);
   })
   removable = false;
-  @property()
-  removeIcon = 'close';
-  @property()
-  removeIconClass = 'material-icons';
-  @property({ type: Boolean })
-  removeIconFocusable = false;
+  @property() removeIcon = 'close';
+  @property() removeIconClass = 'material-icons';
+  @property({type: Boolean}) removeIconFocusable = false;
 
   @query(MDCChipFoundation.strings.LEADING_ICON_SELECTOR)
-  protected leadingIconElement!: HTMLElement | null;
+  protected leadingIconElement!: HTMLElement|null;
   @query(MDCChipFoundation.strings.CHECKMARK_SELECTOR)
-  protected checkmarkElement!: HTMLElement | null;
+  protected checkmarkElement!: HTMLElement|null;
   @query(MDCChipFoundation.strings.PRIMARY_ACTION_SELECTOR)
-  protected primaryActionElement!: HTMLElement | null;
+  protected primaryActionElement!: HTMLElement|null;
   @query(MDCChipFoundation.strings.TRAILING_ACTION_SELECTOR)
-  protected trailingActionElement!: HTMLElement | any;
+  protected trailingActionElement!: HTMLElement|any;
 
   protected createAdapter(): MDCChipAdapter {
     return <MDCChipAdapter>{
@@ -90,46 +83,47 @@ export class ChipBase extends BaseElement {
           this.trailingActionElement.removeFocus();
         }
       },
-      eventTargetHasClass: (target, className) => target ? (target as Element).classList.contains(className) : false,
+      eventTargetHasClass: (target, className) =>
+          target ? (target as Element).classList.contains(className) : false,
       notifyInteraction: () => {
-        const detail: MDCChipInteractionEventDetail = { chipId: this.id };
-        this.dispatchEvent(new CustomEvent(MDCChipFoundation.strings.INTERACTION_EVENT, {
-          detail,
-          bubbles: true,
-          composed: true
-        }));
+        const detail: MDCChipInteractionEventDetail = {chipId: this.id};
+        this.dispatchEvent(new CustomEvent(
+            MDCChipFoundation.strings.INTERACTION_EVENT,
+            {detail, bubbles: true, composed: true}));
       },
       notifySelection: (selected, shouldIgnore) => {
-        const detail: MDCChipSelectionEventDetail = { chipId: this.id, selected, shouldIgnore };
-        this.dispatchEvent(new CustomEvent(MDCChipFoundation.strings.SELECTION_EVENT, {
-          detail,
-          bubbles: true,
-          composed: true
-        }));
+        const detail: MDCChipSelectionEventDetail = {
+          chipId: this.id,
+          selected,
+          shouldIgnore
+        };
+        this.dispatchEvent(new CustomEvent(
+            MDCChipFoundation.strings.SELECTION_EVENT,
+            {detail, bubbles: true, composed: true}));
       },
       notifyTrailingIconInteraction: () => {
-        const detail: MDCChipInteractionEventDetail = { chipId: this.id };
-        this.dispatchEvent(new CustomEvent(MDCChipFoundation.strings.TRAILING_ICON_INTERACTION_EVENT, {
-          detail,
-          bubbles: true,
-          composed: true
-        }));
+        const detail: MDCChipInteractionEventDetail = {chipId: this.id};
+        this.dispatchEvent(new CustomEvent(
+            MDCChipFoundation.strings.TRAILING_ICON_INTERACTION_EVENT,
+            {detail, bubbles: true, composed: true}));
       },
       notifyRemoval: () => this.dispatchRemovalEvent(),
       notifyNavigation: (key, source) => {
-        const detail: MDCChipNavigationEventDetail = { chipId: this.id, key, source };
-        this.dispatchEvent(new CustomEvent(MDCChipFoundation.strings.NAVIGATION_EVENT, {
-          detail,
-          bubbles: true,
-          composed: true
-        }));
+        const detail:
+            MDCChipNavigationEventDetail = {chipId: this.id, key, source};
+        this.dispatchEvent(new CustomEvent(
+            MDCChipFoundation.strings.NAVIGATION_EVENT,
+            {detail, bubbles: true, composed: true}));
       },
-      getComputedStyleValue: (propertyName) => getComputedStyle(this.mdcRoot).getPropertyValue(propertyName),
-      setStyleProperty: (propertyName, value) => this.mdcRoot.style.setProperty(propertyName, value),
+      getComputedStyleValue: (propertyName) =>
+          getComputedStyle(this.mdcRoot).getPropertyValue(propertyName),
+      setStyleProperty: (propertyName, value) =>
+          this.mdcRoot.style.setProperty(propertyName, value),
       hasLeadingIcon: () => !!this.leadingIconElement,
       getAttribute: attr => this.mdcRoot.getAttribute(attr),
       getRootBoundingClientRect: () => this.mdcRoot.getBoundingClientRect(),
-      getCheckmarkBoundingClientRect: () => this.checkmarkElement && this.checkmarkElement.getBoundingClientRect(),
+      getCheckmarkBoundingClientRect: () => this.checkmarkElement &&
+          this.checkmarkElement.getBoundingClientRect(),
       setPrimaryActionAttr: (attr, value) => {
         if (this.primaryActionElement) {
           this.primaryActionElement.setAttribute(attr, value);
@@ -237,12 +231,14 @@ export class ChipBase extends BaseElement {
   }
 
   renderCheckmark() {
-    return html`${this.type === 'filter' ? html`
+    return html`${
+        this.type === 'filter' ? html`
       <span class="mdc-chip__checkmark">
         <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
           <path class="mdc-chip__checkmark-path" fill="none" stroke="black" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
         </svg>
-      </span>` : nothing}`;
+      </span>` :
+                                 nothing}`;
   }
 
   renderPrimaryAction() {
@@ -250,7 +246,8 @@ export class ChipBase extends BaseElement {
     const role = isFilter ? 'checkbox' : 'button';
     const ariaChecked = isFilter ? String(this.selected) : undefined;
     return html`
-      <span class="mdc-chip__text mdc-chip__primary-action" role="${role}" tabindex="0" aria-checked=${ifDefined(ariaChecked)}>
+      <span class="mdc-chip__text mdc-chip__primary-action" role="${
+        role}" tabindex="0" aria-checked=${ifDefined(ariaChecked)}>
         ${this.renderLabel()}
       </span>`;
   }
@@ -261,14 +258,16 @@ export class ChipBase extends BaseElement {
       [this.removeIconClass]: true
     };
 
-    const icon = html`${this.removable ? html`
+    const icon = html`${
+        this.removable ? html`
       <i class="mdc-chip__icon mdc-chip__icon--trailing ${classMap(classes)}"
         tabindex="-1"
         role=${ifDefined(this.removeIconFocusable ? 'button' : undefined)}
         aria-hidden=${ifDefined(this.removeIconFocusable ? undefined : 'true')}
         @click=${this.handleTrailingIconInteraction}
         @keydown=${this.handleTrailingIconInteraction}
-      >${this.removeIcon}</i>` : nothing}`;
+      >${this.removeIcon}</i>` :
+                         nothing}`;
 
     if (this.removeIconFocusable) {
       return html`<span role="gridcell">${icon}</span>`;
@@ -278,12 +277,13 @@ export class ChipBase extends BaseElement {
   }
 
   private dispatchRemovalEvent() {
-    const detail: MDCChipRemovalEventDetail = { chipId: this.id, removedAnnouncement: null };
-    this.dispatchEvent(new CustomEvent(MDCChipFoundation.strings.REMOVAL_EVENT, {
-      detail,
-      bubbles: true,
-      composed: true
-    }));
+    const detail: MDCChipRemovalEventDetail = {
+      chipId: this.id,
+      removedAnnouncement: null
+    };
+    this.dispatchEvent(new CustomEvent(
+        MDCChipFoundation.strings.REMOVAL_EVENT,
+        {detail, bubbles: true, composed: true}));
   }
 
   private handleClick() {
@@ -303,4 +303,4 @@ export class ChipBase extends BaseElement {
   }
 }
 
-export type ChipType = 'action' | 'input' | 'choice' | 'filter';
+export type ChipType = 'action'|'input'|'choice'|'filter';
