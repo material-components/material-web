@@ -25,7 +25,7 @@ import {MDCTabBarAdapter} from '@material/tab-bar/adapter';
 import MDCTabBarFoundation from '@material/tab-bar/foundation';
 import {MDCTabInteractionEvent} from '@material/tab/types';
 import {html, property, query} from 'lit-element';
-import {isRTL} from '@material/mwc-base/src/utils';
+import {isRTL} from '@material/mwc-base/utils';
 
 export class TabBarBase extends BaseElement {
   protected mdcFoundation!: MDCTabBarFoundation;
