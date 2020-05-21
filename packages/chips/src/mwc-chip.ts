@@ -14,10 +14,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {customElement} from 'lit-element';
+import { customElement } from 'lit-element';
 
-import {ChipBase} from './mwc-chip-base.js';
-import {style} from './mwc-chip-css.js';
+import { ChipBase } from './mwc-chip-base.js';
+import { style } from './mwc-chip-css.js';
 
 @customElement('mwc-chip')
 export class Chip extends ChipBase {
