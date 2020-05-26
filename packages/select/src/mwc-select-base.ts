@@ -235,6 +235,7 @@ export abstract class SelectBase extends FormElement {
     const classes = {
       'mdc-select--disabled': this.disabled,
       'mdc-select--no-label': !this.label,
+      'mdc-select--filled': !this.outlined,
       'mdc-select--outlined': this.outlined,
       'mdc-select--with-leading-icon': !!this.icon,
       'mdc-select--required': this.required,
