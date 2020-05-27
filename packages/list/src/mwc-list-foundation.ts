@@ -202,7 +202,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
    */
   handleFocusIn(_: FocusEvent, listItemIndex: number) {
     if (listItemIndex >= 0) {
-      this.adapter_.setTabIndexForElementIndex(listItemIndex, 0);
+      this.adapter.setTabIndexForElementIndex(listItemIndex, 0);
     }
   }
 
@@ -211,7 +211,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
    */
   handleFocusOut(_: FocusEvent, listItemIndex: number) {
     if (listItemIndex >= 0) {
-      this.adapter_.setTabIndexForElementIndex(listItemIndex, -1);
+      this.adapter.setTabIndexForElementIndex(listItemIndex, -1);
     }
 
     /**
@@ -219,7 +219,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
      * element. Setting a delay to wait till the focus is moved to next element.
      */
     setTimeout(() => {
-      if (!this.adapter_.isFocusInsideList()) {
+      if (!this.adapter.isFocusInsideList()) {
         this.setTabindexToFirstSelectedItem_();
       }
     }, 0);
@@ -239,7 +239,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
     const isEnter = evt.key === 'Enter' || evt.keyCode === 13;
     const isSpace = evt.key === 'Space' || evt.keyCode === 32;
 
-    if (this.adapter_.isRootFocused()) {
+    if (this.adapter.isRootFocused()) {
       if (isArrowUp || isEnd) {
         evt.preventDefault();
         this.focusLastElement();
@@ -251,7 +251,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
       return;
     }
 
-    let currentIndex = this.adapter_.getFocusedElementIndex();
+    let currentIndex = this.adapter.getFocusedElementIndex();
     if (currentIndex === -1) {
       currentIndex = listItemIndex;
       if (currentIndex < 0) {
@@ -316,7 +316,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
    * Focuses the next element on the list.
    */
   focusNextElement(index: number) {
-    const count = this.adapter_.getListItemCount();
+    const count = this.adapter.getListItemCount();
     let nextIndex = index + 1;
     if (nextIndex >= count) {
       if (this.wrapFocus_) {
@@ -326,7 +326,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
         return index;
       }
     }
-    this.adapter_.focusItemAtIndex(nextIndex);
+    this.adapter.focusItemAtIndex(nextIndex);
 
     return nextIndex;
   }
@@ -338,25 +338,25 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
     let prevIndex = index - 1;
     if (prevIndex < 0) {
       if (this.wrapFocus_) {
-        prevIndex = this.adapter_.getListItemCount() - 1;
+        prevIndex = this.adapter.getListItemCount() - 1;
       } else {
         // Return early because first item is already focused.
         return index;
       }
     }
-    this.adapter_.focusItemAtIndex(prevIndex);
+    this.adapter.focusItemAtIndex(prevIndex);
 
     return prevIndex;
   }
 
   focusFirstElement() {
-    this.adapter_.focusItemAtIndex(0);
+    this.adapter.focusItemAtIndex(0);
     return 0;
   }
 
   focusLastElement() {
-    const lastIndex = this.adapter_.getListItemCount() - 1;
-    this.adapter_.focusItemAtIndex(lastIndex);
+    const lastIndex = this.adapter.getListItemCount() - 1;
+    this.adapter.focusItemAtIndex(lastIndex);
     return lastIndex;
   }
 
@@ -369,7 +369,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
       return;
     }
 
-    this.adapter_.setDisabledStateForElementIndex(itemIndex, !isEnabled);
+    this.adapter.setDisabledStateForElementIndex(itemIndex, !isEnabled);
   }
 
   /**
@@ -391,26 +391,26 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
 
     // unset previous
     if (this.selectedIndex_ !== numbers.UNSET_INDEX) {
-      this.adapter_.setSelectedStateForElementIndex(
+      this.adapter.setSelectedStateForElementIndex(
           this.selectedIndex_ as number, false);
       if (this.useActivatedClass_) {
-        this.adapter_.setActivatedStateForElementIndex(
+        this.adapter.setActivatedStateForElementIndex(
             this.selectedIndex_ as number, false);
       }
     }
 
     // set new
     if (isInteraction) {
-      this.adapter_.setSelectedStateForElementIndex(index, true);
+      this.adapter.setSelectedStateForElementIndex(index, true);
     }
     if (this.useActivatedClass_) {
-      this.adapter_.setActivatedStateForElementIndex(index, true);
+      this.adapter.setActivatedStateForElementIndex(index, true);
     }
     this.setAriaForSingleSelectionAtIndex_(index);
 
     this.selectedIndex_ = index;
 
-    this.adapter_.notifySelected(index);
+    this.adapter.notifySelected(index);
   }
 
   private setMultiSelectionAtIndex_(
@@ -424,27 +424,27 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
 
     for (const removed of diff.removed) {
       if (isInteraction) {
-        this.adapter_.setSelectedStateForElementIndex(removed, false);
+        this.adapter.setSelectedStateForElementIndex(removed, false);
       }
 
       if (this.useActivatedClass_) {
-        this.adapter_.setActivatedStateForElementIndex(removed, false);
+        this.adapter.setActivatedStateForElementIndex(removed, false);
       }
     }
 
     for (const added of diff.added) {
       if (isInteraction) {
-        this.adapter_.setSelectedStateForElementIndex(added, true);
+        this.adapter.setSelectedStateForElementIndex(added, true);
       }
 
       if (this.useActivatedClass_) {
-        this.adapter_.setActivatedStateForElementIndex(added, true);
+        this.adapter.setActivatedStateForElementIndex(added, true);
       }
     }
 
     this.selectedIndex_ = newIndex;
 
-    this.adapter_.notifySelected(newIndex, diff);
+    this.adapter.notifySelected(newIndex, diff);
   }
 
   /**
@@ -454,7 +454,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
     // Detect the presence of aria-current and get the value only during list
     // initialization when it is in unset state.
     if (this.selectedIndex_ === numbers.UNSET_INDEX) {
-      this.ariaCurrentAttrValue_ = this.adapter_.getAttributeForElementIndex(
+      this.ariaCurrentAttrValue_ = this.adapter.getAttributeForElementIndex(
           index, strings.ARIA_CURRENT);
     }
 
@@ -463,13 +463,13 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
         isAriaCurrent ? strings.ARIA_CURRENT : strings.ARIA_SELECTED;
 
     if (this.selectedIndex_ !== numbers.UNSET_INDEX) {
-      this.adapter_.setAttributeForElementIndex(
+      this.adapter.setAttributeForElementIndex(
           this.selectedIndex_ as number, ariaAttribute, 'false');
     }
 
     const ariaAttributeValue =
         isAriaCurrent ? this.ariaCurrentAttrValue_ : 'true';
-    this.adapter_.setAttributeForElementIndex(
+    this.adapter.setAttributeForElementIndex(
         index, ariaAttribute, ariaAttributeValue as string);
   }
 
@@ -478,13 +478,13 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
       // If no list item was selected set first list item's tabindex to -1.
       // Generally, tabindex is set to 0 on first list item of list that has no
       // preselected items.
-      this.adapter_.setTabIndexForElementIndex(0, -1);
+      this.adapter.setTabIndexForElementIndex(0, -1);
     } else if (
         this.focusedItemIndex_ >= 0 && this.focusedItemIndex_ !== index) {
-      this.adapter_.setTabIndexForElementIndex(this.focusedItemIndex_, -1);
+      this.adapter.setTabIndexForElementIndex(this.focusedItemIndex_, -1);
     }
 
-    this.adapter_.setTabIndexForElementIndex(index, 0);
+    this.adapter.setTabIndexForElementIndex(index, 0);
   }
 
   private setTabindexToFirstSelectedItem_() {
@@ -536,7 +536,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
   }
 
   private isIndexInRange_(index: number) {
-    const listSize = this.adapter_.getListItemCount();
+    const listSize = this.adapter.getListItemCount();
     return index >= 0 && index < listSize;
   }
 
@@ -547,7 +547,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
    */
   private setSelectedIndexOnAction_(
       index: number, isInteraction: boolean, force?: boolean) {
-    if (this.adapter_.getDisabledStateForElementIndex(index)) {
+    if (this.adapter.getDisabledStateForElementIndex(index)) {
       return;
     }
 
@@ -575,7 +575,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
     }
 
     if (isInteraction) {
-      this.adapter_.notifyAction(index);
+      this.adapter.notifyAction(index);
     }
   }
 
@@ -583,7 +583,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
     let newSelectionValue = false;
 
     if (force === undefined) {
-      newSelectionValue = !this.adapter_.getSelectedStateForElementIndex(index);
+      newSelectionValue = !this.adapter.getSelectedStateForElementIndex(index);
     } else {
       newSelectionValue = force;
     }
