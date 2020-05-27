@@ -79,8 +79,3 @@ limitations under the License.
     color: var(--mdc-tab-color-default, #{tab.$icon-color-default});
   }
 }
-
-:host,
-.mdc-tab__ripple {
-  border-radius: var(--mdc-tab-border-radius, 0px);
-}

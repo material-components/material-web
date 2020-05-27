@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - **BREAKING** renamed `SelectionController` to `SingleSelectionController`
   - **BREAKING** moved `SingleSelectionController` to `@material/mwc-radio/single-selection-controller.ts`
   - `SingleSelectionController` now accepts `CheckableElements` rather than just MWC Radio elements
+- **BREAKING** `--mdc-tab-border-radius` has been removed to align with spec
 
 ## [v0.15.0] - 2020-05-05
 
