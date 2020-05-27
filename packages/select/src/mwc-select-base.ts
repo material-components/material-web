@@ -20,8 +20,11 @@ import '@material/mwc-icon';
 
 import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
 import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
+import * as typeahead from '@material/list/typeahead.js';
+import {MDCListTextAndIndex} from '@material/list/types';
 import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element.js';
 import {observer} from '@material/mwc-base/observer.js';
+import {isNodeElement} from '@material/mwc-base/utils.js';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {ListItemBase} from '@material/mwc-list/mwc-list-item-base';
@@ -29,10 +32,9 @@ import {Menu} from '@material/mwc-menu';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCSelectAdapter} from '@material/select/adapter';
 import MDCSelectFoundation from '@material/select/foundation.js';
-import {html, property, query, TemplateResult} from 'lit-element';
+import {eventOptions, html, property, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map.js';
 import {ifDefined} from 'lit-html/directives/if-defined.js';
-
 
 // must be done to get past lit-analyzer checks
 declare global {
@@ -117,7 +119,6 @@ export abstract class SelectBase extends FormElement {
 
   @query('.mdc-menu') protected menuElement!: Menu|null;
 
-
   @query('.mdc-select__anchor') protected anchorElement!: HTMLDivElement|null;
 
   @property({type: Boolean, attribute: 'disabled', reflect: true})
@@ -170,10 +171,20 @@ export abstract class SelectBase extends FormElement {
 
   @property({type: Boolean}) protected isUiValid = true;
 
+  // Transiently holds current typeahead prefix from user.
+  protected typeaheadState = typeahead.initState();
+  protected sortedIndexByFirstChar = new Map<string, MDCListTextAndIndex[]>();
+
+  protected menuElement_: Menu|null = null;
+
   get items(): ListItemBase[] {
-    const menuElement = this.menuElement;
-    if (menuElement) {
-      return menuElement.items;
+    // memoize menuElement to prevent unnecessary querySelector calls.
+    if (!this.menuElement_) {
+      this.menuElement_ = this.menuElement;
+    }
+
+    if (this.menuElement_) {
+      return this.menuElement_.items;
     }
 
     return [];
@@ -250,7 +261,8 @@ export abstract class SelectBase extends FormElement {
     const describedby = this.shouldRenderHelperText ? 'helper-text' : undefined;
 
     return html`
-      <div class="mdc-select ${classMap(classes)}">
+      <div
+          class="mdc-select ${classMap(classes)}">
         <input
             class="formElement"
             .value=${this.value}
@@ -303,7 +315,9 @@ export abstract class SelectBase extends FormElement {
             .anchor=${this.anchorElement}
             @selected=${this.onSelected}
             @opened=${this.onOpened}
-            @closed=${this.onClosed}>
+            @closed=${this.onClosed}
+            @items-updated=${this.onItemsUpdated}
+            @keydown=${this.handleTypeahead}>
           <slot></slot>
         </mwc-menu>
       </div>
@@ -555,8 +569,34 @@ export abstract class SelectBase extends FormElement {
       },
       addClassAtIndex: () => undefined,
       removeClassAtIndex: () => undefined,
-      isTypeaheadInProgress: () => false,
-      typeaheadMatchItem: () => -1,
+      isTypeaheadInProgress: () =>
+          typeahead.isTypingInProgress(this.typeaheadState),
+      typeaheadMatchItem: (nextChar, startingIndex) => {
+        if (!this.menuElement) {
+          return -1;
+        }
+
+        const opts: typeahead.TypeaheadMatchItemOpts = {
+          focusItemAtIndex: (index) => {
+            this.menuElement!.focusItemAtIndex(index)
+          },
+          focusedItemIndex: startingIndex ?
+              startingIndex :
+              this.menuElement.getFocusedItemIndex(),
+          nextChar,
+          sortedIndexByFirstChar: this.sortedIndexByFirstChar,
+          skipFocus: false,
+          isItemAtIndexDisabled: (index) => this.items[index].disabled,
+        };
+
+        const index = typeahead.matchItem(opts, this.typeaheadState);
+
+        if (index !== -1) {
+          this.select(index);
+        }
+
+        return index;
+      },
     };
   }
 
@@ -635,7 +675,14 @@ export abstract class SelectBase extends FormElement {
       this.selectByValue(this.value);
     }
 
+    this.sortedIndexByFirstChar = typeahead.initSortedIndex(
+        this.items.length, (index) => this.items[index].text);
     this.renderReady = true;
+  }
+
+  protected onItemsUpdated() {
+    this.sortedIndexByFirstChar = typeahead.initSortedIndex(
+        this.items.length, (index) => this.items[index].text);
   }
 
   select(index: number) {
@@ -727,6 +774,34 @@ export abstract class SelectBase extends FormElement {
     if (this.mdcFoundation) {
       this.mdcFoundation.handleKeydown(evt);
     }
+  }
+
+  // must capture to run before list foundation captures event
+  @eventOptions({capture: true})
+  protected handleTypeahead(event: KeyboardEvent) {
+    if (!this.menuElement) {
+      return;
+    }
+
+    const focusedItemIndex = this.menuElement.getFocusedItemIndex();
+    const target = isNodeElement(event.target as Node) ?
+        event.target as HTMLElement :
+        null;
+    const isTargetListItem =
+        target ? target.hasAttribute('mwc-list-item') : false;
+
+    const opts: typeahead.HandleKeydownOpts = {
+      event,
+      focusItemAtIndex: (index) => {
+        this.menuElement!.focusItemAtIndex(index)
+      },
+      focusedItemIndex,
+      isTargetListItem,
+      sortedIndexByFirstChar: this.sortedIndexByFirstChar,
+      isItemAtIndexDisabled: (index) => this.items[index].disabled,
+    };
+
+    typeahead.handleKeydown(opts, this.typeaheadState);
   }
 
   protected async onSelected(evt: CustomEvent<{index: number}>) {

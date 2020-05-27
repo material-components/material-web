@@ -38,6 +38,7 @@ export type DefaultFocusState = keyof typeof DefaultFocusStateEnum;
 /**
  * @fires selected {SelectedDetail}
  * @fires action {ActionDetail}
+ * @fires items-updated
  * @fires opened
  * @fires closed
  */
@@ -377,6 +378,24 @@ export abstract class MenuBase extends BaseElement {
 
   show() {
     this.open = true;
+  }
+
+  getFocusedItemIndex() {
+    const listElement = this.listElement;
+
+    if (listElement) {
+      return listElement.getFocusedItemIndex();
+    }
+
+    return -1;
+  }
+
+  focusItemAtIndex(index: number) {
+    const listElement = this.listElement;
+
+    if (listElement) {
+      listElement.focusItemAtIndex(index);
+    }
   }
 
   layout(updateItems = true) {

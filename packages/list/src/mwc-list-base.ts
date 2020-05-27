@@ -36,6 +36,7 @@ const isListItem = (element: Element): element is ListItemBase => {
 /**
  * @fires selected {SelectedDetail}
  * @fires action {ActionDetail}
+ * @fires items-updated
  */
 export abstract class ListBase extends BaseElement implements Layoutable {
   protected mdcFoundation!: MDCListFoundation;
@@ -163,6 +164,10 @@ export abstract class ListBase extends BaseElement implements Layoutable {
           selectedIndices.size ? selectedIndices.entries().next().value[1] : -1;
       this.select(index);
     }
+
+    const itemsUpdatedEv =
+        new Event('items-updated', {bubbles: true, composed: true});
+    this.dispatchEvent(itemsUpdatedEv);
   }
 
   get selected(): ListItemBase|ListItemBase[]|null {
@@ -307,31 +312,7 @@ export abstract class ListBase extends BaseElement implements Layoutable {
 
         return 0;
       },
-      getFocusedElementIndex: () => {
-        if (!this.mdcRoot) {
-          return -1;
-        }
-
-        if (!this.items.length) {
-          return -1;
-        }
-
-        const activeElementPath = deepActiveElementPath();
-
-        if (!activeElementPath.length) {
-          return -1;
-        }
-
-        for (let i = activeElementPath.length - 1; i >= 0; i--) {
-          const activeItem = activeElementPath[i];
-
-          if (isListItem(activeItem)) {
-            return this.items.indexOf(activeItem);
-          }
-        }
-
-        return -1;
-      },
+      getFocusedElementIndex: this.getFocusedItemIndex,
       getAttributeForElementIndex: (index, attr) => {
         const listElement = this.mdcRoot;
         if (!listElement) {
@@ -491,6 +472,44 @@ export abstract class ListBase extends BaseElement implements Layoutable {
         first.tabindex = 0;
       }
     }
+  }
+
+  getFocusedItemIndex() {
+    if (!this.mdcRoot) {
+      return -1;
+    }
+
+    if (!this.items.length) {
+      return -1;
+    }
+
+    const activeElementPath = deepActiveElementPath();
+
+    if (!activeElementPath.length) {
+      return -1;
+    }
+
+    for (let i = activeElementPath.length - 1; i >= 0; i--) {
+      const activeItem = activeElementPath[i];
+
+      if (isListItem(activeItem)) {
+        return this.items.indexOf(activeItem);
+      }
+    }
+
+    return -1;
+  }
+
+  focusItemAtIndex(index: number) {
+    for (const item of this.items) {
+      if (item.tabindex === 0) {
+        item.tabindex = -1;
+        break;
+      }
+    }
+
+    this.items[index].tabindex = 0;
+    this.items[index].focus();
   }
 
   focus() {
