@@ -454,8 +454,8 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
     // Detect the presence of aria-current and get the value only during list
     // initialization when it is in unset state.
     if (this.selectedIndex_ === numbers.UNSET_INDEX) {
-      this.ariaCurrentAttrValue_ = this.adapter.getAttributeForElementIndex(
-          index, strings.ARIA_CURRENT);
+      this.ariaCurrentAttrValue_ =
+          this.adapter.getAttributeForElementIndex(index, strings.ARIA_CURRENT);
     }
 
     const isAriaCurrent = this.ariaCurrentAttrValue_ !== null;
