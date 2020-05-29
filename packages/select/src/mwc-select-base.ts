@@ -459,6 +459,15 @@ export abstract class SelectBase extends FormElement {
 
         selectAnchorElement.setAttribute(attr, value);
       },
+      removeSelectAnchorAttr: (attr) => {
+        const selectAnchorElement = this.anchorElement;
+
+        if (!selectAnchorElement) {
+          return;
+        }
+
+        selectAnchorElement.removeAttribute(attr);
+      },
       openMenu: () => {
         this.menuOpen = true;
       },
