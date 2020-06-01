@@ -99,6 +99,8 @@ export type TextFieldInputMode =
     'verbatim'|'latin'|'latin-name'|'latin-prose'|'full-width-latin'|'kana'|
     'kana-name'|'katakana'|'numeric'|'tel'|'email'|'url';
 
+export type TextAreaCharCounter = 'external'|'internal';
+
 export abstract class TextFieldBase extends FormElement {
   protected mdcFoundation!: MDCTextFieldFoundation;
 
@@ -160,7 +162,7 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: Boolean}) helperPersistent = false;
 
-  @property({type: Boolean}) charCounter = false;
+  @property({type: Boolean}) charCounter: boolean|TextAreaCharCounter = false;
 
   @property({type: Boolean}) endAligned = false;
 

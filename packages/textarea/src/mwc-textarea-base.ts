@@ -15,12 +15,32 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {TextFieldBase} from '@material/mwc-textfield/mwc-textfield-base.js';
-import {html, property, query} from 'lit-element';
+import {TextAreaCharCounter, TextFieldBase} from '@material/mwc-textfield/mwc-textfield-base.js';
+import {ComplexAttributeConverter, html, property, query} from 'lit-element';
+import {nothing} from 'lit-html';
 import {classMap} from 'lit-html/directives/class-map.js';
 import {ifDefined} from 'lit-html/directives/if-defined.js';
 
 export {TextFieldType} from '@material/mwc-textfield/mwc-textfield-base.js';
+
+const booleanOrStringConverter: ComplexAttributeConverter<boolean|string> = {
+  fromAttribute(value) {
+    if (value === null) {
+      return false;
+    } else if (value === '') {
+      return true;
+    }
+
+    return value;
+  },
+  toAttribute(value) {
+    if (typeof value === 'boolean') {
+      return value ? '' : null;
+    }
+
+    return value;
+  }
+};
 
 export abstract class TextAreaBase extends TextFieldBase {
   @query('textarea') protected formElement!: HTMLInputElement;
@@ -29,11 +49,16 @@ export abstract class TextAreaBase extends TextFieldBase {
 
   @property({type: Number}) cols = 20;
 
+  @property({converter: booleanOrStringConverter})
+  charCounter: boolean|TextAreaCharCounter = false;
+
   protected get shouldRenderHelperText(): boolean {
-    return !!this.helper || !!this.validationMessage;
+    return !!this.helper || !!this.validationMessage ||
+        (this.charCounterVisible && this.charCounter !== 'internal');
   }
 
   render() {
+    const internalCounter = this.charCounter === 'internal';
     const classes = {
       'mdc-text-field--disabled': this.disabled,
       'mdc-text-field--no-label': !this.label,
@@ -41,9 +66,10 @@ export abstract class TextAreaBase extends TextFieldBase {
       'mdc-text-field--outlined': this.outlined,
       'mdc-text-field--fullwidth': this.fullWidth,
       'mdc-text-field--end-aligned': this.endAligned,
-      'mdc-text-field--with-internal-counter': this.charCounterVisible,
+      'mdc-text-field--with-internal-counter': internalCounter,
     };
 
+    const charCounter = this.renderCharCounter();
     const ripple =
         !this.outlined ? html`<div class="mdc-text-field__ripple"></div>` : '';
     return html`
@@ -51,10 +77,10 @@ export abstract class TextAreaBase extends TextFieldBase {
         classMap(classes)}">
         ${ripple}
         ${this.renderInput()}
-        ${this.renderCharCounter()}
+        ${internalCounter ? charCounter : nothing}
         ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
       </label>
-      ${this.renderHelperText()}
+      ${this.renderHelperText(internalCounter ? undefined : charCounter)}
     `;
   }
 

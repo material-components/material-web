@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- `textarea`
+  - added separate internal and external character counters
 - `--mdc-drawer-width` Drawer width is now configurable.
 - Added `name` property `mwc-textfield` & `mwc-textarea` for browser autofill.
 - `ListItem.multipleGraphics` list-item graphic width now configuratble for multiple graphics
@@ -31,6 +33,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - **BREAKING** renamed `SelectionController` to `SingleSelectionController`
   - **BREAKING** moved `SingleSelectionController` to `@material/mwc-radio/single-selection-controller.ts`
   - `SingleSelectionController` now accepts `CheckableElements` rather than just MWC Radio elements
+- `textarea`
+  - **BREAKING** character counters are now external by default
 - **BREAKING** `--mdc-tab-border-radius` has been removed to align with spec
 - **BREAKING** replaced `--mdc-dialog-shape-radius` with `--mdc-shape-medium`
 
