@@ -350,9 +350,7 @@ export abstract class SelectBase extends FormElement {
       <label
           .floatingLabelFoundation=${floatingLabel(this.label)}
           @labelchange=${this.onLabelChange}
-          id="label">
-        ${this.label}
-      </label>
+          id="label">${this.label}</label>
     `;
   }
 
@@ -397,6 +395,11 @@ export abstract class SelectBase extends FormElement {
         }
 
         return 0;
+      },
+      setLabelRequired: (isRequired) => {
+        if (this.labelElement) {
+          this.labelElement.floatingLabelFoundation.setRequired(isRequired);
+        }
       },
       hasOutline: () => this.outlined,
       notchOutline: (labelWidth) => {
