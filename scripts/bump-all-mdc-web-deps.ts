@@ -24,6 +24,7 @@ const packagesDir = path.resolve(__dirname, '..', '..', 'packages');
 interface PackageJson {
   name: string;
   dependencies?: {[mdcwPkg: string]: string};
+  devDependencies?: {[mdcwPkg: string]: string};
 }
 
 function isMdcWebPackage(mdcwPkg: string): boolean {
@@ -44,20 +45,29 @@ function main() {
   for (const relPath of packageJsonPaths) {
     const absPath = path.join(packagesDir, relPath);
     const pj = JSON.parse(fs.readFileSync(absPath, 'utf8')) as PackageJson;
-    if (!pj.dependencies) {
+    if (!pj.dependencies || !pj.devDependencies) {
       continue;
     }
     console.log(`Checking ${pj.name}`);
     let changed = false;
-    for (const [pkg, oldVersion] of Object.entries(pj.dependencies)) {
-      if (isMdcWebPackage(pkg)) {
-        if (oldVersion !== newVersion) {
-          pj.dependencies[pkg] = newVersion;
-          console.log(`\tUpdating ${pkg} from ${oldVersion} to ${newVersion}`);
-          changed = true;
-          anyChanged = true;
+    function updateDependencies(dependencies: Record<string, string>) {
+      for (const [pkg, oldVersion] of Object.entries(dependencies)) {
+        if (isMdcWebPackage(pkg)) {
+          if (oldVersion !== newVersion) {
+            dependencies[pkg] = newVersion;
+            console.log(
+                `\tUpdating ${pkg} from ${oldVersion} to ${newVersion}`);
+            changed = true;
+            anyChanged = true;
+          }
         }
       }
+    }
+    if (pj.dependencies) {
+      updateDependencies(pj.dependencies);
+    }
+    if (pj.devDependencies) {
+      updateDependencies(pj.devDependencies)
     }
     if (changed) {
       console.log(`\tWriting new package.json`);
