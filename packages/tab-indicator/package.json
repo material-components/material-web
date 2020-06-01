@@ -1,7 +1,12 @@
 {
   "name": "@material/mwc-tab-indicator",
   "version": "0.15.0",
-  "description": "",
+  "description": "Material Design tab indicator web component",
+  "keywords": [
+    "material design",
+    "web components",
+    "tab indicator"
+  ],
   "main": "mwc-tab-indicator.js",
   "module": "mwc-tab-indicator.js",
   "repository": {
@@ -9,11 +14,6 @@
     "url": "https://github.com/material-components/material-components-web-components.git",
     "directory": "packages/tab-indicator"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
-  },
-  "author": "",
   "license": "Apache-2.0",
   "dependencies": {
     "@material/mwc-base": "^0.15.0",
@@ -21,6 +21,9 @@
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0"
+  },
+  "devDependencies": {
+    "@material/mwc-icon": "^0.15.0"
   },
   "publishConfig": {
     "access": "public"

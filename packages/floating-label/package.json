@@ -1,7 +1,12 @@
 {
   "name": "@material/mwc-floating-label",
   "version": "0.15.0",
-  "description": "",
+  "description": "Material Design floating label web component",
+  "keywords": [
+    "material design",
+    "web components",
+    "floating label"
+  ],
   "main": "mwc-floating-label-directive.js",
   "module": "mwc-floating-label-directive.js",
   "repository": {
@@ -9,13 +14,17 @@
     "url": "https://github.com/material-components/material-components-web-components.git",
     "directory": "packages/floating-label"
   },
-  "author": "",
   "license": "Apache-2.0",
   "dependencies": {
     "@material/floating-label": "=7.0.0-canary.b9776b1d0.0",
-    "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0"
+  },
+  "devDependencies": {
+    "@material/animation": "=7.0.0-canary.b9776b1d0.0",
+    "@material/base": "=7.0.0-canary.b9776b1d0.0",
+    "@material/rtl": "=7.0.0-canary.b9776b1d0.0",
+    "@material/typography": "=7.0.0-canary.b9776b1d0.0"
   },
   "publishConfig": {
     "access": "public"

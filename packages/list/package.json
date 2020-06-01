@@ -1,30 +1,33 @@
 {
   "name": "@material/mwc-list",
   "version": "0.15.0",
-  "description": "",
+  "description": "Material Design list web component",
+  "keywords": [
+    "material design",
+    "web components",
+    "list"
+  ],
   "main": "mwc-list.js",
   "module": "mwc-list.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
   "license": "Apache-2.0",
   "dependencies": {
     "@material/base": "=7.0.0-canary.b9776b1d0.0",
-    "@material/density": "=7.0.0-canary.b9776b1d0.0",
-    "@material/feature-targeting": "=7.0.0-canary.b9776b1d0.0",
     "@material/list": "=7.0.0-canary.b9776b1d0.0",
     "@material/mwc-base": "^0.15.0",
     "@material/mwc-checkbox": "^0.15.0",
     "@material/mwc-radio": "^0.15.0",
     "@material/mwc-ripple": "^0.15.0",
-    "@material/ripple": "=7.0.0-canary.b9776b1d0.0",
-    "@material/rtl": "=7.0.0-canary.b9776b1d0.0",
-    "@material/theme": "=7.0.0-canary.b9776b1d0.0",
-    "@material/typography": "=7.0.0-canary.b9776b1d0.0",
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0"
+  },
+  "devDependencies": {
+    "@material/density": "=7.0.0-canary.b9776b1d0.0",
+    "@material/feature-targeting": "=7.0.0-canary.b9776b1d0.0",
+    "@material/ripple": "=7.0.0-canary.b9776b1d0.0",
+    "@material/rtl": "=7.0.0-canary.b9776b1d0.0",
+    "@material/theme": "=7.0.0-canary.b9776b1d0.0",
+    "@material/typography": "=7.0.0-canary.b9776b1d0.0"
   },
   "publishConfig": {
     "access": "public"

@@ -17,9 +17,10 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@material/elevation": "=7.0.0-canary.8073a20a9.0",
-    "@material/feature-targeting": "=7.0.0-canary.8073a20a9.0",
-    "@material/ripple": "=7.0.0-canary.8073a20a9.0"
+    "@material/elevation": "=7.0.0-canary.b9776b1d0.0",
+    "@material/feature-targeting": "=7.0.0-canary.b9776b1d0.0",
+    "@material/ripple": "=7.0.0-canary.b9776b1d0.0",
+    "@material/theme": "=7.0.0-canary.b9776b1d0.0"
   },
   "publishConfig": {
     "access": "public"

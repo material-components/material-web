@@ -1,7 +1,12 @@
 {
   "name": "@material/mwc-tab-scroller",
   "version": "0.15.0",
-  "description": "",
+  "description": "Material Design tab scroller web component",
+  "keywords": [
+    "material design",
+    "web components",
+    "tab scroller"
+  ],
   "main": "mwc-tab-scroller.js",
   "module": "mwc-tab-scroller.js",
   "repository": {
@@ -9,11 +14,6 @@
     "url": "https://github.com/material-components/material-components-web-components.git",
     "directory": "packages/tab-scroller"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
-  },
-  "author": "",
   "license": "Apache-2.0",
   "dependencies": {
     "@material/dom": "=7.0.0-canary.b9776b1d0.0",

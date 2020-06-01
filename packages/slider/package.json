@@ -1,7 +1,12 @@
 {
   "name": "@material/mwc-slider",
   "version": "0.15.0",
-  "description": "",
+  "description": "Material Design slider web component",
+  "keywords": [
+    "material design",
+    "web components",
+    "slider"
+  ],
   "main": "mwc-slider.js",
   "module": "mwc-slider.js",
   "repository": {
@@ -9,12 +14,9 @@
     "url": "https://github.com/material-components/material-components-web-components.git",
     "directory": "packages/slider"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
   "license": "Apache-2.0",
   "dependencies": {
+    "@material/dom": "=7.0.0-canary.b9776b1d0.0",
     "@material/mwc-base": "^0.15.0",
     "@material/slider": "=7.0.0-canary.b9776b1d0.0",
     "lit-element": "^2.3.0",

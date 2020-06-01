@@ -1,7 +1,12 @@
 {
   "name": "@material/mwc-drawer",
   "version": "0.15.0",
-  "description": "",
+  "description": "Material Design drawer web component",
+  "keywords": [
+    "material design",
+    "web components",
+    "drawer"
+  ],
   "main": "mwc-drawer.js",
   "module": "mwc-drawer.js",
   "repository": {
@@ -9,11 +14,6 @@
     "url": "https://github.com/material-components/material-components-web-components.git",
     "directory": "packages/drawer"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
-  },
-  "author": "",
   "license": "Apache-2.0",
   "dependencies": {
     "@material/drawer": "=7.0.0-canary.b9776b1d0.0",
@@ -23,6 +23,9 @@
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0",
     "wicg-inert": "^3.0.0"
+  },
+  "devDependencies": {
+    "@material/theme": "=7.0.0-canary.b9776b1d0.0"
   },
   "publishConfig": {
     "access": "public"

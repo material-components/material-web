@@ -1,7 +1,12 @@
 {
   "name": "@material/mwc-linear-progress",
   "version": "0.15.0",
-  "description": "",
+  "description": "Material Design linear progress web component",
+  "keywords": [
+    "material design",
+    "web components",
+    "line ripple"
+  ],
   "main": "mwc-linear-progress.js",
   "module": "mwc-linear-progress.js",
   "repository": {
@@ -9,10 +14,6 @@
     "url": "https://github.com/material-components/material-components-web-components.git",
     "directory": "packages/icon-button"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
   "license": "Apache-2.0",
   "dependencies": {
     "@material/linear-progress": "=7.0.0-canary.b9776b1d0.0",

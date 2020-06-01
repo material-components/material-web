@@ -1,7 +1,12 @@
 {
   "name": "@material/mwc-line-ripple",
   "version": "0.15.0",
-  "description": "",
+  "description": "Material Design line ripple web component",
+  "keywords": [
+    "material design",
+    "web components",
+    "line ripple"
+  ],
   "main": "mwc-line-ripple-directive.js",
   "module": "mwc-line-ripple-directive.js",
   "repository": {
@@ -9,11 +14,9 @@
     "url": "https://github.com/material-components/material-components-web-components.git",
     "directory": "packages/line-ripple"
   },
-  "author": "",
   "license": "Apache-2.0",
   "dependencies": {
     "@material/line-ripple": "=7.0.0-canary.b9776b1d0.0",
-    "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0"
   },
