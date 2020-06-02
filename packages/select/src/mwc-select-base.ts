@@ -18,6 +18,7 @@ import '@material/mwc-notched-outline';
 import '@material/mwc-menu';
 import '@material/mwc-icon';
 
+import {KEY, normalizeKey} from '@material/dom/keyboard';
 import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
 import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
 import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element.js';
@@ -621,15 +622,17 @@ export abstract class SelectBase extends FormElement {
       this.reportValidity();
     }
 
+    if (!this.items.length && this.slotElement &&
+        this.slotElement.assignedNodes({flatten: true}).length) {
+      // Shady DOM initial render fix
+      await new Promise((res) => {
+        requestAnimationFrame(res);
+      });
+    }
+    await this.layout();
+
     // init with value set
     if (this.value && !this.selected) {
-      if (!this.items.length && this.slotElement &&
-          this.slotElement.assignedNodes({flatten: true}).length) {
-        // Shady DOM initial render fix
-        await new Promise((res) => requestAnimationFrame(res));
-        await this.layout();
-      }
-
       this.selectByValue(this.value);
     }
 
@@ -722,6 +725,20 @@ export abstract class SelectBase extends FormElement {
   }
 
   protected onKeydown(evt: KeyboardEvent) {
+    const arrowUp = normalizeKey(evt) === KEY.ARROW_UP;
+    const arrowDown = normalizeKey(evt) === KEY.ARROW_DOWN;
+    if (this.menuElement && (arrowUp || arrowDown)) {
+      if (arrowUp && this.index > 0) {
+        this.select(this.index - 1);
+      } else if (arrowDown && this.index < this.menuElement.items.length - 1) {
+        this.select(this.index + 1);
+      }
+      evt.preventDefault();
+
+      // Let MDC handle the menu opening part.
+      evt = new KeyboardEvent('keydown', {key: KEY.ENTER});
+    }
+
     if (this.mdcFoundation) {
       this.mdcFoundation.handleKeydown(evt);
     }
@@ -781,6 +798,11 @@ export abstract class SelectBase extends FormElement {
 
     if (menuElement) {
       menuElement.layout(updateItems);
+
+      if (!this.value && !this.selected && menuElement.items.length &&
+          menuElement.items[0].value === '') {
+        this.select(0);
+      }
     }
   }
 }

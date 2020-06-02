@@ -129,6 +129,74 @@ suite('mwc-select:', () => {
     });
   });
 
+  suite('keydown', () => {
+    let element: Select;
+    setup(async () => {
+      fixt = await fixture(basic());
+
+      element = fixt.root.querySelector('mwc-select')!;
+    });
+
+    test('keydown arrowdown increments selected index', async () => {
+      // deflake shady dom (IE)
+      await rafPromise();
+      await element.layout();
+
+      let changeCalled = false;
+      element.addEventListener('change', () => changeCalled = true);
+
+      await element['onKeydown'](
+          new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      const aElement = element.querySelector('[value="a"]') as ListItem;
+
+      await element.updateComplete;
+      await aElement.updateComplete;
+
+      assert.isTrue(
+          changeCalled, 'change event fired after next item selected');
+      assert.equal(element.value, 'a', 'value changes to next value in list');
+      assert.equal(
+          aElement, element.selected, 'selected element matches list item');
+      assert.isTrue(aElement.selected, 'prop sets on list item');
+      assert.equal(element.index, 1, 'index is correctly set');
+    });
+
+    test('keydown arrowup decrements selected index', async () => {
+      fixt.remove();
+      fixt = await fixture(valueInit);
+
+      // deflake shady dom (IE)
+      await rafPromise();
+      await element.layout();
+
+      element = fixt.root.querySelector('mwc-select')!;
+
+      let changeCalled = false;
+      element.addEventListener('change', () => changeCalled = true);
+
+      await element['onKeydown'](
+          new KeyboardEvent('keydown', {key: 'ArrowUp'}));
+
+      const bElement = element.querySelector('[value="b"]') as ListItem;
+      await bElement.updateComplete;
+      await element.updateComplete;
+
+      assert.isTrue(
+          changeCalled, 'change event fired after previous item selected');
+      assert.equal(element.value, 'b', 'value changes to previous list item');
+      assert.equal(
+          bElement, element.selected, 'selected element matches list item');
+      assert.isTrue(bElement.selected, 'prop sets on list item');
+      assert.equal(element.index, 2, 'index is correctly set');
+    });
+
+    teardown(() => {
+      if (fixt) {
+        fixt.remove();
+      }
+    });
+  });
+
   suite('validation', () => {
     suite('standard', () => {
       test('required invalidates on blur', async () => {
