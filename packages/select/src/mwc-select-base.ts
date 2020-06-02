@@ -243,6 +243,10 @@ export abstract class SelectBase extends FormElement {
       'mdc-select--fullwidth': this.fullwidth,
     };
 
+    const menuClasses = {
+      'mdc-select__menu--invalid': !this.isUiValid,
+    }
+
     const describedby = this.shouldRenderHelperText ? 'helper-text' : undefined;
 
     return html`
@@ -291,7 +295,8 @@ export abstract class SelectBase extends FormElement {
         <mwc-menu
             innerRole="listbox"
             wrapFocus
-            class="mdc-select__menu mdc-menu mdc-menu-surface"
+            class="mdc-select__menu mdc-menu mdc-menu-surface ${
+        classMap(menuClasses)}"
             activatable
             .fullwidth=${!this.naturalMenuWidth}
             .open=${this.menuOpen}
@@ -477,6 +482,8 @@ export abstract class SelectBase extends FormElement {
       closeMenu: () => {
         this.menuOpen = false;
       },
+      addMenuClass: () => undefined,
+      removeMenuClass: () => undefined,
       getAnchorElement: () => this.anchorElement,
       setMenuAnchorElement: () => {
         /* Handled by anchor directive */

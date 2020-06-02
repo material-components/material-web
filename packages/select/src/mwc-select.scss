@@ -111,7 +111,9 @@ mwc-notched-outline {
         --mdc-notched-outline-border-color: #{$select-error-color};
       }
 
-      mwc-menu {
+      // Share the definition of $select-error-color and keep this organized in
+      // the same place as all other invalid styles.
+      @at-root .mdc-select__menu--invalid {
         --mdc-theme-primary: #{$select-error-color};
       }
     }
