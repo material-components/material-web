@@ -37,6 +37,8 @@ export class CheckboxBase extends FormElement {
 
   @property({type: String}) value = '';
 
+  @property({type: Boolean}) touch = false;
+
   @internalProperty() protected animationClass = '';
 
   @internalProperty() protected shouldRenderRipple = false;
@@ -107,6 +109,7 @@ export class CheckboxBase extends FormElement {
     const classes = {
       'mdc-checkbox--disabled': this.disabled,
       'mdc-checkbox--selected': selected,
+      'mdc-checkbox--touch': this.touch,
       // transition animiation classes
       'mdc-checkbox--anim-checked-indeterminate':
           this.animationClass == 'checked-indeterminate',

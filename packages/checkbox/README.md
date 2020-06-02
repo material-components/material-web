@@ -138,6 +138,7 @@ Name            | Type      | Default | Description
 `indeterminate` | `boolean` | `false` | When a checkbox is the parent of a set of child checkboxes, the *indeterminate* state is used on the parent to indicate that some but not all of its children are checked.
 `disabled`      | `boolean` | `false` | When `true`, the checkbox cannot be interacted with, and renders in muted colors.
 `value`         | `string`  | `''`    | The value that will be included if the checkbox is submitted in a form.
+`touch`         | `boolean` | `false` | When `true`, the checkbox will add additional padding to be accessible for touchscreens.
 
 
 ### Methods
