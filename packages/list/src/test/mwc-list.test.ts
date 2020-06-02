@@ -1418,6 +1418,45 @@ suite('mwc-list:', () => {
             element.selected, null, 'selected is null index deselection');
       });
 
+      test('prop deselection on disconnect', async () => {
+        const itemsTemplates = [
+          listItem(),
+          listItem({selected: true, activated: true}),
+          listItem(),
+        ];
+        fixt = await fixture(
+            listTemplate({items: itemsTemplates, activatable: true}));
+        element = fixt.root.querySelector('mwc-list')!;
+        const items = element.items;
+
+        assert.isTrue(items[1].selected, 'second item is selected on init');
+        assert.isTrue(items[1].activated, 'second item is activated on init');
+        assert.equal(element.index, 1, 'index is set to 1 init');
+        assert.equal(
+            element.selected, items[1], 'selected is second item on init');
+
+        element.removeChild(items[1]);
+
+        await element.updateComplete;
+        await items[1].updateComplete;
+        await element.updateComplete;
+
+        assert.isTrue(
+            items[1].selected,
+            'second item is still selected after disconnect');
+        assert.isTrue(
+            items[1].activated,
+            'second item is still activated after disconnect');
+        assert.equal(
+            element.index,
+            -1,
+            'index is reset to null on selected item disconnect');
+        assert.equal(
+            element.selected,
+            null,
+            'selected is null on selected item disconnect');
+      });
+
       test('single to multi', async () => {
         const itemsTemplates = [
           listItem(),

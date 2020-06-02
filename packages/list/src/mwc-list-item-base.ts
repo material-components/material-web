@@ -29,6 +29,10 @@ export interface RequestSelectedDetail {
   source: SelectionSource;
 }
 
+export interface Layoutable {
+  layout: (updateItems?: boolean) => void;
+}
+
 export type GraphicType = 'avatar'|'icon'|'medium'|'large'|'control'|null;
 
 /**
@@ -95,6 +99,7 @@ export class ListItemBase extends LitElement {
   selected = false;
 
   @internalProperty() protected shouldRenderRipple = false;
+  @internalProperty() _managingList: Layoutable|null = null;
 
   protected boundOnClick = this.onClick.bind(this);
   protected _firstChanged = true;
@@ -270,10 +275,14 @@ export class ListItemBase extends LitElement {
         listener.target.removeEventListener(eventName, listener.cb);
       }
     }
+
+    if (this._managingList) {
+      this._managingList.layout(true);
+    }
   }
 
   protected firstUpdated() {
-    this.dispatchEvent(
-        new Event('list-item-rendered', {bubbles: true, composed: true}));
+    const ev = new Event('list-item-rendered', {bubbles: true, composed: true});
+    this.dispatchEvent(ev);
   }
 }

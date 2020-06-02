@@ -24,7 +24,7 @@ import {ifDefined} from 'lit-html/directives/if-defined.js';
 import {MDCListAdapter} from './mwc-list-adapter.js';
 import MDCListFoundation, {ActionDetail, isIndexSet, SelectedDetail} from './mwc-list-foundation.js';
 import {MWCListIndex} from './mwc-list-foundation.js';
-import {ListItemBase, RequestSelectedDetail} from './mwc-list-item-base.js';
+import {Layoutable, ListItemBase, RequestSelectedDetail} from './mwc-list-item-base.js';
 
 export {createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex} from './mwc-list-foundation.js';
 
@@ -37,7 +37,7 @@ const isListItem = (element: Element): element is ListItemBase => {
  * @fires selected {SelectedDetail}
  * @fires action {ActionDetail}
  */
-export abstract class ListBase extends BaseElement {
+export abstract class ListBase extends BaseElement implements Layoutable {
   protected mdcFoundation!: MDCListFoundation;
   protected mdcAdapter: MDCListAdapter|null = null;
 
@@ -133,6 +133,7 @@ export abstract class ListBase extends BaseElement {
     for (const node of nodes) {
       if (isListItem(node)) {
         listItems.push(node);
+        node._managingList = this;
       }
 
       if (node.hasAttribute('divider') && !node.hasAttribute('role')) {
@@ -464,7 +465,7 @@ export abstract class ListBase extends BaseElement {
     }
   }
 
-  protected onListItemConnected(e: Event) {
+  protected onListItemConnected(e: CustomEvent) {
     const target = e.target as ListItemBase;
 
     this.layout(this.items.indexOf(target) === -1);
