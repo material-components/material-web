@@ -245,7 +245,7 @@ export abstract class SelectBase extends FormElement {
 
     const menuClasses = {
       'mdc-select__menu--invalid': !this.isUiValid,
-    }
+    };
 
     const describedby = this.shouldRenderHelperText ? 'helper-text' : undefined;
 
