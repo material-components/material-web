@@ -16,22 +16,19 @@ limitations under the License.
 */
 import {MDCLinearProgressAdapter} from '@material/linear-progress/adapter.js';
 import MDCLinearProgressFoundation from '@material/linear-progress/foundation.js';
-import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
+import {BaseElement} from '@material/mwc-base/base-element.js';
 import {observer} from '@material/mwc-base/observer.js';
-import {html, property, query} from 'lit-element';
+import {html, internalProperty, property, query} from 'lit-element';
+import {classMap} from 'lit-html/directives/class-map.js';
+import {styleMap} from 'lit-html/directives/style-map.js';
 
+/** @soyCompatible */
 export class LinearProgressBase extends BaseElement {
   protected mdcFoundation!: MDCLinearProgressFoundation;
 
   protected readonly mdcFoundationClass = MDCLinearProgressFoundation;
 
   @query('.mdc-linear-progress') protected mdcRoot!: HTMLElement;
-
-  @query('.mdc-linear-progress__primary-bar')
-  protected primaryBar!: HTMLElement;
-
-  @query('.mdc-linear-progress__buffer-bar')
-  protected bufferElement!: HTMLElement;
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: LinearProgressBase, value: boolean) {
@@ -57,31 +54,50 @@ export class LinearProgressBase extends BaseElement {
   })
   reverse = false;
 
-  @property({type: Boolean, reflect: true})
-  @observer(function(this: LinearProgressBase, value: boolean) {
-    if (value) {
-      this.mdcFoundation.close();
-    } else {
-      this.mdcFoundation.open();
-    }
-  })
-  closed = false;
+  @property({type: Boolean, reflect: true}) closed = false;
 
   @property() ariaLabel = '';
 
+  @internalProperty() bufferFlexBasisValue = '';
+
+  @internalProperty() primaryTransformValue = '';
+
+  /**
+   * @soyCompatible
+   */
   protected render() {
+    /** @classMap */
+    const classes = {
+      'mdc-linear-progress--closed': this.closed,
+      'mdc-linear-progress--indeterminate': this.indeterminate,
+      'mdc-linear-progress--reversed': this.reverse,
+    };
+
+    const bufferBarStyles = {
+      'flex-basis': this.bufferFlexBasisValue,
+    };
+
+    const primaryBarStyles = {
+      transform: this.primaryTransformValue,
+    };
+
     return html`
       <div role="progressbar"
-        class="mdc-linear-progress"
+        class="mdc-linear-progress ${classMap(classes)}"
         aria-label="${this.ariaLabel}"
         aria-valuemin="0"
         aria-valuemax="1"
         aria-valuenow="0">
         <div class="mdc-linear-progress__buffer">
-          <div class="mdc-linear-progress__buffer-bar"></div>
+          <div
+            class="mdc-linear-progress__buffer-bar"
+            style=${styleMap(bufferBarStyles)}>
+          </div>
           <div class="mdc-linear-progress__buffer-dots"></div>
         </div>
-        <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+        <div
+            class="mdc-linear-progress__bar mdc-linear-progress__primary-bar"
+            style=${styleMap(primaryBarStyles)}>
           <span class="mdc-linear-progress__bar-inner"></span>
         </div>
         <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
@@ -92,7 +108,11 @@ export class LinearProgressBase extends BaseElement {
 
   protected createAdapter(): MDCLinearProgressAdapter {
     return {
-      ...addHasRemoveClass(this.mdcRoot),
+      addClass: () => undefined,
+      removeClass: () => undefined,
+      hasClass: (name: string) => {
+        return this.mdcRoot.classList.contains(name);
+      },
       forceLayout: () => this.mdcRoot.offsetWidth,
       removeAttribute: (name: string) => {
         this.mdcRoot.removeAttribute(name);
@@ -100,25 +120,11 @@ export class LinearProgressBase extends BaseElement {
       setAttribute: (name: string, value: string) => {
         this.mdcRoot.setAttribute(name, value);
       },
-      setBufferBarStyle: (property: string, value: string) => {
-        // TODO(aomarks) Consider moving this type to the
-        // MDCLinearProgressAdapter parameter type, but note that the "-webkit"
-        // prefixed CSS properties are not declared in CSSStyleDeclaration.
-        //
-        // Exclude read-only properties.
-        this.bufferElement
-            .style[property as Exclude<keyof CSSStyleDeclaration, 'length'|'parentRule'>] =
-            value;
+      setBufferBarStyle: (_property: string, value: string) => {
+        this.bufferFlexBasisValue = value;
       },
-      setPrimaryBarStyle: (property: string, value: string) => {
-        // TODO(aomarks) Consider moving this type to the
-        // MDCLinearProgressAdapter parameter type, but note that the "-webkit"
-        // prefixed CSS properties are not declared in CSSStyleDeclaration.
-        //
-        // Exclude read-only properties.
-        this.primaryBar
-            .style[property as Exclude<keyof CSSStyleDeclaration, 'length'|'parentRule'>] =
-            value;
+      setPrimaryBarStyle: (_property: string, value: string) => {
+        this.primaryTransformValue = value;
       },
     };
   }
