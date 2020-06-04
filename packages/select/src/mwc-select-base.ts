@@ -555,6 +555,8 @@ export abstract class SelectBase extends FormElement {
       },
       addClassAtIndex: () => undefined,
       removeClassAtIndex: () => undefined,
+      isTypeaheadInProgress: () => false,
+      typeaheadMatchItem: () => -1,
     };
   }
 
