@@ -607,8 +607,8 @@ suite('mwc-select:', () => {
       const aElement = element.querySelector('[value="a"]') as ListItem;
 
       element.value = 'a';
-      await aElement.updateComplete;
       await element.updateComplete;
+      await aElement.updateComplete;
       assert.equal(changeCalls, 1, 'change event called once on selection');
       changeCalls = 0;
 
