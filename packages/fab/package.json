@@ -22,12 +22,12 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@material/animation": "=7.0.0-canary.a0dc2b5c4.0",
-    "@material/fab": "=7.0.0-canary.a0dc2b5c4.0",
+    "@material/animation": "=7.0.0-canary.8fa22aacc.0",
+    "@material/fab": "=7.0.0-canary.8fa22aacc.0",
     "@material/mwc-base": "^0.15.0",
     "@material/mwc-icon": "^0.15.0",
-    "@material/ripple": "=7.0.0-canary.a0dc2b5c4.0",
-    "@material/rtl": "=7.0.0-canary.a0dc2b5c4.0"
+    "@material/ripple": "=7.0.0-canary.8fa22aacc.0",
+    "@material/rtl": "=7.0.0-canary.8fa22aacc.0"
   },
   "publishConfig": {
     "access": "public"
