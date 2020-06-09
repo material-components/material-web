@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 @use '@material/drawer';
-@use '@material/theme';
+@use '@material/theme/custom-properties';
 
 @include drawer.core-styles();
 @include drawer.dismissible-core-styles();
@@ -33,15 +33,7 @@ limitations under the License.
 }
 
 .mdc-drawer {
-  @include theme.prop(width, (
-    varname: --mdc-drawer-width,
-    fallback: drawer.$width,
-  ));
-
-  &.mdc-drawer--open:not(.mdc-drawer--closing) + .mdc-drawer-app-content {
-    @include theme.prop(margin-left, (
-      varname: --mdc-drawer-width,
-      fallback: drawer.$width,
-    ));
-  }
+  @include drawer.width(
+    custom-properties.create(--mdc-drawer-width, drawer.$width)
+  );
 }
