@@ -82,12 +82,13 @@ export class LinearProgressBase extends BaseElement {
     };
 
     return html`
-      <div role="progressbar"
-        class="mdc-linear-progress ${classMap(classes)}"
-        aria-label="${this.ariaLabel}"
-        aria-valuemin="0"
-        aria-valuemax="1"
-        aria-valuenow="0">
+      <div
+          role="progressbar"
+          class="mdc-linear-progress ${classMap(classes)}"
+          aria-label="${this.ariaLabel}"
+          aria-valuemin="0"
+          aria-valuemax="1"
+          aria-valuenow="0">
         <div class="mdc-linear-progress__buffer">
           <div
             class="mdc-linear-progress__buffer-bar"
