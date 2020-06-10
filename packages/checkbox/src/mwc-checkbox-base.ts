@@ -37,7 +37,7 @@ export class CheckboxBase extends FormElement {
 
   @property({type: String}) value = '';
 
-  @property({type: Boolean}) touch = false;
+  @property({type: Boolean}) reducedTouchTarget = false;
 
   @internalProperty() protected animationClass = '';
 
@@ -57,19 +57,23 @@ export class CheckboxBase extends FormElement {
   protected update(changedProperties: PropertyValues) {
     const oldIndeterminate = changedProperties.get('indeterminate');
     const oldChecked = changedProperties.get('checked');
-    if (oldIndeterminate !== undefined || oldChecked !== undefined) {
-      const oldState =
-          this.calculateAnimationStateName(!!oldChecked, !!oldIndeterminate);
-      const newState =
-          this.calculateAnimationStateName(this.checked, this.indeterminate);
+    const oldDisabled = changedProperties.get('disabled');
+    if (oldIndeterminate !== undefined || oldChecked !== undefined ||
+        oldDisabled !== undefined) {
+      const oldState = this.calculateAnimationStateName(
+          !!oldChecked, !!oldIndeterminate, !!oldDisabled);
+      const newState = this.calculateAnimationStateName(
+          this.checked, this.indeterminate, this.disabled);
       this.animationClass = `${oldState}-${newState}`;
     }
     super.update(changedProperties);
   }
 
   protected calculateAnimationStateName(
-      checked: boolean, indeterminate: boolean): string {
-    if (indeterminate) {
+      checked: boolean, indeterminate: boolean, disabled: boolean): string {
+    if (disabled) {
+      return 'disabled';
+    } else if (indeterminate) {
       return 'indeterminate';
     } else if (checked) {
       return 'checked';
@@ -109,7 +113,7 @@ export class CheckboxBase extends FormElement {
     const classes = {
       'mdc-checkbox--disabled': this.disabled,
       'mdc-checkbox--selected': selected,
-      'mdc-checkbox--touch': this.touch,
+      'mdc-checkbox--touch': !this.reducedTouchTarget,
       // transition animiation classes
       'mdc-checkbox--anim-checked-indeterminate':
           this.animationClass == 'checked-indeterminate',

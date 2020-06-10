@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added `name` property `mwc-textfield` & `mwc-textarea` for browser autofill.
 - `ListItem.multipleGraphics` list-item graphic width now configuratble for multiple graphics
 - `Menu.menuCorner` can now configure from which horizontal corner should the menu anchor from.
-- Add `touch` param to `mwc-checkbox` to control touchscreen accessibility.
+- Add `reducedTouchTarget` param to `mwc-checkbox` to control touchscreen accessibility.
 
 ### Changed
 
@@ -39,6 +39,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - **BREAKING** character counters are now external by default
 - **BREAKING** `--mdc-tab-border-radius` has been removed to align with spec
 - **BREAKING** replaced `--mdc-dialog-shape-radius` with `--mdc-shape-medium`
+- **BREAKING** mwc-checkbox sizing changed to 48x48 by default for touch accessibility. Disable with `reducedTouchTarget` attribute or property.
 
 ## [v0.15.0] - 2020-05-05
 

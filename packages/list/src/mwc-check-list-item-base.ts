@@ -49,6 +49,7 @@ export class CheckListItemBase extends ListItemBase {
       ${this.left ? '' : text}
       <span class=${classMap(checkboxClasses)}>
         <mwc-checkbox
+            reducedTouchTarget
             tabindex=${this.tabindex}
             .checked=${this.selected}
             ?disabled=${this.disabled}
