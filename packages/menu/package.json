@@ -11,8 +11,8 @@
   "module": "mwc-menu.js",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/menu": "=7.0.0-canary.a6ac8f629.0",
-    "@material/menu-surface": "=7.0.0-canary.a6ac8f629.0",
+    "@material/menu": "=7.0.0-canary.3aa33998e.0",
+    "@material/menu-surface": "=7.0.0-canary.3aa33998e.0",
     "@material/mwc-base": "^0.15.0",
     "@material/mwc-list": "^0.15.0",
     "lit-element": "^2.3.0",
@@ -20,7 +20,7 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@material/shape": "=7.0.0-canary.a6ac8f629.0"
+    "@material/shape": "=7.0.0-canary.3aa33998e.0"
   },
   "publishConfig": {
     "access": "public"
