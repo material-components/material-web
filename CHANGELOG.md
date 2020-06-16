@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - `textarea`
   - added separate internal and external character counters
+- `textfield`
+  - added support for autocapitalize attribute
 - `--mdc-drawer-width` Drawer width is now configurable.
 - Added `name` property `mwc-textfield` & `mwc-textarea` for browser autofill.
 - `ListItem.multipleGraphics` list-item graphic width now configuratble for multiple graphics

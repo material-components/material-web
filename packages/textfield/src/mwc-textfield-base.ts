@@ -182,6 +182,8 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: Boolean}) readOnly = false;
 
+  @property({type: String}) autocapitalize = '';
+
   @property({type: Boolean}) protected outlineOpen = false;
   @property({type: Number}) protected outlineWidth = 0;
   @property({type: Boolean}) protected isUiValid = true;
@@ -288,6 +290,8 @@ export abstract class TextFieldBase extends FormElement {
   protected renderInput() {
     const minOrUndef = this.minLength === -1 ? undefined : this.minLength;
     const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
+    const autocapitalizeOrUndef =
+        this.autocapitalize ? this.autocapitalize : undefined;
     // TODO: live() directive needs casting for lit-analyzer
     // https://github.com/runem/lit-analyzer/pull/91/files
     return html`
@@ -309,6 +313,7 @@ export abstract class TextFieldBase extends FormElement {
           size="${ifDefined(this.size === null ? undefined : this.size)}"
           name="${ifDefined(this.name === '' ? undefined : this.name)}"
           inputmode="${ifDefined(this.inputMode)}"
+          autocapitalize="${ifDefined(autocapitalizeOrUndef)}"
           @input="${this.handleInputChange}"
           @blur="${this.onInputBlur}">`;
   }
