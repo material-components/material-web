@@ -117,7 +117,6 @@ export abstract class SelectBase extends FormElement {
 
   @query('.mdc-menu') protected menuElement!: Menu|null;
 
-
   @query('.mdc-select__anchor') protected anchorElement!: HTMLDivElement|null;
 
   @property({type: Boolean, attribute: 'disabled', reflect: true})
@@ -128,9 +127,21 @@ export abstract class SelectBase extends FormElement {
   })
   disabled = false;
 
-  @property({type: Boolean}) outlined = false;
+  @property({type: Boolean})
+  @observer(function(this: SelectBase, _newVal: boolean, oldVal: boolean) {
+    if (oldVal !== undefined && this.outlined !== oldVal) {
+      this.layout();
+    }
+  })
+  outlined = false;
 
-  @property({type: String}) label = '';
+  @property({type: String})
+  @observer(function(this: SelectBase, _newVal: string, oldVal: string) {
+    if (oldVal !== undefined && this.label !== oldVal) {
+      this.layout(false);
+    }
+  })
+  label = '';
 
   @property({type: Boolean}) protected outlineOpen = false;
 
@@ -354,7 +365,6 @@ export abstract class SelectBase extends FormElement {
     return html`
       <label
           .floatingLabelFoundation=${floatingLabel(this.label)}
-          @labelchange=${this.onLabelChange}
           id="label">${this.label}</label>
     `;
   }
@@ -751,12 +761,6 @@ export abstract class SelectBase extends FormElement {
     }
   }
 
-  protected async onLabelChange() {
-    if (this.label) {
-      await this.layout(false);
-    }
-  }
-
   async layout(updateItems = true) {
     if (this.mdcFoundation) {
       this.mdcFoundation.layout();
@@ -764,25 +768,38 @@ export abstract class SelectBase extends FormElement {
 
     await this.updateComplete;
 
-    const labelElement = this.labelElement;
-
-    if (labelElement && this.outlineElement) {
-      /* When the textfield automatically notches due to a value and label
-       * being defined, the textfield may be set to `display: none` by the user.
-       * this means that the notch is of size 0px. We provide this function so
-       * that the user may manually resize the notch to the floated label's
-       * width.
-       */
-      if (this.outlineOpen) {
-        const labelWidth = labelElement.floatingLabelFoundation.getWidth();
-        this.outlineWidth = labelWidth;
-      }
-    }
-
     const menuElement = this.menuElement;
 
     if (menuElement) {
       menuElement.layout(updateItems);
+    }
+
+    const labelElement = this.labelElement;
+
+    if (!labelElement) {
+      this.outlineOpen = false;
+      return;
+    }
+
+    const shouldFloat = !!this.label && !!this.value;
+    labelElement.floatingLabelFoundation.float(shouldFloat);
+
+    if (!this.outlined) {
+      return;
+    }
+
+    this.outlineOpen = shouldFloat;
+    await this.updateComplete;
+
+    /* When the textfield automatically notches due to a value and label
+     * being defined, the textfield may be set to `display: none` by the user.
+     * this means that the notch is of size 0px. We provide this function so
+     * that the user may manually resize the notch to the floated label's
+     * width.
+     */
+    const labelWidth = labelElement.floatingLabelFoundation.getWidth();
+    if (this.outlineOpen) {
+      this.outlineWidth = labelWidth;
     }
   }
 }

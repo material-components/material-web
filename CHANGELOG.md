@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - mwc-list-item ripple color will now change based off of --mdc-ripple-color on initialization
 - Fix issue where textfield would throw an error when fed a non-string value
 - list selected item will update if selected item is disconnected
+- `floating-label`: both `select` and `textfield` no longer have to call layout when changing label or outlined
 
 ### Added
 
