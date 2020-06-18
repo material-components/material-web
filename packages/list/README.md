@@ -459,6 +459,8 @@ of `mwc-list-item`, so all properties in `mwc-list-item` will be available on
 | -------- | -------------
 | `select(index: MWCListIndex) => void` | Selects the elements at the given index / indices.
 | `toggle(index: number, force?: boolean) => void` | Toggles the selected index, and forcibly selects or deselects the value of `force` if attribtue is provided.
+| `getFocusedItemIndex() => number` | Returns the index of the currently-focused item. `-1` if none are focused.
+| `focusItemAtIndex(index) => void` | Focuses the item at the given index and manages tabindex on all other items.
 | `layout(updateItems = true) => void` | Resets tabindex on all items and will update items model if provided true. It may be required to call layout if selectability of an element is dynamically changed. e.g. `[mwc-list-item]` attribute is removed from a list item or `noninteractive` is dynamically set on a list item.
 
 ### Events

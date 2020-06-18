@@ -30,6 +30,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `ListItem.multipleGraphics` list-item graphic width now configuratble for multiple graphics
 - `Menu.menuCorner` can now configure from which horizontal corner should the menu anchor from.
 - Add `reducedTouchTarget` param to `mwc-checkbox` to control touchscreen accessibility.
+- Typeahead on `mwc-select`
+- Added `focusItemAtIndex(index)` and `getFocusedItemIndex` to both `list` and `menu`
 
 ### Changed
 
