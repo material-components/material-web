@@ -270,9 +270,13 @@ export abstract class TextFieldBase extends FormElement {
       <label class="mdc-text-field ${classMap(classes)}">
         ${ripple}
         ${this.icon ? this.renderIcon(this.icon) : ''}
-        ${this.prefix ? this.renderAffix(this.prefix) : html`<slot name="prefix"></slot>`}
+        ${
+        this.prefix ? this.renderAffix(this.prefix) :
+                      html`<slot name="prefix"></slot>`}
         ${this.renderInput()}
-        ${this.suffix ? this.renderAffix(this.suffix, true) : html`<slot name="suffix"></slot>`}
+        ${
+        this.suffix ? this.renderAffix(this.suffix, true) :
+                      html`<slot name="suffix"></slot>`}
         ${this.iconTrailing ? this.renderIcon(this.iconTrailing, true) : ''}
         ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
       </label>
