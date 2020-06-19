@@ -19,6 +19,7 @@ import '@material/mwc-notched-outline';
 import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
 import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
 import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element.js';
+import {observer} from '@material/mwc-base/observer.js';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {NotchedOutline} from '@material/mwc-notched-outline';
@@ -124,7 +125,13 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: String}) placeholder = '';
 
-  @property({type: String}) label = '';
+  @property({type: String})
+  @observer(function(this: TextFieldBase, _newVal: string, oldVal: string) {
+    if (oldVal !== undefined && this.label !== oldVal) {
+      this.layout();
+    }
+  })
+  label = '';
 
   @property({type: String}) icon = '';
 
@@ -138,7 +145,13 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: Number}) maxLength = -1;
 
-  @property({type: Boolean, reflect: true}) outlined = false;
+  @property({type: Boolean, reflect: true})
+  @observer(function(this: TextFieldBase, _newVal: boolean, oldVal: boolean) {
+    if (oldVal !== undefined && this.outlined !== oldVal) {
+      this.layout();
+    }
+  })
+  outlined = false;
 
   @property({type: Boolean, reflect: true}) fullWidth = false;
 
@@ -344,7 +357,6 @@ export abstract class TextFieldBase extends FormElement {
       labelTemplate = html`
         <span
             .floatingLabelFoundation=${floatingLabel(this.label)}
-            @labelchange=${this.onLabelChange}
             id="label">
           ${this.label}
         </span>
@@ -594,26 +606,35 @@ export abstract class TextFieldBase extends FormElement {
     };
   }
 
-  protected async onLabelChange() {
-    if (this.label) {
-      await this.layout();
-    }
-  }
-
   async layout() {
     await this.updateComplete;
 
-    if (this.labelElement && this.outlineElement) {
-      /* When the textfield automatically notches due to a value and label
-       * being defined, the textfield may be set to `display: none` by the user.
-       * this means that the notch is of size 0px. We provide this function so
-       * that the user may manually resize the notch to the floated label's
-       * width.
-       */
-      const labelWidth = this.labelElement.floatingLabelFoundation.getWidth();
-      if (this.outlineOpen) {
-        this.outlineWidth = labelWidth;
-      }
+    const labelElement = this.labelElement;
+
+    if (!labelElement) {
+      this.outlineOpen = false;
+      return;
+    }
+
+    const shouldFloat = !!this.label && !!this.value;
+    labelElement.floatingLabelFoundation.float(shouldFloat);
+
+    if (!this.outlined) {
+      return;
+    }
+
+    this.outlineOpen = shouldFloat;
+    await this.updateComplete;
+
+    /* When the textfield automatically notches due to a value and label
+     * being defined, the textfield may be set to `display: none` by the user.
+     * this means that the notch is of size 0px. We provide this function so
+     * that the user may manually resize the notch to the floated label's
+     * width.
+     */
+    const labelWidth = labelElement.floatingLabelFoundation.getWidth();
+    if (this.outlineOpen) {
+      this.outlineWidth = labelWidth;
     }
   }
 }
