@@ -55,9 +55,5 @@ export const floatingLabel =
         foundation.init();
         part.setValue(foundation);
         partToFoundationMap.set(part, {label, foundation});
-      } else if (lastFoundation.label !== label) {
-        const labelElement = part.committer.element as FloatingLabel;
-        const labelChangeEvent = new Event('labelchange');
-        labelElement.dispatchEvent(labelChangeEvent);
       }
     });

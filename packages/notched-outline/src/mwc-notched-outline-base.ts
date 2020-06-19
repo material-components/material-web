@@ -18,6 +18,7 @@ import {BaseElement} from '@material/mwc-base/base-element.js';
 import {MDCNotchedOutlineAdapter} from '@material/notched-outline/adapter.js';
 import {MDCNotchedOutlineFoundation} from '@material/notched-outline/foundation.js';
 import {html, property, query} from 'lit-element';
+import {classMap} from 'lit-html/directives/class-map';
 
 export class NotchedOutlineBase extends BaseElement {
   @query('.mdc-notched-outline') protected mdcRoot!: HTMLElement;
@@ -59,8 +60,12 @@ export class NotchedOutlineBase extends BaseElement {
   render() {
     this.openOrClose(this.open, this.width);
 
+    const classes = classMap({
+      'mdc-notched-outline--notched': this.open,
+    });
+
     return html`
-      <span class="mdc-notched-outline">
+      <span class="mdc-notched-outline ${classes}">
         <span class="mdc-notched-outline__leading"></span>
         <span class="mdc-notched-outline__notch">
           <slot></slot>
