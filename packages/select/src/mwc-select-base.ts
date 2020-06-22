@@ -18,6 +18,7 @@ import '@material/mwc-notched-outline';
 import '@material/mwc-menu';
 import '@material/mwc-icon';
 
+import {KEY, normalizeKey} from '@material/dom/keyboard';
 import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
 import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
 import * as typeahead from '@material/list/typeahead.js';
@@ -674,13 +675,20 @@ export abstract class SelectBase extends FormElement {
       this.reportValidity();
     }
 
-    // init with value set
-    if (this.value && !this.selected) {
+    // Select an option based on init value
+    if (!this.selected) {
       if (!this.items.length && this.slotElement &&
           this.slotElement.assignedNodes({flatten: true}).length) {
         // Shady DOM initial render fix
         await new Promise((res) => requestAnimationFrame(res));
         await this.layout();
+      }
+
+      const hasEmptyFirstOption =
+          this.items.length && this.items[0].value === '';
+      if (!this.value && hasEmptyFirstOption) {
+        this.select(0);
+        return;
       }
 
       this.selectByValue(this.value);
@@ -782,9 +790,26 @@ export abstract class SelectBase extends FormElement {
   }
 
   protected onKeydown(evt: KeyboardEvent) {
-    if (this.mdcFoundation) {
-      this.mdcFoundation.handleKeydown(evt);
+    const arrowUp = normalizeKey(evt) === KEY.ARROW_UP;
+    const arrowDown = normalizeKey(evt) === KEY.ARROW_DOWN;
+
+    if (arrowDown || arrowUp) {
+      const shouldSelectNextItem = arrowUp && this.index > 0;
+      const shouldSelectPrevItem =
+          arrowDown && this.index < this.items.length - 1;
+
+      if (shouldSelectNextItem) {
+        this.select(this.index - 1);
+      } else if (shouldSelectPrevItem) {
+        this.select(this.index + 1);
+      }
+      evt.preventDefault();
+
+      this.mdcFoundation.openMenu();
+      return;
     }
+
+    this.mdcFoundation.handleKeydown(evt);
   }
 
   // must capture to run before list foundation captures event
