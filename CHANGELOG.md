@@ -45,6 +45,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - **BREAKING** `--mdc-tab-border-radius` has been removed to align with spec
 - **BREAKING** replaced `--mdc-dialog-shape-radius` with `--mdc-shape-medium`
 - **BREAKING** mwc-checkbox sizing changed to 48x48 by default for touch accessibility. Disable with `reducedTouchTarget` attribute or property.
+- **BREAKING** mwc-select's fullwidth property removed since it was behaving as initially expected. Use `width: 100%` on the root element to accomplish fullwidth.
 
 ## [v0.15.0] - 2020-05-05
 

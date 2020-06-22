@@ -178,8 +178,6 @@ export abstract class SelectBase extends FormElement {
 
   @property({type: Boolean}) required = false;
 
-  @property({type: Boolean}) fullwidth = false;
-
   @property({type: Boolean}) naturalMenuWidth = false;
 
   @property({type: Boolean}) protected isUiValid = true;
@@ -264,7 +262,6 @@ export abstract class SelectBase extends FormElement {
       'mdc-select--with-leading-icon': !!this.icon,
       'mdc-select--required': this.required,
       'mdc-select--invalid': !this.isUiValid,
-      'mdc-select--fullwidth': this.fullwidth,
     };
 
     const menuClasses = {
