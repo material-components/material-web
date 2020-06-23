@@ -21,7 +21,6 @@ limitations under the License.
 @use '@material/theme';
 
 @include button.without-ripple();
-@include button.theme-baseline();
 
 .trailing-icon,
 .leading-icon, {
