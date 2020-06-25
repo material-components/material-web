@@ -578,8 +578,6 @@ export abstract class SelectBase extends FormElement {
       },
       addClassAtIndex: () => undefined,
       removeClassAtIndex: () => undefined,
-      getSelectedIndex: () => this.index,
-      setSelectedIndex: () => undefined,
       isTypeaheadInProgress: () =>
           typeahead.isTypingInProgress(this.typeaheadState),
       typeaheadMatchItem: (nextChar, startingIndex) => {
