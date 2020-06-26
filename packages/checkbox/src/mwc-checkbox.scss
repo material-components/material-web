@@ -53,6 +53,20 @@ limitations under the License.
     varname: --mdc-checkbox-unchecked-color,
     fallback: checkbox.$border-color
   ),
+  $marked-stroke-color: (
+    varname: --m-checkbox-checked-color,
+    fallback: (
+      varname: --mdc-theme-secondary,
+      fallback: theme.prop-value(checkbox.$baseline-theme-color)
+    )
+  ),
+  $marked-fill-color: (
+    varname: --m-checkbox-checked-color,
+    fallback: (
+      varname: --mdc-theme-secondary,
+      fallback: theme.prop-value(checkbox.$baseline-theme-color)
+    )
+  ),
 );
 @include checkbox.ink-color((
   varname: --mdc-checkbox-mark-color,

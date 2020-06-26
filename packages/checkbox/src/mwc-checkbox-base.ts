@@ -43,6 +43,8 @@ export class CheckboxBase extends FormElement {
 
   @internalProperty() protected shouldRenderRipple = false;
 
+  @internalProperty() protected focused = false;
+
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 
   // MDC Foundation is unused
@@ -114,6 +116,7 @@ export class CheckboxBase extends FormElement {
       'mdc-checkbox--disabled': this.disabled,
       'mdc-checkbox--selected': selected,
       'mdc-checkbox--touch': !this.reducedTouchTarget,
+      'mdc-checkbox--focused': this.focused,
       // transition animiation classes
       'mdc-checkbox--anim-checked-indeterminate':
           this.animationClass == 'checked-indeterminate',
@@ -165,10 +168,12 @@ export class CheckboxBase extends FormElement {
   }
 
   private _handleFocus() {
+    this.focused = true;
     this.rippleHandlers.startFocus();
   }
 
   private _handleBlur() {
+    this.focused = false;
     this.rippleHandlers.endFocus();
   }
 

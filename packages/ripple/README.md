@@ -91,3 +91,4 @@ Name | Type | Default | Description
 | `--mdc-ripple-focus-opacity` | `0.12` | Opacity of the ripple when focused.
 | `--mdc-ripple-selected-opacity` | `0.08` | Opacity of the ripple when the host component is "selected". This opacity is added to `press`, `hover`, and `focus` states.
 | `--mdc-ripple-activated-opacity` | `0.12` | Opacity of the ripple when the host component is "activated". This opacity is added to `press`, `hover`, and `focus` states.
+| `--m-ripple-z-index` | `0` | Z-index of the ripple.

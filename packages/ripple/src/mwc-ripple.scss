@@ -18,6 +18,7 @@ limitations under the License.
 @use 'sass:map';
 @use '@material/ripple';
 @use '@material/theme';
+@use '@material/theme/custom-properties';
 
 @include ripple.common();
 
@@ -121,6 +122,23 @@ limitations under the License.
 
   &.disabled {
     --mdc-ripple-color: transparent;
+  }
+
+  &::before {
+    @include theme.property(
+      z-index,
+      custom-properties.create(--m-ripple-z-index, 1),
+      (alternate: true)
+    );
+
+  }
+
+  &::after {
+    @include theme.property(
+      z-index,
+      custom-properties.create(--m-ripple-z-index, 0),
+      (alternate: true)
+    );
   }
 }
 

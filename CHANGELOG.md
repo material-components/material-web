@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add `reducedTouchTarget` param to `mwc-checkbox` to control touchscreen accessibility.
 - Typeahead on `mwc-select`
 - Added `focusItemAtIndex(index)` and `getFocusedItemIndex` to both `list` and `menu`
+- Add `--m-ripple-z-index` to control ripple z-index.
 
 ### Changed
 
