@@ -64,7 +64,6 @@ export abstract class TextAreaBase extends TextFieldBase {
       'mdc-text-field--no-label': !this.label,
       'mdc-text-field--filled': !this.outlined,
       'mdc-text-field--outlined': this.outlined,
-      'mdc-text-field--fullwidth': this.fullWidth,
       'mdc-text-field--end-aligned': this.endAligned,
       'mdc-text-field--with-internal-counter': internalCounter,
     };

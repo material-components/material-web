@@ -42,6 +42,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `SingleSelectionController` now accepts `CheckableElements` rather than just MWC Radio elements
 - `textarea`
   - **BREAKING** character counters are now external by default
+  - **BREAKING** removed `fullwidth` variant
+- `textfield`
+  - **BREAKING** removed `fullwidth` variant
 - **BREAKING** `--mdc-tab-border-radius` has been removed to align with spec
 - **BREAKING** replaced `--mdc-dialog-shape-radius` with `--mdc-shape-medium`
 - **BREAKING** mwc-checkbox sizing changed to 48x48 by default for touch accessibility. Disable with `reducedTouchTarget` attribute or property.

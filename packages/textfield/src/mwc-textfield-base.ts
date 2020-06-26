@@ -153,8 +153,6 @@ export abstract class TextFieldBase extends FormElement {
   })
   outlined = false;
 
-  @property({type: Boolean, reflect: true}) fullWidth = false;
-
   @property({type: String}) helper = '';
 
   @property({type: Boolean}) validateOnInitialRender = false;
@@ -271,7 +269,6 @@ export abstract class TextFieldBase extends FormElement {
       'mdc-text-field--no-label': !this.label,
       'mdc-text-field--filled': !this.outlined,
       'mdc-text-field--outlined': this.outlined,
-      'mdc-text-field--fullwidth': this.fullWidth,
       'mdc-text-field--with-leading-icon': this.icon,
       'mdc-text-field--with-trailing-icon': this.iconTrailing,
       'mdc-text-field--end-aligned': this.endAligned,
@@ -373,7 +370,7 @@ export abstract class TextFieldBase extends FormElement {
 
   protected renderLabelText() {
     let labelTemplate: TemplateResult|string = '';
-    if (this.label && !this.fullWidth) {
+    if (this.label) {
       labelTemplate = html`
       <span
           .floatingLabelFoundation=${floatingLabel(this.label)}

@@ -115,15 +115,6 @@ npm install @material/mwc-textarea
 </mwc-textarea>
 ```
 
-### Fullwidth
-
-<img src="images/fullwidth-outlined.png" width="762px">
-
-```html
-<!-- Note: Fullwidth does not support label; only placeholder -->
-<mwc-textarea outlined fullwidth placeholder="My Textarea"></mwc-textarea>
-```
-
 ## API
 
 ### Properties/Attributes
@@ -141,7 +132,6 @@ npm install @material/mwc-textarea
 | `disabled`          | `boolean`        | Whether or not the input should be disabled.
 | `charCounter`       | `boolean`\|`TextAreaCharCounter**` | **Note: requires `maxLength` to be set.** Display character counter with max length. Textareas may display an `"external"` or `"internal"` `charCounter`. When `true`, textareas display an external character counter by default.
 | `outlined`          | `boolean`        | Whether or not to show the material outlined variant.
-| `fullwidth`         | `boolean`        | Whether or not to make the input fullwidth. No longer displays `label`; only `placeholder` and `helper`.
 | `helper`            | `string`         | Helper text to display below the input. Display default only when focused.
 | `helperPersistent`  | `boolean`        | Always show the helper text despite focus.
 | `required`          | `boolean`        | Displays error state if value is empty and input is blurred.

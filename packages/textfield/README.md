@@ -140,15 +140,6 @@ npm install @material/mwc-textfield
 </mwc-textfield>
 ```
 
-### Fullwidth
-
-<img src="images/fullwidth.png" width="777px">
-
-```html
-<!-- Note: Fullwidth does not support label; only placeholder -->
-<mwc-textfield fullwidth placeholder="Standard" helper="Helper Text"></mwc-textfield>
-```
-
 ## API
 
 ### Properties/Attributes
@@ -166,7 +157,6 @@ Name                      | Type                          | Description
 `disabled`                | `boolean`                     | Whether or not the input should be disabled.
 `charCounter`             | `boolean`                     | **Note: requries `maxLength` to be set.** Display character counter with max length.
 `outlined`                | `boolean`                     | Whether or not to show the material outlined variant.
-`fullwidth`               | `boolean`                     | Whether or not to make the input fullwidth. No longer displays `label`; only `placeholder` and `helper`.
 `helper`                  | `string`                      | Helper text to display below the input. Display default only when focused.
 `helperPersistent`        | `boolean`                     | Always show the helper text despite focus.
 `required`                | `boolean`                     | Displays error state if value is empty and input is blurred.
