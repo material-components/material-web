@@ -135,6 +135,20 @@ limitations under the License.
     </mwc-select>
     <div>Value: <span id="disabledOptionsValue"></span></div>
 
+    <h2>Options with Icons</h2>
+    <mwc-select label="Option Icons">
+      <mwc-list-item></mwc-list-item>
+      <mwc-list-item graphic="avatar" value="1">
+        Option 1
+        <mwc-icon slot="graphic">lightbulb</mwc-icon>
+      </mwc-list-item>
+      <mwc-list-item graphic="avatar" icon="add" value="2">
+        <div>Option 2</div>
+        <mwc-icon slot="graphic">add</mwc-icon>
+      </mwc-list-item>
+      <mwc-list-item value="3">Option 3 (no icon)</mwc-list-item>
+    </mwc-select>
+
     <h2>Natural Menu Width</h2>
 
     <style>

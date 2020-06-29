@@ -156,7 +156,11 @@ export class ListItemBase extends LitElement {
   get text() {
     const textContent = this.textContent;
 
-    return textContent ? textContent.trim() : '';
+    return textContent ? this.renderRoot.querySelectorAll('slot')[1].assignedNodes().reduce(
+      (totalString, partialStringElem)=>{
+        totalString = totalString + partialStringElem.textContent;
+        return totalString;
+      }, '').trim(): '';
   }
 
   render() {
