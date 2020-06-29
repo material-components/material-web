@@ -154,13 +154,15 @@ export class ListItemBase extends LitElement {
       ];
 
   get text() {
-    const textContent = this.textContent;
-
-    return textContent ? this.renderRoot.querySelectorAll('slot')[1].assignedNodes().reduce(
+    const primaryTextSlot = this.renderRoot.querySelector('.mdc-list-item__text')?.querySelector('slot');
+    if (!primaryTextSlot) {
+      return '';
+    }
+    return primaryTextSlot.assignedNodes().reduce(
       (totalString, partialStringElem)=>{
         totalString = totalString + partialStringElem.textContent;
         return totalString;
-      }, '').trim(): '';
+      }, '').trim();
   }
 
   render() {
