@@ -11,8 +11,8 @@
   "module": "mwc-list.js",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/base": "=8.0.0-canary.c678a9d34.0",
-    "@material/list": "=8.0.0-canary.c678a9d34.0",
+    "@material/base": "=8.0.0-canary.a2ad48839.0",
+    "@material/list": "=8.0.0-canary.a2ad48839.0",
     "@material/mwc-base": "^0.16.0",
     "@material/mwc-checkbox": "^0.16.0",
     "@material/mwc-radio": "^0.16.0",
@@ -22,12 +22,12 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@material/density": "=8.0.0-canary.c678a9d34.0",
-    "@material/feature-targeting": "=8.0.0-canary.c678a9d34.0",
-    "@material/ripple": "=8.0.0-canary.c678a9d34.0",
-    "@material/rtl": "=8.0.0-canary.c678a9d34.0",
-    "@material/theme": "=8.0.0-canary.c678a9d34.0",
-    "@material/typography": "=8.0.0-canary.c678a9d34.0"
+    "@material/density": "=8.0.0-canary.a2ad48839.0",
+    "@material/feature-targeting": "=8.0.0-canary.a2ad48839.0",
+    "@material/ripple": "=8.0.0-canary.a2ad48839.0",
+    "@material/rtl": "=8.0.0-canary.a2ad48839.0",
+    "@material/theme": "=8.0.0-canary.a2ad48839.0",
+    "@material/typography": "=8.0.0-canary.a2ad48839.0"
   },
   "publishConfig": {
     "access": "public"
