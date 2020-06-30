@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-notched-outline",
-  "version": "0.16.0",
+  "version": "0.15.0",
   "description": "Material Design notched outline web component",
   "keywords": [
     "material design",
@@ -16,14 +16,14 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/mwc-base": "^0.16.0",
+    "@material/mwc-base": "^0.15.0",
     "@material/notched-outline": "=8.0.0-canary.c678a9d34.0",
     "lit-element": "^2.3.0",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@material/rtl": "=8.0.0-canary.c678a9d34.0",
     "@material/shape": "=8.0.0-canary.c678a9d34.0",
+    "@material/rtl": "=8.0.0-canary.c678a9d34.0",
     "@material/theme": "=8.0.0-canary.c678a9d34.0"
   },
   "publishConfig": {
