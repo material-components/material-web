@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-select",
-  "version": "0.15.0",
+  "version": "0.16.1",
   "description": "Material Design select web component",
   "keywords": [
     "material design",
@@ -18,13 +18,13 @@
   "dependencies": {
     "@material/floating-label": "=8.0.0-canary.c678a9d34.0",
     "@material/line-ripple": "=8.0.0-canary.c678a9d34.0",
-    "@material/mwc-base": "^0.15.0",
-    "@material/mwc-floating-label": "^0.15.0",
-    "@material/mwc-icon": "^0.15.0",
-    "@material/mwc-line-ripple": "^0.15.0",
-    "@material/mwc-list": "^0.15.0",
-    "@material/mwc-menu": "^0.15.0",
-    "@material/mwc-notched-outline": "^0.15.0",
+    "@material/mwc-base": "^0.16.1",
+    "@material/mwc-floating-label": "^0.16.1",
+    "@material/mwc-icon": "^0.16.1",
+    "@material/mwc-line-ripple": "^0.16.1",
+    "@material/mwc-list": "^0.16.1",
+    "@material/mwc-menu": "^0.16.1",
+    "@material/mwc-notched-outline": "^0.16.1",
     "@material/select": "=8.0.0-canary.c678a9d34.0",
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
