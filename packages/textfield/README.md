@@ -100,42 +100,20 @@ npm install @material/mwc-textfield
 </mwc-textfield>
 ```
 
-#### Shaping Outlined
+#### Shaped
 
-<img src="images/shape-left.png" width="244px">
-<img src="images/shape-right.png" width="244px">
-<img src="images/shape-left-right.png" width="244px">
+<img src="images/shape.png" width="233px">
 
 ```html
 <style>
-  mwc-textfield.left {
-    --mdc-notched-outline-leading-width: 28px;
-    --mdc-notched-outline-leading-border-radius: 28px 0 0 28px;
-  }
-
-  mwc-textfield.right {
-    --mdc-notched-outline-trailing-border-radius: 0 28px 28px 0;
+  mwc-textfield.rounded {
+    --mdc-shape-small: 28px;
   }
 </style>
 
 <mwc-textfield
-    class="left";
+    class="rounded"
     label="My Textfield"
-    iconTrailing="delete"
-    outlined>
-</mwc-textfield>
-
-<mwc-textfield
-    class="right";
-    label="My Textfield"
-    iconTrailing="delete"
-    outlined>
-</mwc-textfield>
-
-<mwc-textfield
-    class="left right";
-    label="My Textfield"
-    iconTrailing="delete"
     outlined>
 </mwc-textfield>
 ```

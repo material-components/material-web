@@ -38,11 +38,6 @@ limitations under the License.
 .mdc-text-field {
   width: 100%;
 
-  @include theme.prop(border-radius, (
-    varname: --mdc-text-field-filled-border-radius,
-    fallback: shape.mask-radius(shape.prop-value(small), 1 1 0 0)
-  ));
-
   @include textfield.bottom-line-color((
     varname: --mdc-text-field-idle-line-color,
     fallback: textfield.$bottom-line-idle

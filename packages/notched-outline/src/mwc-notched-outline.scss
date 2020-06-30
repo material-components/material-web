@@ -15,9 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+@use '@material/theme/custom-properties';
 @use '@material/notched-outline' as notchedoutline;
 @use '@material/theme';
-@use '@material/shape';
 @use '@material/rtl';
 
 @include notchedoutline.core-styles();
@@ -57,23 +57,9 @@ limitations under the License.
   max-width: calc(100% / .75);
 }
 
-.mdc-notched-outline__leading {
-  @include theme.prop(width, (
-    varname: --mdc-notched-outline-leading-width,
-    fallback: notchedoutline.$leading-width
-  ));
-
-  @include theme.prop(border-radius, (
-    varname: --mdc-notched-outline-leading-border-radius,
-    fallback: shape.mask-radius(shape.prop-value(small), 1 0 0 1)
-  ));
-}
-
-.mdc-notched-outline__trailing {
-  @include theme.prop(border-radius, (
-    varname: --mdc-notched-outline-trailing-border-radius,
-    fallback: shape.mask-radius(shape.prop-value(small), 0 1 1 0)
-  ));
+.mdc-notched-outline {
+  // Normally shape-radius is included by textfield/select's shape radius mixin
+  @include notchedoutline.shape-radius(small);
 }
 
 .mdc-notched-outline__leading,

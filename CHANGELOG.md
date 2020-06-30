@@ -4,7 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Changed
+
+- `notched-outline`
+  - **BREAKING** removed border-radius and leading-width custom properties in favor of `--mdc-shape-small`
+- `textarea`
+  - **BREAKING** shape is now customized with `--mdc-shape-small`
+- `textfield`
+  - **BREAKING** shape is now customized with `--mdc-shape-small`
 
 ## [v0.16.0] - 2020-06-29
 

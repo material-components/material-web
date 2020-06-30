@@ -78,38 +78,19 @@ npm install @material/mwc-textarea
 </mwc-textarea>
 ```
 
-#### Shaping Outlined
+#### Shaped
 
-<img src="images/shape-left.png" width="256px">
-<img src="images/shape-right.png" width="256px">
-<img src="images/shape-left-right.png" width="256px">
+<img src="images/shape.png" width="212px">
 
 ```html
 <style>
-  mwc-textarea.left {
-    --mdc-notched-outline-leading-width: 28px;
-    --mdc-notched-outline-leading-border-radius: 28px 0 0 28px;
-  }
-
-  mwc-textarea.right {
-    --mdc-notched-outline-trailing-border-radius: 0 28px 28px 0;
+  mwc-textarea.rounded {
+    --mdc-shape-small: 28px;
   }
 </style>
 
 <mwc-textarea
-    class="left";
-    label="My Textarea"
-    outlined>
-</mwc-textarea>
-
-<mwc-textarea
-    class="right";
-    label="My Textarea"
-    outlined>
-</mwc-textarea>
-
-<mwc-textarea
-    class="left right"
+    class="rounded"
     label="My Textarea"
     outlined>
 </mwc-textarea>
