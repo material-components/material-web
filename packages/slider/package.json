@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-slider",
-  "version": "0.15.0",
+  "version": "0.16.1",
   "description": "Material Design slider web component",
   "keywords": [
     "material design",
@@ -16,9 +16,9 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/dom": "=7.0.0-canary.b9776b1d0.0",
-    "@material/mwc-base": "^0.15.0",
-    "@material/slider": "=7.0.0-canary.b9776b1d0.0",
+    "@material/dom": "=8.0.0-canary.610c26c4a.0",
+    "@material/mwc-base": "^0.16.1",
+    "@material/slider": "=8.0.0-canary.610c26c4a.0",
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0"

@@ -45,12 +45,13 @@ function main() {
   for (const relPath of packageJsonPaths) {
     const absPath = path.join(packagesDir, relPath);
     const pj = JSON.parse(fs.readFileSync(absPath, 'utf8')) as PackageJson;
-    if (!pj.dependencies || !pj.devDependencies) {
+    if (!pj.dependencies && !pj.devDependencies) {
       continue;
     }
     console.log(`Checking ${pj.name}`);
     let changed = false;
-    function updateDependencies(dependencies: Record<string, string>) {
+
+    const updateDependencies = (dependencies: Record<string, string>) => {
       for (const [pkg, oldVersion] of Object.entries(dependencies)) {
         if (isMdcWebPackage(pkg)) {
           if (oldVersion !== newVersion) {
@@ -62,7 +63,8 @@ function main() {
           }
         }
       }
-    }
+    };
+
     if (pj.dependencies) {
       updateDependencies(pj.dependencies);
     }
