@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- ## Unreleased -->
 
+## [v0.17.2] - 2020-01-01
+
+### Fixed
+
+- prod dependency breakage based on `@material/dom`
+
+## [v0.17.2] - 2020-01-01
+
+- unused GH tag
+
 ## [v0.17.0] - 2020-01-01
 
 ### Changed
