@@ -1,0 +1,60 @@
+/**
+@license
+Copyright 2020 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+@use 'sass:map';
+@use 'sass:string';
+@use '@material/linear-progress' as linearprogress;
+@use '@material/theme';
+@use '@material/theme/custom-properties';
+
+$light-theme: (
+  bar: theme.prop-value(primary),
+  buffer: linearprogress.$baseline-buffer-color,
+);
+
+@mixin theme($theme: $light-theme) {
+  $bar-color: map.get($theme, bar);
+  @if $bar-color {
+    --mdc-theme-primary: #{$bar-color};
+  }
+
+  $buffer-color: map.get($theme, buffer);
+  @if $buffer-color {
+    @include buffer-color($buffer-color);
+  }
+}
+
+/// Sets the color of the buffer bar and buffering dots image.
+@mixin buffer-color($color) {
+  // TODO(b/153370936): Replace with theme key resolve function
+  @if map.has-key(theme.$property-values, $color) {
+    @error 'buffer-color does not support theme keys';
+  }
+
+  @if custom-properties.is-custom-prop($color) {
+    @error 'buffer-color does not support custom properties.';
+  }
+
+  $buffer-color-svg: linearprogress.str-replace_(
+    string.unquote('#{$color}'),
+    '#',
+    '%23'
+  );
+
+  --mdc-linear-progress-buffer-color: #{$color};
+  --mdc-linear-progress-buffering-dots-image: url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' enable-background='new 0 0 5 2' xml:space='preserve' viewBox='0 0 5 2' preserveAspectRatio='none slice'%3E%3Ccircle cx='1' cy='1' r='1' fill='#{$buffer-color-svg}'/%3E%3C/svg%3E");
+}
