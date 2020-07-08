@@ -30,7 +30,7 @@ export class IconButtonBase extends LitElement {
 
   @query('button') buttonElement!: HTMLElement;
 
-  @queryAsync('mwc-ripple') ripple!: Promise<Ripple | null>;
+  @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 
   @internalProperty() protected shouldRenderRipple = false;
 
@@ -41,9 +41,9 @@ export class IconButtonBase extends LitElement {
 
   protected renderRipple() {
     return html`${
-        this.shouldRenderRipple ?
-            html`<mwc-ripple .disabled="${this.disabled}" unbounded></mwc-ripple>` :
-            ''}`;
+        this.shouldRenderRipple ? html`<mwc-ripple .disabled="${
+                                      this.disabled}" unbounded></mwc-ripple>` :
+                                  ''}`;
   }
 
   focus() {
