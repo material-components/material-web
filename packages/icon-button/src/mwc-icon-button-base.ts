@@ -71,12 +71,9 @@ export class IconButtonBase extends LitElement {
         @focus="${this.handleRippleFocus}"
         @blur="${this.handleRippleBlur}"
         @mousedown="${this.handleRippleActivate}"
-        @mouseup="${this.handleRippleDeactivate}"
         @mouseenter="${this.handleRippleMouseEnter}"
         @mouseleave="${this.handleRippleMouseLeave}"
-        @touchstart="${this.handleRippleActivate}"
-        @touchend="${this.handleRippleDeactivate}"
-        @touchcancel="${this.handleRippleDeactivate}">
+        @touchstart="${this.handleRippleActivate}">
       ${this.renderRipple()}
     <i class="material-icons">${this.icon}</i>
     <slot></slot>
@@ -85,11 +82,19 @@ export class IconButtonBase extends LitElement {
 
   @eventOptions({passive: true})
   private handleRippleActivate(evt?: Event) {
-    this.rippleHandlers.startPress(evt);
-  }
+    const onUp = () => {
+      window.removeEventListener('mouseup', onUp);
+      window.removeEventListener('touchend', onUp);
+      window.removeEventListener('touchcancel', onUp);
 
-  private handleRippleDeactivate() {
-    this.rippleHandlers.endPress();
+      this.rippleHandlers.endPress();
+    };
+
+    window.addEventListener('mouseup', onUp);
+    window.addEventListener('touchend', onUp);
+    window.addEventListener('touchcancel', onUp);
+
+    this.rippleHandlers.startPress(evt);
   }
 
   private handleRippleMouseEnter() {
