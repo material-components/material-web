@@ -14,8 +14,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {ripple} from '@material/mwc-ripple/ripple-directive.js';
-import {html, LitElement, property} from 'lit-element';
+import '@material/mwc-ripple/mwc-ripple.js';
+
+import {Ripple} from '@material/mwc-ripple/mwc-ripple.js';
+import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers.js';
+import {eventOptions, html, internalProperty, LitElement, property, query, queryAsync} from 'lit-element';
 
 /** @soyCompatible */
 export class IconButtonBase extends LitElement {
@@ -25,15 +28,83 @@ export class IconButtonBase extends LitElement {
 
   @property({type: String}) label = '';
 
+  @query('button') buttonElement!: HTMLElement;
+
+  @queryAsync('mwc-ripple') ripple!: Promise<Ripple | null>;
+
+  @internalProperty() protected shouldRenderRipple = false;
+
+  protected rippleHandlers: RippleHandlers = new RippleHandlers(() => {
+    this.shouldRenderRipple = true;
+    return this.ripple;
+  });
+
+  protected renderRipple() {
+    return html`${
+        this.shouldRenderRipple ?
+            html`<mwc-ripple .disabled="${this.disabled}" unbounded></mwc-ripple>` :
+            ''}`;
+  }
+
+  focus() {
+    const buttonElement = this.buttonElement;
+    if (buttonElement) {
+      this.rippleHandlers.startFocus();
+      buttonElement.focus();
+    }
+  }
+
+  blur() {
+    const buttonElement = this.buttonElement;
+    if (buttonElement) {
+      this.rippleHandlers.endFocus();
+      buttonElement.blur();
+    }
+  }
+
   /** @soyCompatible */
   protected render() {
     return html`<button
-    .ripple="${ripple()}"
-    class="mdc-icon-button"
-    aria-label="${this.label || this.icon}"
-    ?disabled="${this.disabled}">
+        class="mdc-icon-button"
+        aria-label="${this.label || this.icon}"
+        ?disabled="${this.disabled}"
+        @focus="${this.handleRippleFocus}"
+        @blur="${this.handleRippleBlur}"
+        @mousedown="${this.handleRippleActivate}"
+        @mouseup="${this.handleRippleDeactivate}"
+        @mouseenter="${this.handleRippleMouseEnter}"
+        @mouseleave="${this.handleRippleMouseLeave}"
+        @touchstart="${this.handleRippleActivate}"
+        @touchend="${this.handleRippleDeactivate}"
+        @touchcancel="${this.handleRippleDeactivate}">
+      ${this.renderRipple()}
     <i class="material-icons">${this.icon}</i>
     <slot></slot>
   </button>`;
+  }
+
+  @eventOptions({passive: true})
+  private handleRippleActivate(evt?: Event) {
+    this.rippleHandlers.startPress(evt);
+  }
+
+  private handleRippleDeactivate() {
+    this.rippleHandlers.endPress();
+  }
+
+  private handleRippleMouseEnter() {
+    this.rippleHandlers.startHover();
+  }
+
+  private handleRippleMouseLeave() {
+    this.rippleHandlers.endHover();
+  }
+
+  private handleRippleFocus() {
+    this.rippleHandlers.startFocus();
+  }
+
+  private handleRippleBlur() {
+    this.rippleHandlers.endFocus();
   }
 }

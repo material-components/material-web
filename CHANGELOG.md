@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- ## Unreleased -->
 
+### Changed
+
+- Refactor `mwc-icon-button`
+  - Replace `ripple-directive` with lazy `mwc-ripple`
+
 ## [v0.17.2] - 2020-01-01
 
 ### Fixed
