@@ -400,15 +400,6 @@ export abstract class SelectBase extends FormElement {
           this.lineRippleElement.lineRippleFoundation.deactivate();
         }
       },
-      getSelectedMenuItem: () => {
-        const menuElement = this.menuElement;
-
-        if (!menuElement) {
-          return null;
-        }
-
-        return menuElement.selected as ListItemBase | null;
-      },
       hasLabel: () => {
         return !!this.label;
       },
@@ -523,7 +514,6 @@ export abstract class SelectBase extends FormElement {
           menuElement.wrapFocus = wrapFocus;
         }
       },
-      setAttributeAtIndex: () => undefined,
       focusMenuItemAtIndex: (index) => {
         const menuElement = this.menuElement;
         if (!menuElement) {
@@ -572,12 +562,6 @@ export abstract class SelectBase extends FormElement {
 
         return element.text;
       },
-      getMenuItemAttr: (menuItem) => {
-        const listItem = menuItem as ListItemBase;
-        return listItem.value;
-      },
-      addClassAtIndex: () => undefined,
-      removeClassAtIndex: () => undefined,
       getSelectedIndex: () => this.index,
       setSelectedIndex: () => undefined,
       isTypeaheadInProgress: () =>
