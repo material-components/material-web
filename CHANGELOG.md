@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `top-app-bar(-fixed)`
   - `--mdc-top-app-bar-width` is now configurable
 
+### Fixed
+
+- `button`
+  - ripple will unripple when mouse/touchend happens outside of button
+
 ## [v0.17.2] - 2020-01-01
 
 ### Fixed
