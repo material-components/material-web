@@ -143,10 +143,16 @@ mwc-top-app-bar-fixed {
 ### CSS Custom Properties
 
 | Name | Default | Description
+| ------------------------------------ | --------------- | ---
+| `--mdc-top-app-bar-fixed-box-shadow` | mdc elevation 4 | Sets the box shadow of the fixed top app bar when scrolling.
+| `--mdc-top-app-bar-width`            | `100%`          | Width of the `top-app-bar` in relation to the Window.
+
+#### Global Custom Properties
+
+| Name | Default | Description
 | ---- | ------- | -----------
 | `--mdc-theme-primary` | ![](images/color_6200ee.png) `#6200ee` | Background color of the bar
 | `--mdc-theme-on-primary` | ![](images/color_ffffff.png) `#ffffff` | Text color of the title, and icon colors
-| `--mdc-top-app-bar-fixed-box-shadow` | mdc elevation 4 | Sets the box shadow of the fixed top app bar when scrolling.
 
 #### Elevation values
 

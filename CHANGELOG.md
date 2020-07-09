@@ -4,7 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Changed
+
+- `top-app-bar(-fixed)`
+  - `--mdc-top-app-bar-width` is now configurable
 
 ## [v0.17.2] - 2020-01-01
 

@@ -15,11 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@use '@material/mwc-base/src/elevation.scss' as elevation;
+@use '@material/mwc-base/src/elevation';
 @use '@material/top-app-bar/mdc-top-app-bar.scss';
-@use '@material/theme/_mixins.scss' as theme-mixins;
-@use '@material/animation/_variables.scss' as animation-vars;
-
+@use '@material/theme';
+@use '@material/theme/custom-properties';
+@use '@material/animation';
 
 :host {
   display: block;
@@ -27,14 +27,20 @@ limitations under the License.
 
 // this should be in mdc-top-app-bar
 .mdc-top-app-bar {
-  @include theme-mixins.prop(color, (
-    varname: --mdc-theme-on-primary,
-    fallback: #fff
-  ))
+  @include theme.property(
+    color,
+    custom-properties.create(--mdc-theme-on-primary, #fff)
+  );
+
+  @include theme.property(
+    width,
+    custom-properties.create(--mdc-top-app-bar-width, 100%)
+  );
 }
 
 .mdc-top-app-bar--prominent {
-  #navigation, #actions {
+  #navigation,
+  #actions {
     ::slotted(*) {
       align-self: flex-start;
     }
@@ -42,7 +48,8 @@ limitations under the License.
 }
 
 // hack for icon-button ripple opacity
-#navigation, #actions {
+#navigation,
+#actions {
   ::slotted(*) {
     --mdc-icon-button-ripple-opacity: 0.24;
   }
@@ -50,7 +57,7 @@ limitations under the License.
 
 .mdc-top-app-bar--short-collapsed {
   #actions ::slotted(*) {
-    transition: padding 150ms animation-vars.$standard-curve-timing-function;
+    transition: padding 150ms animation.$standard-curve-timing-function;
   }
 }
 
@@ -78,11 +85,15 @@ limitations under the License.
 }
 
 // dense & prominent theming needs a more specific override
-.mdc-top-app-bar--dense.mdc-top-app-bar--prominent .mdc-top-app-bar__section--align-center .mdc-top-app-bar__title {
+.mdc-top-app-bar--dense.mdc-top-app-bar--prominent
+  .mdc-top-app-bar__section--align-center
+  .mdc-top-app-bar__title {
   @include centerPadding();
 }
 
-
 .mdc-top-app-bar--fixed-scrolled {
-  box-shadow: var(--mdc-top-app-bar-fixed-box-shadow, #{elevation.elevation-box-shadow(4)});
+  box-shadow: var(
+    --mdc-top-app-bar-fixed-box-shadow,
+    #{elevation.elevation-box-shadow(4)}
+  );
 }
