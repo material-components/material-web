@@ -575,7 +575,8 @@ suite('mwc-select:', () => {
       element.select(1);
       await element.updateComplete;
       assert.equal(
-          changeCalls, 1,
+          changeCalls,
+          1,
           'change event not emitted twice when same value selected again');
 
       assert.equal(element.value, 'a', 'select method updates value');
@@ -595,7 +596,8 @@ suite('mwc-select:', () => {
       element.value = 'a';
       await element.updateComplete;
       assert.equal(
-          changeCalls, 1,
+          changeCalls,
+          1,
           'change event not emitted twice when same value selected again using value property');
       changeCalls = 0;
 
