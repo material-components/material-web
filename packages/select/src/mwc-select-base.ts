@@ -823,12 +823,16 @@ export abstract class SelectBase extends FormElement {
     typeahead.handleKeydown(opts, this.typeaheadState);
   }
 
-  protected async onSelected(evt: CustomEvent<{index: number}>) {
+  protected async onSelected(event: CustomEvent<{index: number}>) {
     if (!this.mdcFoundation) {
       await this.updateComplete;
     }
 
-    this.mdcFoundation.handleMenuItemAction(evt.detail.index);
+    this.mdcFoundation.handleMenuItemAction(event.detail.index);
+    const item = this.items[event.detail.index];
+    if (item) {
+      this.value = item.value;
+    }
   }
 
   protected onOpened() {
