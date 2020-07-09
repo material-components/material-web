@@ -502,7 +502,7 @@ suite('mwc-textfield:', () => {
       let labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
       assert.isTrue(notchedOutline.open);
       let diff = Math.abs(outlineWidth - labelWidth);
-      assert.isTrue(diff < 3);
+      assert.isTrue(diff < 5);
 
       element.label = 'this is some other label';
 
@@ -516,7 +516,7 @@ suite('mwc-textfield:', () => {
       outlineWidth = notchedOutline.width;
       labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
       diff = Math.abs(outlineWidth - labelWidth);
-      assert.isTrue(diff < 3);
+      assert.isTrue(diff < 5);
     });
 
     teardown(() => {
