@@ -23,9 +23,9 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@material/button": "=8.0.0-canary.6ed717ddd.0",
-    "@material/feature-targeting": "=8.0.0-canary.6ed717ddd.0",
-    "@material/theme": "=8.0.0-canary.6ed717ddd.0"
+    "@material/button": "=8.0.0-canary.1e7cb6198.0",
+    "@material/feature-targeting": "=8.0.0-canary.1e7cb6198.0",
+    "@material/theme": "=8.0.0-canary.1e7cb6198.0"
   },
   "publishConfig": {
     "access": "public"
