@@ -14,12 +14,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-@use '@material/mwc-base/src/elevation';
 @use '@material/mwc-icon/src/_mwc-icon';
-@use '@material/fab';
-@use '@material/rtl';
 @use '@material/animation';
+@use '@material/elevation';
+@use '@material/fab';
 @use '@material/ripple';
+@use '@material/rtl';
 
 @include fab.core-styles();
 @include ripple.common();

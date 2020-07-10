@@ -15,8 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@use '@material/mwc-base/src/elevation';
 @use '@material/dialog';
+@use '@material/elevation';
 @use '@material/feature-targeting' as feature;
 @use '@material/rtl';
 @use '@material/theme';
@@ -29,7 +29,10 @@ limitations under the License.
 }
 
 .mdc-dialog__surface {
-  box-shadow: var(--mdc-dialog-box-shadow, #{elevation.elevation-box-shadow(24)});
+  box-shadow: var(
+    --mdc-dialog-box-shadow,
+    #{elevation.elevation-box-shadow(24)}
+  );
 }
 
 @mixin mwc-dialog-core-styles($query: feature.all()) {
@@ -38,18 +41,30 @@ limitations under the License.
 
   @media (min-width: dialog.$max-width) {
     .mdc-dialog .mdc-dialog__surface {
-      @include theme.prop(max-width, (
-        varname: --mdc-dialog-max-width,
-        fallback: dialog.$max-width
-      ));
+      @include theme.property(
+        max-width,
+        (
+          varname: --mdc-dialog-max-width,
+          fallback: dialog.$max-width,
+        )
+      );
     }
   }
 
   .mdc-dialog {
     @include mwc-dialog-scrim-color(dialog.$scrim-color, $query: $query);
-    @include mwc-dialog-title-ink-color(dialog.$title-ink-color, $query: $query);
-    @include mwc-dialog-content-ink-color(dialog.$content-ink-color, $query: $query);
-    @include mwc-dialog-scroll-divider-color(dialog.$scroll-divider-color, $query: $query);
+    @include mwc-dialog-title-ink-color(
+      dialog.$title-ink-color,
+      $query: $query
+    );
+    @include mwc-dialog-content-ink-color(
+      dialog.$content-ink-color,
+      $query: $query
+    );
+    @include mwc-dialog-scroll-divider-color(
+      dialog.$scroll-divider-color,
+      $query: $query
+    );
     @include mwc-dialog-min-width(dialog.$min-width, $query: $query);
 
     .mdc-dialog__surface {
@@ -68,7 +83,7 @@ limitations under the License.
         /* @noflip */
         text-align: right;
 
-        @include rtl.rtl(".mdc-dialog") {
+        @include rtl.rtl('.mdc-dialog') {
           /* @noflip */
           text-align: left;
         }
@@ -80,7 +95,7 @@ limitations under the License.
     flex-direction: column-reverse;
 
     *:not(:last-child) ::slotted(*) {
-      flex-basis: .000000001px;
+      flex-basis: 0.000000001px;
       @include feature.targets($feat-structure) {
         margin-top: 12px;
       }
@@ -88,41 +103,62 @@ limitations under the License.
   }
 }
 
-@mixin mwc-dialog-scrim-color($color, $opacity: dialog.$scrim-opacity, $query: feature.all()) {
+@mixin mwc-dialog-scrim-color(
+  $color,
+  $opacity: dialog.$scrim-opacity,
+  $query: feature.all()
+) {
   $feat-color: feature.create-target($query, color);
 
   .mdc-dialog__scrim {
     @include feature.targets($feat-color) {
-      @include theme.prop(background-color, (
-        varname: --mdc-dialog-scrim-color,
-        fallback: rgba(theme.prop-value($color), $opacity)
-      ));
+      @include theme.property(
+        background-color,
+        (
+          varname: --mdc-dialog-scrim-color,
+          fallback: rgba(theme.prop-value($color), $opacity),
+        )
+      );
     }
   }
 }
 
-@mixin mwc-dialog-title-ink-color($color, $opacity: dialog.$title-ink-opacity, $query: feature.all()) {
+@mixin mwc-dialog-title-ink-color(
+  $color,
+  $opacity: dialog.$title-ink-opacity,
+  $query: feature.all()
+) {
   $feat-color: feature.create-target($query, color);
 
   .mdc-dialog__title {
     @include feature.targets($feat-color) {
-      @include theme.prop(color, (
-        varname: --mdc-dialog-heading-ink-color,
-        fallback: rgba(theme.prop-value($color), $opacity)
-      ));
+      @include theme.property(
+        color,
+        (
+          varname: --mdc-dialog-heading-ink-color,
+          fallback: rgba(theme.prop-value($color), $opacity),
+        )
+      );
     }
   }
 }
 
-@mixin mwc-dialog-content-ink-color($color, $opacity: dialog.$content-ink-opacity, $query: feature.all()) {
+@mixin mwc-dialog-content-ink-color(
+  $color,
+  $opacity: dialog.$content-ink-opacity,
+  $query: feature.all()
+) {
   $feat-color: feature.create-target($query, color);
 
   .mdc-dialog__content {
     @include feature.targets($feat-color) {
-      @include theme.prop(color, (
-        varname: --mdc-dialog-content-ink-color,
-        fallback: rgba(theme.prop-value($color), $opacity)
-      ));
+      @include theme.property(
+        color,
+        (
+          varname: --mdc-dialog-content-ink-color,
+          fallback: rgba(theme.prop-value($color), $opacity),
+        )
+      );
     }
   }
 }
@@ -137,15 +173,22 @@ limitations under the License.
   &.mdc-dialog--scrollable .mdc-dialog__title,
   &.mdc-dialog--scrollable .mdc-dialog__actions {
     @include feature.targets($feat-color) {
-      @include theme.prop(border-color, (
-        varname: --mdc-dialog-scroll-divider-color,
-        fallback: rgba(theme.prop-value($color), $opacity)
-      ));
+      @include theme.property(
+        border-color,
+        (
+          varname: --mdc-dialog-scroll-divider-color,
+          fallback: rgba(theme.prop-value($color), $opacity),
+        )
+      );
     }
   }
 }
 
-@mixin mwc-dialog-shape-radius($radius, $rtl-reflexive: false, $query: feature.all()) {
+@mixin mwc-dialog-shape-radius(
+  $radius,
+  $rtl-reflexive: false,
+  $query: feature.all()
+) {
   $feat-structure: feature.create-target($query, structure);
 
   .mdc-dialog__surface {
@@ -158,10 +201,13 @@ limitations under the License.
 
   .mdc-dialog__surface {
     @include feature.targets($feat-structure) {
-      @include theme.prop(min-width, (
-        varname: --mdc-dialog-min-width,
-        fallback: $min-width
-      ));
+      @include theme.property(
+        min-width,
+        (
+          varname: --mdc-dialog-min-width,
+          fallback: $min-width,
+        )
+      );
     }
   }
 }

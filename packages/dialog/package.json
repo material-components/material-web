@@ -26,6 +26,7 @@
     "wicg-inert": "^3.0.0"
   },
   "devDependencies": {
+    "@material/elevation": "=8.0.0-canary.b2edaeead.0",
     "@material/feature-targeting": "=8.0.0-canary.b2edaeead.0",
     "@material/rtl": "=8.0.0-canary.b2edaeead.0",
     "@material/shape": "=8.0.0-canary.b2edaeead.0",

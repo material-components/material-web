@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@material/animation": "=8.0.0-canary.b2edaeead.0",
+    "@material/elevation": "=8.0.0-canary.b2edaeead.0",
     "@material/theme": "=8.0.0-canary.b2edaeead.0"
   },
   "publishConfig": {
