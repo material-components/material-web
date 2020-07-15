@@ -1,0 +1,77 @@
+/**
+@license
+Copyright 2020 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+@use 'sass:map';
+@use 'sass:string';
+@use '@material/theme';
+@use '@material/theme/custom-properties';
+@use '@material/fab';
+
+@use './fab' as mwc-fab;
+
+$light-theme: (
+  container-color: theme.prop-value(secondary),
+  ink-color: theme.prop-value(on-secondary),
+  icon-size: mwc-fab.$icon-size,
+  extended: (
+    icon-padding: fab.$extended-icon-padding,
+    label-padding: fab.$extended-label-padding,
+  ),
+  ripple: (
+    state: currentcolor,
+    opacity: (
+      hover: 0.04,
+      focus: 0.12,
+      press: 0.10,
+    ),
+  )
+);
+
+@mixin theme($theme: $light-theme) {
+  $container-color: map.get($theme, container-color);
+  @if $container-color {
+    --mdc-theme-secondary: #{$container-color};
+  }
+
+  $ink-color: map.get($theme, ink-color);
+  @if $ink-color {
+    --mdc-theme-on-secondary: #{$ink-color};
+  }
+
+  $icon-size: map.get($theme, icon-size);
+  @if $icon-size {
+    --mdc-icon-size: #{$icon-size};
+  }
+
+  $extended: map.get($theme, extended);
+  @if $extended {
+    $icon-padding: map.get($extended, icon-padding);
+    @if $icon-padding {
+      --mdc-fab-extended-icon-padding: #{$icon-padding};
+    }
+
+    $label-padding: map.get($extended, label-padding);
+    @if $label-padding {
+      --mdc-fab-extended-label-padding: #{$label-padding};
+    }
+  }
+
+  $ripple: map.get($theme, ripple);
+  @if $ripple {
+    // apply mwc-ripple theme which currently only exists on gm
+  }
+}

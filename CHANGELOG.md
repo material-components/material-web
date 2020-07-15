@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - `top-app-bar(-fixed)`
   - `--mdc-top-app-bar-width` is now configurable
+- `mwc-fab`
+  - **BREAKING** removed `--mdc-fab-box-shadow-hover`; use `--mdc-fab-box-shadow`
+  - **BREAKING** removed `--mdc-fab-box-shadow-active`; use `--mdc-fab-box-shadow`
+  - Ripple now uses and exposes `mwc-ripple`'s CSS custom properties API
 
 ### Fixed
 
@@ -22,7 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - prod dependency breakage based on `@material/dom`
 
-## [v0.17.2] - 2020-01-01
+## [v0.17.1] - 2020-01-01
 
 - unused GH tag
 
