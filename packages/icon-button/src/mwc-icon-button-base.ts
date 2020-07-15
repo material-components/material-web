@@ -40,10 +40,11 @@ export class IconButtonBase extends LitElement {
   });
 
   protected renderRipple() {
-    return html`${
-        this.shouldRenderRipple ? html`<mwc-ripple .disabled="${
-                                      this.disabled}" unbounded></mwc-ripple>` :
-                                  ''}`;
+    if (this.shouldRenderRipple) {
+      return html`<mwc-ripple .disabled="${
+          this.disabled}" unbounded></mwc-ripple>`;
+    }
+    return html``;
   }
 
   focus() {
@@ -73,7 +74,9 @@ export class IconButtonBase extends LitElement {
         @mousedown="${this.handleRippleActivate}"
         @mouseenter="${this.handleRippleMouseEnter}"
         @mouseleave="${this.handleRippleMouseLeave}"
-        @touchstart="${this.handleRippleActivate}">
+        @touchstart="${this.handleRippleActivate}"
+        @touchend="${this.handleRippleDeactivate}"
+        @touchcancel="${this.handleRippleDeactivate}">
       ${this.renderRipple()}
     <i class="material-icons">${this.icon}</i>
     <slot></slot>
@@ -84,17 +87,16 @@ export class IconButtonBase extends LitElement {
   private handleRippleActivate(evt?: Event) {
     const onUp = () => {
       window.removeEventListener('mouseup', onUp);
-      window.removeEventListener('touchend', onUp);
-      window.removeEventListener('touchcancel', onUp);
 
-      this.rippleHandlers.endPress();
+      this.handleRippleDeactivate();
     };
 
     window.addEventListener('mouseup', onUp);
-    window.addEventListener('touchend', onUp);
-    window.addEventListener('touchcancel', onUp);
-
     this.rippleHandlers.startPress(evt);
+  }
+
+  private handleRippleDeactivate() {
+    this.rippleHandlers.endPress();
   }
 
   private handleRippleMouseEnter() {
