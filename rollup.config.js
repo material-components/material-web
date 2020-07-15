@@ -182,24 +182,5 @@ export default [
       }),
     ],
   },
-  {
-    // styles perf improvement doesn't work on IE
-    input: 'demos/shared/ie-style-transform.js',
-    output: {
-      file: 'dist/demos/shared/ie-style-transform.js',
-      format: 'iife',
-      sourcemap: false,
-    },
-    plugins: [
-      strip({
-        functions: ['console.log'],
-      }),
-      minifyHTML(),
-      terser(),
-      babel({
-        presets: [['@babel/preset-env', {modules: false}]]
-      }),
-    ],
-  },
   ...configs,
 ];
