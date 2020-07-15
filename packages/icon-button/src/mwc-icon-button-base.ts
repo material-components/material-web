@@ -14,10 +14,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import '@material/mwc-ripple/mwc-ripple.js';
+import '@material/mwc-ripple/mwc-ripple';
 
-import {Ripple} from '@material/mwc-ripple/mwc-ripple.js';
-import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers.js';
+import {Ripple} from '@material/mwc-ripple/mwc-ripple';
+import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {eventOptions, html, internalProperty, LitElement, property, query, queryAsync} from 'lit-element';
 
 /** @soyCompatible */

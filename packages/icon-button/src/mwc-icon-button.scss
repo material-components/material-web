@@ -90,6 +90,12 @@ limitations under the License.
 
 // hack for top-app-bar ripple coloring of icon-buttons
 mwc-ripple {
-  --mdc-ripple-color: var(--mdc-theme-on-primary, currentColor);
-  --mdc-ripple-focus-opacity: var(--mdc-icon-button-ripple-opacity, 0.12)
+  @include theme.property(--mdc-ripple-color, (
+    varname: --mdc-theme-on-primary,
+    fallback: currentColor,
+  ));
+  @include theme.property(--mdc-ripple-focus-opacity, (
+    varname: --mdc-icon-button-ripple-opacity,
+    fallback: 0.12,
+  ));
 }
