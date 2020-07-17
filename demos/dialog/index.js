@@ -1,3 +1,5 @@
+import {LitElement, html} from 'lit-element/lit-element.js';
+
 import '@material/mwc-dialog';
 import '@material/mwc-button';
 import '@material/mwc-textfield';
@@ -34,3 +36,61 @@ window.toggleActions.onclick = function() {
   dialog.hideActions = hideAction;
   hideActionSpan.innerText = hideAction;
 };
+
+class DailogWithFormValidation extends LitElement {  
+  static get properties() {
+    return {
+      open: {type: Boolean},
+      isDisabled: {type: Boolean},
+    };
+  }
+
+  constructor() {
+    super();
+    this.isDisabled = true;
+  }
+
+  onInputListener(e) {
+    this.isDisabled = !e.target.checkValidity();
+  }
+
+  onClosingListener(e) {
+    this.open = false
+
+    // we could call APIs here ...
+  }
+
+  render() {
+    return html`
+      <mwc-dialog
+        @closing="${this.onClosingListener}"
+        heading="Form Validation"
+        .open="${this.open}">
+        <div>
+          Our primary action button will be disabled
+          until our textfield has valid input!
+        </div>
+        <mwc-textfield
+            dialogInitialFocus
+            @input="${this.onInputListener}"
+            label="Name"
+            pattern="^[a-zA-Z]{3,}$"
+            placeholder="Casey"
+            required
+            type="text">
+        </mwc-textfield>
+        <mwc-button
+          dialogAction="close"
+          ?disabled="${this.isDisabled}"
+          slot="primaryAction">
+          Primary
+        </mwc-button>
+        <mwc-button slot="secondaryAction" dialogAction="close">
+          Secondary
+        </mwc-button>
+      </mwc-dialog>
+    `;
+  }
+}
+
+customElements.define('dialog-with-form-validation', DailogWithFormValidation);
