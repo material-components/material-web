@@ -14,14 +14,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import '@material/mwc-ripple/mwc-ripple.js';
+import '@material/mwc-ripple/mwc-ripple';
 
-import {FormElement} from '@material/mwc-base/form-element.js';
-import {Ripple} from '@material/mwc-ripple/mwc-ripple.js';
-import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers.js';
+import {FormElement} from '@material/mwc-base/form-element';
+import {Ripple} from '@material/mwc-ripple/mwc-ripple';
+import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {html, internalProperty, property, PropertyValues, query, queryAsync, eventOptions} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
-import {ifDefined} from 'lit-html/directives/if-defined.js';
+import {classMap} from 'lit-html/directives/class-map';
+import {ifDefined} from 'lit-html/directives/if-defined';
 
 /** @soyCompatible */
 export class CheckboxBase extends FormElement {
