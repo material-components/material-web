@@ -71,10 +71,10 @@ export class IconButtonBase extends LitElement {
         ?disabled="${this.disabled}"
         @focus="${this.handleRippleFocus}"
         @blur="${this.handleRippleBlur}"
-        @mousedown="${this.handleRippleActivate}"
+        @mousedown="${this.handleRippleMouseDown}"
         @mouseenter="${this.handleRippleMouseEnter}"
         @mouseleave="${this.handleRippleMouseLeave}"
-        @touchstart="${this.handleRippleActivate}"
+        @touchstart="${this.handleRippleTouchStart}"
         @touchend="${this.handleRippleDeactivate}"
         @touchcancel="${this.handleRippleDeactivate}">
       ${this.renderRipple()}
@@ -84,7 +84,7 @@ export class IconButtonBase extends LitElement {
   }
 
   @eventOptions({passive: true})
-  private handleRippleActivate(evt?: Event) {
+  protected handleRippleMouseDown(event?: Event) {
     const onUp = () => {
       window.removeEventListener('mouseup', onUp);
 
@@ -92,7 +92,12 @@ export class IconButtonBase extends LitElement {
     };
 
     window.addEventListener('mouseup', onUp);
-    this.rippleHandlers.startPress(evt);
+    this.rippleHandlers.startPress(event);
+  }
+
+  @eventOptions({passive: true})
+  protected handleRippleTouchStart(event?: Event) {
+    this.rippleHandlers.startPress(event);
   }
 
   private handleRippleDeactivate() {
