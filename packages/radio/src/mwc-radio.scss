@@ -16,10 +16,8 @@ limitations under the License.
 */
 
 @use '@material/radio';
-@use '@material/ripple';
 
-@include radio.core-styles();
-@include ripple.common();
+@include radio.without-ripple();
 
 :host {
   display: inline-block;

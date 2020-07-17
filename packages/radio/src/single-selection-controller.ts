@@ -94,8 +94,6 @@ export type CheckableElement = HTMLElement&{
 export class SingleSelectionController {
   private readonly sets: {[name: string]: SingleSelectionSet} = {};
 
-  private focusedSet: SingleSelectionSet|null = null;
-
   private mouseIsDown = false;
 
   private updating = false;
@@ -213,15 +211,14 @@ export class SingleSelectionController {
    * @param element Element from which selection set is derived and subsequently
    *     focused.
    */
-  focus(element: CheckableElement) {
+  async focus(element: CheckableElement) {
     // Only manage focus state when using keyboard
     if (this.mouseIsDown) {
       return;
     }
     const set = this.getSet(element.name);
-    const currentFocusedSet = this.focusedSet;
-    this.focusedSet = set;
-    if (currentFocusedSet != set && set.selected && set.selected != element) {
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    if (set.selected && set.selected != element) {
       set.selected.focus();
     }
   }
