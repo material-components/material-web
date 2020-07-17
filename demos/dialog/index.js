@@ -37,7 +37,7 @@ window.toggleActions.onclick = function() {
   hideActionSpan.innerText = hideAction;
 };
 
-class DailogWithFormValidation extends LitElement {  
+class DialogWithFormValidation extends LitElement {  
   static get properties() {
     return {
       open: {type: Boolean},
@@ -93,4 +93,4 @@ class DailogWithFormValidation extends LitElement {
   }
 }
 
-customElements.define('dialog-with-form-validation', DailogWithFormValidation);
+customElements.define('dialog-with-form-validation', DialogWithFormValidation);
