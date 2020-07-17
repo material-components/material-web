@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+- `slider`
+  - An upcoming change will migrate the slider to use the MDC M2 slider. In
+    preparation for this, the MWC slider => MDC slider dependency will not be
+    updated until the migration is complete.
 - `top-app-bar(-fixed)`
   - `--mdc-top-app-bar-width` is now configurable
 
