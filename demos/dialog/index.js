@@ -40,14 +40,15 @@ window.toggleActions.onclick = function() {
 class DialogWithFormValidation extends LitElement {  
   static get properties() {
     return {
-      open: {type: Boolean},
       isDisabled: {type: Boolean},
+      open: {type: Boolean},
     };
   }
 
   constructor() {
     super();
     this.isDisabled = true;
+    this.open = false;
   }
 
   onInputListener(e) {
@@ -56,7 +57,6 @@ class DialogWithFormValidation extends LitElement {
 
   onClosingListener(e) {
     this.open = false
-
     // we could call APIs here ...
   }
 
@@ -67,8 +67,8 @@ class DialogWithFormValidation extends LitElement {
         heading="Form Validation"
         .open="${this.open}">
         <div>
-          Our primary action button will be disabled
-          until our textfield has valid input!
+          Our primary action button is disabled
+          until our textfield has valid input.
         </div>
         <mwc-textfield
             dialogInitialFocus
