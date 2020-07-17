@@ -16,13 +16,14 @@ limitations under the License.
 */
 import '@material/mwc-ripple/mwc-ripple';
 
-import {Ripple} from '@material/mwc-ripple/mwc-ripple';
-import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element';
 import {observer} from '@material/mwc-base/observer';
+import {Ripple} from '@material/mwc-ripple/mwc-ripple';
+import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {MDCRadioAdapter} from '@material/radio/adapter';
 import MDCRadioFoundation from '@material/radio/foundation';
-import {html, property, query, queryAsync, internalProperty, eventOptions} from 'lit-element';
+import {eventOptions, html, internalProperty, property, query, queryAsync} from 'lit-element';
+
 import {SingleSelectionController} from './single-selection-controller';
 
 /**
@@ -258,5 +259,4 @@ export class RadioBase extends FormElement {
   private handleRippleBlur() {
     this.rippleHandlers.endFocus();
   }
-
 }
