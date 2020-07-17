@@ -19,7 +19,7 @@ import '@material/mwc-ripple/mwc-ripple.js';
 import {FormElement} from '@material/mwc-base/form-element.js';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple.js';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers.js';
-import {html, internalProperty, property, PropertyValues, query, queryAsync} from 'lit-element';
+import {html, internalProperty, property, PropertyValues, query, queryAsync, eventOptions} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map.js';
 import {ifDefined} from 'lit-html/directives/if-defined.js';
 
@@ -96,11 +96,10 @@ export class CheckboxBase extends FormElement {
   /** @soyCompatible */
   protected renderRipple() {
     const selected = this.indeterminate || this.checked;
-    return html`${
-        this.shouldRenderRipple ?
-            html`<mwc-ripple .accent="${selected}" .disabled="${
-                this.disabled}" .unbounded="${true}"></mwc-ripple>` :
-            ''}`;
+    if (this.shouldRenderRipple) {
+            return html`<mwc-ripple .accent="${selected}" .disabled="${
+                this.disabled}" .unbounded="${true}"></mwc-ripple>`;} else { return html``;
+}
   }
 
   /**
@@ -145,15 +144,14 @@ export class CheckboxBase extends FormElement {
               .checked="${this.checked}"
               .value="${this.value}"
               @change="${this._changeHandler}"
-              @focus="${this._handleFocus}"
-              @blur="${this._handleBlur}"
-              @mousedown="${this._activateRipple}"
-              @mouseup="${this._deactivateRipple}"
-              @mouseenter="${this._handleMouseEnter}"
-              @mouseleave="${this._handleMouseLeave}"
-              @touchstart="${this._activateRipple}"
-              @touchend="${this._deactivateRipple}"
-              @touchcancel="${this._deactivateRipple}">
+              @focus="${this.handleRippleFocus}"
+              @blur="${this.handleRippleBlur}"
+              @mousedown="${this.handleRippleMouseDown}"
+              @mouseenter="${this.handleRippleMouseEnter}"
+              @mouseleave="${this.handleRippleMouseLeave}"
+              @touchstart="${this.handleRippleTouchStart}"
+              @touchend="${this.handleRippleDeactivate}"
+              @touchcancel="${this.handleRippleDeactivate}">
         <div class="mdc-checkbox__background">
           <svg class="mdc-checkbox__checkmark"
               viewBox="0 0 24 24">
@@ -167,30 +165,41 @@ export class CheckboxBase extends FormElement {
       </div>`;
   }
 
-  private _handleFocus() {
-    this.focused = true;
-    this.rippleHandlers.startFocus();
+  @eventOptions({passive: true})
+  protected handleRippleMouseDown(event: Event) {
+    const onUp = () => {
+      window.removeEventListener('mouseup', onUp);
+
+      this.handleRippleDeactivate();
+    };
+
+    window.addEventListener('mouseup', onUp);
+    this.rippleHandlers.startPress(event);
   }
 
-  private _handleBlur() {
-    this.focused = false;
-    this.rippleHandlers.endFocus();
+  @eventOptions({passive: true})
+  protected handleRippleTouchStart(event: Event) {
+    this.rippleHandlers.startPress(event);
   }
 
-  private _activateRipple() {
-    this.rippleHandlers.startPress();
-  }
-
-  private _deactivateRipple() {
+  private handleRippleDeactivate() {
     this.rippleHandlers.endPress();
   }
 
-  private _handleMouseEnter() {
+  private handleRippleMouseEnter() {
     this.rippleHandlers.startHover();
   }
 
-  private _handleMouseLeave() {
+  private handleRippleMouseLeave() {
     this.rippleHandlers.endHover();
+  }
+
+  private handleRippleFocus() {
+    this.rippleHandlers.startFocus();
+  }
+
+  private handleRippleBlur() {
+    this.rippleHandlers.endFocus();
   }
 
   private _changeHandler() {
