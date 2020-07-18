@@ -56,7 +56,7 @@ function main() {
         if (isMdcWebPackage(pkg)) {
           // TODO(b/156658489): Keep MDC slider dep pinned until
           // we've updated to the M2 slider.
-          if (pkg.startsWith('@material/slider') {
+          if (pkg.startsWith('@material/slider')) {
             continue;
           }
               
