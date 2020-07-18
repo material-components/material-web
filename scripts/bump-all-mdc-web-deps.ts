@@ -59,7 +59,7 @@ function main() {
           if (pkg.startsWith('@material/slider')) {
             continue;
           }
-              
+
           if (oldVersion !== newVersion) {
             dependencies[pkg] = newVersion;
             console.log(
