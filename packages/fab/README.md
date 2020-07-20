@@ -119,14 +119,12 @@ mwc-fab {
 
 ### CSS Custom Properties
 
-| Name                       | Default                                | Description
-| -------------------------- | -------------------------------------- |------------
-| `--mdc-icon-font`          | [`Material Icons`](https://google.github.io/material-design-icons/) | Font to use for the icon.
-| `--mdc-theme-on-secondary` | ![](images/color_ffffff.png) `#ffffff` | Foreground color of the label and icon.
-| `--mdc-theme-secondary`    | ![](images/color_018786.png) `#018786` | Background color of the FAB.
-| `--mdc-fab-box-shadow`        | mdc elevation 6  | Sets the box shadow of the fab.
-| `--mdc-fab-box-shadow-hover`  | mdc elevation 8  | Sets the box shadow of the fab when focused or hovered.
-| `--mdc-fab-box-shadow-active` | mdc elevation 12 | Sets the box shadow of the fab when active.
+Name                       | Default                                                             | Description
+-------------------------- | ------------------------------------------------------------------- | -----------
+`--mdc-icon-font`          | [`Material Icons`](https://google.github.io/material-design-icons/) | Font to use for the icon.
+`--mdc-theme-on-secondary` | ![](images/color_ffffff.png) `#ffffff`                          | Foreground color of the label and icon.
+`--mdc-theme-secondary`    | ![](images/color_018786.png) `#018786`                          | Background color of the FAB.
+`--mdc-fab-box-shadow`     | mdc elevation 6, 8, 12                                              | Sets the box shadow of the fab. Elevation 6 when idle, 8 when focused or hovered, and 12 when active.
 
 #### Elevation values
 

@@ -1,0 +1,154 @@
+/**
+@license
+Copyright 2020 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+@use '@material/mwc-icon/src/_mwc-icon';
+@use '@material/elevation';
+@use '@material/fab';
+@use '@material/rtl';
+@use '@material/animation';
+@use '@material/shape';
+@use '@material/theme';
+@use '@material/theme/custom-properties';
+
+$icon-size: 24px;
+
+@mixin core-styles() {
+  outline: none;
+  --mdc-ripple-color: currentcolor;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  @include fab.without-ripple();
+
+  .mdc-fab {
+    @include theme.property(
+      box-shadow,
+      custom-properties.create(
+        --mdc-fab-box-shadow,
+        elevation.elevation-box-shadow(6)
+      )
+    );
+
+    &:hover,
+    &:focus {
+      @include theme.property(
+        box-shadow,
+        custom-properties.create(
+          --mdc-fab-box-shadow,
+          elevation.elevation-box-shadow(8)
+        )
+      );
+    }
+
+    &:active {
+      @include theme.property(
+        box-shadow,
+        custom-properties.create(
+          --mdc-fab-box-shadow,
+          elevation.elevation-box-shadow(12)
+        )
+      );
+    }
+
+    mwc-ripple {
+      overflow: hidden;
+    }
+
+    .mdc-fab__label {
+      z-index: 0;
+    }
+
+    &:not(.mdc-fab--extended) mwc-ripple {
+      @include shape.radius(fab.$shape-radius);
+    }
+
+    &.mdc-fab--extended mwc-ripple {
+      @include shape.radius(
+        fab.$shape-radius,
+        $component-height: fab.$extended-height
+      );
+    }
+
+    .material-icons {
+      @extend %material-icons;
+    }
+
+    .mdc-fab__icon,
+    ::slotted([slot='icon']) {
+      @include theme.property(
+        width,
+        custom-properties.create(--mdc-icon-size, $icon-size)
+      );
+      @include theme.property(
+        height,
+        custom-properties.create(--mdc-icon-size, $icon-size)
+      );
+      @include theme.property(
+        font-size,
+        custom-properties.create(--mdc-icon-size, $icon-size)
+      );
+
+      @include fab.icon_();
+      @include fab.icon-overrides_();
+    }
+
+    &.mdc-fab--extended {
+      $extended-icon-padding: custom-properties.create(
+        --mdc-fab-extended-icon-padding,
+        fab.$extended-icon-padding
+      );
+      $extended-label-padding: custom-properties.create(
+        --mdc-fab-extended-label-padding,
+        fab.$extended-label-padding
+      );
+
+      @include fab.extended-padding(
+        $extended-icon-padding,
+        $extended-label-padding
+      );
+
+      ::slotted([slot='icon']) {
+        @include fab.extended-icon-padding_(
+          $extended-icon-padding,
+          $extended-label-padding
+        );
+      }
+
+      &.icon-end {
+        .mdc-fab__icon {
+          @include fab.extended-icon-padding_(
+            $extended-icon-padding,
+            $extended-label-padding,
+            $is-icon-at-end: true
+          );
+        }
+
+        ::slotted([slot='icon']) {
+          @include fab.extended-icon-padding_(
+            $extended-icon-padding,
+            $extended-label-padding,
+            $is-icon-at-end: true
+          );
+        }
+      }
+    }
+
+    &.mdc-fab--exited ::slotted([slot='icon']) {
+      transform: scale(0);
+      transition: animation.exit-permanent(transform, 135ms);
+    }
+  }
+}

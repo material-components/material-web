@@ -28,7 +28,9 @@
     "@material/mwc-base": "^0.17.2",
     "@material/mwc-icon": "^0.17.2",
     "@material/ripple": "=8.0.0-canary.01db89053.0",
-    "@material/rtl": "=8.0.0-canary.01db89053.0"
+    "@material/rtl": "=8.0.0-canary.01db89053.0",
+    "@material/shape": "=8.0.0-canary.01db89053.0",
+    "@material/theme": "=8.0.0-canary.01db89053.0"
   },
   "publishConfig": {
     "access": "public"
