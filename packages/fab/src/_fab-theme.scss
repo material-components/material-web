@@ -15,8 +15,122 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+@use 'sass:map';
+@use 'sass:string';
+@use 'sass:selector';
+@use '@material/theme';
+@use '@material/theme/custom-properties';
+@use '@material/theme/shadow-dom';
+@use '@material/fab';
+@use '@material/ripple';
+@use 'third_party/javascript/material_web_components/ripple' as mwc-ripple;
+
+@use './fab' as mwc-fab;
+
 $light-theme: (
+  ink-color: (
+    default: theme.prop-value(on-secondary),
+    hover: theme.prop-value(on-secondary),
+    focus: theme.prop-value(on-secondary),
+    press: theme.prop-value(on-secondary),
+  ),
+  container-color: (
+    default: theme.prop-value(secondary),
+    hover: theme.prop-value(secondary),
+    focus: theme.prop-value(secondary),
+    press: theme.prop-value(secondary),
+  ),
+  icon-size: mwc-fab.$icon-size,
+  extended: (
+    icon-padding: fab.$extended-icon-padding,
+    label-padding: fab.$extended-label-padding,
+  ),
+  ripple: (
+    state: currentcolor,
+    opacity: (
+      hover: 0.04,
+      focus: 0.12,
+      press: 0.10,
+    ),
+  ),
+  shadow-color: black,
+  icon-font-family: 'Material Icons',
 );
 
 @mixin theme($theme: $light-theme) {
+  $default-container-color: theme.deep-get($theme, container-color default);
+  @if $default-container-color {
+    --mdc-theme-secondary: #{$default-container-color};
+  }
+
+  $icon-font-family: map.get($theme, icon-font-family);
+  @if $icon-font-family {
+    --mdc-icon-font: #{$icon-font-family};
+  }
+
+  $default-ink-color: theme.deep-get($theme, ink-color default);
+  @if $default-ink-color {
+    --mdc-theme-on-secondary: #{$default-ink-color};
+  }
+
+  @include shadow-dom.host-aware(selector.append(&, ':hover')) {
+    $hover-container-color: theme.deep-get($theme, container-color hover);
+    @if $hover-container-color {
+      --mdc-theme-secondary: #{$hover-container-color};
+    }
+
+    $hover-ink-color: theme.deep-get($theme, ink-color hover);
+    @if $hover-ink-color {
+      --mdc-theme-on-secondary: #{$hover-ink-color};
+    }
+  }
+
+  @include shadow-dom.host-aware(selector.append(&, ':focus,:focus-within')) {
+    $focus-container-color: theme.deep-get($theme, container-color focus);
+    @if $focus-container-color {
+      --mdc-theme-secondary: #{$focus-container-color};
+    }
+
+    $focus-ink-color: theme.deep-get($theme, ink-color focus);
+    @if $focus-ink-color {
+      --mdc-theme-on-secondary: #{$focus-ink-color};
+    }
+  }
+
+  @include shadow-dom.host-aware(selector.append(&, ':active')) {
+    $press-container-color: theme.deep-get($theme, container-color press);
+    @if $press-container-color {
+      --mdc-theme-secondary: #{$press-container-color};
+    }
+
+    $press-ink-color: theme.deep-get($theme, ink-color press);
+    @if $press-ink-color {
+      --mdc-theme-on-secondary: #{$press-ink-color};
+    }
+  }
+
+  $icon-size: map.get($theme, icon-size);
+  @if $icon-size {
+    --mdc-icon-size: #{$icon-size};
+  }
+
+  $extended-icon-padding: theme.deep-get($theme, extended icon-padding);
+  @if $extended-icon-padding {
+    --mdc-fab-extended-icon-padding: #{$extended-icon-padding};
+  }
+
+  $extended-label-padding: theme.deep-get($theme, extended label-padding);
+  @if $extended-label-padding {
+    --mdc-fab-extended-label-padding: #{$extended-label-padding};
+  }
+
+  $shadow-color: map.get($theme, shadow-color);
+  @if $shadow-color {
+    --m-shadow-color: #{$shadow-color};
+  }
+
+  $ripple: map.get($theme, ripple);
+  @if $ripple {
+    @include mwc-ripple.theme($ripple);
+  }
 }
