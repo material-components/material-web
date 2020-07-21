@@ -44,7 +44,7 @@ npm install @material/mwc-radio
 
 ```html
 <style>
-body {
+mwc-radio {
   background-color: #363636;
 
   --mdc-theme-secondary: #ff2929;
@@ -62,7 +62,7 @@ body {
 
 ```html
 <style>
-body {
+mwc-radio {
   background-color: #363636;
 
   --mdc-radio-disabled-color: #adadad;
