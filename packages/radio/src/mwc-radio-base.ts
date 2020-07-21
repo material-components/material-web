@@ -164,15 +164,14 @@ export class RadioBase extends FormElement {
   });
 
   protected renderRipple() {
-    if (this.shouldRenderRipple) {
-      return html`
+    return html`${
+        this.shouldRenderRipple ? html`
         <mwc-ripple 
           .accent="${this.checked}" 
           .disabled="${this.disabled}" 
           unbounded>
-        </mwc-ripple>`;
-    }
-    return html``;
+        </mwc-ripple>` :
+                                  html``}`;
   }
 
   private _changeHandler() {
