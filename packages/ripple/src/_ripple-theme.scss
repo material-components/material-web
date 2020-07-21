@@ -1,0 +1,54 @@
+/**
+@license
+Copyright 2020 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+// Ignore function name case warnings from states module
+// stylelint-disable function-name-case
+@use 'sass:map';
+
+$transparent-theme: (
+  state: #000,
+  opacity: (
+    hover: 0,
+    focus: 0,
+    press: 0,
+  ),
+);
+
+@mixin theme($theme: $transparent-theme) {
+  $color: map.get($theme, state);
+  @if $color {
+    --mdc-ripple-color: #{$color};
+  }
+
+  $opacity-map: map.get($theme, opacity);
+  @if $opacity-map {
+    $focus-opacity: map.get($opacity-map, focus);
+    @if $focus-opacity {
+      --mdc-ripple-focus-opacity: #{$focus-opacity};
+    }
+
+    $hover-opacity: map.get($opacity-map, hover);
+    @if $hover-opacity {
+      --mdc-ripple-hover-opacity: #{$hover-opacity};
+    }
+
+    $press-opacity: map.get($opacity-map, press);
+    @if $press-opacity {
+      --mdc-ripple-press-opacity: #{$press-opacity};
+    }
+  }
+}

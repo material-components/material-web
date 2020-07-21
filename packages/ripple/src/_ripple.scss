@@ -1,0 +1,168 @@
+/**
+@license
+Copyright 2020 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+@use 'sass:map';
+@use '@material/ripple';
+@use '@material/theme';
+@use '@material/theme/custom-properties';
+
+@use './ripple-theme';
+
+@mixin core-styles() {
+  @include ripple.common();
+
+  display: block;
+  position: absolute;
+  @include _fullbleed();
+
+  // Use custom primary and accent classes because mdc-ripple-surface--primary
+  // and --secondary override opacity
+  .primary {
+    --mdc-ripple-color: var(--mdc-theme-primary, #{theme.prop-value(primary)});
+  }
+
+  .accent {
+    --mdc-ripple-color: var(
+      --mdc-theme-secondary,
+      #{theme.prop-value(secondary)}
+    );
+  }
+
+  .mdc-ripple-surface {
+    @include _fullbleed();
+    @include ripple.surface();
+    @include ripple.radius-bounded();
+    @include ripple.surface-styles();
+
+    --mdc-ripple-fg-opacity: var(
+      --mdc-ripple-press-opacity,
+      #{map.get(ripple.$dark-ink-opacities, press)}
+    );
+
+    &.mdc-ripple-upgraded--unbounded {
+      @include ripple.radius-unbounded();
+      @include ripple.unbounded-styles();
+    }
+
+    &.hover::before {
+      @include theme.property(
+        opacity,
+        custom-properties.create(
+          --mdc-ripple-hover-opacity,
+          map.get(ripple.$dark-ink-opacities, hover),
+        )
+      );
+    }
+
+    &.mdc-ripple-upgraded--background-focused::before {
+      @include theme.property(
+        opacity,
+        custom-properties.create(
+          --mdc-ripple-focus-opacity,
+          map.get(ripple.$dark-ink-opacities, focus),
+        )
+      );
+    }
+
+    @include ripple.states-base-color(
+      custom-properties.create(
+        --mdc-ripple-color,
+        #000,
+      )
+    );
+
+    &.activated {
+      @include _mix-state-opacity(activated);
+    }
+
+    &.selected {
+      @include _mix-state-opacity(selected);
+    }
+
+    &.disabled {
+      --mdc-ripple-color: transparent;
+    }
+
+    &::before {
+      @include theme.property(
+        z-index,
+        custom-properties.create(--m-ripple-z-index, 1),
+        (
+          alternate: true,
+        )
+      );
+    }
+
+    &::after {
+      @include theme.property(
+        z-index,
+        custom-properties.create(--m-ripple-z-index, 0),
+        (
+          alternate: true,
+        )
+      );
+    }
+  }
+}
+
+@mixin _fullbleed() {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+@mixin _mix-state-opacity($state) {
+  $opacity: map.get(ripple.$dark-ink-opacities, $state);
+
+  &::before {
+    @include theme.property(
+      opacity,
+      custom-properties.create(
+        --mdc-ripple-#{$state}-opacity,
+        $opacity,
+      )
+    );
+  }
+  // interaction opacity order must be: hover, focus, press
+  &.hover::before {
+    $fallback: map.get(ripple.$dark-ink-opacities, hover);
+    opacity: $fallback + $opacity;
+    /* @alternate */
+    opacity: calc(
+      var(--mdc-ripple-hover-opacity, #{$fallback}) +
+        var(--mdc-ripple-#{$state}-opacity, #{$opacity})
+    );
+  }
+  &.mdc-ripple-upgraded--background-focused::before {
+    $fallback: map.get(ripple.$dark-ink-opacities, focus);
+    opacity: $fallback + $opacity;
+    /** @alternate */
+    opacity: calc(
+      var(--mdc-ripple-focus-opacity, #{$fallback}) +
+        var(--mdc-ripple-#{$state}-opacity, #{$opacity})
+    );
+  }
+
+  $fallback: map.get(ripple.$dark-ink-opacities, press);
+  --mdc-ripple-press-opacity: calc(
+    var(--mdc-ripple-press-opacity, #{$fallback}) + #{$opacity}
+  );
+}
