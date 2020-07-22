@@ -158,24 +158,23 @@ limitations under the License.
 
     <mwc-button data-num="8" raised>Form Validation</mwc-button>
     <mwc-dialog id="dialog8" heading="Form Validation">
-      <p>We can validate user input before closing our dialog.</p>
+      <p>This dialog can validate user input before closing.</p>
       <mwc-textfield
         id="dialog8-text-field"
-        type="text"
-        pattern="^[a-zA-Z\s]{3,64}$"
-        placeholder="Casey"
+        minlength="3"
+        maxlength="64"
+        placeholder="First Name"
         required>
       </mwc-textfield>
       <mwc-button
         id="dialog8-primary-action-button"
-        slot="primaryAction"
-        dialogAction="close">
-        primary
+        slot="primaryAction">
+        confirm
       </mwc-button>
       <mwc-button
         slot="secondaryAction"
         dialogAction="close">
-        secondary
+        cancel
       </mwc-button>
     </mwc-dialog>
 

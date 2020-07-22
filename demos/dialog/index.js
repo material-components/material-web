@@ -35,16 +35,17 @@ window.toggleActions.onclick = function() {
   hideActionSpan.innerText = hideAction;
 };
 
-const textField = document.getElementById('dialog8-text-field');
-const primaryButton = document.getElementById('dialog8-primary-action-button');
+const dialog = document.querySelector('#dialog8');
+const textField = document.querySelector('#dialog8-text-field');
+const primaryButton = document.querySelector('#dialog8-primary-action-button');
     
 primaryButton.addEventListener('click', (e) => {
   // validate, possible asynchronous such as a server response
   const isValid = textField.checkValidity();
   if (isValid) {
+    dialog.close();
     return;
   }
   
-  e.stopPropagation();
   textField.reportValidity();
 });
