@@ -155,6 +155,22 @@ limitations under the License.
         Secondary
       </mwc-button>
     </mwc-dialog>
+
+    <mwc-button data-num="8" raised>Validation in a Dialog</mwc-button>
+    <mwc-dialog id="dialog8" heading="Validation in a Dialog">
+      <div>
+        In this example we set validate a form inside a dialog before closing it.
+      </div>
+      <form id="aForm">
+        <input required name="firstName"/>
+        <mwc-button slot="primaryAction" onclick="validateAndClose()">
+          Validate and Close
+        </mwc-button>
+        <mwc-button slot="secondaryAction" dialogAction="close">
+          Just Close
+        </mwc-button>
+    </form>
+    </mwc-dialog>
     <script nomodule src="index.es5.js"></script>
   </main>
 </body>

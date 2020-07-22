@@ -34,3 +34,13 @@ window.toggleActions.onclick = function() {
   dialog.hideActions = hideAction;
   hideActionSpan.innerText = hideAction;
 };
+
+window.validateAndClose = function validateAndClose() {
+  const formElement = event.target.closest('form');
+  if (formElement.checkValidity()) {
+    // do something with the data
+
+    // close the dialog
+    document.body.querySelector('#dialog8').open = false;
+  }
+}

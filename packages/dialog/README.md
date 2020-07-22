@@ -377,6 +377,45 @@ of the shadow root of `mwc-dialog` or the
 [root node](https://developer.mozilla.org/en-US/docs/Web/API/Node/getRootNode)
 of the dialog.
 
+### Form Handling
+
+In some cases you would like to show forms inside a dialog and process the data before closing the dialog. One such case is form validation.
+
+You can achieve that by handling the submit button click and closing the modal window manually.
+
+Consider the following HTML:
+
+```html
+<mwc-button raised>Validation in a Dialog</mwc-button>
+<mwc-dialog id="dialog8" heading="Validation in a Dialog">
+  <div>
+    In this example we set validate a form inside a dialog before closing it.
+  </div>
+  <form id="aForm">
+    <input required name="firstName"/>
+    <mwc-button slot="primaryAction" onclick="validateAndClose()">
+      Validate and Close
+    </mwc-button>
+</form>
+</mwc-dialog>
+```
+
+The `validateAndClose` function can be implemented as follows:
+
+```
+function validateAndClose() {
+  const formElement = event.target.closest('form');
+  if (formElement.checkValidity()) {
+    // do something with the data
+
+    // close the dialog
+    document.body.querySelector('#dialog8').open = false;
+  }
+}
+```
+
+You can view the live demo here: [Demo](https://material-components.github.io/material-components-web-components/demos/dialog/) - click on "Validation in Dialog".
+
 ## Additional references
 
 - [MDC Web dialogs](https://material.io/develop/web/components/dialogs/)
