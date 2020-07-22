@@ -204,6 +204,49 @@ npm install @material/mwc-dialog
 </mwc-dialog>
 ```
 
+### Form Validation
+
+<img src="images/mwc-dialog_form-validation.gif" width="500px">
+
+```html
+<mwc-dialog id="dialog" heading="Form Validation">
+  <p>This dialog can validate user input before closing.</p>
+  <mwc-textfield
+    id="text-field"
+    minlength="3"
+    maxlength="64"
+    placeholder="First name"
+    required>
+  </mwc-textfield>
+  <mwc-button
+    id="primary-action-button"
+    slot="primaryAction">
+    Confirm
+  </mwc-button>
+  <mwc-button
+    slot="secondaryAction"
+    dialogAction="close">
+    Cancel
+  </mwc-button>
+</mwc-dialog>
+<script>
+  const dialog = document.querySelector('#dialog');
+  const textField = document.querySelector('#text-field');
+  const primaryButton = document.querySelector('#primary-action-button');
+
+  primaryButton.addEventListener('click', () => {
+    // validate, possible asynchronous such as a server response
+    const isValid = textField.checkValidity();
+    if (isValid) {
+      dialog.close();
+      return;
+    }
+
+    textField.reportValidity();
+  });
+</script>
+```
+
 ## API
 
 ### Slots
