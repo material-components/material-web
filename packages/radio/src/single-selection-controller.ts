@@ -227,7 +227,8 @@ export class SingleSelectionController {
   }
 
   /**
-   * Remove focused set when no element of the set has focus anymore, or if overridden by mouse
+   * Remove focused set when no element of the set has focus anymore, or if
+   * overridden by mouse
    *
    * @param element Element from which selection set is derived and subsequently
    *     blurred.
