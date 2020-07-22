@@ -39,7 +39,7 @@ const dialog = document.querySelector('#dialog8');
 const textField = document.querySelector('#dialog8-text-field');
 const primaryButton = document.querySelector('#dialog8-primary-action-button');
     
-primaryButton.addEventListener('click', (e) => {
+primaryButton.addEventListener('click', () => {
   // validate, possible asynchronous such as a server response
   const isValid = textField.checkValidity();
   if (isValid) {
