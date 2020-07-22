@@ -23,7 +23,8 @@ import {ripple} from '@material/mwc-ripple/ripple-directive.js';
 import {html, property, query} from 'lit-element';
 
 export class IconButtonToggleBase extends BaseElement {
-  protected mdcFoundationClass = MDCIconButtonToggleFoundation;
+  protected mdcFoundationClass =
+  MDCIconButtonToggleFoundation;
 
   protected mdcFoundation!: MDCIconButtonToggleFoundation;
 
