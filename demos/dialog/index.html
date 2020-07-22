@@ -20,6 +20,8 @@ limitations under the License.
   <title>MWC Dialog Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" as="style" type="text/css" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" as="style" type="text/css" crossorigin>
   <script type="module" src="index.js"></script>
   <script nomodule src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <style>
@@ -153,9 +155,30 @@ limitations under the License.
         Secondary
       </mwc-button>
     </mwc-dialog>
+
     <mwc-button data-num="8" raised>Form Validation</mwc-button>
-    <dialog-with-form-validation id="dialog8">
-    </dialog-with-form-validation>
+    <mwc-dialog id="dialog8" heading="Form Validation">
+      <p>We can validate user input before closing our dialog.</p>
+      <mwc-textfield
+        id="dialog8-text-field"
+        type="text"
+        pattern="^[a-zA-Z\s]{3,64}$"
+        placeholder="Casey"
+        required>
+      </mwc-textfield>
+      <mwc-button
+        id="dialog8-primary-action-button"
+        slot="primaryAction"
+        dialogAction="close">
+        primary
+      </mwc-button>
+      <mwc-button
+        slot="secondaryAction"
+        dialogAction="close">
+        secondary
+      </mwc-button>
+    </mwc-dialog>
+
     <script nomodule src="index.es5.js"></script>
   </main>
 </body>

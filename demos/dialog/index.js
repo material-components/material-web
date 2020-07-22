@@ -1,5 +1,3 @@
-import {LitElement, html} from 'lit-element/lit-element.js';
-
 import '@material/mwc-dialog';
 import '@material/mwc-button';
 import '@material/mwc-textfield';
@@ -37,60 +35,16 @@ window.toggleActions.onclick = function() {
   hideActionSpan.innerText = hideAction;
 };
 
-class DialogWithFormValidation extends LitElement {  
-  static get properties() {
-    return {
-      isDisabled: {type: Boolean},
-      open: {type: Boolean},
-    };
+const textField = document.getElementById('dialog8-text-field');
+const primaryButton = document.getElementById('dialog8-primary-action-button');
+    
+primaryButton.addEventListener('click', (e) => {
+  // validate, possible asynchronous such as a server response
+  const isValid = textField.checkValidity();
+  if (isValid) {
+    return;
   }
-
-  constructor() {
-    super();
-    this.isDisabled = true;
-    this.open = false;
-  }
-
-  onInputListener(e) {
-    this.isDisabled = !e.target.checkValidity();
-  }
-
-  onClosingListener(e) {
-    this.open = false
-    // we could call APIs here ...
-  }
-
-  render() {
-    return html`
-      <mwc-dialog
-        @closing="${this.onClosingListener}"
-        heading="Form Validation"
-        .open="${this.open}">
-        <div>
-          Our primary action button is disabled
-          until our textfield has valid input.
-        </div>
-        <mwc-textfield
-            dialogInitialFocus
-            @input="${this.onInputListener}"
-            label="Name"
-            pattern="^[a-zA-Z]{3,}$"
-            placeholder="Casey"
-            required
-            type="text">
-        </mwc-textfield>
-        <mwc-button
-          dialogAction="close"
-          ?disabled="${this.isDisabled}"
-          slot="primaryAction">
-          Primary
-        </mwc-button>
-        <mwc-button slot="secondaryAction" dialogAction="close">
-          Secondary
-        </mwc-button>
-      </mwc-dialog>
-    `;
-  }
-}
-
-customElements.define('dialog-with-form-validation', DialogWithFormValidation);
+  
+  e.stopPropagation();
+  textField.reportValidity();
+});
