@@ -19,10 +19,8 @@ limitations under the License.
 @use '@material/mwc-icon/src/_mwc-icon';
 @use '@material/theme';
 @use '@material/feature-targeting' as feature;
-@use '@material/ripple';
 
-@include iconbutton.core-styles();
-@include ripple.common();
+@include iconbutton.without-ripple();
 
 @mixin mdc-icon-button-size-var-aware($size, $query: feature.all()) {
   $feat-structure: feature.create-target($query, structure);
@@ -91,15 +89,13 @@ limitations under the License.
 }
 
 // hack for top-app-bar ripple coloring of icon-buttons
-.mdc-ripple-upgraded {
-  &:focus::before, &:focus::after {
-    @include theme.prop(background-color, (
-      varname: --mdc-theme-on-primary,
-      fallback: currentColor,
-    ));
-    @include theme.prop(opacity, (
-      varname: --mdc-icon-button-ripple-opacity,
-      fallback: 0.12,
-    ));
-  }
+mwc-ripple {
+  @include theme.property(--mdc-ripple-color, (
+    varname: --mdc-theme-on-primary,
+    fallback: currentColor,
+  ));
+  @include theme.property(--mdc-ripple-focus-opacity, (
+    varname: --mdc-icon-button-ripple-opacity,
+    fallback: 0.12,
+  ));
 }

@@ -24,6 +24,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `button`
   - ripple will unripple when mouse/touchend happens outside of button
 
+### Changed
+
+- Refactor `mwc-icon-button`
+  - Replace `ripple-directive` with lazy `mwc-ripple`
+
 ## [v0.17.2] - 2020-01-01
 
 ### Fixed
