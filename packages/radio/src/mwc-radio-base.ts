@@ -142,7 +142,6 @@ export class RadioBase extends FormElement {
 
   focus() {
     this.focusNative();
-    this.handleRippleFocus();
   }
 
   focusNative() {
@@ -179,8 +178,16 @@ export class RadioBase extends FormElement {
   }
 
   private _focusHandler() {
+    this.handleRippleFocus();
     if (this._selectionController !== undefined) {
       this._selectionController.focus(this);
+    }
+  }
+
+  private _blurHandler() {
+    this.handleRippleBlur();
+    if (this._selectionController !== undefined) {
+      this._selectionController.blur(this);
     }
   }
 
@@ -201,7 +208,7 @@ export class RadioBase extends FormElement {
           @change="${this._changeHandler}"
           @click="${this._clickHandler}"
           @focus="${this._focusHandler}"
-          @blur="${this.handleRippleBlur}"
+          @blur="${this._blurHandler}"
           @mousedown="${this.handleRippleMouseDown}"
           @mouseenter="${this.handleRippleMouseEnter}"
           @mouseleave="${this.handleRippleMouseLeave}"

@@ -25,6 +25,11 @@ limitations under the License.
 }
 
 .mdc-radio {
+  /* disable non-upgraded ripple on radio background */
+  .mdc-radio__background::before {
+    content: none;
+  }
+
   vertical-align: bottom;
   @include radio.unchecked-stroke-color(var(--mdc-radio-unchecked-color, #{radio.$unchecked-color}));
   @include radio.disabled-unchecked-stroke-color(var(--mdc-radio-disabled-color, #{radio.$disabled-circle-color}));
