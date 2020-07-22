@@ -16,10 +16,8 @@ limitations under the License.
 */
 
 @use '@material/switch';
-@use '@material/ripple';
 
-@include ripple.common();
-@include switch.core-styles();
+@include switch.without-ripple();
 
 :host {
   display: inline-flex;
