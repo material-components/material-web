@@ -113,6 +113,12 @@ class DemoView extends LitElement {
         img: 'https://material-components-web.appspot.com/images/ic_selection_control_24px.svg',
       },
       {
+        name: 'Circular Progress',
+        secondary: 'Fills from 0-100%, represented by an arc.',
+        href: 'circular-progress/',
+        img: 'https://material-components-web.appspot.com/images/ic_progress_activity.svg',
+      },
+      {
         name: 'Drawer',
         secondary: 'Navigation to provide access to destinations.',
         href: 'drawer/',
