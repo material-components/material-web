@@ -148,8 +148,8 @@ export class CheckboxBase extends FormElement {
               .checked="${this.checked}"
               .value="${this.value}"
               @change="${this._changeHandler}"
-              @focus="${this.handleRippleFocus}"
-              @blur="${this.handleRippleBlur}"
+              @focus="${this._handleFocus}"
+              @blur="${this._handleBlur}"
               @mousedown="${this.handleRippleMouseDown}"
               @mouseenter="${this.handleRippleMouseEnter}"
               @mouseleave="${this.handleRippleMouseLeave}"
@@ -169,7 +169,16 @@ export class CheckboxBase extends FormElement {
       </div>`;
   }
 
-  @eventOptions({passive: true})
+  private _handleFocus() {
+    this.focused = true;
+    this.handleRippleFocus();
+  }
+
+  private _handleBlur() {
+    this.focused = false;
+    this.handleRippleBlur();
+  }
+
   protected handleRippleMouseDown(event: Event) {
     const onUp = () => {
       window.removeEventListener('mouseup', onUp);
