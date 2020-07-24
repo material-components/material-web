@@ -155,6 +155,29 @@ limitations under the License.
         Secondary
       </mwc-button>
     </mwc-dialog>
+    
+    <mwc-button data-num="8" raised>Form Validation</mwc-button>
+    <mwc-dialog id="dialog8" heading="Form Validation">
+      <p>This dialog can validate user input before closing.</p>
+      <mwc-textfield
+        id="dialog8-text-field"
+        minlength="3"
+        maxlength="64"
+        placeholder="First name"
+        required>
+      </mwc-textfield>
+      <mwc-button
+        id="dialog8-primary-action-button"
+        slot="primaryAction">
+        Confirm
+      </mwc-button>
+      <mwc-button
+        slot="secondaryAction"
+        dialogAction="close">
+        Cancel
+      </mwc-button>
+    </mwc-dialog>
+
     <script nomodule src="index.es5.js"></script>
   </main>
 </body>

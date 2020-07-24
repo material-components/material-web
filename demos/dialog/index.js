@@ -34,3 +34,18 @@ window.toggleActions.onclick = function() {
   dialog.hideActions = hideAction;
   hideActionSpan.innerText = hideAction;
 };
+
+const dialog = document.querySelector('#dialog8');
+const textField = document.querySelector('#dialog8-text-field');
+const primaryButton = document.querySelector('#dialog8-primary-action-button');
+    
+primaryButton.addEventListener('click', () => {
+  // validate, possible asynchronous such as a server response
+  const isValid = textField.checkValidity();
+  if (isValid) {
+    dialog.close();
+    return;
+  }
+  
+  textField.reportValidity();
+});
