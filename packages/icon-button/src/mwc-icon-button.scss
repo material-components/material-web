@@ -18,11 +18,10 @@ limitations under the License.
 @use '@material/icon-button' as iconbutton;
 @use '@material/mwc-icon/src/_mwc-icon';
 @use '@material/theme';
+@use '@material/theme/custom-properties';
 @use '@material/feature-targeting' as feature;
-@use '@material/ripple';
 
-@include iconbutton.core-styles();
-@include ripple.common();
+@include iconbutton.without-ripple();
 
 @mixin mdc-icon-button-size-var-aware($size, $query: feature.all()) {
   $feat-structure: feature.create-target($query, structure);
@@ -37,6 +36,8 @@ limitations under the License.
 :host {
   display: inline-block;
   outline: none;
+
+  --mdc-ripple-color: currentcolor;
 }
 
 :host([disabled]) {
@@ -87,19 +88,5 @@ limitations under the License.
       width: var(--mdc-icon-size, #{iconbutton.$icon-size});
       height: var(--mdc-icon-size, #{iconbutton.$icon-size});
     }
-  }
-}
-
-// hack for top-app-bar ripple coloring of icon-buttons
-.mdc-ripple-upgraded {
-  &:focus::before, &:focus::after {
-    @include theme.prop(background-color, (
-      varname: --mdc-theme-on-primary,
-      fallback: currentColor,
-    ));
-    @include theme.prop(opacity, (
-      varname: --mdc-icon-button-ripple-opacity,
-      fallback: 0.12,
-    ));
   }
 }

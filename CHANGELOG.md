@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - **BREAKING** removed `--mdc-fab-box-shadow-hover`; use `--mdc-fab-box-shadow`
   - **BREAKING** removed `--mdc-fab-box-shadow-active`; use `--mdc-fab-box-shadow`
   - Ripple now uses and exposes `mwc-ripple`'s CSS custom properties API
+- `mwc-icon-button`
+  - **BREAKING** now uses lazy `mwc-ripple` in its implementation
+- `mwc-icon-button-toggle`
+  - **BREAKING** now uses lazy `mwc-ripple` in its implementation
 
 ### Fixed
 
