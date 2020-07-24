@@ -11,20 +11,6 @@ Progress indicators express an unspecified wait time or display the length of a 
 
 [Demo](https://material-components.github.io/material-components-web-components/demos/linear-progress/)
 
-## Installation
-
-```sh
-npm install @material/mwc-linear-progress
-```
-
-> NOTE: The Material Web Components are distributed as ES2017 JavaScript
-> Modules, and use the Custom Elements API. They are compatible with all modern
-> browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
-> tooling step is required to resolve *bare module specifiers*, as well as
-> transpilation and polyfills for IE11. See
-> [here](https://github.com/material-components/material-components-web-components#quick-start)
-> for detailed instructions.
-
 ## Example usage
 
 ### Determinate
@@ -104,8 +90,8 @@ None
 
 | Name              | Description
 | ----------------- | -----------
-| `open() => void`  | Sets `Slider.closed` to `false`;
-| `close() => void` | Sets `Slider.closed` to `true`;
+| `open() => void`  | Sets `LinearProgress.closed` to `false`;
+| `close() => void` | Sets `LinearProgress.closed` to `true`;
 
 ### Events
 
