@@ -148,16 +148,16 @@ suite('mwc-fab', () => {
 
     const children = root.children;
 
-    assert.equal(children.length, 3);
-    assert.isTrue(children[1].querySelector(ICON_SELECTOR)!.classList.contains(
+    assert.equal(children.length, 2);
+    assert.isTrue(children[0].querySelector(ICON_SELECTOR)!.classList.contains(
         ICON_CLASS));
-    assert.isTrue(children[2].classList.contains(LABEL_CLASS));
+    assert.isTrue(children[1].classList.contains(LABEL_CLASS));
 
     element.showIconAtEnd = true;
     await element.updateComplete;
 
-    assert.isTrue(children[2].querySelector(ICON_SELECTOR)!.classList.contains(
+    assert.isTrue(children[1].querySelector(ICON_SELECTOR)!.classList.contains(
         ICON_CLASS));
-    assert.isTrue(children[1].classList.contains(LABEL_CLASS));
+    assert.isTrue(children[0].classList.contains(LABEL_CLASS));
   });
 });

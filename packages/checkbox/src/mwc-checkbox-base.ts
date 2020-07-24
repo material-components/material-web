@@ -14,14 +14,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import '@material/mwc-ripple/mwc-ripple.js';
+import '@material/mwc-ripple/mwc-ripple';
 
-import {FormElement} from '@material/mwc-base/form-element.js';
-import {Ripple} from '@material/mwc-ripple/mwc-ripple.js';
-import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers.js';
-import {html, internalProperty, property, PropertyValues, query, queryAsync} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
-import {ifDefined} from 'lit-html/directives/if-defined.js';
+import {FormElement} from '@material/mwc-base/form-element';
+import {Ripple} from '@material/mwc-ripple/mwc-ripple';
+import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
+import {eventOptions, html, internalProperty, property, PropertyValues, query, queryAsync} from 'lit-element';
+import {classMap} from 'lit-html/directives/class-map';
+import {ifDefined} from 'lit-html/directives/if-defined';
 
 /** @soyCompatible */
 export class CheckboxBase extends FormElement {
@@ -97,10 +97,13 @@ export class CheckboxBase extends FormElement {
   protected renderRipple() {
     const selected = this.indeterminate || this.checked;
     return html`${
-        this.shouldRenderRipple ?
-            html`<mwc-ripple .accent="${selected}" .disabled="${
-                this.disabled}" .unbounded="${true}"></mwc-ripple>` :
-            ''}`;
+        this.shouldRenderRipple ? html`
+        <mwc-ripple
+          .accent="${selected}"
+          .disabled="${this.disabled}"
+          unbounded>
+        </mwc-ripple>` :
+                                  html``}`;
   }
 
   /**
@@ -147,13 +150,12 @@ export class CheckboxBase extends FormElement {
               @change="${this._changeHandler}"
               @focus="${this._handleFocus}"
               @blur="${this._handleBlur}"
-              @mousedown="${this._activateRipple}"
-              @mouseup="${this._deactivateRipple}"
-              @mouseenter="${this._handleMouseEnter}"
-              @mouseleave="${this._handleMouseLeave}"
-              @touchstart="${this._activateRipple}"
-              @touchend="${this._deactivateRipple}"
-              @touchcancel="${this._deactivateRipple}">
+              @mousedown="${this.handleRippleMouseDown}"
+              @mouseenter="${this.handleRippleMouseEnter}"
+              @mouseleave="${this.handleRippleMouseLeave}"
+              @touchstart="${this.handleRippleTouchStart}"
+              @touchend="${this.handleRippleDeactivate}"
+              @touchcancel="${this.handleRippleDeactivate}">
         <div class="mdc-checkbox__background">
           <svg class="mdc-checkbox__checkmark"
               viewBox="0 0 24 24">
@@ -169,28 +171,48 @@ export class CheckboxBase extends FormElement {
 
   private _handleFocus() {
     this.focused = true;
-    this.rippleHandlers.startFocus();
+    this.handleRippleFocus();
   }
 
   private _handleBlur() {
     this.focused = false;
-    this.rippleHandlers.endFocus();
+    this.handleRippleBlur();
   }
 
-  private _activateRipple() {
-    this.rippleHandlers.startPress();
+  protected handleRippleMouseDown(event: Event) {
+    const onUp = () => {
+      window.removeEventListener('mouseup', onUp);
+
+      this.handleRippleDeactivate();
+    };
+
+    window.addEventListener('mouseup', onUp);
+    this.rippleHandlers.startPress(event);
   }
 
-  private _deactivateRipple() {
+  @eventOptions({passive: true})
+  protected handleRippleTouchStart(event: Event) {
+    this.rippleHandlers.startPress(event);
+  }
+
+  protected handleRippleDeactivate() {
     this.rippleHandlers.endPress();
   }
 
-  private _handleMouseEnter() {
+  protected handleRippleMouseEnter() {
     this.rippleHandlers.startHover();
   }
 
-  private _handleMouseLeave() {
+  protected handleRippleMouseLeave() {
     this.rippleHandlers.endHover();
+  }
+
+  protected handleRippleFocus() {
+    this.rippleHandlers.startFocus();
+  }
+
+  protected handleRippleBlur() {
+    this.rippleHandlers.endFocus();
   }
 
   private _changeHandler() {

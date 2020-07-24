@@ -10,6 +10,7 @@ import commonjs from '@rollup/plugin-commonjs';
 const packageNames = [
   'button',
   'checkbox',
+  'circular-progress',
   'dialog',
   'drawer',
   'drawer_dismissible',
