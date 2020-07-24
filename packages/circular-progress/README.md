@@ -53,39 +53,12 @@ None
 
 ### Properties/Attributes
 
-| Name            | Type      | Default | Description       |
-| --------------- | --------- | ------- | ----------------- |
-| `indeterminate` | `boolean` | `false` | Sets the          |
-:                 :           :         : circular-progress :
-:                 :           :         : into its          :
-:                 :           :         : indeterminate     :
-:                 :           :         : state.            :
-| `progress`      | `number`  | `0`     | Sets the progress |
-:                 :           :         : bar's value.      :
-:                 :           :         : Value should be   :
-:                 :           :         : between [0, 1].   :
-| `density`       | `number`  | `0`     | Sets the progress |
-:                 :           :         : indicator's       :
-:                 :           :         : sizing based on   :
-:                 :           :         : density scale.    :
-:                 :           :         : Minimum value is  :
-:                 :           :         : -8 . Each unit    :
-:                 :           :         : change in density :
-:                 :           :         : scale corresponds :
-:                 :           :         : to 4px change in  :
-:                 :           :         : side dimensions.  :
-:                 :           :         : The stroke width  :
-:                 :           :         : adjusts           :
-:                 :           :         : automatically.    :
-| `closed`        | `boolean` | `false` | Sets the progress |
-:                 :           :         : indicator to the  :
-:                 :           :         : closed state.     :
-:                 :           :         : Sets content      :
-:                 :           :         : opacity to 0.     :
-:                 :           :         : Typically should  :
-:                 :           :         : be set to true    :
-:                 :           :         : when loading has  :
-:                 :           :         : finished.         :
+| Name            | Type      | Default | Description
+| --------------- | --------- | ------- | -----------
+| `indeterminate` | `boolean` | `false` | Sets the circular-progress into its indeterminate state.
+| `progress`      | `number`  | `0`     | Sets the progress bar's value. Value should be between [0, 1].
+| `density`       | `number`  | `0`     | Sets the progress indicator's sizing based on density scale. Minimum value is `-8`. Each unit change in density scale corresponds to 4px change in side dimensions. The stroke width adjusts automatically.
+| `closed`        | `boolean` | `false` | Sets the progress indicator to the closed state. Sets content opacity to 0. Typically should be set to true when loading has finished.
 
 ### Methods
 
