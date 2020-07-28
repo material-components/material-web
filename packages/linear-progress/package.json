@@ -20,6 +20,7 @@
     "@material/mwc-base": "^0.17.2",
     "@material/theme": "=8.0.0-canary.f86f83f54.0",
     "lit-element": "^2.3.0",
+    "lit-html": "*",
     "tslib": "^1.10.0"
   },
   "publishConfig": {

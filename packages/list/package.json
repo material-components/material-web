@@ -12,6 +12,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/base": "=8.0.0-canary.f86f83f54.0",
+    "@material/dom": "*",
     "@material/list": "=8.0.0-canary.f86f83f54.0",
     "@material/mwc-base": "^0.17.2",
     "@material/mwc-checkbox": "^0.17.2",
@@ -24,6 +25,8 @@
   "devDependencies": {
     "@material/density": "=8.0.0-canary.f86f83f54.0",
     "@material/feature-targeting": "=8.0.0-canary.f86f83f54.0",
+    "@material/mwc-icon": "*",
+    "@material/mwc-menu": "*",
     "@material/ripple": "=8.0.0-canary.f86f83f54.0",
     "@material/rtl": "=8.0.0-canary.f86f83f54.0",
     "@material/theme": "=8.0.0-canary.f86f83f54.0",

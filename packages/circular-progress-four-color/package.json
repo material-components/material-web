@@ -18,6 +18,7 @@
   "dependencies": {
     "@material/circular-progress": "=8.0.0-canary.ac405eae1.0",
     "@material/mwc-base": "^0.17.2",
+    "@material/mwc-circular-progress": "*",
     "@material/theme": "=8.0.0-canary.ac405eae1.0",
     "lit-element": "^2.3.0",
     "tslib": "^1.10.0"
