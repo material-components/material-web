@@ -43,6 +43,14 @@ export abstract class BaseElement extends LitElement {
   protected abstract mdcFoundation?: MDCFoundation;
 
   /**
+   * Focus Forwarding to an instance of the MDC Foundation class
+   */
+  click() {
+    this.mdcRoot.focus();
+    this.mdcRoot.click();
+  }
+
+  /**
    * Create the adapter for the `mdcFoundation`.
    *
    * Override and return an object with the Adapter's functions implemented:
