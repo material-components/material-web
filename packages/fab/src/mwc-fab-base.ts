@@ -14,16 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import '@material/mwc-ripple';
+import '@material/mwc-ripple/mwc-ripple';
 
-import {Ripple} from '@material/mwc-ripple';
+import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {eventOptions, html, internalProperty, LitElement, property, queryAsync, TemplateResult} from 'lit-element';
-import {nothing} from 'lit-html';
+import {eventOptions, html, internalProperty, LitElement, property, queryAsync} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
 /**
- * Fab Base class logic and template definition.
+ * Fab Base class logic and template definition
+ * @soyCompatible
  */
 export class FabBase extends LitElement {
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
@@ -53,27 +53,15 @@ export class FabBase extends LitElement {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
+  /** @soyCompatible */
   protected render() {
+    /** @classMap */
     const classes = {
       'mdc-fab--mini': this.mini,
       'mdc-fab--exited': this.exited,
       'mdc-fab--extended': this.extended,
       'icon-end': this.showIconAtEnd,
     };
-    const showLabel = this.label !== '' && this.extended;
-
-    let iconTemplate: TemplateResult|string = '';
-
-    if (this.icon) {
-      iconTemplate = html`
-        <span class="material-icons mdc-fab__icon">${this.icon}</span>`;
-    }
-
-    let label = nothing;
-
-    if (showLabel) {
-      label = html`<span class="mdc-fab__label">${this.label}</span>`;
-    }
 
     return html`
       <button
@@ -88,21 +76,42 @@ export class FabBase extends LitElement {
           @touchstart=${this.handleRippleStartPress}
           @touchend=${this.handleRippleDeactivate}
           @touchcancel=${this.handleRippleDeactivate}>
+        ${this.renderBeforeRipple()}
         ${this.renderRipple()}
-        ${this.showIconAtEnd ? label : ''}
+        ${this.showIconAtEnd ? this.renderLabel() : ''}
         <slot name="icon">
-          ${iconTemplate}
+          ${this.renderIcon()}
         </slot>
-        ${!this.showIconAtEnd ? label : ''}
+        ${!this.showIconAtEnd ? this.renderLabel() : ''}
       </button>`;
   }
 
-  protected renderRipple() {
-    if (this.shouldRenderRipple) {
-      return html`<mwc-ripple></mwc-ripple>`;
-    }
+  /** @soyCompatible */
+  protected renderIcon() {
+    return html`${
+        this.icon ? html`
+          <span class="material-icons mdc-fab__icon">${this.icon}</span>` :
+                    ''}`;
+  }
 
-    return nothing;
+  /** @soyCompatible */
+  protected renderLabel() {
+    const showLabel = this.label !== '' && this.extended;
+
+    return html`${
+        showLabel ? html`<span class="mdc-fab__label">${this.label}</span>` :
+                    ''}`;
+  }
+
+  /** @soyCompatible */
+  protected renderBeforeRipple() {
+    return html``;
+  }
+
+  /** @soyCompatible */
+  protected renderRipple() {
+    return html`${
+        this.shouldRenderRipple ? html`<mwc-ripple></mwc-ripple>` : ''}`;
   }
 
   protected handleRippleActivate(event?: Event) {
