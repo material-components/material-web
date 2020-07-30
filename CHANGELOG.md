@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `textfield`
   - render methods have been renamed and reorganized (breaking if extending and
     overriding)
+  - remove extra space between label and required asterisk (`*`)
 - `top-app-bar(-fixed)`
   - `--mdc-top-app-bar-width` is now configurable
 
@@ -36,9 +37,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - minlength attribute is now supported
   - inputmode attribute is now supported
   - autocapitalize attribute is now supported
+  - remove extra space between label and required asterisk (`*`)
 - `textfield`
   - label will be highlighted before input during horizontal navigation for
     screen readers
+  - remove extra space between label and required asterisk (`*`)
 
 ## [v0.17.2] - 2020-01-01
 

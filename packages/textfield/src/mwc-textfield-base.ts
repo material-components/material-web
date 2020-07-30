@@ -326,13 +326,10 @@ export abstract class TextFieldBase extends FormElement {
       return nothing;
     }
 
-    // TODO(b/162468716): remove extra space in span
     return html`
       <span
           .floatingLabelFoundation=${floatingLabel(this.label)}
-          id="label">
-        ${this.label}
-      </span>
+          id="label">${this.label}</span>
     `;
   }
 
