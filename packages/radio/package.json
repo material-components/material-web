@@ -18,12 +18,12 @@
   "dependencies": {
     "@material/mwc-base": "^0.17.2",
     "@material/mwc-ripple": "^0.17.2",
-    "@material/radio": "=8.0.0-canary.f86f83f54.0",
+    "@material/radio": "=8.0.0-canary.49fb20ca3.0",
     "lit-element": "^2.3.0",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@material/ripple": "=8.0.0-canary.f86f83f54.0"
+    "@material/ripple": "=8.0.0-canary.49fb20ca3.0"
   },
   "publishConfig": {
     "access": "public"
