@@ -20,6 +20,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - An upcoming change will migrate the slider to use the MDC M2 slider. In
     preparation for this, the MWC slider => MDC slider dependency will not be
     updated until the migration is complete.
+- `textfield`
+  - render methods have been renamed and reorganized (breaking if extending and
+    overriding)
 - `top-app-bar(-fixed)`
   - `--mdc-top-app-bar-width` is now configurable
 
@@ -27,6 +30,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - `button`
   - ripple will unripple when mouse/touchend happens outside of button
+- `textarea`
+  - label will be highlighted before input during horizontal navigation for
+    screen readers
+  - minlength attribute is now supported
+  - inputmode attribute is now supported
+  - autocapitalize attribute is now supported
+- `textfield`
+  - label will be highlighted before input during horizontal navigation for
+    screen readers
 
 ## [v0.17.2] - 2020-01-01
 
