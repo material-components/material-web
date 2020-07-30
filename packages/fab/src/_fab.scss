@@ -14,16 +14,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-@use '@material/mwc-icon/src/_mwc-icon';
-@use '@material/elevation';
-@use '@material/fab';
-@use '@material/rtl';
+@use 'sass:map';
+@use '@material/elevation/elevation-theme';
+@use '@material/fab/mixins' as fab-mixins;
+@use '@material/fab/variables' as fab-variables;
+@use '@material/rtl/rtl';
 @use '@material/animation';
-@use '@material/shape';
-@use '@material/theme';
+@use '@material/shape/shape';
+@use '@material/theme/theme';
 @use '@material/theme/custom-properties';
+@use 'third_party/javascript/material_web_components/icon/mwc-icon';
+@use './fab-theme';
 
-$icon-size: 24px;
+$icon-size: map.get(fab-theme.$light-theme, icon-size);
 
 @mixin core-styles() {
   outline: none;
@@ -31,14 +34,14 @@ $icon-size: 24px;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 
-  @include fab.without-ripple();
+  @include fab-mixins.without-ripple();
 
   .mdc-fab {
     @include theme.property(
       box-shadow,
       custom-properties.create(
         --mdc-fab-box-shadow,
-        elevation.elevation-box-shadow(6)
+        elevation-theme.elevation-box-shadow(6)
       )
     );
 
@@ -48,7 +51,7 @@ $icon-size: 24px;
         box-shadow,
         custom-properties.create(
           --mdc-fab-box-shadow,
-          elevation.elevation-box-shadow(8)
+          elevation-theme.elevation-box-shadow(8)
         )
       );
     }
@@ -58,7 +61,7 @@ $icon-size: 24px;
         box-shadow,
         custom-properties.create(
           --mdc-fab-box-shadow,
-          elevation.elevation-box-shadow(12)
+          elevation-theme.elevation-box-shadow(12)
         )
       );
     }
@@ -72,13 +75,13 @@ $icon-size: 24px;
     }
 
     &:not(.mdc-fab--extended) mwc-ripple {
-      @include shape.radius(fab.$shape-radius);
+      @include shape.radius(fab-variables.$shape-radius);
     }
 
     &.mdc-fab--extended mwc-ripple {
       @include shape.radius(
-        fab.$shape-radius,
-        $component-height: fab.$extended-height
+        fab-variables.$shape-radius,
+        $component-height: fab-variables.$extended-height
       );
     }
 
@@ -101,27 +104,27 @@ $icon-size: 24px;
         custom-properties.create(--mdc-icon-size, $icon-size)
       );
 
-      @include fab.icon_();
-      @include fab.icon-overrides_();
+      @include fab-mixins.icon_();
+      @include fab-mixins.icon-overrides_();
     }
 
     &.mdc-fab--extended {
       $extended-icon-padding: custom-properties.create(
         --mdc-fab-extended-icon-padding,
-        fab.$extended-icon-padding
+        fab-variables.$extended-icon-padding
       );
       $extended-label-padding: custom-properties.create(
         --mdc-fab-extended-label-padding,
-        fab.$extended-label-padding
+        fab-variables.$extended-label-padding
       );
 
-      @include fab.extended-padding(
+      @include fab-mixins.extended-padding(
         $extended-icon-padding,
         $extended-label-padding
       );
 
       ::slotted([slot='icon']) {
-        @include fab.extended-icon-padding_(
+        @include fab-mixins.extended-icon-padding_(
           $extended-icon-padding,
           $extended-label-padding
         );
@@ -129,7 +132,7 @@ $icon-size: 24px;
 
       &.icon-end {
         .mdc-fab__icon {
-          @include fab.extended-icon-padding_(
+          @include fab-mixins.extended-icon-padding_(
             $extended-icon-padding,
             $extended-label-padding,
             $is-icon-at-end: true
@@ -137,7 +140,7 @@ $icon-size: 24px;
         }
 
         ::slotted([slot='icon']) {
-          @include fab.extended-icon-padding_(
+          @include fab-mixins.extended-icon-padding_(
             $extended-icon-padding,
             $extended-label-padding,
             $is-icon-at-end: true
