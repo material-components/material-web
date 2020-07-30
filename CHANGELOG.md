@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - **BREAKING** now uses lazy `mwc-ripple` in its implementation
 - `icon-button-toggle`
   - **BREAKING** now uses lazy `mwc-ripple` in its implementation
+- `select`
+  - render methods have been renamed and reorganized (breaking if extending and
+    overriding)
 - `slider`
   - An upcoming change will migrate the slider to use the MDC M2 slider. In
     preparation for this, the MWC slider => MDC slider dependency will not be
@@ -31,6 +34,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - `button`
   - ripple will unripple when mouse/touchend happens outside of button
+- `select`
+  - label will be highlighted before selected text during horizontal navigation
+    for screen readers
+  - filled variant now has a ripple
 - `textarea`
   - label will be highlighted before input during horizontal navigation for
     screen readers
