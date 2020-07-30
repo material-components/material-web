@@ -22,7 +22,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     updated until the migration is complete.
 - `top-app-bar(-fixed)`
   - `--mdc-top-app-bar-width` is now configurable
-- `base-element` forwards focus on click to mdcRoot .
 
 ### Fixed
 
