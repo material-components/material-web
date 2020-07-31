@@ -15,7 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@use '@material/radio';
+@use '@material/radio/radio';
+@use '@material/radio/radio-theme';
 @use '@material/ripple';
 
 @include radio.core-styles();
@@ -28,8 +29,8 @@ limitations under the License.
 
 .mdc-radio {
   vertical-align: bottom;
-  @include radio.unchecked-stroke-color(var(--mdc-radio-unchecked-color, #{radio.$unchecked-color}));
-  @include radio.disabled-unchecked-stroke-color(var(--mdc-radio-disabled-color, #{radio.$disabled-circle-color}));
-  @include radio.disabled-checked-stroke-color(var(--mdc-radio-disabled-color, #{radio.$disabled-circle-color}));
-  @include radio.disabled-ink-color(var(--mdc-radio-disabled-color, #{radio.$disabled-circle-color}));
+  @include radio-theme.unchecked-stroke-color(var(--mdc-radio-unchecked-color, #{radio-theme.$unchecked-color}));
+  @include radio-theme.disabled-unchecked-stroke-color(var(--mdc-radio-disabled-color, #{radio-theme.$disabled-circle-color}));
+  @include radio-theme.disabled-checked-stroke-color(var(--mdc-radio-disabled-color, #{radio-theme.$disabled-circle-color}));
+  @include radio-theme.disabled-ink-color(var(--mdc-radio-disabled-color, #{radio-theme.$disabled-circle-color}));
 }
