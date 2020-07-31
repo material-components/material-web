@@ -34,6 +34,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - `button`
   - ripple will unripple when mouse/touchend happens outside of button
+- `checkbox`
+  - Remove animation class after the animation ends to prevent replaying animations when hidden and shown, or removed and readded to the DOM
 - `select`
   - label will be highlighted before selected text during horizontal navigation
     for screen readers

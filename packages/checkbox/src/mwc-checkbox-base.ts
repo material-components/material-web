@@ -156,7 +156,8 @@ export class CheckboxBase extends FormElement {
               @touchstart="${this.handleRippleTouchStart}"
               @touchend="${this.handleRippleDeactivate}"
               @touchcancel="${this.handleRippleDeactivate}">
-        <div class="mdc-checkbox__background">
+        <div class="mdc-checkbox__background"
+          @animationend="${this.resetAnimationClass}">
           <svg class="mdc-checkbox__checkmark"
               viewBox="0 0 24 24">
             <path class="mdc-checkbox__checkmark-path"
@@ -218,6 +219,10 @@ export class CheckboxBase extends FormElement {
   private _changeHandler() {
     this.checked = this.formElement.checked;
     this.indeterminate = this.formElement.indeterminate;
+  }
+
+  protected resetAnimationClass() {
+    this.animationClass = '';
   }
 
   get isRippleActive() {
