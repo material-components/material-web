@@ -17,10 +17,11 @@
 
 import {Checkbox} from '@material/mwc-checkbox';
 
-import {Fake} from '../../../../test/src/util/helpers';
+import {Fake, rafPromise} from '../../../../test/src/util/helpers';
 
 interface CheckboxInternals {
   formElement: HTMLInputElement;
+  animationClass: string;
 }
 
 suite('mwc-checkbox', () => {
@@ -109,5 +110,15 @@ suite('mwc-checkbox', () => {
     element.click();
     await element.updateComplete;
     assert.equal(element.checked, true);
+  });
+
+  test('does not animate after being hidden', async () => {
+    element.checked = true;
+    await element.updateComplete;
+    element.style.display = 'hidden';
+    await rafPromise();
+    element.style.display = '';
+    await rafPromise();
+    assert.equal(internals.animationClass, '');
   });
 });

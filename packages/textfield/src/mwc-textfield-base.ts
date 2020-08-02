@@ -16,19 +16,20 @@ limitations under the License.
 */
 import '@material/mwc-notched-outline';
 
-import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
-import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
-import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element.js';
-import {observer} from '@material/mwc-base/observer.js';
+import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation';
+import {MDCLineRippleFoundation} from '@material/line-ripple/foundation';
+import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element';
+import {observer} from '@material/mwc-base/observer';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {NotchedOutline} from '@material/mwc-notched-outline';
-import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter.js';
-import MDCTextFieldFoundation from '@material/textfield/foundation.js';
+import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter';
+import MDCTextFieldFoundation from '@material/textfield/foundation';
 import {eventOptions, html, property, PropertyValues, query, TemplateResult} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
-import {ifDefined} from 'lit-html/directives/if-defined.js';
-import {live} from 'lit-html/directives/live.js';
+import {nothing} from 'lit-html';
+import {classMap} from 'lit-html/directives/class-map';
+import {ifDefined} from 'lit-html/directives/if-defined';
+import {live} from 'lit-html/directives/live';
 
 // must be done to get past lit-analyzer checks
 declare global {
@@ -274,17 +275,16 @@ export abstract class TextFieldBase extends FormElement {
       'mdc-text-field--end-aligned': this.endAligned,
     };
 
-    const ripple =
-        !this.outlined ? html`<div class="mdc-text-field__ripple"></div>` : '';
     return html`
       <label class="mdc-text-field ${classMap(classes)}">
-        ${ripple}
-        ${this.icon ? this.renderIcon(this.icon) : ''}
-        ${this.prefix ? this.renderAffix(this.prefix) : ''}
+        ${this.renderRipple()}
+        ${this.outlined ? this.renderOutline() : this.renderLabel()}
+        ${this.renderLeadingIcon()}
+        ${this.renderPrefix()}
         ${this.renderInput()}
-        ${this.suffix ? this.renderAffix(this.suffix, true) : ''}
-        ${this.iconTrailing ? this.renderIcon(this.iconTrailing, true) : ''}
-        ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
+        ${this.renderSuffix()}
+        ${this.renderTrailingIcon()}
+        ${this.renderLineRipple()}
       </label>
       ${this.renderHelperText(this.renderCharCounter())}
     `;
@@ -295,6 +295,79 @@ export abstract class TextFieldBase extends FormElement {
         changedProperties.get('value') !== undefined) {
       this.mdcFoundation.setValue(this.value);
     }
+  }
+
+  protected renderRipple() {
+    if (this.outlined) {
+      return nothing;
+    }
+
+    return html`
+      <span class="mdc-text-field__ripple"></span>
+    `;
+  }
+
+  protected renderOutline() {
+    if (!this.outlined) {
+      return nothing;
+    }
+
+    return html`
+      <mwc-notched-outline
+          .width=${this.outlineWidth}
+          .open=${this.outlineOpen}
+          class="mdc-notched-outline">
+        ${this.renderLabel()}
+      </mwc-notched-outline>`;
+  }
+
+  protected renderLabel() {
+    if (!this.label) {
+      return nothing;
+    }
+
+    return html`
+      <span
+          .floatingLabelFoundation=${floatingLabel(this.label)}
+          id="label">${this.label}</span>
+    `;
+  }
+
+  protected renderLeadingIcon() {
+    return this.icon ? this.renderIcon(this.icon) : nothing;
+  }
+
+  protected renderTrailingIcon() {
+    return this.iconTrailing ? this.renderIcon(this.iconTrailing, true) :
+                               nothing;
+  }
+
+  protected renderIcon(icon: string, isTrailingIcon = false) {
+    const classes = {
+      'mdc-text-field__icon--leading': !isTrailingIcon,
+      'mdc-text-field__icon--trailing': isTrailingIcon
+    };
+
+    return html`<i class="material-icons mdc-text-field__icon ${
+        classMap(classes)}">${icon}</i>`;
+  }
+
+  protected renderPrefix() {
+    return this.prefix ? this.renderAffix(this.prefix) : nothing;
+  }
+
+  protected renderSuffix() {
+    return this.suffix ? this.renderAffix(this.suffix, true) : nothing;
+  }
+
+  protected renderAffix(content: string, isSuffix = false) {
+    const classes = {
+      'mdc-text-field__affix--prefix': !isSuffix,
+      'mdc-text-field__affix--suffix': isSuffix
+    };
+
+    return html`<span class="mdc-text-field__affix ${classMap(classes)}">
+        ${content}</span>`;
   }
 
   protected renderInput() {
@@ -328,66 +401,20 @@ export abstract class TextFieldBase extends FormElement {
           @blur="${this.onInputBlur}">`;
   }
 
-  protected renderAffix(content: string, isSuffix = false) {
-    const classes = {
-      'mdc-text-field__affix--prefix': !isSuffix,
-      'mdc-text-field__affix--suffix': isSuffix
-    };
-
-    return html`<span class="mdc-text-field__affix ${classMap(classes)}">
-        ${content}</span>`;
-  }
-
-  protected renderIcon(icon: string, isTrailingIcon = false) {
-    const classes = {
-      'mdc-text-field__icon--leading': !isTrailingIcon,
-      'mdc-text-field__icon--trailing': isTrailingIcon
-    };
-
-    return html`<i class="material-icons mdc-text-field__icon ${
-        classMap(classes)}">${icon}</i>`;
-  }
-
-  protected renderOutlined() {
-    let labelTemplate: TemplateResult|string = '';
-    if (this.label) {
-      labelTemplate = html`
-        <span
-            .floatingLabelFoundation=${floatingLabel(this.label)}
-            id="label">
-          ${this.label}
-        </span>
-      `;
-    }
-    return html`
-      <mwc-notched-outline
-          .width=${this.outlineWidth}
-          .open=${this.outlineOpen}
-          class="mdc-notched-outline">
-        ${labelTemplate}
-      </mwc-notched-outline>`;
-  }
-
-  protected renderLabelText() {
-    let labelTemplate: TemplateResult|string = '';
-    if (this.label) {
-      labelTemplate = html`
-      <span
-          .floatingLabelFoundation=${floatingLabel(this.label)}
-          id="label">
-        ${this.label}
-      </span>`;
+  protected renderLineRipple() {
+    if (this.outlined) {
+      return nothing;
     }
 
     return html`
-      ${labelTemplate}
       <span .lineRippleFoundation=${lineRipple()}></span>
     `;
   }
 
-  protected renderHelperText(charCounterTemplate?: TemplateResult) {
+  protected renderHelperText(
+      charCounterTemplate: TemplateResult|typeof nothing = nothing) {
     if (!this.shouldRenderHelperText) {
-      return undefined;
+      return nothing;
     }
 
     const showValidationMessage = this.validationMessage && !this.isUiValid;
@@ -407,7 +434,7 @@ export abstract class TextFieldBase extends FormElement {
 
   protected renderCharCounter() {
     if (!this.charCounterVisible) {
-      return undefined;
+      return nothing;
     }
 
     const length = Math.min(this.value.length, this.maxLength);

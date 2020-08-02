@@ -37,7 +37,7 @@ limitations under the License.
   width: 100%;
 }
 
-.hidden, [hidden] {
+[hidden] {
   display: none;
 }
 
@@ -175,7 +175,7 @@ mwc-notched-outline {
 
   .mdc-select {
     &:not(.mdc-select--outlined) {
-      @include mixins.container-fill-color_((
+      @include mixins.disabled-container-fill-color((
         varname: --mdc-select-disabled-fill-color,
         fallback: vars.$disabled-fill-color
       ));

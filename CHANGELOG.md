@@ -8,25 +8,49 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+- `fab`
+  - **BREAKING** removed `--mdc-fab-box-shadow-hover`; use `--mdc-fab-box-shadow`
+  - **BREAKING** removed `--mdc-fab-box-shadow-active`; use `--mdc-fab-box-shadow`
+  - Ripple now uses and exposes `mwc-ripple`'s CSS custom properties API
+- `icon-button`
+  - **BREAKING** now uses lazy `mwc-ripple` in its implementation
+- `icon-button-toggle`
+  - **BREAKING** now uses lazy `mwc-ripple` in its implementation
+- `select`
+  - render methods have been renamed and reorganized (breaking if extending and
+    overriding)
 - `slider`
   - An upcoming change will migrate the slider to use the MDC M2 slider. In
     preparation for this, the MWC slider => MDC slider dependency will not be
     updated until the migration is complete.
+- `textfield`
+  - render methods have been renamed and reorganized (breaking if extending and
+    overriding)
+  - remove extra space between label and required asterisk (`*`)
 - `top-app-bar(-fixed)`
   - `--mdc-top-app-bar-width` is now configurable
-- `mwc-fab`
-  - **BREAKING** removed `--mdc-fab-box-shadow-hover`; use `--mdc-fab-box-shadow`
-  - **BREAKING** removed `--mdc-fab-box-shadow-active`; use `--mdc-fab-box-shadow`
-  - Ripple now uses and exposes `mwc-ripple`'s CSS custom properties API
-- `mwc-icon-button`
-  - **BREAKING** now uses lazy `mwc-ripple` in its implementation
-- `mwc-icon-button-toggle`
-  - **BREAKING** now uses lazy `mwc-ripple` in its implementation
 
 ### Fixed
 
 - `button`
   - ripple will unripple when mouse/touchend happens outside of button
+- `checkbox`
+  - Remove animation class after the animation ends to prevent replaying animations when hidden and shown, or removed and readded to the DOM
+- `select`
+  - label will be highlighted before selected text during horizontal navigation
+    for screen readers
+  - filled variant now has a ripple
+- `textarea`
+  - label will be highlighted before input during horizontal navigation for
+    screen readers
+  - minlength attribute is now supported
+  - inputmode attribute is now supported
+  - autocapitalize attribute is now supported
+  - remove extra space between label and required asterisk (`*`)
+- `textfield`
+  - label will be highlighted before input during horizontal navigation for
+    screen readers
+  - remove extra space between label and required asterisk (`*`)
 
 ## [v0.17.2] - 2020-01-01
 
