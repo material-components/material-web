@@ -36,6 +36,12 @@ limitations under the License.
     .demo-progress-bar {
       --mdc-theme-primary: red;
     }
+    .demo-progress-bar-four-color {
+      --mdc-circular-progress-bar-color-1: #2196f3;
+      --mdc-circular-progress-bar-color-2: #e91e63;
+      --mdc-circular-progress-bar-color-3: #ffc107;
+      --mdc-circular-progress-bar-color-4: #03dac5;
+    }
   </style>
 </head>
 <body class="unresolved">
@@ -50,6 +56,8 @@ limitations under the License.
     <mwc-circular-progress indeterminate></mwc-circular-progress>
     <h3>circular-progress: custom color</h3>
     <mwc-circular-progress indeterminate class="demo-progress-bar"></mwc-circular-progress>
+    <h3>circular-progress: custom four color</h3>
+    <mwc-circular-progress-four-color indeterminate class="demo-progress-bar-four-color"></mwc-circular-progress>
   </main>
   <script nomodule src="index.es5.js"></script>
 </body>

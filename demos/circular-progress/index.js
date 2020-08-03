@@ -1,4 +1,5 @@
 import '@material/mwc-circular-progress';
+import '@material/mwc-circular-progress-four-color';
 import '@material/mwc-button';
 
 import '../shared/demo-header';
