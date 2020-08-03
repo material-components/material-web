@@ -109,6 +109,7 @@ export class CheckboxBase extends FormElement {
   /**
    * @soyCompatible
    * @soyAttributes checkboxAttributes: input
+   * @soyClasses checkboxClasses: .mdc-checkbox
    */
   protected render() {
     const selected = this.indeterminate || this.checked;
