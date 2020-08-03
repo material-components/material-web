@@ -15,7 +15,135 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-$light-theme: ();
+@use 'sass:map';
+@use 'sass:string';
+@use 'sass:selector';
+@use '@material/elevation/elevation-theme';
+@use '@material/theme/theme';
+@use '@material/theme/theme-color';
+@use '@material/theme/custom-properties';
+@use '@material/theme/shadow-dom';
+@use '@material/fab/variables' as fab-variables;
+@use '@material/mwc-ripple/src/ripple-theme';
+
+// TODO(b/153370936): replace with theme.resolve()
+$light-theme: (
+  ink-color: theme-color.prop-value(on-secondary),
+  ink-color-hover: theme-color.prop-value(on-secondary),
+  ink-color-focus: theme-color.prop-value(on-secondary),
+  ink-color-press: theme-color.prop-value(on-secondary),
+  container-color: theme-color.prop-value(secondary),
+  container-color-hover: theme-color.prop-value(secondary),
+  container-color-focus: theme-color.prop-value(secondary),
+  container-color-press: theme-color.prop-value(secondary),
+  icon-size: 24px,
+  extended-icon-padding: fab-variables.$extended-icon-padding,
+  extended-label-padding: fab-variables.$extended-label-padding,
+  ripple: (
+    state: currentcolor,
+    opacity-hover: 0.04,
+    opacity-focus: 0.12,
+    opacity-press: 0.1,
+  ),
+  elevation-shadow-color: black,
+  icon-font-family: 'Material Icons',
+);
 
 @mixin theme($theme: $light-theme) {
+  $container-color: map.get($theme, container-color);
+  @if $container-color {
+    --mdc-theme-secondary: #{$container-color};
+  }
+
+  $icon-font-family: map.get($theme, icon-font-family);
+  @if $icon-font-family {
+    --mdc-icon-font: #{$icon-font-family};
+  }
+
+  $ink-color: map.get($theme, ink-color);
+  @if $ink-color {
+    --mdc-theme-on-secondary: #{$ink-color};
+  }
+
+  $elevation-shadow-color: map.get($theme, elevation-shadow-color);
+  @if $elevation-shadow-color {
+    --mdc-fab-box-shadow: #{elevation-theme.elevation-box-shadow(
+        6,
+        $color: $elevation-shadow-color
+      )};
+  }
+
+  @include shadow-dom.host-aware(selector.append(&, ':hover')) {
+    $hover-container-color: map.get($theme, container-color-hover);
+    @if $hover-container-color {
+      --mdc-theme-secondary: #{$hover-container-color};
+    }
+
+    $hover-ink-color: map.get($theme, ink-color-hover);
+    @if $hover-ink-color {
+      --mdc-theme-on-secondary: #{$hover-ink-color};
+    }
+  }
+
+  @include shadow-dom.host-aware(selector.append(&, ':focus,:focus-within')) {
+    $focus-container-color: map.get($theme, container-color-focus);
+    @if $focus-container-color {
+      --mdc-theme-secondary: #{$focus-container-color};
+    }
+
+    $focus-ink-color: map.get($theme, ink-color-focus);
+    @if $focus-ink-color {
+      --mdc-theme-on-secondary: #{$focus-ink-color};
+    }
+  }
+
+  @include shadow-dom.host-aware(
+    selector.append(&, ':hover,:focus,:focus-within')
+  ) {
+    @if $elevation-shadow-color {
+      --mdc-fab-box-shadow: #{elevation-theme.elevation-box-shadow(
+          8,
+          $color: $elevation-shadow-color
+        )};
+    }
+  }
+
+  @include shadow-dom.host-aware(selector.append(&, ':active')) {
+    $press-container-color: map.get($theme, container-color-press);
+    @if $press-container-color {
+      --mdc-theme-secondary: #{$press-container-color};
+    }
+
+    $press-ink-color: map.get($theme, ink-color-press);
+    @if $press-ink-color {
+      --mdc-theme-on-secondary: #{$press-ink-color};
+    }
+
+    @if $elevation-shadow-color {
+      --mdc-fab-box-shadow: #{elevation-theme.elevation-box-shadow(
+          12,
+          $color: $elevation-shadow-color
+        )};
+    }
+  }
+
+  $icon-size: map.get($theme, icon-size);
+  @if $icon-size {
+    --mdc-icon-size: #{$icon-size};
+  }
+
+  $extended-icon-padding: map.get($theme, extended-icon-padding);
+  @if $extended-icon-padding {
+    --mdc-fab-extended-icon-padding: #{$extended-icon-padding};
+  }
+
+  $extended-label-padding: map.get($theme, extended-label-padding);
+  @if $extended-label-padding {
+    --mdc-fab-extended-label-padding: #{$extended-label-padding};
+  }
+
+  $ripple: map.get($theme, ripple);
+  @if $ripple {
+    @include ripple-theme.theme($ripple);
+  }
 }
