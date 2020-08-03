@@ -23,6 +23,9 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
+    "@material/mwc-checkbox": "^0.17.2",
+    "@material/mwc-radio": "^0.17.2",
+    "@material/mwc-switch": "^0.17.2",
     "@material/rtl": "=8.0.0-canary.74839da7b.0",
     "@material/theme": "=8.0.0-canary.74839da7b.0",
     "@material/typography": "=8.0.0-canary.74839da7b.0"
