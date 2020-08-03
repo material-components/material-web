@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-checkbox",
-  "version": "0.17.2",
+  "version": "0.18.0",
   "description": "Material Design checkbox web component",
   "keywords": [
     "material design",
@@ -16,8 +16,8 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/mwc-base": "^0.17.2",
-    "@material/mwc-ripple": "^0.17.2",
+    "@material/mwc-base": "^0.18.0",
+    "@material/mwc-ripple": "^0.18.0",
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0"
