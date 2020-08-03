@@ -19,13 +19,13 @@
     "@material/mwc-base": "^0.17.2",
     "@material/mwc-tab": "^0.17.2",
     "@material/mwc-tab-scroller": "^0.17.2",
-    "@material/tab": "=8.0.0-canary.74839da7b.0",
-    "@material/tab-bar": "=8.0.0-canary.74839da7b.0",
+    "@material/tab": "=8.0.0-canary.5903d39af.0",
+    "@material/tab-bar": "=8.0.0-canary.5903d39af.0",
     "lit-element": "^2.3.0",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-     "lit-html": "^1.1.2"
+    "lit-html": "^1.1.2"
   },
   "publishConfig": {
     "access": "public"
