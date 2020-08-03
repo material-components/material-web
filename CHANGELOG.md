@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+<!-- ## Unreleased -->
+
+## [v0.18.0] - 2020-08-03
 
 ### Changed
 
@@ -52,17 +54,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     screen readers
   - remove extra space between label and required asterisk (`*`)
 
-## [v0.17.2] - 2020-01-01
+### Added
+
+  - `mwc-circular-progress` implemented.
+  - `mwc-circular-progress-four-color` implemented.
+
+## [v0.17.2] - 2020-06-29
 
 ### Fixed
 
 - prod dependency breakage based on `@material/dom`
 
-## [v0.17.1] - 2020-01-01
+## [v0.17.1] - 2020-06-29
 
 - unused GH tag
 
-## [v0.17.0] - 2020-01-01
+## [v0.17.0] - 2020-06-29
 
 ### Added
 
