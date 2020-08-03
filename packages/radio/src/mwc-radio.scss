@@ -15,10 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@use '@material/radio';
+@use '@material/radio/mixins' as radio-mixins;
+@use '@material/radio/variables' as radio-variables;
 @use '@material/ripple';
 
-@include radio.core-styles();
+@include radio-mixins.core-styles();
 @include ripple.common();
 
 :host {
@@ -28,8 +29,8 @@ limitations under the License.
 
 .mdc-radio {
   vertical-align: bottom;
-  @include radio.unchecked-stroke-color(var(--mdc-radio-unchecked-color, #{radio.$unchecked-color}));
-  @include radio.disabled-unchecked-stroke-color(var(--mdc-radio-disabled-color, #{radio.$disabled-circle-color}));
-  @include radio.disabled-checked-stroke-color(var(--mdc-radio-disabled-color, #{radio.$disabled-circle-color}));
-  @include radio.disabled-ink-color(var(--mdc-radio-disabled-color, #{radio.$disabled-circle-color}));
+  @include radio-mixins.unchecked-stroke-color(var(--mdc-radio-unchecked-color, #{radio-variables.$unchecked-color}));
+  @include radio-mixins.disabled-unchecked-stroke-color(var(--mdc-radio-disabled-color, #{radio-variables.$disabled-circle-color}));
+  @include radio-mixins.disabled-checked-stroke-color(var(--mdc-radio-disabled-color, #{radio-variables.$disabled-circle-color}));
+  @include radio-mixins.disabled-ink-color(var(--mdc-radio-disabled-color, #{radio-variables.$disabled-circle-color}));
 }
