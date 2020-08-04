@@ -58,9 +58,9 @@ export class LinearProgressBase extends BaseElement {
 
   @property() ariaLabel = '';
 
-  @internalProperty() bufferFlexBasisValue = '';
+  @internalProperty() protected bufferFlexBasisValue = '';
 
-  @internalProperty() primaryTransformValue = '';
+  @internalProperty() protected primaryTransformValue = '';
 
   /**
    * @soyCompatible
