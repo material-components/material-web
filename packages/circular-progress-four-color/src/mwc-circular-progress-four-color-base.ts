@@ -19,6 +19,7 @@ import {html} from 'lit-element';
 
 /** @soyCompatible */
 export class CircularProgressFourColorBase extends CircularProgressBase {
+  /** @soyCompatible */
   protected renderIndeterminateContainer() {
     return html`
       <div class="mdc-circular-progress__indeterminate-container">
