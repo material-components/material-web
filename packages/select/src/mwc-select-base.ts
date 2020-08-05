@@ -292,7 +292,8 @@ export abstract class SelectBase extends FormElement {
           <span class="mdc-select__dropdown-icon">
             <svg
                 class="mdc-select__dropdown-icon-graphic"
-                viewBox="7 10 10 5">
+                viewBox="7 10 10 5"
+                focusable="false">
               <polygon
                   class="mdc-select__dropdown-icon-inactive"
                   stroke="none"
