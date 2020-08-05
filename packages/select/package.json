@@ -16,10 +16,10 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/dom": "=8.0.0-canary.1b44b43c8.0",
-    "@material/floating-label": "=8.0.0-canary.1b44b43c8.0",
-    "@material/line-ripple": "=8.0.0-canary.1b44b43c8.0",
-    "@material/list": "=8.0.0-canary.1b44b43c8.0",
+    "@material/dom": "=8.0.0-canary.2bd09a706.0",
+    "@material/floating-label": "=8.0.0-canary.2bd09a706.0",
+    "@material/line-ripple": "=8.0.0-canary.2bd09a706.0",
+    "@material/list": "=8.0.0-canary.2bd09a706.0",
     "@material/mwc-base": "^0.18.0",
     "@material/mwc-floating-label": "^0.18.0",
     "@material/mwc-icon": "^0.18.0",
@@ -27,13 +27,13 @@
     "@material/mwc-list": "^0.18.0",
     "@material/mwc-menu": "^0.18.0",
     "@material/mwc-notched-outline": "^0.18.0",
-    "@material/select": "=8.0.0-canary.1b44b43c8.0",
+    "@material/select": "=8.0.0-canary.2bd09a706.0",
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@material/theme": "=8.0.0-canary.1b44b43c8.0"
+    "@material/theme": "=8.0.0-canary.2bd09a706.0"
   },
   "publishConfig": {
     "access": "public"
