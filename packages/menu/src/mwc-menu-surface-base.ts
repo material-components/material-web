@@ -1,28 +1,28 @@
 /**
-@license
-Copyright 2020 Google Inc. All Rights Reserved.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
+ * @license
+ * Copyright 2020 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 import {MDCMenuSurfaceAdapter} from '@material/menu-surface/adapter';
 import {Corner as CornerEnum, CornerBit} from '@material/menu-surface/constants';
-import MDCMenuSurfaceFoundation from '@material/menu-surface/foundation.js';
-import {getTransformPropertyName} from '@material/menu-surface/util';
-import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
-import {observer} from '@material/mwc-base/observer.js';
+import MDCMenuSurfaceFoundation from '@material/menu-surface/foundation';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
+import {observer} from '@material/mwc-base/observer';
 import {deepActiveElementPath, doesElementContainFocus} from '@material/mwc-base/utils';
 import {html, internalProperty, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
+import {classMap} from 'lit-html/directives/class-map';
+import {styleMap} from 'lit-html/directives/style-map';
 
 export type Corner = keyof typeof CornerEnum;
 export type AnchorableElement = HTMLElement&{anchor: Element | null};
@@ -163,6 +163,13 @@ export abstract class MenuSurfaceBase extends BaseElement {
   })
   corner: Corner = 'TOP_START';
 
+  @internalProperty() protected styleTop = '';
+  @internalProperty() protected styleLeft = '';
+  @internalProperty() protected styleRight = '';
+  @internalProperty() protected styleBottom = '';
+  @internalProperty() protected styleMaxHeight = '';
+  @internalProperty() protected styleTransformOrigin = '';
+
   anchor: HTMLElement|null = null;
 
   protected previouslyFocused: HTMLElement|Element|null = null;
@@ -175,9 +182,19 @@ export abstract class MenuSurfaceBase extends BaseElement {
       'mdc-menu-surface--fullwidth': this.fullwidth,
     };
 
+    const styles = {
+      'top': this.styleTop,
+      'left': this.styleLeft,
+      'right': this.styleRight,
+      'bottom': this.styleBottom,
+      'max-height': this.styleMaxHeight,
+      'transform-origin': this.styleTransformOrigin,
+    };
+
     return html`
       <div
           class="mdc-menu-surface ${classMap(classes)}"
+          style="${styleMap(styles)}"
           @keydown=${this.onKeydown}
           @opened=${this.registerBodyClick}
           @closed=${this.deregisterBodyClick}>
@@ -217,8 +234,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
           return;
         }
 
-        const propertyName = `${getTransformPropertyName(window)}-origin`;
-        root.style.setProperty(propertyName, origin);
+        this.styleTransformOrigin = origin;
       },
       isFocused: () => {
         return doesElementContainFocus(this);
@@ -281,20 +297,22 @@ export abstract class MenuSurfaceBase extends BaseElement {
           return;
         }
 
-        mdcRoot.style.left = 'left' in position ? `${position.left}px` : '';
-        mdcRoot.style.right = 'right' in position ? `${position.right}px` : '';
-        mdcRoot.style.top = 'top' in position ? `${position.top}px` : '';
-        mdcRoot.style.bottom =
-            'bottom' in position ? `${position.bottom}px` : '';
+        this.styleLeft = 'left' in position ? `${position.left}px` : '';
+        this.styleRight = 'right' in position ? `${position.right}px` : '';
+        this.styleTop = 'top' in position ? `${position.top}px` : '';
+        this.styleBottom = 'bottom' in position ? `${position.bottom}px` : '';
       },
-      setMaxHeight: (height) => {
+      setMaxHeight: async (height) => {
         const mdcRoot = this.mdcRoot;
 
         if (!mdcRoot) {
           return;
         }
 
-        mdcRoot.style.maxHeight = height;
+        // must set both for IE support as IE will not set a var
+        this.styleMaxHeight = height;
+        await this.updateComplete;
+        this.styleMaxHeight = `var(--mdc-menu-max-height, ${height})`;
       },
     };
   }

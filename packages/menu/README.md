@@ -300,6 +300,7 @@ propagate through `mwc-menu`.
 | `--mdc-menu-item-height` | `48px`  | Height of single-line list-items in the menu.
 | `--mdc-menu-min-width`   | `auto`  | Menu min-width.
 | `--mdc-menu-max-width`   | `auto`  | Menu max-width.
+| `--mdc-menu-max-height`  | `calc(100vh - 32px)` and content height | Menu max height.
 | `--mdc-menu-z-index`     | `8`     | Z-index of the popup menu surface.
 | `--mdc-theme-surface`    | ![](images/color_fff.png) `#fff` | Color of the menu surface.
 

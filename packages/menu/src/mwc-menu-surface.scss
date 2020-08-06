@@ -14,6 +14,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+@use '@material/theme/theme';
+@use '@material/theme/custom-properties';
 @use '@material/menu-surface/mixins';
 @use '@material/menu-surface/variables';
 @use '@material/shape/variables' as shape-variables;
@@ -25,5 +27,12 @@ limitations under the License.
 }
 
 .mdc-menu-surface {
-  z-index: var(--mdc-menu-z-index, #{variables.$z-index});
+  $z-index: custom-properties.create(--mdc-menu-z-index, variables.$z-index);
+  @include theme.property(z-index, $z-index);
+
+  $max-height: custom-properties.create(
+    --mdc-menu-max-height,
+    calc(100vh - #{variables.$min-distance-from-edge})
+  );
+  @include theme.property(max-height, $max-height);
 }
