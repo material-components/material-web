@@ -88,9 +88,11 @@ mwc-notched-outline {
       fallback: vars.$bottom-line-idle-color
     ));
 
-    @include mixins.hover-bottom-line-color((
-      varname: --mdc-select-hover-line-color,
-      fallback: vars.$bottom-line-hover-color
+    @include mixins.bottom-line-color((
+      hover: (
+        varname: --mdc-select-hover-line-color,
+        fallback: vars.$bottom-line-hover-color
+      )
     ));
 
     &:not(.mdc-select--outlined) {
@@ -175,9 +177,11 @@ mwc-notched-outline {
 
   .mdc-select {
     &:not(.mdc-select--outlined) {
-      @include mixins.disabled-container-fill-color((
-        varname: --mdc-select-disabled-fill-color,
-        fallback: vars.$disabled-fill-color
+      @include mixins.container-fill-color((
+        disabled: (
+          varname: --mdc-select-disabled-fill-color,
+          fallback: vars.$disabled-fill-color
+        )
       ));
     }
 
