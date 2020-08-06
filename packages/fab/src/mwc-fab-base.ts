@@ -111,7 +111,9 @@ export class FabBase extends LitElement {
   /** @soyCompatible */
   protected renderRipple() {
     return html`${
-        this.shouldRenderRipple ? html`<mwc-ripple></mwc-ripple>` : ''}`;
+        this.shouldRenderRipple ?
+            html`<mwc-ripple class="ripple"></mwc-ripple>` :
+            ''}`;
   }
 
   protected handleRippleActivate(event?: Event) {

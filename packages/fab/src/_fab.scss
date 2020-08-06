@@ -33,6 +33,7 @@ $icon-size: map.get(fab-theme.$light-theme, icon-size);
   --mdc-ripple-color: currentcolor;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  vertical-align: top;
 
   @include fab-mixins.without-ripple();
 
@@ -66,7 +67,7 @@ $icon-size: map.get(fab-theme.$light-theme, icon-size);
       );
     }
 
-    mwc-ripple {
+    .ripple {
       overflow: hidden;
     }
 
@@ -74,11 +75,11 @@ $icon-size: map.get(fab-theme.$light-theme, icon-size);
       z-index: 0;
     }
 
-    &:not(.mdc-fab--extended) mwc-ripple {
+    &:not(.mdc-fab--extended) .ripple {
       @include shape.radius(fab-variables.$shape-radius);
     }
 
-    &.mdc-fab--extended mwc-ripple {
+    &.mdc-fab--extended .ripple {
       @include shape.radius(
         fab-variables.$shape-radius,
         $component-height: fab-variables.$extended-height
