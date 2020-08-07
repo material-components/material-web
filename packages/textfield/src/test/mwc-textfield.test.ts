@@ -74,15 +74,6 @@ const isUiInvalid = (element: TextField) => {
   return !!element.shadowRoot!.querySelector(`.${cssClasses.INVALID}`);
 };
 
-const asDateType = html`
-  <mwc-textfield
-    type="date"
-    min="${'2020-01-01' as unknown as number}"
-    max="${'2020-12-31' as unknown as number}"
-    ?required="${true}">
-  </mwc-textfield>
-`;
-
 suite('mwc-textfield:', () => {
   let fixt: TestFixture;
 
@@ -563,63 +554,5 @@ suite('mwc-textfield:', () => {
       assert.isTrue(
           floatingLabel.classList.contains(floatingClasses.LABEL_FLOAT_ABOVE));
     });
-  });
-});
-
-suite('date type textfield', () => {
-  // IE 8-1 has no support for input[type=date]
-  // Safari has no support for input[type=date]
-
-  // Feature detection to skip IE unit tests
-  if (window.MSInputMethodContext) {
-    return;
-  }
-
-  let fixt: TestFixture;
-  let element: TextField;
-
-  setup(async () => {
-    fixt = await fixture(asDateType);
-    element = fixt.root.querySelector('mwc-textfield')!;
-    await element.updateComplete;
-  });
-
-  teardown(() => {
-    if (fixt) {
-      fixt.remove();
-    }
-  });
-
-  test('will be valid with a date-string inside min-max range', async () => {
-    element.focus();
-    element.value = '2020-10-16';
-    element.blur();
-
-    await element.updateComplete;
-
-    assert.isTrue(element.checkValidity());
-    assert.isFalse(isUiInvalid(element));
-  });
-
-  test('will be invalid with a date-string before min', async () => {
-    element.focus();
-    element.value = '2019-10-16';
-    element.blur();
-
-    await element.updateComplete;
-
-    assert.isFalse(element.checkValidity());
-    assert.isTrue(isUiInvalid(element));
-  });
-
-  test('will be invalid with a date-string after max', async () => {
-    element.focus();
-    element.value = '2021-10-16';
-    element.blur();
-
-    await element.updateComplete;
-
-    assert.isFalse(element.checkValidity());
-    assert.isTrue(isUiInvalid(element));
   });
 });

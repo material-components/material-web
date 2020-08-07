@@ -164,9 +164,9 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: String}) pattern = '';
 
-  @property({type: String}) min: number|string = '';
+  @property({type: Number}) min: number|string = '';
 
-  @property({type: String}) max: number|string = '';
+  @property({type: Number}) max: number|string = '';
 
   @property({type: Number}) step: number|null = null;
 
@@ -375,10 +375,8 @@ export abstract class TextFieldBase extends FormElement {
     const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
     const autocapitalizeOrUndef =
         this.autocapitalize ? this.autocapitalize : undefined;
-
     // TODO: live() directive needs casting for lit-analyzer
     // https://github.com/runem/lit-analyzer/pull/91/files
-    // TODO: lit-analyzer labels min/max as (number|string) instead of string
     return html`
       <input
           aria-labelledby="label"
