@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - `menu`
   - `--mdc-menu-max-height` to set max height on menu
+- `fab`
+  - `reducedTouchTarget` reduces the touch target on mini fab
+
+### Changed
+
+- `fab`
+  - **BREAKING:VISUAL** default touch target increased on mini fab by 8px.
 
 ## [v0.18.0] - 2020-08-03
 

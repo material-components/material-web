@@ -108,6 +108,7 @@ mwc-fab {
 | `icon`          | `string`  | The icon to display.
 | `label`         | `string`  | The label to display when using the `extended` layout, and the `aria-label` attribute in all layouts.
 | `mini`          | `boolean` | Modifies the FAB to be a smaller size, for use on smaller screens. Defaults to `false`.
+| `reducedTouchTarget` | `boolean` | Sets the minimum touch target of the default-sized mini fab to recommended 48x48px.
 | `extended`      | `boolean` | Enable the *extended* layout which includes a text label. Defaults to `false`.
 | `showIconAtEnd` | `boolean` | When in the *extended* layout, position the icon after the label, instead of before. Defaults to `false`.
 

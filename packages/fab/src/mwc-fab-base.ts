@@ -38,6 +38,8 @@ export class FabBase extends LitElement {
 
   @property({type: Boolean}) showIconAtEnd = false;
 
+  @property({type: Boolean}) reducedTouchTarget = false;
+
   @property() icon = '';
 
   @property() label = '';
@@ -55,9 +57,11 @@ export class FabBase extends LitElement {
 
   /** @soyCompatible */
   protected render() {
+    const hasTouchTarget = this.mini && !this.reducedTouchTarget;
     /** @classMap */
     const classes = {
       'mdc-fab--mini': this.mini,
+      'mdc-fab--touch': hasTouchTarget,
       'mdc-fab--exited': this.exited,
       'mdc-fab--extended': this.extended,
       'icon-end': this.showIconAtEnd,
@@ -83,6 +87,7 @@ export class FabBase extends LitElement {
           ${this.renderIcon()}
         </slot>
         ${!this.showIconAtEnd ? this.renderLabel() : ''}
+        ${this.renderTouchTarget()}
       </button>`;
   }
 
@@ -92,6 +97,14 @@ export class FabBase extends LitElement {
         this.icon ? html`
           <span class="material-icons mdc-fab__icon">${this.icon}</span>` :
                     ''}`;
+  }
+
+  /** @soyCompatible */
+  protected renderTouchTarget() {
+    const hasTouchTarget = this.mini && !this.reducedTouchTarget;
+
+    return html`${
+        hasTouchTarget ? html`<div class="mdc-fab__touch"></div>` : ''}`;
   }
 
   /** @soyCompatible */
