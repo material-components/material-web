@@ -69,17 +69,25 @@ For usage please see [mwc-tab-bar](https://github.com/material-components/materi
 
 ### CSS Custom Properties
 
-Name                                 | Default                                                  | Description
------------------------------------- | -------------------------------------------------------- | -----------
-`--mdc-theme-primary`                | ![](images/color_6200ee.png) `#6200ee`               | Color of the activated tab's text, indicator, and ripple.
-`--mdc-theme-secondary`              | ![](images/color_018786.png) `#018786`               | Color of the indicator icon if defined.
-`--mdc-icon-font`                    | `"Material Icons"`                                       | Icon font to use for `icon` and `indicatorIcon`.
-`--mdc-icon-size`                    | `24px`                                                   | Size of the text icon.
-`--mdc-tab-height`                   | `48px`                                                   | Height of the tab.
-`--mdc-tab-horizontal-padding`       | `24px`                                                   | Horizontal padding on either side of the tab.
-`--mdc-tab-stacked-height`           | `72px`                                                   | Height of the tab's stacked variant.
-`--mdc-tab-text-label-color-default` | ![](images/color_0,0,0,60.png) `rgba(0, 0, 0, 0.6)`  | Color of an unactivated tab label.
-`--mdc-tab-color-default`            | ![](images/color_0,0,0,54.png) `rgba(0, 0, 0, 0.54)` | Color of an unactivated icon.
+
+  Name                                    | Default                                                  | Description
+----------------------------------------- | -------------------------------------------------------- | -----------
+`--mdc-theme-primary`                     | ![](images/color_6200ee.png) `#6200ee`                   | Color of the activated tab's text, indicator, and ripple.
+`--mdc-theme-secondary`                   | ![](images/color_018786.png) `#018786`                   | Color of the indicator icon if defined.
+`--mdc-icon-font`                         | `"Material Icons"`                                       | Icon font to use for `icon` and `indicatorIcon`.
+`--mdc-icon-size`                         | `24px`                                                   | Size of the text icon.
+`--mdc-tab-height`                        | `48px`                                                   | Height of the tab.
+`--mdc-tab-horizontal-padding`            | `24px`                                                   | Horizontal padding on either side of the tab.
+`--mdc-tab-stacked-height`                | `72px`                                                   | Height of the tab's stacked variant.
+`--mdc-tab-text-label-color-default`      | ![](images/color_0,0,0,60.png) `rgba(0, 0, 0, 0.6)`      | Color of an unactivated tab label.
+`--mdc-tab-color-default`                 | ![](images/color_0,0,0,54.png) `rgba(0, 0, 0, 0.54)`     | Color of an unactivated icon.
+`--mdc-typography-button-font-family`     | `"Roboto, sans-serif"`                                   | Font Family of tab's text
+`--mdc-typography-button-font-size`       | `0.875rem`                                               | Font Size of tab's text  
+`--mdc-typography-button-line-height`     | `2.25rem`                                                | Line Height of tab's text  
+`--mdc-typography-button-font-weight`     | `500`                                                    | Font Weight of tab's text  
+`--mdc-typography-button-letter-spacing`  | `0.0892857em`                                            | Letter Spacing of tab's text  
+`--mdc-typography-button-text-decoration` | `none`                                                   | Text Decoration of tab's text  
+`--mdc-typography-button-text-transform`  | `uppercase`                                              | Text Transform of tab's text  
 
 ## Additional references
 
