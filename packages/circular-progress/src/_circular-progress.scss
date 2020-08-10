@@ -21,7 +21,5 @@ limitations under the License.
 @mixin core-styles() {
   @include circularprogress.core-styles();
 
-  :host {
-    display: inline-flex;
-  }
+  display: inline-flex;
 }

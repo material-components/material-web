@@ -16,4 +16,6 @@ limitations under the License.
 */
 @use './circular-progress';
 
-@include circular-progress.core-styles();
+:host {
+  @include circular-progress.core-styles();
+}
