@@ -33,6 +33,10 @@ import {live} from 'lit-html/directives/live';
 
 // must be done to get past lit-analyzer checks
 declare global {
+  interface HTMLElement {
+    floatingLabelFoundation?: MDCFloatingLabelFoundation;
+    lineRippleFoundation?: MDCLineRippleFoundation;
+  }
   interface Element {
     floatingLabelFoundation?: MDCFloatingLabelFoundation;
     lineRippleFoundation?: MDCLineRippleFoundation;
@@ -373,9 +377,10 @@ export abstract class TextFieldBase extends FormElement {
   protected renderInput() {
     const minOrUndef = this.minLength === -1 ? undefined : this.minLength;
     const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
-    const autocapitalizeOrUndef =
-        this.autocapitalize ? this.autocapitalize : undefined;
-
+    const autocapitalizeOrUndef = this.autocapitalize ?
+        this.autocapitalize as (
+            'off' | 'none' | 'on' | 'sentences' | 'words' | 'characters') :
+        undefined;
     // TODO: live() directive needs casting for lit-analyzer
     // https://github.com/runem/lit-analyzer/pull/91/files
     // TODO: lit-analyzer labels min/max as (number|string) instead of string

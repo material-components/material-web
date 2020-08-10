@@ -69,6 +69,11 @@ class RippleIntermediate implements RippleInterface {
 }
 
 declare global {
+  interface HTMLElement {
+    // This is not a super great thing to do, adding a new property onto
+    // arbitrary elements...
+    ripple?: unknown;
+  }
   interface Element {
     // This is not a super great thing to do, adding a new property onto
     // arbitrary elements...

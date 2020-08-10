@@ -86,8 +86,11 @@ export abstract class TextAreaBase extends TextFieldBase {
   protected renderInput() {
     const minOrUndef = this.minLength === -1 ? undefined : this.minLength;
     const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
-    const autocapitalizeOrUndef =
-        this.autocapitalize ? this.autocapitalize : undefined;
+    const autocapitalizeOrUndef = this.autocapitalize ?
+        (this.autocapitalize as 'off' | 'none' | 'on' | 'sentences' | 'words' |
+         'characters' | 'off' | 'none' | 'on' | 'sentences' | 'words' |
+         'characters') :
+        undefined;
 
     return html`
       <textarea
