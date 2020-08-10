@@ -219,7 +219,6 @@ _Note: example is in the state of hovering over the first tab._
   mwc-tab-bar {
     --mdc-theme-primary: red;
     --mdc-text-transform: none;
-    --mdc-tab-border-radius: 20px 20px 0px 0px;
     --mdc-tab-color-default: green;
     --mdc-tab-text-label-color-default: green;
     --mdc-tab-stacked-height: 100px;
