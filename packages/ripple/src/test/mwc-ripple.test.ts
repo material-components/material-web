@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {Ripple} from '@material/mwc-ripple';
+import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 
 interface RippleInternals {
   hovering: boolean;
