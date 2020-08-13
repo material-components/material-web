@@ -55,6 +55,16 @@ export abstract class BaseElement extends LitElement {
    */
   protected abstract createAdapter(): {}
 
+  click() {
+    if (this.mdcRoot) {
+      this.mdcRoot.focus();
+      this.mdcRoot.click();
+      return;
+    }
+
+    super.click();
+  }
+
   /**
    * Create and attach the MDC Foundation to the instance
    */

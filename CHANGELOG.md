@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `--mdc-menu-max-height` to set max height on menu
 - `fab`
   - `reducedTouchTarget` reduces the touch target on mini fab
+- `base-element`
+  - BaseElement.click() forwards focus to BaseElement.mdcRoot
+- `form-element`
+  - FormElement.click() forwards focus to FormElement.formElement
 
 ### Changed
 
