@@ -18,10 +18,10 @@ limitations under the License.
 import {MDCFoundation} from '@material/base';
 import {LitElement} from 'lit-element';
 
-import {Constructor} from './utils.js';
+import {Constructor} from './utils';
 
-export {CustomEventListener, EventType, SpecificEventListener} from '@material/base/types.js';
-export {addHasRemoveClass} from './utils.js';
+export {CustomEventListener, EventType, SpecificEventListener} from '@material/base/types';
+export {addHasRemoveClass} from './utils';
 
 /** @soyCompatible */
 export abstract class BaseElement extends LitElement {

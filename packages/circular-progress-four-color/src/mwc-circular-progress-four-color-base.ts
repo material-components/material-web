@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {CircularProgressBase} from '@material/mwc-circular-progress/mwc-circular-progress-base.js';
+import {CircularProgressBase} from '@material/mwc-circular-progress/mwc-circular-progress-base';
 import {html} from 'lit-element';
 
 /** @soyCompatible */

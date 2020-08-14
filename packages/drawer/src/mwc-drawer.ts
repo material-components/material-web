@@ -16,8 +16,8 @@ limitations under the License.
 */
 import {customElement} from 'lit-element';
 
-import {DrawerBase} from './mwc-drawer-base.js';
-import {style} from './mwc-drawer-css.js';
+import {DrawerBase} from './mwc-drawer-base';
+import {style} from './mwc-drawer-css';
 
 declare global {
   interface HTMLElementTagNameMap {

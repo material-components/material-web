@@ -15,9 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {html, internalProperty, LitElement, property} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
-import {ifDefined} from 'lit-html/directives/if-defined.js';
-import {styleMap} from 'lit-html/directives/style-map.js';
+import {classMap} from 'lit-html/directives/class-map';
+import {ifDefined} from 'lit-html/directives/if-defined';
+import {styleMap} from 'lit-html/directives/style-map';
 
 /** @soyCompatible */
 export class CircularProgressBase extends LitElement {

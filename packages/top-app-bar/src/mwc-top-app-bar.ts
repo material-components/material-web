@@ -16,8 +16,8 @@ limitations under the License.
 */
 import {customElement} from 'lit-element';
 
-import {TopAppBarBase} from './mwc-top-app-bar-base.js';
-import {style} from './mwc-top-app-bar-css.js';
+import {TopAppBarBase} from './mwc-top-app-bar-base';
+import {style} from './mwc-top-app-bar-css';
 
 declare global {
   interface HTMLElementTagNameMap {

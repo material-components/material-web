@@ -22,15 +22,15 @@ limitations under the License.
 import 'blocking-elements';
 import 'wicg-inert';
 
-import {MDCDrawerAdapter} from '@material/drawer/adapter.js';
-import {strings} from '@material/drawer/constants.js';
-import MDCDismissibleDrawerFoundation from '@material/drawer/dismissible/foundation.js';
-import MDCModalDrawerFoundation from '@material/drawer/modal/foundation.js';
-import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
-import {observer} from '@material/mwc-base/observer.js';
+import {MDCDrawerAdapter} from '@material/drawer/adapter';
+import {strings} from '@material/drawer/constants';
+import MDCDismissibleDrawerFoundation from '@material/drawer/dismissible/foundation';
+import MDCModalDrawerFoundation from '@material/drawer/modal/foundation';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
+import {observer} from '@material/mwc-base/observer';
 import {DocumentWithBlockingElements} from 'blocking-elements';
 import {html, property, PropertyValues, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
+import {classMap} from 'lit-html/directives/class-map';
 
 interface InertableHTMLElement extends HTMLElement {
   inert?: boolean;

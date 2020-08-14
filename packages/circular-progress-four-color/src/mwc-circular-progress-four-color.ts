@@ -16,8 +16,8 @@ limitations under the License.
 */
 import {customElement} from 'lit-element';
 
-import {CircularProgressFourColorBase} from './mwc-circular-progress-four-color-base.js';
-import {style} from './mwc-circular-progress-four-color-css.js';
+import {CircularProgressFourColorBase} from './mwc-circular-progress-four-color-base';
+import {style} from './mwc-circular-progress-four-color-css';
 
 declare global {
   interface HTMLElementTagNameMap {

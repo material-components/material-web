@@ -16,11 +16,11 @@ limitations under the License.
 */
 
 import {customElement} from 'lit-element';
-import {MenuSurfaceBase} from './mwc-menu-surface-base.js';
-import {style} from './mwc-menu-surface-css.js';
+import {MenuSurfaceBase} from './mwc-menu-surface-base';
+import {style} from './mwc-menu-surface-css';
 
-export {MDCMenuDistance} from '@material/menu-surface/types.js';
-export {Corner, MenuCorner} from './mwc-menu-surface-base.js';
+export {MDCMenuDistance} from '@material/menu-surface/types';
+export {Corner, MenuCorner} from './mwc-menu-surface-base';
 
 declare global {
   interface HTMLElementTagNameMap {

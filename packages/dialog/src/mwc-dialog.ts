@@ -16,8 +16,8 @@ limitations under the License.
 */
 import {customElement} from 'lit-element';
 
-import {DialogBase} from './mwc-dialog-base.js';
-import {style} from './mwc-dialog-css.js';
+import {DialogBase} from './mwc-dialog-base';
+import {style} from './mwc-dialog-css';
 
 declare global {
   interface HTMLElementTagNameMap {

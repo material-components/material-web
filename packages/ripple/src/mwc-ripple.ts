@@ -16,8 +16,8 @@ limitations under the License.
 */
 import {customElement} from 'lit-element';
 
-import {RippleBase} from './mwc-ripple-base.js';
-import {style} from './mwc-ripple-css.js';
+import {RippleBase} from './mwc-ripple-base';
+import {style} from './mwc-ripple-css';
 
 declare global {
   interface HTMLElementTagNameMap {

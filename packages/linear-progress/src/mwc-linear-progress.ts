@@ -16,8 +16,8 @@ limitations under the License.
 */
 import {customElement} from 'lit-element';
 
-import {LinearProgressBase} from './mwc-linear-progress-base.js';
-import {style} from './mwc-linear-progress-css.js';
+import {LinearProgressBase} from './mwc-linear-progress-base';
+import {style} from './mwc-linear-progress-css';
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -16,8 +16,8 @@ limitations under the License.
 */
 
 import {customElement} from 'lit-element';
-import {SelectBase} from './mwc-select-base.js';
-import {style} from './mwc-select-css.js';
+import {SelectBase} from './mwc-select-base';
+import {style} from './mwc-select-css';
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -16,8 +16,8 @@ limitations under the License.
 */
 import {customElement} from 'lit-element';
 
-import {TabScrollerBase} from './mwc-tab-scroller-base.js';
-import {style} from './mwc-tab-scroller-css.js';
+import {TabScrollerBase} from './mwc-tab-scroller-base';
+import {style} from './mwc-tab-scroller-css';
 
 declare global {
   interface HTMLElementTagNameMap {

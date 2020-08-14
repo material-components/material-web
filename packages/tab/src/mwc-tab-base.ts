@@ -17,14 +17,14 @@ limitations under the License.
 // Make TypeScript not remove the import.
 import '@material/mwc-tab-indicator';
 
-import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
-import {observer} from '@material/mwc-base/observer.js';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
+import {observer} from '@material/mwc-base/observer';
 import {ripple} from '@material/mwc-ripple/ripple-directive';
 import {TabIndicator} from '@material/mwc-tab-indicator';
 import {MDCTabAdapter} from '@material/tab/adapter';
 import MDCTabFoundation from '@material/tab/foundation';
 import {html, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
+import {classMap} from 'lit-html/directives/class-map';
 
 // used for generating unique id for each tab
 let tabIdCounter = 0;

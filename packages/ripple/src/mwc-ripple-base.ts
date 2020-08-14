@@ -14,13 +14,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {BaseElement} from '@material/mwc-base/base-element.js';
-import {MDCRippleAdapter} from '@material/ripple/adapter.js';
-import MDCRippleFoundation from '@material/ripple/foundation.js';
+import {BaseElement} from '@material/mwc-base/base-element';
+import {MDCRippleAdapter} from '@material/ripple/adapter';
+import MDCRippleFoundation from '@material/ripple/foundation';
 import {html, internalProperty, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
-import {styleMap} from 'lit-html/directives/style-map.js';
-import {RippleAPI} from './ripple-handlers.js';
+import {classMap} from 'lit-html/directives/class-map';
+import {styleMap} from 'lit-html/directives/style-map';
+import {RippleAPI} from './ripple-handlers';
 
 /** @soyCompatible */
 export class RippleBase extends BaseElement implements RippleAPI {

@@ -19,9 +19,9 @@ import '@material/mwc-checkbox';
 
 import {Checkbox} from '@material/mwc-checkbox';
 import {html, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
+import {classMap} from 'lit-html/directives/class-map';
 
-import {GraphicType, ListItemBase} from './mwc-list-item-base.js';
+import {GraphicType, ListItemBase} from './mwc-list-item-base';
 
 export class CheckListItemBase extends ListItemBase {
   @query('slot') protected slotElement!: HTMLSlotElement|null;

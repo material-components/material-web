@@ -16,8 +16,8 @@ limitations under the License.
 */
 import {customElement} from 'lit-element';
 
-import {SnackbarBase} from './mwc-snackbar-base.js';
-import {style} from './mwc-snackbar-css.js';
+import {SnackbarBase} from './mwc-snackbar-base';
+import {style} from './mwc-snackbar-css';
 
 declare global {
   interface HTMLElementTagNameMap {

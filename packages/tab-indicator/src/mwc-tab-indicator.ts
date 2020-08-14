@@ -16,8 +16,8 @@ limitations under the License.
 */
 import {customElement} from 'lit-element';
 
-import {TabIndicatorBase} from './mwc-tab-indicator-base.js';
-import {style} from './mwc-tab-indicator-css.js';
+import {TabIndicatorBase} from './mwc-tab-indicator-base';
+import {style} from './mwc-tab-indicator-css';
 
 declare global {
   interface HTMLElementTagNameMap {

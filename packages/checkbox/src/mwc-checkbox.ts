@@ -16,8 +16,8 @@ limitations under the License.
 */
 import {customElement} from 'lit-element';
 
-import {CheckboxBase} from './mwc-checkbox-base.js';
-import {style} from './mwc-checkbox-css.js';
+import {CheckboxBase} from './mwc-checkbox-base';
+import {style} from './mwc-checkbox-css';
 
 declare global {
   interface HTMLElementTagNameMap {

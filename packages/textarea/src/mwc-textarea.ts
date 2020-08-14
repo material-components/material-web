@@ -15,12 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {style as textfieldStyles} from '@material/mwc-textfield/mwc-textfield-css.js';
+import {style as textfieldStyles} from '@material/mwc-textfield/mwc-textfield-css';
 import {customElement} from 'lit-element';
-import {TextAreaBase} from './mwc-textarea-base.js';
-import {style as textareaStyles} from './mwc-textarea-css.js';
+import {TextAreaBase} from './mwc-textarea-base';
+import {style as textareaStyles} from './mwc-textarea-css';
 
-export {TextAreaCharCounter, TextFieldType} from '@material/mwc-textfield/mwc-textfield-base.js';
+export {TextAreaCharCounter, TextFieldType} from '@material/mwc-textfield/mwc-textfield-base';
 
 declare global {
   interface HTMLElementTagNameMap {

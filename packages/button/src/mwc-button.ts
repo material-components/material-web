@@ -16,8 +16,8 @@ limitations under the License.
 */
 import {customElement} from 'lit-element';
 
-import {ButtonBase} from './mwc-button-base.js';
-import {style} from './mwc-button-css.js';
+import {ButtonBase} from './mwc-button-base';
+import {style} from './mwc-button-css';
 
 /** @soyCompatible */
 @customElement('mwc-button')

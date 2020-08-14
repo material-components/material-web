@@ -17,16 +17,16 @@ limitations under the License.
 import 'blocking-elements';
 import 'wicg-inert';
 
-import {MDCDialogAdapter} from '@material/dialog/adapter.js';
-import {cssClasses} from '@material/dialog/constants.js';
-import MDCDialogFoundation from '@material/dialog/foundation.js';
+import {MDCDialogAdapter} from '@material/dialog/adapter';
+import {cssClasses} from '@material/dialog/constants';
+import MDCDialogFoundation from '@material/dialog/foundation';
 import {applyPassive} from '@material/dom/events';
 import {closest, matches} from '@material/dom/ponyfill';
-import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
-import {observer} from '@material/mwc-base/observer.js';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
+import {observer} from '@material/mwc-base/observer';
 import {DocumentWithBlockingElements} from 'blocking-elements';
 import {html, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
+import {classMap} from 'lit-html/directives/class-map';
 
 export {MDCDialogCloseEventDetail} from '@material/dialog/types';
 

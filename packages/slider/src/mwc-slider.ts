@@ -16,8 +16,8 @@ limitations under the License.
 */
 import {customElement} from 'lit-element';
 
-import {SliderBase} from './mwc-slider-base.js';
-import {style} from './mwc-slider-css.js';
+import {SliderBase} from './mwc-slider-base';
+import {style} from './mwc-slider-css';
 
 declare global {
   interface HTMLElementTagNameMap {

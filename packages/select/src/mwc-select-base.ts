@@ -19,24 +19,24 @@ import '@material/mwc-menu';
 import '@material/mwc-icon';
 
 import {KEY, normalizeKey} from '@material/dom/keyboard';
-import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
-import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
-import * as typeahead from '@material/list/typeahead.js';
+import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation';
+import {MDCLineRippleFoundation} from '@material/line-ripple/foundation';
+import * as typeahead from '@material/list/typeahead';
 import {MDCListTextAndIndex} from '@material/list/types';
-import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element.js';
-import {observer} from '@material/mwc-base/observer.js';
-import {isNodeElement} from '@material/mwc-base/utils.js';
+import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element';
+import {observer} from '@material/mwc-base/observer';
+import {isNodeElement} from '@material/mwc-base/utils';
 import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {ListItemBase} from '@material/mwc-list/mwc-list-item-base';
 import {Menu} from '@material/mwc-menu';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCSelectAdapter} from '@material/select/adapter';
-import MDCSelectFoundation from '@material/select/foundation.js';
+import MDCSelectFoundation from '@material/select/foundation';
 import {eventOptions, html, property, query} from 'lit-element';
 import {nothing} from 'lit-html';
-import {classMap} from 'lit-html/directives/class-map.js';
-import {ifDefined} from 'lit-html/directives/if-defined.js';
+import {classMap} from 'lit-html/directives/class-map';
+import {ifDefined} from 'lit-html/directives/if-defined';
 
 // must be done to get past lit-analyzer checks
 declare global {

@@ -15,18 +15,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {BaseElement} from '@material/mwc-base/base-element.js';
-import {observer} from '@material/mwc-base/observer.js';
-import {deepActiveElementPath, doesElementContainFocus, findAssignedElement, isNodeElement} from '@material/mwc-base/utils.js';
+import {BaseElement} from '@material/mwc-base/base-element';
+import {observer} from '@material/mwc-base/observer';
+import {deepActiveElementPath, doesElementContainFocus, findAssignedElement, isNodeElement} from '@material/mwc-base/utils';
 import {html, property, query} from 'lit-element';
-import {ifDefined} from 'lit-html/directives/if-defined.js';
+import {ifDefined} from 'lit-html/directives/if-defined';
 
-import {MDCListAdapter} from './mwc-list-adapter.js';
-import MDCListFoundation, {ActionDetail, isIndexSet, SelectedDetail} from './mwc-list-foundation.js';
-import {MWCListIndex} from './mwc-list-foundation.js';
-import {Layoutable, ListItemBase, RequestSelectedDetail} from './mwc-list-item-base.js';
+import {MDCListAdapter} from './mwc-list-adapter';
+import MDCListFoundation, {ActionDetail, isIndexSet, SelectedDetail} from './mwc-list-foundation';
+import {MWCListIndex} from './mwc-list-foundation';
+import {Layoutable, ListItemBase, RequestSelectedDetail} from './mwc-list-item-base';
 
-export {createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex} from './mwc-list-foundation.js';
+export {createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex} from './mwc-list-foundation';
 
 
 const isListItem = (element: Element): element is ListItemBase => {

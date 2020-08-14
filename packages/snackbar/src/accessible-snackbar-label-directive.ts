@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import MDCSnackbarFoundation from '@material/snackbar/foundation.js';
+import MDCSnackbarFoundation from '@material/snackbar/foundation';
 import {directive, NodePart} from 'lit-html';
 
 const {ARIA_LIVE_LABEL_TEXT_ATTR} = MDCSnackbarFoundation.strings;

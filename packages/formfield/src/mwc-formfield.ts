@@ -16,8 +16,8 @@ limitations under the License.
 */
 import {customElement} from 'lit-element';
 
-import {FormfieldBase} from './mwc-formfield-base.js';
-import {style} from './mwc-formfield-css.js';
+import {FormfieldBase} from './mwc-formfield-base';
+import {style} from './mwc-formfield-css';
 
 declare global {
   interface HTMLElementTagNameMap {

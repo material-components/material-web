@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {RippleInterface} from '@material/mwc-base/utils.js';
+import {RippleInterface} from '@material/mwc-base/utils';
 
 export interface RippleAPI extends RippleInterface {
   startHover: () => void;

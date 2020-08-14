@@ -16,8 +16,8 @@ limitations under the License.
 */
 import {customElement} from 'lit-element';
 
-import {SwitchBase} from './mwc-switch-base.js';
-import {style} from './mwc-switch-css.js';
+import {SwitchBase} from './mwc-switch-base';
+import {style} from './mwc-switch-css';
 
 declare global {
   interface HTMLElementTagNameMap {

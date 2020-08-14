@@ -16,8 +16,8 @@ limitations under the License.
 */
 import {customElement} from 'lit-element';
 
-import {NotchedOutlineBase} from './mwc-notched-outline-base.js';
-import {style} from './mwc-notched-outline-css.js';
+import {NotchedOutlineBase} from './mwc-notched-outline-base';
+import {style} from './mwc-notched-outline-css';
 
 declare global {
   interface HTMLElementTagNameMap {

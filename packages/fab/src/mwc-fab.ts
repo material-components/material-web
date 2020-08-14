@@ -16,8 +16,8 @@ limitations under the License.
 */
 import {customElement} from 'lit-element';
 
-import {FabBase} from './mwc-fab-base.js';
-import {style} from './mwc-fab-css.js';
+import {FabBase} from './mwc-fab-base';
+import {style} from './mwc-fab-css';
 
 declare global {
   interface HTMLElementTagNameMap {

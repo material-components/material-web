@@ -16,10 +16,10 @@ limitations under the License.
 */
 
 import {customElement} from 'lit-element';
-import {TextFieldBase} from './mwc-textfield-base.js';
-import {style} from './mwc-textfield-css.js';
+import {TextFieldBase} from './mwc-textfield-base';
+import {style} from './mwc-textfield-css';
 
-export {TextFieldType} from './mwc-textfield-base.js';
+export {TextFieldType} from './mwc-textfield-base';
 
 declare global {
   interface HTMLElementTagNameMap {

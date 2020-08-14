@@ -17,9 +17,9 @@ limitations under the License.
 
 import {customElement} from 'lit-element';
 
-import {CheckListItemBase} from './mwc-check-list-item-base.js';
-import {style as controlStyle} from './mwc-control-list-item-css.js';
-import {style} from './mwc-list-item-css.js';
+import {CheckListItemBase} from './mwc-check-list-item-base';
+import {style as controlStyle} from './mwc-control-list-item-css';
+import {style} from './mwc-list-item-css';
 
 declare global {
   interface HTMLElementTagNameMap {

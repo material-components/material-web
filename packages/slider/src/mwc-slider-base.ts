@@ -14,14 +14,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {applyPassive} from '@material/dom/events.js';
-import {addHasRemoveClass, EventType, FormElement, SpecificEventListener} from '@material/mwc-base/form-element.js';
-import {observer} from '@material/mwc-base/observer.js';
-import {MDCSliderAdapter} from '@material/slider/adapter.js';
-import MDCSliderFoundation from '@material/slider/foundation.js';
+import {applyPassive} from '@material/dom/events';
+import {addHasRemoveClass, EventType, FormElement, SpecificEventListener} from '@material/mwc-base/form-element';
+import {observer} from '@material/mwc-base/observer';
+import {MDCSliderAdapter} from '@material/slider/adapter';
+import MDCSliderFoundation from '@material/slider/foundation';
 import {eventOptions, html, property, PropertyValues, query, TemplateResult} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
-import {styleMap} from 'lit-html/directives/style-map.js';
+import {classMap} from 'lit-html/directives/class-map';
+import {styleMap} from 'lit-html/directives/style-map';
 
 const INPUT_EVENT = 'input';
 const CHANGE_EVENT = 'change';

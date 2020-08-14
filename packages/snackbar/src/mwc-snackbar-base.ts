@@ -14,15 +14,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
-import {observer} from '@material/mwc-base/observer.js';
-import {MDCSnackbarAdapter} from '@material/snackbar/adapter.js';
-import MDCSnackbarFoundation from '@material/snackbar/foundation.js';
-import {MDCSnackbarCloseEventDetail} from '@material/snackbar/types.js';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
+import {observer} from '@material/mwc-base/observer';
+import {MDCSnackbarAdapter} from '@material/snackbar/adapter';
+import MDCSnackbarFoundation from '@material/snackbar/foundation';
+import {MDCSnackbarCloseEventDetail} from '@material/snackbar/types';
 import {html, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
+import {classMap} from 'lit-html/directives/class-map';
 
-import {accessibleSnackbarLabel} from './accessible-snackbar-label-directive.js';
+import {accessibleSnackbarLabel} from './accessible-snackbar-label-directive';
 
 const {
   OPENING_EVENT,

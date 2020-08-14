@@ -14,8 +14,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {MDCFloatingLabelAdapter} from '@material/floating-label/adapter.js';
-import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
+import {MDCFloatingLabelAdapter} from '@material/floating-label/adapter';
+import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation';
 import {directive, PropertyPart} from 'lit-html';
 
 export interface FloatingLabel extends HTMLLabelElement {

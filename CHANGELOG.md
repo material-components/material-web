@@ -22,6 +22,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `fab`
   - **BREAKING:VISUAL** default touch target increased on mini fab by 8px.
 
+### Fixed
+
+- Unpkg integration should properly dedupe after removing file extensions from imports
+
 ## [v0.18.0] - 2020-08-03
 
 ### Changed

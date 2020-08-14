@@ -16,7 +16,7 @@ limitations under the License.
 */
 import {customElement} from 'lit-element';
 
-import {TabBase} from './mwc-tab-base.js';
+import {TabBase} from './mwc-tab-base';
 import {style} from './mwc-tab-css';
 
 declare global {

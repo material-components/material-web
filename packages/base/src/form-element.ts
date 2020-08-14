@@ -15,8 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {addHasRemoveClass, BaseElement, CustomEventListener, EventType, SpecificEventListener} from './base-element.js';
-import {HTMLElementWithRipple, RippleInterface} from './utils.js';
+import {addHasRemoveClass, BaseElement, CustomEventListener, EventType, SpecificEventListener} from './base-element';
+import {HTMLElementWithRipple, RippleInterface} from './utils';
 
 export {
   addHasRemoveClass,

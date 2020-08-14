@@ -17,8 +17,8 @@ limitations under the License.
 
 import {customElement} from 'lit-element';
 
-import {IconButtonBase} from './mwc-icon-button-base.js';
-import {style} from './mwc-icon-button-css.js';
+import {IconButtonBase} from './mwc-icon-button-base';
+import {style} from './mwc-icon-button-css';
 
 declare global {
   interface HTMLElementTagNameMap {

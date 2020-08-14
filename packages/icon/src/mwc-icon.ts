@@ -16,7 +16,7 @@ limitations under the License.
 */
 import {customElement, html, LitElement} from 'lit-element';
 
-import {style} from './mwc-icon-host-css.js';
+import {style} from './mwc-icon-host-css';
 
 /** @soyCompatible */
 @customElement('mwc-icon')

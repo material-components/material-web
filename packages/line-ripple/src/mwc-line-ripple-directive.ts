@@ -14,8 +14,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {MDCLineRippleAdapter} from '@material/line-ripple/adapter.js';
-import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
+import {MDCLineRippleAdapter} from '@material/line-ripple/adapter';
+import {MDCLineRippleFoundation} from '@material/line-ripple/foundation';
 import {directive, PropertyPart} from 'lit-html';
 
 export interface LineRipple extends HTMLElement {

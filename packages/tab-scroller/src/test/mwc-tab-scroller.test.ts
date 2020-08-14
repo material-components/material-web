@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {TabScroller} from '@material/mwc-tab-scroller/mwc-tab-scroller.js';
+import {TabScroller} from '@material/mwc-tab-scroller/mwc-tab-scroller';
 
 suite('mwc-tab-scroller', () => {
   let element: TabScroller;

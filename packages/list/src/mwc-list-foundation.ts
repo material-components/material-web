@@ -19,7 +19,7 @@ import {MDCFoundation} from '@material/base/foundation';
 import {normalizeKey} from '@material/dom/keyboard';
 import {numbers, strings} from '@material/list/constants';
 
-import {MDCListAdapter} from './mwc-list-adapter.js';
+import {MDCListAdapter} from './mwc-list-adapter';
 
 export type MWCListIndex = number|Set<number>;
 

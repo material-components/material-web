@@ -16,14 +16,14 @@ limitations under the License.
 */
 import {applyPassive} from '@material/dom/events';
 import {matches} from '@material/dom/ponyfill';
-import {EventType, SpecificEventListener} from '@material/mwc-base/base-element.js';
-import {RippleInterface} from '@material/mwc-base/form-element.js';
-import {MDCRippleAdapter} from '@material/ripple/adapter.js';
-import MDCRippleFoundation from '@material/ripple/foundation.js';
-import {supportsCssVariables} from '@material/ripple/util.js';
+import {EventType, SpecificEventListener} from '@material/mwc-base/base-element';
+import {RippleInterface} from '@material/mwc-base/form-element';
+import {MDCRippleAdapter} from '@material/ripple/adapter';
+import MDCRippleFoundation from '@material/ripple/foundation';
+import {supportsCssVariables} from '@material/ripple/util';
 import {directive, noChange, NodePart, PropertyPart, templateFactory} from 'lit-html';
 
-import {style} from './mwc-ripple-global-css.js';
+import {style} from './mwc-ripple-global-css';
 
 const supportsCssVariablesWin = supportsCssVariables(window);
 

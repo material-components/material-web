@@ -14,13 +14,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {MDCLinearProgressAdapter} from '@material/linear-progress/adapter.js';
-import MDCLinearProgressFoundation from '@material/linear-progress/foundation.js';
-import {BaseElement} from '@material/mwc-base/base-element.js';
-import {observer} from '@material/mwc-base/observer.js';
+import {MDCLinearProgressAdapter} from '@material/linear-progress/adapter';
+import MDCLinearProgressFoundation from '@material/linear-progress/foundation';
+import {BaseElement} from '@material/mwc-base/base-element';
+import {observer} from '@material/mwc-base/observer';
 import {html, internalProperty, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
-import {styleMap} from 'lit-html/directives/style-map.js';
+import {classMap} from 'lit-html/directives/class-map';
+import {styleMap} from 'lit-html/directives/style-map';
 
 /** @soyCompatible */
 export class LinearProgressBase extends BaseElement {

@@ -16,8 +16,8 @@ limitations under the License.
 */
 import {customElement} from 'lit-element';
 
-import {CircularProgressBase} from './mwc-circular-progress-base.js';
-import {style} from './mwc-circular-progress-css.js';
+import {CircularProgressBase} from './mwc-circular-progress-base';
+import {style} from './mwc-circular-progress-css';
 
 declare global {
   interface HTMLElementTagNameMap {
