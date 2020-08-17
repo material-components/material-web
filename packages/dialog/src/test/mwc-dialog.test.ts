@@ -33,6 +33,8 @@ const OPENING_EVENT = 'opening';
 const OPENED_EVENT = 'opened';
 const CLOSING_EVENT = 'closing';
 const CLOSED_EVENT = 'closed';
+const CLOSE_EVENT = 'close';
+const CANCEL_EVENT = 'cancel';
 
 interface HasKeyCode {
   keyCode: number;
@@ -131,10 +133,14 @@ suite('mwc-dialog:', () => {
     });
 
     test('Dialog fires open and close events', async () => {
+
       let openingCalled = false;
       let openedCalled = false;
       let closingCalled = false;
       let closedCalled = false;
+      let closeCalled = false;
+      let cancelCalled = false;
+
       const surfaceElement = element.shadowRoot!.querySelector(
                                  '.mdc-dialog__surface') as HTMLDivElement;
 
@@ -154,6 +160,14 @@ suite('mwc-dialog:', () => {
         closedCalled = true;
       });
 
+      element.addEventListener(CLOSE_EVENT, () => {
+        closeCalled = true;
+      });
+
+      element.addEventListener(CANCEL_EVENT, () => {
+        closeCalled = true;
+      });
+
       const openedPromise = awaitEvent(element, OPENED_EVENT);
       const closedPromise = awaitEvent(element, CLOSED_EVENT);
 
@@ -161,6 +175,8 @@ suite('mwc-dialog:', () => {
       assert.isFalse(openedCalled);
       assert.isFalse(closingCalled);
       assert.isFalse(closedCalled);
+      assert.isFalse(closeCalled);
+      assert.isFalse(cancelCalled);
 
       assert.strictEqual(surfaceElement.offsetWidth, 0);
       assert.strictEqual(surfaceElement.offsetHeight, 0);
@@ -174,6 +190,8 @@ suite('mwc-dialog:', () => {
       assert.isTrue(openedCalled);
       assert.isFalse(closingCalled);
       assert.isFalse(closedCalled);
+      assert.isFalse(closeCalled);
+      assert.isFalse(cancelCalled);
 
       assert.isTrue(surfaceElement.offsetWidth > 0);
       assert.isTrue(surfaceElement.offsetHeight > 0);
@@ -188,6 +206,8 @@ suite('mwc-dialog:', () => {
       assert.isFalse(openedCalled);
       assert.isTrue(closingCalled);
       assert.isTrue(closedCalled);
+      assert.isTrue(closeCalled);
+      assert.isFalse(cancelCalled);
 
       assert.strictEqual(surfaceElement.offsetWidth, 0);
       assert.strictEqual(surfaceElement.offsetHeight, 0);
@@ -294,11 +314,15 @@ suite('mwc-dialog:', () => {
       await awaitEvent(element, OPENED_EVENT);
 
       let closedCalled = false;
+      let cancelCalled = false;
 
       element.addEventListener(CLOSED_EVENT, () => {
         closedCalled = true;
       });
 
+      element.addEventListener(CANCEL_EVENT, () => {
+        cancelCalled = true;
+      });
       const primary = element.querySelector('[slot="primaryAction"]') as Button;
       const secondary =
           element.querySelector('[slot="secondaryAction"]') as Button;
@@ -323,11 +347,11 @@ suite('mwc-dialog:', () => {
 
       secondary.click();
 
-      const secondaryAction = await awaitEvent(element, CLOSED_EVENT);
+      const secondaryAction = await awaitEvent(element, CANCEL_EVENT);
 
-      assert.isTrue(closedCalled);
+      assert.isTrue(cancelCalled);
       assert.strictEqual(secondaryAction.detail.action, 'cancel');
-    });
+    }).timeout(5000);
 
     test('Initial focus attribute focuses', async () => {
       const button = element.firstElementChild as Button;

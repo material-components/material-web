@@ -68,13 +68,13 @@ export class DialogBase extends BaseElement {
   @observer(function(this: DialogBase, newAction: string) {
     this.mdcFoundation.setScrimClickAction(newAction);
   })
-  scrimClickAction = 'close';
+  scrimClickAction = 'cancel';
 
   @property({type: String})
   @observer(function(this: DialogBase, newAction: string) {
     this.mdcFoundation.setEscapeKeyAction(newAction);
   })
-  escapeKeyAction = 'close';
+  escapeKeyAction = 'cancel';
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: DialogBase, isOpen: boolean) {
@@ -117,7 +117,7 @@ export class DialogBase extends BaseElement {
   protected boundHandleDocumentKeydown:
       ((ev: KeyboardEvent) => void)|null = null;
 
-  protected emitNotification(name: string, action?: string) {
+  protected  emitNotification(name: string, action?: string) {
     const init: CustomEventInit = {detail: action ? {action} : {}};
     const ev = new CustomEvent(name, init);
     this.dispatchEvent(ev);
@@ -210,6 +210,7 @@ export class DialogBase extends BaseElement {
         return el ? el.scrollHeight > el.offsetHeight : false;
       },
       notifyClosed: (action) => this.emitNotification('closed', action),
+      notifyCancel: (action) => this.emitNotification('cancel', action),
       notifyClosing: (action) => {
         if (!this.closingDueToDisconnect) {
           // Don't set our open state to closed just because we were
@@ -218,6 +219,7 @@ export class DialogBase extends BaseElement {
           this.open = false;
         }
         this.emitNotification('closing', action);
+        this.emitNotification('close', action);
       },
       notifyOpened: () => this.emitNotification('opened'),
       notifyOpening: () => {
