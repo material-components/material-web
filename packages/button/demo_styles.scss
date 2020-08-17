@@ -1,0 +1,28 @@
+@use './button-theme';
+
+$theme: (
+  contained: (
+    container-color: red,
+    container-disabled-color: green,
+    label-color: black,
+    label-disabled-color: aqua,
+    shape: 0 4px 4px 0,
+  ),
+  text: (
+    label-color: red,
+    label-disabled-color: aqua,
+    shape: 0 4px 4px 0,
+  ),
+  outlined: (
+    label-color: red,
+    outline-color: blue,
+    outline-disabled-color: orange,
+    shape: 0 4px 4px 0,
+  ),
+);
+
+mwc-button {
+  @include button-theme.theme($theme);
+  --mdc-button-horizontal-padding: 5px;
+  --mdc-button-outline-width: 2px;
+}

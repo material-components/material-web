@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- `button`
+  - Sass theming mixins added
 - `menu`
   - `--mdc-menu-max-height` to set max height on menu
 - `fab`

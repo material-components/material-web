@@ -1,0 +1,185 @@
+/**
+@license
+Copyright 2020 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+@use 'sass:map';
+@use 'sass:selector';
+@use '@material/elevation/elevation-theme';
+@use '@material/ripple/ripple-theme' as mdc-ripple-theme;
+@use '@material/shape/shape';
+@use '@material/theme/css';
+@use '@material/theme/theme-color';
+@use '@material/theme/shadow-dom';
+@use '@material/button/variables' as button-variables;
+@use '@material/mwc-ripple/ripple-theme';
+
+$_primary: theme-color.$primary;
+$_on-primary: theme-color.$on-primary;
+$_primary-opacities: mdc-ripple-theme.$dark-ink-opacities;
+$_on-primary-opacities: mdc-ripple-theme.$light-ink-opacities;
+
+$light-theme: (
+  text: (
+    label-color: $_primary,
+    label-disabled-color: button-variables.$disabled-ink-color,
+    shape: shape.$small-component-radius,
+  ),
+  outlined: (
+    label-color: $_primary,
+    label-disabled-color: button-variables.$disabled-ink-color,
+    outline-color: button-variables.$outline-color,
+    outline-disabled-color: button-variables.$disabled-container-color,
+    shape: shape.$small-component-radius,
+  ),
+  contained: (
+    container-color: $_primary,
+    container-disabled-color: button-variables.$disabled-container-color,
+    label-color: $_on-primary,
+    label-disabled-color: button-variables.$disabled-ink-color,
+    shape: shape.$small-component-radius,
+  ),
+);
+
+@mixin theme($theme: $light-theme) {
+  // text buttons
+  $text: map.get($theme, text);
+  @if $text {
+    @include _text-theme($text);
+  }
+
+  // outlined buttons
+  $outlined: map.get($theme, outlined);
+  @if $outlined {
+    @include shadow-dom.host-aware(selector.append(&, '[outlined]')) {
+      @include _outlined-theme($outlined);
+    }
+  }
+
+  // contained buttons
+  $contained: map.get($theme, contained);
+  @if $contained {
+    @include shadow-dom.host-aware(selector.append(&, '[raised]')) {
+      @include _raised-elevations($contained);
+    }
+    @include shadow-dom.host-aware(
+      selector.append(&, '[raised]'),
+      selector.append(&, '[unelevated]')
+    ) {
+      @include _contained-theme($contained);
+    }
+  }
+}
+
+@mixin _text-theme($text) {
+  @include css.declaration(--mdc-theme-primary, map.get($text, label-color));
+  @include css.declaration(
+    --mdc-button-disabled-ink-color,
+    map.get($text, label-disabled-color)
+  );
+  // TODO(dfreedm): infer ripple opacities from label-color
+  @include ripple-theme.theme(
+    (
+      state: map.get($text, ripple-color),
+      opacity: map.get($text, ripple-opacity),
+    )
+  );
+  @include css.declaration(--mdc-shape-small, map.get($text, shape));
+}
+
+@mixin _outlined-theme($outlined) {
+  @include css.declaration(
+    --mdc-theme-primary,
+    map.get($outlined, label-color)
+  );
+  @include css.declaration(
+    --mdc-button-disabled-ink-color,
+    map.get($outlined, label-disabled-color)
+  );
+  @include css.declaration(
+    --mdc-button-outline-color,
+    map.get($outlined, outline-color)
+  );
+  @include css.declaration(
+    --mdc-button-disabled-outline-color,
+    map.get($outlined, outline-disabled-color)
+  );
+  // TODO(dfreedm): infer ripple opacities from label-color
+  @include ripple-theme.theme(
+    (
+      state: map.get($outlined, ripple-color),
+      opacity: map.get($outlined, ripple-opacity),
+    )
+  );
+  @include css.declaration(--mdc-shape-small, map.get($outlined, shape));
+}
+
+@mixin _raised-elevations($contained) {
+  $elevation: map.get($contained, elevation);
+  @if $elevation {
+    @include css.declaration(
+      --mdc-button-raised-box-shadow,
+      elevation-theme.elevation-box-shadow($elevation, $color)
+    );
+  }
+  $elevation: map.get($contained, active-elevation);
+  @if $elevation {
+    @include css.declaration(
+      --mdc-button-raised-box-shadow-active,
+      elevation-theme.elevation-box-shadow($elevation, $color)
+    );
+  }
+  $elevation: map.get($contained, disabled-elevation);
+  @if $elevation {
+    @include css.declaration(
+      --mdc-button-raised-box-shadow-disabled,
+      elevation-theme.elevation-box-shadow($elevation, $color)
+    );
+  }
+  $elevation: map.get($contained, hover-elevation);
+  @if $elevation {
+    @include css.declaration(
+      --mdc-button-raised-shadow-hover,
+      elevation-theme.elevation-box-shadow($elevation, $color)
+    );
+  }
+}
+
+@mixin _contained-theme($contained) {
+  @include css.declaration(
+    --mdc-theme-primary,
+    map.get($contained, container-color)
+  );
+  @include css.declaration(
+    --mdc-button-disabled-fill-color,
+    map.get($contained, container-disabled-color)
+  );
+  @include css.declaration(
+    --mdc-theme-on-primary,
+    map.get($contained, label-color)
+  );
+  @include css.declaration(
+    --mdc-button-disabled-ink-color,
+    map.get($contained, label-disabled-color)
+  );
+  // TODO(dfreedm): infer ripple opacities from label-color
+  @include ripple-theme.theme(
+    (
+      state: map.get($contained, ripple-color),
+      opacity: map.get($contained, ripple-opacity),
+    )
+  );
+  @include css.declaration(--mdc-shape-small, map.get($contained, shape));
+}
