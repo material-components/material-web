@@ -18,7 +18,7 @@
 import {Tab} from '@material/mwc-tab';
 import {html} from 'lit-html';
 
-import {Fake, fixture, rafPromise, TestFixture} from '../../../../test/src/util/helpers';
+import {Fake, fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 
 interface TabProps {
   label: string;

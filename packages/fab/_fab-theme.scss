@@ -24,7 +24,7 @@ limitations under the License.
 @use '@material/theme/custom-properties';
 @use '@material/theme/shadow-dom';
 @use '@material/fab/variables' as fab-variables;
-@use '@material/mwc-ripple/src/ripple-theme';
+@use '@material/mwc-ripple/ripple-theme';
 
 // TODO(b/153370936): replace with theme.resolve()
 $light-theme: (

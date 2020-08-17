@@ -18,7 +18,7 @@
 import {Snackbar} from '@material/mwc-snackbar';
 import {html, TemplateResult} from 'lit-html';
 
-import {Fake, fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../../test/src/util/helpers';
+import {Fake, fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 
 interface SnackBarProps {
   timeoutMs: number;

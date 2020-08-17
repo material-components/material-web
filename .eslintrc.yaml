@@ -62,6 +62,6 @@ overrides:
       no-unused-vars: off
       no-invalid-this: off
       new-cap: off
-  - files: ["packages/**/src/test/*.ts"]
+  - files: ["packages/**/test/*.ts"]
     rules:
       "@typescript-eslint/no-non-null-assertion": off

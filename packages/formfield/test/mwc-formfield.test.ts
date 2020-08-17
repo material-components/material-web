@@ -27,7 +27,7 @@ import {Radio} from '@material/mwc-radio';
 import {Switch} from '@material/mwc-switch';
 import {html} from 'lit-html';
 
-import {fixture, TestFixture} from '../../../../test/src/util/helpers';
+import {fixture, TestFixture} from '../../../test/src/util/helpers';
 
 const defaultEl = html`<mwc-formfield></mwc-formfield>`;
 

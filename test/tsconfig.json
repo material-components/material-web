@@ -11,7 +11,7 @@
   "include": [
     "src/custom_typings/*.d.ts",
     "src/**/*.ts",
-    "../packages/*/src/test/*.ts"
+    "../packages/**/*.ts"
   ],
   "exclude": [
     "src/benchmark/cli.ts"

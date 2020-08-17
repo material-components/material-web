@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 @use '@material/tab-indicator' as tabindicator;
-@use '@material/mwc-icon/src/_mwc-icon.scss';
+@use '@material/mwc-icon/_mwc-icon.scss';
 
 @include tabindicator.core-styles();
 
