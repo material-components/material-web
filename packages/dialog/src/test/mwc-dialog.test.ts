@@ -318,7 +318,7 @@ suite('mwc-dialog:', () => {
 
       element.addEventListener(CANCEL_EVENT, (e) => {
         cancelCalled = true;
-        cancelAction = e["detail"].action;
+        cancelAction = e['detail'].action;
       });
       const primary = element.querySelector('[slot="primaryAction"]') as Button;
       const secondary =
