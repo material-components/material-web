@@ -11,18 +11,18 @@
   "module": "mwc-menu.js",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/menu": "=8.0.0-canary.150f427a0.0",
-    "@material/menu-surface": "=8.0.0-canary.150f427a0.0",
+    "@material/menu": "=8.0.0-canary.000d64815.0",
+    "@material/menu-surface": "=8.0.0-canary.000d64815.0",
     "@material/mwc-base": "^0.18.0",
     "@material/mwc-list": "^0.18.0",
-    "@material/shape": "=8.0.0-canary.150f427a0.0",
-    "@material/theme": "=8.0.0-canary.150f427a0.0",
+    "@material/shape": "=8.0.0-canary.000d64815.0",
+    "@material/theme": "=8.0.0-canary.000d64815.0",
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@material/shape": "=8.0.0-canary.150f427a0.0"
+    "@material/shape": "=8.0.0-canary.000d64815.0"
   },
   "publishConfig": {
     "access": "public"
