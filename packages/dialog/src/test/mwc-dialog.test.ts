@@ -133,7 +133,6 @@ suite('mwc-dialog:', () => {
     });
 
     test('Dialog fires open, close and cancel events', async () => {
-
       let openingCalled = false;
       let openedCalled = false;
       let closingCalled = false;

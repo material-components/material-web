@@ -117,7 +117,7 @@ export class DialogBase extends BaseElement {
   protected boundHandleDocumentKeydown:
       ((ev: KeyboardEvent) => void)|null = null;
 
-  protected  emitNotification(name: string, action?: string) {
+  protected emitNotification(name: string, action?: string) {
     const init: CustomEventInit = {detail: action ? {action} : {}};
     const ev = new CustomEvent(name, init);
     this.dispatchEvent(ev);
@@ -209,7 +209,7 @@ export class DialogBase extends BaseElement {
         const el = this.contentElement;
         return el ? el.scrollHeight > el.offsetHeight : false;
       },
-      notifyClosed: (action) => this.emitNotification( 'closed', action),
+      notifyClosed: (action) => this.emitNotification('closed', action),
       notifyClosing: (action) => {
         if (!this.closingDueToDisconnect) {
           // Don't set our open state to closed just because we were
