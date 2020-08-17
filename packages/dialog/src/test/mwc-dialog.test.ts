@@ -132,7 +132,7 @@ suite('mwc-dialog:', () => {
       assert.strictEqual(titleTag!.textContent, 'This is my Title');
     });
 
-    test('Dialog fires open and close events', async () => {
+    test('Dialog fires open, close and cancel events', async () => {
 
       let openingCalled = false;
       let openedCalled = false;
@@ -213,9 +213,7 @@ suite('mwc-dialog:', () => {
       assert.strictEqual(surfaceElement.offsetHeight, 0);
     });
 
-    test('Scrim closes dialog', async () => {
-      const SCRIM_ACTION = 'SCRIM_CLOSE';
-      element.scrimClickAction = SCRIM_ACTION;
+    test('Scrim cancels dialog', async () => {
       element.open = true;
 
       await awaitEvent(element, OPENED_EVENT);
@@ -228,12 +226,10 @@ suite('mwc-dialog:', () => {
       const event = await awaitEvent(element, CLOSED_EVENT);
 
       const action = event.detail.action;
-      assert.strictEqual(action, SCRIM_ACTION);
+      assert.strictEqual(action, 'cancel');
     });
 
-    test('Escape closes dialog', async () => {
-      const ESCAPE_ACTION = 'ESCAPE_CLOSE';
-      element.escapeKeyAction = ESCAPE_ACTION;
+    test('Escape cancles dialog', async () => {
       element.open = true;
 
       await awaitEvent(element, OPENED_EVENT);
@@ -251,7 +247,7 @@ suite('mwc-dialog:', () => {
       const event = await awaitEvent(element, CLOSED_EVENT);
 
       const action = event.detail.action;
-      assert.strictEqual(action, ESCAPE_ACTION);
+      assert.strictEqual(action, 'cancel');
     });
 
     test('Hide Actions hides empty whitespace', async () => {
@@ -315,13 +311,15 @@ suite('mwc-dialog:', () => {
 
       let closedCalled = false;
       let cancelCalled = false;
+      let cancelAction = '';
 
       element.addEventListener(CLOSED_EVENT, () => {
         closedCalled = true;
       });
 
-      element.addEventListener(CANCEL_EVENT, () => {
+      element.addEventListener(CANCEL_EVENT, (e) => {
         cancelCalled = true;
+        cancelAction = e["detail"].action;
       });
       const primary = element.querySelector('[slot="primaryAction"]') as Button;
       const secondary =
@@ -347,10 +345,8 @@ suite('mwc-dialog:', () => {
 
       secondary.click();
 
-      const secondaryAction = await awaitEvent(element, CANCEL_EVENT);
-
       assert.isTrue(cancelCalled);
-      assert.strictEqual(secondaryAction.detail.action, 'cancel');
+      assert.strictEqual(cancelAction, 'cancel');
     }).timeout(5000);
 
     test('Initial focus attribute focuses', async () => {

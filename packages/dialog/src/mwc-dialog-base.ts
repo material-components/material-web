@@ -209,8 +209,7 @@ export class DialogBase extends BaseElement {
         const el = this.contentElement;
         return el ? el.scrollHeight > el.offsetHeight : false;
       },
-      notifyClosed: (action) => this.emitNotification('closed', action),
-      notifyCancel: (action) => this.emitNotification('cancel', action),
+      notifyClosed: (action) => this.emitNotification( 'closed', action),
       notifyClosing: (action) => {
         if (!this.closingDueToDisconnect) {
           // Don't set our open state to closed just because we were
@@ -219,7 +218,11 @@ export class DialogBase extends BaseElement {
           this.open = false;
         }
         this.emitNotification('closing', action);
-        this.emitNotification('close', action);
+        if (action === 'cancel') {
+          this.emitNotification(action, action);
+        } else {
+          this.emitNotification('close', action);
+        }
       },
       notifyOpened: () => this.emitNotification('opened'),
       notifyOpening: () => {
