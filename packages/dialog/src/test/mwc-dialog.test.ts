@@ -164,7 +164,7 @@ suite('mwc-dialog:', () => {
       });
 
       element.addEventListener(CANCEL_EVENT, () => {
-        closeCalled = true;
+        cancelCalled = true;
       });
 
       const openedPromise = awaitEvent(element, OPENED_EVENT);
@@ -320,6 +320,7 @@ suite('mwc-dialog:', () => {
         cancelCalled = true;
         cancelAction = e['detail'].action;
       });
+
       const primary = element.querySelector('[slot="primaryAction"]') as Button;
       const secondary =
           element.querySelector('[slot="secondaryAction"]') as Button;
