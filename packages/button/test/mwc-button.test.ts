@@ -18,7 +18,7 @@
 import {Button} from '@material/mwc-button';
 import {html} from 'lit-html';
 
-import {fixture, rafPromise, TestFixture} from '../../../../test/src/util/helpers';
+import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 
 const ICON_SELECTOR = '.mdc-button__icon';
 

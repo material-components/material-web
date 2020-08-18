@@ -23,7 +23,7 @@ limitations under the License.
 @use '@material/shape/shape';
 @use '@material/theme/theme';
 @use '@material/theme/custom-properties';
-@use '@material/mwc-icon/src/mwc-icon';
+@use '@material/mwc-icon/mwc-icon';
 @use './fab-theme';
 
 $icon-size: map.get(fab-theme.$light-theme, icon-size);

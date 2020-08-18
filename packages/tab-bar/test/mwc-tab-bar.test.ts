@@ -20,7 +20,7 @@ import '@material/mwc-tab';
 import {TabBar} from '@material/mwc-tab-bar/mwc-tab-bar';
 import {html, TemplateResult} from 'lit-html';
 
-import {fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../../test/src/util/helpers';
+import {fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 
 interface TabBarProps {
   activeIndex: number;

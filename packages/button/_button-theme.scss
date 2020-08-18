@@ -24,7 +24,7 @@ limitations under the License.
 @use '@material/theme/theme-color';
 @use '@material/theme/shadow-dom';
 @use '@material/button/variables' as button-variables;
-@use '@material/mwc-ripple/src/ripple-theme';
+@use '@material/mwc-ripple/ripple-theme';
 
 $_primary: theme-color.$primary;
 $_on-primary: theme-color.$on-primary;

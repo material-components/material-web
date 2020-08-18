@@ -17,7 +17,7 @@
 
 import {Checkbox} from '@material/mwc-checkbox';
 
-import {Fake, rafPromise} from '../../../../test/src/util/helpers';
+import {Fake, rafPromise} from '../../../test/src/util/helpers';
 
 interface CheckboxInternals {
   formElement: HTMLInputElement;

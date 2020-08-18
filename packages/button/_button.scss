@@ -25,7 +25,7 @@ limitations under the License.
 @use '@material/theme/custom-properties';
 @use '@material/theme/theme';
 @use '@material/theme/theme-color';
-@use '@material/mwc-ripple/src/ripple-theme';
+@use '@material/mwc-ripple/ripple-theme';
 @use './button-theme';
 
 @mixin core-styles() {

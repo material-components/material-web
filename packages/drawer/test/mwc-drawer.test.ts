@@ -18,7 +18,7 @@
 import {Drawer} from '@material/mwc-drawer';
 import {html} from 'lit-html';
 
-import {fixture, TestFixture, waitForEvent} from '../../../../test/src/util/helpers';
+import {fixture, TestFixture, waitForEvent} from '../../../test/src/util/helpers';
 
 const SCRIM_SELECTOR = '.mdc-drawer-scrim';
 const HEADER_SELECTOR = '.mdc-drawer__header';
