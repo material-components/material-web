@@ -18,7 +18,7 @@
     "outDir": "./",
     "baseUrl": "./packages",
     "paths": {
-      "@material/mwc-*": ["./*/src"]
+      "@material/mwc-*": ["./*"]
     },
     "composite": true,
     "importHelpers": true,
@@ -53,7 +53,7 @@
   },
   "include": [
     "custom_typings/**/*.ts",
-    "src/*.ts"
+    "*.ts"
   ],
   "exclude": [],
   "references": [

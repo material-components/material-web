@@ -8,7 +8,7 @@ node_modules
 /packages/**/*.js.map
 /packages/**/*.d.ts
 /packages/*/*.tgz
-/packages/*/src/*-css.ts
+/packages/*/*-css.ts
 /packages/*/package-lock.json
 **/*.tsbuildinfo*
 !packages/*/custom_types/**
