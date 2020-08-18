@@ -132,7 +132,7 @@ limitations under the License.
     @include _horizontal-padding($contained-padding);
   }
 
-  .mdc-button--outlined{
+  .mdc-button--outlined {
     $outline-width: custom-properties.create(
       --mdc-button-outline-width,
       button-variables.$outlined-border-width
@@ -240,4 +240,3 @@ limitations under the License.
   border-style: solid;
   border-color: transparent;
 }
-
