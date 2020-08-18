@@ -256,7 +256,7 @@ Name                                          | Description
 | `opened`   | `mwc-select-surface` | none              | Fired menu opens.    |
 | `closed`   | `mwc-select-surface` | none              | Fired menu closes.   |
 | `action`   | `mwc-list`           | `ActionDetail`*   | Fired when a selection has been made via click or keyboard action. |
-| `selected` | `mwc-list`           | `SelectedDetail`* | Fired when a selection has been made. Attribute `index` is the selected index (will  be of type `number`) |
+| `selected` | `mwc-list`           | `SelectedDetail`* | Fired when a selection has been made. Property `index` is the selected index (will  be of type `number`) |
 
 \* See
 [`mwc-list`'s Events section](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-2)
