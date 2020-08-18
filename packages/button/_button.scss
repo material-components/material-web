@@ -146,7 +146,10 @@ limitations under the License.
         border-color,
         custom-properties.create(
           --mdc-button-outline-color,
-          theme-color.prop-value(primary)
+          custom-properties.create(
+            --mdc-theme-primary,
+            theme-color.prop-value(primary)
+          )
         )
       );
     }
