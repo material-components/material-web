@@ -24,7 +24,7 @@ import {Menu} from '@material/mwc-menu';
 import {Corner, MenuCorner, MenuSurface} from '@material/mwc-menu/mwc-menu-surface';
 import {html, TemplateResult} from 'lit-html';
 
-import {Fake, fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../../test/src/util/helpers';
+import {Fake, fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 
 const defaultMenu = html`<mwc-menu></mwc-menu>`;
 const defaultSurface = html`<mwc-menu-surface></mwc-menu-surface>`;

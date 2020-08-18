@@ -17,7 +17,7 @@
 import {Switch} from '@material/mwc-switch';
 import {html} from 'lit-html';
 
-import {Fake, fixture, TestFixture} from '../../../../test/src/util/helpers';
+import {Fake, fixture, TestFixture} from '../../../test/src/util/helpers';
 
 interface SwitchProps {
   checked: boolean;

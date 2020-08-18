@@ -19,7 +19,7 @@ module.exports = function(config) {
   const packages = config.packages ? config.packages.split(',') : [];
   const fileEntries = [];
   const defaultFileEntry = [{
-    pattern: 'test/lib/packages/*/src/test/*.test.js',
+    pattern: 'test/lib/packages/*/test/*.test.js',
     watched: true,
     type: 'module'
   }];
@@ -28,7 +28,7 @@ module.exports = function(config) {
     const withoutMwcPrefix = package.replace(/^mwc-/, '');
     const fileEntry = {
       pattern:
-          `test/lib/packages/${withoutMwcPrefix}/src/test/${package}.test.js`,
+          `test/lib/packages/${withoutMwcPrefix}/test/${package}.test.js`,
       watched: true,
       type: 'module',
     };

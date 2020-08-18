@@ -30,7 +30,7 @@ import {RadioListItem} from '@material/mwc-list/mwc-radio-list-item';
 import {isIndexSet} from '@material/mwc-menu';
 import {html, TemplateResult} from 'lit-html';
 
-import {fixture, TestFixture} from '../../../../test/src/util/helpers';
+import {fixture, TestFixture} from '../../../test/src/util/helpers';
 
 const defaultListItemProps = {
   twoLine: false,

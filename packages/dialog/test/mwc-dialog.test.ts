@@ -24,7 +24,7 @@ import {DocumentWithBlockingElements} from 'blocking-elements';
 import {customElement, LitElement} from 'lit-element';
 import {html} from 'lit-html';
 
-import {fixture, rafPromise, TestFixture} from '../../../../test/src/util/helpers';
+import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 
 const blockingElements =
     (document as DocumentWithBlockingElements).$blockingElements;

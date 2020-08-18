@@ -25,9 +25,6 @@ const watchOptions = {
     if (path.indexOf('node_modules') > -1) {
       return false;
     }
-    if (path.indexOf('src') === -1) {
-      return false;
-    }
     return /.(?:ts|scss)$/.test(path);
   },
 };

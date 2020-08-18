@@ -19,7 +19,7 @@ import {FormElement} from '@material/mwc-base/form-element';
 import {customElement, query} from 'lit-element';
 import {html} from 'lit-html';
 
-import {fixture, TestFixture} from '../../../../test/src/util/helpers';
+import {fixture, TestFixture} from '../../../test/src/util/helpers';
 
 
 @customElement('test-form-element')
