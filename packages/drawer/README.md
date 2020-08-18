@@ -86,6 +86,15 @@ npm install @material/mwc-drawer
         </div>
     </div>
 </mwc-drawer>
+<script>
+    const drawer = document.getElementsByTagName('mwc-drawer')[0];
+    if (drawer) {
+        const container = drawer.parentNode;
+        container.addEventListener('MDCTopAppBar:nav', () => {
+            drawer.open = !drawer.open;
+        });
+    }
+</script>
 ```
 
 ### Modal
@@ -110,6 +119,15 @@ npm install @material/mwc-drawer
         </div>
     </div>
 </mwc-drawer>
+<script>
+    const drawer = document.getElementsByTagName('mwc-drawer')[0];
+    if (drawer) {
+        const container = drawer.parentNode;
+        container.addEventListener('MDCTopAppBar:nav', () => {
+            drawer.open = !drawer.open;
+        });
+    }
+</script>
 ```
 
 ## API
