@@ -17,7 +17,8 @@ limitations under the License.
 
 @use '@material/theme/custom-properties';
 @use '@material/notched-outline' as notchedoutline;
-@use '@material/theme';
+@use '@material/theme/theme';
+@use '@material/theme/theme-color';
 @use '@material/rtl';
 
 @include notchedoutline.core-styles();
@@ -65,7 +66,7 @@ limitations under the License.
 .mdc-notched-outline__leading,
 .mdc-notched-outline__notch,
 .mdc-notched-outline__trailing {
-  border-color: var(--mdc-notched-outline-border-color, var(--mdc-theme-primary, #{theme.$primary}));
+  border-color: var(--mdc-notched-outline-border-color, var(--mdc-theme-primary, #{theme-color.$primary}));
 
   @include theme.prop(border-width, (
     varname: --mdc-notched-outline-stroke-width,
