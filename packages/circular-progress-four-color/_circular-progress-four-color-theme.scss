@@ -17,14 +17,14 @@ limitations under the License.
 
 @use 'sass:map';
 @use '@material/circular-progress' as circularprogress;
-@use '@material/theme';
+@use '@material/theme/theme-color';
 
 $light-theme: (
   bar: (
-    theme.prop-value(primary),
-    theme.prop-value(primary),
-    theme.prop-value(primary),
-    theme.prop-value(primary)
+    theme-color.prop-value(primary),
+    theme-color.prop-value(primary),
+    theme-color.prop-value(primary),
+    theme-color.prop-value(primary)
   )
 );
 

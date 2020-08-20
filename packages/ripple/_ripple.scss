@@ -17,7 +17,8 @@ limitations under the License.
 
 @use 'sass:map';
 @use '@material/ripple';
-@use '@material/theme';
+@use '@material/theme/theme';
+@use '@material/theme/theme-color';
 @use '@material/theme/custom-properties';
 
 @use './ripple-theme';
@@ -32,13 +33,13 @@ limitations under the License.
   // Use custom primary and accent classes because mdc-ripple-surface--primary
   // and --secondary override opacity
   .primary {
-    --mdc-ripple-color: var(--mdc-theme-primary, #{theme.prop-value(primary)});
+    --mdc-ripple-color: var(--mdc-theme-primary, #{theme-color.prop-value(primary)});
   }
 
   .accent {
     --mdc-ripple-color: var(
       --mdc-theme-secondary,
-      #{theme.prop-value(secondary)}
+      #{theme-color.prop-value(secondary)}
     );
   }
 

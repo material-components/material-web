@@ -18,7 +18,8 @@ limitations under the License.
 @use "@material/list";
 @use "@material/ripple";
 @use "@material/feature-targeting" as feature;
-@use '@material/theme';
+@use '@material/theme/theme';
+@use '@material/theme/theme-color';
 @use '@material/typography';
 @use '@material/rtl';
 
@@ -34,7 +35,7 @@ $item-primary-text-baseline-height: 32px;
 $item-secondary-text-baseline-height: 20px;
 $dense-item-primary-text-baseline-height: 24px;
 $divider-color: if(
-  theme.tone(theme.$background) == "dark",
+  theme-color.tone(theme-color.$background) == "dark",
   list.$divider-color-on-dark-bg,
   list.$divider-color-on-light-bg
 );

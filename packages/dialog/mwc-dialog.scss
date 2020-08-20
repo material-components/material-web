@@ -19,7 +19,8 @@ limitations under the License.
 @use '@material/elevation';
 @use '@material/feature-targeting' as feature;
 @use '@material/rtl';
-@use '@material/theme';
+@use '@material/theme/theme';
+@use '@material/theme/theme-color';
 @use '@material/shape';
 
 @include dialog.core-styles();
@@ -116,7 +117,7 @@ limitations under the License.
         background-color,
         (
           varname: --mdc-dialog-scrim-color,
-          fallback: rgba(theme.prop-value($color), $opacity),
+          fallback: rgba(theme-color.prop-value($color), $opacity),
         )
       );
     }
@@ -136,7 +137,7 @@ limitations under the License.
         color,
         (
           varname: --mdc-dialog-heading-ink-color,
-          fallback: rgba(theme.prop-value($color), $opacity),
+          fallback: rgba(theme-color.prop-value($color), $opacity),
         )
       );
     }
@@ -156,7 +157,7 @@ limitations under the License.
         color,
         (
           varname: --mdc-dialog-content-ink-color,
-          fallback: rgba(theme.prop-value($color), $opacity),
+          fallback: rgba(theme-color.prop-value($color), $opacity),
         )
       );
     }
@@ -177,7 +178,7 @@ limitations under the License.
         border-color,
         (
           varname: --mdc-dialog-scroll-divider-color,
-          fallback: rgba(theme.prop-value($color), $opacity),
+          fallback: rgba(theme-color.prop-value($color), $opacity),
         )
       );
     }

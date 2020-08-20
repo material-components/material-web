@@ -18,11 +18,11 @@ limitations under the License.
 @use 'sass:map';
 @use 'sass:string';
 @use '@material/linear-progress' as linearprogress;
-@use '@material/theme';
+@use '@material/theme/theme-color';
 @use '@material/theme/custom-properties';
 
 $light-theme: (
-  bar: theme.prop-value(primary),
+  bar: theme-color.prop-value(primary),
   buffer: linearprogress.$baseline-buffer-color,
 );
 
@@ -41,7 +41,7 @@ $light-theme: (
 /// Sets the color of the buffer bar and buffering dots image.
 @mixin buffer-color($color) {
   // TODO(b/153370936): Replace with theme key resolve function
-  @if map.has-key(theme.$property-values, $color) {
+  @if map.has-key(theme-color.$property-values, $color) {
     @error 'buffer-color does not support theme keys';
   }
 

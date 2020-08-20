@@ -16,7 +16,7 @@ limitations under the License.
 */
 @use '@material/theme/custom-properties';
 @use '@material/linear-progress' as linearprogress;
-@use '@material/theme';
+@use '@material/theme/theme';
 
 @mixin core-styles() {
   @include linearprogress.core-styles();

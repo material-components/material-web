@@ -17,7 +17,7 @@ limitations under the License.
 
 @use '@material/form-field' as formfield;
 @use '@material/typography';
-@use '@material/theme';
+@use '@material/theme/theme';
 @use '@material/rtl';
 
 @include formfield.core-styles();

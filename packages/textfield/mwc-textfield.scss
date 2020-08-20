@@ -22,7 +22,8 @@ limitations under the License.
 @use "@material/line-ripple/mdc-line-ripple";
 @use "@material/notched-outline/mdc-notched-outline";
 @use "@material/ripple/common";
-@use '@material/theme';
+@use '@material/theme/theme';
+@use '@material/theme/theme-color';
 @use '@material/shape';
 
 .material-icons {
@@ -74,11 +75,11 @@ mwc-notched-outline {
 
     &.mdc-text-field--invalid {
       mwc-notched-outline {
-        --mdc-notched-outline-border-color: var(--mdc-text-field-error-color, var(--mdc-theme-error, #{theme.$error}));
+        --mdc-notched-outline-border-color: var(--mdc-text-field-error-color, var(--mdc-theme-error, #{theme-color.$error}));
       }
 
       &+.mdc-text-field-helper-line .mdc-text-field-character-counter, .mdc-text-field__icon {
-        color: var(--mdc-text-field-error-color, var(--mdc-theme-error, #{theme.$error}));
+        color: var(--mdc-text-field-error-color, var(--mdc-theme-error, #{theme-color.$error}));
       }
     }
 

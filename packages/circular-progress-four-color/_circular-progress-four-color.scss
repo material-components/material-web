@@ -15,13 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 @use '@material/circular-progress' as circularprogress;
-@use '@material/theme';
+@use '@material/theme/theme-color';
 @use '@material/theme/custom-properties';
 
 @mixin core-styles() {
   @include circularprogress.core-styles();
 
-  $primary: custom-properties.create(--mdc-theme-primary, theme.prop-value(primary));
+  $primary: custom-properties.create(--mdc-theme-primary, theme-color.prop-value(primary));
   @include circularprogress.indeterminate-colors((
     custom-properties.create(--mdc-circular-progress-bar-color-1, $primary),
     custom-properties.create(--mdc-circular-progress-bar-color-2, $primary),
