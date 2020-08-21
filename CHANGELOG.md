@@ -30,6 +30,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `button`
   - outline color should default to on-surface with 12% opacity
   - disabled outline color should default to on-surface with 12% opacity
+- `fab`
+  - **BREAKING:VISUAL** vertical alignment is now all inline and up to spec.
 
 ## [v0.18.0] - 2020-08-03
 

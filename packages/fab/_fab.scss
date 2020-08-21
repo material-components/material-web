@@ -33,7 +33,7 @@ $icon-size: map.get(fab-theme.$light-theme, icon-size);
   --mdc-ripple-color: currentcolor;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  vertical-align: top;
+  display: inline-flex;
 
   @include fab-mixins.without-ripple();
 
