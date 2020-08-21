@@ -155,11 +155,19 @@ Name            | Type      | Default | Description
 
 Name                             | Default                                                       | Description
 -------------------------------- | ------------------------------------------------------------- | -----------
-`--mdc-theme-secondary`          | ![](images/color_018786.png) `#018786`               | Background color when the checkbox is `checked` or `indeterminate`, and the base color of the ripple effect and focus halo.
-`--mdc-theme-on-surface`         | ![](images/color_000.png) `#000`                     | Color of the unchecked focus ripple.
 `--mdc-checkbox-ink-color`       | ![](images/color_fff.png) `#fff`                     | Color of mark inside a `checked` or `indeterminate` checkbox (enabled or disabled).
 `--mdc-checkbox-unchecked-color` | ![](images/color_0,0,0,54.png) `rgba(0, 0, 0, 0.54)` | Color of the unchecked box.
 `--mdc-checkbox-disabled-color`  | ![](images/color_0,0,0,38.png) `rgba(0, 0, 0, 0.38)` | Color of the checkbox box and fill when disabled.
+
+#### Global Custom Properties
+
+This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+custom properties.
+
+| Name                                 | Description
+| ------------------------------------ | -----------
+| `--mdc-theme-secondary`                | Background color when the checkbox is `checked` or `indeterminate`, and the base color of the ripple effect and focus halo.
+| `--mdc-theme-on-surface`             | Color of mark inside a `checked` or `indeterminate` checkbox (enabled or disabled).
 
 ## Additional references
 
