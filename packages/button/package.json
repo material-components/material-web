@@ -25,7 +25,8 @@
   "devDependencies": {
     "@material/button": "=8.0.0-canary.95e4eeea7.0",
     "@material/elevation": "=8.0.0-canary.95e4eeea7.0",
-    "@material/feature-targeting": "=8.0.0-canary.95e4eeea7.0",
+    "@material/ripple": "=8.0.0-canary.95e4eeea7.0",
+    "@material/shape": "=8.0.0-canary.95e4eeea7.0",
     "@material/theme": "=8.0.0-canary.95e4eeea7.0"
   },
   "publishConfig": {

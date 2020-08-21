@@ -137,10 +137,10 @@ mwc-button {
 | ------------------------------------- | -------------------------------------------------- | ---
 | `--mdc-button-horizontal-padding`     | filled: `16px` outlined: `15px` default: `8px`     | Left and right padding of the button label (for outlined buttons the outline width is automatically subtracted).
 | `--mdc-button-outline-width`          | `1px`                                              | `width` of the outline of an outlined button and attempts to keep the component size constant.
-| `--mdc-button-outline-color`          | ![](images/color_6200ee.png) `--mdc-theme-primary` | Color of the outline of an outlined element. (Overrides `--mdc-theme-primary`)
+| `--mdc-button-outline-color`          | ![](images/color_0,0,0,12.png) | Color of the outline of an outlined element.
 | `--mdc-button-disabled-fill-color`    | ![](images/color_0,0,0,12.png) `rgba(0,0,0,0.12)`  | Background fill color of a disabled raised or unelevated button.
 | `--mdc-button-disabled-ink-color`     | ![](images/color_0,0,0,37.png) `rgba(0,0,0,0.37)`  | Text color of a disabled button as well as the outline color of a disabled outlined button.
-| `--mdc-button-disabled-outline-color` | ![](images/color_0,0,0,37.png) `--mdc-button-disabled-ink-color` | Sets the color of the outline of a disabled outlined button. (Overrides `--mdc-button-disabled-ink-color`)
+| `--mdc-button-disabled-outline-color` | ![](images/color_0,0,0,12.png) | Sets the color of the outline of a disabled outlined button.
 | `--mdc-button-raised-box-shadow`          | mdc elevation 2 | Sets the box shadow of the raised button.
 | `--mdc-button-raised-box-shadow-hover`    | mdc elevation 4 | Sets the box shadow of the raised button when focused or hovered.
 | `--mdc-button-raised-box-shadow-active`   | mdc elevation 8 | Sets the box shadow of the raised button when active.

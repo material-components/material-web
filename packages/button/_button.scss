@@ -146,10 +146,7 @@ limitations under the License.
         border-color,
         custom-properties.create(
           --mdc-button-outline-color,
-          custom-properties.create(
-            --mdc-theme-primary,
-            theme-color.prop-value(primary)
-          )
+          button-variables.$outline-color
         )
       );
     }
@@ -192,7 +189,7 @@ limitations under the License.
         border-color,
         custom-properties.create(
           --mdc-button-disabled-outline-color,
-          button-variables.$disabled-ink-color
+          button-variables.$disabled-container-color
         )
       );
     }

@@ -27,6 +27,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Unpkg integration should properly dedupe after removing file extensions from imports
+- `button`
+  - outline color should default to on-surface with 12% opacity
+  - disabled outline color should default to on-surface with 12% opacity
 
 ## [v0.18.0] - 2020-08-03
 
