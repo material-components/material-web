@@ -7,32 +7,17 @@
 @use 'sass:map';
 @use 'sass:string';
 @use '@material/checkbox/checkbox-custom-properties';
-@use '@material/checkbox/variables' as checkbox-variables;
-@use '@material/ripple/ripple-theme' as mdc-ripple-theme;
 @use '@material/theme/color-custom-properties';
 @use '@material/theme/css';
 @use '@material/theme/theme';
-@use '@material/theme/theme-color';
 @use 'third_party/javascript/material_web_components/ripple/ripple-theme';
 
-$ripple-opacity: (
-  hover: map.get(mdc-ripple-theme.$dark-ink-opacities, hover),
-  focus: map.get(mdc-ripple-theme.$dark-ink-opacities, focus),
-  press: map.get(mdc-ripple-theme.$dark-ink-opacities, press),
-);
-
-$light-theme: (
-  checkmark-color: checkbox-variables.$mark-color,
-  container-checked-color: theme-color.prop-value(checkbox-variables.$baseline-theme-color),
-  container-checked-hover-color: null,
-  container-disabled-color: checkbox-variables.$disabled-color,
-  outline-color: checkbox-variables.$border-color,
-  outline-hover-color: null,
-  ripple-color: theme-color.$on-surface,
-  ripple-opacity: $ripple-opacity,
-);
-
-@mixin theme($theme: $light-theme) {
+/// Sets theme to checkbox with given theme configuration by setting appropriate
+/// CSS custom properties. Material baseline theme - `$light-theme`
+/// (`material_components_web/checkbox/_checkbox-theme.scss`) is applied by
+/// default.
+/// @param {Map} $theme - Theme configuration to use for theming.
+@mixin theme($theme) {
   @include css.declaration(
     checkbox-custom-properties.$ink-color,
     map.get($theme, checkmark-color)
