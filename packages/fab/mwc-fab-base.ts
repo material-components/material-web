@@ -67,11 +67,13 @@ export class FabBase extends LitElement {
       'icon-end': this.showIconAtEnd,
     };
 
+    const ariaLabel = this.label ? this.label : this.icon;
+
     return html`
       <button
           class="mdc-fab ${classMap(classes)}"
           ?disabled="${this.disabled}"
-          aria-label="${this.label || this.icon}"
+          aria-label="${ariaLabel}"
           @mouseenter=${this.handleRippleMouseEnter}
           @mouseleave=${this.handleRippleMouseLeave}
           @focus=${this.handleRippleFocus}
