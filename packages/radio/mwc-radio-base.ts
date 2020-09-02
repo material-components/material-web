@@ -22,6 +22,7 @@ import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {MDCRadioAdapter} from '@material/radio/adapter';
 import MDCRadioFoundation from '@material/radio/foundation';
 import {eventOptions, html, internalProperty, property, query, queryAsync} from 'lit-element';
+import {classMap} from 'lit-html/directives/class-map';
 
 
 /**
@@ -99,6 +100,8 @@ export class RadioBase extends FormElement {
   }
 
   @property({type: String}) name = '';
+
+  @property({type: Boolean}) reducedTouchTarget = false;
 
   protected mdcFoundationClass = MDCRadioFoundation;
 
@@ -198,16 +201,25 @@ export class RadioBase extends FormElement {
 
   /**
    * @soyCompatible
+   * @soyAttributes radioAttributes: input
+   * @soyClasses radioClasses: .mdc-radio
    */
   protected render() {
+    /** @classMap */
+    const classes = {
+      'mdc-radio--touch': !this.reducedTouchTarget,
+      'mdc-radio--disabled': this.disabled,
+    };
+
     return html`
-      <div class="mdc-radio">
+      <div class="mdc-radio ${classMap(classes)}">
         <input
           class="mdc-radio__native-control"
           type="radio"
           name="${this.name}"
           .checked="${this.checked}"
           .value="${this.value}"
+          ?disabled="${this.disabled}"
           @change="${this.changeHandler}"
           @focus="${this.handleFocus}"
           @click="${this.handleClick}"
@@ -272,7 +284,7 @@ export class RadioBase extends FormElement {
     this.rippleHandlers.endFocus();
   }
 
-  private changeHandler() {
+  protected changeHandler() {
     this.checked = this.formElement.checked;
   }
 }
