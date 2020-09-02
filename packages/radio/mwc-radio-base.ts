@@ -16,11 +16,11 @@ limitations under the License.
 */
 import {addHasRemoveClass, FormElement, HTMLElementWithRipple} from '@material/mwc-base/form-element';
 import {observer} from '@material/mwc-base/observer';
+import {SingleSelectionController} from '@material/mwc-radio/single-selection-controller';
 import {ripple} from '@material/mwc-ripple/ripple-directive';
 import {MDCRadioAdapter} from '@material/radio/adapter';
 import MDCRadioFoundation from '@material/radio/foundation';
 import {html, property, query} from 'lit-element';
-import {SingleSelectionController} from './single-selection-controller';
 
 /**
  * @fires checked
