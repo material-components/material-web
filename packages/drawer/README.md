@@ -166,6 +166,17 @@ Name | Detail | Description
 | -------------------- | --------- | -----------
 | `--mdc-drawer-width` | `256px`   | Width of the side drawer when opened.
 
+### Global CSS Custom Properties
+
+This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+custom properties.
+
+| Name | Detail | Description
+|---- | ------ | -----------
+| `--mdc-typography-headline6-<PROPERTY>`  | Styles the typography of the drawer's title.
+| `--mdc-typography-body2-<PROPERTY>`      | Styles the typography of the drawer's subtitle.
+| `--mdc-typography-subtitle2-<PROPERTY>`  | Styles the typography of the drawer's list items.
+
 ### Additional References
 
 -   [MDC Web Drawers](https://material.io/develop/web/components/drawers/)
