@@ -113,6 +113,8 @@ custom properties.
 | ------------------------------------ | -----------
 | `--mdc-theme-secondary`              | Sets the color of the knob and filled track when slider is active.
 | `--mdc-theme-text-primary-on-dark`   | Sets the color of the text in the pin.
+| `--mdc-typography-subtitle2-<PROPERTY>` | Styles the typography of slider's value indicators.
+
 
 ## Additional references
 
