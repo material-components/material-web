@@ -123,6 +123,15 @@ attribute or property to enable this layout.
 | ----------------------------- | ------- |------------
 | `--mdc-snackbar-action-color` | ![](images/color_bb86fc.png) `#bb86fc` | Color of the action button text.
 
+#### Global CSS Custom Properties
+
+This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+custom properties.
+
+| Name                                 | Description
+| ------------------------------------ | -----------
+| `--mdc-typography-body2-<PROPERTY>`  | Styles the typography of a snackbar.
+
 ## Additional references
 
 - [MDC Web Snackbars](https://material.io/develop/web/components/snackbars/)
