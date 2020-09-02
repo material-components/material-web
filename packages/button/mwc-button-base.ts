@@ -113,9 +113,7 @@ export class ButtonBase extends LitElement {
           </slot>
         </span>
         <span class="mdc-button__label">${this.label}</span>
-        <span>
-          <slot></slot>
-        </span>
+        <slot></slot>
         <span class="trailing-icon">
           <slot name="trailingIcon">
             ${this.icon && this.trailingIcon ? this.renderIcon() : ''}

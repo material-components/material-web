@@ -90,12 +90,8 @@ $icon-size: map.get(fab-theme.$light-theme, icon-size);
       @extend %material-icons;
     }
 
-    .icon-slot-container {
-      display: inline-flex;
-    }
-
     .mdc-fab__icon,
-    .icon-slot-container ::slotted([slot='icon']) {
+    ::slotted([slot='icon']) {
       @include theme.property(
         width,
         custom-properties.create(--mdc-icon-size, $icon-size)
@@ -128,7 +124,7 @@ $icon-size: map.get(fab-theme.$light-theme, icon-size);
         $extended-label-padding
       );
 
-      .icon-slot-container ::slotted([slot='icon']) {
+      ::slotted([slot='icon']) {
         @include fab-mixins.extended-icon-padding(
           $extended-icon-padding,
           $extended-label-padding
@@ -144,7 +140,7 @@ $icon-size: map.get(fab-theme.$light-theme, icon-size);
           );
         }
 
-        .icon-slot-container ::slotted([slot='icon']) {
+        ::slotted([slot='icon']) {
           @include fab-mixins.extended-icon-padding(
             $extended-icon-padding,
             $extended-label-padding,
@@ -154,7 +150,7 @@ $icon-size: map.get(fab-theme.$light-theme, icon-size);
       }
     }
 
-    &.mdc-fab--exited .icon-slot-container ::slotted([slot='icon']) {
+    &.mdc-fab--exited ::slotted([slot='icon']) {
       transform: scale(0);
       transition: animation.exit-permanent(transform, 135ms);
     }
