@@ -1,5 +1,4 @@
 # `<mwc-tab-bar>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-tab-bar.svg)](https://www.npmjs.com/package/@material/mwc-tab-bar)
-
 > IMPORTANT: The Material Web Components are a work in progress and subject to
 > major changes until 1.0 release.
 
@@ -275,7 +274,6 @@ _Note: example is in the state of hovering over the first tab._
 ### CSS Custom Properties
 
 None
-
 
 ## Additional references
 

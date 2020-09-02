@@ -1,5 +1,4 @@
 # `mwc-floating-label` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-floating-label.svg)](https://www.npmjs.com/package/@material/mwc-floating-label)
-
 > IMPORTANT: The Material Web Components are a work in progress and subject to
 > major changes until 1.0 release.
 

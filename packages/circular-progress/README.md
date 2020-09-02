@@ -73,6 +73,11 @@ None
 
 ### CSS Custom Properties
 
-Name                  | Default                                                  | Description
---------------------- | -------------------------------------------------------- | -----------
-`--mdc-theme-primary` | ![](images/color_6200ee.png) `#6200EE` | Sets the color of primary progress bar.
+#### Global Custom Properties
+
+This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+custom properties.
+
+| Name                                 | Description
+| ------------------------------------ | -----------
+| `--mdc-theme-primary`                | Sets the color of primary progress bar.

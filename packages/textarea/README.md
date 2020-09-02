@@ -1,5 +1,4 @@
 # `<mwc-textarea>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-textarea.svg)](https://www.npmjs.com/package/@material/mwc-textarea)
-
 > IMPORTANT: The Material Web Components are a work in progress and subject to
 > major changes until 1.0 release.
 
@@ -152,18 +151,27 @@ type ValidityTransform = (value: string, nativeValidity: ValidityState) => Parti
 ### CSS Custom Properties
 
 Inherits CSS Custom properties from:
+
 * [`mwc-ripple`](https://github.com/material-components/material-components-web-components/tree/master/packages/ripple)
 * [`mwc-notched-outline`](https://github.com/material-components/material-components-web-components/tree/master/packages/notched-outline).
 * [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon)
 
 | Name                                              | Default               | Description
 | ------------------------------------------------- | --------------------- |------------
-| `--mdc-theme-primary`                             | `#6200ee`             | Color when active of the underline ripple, the outline, and the caret.
-| `--mdc-theme-error`                               | `#b00020`             | Color when errored of the underline, the outline, the caret, and the icons.
 | `--mdc-text-area-filled-border-radius`           | `4px 4px 0 0`          | Border radius of the standard / filled textarea's background filling.
 | `--mdc-text-area-outlined-idle-border-color`     | `rgba(0, 0, 0, 0.38)`  | Color of the outlined textarea's  outline when idle.
 | `--mdc-text-area-outlined-hover-border-color`    | `rgba(0, 0, 0, 0.87)`  | Color of the outlined textarea's outline when hovering.
 | `--mdc-text-area-outlined-disabled-border-color` | `rgba(0, 0, 0, 0.06)`  | Color of the outlined textarea's outline when disabled.
+
+#### Global Custom Properties
+
+This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+custom properties.
+
+| Name                 | Description
+| -------------------- | -----------
+`--mdc-theme-primary`  | Color when active of the underline ripple, the outline, and the caret.
+`--mdc-theme-error`    | Color when errored of the underline, the outline, the caret, and the icons.
 
 ### Validation
 

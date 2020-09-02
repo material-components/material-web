@@ -147,18 +147,21 @@ mwc-top-app-bar-fixed {
 | `--mdc-top-app-bar-fixed-box-shadow` | mdc elevation 4 | Sets the box shadow of the fixed top app bar when scrolling.
 | `--mdc-top-app-bar-width`            | `100%`          | Width of the `top-app-bar` in relation to the Window.
 
-#### Global Custom Properties
-
-| Name | Default | Description
-| ---- | ------- | -----------
-| `--mdc-theme-primary` | ![](images/color_6200ee.png) `#6200ee` | Background color of the bar
-| `--mdc-theme-on-primary` | ![](images/color_ffffff.png) `#ffffff` | Text color of the title, and icon colors
-
 #### Elevation values
 
 | Elevation Level | CSS Value
 | --- | ---
 | `4` | `0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)`
+
+#### Global Custom Properties
+
+This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+custom properties.
+
+| Name | Default | Description
+| ---- | ------- | -----------
+| `--mdc-theme-primary` | Background color of the bar
+| `--mdc-theme-on-primary` | Text color of the title, and icon colors
 
 ## Additional references
 

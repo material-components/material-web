@@ -269,8 +269,6 @@ properties from `mwc-menu` and `mwc-list` propagate through `mwc-select`.
 
 Name                                          | Default                                                       | Description
 --------------------------------------------- | ------------------------------------------------------------- | -----------
-`--mdc-theme-primary`                         | ![](images/color_6200ee.png) `#6200ee`                 | Color when active of the underline ripple, the outline, the caret, the dropdown-icon, and the focused and activatd list items.
-`--mdc-theme-error`                           | ![](images/color_b00020.png) `#b00020`                 | Color when errored of the underline ripple, the outline, the caret, the dropdown-icon, and the focused and activatd list items.
 `--mdc-select-error-color`                    | `--mdc-theme-error`                                           | Applies where --mdc-theme-error applies.
 `--mdc-select-idle-line-color`                | ![](images/color_0,0,0,42.png) `rgba(0, 0, 0, 0.42)`   | Color of the filled select's bottom line when idle.
 `--mdc-select-hover-line-color`               | ![](images/color_0,0,0,87.png) `rgba(0, 0, 0, 0.87)`   | Color of the filled select's bottom line when hovering.
@@ -293,6 +291,16 @@ Name                                          | Default                         
 see the
 [styling documentation](https://github.com/material-components/material-components-web-components/tree/master/packages/list#css-custom-properties)
 for further details.
+
+#### Global Custom Properties
+
+This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+custom properties.
+
+| Name                     | Description
+| ------------------------ | -----------
+| `--mdc-theme-primary`    | Color when active of the underline ripple, the outline, the caret, the dropdown-icon, and the focused and activatd list items.
+| `--mdc-theme-error`      | Color when errored of the underline ripple, the outline, the caret, the dropdown-icon, and the focused and activatd list items.
 
 ## Additional references
 

@@ -303,8 +303,6 @@ npm install @material/mwc-dialog
 
 | Name                                | Default               | Description
 | ----------------------------------- | --------------------- |------------
-| `--mdc-theme-surface`               | ![](images/color_fff.png) `#fff`                | Color of the dialog surface's background.
-| `--mdc-shape-medium`                | `4px`                 | Corner radius of the dialog surface.
 | `--mdc-dialog-scrim-color`          | ![](images/color_0,0,0,32.png) `rgba(0, 0, 0, 0.32)` | Color of the scrim. (**Note:** setting alpha to 0 will still make scrim clickable but transparent).
 | `--mdc-dialog-heading-ink-color`    | ![](images/color_0,0,0,87.png) `rgba(0, 0, 0, 0.87)` | Color of the heading text.
 | `--mdc-dialog-content-ink-color`    | ![](images/color_0,0,0,6.png) `rgba(0, 0, 0, 0.6)`  | Color applied to the projected content. (**Note:** it may also be possible to style the content via the light DOM since it is not encapsulated in a shadow root).
@@ -319,6 +317,16 @@ npm install @material/mwc-dialog
 | Elevation Level | CSS Value
 | -- | -
 `24` | `0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)`
+
+#### Global Custom Properties
+
+This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+custom properties.
+
+| Name                                 | Description
+| ------------------------------------ | -----------
+| `--mdc-theme-surface`                | Color of the dialog surface's background.
+| `--mdc-shape-medium`                 | Corner radius of the dialog surface.
 
 ### Actions
 

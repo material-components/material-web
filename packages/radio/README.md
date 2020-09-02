@@ -1,5 +1,4 @@
 # `<mwc-radio>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-radio.svg)](https://www.npmjs.com/package/@material/mwc-radio)
-
 > IMPORTANT: The Material Web Components are a work in progress and subject to
 > major changes until 1.0 release.
 
@@ -125,14 +124,21 @@ to associate an interactive label with the radio.
 | ---------| ------ | -----------
 | `change` | `{}`   | Fired when the user modifies the radio `checked` state from an input device interaction on this radio. Note that, like [native `<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event), the `change` event is *not* fired when the `checked` property is set from JavaScript, nor is it fired when another radio in the same group becomes `checked`.
 
-
 ### CSS Custom Properties
 
 | Name                    | Default                                | Description
 | ----------------------- | -------------------------------------- |------------
-| `--mdc-theme-secondary` | ![](images/color_018786.png) `#018786` | Color of the radio button.
 | `--mdc-radio-unchecked-color` | ![](images/color_0,0,0,54.png) `rgba(0, 0, 0, 0.54)` | Color of the ring of an unchecked radio.
 | `--mdc-radio-disabled-color` | ![](images/color_0,0,0,38.png) `rgba(0, 0, 0, 0.38)` | Color of the ring and circle of a disabled radio.
+
+#### Global Custom Properties
+
+This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+custom properties.
+
+| Name                                 | Description
+| ------------------------------------ | -----------
+| `--mdc-theme-secondary`              | Color of the radio button.
 
 ## Additional references
 

@@ -1,5 +1,4 @@
 # `<mwc-tab>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-tab.svg)](https://www.npmjs.com/package/@material/mwc-tab)
-
 > IMPORTANT: The Material Web Components are a work in progress and subject to
 > major changes until 1.0 release.
 
@@ -88,8 +87,6 @@ custom properties.
 | `--mdc-theme-secondary`              | Color of the indicator icon if defined.
 | `--mdc-icon-font`                    | Icon font to use for `icon` and `indicatorIcon`.
 | `--mdc-icon-size`                    | Size of the text icon.
-
-
 
 ## Additional references
 

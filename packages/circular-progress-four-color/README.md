@@ -80,8 +80,16 @@ None
 
 Name                                  | Default                                                             | Description
 ------------------------------------- | ------------------------------------------------------------------- | -----------
-`--mdc-theme-primary`                 | ![](images/color_6200ee.png) `#6200EE` | Sets the color of determinate progress bar. If the indeterminate four colors are unset, sets the color for indeterminate state as well.
 `--mdc-circular-progress-bar-color-1` | `--mdc-theme-primary`                                               | Sets the first of the four rotating colors.
 `--mdc-circular-progress-bar-color-2` | `--mdc-theme-primary`                                               | Sets the second of the four rotating colors.
 `--mdc-circular-progress-bar-color-3` | `--mdc-theme-primary`                                               | Sets the third of the four rotating colors.
 `--mdc-circular-progress-bar-color-4` | `--mdc-theme-primary`                                               | Sets the last of the four rotating colors.
+
+#### Global Custom Properties
+
+This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+custom properties.
+
+| Name                                 | Description
+| ------------------------------------ | -----------
+| `--mdc-theme-primary`                | Sets the color of determinate progress bar. If the indeterminate four colors are unset, sets the color for indeterminate state as well.

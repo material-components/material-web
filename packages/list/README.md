@@ -558,7 +558,6 @@ interface RequestSelectedDetail {
 
 | Name                                | Default               | Description
 | ----------------------------------- | --------------------- |------------
-| `--mdc-theme-text-primary-on-background` | ![](images/color_0,0,0,87.png) `rgba(0, 0, 0, 0.87)` | Color of the primary text.
 | `--mdc-list-vertical-padding` | `8px`    | Padding before and after the first and last list items.
 | `--mdc-list-side-padding`     | `16px`   | Adjusts the padding of the `[padded]` list dividers (also propagates to `mwc-list-item`).
 | `--mdc-list-inset-margin`     | `72px`   | Adjusts the left inset padding of an `[inset]` list divider. Typically used for dividing list items with icons.
@@ -567,12 +566,6 @@ interface RequestSelectedDetail {
 
 | Name                                       | Default              | Description
 | ------------------------------------------ | -------------------- |------------
-| `--mdc-theme-primary`                      | ![](images/color_6200ee.png) `#6200ee` | Color of the activated ripple and primary text color when activated.
-| `--mdc-theme-on-surface`                   | ![](images/color_000.png) `#000`       | Disabled text color
-| `--mdc-theme-text-icon-on-background`      | ![](images/color_0,0,0,38.png) `rgba(0, 0, 0, .38)` | Color of the graphic icon (if graphic is text icon).
-| `--mdc-theme-text-primary-on-background`   | ![](images/color_0,0,0,87.png) `rgba(0, 0, 0, .87)` | Color of the primary text if not activated.
-| `--mdc-theme-text-secondary-on-background` | ![](images/color_0,0,0,54.png) `rgba(0, 0, 0, .54)` | Color of the secondary text if not activated.
-| `--mdc-theme-hint-on-background`           | ![](images/color_0,0,0,38.png) `rgba(0, 0, 0, .38)` | Color of the meta (if is text or text icon).
 | `--mdc-list-side-padding`                  | `16px`               | Side padding of the list item.
 | `--mdc-list-item-meta-size`                | `24px`               | Line height of the meta icon or text and width & height of the slotted parent wrapper.
 | `--mdc-list-item-graphic-size`             | `24px`,`40px`,`56px` | Line height of the graphic and width & height of the slotted parent wrapper. `24px` when graphic is `"icon"`. `40px` when graphic is `"avatar"`. `56px` when graphic is `"medium"`, and `"large"`.
@@ -582,6 +575,20 @@ interface RequestSelectedDetail {
 and thus exposes all of the custom properties in `mwc-ripple`'s documentation
 with the exception of `--mdc-ripple-color` being overriden as
 `--mdc-theme-primary` when `mwc-list-item` is `activated`.
+
+##### Global Custom Properties
+
+This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+custom properties.
+
+| Name                                       | Description
+| ------------------------------------------ | -----------
+| `--mdc-theme-primary`                      | Color of the activated ripple and primary text color when activated.
+| `--mdc-theme-on-surface`                   | Disabled text color.
+| `--mdc-theme-text-icon-on-background`      | Color of the graphic icon (if graphic is text icon).
+| `--mdc-theme-text-primary-on-background`   | Color of the primary text if not activated.
+| `--mdc-theme-text-secondary-on-background` | Color of the secondary text if not activated.
+| `--mdc-theme-hint-on-background`           | Color of the meta (if is text or text icon).
 
 ## Additional references
 

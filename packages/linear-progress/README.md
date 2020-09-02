@@ -1,5 +1,4 @@
 # `<mwc-linear-progress>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-linear-progress.svg)](https://www.npmjs.com/package/@material/mwc-linear-progress)
-
 > IMPORTANT: The Material Web Components are a work in progress and subject to
 > major changes until 1.0 release.
 
@@ -101,7 +100,6 @@ None
 
 | Name                                         | Default                                | Description
 | -------------------------------------------- | -------------------------------------- |------------
-| `--mdc-theme-primary`                        | ![](images/color_6200ee.png) `#6200EE` | Sets the color of primary progress bar.
 | `--mdc-linear-progress-buffer-color`         | ![](images/color_e6e6e6.png) `#E6E6E6` | Sets the color of the buffer progress bar.<br> **NOTE:** to change the color of the buffering dots, you must do so in the image of `--mdc-linear-progress-buffering-dots-image`.
 | `--mdc-linear-progress-buffering-dots-image` | `url("<svg data url>")` (see below for value) | Sets the image to use as the buffering dots. This pattern is then repeated horizontally and animated.
 
@@ -116,6 +114,15 @@ You may also notice that it is simply a colored circle with some transparent
 space to its right. If you would like to change the color of the circle, you can
 simply change the `fill="%23e6e6e6"` to any valid color property (n.b. `%23` is
 the url-encoded equivalent of `#`).
+
+#### Global Custom Properties
+
+This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+custom properties.
+
+| Name                                 | Description
+| ------------------------------------ | -----------
+| `--mdc-theme-primary`                | Sets the color of primary progress bar.
 
 ## Additional references
 

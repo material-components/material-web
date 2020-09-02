@@ -1,5 +1,4 @@
 # `<mwc-switch>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-switch.svg)](https://www.npmjs.com/package/@material/mwc-switch)
-
 > IMPORTANT: The Material Web Components are a work in progress and subject to
 > major changes until 1.0 release.
 
@@ -110,13 +109,18 @@ to associate an interactive label with the switch.
 
 ### CSS Custom Properties
 
-| Name | Default | Description
-| ----------------------- | -------------------------------------- | ---
-| `--mdc-theme-surface` | ![](images/color_ffffff.png) `#ffffff` | Fill color of the thumb head when unchecked.
-| `--mdc-theme-on-surface` | ![](images/color_000000.png) `#000000` | 38% fill color of the track when unchecked.
-| `--mdc-theme-secondary` | ![](images/color_018786.png) `#018786` | Fill color of the thumb head and 38% fill color of the track when checked.
+Inherits styles from [ripple](https://github.com/material-components/material-components-web-components/tree/master/packages/ripple)
 
-Also inherits styles from [ripple](https://github.com/material-components/material-components-web-components/tree/master/packages/ripple)
+#### Global Custom Properties
+
+This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+custom properties.
+
+| Name                                 | Description
+| ------------------------------------ | -----------
+| `--mdc-theme-surface`                | Fill color of the thumb head when unchecked.
+| `--mdc-theme-on-surface`             | 38% fill color of the track when unchecked.
+| `--mdc-theme-secondary`              | Fill color of the thumb head and 38% fill color of the track when checked.
 
 ## Additional references
 

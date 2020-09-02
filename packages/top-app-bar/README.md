@@ -148,10 +148,10 @@ mwc-top-app-bar {
 
 #### Global Custom Properties
 
-| Name | Default | Description
-| ---- | ------- | -----------
-| `--mdc-theme-primary` | ![](images/color_6200ee.png) `#6200ee` | Background color of the bar
-| `--mdc-theme-on-primary` | ![](images/color_ffffff.png) `#ffffff` | Text color of the title, and icon colors
+| Name | Description
+| ---- | -----------
+| `--mdc-theme-primary` | Background color of the bar
+| `--mdc-theme-on-primary` | Text color of the title, and icon colors
 
 ## Additional references
 

@@ -9,7 +9,6 @@ be used to turn an option on or off.
 
 [Demo](https://material-components.github.io/material-components-web-components/demos/checkbox/)
 
-
 ## Installation
 
 ```sh
@@ -166,8 +165,8 @@ custom properties.
 
 | Name                                 | Description
 | ------------------------------------ | -----------
-| `--mdc-theme-secondary`                | Background color when the checkbox is `checked` or `indeterminate`, and the base color of the ripple effect and focus halo.
-| `--mdc-theme-on-surface`             | Color of mark inside a `checked` or `indeterminate` checkbox (enabled or disabled).
+|`--mdc-theme-secondary`               | Background color when the checkbox is `checked` or `indeterminate`, and the base color of the ripple effect and focus halo.
+|`--mdc-theme-on-surface`              | Color of mark inside a `checked` or `indeterminate` checkbox (enabled or disabled).
 
 ## Additional references
 

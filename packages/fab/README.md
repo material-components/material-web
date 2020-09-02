@@ -1,5 +1,4 @@
 # `<mwc-fab>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-fab.svg)](https://www.npmjs.com/package/@material/mwc-fab)
-
 > IMPORTANT: The Material Web Components are a work in progress and subject to
 > major changes until 1.0 release.
 
@@ -120,12 +119,9 @@ mwc-fab {
 
 ### CSS Custom Properties
 
-Name                       | Default                                                             | Description
--------------------------- | ------------------------------------------------------------------- | -----------
-`--mdc-icon-font`          | [`Material Icons`](https://google.github.io/material-design-icons/) | Font to use for the icon.
-`--mdc-theme-on-secondary` | ![](images/color_ffffff.png) `#ffffff`                          | Foreground color of the label and icon.
-`--mdc-theme-secondary`    | ![](images/color_018786.png) `#018786`                          | Background color of the FAB.
-`--mdc-fab-box-shadow`     | mdc elevation 6, 8, 12                                              | Sets the box shadow of the fab. Elevation 6 when idle, 8 when focused or hovered, and 12 when active.
+Name                       | Default                            | Description
+-------------------------- | -----------------------------------| -----------
+`--mdc-fab-box-shadow`     | mdc elevation 6, 8, 12             | Sets the box shadow of the fab. Elevation 6 when idle, 8 when focused or hovered, and 12 when active.
 
 #### Elevation values
 
@@ -134,6 +130,17 @@ Name                       | Default                                            
 | `6`  | `0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12)`
 | `8`  | `0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)`
 | `12` | `0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12)`
+
+#### Global Custom Properties
+
+This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+custom properties.
+
+| Name                                 | Description
+| ------------------------------------ | -----------
+| `--mdc-icon-font`                    | Font to use for the icon.
+| `--mdc-theme-secondary`              | Background color of the FAB.
+| `--mdc-theme-on-secondary`           | Foreground color of the label and icon.
 
 ## Additional references
 
