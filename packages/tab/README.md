@@ -81,12 +81,13 @@ Name                                 | Default                                  
 This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
 custom properties.
 
-| Name                                 | Description
-| ------------------------------------ | -----------
-| `--mdc-theme-primary`                | Color of the activated tab's text, indicator, and ripple.
-| `--mdc-theme-secondary`              | Color of the indicator icon if defined.
-| `--mdc-icon-font`                    | Icon font to use for `icon` and `indicatorIcon`.
-| `--mdc-icon-size`                    | Size of the text icon.
+| Name                                      | Description
+| ----------------------------------------- | -----------
+| `--mdc-theme-primary`                     | Color of the activated tab's text, indicator, and ripple.
+| `--mdc-theme-secondary`                   | Color of the indicator icon if defined.
+| `--mdc-icon-font`                         | Icon font to use for `icon` and `indicatorIcon`.
+| `--mdc-icon-size`                         | Size of the text icon.
+| `--mdc-typography-button-<PROPERTY>`      | Styles the typography of the tab label.
 
 ## Additional references
 
