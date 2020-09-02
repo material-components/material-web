@@ -323,10 +323,12 @@ npm install @material/mwc-dialog
 This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
 custom properties.
 
-| Name                                 | Description
-| ------------------------------------ | -----------
-| `--mdc-theme-surface`                | Color of the dialog surface's background.
-| `--mdc-shape-medium`                 | Corner radius of the dialog surface.
+| Name                                     | Description
+| ---------------------------------------- | -----------
+| `--mdc-theme-surface`                    | Color of the dialog surface's background.
+| `--mdc-shape-medium`                     | Corner radius of the dialog surface.
+| `--mdc-typography-body1-<PROPERTY>`      | Styles the typography of the dialog's text.
+| `--mdc-typography-headline6-<PROPERTY>`  | Styles the typography of the action buttons.
 
 ### Actions
 
