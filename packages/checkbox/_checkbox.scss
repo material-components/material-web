@@ -1,6 +1,6 @@
 /**
 @license
-Copyright 2018 Google Inc. All Rights Reserved.
+Copyright 2020 Google Inc. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,6 +15,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@use './checkbox';
+@use '@material/checkbox';
 
-@include checkbox.core-styles();
+@mixin core-styles() {
+  @include checkbox.without-ripple();
+
+  :host {
+    outline: none;
+    display: inline-block;
+  }
+
+  .mdc-checkbox {
+    // TODO(b/162887560): Use MDC core style mixins instead.
+    // This style block is required since MWC does not include ripple styles.
+    .mdc-checkbox__background::before {
+      content: none;
+    }
+  }
+}
