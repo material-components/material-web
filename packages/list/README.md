@@ -589,6 +589,9 @@ custom properties.
 | `--mdc-theme-text-primary-on-background`   | Color of the primary text if not activated.
 | `--mdc-theme-text-secondary-on-background` | Color of the secondary text if not activated.
 | `--mdc-theme-hint-on-background`           | Color of the meta (if is text or text icon).
+| `--mdc-typography-subtitle1-<PROPERTY>`    | Styles the typography of a list item.
+| `--mdc-typography-body2-<PROPERTY>`        | Styles the typography of a list item's secondary text.
+| `--mdc-typography-caption-<PROPERTY>`      | Styles the typography of a list item's icon and meta text.
 
 ## Additional references
 
