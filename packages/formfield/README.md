@@ -135,7 +135,14 @@ Name    | Type     | Description
 
 ### CSS Custom Properties
 
-*None*
+#### Global CSS Custom Properties
+
+This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+custom properties.
+
+| Name | Description
+|----  | -----------
+| `--mdc-typography-body2-<PROPERTY>` | Styles the typography of the formfield.
 
 ## Additional references
 
