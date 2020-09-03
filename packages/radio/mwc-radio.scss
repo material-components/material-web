@@ -15,22 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@use '@material/radio/mixins' as radio-mixins;
-@use '@material/radio/variables' as radio-variables;
-@use '@material/ripple';
+@use './radio';
 
-@include radio-mixins.core-styles();
-@include ripple.common();
-
-:host {
-  display: inline-block;
-  outline: none;
-}
-
-.mdc-radio {
-  vertical-align: bottom;
-  @include radio-mixins.unchecked-stroke-color(var(--mdc-radio-unchecked-color, #{radio-variables.$unchecked-color}));
-  @include radio-mixins.disabled-unchecked-stroke-color(var(--mdc-radio-disabled-color, #{radio-variables.$disabled-circle-color}));
-  @include radio-mixins.disabled-checked-stroke-color(var(--mdc-radio-disabled-color, #{radio-variables.$disabled-circle-color}));
-  @include radio-mixins.disabled-ink-color(var(--mdc-radio-disabled-color, #{radio-variables.$disabled-circle-color}));
-}
+@include radio.core-styles();

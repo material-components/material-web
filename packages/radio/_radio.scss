@@ -1,0 +1,46 @@
+/**
+@license
+Copyright 2020 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+@use '@material/radio/radio';
+@use '@material/radio/radio-theme';
+@use '@material/ripple';
+
+@mixin core-styles() {
+  @include radio.core-styles();
+  @include ripple.common();
+
+  :host {
+    display: inline-block;
+    outline: none;
+  }
+
+  .mdc-radio {
+    vertical-align: bottom;
+    @include radio-theme.unchecked-stroke-color(
+      var(--mdc-radio-unchecked-color, #{radio-theme.$unchecked-color})
+    );
+    @include radio-theme.disabled-unchecked-stroke-color(
+      var(--mdc-radio-disabled-color, #{radio-theme.$disabled-circle-color})
+    );
+    @include radio-theme.disabled-checked-stroke-color(
+      var(--mdc-radio-disabled-color, #{radio-theme.$disabled-circle-color})
+    );
+    @include radio-theme.disabled-ink-color(
+      var(--mdc-radio-disabled-color, #{radio-theme.$disabled-circle-color})
+    );
+  }
+}
