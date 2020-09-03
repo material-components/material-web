@@ -301,6 +301,8 @@ custom properties.
 | ------------------------ | -----------
 | `--mdc-theme-primary`    | Color when active of the underline ripple, the outline, the caret, the dropdown-icon, and the focused and activatd list items.
 | `--mdc-theme-error`      | Color when errored of the underline ripple, the outline, the caret, the dropdown-icon, and the focused and activatd list items.
+| `--mdc-typography-subtitle1-<PROPERTY>` | Styles the typography of the selected text.
+
 
 ## Additional references
 
