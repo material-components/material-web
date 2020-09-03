@@ -152,6 +152,7 @@ mwc-top-app-bar {
 | ---- | -----------
 | `--mdc-theme-primary` | Background color of the bar
 | `--mdc-theme-on-primary` | Text color of the title, and icon colors
+| `--mdc-typography-headline6-<PROPERTY>` | Styles the typography of the top-app-bar title.
 
 ## Additional references
 
