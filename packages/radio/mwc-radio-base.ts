@@ -24,6 +24,7 @@ import {html, property, query} from 'lit-element';
 
 /**
  * @fires checked
+ * @soyCompatible
  */
 export class RadioBase extends FormElement {
   @query('.mdc-radio') protected mdcRoot!: HTMLElement;
@@ -60,14 +61,14 @@ export class RadioBase extends FormElement {
    * In this case we'd first see all changes for radio1, and then for radio2,
    * and we couldn't tell that radio1 was the most recently checked.
    */
-  set checked(checked: boolean) {
+  set checked(isChecked: boolean) {
     const oldValue = this._checked;
-    if (!!checked === !!oldValue) {
+    if (!!isChecked === !!oldValue) {
       return;
     }
-    this._checked = checked;
+    this._checked = isChecked;
     if (this.formElement) {
-      this.formElement.checked = checked;
+      this.formElement.checked = isChecked;
     }
     if (this._selectionController !== undefined) {
       this._selectionController.update(this);
@@ -170,6 +171,9 @@ export class RadioBase extends FormElement {
     this.formElement.focus();
   }
 
+  /**
+   * @soyCompatible
+   */
   protected render() {
     return html`
       <div class="mdc-radio" .ripple=${ripple()}>
