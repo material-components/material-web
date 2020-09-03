@@ -203,8 +203,9 @@ custom properties.
 
 | Name                 | Description
 | -------------------- | -----------
-`--mdc-theme-primary`  | Color when active of the underline ripple, the outline, and the caret.
-`--mdc-theme-error`    | Color when errored of the underline, the outline, the caret, and the icons.
+| `--mdc-theme-primary`  | Color when active of the underline ripple, the outline, and the caret.
+| `--mdc-theme-error`    | Color when errored of the underline, the outline, the caret, and the icons.
+| `--mdc-typography-subtitle1-<PROPERTY>` | Styles the typography of the textfield.
 
 ### Validation
 
