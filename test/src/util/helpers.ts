@@ -203,6 +203,18 @@ export const waitForEvent = (el: Element, ev: string) => new Promise((res) => {
   }, {once: true});
 });
 
+/**
+ * Waits until a new task can start executing. This means that (at least) the
+ * pending microtasks have been flushed.
+ */
+export function completePendingMicrotasks() {
+  return new Promise(resolve => {
+    // The spec guarantees Promises to execute before timeouts.
+    // https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model
+    setTimeout(resolve);
+  });
+}
+
 export const ieSafeKeyboardEvent = (type: string, keycode: number) => {
   // IE es5 fix
   const init = {detail: 0, bubbles: true, cancelable: true, composed: true};
