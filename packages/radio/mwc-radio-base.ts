@@ -14,13 +14,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {addHasRemoveClass, FormElement, HTMLElementWithRipple} from '@material/mwc-base/form-element';
+import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element';
 import {observer} from '@material/mwc-base/observer';
 import {SingleSelectionController} from '@material/mwc-radio/single-selection-controller';
-import {ripple} from '@material/mwc-ripple/ripple-directive';
+import {Ripple} from '@material/mwc-ripple/mwc-ripple';
+import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {MDCRadioAdapter} from '@material/radio/adapter';
 import MDCRadioFoundation from '@material/radio/foundation';
-import {html, property, query} from 'lit-element';
+import {eventOptions, html, internalProperty, property, query, queryAsync} from 'lit-element';
+
 
 /**
  * @fires checked
@@ -30,8 +32,6 @@ export class RadioBase extends FormElement {
   @query('.mdc-radio') protected mdcRoot!: HTMLElement;
 
   @query('input') protected formElement!: HTMLInputElement;
-
-  @query('.mdc-radio__ripple') protected rippleElement!: HTMLElementWithRipple;
 
   private _checked = false;
 
@@ -106,6 +106,33 @@ export class RadioBase extends FormElement {
 
   private _selectionController?: SingleSelectionController;
 
+  @internalProperty() protected shouldRenderRipple = false;
+
+  @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
+
+  private rippleElement: Ripple|null = null;
+
+  protected rippleHandlers: RippleHandlers = new RippleHandlers(() => {
+    this.shouldRenderRipple = true;
+    this.ripple.then((v) => {
+      this.rippleElement = v;
+    });
+
+    return this.ripple;
+  });
+
+  /** @soyCompatible */
+  protected renderRipple() {
+    return this.shouldRenderRipple ?
+        html`<mwc-ripple unbounded accent .disabled="${
+            this.disabled}"></mwc-ripple>` :
+        '';
+  }
+
+  get isRippleActive() {
+    return this.rippleElement?.isActive || false;
+  }
+
   connectedCallback() {
     super.connectedCallback();
     // Note that we must defer creating the selection controller until the
@@ -143,10 +170,6 @@ export class RadioBase extends FormElement {
     this.formElement.focus();
   }
 
-  get ripple() {
-    return this.rippleElement.ripple;
-  }
-
   protected createAdapter(): MDCRadioAdapter {
     return {
       ...addHasRemoveClass(this.mdcRoot),
@@ -156,19 +179,21 @@ export class RadioBase extends FormElement {
     };
   }
 
-  private _changeHandler() {
-    this.checked = this.formElement.checked;
-  }
-
-  private _focusHandler() {
+  private handleFocus() {
     if (this._selectionController !== undefined) {
       this._selectionController.focus(this);
+      this.handleRippleFocus();
     }
   }
 
-  private _clickHandler() {
+  private handleClick() {
     // Firefox has weird behavior with radios if they are not focused
     this.formElement.focus();
+  }
+
+  private handleBlur() {
+    this.formElement.blur();
+    this.handleRippleBlur();
   }
 
   /**
@@ -176,21 +201,28 @@ export class RadioBase extends FormElement {
    */
   protected render() {
     return html`
-      <div class="mdc-radio" .ripple=${ripple()}>
+      <div class="mdc-radio">
         <input
           class="mdc-radio__native-control"
           type="radio"
           name="${this.name}"
           .checked="${this.checked}"
           .value="${this.value}"
-          @change="${this._changeHandler}"
-          @focus="${this._focusHandler}"
-          @click="${this._clickHandler}">
+          @change="${this.changeHandler}"
+          @focus="${this.handleFocus}"
+          @click="${this.handleClick}"
+          @blur="${this.handleBlur}"
+          @mousedown="${this.handleRippleMouseDown}"
+          @mouseenter="${this.handleRippleMouseEnter}"
+          @mouseleave="${this.handleRippleMouseLeave}"
+          @touchstart="${this.handleRippleTouchStart}"
+          @touchend="${this.handleRippleDeactivate}"
+          @touchcancel="${this.handleRippleDeactivate}">
         <div class="mdc-radio__background">
           <div class="mdc-radio__outer-circle"></div>
           <div class="mdc-radio__inner-circle"></div>
         </div>
-        <div class="mdc-radio__ripple"></div>
+        ${this.renderRipple()}
       </div>`;
   }
 
@@ -202,5 +234,45 @@ export class RadioBase extends FormElement {
     if (this._selectionController !== undefined) {
       this._selectionController.update(this);
     }
+  }
+
+  protected handleRippleMouseDown(event: Event) {
+    const onUp = () => {
+      window.removeEventListener('mouseup', onUp);
+
+      this.handleRippleDeactivate();
+    };
+
+    window.addEventListener('mouseup', onUp);
+    this.rippleHandlers.startPress(event);
+  }
+
+  @eventOptions({passive: true})
+  protected handleRippleTouchStart(event: Event) {
+    this.rippleHandlers.startPress(event);
+  }
+
+  protected handleRippleDeactivate() {
+    this.rippleHandlers.endPress();
+  }
+
+  protected handleRippleMouseEnter() {
+    this.rippleHandlers.startHover();
+  }
+
+  protected handleRippleMouseLeave() {
+    this.rippleHandlers.endHover();
+  }
+
+  protected handleRippleFocus() {
+    this.rippleHandlers.startFocus();
+  }
+
+  protected handleRippleBlur() {
+    this.rippleHandlers.endFocus();
+  }
+
+  private changeHandler() {
+    this.checked = this.formElement.checked;
   }
 }

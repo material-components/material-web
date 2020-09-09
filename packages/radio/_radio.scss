@@ -17,11 +17,9 @@ limitations under the License.
 
 @use '@material/radio/radio';
 @use '@material/radio/radio-theme';
-@use '@material/ripple';
 
 @mixin core-styles() {
   @include radio.core-styles();
-  @include ripple.common();
 
   :host {
     display: inline-block;
