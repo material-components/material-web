@@ -15,12 +15,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+@use 'sass:list';
 @use 'sass:map';
 @use '@material/circular-progress' as circularprogress;
+@use '@material/theme/css';
 @use '@material/theme/theme-color';
 
 $light-theme: (
-  bar: (
+  bar-color: theme-color.prop-value(primary),
+  bar-indeterminate-colors: (
     theme-color.prop-value(primary),
     theme-color.prop-value(primary),
     theme-color.prop-value(primary),
@@ -29,13 +32,19 @@ $light-theme: (
 );
 
 @mixin theme($theme: $light-theme) {
-  $bar-colors: map.get($theme, bar);
+  $bar-color: map.get($theme, bar-color);
+  $bar-indeterminate-colors: map.get($theme, bar-indeterminate-colors);
 
-  @if length($bar-colors) != 4 {
-    @error "`mwc-circular-progress-four-colors` accepts exactly 4 colors";
-  }
+  @include css.declaration(--mdc-theme-primary, $bar-color);
 
-  @for $i from 1 through 4 {
-    --mdc-circular-progress-bar-color-#{$i}: nth($bar-colors, $i - 1);
+  @if $bar-indeterminate-colors {
+    @if list.length($bar-indeterminate-colors) != 4 {
+      @error "`mwc-circular-progress-four-colors` accepts exactly 4 colors";
+    }
+
+    @include css.declaration(--mdc-circular-progress-bar-color-1, nth($bar-indeterminate-colors, 1));
+    @include css.declaration(--mdc-circular-progress-bar-color-2, nth($bar-indeterminate-colors, 2));
+    @include css.declaration(--mdc-circular-progress-bar-color-3, nth($bar-indeterminate-colors, 3));
+    @include css.declaration(--mdc-circular-progress-bar-color-4, nth($bar-indeterminate-colors, 4));
   }
 }
