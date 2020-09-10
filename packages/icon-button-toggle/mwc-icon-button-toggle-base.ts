@@ -86,13 +86,12 @@ export class IconButtonToggleBase extends BaseElement {
   }
 
   protected renderRipple() {
-    return html`${
-        this.shouldRenderRipple ? html`
+    return this.shouldRenderRipple ? html`
             <mwc-ripple
                 .disabled="${this.disabled}"
                 unbounded>
             </mwc-ripple>` :
-                                  ''}`;
+                                     '';
   }
 
   protected render() {
