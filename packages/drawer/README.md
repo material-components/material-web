@@ -173,6 +173,7 @@ custom properties.
 
 | Name | Detail | Description
 |---- | ------ | -----------
+| `--mdc-theme-surface`                    | The background color of the drawer.
 | `--mdc-typography-headline6-<PROPERTY>`  | Styles the typography of the drawer's title.
 | `--mdc-typography-body2-<PROPERTY>`      | Styles the typography of the drawer's subtitle.
 | `--mdc-typography-subtitle2-<PROPERTY>`  | Styles the typography of the drawer's list items.
