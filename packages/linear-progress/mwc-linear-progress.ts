@@ -21,7 +21,7 @@ import {style} from './mwc-linear-progress-css';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mwc-linear-progress': LinearProgressBase;
+    'mwc-linear-progress': LinearProgress;
   }
 }
 

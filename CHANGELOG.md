@@ -34,6 +34,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - **BREAKING:VISUAL** vertical alignment is now all inline and up to spec.
 - `icon-button-toggle`
   - removed aria-hidden="true" from button
+- `linear-progress`
+  - Fixed performance issues with indeterminate set on modern browsers
 
 ## [v0.18.0] - 2020-08-03
 
