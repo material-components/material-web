@@ -76,14 +76,13 @@ export class SwitchBase extends FormElement {
   });
 
   protected renderRipple() {
-    return html`${
-        this.shouldRenderRipple ? html`
+    return this.shouldRenderRipple ? html`
         <mwc-ripple 
-          .accent="${this.checked}" 
-          .disabled="${this.disabled}" 
+          .accent="${this.checked}"
+          .disabled="${this.disabled}"
           unbounded>
         </mwc-ripple>` :
-                                  html``}`;
+                                     '';
   }
 
   focus() {
