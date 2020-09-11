@@ -56,11 +56,10 @@ export class ButtonBase extends LitElement {
   /** @soyCompatible */
   protected renderRipple() {
     const filled = this.raised || this.unelevated;
-    return html`${
-        this.shouldRenderRipple ?
-            html`<mwc-ripple .primary="${!filled}" .disabled="${
-                this.disabled}"></mwc-ripple>` :
-            ''}`;
+    return this.shouldRenderRipple ?
+        html`<mwc-ripple .primary="${!filled}" .disabled="${
+            this.disabled}"></mwc-ripple>` :
+        '';
   }
 
   protected createRenderRoot() {
