@@ -272,7 +272,7 @@ export class RadioBase extends FormElement {
     this.rippleHandlers.endFocus();
   }
 
-  private changeHandler() {
+  protected changeHandler() {
     this.checked = this.formElement.checked;
   }
 }
