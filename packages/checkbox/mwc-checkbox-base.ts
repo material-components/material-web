@@ -96,14 +96,13 @@ export class CheckboxBase extends FormElement {
   /** @soyCompatible */
   protected renderRipple() {
     const selected = this.indeterminate || this.checked;
-    return html`${
-        this.shouldRenderRipple ? html`
+    return this.shouldRenderRipple ? html`
         <mwc-ripple
           .accent="${selected}"
           .disabled="${this.disabled}"
           unbounded>
         </mwc-ripple>` :
-                                  html``}`;
+                                     '';
   }
 
   /**
