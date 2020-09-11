@@ -180,7 +180,7 @@ export class ListItemBase extends LitElement {
     } else if (this.activated) {
       return html`<div class="fake-activated-ripple"></div>`;
     } else {
-      return html``;
+      return '';
     }
   }
 
