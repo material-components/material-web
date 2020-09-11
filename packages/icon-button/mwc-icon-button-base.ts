@@ -41,13 +41,12 @@ export class IconButtonBase extends LitElement {
 
   /** @soyCompatible */
   protected renderRipple() {
-    return html`${
-        this.shouldRenderRipple ? html`
+    return this.shouldRenderRipple ? html`
             <mwc-ripple
                 .disabled="${this.disabled}"
                 unbounded>
             </mwc-ripple>` :
-                                  ''}`;
+                                     '';
   }
 
   focus() {
