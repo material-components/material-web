@@ -13,7 +13,8 @@
 
     "lib": [
       "es2017",
-      "esnext.asynciterable"
+      "esnext.asynciterable",
+      "DOM"
     ],
 
     "declaration": true,
@@ -22,5 +23,8 @@
   },
   "include": [
     "**/*.ts"
-  ]
+  ],
+  "exclude": [
+    "tsc-out/**/*"
+  ],
 }
