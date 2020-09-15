@@ -427,13 +427,18 @@ suite('mwc-linear-progress', () => {
           HTMLElement;
       assert.isNotNull(root);
 
+      await element.updateComplete;
       assert.isTrue(root.classList.contains('mdc-linear-progress--closed'));
+      assert.isTrue(
+          root.classList.contains('mdc-linear-progress--closed-animation-off'));
 
       element.closed = false;
 
       await element.updateComplete;
 
       assert.isFalse(root.classList.contains('mdc-linear-progress--closed'));
+      assert.isFalse(
+          root.classList.contains('mdc-linear-progress--closed-animation-off'));
     });
 
     test('open, close methods set the correct classes', async () => {

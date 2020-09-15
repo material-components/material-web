@@ -41,6 +41,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - removed aria-hidden="true" from button
 - `linear-progress`
   - Fixed performance issues with indeterminate set on modern browsers
+  - Animations no longer run when indicator has been closed.
 
 ## [v0.18.0] - 2020-08-03
 

@@ -41,7 +41,7 @@ export class LinearProgressBase extends LitElement {
   @internalProperty() protected styleSecondaryHalf = '';
   @internalProperty() protected styleSecondaryFull = '';
   @internalProperty() protected animationReady = true;
-
+  @internalProperty() protected closedAnimationOff = false;
   protected resizeObserver: ResizeObserver|null = null;
 
   connectedCallback() {
@@ -59,6 +59,7 @@ export class LinearProgressBase extends LitElement {
     /** @classMap */
     const classes = {
       'mdc-linear-progress--closed': this.closed,
+      'mdc-linear-progress--closed-animation-off': this.closedAnimationOff,
       'mdc-linear-progress--indeterminate': this.indeterminate,
       'mdc-linear-progress--reversed': this.reverse,
       // needed for controller-less render
@@ -101,7 +102,8 @@ export class LinearProgressBase extends LitElement {
           aria-valuemin="0"
           aria-valuemax="1"
           aria-valuenow=${
-        ifDefined(this.indeterminate ? undefined : this.progress)}>
+        ifDefined(this.indeterminate ? undefined : this.progress)}
+        @transitionend=${this.syncClosedState}>
         <div class="mdc-linear-progress__buffer">
           <div
             class="mdc-linear-progress__buffer-bar"
@@ -120,10 +122,27 @@ export class LinearProgressBase extends LitElement {
       </div>`;
   }
 
+  update(changedProperties: Map<string, string>) {
+    // - When showing the indicator, enable animations immediately.
+    // - On first render, disable the animation immediately.
+    // - For normal calls to hide the component, let transitionend event trigger
+    //   disabling of animations instead (see render method), so that animation
+    //   does not jump in the middle of fade out.
+    if (changedProperties.has('closed') &&
+        (!this.closed || changedProperties.get('closed') === undefined)) {
+      this.syncClosedState();
+    }
+    super.update(changedProperties);
+  }
+
   async firstUpdated(changed: PropertyValues) {
     super.firstUpdated(changed);
 
     this.attachResizeObserver();
+  }
+
+  private syncClosedState() {
+    this.closedAnimationOff = this.closed;
   }
 
   protected updated(changed: PropertyValues) {
