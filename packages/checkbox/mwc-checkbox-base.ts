@@ -37,6 +37,11 @@ export class CheckboxBase extends FormElement {
 
   @property({type: String}) value = '';
 
+  /**
+   * Touch target extends beyond visual boundary of a component by default.
+   * Set to `true` to remove touch target added to the component.
+   * @see https://material.io/design/usability/accessibility.html
+   */
   @property({type: Boolean}) reducedTouchTarget = false;
 
   @internalProperty() protected animationClass = '';
