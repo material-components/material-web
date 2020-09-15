@@ -18,6 +18,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - BaseElement.click() forwards focus to BaseElement.mdcRoot
 - `form-element`
   - FormElement.click() forwards focus to FormElement.formElement
+- `tab`
+  - export for `TabInteractionEventDetail`
+- `list`
+  - export for `ActionDetail`
+  - export for `SelectedDetail`
 
 ### Changed
 

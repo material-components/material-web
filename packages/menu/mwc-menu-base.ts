@@ -30,7 +30,7 @@ import {html, property, query} from 'lit-element';
 import {MenuSurface} from './mwc-menu-surface';
 import {Corner, MenuCorner} from './mwc-menu-surface-base';
 
-export {createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex} from '@material/mwc-list/mwc-list-foundation';
+export {ActionDetail, createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex, SelectedDetail} from '@material/mwc-list/mwc-list-foundation';
 export {Corner, MenuCorner} from './mwc-menu-surface-base';
 
 export type DefaultFocusState = keyof typeof DefaultFocusStateEnum;

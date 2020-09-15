@@ -19,6 +19,8 @@ import {customElement} from 'lit-element';
 import {TabBase} from './mwc-tab-base';
 import {style} from './mwc-tab-css';
 
+export {TabInteractionEventDetail} from './mwc-tab-base';
+
 declare global {
   interface HTMLElementTagNameMap {
     'mwc-tab': Tab;

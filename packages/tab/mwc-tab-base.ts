@@ -26,6 +26,10 @@ import MDCTabFoundation from '@material/tab/foundation';
 import {html, property, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
+export interface TabInteractionEventDetail {
+  tabId: string;
+}
+
 // used for generating unique id for each tab
 let tabIdCounter = 0;
 
@@ -160,13 +164,14 @@ export class TabBase extends BaseElement {
               .activate(previousIndicatorClientRect),
       deactivateIndicator: () =>
           (this._tabIndicator as TabIndicator).deactivate(),
-      notifyInteracted: () => this.dispatchEvent(
-          new CustomEvent(MDCTabFoundation.strings.INTERACTED_EVENT, {
-            detail: {tabId: this.id},
-            bubbles: true,
-            composed: true,
-            cancelable: true,
-          })),
+      notifyInteracted: () =>
+          this.dispatchEvent(new CustomEvent<TabInteractionEventDetail>(
+              MDCTabFoundation.strings.INTERACTED_EVENT, {
+                detail: {tabId: this.id},
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+              })),
       getOffsetLeft: () => this.offsetLeft,
       getOffsetWidth: () => this.mdcRoot.offsetWidth,
       getContentOffsetLeft: () => this._contentElement.offsetLeft,

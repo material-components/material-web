@@ -26,7 +26,7 @@ import MDCListFoundation, {ActionDetail, isIndexSet, SelectedDetail} from './mwc
 import {MWCListIndex} from './mwc-list-foundation';
 import {Layoutable, ListItemBase, RequestSelectedDetail} from './mwc-list-item-base';
 
-export {createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex} from './mwc-list-foundation';
+export {ActionDetail, createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex, SelectedDetail} from './mwc-list-foundation';
 
 
 const isListItem = (element: Element): element is ListItemBase => {
