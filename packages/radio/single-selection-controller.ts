@@ -266,7 +266,12 @@ export class SingleSelectionController {
    * @param element Element to register. Registers in set of `element.name`.
    */
   register(element: CheckableElement) {
-    const set = this.getSet(element.name);
+    // TODO(b/168546148): Remove accessing 'name' via getAttribute() when new
+    // base class is created without single selection controller. Component
+    // maybe booted up after it is connected to DOM in which case properties
+    // (including `name`) are not updated yet.
+    const name = element.name || element.getAttribute('name') || '';
+    const set = this.getSet(name);
     set.set.add(element);
     set.ordered = null;
   }

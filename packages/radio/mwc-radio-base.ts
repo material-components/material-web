@@ -77,6 +77,7 @@ export class RadioBase extends FormElement {
     this.requestUpdate('checked', oldValue);
 
     // useful when unchecks self and wrapping element needs to synchronize
+    // TODO(b/168543810): Remove triggering event on programmatic API call.
     this.dispatchEvent(new Event('checked', {bubbles: true, composed: true}));
   }
 
