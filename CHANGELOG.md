@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - `fab`
   - **BREAKING:VISUAL** default touch target increased on mini fab by 8px.
+- `button`
+  - Separate classMap into its own method
 
 ### Fixed
 

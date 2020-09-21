@@ -48,7 +48,7 @@ export class ButtonBase extends LitElement {
 
   @internalProperty() protected shouldRenderRipple = false;
 
-  protected rippleHandlers: RippleHandlers = new RippleHandlers(() => {
+  protected rippleHandlers = new RippleHandlers(() => {
     this.shouldRenderRipple = true;
     return this.ripple;
   });
@@ -83,18 +83,21 @@ export class ButtonBase extends LitElement {
   }
 
   /** @soyCompatible */
-  protected render() {
-    /** @classMap */
-    const classes = {
+  protected getRenderClasses() {
+    return classMap({
       'mdc-button--raised': this.raised,
       'mdc-button--unelevated': this.unelevated,
       'mdc-button--outlined': this.outlined,
       'mdc-button--dense': this.dense,
-    };
+    });
+  }
+
+  /** @soyCompatible */
+  protected render() {
     return html`
       <button
           id="button"
-          class="mdc-button ${classMap(classes)}"
+          class="mdc-button ${this.getRenderClasses()}"
           ?disabled="${this.disabled}"
           aria-label="${this.label || this.icon}"
           @focus="${this.handleRippleFocus}"
