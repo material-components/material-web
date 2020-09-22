@@ -1,0 +1,30 @@
+{
+  "name": "@material/mwc-elevation-overlay",
+  "version": "0.18.0",
+  "description": "Material design floating action button component",
+  "keywords": [
+    "material design",
+    "web components",
+    "elevation",
+    "overlay"
+  ],
+  "main": "mwc-elevation-overlay-css.js",
+  "module": "mwc-elevation-overlay-css.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/material-components/material-components-web-components.git",
+    "directory": "packages/elevation-overlay"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "lit-element": "^2.3.0",
+    "tslib": "^1.10.0"
+  },
+  "devDependencies": {
+    "@material/elevation": "=8.0.0-canary.a831d4799.0",
+    "@material/theme": "=8.0.0-canary.a831d4799.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
