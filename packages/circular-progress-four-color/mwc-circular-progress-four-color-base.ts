@@ -23,11 +23,18 @@ export class CircularProgressFourColorBase extends CircularProgressBase {
   protected renderIndeterminateContainer() {
     return html`
       <div class="mdc-circular-progress__indeterminate-container">
-             ${
-        this.renderIndeterminateSpinnerLayer('mdc-circular-progress__color-1')}
-     ${this.renderIndeterminateSpinnerLayer('mdc-circular-progress__color-2')}
-     ${this.renderIndeterminateSpinnerLayer('mdc-circular-progress__color-3')}
-     ${this.renderIndeterminateSpinnerLayer('mdc-circular-progress__color-4')}
+        <div class="mdc-circular-progress__spinner-layer mdc-circular-progress__color-1">
+          ${this.renderIndeterminateSpinnerLayer()}
+        </div>
+        <div class="mdc-circular-progress__spinner-layer mdc-circular-progress__color-2">
+          ${this.renderIndeterminateSpinnerLayer()}
+        </div>
+        <div class="mdc-circular-progress__spinner-layer mdc-circular-progress__color-3">
+          ${this.renderIndeterminateSpinnerLayer()}
+        </div>
+        <div class="mdc-circular-progress__spinner-layer mdc-circular-progress__color-4">
+          ${this.renderIndeterminateSpinnerLayer()}
+        </div>
       </div>`;
   }
 }
