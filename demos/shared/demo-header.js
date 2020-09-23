@@ -35,6 +35,7 @@ class DemoHeader extends LitElement {
         }
         .white {
           --mdc-theme-primary: white;
+          --mdc-button-outline-color: white;
           color: white;
         }`,
     ];
