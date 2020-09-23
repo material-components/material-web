@@ -19,8 +19,8 @@
     "@material/mwc-base": "^0.18.0",
     "@material/mwc-tab": "^0.18.0",
     "@material/mwc-tab-scroller": "^0.18.0",
-    "@material/tab": "=8.0.0-canary.16c563ef7.0",
-    "@material/tab-bar": "=8.0.0-canary.16c563ef7.0",
+    "@material/tab": "=8.0.0-canary.fd8af3d43.0",
+    "@material/tab-bar": "=8.0.0-canary.fd8af3d43.0",
     "lit-element": "^2.3.0",
     "tslib": "^1.10.0"
   },
