@@ -89,6 +89,6 @@
     {"path": "packages/textarea"},
     {"path": "packages/textfield"},
     {"path": "packages/top-app-bar"},
-    {"path": "packages/top-app-bar-fixed"},
+    {"path": "packages/top-app-bar-fixed"}
   ]
 }
