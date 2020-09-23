@@ -29,7 +29,7 @@ limitations under the License.
   );
 
   $width: custom-properties.create(--mdc-elevation-overlay-width, 100%);
-  $height: custom-properties.create(--mdc-elevation-overlay-height, $width);
+  $height: custom-properties.create(--mdc-elevation-overlay-height, 100%);
 
   @include elevation.overlay-common();
   @include elevation-theme.overlay-dimensions($width, $height);
