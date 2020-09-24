@@ -104,10 +104,13 @@ For technical details about the Material Icons font, see the
 
 ### CSS Custom Properties
 
+Inherits CSS Custom properties from:
+
+* [`mwc-ripple`](https://github.com/material-components/material-components-web-components/tree/master/packages/ripple)
+
 | Name | Default | Description
 | ---- | ------- | -----------
 | `--mdc-icon-button-size` | `48px` | Sets the size of the button wrapping the icon.
-| `--mdc-icon-button-ripple-opacity` | `0.12` | Opacity of the ripple on the icon button
 
 #### Global Custom Properties
 

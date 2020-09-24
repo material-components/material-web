@@ -155,9 +155,9 @@ For technical details about the Material Icons font, see the
 
 ### CSS Custom Properties
 
-| Name | Default | Description
-| ---- | ------- | -----------
-| `--mdc-icon-button-ripple-opacity` | `0.12` | Opacity of the ripple on the icon button.
+Inherits CSS Custom properties from:
+
+* [`mwc-ripple`](https://github.com/material-components/material-components-web-components/tree/master/packages/ripple)
 
 #### Global Custom Properties
 
