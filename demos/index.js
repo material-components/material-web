@@ -95,6 +95,12 @@ class DemoView extends LitElement {
 
     this.listItems = [
       {
+        name: 'Elevation Overlay',
+        secondary: 'Element overlays for dark mode elevation and emphasis',
+        href: 'elevation-overlay/',
+        img: 'https://fonts.gstatic.com/s/i/materialicons/flip_to_front/v6/24px.svg',
+      },
+      {
         name: 'Button',
         secondary: 'Raised and flat buttons',
         href: 'button/',
@@ -164,13 +170,13 @@ class DemoView extends LitElement {
         name: 'List',
         secondary: 'Continuous, vertical indexes of text or images.',
         href: 'list/',
-        img: 'https://material.io/develop/images/component_icons/list.svg',
+        img: 'https://fonts.gstatic.com/s/i/materialicons/view_list/v6/24px.svg',
       },
       {
         name: 'Menu',
         secondary: 'Displays a list of choices on a temporary surface.',
         href: 'menu/',
-        img: 'https://material.io/develop/images/component_icons/menu.svg',
+        img: 'https://fonts.gstatic.com/s/i/materialicons/picture_in_picture/v6/24px.svg',
       },
       {
         name: 'Radio buttons',
@@ -188,7 +194,7 @@ class DemoView extends LitElement {
         name: 'Select',
         secondary: 'Single option dropdown select menus',
         href: 'select/',
-        img: 'https://material.io/develop/images/component_icons/menu.svg',
+        img: 'https://fonts.gstatic.com/s/i/materialicons/list_alt/v6/24px.svg',
       },
       {
         name: 'Slider',

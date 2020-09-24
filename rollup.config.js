@@ -17,6 +17,7 @@ const packageNames = [
   'drawer_modal',
   'drawer_standard',
   'drawer_standard_no_header',
+  'elevation-overlay',
   'fab',
   'formfield',
   'icon',

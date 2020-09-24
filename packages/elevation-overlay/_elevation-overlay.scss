@@ -1,0 +1,40 @@
+/**
+@license
+Copyright 2020 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+/* stylelint-disable selector-class-pattern */
+/* NOTE: We disable `selector-class-pattern` above to allow using `mdc-` class * selectors. */
+@use '@material/elevation/elevation';
+@use '@material/elevation/elevation-theme';
+@use '@material/theme/custom-properties';
+@use '@material/theme/theme';
+
+@mixin core-styles() {
+  $fill-color: custom-properties.create(
+    --mdc-elevation-overlay-fill-color,
+    elevation-theme.$overlay-color
+  );
+
+  $width: custom-properties.create(--mdc-elevation-overlay-width, 100%);
+  $height: custom-properties.create(--mdc-elevation-overlay-height, 100%);
+
+  @include elevation.overlay-common();
+  @include elevation-theme.overlay-dimensions($width, $height);
+
+  .mdc-elevation-overlay {
+    @include elevation-theme.overlay-fill-color($fill-color);
+  }
+}

@@ -10,19 +10,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - `button`
   - Sass theming mixins added
-- `menu`
-  - `--mdc-menu-max-height` to set max height on menu
-- `fab`
-  - `reducedTouchTarget` reduces the touch target on mini fab
 - `base-element`
   - BaseElement.click() forwards focus to BaseElement.mdcRoot
+- `elevation-overlay`
+  - implemented elevation overlay styles
+- `fab`
+  - `reducedTouchTarget` reduces the touch target on mini fab
 - `form-element`
   - FormElement.click() forwards focus to FormElement.formElement
-- `tab`
-  - export for `TabInteractionEventDetail`
 - `list`
   - export for `ActionDetail`
   - export for `SelectedDetail`
+- `menu`
+  - `--mdc-menu-max-height` to set max height on menu
+- `tab`
+  - export for `TabInteractionEventDetail`
 
 ### Changed
 
