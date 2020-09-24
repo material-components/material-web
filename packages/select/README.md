@@ -181,14 +181,14 @@ focused:
     --mdc-list-side-padding: 30px;
   }
 </style>
-<mwc-select helperPersistent helper="Helper Text" label="styled">
+<mwc-select helper="Helper Text" label="styled">
   <mwc-list-item></mwc-list-item>
   <mwc-list-item selected value="0">Item 0</mwc-list-item>
   <mwc-list-item value="1">Item 1</mwc-list-item>
   <mwc-list-item value="2">Item 2</mwc-list-item>
   <mwc-list-item value="3">Item 3</mwc-list-item>
 </mwc-select>
-<mwc-select outlined helperPersistent helper="Helper Text" label="styled">
+<mwc-select outlined helper="Helper Text" label="styled">
   <mwc-list-item></mwc-list-item>
   <mwc-list-item selected value="0">Item 0</mwc-list-item>
   <mwc-list-item value="1">Item 1</mwc-list-item>
@@ -219,8 +219,7 @@ Name                      | Type                          | Default            |
 `icon`                    | `string`                      | `""`               | Leading icon to display in select. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon). _Note_: for proper list spacing, each list item must have `graphic="icon"` or `graphic="avatar"` to be set.
 `disabled`                | `boolean`                     | `false`            | Whether or not the select should be disabled.
 `outlined`                | `boolean`                     | `false`            | Whether or not to show the material outlined variant.
-`helper`                  | `string`                      | `""`               | Helper text to display below the select. Display default only when focused.
-`helperPersistent`        | `boolean`                     | `false`            | Always show the helper text despite focus.
+`helper`                  | `string`                      | `""`               | Helper text to display below the select. Always displays by default.
 `required`                | `boolean`                     | `false`            | Displays error state if value is empty and select is blurred.
 `validationMessage`       | `string`                      | `""`               | Message to show in the error color when the select is invalid. (Helper text will not be visible)
 `selected`                | `ListItemBase`\|`null`        | `null`             | Selected list item element.
