@@ -85,9 +85,11 @@ export class FabBase extends LitElement {
         ${this.renderBeforeRipple()}
         ${this.renderRipple()}
         ${this.showIconAtEnd ? this.renderLabel() : ''}
-        <slot name="icon">
-          ${this.renderIcon()}
-        </slot>
+        <span class="icon-slot-container">
+          <slot name="icon">
+            ${this.renderIcon()}
+          </slot>
+        </span>
         ${!this.showIconAtEnd ? this.renderLabel() : ''}
         ${this.renderTouchTarget()}
       </button>`;

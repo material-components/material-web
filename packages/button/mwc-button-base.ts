@@ -42,6 +42,8 @@ export class ButtonBase extends LitElement {
 
   @property({type: String}) label = '';
 
+  @property({type: Boolean}) expandContent = false;
+
   @query('#button') buttonElement!: HTMLElement;
 
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
@@ -115,7 +117,11 @@ export class ButtonBase extends LitElement {
           </slot>
         </span>
         <span class="mdc-button__label">${this.label}</span>
-        <slot></slot>
+        <span class="slot-container ${classMap({
+      flex: this.expandContent
+    })}">
+          <slot></slot>
+        </span>
         <span class="trailing-icon">
           <slot name="trailingIcon">
             ${this.icon && this.trailingIcon ? this.renderIcon() : ''}

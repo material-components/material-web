@@ -124,6 +124,7 @@ mwc-button {
 | `dense` | `boolean` | `false` | Makes the button text and container slightly smaller.
 | `disabled` | `boolean` | `false` | Disabled buttons cannot be interacted with and have no visual interaction effect.
 | `trailingIcon` | `boolean` | `false` | When `true`, `icon` will be displayed _after_ `label`.
+| 'expandContent' | `boolean` | `false` | When `true`, the space after the label and before any trailing icon, where default slotted content is rendered, is expanded to fit the available space inside the button.
 
 ### Methods
 *None*

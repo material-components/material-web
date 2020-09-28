@@ -70,6 +70,16 @@ limitations under the License.
     }
   }
 
+  .slot-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    &.flex {
+      flex: auto;
+    }
+  }
+
   $text-padding: custom-properties.create(
     --mdc-button-horizontal-padding,
     button-variables.$horizontal-padding
