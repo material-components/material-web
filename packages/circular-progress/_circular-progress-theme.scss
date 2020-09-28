@@ -22,9 +22,12 @@ limitations under the License.
 
 $light-theme: (
   bar-color: theme-color.prop-value(primary),
+  track-color: transparent,
 );
 
 @mixin theme($theme: $light-theme) {
-  $bar-color: map.get($theme, bar-color);
-  @include css.declaration(--mdc-theme-primary, $bar-color);
+  @include css.declaration(--mdc-theme-primary, map.get($theme, bar-color));
+  @include css.declaration(--mdc-circular-progress-track-color, map.get($theme, track-color));
 }
+
+

@@ -84,6 +84,7 @@ Name                                  | Default                                 
 `--mdc-circular-progress-bar-color-2` | `--mdc-theme-primary`                                               | Sets the second of the four rotating colors.
 `--mdc-circular-progress-bar-color-3` | `--mdc-theme-primary`                                               | Sets the third of the four rotating colors.
 `--mdc-circular-progress-bar-color-4` | `--mdc-theme-primary`                                               | Sets the last of the four rotating colors.
+`--mdc-circular-progress-track-color` | transparent                                                         | Sets the track color of the determinate progress bar.
 
 #### Global Custom Properties
 

@@ -73,6 +73,10 @@ None
 
 ### CSS Custom Properties
 
+Name                                  | Default      | Description
+------------------------------------- | ------------ | -----------
+`--mdc-circular-progress-track-color` | transparent  | Sets the track color of the determinate progress bar.
+
 #### Global Custom Properties
 
 This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)

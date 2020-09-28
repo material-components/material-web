@@ -14,15 +14,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-@use '@material/circular-progress' as circularprogress;
+@use '@material/circular-progress' as circular-progress;
 @use '@material/theme/theme-color';
 @use '@material/theme/custom-properties';
+@use '@material/mwc-circular-progress/circular-progress' as mwc-circular-progress;
 
 @mixin core-styles() {
-  @include circularprogress.core-styles();
+  @include mwc-circular-progress.core-styles();
 
   $primary: custom-properties.create(--mdc-theme-primary, theme-color.prop-value(primary));
-  @include circularprogress.indeterminate-colors((
+  @include circular-progress.indeterminate-colors((
     custom-properties.create(--mdc-circular-progress-bar-color-1, $primary),
     custom-properties.create(--mdc-circular-progress-bar-color-2, $primary),
     custom-properties.create(--mdc-circular-progress-bar-color-3, $primary),

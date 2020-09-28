@@ -28,12 +28,14 @@ $light-theme: (
     theme-color.prop-value(primary),
     theme-color.prop-value(primary),
     theme-color.prop-value(primary)
-  )
+  ),
+  track-color: transparent
 );
 
 @mixin theme($theme: $light-theme) {
   $bar-color: map.get($theme, bar-color);
   $bar-indeterminate-colors: map.get($theme, bar-indeterminate-colors);
+  $track-color: map.get($theme, track-color);
 
   @include css.declaration(--mdc-theme-primary, $bar-color);
 
@@ -47,4 +49,6 @@ $light-theme: (
     @include css.declaration(--mdc-circular-progress-bar-color-3, nth($bar-indeterminate-colors, 3));
     @include css.declaration(--mdc-circular-progress-bar-color-4, nth($bar-indeterminate-colors, 4));
   }
+
+  @include css.declaration(--mdc-circular-progress-track-color, $track-color);
 }

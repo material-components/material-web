@@ -87,6 +87,9 @@ export class CircularProgressBase extends LitElement {
       <div class="mdc-circular-progress__determinate-container">
         <svg class="mdc-circular-progress__determinate-circle-graphic"
              viewBox="0 0 ${sideLength} ${sideLength}">
+          <circle class="mdc-circular-progress__determinate-track"
+                  cx="${center}" cy="${center}" r="${circleRadius}"
+                  stroke-width="${strokeWidth}"></circle>
           <circle class="mdc-circular-progress__determinate-circle"
                   cx="${center}" cy="${center}" r="${circleRadius}"
                   stroke-dasharray="${2 * 3.1415926 * circleRadius}"
