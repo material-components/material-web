@@ -21,6 +21,7 @@ import {TextField} from '@material/mwc-textfield';
 import {cssClasses} from '@material/textfield/constants';
 import {html} from 'lit-html';
 
+import { assert as assertOpen } from '@open-wc/testing';
 import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 
 const basic = (outlined = false) => html`
@@ -562,6 +563,59 @@ suite('mwc-textfield:', () => {
 
       assert.isTrue(
           floatingLabel.classList.contains(floatingClasses.LABEL_FLOAT_ABOVE));
+    });
+  });
+
+  suite('accessiblity', () => {
+    let element: TextField;
+    setup(async () => {
+      fixt = await fixture(html`<mwc-textfield label="a label" helper="help me out"></mwc-textfield>`);
+
+      element = fixt.root.querySelector('mwc-textfield')!;
+    });
+
+    test('mwc-textfield is accessible', () => {
+      assertOpen.isAccessible(element);
+    });
+
+    test('focusing removes helper aria-hidden attribute', async () => {
+
+      const helperText = element.shadowRoot!.querySelector('#helper');
+      assert.isTrue(helperText && (helperText.getAttribute('aria-hidden') === ''));
+      element.focus();
+      await element.updateComplete;
+      
+      assert.isTrue(helperText && (helperText.getAttribute('aria-hidden') === null));
+
+      element.blur();
+      await element.updateComplete;
+      
+      assert.isTrue(helperText && (helperText.getAttribute('aria-hidden') === ''));
+
+    });
+
+    test('invalid UI makes helper text\'s role = "alert" ', async () => {
+
+      fixt = await fixture(html`<mwc-textfield validationMessage="required" required></mwc-textfield>`);
+      element = fixt.root.querySelector('mwc-textfield')!;
+
+      const helperText = element.shadowRoot!.querySelector('#helper');
+      
+      assert.isTrue(helperText && (helperText.getAttribute('role') === null));
+
+      element.focus();
+      element.blur();
+      await element.updateComplete;
+      
+      assert.isTrue(isUiInvalid(element));
+      assert.isTrue(helperText && (helperText.getAttribute('role') === 'alert'));
+
+    });    
+
+    teardown(() => {
+      if (fixt) {
+        fixt.remove();
+      }
     });
   });
 });

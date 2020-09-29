@@ -114,6 +114,8 @@ export abstract class TextFieldBase extends FormElement {
 
   @query('.mdc-text-field') protected mdcRoot!: HTMLElement;
 
+  @query('#helper') protected helperElement!: HTMLElement|null;
+
   @query('input') protected formElement!: HTMLInputElement;
 
   @query('.mdc-floating-label') protected labelElement!: FloatingLabel|null;
@@ -203,6 +205,7 @@ export abstract class TextFieldBase extends FormElement {
   @property({type: Boolean}) protected outlineOpen = false;
   @property({type: Number}) protected outlineWidth = 0;
   @property({type: Boolean}) protected isUiValid = true;
+  @property({type: Boolean}) protected isFocused_ = false;
 
   protected _validity: ValidityState = createValidityObj();
   protected _outlineUpdateComplete: null|Promise<unknown> = null;
@@ -238,12 +241,14 @@ export abstract class TextFieldBase extends FormElement {
         nativeValidity: ValidityState) => Partial<ValidityState>)|null = null;
 
   focus() {
+    this.isFocused_ = true;
     const focusEvt = new CustomEvent('focus');
     this.formElement.dispatchEvent(focusEvt);
     this.formElement.focus();
   }
 
   blur() {
+    this.isFocused_ = false;
     const blurEvt = new CustomEvent('blur');
     this.formElement.dispatchEvent(blurEvt);
     this.formElement.blur();
@@ -387,6 +392,8 @@ export abstract class TextFieldBase extends FormElement {
     return html`
       <input
           aria-labelledby="label"
+          aria-controls="helper"
+          aria-describedby="helper"
           class="mdc-text-field__input"
           type="${this.type}"
           .value="${live(this.value) as unknown as string}"
@@ -405,6 +412,7 @@ export abstract class TextFieldBase extends FormElement {
           inputmode="${ifDefined(this.inputMode)}"
           autocapitalize="${ifDefined(autocapitalizeOrUndef)}"
           @input="${this.handleInputChange}"
+          @focus="${this.onInputFocus}"
           @blur="${this.onInputBlur}">`;
   }
 
@@ -430,9 +438,11 @@ export abstract class TextFieldBase extends FormElement {
       'mdc-text-field-helper-text--validation-msg': showValidationMessage,
     };
 
+    const role = showValidationMessage ? 'alert' : undefined;
+
     return html`
       <div class="mdc-text-field-helper-line">
-        <div class="mdc-text-field-helper-text ${classMap(classes)}">${
+        <div id="helper" class="mdc-text-field-helper-text ${classMap(classes)}" role="${ifDefined(role)}" ?aria-hidden="${!(this.helperPersistent || showValidationMessage || this.isFocused_)}">${
         showValidationMessage ? this.validationMessage : this.helper}</div>
         ${charCounterTemplate}
       </div>
@@ -450,7 +460,15 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   protected onInputBlur() {
+    this.isFocused_ = false;
     this.reportValidity();
+  }
+
+  // Note (cg): keep `isFocused` at component level 
+  // (instead of this.mdcFoundation.isFocused) to 
+  // handle aria-hidden attribue from component state
+  protected onInputFocus() {
+    this.isFocused_ = true;
   }
 
   checkValidity(): boolean {
