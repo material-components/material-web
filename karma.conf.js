@@ -42,6 +42,13 @@ module.exports = function(config) {
     plugins: [
       require.resolve('@open-wc/karma-esm'),
       'karma-*',
+      'karma-mocha',
+      'karma-chai',
+      'mocha',
+      'karma-mocha-reporter',
+      'karma-chrome-launcher',
+      'karma-firefox-launcher'
+
     ],
     frameworks: ['esm', 'mocha', 'chai'],
     files: [
