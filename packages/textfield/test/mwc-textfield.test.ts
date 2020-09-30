@@ -581,16 +581,15 @@ suite('mwc-textfield:', () => {
     test('focusing removes helper aria-hidden attribute', async () => {
 
       const helperText = element.shadowRoot!.querySelector('#helper');
-      assert.isTrue(helperText && (helperText.getAttribute('aria-hidden') === ''));
+      assert.isTrue(helperText && (helperText.getAttribute('aria-hidden') === 'true'));
+
       element.focus();
       await element.updateComplete;
-      
       assert.isTrue(helperText && (helperText.getAttribute('aria-hidden') === null));
 
       element.blur();
       await element.updateComplete;
-      
-      assert.isTrue(helperText && (helperText.getAttribute('aria-hidden') === ''));
+      assert.isTrue(helperText && (helperText.getAttribute('aria-hidden') === 'true'));
 
     });
 

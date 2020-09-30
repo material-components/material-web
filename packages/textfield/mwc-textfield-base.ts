@@ -439,10 +439,13 @@ export abstract class TextFieldBase extends FormElement {
     };
 
     const role = showValidationMessage ? 'alert' : undefined;
+    const ariaHidden = !(this.helperPersistent || showValidationMessage || this.isFocused_) ? 'true' : undefined;
 
     return html`
       <div class="mdc-text-field-helper-line">
-        <div id="helper" class="mdc-text-field-helper-text ${classMap(classes)}" role="${ifDefined(role)}" ?aria-hidden="${!(this.helperPersistent || showValidationMessage || this.isFocused_)}">${
+        <div id="helper" class="mdc-text-field-helper-text ${classMap(classes)}" 
+        role="${ifDefined(role)}" 
+        aria-hidden="${ifDefined(ariaHidden)}">${
         showValidationMessage ? this.validationMessage : this.helper}</div>
         ${charCounterTemplate}
       </div>
