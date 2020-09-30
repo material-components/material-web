@@ -30,12 +30,13 @@ export class SingleSelectionSet {
 }
 
 /**
- * Element with `checked` and `name` properties consumed by
+ * Element that is checkable consumed by
  * `SingleSelectionController` and `SingleSelectionSet`
  */
 export type CheckableElement = HTMLElement&{
   name: string;
   checked: boolean;
+  formElementTabIndex?: number;
 };
 
 /**
@@ -49,6 +50,8 @@ export type CheckableElement = HTMLElement&{
  * - Grouping of checkable elements by name
  *   - Defaults grouping scope to host shadow root
  *   - Document-wide scoping enabled
+ * - Land focus only on checked element. Focuses leading element when none
+ *   checked.
  *
  * Intended Usage:
  *
@@ -83,10 +86,6 @@ export type CheckableElement = HTMLElement&{
  *   disconnectedCallback() {
  *     this.selectionController!.unregister(this);
  *     this.selectionController = null;
- *   }
- *
- *   focus() {
- *     // focus native radio element
  *   }
  * }
  * ```
@@ -212,6 +211,8 @@ export class SingleSelectionController {
    *
    * @param element Element from which selection set is derived and subsequently
    *     focused.
+   * @deprecated update() method now handles focus management by setting
+   *     appropriate tabindex to form element.
    */
   focus(element: CheckableElement) {
     // Only manage focus state when using keyboard
@@ -224,6 +225,21 @@ export class SingleSelectionController {
     if (currentFocusedSet != set && set.selected && set.selected != element) {
       set.selected.focus();
     }
+  }
+
+  /**
+   * @return Returns true if atleast one radio is selected in the radio group.
+   */
+  isAnySelected(element: CheckableElement): boolean {
+    const set = this.getSet(element.name);
+
+    for (const e of set.set) {
+      if (e.checked) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   /**
@@ -301,12 +317,26 @@ export class SingleSelectionController {
       return;
     }
     this.updating = true;
+    const set = this.getSet(element.name);
     if (element.checked) {
-      const set = this.getSet(element.name);
       for (const e of set.set) {
-        e.checked = (e == element);
+        if (e == element) {
+          continue;
+        }
+        e.checked = false;
       }
       set.selected = element;
+    }
+
+    // When tabbing through land focus on the checked radio in the group.
+    if (this.isAnySelected(element)) {
+      for (const e of set.set) {
+        if (e.formElementTabIndex === undefined) {
+          break;
+        }
+
+        e.formElementTabIndex = e.checked ? 0 : -1;
+      }
     }
     this.updating = false;
   }
