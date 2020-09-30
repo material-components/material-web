@@ -394,6 +394,8 @@ export abstract class TextFieldBase extends FormElement {
           aria-labelledby="label"
           aria-controls="helper"
           aria-describedby="helper"
+          aria-errormessage="helper"
+          aria-invalid="${ifDefined(this.isUiValid ? undefined: 'true')}"
           class="mdc-text-field__input"
           type="${this.type}"
           .value="${live(this.value) as unknown as string}"
