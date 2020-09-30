@@ -23,7 +23,7 @@
     "blocking-elements": "^0.1.0",
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
-    "tslib": "^1.10.0",
+    "tslib": "^2.0.1",
     "wicg-inert": "^3.0.0"
   },
   "devDependencies": {

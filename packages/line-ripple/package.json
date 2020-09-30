@@ -18,7 +18,7 @@
   "dependencies": {
     "@material/line-ripple": "=8.0.0-canary.43c1c5e2f.0",
     "lit-html": "^1.1.2",
-    "tslib": "^1.10.0"
+    "tslib": "^2.0.1"
   },
   "publishConfig": {
     "access": "public"

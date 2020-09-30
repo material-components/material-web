@@ -20,7 +20,7 @@
     "@material/mwc-base": "^0.19.1",
     "@material/tab-scroller": "=8.0.0-canary.43c1c5e2f.0",
     "lit-element": "^2.3.0",
-    "tslib": "^1.10.0"
+    "tslib": "^2.0.1"
   },
   "publishConfig": {
     "access": "public"
