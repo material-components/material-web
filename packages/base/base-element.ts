@@ -42,6 +42,9 @@ export abstract class BaseElement extends LitElement {
    */
   protected abstract mdcFoundation?: MDCFoundation;
 
+
+  /* eslint-disable @typescript-eslint/ban-types */
+
   /**
    * Create the adapter for the `mdcFoundation`.
    *
@@ -53,7 +56,9 @@ export abstract class BaseElement extends LitElement {
    *      ...
    *    }
    */
-  protected abstract createAdapter(): {}; // eslint-disable-line @typescript-eslint/ban-types
+  protected abstract createAdapter(): {};
+
+  /* eslint-enable @typescript-eslint/ban-types */
 
   click() {
     if (this.mdcRoot) {
