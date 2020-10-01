@@ -39,7 +39,7 @@ export class IconButtonBase extends LitElement {
     return this.ripple;
   });
 
-  /** @soyCompatible */
+  /** @soyTemplate */
   protected renderRipple() {
     return this.shouldRenderRipple ? html`
             <mwc-ripple
@@ -65,7 +65,7 @@ export class IconButtonBase extends LitElement {
     }
   }
 
-  /** @soyCompatible */
+  /** @soyTemplate */
   protected render() {
     return html`<button
         class="mdc-icon-button"

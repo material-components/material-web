@@ -98,7 +98,7 @@ export class CheckboxBase extends FormElement {
   });
 
   // TODO(dfreedm): Make this use selected as a param after Polymer/internal#739
-  /** @soyCompatible */
+  /** @soyTemplate */
   protected renderRipple() {
     const selected = this.indeterminate || this.checked;
     return this.shouldRenderRipple ? html`
@@ -111,7 +111,7 @@ export class CheckboxBase extends FormElement {
   }
 
   /**
-   * @soyCompatible
+   * @soyTemplate
    * @soyAttributes checkboxAttributes: input
    * @soyClasses checkboxClasses: .mdc-checkbox
    */

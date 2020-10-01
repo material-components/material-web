@@ -183,7 +183,7 @@ export class RippleBase extends BaseElement implements RippleAPI {
     }
   }
 
-  /** @soyCompatible */
+  /** @soyTemplate */
   protected render() {
     /** @classMap */
     const classes = {

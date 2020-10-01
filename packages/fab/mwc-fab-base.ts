@@ -55,7 +55,7 @@ export class FabBase extends LitElement {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
-  /** @soyCompatible */
+  /** @soyTemplate */
   protected render() {
     const hasTouchTarget = this.mini && !this.reducedTouchTarget;
     /** @classMap */
@@ -95,7 +95,7 @@ export class FabBase extends LitElement {
       </button>`;
   }
 
-  /** @soyCompatible */
+  /** @soyTemplate */
   protected renderIcon() {
     return html`${
         this.icon ? html`
@@ -103,7 +103,7 @@ export class FabBase extends LitElement {
                     ''}`;
   }
 
-  /** @soyCompatible */
+  /** @soyTemplate */
   protected renderTouchTarget() {
     const hasTouchTarget = this.mini && !this.reducedTouchTarget;
 
@@ -111,7 +111,7 @@ export class FabBase extends LitElement {
         hasTouchTarget ? html`<div class="mdc-fab__touch"></div>` : ''}`;
   }
 
-  /** @soyCompatible */
+  /** @soyTemplate */
   protected renderLabel() {
     const showLabel = this.label !== '' && this.extended;
 
@@ -120,12 +120,12 @@ export class FabBase extends LitElement {
                     ''}`;
   }
 
-  /** @soyCompatible */
+  /** @soyTemplate */
   protected renderBeforeRipple() {
     return html``;
   }
 
-  /** @soyCompatible */
+  /** @soyTemplate */
   protected renderRipple() {
     return this.shouldRenderRipple ?
         html`<mwc-ripple class="ripple"></mwc-ripple>` :

@@ -23,7 +23,7 @@ import {style} from './mwc-icon-host-css';
 export class Icon extends LitElement {
   static styles = style;
 
-  /** @soyCompatible */
+  /** @soyTemplate */
   protected render() {
     return html`<slot></slot>`;
   }

@@ -55,7 +55,7 @@ export class ButtonBase extends LitElement {
     return this.ripple;
   });
 
-  /** @soyCompatible */
+  /** @soyTemplate */
   protected renderRipple() {
     const filled = this.raised || this.unelevated;
     return this.shouldRenderRipple ?
@@ -84,7 +84,7 @@ export class ButtonBase extends LitElement {
     }
   }
 
-  /** @soyCompatible */
+  /** @soyTemplate */
   protected getRenderClasses() {
     return classMap({
       'mdc-button--raised': this.raised,
@@ -94,7 +94,7 @@ export class ButtonBase extends LitElement {
     });
   }
 
-  /** @soyCompatible */
+  /** @soyTemplate */
   protected render() {
     return html`
       <button
@@ -130,7 +130,7 @@ export class ButtonBase extends LitElement {
       </button>`;
   }
 
-  /** @soyCompatible */
+  /** @soyTemplate */
   protected renderIcon() {
     return html`
     <mwc-icon class="mdc-button__icon">

@@ -40,7 +40,7 @@ export class CircularProgressBase extends LitElement {
   }
 
   /**
-   * @soyCompatible
+   * @soyTemplate
    */
   protected render() {
     /** @classMap */
@@ -71,7 +71,7 @@ export class CircularProgressBase extends LitElement {
   }
 
   /**
-   * @soyCompatible
+   * @soyTemplate
    */
   private renderDeterminateContainer() {
     const sideLength = 48 + this.density * 4;
@@ -100,7 +100,7 @@ export class CircularProgressBase extends LitElement {
   }
 
   /**
-   * @soyCompatible
+   * @soyTemplate
    */
   protected renderIndeterminateContainer() {
     return html`
@@ -112,7 +112,7 @@ export class CircularProgressBase extends LitElement {
   }
 
   /**
-   * @soyCompatible
+   * @soyTemplate
    */
   protected renderIndeterminateSpinnerLayer() {
     const sideLength = 48 + this.density * 4;

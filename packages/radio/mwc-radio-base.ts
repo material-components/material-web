@@ -140,7 +140,7 @@ export class RadioBase extends FormElement {
     return this.ripple;
   });
 
-  /** @soyCompatible */
+  /** @soyTemplate */
   protected renderRipple() {
     return this.shouldRenderRipple ?
         html`<mwc-ripple unbounded accent .disabled="${
@@ -212,7 +212,7 @@ export class RadioBase extends FormElement {
   }
 
   /**
-   * @soyCompatible
+   * @soyTemplate
    * @soyAttributes radioAttributes: input
    * @soyClasses radioClasses: .mdc-radio
    */

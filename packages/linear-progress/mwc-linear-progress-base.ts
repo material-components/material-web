@@ -53,7 +53,7 @@ export class LinearProgressBase extends LitElement {
   }
 
   /**
-   * @soyCompatible
+   * @soyTemplate
    */
   protected render() {
     /** @classMap */
