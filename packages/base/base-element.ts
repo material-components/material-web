@@ -53,7 +53,7 @@ export abstract class BaseElement extends LitElement {
    *      ...
    *    }
    */
-  protected abstract createAdapter(): {}
+  protected abstract createAdapter(): {}; // eslint-disable-line @typescript-eslint/ban-types
 
   click() {
     if (this.mdcRoot) {

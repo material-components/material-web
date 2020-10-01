@@ -57,7 +57,7 @@ suite('mwc-snackbar', () => {
 
   setup(() => {
     originalSetTimeout = window.setTimeout;
-    (window as any).setTimeout = (fn: Function) => {
+    (window as any).setTimeout = (fn: () => any) => {
       fn();
       return -1;
     };

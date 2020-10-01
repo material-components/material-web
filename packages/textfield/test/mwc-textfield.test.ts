@@ -118,7 +118,7 @@ suite('mwc-textfield:', () => {
       await element.updateComplete;
       assert.equal(element.value, '15');
 
-      (element.value as unknown as {}) = {};
+      (element.value as unknown) = {};
       await element.updateComplete;
       assert.equal(element.value, '[object Object]');
     });

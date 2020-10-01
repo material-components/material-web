@@ -58,6 +58,7 @@ export const observer = (observer: Observer) =>
           });
         };
         // clone any existing observers (superclasses)
+        // eslint-disable-next-line no-prototype-builtins
       } else if (!proto.constructor.hasOwnProperty('_observers')) {
         const observers = proto.constructor._observers;
         proto.constructor._observers = new Map();
