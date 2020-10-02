@@ -81,8 +81,6 @@ export class TabBase extends BaseElement {
    * onTransitionEnd (needed?)
    */
 
-  @query('mwc-tab-indicator') private _tabIndicator!: HTMLElement;
-
   @query('.mdc-tab__content') private _contentElement!: HTMLElement;
 
   private _handleClick() {
@@ -159,11 +157,14 @@ export class TabBase extends BaseElement {
       ...addHasRemoveClass(this.mdcRoot),
       setAttr: (attr: string, value: string) =>
           this.mdcRoot.setAttribute(attr, value),
-      activateIndicator: (previousIndicatorClientRect: ClientRect) =>
-          (this._tabIndicator as TabIndicator)
-              .activate(previousIndicatorClientRect),
-      deactivateIndicator: () =>
-          (this._tabIndicator as TabIndicator).deactivate(),
+      activateIndicator: async (previousIndicatorClientRect: ClientRect) => {
+        await this.tabIndicator.updateComplete;
+        this.tabIndicator.activate(previousIndicatorClientRect);
+      },
+      deactivateIndicator: async () => {
+        await this.tabIndicator.updateComplete;
+        this.tabIndicator.deactivate();
+      },
       notifyInteracted: () =>
           this.dispatchEvent(new CustomEvent<TabInteractionEventDetail>(
               MDCTabFoundation.strings.INTERACTED_EVENT, {

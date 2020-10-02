@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `--mdc-menu-max-height` to set max height on menu
 - `tab`
   - export for `TabInteractionEventDetail`
+  - fix race condition on safari
 
 ### Changed
 
