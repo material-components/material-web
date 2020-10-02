@@ -55,7 +55,10 @@ export class FabBase extends LitElement {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
-  /** @soyTemplate */
+  /**
+   * @soyTemplate
+   * @soyClasses fabClasses: .mdc-fab
+   */
   protected render() {
     const hasTouchTarget = this.mini && !this.reducedTouchTarget;
     /** @classMap */
