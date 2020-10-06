@@ -96,7 +96,7 @@ attribute or property to enable this layout.
 | ------------------- | --------------------- |------------
 | `open`              | `boolean`             | Whether the snackbar is currently open.
 | `timeoutMs`         | `number`              | Automatic dismiss timeout in milliseconds. Value must be between `4000` and `10000`  (or `-1` to disable the timeout completely) or an error will be thrown. Defaults to `5000` (5 seconds).
-| `closeOnEscape`     | `boolean`             | Whether the snackbar closes when it is focused and the user presses the ESC key. Defaults to `true`.
+| `closeOnEscape`     | `boolean`             | Whether the snackbar closes when it is focused and the user presses the ESC key. Defaults to `false`.
 | `labelText`         | `string`              | The text content of the label element.
 | `stacked`           | `boolean`             | Enables the *stacked* layout (see above).
 | `leading`           | `boolean`             | Enables the *leading* layout (see above).
