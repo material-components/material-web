@@ -42,7 +42,6 @@ export abstract class BaseElement extends LitElement {
    */
   protected abstract mdcFoundation?: MDCFoundation;
 
-
   /**
    * Create the adapter for the `mdcFoundation`.
    *
