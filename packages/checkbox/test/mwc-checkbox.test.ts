@@ -93,6 +93,11 @@ suite('mwc-checkbox', () => {
 
     test('does not animate after being hidden', async () => {
       element.checked = true;
+      const animatedElement =
+          element.shadowRoot!.querySelector('.mdc-checkbox__background')!;
+      await new Promise((resolve) => {
+        animatedElement.addEventListener('animationend', resolve);
+      });
       await element.updateComplete;
       element.style.display = 'hidden';
       await rafPromise();
