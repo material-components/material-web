@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-ripple",
-  "version": "0.18.0",
+  "version": "0.19.0",
   "description": "Material Design ripple web component",
   "keywords": [
     "material design",
@@ -17,7 +17,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/dom": "=8.0.0-canary.774dcfc8e.0",
-    "@material/mwc-base": "^0.18.0",
+    "@material/mwc-base": "^0.19.0",
     "@material/ripple": "=8.0.0-canary.774dcfc8e.0",
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
