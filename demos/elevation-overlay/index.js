@@ -118,7 +118,7 @@ class MyElement extends LitElement {
 
   render() {
     const styles = {
-      '--mdc-elevation-overlay-fill-color': this.color ?? '',
+      '--mdc-elevation-overlay-fill-color': this.color || '',
       '--mdc-elevation-overlay-width': this.width,
       '--mdc-elevation-overlay-height': this.height,
     };
