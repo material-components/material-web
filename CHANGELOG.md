@@ -47,6 +47,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `linear-progress`
   - Fixed performance issues with indeterminate set on modern browsers
   - Animations no longer run when indicator has been closed.
+- `menu`
+  - Fixed a wrong export of `DefaultFocusState` from `mwc-menu.ts`
 
 ## [v0.18.0] - 2020-08-03
 

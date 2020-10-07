@@ -20,8 +20,8 @@ import {customElement} from 'lit-element';
 import {MenuBase} from './mwc-menu-base';
 import {style} from './mwc-menu-css';
 
-export {DefaultFocusState} from '@material/menu/constants';
 export {createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex} from '@material/mwc-list/mwc-list-foundation';
+export {DefaultFocusState} from './mwc-menu-base';
 export {Corner, MenuCorner} from './mwc-menu-surface-base';
 
 declare global {
