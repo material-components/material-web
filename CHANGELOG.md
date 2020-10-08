@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- ## Unreleased -->
 
+## [v0.19.1] - 2020-10-08
+
+### Fixed
+
+- `linear-progress`
+  - Fix distributed build by including ResizeObserver types
+
 ## [v0.19.0] - 2020-10-07
 
 ### Added
