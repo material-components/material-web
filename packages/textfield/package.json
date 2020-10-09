@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-textfield",
-  "version": "0.19.0",
+  "version": "0.19.1",
   "description": "Material Design textfield web component",
   "keywords": [
     "material design",
@@ -18,17 +18,17 @@
   "dependencies": {
     "@material/floating-label": "=8.0.0-canary.0f60323a8.0",
     "@material/line-ripple": "=8.0.0-canary.0f60323a8.0",
-    "@material/mwc-base": "^0.19.0",
-    "@material/mwc-floating-label": "^0.19.0",
-    "@material/mwc-line-ripple": "^0.19.0",
-    "@material/mwc-notched-outline": "^0.19.0",
+    "@material/mwc-base": "^0.19.1",
+    "@material/mwc-floating-label": "^0.19.1",
+    "@material/mwc-line-ripple": "^0.19.1",
+    "@material/mwc-notched-outline": "^0.19.1",
     "@material/textfield": "=8.0.0-canary.0f60323a8.0",
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@material/mwc-icon": "^0.19.0",
+    "@material/mwc-icon": "^0.19.1",
     "@material/notched-outline": "=8.0.0-canary.0f60323a8.0",
     "@material/ripple": "=8.0.0-canary.0f60323a8.0",
     "@material/shape": "=8.0.0-canary.0f60323a8.0",
