@@ -8,6 +8,7 @@
     "sourceMap": false,
     "inlineSources": false
   },
+  "types": ["mocha", "resize-observer-browser"],
   "include": [
     "src/custom_typings/*.d.ts",
     "src/**/*.ts",
