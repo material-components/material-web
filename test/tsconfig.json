@@ -6,9 +6,9 @@
     "tsBuildInfoFile": ".tsbuildinfo",
     "rootDir": "../",
     "sourceMap": false,
-    "inlineSources": false
+    "inlineSources": false,
+    "types": ["mocha", "resize-observer-browser"]
   },
-  "types": ["mocha", "resize-observer-browser"],
   "include": [
     "src/custom_typings/*.d.ts",
     "src/**/*.ts",

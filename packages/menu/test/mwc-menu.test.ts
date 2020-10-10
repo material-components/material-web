@@ -299,8 +299,10 @@ suite('mwc-menu', () => {
 
     setup(async () => {
       originalSetTimeout = window.setTimeout;
-      (window as any).setTimeout = (fn: () => unknown) => {
-        fn();
+      window.setTimeout = (fn) => {
+        if (typeof fn === 'function') {
+          fn();
+        }
         return -1;
       };
       fixt = await fixture(menu({
