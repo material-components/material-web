@@ -25,7 +25,7 @@ import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter';
 import MDCTextFieldFoundation from '@material/textfield/foundation';
-import {eventOptions, html, property, PropertyValues, query, TemplateResult} from 'lit-element';
+import {eventOptions, html, internalProperty, property, PropertyValues, query, TemplateResult} from 'lit-element';
 import {nothing} from 'lit-html';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
@@ -204,6 +204,8 @@ export abstract class TextFieldBase extends FormElement {
   @property({type: Number}) protected outlineWidth = 0;
   @property({type: Boolean}) protected isUiValid = true;
 
+  @internalProperty() protected focused = false;
+
   protected _validity: ValidityState = createValidityObj();
   protected _outlineUpdateComplete: null|Promise<unknown> = null;
 
@@ -381,12 +383,22 @@ export abstract class TextFieldBase extends FormElement {
         this.autocapitalize as (
             'off' | 'none' | 'on' | 'sentences' | 'words' | 'characters') :
         undefined;
+    const showValidationMessage = this.validationMessage && !this.isUiValid;
     // TODO: live() directive needs casting for lit-analyzer
     // https://github.com/runem/lit-analyzer/pull/91/files
     // TODO: lit-analyzer labels min/max as (number|string) instead of string
     return html`
       <input
           aria-labelledby="label"
+          aria-controls="${
+        ifDefined(this.shouldRenderHelperText ? 'helper-text' : undefined)}"
+          aria-describedby="${
+        ifDefined(
+            this.focused || this.helperPersistent || showValidationMessage ?
+                'helper-text' :
+                undefined)}"
+         aria-errortext="${
+        ifDefined(showValidationMessage ? 'helper-text' : undefined)}"
           class="mdc-text-field__input"
           type="${this.type}"
           .value="${live(this.value) as unknown as string}"
@@ -405,6 +417,7 @@ export abstract class TextFieldBase extends FormElement {
           inputmode="${ifDefined(this.inputMode)}"
           autocapitalize="${ifDefined(autocapitalizeOrUndef)}"
           @input="${this.handleInputChange}"
+          @focus="${this.onInputFocus}"
           @blur="${this.onInputBlur}">`;
   }
 
@@ -432,7 +445,14 @@ export abstract class TextFieldBase extends FormElement {
 
     return html`
       <div class="mdc-text-field-helper-line">
-        <div class="mdc-text-field-helper-text ${classMap(classes)}">${
+        <div
+        id="helper-text"
+        aria-hidden="${
+        ifDefined(
+            this.focused || this.helperPersistent || showValidationMessage ?
+                undefined :
+                'true')}"
+        class="mdc-text-field-helper-text ${classMap(classes)}">${
         showValidationMessage ? this.validationMessage : this.helper}</div>
         ${charCounterTemplate}
       </div>
@@ -449,7 +469,12 @@ export abstract class TextFieldBase extends FormElement {
         this.maxLength}</span>`;
   }
 
+  protected onInputFocus() {
+    this.focused = true;
+  }
+
   protected onInputBlur() {
+    this.focused = false;
     this.reportValidity();
   }
 
@@ -552,6 +577,10 @@ export abstract class TextFieldBase extends FormElement {
   protected getInputAdapterMethods(): MDCTextFieldInputAdapter {
     return {
       getNativeInput: () => this.formElement,
+      // since HelperTextFoundation is not used, aria-describedby a11y logic
+      // is implemented in render method instead of these adapter methods
+      setInputAttr: () => undefined,
+      removeInputAttr: () => undefined,
       isFocused: () => this.shadowRoot ?
           this.shadowRoot.activeElement === this.formElement :
           false,
