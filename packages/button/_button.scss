@@ -26,7 +26,6 @@ limitations under the License.
 @use '@material/theme/theme';
 @use '@material/theme/theme-color';
 @use '@material/mwc-ripple/ripple-theme';
-@use './button-theme';
 
 @mixin core-styles() {
   @include button-mixins.without-ripple();
@@ -161,7 +160,7 @@ limitations under the License.
       );
     }
 
-    mwc-ripple {
+    .ripple {
       @include _outline-ripple($outline-width);
     }
   }

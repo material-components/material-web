@@ -35,13 +35,19 @@ $light-theme: (
   text: (
     label-color: $_primary,
     label-disabled-color: button-variables.$disabled-ink-color,
+    label-focus-color: null,
+    label-hover-color: null,
+    label-press-color: null,
     shape: shape.$small-component-radius,
   ),
   outlined: (
     label-color: $_primary,
     label-disabled-color: button-variables.$disabled-ink-color,
-    outline-color: button-variables.$outline-color,
-    outline-disabled-color: button-variables.$disabled-container-color,
+    label-focus-color: null,
+    label-hover-color: null,
+    label-press-color: null,
+    outline-color: null,
+    outline-disabled-color: null,
     shape: shape.$small-component-radius,
   ),
   contained: (
@@ -49,6 +55,9 @@ $light-theme: (
     container-disabled-color: button-variables.$disabled-container-color,
     label-color: $_on-primary,
     label-disabled-color: button-variables.$disabled-ink-color,
+    label-focus-color: null,
+    label-hover-color: null,
+    label-press-color: null,
     shape: shape.$small-component-radius,
   ),
 );
@@ -89,6 +98,24 @@ $light-theme: (
     --mdc-button-disabled-ink-color,
     map.get($text, label-disabled-color)
   );
+  @include shadow-dom.host-aware(selector.append(&, ':hover')) {
+    @include css.declaration(
+      --mdc-theme-primary,
+      map.get($text, label-hover-color)
+    );
+  }
+  @include shadow-dom.host-aware(selector.append(&, ':focus-within')) {
+    @include css.declaration(
+      --mdc-theme-primary,
+      map.get($text, label-focus-color)
+    );
+  }
+  @include shadow-dom.host-aware(selector.append(&, ':active')) {
+    @include css.declaration(
+      --mdc-theme-primary,
+      map.get($text, label-pressed-color)
+    );
+  }
   // TODO(dfreedm): infer ripple opacities from label-color
   @include ripple-theme.theme(
     (

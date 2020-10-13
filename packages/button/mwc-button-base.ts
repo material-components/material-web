@@ -24,11 +24,11 @@ import {classMap} from 'lit-html/directives/class-map';
 
 /** @soyCompatible */
 export class ButtonBase extends LitElement {
-  @property({type: Boolean}) raised = false;
+  @property({type: Boolean, reflect: true}) raised = false;
 
-  @property({type: Boolean}) unelevated = false;
+  @property({type: Boolean, reflect: true}) unelevated = false;
 
-  @property({type: Boolean}) outlined = false;
+  @property({type: Boolean, reflect: true}) outlined = false;
 
   @property({type: Boolean}) dense = false;
 
@@ -59,7 +59,7 @@ export class ButtonBase extends LitElement {
   protected renderRipple() {
     const filled = this.raised || this.unelevated;
     return this.shouldRenderRipple ?
-        html`<mwc-ripple .primary="${!filled}" .disabled="${
+        html`<mwc-ripple class="ripple" .primary="${!filled}" .disabled="${
             this.disabled}"></mwc-ripple>` :
         '';
   }
@@ -94,7 +94,11 @@ export class ButtonBase extends LitElement {
     });
   }
 
-  /** @soyTemplate */
+  /**
+   * @soyTemplate
+   * @soyAttributes buttonAttributes: #button
+   * @soyClasses buttonClasses: #button
+   */
   protected render() {
     return html`
       <button
