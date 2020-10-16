@@ -15,10 +15,6 @@
  * limitations under the License.
  */
 
-import '@material/mwc-list';
-import '@material/mwc-list/mwc-list-item';
-import '@material/mwc-list/mwc-check-list-item';
-import '@material/mwc-list/mwc-radio-list-item';
 import '@material/mwc-icon';
 
 import {isNodeElement} from '@material/mwc-base/utils';
@@ -29,6 +25,7 @@ import {ListItemBase} from '@material/mwc-list/mwc-list-item-base';
 import {RadioListItem} from '@material/mwc-list/mwc-radio-list-item';
 import {isIndexSet} from '@material/mwc-menu';
 import {html, TemplateResult} from 'lit-html';
+import {ifDefined} from 'lit-html/directives/if-defined.js';
 
 import {fixture, TestFixture} from '../../../test/src/util/helpers';
 
@@ -146,6 +143,12 @@ const listTemplate = (propsInit: Partial<ListProps> = {}) => {
         .innerRole=${props.innerRole}>
       ${props.items}
     </mwc-list>
+  `;
+};
+
+const createEmptyList = (emptyMessage: string|undefined) => {
+  return html`
+    <mwc-list emptyMessage="${ifDefined(emptyMessage)}"></mwc-list>
   `;
 };
 
@@ -1735,6 +1738,48 @@ suite('mwc-list:', () => {
 
         assert.equal(element.index, 1, 'index is now only the first item');
         assert.equal(element.selected, items[1], 'element is selected');
+      });
+
+      teardown(() => {
+        if (fixt) {
+          fixt.remove();
+        }
+      });
+    });
+
+    suite('empty list', () => {
+      // IE does not support slots and cannot run this test
+      // IE feature detection.
+      if ((document as any).documentMode) {
+        return;
+      }
+
+      let fixt: TestFixture;
+      let component: List|null;
+      let placeholderElement: ListItem|null;
+
+      test('does not render placeholder by default', async () => {
+        fixt = await fixture(createEmptyList(undefined));
+        component = fixt.root.querySelector('mwc-list');
+        if (component && component.shadowRoot) {
+          placeholderElement =
+              component.shadowRoot.querySelector('mwc-list-item');
+        }
+
+        assert.isNull(placeholderElement);
+      });
+
+      test('will render a noninteractive paceholder if provided', async () => {
+        fixt = await fixture(
+            createEmptyList('Unfortunately, no results were found.'));
+        component = fixt.root.querySelector('mwc-list');
+
+        if (component && component.shadowRoot) {
+          placeholderElement =
+              component.shadowRoot.querySelector('mwc-list-item');
+        }
+
+        assert.isNotNull(placeholderElement);
       });
 
       teardown(() => {

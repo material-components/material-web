@@ -14,6 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import '@material/mwc-list/mwc-list-item';
 
 import {BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
@@ -43,6 +44,8 @@ export abstract class ListBase extends BaseElement implements Layoutable {
   protected mdcAdapter: MDCListAdapter|null = null;
 
   protected readonly mdcFoundationClass = MDCListFoundation;
+
+  @property({type: String}) emptyMessage: string|undefined;
 
   @query('.mdc-list') protected mdcRoot!: HTMLElement;
 
@@ -128,7 +131,6 @@ export abstract class ListBase extends BaseElement implements Layoutable {
 
   protected updateItems() {
     const nodes = this.assignedElements;
-
     const listItems: ListItemBase[] = [];
 
     for (const node of nodes) {
@@ -203,6 +205,7 @@ export abstract class ListBase extends BaseElement implements Layoutable {
     const ariaLabel =
         this.innerAriaLabel === null ? undefined : this.innerAriaLabel;
     const tabindex = this.rootTabbable ? '0' : '-1';
+
     return html`
       <!-- @ts-ignore -->
       <ul
@@ -216,8 +219,19 @@ export abstract class ListBase extends BaseElement implements Layoutable {
           @request-selected=${this.onRequestSelected}
           @list-item-rendered=${this.onListItemConnected}>
         <slot></slot>
+        ${this.renderPlaceholder()}
       </ul>
     `;
+  }
+
+  renderPlaceholder() {
+    if (this.emptyMessage !== undefined && this.assignedElements.length === 0) {
+      return html`
+        <mwc-list-item noninteractive>${this.emptyMessage}</mwc-list-item>
+      `;
+    }
+
+    return null;
   }
 
   firstUpdated() {

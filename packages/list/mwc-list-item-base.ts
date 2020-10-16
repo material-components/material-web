@@ -281,6 +281,7 @@ export class ListItemBase extends LitElement {
     }
   }
 
+  // composed flag, event fire through shadow root and up through composed tree
   protected firstUpdated() {
     const ev = new Event('list-item-rendered', {bubbles: true, composed: true});
     this.dispatchEvent(ev);
