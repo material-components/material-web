@@ -56,6 +56,11 @@ export class ButtonBase extends LitElement {
   });
 
   /** @soyTemplate */
+  protected renderOverlay() {
+    return html``;
+  }
+
+  /** @soyTemplate */
   protected renderRipple() {
     const filled = this.raised || this.unelevated;
     return this.shouldRenderRipple ?
@@ -114,6 +119,7 @@ export class ButtonBase extends LitElement {
           @touchstart="${this.handleRippleActivate}"
           @touchend="${this.handleRippleDeactivate}"
           @touchcancel="${this.handleRippleDeactivate}">
+        ${this.renderOverlay()}
         ${this.renderRipple()}
         <span class="leading-icon">
           <slot name="icon">

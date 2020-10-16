@@ -45,7 +45,7 @@ $light-theme: (
     opacity-focus: 0.12,
     opacity-press: 0.1,
   ),
-  elevation-shadow-color: black,
+  elevation-shadow-color: elevation-theme.$baseline-color,
   icon-font-family: 'Material Icons',
 );
 

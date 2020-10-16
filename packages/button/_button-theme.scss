@@ -59,6 +59,7 @@ $light-theme: (
     label-hover-color: null,
     label-press-color: null,
     shape: shape.$small-component-radius,
+    elevation-shadow-color: elevation-theme.$baseline-color,
   ),
 );
 
@@ -135,6 +136,7 @@ $light-theme: (
     --mdc-button-disabled-ink-color,
     map.get($outlined, label-disabled-color)
   );
+
   @include css.declaration(
     --mdc-button-outline-color,
     map.get($outlined, outline-color)
@@ -143,6 +145,46 @@ $light-theme: (
     --mdc-button-disabled-outline-color,
     map.get($outlined, outline-disabled-color)
   );
+
+  @include shadow-dom.host-aware(selector.append(&, ':hover')) {
+    @include css.declaration(
+      --mdc-theme-primary,
+      map.get($outlined, label-hover-color)
+    );
+
+    @include css.declaration(
+      --mdc-button-outline-color,
+      map.get($outlined, outline-hover-color)
+    );
+  }
+
+  @include shadow-dom.host-aware(
+    selector.append(&, ':focus'),
+    selector.append(&, ':focus-within')
+  ) {
+    @include css.declaration(
+      --mdc-theme-primary,
+      map.get($outlined, label-focus-color)
+    );
+
+    @include css.declaration(
+      --mdc-button-outline-color,
+      map.get($outlined, outline-focus-color)
+    );
+  }
+
+  @include shadow-dom.host-aware(selector.append(&, ':active')) {
+    @include css.declaration(
+      --mdc-theme-primary,
+      map.get($outlined, label-pressed-color)
+    );
+
+    @include css.declaration(
+      --mdc-button-outline-color,
+      map.get($outlined, outline-pressed-color)
+    );
+  }
+
   // TODO(dfreedm): infer ripple opacities from label-color
   @include ripple-theme.theme(
     (
@@ -154,32 +196,27 @@ $light-theme: (
 }
 
 @mixin _raised-elevations($contained) {
-  $elevation: map.get($contained, elevation);
-  @if $elevation {
+  $elevation-shadow-color: map.get($contained, elevation-shadow-color);
+
+  @if $elevation-shadow-color {
     @include css.declaration(
       --mdc-button-raised-box-shadow,
-      elevation-theme.elevation-box-shadow($elevation, $color)
+      elevation-theme.elevation-box-shadow(2, $elevation-shadow-color)
     );
-  }
-  $elevation: map.get($contained, active-elevation);
-  @if $elevation {
+
     @include css.declaration(
       --mdc-button-raised-box-shadow-active,
-      elevation-theme.elevation-box-shadow($elevation, $color)
+      elevation-theme.elevation-box-shadow(8, $elevation-shadow-color)
     );
-  }
-  $elevation: map.get($contained, disabled-elevation);
-  @if $elevation {
+
     @include css.declaration(
       --mdc-button-raised-box-shadow-disabled,
-      elevation-theme.elevation-box-shadow($elevation, $color)
+      elevation-theme.elevation-box-shadow(0, $elevation-shadow-color)
     );
-  }
-  $elevation: map.get($contained, hover-elevation);
-  @if $elevation {
+
     @include css.declaration(
       --mdc-button-raised-shadow-hover,
-      elevation-theme.elevation-box-shadow($elevation, $color)
+      elevation-theme.elevation-box-shadow(4, $elevation-shadow-color)
     );
   }
 }
@@ -201,6 +238,30 @@ $light-theme: (
     --mdc-button-disabled-ink-color,
     map.get($contained, label-disabled-color)
   );
+  @include shadow-dom.host-aware(selector.append(&, ':hover')) {
+    @include css.declaration(
+      --mdc-theme-on-primary,
+      map.get($contained, label-hover-color)
+    );
+  }
+
+  @include shadow-dom.host-aware(
+    selector.append(&, ':focus'),
+    selector.append(&, ':focus-within')
+  ) {
+    @include css.declaration(
+      --mdc-theme-on-primary,
+      map.get($contained, label-focus-color)
+    );
+  }
+
+  @include shadow-dom.host-aware(selector.append(&, ':active')) {
+    @include css.declaration(
+      --mdc-theme-on-primary,
+      map.get($contained, label-pressed-color)
+    );
+  }
+
   // TODO(dfreedm): infer ripple opacities from label-color
   @include ripple-theme.theme(
     (
