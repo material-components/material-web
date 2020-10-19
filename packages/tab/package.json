@@ -19,15 +19,15 @@
     "@material/mwc-base": "^0.19.1",
     "@material/mwc-ripple": "^0.19.1",
     "@material/mwc-tab-indicator": "^0.19.1",
-    "@material/tab": "=8.0.0-canary.2ab716cbd.0",
+    "@material/tab": "=8.0.0-canary.43c1c5e2f.0",
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
     "@material/mwc-icon": "^0.19.1",
-    "@material/ripple": "=8.0.0-canary.2ab716cbd.0",
-    "@material/rtl": "=8.0.0-canary.2ab716cbd.0"
+    "@material/ripple": "=8.0.0-canary.43c1c5e2f.0",
+    "@material/rtl": "=8.0.0-canary.43c1c5e2f.0"
   },
   "publishConfig": {
     "access": "public"
