@@ -11,6 +11,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `button`
   - Insertion point for an elevation overlay
 
+### Fixed
+
+- `textfield`
+  - inconsistencies of autovalidation when it's turned off.
+
+### Changed
+
+- `textfield`
+  - `autoValidate` now validates on value change rather than input
+
 ## [v0.19.1] - 2020-10-08
 
 ### Fixed

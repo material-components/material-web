@@ -144,7 +144,7 @@ Name                      | Type                          | Description
 `max`                     | `number`\|`string`            | [`HTMLInputElement.prototype.max`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (empty string will unset attribute)
 `size`                    | `number`\|`null`              | [`HTMLInputElement.prototype.size`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefsize) (null will unset attribute)
 `step`                    | `number`\|`null`              | [`HTMLInputElement.prototype.step`](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Validation-related_attributes) (null will unset attribute)
-`autoValidate`            | `boolean`                     | Reports validity on input rather than only on blur.
+`autoValidate`            | `boolean`                     | Reports validity on value change rather than only on blur.
 `validity`                | `ValidityState` (readonly)    | The [`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState) of the textfield.
 `willValidate`            | `boolean` (readonly)          | [`HTMLInputElement.prototype.willValidate`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement#Properties)
 `validityTransform`       | `ValidityTransform**`\|`null` | Callback called before each validation check. See the [validation section](#Validation) for more details.

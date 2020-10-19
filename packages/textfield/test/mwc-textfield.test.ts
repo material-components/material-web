@@ -254,6 +254,42 @@ suite('mwc-textfield:', () => {
         assert.isFalse(isUiInvalid(element));
       });
 
+      test('autoValidate validates on value change', async () => {
+        fixt = await fixture(validationRequired());
+        const element = fixt.root.querySelector('mwc-textfield')!;
+        assert.isFalse(isUiInvalid(element));
+
+        element.value = 'some value';
+        // value update followed async by ui invalid update
+        await element.updateComplete;
+        await element.updateComplete;
+
+        assert.isFalse(isUiInvalid(element));
+
+        element.value = '';
+        await element.updateComplete;
+        await element.updateComplete;
+
+        assert.isFalse(isUiInvalid(element));
+
+        element.autoValidate = true;
+        await element.updateComplete;
+        assert.isFalse(isUiInvalid(element));
+
+        element.value = 'some value';
+        // value update followed async by ui invalid update
+        await element.updateComplete;
+        await element.updateComplete;
+
+        assert.isFalse(isUiInvalid(element));
+
+        element.value = '';
+        await element.updateComplete;
+        await element.updateComplete;
+
+        assert.isTrue(isUiInvalid(element));
+      });
+
       teardown(() => {
         if (fixt) {
           fixt.remove();
@@ -601,7 +637,7 @@ suite('date type textfield', () => {
 
     await element.updateComplete;
 
-    assert.isTrue(element.checkValidity());
+    assert.isTrue(element.reportValidity());
     assert.isFalse(isUiInvalid(element));
   });
 
@@ -612,7 +648,7 @@ suite('date type textfield', () => {
 
     await element.updateComplete;
 
-    assert.isFalse(element.checkValidity());
+    assert.isFalse(element.reportValidity());
     assert.isTrue(isUiInvalid(element));
   });
 
@@ -623,7 +659,7 @@ suite('date type textfield', () => {
 
     await element.updateComplete;
 
-    assert.isFalse(element.checkValidity());
+    assert.isFalse(element.reportValidity());
     assert.isTrue(isUiInvalid(element));
   });
 });
