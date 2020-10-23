@@ -144,6 +144,7 @@ mwc-button {
 | `--mdc-button-disabled-outline-color` | ![](images/color_0,0,0,12.png) | Sets the color of the outline of a disabled outlined button.
 | `--mdc-button-raised-box-shadow`          | mdc elevation 2 | Sets the box shadow of the raised button.
 | `--mdc-button-raised-box-shadow-hover`    | mdc elevation 4 | Sets the box shadow of the raised button when focused or hovered.
+| `--mdc-button-raised-box-shadow-focus`    | `--mdc-button-raised-box-shadow-hover` | Sets the box shadow of the raised button when focused. Note, if button is both focused and hovered, then hover will override focus box-shadow.
 | `--mdc-button-raised-box-shadow-active`   | mdc elevation 8 | Sets the box shadow of the raised button when active.
 | `--mdc-button-raised-box-shadow-disabled` | mdc elevation 0 | Sets the box shadow of the raised button when disabled.
 

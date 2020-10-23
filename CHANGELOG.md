@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - `button`
   - Insertion point for an elevation overlay
+  - `--mdc-button-raised-box-shadow-hover`
 
 ### Fixed
 

@@ -104,8 +104,20 @@ limitations under the License.
       )
     );
 
-    &:hover,
     &:focus {
+      @include theme.property(
+        box-shadow,
+        custom-properties.create(
+          --mdc-button-raised-box-shadow-focus,
+          custom-properties.create(
+            --mdc-button-raised-box-shadow-hover,
+            elevation-theme.elevation-box-shadow(4)
+          )
+        )
+      );
+    }
+
+    &:hover {
       @include theme.property(
         box-shadow,
         custom-properties.create(

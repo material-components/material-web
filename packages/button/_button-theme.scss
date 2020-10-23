@@ -215,7 +215,12 @@ $light-theme: (
     );
 
     @include css.declaration(
-      --mdc-button-raised-shadow-hover,
+      --mdc-button-raised-box-shadow-hover,
+      elevation-theme.elevation-box-shadow(4, $elevation-shadow-color)
+    );
+
+    @include css.declaration(
+      --mdc-button-raised-box-shadow-focus,
       elevation-theme.elevation-box-shadow(4, $elevation-shadow-color)
     );
   }
