@@ -118,7 +118,7 @@ mwc-top-app-bar {
 ### Slots
 | Name | Description
 | ---- | -----------
-| `actionItems` | A number of `<mwc-icon-button>` elements to use for action icons on the right side.
+| `actionItems` | A number of `<mwc-icon-button>` elements to use for action icons on the right side. _NOTE:_ If using with `mwc-drawer`, please read note under [`Standard` drawer example](https://github.com/material-components/material-components-web-components/tree/master/packages/top-app-bar).
 | `navigationIcon` | One `<mwc-icon-button>` element to use for the left icon.
 | `title` | A `<div>` or `<span>` that will be used as the title text.
 | _default_ | Scrollable content to display under the bar. This may be the entire application.
