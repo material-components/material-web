@@ -16,9 +16,10 @@
  */
 
 import {Checkbox} from '@material/mwc-checkbox';
+import * as hanbi from 'hanbi';
 import {html} from 'lit-html';
 
-import {Fake, fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 
 interface CheckboxInternals {
   formElement: HTMLInputElement;
@@ -79,7 +80,7 @@ suite('mwc-checkbox', () => {
         });
 
     test('user input emits `change` event', async () => {
-      const callback = new Fake<[], void>();
+      const callback = hanbi.spy();
       element.addEventListener('change', callback.handler);
       element.click();
       assert.equal(callback.callCount, 1);

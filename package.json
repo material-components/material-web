@@ -69,6 +69,7 @@
     "eslint-plugin-mocha": "^5.3.0",
     "eslint-plugin-wc": "^1.2.0",
     "glob": "^7.1.1",
+    "hanbi": "^0.4.0",
     "html-minifier-terser": "^5.1.0",
     "karma": "^4.0.1",
     "karma-chai": "^0.1.0",
@@ -94,6 +95,5 @@
     "shady-css-parser": "^0.1.0",
     "tachometer": "^0.4.13",
     "typescript": "^3.4.1"
-  },
-  "dependencies": {}
+  }
 }
