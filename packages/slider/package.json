@@ -16,7 +16,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/dom": "=8.0.0-canary.ccc64eea3.0",
+    "@material/dom": "=8.0.0-canary.a79cdd019.0",
     "@material/mwc-base": "^0.19.1",
     "@material/slider": "=8.0.0-canary.01db89053.0",
     "lit-element": "^2.3.0",
