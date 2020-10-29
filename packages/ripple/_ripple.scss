@@ -45,7 +45,7 @@ limitations under the License.
 
   .mdc-ripple-surface {
     @include _fullbleed();
-    @include ripple.surface();
+    @include ripple.surface($include-will-change: false);
     @include ripple.radius-bounded();
     @include ripple.surface-styles();
 
