@@ -338,7 +338,8 @@ export abstract class MenuSurfaceBase extends BaseElement {
   }
 
   protected deregisterBodyClick() {
-    document.body.removeEventListener('click', this.onBodyClickBound);
+    document.body.removeEventListener(
+        'click', this.onBodyClickBound, {capture: true});
   }
 
   close() {
