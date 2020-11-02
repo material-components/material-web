@@ -6,6 +6,9 @@ The Material Web Components (MWC) are a collection of [Web Components](https://d
 
 [API demos](https://material-components.github.io/material-components-web-components/demos/index.html)
 
+[Theming
+Guide](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+
 [Sandbox demo on Glitch](https://mwc-demos.glitch.me/)
 
 [Contributing Guide](#Contributing)
