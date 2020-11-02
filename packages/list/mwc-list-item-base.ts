@@ -31,6 +31,7 @@ export interface RequestSelectedDetail {
 
 export interface Layoutable {
   layout: (updateItems?: boolean) => void;
+  debouncedLayout?: (updateItems?: boolean) => void;
 }
 
 export type GraphicType = 'avatar'|'icon'|'medium'|'large'|'control'|null;
@@ -277,7 +278,8 @@ export class ListItemBase extends LitElement {
     }
 
     if (this._managingList) {
-      this._managingList.layout(true);
+      // this._managingList.layout(true);
+      this._managingList.debouncedLayout ? this._managingList.debouncedLayout(true) : this._managingList.layout(true);
     }
   }
 

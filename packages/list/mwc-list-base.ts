@@ -29,6 +29,17 @@ import {Layoutable, ListItemBase, RequestSelectedDetail} from './mwc-list-item-b
 
 export {ActionDetail, createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex, SelectedDetail} from './mwc-list-foundation';
 
+function debounce(
+    callback: <T>(this: T, ...args: any[]) => void,
+    waitInMS = 50
+) {
+  let timeoutId: NodeJS.Timeout;
+  return function <T>(this: T, ...args: any[]) {
+    clearTimeout(timeoutId);
+    const context = this;
+    timeoutId = setTimeout(() => callback.apply(context, args), waitInMS);
+  };
+}
 
 const isListItem = (element: Element): element is ListItemBase => {
   return element.hasAttribute('mwc-list-item');
@@ -112,6 +123,11 @@ export abstract class ListBase extends BaseElement implements Layoutable {
     }
   })
   noninteractive = false;
+
+  constructor() {
+    super();
+    this.debouncedLayout = debounce(this.layout);
+  }
 
   protected get assignedElements(): Element[] {
     const slot = this.slotElement;
@@ -464,6 +480,10 @@ export abstract class ListBase extends BaseElement implements Layoutable {
     const target = e.target as ListItemBase;
 
     this.layout(this.items.indexOf(target) === -1);
+  }
+
+  debouncedLayout(): void {
+
   }
 
   layout(updateItems = true) {
