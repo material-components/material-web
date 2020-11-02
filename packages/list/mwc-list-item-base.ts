@@ -31,7 +31,7 @@ export interface RequestSelectedDetail {
 
 export interface Layoutable {
   layout: (updateItems?: boolean) => void;
-  debouncedLayout?: (updateItems?: boolean) => void;
+  debouncedLayout?: (updateItems?: boolean) => void | undefined;
 }
 
 export type GraphicType = 'avatar'|'icon'|'medium'|'large'|'control'|null;

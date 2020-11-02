@@ -1444,7 +1444,7 @@ suite('mwc-list:', () => {
         await items[1].updateComplete;
         await element.updateComplete;
 
-        await new Promise(res => setTimeout(res, 50));
+        await new Promise((res) => setTimeout(res, 50));
 
         assert.isTrue(
             items[1].selected,
@@ -1796,23 +1796,23 @@ suite('mwc-list:', () => {
           'removing a list should not call layout more than once', async () => {
             let count = 0;
             const originalLayout = List.prototype.layout;
-            List.prototype.layout =
-                function(update) {
+            List.prototype.layout = function(update) {
               originalLayout.call(this, update);
               count++;
-            } const itemsTemplates =
-                    new Array(300).fill(0).map(() => listItem());
+            };
+
+            const itemsTemplates = new Array(300).fill(0).map(() => listItem());
             fixt = await fixture(listTemplate({items: itemsTemplates}));
             element = fixt.root.querySelector('mwc-list')!;
 
             count = 0;
 
             fixt.remove();
-            await new Promise(res => setTimeout(res, 50));
+            await new Promise((res) => setTimeout(res, 50));
             fixt = null;
             expect(count).to.eq(1);
             List.prototype.layout = originalLayout;
           });
-    })
+    });
   });
 });

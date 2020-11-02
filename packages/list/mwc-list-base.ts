@@ -34,6 +34,7 @@ function debounce(
   let timeoutId: NodeJS.Timeout;
   return function<T>(this: T, ...args: any[]) {
     clearTimeout(timeoutId);
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const context = this;
     timeoutId = setTimeout(() => callback.apply(context, args), waitInMS);
   };
@@ -67,7 +68,6 @@ export abstract class ListBase extends BaseElement implements Layoutable {
     }
   })
   activatable = false;
-
 
   @property({type: Boolean})
   @observer(function(this: ListBase, newValue: boolean, oldValue: boolean) {
@@ -121,6 +121,8 @@ export abstract class ListBase extends BaseElement implements Layoutable {
     }
   })
   noninteractive = false;
+
+  debouncedLayout: (updateItems?: boolean) => void | undefined;
 
   constructor() {
     super();
@@ -478,9 +480,6 @@ export abstract class ListBase extends BaseElement implements Layoutable {
     const target = e.target as ListItemBase;
 
     this.layout(this.items.indexOf(target) === -1);
-  }
-
-  debouncedLayout(): void {
   }
 
   layout(updateItems = true) {
