@@ -44,6 +44,14 @@ const isListItem = (element: Element): element is ListItemBase => {
   return element.hasAttribute('mwc-list-item');
 };
 
+function clearAndCreateItemsReadyPromise() {
+  const oldResolver = this.itemsReadyResolver;
+  this.itemsReady = new Promise(res => {
+    return this.itemsReadyResolver = res;
+  });
+  oldResolver();
+}
+
 /**
  * @fires selected {SelectedDetail}
  * @fires action {ActionDetail}
@@ -123,10 +131,23 @@ export abstract class ListBase extends BaseElement implements Layoutable {
   noninteractive = false;
 
   debouncedLayout: (updateItems?: boolean) => void | undefined;
+  itemsReadyResolver: (value?: (PromiseLike<never[]> | never[] | undefined)) => void = (() => {}) as (value?: (PromiseLike<any[]> | any[])) => void;
 
   constructor() {
     super();
-    this.debouncedLayout = debounceLayout(this.layout);
+    const debouncedFunction = debounceLayout(this.layout).bind(this);
+    this.debouncedLayout = (updateItems = true) => {
+      clearAndCreateItemsReadyPromise.call(this);
+
+      debouncedFunction(updateItems);
+    }
+  }
+
+  itemsReady = Promise.resolve([]);
+
+  async _getUpdateComplete() {
+    await super._getUpdateComplete();
+    await this.itemsReady;
   }
 
   protected get assignedElements(): Element[] {
@@ -502,6 +523,8 @@ export abstract class ListBase extends BaseElement implements Layoutable {
         first.tabindex = 0;
       }
     }
+
+    this.itemsReadyResolver();
   }
 
   getFocusedItemIndex() {

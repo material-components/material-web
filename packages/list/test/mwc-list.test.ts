@@ -1808,7 +1808,7 @@ suite('mwc-list:', () => {
             count = 0;
 
             fixt.remove();
-            await new Promise((res) => setTimeout(res, 50));
+            await element.updateComplete;
             fixt = null;
             expect(count).to.eq(1);
             List.prototype.layout = originalLayout;
