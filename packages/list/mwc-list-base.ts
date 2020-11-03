@@ -135,7 +135,7 @@ export abstract class ListBase extends BaseElement implements Layoutable {
   itemsReadyResolver: (value?: (PromiseLike<never[]>|never[]|undefined)) =>
       void = (() => {
                   //
-              }) as(value?: (PromiseLike<any[]>|any[])) => void;
+              }) as(value?: (PromiseLike<unknown[]>|unknown[])) => void;
 
   constructor() {
     super();
