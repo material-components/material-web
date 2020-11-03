@@ -36,7 +36,8 @@ function debounceLayout(
     clearTimeout(timeoutId);
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const context = this;
-    timeoutId = setTimeout(() => callback.apply(context, [updateItems]), waitInMS);
+    timeoutId =
+        setTimeout(() => callback.apply(context, [updateItems]), waitInMS);
   };
 }
 
@@ -44,9 +45,9 @@ const isListItem = (element: Element): element is ListItemBase => {
   return element.hasAttribute('mwc-list-item');
 };
 
-function clearAndCreateItemsReadyPromise() {
+function clearAndCreateItemsReadyPromise(this: ListBase) {
   const oldResolver = this.itemsReadyResolver;
-  this.itemsReady = new Promise(res => {
+  this.itemsReady = new Promise((res) => {
     return this.itemsReadyResolver = res;
   });
   oldResolver();
@@ -131,7 +132,10 @@ export abstract class ListBase extends BaseElement implements Layoutable {
   noninteractive = false;
 
   debouncedLayout: (updateItems?: boolean) => void | undefined;
-  itemsReadyResolver: (value?: (PromiseLike<never[]> | never[] | undefined)) => void = (() => {}) as (value?: (PromiseLike<any[]> | any[])) => void;
+  itemsReadyResolver: (value?: (PromiseLike<never[]>|never[]|undefined)) =>
+      void = (() => {
+                  //
+              }) as(value?: (PromiseLike<any[]>|any[])) => void;
 
   constructor() {
     super();
@@ -140,7 +144,7 @@ export abstract class ListBase extends BaseElement implements Layoutable {
       clearAndCreateItemsReadyPromise.call(this);
 
       debouncedFunction(updateItems);
-    }
+    };
   }
 
   itemsReady = Promise.resolve([]);
