@@ -278,7 +278,6 @@ export class ListItemBase extends LitElement {
     }
 
     if (this._managingList) {
-      // this._managingList.layout(true);
       this._managingList.debouncedLayout ?
           this._managingList.debouncedLayout(true) :
           this._managingList.layout(true);
