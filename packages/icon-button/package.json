@@ -21,11 +21,11 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@material/feature-targeting": "=8.0.0-canary.6d9648ab2.0",
-    "@material/icon-button": "=8.0.0-canary.6d9648ab2.0",
+    "@material/feature-targeting": "=9.0.0-canary.d6b5cd418.0",
+    "@material/icon-button": "=9.0.0-canary.d6b5cd418.0",
     "@material/mwc-icon": "^0.19.1",
-    "@material/ripple": "=8.0.0-canary.6d9648ab2.0",
-    "@material/theme": "=8.0.0-canary.6d9648ab2.0"
+    "@material/ripple": "=9.0.0-canary.d6b5cd418.0",
+    "@material/theme": "=9.0.0-canary.d6b5cd418.0"
   },
   "publishConfig": {
     "access": "public"
