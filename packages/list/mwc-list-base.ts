@@ -132,10 +132,11 @@ export abstract class ListBase extends BaseElement implements Layoutable {
   noninteractive = false;
 
   debouncedLayout: (updateItems?: boolean) => void | undefined;
-  itemsReadyResolver: (value?: (PromiseLike<never[]>|never[]|undefined)) =>
-      void = (() => {
-                  //
-              }) as(value?: (PromiseLike<unknown[]>|unknown[])) => void;
+  protected itemsReadyResolver:
+      (value?: (PromiseLike<never[]>|never[]|undefined)) => void =
+          (() => {
+               //
+           }) as(value?: (PromiseLike<unknown[]>|unknown[])) => void;
 
   constructor() {
     super();

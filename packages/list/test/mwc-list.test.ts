@@ -1444,8 +1444,6 @@ suite('mwc-list:', () => {
         await items[1].updateComplete;
         await element.updateComplete;
 
-        await new Promise((res) => setTimeout(res, 50));
-
         assert.isTrue(
             items[1].selected,
             'second item is still selected after disconnect');
