@@ -30,15 +30,12 @@ import {Layoutable, ListItemBase, RequestSelectedDetail} from './mwc-list-item-b
 export {ActionDetail, createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex, SelectedDetail} from './mwc-list-foundation';
 
 function debounceLayout(
-    callback: <T>(this: T, updateItems: boolean) => void, waitInMS = 50) {
+    callback: (updateItems: boolean) => void, waitInMS = 50) {
   let timeoutId: number;
-  return function<T>(this: T, updateItems = true) {
+  return function(updateItems = true) {
     clearTimeout(timeoutId);
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const context = this;
     timeoutId =
-        setTimeout(() => callback.apply(context, [updateItems]), waitInMS) as
-        unknown as number;
+        setTimeout(() => callback(updateItems), waitInMS) as unknown as number;
   };
 }
 
@@ -141,7 +138,7 @@ export abstract class ListBase extends BaseElement implements Layoutable {
 
   constructor() {
     super();
-    const debouncedFunction = debounceLayout(this.layout).bind(this);
+    const debouncedFunction = debounceLayout(this.layout.bind(this));
     this.debouncedLayout = (updateItems = true) => {
       clearAndCreateItemsReadyPromise.call(this);
 
