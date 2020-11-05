@@ -37,7 +37,8 @@ function debounceLayout(
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const context = this;
     timeoutId =
-        setTimeout(() => callback.apply(context, [updateItems]), waitInMS) as unknown as number;
+        setTimeout(() => callback.apply(context, [updateItems]), waitInMS) as
+        unknown as number;
   };
 }
 
