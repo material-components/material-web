@@ -451,20 +451,20 @@ export abstract class TextFieldBase extends FormElement {
       'mdc-text-field-helper-text--validation-msg': showValidationMessage,
     };
 
+    const ariaHiddenOrUndef =
+        this.focused || this.helperPersistent || showValidationMessage ?
+        undefined :
+        'true';
+    const helperText =
+        showValidationMessage ? this.validationMessage : this.helper;
     return html`
       <div class="mdc-text-field-helper-line">
-        <div
-        id="helper-text"
-        aria-hidden="${
-        ifDefined(
-            this.focused || this.helperPersistent || showValidationMessage ?
-                undefined :
-                'true')}"
-        class="mdc-text-field-helper-text ${classMap(classes)}">${
-        showValidationMessage ? this.validationMessage : this.helper}</div>
+        <div id="helper-text"
+             aria-hidden="${ifDefined(ariaHiddenOrUndef)}"
+             class="mdc-text-field-helper-text ${classMap(classes)}"
+             >${helperText}</div>
         ${charCounterTemplate}
-      </div>
-    `;
+      </div>`;
   }
 
   protected renderCharCounter() {
@@ -473,8 +473,9 @@ export abstract class TextFieldBase extends FormElement {
     }
 
     const length = Math.min(this.value.length, this.maxLength);
-    return html`<span class="mdc-text-field-character-counter">${length} / ${
-        this.maxLength}</span>`;
+    return html`
+      <span class="mdc-text-field-character-counter"
+            >${length} / ${this.maxLength}</span>`;
   }
 
   protected onInputFocus() {
