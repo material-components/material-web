@@ -31,13 +31,13 @@ export {ActionDetail, createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex
 
 function debounceLayout(
     callback: <T>(this: T, updateItems: boolean) => void, waitInMS = 50) {
-  let timeoutId: NodeJS.Timeout;
+  let timeoutId: number;
   return function<T>(this: T, updateItems = true) {
     clearTimeout(timeoutId);
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const context = this;
     timeoutId =
-        setTimeout(() => callback.apply(context, [updateItems]), waitInMS);
+        setTimeout(() => callback.apply(context, [updateItems]), waitInMS) as unknown as number;
   };
 }
 
