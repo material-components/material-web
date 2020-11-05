@@ -1808,7 +1808,10 @@ suite('mwc-list:', () => {
             fixt.remove();
             await element.updateComplete;
             fixt = null;
-            expect(count).to.eq(1);
+            assert.equal(
+                count,
+                1,
+                'list.layout ran more than once while it shouldn\'t have');
             List.prototype.layout = originalLayout;
           });
     });
