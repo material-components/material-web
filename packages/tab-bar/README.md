@@ -273,7 +273,9 @@ _Note: example is in the state of hovering over the first tab._
 
 ### CSS Custom Properties
 
-None
+Inherits CSS Custom properties from:
+
+* [`mwc-tab`](https://github.com/material-components/material-components-web-components/tree/master/packages/tab)
 
 ## Additional references
 
