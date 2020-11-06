@@ -5,12 +5,14 @@
 // stylelint-disable function-name-case
 
 @use 'sass:map';
+@use 'sass:selector';
 @use 'sass:string';
 @use '@material/checkbox/checkbox-custom-properties';
 @use '@material/checkbox/variables' as checkbox-variables;
 @use '@material/ripple/ripple-theme' as mdc-ripple-theme;
 @use '@material/theme/color-custom-properties';
 @use '@material/theme/css';
+@use '@material/theme/shadow-dom';
 @use '@material/theme/theme';
 @use '@material/theme/theme-color';
 @use 'third_party/javascript/material_web_components/ripple/ripple-theme';
@@ -23,13 +25,16 @@ $ripple-opacity: (
 
 $light-theme: (
   checkmark-color: checkbox-variables.$mark-color,
-  container-checked-color: theme-color.prop-value(checkbox-variables.$baseline-theme-color),
+  container-checked-color:
+    theme-color.prop-value(checkbox-variables.$baseline-theme-color),
   container-checked-hover-color: null,
   container-disabled-color: checkbox-variables.$disabled-color,
   outline-color: checkbox-variables.$border-color,
   outline-hover-color: null,
   ripple-color: theme-color.$on-surface,
   ripple-opacity: $ripple-opacity,
+  ripple-checked-color: theme-color.$secondary,
+  ripple-checked-opacity: $ripple-opacity,
 );
 
 @mixin theme($theme: $light-theme) {
@@ -67,6 +72,18 @@ $light-theme: (
       opacity: map.get($theme, ripple-opacity),
     )
   );
+
+  @include shadow-dom.host-aware(
+    selector.append(&, '[checked]'),
+    selector.append(&, '[indeterminate]')
+  ) {
+    @include ripple-theme.theme(
+      (
+        state: map.get($theme, ripple-checked-color),
+        opacity: map.get($theme, ripple-checked-opacity),
+      )
+    );
+  }
 }
 
 // TODO(b/162887560): Move this to MDC core style module.

@@ -83,12 +83,12 @@ Name | Type | Default | Description
 
 ### CSS Custom Properties
 
-| Name | Default | Description
-| ---- | ------- | -----------
-| `--mdc-ripple-color` | ![](images/color_000.png) `#000` | Color of the ripple will have when activated.
-| `--mdc-ripple-press-opacity` | `0.12` | Opacity of the ripple when pressed.
-| `--mdc-ripple-hover-opacity` | `0.04` | Opacity of the ripple when hovered.
-| `--mdc-ripple-focus-opacity` | `0.12` | Opacity of the ripple when focused.
-| `--mdc-ripple-selected-opacity` | `0.08` | Opacity of the ripple when the host component is "selected". This opacity is added to `press`, `hover`, and `focus` states.
-| `--mdc-ripple-activated-opacity` | `0.12` | Opacity of the ripple when the host component is "activated". This opacity is added to `press`, `hover`, and `focus` states.
-| `--m-ripple-z-index` | `0` | Z-index of the ripple.
+Name                             | Default                                 | Description
+-------------------------------- | --------------------------------------- | -----------
+`--mdc-ripple-color`             | ![](images/color_000.png) `#000` | Color of the ripple will have when activated.
+`--mdc-ripple-press-opacity`     | `0.12`                                  | Opacity of the ripple when pressed.
+`--mdc-ripple-hover-opacity`     | `0.04`                                  | Opacity of the ripple when hovered.
+`--mdc-ripple-focus-opacity`     | `0.12`                                  | Opacity of the ripple when focused.
+`--mdc-ripple-selected-opacity`  | `0.08`                                  | Opacity of the ripple when the host component is "selected". This opacity is added to `press`, `hover`, and `focus` states.
+`--mdc-ripple-activated-opacity` | `0.12`                                  | Opacity of the ripple when the host component is "activated". This opacity is added to `press`, `hover`, and `focus` states.
+`--mdc-ripple-z-index`           | `0`                                     | Z-index of the ripple.

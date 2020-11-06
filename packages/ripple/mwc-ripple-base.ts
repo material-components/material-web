@@ -185,18 +185,26 @@ export class RippleBase extends BaseElement implements RippleAPI {
 
   /** @soyTemplate */
   protected render() {
+    const shouldActivateInPrimary =
+        this.activated && (this.primary || !this.accent);
+    const shouldSelectInPrimary =
+        this.selected && (this.primary || !this.accent);
+
     /** @classMap */
     const classes = {
-      'mdc-ripple-upgraded--unbounded': this.unbounded,
+      'mdc-ripple-surface--accent': this.accent,
+      'mdc-ripple-surface--primary--activated': shouldActivateInPrimary,
+      'mdc-ripple-surface--accent--activated': this.accent && this.activated,
+      'mdc-ripple-surface--primary--selected': shouldSelectInPrimary,
+      'mdc-ripple-surface--accent--selected': this.accent && this.selected,
+      'mdc-ripple-surface--disabled': this.disabled,
+      'mdc-ripple-surface--hover': this.hovering,
+      'mdc-ripple-surface--primary': this.primary,
+      'mdc-ripple-surface--selected': this.selected,
       'mdc-ripple-upgraded--background-focused': this.bgFocused,
       'mdc-ripple-upgraded--foreground-activation': this.fgActivation,
       'mdc-ripple-upgraded--foreground-deactivation': this.fgDeactivation,
-      'hover': this.hovering,
-      'primary': this.primary,
-      'accent': this.accent,
-      'disabled': this.disabled,
-      'activated': this.activated,
-      'selected': this.selected,
+      'mdc-ripple-upgraded--unbounded': this.unbounded,
     };
     return html`
         <div class="mdc-ripple-surface mdc-ripple-upgraded ${classMap(classes)}"
