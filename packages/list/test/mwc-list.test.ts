@@ -1799,7 +1799,7 @@ suite('mwc-list:', () => {
               count++;
             };
 
-            const itemsTemplates = new Array(300).fill(0).map(() => listItem());
+            const itemsTemplates = new Array(100).fill(0).map(() => listItem());
             fixt = await fixture(listTemplate({items: itemsTemplates}));
             element = fixt.root.querySelector('mwc-list')!;
 
