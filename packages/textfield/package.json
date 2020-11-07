@@ -16,23 +16,23 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/floating-label": "=9.0.0-canary.d6b5cd418.0",
-    "@material/line-ripple": "=9.0.0-canary.d6b5cd418.0",
+    "@material/floating-label": "=9.0.0-canary.b39094d14.0",
+    "@material/line-ripple": "=9.0.0-canary.b39094d14.0",
     "@material/mwc-base": "^0.19.1",
     "@material/mwc-floating-label": "^0.19.1",
     "@material/mwc-line-ripple": "^0.19.1",
     "@material/mwc-notched-outline": "^0.19.1",
-    "@material/textfield": "=9.0.0-canary.d6b5cd418.0",
+    "@material/textfield": "=9.0.0-canary.b39094d14.0",
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
     "@material/mwc-icon": "^0.19.1",
-    "@material/notched-outline": "=9.0.0-canary.d6b5cd418.0",
-    "@material/ripple": "=9.0.0-canary.d6b5cd418.0",
-    "@material/shape": "=9.0.0-canary.d6b5cd418.0",
-    "@material/theme": "=9.0.0-canary.d6b5cd418.0"
+    "@material/notched-outline": "=9.0.0-canary.b39094d14.0",
+    "@material/ripple": "=9.0.0-canary.b39094d14.0",
+    "@material/shape": "=9.0.0-canary.b39094d14.0",
+    "@material/theme": "=9.0.0-canary.b39094d14.0"
   },
   "publishConfig": {
     "access": "public"
