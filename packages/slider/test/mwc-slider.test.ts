@@ -16,9 +16,10 @@
  */
 
 import {Slider} from '@material/mwc-slider/mwc-slider';
+import * as hanbi from 'hanbi';
 import {html} from 'lit-html';
 
-import {Fake, fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 
 const defaultSliderProps = {
   min: 0,
@@ -88,8 +89,8 @@ suite('mwc-slider', () => {
 
     test('key events change value and fire events', async () => {
       const slider = element.shadowRoot!.querySelector('.mdc-slider')!;
-      const inputHandler = new Fake<[], void>();
-      const changeHandler = new Fake<[], void>();
+      const inputHandler = hanbi.spy();
+      const changeHandler = hanbi.spy();
       element.addEventListener('input', inputHandler.handler);
       element.addEventListener('change', changeHandler.handler);
 

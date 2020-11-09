@@ -22,9 +22,10 @@ import {List} from '@material/mwc-list';
 import {ListItem} from '@material/mwc-list/mwc-list-item';
 import {Menu} from '@material/mwc-menu';
 import {Corner, MenuCorner, MenuSurface} from '@material/mwc-menu/mwc-menu-surface';
+import * as hanbi from 'hanbi';
 import {html, TemplateResult} from 'lit-html';
 
-import {Fake, fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 
 const defaultMenu = html`<mwc-menu></mwc-menu>`;
 const defaultSurface = html`<mwc-menu-surface></mwc-menu-surface>`;
@@ -489,7 +490,7 @@ suite('mwc-menu-surface', () => {
     });
 
     test('closing fires the closed event', async () => {
-      const fake = new Fake<[], void>();
+      const fake = hanbi.spy();
       element.addEventListener('closed', fake.handler);
       element.show();
       await element.updateComplete;
@@ -501,7 +502,7 @@ suite('mwc-menu-surface', () => {
     });
 
     test('opening fires the opened event', async () => {
-      const fake = new Fake<[], void>();
+      const fake = hanbi.spy();
       element.addEventListener('opened', fake.handler);
       element.show();
       await element.updateComplete;

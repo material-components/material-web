@@ -178,25 +178,6 @@ export const rafPromise = async () => new Promise((res) => {
   requestAnimationFrame(res);
 });
 
-export class Fake<TArgs extends any[], TReturn> {
-  public calls: Array<{args: TArgs}> = [];
-  public get called(): boolean {
-    return this.calls.length > 0;
-  }
-  public get callCount(): number {
-    return this.calls.length;
-  }
-  public returnValue?: TReturn;
-  public handler: (...args: TArgs) => TReturn;
-
-  public constructor() {
-    this.handler = (...args: TArgs) => {
-      this.calls.push({args});
-      return this.returnValue as TReturn;
-    };
-  }
-}
-
 export const waitForEvent = (el: Element, ev: string) => new Promise((res) => {
   el.addEventListener(ev, () => {
     res();

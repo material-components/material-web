@@ -16,9 +16,10 @@
  */
 
 import {Tab} from '@material/mwc-tab';
+import * as hanbi from 'hanbi';
 import {html} from 'lit-html';
 
-import {Fake, fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 
 interface TabProps {
   label: string;
@@ -69,7 +70,7 @@ suite('mwc-tab', () => {
     });
 
     test('fires interacted event on click', () => {
-      const interactedHandler = new Fake<[], void>();
+      const interactedHandler = hanbi.spy();
       element.addEventListener('MDCTab:interacted', interactedHandler.handler);
       const tab = element.shadowRoot!.querySelector<HTMLElement>('.mdc-tab')!;
       tab.click();

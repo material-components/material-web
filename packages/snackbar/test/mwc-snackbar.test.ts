@@ -16,9 +16,10 @@
  */
 
 import {Snackbar} from '@material/mwc-snackbar';
+import * as hanbi from 'hanbi';
 import {html, TemplateResult} from 'lit-html';
 
-import {Fake, fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 
 interface SnackBarProps {
   timeoutMs: number;
@@ -94,8 +95,8 @@ suite('mwc-snackbar', () => {
     });
 
     test('`show()` opens snack bar', async () => {
-      const openedHandler = new Fake<[], void>();
-      const openingHandler = new Fake<[], void>();
+      const openedHandler = hanbi.spy();
+      const openingHandler = hanbi.spy();
       element.addEventListener('MDCSnackbar:opened', openedHandler.handler);
       element.addEventListener('MDCSnackbar:opening', openingHandler.handler);
       assert.equal(element.open, false);
@@ -108,8 +109,8 @@ suite('mwc-snackbar', () => {
     });
 
     test('`open = true` opens snack bar', async () => {
-      const openedHandler = new Fake<[], void>();
-      const openingHandler = new Fake<[], void>();
+      const openedHandler = hanbi.spy();
+      const openingHandler = hanbi.spy();
       element.addEventListener('MDCSnackbar:opened', openedHandler.handler);
       element.addEventListener('MDCSnackbar:opening', openingHandler.handler);
       assert.equal(element.open, false);
@@ -123,7 +124,7 @@ suite('mwc-snackbar', () => {
     });
 
     test('`close()` closes snack bar', async () => {
-      const closedHandler = new Fake<[], void>();
+      const closedHandler = hanbi.spy();
       element.addEventListener('MDCSnackbar:closed', closedHandler.handler);
       element.show();
       await element.updateComplete;
@@ -135,7 +136,7 @@ suite('mwc-snackbar', () => {
     });
 
     test('`open = false` closes snack bar', async () => {
-      const closedHandler = new Fake<[], void>();
+      const closedHandler = hanbi.spy();
       element.addEventListener('MDCSnackbar:closed', closedHandler.handler);
       element.show();
       await element.updateComplete;
@@ -179,13 +180,13 @@ suite('mwc-snackbar', () => {
 
     test('closes when dismissed', async () => {
       const close = element.querySelector<HTMLElement>('[slot="dismiss"]')!;
-      const closedHandler = new Fake<[Event], void>();
+      const closedHandler = hanbi.spy();
       element.addEventListener('MDCSnackbar:closed', closedHandler.handler);
       element.show();
       await element.updateComplete;
       close.click();
       assert.isFalse(element.open);
-      const ev = closedHandler.calls[0].args[0] as CustomEvent;
+      const ev = closedHandler.getCall(0).args[0] as CustomEvent;
       assert.equal(ev.detail.reason, 'dismiss');
     });
   });
@@ -200,13 +201,13 @@ suite('mwc-snackbar', () => {
 
     test('closes when actioned', async () => {
       const action = element.querySelector<HTMLElement>('[slot="action"]')!;
-      const closedHandler = new Fake<[Event], void>();
+      const closedHandler = hanbi.spy();
       element.addEventListener('MDCSnackbar:closed', closedHandler.handler);
       element.show();
       await element.updateComplete;
       action.click();
       assert.isFalse(element.open);
-      const ev = closedHandler.calls[0].args[0] as CustomEvent;
+      const ev = closedHandler.getCall(0).args[0] as CustomEvent;
       assert.equal(ev.detail.reason, 'action');
     });
   });

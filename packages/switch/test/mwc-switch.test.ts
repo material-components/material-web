@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 import {Switch} from '@material/mwc-switch';
+import * as hanbi from 'hanbi';
 import {html} from 'lit-html';
 
-import {Fake, fixture, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, TestFixture} from '../../../test/src/util/helpers';
 
 interface SwitchProps {
   checked: boolean;
@@ -56,7 +57,7 @@ suite('mwc-switch', () => {
     });
 
     test('user input emits `change` event', async () => {
-      const callback = new Fake<[], void>();
+      const callback = hanbi.spy();
       element.addEventListener('change', callback.handler);
 
       element.click();
