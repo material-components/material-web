@@ -392,21 +392,23 @@ export abstract class TextFieldBase extends FormElement {
             'off' | 'none' | 'on' | 'sentences' | 'words' | 'characters') :
         undefined;
     const showValidationMessage = this.validationMessage && !this.isUiValid;
+    const ariaControlsOrUndef =
+        this.shouldRenderHelperText ? 'helper-text' : undefined;
+    const ariaDescribedbyOrUndef =
+        this.focused || this.helperPersistent || showValidationMessage ?
+        'helper-text' :
+        undefined;
+    const ariaErrortextOrUndef =
+        showValidationMessage ? 'helper-text' : undefined;
     // TODO: live() directive needs casting for lit-analyzer
     // https://github.com/runem/lit-analyzer/pull/91/files
     // TODO: lit-analyzer labels min/max as (number|string) instead of string
     return html`
       <input
           aria-labelledby="label"
-          aria-controls="${
-        ifDefined(this.shouldRenderHelperText ? 'helper-text' : undefined)}"
-          aria-describedby="${
-        ifDefined(
-            this.focused || this.helperPersistent || showValidationMessage ?
-                'helper-text' :
-                undefined)}"
-         aria-errortext="${
-        ifDefined(showValidationMessage ? 'helper-text' : undefined)}"
+          aria-controls="${ifDefined(ariaControlsOrUndef)}"
+          aria-describedby="${ifDefined(ariaDescribedbyOrUndef)}"
+          aria-errortext="${ifDefined(ariaErrortextOrUndef)}"
           class="mdc-text-field__input"
           type="${this.type}"
           .value="${live(this.value) as unknown as string}"
