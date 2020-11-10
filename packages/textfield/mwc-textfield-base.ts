@@ -26,7 +26,6 @@ import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter';
 import MDCTextFieldFoundation from '@material/textfield/foundation';
 import {eventOptions, html, internalProperty, property, PropertyValues, query, TemplateResult} from 'lit-element';
-import {nothing} from 'lit-html';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
 import {live} from 'lit-html/directives/live';
@@ -312,21 +311,13 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   protected renderRipple() {
-    if (this.outlined) {
-      return nothing;
-    }
-
-    return html`
+    return this.outlined ? '' : html`
       <span class="mdc-text-field__ripple"></span>
     `;
   }
 
   protected renderOutline() {
-    if (!this.outlined) {
-      return nothing;
-    }
-
-    return html`
+    return !this.outlined ? '' : html`
       <mwc-notched-outline
           .width=${this.outlineWidth}
           .open=${this.outlineOpen}
@@ -336,11 +327,7 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   protected renderLabel() {
-    if (!this.label) {
-      return nothing;
-    }
-
-    return html`
+    return !this.label ? '' : html`
       <span
           .floatingLabelFoundation=${floatingLabel(this.label)}
           id="label">${this.label}</span>
@@ -348,12 +335,11 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   protected renderLeadingIcon() {
-    return this.icon ? this.renderIcon(this.icon) : nothing;
+    return this.icon ? this.renderIcon(this.icon) : '';
   }
 
   protected renderTrailingIcon() {
-    return this.iconTrailing ? this.renderIcon(this.iconTrailing, true) :
-                               nothing;
+    return this.iconTrailing ? this.renderIcon(this.iconTrailing, true) : '';
   }
 
   protected renderIcon(icon: string, isTrailingIcon = false) {
@@ -367,11 +353,11 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   protected renderPrefix() {
-    return this.prefix ? this.renderAffix(this.prefix) : nothing;
+    return this.prefix ? this.renderAffix(this.prefix) : '';
   }
 
   protected renderSuffix() {
-    return this.suffix ? this.renderAffix(this.suffix, true) : nothing;
+    return this.suffix ? this.renderAffix(this.suffix, true) : '';
   }
 
   protected renderAffix(content: string, isSuffix = false) {
@@ -432,21 +418,12 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   protected renderLineRipple() {
-    if (this.outlined) {
-      return nothing;
-    }
-
-    return html`
+    return this.outlined ? '' : html`
       <span .lineRippleFoundation=${lineRipple()}></span>
     `;
   }
 
-  protected renderHelperText(
-      charCounterTemplate: TemplateResult|typeof nothing = nothing) {
-    if (!this.shouldRenderHelperText) {
-      return nothing;
-    }
-
+  protected renderHelperText(charCounterTemplate: TemplateResult|string = '') {
     const showValidationMessage = this.validationMessage && !this.isUiValid;
     const classes = {
       'mdc-text-field-helper-text--persistent': this.helperPersistent,
@@ -459,7 +436,7 @@ export abstract class TextFieldBase extends FormElement {
         'true';
     const helperText =
         showValidationMessage ? this.validationMessage : this.helper;
-    return html`
+    return !this.shouldRenderHelperText ? '' : html`
       <div class="mdc-text-field-helper-line">
         <div id="helper-text"
              aria-hidden="${ifDefined(ariaHiddenOrUndef)}"
@@ -470,12 +447,8 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   protected renderCharCounter() {
-    if (!this.charCounterVisible) {
-      return nothing;
-    }
-
     const length = Math.min(this.value.length, this.maxLength);
-    return html`
+    return !this.charCounterVisible ? '' : html`
       <span class="mdc-text-field-character-counter"
             >${length} / ${this.maxLength}</span>`;
   }

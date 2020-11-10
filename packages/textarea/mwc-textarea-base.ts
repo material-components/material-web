@@ -17,7 +17,6 @@ limitations under the License.
 
 import {TextAreaCharCounter, TextFieldBase} from '@material/mwc-textfield/mwc-textfield-base';
 import {ComplexAttributeConverter, html, property, query} from 'lit-element';
-import {nothing} from 'lit-html';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
 import {live} from 'lit-html/directives/live';
@@ -76,10 +75,10 @@ export abstract class TextAreaBase extends TextFieldBase {
         ${this.renderRipple()}
         ${this.outlined ? this.renderOutline() : this.renderLabel()}
         ${this.renderInput()}
-        ${withInternalCounter ? charCounter : nothing}
+        ${withInternalCounter ? charCounter : ''}
         ${this.renderLineRipple()}
       </label>
-      ${this.renderHelperText(withInternalCounter ? nothing : charCounter)}
+      ${this.renderHelperText(withInternalCounter ? '' : charCounter)}
     `;
   }
 
