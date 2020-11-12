@@ -133,7 +133,8 @@ export class CircularProgressBase extends LitElement {
                     stroke-dashoffset="${halfCircumference}"
                     stroke-width="${strokeWidth}"></circle>
           </svg>
-        </div><div class="mdc-circular-progress__gap-patch">
+        </div>
+        <div class="mdc-circular-progress__gap-patch">
           <svg class="mdc-circular-progress__indeterminate-circle-graphic"
                viewBox="0 0 ${sideLength} ${sideLength}">
             <circle cx="${center}" cy="${center}" r="${circleRadius}"
@@ -141,7 +142,8 @@ export class CircularProgressBase extends LitElement {
                     stroke-dashoffset="${halfCircumference}"
                     stroke-width="${strokeWidth * 0.8}"></circle>
           </svg>
-        </div><div class="mdc-circular-progress__circle-clipper mdc-circular-progress__circle-right">
+        </div>
+        <div class="mdc-circular-progress__circle-clipper mdc-circular-progress__circle-right">
           <svg class="mdc-circular-progress__indeterminate-circle-graphic"
                viewBox="0 0 ${sideLength} ${sideLength}">
             <circle cx="${center}" cy="${center}" r="${circleRadius}"
