@@ -18,7 +18,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "lit-element": "^2.3.0",
-    "tslib": "^1.10.0"
+    "tslib": "^2.0.1"
   },
   "devDependencies": {
     "@material/elevation": "=9.0.0-canary.b39094d14.0",

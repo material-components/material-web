@@ -300,7 +300,8 @@ suite('mwc-menu', () => {
 
     setup(async () => {
       originalSetTimeout = window.setTimeout;
-      (window as any).setTimeout = (fn: Function) => {
+      // tslint:disable-next-line
+      (window as any).setTimeout = (fn: () => unknown) => {
         fn();
         return -1;
       };

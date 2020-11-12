@@ -58,7 +58,8 @@ suite('mwc-snackbar', () => {
 
   setup(() => {
     originalSetTimeout = window.setTimeout;
-    (window as any).setTimeout = (fn: Function) => {
+    // tslint:disable-next-line
+    (window as any).setTimeout = (fn: () => unknown) => {
       fn();
       return -1;
     };

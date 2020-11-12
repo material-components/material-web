@@ -191,7 +191,7 @@ export abstract class TextFieldBase extends FormElement {
   // base class is unspecific "string". It also needs non-null coercion (!)
   // since we don't want to provide a default value, but the base class is not
   // typed to allow undefined.
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   @property({type: String}) inputMode!: TextFieldInputMode;
 

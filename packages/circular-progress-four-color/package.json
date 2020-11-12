@@ -21,7 +21,7 @@
     "@material/mwc-circular-progress": "^0.19.1",
     "@material/theme": "=9.0.0-canary.b39094d14.0",
     "lit-element": "^2.3.0",
-    "tslib": "^1.10.0"
+    "tslib": "^2.0.1"
   },
   "publishConfig": {
     "access": "public"

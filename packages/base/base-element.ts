@@ -53,7 +53,7 @@ export abstract class BaseElement extends LitElement {
    *      ...
    *    }
    */
-  protected abstract createAdapter(): {}
+  protected abstract createAdapter(): unknown;
 
   click() {
     if (this.mdcRoot) {
