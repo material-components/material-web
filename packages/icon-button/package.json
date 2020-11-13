@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-icon-button",
-  "version": "0.19.1",
+  "version": "0.20.0",
   "description": "Material Design icon button web component",
   "keywords": [
     "material design",
@@ -16,14 +16,14 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/mwc-ripple": "^0.19.1",
+    "@material/mwc-ripple": "^0.20.0",
     "lit-element": "^2.3.0",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
     "@material/feature-targeting": "=9.0.0-canary.b39094d14.0",
     "@material/icon-button": "=9.0.0-canary.b39094d14.0",
-    "@material/mwc-icon": "^0.19.1",
+    "@material/mwc-icon": "^0.20.0",
     "@material/ripple": "=9.0.0-canary.b39094d14.0",
     "@material/theme": "=9.0.0-canary.b39094d14.0"
   },
