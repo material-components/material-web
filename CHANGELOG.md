@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [v0.20.0] - 2020-11-12
+
+### Changed
+- `base`
+  - Update package.json to use Typescript 4.x
+
 ### Added
 
 - `button`
