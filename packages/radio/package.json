@@ -23,7 +23,7 @@
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@material/ripple": "=9.0.0-canary.b39094d14.0",
+    "@material/ripple": "=9.0.0-canary.240c5f74f.0",
     "lit-html": "^1.1.2"
   },
   "publishConfig": {
