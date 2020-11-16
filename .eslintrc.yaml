@@ -1,8 +1,6 @@
 extends:
   - eslint:recommended
   - google
-  - plugin:@typescript-eslint/eslint-recommended
-  - plugin:@typescript-eslint/recommended
   - plugin:wc/recommended
 globals:
   goog: false
