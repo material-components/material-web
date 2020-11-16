@@ -19,7 +19,7 @@ import '@material/mwc-ripple/mwc-ripple';
 import {FormElement} from '@material/mwc-base/form-element';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {eventOptions, html, internalProperty, property, PropertyValues, query, queryAsync} from 'lit-element';
+import {eventOptions, html, internalProperty, property, PropertyValues, query, queryAsync, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
 
@@ -99,7 +99,7 @@ export class CheckboxBase extends FormElement {
 
   // TODO(dfreedm): Make this use selected as a param after Polymer/internal#739
   /** @soyTemplate */
-  protected renderRipple() {
+  protected renderRipple(): TemplateResult|string {
     const selected = this.indeterminate || this.checked;
     return this.shouldRenderRipple ? html`
         <mwc-ripple
@@ -115,7 +115,7 @@ export class CheckboxBase extends FormElement {
    * @soyAttributes checkboxAttributes: input
    * @soyClasses checkboxClasses: .mdc-checkbox
    */
-  protected render() {
+  protected render(): TemplateResult {
     const selected = this.indeterminate || this.checked;
     /* eslint-disable eqeqeq */
     // tslint:disable:triple-equals

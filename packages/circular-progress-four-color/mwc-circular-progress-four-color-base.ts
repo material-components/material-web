@@ -15,12 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {CircularProgressBase} from '@material/mwc-circular-progress/mwc-circular-progress-base';
-import {html} from 'lit-element';
+import {html, TemplateResult} from 'lit-element';
 
 /** @soyCompatible */
 export class CircularProgressFourColorBase extends CircularProgressBase {
   /** @soyTemplate */
-  protected renderIndeterminateContainer() {
+  protected renderIndeterminateContainer(): TemplateResult {
     return html`
       <div class="mdc-circular-progress__indeterminate-container">
         <div class="mdc-circular-progress__spinner-layer mdc-circular-progress__color-1">

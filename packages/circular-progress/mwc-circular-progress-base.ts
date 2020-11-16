@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {html, LitElement, property} from 'lit-element';
+import {html, LitElement, property, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
 import {styleMap} from 'lit-html/directives/style-map';
@@ -42,7 +42,7 @@ export class CircularProgressBase extends LitElement {
   /**
    * @soyTemplate
    */
-  protected render() {
+  protected render(): TemplateResult {
     /** @classMap */
     const classes = {
       'mdc-circular-progress--closed': this.closed,
@@ -73,7 +73,7 @@ export class CircularProgressBase extends LitElement {
   /**
    * @soyTemplate
    */
-  private renderDeterminateContainer() {
+  private renderDeterminateContainer(): TemplateResult {
     const sideLength = 48 + this.density * 4;
     const center = sideLength / 2;
     const circleRadius = this.density >= -3 ? 18 + this.density * 11 / 6 :
@@ -102,7 +102,7 @@ export class CircularProgressBase extends LitElement {
   /**
    * @soyTemplate
    */
-  protected renderIndeterminateContainer() {
+  protected renderIndeterminateContainer(): TemplateResult {
     return html`
       <div class="mdc-circular-progress__indeterminate-container">
         <div class="mdc-circular-progress__spinner-layer">
@@ -114,7 +114,7 @@ export class CircularProgressBase extends LitElement {
   /**
    * @soyTemplate
    */
-  protected renderIndeterminateSpinnerLayer() {
+  protected renderIndeterminateSpinnerLayer(): TemplateResult {
     const sideLength = 48 + this.density * 4;
     const center = sideLength / 2;
     const circleRadius = this.density >= -3 ? 18 + this.density * 11 / 6 :

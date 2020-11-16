@@ -17,7 +17,7 @@ limitations under the License.
 import {BaseElement} from '@material/mwc-base/base-element';
 import {MDCRippleAdapter} from '@material/ripple/adapter';
 import MDCRippleFoundation from '@material/ripple/foundation';
-import {html, internalProperty, property, query} from 'lit-element';
+import {html, internalProperty, property, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
 import {RippleAPI} from './ripple-handlers';
@@ -184,7 +184,7 @@ export class RippleBase extends BaseElement implements RippleAPI {
   }
 
   /** @soyTemplate */
-  protected render() {
+  protected render(): TemplateResult {
     const shouldActivateInPrimary =
         this.activated && (this.primary || !this.accent);
     const shouldSelectInPrimary =

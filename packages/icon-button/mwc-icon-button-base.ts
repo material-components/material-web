@@ -18,7 +18,7 @@ import '@material/mwc-ripple/mwc-ripple';
 
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {eventOptions, html, internalProperty, LitElement, property, query, queryAsync} from 'lit-element';
+import {eventOptions, html, internalProperty, LitElement, property, query, queryAsync, TemplateResult} from 'lit-element';
 
 /** @soyCompatible */
 export class IconButtonBase extends LitElement {
@@ -40,7 +40,7 @@ export class IconButtonBase extends LitElement {
   });
 
   /** @soyTemplate */
-  protected renderRipple() {
+  protected renderRipple(): TemplateResult|string {
     return this.shouldRenderRipple ? html`
             <mwc-ripple
                 .disabled="${this.disabled}"
@@ -66,7 +66,7 @@ export class IconButtonBase extends LitElement {
   }
 
   /** @soyTemplate */
-  protected render() {
+  protected render(): TemplateResult {
     return html`<button
         class="mdc-icon-button"
         aria-label="${this.label || this.icon}"
