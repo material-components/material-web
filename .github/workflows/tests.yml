@@ -3,6 +3,16 @@ name: tests
 on: [push, pull_request]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 12
+      run: npm ci --ignore-scripts
+      run: npm run bootstrap
+      run: npm run lint
   tests:
     runs-on: ubuntu-latest
 
@@ -29,11 +39,6 @@ jobs:
 
     - name: Compile component TypeScript
       run: npm run build:typescript
-
-    # TODO(aomarks) Once b/144957560 is fixed, move lint and format into their
-    # own workflows or jobs so that they can run in parallel.
-    - name: Check lint
-      run: npm run lint
 
     - name: Compile test TypeScript
       run: npm run build:tests
