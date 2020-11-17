@@ -29,10 +29,29 @@ import {Layoutable, ListItemBase, RequestSelectedDetail} from './mwc-list-item-b
 
 export {ActionDetail, createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex, SelectedDetail} from './mwc-list-foundation';
 
+function debounceLayout(
+    callback: (updateItems: boolean) => void, waitInMS = 50) {
+  let timeoutId: number;
+  // tslint:disable-next-line
+  return function(updateItems = true) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+                  callback(updateItems);
+                }, waitInMS) as unknown as number;
+  };
+}
 
 const isListItem = (element: Element): element is ListItemBase => {
   return element.hasAttribute('mwc-list-item');
 };
+
+function clearAndCreateItemsReadyPromise(this: ListBase) {
+  const oldResolver = this.itemsReadyResolver;
+  this.itemsReady = new Promise((res) => {
+    return this.itemsReadyResolver = res;
+  });
+  oldResolver();
+}
 
 /**
  * @fires selected {SelectedDetail}
@@ -58,7 +77,6 @@ export abstract class ListBase extends BaseElement implements Layoutable {
     }
   })
   activatable = false;
-
 
   @property({type: Boolean})
   @observer(function(this: ListBase, newValue: boolean, oldValue: boolean) {
@@ -112,6 +130,30 @@ export abstract class ListBase extends BaseElement implements Layoutable {
     }
   })
   noninteractive = false;
+
+  debouncedLayout: (updateItems?: boolean) => void | undefined;
+  protected itemsReadyResolver:
+      (value?: (PromiseLike<never[]>|never[]|undefined)) => void =
+          (() => {
+               //
+           }) as(value?: (PromiseLike<unknown[]>|unknown[])) => void;
+
+  constructor() {
+    super();
+    const debouncedFunction = debounceLayout(this.layout.bind(this));
+    this.debouncedLayout = (updateItems = true) => {
+      clearAndCreateItemsReadyPromise.call(this);
+
+      debouncedFunction(updateItems);
+    };
+  }
+
+  itemsReady = Promise.resolve([]);
+
+  async _getUpdateComplete() {
+    await super._getUpdateComplete();
+    await this.itemsReady;
+  }
 
   protected get assignedElements(): Element[] {
     const slot = this.slotElement;
@@ -486,6 +528,8 @@ export abstract class ListBase extends BaseElement implements Layoutable {
         first.tabindex = 0;
       }
     }
+
+    this.itemsReadyResolver();
   }
 
   getFocusedItemIndex() {

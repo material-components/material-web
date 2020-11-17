@@ -24,6 +24,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `ripple`
   - Renamed custom property `--m-ripple-z-index` => `--mdc-ripple-z-index`.
 
+- `list`
+  - List items removal from DOM initiates an async layout in the managing list
+  - Added `itemsReady` promise to the list's updateComplete
+
 ## [v0.19.1] - 2020-10-08
 
 ### Fixed

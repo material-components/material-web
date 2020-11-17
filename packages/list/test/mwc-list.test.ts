@@ -153,7 +153,7 @@ const createEmptyList = (emptyMessage: string|undefined) => {
 };
 
 suite('mwc-list:', () => {
-  let fixt: TestFixture;
+  let fixt: TestFixture|null;
 
   suite('mwc-list-item', () => {
     suite('initialization', () => {
@@ -1787,6 +1787,33 @@ suite('mwc-list:', () => {
           fixt.remove();
         }
       });
+    });
+
+    suite('performance issue', () => {
+      test(
+          'removing a list should not call layout more than once', async () => {
+            let count = 0;
+            const originalLayout = List.prototype.layout;
+            List.prototype.layout = function(update) {
+              originalLayout.call(this, update);
+              count++;
+            };
+
+            const itemsTemplates = new Array(100).fill(0).map(() => listItem());
+            fixt = await fixture(listTemplate({items: itemsTemplates}));
+            element = fixt.root.querySelector('mwc-list')!;
+
+            count = 0;
+
+            fixt.remove();
+            await element.updateComplete;
+            fixt = null;
+            assert.equal(
+                count,
+                1,
+                'list.layout ran more than once while it shouldn\'t have');
+            List.prototype.layout = originalLayout;
+          });
     });
   });
 });
