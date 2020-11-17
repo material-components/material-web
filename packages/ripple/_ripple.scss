@@ -23,8 +23,7 @@ limitations under the License.
 @use '@material/theme/custom-properties';
 
 @mixin core-styles() {
-  // TODO(b/151931961): Remove setting `$include-will-change` once resolved.
-  @include ripple.core-styles($include-will-change: false);
+  @include ripple.core-styles();
   @include ripple.common();
 
   :host {
@@ -35,6 +34,9 @@ limitations under the License.
 
   .mdc-ripple-surface {
     @include ripple.target-common();
+
+    // TODO(b/151931961): Remove setting `will-change` once resolved.
+    will-change: unset;
   }
 
   .mdc-ripple-surface--primary {

@@ -18,6 +18,7 @@ limitations under the License.
 // Ignore function name case warnings from states module
 // stylelint-disable function-name-case
 @use 'sass:map';
+@use '@material/ripple/ripple-theme';
 
 $transparent-theme: (
   state: #000,
@@ -28,7 +29,7 @@ $transparent-theme: (
   ),
 );
 
-@mixin theme($theme: $transparent-theme) {
+@mixin theme($theme: $transparent-theme, $ie11-fallback: false) {
   $color: map.get($theme, state);
   @if $color {
     --mdc-ripple-color: #{$color};
@@ -49,6 +50,18 @@ $transparent-theme: (
     $press-opacity: map.get($opacity-map, press);
     @if $press-opacity {
       --mdc-ripple-press-opacity: #{$press-opacity};
+    }
+  }
+
+  @if $ie11-fallback {
+    .mdc-ripple-surface {
+      @if map.get($theme, state) {
+        @include ripple-theme.states-base-color(map.get($theme, state));
+      }
+
+      @if map.get($theme, opacity) {
+        @include ripple-theme.states-opacities(map.get($theme, opacity));
+      }
     }
   }
 }

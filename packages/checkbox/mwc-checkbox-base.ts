@@ -124,7 +124,7 @@ export class CheckboxBase extends FormElement {
       'mdc-checkbox--disabled': this.disabled,
       'mdc-checkbox--selected': selected,
       'mdc-checkbox--touch': !this.reducedTouchTarget,
-      'mdc-checkbox--focused': this.focused,
+      'mdc-ripple-upgraded--background-focused': this.focused,
       // transition animiation classes
       'mdc-checkbox--anim-checked-indeterminate':
           this.animationClass == 'checked-indeterminate',
