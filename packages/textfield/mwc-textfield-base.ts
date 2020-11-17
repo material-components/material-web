@@ -25,7 +25,7 @@ import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter';
 import MDCTextFieldFoundation from '@material/textfield/foundation';
-import {eventOptions, html, internalProperty, property, PropertyValues, query, TemplateResult} from 'lit-element';
+import {eventOptions, html, internalProperty, property, PropertyValues, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
 import {live} from 'lit-html/directives/live';
@@ -226,14 +226,6 @@ export abstract class TextFieldBase extends FormElement {
     return this.formElement.selectionEnd;
   }
 
-  protected get shouldRenderHelperText(): boolean {
-    return !!this.helper || !!this.validationMessage || this.charCounterVisible;
-  }
-
-  protected get charCounterVisible(): boolean {
-    return this.charCounter && this.maxLength !== -1;
-  }
-
   validityTransform:
       ((value: string,
         nativeValidity: ValidityState) => Partial<ValidityState>)|null = null;
@@ -274,6 +266,10 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   render() {
+    const shouldRenderCharCounter = this.charCounter && this.maxLength !== -1;
+    const shouldRenderHelperText =
+        !!this.helper || !!this.validationMessage || shouldRenderCharCounter;
+
     const classes = {
       'mdc-text-field--disabled': this.disabled,
       'mdc-text-field--no-label': !this.label,
@@ -290,12 +286,12 @@ export abstract class TextFieldBase extends FormElement {
         ${this.outlined ? this.renderOutline() : this.renderLabel()}
         ${this.renderLeadingIcon()}
         ${this.renderPrefix()}
-        ${this.renderInput()}
+        ${this.renderInput(shouldRenderHelperText)}
         ${this.renderSuffix()}
         ${this.renderTrailingIcon()}
         ${this.renderLineRipple()}
       </label>
-      ${this.renderHelperText(this.renderCharCounter())}
+      ${this.renderHelperText(shouldRenderHelperText, shouldRenderCharCounter)}
     `;
   }
 
@@ -370,7 +366,7 @@ export abstract class TextFieldBase extends FormElement {
         ${content}</span>`;
   }
 
-  protected renderInput() {
+  protected renderInput(shouldRenderHelperText: boolean) {
     const minOrUndef = this.minLength === -1 ? undefined : this.minLength;
     const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
     const autocapitalizeOrUndef = this.autocapitalize ?
@@ -379,7 +375,7 @@ export abstract class TextFieldBase extends FormElement {
         undefined;
     const showValidationMessage = this.validationMessage && !this.isUiValid;
     const ariaControlsOrUndef =
-        this.shouldRenderHelperText ? 'helper-text' : undefined;
+        shouldRenderHelperText ? 'helper-text' : undefined;
     const ariaDescribedbyOrUndef =
         this.focused || this.helperPersistent || showValidationMessage ?
         'helper-text' :
@@ -423,7 +419,8 @@ export abstract class TextFieldBase extends FormElement {
     `;
   }
 
-  protected renderHelperText(charCounterTemplate: TemplateResult|string = '') {
+  protected renderHelperText(
+      shouldRenderHelperText: boolean, shouldRenderCharCounter: boolean) {
     const showValidationMessage = this.validationMessage && !this.isUiValid;
     const classes = {
       'mdc-text-field-helper-text--persistent': this.helperPersistent,
@@ -436,19 +433,19 @@ export abstract class TextFieldBase extends FormElement {
         'true';
     const helperText =
         showValidationMessage ? this.validationMessage : this.helper;
-    return !this.shouldRenderHelperText ? '' : html`
+    return !shouldRenderHelperText ? '' : html`
       <div class="mdc-text-field-helper-line">
         <div id="helper-text"
              aria-hidden="${ifDefined(ariaHiddenOrUndef)}"
              class="mdc-text-field-helper-text ${classMap(classes)}"
              >${helperText}</div>
-        ${charCounterTemplate}
+        ${this.renderCharCounter(shouldRenderCharCounter)}
       </div>`;
   }
 
-  protected renderCharCounter() {
+  protected renderCharCounter(shouldRenderCharCounter: boolean) {
     const length = Math.min(this.value.length, this.maxLength);
-    return !this.charCounterVisible ? '' : html`
+    return !shouldRenderCharCounter ? '' : html`
       <span class="mdc-text-field-character-counter"
             >${length} / ${this.maxLength}</span>`;
   }
