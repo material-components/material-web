@@ -30,13 +30,13 @@ limitations under the License.
     @include ripple.target-common();
 
     display: block;
-  }
 
-  .mdc-ripple-surface {
-    @include ripple.target-common();
+    .mdc-ripple-surface {
+      @include ripple.target-common();
 
-    // TODO(b/151931961): Remove setting `will-change` once resolved.
-    will-change: unset;
+      // TODO(b/151931961): Remove setting `will-change` once resolved.
+      will-change: unset;
+    }
   }
 
   .mdc-ripple-surface--primary {
