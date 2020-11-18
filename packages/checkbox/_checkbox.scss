@@ -23,6 +23,7 @@ limitations under the License.
   :host {
     outline: none;
     display: inline-block;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .mdc-checkbox {
