@@ -23,6 +23,7 @@ settings:
 rules:
   # Rules temporally disabled
   "@typescript-eslint/explicit-function-return-type": off
+  "@typescript-eslint/explicit-module-boundary-types": off
 
   # Rules disabled in favor of clang-format
   "@typescript-eslint/indent": off
