@@ -16,10 +16,10 @@ limitations under the License.
 */
 
 import {customElement} from 'lit-element';
-import {TextFieldBase} from './mwc-textfield-base';
+import {TextAreaCharCounter, TextFieldBase, TextFieldInputMode, TextFieldType} from './mwc-textfield-base';
 import {style} from './mwc-textfield-css';
 
-export {TextFieldType} from './mwc-textfield-base';
+export {TextAreaCharCounter, TextFieldInputMode, TextFieldType};
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -27,6 +27,7 @@ declare global {
   }
 }
 
+/** @soyCompatible */
 @customElement('mwc-textfield')
 export class TextField extends TextFieldBase {
   static styles = style;
