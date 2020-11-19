@@ -28,7 +28,9 @@ limitations under the License.
   @include feature.targets($feat-structure) {
     width: $size;
     height: $size;
-    padding: calc((#{$size} - var(--mdc-icon-size, #{iconbutton.$icon-size})) / 2);
+    padding: calc(
+      (#{$size} - var(--mdc-icon-size, #{iconbutton.$icon-size})) / 2
+    );
   }
 }
 
@@ -37,6 +39,7 @@ limitations under the License.
   outline: none;
 
   --mdc-ripple-color: currentcolor;
+  -webkit-tap-highlight-color: transparent;
 }
 
 :host([disabled]) {
@@ -69,7 +72,9 @@ limitations under the License.
 }
 
 .mdc-icon-button {
-  @include mdc-icon-button-size-var-aware(var(--mdc-icon-button-size, #{iconbutton.$size}));
+  @include mdc-icon-button-size-var-aware(
+    var(--mdc-icon-button-size, #{iconbutton.$size})
+  );
 
   > i {
     position: absolute;

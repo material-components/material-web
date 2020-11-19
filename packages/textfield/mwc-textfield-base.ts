@@ -106,6 +106,7 @@ export type TextFieldInputMode =
 
 export type TextAreaCharCounter = 'external'|'internal';
 
+/** @soyCompatible */
 export abstract class TextFieldBase extends FormElement {
   protected mdcFoundation!: MDCTextFieldFoundation;
 
@@ -259,11 +260,13 @@ export abstract class TextFieldBase extends FormElement {
     super.update(changedProperties);
   }
 
+  /** @soyTemplate */
   render() {
     const shouldRenderCharCounter = this.charCounter && this.maxLength !== -1;
     const shouldRenderHelperText =
         !!this.helper || !!this.validationMessage || shouldRenderCharCounter;
 
+    /** @classMap */
     const classes = {
       'mdc-text-field--disabled': this.disabled,
       'mdc-text-field--no-label': !this.label,
@@ -300,12 +303,14 @@ export abstract class TextFieldBase extends FormElement {
     }
   }
 
+  /** @soyTemplate */
   protected renderRipple() {
     return this.outlined ? '' : html`
       <span class="mdc-text-field__ripple"></span>
     `;
   }
 
+  /** @soyTemplate */
   protected renderOutline() {
     return !this.outlined ? '' : html`
       <mwc-notched-outline
@@ -316,6 +321,7 @@ export abstract class TextFieldBase extends FormElement {
       </mwc-notched-outline>`;
   }
 
+  /** @soyTemplate */
   protected renderLabel() {
     return !this.label ? '' : html`
       <span
@@ -324,15 +330,19 @@ export abstract class TextFieldBase extends FormElement {
     `;
   }
 
+  /** @soyTemplate */
   protected renderLeadingIcon() {
     return this.icon ? this.renderIcon(this.icon) : '';
   }
 
+  /** @soyTemplate */
   protected renderTrailingIcon() {
     return this.iconTrailing ? this.renderIcon(this.iconTrailing, true) : '';
   }
 
+  /** @soyTemplate */
   protected renderIcon(icon: string, isTrailingIcon = false) {
+    /** @classMap */
     const classes = {
       'mdc-text-field__icon--leading': !isTrailingIcon,
       'mdc-text-field__icon--trailing': isTrailingIcon
@@ -342,15 +352,19 @@ export abstract class TextFieldBase extends FormElement {
         classMap(classes)}">${icon}</i>`;
   }
 
+  /** @soyTemplate */
   protected renderPrefix() {
     return this.prefix ? this.renderAffix(this.prefix) : '';
   }
 
+  /** @soyTemplate */
   protected renderSuffix() {
     return this.suffix ? this.renderAffix(this.suffix, true) : '';
   }
 
+  /** @soyTemplate */
   protected renderAffix(content: string, isSuffix = false) {
+    /** @classMap */
     const classes = {
       'mdc-text-field__affix--prefix': !isSuffix,
       'mdc-text-field__affix--suffix': isSuffix
@@ -360,6 +374,7 @@ export abstract class TextFieldBase extends FormElement {
         ${content}</span>`;
   }
 
+  /** @soyTemplate */
   protected renderInput(shouldRenderHelperText: boolean) {
     const minOrUndef = this.minLength === -1 ? undefined : this.minLength;
     const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
@@ -407,15 +422,18 @@ export abstract class TextFieldBase extends FormElement {
           @blur="${this.onInputBlur}">`;
   }
 
+  /** @soyTemplate */
   protected renderLineRipple() {
     return this.outlined ? '' : html`
       <span .lineRippleFoundation=${lineRipple()}></span>
     `;
   }
 
+  /** @soyTemplate */
   protected renderHelperText(
       shouldRenderHelperText: boolean, shouldRenderCharCounter: boolean) {
     const showValidationMessage = this.validationMessage && !this.isUiValid;
+    /** @classMap */
     const classes = {
       'mdc-text-field-helper-text--persistent': this.helperPersistent,
       'mdc-text-field-helper-text--validation-msg': showValidationMessage,
@@ -437,6 +455,7 @@ export abstract class TextFieldBase extends FormElement {
       </div>`;
   }
 
+  /** @soyTemplate */
   protected renderCharCounter(shouldRenderCharCounter: boolean) {
     const length = Math.min(this.value.length, this.maxLength);
     return !shouldRenderCharCounter ? '' : html`

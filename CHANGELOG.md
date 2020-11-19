@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - `textfield`
   - inconsistencies of autovalidation when it's turned off.
+- Tapping on tappable components no longer triggers tap highlight
 
 ### Changed
 

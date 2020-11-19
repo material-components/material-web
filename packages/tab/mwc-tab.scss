@@ -32,13 +32,16 @@ limitations under the License.
   flex: 1 0 auto;
   display: flex;
   justify-content: center;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .mdc-tab {
   height: var(--mdc-tab-height, #{tab.$height});
   margin-left: 0;
   margin-right: 0;
-  @include tab.horizontal-padding(var(--mdc-tab-horizontal-padding, #{tab.$horizontal-padding}));
+  @include tab.horizontal-padding(
+    var(--mdc-tab-horizontal-padding, #{tab.$horizontal-padding})
+  );
 }
 
 .mdc-tab--stacked {
@@ -53,13 +56,13 @@ limitations under the License.
 @mixin mdc-rtl($root-selector: null) {
   @if ($root-selector) {
     @at-root {
-      #{$root-selector}[dir="rtl"] &,
-      [dir="rtl"] #{$root-selector} & {
+      #{$root-selector}[dir='rtl'] &,
+      [dir='rtl'] #{$root-selector} & {
         @content;
       }
     }
   } @else {
-    :host([dir="rtl"]) & {
+    :host([dir='rtl']) & {
       @content;
     }
   }
@@ -72,7 +75,10 @@ limitations under the License.
 
 .mdc-tab:not(.mdc-tab--active) {
   .mdc-tab__text-label {
-    color: var(--mdc-tab-text-label-color-default, #{tab.$text-label-color-default});
+    color: var(
+      --mdc-tab-text-label-color-default,
+      #{tab.$text-label-color-default}
+    );
   }
 
   .mdc-tab__icon {
