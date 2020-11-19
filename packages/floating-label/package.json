@@ -16,15 +16,15 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/floating-label": "=9.0.0-canary.30c11bfc2.0",
+    "@material/floating-label": "=9.0.0-canary.a41527604.0",
     "lit-html": "^1.1.2",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@material/animation": "=9.0.0-canary.30c11bfc2.0",
-    "@material/base": "=9.0.0-canary.30c11bfc2.0",
-    "@material/rtl": "=9.0.0-canary.30c11bfc2.0",
-    "@material/typography": "=9.0.0-canary.30c11bfc2.0"
+    "@material/animation": "=9.0.0-canary.a41527604.0",
+    "@material/base": "=9.0.0-canary.a41527604.0",
+    "@material/rtl": "=9.0.0-canary.a41527604.0",
+    "@material/typography": "=9.0.0-canary.a41527604.0"
   },
   "publishConfig": {
     "access": "public"
