@@ -134,7 +134,7 @@ export const measureFixtureCreation = async (
 
   document.body.appendChild(renderContainer);
 
-  await new Promise(async (res) => {
+  await new Promise<void>(async (res) => {
     performance.mark('measureFixture-start');
     render(templates, renderTargetRoot);
     const firstChild = renderTargetRoot.firstElementChild;
@@ -178,7 +178,7 @@ export const rafPromise = async () => new Promise((res) => {
   requestAnimationFrame(res);
 });
 
-export const waitForEvent = (el: Element, ev: string) => new Promise((res) => {
+export const waitForEvent = (el: Element, ev: string) => new Promise<void>((res) => {
   el.addEventListener(ev, () => {
     res();
   }, {once: true});
