@@ -38,7 +38,7 @@ $light-theme: (
   ripple-checked-opacity: $ripple-opacity,
 );
 
-@mixin theme($theme: $light-theme, $ie11-fallback: false) {
+@mixin theme($theme: $light-theme) {
   @include css.declaration(
     checkbox-custom-properties.$ink-color,
     map.get($theme, checkmark-color)
@@ -77,8 +77,7 @@ $light-theme: (
     (
       state: map.get($theme, ripple-color),
       opacity: map.get($theme, ripple-opacity),
-    ),
-    $ie11-fallback: $ie11-fallback
+    )
   );
 
   @include checked-selector() {
@@ -86,12 +85,11 @@ $light-theme: (
       (
         state: map.get($theme, ripple-checked-color),
         opacity: map.get($theme, ripple-checked-opacity),
-      ),
-      $ie11-fallback: $ie11-fallback
+      )
     );
   }
 
-  @if $ie11-fallback {
+  @if shadow-dom.$css-selector-fallback-declarations {
     .mdc-checkbox {
       @include checkbox-theme.theme($theme);
     }
