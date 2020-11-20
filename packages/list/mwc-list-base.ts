@@ -29,7 +29,8 @@ import {Layoutable, ListItemBase, RequestSelectedDetail} from './mwc-list-item-b
 
 export {ActionDetail, createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex, SelectedDetail} from './mwc-list-foundation';
 
-type ItemsReadyResolver = (value?: (PromiseLike<never[]>|never[]|undefined)) => void;
+type ItemsReadyResolver = (value?: (PromiseLike<never[]>|never[]|undefined)) =>
+    void;
 
 function debounceLayout(
     callback: (updateItems: boolean) => void, waitInMS = 50) {

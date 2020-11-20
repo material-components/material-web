@@ -178,11 +178,12 @@ export const rafPromise = async () => new Promise((res) => {
   requestAnimationFrame(res);
 });
 
-export const waitForEvent = (el: Element, ev: string) => new Promise<void>((res) => {
-  el.addEventListener(ev, () => {
-    res();
-  }, {once: true});
-});
+export const waitForEvent = (el: Element, ev: string) =>
+    new Promise<void>((res) => {
+      el.addEventListener(ev, () => {
+        res();
+      }, {once: true});
+    });
 
 export const ieSafeKeyboardEvent = (type: string, keycode: number) => {
   // IE es5 fix
