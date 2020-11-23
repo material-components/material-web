@@ -19,6 +19,7 @@ limitations under the License.
 // stylelint-disable function-name-case
 @use 'sass:map';
 @use '@material/ripple/ripple-theme';
+@use '@material/theme/shadow-dom';
 
 $transparent-theme: (
   state: #000,
@@ -29,7 +30,7 @@ $transparent-theme: (
   ),
 );
 
-@mixin theme($theme: $transparent-theme, $ie11-fallback: false) {
+@mixin theme($theme: $transparent-theme) {
   $color: map.get($theme, state);
   @if $color {
     --mdc-ripple-color: #{$color};
@@ -53,7 +54,7 @@ $transparent-theme: (
     }
   }
 
-  @if $ie11-fallback {
+  @if shadow-dom.$css-selector-fallback-declarations {
     .mdc-ripple-surface {
       @if map.get($theme, state) {
         @include ripple-theme.states-base-color(map.get($theme, state));
