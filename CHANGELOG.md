@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Changed
+
+- `ripple_directive`
+  - Remove in favor of `mwc-ripple`
+
 ### Added
 
 - `button`

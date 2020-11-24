@@ -16,14 +16,17 @@ limitations under the License.
 */
 // Make TypeScript not remove the import.
 import '@material/mwc-tab-indicator';
+import '@material/mwc-ripple';
+
 
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
-import {ripple} from '@material/mwc-ripple/ripple-directive';
+import {Ripple} from '@material/mwc-ripple/mwc-ripple';
+import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {TabIndicator} from '@material/mwc-tab-indicator';
 import {MDCTabAdapter} from '@material/tab/adapter';
 import MDCTabFoundation from '@material/tab/foundation';
-import {html, property, query} from 'lit-element';
+import {eventOptions, html, internalProperty, property, query, queryAsync} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
 export interface TabInteractionEventDetail {
@@ -83,9 +86,11 @@ export class TabBase extends BaseElement {
 
   @query('.mdc-tab__content') private _contentElement!: HTMLElement;
 
-  private _handleClick() {
-    this.mdcFoundation.handleClick();
-  }
+  @internalProperty() protected shouldRenderRipple = false;
+
+  @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
+
+  private rippleElement: Ripple|null = null;
 
   protected createRenderRoot() {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
@@ -123,25 +128,28 @@ export class TabBase extends BaseElement {
         <span class="mdc-tab__text-label">${this.label}</span>`;
     }
 
-    const rippleDirective = ripple({
-      interactionNode: this,
-      unbounded: false,
-    });
-
     return html`
       <button
-        @click="${this._handleClick}"
+        @click="${this.handleClick}"
         class="mdc-tab ${classMap(classes)}"
         role="tab"
         aria-selected="false"
-        tabindex="-1">
+        tabindex="-1"
+        @focus="${this.focus}"
+        @blur="${this.handleBlur}"
+        @mousedown="${this.handleRippleMouseDown}"
+        @mouseenter="${this.handleRippleMouseEnter}"
+        @mouseleave="${this.handleRippleMouseLeave}"
+        @touchstart="${this.handleRippleTouchStart}"
+        @touchend="${this.handleRippleDeactivate}"
+        @touchcancel="${this.handleRippleDeactivate}">
         <span class="mdc-tab__content">
           ${iconTemplate}
           ${labelTemplate}
           ${this.isMinWidthIndicator ? this.renderIndicator() : ''}
         </span>
         ${this.isMinWidthIndicator ? '' : this.renderIndicator()}
-        <span class="mdc-tab__ripple" .ripple="${rippleDirective}"></span>
+        ${this.renderRipple()}
       </button>`;
   }
 
@@ -151,6 +159,14 @@ export class TabBase extends BaseElement {
         .fade="${this.isFadingIndicator}"></mwc-tab-indicator>`;
   }
 
+  // TODO(dfreedm): Make this use selected as a param after Polymer/internal#739
+  /** @soyCompatible */
+  protected renderRipple() {
+    return this.shouldRenderRipple ? html`
+          <mwc-ripple primary></mwc-ripple>
+        ` :
+                                     '';
+  }
 
   protected createAdapter(): MDCTabAdapter {
     return {
@@ -221,5 +237,65 @@ export class TabBase extends BaseElement {
   // NOTE: needed only for ShadyDOM where delegatesFocus is not implemented
   focus() {
     this.mdcRoot.focus();
+    this.handleFocus();
+  }
+
+  protected rippleHandlers: RippleHandlers = new RippleHandlers(() => {
+    this.shouldRenderRipple = true;
+    this.ripple.then((v) => this.rippleElement = v);
+    return this.ripple;
+  });
+
+  private handleClick() {
+    this.handleFocus();
+    this.mdcFoundation.handleClick();
+  }
+
+  private handleFocus() {
+    this.handleRippleFocus();
+  }
+
+  private handleBlur() {
+    this.handleRippleBlur();
+  }
+
+  protected handleRippleMouseDown(event: Event) {
+    const onUp = () => {
+      window.removeEventListener('mouseup', onUp);
+
+      this.handleRippleDeactivate();
+    };
+
+    window.addEventListener('mouseup', onUp);
+    this.rippleHandlers.startPress(event);
+  }
+
+  @eventOptions({passive: true})
+  protected handleRippleTouchStart(event: Event) {
+    this.rippleHandlers.startPress(event);
+  }
+
+  protected handleRippleDeactivate() {
+    this.rippleHandlers.endPress();
+  }
+
+  protected handleRippleMouseEnter() {
+    this.rippleHandlers.startHover();
+  }
+
+  protected handleRippleMouseLeave() {
+    this.rippleHandlers.endHover();
+  }
+
+  protected handleRippleFocus() {
+    this.rippleHandlers.startFocus();
+  }
+
+  protected handleRippleBlur() {
+    this.rippleHandlers.endFocus();
+  }
+
+  get isRippleActive() {
+    return this.rippleElement?.isActive || false;
   }
 }
