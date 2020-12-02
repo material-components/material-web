@@ -16,10 +16,10 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/circular-progress": "=9.0.0-canary.ae27b44b0.0",
+    "@material/circular-progress": "=9.0.0-canary.11da3c0db.0",
     "@material/mwc-base": "^0.19.1",
     "@material/mwc-circular-progress": "^0.19.1",
-    "@material/theme": "=9.0.0-canary.ae27b44b0.0",
+    "@material/theme": "=9.0.0-canary.11da3c0db.0",
     "lit-element": "^2.3.0",
     "tslib": "^2.0.1"
   },
