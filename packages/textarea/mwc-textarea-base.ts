@@ -15,13 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {TextAreaCharCounter, TextFieldBase} from '@material/mwc-textfield/mwc-textfield-base';
+import {TextAreaCharCounter, TextFieldBase, TextFieldInputMode, TextFieldType} from '@material/mwc-textfield/mwc-textfield-base';
 import {ComplexAttributeConverter, html, property, query} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
 import {live} from 'lit-html/directives/live';
 
-export {TextFieldType} from '@material/mwc-textfield/mwc-textfield-base';
+export {TextAreaCharCounter, TextFieldInputMode, TextFieldType};
 
 const booleanOrStringConverter: ComplexAttributeConverter<boolean|string> = {
   fromAttribute(value) {
@@ -42,6 +42,7 @@ const booleanOrStringConverter: ComplexAttributeConverter<boolean|string> = {
   }
 };
 
+/** @soyCompatible */
 export abstract class TextAreaBase extends TextFieldBase {
   @query('textarea') protected formElement!: HTMLInputElement;
 
@@ -52,6 +53,7 @@ export abstract class TextAreaBase extends TextFieldBase {
   @property({converter: booleanOrStringConverter})
   charCounter: boolean|TextAreaCharCounter = false;
 
+  /** @soyTemplate */
   render() {
     const shouldRenderCharCounter = this.charCounter && this.maxLength !== -1;
     const shouldRenderInternalCharCounter =
@@ -61,6 +63,7 @@ export abstract class TextAreaBase extends TextFieldBase {
     const shouldRenderHelperText = !!this.helper || !!this.validationMessage ||
         shouldRenderExternalCharCounter;
 
+    /** @classMap */
     const classes = {
       'mdc-text-field--disabled': this.disabled,
       'mdc-text-field--no-label': !this.label,
@@ -85,6 +88,7 @@ export abstract class TextAreaBase extends TextFieldBase {
     `;
   }
 
+  /** @soyTemplate */
   protected renderInput() {
     const minOrUndef = this.minLength === -1 ? undefined : this.minLength;
     const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
