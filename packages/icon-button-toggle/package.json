@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-icon-button-toggle",
-  "version": "0.19.1",
+  "version": "0.20.0",
   "description": "Material Design icon button toggle",
   "keywords": [
     "material design",
@@ -17,9 +17,9 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/icon-button": "=9.0.0-canary.1c156d69d.0",
-    "@material/mwc-base": "^0.19.1",
-    "@material/mwc-icon-button": "^0.19.1",
-    "@material/mwc-ripple": "^0.19.1",
+    "@material/mwc-base": "^0.20.0",
+    "@material/mwc-icon-button": "^0.20.0",
+    "@material/mwc-ripple": "^0.20.0",
     "lit-element": "^2.3.0",
     "tslib": "^2.0.1"
   },

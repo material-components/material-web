@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-list",
-  "version": "0.19.1",
+  "version": "0.20.0",
   "description": "Material Design list web component",
   "keywords": [
     "material design",
@@ -14,10 +14,10 @@
     "@material/base": "=9.0.0-canary.1c156d69d.0",
     "@material/dom": "=9.0.0-canary.1c156d69d.0",
     "@material/list": "=9.0.0-canary.1c156d69d.0",
-    "@material/mwc-base": "^0.19.1",
-    "@material/mwc-checkbox": "^0.19.1",
-    "@material/mwc-radio": "^0.19.1",
-    "@material/mwc-ripple": "^0.19.1",
+    "@material/mwc-base": "^0.20.0",
+    "@material/mwc-checkbox": "^0.20.0",
+    "@material/mwc-radio": "^0.20.0",
+    "@material/mwc-ripple": "^0.20.0",
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
     "tslib": "^2.0.1"
@@ -25,8 +25,8 @@
   "devDependencies": {
     "@material/density": "=9.0.0-canary.1c156d69d.0",
     "@material/feature-targeting": "=9.0.0-canary.1c156d69d.0",
-    "@material/mwc-icon": "^0.19.1",
-    "@material/mwc-menu": "^0.19.1",
+    "@material/mwc-icon": "^0.20.0",
+    "@material/mwc-menu": "^0.20.0",
     "@material/ripple": "=9.0.0-canary.1c156d69d.0",
     "@material/rtl": "=9.0.0-canary.1c156d69d.0",
     "@material/theme": "=9.0.0-canary.1c156d69d.0",
