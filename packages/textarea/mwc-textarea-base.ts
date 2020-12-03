@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import {TextAreaCharCounter, TextFieldBase, TextFieldInputMode, TextFieldType} from '@material/mwc-textfield/mwc-textfield-base';
-import {ComplexAttributeConverter, html, property, query} from 'lit-element';
+import {ComplexAttributeConverter, html, property, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
 import {live} from 'lit-html/directives/live';
@@ -54,7 +54,7 @@ export abstract class TextAreaBase extends TextFieldBase {
   charCounter: boolean|TextAreaCharCounter = false;
 
   /** @soyTemplate */
-  render() {
+  render(): TemplateResult {
     const shouldRenderCharCounter = this.charCounter && this.maxLength !== -1;
     const shouldRenderInternalCharCounter =
         shouldRenderCharCounter && this.charCounter === 'internal';
@@ -89,7 +89,7 @@ export abstract class TextAreaBase extends TextFieldBase {
   }
 
   /** @soyTemplate */
-  protected renderInput() {
+  protected renderInput(): TemplateResult {
     const minOrUndef = this.minLength === -1 ? undefined : this.minLength;
     const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
     const autocapitalizeOrUndef = this.autocapitalize ?
