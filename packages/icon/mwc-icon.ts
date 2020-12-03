@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {customElement, html, LitElement} from 'lit-element';
+import {customElement, html, LitElement, TemplateResult} from 'lit-element';
 
 import {style} from './mwc-icon-host-css';
 
@@ -24,7 +24,7 @@ export class Icon extends LitElement {
   static styles = style;
 
   /** @soyTemplate */
-  protected render() {
+  protected render(): TemplateResult {
     return html`<slot></slot>`;
   }
 }

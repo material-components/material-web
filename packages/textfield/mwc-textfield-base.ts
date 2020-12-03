@@ -25,7 +25,7 @@ import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter';
 import MDCTextFieldFoundation from '@material/textfield/foundation';
-import {eventOptions, html, internalProperty, property, PropertyValues, query} from 'lit-element';
+import {eventOptions, html, internalProperty, property, PropertyValues, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
 import {live} from 'lit-html/directives/live';
@@ -267,7 +267,7 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   /** @soyTemplate */
-  render() {
+  render(): TemplateResult {
     const shouldRenderCharCounter = this.charCounter && this.maxLength !== -1;
     const shouldRenderHelperText =
         !!this.helper || !!this.validationMessage || shouldRenderCharCounter;
@@ -310,14 +310,14 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   /** @soyTemplate */
-  protected renderRipple() {
+  protected renderRipple(): TemplateResult|string {
     return this.outlined ? '' : html`
       <span class="mdc-text-field__ripple"></span>
     `;
   }
 
   /** @soyTemplate */
-  protected renderOutline() {
+  protected renderOutline(): TemplateResult|string {
     return !this.outlined ? '' : html`
       <mwc-notched-outline
           .width=${this.outlineWidth}
@@ -328,7 +328,7 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   /** @soyTemplate */
-  protected renderLabel() {
+  protected renderLabel(): TemplateResult|string {
     return !this.label ? '' : html`
       <span
           .floatingLabelFoundation=${floatingLabel(this.label)}
@@ -337,17 +337,17 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   /** @soyTemplate */
-  protected renderLeadingIcon() {
+  protected renderLeadingIcon(): TemplateResult|string {
     return this.icon ? this.renderIcon(this.icon) : '';
   }
 
   /** @soyTemplate */
-  protected renderTrailingIcon() {
+  protected renderTrailingIcon(): TemplateResult|string {
     return this.iconTrailing ? this.renderIcon(this.iconTrailing, true) : '';
   }
 
   /** @soyTemplate */
-  protected renderIcon(icon: string, isTrailingIcon = false) {
+  protected renderIcon(icon: string, isTrailingIcon = false): TemplateResult {
     /** @classMap */
     const classes = {
       'mdc-text-field__icon--leading': !isTrailingIcon,
@@ -359,17 +359,18 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   /** @soyTemplate */
-  protected renderPrefix() {
+  protected renderPrefix(): TemplateResult|string {
     return this.prefix ? this.renderAffix(this.prefix) : '';
   }
 
   /** @soyTemplate */
-  protected renderSuffix() {
+  protected renderSuffix(): TemplateResult|string {
     return this.suffix ? this.renderAffix(this.suffix, true) : '';
   }
 
   /** @soyTemplate */
-  protected renderAffix(content: string, isSuffix = false) {
+  protected renderAffix(content: string, isSuffix = false): TemplateResult
+      |string {
     /** @classMap */
     const classes = {
       'mdc-text-field__affix--prefix': !isSuffix,
@@ -381,7 +382,7 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   /** @soyTemplate */
-  protected renderInput(shouldRenderHelperText: boolean) {
+  protected renderInput(shouldRenderHelperText: boolean): TemplateResult {
     const minOrUndef = this.minLength === -1 ? undefined : this.minLength;
     const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
     const autocapitalizeOrUndef = this.autocapitalize ?
@@ -429,7 +430,7 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   /** @soyTemplate */
-  protected renderLineRipple() {
+  protected renderLineRipple(): TemplateResult|string {
     return this.outlined ? '' : html`
       <span .lineRippleFoundation=${lineRipple()}></span>
     `;
@@ -437,7 +438,8 @@ export abstract class TextFieldBase extends FormElement {
 
   /** @soyTemplate */
   protected renderHelperText(
-      shouldRenderHelperText: boolean, shouldRenderCharCounter: boolean) {
+      shouldRenderHelperText: boolean,
+      shouldRenderCharCounter: boolean): TemplateResult|string {
     const showValidationMessage = this.validationMessage && !this.isUiValid;
     /** @classMap */
     const classes = {
@@ -462,7 +464,8 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   /** @soyTemplate */
-  protected renderCharCounter(shouldRenderCharCounter: boolean) {
+  protected renderCharCounter(shouldRenderCharCounter: boolean): TemplateResult
+      |string {
     const length = Math.min(this.value.length, this.maxLength);
     return !shouldRenderCharCounter ? '' : html`
       <span class="mdc-text-field-character-counter"

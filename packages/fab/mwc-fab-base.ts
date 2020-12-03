@@ -18,7 +18,7 @@ import '@material/mwc-ripple/mwc-ripple';
 
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {eventOptions, html, internalProperty, LitElement, property, queryAsync} from 'lit-element';
+import {eventOptions, html, internalProperty, LitElement, property, queryAsync, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
 /**
@@ -59,7 +59,7 @@ export class FabBase extends LitElement {
    * @soyTemplate
    * @soyClasses fabClasses: .mdc-fab
    */
-  protected render() {
+  protected render(): TemplateResult {
     const hasTouchTarget = this.mini && !this.reducedTouchTarget;
     /** @classMap */
     const classes = {
@@ -99,7 +99,7 @@ export class FabBase extends LitElement {
   }
 
   /** @soyTemplate */
-  protected renderIcon() {
+  protected renderIcon(): TemplateResult {
     return html`${
         this.icon ? html`
           <span class="material-icons mdc-fab__icon">${this.icon}</span>` :
@@ -107,7 +107,7 @@ export class FabBase extends LitElement {
   }
 
   /** @soyTemplate */
-  protected renderTouchTarget() {
+  protected renderTouchTarget(): TemplateResult {
     const hasTouchTarget = this.mini && !this.reducedTouchTarget;
 
     return html`${
@@ -115,7 +115,7 @@ export class FabBase extends LitElement {
   }
 
   /** @soyTemplate */
-  protected renderLabel() {
+  protected renderLabel(): TemplateResult {
     const showLabel = this.label !== '' && this.extended;
 
     return html`${
@@ -124,12 +124,12 @@ export class FabBase extends LitElement {
   }
 
   /** @soyTemplate */
-  protected renderBeforeRipple() {
+  protected renderBeforeRipple(): TemplateResult {
     return html``;
   }
 
   /** @soyTemplate */
-  protected renderRipple() {
+  protected renderRipple(): TemplateResult|string {
     return this.shouldRenderRipple ?
         html`<mwc-ripple class="ripple"></mwc-ripple>` :
         '';

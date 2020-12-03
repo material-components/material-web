@@ -19,7 +19,7 @@ import '@material/mwc-ripple/mwc-ripple';
 
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {eventOptions, html, internalProperty, LitElement, property, query, queryAsync} from 'lit-element';
+import {eventOptions, html, internalProperty, LitElement, property, query, queryAsync, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
 /** @soyCompatible */
@@ -56,12 +56,12 @@ export class ButtonBase extends LitElement {
   });
 
   /** @soyTemplate */
-  protected renderOverlay() {
+  protected renderOverlay(): TemplateResult {
     return html``;
   }
 
   /** @soyTemplate */
-  protected renderRipple() {
+  protected renderRipple(): TemplateResult|string {
     const filled = this.raised || this.unelevated;
     return this.shouldRenderRipple ?
         html`<mwc-ripple class="ripple" .primary="${!filled}" .disabled="${
@@ -89,7 +89,7 @@ export class ButtonBase extends LitElement {
     }
   }
 
-  /** @soyTemplate */
+  /** @soyTemplate classMap */
   protected getRenderClasses() {
     return classMap({
       'mdc-button--raised': this.raised,
@@ -104,7 +104,7 @@ export class ButtonBase extends LitElement {
    * @soyAttributes buttonAttributes: #button
    * @soyClasses buttonClasses: #button
    */
-  protected render() {
+  protected render(): TemplateResult {
     return html`
       <button
           id="button"
@@ -141,7 +141,7 @@ export class ButtonBase extends LitElement {
   }
 
   /** @soyTemplate */
-  protected renderIcon() {
+  protected renderIcon(): TemplateResult {
     return html`
     <mwc-icon class="mdc-button__icon">
       ${this.icon}

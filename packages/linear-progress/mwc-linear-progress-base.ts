@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {html, internalProperty, LitElement, property, PropertyValues, query} from 'lit-element';
+import {html, internalProperty, LitElement, property, PropertyValues, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
 import {styleMap} from 'lit-html/directives/style-map';
@@ -55,7 +55,7 @@ export class LinearProgressBase extends LitElement {
   /**
    * @soyTemplate
    */
-  protected render() {
+  protected render(): TemplateResult {
     /** @classMap */
     const classes = {
       'mdc-linear-progress--closed': this.closed,

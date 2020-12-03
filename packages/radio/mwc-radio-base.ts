@@ -21,7 +21,7 @@ import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {MDCRadioAdapter} from '@material/radio/adapter';
 import MDCRadioFoundation from '@material/radio/foundation';
-import {eventOptions, html, internalProperty, property, query, queryAsync} from 'lit-element';
+import {eventOptions, html, internalProperty, property, query, queryAsync, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
 
@@ -141,7 +141,7 @@ export class RadioBase extends FormElement {
   });
 
   /** @soyTemplate */
-  protected renderRipple() {
+  protected renderRipple(): TemplateResult|string {
     return this.shouldRenderRipple ?
         html`<mwc-ripple unbounded accent .disabled="${
             this.disabled}"></mwc-ripple>` :
@@ -216,7 +216,7 @@ export class RadioBase extends FormElement {
    * @soyAttributes radioAttributes: input
    * @soyClasses radioClasses: .mdc-radio
    */
-  protected render() {
+  protected render(): TemplateResult {
     /** @classMap */
     const classes = {
       'mdc-radio--touch': !this.reducedTouchTarget,
