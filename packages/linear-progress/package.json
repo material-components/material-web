@@ -16,8 +16,8 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/linear-progress": "=9.0.0-canary.11da3c0db.0",
-    "@material/theme": "=9.0.0-canary.11da3c0db.0",
+    "@material/linear-progress": "=9.0.0-canary.1c156d69d.0",
+    "@material/theme": "=9.0.0-canary.1c156d69d.0",
     "@types/resize-observer-browser": "^0.1.3",
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
