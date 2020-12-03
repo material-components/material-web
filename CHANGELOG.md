@@ -36,6 +36,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - List items removal from DOM initiates an async layout in the managing list
   - Added `itemsReady` promise to the list's updateComplete
 
+- `tab`
+  - Calling `activate()` before first render does not throw an error.
+
 ## [v0.19.1] - 2020-10-08
 
 ### Fixed

@@ -17,7 +17,7 @@
 
 import {Tab} from '@material/mwc-tab';
 import * as hanbi from 'hanbi';
-import {html} from 'lit-html';
+import {html, render} from 'lit-html';
 
 import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 
@@ -127,6 +127,41 @@ suite('mwc-tab', () => {
     test('displays icon', () => {
       const content = element.shadowRoot!.querySelector('.mdc-tab__icon')!;
       assert.equal(content.textContent!.trim(), 'add');
+    });
+  });
+
+  suite('activate', () => {
+    teardown(() => {
+      const tabs = document.body.querySelectorAll('mwc-tab');
+
+      for (const tab of tabs) {
+        document.body.removeChild(tab);
+      }
+    });
+
+    test('don\'t throw if active is called before firstRender', async () => {
+      const dummyClientRect = document.body.getBoundingClientRect();
+      render(html`<mwc-tab></mwc-tab>`, document.body);
+      const tab = document.body.querySelector('mwc-tab')!;
+      assert.isFalse(
+          !!(tab as unknown as {mdcFoundation: boolean}).mdcFoundation);
+
+      let didThrow = false;
+
+      try {
+        tab.activate(dummyClientRect);
+      } catch (e) {
+        didThrow = true;
+      }
+
+      assert.isFalse(didThrow);
+
+      await tab.updateComplete;
+      await tab.updateComplete;
+
+      assert.isTrue(
+          !!(tab as unknown as {mdcFoundation: boolean}).mdcFoundation);
+      assert.isTrue(tab.active);
     });
   });
 });

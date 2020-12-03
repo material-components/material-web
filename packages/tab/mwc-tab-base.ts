@@ -208,8 +208,18 @@ export class TabBase extends BaseElement {
     if (!clientRect) {
       this.initFocus = true;
     }
-    this.mdcFoundation.activate(clientRect);
-    this.setActive(this.mdcFoundation.isActive());
+
+    if (this.mdcFoundation) {
+      this.mdcFoundation.activate(clientRect);
+      this.setActive(this.mdcFoundation.isActive());
+    } else {
+      // happens if this is called by tab-bar on initialization, but tab has not
+      // finished rendering.
+      this.updateComplete.then(() => {
+        this.mdcFoundation.activate(clientRect);
+        this.setActive(this.mdcFoundation.isActive());
+      });
+    }
   }
 
   deactivate() {
