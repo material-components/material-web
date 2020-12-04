@@ -16,7 +16,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/icon-button": "=9.0.0-canary.1c156d69d.0",
+    "@material/icon-button": "=9.0.0-canary.832668d33.0",
     "@material/mwc-base": "^0.20.0",
     "@material/mwc-icon-button": "^0.20.0",
     "@material/mwc-ripple": "^0.20.0",
