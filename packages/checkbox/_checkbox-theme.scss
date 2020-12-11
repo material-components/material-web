@@ -16,6 +16,7 @@
 @use '@material/theme/shadow-dom';
 @use '@material/theme/theme';
 @use '@material/theme/theme-color';
+@use '@material/touchtarget/touch-target';
 @use 'third_party/javascript/material_web_components/ripple/ripple-theme';
 
 $ripple-opacity: (
@@ -63,6 +64,19 @@ $light-theme: (
     checkbox-custom-properties.$disabled-color,
     map.get($theme, container-disabled-color)
   );
+
+  $density-scale: map.get($theme, density-scale);
+  @if $density-scale != null {
+    @include css.declaration(
+      checkbox-custom-properties.$ripple-size,
+      checkbox-theme.get-ripple-size($density-scale)
+    );
+    @include css.declaration(
+      checkbox-custom-properties.$touch-target-size,
+      var(checkbox-custom-properties.$ripple-size)
+    );
+  }
+
   @include shadow-dom.host-aware(
     selector.append(&, ':hover, :focus, :focus-within, :active')
   ) {
