@@ -92,6 +92,15 @@ suite('mwc-checkbox', () => {
       assert.equal(element.checked, true);
     });
 
+    test('change event has updated values for `checked`', () => {
+      let changeChecked: boolean|undefined = undefined;
+      element.addEventListener('change', () => {
+        changeChecked = element.checked;
+      });
+      element.click();
+      assert.equal(changeChecked, true);
+    });
+
     test('does not animate after being hidden', async () => {
       element.checked = true;
       const animatedElement =

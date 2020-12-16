@@ -61,8 +61,10 @@ export abstract class FormElement extends BaseElement {
 
   protected firstUpdated() {
     super.firstUpdated();
-    this.mdcRoot.addEventListener('change', (e) => {
-      this.dispatchEvent(new Event('change', e));
-    });
+    if (this.shadowRoot) {
+      this.mdcRoot.addEventListener('change', (e) => {
+        this.dispatchEvent(new Event('change', e));
+      });
+    }
   }
 }

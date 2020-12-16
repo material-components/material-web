@@ -22,6 +22,7 @@ import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {eventOptions, html, internalProperty, property, PropertyValues, query, queryAsync, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
+import {live} from 'lit-html/directives/live';
 
 /** @soyCompatible */
 export class CheckboxBase extends FormElement {
@@ -149,12 +150,12 @@ export class CheckboxBase extends FormElement {
               aria-checked="${ifDefined(ariaChecked)}"
               data-indeterminate="${this.indeterminate ? 'true' : 'false'}"
               ?disabled="${this.disabled}"
-              .indeterminate="${this.indeterminate}"
-              .checked="${this.checked}"
+              .indeterminate="${live(this.indeterminate)}"
+              .checked="${live(this.checked)}"
               .value="${this.value}"
-              @change="${this._changeHandler}"
-              @focus="${this._handleFocus}"
-              @blur="${this._handleBlur}"
+              @change="${this.handleChange}"
+              @focus="${this.handleFocus}"
+              @blur="${this.handleBlur}"
               @mousedown="${this.handleRippleMouseDown}"
               @mouseenter="${this.handleRippleMouseEnter}"
               @mouseleave="${this.handleRippleMouseLeave}"
@@ -175,12 +176,12 @@ export class CheckboxBase extends FormElement {
       </div>`;
   }
 
-  private _handleFocus() {
+  protected handleFocus() {
     this.focused = true;
     this.handleRippleFocus();
   }
 
-  private _handleBlur() {
+  protected handleBlur() {
     this.focused = false;
     this.handleRippleBlur();
   }
@@ -221,7 +222,7 @@ export class CheckboxBase extends FormElement {
     this.rippleHandlers.endFocus();
   }
 
-  private _changeHandler() {
+  protected handleChange() {
     this.checked = this.formElement.checked;
     this.indeterminate = this.formElement.indeterminate;
   }
