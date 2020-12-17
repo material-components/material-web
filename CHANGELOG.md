@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - `FormElement`
   - FormElement checks if `change` event re-refiring is needed
+- `tab`
+  - Clean up fixture typing so that tests work when reordered
 
 ## [v0.20.0] - 2020-12-03
 

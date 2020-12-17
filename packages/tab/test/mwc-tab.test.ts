@@ -42,11 +42,12 @@ const tab = (propsInit: Partial<TabProps>) => {
 };
 
 suite('mwc-tab', () => {
-  let fixt: TestFixture;
+  let fixt: TestFixture|undefined;
   let element: Tab;
 
   teardown(() => {
-    fixt.remove();
+    fixt?.remove();
+    fixt = undefined;
   });
 
   suite('basic', () => {
@@ -141,7 +142,7 @@ suite('mwc-tab', () => {
 
     test('don\'t throw if active is called before firstRender', async () => {
       const dummyClientRect = document.body.getBoundingClientRect();
-      render(html`<mwc-tab></mwc-tab>`, document.body);
+      render(defaultTab, document.body);
       const tab = document.body.querySelector('mwc-tab')!;
       assert.isFalse(
           !!(tab as unknown as {mdcFoundation: boolean}).mdcFoundation);
