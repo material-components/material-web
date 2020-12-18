@@ -22,7 +22,6 @@ import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {eventOptions, html, internalProperty, property, PropertyValues, query, queryAsync, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
-import {live} from 'lit-html/directives/live';
 
 /** @soyCompatible */
 export class CheckboxBase extends FormElement {
@@ -150,8 +149,8 @@ export class CheckboxBase extends FormElement {
               aria-checked="${ifDefined(ariaChecked)}"
               data-indeterminate="${this.indeterminate ? 'true' : 'false'}"
               ?disabled="${this.disabled}"
-              .indeterminate="${live(this.indeterminate)}"
-              .checked="${live(this.checked)}"
+              .indeterminate="${this.indeterminate}"
+              .checked="${this.checked}"
               .value="${this.value}"
               @change="${this.handleChange}"
               @focus="${this.handleFocus}"
