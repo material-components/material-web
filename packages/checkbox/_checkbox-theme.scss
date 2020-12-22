@@ -39,7 +39,7 @@ $light-theme: (
   ripple-checked-opacity: $ripple-opacity,
 );
 
-@mixin theme($theme: $light-theme) {
+@mixin theme($theme) {
   @include css.declaration(
     checkbox-custom-properties.$ink-color,
     map.get($theme, checkmark-color)
