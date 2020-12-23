@@ -16,7 +16,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/line-ripple": "=9.0.0-canary.30fdfd06e.0",
+    "@material/line-ripple": "=9.0.0-canary.f89d8b8f2.0",
     "lit-html": "^1.1.2",
     "tslib": "^2.0.1"
   },
