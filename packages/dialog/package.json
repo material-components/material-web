@@ -16,8 +16,8 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/dialog": "=9.0.0-canary.30fdfd06e.0",
-    "@material/dom": "=9.0.0-canary.30fdfd06e.0",
+    "@material/dialog": "=10.0.0-canary.5d128511b.0",
+    "@material/dom": "=10.0.0-canary.5d128511b.0",
     "@material/mwc-base": "^0.20.0",
     "@material/mwc-button": "^0.20.0",
     "blocking-elements": "^0.1.0",
@@ -27,11 +27,11 @@
     "wicg-inert": "^3.0.0"
   },
   "devDependencies": {
-    "@material/elevation": "=9.0.0-canary.30fdfd06e.0",
-    "@material/feature-targeting": "=9.0.0-canary.30fdfd06e.0",
-    "@material/rtl": "=9.0.0-canary.30fdfd06e.0",
-    "@material/shape": "=9.0.0-canary.30fdfd06e.0",
-    "@material/theme": "=9.0.0-canary.30fdfd06e.0"
+    "@material/elevation": "=10.0.0-canary.5d128511b.0",
+    "@material/feature-targeting": "=10.0.0-canary.5d128511b.0",
+    "@material/rtl": "=10.0.0-canary.5d128511b.0",
+    "@material/shape": "=10.0.0-canary.5d128511b.0",
+    "@material/theme": "=10.0.0-canary.5d128511b.0"
   },
   "publishConfig": {
     "access": "public"
