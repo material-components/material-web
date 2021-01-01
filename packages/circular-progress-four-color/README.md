@@ -40,7 +40,7 @@ four colors by default. These colors may be specified as follows:
 
 ```html
 <style>
-  mwc-circular-progress {
+  mwc-circular-progress-four-color {
     --mdc-circular-progress-bar-color-1: #2196f3;
     --mdc-circular-progress-bar-color-2: #e91e63;
     --mdc-circular-progress-bar-color-3: #ffc107;
