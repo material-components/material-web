@@ -23,8 +23,8 @@
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@material/checkbox": "=10.0.0-canary.365c69360.0",
-    "@material/theme": "=10.0.0-canary.365c69360.0"
+    "@material/checkbox": "=10.0.0-canary.121e1f303.0",
+    "@material/theme": "=10.0.0-canary.121e1f303.0"
   },
   "publishConfig": {
     "access": "public"
