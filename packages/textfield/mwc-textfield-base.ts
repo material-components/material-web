@@ -200,9 +200,9 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: String}) autocapitalize = '';
 
-  @property({type: Boolean}) protected outlineOpen = false;
-  @property({type: Number}) protected outlineWidth = 0;
-  @property({type: Boolean}) protected isUiValid = true;
+  @internalProperty() protected outlineOpen = false;
+  @internalProperty() protected outlineWidth = 0;
+  @internalProperty() protected isUiValid = true;
 
   @internalProperty() protected focused = false;
 
