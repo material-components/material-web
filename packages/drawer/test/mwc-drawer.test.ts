@@ -40,6 +40,20 @@ const drawer = (propsInit: Partial<DrawerProps>) => {
   `;
 };
 
+const IS_SAFARI_13 =
+    window.navigator.appVersion?.indexOf('AppleWebKit') !== -1 &&
+    window.navigator.appVersion?.indexOf('Version/13.1') !== -1;
+
+const transitionend = async (drawer: Element) => {
+  if (IS_SAFARI_13) {
+    await new Promise((resolve) => {
+      setTimeout(resolve, 400);
+    });
+  } else {
+    await waitForEvent(drawer, 'transitionend');
+  }
+};
+
 suite('mwc-drawer', () => {
   let fixt: TestFixture;
   let element: Drawer;
@@ -73,10 +87,11 @@ suite('mwc-drawer', () => {
       });
       element.type = 'dismissible';
       element.open = true;
-      await waitForEvent(drawer, 'transitionend');
+      await transitionend(drawer);
       assert.equal(openedFired, true);
       element.open = false;
-      await waitForEvent(drawer, 'transitionend');
+      await transitionend(drawer);
+
       assert.equal(closedFired, true);
     });
   });
@@ -117,9 +132,11 @@ suite('mwc-drawer', () => {
       const scrim =
           element.shadowRoot!.querySelector<HTMLElement>(SCRIM_SELECTOR)!;
       element.open = true;
-      await waitForEvent(drawer, 'transitionend');
+      await transitionend(drawer);
+
       scrim.click();
-      await waitForEvent(drawer, 'transitionend');
+      await transitionend(drawer);
+
       assert.equal(element.open, false);
     });
   });
