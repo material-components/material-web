@@ -549,7 +549,9 @@ suite('mwc-dialog:', () => {
       await rafPromise();
       await new Promise((resolve) => {
         setTimeout(() => {
-          resolve();
+          // TODO(b/175626389): Expected 1 arguments, but got 0. Did you forget
+          // to include 'void' in your type argument to 'Promise'?
+          (resolve as any)();
         }, 150 + 10);
       });
       assert.isFalse(sawOpenEvent);

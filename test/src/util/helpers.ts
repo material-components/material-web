@@ -158,7 +158,9 @@ export const measureFixtureCreation = async (
       await opts.afterRender(renderTargetRoot);
     }
 
-    res();
+    // TODO(b/175626389): Expected 1 arguments, but got 0. Did you forget to
+    // include 'void' in your type argument to 'Promise'?
+    (res as any)();
   })
       .then(
           // this adds an extra microtask and awaits any trailing async updates
@@ -180,7 +182,9 @@ export const rafPromise = async () => new Promise((res) => {
 
 export const waitForEvent = (el: Element, ev: string) => new Promise((res) => {
   el.addEventListener(ev, () => {
-    res();
+    // TODO(b/175626389): Expected 1 arguments, but got 0. Did you forget to
+    // include 'void' in your type argument to 'Promise'?
+    (res as any)();
   }, {once: true});
 });
 
