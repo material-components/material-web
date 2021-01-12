@@ -17,8 +17,8 @@ limitations under the License.
 
 @use 'sass:math';
 @use 'sass:map';
-@use '@material/button/mixins' as button-mixins;
-@use '@material/button/variables' as button-variables;
+@use '@material/button/button';
+@use '@material/button/button-theme';
 @use '@material/elevation/elevation-theme';
 @use '@material/ripple/ripple-theme' as mdc-ripple-theme;
 @use '@material/rtl/rtl';
@@ -28,7 +28,7 @@ limitations under the License.
 @use '@material/mwc-ripple/ripple-theme';
 
 @mixin core-styles() {
-  @include button-mixins.without-ripple();
+  @include button.without-ripple();
 
   :host {
     display: inline-flex;
@@ -59,14 +59,14 @@ limitations under the License.
   .leading-icon {
     ::slotted(*),
     .mdc-button__icon {
-      @include button-mixins.icon_();
+      @include button.deprecated-icon();
     }
   }
 
   .trailing-icon {
     ::slotted(*),
     .mdc-button__icon {
-      @include button-mixins.icon-trailing_();
+      @include button.deprecated-icon-trailing();
     }
   }
 
@@ -82,12 +82,12 @@ limitations under the License.
 
   $text-padding: custom-properties.create(
     --mdc-button-horizontal-padding,
-    button-variables.$horizontal-padding
+    button-theme.$horizontal-padding
   );
 
   $contained-padding: custom-properties.create(
     --mdc-button-horizontal-padding,
-    button-variables.$contained-horizontal-padding
+    button-theme.$contained-horizontal-padding
   );
 
   .mdc-button {
@@ -157,7 +157,7 @@ limitations under the License.
   .mdc-button--outlined {
     $outline-width: custom-properties.create(
       --mdc-button-outline-width,
-      button-variables.$outlined-border-width
+      button-theme.$outlined-border-width
     );
 
     @include _outline-width($outline-width, $contained-padding);
@@ -168,7 +168,7 @@ limitations under the License.
         border-color,
         custom-properties.create(
           --mdc-button-outline-color,
-          button-variables.$outline-color
+          button-theme.$outline-color
         )
       );
     }
@@ -179,7 +179,7 @@ limitations under the License.
   }
 
   .mdc-button--dense {
-    @include button-mixins.density(-2);
+    @include button-theme.density(-2);
   }
 
   :host([disabled]) {
@@ -190,7 +190,7 @@ limitations under the License.
         color,
         custom-properties.create(
           --mdc-button-disabled-ink-color,
-          button-variables.$disabled-ink-color
+          button-theme.$disabled-ink-color
         )
       );
     }
@@ -201,7 +201,7 @@ limitations under the License.
         background-color,
         custom-properties.create(
           --mdc-button-disabled-fill-color,
-          button-variables.$outline-color
+          button-theme.$outline-color
         )
       );
     }
@@ -211,7 +211,7 @@ limitations under the License.
         border-color,
         custom-properties.create(
           --mdc-button-disabled-outline-color,
-          button-variables.$disabled-container-color
+          button-theme.$disabled-container-color
         )
       );
     }
@@ -225,7 +225,7 @@ limitations under the License.
 
 @mixin _outline-width(
   $outline-width,
-  $padding: button-variables.$contained-horizontal-padding
+  $padding: button-theme.$contained-horizontal-padding
 ) {
   @include theme.property(border-width, $outline-width);
 

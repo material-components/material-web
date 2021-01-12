@@ -23,7 +23,7 @@ limitations under the License.
 @use '@material/theme/css';
 @use '@material/theme/theme-color';
 @use '@material/theme/shadow-dom';
-@use '@material/button/variables' as button-variables;
+@use '@material/button/button-theme';
 @use '@material/mwc-ripple/ripple-theme';
 
 $_primary: theme-color.$primary;
@@ -34,7 +34,7 @@ $_on-primary-opacities: mdc-ripple-theme.$light-ink-opacities;
 $light-theme: (
   text: (
     label-color: $_primary,
-    label-disabled-color: button-variables.$disabled-ink-color,
+    label-disabled-color: button-theme.$disabled-ink-color,
     label-focus-color: null,
     label-hover-color: null,
     label-press-color: null,
@@ -42,7 +42,7 @@ $light-theme: (
   ),
   outlined: (
     label-color: $_primary,
-    label-disabled-color: button-variables.$disabled-ink-color,
+    label-disabled-color: button-theme.$disabled-ink-color,
     label-focus-color: null,
     label-hover-color: null,
     label-press-color: null,
@@ -52,9 +52,9 @@ $light-theme: (
   ),
   contained: (
     container-color: $_primary,
-    container-disabled-color: button-variables.$disabled-container-color,
+    container-disabled-color: button-theme.$disabled-container-color,
     label-color: $_on-primary,
-    label-disabled-color: button-variables.$disabled-ink-color,
+    label-disabled-color: button-theme.$disabled-ink-color,
     label-focus-color: null,
     label-hover-color: null,
     label-press-color: null,
