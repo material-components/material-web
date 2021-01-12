@@ -15,15 +15,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {BaseElement} from '@material/mwc-base/base-element';
+import {RippleInterface} from '@material/mwc-base/utils';
 import {MDCRippleAdapter} from '@material/ripple/adapter';
 import MDCRippleFoundation from '@material/ripple/foundation';
 import {html, internalProperty, property, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
-import {RippleAPI} from './ripple-handlers';
 
 /** @soyCompatible */
-export class RippleBase extends BaseElement implements RippleAPI {
+export class RippleBase extends BaseElement implements RippleInterface {
   @query('.mdc-ripple-surface') mdcRoot!: HTMLElement;
 
   @property({type: Boolean}) primary = false;

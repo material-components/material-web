@@ -17,11 +17,6 @@ limitations under the License.
 
 import {RippleInterface} from '@material/mwc-base/utils';
 
-export interface RippleAPI extends RippleInterface {
-  startHover: () => void;
-  endHover: () => void;
-}
-
 /**
  * Class that encapsulates the events handlers for `mwc-ripple`
  *
@@ -45,7 +40,7 @@ export interface RippleAPI extends RippleInterface {
  * }
  * ```
  */
-export class RippleHandlers implements RippleAPI {
+export class RippleHandlers implements RippleInterface {
   startPress: (ev?: Event) => void;
   endPress: () => void;
   startFocus: () => void;
@@ -55,7 +50,7 @@ export class RippleHandlers implements RippleAPI {
 
   constructor(
       /** Function that returns a `mwc-ripple` */
-      rippleFn: () => Promise<RippleAPI|null>) {
+      rippleFn: () => Promise<RippleInterface|null>) {
     this.startPress = (ev?: Event) => {
       rippleFn().then((r) => {
         r && r.startPress(ev);

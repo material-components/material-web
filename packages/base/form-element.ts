@@ -16,14 +16,13 @@ limitations under the License.
 */
 
 import {addHasRemoveClass, BaseElement, CustomEventListener, EventType, SpecificEventListener} from './base-element';
-import {HTMLElementWithRipple, RippleInterface} from './utils';
+import {RippleInterface} from './utils';
 
 export {
   addHasRemoveClass,
   BaseElement,
   CustomEventListener,
   EventType,
-  HTMLElementWithRipple,
   RippleInterface,
   SpecificEventListener,
 };
@@ -44,7 +43,7 @@ export abstract class FormElement extends BaseElement {
   /**
    * Implement ripple getter for Ripple integration with mwc-formfield
    */
-  readonly ripple?: RippleInterface|Promise<RippleInterface|null>;
+  readonly ripple?: Promise<RippleInterface|null>;
 
   click() {
     if (this.formElement) {

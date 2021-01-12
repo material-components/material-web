@@ -115,13 +115,11 @@ export const doesElementContainFocus = (element: HTMLElement): boolean => {
   return composedPath.indexOf(element) !== -1;
 };
 
-export interface HTMLElementWithRipple extends HTMLElement {
-  ripple?: RippleInterface;
-}
-
 export interface RippleInterface {
   startPress: (e?: Event) => void;
   endPress: () => void;
   startFocus: () => void;
   endFocus: () => void;
+  startHover: () => void;
+  endHover: () => void;
 }

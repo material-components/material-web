@@ -20,6 +20,7 @@ limitations under the License.
 @use 'sass:map';
 @use '@material/ripple/ripple-theme';
 @use '@material/theme/shadow-dom';
+@use '@material/theme/css';
 
 $transparent-theme: (
   state: #000,
@@ -31,27 +32,22 @@ $transparent-theme: (
 );
 
 @mixin theme($theme: $transparent-theme) {
-  $color: map.get($theme, state);
-  @if $color {
-    --mdc-ripple-color: #{$color};
-  }
+  @include css.declaration(--mdc-ripple-color, map.get($theme, state));
 
   $opacity-map: map.get($theme, opacity);
   @if $opacity-map {
-    $focus-opacity: map.get($opacity-map, focus);
-    @if $focus-opacity {
-      --mdc-ripple-focus-opacity: #{$focus-opacity};
-    }
-
-    $hover-opacity: map.get($opacity-map, hover);
-    @if $hover-opacity {
-      --mdc-ripple-hover-opacity: #{$hover-opacity};
-    }
-
-    $press-opacity: map.get($opacity-map, press);
-    @if $press-opacity {
-      --mdc-ripple-press-opacity: #{$press-opacity};
-    }
+    @include css.declaration(
+      --mdc-ripple-focus-opacity,
+      map.get($opacity-map, focus)
+    );
+    @include css.declaration(
+      --mdc-ripple-hover-opacity,
+      map.get($opacity-map, hover)
+    );
+    @include css.declaration(
+      --mdc-ripple-press-opacity,
+      map.get($opacity-map, press)
+    );
   }
 
   @if shadow-dom.$css-selector-fallback-declarations {

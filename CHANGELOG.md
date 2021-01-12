@@ -7,8 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
 ### Changed
+- `base`
+  - Clean up RippleInterface now that the ripple directive has been removed
+  - Remove `HTMLElementWithRipple` interface
+  - Clean up `ripple` property typing
 - `checkbox`
   - Remove underscores from internal event handler functions
+- `ripple`
+  - Use css.declaration in ripple-theme.scss
+  - Remove RippleAPI interface, merged with RippleInterface in base
+  - Remove mwc-ripple-global.scss, which was only used for the ripple directive
 
 ### Fixed
 - `FormElement`
