@@ -253,16 +253,14 @@ suite('mwc-select:', () => {
             isUiInvalid(element),
             'ui not false due to setting validationMessage');
         assert.equal(
-            element.validationMessage,
-            validationMsgProp,
+            element.validationMessage, validationMsgProp,
             'setting validationMessage works');
 
         const validationMsgFn = 'set by setCustomValidity';
         element.setCustomValidity(validationMsgFn);
 
         assert.equal(
-            element.validationMessage,
-            validationMsgFn,
+            element.validationMessage, validationMsgFn,
             'validationMessage prop is set with setCustomValidity');
 
         const validity = element.validity;
@@ -560,8 +558,7 @@ suite('mwc-select:', () => {
       assert.equal(changeCalls, 0, 'change evt not called on startup');
       assert.equal(element.value, '', 'initial value is blank');
       assert.equal(
-          (element as unknown as WithSelectedText).selectedText,
-          '',
+          (element as unknown as WithSelectedText).selectedText, '',
           'selectedText is blank');
       assert.isTrue(!!element.selected, 'there is a selected element');
 
@@ -575,8 +572,7 @@ suite('mwc-select:', () => {
       element.select(1);
       await element.updateComplete;
       assert.equal(
-          changeCalls,
-          1,
+          changeCalls, 1,
           'change event not emitted twice when same value selected again');
 
       assert.equal(element.value, 'a', 'select method updates value');
@@ -596,8 +592,7 @@ suite('mwc-select:', () => {
       element.value = 'a';
       await element.updateComplete;
       assert.equal(
-          changeCalls,
-          1,
+          changeCalls, 1,
           'change event not emitted twice when same value selected again using value property');
       changeCalls = 0;
 
@@ -678,8 +673,7 @@ suite('mwc-select:', () => {
       assert.equal(changeCalls, 0, 'change evt not called on startup');
       assert.equal(element.value, '', 'initial value is blank');
       assert.equal(
-          (element as unknown as WithSelectedText).selectedText,
-          '',
+          (element as unknown as WithSelectedText).selectedText, '',
           'selectedText is blank');
       assert.isTrue(!!element.selected, 'there is a selected element');
 
