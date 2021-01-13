@@ -231,11 +231,13 @@ suite('mwc-button', () => {
       const rippleElement = await element.ripple;
       const nativeRipple = rippleElement!.shadowRoot!.querySelector(
                                '.mdc-ripple-surface') as HTMLDivElement;
-      await element.requestUpdate();
+      element.requestUpdate();
+      await element.updateComplete;
       await rafPromise();
       assert.isTrue(nativeRipple.classList.contains(focusedClass));
       element.blur();
-      await element.requestUpdate();
+      element.requestUpdate();
+      await element.updateComplete;
       await rafPromise();
       assert.isFalse(nativeRipple.classList.contains(focusedClass));
     });

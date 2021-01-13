@@ -504,9 +504,11 @@ suite('mwc-textfield:', () => {
       const floatingLabel = element.shadowRoot!.querySelector(
                                 '.mdc-floating-label') as FloatingLabel;
 
-      await element.requestUpdate();
+      element.requestUpdate();
+      await element.updateComplete;
       // needed for older browsers
-      await notchedOutline.requestUpdate();
+      notchedOutline.requestUpdate();
+      await notchedOutline.updateComplete;
 
       let outlineWidth = notchedOutline.width;
       assert.isTrue(notchedOutline.open);
@@ -514,7 +516,8 @@ suite('mwc-textfield:', () => {
       assert.strictEqual(outlineWidth, 0);
 
       element.classList.remove('hidden');
-      await element.requestUpdate();
+      element.requestUpdate();
+      await element.updateComplete;
       await rafPromise();
       outlineWidth = notchedOutline.width;
       let labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
@@ -539,9 +542,12 @@ suite('mwc-textfield:', () => {
           element.shadowRoot!.querySelector('mwc-notched-outline')!;
       const floatingLabel = element.shadowRoot!.querySelector(
                                 '.mdc-floating-label') as FloatingLabel;
-      await element.requestUpdate();
+      element.requestUpdate();
+      await element.updateComplete;
+
       // needed for older browsers
-      await notchedOutline.requestUpdate();
+      notchedOutline.requestUpdate();
+      await notchedOutline.updateComplete;
 
       let outlineWidth = notchedOutline.width;
       let labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
@@ -554,9 +560,11 @@ suite('mwc-textfield:', () => {
       // wait for this label to finish updating
       await element.updateComplete;
       // wait for internal event listener to trigger layout method
-      await element.requestUpdate();
+      element.requestUpdate();
+      await element.updateComplete;
       // needed for older browsers
-      await notchedOutline.requestUpdate();
+      notchedOutline.requestUpdate();
+      await notchedOutline.updateComplete;
 
       outlineWidth = notchedOutline.width;
       labelWidth = floatingLabel.floatingLabelFoundation.getWidth();

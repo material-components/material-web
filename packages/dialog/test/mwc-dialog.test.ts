@@ -124,7 +124,8 @@ suite('mwc-dialog:', () => {
       assert.isNull(titleTag);
 
       element.heading = 'This is my Title';
-      await element.requestUpdate();
+      element.requestUpdate();
+      await element.updateComplete;
       titleTag = element.shadowRoot!.querySelector('.mdc-dialog__title');
       assert.notStrictEqual(titleTag, null);
       assert.strictEqual(titleTag!.textContent, 'This is my Title');
@@ -245,7 +246,8 @@ suite('mwc-dialog:', () => {
       assert.isTrue(actionsFooter.offsetHeight > 0);
 
       element.hideActions = true;
-      await element.requestUpdate();
+      element.requestUpdate();
+      await element.updateComplete;
 
       assert.strictEqual(actionsFooter.offsetHeight, 0);
     });
@@ -462,7 +464,8 @@ suite('mwc-dialog:', () => {
       assert.isTrue(primary.offsetLeft > secondary.offsetLeft);
 
       element.stacked = true;
-      await element.requestUpdate();
+      element.requestUpdate();
+      await element.updateComplete;
       await rafPromise();
 
       const primaryRight = primary.offsetLeft + primary.offsetWidth;
