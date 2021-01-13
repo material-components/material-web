@@ -58,7 +58,7 @@
     "@typescript-eslint/parser": "^2.3.2",
     "@webcomponents/webcomponentsjs": "^2.2.8",
     "chai": "^4.2.0",
-    "clang-format": "^1.2.4",
+    "clang-format": "^1.5.0",
     "command-line-args": "^5.1.1",
     "command-line-usage": "^5.0.5",
     "del-cli": "^3.0.1",

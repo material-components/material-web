@@ -138,8 +138,7 @@ $ node test/lib/benchmark/cli -n 20
     }
 
     const statResults = await main([
-      ...runCommands,
-      '--measure=global',
+      ...runCommands, '--measure=global',
       `--browser=${opts.browser}${opts.remote ? `@${opts.remote}` : ''}`,
       `--sample-size=${opts['sample-size']}`
     ]);
