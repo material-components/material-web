@@ -99,7 +99,23 @@ export class DialogBase extends BaseElement {
   @property() actionAttribute = 'dialogAction';
   @property() initialFocusAttribute = 'dialogInitialFocus';
 
+  set suppressDefaultPressSelector(selector: string) {
+    if (this.mdcFoundation) {
+      this.mdcFoundation.setSuppressDefaultPressSelector(selector);
+    } else {
+      this.initialSupressDefaultPressSelector = selector;
+    }
+  }
+
+
+  get suppressDefaultPressSelector(): string {
+    return this.mdcFoundation ?
+        this.mdcFoundation.getSuppressDefaultPressSelector() :
+        this.initialSupressDefaultPressSelector;
+  }
+
   private closingDueToDisconnect?: boolean;
+  private initialSupressDefaultPressSelector = '';
 
   protected get primaryButton(): HTMLElement|null {
     let assignedNodes = (this.primarySlot as HTMLSlotElement).assignedNodes();
@@ -288,6 +304,15 @@ export class DialogBase extends BaseElement {
   firstUpdated() {
     super.firstUpdated();
     this.mdcFoundation.setAutoStackButtons(true);
+    if (this.initialSupressDefaultPressSelector) {
+      this.suppressDefaultPressSelector =
+          this.initialSupressDefaultPressSelector;
+    } else {
+      this.suppressDefaultPressSelector = [
+        this.suppressDefaultPressSelector, 'mwc-textarea',
+        'mwc-menu mwc-list-item', 'mwc-select mwc-list-item'
+      ].join(', ');
+    }
   }
 
   connectedCallback() {
