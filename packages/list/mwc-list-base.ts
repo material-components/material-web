@@ -48,7 +48,10 @@ const isListItem = (element: Element): element is ListItemBase => {
 function clearAndCreateItemsReadyPromise(this: ListBase) {
   const oldResolver = this.itemsReadyResolver;
   this.itemsReady = new Promise((res) => {
-    return this.itemsReadyResolver = res;
+    // TODO(b/175626389): Type '(value: never[] | PromiseLike<never[]>) => void'
+    // is not assignable to type '(value?: never[] | PromiseLike<never[]> |
+    // undefined) => void'.
+    return this.itemsReadyResolver = res as any;
   });
   oldResolver();
 }
