@@ -104,24 +104,18 @@ module.exports = function(config) {
         version: '11',
         platform: 'Windows 8.1',
       },
-      'sl-safari-11': {
+      'sl-safari-14': {
         base: 'SauceLabs',
         browserName: 'safari',
-        version: '11',
-        platform: 'macOS 10.13',
+        version: '14',
+        platform: 'macOS 11.00',
       },
-      'sl-safari-10': {
+      'sl-safari-13': {
         base: 'SauceLabs',
         browserName: 'safari',
-        version: '10',
-        platform: 'OS X 10.12',
+        version: '13',
+        platform: 'macOS 10.15',
       },
-      // 'sl-safari-9': {
-      //   base: 'SauceLabs',
-      //   browserName: 'safari',
-      //   version: '9',
-      //   platform: 'OS X 10.11',
-      // },
       // 'sl-chrome-41': {
       //   base: 'SauceLabs',
       //   browserName: 'chrome',
