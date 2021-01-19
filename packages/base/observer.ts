@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */// tslint:disable:no-any
 
-import {PropertyValues, UpdatingElement} from 'lit-element/lib/updating-element';
+import {PropertyValues, UpdatingElement} from 'lit-element';
 
 /**
  * Observer function type.
