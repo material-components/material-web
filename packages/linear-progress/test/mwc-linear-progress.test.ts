@@ -115,7 +115,7 @@ suite('mwc-linear-progress', () => {
 
       assert.isFalse(classlist.contains('mdc-linear-progress--closed'));
       assert.isFalse(classlist.contains('mdc-linear-progress--indeterminate'));
-      assert.isFalse(classlist.contains('mdc-linear-progress--reversed'));
+      assert.isFalse(root.getAttribute('dir') === 'rtl');
       assert.isTrue(classlist.contains('mdc-linear-progress--animation-ready'));
     });
 
@@ -405,12 +405,12 @@ suite('mwc-linear-progress', () => {
       await awaitIndeterminateReady(element);
     });
 
-    test('sets the correct classes', async () => {
+    test('sets the correct attributes', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
       assert.isNotNull(root);
 
-      assert.isTrue(root.classList.contains('mdc-linear-progress--reversed'));
+      assert.isTrue(root.getAttribute('dir') === 'rtl');
     });
   });
 

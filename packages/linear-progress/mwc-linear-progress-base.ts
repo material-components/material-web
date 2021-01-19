@@ -61,7 +61,6 @@ export class LinearProgressBase extends LitElement {
       'mdc-linear-progress--closed': this.closed,
       'mdc-linear-progress--closed-animation-off': this.closedAnimationOff,
       'mdc-linear-progress--indeterminate': this.indeterminate,
-      'mdc-linear-progress--reversed': this.reverse,
       // needed for controller-less render
       'mdc-linear-progress--animation-ready': this.animationReady
     };
@@ -98,6 +97,7 @@ export class LinearProgressBase extends LitElement {
           role="progressbar"
           class="mdc-linear-progress ${classMap(classes)}"
           style=${styleMap(rootStyles)}
+          dir=${ifDefined(this.reverse ? 'rtl' : undefined)}
           aria-label=${ifDefined(this.ariaLabel ? this.ariaLabel : undefined)}
           aria-valuemin="0"
           aria-valuemax="1"
