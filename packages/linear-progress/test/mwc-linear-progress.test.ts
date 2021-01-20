@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {MDCResizeObserver, WithMDCResizeObserver} from '@material/linear-progress/types';
 import {LinearProgress} from '@material/mwc-linear-progress';
 import {html} from 'lit-html';
 import {styleMap} from 'lit-html/directives/style-map';
@@ -44,8 +45,8 @@ const truncatePixelValue = (cssValue: string, decimals = 3) => {
   return `${truncatedValue}px`;
 };
 
-interface WithResizeObserver {
-  resizeObserver: ResizeObserver|null;
+interface ElWithRO {
+  resizeObserver: MDCResizeObserver|null;
 }
 
 const defaultLinearProgressProps = {
@@ -176,12 +177,10 @@ suite('mwc-linear-progress', () => {
 
       await awaitIndeterminateReady(element);
 
-      if (window.ResizeObserver) {
-        assert.isNotNull(
-            (element as unknown as WithResizeObserver).resizeObserver);
+      if ((window as unknown as WithMDCResizeObserver).ResizeObserver) {
+        assert.isNotNull((element as unknown as ElWithRO).resizeObserver);
       } else {
-        assert.isNull(
-            (element as unknown as WithResizeObserver).resizeObserver);
+        assert.isNull((element as unknown as ElWithRO).resizeObserver);
       }
     });
   });
@@ -219,7 +218,7 @@ suite('mwc-linear-progress', () => {
       assert.equal(primaryBar.style.getPropertyValue('transform'), 'scaleX(1)');
       assert.equal(bufferBar.style.getPropertyValue('flex-basis'), '100%');
 
-      if (!window.ResizeObserver) {
+      if (!(window as unknown as WithMDCResizeObserver).ResizeObserver) {
         return;
       }
       assert.equal(
@@ -273,7 +272,7 @@ suite('mwc-linear-progress', () => {
           HTMLElement;
       assert.isNotNull(root);
 
-      if (!window.ResizeObserver) {
+      if (!(window as unknown as WithMDCResizeObserver).ResizeObserver) {
         return;
       }
 
@@ -373,7 +372,7 @@ suite('mwc-linear-progress', () => {
           HTMLElement;
       assert.isNotNull(root);
 
-      if (!window.ResizeObserver) {
+      if (!(window as unknown as WithMDCResizeObserver).ResizeObserver) {
         return;
       }
 

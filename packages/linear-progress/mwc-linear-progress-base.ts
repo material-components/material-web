@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {MDCResizeObserver, WithMDCResizeObserver} from '@material/linear-progress/types';
 import {html, internalProperty, LitElement, property, PropertyValues, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
@@ -42,7 +43,7 @@ export class LinearProgressBase extends LitElement {
   @internalProperty() protected styleSecondaryFull = '';
   @internalProperty() protected animationReady = true;
   @internalProperty() protected closedAnimationOff = false;
-  protected resizeObserver: ResizeObserver|null = null;
+  protected resizeObserver: MDCResizeObserver|null = null;
 
   connectedCallback() {
     super.connectedCallback();
@@ -160,7 +161,7 @@ export class LinearProgressBase extends LitElement {
     // but resize observer will not update animation vals while determinate
     if (changed.has('indeterminate') &&
         changed.get('indeterminate') !== undefined && this.indeterminate &&
-        window.ResizeObserver) {
+        (window as unknown as WithMDCResizeObserver).ResizeObserver) {
       this.calculateAndSetAnimationDimensions(this.rootEl.offsetWidth);
     }
     super.updated(changed);
@@ -175,19 +176,21 @@ export class LinearProgressBase extends LitElement {
   }
 
   protected attachResizeObserver() {
-    if (window.ResizeObserver) {
-      this.resizeObserver = new ResizeObserver((entries) => {
-        if (!this.indeterminate) {
-          return;
-        }
+    if ((window as unknown as WithMDCResizeObserver).ResizeObserver) {
+      this.resizeObserver =
+          new (window as unknown as WithMDCResizeObserver)
+              .ResizeObserver((entries) => {
+                if (!this.indeterminate) {
+                  return;
+                }
 
-        for (const entry of entries) {
-          if (entry.contentRect) {
-            const width = entry.contentRect.width;
-            this.calculateAndSetAnimationDimensions(width);
-          }
-        }
-      });
+                for (const entry of entries) {
+                  if (entry.contentRect) {
+                    const width = entry.contentRect.width;
+                    this.calculateAndSetAnimationDimensions(width);
+                  }
+                }
+              });
       this.resizeObserver.observe(this.rootEl);
       return;
     }
