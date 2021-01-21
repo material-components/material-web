@@ -214,6 +214,11 @@ export abstract class MenuSurfaceBase extends BaseElement {
         this.open = false;
         this.mdcRoot.dispatchEvent(ev);
       },
+      notifyClosing: () => {
+        const init: CustomEventInit = {bubbles: true, composed: true};
+        const ev = new CustomEvent('closing', init);
+        this.mdcRoot.dispatchEvent(ev);
+      },
       notifyOpen: () => {
         const init: CustomEventInit = {bubbles: true, composed: true};
         const ev = new CustomEvent('opened', init);

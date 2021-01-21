@@ -490,7 +490,7 @@ suite('mwc-menu-surface', () => {
       assert.equal(element.open, false);
     });
 
-    test('closing fires the closed event', async () => {
+    test('closing fires the closed event after raf', async () => {
       const fake = hanbi.spy();
       element.addEventListener('closed', fake.handler);
       element.show();
@@ -499,6 +499,17 @@ suite('mwc-menu-surface', () => {
       element.close();
       await element.updateComplete;
       await rafPromise();
+      assert.isTrue(fake.called);
+    });
+
+    test('closing fires the closing event immediately', async () => {
+      const fake = hanbi.spy();
+      element.addEventListener('closing', fake.handler);
+      element.show();
+      await element.updateComplete;
+      await rafPromise();
+      element.close();
+      await element.updateComplete;
       assert.isTrue(fake.called);
     });
 

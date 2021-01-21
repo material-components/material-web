@@ -17,7 +17,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Use css.declaration in ripple-theme.scss
   - Remove RippleAPI interface, merged with RippleInterface in base
   - Remove mwc-ripple-global.scss, which was only used for the ripple directive
-
+- `menu`
+  - Added new `closing` event triggering any immediate action that must be taken
+    without waiting for animations to finish.
 ### Fixed
 - `FormElement`
   - FormElement checks if `change` event re-refiring is needed

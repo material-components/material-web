@@ -281,6 +281,7 @@ Name                  | Type                              | Default       | Desc
 | Event Name | Target             | Detail             | Description
 | ---------- | ------------------ | ------------------ | -----------
 | `opened`   | `mwc-menu-surface` | none               | Fired when opened.
+| `closing`  | `mwc-menu-surface` | none               | Fired when closing but animation may not have completed yet. Use for time-sensitive logic that must be run immediately upon close.
 | `closed`   | `mwc-menu-surface` | none               | Fired when closed.
 | `action`   | `mwc-list`         | `ActionDetail`*    | Fired when a selection has been made via click or keyboard aciton.
 | `selected` | `mwc-list`         | `SelectedDetail`*  | Fired when a selection has been made. `index` is the selected index (will be of type `Set<number>` if multi and `number` if single), and `diff` (of type `IndexDiff`**) represents the diff of added and removed indices from previous selection.
