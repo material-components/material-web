@@ -349,9 +349,22 @@ export abstract class MenuBase extends BaseElement {
     this.open = false;
   }
 
-  protected async _getUpdateComplete() {
+  // tslint:disable:ban-ts-ignore
+  async _getUpdateComplete() {
     await this._listUpdateComplete;
-    await super._getUpdateComplete();
+    // @ts-ignore
+    if (super._getUpdateComplete) {
+      // @ts-ignore
+      await super._getUpdateComplete();
+    } else {
+      // @ts-ignore
+      await super.getUpdateComplete();
+    }
+  }
+  // tslint:enable:ban-ts-ignore
+
+  async getUpdateComplete() {
+    return this._getUpdateComplete();
   }
 
   protected async firstUpdated() {

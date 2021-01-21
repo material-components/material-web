@@ -168,14 +168,29 @@ export class TabBarBase extends BaseElement {
     // This is necessary because the foundation/adapter synchronously addresses
     // the scroller element.
   }
+
+  // tslint:disable:ban-ts-ignore
   protected _getUpdateComplete() {
-    return super._getUpdateComplete()
-        .then(() => this.scrollerElement.updateComplete)
+    let superPromise;
+    // @ts-ignore
+    if (super._getUpdateComplete) {
+      // @ts-ignore
+      superPromise = super._getUpdateComplete();
+    } else {
+      // @ts-ignore
+      superPromise = super.getUpdateComplete();
+    }
+    return superPromise.then(() => this.scrollerElement.updateComplete)
         .then(() => {
           if (this.mdcFoundation === undefined) {
             this.createFoundation();
           }
         });
+  }
+  // tslint:enable:ban-ts-ignore
+
+  protected async getUpdateComplete() {
+    return this._getUpdateComplete();
   }
 
   scrollIndexIntoView(index: number) {
