@@ -14,6 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import {matches} from '@material/dom/ponyfill';
 import {BaseElement} from '@material/mwc-base/base-element';
 import {RippleInterface} from '@material/mwc-base/utils';
 import {MDCRippleAdapter} from '@material/ripple/adapter';
@@ -63,7 +64,7 @@ export class RippleBase extends BaseElement implements RippleInterface {
   protected mdcFoundation!: MDCRippleFoundation;
 
   get isActive() {
-    return (this.parentElement || this).matches(':active');
+    return matches(this.parentElement || this, ':active');
   }
 
   createAdapter(): MDCRippleAdapter {

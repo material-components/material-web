@@ -25,6 +25,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - FormElement checks if `change` event re-refiring is needed
 - `tab`
   - Clean up fixture typing so that tests work when reordered
+- `ripple`
+  - Fix IE11 errors with `isActive()`
 
 ## [v0.20.0] - 2020-12-03
 
