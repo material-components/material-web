@@ -670,7 +670,7 @@ export abstract class SelectBase extends FormElement {
   }
   // tslint:enable:ban-ts-ignore
 
-  async getUpdateComplete() {
+  getUpdateComplete() {
     return this._getUpdateComplete();
   }
 

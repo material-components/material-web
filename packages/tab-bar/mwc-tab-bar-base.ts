@@ -189,7 +189,7 @@ export class TabBarBase extends BaseElement {
   }
   // tslint:enable:ban-ts-ignore
 
-  protected async getUpdateComplete() {
+  protected getUpdateComplete() {
     return this._getUpdateComplete();
   }
 

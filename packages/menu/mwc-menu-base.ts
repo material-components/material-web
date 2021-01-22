@@ -363,7 +363,7 @@ export abstract class MenuBase extends BaseElement {
   }
   // tslint:enable:ban-ts-ignore
 
-  async getUpdateComplete() {
+  getUpdateComplete() {
     return this._getUpdateComplete();
   }
 
