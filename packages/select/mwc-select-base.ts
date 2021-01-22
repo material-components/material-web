@@ -183,6 +183,8 @@ export abstract class SelectBase extends FormElement {
 
   @internalProperty() protected isUiValid = true;
 
+  @property({type: Boolean}) fixedMenuPosition = false;
+
   // Transiently holds current typeahead prefix from user.
   protected typeaheadState = typeahead.initState();
   protected sortedIndexByFirstChar = new Map<string, MDCListTextAndIndex[]>();
@@ -318,9 +320,11 @@ export abstract class SelectBase extends FormElement {
             class="mdc-select__menu mdc-menu mdc-menu-surface ${
         classMap(menuClasses)}"
             activatable
-            .fullwidth=${!this.naturalMenuWidth}
+            .fullwidth=${
+        this.fixedMenuPosition ? false : !this.naturalMenuWidth}
             .open=${this.menuOpen}
             .anchor=${this.anchorElement}
+            .fixed=${this.fixedMenuPosition}
             @selected=${this.onSelected}
             @opened=${this.onOpened}
             @closed=${this.onClosed}
