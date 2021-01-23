@@ -27,7 +27,8 @@ $light-theme: (
 
 @mixin theme($theme: $light-theme) {
   @include css.declaration(--mdc-theme-primary, map.get($theme, bar-color));
-  @include css.declaration(--mdc-circular-progress-track-color, map.get($theme, track-color));
+  @include css.declaration(
+    --mdc-circular-progress-track-color,
+    map.get($theme, track-color)
+  );
 }
-
-

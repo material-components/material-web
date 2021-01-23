@@ -22,7 +22,7 @@ limitations under the License.
 @use "@material/floating-label" as floatinglabel;
 
 // Floating Label is intended for use by multiple components, but its styles should only be emitted once when bundled
-@include base.emit-once("mdc-floating-label") {
+@include base.emit-once('mdc-floating-label') {
   // postcss-bem-linter: define floating-label
   :host {
     @include typography.typography(subtitle1);
@@ -32,9 +32,10 @@ limitations under the License.
     left: 0;
     /* @noflip */
     transform-origin: left top;
-    transition:
-      transform floatinglabel.$transition-duration animation.$standard-curve-timing-function,
-      color floatinglabel.$transition-duration animation.$standard-curve-timing-function;
+    transition: transform floatinglabel.$transition-duration
+        animation.$standard-curve-timing-function,
+      color floatinglabel.$transition-duration
+        animation.$standard-curve-timing-function;
     /* @alternate */
     line-height: 1.15rem;
     text-align: left;

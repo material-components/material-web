@@ -32,7 +32,7 @@ $transparent-theme: (
   @include css.declaration(--mdc-elevation-overlay-opacity, $opacity);
 
   $fill-color: map.get($theme, fill-color);
-    @include css.declaration(--mdc-elevation-overlay-fill-color, $fill-color);
+  @include css.declaration(--mdc-elevation-overlay-fill-color, $fill-color);
 
   $width: map.get($theme, width);
   @include css.declaration(--mdc-elevation-overlay-width, $width);

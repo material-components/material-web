@@ -27,9 +27,9 @@ $light-theme: (
     theme-color.prop-value(primary),
     theme-color.prop-value(primary),
     theme-color.prop-value(primary),
-    theme-color.prop-value(primary)
+    theme-color.prop-value(primary),
   ),
-  track-color: transparent
+  track-color: transparent,
 );
 
 @mixin theme($theme: $light-theme) {
@@ -44,10 +44,22 @@ $light-theme: (
       @error "`mwc-circular-progress-four-colors` accepts exactly 4 colors";
     }
 
-    @include css.declaration(--mdc-circular-progress-bar-color-1, nth($bar-indeterminate-colors, 1));
-    @include css.declaration(--mdc-circular-progress-bar-color-2, nth($bar-indeterminate-colors, 2));
-    @include css.declaration(--mdc-circular-progress-bar-color-3, nth($bar-indeterminate-colors, 3));
-    @include css.declaration(--mdc-circular-progress-bar-color-4, nth($bar-indeterminate-colors, 4));
+    @include css.declaration(
+      --mdc-circular-progress-bar-color-1,
+      nth($bar-indeterminate-colors, 1)
+    );
+    @include css.declaration(
+      --mdc-circular-progress-bar-color-2,
+      nth($bar-indeterminate-colors, 2)
+    );
+    @include css.declaration(
+      --mdc-circular-progress-bar-color-3,
+      nth($bar-indeterminate-colors, 3)
+    );
+    @include css.declaration(
+      --mdc-circular-progress-bar-color-4,
+      nth($bar-indeterminate-colors, 4)
+    );
   }
 
   @include css.declaration(--mdc-circular-progress-track-color, $track-color);
