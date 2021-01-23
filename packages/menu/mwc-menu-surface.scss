@@ -30,5 +30,5 @@ limitations under the License.
 .mdc-menu-surface {
   $z-index: custom-properties.create(--mdc-menu-z-index, variables.$z-index);
   @include theme.property(z-index, $z-index);
-  @include menu-mixins.min-width(auto);
+  @include menu-mixins.min-width(menu-variables.$min-width);
 }
