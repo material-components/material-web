@@ -68,7 +68,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
   @property({type: Boolean})
   @observer(function(this: MenuSurfaceBase, isFixed: boolean) {
     if (this.mdcFoundation && !this.absolute) {
-      this.mdcFoundation.setIsHoisted(isFixed);
+      this.mdcFoundation.setFixedPosition(isFixed);
     }
   })
   fixed = false;

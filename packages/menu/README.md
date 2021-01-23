@@ -238,8 +238,8 @@ Name                  | Type                              | Default       | Desc
 `quick`               | `boolean`                         | `false`       | Whether to skip the opening animation.
 `absolute`            | `boolean`                         | `false`       | Makes the menu's position `absolute` which will be relative to whichever ancestor has `position:relative`. Setting `x` and `y` will modify the menu's `left` and `top`. Setting `anchor` will attempt to position the menu to the `anchor`.
 `fixed`               | `boolean`                         | `false`       | Makes the menu's position `fixed` which will be relative to the window. Setting `x` and `y` will modify the menu's `left` and `top`. Setting `anchor` will attempt to position the menu to the `anchor`'s immediate position before opening.
-`x`                   | `number\|null`                    | `null`        | Sets horizontal position when `absolute` or `fixed`. When given an `anchor`, sets horizontal position relative to `anchor` at given `corner`. Requires `y` not to be null.
-`y`                   | `number\|null`                    | `null`        | Sets vertical position when `absolute` or `fixed`. When given an `anchor`, sets vertical position relative to `anchor` at given `corner`. Requires `x` not to be null.
+`x`                   | `number\|null`                    | `null`        | Sets horizontal position when `absolute`. When given an `anchor`, sets horizontal position relative to `anchor` at given `corner`. Requires `y` not to be null.
+`y`                   | `number\|null`                    | `null`        | Sets vertical position when `absolute`. When given an `anchor`, sets vertical position relative to `anchor` at given `corner`. Requires `x` not to be null.
 `forceGroupSelection` | `boolean`                         | `false`       | Forces a menu group to have a selected item by preventing deselection of menu items in menu groups via user interaction.
 `defaultFocus`        | `DefaultFocusState`\*\*\*         | `"LIST_ROOT"` | Item to focus upon menu open.
 `fullwidth`           | `boolean`                         | `false`       | Sets surface width to 100%.
@@ -298,8 +298,8 @@ propagate through `mwc-menu`.
 | ------------------------ | ------- |------------
 | `--mdc-menu-item-height` | `48px`  | Height of single-line list-items in the menu.
 | `--mdc-menu-min-width`   | `auto`  | Menu min-width.
-| `--mdc-menu-max-width`   | `auto`  | Menu max-width.
-| `--mdc-menu-max-height`  | `calc(100vh - 32px)` and content height | Menu max height.
+| `--mdc-menu-max-width`   | `calc(100vw - 32px)` | Menu max-width.
+| `--mdc-menu-max-height`  | `calc(100vh - 32px)` | Menu max-height.
 | `--mdc-menu-z-index`     | `8`     | Z-index of the popup menu surface.
 
 `mwc-menu` internally uses

@@ -35,7 +35,7 @@ $item-primary-text-baseline-height: 32px;
 $item-secondary-text-baseline-height: 20px;
 $dense-item-primary-text-baseline-height: 24px;
 $divider-color: if(
-  theme-color.tone(theme-color.$background) == "dark",
+  theme-color.tone(theme-color.$background) == 'dark',
   list.$divider-color-on-dark-bg,
   list.$divider-color-on-light-bg
 );
@@ -50,13 +50,16 @@ $divider-color: if(
   padding: var(--mdc-list-vertical-padding, 8px) 0;
 }
 
-@include list.single-line-density(list.$single-line-density-scale, $query: $query);
+@include list.single-line-density(
+  list.$single-line-density-scale,
+  $query: $query
+);
 
 .mdc-list--dense {
   @include feature.targets($feat-structure) {
     padding-top: 4px;
     padding-bottom: 4px;
-    font-size: .812rem;
+    font-size: 0.812rem;
   }
 }
 // stylelint-enable selector-max-type,selector-no-qualifying-type
@@ -70,7 +73,7 @@ $divider-color: if(
     border-bottom-style: solid;
   }
 
-  @include theme.prop(border-bottom-color, $divider-color)
+  @include theme.prop(border-bottom-color, $divider-color);
 }
 
 .mdc-list ::slotted([divider][padded]) {
@@ -82,7 +85,12 @@ $divider-color: if(
 
 .mdc-list ::slotted([divider][inset]) {
   @include feature.targets($feat-structure) {
-    @include rtl.reflexive-box(margin, left, var(--mdc-list-inset-margin, #{list.$text-offset}), ".mdc-list-group");
+    @include rtl.reflexive-box(
+      margin,
+      left,
+      var(--mdc-list-inset-margin, #{list.$text-offset}),
+      '.mdc-list-group'
+    );
 
     width: calc(100% - var(--mdc-list-inset-margin, #{list.$text-offset}));
   }
@@ -90,7 +98,10 @@ $divider-color: if(
 
 .mdc-list ::slotted([divider][inset][padded]) {
   @include feature.targets($feat-structure) {
-    width: calc(100% - var(--mdc-list-inset-margin, #{list.$text-offset}) - var(--mdc-list-side-padding, #{list.$side-padding}));
+    width: calc(
+      100% - var(--mdc-list-inset-margin, #{list.$text-offset}) -
+        var(--mdc-list-side-padding, #{list.$side-padding})
+    );
   }
 }
 

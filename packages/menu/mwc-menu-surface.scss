@@ -17,8 +17,9 @@ limitations under the License.
 @use '@material/theme/theme';
 @use '@material/theme/custom-properties';
 @use '@material/menu-surface/mixins';
+@use '@material/menu/mixins' as menu-mixins;
+@use '@material/menu/variables' as menu-variables;
 @use '@material/menu-surface/variables';
-@use '@material/shape/variables' as shape-variables;
 
 @include mixins.core-styles;
 
@@ -29,10 +30,5 @@ limitations under the License.
 .mdc-menu-surface {
   $z-index: custom-properties.create(--mdc-menu-z-index, variables.$z-index);
   @include theme.property(z-index, $z-index);
-
-  $max-height: custom-properties.create(
-    --mdc-menu-max-height,
-    calc(100vh - #{variables.$min-distance-from-edge})
-  );
-  @include theme.property(max-height, $max-height);
+  @include menu-mixins.min-width(auto);
 }

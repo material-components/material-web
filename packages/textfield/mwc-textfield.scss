@@ -39,20 +39,26 @@ limitations under the License.
 .mdc-text-field {
   width: 100%;
 
-  @include textfield.bottom-line-color((
-    varname: --mdc-text-field-idle-line-color,
-    fallback: textfield.$bottom-line-idle
-  ));
+  @include textfield.bottom-line-color(
+    (
+      varname: --mdc-text-field-idle-line-color,
+      fallback: textfield.$bottom-line-idle,
+    )
+  );
 
-  @include textfield.hover-bottom-line-color((
-    varname: --mdc-text-field-hover-line-color,
-    fallback: textfield.$bottom-line-hover
-  ));
+  @include textfield.hover-bottom-line-color(
+    (
+      varname: --mdc-text-field-hover-line-color,
+      fallback: textfield.$bottom-line-hover,
+    )
+  );
 
-  @include textfield.disabled-bottom-line-color((
-    varname: --mdc-text-field-disabled-line-color,
-    fallback: textfield.$disabled-border
-  ));
+  @include textfield.disabled-bottom-line-color(
+    (
+      varname: --mdc-text-field-disabled-line-color,
+      fallback: textfield.$disabled-border,
+    )
+  );
 
   &.mdc-text-field--invalid {
     @include textfield.bottom-line-color(textfield.$error);
@@ -60,31 +66,50 @@ limitations under the License.
 }
 
 mwc-notched-outline {
-  --mdc-notched-outline-border-color: var(--mdc-text-field-outlined-idle-border-color, #{textfield.$outlined-idle-border});
+  --mdc-notched-outline-border-color: var(
+    --mdc-text-field-outlined-idle-border-color,
+    #{textfield.$outlined-idle-border}
+  );
 }
 
-:host(:not([disabled]):hover) :not(.mdc-text-field--invalid):not(.mdc-text-field--focused) mwc-notched-outline {
-  --mdc-notched-outline-border-color: var(--mdc-text-field-outlined-hover-border-color, #{textfield.$outlined-hover-border});
+:host(:not([disabled]):hover)
+  :not(.mdc-text-field--invalid):not(.mdc-text-field--focused)
+  mwc-notched-outline {
+  --mdc-notched-outline-border-color: var(
+    --mdc-text-field-outlined-hover-border-color,
+    #{textfield.$outlined-hover-border}
+  );
 }
 
 :host(:not([disabled])) {
   .mdc-text-field {
     &:not(.mdc-text-field--outlined) {
-      background-color: var(--mdc-text-field-fill-color, #{textfield.$background});
+      background-color: var(
+        --mdc-text-field-fill-color,
+        #{textfield.$background}
+      );
     }
 
     &.mdc-text-field--invalid {
       mwc-notched-outline {
-        --mdc-notched-outline-border-color: var(--mdc-text-field-error-color, var(--mdc-theme-error, #{theme-color.$error}));
+        --mdc-notched-outline-border-color: var(
+          --mdc-text-field-error-color,
+          var(--mdc-theme-error, #{theme-color.$error})
+        );
       }
 
-      &+.mdc-text-field-helper-line .mdc-text-field-character-counter, .mdc-text-field__icon {
-        color: var(--mdc-text-field-error-color, var(--mdc-theme-error, #{theme-color.$error}));
+      & + .mdc-text-field-helper-line .mdc-text-field-character-counter,
+      .mdc-text-field__icon {
+        color: var(
+          --mdc-text-field-error-color,
+          var(--mdc-theme-error, #{theme-color.$error})
+        );
       }
     }
 
     &:not(.mdc-text-field--invalid):not(.mdc-text-field--focused) {
-      .mdc-floating-label, .mdc-floating-label::after {
+      .mdc-floating-label,
+      .mdc-floating-label::after {
         color: var(--mdc-text-field-label-ink-color, #{textfield.$label});
       }
     }
@@ -96,7 +121,10 @@ mwc-notched-outline {
 
       &:not(.mdc-text-field--invalid) {
         mwc-notched-outline {
-          --mdc-notched-outline-border-color: var(--mdc-text-field-focused-label-color, var(--mdc-theme-primary, #{textfield.$focused-label-color}));
+          --mdc-notched-outline-border-color: var(
+            --mdc-text-field-focused-label-color,
+            var(--mdc-theme-primary, #{textfield.$focused-label-color})
+          );
         }
 
         .mdc-floating-label {
@@ -125,31 +153,47 @@ mwc-notched-outline {
 :host([disabled]) {
   .mdc-text-field {
     &:not(.mdc-text-field--outlined) {
-      background-color: var(--mdc-text-field-disabled-fill-color, #{textfield.$disabled-background});
+      background-color: var(
+        --mdc-text-field-disabled-fill-color,
+        #{textfield.$disabled-background}
+      );
     }
 
     &.mdc-text-field--outlined {
       mwc-notched-outline {
-        --mdc-notched-outline-border-color: var(--mdc-text-field-outlined-disabled-border-color, #{textfield.$outlined-disabled-border});
+        --mdc-notched-outline-border-color: var(
+          --mdc-text-field-outlined-disabled-border-color,
+          #{textfield.$outlined-disabled-border}
+        );
       }
     }
 
     &:not(.mdc-text-field--invalid):not(.mdc-text-field--focused) {
-      .mdc-floating-label, .mdc-floating-label::after {
-        color: var(--mdc-text-field-disabled-ink-color, #{textfield.$disabled-ink-color});
+      .mdc-floating-label,
+      .mdc-floating-label::after {
+        color: var(
+          --mdc-text-field-disabled-ink-color,
+          #{textfield.$disabled-ink-color}
+        );
       }
     }
 
     .mdc-text-field__input,
     .mdc-text-field__input::placeholder {
-      color: var(--mdc-text-field-disabled-ink-color, #{textfield.$disabled-ink-color});
+      color: var(
+        --mdc-text-field-disabled-ink-color,
+        #{textfield.$disabled-ink-color}
+      );
     }
   }
 
   .mdc-text-field-helper-line {
     .mdc-text-field-helper-text,
     .mdc-text-field-character-counter {
-      color: var(--mdc-text-field-disabled-ink-color, #{textfield.$disabled-ink-color});
+      color: var(
+        --mdc-text-field-disabled-ink-color,
+        #{textfield.$disabled-ink-color}
+      );
     }
   }
 }

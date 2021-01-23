@@ -22,13 +22,18 @@ limitations under the License.
 @mixin core-styles() {
   @include mwc-circular-progress.core-styles();
 
-  $primary: custom-properties.create(--mdc-theme-primary, theme-color.prop-value(primary));
-  @include circular-progress.indeterminate-colors((
-    custom-properties.create(--mdc-circular-progress-bar-color-1, $primary),
-    custom-properties.create(--mdc-circular-progress-bar-color-2, $primary),
-    custom-properties.create(--mdc-circular-progress-bar-color-3, $primary),
-    custom-properties.create(--mdc-circular-progress-bar-color-4, $primary),
-  ));
+  $primary: custom-properties.create(
+    --mdc-theme-primary,
+    theme-color.prop-value(primary)
+  );
+  @include circular-progress.indeterminate-colors(
+    (
+      custom-properties.create(--mdc-circular-progress-bar-color-1, $primary),
+      custom-properties.create(--mdc-circular-progress-bar-color-2, $primary),
+      custom-properties.create(--mdc-circular-progress-bar-color-3, $primary),
+      custom-properties.create(--mdc-circular-progress-bar-color-4, $primary)
+    )
+  );
 
   :host {
     display: inline-flex;

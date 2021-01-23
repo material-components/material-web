@@ -24,7 +24,7 @@ limitations under the License.
     display: inline-flex;
   }
 
-  @include circularprogress.track-color(custom-properties.create(
-        --mdc-circular-progress-track-color,
-        transparent));
+  @include circularprogress.track-color(
+    custom-properties.create(--mdc-circular-progress-track-color, transparent)
+  );
 }
