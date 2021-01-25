@@ -20,6 +20,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `menu`
   - Added new `closing` event triggering any immediate action that must be taken
     without waiting for animations to finish.
+  - BREAKING(VISUAL): Added a min-width of 112px to be in line with material
+    spec.
+- `select`
+  - Added `fixedMenuPosition` to allow menu overlaying in nested absolute
+    contexts e.g. dialog.
+
 ### Fixed
 - `FormElement`
   - FormElement checks if `change` event re-refiring is needed

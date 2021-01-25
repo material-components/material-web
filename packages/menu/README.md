@@ -297,7 +297,7 @@ propagate through `mwc-menu`.
 | Name                     | Default | Description
 | ------------------------ | ------- |------------
 | `--mdc-menu-item-height` | `48px`  | Height of single-line list-items in the menu.
-| `--mdc-menu-min-width`   | `auto`  | Menu min-width.
+| `--mdc-menu-min-width`   | `112px` | Menu min-width.
 | `--mdc-menu-max-width`   | `calc(100vw - 32px)` | Menu max-width.
 | `--mdc-menu-max-height`  | `calc(100vh - 32px)` | Menu max-height.
 | `--mdc-menu-z-index`     | `8`     | Z-index of the popup menu surface.
