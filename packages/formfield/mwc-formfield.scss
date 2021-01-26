@@ -32,7 +32,7 @@ limitations under the License.
 
 ::slotted(*) {
   @include typography.typography(body2);
-  @include theme.prop(color, text-primary-on-background);
+  @include theme.property(color, text-primary-on-background);
 }
 
 ::slotted(mwc-switch) {

@@ -71,7 +71,7 @@ limitations under the License.
     var(--mdc-theme-primary, #{theme-color.$primary})
   );
 
-  @include theme.prop(
+  @include theme.property(
     border-width,
     (
       varname: --mdc-notched-outline-stroke-width,
@@ -81,14 +81,14 @@ limitations under the License.
 }
 
 .mdc-notched-outline--notched .mdc-notched-outline__notch {
-  @include theme.prop(
+  @include theme.property(
     padding-top,
     (
-       // TODO: Collapse this to also use the --mdc-notched-outline-stroke-widt
-       // variable and update default value to 1px to correct textfield notche
-       // label misalignment (currently ~1px higher than center-aligned)
-       // Currently this is only overridden in mwc-select
-       // Context: go/mwc-textfield-label-misalignmen
+      // TODO: Collapse this to also use the --mdc-notched-outline-stroke-widt
+      // variable and update default value to 1px to correct textfield notche
+      // label misalignment (currently ~1px higher than center-aligned)
+      // Currently this is only overridden in mwc-select
+      // Context: go/mwc-textfield-label-misalignmen
       varname: --mdc-notched-outline-notch-offset,
       fallback: 0
     )

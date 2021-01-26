@@ -73,7 +73,7 @@ $divider-color: if(
     border-bottom-style: solid;
   }
 
-  @include theme.prop(border-bottom-color, $divider-color);
+  @include theme.property(border-bottom-color, $divider-color);
 }
 
 .mdc-list ::slotted([divider][padded]) {

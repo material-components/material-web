@@ -128,7 +128,7 @@ mwc-notched-outline {
         }
 
         .mdc-floating-label {
-          @include theme.prop(color, primary);
+          @include theme.property(color, primary);
         }
       }
     }

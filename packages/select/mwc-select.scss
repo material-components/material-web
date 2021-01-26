@@ -151,7 +151,7 @@ mwc-notched-outline {
     &:not(.mdc-select--invalid):not(.mdc-select--focused) {
       .mdc-floating-label,
       .mdc-floating-label::after {
-        @include theme-mixins.prop(
+        @include theme-mixins.property(
           color,
           (
             varname: --mdc-select-label-ink-color,
@@ -161,7 +161,7 @@ mwc-notched-outline {
       }
 
       .mdc-select__dropdown-icon {
-        @include theme-mixins.prop(
+        @include theme-mixins.property(
           fill,
           (
             varname: --mdc-select-dropdown-icon-color,
@@ -194,10 +194,10 @@ mwc-notched-outline {
         }
 
         .mdc-floating-label {
-          @include theme-mixins.prop(color, primary);
+          @include theme-mixins.property(color, primary);
 
           &::after {
-            @include theme-mixins.prop(color, primary);
+            @include theme-mixins.property(color, primary);
           }
         }
       }
@@ -234,7 +234,7 @@ mwc-notched-outline {
     }
 
     .mdc-select__dropdown-icon {
-      @include theme-mixins.prop(
+      @include theme-mixins.property(
         fill,
         (
           varname: --mdc-select-disabled-dropdown-icon-color,
@@ -246,7 +246,7 @@ mwc-notched-outline {
     &:not(.mdc-select--invalid):not(.mdc-select--focused) {
       .mdc-floating-label,
       .mdc-floating-label::after {
-        @include theme-mixins.prop(
+        @include theme-mixins.property(
           color,
           (
             varname: --mdc-select-disabled-ink-color,
@@ -258,7 +258,7 @@ mwc-notched-outline {
   }
 
   .mdc-select-helper-text {
-    @include theme-mixins.prop(
+    @include theme-mixins.property(
       color,
       (
         varname: --mdc-select-disabled-ink-color,
@@ -268,7 +268,7 @@ mwc-notched-outline {
   }
 
   .mdc-select__selected-text {
-    @include theme-mixins.prop(
+    @include theme-mixins.property(
       color,
       (
         varname: --mdc-select-disabled-ink-color,
