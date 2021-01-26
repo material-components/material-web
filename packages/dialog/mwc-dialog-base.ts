@@ -250,6 +250,24 @@ export class DialogBase extends BaseElement {
           el.focus();
         }
       },
+      registerContentEventHandler: (evtType, handler) => {
+        const el = this.contentElement;
+        el.addEventListener(evtType, handler);
+      },
+      deregisterContentEventHandler: (evtType, handler) => {
+        const el = this.contentElement;
+        el.removeEventListener(evtType, handler);
+      },
+      isScrollableContentAtTop: () => {
+        const el = this.contentElement;
+        return el ? el.scrollTop === 0 : false;
+      },
+      isScrollableContentAtBottom: () => {
+        const el = this.contentElement;
+        return el ?
+            Math.ceil(el.scrollHeight - el.scrollTop) === el.clientHeight :
+            false;
+      },
     };
   }
 
