@@ -155,15 +155,17 @@ export abstract class ListBase extends BaseElement implements Layoutable {
 
   // tslint:disable:ban-ts-ignore
   protected async _getUpdateComplete() {
+    let result = false;
     // @ts-ignore
     if (super._getUpdateComplete) {
       // @ts-ignore
       await super._getUpdateComplete();
     } else {
       // @ts-ignore
-      await super.getUpdateComplete();
+      result = await super.getUpdateComplete();
     }
     await this.itemsReady;
+    return result;
   }
   // tslint:enable:ban-ts-ignore
 

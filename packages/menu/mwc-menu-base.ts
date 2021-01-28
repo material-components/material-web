@@ -351,6 +351,7 @@ export abstract class MenuBase extends BaseElement {
 
   // tslint:disable:ban-ts-ignore
   async _getUpdateComplete() {
+    let result = false;
     await this._listUpdateComplete;
     // @ts-ignore
     if (super._getUpdateComplete) {
@@ -358,8 +359,9 @@ export abstract class MenuBase extends BaseElement {
       await super._getUpdateComplete();
     } else {
       // @ts-ignore
-      await super.getUpdateComplete();
+      result = await super.getUpdateComplete();
     }
+    return result;
   }
   // tslint:enable:ban-ts-ignore
 

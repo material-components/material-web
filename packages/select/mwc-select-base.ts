@@ -658,6 +658,7 @@ export abstract class SelectBase extends FormElement {
 
   // tslint:disable:ban-ts-ignore
   protected async _getUpdateComplete() {
+    let result = false;
     await this._menuUpdateComplete;
     // @ts-ignore
     if (super._getUpdateComplete) {
@@ -665,8 +666,9 @@ export abstract class SelectBase extends FormElement {
       await super._getUpdateComplete();
     } else {
       // @ts-ignore
-      await super.getUpdateComplete();
+      result = await super.getUpdateComplete();
     }
+    return result;
   }
   // tslint:enable:ban-ts-ignore
 

@@ -633,15 +633,17 @@ export abstract class TextFieldBase extends FormElement {
 
   // tslint:disable:ban-ts-ignore
   async _getUpdateComplete() {
+    let result = false;
     // @ts-ignore
     if (super._getUpdateComplete) {
       // @ts-ignore
       await super._getUpdateComplete();
     } else {
       // @ts-ignore
-      await super.getUpdateComplete();
+      result = await super.getUpdateComplete();
     }
     await this._outlineUpdateComplete;
+    return result;
   }
   // tslint:enable:ban-ts-ignore
 
