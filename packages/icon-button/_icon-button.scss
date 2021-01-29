@@ -1,0 +1,98 @@
+/**
+@license
+Copyright 2021 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+@use '@material/icon-button' as iconbutton;
+@use '@material/theme/custom-properties';
+@use '@material/feature-targeting' as feature;
+@use '@material/mwc-icon/_mwc-icon';
+
+@mixin core-styles() {
+  @include iconbutton.without-ripple();
+
+  :host {
+    display: inline-block;
+    outline: none;
+
+    --mdc-ripple-color: currentcolor;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :host([disabled]) {
+    pointer-events: none;
+  }
+
+  .material-icons {
+    @extend %material-icons;
+  }
+
+  :host,
+  .mdc-icon-button {
+    /**
+     * Any vertical-align other than the default of "baseline" will work here (and
+     * "top" is the shortest).
+     *
+     * In general, when an inline-block element has vertical-align: baseline and
+     * also a fixed height, extra space may "appear" below it. This is because the
+     * baseline it is aligned to is not the very bottom of the line, it's the line
+     * above the "descenders" (e.g. the tail of a "y" or "j"). This means the
+     * container must grow to accomodate both the fixed height inline-element, and
+     * the descender height below it.
+     *
+     * For unknown reasons, in this particular case, this only causes incorrect
+     * alignment in IE.
+     *
+     * IE needs the vertical-align on both the button and the host element.
+     */
+    vertical-align: top;
+  }
+
+  .mdc-icon-button {
+    @include mdc-icon-button-size-var-aware(
+      var(--mdc-icon-button-size, #{iconbutton.$size})
+    );
+
+    > i {
+      position: absolute;
+      top: 0;
+      padding-top: inherit;
+    }
+
+    i,
+    svg,
+    img,
+    ::slotted(*) {
+      display: block;
+      $feat-structure: feature.create-target(feature.all(), structure);
+      @include feature.targets($feat-structure) {
+        width: var(--mdc-icon-size, #{iconbutton.$icon-size});
+        height: var(--mdc-icon-size, #{iconbutton.$icon-size});
+      }
+    }
+  }
+}
+
+@mixin mdc-icon-button-size-var-aware($size, $query: feature.all()) {
+  $feat-structure: feature.create-target($query, structure);
+
+  @include feature.targets($feat-structure) {
+    width: $size;
+    height: $size;
+    padding: calc(
+      (#{$size} - var(--mdc-icon-size, #{iconbutton.$icon-size})) / 2
+    );
+  }
+}
