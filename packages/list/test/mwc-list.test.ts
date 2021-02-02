@@ -18,7 +18,7 @@
 import '@material/mwc-icon';
 
 import {isNodeElement} from '@material/mwc-base/utils';
-import {List} from '@material/mwc-list';
+import {IndexDiff, List, SelectedDetail} from '@material/mwc-list';
 import {CheckListItem} from '@material/mwc-list/mwc-check-list-item';
 import {GraphicType, ListItem, RequestSelectedDetail} from '@material/mwc-list/mwc-list-item';
 import {ListItemBase} from '@material/mwc-list/mwc-list-item-base';
@@ -45,6 +45,41 @@ const defaultListItemProps = {
   onRequestSelected: (() => undefined) as
       (ev: CustomEvent<RequestSelectedDetail>) => void,
   onListItemRendered: (() => undefined) as (ev: Event) => void,
+};
+
+const asssertDiffsEqual = (first: IndexDiff, second: IndexDiff) => {
+  const firstAddedArray = first.added.sort((a, b) => {
+    return a - b;
+  });
+  const firstRemovedArray = first.removed.sort((a, b) => {
+    return a - b;
+  });
+
+  const secondAddedArray = second.added.sort((a, b) => {
+    return a - b;
+  });
+  const secondRemovedArray = second.removed.sort((a, b) => {
+    return a - b;
+  });
+
+  assert.equal(
+      firstAddedArray.length, secondAddedArray.length,
+      'added diffs different length');
+  assert.equal(
+      firstRemovedArray.length, secondRemovedArray.length,
+      'removed diffs different length');
+
+  for (let i = 0; i < firstAddedArray.length; i++) {
+    assert.equal(
+        firstAddedArray[i], secondAddedArray[i],
+        'added diffs different values');
+  }
+
+  for (let i = 0; i < firstRemovedArray.length; i++) {
+    assert.equal(
+        firstRemovedArray[i], secondRemovedArray[i],
+        'removed diffs different values');
+  }
 };
 
 type ListItemProps = typeof defaultListItemProps;
@@ -1582,6 +1617,70 @@ suite('mwc-list:', () => {
             'selected is correct after index selection');
       });
 
+      test('multi index selection diff', async () => {
+        const itemsTemplate = [
+          listItem(),
+          listItem(),
+          listItem(),
+          listItem(),
+          listItem(),
+          listItem(),
+          listItem(),
+          listItem(),
+          listItem(),
+          listItem(),
+          listItem(),
+          listItem(),
+        ];
+        fixt = await fixture(listTemplate({items: itemsTemplate, multi: true}));
+        element = fixt.root.querySelector('mwc-list')!;
+        let lastDiff: IndexDiff|null = null;
+        element.addEventListener(
+            'selected', ((event: CustomEvent<SelectedDetail<Set<number>>>) => {
+                          lastDiff = event.detail.diff;
+                        }) as EventListener);
+
+        element.select(new Set([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+        await element.updateComplete;
+
+        assert.ok(lastDiff);
+        if (!lastDiff) {
+          return;
+        }
+        asssertDiffsEqual(lastDiff, {
+          added: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+          removed: [],
+        });
+
+        lastDiff = null;
+
+        element.select(new Set([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]));
+        await element.updateComplete;
+
+        assert.ok(lastDiff);
+        if (!lastDiff) {
+          return;
+        }
+        asssertDiffsEqual(lastDiff, {
+          added: [10],
+          removed: [],
+        });
+
+        lastDiff = null;
+
+        element.select(new Set([3, 4, 5, 6, 11]));
+        await element.updateComplete;
+
+        assert.ok(lastDiff);
+        if (!lastDiff) {
+          return;
+        }
+        asssertDiffsEqual(lastDiff, {
+          added: [11],
+          removed: [0, 1, 2, 7, 8, 9, 10],
+        });
+      });
+
       test('index deselection', async () => {
         const itemsTemplates = [
           listItem(), listItem({selected: true, activated: true}), listItem()
@@ -1611,7 +1710,17 @@ suite('mwc-list:', () => {
 
       test('multi to single', async () => {
         const itemsTemplates = [
-          listItem(), listItem({selected: true}), listItem({selected: true})
+          listItem(),
+          listItem({selected: true}),
+          listItem({selected: true}),
+          listItem(),
+          listItem(),
+          listItem(),
+          listItem(),
+          listItem(),
+          listItem(),
+          listItem(),
+          listItem(),
         ];
         fixt =
             await fixture(listTemplate({multi: true, items: itemsTemplates}));
@@ -1685,29 +1794,28 @@ suite('mwc-list:', () => {
     });
 
     suite('performance issue', () => {
-      test(
-          'removing a list should not call layout more than once', async () => {
-            let count = 0;
-            const originalLayout = List.prototype.layout;
-            List.prototype.layout = function(update) {
-              originalLayout.call(this, update);
-              count++;
-            };
+      test('removing list should not call layout more than once', async () => {
+        let count = 0;
+        const originalLayout = List.prototype.layout;
+        List.prototype.layout = function(update) {
+          originalLayout.call(this, update);
+          count++;
+        };
 
-            const itemsTemplates = new Array(100).fill(0).map(() => listItem());
-            fixt = await fixture(listTemplate({items: itemsTemplates}));
-            element = fixt.root.querySelector('mwc-list')!;
+        const itemsTemplates = new Array(100).fill(0).map(() => listItem());
+        fixt = await fixture(listTemplate({items: itemsTemplates}));
+        element = fixt.root.querySelector('mwc-list')!;
 
-            count = 0;
+        count = 0;
 
-            fixt.remove();
-            await element.updateComplete;
-            fixt = null;
-            assert.equal(
-                count, 1,
-                'list.layout ran more than once while it shouldn\'t have');
-            List.prototype.layout = originalLayout;
-          });
+        fixt.remove();
+        await element.updateComplete;
+        fixt = null;
+        assert.equal(
+            count, 1,
+            'list.layout ran more than once while it shouldn\'t have');
+        List.prototype.layout = originalLayout;
+      });
     });
   });
 });

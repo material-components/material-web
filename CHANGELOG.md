@@ -33,6 +33,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Clean up fixture typing so that tests work when reordered
 - `ripple`
   - Fix IE11 errors with `isActive()`
+- `list`
+  - Fix issue with diff indices of different digit length
 - all
   - Format sass files with prettier
 

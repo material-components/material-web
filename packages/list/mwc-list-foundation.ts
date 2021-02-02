@@ -37,6 +37,10 @@ export interface ActionDetail {
   index: number;
 }
 
+const integerSort = (a: number, b: number) => {
+  return a - b;
+};
+
 export type SingleSelectedEvent = CustomEvent<SelectedDetail<number>>;
 export type MultiSelectedEvent = CustomEvent<SelectedDetail<Set<number>>>;
 export type SelectedEvent = SingleSelectedEvent|MultiSelectedEvent;
@@ -45,8 +49,8 @@ const findIndexDiff = (oldSet: Set<number>, newSet: Set<number>): IndexDiff => {
   const oldArr = Array.from(oldSet);
   const newArr = Array.from(newSet);
   const diff: IndexDiff = {added: [], removed: []};
-  const oldSorted = oldArr.sort();
-  const newSorted = newArr.sort();
+  const oldSorted = oldArr.sort(integerSort);
+  const newSorted = newArr.sort(integerSort);
 
   let i = 0;
   let j = 0;
@@ -159,7 +163,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
       // set to first sorted number in set
       if (isIndexSet(currentIndex)) {
         if (currentIndex.size) {
-          const vals = Array.from(currentIndex).sort();
+          const vals = Array.from(currentIndex).sort(integerSort);
           this.selectedIndex_ = vals[0];
         } else {
           this.selectedIndex_ = numbers.UNSET_INDEX;
