@@ -16,7 +16,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/drawer": "=10.0.0-canary.96878e1d0.0",
+    "@material/drawer": "=10.0.0-canary.8e66dbfee.0",
     "@material/mwc-base": "^0.20.0",
     "blocking-elements": "^0.1.0",
     "lit-element": "^2.3.0",
@@ -25,7 +25,7 @@
     "wicg-inert": "^3.0.0"
   },
   "devDependencies": {
-    "@material/theme": "=10.0.0-canary.96878e1d0.0"
+    "@material/theme": "=10.0.0-canary.8e66dbfee.0"
   },
   "publishConfig": {
     "access": "public"

@@ -17,15 +17,15 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/mwc-base": "^0.20.0",
-    "@material/notched-outline": "=10.0.0-canary.96878e1d0.0",
+    "@material/notched-outline": "=10.0.0-canary.8e66dbfee.0",
     "lit-element": "^2.3.0",
     "lit-html": "^1.1.2",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@material/rtl": "=10.0.0-canary.96878e1d0.0",
-    "@material/shape": "=10.0.0-canary.96878e1d0.0",
-    "@material/theme": "=10.0.0-canary.96878e1d0.0"
+    "@material/rtl": "=10.0.0-canary.8e66dbfee.0",
+    "@material/shape": "=10.0.0-canary.8e66dbfee.0",
+    "@material/theme": "=10.0.0-canary.8e66dbfee.0"
   },
   "publishConfig": {
     "access": "public"
