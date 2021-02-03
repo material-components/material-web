@@ -22,15 +22,15 @@
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@material/animation": "=10.0.0-canary.96878e1d0.0",
-    "@material/elevation": "=10.0.0-canary.96878e1d0.0",
-    "@material/fab": "=10.0.0-canary.96878e1d0.0",
+    "@material/animation": "=10.0.0-canary.8e66dbfee.0",
+    "@material/elevation": "=10.0.0-canary.8e66dbfee.0",
+    "@material/fab": "=10.0.0-canary.8e66dbfee.0",
     "@material/mwc-base": "^0.20.0",
     "@material/mwc-icon": "^0.20.0",
-    "@material/ripple": "=10.0.0-canary.96878e1d0.0",
-    "@material/rtl": "=10.0.0-canary.96878e1d0.0",
-    "@material/shape": "=10.0.0-canary.96878e1d0.0",
-    "@material/theme": "=10.0.0-canary.96878e1d0.0"
+    "@material/ripple": "=10.0.0-canary.8e66dbfee.0",
+    "@material/rtl": "=10.0.0-canary.8e66dbfee.0",
+    "@material/shape": "=10.0.0-canary.8e66dbfee.0",
+    "@material/theme": "=10.0.0-canary.8e66dbfee.0"
   },
   "publishConfig": {
     "access": "public"
