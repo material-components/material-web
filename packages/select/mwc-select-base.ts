@@ -185,6 +185,8 @@ export abstract class SelectBase extends FormElement {
 
   @property({type: Boolean}) fixedMenuPosition = false;
 
+  @property({type: String}) menuCorner = 'BOTTOM_START';
+
   // Transiently holds current typeahead prefix from user.
   protected typeaheadState = typeahead.initState();
   protected sortedIndexByFirstChar = new Map<string, MDCListTextAndIndex[]>();
@@ -325,6 +327,7 @@ export abstract class SelectBase extends FormElement {
             .open=${this.menuOpen}
             .anchor=${this.anchorElement}
             .fixed=${this.fixedMenuPosition}
+            .corner=${this.menuCorner}
             @selected=${this.onSelected}
             @opened=${this.onOpened}
             @closed=${this.onClosed}
