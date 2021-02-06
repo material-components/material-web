@@ -30,6 +30,7 @@ import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
 import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {ListItemBase} from '@material/mwc-list/mwc-list-item-base';
 import {Menu} from '@material/mwc-menu';
+import {Corner} from '@material/mwc-menu/mwc-menu-surface-base';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCSelectAdapter} from '@material/select/adapter';
 import MDCSelectFoundation from '@material/select/foundation';
@@ -37,7 +38,6 @@ import {eventOptions, html, internalProperty, property, query} from 'lit-element
 import {nothing} from 'lit-html';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
-import {Corner} from '@material/mwc-menu/mwc-menu-surface-base';
 
 // must be done to get past lit-analyzer checks
 declare global {
