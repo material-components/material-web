@@ -37,6 +37,7 @@ import {eventOptions, html, internalProperty, property, query} from 'lit-element
 import {nothing} from 'lit-html';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
+import {Corner} from '@material/mwc-menu/mwc-menu-surface-base';
 
 // must be done to get past lit-analyzer checks
 declare global {
@@ -185,7 +186,7 @@ export abstract class SelectBase extends FormElement {
 
   @property({type: Boolean}) fixedMenuPosition = false;
 
-  @property({type: String}) menuCorner = 'BOTTOM_START';
+  @property({type: String}) menuCorner: Corner = 'BOTTOM_START';
 
   // Transiently holds current typeahead prefix from user.
   protected typeaheadState = typeahead.initState();
