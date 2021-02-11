@@ -20,6 +20,7 @@ limitations under the License.
 @use 'sass:selector';
 @use '@material/elevation/elevation-theme';
 @use '@material/theme/theme';
+@use '@material/theme/css';
 @use '@material/theme/theme-color';
 @use '@material/theme/custom-properties';
 @use '@material/theme/shadow-dom';
@@ -47,6 +48,8 @@ $light-theme: (
   ),
   elevation-shadow-color: elevation-theme.$baseline-color,
   icon-font-family: 'Material Icons',
+  outline-color-focus: initial,
+  outline-width-focus: initial,
 );
 
 @mixin theme($theme: $light-theme) {
@@ -145,5 +148,21 @@ $light-theme: (
   $ripple: map.get($theme, ripple);
   @if $ripple {
     @include ripple-theme.theme($ripple);
+  }
+
+  $outline-color-focus: map.get($theme, outline-color-focus);
+  @if $outline-color-focus {
+    @include css.declaration(
+      --mdc-fab-focus-outline-color,
+      $outline-color-focus
+    );
+  }
+
+  $outline-width-focus: map.get($theme, outline-width-focus);
+  @if $outline-width-focus {
+    @include css.declaration(
+      --mdc-fab-focus-outline-width,
+      $outline-width-focus
+    );
   }
 }

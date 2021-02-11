@@ -119,9 +119,13 @@ mwc-fab {
 
 ### CSS Custom Properties
 
-Name                       | Default                            | Description
--------------------------- | -----------------------------------| -----------
-`--mdc-fab-box-shadow`     | mdc elevation 6, 8, 12             | Sets the box shadow of the fab. Elevation 6 when idle, 8 when focused or hovered, and 12 when active.
+Name                               | Default   | Description
+---------------------------------- | --------- | -----------
+`--mdc-fab-box-shadow`             | mdc elevation 6, 8, 12 | Sets the box shadow of the fab. Elevation 6 when idle, 8 when focused or hovered, and 12 when active.
+`--mdc-fab-extended-label-padding` | `20px`    | Sets the padding on either horizontal side of an extended fab.
+`--mdc-fab-extended-icon-padding`  | `12px`    | Sets the padding between the icon and the label of an extended fab.
+`--mdc-fab-focus-outline-color`    | `initial` | The color of the focus outline ring (off by default).
+`--mdc-fab-focus-outline-width`    | `0px`     | Sets the width of the focus outline ring.
 
 #### Elevation values
 
