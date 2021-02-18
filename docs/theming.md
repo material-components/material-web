@@ -232,6 +232,8 @@ html {
 
 MWC doesn't support cut corners.
 
+See also: [Material Design type system](https://material.io/design/shape/applying-shape-to-ui.html#shape-scheme)
+
 
 ## Iconography
 
