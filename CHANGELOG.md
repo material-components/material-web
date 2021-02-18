@@ -31,6 +31,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `select`
   - Added `fixedMenuPosition` to allow menu overlaying in nested absolute
     contexts e.g. dialog.
+- `snackbar`
+  - Removed directive and inlined implementation to element
+- `line-ripple`
+  - Using new directive syntax
+- `floating-label`
+  - Using new directive syntax
 
 ### Fixed
 

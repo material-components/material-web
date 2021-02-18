@@ -51,9 +51,12 @@ export class FabBase extends LitElement {
     return this.ripple;
   });
 
-  protected createRenderRoot() {
-    return this.attachShadow({mode: 'open', delegatesFocus: true});
-  }
+  static shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    ...{
+      delegatesFocus: true
+    }
+  };
 
   /**
    * @soyTemplate

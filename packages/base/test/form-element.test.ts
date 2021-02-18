@@ -53,9 +53,12 @@ class CustomClickFormElement extends FormElement {
   protected createAdapter() {
     return {};
   }
-  protected createRenderRoot() {
-    return this.attachShadow({mode: 'open', delegatesFocus: true});
-  }
+  static shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    ...{
+      delegatesFocus: true
+    }
+  };
 
   click() {
     if (this.indirectFormElement) {

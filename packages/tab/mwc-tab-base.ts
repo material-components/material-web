@@ -92,9 +92,12 @@ export class TabBase extends BaseElement {
 
   protected rippleElement: Ripple|null = null;
 
-  protected createRenderRoot() {
-    return this.attachShadow({mode: 'open', delegatesFocus: true});
-  }
+  static shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    ...{
+      delegatesFocus: true
+    }
+  };
 
   connectedCallback() {
     this.dir = document.dir;

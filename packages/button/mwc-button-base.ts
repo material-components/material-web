@@ -69,9 +69,12 @@ export class ButtonBase extends LitElement {
         '';
   }
 
-  protected createRenderRoot() {
-    return this.attachShadow({mode: 'open', delegatesFocus: true});
-  }
+  static shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    ...{
+      delegatesFocus: true
+    }
+  };
 
   focus() {
     const buttonElement = this.buttonElement;

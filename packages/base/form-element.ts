@@ -36,9 +36,12 @@ export abstract class FormElement extends BaseElement {
    */
   protected abstract formElement: HTMLElement;
 
-  protected createRenderRoot() {
-    return this.attachShadow({mode: 'open', delegatesFocus: true});
-  }
+  static shadowRootOptions = {
+    ...BaseElement.shadowRootOptions,
+    ...{
+      delegatesFocus: true
+    }
+  };
 
   /**
    * Implement ripple getter for Ripple integration with mwc-formfield

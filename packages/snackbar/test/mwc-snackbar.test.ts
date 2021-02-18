@@ -163,9 +163,13 @@ suite('mwc-snackbar', () => {
 
       element.labelText = 'bar';
       await element.updateComplete;
+      await element.updateComplete;
+      await element.updateComplete;
       assert.equal(findLabelText(element), 'bar');
 
       element.labelText = 'baz';
+      await element.updateComplete;
+      await element.updateComplete;
       await element.updateComplete;
       assert.equal(findLabelText(element), 'baz');
     });
