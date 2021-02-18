@@ -14,13 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import '@material/mwc-ripple/mwc-ripple';
+import '@material/mwc-ripple';
 
 import {MDCIconButtonToggleAdapter} from '@material/icon-button/adapter';
 import MDCIconButtonToggleFoundation from '@material/icon-button/foundation';
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
-import {Ripple} from '@material/mwc-ripple/mwc-ripple';
+import {Ripple} from '@material/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {eventOptions, html, internalProperty, property, query, queryAsync} from 'lit-element';
 

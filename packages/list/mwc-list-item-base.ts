@@ -15,10 +15,10 @@
  limitations under the License.
  */
 
-import '@material/mwc-ripple/mwc-ripple';
+import '@material/mwc-ripple';
 
 import {observer} from '@material/mwc-base/observer';
-import {Ripple} from '@material/mwc-ripple/mwc-ripple';
+import {Ripple} from '@material/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {html, internalProperty, LitElement, property, query, queryAsync} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';

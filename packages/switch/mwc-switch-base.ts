@@ -14,11 +14,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import '@material/mwc-ripple/mwc-ripple';
+import '@material/mwc-ripple';
 
 import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element';
 import {observer} from '@material/mwc-base/observer';
-import {Ripple} from '@material/mwc-ripple/mwc-ripple';
+import {Ripple} from '@material/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {MDCSwitchAdapter} from '@material/switch/adapter';
 import MDCSwitchFoundation from '@material/switch/foundation';
@@ -77,7 +77,7 @@ export class SwitchBase extends FormElement {
 
   protected renderRipple() {
     return this.shouldRenderRipple ? html`
-        <mwc-ripple 
+        <mwc-ripple
           .accent="${this.checked}"
           .disabled="${this.disabled}"
           unbounded>
