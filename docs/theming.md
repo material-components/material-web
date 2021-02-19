@@ -206,7 +206,6 @@ This example shows loading a web font and setting it as the default font for MWC
 
 **Example:** Overriding the `font-family` property for `headline1` and `font-family` and `font-size` for `headline2`.
 
-
 ```css
 html {
   --mdc-typography-headline1-font-family: Arial, Helvetica, sans-serif;
@@ -232,8 +231,7 @@ html {
 
 MWC doesn't support cut corners.
 
-See also: [Material Design type system](https://material.io/design/shape/applying-shape-to-ui.html#shape-scheme)
-
+See also: [Material Design shape](https://material.io/design/shape/applying-shape-to-ui.html#shape-scheme).
 
 ## Iconography
 
