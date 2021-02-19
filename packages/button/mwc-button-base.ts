@@ -15,9 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import '@material/mwc-icon/mwc-icon';
-import '@material/mwc-ripple';
+import '@material/mwc-ripple/mwc-ripple';
 
-import {Ripple} from '@material/mwc-ripple';
+import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {eventOptions, html, internalProperty, LitElement, property, query, queryAsync, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';

@@ -1,4 +1,4 @@
-import '@material/mwc-ripple';
+import '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 
 import '../shared/demo-header';
