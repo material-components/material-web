@@ -16,6 +16,7 @@ limitations under the License.
 */
 import '@material/mwc-ripple/mwc-ripple';
 
+import {ariaProperty} from '@material/mwc-base/aria-property';
 import {FormElement} from '@material/mwc-base/form-element';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
@@ -35,7 +36,24 @@ export class CheckboxBase extends FormElement {
 
   @property({type: Boolean, reflect: true}) disabled = false;
 
+  @property({type: String, reflect: true}) name?: string;
+
   @property({type: String}) value = '';
+
+  /** @soyPrefixAttribute */
+  @ariaProperty
+  @property({type: String, attribute: 'aria-label'})
+  ariaLabel?: string;
+
+  /** @soyPrefixAttribute */
+  @ariaProperty
+  @property({type: String, attribute: 'aria-labelledby'})
+  ariaLabelledBy?: string;
+
+  /** @soyPrefixAttribute */
+  @ariaProperty
+  @property({type: String, attribute: 'aria-describedby'})
+  ariaDescribedBy?: string;
 
   /**
    * Touch target extends beyond visual boundary of a component by default.
@@ -146,7 +164,11 @@ export class CheckboxBase extends FormElement {
       <div class="mdc-checkbox mdc-checkbox--upgraded ${classMap(classes)}">
         <input type="checkbox"
               class="mdc-checkbox__native-control"
+              name="${ifDefined(this.name)}"
               aria-checked="${ifDefined(ariaChecked)}"
+              aria-label="${ifDefined(this.ariaLabel)}"
+              aria-labelledby="${ifDefined(this.ariaLabelledBy)}"
+              aria-describedby="${ifDefined(this.ariaDescribedBy)}"
               data-indeterminate="${this.indeterminate ? 'true' : 'false'}"
               ?disabled="${this.disabled}"
               .indeterminate="${this.indeterminate}"

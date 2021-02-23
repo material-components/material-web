@@ -36,8 +36,8 @@ $item-secondary-text-baseline-height: 20px;
 $dense-item-primary-text-baseline-height: 24px;
 $divider-color: if(
   theme-color.tone(theme-color.$background) == 'dark',
-  list.$divider-color-on-dark-bg,
-  list.$divider-color-on-light-bg
+  list.$deprecated-divider-color-on-dark-bg,
+  list.$deprecated-divider-color-on-light-bg
 );
 
 :host {
@@ -45,13 +45,13 @@ $divider-color: if(
 }
 
 .mdc-list {
-  @include list.base_($query);
+  @include list.deprecated-base_($query);
 
   padding: var(--mdc-list-vertical-padding, 8px) 0;
 }
 
-@include list.single-line-density(
-  list.$single-line-density-scale,
+@include list.deprecated-single-line-density(
+  list.$deprecated-single-line-density-scale,
   $query: $query
 );
 
@@ -79,7 +79,7 @@ $divider-color: if(
 .mdc-list ::slotted([divider][padded]) {
   @include feature.targets($feat-structure) {
     // Leave gaps on each side to match the padding on list items
-    margin: 0 var(--mdc-list-side-padding, #{list.$side-padding});
+    margin: 0 var(--mdc-list-side-padding, #{list.$deprecated-side-padding});
   }
 }
 
@@ -88,19 +88,21 @@ $divider-color: if(
     @include rtl.reflexive-box(
       margin,
       left,
-      var(--mdc-list-inset-margin, #{list.$text-offset}),
+      var(--mdc-list-inset-margin, #{list.$deprecated-text-offset}),
       '.mdc-list-group'
     );
 
-    width: calc(100% - var(--mdc-list-inset-margin, #{list.$text-offset}));
+    width: calc(
+      100% - var(--mdc-list-inset-margin, #{list.$deprecated-text-offset})
+    );
   }
 }
 
 .mdc-list ::slotted([divider][inset][padded]) {
   @include feature.targets($feat-structure) {
     width: calc(
-      100% - var(--mdc-list-inset-margin, #{list.$text-offset}) -
-        var(--mdc-list-side-padding, #{list.$side-padding})
+      100% - var(--mdc-list-inset-margin, #{list.$deprecated-text-offset}) -
+        var(--mdc-list-side-padding, #{list.$deprecated-side-padding})
     );
   }
 }

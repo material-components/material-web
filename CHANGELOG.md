@@ -37,6 +37,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Fix issue with diff indices of different digit length
 - all
   - Format sass files with prettier
+- `fab`
+  - Added missing documentation for extended-(label|icon)-padding custom props
+
+### Added
+- `base`
+  - Add `@ariaProperty` decorator
+- `checkbox`
+  - Add `ariaLabel`, `ariaLabelledBy`, `ariaDescribedBy`, and `name` properties
+- `fab`
+  - Added `--mdc-fab-focus-outline-color`
+  - Added `--mdc-fab-focus-outline-width`
 
 ## [v0.20.0] - 2020-12-03
 

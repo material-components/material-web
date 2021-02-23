@@ -20,6 +20,7 @@ limitations under the License.
 @use 'sass:selector';
 @use '@material/elevation/elevation-theme';
 @use '@material/theme/theme';
+@use '@material/theme/css';
 @use '@material/theme/theme-color';
 @use '@material/theme/custom-properties';
 @use '@material/theme/shadow-dom';
@@ -47,53 +48,55 @@ $light-theme: (
   ),
   elevation-shadow-color: elevation-theme.$baseline-color,
   icon-font-family: 'Material Icons',
+  outline-color-focus: initial,
+  outline-width-focus: initial,
 );
 
 @mixin theme($theme: $light-theme) {
   $container-color: map.get($theme, container-color);
   @if $container-color {
-    --mdc-theme-secondary: #{$container-color};
+    @include css.declaration(--mdc-theme-secondary, $container-color);
   }
 
   $icon-font-family: map.get($theme, icon-font-family);
   @if $icon-font-family {
-    --mdc-icon-font: #{$icon-font-family};
+    @include css.declaration(--mdc-icon-font, $icon-font-family);
   }
 
   $ink-color: map.get($theme, ink-color);
   @if $ink-color {
-    --mdc-theme-on-secondary: #{$ink-color};
+    @include css.declaration(--mdc-theme-on-secondary, $ink-color);
   }
 
   $elevation-shadow-color: map.get($theme, elevation-shadow-color);
   @if $elevation-shadow-color {
-    --mdc-fab-box-shadow: #{elevation-theme.elevation-box-shadow(
-        6,
-        $color: $elevation-shadow-color
-      )};
+    @include css.declaration(
+      --mdc-fab-box-shadow,
+      elevation-theme.elevation-box-shadow(6, $color: $elevation-shadow-color)
+    );
   }
 
   @include shadow-dom.host-aware(selector.append(&, ':hover')) {
     $hover-container-color: map.get($theme, container-color-hover);
     @if $hover-container-color {
-      --mdc-theme-secondary: #{$hover-container-color};
+      @include css.declaration(--mdc-theme-secondary, $hover-container-color);
     }
 
     $hover-ink-color: map.get($theme, ink-color-hover);
     @if $hover-ink-color {
-      --mdc-theme-on-secondary: #{$hover-ink-color};
+      @include css.declaration(--mdc-theme-on-secondary, $hover-ink-color);
     }
   }
 
   @include shadow-dom.host-aware(selector.append(&, ':focus,:focus-within')) {
     $focus-container-color: map.get($theme, container-color-focus);
     @if $focus-container-color {
-      --mdc-theme-secondary: #{$focus-container-color};
+      @include css.declaration(--mdc-theme-secondary, $focus-container-color);
     }
 
     $focus-ink-color: map.get($theme, ink-color-focus);
     @if $focus-ink-color {
-      --mdc-theme-on-secondary: #{$focus-ink-color};
+      @include css.declaration(--mdc-theme-on-secondary, $focus-ink-color);
     }
   }
 
@@ -101,49 +104,74 @@ $light-theme: (
     selector.append(&, ':hover,:focus,:focus-within')
   ) {
     @if $elevation-shadow-color {
-      --mdc-fab-box-shadow: #{elevation-theme.elevation-box-shadow(
-          8,
-          $color: $elevation-shadow-color
-        )};
+      @include css.declaration(
+        --mdc-fab-box-shadow,
+        elevation-theme.elevation-box-shadow(8, $color: $elevation-shadow-color)
+      );
     }
   }
 
   @include shadow-dom.host-aware(selector.append(&, ':active')) {
     $press-container-color: map.get($theme, container-color-press);
     @if $press-container-color {
-      --mdc-theme-secondary: #{$press-container-color};
+      @include css.declaration(--mdc-theme-secondary, $press-container-color);
     }
 
     $press-ink-color: map.get($theme, ink-color-press);
     @if $press-ink-color {
-      --mdc-theme-on-secondary: #{$press-ink-color};
+      @include css.declaration(--mdc-theme-on-secondary, $press-ink-color);
     }
 
     @if $elevation-shadow-color {
-      --mdc-fab-box-shadow: #{elevation-theme.elevation-box-shadow(
+      @include css.declaration(
+        --mdc-fab-box-shadow,
+        elevation-theme.elevation-box-shadow(
           12,
           $color: $elevation-shadow-color
-        )};
+        )
+      );
     }
   }
 
   $icon-size: map.get($theme, icon-size);
   @if $icon-size {
-    --mdc-icon-size: #{$icon-size};
+    @include css.declaration(--mdc-icon-size, $icon-size);
   }
 
   $extended-icon-padding: map.get($theme, extended-icon-padding);
   @if $extended-icon-padding {
-    --mdc-fab-extended-icon-padding: #{$extended-icon-padding};
+    @include css.declaration(
+      --mdc-fab-extended-icon-padding,
+      $extended-icon-padding
+    );
   }
 
   $extended-label-padding: map.get($theme, extended-label-padding);
   @if $extended-label-padding {
-    --mdc-fab-extended-label-padding: #{$extended-label-padding};
+    @include css.declaration(
+      --mdc-fab-extended-label-padding,
+      $extended-label-padding
+    );
   }
 
   $ripple: map.get($theme, ripple);
   @if $ripple {
     @include ripple-theme.theme($ripple);
+  }
+
+  $outline-color-focus: map.get($theme, outline-color-focus);
+  @if $outline-color-focus {
+    @include css.declaration(
+      --mdc-fab-focus-outline-color,
+      $outline-color-focus
+    );
+  }
+
+  $outline-width-focus: map.get($theme, outline-width-focus);
+  @if $outline-width-focus {
+    @include css.declaration(
+      --mdc-fab-focus-outline-width,
+      $outline-width-focus
+    );
   }
 }

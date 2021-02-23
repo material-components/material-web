@@ -18,6 +18,7 @@ limitations under the License.
 @use '@material/elevation/elevation-theme';
 @use '@material/fab/mixins' as fab-mixins;
 @use '@material/fab/variables' as fab-variables;
+@use '@material/fab/fab-custom-properties';
 @use '@material/rtl/rtl';
 @use '@material/animation';
 @use '@material/shape/shape';
@@ -38,6 +39,18 @@ $icon-size: map.get(fab-theme.$light-theme, icon-size);
   @include fab-mixins.without-ripple();
 
   .mdc-fab {
+    $outline-color: custom-properties.create(
+      --mdc-fab-focus-outline-color,
+      initial
+    );
+    @include fab-mixins.focus-outline-color($outline-color);
+
+    $outline-width: custom-properties.create(
+      --mdc-fab-focus-outline-width,
+      0px
+    );
+    @include fab-mixins.focus-outline-width($outline-width);
+
     @include theme.property(
       box-shadow,
       custom-properties.create(
@@ -115,17 +128,16 @@ $icon-size: map.get(fab-theme.$light-theme, icon-size);
 
     &.mdc-fab--extended {
       $extended-icon-padding: custom-properties.create(
-        --mdc-fab-extended-icon-padding,
+        fab-custom-properties.$extended-icon-padding,
         fab-variables.$extended-icon-padding
       );
       $extended-label-padding: custom-properties.create(
-        --mdc-fab-extended-label-padding,
+        fab-custom-properties.$extended-label-padding,
         fab-variables.$extended-label-padding
       );
-
-      @include fab-mixins.extended-padding(
-        $extended-icon-padding,
-        $extended-label-padding
+      @include fab-mixins.focus-outline-width(
+        $width: $outline-width,
+        $padding: 0 $extended-label-padding
       );
 
       .icon-slot-container ::slotted([slot='icon']) {

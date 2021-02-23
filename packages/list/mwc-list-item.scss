@@ -59,12 +59,12 @@ $dense-item-primary-text-baseline-height: 24px;
   -webkit-tap-highlight-color: transparent;
 
   $height: density.prop-value(
-    $density-config: list.$single-line-density-config,
-    $density-scale: list.$single-line-density-scale,
+    $density-config: list.$deprecated-single-line-density-config,
+    $density-scale: list.$deprecated-single-line-density-scale,
     $property-name: height,
   );
-  @include list.single-line-height($height, $query: $query);
-  @include list.item-base_;
+  @include list.deprecated-single-line-height($height, $query: $query);
+  @include list.deprecated-item-base_;
 
   padding-left: var(--mdc-list-side-padding, 16px);
   padding-right: var(--mdc-list-side-padding, 16px);
@@ -72,12 +72,12 @@ $dense-item-primary-text-baseline-height: 24px;
   outline: none;
 
   $height: density.prop-value(
-    $density-config: list.$single-line-density-config,
-    $density-scale: list.$single-line-density-scale,
+    $density-config: list.$deprecated-single-line-density-config,
+    $density-scale: list.$deprecated-single-line-density-scale,
     $property-name: height,
   );
 
-  @include list.single-line-height($height, $query: $query);
+  @include list.deprecated-single-line-height($height, $query: $query);
   color: rgba(0, 0, 0, 0.87);
   color: var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87));
 }
@@ -85,8 +85,8 @@ $dense-item-primary-text-baseline-height: 24px;
 // "Selected" is ephemeral and likely to change soon. E.g., selecting one or more photos to share in Google Photos.
 // "Activated" is more permanent. E.g., the currently highlighted navigation destination in a drawer.
 :host([activated]) {
-  @include list.item-primary-text-ink-color(primary, $query);
-  @include list.item-graphic-ink-color(primary, $query);
+  @include list.deprecated-item-primary-text-ink-color(primary, $query);
+  @include list.deprecated-item-graphic-ink-color(primary, $query);
 
   --mdc-ripple-color: var(
     --mdc-theme-primary,
@@ -246,7 +246,7 @@ a {
   .mdc-list-item__text {
     ::slotted(*) {
       @include featuretargeting.targets($feat-color) {
-        opacity: list.$text-disabled-opacity;
+        opacity: list.$deprecated-text-disabled-opacity;
       }
     }
   }
@@ -256,7 +256,7 @@ a {
   .mdc-list-item__secondary-text {
     ::slotted(*) {
       @include featuretargeting.targets($feat-color) {
-        @include theme.property(color, list.$text-disabled-color);
+        @include theme.property(color, list.$deprecated-text-disabled-color);
       }
     }
   }
