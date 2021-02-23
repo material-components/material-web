@@ -11,9 +11,9 @@
   "module": "mwc-list.js",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/base": "=11.0.0-canary.0b4a4b2eb.0",
-    "@material/dom": "=11.0.0-canary.0b4a4b2eb.0",
-    "@material/list": "=11.0.0-canary.0b4a4b2eb.0",
+    "@material/base": "=11.0.0-canary.60e892d79.0",
+    "@material/dom": "=11.0.0-canary.60e892d79.0",
+    "@material/list": "=11.0.0-canary.60e892d79.0",
     "@material/mwc-base": "^0.20.0",
     "@material/mwc-checkbox": "^0.20.0",
     "@material/mwc-radio": "^0.20.0",
@@ -23,14 +23,14 @@
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@material/density": "=11.0.0-canary.0b4a4b2eb.0",
-    "@material/feature-targeting": "=11.0.0-canary.0b4a4b2eb.0",
+    "@material/density": "=11.0.0-canary.60e892d79.0",
+    "@material/feature-targeting": "=11.0.0-canary.60e892d79.0",
     "@material/mwc-icon": "^0.20.0",
     "@material/mwc-menu": "^0.20.0",
-    "@material/ripple": "=11.0.0-canary.0b4a4b2eb.0",
-    "@material/rtl": "=11.0.0-canary.0b4a4b2eb.0",
-    "@material/theme": "=11.0.0-canary.0b4a4b2eb.0",
-    "@material/typography": "=11.0.0-canary.0b4a4b2eb.0"
+    "@material/ripple": "=11.0.0-canary.60e892d79.0",
+    "@material/rtl": "=11.0.0-canary.60e892d79.0",
+    "@material/theme": "=11.0.0-canary.60e892d79.0",
+    "@material/typography": "=11.0.0-canary.60e892d79.0"
   },
   "publishConfig": {
     "access": "public"
