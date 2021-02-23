@@ -330,7 +330,7 @@ export abstract class SelectBase extends FormElement {
             @closed=${this.onClosed}
             @items-updated=${this.onItemsUpdated}
             @keydown=${this.handleTypeahead}>
-          <slot></slot>
+          <slot @slotchange=${this.onSlotchange}></slot>
         </mwc-menu>
       </div>
       ${this.renderHelperText()}`;
@@ -882,6 +882,14 @@ export abstract class SelectBase extends FormElement {
     if (this.mdcFoundation) {
       this.menuOpen = false;
       this.mdcFoundation.handleMenuClosed();
+    }
+  }
+
+  private onSlotchange() {
+    // Synchronize the list of options with the state of the foundation as they
+    // are slotted in.
+    if (this.mdcFoundation) {
+      this.mdcFoundation.layoutOptions();
     }
   }
 
