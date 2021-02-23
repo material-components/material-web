@@ -15,61 +15,117 @@
  * limitations under the License.
  */
 import {CircularProgressFourColor} from '@material/mwc-circular-progress-four-color';
+import {html} from 'lit-html';
+
+import {fixture, TestFixture} from '../../../test/src/util/helpers';
 
 const INDETERMINATE_CLASS = 'mdc-circular-progress--indeterminate';
 
+interface ProgressProps {
+  ariaLabel: string;
+  progress: number;
+  indeterminate: true;
+}
+
+const defaultProgress = html`
+  <mwc-circular-progress-four-color>
+  </mwc-circular-progress-four-color>`;
+
+const progress = (propsInit: Partial<ProgressProps>) => {
+  return html`
+    <mwc-circular-progress-four-color
+      progress=${propsInit.progress ?? 0}
+      .ariaLabel=${propsInit.ariaLabel ?? ''}
+      ?indeterminate=${propsInit.indeterminate === true}>
+    </mwc-circular-progress-four-color>
+  `;
+};
+
 suite('mwc-circular-progress-four-color', () => {
+  let fixt: TestFixture;
   let element: CircularProgressFourColor;
 
-  setup(() => {
-    element = document.createElement('mwc-circular-progress-four-color');
-    document.body.appendChild(element);
-  });
-
   teardown(() => {
-    document.body.removeChild(element);
+    fixt.remove();
   });
 
-  test('initializes as an mwc-circular-progress-four-color', () => {
-    assert.instanceOf(element, CircularProgressFourColor);
+  suite('basic', () => {
+    setup(async () => {
+      fixt = await fixture(defaultProgress);
+      element = fixt.root.querySelector('mwc-circular-progress-four-color')!;
+    });
+
+    test('initializes as an mwc-circular-progress-four-color', () => {
+      assert.instanceOf(element, CircularProgressFourColor);
+      assert.isFalse(element.indeterminate);
+      assert.equal(element.progress, 0);
+      assert.equal(element.density, 0);
+      assert.isFalse(element.closed);
+      assert.equal(element.ariaLabel, '');
+    });
+
+    test('open sets closed to false', async () => {
+      element.closed = true;
+      element.open();
+      assert.equal(element.closed, false);
+    });
+
+    test('close sets closed to true', async () => {
+      element.closed = false;
+      element.close();
+      assert.equal(element.closed, true);
+    });
   });
 
-  test('sets `aria-label`', async () => {
-    element.ariaLabel = 'Unit Test Progress Bar';
-    await element.updateComplete;
-    const progressBar =
-        element.shadowRoot!.querySelector('.mdc-circular-progress');
-    assert.equal(
-        progressBar!.getAttribute('aria-label'), 'Unit Test Progress Bar');
+  suite('ariaLabel', () => {
+    setup(async () => {
+      fixt = await fixture(progress({ariaLabel: 'Unit Test Progress Bar'}));
+      element = fixt.root.querySelector('mwc-circular-progress-four-color')!;
+      await element.updateComplete;
+    });
+
+    test('sets `aria-label`', async () => {
+      const progressBar =
+          element.shadowRoot!.querySelector('.mdc-circular-progress')!;
+
+      assert.equal(
+          progressBar.getAttribute('aria-label'), 'Unit Test Progress Bar');
+
+      element.ariaLabel = 'Another label';
+      await element.updateComplete;
+
+      assert.equal(progressBar.getAttribute('aria-label'), 'Another label');
+    });
   });
 
-  test('open sets closed to false', async () => {
-    element.closed = true;
-    element.open();
-    assert.equal(element.closed, false);
+  suite('progress', () => {
+    setup(async () => {
+      fixt = await fixture(progress({progress: 0.5}));
+      element = fixt.root.querySelector('mwc-circular-progress-four-color')!;
+      await element.updateComplete;
+    });
+
+    test('sets inner progress', async () => {
+      const progressBar =
+          element.shadowRoot!.querySelector('.mdc-circular-progress')!;
+      assert.equal(progressBar.getAttribute('aria-valuenow'), '0.5');
+    });
   });
 
-  test('close sets closed to true', async () => {
-    element.closed = false;
-    element.close();
-    assert.equal(element.closed, true);
-  });
+  suite('indeterminate', () => {
+    setup(async () => {
+      fixt = await fixture(progress({indeterminate: true}));
+      element = fixt.root.querySelector('mwc-circular-progress-four-color')!;
+      await element.updateComplete;
+    });
 
-  test('`progress` sets inner progress', async () => {
-    element.progress = 0.5;
-    await element.updateComplete;
-    const progressBar =
-        element.shadowRoot!.querySelector('.mdc-circular-progress')!;
-    assert.equal(progressBar.getAttribute('aria-valuenow'), '0.5');
-  });
-
-  test('`indeterminate` sets correct inner class', async () => {
-    await element.updateComplete;
-    const progressBar =
-        element.shadowRoot!.querySelector('.mdc-circular-progress')!;
-    assert.isFalse(progressBar.classList.contains(INDETERMINATE_CLASS));
-    element.indeterminate = true;
-    await element.updateComplete;
-    assert.isTrue(progressBar.classList.contains(INDETERMINATE_CLASS));
+    test('sets correct inner class', async () => {
+      const progressBar =
+          element.shadowRoot!.querySelector('.mdc-circular-progress')!;
+      assert.isTrue(progressBar.classList.contains(INDETERMINATE_CLASS));
+      element.indeterminate = false;
+      await element.updateComplete;
+      assert.isFalse(progressBar.classList.contains(INDETERMINATE_CLASS));
+    });
   });
 });
