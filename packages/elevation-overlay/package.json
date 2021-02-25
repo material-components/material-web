@@ -21,8 +21,8 @@
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@material/elevation": "=11.0.0-canary.0b4a4b2eb.0",
-    "@material/theme": "=11.0.0-canary.0b4a4b2eb.0"
+    "@material/elevation": "=11.0.0-canary.63df6e9bf.0",
+    "@material/theme": "=11.0.0-canary.63df6e9bf.0"
   },
   "publishConfig": {
     "access": "public"
