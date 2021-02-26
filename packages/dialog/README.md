@@ -1,9 +1,9 @@
 # `<mwc-dialog>` [![Published on npm](https://img.shields.io/npm/v/@material/mwc-dialog.svg)](https://www.npmjs.com/package/@material/mwc-dialog)
-
 > IMPORTANT: The Material Web Components are a work in progress and subject to
 > major changes until 1.0 release.
 
-Dialogs inform users about a task and can contain critical information, require decisions, or involve multiple tasks.
+Dialogs inform users about a task and can contain critical information, require
+decisions, or involve multiple tasks.
 
 <img src="images/standard.png" width="397px">
 
@@ -247,57 +247,152 @@ npm install @material/mwc-dialog
 </script>
 ```
 
+### Prevent Scrim Clicks
+
+<img src="images/scrim_click.gif" width="320px">
+
+```html
+<mwc-dialog scrimClickAction="">
+  <div>
+    This will prevent a click outside of the dialog from closing the dialog.
+  </div>
+  <mwc-button slot="primaryAction" dialogAction="close">
+    Discard
+  </mwc-button>
+  <mwc-button slot="secondaryAction" dialogAction="close">
+    Cancel
+  </mwc-button>
+</mwc-dialog>
+```
+
+### Prevent Escape Key Action
+
+You can prevent the default escape key action from closing the dialog by setting
+the `escapeKeyAction` attribute to an empty string `""`.
+
+```html
+<mwc-dialog escapeKeyAction="">
+  <div>
+    This will prevent the escape key from closing the dialog.
+  </div>
+  <mwc-button slot="primaryAction" dialogAction="close">
+    Primary
+  </mwc-button>
+  <mwc-button slot="secondaryAction" dialogAction="close">
+    Secondary
+  </mwc-button>
+</mwc-dialog>
+```
+
 ## API
 
 ### Slots
 
-| Name              |	Description
-| ----------------- | -------------
-| `primaryAction`   |	A focusable and clickable target. Typically a button such as  `<mwc-button>`. Placed on the bottom right of the dialog (LTR) and above the secondary action when stacked. Automatically clicked when `Enter` key is pressed in the dialog.
-| `secondaryAction` |	A focusable and clickable target. Typically a button such as  `<mwc-button>`. Placed immediately to the left of the `primaryAction` (LTR) or below when stacked.
-| _default_         |	Content to display in the dialog's content area.
+| Name              | Description                                            |
+| ----------------- | ------------------------------------------------------ |
+| `primaryAction`   | A focusable and clickable target. Typically a button   |
+:                   : such as `<mwc-button>`. Placed on the bottom right of  :
+:                   : the dialog (LTR) and above the secondary action when   :
+:                   : stacked. Automatically clicked when `Enter` key is     :
+:                   : pressed in the dialog.                                 :
+| `secondaryAction` | A focusable and clickable target. Typically a button   |
+:                   : such as `<mwc-button>`. Placed immediately to the left :
+:                   : of the `primaryAction` (LTR) or below when stacked.    :
+| _default_         | Content to display in the dialog's content area.       |
 
 ### Properties/Attributes
 
-| Name                    | Type      | Description
-| ----------------------- | --------- |------------
-| `open`                  | `boolean` | Whether the dialog should open.
-| `hideActions`           | `boolean` | Hides the actions footer of the dialog. Needed to remove excess padding when no actions are slotted in.
-| `stacked`               | `boolean` | Whether to stack the action buttons.
-| `heading`               | `string`  | Heading text of the dialog.
-| `scrimClickAction`      | `string`  | _Default: 'close'_ – Action to be emitted with the `closing` and `closed` events when the dialog closes because the scrim was clicked (see [actions section](#actions)).
-| `escapeKeyAction`       | `string`  | _Default: 'close'_ – Action to be emitted with the `closing` and `closed` events when the dialog closes because the excape key was pressed (see [actions section](#actions)).
-| `defaultAction`         | `string`  | _Default: 'close'_ – Action to be emitted with the `closing` and `closed` events when `<mwc-dialog>.open` is toggled (see [actions section](#actions)).
-| `actionAttribute`       | `string`  | _Default: 'dialogAction'_ – Attribute to read in light dom of dialog for closing action value (see [actions section](#actions)).
-| `initialFocusAttribute` | `string`  | _Default: 'dialogInitialFocus'_ – Attribute to search for in light dom for initial focus on dialog open.
+| Name                    | Type      | Description                            |
+| ----------------------- | --------- | -------------------------------------- |
+| `open`                  | `boolean` | Whether the dialog should open.        |
+| `hideActions`           | `boolean` | Hides the actions footer of the        |
+:                         :           : dialog. Needed to remove excess        :
+:                         :           : padding when no actions are slotted    :
+:                         :           : in.                                    :
+| `stacked`               | `boolean` | Whether to stack the action buttons.   |
+| `heading`               | `string`  | Heading text of the dialog.            |
+| `scrimClickAction`      | `string`  | _Default: 'close'_ – Action to be      |
+:                         :           : emitted with the `closing` and         :
+:                         :           : `closed` events when the dialog closes :
+:                         :           : because the scrim was clicked (see     :
+:                         :           : [actions section](#actions)). Setting  :
+:                         :           : this attribute to an empty string `""` :
+:                         :           : will prevent clicks outside the dialog :
+:                         :           : from closing the dialog.               :
+| `escapeKeyAction`       | `string`  | _Default: 'close'_ – Action to be      |
+:                         :           : emitted with the `closing` and         :
+:                         :           : `closed` events when the dialog closes :
+:                         :           : because the escape key was pressed     :
+:                         :           : (see [actions section](#actions)).     :
+:                         :           : Setting this attribute to an empty     :
+:                         :           : string `""` will prevent the escape    :
+:                         :           : key from  closing the dialog.          :
+| `defaultAction`         | `string`  | _Default: 'close'_ – Action to be      |
+:                         :           : emitted with the `closing` and         :
+:                         :           : `closed` events when                   :
+:                         :           : `<mwc-dialog>.open` is toggled (see    :
+:                         :           : [actions section](#actions)).          :
+| `actionAttribute`       | `string`  | _Default: 'dialogAction'_ – Attribute  |
+:                         :           : to read in light dom of dialog for     :
+:                         :           : closing action value (see [actions     :
+:                         :           : section](#actions)).                   :
+| `initialFocusAttribute` | `string`  | _Default: 'dialogInitialFocus'_ –      |
+:                         :           : Attribute to search for in light dom   :
+:                         :           : for initial focus on dialog open.      :
 
 ### Methods
 
-| Name     | Description
-| -------- | -------------
-| `forceLayout() => void` | Forces dialog to relayout (animation frame time). May be required if dialog size is incorrect or if stacked layout has not been triggered correctly.
-| `focus() => void` | Focuses on the initial focus element if defined (see [focus section](#focus)).
-| `blur() => void`  | Blurs the active element.
-| `show() => void`  | Opens the dialog.
-| `close() => void` | Closes the dialog.
+| Name                    | Description                                       |
+| ----------------------- | ------------------------------------------------- |
+| `forceLayout() => void` | Forces dialog to relayout (animation frame time). |
+:                         : May be required if dialog size is incorrect or if :
+:                         : stacked layout has not been triggered correctly.  :
+| `focus() => void`       | Focuses on the initial focus element if defined   |
+:                         : (see [focus section](#focus)).                    :
+| `blur() => void`        | Blurs the active element.                         |
+| `show() => void`        | Opens the dialog.                                 |
+| `close() => void`       | Closes the dialog.                                |
 
 ### Listeners
-| Event Name          | Target       | Description
-| ------------------- | ------------ | -----------
-| `click`             | root element | Detects if clicked target is a dialog action.
-| `resize`            | `window `    | Performs dialog layout (passive).
-| `orientationchange` | `window`     | Performs dialog layout (passive).
-| `keydown`           | `mwc-dialog` | Listens for the enter key to click the default button (passive).
-| `keydown`           | `document`   | Listens for the escape key to close the dialog (see [`escapeKeyAction`](#properties)).
+
+| Event Name          | Target       | Description                        |
+| ------------------- | ------------ | ---------------------------------- |
+| `click`             | root element | Detects if clicked target is a     |
+:                     :              : dialog action.                     :
+| `resize`            | `window`     | Performs dialog layout (passive).  |
+| `orientationchange` | `window`     | Performs dialog layout (passive).  |
+| `keydown`           | `mwc-dialog` | Listens for the enter key to click |
+:                     :              : the default button (passive).      :
+| `keydown`           | `document`   | Listens for the escape key to      |
+:                     :              : close the dialog (see              :
+:                     :              : [`escapeKeyAction`](#properties)). :
 
 ### Events
 
-| Event Name | Target       | Detail             | Description
-| ---------- | ------------ | ------------------ | -----------
-| `opening`  | `mwc-dialog` | `{}`               | Fired when the dialog is beginning to open.
-| `opened`   | `mwc-dialog` | `{}`               | Fired once the dialog is finished opening (after animation).
-| `closing`  | `mwc-dialog` | `{action: string}` | Fired when the dialog is is beginning to close. Detail is the action that closed the dialog (see [actions section](#actions)).
-| `closed`   | `mwc-dialog` | `{action: string}` | Fired once the dialog is finished closing (after animation). Detail is the action that closed the dialog (see [actions section](#actions)).
+| Event Name | Target       | Detail             | Description          |
+| ---------- | ------------ | ------------------ | -------------------- |
+| `opening`  | `mwc-dialog` | `{}`               | Fired when the       |
+:            :              :                    : dialog is beginning  :
+:            :              :                    : to open.             :
+| `opened`   | `mwc-dialog` | `{}`               | Fired once the       |
+:            :              :                    : dialog is finished   :
+:            :              :                    : opening (after       :
+:            :              :                    : animation).          :
+| `closing`  | `mwc-dialog` | `{action: string}` | Fired when the       |
+:            :              :                    : dialog is is         :
+:            :              :                    : beginning to close.  :
+:            :              :                    : Detail is the action :
+:            :              :                    : that closed the      :
+:            :              :                    : dialog (see [actions :
+:            :              :                    : section](#actions)). :
+| `closed`   | `mwc-dialog` | `{action: string}` | Fired once the       |
+:            :              :                    : dialog is finished   :
+:            :              :                    : closing (after       :
+:            :              :                    : animation). Detail   :
+:            :              :                    : is the action that   :
+:            :              :                    : closed the dialog    :
+:            :              :                    : (see [actions        :
+:            :              :                    : section](#actions)). :
 
 ### CSS Custom Properties
 
@@ -315,21 +410,26 @@ Name                                | Default                                   
 
 #### Elevation values
 
-| Elevation Level | CSS Value
-| -- | -
-`24` | `0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)`
+| Elevation Level | CSS Value | -- | - `24` | `0px 11px 15px -7px rgba(0, 0, 0,
+0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0,
+0.12)`
 
 #### Global Custom Properties
 
-This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+This component exposes the following global
+[theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
 custom properties.
 
-| Name                                     | Description
-| ---------------------------------------- | -----------
-| `--mdc-theme-surface`                    | Color of the dialog surface's background.
-| `--mdc-shape-medium`                     | Corner radius of the dialog surface.
-| `--mdc-typography-body1-<PROPERTY>`      | Styles the typography of the dialog's text.
-| `--mdc-typography-headline6-<PROPERTY>`  | Styles the typography of the action buttons.
+| Name                                    | Description                   |
+| --------------------------------------- | ----------------------------- |
+| `--mdc-theme-surface`                   | Color of the dialog surface's |
+:                                         : background.                   :
+| `--mdc-shape-medium`                    | Corner radius of the dialog   |
+:                                         : surface.                      :
+| `--mdc-typography-body1-<PROPERTY>`     | Styles the typography of the  |
+:                                         : dialog's text.                :
+| `--mdc-typography-headline6-<PROPERTY>` | Styles the typography of the  |
+:                                         : action buttons.               :
 
 ### Actions
 
@@ -337,8 +437,8 @@ Actions close the dialog on click. You can define an action by slotting an
 element with the `dialogAction="..."` string attribute. The name of the
 attribute can be customized by the
 [`actionAttribute` property](#propertiesattributes). When a clickable element
-with the `dialogAction` attribute is clicked, `mwc-dialog` will get the value
-of the attribute and fire the `closing` and subsequent `closed` events with a
+with the `dialogAction` attribute is clicked, `mwc-dialog` will get the value of
+the attribute and fire the `closing` and subsequent `closed` events with a
 detail of `{action: <clickedElement.getAttribute('dialogAction')>}`.
 
 For example:
@@ -362,10 +462,8 @@ For example:
 </mwc-dialog>
 ```
 
-In this example we have 3 actionable elements:
-```html
-<button dialogAction="contentButton">button 1</button>
-```
+In this example we have 3 actionable elements: `html <button
+dialogAction="contentButton">button 1</button>`
 
 ```html
 <button disabled dialogAction="disabledContentButton">button 2</button>
@@ -375,17 +473,17 @@ In this example we have 3 actionable elements:
 <mwc-button slot="primaryAction" dialogAction="ok">ok</mwc-button>
 ```
 
-* Clicking button 1 will close the dialog and fire a `closing` and subsequently
-a `closed` event with a detail of `{action: 'contentButton'}`.
-* Clicking button 2 will not close the dialog since it is disabled
-* Clicking the cancel `mwc-button` will not close the dialog as it does not have
-a `dialogAction` attribute set on it.
-* Clicking the ok `mwc-button` will close the dialog and fire a `closing` and
-subsequently a `closed` event with a detail of `{action: 'ok'}`.
-* Setting `document.querySelector('mwc-dialog').open = false;` will close the
-dialog and fire a `closing` and subsequently a `closed` event with a detail of
-`{action: 'close'}` (action is configurable via
-[`defaultAction` property](#propertiesattributes)).
+*   Clicking button 1 will close the dialog and fire a `closing` and
+    subsequently a `closed` event with a detail of `{action: 'contentButton'}`.
+*   Clicking button 2 will not close the dialog since it is disabled
+*   Clicking the cancel `mwc-button` will not close the dialog as it does not
+    have a `dialogAction` attribute set on it.
+*   Clicking the ok `mwc-button` will close the dialog and fire a `closing` and
+    subsequently a `closed` event with a detail of `{action: 'ok'}`.
+*   Setting `document.querySelector('mwc-dialog').open = false;` will close the
+    dialog and fire a `closing` and subsequently a `closed` event with a detail
+    of `{action: 'close'}` (action is configurable via
+    [`defaultAction` property](#propertiesattributes)).
 
 ### Focus
 
@@ -433,4 +531,4 @@ of the dialog.
 
 ## Additional references
 
-- [MDC Web dialogs](https://material.io/develop/web/components/dialogs/)
+-   [MDC Web dialogs](https://material.io/develop/web/components/dialogs/)

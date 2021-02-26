@@ -77,7 +77,7 @@ export class SwitchBase extends FormElement {
 
   protected renderRipple() {
     return this.shouldRenderRipple ? html`
-        <mwc-ripple 
+        <mwc-ripple
           .accent="${this.checked}"
           .disabled="${this.disabled}"
           unbounded>

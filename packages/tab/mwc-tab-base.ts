@@ -16,7 +16,7 @@ limitations under the License.
 */
 // Make TypeScript not remove the import.
 import '@material/mwc-tab-indicator';
-import '@material/mwc-ripple';
+import '@material/mwc-ripple/mwc-ripple';
 
 
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
