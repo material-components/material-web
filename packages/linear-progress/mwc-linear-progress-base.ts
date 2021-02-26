@@ -66,6 +66,7 @@ export class LinearProgressBase extends LitElement {
       'mdc-linear-progress--animation-ready': this.animationReady
     };
 
+    /** @styleMap */
     const rootStyles = {
       '--mdc-linear-progress-primary-half': this.stylePrimaryHalf,
       '--mdc-linear-progress-primary-half-neg':
@@ -85,10 +86,12 @@ export class LinearProgressBase extends LitElement {
           this.styleSecondaryFull !== '' ? `-${this.styleSecondaryFull}` : '',
     };
 
+    /** @styleMap */
     const bufferBarStyles = {
       'flex-basis': this.indeterminate ? '100%' : `${this.buffer * 100}%`,
     };
 
+    /** @styleMap */
     const primaryBarStyles = {
       transform: this.indeterminate ? 'scaleX(1)' : `scaleX(${this.progress})`,
     };

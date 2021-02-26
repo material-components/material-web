@@ -50,6 +50,7 @@ export class CircularProgressBase extends LitElement {
     };
 
     const containerSideLength = 48 + this.density * 4;
+    /** @styleMap */
     const styles = {
       'width': `${containerSideLength}px`,
       'height': `${containerSideLength}px`,
