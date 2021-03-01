@@ -72,8 +72,11 @@ export class FabBase extends LitElement {
 
     const ariaLabel = this.label ? this.label : this.icon;
 
-    return html`
-      <button
+    /*
+     * Some internal styling is sensitive to whitespace in this template, take
+     * care when modifying it.
+     */
+    return html`<button
           class="mdc-fab ${classMap(classes)}"
           ?disabled="${this.disabled}"
           aria-label="${ariaLabel}"
@@ -84,18 +87,16 @@ export class FabBase extends LitElement {
           @mousedown=${this.handleRippleActivate}
           @touchstart=${this.handleRippleStartPress}
           @touchend=${this.handleRippleDeactivate}
-          @touchcancel=${this.handleRippleDeactivate}>
-        ${this.renderBeforeRipple()}
-        ${this.renderRipple()}
-        ${this.showIconAtEnd ? this.renderLabel() : ''}
-        <span class="icon-slot-container">
-          <slot name="icon">
-            ${this.renderIcon()}
-          </slot>
-        </span>
-        ${!this.showIconAtEnd ? this.renderLabel() : ''}
-        ${this.renderTouchTarget()}
-      </button>`;
+          @touchcancel=${this.handleRippleDeactivate}><!--
+        -->${this.renderBeforeRipple()}<!--
+        -->${this.renderRipple()}<!--
+        -->${this.showIconAtEnd ? this.renderLabel() : ''}<!--
+        --><span class="icon-slot-container"><!--
+          --><slot name="icon">${this.renderIcon()}</slot><!--
+        --></span><!--
+        -->${!this.showIconAtEnd ? this.renderLabel() : ''}<!--
+        -->${this.renderTouchTarget()}<!--
+      --></button>`;
   }
 
   /** @soyTemplate */
