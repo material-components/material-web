@@ -926,4 +926,12 @@ export abstract class SelectBase extends FormElement {
       this.outlineWidth = labelWidth;
     }
   }
+
+  async layoutOptions() {
+    if (!this.mdcFoundation) {
+      return;
+    }
+
+    this.mdcFoundation.layoutOptions();
+  }
 }

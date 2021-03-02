@@ -533,7 +533,6 @@ suite('mwc-select:', () => {
     });
   });
 
-
   suite('selection', () => {
     let element: Select;
     let changeCalls = 0;
@@ -719,6 +718,37 @@ suite('mwc-select:', () => {
       assert.isFalse(
           aElement.selected,
           'the previous element is deselcted when doesn\'t match');
+    });
+
+    test('label change selected', async () => {
+      fixt.remove();
+      fixt = await fixture(lazy());
+      element = fixt.root.querySelector('mwc-select')!;
+
+      // deflake shady dom (IE)
+      await rafPromise();
+      await element.layout();
+
+      fixt.template = lazy(itemsTemplate);
+      await fixt.updateComplete;
+      await element.updateComplete;
+
+      assert.equal(element.index, 3, 'index updates when lazily slotted');
+      assert.equal(element.value, 'c', 'value updates when lazily slotted');
+      assert.equal(
+          (element as unknown as WithSelectedText).selectedText, 'Cucumber');
+
+      element.selected!.textContent = 'Cherry';
+      await element.updateComplete;
+
+      assert.equal(
+          (element as unknown as WithSelectedText).selectedText, 'Cucumber');
+
+      await element.layoutOptions();
+      await element.updateComplete;
+
+      assert.equal(
+          (element as unknown as WithSelectedText).selectedText, 'Cherry');
     });
 
     teardown(() => {
