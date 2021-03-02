@@ -39,6 +39,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Format sass files with prettier
 - `fab`
   - Added missing documentation for extended-(label|icon)-padding custom props
+- `dialog`
+  - Blocking elements will not throw if dialog is closed and removed from DOM
+    before opening animation is completed.
 
 ### Added
 - `base`

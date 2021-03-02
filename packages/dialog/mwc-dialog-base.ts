@@ -245,7 +245,14 @@ export class DialogBase extends BaseElement {
         blockingElements.remove(this);
       },
       trapFocus: (el) => {
+        if (!this.isConnected) {
+          // this is the case where it is opened and closed and then removed
+          // from DOM before the animation has completed. Blocking Elements will
+          // throw if this is the case
+          return;
+        }
         blockingElements.push(this);
+
         if (el) {
           el.focus();
         }

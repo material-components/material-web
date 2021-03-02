@@ -561,6 +561,9 @@ suite('mwc-dialog:', () => {
 
     teardown(() => {
       document.body.removeChild(container);
+      if (fixt) {
+        fixt.remove();
+      }
     });
 
     test('open event is cancelled when disconnected', async () => {
@@ -582,6 +585,18 @@ suite('mwc-dialog:', () => {
         }, 150 + 10);
       });
       assert.isFalse(sawOpenEvent);
+    });
+
+    test('error not thrown after disconnect before animation', async () => {
+      fixt = await fixture(withButtons);
+      const dialog = fixt.root.querySelector('mwc-dialog')!;
+      await dialog.updateComplete;
+      dialog.open = true;
+      await dialog.updateComplete;
+      dialog.open = false;
+      fixt.remove();
+      await awaitEvent(dialog, OPENED_EVENT);
+      // blocking elements throw should throw here and fail test
     });
 
     test('maintains open state when disconnected and reconnected', async () => {
