@@ -18,12 +18,14 @@ import '@material/mwc-ripple/mwc-ripple';
 
 import {MDCIconButtonToggleAdapter} from '@material/icon-button/adapter';
 import MDCIconButtonToggleFoundation from '@material/icon-button/foundation';
-import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
+import {BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
+import {addHasRemoveClass} from '@material/mwc-base/utils';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {eventOptions, html, internalProperty, property, query, queryAsync} from 'lit-element';
+import {eventOptions, html, internalProperty, property, query, queryAsync, TemplateResult} from 'lit-element';
 
+/** @soyCompatible */
 export class IconButtonToggleBase extends BaseElement {
   protected mdcFoundationClass = MDCIconButtonToggleFoundation;
 
@@ -65,7 +67,7 @@ export class IconButtonToggleBase extends BaseElement {
       },
       notifyChange: (evtData: {isOn: boolean}) => {
         this.dispatchEvent(new CustomEvent(
-            'MDCIconButtonToggle:change', {detail: evtData, bubbles: true}));
+            'icon-button-toggle-change', {detail: evtData, bubbles: true}));
       },
     };
   }
@@ -85,7 +87,8 @@ export class IconButtonToggleBase extends BaseElement {
     this.mdcRoot.blur();
   }
 
-  protected renderRipple() {
+  /** @soyTemplate */
+  protected renderRipple(): TemplateResult|string {
     return this.shouldRenderRipple ? html`
             <mwc-ripple
                 .disabled="${this.disabled}"
@@ -94,7 +97,8 @@ export class IconButtonToggleBase extends BaseElement {
                                      '';
   }
 
-  protected render() {
+  /** @soyTemplate */
+  protected render(): TemplateResult {
     return html`
       <button
           class="mdc-icon-button"
