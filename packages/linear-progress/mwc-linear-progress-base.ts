@@ -68,6 +68,7 @@ export class LinearProgressBase extends LitElement {
 
     /** @styleMap */
     const rootStyles = {
+      '--mdc-linear-progress-progress': this.progress,
       '--mdc-linear-progress-primary-half': this.stylePrimaryHalf,
       '--mdc-linear-progress-primary-half-neg':
           this.stylePrimaryHalf !== '' ? `-${this.stylePrimaryHalf}` : '',
