@@ -338,7 +338,7 @@ suite('mwc-linear-progress', () => {
       assert.equal(
           truncatePixelValue(
               root.style.getPropertyValue('--mdc-linear-progress-progress')),
-          '8.367px');
+          '0.8367px');
       assert.equal(
           truncatePixelValue(root.style.getPropertyValue(
               '--mdc-linear-progress-primary-half')),
