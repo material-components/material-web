@@ -133,6 +133,9 @@ suite('mwc-linear-progress', () => {
       assert.isNotNull(bufferBar);
 
       assert.equal(
+          root.style.getPropertyValue('--mdc-linear-progress-progress'),
+          '');
+      assert.equal(
           root.style.getPropertyValue('--mdc-linear-progress-primary-half'),
           '');
       assert.equal(
@@ -223,6 +226,10 @@ suite('mwc-linear-progress', () => {
       }
       assert.equal(
           truncatePixelValue(root.style.getPropertyValue(
+              '--mdc-linear-progress-progress')),
+          '83.671px');
+      assert.equal(
+          truncatePixelValue(root.style.getPropertyValue(
               '--mdc-linear-progress-primary-half')),
           '83.671px');
       assert.equal(
@@ -278,6 +285,10 @@ suite('mwc-linear-progress', () => {
 
       assert.equal(
           truncatePixelValue(root.style.getPropertyValue(
+              '--mdc-linear-progress-progress')),
+          '83.671px');
+      assert.equal(
+          truncatePixelValue(root.style.getPropertyValue(
               '--mdc-linear-progress-primary-half')),
           '83.671px');
       assert.equal(
@@ -325,6 +336,10 @@ suite('mwc-linear-progress', () => {
 
       await awaitIndeterminateReady(element);
 
+      assert.equal(
+          truncatePixelValue(root.style.getPropertyValue(
+              '--mdc-linear-progress-progress')),
+          '8.367px');
       assert.equal(
           truncatePixelValue(root.style.getPropertyValue(
               '--mdc-linear-progress-primary-half')),
