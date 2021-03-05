@@ -133,7 +133,7 @@ suite('mwc-linear-progress', () => {
       assert.isNotNull(bufferBar);
 
       assert.equal(
-          root.style.getPropertyValue('--mdc-linear-progress-progress'), '');
+          root.style.getPropertyValue('--mdc-linear-progress-progress'), '0');
       assert.equal(
           root.style.getPropertyValue('--mdc-linear-progress-primary-half'),
           '');
@@ -226,7 +226,7 @@ suite('mwc-linear-progress', () => {
       assert.equal(
           truncatePixelValue(
               root.style.getPropertyValue('--mdc-linear-progress-progress')),
-          '83.671px');
+          '0px');
       assert.equal(
           truncatePixelValue(root.style.getPropertyValue(
               '--mdc-linear-progress-primary-half')),
