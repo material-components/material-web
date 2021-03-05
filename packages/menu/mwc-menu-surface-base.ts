@@ -115,6 +115,8 @@ export abstract class MenuSurfaceBase extends BaseElement {
   })
   open = false;
 
+  @property({type: Boolean}) stayOpenOnBodyClick: boolean = false;
+
   @internalProperty()
   @observer(function(this: MenuSurfaceBase, value: CornerEnum) {
     if (this.mdcFoundation) {
@@ -329,6 +331,9 @@ export abstract class MenuSurfaceBase extends BaseElement {
   }
 
   protected onBodyClick(evt: MouseEvent) {
+    if (this.stayOpenOnBodyClick) {
+      return;
+    }
     const path = evt.composedPath();
     if (path.indexOf(this) === -1) {
       this.close();

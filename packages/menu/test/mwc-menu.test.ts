@@ -546,6 +546,17 @@ suite('mwc-menu-surface', () => {
       await element.updateComplete;
       assert.isFalse(element.open);
     });
+
+    test('respects stayOpenOnBodyClick', async () => {
+      element.stayOpenOnBodyClick = true;
+      element.show();
+      await element.updateComplete;
+      await rafPromise();
+      document.body.dispatchEvent(new MouseEvent('click'));
+      await rafPromise();
+      await element.updateComplete;
+      assert.isTrue(element.open);
+    });
   });
 
   suite('menuCorner', () => {

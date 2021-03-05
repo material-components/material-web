@@ -83,6 +83,8 @@ export abstract class MenuBase extends BaseElement {
 
   @property({type: String}) menuCorner: MenuCorner = 'START';
 
+  @property({type: Boolean}) stayOpenOnBodyClick: boolean = false;
+
   @property({type: String})
   @observer(function(this: MenuBase, value: DefaultFocusState) {
     if (this.mdcFoundation) {
@@ -148,6 +150,7 @@ export abstract class MenuBase extends BaseElement {
           .fixed=${this.fixed}
           .fullwidth=${this.fullwidth}
           .menuCorner=${this.menuCorner}
+          ?stayOpenOnBodyClick=${this.stayOpenOnBodyClick}
           class="mdc-menu mdc-menu-surface"
           @closed=${this.onClosed}
           @opened=${this.onOpened}

@@ -243,6 +243,7 @@ Name                  | Type                              | Default       | Desc
 `forceGroupSelection` | `boolean`                         | `false`       | Forces a menu group to have a selected item by preventing deselection of menu items in menu groups via user interaction.
 `defaultFocus`        | `DefaultFocusState`\*\*\*         | `"LIST_ROOT"` | Item to focus upon menu open.
 `fullwidth`           | `boolean`                         | `false`       | Sets surface width to 100%.
+`stayOpenOnBodyClick` | `boolean`                         | `false`       | Prevents the menu from closing when clicking outside the menu.
 `wrapFocus`           | `boolean`                         | `false`       | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `wrapFocus` property.
 `innerRole`           | `"menu"                           | "listbox"`    | `"menu"`
 `multi`               | `boolean`                         | `false`       | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `multi` property.
