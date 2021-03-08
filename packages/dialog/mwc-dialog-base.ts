@@ -436,7 +436,7 @@ export class DialogBase extends BaseElement {
     }
 
     if (this.boundHandleKeydown) {
-      this.mdcRoot.removeEventListener('keydown', this.boundHandleKeydown);
+      document.removeEventListener('keydown', this.boundHandleKeydown);
     }
 
     if (this.boundHandleDocumentKeydown) {

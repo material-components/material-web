@@ -42,6 +42,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `dialog`
   - Blocking elements will not throw if dialog is closed and removed from DOM
     before opening animation is completed.
+  - Memory leak with document event listener
 
 ### Added
 - `base`
