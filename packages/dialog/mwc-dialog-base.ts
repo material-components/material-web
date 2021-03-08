@@ -436,12 +436,11 @@ export class DialogBase extends BaseElement {
     }
 
     if (this.boundHandleKeydown) {
-      document.removeEventListener('keydown', this.boundHandleKeydown);
+      this.mdcRoot.removeEventListener('keydown', this.boundHandleKeydown);
     }
 
     if (this.boundHandleDocumentKeydown) {
-      this.mdcRoot.removeEventListener(
-          'keydown', this.boundHandleDocumentKeydown);
+      document.removeEventListener('keydown', this.boundHandleDocumentKeydown);
     }
   }
 
