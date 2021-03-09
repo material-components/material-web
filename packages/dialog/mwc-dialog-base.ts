@@ -326,7 +326,7 @@ export class DialogBase extends BaseElement {
       <h2 id="title" class="mdc-dialog__title">${this.heading}</h2>`;
   }
 
-  firstUpdated() {
+  protected firstUpdated() {
     super.firstUpdated();
     this.mdcFoundation.setAutoStackButtons(true);
     if (this.initialSupressDefaultPressSelector) {
@@ -338,6 +338,18 @@ export class DialogBase extends BaseElement {
         'mwc-menu mwc-list-item', 'mwc-select mwc-list-item'
       ].join(', ');
     }
+    this.boundHandleClick = this.mdcFoundation.handleClick.bind(
+                                this.mdcFoundation) as EventListener;
+    this.boundLayout = () => {
+      if (this.open) {
+        this.mdcFoundation.layout.bind(this.mdcFoundation);
+      }
+    };
+    this.boundHandleKeydown = this.mdcFoundation.handleKeydown.bind(
+                                  this.mdcFoundation) as EventListener;
+    this.boundHandleDocumentKeydown =
+        this.mdcFoundation.handleDocumentKeydown.bind(this.mdcFoundation) as
+        EventListener;
   }
 
   connectedCallback() {
@@ -402,27 +414,22 @@ export class DialogBase extends BaseElement {
   }
 
   protected setEventListeners() {
-    this.boundHandleClick = this.mdcFoundation.handleClick.bind(
-                                this.mdcFoundation) as EventListener;
-    this.boundLayout = () => {
-      if (this.open) {
-        this.mdcFoundation.layout.bind(this.mdcFoundation);
-      }
-    };
-    this.boundHandleKeydown = this.mdcFoundation.handleKeydown.bind(
-                                  this.mdcFoundation) as EventListener;
-    this.boundHandleDocumentKeydown =
-        this.mdcFoundation.handleDocumentKeydown.bind(this.mdcFoundation) as
-        EventListener;
-
-    this.mdcRoot.addEventListener('click', this.boundHandleClick);
-    window.addEventListener('resize', this.boundLayout, applyPassive());
-    window.addEventListener(
-        'orientationchange', this.boundLayout, applyPassive());
-    this.mdcRoot.addEventListener(
-        'keydown', this.boundHandleKeydown, applyPassive());
-    document.addEventListener(
-        'keydown', this.boundHandleDocumentKeydown, applyPassive());
+    if (this.boundHandleClick) {
+      this.mdcRoot.addEventListener('click', this.boundHandleClick);
+    }
+    if (this.boundLayout) {
+      window.addEventListener('resize', this.boundLayout, applyPassive());
+      window.addEventListener(
+          'orientationchange', this.boundLayout, applyPassive());
+    }
+    if (this.boundHandleKeydown) {
+      this.mdcRoot.addEventListener(
+          'keydown', this.boundHandleKeydown, applyPassive());
+    }
+    if (this.boundHandleDocumentKeydown) {
+      document.addEventListener(
+          'keydown', this.boundHandleDocumentKeydown, applyPassive());
+    }
   }
 
   protected removeEventListeners() {
