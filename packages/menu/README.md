@@ -270,8 +270,8 @@ Name                  | Type                              | Default       | Desc
 
 | Name     | Description
 | -------- | -------------
-| `show() => void`  | Sets `open` to false.
-| `close() => void` | Sets `open` to true.
+| `show() => void`  | Sets `open` to true.
+| `close() => void` | Sets `open` to false.
 | `select(index: MWCMenuIndex) => void` | Selects the elements at the given index / indices.
 | `getFocusedItemIndex() => number` | Returns the index of the currently-focused item. `-1` if none are focused.
 | `focusItemAtIndex(index) => void` | Focuses the item at the given index and manages tabindex on all other items.
