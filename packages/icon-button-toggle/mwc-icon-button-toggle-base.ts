@@ -99,8 +99,7 @@ export class IconButtonToggleBase extends BaseElement {
 
   /** @soyTemplate */
   protected render(): TemplateResult {
-    return html`
-      <button
+    return html`<button
           class="mdc-icon-button"
           @click="${this.handleClick}"
           aria-label="${this.label}"
@@ -114,13 +113,13 @@ export class IconButtonToggleBase extends BaseElement {
           @touchend="${this.handleRippleDeactivate}"
           @touchcancel="${this.handleRippleDeactivate}">
         ${this.renderRipple()}
-        <span class="mdc-icon-button__icon">
-          <slot name="offIcon">
+        <span class="mdc-icon-button__icon"
+          ><slot name="offIcon">
             <i class="material-icons">${this.offIcon}</i>
           </slot>
         </span>
-        <span class="mdc-icon-button__icon mdc-icon-button__icon--on">
-          <slot name="onIcon">
+        <span class="mdc-icon-button__icon mdc-icon-button__icon--on"
+          ><slot name="onIcon">
             <i class="material-icons">${this.onIcon}</i>
           </slot>
         </span>
