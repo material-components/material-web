@@ -114,15 +114,15 @@ export class IconButtonToggleBase extends BaseElement {
           @touchcancel="${this.handleRippleDeactivate}">
         ${this.renderRipple()}
         <span class="mdc-icon-button__icon"
-          ><slot name="offIcon">
-            <i class="material-icons">${this.offIcon}</i>
-          </slot>
-        </span>
+          ><slot name="offIcon"
+            ><i class="material-icons">${this.offIcon}</i
+          ></slot
+        ></span>
         <span class="mdc-icon-button__icon mdc-icon-button__icon--on"
-          ><slot name="onIcon">
-            <i class="material-icons">${this.onIcon}</i>
-          </slot>
-        </span>
+          ><slot name="onIcon"
+            ><i class="material-icons">${this.onIcon}</i
+          ></slot
+        ></span>
       </button>`;
   }
 
