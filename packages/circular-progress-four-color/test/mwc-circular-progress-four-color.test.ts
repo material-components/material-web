@@ -22,7 +22,7 @@ import {fixture, TestFixture} from '../../../test/src/util/helpers';
 const INDETERMINATE_CLASS = 'mdc-circular-progress--indeterminate';
 
 interface ProgressProps {
-  ariaLabel: string;
+  ariaLabel: string|undefined;
   progress: number;
   indeterminate: true;
 }
@@ -34,8 +34,8 @@ const defaultProgress = html`
 const progress = (propsInit: Partial<ProgressProps>) => {
   return html`
     <mwc-circular-progress-four-color
-      progress=${propsInit.progress ?? 0}
-      .ariaLabel=${propsInit.ariaLabel ?? ''}
+      progress="${propsInit.progress ?? 0}"
+      aria-label="${propsInit.ariaLabel ?? ''}"
       ?indeterminate=${propsInit.indeterminate === true}>
     </mwc-circular-progress-four-color>
   `;
@@ -61,7 +61,7 @@ suite('mwc-circular-progress-four-color', () => {
       assert.equal(element.progress, 0);
       assert.equal(element.density, 0);
       assert.isFalse(element.closed);
-      assert.equal(element.ariaLabel, '');
+      assert.equal(element.ariaLabel, undefined);
     });
 
     test('open sets closed to false', async () => {

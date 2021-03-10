@@ -27,6 +27,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     contexts e.g. dialog.
 
 ### Fixed
+- `circular-progress`
+  - Support setting `aria-label` attribute
 - `FormElement`
   - FormElement checks if `change` event re-refiring is needed
 - `tab`

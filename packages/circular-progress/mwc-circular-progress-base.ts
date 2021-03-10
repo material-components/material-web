@@ -14,6 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import {ariaProperty} from '@material/mwc-base/aria-property';
 import {html, LitElement, property, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
@@ -29,7 +30,10 @@ export class CircularProgressBase extends LitElement {
 
   @property({type: Boolean, reflect: true}) closed = false;
 
-  @property({type: String}) ariaLabel = '';
+  /** @soyPrefixAttribute */
+  @ariaProperty
+  @property({type: String, attribute: 'aria-label'})
+  ariaLabel: string|undefined = undefined;
 
   open() {
     this.closed = false;
@@ -61,7 +65,7 @@ export class CircularProgressBase extends LitElement {
         class="mdc-circular-progress ${classMap(classes)}"
         style="${styleMap(styles)}"
         role="progressbar"
-        aria-label="${this.ariaLabel}"
+        aria-label="${ifDefined(this.ariaLabel)}"
         aria-valuemin="0"
         aria-valuemax="1"
         aria-valuenow="${
