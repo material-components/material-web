@@ -293,8 +293,10 @@ a {
   }
 }
 
-:host([graphic='avatar'], [graphic='medium'], [graphic='large'], [graphic='control'])
-  .mdc-list-item__graphic {
+:host([graphic='avatar']) .mdc-list-item__graphic,
+:host([graphic='medium']) .mdc-list-item__graphic,
+:host([graphic='large']) .mdc-list-item__graphic,
+:host([graphic='control']) .mdc-list-item__graphic {
   @include rtl.reflexive-box(
     margin,
     right,
