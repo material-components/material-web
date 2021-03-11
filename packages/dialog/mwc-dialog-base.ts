@@ -127,7 +127,6 @@ export class DialogBase extends BaseElement {
   protected currentAction: string|undefined;
   protected mdcFoundationClass = MDCDialogFoundation;
   protected mdcFoundation!: MDCDialogFoundation;
-  protected boundLayout: (() => void)|null = null;
   protected boundHandleClick: ((ev: MouseEvent) => void)|null = null;
   protected boundHandleKeydown: ((ev: KeyboardEvent) => void)|null = null;
   protected boundHandleDocumentKeydown:
@@ -275,6 +274,13 @@ export class DialogBase extends BaseElement {
             Math.ceil(el.scrollHeight - el.scrollTop) === el.clientHeight :
             false;
       },
+      registerWindowEventHandler: (evtType, handler) => {
+        window.addEventListener(evtType, handler, applyPassive());
+      },
+      deregisterWindowEventHandler: (evtType, handler) => {
+        window.removeEventListener(evtType, handler, applyPassive());
+      },
+
     };
   }
 
@@ -340,11 +346,6 @@ export class DialogBase extends BaseElement {
     }
     this.boundHandleClick = this.mdcFoundation.handleClick.bind(
                                 this.mdcFoundation) as EventListener;
-    this.boundLayout = () => {
-      if (this.open) {
-        this.mdcFoundation.layout.bind(this.mdcFoundation);
-      }
-    };
     this.boundHandleKeydown = this.mdcFoundation.handleKeydown.bind(
                                   this.mdcFoundation) as EventListener;
     this.boundHandleDocumentKeydown =
@@ -417,11 +418,6 @@ export class DialogBase extends BaseElement {
     if (this.boundHandleClick) {
       this.mdcRoot.addEventListener('click', this.boundHandleClick);
     }
-    if (this.boundLayout) {
-      window.addEventListener('resize', this.boundLayout, applyPassive());
-      window.addEventListener(
-          'orientationchange', this.boundLayout, applyPassive());
-    }
     if (this.boundHandleKeydown) {
       this.mdcRoot.addEventListener(
           'keydown', this.boundHandleKeydown, applyPassive());
@@ -435,11 +431,6 @@ export class DialogBase extends BaseElement {
   protected removeEventListeners() {
     if (this.boundHandleClick) {
       this.mdcRoot.removeEventListener('click', this.boundHandleClick);
-    }
-
-    if (this.boundLayout) {
-      window.removeEventListener('resize', this.boundLayout);
-      window.removeEventListener('orientationchange', this.boundLayout);
     }
 
     if (this.boundHandleKeydown) {
