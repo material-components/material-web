@@ -119,6 +119,13 @@ npm install @material/mwc-textfield
 
 ## API
 
+### Slots
+
+Name                      | Description
+------------------------- | -----------
+`icon`                    | Leading icon. Overrides `icon` property. Works only when the `slottedIcon` property is set to `leading`
+`iconTrailing`            | Trailing icon. Overrides `iconTrailing` property. Works only when the `slottedIcon` property is set to `trailing`
+
 ### Properties/Attributes
 
 Name                      | Type                          | Description
@@ -131,6 +138,7 @@ Name                      | Type                          | Description
 `suffix`                  | `string`                      | Suffix text to display after the input.
 `icon`                    | `string`                      | Leading icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon).
 `iconTrailing`            | `string`                      | Trailing icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon).
+`slottedIcon`             | `string`                      | Type of the slotted icon (needed for slotted icon to work). Must be `leading` or `trailing`
 `disabled`                | `boolean`                     | Whether or not the input should be disabled.
 `charCounter`             | `boolean`                     | **Note: requries `maxLength` to be set.** Display character counter with max length.
 `outlined`                | `boolean`                     | Whether or not to show the material outlined variant.
