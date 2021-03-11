@@ -24,6 +24,7 @@ import {addHasRemoveClass} from '@material/mwc-base/utils';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {eventOptions, html, internalProperty, property, query, queryAsync, TemplateResult} from 'lit-element';
+import {classMap} from 'lit-html/directives/class-map';
 
 /** @soyCompatible */
 export class IconButtonToggleBase extends BaseElement {
@@ -99,8 +100,12 @@ export class IconButtonToggleBase extends BaseElement {
 
   /** @soyTemplate */
   protected render(): TemplateResult {
+    /** @classMap */
+    const classes = {
+      'mdc-icon-button--on': this.on,
+    };
     return html`<button
-          class="mdc-icon-button"
+          class="mdc-icon-button ${classMap(classes)}"
           @click="${this.handleClick}"
           aria-label="${this.label}"
           ?disabled="${this.disabled}"

@@ -17,6 +17,7 @@
 
 import {IconButtonToggle} from '@material/mwc-icon-button-toggle';
 
+const ICON_BUTTON_ON_SELECTOR = '.mdc-icon-button.mdc-icon-button--on';
 const ICON_SELECTOR =
     '.mdc-icon-button__icon.mdc-icon-button__icon--on i.material-icons';
 const OFF_ICON_SELECTOR =
@@ -162,8 +163,11 @@ suite('mwc-icon-button-toggle', () => {
     element.appendChild(fragment);
     await element.updateComplete;
     assert.equal(element.on, false);
+    assert.isNull(element.shadowRoot!.querySelector(ICON_BUTTON_ON_SELECTOR));
     internals.mdcRoot.click();
     await element.updateComplete;
     assert.equal(element.on, true);
+    assert.isNotNull(
+        element.shadowRoot!.querySelector(ICON_BUTTON_ON_SELECTOR));
   });
 });
