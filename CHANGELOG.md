@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
 ### Changed
+- all
+  - Upgrade typescript to 4.1.4
 - `base`
   - Clean up RippleInterface now that the ripple directive has been removed
   - Remove `HTMLElementWithRipple` interface
