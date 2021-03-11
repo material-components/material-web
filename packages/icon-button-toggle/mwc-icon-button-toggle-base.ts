@@ -111,8 +111,8 @@ export class IconButtonToggleBase extends BaseElement {
           @mouseleave="${this.handleRippleMouseLeave}"
           @touchstart="${this.handleRippleTouchStart}"
           @touchend="${this.handleRippleDeactivate}"
-          @touchcancel="${this.handleRippleDeactivate}">
-        ${this.renderRipple()}
+          @touchcancel="${this.handleRippleDeactivate}"
+        >${this.renderRipple()}
         <span class="mdc-icon-button__icon"
           ><slot name="offIcon"
             ><i class="material-icons">${this.offIcon}</i
