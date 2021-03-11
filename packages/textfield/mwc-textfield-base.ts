@@ -142,6 +142,8 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: String}) iconTrailing = '';
 
+  @property({type: String}) slottedIcon = '';
+
   @property({type: Boolean, reflect: true}) disabled = false;
 
   @property({type: Boolean}) required = false;
@@ -277,8 +279,8 @@ export abstract class TextFieldBase extends FormElement {
       'mdc-text-field--no-label': !this.label,
       'mdc-text-field--filled': !this.outlined,
       'mdc-text-field--outlined': this.outlined,
-      'mdc-text-field--with-leading-icon': this.icon,
-      'mdc-text-field--with-trailing-icon': this.iconTrailing,
+      'mdc-text-field--with-leading-icon': this.icon || this.slottedIcon === 'leading',
+      'mdc-text-field--with-trailing-icon': this.iconTrailing || this.slottedIcon === 'trailing',
       'mdc-text-field--end-aligned': this.endAligned,
     };
 
@@ -337,25 +339,23 @@ export abstract class TextFieldBase extends FormElement {
 
   /** @soyTemplate */
   protected renderLeadingIcon(): TemplateResult|string {
-    return this.icon ? this.renderIcon(this.icon) : '';
+    return this.renderIcon(this.icon, 'leading');
   }
 
   /** @soyTemplate */
   protected renderTrailingIcon(): TemplateResult|string {
-    return this.iconTrailing ? this.renderIcon(this.iconTrailing, true) : '';
+    return this.renderIcon(this.iconTrailing, 'trailing');
   }
 
   /** @soyTemplate */
   protected renderIcon(icon: string, isTrailingIcon: boolean = false):
       TemplateResult {
-    /** @classMap */
-    const classes = {
-      'mdc-text-field__icon--leading': !isTrailingIcon,
-      'mdc-text-field__icon--trailing': isTrailingIcon
-    };
-
-    return html`<i class="material-icons mdc-text-field__icon ${
-        classMap(classes)}">${icon}</i>`;
+    return html `
+        <span class="mdc-text-field__icon mdc-text-field__icon--${type}">
+          <slot name="${type === 'traling' ? type : ''}Icon">
+            ${icon ? `<i class="material-icons">${icon}</i>` : ''}
+          </slot>
+        </span>`;
   }
 
   /** @soyTemplate */
