@@ -235,16 +235,18 @@ suite('mwc-list:', () => {
         element = fixt.root.querySelector('mwc-list-item')!;
 
         const root = (element.shadowRoot as ShadowRoot);
-        const mdcRoot =
-            root.querySelector('.mdc-list-item__text') as HTMLElement;
+        const mdcRoot = root.querySelector('.mdc-deprecated-list-item__text') as
+            HTMLElement;
         const defaultSlot =
             root.querySelector('slot:not([name])') as HTMLSlotElement;
         const primaryTextWrapper =
-            root.querySelector('.mdc-list-item__primaray-text');
+            root.querySelector('.mdc-deprecated-list-item__primaray-text');
         const secondaryTextWrapper =
-            root.querySelector('.mdc-list-item__secondary-text');
-        const metaWrapper = root.querySelector('.mdc-list-item__meta');
-        const graphicWrapper = root.querySelector('.mdc-list-item__graphic');
+            root.querySelector('.mdc-deprecated-list-item__secondary-text');
+        const metaWrapper =
+            root.querySelector('.mdc-deprecated-list-item__meta');
+        const graphicWrapper =
+            root.querySelector('.mdc-deprecated-list-item__graphic');
 
         assert.notEqual(
             defaultSlot, null, 'default slot exists with no wrapper');
@@ -286,11 +288,14 @@ suite('mwc-list:', () => {
         const defaultSlot =
             root.querySelector('slot:not([name])') as HTMLSlotElement;
         const primaryTextWrapper =
-            root.querySelector('.mdc-list-item__primary-text') as HTMLElement;
+            root.querySelector('.mdc-deprecated-list-item__primary-text') as
+            HTMLElement;
         const secondaryTextSlot =
             root.querySelector('slot[name="secondary"]') as HTMLSlotElement;
-        const metaWrapper = root.querySelector('.mdc-list-item__meta');
-        const graphicWrapper = root.querySelector('.mdc-list-item__graphic');
+        const metaWrapper =
+            root.querySelector('.mdc-deprecated-list-item__meta');
+        const graphicWrapper =
+            root.querySelector('.mdc-deprecated-list-item__graphic');
 
         assert.notEqual(defaultSlot, null, 'default slot exists');
         assert.notEqual(
@@ -338,18 +343,20 @@ suite('mwc-list:', () => {
         await element.updateComplete;
 
         const root = (element.shadowRoot as ShadowRoot);
-        const mdcRoot =
-            root.querySelector('.mdc-list-item__text') as HTMLElement;
+        const mdcRoot = root.querySelector('.mdc-deprecated-list-item__text') as
+            HTMLElement;
         const defaultSlot =
             root.querySelector('slot:not([name])') as HTMLSlotElement;
         const primaryTextWrapper =
-            root.querySelector('.mdc-list-item__primaray-text');
+            root.querySelector('.mdc-deprecated-list-item__primaray-text');
         const secondaryTextWrapper =
-            root.querySelector('.mdc-list-item__secondary-text');
-        const metaWrapper = root.querySelector('.mdc-list-item__meta');
+            root.querySelector('.mdc-deprecated-list-item__secondary-text');
+        const metaWrapper =
+            root.querySelector('.mdc-deprecated-list-item__meta');
         const metaSlot =
             root.querySelector('slot[name="meta"]') as HTMLSlotElement;
-        const graphicWrapper = root.querySelector('.mdc-list-item__graphic');
+        const graphicWrapper =
+            root.querySelector('.mdc-deprecated-list-item__graphic');
 
         assert.notEqual(
             defaultSlot, null, 'default slot exists with no wrapper');
@@ -388,16 +395,18 @@ suite('mwc-list:', () => {
         element = fixt.root.querySelector('mwc-list-item')!;
 
         const root = (element.shadowRoot as ShadowRoot);
-        const mdcRoot =
-            root.querySelector('.mdc-list-item__text') as HTMLElement;
+        const mdcRoot = root.querySelector('.mdc-deprecated-list-item__text') as
+            HTMLElement;
         const defaultSlot =
             root.querySelector('slot:not([name])') as HTMLSlotElement;
         const primaryTextWrapper =
-            root.querySelector('.mdc-list-item__primaray-text');
+            root.querySelector('.mdc-deprecated-list-item__primaray-text');
         const secondaryTextWrapper =
-            root.querySelector('.mdc-list-item__secondary-text');
-        const metaWrapper = root.querySelector('.mdc-list-item__meta');
-        const graphicWrapper = root.querySelector('.mdc-list-item__graphic');
+            root.querySelector('.mdc-deprecated-list-item__secondary-text');
+        const metaWrapper =
+            root.querySelector('.mdc-deprecated-list-item__meta');
+        const graphicWrapper =
+            root.querySelector('.mdc-deprecated-list-item__graphic');
         const graphicSlot =
             root.querySelector('slot[name="graphic"]') as HTMLSlotElement;
 

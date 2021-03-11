@@ -44,7 +44,7 @@ $divider-color: if(
   display: block;
 }
 
-.mdc-list {
+.mdc-deprecated-list {
   @include list.deprecated-base_($query);
 
   padding: var(--mdc-list-vertical-padding, 8px) 0;
@@ -55,7 +55,7 @@ $divider-color: if(
   $query: $query
 );
 
-.mdc-list--dense {
+.mdc-deprecated-list--dense {
   @include feature.targets($feat-structure) {
     padding-top: 4px;
     padding-bottom: 4px;
@@ -64,7 +64,7 @@ $divider-color: if(
 }
 // stylelint-enable selector-max-type,selector-no-qualifying-type
 
-.mdc-list ::slotted([divider]) {
+.mdc-deprecated-list ::slotted([divider]) {
   @include feature.targets($feat-structure) {
     height: 0;
     margin: 0;
@@ -76,20 +76,20 @@ $divider-color: if(
   @include theme.property(border-bottom-color, $divider-color);
 }
 
-.mdc-list ::slotted([divider][padded]) {
+.mdc-deprecated-list ::slotted([divider][padded]) {
   @include feature.targets($feat-structure) {
     // Leave gaps on each side to match the padding on list items
     margin: 0 var(--mdc-list-side-padding, #{list.$deprecated-side-padding});
   }
 }
 
-.mdc-list ::slotted([divider][inset]) {
+.mdc-deprecated-list ::slotted([divider][inset]) {
   @include feature.targets($feat-structure) {
     @include rtl.reflexive-box(
       margin,
       left,
       var(--mdc-list-inset-margin, #{list.$deprecated-text-offset}),
-      '.mdc-list-group'
+      '.mdc-deprecated-list-group'
     );
 
     width: calc(
@@ -98,7 +98,7 @@ $divider-color: if(
   }
 }
 
-.mdc-list ::slotted([divider][inset][padded]) {
+.mdc-deprecated-list ::slotted([divider][inset][padded]) {
   @include feature.targets($feat-structure) {
     width: calc(
       100% - var(--mdc-list-inset-margin, #{list.$deprecated-text-offset}) -
@@ -108,26 +108,26 @@ $divider-color: if(
 }
 
 // stylelint-disable plugin/selector-bem-pattern
-.mdc-list--dense ::slotted([mwc-list-item]) {
+.mdc-deprecated-list--dense ::slotted([mwc-list-item]) {
   @include feature.targets($feat-structure) {
     height: 40px;
   }
 }
 
-.mdc-list--dense ::slotted([mwc-list]) {
+.mdc-deprecated-list--dense ::slotted([mwc-list]) {
   @include feature.targets($feat-structure) {
     --mdc-list-item-graphic-size: 20px;
   }
 }
 
-.mdc-list--two-line.mdc-list--dense ::slotted([mwc-list-item]),
-.mdc-list--avatar-list.mdc-list--dense ::slotted([mwc-list-item]) {
+.mdc-deprecated-list--two-line.mdc-deprecated-list--dense ::slotted([mwc-list-item]),
+.mdc-deprecated-list--avatar-list.mdc-deprecated-list--dense ::slotted([mwc-list-item]) {
   @include feature.targets($feat-structure) {
     height: 60px;
   }
 }
 
-.mdc-list--avatar-list.mdc-list--dense ::slotted([mwc-list]) {
+.mdc-deprecated-list--avatar-list.mdc-deprecated-list--dense ::slotted([mwc-list]) {
   @include feature.targets($feat-structure) {
     --mdc-list-item-graphic-size: 36px;
   }
@@ -138,7 +138,7 @@ $divider-color: if(
   cursor: default;
 }
 
-.mdc-list--dense ::slotted(.mdc-list-item__primary-text) {
+.mdc-deprecated-list--dense ::slotted(.mdc-deprecated-list-item__primary-text) {
   @include typography.text-baseline(
     $top: $dense-item-primary-text-baseline-height,
     $bottom: $item-secondary-text-baseline-height,

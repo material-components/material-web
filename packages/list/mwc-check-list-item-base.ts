@@ -32,8 +32,8 @@ export class CheckListItemBase extends ListItemBase {
 
   render() {
     const checkboxClasses = {
-      'mdc-list-item__graphic': this.left,
-      'mdc-list-item__meta': !this.left,
+      'mdc-deprecated-list-item__graphic': this.left,
+      'mdc-deprecated-list-item__meta': !this.left,
     };
 
     const text = this.renderText();

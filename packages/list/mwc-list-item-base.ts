@@ -191,7 +191,7 @@ export class ListItemBase extends LitElement {
     };
 
     return html`
-      <span class="mdc-list-item__graphic material-icons ${
+      <span class="mdc-deprecated-list-item__graphic material-icons ${
         classMap(graphicClasses)}">
         <slot name="graphic"></slot>
       </span>`;
@@ -199,7 +199,7 @@ export class ListItemBase extends LitElement {
 
   protected renderMeta() {
     return html`
-      <span class="mdc-list-item__meta material-icons">
+      <span class="mdc-deprecated-list-item__meta material-icons">
         <slot name="meta"></slot>
       </span>`;
   }
@@ -207,7 +207,7 @@ export class ListItemBase extends LitElement {
   protected renderText() {
     const inner = this.twoline ? this.renderTwoline() : this.renderSingleLine();
     return html`
-      <span class="mdc-list-item__text">
+      <span class="mdc-deprecated-list-item__text">
         ${inner}
       </span>`;
   }
@@ -218,10 +218,10 @@ export class ListItemBase extends LitElement {
 
   protected renderTwoline() {
     return html`
-      <span class="mdc-list-item__primary-text">
+      <span class="mdc-deprecated-list-item__primary-text">
         <slot></slot>
       </span>
-      <span class="mdc-list-item__secondary-text">
+      <span class="mdc-deprecated-list-item__secondary-text">
         <slot name="secondary"></slot>
       </span>
     `;

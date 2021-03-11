@@ -260,8 +260,8 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
     if (currentIndex === -1) {
       currentIndex = listItemIndex;
       if (currentIndex < 0) {
-        // If this event doesn't have a mdc-list-item ancestor from the
-        // current list (not from a sublist), return early.
+        // If this event doesn't have a mdc-deprecated-list-item ancestor from
+        // the current list (not from a sublist), return early.
         return;
       }
     }

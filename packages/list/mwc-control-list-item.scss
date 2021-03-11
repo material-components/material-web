@@ -19,7 +19,7 @@ limitations under the License.
   height: 56px;
 }
 
-:host(:not([left])) .mdc-list-item__meta {
+:host(:not([left])) .mdc-deprecated-list-item__meta {
   height: 40px;
   width: 40px;
 }

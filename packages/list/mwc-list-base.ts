@@ -69,7 +69,7 @@ export abstract class ListBase extends BaseElement implements Layoutable {
 
   @property({type: String}) emptyMessage: string|undefined;
 
-  @query('.mdc-list') protected mdcRoot!: HTMLElement;
+  @query('.mdc-deprecated-list') protected mdcRoot!: HTMLElement;
 
   @query('slot') protected slotElement!: HTMLSlotElement|null;
 
@@ -272,7 +272,7 @@ export abstract class ListBase extends BaseElement implements Layoutable {
           tabindex=${tabindex}
           role="${ifDefined(role)}"
           aria-label="${ifDefined(ariaLabel)}"
-          class="mdc-list"
+          class="mdc-deprecated-list"
           @keydown=${this.onKeydown}
           @focusin=${this.onFocusIn}
           @focusout=${this.onFocusOut}

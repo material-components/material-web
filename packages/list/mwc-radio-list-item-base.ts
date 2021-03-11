@@ -35,8 +35,8 @@ export class RadioListItemBase extends ListItemBase {
 
   render() {
     const radioClasses = {
-      'mdc-list-item__graphic': this.left,
-      'mdc-list-item__meta': !this.left,
+      'mdc-deprecated-list-item__graphic': this.left,
+      'mdc-deprecated-list-item__meta': !this.left,
     };
 
     const text = this.renderText();

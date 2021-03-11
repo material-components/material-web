@@ -121,7 +121,7 @@ $dense-item-primary-text-baseline-height: 24px;
   }
 }
 
-.mdc-list-item__graphic {
+.mdc-deprecated-list-item__graphic {
   @include featuretargeting.targets($feat-structure) {
     flex-shrink: 0;
     align-items: center;
@@ -144,7 +144,7 @@ $dense-item-primary-text-baseline-height: 24px;
   }
 }
 
-.mdc-list-item__meta {
+.mdc-deprecated-list-item__meta {
   @include graphic-size_(var(--mdc-list-item-meta-size, 24px));
 
   // stylelint-disable selector-class-pattern
@@ -167,7 +167,7 @@ $dense-item-primary-text-baseline-height: 24px;
   }
 }
 
-.mdc-list-item__text {
+.mdc-deprecated-list-item__text {
   @include typography.overflow-ellipsis($query);
 
   // Disable interaction on label elements that may automatically
@@ -180,7 +180,7 @@ $dense-item-primary-text-baseline-height: 24px;
   }
 }
 
-.mdc-list-item__primary-text {
+.mdc-deprecated-list-item__primary-text {
   @include typography.overflow-ellipsis($query);
   @include typography.text-baseline(
     $top: $item-primary-text-baseline-height,
@@ -193,7 +193,7 @@ $dense-item-primary-text-baseline-height: 24px;
   }
 }
 
-.mdc-list-item__secondary-text {
+.mdc-deprecated-list-item__secondary-text {
   @include typography.typography(body2, $query);
   @include typography.overflow-ellipsis($query);
   @include typography.text-baseline(
@@ -206,7 +206,7 @@ $dense-item-primary-text-baseline-height: 24px;
   }
 
   // stylelint-disable plugin/selector-bem-pattern
-  .mdc-list--dense & {
+  .mdc-deprecated-list--dense & {
     @include featuretargeting.targets($feat-structure) {
       font-size: inherit;
     }
@@ -225,7 +225,7 @@ a {
 }
 
 :host([twoline]) {
-  .mdc-list-item__text {
+  .mdc-deprecated-list-item__text {
     @include featuretargeting.targets($feat-structure) {
       align-self: flex-start;
     }
@@ -243,7 +243,7 @@ a {
 }
 
 :host([disabled]) {
-  .mdc-list-item__text {
+  .mdc-deprecated-list-item__text {
     ::slotted(*) {
       @include featuretargeting.targets($feat-color) {
         opacity: list.$deprecated-text-disabled-opacity;
@@ -251,9 +251,9 @@ a {
     }
   }
 
-  .mdc-list-item__text,
-  .mdc-list-item__primary-text,
-  .mdc-list-item__secondary-text {
+  .mdc-deprecated-list-item__text,
+  .mdc-deprecated-list-item__primary-text,
+  .mdc-deprecated-list-item__secondary-text {
     ::slotted(*) {
       @include featuretargeting.targets($feat-color) {
         @include theme.property(color, list.$deprecated-text-disabled-color);
@@ -262,27 +262,27 @@ a {
   }
 }
 
-.mdc-list-item__secondary-text ::slotted(*) {
+.mdc-deprecated-list-item__secondary-text ::slotted(*) {
   @include featuretargeting.targets($feat-color) {
     @include theme.property(color, text-secondary-on-background);
   }
 }
 
-.mdc-list-item__graphic ::slotted(*) {
+.mdc-deprecated-list-item__graphic ::slotted(*) {
   @include featuretargeting.targets($feat-color) {
     @include theme.property(background-color, transparent);
     @include theme.property(color, text-icon-on-background);
   }
 }
 
-.mdc-list-group__subheader ::slotted(*) {
+.mdc-deprecated-list-group__subheader ::slotted(*) {
   @include featuretargeting.targets($feat-color) {
     @include theme.property(color, text-primary-on-background);
   }
 }
 
 :host([graphic='avatar']) {
-  .mdc-list-item__graphic {
+  .mdc-deprecated-list-item__graphic {
     @include featuretargeting.targets($feat-structure) {
       @include graphic-size_(var(--mdc-list-item-graphic-size, 40px));
 
@@ -293,10 +293,10 @@ a {
   }
 }
 
-:host([graphic='avatar']) .mdc-list-item__graphic,
-:host([graphic='medium']) .mdc-list-item__graphic,
-:host([graphic='large']) .mdc-list-item__graphic,
-:host([graphic='control']) .mdc-list-item__graphic {
+:host([graphic='avatar']) .mdc-deprecated-list-item__graphic,
+:host([graphic='medium']) .mdc-deprecated-list-item__graphic,
+:host([graphic='large']) .mdc-deprecated-list-item__graphic,
+:host([graphic='control']) .mdc-deprecated-list-item__graphic {
   @include rtl.reflexive-box(
     margin,
     right,
@@ -305,7 +305,7 @@ a {
   );
 }
 
-:host([graphic='icon']) .mdc-list-item__graphic {
+:host([graphic='icon']) .mdc-deprecated-list-item__graphic {
   @include graphic-size_(var(--mdc-list-item-graphic-size, 24px));
   @include rtl.reflexive-box(
     margin,
@@ -327,7 +327,7 @@ a {
 
 :host([graphic='medium']),
 :host([graphic='large']) {
-  .mdc-list-item__graphic {
+  .mdc-deprecated-list-item__graphic {
     @include graphic-size_(var(--mdc-list-item-graphic-size, 56px));
   }
 }
