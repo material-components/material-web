@@ -346,7 +346,8 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   /** @soyTemplate */
-  protected renderIcon(icon: string, isTrailingIcon = false): TemplateResult {
+  protected renderIcon(icon: string, isTrailingIcon: boolean = false):
+      TemplateResult {
     /** @classMap */
     const classes = {
       'mdc-text-field__icon--leading': !isTrailingIcon,
@@ -368,8 +369,8 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   /** @soyTemplate */
-  protected renderAffix(content: string, isSuffix = false): TemplateResult
-      |string {
+  protected renderAffix(content: string, isSuffix: boolean = false):
+      TemplateResult|string {
     /** @classMap */
     const classes = {
       'mdc-text-field__affix--prefix': !isSuffix,
