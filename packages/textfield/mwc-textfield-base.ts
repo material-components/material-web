@@ -352,7 +352,7 @@ export abstract class TextFieldBase extends FormElement {
       TemplateResult {
     return html `
         <span class="mdc-text-field__icon mdc-text-field__icon--${type}">
-          <slot name="${type === 'traling' ? type : ''}Icon">
+          <slot name="${type === 'tralingIcon' ? `${type}Icon` : 'icon'}">
             ${icon ? `<i class="material-icons">${icon}</i>` : ''}
           </slot>
         </span>`;
