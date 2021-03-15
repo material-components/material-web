@@ -21,7 +21,7 @@ import {style} from './mwc-circular-progress-four-color-css';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mwc-circular-progress-four-color': CircularProgressFourColorBase;
+    'mwc-circular-progress-four-color': CircularProgressFourColor;
   }
 }
 

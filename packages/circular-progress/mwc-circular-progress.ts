@@ -21,7 +21,7 @@ import {style} from './mwc-circular-progress-css';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mwc-circular-progress': CircularProgressBase;
+    'mwc-circular-progress': CircularProgress;
   }
 }
 
