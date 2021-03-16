@@ -56,6 +56,10 @@
     @include ripple.states-for-color(secondary);
   }
 
+  .mdc-ripple-surface--selected {
+    /*! comment to preserve empty selector referenced in mwc-radio-base.ts */
+  }
+
   .mdc-ripple-surface--disabled {
     opacity: 0;
   }
