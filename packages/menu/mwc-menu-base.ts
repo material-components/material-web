@@ -159,7 +159,7 @@ export abstract class MenuBase extends BaseElement {
           rootTabbable
           .innerRole=${this.innerRole}
           .multi=${this.multi}
-          class="mdc-list"
+          class="mdc-deprecated-list"
           .itemRoles=${itemRoles}
           .wrapFocus=${this.wrapFocus}
           .activatable=${this.activatable}
