@@ -23,6 +23,8 @@ import {fixture, TestFixture} from '../../../test/src/util/helpers';
 interface SwitchProps {
   checked: boolean;
   disabled: boolean;
+  ariaLabel: string;
+  ariaLabelledBy: string;
 }
 
 const defaultSwitchElement = html`<mwc-switch></mwc-switch>`;
@@ -108,6 +110,50 @@ suite('mwc-switch', () => {
       element.disabled = false;
       await element.updateComplete;
       assert(!input.disabled);
+    });
+  });
+
+  suite('aria', () => {
+    setup(async () => {
+      fixt = await fixture(defaultSwitchElement);
+      element = fixt.root.querySelector('mwc-switch')!;
+      await element.updateComplete;
+    });
+
+    test('delegates aria-label to the proper element', async () => {
+      const input = element.shadowRoot!.querySelector('input')!;
+      element.setAttribute('aria-label', 'foo');
+      await element.updateComplete;
+      assert.equal(element.ariaLabel, 'foo');
+      assert.equal(element.getAttribute('aria-label'), null);
+      assert.equal(input.getAttribute('aria-label'), 'foo');
+    });
+
+    test('delegates .ariaLabel to the proper element', async () => {
+      const input = element.shadowRoot!.querySelector('input')!;
+      element.ariaLabel = 'foo';
+      await element.updateComplete;
+      assert.equal(element.ariaLabel, 'foo');
+      assert.equal(element.getAttribute('aria-label'), null);
+      assert.equal(input.getAttribute('aria-label'), 'foo');
+    });
+
+    test('delegates aria-labelledby to the proper element', async () => {
+      const input = element.shadowRoot!.querySelector('input')!;
+      element.setAttribute('aria-labelledby', 'foo');
+      await element.updateComplete;
+      assert.equal(element.ariaLabelledBy, 'foo');
+      assert.equal(element.getAttribute('aria-labelledby'), null);
+      assert.equal(input.getAttribute('aria-labelledby'), 'foo');
+    });
+
+    test('delegates .ariaLabelledBy to the proper element', async () => {
+      const input = element.shadowRoot!.querySelector('input')!;
+      element.ariaLabelledBy = 'foo';
+      await element.updateComplete;
+      assert.equal(element.ariaLabelledBy, 'foo');
+      assert.equal(element.getAttribute('aria-labelledby'), null);
+      assert.equal(input.getAttribute('aria-labelledby'), 'foo');
     });
   });
 });

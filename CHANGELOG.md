@@ -59,6 +59,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Added `--mdc-fab-focus-outline-width`
 - `select`
   - Forwarded `layoutOptions` method from foundation
+- `switch`
+  - Add `ariaLabel` and `ariaLabelledBy` properties
 
 ## [v0.20.0] - 2020-12-03
 

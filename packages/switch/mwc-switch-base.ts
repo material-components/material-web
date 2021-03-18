@@ -16,6 +16,7 @@ limitations under the License.
 */
 import '@material/mwc-ripple/mwc-ripple';
 
+import {ariaProperty} from '@material/mwc-base/aria-property';
 import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element';
 import {observer} from '@material/mwc-base/observer';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
@@ -23,6 +24,7 @@ import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {MDCSwitchAdapter} from '@material/switch/adapter';
 import MDCSwitchFoundation from '@material/switch/foundation';
 import {eventOptions, html, internalProperty, property, query, queryAsync} from 'lit-element';
+import {ifDefined} from 'lit-html/directives/if-defined';
 
 export class SwitchBase extends FormElement {
   @property({type: Boolean})
@@ -36,6 +38,16 @@ export class SwitchBase extends FormElement {
     this.mdcFoundation.setDisabled(value);
   })
   disabled = false;
+
+  /** @soyPrefixAttribute */
+  @ariaProperty
+  @property({attribute: 'aria-label'})
+  ariaLabel: string|undefined = undefined;
+
+  /** @soyPrefixAttribute */
+  @ariaProperty
+  @property({attribute: 'aria-labelledby'})
+  ariaLabelledBy: string|undefined = undefined;
 
   @query('.mdc-switch') protected mdcRoot!: HTMLElement;
 
@@ -113,6 +125,8 @@ export class SwitchBase extends FormElement {
               id="basic-switch"
               class="mdc-switch__native-control"
               role="switch"
+              aria-label="${ifDefined(this.ariaLabel)}"
+              aria-labelledby="${ifDefined(this.ariaLabelledBy)}"
               @change="${this.changeHandler}"
               @focus="${this.handleRippleFocus}"
               @blur="${this.handleRippleBlur}"
