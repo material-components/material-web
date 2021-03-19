@@ -39,7 +39,7 @@ export class RadioBase extends FormElement {
   @property({type: Boolean}) global = false;
 
   @property({type: Boolean, reflect: true})
-  get checked() {
+  get checked(): boolean {
     return this._checked;
   }
 
