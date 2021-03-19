@@ -14,6 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import {ariaProperty} from '@material/mwc-base/aria-property';
 import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element';
 import {observer} from '@material/mwc-base/observer';
 import {SingleSelectionController} from '@material/mwc-radio/single-selection-controller';
@@ -23,6 +24,7 @@ import {MDCRadioAdapter} from '@material/radio/adapter';
 import MDCRadioFoundation from '@material/radio/foundation';
 import {eventOptions, html, internalProperty, property, query, queryAsync, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
+import {ifDefined} from 'lit-html/directives/if-defined';
 
 
 /**
@@ -129,6 +131,16 @@ export class RadioBase extends FormElement {
 
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 
+  /** @soyPrefixAttribute */
+  @ariaProperty
+  @property({attribute: 'aria-label'})
+  ariaLabel: string|undefined = undefined;
+
+  /** @soyPrefixAttribute */
+  @ariaProperty
+  @property({attribute: 'aria-labelledby'})
+  ariaLabelledBy: string|undefined = undefined;
+
   private rippleElement: Ripple|null = null;
 
   protected rippleHandlers: RippleHandlers = new RippleHandlers(() => {
@@ -230,6 +242,8 @@ export class RadioBase extends FormElement {
           class="mdc-radio__native-control"
           type="radio"
           name="${this.name}"
+          aria-label="${ifDefined(this.ariaLabel)}"
+          aria-labelledby="${ifDefined(this.ariaLabelledBy)}"
           .checked="${this.checked}"
           .value="${this.value}"
           ?disabled="${this.disabled}"

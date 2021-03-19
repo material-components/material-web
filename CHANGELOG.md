@@ -63,6 +63,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Forwarded `layoutOptions` method from foundation
 - `switch`
   - Add `ariaLabel` and `ariaLabelledBy` properties
+- `radio`
+  - Add `ariaLabel` and `ariaLabelledBy`
 
 ## [v0.20.0] - 2020-12-03
 

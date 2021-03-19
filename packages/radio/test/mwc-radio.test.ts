@@ -41,6 +41,51 @@ suite('mwc-radio', () => {
     assert.instanceOf(radio, Radio);
   });
 
+  suite('aria', () => {
+    let element!: Radio;
+    setup(async () => {
+      render(html`<mwc-radio></mwc-radio>`, container);
+      element = container.querySelector('mwc-radio')!;
+      await element.updateComplete;
+    });
+
+    test('delegates aria-label via attribute', async () => {
+      const input = element.shadowRoot!.querySelector('input')!;
+      element.setAttribute('aria-label', 'foo');
+      await element.updateComplete;
+      assert.equal(element.getAttribute('aria-label'), null);
+      assert.equal(element.ariaLabel, 'foo');
+      assert.equal(input.getAttribute('aria-label'), 'foo');
+    });
+
+    test('delegates aria-label via property', async () => {
+      const input = element.shadowRoot!.querySelector('input')!;
+      element.ariaLabel = 'foo';
+      await element.updateComplete;
+      assert.equal(element.getAttribute('aria-label'), null);
+      assert.equal(element.ariaLabel, 'foo');
+      assert.equal(input.getAttribute('aria-label'), 'foo');
+    });
+
+    test('delegates aria-labelledby via attribute', async () => {
+      const input = element.shadowRoot!.querySelector('input')!;
+      element.setAttribute('aria-label', 'foo');
+      await element.updateComplete;
+      assert.equal(element.getAttribute('aria-label'), null);
+      assert.equal(element.ariaLabel, 'foo');
+      assert.equal(input.getAttribute('aria-label'), 'foo');
+    });
+
+    test('delegates aria-labelledby via property', async () => {
+      const input = element.shadowRoot!.querySelector('input')!;
+      element.ariaLabel = 'foo';
+      await element.updateComplete;
+      assert.equal(element.getAttribute('aria-label'), null);
+      assert.equal(element.ariaLabel, 'foo');
+      assert.equal(input.getAttribute('aria-label'), 'foo');
+    });
+  });
+
   suite('manages selection groups', () => {
     test('synchronously', async () => {
       render(
