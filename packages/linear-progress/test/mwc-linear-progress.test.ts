@@ -608,13 +608,26 @@ suite('mwc-linear-progress', () => {
       assert.isNull(root.getAttribute('aria-label'));
     });
 
-    test('correctly sets to aria-label', async () => {
+    test('correctly sets to aria-label with .ariaLabel', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
 
       assert.isNotNull(root);
 
       element.ariaLabel = 'test label';
+
+      await element.updateComplete;
+
+      assert.equal(root.getAttribute('aria-label'), 'test label');
+    });
+
+    test('correctly sets to aria-label with aria-label', async () => {
+      const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
+          HTMLElement;
+
+      assert.isNotNull(root);
+
+      element.setAttribute('aria-label', 'test label');
 
       await element.updateComplete;
 

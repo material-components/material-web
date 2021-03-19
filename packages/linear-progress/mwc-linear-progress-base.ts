@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 import {MDCResizeObserver, WithMDCResizeObserver} from '@material/linear-progress/types';
+import {ariaProperty} from '@material/mwc-base/aria-property';
 import {html, internalProperty, LitElement, property, PropertyValues, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
@@ -34,7 +35,10 @@ export class LinearProgressBase extends LitElement {
 
   @property({type: Boolean, reflect: true}) closed = false;
 
-  @property() ariaLabel = '';
+  /** @soyPrefixAttribute */
+  @ariaProperty
+  @property({attribute: 'aria-label'})
+  ariaLabel: string|undefined = undefined;
 
   @internalProperty() protected stylePrimaryHalf = '';
   @internalProperty() protected stylePrimaryFull = '';
@@ -100,14 +104,14 @@ export class LinearProgressBase extends LitElement {
       <div
           role="progressbar"
           class="mdc-linear-progress ${classMap(classes)}"
-          style=${styleMap(rootStyles)}
-          dir=${ifDefined(this.reverse ? 'rtl' : undefined)}
-          aria-label=${ifDefined(this.ariaLabel ? this.ariaLabel : undefined)}
+          style="${styleMap(rootStyles)}"
+          dir="${ifDefined(this.reverse ? 'rtl' : undefined)}"
+          aria-label="${ifDefined(this.ariaLabel)}"
           aria-valuemin="0"
           aria-valuemax="1"
-          aria-valuenow=${
-        ifDefined(this.indeterminate ? undefined : this.progress)}
-        @transitionend=${this.syncClosedState}>
+          aria-valuenow="${
+        ifDefined(this.indeterminate ? undefined : this.progress)}"
+        @transitionend="${this.syncClosedState}">
         <div class="mdc-linear-progress__buffer">
           <div
             class="mdc-linear-progress__buffer-bar"

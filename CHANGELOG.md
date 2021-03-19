@@ -48,6 +48,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     before opening animation is completed.
   - Memory leak with document event listener
   - Only bind event listeners once in `firstUpdated`
+- `linear-progress`
+  - Fixed `ariaLabel` property to use `aria-label` attribute
 
 ### Added
 - `base`
