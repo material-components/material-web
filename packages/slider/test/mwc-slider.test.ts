@@ -194,7 +194,7 @@ suite('mwc-slider', () => {
       assert.equal(element.ariaLabel, 'foo');
       assert.equal(slider.getAttribute('aria-label'), 'foo');
     });
-  })
+  });
 
   suite('min-max-value initializations', () => {
     teardown(() => {
