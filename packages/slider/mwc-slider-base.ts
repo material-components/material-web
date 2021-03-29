@@ -15,12 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {applyPassive} from '@material/dom/events';
+import {ariaProperty} from '@material/mwc-base/aria-property';
 import {addHasRemoveClass, EventType, FormElement, SpecificEventListener} from '@material/mwc-base/form-element';
 import {observer} from '@material/mwc-base/observer';
 import {MDCSliderAdapter} from '@material/slider/adapter';
 import MDCSliderFoundation from '@material/slider/foundation';
 import {eventOptions, html, internalProperty, property, PropertyValues, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
+import {ifDefined} from 'lit-html/directives/if-defined';
 import {styleMap} from 'lit-html/directives/style-map';
 
 const INPUT_EVENT = 'input';
@@ -91,6 +93,16 @@ export class SliderBase extends FormElement {
   @internalProperty() protected thumbContainerStyles = {};
   @internalProperty() protected trackStyles = {};
 
+  /** @soyPrefixAttribute */
+  @ariaProperty
+  @property({attribute: 'aria-label'})
+  ariaLabel: string|undefined = undefined;
+
+  /** @soyPrefixAttribute */
+  @ariaProperty
+  @property({attribute: 'aria-labelledby'})
+  ariaLabelledBy: string|undefined = undefined;
+
   protected isFoundationDestroyed = false;
 
   // TODO(sorvell) #css: needs a default width
@@ -123,6 +135,8 @@ export class SliderBase extends FormElement {
     return html`
       <div class="mdc-slider ${classMap(hostClassInfo)}"
            tabindex="0" role="slider"
+           aria-label="${ifDefined(this.ariaLabel)}"
+           aria-labelledby="${ifDefined(this.ariaLabelledBy)}"
            aria-valuemin="${this.min}" aria-valuemax="${this.max}"
            aria-valuenow="${this.value}"
            aria-disabled="${this.disabled.toString() as 'true' | 'false'}"

@@ -65,6 +65,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Add `ariaLabel` and `ariaLabelledBy` properties
 - `radio`
   - Add `ariaLabel` and `ariaLabelledBy`
+- `slider`
+  - Add `ariaLabel` and `ariaLabelledBy`
 
 ## [v0.20.0] - 2020-12-03
 
