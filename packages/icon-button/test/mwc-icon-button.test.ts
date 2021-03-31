@@ -51,13 +51,13 @@ suite('mwc-icon-button', () => {
       });
 
   test(
-      'setting `label` updates the aria-label attribute on the native button element',
+      'setting `ariaLabel` updates the aria-label attribute on the native button element',
       async () => {
-        const label = 'hello';
-        element.label = label;
+        const ariaLabel = 'hello';
+        element.ariaLabel = ariaLabel;
         await element.updateComplete;
         const button = element.shadowRoot!.querySelector('button')!;
-        assert.equal(button.getAttribute('aria-label'), label);
+        assert.equal(button.getAttribute('aria-label'), ariaLabel);
       });
 
   test(

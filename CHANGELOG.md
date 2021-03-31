@@ -50,6 +50,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Only bind event listeners once in `firstUpdated`
 - `linear-progress`
   - Fixed `ariaLabel` property to use `aria-label` attribute
+- `icon-button`
+  - Fixed `label` property to use `aria-label` attribute
 
 ### Added
 - `base`
