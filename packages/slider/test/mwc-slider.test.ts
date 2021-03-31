@@ -149,6 +149,53 @@ suite('mwc-slider', () => {
     });
   });
 
+  suite('aria', () => {
+    setup(async () => {
+      fixt = await fixture(basic);
+      element = fixt.root.querySelector('mwc-slider')!;
+    });
+
+    teardown(() => {
+      fixt.remove();
+    });
+
+    test('delegates aria-label via attribute', async () => {
+      const slider = element.shadowRoot!.querySelector('.mdc-slider')!;
+      element.setAttribute('aria-label', 'foo');
+      await element.updateComplete;
+      assert.equal(element.getAttribute('aria-label'), null);
+      assert.equal(element.ariaLabel, 'foo');
+      assert.equal(slider.getAttribute('aria-label'), 'foo');
+    });
+
+    test('delegates aria-label via property', async () => {
+      const slider = element.shadowRoot!.querySelector('.mdc-slider')!;
+      element.ariaLabel = 'foo';
+      await element.updateComplete;
+      assert.equal(element.getAttribute('aria-label'), null);
+      assert.equal(element.ariaLabel, 'foo');
+      assert.equal(slider.getAttribute('aria-label'), 'foo');
+    });
+
+    test('delegates aria-labelledby via attribute', async () => {
+      const slider = element.shadowRoot!.querySelector('.mdc-slider')!;
+      element.setAttribute('aria-label', 'foo');
+      await element.updateComplete;
+      assert.equal(element.getAttribute('aria-label'), null);
+      assert.equal(element.ariaLabel, 'foo');
+      assert.equal(slider.getAttribute('aria-label'), 'foo');
+    });
+
+    test('delegates aria-labelledby via property', async () => {
+      const slider = element.shadowRoot!.querySelector('.mdc-slider')!;
+      element.ariaLabel = 'foo';
+      await element.updateComplete;
+      assert.equal(element.getAttribute('aria-label'), null);
+      assert.equal(element.ariaLabel, 'foo');
+      assert.equal(slider.getAttribute('aria-label'), 'foo');
+    });
+  });
+
   suite('min-max-value initializations', () => {
     teardown(() => {
       fixt.remove();
