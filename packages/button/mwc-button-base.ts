@@ -17,10 +17,12 @@ limitations under the License.
 import '@material/mwc-icon/mwc-icon';
 import '@material/mwc-ripple/mwc-ripple';
 
+import {ariaProperty} from '@material/mwc-base/aria-property';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {eventOptions, html, internalProperty, LitElement, property, query, queryAsync, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
+import {ifDefined} from 'lit-html/directives/if-defined';
 
 /** @soyCompatible */
 export class ButtonBase extends LitElement {
@@ -47,6 +49,9 @@ export class ButtonBase extends LitElement {
   @query('#button') buttonElement!: HTMLElement;
 
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
+
+  /** @soyPrefixAttribute */
+  @ariaProperty @property({attribute: 'aria-label'}) ariaLabel?: string;
 
   @internalProperty() protected shouldRenderRipple = false;
 
@@ -110,7 +115,7 @@ export class ButtonBase extends LitElement {
           id="button"
           class="mdc-button ${this.getRenderClasses()}"
           ?disabled="${this.disabled}"
-          aria-label="${this.label || this.icon}"
+          aria-label="${ifDefined(this.ariaLabel)}"
           @focus="${this.handleRippleFocus}"
           @blur="${this.handleRippleBlur}"
           @mousedown="${this.handleRippleActivate}"
@@ -143,7 +148,7 @@ export class ButtonBase extends LitElement {
   /** @soyTemplate */
   protected renderIcon(): TemplateResult {
     return html`
-    <mwc-icon class="mdc-button__icon">
+    <mwc-icon class="mdc-button__icon" aria-hidden="true">
       ${this.icon}
     </mwc-icon>`;
   }
