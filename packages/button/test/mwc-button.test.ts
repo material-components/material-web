@@ -128,6 +128,11 @@ suite('mwc-button', () => {
           assert.equal(leadingIcon, null);
           assert.instanceOf(trailingIcon, Element);
         });
+
+    test('sets `aria-label` of the button when `icon` is set', async () => {
+      const button = element.shadowRoot!.querySelector('#button');
+      assert.equal(button!.getAttribute('aria-label'), 'check');
+    });
   });
 
   suite('label', () => {
@@ -137,29 +142,9 @@ suite('mwc-button', () => {
       await element.updateComplete;
     });
 
-    test('sets text content of the button when `label` is set', async () => {
+    test('sets `aria-label` of the button when `label` is set', async () => {
       const button = element.shadowRoot!.querySelector('#button');
-      assert.equal(button!.textContent!.trim(), 'Unit Test Button');
-    });
-  });
-
-  suite('ariaLabel', () => {
-    setup(async () => {
-      fixt = await fixture(defaultButton);
-      element = fixt.root.querySelector('mwc-button')!;
-      await element.updateComplete;
-    });
-    test('sets `aria-label` of the button with `.ariaLabel`', async () => {
-      const button = element.shadowRoot!.querySelector('#button');
-      element.ariaLabel = 'foo';
-      await element.updateComplete;
-      assert.equal(button!.getAttribute('aria-label'), 'foo');
-    });
-    test('sets `aria-label` of the button with attribute', async () => {
-      const button = element.shadowRoot!.querySelector('#button');
-      element.setAttribute('aria-label', 'foo');
-      await element.updateComplete;
-      assert.equal(button!.getAttribute('aria-label'), 'foo');
+      assert.equal(button!.getAttribute('aria-label'), 'Unit Test Button');
     });
   });
 

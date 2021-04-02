@@ -13,8 +13,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Clean up RippleInterface now that the ripple directive has been removed
   - Remove `HTMLElementWithRipple` interface
   - Clean up `ripple` property typing
-- `button`
-  - `aria-label` is no longer set by `icon`, please set an appropriate `aria-label` where necessary
 - `checkbox`
   - Remove underscores from internal event handler functions
 - `ripple`
@@ -58,8 +56,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - `base`
   - Add `@ariaProperty` decorator
-- `button`
-  - Add `ariaLabel` property
 - `checkbox`
   - Add `ariaLabel`, `ariaLabelledBy`, `ariaDescribedBy`, and `name` properties
 - `fab`
