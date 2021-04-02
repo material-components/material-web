@@ -52,6 +52,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Fixed `ariaLabel` property to use `aria-label` attribute
 - `icon-button`
   - Fixed `label` property to use `aria-label` attribute
+- `icon-button-toggle`
+  - Fixed `label` property to use `aria-label` attribute
 
 ### Added
 - `base`

@@ -18,6 +18,7 @@ import '@material/mwc-ripple/mwc-ripple';
 
 import {MDCIconButtonToggleAdapter} from '@material/icon-button/adapter';
 import MDCIconButtonToggleFoundation from '@material/icon-button/foundation';
+import {ariaProperty} from '@material/mwc-base/aria-property';
 import {BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
 import {addHasRemoveClass} from '@material/mwc-base/utils';
@@ -25,6 +26,7 @@ import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {eventOptions, html, internalProperty, property, query, queryAsync, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
+import {ifDefined} from 'lit-html/directives/if-defined';
 
 /** @soyCompatible */
 export class IconButtonToggleBase extends BaseElement {
@@ -34,7 +36,10 @@ export class IconButtonToggleBase extends BaseElement {
 
   @query('.mdc-icon-button') protected mdcRoot!: HTMLElement;
 
-  @property({type: String}) label = '';
+  /** @soyPrefixAttribute */
+  @ariaProperty
+  @property({type: String, attribute: 'aria-label'})
+  ariaLabel?: string;
 
   @property({type: Boolean, reflect: true}) disabled = false;
 
@@ -106,8 +111,8 @@ export class IconButtonToggleBase extends BaseElement {
     };
     return html`<button
           class="mdc-icon-button ${classMap(classes)}"
+          aria-label="${ifDefined(this.ariaLabel)}"
           @click="${this.handleClick}"
-          aria-label="${this.label}"
           ?disabled="${this.disabled}"
           @focus="${this.handleRippleFocus}"
           @blur="${this.handleRippleBlur}"
