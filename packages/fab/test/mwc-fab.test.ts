@@ -29,6 +29,7 @@ interface FabProps {
   showIconAtEnd: boolean;
   icon: string;
   label: string;
+  reducedTouchTarget: boolean;
 }
 
 const defaultFab = html`<mwc-fab></mwc-fab>`;
@@ -41,13 +42,16 @@ const fab = (propsInit: Partial<FabProps>) => {
       ?disabled=${propsInit.disabled === true}
       ?extended=${propsInit.extended === true}
       ?showIconAtEnd=${propsInit.showIconAtEnd === true}
+      ?reducedTouchTarget=${propsInit.reducedTouchTarget === true}
       icon=${propsInit.icon ?? ''}
-      label=${propsInit.label ?? ''}>${propsInit.text ?? ''}</mwc-button>
+      label=${propsInit.label ?? ''}>${propsInit.text ?? ''}</mwc-fab>
   `;
 };
 
 const ICON_SELECTOR = '.mdc-fab__icon';
 const LABEL_SELECTOR = '.mdc-fab__label';
+const TOUCH_SELECTOR = '.mdc-fab__touch';
+const TOUCH_CLASS = 'mdc-fab--touch';
 
 suite('mwc-fab', () => {
   let fixt: TestFixture;
@@ -105,6 +109,7 @@ suite('mwc-fab', () => {
 
     test('setting adds an icon to the fab', async () => {
       let icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
+      assert.equal(element.icon, 'check');
       assert.instanceOf(icon, Element);
 
       element.icon = 'home';
@@ -133,6 +138,7 @@ suite('mwc-fab', () => {
 
     test('sets `aria-label` of the button, overriding `icon`', async () => {
       const button = element.shadowRoot!.querySelector('button')!;
+      assert.equal(element.label, 'label text');
       assert.equal(button.getAttribute('aria-label'), 'label text');
 
       element.label = '';
@@ -151,6 +157,7 @@ suite('mwc-fab', () => {
     test('sets the correct inner class', async () => {
       const miniClass = 'mdc-fab--mini';
       const button = element.shadowRoot!.querySelector('.mdc-fab')!;
+      assert.isTrue(element.mini);
       assert.isTrue(button.classList.contains(miniClass));
       element.mini = false;
       await element.updateComplete;
@@ -168,6 +175,7 @@ suite('mwc-fab', () => {
     test('sets the correct inner class', async () => {
       const exitedClass = 'mdc-fab--exited';
       const button = element.shadowRoot!.querySelector('.mdc-fab')!;
+      assert.isTrue(element.exited);
       assert.isTrue(button.classList.contains(exitedClass));
       element.exited = false;
       await element.updateComplete;
@@ -185,6 +193,7 @@ suite('mwc-fab', () => {
     test('sets the correct inner class', async () => {
       const extendedClass = 'mdc-fab--extended';
       const button = element.shadowRoot!.querySelector('.mdc-fab')!;
+      assert.isTrue(element.extended);
       assert.isTrue(button.classList.contains(extendedClass));
       element.extended = false;
       await element.updateComplete;
@@ -221,6 +230,7 @@ suite('mwc-fab', () => {
 
       const children = root.children;
 
+      assert.isTrue(element.showIconAtEnd);
       assert.isTrue(
           children[1].querySelector(ICON_SELECTOR)!.classList.contains(
               ICON_CLASS));
@@ -234,6 +244,38 @@ suite('mwc-fab', () => {
           children[0].querySelector(ICON_SELECTOR)!.classList.contains(
               ICON_CLASS));
       assert.isTrue(children[1].classList.contains(LABEL_CLASS));
+    });
+  });
+
+  suite('reducedTouchTarget', () => {
+    setup(async () => {
+      fixt = await fixture(
+          fab({reducedTouchTarget: true, mini: true, icon: 'check'}));
+      element = fixt.root.querySelector('mwc-fab')!;
+      await element.updateComplete;
+    });
+
+    test('sets correct classes', async () => {
+      const button = element.shadowRoot!.querySelector('.mdc-fab')!;
+
+      assert.isFalse(button.classList.contains(TOUCH_CLASS));
+
+      element.reducedTouchTarget = false;
+      await element.updateComplete;
+
+      assert.isTrue(button.classList.contains(TOUCH_CLASS));
+    });
+
+    test('hides touch target', async () => {
+      let target = element.shadowRoot!.querySelector(TOUCH_SELECTOR);
+      assert.isTrue(element.reducedTouchTarget);
+      assert.equal(target, null);
+
+      element.reducedTouchTarget = false;
+      await element.updateComplete;
+
+      target = element.shadowRoot!.querySelector(TOUCH_SELECTOR);
+      assert.instanceOf(target, Element);
     });
   });
 });
