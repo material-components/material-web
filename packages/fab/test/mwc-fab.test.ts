@@ -16,148 +16,224 @@
  */
 
 import {Fab} from '@material/mwc-fab';
+import {html} from 'lit-html';
+
+import {fixture, TestFixture} from '../../../test/src/util/helpers';
+
+interface FabProps {
+  text: string;
+  mini: boolean;
+  exited: boolean;
+  disabled: boolean;
+  extended: boolean;
+  showIconAtEnd: boolean;
+  icon: string;
+  label: string;
+}
+
+const defaultFab = html`<mwc-fab></mwc-fab>`;
+
+const fab = (propsInit: Partial<FabProps>) => {
+  return html`
+    <mwc-fab
+      ?mini=${propsInit.mini === true}
+      ?exited=${propsInit.exited === true}
+      ?disabled=${propsInit.disabled === true}
+      ?extended=${propsInit.extended === true}
+      ?showIconAtEnd=${propsInit.showIconAtEnd === true}
+      icon=${propsInit.icon ?? ''}
+      label=${propsInit.label ?? ''}>${propsInit.text ?? ''}</mwc-button>
+  `;
+};
 
 const ICON_SELECTOR = '.mdc-fab__icon';
 const LABEL_SELECTOR = '.mdc-fab__label';
 
 suite('mwc-fab', () => {
+  let fixt: TestFixture;
   let element: Fab;
-  setup(() => {
-    element = document.createElement('mwc-fab');
-    document.body.appendChild(element);
-  });
 
   teardown(() => {
-    document.body.removeChild(element);
+    fixt.remove();
   });
 
-  test('initializes as an mwc-fab', () => {
-    assert.instanceOf(element, Fab);
+  suite('basic', () => {
+    setup(async () => {
+      fixt = await fixture(defaultFab);
+      element = fixt.root.querySelector('mwc-fab')!;
+    });
+
+    test('initializes as an mwc-fab', () => {
+      assert.instanceOf(element, Fab);
+      assert.equal(element.mini, false);
+      assert.equal(element.exited, false);
+      assert.equal(element.disabled, false);
+      assert.equal(element.extended, false);
+      assert.equal(element.showIconAtEnd, false);
+      assert.equal(element.reducedTouchTarget, false);
+      assert.equal(element.icon, '');
+      assert.equal(element.label, '');
+    });
   });
 
-  test(
-      'get/set disabled updates the disabled property on the native button element',
-      async () => {
-        element.disabled = true;
-        await element.updateComplete;
-        const button = element.shadowRoot!.querySelector('button')!;
-        assert.equal(button.hasAttribute('disabled'), true);
+  suite('disabled', () => {
+    setup(async () => {
+      fixt = await fixture(fab({disabled: true}));
+      element = fixt.root.querySelector('mwc-fab')!;
+      await element.updateComplete;
+    });
 
-        element.disabled = false;
-        await element.updateComplete;
-        assert.equal(button.hasAttribute('disabled'), false);
-      });
+    test(
+        'set updates the disabled property on the native button element',
+        async () => {
+          const button = element.shadowRoot!.querySelector('button')!;
+          assert.equal(element.disabled, true);
+          assert.equal(button.hasAttribute('disabled'), true);
 
-  test('setting `icon` adds an icon to the fab', async () => {
-    await element.updateComplete;
-    let icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
-    assert.equal(icon, null);
-
-    element.icon = 'check';
-    await element.updateComplete;
-    icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
-    assert.instanceOf(icon, Element);
-
-    element.icon = '';
-    await element.updateComplete;
-    icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
-    assert.equal(icon, null);
+          element.disabled = false;
+          await element.updateComplete;
+          assert.equal(button.hasAttribute('disabled'), false);
+        });
   });
 
-  test('setting `icon` sets `aria-label` of the button', async () => {
-    element.icon = 'check';
-    await element.updateComplete;
-    const button = element.shadowRoot!.querySelector('button')!;
-    assert.equal(button.getAttribute('aria-label'), 'check');
+  suite('icon', () => {
+    setup(async () => {
+      fixt = await fixture(fab({icon: 'check'}));
+      element = fixt.root.querySelector('mwc-fab')!;
+      await element.updateComplete;
+    });
+
+    test('setting adds an icon to the fab', async () => {
+      let icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
+      assert.instanceOf(icon, Element);
+
+      element.icon = 'home';
+      await element.updateComplete;
+      icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
+      assert.instanceOf(icon, Element);
+
+      element.icon = '';
+      await element.updateComplete;
+      icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
+      assert.equal(icon, null);
+    });
+
+    test('sets `aria-label` of the button', async () => {
+      const button = element.shadowRoot!.querySelector('button')!;
+      assert.equal(button.getAttribute('aria-label'), 'check');
+    });
   });
 
-  test(
-      'setting `label` sets `aria-label` of the button, overriding `icon`',
-      async () => {
-        element.icon = 'check';
-        await element.updateComplete;
-        let button = element.shadowRoot!.querySelector('button')!;
-        assert.equal(button.getAttribute('aria-label'), 'check');
+  suite('label', () => {
+    setup(async () => {
+      fixt = await fixture(fab({label: 'label text', icon: 'check'}));
+      element = fixt.root.querySelector('mwc-fab')!;
+      await element.updateComplete;
+    });
 
-        element.label = 'label text';
-        await element.updateComplete;
-        button = element.shadowRoot!.querySelector('button')!;
-        assert.equal(button.getAttribute('aria-label'), 'label text');
+    test('sets `aria-label` of the button, overriding `icon`', async () => {
+      const button = element.shadowRoot!.querySelector('button')!;
+      assert.equal(button.getAttribute('aria-label'), 'label text');
 
-        element.label = '';
-        await element.updateComplete;
-        button = element.shadowRoot!.querySelector('button')!;
-        assert.equal(button.getAttribute('aria-label'), 'check');
-      });
-
-  test('setting `mini` sets the correct inner class', async () => {
-    await element.updateComplete;
-    const miniClass = 'mdc-fab--mini';
-    const button = element.shadowRoot!.querySelector('.mdc-fab')!;
-    assert.isFalse(button.classList.contains(miniClass));
-    element.mini = true;
-    await element.updateComplete;
-    assert.isTrue(button.classList.contains(miniClass));
+      element.label = '';
+      await element.updateComplete;
+      assert.equal(button.getAttribute('aria-label'), 'check');
+    });
   });
 
-  test('setting `exited` sets the correct inner class', async () => {
-    await element.updateComplete;
-    const exitedClass = 'mdc-fab--exited';
-    const button = element.shadowRoot!.querySelector('.mdc-fab')!;
-    assert.isFalse(button.classList.contains(exitedClass));
-    element.exited = true;
-    await element.updateComplete;
-    assert.isTrue(button.classList.contains(exitedClass));
+  suite('mini', () => {
+    setup(async () => {
+      fixt = await fixture(fab({mini: true}));
+      element = fixt.root.querySelector('mwc-fab')!;
+      await element.updateComplete;
+    });
+
+    test('sets the correct inner class', async () => {
+      const miniClass = 'mdc-fab--mini';
+      const button = element.shadowRoot!.querySelector('.mdc-fab')!;
+      assert.isTrue(button.classList.contains(miniClass));
+      element.mini = false;
+      await element.updateComplete;
+      assert.isFalse(button.classList.contains(miniClass));
+    });
   });
 
-  test('setting `extended` sets the correct inner class', async () => {
-    await element.updateComplete;
-    const extendedClass = 'mdc-fab--extended';
-    const button = element.shadowRoot!.querySelector('.mdc-fab')!;
-    assert.isFalse(button.classList.contains(extendedClass));
-    element.extended = true;
-    await element.updateComplete;
-    assert.isTrue(button.classList.contains(extendedClass));
+  suite('exited', () => {
+    setup(async () => {
+      fixt = await fixture(fab({exited: true}));
+      element = fixt.root.querySelector('mwc-fab')!;
+      await element.updateComplete;
+    });
+
+    test('sets the correct inner class', async () => {
+      const exitedClass = 'mdc-fab--exited';
+      const button = element.shadowRoot!.querySelector('.mdc-fab')!;
+      assert.isTrue(button.classList.contains(exitedClass));
+      element.exited = false;
+      await element.updateComplete;
+      assert.isFalse(button.classList.contains(exitedClass));
+    });
   });
 
-  test('displays label only if extended', async () => {
-    await element.updateComplete;
-    let label = element.shadowRoot!.querySelector(LABEL_SELECTOR);
-    assert.equal(label, null);
-    element.label = 'foo';
-    await element.updateComplete;
-    label = element.shadowRoot!.querySelector(LABEL_SELECTOR);
-    assert.equal(label, null);
-    element.extended = true;
-    await element.updateComplete;
-    label = element.shadowRoot!.querySelector(LABEL_SELECTOR);
-    assert.instanceOf(label, Element);
-    assert.equal(label!.textContent, 'foo');
+  suite('extended', () => {
+    setup(async () => {
+      fixt = await fixture(fab({extended: true}));
+      element = fixt.root.querySelector('mwc-fab')!;
+      await element.updateComplete;
+    });
+
+    test('sets the correct inner class', async () => {
+      const extendedClass = 'mdc-fab--extended';
+      const button = element.shadowRoot!.querySelector('.mdc-fab')!;
+      assert.isTrue(button.classList.contains(extendedClass));
+      element.extended = false;
+      await element.updateComplete;
+      assert.isFalse(button.classList.contains(extendedClass));
+    });
+
+    test('displays label if set', async () => {
+      let label = element.shadowRoot!.querySelector(LABEL_SELECTOR);
+      assert.equal(label, null);
+      element.label = 'foo';
+      await element.updateComplete;
+      label = element.shadowRoot!.querySelector(LABEL_SELECTOR);
+      assert.instanceOf(label, Element);
+      assert.equal(label!.textContent, 'foo');
+      element.extended = false;
+      await element.updateComplete;
+      label = element.shadowRoot!.querySelector(LABEL_SELECTOR);
+      assert.equal(label, null);
+    });
   });
 
-  test('`showIconAtEnd` displays icon after label', async () => {
-    element.icon = 'check';
-    element.label = 'foo';
-    element.extended = true;
-    element.showIconAtEnd = false;
-    await element.updateComplete;
+  suite('showIconAtEnd', () => {
+    setup(async () => {
+      fixt = await fixture(fab(
+          {showIconAtEnd: true, icon: 'check', label: 'foo', extended: true}));
+      element = fixt.root.querySelector('mwc-fab')!;
+      await element.updateComplete;
+    });
 
-    const root = element.shadowRoot!.querySelector('.mdc-fab')!;
-    const LABEL_CLASS = 'mdc-fab__label';
-    const ICON_CLASS = 'mdc-fab__icon';
+    test('displays icon after label', async () => {
+      const root = element.shadowRoot!.querySelector('.mdc-fab')!;
+      const LABEL_CLASS = 'mdc-fab__label';
+      const ICON_CLASS = 'mdc-fab__icon';
 
-    const children = root.children;
+      const children = root.children;
 
-    assert.equal(children.length, 2);
-    assert.isTrue(children[0].querySelector(ICON_SELECTOR)!.classList.contains(
-        ICON_CLASS));
-    assert.isTrue(children[1].classList.contains(LABEL_CLASS));
+      assert.isTrue(
+          children[1].querySelector(ICON_SELECTOR)!.classList.contains(
+              ICON_CLASS));
+      assert.isTrue(children[0].classList.contains(LABEL_CLASS));
 
-    element.showIconAtEnd = true;
-    await element.updateComplete;
+      element.showIconAtEnd = false;
+      await element.updateComplete;
 
-    assert.isTrue(children[1].querySelector(ICON_SELECTOR)!.classList.contains(
-        ICON_CLASS));
-    assert.isTrue(children[0].classList.contains(LABEL_CLASS));
+      assert.equal(children.length, 2);
+      assert.isTrue(
+          children[0].querySelector(ICON_SELECTOR)!.classList.contains(
+              ICON_CLASS));
+      assert.isTrue(children[1].classList.contains(LABEL_CLASS));
+    });
   });
 });
