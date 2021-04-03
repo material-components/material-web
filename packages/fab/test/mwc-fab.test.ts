@@ -41,8 +41,8 @@ const fab = (propsInit: Partial<FabProps>) => {
       ?exited=${propsInit.exited === true}
       ?disabled=${propsInit.disabled === true}
       ?extended=${propsInit.extended === true}
-      ?showIconAtEnd=${propsInit.showIconAtEnd === true}
-      ?reducedTouchTarget=${propsInit.reducedTouchTarget === true}
+      .showIconAtEnd=${propsInit.showIconAtEnd === true}
+      .reducedTouchTarget=${propsInit.reducedTouchTarget === true}
       icon=${propsInit.icon ?? ''}
       label=${propsInit.label ?? ''}>${propsInit.text ?? ''}</mwc-fab>
   `;
