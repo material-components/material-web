@@ -94,14 +94,12 @@ export class SliderBase extends FormElement {
   @internalProperty() protected trackStyles = {};
 
   /** @soyPrefixAttribute */
-  @ariaProperty
-  @property({attribute: 'aria-label'})
-  ariaLabel: string|undefined = undefined;
+  @ariaProperty @property({attribute: 'aria-label'}) ariaLabel?: string;
 
   /** @soyPrefixAttribute */
   @ariaProperty
   @property({attribute: 'aria-labelledby'})
-  ariaLabelledBy: string|undefined = undefined;
+  ariaLabelledBy?: string;
 
   protected isFoundationDestroyed = false;
 

@@ -36,9 +36,7 @@ export class LinearProgressBase extends LitElement {
   @property({type: Boolean, reflect: true}) closed = false;
 
   /** @soyPrefixAttribute */
-  @ariaProperty
-  @property({attribute: 'aria-label'})
-  ariaLabel: string|undefined = undefined;
+  @ariaProperty @property({attribute: 'aria-label'}) ariaLabel?: string;
 
   @internalProperty() protected stylePrimaryHalf = '';
   @internalProperty() protected stylePrimaryFull = '';
