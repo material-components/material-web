@@ -125,7 +125,7 @@ export abstract class SelectBase extends FormElement {
 
   @property({type: Boolean, attribute: 'disabled', reflect: true})
   @observer(function(this: SelectBase, value: boolean) {
-    if (this.renderReady) {
+    if (this.mdcFoundation) {
       this.mdcFoundation.setDisabled(value);
     }
   })
@@ -233,7 +233,6 @@ export abstract class SelectBase extends FormElement {
     return !!this.helper || !!this.validationMessage;
   }
 
-  protected renderReady = false;
   private valueSetDirectly = false;
 
   validityTransform:
@@ -715,7 +714,6 @@ export abstract class SelectBase extends FormElement {
 
     this.sortedIndexByFirstChar = typeahead.initSortedIndex(
         this.items.length, (index) => this.items[index].text);
-    this.renderReady = true;
   }
 
   protected onItemsUpdated() {

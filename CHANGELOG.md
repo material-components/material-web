@@ -29,31 +29,33 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     contexts e.g. dialog.
 
 ### Fixed
-- `circular-progress`
-  - Support setting `aria-label` attribute
-- `FormElement`
-  - FormElement checks if `change` event re-refiring is needed
-- `tab`
-  - Clean up fixture typing so that tests work when reordered
-- `ripple`
-  - Fix IE11 errors with `isActive()`
-- `list`
-  - Fix issue with diff indices of different digit length
 - all
   - Format sass files with prettier
-- `fab`
-  - Added missing documentation for extended-(label|icon)-padding custom props
+- `circular-progress`
+  - Support setting `aria-label` attribute
 - `dialog`
   - Blocking elements will not throw if dialog is closed and removed from DOM
     before opening animation is completed.
   - Memory leak with document event listener
   - Only bind event listeners once in `firstUpdated`
-- `linear-progress`
-  - Fixed `ariaLabel` property to use `aria-label` attribute
+- `fab`
+  - Added missing documentation for extended-(label|icon)-padding custom props
+- `FormElement`
+  - FormElement checks if `change` event re-refiring is needed
 - `icon-button`
   - Fixed `label` property to use `aria-label` attribute
 - `icon-button-toggle`
   - Fixed `label` property to use `aria-label` attribute
+- `linear-progress`
+  - Fixed `ariaLabel` property to use `aria-label` attribute
+- `list`
+  - Fix issue with diff indices of different digit length
+- `ripple`
+  - Fix IE11 errors with `isActive()`
+- `select`
+  - menu not opening when disabled initially set
+- `tab`
+  - Clean up fixture typing so that tests work when reordered
 
 ### Added
 - `base`
