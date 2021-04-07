@@ -62,7 +62,6 @@ $divider-color: if(
     font-size: 0.812rem;
   }
 }
-// stylelint-enable selector-max-type,selector-no-qualifying-type
 
 .mdc-deprecated-list ::slotted([divider]) {
   @include feature.targets($feat-structure) {
