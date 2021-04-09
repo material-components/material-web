@@ -366,7 +366,8 @@ export abstract class SelectBase extends FormElement {
 
     return html`
       <span
-          .floatingLabelFoundation=${floatingLabel(this.label)}
+          .floatingLabelFoundation=${
+        floatingLabel(this.label) as unknown as MDCFloatingLabelFoundation}
           id="label">${this.label}</span>
     `;
   }
@@ -386,7 +387,8 @@ export abstract class SelectBase extends FormElement {
     }
 
     return html`
-      <span .lineRippleFoundation=${lineRipple()}></span>
+      <span .lineRippleFoundation=${
+        lineRipple() as unknown as MDCLineRippleFoundation}></span>
     `;
   }
 

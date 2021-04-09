@@ -29,16 +29,15 @@ export {
 
 /** @soyCompatible */
 export abstract class FormElement extends BaseElement {
+  static shadowRootOptions:
+      ShadowRootInit = {mode: 'open', delegatesFocus: true};
+
   /**
    * Form-capable element in the component ShadowRoot.
    *
    * Define in your component with the `@query` decorator
    */
   protected abstract formElement: HTMLElement;
-
-  protected createRenderRoot() {
-    return this.attachShadow({mode: 'open', delegatesFocus: true});
-  }
 
   /**
    * Implement ripple getter for Ripple integration with mwc-formfield
