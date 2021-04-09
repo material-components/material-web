@@ -206,7 +206,6 @@ This example shows loading a web font and setting it as the default font for MWC
 
 **Example:** Overriding the `font-family` property for `headline1` and `font-family` and `font-size` for `headline2`.
 
-
 ```css
 html {
   --mdc-typography-headline1-font-family: Arial, Helvetica, sans-serif;
@@ -217,18 +216,22 @@ html {
 
 ## Shape
 
-MWC doesn't currently support shape customization.
-
-<!-- 
 Material components are all basically rectangular, but allow for some customization of the corner shape. 
 
 By default, components have a rounded corner. The default radius depends on the component's size 
 (small, medium, or large).
 
+```css
+html {
+  --mdc-shape-small: 4px;
+  --mdc-shape-medium: 12px;
+  --mdc-shape-large: 16px;
+}
+```
+
 MWC doesn't support cut corners.
 
-See also: [Material Design shape](https://material.io/design/shape/applying-shape-to-ui.html#).
--->
+See also: [Material Design shape](https://material.io/design/shape/applying-shape-to-ui.html#shape-scheme).
 
 ## Iconography
 
