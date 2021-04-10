@@ -39,46 +39,11 @@ $icon-size: map.get(fab-theme.$light-theme, icon-size);
   @include fab-mixins.without-ripple();
 
   .mdc-fab {
-    $outline-color: custom-properties.create(
-      --mdc-fab-focus-outline-color,
-      initial
-    );
-    @include fab-mixins.focus-outline-color($outline-color);
-
     $outline-width: custom-properties.create(
-      --mdc-fab-focus-outline-width,
+      fab-custom-properties.$focus-outline-width,
       0px
     );
     @include fab-mixins.focus-outline-width($outline-width);
-
-    @include theme.property(
-      box-shadow,
-      custom-properties.create(
-        --mdc-fab-box-shadow,
-        elevation-theme.elevation-box-shadow(6)
-      )
-    );
-
-    &:hover,
-    &:focus {
-      @include theme.property(
-        box-shadow,
-        custom-properties.create(
-          --mdc-fab-box-shadow,
-          elevation-theme.elevation-box-shadow(8)
-        )
-      );
-    }
-
-    &:active {
-      @include theme.property(
-        box-shadow,
-        custom-properties.create(
-          --mdc-fab-box-shadow,
-          elevation-theme.elevation-box-shadow(12)
-        )
-      );
-    }
 
     .ripple {
       overflow: hidden;

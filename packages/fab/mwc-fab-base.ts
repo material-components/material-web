@@ -28,7 +28,7 @@ import {classMap} from 'lit-html/directives/class-map';
 export class FabBase extends LitElement {
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 
-  @property({type: Boolean}) mini = false;
+  @property({type: Boolean, reflect: true}) mini = false;
 
   @property({type: Boolean}) exited = false;
 
