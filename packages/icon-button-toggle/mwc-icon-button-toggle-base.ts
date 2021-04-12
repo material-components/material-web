@@ -16,24 +16,15 @@
  */
 import '@material/mwc-ripple/mwc-ripple';
 
-import {MDCIconButtonToggleAdapter} from '@material/icon-button/adapter';
-import MDCIconButtonToggleFoundation from '@material/icon-button/foundation';
 import {ariaProperty} from '@material/mwc-base/aria-property';
-import {BaseElement} from '@material/mwc-base/base-element';
-import {observer} from '@material/mwc-base/observer';
-import {addHasRemoveClass} from '@material/mwc-base/utils';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {eventOptions, html, internalProperty, property, query, queryAsync, TemplateResult} from 'lit-element';
+import {eventOptions, html, internalProperty, LitElement, property, query, queryAsync, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
 
 /** @soyCompatible */
-export class IconButtonToggleBase extends BaseElement {
-  protected mdcFoundationClass = MDCIconButtonToggleFoundation;
-
-  protected mdcFoundation!: MDCIconButtonToggleFoundation;
-
+export class IconButtonToggleBase extends LitElement {
   @query('.mdc-icon-button') protected mdcRoot!: HTMLElement;
 
   /** @soyPrefixAttribute */
@@ -47,11 +38,7 @@ export class IconButtonToggleBase extends BaseElement {
 
   @property({type: String}) offIcon = '';
 
-  @property({type: Boolean, reflect: true})
-  @observer(function(this: IconButtonToggleBase, state: boolean) {
-    this.mdcFoundation.toggle(state);
-  })
-  on = false;
+  @property({type: Boolean, reflect: true}) on = false;
 
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 
@@ -62,25 +49,15 @@ export class IconButtonToggleBase extends BaseElement {
     return this.ripple;
   });
 
-  protected createAdapter(): MDCIconButtonToggleAdapter {
-    return {
-      ...addHasRemoveClass(this.mdcRoot),
-      getAttr: (name: string) => {
-        return this.mdcRoot.getAttribute(name);
-      },
-      setAttr: (name: string, value: string) => {
-        this.mdcRoot.setAttribute(name, value);
-      },
-      notifyChange: (evtData: {isOn: boolean}) => {
-        this.dispatchEvent(new CustomEvent(
-            'icon-button-toggle-change', {detail: evtData, bubbles: true}));
-      },
-    };
-  }
-
   protected handleClick() {
     this.on = !this.on;
-    this.mdcFoundation.handleClick();
+    this.dispatchEvent(new CustomEvent(
+        'icon-button-toggle-change', {detail: {isOn: this.on}, bubbles: true}));
+  }
+
+  click() {
+    this.mdcRoot.focus();
+    this.mdcRoot.click();
   }
 
   focus() {
@@ -111,6 +88,7 @@ export class IconButtonToggleBase extends BaseElement {
     };
     return html`<button
           class="mdc-icon-button ${classMap(classes)}"
+          aria-pressed="${this.on}"
           aria-label="${ifDefined(this.ariaLabel)}"
           @click="${this.handleClick}"
           ?disabled="${this.disabled}"

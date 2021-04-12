@@ -149,9 +149,12 @@ For technical details about the Material Icons font, see the
 
 ### Events
 
-| Name | Detail | Description
-| ---- | ------ | -----------
-| `MDCIconButtonToggle:change` | `{isOn: boolean}` | Indicates the button has toggled. `isOn` indicates the `on` value of the toggle button.
+| Name                        | Detail            | Description              |
+| --------------------------- | ----------------- | ------------------------ |
+| `icon-button-toggle-change` | `{isOn: boolean}` | Indicates the button has |
+:                             :                   : been toggled. `isOn`     :
+:                             :                   : indicates the `on` value :
+:                             :                   : of the toggle button.    :
 
 ### CSS Custom Properties
 
