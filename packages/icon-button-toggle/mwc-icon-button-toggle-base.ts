@@ -38,6 +38,12 @@ export class IconButtonToggleBase extends LitElement {
 
   @property({type: String}) offIcon = '';
 
+  // `aria-label` of the button when `on` is true.
+  @property({type: String}) ariaLabelOn?: string;
+
+  // `aria-label` of the button when `on` is false.
+  @property({type: String}) ariaLabelOff?: string;
+
   @property({type: Boolean, reflect: true}) on = false;
 
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
@@ -86,10 +92,16 @@ export class IconButtonToggleBase extends LitElement {
     const classes = {
       'mdc-icon-button--on': this.on,
     };
+    const hasToggledAriaLabel =
+        this.ariaLabelOn !== undefined && this.ariaLabelOff !== undefined;
+    const ariaPressedValue = hasToggledAriaLabel ? undefined : this.on;
+    const ariaLabelValue = hasToggledAriaLabel ?
+        (this.on ? this.ariaLabelOn : this.ariaLabelOff) :
+        this.ariaLabel;
     return html`<button
           class="mdc-icon-button ${classMap(classes)}"
-          aria-pressed="${this.on}"
-          aria-label="${ifDefined(this.ariaLabel)}"
+          aria-pressed="${ifDefined(ariaPressedValue)}"
+          aria-label="${ifDefined(ariaLabelValue)}"
           @click="${this.handleClick}"
           ?disabled="${this.disabled}"
           @focus="${this.handleRippleFocus}"

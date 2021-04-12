@@ -26,7 +26,7 @@ npm install @material/mwc-icon-button-toggle
 > [here](https://github.com/material-components/material-components-web-components#quick-start)
 > for detailed instructions.
 
-## Example Usage
+## Example usage
 
 ### Standard
 
@@ -95,7 +95,17 @@ npm install @material/mwc-icon-button-toggle
 <mwc-icon-button-toggle disabled onIcon="sentiment_very_satisfied" offIcon="sentiment_very_dissatisfied"></mwc-icon-button-toggle>
 ```
 
-### Customize Colors
+### With toggled aria label
+
+Some designs may call for the aria label to change depending on the icon button
+state. In this case, specify the `ariaLabelOn` and `ariaLabelOff` properties and
+omit the `aria-label` attribute.
+
+```html
+<mwc-icon-button-toggle ariaLabelOn="Very satisfied" ariaLabelOff="Very dissatisfied" onIcon="sentiment_very_satisfied" offIcon="sentiment_very_dissatisfied"></mwc-icon-button-toggle>
+```
+
+### Customize colors
 
 #### `on = false`
 ![](images/custom_color_off.png)
@@ -135,14 +145,25 @@ For technical details about the Material Icons font, see the
 | `onIcon` | Optional `<img>` or `<svg>` to display instead of using an icon font for the `onIcon` property.
 | `offIcon` | Optional `<img>` or `<svg>` to display instead of using an icon font for the `offIcon` property.
 
-### Properties/Attributes
-| Name | Type | Default | Description
-| ---- | ---- | ------- | -----------
-| `on` | `boolean` | `false` | Whether the toggle is activated.
-| `onIcon` | `string` | `''` | Icon to display when `on` is `true`.
-| `offIcon` | `string` | `''` | Icon to display when `on` is `false`.
-| `label` | `string` | `''` | Accessible label for the button, sets `aria-label`.
-| `disabled` | `boolean` | `false` | Disabled buttons cannot be interacted with and have no visual interaction effect.
+### Properties/attributes
+
+| Name           | Type      | Default     | Description                      |
+| -------------- | --------- | ----------- | -------------------------------- |
+| `aria-label`   | `string`  | `''`        | Accessible label for the button. |
+| `on`           | `boolean` | `false`     | Whether the toggle is activated. |
+| `onIcon`       | `string`  | `''`        | Icon to display when `on` is     |
+:                :           :             : `true`.                          :
+| `offIcon`      | `string`  | `''`        | Icon to display when `on` is     |
+:                :           :             : `false`.                         :
+| `disabled`     | `boolean` | `false`     | Disabled buttons cannot be       |
+:                :           :             : interacted with and have no      :
+:                :           :             : visual interaction effect.       :
+| `ariaLabelOn`  | `string`  | `undefined` | `aria-label` of the button when  |
+:                :           :             : `on` is true. If set,            :
+:                :           :             : `ariaLabelOff` must also be set. :
+| `ariaLabelOff` | `string`  | `undefined` | `aria-label` of the button when  |
+:                :           :             : `on` is false. If set,           :
+:                :           :             : `ariaLabelOn` must also be set.  :
 
 ### Methods
 *None*
@@ -156,13 +177,13 @@ For technical details about the Material Icons font, see the
 :                             :                   : indicates the `on` value :
 :                             :                   : of the toggle button.    :
 
-### CSS Custom Properties
+### CSS custom properties
 
 Inherits CSS Custom properties from:
 
 * [`mwc-ripple`](https://github.com/material-components/material-components-web-components/tree/master/packages/ripple)
 
-#### Global Custom Properties
+#### Global custom properties
 
 This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
 custom properties.

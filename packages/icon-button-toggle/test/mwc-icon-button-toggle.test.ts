@@ -170,4 +170,21 @@ suite('mwc-icon-button-toggle', () => {
     assert.isNotNull(
         element.shadowRoot!.querySelector(ICON_BUTTON_ON_SELECTOR));
   });
+
+  test('button with toggled aria label toggles aria label', async () => {
+    element.ariaLabelOn = 'aria label on';
+    element.ariaLabelOff = 'aria label off';
+    await element.updateComplete;
+
+    const button = internals.mdcRoot;
+    assert.isFalse(element.on);
+    assert.equal(button.getAttribute('aria-label'), 'aria label off');
+    assert.isNull(button.getAttribute('aria-pressed'));
+
+    button.click();  // Toggle.
+    await element.updateComplete;
+    assert.isTrue(element.on);
+    assert.equal(button.getAttribute('aria-label'), 'aria label on');
+    assert.isNull(button.getAttribute('aria-pressed'));
+  });
 });
