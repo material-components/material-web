@@ -84,7 +84,7 @@ limitations under the License.
         /* @noflip */
         text-align: right;
 
-        @include rtl.rtl('.mdc-dialog') {
+        @include rtl.rtl {
           /* @noflip */
           text-align: left;
         }

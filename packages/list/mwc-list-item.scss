@@ -154,7 +154,7 @@ $dense-item-primary-text-baseline-height: 24px;
   // stylelint-enable selector-class-pattern
 
   @include featuretargeting.targets($feat-structure) {
-    @include rtl.reflexive-property(margin, auto, 0, ':host');
+    @include rtl.reflexive-property(margin, auto, 0);
   }
 
   @include featuretargeting.targets($feat-color) {
@@ -300,8 +300,7 @@ a {
   @include rtl.reflexive-box(
     margin,
     right,
-    var(--mdc-list-item-graphic-margin, 16px),
-    ':host'
+    var(--mdc-list-item-graphic-margin, 16px)
   );
 }
 
@@ -310,8 +309,7 @@ a {
   @include rtl.reflexive-box(
     margin,
     right,
-    var(--mdc-list-item-graphic-margin, 32px),
-    ':host'
+    var(--mdc-list-item-graphic-margin, 32px)
   );
 }
 

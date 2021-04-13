@@ -88,7 +88,6 @@ $divider-color: if(
       margin,
       left,
       var(--mdc-list-inset-margin, #{list.$deprecated-text-offset}),
-      '.mdc-deprecated-list-group'
     );
 
     width: calc(
