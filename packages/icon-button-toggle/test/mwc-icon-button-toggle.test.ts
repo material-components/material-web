@@ -181,7 +181,8 @@ suite('mwc-icon-button-toggle', () => {
     assert.equal(button.getAttribute('aria-label'), 'aria label off');
     assert.isNull(button.getAttribute('aria-pressed'));
 
-    button.click();  // Toggle.
+    // Toggle
+    button.click();
     await element.updateComplete;
     assert.isTrue(element.on);
     assert.equal(button.getAttribute('aria-label'), 'aria label on');
