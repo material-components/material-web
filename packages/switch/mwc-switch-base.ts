@@ -21,8 +21,8 @@ import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element';
 import {observer} from '@material/mwc-base/observer';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {MDCSwitchAdapter} from '@material/switch/adapter';
-import MDCSwitchFoundation from '@material/switch/foundation';
+import {MDCSwitchAdapter} from '@material/switch/deprecated/adapter';
+import MDCSwitchFoundation from '@material/switch/deprecated/foundation';
 import {eventOptions, html, internalProperty, property, query, queryAsync} from 'lit-element';
 import {ifDefined} from 'lit-html/directives/if-defined';
 

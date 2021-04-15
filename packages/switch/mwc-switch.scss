@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@use '@material/switch';
+@use '@material/switch/deprecated' as switch;
 
 @include switch.without-ripple();
 
