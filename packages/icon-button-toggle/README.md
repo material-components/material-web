@@ -140,42 +140,33 @@ For technical details about the Material Icons font, see the
 ## API
 
 ### Slots
-| Name | Description
-| ---- | -----------
-| `onIcon` | Optional `<img>` or `<svg>` to display instead of using an icon font for the `onIcon` property.
+
+| Name      | Description
+| --------- | -----------
+| `onIcon`  | Optional `<img>` or `<svg>` to display instead of using an icon font for the `onIcon` property.
 | `offIcon` | Optional `<img>` or `<svg>` to display instead of using an icon font for the `offIcon` property.
 
-### Properties/attributes
+### Properties / Attributes
 
-| Name           | Type      | Default     | Description                      |
-| -------------- | --------- | ----------- | -------------------------------- |
-| `aria-label`   | `string`  | `''`        | Accessible label for the button. |
-| `on`           | `boolean` | `false`     | Whether the toggle is activated. |
-| `onIcon`       | `string`  | `''`        | Icon to display when `on` is     |
-:                :           :             : `true`.                          :
-| `offIcon`      | `string`  | `''`        | Icon to display when `on` is     |
-:                :           :             : `false`.                         :
-| `disabled`     | `boolean` | `false`     | Disabled buttons cannot be       |
-:                :           :             : interacted with and have no      :
-:                :           :             : visual interaction effect.       :
-| `ariaLabelOn`  | `string`  | `undefined` | `aria-label` of the button when  |
-:                :           :             : `on` is true. If set,            :
-:                :           :             : `ariaLabelOff` must also be set. :
-| `ariaLabelOff` | `string`  | `undefined` | `aria-label` of the button when  |
-:                :           :             : `on` is false. If set,           :
-:                :           :             : `ariaLabelOn` must also be set.  :
+| Name           | Type      | Default     | Description
+| -------------- | --------- | ----------- | -----------
+| `aria-label`   | `string`  | `''`        | Accessible label for the button.
+| `on`           | `boolean` | `false`     | Whether the toggle is activated.
+| `onIcon`       | `string`  | `''`        | Icon to display when `on` is `true`.
+| `offIcon`      | `string`  | `''`        | Icon to display when `on` is `false`.
+| `disabled`     | `boolean` | `false`     | Disabled buttons cannot be interacted with and have no visual interaction effect.
+| `ariaLabelOn`  | `string`  | `undefined` | `aria-label` of the button when  `on` is true. If set,  `ariaLabelOff` must also be set.
+| `ariaLabelOff` | `string`  | `undefined` | `aria-label` of the button when `on` is false. If set, `ariaLabelOn` must also be set.
 
 ### Methods
+
 *None*
 
 ### Events
 
-| Name                        | Detail            | Description              |
-| --------------------------- | ----------------- | ------------------------ |
-| `icon-button-toggle-change` | `{isOn: boolean}` | Indicates the button has |
-:                             :                   : been toggled. `isOn`     :
-:                             :                   : indicates the `on` value :
-:                             :                   : of the toggle button.    :
+| Name                        | Detail            | Description
+| --------------------------- | ----------------- | -----------
+| `icon-button-toggle-change` | `{isOn: boolean}` | Indicates the button has been toggled. `isOn` indicates the `on` value of the toggle button.
 
 ### CSS custom properties
 
