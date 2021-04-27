@@ -78,7 +78,7 @@ export class CircularProgressBase extends LitElement {
   /**
    * @soyTemplate
    */
-  private renderDeterminateContainer(): TemplateResult {
+  protected renderDeterminateContainer(): TemplateResult {
     const sideLength = 48 + this.density * 4;
     const center = sideLength / 2;
     const circleRadius = this.density >= -3 ? 18 + this.density * 11 / 6 :

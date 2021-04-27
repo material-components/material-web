@@ -107,7 +107,7 @@ export class CheckboxBase extends FormElement {
     }
   }
 
-  private rippleElement: Ripple|null = null;
+  protected rippleElement: Ripple|null = null;
 
   protected rippleHandlers: RippleHandlers = new RippleHandlers(() => {
     this.shouldRenderRipple = true;

@@ -138,15 +138,15 @@ export class SnackbarBase extends BaseElement {
     }
   }
 
-  private _handleKeydown(e: KeyboardEvent) {
+  protected _handleKeydown(e: KeyboardEvent) {
     this.mdcFoundation.handleKeyDown(e);
   }
 
-  private _handleActionClick(e: MouseEvent) {
+  protected _handleActionClick(e: MouseEvent) {
     this.mdcFoundation.handleActionButtonClick(e);
   }
 
-  private _handleDismissClick(e: MouseEvent) {
+  protected _handleDismissClick(e: MouseEvent) {
     this.mdcFoundation.handleActionIconClick(e);
   }
 }

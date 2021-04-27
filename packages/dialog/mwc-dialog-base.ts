@@ -114,8 +114,8 @@ export class DialogBase extends BaseElement {
         this.initialSupressDefaultPressSelector;
   }
 
-  private closingDueToDisconnect?: boolean;
-  private initialSupressDefaultPressSelector = '';
+  protected closingDueToDisconnect?: boolean;
+  protected initialSupressDefaultPressSelector = '';
 
   protected get primaryButton(): HTMLElement|null {
     let assignedNodes = (this.primarySlot as HTMLSlotElement).assignedNodes();
@@ -173,7 +173,7 @@ export class DialogBase extends BaseElement {
     return initFocusElement;
   }
 
-  private searchNodeTreesForAttribute(nodes: Node[], attribute: string):
+  protected searchNodeTreesForAttribute(nodes: Node[], attribute: string):
       HTMLElement|null {
     for (const node of nodes) {
       if (!(node instanceof HTMLElement)) {

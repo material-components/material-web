@@ -84,13 +84,13 @@ export class TabBase extends BaseElement {
    * onTransitionEnd (needed?)
    */
 
-  @query('.mdc-tab__content') private _contentElement!: HTMLElement;
+  @query('.mdc-tab__content') protected _contentElement!: HTMLElement;
 
   @internalProperty() protected shouldRenderRipple = false;
 
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 
-  private rippleElement: Ripple|null = null;
+  protected rippleElement: Ripple|null = null;
 
   protected createRenderRoot() {
     return this.attachShadow({mode: 'open', delegatesFocus: true});
@@ -256,16 +256,16 @@ export class TabBase extends BaseElement {
     return this.ripple;
   });
 
-  private handleClick() {
+  protected handleClick() {
     this.handleFocus();
     this.mdcFoundation.handleClick();
   }
 
-  private handleFocus() {
+  protected handleFocus() {
     this.handleRippleFocus();
   }
 
-  private handleBlur() {
+  protected handleBlur() {
     this.handleRippleBlur();
   }
 

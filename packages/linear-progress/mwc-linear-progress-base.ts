@@ -147,7 +147,7 @@ export class LinearProgressBase extends LitElement {
     this.attachResizeObserver();
   }
 
-  private syncClosedState() {
+  protected syncClosedState() {
     this.closedAnimationOff = this.closed;
   }
 

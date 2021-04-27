@@ -29,7 +29,7 @@ class TestElement extends LitElement {
   @property({type: String, attribute: 'aria-label'})
   ariaLabel?: string;
 
-  private internalAriaChecked: 'true'|'false'|'mixed'|undefined = undefined;
+  protected internalAriaChecked: 'true'|'false'|'mixed'|undefined = undefined;
 
   @ariaProperty
   @property({attribute: 'aria-checked'})

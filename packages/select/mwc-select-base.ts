@@ -233,7 +233,7 @@ export abstract class SelectBase extends FormElement {
     return !!this.helper || !!this.validationMessage;
   }
 
-  private valueSetDirectly = false;
+  protected valueSetDirectly = false;
 
   validityTransform:
       ((value: string,

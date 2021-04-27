@@ -36,7 +36,7 @@ export class RadioBase extends FormElement {
 
   @query('input') protected formElement!: HTMLInputElement;
 
-  private _checked = false;
+  protected _checked = false;
 
   @property({type: Boolean}) global = false;
 
@@ -119,7 +119,7 @@ export class RadioBase extends FormElement {
 
   protected mdcFoundation!: MDCRadioFoundation;
 
-  private _selectionController?: SingleSelectionController;
+  protected _selectionController?: SingleSelectionController;
 
   /**
    * input's tabindex is updated based on checked status.
@@ -139,7 +139,7 @@ export class RadioBase extends FormElement {
   @property({attribute: 'aria-labelledby'})
   ariaLabelledBy?: string;
 
-  private rippleElement: Ripple|null = null;
+  protected rippleElement: Ripple|null = null;
 
   protected rippleHandlers: RippleHandlers = new RippleHandlers(() => {
     this.shouldRenderRipple = true;
@@ -207,16 +207,16 @@ export class RadioBase extends FormElement {
     };
   }
 
-  private handleFocus() {
+  protected handleFocus() {
     this.handleRippleFocus();
   }
 
-  private handleClick() {
+  protected handleClick() {
     // Firefox has weird behavior with radios if they are not focused
     this.formElement.focus();
   }
 
-  private handleBlur() {
+  protected handleBlur() {
     this.formElement.blur();
     this.rippleHandlers.endFocus();
   }

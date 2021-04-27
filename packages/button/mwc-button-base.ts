@@ -149,7 +149,7 @@ export class ButtonBase extends LitElement {
   }
 
   @eventOptions({passive: true})
-  private handleRippleActivate(evt?: Event) {
+  protected handleRippleActivate(evt?: Event) {
     const onUp = () => {
       window.removeEventListener('mouseup', onUp);
 
@@ -160,23 +160,23 @@ export class ButtonBase extends LitElement {
     this.rippleHandlers.startPress(evt);
   }
 
-  private handleRippleDeactivate() {
+  protected handleRippleDeactivate() {
     this.rippleHandlers.endPress();
   }
 
-  private handleRippleMouseEnter() {
+  protected handleRippleMouseEnter() {
     this.rippleHandlers.startHover();
   }
 
-  private handleRippleMouseLeave() {
+  protected handleRippleMouseLeave() {
     this.rippleHandlers.endHover();
   }
 
-  private handleRippleFocus() {
+  protected handleRippleFocus() {
     this.rippleHandlers.startFocus();
   }
 
-  private handleRippleBlur() {
+  protected handleRippleBlur() {
     this.rippleHandlers.endFocus();
   }
 }

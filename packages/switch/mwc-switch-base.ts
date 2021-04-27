@@ -57,7 +57,7 @@ export class SwitchBase extends FormElement {
 
   protected mdcFoundation!: MDCSwitchFoundation;
 
-  private changeHandler(e: Event) {
+  protected changeHandler(e: Event) {
     this.mdcFoundation.handleChange(e);
     // catch "click" event and sync properties
     this.checked = this.formElement.checked;
@@ -156,23 +156,23 @@ export class SwitchBase extends FormElement {
     this.rippleHandlers.startPress(event);
   }
 
-  private handleRippleDeactivate() {
+  protected handleRippleDeactivate() {
     this.rippleHandlers.endPress();
   }
 
-  private handleRippleMouseEnter() {
+  protected handleRippleMouseEnter() {
     this.rippleHandlers.startHover();
   }
 
-  private handleRippleMouseLeave() {
+  protected handleRippleMouseLeave() {
     this.rippleHandlers.endHover();
   }
 
-  private handleRippleFocus() {
+  protected handleRippleFocus() {
     this.rippleHandlers.startFocus();
   }
 
-  private handleRippleBlur() {
+  protected handleRippleBlur() {
     this.rippleHandlers.endFocus();
   }
 }

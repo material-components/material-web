@@ -40,9 +40,9 @@ export abstract class TopAppBarBaseBase extends BaseElement {
   // emitDecoratorMetadata is enabled, the HTMLSlotElement constructor will
   // be emitted into the runtime, which will cause an "HTMLSlotElement is
   // undefined" error in browsers that don't define it (e.g. IE11).
-  @query('slot[name="actionItems"]') private _actionItemsSlot!: HTMLElement;
+  @query('slot[name="actionItems"]') protected _actionItemsSlot!: HTMLElement;
 
-  private _scrollTarget!: HTMLElement|Window;
+  protected _scrollTarget!: HTMLElement|Window;
 
   @property({type: Boolean}) centerTitle = false;
 
@@ -60,7 +60,7 @@ export abstract class TopAppBarBaseBase extends BaseElement {
     this.registerScrollListener();
   }
 
-  private updateRootPosition() {
+  protected updateRootPosition() {
     if (this.mdcRoot) {
       const windowScroller = this.scrollTarget === window;
       // we add support for top-app-bar's tied to an element scroller.

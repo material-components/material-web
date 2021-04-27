@@ -39,25 +39,25 @@ export class RippleBase extends BaseElement implements RippleInterface {
 
   @property({type: Boolean}) selected = false;
 
-  @internalProperty() private hovering = false;
+  @internalProperty() protected hovering = false;
 
-  @internalProperty() private bgFocused = false;
+  @internalProperty() protected bgFocused = false;
 
-  @internalProperty() private fgActivation = false;
+  @internalProperty() protected fgActivation = false;
 
-  @internalProperty() private fgDeactivation = false;
+  @internalProperty() protected fgDeactivation = false;
 
-  @internalProperty() private fgScale = '';
+  @internalProperty() protected fgScale = '';
 
-  @internalProperty() private fgSize = '';
+  @internalProperty() protected fgSize = '';
 
-  @internalProperty() private translateStart = '';
+  @internalProperty() protected translateStart = '';
 
-  @internalProperty() private translateEnd = '';
+  @internalProperty() protected translateEnd = '';
 
-  @internalProperty() private leftPos = '';
+  @internalProperty() protected leftPos = '';
 
-  @internalProperty() private topPos = '';
+  @internalProperty() protected topPos = '';
 
   protected mdcFoundationClass = MDCRippleFoundation;
 

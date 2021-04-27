@@ -126,7 +126,7 @@ export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
     };
   }
 
-  private isMulti_ = false;
+  protected isMulti_ = false;
   private wrapFocus_ = false;
   private isVertical_ = true;
   private selectedIndex_: MWCListIndex = numbers.UNSET_INDEX;

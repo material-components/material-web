@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - all
   - Upgrade typescript to 4.1.4
+  - Change all fields from `private` to `protected`
 - `base`
   - Clean up RippleInterface now that the ripple directive has been removed
   - Remove `HTMLElementWithRipple` interface

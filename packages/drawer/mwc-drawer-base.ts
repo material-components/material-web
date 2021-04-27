@@ -91,9 +91,9 @@ export class DrawerBase extends BaseElement {
     };
   }
 
-  private _previousFocus: HTMLElement|null = null;
+  protected _previousFocus: HTMLElement|null = null;
 
-  private _handleScrimClick() {
+  protected _handleScrimClick() {
     if (this.mdcFoundation instanceof MDCModalDrawerFoundation) {
       this.mdcFoundation.handleScrimClick();
     }
