@@ -23,11 +23,11 @@
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@material/button": "=12.0.0-canary.197f64fa2.0",
-    "@material/elevation": "=12.0.0-canary.197f64fa2.0",
-    "@material/ripple": "=12.0.0-canary.197f64fa2.0",
-    "@material/shape": "=12.0.0-canary.197f64fa2.0",
-    "@material/theme": "=12.0.0-canary.197f64fa2.0"
+    "@material/button": "=12.0.0-canary.81e2d4ff3.0",
+    "@material/elevation": "=12.0.0-canary.81e2d4ff3.0",
+    "@material/ripple": "=12.0.0-canary.81e2d4ff3.0",
+    "@material/shape": "=12.0.0-canary.81e2d4ff3.0",
+    "@material/theme": "=12.0.0-canary.81e2d4ff3.0"
   },
   "publishConfig": {
     "access": "public"
