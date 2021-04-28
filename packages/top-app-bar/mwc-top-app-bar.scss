@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@use '@material/elevation';
+@use '@material/elevation/elevation-theme';
 @use '@material/top-app-bar/mdc-top-app-bar.scss';
 @use '@material/theme/theme';
 @use '@material/theme/custom-properties';
@@ -94,6 +94,6 @@ limitations under the License.
 .mdc-top-app-bar--fixed-scrolled {
   box-shadow: var(
     --mdc-top-app-bar-fixed-box-shadow,
-    #{elevation.elevation-box-shadow(4)}
+    #{elevation-theme.elevation-box-shadow(4)}
   );
 }

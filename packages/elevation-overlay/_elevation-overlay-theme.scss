@@ -17,12 +17,12 @@ limitations under the License.
 
 @use 'sass:map';
 
-@use '@material/elevation';
+@use '@material/elevation/elevation-theme';
 @use '@material/theme/css';
 
 $transparent-theme: (
   opacity: 0,
-  fill-color: elevation.$overlay-color,
+  fill-color: elevation-theme.$overlay-color,
   width: 100%,
   height: 100%,
 );

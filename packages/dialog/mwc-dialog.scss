@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 @use '@material/dialog';
-@use '@material/elevation';
+@use '@material/elevation/elevation-theme';
 @use '@material/feature-targeting' as feature;
 @use '@material/rtl';
 @use '@material/theme/theme';
@@ -32,7 +32,7 @@ limitations under the License.
 .mdc-dialog__surface {
   box-shadow: var(
     --mdc-dialog-box-shadow,
-    #{elevation.elevation-box-shadow(24)}
+    #{elevation-theme.elevation-box-shadow(24)}
   );
 }
 

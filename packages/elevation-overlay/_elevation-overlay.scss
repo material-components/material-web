@@ -17,8 +17,8 @@ limitations under the License.
 
 /* stylelint-disable selector-class-pattern */
 /* NOTE: We disable `selector-class-pattern` above to allow using `mdc-` class * selectors. */
-@use '@material/elevation/elevation';
 @use '@material/elevation/elevation-theme';
+@use '@material/elevation/elevation';
 @use '@material/theme/custom-properties';
 @use '@material/theme/theme';
 
