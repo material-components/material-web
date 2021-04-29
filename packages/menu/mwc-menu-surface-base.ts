@@ -176,7 +176,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
 
   protected previouslyFocused: HTMLElement|Element|null = null;
   protected previousAnchor: HTMLElement|null = null;
-  protected onBodyClickBound: (evt: MouseEvent) => void = () => undefined;
+  protected onDocumentClickBound: (evt: MouseEvent) => void = () => undefined;
 
   render() {
     const classes = {
@@ -198,8 +198,8 @@ export abstract class MenuSurfaceBase extends BaseElement {
           class="mdc-menu-surface ${classMap(classes)}"
           style="${styleMap(styles)}"
           @keydown=${this.onKeydown}
-          @opened=${this.registerBodyClick}
-          @closed=${this.deregisterBodyClick}>
+          @opened=${this.registerDocumentClick}
+          @closed=${this.deregisterDocumentClick}>
         <slot></slot>
       </div>`;
   }
@@ -330,7 +330,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
     }
   }
 
-  protected onBodyClick(evt: MouseEvent) {
+  protected onDocumentClick(evt: MouseEvent) {
     if (this.stayOpenOnBodyClick) {
       return;
     }
@@ -340,16 +340,16 @@ export abstract class MenuSurfaceBase extends BaseElement {
     }
   }
 
-  protected registerBodyClick() {
-    this.onBodyClickBound = this.onBodyClick.bind(this);
+  protected registerDocumentClick() {
+    this.onDocumentClickBound = this.onDocumentClick.bind(this);
     // capture otherwise listener closes menu after quick menu opens
-    document.body.addEventListener(
-        'click', this.onBodyClickBound, {passive: true, capture: true});
+    document.addEventListener(
+        'click', this.onDocumentClickBound, {passive: true, capture: true});
   }
 
-  protected deregisterBodyClick() {
-    document.body.removeEventListener(
-        'click', this.onBodyClickBound, {capture: true});
+  protected deregisterDocumentClick() {
+    document.removeEventListener(
+        'click', this.onDocumentClickBound, {capture: true});
   }
 
   close() {
