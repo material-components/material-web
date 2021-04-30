@@ -4,9 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+<!-- ## Unreleased -->
+
+## [v0.21.0] - 2021-04-30
 
 ### Changed
+
 - all
   - Upgrade typescript to 4.1.4
   - Change all fields from `private` to `protected`
@@ -30,6 +33,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     contexts e.g. dialog.
 
 ### Fixed
+
 - all
   - Format sass files with prettier
 - `circular-progress`
@@ -60,6 +64,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Clean up fixture typing so that tests work when reordered
 
 ### Added
+
 - `base`
   - Add `@ariaProperty` decorator
 - `checkbox`
