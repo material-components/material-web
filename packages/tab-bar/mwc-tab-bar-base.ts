@@ -184,12 +184,11 @@ export class TabBarBase extends BaseElement {
       // @ts-ignore
       result = super._getUpdateComplete();
     }
-    return result.then(() => this.scrollerElement.updateComplete)
-        .then(() => {
-          if (this.mdcFoundation === undefined) {
-            this.createFoundation();
-          }
-        });
+    return result.then(() => this.scrollerElement.updateComplete).then(() => {
+      if (this.mdcFoundation === undefined) {
+        this.createFoundation();
+      }
+    });
   }
   // tslint:enable:ban-ts-ignore
 
