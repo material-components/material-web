@@ -19,7 +19,7 @@ import {BaseElement} from '@material/mwc-base/base-element';
 import {RippleInterface} from '@material/mwc-base/utils';
 import {MDCRippleAdapter} from '@material/ripple/adapter';
 import MDCRippleFoundation from '@material/ripple/foundation';
-import {html, internalProperty, property, query, TemplateResult} from 'lit-element';
+import {html, internalProperty, property, PropertyValues, query, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
 
@@ -182,6 +182,18 @@ export class RippleBase extends BaseElement implements RippleInterface {
     } else {
       this.updateComplete.then(fn);
     }
+  }
+
+  protected update(changedProperties: PropertyValues<this>) {
+    if (changedProperties.has('disabled')) {
+      // stop hovering when ripple is disabled to prevent a stuck "hover" state
+      // When re-enabled, the outer component will get a `mouseenter` event on
+      // the first movement, which will call `startHover()`
+      if (this.disabled) {
+        this.endHover();
+      }
+    }
+    super.update(changedProperties);
   }
 
   /** @soyTemplate */

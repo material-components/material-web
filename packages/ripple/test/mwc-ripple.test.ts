@@ -94,5 +94,13 @@ suite('mwc-ripple', () => {
       await element.updateComplete;
       assert.equal(internals.hovering, false);
     });
+
+    test('stops hovering when disabled', async () => {
+      element.startHover();
+      await element.updateComplete;
+      element.disabled = true;
+      await element.updateComplete;
+      assert.equal(internals.hovering, false);
+    });
   });
 });

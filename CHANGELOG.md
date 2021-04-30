@@ -53,6 +53,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Fix issue with diff indices of different digit length
 - `ripple`
   - Fix IE11 errors with `isActive()`
+  - Fix cases where `hover` effect is stuck when toggling `disabled`
 - `select`
   - menu not opening when disabled initially set
 - `tab`
