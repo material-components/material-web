@@ -153,25 +153,25 @@ export abstract class ListBase extends BaseElement implements Layoutable {
 
   itemsReady = Promise.resolve([]);
 
-  // tslint:disable:ban-ts-ignore
   protected async _getUpdateComplete() {
+    return this.getUpdateComplete();
+  }
+
+  // tslint:disable:ban-ts-ignore
+  protected async getUpdateComplete() {
     let result = false;
     // @ts-ignore
-    if (super._getUpdateComplete) {
-      // @ts-ignore
-      await super._getUpdateComplete();
-    } else {
+    if (super.getUpdateComplete) {
       // @ts-ignore
       result = await super.getUpdateComplete();
+    } else {
+      // @ts-ignore
+      await super._getUpdateComplete();
     }
     await this.itemsReady;
     return result;
   }
   // tslint:enable:ban-ts-ignore
-
-  protected async getUpdateComplete() {
-    return this._getUpdateComplete();
-  }
 
   protected get assignedElements(): Element[] {
     const slot = this.slotElement;

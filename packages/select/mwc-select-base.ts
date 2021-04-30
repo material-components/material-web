@@ -655,25 +655,25 @@ export abstract class SelectBase extends FormElement {
     this.formElement.setCustomValidity(message);
   }
 
-  // tslint:disable:ban-ts-ignore
   protected async _getUpdateComplete() {
+    return this.getUpdateComplete();
+  }
+
+  // tslint:disable:ban-ts-ignore
+  protected async getUpdateComplete() {
     let result = false;
     await this._menuUpdateComplete;
     // @ts-ignore
-    if (super._getUpdateComplete) {
-      // @ts-ignore
-      await super._getUpdateComplete();
-    } else {
+    if (super.getUpdateComplete) {
       // @ts-ignore
       result = await super.getUpdateComplete();
+    } else {
+      // @ts-ignore
+      await super._getUpdateComplete();
     }
     return result;
   }
   // tslint:enable:ban-ts-ignore
-
-  getUpdateComplete() {
-    return this._getUpdateComplete();
-  }
 
   protected async firstUpdated() {
     const menuElement = this.menuElement;
