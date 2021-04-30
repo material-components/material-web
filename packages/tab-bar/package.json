@@ -21,7 +21,7 @@
     "@material/mwc-tab-scroller": "^0.20.0",
     "@material/tab": "=12.0.0-canary.197f64fa2.0",
     "@material/tab-bar": "=12.0.0-canary.197f64fa2.0",
-    "lit-element": "^2.3.0",
+    "lit-element": "~2.4.0",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
