@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-linear-progress",
-  "version": "0.20.0",
+  "version": "0.21.0",
   "description": "Material Design linear progress web component",
   "keywords": [
     "material design",
@@ -18,7 +18,7 @@
   "dependencies": {
     "@material/linear-progress": "=12.0.0-canary.c50d20bab.0",
     "@material/theme": "=12.0.0-canary.c50d20bab.0",
-    "lit-element": "^2.3.0",
+    "lit-element": "~2.4.0",
     "lit-html": "^1.1.2",
     "tslib": "^2.0.1"
   },

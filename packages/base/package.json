@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-base",
-  "version": "0.20.0",
+  "version": "0.21.0",
   "description": "",
   "main": "base-element.js",
   "module": "base-element.js",
@@ -13,7 +13,7 @@
   "dependencies": {
     "@material/base": "=12.0.0-canary.c50d20bab.0",
     "@material/dom": "=12.0.0-canary.c50d20bab.0",
-    "lit-element": "^2.3.0",
+    "lit-element": "~2.4.0",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
