@@ -352,25 +352,25 @@ export abstract class MenuBase extends BaseElement {
     this.open = false;
   }
 
+  protected async _getUpdateComplete() {
+    return this.getUpdateComplete();
+  }
+
   // tslint:disable:ban-ts-ignore
-  async _getUpdateComplete() {
+  protected async getUpdateComplete() {
     let result = false;
     await this._listUpdateComplete;
     // @ts-ignore
-    if (super._getUpdateComplete) {
-      // @ts-ignore
-      await super._getUpdateComplete();
-    } else {
+    if (super.getUpdateComplete) {
       // @ts-ignore
       result = await super.getUpdateComplete();
+    } else {
+      // @ts-ignore
+      await super._getUpdateComplete();
     }
     return result;
   }
   // tslint:enable:ban-ts-ignore
-
-  getUpdateComplete() {
-    return this._getUpdateComplete();
-  }
 
   protected async firstUpdated() {
     super.firstUpdated();

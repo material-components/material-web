@@ -169,29 +169,28 @@ export class TabBarBase extends BaseElement {
     // the scroller element.
   }
 
+  protected async _getUpdateComplete() {
+    return this.getUpdateComplete();
+  }
+
   // tslint:disable:ban-ts-ignore
-  protected _getUpdateComplete() {
-    let superPromise;
+  protected async getUpdateComplete() {
+    let result;
     // @ts-ignore
-    if (super._getUpdateComplete) {
+    if (super.getUpdateComplete) {
       // @ts-ignore
-      superPromise = super._getUpdateComplete();
+      result = super.getUpdateComplete();
     } else {
       // @ts-ignore
-      superPromise = super.getUpdateComplete();
+      result = super._getUpdateComplete();
     }
-    return superPromise.then(() => this.scrollerElement.updateComplete)
-        .then(() => {
-          if (this.mdcFoundation === undefined) {
-            this.createFoundation();
-          }
-        });
+    return result.then(() => this.scrollerElement.updateComplete).then(() => {
+      if (this.mdcFoundation === undefined) {
+        this.createFoundation();
+      }
+    });
   }
   // tslint:enable:ban-ts-ignore
-
-  protected getUpdateComplete() {
-    return this._getUpdateComplete();
-  }
 
   scrollIndexIntoView(index: number) {
     this.mdcFoundation.scrollIntoView(index);
