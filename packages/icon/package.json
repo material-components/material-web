@@ -16,7 +16,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "lit-element": "~2.4.0",
+    "lit-element": "^2.5.0",
     "tslib": "^2.0.1"
   },
   "publishConfig": {
