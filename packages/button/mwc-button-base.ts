@@ -24,6 +24,9 @@ import {classMap} from 'lit-html/directives/class-map';
 
 /** @soyCompatible */
 export class ButtonBase extends LitElement {
+  static shadowRootOptions:
+      ShadowRootInit = {mode: 'open', delegatesFocus: true};
+
   @property({type: Boolean, reflect: true}) raised = false;
 
   @property({type: Boolean, reflect: true}) unelevated = false;
@@ -67,10 +70,6 @@ export class ButtonBase extends LitElement {
         html`<mwc-ripple class="ripple" .primary="${!filled}" .disabled="${
             this.disabled}"></mwc-ripple>` :
         '';
-  }
-
-  protected createRenderRoot() {
-    return this.attachShadow({mode: 'open', delegatesFocus: true});
   }
 
   focus() {
