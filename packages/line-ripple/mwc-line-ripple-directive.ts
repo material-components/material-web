@@ -16,7 +16,7 @@ limitations under the License.
 */
 import {MDCLineRippleAdapter} from '@material/line-ripple/adapter';
 import {MDCLineRippleFoundation} from '@material/line-ripple/foundation';
-import {directive, PropertyPart} from 'lit-html';
+import {AttributePart, directive, Directive, DirectiveParameters, PartInfo, PartType} from 'lit-html/directive';
 
 export interface LineRipple extends HTMLElement {
   lineRippleFoundation: MDCLineRippleFoundation;
@@ -38,18 +38,45 @@ const createAdapter = (lineElement: HTMLElement): MDCLineRippleAdapter => {
   };
 };
 
-const partToFoundationMap =
-    new WeakMap<PropertyPart, MDCLineRippleFoundation>();
+export class LineRippleDirective extends Directive {
+  private previousPart: AttributePart|null = null;
+  protected foundation: MDCLineRippleFoundation|null = null;
 
-export const lineRipple = directive(() => (part: PropertyPart) => {
-  const lastFoundation = partToFoundationMap.get(part);
-  if (!lastFoundation) {
-    const lineElement = part.committer.element as LineRipple;
-    lineElement.classList.add('mdc-line-ripple');
-    const adapter = createAdapter(lineElement);
-    const foundation = new MDCLineRippleFoundation(adapter);
-    foundation.init();
-    part.setValue(foundation);
-    partToFoundationMap.set(part, foundation);
+  constructor(partInfo: PartInfo) {
+    super(partInfo);
+
+    switch (partInfo.type) {
+      case PartType.ATTRIBUTE:
+      case PartType.PROPERTY:
+        return;
+      default:
+        throw new Error(
+            'LineRipple only support attribute and property parts.');
+    }
   }
-});
+
+  /**
+   * There is no PropertyPart in Lit 2 so far. For more info see:
+   * https://github.com/lit/lit/issues/1863
+   */
+  update(part: AttributePart, _params: DirectiveParameters<this>) {
+    if (this.previousPart !== part) {
+      if (this.foundation) {
+        this.foundation.destroy();
+      }
+      this.previousPart = part;
+      const lineElement = part.element as LineRipple;
+      lineElement.classList.add('mdc-line-ripple');
+      const adapter = createAdapter(lineElement);
+      this.foundation = new MDCLineRippleFoundation(adapter);
+      this.foundation.init();
+    }
+    return this.render();
+  }
+
+  render(): MDCLineRippleFoundation|null {
+    return this.foundation;
+  }
+}
+
+export const lineRipple = directive(LineRippleDirective);
