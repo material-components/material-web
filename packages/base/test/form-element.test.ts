@@ -16,7 +16,7 @@
  */
 
 import {FormElement} from '@material/mwc-base/form-element';
-import {customElement, query} from 'lit-element';
+import {customElement, LitElement, query} from 'lit-element';
 import {html} from 'lit-html';
 
 import {fixture, TestFixture} from '../../../test/src/util/helpers';
@@ -53,9 +53,10 @@ class CustomClickFormElement extends FormElement {
   protected createAdapter() {
     return {};
   }
-  protected createRenderRoot() {
-    return this.attachShadow({mode: 'open', delegatesFocus: true});
-  }
+  static shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   click() {
     if (this.indirectFormElement) {
