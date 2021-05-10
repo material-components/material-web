@@ -15,22 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import MDCSnackbarFoundation from '@material/snackbar/foundation';
-import {directive, NodePart} from 'lit-html';
+import {html, render, TemplateResult} from 'lit-html';
+import {AsyncDirective} from 'lit-html/async-directive';
+import {ChildPart, directive, DirectiveParameters, PartInfo, PartType} from 'lit-html/directive';
 
-const {ARIA_LIVE_LABEL_TEXT_ATTR} = MDCSnackbarFoundation.strings;
 const {ARIA_LIVE_DELAY_MS} = MDCSnackbarFoundation.numbers;
-
-/**
- * Maps an accessibleLabel container part to its label element and the timeoutID
- * of the task that restores its text content from ::before back to textContent.
- */
-const stateMap = new WeakMap<NodePart, State>();
-
-interface State {
-  labelEl: Element;
-  timerId: number|null;
-}
-
 /**
  * A lit directive implementation of @material/mdc-snackbar/util.ts#announce,
  * which does some tricks to ensure that snackbar labels will be handled
@@ -50,108 +39,134 @@ interface State {
  * swap is strictly required, can we at elast make this directive more generic
  * (e.g. so that we don't hard-code the name of the label class).
  */
-export const accessibleSnackbarLabel =
-    directive((labelText: string, isOpen: boolean) => (part: NodePart) => {
-      if (!isOpen) {
-        // We never need to do anything if we're closed, even if the label also
-        // changed in this batch of changes. We'll fully reset the label text
-        // whenever we next open.
-        return;
-      }
+class AccessibleSnackbarLabel extends AsyncDirective {
+  protected labelEl: Element|null = null;
+  protected timerId: number|null = null;
+  protected previousPart: ChildPart|null = null;
 
-      let maybeState = stateMap.get(part);
-      if (maybeState === undefined) {
-        // Create the label element once, the first time we open.
-        const labelEl = document.createElement('div');
-        labelEl.setAttribute('class', 'mdc-snackbar__label');
-        labelEl.setAttribute('role', 'status');
-        labelEl.setAttribute('aria-live', 'polite');
-        labelEl.textContent = labelText;
-        // endNode can't be a Document, so it must have a parent.
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        part.endNode.parentNode!.insertBefore(labelEl, part.endNode);
-        maybeState = {
-          labelEl,
-          timerId: null,
-        };
-        stateMap.set(part, maybeState);
-        // No need to do anything more for ARIA the first time we open. We just
-        // created the element with the current label, so screen readers will
-        // detect it fine.
-        return;
-      }
+  constructor(partInfo: PartInfo) {
+    super(partInfo);
 
-      const state = maybeState;
-      const labelEl = state.labelEl;
+    if (partInfo.type !== PartType.CHILD) {
+      throw new Error('AccessibleSnackbarLabel only supports child parts.');
+    }
+  }
 
-      // Temporarily disable `aria-live` to prevent JAWS+Firefox from announcing
-      // the message twice.
-      labelEl.setAttribute('aria-live', 'off');
+  update(part: ChildPart, [labelText, isOpen]: DirectiveParameters<this>) {
+    if (!isOpen) {
+      // We never need to do anything if we're closed, even if the label also
+      // changed in this batch of changes. We'll fully reset the label text
+      // whenever we next open.
+      return;
+    }
 
-      // Temporarily clear `textContent` to force a DOM mutation event that will
-      // be detected by screen readers. `aria-live` elements are only announced
-      // when the element's `textContent` *changes*, so snackbars sent to the
-      // browser in the initial HTML response won't be read unless we clear the
-      // element's `textContent` first. Similarly, displaying the same snackbar
-      // message twice in a row doesn't trigger a DOM mutation event, so screen
-      // readers won't announce the second message unless we first clear
-      // `textContent`.
-      //
-      // We have to clear the label text two different ways to make it work in
-      // all browsers and screen readers:
-      //
-      //   1. `textContent = ''` is required for IE11 + JAWS
-      //   2. `innerHTML = '&nbsp;'` is required for Chrome + JAWS and NVDA
-      //
-      // All other browser/screen reader combinations support both methods.
-      //
-      // The wrapper `<span>` visually hides the space character so that it
-      // doesn't cause jank when added/removed. N.B.: Setting `position:
-      // absolute`, `opacity: 0`, or `height: 0` prevents Chrome from detecting
-      // the DOM change.
-      //
-      // This technique has been tested in:
-      //
-      //   * JAWS 2019:
-      //       - Chrome 70
-      //       - Firefox 60 (ESR)
-      //       - IE 11
-      //   * NVDA 2018:
-      //       - Chrome 70
-      //       - Firefox 60 (ESR)
-      //       - IE 11
-      //   * ChromeVox 53
-      labelEl.textContent = '';
-      labelEl.innerHTML =
-          '<span style="display: inline-block; width: 0; height: 1px;">' +
-          '&nbsp;</span>';
+    if (this.labelEl === null) {
+      // Create the label element once, the first time we open.
+      const wrapperEl = document.createElement('div');
+      const labelTemplate =
+          html`<div class="mdc-snackbar__label" role="status" aria-live="polite">${
+              labelText}</div>`;
 
-      // Prevent visual jank by temporarily displaying the label text in the
-      // ::before pseudo-element. CSS generated content is normally announced by
-      // screen readers (except in IE 11; see
-      // https://tink.uk/accessibility-support-for-css-generated-content/);
-      // however, `aria-live` is turned off, so this DOM update will be ignored
-      // by screen readers.
-      labelEl.setAttribute(ARIA_LIVE_LABEL_TEXT_ATTR, labelText);
+      render(labelTemplate, wrapperEl);
 
-      if (state.timerId !== null) {
-        // We hadn't yet swapped the textContent back in since the last time we
-        // opened or changed the label. Cancel that task so we don't clobber the
-        // new label.
-        clearTimeout(state.timerId);
-      }
+      const labelEl = wrapperEl.firstElementChild!;
+      // endNode can't be a Document, so it must have a parent.
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      part.endNode?.parentNode!.insertBefore(labelEl, part.endNode);
+      this.labelEl = labelEl;
+      // No need to do anything more for ARIA the first time we open. We just
+      // created the element with the current label, so screen readers will
+      // detect it fine.
+      return labelEl;
+    }
 
-      state.timerId = window.setTimeout(() => {
-        state.timerId = null;
+    const labelEl = this.labelEl;
 
-        // Allow screen readers to announce changes to the DOM again.
-        labelEl.setAttribute('aria-live', 'polite');
+    // Temporarily disable `aria-live` to prevent JAWS+Firefox from announcing
+    // the message twice.
+    labelEl.setAttribute('aria-live', 'off');
 
-        // Remove the message from the ::before pseudo-element.
-        labelEl.removeAttribute(ARIA_LIVE_LABEL_TEXT_ATTR);
+    // Temporarily clear `textContent` to force a DOM mutation event that will
+    // be detected by screen readers. `aria-live` elements are only announced
+    // when the element's `textContent` *changes*, so snackbars sent to the
+    // browser in the initial HTML response won't be read unless we clear the
+    // element's `textContent` first. Similarly, displaying the same snackbar
+    // message twice in a row doesn't trigger a DOM mutation event, so screen
+    // readers won't announce the second message unless we first clear
+    // `textContent`.
+    //
+    // We have to clear the label text two different ways to make it work in
+    // all browsers and screen readers:
+    //
+    //   1. `textContent = ''` is required for IE11 + JAWS
+    //   2. `innerHTML = '&nbsp;'` is required for Chrome + JAWS and NVDA
+    //
+    // All other browser/screen reader combinations support both methods.
+    //
+    // The wrapper `<span>` visually hides the space character so that it
+    // doesn't cause jank when added/removed. N.B.: Setting `position:
+    // absolute`, `opacity: 0`, or `height: 0` prevents Chrome from detecting
+    // the DOM change.
+    //
+    // This technique has been tested in:
+    //
+    //   * JAWS 2019:
+    //       - Chrome 70
+    //       - Firefox 60 (ESR)
+    //       - IE 11
+    //   * NVDA 2018:
+    //       - Chrome 70
+    //       - Firefox 60 (ESR)
+    //       - IE 11
+    //   * ChromeVox 53
+    labelEl.textContent = '';
+    const spaceTemplate =
+        html`<span style="display: inline-block; width: 0; height: 1px;">&nbsp;</span>`;
+    render(spaceTemplate, labelEl);
 
-        // Restore the original label text, which will be announced by
-        // screen readers.
-        labelEl.textContent = labelText;
-      }, ARIA_LIVE_DELAY_MS);
-    });
+    // Prevent visual jank by temporarily displaying the label text in the
+    // ::before pseudo-element. CSS generated content is normally announced by
+    // screen readers (except in IE 11; see
+    // https://tink.uk/accessibility-support-for-css-generated-content/);
+    // however, `aria-live` is turned off, so this DOM update will be ignored
+    // by screen readers.
+    labelEl.setAttribute('data-mdc-snackbar-label-text', labelText);
+
+    if (this.timerId !== null) {
+      // We hadn't yet swapped the textContent back in since the last time we
+      // opened or changed the label. Cancel that task so we don't clobber the
+      // new label.
+      clearTimeout(this.timerId);
+    }
+
+    this.timerId = window.setTimeout(() => {
+      this.timerId = null;
+
+      // Allow screen readers to announce changes to the DOM again.
+      labelEl.setAttribute('aria-live', 'polite');
+
+      // Remove the message from the ::before pseudo-element.
+      labelEl.removeAttribute('data-mdc-snackbar-label-text');
+
+      // Restore the original label text, which will be announced by
+      // screen readers.
+      labelEl.textContent = labelText;
+
+      this.setValue(this.labelEl);
+    }, ARIA_LIVE_DELAY_MS);
+
+    return labelEl;
+  }
+
+  render(labelText: string, isOpen: boolean): TemplateResult {
+    if (!isOpen) {
+      return html``;
+    }
+
+    return html`
+      <div class="mdc-snackbar__label" role="status" aria-live="polite">${
+        labelText}</div>`;
+  }
+}
+
+export const accessibleSnackbarLabel = directive(AccessibleSnackbarLabel);

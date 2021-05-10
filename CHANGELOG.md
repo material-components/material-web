@@ -19,18 +19,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Clean up `ripple` property typing
 - `checkbox`
   - Remove underscores from internal event handler functions
-- `ripple`
-  - Use css.declaration in ripple-theme.scss
-  - Remove RippleAPI interface, merged with RippleInterface in base
-  - Remove mwc-ripple-global.scss, which was only used for the ripple directive
+- `floating-label`
+  - Using new directive syntax
+- `line-ripple`
+  - Using new directive syntax
 - `menu`
   - Added new `closing` event triggering any immediate action that must be taken
     without waiting for animations to finish.
   - BREAKING(VISUAL): Added a min-width of 112px to be in line with material
     spec.
+- `ripple`
+  - Use css.declaration in ripple-theme.scss
+  - Remove RippleAPI interface, merged with RippleInterface in base
+  - Remove mwc-ripple-global.scss, which was only used for the ripple directive
 - `select`
   - Added `fixedMenuPosition` to allow menu overlaying in nested absolute
     contexts e.g. dialog.
+- `snackbar`
+  - Removed directive and inlined implementation to element
+
 
 ### Fixed
 
