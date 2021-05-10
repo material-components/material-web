@@ -16,7 +16,7 @@
  */
 import {MDCResizeObserver, WithMDCResizeObserver} from '@material/linear-progress/types';
 import {ariaProperty} from '@material/mwc-base/aria-property';
-import {html, internalProperty, LitElement, property, PropertyValues, query, TemplateResult} from 'lit-element';
+import {html, LitElement, property, PropertyValues, query, state, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
 import {styleMap} from 'lit-html/directives/style-map';
@@ -38,13 +38,13 @@ export class LinearProgressBase extends LitElement {
   /** @soyPrefixAttribute */
   @ariaProperty @property({attribute: 'aria-label'}) ariaLabel?: string;
 
-  @internalProperty() protected stylePrimaryHalf = '';
-  @internalProperty() protected stylePrimaryFull = '';
-  @internalProperty() protected styleSecondaryQuarter = '';
-  @internalProperty() protected styleSecondaryHalf = '';
-  @internalProperty() protected styleSecondaryFull = '';
-  @internalProperty() protected animationReady = true;
-  @internalProperty() protected closedAnimationOff = false;
+  @state() protected stylePrimaryHalf = '';
+  @state() protected stylePrimaryFull = '';
+  @state() protected styleSecondaryQuarter = '';
+  @state() protected styleSecondaryHalf = '';
+  @state() protected styleSecondaryFull = '';
+  @state() protected animationReady = true;
+  @state() protected closedAnimationOff = false;
   protected resizeObserver: MDCResizeObserver|null = null;
 
   connectedCallback() {

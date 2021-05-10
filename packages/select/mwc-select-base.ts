@@ -33,7 +33,7 @@ import {Menu} from '@material/mwc-menu';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCSelectAdapter} from '@material/select/adapter';
 import MDCSelectFoundation from '@material/select/foundation';
-import {eventOptions, html, internalProperty, property, query} from 'lit-element';
+import {eventOptions, html, property, query, state} from 'lit-element';
 import {nothing} from 'lit-html';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
@@ -147,9 +147,9 @@ export abstract class SelectBase extends FormElement {
   })
   label = '';
 
-  @internalProperty() protected outlineOpen = false;
+  @state() protected outlineOpen = false;
 
-  @internalProperty() protected outlineWidth = 0;
+  @state() protected outlineWidth = 0;
 
   @property({type: String})
   @observer(function(this: SelectBase, value: string) {
@@ -165,11 +165,11 @@ export abstract class SelectBase extends FormElement {
   })
   value = '';
 
-  @internalProperty() protected selectedText = '';
+  @state() protected selectedText = '';
 
   @property({type: String}) icon = '';
 
-  @internalProperty() protected menuOpen = false;
+  @state() protected menuOpen = false;
 
   @property({type: String}) helper = '';
 
@@ -181,7 +181,7 @@ export abstract class SelectBase extends FormElement {
 
   @property({type: Boolean}) naturalMenuWidth = false;
 
-  @internalProperty() protected isUiValid = true;
+  @state() protected isUiValid = true;
 
   @property({type: Boolean}) fixedMenuPosition = false;
 

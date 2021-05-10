@@ -23,7 +23,7 @@ import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {MDCSwitchAdapter} from '@material/switch/deprecated/adapter';
 import MDCSwitchFoundation from '@material/switch/deprecated/foundation';
-import {eventOptions, html, internalProperty, property, query, queryAsync} from 'lit-element';
+import {eventOptions, html, property, query, queryAsync, state} from 'lit-element';
 import {ifDefined} from 'lit-html/directives/if-defined';
 
 export class SwitchBase extends FormElement {
@@ -53,7 +53,7 @@ export class SwitchBase extends FormElement {
 
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 
-  @internalProperty() protected shouldRenderRipple = false;
+  @state() protected shouldRenderRipple = false;
 
   protected mdcFoundation!: MDCSwitchFoundation;
 

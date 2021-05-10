@@ -20,7 +20,7 @@ import {ariaProperty} from '@material/mwc-base/aria-property';
 import {FormElement} from '@material/mwc-base/form-element';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {eventOptions, html, internalProperty, property, PropertyValues, query, queryAsync, TemplateResult} from 'lit-element';
+import {eventOptions, html, property, PropertyValues, query, queryAsync, state, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
 
@@ -62,11 +62,11 @@ export class CheckboxBase extends FormElement {
    */
   @property({type: Boolean}) reducedTouchTarget = false;
 
-  @internalProperty() protected animationClass = '';
+  @state() protected animationClass = '';
 
-  @internalProperty() protected shouldRenderRipple = false;
+  @state() protected shouldRenderRipple = false;
 
-  @internalProperty() protected focused = false;
+  @state() protected focused = false;
 
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 

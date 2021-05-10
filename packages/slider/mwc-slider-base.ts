@@ -20,7 +20,7 @@ import {addHasRemoveClass, EventType, FormElement, SpecificEventListener} from '
 import {observer} from '@material/mwc-base/observer';
 import {MDCSliderAdapter} from '@material/slider/adapter';
 import MDCSliderFoundation from '@material/slider/foundation';
-import {eventOptions, html, internalProperty, property, PropertyValues, query, TemplateResult} from 'lit-element';
+import {eventOptions, html, property, PropertyValues, query, state, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
 import {styleMap} from 'lit-html/directives/style-map';
@@ -88,10 +88,10 @@ export class SliderBase extends FormElement {
   })
   markers = false;
 
-  @internalProperty() protected pinMarkerText = '';
-  @internalProperty() protected trackMarkerContainerStyles = {};
-  @internalProperty() protected thumbContainerStyles = {};
-  @internalProperty() protected trackStyles = {};
+  @state() protected pinMarkerText = '';
+  @state() protected trackMarkerContainerStyles = {};
+  @state() protected thumbContainerStyles = {};
+  @state() protected trackStyles = {};
 
   /** @soyPrefixAttribute */
   @ariaProperty @property({attribute: 'aria-label'}) ariaLabel?: string;

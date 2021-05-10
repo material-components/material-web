@@ -22,7 +22,7 @@ import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {MDCRadioAdapter} from '@material/radio/adapter';
 import MDCRadioFoundation from '@material/radio/foundation';
-import {eventOptions, html, internalProperty, property, query, queryAsync, TemplateResult} from 'lit-element';
+import {eventOptions, html, property, query, queryAsync, state, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
 
@@ -127,7 +127,7 @@ export class RadioBase extends FormElement {
    */
   @property({type: Number}) formElementTabIndex = 0;
 
-  @internalProperty() protected shouldRenderRipple = false;
+  @state() protected shouldRenderRipple = false;
 
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 

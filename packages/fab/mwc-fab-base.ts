@@ -18,7 +18,7 @@ import '@material/mwc-ripple/mwc-ripple';
 
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {eventOptions, html, internalProperty, LitElement, property, queryAsync, TemplateResult} from 'lit-element';
+import {eventOptions, html, LitElement, property, queryAsync, state, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
 /**
@@ -44,7 +44,7 @@ export class FabBase extends LitElement {
 
   @property() label = '';
 
-  @internalProperty() protected shouldRenderRipple = false;
+  @state() protected shouldRenderRipple = false;
 
   protected rippleHandlers = new RippleHandlers(() => {
     this.shouldRenderRipple = true;

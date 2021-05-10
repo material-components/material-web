@@ -19,7 +19,7 @@ import '@material/mwc-ripple/mwc-ripple';
 import {ariaProperty} from '@material/mwc-base/aria-property';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {eventOptions, html, internalProperty, LitElement, property, query, queryAsync, TemplateResult} from 'lit-element';
+import {eventOptions, html, LitElement, property, query, queryAsync, state, TemplateResult} from 'lit-element';
 
 /** @soyCompatible */
 export class IconButtonBase extends LitElement {
@@ -36,7 +36,7 @@ export class IconButtonBase extends LitElement {
 
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 
-  @internalProperty() protected shouldRenderRipple = false;
+  @state() protected shouldRenderRipple = false;
 
   protected rippleHandlers: RippleHandlers = new RippleHandlers(() => {
     this.shouldRenderRipple = true;

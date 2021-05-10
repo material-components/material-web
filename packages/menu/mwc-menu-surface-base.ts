@@ -20,7 +20,7 @@ import MDCMenuSurfaceFoundation from '@material/menu-surface/foundation';
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
 import {deepActiveElementPath, doesElementContainFocus} from '@material/mwc-base/utils';
-import {html, internalProperty, property, query} from 'lit-element';
+import {html, property, query, state} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
 
@@ -117,7 +117,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
 
   @property({type: Boolean}) stayOpenOnBodyClick: boolean = false;
 
-  @internalProperty()
+  @state()
   @observer(function(this: MenuSurfaceBase, value: CornerEnum) {
     if (this.mdcFoundation) {
       if (value) {
@@ -165,12 +165,12 @@ export abstract class MenuSurfaceBase extends BaseElement {
   })
   corner: Corner = 'TOP_START';
 
-  @internalProperty() protected styleTop = '';
-  @internalProperty() protected styleLeft = '';
-  @internalProperty() protected styleRight = '';
-  @internalProperty() protected styleBottom = '';
-  @internalProperty() protected styleMaxHeight = '';
-  @internalProperty() protected styleTransformOrigin = '';
+  @state() protected styleTop = '';
+  @state() protected styleLeft = '';
+  @state() protected styleRight = '';
+  @state() protected styleBottom = '';
+  @state() protected styleMaxHeight = '';
+  @state() protected styleTransformOrigin = '';
 
   anchor: HTMLElement|null = null;
 

@@ -25,7 +25,7 @@ import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter';
 import MDCTextFieldFoundation from '@material/textfield/foundation';
-import {eventOptions, html, internalProperty, property, PropertyValues, query, TemplateResult} from 'lit-element';
+import {eventOptions, html, property, PropertyValues, query, state, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
 import {live} from 'lit-html/directives/live';
@@ -200,10 +200,10 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: String}) autocapitalize = '';
 
-  @internalProperty() protected outlineOpen = false;
-  @internalProperty() protected outlineWidth = 0;
-  @internalProperty() protected isUiValid = true;
-  @internalProperty() protected focused = false;
+  @state() protected outlineOpen = false;
+  @state() protected outlineWidth = 0;
+  @state() protected isUiValid = true;
+  @state() protected focused = false;
 
   protected _validity: ValidityState = createValidityObj();
   protected _outlineUpdateComplete: null|Promise<unknown> = null;

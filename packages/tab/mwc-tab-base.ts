@@ -18,7 +18,6 @@ limitations under the License.
 import '@material/mwc-tab-indicator';
 import '@material/mwc-ripple/mwc-ripple';
 
-
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
@@ -26,7 +25,7 @@ import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {TabIndicator} from '@material/mwc-tab-indicator';
 import {MDCTabAdapter} from '@material/tab/adapter';
 import MDCTabFoundation from '@material/tab/foundation';
-import {eventOptions, html, internalProperty, property, query, queryAsync} from 'lit-element';
+import {eventOptions, html, property, query, queryAsync, state} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
 export interface TabInteractionEventDetail {
@@ -86,7 +85,7 @@ export class TabBase extends BaseElement {
 
   @query('.mdc-tab__content') protected _contentElement!: HTMLElement;
 
-  @internalProperty() protected shouldRenderRipple = false;
+  @state() protected shouldRenderRipple = false;
 
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 

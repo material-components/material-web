@@ -19,7 +19,7 @@ import '@material/mwc-ripple/mwc-ripple';
 
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {eventOptions, html, internalProperty, LitElement, property, query, queryAsync, TemplateResult} from 'lit-element';
+import {eventOptions, html, LitElement, property, query, queryAsync, state, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
 /** @soyCompatible */
@@ -48,7 +48,7 @@ export class ButtonBase extends LitElement {
 
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 
-  @internalProperty() protected shouldRenderRipple = false;
+  @state() protected shouldRenderRipple = false;
 
   protected rippleHandlers = new RippleHandlers(() => {
     this.shouldRenderRipple = true;

@@ -20,7 +20,7 @@ import '@material/mwc-ripple/mwc-ripple';
 import {observer} from '@material/mwc-base/observer';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {html, internalProperty, LitElement, property, query, queryAsync} from 'lit-element';
+import {html, LitElement, property, query, queryAsync, state} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
 export type SelectionSource = 'interaction'|'property';
@@ -99,8 +99,8 @@ export class ListItemBase extends LitElement {
   })
   selected = false;
 
-  @internalProperty() protected shouldRenderRipple = false;
-  @internalProperty() _managingList: Layoutable|null = null;
+  @state() protected shouldRenderRipple = false;
+  @state() _managingList: Layoutable|null = null;
 
   protected boundOnClick = this.onClick.bind(this);
   protected _firstChanged = true;
