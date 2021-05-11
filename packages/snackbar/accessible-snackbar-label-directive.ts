@@ -40,7 +40,7 @@ const {ARIA_LIVE_DELAY_MS} = MDCSnackbarFoundation.numbers;
  * (e.g. so that we don't hard-code the name of the label class).
  */
 class AccessibleSnackbarLabel extends AsyncDirective {
-  protected labelEl: Element|null = null;
+  protected labelEl: HTMLElement|null = null;
   protected timerId: number|null = null;
   protected previousPart: ChildPart|null = null;
 
@@ -69,7 +69,7 @@ class AccessibleSnackbarLabel extends AsyncDirective {
 
       render(labelTemplate, wrapperEl);
 
-      const labelEl = wrapperEl.firstElementChild!;
+      const labelEl = wrapperEl.firstElementChild! as HTMLElement;
       // endNode can't be a Document, so it must have a parent.
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       part.endNode?.parentNode!.insertBefore(labelEl, part.endNode);
