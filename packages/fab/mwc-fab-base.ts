@@ -26,6 +26,9 @@ import {classMap} from 'lit-html/directives/class-map';
  * @soyCompatible
  */
 export class FabBase extends LitElement {
+  static shadowRootOptions:
+      ShadowRootInit = {mode: 'open', delegatesFocus: true};
+
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 
   @property({type: Boolean}) mini = false;
@@ -50,10 +53,6 @@ export class FabBase extends LitElement {
     this.shouldRenderRipple = true;
     return this.ripple;
   });
-
-  protected createRenderRoot() {
-    return this.attachShadow({mode: 'open', delegatesFocus: true});
-  }
 
   /**
    * @soyTemplate

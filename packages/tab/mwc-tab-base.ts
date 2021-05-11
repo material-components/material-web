@@ -36,6 +36,9 @@ export interface TabInteractionEventDetail {
 let tabIdCounter = 0;
 
 export class TabBase extends BaseElement {
+  static shadowRootOptions:
+      ShadowRootInit = {mode: 'open', delegatesFocus: true};
+
   protected mdcFoundation!: MDCTabFoundation;
 
   protected readonly mdcFoundationClass = MDCTabFoundation;
@@ -90,10 +93,6 @@ export class TabBase extends BaseElement {
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 
   protected rippleElement: Ripple|null = null;
-
-  protected createRenderRoot() {
-    return this.attachShadow({mode: 'open', delegatesFocus: true});
-  }
 
   connectedCallback() {
     this.dir = document.dir;
