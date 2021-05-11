@@ -328,9 +328,12 @@ export abstract class TextFieldBase extends FormElement {
 
   /** @soyTemplate */
   protected renderLabel(): TemplateResult|string {
-    return !this.label ? '' : html`
+    return !this.label ?
+        '' :
+        html`
       <span
-          .floatingLabelFoundation=${floatingLabel(this.label)}
+          .floatingLabelFoundation=${
+            floatingLabel(this.label) as unknown as MDCFloatingLabelFoundation}
           id="label">${this.label}</span>
     `;
   }
@@ -431,8 +434,11 @@ export abstract class TextFieldBase extends FormElement {
 
   /** @soyTemplate */
   protected renderLineRipple(): TemplateResult|string {
-    return this.outlined ? '' : html`
-      <span .lineRippleFoundation=${lineRipple()}></span>
+    return this.outlined ?
+        '' :
+        html`
+      <span .lineRippleFoundation=${
+            lineRipple() as unknown as MDCLineRippleFoundation}></span>
     `;
   }
 
