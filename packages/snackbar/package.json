@@ -17,14 +17,14 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/mwc-base": "^0.21.0",
-    "@material/snackbar": "=12.0.0-canary.ec22e1da9.0",
+    "@material/snackbar": "=12.0.0-canary.573dc7ffd.0",
     "lit-element": "^2.5.0",
     "lit-html": "^1.4.0",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@material/feature-targeting": "=12.0.0-canary.ec22e1da9.0",
-    "@material/rtl": "=12.0.0-canary.ec22e1da9.0"
+    "@material/feature-targeting": "=12.0.0-canary.573dc7ffd.0",
+    "@material/rtl": "=12.0.0-canary.573dc7ffd.0"
   },
   "publishConfig": {
     "access": "public"
