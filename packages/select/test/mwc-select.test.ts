@@ -105,11 +105,12 @@ suite('mwc-select:', () => {
       fixt.remove();
       fixt = await fixture(valueInit);
 
+      element = fixt.root.querySelector('mwc-select')!;
+
       // deflake shady dom (IE)
       await rafPromise();
       await element.layout();
 
-      element = fixt.root.querySelector('mwc-select')!;
       const cElement = element.querySelector('[value="c"]') as ListItem;
 
       await element.updateComplete;
@@ -165,11 +166,11 @@ suite('mwc-select:', () => {
       fixt.remove();
       fixt = await fixture(valueInit);
 
+      element = fixt.root.querySelector('mwc-select')!;
+
       // deflake shady dom (IE)
       await rafPromise();
       await element.layout();
-
-      element = fixt.root.querySelector('mwc-select')!;
 
       element['onKeydown']({
         type: 'keydown',
