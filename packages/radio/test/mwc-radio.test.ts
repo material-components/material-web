@@ -36,8 +36,10 @@ suite('mwc-radio', () => {
   });
 
   test('initializes as an mwc-radio', () => {
-    const radio = document.createElement('mwc-radio');
-    container.appendChild(radio);
+    const radioTempl = html`<mwc-radio></mwc-radio>`;
+
+    render(radioTempl, container);
+    const radio = container.querySelector('mwc-radio');
     assert.instanceOf(radio, Radio);
   });
 
@@ -104,6 +106,7 @@ suite('mwc-radio', () => {
 
       a2.checked = true;
       a1.checked = true;
+
       assert.isTrue(a1.checked);
       assert.isFalse(a2.checked);
       assert.isFalse(b1.checked);
