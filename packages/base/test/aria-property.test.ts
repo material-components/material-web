@@ -74,6 +74,12 @@ suite('aria-property:', () => {
       }
     });
 
+    teardown(async () => {
+      if (fixt) {
+        fixt.remove();
+      }
+    });
+
     test('property sets with @property()', async () => {
       if (component === null) {
         assert.isNotNull(component);
@@ -212,6 +218,12 @@ suite('aria-property:', () => {
 
       if (component?.shadowRoot) {
         shadowTargetElement = component.shadowRoot.querySelector('input');
+      }
+    });
+
+    teardown(async () => {
+      if (fixt) {
+        fixt.remove();
       }
     });
 

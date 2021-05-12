@@ -87,6 +87,12 @@ suite('base-element:', () => {
       }
     });
 
+    teardown(async () => {
+      if (fixt) {
+        fixt.remove();
+      }
+    });
+
     test('is an instance of base-element', () => {
       assert.instanceOf(component, BaseElement);
     });
@@ -125,6 +131,12 @@ suite('base-element:', () => {
       if (component !== null && component.shadowRoot !== null) {
         shadowRootElement = component.shadowRoot.querySelector('#root');
         shadowIndirectElement = component.shadowRoot.querySelector('#indirect');
+      }
+    });
+
+    teardown(async () => {
+      if (fixt) {
+        fixt.remove();
       }
     });
 

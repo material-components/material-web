@@ -101,6 +101,12 @@ suite('form-element:', () => {
       }
     });
 
+    teardown(async () => {
+      if (fixt) {
+        fixt.remove();
+      }
+    });
+
     test('is an instance of form-element', () => {
       assert.instanceOf(component, TestFormElement);
       assert.instanceOf(component, FormElement);
@@ -140,6 +146,12 @@ suite('form-element:', () => {
       if (component !== null && component.shadowRoot !== null) {
         formElement = component.shadowRoot.querySelector('#direct');
         indirectFormElement = component.shadowRoot.querySelector('#indirect');
+      }
+    });
+
+    teardown(async () => {
+      if (fixt) {
+        fixt.remove();
       }
     });
 
