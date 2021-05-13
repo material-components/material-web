@@ -118,13 +118,9 @@ export class CheckboxBase extends FormElement {
   // TODO(dfreedm): Make this use selected as a param after Polymer/internal#739
   /** @soyTemplate */
   protected renderRipple(): TemplateResult|string {
-    const selected = this.indeterminate || this.checked;
-    return this.shouldRenderRipple ? html`
-        <mwc-ripple
-          .accent="${selected}"
-          .disabled="${this.disabled}"
-          unbounded>
-        </mwc-ripple>` :
+    return this.shouldRenderRipple ? html`<mwc-ripple
+        .disabled="${this.disabled}"
+        unbounded></mwc-ripple>` :
                                      '';
   }
 

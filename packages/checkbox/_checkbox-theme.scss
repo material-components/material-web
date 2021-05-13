@@ -16,8 +16,8 @@
 @use '@material/theme/shadow-dom';
 @use '@material/theme/theme';
 @use '@material/theme/theme-color';
-@use '@material/touchtarget/touch-target';
-@use 'third_party/javascript/material_web_components/ripple/ripple-theme';
+@use '@material/touch-target/touch-target';
+@use '@material/mwc-ripple/ripple-theme';
 
 $ripple-opacity: (
   hover: map.get(mdc-ripple-theme.$dark-ink-opacities, hover),
