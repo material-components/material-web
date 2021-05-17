@@ -25,6 +25,9 @@
   "devDependencies": {
     "@material/mwc-icon": "^0.21.0"
   },
+  "scripts": {
+    "build:style": "node ../../scripts/sass-to-lit-css/index.js mwc-tab-indicator.scss"
+  },
   "publishConfig": {
     "access": "public"
   }

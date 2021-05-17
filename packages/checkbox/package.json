@@ -22,6 +22,9 @@
     "lit-html": "^1.4.0",
     "tslib": "^2.0.1"
   },
+  "scripts": {
+    "build:style": "node ../../scripts/sass-to-lit-css/index.js mwc-checkbox.scss"
+  },
   "devDependencies": {
     "@material/checkbox": "=12.0.0-canary.1a8d06483.0",
     "@material/theme": "=12.0.0-canary.1a8d06483.0",

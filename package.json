@@ -22,7 +22,7 @@
     "postinstall": "npm run bootstrap",
     "bootstrap": "./scripts/bootstrap.sh",
     "build": "npm run build:styling && npm run build:typescript -- --verbose",
-    "build:styling": "./scripts/build-styling.sh",
+    "build:styling": "./scripts/build-styling.sh && lerna run --stream build:style",
     "build:typescript": "tsc --build",
     "build:tests": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json",
     "build:scripts": "tsc --project scripts/tsconfig.json",

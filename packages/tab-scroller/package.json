@@ -22,6 +22,9 @@
     "lit-element": "^2.5.0",
     "tslib": "^2.0.1"
   },
+  "scripts": {
+    "build:style": "node ../../scripts/sass-to-lit-css/index.js mwc-tab-scroller.scss"
+  },
   "publishConfig": {
     "access": "public"
   }
