@@ -9,6 +9,7 @@ node_modules
 /packages/**/*.d.ts
 /packages/*/*.tgz
 /packages/*/*-css.ts
+/packages/*/*.css.ts
 /packages/*/package-lock.json
 **/*.tsbuildinfo*
 !packages/*/custom_types/**

@@ -23,6 +23,9 @@
     "lit-html": "^1.4.0",
     "tslib": "^2.0.1"
   },
+  "scripts": {
+    "build:style": "node ../../scripts/sass-to-lit-css/index.js mwc-circular-progress.scss"
+  },
   "publishConfig": {
     "access": "public"
   }

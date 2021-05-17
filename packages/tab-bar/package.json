@@ -27,6 +27,9 @@
   "devDependencies": {
     "lit-html": "^1.4.0"
   },
+  "scripts": {
+    "build:style": "node ../../scripts/sass-to-lit-css/index.js mwc-tab-bar.scss"
+  },
   "publishConfig": {
     "access": "public"
   }

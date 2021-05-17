@@ -26,6 +26,9 @@
     "@material/feature-targeting": "=12.0.0-canary.1a8d06483.0",
     "@material/rtl": "=12.0.0-canary.1a8d06483.0"
   },
+  "scripts": {
+    "build:style": "node ../../scripts/sass-to-lit-css/index.js mwc-snackbar.scss"
+  },
   "publishConfig": {
     "access": "public"
   }

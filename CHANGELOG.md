@@ -4,7 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Changed
+- all
+  - Update sass build to match internal imports and naming
+
+### Fixed
+
+### Added
 
 ## [v0.21.0] - 2021-04-30
 
