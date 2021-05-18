@@ -19,7 +19,7 @@ limitations under the License.
 
 const path = require('path');
 const commandLineArgs = require('command-line-args');
-const sassRender = require('../sass-render/index.js').sassRender;
+const sassRender = require('./compile.js').sassRender;
 
 const options = [
   {
