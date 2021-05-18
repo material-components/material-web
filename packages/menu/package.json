@@ -24,6 +24,9 @@
   "devDependencies": {
     "@material/shape": "=12.0.0-canary.a2b0f4cee.0"
   },
+  "scripts": {
+    "build:style": "node ../../scripts/sass-to-lit-css/index.js mwc-menu.scss mwc-menu-surface.scss"
+  },
   "publishConfig": {
     "access": "public"
   }
