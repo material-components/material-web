@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- `tab`
+  - Add `--mdc-tab-min-width` variable
+
 ## [v0.21.0] - 2021-04-30
 
 ### Changed

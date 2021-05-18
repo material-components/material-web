@@ -72,6 +72,7 @@ Name                                 | Default                                  
 ------------------------------------ | -------------------------------------------------------- | -----------
 `--mdc-tab-height`                   | `48px`                                                   | Height of the tab.
 `--mdc-tab-horizontal-padding`       | `24px`                                                   | Horizontal padding on either side of the tab.
+`--mdc-tab-min-width`                | `90px`                                                   | Minimum width of the tab.
 `--mdc-tab-stacked-height`           | `72px`                                                   | Height of the tab's stacked variant.
 `--mdc-tab-text-label-color-default` | ![](images/color_0,0,0,60.png) `rgba(0, 0, 0, 0.6)`  | Color of an unactivated tab label.
 `--mdc-tab-color-default`            | ![](images/color_0,0,0,54.png) `rgba(0, 0, 0, 0.54)` | Color of an unactivated icon.

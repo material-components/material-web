@@ -31,6 +31,9 @@
   @include tab.horizontal-padding(
     var(--mdc-tab-horizontal-padding, #{tab.$horizontal-padding})
   );
+  @include tab.min-width(
+    var(--mdc-tab-min-width, #{tab.$min-width})
+  );
 }
 
 .mdc-tab--stacked {
