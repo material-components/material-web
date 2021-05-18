@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "del-cli packages/*/node_modules packages/*/package-lock.json && npm run clean:typescript && npm run clean:styles && npm run clean:scripts",
     "clean:typescript": "npm run build:typescript -- --clean",
-    "clean:styles": "del-cli packages/*/*-css.ts",
+    "clean:styles": "del-cli packages/*/*.css.ts",
     "clean:scripts": "del-cli scripts/tsc-out",
     "dev": "es-dev-server --node-resolve --preserve-symlinks",
     "format": "clang-format --version; find . -name '*.ts' | grep -v node_modules | grep -v .d.ts | grep -v -- -css.ts | xargs clang-format -style=file -i",
@@ -22,7 +22,7 @@
     "postinstall": "npm run bootstrap",
     "bootstrap": "./scripts/bootstrap.sh",
     "build": "npm run build:styling && npm run build:typescript -- --verbose",
-    "build:styling": "./scripts/build-styling.sh && lerna run --stream build:style",
+    "build:styling": "lerna run --stream build:style",
     "build:typescript": "tsc --build",
     "build:tests": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json",
     "build:scripts": "tsc --project scripts/tsconfig.json",
