@@ -6,7 +6,7 @@
 import {customElement} from 'lit-element';
 
 import {TabBarBase} from './mwc-tab-bar-base';
-import {style} from './mwc-tab-bar-css';
+import {styles} from './mwc-tab-bar.css';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -16,5 +16,5 @@ declare global {
 
 @customElement('mwc-tab-bar')
 export class TabBar extends TabBarBase {
-  static styles = style;
+  static styles = styles;
 }

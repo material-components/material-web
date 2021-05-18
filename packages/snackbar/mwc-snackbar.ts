@@ -6,7 +6,7 @@
 import {customElement} from 'lit-element';
 
 import {SnackbarBase} from './mwc-snackbar-base';
-import {style} from './mwc-snackbar-css';
+import {styles} from './mwc-snackbar.css';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -16,5 +16,5 @@ declare global {
 
 @customElement('mwc-snackbar')
 export class Snackbar extends SnackbarBase {
-  static styles = style;
+  static styles = styles;
 }

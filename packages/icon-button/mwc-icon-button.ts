@@ -7,7 +7,7 @@
 import {customElement} from 'lit-element';
 
 import {IconButtonBase} from './mwc-icon-button-base';
-import {style} from './mwc-icon-button-css';
+import {styles} from './mwc-icon-button.css';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -18,5 +18,5 @@ declare global {
 /** @soyCompatible */
 @customElement('mwc-icon-button')
 export class IconButton extends IconButtonBase {
-  static styles = style;
+  static styles = styles;
 }

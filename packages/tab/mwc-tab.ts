@@ -6,7 +6,7 @@
 import {customElement} from 'lit-element';
 
 import {TabBase} from './mwc-tab-base';
-import {style} from './mwc-tab-css';
+import {styles} from './mwc-tab.css';
 
 export {TabInteractionEventDetail} from './mwc-tab-base';
 
@@ -18,5 +18,5 @@ declare global {
 
 @customElement('mwc-tab')
 export class Tab extends TabBase {
-  static styles = style;
+  static styles = styles;
 }

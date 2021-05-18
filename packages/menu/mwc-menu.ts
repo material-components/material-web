@@ -7,7 +7,7 @@
 import {customElement} from 'lit-element';
 
 import {MenuBase} from './mwc-menu-base';
-import {style} from './mwc-menu-css';
+import {styles} from './mwc-menu.css';
 
 export {createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex} from '@material/mwc-list/mwc-list-foundation';
 export {DefaultFocusState} from './mwc-menu-base';
@@ -21,5 +21,5 @@ declare global {
 
 @customElement('mwc-menu')
 export class Menu extends MenuBase {
-  static styles = style;
+  static styles = styles;
 }

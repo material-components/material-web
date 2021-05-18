@@ -6,7 +6,7 @@
 import {customElement} from 'lit-element';
 
 import {SwitchBase} from './mwc-switch-base';
-import {style} from './mwc-switch-css';
+import {styles} from './mwc-switch.css';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -16,5 +16,5 @@ declare global {
 
 @customElement('mwc-switch')
 export class Switch extends SwitchBase {
-  static styles = style;
+  static styles = styles;
 }

@@ -6,7 +6,7 @@
 import {customElement} from 'lit-element';
 
 import {TopAppBarBase} from './mwc-top-app-bar-base';
-import {style} from './mwc-top-app-bar-css';
+import {styles} from './mwc-top-app-bar.css';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -16,5 +16,5 @@ declare global {
 
 @customElement('mwc-top-app-bar')
 export class TopAppBar extends TopAppBarBase {
-  static styles = style;
+  static styles = styles;
 }

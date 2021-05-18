@@ -6,7 +6,7 @@
 import {customElement} from 'lit-element';
 
 import {LinearProgressBase} from './mwc-linear-progress-base';
-import {style} from './mwc-linear-progress-css';
+import {styles} from './mwc-linear-progress.css';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -17,5 +17,5 @@ declare global {
 /** @soyCompatible */
 @customElement('mwc-linear-progress')
 export class LinearProgress extends LinearProgressBase {
-  static styles = style;
+  static styles = styles;
 }

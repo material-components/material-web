@@ -6,8 +6,8 @@
 
 import {customElement} from 'lit-element';
 
-import {style as controlStyle} from './mwc-control-list-item-css';
-import {style} from './mwc-list-item-css';
+import {styles as controlStyle} from './mwc-control-list-item.css';
+import {styles} from './mwc-list-item.css';
 import {RadioListItemBase} from './mwc-radio-list-item-base';
 
 declare global {
@@ -18,5 +18,5 @@ declare global {
 
 @customElement('mwc-radio-list-item')
 export class RadioListItem extends RadioListItemBase {
-  static styles = [style, controlStyle];
+  static styles = [styles, controlStyle];
 }

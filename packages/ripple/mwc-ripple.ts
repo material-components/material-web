@@ -6,7 +6,7 @@
 import {customElement} from 'lit-element';
 
 import {RippleBase} from './mwc-ripple-base';
-import {style} from './mwc-ripple-css';
+import {styles} from './mwc-ripple.css';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -17,5 +17,5 @@ declare global {
 /** @soyCompatible */
 @customElement('mwc-ripple')
 export class Ripple extends RippleBase {
-  static styles = style;
+  static styles = styles;
 }

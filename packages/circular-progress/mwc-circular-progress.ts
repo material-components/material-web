@@ -6,7 +6,7 @@
 import {customElement} from 'lit-element';
 
 import {CircularProgressBase} from './mwc-circular-progress-base';
-import {style} from './mwc-circular-progress-css';
+import {styles} from './mwc-circular-progress.css';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -17,5 +17,5 @@ declare global {
 /** @soyCompatible */
 @customElement('mwc-circular-progress')
 export class CircularProgress extends CircularProgressBase {
-  static styles = style;
+  static styles = styles;
 }

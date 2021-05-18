@@ -6,12 +6,12 @@
 import {customElement} from 'lit-element';
 
 import {ButtonBase} from './mwc-button-base';
-import {style} from './styles-css';
+import {styles} from './styles.css';
 
 /** @soyCompatible */
 @customElement('mwc-button')
 export class Button extends ButtonBase {
-  static styles = style;
+  static styles = styles;
 }
 
 declare global {

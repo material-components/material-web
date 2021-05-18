@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {style as textfieldStyles} from '@material/mwc-textfield/mwc-textfield-css';
+import {styles as textfieldStyles} from '@material/mwc-textfield/mwc-textfield.css';
 import {customElement} from 'lit-element';
 import {TextAreaBase, TextAreaCharCounter, TextFieldInputMode, TextFieldType} from './mwc-textarea-base';
-import {style as textareaStyles} from './mwc-textarea-css';
+import {styles as textareaStyles} from './mwc-textarea.css';
 
 export {TextAreaCharCounter, TextFieldInputMode, TextFieldType};
 

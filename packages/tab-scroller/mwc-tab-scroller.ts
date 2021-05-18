@@ -6,7 +6,7 @@
 import {customElement} from 'lit-element';
 
 import {TabScrollerBase} from './mwc-tab-scroller-base';
-import {style} from './mwc-tab-scroller-css';
+import {styles} from './mwc-tab-scroller.css';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -16,5 +16,5 @@ declare global {
 
 @customElement('mwc-tab-scroller')
 export class TabScroller extends TabScrollerBase {
-  static styles = style;
+  static styles = styles;
 }

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {style} from '@material/mwc-icon-button/mwc-icon-button-css';
+import {styles} from '@material/mwc-icon-button/mwc-icon-button.css';
 import {customElement} from 'lit-element';
 
 import {IconButtonToggleBase} from './mwc-icon-button-toggle-base';
@@ -17,5 +17,5 @@ declare global {
 
 @customElement('mwc-icon-button-toggle')
 export class IconButtonToggle extends IconButtonToggleBase {
-  static styles = style;
+  static styles = styles;
 }

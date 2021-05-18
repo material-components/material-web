@@ -6,7 +6,7 @@
 import {customElement} from 'lit-element';
 
 import {TabIndicatorBase} from './mwc-tab-indicator-base';
-import {style} from './mwc-tab-indicator-css';
+import {styles} from './mwc-tab-indicator.css';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -16,5 +16,5 @@ declare global {
 
 @customElement('mwc-tab-indicator')
 export class TabIndicator extends TabIndicatorBase {
-  static styles = style;
+  static styles = styles;
 }

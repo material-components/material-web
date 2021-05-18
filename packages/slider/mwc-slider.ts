@@ -6,7 +6,7 @@
 import {customElement} from 'lit-element';
 
 import {SliderBase} from './mwc-slider-base';
-import {style} from './mwc-slider-css';
+import {styles} from './mwc-slider.css';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -16,5 +16,5 @@ declare global {
 
 @customElement('mwc-slider')
 export class Slider extends SliderBase {
-  static styles = style;
+  static styles = styles;
 }

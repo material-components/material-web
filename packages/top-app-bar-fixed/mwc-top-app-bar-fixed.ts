@@ -3,7 +3,7 @@
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
-import {style} from '@material/mwc-top-app-bar/mwc-top-app-bar-css';
+import {styles} from '@material/mwc-top-app-bar/mwc-top-app-bar.css';
 import {customElement} from 'lit-element';
 
 import {TopAppBarFixedBase} from './mwc-top-app-bar-fixed-base';
@@ -16,5 +16,5 @@ declare global {
 
 @customElement('mwc-top-app-bar-fixed')
 export class TopAppBarFixed extends TopAppBarFixedBase {
-  static styles = style;
+  static styles = styles;
 }

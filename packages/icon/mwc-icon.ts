@@ -5,12 +5,12 @@
  */
 import {customElement, html, LitElement, TemplateResult} from 'lit-element';
 
-import {style} from './mwc-icon-host-css';
+import {styles} from './mwc-icon-host.css';
 
 /** @soyCompatible */
 @customElement('mwc-icon')
 export class Icon extends LitElement {
-  static styles = style;
+  static styles = styles;
 
   /** @soyTemplate */
   protected render(): TemplateResult {

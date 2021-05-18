@@ -6,7 +6,7 @@
 import {customElement} from 'lit-element';
 
 import {DrawerBase} from './mwc-drawer-base';
-import {style} from './mwc-drawer-css';
+import {styles} from './mwc-drawer.css';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -16,5 +16,5 @@ declare global {
 
 @customElement('mwc-drawer')
 export class Drawer extends DrawerBase {
-  static styles = style;
+  static styles = styles;
 }

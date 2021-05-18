@@ -6,7 +6,7 @@
 import {customElement} from 'lit-element';
 
 import {CheckboxBase} from './mwc-checkbox-base';
-import {style} from './mwc-checkbox-css';
+import {styles} from './mwc-checkbox.css';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -17,5 +17,5 @@ declare global {
 /** @soyCompatible */
 @customElement('mwc-checkbox')
 export class Checkbox extends CheckboxBase {
-  static styles = style;
+  static styles = styles;
 }

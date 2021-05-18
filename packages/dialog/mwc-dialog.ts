@@ -6,7 +6,7 @@
 import {customElement} from 'lit-element';
 
 import {DialogBase} from './mwc-dialog-base';
-import {style} from './mwc-dialog-css';
+import {styles} from './mwc-dialog.css';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -16,5 +16,5 @@ declare global {
 
 @customElement('mwc-dialog')
 export class Dialog extends DialogBase {
-  static styles = style;
+  static styles = styles;
 }

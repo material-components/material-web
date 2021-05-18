@@ -6,7 +6,7 @@
 
 import {customElement} from 'lit-element';
 import {TextAreaCharCounter, TextFieldBase, TextFieldInputMode, TextFieldType} from './mwc-textfield-base';
-import {style} from './mwc-textfield-css';
+import {styles} from './mwc-textfield.css';
 
 export {TextAreaCharCounter, TextFieldInputMode, TextFieldType};
 
@@ -19,5 +19,5 @@ declare global {
 /** @soyCompatible */
 @customElement('mwc-textfield')
 export class TextField extends TextFieldBase {
-  static styles = style;
+  static styles = styles;
 }

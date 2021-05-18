@@ -6,7 +6,7 @@
 import {customElement} from 'lit-element';
 
 import {FabBase} from './mwc-fab-base';
-import {style} from './mwc-fab-css';
+import {styles} from './mwc-fab.css';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -17,5 +17,5 @@ declare global {
 /** @soyCompatible */
 @customElement('mwc-fab')
 export class Fab extends FabBase {
-  static styles = style;
+  static styles = styles;
 }

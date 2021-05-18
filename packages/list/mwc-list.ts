@@ -7,7 +7,7 @@
 import {customElement} from 'lit-element';
 
 import {ListBase} from './mwc-list-base';
-import {style} from './mwc-list-css';
+import {styles} from './mwc-list.css';
 
 export {ActionDetail, createSetFromIndex, IndexDiff, isEventMulti, isIndexSet, MWCListIndex, SelectedDetail} from './mwc-list-foundation';
 
@@ -19,5 +19,5 @@ declare global {
 
 @customElement('mwc-list')
 export class List extends ListBase {
-  static styles = style;
+  static styles = styles;
 }

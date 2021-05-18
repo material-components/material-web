@@ -6,7 +6,7 @@
 import {customElement} from 'lit-element';
 
 import {NotchedOutlineBase} from './mwc-notched-outline-base';
-import {style} from './mwc-notched-outline-css';
+import {styles} from './mwc-notched-outline.css';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -16,5 +16,5 @@ declare global {
 
 @customElement('mwc-notched-outline')
 export class NotchedOutline extends NotchedOutlineBase {
-  static styles = style;
+  static styles = styles;
 }

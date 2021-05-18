@@ -7,7 +7,7 @@
 import {customElement} from 'lit-element';
 
 import {ListItemBase} from './mwc-list-item-base';
-import {style} from './mwc-list-item-css';
+import {styles} from './mwc-list-item.css';
 
 export {GraphicType, RequestSelectedDetail} from './mwc-list-item-base';
 declare global {
@@ -18,5 +18,5 @@ declare global {
 
 @customElement('mwc-list-item')
 export class ListItem extends ListItemBase {
-  static styles = style;
+  static styles = styles;
 }

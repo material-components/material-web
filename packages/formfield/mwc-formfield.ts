@@ -6,7 +6,7 @@
 import {customElement} from 'lit-element';
 
 import {FormfieldBase} from './mwc-formfield-base';
-import {style} from './mwc-formfield-css';
+import {styles} from './mwc-formfield.css';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -16,5 +16,5 @@ declare global {
 
 @customElement('mwc-formfield')
 export class Formfield extends FormfieldBase {
-  static styles = style;
+  static styles = styles;
 }

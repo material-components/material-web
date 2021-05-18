@@ -6,7 +6,7 @@
 import {customElement} from 'lit-element';
 
 import {RadioBase} from './mwc-radio-base';
-import {style} from './mwc-radio-css';
+import {styles} from './mwc-radio.css';
 
 export {SingleSelectionController} from './single-selection-controller';
 
@@ -18,5 +18,5 @@ declare global {
 
 @customElement('mwc-radio')
 export class Radio extends RadioBase {
-  static styles = style;
+  static styles = styles;
 }

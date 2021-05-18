@@ -6,7 +6,7 @@
 
 import {customElement} from 'lit-element';
 import {MenuSurfaceBase} from './mwc-menu-surface-base';
-import {style} from './mwc-menu-surface-css';
+import {styles} from './mwc-menu-surface.css';
 
 export {MDCMenuDistance} from '@material/menu-surface/types';
 export {Corner, MenuCorner} from './mwc-menu-surface-base';
@@ -19,5 +19,5 @@ declare global {
 
 @customElement('mwc-menu-surface')
 export class MenuSurface extends MenuSurfaceBase {
-  static styles = style;
+  static styles = styles;
 }

@@ -6,7 +6,7 @@
 
 import {customElement} from 'lit-element';
 import {SelectBase} from './mwc-select-base';
-import {style} from './mwc-select-css';
+import {styles} from './mwc-select.css';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -16,5 +16,5 @@ declare global {
 
 @customElement('mwc-select')
 export class Select extends SelectBase {
-  static styles = style;
+  static styles = styles;
 }
