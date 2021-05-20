@@ -5,6 +5,7 @@
  */
 
 import {Tab} from '@material/mwc-tab';
+import {assert} from 'chai';
 import * as hanbi from 'hanbi';
 import {html, render} from 'lit-html';
 

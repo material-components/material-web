@@ -5,6 +5,7 @@
  */
 
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
+import {assert} from 'chai';
 
 interface RippleInternals {
   hovering: boolean;

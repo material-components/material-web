@@ -5,6 +5,7 @@
  */
 
 import {Drawer} from '@material/mwc-drawer';
+import {assert} from 'chai';
 import {html} from 'lit-html';
 
 import {fixture, TestFixture, waitForEvent} from '../../../test/src/util/helpers';

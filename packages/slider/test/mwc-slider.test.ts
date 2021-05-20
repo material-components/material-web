@@ -5,6 +5,7 @@
  */
 
 import {Slider} from '@material/mwc-slider/mwc-slider';
+import {assert} from 'chai';
 import * as hanbi from 'hanbi';
 import {html} from 'lit-html';
 

@@ -8,6 +8,7 @@ import '@material/mwc-list/mwc-list-item';
 
 import {ListItem} from '@material/mwc-list/mwc-list-item';
 import {Select} from '@material/mwc-select';
+import {assert} from 'chai';
 import {html} from 'lit-html';
 
 import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';

@@ -8,6 +8,7 @@ import {cssClasses as floatingClasses} from '@material/floating-label/constants'
 import {FloatingLabel} from '@material/mwc-floating-label';
 import {TextField} from '@material/mwc-textfield';
 import {cssClasses} from '@material/textfield/constants';
+import {assert} from 'chai';
 import {html} from 'lit-html';
 
 import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';

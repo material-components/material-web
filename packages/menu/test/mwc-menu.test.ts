@@ -11,6 +11,7 @@ import {List} from '@material/mwc-list';
 import {ListItem} from '@material/mwc-list/mwc-list-item';
 import {Menu} from '@material/mwc-menu';
 import {Corner, MenuCorner, MenuSurface} from '@material/mwc-menu/mwc-menu-surface';
+import {assert} from 'chai';
 import * as hanbi from 'hanbi';
 import {html, TemplateResult} from 'lit-html';
 

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 import {Switch} from '@material/mwc-switch';
+import {assert} from 'chai';
 import * as hanbi from 'hanbi';
 import {html} from 'lit-html';
 

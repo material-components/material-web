@@ -5,6 +5,7 @@
  */
 
 import {TabScroller} from '@material/mwc-tab-scroller/mwc-tab-scroller';
+import {assert} from 'chai';
 
 suite('mwc-tab-scroller', () => {
   let element: TabScroller;

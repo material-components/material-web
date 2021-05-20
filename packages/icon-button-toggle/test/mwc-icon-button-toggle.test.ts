@@ -5,6 +5,7 @@
  */
 
 import {IconButtonToggle} from '@material/mwc-icon-button-toggle';
+import {assert} from 'chai';
 
 const ICON_BUTTON_ON_SELECTOR = '.mdc-icon-button.mdc-icon-button--on';
 const ICON_SELECTOR =

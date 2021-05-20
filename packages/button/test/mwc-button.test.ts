@@ -5,6 +5,7 @@
  */
 
 import {Button} from '@material/mwc-button';
+import {assert} from 'chai';
 import {html} from 'lit-html';
 
 import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';

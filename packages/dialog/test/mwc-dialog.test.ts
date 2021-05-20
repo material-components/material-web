@@ -13,6 +13,7 @@ import '@material/mwc-textarea';
 import {Button} from '@material/mwc-button';
 import {Dialog} from '@material/mwc-dialog';
 import {DocumentWithBlockingElements} from 'blocking-elements';
+import {assert} from 'chai';
 import {customElement, LitElement} from 'lit-element';
 import {html} from 'lit-html';
 

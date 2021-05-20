@@ -7,6 +7,7 @@
 import '@material/mwc-tab';
 
 import {TabBar} from '@material/mwc-tab-bar/mwc-tab-bar';
+import {assert} from 'chai';
 import {html, TemplateResult} from 'lit-html';
 
 import {fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../test/src/util/helpers';

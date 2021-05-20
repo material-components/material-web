@@ -5,6 +5,7 @@
  */
 
 import {IconButton} from '@material/mwc-icon-button';
+import {assert} from 'chai';
 
 const ICON_SELECTOR = 'i.material-icons';
 

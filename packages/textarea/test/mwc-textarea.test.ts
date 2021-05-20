@@ -5,6 +5,7 @@
  */
 
 import {TextArea} from '@material/mwc-textarea';
+import {assert} from 'chai';
 import {html} from 'lit-html';
 
 import {fixture, TestFixture} from '../../../test/src/util/helpers';

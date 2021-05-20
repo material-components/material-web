@@ -5,6 +5,7 @@
  */
 
 import {Checkbox} from '@material/mwc-checkbox';
+import {assert} from 'chai';
 import * as hanbi from 'hanbi';
 import {html} from 'lit-html';
 

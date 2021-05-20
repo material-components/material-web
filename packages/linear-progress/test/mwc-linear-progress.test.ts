@@ -5,6 +5,7 @@
  */
 import {MDCResizeObserver, WithMDCResizeObserver} from '@material/linear-progress/types';
 import {LinearProgress} from '@material/mwc-linear-progress';
+import {assert} from 'chai';
 import {html} from 'lit-html';
 import {styleMap} from 'lit-html/directives/style-map';
 

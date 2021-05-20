@@ -9,11 +9,11 @@ import '@material/mwc-checkbox';
 import '@material/mwc-radio';
 import '@material/mwc-switch';
 
-
 import {Checkbox} from '@material/mwc-checkbox';
 import {Formfield} from '@material/mwc-formfield';
 import {Radio} from '@material/mwc-radio';
 import {Switch} from '@material/mwc-switch';
+import {assert} from 'chai';
 import {html} from 'lit-html';
 
 import {fixture, TestFixture} from '../../../test/src/util/helpers';

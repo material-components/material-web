@@ -5,6 +5,7 @@
  */
 
 import {Snackbar} from '@material/mwc-snackbar';
+import {assert} from 'chai';
 import * as hanbi from 'hanbi';
 import {html, TemplateResult} from 'lit-html';
 

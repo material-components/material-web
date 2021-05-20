@@ -5,6 +5,7 @@
  */
 
 import {FormElement} from '@material/mwc-base/form-element';
+import {assert} from 'chai';
 import {customElement, LitElement, query} from 'lit-element';
 import {html} from 'lit-html';
 

@@ -5,6 +5,7 @@
  */
 
 import {ariaProperty} from '@material/mwc-base/aria-property';
+import {assert} from 'chai';
 import {customElement, LitElement, property} from 'lit-element';
 import {html} from 'lit-html';
 import {ifDefined} from 'lit-html/directives/if-defined';

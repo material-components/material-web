@@ -5,6 +5,7 @@
  */
 
 import {Icon} from '@material/mwc-icon';
+import {assert} from 'chai';
 
 
 suite('mwc-icon', () => {
