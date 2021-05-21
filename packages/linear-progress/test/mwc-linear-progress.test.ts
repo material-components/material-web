@@ -71,24 +71,24 @@ const linearProgressElement =
   `;
     };
 
-suite('mwc-linear-progress', () => {
+describe('mwc-linear-progress', () => {
   let fixt: TestFixture;
   let element: LinearProgress;
 
-  teardown(() => {
+  afterEach(() => {
     if (fixt) {
       fixt.remove();
     }
   });
 
-  suite('basic', () => {
-    setup(async () => {
+  describe('basic', () => {
+    beforeEach(async () => {
       fixt = await fixture(defaultLinearProgressElement);
       element = fixt.root.querySelector('mwc-linear-progress')!;
       await awaitIndeterminateReady(element);
     });
 
-    test('initializes as an mwc-linear-progress', () => {
+    it('initializes as an mwc-linear-progress', () => {
       assert.instanceOf(element, LinearProgress);
       assert.equal(element.indeterminate, false);
       assert.equal(element.closed, false);
@@ -97,7 +97,7 @@ suite('mwc-linear-progress', () => {
       assert.equal(element.buffer, 1);
     });
 
-    test('internal classes set correctly', async () => {
+    it('internal classes set correctly', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress')!;
       assert.isNotNull(root);
 
@@ -109,7 +109,7 @@ suite('mwc-linear-progress', () => {
       assert.isTrue(classlist.contains('mdc-linear-progress--animation-ready'));
     });
 
-    test('sets internal styles correctly', async () => {
+    it('sets internal styles correctly', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
       const primaryBar =
@@ -159,7 +159,7 @@ suite('mwc-linear-progress', () => {
       assert.equal(bufferBar.style.getPropertyValue('flex-basis'), '100%');
     });
 
-    test('attaches a resize observer if available', async () => {
+    it('attaches a resize observer if available', async () => {
       fixt = await fixture(
           linearProgressElement({indeterminate: true, width: '100px'}));
       element = fixt.root.querySelector('mwc-linear-progress')!;
@@ -174,15 +174,15 @@ suite('mwc-linear-progress', () => {
     });
   });
 
-  suite('indeterminate', () => {
-    setup(async () => {
+  describe('indeterminate', () => {
+    beforeEach(async () => {
       fixt = await fixture(
           linearProgressElement({indeterminate: true, width: '100px'}));
       element = fixt.root.querySelector('mwc-linear-progress')!;
       await awaitIndeterminateReady(element);
     });
 
-    test('internal classes set correctly', async () => {
+    it('internal classes set correctly', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress')!;
       assert.isNotNull(root);
 
@@ -192,7 +192,7 @@ suite('mwc-linear-progress', () => {
       assert.isTrue(classlist.contains('mdc-linear-progress--animation-ready'));
     });
 
-    test('sets internal styles correctly', async () => {
+    it('sets internal styles correctly', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
       const primaryBar =
@@ -256,7 +256,7 @@ suite('mwc-linear-progress', () => {
           '-160.27px');
     });
 
-    test('updates custom props if resized', async () => {
+    it('updates custom props if resized', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
       assert.isNotNull(root);
@@ -356,7 +356,7 @@ suite('mwc-linear-progress', () => {
           '-16.027px');
     });
 
-    test('does not update custom props if determinate', async () => {
+    it('does not update custom props if determinate', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
       assert.isNotNull(root);
@@ -385,15 +385,15 @@ suite('mwc-linear-progress', () => {
     });
   });
 
-  suite('reverse', () => {
-    setup(async () => {
+  describe('reverse', () => {
+    beforeEach(async () => {
       fixt =
           await fixture(linearProgressElement({reverse: true, width: '100px'}));
       element = fixt.root.querySelector('mwc-linear-progress')!;
       await awaitIndeterminateReady(element);
     });
 
-    test('sets the correct attributes', async () => {
+    it('sets the correct attributes', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
       assert.isNotNull(root);
@@ -402,15 +402,15 @@ suite('mwc-linear-progress', () => {
     });
   });
 
-  suite('open, close, closed', () => {
-    setup(async () => {
+  describe('open, close, closed', () => {
+    beforeEach(async () => {
       fixt =
           await fixture(linearProgressElement({closed: true, width: '100px'}));
       element = fixt.root.querySelector('mwc-linear-progress')!;
       await awaitIndeterminateReady(element);
     });
 
-    test('sets the correct classes', async () => {
+    it('sets the correct classes', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
       assert.isNotNull(root);
@@ -429,7 +429,7 @@ suite('mwc-linear-progress', () => {
           root.classList.contains('mdc-linear-progress--closed-animation-off'));
     });
 
-    test('open, close methods set the correct classes', async () => {
+    it('open, close methods set the correct classes', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
       assert.isNotNull(root);
@@ -450,14 +450,14 @@ suite('mwc-linear-progress', () => {
     });
   });
 
-  suite('progress', () => {
-    setup(async () => {
+  describe('progress', () => {
+    beforeEach(async () => {
       fixt = await fixture(linearProgressElement({width: '100px'}));
       element = fixt.root.querySelector('mwc-linear-progress')!;
       await awaitIndeterminateReady(element);
     });
 
-    test('sets the correct determinate styles', async () => {
+    it('sets the correct determinate styles', async () => {
       const primary = element.shadowRoot!.querySelector(
                           '.mdc-linear-progress__primary-bar') as HTMLElement;
       assert.isNotNull(primary);
@@ -472,7 +472,7 @@ suite('mwc-linear-progress', () => {
       assert.equal(primary.style.getPropertyValue('transform'), 'scaleX(0.5)');
     });
 
-    test('doesn\'t set style if indeterminate', async () => {
+    it('doesn\'t set style if indeterminate', async () => {
       const primary = element.shadowRoot!.querySelector(
                           '.mdc-linear-progress__primary-bar') as HTMLElement;
       assert.isNotNull(primary);
@@ -497,7 +497,7 @@ suite('mwc-linear-progress', () => {
       assert.equal(primary.style.getPropertyValue('transform'), 'scaleX(1)');
     });
 
-    test('aria-valuenow set correctly', async () => {
+    it('aria-valuenow set correctly', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
       assert.isNotNull(root);
@@ -515,7 +515,7 @@ suite('mwc-linear-progress', () => {
       assert.equal(root.getAttribute('aria-valuenow'), '2');
     });
 
-    test('aria-valuenow removed if indeterminate', async () => {
+    it('aria-valuenow removed if indeterminate', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
       assert.isNotNull(root);
@@ -533,14 +533,14 @@ suite('mwc-linear-progress', () => {
     });
   });
 
-  suite('buffer', () => {
-    setup(async () => {
+  describe('buffer', () => {
+    beforeEach(async () => {
       fixt = await fixture(linearProgressElement({width: '100px'}));
       element = fixt.root.querySelector('mwc-linear-progress')!;
       await awaitIndeterminateReady(element);
     });
 
-    test('sets the correct determinate styles', async () => {
+    it('sets the correct determinate styles', async () => {
       const secondary = element.shadowRoot!.querySelector(
                             '.mdc-linear-progress__buffer-bar') as HTMLElement;
       assert.isNotNull(secondary);
@@ -555,7 +555,7 @@ suite('mwc-linear-progress', () => {
       assert.equal(secondary.style.getPropertyValue('flex-basis'), '50%');
     });
 
-    test('doesn\'t set style if indeterminate', async () => {
+    it('doesn\'t set style if indeterminate', async () => {
       const secondary = element.shadowRoot!.querySelector(
                             '.mdc-linear-progress__buffer-bar') as HTMLElement;
       assert.isNotNull(secondary);
@@ -581,14 +581,14 @@ suite('mwc-linear-progress', () => {
     });
   });
 
-  suite('ariaLabel', () => {
-    setup(async () => {
+  describe('ariaLabel', () => {
+    beforeEach(async () => {
       fixt = await fixture(linearProgressElement({width: '100px'}));
       element = fixt.root.querySelector('mwc-linear-progress')!;
       await awaitIndeterminateReady(element);
     });
 
-    test('defaults to no aria-label', async () => {
+    it('defaults to no aria-label', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
 
@@ -597,7 +597,7 @@ suite('mwc-linear-progress', () => {
       assert.isNull(root.getAttribute('aria-label'));
     });
 
-    test('correctly sets to aria-label with .ariaLabel', async () => {
+    it('correctly sets to aria-label with .ariaLabel', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
 
@@ -610,7 +610,7 @@ suite('mwc-linear-progress', () => {
       assert.equal(root.getAttribute('aria-label'), 'test label');
     });
 
-    test('correctly sets to aria-label with aria-label', async () => {
+    it('correctly sets to aria-label with aria-label', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
 

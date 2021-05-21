@@ -61,13 +61,13 @@ const testClickElement = html`
   <custom-click-element></custom-click-element>
 `;
 
-suite('base-element:', () => {
-  suite('test-element', () => {
+describe('base-element:', () => {
+  describe('test-element', () => {
     let fixt: TestFixture;
     let component: TestElement|null;
     let shadowTargetElement: HTMLElement|null;
 
-    setup(async () => {
+    beforeEach(async () => {
       fixt = await fixture(testElement);
       component = fixt.root.querySelector('test-element');
 
@@ -76,17 +76,17 @@ suite('base-element:', () => {
       }
     });
 
-    teardown(async () => {
+    afterEach(async () => {
       if (fixt) {
         fixt.remove();
       }
     });
 
-    test('is an instance of base-element', () => {
+    it('is an instance of base-element', () => {
       assert.instanceOf(component, BaseElement);
     });
 
-    test('shadowRoot focuses on #root after click', async () => {
+    it('shadowRoot focuses on #root after click', async () => {
       if (component === null) {
         assert.isNotNull(component);
         return;
@@ -107,13 +107,13 @@ suite('base-element:', () => {
     });
   });
 
-  suite('custom-click-element', () => {
+  describe('custom-click-element', () => {
     let fixt: TestFixture;
     let component: CustomClickElement|null;
     let shadowRootElement: HTMLElement|null;
     let shadowIndirectElement: HTMLElement|null;
 
-    setup(async () => {
+    beforeEach(async () => {
       fixt = await fixture(testClickElement);
       component = fixt.root.querySelector('custom-click-element');
 
@@ -123,17 +123,17 @@ suite('base-element:', () => {
       }
     });
 
-    teardown(async () => {
+    afterEach(async () => {
       if (fixt) {
         fixt.remove();
       }
     });
 
-    test('an instance of BaseElement', () => {
+    it('an instance of BaseElement', () => {
       assert.instanceOf(component, BaseElement);
     });
 
-    test('shadowRoot should not focus on #indirect after click', async () => {
+    it('shadowRoot should not focus on #indirect after click', async () => {
       if (component === null) {
         assert.isNotNull(component);
         return;
@@ -154,7 +154,7 @@ suite('base-element:', () => {
           component.shadowRoot.activeElement, shadowIndirectElement);
     });
 
-    test('shadowRoot should not focus on #root after click', async () => {
+    it('shadowRoot should not focus on #root after click', async () => {
       if (component === null) {
         assert.isNotNull(component);
         return;

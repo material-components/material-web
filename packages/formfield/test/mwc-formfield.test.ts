@@ -9,7 +9,6 @@ import '@material/mwc-checkbox';
 import '@material/mwc-radio';
 import '@material/mwc-switch';
 
-
 import {Checkbox} from '@material/mwc-checkbox';
 import {Formfield} from '@material/mwc-formfield';
 import {Radio} from '@material/mwc-radio';
@@ -42,21 +41,21 @@ const formfield = (propsInit: Partial<FormfieldProps>) => {
   `;
 };
 
-suite('mwc-formfield', () => {
+describe('mwc-formfield', () => {
   let fixt: TestFixture;
   let element: Formfield;
 
-  teardown(() => {
+  afterEach(() => {
     fixt.remove();
   });
 
-  suite('basic', () => {
-    setup(async () => {
+  describe('basic', () => {
+    beforeEach(async () => {
       fixt = await fixture(defaultEl);
       element = fixt.root.querySelector('mwc-formfield')!;
     });
 
-    test('initializes as an mwc-formfield', () => {
+    it('initializes as an mwc-formfield', () => {
       assert.instanceOf(element, Formfield);
       assert.isFalse(element.alignEnd);
       assert.isFalse(element.spaceBetween);
@@ -64,11 +63,11 @@ suite('mwc-formfield', () => {
     });
   });
 
-  suite('with checkbox', () => {
+  describe('with checkbox', () => {
     let control: Checkbox;
 
-    suite('prop label', () => {
-      setup(async () => {
+    describe('prop label', () => {
+      beforeEach(async () => {
         fixt = await fixture(formfield(
             {label: 'label', content: html`<mwc-checkbox></mwc-checkbox>`}));
         element = fixt.root.querySelector('mwc-formfield')!;
@@ -77,12 +76,12 @@ suite('mwc-formfield', () => {
         await control.updateComplete;
       });
 
-      test('sets the aria-label on the control', async () => {
+      it('sets the aria-label on the control', async () => {
         const internalInput = control.shadowRoot!.querySelector('input')!;
         assert.equal(internalInput.getAttribute('aria-label'), 'label');
       });
 
-      test('label click propagates click and focus to control', async () => {
+      it('label click propagates click and focus to control', async () => {
         const labelEl = element.shadowRoot!.querySelector('label')!;
         let numClicks = 0;
         const origClick = control.click;
@@ -106,7 +105,7 @@ suite('mwc-formfield', () => {
         assert.equal(numClicks, 1);
       });
 
-      test('formfield will not double click control', async () => {
+      it('formfield will not double click control', async () => {
         let numClicks = 0;
         const origClick = control.click;
 
@@ -129,11 +128,11 @@ suite('mwc-formfield', () => {
     });
   });
 
-  suite('with switch', () => {
+  describe('with switch', () => {
     let control: Switch;
 
-    suite('prop label', () => {
-      setup(async () => {
+    describe('prop label', () => {
+      beforeEach(async () => {
         fixt = await fixture(formfield(
             {label: 'label', content: html`<mwc-switch></mwc-switch>`}));
         element = fixt.root.querySelector('mwc-formfield')!;
@@ -142,12 +141,12 @@ suite('mwc-formfield', () => {
         await control.updateComplete;
       });
 
-      test('sets the aria-label on the control', async () => {
+      it('sets the aria-label on the control', async () => {
         const internalInput = control.shadowRoot!.querySelector('input')!;
         assert.equal(internalInput.getAttribute('aria-label'), 'label');
       });
 
-      test('label click propagates click and focus to control', async () => {
+      it('label click propagates click and focus to control', async () => {
         const labelEl = element.shadowRoot!.querySelector('label')!;
         let numClicks = 0;
         const origClick = control.click;
@@ -171,7 +170,7 @@ suite('mwc-formfield', () => {
         assert.equal(numClicks, 1);
       });
 
-      test('formfield will not double click control', async () => {
+      it('formfield will not double click control', async () => {
         let numClicks = 0;
         const origClick = control.click;
 
@@ -194,11 +193,11 @@ suite('mwc-formfield', () => {
     });
   });
 
-  suite('with radio', () => {
+  describe('with radio', () => {
     let control: Radio;
 
-    suite('prop label', () => {
-      setup(async () => {
+    describe('prop label', () => {
+      beforeEach(async () => {
         fixt = await fixture(formfield(
             {label: 'label', content: html`<mwc-radio></mwc-radio>`}));
         element = fixt.root.querySelector('mwc-formfield')!;
@@ -207,12 +206,12 @@ suite('mwc-formfield', () => {
         await control.updateComplete;
       });
 
-      test('sets the aria-label on the control', async () => {
+      it('sets the aria-label on the control', async () => {
         const internalInput = control.shadowRoot!.querySelector('input')!;
         assert.equal(internalInput.getAttribute('aria-label'), 'label');
       });
 
-      test('label click propagates click and focus to control', async () => {
+      it('label click propagates click and focus to control', async () => {
         const labelEl = element.shadowRoot!.querySelector('label')!;
         let numClicks = 0;
         const origClick = control.click;
@@ -236,7 +235,7 @@ suite('mwc-formfield', () => {
         assert.equal(numClicks, 1);
       });
 
-      test('formfield will not double click control', async () => {
+      it('formfield will not double click control', async () => {
         let numClicks = 0;
         const origClick = control.click;
 

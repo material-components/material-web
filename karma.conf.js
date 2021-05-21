@@ -72,7 +72,7 @@ module.exports = function(config) {
     client: {
       mocha: {
         reporter: 'html',
-        ui: 'tdd',
+        ui: 'bdd',
       },
     },
 

@@ -26,28 +26,28 @@ const switchElement = (propsInit: Partial<SwitchProps>) => {
   `;
 };
 
-suite('mwc-switch', () => {
+describe('mwc-switch', () => {
   let fixt: TestFixture;
   let element: Switch;
 
-  teardown(() => {
+  afterEach(() => {
     fixt.remove();
   });
 
-  suite('basic', () => {
-    setup(async () => {
+  describe('basic', () => {
+    beforeEach(async () => {
       fixt = await fixture(defaultSwitchElement);
       element = fixt.root.querySelector('mwc-switch')!;
       await element.updateComplete;
     });
 
-    test('initializes as an mwc-switch', () => {
+    it('initializes as an mwc-switch', () => {
       assert.instanceOf(element, Switch);
       assert.equal(element.checked, false);
       assert.equal(element.disabled, false);
     });
 
-    test('user input emits `change` event', async () => {
+    it('user input emits `change` event', async () => {
       const callback = hanbi.spy();
       element.addEventListener('change', callback.handler);
 
@@ -57,14 +57,14 @@ suite('mwc-switch', () => {
     });
   });
 
-  suite('checked', () => {
-    setup(async () => {
+  describe('checked', () => {
+    beforeEach(async () => {
       fixt = await fixture(switchElement({checked: true}));
       element = fixt.root.querySelector('mwc-switch')!;
       await element.updateComplete;
     });
 
-    test('checks the native input', async () => {
+    it('checks the native input', async () => {
       const input = element.shadowRoot!.querySelector('input')!;
       assert(input.checked);
 
@@ -73,26 +73,24 @@ suite('mwc-switch', () => {
       assert(!input.checked);
     });
 
-    test(
-        'setting `checked` affects `aria-checked` of native input',
-        async () => {
-          const input = element.shadowRoot!.querySelector('input')!;
-          assert.equal(input.getAttribute('aria-checked'), 'true');
+    it('setting `checked` affects `aria-checked` of native input', async () => {
+      const input = element.shadowRoot!.querySelector('input')!;
+      assert.equal(input.getAttribute('aria-checked'), 'true');
 
-          element.checked = false;
-          await element.updateComplete;
-          assert.equal(input.getAttribute('aria-checked'), 'false');
-        });
+      element.checked = false;
+      await element.updateComplete;
+      assert.equal(input.getAttribute('aria-checked'), 'false');
+    });
   });
 
-  suite('disabled', () => {
-    setup(async () => {
+  describe('disabled', () => {
+    beforeEach(async () => {
       fixt = await fixture(switchElement({disabled: true}));
       element = fixt.root.querySelector('mwc-switch')!;
       await element.updateComplete;
     });
 
-    test('disables the native input', async () => {
+    it('disables the native input', async () => {
       const input = element.shadowRoot!.querySelector('input')!;
       assert(input.disabled);
 
@@ -102,14 +100,14 @@ suite('mwc-switch', () => {
     });
   });
 
-  suite('aria', () => {
-    setup(async () => {
+  describe('aria', () => {
+    beforeEach(async () => {
       fixt = await fixture(defaultSwitchElement);
       element = fixt.root.querySelector('mwc-switch')!;
       await element.updateComplete;
     });
 
-    test('delegates aria-label to the proper element', async () => {
+    it('delegates aria-label to the proper element', async () => {
       const input = element.shadowRoot!.querySelector('input')!;
       element.setAttribute('aria-label', 'foo');
       await element.updateComplete;
@@ -118,7 +116,7 @@ suite('mwc-switch', () => {
       assert.equal(input.getAttribute('aria-label'), 'foo');
     });
 
-    test('delegates .ariaLabel to the proper element', async () => {
+    it('delegates .ariaLabel to the proper element', async () => {
       const input = element.shadowRoot!.querySelector('input')!;
       element.ariaLabel = 'foo';
       await element.updateComplete;
@@ -127,7 +125,7 @@ suite('mwc-switch', () => {
       assert.equal(input.getAttribute('aria-label'), 'foo');
     });
 
-    test('delegates aria-labelledby to the proper element', async () => {
+    it('delegates aria-labelledby to the proper element', async () => {
       const input = element.shadowRoot!.querySelector('input')!;
       element.setAttribute('aria-labelledby', 'foo');
       await element.updateComplete;
@@ -136,7 +134,7 @@ suite('mwc-switch', () => {
       assert.equal(input.getAttribute('aria-labelledby'), 'foo');
     });
 
-    test('delegates .ariaLabelledBy to the proper element', async () => {
+    it('delegates .ariaLabelledBy to the proper element', async () => {
       const input = element.shadowRoot!.querySelector('input')!;
       element.ariaLabelledBy = 'foo';
       await element.updateComplete;

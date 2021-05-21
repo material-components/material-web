@@ -87,22 +87,22 @@ const surface = (propsInit: Partial<SurfaceProps>) => {
     </mwc-menu-surface>`;
 };
 
-suite('mwc-menu', () => {
+describe('mwc-menu', () => {
   let fixt: TestFixture;
   let element: Menu;
 
-  teardown(() => {
+  afterEach(() => {
     fixt.remove();
   });
 
-  suite('basic', () => {
-    setup(async () => {
+  describe('basic', () => {
+    beforeEach(async () => {
       fixt = await fixture(defaultMenu);
       element = fixt.root.querySelector('mwc-menu')!;
       await element.updateComplete;
     });
 
-    test('initializes as an mwc-menu', () => {
+    it('initializes as an mwc-menu', () => {
       assert.instanceOf(element, Menu);
       assert.equal(element.open, false);
       assert.equal(element.quick, false);
@@ -119,7 +119,7 @@ suite('mwc-menu', () => {
       assert.equal(element.fullwidth, false);
     });
 
-    test('surface is visible when open', async () => {
+    it('surface is visible when open', async () => {
       const surface =
           element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
       assert.isTrue(surface.hasAttribute('hidden'));
@@ -130,7 +130,7 @@ suite('mwc-menu', () => {
       assert.isTrue(surface.open);
     });
 
-    test('`items` returns list items', async () => {
+    it('`items` returns list items', async () => {
       element.innerHTML = '<mwc-list-item>1</mwc-list-item>';
       element.layout(true);
       await element.updateComplete;
@@ -139,7 +139,7 @@ suite('mwc-menu', () => {
       assert.equal(items[0], element.children[0] as ListItem);
     });
 
-    test('`anchor` is passed to surface', async () => {
+    it('`anchor` is passed to surface', async () => {
       const surface =
           element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
       assert.equal(element.anchor, null);
@@ -149,7 +149,7 @@ suite('mwc-menu', () => {
       assert.equal(surface.anchor, document.body);
     });
 
-    test('`quick` is passed to surface', async () => {
+    it('`quick` is passed to surface', async () => {
       const surface =
           element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
       assert.equal(element.quick, false);
@@ -159,7 +159,7 @@ suite('mwc-menu', () => {
       assert.equal(surface.quick, true);
     });
 
-    test('`corner` is passed to surface', async () => {
+    it('`corner` is passed to surface', async () => {
       const surface =
           element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
       assert.equal(element.corner, 'TOP_START');
@@ -169,7 +169,7 @@ suite('mwc-menu', () => {
       assert.equal(surface.corner, 'BOTTOM_START');
     });
 
-    test('`menuCorner` is passed to surface', async () => {
+    it('`menuCorner` is passed to surface', async () => {
       const surface =
           element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
       assert.equal(element.menuCorner, 'START');
@@ -179,7 +179,7 @@ suite('mwc-menu', () => {
       assert.equal(surface.menuCorner, 'END');
     });
 
-    test('`x` and `y` are passed to surface', async () => {
+    it('`x` and `y` are passed to surface', async () => {
       const surface =
           element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
       assert.equal(element.x, null);
@@ -195,7 +195,7 @@ suite('mwc-menu', () => {
       assert.equal(surface.y, 101);
     });
 
-    test('`absolute` is passed to surface', async () => {
+    it('`absolute` is passed to surface', async () => {
       const surface =
           element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
       assert.equal(element.absolute, false);
@@ -206,7 +206,7 @@ suite('mwc-menu', () => {
       assert.equal(surface.absolute, true);
     });
 
-    test('`fixed` is passed to surface', async () => {
+    it('`fixed` is passed to surface', async () => {
       const surface =
           element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
       assert.equal(element.fixed, false);
@@ -217,7 +217,7 @@ suite('mwc-menu', () => {
       assert.equal(surface.fixed, true);
     });
 
-    test('`fullwidth` is passed to surface', async () => {
+    it('`fullwidth` is passed to surface', async () => {
       const surface =
           element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
       assert.equal(element.fullwidth, false);
@@ -228,7 +228,7 @@ suite('mwc-menu', () => {
       assert.equal(surface.fullwidth, true);
     });
 
-    test('correct roles are passed to inner list', async () => {
+    it('correct roles are passed to inner list', async () => {
       const list =
           element.shadowRoot!.querySelector<List>('.mdc-deprecated-list')!;
       assert.equal(element.innerRole, 'menu');
@@ -240,7 +240,7 @@ suite('mwc-menu', () => {
       assert.equal(list.itemRoles, 'option');
     });
 
-    test('`activatable` is set on inner list', async () => {
+    it('`activatable` is set on inner list', async () => {
       const list =
           element.shadowRoot!.querySelector<List>('.mdc-deprecated-list')!;
       assert.equal(element.activatable, false);
@@ -252,8 +252,8 @@ suite('mwc-menu', () => {
     });
   });
 
-  suite('multi', () => {
-    setup(async () => {
+  describe('multi', () => {
+    beforeEach(async () => {
       fixt = await fixture(menu({
         multi: true,
         open: true,
@@ -265,7 +265,7 @@ suite('mwc-menu', () => {
       await element.updateComplete;
     });
 
-    test('`multi` is set on inner list', async () => {
+    it('`multi` is set on inner list', async () => {
       const list =
           element.shadowRoot!.querySelector<List>('.mdc-deprecated-list')!;
       assert.equal(element.multi, true);
@@ -276,7 +276,7 @@ suite('mwc-menu', () => {
       assert.equal(list.multi, false);
     });
 
-    test('clicking items sets selection', async () => {
+    it('clicking items sets selection', async () => {
       const item0 = element.children[0] as ListItem;
       const item1 = element.children[1] as ListItem;
       item0.click();
@@ -287,10 +287,10 @@ suite('mwc-menu', () => {
     });
   });
 
-  suite('grouped', () => {
+  describe('grouped', () => {
     let originalSetTimeout: typeof window.setTimeout;
 
-    setup(async () => {
+    beforeEach(async () => {
       originalSetTimeout = window.setTimeout;
       // tslint:disable-next-line
       (window as any).setTimeout = (fn: () => unknown) => {
@@ -310,11 +310,11 @@ suite('mwc-menu', () => {
       await element.updateComplete;
     });
 
-    teardown(() => {
+    afterEach(() => {
       window.setTimeout = originalSetTimeout;
     });
 
-    test('clicking items within one group overrides prev sel', async () => {
+    it('clicking items within one group overrides prev sel', async () => {
       const [item1a, item1b, item2a, item2b] =
           element.children as unknown as ListItem[];
       item1a.click();
@@ -328,36 +328,36 @@ suite('mwc-menu', () => {
     });
   });
 
-  suite('show()', () => {
-    setup(async () => {
+  describe('show()', () => {
+    beforeEach(async () => {
       fixt = await fixture(defaultMenu);
       element = fixt.root.querySelector('mwc-menu')!;
       await element.updateComplete;
     });
 
-    test('opens the menu', async () => {
+    it('opens the menu', async () => {
       assert.isFalse(element.open);
       element.show();
       assert.isTrue(element.open);
     });
   });
 
-  suite('close()', () => {
-    setup(async () => {
+  describe('close()', () => {
+    beforeEach(async () => {
       fixt = await fixture(menu({open: true}));
       element = fixt.root.querySelector('mwc-menu')!;
       await element.updateComplete;
     });
 
-    test('closes the menu', async () => {
+    it('closes the menu', async () => {
       assert.isTrue(element.open);
       element.close();
       assert.isFalse(element.open);
     });
   });
 
-  suite('selection', () => {
-    setup(async () => {
+  describe('selection', () => {
+    beforeEach(async () => {
       fixt = await fixture(menu({
         open: true,
         contents: html`
@@ -368,7 +368,7 @@ suite('mwc-menu', () => {
       await element.updateComplete;
     });
 
-    test('`index` returns selected index', async () => {
+    it('`index` returns selected index', async () => {
       const list = element.shadowRoot!.querySelector('mwc-list')!;
       assert.equal(list.index, -1);
       assert.equal(element.index, -1);
@@ -378,7 +378,7 @@ suite('mwc-menu', () => {
       assert.equal(element.index, 1);
     });
 
-    test('`selected` returns selected item', async () => {
+    it('`selected` returns selected item', async () => {
       const list = element.shadowRoot!.querySelector('mwc-list')!;
       const item = element.children[1] as ListItem;
       element.select(1);
@@ -387,7 +387,7 @@ suite('mwc-menu', () => {
       assert.equal(list.selected, item);
     });
 
-    test('clicking an item closes the menu', async () => {
+    it('clicking an item closes the menu', async () => {
       const item = element.children[1] as ListItem;
       item.click();
       assert.equal(element.open, false);
@@ -396,22 +396,22 @@ suite('mwc-menu', () => {
   });
 });
 
-suite('mwc-menu-surface', () => {
+describe('mwc-menu-surface', () => {
   let fixt: TestFixture;
   let element: MenuSurface;
 
-  teardown(() => {
+  afterEach(() => {
     fixt.remove();
   });
 
-  suite('basic', () => {
-    setup(async () => {
+  describe('basic', () => {
+    beforeEach(async () => {
       fixt = await fixture(defaultSurface);
       element = fixt.root.querySelector('mwc-menu-surface')!;
       await element.updateComplete;
     });
 
-    test('initializes as an mwc-menu-surface', () => {
+    it('initializes as an mwc-menu-surface', () => {
       assert.instanceOf(element, MenuSurface);
       assert.equal(element.absolute, false);
       assert.equal(element.fullwidth, false);
@@ -428,14 +428,14 @@ suite('mwc-menu-surface', () => {
     });
   });
 
-  suite('fixed', () => {
-    setup(async () => {
+  describe('fixed', () => {
+    beforeEach(async () => {
       fixt = await fixture(surface({fixed: true}));
       element = fixt.root.querySelector('mwc-menu-surface')!;
       await element.updateComplete;
     });
 
-    test('sets correct class', async () => {
+    it('sets correct class', async () => {
       const fixedClass = 'mdc-menu-surface--fixed';
       const surface = element.shadowRoot!.querySelector('.mdc-menu-surface')!;
       assert.isTrue(surface.classList.contains(fixedClass));
@@ -445,14 +445,14 @@ suite('mwc-menu-surface', () => {
     });
   });
 
-  suite('fullwidth', () => {
-    setup(async () => {
+  describe('fullwidth', () => {
+    beforeEach(async () => {
       fixt = await fixture(surface({fullwidth: true}));
       element = fixt.root.querySelector('mwc-menu-surface')!;
       await element.updateComplete;
     });
 
-    test('sets correct class', async () => {
+    it('sets correct class', async () => {
       const fullwidthClass = 'mdc-menu-surface--fullwidth';
       const surface = element.shadowRoot!.querySelector('.mdc-menu-surface')!;
       assert.isTrue(surface.classList.contains(fullwidthClass));
@@ -462,27 +462,27 @@ suite('mwc-menu-surface', () => {
     });
   });
 
-  suite('open/close', () => {
-    setup(async () => {
+  describe('open/close', () => {
+    beforeEach(async () => {
       fixt = await fixture(surface({quick: true}));
       element = fixt.root.querySelector('mwc-menu-surface')!;
       await element.updateComplete;
     });
 
-    test('`show()` opens surface', async () => {
+    it('`show()` opens surface', async () => {
       element.show();
       await element.updateComplete;
       assert.equal(element.open, true);
     });
 
-    test('`close()` closes surface', async () => {
+    it('`close()` closes surface', async () => {
       element.show();
       await element.updateComplete;
       element.close();
       assert.equal(element.open, false);
     });
 
-    test('closing fires the closed event after raf', async () => {
+    it('closing fires the closed event after raf', async () => {
       const fake = hanbi.spy();
       element.addEventListener('closed', fake.handler);
       element.show();
@@ -494,7 +494,7 @@ suite('mwc-menu-surface', () => {
       assert.isTrue(fake.called);
     });
 
-    test('closing fires the closing event immediately', async () => {
+    it('closing fires the closing event immediately', async () => {
       const fake = hanbi.spy();
       element.addEventListener('closing', fake.handler);
       element.show();
@@ -505,7 +505,7 @@ suite('mwc-menu-surface', () => {
       assert.isTrue(fake.called);
     });
 
-    test('opening fires the opened event', async () => {
+    it('opening fires the opened event', async () => {
       const fake = hanbi.spy();
       element.addEventListener('opened', fake.handler);
       element.show();
@@ -514,7 +514,7 @@ suite('mwc-menu-surface', () => {
       assert.isTrue(fake.called);
     });
 
-    test('escape key closes surface', async () => {
+    it('escape key closes surface', async () => {
       const surface = element.shadowRoot!.querySelector('.mdc-menu-surface')!;
       element.show();
       await element.updateComplete;
@@ -529,7 +529,7 @@ suite('mwc-menu-surface', () => {
       assert.isFalse(element.open);
     });
 
-    test('clicking outside the surface closes surface', async () => {
+    it('clicking outside the surface closes surface', async () => {
       element.show();
       await element.updateComplete;
       await rafPromise();
@@ -539,7 +539,7 @@ suite('mwc-menu-surface', () => {
       assert.isFalse(element.open);
     });
 
-    test('respects stayOpenOnBodyClick', async () => {
+    it('respects stayOpenOnBodyClick', async () => {
       element.stayOpenOnBodyClick = true;
       element.show();
       await element.updateComplete;
@@ -551,21 +551,21 @@ suite('mwc-menu-surface', () => {
     });
   });
 
-  suite('menuCorner', () => {
-    setup(async () => {
+  describe('menuCorner', () => {
+    beforeEach(async () => {
       fixt = await fixture(surface({quick: true}));
       element = fixt.root.querySelector('mwc-menu-surface')!;
       await element.updateComplete;
     });
 
-    test('`menuCorner` doesnt flip corners on init', async () => {
+    it('`menuCorner` doesnt flip corners on init', async () => {
       const internals = element as unknown as MenuCornerInternals;
       assert.equal(internals.previousMenuCorner, null);
       assert.equal(internals.bitwiseCorner, CornerEnum.TOP_START);
       assert.equal(element.corner, 'TOP_START');
     });
 
-    test('`menuCorner` flips corners on init with `END`', async () => {
+    it('`menuCorner` flips corners on init with `END`', async () => {
       await fixt.remove();
       fixt = await fixture(surface({quick: true, menuCorner: 'END'}));
       element = fixt.root.querySelector('mwc-menu-surface')!;
@@ -576,7 +576,7 @@ suite('mwc-menu-surface', () => {
       assert.equal(element.corner, 'TOP_START');
     });
 
-    test('`menuCorner` flips after initialization', async () => {
+    it('`menuCorner` flips after initialization', async () => {
       const internals = element as unknown as MenuCornerInternals;
 
       element.menuCorner = 'END';
@@ -596,7 +596,7 @@ suite('mwc-menu-surface', () => {
       assert.equal(element.corner, 'TOP_START');
     });
 
-    test('`menuCorner` wont flip with invalid/same val', async () => {
+    it('`menuCorner` wont flip with invalid/same val', async () => {
       const internals = element as unknown as MenuCornerInternals;
 
       (element as unknown as {menuCorner: 'end'}).menuCorner = 'end';
@@ -640,7 +640,7 @@ suite('mwc-menu-surface', () => {
       assert.equal(element.corner, 'TOP_START');
     });
 
-    test('`corner` internals flip when `menuCorner` flipped', async () => {
+    it('`corner` internals flip when `menuCorner` flipped', async () => {
       const internals = element as unknown as MenuCornerInternals;
 
       element.corner = 'TOP_END';
@@ -669,11 +669,11 @@ suite('mwc-menu-surface', () => {
     });
   });
 
-  suite('focus', () => {
+  describe('focus', () => {
     let focusedElement: HTMLElement;
     let innerFocusedElement: HTMLElement;
 
-    setup(async () => {
+    beforeEach(async () => {
       focusedElement = document.createElement('input');
       document.body.appendChild(focusedElement);
       const contents = html`<input>`;
@@ -683,11 +683,11 @@ suite('mwc-menu-surface', () => {
       await element.updateComplete;
     });
 
-    teardown(() => {
+    afterEach(() => {
       focusedElement.parentNode!.removeChild(focusedElement);
     });
 
-    test('focus is restored after closing', async () => {
+    it('focus is restored after closing', async () => {
       const w: WindowWithShadyDOM = window;
       if (w.ShadyDOM && w.ShadyDOM.inUse) {
         /*

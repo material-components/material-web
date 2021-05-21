@@ -37,23 +37,23 @@ const checkbox = (propsInit: Partial<CheckboxProps>) => {
   `;
 };
 
-suite('mwc-checkbox', () => {
+describe('mwc-checkbox', () => {
   let fixt: TestFixture;
   let element: Checkbox;
   let internals: CheckboxInternals;
 
-  teardown(() => {
+  afterEach(() => {
     fixt.remove();
   });
 
-  suite('basic', () => {
-    setup(async () => {
+  describe('basic', () => {
+    beforeEach(async () => {
       fixt = await fixture(defaultCheckbox);
       element = fixt.root.querySelector('mwc-checkbox')!;
       internals = element as unknown as CheckboxInternals;
     });
 
-    test('initializes as an mwc-checkbox', () => {
+    it('initializes as an mwc-checkbox', () => {
       assert.instanceOf(element, Checkbox);
       assert.equal(element.checked, false);
       assert.equal(element.indeterminate, false);
@@ -61,27 +61,26 @@ suite('mwc-checkbox', () => {
       assert.equal(element.value, '');
     });
 
-    test(
-        'element.formElement returns the native checkbox element', async () => {
-          await element.updateComplete;
-          assert.instanceOf(internals.formElement, HTMLElement);
-          assert.equal(internals.formElement.localName, 'input');
-        });
+    it('element.formElement returns the native checkbox element', async () => {
+      await element.updateComplete;
+      assert.instanceOf(internals.formElement, HTMLElement);
+      assert.equal(internals.formElement.localName, 'input');
+    });
 
-    test('user input emits `change` event', async () => {
+    it('user input emits `change` event', async () => {
       const callback = hanbi.spy();
       element.addEventListener('change', callback.handler);
       element.click();
       assert.equal(callback.callCount, 1);
     });
 
-    test('user input updates checked state', async () => {
+    it('user input updates checked state', async () => {
       element.click();
       await element.updateComplete;
       assert.equal(element.checked, true);
     });
 
-    test('change event has updated values for `checked`', () => {
+    it('change event has updated values for `checked`', () => {
       let changeChecked: boolean|undefined = undefined;
       element.addEventListener('change', () => {
         changeChecked = element.checked;
@@ -90,7 +89,7 @@ suite('mwc-checkbox', () => {
       assert.equal(changeChecked, true);
     });
 
-    test('does not animate after being hidden', async () => {
+    it('does not animate after being hidden', async () => {
       element.checked = true;
       const animatedElement =
           element.shadowRoot!.querySelector('.mdc-checkbox__background')!;
@@ -106,77 +105,72 @@ suite('mwc-checkbox', () => {
     });
   });
 
-  suite('checked', () => {
-    setup(async () => {
+  describe('checked', () => {
+    beforeEach(async () => {
       fixt = await fixture(checkbox({checked: true}));
       element = fixt.root.querySelector('mwc-checkbox')!;
       internals = element as unknown as CheckboxInternals;
       await element.updateComplete;
     });
 
-    test(
-        'get/set updates the checked property on the native checkbox element',
-        async () => {
-          assert.equal(internals.formElement.checked, true);
-          element.checked = false;
-          await element.updateComplete;
-          assert.equal(internals.formElement.checked, false);
-        });
+    it('get/set updates the checked property on the native checkbox element',
+       async () => {
+         assert.equal(internals.formElement.checked, true);
+         element.checked = false;
+         await element.updateComplete;
+         assert.equal(internals.formElement.checked, false);
+       });
   });
 
-  suite('indeterminate', () => {
-    setup(async () => {
+  describe('indeterminate', () => {
+    beforeEach(async () => {
       fixt = await fixture(checkbox({indeterminate: true}));
       element = fixt.root.querySelector('mwc-checkbox')!;
       internals = element as unknown as CheckboxInternals;
       await element.updateComplete;
     });
 
-    test(
-        'get/set updates the indeterminate property on the native checkbox element',
-        async () => {
-          assert.equal(internals.formElement.indeterminate, true);
-          assert.equal(
-              internals.formElement.getAttribute('aria-checked'), 'mixed');
-          element.indeterminate = false;
-          await element.updateComplete;
-          assert.equal(internals.formElement.indeterminate, false);
-        });
+    it('get/set updates the indeterminate property on the native checkbox element',
+       async () => {
+         assert.equal(internals.formElement.indeterminate, true);
+         assert.equal(
+             internals.formElement.getAttribute('aria-checked'), 'mixed');
+         element.indeterminate = false;
+         await element.updateComplete;
+         assert.equal(internals.formElement.indeterminate, false);
+       });
   });
 
-  suite('disabled', () => {
-    setup(async () => {
+  describe('disabled', () => {
+    beforeEach(async () => {
       fixt = await fixture(checkbox({disabled: true}));
       element = fixt.root.querySelector('mwc-checkbox')!;
       internals = element as unknown as CheckboxInternals;
       await element.updateComplete;
     });
 
-    test(
-        'get/set updates the disabled property on the native checkbox element',
-        async () => {
-          assert.equal(internals.formElement.disabled, true);
-          element.disabled = false;
-          await element.updateComplete;
-          assert.equal(internals.formElement.disabled, false);
-        });
+    it('get/set updates the disabled property on the native checkbox element',
+       async () => {
+         assert.equal(internals.formElement.disabled, true);
+         element.disabled = false;
+         await element.updateComplete;
+         assert.equal(internals.formElement.disabled, false);
+       });
   });
 
-  suite('value', () => {
-    setup(async () => {
+  describe('value', () => {
+    beforeEach(async () => {
       fixt = await fixture(checkbox({value: 'new value'}));
       element = fixt.root.querySelector('mwc-checkbox')!;
       internals = element as unknown as CheckboxInternals;
       await element.updateComplete;
     });
 
-    test(
-        'get/set updates the value of the native checkbox element',
-        async () => {
-          assert.equal(internals.formElement.value, 'new value');
-          element.value = 'new value 2';
-          await element.updateComplete;
-          assert.equal(internals.formElement.value, 'new value 2');
-        });
+    it('get/set updates the value of the native checkbox element', async () => {
+      assert.equal(internals.formElement.value, 'new value');
+      element.value = 'new value 2';
+      await element.updateComplete;
+      assert.equal(internals.formElement.value, 'new value 2');
+    });
   });
 });

@@ -42,21 +42,21 @@ const LABEL_SELECTOR = '.mdc-fab__label';
 const TOUCH_SELECTOR = '.mdc-fab__touch';
 const TOUCH_CLASS = 'mdc-fab--touch';
 
-suite('mwc-fab', () => {
+describe('mwc-fab', () => {
   let fixt: TestFixture;
   let element: Fab;
 
-  teardown(() => {
+  afterEach(() => {
     fixt.remove();
   });
 
-  suite('basic', () => {
-    setup(async () => {
+  describe('basic', () => {
+    beforeEach(async () => {
       fixt = await fixture(defaultFab);
       element = fixt.root.querySelector('mwc-fab')!;
     });
 
-    test('initializes as an mwc-fab', () => {
+    it('initializes as an mwc-fab', () => {
       assert.instanceOf(element, Fab);
       assert.equal(element.mini, false);
       assert.equal(element.exited, false);
@@ -69,34 +69,33 @@ suite('mwc-fab', () => {
     });
   });
 
-  suite('disabled', () => {
-    setup(async () => {
+  describe('disabled', () => {
+    beforeEach(async () => {
       fixt = await fixture(fab({disabled: true}));
       element = fixt.root.querySelector('mwc-fab')!;
       await element.updateComplete;
     });
 
-    test(
-        'set updates the disabled property on the native button element',
-        async () => {
-          const button = element.shadowRoot!.querySelector('button')!;
-          assert.equal(element.disabled, true);
-          assert.equal(button.hasAttribute('disabled'), true);
+    it('set updates the disabled property on the native button element',
+       async () => {
+         const button = element.shadowRoot!.querySelector('button')!;
+         assert.equal(element.disabled, true);
+         assert.equal(button.hasAttribute('disabled'), true);
 
-          element.disabled = false;
-          await element.updateComplete;
-          assert.equal(button.hasAttribute('disabled'), false);
-        });
+         element.disabled = false;
+         await element.updateComplete;
+         assert.equal(button.hasAttribute('disabled'), false);
+       });
   });
 
-  suite('icon', () => {
-    setup(async () => {
+  describe('icon', () => {
+    beforeEach(async () => {
       fixt = await fixture(fab({icon: 'check'}));
       element = fixt.root.querySelector('mwc-fab')!;
       await element.updateComplete;
     });
 
-    test('setting adds an icon to the fab', async () => {
+    it('setting adds an icon to the fab', async () => {
       let icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
       assert.equal(element.icon, 'check');
       assert.instanceOf(icon, Element);
@@ -112,20 +111,20 @@ suite('mwc-fab', () => {
       assert.equal(icon, null);
     });
 
-    test('sets `aria-label` of the button', async () => {
+    it('sets `aria-label` of the button', async () => {
       const button = element.shadowRoot!.querySelector('button')!;
       assert.equal(button.getAttribute('aria-label'), 'check');
     });
   });
 
-  suite('label', () => {
-    setup(async () => {
+  describe('label', () => {
+    beforeEach(async () => {
       fixt = await fixture(fab({label: 'label text', icon: 'check'}));
       element = fixt.root.querySelector('mwc-fab')!;
       await element.updateComplete;
     });
 
-    test('sets `aria-label` of the button, overriding `icon`', async () => {
+    it('sets `aria-label` of the button, overriding `icon`', async () => {
       const button = element.shadowRoot!.querySelector('button')!;
       assert.equal(element.label, 'label text');
       assert.equal(button.getAttribute('aria-label'), 'label text');
@@ -136,14 +135,14 @@ suite('mwc-fab', () => {
     });
   });
 
-  suite('mini', () => {
-    setup(async () => {
+  describe('mini', () => {
+    beforeEach(async () => {
       fixt = await fixture(fab({mini: true}));
       element = fixt.root.querySelector('mwc-fab')!;
       await element.updateComplete;
     });
 
-    test('sets the correct inner class', async () => {
+    it('sets the correct inner class', async () => {
       const miniClass = 'mdc-fab--mini';
       const button = element.shadowRoot!.querySelector('.mdc-fab')!;
       assert.isTrue(element.mini);
@@ -154,14 +153,14 @@ suite('mwc-fab', () => {
     });
   });
 
-  suite('exited', () => {
-    setup(async () => {
+  describe('exited', () => {
+    beforeEach(async () => {
       fixt = await fixture(fab({exited: true}));
       element = fixt.root.querySelector('mwc-fab')!;
       await element.updateComplete;
     });
 
-    test('sets the correct inner class', async () => {
+    it('sets the correct inner class', async () => {
       const exitedClass = 'mdc-fab--exited';
       const button = element.shadowRoot!.querySelector('.mdc-fab')!;
       assert.isTrue(element.exited);
@@ -172,14 +171,14 @@ suite('mwc-fab', () => {
     });
   });
 
-  suite('extended', () => {
-    setup(async () => {
+  describe('extended', () => {
+    beforeEach(async () => {
       fixt = await fixture(fab({extended: true}));
       element = fixt.root.querySelector('mwc-fab')!;
       await element.updateComplete;
     });
 
-    test('sets the correct inner class', async () => {
+    it('sets the correct inner class', async () => {
       const extendedClass = 'mdc-fab--extended';
       const button = element.shadowRoot!.querySelector('.mdc-fab')!;
       assert.isTrue(element.extended);
@@ -189,7 +188,7 @@ suite('mwc-fab', () => {
       assert.isFalse(button.classList.contains(extendedClass));
     });
 
-    test('displays label if set', async () => {
+    it('displays label if set', async () => {
       let label = element.shadowRoot!.querySelector(LABEL_SELECTOR);
       assert.equal(label, null);
       element.label = 'foo';
@@ -204,15 +203,15 @@ suite('mwc-fab', () => {
     });
   });
 
-  suite('showIconAtEnd', () => {
-    setup(async () => {
+  describe('showIconAtEnd', () => {
+    beforeEach(async () => {
       fixt = await fixture(fab(
           {showIconAtEnd: true, icon: 'check', label: 'foo', extended: true}));
       element = fixt.root.querySelector('mwc-fab')!;
       await element.updateComplete;
     });
 
-    test('displays icon after label', async () => {
+    it('displays icon after label', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-fab')!;
       const LABEL_CLASS = 'mdc-fab__label';
       const ICON_CLASS = 'mdc-fab__icon';
@@ -236,15 +235,15 @@ suite('mwc-fab', () => {
     });
   });
 
-  suite('reducedTouchTarget', () => {
-    setup(async () => {
+  describe('reducedTouchTarget', () => {
+    beforeEach(async () => {
       fixt = await fixture(
           fab({reducedTouchTarget: true, mini: true, icon: 'check'}));
       element = fixt.root.querySelector('mwc-fab')!;
       await element.updateComplete;
     });
 
-    test('sets correct classes', async () => {
+    it('sets correct classes', async () => {
       const button = element.shadowRoot!.querySelector('.mdc-fab')!;
 
       assert.isFalse(button.classList.contains(TOUCH_CLASS));
@@ -255,7 +254,7 @@ suite('mwc-fab', () => {
       assert.isTrue(button.classList.contains(TOUCH_CLASS));
     });
 
-    test('hides touch target', async () => {
+    it('hides touch target', async () => {
       let target = element.shadowRoot!.querySelector(TOUCH_SELECTOR);
       assert.isTrue(element.reducedTouchTarget);
       assert.equal(target, null);

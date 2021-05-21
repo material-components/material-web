@@ -30,21 +30,21 @@ const progress = (propsInit: Partial<ProgressProps>) => {
   `;
 };
 
-suite('mwc-circular-progress-four-color', () => {
+describe('mwc-circular-progress-four-color', () => {
   let fixt: TestFixture;
   let element: CircularProgressFourColor;
 
-  teardown(() => {
+  afterEach(() => {
     fixt.remove();
   });
 
-  suite('basic', () => {
-    setup(async () => {
+  describe('basic', () => {
+    beforeEach(async () => {
       fixt = await fixture(defaultProgress);
       element = fixt.root.querySelector('mwc-circular-progress-four-color')!;
     });
 
-    test('initializes as an mwc-circular-progress-four-color', () => {
+    it('initializes as an mwc-circular-progress-four-color', () => {
       assert.instanceOf(element, CircularProgressFourColor);
       assert.isFalse(element.indeterminate);
       assert.equal(element.progress, 0);
@@ -53,27 +53,27 @@ suite('mwc-circular-progress-four-color', () => {
       assert.equal(element.ariaLabel, undefined);
     });
 
-    test('open sets closed to false', async () => {
+    it('open sets closed to false', async () => {
       element.closed = true;
       element.open();
       assert.equal(element.closed, false);
     });
 
-    test('close sets closed to true', async () => {
+    it('close sets closed to true', async () => {
       element.closed = false;
       element.close();
       assert.equal(element.closed, true);
     });
   });
 
-  suite('ariaLabel', () => {
-    setup(async () => {
+  describe('ariaLabel', () => {
+    beforeEach(async () => {
       fixt = await fixture(progress({ariaLabel: 'Unit Test Progress Bar'}));
       element = fixt.root.querySelector('mwc-circular-progress-four-color')!;
       await element.updateComplete;
     });
 
-    test('sets `aria-label`', async () => {
+    it('sets `aria-label`', async () => {
       const progressBar =
           element.shadowRoot!.querySelector('.mdc-circular-progress')!;
 
@@ -87,28 +87,28 @@ suite('mwc-circular-progress-four-color', () => {
     });
   });
 
-  suite('progress', () => {
-    setup(async () => {
+  describe('progress', () => {
+    beforeEach(async () => {
       fixt = await fixture(progress({progress: 0.5}));
       element = fixt.root.querySelector('mwc-circular-progress-four-color')!;
       await element.updateComplete;
     });
 
-    test('sets inner progress', async () => {
+    it('sets inner progress', async () => {
       const progressBar =
           element.shadowRoot!.querySelector('.mdc-circular-progress')!;
       assert.equal(progressBar.getAttribute('aria-valuenow'), '0.5');
     });
   });
 
-  suite('indeterminate', () => {
-    setup(async () => {
+  describe('indeterminate', () => {
+    beforeEach(async () => {
       fixt = await fixture(progress({indeterminate: true}));
       element = fixt.root.querySelector('mwc-circular-progress-four-color')!;
       await element.updateComplete;
     });
 
-    test('sets correct inner class', async () => {
+    it('sets correct inner class', async () => {
       const progressBar =
           element.shadowRoot!.querySelector('.mdc-circular-progress')!;
       assert.isTrue(progressBar.classList.contains(INDETERMINATE_CLASS));

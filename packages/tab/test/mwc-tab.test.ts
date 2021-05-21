@@ -30,22 +30,22 @@ const tab = (propsInit: Partial<TabProps>) => {
   `;
 };
 
-suite('mwc-tab', () => {
+describe('mwc-tab', () => {
   let fixt: TestFixture|undefined;
   let element: Tab;
 
-  teardown(() => {
+  afterEach(() => {
     fixt?.remove();
     fixt = undefined;
   });
 
-  suite('basic', () => {
-    setup(async () => {
+  describe('basic', () => {
+    beforeEach(async () => {
       fixt = await fixture(defaultTab);
       element = fixt.root.querySelector('mwc-tab')!;
     });
 
-    test('initializes as an mwc-tab', () => {
+    it('initializes as an mwc-tab', () => {
       assert.instanceOf(element, Tab);
       assert.equal(element.label, '');
       assert.equal(element.icon, '');
@@ -59,7 +59,7 @@ suite('mwc-tab', () => {
       assert.equal(element.focusOnActivate, true);
     });
 
-    test('fires interacted event on click', () => {
+    it('fires interacted event on click', () => {
       const interactedHandler = hanbi.spy();
       element.addEventListener('MDCTab:interacted', interactedHandler.handler);
       const tab = element.shadowRoot!.querySelector<HTMLElement>('.mdc-tab')!;
@@ -68,60 +68,60 @@ suite('mwc-tab', () => {
     });
   });
 
-  suite('minWidth', () => {
-    setup(async () => {
+  describe('minWidth', () => {
+    beforeEach(async () => {
       fixt = await fixture(tab({minWidth: true}));
       element = fixt.root.querySelector('mwc-tab')!;
       await rafPromise();
     });
 
-    test('sets the correct classes', () => {
+    it('sets the correct classes', () => {
       const tab = element.shadowRoot!.querySelector('.mdc-tab')!;
       assert.isTrue(tab.classList.contains('mdc-tab--min-width'));
     });
   });
 
-  suite('stacked', () => {
-    setup(async () => {
+  describe('stacked', () => {
+    beforeEach(async () => {
       fixt = await fixture(tab({stacked: true}));
       element = fixt.root.querySelector('mwc-tab')!;
       await element.updateComplete;
     });
 
-    test('sets the correct classes', () => {
+    it('sets the correct classes', () => {
       const tab = element.shadowRoot!.querySelector('.mdc-tab')!;
       assert.isTrue(tab.classList.contains('mdc-tab--stacked'));
     });
   });
 
-  suite('label', () => {
-    setup(async () => {
+  describe('label', () => {
+    beforeEach(async () => {
       fixt = await fixture(tab({label: 'foo'}));
       element = fixt.root.querySelector('mwc-tab')!;
       await element.updateComplete;
     });
 
-    test('displays label text', () => {
+    it('displays label text', () => {
       const content = element.shadowRoot!.querySelector('.mdc-tab__content')!;
       assert.equal(content.textContent!.trim(), 'foo');
     });
   });
 
-  suite('icon', () => {
-    setup(async () => {
+  describe('icon', () => {
+    beforeEach(async () => {
       fixt = await fixture(tab({icon: 'add'}));
       element = fixt.root.querySelector('mwc-tab')!;
       await element.updateComplete;
     });
 
-    test('displays icon', () => {
+    it('displays icon', () => {
       const content = element.shadowRoot!.querySelector('.mdc-tab__icon')!;
       assert.equal(content.textContent!.trim(), 'add');
     });
   });
 
-  suite('activate', () => {
-    teardown(() => {
+  describe('activate', () => {
+    afterEach(() => {
       const tabs = document.body.querySelectorAll('mwc-tab');
 
       for (const tab of tabs) {
@@ -129,7 +129,7 @@ suite('mwc-tab', () => {
       }
     });
 
-    test('don\'t throw if active is called before firstRender', async () => {
+    it('don\'t throw if active is called before firstRender', async () => {
       const dummyClientRect = document.body.getBoundingClientRect();
       render(defaultTab, document.body);
       const tab = document.body.querySelector('mwc-tab')!;

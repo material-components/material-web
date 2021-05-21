@@ -42,25 +42,25 @@ const afterRender = async (root: ShadowRoot) => {
   await rafPromise();
 };
 
-suite('mwc-slider', () => {
+describe('mwc-slider', () => {
   let fixt: TestFixture;
   let element: Slider;
 
-  suite('basic', () => {
-    setup(async () => {
+  describe('basic', () => {
+    beforeEach(async () => {
       fixt = await fixture(basic);
       element = fixt.root.querySelector('mwc-slider')!;
     });
 
-    teardown(() => {
+    afterEach(() => {
       fixt.remove();
     });
 
-    test('initializes as an mwc-slider', () => {
+    it('initializes as an mwc-slider', () => {
       assert.instanceOf(element, Slider);
     });
 
-    test('initializes defaults', () => {
+    it('initializes defaults', () => {
       assert.equal(element.value, 0);
       assert.equal(element.min, 0);
       assert.equal(element.max, 100);
@@ -70,13 +70,13 @@ suite('mwc-slider', () => {
       assert.equal(element.markers, false);
     });
 
-    test('sets correct aria values', () => {
+    it('sets correct aria values', () => {
       const slider = element.shadowRoot!.querySelector('.mdc-slider')!;
       assert.equal(slider.getAttribute('aria-valuemin'), '0');
       assert.equal(slider.getAttribute('aria-valuenow'), '0');
     });
 
-    test('key events change value and fire events', async () => {
+    it('key events change value and fire events', async () => {
       const slider = element.shadowRoot!.querySelector('.mdc-slider')!;
       const inputHandler = hanbi.spy();
       const changeHandler = hanbi.spy();
@@ -101,7 +101,7 @@ suite('mwc-slider', () => {
       assert.equal(element.value, 0);
     });
 
-    test('markers display when enabled', async () => {
+    it('markers display when enabled', async () => {
       const markerSelector = '.mdc-slider__track-marker-container';
       let markers = element.shadowRoot!.querySelector(markerSelector);
       assert.equal(markers, null);
@@ -115,7 +115,7 @@ suite('mwc-slider', () => {
       assert.instanceOf(markers, Element);
     });
 
-    test('pin displays when enabled and receiving input', async () => {
+    it('pin displays when enabled and receiving input', async () => {
       const pinSelector = '.mdc-slider__pin';
       const slider = element.shadowRoot!.querySelector('.mdc-slider')!;
       let pin = element.shadowRoot!.querySelector(pinSelector);
@@ -138,17 +138,17 @@ suite('mwc-slider', () => {
     });
   });
 
-  suite('aria', () => {
-    setup(async () => {
+  describe('aria', () => {
+    beforeEach(async () => {
       fixt = await fixture(basic);
       element = fixt.root.querySelector('mwc-slider')!;
     });
 
-    teardown(() => {
+    afterEach(() => {
       fixt.remove();
     });
 
-    test('delegates aria-label via attribute', async () => {
+    it('delegates aria-label via attribute', async () => {
       const slider = element.shadowRoot!.querySelector('.mdc-slider')!;
       element.setAttribute('aria-label', 'foo');
       await element.updateComplete;
@@ -157,7 +157,7 @@ suite('mwc-slider', () => {
       assert.equal(slider.getAttribute('aria-label'), 'foo');
     });
 
-    test('delegates aria-label via property', async () => {
+    it('delegates aria-label via property', async () => {
       const slider = element.shadowRoot!.querySelector('.mdc-slider')!;
       element.ariaLabel = 'foo';
       await element.updateComplete;
@@ -166,7 +166,7 @@ suite('mwc-slider', () => {
       assert.equal(slider.getAttribute('aria-label'), 'foo');
     });
 
-    test('delegates aria-labelledby via attribute', async () => {
+    it('delegates aria-labelledby via attribute', async () => {
       const slider = element.shadowRoot!.querySelector('.mdc-slider')!;
       element.setAttribute('aria-label', 'foo');
       await element.updateComplete;
@@ -175,7 +175,7 @@ suite('mwc-slider', () => {
       assert.equal(slider.getAttribute('aria-label'), 'foo');
     });
 
-    test('delegates aria-labelledby via property', async () => {
+    it('delegates aria-labelledby via property', async () => {
       const slider = element.shadowRoot!.querySelector('.mdc-slider')!;
       element.ariaLabel = 'foo';
       await element.updateComplete;
@@ -185,12 +185,12 @@ suite('mwc-slider', () => {
     });
   });
 
-  suite('min-max-value initializations', () => {
-    teardown(() => {
+  describe('min-max-value initializations', () => {
+    afterEach(() => {
       fixt.remove();
     });
 
-    test('vals set correctly when explicitly set to defaults', async () => {
+    it('vals set correctly when explicitly set to defaults', async () => {
       fixt = await fixture(slider(), {afterRender});
       element = fixt.root.querySelector('mwc-slider')!;
 
@@ -199,7 +199,7 @@ suite('mwc-slider', () => {
       assert.equal(element.value, 0);
     });
 
-    test('can set min max over 100', async () => {
+    it('can set min max over 100', async () => {
       fixt = await fixture(
           slider({min: 101, max: 103, value: 102}), {afterRender});
       element = fixt.root.querySelector('mwc-slider')!;
@@ -209,7 +209,7 @@ suite('mwc-slider', () => {
       assert.equal(element.value, 102);
     });
 
-    test('can set min max below 0', async () => {
+    it('can set min max below 0', async () => {
       fixt =
           await fixture(slider({min: -3, max: -1, value: -2}), {afterRender});
       element = fixt.root.querySelector('mwc-slider')!;
@@ -219,7 +219,7 @@ suite('mwc-slider', () => {
       assert.equal(element.value, -2);
     });
 
-    test('value below min', async () => {
+    it('value below min', async () => {
       fixt =
           await fixture(slider({min: 101, max: 103, value: 99}), {afterRender});
       element = fixt.root.querySelector('mwc-slider')!;
@@ -229,7 +229,7 @@ suite('mwc-slider', () => {
       assert.equal(element.value, 101);
     });
 
-    test('value above max', async () => {
+    it('value above max', async () => {
       fixt = await fixture(slider({min: -3, max: -1, value: 1}), {afterRender});
       element = fixt.root.querySelector('mwc-slider')!;
 

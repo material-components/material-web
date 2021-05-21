@@ -32,26 +32,26 @@ const tabBar = (propsInit: Partial<TabBarProps>) => {
   `;
 };
 
-suite('mwc-tab-bar', () => {
+describe('mwc-tab-bar', () => {
   let fixt: TestFixture;
   let element: TabBar;
 
-  teardown(() => {
+  afterEach(() => {
     fixt.remove();
   });
 
-  suite('basic', () => {
-    setup(async () => {
+  describe('basic', () => {
+    beforeEach(async () => {
       fixt = await fixture(defaultTabBar);
       element = fixt.root.querySelector('mwc-tab-bar')!;
     });
 
-    test('initializes as an mwc-tab-bar', () => {
+    it('initializes as an mwc-tab-bar', () => {
       assert.instanceOf(element, TabBar);
       assert.equal(element.activeIndex, 0);
     });
 
-    test('activates but does not focus tab on init', async () => {
+    it('activates but does not focus tab on init', async () => {
       fixt.remove();
       fixt = await fixture(defaultTabBarWithTabs);
       const tab = fixt.root.querySelector('mwc-tab')!;
@@ -70,8 +70,8 @@ suite('mwc-tab-bar', () => {
     });
   });
 
-  suite('activation', () => {
-    setup(async () => {
+  describe('activation', () => {
+    beforeEach(async () => {
       fixt = await fixture(tabBar({
         contents: html`
           <mwc-tab label="one"></mwc-tab>
@@ -82,7 +82,7 @@ suite('mwc-tab-bar', () => {
       await element.updateComplete;
     });
 
-    test('clicking tab activates it', async () => {
+    it('clicking tab activates it', async () => {
       const tab1 = element.children[0] as HTMLElement;
       const tab2 = element.children[1] as HTMLElement;
       const tab1Button = tab1.shadowRoot!.querySelector('button')!;
@@ -94,7 +94,7 @@ suite('mwc-tab-bar', () => {
       assert.equal(element.activeIndex, 0);
     });
 
-    test('responds to key navigation', async () => {
+    it('responds to key navigation', async () => {
       const bar = element.shadowRoot!.querySelector('.mdc-tab-bar')!;
       const tab1 = element.children[0] as HTMLElement;
       const tab2 = element.children[1] as HTMLElement;

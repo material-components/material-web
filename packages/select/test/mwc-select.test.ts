@@ -75,22 +75,22 @@ const isUiInvalid = (element: Select) => {
   return !!element.shadowRoot!.querySelector('.mdc-select--invalid');
 };
 
-suite('mwc-select:', () => {
+describe('mwc-select:', () => {
   let fixt: TestFixture;
 
-  suite('basic', () => {
+  describe('basic', () => {
     let element: Select;
-    setup(async () => {
+    beforeEach(async () => {
       fixt = await fixture(basic());
 
       element = fixt.root.querySelector('mwc-select')!;
     });
 
-    test('initializes as an mwc-select', () => {
+    it('initializes as an mwc-select', () => {
       assert.instanceOf(element, Select);
     });
 
-    test('initialize with value', async () => {
+    it('initialize with value', async () => {
       fixt.remove();
       fixt = await fixture(valueInit);
 
@@ -112,22 +112,22 @@ suite('mwc-select:', () => {
       assert.equal(element.index, 3, 'index is correctly set');
     });
 
-    teardown(() => {
+    afterEach(() => {
       if (fixt) {
         fixt.remove();
       }
     });
   });
 
-  suite('keydown', () => {
+  describe('keydown', () => {
     let element: Select;
-    setup(async () => {
+    beforeEach(async () => {
       fixt = await fixture(basic());
 
       element = fixt.root.querySelector('mwc-select')!;
     });
 
-    test('keydown arrowdown increments selected index', async () => {
+    it('keydown arrowdown increments selected index', async () => {
       // deflake shady dom (IE)
       await rafPromise();
       await element.layout();
@@ -151,7 +151,7 @@ suite('mwc-select:', () => {
       assert.equal(element.index, 1, 'index is correctly set');
     });
 
-    test('keydown arrowup decrements selected index', async () => {
+    it('keydown arrowup decrements selected index', async () => {
       fixt.remove();
       fixt = await fixture(valueInit);
 
@@ -179,16 +179,16 @@ suite('mwc-select:', () => {
       assert.equal(element.index, 2, 'index is correctly set');
     });
 
-    teardown(() => {
+    afterEach(() => {
       if (fixt) {
         fixt.remove();
       }
     });
   });
 
-  suite('validation', () => {
-    suite('standard', () => {
-      test('required invalidates on blur', async () => {
+  describe('validation', () => {
+    describe('standard', () => {
+      it('required invalidates on blur', async () => {
         fixt = await fixture(validationRequired());
         const element = fixt.root.querySelector('mwc-select')!;
 
@@ -201,7 +201,7 @@ suite('mwc-select:', () => {
         assert.isTrue(isUiInvalid(element), 'invalid after blur');
       });
 
-      test('validity & checkValidity do not trigger ui', async () => {
+      it('validity & checkValidity do not trigger ui', async () => {
         fixt = await fixture(validationRequired());
         const element = fixt.root.querySelector('mwc-select')!;
         assert.isFalse(isUiInvalid(element), 'ui initially valid');
@@ -226,7 +226,7 @@ suite('mwc-select:', () => {
         assert.isFalse(isUiInvalid(element), 'ui is invalid');
       });
 
-      test('setCustomValidity', async () => {
+      it('setCustomValidity', async () => {
         fixt = await fixture(basic());
         const element = fixt.root.querySelector('mwc-select')!;
 
@@ -259,7 +259,7 @@ suite('mwc-select:', () => {
         assert.isFalse(validity.valid, 'element is not valid');
       });
 
-      test('validity transform', async () => {
+      it('validity transform', async () => {
         fixt = await fixture(basic());
         const element = fixt.root.querySelector('mwc-select')! as Select;
 
@@ -336,7 +336,7 @@ suite('mwc-select:', () => {
         assert.isFalse(isUiInvalid(element), 'ui can be made valid again');
       });
 
-      test('initial validation', async () => {
+      it('initial validation', async () => {
         fixt = await fixture(reqInitialVal());
         let element = fixt.root.querySelector('mwc-select')!;
         await element.updateComplete;
@@ -350,15 +350,15 @@ suite('mwc-select:', () => {
         assert.isFalse(isUiInvalid(element), 'without flag is valid');
       });
 
-      teardown(() => {
+      afterEach(() => {
         if (fixt) {
           fixt.remove();
         }
       });
     });
 
-    suite('outlined', () => {
-      test('required invalidates on blur', async () => {
+    describe('outlined', () => {
+      it('required invalidates on blur', async () => {
         fixt = await fixture(validationRequired(true));
         const element = fixt.root.querySelector('mwc-select')!;
 
@@ -371,7 +371,7 @@ suite('mwc-select:', () => {
         assert.isTrue(isUiInvalid(element), 'invalid after blur');
       });
 
-      test('validity & checkValidity do not trigger ui', async () => {
+      it('validity & checkValidity do not trigger ui', async () => {
         fixt = await fixture(validationRequired(true));
         const element = fixt.root.querySelector('mwc-select')!;
         assert.isFalse(isUiInvalid(element), 'ui initially valid');
@@ -396,7 +396,7 @@ suite('mwc-select:', () => {
         assert.isFalse(isUiInvalid(element), 'ui is invalid');
       });
 
-      test('setCustomValidity', async () => {
+      it('setCustomValidity', async () => {
         fixt = await fixture(basic(true));
         const element = fixt.root.querySelector('mwc-select')!;
         await element.updateComplete;
@@ -419,7 +419,7 @@ suite('mwc-select:', () => {
         assert.isFalse(validity.valid);
       });
 
-      test('validity transform', async () => {
+      it('validity transform', async () => {
         fixt = await fixture(basic(true));
         const element = fixt.root.querySelector('mwc-select')! as Select;
 
@@ -496,7 +496,7 @@ suite('mwc-select:', () => {
         assert.isFalse(isUiInvalid(element), 'ui can be made valid again');
       });
 
-      test('initial validation', async () => {
+      it('initial validation', async () => {
         fixt = await fixture(reqInitialVal(true));
         let element = fixt.root.querySelector('mwc-select')!;
         await element.updateComplete;
@@ -515,7 +515,7 @@ suite('mwc-select:', () => {
         assert.isFalse(isUiInvalid(element), 'without flag is valid');
       });
 
-      teardown(() => {
+      afterEach(() => {
         if (fixt) {
           fixt.remove();
         }
@@ -523,14 +523,14 @@ suite('mwc-select:', () => {
     });
   });
 
-  suite('selection', () => {
+  describe('selection', () => {
     let element: Select;
     let changeCalls = 0;
     const changeListener = () => {
       changeCalls++;
     };
 
-    setup(async () => {
+    beforeEach(async () => {
       fixt = await fixture(basic());
 
       element = fixt.root.querySelector('mwc-select')!;
@@ -539,7 +539,7 @@ suite('mwc-select:', () => {
       await element.updateComplete;
     });
 
-    test('selection via index', async () => {
+    it('selection via index', async () => {
       // deflake shady dom (IE)
       await rafPromise();
       await element.layout();
@@ -599,7 +599,7 @@ suite('mwc-select:', () => {
       assert.isFalse(aElement.selected, 'the previous has be deselected');
     });
 
-    test('selection via element', async () => {
+    it('selection via element', async () => {
       // deflake shady dom (IE)
       await rafPromise();
       await element.layout();
@@ -635,7 +635,7 @@ suite('mwc-select:', () => {
           'element with selected prop is the same as selected on mwc-select');
     });
 
-    test('lazy selection', async () => {
+    it('lazy selection', async () => {
       fixt.remove();
       fixt = await fixture(lazy());
       element = fixt.root.querySelector('mwc-select')!;
@@ -654,7 +654,7 @@ suite('mwc-select:', () => {
       assert.equal(element.value, 'c', 'value updates when lazily slotted');
     });
 
-    test('selection via value prop', async () => {
+    it('selection via value prop', async () => {
       // deflake shady dom (IE)
       await rafPromise();
       await element.layout();
@@ -710,7 +710,7 @@ suite('mwc-select:', () => {
           'the previous element is deselcted when doesn\'t match');
     });
 
-    test('label change selected', async () => {
+    it('label change selected', async () => {
       fixt.remove();
       fixt = await fixture(lazy());
       element = fixt.root.querySelector('mwc-select')!;
@@ -741,7 +741,7 @@ suite('mwc-select:', () => {
           (element as unknown as WithSelectedText).selectedText, 'Cherry');
     });
 
-    teardown(() => {
+    afterEach(() => {
       if (fixt) {
         fixt.remove();
       }

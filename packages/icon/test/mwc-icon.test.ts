@@ -7,19 +7,19 @@
 import {Icon} from '@material/mwc-icon';
 
 
-suite('mwc-icon', () => {
+describe('mwc-icon', () => {
   let element: Icon;
 
-  setup(() => {
+  beforeEach(() => {
     element = document.createElement('mwc-icon');
     document.body.appendChild(element);
   });
 
-  teardown(() => {
+  afterEach(() => {
     document.body.removeChild(element);
   });
 
-  test('initializes as an mwc-icon', () => {
+  it('initializes as an mwc-icon', () => {
     assert.instanceOf(element, Icon);
   });
 });

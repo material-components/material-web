@@ -39,21 +39,21 @@ const button = (propsInit: Partial<ButtonProps>) => {
   `;
 };
 
-suite('mwc-button', () => {
+describe('mwc-button', () => {
   let fixt: TestFixture;
   let element: Button;
 
-  teardown(() => {
+  afterEach(() => {
     fixt.remove();
   });
 
-  suite('basic', () => {
-    setup(async () => {
+  describe('basic', () => {
+    beforeEach(async () => {
       fixt = await fixture(defaultButton);
       element = fixt.root.querySelector('mwc-button')!;
     });
 
-    test('initializes as an mwc-button', () => {
+    it('initializes as an mwc-button', () => {
       assert.instanceOf(element, Button);
       assert.isFalse(element.raised);
       assert.isFalse(element.unelevated);
@@ -67,34 +67,33 @@ suite('mwc-button', () => {
     });
   });
 
-  suite('disabled', () => {
-    setup(async () => {
+  describe('disabled', () => {
+    beforeEach(async () => {
       fixt = await fixture(button({disabled: true}));
       element = fixt.root.querySelector('mwc-button')!;
       await element.updateComplete;
     });
 
-    test(
-        'updates the disabled property on the native button element',
-        async () => {
-          const button = element.shadowRoot!.querySelector('button')!;
+    it('updates the disabled property on the native button element',
+       async () => {
+         const button = element.shadowRoot!.querySelector('button')!;
 
-          assert.isTrue(button.hasAttribute('disabled'));
+         assert.isTrue(button.hasAttribute('disabled'));
 
-          element.disabled = false;
-          await element.updateComplete;
-          assert.isFalse(button.hasAttribute('disabled'));
-        });
+         element.disabled = false;
+         await element.updateComplete;
+         assert.isFalse(button.hasAttribute('disabled'));
+       });
   });
 
-  suite('icon', () => {
-    setup(async () => {
+  describe('icon', () => {
+    beforeEach(async () => {
       fixt = await fixture(button({icon: 'check'}));
       element = fixt.root.querySelector('mwc-button')!;
       await element.updateComplete;
     });
 
-    test('adds an icon to the button', async () => {
+    it('adds an icon to the button', async () => {
       let icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
       assert.instanceOf(icon, Element);
 
@@ -104,47 +103,46 @@ suite('mwc-button', () => {
       assert.equal(icon, null);
     });
 
-    test(
-        'setting `trailingIcon` displays icon in a trailing position',
-        async () => {
-          element.trailingIcon = true;
-          await rafPromise();
+    it('setting `trailingIcon` displays icon in a trailing position',
+       async () => {
+         element.trailingIcon = true;
+         await rafPromise();
 
-          const leadingIcon = element.shadowRoot!.querySelector(
-              `.leading-icon ${ICON_SELECTOR}`);
-          const trailingIcon = element.shadowRoot!.querySelector(
-              `.trailing-icon ${ICON_SELECTOR}`);
-          assert.equal(leadingIcon, null);
-          assert.instanceOf(trailingIcon, Element);
-        });
+         const leadingIcon = element.shadowRoot!.querySelector(
+             `.leading-icon ${ICON_SELECTOR}`);
+         const trailingIcon = element.shadowRoot!.querySelector(
+             `.trailing-icon ${ICON_SELECTOR}`);
+         assert.equal(leadingIcon, null);
+         assert.instanceOf(trailingIcon, Element);
+       });
 
-    test('sets `aria-label` of the button when `icon` is set', async () => {
+    it('sets `aria-label` of the button when `icon` is set', async () => {
       const button = element.shadowRoot!.querySelector('#button');
       assert.equal(button!.getAttribute('aria-label'), 'check');
     });
   });
 
-  suite('label', () => {
-    setup(async () => {
+  describe('label', () => {
+    beforeEach(async () => {
       fixt = await fixture(button({label: 'Unit Test Button'}));
       element = fixt.root.querySelector('mwc-button')!;
       await element.updateComplete;
     });
 
-    test('sets `aria-label` of the button when `label` is set', async () => {
+    it('sets `aria-label` of the button when `label` is set', async () => {
       const button = element.shadowRoot!.querySelector('#button');
       assert.equal(button!.getAttribute('aria-label'), 'Unit Test Button');
     });
   });
 
-  suite('raised', () => {
-    setup(async () => {
+  describe('raised', () => {
+    beforeEach(async () => {
       fixt = await fixture(button({raised: true}));
       element = fixt.root.querySelector('mwc-button')!;
       await element.updateComplete;
     });
 
-    test('sets correct internal button style', async () => {
+    it('sets correct internal button style', async () => {
       const button = element.shadowRoot!.querySelector('#button')!;
       const raisedClass = 'mdc-button--raised';
       assert.isTrue(button.classList.contains(raisedClass));
@@ -154,14 +152,14 @@ suite('mwc-button', () => {
     });
   });
 
-  suite('unelevated', () => {
-    setup(async () => {
+  describe('unelevated', () => {
+    beforeEach(async () => {
       fixt = await fixture(button({unelevated: true}));
       element = fixt.root.querySelector('mwc-button')!;
       await element.updateComplete;
     });
 
-    test('sets correct internal button style', async () => {
+    it('sets correct internal button style', async () => {
       const button = element.shadowRoot!.querySelector('#button')!;
       const unelevatedClass = 'mdc-button--unelevated';
       assert.isTrue(button.classList.contains(unelevatedClass));
@@ -171,14 +169,14 @@ suite('mwc-button', () => {
     });
   });
 
-  suite('outlined', () => {
-    setup(async () => {
+  describe('outlined', () => {
+    beforeEach(async () => {
       fixt = await fixture(button({outlined: true}));
       element = fixt.root.querySelector('mwc-button')!;
       await element.updateComplete;
     });
 
-    test('sets correct internal button style', async () => {
+    it('sets correct internal button style', async () => {
       const button = element.shadowRoot!.querySelector('#button')!;
       const outlinedClass = 'mdc-button--outlined';
       assert.isTrue(button.classList.contains(outlinedClass));
@@ -188,14 +186,14 @@ suite('mwc-button', () => {
     });
   });
 
-  suite('dense', () => {
-    setup(async () => {
+  describe('dense', () => {
+    beforeEach(async () => {
       fixt = await fixture(button({dense: true}));
       element = fixt.root.querySelector('mwc-button')!;
       await element.updateComplete;
     });
 
-    test('sets correct internal button style', async () => {
+    it('sets correct internal button style', async () => {
       const button = element.shadowRoot!.querySelector('#button')!;
       const denseClass = 'mdc-button--dense';
       assert.isTrue(button.classList.contains(denseClass));
@@ -205,13 +203,13 @@ suite('mwc-button', () => {
     });
   });
 
-  suite('focus', () => {
-    setup(async () => {
+  describe('focus', () => {
+    beforeEach(async () => {
       fixt = await fixture(defaultButton);
       element = fixt.root.querySelector('mwc-button')!;
     });
 
-    test('highlights and blurs', async () => {
+    it('highlights and blurs', async () => {
       const focusedClass = 'mdc-ripple-upgraded--background-focused';
       const nativeButton =
           element.shadowRoot!.querySelector<HTMLButtonElement>('#button')!;

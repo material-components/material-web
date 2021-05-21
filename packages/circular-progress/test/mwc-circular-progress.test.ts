@@ -32,21 +32,21 @@ const progress = (propsInit: Partial<ProgressProps>) => {
   `;
 };
 
-suite('mwc-circular-progress', () => {
+describe('mwc-circular-progress', () => {
   let fixt: TestFixture;
   let element: CircularProgress;
 
-  teardown(() => {
+  afterEach(() => {
     fixt.remove();
   });
 
-  suite('basic', () => {
-    setup(async () => {
+  describe('basic', () => {
+    beforeEach(async () => {
       fixt = await fixture(defaultProgress);
       element = fixt.root.querySelector('mwc-circular-progress')!;
     });
 
-    test('initializes as an mwc-circular-progress', () => {
+    it('initializes as an mwc-circular-progress', () => {
       assert.instanceOf(element, CircularProgress);
       assert.isFalse(element.indeterminate);
       assert.equal(element.progress, 0);
@@ -55,27 +55,27 @@ suite('mwc-circular-progress', () => {
       assert.equal(element.ariaLabel, undefined);
     });
 
-    test('open sets closed to false', async () => {
+    it('open sets closed to false', async () => {
       element.closed = true;
       element.open();
       assert.equal(element.closed, false);
     });
 
-    test('close sets closed to true', async () => {
+    it('close sets closed to true', async () => {
       element.closed = false;
       element.close();
       assert.equal(element.closed, true);
     });
   });
 
-  suite('ariaLabel', () => {
-    setup(async () => {
+  describe('ariaLabel', () => {
+    beforeEach(async () => {
       fixt = await fixture(progress({ariaLabel: 'Unit Test Progress Bar'}));
       element = fixt.root.querySelector('mwc-circular-progress')!;
       await element.updateComplete;
     });
 
-    test('sets `aria-label`', async () => {
+    it('sets `aria-label`', async () => {
       const progressBar =
           element.shadowRoot!.querySelector('.mdc-circular-progress')!;
       assert.equal(
@@ -88,40 +88,40 @@ suite('mwc-circular-progress', () => {
     });
   });
 
-  suite('progress', () => {
-    setup(async () => {
+  describe('progress', () => {
+    beforeEach(async () => {
       fixt = await fixture(progress({progress: 0.5}));
       element = fixt.root.querySelector('mwc-circular-progress')!;
       await element.updateComplete;
     });
 
-    test('sets inner progress', async () => {
+    it('sets inner progress', async () => {
       const progressBar =
           element.shadowRoot!.querySelector('.mdc-circular-progress')!;
       assert.equal(progressBar.getAttribute('aria-valuenow'), '0.5');
     });
 
-    test('has an upper bound of 1', async () => {
+    it('has an upper bound of 1', async () => {
       element.progress = 2;
       await element.updateComplete;
       assert.equal(element.progress, 1);
     });
 
-    test('has a lower bound of 0', async () => {
+    it('has a lower bound of 0', async () => {
       element.progress = -1;
       await element.updateComplete;
       assert.equal(element.progress, 0);
     });
   });
 
-  suite('indeterminate', () => {
-    setup(async () => {
+  describe('indeterminate', () => {
+    beforeEach(async () => {
       fixt = await fixture(progress({indeterminate: true}));
       element = fixt.root.querySelector('mwc-circular-progress')!;
       await element.updateComplete;
     });
 
-    test('sets correct inner class', async () => {
+    it('sets correct inner class', async () => {
       const progressBar =
           element.shadowRoot!.querySelector('.mdc-circular-progress')!;
       assert.isTrue(progressBar.classList.contains(INDETERMINATE_CLASS));
@@ -131,14 +131,14 @@ suite('mwc-circular-progress', () => {
     });
   });
 
-  suite('density', () => {
-    setup(async () => {
+  describe('density', () => {
+    beforeEach(async () => {
       fixt = await fixture(progress({density: 0.5}));
       element = fixt.root.querySelector('mwc-circular-progress')!;
       await element.updateComplete;
     });
 
-    test('affects progress size', () => {
+    it('affects progress size', () => {
       const progressBar = element.shadowRoot!.querySelector<HTMLElement>(
           '.mdc-circular-progress')!;
       assert.equal(progressBar.style.width, '50px');

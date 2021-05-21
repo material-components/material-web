@@ -75,13 +75,13 @@ const testClickFormElement = html`
   <custom-click-form-element></custom-click-form-element>
 `;
 
-suite('form-element:', () => {
-  suite('test-form-element', () => {
+describe('form-element:', () => {
+  describe('test-form-element', () => {
     let fixt: TestFixture;
     let component: TestFormElement|null;
     let formElement: HTMLElement|null;
 
-    setup(async () => {
+    beforeEach(async () => {
       fixt = await fixture(testFormElement);
       component = fixt.root.querySelector('test-form-element');
 
@@ -90,18 +90,18 @@ suite('form-element:', () => {
       }
     });
 
-    teardown(async () => {
+    afterEach(async () => {
       if (fixt) {
         fixt.remove();
       }
     });
 
-    test('is an instance of form-element', () => {
+    it('is an instance of form-element', () => {
       assert.instanceOf(component, TestFormElement);
       assert.instanceOf(component, FormElement);
     });
 
-    test('shadowRoot focuses on formElement after click', async () => {
+    it('shadowRoot focuses on formElement after click', async () => {
       if (component === null) {
         assert.isNotNull(component);
         return;
@@ -122,13 +122,13 @@ suite('form-element:', () => {
     });
   });
 
-  suite('custom-click-form-element', () => {
+  describe('custom-click-form-element', () => {
     let fixt: TestFixture;
     let component: CustomClickFormElement|null;
     let formElement: HTMLElement|null;
     let indirectFormElement: HTMLElement|null;
 
-    setup(async () => {
+    beforeEach(async () => {
       fixt = await fixture(testClickFormElement);
       component = fixt.root.querySelector('custom-click-form-element');
 
@@ -138,17 +138,17 @@ suite('form-element:', () => {
       }
     });
 
-    teardown(async () => {
+    afterEach(async () => {
       if (fixt) {
         fixt.remove();
       }
     });
 
-    test('is a descendant of FormElement', () => {
+    it('is a descendant of FormElement', () => {
       assert.instanceOf(component, FormElement);
     });
 
-    test('shadowRoot should not focus on #indirect after click', async () => {
+    it('shadowRoot should not focus on #indirect after click', async () => {
       if (component === null) {
         assert.isNotNull(component);
         return;
@@ -168,7 +168,7 @@ suite('form-element:', () => {
       assert.notEqual(component.shadowRoot.activeElement, indirectFormElement);
     });
 
-    test('shadowRoot should not focus on #root after click', async () => {
+    it('shadowRoot should not focus on #root after click', async () => {
       if (component === null) {
         assert.isNotNull(component);
         return;

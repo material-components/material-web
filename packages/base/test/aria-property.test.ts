@@ -48,13 +48,13 @@ const imperative = html`<test-aria-element></test-aria-element>`;
 const declarative =
     html`<test-aria-element aria-label="foo" aria-checked="mixed" aria-owns="baz"></test-aria-element>`;
 
-suite('aria-property:', () => {
-  suite('imperative', () => {
+describe('aria-property:', () => {
+  describe('imperative', () => {
     let fixt: TestFixture;
     let component: TestElement|null;
     let shadowTargetElement: HTMLInputElement|null;
 
-    setup(async () => {
+    beforeEach(async () => {
       fixt = await fixture(imperative);
       component = fixt.root.querySelector('test-aria-element');
 
@@ -63,13 +63,13 @@ suite('aria-property:', () => {
       }
     });
 
-    teardown(async () => {
+    afterEach(async () => {
       if (fixt) {
         fixt.remove();
       }
     });
 
-    test('property sets with @property()', async () => {
+    it('property sets with @property()', async () => {
       if (component === null) {
         assert.isNotNull(component);
         return;
@@ -90,7 +90,7 @@ suite('aria-property:', () => {
       assert.equal(shadowTargetElement.getAttribute('aria-label'), 'foo');
     });
 
-    test('property sets with a getter and setter', async () => {
+    it('property sets with a getter and setter', async () => {
       if (component === null) {
         assert.isNotNull(component);
         return;
@@ -111,7 +111,7 @@ suite('aria-property:', () => {
       assert.equal(shadowTargetElement.getAttribute('aria-checked'), 'mixed');
     });
 
-    test('property sets with alternate order', async () => {
+    it('property sets with alternate order', async () => {
       if (component === null) {
         assert.isNotNull(component);
         return;
@@ -132,7 +132,7 @@ suite('aria-property:', () => {
       assert.equal(shadowTargetElement.getAttribute('aria-owns'), 'baz');
     });
 
-    test('attribute sets with @property()', async () => {
+    it('attribute sets with @property()', async () => {
       if (component === null) {
         assert.isNotNull(component);
         return;
@@ -153,7 +153,7 @@ suite('aria-property:', () => {
       assert.equal(shadowTargetElement.getAttribute('aria-label'), 'foo');
     });
 
-    test('attribute sets with a getter and setter', async () => {
+    it('attribute sets with a getter and setter', async () => {
       if (component === null) {
         assert.isNotNull(component);
         return;
@@ -174,7 +174,7 @@ suite('aria-property:', () => {
       assert.equal(shadowTargetElement?.getAttribute('aria-checked'), 'mixed');
     });
 
-    test('attribute sets with alternate order', async () => {
+    it('attribute sets with alternate order', async () => {
       if (component === null) {
         assert.isNotNull(component);
         return;
@@ -196,12 +196,12 @@ suite('aria-property:', () => {
     });
   });
 
-  suite('declarative', () => {
+  describe('declarative', () => {
     let fixt: TestFixture;
     let component: TestElement|null;
     let shadowTargetElement: HTMLInputElement|null;
 
-    setup(async () => {
+    beforeEach(async () => {
       fixt = await fixture(declarative);
       component = fixt.root.querySelector('test-aria-element');
 
@@ -210,13 +210,13 @@ suite('aria-property:', () => {
       }
     });
 
-    teardown(async () => {
+    afterEach(async () => {
       if (fixt) {
         fixt.remove();
       }
     });
 
-    test('removes attribute from @property', async () => {
+    it('removes attribute from @property', async () => {
       if (component === null) {
         assert.isNotNull(component);
         return;
@@ -235,7 +235,7 @@ suite('aria-property:', () => {
       assert.equal(shadowTargetElement?.getAttribute('aria-label'), 'foo');
     });
 
-    test('removes attribute from getter and setter', async () => {
+    it('removes attribute from getter and setter', async () => {
       if (component === null) {
         assert.isNotNull(component);
         return;
@@ -254,7 +254,7 @@ suite('aria-property:', () => {
       assert.equal(shadowTargetElement?.getAttribute('aria-checked'), 'mixed');
     });
 
-    test('removes attribute from alternate order', async () => {
+    it('removes attribute from alternate order', async () => {
       if (component === null) {
         assert.isNotNull(component);
         return;

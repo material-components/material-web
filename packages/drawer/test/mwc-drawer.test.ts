@@ -43,28 +43,28 @@ const transitionend = async (drawer: Element) => {
   }
 };
 
-suite('mwc-drawer', () => {
+describe('mwc-drawer', () => {
   let fixt: TestFixture;
   let element: Drawer;
 
-  teardown(() => {
+  afterEach(() => {
     fixt.remove();
   });
 
-  suite('basic', () => {
-    setup(async () => {
+  describe('basic', () => {
+    beforeEach(async () => {
       fixt = await fixture(defaultDrawer);
       element = fixt.root.querySelector('mwc-drawer')!;
     });
 
-    test('initializes as an mwc-drawer', () => {
+    it('initializes as an mwc-drawer', () => {
       assert.instanceOf(element, Drawer);
       assert.equal(element.type, '');
       assert.equal(element.open, false);
       assert.equal(element.hasHeader, false);
     });
 
-    test('opening/closing events are fired', async () => {
+    it('opening/closing events are fired', async () => {
       const drawer = element.shadowRoot!.querySelector('.mdc-drawer')!;
       let openedFired = false;
       let closedFired = false;
@@ -85,14 +85,14 @@ suite('mwc-drawer', () => {
     });
   });
 
-  suite('hasHeader', () => {
-    setup(async () => {
+  describe('hasHeader', () => {
+    beforeEach(async () => {
       fixt = await fixture(drawer({hasHeader: true}));
       element = fixt.root.querySelector('mwc-drawer')!;
       await element.updateComplete;
     });
 
-    test('displays a header if set', async () => {
+    it('displays a header if set', async () => {
       let header = element.shadowRoot!.querySelector(HEADER_SELECTOR);
       assert.instanceOf(header, Element);
       element.hasHeader = false;
@@ -102,21 +102,21 @@ suite('mwc-drawer', () => {
     });
   });
 
-  suite('modal type', () => {
-    setup(async () => {
+  describe('modal type', () => {
+    beforeEach(async () => {
       fixt = await fixture(drawer({type: 'modal'}));
       element = fixt.root.querySelector('mwc-drawer')!;
       await element.updateComplete;
     });
 
-    test('displays scrim', async () => {
+    it('displays scrim', async () => {
       const drawer = element.shadowRoot!.querySelector('.mdc-drawer')!;
       const scrim = element.shadowRoot!.querySelector(SCRIM_SELECTOR)!;
       assert.instanceOf(scrim, Element);
       assert.isTrue(drawer.classList.contains('mdc-drawer--modal'));
     });
 
-    test('closes on scrim click', async () => {
+    it('closes on scrim click', async () => {
       const drawer = element.shadowRoot!.querySelector('.mdc-drawer')!;
       const scrim =
           element.shadowRoot!.querySelector<HTMLElement>(SCRIM_SELECTOR)!;
@@ -130,14 +130,14 @@ suite('mwc-drawer', () => {
     });
   });
 
-  suite('dismissible type', () => {
-    setup(async () => {
+  describe('dismissible type', () => {
+    beforeEach(async () => {
       fixt = await fixture(drawer({type: 'dismissible'}));
       element = fixt.root.querySelector('mwc-drawer')!;
       await element.updateComplete;
     });
 
-    test('sets correct classes', async () => {
+    it('sets correct classes', async () => {
       const drawer = element.shadowRoot!.querySelector('.mdc-drawer')!;
       assert.isTrue(drawer.classList.contains(DISMISSIBLE_CLASS));
     });

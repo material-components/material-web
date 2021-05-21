@@ -13,29 +13,29 @@ const basic = html`
   <mwc-textarea></mwc-textarea>
 `;
 
-suite('mwc-textarea:', () => {
+describe('mwc-textarea:', () => {
   let fixt: TestFixture;
 
-  suite('basic', () => {
+  describe('basic', () => {
     let element: TextArea;
-    setup(async () => {
+    beforeEach(async () => {
       fixt = await fixture(basic);
 
       element = fixt.root.querySelector('mwc-textarea')!;
     });
 
-    test('initializes as an mwc-textarea', () => {
+    it('initializes as an mwc-textarea', () => {
       assert.instanceOf(element, TextArea);
     });
 
-    test('setting value sets on textarea', async () => {
+    it('setting value sets on textarea', async () => {
       element.value = 'my test value';
 
       const inputElement = element.shadowRoot!.querySelector('textarea');
       assert(inputElement, 'my test value');
     });
 
-    teardown(() => {
+    afterEach(() => {
       if (fixt) {
         fixt.remove();
       }

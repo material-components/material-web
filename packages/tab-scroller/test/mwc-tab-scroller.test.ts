@@ -6,18 +6,18 @@
 
 import {TabScroller} from '@material/mwc-tab-scroller/mwc-tab-scroller';
 
-suite('mwc-tab-scroller', () => {
+describe('mwc-tab-scroller', () => {
   let element: TabScroller;
-  setup(() => {
+  beforeEach(() => {
     element = document.createElement('mwc-tab-scroller');
     document.body.appendChild(element);
   });
 
-  teardown(() => {
+  afterEach(() => {
     document.body.removeChild(element);
   });
 
-  test('initializes as an mwc-tab-scroller', () => {
+  it('initializes as an mwc-tab-scroller', () => {
     assert.instanceOf(element, TabScroller);
   });
 });

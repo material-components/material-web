@@ -40,12 +40,12 @@ const findLabelText = (element: Element) => {
       label.textContent;
 };
 
-suite('mwc-snackbar', () => {
+describe('mwc-snackbar', () => {
   let fixt: TestFixture;
   let element: Snackbar;
   let originalSetTimeout: typeof window.setTimeout;
 
-  setup(() => {
+  beforeEach(() => {
     originalSetTimeout = window.setTimeout;
     // tslint:disable-next-line
     (window as any).setTimeout = (fn: () => unknown) => {
@@ -54,19 +54,19 @@ suite('mwc-snackbar', () => {
     };
   });
 
-  teardown(() => {
+  afterEach(() => {
     window.setTimeout = originalSetTimeout;
     element.parentNode!.removeChild(element);
   });
 
-  suite('basic', () => {
-    setup(async () => {
+  describe('basic', () => {
+    beforeEach(async () => {
       fixt = await fixture(defaultSnackBar);
       element = fixt.root.querySelector('mwc-snackbar')!;
       await element.updateComplete;
     });
 
-    test('initializes as an mwc-snackbar', () => {
+    it('initializes as an mwc-snackbar', () => {
       assert.instanceOf(element, Snackbar);
       assert.isFalse(element.open);
       assert.equal(element.timeoutMs, 5000);
@@ -77,14 +77,14 @@ suite('mwc-snackbar', () => {
     });
   });
 
-  suite('open/close', () => {
-    setup(async () => {
+  describe('open/close', () => {
+    beforeEach(async () => {
       fixt = await fixture(snackBar({timeoutMs: -1}));
       element = fixt.root.querySelector('mwc-snackbar')!;
       await element.updateComplete;
     });
 
-    test('`show()` opens snack bar', async () => {
+    it('`show()` opens snack bar', async () => {
       const openedHandler = hanbi.spy();
       const openingHandler = hanbi.spy();
       element.addEventListener('MDCSnackbar:opened', openedHandler.handler);
@@ -98,7 +98,7 @@ suite('mwc-snackbar', () => {
       assert.isTrue(openedHandler.called);
     });
 
-    test('`open = true` opens snack bar', async () => {
+    it('`open = true` opens snack bar', async () => {
       const openedHandler = hanbi.spy();
       const openingHandler = hanbi.spy();
       element.addEventListener('MDCSnackbar:opened', openedHandler.handler);
@@ -113,7 +113,7 @@ suite('mwc-snackbar', () => {
       assert.isTrue(openedHandler.called);
     });
 
-    test('`close()` closes snack bar', async () => {
+    it('`close()` closes snack bar', async () => {
       const closedHandler = hanbi.spy();
       element.addEventListener('MDCSnackbar:closed', closedHandler.handler);
       element.show();
@@ -125,7 +125,7 @@ suite('mwc-snackbar', () => {
       assert.isTrue(closedHandler.called);
     });
 
-    test('`open = false` closes snack bar', async () => {
+    it('`open = false` closes snack bar', async () => {
       const closedHandler = hanbi.spy();
       element.addEventListener('MDCSnackbar:closed', closedHandler.handler);
       element.show();
@@ -138,14 +138,14 @@ suite('mwc-snackbar', () => {
     });
   });
 
-  suite('labelText', () => {
-    setup(async () => {
+  describe('labelText', () => {
+    beforeEach(async () => {
       fixt = await fixture(snackBar({labelText: 'foo'}));
       element = fixt.root.querySelector('mwc-snackbar')!;
       await element.updateComplete;
     });
 
-    test('set label text after opening', async () => {
+    it('set label text after opening', async () => {
       element.show();
       await element.updateComplete;
       assert.equal(findLabelText(element), 'foo');
@@ -160,15 +160,15 @@ suite('mwc-snackbar', () => {
     });
   });
 
-  suite('dismiss', () => {
-    setup(async () => {
+  describe('dismiss', () => {
+    beforeEach(async () => {
       fixt = await fixture(
           snackBar({dismissElement: html`<span slot="dismiss">test</span>`}));
       element = fixt.root.querySelector('mwc-snackbar')!;
       await element.updateComplete;
     });
 
-    test('closes when dismissed', async () => {
+    it('closes when dismissed', async () => {
       const close = element.querySelector<HTMLElement>('[slot="dismiss"]')!;
       const closedHandler = hanbi.spy();
       element.addEventListener('MDCSnackbar:closed', closedHandler.handler);
@@ -181,15 +181,15 @@ suite('mwc-snackbar', () => {
     });
   });
 
-  suite('action', () => {
-    setup(async () => {
+  describe('action', () => {
+    beforeEach(async () => {
       fixt = await fixture(
           snackBar({actionElement: html`<span slot="action">test</span>`}));
       element = fixt.root.querySelector('mwc-snackbar')!;
       await element.updateComplete;
     });
 
-    test('closes when actioned', async () => {
+    it('closes when actioned', async () => {
       const action = element.querySelector<HTMLElement>('[slot="action"]')!;
       const closedHandler = hanbi.spy();
       element.addEventListener('MDCSnackbar:closed', closedHandler.handler);
@@ -202,14 +202,14 @@ suite('mwc-snackbar', () => {
     });
   });
 
-  suite('`closeOnEscape`', () => {
-    setup(async () => {
+  describe('`closeOnEscape`', () => {
+    beforeEach(async () => {
       fixt = await fixture(snackBar({closeOnEscape: true}));
       element = fixt.root.querySelector('mwc-snackbar')!;
       await element.updateComplete;
     });
 
-    test('does not close when unset and esc is pressed', async () => {
+    it('does not close when unset and esc is pressed', async () => {
       element.closeOnEscape = false;
       element.show();
       await element.updateComplete;
@@ -225,7 +225,7 @@ suite('mwc-snackbar', () => {
       assert.equal(element.open, true);
     });
 
-    test('closes when set and esc is pressed', async () => {
+    it('closes when set and esc is pressed', async () => {
       element.show();
       await element.updateComplete;
       await rafPromise();

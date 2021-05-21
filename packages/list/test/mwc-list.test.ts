@@ -176,45 +176,45 @@ const createEmptyList = (emptyMessage: string|undefined) => {
   `;
 };
 
-suite('mwc-list:', () => {
+describe('mwc-list:', () => {
   let fixt: TestFixture|null;
 
-  suite('mwc-list-item', () => {
-    suite('initialization', () => {
+  describe('mwc-list-item', () => {
+    describe('initialization', () => {
       let element: ListItem;
 
-      test('initializes as an mwc-list-item', async () => {
+      it('initializes as an mwc-list-item', async () => {
         fixt = await fixture(listItem());
         element = fixt.root.querySelector('mwc-list-item')!;
         assert.instanceOf(element, ListItem);
         assert.instanceOf(element, ListItemBase);
       });
 
-      test('sets attribute on connection', async () => {
+      it('sets attribute on connection', async () => {
         fixt = await fixture(listItem());
         element = fixt.root.querySelector('mwc-list-item')!;
 
         assert.isTrue(element.hasAttribute('mwc-list-item'));
       });
 
-      test('noninteractive does not set attribute on connection', async () => {
+      it('noninteractive does not set attribute on connection', async () => {
         fixt = await fixture(listItem({noninteractive: true}));
         element = fixt.root.querySelector('mwc-list-item')!;
 
         assert.isFalse(element.hasAttribute('mwc-list-item'));
       });
 
-      teardown(() => {
+      afterEach(() => {
         if (fixt) {
           fixt.remove();
         }
       });
     });
 
-    suite('variants', () => {
+    describe('variants', () => {
       let element: ListItem;
 
-      test('single line renders correctly', async () => {
+      it('single line renders correctly', async () => {
         fixt = await fixture(listItem({
           primary: html`<span class="primary">Apple</span>`,
           secondary: html`<span slot="secondary">This is a Fruit</span>`,
@@ -263,7 +263,7 @@ suite('mwc-list:', () => {
             'primary text is projected');
       });
 
-      test('two line renders correctly', async () => {
+      it('two line renders correctly', async () => {
         fixt = await fixture(listItem({
           primary: html`<span class="primary">Apple</span>`,
           secondary: html`<span slot="secondary">This is a Fruit</span>`,
@@ -319,7 +319,7 @@ suite('mwc-list:', () => {
             'secondary text is projected');
       });
 
-      test('meta renders correctly', async () => {
+      it('meta renders correctly', async () => {
         fixt = await fixture(listItem({
           primary: html`<span class="primary">Apple</span>`,
           secondary: html`<span slot="secondary">This is a Fruit</span>`,
@@ -373,7 +373,7 @@ suite('mwc-list:', () => {
             metaElement, projectedElements[0], 'meta icon is projected');
       });
 
-      test('graphic renders correctly', async () => {
+      it('graphic renders correctly', async () => {
         fixt = await fixture(listItem({
           primary: html`<span class="primary">Apple</span>`,
           secondary: html`<span slot="secondary">This is a Fruit</span>`,
@@ -426,7 +426,7 @@ suite('mwc-list:', () => {
             graphicElement, projectedElements[0], 'meta icon is projected');
       });
 
-      test('noninteractive removes props and attrs on bootup', async () => {
+      it('noninteractive removes props and attrs on bootup', async () => {
         fixt = await fixture(listItem({
           noninteractive: true,
           selected: true,
@@ -442,7 +442,7 @@ suite('mwc-list:', () => {
             'removes selectability on boot up');
       });
 
-      test('noninteractive +/- props and attrs on change', async () => {
+      it('noninteractive +/- props and attrs on change', async () => {
         fixt = await fixture(listItem({
           noninteractive: false,
           selected: true,
@@ -479,17 +479,17 @@ suite('mwc-list:', () => {
             'adds selectability on prop change');
       });
 
-      teardown(() => {
+      afterEach(() => {
         if (fixt) {
           fixt.remove();
         }
       });
     });
 
-    suite('interaction', () => {
+    describe('interaction', () => {
       let element: ListItem;
 
-      test('rendered event fires', async () => {
+      it('rendered event fires', async () => {
         let numRenderCalls = 0;
         fixt = await fixture(listItem({
           onListItemRendered: () => numRenderCalls++,
@@ -499,7 +499,7 @@ suite('mwc-list:', () => {
             numRenderCalls, 1, 'list-item-rendered called only once on bootup');
       });
 
-      test('request selected event', async () => {
+      it('request selected event', async () => {
         let numReqSelectedCalls = 0;
         let lastReqSelectedEv = {detail: {}} as
             CustomEvent<RequestSelectedDetail>;
@@ -563,7 +563,7 @@ suite('mwc-list:', () => {
             'property request selected ev requests for the same as selected state');
       });
 
-      teardown(() => {
+      afterEach(() => {
         if (fixt) {
           fixt.remove();
         }
@@ -571,25 +571,25 @@ suite('mwc-list:', () => {
     });
   });
 
-  suite('mwc-check-list-item', () => {
-    suite('initialization', () => {
+  describe('mwc-check-list-item', () => {
+    describe('initialization', () => {
       let element: CheckListItem;
 
-      test('initializes as an mwc-check-list-item', async () => {
+      it('initializes as an mwc-check-list-item', async () => {
         fixt = await fixture(checkListItem());
         element = fixt.root.querySelector('mwc-check-list-item')!;
         assert.instanceOf(element, CheckListItem, 'is checklsit item');
         assert.instanceOf(element, ListItemBase, 'inherits base');
       });
 
-      test('sets attribute on connection', async () => {
+      it('sets attribute on connection', async () => {
         fixt = await fixture(checkListItem());
         element = fixt.root.querySelector('mwc-check-list-item')!;
 
         assert.isTrue(element.hasAttribute('mwc-list-item'));
       });
 
-      test('left functions as intended', async () => {
+      it('left functions as intended', async () => {
         fixt = await fixture(checkListItem({
           left: true,
         }));
@@ -621,17 +621,17 @@ suite('mwc-list:', () => {
         assert.equal(second, checkbox, 'checkbox is second when not left');
       });
 
-      teardown(() => {
+      afterEach(() => {
         if (fixt) {
           fixt.remove();
         }
       });
     });
 
-    suite('interaction', () => {
+    describe('interaction', () => {
       let element: CheckListItem;
 
-      test('request selected event', async () => {
+      it('request selected event', async () => {
         let numReqSelectedCalls = 0;
         let lastReqSelectedEv = {detail: {}} as
             CustomEvent<RequestSelectedDetail>;
@@ -719,7 +719,7 @@ suite('mwc-list:', () => {
         }
       });
 
-      teardown(() => {
+      afterEach(() => {
         if (fixt) {
           fixt.remove();
         }
@@ -727,25 +727,25 @@ suite('mwc-list:', () => {
     });
   });
 
-  suite('mwc-radio-list-item', () => {
-    suite('mwc-radio-list-item: initialization', () => {
+  describe('mwc-radio-list-item', () => {
+    describe('mwc-radio-list-item: initialization', () => {
       let element: RadioListItem;
 
-      test('initializes as an mwc-radio-list-item', async () => {
+      it('initializes as an mwc-radio-list-item', async () => {
         fixt = await fixture(radioListItem());
         element = fixt.root.querySelector('mwc-radio-list-item')!;
         assert.instanceOf(element, RadioListItem, 'is checklsit item');
         assert.instanceOf(element, ListItemBase, 'inherits base');
       });
 
-      test('sets attribute on connection', async () => {
+      it('sets attribute on connection', async () => {
         fixt = await fixture(radioListItem());
         element = fixt.root.querySelector('mwc-radio-list-item')!;
 
         assert.isTrue(element.hasAttribute('mwc-list-item'));
       });
 
-      test('left functions as intended', async () => {
+      it('left functions as intended', async () => {
         fixt = await fixture(radioListItem({
           left: true,
         }));
@@ -777,18 +777,18 @@ suite('mwc-list:', () => {
         assert.equal(second, checkbox, 'checkbox is second when not left');
       });
 
-      teardown(() => {
+      afterEach(() => {
         if (fixt) {
           fixt.remove();
         }
       });
     });
 
-    suite('mwc-radio-list-item: interaction', () => {
+    describe('mwc-radio-list-item: interaction', () => {
       let firstElement: RadioListItem;
       let secondElement: RadioListItem;
 
-      test('request selected event', async () => {
+      it('request selected event', async () => {
         let reqSelectedEvts = [] as CustomEvent<RequestSelectedDetail>[];
         const radioItem = radioListItem({
           onRequestSelected: (ev) => {
@@ -919,7 +919,7 @@ suite('mwc-list:', () => {
         reqSelectedEvts = [];
       });
 
-      teardown(() => {
+      afterEach(() => {
         if (fixt) {
           fixt.remove();
         }
@@ -928,17 +928,17 @@ suite('mwc-list:', () => {
   });
 
 
-  suite('mwc-list', () => {
+  describe('mwc-list', () => {
     let element: List;
 
-    suite('initialization', () => {
-      test('initializes as an mwc-list', async () => {
+    describe('initialization', () => {
+      it('initializes as an mwc-list', async () => {
         fixt = await fixture(listTemplate());
         element = fixt.root.querySelector('mwc-list')!;
         assert.instanceOf(element, List);
       });
 
-      test('with no children', async () => {
+      it('with no children', async () => {
         fixt = await fixture(listTemplate());
         element = fixt.root.querySelector('mwc-list')!;
 
@@ -980,7 +980,7 @@ suite('mwc-list:', () => {
             element.index, -1, 'multi -> not list `index` initializes as `-1`');
       });
 
-      test('single with unselected children', async () => {
+      it('single with unselected children', async () => {
         const itemsTemplates = [listItem(), listItem(), listItem()];
         fixt = await fixture(listTemplate({items: itemsTemplates}));
         element = fixt.root.querySelector('mwc-list')!;
@@ -998,7 +998,7 @@ suite('mwc-list:', () => {
             'list with no selected children `index` initializes as `-1`');
       });
 
-      test('single with selected child', async () => {
+      it('single with selected child', async () => {
         const itemsTemplates =
             [listItem(), listItem({selected: true}), listItem()];
         fixt = await fixture(listTemplate({items: itemsTemplates}));
@@ -1011,7 +1011,7 @@ suite('mwc-list:', () => {
         assert.equal(element.index, 1, 'second item is index');
       });
 
-      test('single lazy', async () => {
+      it('single lazy', async () => {
         const itemsTemplates =
             [listItem(), listItem({selected: true}), listItem()];
         fixt = await fixture(listTemplate());
@@ -1040,7 +1040,7 @@ suite('mwc-list:', () => {
         assert.equal(element.index, 1, 'second item is index on lazy startup');
       });
 
-      test('multi with unselected children', async () => {
+      it('multi with unselected children', async () => {
         const itemsTemplates = [listItem(), listItem(), listItem()];
         fixt =
             await fixture(listTemplate({items: itemsTemplates, multi: true}));
@@ -1057,7 +1057,7 @@ suite('mwc-list:', () => {
             'multi list with no selected children `index` initializes as empty set');
       });
 
-      test('multi with selected children', async () => {
+      it('multi with selected children', async () => {
         let itemsTemplates = [
           listItem(),
           listItem({selected: true}),
@@ -1117,7 +1117,7 @@ suite('mwc-list:', () => {
             'multi list with selected children `index` is correct');
       });
 
-      test('multi lazy', async () => {
+      it('multi lazy', async () => {
         const itemsTemplates = [
           listItem(), listItem({selected: true}), listItem({selected: true})
         ];
@@ -1162,7 +1162,7 @@ suite('mwc-list:', () => {
         assert.isTrue(index.has(2), 'indicies are correct on lazy startup');
       });
 
-      test('a11y roles are set', async () => {
+      it('a11y roles are set', async () => {
         const itemsTemplate = [listItem(), dividerTempl, listItem()];
         fixt = await fixture(
             listTemplate({items: itemsTemplate, itemRoles: 'option'}));
@@ -1181,7 +1181,7 @@ suite('mwc-list:', () => {
             'divider role propagates correctly');
       });
 
-      test('noninteractive', async () => {
+      it('noninteractive', async () => {
         const itemsTemplate = [listItem(), listItem()];
         fixt = await fixture(
             listTemplate({items: itemsTemplate, noninteractive: true}));
@@ -1204,15 +1204,15 @@ suite('mwc-list:', () => {
             items[1].tabIndex, -1, 'other items are still tabindex -1');
       });
 
-      teardown(() => {
+      afterEach(() => {
         if (fixt) {
           fixt.remove();
         }
       });
     });
 
-    suite('single', () => {
-      test('click selection', async () => {
+    describe('single', () => {
+      it('click selection', async () => {
         const itemsTemplates = [
           listItem(), listItem({selected: true, activated: true}), listItem()
         ];
@@ -1239,7 +1239,7 @@ suite('mwc-list:', () => {
             element.selected, items[2], 'selected is correct after click');
       });
 
-      test('no deselection on click', async () => {
+      it('no deselection on click', async () => {
         const itemsTemplates = [
           listItem(), listItem({selected: true, activated: true}), listItem()
         ];
@@ -1261,7 +1261,7 @@ suite('mwc-list:', () => {
             element.selected, items[1], 'selected is correct after click');
       });
 
-      test('prop selection', async () => {
+      it('prop selection', async () => {
         const itemsTemplates = [
           listItem(), listItem({selected: true, activated: true}), listItem()
         ];
@@ -1290,7 +1290,7 @@ suite('mwc-list:', () => {
             'selected is correct after prop selection');
       });
 
-      test('prop deselection', async () => {
+      it('prop deselection', async () => {
         const itemsTemplates = [
           listItem(), listItem({selected: true, activated: true}), listItem()
         ];
@@ -1314,7 +1314,7 @@ suite('mwc-list:', () => {
             element.selected, null, 'selected is null prop deselection');
       });
 
-      test('index selection', async () => {
+      it('index selection', async () => {
         const itemsTemplates = [
           listItem(), listItem({selected: true, activated: true}), listItem()
         ];
@@ -1345,7 +1345,7 @@ suite('mwc-list:', () => {
             'selected is correct after index selection');
       });
 
-      test('index deselection', async () => {
+      it('index deselection', async () => {
         const itemsTemplates = [
           listItem(), listItem({selected: true, activated: true}), listItem()
         ];
@@ -1369,7 +1369,7 @@ suite('mwc-list:', () => {
             element.selected, null, 'selected is null index deselection');
       });
 
-      test('prop deselection on disconnect', async () => {
+      it('prop deselection on disconnect', async () => {
         const itemsTemplates = [
           listItem(),
           listItem({selected: true, activated: true}),
@@ -1406,7 +1406,7 @@ suite('mwc-list:', () => {
             'selected is null on selected item disconnect');
       });
 
-      test('single to multi', async () => {
+      it('single to multi', async () => {
         const itemsTemplates = [
           listItem(), listItem({selected: true, activated: true}), listItem()
         ];
@@ -1430,15 +1430,15 @@ suite('mwc-list:', () => {
         assert.equal(selected[0], items[1], 'selected is correct');
       });
 
-      teardown(() => {
+      afterEach(() => {
         if (fixt) {
           fixt.remove();
         }
       });
     });
 
-    suite('multi', () => {
-      test('click selection', async () => {
+    describe('multi', () => {
+      it('click selection', async () => {
         const itemsTemplates = [
           listItem(), listItem({selected: true, activated: true}), listItem()
         ];
@@ -1476,7 +1476,7 @@ suite('mwc-list:', () => {
             'selected is correct after click');
       });
 
-      test('deselection on click', async () => {
+      it('deselection on click', async () => {
         const itemsTemplates = [
           listItem(), listItem({selected: true, activated: true}), listItem()
         ];
@@ -1500,7 +1500,7 @@ suite('mwc-list:', () => {
         assert.equal(selected.length, 0, 'nothing is selected after click');
       });
 
-      test('prop selection', async () => {
+      it('prop selection', async () => {
         const itemsTemplates = [
           listItem(), listItem({selected: true, activated: true}), listItem()
         ];
@@ -1541,7 +1541,7 @@ suite('mwc-list:', () => {
             'selected is correct after prop selection');
       });
 
-      test('prop deselection', async () => {
+      it('prop deselection', async () => {
         const itemsTemplates = [
           listItem(), listItem({selected: true, activated: true}), listItem()
         ];
@@ -1568,7 +1568,7 @@ suite('mwc-list:', () => {
             selected.length, 0, 'nothing is selected after prop deselection');
       });
 
-      test('index selection', async () => {
+      it('index selection', async () => {
         const itemsTemplates = [
           listItem(), listItem({selected: true, activated: true}), listItem()
         ];
@@ -1615,7 +1615,7 @@ suite('mwc-list:', () => {
             'selected is correct after index selection');
       });
 
-      test('multi index selection diff', async () => {
+      it('multi index selection diff', async () => {
         const itemsTemplate = [
           listItem(),
           listItem(),
@@ -1679,7 +1679,7 @@ suite('mwc-list:', () => {
         });
       });
 
-      test('index deselection', async () => {
+      it('index deselection', async () => {
         const itemsTemplates = [
           listItem(), listItem({selected: true, activated: true}), listItem()
         ];
@@ -1706,7 +1706,7 @@ suite('mwc-list:', () => {
             selected.length, 0, 'nothing is selected after index deselection');
       });
 
-      test('multi to single', async () => {
+      it('multi to single', async () => {
         const itemsTemplates = [
           listItem(),
           listItem({selected: true}),
@@ -1742,14 +1742,14 @@ suite('mwc-list:', () => {
         assert.equal(element.selected, items[1], 'element is selected');
       });
 
-      teardown(() => {
+      afterEach(() => {
         if (fixt) {
           fixt.remove();
         }
       });
     });
 
-    suite('empty list', () => {
+    describe('empty list', () => {
       // IE does not support slots and cannot run this test
       // IE feature detection.
       if ((document as any).documentMode) {
@@ -1760,7 +1760,7 @@ suite('mwc-list:', () => {
       let component: List|null;
       let placeholderElement: ListItem|null;
 
-      test('does not render placeholder by default', async () => {
+      it('does not render placeholder by default', async () => {
         fixt = await fixture(createEmptyList(undefined));
         component = fixt.root.querySelector('mwc-list');
         if (component && component.shadowRoot) {
@@ -1771,7 +1771,7 @@ suite('mwc-list:', () => {
         assert.isNull(placeholderElement);
       });
 
-      test('will render a noninteractive paceholder if provided', async () => {
+      it('will render a noninteractive paceholder if provided', async () => {
         fixt = await fixture(
             createEmptyList('Unfortunately, no results were found.'));
         component = fixt.root.querySelector('mwc-list');
@@ -1784,15 +1784,15 @@ suite('mwc-list:', () => {
         assert.isNotNull(placeholderElement);
       });
 
-      teardown(() => {
+      afterEach(() => {
         if (fixt) {
           fixt.remove();
         }
       });
     });
 
-    suite('performance issue', () => {
-      test('removing list should not call layout more than once', async () => {
+    describe('performance issue', () => {
+      it('removing list should not call layout more than once', async () => {
         let count = 0;
         const originalLayout = List.prototype.layout;
         List.prototype.layout = function(update) {

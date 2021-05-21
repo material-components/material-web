@@ -72,29 +72,29 @@ const asDateType = html`
   </mwc-textfield>
 `;
 
-suite('mwc-textfield:', () => {
+describe('mwc-textfield:', () => {
   let fixt: TestFixture;
 
-  suite('basic', () => {
+  describe('basic', () => {
     let element: TextField;
-    setup(async () => {
+    beforeEach(async () => {
       fixt = await fixture(basic());
 
       element = fixt.root.querySelector('mwc-textfield')!;
     });
 
-    test('initializes as an mwc-textfield', () => {
+    it('initializes as an mwc-textfield', () => {
       assert.instanceOf(element, TextField);
     });
 
-    test('setting value sets on input', async () => {
+    it('setting value sets on input', async () => {
       element.value = 'my test value';
 
       const inputElement = element.shadowRoot!.querySelector('input');
       assert(inputElement, 'my test value');
     });
 
-    test('setting non-string values stringifies values', async () => {
+    it('setting non-string values stringifies values', async () => {
       (element.value as unknown as undefined) = undefined;
       await element.updateComplete;
       assert.equal(element.value, 'undefined');
@@ -112,16 +112,16 @@ suite('mwc-textfield:', () => {
       assert.equal(element.value, '[object Object]');
     });
 
-    teardown(() => {
+    afterEach(() => {
       if (fixt) {
         fixt.remove();
       }
     });
   });
 
-  suite('validation', () => {
-    suite('standard', () => {
-      test('required invalidates on blur', async () => {
+  describe('validation', () => {
+    describe('standard', () => {
+      it('required invalidates on blur', async () => {
         fixt = await fixture(validationRequired());
         const element = fixt.root.querySelector('mwc-textfield')!;
 
@@ -131,7 +131,7 @@ suite('mwc-textfield:', () => {
         assert.isTrue(isUiInvalid(element));
       });
 
-      test('validity & checkValidity do not trigger ui', async () => {
+      it('validity & checkValidity do not trigger ui', async () => {
         fixt = await fixture(validationPattern());
         const element = fixt.root.querySelector('mwc-textfield')!;
 
@@ -154,7 +154,7 @@ suite('mwc-textfield:', () => {
         assert.isFalse(isUiInvalid(element));
       });
 
-      test('setCustomValidity', async () => {
+      it('setCustomValidity', async () => {
         fixt = await fixture(basic());
         const element = fixt.root.querySelector('mwc-textfield')!;
 
@@ -176,7 +176,7 @@ suite('mwc-textfield:', () => {
         assert.isFalse(validity.valid);
       });
 
-      test('validity transform', async () => {
+      it('validity transform', async () => {
         fixt = await fixture(validationPattern());
         const element = fixt.root.querySelector('mwc-textfield')!;
 
@@ -231,7 +231,7 @@ suite('mwc-textfield:', () => {
         assert.isFalse(isUiInvalid(element));
       });
 
-      test('initial validation', async () => {
+      it('initial validation', async () => {
         fixt = await fixture(reqInitialVal());
         let element = fixt.root.querySelector('mwc-textfield')!;
         assert.isTrue(isUiInvalid(element));
@@ -243,7 +243,7 @@ suite('mwc-textfield:', () => {
         assert.isFalse(isUiInvalid(element));
       });
 
-      test('autoValidate validates on value change', async () => {
+      it('autoValidate validates on value change', async () => {
         fixt = await fixture(validationRequired());
         const element = fixt.root.querySelector('mwc-textfield')!;
         assert.isFalse(isUiInvalid(element));
@@ -279,15 +279,15 @@ suite('mwc-textfield:', () => {
         assert.isTrue(isUiInvalid(element));
       });
 
-      teardown(() => {
+      afterEach(() => {
         if (fixt) {
           fixt.remove();
         }
       });
     });
 
-    suite('outlined', () => {
-      test('required invalidates on blur', async () => {
+    describe('outlined', () => {
+      it('required invalidates on blur', async () => {
         fixt = await fixture(validationRequired(true));
         const element = fixt.root.querySelector('mwc-textfield')!;
         await element.updateComplete;
@@ -298,7 +298,7 @@ suite('mwc-textfield:', () => {
         assert.isTrue(isUiInvalid(element));
       });
 
-      test('validity & checkValidity do not trigger ui', async () => {
+      it('validity & checkValidity do not trigger ui', async () => {
         fixt = await fixture(validationPattern(true));
         const element = fixt.root.querySelector('mwc-textfield')!;
         await element.updateComplete;
@@ -323,7 +323,7 @@ suite('mwc-textfield:', () => {
         assert.isFalse(isUiInvalid(element));
       });
 
-      test('setCustomValidity', async () => {
+      it('setCustomValidity', async () => {
         fixt = await fixture(basic(true));
         const element = fixt.root.querySelector('mwc-textfield')!;
         await element.updateComplete;
@@ -346,7 +346,7 @@ suite('mwc-textfield:', () => {
         assert.isFalse(validity.valid);
       });
 
-      test('validity transform', async () => {
+      it('validity transform', async () => {
         fixt = await fixture(validationPattern(true));
         const element = fixt.root.querySelector('mwc-textfield')!;
         await element.updateComplete;
@@ -402,7 +402,7 @@ suite('mwc-textfield:', () => {
         assert.isFalse(isUiInvalid(element));
       });
 
-      test('initial validation', async () => {
+      it('initial validation', async () => {
         fixt = await fixture(reqInitialVal(true));
         let element = fixt.root.querySelector('mwc-textfield')!;
         await element.updateComplete;
@@ -416,7 +416,7 @@ suite('mwc-textfield:', () => {
         assert.isFalse(isUiInvalid(element));
       });
 
-      teardown(() => {
+      afterEach(() => {
         if (fixt) {
           fixt.remove();
         }
@@ -425,16 +425,16 @@ suite('mwc-textfield:', () => {
   });
 
 
-  suite('select', () => {
+  describe('select', () => {
     let element: TextField;
 
-    setup(async () => {
+    beforeEach(async () => {
       fixt = await fixture(basic());
 
       element = fixt.root.querySelector('mwc-textfield')!;
     });
 
-    test('selects the input text', () => {
+    it('selects the input text', () => {
       const input = element.shadowRoot!.querySelector('input')!;
 
       input.value = 'foobar';
@@ -445,23 +445,23 @@ suite('mwc-textfield:', () => {
       assert.equal(input.selectionEnd, 6);
     });
 
-    teardown(() => {
+    afterEach(() => {
       if (fixt) {
         fixt.remove();
       }
     });
   });
 
-  suite('setSelectionRange', () => {
+  describe('setSelectionRange', () => {
     let element: TextField;
 
-    setup(async () => {
+    beforeEach(async () => {
       fixt = await fixture(basic());
 
       element = fixt.root.querySelector('mwc-textfield')!;
     });
 
-    test('sets correct selection', async () => {
+    it('sets correct selection', async () => {
       const input = element.shadowRoot!.querySelector('input')!;
 
       element.value = 'one two three';
@@ -475,16 +475,16 @@ suite('mwc-textfield:', () => {
       assert.equal(element.selectionEnd, 6);
     });
 
-    teardown(() => {
+    afterEach(() => {
       if (fixt) {
         fixt.remove();
       }
     });
   });
 
-  suite('notch', () => {
+  describe('notch', () => {
     let fixt: TestFixture;
-    test('notch can be layout-ed to correct size', async () => {
+    it('notch can be layout-ed to correct size', async () => {
       fixt = await fixture(makeOutlined(true));
       const element = fixt.root.querySelector('mwc-textfield')!;
 
@@ -523,7 +523,7 @@ suite('mwc-textfield:', () => {
       assert.isTrue(diff < 3);
     });
 
-    test('notch changes size with label change', async () => {
+    it('notch changes size with label change', async () => {
       fixt = await fixture(makeOutlined(false));
       const element = fixt.root.querySelector('mwc-textfield')!;
 
@@ -561,29 +561,29 @@ suite('mwc-textfield:', () => {
       assert.isTrue(diff < 5);
     });
 
-    teardown(() => {
+    afterEach(() => {
       if (fixt) {
         fixt.remove();
       }
     });
   });
 
-  suite('label', () => {
+  describe('label', () => {
     let element: TextField;
 
-    setup(async () => {
+    beforeEach(async () => {
       fixt = await fixture(withLabel);
       element = fixt.root.querySelector('mwc-textfield')!;
       await element.updateComplete;
     });
 
-    teardown(() => {
+    afterEach(() => {
       if (fixt) {
         fixt.remove();
       }
     });
 
-    test('label floats when value is set', async () => {
+    it('label floats when value is set', async () => {
       const floatingLabel = element.shadowRoot!.querySelector(
                                 '.mdc-floating-label') as FloatingLabel;
 
@@ -599,7 +599,7 @@ suite('mwc-textfield:', () => {
   });
 });
 
-suite('date type textfield', () => {
+describe('date type textfield', () => {
   // IE 8-1 has no support for input[type=date]
   // Feature detection to skip these unit tests in IE, they will always fail
   if (window.MSInputMethodContext) {
@@ -615,19 +615,19 @@ suite('date type textfield', () => {
   let fixt: TestFixture;
   let element: TextField;
 
-  setup(async () => {
+  beforeEach(async () => {
     fixt = await fixture(asDateType);
     element = fixt.root.querySelector('mwc-textfield')!;
     await element.updateComplete;
   });
 
-  teardown(() => {
+  afterEach(() => {
     if (fixt) {
       fixt.remove();
     }
   });
 
-  test('will be valid with a date-string inside min-max range', async () => {
+  it('will be valid with a date-string inside min-max range', async () => {
     element.focus();
     element.value = '2020-10-16';
     element.blur();
@@ -638,7 +638,7 @@ suite('date type textfield', () => {
     assert.isFalse(isUiInvalid(element));
   });
 
-  test('will be invalid with a date-string before min', async () => {
+  it('will be invalid with a date-string before min', async () => {
     element.focus();
     element.value = '2019-10-16';
     element.blur();
@@ -649,7 +649,7 @@ suite('date type textfield', () => {
     assert.isTrue(isUiInvalid(element));
   });
 
-  test('will be invalid with a date-string after max', async () => {
+  it('will be invalid with a date-string after max', async () => {
     element.focus();
     element.value = '2021-10-16';
     element.blur();

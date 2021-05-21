@@ -16,98 +16,93 @@ interface IconButtonToggleInternals {
   mdcRoot: HTMLElement;
 }
 
-suite('mwc-icon-button-toggle', () => {
+describe('mwc-icon-button-toggle', () => {
   let element: IconButtonToggle;
   let internals: IconButtonToggleInternals;
 
-  setup(() => {
+  beforeEach(() => {
     element = document.createElement('mwc-icon-button-toggle');
     internals = element as unknown as IconButtonToggleInternals;
     document.body.appendChild(element);
   });
 
-  teardown(() => {
+  afterEach(() => {
     document.body.removeChild(element);
   });
 
-  test('initializes as an mwc-icon-button', () => {
+  it('initializes as an mwc-icon-button', () => {
     assert.instanceOf(element, IconButtonToggle);
   });
 
-  test(
-      'setting `icon` updates the textContent inside <i class="mdc-icon-button__icon mdc-icon-button__icon--on">',
-      async () => {
-        let icon = 'check';
-        element.onIcon = icon;
-        await element.updateComplete;
-        const i = element.shadowRoot!.querySelector(ICON_SELECTOR)!;
-        let content = i.textContent as string;
-        assert.match(content, new RegExp(`^\\s*${icon}\\s*$`));
+  it('setting `icon` updates the textContent inside <i class="mdc-icon-button__icon mdc-icon-button__icon--on">',
+     async () => {
+       let icon = 'check';
+       element.onIcon = icon;
+       await element.updateComplete;
+       const i = element.shadowRoot!.querySelector(ICON_SELECTOR)!;
+       let content = i.textContent as string;
+       assert.match(content, new RegExp(`^\\s*${icon}\\s*$`));
 
-        icon = 'menu';
-        element.onIcon = icon;
-        await element.updateComplete;
-        content = i.textContent as string;
-        assert.match(content, new RegExp(`^\\s*${icon}\\s*$`));
-      });
+       icon = 'menu';
+       element.onIcon = icon;
+       await element.updateComplete;
+       content = i.textContent as string;
+       assert.match(content, new RegExp(`^\\s*${icon}\\s*$`));
+     });
 
-  test(
-      'setting `offIcon` updates the textContent inside <i class="mdc-icon-button__icon">',
-      async () => {
-        let icon = 'check';
-        element.offIcon = icon;
-        await element.updateComplete;
-        const i = element.shadowRoot!.querySelector(OFF_ICON_SELECTOR)!;
-        let content = i.textContent as string;
-        assert.match(content, new RegExp(`^\\s*${icon}\\s*$`));
+  it('setting `offIcon` updates the textContent inside <i class="mdc-icon-button__icon">',
+     async () => {
+       let icon = 'check';
+       element.offIcon = icon;
+       await element.updateComplete;
+       const i = element.shadowRoot!.querySelector(OFF_ICON_SELECTOR)!;
+       let content = i.textContent as string;
+       assert.match(content, new RegExp(`^\\s*${icon}\\s*$`));
 
-        icon = 'menu';
-        element.offIcon = icon;
-        await element.updateComplete;
-        content = i.textContent as string;
-        assert.match(content, new RegExp(`^\\s*${icon}\\s*$`));
-      });
+       icon = 'menu';
+       element.offIcon = icon;
+       await element.updateComplete;
+       content = i.textContent as string;
+       assert.match(content, new RegExp(`^\\s*${icon}\\s*$`));
+     });
 
-  test(
-      'setting `ariaLabel` updates the aria-label attribute on the native button element',
-      async () => {
-        const ariaLabel = 'hello';
-        element.ariaLabel = ariaLabel;
-        await element.updateComplete;
-        const button = element.shadowRoot!.querySelector('button')!;
-        assert.equal(button.getAttribute('aria-label'), ariaLabel);
-      });
+  it('setting `ariaLabel` updates the aria-label attribute on the native button element',
+     async () => {
+       const ariaLabel = 'hello';
+       element.ariaLabel = ariaLabel;
+       await element.updateComplete;
+       const button = element.shadowRoot!.querySelector('button')!;
+       assert.equal(button.getAttribute('aria-label'), ariaLabel);
+     });
 
-  test(
-      'setting `on` updates the aria-pressed attribute on the native button element',
-      async () => {
-        element.onIcon = 'alarm_on';
-        element.offIcon = 'alarm_off';
+  it('setting `on` updates the aria-pressed attribute on the native button element',
+     async () => {
+       element.onIcon = 'alarm_on';
+       element.offIcon = 'alarm_off';
 
-        element.on = true;
-        await element.updateComplete;
-        const button = element.shadowRoot!.querySelector('button')!;
-        assert.equal(button.getAttribute('aria-pressed'), 'true');
+       element.on = true;
+       await element.updateComplete;
+       const button = element.shadowRoot!.querySelector('button')!;
+       assert.equal(button.getAttribute('aria-pressed'), 'true');
 
-        element.on = false;
-        await element.updateComplete;
-        assert.equal(button.getAttribute('aria-pressed'), 'false');
-      });
+       element.on = false;
+       await element.updateComplete;
+       assert.equal(button.getAttribute('aria-pressed'), 'false');
+     });
 
-  test(
-      'setting `disabled` updates the disabled attribute on the native button element',
-      async () => {
-        element.disabled = true;
-        await element.updateComplete;
-        const button = element.shadowRoot!.querySelector('button')!;
-        assert.equal(button.hasAttribute('disabled'), true);
+  it('setting `disabled` updates the disabled attribute on the native button element',
+     async () => {
+       element.disabled = true;
+       await element.updateComplete;
+       const button = element.shadowRoot!.querySelector('button')!;
+       assert.equal(button.hasAttribute('disabled'), true);
 
-        element.disabled = false;
-        await element.updateComplete;
-        assert.equal(button.hasAttribute('disabled'), false);
-      });
+       element.disabled = false;
+       await element.updateComplete;
+       assert.equal(button.hasAttribute('disabled'), false);
+     });
 
-  test('icon button toggles when clicked with two icons', async () => {
+  it('icon button toggles when clicked with two icons', async () => {
     element.onIcon = 'alarm_on';
     element.offIcon = 'alarm_off';
     await element.updateComplete;
@@ -122,7 +117,7 @@ suite('mwc-icon-button-toggle', () => {
   <svg slot="onIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
   <svg slot="offIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z"/><path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>`;
 
-  test('nodes with `slot=onIcon` will serve as the on icon', async () => {
+  it('nodes with `slot=onIcon` will serve as the on icon', async () => {
     const iconQuery = svgTemplate.content.querySelector('svg[slot="onIcon"]')!;
     assert.instanceOf(iconQuery, SVGElement);
 
@@ -134,7 +129,7 @@ suite('mwc-icon-button-toggle', () => {
     assert.include(iconSlot.assignedNodes(), icon);
   });
 
-  test('nodes with `slot=offIcon` will serve as the off icon', async () => {
+  it('nodes with `slot=offIcon` will serve as the off icon', async () => {
     const iconQuery = svgTemplate.content.querySelector('svg[slot="offIcon"]')!;
     assert.instanceOf(iconQuery, SVGElement);
 
@@ -147,7 +142,7 @@ suite('mwc-icon-button-toggle', () => {
     assert.include(iconSlot.assignedNodes(), icon);
   });
 
-  test('icon-button toggles with slotted icon and offIcon', async () => {
+  it('icon-button toggles with slotted icon and offIcon', async () => {
     const fragment = svgTemplate.content.cloneNode(true);
     element.appendChild(fragment);
     await element.updateComplete;
@@ -160,7 +155,7 @@ suite('mwc-icon-button-toggle', () => {
         element.shadowRoot!.querySelector(ICON_BUTTON_ON_SELECTOR));
   });
 
-  test('button with toggled aria label toggles aria label', async () => {
+  it('button with toggled aria label toggles aria label', async () => {
     element.ariaLabelOn = 'aria label on';
     element.ariaLabelOff = 'aria label off';
     await element.updateComplete;
