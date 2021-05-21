@@ -43,7 +43,7 @@ module.exports = function(config) {
       require.resolve('@open-wc/karma-esm'),
       'karma-*',
     ],
-    frameworks: ['esm', 'mocha', 'chai'],
+    frameworks: ['esm', 'jasmine', 'chai'],
     files: [
       {
         pattern:
@@ -67,13 +67,6 @@ module.exports = function(config) {
       nodeResolve: true,
       compatibility: 'auto',
       preserveSymlinks: true,
-    },
-
-    client: {
-      mocha: {
-        reporter: 'html',
-        ui: 'bdd',
-      },
     },
 
     reporters: ['mocha'],
