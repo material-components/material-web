@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - all
   - Update sass build to match internal imports and naming
+  - Switch testing from Mocha to Jasmine
 
 ### Fixed
 
