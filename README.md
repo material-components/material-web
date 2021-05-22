@@ -89,7 +89,7 @@ Import the component's JavaScript module, use the component in your HTML, and co
       // can use in this page.
       //
       // Note this import is a bare module specifier, so it must be converted
-      // to a path using a server such as es-dev-server.
+      // to a path using a server such as Web Dev Server.
       import '@material/mwc-button';
 
       // Standard DOM APIs work with Web Components just like they do for
@@ -108,8 +108,8 @@ Import the component's JavaScript module, use the component in your HTML, and co
 Serve your HTML with any server or build process that supports *bare module specifier resolution* (see next section):
 
 ```sh
-npm install -g es-dev-server
-es-dev-server --node-resolve
+npm install --save-dev @web/dev-server
+npx web-dev-server --node-resolve
 ```
 
 ## Bare module specifiers
@@ -119,7 +119,7 @@ them to a *path* (for example from `@material/mwc-button` to `./node_modules/@ma
 
 Two great choices for tools that do this are:
 
-- During local development, use open-wc's [`es-dev-server`](https://open-wc.org/developing/es-dev-server.html) with the `--node-resolve` flag.
+- During local development, use Modern Web's [`Web Dev Server`](https://modern-web.dev/docs/dev-server/overview/) with the `--node-resolve` flag.
 - For your production deployment, build your application with [Rollup](https://rollupjs.org/guide/en/) using the [`rollup-plugin-node-resolve`](https://github.com/rollup/rollup-plugin-node-resolve) plugin.
 
 
