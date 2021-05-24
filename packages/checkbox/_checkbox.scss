@@ -4,14 +4,28 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-@use '@material/checkbox';
+@use '@material/checkbox/checkbox' as mdc-checkbox;
+@use '@material/checkbox/checkbox-theme' as mdc-checkbox-theme;
 @use '@material/theme/custom-properties';
 @use '@material/theme/theme-color';
 @use '@material/mwc-ripple/ripple-theme';
 @use './checkbox-theme';
 
+@mixin static-styles() {
+  :host {
+    @include mdc-checkbox.static-styles();
+
+    outline: none;
+    display: inline-flex;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
 @mixin core-styles() {
-  @include checkbox.without-ripple();
+  .mdc-checkbox {
+    @include mdc-checkbox-theme.theme(mdc-checkbox-theme.$light-theme);
+  }
+  @include mdc-checkbox.static-styles();
 
   :host {
     @include checkbox-theme.checked-selector() {

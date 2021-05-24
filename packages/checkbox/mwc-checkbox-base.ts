@@ -57,6 +57,8 @@ export class CheckboxBase extends FormElement {
 
   @state() protected focused = false;
 
+  @state() protected useStateLayerCustomProperties = false;
+
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 
   // MDC Foundation is unused
@@ -109,6 +111,8 @@ export class CheckboxBase extends FormElement {
   protected renderRipple(): TemplateResult|string {
     return this.shouldRenderRipple ? html`<mwc-ripple
         .disabled="${this.disabled}"
+        .internalUseStateLayerCustomProperties="${
+                                         this.useStateLayerCustomProperties}"
         unbounded></mwc-ripple>` :
                                      '';
   }

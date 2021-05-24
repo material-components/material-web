@@ -10,103 +10,67 @@
 @use '@material/checkbox/checkbox-custom-properties';
 @use '@material/checkbox/checkbox-theme';
 @use '@material/checkbox/variables' as checkbox-variables;
-@use '@material/ripple/ripple-theme' as mdc-ripple-theme;
+@use '@material/ripple/ripple-theme';
 @use '@material/theme/color-custom-properties';
 @use '@material/theme/css';
+@use '@material/theme/keys';
 @use '@material/theme/shadow-dom';
 @use '@material/theme/theme';
 @use '@material/theme/theme-color';
 @use '@material/touch-target/touch-target';
-@use '@material/mwc-ripple/ripple-theme';
-
-$ripple-opacity: (
-  hover: map.get(mdc-ripple-theme.$dark-ink-opacities, hover),
-  focus: map.get(mdc-ripple-theme.$dark-ink-opacities, focus),
-  press: map.get(mdc-ripple-theme.$dark-ink-opacities, press),
-);
-
-$light-theme: (
-  checkmark-color: checkbox-variables.$mark-color,
-  container-checked-color:
-    theme-color.prop-value(checkbox-variables.$baseline-theme-color),
-  container-checked-hover-color: null,
-  container-disabled-color: checkbox-variables.$disabled-color,
-  outline-color: checkbox-variables.$border-color,
-  outline-hover-color: null,
-  ripple-color: theme-color.$on-surface,
-  ripple-opacity: $ripple-opacity,
-  ripple-checked-color: theme-color.$secondary,
-  ripple-checked-opacity: $ripple-opacity,
-);
 
 @mixin theme($theme) {
-  @include css.declaration(
-    checkbox-custom-properties.$ink-color,
-    map.get($theme, checkmark-color)
-  );
-  @include css.declaration(
-    checkbox-custom-properties.$checked-color,
-    map.get($theme, container-checked-color)
-  );
-  @include shadow-dom.host-aware(
-    selector.append(&, ':hover, :focus, :focus-within, :active')
-  ) {
-    @include css.declaration(
-      checkbox-custom-properties.$checked-color,
-      map.get($theme, container-checked-hover-color)
-    );
-  }
-  @include css.declaration(
-    checkbox-custom-properties.$unchecked-color,
-    map.get($theme, outline-color)
-  );
-  @include css.declaration(
-    checkbox-custom-properties.$disabled-color,
-    map.get($theme, container-disabled-color)
-  );
+  @include checkbox-theme.theme-declare-custom-properties($theme);
 
-  $density-scale: map.get($theme, density-scale);
-  @if $density-scale != null {
-    @include css.declaration(
-      checkbox-custom-properties.$ripple-size,
-      checkbox-theme.get-ripple-size($density-scale)
-    );
-    @include css.declaration(
-      checkbox-custom-properties.$touch-target-size,
-      var(checkbox-custom-properties.$ripple-size)
-    );
+  @if shadow-dom.$css-selector-fallback-declarations {
+    @include theme-styles($theme);
+  }
+}
+
+@mixin theme-styles($theme) {
+  .mdc-checkbox {
+    @include checkbox-theme.theme-styles($theme);
   }
 
-  @include shadow-dom.host-aware(
-    selector.append(&, ':hover, :focus, :focus-within, :active')
-  ) {
-    @include css.declaration(
-      checkbox-custom-properties.$unchecked-color,
-      map.get($theme, outline-hover-color)
-    );
-  }
+  $theme: keys.create-theme-properties(
+    $theme,
+    $prefix: checkbox-theme.$custom-property-prefix
+  );
 
-  // Ripple styles
   @include ripple-theme.theme(
     (
-      state: map.get($theme, ripple-color),
-      opacity: map.get($theme, ripple-opacity),
+      hover-state-layer-color:
+        map.get($theme, unselected-hover-state-layer-color),
+      focus-state-layer-color:
+        map.get($theme, unselected-focus-state-layer-color),
+      pressed-state-layer-color:
+        map.get($theme, unselected-pressed-state-layer-color),
+      hover-state-layer-opacity:
+        map.get($theme, unselected-hover-state-layer-opacity),
+      focus-state-layer-opacity:
+        map.get($theme, unselected-focus-state-layer-opacity),
+      pressed-state-layer-opacity:
+        map.get($theme, unselected-pressed-state-layer-opacity),
     )
   );
 
   @include checked-selector() {
     @include ripple-theme.theme(
       (
-        state: map.get($theme, ripple-checked-color),
-        opacity: map.get($theme, ripple-checked-opacity),
+        hover-state-layer-color:
+          map.get($theme, selected-hover-state-layer-color),
+        focus-state-layer-color:
+          map.get($theme, selected-focus-state-layer-color),
+        pressed-state-layer-color:
+          map.get($theme, selected-pressed-state-layer-color),
+        hover-state-layer-opacity:
+          map.get($theme, selected-hover-state-layer-opacity),
+        focus-state-layer-opacity:
+          map.get($theme, selected-focus-state-layer-opacity),
+        pressed-state-layer-opacity:
+          map.get($theme, selected-pressed-state-layer-opacity),
       )
     );
-  }
-
-  @if shadow-dom.$css-selector-fallback-declarations {
-    .mdc-checkbox {
-      @include checkbox-theme.theme($theme);
-    }
   }
 }
 
