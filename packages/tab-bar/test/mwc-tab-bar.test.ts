@@ -47,8 +47,8 @@ describe('mwc-tab-bar', () => {
     });
 
     it('initializes as an mwc-tab-bar', () => {
-      assert.instanceOf(element, TabBar);
-      assert.equal(element.activeIndex, 0);
+      expect(element).toBeInstanceOf(TabBar);
+      expect(element.activeIndex).toEqual(0);
     });
 
     it('activates but does not focus tab on init', async () => {
@@ -64,9 +64,9 @@ describe('mwc-tab-bar', () => {
       const bodyOrNullIsFocused =
           focusedEl === document.body || focusedEl === null;
 
-      assert.isTrue(bodyOrNullIsFocused);
-      assert.isTrue(tab.active);
-      assert.equal(element.activeIndex, 0);
+      expect(bodyOrNullIsFocused).toBeTrue();
+      expect(tab.active).toBeTrue();
+      expect(element.activeIndex).toEqual(0);
     });
   });
 
@@ -89,9 +89,9 @@ describe('mwc-tab-bar', () => {
       const tab2Button = tab2.shadowRoot!.querySelector('button')!;
 
       tab2Button.click();
-      assert.equal(element.activeIndex, 1);
+      expect(element.activeIndex).toEqual(1);
       tab1Button.click();
-      assert.equal(element.activeIndex, 0);
+      expect(element.activeIndex).toEqual(0);
     });
 
     it('responds to key navigation', async () => {
@@ -103,12 +103,12 @@ describe('mwc-tab-bar', () => {
       // right arrow keybode
       const rightEv = ieSafeKeyboardEvent('keydown', 39);
       bar.dispatchEvent(rightEv);
-      assert.equal(fixt.root.activeElement, tab2);
+      expect(fixt.root.activeElement).toEqual(tab2);
 
       // left arrow keycode
       const leftEv = ieSafeKeyboardEvent('keydown', 37);
       bar.dispatchEvent(leftEv);
-      assert.equal(fixt.root.activeElement, tab1);
+      expect(fixt.root.activeElement).toEqual(tab1);
     });
   });
 });

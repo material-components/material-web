@@ -18,6 +18,6 @@ describe('mwc-tab-scroller', () => {
   });
 
   it('initializes as an mwc-tab-scroller', () => {
-    assert.instanceOf(element, TabScroller);
+    expect(element).toBeInstanceOf(TabScroller);
   });
 });

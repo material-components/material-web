@@ -25,14 +25,15 @@ describe('mwc-textarea:', () => {
     });
 
     it('initializes as an mwc-textarea', () => {
-      assert.instanceOf(element, TextArea);
+      expect(element).toBeInstanceOf(TextArea);
     });
 
     it('setting value sets on textarea', async () => {
       element.value = 'my test value';
+      await element.updateComplete;
 
       const inputElement = element.shadowRoot!.querySelector('textarea');
-      assert(inputElement, 'my test value');
+      expect(inputElement!.value).toEqual('my test value');
     });
 
     afterEach(() => {

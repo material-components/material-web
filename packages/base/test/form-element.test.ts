@@ -97,28 +97,28 @@ describe('form-element:', () => {
     });
 
     it('is an instance of form-element', () => {
-      assert.instanceOf(component, TestFormElement);
-      assert.instanceOf(component, FormElement);
+      expect(component).toBeInstanceOf(TestFormElement);
+      expect(component).toBeInstanceOf(FormElement);
     });
 
     it('shadowRoot focuses on formElement after click', async () => {
       if (component === null) {
-        assert.isNotNull(component);
+        expect(component).not.toBeNull();
         return;
       }
       if (component.shadowRoot === null) {
-        assert.isNotNull(component.shadowRoot);
+        expect(component.shadowRoot).not.toBeNull();
         return;
       }
       if (formElement === null) {
-        assert.isNotNull(formElement);
+        expect(formElement).not.toBeNull();
         return;
       }
 
       component.click();
       await component.updateComplete;
 
-      assert.equal(component.shadowRoot.activeElement, formElement);
+      expect(component.shadowRoot.activeElement).toEqual(formElement);
     });
   });
 
@@ -145,47 +145,48 @@ describe('form-element:', () => {
     });
 
     it('is a descendant of FormElement', () => {
-      assert.instanceOf(component, FormElement);
+      expect(component).toBeInstanceOf(FormElement);
     });
 
     it('shadowRoot should not focus on #indirect after click', async () => {
       if (component === null) {
-        assert.isNotNull(component);
+        expect(component).not.toBeNull();
         return;
       }
       if (component.shadowRoot === null) {
-        assert.isNotNull(component.shadowRoot);
+        expect(component.shadowRoot).not.toBeNull();
         return;
       }
       if (indirectFormElement === null) {
-        assert.isNotNull(indirectFormElement);
+        expect(indirectFormElement).not.toBeNull();
         return;
       }
 
       component.click();
       await component.updateComplete;
 
-      assert.notEqual(component.shadowRoot.activeElement, indirectFormElement);
+      expect(component.shadowRoot.activeElement)
+          .not.toEqual(indirectFormElement);
     });
 
     it('shadowRoot should not focus on #root after click', async () => {
       if (component === null) {
-        assert.isNotNull(component);
+        expect(component).not.toBeNull();
         return;
       }
       if (component.shadowRoot === null) {
-        assert.isNotNull(component.shadowRoot);
+        expect(component.shadowRoot).not.toBeNull();
         return;
       }
       if (formElement === null) {
-        assert.isNotNull(formElement);
+        expect(formElement).not.toBeNull();
         return;
       }
 
       component.click();
       await component.updateComplete;
 
-      assert.notEqual(component.shadowRoot.activeElement, formElement);
+      expect(component.shadowRoot.activeElement).not.toEqual(formElement);
     });
   });
 });

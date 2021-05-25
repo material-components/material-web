@@ -39,13 +39,13 @@ describe('mwc-ripple', () => {
     });
 
     it('initializes as an mwc-ripple', () => {
-      assert.instanceOf(element, Ripple);
+      expect(element).toBeInstanceOf(Ripple);
     });
 
     it('sets pressed class on startPress()', async () => {
       element.startPress();
       await element.updateComplete;
-      assert.equal(internals.fgActivation, true);
+      expect(internals.fgActivation).toEqual(true);
     });
 
     it('removes pressed class on endPress()', async () => {
@@ -53,13 +53,13 @@ describe('mwc-ripple', () => {
       await animationTimer();
       element.endPress();
       await animationTimer();
-      assert.equal(internals.fgActivation, false);
+      expect(internals.fgActivation).toEqual(false);
     });
 
     it('sets focused class on startFocus()', async () => {
       element.startFocus();
       await animationTimer();
-      assert.equal(internals.bgFocused, true);
+      expect(internals.bgFocused).toEqual(true);
     });
 
     it('removes focused class on endFocus()', async () => {
@@ -67,13 +67,13 @@ describe('mwc-ripple', () => {
       await animationTimer();
       element.endFocus();
       await animationTimer();
-      assert.equal(internals.bgFocused, false);
+      expect(internals.bgFocused).toEqual(false);
     });
 
     it('sets hover class on startHover()', async () => {
       element.startHover();
       await element.updateComplete;
-      assert.equal(internals.hovering, true);
+      expect(internals.hovering).toEqual(true);
     });
 
     it('removes hover class on endHover()', async () => {
@@ -81,7 +81,7 @@ describe('mwc-ripple', () => {
       await element.updateComplete;
       element.endHover();
       await element.updateComplete;
-      assert.equal(internals.hovering, false);
+      expect(internals.hovering).toEqual(false);
     });
 
     it('stops hovering when disabled', async () => {
@@ -89,7 +89,7 @@ describe('mwc-ripple', () => {
       await element.updateComplete;
       element.disabled = true;
       await element.updateComplete;
-      assert.equal(internals.hovering, false);
+      expect(internals.hovering).toEqual(false);
     });
   });
 });

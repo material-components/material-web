@@ -129,19 +129,19 @@ describe('mwc-dialog:', () => {
     });
 
     it('initializes as an mwc-dialog', () => {
-      assert.instanceOf(element, Dialog);
+      expect(element).toBeInstanceOf(Dialog);
     });
 
     it('Title spacing is not displayed when there is no title', async () => {
       let titleTag = element.shadowRoot!.querySelector('.mdc-dialog__title');
-      assert.isNull(titleTag);
+      expect(titleTag).toBeNull();
 
       element.heading = 'This is my Title';
       element.requestUpdate();
       await element.updateComplete;
       titleTag = element.shadowRoot!.querySelector('.mdc-dialog__title');
-      assert.notStrictEqual(titleTag, null);
-      assert.strictEqual(titleTag!.textContent, 'This is my Title');
+      expect(titleTag).not.toBe(null);
+      expect(titleTag!.textContent).toBe('This is my Title');
     });
 
     it('Dialog fires open and close events', async () => {
@@ -171,26 +171,26 @@ describe('mwc-dialog:', () => {
       const openedPromise = awaitEvent(element, OPENED_EVENT);
       const closedPromise = awaitEvent(element, CLOSED_EVENT);
 
-      assert.isFalse(openingCalled);
-      assert.isFalse(openedCalled);
-      assert.isFalse(closingCalled);
-      assert.isFalse(closedCalled);
+      expect(openingCalled).toBeFalse();
+      expect(openedCalled).toBeFalse();
+      expect(closingCalled).toBeFalse();
+      expect(closedCalled).toBeFalse();
 
-      assert.strictEqual(surfaceElement.offsetWidth, 0);
-      assert.strictEqual(surfaceElement.offsetHeight, 0);
+      expect(surfaceElement.offsetWidth).toBe(0);
+      expect(surfaceElement.offsetHeight).toBe(0);
 
       element.heading = 'Basic title';
       element.hideActions = true;
       element.open = true;
       await openedPromise;
 
-      assert.isTrue(openingCalled);
-      assert.isTrue(openedCalled);
-      assert.isFalse(closingCalled);
-      assert.isFalse(closedCalled);
+      expect(openingCalled).toBeTrue();
+      expect(openedCalled).toBeTrue();
+      expect(closingCalled).toBeFalse();
+      expect(closedCalled).toBeFalse();
 
-      assert.isTrue(surfaceElement.offsetWidth > 0);
-      assert.isTrue(surfaceElement.offsetHeight > 0);
+      expect(surfaceElement.offsetWidth > 0).toBeTrue();
+      expect(surfaceElement.offsetHeight > 0).toBeTrue();
 
       openingCalled = false;
       openedCalled = false;
@@ -198,13 +198,13 @@ describe('mwc-dialog:', () => {
 
       await closedPromise;
 
-      assert.isFalse(openingCalled);
-      assert.isFalse(openedCalled);
-      assert.isTrue(closingCalled);
-      assert.isTrue(closedCalled);
+      expect(openingCalled).toBeFalse();
+      expect(openedCalled).toBeFalse();
+      expect(closingCalled).toBeTrue();
+      expect(closedCalled).toBeTrue();
 
-      assert.strictEqual(surfaceElement.offsetWidth, 0);
-      assert.strictEqual(surfaceElement.offsetHeight, 0);
+      expect(surfaceElement.offsetWidth).toBe(0);
+      expect(surfaceElement.offsetHeight).toBe(0);
     });
 
     it('Scrim closes dialog', async () => {
@@ -222,7 +222,7 @@ describe('mwc-dialog:', () => {
       const event = await awaitEvent(element, CLOSED_EVENT);
 
       const action = event.detail.action;
-      assert.strictEqual(action, SCRIM_ACTION);
+      expect(action).toBe(SCRIM_ACTION);
     });
 
     it('Escape closes dialog', async () => {
@@ -245,7 +245,7 @@ describe('mwc-dialog:', () => {
       const event = await awaitEvent(element, CLOSED_EVENT);
 
       const action = event.detail.action;
-      assert.strictEqual(action, ESCAPE_ACTION);
+      expect(action).toBe(ESCAPE_ACTION);
     });
 
     it('Hide Actions hides empty whitespace', async () => {
@@ -255,14 +255,14 @@ describe('mwc-dialog:', () => {
       element.open = true;
       await awaitEvent(element, OPENED_EVENT);
 
-      assert.isTrue(actionsFooter.offsetWidth > 0);
-      assert.isTrue(actionsFooter.offsetHeight > 0);
+      expect(actionsFooter.offsetWidth > 0).toBeTrue();
+      expect(actionsFooter.offsetHeight > 0).toBeTrue();
 
       element.hideActions = true;
       element.requestUpdate();
       await element.updateComplete;
 
-      assert.strictEqual(actionsFooter.offsetHeight, 0);
+      expect(actionsFooter.offsetHeight).toBe(0);
     });
 
     it('declaratively opens', async () => {
@@ -276,7 +276,7 @@ describe('mwc-dialog:', () => {
 
       await awaitEvent(element, OPENED_EVENT);
 
-      assert.isTrue(openedCalled);
+      expect(openedCalled).toBeTrue();
 
       fixt.remove();
     });
@@ -320,14 +320,14 @@ describe('mwc-dialog:', () => {
 
       secondary.click();
 
-      assert.isFalse(closedCalled);
+      expect(closedCalled).toBeFalse();
 
       primary.click();
 
       const action = await awaitEvent(element, CLOSED_EVENT);
 
-      assert.isTrue(closedCalled);
-      assert.strictEqual(action.detail.action, 'ok');
+      expect(closedCalled).toBeTrue();
+      expect(action.detail.action).toBe('ok');
 
       closedCalled = false;
 
@@ -340,26 +340,26 @@ describe('mwc-dialog:', () => {
 
       const secondaryAction = await awaitEvent(element, CLOSED_EVENT);
 
-      assert.isTrue(closedCalled);
-      assert.strictEqual(secondaryAction.detail.action, 'cancel');
+      expect(closedCalled).toBeTrue();
+      expect(secondaryAction.detail.action).toBe('cancel');
     });
 
     it('Initial focus attribute focuses', async () => {
       const button = element.firstElementChild as Button;
 
-      assert.isNull(fixt.root.activeElement);
+      expect(fixt.root.activeElement).toBeNull();
 
       element.open = true;
 
       await awaitEvent(element, OPENED_EVENT);
 
-      assert.isNull(fixt.root.activeElement);
+      expect(fixt.root.activeElement).toBeNull();
 
       element.open = false;
 
       await awaitEvent(element, CLOSED_EVENT);
 
-      assert.isNull(fixt.root.activeElement);
+      expect(fixt.root.activeElement).toBeNull();
 
       button.setAttribute('dialogInitialFocus', '');
 
@@ -367,7 +367,7 @@ describe('mwc-dialog:', () => {
 
       await awaitEvent(element, OPENED_EVENT);
 
-      assert.strictEqual(fixt.root.activeElement, button);
+      expect(fixt.root.activeElement).toBe(button);
     });
 
     it('initial focus not in light dom but still distributed', async () => {
@@ -387,10 +387,9 @@ describe('mwc-dialog:', () => {
 
       await awaitEvent(element, OPENED_EVENT);
 
-      assert.strictEqual(
-          primaryButton.shadowRoot!.activeElement,
-          primaryButton.shadowRoot!.querySelector('button'),
-          'root slotted primary action is focused');
+      expect(primaryButton.shadowRoot!.activeElement)
+          .withContext('root slotted primary action is focused')
+          .toBe(primaryButton.shadowRoot!.querySelector('button'));
 
       element.open = false;
 
@@ -408,10 +407,9 @@ describe('mwc-dialog:', () => {
 
       await awaitEvent(element, OPENED_EVENT);
 
-      assert.strictEqual(
-          secondaryButton.shadowRoot!.activeElement,
-          secondaryButton.shadowRoot!.querySelector('button'),
-          'root slotted secondary action is focused');
+      expect(secondaryButton.shadowRoot!.activeElement)
+          .withContext('root slotted secondary action is focused')
+          .toBe(secondaryButton.shadowRoot!.querySelector('button'));
 
       element.open = false;
 
@@ -429,10 +427,9 @@ describe('mwc-dialog:', () => {
 
       await awaitEvent(element, OPENED_EVENT);
 
-      assert.strictEqual(
-          contentButton.shadowRoot!.activeElement,
-          contentButton.shadowRoot!.querySelector('button'),
-          'root slotted content focused');
+      expect(contentButton.shadowRoot!.activeElement)
+          .withContext('root slotted content focused')
+          .toBe(contentButton.shadowRoot!.querySelector('button'));
 
       element.open = false;
 
@@ -450,10 +447,9 @@ describe('mwc-dialog:', () => {
 
       await awaitEvent(element, OPENED_EVENT);
 
-      assert.strictEqual(
-          wrappedContentButton.shadowRoot!.activeElement,
-          wrappedContentButton.shadowRoot!.querySelector('button'),
-          'wrapped slotted content focused');
+      expect(wrappedContentButton.shadowRoot!.activeElement)
+          .withContext('wrapped slotted content focused')
+          .toBe(wrappedContentButton.shadowRoot!.querySelector('button'));
 
       element.open = false;
 
@@ -473,8 +469,8 @@ describe('mwc-dialog:', () => {
       const topDiff = primary.offsetTop - secondary.offsetTop;
 
       // tops are within about 5 px of each other
-      assert.isTrue(Math.abs(topDiff) < 5);
-      assert.isTrue(primary.offsetLeft > secondary.offsetLeft);
+      expect(Math.abs(topDiff) < 5).toBeTrue();
+      expect(primary.offsetLeft > secondary.offsetLeft).toBeTrue();
 
       element.stacked = true;
       element.requestUpdate();
@@ -487,13 +483,13 @@ describe('mwc-dialog:', () => {
 
       // rights are within about 5 px of each other: some browsers don't
       // calculate offsetLeft+offsetWidth to necessarily equal right
-      assert.isTrue(Math.abs(rightDiff) < 5);
-      assert.isTrue(secondary.offsetTop > primary.offsetTop);
+      expect(Math.abs(rightDiff) < 5).toBeTrue();
+      expect(secondary.offsetTop > primary.offsetTop).toBeTrue();
     });
 
     it('Enter clicks primary action', async () => {
       const mdcRoot = element.shadowRoot!.querySelector('.mdc-dialog');
-      assert.isTrue(!!mdcRoot, 'root has rendered');
+      expect(!!mdcRoot).withContext('root has rendered').toBeTrue();
 
       let clickCalled = false;
       const primary = element.querySelector('[slot="primaryAction"]') as Button;
@@ -505,7 +501,7 @@ describe('mwc-dialog:', () => {
       element.open = true;
       await awaitEvent(element, OPENED_EVENT);
 
-      assert.isFalse(clickCalled);
+      expect(clickCalled).toBeFalse();
 
       const init = {detail: 0, bubbles: true, cancelable: true, composed: true};
       const enterDown = new CustomEvent('keydown', init);
@@ -519,9 +515,9 @@ describe('mwc-dialog:', () => {
 
 
       const action = await awaitEvent(element, CLOSED_EVENT);
-      assert.isTrue(clickCalled);
+      expect(clickCalled).toBeTrue();
 
-      assert.strictEqual(action.detail.action, 'ok');
+      expect(action.detail.action).toBe('ok');
     });
 
     afterEach(async () => {
@@ -573,7 +569,7 @@ describe('mwc-dialog:', () => {
           (resolve as any)();
         }, 150 + 10);
       });
-      assert.isFalse(sawOpenEvent);
+      expect(sawOpenEvent).toBeFalse();
     });
 
     it('error not thrown after disconnect before animation', async () => {
@@ -593,20 +589,20 @@ describe('mwc-dialog:', () => {
       container.appendChild(dialog);
       dialog.open = true;
       await awaitEvent(dialog, OPENED_EVENT);
-      assert.isTrue(dialog.open);
-      assert.strictEqual(blockingElements.top, dialog);
+      expect(dialog.open).toBeTrue();
+      expect(blockingElements.top).toBe(dialog);
 
       container.removeChild(dialog);
-      assert.isTrue(dialog.open);
-      assert.strictEqual(blockingElements.top, null);
+      expect(dialog.open).toBeTrue();
+      expect(blockingElements.top).toBe(null);
       await awaitEvent(dialog, CLOSED_EVENT);
-      assert.isTrue(dialog.open);
-      assert.strictEqual(blockingElements.top, null);
+      expect(dialog.open).toBeTrue();
+      expect(blockingElements.top).toBe(null);
 
       container.appendChild(dialog);
       await awaitEvent(dialog, OPENED_EVENT);
-      assert.isTrue(dialog.open);
-      assert.strictEqual(blockingElements.top, dialog);
+      expect(dialog.open).toBeTrue();
+      expect(blockingElements.top).toBe(dialog);
     });
   });
 
@@ -639,13 +635,13 @@ describe('mwc-dialog:', () => {
     menuItem.dispatchEvent(enterDown);
     menuItem.dispatchEvent(enterUp);
 
-    assert.isFalse(clickCalled);
+    expect(clickCalled).toBeFalse();
 
     dialog.suppressDefaultPressSelector = '';
     textarea.dispatchEvent(enterDown);
     textarea.dispatchEvent(enterUp);
 
-    assert.isTrue(clickCalled);
+    expect(clickCalled).toBeTrue();
 
     if (dialog.open) {
       dialog.open = false;

@@ -57,23 +57,23 @@ describe('mwc-slider', () => {
     });
 
     it('initializes as an mwc-slider', () => {
-      assert.instanceOf(element, Slider);
+      expect(element).toBeInstanceOf(Slider);
     });
 
     it('initializes defaults', () => {
-      assert.equal(element.value, 0);
-      assert.equal(element.min, 0);
-      assert.equal(element.max, 100);
-      assert.equal(element.step, 0);
-      assert.equal(element.disabled, false);
-      assert.equal(element.pin, false);
-      assert.equal(element.markers, false);
+      expect(element.value).toEqual(0);
+      expect(element.min).toEqual(0);
+      expect(element.max).toEqual(100);
+      expect(element.step).toEqual(0);
+      expect(element.disabled).toEqual(false);
+      expect(element.pin).toEqual(false);
+      expect(element.markers).toEqual(false);
     });
 
     it('sets correct aria values', () => {
       const slider = element.shadowRoot!.querySelector('.mdc-slider')!;
-      assert.equal(slider.getAttribute('aria-valuemin'), '0');
-      assert.equal(slider.getAttribute('aria-valuenow'), '0');
+      expect(slider.getAttribute('aria-valuemin')).toEqual('0');
+      expect(slider.getAttribute('aria-valuenow')).toEqual('0');
     });
 
     it('key events change value and fire events', async () => {
@@ -89,37 +89,37 @@ describe('mwc-slider', () => {
 
       await element.updateComplete;
       await rafPromise();
-      assert.isTrue(inputHandler.called);
-      assert.isTrue(changeHandler.called);
-      assert.equal(element.value, 1);
+      expect(inputHandler.called).toBeTrue();
+      expect(changeHandler.called).toBeTrue();
+      expect(element.value).toEqual(1);
 
       // arrow down keycode
       const downEv = ieSafeKeyboardEvent('keydown', 40);
       slider.dispatchEvent(downEv);
       await element.updateComplete;
       await rafPromise();
-      assert.equal(element.value, 0);
+      expect(element.value).toEqual(0);
     });
 
     it('markers display when enabled', async () => {
       const markerSelector = '.mdc-slider__track-marker-container';
       let markers = element.shadowRoot!.querySelector(markerSelector);
-      assert.equal(markers, null);
+      expect(markers).toEqual(null);
       element.markers = true;
       await element.updateComplete;
       markers = element.shadowRoot!.querySelector(markerSelector);
-      assert.equal(markers, null);
+      expect(markers).toEqual(null);
       element.step = 1;
       await element.updateComplete;
       markers = element.shadowRoot!.querySelector(markerSelector);
-      assert.instanceOf(markers, Element);
+      expect(markers).toBeInstanceOf(Element);
     });
 
     it('pin displays when enabled and receiving input', async () => {
       const pinSelector = '.mdc-slider__pin';
       const slider = element.shadowRoot!.querySelector('.mdc-slider')!;
       let pin = element.shadowRoot!.querySelector(pinSelector);
-      assert.equal(pin, null);
+      expect(pin).toEqual(null);
       element.pin = true;
       element.step = 1;
       await element.updateComplete;
@@ -133,8 +133,8 @@ describe('mwc-slider', () => {
       await rafPromise();
       pin = element.shadowRoot!.querySelector(pinSelector);
       const pinText = pin!.querySelector('.mdc-slider__pin-value-marker')!;
-      assert.instanceOf(pin, Element);
-      assert.equal(pinText.textContent, '1');
+      expect(pin).toBeInstanceOf(Element);
+      expect(pinText.textContent).toEqual('1');
     });
   });
 
@@ -152,36 +152,36 @@ describe('mwc-slider', () => {
       const slider = element.shadowRoot!.querySelector('.mdc-slider')!;
       element.setAttribute('aria-label', 'foo');
       await element.updateComplete;
-      assert.equal(element.getAttribute('aria-label'), null);
-      assert.equal(element.ariaLabel, 'foo');
-      assert.equal(slider.getAttribute('aria-label'), 'foo');
+      expect(element.getAttribute('aria-label')).toEqual(null);
+      expect(element.ariaLabel).toEqual('foo');
+      expect(slider.getAttribute('aria-label')).toEqual('foo');
     });
 
     it('delegates aria-label via property', async () => {
       const slider = element.shadowRoot!.querySelector('.mdc-slider')!;
       element.ariaLabel = 'foo';
       await element.updateComplete;
-      assert.equal(element.getAttribute('aria-label'), null);
-      assert.equal(element.ariaLabel, 'foo');
-      assert.equal(slider.getAttribute('aria-label'), 'foo');
+      expect(element.getAttribute('aria-label')).toEqual(null);
+      expect(element.ariaLabel).toEqual('foo');
+      expect(slider.getAttribute('aria-label')).toEqual('foo');
     });
 
     it('delegates aria-labelledby via attribute', async () => {
       const slider = element.shadowRoot!.querySelector('.mdc-slider')!;
       element.setAttribute('aria-label', 'foo');
       await element.updateComplete;
-      assert.equal(element.getAttribute('aria-label'), null);
-      assert.equal(element.ariaLabel, 'foo');
-      assert.equal(slider.getAttribute('aria-label'), 'foo');
+      expect(element.getAttribute('aria-label')).toEqual(null);
+      expect(element.ariaLabel).toEqual('foo');
+      expect(slider.getAttribute('aria-label')).toEqual('foo');
     });
 
     it('delegates aria-labelledby via property', async () => {
       const slider = element.shadowRoot!.querySelector('.mdc-slider')!;
       element.ariaLabel = 'foo';
       await element.updateComplete;
-      assert.equal(element.getAttribute('aria-label'), null);
-      assert.equal(element.ariaLabel, 'foo');
-      assert.equal(slider.getAttribute('aria-label'), 'foo');
+      expect(element.getAttribute('aria-label')).toEqual(null);
+      expect(element.ariaLabel).toEqual('foo');
+      expect(slider.getAttribute('aria-label')).toEqual('foo');
     });
   });
 
@@ -194,9 +194,9 @@ describe('mwc-slider', () => {
       fixt = await fixture(slider(), {afterRender});
       element = fixt.root.querySelector('mwc-slider')!;
 
-      assert.equal(element.min, 0);
-      assert.equal(element.max, 100);
-      assert.equal(element.value, 0);
+      expect(element.min).toEqual(0);
+      expect(element.max).toEqual(100);
+      expect(element.value).toEqual(0);
     });
 
     it('can set min max over 100', async () => {
@@ -204,9 +204,9 @@ describe('mwc-slider', () => {
           slider({min: 101, max: 103, value: 102}), {afterRender});
       element = fixt.root.querySelector('mwc-slider')!;
 
-      assert.equal(element.min, 101);
-      assert.equal(element.max, 103);
-      assert.equal(element.value, 102);
+      expect(element.min).toEqual(101);
+      expect(element.max).toEqual(103);
+      expect(element.value).toEqual(102);
     });
 
     it('can set min max below 0', async () => {
@@ -214,9 +214,9 @@ describe('mwc-slider', () => {
           await fixture(slider({min: -3, max: -1, value: -2}), {afterRender});
       element = fixt.root.querySelector('mwc-slider')!;
 
-      assert.equal(element.min, -3);
-      assert.equal(element.max, -1);
-      assert.equal(element.value, -2);
+      expect(element.min).toEqual(-3);
+      expect(element.max).toEqual(-1);
+      expect(element.value).toEqual(-2);
     });
 
     it('value below min', async () => {
@@ -224,18 +224,18 @@ describe('mwc-slider', () => {
           await fixture(slider({min: 101, max: 103, value: 99}), {afterRender});
       element = fixt.root.querySelector('mwc-slider')!;
 
-      assert.equal(element.min, 101);
-      assert.equal(element.max, 103);
-      assert.equal(element.value, 101);
+      expect(element.min).toEqual(101);
+      expect(element.max).toEqual(103);
+      expect(element.value).toEqual(101);
     });
 
     it('value above max', async () => {
       fixt = await fixture(slider({min: -3, max: -1, value: 1}), {afterRender});
       element = fixt.root.querySelector('mwc-slider')!;
 
-      assert.equal(element.min, -3);
-      assert.equal(element.max, -1);
-      assert.equal(element.value, -1);
+      expect(element.min).toEqual(-3);
+      expect(element.max).toEqual(-1);
+      expect(element.value).toEqual(-1);
     });
   });
 });

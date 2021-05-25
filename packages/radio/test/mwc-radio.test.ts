@@ -38,7 +38,7 @@ describe('mwc-radio', () => {
     });
 
     it('initializes as an mwc-radio', () => {
-      assert.instanceOf(element, Radio);
+      expect(element).toBeInstanceOf(Radio);
     });
   });
 
@@ -53,36 +53,36 @@ describe('mwc-radio', () => {
       const input = element.shadowRoot!.querySelector('input')!;
       element.setAttribute('aria-label', 'foo');
       await element.updateComplete;
-      assert.equal(element.getAttribute('aria-label'), null);
-      assert.equal(element.ariaLabel, 'foo');
-      assert.equal(input.getAttribute('aria-label'), 'foo');
+      expect(element.getAttribute('aria-label')).toEqual(null);
+      expect(element.ariaLabel).toEqual('foo');
+      expect(input.getAttribute('aria-label')).toEqual('foo');
     });
 
     it('delegates aria-label via property', async () => {
       const input = element.shadowRoot!.querySelector('input')!;
       element.ariaLabel = 'foo';
       await element.updateComplete;
-      assert.equal(element.getAttribute('aria-label'), null);
-      assert.equal(element.ariaLabel, 'foo');
-      assert.equal(input.getAttribute('aria-label'), 'foo');
+      expect(element.getAttribute('aria-label')).toEqual(null);
+      expect(element.ariaLabel).toEqual('foo');
+      expect(input.getAttribute('aria-label')).toEqual('foo');
     });
 
     it('delegates aria-labelledby via attribute', async () => {
       const input = element.shadowRoot!.querySelector('input')!;
       element.setAttribute('aria-label', 'foo');
       await element.updateComplete;
-      assert.equal(element.getAttribute('aria-label'), null);
-      assert.equal(element.ariaLabel, 'foo');
-      assert.equal(input.getAttribute('aria-label'), 'foo');
+      expect(element.getAttribute('aria-label')).toEqual(null);
+      expect(element.ariaLabel).toEqual('foo');
+      expect(input.getAttribute('aria-label')).toEqual('foo');
     });
 
     it('delegates aria-labelledby via property', async () => {
       const input = element.shadowRoot!.querySelector('input')!;
       element.ariaLabel = 'foo';
       await element.updateComplete;
-      assert.equal(element.getAttribute('aria-label'), null);
-      assert.equal(element.ariaLabel, 'foo');
-      assert.equal(input.getAttribute('aria-label'), 'foo');
+      expect(element.getAttribute('aria-label')).toEqual(null);
+      expect(element.ariaLabel).toEqual('foo');
+      expect(input.getAttribute('aria-label')).toEqual('foo');
     });
   });
 
@@ -92,39 +92,39 @@ describe('mwc-radio', () => {
 
       const [a1, a2, b1] = [...fixt.root.querySelectorAll('mwc-radio')];
 
-      assert.isFalse(a1.checked);
-      assert.isFalse(a2.checked);
-      assert.isFalse(b1.checked);
+      expect(a1.checked).toBeFalse();
+      expect(a2.checked).toBeFalse();
+      expect(b1.checked).toBeFalse();
 
       a2.checked = true;
       a1.checked = true;
 
-      assert.isTrue(a1.checked);
-      assert.isFalse(a2.checked);
-      assert.isFalse(b1.checked);
+      expect(a1.checked).toBeTrue();
+      expect(a2.checked).toBeFalse();
+      expect(b1.checked).toBeFalse();
 
       a2.checked = true;
       a1.checked = true;
       a2.checked = true;
-      assert.isFalse(a1.checked);
-      assert.isTrue(a2.checked);
-      assert.isFalse(b1.checked);
+      expect(a1.checked).toBeFalse();
+      expect(a2.checked).toBeTrue();
+      expect(b1.checked).toBeFalse();
 
       a1.checked = true;
-      assert.isTrue(a1.checked);
-      assert.isFalse(a2.checked);
-      assert.isFalse(b1.checked);
+      expect(a1.checked).toBeTrue();
+      expect(a2.checked).toBeFalse();
+      expect(b1.checked).toBeFalse();
 
       b1.checked = true;
-      assert.isTrue(a1.checked);
-      assert.isFalse(a2.checked);
-      assert.isTrue(b1.checked);
+      expect(a1.checked).toBeTrue();
+      expect(a2.checked).toBeFalse();
+      expect(b1.checked).toBeTrue();
 
       a1.checked = false;
       b1.checked = false;
-      assert.isFalse(a1.checked);
-      assert.isFalse(a2.checked);
-      assert.isFalse(b1.checked);
+      expect(a1.checked).toBeFalse();
+      expect(a2.checked).toBeFalse();
+      expect(b1.checked).toBeFalse();
     });
 
     it('after updates settle', async () => {
@@ -136,42 +136,42 @@ describe('mwc-radio', () => {
           Promise.all(radios.map((radio) => radio.updateComplete));
 
       await allUpdatesComplete();
-      assert.isFalse(a1.checked);
-      assert.isFalse(a2.checked);
-      assert.isFalse(b1.checked);
+      expect(a1.checked).toBeFalse();
+      expect(a2.checked).toBeFalse();
+      expect(b1.checked).toBeFalse();
 
       a2.checked = true;
       a1.checked = true;
       await allUpdatesComplete();
-      assert.isTrue(a1.checked);
-      assert.isFalse(a2.checked);
-      assert.isFalse(b1.checked);
+      expect(a1.checked).toBeTrue();
+      expect(a2.checked).toBeFalse();
+      expect(b1.checked).toBeFalse();
 
       a2.checked = true;
       a1.checked = true;
       a2.checked = true;
       await allUpdatesComplete();
-      assert.isFalse(a1.checked);
-      assert.isTrue(a2.checked);
-      assert.isFalse(b1.checked);
+      expect(a1.checked).toBeFalse();
+      expect(a2.checked).toBeTrue();
+      expect(b1.checked).toBeFalse();
 
       a1.checked = true;
-      assert.isTrue(a1.checked);
-      assert.isFalse(a2.checked);
-      assert.isFalse(b1.checked);
+      expect(a1.checked).toBeTrue();
+      expect(a2.checked).toBeFalse();
+      expect(b1.checked).toBeFalse();
 
       b1.checked = true;
       await allUpdatesComplete();
-      assert.isTrue(a1.checked);
-      assert.isFalse(a2.checked);
-      assert.isTrue(b1.checked);
+      expect(a1.checked).toBeTrue();
+      expect(a2.checked).toBeFalse();
+      expect(b1.checked).toBeTrue();
 
       a1.checked = false;
       b1.checked = false;
       await allUpdatesComplete();
-      assert.isFalse(a1.checked);
-      assert.isFalse(a2.checked);
-      assert.isFalse(b1.checked);
+      expect(a1.checked).toBeFalse();
+      expect(a2.checked).toBeFalse();
+      expect(b1.checked).toBeFalse();
     });
 
     it('when checked before connected', async () => {
@@ -191,35 +191,35 @@ describe('mwc-radio', () => {
       // connected to one. This matches native <input type="radio"> behavior.
       r1.checked = true;
       r2.checked = true;
-      assert.isTrue(r1.checked);
-      assert.isTrue(r2.checked);
-      assert.isFalse(r3.checked);
+      expect(r1.checked).toBeTrue();
+      expect(r2.checked).toBeTrue();
+      expect(r3.checked).toBeFalse();
 
       // Connecting r1 shouldn't change anything, since it's the only one in the
       // group.
       container.appendChild(r1);
-      assert.isTrue(r1.checked);
-      assert.isTrue(r2.checked);
-      assert.isFalse(r3.checked);
+      expect(r1.checked).toBeTrue();
+      expect(r2.checked).toBeTrue();
+      expect(r3.checked).toBeFalse();
 
       // Appending r2 should disable r1, because when a new checked radio is
       // connected, it wins (this matches native input behavior).
       container.appendChild(r2);
-      assert.isFalse(r1.checked);
-      assert.isTrue(r2.checked);
-      assert.isFalse(r3.checked);
+      expect(r1.checked).toBeFalse();
+      expect(r2.checked).toBeTrue();
+      expect(r3.checked).toBeFalse();
 
       // Appending r3 shouldn't change anything, because it's not checked.
       container.appendChild(r3);
-      assert.isFalse(r1.checked);
-      assert.isTrue(r2.checked);
-      assert.isFalse(r3.checked);
+      expect(r1.checked).toBeFalse();
+      expect(r2.checked).toBeTrue();
+      expect(r3.checked).toBeFalse();
 
       // Checking r3 should uncheck r2 because it's now in the same group.
       r3.checked = true;
-      assert.isFalse(r1.checked);
-      assert.isFalse(r2.checked);
-      assert.isTrue(r3.checked);
+      expect(r1.checked).toBeFalse();
+      expect(r2.checked).toBeFalse();
+      expect(r3.checked).toBeTrue();
     });
 
     it('in a lit repeat', async () => {
@@ -227,22 +227,22 @@ describe('mwc-radio', () => {
       fixt = await fixture(repeatedRadio(values));
       const [a1, a2] = fixt.root.querySelectorAll('mwc-radio');
 
-      assert.isFalse(a1.checked);
-      assert.isFalse(a2.checked);
-      assert.equal(a1.value, values[0]);
-      assert.equal(a2.value, values[1]);
+      expect(a1.checked).toBeFalse();
+      expect(a2.checked).toBeFalse();
+      expect(a1.value).toEqual(values[0]);
+      expect(a2.value).toEqual(values[1]);
 
       a1.checked = true;
-      assert.isTrue(a1.checked);
-      assert.isFalse(a2.checked);
+      expect(a1.checked).toBeTrue();
+      expect(a2.checked).toBeFalse();
 
       a2.checked = true;
-      assert.isFalse(a1.checked);
-      assert.isTrue(a2.checked);
+      expect(a1.checked).toBeFalse();
+      expect(a2.checked).toBeTrue();
 
       a2.checked = false;
-      assert.isFalse(a1.checked);
-      assert.isFalse(a2.checked);
+      expect(a1.checked).toBeFalse();
+      expect(a2.checked).toBeFalse();
     });
   });
 });

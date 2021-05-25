@@ -57,15 +57,15 @@ describe('mwc-fab', () => {
     });
 
     it('initializes as an mwc-fab', () => {
-      assert.instanceOf(element, Fab);
-      assert.equal(element.mini, false);
-      assert.equal(element.exited, false);
-      assert.equal(element.disabled, false);
-      assert.equal(element.extended, false);
-      assert.equal(element.showIconAtEnd, false);
-      assert.equal(element.reducedTouchTarget, false);
-      assert.equal(element.icon, '');
-      assert.equal(element.label, '');
+      expect(element).toBeInstanceOf(Fab);
+      expect(element.mini).toEqual(false);
+      expect(element.exited).toEqual(false);
+      expect(element.disabled).toEqual(false);
+      expect(element.extended).toEqual(false);
+      expect(element.showIconAtEnd).toEqual(false);
+      expect(element.reducedTouchTarget).toEqual(false);
+      expect(element.icon).toEqual('');
+      expect(element.label).toEqual('');
     });
   });
 
@@ -79,12 +79,12 @@ describe('mwc-fab', () => {
     it('set updates the disabled property on the native button element',
        async () => {
          const button = element.shadowRoot!.querySelector('button')!;
-         assert.equal(element.disabled, true);
-         assert.equal(button.hasAttribute('disabled'), true);
+         expect(element.disabled).toEqual(true);
+         expect(button.hasAttribute('disabled')).toEqual(true);
 
          element.disabled = false;
          await element.updateComplete;
-         assert.equal(button.hasAttribute('disabled'), false);
+         expect(button.hasAttribute('disabled')).toEqual(false);
        });
   });
 
@@ -97,23 +97,23 @@ describe('mwc-fab', () => {
 
     it('setting adds an icon to the fab', async () => {
       let icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
-      assert.equal(element.icon, 'check');
-      assert.instanceOf(icon, Element);
+      expect(element.icon).toEqual('check');
+      expect(icon).toBeInstanceOf(Element);
 
       element.icon = 'home';
       await element.updateComplete;
       icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
-      assert.instanceOf(icon, Element);
+      expect(icon).toBeInstanceOf(Element);
 
       element.icon = '';
       await element.updateComplete;
       icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
-      assert.equal(icon, null);
+      expect(icon).toEqual(null);
     });
 
     it('sets `aria-label` of the button', async () => {
       const button = element.shadowRoot!.querySelector('button')!;
-      assert.equal(button.getAttribute('aria-label'), 'check');
+      expect(button.getAttribute('aria-label')).toEqual('check');
     });
   });
 
@@ -126,12 +126,12 @@ describe('mwc-fab', () => {
 
     it('sets `aria-label` of the button, overriding `icon`', async () => {
       const button = element.shadowRoot!.querySelector('button')!;
-      assert.equal(element.label, 'label text');
-      assert.equal(button.getAttribute('aria-label'), 'label text');
+      expect(element.label).toEqual('label text');
+      expect(button.getAttribute('aria-label')).toEqual('label text');
 
       element.label = '';
       await element.updateComplete;
-      assert.equal(button.getAttribute('aria-label'), 'check');
+      expect(button.getAttribute('aria-label')).toEqual('check');
     });
   });
 
@@ -145,11 +145,11 @@ describe('mwc-fab', () => {
     it('sets the correct inner class', async () => {
       const miniClass = 'mdc-fab--mini';
       const button = element.shadowRoot!.querySelector('.mdc-fab')!;
-      assert.isTrue(element.mini);
-      assert.isTrue(button.classList.contains(miniClass));
+      expect(element.mini).toBeTrue();
+      expect(button.classList.contains(miniClass)).toBeTrue();
       element.mini = false;
       await element.updateComplete;
-      assert.isFalse(button.classList.contains(miniClass));
+      expect(button.classList.contains(miniClass)).toBeFalse();
     });
   });
 
@@ -163,11 +163,11 @@ describe('mwc-fab', () => {
     it('sets the correct inner class', async () => {
       const exitedClass = 'mdc-fab--exited';
       const button = element.shadowRoot!.querySelector('.mdc-fab')!;
-      assert.isTrue(element.exited);
-      assert.isTrue(button.classList.contains(exitedClass));
+      expect(element.exited).toBeTrue();
+      expect(button.classList.contains(exitedClass)).toBeTrue();
       element.exited = false;
       await element.updateComplete;
-      assert.isFalse(button.classList.contains(exitedClass));
+      expect(button.classList.contains(exitedClass)).toBeFalse();
     });
   });
 
@@ -181,25 +181,25 @@ describe('mwc-fab', () => {
     it('sets the correct inner class', async () => {
       const extendedClass = 'mdc-fab--extended';
       const button = element.shadowRoot!.querySelector('.mdc-fab')!;
-      assert.isTrue(element.extended);
-      assert.isTrue(button.classList.contains(extendedClass));
+      expect(element.extended).toBeTrue();
+      expect(button.classList.contains(extendedClass)).toBeTrue();
       element.extended = false;
       await element.updateComplete;
-      assert.isFalse(button.classList.contains(extendedClass));
+      expect(button.classList.contains(extendedClass)).toBeFalse();
     });
 
     it('displays label if set', async () => {
       let label = element.shadowRoot!.querySelector(LABEL_SELECTOR);
-      assert.equal(label, null);
+      expect(label).toEqual(null);
       element.label = 'foo';
       await element.updateComplete;
       label = element.shadowRoot!.querySelector(LABEL_SELECTOR);
-      assert.instanceOf(label, Element);
-      assert.equal(label!.textContent, 'foo');
+      expect(label).toBeInstanceOf(Element);
+      expect(label!.textContent).toEqual('foo');
       element.extended = false;
       await element.updateComplete;
       label = element.shadowRoot!.querySelector(LABEL_SELECTOR);
-      assert.equal(label, null);
+      expect(label).toEqual(null);
     });
   });
 
@@ -218,20 +218,20 @@ describe('mwc-fab', () => {
 
       const children = root.children;
 
-      assert.isTrue(element.showIconAtEnd);
-      assert.isTrue(
-          children[1].querySelector(ICON_SELECTOR)!.classList.contains(
-              ICON_CLASS));
-      assert.isTrue(children[0].classList.contains(LABEL_CLASS));
+      expect(element.showIconAtEnd).toBeTrue();
+      expect(children[1].querySelector(ICON_SELECTOR)!.classList.contains(
+                 ICON_CLASS))
+          .toBeTrue();
+      expect(children[0].classList.contains(LABEL_CLASS)).toBeTrue();
 
       element.showIconAtEnd = false;
       await element.updateComplete;
 
-      assert.equal(children.length, 2);
-      assert.isTrue(
-          children[0].querySelector(ICON_SELECTOR)!.classList.contains(
-              ICON_CLASS));
-      assert.isTrue(children[1].classList.contains(LABEL_CLASS));
+      expect(children.length).toEqual(2);
+      expect(children[0].querySelector(ICON_SELECTOR)!.classList.contains(
+                 ICON_CLASS))
+          .toBeTrue();
+      expect(children[1].classList.contains(LABEL_CLASS)).toBeTrue();
     });
   });
 
@@ -246,24 +246,24 @@ describe('mwc-fab', () => {
     it('sets correct classes', async () => {
       const button = element.shadowRoot!.querySelector('.mdc-fab')!;
 
-      assert.isFalse(button.classList.contains(TOUCH_CLASS));
+      expect(button.classList.contains(TOUCH_CLASS)).toBeFalse();
 
       element.reducedTouchTarget = false;
       await element.updateComplete;
 
-      assert.isTrue(button.classList.contains(TOUCH_CLASS));
+      expect(button.classList.contains(TOUCH_CLASS)).toBeTrue();
     });
 
     it('hides touch target', async () => {
       let target = element.shadowRoot!.querySelector(TOUCH_SELECTOR);
-      assert.isTrue(element.reducedTouchTarget);
-      assert.equal(target, null);
+      expect(element.reducedTouchTarget).toBeTrue();
+      expect(target).toEqual(null);
 
       element.reducedTouchTarget = false;
       await element.updateComplete;
 
       target = element.shadowRoot!.querySelector(TOUCH_SELECTOR);
-      assert.instanceOf(target, Element);
+      expect(target).toBeInstanceOf(Element);
     });
   });
 });

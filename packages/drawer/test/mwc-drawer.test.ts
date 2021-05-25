@@ -58,10 +58,10 @@ describe('mwc-drawer', () => {
     });
 
     it('initializes as an mwc-drawer', () => {
-      assert.instanceOf(element, Drawer);
-      assert.equal(element.type, '');
-      assert.equal(element.open, false);
-      assert.equal(element.hasHeader, false);
+      expect(element).toBeInstanceOf(Drawer);
+      expect(element.type).toEqual('');
+      expect(element.open).toEqual(false);
+      expect(element.hasHeader).toEqual(false);
     });
 
     it('opening/closing events are fired', async () => {
@@ -77,11 +77,11 @@ describe('mwc-drawer', () => {
       element.type = 'dismissible';
       element.open = true;
       await transitionend(drawer);
-      assert.equal(openedFired, true);
+      expect(openedFired).toEqual(true);
       element.open = false;
       await transitionend(drawer);
 
-      assert.equal(closedFired, true);
+      expect(closedFired).toEqual(true);
     });
   });
 
@@ -94,11 +94,11 @@ describe('mwc-drawer', () => {
 
     it('displays a header if set', async () => {
       let header = element.shadowRoot!.querySelector(HEADER_SELECTOR);
-      assert.instanceOf(header, Element);
+      expect(header).toBeInstanceOf(Element);
       element.hasHeader = false;
       await element.updateComplete;
       header = element.shadowRoot!.querySelector(HEADER_SELECTOR);
-      assert.equal(header, null);
+      expect(header).toEqual(null);
     });
   });
 
@@ -112,8 +112,8 @@ describe('mwc-drawer', () => {
     it('displays scrim', async () => {
       const drawer = element.shadowRoot!.querySelector('.mdc-drawer')!;
       const scrim = element.shadowRoot!.querySelector(SCRIM_SELECTOR)!;
-      assert.instanceOf(scrim, Element);
-      assert.isTrue(drawer.classList.contains('mdc-drawer--modal'));
+      expect(scrim).toBeInstanceOf(Element);
+      expect(drawer.classList.contains('mdc-drawer--modal')).toBeTrue();
     });
 
     it('closes on scrim click', async () => {
@@ -126,7 +126,7 @@ describe('mwc-drawer', () => {
       scrim.click();
       await transitionend(drawer);
 
-      assert.equal(element.open, false);
+      expect(element.open).toEqual(false);
     });
   });
 
@@ -139,7 +139,7 @@ describe('mwc-drawer', () => {
 
     it('sets correct classes', async () => {
       const drawer = element.shadowRoot!.querySelector('.mdc-drawer')!;
-      assert.isTrue(drawer.classList.contains(DISMISSIBLE_CLASS));
+      expect(drawer.classList.contains(DISMISSIBLE_CLASS)).toBeTrue();
     });
   });
 });

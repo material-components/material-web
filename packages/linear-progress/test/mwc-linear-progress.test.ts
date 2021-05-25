@@ -89,24 +89,26 @@ describe('mwc-linear-progress', () => {
     });
 
     it('initializes as an mwc-linear-progress', () => {
-      assert.instanceOf(element, LinearProgress);
-      assert.equal(element.indeterminate, false);
-      assert.equal(element.closed, false);
-      assert.equal(element.reverse, false);
-      assert.equal(element.progress, 0);
-      assert.equal(element.buffer, 1);
+      expect(element).toBeInstanceOf(LinearProgress);
+      expect(element.indeterminate).toEqual(false);
+      expect(element.closed).toEqual(false);
+      expect(element.reverse).toEqual(false);
+      expect(element.progress).toEqual(0);
+      expect(element.buffer).toEqual(1);
     });
 
     it('internal classes set correctly', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress')!;
-      assert.isNotNull(root);
+      expect(root).not.toBeNull();
 
       const classlist = root.classList;
 
-      assert.isFalse(classlist.contains('mdc-linear-progress--closed'));
-      assert.isFalse(classlist.contains('mdc-linear-progress--indeterminate'));
-      assert.isFalse(root.getAttribute('dir') === 'rtl');
-      assert.isTrue(classlist.contains('mdc-linear-progress--animation-ready'));
+      expect(classlist.contains('mdc-linear-progress--closed')).toBeFalse();
+      expect(classlist.contains('mdc-linear-progress--indeterminate'))
+          .toBeFalse();
+      expect(root.getAttribute('dir') === 'rtl').toBeFalse();
+      expect(classlist.contains('mdc-linear-progress--animation-ready'))
+          .toBeTrue();
     });
 
     it('sets internal styles correctly', async () => {
@@ -117,46 +119,41 @@ describe('mwc-linear-progress', () => {
               '.mdc-linear-progress__primary-bar') as HTMLElement;
       const bufferBar = element.shadowRoot!.querySelector(
                             '.mdc-linear-progress__buffer-bar') as HTMLElement;
-      assert.isNotNull(root);
-      assert.isNotNull(primaryBar);
-      assert.isNotNull(bufferBar);
+      expect(root).not.toBeNull();
+      expect(primaryBar).not.toBeNull();
+      expect(bufferBar).not.toBeNull();
 
-      assert.equal(
-          root.style.getPropertyValue('--mdc-linear-progress-primary-half'),
-          '');
-      assert.equal(
-          root.style.getPropertyValue('--mdc-linear-progress-primary-half-neg'),
-          '');
-      assert.equal(
-          root.style.getPropertyValue('--mdc-linear-progress-primary-full'),
-          '');
-      assert.equal(
-          root.style.getPropertyValue('--mdc-linear-progress-primary-full-neg'),
-          '');
-      assert.equal(
-          root.style.getPropertyValue(
-              '--mdc-linear-progress-secondary-quarter'),
-          '');
-      assert.equal(
-          root.style.getPropertyValue(
-              '--mdc-linear-progress-secondary-quarter-neg'),
-          '');
-      assert.equal(
-          root.style.getPropertyValue('--mdc-linear-progress-secondary-half'),
-          '');
-      assert.equal(
-          root.style.getPropertyValue(
-              '--mdc-linear-progress-secondary-half-neg'),
-          '');
-      assert.equal(
-          root.style.getPropertyValue('--mdc-linear-progress-secondary-full'),
-          '');
-      assert.equal(
-          root.style.getPropertyValue(
-              '--mdc-linear-progress-secondary-full-neg'),
-          '');
-      assert.equal(primaryBar.style.getPropertyValue('transform'), 'scaleX(0)');
-      assert.equal(bufferBar.style.getPropertyValue('flex-basis'), '100%');
+      expect(root.style.getPropertyValue('--mdc-linear-progress-primary-half'))
+          .toEqual('');
+      expect(
+          root.style.getPropertyValue('--mdc-linear-progress-primary-half-neg'))
+          .toEqual('');
+      expect(root.style.getPropertyValue('--mdc-linear-progress-primary-full'))
+          .toEqual('');
+      expect(
+          root.style.getPropertyValue('--mdc-linear-progress-primary-full-neg'))
+          .toEqual('');
+      expect(root.style.getPropertyValue(
+                 '--mdc-linear-progress-secondary-quarter'))
+          .toEqual('');
+      expect(root.style.getPropertyValue(
+                 '--mdc-linear-progress-secondary-quarter-neg'))
+          .toEqual('');
+      expect(
+          root.style.getPropertyValue('--mdc-linear-progress-secondary-half'))
+          .toEqual('');
+      expect(root.style.getPropertyValue(
+                 '--mdc-linear-progress-secondary-half-neg'))
+          .toEqual('');
+      expect(
+          root.style.getPropertyValue('--mdc-linear-progress-secondary-full'))
+          .toEqual('');
+      expect(root.style.getPropertyValue(
+                 '--mdc-linear-progress-secondary-full-neg'))
+          .toEqual('');
+      expect(primaryBar.style.getPropertyValue('transform'))
+          .toEqual('scaleX(0)');
+      expect(bufferBar.style.getPropertyValue('flex-basis')).toEqual('100%');
     });
 
     it('attaches a resize observer if available', async () => {
@@ -167,9 +164,9 @@ describe('mwc-linear-progress', () => {
       await awaitIndeterminateReady(element);
 
       if ((window as unknown as WithMDCResizeObserver).ResizeObserver) {
-        assert.isNotNull((element as unknown as ElWithRO).resizeObserver);
+        expect((element as unknown as ElWithRO).resizeObserver).not.toBeNull();
       } else {
-        assert.isNull((element as unknown as ElWithRO).resizeObserver);
+        expect((element as unknown as ElWithRO).resizeObserver).toBeNull();
       }
     });
   });
@@ -184,12 +181,14 @@ describe('mwc-linear-progress', () => {
 
     it('internal classes set correctly', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress')!;
-      assert.isNotNull(root);
+      expect(root).not.toBeNull();
 
       const classlist = root.classList;
 
-      assert.isTrue(classlist.contains('mdc-linear-progress--indeterminate'));
-      assert.isTrue(classlist.contains('mdc-linear-progress--animation-ready'));
+      expect(classlist.contains('mdc-linear-progress--indeterminate'))
+          .toBeTrue();
+      expect(classlist.contains('mdc-linear-progress--animation-ready'))
+          .toBeTrue();
     });
 
     it('sets internal styles correctly', async () => {
@@ -200,166 +199,137 @@ describe('mwc-linear-progress', () => {
               '.mdc-linear-progress__primary-bar') as HTMLElement;
       const bufferBar = element.shadowRoot!.querySelector(
                             '.mdc-linear-progress__buffer-bar') as HTMLElement;
-      assert.isNotNull(root);
-      assert.isNotNull(primaryBar);
-      assert.isNotNull(bufferBar);
+      expect(root).not.toBeNull();
+      expect(primaryBar).not.toBeNull();
+      expect(bufferBar).not.toBeNull();
 
-      assert.equal(primaryBar.style.getPropertyValue('transform'), 'scaleX(1)');
-      assert.equal(bufferBar.style.getPropertyValue('flex-basis'), '100%');
+      expect(primaryBar.style.getPropertyValue('transform'))
+          .toEqual('scaleX(1)');
+      expect(bufferBar.style.getPropertyValue('flex-basis')).toEqual('100%');
 
       if (!(window as unknown as WithMDCResizeObserver).ResizeObserver) {
         return;
       }
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-primary-half')),
-          '83.671px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-primary-half-neg')),
-          '-83.671px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-primary-full')),
-          '200.611px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-primary-full-neg')),
-          '-200.611px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-secondary-quarter')),
-          '37.651px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-secondary-quarter-neg')),
-          '-37.651px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-secondary-half')),
-          '84.386px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-secondary-half-neg')),
-          '-84.386px');
-      assert.equal(
-          truncatePixelValue(
-              root.style.getPropertyValue(
-                  '--mdc-linear-progress-secondary-full'),
-              2),
-          '160.27px');
-      assert.equal(
-          truncatePixelValue(
-              root.style.getPropertyValue(
-                  '--mdc-linear-progress-secondary-full-neg'),
-              2),
-          '-160.27px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-primary-half')))
+          .toEqual('83.671px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-primary-half-neg')))
+          .toEqual('-83.671px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-primary-full')))
+          .toEqual('200.611px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-primary-full-neg')))
+          .toEqual('-200.611px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-secondary-quarter')))
+          .toEqual('37.651px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-secondary-quarter-neg')))
+          .toEqual('-37.651px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-secondary-half')))
+          .toEqual('84.386px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-secondary-half-neg')))
+          .toEqual('-84.386px');
+      expect(truncatePixelValue(
+                 root.style.getPropertyValue(
+                     '--mdc-linear-progress-secondary-full'),
+                 2))
+          .toEqual('160.27px');
+      expect(truncatePixelValue(
+                 root.style.getPropertyValue(
+                     '--mdc-linear-progress-secondary-full-neg'),
+                 2))
+          .toEqual('-160.27px');
     });
 
     it('updates custom props if resized', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
-      assert.isNotNull(root);
+      expect(root).not.toBeNull();
 
       if (!(window as unknown as WithMDCResizeObserver).ResizeObserver) {
         return;
       }
 
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-primary-half')),
-          '83.671px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-primary-half-neg')),
-          '-83.671px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-primary-full')),
-          '200.611px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-primary-full-neg')),
-          '-200.611px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-secondary-quarter')),
-          '37.651px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-secondary-quarter-neg')),
-          '-37.651px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-secondary-half')),
-          '84.386px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-secondary-half-neg')),
-          '-84.386px');
-      assert.equal(
-          truncatePixelValue(
-              root.style.getPropertyValue(
-                  '--mdc-linear-progress-secondary-full'),
-              2),
-          '160.27px');
-      assert.equal(
-          truncatePixelValue(
-              root.style.getPropertyValue(
-                  '--mdc-linear-progress-secondary-full-neg'),
-              2),
-          '-160.27px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-primary-half')))
+          .toEqual('83.671px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-primary-half-neg')))
+          .toEqual('-83.671px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-primary-full')))
+          .toEqual('200.611px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-primary-full-neg')))
+          .toEqual('-200.611px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-secondary-quarter')))
+          .toEqual('37.651px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-secondary-quarter-neg')))
+          .toEqual('-37.651px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-secondary-half')))
+          .toEqual('84.386px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-secondary-half-neg')))
+          .toEqual('-84.386px');
+      expect(truncatePixelValue(
+                 root.style.getPropertyValue(
+                     '--mdc-linear-progress-secondary-full'),
+                 2))
+          .toEqual('160.27px');
+      expect(truncatePixelValue(
+                 root.style.getPropertyValue(
+                     '--mdc-linear-progress-secondary-full-neg'),
+                 2))
+          .toEqual('-160.27px');
 
       element.style.setProperty('width', '10px');
 
       await awaitIndeterminateReady(element);
 
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-primary-half')),
-          '8.367px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-primary-half-neg')),
-          '-8.367px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-primary-full')),
-          '20.061px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-primary-full-neg')),
-          '-20.061px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-secondary-quarter')),
-          '3.765px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-secondary-quarter-neg')),
-          '-3.765px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-secondary-half')),
-          '8.438px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-secondary-half-neg')),
-          '-8.438px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-secondary-full')),
-          '16.027px');
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-secondary-full-neg')),
-          '-16.027px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-primary-half')))
+          .toEqual('8.367px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-primary-half-neg')))
+          .toEqual('-8.367px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-primary-full')))
+          .toEqual('20.061px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-primary-full-neg')))
+          .toEqual('-20.061px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-secondary-quarter')))
+          .toEqual('3.765px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-secondary-quarter-neg')))
+          .toEqual('-3.765px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-secondary-half')))
+          .toEqual('8.438px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-secondary-half-neg')))
+          .toEqual('-8.438px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-secondary-full')))
+          .toEqual('16.027px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-secondary-full-neg')))
+          .toEqual('-16.027px');
     });
 
     it('does not update custom props if determinate', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
-      assert.isNotNull(root);
+      expect(root).not.toBeNull();
 
       if (!(window as unknown as WithMDCResizeObserver).ResizeObserver) {
         return;
@@ -370,18 +340,16 @@ describe('mwc-linear-progress', () => {
 
       element.style.setProperty('width', '10px');
 
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-primary-half')),
-          '83.671px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-primary-half')))
+          .toEqual('83.671px');
 
       element.indeterminate = true;
       await awaitIndeterminateReady(element);
 
-      assert.equal(
-          truncatePixelValue(root.style.getPropertyValue(
-              '--mdc-linear-progress-primary-half')),
-          '8.367px');
+      expect(truncatePixelValue(root.style.getPropertyValue(
+                 '--mdc-linear-progress-primary-half')))
+          .toEqual('8.367px');
     });
   });
 
@@ -396,9 +364,9 @@ describe('mwc-linear-progress', () => {
     it('sets the correct attributes', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
-      assert.isNotNull(root);
+      expect(root).not.toBeNull();
 
-      assert.isTrue(root.getAttribute('dir') === 'rtl');
+      expect(root.getAttribute('dir') === 'rtl').toBeTrue();
     });
   });
 
@@ -413,40 +381,44 @@ describe('mwc-linear-progress', () => {
     it('sets the correct classes', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
-      assert.isNotNull(root);
+      expect(root).not.toBeNull();
 
       await element.updateComplete;
-      assert.isTrue(root.classList.contains('mdc-linear-progress--closed'));
-      assert.isTrue(
-          root.classList.contains('mdc-linear-progress--closed-animation-off'));
+      expect(root.classList.contains('mdc-linear-progress--closed')).toBeTrue();
+      expect(
+          root.classList.contains('mdc-linear-progress--closed-animation-off'))
+          .toBeTrue();
 
       element.closed = false;
 
       await element.updateComplete;
 
-      assert.isFalse(root.classList.contains('mdc-linear-progress--closed'));
-      assert.isFalse(
-          root.classList.contains('mdc-linear-progress--closed-animation-off'));
+      expect(root.classList.contains('mdc-linear-progress--closed'))
+          .toBeFalse();
+      expect(
+          root.classList.contains('mdc-linear-progress--closed-animation-off'))
+          .toBeFalse();
     });
 
     it('open, close methods set the correct classes', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
-      assert.isNotNull(root);
+      expect(root).not.toBeNull();
 
-      assert.isTrue(root.classList.contains('mdc-linear-progress--closed'));
+      expect(root.classList.contains('mdc-linear-progress--closed')).toBeTrue();
 
       element.open();
 
       await element.updateComplete;
 
-      assert.isFalse(root.classList.contains('mdc-linear-progress--closed'));
+      expect(root.classList.contains('mdc-linear-progress--closed'))
+          .toBeFalse();
 
       element.close();
 
       await element.updateComplete;
 
-      assert.isTrue(root.classList.contains('mdc-linear-progress--closed'));
+      expect(root.classList.contains('mdc-linear-progress--closed')).toBeTrue();
     });
   });
 
@@ -460,67 +432,69 @@ describe('mwc-linear-progress', () => {
     it('sets the correct determinate styles', async () => {
       const primary = element.shadowRoot!.querySelector(
                           '.mdc-linear-progress__primary-bar') as HTMLElement;
-      assert.isNotNull(primary);
+      expect(primary).not.toBeNull();
 
-      assert.equal(element.progress, 0);
-      assert.equal(primary.style.getPropertyValue('transform'), 'scaleX(0)');
+      expect(element.progress).toEqual(0);
+      expect(primary.style.getPropertyValue('transform')).toEqual('scaleX(0)');
 
       element.progress = 0.5;
       await element.updateComplete;
 
-      assert.equal(element.progress, 0.5);
-      assert.equal(primary.style.getPropertyValue('transform'), 'scaleX(0.5)');
+      expect(element.progress).toEqual(0.5);
+      expect(primary.style.getPropertyValue('transform'))
+          .toEqual('scaleX(0.5)');
     });
 
     it('doesn\'t set style if indeterminate', async () => {
       const primary = element.shadowRoot!.querySelector(
                           '.mdc-linear-progress__primary-bar') as HTMLElement;
-      assert.isNotNull(primary);
+      expect(primary).not.toBeNull();
 
       element.progress = 0.5;
       await element.updateComplete;
 
-      assert.equal(element.progress, 0.5);
-      assert.equal(primary.style.getPropertyValue('transform'), 'scaleX(0.5)');
+      expect(element.progress).toEqual(0.5);
+      expect(primary.style.getPropertyValue('transform'))
+          .toEqual('scaleX(0.5)');
 
       element.indeterminate = true;
 
       await awaitIndeterminateReady(element);
 
-      assert.equal(element.progress, 0.5);
-      assert.equal(primary.style.getPropertyValue('transform'), 'scaleX(1)');
+      expect(element.progress).toEqual(0.5);
+      expect(primary.style.getPropertyValue('transform')).toEqual('scaleX(1)');
 
       element.progress = 0.6;
       await element.updateComplete;
 
-      assert.equal(element.progress, 0.6);
-      assert.equal(primary.style.getPropertyValue('transform'), 'scaleX(1)');
+      expect(element.progress).toEqual(0.6);
+      expect(primary.style.getPropertyValue('transform')).toEqual('scaleX(1)');
     });
 
     it('aria-valuenow set correctly', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
-      assert.isNotNull(root);
+      expect(root).not.toBeNull();
 
-      assert.equal(root.getAttribute('aria-valuenow'), '0');
+      expect(root.getAttribute('aria-valuenow')).toEqual('0');
 
       element.progress = 0.5;
       await element.updateComplete;
 
-      assert.equal(root.getAttribute('aria-valuenow'), '0.5');
+      expect(root.getAttribute('aria-valuenow')).toEqual('0.5');
 
       element.progress = 2;
       await element.updateComplete;
 
-      assert.equal(root.getAttribute('aria-valuenow'), '2');
+      expect(root.getAttribute('aria-valuenow')).toEqual('2');
     });
 
     it('aria-valuenow removed if indeterminate', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
-      assert.isNotNull(root);
+      expect(root).not.toBeNull();
 
-      assert.equal(root.getAttribute('aria-valuenow'), '0');
+      expect(root.getAttribute('aria-valuenow')).toEqual('0');
 
       element.indeterminate = true;
       await awaitIndeterminateReady(element);
@@ -529,7 +503,7 @@ describe('mwc-linear-progress', () => {
       element.progress = 0.5;
       await element.updateComplete;
 
-      assert.isNull(root.getAttribute('aria-valuenow'));
+      expect(root.getAttribute('aria-valuenow')).toBeNull();
     });
   });
 
@@ -543,41 +517,41 @@ describe('mwc-linear-progress', () => {
     it('sets the correct determinate styles', async () => {
       const secondary = element.shadowRoot!.querySelector(
                             '.mdc-linear-progress__buffer-bar') as HTMLElement;
-      assert.isNotNull(secondary);
+      expect(secondary).not.toBeNull();
 
-      assert.equal(element.buffer, 1);
-      assert.equal(secondary.style.getPropertyValue('flex-basis'), '100%');
+      expect(element.buffer).toEqual(1);
+      expect(secondary.style.getPropertyValue('flex-basis')).toEqual('100%');
 
       element.buffer = 0.5;
       await element.updateComplete;
 
-      assert.equal(element.buffer, 0.5);
-      assert.equal(secondary.style.getPropertyValue('flex-basis'), '50%');
+      expect(element.buffer).toEqual(0.5);
+      expect(secondary.style.getPropertyValue('flex-basis')).toEqual('50%');
     });
 
     it('doesn\'t set style if indeterminate', async () => {
       const secondary = element.shadowRoot!.querySelector(
                             '.mdc-linear-progress__buffer-bar') as HTMLElement;
-      assert.isNotNull(secondary);
+      expect(secondary).not.toBeNull();
 
       element.buffer = 0.5;
       await element.updateComplete;
 
-      assert.equal(element.buffer, 0.5);
-      assert.equal(secondary.style.getPropertyValue('flex-basis'), '50%');
+      expect(element.buffer).toEqual(0.5);
+      expect(secondary.style.getPropertyValue('flex-basis')).toEqual('50%');
 
       element.indeterminate = true;
 
       await awaitIndeterminateReady(element);
 
-      assert.equal(element.buffer, 0.5);
-      assert.equal(secondary.style.getPropertyValue('flex-basis'), '100%');
+      expect(element.buffer).toEqual(0.5);
+      expect(secondary.style.getPropertyValue('flex-basis')).toEqual('100%');
 
       element.buffer = 0.6;
       await element.updateComplete;
 
-      assert.equal(element.buffer, 0.6);
-      assert.equal(secondary.style.getPropertyValue('flex-basis'), '100%');
+      expect(element.buffer).toEqual(0.6);
+      expect(secondary.style.getPropertyValue('flex-basis')).toEqual('100%');
     });
   });
 
@@ -592,35 +566,35 @@ describe('mwc-linear-progress', () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
 
-      assert.isNotNull(root);
+      expect(root).not.toBeNull();
 
-      assert.isNull(root.getAttribute('aria-label'));
+      expect(root.getAttribute('aria-label')).toBeNull();
     });
 
     it('correctly sets to aria-label with .ariaLabel', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
 
-      assert.isNotNull(root);
+      expect(root).not.toBeNull();
 
       element.ariaLabel = 'test label';
 
       await element.updateComplete;
 
-      assert.equal(root.getAttribute('aria-label'), 'test label');
+      expect(root.getAttribute('aria-label')).toEqual('test label');
     });
 
     it('correctly sets to aria-label with aria-label', async () => {
       const root = element.shadowRoot!.querySelector('.mdc-linear-progress') as
           HTMLElement;
 
-      assert.isNotNull(root);
+      expect(root).not.toBeNull();
 
       element.setAttribute('aria-label', 'test label');
 
       await element.updateComplete;
 
-      assert.equal(root.getAttribute('aria-label'), 'test label');
+      expect(root.getAttribute('aria-label')).toEqual('test label');
     });
   });
 });

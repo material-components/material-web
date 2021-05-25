@@ -42,9 +42,9 @@ describe('mwc-switch', () => {
     });
 
     it('initializes as an mwc-switch', () => {
-      assert.instanceOf(element, Switch);
-      assert.equal(element.checked, false);
-      assert.equal(element.disabled, false);
+      expect(element).toBeInstanceOf(Switch);
+      expect(element.checked).toEqual(false);
+      expect(element.disabled).toEqual(false);
     });
 
     it('user input emits `change` event', async () => {
@@ -53,7 +53,7 @@ describe('mwc-switch', () => {
 
       element.click();
 
-      assert.equal(callback.callCount, 1);
+      expect(callback.callCount).toEqual(1);
     });
   });
 
@@ -66,20 +66,20 @@ describe('mwc-switch', () => {
 
     it('checks the native input', async () => {
       const input = element.shadowRoot!.querySelector('input')!;
-      assert(input.checked);
+      expect(input.checked).toBeTrue();
 
       element.checked = false;
       await element.updateComplete;
-      assert(!input.checked);
+      expect(input.checked).toBeFalse();
     });
 
     it('setting `checked` affects `aria-checked` of native input', async () => {
       const input = element.shadowRoot!.querySelector('input')!;
-      assert.equal(input.getAttribute('aria-checked'), 'true');
+      expect(input.getAttribute('aria-checked')).toEqual('true');
 
       element.checked = false;
       await element.updateComplete;
-      assert.equal(input.getAttribute('aria-checked'), 'false');
+      expect(input.getAttribute('aria-checked')).toEqual('false');
     });
   });
 
@@ -92,11 +92,11 @@ describe('mwc-switch', () => {
 
     it('disables the native input', async () => {
       const input = element.shadowRoot!.querySelector('input')!;
-      assert(input.disabled);
+      expect(input.disabled).toBeTrue();
 
       element.disabled = false;
       await element.updateComplete;
-      assert(!input.disabled);
+      expect(input.disabled).toBeFalse();
     });
   });
 
@@ -111,36 +111,36 @@ describe('mwc-switch', () => {
       const input = element.shadowRoot!.querySelector('input')!;
       element.setAttribute('aria-label', 'foo');
       await element.updateComplete;
-      assert.equal(element.ariaLabel, 'foo');
-      assert.equal(element.getAttribute('aria-label'), null);
-      assert.equal(input.getAttribute('aria-label'), 'foo');
+      expect(element.ariaLabel).toEqual('foo');
+      expect(element.getAttribute('aria-label')).toEqual(null);
+      expect(input.getAttribute('aria-label')).toEqual('foo');
     });
 
     it('delegates .ariaLabel to the proper element', async () => {
       const input = element.shadowRoot!.querySelector('input')!;
       element.ariaLabel = 'foo';
       await element.updateComplete;
-      assert.equal(element.ariaLabel, 'foo');
-      assert.equal(element.getAttribute('aria-label'), null);
-      assert.equal(input.getAttribute('aria-label'), 'foo');
+      expect(element.ariaLabel).toEqual('foo');
+      expect(element.getAttribute('aria-label')).toEqual(null);
+      expect(input.getAttribute('aria-label')).toEqual('foo');
     });
 
     it('delegates aria-labelledby to the proper element', async () => {
       const input = element.shadowRoot!.querySelector('input')!;
       element.setAttribute('aria-labelledby', 'foo');
       await element.updateComplete;
-      assert.equal(element.ariaLabelledBy, 'foo');
-      assert.equal(element.getAttribute('aria-labelledby'), null);
-      assert.equal(input.getAttribute('aria-labelledby'), 'foo');
+      expect(element.ariaLabelledBy).toEqual('foo');
+      expect(element.getAttribute('aria-labelledby')).toEqual(null);
+      expect(input.getAttribute('aria-labelledby')).toEqual('foo');
     });
 
     it('delegates .ariaLabelledBy to the proper element', async () => {
       const input = element.shadowRoot!.querySelector('input')!;
       element.ariaLabelledBy = 'foo';
       await element.updateComplete;
-      assert.equal(element.ariaLabelledBy, 'foo');
-      assert.equal(element.getAttribute('aria-labelledby'), null);
-      assert.equal(input.getAttribute('aria-labelledby'), 'foo');
+      expect(element.ariaLabelledBy).toEqual('foo');
+      expect(element.getAttribute('aria-labelledby')).toEqual(null);
+      expect(input.getAttribute('aria-labelledby')).toEqual('foo');
     });
   });
 });

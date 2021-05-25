@@ -84,32 +84,33 @@ describe('mwc-textfield:', () => {
     });
 
     it('initializes as an mwc-textfield', () => {
-      assert.instanceOf(element, TextField);
+      expect(element).toBeInstanceOf(TextField);
     });
 
     it('setting value sets on input', async () => {
       element.value = 'my test value';
+      await element.updateComplete;
 
       const inputElement = element.shadowRoot!.querySelector('input');
-      assert(inputElement, 'my test value');
+      expect(inputElement!.value).toEqual('my test value');
     });
 
     it('setting non-string values stringifies values', async () => {
       (element.value as unknown as undefined) = undefined;
       await element.updateComplete;
-      assert.equal(element.value, 'undefined');
+      expect(element.value).toEqual('undefined');
 
       (element.value as unknown as null) = null;
       await element.updateComplete;
-      assert.equal(element.value, 'null');
+      expect(element.value).toEqual('null');
 
       (element.value as unknown as number) = 15;
       await element.updateComplete;
-      assert.equal(element.value, '15');
+      expect(element.value).toEqual('15');
 
       (element.value as unknown) = {};
       await element.updateComplete;
-      assert.equal(element.value, '[object Object]');
+      expect(element.value).toEqual('[object Object]');
     });
 
     afterEach(() => {
@@ -125,62 +126,62 @@ describe('mwc-textfield:', () => {
         fixt = await fixture(validationRequired());
         const element = fixt.root.querySelector('mwc-textfield')!;
 
-        assert.isFalse(isUiInvalid(element));
+        expect(isUiInvalid(element)).toBeFalse();
         element.focus();
         element.blur();
-        assert.isTrue(isUiInvalid(element));
+        expect(isUiInvalid(element)).toBeTrue();
       });
 
       it('validity & checkValidity do not trigger ui', async () => {
         fixt = await fixture(validationPattern());
         const element = fixt.root.querySelector('mwc-textfield')!;
 
-        assert.isFalse(isUiInvalid(element));
+        expect(isUiInvalid(element)).toBeFalse();
 
         let invalidCalled = false;
         element.addEventListener('invalid', () => invalidCalled = true);
 
         const validity = element.validity;
 
-        assert.isTrue(validity.patternMismatch);
-        assert.isFalse(validity.valid);
-        assert.isFalse(invalidCalled);
-        assert.isFalse(isUiInvalid(element));
+        expect(validity.patternMismatch).toBeTrue();
+        expect(validity.valid).toBeFalse();
+        expect(invalidCalled).toBeFalse();
+        expect(isUiInvalid(element)).toBeFalse();
 
         const checkValidity = element.checkValidity();
 
-        assert.isFalse(checkValidity);
-        assert.isTrue(invalidCalled);
-        assert.isFalse(isUiInvalid(element));
+        expect(checkValidity).toBeFalse();
+        expect(invalidCalled).toBeTrue();
+        expect(isUiInvalid(element)).toBeFalse();
       });
 
       it('setCustomValidity', async () => {
         fixt = await fixture(basic());
         const element = fixt.root.querySelector('mwc-textfield')!;
 
-        assert.isFalse(isUiInvalid(element));
-        assert.equal(element.validationMessage, '');
+        expect(isUiInvalid(element)).toBeFalse();
+        expect(element.validationMessage).toEqual('');
 
         const validationMsgProp = 'set on prop';
         element.validationMessage = validationMsgProp;
-        assert.isFalse(isUiInvalid(element));
-        assert.equal(element.validationMessage, validationMsgProp);
+        expect(isUiInvalid(element)).toBeFalse();
+        expect(element.validationMessage).toEqual(validationMsgProp);
 
         const validationMsgFn = 'set by setCustomValidity';
         element.setCustomValidity(validationMsgFn);
 
-        assert.equal(element.validationMessage, validationMsgFn);
+        expect(element.validationMessage).toEqual(validationMsgFn);
 
         const validity = element.validity;
-        assert.isTrue(validity.customError);
-        assert.isFalse(validity.valid);
+        expect(validity.customError).toBeTrue();
+        expect(validity.valid).toBeFalse();
       });
 
       it('validity transform', async () => {
         fixt = await fixture(validationPattern());
         const element = fixt.root.querySelector('mwc-textfield')!;
 
-        assert.isFalse(element.checkValidity());
+        expect(element.checkValidity()).toBeFalse();
 
         const transformFn =
             (value: string, vState: ValidityState): Partial<ValidityState> => {
@@ -205,78 +206,78 @@ describe('mwc-textfield:', () => {
 
         let validity = element.validity;
         // true because dogs
-        assert.isTrue(validity.valid);
-        assert.isTrue(validity.patternMismatch);
-        assert.isTrue(element.checkValidity());
+        expect(validity.valid).toBeTrue();
+        expect(validity.patternMismatch).toBeTrue();
+        expect(element.checkValidity()).toBeTrue();
 
         element.value = '6';
         await element.updateComplete;
         validity = element.validity;
         // false because > 5
-        assert.isFalse(validity.valid);
-        assert.isTrue(validity.rangeOverflow);
-        assert.isFalse(element.reportValidity());
+        expect(validity.valid).toBeFalse();
+        expect(validity.rangeOverflow).toBeTrue();
+        expect(element.reportValidity()).toBeFalse();
 
-        assert.isTrue(isUiInvalid(element));
+        expect(isUiInvalid(element)).toBeTrue();
 
         element.value = '1';
         await element.updateComplete;
         validity = element.validity;
         // true because < 5
-        assert.isTrue(validity.valid);
-        assert.isFalse(validity.patternMismatch);
-        assert.isFalse(validity.rangeOverflow);
-        assert.isTrue(element.reportValidity());
+        expect(validity.valid).toBeTrue();
+        expect(validity.patternMismatch).toBeFalse();
+        expect(validity.rangeOverflow).toBeFalse();
+        expect(element.reportValidity()).toBeTrue();
 
-        assert.isFalse(isUiInvalid(element));
+        expect(isUiInvalid(element)).toBeFalse();
       });
 
       it('initial validation', async () => {
         fixt = await fixture(reqInitialVal());
         let element = fixt.root.querySelector('mwc-textfield')!;
-        assert.isTrue(isUiInvalid(element));
+        expect(isUiInvalid(element)).toBeTrue();
 
         fixt.remove();
 
         fixt = await fixture(validationRequired());
         element = fixt.root.querySelector('mwc-textfield')!;
-        assert.isFalse(isUiInvalid(element));
+        expect(isUiInvalid(element)).toBeFalse();
       });
 
       it('autoValidate validates on value change', async () => {
         fixt = await fixture(validationRequired());
         const element = fixt.root.querySelector('mwc-textfield')!;
-        assert.isFalse(isUiInvalid(element));
+        expect(isUiInvalid(element)).toBeFalse();
 
         element.value = 'some value';
         // value update followed async by ui invalid update
         await element.updateComplete;
         await element.updateComplete;
 
-        assert.isFalse(isUiInvalid(element));
+        expect(isUiInvalid(element)).toBeFalse();
 
         element.value = '';
         await element.updateComplete;
         await element.updateComplete;
 
-        assert.isFalse(isUiInvalid(element));
+        expect(isUiInvalid(element)).toBeFalse();
 
         element.autoValidate = true;
         await element.updateComplete;
-        assert.isFalse(isUiInvalid(element));
+        expect(isUiInvalid(element)).toBeFalse();
 
         element.value = 'some value';
         // value update followed async by ui invalid update
         await element.updateComplete;
         await element.updateComplete;
 
-        assert.isFalse(isUiInvalid(element));
+        expect(isUiInvalid(element)).toBeFalse();
 
         element.value = '';
         await element.updateComplete;
         await element.updateComplete;
 
-        assert.isTrue(isUiInvalid(element));
+        expect(isUiInvalid(element)).toBeTrue();
       });
 
       afterEach(() => {
@@ -292,10 +293,10 @@ describe('mwc-textfield:', () => {
         const element = fixt.root.querySelector('mwc-textfield')!;
         await element.updateComplete;
 
-        assert.isFalse(isUiInvalid(element));
+        expect(isUiInvalid(element)).toBeFalse();
         element.focus();
         element.blur();
-        assert.isTrue(isUiInvalid(element));
+        expect(isUiInvalid(element)).toBeTrue();
       });
 
       it('validity & checkValidity do not trigger ui', async () => {
@@ -303,24 +304,24 @@ describe('mwc-textfield:', () => {
         const element = fixt.root.querySelector('mwc-textfield')!;
         await element.updateComplete;
 
-        assert.isFalse(isUiInvalid(element));
+        expect(isUiInvalid(element)).toBeFalse();
 
         let invalidCalled = false;
         element.addEventListener('invalid', () => invalidCalled = true);
 
         const validity = element.validity;
 
-        assert.isTrue(validity.patternMismatch);
-        assert.isFalse(validity.valid);
-        assert.isFalse(invalidCalled);
-        assert.isFalse(isUiInvalid(element));
+        expect(validity.patternMismatch).toBeTrue();
+        expect(validity.valid).toBeFalse();
+        expect(invalidCalled).toBeFalse();
+        expect(isUiInvalid(element)).toBeFalse();
 
 
         const checkValidity = element.checkValidity();
 
-        assert.isFalse(checkValidity);
-        assert.isTrue(invalidCalled);
-        assert.isFalse(isUiInvalid(element));
+        expect(checkValidity).toBeFalse();
+        expect(invalidCalled).toBeTrue();
+        expect(isUiInvalid(element)).toBeFalse();
       });
 
       it('setCustomValidity', async () => {
@@ -328,22 +329,22 @@ describe('mwc-textfield:', () => {
         const element = fixt.root.querySelector('mwc-textfield')!;
         await element.updateComplete;
 
-        assert.isFalse(isUiInvalid(element));
-        assert.equal(element.validationMessage, '');
+        expect(isUiInvalid(element)).toBeFalse();
+        expect(element.validationMessage).toEqual('');
 
         const validationMsgProp = 'set on prop';
         element.validationMessage = validationMsgProp;
-        assert.isFalse(isUiInvalid(element));
-        assert.equal(element.validationMessage, validationMsgProp);
+        expect(isUiInvalid(element)).toBeFalse();
+        expect(element.validationMessage).toEqual(validationMsgProp);
 
         const validationMsgFn = 'set by setCustomValidity';
         element.setCustomValidity(validationMsgFn);
 
-        assert.equal(element.validationMessage, validationMsgFn);
+        expect(element.validationMessage).toEqual(validationMsgFn);
 
         const validity = element.validity;
-        assert.isTrue(validity.customError);
-        assert.isFalse(validity.valid);
+        expect(validity.customError).toBeTrue();
+        expect(validity.valid).toBeFalse();
       });
 
       it('validity transform', async () => {
@@ -351,7 +352,7 @@ describe('mwc-textfield:', () => {
         const element = fixt.root.querySelector('mwc-textfield')!;
         await element.updateComplete;
 
-        assert.isFalse(element.checkValidity());
+        expect(element.checkValidity()).toBeFalse();
 
         const transformFn =
             (value: string, vState: ValidityState): Partial<ValidityState> => {
@@ -376,44 +377,44 @@ describe('mwc-textfield:', () => {
 
         let validity = element.validity;
         // true because dogs
-        assert.isTrue(validity.valid);
-        assert.isTrue(validity.patternMismatch);
-        assert.isTrue(element.checkValidity());
+        expect(validity.valid).toBeTrue();
+        expect(validity.patternMismatch).toBeTrue();
+        expect(element.checkValidity()).toBeTrue();
 
         element.value = '6';
         await element.updateComplete;
         validity = element.validity;
         // false because > 5
-        assert.isFalse(validity.valid);
-        assert.isTrue(validity.rangeOverflow);
-        assert.isFalse(element.reportValidity());
+        expect(validity.valid).toBeFalse();
+        expect(validity.rangeOverflow).toBeTrue();
+        expect(element.reportValidity()).toBeFalse();
 
-        assert.isTrue(isUiInvalid(element));
+        expect(isUiInvalid(element)).toBeTrue();
 
         element.value = '1';
         await element.updateComplete;
         validity = element.validity;
         // true because < 5
-        assert.isTrue(validity.valid);
-        assert.isFalse(validity.patternMismatch);
-        assert.isFalse(validity.rangeOverflow);
-        assert.isTrue(element.reportValidity());
+        expect(validity.valid).toBeTrue();
+        expect(validity.patternMismatch).toBeFalse();
+        expect(validity.rangeOverflow).toBeFalse();
+        expect(element.reportValidity()).toBeTrue();
 
-        assert.isFalse(isUiInvalid(element));
+        expect(isUiInvalid(element)).toBeFalse();
       });
 
       it('initial validation', async () => {
         fixt = await fixture(reqInitialVal(true));
         let element = fixt.root.querySelector('mwc-textfield')!;
         await element.updateComplete;
-        assert.isTrue(isUiInvalid(element));
+        expect(isUiInvalid(element)).toBeTrue();
 
         fixt.remove();
 
         fixt = await fixture(validationRequired(true));
         element = fixt.root.querySelector('mwc-textfield')!;
         await element.updateComplete;
-        assert.isFalse(isUiInvalid(element));
+        expect(isUiInvalid(element)).toBeFalse();
       });
 
       afterEach(() => {
@@ -441,8 +442,8 @@ describe('mwc-textfield:', () => {
 
       element.select();
 
-      assert.equal(input.selectionStart, 0);
-      assert.equal(input.selectionEnd, 6);
+      expect(input.selectionStart).toEqual(0);
+      expect(input.selectionEnd).toEqual(6);
     });
 
     afterEach(() => {
@@ -469,10 +470,10 @@ describe('mwc-textfield:', () => {
 
       element.setSelectionRange(4, 6);
 
-      assert.equal(input.selectionStart, 4);
-      assert.equal(input.selectionEnd, 6);
-      assert.equal(element.selectionStart, 4);
-      assert.equal(element.selectionEnd, 6);
+      expect(input.selectionStart).toEqual(4);
+      expect(input.selectionEnd).toEqual(6);
+      expect(element.selectionStart).toEqual(4);
+      expect(element.selectionEnd).toEqual(6);
     });
 
     afterEach(() => {
@@ -500,9 +501,9 @@ describe('mwc-textfield:', () => {
       await notchedOutline.updateComplete;
 
       let outlineWidth = notchedOutline.width;
-      assert.isTrue(notchedOutline.open);
+      expect(notchedOutline.open).toBeTrue();
 
-      assert.strictEqual(outlineWidth, 0);
+      expect(outlineWidth).toBe(0);
 
       element.classList.remove('hidden');
       element.requestUpdate();
@@ -510,8 +511,8 @@ describe('mwc-textfield:', () => {
       await rafPromise();
       outlineWidth = notchedOutline.width;
       let labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
-      assert.strictEqual(outlineWidth, 0);
-      assert.isTrue(labelWidth > 0);
+      expect(outlineWidth).toBe(0);
+      expect(labelWidth > 0).toBeTrue();
 
       await element.layout();
       await element.updateComplete;
@@ -520,7 +521,7 @@ describe('mwc-textfield:', () => {
       labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
 
       const diff = Math.abs(outlineWidth - labelWidth);
-      assert.isTrue(diff < 3);
+      expect(diff < 3).toBeTrue();
     });
 
     it('notch changes size with label change', async () => {
@@ -540,9 +541,9 @@ describe('mwc-textfield:', () => {
 
       let outlineWidth = notchedOutline.width;
       let labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
-      assert.isTrue(notchedOutline.open);
+      expect(notchedOutline.open).toBeTrue();
       let diff = Math.abs(outlineWidth - labelWidth);
-      assert.isTrue(diff < 5);
+      expect(diff < 5).toBeTrue();
 
       element.label = 'this is some other label';
 
@@ -558,7 +559,7 @@ describe('mwc-textfield:', () => {
       outlineWidth = notchedOutline.width;
       labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
       diff = Math.abs(outlineWidth - labelWidth);
-      assert.isTrue(diff < 5);
+      expect(diff < 5).toBeTrue();
     });
 
     afterEach(() => {
@@ -587,14 +588,16 @@ describe('mwc-textfield:', () => {
       const floatingLabel = element.shadowRoot!.querySelector(
                                 '.mdc-floating-label') as FloatingLabel;
 
-      assert.isFalse(
-          floatingLabel.classList.contains(floatingClasses.LABEL_FLOAT_ABOVE));
+      expect(
+          floatingLabel.classList.contains(floatingClasses.LABEL_FLOAT_ABOVE))
+          .toBeFalse();
 
       element.value = 'foo bar';
       await element.updateComplete;
 
-      assert.isTrue(
-          floatingLabel.classList.contains(floatingClasses.LABEL_FLOAT_ABOVE));
+      expect(
+          floatingLabel.classList.contains(floatingClasses.LABEL_FLOAT_ABOVE))
+          .toBeTrue();
     });
   });
 });
@@ -634,8 +637,8 @@ describe('date type textfield', () => {
 
     await element.updateComplete;
 
-    assert.isTrue(element.reportValidity());
-    assert.isFalse(isUiInvalid(element));
+    expect(element.reportValidity()).toBeTrue();
+    expect(isUiInvalid(element)).toBeFalse();
   });
 
   it('will be invalid with a date-string before min', async () => {
@@ -645,8 +648,8 @@ describe('date type textfield', () => {
 
     await element.updateComplete;
 
-    assert.isFalse(element.reportValidity());
-    assert.isTrue(isUiInvalid(element));
+    expect(element.reportValidity()).toBeFalse();
+    expect(isUiInvalid(element)).toBeTrue();
   });
 
   it('will be invalid with a date-string after max', async () => {
@@ -656,7 +659,7 @@ describe('date type textfield', () => {
 
     await element.updateComplete;
 
-    assert.isFalse(element.reportValidity());
-    assert.isTrue(isUiInvalid(element));
+    expect(element.reportValidity()).toBeFalse();
+    expect(isUiInvalid(element)).toBeTrue();
   });
 });

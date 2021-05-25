@@ -67,13 +67,13 @@ describe('mwc-snackbar', () => {
     });
 
     it('initializes as an mwc-snackbar', () => {
-      assert.instanceOf(element, Snackbar);
-      assert.isFalse(element.open);
-      assert.equal(element.timeoutMs, 5000);
-      assert.isFalse(element.closeOnEscape);
-      assert.equal(element.labelText, '');
-      assert.isFalse(element.stacked);
-      assert.isFalse(element.leading);
+      expect(element).toBeInstanceOf(Snackbar);
+      expect(element.open).toBeFalse();
+      expect(element.timeoutMs).toEqual(5000);
+      expect(element.closeOnEscape).toBeFalse();
+      expect(element.labelText).toEqual('');
+      expect(element.stacked).toBeFalse();
+      expect(element.leading).toBeFalse();
     });
   });
 
@@ -89,13 +89,13 @@ describe('mwc-snackbar', () => {
       const openingHandler = hanbi.spy();
       element.addEventListener('MDCSnackbar:opened', openedHandler.handler);
       element.addEventListener('MDCSnackbar:opening', openingHandler.handler);
-      assert.equal(element.open, false);
+      expect(element.open).toEqual(false);
       element.show();
       await element.updateComplete;
-      assert.isTrue(openingHandler.called);
+      expect(openingHandler.called).toBeTrue();
       await rafPromise();
-      assert.isTrue(element.open);
-      assert.isTrue(openedHandler.called);
+      expect(element.open).toBeTrue();
+      expect(openedHandler.called).toBeTrue();
     });
 
     it('`open = true` opens snack bar', async () => {
@@ -103,14 +103,14 @@ describe('mwc-snackbar', () => {
       const openingHandler = hanbi.spy();
       element.addEventListener('MDCSnackbar:opened', openedHandler.handler);
       element.addEventListener('MDCSnackbar:opening', openingHandler.handler);
-      assert.equal(element.open, false);
-      assert.isFalse(openedHandler.called);
+      expect(element.open).toEqual(false);
+      expect(openedHandler.called).toBeFalse();
       element.open = true;
       await element.updateComplete;
-      assert.isTrue(openingHandler.called);
+      expect(openingHandler.called).toBeTrue();
       await rafPromise();
-      assert.isTrue(element.open);
-      assert.isTrue(openedHandler.called);
+      expect(element.open).toBeTrue();
+      expect(openedHandler.called).toBeTrue();
     });
 
     it('`close()` closes snack bar', async () => {
@@ -120,9 +120,9 @@ describe('mwc-snackbar', () => {
       await element.updateComplete;
       await rafPromise();
       element.close();
-      assert.isFalse(element.open);
+      expect(element.open).toBeFalse();
       await element.updateComplete;
-      assert.isTrue(closedHandler.called);
+      expect(closedHandler.called).toBeTrue();
     });
 
     it('`open = false` closes snack bar', async () => {
@@ -133,8 +133,8 @@ describe('mwc-snackbar', () => {
       await rafPromise();
       element.open = false;
       await element.updateComplete;
-      assert.isFalse(element.open);
-      assert.isTrue(closedHandler.called);
+      expect(element.open).toBeFalse();
+      expect(closedHandler.called).toBeTrue();
     });
   });
 
@@ -148,15 +148,15 @@ describe('mwc-snackbar', () => {
     it('set label text after opening', async () => {
       element.show();
       await element.updateComplete;
-      assert.equal(findLabelText(element), 'foo');
+      expect(findLabelText(element)).toEqual('foo');
 
       element.labelText = 'bar';
       await element.updateComplete;
-      assert.equal(findLabelText(element), 'bar');
+      expect(findLabelText(element)).toEqual('bar');
 
       element.labelText = 'baz';
       await element.updateComplete;
-      assert.equal(findLabelText(element), 'baz');
+      expect(findLabelText(element)).toEqual('baz');
     });
   });
 
@@ -175,9 +175,9 @@ describe('mwc-snackbar', () => {
       element.show();
       await element.updateComplete;
       close.click();
-      assert.isFalse(element.open);
+      expect(element.open).toBeFalse();
       const ev = closedHandler.getCall(0).args[0] as CustomEvent;
-      assert.equal(ev.detail.reason, 'dismiss');
+      expect(ev.detail.reason).toEqual('dismiss');
     });
   });
 
@@ -196,9 +196,9 @@ describe('mwc-snackbar', () => {
       element.show();
       await element.updateComplete;
       action.click();
-      assert.isFalse(element.open);
+      expect(element.open).toBeFalse();
       const ev = closedHandler.getCall(0).args[0] as CustomEvent;
-      assert.equal(ev.detail.reason, 'action');
+      expect(ev.detail.reason).toEqual('action');
     });
   });
 
@@ -215,14 +215,14 @@ describe('mwc-snackbar', () => {
       await element.updateComplete;
       await rafPromise();
       const bar = element.shadowRoot!.querySelector('.mdc-snackbar')!;
-      assert.equal(element.open, true);
+      expect(element.open).toEqual(true);
 
       // escape keycode
       const escEv = ieSafeKeyboardEvent('keydown', 27);
       bar.dispatchEvent(escEv);
 
       await element.updateComplete;
-      assert.equal(element.open, true);
+      expect(element.open).toEqual(true);
     });
 
     it('closes when set and esc is pressed', async () => {
@@ -230,14 +230,14 @@ describe('mwc-snackbar', () => {
       await element.updateComplete;
       await rafPromise();
       const bar = element.shadowRoot!.querySelector('.mdc-snackbar')!;
-      assert.equal(element.open, true);
+      expect(element.open).toEqual(true);
 
       // escape keycode
       const escEv = ieSafeKeyboardEvent('keydown', 27);
       bar.dispatchEvent(escEv);
 
       await element.updateComplete;
-      assert.equal(element.open, false);
+      expect(element.open).toEqual(false);
     });
   });
 });

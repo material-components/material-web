@@ -46,17 +46,17 @@ describe('mwc-tab', () => {
     });
 
     it('initializes as an mwc-tab', () => {
-      assert.instanceOf(element, Tab);
-      assert.equal(element.label, '');
-      assert.equal(element.icon, '');
-      assert.equal(element.hasImageIcon, false);
-      assert.equal(element.isFadingIndicator, false);
-      assert.equal(element.minWidth, false);
-      assert.equal(element.isMinWidthIndicator, false);
-      assert.equal(element.active, false);
-      assert.equal(element.indicatorIcon, '');
-      assert.equal(element.stacked, false);
-      assert.equal(element.focusOnActivate, true);
+      expect(element).toBeInstanceOf(Tab);
+      expect(element.label).toEqual('');
+      expect(element.icon).toEqual('');
+      expect(element.hasImageIcon).toEqual(false);
+      expect(element.isFadingIndicator).toEqual(false);
+      expect(element.minWidth).toEqual(false);
+      expect(element.isMinWidthIndicator).toEqual(false);
+      expect(element.active).toEqual(false);
+      expect(element.indicatorIcon).toEqual('');
+      expect(element.stacked).toEqual(false);
+      expect(element.focusOnActivate).toEqual(true);
     });
 
     it('fires interacted event on click', () => {
@@ -64,7 +64,7 @@ describe('mwc-tab', () => {
       element.addEventListener('MDCTab:interacted', interactedHandler.handler);
       const tab = element.shadowRoot!.querySelector<HTMLElement>('.mdc-tab')!;
       tab.click();
-      assert.isTrue(interactedHandler.called);
+      expect(interactedHandler.called).toBeTrue();
     });
   });
 
@@ -77,7 +77,7 @@ describe('mwc-tab', () => {
 
     it('sets the correct classes', () => {
       const tab = element.shadowRoot!.querySelector('.mdc-tab')!;
-      assert.isTrue(tab.classList.contains('mdc-tab--min-width'));
+      expect(tab.classList.contains('mdc-tab--min-width')).toBeTrue();
     });
   });
 
@@ -90,7 +90,7 @@ describe('mwc-tab', () => {
 
     it('sets the correct classes', () => {
       const tab = element.shadowRoot!.querySelector('.mdc-tab')!;
-      assert.isTrue(tab.classList.contains('mdc-tab--stacked'));
+      expect(tab.classList.contains('mdc-tab--stacked')).toBeTrue();
     });
   });
 
@@ -103,7 +103,7 @@ describe('mwc-tab', () => {
 
     it('displays label text', () => {
       const content = element.shadowRoot!.querySelector('.mdc-tab__content')!;
-      assert.equal(content.textContent!.trim(), 'foo');
+      expect(content.textContent!.trim()).toEqual('foo');
     });
   });
 
@@ -116,7 +116,7 @@ describe('mwc-tab', () => {
 
     it('displays icon', () => {
       const content = element.shadowRoot!.querySelector('.mdc-tab__icon')!;
-      assert.equal(content.textContent!.trim(), 'add');
+      expect(content.textContent!.trim()).toEqual('add');
     });
   });
 
@@ -133,8 +133,8 @@ describe('mwc-tab', () => {
       const dummyClientRect = document.body.getBoundingClientRect();
       render(defaultTab, document.body);
       const tab = document.body.querySelector('mwc-tab')!;
-      assert.isFalse(
-          !!(tab as unknown as {mdcFoundation: boolean}).mdcFoundation);
+      expect(!!(tab as unknown as {mdcFoundation: boolean}).mdcFoundation)
+          .toBeFalse();
 
       let didThrow = false;
 
@@ -144,14 +144,14 @@ describe('mwc-tab', () => {
         didThrow = true;
       }
 
-      assert.isFalse(didThrow);
+      expect(didThrow).toBeFalse();
 
       await tab.updateComplete;
       await tab.updateComplete;
 
-      assert.isTrue(
-          !!(tab as unknown as {mdcFoundation: boolean}).mdcFoundation);
-      assert.isTrue(tab.active);
+      expect(!!(tab as unknown as {mdcFoundation: boolean}).mdcFoundation)
+          .toBeTrue();
+      expect(tab.active).toBeTrue();
     });
   });
 });

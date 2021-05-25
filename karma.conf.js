@@ -43,7 +43,7 @@ module.exports = function(config) {
       require.resolve('@open-wc/karma-esm'),
       'karma-*',
     ],
-    frameworks: ['esm', 'jasmine', 'chai'],
+    frameworks: ['esm', 'jasmine'],
     files: [
       {
         pattern:

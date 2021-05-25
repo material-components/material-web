@@ -45,24 +45,24 @@ describe('mwc-circular-progress-four-color', () => {
     });
 
     it('initializes as an mwc-circular-progress-four-color', () => {
-      assert.instanceOf(element, CircularProgressFourColor);
-      assert.isFalse(element.indeterminate);
-      assert.equal(element.progress, 0);
-      assert.equal(element.density, 0);
-      assert.isFalse(element.closed);
-      assert.equal(element.ariaLabel, undefined);
+      expect(element).toBeInstanceOf(CircularProgressFourColor);
+      expect(element.indeterminate).toBeFalse();
+      expect(element.progress).toEqual(0);
+      expect(element.density).toEqual(0);
+      expect(element.closed).toBeFalse();
+      expect(element.ariaLabel).toEqual(undefined);
     });
 
     it('open sets closed to false', async () => {
       element.closed = true;
       element.open();
-      assert.equal(element.closed, false);
+      expect(element.closed).toEqual(false);
     });
 
     it('close sets closed to true', async () => {
       element.closed = false;
       element.close();
-      assert.equal(element.closed, true);
+      expect(element.closed).toEqual(true);
     });
   });
 
@@ -77,13 +77,13 @@ describe('mwc-circular-progress-four-color', () => {
       const progressBar =
           element.shadowRoot!.querySelector('.mdc-circular-progress')!;
 
-      assert.equal(
-          progressBar.getAttribute('aria-label'), 'Unit Test Progress Bar');
+      expect(progressBar.getAttribute('aria-label'))
+          .toEqual('Unit Test Progress Bar');
 
       element.ariaLabel = 'Another label';
       await element.updateComplete;
 
-      assert.equal(progressBar.getAttribute('aria-label'), 'Another label');
+      expect(progressBar.getAttribute('aria-label')).toEqual('Another label');
     });
   });
 
@@ -97,7 +97,7 @@ describe('mwc-circular-progress-four-color', () => {
     it('sets inner progress', async () => {
       const progressBar =
           element.shadowRoot!.querySelector('.mdc-circular-progress')!;
-      assert.equal(progressBar.getAttribute('aria-valuenow'), '0.5');
+      expect(progressBar.getAttribute('aria-valuenow')).toEqual('0.5');
     });
   });
 
@@ -111,10 +111,10 @@ describe('mwc-circular-progress-four-color', () => {
     it('sets correct inner class', async () => {
       const progressBar =
           element.shadowRoot!.querySelector('.mdc-circular-progress')!;
-      assert.isTrue(progressBar.classList.contains(INDETERMINATE_CLASS));
+      expect(progressBar.classList.contains(INDETERMINATE_CLASS)).toBeTrue();
       element.indeterminate = false;
       await element.updateComplete;
-      assert.isFalse(progressBar.classList.contains(INDETERMINATE_CLASS));
+      expect(progressBar.classList.contains(INDETERMINATE_CLASS)).toBeFalse();
     });
   });
 });

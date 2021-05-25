@@ -87,7 +87,7 @@ describe('mwc-select:', () => {
     });
 
     it('initializes as an mwc-select', () => {
-      assert.instanceOf(element, Select);
+      expect(element).toBeInstanceOf(Select);
     });
 
     it('initialize with value', async () => {
@@ -105,11 +105,16 @@ describe('mwc-select:', () => {
       await element.updateComplete;
       await cElement.updateComplete;
 
-      assert.equal(element.value, 'c', 'value stays the same as init');
-      assert.equal(
-          cElement, element.selected, 'selected element matches list item');
-      assert.isTrue(cElement.selected, 'prop sets on list item');
-      assert.equal(element.index, 3, 'index is correctly set');
+      expect(element.value)
+          .withContext('value stays the same as init')
+          .toEqual('c');
+      expect(cElement)
+          .withContext('selected element matches list item')
+          .toEqual(element.selected!);
+      expect(cElement.selected)
+          .withContext('prop sets on list item')
+          .toBeTrue();
+      expect(element.index).withContext('index is correctly set').toEqual(3);
     });
 
     afterEach(() => {
@@ -144,11 +149,16 @@ describe('mwc-select:', () => {
       await element.updateComplete;
       await aElement.updateComplete;
 
-      assert.equal(element.value, 'a', 'value changes to next value in list');
-      assert.equal(
-          aElement, element.selected, 'selected element matches list item');
-      assert.isTrue(aElement.selected, 'prop sets on list item');
-      assert.equal(element.index, 1, 'index is correctly set');
+      expect(element.value)
+          .withContext('value changes to next value in list')
+          .toEqual('a');
+      expect(aElement)
+          .withContext('selected element matches list item')
+          .toEqual(element.selected!);
+      expect(aElement.selected)
+          .withContext('prop sets on list item')
+          .toBeTrue();
+      expect(element.index).withContext('index is correctly set').toEqual(1);
     });
 
     it('keydown arrowup decrements selected index', async () => {
@@ -172,11 +182,16 @@ describe('mwc-select:', () => {
       await bElement.updateComplete;
       await element.updateComplete;
 
-      assert.equal(element.value, 'b', 'value changes to previous list item');
-      assert.equal(
-          bElement, element.selected, 'selected element matches list item');
-      assert.isTrue(bElement.selected, 'prop sets on list item');
-      assert.equal(element.index, 2, 'index is correctly set');
+      expect(element.value)
+          .withContext('value changes to previous list item')
+          .toEqual('b');
+      expect(bElement)
+          .withContext('selected element matches list item')
+          .toEqual(element.selected!);
+      expect(bElement.selected)
+          .withContext('prop sets on list item')
+          .toBeTrue();
+      expect(element.index).withContext('index is correctly set').toEqual(2);
     });
 
     afterEach(() => {
@@ -192,38 +207,51 @@ describe('mwc-select:', () => {
         fixt = await fixture(validationRequired());
         const element = fixt.root.querySelector('mwc-select')!;
 
-        assert.isFalse(isUiInvalid(element), 'ui initially valid');
+        expect(isUiInvalid(element))
+            .withContext('ui initially valid')
+            .toBeFalse();
         element.focus();
         await element.updateComplete;
-        assert.isFalse(isUiInvalid(element), 'no validation on focus');
+        expect(isUiInvalid(element))
+            .withContext('no validation on focus')
+            .toBeFalse();
         element.blur();
         await element.updateComplete;
-        assert.isTrue(isUiInvalid(element), 'invalid after blur');
+        expect(isUiInvalid(element))
+            .withContext('invalid after blur')
+            .toBeTrue();
       });
 
       it('validity & checkValidity do not trigger ui', async () => {
         fixt = await fixture(validationRequired());
         const element = fixt.root.querySelector('mwc-select')!;
-        assert.isFalse(isUiInvalid(element), 'ui initially valid');
+        expect(isUiInvalid(element))
+            .withContext('ui initially valid')
+            .toBeFalse();
 
         let invalidCalled = false;
         element.addEventListener('invalid', () => invalidCalled = true);
 
         const validity = element.validity;
 
-        assert.isTrue(validity.valueMissing, 'validation fails - required');
-        assert.isFalse(validity.valid, 'element is invalid');
-        assert.isFalse(
-            invalidCalled, 'invalid event not fired because of .validity');
-        assert.isFalse(
-            isUiInvalid(element), 'ui is not invalid because of .validity');
+        expect(validity.valueMissing)
+            .withContext('validation fails - required')
+            .toBeTrue();
+        expect(validity.valid).withContext('element is invalid').toBeFalse();
+        expect(invalidCalled)
+            .withContext('invalid event not fired because of .validity')
+            .toBeFalse();
+        expect(isUiInvalid(element))
+            .withContext('ui is not invalid because of .validity')
+            .toBeFalse();
 
         const checkValidity = element.checkValidity();
 
-        assert.isFalse(
-            checkValidity, 'check validity returns false when invalid');
-        assert.isTrue(invalidCalled, 'invalid event called');
-        assert.isFalse(isUiInvalid(element), 'ui is invalid');
+        expect(checkValidity)
+            .withContext('check validity returns false when invalid')
+            .toBeFalse();
+        expect(invalidCalled).withContext('invalid event called').toBeTrue();
+        expect(isUiInvalid(element)).withContext('ui is invalid').toBeFalse();
       });
 
       it('setCustomValidity', async () => {
@@ -234,29 +262,32 @@ describe('mwc-select:', () => {
         await rafPromise();
         await element.layout();
 
-        assert.isFalse(isUiInvalid(element), 'ui initially valid');
-        assert.equal(element.validationMessage, '');
+        expect(isUiInvalid(element))
+            .withContext('ui initially valid')
+            .toBeFalse();
+        expect(element.validationMessage).toEqual('');
 
         const validationMsgProp = 'set on prop';
         element.validationMessage = validationMsgProp;
-        assert.isFalse(
-            isUiInvalid(element),
-            'ui not false due to setting validationMessage');
-        assert.equal(
-            element.validationMessage, validationMsgProp,
-            'setting validationMessage works');
+        expect(isUiInvalid(element))
+            .withContext('ui not false due to setting validationMessage')
+            .toBeFalse();
+        expect(element.validationMessage)
+            .withContext('setting validationMessage works')
+            .toEqual(validationMsgProp);
 
         const validationMsgFn = 'set by setCustomValidity';
         element.setCustomValidity(validationMsgFn);
 
-        assert.equal(
-            element.validationMessage, validationMsgFn,
-            'validationMessage prop is set with setCustomValidity');
+        expect(element.validationMessage)
+            .withContext('validationMessage prop is set with setCustomValidity')
+            .toEqual(validationMsgFn);
 
         const validity = element.validity;
-        assert.isTrue(
-            validity.customError, 'customError is reason for valitity failure');
-        assert.isFalse(validity.valid, 'element is not valid');
+        expect(validity.customError)
+            .withContext('customError is reason for valitity failure')
+            .toBeTrue();
+        expect(validity.valid).withContext('element is not valid').toBeFalse();
       });
 
       it('validity transform', async () => {
@@ -267,7 +298,9 @@ describe('mwc-select:', () => {
         await rafPromise();
         await element.layout();
 
-        assert.isTrue(element.checkValidity(), 'element is initially valid');
+        expect(element.checkValidity())
+            .withContext('element is initially valid')
+            .toBeTrue();
 
         const transformFn =
             (value: string, vState: ValidityState): Partial<ValidityState> => {
@@ -291,63 +324,80 @@ describe('mwc-select:', () => {
         element.validityTransform = transformFn;
 
         let validity = element.validity;
-        assert.isTrue(validity.valid, 'unhandled case is valid');
-        assert.isTrue(
-            element.checkValidity(),
-            'checkValidity is true for unhandled case');
+        expect(validity.valid)
+            .withContext('unhandled case is valid')
+            .toBeTrue();
+        expect(element.checkValidity())
+            .withContext('checkValidity is true for unhandled case')
+            .toBeTrue();
 
         element.select(1);
         await element.updateComplete;
         validity = element.validity;
-        assert.isTrue(validity.valid, 'explicitly handled value is true');
-        assert.isTrue(
-            element.reportValidity(),
-            'checkValidity is true for explicit case');
+        expect(validity.valid)
+            .withContext('explicitly handled value is true')
+            .toBeTrue();
+        expect(element.reportValidity())
+            .withContext('checkValidity is true for explicit case')
+            .toBeTrue();
 
-        assert.isFalse(
-            isUiInvalid(element), 'reportValidity makes ui valid when valid');
+        expect(isUiInvalid(element))
+            .withContext('reportValidity makes ui valid when valid')
+            .toBeFalse();
 
         element.select(3);
         await element.updateComplete;
         validity = element.validity;
 
-        assert.isFalse(validity.valid, 'explicitly false case returns false');
-        assert.isTrue(
-            validity.rangeOverflow, 'explicit reason for invalid set');
-        assert.isFalse(
-            element.reportValidity(),
-            'checkValidity is true for explicitly invalid case');
+        expect(validity.valid)
+            .withContext('explicitly false case returns false')
+            .toBeFalse();
+        expect(validity.rangeOverflow)
+            .withContext('explicit reason for invalid set')
+            .toBeTrue();
+        expect(element.reportValidity())
+            .withContext('checkValidity is true for explicitly invalid case')
+            .toBeFalse();
 
-        assert.isTrue(
-            isUiInvalid(element),
-            'reportValidity makes ui invalid when invalid');
+        expect(isUiInvalid(element))
+            .withContext('reportValidity makes ui invalid when invalid')
+            .toBeTrue();
 
         element.select(2);
         await element.updateComplete;
         validity = element.validity;
 
-        assert.isTrue(validity.valid, 'validity can be set back to true');
-        assert.isFalse(
-            validity.rangeOverflow, 'explicit reason for invalid unset');
-        assert.isTrue(
-            element.reportValidity(),
-            'checkValidity is set back true for valid case');
+        expect(validity.valid)
+            .withContext('validity can be set back to true')
+            .toBeTrue();
+        expect(validity.rangeOverflow)
+            .withContext('explicit reason for invalid unset')
+            .toBeFalse();
+        expect(element.reportValidity())
+            .withContext('checkValidity is set back true for valid case')
+            .toBeTrue();
 
-        assert.isFalse(isUiInvalid(element), 'ui can be made valid again');
+        expect(isUiInvalid(element))
+            .withContext('ui can be made valid again')
+            .toBeFalse();
       });
 
       it('initial validation', async () => {
         fixt = await fixture(reqInitialVal());
         let element = fixt.root.querySelector('mwc-select')!;
         await element.updateComplete;
-        assert.isTrue(isUiInvalid(element), 'initial render is invalid');
+        expect(isUiInvalid(element))
+            .withContext('initial render is invalid')
+            .toBeTrue();
 
         fixt.remove();
 
         fixt = await fixture(validationRequired());
         element = fixt.root.querySelector('mwc-select')!;
         await element.updateComplete;
-        assert.isFalse(isUiInvalid(element), 'without flag is valid');
+        expect(isUiInvalid(element))
+            .withContext('without flag is valid')
+            .toBeFalse();
       });
 
       afterEach(() => {
@@ -362,38 +412,51 @@ describe('mwc-select:', () => {
         fixt = await fixture(validationRequired(true));
         const element = fixt.root.querySelector('mwc-select')!;
 
-        assert.isFalse(isUiInvalid(element), 'ui initially valid');
+        expect(isUiInvalid(element))
+            .withContext('ui initially valid')
+            .toBeFalse();
         element.focus();
         await element.updateComplete;
-        assert.isFalse(isUiInvalid(element), 'no validation on focus');
+        expect(isUiInvalid(element))
+            .withContext('no validation on focus')
+            .toBeFalse();
         element.blur();
         await element.updateComplete;
-        assert.isTrue(isUiInvalid(element), 'invalid after blur');
+        expect(isUiInvalid(element))
+            .withContext('invalid after blur')
+            .toBeTrue();
       });
 
       it('validity & checkValidity do not trigger ui', async () => {
         fixt = await fixture(validationRequired(true));
         const element = fixt.root.querySelector('mwc-select')!;
-        assert.isFalse(isUiInvalid(element), 'ui initially valid');
+        expect(isUiInvalid(element))
+            .withContext('ui initially valid')
+            .toBeFalse();
 
         let invalidCalled = false;
         element.addEventListener('invalid', () => invalidCalled = true);
 
         const validity = element.validity;
 
-        assert.isTrue(validity.valueMissing, 'validation fails - required');
-        assert.isFalse(validity.valid, 'element is invalid');
-        assert.isFalse(
-            invalidCalled, 'invalid event not fired because of .validity');
-        assert.isFalse(
-            isUiInvalid(element), 'ui is not invalid because of .validity');
+        expect(validity.valueMissing)
+            .withContext('validation fails - required')
+            .toBeTrue();
+        expect(validity.valid).withContext('element is invalid').toBeFalse();
+        expect(invalidCalled)
+            .withContext('invalid event not fired because of .validity')
+            .toBeFalse();
+        expect(isUiInvalid(element))
+            .withContext('ui is not invalid because of .validity')
+            .toBeFalse();
 
         const checkValidity = element.checkValidity();
 
-        assert.isFalse(
-            checkValidity, 'check validity returns false when invalid');
-        assert.isTrue(invalidCalled, 'invalid event called');
-        assert.isFalse(isUiInvalid(element), 'ui is invalid');
+        expect(checkValidity)
+            .withContext('check validity returns false when invalid')
+            .toBeFalse();
+        expect(invalidCalled).withContext('invalid event called').toBeTrue();
+        expect(isUiInvalid(element)).withContext('ui is invalid').toBeFalse();
       });
 
       it('setCustomValidity', async () => {
@@ -401,22 +464,22 @@ describe('mwc-select:', () => {
         const element = fixt.root.querySelector('mwc-select')!;
         await element.updateComplete;
 
-        assert.isFalse(isUiInvalid(element));
-        assert.equal(element.validationMessage, '');
+        expect(isUiInvalid(element)).toBeFalse();
+        expect(element.validationMessage).toEqual('');
 
         const validationMsgProp = 'set on prop';
         element.validationMessage = validationMsgProp;
-        assert.isFalse(isUiInvalid(element));
-        assert.equal(element.validationMessage, validationMsgProp);
+        expect(isUiInvalid(element)).toBeFalse();
+        expect(element.validationMessage).toEqual(validationMsgProp);
 
         const validationMsgFn = 'set by setCustomValidity';
         element.setCustomValidity(validationMsgFn);
 
-        assert.equal(element.validationMessage, validationMsgFn);
+        expect(element.validationMessage).toEqual(validationMsgFn);
 
         const validity = element.validity;
-        assert.isTrue(validity.customError);
-        assert.isFalse(validity.valid);
+        expect(validity.customError).toBeTrue();
+        expect(validity.valid).toBeFalse();
       });
 
       it('validity transform', async () => {
@@ -427,7 +490,9 @@ describe('mwc-select:', () => {
         await rafPromise();
         await element.layout();
 
-        assert.isTrue(element.checkValidity(), 'element is initially valid');
+        expect(element.checkValidity())
+            .withContext('element is initially valid')
+            .toBeTrue();
 
         const transformFn =
             (value: string, vState: ValidityState): Partial<ValidityState> => {
@@ -451,49 +516,62 @@ describe('mwc-select:', () => {
         element.validityTransform = transformFn;
 
         let validity = element.validity;
-        assert.isTrue(validity.valid, 'unhandled case is valid');
-        assert.isTrue(
-            element.checkValidity(),
-            'checkValidity is true for unhandled case');
+        expect(validity.valid)
+            .withContext('unhandled case is valid')
+            .toBeTrue();
+        expect(element.checkValidity())
+            .withContext('checkValidity is true for unhandled case')
+            .toBeTrue();
 
         element.select(1);
         await element.updateComplete;
         validity = element.validity;
-        assert.isTrue(validity.valid, 'explicitly handled value is true');
-        assert.isTrue(
-            element.reportValidity(),
-            'checkValidity is true for explicit case');
+        expect(validity.valid)
+            .withContext('explicitly handled value is true')
+            .toBeTrue();
+        expect(element.reportValidity())
+            .withContext('checkValidity is true for explicit case')
+            .toBeTrue();
 
-        assert.isFalse(
-            isUiInvalid(element), 'reportValidity makes ui valid when valid');
+        expect(isUiInvalid(element))
+            .withContext('reportValidity makes ui valid when valid')
+            .toBeFalse();
 
         element.select(3);
         await element.updateComplete;
         validity = element.validity;
 
-        assert.isFalse(validity.valid, 'explicitly false case returns false');
-        assert.isTrue(
-            validity.rangeOverflow, 'explicit reason for invalid set');
-        assert.isFalse(
-            element.reportValidity(),
-            'checkValidity is true for explicitly invalid case');
+        expect(validity.valid)
+            .withContext('explicitly false case returns false')
+            .toBeFalse();
+        expect(validity.rangeOverflow)
+            .withContext('explicit reason for invalid set')
+            .toBeTrue();
+        expect(element.reportValidity())
+            .withContext('checkValidity is true for explicitly invalid case')
+            .toBeFalse();
 
-        assert.isTrue(
-            isUiInvalid(element),
-            'reportValidity makes ui invalid when invalid');
+        expect(isUiInvalid(element))
+            .withContext('reportValidity makes ui invalid when invalid')
+            .toBeTrue();
 
         element.select(2);
         await element.updateComplete;
         validity = element.validity;
 
-        assert.isTrue(validity.valid, 'validity can be set back to true');
-        assert.isFalse(
-            validity.rangeOverflow, 'explicit reason for invalid unset');
-        assert.isTrue(
-            element.reportValidity(),
-            'checkValidity is set back true for valid case');
+        expect(validity.valid)
+            .withContext('validity can be set back to true')
+            .toBeTrue();
+        expect(validity.rangeOverflow)
+            .withContext('explicit reason for invalid unset')
+            .toBeFalse();
+        expect(element.reportValidity())
+            .withContext('checkValidity is set back true for valid case')
+            .toBeTrue();
 
-        assert.isFalse(isUiInvalid(element), 'ui can be made valid again');
+        expect(isUiInvalid(element))
+            .withContext('ui can be made valid again')
+            .toBeFalse();
       });
 
       it('initial validation', async () => {
@@ -505,14 +583,18 @@ describe('mwc-select:', () => {
         await rafPromise();
         await element.layout();
 
-        assert.isTrue(isUiInvalid(element), 'initial render is invalid');
+        expect(isUiInvalid(element))
+            .withContext('initial render is invalid')
+            .toBeTrue();
 
         fixt.remove();
 
         fixt = await fixture(validationRequired(true));
         element = fixt.root.querySelector('mwc-select')!;
         await element.updateComplete;
-        assert.isFalse(isUiInvalid(element), 'without flag is valid');
+        expect(isUiInvalid(element))
+            .withContext('without flag is valid')
+            .toBeFalse();
       });
 
       afterEach(() => {
@@ -544,59 +626,83 @@ describe('mwc-select:', () => {
       await rafPromise();
       await element.layout();
 
-      assert.equal(changeCalls, 0, 'change evt not called on startup');
-      assert.equal(element.value, '', 'initial value is blank');
-      assert.equal(
-          (element as unknown as WithSelectedText).selectedText, '',
-          'selectedText is blank');
-      assert.isTrue(!!element.selected, 'there is a selected element');
+      expect(changeCalls)
+          .withContext('change evt not called on startup')
+          .toEqual(0);
+      expect(element.value).withContext('initial value is blank').toEqual('');
+      expect((element as unknown as WithSelectedText).selectedText)
+          .withContext('selectedText is blank')
+          .toEqual('');
+      expect(!!element.selected)
+          .withContext('there is a selected element')
+          .toBeTrue();
 
       const firstElement = element.querySelector('mwc-list-item')!;
-      assert.isTrue(firstElement.selected, 'the element has selected prop');
+      expect(firstElement.selected)
+          .withContext('the element has selected prop')
+          .toBeTrue();
 
       element.select(1);
       await element.updateComplete;
-      assert.equal(changeCalls, 1, 'change event called once on selection');
+      expect(changeCalls)
+          .withContext('change event called once on selection')
+          .toEqual(1);
 
       element.select(1);
       await element.updateComplete;
-      assert.equal(
-          changeCalls, 1,
-          'change event not emitted twice when same value selected again');
+      expect(changeCalls)
+          .withContext(
+              'change event not emitted twice when same value selected again')
+          .toEqual(1);
 
-      assert.equal(element.value, 'a', 'select method updates value');
-      assert.isTrue(
-          (element as unknown as WithSelectedText).selectedText === 'Apple',
-          'selectedText is updated');
-      assert.isTrue(
-          !!element.selected, 'there is a selected element after select');
+      expect(element.value)
+          .withContext('select method updates value')
+          .toEqual('a');
+      expect((element as unknown as WithSelectedText).selectedText === 'Apple')
+          .withContext('selectedText is updated')
+          .toBeTrue();
+      expect(!!element.selected)
+          .withContext('there is a selected element after select')
+          .toBeTrue();
 
       const aElement = element.querySelector('[value="a"]') as ListItem;
-      assert.isFalse(firstElement.selected, 'the previous has be deselected');
-      assert.isTrue(aElement.selected, 'the element has selected prop');
-      assert.isTrue(
-          aElement === element.selected,
-          'element with selected prop is the same as selected on mwc-select');
+      expect(firstElement.selected)
+          .withContext('the previous has be deselected')
+          .toBeFalse();
+      expect(aElement.selected)
+          .withContext('the element has selected prop')
+          .toBeTrue();
+      expect(aElement === element.selected)
+          .withContext(
+              'element with selected prop is the same as selected on mwc-select')
+          .toBeTrue();
 
       element.value = 'a';
       await element.updateComplete;
-      assert.equal(
-          changeCalls, 1,
-          'change event not emitted twice when same value selected again using value property');
+      expect(changeCalls)
+          .withContext(
+              'change event not emitted twice when same value selected again using value property')
+          .toEqual(1);
       changeCalls = 0;
 
       element.select(-1);
       await element.updateComplete;
-      assert.equal(changeCalls, 1, 'change event called once on selection');
+      expect(changeCalls)
+          .withContext('change event called once on selection')
+          .toEqual(1);
       changeCalls = 0;
 
-      assert.equal(element.value, '', 'deselection clears value');
-      assert.isTrue(
-          (element as unknown as WithSelectedText).selectedText === '',
-          'selectedText is cleared on deselection');
-      assert.isFalse(!!element.selected, 'selected element is cleared');
+      expect(element.value).withContext('deselection clears value').toEqual('');
+      expect((element as unknown as WithSelectedText).selectedText === '')
+          .withContext('selectedText is cleared on deselection')
+          .toBeTrue();
+      expect(!!element.selected)
+          .withContext('selected element is cleared')
+          .toBeFalse();
 
-      assert.isFalse(aElement.selected, 'the previous has be deselected');
+      expect(aElement.selected)
+          .withContext('the previous has be deselected')
+          .toBeFalse();
     });
 
     it('selection via element', async () => {
@@ -604,35 +710,51 @@ describe('mwc-select:', () => {
       await rafPromise();
       await element.layout();
 
-      assert.equal(changeCalls, 0, 'change evt not called on startup');
-      assert.equal(element.value, '', 'initial value is blank');
-      assert.isTrue(
-          (element as unknown as WithSelectedText).selectedText === '',
-          'selectedText is blank');
-      assert.isTrue(!!element.selected, 'there is a selected element');
+      expect(changeCalls)
+          .withContext('change evt not called on startup')
+          .toEqual(0);
+      expect(element.value).withContext('initial value is blank').toEqual('');
+      expect((element as unknown as WithSelectedText).selectedText === '')
+          .withContext('selectedText is blank')
+          .toBeTrue();
+      expect(!!element.selected)
+          .withContext('there is a selected element')
+          .toBeTrue();
 
       const firstElement = element.querySelector('mwc-list-item')!;
-      assert.isTrue(firstElement.selected, 'the element has selected prop');
+      expect(firstElement.selected)
+          .withContext('the element has selected prop')
+          .toBeTrue();
 
       const aElement = element.querySelector('[value="a"]') as ListItem;
       aElement.selected = true;
       await aElement.updateComplete;
       await element.updateComplete;
-      assert.equal(changeCalls, 1, 'change event called once on selection');
+      expect(changeCalls)
+          .withContext('change event called once on selection')
+          .toEqual(1);
       changeCalls = 0;
 
-      assert.equal(element.value, 'a', 'select method updates value');
-      assert.isTrue(
-          (element as unknown as WithSelectedText).selectedText === 'Apple',
-          'selectedText is updated');
-      assert.isTrue(
-          !!element.selected, 'there is a selected element after select');
+      expect(element.value)
+          .withContext('select method updates value')
+          .toEqual('a');
+      expect((element as unknown as WithSelectedText).selectedText === 'Apple')
+          .withContext('selectedText is updated')
+          .toBeTrue();
+      expect(!!element.selected)
+          .withContext('there is a selected element after select')
+          .toBeTrue();
 
-      assert.isFalse(firstElement.selected, 'the previous has be deselected');
-      assert.isTrue(aElement.selected, 'the element has selected prop');
-      assert.isTrue(
-          aElement === element.selected,
-          'element with selected prop is the same as selected on mwc-select');
+      expect(firstElement.selected)
+          .withContext('the previous has be deselected')
+          .toBeFalse();
+      expect(aElement.selected)
+          .withContext('the element has selected prop')
+          .toBeTrue();
+      expect(aElement === element.selected)
+          .withContext(
+              'element with selected prop is the same as selected on mwc-select')
+          .toBeTrue();
     });
 
     it('lazy selection', async () => {
@@ -644,14 +766,20 @@ describe('mwc-select:', () => {
       await rafPromise();
       await element.layout();
 
-      assert.equal(element.index, -1, 'unselected index when no children');
+      expect(element.index)
+          .withContext('unselected index when no children')
+          .toEqual(-1);
 
       fixt.template = lazy(itemsTemplate);
       await fixt.updateComplete;
       await element.updateComplete;
 
-      assert.equal(element.index, 3, 'index updates when lazily slotted');
-      assert.equal(element.value, 'c', 'value updates when lazily slotted');
+      expect(element.index)
+          .withContext('index updates when lazily slotted')
+          .toEqual(3);
+      expect(element.value)
+          .withContext('value updates when lazily slotted')
+          .toEqual('c');
     });
 
     it('selection via value prop', async () => {
@@ -659,55 +787,79 @@ describe('mwc-select:', () => {
       await rafPromise();
       await element.layout();
 
-      assert.equal(changeCalls, 0, 'change evt not called on startup');
-      assert.equal(element.value, '', 'initial value is blank');
-      assert.equal(
-          (element as unknown as WithSelectedText).selectedText, '',
-          'selectedText is blank');
-      assert.isTrue(!!element.selected, 'there is a selected element');
+      expect(changeCalls)
+          .withContext('change evt not called on startup')
+          .toEqual(0);
+      expect(element.value).withContext('initial value is blank').toEqual('');
+      expect((element as unknown as WithSelectedText).selectedText)
+          .withContext('selectedText is blank')
+          .toEqual('');
+      expect(!!element.selected)
+          .withContext('there is a selected element')
+          .toBeTrue();
 
       const firstElement = element.querySelector('mwc-list-item')!;
-      assert.isTrue(firstElement.selected, 'the element has selected prop');
+      expect(firstElement.selected)
+          .withContext('the element has selected prop')
+          .toBeTrue();
       const aElement = element.querySelector('[value="a"]') as ListItem;
 
       element.value = 'a';
       await element.updateComplete;
       await aElement.updateComplete;
-      assert.equal(changeCalls, 1, 'change event called once on selection');
+      expect(changeCalls)
+          .withContext('change event called once on selection')
+          .toEqual(1);
       changeCalls = 0;
 
-      assert.equal(element.value, 'a', 'setting value prop sets value prop');
-      assert.equal(element.index, 1, 'updates the index when matches');
-      assert.isTrue(
-          (element as unknown as WithSelectedText).selectedText === 'Apple',
-          'selectedText is updated');
-      assert.isTrue(
-          !!element.selected, 'there is a selected element after select');
+      expect(element.value)
+          .withContext('setting value prop sets value prop')
+          .toEqual('a');
+      expect(element.index)
+          .withContext('updates the index when matches')
+          .toEqual(1);
+      expect((element as unknown as WithSelectedText).selectedText === 'Apple')
+          .withContext('selectedText is updated')
+          .toBeTrue();
+      expect(!!element.selected)
+          .withContext('there is a selected element after select')
+          .toBeTrue();
 
-      assert.isFalse(firstElement.selected, 'the previous has be deselected');
-      assert.isTrue(aElement.selected, 'the element has selected prop');
-      assert.isTrue(
-          aElement === element.selected,
-          'element with selected prop is the same as selected on mwc-select');
+      expect(firstElement.selected)
+          .withContext('the previous has be deselected')
+          .toBeFalse();
+      expect(aElement.selected)
+          .withContext('the element has selected prop')
+          .toBeTrue();
+      expect(aElement === element.selected)
+          .withContext(
+              'element with selected prop is the same as selected on mwc-select')
+          .toBeTrue();
 
       element.value = 'nonexistent';
       await element.updateComplete;
       await aElement.updateComplete;
-      assert.equal(changeCalls, 1, 'change event called once on selection');
+      expect(changeCalls)
+          .withContext('change event called once on selection')
+          .toEqual(1);
       changeCalls = 0;
 
-      assert.equal(element.value, '', 'setting value prop sets value prop');
-      assert.equal(element.index, -1, 'nonexistent value sets index to -1');
-      assert.isTrue(
-          (element as unknown as WithSelectedText).selectedText === '',
-          'selectedText is empty when value doesn\'t match');
-      assert.isFalse(
-          !!element.selected,
-          'there is no selected element when value doesn\'t match');
+      expect(element.value)
+          .withContext('setting value prop sets value prop')
+          .toEqual('');
+      expect(element.index)
+          .withContext('nonexistent value sets index to -1')
+          .toEqual(-1);
+      expect((element as unknown as WithSelectedText).selectedText === '')
+          .withContext('selectedText is empty when value doesn\'t match')
+          .toBeTrue();
+      expect(!!element.selected)
+          .withContext('there is no selected element when value doesn\'t match')
+          .toBeFalse();
 
-      assert.isFalse(
-          aElement.selected,
-          'the previous element is deselcted when doesn\'t match');
+      expect(aElement.selected)
+          .withContext('the previous element is deselcted when doesn\'t match')
+          .toBeFalse();
     });
 
     it('label change selected', async () => {
@@ -723,22 +875,26 @@ describe('mwc-select:', () => {
       await fixt.updateComplete;
       await element.updateComplete;
 
-      assert.equal(element.index, 3, 'index updates when lazily slotted');
-      assert.equal(element.value, 'c', 'value updates when lazily slotted');
-      assert.equal(
-          (element as unknown as WithSelectedText).selectedText, 'Cucumber');
+      expect(element.index)
+          .withContext('index updates when lazily slotted')
+          .toEqual(3);
+      expect(element.value)
+          .withContext('value updates when lazily slotted')
+          .toEqual('c');
+      expect((element as unknown as WithSelectedText).selectedText)
+          .toEqual('Cucumber');
 
       element.selected!.textContent = 'Cherry';
       await element.updateComplete;
 
-      assert.equal(
-          (element as unknown as WithSelectedText).selectedText, 'Cucumber');
+      expect((element as unknown as WithSelectedText).selectedText)
+          .toEqual('Cucumber');
 
       await element.layoutOptions();
       await element.updateComplete;
 
-      assert.equal(
-          (element as unknown as WithSelectedText).selectedText, 'Cherry');
+      expect((element as unknown as WithSelectedText).selectedText)
+          .toEqual('Cherry');
     });
 
     afterEach(() => {

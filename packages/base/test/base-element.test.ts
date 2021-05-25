@@ -83,27 +83,27 @@ describe('base-element:', () => {
     });
 
     it('is an instance of base-element', () => {
-      assert.instanceOf(component, BaseElement);
+      expect(component).toBeInstanceOf(BaseElement);
     });
 
     it('shadowRoot focuses on #root after click', async () => {
       if (component === null) {
-        assert.isNotNull(component);
+        expect(component).not.toBeNull();
         return;
       }
       if (component.shadowRoot === null) {
-        assert.isNotNull(component.shadowRoot);
+        expect(component.shadowRoot).not.toBeNull();
         return;
       }
       if (shadowTargetElement === null) {
-        assert.isNotNull(shadowTargetElement);
+        expect(shadowTargetElement).not.toBeNull();
         return;
       }
 
       component.click();
       await component.updateComplete;
 
-      assert.equal(component.shadowRoot.activeElement, shadowTargetElement);
+      expect(component.shadowRoot.activeElement).toEqual(shadowTargetElement);
     });
   });
 
@@ -130,48 +130,48 @@ describe('base-element:', () => {
     });
 
     it('an instance of BaseElement', () => {
-      assert.instanceOf(component, BaseElement);
+      expect(component).toBeInstanceOf(BaseElement);
     });
 
     it('shadowRoot should not focus on #indirect after click', async () => {
       if (component === null) {
-        assert.isNotNull(component);
+        expect(component).not.toBeNull();
         return;
       }
       if (component.shadowRoot === null) {
-        assert.isNotNull(component.shadowRoot);
+        expect(component.shadowRoot).not.toBeNull();
         return;
       }
       if (shadowIndirectElement === null) {
-        assert.isNotNull(shadowIndirectElement);
+        expect(shadowIndirectElement).not.toBeNull();
         return;
       }
 
       component.click();
       await component.updateComplete;
 
-      assert.notEqual(
-          component.shadowRoot.activeElement, shadowIndirectElement);
+      expect(component.shadowRoot.activeElement)
+          .not.toEqual(shadowIndirectElement);
     });
 
     it('shadowRoot should not focus on #root after click', async () => {
       if (component === null) {
-        assert.isNotNull(component);
+        expect(component).not.toBeNull();
         return;
       }
       if (component.shadowRoot === null) {
-        assert.isNotNull(component.shadowRoot);
+        expect(component.shadowRoot).not.toBeNull();
         return;
       }
       if (shadowRootElement === null) {
-        assert.isNotNull(shadowRootElement);
+        expect(shadowRootElement).not.toBeNull();
         return;
       }
 
       component.click();
       await component.updateComplete;
 
-      assert.notEqual(component.shadowRoot.activeElement, shadowRootElement);
+      expect(component.shadowRoot.activeElement).not.toEqual(shadowRootElement);
     });
   });
 });

@@ -71,128 +71,129 @@ describe('aria-property:', () => {
 
     it('property sets with @property()', async () => {
       if (component === null) {
-        assert.isNotNull(component);
+        expect(component).not.toBeNull();
         return;
       }
       if (component.shadowRoot === null) {
-        assert.isNotNull(component.shadowRoot);
+        expect(component.shadowRoot).not.toBeNull();
         return;
       }
       if (shadowTargetElement === null) {
-        assert.isNotNull(shadowTargetElement);
+        expect(shadowTargetElement).not.toBeNull();
         return;
       }
-      assert.equal(component.ariaLabel, undefined);
+      expect(component.ariaLabel).toEqual(undefined);
       component.ariaLabel = 'foo';
       await component.updateComplete;
-      assert.isNull(component.getAttribute('aria-label'));
-      assert.equal(component.ariaLabel, 'foo');
-      assert.equal(shadowTargetElement.getAttribute('aria-label'), 'foo');
+      expect(component.getAttribute('aria-label')).toBeNull();
+      expect(component.ariaLabel).toEqual('foo');
+      expect(shadowTargetElement.getAttribute('aria-label')).toEqual('foo');
     });
 
     it('property sets with a getter and setter', async () => {
       if (component === null) {
-        assert.isNotNull(component);
+        expect(component).not.toBeNull();
         return;
       }
       if (component.shadowRoot === null) {
-        assert.isNotNull(component.shadowRoot);
+        expect(component.shadowRoot).not.toBeNull();
         return;
       }
       if (shadowTargetElement === null) {
-        assert.isNotNull(shadowTargetElement);
+        expect(shadowTargetElement).not.toBeNull();
         return;
       }
-      assert.equal(component.ariaChecked, undefined);
+      expect(component.ariaChecked).toEqual(undefined);
       component.ariaChecked = 'mixed';
       await component.updateComplete;
-      assert.isNull(component.getAttribute('aria-checked'));
-      assert.equal(component.ariaChecked, 'mixed');
-      assert.equal(shadowTargetElement.getAttribute('aria-checked'), 'mixed');
+      expect(component.getAttribute('aria-checked')).toBeNull();
+      expect(component.ariaChecked).toEqual('mixed');
+      expect(shadowTargetElement.getAttribute('aria-checked')).toEqual('mixed');
     });
 
     it('property sets with alternate order', async () => {
       if (component === null) {
-        assert.isNotNull(component);
+        expect(component).not.toBeNull();
         return;
       }
       if (component.shadowRoot === null) {
-        assert.isNotNull(component.shadowRoot);
+        expect(component.shadowRoot).not.toBeNull();
         return;
       }
       if (shadowTargetElement === null) {
-        assert.isNotNull(shadowTargetElement);
+        expect(shadowTargetElement).not.toBeNull();
         return;
       }
-      assert.equal(component.ariaOwns, undefined);
+      expect(component.ariaOwns).toEqual(undefined);
       component.ariaOwns = 'baz';
       await component.updateComplete;
-      assert.isNull(component.getAttribute('aria-owns'));
-      assert.equal(component.ariaOwns, 'baz');
-      assert.equal(shadowTargetElement.getAttribute('aria-owns'), 'baz');
+      expect(component.getAttribute('aria-owns')).toBeNull();
+      expect(component.ariaOwns).toEqual('baz');
+      expect(shadowTargetElement.getAttribute('aria-owns')).toEqual('baz');
     });
 
     it('attribute sets with @property()', async () => {
       if (component === null) {
-        assert.isNotNull(component);
+        expect(component).not.toBeNull();
         return;
       }
       if (component.shadowRoot === null) {
-        assert.isNotNull(component.shadowRoot);
+        expect(component.shadowRoot).not.toBeNull();
         return;
       }
       if (shadowTargetElement === null) {
-        assert.isNotNull(shadowTargetElement);
+        expect(shadowTargetElement).not.toBeNull();
         return;
       }
-      assert.equal(component.ariaLabel, undefined);
+      expect(component.ariaLabel).toEqual(undefined);
       component.setAttribute('aria-label', 'foo');
       await component.updateComplete;
-      assert.isNull(component.getAttribute('aria-label'));
-      assert.equal(component.ariaLabel, 'foo');
-      assert.equal(shadowTargetElement.getAttribute('aria-label'), 'foo');
+      expect(component.getAttribute('aria-label')).toBeNull();
+      expect(component.ariaLabel).toEqual('foo');
+      expect(shadowTargetElement.getAttribute('aria-label')).toEqual('foo');
     });
 
     it('attribute sets with a getter and setter', async () => {
       if (component === null) {
-        assert.isNotNull(component);
+        expect(component).not.toBeNull();
         return;
       }
       if (component.shadowRoot === null) {
-        assert.isNotNull(component.shadowRoot);
+        expect(component.shadowRoot).not.toBeNull();
         return;
       }
       if (shadowTargetElement === null) {
-        assert.isNotNull(shadowTargetElement);
+        expect(shadowTargetElement).not.toBeNull();
         return;
       }
-      assert.equal(component.ariaChecked, undefined);
+      expect(component.ariaChecked).toEqual(undefined);
       component.setAttribute('aria-checked', 'mixed');
       await component.updateComplete;
-      assert.isNull(component.getAttribute('aria-checked'));
-      assert.equal(component.ariaChecked, 'mixed');
-      assert.equal(shadowTargetElement?.getAttribute('aria-checked'), 'mixed');
+      expect(component.getAttribute('aria-checked')).toBeNull();
+      expect(component.ariaChecked).toEqual('mixed');
+      expect(shadowTargetElement?.getAttribute('aria-checked'))
+          .toEqual('mixed');
     });
 
     it('attribute sets with alternate order', async () => {
       if (component === null) {
-        assert.isNotNull(component);
+        expect(component).not.toBeNull();
         return;
       }
       if (component.shadowRoot === null) {
-        assert.isNotNull(component.shadowRoot);
+        expect(component.shadowRoot).not.toBeNull();
         return;
       }
       if (shadowTargetElement === null) {
-        assert.isNotNull(shadowTargetElement);
+        expect(shadowTargetElement).not.toBeNull();
         return;
       }
-      assert.equal(component.ariaOwns, undefined);
+      expect(component.ariaOwns).toEqual(undefined);
       component.setAttribute('aria-owns', 'baz');
       await component.updateComplete;
-      assert.isNull(component.getAttribute('aria-owns'));
-      assert.equal(component.ariaOwns, 'baz');
-      assert.equal(shadowTargetElement.getAttribute('aria-owns'), 'baz');
+      expect(component.getAttribute('aria-owns')).toBeNull();
+      expect(component.ariaOwns).toEqual('baz');
+      expect(shadowTargetElement.getAttribute('aria-owns')).toEqual('baz');
     });
   });
 
@@ -218,59 +219,60 @@ describe('aria-property:', () => {
 
     it('removes attribute from @property', async () => {
       if (component === null) {
-        assert.isNotNull(component);
+        expect(component).not.toBeNull();
         return;
       }
       if (component.shadowRoot === null) {
-        assert.isNotNull(component.shadowRoot);
+        expect(component.shadowRoot).not.toBeNull();
         return;
       }
       if (shadowTargetElement === null) {
-        assert.isNotNull(shadowTargetElement);
+        expect(shadowTargetElement).not.toBeNull();
         return;
       }
       await component.updateComplete;
-      assert.isNull(component.getAttribute('aria-label'));
-      assert.equal(component.ariaLabel, 'foo');
-      assert.equal(shadowTargetElement?.getAttribute('aria-label'), 'foo');
+      expect(component.getAttribute('aria-label')).toBeNull();
+      expect(component.ariaLabel).toEqual('foo');
+      expect(shadowTargetElement?.getAttribute('aria-label')).toEqual('foo');
     });
 
     it('removes attribute from getter and setter', async () => {
       if (component === null) {
-        assert.isNotNull(component);
+        expect(component).not.toBeNull();
         return;
       }
       if (component.shadowRoot === null) {
-        assert.isNotNull(component.shadowRoot);
+        expect(component.shadowRoot).not.toBeNull();
         return;
       }
       if (shadowTargetElement === null) {
-        assert.isNotNull(shadowTargetElement);
+        expect(shadowTargetElement).not.toBeNull();
         return;
       }
       await component.updateComplete;
-      assert.isNull(component.getAttribute('aria-checked'));
-      assert.equal(component.ariaChecked, 'mixed');
-      assert.equal(shadowTargetElement?.getAttribute('aria-checked'), 'mixed');
+      expect(component.getAttribute('aria-checked')).toBeNull();
+      expect(component.ariaChecked).toEqual('mixed');
+      expect(shadowTargetElement?.getAttribute('aria-checked'))
+          .toEqual('mixed');
     });
 
     it('removes attribute from alternate order', async () => {
       if (component === null) {
-        assert.isNotNull(component);
+        expect(component).not.toBeNull();
         return;
       }
       if (component.shadowRoot === null) {
-        assert.isNotNull(component.shadowRoot);
+        expect(component.shadowRoot).not.toBeNull();
         return;
       }
       if (shadowTargetElement === null) {
-        assert.isNotNull(shadowTargetElement);
+        expect(shadowTargetElement).not.toBeNull();
         return;
       }
       await component.updateComplete;
-      assert.isNull(component.getAttribute('aria-owns'));
-      assert.equal(component.ariaOwns, 'baz');
-      assert.equal(shadowTargetElement?.getAttribute('aria-owns'), 'baz');
+      expect(component.getAttribute('aria-owns')).toBeNull();
+      expect(component.ariaOwns).toEqual('baz');
+      expect(shadowTargetElement?.getAttribute('aria-owns')).toEqual('baz');
     });
   });
 });

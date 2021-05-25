@@ -103,31 +103,31 @@ describe('mwc-menu', () => {
     });
 
     it('initializes as an mwc-menu', () => {
-      assert.instanceOf(element, Menu);
-      assert.equal(element.open, false);
-      assert.equal(element.quick, false);
-      assert.equal(element.wrapFocus, false);
-      assert.equal(element.innerRole, 'menu');
-      assert.equal(element.corner, 'TOP_START');
-      assert.equal(element.x, null);
-      assert.equal(element.y, null);
-      assert.equal(element.absolute, false);
-      assert.equal(element.multi, false);
-      assert.equal(element.activatable, false);
-      assert.equal(element.fixed, false);
-      assert.equal(element.forceGroupSelection, false);
-      assert.equal(element.fullwidth, false);
+      expect(element).toBeInstanceOf(Menu);
+      expect(element.open).toEqual(false);
+      expect(element.quick).toEqual(false);
+      expect(element.wrapFocus).toEqual(false);
+      expect(element.innerRole).toEqual('menu');
+      expect(element.corner).toEqual('TOP_START');
+      expect(element.x).toEqual(null);
+      expect(element.y).toEqual(null);
+      expect(element.absolute).toEqual(false);
+      expect(element.multi).toEqual(false);
+      expect(element.activatable).toEqual(false);
+      expect(element.fixed).toEqual(false);
+      expect(element.forceGroupSelection).toEqual(false);
+      expect(element.fullwidth).toEqual(false);
     });
 
     it('surface is visible when open', async () => {
       const surface =
           element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
-      assert.isTrue(surface.hasAttribute('hidden'));
-      assert.isFalse(surface.open);
+      expect(surface.hasAttribute('hidden')).toBeTrue();
+      expect(surface.open).toBeFalse();
       element.open = true;
       await element.updateComplete;
-      assert.isFalse(surface.hasAttribute('hidden'));
-      assert.isTrue(surface.open);
+      expect(surface.hasAttribute('hidden')).toBeFalse();
+      expect(surface.open).toBeTrue();
     });
 
     it('`items` returns list items', async () => {
@@ -135,120 +135,120 @@ describe('mwc-menu', () => {
       element.layout(true);
       await element.updateComplete;
       const items = element.items;
-      assert.equal(items.length, 1);
-      assert.equal(items[0], element.children[0] as ListItem);
+      expect(items.length).toEqual(1);
+      expect(items[0]).toEqual(element.children[0] as ListItem);
     });
 
     it('`anchor` is passed to surface', async () => {
       const surface =
           element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
-      assert.equal(element.anchor, null);
-      assert.equal(surface.anchor, null);
+      expect(element.anchor).toEqual(null);
+      expect(surface.anchor).toEqual(null);
       element.anchor = document.body;
       await element.updateComplete;
-      assert.equal(surface.anchor, document.body);
+      expect(surface.anchor).toEqual(document.body);
     });
 
     it('`quick` is passed to surface', async () => {
       const surface =
           element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
-      assert.equal(element.quick, false);
-      assert.equal(surface.quick, false);
+      expect(element.quick).toEqual(false);
+      expect(surface.quick).toEqual(false);
       element.quick = true;
       await element.updateComplete;
-      assert.equal(surface.quick, true);
+      expect(surface.quick).toEqual(true);
     });
 
     it('`corner` is passed to surface', async () => {
       const surface =
           element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
-      assert.equal(element.corner, 'TOP_START');
-      assert.equal(surface.corner, 'TOP_START');
+      expect(element.corner).toEqual('TOP_START');
+      expect(surface.corner).toEqual('TOP_START');
       element.corner = 'BOTTOM_START';
       await element.updateComplete;
-      assert.equal(surface.corner, 'BOTTOM_START');
+      expect(surface.corner).toEqual('BOTTOM_START');
     });
 
     it('`menuCorner` is passed to surface', async () => {
       const surface =
           element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
-      assert.equal(element.menuCorner, 'START');
-      assert.equal(surface.menuCorner, 'START');
+      expect(element.menuCorner).toEqual('START');
+      expect(surface.menuCorner).toEqual('START');
       element.menuCorner = 'END';
       await element.updateComplete;
-      assert.equal(surface.menuCorner, 'END');
+      expect(surface.menuCorner).toEqual('END');
     });
 
     it('`x` and `y` are passed to surface', async () => {
       const surface =
           element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
-      assert.equal(element.x, null);
-      assert.equal(element.y, null);
-      assert.equal(surface.x, null);
-      assert.equal(surface.y, null);
+      expect(element.x).toEqual(null);
+      expect(element.y).toEqual(null);
+      expect(surface.x).toEqual(null);
+      expect(surface.y).toEqual(null);
       element.x = 111;
       element.y = 101;
       await element.updateComplete;
-      assert.equal(element.x, 111);
-      assert.equal(element.y, 101);
-      assert.equal(surface.x, 111);
-      assert.equal(surface.y, 101);
+      expect(element.x).toEqual(111);
+      expect(element.y).toEqual(101);
+      expect(surface.x).toEqual(111);
+      expect(surface.y).toEqual(101);
     });
 
     it('`absolute` is passed to surface', async () => {
       const surface =
           element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
-      assert.equal(element.absolute, false);
-      assert.equal(surface.absolute, false);
+      expect(element.absolute).toEqual(false);
+      expect(surface.absolute).toEqual(false);
       element.absolute = true;
       await element.updateComplete;
-      assert.equal(element.absolute, true);
-      assert.equal(surface.absolute, true);
+      expect(element.absolute).toEqual(true);
+      expect(surface.absolute).toEqual(true);
     });
 
     it('`fixed` is passed to surface', async () => {
       const surface =
           element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
-      assert.equal(element.fixed, false);
-      assert.equal(surface.fixed, false);
+      expect(element.fixed).toEqual(false);
+      expect(surface.fixed).toEqual(false);
       element.fixed = true;
       await element.updateComplete;
-      assert.equal(element.fixed, true);
-      assert.equal(surface.fixed, true);
+      expect(element.fixed).toEqual(true);
+      expect(surface.fixed).toEqual(true);
     });
 
     it('`fullwidth` is passed to surface', async () => {
       const surface =
           element.shadowRoot!.querySelector<MenuSurface>('.mdc-menu')!;
-      assert.equal(element.fullwidth, false);
-      assert.equal(surface.fullwidth, false);
+      expect(element.fullwidth).toEqual(false);
+      expect(surface.fullwidth).toEqual(false);
       element.fullwidth = true;
       await element.updateComplete;
-      assert.equal(element.fullwidth, true);
-      assert.equal(surface.fullwidth, true);
+      expect(element.fullwidth).toEqual(true);
+      expect(surface.fullwidth).toEqual(true);
     });
 
     it('correct roles are passed to inner list', async () => {
       const list =
           element.shadowRoot!.querySelector<List>('.mdc-deprecated-list')!;
-      assert.equal(element.innerRole, 'menu');
-      assert.equal(list.innerRole, 'menu');
-      assert.equal(list.itemRoles, 'menuitem');
+      expect(element.innerRole).toEqual('menu');
+      expect(list.innerRole).toEqual('menu');
+      expect(list.itemRoles).toEqual('menuitem');
       element.innerRole = 'listbox';
       await element.updateComplete;
-      assert.equal(list.innerRole, 'listbox');
-      assert.equal(list.itemRoles, 'option');
+      expect(list.innerRole).toEqual('listbox');
+      expect(list.itemRoles).toEqual('option');
     });
 
     it('`activatable` is set on inner list', async () => {
       const list =
           element.shadowRoot!.querySelector<List>('.mdc-deprecated-list')!;
-      assert.equal(element.activatable, false);
-      assert.equal(list.activatable, false);
+      expect(element.activatable).toEqual(false);
+      expect(list.activatable).toEqual(false);
       element.activatable = true;
       await element.updateComplete;
-      assert.equal(element.activatable, true);
-      assert.equal(list.activatable, true);
+      expect(element.activatable).toEqual(true);
+      expect(list.activatable).toEqual(true);
     });
   });
 
@@ -268,12 +268,12 @@ describe('mwc-menu', () => {
     it('`multi` is set on inner list', async () => {
       const list =
           element.shadowRoot!.querySelector<List>('.mdc-deprecated-list')!;
-      assert.equal(element.multi, true);
-      assert.equal(list.multi, true);
+      expect(element.multi).toEqual(true);
+      expect(list.multi).toEqual(true);
       element.multi = false;
       await element.updateComplete;
-      assert.equal(element.multi, false);
-      assert.equal(list.multi, false);
+      expect(element.multi).toEqual(false);
+      expect(list.multi).toEqual(false);
     });
 
     it('clicking items sets selection', async () => {
@@ -282,8 +282,8 @@ describe('mwc-menu', () => {
       item0.click();
       item1.click();
       const items = element.selected! as ListItem[];
-      assert.equal(items[0], item0);
-      assert.equal(items[1], item1);
+      expect(items[0]).toEqual(item0);
+      expect(items[1]).toEqual(item1);
     });
   });
 
@@ -318,13 +318,13 @@ describe('mwc-menu', () => {
       const [item1a, item1b, item2a, item2b] =
           element.children as unknown as ListItem[];
       item1a.click();
-      assert.deepEqual(element.selected!, [item1a]);
+      expect(element.selected!).toEqual([item1a]);
       item1b.click();
-      assert.deepEqual(element.selected!, [item1b]);
+      expect(element.selected!).toEqual([item1b]);
       item2a.click();
-      assert.deepEqual(element.selected!, [item1b, item2a]);
+      expect(element.selected!).toEqual([item1b, item2a]);
       item2b.click();
-      assert.deepEqual(element.selected!, [item1b, item2b]);
+      expect(element.selected!).toEqual([item1b, item2b]);
     });
   });
 
@@ -336,9 +336,9 @@ describe('mwc-menu', () => {
     });
 
     it('opens the menu', async () => {
-      assert.isFalse(element.open);
+      expect(element.open).toBeFalse();
       element.show();
-      assert.isTrue(element.open);
+      expect(element.open).toBeTrue();
     });
   });
 
@@ -350,9 +350,9 @@ describe('mwc-menu', () => {
     });
 
     it('closes the menu', async () => {
-      assert.isTrue(element.open);
+      expect(element.open).toBeTrue();
       element.close();
-      assert.isFalse(element.open);
+      expect(element.open).toBeFalse();
     });
   });
 
@@ -370,12 +370,12 @@ describe('mwc-menu', () => {
 
     it('`index` returns selected index', async () => {
       const list = element.shadowRoot!.querySelector('mwc-list')!;
-      assert.equal(list.index, -1);
-      assert.equal(element.index, -1);
+      expect(list.index).toEqual(-1);
+      expect(element.index).toEqual(-1);
       element.select(1);
       await element.updateComplete;
-      assert.equal(list.index, 1);
-      assert.equal(element.index, 1);
+      expect(list.index).toEqual(1);
+      expect(element.index).toEqual(1);
     });
 
     it('`selected` returns selected item', async () => {
@@ -383,15 +383,15 @@ describe('mwc-menu', () => {
       const item = element.children[1] as ListItem;
       element.select(1);
       await element.updateComplete;
-      assert.equal(element.selected, item);
-      assert.equal(list.selected, item);
+      expect(element.selected).toEqual(item);
+      expect(list.selected).toEqual(item);
     });
 
     it('clicking an item closes the menu', async () => {
       const item = element.children[1] as ListItem;
       item.click();
-      assert.equal(element.open, false);
-      assert.equal(element.selected, item);
+      expect(element.open).toEqual(false);
+      expect(element.selected).toEqual(item);
     });
   });
 });
@@ -412,19 +412,18 @@ describe('mwc-menu-surface', () => {
     });
 
     it('initializes as an mwc-menu-surface', () => {
-      assert.instanceOf(element, MenuSurface);
-      assert.equal(element.absolute, false);
-      assert.equal(element.fullwidth, false);
-      assert.equal(element.fixed, false);
-      assert.equal(element.x, null);
-      assert.equal(element.y, null);
-      assert.equal(element.quick, false);
-      assert.equal(element.open, false);
-      assert.equal(element.corner, 'TOP_START');
-      assert.equal(element.menuCorner, 'START');
-      assert.equal(
-          (element as unknown as MenuCornerInternals).bitwiseCorner,
-          CornerEnum.TOP_START);
+      expect(element).toBeInstanceOf(MenuSurface);
+      expect(element.absolute).toEqual(false);
+      expect(element.fullwidth).toEqual(false);
+      expect(element.fixed).toEqual(false);
+      expect(element.x).toEqual(null);
+      expect(element.y).toEqual(null);
+      expect(element.quick).toEqual(false);
+      expect(element.open).toEqual(false);
+      expect(element.corner).toEqual('TOP_START');
+      expect(element.menuCorner).toEqual('START');
+      expect((element as unknown as MenuCornerInternals).bitwiseCorner)
+          .toEqual(CornerEnum.TOP_START);
     });
   });
 
@@ -438,10 +437,10 @@ describe('mwc-menu-surface', () => {
     it('sets correct class', async () => {
       const fixedClass = 'mdc-menu-surface--fixed';
       const surface = element.shadowRoot!.querySelector('.mdc-menu-surface')!;
-      assert.isTrue(surface.classList.contains(fixedClass));
+      expect(surface.classList.contains(fixedClass)).toBeTrue();
       element.fixed = false;
       await element.updateComplete;
-      assert.isFalse(surface.classList.contains(fixedClass));
+      expect(surface.classList.contains(fixedClass)).toBeFalse();
     });
   });
 
@@ -455,10 +454,10 @@ describe('mwc-menu-surface', () => {
     it('sets correct class', async () => {
       const fullwidthClass = 'mdc-menu-surface--fullwidth';
       const surface = element.shadowRoot!.querySelector('.mdc-menu-surface')!;
-      assert.isTrue(surface.classList.contains(fullwidthClass));
+      expect(surface.classList.contains(fullwidthClass)).toBeTrue();
       element.fullwidth = false;
       await element.updateComplete;
-      assert.isFalse(surface.classList.contains(fullwidthClass));
+      expect(surface.classList.contains(fullwidthClass)).toBeFalse();
     });
   });
 
@@ -472,14 +471,14 @@ describe('mwc-menu-surface', () => {
     it('`show()` opens surface', async () => {
       element.show();
       await element.updateComplete;
-      assert.equal(element.open, true);
+      expect(element.open).toEqual(true);
     });
 
     it('`close()` closes surface', async () => {
       element.show();
       await element.updateComplete;
       element.close();
-      assert.equal(element.open, false);
+      expect(element.open).toEqual(false);
     });
 
     it('closing fires the closed event after raf', async () => {
@@ -491,7 +490,7 @@ describe('mwc-menu-surface', () => {
       element.close();
       await element.updateComplete;
       await rafPromise();
-      assert.isTrue(fake.called);
+      expect(fake.called).toBeTrue();
     });
 
     it('closing fires the closing event immediately', async () => {
@@ -502,7 +501,7 @@ describe('mwc-menu-surface', () => {
       await rafPromise();
       element.close();
       await element.updateComplete;
-      assert.isTrue(fake.called);
+      expect(fake.called).toBeTrue();
     });
 
     it('opening fires the opened event', async () => {
@@ -511,7 +510,7 @@ describe('mwc-menu-surface', () => {
       element.show();
       await element.updateComplete;
       await rafPromise();
-      assert.isTrue(fake.called);
+      expect(fake.called).toBeTrue();
     });
 
     it('escape key closes surface', async () => {
@@ -526,7 +525,7 @@ describe('mwc-menu-surface', () => {
 
       await rafPromise();
       await element.updateComplete;
-      assert.isFalse(element.open);
+      expect(element.open).toBeFalse();
     });
 
     it('clicking outside the surface closes surface', async () => {
@@ -536,7 +535,7 @@ describe('mwc-menu-surface', () => {
       document.body.dispatchEvent(new MouseEvent('click'));
       await rafPromise();
       await element.updateComplete;
-      assert.isFalse(element.open);
+      expect(element.open).toBeFalse();
     });
 
     it('respects stayOpenOnBodyClick', async () => {
@@ -547,7 +546,7 @@ describe('mwc-menu-surface', () => {
       document.body.dispatchEvent(new MouseEvent('click'));
       await rafPromise();
       await element.updateComplete;
-      assert.isTrue(element.open);
+      expect(element.open).toBeTrue();
     });
   });
 
@@ -560,9 +559,9 @@ describe('mwc-menu-surface', () => {
 
     it('`menuCorner` doesnt flip corners on init', async () => {
       const internals = element as unknown as MenuCornerInternals;
-      assert.equal(internals.previousMenuCorner, null);
-      assert.equal(internals.bitwiseCorner, CornerEnum.TOP_START);
-      assert.equal(element.corner, 'TOP_START');
+      expect(internals.previousMenuCorner).toEqual(null);
+      expect(internals.bitwiseCorner).toEqual(CornerEnum.TOP_START);
+      expect(element.corner).toEqual('TOP_START');
     });
 
     it('`menuCorner` flips corners on init with `END`', async () => {
@@ -571,9 +570,9 @@ describe('mwc-menu-surface', () => {
       element = fixt.root.querySelector('mwc-menu-surface')!;
       await element.updateComplete;
       const internals = element as unknown as MenuCornerInternals;
-      assert.equal(internals.previousMenuCorner, 'END');
-      assert.equal(internals.bitwiseCorner, CornerEnum.TOP_END);
-      assert.equal(element.corner, 'TOP_START');
+      expect(internals.previousMenuCorner).toEqual('END');
+      expect(internals.bitwiseCorner).toEqual(CornerEnum.TOP_END);
+      expect(element.corner).toEqual('TOP_START');
     });
 
     it('`menuCorner` flips after initialization', async () => {
@@ -583,17 +582,17 @@ describe('mwc-menu-surface', () => {
 
       await element.updateComplete;
 
-      assert.equal(internals.previousMenuCorner, 'END');
-      assert.equal(internals.bitwiseCorner, CornerEnum.TOP_END);
-      assert.equal(element.corner, 'TOP_START');
+      expect(internals.previousMenuCorner).toEqual('END');
+      expect(internals.bitwiseCorner).toEqual(CornerEnum.TOP_END);
+      expect(element.corner).toEqual('TOP_START');
 
       element.menuCorner = 'START';
 
       await element.updateComplete;
 
-      assert.equal(internals.previousMenuCorner, 'START');
-      assert.equal(internals.bitwiseCorner, CornerEnum.TOP_START);
-      assert.equal(element.corner, 'TOP_START');
+      expect(internals.previousMenuCorner).toEqual('START');
+      expect(internals.bitwiseCorner).toEqual(CornerEnum.TOP_START);
+      expect(element.corner).toEqual('TOP_START');
     });
 
     it('`menuCorner` wont flip with invalid/same val', async () => {
@@ -603,41 +602,41 @@ describe('mwc-menu-surface', () => {
 
       await element.updateComplete;
 
-      assert.equal(internals.previousMenuCorner, null);
-      assert.equal(internals.bitwiseCorner, CornerEnum.TOP_START);
-      assert.equal(element.corner, 'TOP_START');
+      expect(internals.previousMenuCorner).toEqual(null);
+      expect(internals.bitwiseCorner).toEqual(CornerEnum.TOP_START);
+      expect(element.corner).toEqual('TOP_START');
 
       element.menuCorner = 'START';
 
       await element.updateComplete;
 
-      assert.equal(internals.previousMenuCorner, null);
-      assert.equal(internals.bitwiseCorner, CornerEnum.TOP_START);
-      assert.equal(element.corner, 'TOP_START');
+      expect(internals.previousMenuCorner).toEqual(null);
+      expect(internals.bitwiseCorner).toEqual(CornerEnum.TOP_START);
+      expect(element.corner).toEqual('TOP_START');
 
       element.menuCorner = 'END';
 
       await element.updateComplete;
 
-      assert.equal(internals.previousMenuCorner, 'END');
-      assert.equal(internals.bitwiseCorner, CornerEnum.TOP_END);
-      assert.equal(element.corner, 'TOP_START');
+      expect(internals.previousMenuCorner).toEqual('END');
+      expect(internals.bitwiseCorner).toEqual(CornerEnum.TOP_END);
+      expect(element.corner).toEqual('TOP_START');
 
       (element as unknown as {menuCorner: 'start'}).menuCorner = 'start';
 
       await element.updateComplete;
 
-      assert.equal(internals.previousMenuCorner, 'END');
-      assert.equal(internals.bitwiseCorner, CornerEnum.TOP_END);
-      assert.equal(element.corner, 'TOP_START');
+      expect(internals.previousMenuCorner).toEqual('END');
+      expect(internals.bitwiseCorner).toEqual(CornerEnum.TOP_END);
+      expect(element.corner).toEqual('TOP_START');
 
       element.menuCorner = 'END';
 
       await element.updateComplete;
 
-      assert.equal(internals.previousMenuCorner, 'END');
-      assert.equal(internals.bitwiseCorner, CornerEnum.TOP_END);
-      assert.equal(element.corner, 'TOP_START');
+      expect(internals.previousMenuCorner).toEqual('END');
+      expect(internals.bitwiseCorner).toEqual(CornerEnum.TOP_END);
+      expect(element.corner).toEqual('TOP_START');
     });
 
     it('`corner` internals flip when `menuCorner` flipped', async () => {
@@ -647,25 +646,25 @@ describe('mwc-menu-surface', () => {
 
       await element.updateComplete;
 
-      assert.equal(internals.previousMenuCorner, null);
-      assert.equal(internals.bitwiseCorner, CornerEnum.TOP_END);
-      assert.equal(element.corner, 'TOP_END');
+      expect(internals.previousMenuCorner).toEqual(null);
+      expect(internals.bitwiseCorner).toEqual(CornerEnum.TOP_END);
+      expect(element.corner).toEqual('TOP_END');
 
       element.menuCorner = 'END';
 
       await element.updateComplete;
 
-      assert.equal(internals.previousMenuCorner, 'END');
-      assert.equal(internals.bitwiseCorner, CornerEnum.TOP_START);
-      assert.equal(element.corner, 'TOP_END');
+      expect(internals.previousMenuCorner).toEqual('END');
+      expect(internals.bitwiseCorner).toEqual(CornerEnum.TOP_START);
+      expect(element.corner).toEqual('TOP_END');
 
       element.corner = 'TOP_START';
 
       await element.updateComplete;
 
-      assert.equal(internals.previousMenuCorner, 'END');
-      assert.equal(internals.bitwiseCorner, CornerEnum.TOP_END);
-      assert.equal(element.corner, 'TOP_START');
+      expect(internals.previousMenuCorner).toEqual('END');
+      expect(internals.bitwiseCorner).toEqual(CornerEnum.TOP_END);
+      expect(element.corner).toEqual('TOP_START');
     });
   });
 
@@ -704,12 +703,12 @@ describe('mwc-menu-surface', () => {
       await rafPromise();
       innerFocusedElement.focus();
       await rafPromise();
-      assert.equal(document.activeElement, fixt);
-      assert.equal(fixt.shadowRoot!.activeElement, innerFocusedElement);
+      expect(document.activeElement).toEqual(fixt);
+      expect(fixt.shadowRoot!.activeElement).toEqual(innerFocusedElement);
       element.close();
       await rafPromise();
       await element.updateComplete;
-      assert.equal(document.activeElement, focusedElement);
+      expect(document.activeElement).toEqual(focusedElement);
     });
   });
 });

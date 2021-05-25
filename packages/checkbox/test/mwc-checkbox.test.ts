@@ -54,30 +54,30 @@ describe('mwc-checkbox', () => {
     });
 
     it('initializes as an mwc-checkbox', () => {
-      assert.instanceOf(element, Checkbox);
-      assert.equal(element.checked, false);
-      assert.equal(element.indeterminate, false);
-      assert.equal(element.disabled, false);
-      assert.equal(element.value, '');
+      expect(element).toBeInstanceOf(Checkbox);
+      expect(element.checked).toEqual(false);
+      expect(element.indeterminate).toEqual(false);
+      expect(element.disabled).toEqual(false);
+      expect(element.value).toEqual('');
     });
 
     it('element.formElement returns the native checkbox element', async () => {
       await element.updateComplete;
-      assert.instanceOf(internals.formElement, HTMLElement);
-      assert.equal(internals.formElement.localName, 'input');
+      expect(internals.formElement).toBeInstanceOf(HTMLElement);
+      expect(internals.formElement.localName).toEqual('input');
     });
 
     it('user input emits `change` event', async () => {
       const callback = hanbi.spy();
       element.addEventListener('change', callback.handler);
       element.click();
-      assert.equal(callback.callCount, 1);
+      expect(callback.callCount).toEqual(1);
     });
 
     it('user input updates checked state', async () => {
       element.click();
       await element.updateComplete;
-      assert.equal(element.checked, true);
+      expect(element.checked).toEqual(true);
     });
 
     it('change event has updated values for `checked`', () => {
@@ -86,7 +86,7 @@ describe('mwc-checkbox', () => {
         changeChecked = element.checked;
       });
       element.click();
-      assert.equal(changeChecked, true);
+      expect(changeChecked).toBeTruthy();
     });
 
     it('does not animate after being hidden', async () => {
@@ -101,7 +101,7 @@ describe('mwc-checkbox', () => {
       await rafPromise();
       element.style.display = '';
       await rafPromise();
-      assert.equal(internals.animationClass, '');
+      expect(internals.animationClass).toEqual('');
     });
   });
 
@@ -115,10 +115,10 @@ describe('mwc-checkbox', () => {
 
     it('get/set updates the checked property on the native checkbox element',
        async () => {
-         assert.equal(internals.formElement.checked, true);
+         expect(internals.formElement.checked).toEqual(true);
          element.checked = false;
          await element.updateComplete;
-         assert.equal(internals.formElement.checked, false);
+         expect(internals.formElement.checked).toEqual(false);
        });
   });
 
@@ -132,12 +132,12 @@ describe('mwc-checkbox', () => {
 
     it('get/set updates the indeterminate property on the native checkbox element',
        async () => {
-         assert.equal(internals.formElement.indeterminate, true);
-         assert.equal(
-             internals.formElement.getAttribute('aria-checked'), 'mixed');
+         expect(internals.formElement.indeterminate).toEqual(true);
+         expect(internals.formElement.getAttribute('aria-checked'))
+             .toEqual('mixed');
          element.indeterminate = false;
          await element.updateComplete;
-         assert.equal(internals.formElement.indeterminate, false);
+         expect(internals.formElement.indeterminate).toEqual(false);
        });
   });
 
@@ -151,10 +151,10 @@ describe('mwc-checkbox', () => {
 
     it('get/set updates the disabled property on the native checkbox element',
        async () => {
-         assert.equal(internals.formElement.disabled, true);
+         expect(internals.formElement.disabled).toEqual(true);
          element.disabled = false;
          await element.updateComplete;
-         assert.equal(internals.formElement.disabled, false);
+         expect(internals.formElement.disabled).toEqual(false);
        });
   });
 
@@ -167,10 +167,10 @@ describe('mwc-checkbox', () => {
     });
 
     it('get/set updates the value of the native checkbox element', async () => {
-      assert.equal(internals.formElement.value, 'new value');
+      expect(internals.formElement.value).toEqual('new value');
       element.value = 'new value 2';
       await element.updateComplete;
-      assert.equal(internals.formElement.value, 'new value 2');
+      expect(internals.formElement.value).toEqual('new value 2');
     });
   });
 });

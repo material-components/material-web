@@ -20,6 +20,6 @@ describe('mwc-icon', () => {
   });
 
   it('initializes as an mwc-icon', () => {
-    assert.instanceOf(element, Icon);
+    expect(element).toBeInstanceOf(Icon);
   });
 });

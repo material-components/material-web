@@ -23,7 +23,7 @@ describe('mwc-icon-button', () => {
   });
 
   it('initializes as an mwc-icon-button', () => {
-    assert.instanceOf(element, IconButton);
+    expect(element).toBeInstanceOf(IconButton);
   });
 
   it('setting `icon` updates the textContent inside <i class="mdc-icon-button__icon mdc-icon-button__icon--on">',
@@ -31,11 +31,11 @@ describe('mwc-icon-button', () => {
        element.icon = 'check';
        await element.updateComplete;
        const icon = element.shadowRoot!.querySelector(ICON_SELECTOR)!;
-       assert.instanceOf(icon, HTMLElement);
-       assert.equal(icon.textContent!.trim(), 'check');
+       expect(icon).toBeInstanceOf(HTMLElement);
+       expect(icon.textContent!.trim()).toEqual('check');
        element.icon = 'menu';
        await element.updateComplete;
-       assert.equal(icon.textContent!.trim(), 'menu');
+       expect(icon.textContent!.trim()).toEqual('menu');
      });
 
   it('setting `ariaLabel` updates the aria-label attribute on the native button element',
@@ -44,7 +44,7 @@ describe('mwc-icon-button', () => {
        element.ariaLabel = ariaLabel;
        await element.updateComplete;
        const button = element.shadowRoot!.querySelector('button')!;
-       assert.equal(button.getAttribute('aria-label'), ariaLabel);
+       expect(button.getAttribute('aria-label')).toEqual(ariaLabel);
      });
 
   it('setting `disabled` updates the disabled attribute on the native button element',
@@ -52,11 +52,11 @@ describe('mwc-icon-button', () => {
        element.disabled = true;
        await element.updateComplete;
        const button = element.shadowRoot!.querySelector('button')!;
-       assert.equal(button.hasAttribute('disabled'), true);
+       expect(button.hasAttribute('disabled')).toEqual(true);
 
        element.disabled = false;
        await element.updateComplete;
-       assert.equal(button.hasAttribute('disabled'), false);
+       expect(button.hasAttribute('disabled')).toEqual(false);
      });
 
   const svgTemplate = document.createElement('template');
@@ -65,13 +65,13 @@ describe('mwc-icon-button', () => {
 
   it('default node will serve as the on icon', async () => {
     const iconQuery = svgTemplate.content.querySelector('svg')!;
-    assert.instanceOf(iconQuery, SVGElement);
+    expect(iconQuery).toBeInstanceOf(SVGElement);
 
     const icon = iconQuery.cloneNode(true);
     element.appendChild(icon);
     await element.updateComplete;
     const root = element.shadowRoot!;
     const iconSlot = root.querySelector('slot') as HTMLSlotElement;
-    assert.include(iconSlot.assignedNodes(), icon);
+    expect(iconSlot.assignedNodes()).toContain(icon);
   });
 });

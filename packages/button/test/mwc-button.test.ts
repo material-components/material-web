@@ -54,16 +54,16 @@ describe('mwc-button', () => {
     });
 
     it('initializes as an mwc-button', () => {
-      assert.instanceOf(element, Button);
-      assert.isFalse(element.raised);
-      assert.isFalse(element.unelevated);
-      assert.isFalse(element.outlined);
-      assert.isFalse(element.dense);
-      assert.isFalse(element.disabled);
-      assert.isFalse(element.trailingIcon);
-      assert.isFalse(element.fullwidth);
-      assert.equal(element.icon, '');
-      assert.equal(element.label, '');
+      expect(element).toBeInstanceOf(Button);
+      expect(element.raised).toBeFalse();
+      expect(element.unelevated).toBeFalse();
+      expect(element.outlined).toBeFalse();
+      expect(element.dense).toBeFalse();
+      expect(element.disabled).toBeFalse();
+      expect(element.trailingIcon).toBeFalse();
+      expect(element.fullwidth).toBeFalse();
+      expect(element.icon).toEqual('');
+      expect(element.label).toEqual('');
     });
   });
 
@@ -78,11 +78,11 @@ describe('mwc-button', () => {
        async () => {
          const button = element.shadowRoot!.querySelector('button')!;
 
-         assert.isTrue(button.hasAttribute('disabled'));
+         expect(button.hasAttribute('disabled')).toBeTrue();
 
          element.disabled = false;
          await element.updateComplete;
-         assert.isFalse(button.hasAttribute('disabled'));
+         expect(button.hasAttribute('disabled')).toBeFalse();
        });
   });
 
@@ -95,12 +95,12 @@ describe('mwc-button', () => {
 
     it('adds an icon to the button', async () => {
       let icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
-      assert.instanceOf(icon, Element);
+      expect(icon).toBeInstanceOf(Element);
 
       element.icon = '';
       await element.updateComplete;
       icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
-      assert.equal(icon, null);
+      expect(icon).toEqual(null);
     });
 
     it('setting `trailingIcon` displays icon in a trailing position',
@@ -112,13 +112,13 @@ describe('mwc-button', () => {
              `.leading-icon ${ICON_SELECTOR}`);
          const trailingIcon = element.shadowRoot!.querySelector(
              `.trailing-icon ${ICON_SELECTOR}`);
-         assert.equal(leadingIcon, null);
-         assert.instanceOf(trailingIcon, Element);
+         expect(leadingIcon).toEqual(null);
+         expect(trailingIcon).toBeInstanceOf(Element);
        });
 
     it('sets `aria-label` of the button when `icon` is set', async () => {
       const button = element.shadowRoot!.querySelector('#button');
-      assert.equal(button!.getAttribute('aria-label'), 'check');
+      expect(button!.getAttribute('aria-label')).toEqual('check');
     });
   });
 
@@ -131,7 +131,7 @@ describe('mwc-button', () => {
 
     it('sets `aria-label` of the button when `label` is set', async () => {
       const button = element.shadowRoot!.querySelector('#button');
-      assert.equal(button!.getAttribute('aria-label'), 'Unit Test Button');
+      expect(button!.getAttribute('aria-label')).toEqual('Unit Test Button');
     });
   });
 
@@ -145,10 +145,10 @@ describe('mwc-button', () => {
     it('sets correct internal button style', async () => {
       const button = element.shadowRoot!.querySelector('#button')!;
       const raisedClass = 'mdc-button--raised';
-      assert.isTrue(button.classList.contains(raisedClass));
+      expect(button.classList.contains(raisedClass)).toBeTrue();
       element.raised = false;
       await element.updateComplete;
-      assert.isFalse(button.classList.contains(raisedClass));
+      expect(button.classList.contains(raisedClass)).toBeFalse();
     });
   });
 
@@ -162,10 +162,10 @@ describe('mwc-button', () => {
     it('sets correct internal button style', async () => {
       const button = element.shadowRoot!.querySelector('#button')!;
       const unelevatedClass = 'mdc-button--unelevated';
-      assert.isTrue(button.classList.contains(unelevatedClass));
+      expect(button.classList.contains(unelevatedClass)).toBeTrue();
       element.unelevated = false;
       await element.updateComplete;
-      assert.isFalse(button.classList.contains(unelevatedClass));
+      expect(button.classList.contains(unelevatedClass)).toBeFalse();
     });
   });
 
@@ -179,10 +179,10 @@ describe('mwc-button', () => {
     it('sets correct internal button style', async () => {
       const button = element.shadowRoot!.querySelector('#button')!;
       const outlinedClass = 'mdc-button--outlined';
-      assert.isTrue(button.classList.contains(outlinedClass));
+      expect(button.classList.contains(outlinedClass)).toBeTrue();
       element.outlined = false;
       await element.updateComplete;
-      assert.isFalse(button.classList.contains(outlinedClass));
+      expect(button.classList.contains(outlinedClass)).toBeFalse();
     });
   });
 
@@ -196,10 +196,10 @@ describe('mwc-button', () => {
     it('sets correct internal button style', async () => {
       const button = element.shadowRoot!.querySelector('#button')!;
       const denseClass = 'mdc-button--dense';
-      assert.isTrue(button.classList.contains(denseClass));
+      expect(button.classList.contains(denseClass)).toBeTrue();
       element.dense = false;
       await element.updateComplete;
-      assert.isFalse(button.classList.contains(denseClass));
+      expect(button.classList.contains(denseClass)).toBeFalse();
     });
   });
 
@@ -213,7 +213,7 @@ describe('mwc-button', () => {
       const focusedClass = 'mdc-ripple-upgraded--background-focused';
       const nativeButton =
           element.shadowRoot!.querySelector<HTMLButtonElement>('#button')!;
-      assert.isFalse(nativeButton.classList.contains(focusedClass));
+      expect(nativeButton.classList.contains(focusedClass)).toBeFalse();
       element.focus();
       const rippleElement = await element.ripple;
       const nativeRipple = rippleElement!.shadowRoot!.querySelector(
@@ -221,12 +221,12 @@ describe('mwc-button', () => {
       element.requestUpdate();
       await element.updateComplete;
       await rafPromise();
-      assert.isTrue(nativeRipple.classList.contains(focusedClass));
+      expect(nativeRipple.classList.contains(focusedClass)).toBeTrue();
       element.blur();
       element.requestUpdate();
       await element.updateComplete;
       await rafPromise();
-      assert.isFalse(nativeRipple.classList.contains(focusedClass));
+      expect(nativeRipple.classList.contains(focusedClass)).toBeFalse();
     });
   });
 });

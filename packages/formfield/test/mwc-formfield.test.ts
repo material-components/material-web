@@ -56,10 +56,10 @@ describe('mwc-formfield', () => {
     });
 
     it('initializes as an mwc-formfield', () => {
-      assert.instanceOf(element, Formfield);
-      assert.isFalse(element.alignEnd);
-      assert.isFalse(element.spaceBetween);
-      assert.equal(element.label, '');
+      expect(element).toBeInstanceOf(Formfield);
+      expect(element.alignEnd).toBeFalse();
+      expect(element.spaceBetween).toBeFalse();
+      expect(element.label).toEqual('');
     });
   });
 
@@ -78,7 +78,7 @@ describe('mwc-formfield', () => {
 
       it('sets the aria-label on the control', async () => {
         const internalInput = control.shadowRoot!.querySelector('input')!;
-        assert.equal(internalInput.getAttribute('aria-label'), 'label');
+        expect(internalInput.getAttribute('aria-label')).toEqual('label');
       });
 
       it('label click propagates click and focus to control', async () => {
@@ -91,18 +91,18 @@ describe('mwc-formfield', () => {
           origClick.call(control);
         };
 
-        assert.isFalse(control.checked);
-        assert.equal(fixt.shadowRoot!.activeElement, null);
-        assert.equal(numClicks, 0);
+        expect(control.checked).toBeFalse();
+        expect(fixt.shadowRoot!.activeElement).toEqual(null);
+        expect(numClicks).toEqual(0);
 
         labelEl.click();
 
         await element.updateComplete;
         await control.updateComplete;
 
-        assert.isTrue(control.checked);
-        assert.equal(fixt.shadowRoot!.activeElement, control);
-        assert.equal(numClicks, 1);
+        expect(control.checked).toBeTrue();
+        expect(fixt.shadowRoot!.activeElement).toEqual(control);
+        expect(numClicks).toEqual(1);
       });
 
       it('formfield will not double click control', async () => {
@@ -114,16 +114,16 @@ describe('mwc-formfield', () => {
           origClick.call(control);
         };
 
-        assert.isFalse(control.checked);
-        assert.equal(numClicks, 0);
+        expect(control.checked).toBeFalse();
+        expect(numClicks).toEqual(0);
 
         control.click();
 
         await element.updateComplete;
         await control.updateComplete;
 
-        assert.equal(numClicks, 1);
-        assert.isTrue(control.checked);
+        expect(numClicks).toEqual(1);
+        expect(control.checked).toBeTrue();
       });
     });
   });
@@ -143,7 +143,7 @@ describe('mwc-formfield', () => {
 
       it('sets the aria-label on the control', async () => {
         const internalInput = control.shadowRoot!.querySelector('input')!;
-        assert.equal(internalInput.getAttribute('aria-label'), 'label');
+        expect(internalInput.getAttribute('aria-label')).toEqual('label');
       });
 
       it('label click propagates click and focus to control', async () => {
@@ -156,18 +156,18 @@ describe('mwc-formfield', () => {
           origClick.call(control);
         };
 
-        assert.isFalse(control.checked);
-        assert.equal(fixt.shadowRoot!.activeElement, null);
-        assert.equal(numClicks, 0);
+        expect(control.checked).toBeFalse();
+        expect(fixt.shadowRoot!.activeElement).toEqual(null);
+        expect(numClicks).toEqual(0);
 
         labelEl.click();
 
         await element.updateComplete;
         await control.updateComplete;
 
-        assert.isTrue(control.checked);
-        assert.equal(fixt.shadowRoot!.activeElement, control);
-        assert.equal(numClicks, 1);
+        expect(control.checked).toBeTrue();
+        expect(fixt.shadowRoot!.activeElement).toEqual(control);
+        expect(numClicks).toEqual(1);
       });
 
       it('formfield will not double click control', async () => {
@@ -179,16 +179,16 @@ describe('mwc-formfield', () => {
           origClick.call(control);
         };
 
-        assert.isFalse(control.checked);
-        assert.equal(numClicks, 0);
+        expect(control.checked).toBeFalse();
+        expect(numClicks).toEqual(0);
 
         control.click();
 
         await element.updateComplete;
         await control.updateComplete;
 
-        assert.equal(numClicks, 1);
-        assert.isTrue(control.checked);
+        expect(numClicks).toEqual(1);
+        expect(control.checked).toBeTrue();
       });
     });
   });
@@ -208,7 +208,7 @@ describe('mwc-formfield', () => {
 
       it('sets the aria-label on the control', async () => {
         const internalInput = control.shadowRoot!.querySelector('input')!;
-        assert.equal(internalInput.getAttribute('aria-label'), 'label');
+        expect(internalInput.getAttribute('aria-label')).toEqual('label');
       });
 
       it('label click propagates click and focus to control', async () => {
@@ -221,18 +221,18 @@ describe('mwc-formfield', () => {
           origClick.call(control);
         };
 
-        assert.isFalse(control.checked);
-        assert.equal(fixt.shadowRoot!.activeElement, null);
-        assert.equal(numClicks, 0);
+        expect(control.checked).toBeFalse();
+        expect(fixt.shadowRoot!.activeElement).toEqual(null);
+        expect(numClicks).toEqual(0);
 
         labelEl.click();
 
         await element.updateComplete;
         await control.updateComplete;
 
-        assert.isTrue(control.checked);
-        assert.equal(fixt.shadowRoot!.activeElement, control);
-        assert.equal(numClicks, 1);
+        expect(control.checked).toBeTrue();
+        expect(fixt.shadowRoot!.activeElement).toEqual(control);
+        expect(numClicks).toEqual(1);
       });
 
       it('formfield will not double click control', async () => {
@@ -244,16 +244,16 @@ describe('mwc-formfield', () => {
           origClick.call(control);
         };
 
-        assert.isFalse(control.checked);
-        assert.equal(numClicks, 0);
+        expect(control.checked).toBeFalse();
+        expect(numClicks).toEqual(0);
 
         control.click();
 
         await element.updateComplete;
         await control.updateComplete;
 
-        assert.equal(numClicks, 1);
-        assert.isTrue(control.checked);
+        expect(numClicks).toEqual(1);
+        expect(control.checked).toBeTrue();
       });
     });
   });
