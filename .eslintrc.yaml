@@ -6,13 +6,13 @@ globals:
   goog: false
   assert: false
 env:
-  mocha: true
+  jasmine: true
   browser: true
   es6: true
 parser: "@typescript-eslint/parser"
 plugins:
   - "@typescript-eslint"
-  - mocha
+  - jasmine
   - wc
 parserOptions:
   ecmaVersion: 2017
@@ -50,12 +50,16 @@ rules:
   prefer-const: error
   comma-dangle: off
 
-  mocha/handle-done-callback: error
-  mocha/no-exclusive-tests: error
-  mocha/no-identical-title: error
-  mocha/no-nested-tests: error
-  mocha/no-pending-tests: error
-  mocha/no-skipped-tests: error
+  jasmine/no-promise-without-done-fail: error
+  jasmine/no-focused-tests: error
+  jasmine/no-spec-dupes:
+    - error
+    - branch
+  jasmine/no-suite-dupes:
+    - error
+    - branch
+  jasmine/no-disabled-tests: error
+  jasmine/no-pending-tests: error
 overrides:
   - files: ["packages/**/*.ts"]
     rules:
