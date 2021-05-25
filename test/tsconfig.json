@@ -11,7 +11,8 @@
   "include": [
     "src/custom_typings/*.d.ts",
     "src/**/*.ts",
-    "../packages/**/*.ts"
+    "../packages/**/*.ts",
+    "node_modules/@types/jasmine/*.d.ts"
   ],
   "exclude": [
     "src/benchmark/cli.ts"
