@@ -54,7 +54,7 @@ export class RippleBase extends BaseElement implements RippleInterface {
 
   protected mdcFoundation!: MDCRippleFoundation;
 
-  get isActive() {
+  get isActive(): any {
     return matches(this.parentElement || this, ':active');
   }
 
