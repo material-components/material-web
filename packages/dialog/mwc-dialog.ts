@@ -16,5 +16,5 @@ declare global {
 
 @customElement('mwc-dialog')
 export class Dialog extends DialogBase {
-  static styles = styles;
+  static styles = [styles];
 }

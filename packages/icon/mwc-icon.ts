@@ -10,7 +10,7 @@ import {styles} from './mwc-icon-host.css';
 /** @soyCompatible */
 @customElement('mwc-icon')
 export class Icon extends LitElement {
-  static styles = styles;
+  static styles = [styles];
 
   /** @soyTemplate */
   protected render(): TemplateResult {

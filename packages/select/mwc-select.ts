@@ -16,5 +16,5 @@ declare global {
 
 @customElement('mwc-select')
 export class Select extends SelectBase {
-  static styles = styles;
+  static styles = [styles];
 }

@@ -18,5 +18,5 @@ declare global {
 
 @customElement('mwc-radio')
 export class Radio extends RadioBase {
-  static styles = styles;
+  static styles = [styles];
 }

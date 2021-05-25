@@ -17,5 +17,5 @@ declare global {
 /** @soyCompatible */
 @customElement('mwc-circular-progress')
 export class CircularProgress extends CircularProgressBase {
-  static styles = styles;
+  static styles = [styles];
 }

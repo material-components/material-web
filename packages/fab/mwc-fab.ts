@@ -17,5 +17,5 @@ declare global {
 /** @soyCompatible */
 @customElement('mwc-fab')
 export class Fab extends FabBase {
-  static styles = styles;
+  static styles = [styles];
 }

@@ -16,5 +16,5 @@ declare global {
 
 @customElement('mwc-tab-scroller')
 export class TabScroller extends TabScrollerBase {
-  static styles = styles;
+  static styles = [styles];
 }

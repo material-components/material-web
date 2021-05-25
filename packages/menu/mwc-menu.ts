@@ -21,5 +21,5 @@ declare global {
 
 @customElement('mwc-menu')
 export class Menu extends MenuBase {
-  static styles = styles;
+  static styles = [styles];
 }

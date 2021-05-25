@@ -18,5 +18,5 @@ declare global {
 
 @customElement('mwc-list-item')
 export class ListItem extends ListItemBase {
-  static styles = styles;
+  static styles = [styles];
 }

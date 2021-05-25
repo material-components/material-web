@@ -16,5 +16,5 @@ declare global {
 
 @customElement('mwc-top-app-bar-fixed')
 export class TopAppBarFixed extends TopAppBarFixedBase {
-  static styles = styles;
+  static styles = [styles];
 }

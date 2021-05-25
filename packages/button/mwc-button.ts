@@ -11,7 +11,7 @@ import {styles} from './styles.css';
 /** @soyCompatible */
 @customElement('mwc-button')
 export class Button extends ButtonBase {
-  static styles = styles;
+  static styles = [styles];
 }
 
 declare global {

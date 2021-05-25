@@ -18,5 +18,5 @@ declare global {
 /** @soyCompatible */
 @customElement('mwc-icon-button')
 export class IconButton extends IconButtonBase {
-  static styles = styles;
+  static styles = [styles];
 }

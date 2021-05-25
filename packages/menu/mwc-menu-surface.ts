@@ -19,5 +19,5 @@ declare global {
 
 @customElement('mwc-menu-surface')
 export class MenuSurface extends MenuSurfaceBase {
-  static styles = styles;
+  static styles = [styles];
 }

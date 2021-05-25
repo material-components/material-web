@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - all
   - Update sass build to match internal imports and naming
   - Switch testing from Mocha to Jasmine
+  - **BREAKING:** Changed all instances of `static get styles = styles;` to be
+    an array of `[styles]`
 
 ### Fixed
 
