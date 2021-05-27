@@ -38,6 +38,8 @@ export class FabBase extends LitElement {
 
   @state() protected shouldRenderRipple = false;
 
+  @state() protected useStateLayerCustomProperties = false;
+
   protected rippleHandlers = new RippleHandlers(() => {
     this.shouldRenderRipple = true;
     return this.ripple;
@@ -119,9 +121,11 @@ export class FabBase extends LitElement {
 
   /** @soyTemplate */
   protected renderRipple(): TemplateResult|string {
-    return this.shouldRenderRipple ?
-        html`<mwc-ripple class="ripple"></mwc-ripple>` :
-        '';
+    return this.shouldRenderRipple ? html`<mwc-ripple class="ripple"
+        .internalUseStateLayerCustomProperties="${
+                                         this.useStateLayerCustomProperties}"
+         ></mwc-ripple>` :
+                                     '';
   }
 
   protected handleRippleActivate(event?: Event) {

@@ -6,6 +6,7 @@
 @use 'sass:map';
 @use '@material/elevation/elevation-theme';
 @use '@material/fab/mixins' as fab-mixins;
+@use '@material/fab/fab' as mdc-fab;
 @use '@material/fab/variables' as fab-variables;
 @use '@material/fab/fab-custom-properties';
 @use '@material/rtl/rtl';
@@ -158,6 +159,33 @@ $icon-size: map.get(fab-theme.$light-theme, icon-size);
     &.mdc-fab--exited .icon-slot-container ::slotted([slot='icon']) {
       transform: scale(0);
       transition: animation.exit-permanent(transform, 135ms);
+    }
+  }
+}
+
+@mixin static-styles() {
+  -webkit-tap-highlight-color: transparent;
+  display: inline-flex;
+  outline: none;
+  user-select: none;
+
+  @include mdc-fab.static-styles();
+
+  .mdc-fab {
+    .ripple {
+      overflow: hidden;
+    }
+
+    &:not(.mdc-fab--extended) .ripple {
+      @include shape.radius(fab-variables.$shape-radius);
+    }
+
+    .material-icons {
+      @extend %material-icons;
+    }
+
+    .icon-slot-container {
+      display: inline-flex;
     }
   }
 }
