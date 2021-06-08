@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- An infinite loop caused by having both `_getUpdateComplete` and
+  `getUpdateComplete` introduced by lit-element 2.5.0
+
 ### Added
 
 ## [v0.21.0] - 2021-04-30

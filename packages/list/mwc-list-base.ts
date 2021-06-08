@@ -142,21 +142,10 @@ export abstract class ListBase extends BaseElement implements Layoutable {
 
   itemsReady = Promise.resolve([]);
 
-  protected async _getUpdateComplete() {
-    return this.getUpdateComplete();
-  }
-
   // tslint:disable:ban-ts-ignore
   protected async getUpdateComplete() {
-    let result = false;
     // @ts-ignore
-    if (super.getUpdateComplete) {
-      // @ts-ignore
-      result = await super.getUpdateComplete();
-    } else {
-      // @ts-ignore
-      await super._getUpdateComplete();
-    }
+    const result = await super.getUpdateComplete();
     await this.itemsReady;
     return result;
   }

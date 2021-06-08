@@ -646,22 +646,11 @@ export abstract class SelectBase extends FormElement {
     this.formElement.setCustomValidity(message);
   }
 
-  protected async _getUpdateComplete() {
-    return this.getUpdateComplete();
-  }
-
   // tslint:disable:ban-ts-ignore
   protected async getUpdateComplete() {
-    let result = false;
     await this._menuUpdateComplete;
     // @ts-ignore
-    if (super.getUpdateComplete) {
-      // @ts-ignore
-      result = await super.getUpdateComplete();
-    } else {
-      // @ts-ignore
-      await super._getUpdateComplete();
-    }
+    const result = await super.getUpdateComplete();
     return result;
   }
   // tslint:enable:ban-ts-ignore

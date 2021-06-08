@@ -158,21 +158,10 @@ export class TabBarBase extends BaseElement {
     // the scroller element.
   }
 
-  protected async _getUpdateComplete() {
-    return this.getUpdateComplete();
-  }
-
   // tslint:disable:ban-ts-ignore
   protected async getUpdateComplete() {
-    let result;
     // @ts-ignore
-    if (super.getUpdateComplete) {
-      // @ts-ignore
-      result = super.getUpdateComplete();
-    } else {
-      // @ts-ignore
-      result = super._getUpdateComplete();
-    }
+    const result = super.getUpdateComplete();
     return result.then(() => this.scrollerElement.updateComplete).then(() => {
       if (this.mdcFoundation === undefined) {
         this.createFoundation();
