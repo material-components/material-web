@@ -195,7 +195,6 @@ export abstract class TextFieldBase extends FormElement {
   @state() protected focused = false;
 
   protected _validity: ValidityState = createValidityObj();
-  protected _outlineUpdateComplete: null|Promise<unknown> = null;
 
   get validity(): ValidityState {
     this._checkValidity(this.value);
@@ -525,13 +524,6 @@ export abstract class TextFieldBase extends FormElement {
     this.value = this.formElement.value;
   }
 
-  protected createFoundation() {
-    if (this.mdcFoundation !== undefined) {
-      this.mdcFoundation.destroy();
-    }
-    this.mdcFoundation = new this.mdcFoundationClass(this.createAdapter());
-    this.mdcFoundation.init();
-  }
 
   protected createAdapter(): MDCTextFieldAdapter {
     return {
@@ -631,26 +623,28 @@ export abstract class TextFieldBase extends FormElement {
   protected async getUpdateComplete() {
     // @ts-ignore
     const result = await super.getUpdateComplete();
-    await this._outlineUpdateComplete;
+    await this.outlineElement?.updateComplete;
     return result;
   }
   // tslint:enable:ban-ts-ignore
 
-  async firstUpdated() {
-    const outlineElement = this.outlineElement;
-    if (outlineElement) {
-      this._outlineUpdateComplete = outlineElement.updateComplete;
-      await this._outlineUpdateComplete;
-    }
-
+  firstUpdated() {
     super.firstUpdated();
 
     this.mdcFoundation.setValidateOnValueChange(this.autoValidate);
 
-
     if (this.validateOnInitialRender) {
       this.reportValidity();
     }
+
+    // wait for the outline element to render to update the notch width
+    this.outlineElement?.updateComplete.then(() => {
+      // `foundation.notchOutline()` assumes the label isn't floating and
+      // multiplies by a constant, but the label is already is floating at this
+      // stage, therefore directly set the outline width to the label width
+      this.outlineWidth =
+          this.labelElement?.floatingLabelFoundation.getWidth() || 0;
+    });
   }
 
   protected getOutlineAdapterMethods(): MDCTextFieldOutlineAdapter {
@@ -696,6 +690,7 @@ export abstract class TextFieldBase extends FormElement {
     const labelWidth = labelElement.floatingLabelFoundation.getWidth();
     if (this.outlineOpen) {
       this.outlineWidth = labelWidth;
+      await this.updateComplete;
     }
   }
 }

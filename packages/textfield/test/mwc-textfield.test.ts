@@ -113,6 +113,14 @@ describe('mwc-textfield:', () => {
       expect(element.value).toEqual('[object Object]');
     });
 
+    it('does not throw exception setting value', async () => {
+      await element.updateComplete;
+      const testFn = () => {
+        element.value = 'foo';
+      };
+      expect(testFn).not.toThrow();
+    });
+
     afterEach(() => {
       if (fixt) {
         fixt.remove();
@@ -521,7 +529,7 @@ describe('mwc-textfield:', () => {
       labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
 
       const diff = Math.abs(outlineWidth - labelWidth);
-      expect(diff < 3).toBeTrue();
+      expect(diff).toBeLessThan(3);
     });
 
     it('notch changes size with label change', async () => {
@@ -543,7 +551,7 @@ describe('mwc-textfield:', () => {
       let labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
       expect(notchedOutline.open).toBeTrue();
       let diff = Math.abs(outlineWidth - labelWidth);
-      expect(diff < 5).toBeTrue();
+      expect(diff).toBeLessThan(5);
 
       element.label = 'this is some other label';
 
@@ -559,7 +567,7 @@ describe('mwc-textfield:', () => {
       outlineWidth = notchedOutline.width;
       labelWidth = floatingLabel.floatingLabelFoundation.getWidth();
       diff = Math.abs(outlineWidth - labelWidth);
-      expect(diff < 5).toBeTrue();
+      expect(diff).toBeLessThan(5);
     });
 
     afterEach(() => {
