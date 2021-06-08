@@ -6,46 +6,68 @@
 
 @use 'sass:map';
 @use 'sass:selector';
-@use '@material/theme/css';
+@use '@material/radio/radio-theme';
+@use '@material/ripple/ripple-theme' as mdc-ripple-theme;
+@use '@material/theme/keys';
 @use '@material/theme/shadow-dom';
-@use 'third_party/javascript/material_web_components/ripple/ripple-theme';
 
 @mixin theme($theme) {
-  @include css.declaration(
-    --mdc-theme-secondary,
-    map.get($theme, checked-color)
-  );
-  @include _hover-selector() {
-    @include css.declaration(
-      --mdc-theme-secondary,
-      map.get($theme, checked-hover-color)
-    );
+  @include radio-theme.theme-declare-custom-properties($theme);
+
+  @if shadow-dom.$css-selector-fallback-declarations {
+    @include theme-styles($theme);
   }
-  @include css.declaration(--mdc-radio-unchecked-color, map.get($theme, color));
-  @include _hover-selector() {
-    @include css.declaration(
-      --mdc-radio-unchecked-color,
-      map.get($theme, hover-color)
-    );
-  }
-  @include css.declaration(
-    --mdc-radio-disabled-color,
-    map.get($theme, disabled-color)
-  );
-  @include ripple-theme.theme(
-    (
-      state: map.get($theme, ripple-color),
-      opacity: map.get($theme, ripple-opacity),
-    )
-  );
 }
 
-@mixin _hover-selector() {
-  @include shadow-dom.host-aware(
-    selector.append(&, ':active'),
-    selector.append(&, ':hover'),
-    selector.append(&, ':focus-within')
-  ) {
+@mixin theme-styles($theme) {
+  .mdc-radio {
+    @include radio-theme.theme-styles($theme);
+  }
+
+  $theme: keys.create-theme-properties(
+    $theme,
+    $prefix: radio-theme.$custom-property-prefix
+  );
+
+  @include mdc-ripple-theme.theme(
+    (
+      hover-state-layer-color:
+        map.get($theme, unselected-hover-state-layer-color),
+      focus-state-layer-color:
+        map.get($theme, unselected-focus-state-layer-color),
+      pressed-state-layer-color:
+        map.get($theme, unselected-pressed-state-layer-color),
+      hover-state-layer-opacity:
+        map.get($theme, unselected-hover-state-layer-opacity),
+      focus-state-layer-opacity:
+        map.get($theme, unselected-focus-state-layer-opacity),
+      pressed-state-layer-opacity:
+        map.get($theme, unselected-pressed-state-layer-opacity),
+    )
+  );
+
+  @include _checked-selector() {
+    @include mdc-ripple-theme.theme(
+      (
+        hover-state-layer-color:
+          map.get($theme, selected-hover-state-layer-color),
+        focus-state-layer-color:
+          map.get($theme, selected-focus-state-layer-color),
+        pressed-state-layer-color:
+          map.get($theme, selected-pressed-state-layer-color),
+        hover-state-layer-opacity:
+          map.get($theme, selected-hover-state-layer-opacity),
+        focus-state-layer-opacity:
+          map.get($theme, selected-focus-state-layer-opacity),
+        pressed-state-layer-opacity:
+          map.get($theme, selected-pressed-state-layer-opacity),
+      )
+    );
+  }
+}
+
+@mixin _checked-selector() {
+  @include shadow-dom.host-aware(selector.append(&, '[checked]')) {
     @content;
   }
 }

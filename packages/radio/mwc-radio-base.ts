@@ -27,6 +27,8 @@ export class RadioBase extends FormElement {
 
   protected _checked = false;
 
+  @state() protected useStateLayerCustomProperties = false;
+
   @property({type: Boolean}) global = false;
 
   @property({type: Boolean, reflect: true})
@@ -116,6 +118,7 @@ export class RadioBase extends FormElement {
    */
   @property({type: Number}) formElementTabIndex = 0;
 
+  @state() protected focused = false;
   @state() protected shouldRenderRipple = false;
 
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
@@ -141,10 +144,11 @@ export class RadioBase extends FormElement {
 
   /** @soyTemplate */
   protected renderRipple(): TemplateResult|string {
-    return this.shouldRenderRipple ?
-        html`<mwc-ripple unbounded accent .disabled="${
-            this.disabled}"></mwc-ripple>` :
-        '';
+    return this.shouldRenderRipple ? html`<mwc-ripple unbounded accent
+        .internalUseStateLayerCustomProperties="${
+                                         this.useStateLayerCustomProperties}"
+        .disabled="${this.disabled}"></mwc-ripple>` :
+                                     '';
   }
 
   get isRippleActive() {
@@ -197,6 +201,7 @@ export class RadioBase extends FormElement {
   }
 
   protected handleFocus() {
+    this.focused = true;
     this.handleRippleFocus();
   }
 
@@ -206,6 +211,7 @@ export class RadioBase extends FormElement {
   }
 
   protected handleBlur() {
+    this.focused = false;
     this.formElement.blur();
     this.rippleHandlers.endFocus();
   }
@@ -219,6 +225,7 @@ export class RadioBase extends FormElement {
     /** @classMap */
     const classes = {
       'mdc-radio--touch': !this.reducedTouchTarget,
+      'mdc-ripple-upgraded--background-focused': this.focused,
       'mdc-radio--disabled': this.disabled,
     };
 

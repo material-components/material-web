@@ -7,6 +7,16 @@
 @use '@material/radio/radio';
 @use '@material/radio/radio-theme';
 
+@mixin static-styles() {
+  :host {
+    @include radio.static-styles();
+
+    display: inline-flex;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
 @mixin core-styles() {
   @include radio.core-styles();
 
