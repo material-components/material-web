@@ -158,17 +158,14 @@ export class TabBarBase extends BaseElement {
     // the scroller element.
   }
 
-  // tslint:disable:ban-ts-ignore
   protected async getUpdateComplete() {
-    // @ts-ignore
-    const result = super.getUpdateComplete();
-    return result.then(() => this.scrollerElement.updateComplete).then(() => {
-      if (this.mdcFoundation === undefined) {
-        this.createFoundation();
-      }
-    });
+    const result = await super.getUpdateComplete();
+    await this.scrollerElement.updateComplete;
+    if (this.mdcFoundation === undefined) {
+      this.createFoundation();
+    }
+    return result;
   }
-  // tslint:enable:ban-ts-ignore
 
   scrollIndexIntoView(index: number) {
     this.mdcFoundation.scrollIntoView(index);
