@@ -288,17 +288,11 @@ the `escapeKeyAction` attribute to an empty string `""`.
 
 ### Slots
 
-| Name                    | Type      | Description
-| ----------------------- | --------- |------------
-| `open`                  | `boolean` | Whether the dialog should open.
-| `hideActions`           | `boolean` | Hides the actions footer of the dialog. Needed to remove excess padding when no actions are slotted in.
-| `stacked`               | `boolean` | Whether to stack the action buttons.
-| `heading`               | `string`  | Heading text of the dialog.
-| `scrimClickAction`      | `string`  | _Default: 'close'_ – Action to be emitted with the `closing` and `closed` events when the dialog closes because the scrim was clicked (see [actions section](#actions)).
-| `escapeKeyAction`       | `string`  | _Default: 'close'_ – Action to be emitted with the `closing` and `closed` events when the dialog closes because the excape key was pressed (see [actions section](#actions)).
-| `defaultAction`         | `string`  | _Default: 'close'_ – Action to be emitted with the `closing` and `closed` events when `<mwc-dialog>.open` is toggled (see [actions section](#actions)).
-| `actionAttribute`       | `string`  | _Default: 'dialogAction'_ – Attribute to read in light dom of dialog for closing action value (see [actions section](#actions)).
-| `initialFocusAttribute` | `string`  | _Default: 'dialogInitialFocus'_ – Attribute to search for in light dom for initial focus on dialog open.
+Name              | Description
+----------------- | ------------------------------------------------------------
+_default_         | Primary content area. May contain a list, a form, or prose.
+`primaryAction`   | Footer area containing the dialog's primary action button.
+`secondaryAction` | Footer area containing the dialog's secondary action button.
 
 ### Properties/Attributes
 
