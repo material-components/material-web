@@ -7,8 +7,8 @@ import './mwc-list-item';
 
 import {BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
-import {deepActiveElementPath, doesElementContainFocus, findAssignedElement, isNodeElement} from '@material/mwc-base/utils';
-import {html, property, query} from 'lit-element';
+import {deepActiveElementPath, doesElementContainFocus, isNodeElement} from '@material/mwc-base/utils';
+import {html, property, query, queryAssignedNodes} from 'lit-element';
 import {ifDefined} from 'lit-html/directives/if-defined';
 
 import {MDCListAdapter} from './mwc-list-adapter';
@@ -60,7 +60,10 @@ export abstract class ListBase extends BaseElement implements Layoutable {
 
   @query('.mdc-deprecated-list') protected mdcRoot!: HTMLElement;
 
-  @query('slot') protected slotElement!: HTMLSlotElement|null;
+  @queryAssignedNodes('', true, '*')
+  protected assignedElements!: HTMLElement[]|null;
+  @queryAssignedNodes('', true, '[tabindex="0"]')
+  protected tabbableElements!: HTMLElement[]|null;
 
   @property({type: Boolean})
   @observer(function(this: ListBase, value: boolean) {
@@ -108,10 +111,8 @@ export abstract class ListBase extends BaseElement implements Layoutable {
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: ListBase, value: boolean) {
-    const slot = this.slotElement;
-
-    if (value && slot) {
-      const tabbable = findAssignedElement(slot, '[tabindex="0"]');
+    if (value) {
+      const tabbable = this.tabbableElements?.[0] ?? null;
       this.previousTabindex = tabbable;
       if (tabbable) {
         tabbable.setAttribute('tabindex', '-1');
@@ -151,15 +152,6 @@ export abstract class ListBase extends BaseElement implements Layoutable {
   }
   // tslint:enable:ban-ts-ignore
 
-  protected get assignedElements(): Element[] {
-    const slot = this.slotElement;
-
-    if (slot) {
-      return slot.assignedNodes({flatten: true}).filter<Element>(isNodeElement);
-    }
-
-    return [];
-  }
 
   protected items_: ListItemBase[] = [];
 
@@ -168,7 +160,7 @@ export abstract class ListBase extends BaseElement implements Layoutable {
   }
 
   protected updateItems() {
-    const nodes = this.assignedElements;
+    const nodes = this.assignedElements ?? [];
     const listItems: ListItemBase[] = [];
 
     for (const node of nodes) {
@@ -263,7 +255,8 @@ export abstract class ListBase extends BaseElement implements Layoutable {
   }
 
   renderPlaceholder() {
-    if (this.emptyMessage !== undefined && this.assignedElements.length === 0) {
+    const nodes = this.assignedElements ?? [];
+    if (this.emptyMessage !== undefined && nodes.length === 0) {
       return html`
         <mwc-list-item noninteractive>${this.emptyMessage}</mwc-list-item>
       `;

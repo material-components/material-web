@@ -10,8 +10,7 @@ import MDCFormFieldFoundation from '@material/form-field/foundation';
 import {BaseElement, EventType, SpecificEventListener} from '@material/mwc-base/base-element';
 import {FormElement} from '@material/mwc-base/form-element';
 import {observer} from '@material/mwc-base/observer';
-import {findAssignedElement} from '@material/mwc-base/utils';
-import {html, property, query} from 'lit-element';
+import {html, property, query, queryAssignedNodes} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
 
@@ -71,16 +70,13 @@ export class FormfieldBase extends BaseElement {
     };
   }
 
-  // slotEl should have type HTMLSlotElement, but when TypeScript's
-  // emitDecoratorMetadata is enabled, the HTMLSlotElement constructor will
-  // be emitted into the runtime, which will cause an "HTMLSlotElement is
-  // undefined" error in browsers that don't define it (e.g. IE11).
-  @query('slot') protected slotEl!: HTMLElement;
+  @queryAssignedNodes('', true, '*')
+  protected slottedInputs!: HTMLElement[]|null;
 
   @query('label') protected labelEl!: HTMLLabelElement;
 
   protected get input() {
-    return findAssignedElement(this.slotEl as HTMLSlotElement, '*');
+    return this.slottedInputs?.[0] ?? null;
   }
 
   protected render() {

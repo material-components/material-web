@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Switch testing from Mocha to Jasmine
   - **BREAKING:** Changed all instances of `static get styles = styles;` to be
     an array of `[styles]`
+- base
+  - **BREAKING:** Removed `findAssignedElement` from utils, use
+    `@queryAssignedNodes` lit decorator instead.
 
 ### Fixed
 - `select`

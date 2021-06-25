@@ -3,13 +3,6 @@
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
-
-/**
- * Return an element assigned to a given slot that matches the given selector
- */
-
-import {matches} from '@material/dom/ponyfill';
-
 /**
  * Determines whether a node is an element.
  *
@@ -18,19 +11,6 @@ import {matches} from '@material/dom/ponyfill';
 export const isNodeElement = (node: Node): node is Element => {
   return node.nodeType === Node.ELEMENT_NODE;
 };
-
-export function findAssignedElement(slot: HTMLSlotElement, selector: string) {
-  for (const node of slot.assignedNodes({flatten: true})) {
-    if (isNodeElement(node)) {
-      const el = (node as HTMLElement);
-      if (matches(el, selector)) {
-        return el;
-      }
-    }
-  }
-
-  return null;
-}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Constructor<T> = new (...args: any[]) => T;
