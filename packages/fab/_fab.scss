@@ -27,6 +27,7 @@ $icon-size: map.get(fab-theme.$light-theme, icon-size);
   display: inline-flex;
 
   @include fab-mixins.without-ripple();
+  @include static-styles();
 
   .mdc-fab {
     $outline-color: custom-properties.create(
@@ -89,16 +90,7 @@ $icon-size: map.get(fab-theme.$light-theme, icon-size);
       );
     }
 
-    .material-icons {
-      @extend %material-icons;
-    }
-
-    .icon-slot-container {
-      display: inline-flex;
-    }
-
-    .mdc-fab__icon,
-    .icon-slot-container ::slotted([slot='icon']) {
+    .mdc-fab__icon {
       @include theme.property(
         width,
         custom-properties.create(--mdc-icon-size, $icon-size)
@@ -129,14 +121,6 @@ $icon-size: map.get(fab-theme.$light-theme, icon-size);
         $width: $outline-width,
         $padding: 0 $extended-label-padding
       );
-
-      .icon-slot-container ::slotted([slot='icon']) {
-        @include fab-mixins.extended-icon-padding(
-          $extended-icon-padding,
-          $extended-label-padding
-        );
-      }
-
       &.icon-end {
         .mdc-fab__icon {
           @include fab-mixins.extended-icon-padding(
@@ -145,20 +129,7 @@ $icon-size: map.get(fab-theme.$light-theme, icon-size);
             $is-icon-at-end: true
           );
         }
-
-        .icon-slot-container ::slotted([slot='icon']) {
-          @include fab-mixins.extended-icon-padding(
-            $extended-icon-padding,
-            $extended-label-padding,
-            $is-icon-at-end: true
-          );
-        }
       }
-    }
-
-    &.mdc-fab--exited .icon-slot-container ::slotted([slot='icon']) {
-      transform: scale(0);
-      transition: animation.exit-permanent(transform, 135ms);
     }
   }
 }
@@ -180,12 +151,39 @@ $icon-size: map.get(fab-theme.$light-theme, icon-size);
       @include shape.radius(fab-variables.$shape-radius);
     }
 
+    .mdc-fab__label {
+      z-index: 0;
+    }
+
+    &:not(.mdc-fab--extended) .ripple {
+      @include shape.radius(fab-variables.$shape-radius);
+    }
+
     .material-icons {
       @extend %material-icons;
     }
-
-    .icon-slot-container {
-      display: inline-flex;
+    .mdc-fab__icon ::slotted(*) {
+      width: inherit;
+      height: inherit;
+      font-size: inherit;
     }
+  }
+
+  .mdc-fab--extended.mdc-fab--exited .mdc-fab__icon ::slotted(*) {
+    transform: scale(0);
+    transition: animation.exit-permanent(transform, 135ms);
+  }
+
+  .mdc-fab--extended {
+    @include fab-theme.theme((
+      container-width: auto,
+    ));
+  }
+
+  .mdc-fab--mini {
+    @include fab-theme.theme((
+      container-width: 40px,
+      container-height: 40px,
+    ));
   }
 }

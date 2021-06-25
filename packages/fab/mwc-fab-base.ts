@@ -81,9 +81,9 @@ export class FabBase extends LitElement {
         -->${this.renderBeforeRipple()}<!--
         -->${this.renderRipple()}<!--
         -->${this.showIconAtEnd ? this.renderLabel() : ''}<!--
-        --><span class="icon-slot-container"><!--
-          --><slot name="icon">${this.renderIcon()}</slot><!--
-        --></span><!--
+        --><span class="material-icons mdc-fab__icon"><!--
+          --><slot name="icon">${this.icon}</slot><!--
+       --></span><!--
         -->${!this.showIconAtEnd ? this.renderLabel() : ''}<!--
         -->${this.renderTouchTarget()}<!--
       --></button>`;
@@ -91,10 +91,8 @@ export class FabBase extends LitElement {
 
   /** @soyTemplate */
   protected renderIcon(): TemplateResult {
-    return html`${
-        this.icon ? html`
-          <span class="material-icons mdc-fab__icon">${this.icon}</span>` :
-                    ''}`;
+    // TODO(b/191914389): reimplement once Wit issue is resolved
+    return html``;
   }
 
   /** @soyTemplate */

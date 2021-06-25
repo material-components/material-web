@@ -108,7 +108,8 @@ describe('mwc-fab', () => {
       element.icon = '';
       await element.updateComplete;
       icon = element.shadowRoot!.querySelector(ICON_SELECTOR);
-      expect(icon).toEqual(null);
+      const iconText = icon?.textContent?.replace(/\s/g, '') ?? '';
+      expect(iconText).toEqual('');
     });
 
     it('sets `aria-label` of the button', async () => {
@@ -219,18 +220,14 @@ describe('mwc-fab', () => {
       const children = root.children;
 
       expect(element.showIconAtEnd).toBeTrue();
-      expect(children[1].querySelector(ICON_SELECTOR)!.classList.contains(
-                 ICON_CLASS))
-          .toBeTrue();
+      expect(children[1].classList.contains(ICON_CLASS)).toBeTrue();
       expect(children[0].classList.contains(LABEL_CLASS)).toBeTrue();
 
       element.showIconAtEnd = false;
       await element.updateComplete;
 
       expect(children.length).toEqual(2);
-      expect(children[0].querySelector(ICON_SELECTOR)!.classList.contains(
-                 ICON_CLASS))
-          .toBeTrue();
+      expect(children[0].classList.contains(ICON_CLASS)).toBeTrue();
       expect(children[1].classList.contains(LABEL_CLASS)).toBeTrue();
     });
   });

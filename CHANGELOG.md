@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - base
   - **BREAKING:** Removed `findAssignedElement` from utils, use
     `@queryAssignedNodes` lit decorator instead.
+- fab
+  - **BREAKING** renderIcon currently doesn't do anything until an internal
+    google bug is resolved
 
 ### Fixed
 - `select`
