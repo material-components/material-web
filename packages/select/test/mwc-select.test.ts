@@ -25,6 +25,8 @@ const basic = (outlined = false) => html`
   </mwc-select>
 `;
 
+const withLabel = html`<mwc-select label="a label"></mwc-select>`;
+
 const validationRequired = (outlined = false) => html`
   <mwc-select
       ?outlined=${outlined}
@@ -115,6 +117,32 @@ describe('mwc-select:', () => {
           .withContext('prop sets on list item')
           .toBeTrue();
       expect(element.index).withContext('index is correctly set').toEqual(3);
+    });
+
+    it('does not have aria-labelledby set', async () => {
+      await element.updateComplete;
+      const anchor = element.shadowRoot!.querySelector('.mdc-select__anchor')!;
+      expect(anchor.getAttribute('aria-labelledby')).toBeNull();
+    });
+
+    afterEach(() => {
+      if (fixt) {
+        fixt.remove();
+      }
+    });
+  });
+
+  describe('label', () => {
+    let element: Select;
+    beforeEach(async () => {
+      fixt = await fixture(withLabel);
+      element = fixt.root.querySelector('mwc-select')!;
+    });
+
+    it('anchor has aria-labelledby set', async () => {
+      await element.updateComplete;
+      const anchor = element.shadowRoot!.querySelector('.mdc-select__anchor')!;
+      expect(anchor.getAttribute('aria-labelledby')).toBe('label');
     });
 
     afterEach(() => {

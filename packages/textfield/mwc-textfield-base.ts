@@ -381,6 +381,7 @@ export abstract class TextFieldBase extends FormElement {
             'off' | 'none' | 'on' | 'sentences' | 'words' | 'characters') :
         undefined;
     const showValidationMessage = this.validationMessage && !this.isUiValid;
+    const ariaLabelledbyOrUndef = !!this.label ? 'label' : undefined;
     const ariaControlsOrUndef =
         shouldRenderHelperText ? 'helper-text' : undefined;
     const ariaDescribedbyOrUndef =
@@ -394,7 +395,7 @@ export abstract class TextFieldBase extends FormElement {
     // TODO: lit-analyzer labels min/max as (number|string) instead of string
     return html`
       <input
-          aria-labelledby="label"
+          aria-labelledby=${ifDefined(ariaLabelledbyOrUndef)}
           aria-controls="${ifDefined(ariaControlsOrUndef)}"
           aria-describedby="${ifDefined(ariaDescribedbyOrUndef)}"
           aria-errortext="${ifDefined(ariaErrortextOrUndef)}"

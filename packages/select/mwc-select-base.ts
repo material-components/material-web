@@ -251,6 +251,7 @@ export abstract class SelectBase extends FormElement {
       'mdc-select__menu--invalid': !this.isUiValid,
     };
 
+    const labelledby = !!this.label ? 'label' : undefined;
     const describedby = this.shouldRenderHelperText ? 'helper-text' : undefined;
 
     return html`
@@ -268,7 +269,7 @@ export abstract class SelectBase extends FormElement {
             aria-expanded=${this.menuOpen}
             aria-invalid=${!this.isUiValid}
             aria-haspopup="listbox"
-            aria-labelledby="label"
+            aria-labelledby=${ifDefined(labelledby)}
             aria-required=${this.required}
             aria-describedby=${ifDefined(describedby)}
             @click=${this.onClick}

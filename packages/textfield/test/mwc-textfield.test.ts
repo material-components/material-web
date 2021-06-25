@@ -121,6 +121,12 @@ describe('mwc-textfield:', () => {
       expect(testFn).not.toThrow();
     });
 
+    it('does not have aria-labelledby set', async () => {
+      await element.updateComplete;
+      const input = element.shadowRoot!.querySelector('input')!;
+      expect(input.getAttribute('aria-labelledby')).toBeNull();
+    });
+
     afterEach(() => {
       if (fixt) {
         fixt.remove();
@@ -606,6 +612,12 @@ describe('mwc-textfield:', () => {
       expect(
           floatingLabel.classList.contains(floatingClasses.LABEL_FLOAT_ABOVE))
           .toBeTrue();
+    });
+
+    it('input has aria-labelledby set', async () => {
+      await element.updateComplete;
+      const input = element.shadowRoot!.querySelector('input')!;
+      expect(input.getAttribute('aria-labelledby')).toBe('label');
     });
   });
 });

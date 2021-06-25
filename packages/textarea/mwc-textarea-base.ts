@@ -79,6 +79,7 @@ export abstract class TextAreaBase extends TextFieldBase {
 
   /** @soyTemplate */
   protected renderInput(): TemplateResult {
+    const ariaLabelledbyOrUndef = !!this.label ? 'label' : undefined;
     const minOrUndef = this.minLength === -1 ? undefined : this.minLength;
     const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
     const autocapitalizeOrUndef = this.autocapitalize ?
@@ -89,7 +90,7 @@ export abstract class TextAreaBase extends TextFieldBase {
 
     return html`
       <textarea
-          aria-labelledby="label"
+          aria-labelledby=${ifDefined(ariaLabelledbyOrUndef)}
           class="mdc-text-field__input"
           .value="${live(this.value) as unknown as string}"
           rows="${this.rows}"

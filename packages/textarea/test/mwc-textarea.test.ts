@@ -13,6 +13,10 @@ const basic = html`
   <mwc-textarea></mwc-textarea>
 `;
 
+const withLabel = html`
+  <mwc-textarea label="a label"></mwc-textarea>
+`;
+
 describe('mwc-textarea:', () => {
   let fixt: TestFixture;
 
@@ -34,6 +38,33 @@ describe('mwc-textarea:', () => {
 
       const inputElement = element.shadowRoot!.querySelector('textarea');
       expect(inputElement!.value).toEqual('my test value');
+    });
+
+    it('textarea does not have aria-labelledby set', async () => {
+      await element.updateComplete;
+      const textarea = element.shadowRoot!.querySelector('textarea')!;
+      expect(textarea.getAttribute('aria-labelledby')).toBeNull();
+    });
+
+    afterEach(() => {
+      if (fixt) {
+        fixt.remove();
+      }
+    });
+  });
+
+  describe('label', () => {
+    let element: TextArea;
+    beforeEach(async () => {
+      fixt = await fixture(withLabel);
+
+      element = fixt.root.querySelector('mwc-textarea')!;
+    });
+
+    it('textarea has aria-labelledby set', async () => {
+      await element.updateComplete;
+      const textarea = element.shadowRoot!.querySelector('textarea')!;
+      expect(textarea.getAttribute('aria-labelledby')).toBe('label');
     });
 
     afterEach(() => {

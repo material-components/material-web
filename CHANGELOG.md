@@ -14,8 +14,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     an array of `[styles]`
 
 ### Fixed
+- `select`
+  - Fix setting `aria-labelledby` only when a label is actually provided
+- `textarea`
+  - Fix setting `aria-labelledby` only when a label is actually provided
 - `textfield`
   - Fix `firstUpdated` code path to avoid a race condition in initialization with `notched-outline`
+  - Fix setting `aria-labelledby` only when a label is actually provided
 
 - An infinite loop caused by having both `_getUpdateComplete` and
   `getUpdateComplete` introduced by lit-element 2.5.0
