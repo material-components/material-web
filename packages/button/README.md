@@ -45,6 +45,12 @@ npm install @material/mwc-button
 <mwc-button outlined label="outlined" icon="code"></mwc-button>
 ```
 
+Warning: Do not attempt to use multiple variant attributes on the same button to
+achieve intended styles. For example, `<mwc-button raised outlined>`. Doing so
+may subject you to future breaking changes. Instead, pick the single variant
+most appropriate for the use-case and write Sass to customize the buttons
+individually.
+
 ### Raised
 
 ![](images/raised.png)
