@@ -27,8 +27,6 @@ export class RadioBase extends FormElement {
 
   protected _checked = false;
 
-  @state() protected useStateLayerCustomProperties = false;
-
   @property({type: Boolean}) global = false;
 
   @property({type: Boolean, reflect: true})
@@ -145,8 +143,6 @@ export class RadioBase extends FormElement {
   /** @soyTemplate */
   protected renderRipple(): TemplateResult|string {
     return this.shouldRenderRipple ? html`<mwc-ripple unbounded accent
-        .internalUseStateLayerCustomProperties="${
-                                         this.useStateLayerCustomProperties}"
         .disabled="${this.disabled}"></mwc-ripple>` :
                                      '';
   }
