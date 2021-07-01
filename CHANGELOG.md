@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `textfield`
   - Fix `firstUpdated` code path to avoid a race condition in initialization with `notched-outline`
   - Fix setting `aria-labelledby` only when a label is actually provided
+  - Remove definition of invalid `aria-errortext` attribute
 
 - An infinite loop caused by having both `_getUpdateComplete` and
   `getUpdateComplete` introduced by lit-element 2.5.0
