@@ -13,7 +13,7 @@
   "dependencies": {
     "@material/base": "=12.0.0-canary.70e1efdca.0",
     "@material/dom": "=12.0.0-canary.70e1efdca.0",
-    "lit-element": "^2.5.0",
+    "lit-element": "^2.5.1",
     "tslib": "^2.0.1"
   },
   "devDependencies": {

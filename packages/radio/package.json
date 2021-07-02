@@ -19,12 +19,12 @@
     "@material/mwc-base": "^0.21.0",
     "@material/mwc-ripple": "^0.21.0",
     "@material/radio": "=12.0.0-canary.70e1efdca.0",
-    "lit-element": "^2.5.0",
+    "lit-element": "^2.5.1",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
     "@material/ripple": "=12.0.0-canary.70e1efdca.0",
-    "lit-html": "^1.4.0"
+    "lit-html": "^1.4.1"
   },
   "scripts": {
     "build:style": "node ../../scripts/sass-to-lit-css/index.js mwc-radio.scss"
