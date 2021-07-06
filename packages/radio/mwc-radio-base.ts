@@ -3,6 +3,8 @@
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
+import '@material/mwc-ripple';
+
 import {ariaProperty} from '@material/mwc-base/aria-property';
 import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element';
 import {observer} from '@material/mwc-base/observer';
@@ -14,7 +16,6 @@ import MDCRadioFoundation from '@material/radio/foundation';
 import {eventOptions, html, property, query, queryAsync, state, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
-
 
 /**
  * @fires checked
