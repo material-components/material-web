@@ -3,7 +3,7 @@
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
-import '@material/mwc-ripple';
+import '@material/mwc-ripple/mwc-ripple';
 
 import {ariaProperty} from '@material/mwc-base/aria-property';
 import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element';
