@@ -15,10 +15,7 @@ jobs:
       run: npm ci --ignore-scripts
       
     - name: Lerna bootstrap
-      run: npm run bootstrap
-      
-    - name: Check Lint
-      run: npm run lint
+      run: npm run bootstrap      
   tests:
     runs-on: ubuntu-latest
 
