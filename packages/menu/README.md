@@ -245,7 +245,7 @@ Name                  | Type                              | Default       | Desc
 `fullwidth`           | `boolean`                         | `false`       | Sets surface width to 100%.
 `stayOpenOnBodyClick` | `boolean`                         | `false`       | Prevents the menu from closing when clicking outside the menu.
 `wrapFocus`           | `boolean`                         | `false`       | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `wrapFocus` property.
-`innerRole`           | `"menu"                           | "listbox"`    | `"menu"`
+`innerRole`           | `"menu"\|"listbox"`               | `"menu"`      | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `innerRole` property.
 `multi`               | `boolean`                         | `false`       | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `multi` property.
 `activatable`         | `boolean`                         | `false`       | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `activatable` property.
 `items`               | `ListItemBase[]` (readonly)       | `[]`          | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `items` property.
