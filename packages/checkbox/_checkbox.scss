@@ -23,7 +23,9 @@
 
 @mixin core-styles() {
   .mdc-checkbox {
-    @include mdc-checkbox-theme.theme(mdc-checkbox-theme.$light-theme);
+    @include mdc-checkbox-theme.theme-deprecated(
+      mdc-checkbox-theme.$light-theme-deprecated
+    );
   }
   @include mdc-checkbox.static-styles();
 

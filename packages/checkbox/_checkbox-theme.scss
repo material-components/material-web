@@ -20,7 +20,7 @@
 @use '@material/touch-target/touch-target';
 
 @mixin theme($theme) {
-  @include checkbox-theme.theme-declare-custom-properties($theme);
+  @include checkbox-theme.theme($theme);
 
   @if shadow-dom.$css-selector-fallback-declarations {
     @include theme-styles($theme);
