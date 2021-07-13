@@ -15,6 +15,7 @@
 @use '@material/theme/theme-color';
 @use '@material/theme/custom-properties';
 @use '@material/theme/shadow-dom';
+@use '@material/tokens/resolvers';
 @use '@material/fab/variables' as fab-variables;
 @use '@material/fab/fab-theme';
 @use '@material/mwc-ripple/ripple-theme';
@@ -168,9 +169,9 @@ $light-theme: (
   }
 }
 
-@mixin theme-styles($theme) {
+@mixin theme-styles($theme, $resolvers: resolvers.$material) {
   .mdc-fab {
-    @include fab-theme.theme-styles($theme);
+    @include fab-theme.theme-styles($theme, $resolvers);
   }
 
   $theme: keys.create-theme-properties($theme, $prefix: 'fab');
