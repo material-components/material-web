@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-tab",
-  "version": "0.21.0",
+  "version": "0.22.0",
   "description": "Material Design tab web component",
   "keywords": [
     "material design",
@@ -16,16 +16,16 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/mwc-base": "^0.21.0",
-    "@material/mwc-ripple": "^0.21.0",
-    "@material/mwc-tab-indicator": "^0.21.0",
+    "@material/mwc-base": "^0.22.0",
+    "@material/mwc-ripple": "^0.22.0",
+    "@material/mwc-tab-indicator": "^0.22.0",
     "@material/tab": "=12.0.0-canary.22d29cbb4.0",
     "lit-element": "^2.5.1",
     "lit-html": "^1.4.1",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@material/mwc-icon": "^0.21.0",
+    "@material/mwc-icon": "^0.22.0",
     "@material/ripple": "=12.0.0-canary.22d29cbb4.0",
     "@material/rtl": "=12.0.0-canary.22d29cbb4.0"
   },
