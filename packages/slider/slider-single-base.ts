@@ -14,6 +14,7 @@ import {MDCSliderAdapter} from '@material/slider/adapter';
 import {Thumb, TickMark} from '@material/slider/types';
 import {html, property} from 'lit-element';
 import {styleMap} from 'lit-html/directives/style-map';
+
 import {SliderBase} from './slider-base';
 
 export {Thumb} from '@material/slider/types';
@@ -229,6 +230,9 @@ export class SliderSingleBase extends SliderBase {
 
         return this.endThumbKnob.getBoundingClientRect().width;
       },
+      getValueToValueIndicatorTextFn: () => {
+        return this.valueToValueIndicatorTransform;
+      },
       getValueToAriaValueTextFn: () => {
         return this.valueToAriaTextTransform
       },
@@ -334,8 +338,14 @@ export class SliderSingleBase extends SliderBase {
       setPointerCapture: (pointerId) => {
         this.mdcRoot.setPointerCapture(pointerId);
       },
-      setValueIndicatorText: () => {
-        // handled by bindings
+      setValueIndicatorText: (value, thumb) => {
+        switch (thumb) {
+          case Thumb.END:
+            this.valueIndicatorTextEnd = value;
+            break;
+          default:
+            break;
+        }
       },
       updateTickMarks: (tickMarks: TickMark[]) => {
         this.tickMarks = tickMarks;
