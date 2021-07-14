@@ -83,6 +83,7 @@
     {"path": "packages/slider"},
     {"path": "packages/snackbar"},
     {"path": "packages/switch"},
+    {"path": "packages/switch/deprecated"},
     {"path": "packages/tab"},
     {"path": "packages/tab-bar"},
     {"path": "packages/tab-indicator"},
