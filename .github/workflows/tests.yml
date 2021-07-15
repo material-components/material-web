@@ -34,9 +34,6 @@ jobs:
     - name: Lerna bootstrap
       run: npm run bootstrap
 
-    - name: Check format
-      run: npm run format:check
-
     - name: Build component Sass
       run: npm run build:styling
 
