@@ -2,7 +2,11 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
- */// tslint:disable:no-any
+ */
+
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+// tslint:disable:no-any
 // eslint-disable @typescript-eslint/no-explicit-any
 
 import {PropertyDeclaration, UpdatingElement} from 'lit-element/lib/updating-element';

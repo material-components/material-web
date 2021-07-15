@@ -3,6 +3,10 @@
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
+
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
 import {MDCResizeObserver, WithMDCResizeObserver} from '@material/linear-progress/types';
 import {ariaProperty} from '@material/mwc-base/aria-property';
 import {html, LitElement, property, PropertyValues, query, state, TemplateResult} from 'lit-element';

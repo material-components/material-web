@@ -3,6 +3,10 @@
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
+
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
 // Make TypeScript not remove the imports.
 import '@material/mwc-tab';
 import '@material/mwc-tab-scroller';

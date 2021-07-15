@@ -3,6 +3,10 @@
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
+
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
 // tslint:disable:no-new-decorators
 
 import {MDCFormFieldAdapter} from '@material/form-field/adapter';

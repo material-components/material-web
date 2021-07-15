@@ -3,6 +3,10 @@
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
+
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
 import {Switch} from '@material/mwc-switch';
 import * as hanbi from 'hanbi';
 import {html} from 'lit-html';

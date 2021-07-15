@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
+
 import {Snackbar} from '@material/mwc-snackbar';
 import * as hanbi from 'hanbi';
 import {html, TemplateResult} from 'lit-html';

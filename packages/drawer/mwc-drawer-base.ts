@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
+
 // Note this blocking-elements import is not redundant with the one below,
 // because we need to ensure we import this module at runtime for its
 // side-effects. See

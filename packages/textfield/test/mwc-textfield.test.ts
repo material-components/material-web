@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
+
 import {cssClasses as floatingClasses} from '@material/floating-label/constants';
 import {FloatingLabel} from '@material/mwc-floating-label';
 import {TextField} from '@material/mwc-textfield';

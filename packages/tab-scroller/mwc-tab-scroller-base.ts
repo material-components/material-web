@@ -3,6 +3,10 @@
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
+
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
 import {matches} from '@material/dom/ponyfill';
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {MDCTabScrollerAdapter} from '@material/tab-scroller/adapter';

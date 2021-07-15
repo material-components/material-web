@@ -3,6 +3,10 @@
  * Copyright 2020 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
+
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
 import {IndexDiff, MWCListIndex} from './mwc-list-foundation';
 
 /**

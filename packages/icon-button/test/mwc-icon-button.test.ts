@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
+
 import {IconButton} from '@material/mwc-icon-button';
 
 const ICON_SELECTOR = 'i.material-icons';

@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
+
 import '@material/mwc-list/mwc-list-item';
 
 import {ListItem} from '@material/mwc-list/mwc-list-item';

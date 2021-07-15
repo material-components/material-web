@@ -3,6 +3,10 @@
  * Copyright 2020 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
+
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
 import {CircularProgressBase} from '@material/mwc-circular-progress/mwc-circular-progress-base';
 import {html, TemplateResult} from 'lit-element';
 

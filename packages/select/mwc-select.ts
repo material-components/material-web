@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
+
 import {customElement} from 'lit-element';
 import {SelectBase} from './mwc-select-base';
 import {styles} from './mwc-select.css';

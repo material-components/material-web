@@ -3,6 +3,10 @@
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
+
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
 import {BaseElement} from '@material/mwc-base/base-element';
 import {MDCNotchedOutlineAdapter} from '@material/notched-outline/adapter';
 import {MDCNotchedOutlineFoundation} from '@material/notched-outline/foundation';

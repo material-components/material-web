@@ -3,6 +3,10 @@
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
+
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
 import '@material/mwc-notched-outline';
 
 import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation';

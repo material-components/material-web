@@ -3,6 +3,10 @@
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
+
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
 import {styles} from '@material/mwc-top-app-bar/mwc-top-app-bar.css';
 import {customElement} from 'lit-element';
 

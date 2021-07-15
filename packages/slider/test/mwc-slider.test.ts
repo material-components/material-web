@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
+
 import {Slider} from '@material/mwc-slider/mwc-slider';
 import * as hanbi from 'hanbi';
 import {html} from 'lit-html';

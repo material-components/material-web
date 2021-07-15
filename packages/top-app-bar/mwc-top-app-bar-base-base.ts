@@ -3,6 +3,10 @@
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
+
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {supportsPassiveEventListener} from '@material/mwc-base/utils';
 import {MDCTopAppBarAdapter} from '@material/top-app-bar/adapter';

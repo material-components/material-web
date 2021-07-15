@@ -3,6 +3,10 @@
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
+
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
 import MDCSnackbarFoundation from '@material/snackbar/foundation';
 import {html, render, TemplateResult} from 'lit-html';
 import {AsyncDirective} from 'lit-html/async-directive';

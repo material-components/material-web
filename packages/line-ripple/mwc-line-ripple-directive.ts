@@ -3,6 +3,10 @@
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
+
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
 import {MDCLineRippleAdapter} from '@material/line-ripple/adapter';
 import {MDCLineRippleFoundation} from '@material/line-ripple/foundation';
 import {AttributePart, directive, Directive, DirectiveParameters, PartInfo, PartType} from 'lit-html/directive';

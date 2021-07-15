@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
+
 import '@material/mwc-checkbox';
 
 import {Checkbox} from '@material/mwc-checkbox';

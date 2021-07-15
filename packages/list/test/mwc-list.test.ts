@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
+
 import '@material/mwc-icon';
 
 import {isNodeElement} from '@material/mwc-base/utils';

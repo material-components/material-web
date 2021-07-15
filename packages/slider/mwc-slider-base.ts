@@ -3,6 +3,10 @@
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
+
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
 import {applyPassive} from '@material/dom/events';
 import {ariaProperty} from '@material/mwc-base/aria-property';
 import {addHasRemoveClass, EventType, FormElement, SpecificEventListener} from '@material/mwc-base/form-element';

@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
+
 import {IconButtonToggle} from '@material/mwc-icon-button-toggle';
 
 const ICON_BUTTON_ON_SELECTOR = '.mdc-icon-button.mdc-icon-button--on';

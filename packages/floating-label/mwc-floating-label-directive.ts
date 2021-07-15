@@ -3,6 +3,10 @@
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
+
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
 import {MDCFloatingLabelAdapter} from '@material/floating-label/adapter';
 import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation';
 import {AttributePart, directive, Directive, DirectiveParameters, PartInfo, PartType} from 'lit-html/directive';

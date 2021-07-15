@@ -3,6 +3,10 @@
  * Copyright 2020 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
+
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
 import {MDCMenuSurfaceAdapter} from '@material/menu-surface/adapter';
 import {Corner as CornerEnum, CornerBit} from '@material/menu-surface/constants';
 import MDCMenuSurfaceFoundation from '@material/menu-surface/foundation';

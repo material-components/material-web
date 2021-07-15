@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
+
 import {ariaProperty} from '@material/mwc-base/aria-property';
 import {customElement, LitElement, property} from 'lit-element';
 import {html} from 'lit-html';
