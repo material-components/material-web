@@ -11,6 +11,7 @@ import {BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
 import {Tab} from '@material/mwc-tab';
 import {TabScroller} from '@material/mwc-tab-scroller';
+import {TabBase} from '@material/mwc-tab/mwc-tab-base';
 import {MDCTabBarAdapter} from '@material/tab-bar/adapter';
 import MDCTabBarFoundation from '@material/tab-bar/foundation';
 import {MDCTabInteractionEvent} from '@material/tab/types';
@@ -69,7 +70,7 @@ export class TabBarBase extends BaseElement {
   protected _getTabs() {
     return (this.tabsSlot as HTMLSlotElement)
                .assignedNodes({flatten: true})
-               .filter((e: Node) => e instanceof Tab) as Tab[];
+               .filter((e: Node) => e instanceof TabBase) as Tab[];
   }
 
   protected _getTab(index: number) {
