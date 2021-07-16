@@ -712,11 +712,6 @@ describe('mwc-menu-surface', () => {
       element.close();
       await rafPromise();
       await element.updateComplete;
-      await new Promise((resolve) => {
-        // Account for focus restoration delay in MDC to prevent touch + mobile
-        // event combination from overwriting focus.
-        setTimeout(resolve, 50);
-      });
       expect(document.activeElement).toEqual(focusedElement);
     });
   });
