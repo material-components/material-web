@@ -29,9 +29,9 @@ export class CheckboxBase extends FormElement {
 
   @property({type: Boolean, reflect: true}) disabled = false;
 
-  @property({type: String, reflect: true}) name?: string;
+  @property({type: String, reflect: true}) name = '';
 
-  @property({type: String}) value = '';
+  @property({type: String}) value = 'on';
 
   /** @soyPrefixAttribute */
   @ariaProperty
@@ -188,6 +188,12 @@ export class CheckboxBase extends FormElement {
         </div>
         ${this.renderRipple()}
       </div>`;
+  }
+
+  protected setFormData(formData: FormData) {
+    if (this.name && this.checked) {
+      formData.append(this.name, this.value);
+    }
   }
 
   protected handleFocus() {

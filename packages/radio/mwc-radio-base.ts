@@ -93,7 +93,7 @@ export class RadioBase extends FormElement {
   @observer(function(this: RadioBase, value: string) {
     this._handleUpdatedValue(value);
   })
-  value = '';
+  value = 'on';
 
   _handleUpdatedValue(newValue: string) {
     // the observer function can't access protected fields (according to
@@ -219,6 +219,12 @@ export class RadioBase extends FormElement {
     this.focused = false;
     this.formElement.blur();
     this.rippleHandlers.endFocus();
+  }
+
+  protected setFormData(formData: FormData) {
+    if (this.name && this.checked) {
+      formData.append(this.name, this.value);
+    }
   }
 
   /**

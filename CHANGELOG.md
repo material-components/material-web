@@ -23,12 +23,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Switch testing from Mocha to Jasmine
   - **BREAKING:** Changed all instances of `static get styles = styles;` to be
     an array of `[styles]`
-- base
+- `base`
   - **BREAKING:** Removed `findAssignedElement` from utils, use
     `@queryAssignedNodes` lit decorator instead.
-- fab
+  - Remove `setAriaLabel` function, set `aria-label` attribute instead in
+    `mwc-formfield`
+- `checkbox`
+  - **BREAKING** `value` property defaults to "on" to match native checkbox
+- `fab`
   - **BREAKING** renderIcon currently doesn't do anything until an internal
     google bug is resolved
+- `radio`
+  - **BREAKING** `value` property defaults to "on" to match native radio
 
 ### Fixed
 - `select`
@@ -44,6 +50,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   `getUpdateComplete` introduced by lit-element 2.5.0
 
 ### Added
+- `base`, `checkbox`, `radio`, `select`, `slider`, `textfield`, `textarea`
+  - Added support for form submission to FormElement subclasses
+    - This requires browser support for [FormDataEvent](https://developer.mozilla.org/en-US/docs/Web/API/FormDataEvent#browser_compatibility)
 
 ## [v0.21.0] - 2021-04-30
 

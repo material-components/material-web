@@ -81,6 +81,8 @@ export class SliderBase extends FormElement {
   })
   markers = false;
 
+  @property() name = '';
+
   @state() protected pinMarkerText = '';
   @state() protected trackMarkerContainerStyles = {};
   @state() protected thumbContainerStyles = {};
@@ -95,6 +97,12 @@ export class SliderBase extends FormElement {
   ariaLabelledBy?: string;
 
   protected isFoundationDestroyed = false;
+
+  protected setFormData(formData: FormData) {
+    if (this.name) {
+      formData.append(this.name, String(this.value));
+    }
+  }
 
   // TODO(sorvell) #css: needs a default width
   protected render() {

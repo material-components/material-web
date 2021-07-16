@@ -10,7 +10,7 @@
 import '@material/mwc-ripple/mwc-ripple';
 
 import {ariaProperty} from '@material/mwc-base/aria-property';
-import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
@@ -19,7 +19,7 @@ import MDCSwitchFoundation from '@material/switch/deprecated/foundation';
 import {eventOptions, html, property, query, queryAsync, state} from 'lit-element';
 import {ifDefined} from 'lit-html/directives/if-defined';
 
-export class SwitchBase extends FormElement {
+export class SwitchBase extends BaseElement {
   @property({type: Boolean})
   @observer(function(this: SwitchBase, value: boolean) {
     this.mdcFoundation.setChecked(value);
@@ -101,6 +101,22 @@ export class SwitchBase extends FormElement {
     if (formElement) {
       this.rippleHandlers.endFocus();
       formElement.blur();
+    }
+  }
+
+  click() {
+    if (this.formElement && !this.disabled) {
+      this.formElement.focus();
+      this.formElement.click();
+    }
+  }
+
+  protected firstUpdated() {
+    super.firstUpdated();
+    if (this.shadowRoot) {
+      this.mdcRoot.addEventListener('change', (e) => {
+        this.dispatchEvent(new Event('change', e));
+      });
     }
   }
 

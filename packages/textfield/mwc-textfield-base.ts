@@ -257,6 +257,12 @@ export abstract class TextFieldBase extends FormElement {
     super.update(changedProperties);
   }
 
+  protected setFormData(formData: FormData) {
+    if (this.name) {
+      formData.append(this.name, this.value);
+    }
+  }
+
   /** @soyTemplate */
   render(): TemplateResult {
     const shouldRenderCharCounter = this.charCounter && this.maxLength !== -1;
