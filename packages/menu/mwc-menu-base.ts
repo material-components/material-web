@@ -56,6 +56,8 @@ export abstract class MenuBase extends BaseElement {
 
   @property({type: String}) innerRole: 'menu'|'listbox' = 'menu';
 
+  @property({type: String}) innerAriaLabel: string|null = null;
+
   @property({type: String}) corner: Corner = 'TOP_START';
 
   @property({type: Number}) x: number|null = null;
@@ -150,6 +152,7 @@ export abstract class MenuBase extends BaseElement {
           @keydown=${this.onKeydown}>
         <mwc-list
           rootTabbable
+          .innerAriaLabel=${this.innerAriaLabel}
           .innerRole=${this.innerRole}
           .multi=${this.multi}
           class="mdc-deprecated-list"
