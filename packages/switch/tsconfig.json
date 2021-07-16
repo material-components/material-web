@@ -7,7 +7,8 @@
     "tsBuildInfoFile": ".tsbuildinfo"
   },
   "include": [
-    "*.ts"
+    "*.ts",
+    "deprecated/*.ts"
   ],
   "references": [
     {
