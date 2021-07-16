@@ -15,7 +15,6 @@
     "node_modules/@types/jasmine/*.d.ts"
   ],
   "exclude": [
-    "src/benchmark/cli.ts",
-    "../packages/switch/deprecated/**/*.ts"
+    "src/benchmark/cli.ts"
   ]
 }
