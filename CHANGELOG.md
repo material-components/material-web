@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- `button`
+  - Add `ariaHasPopup` property
+- `icon-button`
+  - Add `ariaHasPopup` property
 - `menu`
   - Add `innerAriaLabel` property
 

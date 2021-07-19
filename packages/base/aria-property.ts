@@ -12,6 +12,12 @@
 import {PropertyDeclaration, UpdatingElement} from 'lit-element/lib/updating-element';
 
 /**
+ * A value for the `aria-haspopup` ARIA attribute.
+ */
+export type AriaHasPopup =
+    'false'|'true'|'menu'|'listbox'|'tree'|'grid'|'dialog';
+
+/**
  * Expose protected statics on UpdatingElement
  */
 interface UpdatingElementInternals {
