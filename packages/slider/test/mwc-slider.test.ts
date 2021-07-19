@@ -250,39 +250,41 @@ describe('mwc-slider', () => {
   });
 
   // IE11 can only append to FormData, not inspect it
-  describe('form submission', () => {
-    let form: HTMLFormElement;
-    beforeEach(async () => {
-      fixt = await fixture(sliderInForm);
-      element = fixt.root.querySelector('mwc-slider')!;
-      form = fixt.root.querySelector('form')!;
-      await element.updateComplete;
-    });
+  if (Boolean(FormData.prototype.get)) {
+    describe('form submission', () => {
+      let form: HTMLFormElement;
+      beforeEach(async () => {
+        fixt = await fixture(sliderInForm);
+        element = fixt.root.querySelector('mwc-slider')!;
+        form = fixt.root.querySelector('form')!;
+        await element.updateComplete;
+      });
 
-    it('does not submit without a name', async () => {
-      element.name = '';
-      await element.updateComplete;
-      const formData = simulateFormDataEvent(form);
-      const keys = Array.from(formData.keys());
-      expect(keys.length).toEqual(0);
-    });
+      it('does not submit without a name', async () => {
+        element.name = '';
+        await element.updateComplete;
+        const formData = simulateFormDataEvent(form);
+        const keys = Array.from(formData.keys());
+        expect(keys.length).toEqual(0);
+      });
 
-    it('does not submit with disabled', async () => {
-      element.disabled = true;
-      await element.updateComplete;
-      const formData = simulateFormDataEvent(form);
-      expect(formData.get('foo')).toBeNull();
-    });
+      it('does not submit with disabled', async () => {
+        element.disabled = true;
+        await element.updateComplete;
+        const formData = simulateFormDataEvent(form);
+        expect(formData.get('foo')).toBeNull();
+      });
 
-    it('submits value', async () => {
-      let formData = simulateFormDataEvent(form);
-      expect(formData.get('foo')).withContext('default value').toEqual('0');
-      element.value = 100;
-      await element.updateComplete;
-      formData = simulateFormDataEvent(form);
-      expect(formData.get('foo'))
-          .withContext('value set to 100')
-          .toEqual('100');
+      it('submits value', async () => {
+        let formData = simulateFormDataEvent(form);
+        expect(formData.get('foo')).withContext('default value').toEqual('0');
+        element.value = 100;
+        await element.updateComplete;
+        formData = simulateFormDataEvent(form);
+        expect(formData.get('foo'))
+            .withContext('value set to 100')
+            .toEqual('100');
+      });
     });
-  });
+  }
 });
