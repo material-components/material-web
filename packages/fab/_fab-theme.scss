@@ -188,6 +188,15 @@ $light-theme: (
   );
 }
 
-@mixin theme-declare-custom-properties($theme) {
-  @include fab-theme.theme-declare-custom-properties($theme);
+///
+/// Applies the given theme as custom properties without any selectors.
+///
+@mixin theme-declare-custom-properties(
+  $theme,
+  $resolvers: resolvers.$material
+) {
+  @include fab-theme.theme-declare-custom-properties(
+    $theme,
+    $resolvers: $resolvers
+  );
 }
