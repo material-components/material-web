@@ -61,8 +61,6 @@ export class CheckboxBase extends FormElement {
 
   @state() protected focused = false;
 
-  @state() protected useStateLayerCustomProperties = false;
-
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 
   // MDC Foundation is unused
@@ -113,12 +111,14 @@ export class CheckboxBase extends FormElement {
   // TODO(dfreedm): Make this use selected as a param after Polymer/internal#739
   /** @soyTemplate */
   protected renderRipple(): TemplateResult|string {
-    return this.shouldRenderRipple ? html`<mwc-ripple
+    return this.shouldRenderRipple ? this.renderRippleTemplate() : '';
+  }
+
+  /** @soyTemplate */
+  protected renderRippleTemplate(): TemplateResult {
+    return html`<mwc-ripple
         .disabled="${this.disabled}"
-        .internalUseStateLayerCustomProperties="${
-                                         this.useStateLayerCustomProperties}"
-        unbounded></mwc-ripple>` :
-                                     '';
+        unbounded></mwc-ripple>`;
   }
 
   /**

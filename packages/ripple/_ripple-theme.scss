@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
 // Ignore function name case warnings from states module
 // stylelint-disable function-name-case
 @use 'sass:map';
@@ -11,8 +14,16 @@
 @use '@material/theme/shadow-dom';
 @use '@material/theme/css';
 
+$light-theme: ripple-theme.$light-theme;
+
 @mixin theme($theme) {
   @include ripple-theme.theme($theme);
+}
+
+@mixin theme-styles($theme) {
+  .mdc-ripple-surface {
+    @include ripple-theme.theme-styles($theme);
+  }
 }
 
 $transparent-theme: (
