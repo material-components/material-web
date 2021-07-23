@@ -17,7 +17,7 @@
 }
 
 @mixin theme-styles($theme) {
-  @include theme.validate-keys(mdc-tab-bar-theme.$light-theme, $theme);
+  @include theme.validate-theme(mdc-tab-bar-theme.$light-theme, $theme);
   $theme: keys.create-theme-properties(
     $theme,
     mdc-tab-bar-theme.$custom-property-prefix
