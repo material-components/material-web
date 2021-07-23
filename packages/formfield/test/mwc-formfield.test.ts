@@ -11,12 +11,12 @@
 import '@material/mwc-formfield';
 import '@material/mwc-checkbox';
 import '@material/mwc-radio';
-import '@material/mwc-switch';
+import '@material/mwc-switch/deprecated/mwc-switch';
 
 import {Checkbox} from '@material/mwc-checkbox';
 import {Formfield} from '@material/mwc-formfield';
 import {Radio} from '@material/mwc-radio';
-import {Switch} from '@material/mwc-switch';
+import {Switch} from '@material/mwc-switch/deprecated/mwc-switch';
 import {html} from 'lit-html';
 
 import {fixture, TestFixture} from '../../../test/src/util/helpers';

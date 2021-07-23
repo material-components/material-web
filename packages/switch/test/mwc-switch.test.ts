@@ -7,7 +7,7 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {Switch} from '@material/mwc-switch';
+import {Switch} from '@material/mwc-switch/mwc-switch';
 import * as hanbi from 'hanbi';
 import {html} from 'lit-html';
 
