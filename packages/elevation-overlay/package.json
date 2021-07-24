@@ -21,8 +21,8 @@
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@material/elevation": "=12.0.0-canary.3f36ac75c.0",
-    "@material/theme": "=12.0.0-canary.3f36ac75c.0"
+    "@material/elevation": "=12.0.0-canary.ea1e1b850.0",
+    "@material/theme": "=12.0.0-canary.ea1e1b850.0"
   },
   "scripts": {
     "build:style": "node ../../scripts/sass-to-lit-css/index.js mwc-elevation-overlay.scss"
