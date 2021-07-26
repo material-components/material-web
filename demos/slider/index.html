@@ -52,6 +52,7 @@ limitations under the License.
   <demo-header component="Slider" package="slider"></demo-header>
 
   <main>
+    <h2>Single Handle</h2>
     <h3>Continuous</h3>
     <div class="demo-container">
       <mwc-slider></mwc-slider>
@@ -59,12 +60,36 @@ limitations under the License.
 
     <h3>Discrete</h3>
     <div class="demo-container demo-colory">
-      <mwc-slider pin markers max="50" value="10" step="5"></mwc-slider>
+      <mwc-slider discrete withTickMarks max="50" value="10" step="5"></mwc-slider>
     </div>
 
     <h3>Disabled</h3>
     <div class="demo-container">
       <mwc-slider disabled></mwc-slider>
+    </div>
+
+    <h2>Ranged</h2>
+    <h3>Continuous</h3>
+    <div class="demo-container">
+      <mwc-slider-range></mwc-slider-range>
+    </div>
+
+    <h3>Discrete</h3>
+    <div class="demo-container demo-colory">
+      <mwc-slider-range
+          discrete
+          withTickMarks
+          min="-12"
+          max="12"
+          valueStart="-6"
+          valueEnd="9"
+          step="1.5">
+      </mwc-slider-range>
+    </div>
+
+    <h3>Disabled</h3>
+    <div class="demo-container">
+      <mwc-slider-range disabled></mwc-slider-range>
     </div>
 
     <div>Value from input: <span id="logInput"></span></div>
