@@ -12,21 +12,23 @@ import '@material/mwc-ripple';
 import {deepActiveElementPath} from '@material/mwc-base/utils';
 import {Ripple} from '@material/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {SliderBase} from './slider-base';
 import {MDCSliderAdapter} from '@material/slider/adapter';
 import {Thumb, TickMark} from '@material/slider/types';
+import {html, property, PropertyValues, query, queryAsync, state} from 'lit-element';
 import {nothing, TemplateResult} from 'lit-html';
+import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
 import {styleMap} from 'lit-html/directives/style-map';
-import {html, state, property, PropertyValues, query, queryAsync} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
+
+import {SliderBase} from './slider-base';
 
 export {Thumb} from '@material/slider/types';
 
 export class SliderRangeBase extends SliderBase {
   @query('input.start') protected startInput!: HTMLInputElement;
   @query('.start.mdc-slider__thumb') protected startThumb!: HTMLElement;
-  @query('.start.mdc-slider__thumb .mdc-slider__thumb-knob') protected startThumbKnob!: HTMLElement;
+  @query('.start.mdc-slider__thumb .mdc-slider__thumb-knob')
+  protected startThumbKnob!: HTMLElement;
   @queryAsync('.start .ripple') protected startRipple!: Promise<Ripple|null>;
   @property({type: Number}) valueStart: number = 0;
   @state() protected startThumbWithIndicator = false;

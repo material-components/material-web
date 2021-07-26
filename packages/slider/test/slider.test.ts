@@ -5,14 +5,15 @@
  */
 
 import '../slider';
-// Style preference for leading underscores.
-// tslint:disable:strip-private-property-underscore
 
-import {Slider} from '../slider';
 // import * as hanbi from 'hanbi';
 import {html} from 'lit-html';
 
 import {fixture, TestFixture} from '../../../test/src/util/helpers';
+// Style preference for leading underscores.
+// tslint:disable:strip-private-property-underscore
+
+import {Slider} from '../slider';
 
 const basic = html`
   <mwc-slider></mwc-slider>
