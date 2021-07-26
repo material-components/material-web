@@ -7,8 +7,9 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {styles} from './mwc-slider.css';
 import {customElement} from 'lit-element';
+
+import {styles} from './mwc-slider.css';
 import {SliderRangeBase} from './slider-range-base';
 
 export {Thumb} from '@material/slider/types';

@@ -8,8 +8,9 @@
 // tslint:disable:strip-private-property-underscore
 
 import {customElement} from 'lit-element';
-import {SliderSingleBase} from './slider-single-base';
+
 import {styles} from './mwc-slider.css';
+import {SliderSingleBase} from './slider-single-base';
 
 export {Thumb} from '@material/slider/types';
 

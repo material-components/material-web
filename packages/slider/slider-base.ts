@@ -9,17 +9,17 @@
 
 import '@material/mwc-ripple';
 
+import {ariaProperty} from '@material/mwc-base/aria-property';
 import {FormElement} from '@material/mwc-base/form-element';
 import {Ripple} from '@material/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {MDCSliderFoundation} from '@material/slider/foundation';
 import {Thumb, TickMark} from '@material/slider/types';
+import {html, property, PropertyValues, query, queryAsync, state} from 'lit-element';
 import {nothing, TemplateResult} from 'lit-html';
-import {html, state, property, PropertyValues, query, queryAsync} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
 import {styleMap} from 'lit-html/directives/style-map';
-import {ariaProperty} from '@material/mwc-base/aria-property';
 
 export {Thumb} from '@material/slider/types';
 
@@ -29,7 +29,8 @@ export class SliderBase extends FormElement {
   @query('input.end') protected formElement!: HTMLInputElement;
   @query('.mdc-slider') protected mdcRoot!: HTMLElement;
   @query('.end.mdc-slider__thumb') protected endThumb!: HTMLElement;
-  @query('.end.mdc-slider__thumb .mdc-slider__thumb-knob') protected endThumbKnob!: HTMLElement;
+  @query('.end.mdc-slider__thumb .mdc-slider__thumb-knob')
+  protected endThumbKnob!: HTMLElement;
   @queryAsync('.end .ripple') protected endRipple!: Promise<Ripple|null>;
   @property({type: Boolean, reflect: true}) disabled = false;
   @property({type: Number}) min = 0;
@@ -244,7 +245,8 @@ export class SliderBase extends FormElement {
           ${text}
         </span>
       </div>
-    </div>`:nothing;
+    </div>` :
+                           nothing;
   }
 
   disconnectedCallback() {
