@@ -1,0 +1,53 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use 'sass:map';
+@use '@material/slider/slider-theme';
+@use '@material/theme/shadow-dom';
+@use '@material/theme/keys';
+@use '@material/mwc-ripple/ripple-theme';
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@mixin theme($theme) {
+  @include slider-theme.theme-declare-custom-properties($theme);
+
+  @if shadow-dom.$css-selector-fallback-declarations {
+    @include theme-styles($theme);
+  }
+}
+
+@mixin theme-styles($theme) {
+  .mdc-slider {
+    @include slider-theme.theme-styles($theme);
+
+    .ripple {
+      $theme: keys.create-theme-properties($theme, $prefix: 'slider');
+
+      @include mdc-ripple-theme.theme(
+        (
+          hover-state-layer-color:
+            map.get($theme, hover-thumb-state-layer-color),
+          focus-state-layer-color:
+            map.get($theme, focus-thumb-state-layer-color),
+          pressed-state-layer-color:
+            map.get($theme, pressed-thumb-state-layer-color),
+          hover-state-layer-opacity:
+            map.get($theme, hover-thumb-state-layer-opacity),
+          focus-state-layer-opacity:
+            map.get($theme, focus-thumb-state-layer-opacity),
+          pressed-state-layer-opacity:
+            map.get($theme, pressed-thumb-state-layer-opacity),
+        )
+      );
+    }
+  }
+}
+
+@mixin theme-declare-custom-properties($theme) {
+  @include slider-theme.theme-declare-custom-properties($theme);
+}

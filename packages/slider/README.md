@@ -4,8 +4,6 @@
 
 Sliders allow users to make selections from a range of values.
 
-<img src="images/basic.png" height="48px">
-
 [Material Design Guidelines: sliders](https://material.io/design/components/sliders.html)
 
 [Demo](https://material-components.github.io/material-components-web-components/demos/slider/)
@@ -24,11 +22,16 @@ npm install @material/mwc-slider
 > [here](https://github.com/material-components/material-components-web-components#quick-start)
 > for detailed instructions.
 
+## ⚠️🚧  MWC Slider is currently under active development 🚧⚠️
+
+work still to be done:
+
+* enabling theme custom properties
+* component testing (and any subsequent changes that result from testing)
+
 ## Example usage
 
 ### Continuous
-
-<img src="images/basic.png" height="48pxx">
 
 ```html
 <script type="module">
@@ -40,79 +43,110 @@ npm install @material/mwc-slider
 
 ### Discrete
 
-<img src="images/discrete.gif" height="80.5px">
-
 ```html
 <mwc-slider
+    discrete
+    withTickMarks
     step="5"
-    pin
-    markers
     max="50"
     value="10">
 </mwc-slider>
 ```
 
-### Styled
-
-<img src="images/styled.gif" height="79px">
+### Range Continuous
 
 ```html
-<style>
-  mwc-slider {
-    --mdc-theme-secondary: orange;
-    --mdc-theme-text-primary-on-dark: green;
-  }
-</style>
-<mwc-slider
-    pin
-    markers
-    max="50"
-    value="10"
-    step="5">
-</mwc-slider>
+<script type="module">
+  import '@material/mwc-slider/slider-range.js';
+</script>
+
+<mwc-slider-range
+    min="-20"
+    max="20"
+    valueStart="-10"
+    valueEnd="5">
+</mwc-slider-range>
+```
+
+### Range Discrete
+
+```html
+<mwc-slider-range
+    discrete
+    withTickMarks
+    step="1.5"
+    min="3"
+    max="12"
+    valueStart="4.5"
+    valueEnd="9">
+</mwc-slider-range>
 ```
 
 ## API
 
 ### Properties/Attributes
 
-| Name      | Type      | Default | Description
-| --------- | --------- |-------- | -----------
-| `value`   | `number`  | `0`     | Current value of the slider.
-| `min`     | `number`  | `0`     | Minimum value of the slider.
-| `max`     | `number`  | `100`   | Maximum value of the slider.
-| `step`    | `number`  | `0`     | When defined, the slider will quantize (round to the nearest multiple) all values to match that step value, except for the minimum and maximum values, which can always be set. When 0, quantization is disabled.<br> **NOTE:** Throws when <0.
-| `pin`     | `boolean` | `false` | Shows the thumb pin on a discrete slider.<br> **NOTE:** Numbers displayed inside the slider will be rounded to at most 3 decimal digits.
-| `markers` | `boolean` | `false` | Shows the tick marks for each step on the track when the slider is discrete.
+#### &lt;mwc-slider>
+
+| Name            | Type      | Default | Description
+| --------------- | --------- |-------- | -----------
+| `value`         | `number`  | `0`     | Current value of the slider.
+| `valueEnd`      | `number`  | `0`     | Proxy of `value`.
+| `min`           | `number`  | `0`     | Value representing the minimum allowed value.
+| `max`           | `number`  | `0`     | Value representing the maximum allowed value.
+| `disabled`      | `boolean` | `false` | Disables the slider, preventing interaction.
+| `step`          | `number`  | `1`     | Step for value quantization.
+| `discrete`      | `boolean` | `false` | Displays a numeric value label upon pressing the thumb which allows the user to select an exact value.
+| `withTickMarks` | `number`  | `0`     | Displays tick marks which represent predetermind values to which the user can move the slider. **NOTE:** the slider must be `discrete` to display tick marks, and to function correctly, there must be an integer amount of total steps within the range. i.e. `(max - min) % step === 0`
+
+#### &lt;mwc-slider-range>
+
+| Name            | Type      | Default | Description
+| --------------- | --------- |-------- | -----------
+| `valueStart`    | `number`  | `0`     | Current value of the start thumb handle.
+| `valueEnd`      | `number`  | `0`     | Current value of the end thumb handle.
+| `min`           | `number`  | `0`     | Value representing the minimum allowed value.
+| `max`           | `number`  | `0`     | Value representing the maximum allowed value.
+| `disabled`      | `boolean` | `false` | Disables the slider, preventing interaction.
+| `step`          | `number`  | `1`     | Step for value quantization.
+| `discrete`      | `boolean` | `false` | Displays a numeric value label upon pressing the thumb which allows the user to select an exact value.
+| `withTickMarks` | `number`  | `0`     | Displays tick marks which represent predetermind values to which the user can move the slider. **NOTE:** the slider must be `discrete` to display tick marks, and to function correctly, there must be an integer amount of total steps within the range. i.e. `(max - min) % step === 0`
 
 ### Methods
 
 | Name     | Description
 | -------- | -------------
-| `layout() => void` | Recomputes the dimensions and re-lays out the component. This should be called if the dimensions of the slider itself or any of its parent elements change programmatically (it is called automatically on resize and on mousedown / touchstart).
+| `valueToValueIndicatorTransform(value: number) => string` | Override this method to transform the value of a given knob to the text that should be displayed in the value indicator of a discrete slider. Additionally, this will set the `aria-valuetext`.
+| `layout(skipUpdateUI = false) => Promise<void>` | Recomputes the dimensions and re-lays out the component. This should be called if the dimensions of the slider itself or any of its parent elements change programmatically (it is called automatically on pointerdown). The skipUpdateUI parameter determines whether the UI should be updated alongside the internal clientRect model.
 
 ### Events
 
-| Event Name | Target       | Detail             | Description
-| ---------- | ------------ | ------------------ | -----------
-| `input`    | `mwc-slider` | `Slider`           | Fired when the value changes due to user input. Similar to the [`input` event of the native `<input type="range">` element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event), the `input` event will not fire when `value` is modified via JavaScript.
-| `change`   | `mwc-slider` | `Slider`           | Fired when the value changes and the user has finished interacting with the slider. Similar to the [`change` event of the native `<input type="range">` element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event), the `change` event will not fire when `value` is modified via JavaScript.
+| Event Name | Detail             | Description
+| ---------- | ------------------ | -----------
+| `input`    | `{value: number, thumb: Thumb}`* | Fired when the value changes due to user input. Similar to the [`input` event of the native `<input type="range">` element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event), the `input` event will not fire when `value` is modified via JavaScript.
+| `change`   | `{value: number, thumb: Thumb}`* | Fired when the value changes and the user has finished interacting with the slider. Similar to the [`change` event of the native `<input type="range">` element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event), the `change` event will not fire when `value` is modified via JavaScript.
+
+\* `Thumb` is a TypeScript enum exported by this component with types `START` and `END`
 
 ### CSS Custom Properties
 
+⚠️🚧  In Progress 🚧⚠️
+
 | Name                                     | Default | Description
 | ---------------------------------------- | ------- |------------
-| `--mdc-slider-bg-color-behind-component` | ![](images/color_fff.png) `white`   | Sets the color of the circle around the knob on the disabled slider to make it seem cut-out. May be necessary when placing a disabled slider on a different-colored background.
 
 #### Global Custom Properties
+
+⚠️🚧  In Progress and subject to change soon 🚧⚠️
 
 This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
 custom properties.
 
-| Name                                 | Description
-| ------------------------------------ | -----------
-| `--mdc-theme-secondary`              | Sets the color of the knob and filled track when slider is active.
-| `--mdc-theme-text-primary-on-dark`   | Sets the color of the text in the pin.
+| Name                       | Description
+| -------------------------- | -----------
+| `--mdc-theme-primary`      | Sets the color of the knob and filled track when slider is active.
+| `--mdc-theme-on-primary`   | Sets the color of the text in the pin.
+| `--mdc-theme-on-surface`   | Sets the color of the knob and filled track when slider is disabled.
 | `--mdc-typography-subtitle2-<PROPERTY>` | Styles the typography of slider's value indicators.
 
 

@@ -8,9 +8,10 @@
 // tslint:disable:strip-private-property-underscore
 
 import {customElement} from 'lit-element';
-
-import {SliderBase} from './mwc-slider-base';
+import {SliderSingleBase} from './slider-single-base';
 import {styles} from './mwc-slider.css';
+
+export {Thumb} from '@material/slider/types';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -19,6 +20,6 @@ declare global {
 }
 
 @customElement('mwc-slider')
-export class Slider extends SliderBase {
+export class Slider extends SliderSingleBase {
   static styles = [styles];
 }

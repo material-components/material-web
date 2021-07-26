@@ -12,6 +12,9 @@
   "references": [
     {
       "path": "../base"
+    },
+    {
+      "path": "../ripple"
     }
   ],
   "exclude": [

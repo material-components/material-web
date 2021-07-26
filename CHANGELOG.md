@@ -22,6 +22,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Add `ariaHasPopup` property
 - `menu`
   - Add `innerAriaLabel` property
+- **BREAKING:** `slider`
+  - Initial implementation of Material 2 slider
+  - Implementation is vastly different from M1 slider
 
 ## [v0.22.1] - 2021-07-14
 

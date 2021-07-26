@@ -4,12 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-@use '@material/slider';
+@use './slider';
 
 @include slider.core-styles();
-
-:host {
-  display: inline-block;
-  min-width: 120px;
-  outline: none;
-}
