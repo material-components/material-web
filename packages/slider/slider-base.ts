@@ -79,14 +79,9 @@ export class SliderBase extends FormElement {
     return this.endRipple;
   });
 
-  protected update(changed: PropertyValues) {
-    if (changed.has('disabled')) {
-      this.mdcFoundation?.setDisabled(this.disabled);
-    }
-
+  protected willUpdate(changed: PropertyValues) {
     if (changed.has('valueEnd') && this.mdcFoundation) {
       this.mdcFoundation.setValue(this.valueEnd);
-
       const validVal = this.mdcFoundation.getValue();
 
       if (validVal !== this.valueEnd) {
@@ -94,30 +89,11 @@ export class SliderBase extends FormElement {
       }
     }
 
-    if (changed.has('min')) {
-      this.mdcFoundation?.setMin(this.min);
-    }
-
-    if (changed.has('max')) {
-      this.mdcFoundation?.setMax(this.max);
-    }
-
-    if (changed.has('step')) {
-      this.mdcFoundation?.setStep(this.step);
-    }
-
-    if (changed.has('withTickMarks')) {
-      this.mdcFoundation?.setHasTickMarks(this.withTickMarks);
-    }
-
     if (changed.has('discrete')) {
-      this.mdcFoundation?.setIsDiscrete(this.discrete);
       if (!this.discrete) {
         this.tickMarks = [];
       }
     }
-
-    super.update(changed);
   }
 
   protected render() {
@@ -261,6 +237,38 @@ export class SliderBase extends FormElement {
   async firstUpdated() {
     super.firstUpdated();
     await this.layout(true);
+  }
+
+  updated(changed: PropertyValues) {
+    super.updated(changed);
+
+    if (!this.mdcFoundation) {
+      return;
+    }
+
+    if (changed.has('disabled')) {
+      this.mdcFoundation.setDisabled(this.disabled);
+    }
+
+    if (changed.has('min')) {
+      this.mdcFoundation.setMin(this.min);
+    }
+
+    if (changed.has('max')) {
+      this.mdcFoundation.setMax(this.max);
+    }
+
+    if (changed.has('step')) {
+      this.mdcFoundation.setStep(this.step);
+    }
+
+    if (changed.has('discrete')) {
+      this.mdcFoundation.setIsDiscrete(this.discrete);
+    }
+
+    if (changed.has('withTickMarks')) {
+      this.mdcFoundation.setHasTickMarks(this.withTickMarks);
+    }
   }
 
   async layout(skipUpdateUI = false) {
