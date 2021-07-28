@@ -21,7 +21,7 @@
 @use '@material/mwc-ripple/ripple-theme';
 
 // TODO(b/153370936): replace with theme.resolve()
-$light-theme: (
+$light-theme-deprecated: (
   ink-color: theme-color.prop-value(on-secondary),
   ink-color-hover: theme-color.prop-value(on-secondary),
   ink-color-focus: theme-color.prop-value(on-secondary),
@@ -45,7 +45,7 @@ $light-theme: (
   outline-width-focus: initial,
 );
 
-@mixin theme($theme: $light-theme) {
+@mixin theme-deprecated($theme: $light-theme-deprecated) {
   $container-color: map.get($theme, container-color);
   @if $container-color {
     @include css.declaration(--mdc-theme-secondary, $container-color);
@@ -191,12 +191,6 @@ $light-theme: (
 ///
 /// Applies the given theme as custom properties without any selectors.
 ///
-@mixin theme-declare-custom-properties(
-  $theme,
-  $resolvers: resolvers.$material
-) {
-  @include fab-theme.theme-declare-custom-properties(
-    $theme,
-    $resolvers: $resolvers
-  );
+@mixin theme($theme, $resolvers: resolvers.$material) {
+  @include fab-theme.theme($theme, $resolvers: $resolvers);
 }

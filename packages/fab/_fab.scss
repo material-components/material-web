@@ -17,7 +17,7 @@
 @use '@material/mwc-icon/mwc-icon';
 @use './fab-theme';
 
-$icon-size: map.get(fab-theme.$light-theme, icon-size);
+$icon-size: map.get(fab-theme.$light-theme-deprecated, icon-size);
 
 @mixin core-styles() {
   outline: none;
@@ -175,15 +175,19 @@ $icon-size: map.get(fab-theme.$light-theme, icon-size);
   }
 
   .mdc-fab--extended {
-    @include fab-theme.theme((
-      container-width: auto,
-    ));
+    @include fab-theme.theme-deprecated(
+      (
+        container-width: auto,
+      )
+    );
   }
 
   .mdc-fab--mini {
-    @include fab-theme.theme((
-      container-width: 40px,
-      container-height: 40px,
-    ));
+    @include fab-theme.theme-deprecated(
+      (
+        container-width: 40px,
+        container-height: 40px,
+      )
+    );
   }
 }
