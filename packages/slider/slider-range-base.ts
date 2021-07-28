@@ -66,7 +66,8 @@ export class SliderRangeBase extends SliderBase {
     <div
         class="mdc-slider mdc-slider--range ${rootClasses}"
         @pointerdown=${this.onPointerdown}
-        @pointerup=${this.onPointerup}>
+        @pointerup=${this.onPointerup}
+        @contextmenu=${this.onContextmenu}>
       ${content}
     </div>`;
   }

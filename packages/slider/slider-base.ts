@@ -116,7 +116,8 @@ export class SliderBase extends FormElement {
     <div
         class="mdc-slider ${rootClasses}"
         @pointerdown=${this.onPointerdown}
-        @pointerup=${this.onPointerup}>
+        @pointerup=${this.onPointerup}
+        @contextmenu=${this.onContextmenu}>
       ${content}
     </div>`;
   }
@@ -321,6 +322,11 @@ export class SliderBase extends FormElement {
         this.boundMoveListener = null;
       }
     }
+  }
+
+  protected onContextmenu(e: Event) {
+    // prevents context menu otherwise pointerdown will fire but not pointerup
+    e.preventDefault();
   }
 
   protected setFormData(formData: FormData) {
