@@ -9,11 +9,11 @@
 
 // Make TypeScript not remove the import.
 import '@material/mwc-tab-indicator';
-import '@material/mwc-ripple/mwc-ripple';
+import '@material/mwc-ripple';
 
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
-import {Ripple} from '@material/mwc-ripple/mwc-ripple';
+import {Ripple} from '@material/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {TabIndicator} from '@material/mwc-tab-indicator';
 import {MDCTabAdapter} from '@material/tab/adapter';

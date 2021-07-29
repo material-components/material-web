@@ -8,7 +8,7 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {Ripple} from '@material/mwc-ripple/mwc-ripple';
+import {Ripple} from '@material/mwc-ripple';
 
 interface RippleInternals {
   hovering: boolean;
