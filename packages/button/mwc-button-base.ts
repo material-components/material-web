@@ -7,7 +7,7 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import '@material/mwc-icon/mwc-icon';
+import '@material/mwc-icon';
 import '@material/mwc-ripple';
 
 import {AriaHasPopup, ariaProperty} from '@material/mwc-base/aria-property';
