@@ -1,15 +1,15 @@
 {
   "name": "@material/mwc-elevation-overlay",
   "version": "0.22.1",
-  "description": "Material design floating action button component",
+  "description": "Material semi-transparent covering of an element indicating its state",
   "keywords": [
     "material design",
     "web components",
     "elevation",
     "overlay"
   ],
-  "main": "mwc-elevation-overlay-css.js",
-  "module": "mwc-elevation-overlay-css.js",
+  "main": "mwc-elevation-overlay.css.js",
+  "module": "mwc-elevation-overlay.css.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/material-components/material-components-web-components.git",
