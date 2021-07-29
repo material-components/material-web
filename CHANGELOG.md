@@ -9,10 +9,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - `switch`
-  - **BREKAING:** Moved old switch implementation to 
+  - **BREAKING:** Moved old switch implementation to
     `@material/mwc-switch/deprecated`
 
 ### Fixed
+
+- all
+  - Fixed inconsistent import styles for `@material/mwc-ripple` and
+    `@material-mwc-icon` to reduce duplicate registration errors for those
+    elements in certain environments.
+- `elevation-overlay`
+  - Fixed invalid `main` and `module` fields in `package.json`.
+- `icon-button`
+  - Fixed missing dependency on `@material/mwc-base`.
+- `icon-button-toggle`
+  - Fixed missing dependency on `lit-html`.
 
 ### Added
 
