@@ -14,7 +14,7 @@
 // Selector '.mdc-*' should only be used in this project.
 
 @mixin theme($theme) {
-  @include slider-theme.theme-declare-custom-properties($theme);
+  @include slider-theme.theme($theme);
 
   @if shadow-dom.$css-selector-fallback-declarations {
     @include theme-styles($theme);
@@ -46,8 +46,4 @@
       );
     }
   }
-}
-
-@mixin theme-declare-custom-properties($theme) {
-  @include slider-theme.theme-declare-custom-properties($theme);
 }
