@@ -25,6 +25,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - **BREAKING:** `slider`
   - Initial implementation of Material 2 slider
   - Implementation is vastly different from M1 slider
+- `list`
+  -  `SelectedEvent`, `SingleSelectedEvent`, `MultiSelectedEvent` now exported from `mwc-list-base` and `mwc-list` files
 
 ## [v0.22.1] - 2021-07-14
 

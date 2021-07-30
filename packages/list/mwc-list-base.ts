@@ -20,7 +20,7 @@ import MDCListFoundation, {ActionDetail, isIndexSet, SelectedDetail} from './mwc
 import {MWCListIndex} from './mwc-list-foundation';
 import {Layoutable, ListItemBase, RequestSelectedDetail} from './mwc-list-item-base';
 
-export {ActionDetail, createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex, SelectedDetail} from './mwc-list-foundation';
+export {ActionDetail, createSetFromIndex, isEventMulti, isIndexSet, MultiSelectedEvent, MWCListIndex, SelectedDetail, SelectedEvent, SingleSelectedEvent} from './mwc-list-foundation';
 
 function debounceLayout(
     callback: (updateItems: boolean) => void, waitInMS = 50) {

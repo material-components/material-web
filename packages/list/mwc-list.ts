@@ -13,7 +13,7 @@ import {customElement} from 'lit-element';
 import {ListBase} from './mwc-list-base';
 import {styles} from './mwc-list.css';
 
-export {ActionDetail, createSetFromIndex, IndexDiff, isEventMulti, isIndexSet, MWCListIndex, SelectedDetail} from './mwc-list-foundation';
+export {ActionDetail, createSetFromIndex, IndexDiff, isEventMulti, isIndexSet, MultiSelectedEvent, MWCListIndex, SelectedDetail, SelectedEvent, SingleSelectedEvent} from './mwc-list-foundation';
 
 declare global {
   interface HTMLElementTagNameMap {
