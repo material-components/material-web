@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - all
   - Fixed inconsistent import styles for `@material/mwc-ripple` and
-    `@material-mwc-icon` to reduce duplicate registration errors for those
+    `@material/mwc-icon` to reduce duplicate registration errors for those
     elements in certain environments.
 - `elevation-overlay`
   - Fixed invalid `main` and `module` fields in `package.json`.

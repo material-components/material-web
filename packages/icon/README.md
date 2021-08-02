@@ -35,7 +35,7 @@ npm install @material/mwc-icon
 <mwc-icon>shopping_cart</mwc-icon>
 
 <script type="module">
-  import '@material/mwc-icon/mwc-icon';
+  import '@material/mwc-icon';
 </script>
 ```
 
