@@ -108,7 +108,7 @@ _Note_: it is not recommended to mix graphic sizes in the same list.
 <script type="module">
   import '@material/mwc-list/mwc-list-item.js';
   import '@material/mwc-list/mwc-list.js';
-  import '@material/mwc-icon';
+  import '@material/mwc-icon/mwc-icon';
 </script>
 ```
 

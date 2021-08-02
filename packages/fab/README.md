@@ -60,7 +60,7 @@ npm install @material/mwc-fab
 
 <script type="module">
   import '@material/mwc-fab';
-  import '@material/mwc-icon';
+  import '@material/mwc-icon/mwc-icon';
 </script>
 ```
 

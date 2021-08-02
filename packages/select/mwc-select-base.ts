@@ -9,7 +9,7 @@
 
 import '@material/mwc-notched-outline';
 import '@material/mwc-menu';
-import '@material/mwc-icon';
+import '@material/mwc-icon/mwc-icon';
 
 import {KEY, normalizeKey} from '@material/dom/keyboard';
 import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation';
