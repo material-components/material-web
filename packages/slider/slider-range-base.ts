@@ -7,10 +7,10 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import '@material/mwc-ripple';
+import '@material/mwc-ripple/mwc-ripple';
 
 import {deepActiveElementPath} from '@material/mwc-base/utils';
-import {Ripple} from '@material/mwc-ripple';
+import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {MDCSliderAdapter} from '@material/slider/adapter';
 import {Thumb, TickMark} from '@material/slider/types';

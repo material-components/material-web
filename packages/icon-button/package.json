@@ -26,6 +26,7 @@
   "devDependencies": {
     "@material/feature-targeting": "=13.0.0-canary.cc5377458.0",
     "@material/icon-button": "=13.0.0-canary.cc5377458.0",
+    "@material/mwc-base": "^0.22.1",
     "@material/mwc-icon": "^0.22.1",
     "@material/ripple": "=13.0.0-canary.cc5377458.0",
     "@material/theme": "=13.0.0-canary.cc5377458.0"
