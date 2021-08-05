@@ -6,14 +6,16 @@
 
 @use '@material/theme/theme';
 @use '@material/slider/slider' as mdc-slider;
+@use './slider-theme';
 
 @mixin core-styles() {
-  // TODO: Use ripple theme-styles once available.
-  @include mdc-slider.without-ripple();
   @include static-styles();
+  @include slider-theme.theme-styles(slider-theme.$light-theme);
 }
 
 @mixin static-styles() {
+  @include mdc-slider.static-styles();
+
   :host {
     outline: none;
     display: block;

@@ -26,8 +26,8 @@ npm install @material/mwc-slider
 
 work still to be done:
 
-* enabling theme custom properties
-* component testing (and any subsequent changes that result from testing)
+*   finalizing theme custom properties
+*   component testing (and any subsequent changes that result from testing)
 
 ## Example usage
 
@@ -130,10 +130,74 @@ work still to be done:
 
 ### CSS Custom Properties
 
-⚠️🚧  In Progress 🚧⚠️
+⚠️🚧 Theming API Finalization In Progress 🚧⚠️
 
-| Name                                     | Default | Description
-| ---------------------------------------- | ------- |------------
+| Name | Default | Description | --mdc-slider-active-track-height | `6px` |
+Height of the active track | --mdc-slider-active-track-shape | `3px` | Radius of
+the active track | --mdc-slider-inactive-track-height | `4px` | Height of the
+inactive track | --mdc-slider-inactive-track-shape | `2px` | Radius of the
+inactive track | --mdc-slider-handle-height | `20px` | Height of the slider
+handle | --mdc-slider-handle-width | `20px` | Width of the slider handle |
+--mdc-slider-handle-shape | `10px` | Radius of the slider handle |
+--mdc-slider-handle-color | `--mdc-theme-primary` | Color of the handle |
+--mdc-slider-with-overlap-handle-outline-color | `--mdc-theme-on-primary` |
+Color of the outline of the handle when it overlaps another handle |
+--mdc-slider-with-overlap-handle-outline-width | `1px` | Width of the outline of
+the handle when it overlaps another handle | --mdc-slider-active-track-color |
+`--mdc-theme-primary` | Color of the active track |
+--mdc-slider-inactive-track-color | `#dcc4fb` | Color of the inactive track |
+--mdc-slider-with-tick-marks-container-size | `2px` | Height and width of the
+tick marks | --mdc-slider-with-tick-marks-container-shape | `1px` | Radius of
+the tick marks | --mdc-slider-with-tick-marks-active-container-color |
+`--mdc-theme-on-primary` | Color of the tick marks in the active track |
+--mdc-slider-with-tick-marks-active-container-opacity | `.6` | Opacity of the
+tick marks in the active track |
+--mdc-slider-with-tick-marks-inactive-container-color | `--mdc-theme-primary` |
+Color of tick marks in the inactive track |
+--mdc-slider-with-tick-marks-inactive-container-opacity | `.24` | Opacity of the
+tick marks in the inactive track |
+--mdc-slider-with-value-label-container-height | `28px` | Height of the value
+indicator and width of the small indicator |
+--mdc-slider-with-value-label-container-color | `--mdc-theme-primary` |
+Background color of the value indicator |
+--mdc-slider-with-value-label-label-text-font |
+`--mdc-typography-subtitle2-font-family` | Font family of the value indicator |
+--mdc-slider-with-value-label-label-text-font-size |
+`--mdc-typography-subtitle2-font-size` | Font size of the value indicator |
+--mdc-slider-with-value-label-label-text-line-height |
+`--mdc-typography-subtitle2-line-height` | Line height of the value indicator |
+--mdc-slider-with-value-label-label-text-weight |
+`--mdc-typography-subtitle2-font-weight` | Font weight of the value indicator |
+--mdc-slider-with-value-label-label-text-tracking |
+`--mdc-typography-subtitle2-letter-spacing` | Letter spacing of the value
+indicator | --mdc-slider-with-value-label-label-text-color |
+`--mdc-theme-on-primary` | Color of the value indicator text |
+--mdc-slider-disabled-handle-color | `--mdc-theme-on-surface` | Color of the
+handles when disabled | --mdc-slider-disabled-track-active-color |
+`--mdc-theme-on-surface` | Color of the active track when disabled |
+--mdc-slider-disabled-track-inactive-color | `#bfbfbf` | Color of the inactive
+track when disabled |
+--mdc-slider-with-tick-marks-disabled-active-container-color |
+`--mdc-theme-on-primary` | Color of the tick marks in the active track when
+disabled | --mdc-slider-with-tick-marks-disabled-active-container-opacity | `.6`
+| Opacity of the tick marks in the active track when disabled |
+--mdc-slider-with-tick-marks-disabled-inactive-container-color |
+`--mdc-theme-on-surface` | Color of the tick marks in the inactive track when
+disabled | --mdc-slider-with-tick-marks-disabled-inactive-container-opacity |
+`.6` | Opacity of the tick marks in the inactive track when disabled |
+--mdc-slider-hover-handle-color | `--mdc-theme-primary` | Color of the handle
+when hovered | --mdc-slider-hover-state-layer-color | `--mdc-theme-primary` |
+Color of the handle ripple when hovered | --mdc-slider-hover-state-layer-opacity
+| `.04` | Opacity of the handle ripple when hovered |
+--mdc-slider-focus-handle-color | `--mdc-theme-primary` | Color of the handle
+when focused | --mdc-slider-focus-state-layer-color | `--mdc-theme-primary` |
+Color of the handle ripple when focused | --mdc-slider-focus-state-layer-opacity
+| `.12` | Opacity of the handle ripple when focused |
+--mdc-slider-pressed-handle-color | `--mdc-theme-primary` | Color of the handle
+when pressed | --mdc-slider-pressed-state-layer-color | `--mdc-theme-primary` |
+Color of the handle ripple when pressed |
+--mdc-slider-pressed-state-layer-opacity | `.12` | Opacity of the handle ripple
+when pressed
 
 #### Global Custom Properties
 

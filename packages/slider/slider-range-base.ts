@@ -151,9 +151,11 @@ export class SliderRangeBase extends SliderBase {
   }
 
   protected renderStartThumb() {
+    const indicatorText = this.valueToValueIndicatorTransform(this.valueStart);
     const startThumbClasses = classMap({
       'mdc-slider__thumb--with-indicator': this.startThumbWithIndicator,
       'mdc-slider__thumb--top': this.startThumbTop,
+      'mdc-slider__thumb--short-value': indicatorText.length <= 2,
     });
 
     const startThumbStyles = styleMap({
@@ -187,9 +189,7 @@ export class SliderRangeBase extends SliderBase {
           @mouseenter=${this.onStartMouseenter}
           @mouseleave=${this.onStartMouseleave}>
         ${ripple}
-        ${
-        this.renderValueIndicator(
-            this.valueToValueIndicatorTransform(this.valueStart))}
+        ${this.renderValueIndicator(indicatorText)}
         <div class="mdc-slider__thumb-knob"></div>
       </div>
     `;

@@ -5,43 +5,73 @@
  */
 
 @use 'sass:map';
-@use '@material/slider/slider-theme';
+@use 'sass:list';
+@use '@material/slider/slider-theme' as mdc-slider-theme;
 @use '@material/theme/shadow-dom';
 @use '@material/theme/keys';
+@use '@material/theme/theme';
+@use '@material/theme/state';
+@use '@material/theme/map-ext';
 @use '@material/mwc-ripple/ripple-theme';
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
+@forward 'third_party/javascript/material_components_web/slider/slider-theme' show
+  $light-theme;
 
 @mixin theme($theme) {
-  @include slider-theme.theme($theme);
-
-  @if shadow-dom.$css-selector-fallback-declarations {
-    @include theme-styles($theme);
-  }
+  @include mdc-slider-theme.theme($theme);
 }
 
 @mixin theme-styles($theme) {
-  .mdc-slider {
-    @include slider-theme.theme-styles($theme);
+  @include theme.validate-keys(mdc-slider-theme.$light-theme, $theme);
 
-    .ripple {
-      $theme: keys.create-theme-properties($theme, $prefix: 'slider');
+  $pair: map-ext.split(
+    $theme,
+    state-layer-size,
+    hover-state-layer-color,
+    hover-state-layer-opacity,
+    focus-state-layer-color,
+    focus-state-layer-opacity,
+    pressed-state-layer-color,
+    pressed-state-layer-opacity
+  );
 
-      @include mdc-ripple-theme.theme(
+  $theme-without-ripple: list.nth($pair, 1);
+  @include mdc-slider-theme.theme-styles($theme-without-ripple);
+
+  $ripple-theme: list.nth($pair, 2);
+  $ripple-theme: keys.create-theme-properties($ripple-theme, slider);
+  .ripple {
+    @include ripple-theme.theme(
+      (
+        focus-state-layer-color: map.get($ripple-theme, focus-state-layer-color),
+        focus-state-layer-opacity:
+          map.get($ripple-theme, focus-state-layer-opacity),
+        hover-state-layer-color: map.get($ripple-theme, hover-state-layer-color),
+        hover-state-layer-opacity:
+          map.get($ripple-theme, hover-state-layer-opacity),
+        pressed-state-layer-color:
+          map.get($ripple-theme, pressed-state-layer-color),
+        pressed-state-layer-opacity:
+          map.get($ripple-theme, pressed-state-layer-opacity),
+      )
+    );
+
+    // TODO(b/191298796): ripple-theme does not currently support setting
+    // state layer colors other than hover. Remove this section when bug is
+    // resolved.
+    @include state.focus(mdc-slider-theme.$selectors) {
+      @include ripple-theme.theme(
         (
           hover-state-layer-color:
-            map.get($theme, hover-thumb-state-layer-color),
-          focus-state-layer-color:
-            map.get($theme, focus-thumb-state-layer-color),
-          pressed-state-layer-color:
-            map.get($theme, pressed-thumb-state-layer-color),
-          hover-state-layer-opacity:
-            map.get($theme, hover-thumb-state-layer-opacity),
-          focus-state-layer-opacity:
-            map.get($theme, focus-thumb-state-layer-opacity),
-          pressed-state-layer-opacity:
-            map.get($theme, pressed-thumb-state-layer-opacity),
+            map.get($ripple-theme, focus-state-layer-color),
+        )
+      );
+    }
+    @include state.pressed(mdc-slider-theme.$selectors) {
+      @include ripple-theme.theme(
+        (
+          hover-state-layer-color:
+            map.get($ripple-theme, pressed-state-layer-color),
         )
       );
     }

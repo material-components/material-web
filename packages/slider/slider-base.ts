@@ -170,9 +170,11 @@ export class SliderBase extends FormElement {
   }
 
   protected renderEndThumb() {
+    const indicatorText = this.valueToValueIndicatorTransform(this.valueEnd);
     const endThumbClasses = classMap({
       'mdc-slider__thumb--with-indicator': this.endThumbWithIndicator,
       'mdc-slider__thumb--top': this.endThumbTop,
+      'mdc-slider__thumb--short-value': indicatorText.length <= 2,
     });
 
     const endThumbStyles = styleMap({
@@ -206,9 +208,7 @@ export class SliderBase extends FormElement {
           @mouseenter=${this.onEndMouseenter}
           @mouseleave=${this.onEndMouseleave}>
         ${ripple}
-        ${
-        this.renderValueIndicator(
-            this.valueToValueIndicatorTransform(this.valueEnd))}
+        ${this.renderValueIndicator(indicatorText)}
         <div class="mdc-slider__thumb-knob"></div>
       </div>
     `;
