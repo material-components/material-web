@@ -31,6 +31,7 @@ export class SliderRangeBase extends SliderBase {
   protected startThumbKnob!: HTMLElement;
   @queryAsync('.start .ripple') protected startRipple!: Promise<Ripple|null>;
   @property({type: Number}) valueStart: number = 0;
+  @state() protected valueIndicatorTextStart: string = `${this.valueStart}`;
   @state() protected startThumbWithIndicator = false;
   @state() protected startThumbTop = false;
   @state() protected shouldRenderStartRipple = false;
@@ -154,6 +155,8 @@ export class SliderRangeBase extends SliderBase {
     const startThumbClasses = classMap({
       'mdc-slider__thumb--with-indicator': this.startThumbWithIndicator,
       'mdc-slider__thumb--top': this.startThumbTop,
+      'mdc-slider__thumb--short-value':
+          this.valueIndicatorTextStart.length <= 2,
     });
 
     const startThumbStyles = styleMap({
@@ -187,9 +190,7 @@ export class SliderRangeBase extends SliderBase {
           @mouseenter=${this.onStartMouseenter}
           @mouseleave=${this.onStartMouseleave}>
         ${ripple}
-        ${
-        this.renderValueIndicator(
-            this.valueToValueIndicatorTransform(this.valueStart))}
+        ${this.renderValueIndicator(this.valueIndicatorTextEnd)}
         <div class="mdc-slider__thumb-knob"></div>
       </div>
     `;
@@ -395,6 +396,9 @@ export class SliderRangeBase extends SliderBase {
 
         return this.endThumbKnob.getBoundingClientRect().width;
       },
+      getValueToValueIndicatorTextFn: () => {
+        return this.valueToValueIndicatorTransform;
+      },
       getValueToAriaValueTextFn: () => {
         return this.valueToAriaTextTransform
       },
@@ -526,8 +530,17 @@ export class SliderRangeBase extends SliderBase {
       setPointerCapture: (pointerId) => {
         this.mdcRoot.setPointerCapture(pointerId);
       },
-      setValueIndicatorText: () => {
-        // handled by bidnings
+      setValueIndicatorText: (value, thumb) => {
+        switch (thumb) {
+          case Thumb.END:
+            this.valueIndicatorTextEnd = value;
+            break;
+          case Thumb.START:
+            this.valueIndicatorTextStart;
+            break;
+          default:
+            break;
+        }
       },
       updateTickMarks: (tickMarks: TickMark[]) => {
         this.tickMarks = tickMarks;

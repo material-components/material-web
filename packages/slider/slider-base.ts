@@ -40,6 +40,7 @@ export class SliderBase extends FormElement {
   @property({type: Number}) step: number = 1;
   @property({type: Boolean}) withTickMarks: boolean = false;
   @property({type: Boolean}) discrete: boolean = false;
+  @state() protected valueIndicatorTextEnd: string = `${this.valueEnd}`;
   @state() protected tickMarks: TickMark[] = [];
   @state() protected trackTransformOriginStyle: string = '';
   @state() protected trackLeftStyle: string = '';
@@ -173,6 +174,7 @@ export class SliderBase extends FormElement {
     const endThumbClasses = classMap({
       'mdc-slider__thumb--with-indicator': this.endThumbWithIndicator,
       'mdc-slider__thumb--top': this.endThumbTop,
+      'mdc-slider__thumb--short-value': this.valueIndicatorTextEnd.length <= 2,
     });
 
     const endThumbStyles = styleMap({
@@ -206,9 +208,7 @@ export class SliderBase extends FormElement {
           @mouseenter=${this.onEndMouseenter}
           @mouseleave=${this.onEndMouseleave}>
         ${ripple}
-        ${
-        this.renderValueIndicator(
-            this.valueToValueIndicatorTransform(this.valueEnd))}
+        ${this.renderValueIndicator(this.valueIndicatorTextEnd)}
         <div class="mdc-slider__thumb-knob"></div>
       </div>
     `;
