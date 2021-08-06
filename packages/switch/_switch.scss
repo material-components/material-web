@@ -1,0 +1,24 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use '@material/switch/switch' as mdc-switch;
+
+@mixin static-styles() {
+  @include mdc-switch.static-styles-without-ripple;
+
+  :host {
+    display: inline-flex;
+    outline: none;
+  }
+
+  input {
+    @include input;
+  }
+}
+
+@mixin input() {
+  display: none;
+}

@@ -7,8 +7,8 @@
     "web components",
     "switch"
   ],
-  "main": "deprecated/mwc-switch.js",
-  "module": "deprecated/mwc-switch.js",
+  "main": "mwc-switch.js",
+  "module": "mwc-switch.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/material-components/material-components-web-components.git",
@@ -23,11 +23,14 @@
     "tslib": "^2.0.1"
   },
   "devDependencies": {
+    "@material/dom": "=13.0.0-canary.b47dd37a6.0",
     "@material/ripple": "=13.0.0-canary.b47dd37a6.0",
+    "@material/theme": "=13.0.0-canary.b47dd37a6.0",
     "lit-html": "^1.4.1"
   },
   "scripts": {
-    "build:style": "node ../../scripts/sass-to-lit-css/index.js deprecated/mwc-switch.scss"
+    "build:style": "node ../../scripts/sass-to-lit-css/index.js styles.scss && npm run build:styledeprecated",
+    "build:styledeprecated": "node ../../scripts/sass-to-lit-css/index.js deprecated/mwc-switch.scss"
   },
   "publishConfig": {
     "access": "public"

@@ -33,12 +33,12 @@ npm install @material/mwc-switch
 <mwc-switch></mwc-switch>
 ```
 
-### Checked by default
+### Selected by default
 
 <img src="images/on.png" width="68px">
 
 ```html
-<mwc-switch checked></mwc-switch>
+<mwc-switch selected></mwc-switch>
 ```
 
 ### Disabled
@@ -47,7 +47,7 @@ npm install @material/mwc-switch
 
 ```html
 <mwc-switch disabled></mwc-switch>
-<mwc-switch checked disabled></mwc-switch>
+<mwc-switch selected disabled></mwc-switch>
 ```
 
 ### Styled
@@ -57,13 +57,17 @@ npm install @material/mwc-switch
 ```html
 <style>
   mwc-switch {
-    --mdc-theme-surface: blue;
-    --mdc-theme-on-surface: blue;
-    --mdc-theme-secondary: red;
+    --mdc-switch-selected-handle-color: teal;
+    --mdc-switch-selected-track-color: lightseagreen;
+    /* ... additional states (hover/focus/pressed) + state-layer element */
+    --mdc-switch-unselected-handle-color: goldenrod;
+    --mdc-switch-unselected-track-color: palegoldenrod;
+    --mdc-switch-unselected-icon-color: black;
+    /* ... additional states (hover/focus/pressed) + state-layer element */
   }
 </style>
 <mwc-switch></mwc-switch>
-<mwc-switch checked></mwc-switch>
+<mwc-switch selected></mwc-switch>
 ```
 
 ### With Form Field
@@ -76,7 +80,7 @@ to associate an interactive label with the switch.
 
 ```html
 <mwc-formfield label="Airplane mode">
-  <mwc-switch checked></mwc-switch>
+  <mwc-switch selected></mwc-switch>
 </mwc-formfield>
 
 <script type="module">
@@ -94,8 +98,10 @@ to associate an interactive label with the switch.
 ### Properties/Attributes
 | Name       | Type      | Default | Description
 | ---------- | --------- | ------- | -----------
-| `checked`  | `boolean` | `false` | Whether or not the switch should be checked / activated.
-| `disabled` | `boolean` | `false` | Disables the input and sets the disabled styles.
+| `selected` | `boolean` | `false` | If true, the switch is on. If false, the switch is off.
+| `disabled` | `boolean` | `false` | Indicates whether or not the switch is disabled.
+| `name` | `string` | `""` | The form name of the switch.
+| `value` | `string` | `"on"` | The value of the switch to submit in a form when selected.
 
 ### Methods
 
@@ -103,13 +109,42 @@ to associate an interactive label with the switch.
 
 ### Events
 
-| Event Name | Target         | Detail | Description
-| ---------- | -------------- | ------ | -----------
-| `change`   | `mwc-switch`   | `{}`   | Fired when the user modifies the switch `checked` state from an input device interaction. Note that, like [native `<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event), the `change` event is *not* fired when the `checked` property is set from JavaScript.
+*None*
 
 ### CSS Custom Properties
 
-Inherits styles from [ripple](https://github.com/material-components/material-components-web-components/tree/master/packages/ripple)
+The switch may be customized using the `theme()` mixin to emit custom
+properties. The `theme()` mixin can be used for simple and complex theming,
+such as density.
+
+```scss
+@use '@material/mwc-switch';
+
+mwc-switch {
+  @include mwc-switch.theme((
+    selected-handle-color: #00897b,
+    selected-track-color: #4db6ac,
+  ));
+}
+
+mwc-switch.dense {
+  @include mwc-switch.theme(mwc-switch.density(-1));
+}
+```
+
+```css
+mwc-switch {
+  --mdc-switch-selected-handle-color: #00897b;
+  --mdc-switch-selected-track-color: #4db6ac;
+}
+
+mwc-switch.dense {
+  --mdc-switch-state-layer-size: 44px;
+}
+```
+
+View the [MDC switch theme file](https://github.com/material-components/material-components-web/blob/master/packages/mdc-switch/_switch-theme.scss)
+for a list of theme keys and available built-in themes.
 
 #### Global Custom Properties
 
@@ -118,9 +153,8 @@ custom properties.
 
 | Name                                 | Description
 | ------------------------------------ | -----------
-| `--mdc-theme-surface`                | Fill color of the thumb head when unchecked.
-| `--mdc-theme-on-surface`             | 38% fill color of the track when unchecked.
-| `--mdc-theme-secondary`              | Fill color of the thumb head and 38% fill color of the track when checked.
+| `--mdc-theme-primary`                | Selected handle and ripple color.
+| `--mdc-theme-on-primary`             | Selected and unselected icon colors.
 
 ## Additional references
 

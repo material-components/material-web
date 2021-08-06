@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `switch`
   - **BREAKING:** Moved old switch implementation to
     `@material/mwc-switch/deprecated`
+  - **BREAKING:** Updated switch to new Material Design spec
+    - Selected and unselected states now have icons
+    - Switch uses "primary" theme color instead of "secondary"
+    - New custom properties have been introduced
+  - **BREAKING:** `checked` renamed to `selected`
+  - **BREAKING:** No longer dispatches a `change` event (use `click` events)
+  - Added form support
 
 ### Fixed
 

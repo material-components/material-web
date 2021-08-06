@@ -1,0 +1,11 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@forward './switch-theme' show
+  $forced-colors-theme,
+  $light-theme,
+  density,
+  theme;

@@ -11,12 +11,12 @@
 import '@material/mwc-formfield';
 import '@material/mwc-checkbox';
 import '@material/mwc-radio';
-import '@material/mwc-switch/deprecated/mwc-switch';
+import '@material/mwc-switch/mwc-switch';
 
 import {Checkbox} from '@material/mwc-checkbox';
 import {Formfield} from '@material/mwc-formfield';
 import {Radio} from '@material/mwc-radio';
-import {Switch} from '@material/mwc-switch/deprecated/mwc-switch';
+import {Switch} from '@material/mwc-switch/mwc-switch';
 import {html} from 'lit-html';
 
 import {fixture, TestFixture} from '../../../test/src/util/helpers';
@@ -146,8 +146,7 @@ describe('mwc-formfield', () => {
       });
 
       it('sets the aria-label on the control', async () => {
-        const internalInput = control.shadowRoot!.querySelector('input')!;
-        expect(internalInput.getAttribute('aria-label')).toEqual('label');
+        expect(control.ariaLabel).toEqual('label');
       });
 
       it('label click propagates click and focus to control', async () => {
@@ -160,7 +159,7 @@ describe('mwc-formfield', () => {
           origClick.call(control);
         };
 
-        expect(control.checked).toBeFalse();
+        expect(control.selected).toBeFalse();
         expect(fixt.shadowRoot!.activeElement).toEqual(null);
         expect(numClicks).toEqual(0);
 
@@ -169,7 +168,7 @@ describe('mwc-formfield', () => {
         await element.updateComplete;
         await control.updateComplete;
 
-        expect(control.checked).toBeTrue();
+        expect(control.selected).toBeTrue();
         expect(fixt.shadowRoot!.activeElement).toEqual(control);
         expect(numClicks).toEqual(1);
       });
@@ -183,7 +182,7 @@ describe('mwc-formfield', () => {
           origClick.call(control);
         };
 
-        expect(control.checked).toBeFalse();
+        expect(control.selected).toBeFalse();
         expect(numClicks).toEqual(0);
 
         control.click();
@@ -192,7 +191,7 @@ describe('mwc-formfield', () => {
         await control.updateComplete;
 
         expect(numClicks).toEqual(1);
-        expect(control.checked).toBeTrue();
+        expect(control.selected).toBeTrue();
       });
     });
   });

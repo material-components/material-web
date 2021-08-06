@@ -1,0 +1,24 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use '@material/dom/dom';
+@use './switch';
+@use './switch-theme';
+
+@include switch.static-styles;
+
+.mdc-switch {
+  @include switch-theme.theme-styles(switch-theme.$light-theme);
+
+  @include dom.forced-colors-mode {
+    & {
+      @include switch-theme.theme-styles(switch-theme.$forced-colors-theme);
+    }
+  }
+}
