@@ -31,6 +31,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Fixed missing dependency on `@material/mwc-base`.
 - `icon-button-toggle`
   - Fixed missing dependency on `lit-html`.
+- `textarea`
+  - Text direction follows CSS direction
+- `textfield`
+  - Text direction follows CSS direction
 
 ### Added
 

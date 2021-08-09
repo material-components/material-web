@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
 @use '@material/textfield/mdc-text-field';
 @use '@material/textfield';
 @use "@material/mwc-icon/_mwc-icon";
@@ -52,6 +55,10 @@
   &.mdc-text-field--invalid {
     @include textfield.bottom-line-color(textfield.$error);
   }
+}
+
+.mdc-text-field__input {
+  direction: inherit;
 }
 
 mwc-notched-outline {
