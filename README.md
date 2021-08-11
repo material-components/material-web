@@ -1,6 +1,6 @@
 # Material Web Components
 
-[![Test Status](https://github.com/material-components/material-components-web-components/workflows/tests/badge.svg?branch=master)](https://github.com/material-components/material-components-web-components/actions?query=workflow%3Atests+branch%3Amaster) [![GitHub issues by-label](https://img.shields.io/github/issues-raw/material-components/material-components-web-components/Type:%20Bug)](https://github.com/material-components/material-components-web-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22Type%3A+Bug%22)
+[![Test Status](https://github.com/material-components/material-web/workflows/tests/badge.svg?branch=master)](https://github.com/material-components/material-web/actions?query=workflow%3Atests+branch%3Amaster) [![GitHub issues by-label](https://img.shields.io/github/issues-raw/material-components/material-web/Type:%20Bug)](https://github.com/material-components/material-web/issues?q=is%3Aissue+is%3Aopen+label%3A%22Type%3A+Bug%22)
 
 > IMPORTANT: The Material Web Components are a work in progress and subject to major changes until 1.0 release.
 
@@ -19,10 +19,10 @@ A few notable changes you should expect:
   
   Example: `mwc-button` will be split into `md-text-button`, `md-filled-button`, `md-tonal-button`, `md-outlined-button`, etc
 
-[API demos](https://material-components.github.io/material-components-web-components/demos/index.html)
+[API demos](https://material-components.github.io/material-web/demos/index.html)
 
 [Theming
-Guide](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+Guide](https://github.com/material-components/material-web/blob/master/docs/theming.md)
 
 [Sandbox demo on Glitch](https://mwc-demos.glitch.me/)
 
