@@ -34,6 +34,8 @@
 @mixin core-styles() {
   @include ripple.core-styles();
   @include ripple.common();
+  // TODO(): Uncomment to enable M3 soft ripple for MWC
+  // @include ripple-theme.m3(':host');
 
   :host {
     @include ripple.target-common();

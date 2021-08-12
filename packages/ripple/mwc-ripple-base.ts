@@ -6,7 +6,6 @@
 
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
-
 import {matches} from '@material/dom/ponyfill';
 import {BaseElement} from '@material/mwc-base/base-element';
 import {RippleInterface} from '@material/mwc-base/utils';
@@ -43,6 +42,8 @@ export class RippleBase extends BaseElement implements RippleInterface {
   @state() protected fgDeactivation = false;
 
   @state() protected fgScale = '';
+
+  @state() protected fgEdgeScale = '';
 
   @state() protected fgSize = '';
 
@@ -109,6 +110,9 @@ export class RippleBase extends BaseElement implements RippleInterface {
         switch (varName) {
           case '--mdc-ripple-fg-scale':
             this.fgScale = value;
+            break;
+          case '--mdc-ripple-fg-edge-scale':
+            this.fgEdgeScale = value;
             break;
           case '--mdc-ripple-fg-size':
             this.fgSize = value;
@@ -220,6 +224,7 @@ export class RippleBase extends BaseElement implements RippleInterface {
         <div class="mdc-ripple-surface mdc-ripple-upgraded ${classMap(classes)}"
           style="${styleMap({
       '--mdc-ripple-fg-scale': this.fgScale,
+      '--mdc-ripple-fg-edge-scale': this.fgEdgeScale,
       '--mdc-ripple-fg-size': this.fgSize,
       '--mdc-ripple-fg-translate-end': this.translateEnd,
       '--mdc-ripple-fg-translate-start': this.translateStart,
