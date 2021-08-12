@@ -8,7 +8,7 @@ Menus display a list of choices on temporary surfaces.
 
 [Material Design Guidelines: menus](https://material.io/design/components/menus.html)
 
-[Demo](https://material-components.github.io/material-components-web-components/demos/menu/)
+[Demo](https://material-components.github.io/material-web/demos/menu/)
 
 ## Installation
 

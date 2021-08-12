@@ -7,7 +7,7 @@ be used to turn an option on or off.
 
 [Material Design Guidelines: Checkboxes](https://material.io/components/selection-controls/#checkboxes)
 
-[Demo](https://material-components.github.io/material-components-web-components/demos/checkbox/)
+[Demo](https://material-components.github.io/material-web/demos/checkbox/)
 
 ## Installation
 

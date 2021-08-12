@@ -7,7 +7,7 @@ way to adjust settings on mobile.
 
 [Material Design Guidelines: Switch](https://material.io/components/selection-controls/#switches)
 
-[Demo](https://material-components.github.io/material-components-web-components/demos/switch/)
+[Demo](https://material-components.github.io/material-web/demos/switch/)
 
 ## Installation
 

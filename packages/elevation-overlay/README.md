@@ -10,7 +10,7 @@ opacity.
 
 [Material Design Guidelines: States - Overlay](https://material.io/design/interaction/states.html#anatomy)
 
-[Demo](https://material-components.github.io/material-components-web-components/demos/elevation-overlay/)
+[Demo](https://material-components.github.io/material-web/demos/elevation-overlay/)
 
 ## Installation
 

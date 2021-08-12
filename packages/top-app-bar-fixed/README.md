@@ -11,7 +11,7 @@ For a version of this component that scrolls, see [`<mwc-top-app-bar>`](https://
 
 [Material Design Guidelines: App Bars: Top](https://material.io/design/components/app-bars-top.html)
 
-[Demo](https://material-components.github.io/material-components-web-components/demos/top-app-bar-fixed/)
+[Demo](https://material-components.github.io/material-web/demos/top-app-bar-fixed/)
 
 ## Installation
 

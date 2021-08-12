@@ -8,7 +8,7 @@ Text fields let users enter and edit text.
 
 [Material Design Guidelines: text fields](https://material.io/design/components/text-fields.html)
 
-[Demo](https://material-components.github.io/material-components-web-components/demos/textfield/)
+[Demo](https://material-components.github.io/material-web/demos/textfield/)
 
 ## Installation
 

@@ -6,7 +6,7 @@ Sliders allow users to make selections from a range of values.
 
 [Material Design Guidelines: sliders](https://material.io/design/components/sliders.html)
 
-[Demo](https://material-components.github.io/material-components-web-components/demos/slider/)
+[Demo](https://material-components.github.io/material-web/demos/slider/)
 
 ## Installation
 

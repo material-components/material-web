@@ -7,7 +7,7 @@ font that supports *ligatures*.
 
 [Material Design Guidelines: System icons](https://material.io/design/iconography/system-icons.html)
 
-[Demo](https://material-components.github.io/material-components-web-components/demos/icon/)
+[Demo](https://material-components.github.io/material-web/demos/icon/)
 
 ## Installation
 

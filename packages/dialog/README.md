@@ -9,7 +9,7 @@ decisions, or involve multiple tasks.
 
 [Material Design Guidelines: dialogs](https://material.io/design/components/dialogs.html)
 
-[Demo](https://material-components.github.io/material-components-web-components/demos/dialog/)
+[Demo](https://material-components.github.io/material-web/demos/dialog/)
 
 ## Installation
 

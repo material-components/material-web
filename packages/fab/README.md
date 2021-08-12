@@ -11,7 +11,7 @@ A floating action button (FAB) represents the primary action of a screen.
 
 [Material Design Guidelines: Floating Action Button](https://material.io/design/components/buttons-floating-action-button.html)
 
-[Demo](https://material-components.github.io/material-components-web-components/demos/fab/)
+[Demo](https://material-components.github.io/material-web/demos/fab/)
 
 ## Installation
 

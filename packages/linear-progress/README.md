@@ -8,7 +8,7 @@ Progress indicators express an unspecified wait time or display the length of a 
 
 [Material Design Guidelines: Progress Indicators](https://material.io/components/progress-indicators/#circular-progress-indicators)
 
-[Demo](https://material-components.github.io/material-components-web-components/demos/linear-progress/)
+[Demo](https://material-components.github.io/material-web/demos/linear-progress/)
 
 ## Example usage
 
