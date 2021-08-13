@@ -23,7 +23,7 @@ $light-theme: mdc-tab-theme.$light-theme;
 }
 
 @mixin theme-styles($theme) {
-  @include theme.validate-keys(mdc-tab-theme.$light-theme, $theme);
+  @include theme.validate-theme(mdc-tab-theme.$light-theme, $theme);
   $theme: keys.create-theme-properties($theme, $custom-property-prefix);
   .mdc-tab {
     @include mdc-tab-theme.theme-styles($theme);

@@ -23,7 +23,7 @@
 }
 
 @mixin theme-styles($theme) {
-  @include theme.validate-keys(mdc-switch-theme.$light-theme, $theme);
+  @include theme.validate-theme(mdc-switch-theme.$light-theme, $theme);
 
   $pair: map-ext.split(
     $theme,
