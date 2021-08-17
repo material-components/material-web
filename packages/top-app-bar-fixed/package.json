@@ -17,7 +17,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/mwc-top-app-bar": "^0.22.1",
-    "@material/top-app-bar": "=13.0.0-canary.2fb068fb0.0",
+    "@material/top-app-bar": "=13.0.0-canary.0de2f2edc.0",
     "lit-element": "^2.5.1",
     "tslib": "^2.0.1"
   },
