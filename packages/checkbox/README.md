@@ -94,7 +94,7 @@ npm install @material/mwc-checkbox
 ### With Form Field
 
 Most applications should use
-[`<mwc-formfield>`](https://github.com/material-components/material-components-web-components/tree/master/packages/formfield)
+[`<mwc-formfield>`](https://github.com/material-components/material-web/tree/master/packages/formfield)
 to associate an interactive label with the checkbox.
 
 <img src="images/formfield.png" width="132px" height="123px">

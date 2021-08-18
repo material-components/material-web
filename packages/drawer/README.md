@@ -44,7 +44,7 @@ npm install @material/mwc-drawer
 ```
 
 __NOTE:__ When using an inline-drawer (i.e. non-modal drawer) with a
-[`top-app-bar`](https://github.com/material-components/material-components-web-components/tree/master/packages/top-app-bar),
+[`top-app-bar`](https://github.com/material-components/material-web/tree/master/packages/top-app-bar),
 the app-bar is shifted to the right unlike the body content since its position
 is fixed. This may cause issues with action items on the `top-app-bar` to be
 shifted off screen. To remedy this, you should readjust the size of the

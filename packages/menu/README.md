@@ -29,7 +29,7 @@ npm install @material/mwc-menu
 ### Basic
 
 Note, `mwc-menu` internally uses
-[`mwc-list`](https://github.com/material-components/material-components-web-components/tree/master/packages/list),
+[`mwc-list`](https://github.com/material-components/material-web/tree/master/packages/list),
 so its main slot has the same interface as the main slot of a `mwc-list`.
 
 <img src="images/basic.png" width="160px">
@@ -186,7 +186,7 @@ a radio group.
 ### Styled
 
 `mwc-menu` internally uses
-[`mwc-list`](https://github.com/material-components/material-components-web-components/tree/master/packages/list),
+[`mwc-list`](https://github.com/material-components/material-web/tree/master/packages/list),
 and all CSS custom properties exposed by `mwc-list` apply here as well.
 
 <img src="images/styled.png" width="234px">
@@ -224,7 +224,7 @@ and all CSS custom properties exposed by `mwc-list` apply here as well.
 | _default_         |	Content to display in the menus internal `<mwc-list>` element.
 
 `mwc-menu` internally uses
-[`mwc-list`](https://github.com/material-components/material-components-web-components/tree/master/packages/list),
+[`mwc-list`](https://github.com/material-components/material-web/tree/master/packages/list),
 so the default slot has the same interface as the default slot of `mwc-list`.
 
 ### Properties/Attributes
@@ -244,14 +244,14 @@ Name                  | Type                              | Default       | Desc
 `defaultFocus`        | `DefaultFocusState`\*\*\*         | `"LIST_ROOT"` | Item to focus upon menu open.
 `fullwidth`           | `boolean`                         | `false`       | Sets surface width to 100%.
 `stayOpenOnBodyClick` | `boolean`                         | `false`       | Prevents the menu from closing when clicking outside the menu.
-`wrapFocus`           | `boolean`                         | `false`       | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `wrapFocus` property.
-`innerAriaLabel`      | `string\|null`                    | `null`        | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `innerAriaLabel` property.
-`innerRole`           | `"menu"\|"listbox"`               | `"menu"`      | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `innerRole` property.
-`multi`               | `boolean`                         | `false`       | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `multi` property.
-`activatable`         | `boolean`                         | `false`       | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `activatable` property.
-`items`               | `ListItemBase[]` (readonly)       | `[]`          | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `items` property.
-`index`               | `MWCListIndex` (readonly)\*\*\*\*   | `-1`          | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `index` property.
-`selected`            | `SelectedType` (readonly)\*\*\*\*\* | `null`        | Proxies to [`mwc-list`'s](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-1) `selected` property.
+`wrapFocus`           | `boolean`                         | `false`       | Proxies to [`mwc-list`'s](https://github.com/material-components/material-web/tree/master/packages/list#mwc-list-1) `wrapFocus` property.
+`innerAriaLabel`      | `string\|null`                    | `null`        | Proxies to [`mwc-list`'s](https://github.com/material-components/material-web/tree/master/packages/list#mwc-list-1) `innerAriaLabel` property.
+`innerRole`           | `"menu"\|"listbox"`               | `"menu"`      | Proxies to [`mwc-list`'s](https://github.com/material-components/material-web/tree/master/packages/list#mwc-list-1) `innerRole` property.
+`multi`               | `boolean`                         | `false`       | Proxies to [`mwc-list`'s](https://github.com/material-components/material-web/tree/master/packages/list#mwc-list-1) `multi` property.
+`activatable`         | `boolean`                         | `false`       | Proxies to [`mwc-list`'s](https://github.com/material-components/material-web/tree/master/packages/list#mwc-list-1) `activatable` property.
+`items`               | `ListItemBase[]` (readonly)       | `[]`          | Proxies to [`mwc-list`'s](https://github.com/material-components/material-web/tree/master/packages/list#mwc-list-1) `items` property.
+`index`               | `MWCListIndex` (readonly)\*\*\*\*   | `-1`          | Proxies to [`mwc-list`'s](https://github.com/material-components/material-web/tree/master/packages/list#mwc-list-1) `index` property.
+`selected`            | `SelectedType` (readonly)\*\*\*\*\* | `null`        | Proxies to [`mwc-list`'s](https://github.com/material-components/material-web/tree/master/packages/list#mwc-list-1) `selected` property.
 
 \* `Corner` is equivalent to type
 `"TOP_LEFT"|"TOP_RIGHT"|"BOTTOM_LEFT"|"BOTTOM_RIGHT"|"TOP_START"|"TOP_END" |"BOTTOM_START"|"BOTTOM_END"`
@@ -289,7 +289,7 @@ Name                  | Type                              | Default       | Desc
 | `selected` | `mwc-list`         | `SelectedDetail`*  | Fired when a selection has been made. `index` is the selected index (will be of type `Set<number>` if multi and `number` if single), and `diff` (of type `IndexDiff`**) represents the diff of added and removed indices from previous selection.
 
 \* See
-[`mwc-list`'s Events section](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-2) for more details.
+[`mwc-list`'s Events section](https://github.com/material-components/material-web/tree/master/packages/list#mwc-list-2) for more details.
 
 ### CSS Custom Properties
 
@@ -305,9 +305,9 @@ propagate through `mwc-menu`.
 | `--mdc-menu-z-index`     | `8`     | Z-index of the popup menu surface.
 
 `mwc-menu` internally uses
-[`mwc-list`](https://github.com/material-components/material-components-web-components/tree/master/packages/list#css-custom-properties),
+[`mwc-list`](https://github.com/material-components/material-web/tree/master/packages/list#css-custom-properties),
 see the
-[styling documentation](https://github.com/material-components/material-components-web-components/tree/master/packages/list#css-custom-properties)
+[styling documentation](https://github.com/material-components/material-web/tree/master/packages/list#css-custom-properties)
 for further details.
 
 #### Global Custom Properties

@@ -251,7 +251,7 @@ _Note: example is in the state of hovering over the first tab._
 
 | Name              |	Description
 | ----------------- | -------------
-| _default_         |	[`mwc-tab`](https://github.com/material-components/material-components-web-components/tree/master/packages/tab) elements to display.
+| _default_         |	[`mwc-tab`](https://github.com/material-components/material-web/tree/master/packages/tab) elements to display.
 
 ### Properties/Attributes
 
@@ -275,7 +275,7 @@ _Note: example is in the state of hovering over the first tab._
 
 Inherits CSS Custom properties from:
 
-* [`mwc-tab`](https://github.com/material-components/material-components-web-components/tree/master/packages/tab)
+* [`mwc-tab`](https://github.com/material-components/material-web/tree/master/packages/tab)
 
 ## Additional references
 

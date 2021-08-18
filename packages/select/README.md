@@ -29,7 +29,7 @@ npm install @material/mwc-select
 ### Basic (filled)
 
 Note, `mwc-select` internally uses
-[`mwc-list`](https://github.com/material-components/material-components-web-components/tree/master/packages/list), so
+[`mwc-list`](https://github.com/material-components/material-web/tree/master/packages/list), so
 its main slot has the same interface as the main slot of a `mwc-list`.
 
 <img src="images/basic.png" width="200px">
@@ -206,7 +206,7 @@ Name      | Description
 _default_ | Content to display in the selects internal `<mwc-menu>` element.
 
 `mwc-select` internally uses
-[`mwc-list`](https://github.com/material-components/material-components-web-components/tree/master/packages/list), so
+[`mwc-list`](https://github.com/material-components/material-web/tree/master/packages/list), so
 the default slot has the same interface as the default slot of `mwc-list`.
 
 ### Properties/Attributes
@@ -216,8 +216,8 @@ Name                      | Type                          | Default            |
 `value`                   | `string`                      | `""`               | The select control's value determined by the `value` property of the currently selected list item. Setting value will attempt to select a list-item with the same value. If one does not match, it will set itself to `""` and the `index` to `-1`. Setting `value` before the list item is attached will not select the item.
 `label`                   | `string`                      | `""`               | Sets floating label value. __NOTE:__ The label will not float if the selected item has a falsey value property.
 `naturalMenuWidth`        | `string`                      | `false`            | Sets the dropdown menu's width to `auto`.
-`fixedMenuPosition`       | `boolean`                     | `false`            | Sets the dropdown menu's position to `fixed`. This is useful when the select is inside of a stacking context e.g. inside of an `mwc-dialog`. Note, that [`--mdc-menu-min-width`](https://github.com/material-components/material-components-web-components/tree/master/packages/menu#css-custom-properties) or [`--mdc-menu-max-width`](https://github.com/material-components/material-components-web-components/tree/master/packages/menu#css-custom-properties) may have to be set to resize the menu to the width anchor.
-`icon`                    | `string`                      | `""`               | Leading icon to display in select. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon). _Note_: for proper list spacing, each list item must have `graphic="icon"` or `graphic="avatar"` to be set.
+`fixedMenuPosition`       | `boolean`                     | `false`            | Sets the dropdown menu's position to `fixed`. This is useful when the select is inside of a stacking context e.g. inside of an `mwc-dialog`. Note, that [`--mdc-menu-min-width`](https://github.com/material-components/material-web/tree/master/packages/menu#css-custom-properties) or [`--mdc-menu-max-width`](https://github.com/material-components/material-web/tree/master/packages/menu#css-custom-properties) may have to be set to resize the menu to the width anchor.
+`icon`                    | `string`                      | `""`               | Leading icon to display in select. See [`mwc-icon`](https://github.com/material-components/material-web/tree/master/packages/icon). _Note_: for proper list spacing, each list item must have `graphic="icon"` or `graphic="avatar"` to be set.
 `disabled`                | `boolean`                     | `false`            | Whether or not the select should be disabled.
 `outlined`                | `boolean`                     | `false`            | Whether or not to show the material outlined variant.
 `helper`                  | `string`                      | `""`               | Helper text to display below the select. Always displays by default.
@@ -227,7 +227,7 @@ Name                      | Type                          | Default            |
 `items`                   | `ListItemBase[]`              | `[]`               | List of selectable items.
 `index`                   | `number`                      | `-1`               | Index of selected list item.
 `validity`                | `ValidityState` (readonly)    | `DefaultValidity`* | The [`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState) of the select.
-`validityTransform`       | `ValidityTransform`**\|`null` | `null`             | Callback called before each validation check. See the [mwc-textfield's validation section](https://github.com/material-components/material-components-web-components/tree/master/packages/textfield#validation) for more details.
+`validityTransform`       | `ValidityTransform`**\|`null` | `null`             | Callback called before each validation check. See the [mwc-textfield's validation section](https://github.com/material-components/material-web/tree/master/packages/textfield#validation) for more details.
 `validateOnInitialRender` | `boolean`                     | `false`            | Runs validation check on initial render.
 
 \* `DefaultValidity` is: `ts { badInput: false, customError: false,
@@ -236,7 +236,7 @@ stepMismatch: false, tooLong: false, tooShort: false, typeMismatch: false,
 valid: true, valueMissing: false, }`
 
 \** See
-[`mwc-textfield`'s properties section](https://github.com/material-components/material-components-web-components/tree/master/packages/textfield#propertiesattributes)
+[`mwc-textfield`'s properties section](https://github.com/material-components/material-web/tree/master/packages/textfield#propertiesattributes)
 for more info.
 
 ### Methods
@@ -259,7 +259,7 @@ Name                                          | Description
 | `selected` | `mwc-list`           | `SelectedDetail`* | Fired when a selection has been made. Property `index` is the selected index (will  be of type `number`) |
 
 \* See
-[`mwc-list`'s Events section](https://github.com/material-components/material-components-web-components/tree/master/packages/list#mwc-list-2)
+[`mwc-list`'s Events section](https://github.com/material-components/material-web/tree/master/packages/list#mwc-list-2)
 for more details.
 
 ### CSS Custom Properties
@@ -287,9 +287,9 @@ Name                                          | Default                         
 `--mdc-select-error-dropdown-icon-color`      | `--mdc-select-error-color`                                    | Color of the dropdown icon when select is invalid.
 
 `mwc-select` internally uses
-[`mwc-list`](https://github.com/material-components/material-components-web-components/tree/master/packages/list#css-custom-properties),
+[`mwc-list`](https://github.com/material-components/material-web/tree/master/packages/list#css-custom-properties),
 see the
-[styling documentation](https://github.com/material-components/material-components-web-components/tree/master/packages/list#css-custom-properties)
+[styling documentation](https://github.com/material-components/material-web/tree/master/packages/list#css-custom-properties)
 for further details.
 
 #### Global Custom Properties

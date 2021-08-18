@@ -73,7 +73,7 @@ npm install @material/mwc-switch
 ### With Form Field
 
 Most applications should use
-[`<mwc-formfield>`](https://github.com/material-components/material-components-web-components/tree/master/packages/formfield)
+[`<mwc-formfield>`](https://github.com/material-components/material-web/tree/master/packages/formfield)
 to associate an interactive label with the switch.
 
 <img src="images/formfield.png" width="160px" height="48px">
