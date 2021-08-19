@@ -75,7 +75,7 @@ mwc-radio {
 ### With Form Field
 
 Most applications should use
-[`<mwc-formfield>`](https://github.com/material-components/material-components-web-components/tree/master/packages/formfield)
+[`<mwc-formfield>`](https://github.com/material-components/material-web/tree/master/packages/formfield)
 to associate an interactive label with the radio.
 
 <img src="images/formfield.png" width="94px" height="80px">

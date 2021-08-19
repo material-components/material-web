@@ -129,8 +129,8 @@ Name                      | Type                          | Description
 `placeholder`             | `string`                      | Sets disappearing input placeholder.
 `prefix`                  | `string`                      | Prefix text to display before the input.
 `suffix`                  | `string`                      | Suffix text to display after the input.
-`icon`                    | `string`                      | Leading icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon).
-`iconTrailing`            | `string`                      | Trailing icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon).
+`icon`                    | `string`                      | Leading icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-web/tree/master/packages/icon).
+`iconTrailing`            | `string`                      | Trailing icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-web/tree/master/packages/icon).
 `disabled`                | `boolean`                     | Whether or not the input should be disabled.
 `charCounter`             | `boolean`                     | **Note: requries `maxLength` to be set.** Display character counter with max length.
 `outlined`                | `boolean`                     | Whether or not to show the material outlined variant.
@@ -177,9 +177,9 @@ type ValidityTransform = (value: string, nativeValidity: ValidityState) => Parti
 
 Inherits CSS Custom properties from:
 
-* [`mwc-ripple`](https://github.com/material-components/material-components-web-components/tree/master/packages/ripple)
-* [`mwc-notched-outline`](https://github.com/material-components/material-components-web-components/tree/master/packages/notched-outline).
-* [`mwc-icon`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon)
+* [`mwc-ripple`](https://github.com/material-components/material-web/tree/master/packages/ripple)
+* [`mwc-notched-outline`](https://github.com/material-components/material-web/tree/master/packages/notched-outline).
+* [`mwc-icon`](https://github.com/material-components/material-web/tree/master/packages/icon)
 
 | Name                                              | Default               | Description
 | ------------------------------------------------- | --------------------- |------------

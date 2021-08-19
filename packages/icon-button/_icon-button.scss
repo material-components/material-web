@@ -4,13 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-@use '@material/icon-button' as iconbutton;
+@use '@material/icon-button/icon-button';
+@use '@material/icon-button/icon-button-theme';
 @use '@material/theme/custom-properties';
 @use '@material/feature-targeting' as feature;
 @use '@material/mwc-icon/_mwc-icon';
 
 @mixin core-styles() {
-  @include iconbutton.without-ripple();
+  @include icon-button.without-ripple();
 
   :host {
     display: inline-block;
@@ -51,7 +52,7 @@
 
   .mdc-icon-button {
     @include mdc-icon-button-size-var-aware(
-      var(--mdc-icon-button-size, #{iconbutton.$size})
+      var(--mdc-icon-button-size, #{icon-button-theme.$size})
     );
 
     > i {
@@ -67,8 +68,8 @@
       display: block;
       $feat-structure: feature.create-target(feature.all(), structure);
       @include feature.targets($feat-structure) {
-        width: var(--mdc-icon-size, #{iconbutton.$icon-size});
-        height: var(--mdc-icon-size, #{iconbutton.$icon-size});
+        width: var(--mdc-icon-size, #{icon-button-theme.$icon-size});
+        height: var(--mdc-icon-size, #{icon-button-theme.$icon-size});
       }
     }
   }
@@ -81,7 +82,7 @@
     width: $size;
     height: $size;
     padding: calc(
-      (#{$size} - var(--mdc-icon-size, #{iconbutton.$icon-size})) / 2
+      (#{$size} - var(--mdc-icon-size, #{icon-button-theme.$icon-size})) / 2
     );
   }
 }

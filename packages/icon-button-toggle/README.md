@@ -6,7 +6,7 @@ Toggle buttons can be used to group related options. To emphasize groups of rela
 
 Icons can be used as toggle buttons when they allow selection, or deselection, of a single choice, such as marking an item as a favorite.
 
-For the non-toggling version of this component, see [`<mwc-icon-button>`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon-button)
+For the non-toggling version of this component, see [`<mwc-icon-button>`](https://github.com/material-components/material-web/tree/master/packages/icon-button)
 
 [Material Design Guidelines: Toggle Button](https://material.io/design/components/buttons.html#toggle-button)
 
@@ -172,7 +172,7 @@ For technical details about the Material Icons font, see the
 
 Inherits CSS Custom properties from:
 
-* [`mwc-ripple`](https://github.com/material-components/material-components-web-components/tree/master/packages/ripple)
+* [`mwc-ripple`](https://github.com/material-components/material-web/tree/master/packages/ripple)
 
 #### Global custom properties
 

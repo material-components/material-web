@@ -24,7 +24,7 @@ npm install @material/mwc-tab
 
 ## Example usage
 
-For usage please see [mwc-tab-bar](https://github.com/material-components/material-components-web-components/tree/master/packages/tab-bar)
+For usage please see [mwc-tab-bar](https://github.com/material-components/material-web/tree/master/packages/tab-bar)
 
 ## API
 

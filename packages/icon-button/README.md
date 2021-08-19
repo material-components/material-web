@@ -4,7 +4,7 @@
 
 Icon buttons allow users to take actions, and make choices, with a single tap.
 
-For the toggling version of this component, see [`<mwc-icon-button-toggle>`](https://github.com/material-components/material-components-web-components/tree/master/packages/icon-button-toggle/)
+For the toggling version of this component, see [`<mwc-icon-button-toggle>`](https://github.com/material-components/material-web/tree/master/packages/icon-button-toggle/)
 
 [Material Design Guidelines: Button](https://material.io/design/components/buttons.html)
 
@@ -107,7 +107,7 @@ For technical details about the Material Icons font, see the
 
 Inherits CSS Custom properties from:
 
-* [`mwc-ripple`](https://github.com/material-components/material-components-web-components/tree/master/packages/ripple)
+* [`mwc-ripple`](https://github.com/material-components/material-web/tree/master/packages/ripple)
 
 | Name | Default | Description
 | ---- | ------- | -----------

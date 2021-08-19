@@ -3,10 +3,10 @@
 > major changes until 1.0 release.
 
 A form field is a text caption for MWC input elements including
-[`<mwc-checkbox>`](https://github.com/material-components/material-components-web-components/tree/master/packages/checkbox),
-[`<mwc-radio>`](https://github.com/material-components/material-components-web-components/tree/master/packages/radio),
+[`<mwc-checkbox>`](https://github.com/material-components/material-web/tree/master/packages/checkbox),
+[`<mwc-radio>`](https://github.com/material-components/material-web/tree/master/packages/radio),
 and
-[`<mwc-switch>`](https://github.com/material-components/material-components-web-components/tree/master/packages/switch).
+[`<mwc-switch>`](https://github.com/material-components/material-web/tree/master/packages/switch).
 
 It is equivalent to the native
 [`<label>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label)
