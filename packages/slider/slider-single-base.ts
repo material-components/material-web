@@ -29,7 +29,7 @@ export class SliderSingleBase extends SliderBase {
     this.valueEnd = newVal;
   }
 
-  protected renderTrack() {
+  protected override renderTrack() {
     const trackStyles = styleMap({
       'transform-origin': this.trackTransformOriginStyle,
       'left': this.trackLeftStyle,
@@ -54,7 +54,7 @@ export class SliderSingleBase extends SliderBase {
       </div>`;
   }
 
-  protected createAdapter(): MDCSliderAdapter {
+  protected override createAdapter(): MDCSliderAdapter {
     return {
       addClass: (className) => {
         switch (className) {

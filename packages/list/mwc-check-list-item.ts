@@ -22,5 +22,5 @@ declare global {
 
 @customElement('mwc-check-list-item')
 export class CheckListItem extends CheckListItemBase {
-  static styles = [styles, controlStyle];
+  static override styles = [styles, controlStyle];
 }

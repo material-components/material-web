@@ -22,5 +22,5 @@ declare global {
 
 @customElement('mwc-slider-range')
 export class SliderRange extends SliderRangeBase {
-  static styles = styles;
+  static override styles = styles;
 }

@@ -32,7 +32,7 @@ export class SliderBase extends FormElement {
   @query('.end.mdc-slider__thumb .mdc-slider__thumb-knob')
   protected endThumbKnob!: HTMLElement;
   @queryAsync('.end .ripple') protected endRipple!: Promise<Ripple|null>;
-  @property({type: Boolean, reflect: true}) disabled = false;
+  @property({type: Boolean, reflect: true}) override disabled = false;
   @property({type: Number}) min = 0;
   @property({type: Number}) max = 100;
   @property({type: Number}) valueEnd = 0;
@@ -96,7 +96,7 @@ export class SliderBase extends FormElement {
     }
   }
 
-  protected render() {
+  protected override render() {
     return this.renderRootEl(html`
       ${this.renderStartInput()}
       ${this.renderEndInput()}
@@ -226,7 +226,7 @@ export class SliderBase extends FormElement {
                            nothing;
   }
 
-  disconnectedCallback() {
+  override disconnectedCallback() {
     super.disconnectedCallback();
     if (this.mdcFoundation) {
       this.mdcFoundation.destroy();
@@ -235,12 +235,12 @@ export class SliderBase extends FormElement {
 
   protected createAdapter() {}
 
-  async firstUpdated() {
+  override async firstUpdated() {
     super.firstUpdated();
     await this.layout(true);
   }
 
-  updated(changed: PropertyValues) {
+  override updated(changed: PropertyValues) {
     super.updated(changed);
 
     if (!this.mdcFoundation) {

@@ -22,5 +22,5 @@ declare global {
 
 @customElement('mwc-slider')
 export class Slider extends SliderSingleBase {
-  static styles = [styles];
+  static override styles = [styles];
 }

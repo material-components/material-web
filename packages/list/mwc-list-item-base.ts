@@ -153,7 +153,7 @@ export class ListItemBase extends LitElement {
     return textContent ? textContent.trim() : '';
   }
 
-  render() {
+  override render() {
     const text = this.renderText();
     const graphic = this.graphic ? this.renderGraphic() : html``;
     const meta = this.hasMeta ? this.renderMeta() : html``;
@@ -246,7 +246,7 @@ export class ListItemBase extends LitElement {
     this.dispatchEvent(customEv);
   }
 
-  connectedCallback() {
+  override connectedCallback() {
     super.connectedCallback();
 
     if (!this.noninteractive) {
@@ -261,7 +261,7 @@ export class ListItemBase extends LitElement {
     }
   }
 
-  disconnectedCallback() {
+  override disconnectedCallback() {
     super.disconnectedCallback();
 
     for (const listener of this.listeners) {
@@ -278,7 +278,7 @@ export class ListItemBase extends LitElement {
   }
 
   // composed flag, event fire through shadow root and up through composed tree
-  protected firstUpdated() {
+  protected override firstUpdated() {
     const ev = new Event('list-item-rendered', {bubbles: true, composed: true});
     this.dispatchEvent(ev);
   }

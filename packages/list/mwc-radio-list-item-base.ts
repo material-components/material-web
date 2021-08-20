@@ -18,15 +18,16 @@ import {ifDefined} from 'lit-html/directives/if-defined';
 import {GraphicType, ListItemBase} from './mwc-list-item-base';
 
 export class RadioListItemBase extends ListItemBase {
-  @query('slot') protected slotElement!: HTMLSlotElement|null;
+  @query('slot') protected override slotElement!: HTMLSlotElement|null;
   @query('mwc-radio') protected radioElement!: Radio;
 
   @property({type: Boolean}) left = false;
-  @property({type: String, reflect: true}) graphic: GraphicType = 'control';
+  @property({type: String, reflect: true})
+  override graphic: GraphicType = 'control';
 
   protected _changeFromClick = false;
 
-  render() {
+  override render() {
     const radioClasses = {
       'mdc-deprecated-list-item__graphic': this.left,
       'mdc-deprecated-list-item__meta': !this.left,
@@ -56,7 +57,7 @@ export class RadioListItemBase extends ListItemBase {
       ${meta}`;
   }
 
-  protected onClick() {
+  protected override onClick() {
     this._changeFromClick = true;
     super.onClick();
   }

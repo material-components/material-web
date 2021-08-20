@@ -17,13 +17,14 @@ import {classMap} from 'lit-html/directives/class-map';
 import {GraphicType, ListItemBase} from './mwc-list-item-base';
 
 export class CheckListItemBase extends ListItemBase {
-  @query('slot') protected slotElement!: HTMLSlotElement|null;
+  @query('slot') protected override slotElement!: HTMLSlotElement|null;
   @query('mwc-checkbox') protected checkboxElement!: Checkbox;
 
   @property({type: Boolean}) left = false;
-  @property({type: String, reflect: true}) graphic: GraphicType = 'control';
+  @property({type: String, reflect: true})
+  override graphic: GraphicType = 'control';
 
-  render() {
+  override render() {
     const checkboxClasses = {
       'mdc-deprecated-list-item__graphic': this.left,
       'mdc-deprecated-list-item__meta': !this.left,

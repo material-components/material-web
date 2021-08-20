@@ -22,5 +22,5 @@ declare global {
 
 @customElement('mwc-radio-list-item')
 export class RadioListItem extends RadioListItemBase {
-  static styles = [styles, controlStyle];
+  static override styles = [styles, controlStyle];
 }

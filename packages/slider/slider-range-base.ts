@@ -42,7 +42,7 @@ export class SliderRangeBase extends SliderBase {
     return this.startRipple;
   });
 
-  protected willUpdate(changed: PropertyValues) {
+  protected override willUpdate(changed: PropertyValues) {
     if (changed.has('valueStart') && this.mdcFoundation) {
       this.mdcFoundation.setValueStart(this.valueStart);
 
@@ -56,7 +56,7 @@ export class SliderRangeBase extends SliderBase {
     super.update(changed);
   }
 
-  protected renderRootEl(content: TemplateResult) {
+  protected override renderRootEl(content: TemplateResult) {
     const rootClasses = classMap({
       'mdc-slider--disabled': this.disabled,
       'mdc-slider--discrete': this.discrete,
@@ -72,7 +72,7 @@ export class SliderRangeBase extends SliderBase {
     </div>`;
   }
 
-  protected renderStartInput() {
+  protected override renderStartInput() {
     return html`
       <input
           class="mdc-slider__input start"
@@ -93,7 +93,7 @@ export class SliderRangeBase extends SliderBase {
     `;
   }
 
-  protected renderEndInput() {
+  protected override renderEndInput() {
     return html`
       <input
           class="mdc-slider__input end"
@@ -115,7 +115,7 @@ export class SliderRangeBase extends SliderBase {
     `;
   }
 
-  protected renderTrack() {
+  protected override renderTrack() {
     const trackStyles = styleMap({
       'transform-origin': this.trackTransformOriginStyle,
       'left': this.trackLeftStyle ?
@@ -150,7 +150,7 @@ export class SliderRangeBase extends SliderBase {
       </div>`;
   }
 
-  protected renderStartThumb() {
+  protected override renderStartThumb() {
     const startThumbClasses = classMap({
       'mdc-slider__thumb--with-indicator': this.startThumbWithIndicator,
       'mdc-slider__thumb--top': this.startThumbTop,
@@ -195,7 +195,7 @@ export class SliderRangeBase extends SliderBase {
     `;
   }
 
-  protected createAdapter(): MDCSliderAdapter {
+  protected override createAdapter(): MDCSliderAdapter {
     return {
       addClass: (className) => {
         switch (className) {
@@ -560,7 +560,7 @@ export class SliderRangeBase extends SliderBase {
     this.startRippleHandlers.endHover();
   }
 
-  protected setFormData(formData: FormData) {
+  protected override setFormData(formData: FormData) {
     if (this.name) {
       formData.append(`${this.name}-start`, `${this.valueStart}`);
       formData.append(`${this.name}-end`, `${this.valueEnd}`);

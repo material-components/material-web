@@ -148,7 +148,7 @@ export abstract class ListBase extends BaseElement implements Layoutable {
   itemsReady = Promise.resolve([]);
 
   // tslint:disable:ban-ts-ignore
-  protected async getUpdateComplete() {
+  protected override async getUpdateComplete() {
     // @ts-ignore
     const result = await super.getUpdateComplete();
     await this.itemsReady;
@@ -234,7 +234,7 @@ export abstract class ListBase extends BaseElement implements Layoutable {
     return -1;
   }
 
-  render() {
+  override render() {
     const role = this.innerRole === null ? undefined : this.innerRole;
     const ariaLabel =
         this.innerAriaLabel === null ? undefined : this.innerAriaLabel;
@@ -269,7 +269,7 @@ export abstract class ListBase extends BaseElement implements Layoutable {
     return null;
   }
 
-  firstUpdated() {
+  override firstUpdated() {
     super.firstUpdated();
 
     if (!this.items.length) {
@@ -563,7 +563,7 @@ export abstract class ListBase extends BaseElement implements Layoutable {
     this.items[index].focus();
   }
 
-  focus() {
+  override focus() {
     const root = this.mdcRoot;
 
     if (root) {
@@ -571,7 +571,7 @@ export abstract class ListBase extends BaseElement implements Layoutable {
     }
   }
 
-  blur() {
+  override blur() {
     const root = this.mdcRoot;
 
     if (root) {

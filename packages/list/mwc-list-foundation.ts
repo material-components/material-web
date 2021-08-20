@@ -90,16 +90,16 @@ export const createSetFromIndex = (index: MWCListIndex) => {
 };
 
 export class MDCListFoundation extends MDCFoundation<MDCListAdapter> {
-  static get strings() {
+  static override get strings() {
     return strings;
   }
 
-  static get numbers() {
+  static override get numbers() {
     return numbers;
   }
 
 
-  static get defaultAdapter(): MDCListAdapter {
+  static override get defaultAdapter(): MDCListAdapter {
     return {
       focusItemAtIndex: () => undefined,
       getFocusedElementIndex: () => 0,
