@@ -12,23 +12,23 @@ import {passiveEventOptionsIfSupported} from '@material/mwc-top-app-bar/mwc-top-
 import MDCFixedTopAppBarFoundation from '@material/top-app-bar/fixed/foundation';
 
 export class TopAppBarFixedBase extends TopAppBarBase {
-  protected mdcFoundation!: MDCFixedTopAppBarFoundation;
+  protected override mdcFoundation!: MDCFixedTopAppBarFoundation;
 
-  protected mdcFoundationClass = MDCFixedTopAppBarFoundation;
+  protected override mdcFoundationClass = MDCFixedTopAppBarFoundation;
 
-  protected barClasses() {
+  protected override barClasses() {
     return {
       ...super.barClasses(),
       'mdc-top-app-bar--fixed': true,
     };
   }
 
-  protected registerListeners() {
+  protected override registerListeners() {
     this.scrollTarget.addEventListener(
         'scroll', this.handleTargetScroll, passiveEventOptionsIfSupported);
   }
 
-  protected unregisterListeners() {
+  protected override unregisterListeners() {
     this.scrollTarget.removeEventListener('scroll', this.handleTargetScroll);
   }
 }

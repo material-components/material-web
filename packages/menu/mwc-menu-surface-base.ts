@@ -171,7 +171,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
   protected previousAnchor: HTMLElement|null = null;
   protected onBodyClickBound: (evt: MouseEvent) => void = () => undefined;
 
-  render() {
+  override render() {
     const classes = {
       'mdc-menu-surface--fixed': this.fixed,
       'mdc-menu-surface--fullwidth': this.fullwidth,

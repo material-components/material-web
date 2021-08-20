@@ -42,13 +42,13 @@ export class TopAppBarBase extends TopAppBarBaseBase {
     };
   }
 
-  protected registerListeners() {
+  protected override registerListeners() {
     super.registerListeners();
     window.addEventListener(
         'resize', this.handleResize, passiveEventOptionsIfSupported);
   }
 
-  protected unregisterListeners() {
+  protected override unregisterListeners() {
     super.unregisterListeners();
     window.removeEventListener('resize', this.handleResize);
   }

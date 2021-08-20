@@ -45,7 +45,9 @@ class AccessibleSnackbarLabel extends AsyncDirective {
     }
   }
 
-  update(part: ChildPart, [labelText, isOpen]: DirectiveParameters<this>) {
+  override update(part: ChildPart, [
+    labelText, isOpen
+  ]: DirectiveParameters<this>) {
     if (!isOpen) {
       // We never need to do anything if we're closed, even if the label also
       // changed in this batch of changes. We'll fully reset the label text

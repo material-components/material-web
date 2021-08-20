@@ -135,7 +135,7 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: String}) iconTrailing = '';
 
-  @property({type: Boolean, reflect: true}) disabled = false;
+  @property({type: Boolean, reflect: true}) override disabled = false;
 
   @property({type: Boolean}) required = false;
 
@@ -175,7 +175,7 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: Boolean}) endAligned = false;
 
-  @property({type: String}) prefix = '';
+  @property({type: String}) override prefix = '';
 
   @property({type: String}) suffix = '';
 
@@ -191,7 +191,7 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: Boolean}) readOnly = false;
 
-  @property({type: String}) autocapitalize = '';
+  @property({type: String}) override autocapitalize = '';
 
   @state() protected outlineOpen = false;
   @state() protected outlineWidth = 0;
@@ -222,13 +222,13 @@ export abstract class TextFieldBase extends FormElement {
       ((value: string,
         nativeValidity: ValidityState) => Partial<ValidityState>)|null = null;
 
-  focus() {
+  override focus() {
     const focusEvt = new CustomEvent('focus');
     this.formElement.dispatchEvent(focusEvt);
     this.formElement.focus();
   }
 
-  blur() {
+  override blur() {
     const blurEvt = new CustomEvent('blur');
     this.formElement.dispatchEvent(blurEvt);
     this.formElement.blur();
@@ -245,7 +245,7 @@ export abstract class TextFieldBase extends FormElement {
         selectionStart, selectionEnd, selectionDirection);
   }
 
-  update(changedProperties: PropertyValues) {
+  override update(changedProperties: PropertyValues) {
     if (changedProperties.has('autoValidate') && this.mdcFoundation) {
       this.mdcFoundation.setValidateOnValueChange(this.autoValidate);
     }
@@ -264,7 +264,7 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   /** @soyTemplate */
-  render(): TemplateResult {
+  override render(): TemplateResult {
     const shouldRenderCharCounter = this.charCounter && this.maxLength !== -1;
     const shouldRenderHelperText =
         !!this.helper || !!this.validationMessage || shouldRenderCharCounter;
@@ -295,7 +295,7 @@ export abstract class TextFieldBase extends FormElement {
     `;
   }
 
-  updated(changedProperties: PropertyValues) {
+  override updated(changedProperties: PropertyValues) {
     if (changedProperties.has('value') &&
         changedProperties.get('value') !== undefined) {
       this.mdcFoundation.setValue(this.value);
@@ -628,7 +628,7 @@ export abstract class TextFieldBase extends FormElement {
   }
 
   // tslint:disable:ban-ts-ignore
-  protected async getUpdateComplete() {
+  protected override async getUpdateComplete() {
     // @ts-ignore
     const result = await super.getUpdateComplete();
     await this.outlineElement?.updateComplete;
@@ -636,7 +636,7 @@ export abstract class TextFieldBase extends FormElement {
   }
   // tslint:enable:ban-ts-ignore
 
-  firstUpdated() {
+  override firstUpdated() {
     super.firstUpdated();
 
     this.mdcFoundation.setValidateOnValueChange(this.autoValidate);

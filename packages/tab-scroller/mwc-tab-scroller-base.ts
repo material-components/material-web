@@ -37,7 +37,7 @@ export class TabScrollerBase extends BaseElement {
 
   protected _scrollbarHeight = -1;
 
-  protected render() {
+  protected override render() {
     return html`
       <div class="mdc-tab-scroller">
         <div class="mdc-tab-scroller__scroll-area"

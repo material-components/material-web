@@ -66,7 +66,7 @@ export class SnackbarBase extends BaseElement {
 
   protected reason = '';
 
-  protected render() {
+  protected override render() {
     const classes = {
       'mdc-snackbar--stacked': this.stacked,
       'mdc-snackbar--leading': this.leading,
@@ -124,7 +124,7 @@ export class SnackbarBase extends BaseElement {
     this.open = false;
   }
 
-  protected firstUpdated() {
+  protected override firstUpdated() {
     super.firstUpdated();
     if (this.open) {
       this.mdcFoundation.open();

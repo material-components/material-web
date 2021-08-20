@@ -23,9 +23,9 @@ interface ClassInfo {
 }
 
 export abstract class TopAppBarBaseBase extends BaseElement {
-  protected abstract mdcFoundation: MDCTopAppBarBaseFoundation;
+  protected abstract override mdcFoundation: MDCTopAppBarBaseFoundation;
 
-  protected abstract mdcFoundationClass = MDCTopAppBarBaseFoundation;
+  protected abstract override mdcFoundationClass = MDCTopAppBarBaseFoundation;
 
   @query('.mdc-top-app-bar') protected mdcRoot!: HTMLElement;
 
@@ -71,7 +71,7 @@ export abstract class TopAppBarBaseBase extends BaseElement {
    */
   protected abstract contentClasses(): ClassInfo;
 
-  protected render() {
+  protected override render() {
     // clang-format off
     let title = html`<span class="mdc-top-app-bar__title"><slot name="title"></slot></span>`;
     if (this.centerTitle) {
@@ -142,13 +142,13 @@ export abstract class TopAppBarBaseBase extends BaseElement {
     this.scrollTarget.removeEventListener('scroll', this.handleTargetScroll);
   }
 
-  protected firstUpdated() {
+  protected override firstUpdated() {
     super.firstUpdated();
     this.updateRootPosition();
     this.registerListeners();
   }
 
-  disconnectedCallback() {
+  override disconnectedCallback() {
     super.disconnectedCallback();
     this.unregisterListeners();
   }

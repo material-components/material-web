@@ -22,7 +22,7 @@ interface FormElementInternals {
 class TestFormElement extends FormElement {
   @query('#root') protected mdcRoot!: HTMLElement;
   @query('#input') protected formElement!: HTMLInputElement;
-  disabled = false;
+  override disabled = false;
 
   protected mdcFoundation = undefined;
   protected mdcFoundationClass = undefined;
@@ -32,7 +32,7 @@ class TestFormElement extends FormElement {
 
   protected setFormData(_fd: FormData) {}
 
-  render() {
+  override render() {
     return html`
       <label id="root" for="input">
         <input type="text" id="input"></input>
@@ -46,19 +46,19 @@ class CustomClickFormElement extends FormElement {
   @query('#root') protected mdcRoot!: HTMLElement;
   @query('#indirect') indirectFormElement!: HTMLInputElement;
   @query('#direct') protected formElement!: HTMLInputElement;
-  disabled = false;
+  override disabled = false;
 
   protected mdcFoundation = undefined;
   protected mdcFoundationClass = undefined;
   protected createAdapter() {
     return {};
   }
-  static shadowRootOptions = {
+  static override shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
 
-  click() {
+  override click() {
     if (this.indirectFormElement) {
       this.indirectFormElement.click();
     }
@@ -66,7 +66,7 @@ class CustomClickFormElement extends FormElement {
 
   protected setFormData(_fd: FormData) {}
 
-  render() {
+  override render() {
     return html`
       <section id="root">
         <label id="label_direct" for="direct">
@@ -84,7 +84,7 @@ class CustomClickFormElement extends FormElement {
 class FormSubmission extends FormElement {
   @property() name = 'foo';
   @property() value = 'bar';
-  @property({type: Boolean}) disabled = false;
+  @property({type: Boolean}) override disabled = false;
   @query('input') protected formElement!: HTMLInputElement;
   @query('input') protected mdcRoot!: HTMLElement;
 
@@ -100,7 +100,7 @@ class FormSubmission extends FormElement {
     }
   }
 
-  render() {
+  override render() {
     return html`<input value="${this.value}" ?disabled="${
         this.disabled}" name="${this.name}"></input>`;
   }

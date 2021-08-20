@@ -129,7 +129,7 @@ export abstract class MenuBase extends BaseElement {
     return null;
   }
 
-  render() {
+  override render() {
     const itemRoles = this.innerRole === 'menu' ? 'menuitem' : 'option';
 
     return html`
@@ -349,7 +349,7 @@ export abstract class MenuBase extends BaseElement {
   }
 
   // tslint:disable:ban-ts-ignore
-  protected async getUpdateComplete() {
+  protected override async getUpdateComplete() {
     await this._listUpdateComplete;
     // @ts-ignore
     const result = await super.getUpdateComplete();
@@ -357,7 +357,7 @@ export abstract class MenuBase extends BaseElement {
   }
   // tslint:enable:ban-ts-ignore
 
-  protected async firstUpdated() {
+  protected override async firstUpdated() {
     super.firstUpdated();
     const listElement = this.listElement;
 

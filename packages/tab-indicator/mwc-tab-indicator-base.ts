@@ -31,7 +31,7 @@ export class TabIndicatorBase extends BaseElement {
 
   @property({type: Boolean}) fade = false;
 
-  protected render() {
+  protected override render() {
     const contentClasses = {
       'mdc-tab-indicator__content--icon': this.icon,
       'material-icons': this.icon,
@@ -47,7 +47,7 @@ export class TabIndicatorBase extends BaseElement {
       `;
   }
 
-  protected updated(changedProperties: PropertyValues) {
+  protected override updated(changedProperties: PropertyValues) {
     if (changedProperties.has('fade')) {
       this.createFoundation();
     }

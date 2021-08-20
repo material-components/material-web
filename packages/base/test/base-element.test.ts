@@ -25,7 +25,7 @@ class TestElement extends BaseElement {
     return {};
   }
 
-  render() {
+  override render() {
     return html`
       <input type="text" id="root"></input>
     `;
@@ -43,13 +43,13 @@ class CustomClickElement extends BaseElement {
     return {};
   }
 
-  click() {
+  override click() {
     if (this.indirectRoot) {
       this.indirectRoot.click();
     }
   }
 
-  render() {
+  override render() {
     return html`
       <input type="text" id="root"></input>
       <input type="text" id="indirect"></input>

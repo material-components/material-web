@@ -37,17 +37,17 @@ const booleanOrStringConverter: ComplexAttributeConverter<boolean|string> = {
 
 /** @soyCompatible */
 export abstract class TextAreaBase extends TextFieldBase {
-  @query('textarea') protected formElement!: HTMLInputElement;
+  @query('textarea') protected override formElement!: HTMLInputElement;
 
   @property({type: Number}) rows = 2;
 
   @property({type: Number}) cols = 20;
 
   @property({converter: booleanOrStringConverter})
-  charCounter: boolean|TextAreaCharCounter = false;
+  override charCounter: boolean|TextAreaCharCounter = false;
 
   /** @soyTemplate */
-  render(): TemplateResult {
+  override render(): TemplateResult {
     const shouldRenderCharCounter = this.charCounter && this.maxLength !== -1;
     const shouldRenderInternalCharCounter =
         shouldRenderCharCounter && this.charCounter === 'internal';
@@ -82,7 +82,7 @@ export abstract class TextAreaBase extends TextFieldBase {
   }
 
   /** @soyTemplate */
-  protected renderInput(): TemplateResult {
+  protected override renderInput(): TemplateResult {
     const ariaLabelledbyOrUndef = !!this.label ? 'label' : undefined;
     const minOrUndef = this.minLength === -1 ? undefined : this.minLength;
     const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;

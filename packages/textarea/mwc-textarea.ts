@@ -24,5 +24,5 @@ declare global {
 /** @soyCompatible */
 @customElement('mwc-textarea')
 export class TextArea extends TextAreaBase {
-  static styles = [textfieldStyles, textareaStyles];
+  static override styles = [textfieldStyles, textareaStyles];
 }

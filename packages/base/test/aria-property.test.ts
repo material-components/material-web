@@ -41,7 +41,7 @@ class TestElement extends LitElement {
 
   @property({attribute: 'aria-owns'}) @ariaProperty ariaOwns?: string;
 
-  render() {
+  override render() {
     return html`<input aria-label="${
         ifDefined(this.ariaLabel)}" aria-checked="${
         ifDefined(this.ariaChecked)}" aria-owns="${ifDefined(this.ariaOwns)}">`;

@@ -23,5 +23,5 @@ declare global {
 /** @soyCompatible */
 @customElement('mwc-textfield')
 export class TextField extends TextFieldBase {
-  static styles = [styles];
+  static override styles = [styles];
 }

@@ -20,5 +20,5 @@ declare global {
 
 @customElement('mwc-tab-indicator')
 export class TabIndicator extends TabIndicatorBase {
-  static styles = [styles];
+  static override styles = [styles];
 }
