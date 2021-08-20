@@ -48,7 +48,7 @@ export abstract class BaseElement extends LitElement {
    */
   protected abstract createAdapter(): unknown;
 
-  click() {
+  override click() {
     if (this.mdcRoot) {
       this.mdcRoot.focus();
       this.mdcRoot.click();
@@ -71,7 +71,7 @@ export abstract class BaseElement extends LitElement {
     }
   }
 
-  protected firstUpdated() {
+  protected override firstUpdated() {
     this.createFoundation();
   }
 }

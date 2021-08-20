@@ -27,7 +27,7 @@ export class CheckboxBase extends FormElement {
 
   @property({type: Boolean}) indeterminate = false;
 
-  @property({type: Boolean, reflect: true}) disabled = false;
+  @property({type: Boolean, reflect: true}) override disabled = false;
 
   @property({type: String, reflect: true}) name = '';
 
@@ -61,7 +61,7 @@ export class CheckboxBase extends FormElement {
 
   @state() protected focused = false;
 
-  @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
+  @queryAsync('mwc-ripple') override ripple!: Promise<Ripple|null>;
 
   // MDC Foundation is unused
   protected mdcFoundationClass = undefined;
@@ -72,7 +72,7 @@ export class CheckboxBase extends FormElement {
     return {};
   }
 
-  protected update(changedProperties: PropertyValues) {
+  protected override update(changedProperties: PropertyValues) {
     const oldIndeterminate = changedProperties.get('indeterminate');
     const oldChecked = changedProperties.get('checked');
     const oldDisabled = changedProperties.get('disabled');
@@ -126,7 +126,7 @@ export class CheckboxBase extends FormElement {
    * @soyAttributes checkboxAttributes: input
    * @soyClasses checkboxClasses: .mdc-checkbox
    */
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     const selected = this.indeterminate || this.checked;
     /* eslint-disable eqeqeq */
     // tslint:disable:triple-equals

@@ -19,7 +19,7 @@ import {ifDefined} from 'lit-html/directives/if-defined';
 
 /** @soyCompatible */
 export class ButtonBase extends LitElement {
-  static shadowRootOptions:
+  static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
   /** @soyPrefixAttribute */
@@ -72,7 +72,7 @@ export class ButtonBase extends LitElement {
         '';
   }
 
-  focus() {
+  override focus() {
     const buttonElement = this.buttonElement;
     if (buttonElement) {
       this.rippleHandlers.startFocus();
@@ -80,7 +80,7 @@ export class ButtonBase extends LitElement {
     }
   }
 
-  blur() {
+  override blur() {
     const buttonElement = this.buttonElement;
     if (buttonElement) {
       this.rippleHandlers.endFocus();
@@ -103,7 +103,7 @@ export class ButtonBase extends LitElement {
    * @soyAttributes buttonAttributes: #button
    * @soyClasses buttonClasses: #button
    */
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       <button
           id="button"

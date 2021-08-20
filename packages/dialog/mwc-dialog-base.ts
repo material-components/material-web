@@ -277,7 +277,7 @@ export class DialogBase extends BaseElement {
     };
   }
 
-  protected render() {
+  protected override render() {
     const classes = {
       [cssClasses.STACKED]: this.stacked,
     };
@@ -325,7 +325,7 @@ export class DialogBase extends BaseElement {
       <h2 id="title" class="mdc-dialog__title">${this.heading}</h2>`;
   }
 
-  protected firstUpdated() {
+  protected override firstUpdated() {
     super.firstUpdated();
     this.mdcFoundation.setAutoStackButtons(true);
     if (this.initialSupressDefaultPressSelector) {
@@ -346,7 +346,7 @@ export class DialogBase extends BaseElement {
         EventListener;
   }
 
-  connectedCallback() {
+  override connectedCallback() {
     super.connectedCallback();
     if (this.open && this.mdcFoundation && !this.mdcFoundation.isOpen()) {
       // We probably got disconnected while we were still open. Re-open,
@@ -356,7 +356,7 @@ export class DialogBase extends BaseElement {
     }
   }
 
-  disconnectedCallback() {
+  override disconnectedCallback() {
     super.disconnectedCallback();
     if (this.open && this.mdcFoundation) {
       // If this dialog is opened and then disconnected, we want to close
@@ -383,12 +383,12 @@ export class DialogBase extends BaseElement {
     this.mdcFoundation.layout();
   }
 
-  focus() {
+  override focus() {
     const initialFocusEl = this.getInitialFocusEl();
     initialFocusEl && initialFocusEl.focus();
   }
 
-  blur() {
+  override blur() {
     if (!this.shadowRoot) {
       return;
     }

@@ -52,7 +52,7 @@ export class LineRippleDirective extends Directive {
    * There is no PropertyPart in Lit 2 so far. For more info see:
    * https://github.com/lit/lit/issues/1863
    */
-  update(part: AttributePart, _params: DirectiveParameters<this>) {
+  override update(part: AttributePart, _params: DirectiveParameters<this>) {
     if (this.previousPart !== part) {
       if (this.foundation) {
         this.foundation.destroy();

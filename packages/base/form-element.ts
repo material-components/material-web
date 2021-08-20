@@ -44,7 +44,7 @@ const USING_SHADY_DOM =
 
 /** @soyCompatible */
 export abstract class FormElement extends BaseElement {
-  static shadowRootOptions:
+  static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
   /**
@@ -97,26 +97,26 @@ export abstract class FormElement extends BaseElement {
    */
   protected abstract setFormData(formData: FormData): void;
 
-  connectedCallback() {
+  override connectedCallback() {
     super.connectedCallback();
     this.containingForm = this.findFormElement();
     this.containingForm?.addEventListener('formdata', this.formDataListener);
   }
 
-  disconnectedCallback() {
+  override disconnectedCallback() {
     super.disconnectedCallback();
     this.containingForm?.removeEventListener('formdata', this.formDataListener);
     this.containingForm = null;
   }
 
-  click() {
+  override click() {
     if (this.formElement && !this.disabled) {
       this.formElement.focus();
       this.formElement.click();
     }
   }
 
-  protected firstUpdated() {
+  protected override firstUpdated() {
     super.firstUpdated();
     if (this.shadowRoot) {
       this.mdcRoot.addEventListener('change', (e) => {

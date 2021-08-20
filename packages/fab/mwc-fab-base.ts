@@ -19,7 +19,7 @@ import {classMap} from 'lit-html/directives/class-map';
  * @soyCompatible
  */
 export class FabBase extends LitElement {
-  static shadowRootOptions:
+  static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
@@ -53,7 +53,7 @@ export class FabBase extends LitElement {
    * @soyTemplate
    * @soyClasses fabClasses: .mdc-fab
    */
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     const hasTouchTarget = this.mini && !this.reducedTouchTarget;
     /** @classMap */
     const classes = {

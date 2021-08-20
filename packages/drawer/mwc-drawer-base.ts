@@ -109,7 +109,7 @@ export class DrawerBase extends BaseElement {
 
   @property({reflect: true}) type = '';
 
-  protected render() {
+  protected override render() {
     const dismissible = this.type === 'dismissible' || this.type === 'modal';
     const modal = this.type === 'modal';
     const header = this.hasHeader ? html`
@@ -142,14 +142,14 @@ export class DrawerBase extends BaseElement {
 
   // note, we avoid calling `super.firstUpdated()` to control when
   // `createFoundation()` is called.
-  protected firstUpdated() {
+  protected override firstUpdated() {
     this.mdcRoot.addEventListener(
         'keydown', (e) => this.mdcFoundation.handleKeydown(e));
     this.mdcRoot.addEventListener(
         'transitionend', (e) => this.mdcFoundation.handleTransitionEnd(e));
   }
 
-  protected updated(changedProperties: PropertyValues) {
+  protected override updated(changedProperties: PropertyValues) {
     if (changedProperties.has('type')) {
       this.createFoundation();
     }

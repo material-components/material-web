@@ -21,5 +21,5 @@ declare global {
 /** @soyCompatible */
 @customElement('mwc-checkbox')
 export class Checkbox extends CheckboxBase {
-  static styles = [styles];
+  static override styles = [styles];
 }

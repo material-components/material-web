@@ -36,7 +36,7 @@ interface HasKeyCode {
 
 @customElement('my-test-element')
 export class MyTestElement extends LitElement {
-  render() {
+  override render() {
     return html`
       <mwc-dialog>
         <slot></slot>

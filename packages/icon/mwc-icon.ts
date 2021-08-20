@@ -14,10 +14,10 @@ import {styles} from './mwc-icon-host.css';
 /** @soyCompatible */
 @customElement('mwc-icon')
 export class Icon extends LitElement {
-  static styles = [styles];
+  static override styles = [styles];
 
   /** @soyTemplate */
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`<slot></slot>`;
   }
 }

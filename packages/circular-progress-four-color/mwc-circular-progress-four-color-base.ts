@@ -13,7 +13,7 @@ import {html, TemplateResult} from 'lit-element';
 /** @soyCompatible */
 export class CircularProgressFourColorBase extends CircularProgressBase {
   /** @soyTemplate */
-  protected renderIndeterminateContainer(): TemplateResult {
+  protected override renderIndeterminateContainer(): TemplateResult {
     return html`
       <div class="mdc-circular-progress__indeterminate-container">
         <div class="mdc-circular-progress__spinner-layer mdc-circular-progress__color-1">

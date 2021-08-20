@@ -39,7 +39,7 @@ export class CircularProgressBase extends LitElement {
   /**
    * @soyTemplate
    */
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     /** @classMap */
     const classes = {
       'mdc-circular-progress--closed': this.closed,
@@ -152,7 +152,7 @@ export class CircularProgressBase extends LitElement {
         </div>`;
   }
 
-  update(changedProperties: Map<string, string>) {
+  override update(changedProperties: Map<string, string>) {
     super.update(changedProperties);
 
     // Bound progress value in interval [0, 1].
