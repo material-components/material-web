@@ -20,5 +20,5 @@ declare global {
 
 @customElement('mwc-notched-outline')
 export class NotchedOutline extends NotchedOutlineBase {
-  static styles = [styles];
+  static override styles = [styles];
 }

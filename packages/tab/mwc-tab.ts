@@ -22,5 +22,5 @@ declare global {
 
 @customElement('mwc-tab')
 export class Tab extends TabBase {
-  static styles = [styles];
+  static override styles = [styles];
 }

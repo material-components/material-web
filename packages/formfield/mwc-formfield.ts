@@ -20,5 +20,5 @@ declare global {
 
 @customElement('mwc-formfield')
 export class Formfield extends FormfieldBase {
-  static styles = [styles];
+  static override styles = [styles];
 }

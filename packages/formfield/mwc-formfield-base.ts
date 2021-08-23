@@ -75,7 +75,7 @@ export class FormfieldBase extends BaseElement {
     return this.slottedInputs?.[0] ?? null;
   }
 
-  protected render() {
+  protected override render() {
     const classes = {
       'mdc-form-field--align-end': this.alignEnd,
       'mdc-form-field--space-between': this.spaceBetween,

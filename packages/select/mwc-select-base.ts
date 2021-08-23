@@ -122,7 +122,7 @@ export abstract class SelectBase extends FormElement {
       this.mdcFoundation.setDisabled(value);
     }
   })
-  disabled = false;
+  override disabled = false;
 
   @property({type: Boolean})
   @observer(function(this: SelectBase, _newVal: boolean, oldVal: boolean) {
@@ -242,7 +242,7 @@ export abstract class SelectBase extends FormElement {
     return this._validity;
   }
 
-  render() {
+  override render() {
     const classes = {
       'mdc-select--disabled': this.disabled,
       'mdc-select--no-label': !this.label,
@@ -656,7 +656,7 @@ export abstract class SelectBase extends FormElement {
   }
 
   // tslint:disable:ban-ts-ignore
-  protected async getUpdateComplete() {
+  protected override async getUpdateComplete() {
     await this._menuUpdateComplete;
     // @ts-ignore
     const result = await super.getUpdateComplete();
@@ -664,7 +664,7 @@ export abstract class SelectBase extends FormElement {
   }
   // tslint:enable:ban-ts-ignore
 
-  protected async firstUpdated() {
+  protected override async firstUpdated() {
     const menuElement = this.menuElement;
 
     if (menuElement) {
@@ -732,7 +732,7 @@ export abstract class SelectBase extends FormElement {
     this.mdcFoundation.handleChange();
   }
 
-  disconnectedCallback() {
+  override disconnectedCallback() {
     super.disconnectedCallback();
 
     for (const listener of this.listeners) {
@@ -740,7 +740,7 @@ export abstract class SelectBase extends FormElement {
     }
   }
 
-  focus() {
+  override focus() {
     const focusEvt = new CustomEvent('focus');
     const selectAnchorElement = this.anchorElement;
 
@@ -750,7 +750,7 @@ export abstract class SelectBase extends FormElement {
     }
   }
 
-  blur() {
+  override blur() {
     const focusEvt = new CustomEvent('blur');
     const selectAnchorElement = this.anchorElement;
 

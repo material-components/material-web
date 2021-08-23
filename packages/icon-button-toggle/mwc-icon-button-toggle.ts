@@ -21,5 +21,5 @@ declare global {
 
 @customElement('mwc-icon-button-toggle')
 export class IconButtonToggle extends IconButtonToggleBase {
-  static styles = [styles];
+  static override styles = [styles];
 }

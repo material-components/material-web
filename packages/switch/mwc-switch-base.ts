@@ -34,7 +34,7 @@ export class SwitchBase extends FormElement implements MDCSwitchState {
   ariaLabelledBy = '';
 
   // Ripple
-  @queryAsync('mwc-ripple') readonly ripple!: Promise<Ripple|null>;
+  @queryAsync('mwc-ripple') override readonly ripple!: Promise<Ripple|null>;
 
   @state() protected shouldRenderRipple = false;
 
@@ -60,7 +60,7 @@ export class SwitchBase extends FormElement implements MDCSwitchState {
   protected readonly mdcFoundationClass = MDCSwitchFoundation;
   protected mdcFoundation?: MDCSwitchFoundation;
 
-  click() {
+  override click() {
     // Switch uses a hidden input as its form element, but a different <button>
     // for interaction. It overrides click() from FormElement to avoid clicking
     // the hidden input.
@@ -73,7 +73,7 @@ export class SwitchBase extends FormElement implements MDCSwitchState {
   }
 
   /** @soyTemplate */
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       <button
         type="button"

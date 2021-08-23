@@ -21,5 +21,5 @@ declare global {
 /** @soyCompatible */
 @customElement('mwc-ripple')
 export class Ripple extends RippleBase {
-  static styles = [styles];
+  static override styles = [styles];
 }

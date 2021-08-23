@@ -60,7 +60,7 @@ export class TabBarBase extends BaseElement {
   }
 
   // TODO(sorvell): can scroller be optional for perf?
-  protected render() {
+  protected override render() {
     return html`
       <div class="mdc-tab-bar" role="tablist"
           @MDCTab:interacted="${this._handleTabInteraction}"
@@ -157,13 +157,13 @@ export class TabBarBase extends BaseElement {
     };
   }
 
-  protected firstUpdated() {
+  protected override firstUpdated() {
     // NOTE: Delay creating foundation until scroller is fully updated.
     // This is necessary because the foundation/adapter synchronously addresses
     // the scroller element.
   }
 
-  protected async getUpdateComplete() {
+  protected override async getUpdateComplete() {
     const result = await super.getUpdateComplete();
     await this.scrollerElement.updateComplete;
     if (this.mdcFoundation === undefined) {

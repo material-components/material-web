@@ -18,5 +18,5 @@ declare global {
 /** @soyCompatible */
 @customElement('mwc-switch')
 export class Switch extends SwitchBase {
-  static styles = [styles];
+  static override styles = [styles];
 }

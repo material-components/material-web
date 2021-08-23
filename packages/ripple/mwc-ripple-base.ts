@@ -179,7 +179,7 @@ export class RippleBase extends BaseElement implements RippleInterface {
     }
   }
 
-  protected update(changedProperties: PropertyValues<this>) {
+  protected override update(changedProperties: PropertyValues<this>) {
     if (changedProperties.has('disabled')) {
       // stop hovering when ripple is disabled to prevent a stuck "hover" state
       // When re-enabled, the outer component will get a `mouseenter` event on
@@ -192,7 +192,7 @@ export class RippleBase extends BaseElement implements RippleInterface {
   }
 
   /** @soyTemplate */
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     const shouldActivateInPrimary =
         this.activated && (this.primary || !this.accent);
     const shouldSelectInPrimary =

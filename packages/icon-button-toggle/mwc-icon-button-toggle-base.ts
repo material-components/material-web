@@ -54,17 +54,17 @@ export class IconButtonToggleBase extends LitElement {
         'icon-button-toggle-change', {detail: {isOn: this.on}, bubbles: true}));
   }
 
-  click() {
+  override click() {
     this.mdcRoot.focus();
     this.mdcRoot.click();
   }
 
-  focus() {
+  override focus() {
     this.rippleHandlers.startFocus();
     this.mdcRoot.focus();
   }
 
-  blur() {
+  override blur() {
     this.rippleHandlers.endFocus();
     this.mdcRoot.blur();
   }
@@ -80,7 +80,7 @@ export class IconButtonToggleBase extends LitElement {
   }
 
   /** @soyTemplate */
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     /** @classMap */
     const classes = {
       'mdc-icon-button--on': this.on,

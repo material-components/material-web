@@ -29,7 +29,7 @@ export interface TabInteractionEventDetail {
 let tabIdCounter = 0;
 
 export class TabBase extends BaseElement {
-  static shadowRootOptions:
+  static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
   protected mdcFoundation!: MDCTabFoundation;
@@ -89,18 +89,18 @@ export class TabBase extends BaseElement {
 
   protected rippleElement: Ripple|null = null;
 
-  connectedCallback() {
+  override connectedCallback() {
     this.dir = document.dir;
     super.connectedCallback();
   }
 
-  protected firstUpdated() {
+  protected override firstUpdated() {
     super.firstUpdated();
     // create an unique id
     this.id = this.id || `mdc-tab-${++tabIdCounter}`;
   }
 
-  protected render() {
+  protected override render() {
     const classes = {
       'mdc-tab--min-width': this.minWidth,
       'mdc-tab--stacked': this.stacked,
@@ -239,7 +239,7 @@ export class TabBase extends BaseElement {
   }
 
   // NOTE: needed only for ShadyDOM where delegatesFocus is not implemented
-  focus() {
+  override focus() {
     this.mdcRoot.focus();
     this.handleFocus();
   }

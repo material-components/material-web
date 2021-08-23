@@ -50,7 +50,7 @@ export class NotchedOutlineBase extends BaseElement {
     }
   }
 
-  render() {
+  override render() {
     this.openOrClose(this.open, this.width);
 
     const classes = classMap({

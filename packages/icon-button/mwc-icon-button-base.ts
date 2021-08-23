@@ -52,7 +52,7 @@ export class IconButtonBase extends LitElement {
                                      '';
   }
 
-  focus() {
+  override focus() {
     const buttonElement = this.buttonElement;
     if (buttonElement) {
       this.rippleHandlers.startFocus();
@@ -60,7 +60,7 @@ export class IconButtonBase extends LitElement {
     }
   }
 
-  blur() {
+  override blur() {
     const buttonElement = this.buttonElement;
     if (buttonElement) {
       this.rippleHandlers.endFocus();
@@ -69,7 +69,7 @@ export class IconButtonBase extends LitElement {
   }
 
   /** @soyTemplate */
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`<button
         class="mdc-icon-button"
         aria-label="${this.ariaLabel || this.icon}"

@@ -88,7 +88,7 @@ export class SwitchBase extends BaseElement {
                                      '';
   }
 
-  focus() {
+  override focus() {
     const formElement = this.formElement;
     if (formElement) {
       this.rippleHandlers.startFocus();
@@ -96,7 +96,7 @@ export class SwitchBase extends BaseElement {
     }
   }
 
-  blur() {
+  override blur() {
     const formElement = this.formElement;
     if (formElement) {
       this.rippleHandlers.endFocus();
@@ -104,14 +104,14 @@ export class SwitchBase extends BaseElement {
     }
   }
 
-  click() {
+  override click() {
     if (this.formElement && !this.disabled) {
       this.formElement.focus();
       this.formElement.click();
     }
   }
 
-  protected firstUpdated() {
+  protected override firstUpdated() {
     super.firstUpdated();
     if (this.shadowRoot) {
       this.mdcRoot.addEventListener('change', (e) => {
@@ -120,7 +120,7 @@ export class SwitchBase extends BaseElement {
     }
   }
 
-  protected render() {
+  protected override render() {
     return html`
       <div class="mdc-switch">
         <div class="mdc-switch__track"></div>

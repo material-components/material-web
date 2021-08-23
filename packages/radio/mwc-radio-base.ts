@@ -87,7 +87,7 @@ export class RadioBase extends FormElement {
   @observer(function(this: RadioBase, disabled: boolean) {
     this.mdcFoundation.setDisabled(disabled);
   })
-  disabled = false;
+  override disabled = false;
 
   @property({type: String})
   @observer(function(this: RadioBase, value: string) {
@@ -126,7 +126,7 @@ export class RadioBase extends FormElement {
   @state() protected focused = false;
   @state() protected shouldRenderRipple = false;
 
-  @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
+  @queryAsync('mwc-ripple') override ripple!: Promise<Ripple|null>;
 
   /** @soyPrefixAttribute */
   @ariaProperty @property({attribute: 'aria-label'}) ariaLabel?: string;
@@ -160,7 +160,7 @@ export class RadioBase extends FormElement {
     return this.rippleElement?.isActive || false;
   }
 
-  connectedCallback() {
+  override connectedCallback() {
     super.connectedCallback();
     // Note that we must defer creating the selection controller until the
     // element has connected, because selection controllers are keyed by the
@@ -184,7 +184,7 @@ export class RadioBase extends FormElement {
     this._selectionController.update(this);
   }
 
-  disconnectedCallback() {
+  override disconnectedCallback() {
     // The controller is initialized in connectedCallback, so if we are in
     // disconnectedCallback then it must be initialized.
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -192,7 +192,7 @@ export class RadioBase extends FormElement {
     this._selectionController = undefined;
   }
 
-  focus() {
+  override focus() {
     this.formElement.focus();
   }
 
@@ -232,7 +232,7 @@ export class RadioBase extends FormElement {
    * @soyAttributes radioAttributes: input
    * @soyClasses radioClasses: .mdc-radio
    */
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     /** @classMap */
     const classes = {
       'mdc-radio--touch': !this.reducedTouchTarget,

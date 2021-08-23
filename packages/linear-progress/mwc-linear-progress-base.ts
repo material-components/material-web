@@ -40,7 +40,7 @@ export class LinearProgressBase extends LitElement {
   @state() protected closedAnimationOff = false;
   protected resizeObserver: MDCResizeObserver|null = null;
 
-  connectedCallback() {
+  override connectedCallback() {
     super.connectedCallback();
     // if detached and reattached
     if (this.rootEl) {
@@ -51,7 +51,7 @@ export class LinearProgressBase extends LitElement {
   /**
    * @soyTemplate
    */
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     /** @classMap */
     const classes = {
       'mdc-linear-progress--closed': this.closed,
@@ -121,7 +121,7 @@ export class LinearProgressBase extends LitElement {
       </div>`;
   }
 
-  update(changedProperties: Map<string, string>) {
+  override update(changedProperties: Map<string, string>) {
     // - When showing the indicator, enable animations immediately.
     // - On first render, disable the animation immediately.
     // - For normal calls to hide the component, let transitionend event trigger
@@ -134,7 +134,7 @@ export class LinearProgressBase extends LitElement {
     super.update(changedProperties);
   }
 
-  async firstUpdated(changed: PropertyValues) {
+  override async firstUpdated(changed: PropertyValues) {
     super.firstUpdated(changed);
 
     this.attachResizeObserver();
@@ -144,7 +144,7 @@ export class LinearProgressBase extends LitElement {
     this.closedAnimationOff = this.closed;
   }
 
-  protected updated(changed: PropertyValues) {
+  protected override updated(changed: PropertyValues) {
     // restart animation for timing if reverse changed and is indeterminate.
     // don't restart here if indeterminate has changed as well because we don't
     // want to incur an extra style recalculation
@@ -165,7 +165,7 @@ export class LinearProgressBase extends LitElement {
     super.updated(changed);
   }
 
-  disconnectedCallback() {
+  override disconnectedCallback() {
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
       this.resizeObserver = null;
