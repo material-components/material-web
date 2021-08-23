@@ -1,0 +1,7 @@
+@use '@material/dialog/mixins' as dialog;
+@use '@material/dialog/variables' as dialog-variables;
+
+@mixin static-styles() {
+  @include dialog.static-styles();
+  @include dialog.scrim-color(dialog-variables.$scrim-color);
+}
