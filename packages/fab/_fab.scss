@@ -3,6 +3,10 @@
  * Copyright 2020 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
 @use 'sass:map';
 @use '@material/elevation/elevation-theme';
 @use '@material/fab/mixins' as fab-mixins;
@@ -151,12 +155,15 @@ $icon-size: map.get(fab-theme.$light-theme-deprecated, icon-size);
       @include shape.radius(fab-variables.$shape-radius);
     }
 
-    .mdc-fab__label {
-      z-index: 0;
+    &.mdc-fab--extended .ripple {
+      @include shape.radius(
+        fab-variables.$shape-radius,
+        $component-height: fab-variables.$extended-height
+      );
     }
 
-    &:not(.mdc-fab--extended) .ripple {
-      @include shape.radius(fab-variables.$shape-radius);
+    .mdc-fab__label {
+      z-index: 0;
     }
 
     .material-icons {
