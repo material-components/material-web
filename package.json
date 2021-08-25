@@ -55,7 +55,7 @@
     "@types/jasmine": "^3.7.4",
     "@typescript-eslint/eslint-plugin": "^2.3.2",
     "@typescript-eslint/parser": "^2.3.2",
-    "@webcomponents/webcomponentsjs": "^2.2.8",
+    "@webcomponents/webcomponentsjs": "^2.6.0",
     "clang-format": "^1.5.0",
     "command-line-args": "^5.1.1",
     "command-line-usage": "^5.0.5",
