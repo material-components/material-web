@@ -94,7 +94,8 @@ class AccessibleSnackbarLabel extends AsyncDirective {
     // all browsers and screen readers:
     //
     //   1. `textContent = ''` is required for IE11 + JAWS
-    //   2. `innerHTML = '&nbsp;'` is required for Chrome + JAWS and NVDA
+    //   2. the lit-html render of `'&nbsp;'` is required for Chrome + JAWS and
+    //       NVDA
     //
     // All other browser/screen reader combinations support both methods.
     //

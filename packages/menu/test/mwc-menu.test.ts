@@ -16,7 +16,7 @@ import {ListItem} from '@material/mwc-list/mwc-list-item';
 import {Menu} from '@material/mwc-menu';
 import {Corner, MenuCorner, MenuSurface} from '@material/mwc-menu/mwc-menu-surface';
 import * as hanbi from 'hanbi';
-import {html, TemplateResult} from 'lit-html';
+import {html, render, TemplateResult} from 'lit-html';
 
 import {fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 
@@ -135,7 +135,7 @@ describe('mwc-menu', () => {
     });
 
     it('`items` returns list items', async () => {
-      element.innerHTML = '<mwc-list-item>1</mwc-list-item>';
+      render(html`<mwc-list-item>1</mwc-list-item>`, element);
       element.layout(true);
       await element.updateComplete;
       const items = element.items;
