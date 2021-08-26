@@ -7,6 +7,7 @@
     "tsBuildInfoFile": ".tsbuildinfo"
   },
   "include": [
+    "../../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.d.ts",
     "*.ts"
   ],
   "exclude": [

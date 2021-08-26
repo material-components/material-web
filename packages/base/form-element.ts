@@ -32,15 +32,8 @@ declare global {
   }
 }
 
-// TODO(b/193921953): Remove when lit-html typing for ShadyDOM works internally
-interface WindowWithShadyDOM {
-  // tslint:disable-next-line:enforce-name-casing
-  ShadyDOM?: {inUse: boolean};
-}
-
 // ShadyDOM should submit <input> elements in component internals
-const USING_SHADY_DOM =
-    (window as unknown as WindowWithShadyDOM).ShadyDOM?.inUse ?? false;
+const USING_SHADY_DOM = window.ShadyDOM?.inUse ?? false;
 
 /** @soyCompatible */
 export abstract class FormElement extends BaseElement {
