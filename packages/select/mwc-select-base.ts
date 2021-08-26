@@ -292,8 +292,8 @@ export abstract class SelectBase extends FormElement {
           ${this.outlined ? this.renderOutline() : this.renderLabel()}
           <slot
               class=${classMap({
-                'mdc-select__icon': !!this.icon || this.hasSlottedIcon
-              })}
+      'mdc-select__icon': !!this.icon || this.hasSlottedIcon
+    })}
               name="icon" 
               @slotchange=${this.handleIconSlotChange}>
             ${this.icon ? this.renderLeadingIcon() : nothing}
