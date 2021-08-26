@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Fixed inconsistent import styles for `@material/mwc-ripple` and
     `@material/mwc-icon` to reduce duplicate registration errors for those
     elements in certain environments.
+  - Updated webcomponents polyfills to 2.6.x
 - `elevation-overlay`
   - Fixed invalid `main` and `module` fields in `package.json`.
 - `icon-button`
