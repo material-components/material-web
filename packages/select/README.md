@@ -204,7 +204,7 @@ focused:
 Name      | Description
 --------- | ----------------------------------------------------------------
 _default_ | Content to display in the selects internal `<mwc-menu>` element.
-
+| `icon`  | Leading icon. Overrides `icon` property. Use `label` property to set the `aria-label`.
 `mwc-select` internally uses
 [`mwc-list`](https://github.com/material-components/material-web/tree/master/packages/list), so
 the default slot has the same interface as the default slot of `mwc-list`.

@@ -100,7 +100,9 @@ export abstract class SelectBase extends FormElement {
 
   @query('.formElement') protected formElement!: HTMLInputElement;
 
-  @query('slot') protected slotElement!: HTMLSlotElement|null;
+  @query('slot:not([name])') protected slotElement!: HTMLSlotElement|null;
+
+  @query('slot[name="icon"]') protected iconSlotElement!: HTMLSlotElement|null;
 
   @query('select') protected nativeSelectElement!: HTMLSelectElement|null;
 
@@ -180,6 +182,8 @@ export abstract class SelectBase extends FormElement {
 
   @property({type: Boolean}) fixedMenuPosition = false;
 
+  @state() hasSlottedIcon = false;
+
   // Transiently holds current typeahead prefix from user.
   protected typeaheadState = typeahead.initState();
   protected sortedIndexByFirstChar = new Map<string, MDCListTextAndIndex[]>();
@@ -248,7 +252,7 @@ export abstract class SelectBase extends FormElement {
       'mdc-select--no-label': !this.label,
       'mdc-select--filled': !this.outlined,
       'mdc-select--outlined': this.outlined,
-      'mdc-select--with-leading-icon': !!this.icon,
+      'mdc-select--with-leading-icon': !!this.icon || this.hasSlottedIcon,
       'mdc-select--required': this.required,
       'mdc-select--invalid': !this.isUiValid,
     };
@@ -261,72 +265,79 @@ export abstract class SelectBase extends FormElement {
     const describedby = this.shouldRenderHelperText ? 'helper-text' : undefined;
 
     return html`
-      <div
-          class="mdc-select ${classMap(classes)}">
+    <div
+        class="mdc-select ${classMap(classes)}">
         <input
-            class="formElement"
-            name="${this.name}"
-            .value="${this.value}"
-            hidden
-            ?disabled="${this.disabled}"
-            ?required=${this.required}>
+          class="formElement"
+          name="${this.name}"
+          .value="${this.value}"
+          hidden
+          ?disabled="${this.disabled}"
+          ?required=${this.required}>
         <!-- @ts-ignore -->
         <div class="mdc-select__anchor"
-            aria-autocomplete="none"
-            role="combobox"
-            aria-expanded=${this.menuOpen}
-            aria-invalid=${!this.isUiValid}
-            aria-haspopup="listbox"
-            aria-labelledby=${ifDefined(labelledby)}
-            aria-required=${this.required}
-            aria-describedby=${ifDefined(describedby)}
-            @click=${this.onClick}
-            @focus=${this.onFocus}
-            @blur=${this.onBlur}
-            @keydown=${this.onKeydown}>
+          aria-autocomplete="none"
+          role="combobox"
+          aria-expanded=${this.menuOpen}
+          aria-invalid=${!this.isUiValid}
+          aria-haspopup="listbox"
+          aria-labelledby=${ifDefined(labelledby)}
+          aria-required=${this.required}
+          aria-describedby=${ifDefined(describedby)}
+          @click=${this.onClick}
+          @focus=${this.onFocus}
+          @blur=${this.onBlur}
+          @keydown=${this.onKeydown}>
           ${this.renderRipple()}
           ${this.outlined ? this.renderOutline() : this.renderLabel()}
-          ${this.renderLeadingIcon()}
+          <slot
+              class=${classMap({
+                'mdc-select__icon': !!this.icon || this.hasSlottedIcon
+              })}
+              name="icon" 
+              @slotchange=${this.handleIconSlotChange}>
+            ${this.icon ? this.renderLeadingIcon() : nothing}
+          </slot>
           <span class="mdc-select__selected-text-container">
             <span class="mdc-select__selected-text">${this.selectedText}</span>
           </span>
           <span class="mdc-select__dropdown-icon">
             <svg
-                class="mdc-select__dropdown-icon-graphic"
-                viewBox="7 10 10 5"
-                focusable="false">
+              class="mdc-select__dropdown-icon-graphic"
+              viewBox="7 10 10 5"
+              focusable="false">
               <polygon
-                  class="mdc-select__dropdown-icon-inactive"
-                  stroke="none"
-                  fill-rule="evenodd"
-                  points="7 10 12 15 17 10">
-              </polygon>
+                class="mdc-select__dropdown-icon-inactive"
+                stroke="none"
+                fill-rule="evenodd"
+                points="7 10 12 15 17 10">
+            </polygon>
               <polygon
-                  class="mdc-select__dropdown-icon-active"
-                  stroke="none"
-                  fill-rule="evenodd"
-                  points="7 15 12 10 17 15">
-              </polygon>
+                class="mdc-select__dropdown-icon-active"
+                stroke="none"
+                fill-rule="evenodd"
+                points="7 15 12 10 17 15">
+            </polygon>
             </svg>
           </span>
           ${this.renderLineRipple()}
         </div>
         <mwc-menu
-            innerRole="listbox"
-            wrapFocus
-            class="mdc-select__menu mdc-menu mdc-menu-surface ${
+          innerRole="listbox"
+          wrapFocus
+          class="mdc-select__menu mdc-menu mdc-menu-surface ${
         classMap(menuClasses)}"
-            activatable
-            .fullwidth=${
+          activatable
+          .fullwidth=${
         this.fixedMenuPosition ? false : !this.naturalMenuWidth}
-            .open=${this.menuOpen}
-            .anchor=${this.anchorElement}
-            .fixed=${this.fixedMenuPosition}
-            @selected=${this.onSelected}
-            @opened=${this.onOpened}
-            @closed=${this.onClosed}
-            @items-updated=${this.onItemsUpdated}
-            @keydown=${this.handleTypeahead}>
+          .open=${this.menuOpen}
+          .anchor=${this.anchorElement}
+          .fixed=${this.fixedMenuPosition}
+          @selected=${this.onSelected}
+          @opened=${this.onOpened}
+          @closed=${this.onClosed}
+          @items-updated=${this.onItemsUpdated}
+          @keydown=${this.handleTypeahead}>
           <slot></slot>
         </mwc-menu>
       </div>
@@ -364,19 +375,14 @@ export abstract class SelectBase extends FormElement {
 
     return html`
       <span
-          .floatingLabelFoundation=${
+        .floatingLabelFoundation=${
         floatingLabel(this.label) as unknown as MDCFloatingLabelFoundation}
-          id="label">${this.label}</span>
+        id="label">${this.label}</span>
     `;
   }
 
   protected renderLeadingIcon() {
-    if (!this.icon) {
-      return nothing;
-    }
-
-    return html`<mwc-icon class="mdc-select__icon"><div>${
-        this.icon}</div></mwc-icon>`;
+    return html`<mwc-icon><div>${this.icon}</div></mwc-icon>`;
   }
 
   protected renderLineRipple() {
@@ -844,6 +850,11 @@ export abstract class SelectBase extends FormElement {
     };
 
     typeahead.handleKeydown(opts, this.typeaheadState);
+  }
+
+  protected handleIconSlotChange() {
+    this.hasSlottedIcon =
+        (this.iconSlotElement?.assignedNodes({flatten: true}).length ?? 0) > 0;
   }
 
   protected async onSelected(event: CustomEvent<{index: number}>) {
