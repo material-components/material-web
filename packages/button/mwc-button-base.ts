@@ -88,7 +88,7 @@ export class ButtonBase extends LitElement {
     }
   }
 
-  /** @soyTemplate classMap */
+  /** @soyTemplate */
   protected getRenderClasses() {
     return {
       'mdc-button--raised': this.raised,
