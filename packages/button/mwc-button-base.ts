@@ -90,12 +90,12 @@ export class ButtonBase extends LitElement {
 
   /** @soyTemplate classMap */
   protected getRenderClasses() {
-    return classMap({
+    return {
       'mdc-button--raised': this.raised,
       'mdc-button--unelevated': this.unelevated,
       'mdc-button--outlined': this.outlined,
       'mdc-button--dense': this.dense,
-    });
+    };
   }
 
   /**
@@ -107,7 +107,7 @@ export class ButtonBase extends LitElement {
     return html`
       <button
           id="button"
-          class="mdc-button ${this.getRenderClasses()}"
+          class="mdc-button ${classMap(this.getRenderClasses())}"
           ?disabled="${this.disabled}"
           aria-label="${this.label || this.icon}"
           aria-haspopup="${ifDefined(this.ariaHasPopup)}"
