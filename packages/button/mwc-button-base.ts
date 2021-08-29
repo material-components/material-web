@@ -14,7 +14,7 @@ import {AriaHasPopup, ariaProperty} from '@material/mwc-base/aria-property';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {eventOptions, html, LitElement, property, query, queryAsync, state, TemplateResult} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
+import {ClassInfo, classMap} from 'lit-html/directives/class-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
 
 /** @soyCompatible */
@@ -89,7 +89,7 @@ export class ButtonBase extends LitElement {
   }
 
   /** @soyTemplate */
-  protected getRenderClasses() {
+  protected getRenderClasses(): ClassInfo {
     return {
       'mdc-button--raised': this.raised,
       'mdc-button--unelevated': this.unelevated,
