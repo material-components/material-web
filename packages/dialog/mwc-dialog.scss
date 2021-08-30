@@ -91,6 +91,16 @@
       }
     }
   }
+
+  .mdc-dialog__content {
+    @include mwc-dialog-padding(
+      dialog.$padding-top,
+      dialog.$padding-right,
+      dialog.$padding-bottom,
+      dialog.$padding-left,
+      $query: $query
+    );
+  }
 }
 
 @mixin mwc-dialog-scrim-color(
@@ -196,6 +206,49 @@
         (
           varname: --mdc-dialog-min-width,
           fallback: $min-width,
+        )
+      );
+    }
+  }
+}
+
+@mixin mwc-dialog-padding(
+  $padding-top,
+  $padding-right,
+  $padding-bottom,
+  $padding-left,
+  $query: feature.all()
+) {
+  $feat-structure: feature.create-target($query, structure);
+
+  .mdc-dialog__content {
+    @include feature.targets($feat-structure) {
+      @include theme.property(
+        padding-top,
+        (
+          varname: --mdc-dialog-padding-top,
+          fallback: $padding-top,
+        )
+      );
+      @include theme.property(
+        padding-right,
+        (
+          varname: --mdc-dialog-padding-right,
+          fallback: $padding-right,
+        )
+      );
+      @include theme.property(
+        padding-bottom,
+        (
+          varname: --mdc-dialog-padding-bottom,
+          fallback: $padding-bottom,
+        )
+      );
+      @include theme.property(
+        padding-left,
+        (
+          varname: --mdc-dialog-padding-left,
+          fallback: $padding-left,
         )
       );
     }
