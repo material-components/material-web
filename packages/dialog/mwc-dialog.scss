@@ -93,13 +93,7 @@
   }
 
   .mdc-dialog__content {
-    @include mwc-dialog-padding(
-      dialog.$padding-top,
-      dialog.$padding-right,
-      dialog.$padding-bottom,
-      dialog.$padding-left,
-      $query: $query
-    );
+    @include mwc-dialog-padding(20px, 24px, 20px, 24px, $query: $query);
   }
 }
 
