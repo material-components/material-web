@@ -18,7 +18,7 @@ export class Icon extends LitElement {
 
   /** @soyTemplate */
   protected override render(): TemplateResult {
-    return html`<slot></slot>`;
+    return html`<span><slot></slot></span>`;
   }
 }
 
