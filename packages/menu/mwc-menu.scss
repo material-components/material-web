@@ -6,6 +6,9 @@
 @use '@material/theme/theme';
 @use '@material/theme/custom-properties';
 
-mwc-list ::slotted([mwc-list-item]:not([twoline])) {
-  height: var(--mdc-menu-item-height, 48px);
+mwc-list {
+  ::slotted([mwc-list-item]:not([twoline])),
+  ::slotted([noninteractive]:not([twoline])) {
+    height: var(--mdc-menu-item-height, 48px);
+  }
 }
