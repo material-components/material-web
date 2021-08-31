@@ -79,7 +79,7 @@ export class SliderBase extends FormElement {
     return this.endRipple;
   });
 
-  protected willUpdate(changed: PropertyValues) {
+  override update(changed: PropertyValues) {
     if (changed.has('valueEnd') && this.mdcFoundation) {
       this.mdcFoundation.setValue(this.valueEnd);
       const validVal = this.mdcFoundation.getValue();
@@ -94,6 +94,8 @@ export class SliderBase extends FormElement {
         this.tickMarks = [];
       }
     }
+
+    super.update(changed);
   }
 
   protected override render() {
@@ -122,7 +124,7 @@ export class SliderBase extends FormElement {
     </div>`;
   }
 
-  protected renderStartInput() {
+  protected renderStartInput(): typeof nothing|TemplateResult {
     return nothing;
   }
 
@@ -148,7 +150,7 @@ export class SliderBase extends FormElement {
     `;
   }
 
-  protected renderTrack() {
+  protected renderTrack(): typeof nothing|TemplateResult {
     return nothing;
   }
 
@@ -165,7 +167,7 @@ export class SliderBase extends FormElement {
       </div>`;
   }
 
-  protected renderStartThumb() {
+  protected renderStartThumb(): typeof nothing|TemplateResult {
     return nothing;
   }
 

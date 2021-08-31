@@ -42,7 +42,7 @@ export class SliderRangeBase extends SliderBase {
     return this.startRipple;
   });
 
-  protected override willUpdate(changed: PropertyValues) {
+  override update(changed: PropertyValues) {
     if (changed.has('valueStart') && this.mdcFoundation) {
       this.mdcFoundation.setValueStart(this.valueStart);
 
