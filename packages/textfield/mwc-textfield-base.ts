@@ -679,7 +679,13 @@ export abstract class TextFieldBase extends FormElement {
       return;
     }
 
-    const shouldFloat = !!this.label && !!this.value;
+    // The label is floated if either:
+    //   1. The textfield has a value, OR
+    //   2. The user has focused on a textfield with a placeholder, in order to
+    //      avoid overlap between the label and the placeholder.
+    const focusedWithPlaceholder = this.focused && !!this.placeholder;
+    const shouldFloat =
+        !!this.label && (!!this.value || focusedWithPlaceholder);
     labelElement.floatingLabelFoundation.float(shouldFloat);
 
     if (!this.outlined) {

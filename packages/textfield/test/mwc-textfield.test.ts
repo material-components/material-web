@@ -63,6 +63,13 @@ const withLabel = html`
   <mwc-textfield label="a label"></mwc-textfield>
 `;
 
+const withLabelAndPlaceholder = html`
+  <mwc-textfield
+      label="a label"
+      placeholder="a placeholder">
+  </mwc-textfield>
+`;
+
 const textfieldInForm = html`
   <form>
     <mwc-textfield name="foo"></mwc-textfield>
@@ -628,6 +635,38 @@ describe('mwc-textfield:', () => {
       await element.updateComplete;
       const input = element.shadowRoot!.querySelector('input')!;
       expect(input.getAttribute('aria-labelledby')).toBe('label');
+    });
+  });
+
+  describe('label with placeholder', () => {
+    let element: TextField;
+
+    beforeEach(async () => {
+      fixt = await fixture(withLabelAndPlaceholder);
+      element = fixt.root.querySelector('mwc-textfield')!;
+      await element.updateComplete;
+    });
+
+    afterEach(() => {
+      if (fixt) {
+        fixt.remove();
+      }
+    });
+
+    it('label floats when textfield focused', async () => {
+      const floatingLabel = element.shadowRoot!.querySelector(
+                                '.mdc-floating-label') as FloatingLabel;
+
+      expect(
+          floatingLabel.classList.contains(floatingClasses.LABEL_FLOAT_ABOVE))
+          .toBeFalse();
+
+      element.focus();
+      await element.updateComplete;
+
+      expect(
+          floatingLabel.classList.contains(floatingClasses.LABEL_FLOAT_ABOVE))
+          .toBeTrue();
     });
   });
 
