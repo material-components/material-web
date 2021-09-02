@@ -26,11 +26,11 @@
     "build:style": "node ../../scripts/sass-to-lit-css/index.js styles.scss demo_styles.scss"
   },
   "devDependencies": {
-    "@material/button": "=13.0.0-canary.15981e9d9.0",
-    "@material/elevation": "=13.0.0-canary.15981e9d9.0",
-    "@material/ripple": "=13.0.0-canary.15981e9d9.0",
-    "@material/shape": "=13.0.0-canary.15981e9d9.0",
-    "@material/theme": "=13.0.0-canary.15981e9d9.0"
+    "@material/button": "=13.0.0-canary.c16fe03ce.0",
+    "@material/elevation": "=13.0.0-canary.c16fe03ce.0",
+    "@material/ripple": "=13.0.0-canary.c16fe03ce.0",
+    "@material/shape": "=13.0.0-canary.c16fe03ce.0",
+    "@material/theme": "=13.0.0-canary.c16fe03ce.0"
   },
   "publishConfig": {
     "access": "public"
