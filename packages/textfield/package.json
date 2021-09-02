@@ -16,23 +16,23 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/floating-label": "=13.0.0-canary.15981e9d9.0",
-    "@material/line-ripple": "=13.0.0-canary.15981e9d9.0",
+    "@material/floating-label": "=13.0.0-canary.611db508e.0",
+    "@material/line-ripple": "=13.0.0-canary.611db508e.0",
     "@material/mwc-base": "^0.22.1",
     "@material/mwc-floating-label": "^0.22.1",
     "@material/mwc-line-ripple": "^0.22.1",
     "@material/mwc-notched-outline": "^0.22.1",
-    "@material/textfield": "=13.0.0-canary.15981e9d9.0",
+    "@material/textfield": "=13.0.0-canary.611db508e.0",
     "lit-element": "^2.5.1",
     "lit-html": "^1.4.1",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
     "@material/mwc-icon": "^0.22.1",
-    "@material/notched-outline": "=13.0.0-canary.15981e9d9.0",
-    "@material/ripple": "=13.0.0-canary.15981e9d9.0",
-    "@material/shape": "=13.0.0-canary.15981e9d9.0",
-    "@material/theme": "=13.0.0-canary.15981e9d9.0"
+    "@material/notched-outline": "=13.0.0-canary.611db508e.0",
+    "@material/ripple": "=13.0.0-canary.611db508e.0",
+    "@material/shape": "=13.0.0-canary.611db508e.0",
+    "@material/theme": "=13.0.0-canary.611db508e.0"
   },
   "scripts": {
     "build:style": "node ../../scripts/sass-to-lit-css/index.js mwc-textfield.scss"
