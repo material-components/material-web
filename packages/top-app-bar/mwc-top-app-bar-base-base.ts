@@ -25,7 +25,8 @@ interface ClassInfo {
 export abstract class TopAppBarBaseBase extends BaseElement {
   protected abstract override mdcFoundation: MDCTopAppBarBaseFoundation;
 
-  protected abstract override mdcFoundationClass = MDCTopAppBarBaseFoundation;
+  protected abstract override mdcFoundationClass:
+      typeof MDCTopAppBarBaseFoundation;
 
   @query('.mdc-top-app-bar') protected mdcRoot!: HTMLElement;
 

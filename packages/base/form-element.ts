@@ -24,7 +24,7 @@ export {
 
 declare global {
   interface FormDataEvent extends Event {
-    formData: FormData;
+    readonly formData: FormData;
   }
 
   interface HTMLElementEventMap {

@@ -19,7 +19,7 @@ declare global {
     tachometerResult: undefined|number;
   }
   interface FormDataEvent extends Event {
-    formData: FormData;
+    readonly formData: FormData;
   }
 }
 
@@ -201,7 +201,7 @@ export const simulateFormDataEvent = (form: HTMLFormElement): FormData => {
   // new FormData(form) will send a 'formdata' event and coallesce the
   // additions, but this only works in Chrome and Firefox
   const formData = new FormData();
-  (event as FormDataEvent).formData = formData;
+  (event as FormDataEvent as any).formData = formData;
   form.dispatchEvent(event);
   return formData;
 }

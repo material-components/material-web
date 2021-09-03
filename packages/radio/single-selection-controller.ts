@@ -106,7 +106,7 @@ export class SingleSelectionController {
         !('global' in element) || ('global' in element && element.global);
     const root = useGlobal ? document as Document &
             {[selectionController]?: SingleSelectionController} :
-                             element.getRootNode() as Node &
+                             (element as Element).getRootNode() as Node &
             {[selectionController]?: SingleSelectionController};
     let controller = root[selectionController];
     if (controller === undefined) {
