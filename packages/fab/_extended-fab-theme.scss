@@ -10,6 +10,10 @@
 @use 'sass:map';
 @use '@material/tokens/resolvers';
 @use '@material/fab/extended-fab-theme';
+@use '@material/fab/fab-theme';
+@use '@material/fab/fab-custom-properties';
+@use '@material/theme/css';
+@use '@material/theme/custom-properties';
 @use '@material/theme/keys';
 @use '@material/ripple/ripple-theme' as mdc-ripple-theme;
 
@@ -19,6 +23,10 @@
   }
 
   $theme: keys.create-theme-properties($theme, $prefix: 'extended-fab');
+
+  .mdc-fab.mdc-fab--extended {
+    @include _deprecated-custom-props-theme-styles($theme);
+  }
 
   @include mdc-ripple-theme.theme(
     (
@@ -37,4 +45,27 @@
 ///
 @mixin theme($theme, $resolvers: resolvers.$material) {
   @include extended-fab-theme.theme($theme, $resolvers: $resolvers);
+}
+
+///
+/// Exposes outline styles with deprecated custom props because the tokenized
+/// ones are not set in theme-styles since it requires the layout tokens to be
+/// supplied alongside the outline tokens, and the layout tokens are not yet
+/// finalized.
+/// TODO(b/198496285): delete and replace with proper tokens when available.
+///
+@mixin _deprecated-custom-props-theme-styles($theme) {
+  $extended-icon-padding: custom-properties.create(
+    fab-custom-properties.$extended-icon-padding,
+    extended-fab-theme.$extended-icon-padding
+  );
+  $extended-label-padding: custom-properties.create(
+    fab-custom-properties.$extended-label-padding,
+    extended-fab-theme.$extended-label-padding
+  );
+  @include extended-fab-theme.extended-padding(
+    $extended-icon-padding,
+    $extended-label-padding,
+    $focus-outline-width: map.get($theme, focus-outline-width)
+  );
 }
