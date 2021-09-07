@@ -100,7 +100,9 @@ export class DialogBase extends BaseElement {
     }
   }
 
-
+  /**
+   * @export
+   */
   get suppressDefaultPressSelector(): string {
     return this.mdcFoundation ?
         this.mdcFoundation.getSuppressDefaultPressSelector() :
