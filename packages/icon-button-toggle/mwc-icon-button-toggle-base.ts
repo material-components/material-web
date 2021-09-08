@@ -23,7 +23,7 @@ export class IconButtonToggleBase extends LitElement {
   /** @soyPrefixAttribute */
   @ariaProperty
   @property({type: String, attribute: 'aria-label'})
-  ariaLabel?: string;
+  ariaLabel!: string;
 
   @property({type: Boolean, reflect: true}) disabled = false;
 
@@ -32,10 +32,10 @@ export class IconButtonToggleBase extends LitElement {
   @property({type: String}) offIcon = '';
 
   // `aria-label` of the button when `on` is true.
-  @property({type: String}) ariaLabelOn?: string;
+  @property({type: String}) ariaLabelOn!: string;
 
   // `aria-label` of the button when `on` is false.
-  @property({type: String}) ariaLabelOff?: string;
+  @property({type: String}) ariaLabelOff!: string;
 
   @property({type: Boolean, reflect: true}) on = false;
 

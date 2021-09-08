@@ -20,17 +20,17 @@ import {fixture, TestFixture} from '../../../test/src/util/helpers';
 class TestElement extends LitElement {
   @ariaProperty
   @property({type: String, attribute: 'aria-label'})
-  ariaLabel?: string;
+  ariaLabel!: string;
 
-  protected internalAriaChecked: 'true'|'false'|'mixed'|undefined = undefined;
+  protected internalAriaChecked: 'true'|'false'|'mixed'|null = null;
 
   @ariaProperty
   @property({attribute: 'aria-checked'})
-  set ariaChecked(value: 'true'|'false'|'mixed'|undefined) {
+  set ariaChecked(value: 'true'|'false'|'mixed'|null) {
     if (value === 'mixed') {
       this.internalAriaChecked = value;
     } else {
-      this.internalAriaChecked = undefined;
+      this.internalAriaChecked = null;
     }
     this.requestUpdate();
   }
@@ -39,7 +39,7 @@ class TestElement extends LitElement {
     return this.internalAriaChecked;
   }
 
-  @property({attribute: 'aria-owns'}) @ariaProperty ariaOwns?: string;
+  @property({attribute: 'aria-owns'}) @ariaProperty ariaOwns!: string;
 
   override render() {
     return html`<input aria-label="${
@@ -86,7 +86,7 @@ describe('aria-property:', () => {
         expect(shadowTargetElement).not.toBeNull();
         return;
       }
-      expect(component.ariaLabel).toEqual(undefined);
+      expect(component.ariaLabel).toBeFalsy();
       component.ariaLabel = 'foo';
       await component.updateComplete;
       expect(component.getAttribute('aria-label')).toBeNull();
@@ -107,7 +107,8 @@ describe('aria-property:', () => {
         expect(shadowTargetElement).not.toBeNull();
         return;
       }
-      expect(component.ariaChecked).toEqual(undefined);
+      expect(component.ariaChecked).toBeFalsy();
+      ;
       component.ariaChecked = 'mixed';
       await component.updateComplete;
       expect(component.getAttribute('aria-checked')).toBeNull();
@@ -128,7 +129,7 @@ describe('aria-property:', () => {
         expect(shadowTargetElement).not.toBeNull();
         return;
       }
-      expect(component.ariaOwns).toEqual(undefined);
+      expect(component.ariaOwns).toBeFalsy();
       component.ariaOwns = 'baz';
       await component.updateComplete;
       expect(component.getAttribute('aria-owns')).toBeNull();
@@ -149,7 +150,7 @@ describe('aria-property:', () => {
         expect(shadowTargetElement).not.toBeNull();
         return;
       }
-      expect(component.ariaLabel).toEqual(undefined);
+      expect(component.ariaLabel).toBeFalsy();
       component.setAttribute('aria-label', 'foo');
       await component.updateComplete;
       expect(component.getAttribute('aria-label')).toBeNull();
@@ -170,7 +171,7 @@ describe('aria-property:', () => {
         expect(shadowTargetElement).not.toBeNull();
         return;
       }
-      expect(component.ariaChecked).toEqual(undefined);
+      expect(component.ariaChecked).toEqual(null);
       component.setAttribute('aria-checked', 'mixed');
       await component.updateComplete;
       expect(component.getAttribute('aria-checked')).toBeNull();
@@ -192,7 +193,7 @@ describe('aria-property:', () => {
         expect(shadowTargetElement).not.toBeNull();
         return;
       }
-      expect(component.ariaOwns).toEqual(undefined);
+      expect(component.ariaOwns).toBeFalsy();
       component.setAttribute('aria-owns', 'baz');
       await component.updateComplete;
       expect(component.getAttribute('aria-owns')).toBeNull();

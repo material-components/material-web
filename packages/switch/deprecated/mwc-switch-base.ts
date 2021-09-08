@@ -33,12 +33,12 @@ export class SwitchBase extends BaseElement {
   disabled = false;
 
   /** @soyPrefixAttribute */
-  @ariaProperty @property({attribute: 'aria-label'}) ariaLabel?: string;
+  @ariaProperty @property({attribute: 'aria-label'}) ariaLabel!: string;
 
   /** @soyPrefixAttribute */
   @ariaProperty
   @property({attribute: 'aria-labelledby'})
-  ariaLabelledBy?: string;
+  ariaLabelledBy!: string;
 
   @query('.mdc-switch') protected mdcRoot!: HTMLElement;
 

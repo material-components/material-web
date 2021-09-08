@@ -15,7 +15,7 @@ import {fixture, TestFixture} from '../../../test/src/util/helpers';
 const INDETERMINATE_CLASS = 'mdc-circular-progress--indeterminate';
 
 interface ProgressProps {
-  ariaLabel: string|undefined;
+  ariaLabel: string;
   progress: number;
   indeterminate: true;
   density: number;
@@ -56,7 +56,7 @@ describe('mwc-circular-progress', () => {
       expect(element.progress).toEqual(0);
       expect(element.density).toEqual(0);
       expect(element.closed).toBeFalse();
-      expect(element.ariaLabel).toEqual(undefined);
+      expect(element.ariaLabel).toBeFalsy();
     });
 
     it('open sets closed to false', async () => {

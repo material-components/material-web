@@ -54,7 +54,7 @@ describe('mwc-circular-progress-four-color', () => {
       expect(element.progress).toEqual(0);
       expect(element.density).toEqual(0);
       expect(element.closed).toBeFalse();
-      expect(element.ariaLabel).toEqual(undefined);
+      expect(element.ariaLabel).toBeFalsy();
     });
 
     it('open sets closed to false', async () => {

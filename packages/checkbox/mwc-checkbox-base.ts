@@ -36,17 +36,17 @@ export class CheckboxBase extends FormElement {
   /** @soyPrefixAttribute */
   @ariaProperty
   @property({type: String, attribute: 'aria-label'})
-  ariaLabel?: string;
+  ariaLabel!: string;
 
   /** @soyPrefixAttribute */
   @ariaProperty
   @property({type: String, attribute: 'aria-labelledby'})
-  ariaLabelledBy?: string;
+  ariaLabelledBy!: string;
 
   /** @soyPrefixAttribute */
   @ariaProperty
   @property({type: String, attribute: 'aria-describedby'})
-  ariaDescribedBy?: string;
+  ariaDescribedBy!: string;
 
   /**
    * Touch target extends beyond visual boundary of a component by default.

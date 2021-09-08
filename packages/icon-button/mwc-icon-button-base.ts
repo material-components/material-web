@@ -29,7 +29,7 @@ export class IconButtonBase extends LitElement {
   /** @soyPrefixAttribute */
   @ariaProperty
   @property({type: String, attribute: 'aria-haspopup'})
-  ariaHasPopup?: AriaHasPopup;
+  ariaHasPopup!: AriaHasPopup;
 
   @query('button') buttonElement!: HTMLElement;
 

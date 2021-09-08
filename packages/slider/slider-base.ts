@@ -54,17 +54,17 @@ export class SliderBase extends FormElement {
   /** @soyPrefixAttribute */
   @ariaProperty
   @property({type: String, attribute: 'aria-label'})
-  ariaLabel?: string;
+  ariaLabel!: string;
 
   /** @soyPrefixAttribute */
   @ariaProperty
   @property({type: String, attribute: 'aria-labelledby'})
-  ariaLabelledBy?: string;
+  ariaLabelledBy!: string;
 
   /** @soyPrefixAttribute */
   @ariaProperty
   @property({type: String, attribute: 'aria-describedby'})
-  ariaDescribedBy?: string;
+  ariaDescribedBy!: string;
 
   valueToAriaTextTransform: ((value: number) => string)|null = null;
   valueToValueIndicatorTransform: ((value: number) => string) = (value) => {

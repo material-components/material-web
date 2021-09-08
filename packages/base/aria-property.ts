@@ -97,7 +97,7 @@ function tsDecorator(
  * class MyElement {
  *   @ariaProperty
  *   @property({ type: String, attribute: 'aria-label' })
- *   ariaLabel?: string;
+ *   ariaLabel!: string;
  * }
  * ```
  * @category Decorator
