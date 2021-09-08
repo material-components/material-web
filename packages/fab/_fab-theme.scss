@@ -4,17 +4,20 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
 @use 'sass:map';
 @use 'sass:string';
 @use 'sass:selector';
 @use '@material/elevation/elevation-theme';
-@use '@material/theme/theme';
 @use '@material/theme/css';
 @use '@material/theme/keys';
 @use '@material/ripple/ripple-theme' as mdc-ripple-theme;
 @use '@material/theme/theme-color';
 @use '@material/theme/custom-properties';
 @use '@material/theme/shadow-dom';
+@use '@material/theme/theme';
 @use '@material/tokens/resolvers';
 @use '@material/fab/variables' as fab-variables;
 @use '@material/fab/fab-theme';
@@ -175,6 +178,12 @@ $light-theme-deprecated: (
   }
 
   $theme: keys.create-theme-properties($theme, $prefix: 'fab');
+
+  .mdc-fab {
+    &:not(.mdc-fab--extended) .ripple {
+      @include theme.property(border-radius, map.get($theme, container-shape));
+    }
+  }
 
   @include mdc-ripple-theme.theme(
     (
