@@ -28,6 +28,15 @@
   outline: none;
 }
 
+:host([type="hidden" i]) {
+  display: none;
+  appearance: none;
+  background-color: initial;
+  cursor: default;
+  padding: initial;
+  border: initial;
+}
+
 .mdc-text-field {
   width: 100%;
 
