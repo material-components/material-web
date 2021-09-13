@@ -4,7 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Changed
+
+- all
+  - **BREAKING:BUILD** underlying Lit 1 libraries updated to Lit 2
+  - This may break certain builds that are transitively relying on Lit 1
+  - If your Lit 1 components break due to this, make sure your `package.json`
+    explicitly includes the latest Lit 1 versions of lit-html and lit-element
+    or deduplicate your versions of Lit 1 with your bundler
 
 ## [v0.23.0] - 2021-09-13
 
