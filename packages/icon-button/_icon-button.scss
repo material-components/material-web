@@ -50,7 +50,8 @@
     vertical-align: top;
   }
 
-  .mdc-icon-button {
+  // stylelint-disable-next-line -- `mdc-` was already present.
+  .mdc-icon-button.mdc-icon-button {
     @include mdc-icon-button-size-var-aware(
       var(--mdc-icon-button-size, #{icon-button-theme.$size})
     );
