@@ -9,7 +9,7 @@
 
 import {MDCLineRippleAdapter} from '@material/line-ripple/adapter';
 import {MDCLineRippleFoundation} from '@material/line-ripple/foundation';
-import {AttributePart, directive, Directive, DirectiveParameters, PartInfo, PartType} from 'lit-html/directive';
+import {AttributePart, directive, Directive, DirectiveParameters, PartInfo, PartType} from 'lit-html/directive.js';
 
 export interface LineRipple extends HTMLElement {
   lineRippleFoundation: MDCLineRippleFoundation;

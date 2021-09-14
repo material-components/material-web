@@ -10,9 +10,9 @@
 import {MDCResizeObserver, WithMDCResizeObserver} from '@material/linear-progress/types';
 import {ariaProperty} from '@material/mwc-base/aria-property';
 import {html, LitElement, property, PropertyValues, query, state, TemplateResult} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
-import {ifDefined} from 'lit-html/directives/if-defined';
-import {styleMap} from 'lit-html/directives/style-map';
+import {classMap} from 'lit-html/directives/class-map.js';
+import {ifDefined} from 'lit-html/directives/if-defined.js';
+import {styleMap} from 'lit-html/directives/style-map.js';
 
 /** @soyCompatible */
 export class LinearProgressBase extends LitElement {

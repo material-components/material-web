@@ -23,7 +23,7 @@ import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
 import {DocumentWithBlockingElements} from 'blocking-elements';
 import {html, property, PropertyValues, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
+import {classMap} from 'lit-html/directives/class-map.js';
 
 interface InertableHTMLElement extends HTMLElement {
   inert?: boolean;

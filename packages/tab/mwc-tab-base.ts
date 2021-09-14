@@ -19,7 +19,7 @@ import {TabIndicator} from '@material/mwc-tab-indicator';
 import {MDCTabAdapter} from '@material/tab/adapter';
 import MDCTabFoundation from '@material/tab/foundation';
 import {eventOptions, html, property, query, queryAsync, state} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
+import {classMap} from 'lit-html/directives/class-map.js';
 
 export interface TabInteractionEventDetail {
   tabId: string;

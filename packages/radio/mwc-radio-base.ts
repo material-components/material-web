@@ -18,8 +18,8 @@ import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {MDCRadioAdapter} from '@material/radio/adapter';
 import MDCRadioFoundation from '@material/radio/foundation';
 import {eventOptions, html, property, query, queryAsync, state, TemplateResult} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
-import {ifDefined} from 'lit-html/directives/if-defined';
+import {classMap} from 'lit-html/directives/class-map.js';
+import {ifDefined} from 'lit-html/directives/if-defined.js';
 
 /**
  * @fires checked

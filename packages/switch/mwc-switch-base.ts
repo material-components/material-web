@@ -14,8 +14,8 @@ import {MDCSwitchAdapter, MDCSwitchState} from '@material/switch/adapter';
 import {MDCSwitchFoundation} from '@material/switch/foundation';
 import {eventOptions, html, property, query, queryAsync, state} from 'lit-element';
 import {TemplateResult} from 'lit-html';
-import {ClassInfo, classMap} from 'lit-html/directives/class-map';
-import {ifDefined} from 'lit-html/directives/if-defined';
+import {ClassInfo, classMap} from 'lit-html/directives/class-map.js';
+import {ifDefined} from 'lit-html/directives/if-defined.js';
 
 export class SwitchBase extends FormElement implements MDCSwitchState {
   // MDCSwitchState

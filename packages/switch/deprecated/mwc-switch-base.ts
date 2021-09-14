@@ -17,7 +17,7 @@ import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {MDCSwitchAdapter} from '@material/switch/deprecated/adapter';
 import MDCSwitchFoundation from '@material/switch/deprecated/foundation';
 import {eventOptions, html, property, query, queryAsync, state} from 'lit-element';
-import {ifDefined} from 'lit-html/directives/if-defined';
+import {ifDefined} from 'lit-html/directives/if-defined.js';
 
 export class SwitchBase extends BaseElement {
   @property({type: Boolean})
