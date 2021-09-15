@@ -4,4 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/// TODO: concrete styles applicable to ALL variants.
+@use './button';
+@use './icon';
+@use './touch-target';
+
+@include button.static-styles;
+@include icon.static-styles;
+@include touch-target.static-styles;

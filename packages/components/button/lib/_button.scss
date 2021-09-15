@@ -4,4 +4,85 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/// TODO: static styles applicable to all variants; split into submodules if necessary.
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use '@material/elevation/elevation-theme';
+@use '@material/touch-target/touch-target';
+@use '@material/theme/selector-ext';
+
+@mixin static-styles() {
+  :host {
+    @include host-root;
+    @include selector-ext.append-strict(&, '[disabled]') {
+      @include disabled;
+    }
+  }
+
+  .mdc-button {
+    @include root;
+
+    &:active {
+      @include active;
+    }
+
+    &:hover {
+      @include hover;
+    }
+  }
+
+  .mdc-button__label {
+    // Necessary such that label is stacked on top of ripple
+    // (since ripple is a positioned element, non-positioned elements
+    // appear under it).
+    position: relative;
+  }
+}
+
+@mixin host-root() {
+  display: inline-flex;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  /**
+   * Override vertical-align with shortest value "top". Vertical-align's default
+   * "baseline" value causes buttons to be misaligned next to each other if one
+   * button has an icon and the other does not.
+   */
+  vertical-align: top;
+}
+
+@mixin root() {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 64px;
+  border: none;
+  outline: none;
+  line-height: inherit;
+  user-select: none;
+  -webkit-appearance: none;
+  vertical-align: middle;
+  background: transparent;
+  text-decoration: none;
+  transition: elevation-theme.transition-value();
+
+  &::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+  }
+}
+
+@mixin active() {
+  outline: none;
+}
+
+@mixin hover() {
+  cursor: pointer;
+}
+
+@mixin disabled() {
+  cursor: default;
+  pointer-events: none;
+}
