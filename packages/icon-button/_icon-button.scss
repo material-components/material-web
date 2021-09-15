@@ -10,19 +10,26 @@
 @use '@material/feature-targeting' as feature;
 @use '@material/mwc-icon/_mwc-icon';
 
-@mixin core-styles() {
-  @include icon-button.without-ripple();
+@mixin static-styles() {
+  @include icon-button.static-styles();
 
   :host {
     display: inline-block;
     outline: none;
-
-    --mdc-ripple-color: currentcolor;
-    -webkit-tap-highlight-color: transparent;
   }
 
   :host([disabled]) {
     pointer-events: none;
+  }
+}
+
+@mixin core-styles() {
+  @include icon-button.without-ripple();
+  @include static-styles();
+
+  :host {
+    --mdc-ripple-color: currentcolor;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .material-icons {

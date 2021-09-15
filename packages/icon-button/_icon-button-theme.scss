@@ -1,0 +1,14 @@
+@use '@material/icon-button/icon-button-theme';
+
+// stylelint-disable selector-class-pattern --
+// Selector '-mdc-*' should only be used in this project.
+
+@mixin theme($theme) {
+  @include icon-button-theme.theme($theme);
+}
+
+@mixin theme-styles($theme) {
+  .mdc-icon-button {
+    @include icon-button-theme.theme-styles($theme);
+  }
+}
