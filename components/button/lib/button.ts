@@ -40,7 +40,9 @@ export abstract class Button extends LitElement {
 
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 
-  @queryAssignedNodes('icon', true) protected iconElement!: HTMLElement[];
+  @queryAssignedNodes('icon', true, '*') protected iconElement!: HTMLElement[];
+
+  @state() protected hasIcon = false;
 
   @state() protected shouldRenderRipple = false;
 
@@ -105,10 +107,8 @@ export abstract class Button extends LitElement {
       'mdc-button--filled': this.variant === 'filled',
       'mdc-button--elevated': this.variant === 'elevated',
       'mdc-button--outlined': this.variant === 'outlined',
-      'mdc-button--icon-leading':
-          !this.trailingIcon && (this.icon || this.iconElement.length),
-      'mdc-button--icon-trailing':
-          this.trailingIcon && (this.icon || this.iconElement.length),
+      'mdc-button--icon-leading': !this.trailingIcon && this.hasIcon,
+      'mdc-button--icon-trailing': this.trailingIcon && this.hasIcon,
     });
   }
 
@@ -119,9 +119,8 @@ export abstract class Button extends LitElement {
       'mdc-button__icon--trailing': this.trailingIcon,
     });
     return html`
-      <span class="mdc-button__icon-slot-container ${containerClasses}"
-        @slotchange="${this.requestUpdate}">
-        <slot name="icon">
+      <span class="mdc-button__icon-slot-container ${containerClasses}">
+        <slot name="icon" @slotchange="${this.handleSlotChange}">
           ${this.icon ? this.renderFontIcon() : ''}
         </slot>
      </span>
@@ -135,6 +134,11 @@ export abstract class Button extends LitElement {
     <mwc-icon class="mdc-button__icon">
       ${this.icon}
     </mwc-icon>`;
+  }
+
+  override update(changedProperties: Map<string, string>) {
+    super.update(changedProperties);
+    this.hasIcon = !!this.iconElement && this.iconElement.length > 0;
   }
 
   override focus() {
@@ -183,5 +187,9 @@ export abstract class Button extends LitElement {
 
   protected handleRippleBlur() {
     this.rippleHandlers.endFocus();
+  }
+
+  protected handleSlotChange() {
+    this.requestUpdate();
   }
 }
