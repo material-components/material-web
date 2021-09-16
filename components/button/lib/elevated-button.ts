@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement, state} from 'lit-element';
+import {customElement} from 'lit-element';
 
 import {Button} from './button';
 import {styles as elevatedStyles} from './elevated-styles.css';
@@ -16,12 +16,19 @@ declare global {
   }
 }
 
+/**
+ * @soyCompatible
+ * @final
+ */
 @customElement('md-elevated-button')
 export class ElevatedButton extends Button {
   static styles = [sharedStyles, elevatedStyles];
 
-  @state()
-  protected get variant() {
-    return 'elevated';
+  /** @soyCompatible */
+  protected getRenderClasses() {
+    return {
+      ...super.getRenderClasses(),
+      'mdc-button--elevated': true,
+    };
   }
 }

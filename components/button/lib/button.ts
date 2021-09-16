@@ -19,8 +19,6 @@ export abstract class Button extends LitElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
-  @state() protected abstract readonly variant: string;
-
   /** @soyPrefixAttribute */
   @ariaProperty
   @property({type: String, attribute: 'aria-haspopup'})
@@ -78,7 +76,7 @@ export abstract class Button extends LitElement {
     return html`
       <button
           id="button"
-          class="mdc-button ${this.getRenderClasses()}"
+          class="mdc-button ${classMap(this.getRenderClasses())}"
           ?disabled="${this.disabled}"
           aria-label="${this.ariaLabel || this.label}"
           aria-haspopup="${ifDefined(this.ariaHasPopup)}"
@@ -102,14 +100,10 @@ export abstract class Button extends LitElement {
 
   /** @soyTemplate classMap */
   protected getRenderClasses() {
-    return classMap({
-      'mdc-button--text': this.variant === 'text',
-      'mdc-button--filled': this.variant === 'filled',
-      'mdc-button--elevated': this.variant === 'elevated',
-      'mdc-button--outlined': this.variant === 'outlined',
+    return {
       'mdc-button--icon-leading': !this.trailingIcon && this.hasIcon,
       'mdc-button--icon-trailing': this.trailingIcon && this.hasIcon,
-    });
+    };
   }
 
   /** @soyTemplate */

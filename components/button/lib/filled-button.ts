@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement, state} from 'lit-element';
+import {customElement} from 'lit-element';
 
 import {Button} from './button';
 import {styles as filledStyles} from './filled-styles.css';
@@ -16,12 +16,19 @@ declare global {
   }
 }
 
+/**
+ * @soyCompatible
+ * @final
+ */
 @customElement('md-filled-button')
 export class FilledButton extends Button {
   static styles = [sharedStyles, filledStyles];
 
-  @state()
-  protected get variant() {
-    return 'filled';
+  /** @soyCompatible */
+  protected getRenderClasses() {
+    return {
+      ...super.getRenderClasses(),
+      'mdc-button--filled': true,
+    };
   }
 }

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement, state} from 'lit-element';
+import {customElement} from 'lit-element';
 
 import {Button} from './button';
 import {styles as sharedStyles} from './shared-styles.css';
@@ -16,12 +16,19 @@ declare global {
   }
 }
 
+/**
+ * @soyCompatible
+ * @final
+ */
 @customElement('md-text-button')
 export class TextButton extends Button {
   static styles = [sharedStyles, textStyles];
 
-  @state()
-  protected get variant() {
-    return 'text';
+  /** @soyCompatible */
+  protected getRenderClasses() {
+    return {
+      ...super.getRenderClasses(),
+      'mdc-button--text': true,
+    };
   }
 }
