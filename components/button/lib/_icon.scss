@@ -12,18 +12,24 @@
   // class, which is loaded separately so the order of CSS definitions is not
   // guaranteed. Therefore, increase specifity to ensure overrides apply.
   .mdc-button__icon-slot-container {
+    display: inline-flex;
+
     ::slotted(*),
     .mdc-button__icon {
       @include icon;
     }
   }
 
-  .mdc-button__icon {
-    .mdc-button__icon--leading & {
+  .mdc-button__icon--leading {
+    ::slotted(*),
+    .mdc-button__icon {
       @include icon-leading;
     }
+  }
 
-    .mdc-button__icon--trailing & {
+  .mdc-button__icon--trailing {
+    ::slotted(*),
+    .mdc-button__icon {
       @include icon-trailing;
     }
   }

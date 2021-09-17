@@ -38,7 +38,8 @@ export abstract class Button extends LitElement {
 
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 
-  @queryAssignedNodes('icon', true, '*') protected iconElement!: HTMLElement[];
+  @queryAssignedNodes('icon', true, '*')
+  protected iconElement!: HTMLElement[]|null;
 
   @state() protected hasIcon = false;
 
