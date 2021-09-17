@@ -225,14 +225,14 @@
 
   @include theme.property(
     padding-left,
-    calc(padding - outline),
+    'calc(padding - outline)',
     $gss: (noflip: true),
     $replace: $replace
   );
 
   @include theme.property(
     padding-right,
-    calc(padding - outline),
+    'calc(padding - outline)',
     $gss: (noflip: true),
     $replace: $replace
   );
@@ -243,9 +243,9 @@
     width: $width,
   );
 
-  @include theme.property(top, calc(-1 * width), $replace: $replace);
+  @include theme.property(top, 'calc(-1 * width)', $replace: $replace);
 
-  @include rtl.reflexive-position(left, calc(-1 * width), $replace: $replace);
+  @include rtl.reflexive-position(left, 'calc(-1 * width)', $replace: $replace);
 
   @include theme.property(border-width, $width);
   border-style: solid;
