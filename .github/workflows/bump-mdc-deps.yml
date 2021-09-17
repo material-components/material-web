@@ -13,7 +13,7 @@ jobs:
     - uses: actions/checkout@v1
     - uses: actions/setup-node@v1
       with:
-          node-version: 10
+          node-version: 14
 
     - name: NPM install
       # Don't run postinstall because we don't need to install sub-packages.
