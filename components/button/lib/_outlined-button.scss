@@ -4,4 +4,19 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/// TODO: variant-specific static styles.
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@mixin static-styles() {
+  .mdc-button__outline {
+    @include outline;
+  }
+}
+
+@mixin outline() {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-style: solid;
+  box-sizing: border-box;
+}
