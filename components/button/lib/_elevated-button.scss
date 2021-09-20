@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+@use './elevation';
+
 @mixin static-styles() {
-  // Intentionally blank for future-proofing.
+  @include elevation.static-styles;
 }

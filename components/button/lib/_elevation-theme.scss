@@ -1,0 +1,102 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use 'sass:map';
+@use 'sass:meta';
+@use '@material/elevation/elevation-theme';
+@use '@material/ripple/ripple-theme';
+@use '@material/theme/state';
+@use '@material/theme/theme';
+@use '@material/tokens/resolvers';
+
+@use './button-theme';
+
+$_selectors: button-theme.$selectors;
+
+@mixin theme-styles($theme, $resolvers) {
+  $elevation-resolver: map.get($resolvers, elevation);
+  @include _elevation(
+    $elevation-resolver,
+    $elevation-map: (
+      default: map.get($theme, container-elevation),
+      disabled: map.get($theme, disabled-container-elevation),
+      focus: map.get($theme, focus-container-elevation),
+      hover: map.get($theme, hover-container-elevation),
+      pressed: map.get($theme, pressed-container-elevation)
+    ),
+    $shadow-color: map.get($theme, container-shadow-color)
+  );
+}
+
+@mixin _elevation($elevation-resolver, $elevation-map, $shadow-color) {
+  @include state.default($_selectors) {
+    @include elevation-theme.with-resolver(
+      $elevation-resolver,
+      $elevation: state.get-default-state($elevation-map),
+      $shadow-color: $shadow-color
+    );
+  }
+
+  @include state.focus($_selectors) {
+    @include elevation-theme.with-resolver(
+      $elevation-resolver,
+      $elevation: state.get-focus-state($elevation-map),
+      $shadow-color: $shadow-color
+    );
+  }
+
+  @include state.hover($_selectors) {
+    @include elevation-theme.with-resolver(
+      $elevation-resolver,
+      $elevation: state.get-hover-state($elevation-map),
+      $shadow-color: $shadow-color
+    );
+  }
+
+  @include state.pressed($_selectors) {
+    @include elevation-theme.with-resolver(
+      $elevation-resolver,
+      $elevation: state.get-pressed-state($elevation-map),
+      $shadow-color: $shadow-color
+    );
+  }
+
+  @include state.disabled($_selectors) {
+    @include elevation-theme.with-resolver(
+      $elevation-resolver,
+      $elevation: state.get-disabled-state($elevation-map),
+      $shadow-color: $shadow-color
+    );
+  }
+}
+
+@function resolve-theme-elevation-keys($theme, $resolver) {
+  $elevation-resolver: map.get($resolver, elevation);
+  $shadow-color: map.get($theme, container-shadow-color);
+  @if $elevation-resolver == null {
+    @return $theme;
+  }
+
+  $elevation-keys: (
+    container-elevation,
+    hover-container-elevation,
+    focus-container-elevation,
+    pressed-container-elevation,
+    disabled-container-elevation
+  );
+
+  @each $key in $elevation-keys {
+    $elevation: map.get($theme, $key);
+    $resolved-value: meta.call(
+      $resolver,
+      $elevation: $elevation,
+      $shadow-color: $shadow-color
+    );
+    // Update the key with the resolved value.
+    $theme: map.set($theme, $key, $resolved-value);
+  }
+  @return $theme;
+}

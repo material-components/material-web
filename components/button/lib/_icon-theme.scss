@@ -1,0 +1,70 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use 'sass:map';
+@use '@material/ripple/ripple-theme';
+@use '@material/theme/state';
+@use '@material/theme/theme';
+@use '@material/typography/typography';
+@use './button-theme';
+
+$_selectors: button-theme.$selectors;
+
+@mixin theme-styles($theme, $resolver) {
+  @include _set-icon-color(
+    (
+      default: map.get($theme, with-icon-icon-color),
+      hover: map.get($theme, with-icon-hover-icon-color),
+      focus: map.get($theme, with-icon-focus-icon-color),
+      pressed: map.get($theme, with-icon-pressed-icon-color),
+      disabled: map.get($theme, with-icon-disabled-icon-color),
+    )
+  );
+
+  @include _set-icon-size(map.get($theme, with-icon-icon-size));
+}
+
+@mixin _set-icon-color($colors) {
+  @include state.default($_selectors) {
+    @include _icon-color(state.get-default-state($colors));
+  }
+
+  @include state.hover($_selectors) {
+    @include _icon-color(state.get-hover-state($colors));
+  }
+
+  @include state.focus($_selectors) {
+    @include _icon-color(state.get-focus-state($colors));
+  }
+
+  @include state.pressed($_selectors) {
+    @include _icon-color(state.get-pressed-state($colors));
+  }
+
+  @include state.disabled($_selectors) {
+    @include _icon-color(state.get-disabled-state($colors));
+  }
+}
+
+@mixin _icon-color($color) {
+  ::slotted(*),
+  .mdc-button__icon {
+    @include theme.property(color, $color);
+  }
+}
+
+@mixin _set-icon-size($size-px) {
+  $size-rem: typography.px-to-rem($size-px);
+  ::slotted(*),
+  .mdc-button__icon {
+    @include theme.property(font-size, $size-rem);
+    @include theme.property(width, $size-rem);
+    @include theme.property(height, $size-rem);
+  }
+}
