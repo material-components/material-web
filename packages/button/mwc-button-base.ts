@@ -14,7 +14,7 @@ import {AriaHasPopup, ariaProperty} from '@material/mwc-base/aria-property';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {eventOptions, html, LitElement, property, query, queryAsync, state, TemplateResult} from 'lit-element';
-import {classMap, ClassInfo} from 'lit-html/directives/class-map.js';
+import {ClassInfo, classMap} from 'lit-html/directives/class-map.js';
 import {ifDefined} from 'lit-html/directives/if-defined.js';
 
 /** @soyCompatible */
