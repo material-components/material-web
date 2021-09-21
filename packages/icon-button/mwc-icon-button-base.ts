@@ -71,7 +71,7 @@ export class IconButtonBase extends LitElement {
   /** @soyTemplate */
   protected override render(): TemplateResult {
     return html`<button
-        class="mdc-icon-button"
+        class="mdc-icon-button mdc-icon-button--display-flex"
         aria-label="${this.ariaLabel || this.icon}"
         aria-haspopup="${ifDefined(this.ariaHasPopup)}"
         ?disabled="${this.disabled}"

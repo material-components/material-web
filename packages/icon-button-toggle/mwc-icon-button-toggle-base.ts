@@ -92,7 +92,8 @@ export class IconButtonToggleBase extends LitElement {
         (this.on ? this.ariaLabelOn : this.ariaLabelOff) :
         this.ariaLabel;
     return html`<button
-          class="mdc-icon-button ${classMap(classes)}"
+          class="mdc-icon-button mdc-icon-button--display-flex ${
+        classMap(classes)}"
           aria-pressed="${ifDefined(ariaPressedValue)}"
           aria-label="${ifDefined(ariaLabelValue)}"
           @click="${this.handleClick}"

@@ -10,6 +10,9 @@
 @use '@material/feature-targeting' as feature;
 @use '@material/mwc-icon/_mwc-icon';
 
+// stylelint-disable selector-class-pattern --
+// Selector '-mdc-*' should only be used in this project.
+
 @mixin static-styles() {
   @include icon-button.static-styles();
 
@@ -20,6 +23,15 @@
 
   :host([disabled]) {
     pointer-events: none;
+  }
+
+  .mdc-icon-button {
+    i,
+    svg,
+    img,
+    ::slotted(*) {
+      display: block;
+    }
   }
 }
 
@@ -61,12 +73,6 @@
     @include mdc-icon-button-size-var-aware(
       var(--mdc-icon-button-size, #{icon-button-theme.$size})
     );
-
-    > i {
-      position: absolute;
-      top: 0;
-      padding-top: inherit;
-    }
 
     i,
     svg,
