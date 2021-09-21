@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-tab-bar",
-  "version": "0.23.0",
+  "version": "0.25.0",
   "description": "Material Design tab bar web component",
   "keywords": [
     "material design",
@@ -16,16 +16,16 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/mwc-base": "^0.23.0",
-    "@material/mwc-tab": "^0.23.0",
-    "@material/mwc-tab-scroller": "^0.23.0",
+    "@material/mwc-base": "^0.25.0",
+    "@material/mwc-tab": "^0.25.0",
+    "@material/mwc-tab-scroller": "^0.25.0",
     "@material/tab": "=13.0.0-canary.e8c598d1e.0",
     "@material/tab-bar": "=13.0.0-canary.e8c598d1e.0",
-    "lit-element": "3.0.0-rc.4",
+    "lit-element": "^3.0.0",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "lit-html": "2.0.0-rc.5"
+    "lit-html": "^2.0.0"
   },
   "scripts": {
     "build:style": "node ../../scripts/sass-to-lit-css/index.js mwc-tab-bar.scss"

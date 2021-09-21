@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-base",
-  "version": "0.23.0",
+  "version": "0.25.0",
   "description": "",
   "main": "base-element.js",
   "module": "base-element.js",
@@ -14,7 +14,7 @@
     "@lit/reactive-element": "1.0.0-rc.4",
     "@material/base": "=13.0.0-canary.e8c598d1e.0",
     "@material/dom": "=13.0.0-canary.e8c598d1e.0",
-    "lit-element": "3.0.0-rc.4",
+    "lit-element": "^3.0.0",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
