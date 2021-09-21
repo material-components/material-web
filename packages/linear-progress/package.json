@@ -19,8 +19,8 @@
     "@material/linear-progress": "=13.0.0-canary.65125b3a6.0",
     "@material/mwc-base": "^0.23.0",
     "@material/theme": "=13.0.0-canary.65125b3a6.0",
-    "lit-element": "3.0.0-rc.4",
-    "lit-html": "2.0.0-rc.5",
+    "lit-element": "^3.0.0",
+    "lit-html": "^2.0.0",
     "tslib": "^2.0.1"
   },
   "scripts": {
