@@ -1,0 +1,37 @@
+/**
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use 'sass:map';
+@use '@material/ripple/ripple';
+@use '@material/ripple/ripple-theme';
+@use '@material/theme/theme';
+@use '@material/theme/theme-color';
+@use '@material/theme/custom-properties';
+
+@mixin static-styles() {
+  :host {
+    @include ripple.static-styles();
+    @include ripple.common();
+    @include ripple.target-common();
+
+    .mdc-ripple-surface {
+      @include ripple.target-common();
+
+      // TODO(b/151931961): Remove setting `will-change` once resolved.
+      will-change: unset;
+    }
+
+    display: flex;
+    overflow: hidden;
+  }
+
+  :host[unbounded] {
+    overflow: visible;
+  }
+}

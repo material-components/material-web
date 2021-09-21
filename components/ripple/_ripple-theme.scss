@@ -1,0 +1,28 @@
+/**
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use 'sass:map';
+@use '@material/ripple/ripple-theme';
+@use '@material/theme/shadow-dom';
+@use '@material/theme/css';
+
+$light-theme: ripple-theme.$light-theme;
+$transparent-theme: (
+  state: #000,
+  opacity: (
+    hover: 0,
+    focus: 0,
+    press: 0,
+  ),
+);
+
+@mixin theme($theme) {
+  @include ripple-theme.theme($theme);
+}
+
+@mixin theme-styles($theme) {
+  @include ripple-theme.theme-styles($theme);
+}

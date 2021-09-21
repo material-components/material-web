@@ -1,0 +1,17 @@
+/**
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use './ripple';
+@use './ripple-theme';
+
+@include ripple.static-styles;
+
+.mdc-ripple-surface {
+  @include ripple-theme.theme-styles(ripple-theme.$light-theme);
+}
