@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- ## Unreleased -->
 
-## [v0.25.0] - 2021-09-20
+## [v0.25.1] - 2021-09-20
 
 ### Changed
 
@@ -17,7 +17,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     explicitly includes the latest Lit 1 versions of lit-html and lit-element
     or deduplicate your versions of Lit 1 with your bundler
 
-## [v0.25.0] - 2021-09-20
+## [v0.25.1] - 2021-09-20
+
+npm error mid publish
+
+## [v0.24.0] - 2021-09-20
 
 null version. accidentally polluted tag.
 
