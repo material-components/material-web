@@ -19,15 +19,15 @@
     "@material/mwc-base": "^0.23.0",
     "@material/mwc-ripple": "^0.23.0",
     "@material/mwc-tab-indicator": "^0.23.0",
-    "@material/tab": "=13.0.0-canary.65125b3a6.0",
+    "@material/tab": "=13.0.0-canary.e8c598d1e.0",
     "lit-element": "3.0.0-rc.4",
     "lit-html": "2.0.0-rc.5",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
     "@material/mwc-icon": "^0.23.0",
-    "@material/ripple": "=13.0.0-canary.65125b3a6.0",
-    "@material/rtl": "=13.0.0-canary.65125b3a6.0"
+    "@material/ripple": "=13.0.0-canary.e8c598d1e.0",
+    "@material/rtl": "=13.0.0-canary.e8c598d1e.0"
   },
   "scripts": {
     "build:style": "node ../../scripts/sass-to-lit-css/index.js mwc-tab.scss"
