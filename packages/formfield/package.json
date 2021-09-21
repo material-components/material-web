@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-formfield",
-  "version": "0.23.0",
+  "version": "0.24.0",
   "description": "Material Design formfield web component",
   "keywords": [
     "material design",
@@ -17,15 +17,15 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/form-field": "=13.0.0-canary.65125b3a6.0",
-    "@material/mwc-base": "^0.23.0",
+    "@material/mwc-base": "^0.24.0",
     "lit-element": "^3.0.0",
     "lit-html": "^2.0.0",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@material/mwc-checkbox": "^0.23.0",
-    "@material/mwc-radio": "^0.23.0",
-    "@material/mwc-switch": "^0.23.0",
+    "@material/mwc-checkbox": "^0.24.0",
+    "@material/mwc-radio": "^0.24.0",
+    "@material/mwc-switch": "^0.24.0",
     "@material/rtl": "=13.0.0-canary.65125b3a6.0",
     "@material/theme": "=13.0.0-canary.65125b3a6.0",
     "@material/typography": "=13.0.0-canary.65125b3a6.0"
