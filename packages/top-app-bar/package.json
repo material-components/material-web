@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-top-app-bar",
-  "version": "0.23.0",
+  "version": "0.25.0",
   "description": "Material Design top app bar web component",
   "keywords": [
     "material design",
@@ -16,7 +16,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/mwc-base": "^0.23.0",
+    "@material/mwc-base": "^0.25.0",
     "@material/top-app-bar": "=13.0.0-canary.65125b3a6.0",
     "lit-element": "^3.0.0",
     "lit-html": "^2.0.0",
