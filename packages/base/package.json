@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-base",
-  "version": "0.25.0",
+  "version": "0.25.1",
   "description": "",
   "main": "base-element.js",
   "module": "base-element.js",
