@@ -4,8 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
 @use './filled-button';
+@use './filled-button-theme';
 
 @include filled-button.static-styles();
 
-/// TODO: variant-specific theme styles.
+.mdc-button--filled {
+  @include filled-button-theme.theme-styles(filled-button-theme.$light-theme);
+}

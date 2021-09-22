@@ -16,7 +16,7 @@
 
 $_selectors: button-theme.$selectors;
 
-@mixin theme-styles($theme, $resolver) {
+@mixin theme-styles($theme, $resolvers) {
   @include _set-icon-color(
     (
       default: map.get($theme, with-icon-icon-color),

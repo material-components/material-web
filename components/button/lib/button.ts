@@ -5,11 +5,11 @@
  */
 
 import '@material/mwc-icon/mwc-icon';
-import '@material/mwc-ripple/mwc-ripple';
+import 'google3/third_party/javascript/material_web_components/m3/ripple/mwc-ripple';
 
 import {AriaHasPopup, ariaProperty} from '@material/mwc-base/aria-property';
-import {Ripple} from '@material/mwc-ripple/mwc-ripple';
-import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
+import {Ripple} from 'google3/third_party/javascript/material_web_components/m3/ripple/mwc-ripple';
+import {RippleHandlers} from 'google3/third_party/javascript/material_web_components/m3/ripple/ripple-handlers';
 import {eventOptions, html, LitElement, property, query, queryAssignedNodes, queryAsync, state, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map.js';
 import {ifDefined} from 'lit-html/directives/if-defined.js';
@@ -36,7 +36,7 @@ export abstract class Button extends LitElement {
 
   @query('#button') buttonElement!: HTMLElement;
 
-  @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
+  @queryAsync('md-ripple') ripple!: Promise<Ripple|null>;
 
   @queryAssignedNodes('icon', true, '*')
   protected iconElement!: HTMLElement[]|null;
@@ -58,8 +58,8 @@ export abstract class Button extends LitElement {
   /** @soyTemplate */
   protected renderRipple(): TemplateResult|string {
     return this.shouldRenderRipple ?
-        html`<mwc-ripple class="mdc-button__ripple" .disabled="${
-            this.disabled}"></mwc-ripple>` :
+        html`<md-ripple class="mdc-button__ripple" .disabled="${
+            this.disabled}"></md-ripple>` :
         '';
   }
 

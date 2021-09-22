@@ -4,4 +4,60 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/// TODO: variant-specific theme + theme styles mixins.
+@use 'sass:map';
+@use '@material/theme/keys';
+@use '@material/tokens/resolvers';
+@use './button-theme';
+@use './elevation-theme';
+@use './icon-theme';
+
+$_custom-property-prefix: 'filled-button';
+$light-theme: map.merge(
+  button-theme.$light-theme,
+  (
+    container-color: #6200ee,
+    container-elevation: 0,
+    container-shadow-color: #000,
+    disabled-container-color: rgba(#000, 0.12),
+    disabled-container-elevation: 0,
+    disabled-label-text-color: rgba(#000, 0.38),
+    focus-container-elevation: 0,
+    focus-label-text-color: #fff,
+    focus-state-layer-color: #fff,
+    focus-state-layer-opacity: 0.24,
+    hover-container-elevation: 0,
+    hover-label-text-color: #fff,
+    hover-state-layer-color: #fff,
+    hover-state-layer-opacity: 0.08,
+    label-text-color: #fff,
+    pressed-container-elevation: 0,
+    pressed-label-text-color: #fff,
+    pressed-state-layer-color: #fff,
+    pressed-state-layer-opacity: 0.24,
+    with-icon-disabled-icon-color: rgba(#000, 0.38),
+    with-icon-focus-icon-color: #fff,
+    with-icon-hover-icon-color: #fff,
+    with-icon-icon-color: #fff,
+    with-icon-pressed-icon-color: #fff,
+  )
+);
+
+@mixin theme($theme, $resolvers: resolvers.$material) {
+  @include theme.validate-theme($light-theme, $theme);
+  $theme: elevation-theme.resolve-theme-elevation-keys(
+    $theme,
+    $resolvers: $resolvers
+  );
+  @include keys.declare-custom-properties($theme, $_custom-property-prefix);
+}
+
+@mixin theme-styles($theme, $resolvers: resolvers.$material) {
+  $theme: keys.create-theme-properties(
+    $theme,
+    $prefix: $_custom-property-prefix
+  );
+
+  @include button-theme.theme-styles($theme, $resolvers: $resolvers);
+  @include icon-theme.theme-styles($theme, $resolvers: $resolvers);
+  @include elevation-theme.theme-styles($theme, $resolvers: $resolvers);
+}

@@ -14,7 +14,17 @@
 @use '@material/theme/theme';
 @use '@material/typography/typography';
 
-$_ripple-target: '.mdc-button__ripple';
+$light-theme: (
+  container-height: 36px,
+  container-shape: 4px,
+  label-text-font: typography.get-font(button),
+  label-text-size: typography.get-size(button),
+  label-text-tracking: typography.get-tracking(button),
+  label-text-transform: uppercase,
+  label-text-weight: typography.get-weight(button),
+  with-icon-icon-size: 18px,
+);
+
 $selectors: (
   // :not(:disabled) is used to support link styled as button
   // as link does not support :enabled style
@@ -122,7 +132,7 @@ $selectors: (
 @mixin _set-shape-radius($radius) {
   @include shape.radius($radius);
 
-  #{$_ripple-target} {
+  .mdc-button__ripple {
     @include shape.radius($radius);
   }
 }
