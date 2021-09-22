@@ -59,12 +59,13 @@ class AccessibleSnackbarLabel extends AsyncDirective {
       // Create the label element once, the first time we open.
       const wrapperEl = document.createElement('div');
       const labelTemplate =
-          html`<div class="mdc-snackbar__label" role="status" aria-live="polite">${
-              labelText}</div>`;
+          html`<div class="mdc-snackbar__label" role="status" aria-live="polite"></div>`;
 
       render(labelTemplate, wrapperEl);
 
       const labelEl = wrapperEl.firstElementChild! as HTMLElement;
+      labelEl.textContent = labelText;
+
       // endNode can't be a Document, so it must have a parent.
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       part.endNode?.parentNode!.insertBefore(labelEl, part.endNode);
@@ -116,9 +117,18 @@ class AccessibleSnackbarLabel extends AsyncDirective {
     //       - IE 11
     //   * ChromeVox 53
     labelEl.textContent = '';
-    const spaceTemplate =
-        html`<span style="display: inline-block; width: 0; height: 1px;">&nbsp;</span>`;
-    render(spaceTemplate, labelEl);
+
+    // Updating an element using both Lit's `render` as well as setting its
+    // `textContent` can cause later renders to throw because setting
+    // `textContent` will remove Lit's part marker comments. This directive
+    // needs to set `labelEl`'s `textContent` to trigger the expected screen
+    // reader behavior, so it needs to avoid `render` for `labelEl` altogether.
+    const spaceSpan = document.createElement('span');
+    spaceSpan.style.display = 'inline-block';
+    spaceSpan.style.width = '0';
+    spaceSpan.style.height = '1px';
+    spaceSpan.textContent = '\u00A0';  // U+00A0 is &nbsp;
+    labelEl.appendChild(spaceSpan);
 
     // Prevent visual jank by temporarily displaying the label text in the
     // ::before pseudo-element. CSS generated content is normally announced by
