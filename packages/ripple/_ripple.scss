@@ -28,6 +28,11 @@
     }
 
     display: flex;
+    overflow: hidden;
+  }
+
+  :host[unbounded] {
+    overflow: visible;
   }
 }
 
