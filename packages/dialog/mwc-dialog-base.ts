@@ -19,7 +19,7 @@ import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
 import {DocumentWithBlockingElements} from 'blocking-elements';
 import {html, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
+import {classMap} from 'lit/directives/class-map.js';
 
 export {MDCDialogCloseEventDetail} from '@material/dialog/types';
 

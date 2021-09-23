@@ -12,7 +12,7 @@ import '@material/mwc-ripple/mwc-ripple';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {eventOptions, html, LitElement, property, queryAsync, state, TemplateResult} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
+import {classMap} from 'lit/directives/class-map.js';
 
 /**
  * Fab Base class logic and template definition

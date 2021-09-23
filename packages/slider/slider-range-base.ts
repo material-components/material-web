@@ -16,9 +16,9 @@ import {MDCSliderAdapter} from '@material/slider/adapter';
 import {Thumb, TickMark} from '@material/slider/types';
 import {html, property, PropertyValues, query, queryAsync, state} from 'lit-element';
 import {nothing, TemplateResult} from 'lit-html';
-import {classMap} from 'lit-html/directives/class-map.js';
-import {ifDefined} from 'lit-html/directives/if-defined.js';
-import {styleMap} from 'lit-html/directives/style-map.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
+import {styleMap} from 'lit/directives/style-map.js';
 
 import {SliderBase} from './slider-base';
 

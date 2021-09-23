@@ -11,7 +11,7 @@ import {BaseElement} from '@material/mwc-base/base-element';
 import {MDCNotchedOutlineAdapter} from '@material/notched-outline/adapter';
 import {MDCNotchedOutlineFoundation} from '@material/notched-outline/foundation';
 import {html, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
+import {classMap} from 'lit/directives/class-map.js';
 
 export class NotchedOutlineBase extends BaseElement {
   @query('.mdc-notched-outline') protected mdcRoot!: HTMLElement;

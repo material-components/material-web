@@ -18,7 +18,7 @@ import {ListItemBase} from '@material/mwc-list/mwc-list-item-base';
 import {RadioListItem} from '@material/mwc-list/mwc-radio-list-item';
 import {isIndexSet} from '@material/mwc-menu';
 import {html, TemplateResult} from 'lit-html';
-import {ifDefined} from 'lit-html/directives/if-defined.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 import {fixture, TestFixture} from '../../../test/src/util/helpers';
 

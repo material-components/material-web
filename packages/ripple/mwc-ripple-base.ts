@@ -13,8 +13,8 @@ import {RippleInterface} from '@material/mwc-base/utils';
 import {MDCRippleAdapter} from '@material/ripple/adapter';
 import MDCRippleFoundation from '@material/ripple/foundation';
 import {html, property, PropertyValues, query, state, TemplateResult} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
-import {styleMap} from 'lit-html/directives/style-map.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {styleMap} from 'lit/directives/style-map.js';
 
 /** @soyCompatible */
 export class RippleBase extends BaseElement implements RippleInterface {

@@ -11,7 +11,7 @@
 import {ariaProperty} from '@material/mwc-base/aria-property';
 import {customElement, LitElement, property} from 'lit-element';
 import {html} from 'lit-html';
-import {ifDefined} from 'lit-html/directives/if-defined';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 import {fixture, TestFixture} from '../../../test/src/util/helpers';
 
