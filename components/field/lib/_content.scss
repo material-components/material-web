@@ -1,0 +1,73 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use 'sass:math';
+@use '@material/animation/animation';
+
+@mixin static-styles() {
+  .mdc-field__start,
+  .mdc-field__middle,
+  .mdc-field__end {
+    @include section;
+  }
+
+  .mdc-field__middle {
+    @include middle;
+  }
+
+  .mdc-field__content {
+    @include content;
+
+    .mdc-field--no-label &,
+    .mdc-field--focus &,
+    .mdc-field--populated & {
+      @include content-visible;
+    }
+  }
+}
+
+@mixin section() {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 100%;
+  // Relative position for absolutely positioned labels (to avoid interfering
+  // with baseline alignment).
+  position: relative;
+}
+
+@mixin middle() {
+  // The container of the field aligns sections by "center". Only the middle
+  // section opts in to baseline alignment.
+  //
+  // Labels are absolutely positioned, which leaves only the content as the
+  // evaluated baseline for the field.
+  //
+  // See https://www.w3.org/TR/css-flexbox-1/#baseline-participation
+  align-self: baseline;
+}
+
+// Duration of the label animation.
+$_label-duration: 150ms;
+// Duration of the content's visibility animation.
+$_visible-duration: math.round(math.div($_label-duration * 5, 9));
+// Short delay when entering (focusing/populating) so that the label may move
+// out of the way before the content starts to appear.
+$_enter-delay: $_label-duration - $_visible-duration;
+
+@mixin content() {
+  display: flex;
+  opacity: 0;
+  transition: animation.standard(opacity, $_visible-duration);
+}
+
+@mixin content-visible() {
+  opacity: 1;
+  transition-delay: $_enter-delay;
+}

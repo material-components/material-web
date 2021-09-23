@@ -1,0 +1,50 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use 'sass:map';
+@use '@material/theme/theme';
+
+$light-theme: (
+  label-text-line-height: 24px,
+  label-text-size: 16px,
+  floating-label-text-line-height: 16px,
+  floating-label-text-size: 12px,
+);
+
+@mixin theme-styles($theme) {
+  @include _label-floating-text-font(
+    (
+      line-height: map.get($theme, floating-label-text-line-height),
+      size: map.get($theme, floating-label-text-size),
+    )
+  );
+  @include _label-resting-text-font(
+    (
+      line-height: map.get($theme, label-text-line-height),
+      size: map.get($theme, label-text-size),
+    )
+  );
+}
+
+@mixin _label-floating-text-font($font) {
+  .mdc-field__label--floating {
+    @include _set-label-text-font($font);
+  }
+}
+
+@mixin _label-resting-text-font($font) {
+  .mdc-field__label--resting {
+    @include _set-label-text-font($font);
+  }
+}
+
+@mixin _set-label-text-font($font) {
+  @include theme.property(font-size, map.get($font, size));
+  @include theme.property(line-height, map.get($font, line-height));
+}

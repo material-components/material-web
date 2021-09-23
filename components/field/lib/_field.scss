@@ -1,0 +1,52 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@mixin static-styles() {
+  .mdc-field {
+    @include root;
+  }
+
+  .mdc-field__container {
+    @include container;
+  }
+
+  .mdc-field__padding {
+    @include padding;
+  }
+}
+
+// TODO(b/177368101): add link to diagram explaining difference/purpose between
+// root (container + helper text) and container.
+@mixin root() {
+  display: inline-flex;
+  // Allow the use of block/inline reflexive RTL properties without impacting
+  // structure when languages change.
+  writing-mode: horizontal-tb;
+}
+
+@mixin container() {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  position: relative;
+}
+
+@mixin padding() {
+  // The padding element for the edges is needed to support the outlined
+  // variant's shape.
+  // As the shape increases beyond the size of the specified padding and
+  // the label notch, the size of the padding element must increase to
+  // compensate (even if the desired padding size is less than the shape size).
+  // This prevents the outline border from clipping the label.
+  // A separate ::before pseudo element child is used to achieve this by
+  // growing in width and causing the overall padding element to expand if
+  // needed.
+  box-sizing: border-box;
+  display: flex;
+}

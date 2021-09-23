@@ -1,0 +1,218 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use 'sass:map';
+@use '@material/animation/animation';
+@use '@material/theme/gss';
+
+$_animation-duration: 150ms;
+
+@mixin static-styles() {
+  .mdc-field--outlined {
+    .mdc-field__start::before,
+    .mdc-field__end::after {
+      @include start-and-end-shape-padding;
+    }
+  }
+
+  .mdc-field__outline {
+    @include outline;
+  }
+
+  .mdc-field__outline-start,
+  .mdc-field__outline-panel-inactive,
+  .mdc-field__outline-panel-active,
+  .mdc-field__outline-end {
+    @include outline-border;
+  }
+
+  .mdc-field__outline-start,
+  .mdc-field__outline-end {
+    @include outline-edges;
+
+    .mdc-field--focus & {
+      @include outline-edges-focus;
+    }
+  }
+
+  .mdc-field__outline-start {
+    @include outline-start;
+  }
+
+  .mdc-field__outline-end {
+    @include outline-end;
+  }
+
+  .mdc-field__outline-notch {
+    @include outline-notch;
+  }
+
+  .mdc-field__outline-panel-inactive,
+  .mdc-field__outline-panel-active {
+    @include outline-panel;
+
+    .mdc-field--populated &,
+    .mdc-field--focus & {
+      @include outline-panel-open;
+    }
+  }
+
+  .mdc-field__outline-panel-active {
+    @include outline-panel-active;
+
+    .mdc-field--focus & {
+      @include outline-panel-active-focus;
+    }
+  }
+}
+
+@mixin start-and-end-shape-padding() {
+  // Add a child element that will grow to compensate for the outline's shape.
+  // This is needed to prevent the outline border from clipping with the label
+  // and is mirrored in the container padding to align the content and resting
+  // label with the adjusted floating label.
+  box-sizing: border-box;
+  content: '';
+  display: flex;
+}
+
+@mixin outline() {
+  display: flex;
+  // Allow events to target elements underneath the outline, such as icons.
+  pointer-events: none;
+  height: 100%;
+  position: absolute;
+  transition: animation.standard(border-color, $_animation-duration);
+  width: 100%;
+}
+
+@mixin outline-border() {
+  // ::before is inactive border, ::after is active border. Borders are
+  // absolutely positioned within their elements.
+  &::before,
+  &::after {
+    border: inherit;
+    bottom: 0;
+    content: '';
+    @include gss.annotate($noflip: true);
+    left: 0;
+    position: absolute;
+    @include gss.annotate($noflip: true);
+    right: 0;
+    top: 0;
+  }
+}
+
+@mixin outline-edges() {
+  border: inherit;
+  border-radius: inherit;
+  box-sizing: border-box;
+  position: relative;
+
+  &::before,
+  &::after {
+    border-bottom-style: solid;
+    border-top-style: solid;
+  }
+
+  &::after {
+    opacity: 0;
+    transition: animation.standard(opacity, $_animation-duration);
+  }
+}
+
+@mixin outline-edges-focus() {
+  &::after {
+    opacity: 1;
+  }
+}
+
+@mixin outline-start() {
+  &::before,
+  &::after {
+    border-inline-start-style: solid;
+    border-inline-end-style: none;
+    border-start-start-radius: inherit;
+    border-start-end-radius: 0;
+    border-end-start-radius: inherit;
+    border-end-end-radius: 0;
+  }
+}
+
+@mixin outline-end() {
+  flex-grow: 1;
+
+  &::before,
+  &::after {
+    border-inline-start-style: none;
+    border-inline-end-style: solid;
+    border-start-start-radius: 0;
+    border-start-end-radius: inherit;
+    border-end-start-radius: 0;
+    border-end-end-radius: inherit;
+  }
+}
+
+@mixin outline-notch() {
+  align-items: flex-start;
+  border: inherit;
+  display: flex;
+  position: relative;
+}
+
+@mixin outline-panel() {
+  border: inherit;
+  border-bottom-style: solid;
+  bottom: 0;
+  @include gss.annotate($noflip: true);
+  left: 0;
+  position: absolute;
+  @include gss.annotate($noflip: true);
+  right: 0;
+  top: 0;
+
+  &::before,
+  &::after {
+    border-top-style: solid;
+    border-bottom: none;
+    bottom: auto;
+    transform: scaleX(1);
+    transition: animation.standard(transform, $_animation-duration);
+  }
+
+  &::before {
+    @include gss.annotate($noflip: true);
+    right: 50%;
+    @include gss.annotate($noflip: true);
+    transform-origin: top left;
+  }
+
+  &::after {
+    @include gss.annotate($noflip: true);
+    left: 50%;
+    @include gss.annotate($noflip: true);
+    transform-origin: top right;
+  }
+}
+
+@mixin outline-panel-open() {
+  &::before,
+  &::after {
+    transform: scaleX(0);
+  }
+}
+
+@mixin outline-panel-active() {
+  opacity: 0;
+  transition: animation.standard(opacity, $_animation-duration);
+}
+
+@mixin outline-panel-active-focus() {
+  opacity: 1;
+}

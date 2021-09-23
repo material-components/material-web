@@ -1,0 +1,117 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use 'sass:map';
+@use '@material/animation/animation';
+@use '@material/theme/state';
+@use './field-theme';
+
+$_animation-duration: 150ms;
+
+@mixin static-styles() {
+  .mdc-field--filled {
+    .mdc-field__container {
+      @include container;
+    }
+
+    @include state.hover(field-theme.$selectors) {
+      .mdc-field__container {
+        @include container-hover;
+      }
+    }
+
+    .mdc-field__label--floating {
+      @include label-floating;
+    }
+  }
+
+  .mdc-field__stroke {
+    @include stroke;
+
+    .mdc-field--focus & {
+      @include stroke-focus;
+    }
+  }
+}
+
+@mixin container() {
+  // Needed for negative z-index below to place background and state layer
+  // behind content.
+  z-index: 0;
+
+  // ::before is used for background color so that opacity may be changed
+  // without affecting content
+  &::before,
+  // ::after is used for the state layer color and opacity
+  &::after {
+    border-radius: inherit;
+    content: '';
+    display: flex;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+  }
+
+  &::after {
+    visibility: hidden;
+  }
+}
+
+@mixin container-hover() {
+  &::after {
+    visibility: visible;
+  }
+}
+
+@mixin label-floating() {
+  position: absolute;
+  top: 0;
+}
+
+@mixin stroke() {
+  // Prevent click events on the stroke element since it has no width and
+  // causes bugs when handled by the foundation for updating transform-origin.
+  bottom: 0;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+
+  &::before,
+  &::after {
+    border-bottom-style: solid;
+    bottom: 0;
+    content: '';
+    position: absolute;
+    width: 100%;
+  }
+
+  // focused stroke
+  &::after {
+    opacity: 0;
+    transform: scaleX(0);
+    // The foundation needs to update the transform-origin style attribute in
+    // response to click events. Psuedo elements cannot have their style
+    // updated, but their transform-origin can be inherited.
+    transform-origin: inherit;
+    // Add two transitions: opacity and a delayed transform. With a non-delayed
+    // transform transition on the focus selector without an opacity transition,
+    // this will result in the stroke scaling on enter and fading on exit.
+    transition: animation.standard(opacity, $_animation-duration),
+      transform 0s ease $_animation-duration;
+  }
+}
+
+@mixin stroke-focus() {
+  &::after {
+    opacity: 1;
+    transform: scaleX(1);
+    transition: animation.standard(transform, $_animation-duration);
+  }
+}

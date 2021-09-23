@@ -1,0 +1,286 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use 'sass:color';
+@use 'sass:map';
+@use '@material/theme/color-palette';
+@use '@material/shape/shape';
+@use '@material/theme/keys';
+@use '@material/theme/state';
+@use '@material/theme/theme-color';
+@use '@material/theme/theme';
+@use './content-theme';
+@use './field-theme';
+@use './label-theme';
+
+$_selectors: field-theme.$selectors;
+
+$_error-state-content: color.scale(
+  theme-color.prop-value(error),
+  $blackness: 25%
+);
+
+$_base-light-theme: map.merge(
+  field-theme.$light-theme,
+  content-theme.$light-theme
+);
+$_base-light-theme: map.merge($_base-light-theme, label-theme.$light-theme);
+
+$light-theme: map.merge(
+  $_base-light-theme,
+  (
+    container-color: color-palette.$grey-100,
+    container-padding-vertical: 8px,
+    disabled-container-color: color-palette.$grey-400,
+    disabled-container-opacity: 0.04,
+    disabled-stroke-color: color-palette.$grey-700,
+    disabled-stroke-opacity: 0.38,
+    error-hover-stroke-color: $_error-state-content,
+    error-stroke-color: error,
+    focus-stroke-color: primary,
+    focus-stroke-width: 2px,
+    hover-state-layer-color: color-palette.$grey-800,
+    hover-state-layer-opacity: 0.08,
+    hover-stroke-color: color-palette.$grey-900,
+    shape: small,
+    stroke-color: color-palette.$grey-700,
+    stroke-width: 1px,
+  )
+);
+
+@mixin theme($theme) {
+  @include theme.validate-theme($light-theme, $theme);
+  @include keys.declare-custom-properties($theme, filled-field);
+}
+
+@mixin theme-styles($theme) {
+  @include theme.validate-theme($light-theme, $theme);
+
+  $theme: keys.create-theme-properties($theme, filled-field);
+
+  @include field-theme.theme-styles($theme);
+  @include content-theme.theme-styles($theme);
+  @include label-theme.theme-styles($theme);
+
+  @include _container-color(
+    (
+      default: map.get($theme, container-color),
+      disabled: map.get($theme, disabled-container-color),
+      hover: map.get($theme, hover-state-layer-color),
+    )
+  );
+  @include _container-opacity(
+    (
+      disabled: map.get($theme, disabled-container-opacity),
+      hover: map.get($theme, hover-state-layer-opacity),
+    )
+  );
+  @include _container-padding-horizontal(
+    map.get($theme, container-padding-horizontal)
+  );
+  @include _container-padding-vertical(
+    map.get($theme, container-padding-vertical)
+  );
+  @include _floating-label-text-line-height(
+    map.get($theme, floating-label-text-line-height)
+  );
+  @include _shape(map.get($theme, shape));
+  @include _stroke-color(
+    (
+      default: map.get($theme, stroke-color),
+      disabled: map.get($theme, disabled-stroke-color),
+      focus: map.get($theme, focus-stroke-color),
+      hover: map.get($theme, hover-stroke-color),
+    )
+  );
+  @include _stroke-error-color(
+    (
+      default: map.get($theme, error-stroke-color),
+      focus: map.get($theme, error-stroke-color),
+      hover: map.get($theme, error-hover-stroke-color),
+    )
+  );
+  @include _stroke-opacity(
+    (
+      disabled: map.get($theme, disabled-stroke-opacity),
+    )
+  );
+  @include _stroke-width(
+    (
+      default: map.get($theme, stroke-width),
+      focus: map.get($theme, focus-stroke-width),
+    )
+  );
+}
+
+@mixin _container-color($colors) {
+  @include state.enabled($_selectors) {
+    @include _set-container-color(state.get-default-state($colors));
+  }
+
+  // Hover is on a separate element and does not need a hover selector
+  @include _set-container-hover-color(state.get-hover-state($colors));
+
+  @include state.disabled($_selectors) {
+    @include _set-container-color(state.get-disabled-state($colors));
+  }
+}
+
+@mixin _set-container-color($color) {
+  .mdc-field__container {
+    &::before {
+      @include theme.property(background, $color);
+    }
+  }
+}
+
+@mixin _set-container-hover-color($color) {
+  .mdc-field__container {
+    &::after {
+      @include theme.property(background, $color);
+    }
+  }
+}
+
+@mixin _container-opacity($opacities) {
+  @include state.enabled($_selectors) {
+    @include _set-container-opacity(state.get-default-state($opacities));
+  }
+
+  // Hover is on a separate element and does not need a hover selector
+  @include _set-container-hover-opacity(state.get-hover-state($opacities));
+
+  @include state.disabled($_selectors) {
+    @include _set-container-opacity(state.get-disabled-state($opacities));
+  }
+}
+
+@mixin _set-container-opacity($opacity) {
+  .mdc-field__container {
+    &::before {
+      @include theme.property(opacity, $opacity);
+    }
+  }
+}
+
+@mixin _set-container-hover-opacity($opacity) {
+  .mdc-field__container {
+    &::after {
+      @include theme.property(opacity, $opacity);
+    }
+  }
+}
+
+@mixin _container-padding-horizontal($padding) {
+  .mdc-field__start {
+    @include theme.property(padding-inline-start, $padding);
+  }
+
+  .mdc-field__end {
+    @include theme.property(padding-inline-end, $padding);
+  }
+}
+
+@mixin _container-padding-vertical($padding) {
+  .mdc-field__container {
+    @include theme.property(padding-top, $padding);
+    @include theme.property(padding-bottom, $padding);
+  }
+}
+
+@mixin _floating-label-text-line-height($line-height) {
+  &:not(.mdc-field--no-label) {
+    .mdc-field__middle {
+      @include theme.property(padding-top, $line-height);
+    }
+  }
+}
+
+@mixin _shape($shape) {
+  .mdc-field__container {
+    // TODO(b/177368168): support percentages relative to density
+    @include shape.radius(
+      shape.mask-radius($shape, 1 1 0 0),
+      $rtl-reflexive: true,
+      $component-height: 56px
+    );
+  }
+}
+
+@mixin _stroke-color($colors) {
+  @include state.independent-elements(focus) {
+    @include state.enabled($_selectors) {
+      @include _set-stroke-color(state.get-default-state($colors));
+    }
+
+    // Focus is on a separate element and does not need a focus selector
+    @include _set-stroke-focus-color(state.get-focus-state($colors));
+
+    @include state.hover($_selectors) {
+      @include _set-stroke-color(state.get-hover-state($colors));
+    }
+
+    @include state.disabled($_selectors) {
+      @include _set-stroke-color(state.get-disabled-state($colors));
+    }
+  }
+}
+
+@mixin _set-stroke-color($color) {
+  .mdc-field__stroke::before {
+    @include theme.property(border-bottom-color, $color);
+  }
+}
+
+@mixin _set-stroke-focus-color($color) {
+  .mdc-field__stroke::after {
+    @include theme.property(border-bottom-color, $color);
+  }
+}
+
+@mixin _stroke-error-color($colors) {
+  @include state.error($_selectors) {
+    @include _stroke-color($colors);
+  }
+}
+
+@mixin _stroke-opacity($opacities) {
+  @include state.enabled($_selectors) {
+    @include _set-stroke-opacity(state.get-default-state($opacities));
+  }
+
+  @include state.disabled($_selectors) {
+    @include _set-stroke-opacity(state.get-disabled-state($opacities));
+  }
+}
+
+@mixin _set-stroke-opacity($opacity) {
+  .mdc-field__stroke::before {
+    @include theme.property(opacity, $opacity);
+  }
+}
+
+@mixin _stroke-width($widths) {
+  .mdc-field__stroke {
+    // Default/focus are on different elements and do not need state selectors
+    &::before {
+      @include theme.property(
+        border-bottom-width,
+        state.get-default-state($widths)
+      );
+    }
+
+    &::after {
+      @include theme.property(
+        border-bottom-width,
+        state.get-focus-state($widths)
+      );
+    }
+  }
+}

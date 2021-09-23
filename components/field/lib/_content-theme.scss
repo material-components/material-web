@@ -1,0 +1,70 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use 'sass:map';
+@use '@material/theme/color-palette';
+@use '@material/theme/state';
+@use '@material/theme/theme';
+@use './field-theme';
+
+$_selectors: field-theme.$selectors;
+
+$light-theme: (
+  content-color: color-palette.$grey-800,
+  disabled-content-color: color-palette.$grey-800,
+  disabled-content-opacity: 0.38,
+);
+
+@mixin theme-styles($theme) {
+  @include _content-color(
+    (
+      default: map.get($theme, content-color),
+      disabled: map.get($theme, disabled-content-color),
+    )
+  );
+  @include _content-opacity(
+    (
+      disabled: map.get($theme, disabled-content-opacity),
+    )
+  );
+}
+
+@mixin _content-color($colors) {
+  @include state.enabled($_selectors) {
+    @include _set-content-color(state.get-default-state($colors));
+  }
+
+  @include state.disabled($_selectors) {
+    @include _set-content-color(state.get-disabled-state($colors));
+  }
+}
+
+@mixin _set-content-color($color) {
+  // Content elements provided to the field (such as <input>) may use
+  // `currentColor` to inherit this property.
+  .mdc-field__content {
+    @include theme.property(color, $color);
+  }
+}
+
+@mixin _content-opacity($opacities) {
+  @include state.enabled($_selectors) {
+    @include _set-content-opacity(state.get-default-state($opacities));
+  }
+
+  @include state.disabled($_selectors) {
+    @include _set-content-opacity(state.get-disabled-state($opacities));
+  }
+}
+
+@mixin _set-content-opacity($opacity) {
+  .mdc-field__content {
+    @include theme.property(opacity, $opacity);
+  }
+}

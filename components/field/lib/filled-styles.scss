@@ -1,0 +1,17 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use './filled-field-theme';
+@use './filled-field';
+
+@include filled-field.static-styles;
+
+.mdc-field--filled {
+  @include filled-field-theme.theme-styles(filled-field-theme.$light-theme);
+}

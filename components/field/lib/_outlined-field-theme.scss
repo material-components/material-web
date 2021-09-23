@@ -1,0 +1,260 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use 'sass:color';
+@use 'sass:map';
+@use '@material/shape/shape';
+@use '@material/theme/color-palette';
+@use '@material/theme/custom-properties';
+@use '@material/theme/keys';
+@use '@material/theme/state';
+@use '@material/theme/theme-color';
+@use '@material/theme/theme';
+@use './content-theme';
+@use './field-theme';
+@use './label-theme';
+
+$_selectors: field-theme.$selectors;
+
+$_error-state-content: color.scale(
+  theme-color.prop-value(error),
+  $blackness: 25%
+);
+
+$_base-light-theme: map.merge(
+  field-theme.$light-theme,
+  content-theme.$light-theme
+);
+$_base-light-theme: map.merge($_base-light-theme, label-theme.$light-theme);
+
+$light-theme: map.merge(
+  $_base-light-theme,
+  (
+    disabled-outline-color: color-palette.$grey-800,
+    disabled-outline-opacity: 0.12,
+    error-hover-outline-color: $_error-state-content,
+    error-outline-color: error,
+    focus-outline-color: primary,
+    focus-outline-width: 2px,
+    hover-outline-color: color-palette.$grey-900,
+    outline-color: color-palette.$grey-600,
+    outline-label-padding: 4px,
+    outline-width: 1px,
+    shape: small,
+  )
+);
+
+@mixin theme($theme) {
+  @include theme.validate-theme($light-theme, $theme);
+  @include keys.declare-custom-properties($theme, outlined-field);
+}
+
+@mixin theme-styles($theme) {
+  @include theme.validate-theme($light-theme, $theme);
+
+  $theme: keys.create-theme-properties($theme, outlined-field);
+
+  @include field-theme.theme-styles($theme);
+  @include content-theme.theme-styles($theme);
+  @include label-theme.theme-styles($theme);
+
+  @include _container-padding-horizontal(
+    map.get($theme, container-padding-horizontal)
+  );
+  @include _outline-color(
+    (
+      default: map.get($theme, outline-color),
+      disabled: map.get($theme, disabled-outline-color),
+      focus: map.get($theme, focus-outline-color),
+      hover: map.get($theme, hover-outline-color),
+    )
+  );
+  @include _outline-error-color(
+    (
+      default: map.get($theme, error-outline-color),
+      hover: map.get($theme, error-hover-outline-color),
+    )
+  );
+  @include _outline-label-padding(map.get($theme, outline-label-padding));
+  @include _outline-opacity(
+    (
+      disabled: map.get($theme, disabled-outline-opacity),
+    )
+  );
+  @include _outline-notch-max-width(
+    map.get($theme, container-padding-horizontal)
+  );
+  @include _outline-width(
+    (
+      default: map.get($theme, outline-width),
+      focus: map.get($theme, focus-outline-width),
+    )
+  );
+  @include _shape(map.get($theme, shape));
+}
+
+@mixin _container-padding-horizontal($padding) {
+  .mdc-field__outline-start,
+  .mdc-field__start::before,
+  .mdc-field__end::after {
+    // Outlined variant start section uses min-width instead of padding since it
+    // needs to add start/end padding to add extra space as needed for shape and
+    // label padding.
+    @include theme.property(min-width, $padding);
+  }
+}
+
+@mixin _outline-label-padding($padding) {
+  $replace: (
+    value: $padding,
+  );
+
+  .mdc-field__outline-start,
+  .mdc-field__start::before {
+    @include theme.property(padding-inline-end, $padding);
+  }
+
+  .mdc-field__outline-start::before,
+  .mdc-field__outline-start::after {
+    @include theme.property(margin-inline-end, $padding);
+  }
+
+  .mdc-field__outline-notch {
+    @include theme.property(padding, 0 value, $replace: $replace);
+    @include theme.property(
+      margin-inline-start,
+      'calc(-1 * value)',
+      $replace: $replace
+    );
+    @include theme.property(margin-inline-end, $padding);
+  }
+
+  .mdc-field__outline-end {
+    @include theme.property(
+      margin-inline-start,
+      'calc(-1 * value)',
+      $replace: $replace
+    );
+  }
+}
+
+@mixin _outline-notch-max-width($container-padding-horizontal) {
+  .mdc-field__outline-notch {
+    @include theme.property(
+      max-width,
+      'calc(100% - 2 * value)',
+      $replace: (value: $container-padding-horizontal)
+    );
+  }
+}
+
+@mixin _outline-color($colors) {
+  @include state.enabled($_selectors) {
+    @include _set-outline-color(state.get-default-state($colors));
+  }
+
+  @include state.focus($_selectors) {
+    @include _set-outline-color(state.get-focus-state($colors));
+  }
+
+  @include state.hover($_selectors) {
+    @include _set-outline-color(state.get-hover-state($colors));
+  }
+
+  @include state.disabled($_selectors) {
+    @include _set-outline-color(state.get-disabled-state($colors));
+  }
+}
+
+@mixin _set-outline-color($color) {
+  .mdc-field__outline {
+    @include theme.property(border-color, $color);
+  }
+}
+
+@mixin _outline-error-color($colors) {
+  @include state.error($_selectors) {
+    @include _outline-color($colors);
+  }
+}
+
+@mixin _outline-opacity($opacities) {
+  @include state.enabled($_selectors) {
+    @include _set-outline-inactive-opacity(state.get-default-state($opacities));
+  }
+
+  @include state.disabled($_selectors) {
+    @include _set-outline-inactive-opacity(
+      state.get-disabled-state($opacities)
+    );
+  }
+}
+
+@mixin _set-outline-inactive-opacity($opacity) {
+  .mdc-field__outline-start,
+  .mdc-field__outline-end,
+  .mdc-field__outline-panel-inactive {
+    @include theme.property(opacity, $opacity);
+  }
+}
+
+@mixin _outline-width($widths) {
+  @include _set-outline-width(state.get-default-state($widths));
+  @include _set-outline-focus-width(state.get-focus-state($widths));
+}
+
+@mixin _set-outline-width($width) {
+  .mdc-field__outline-start::before,
+  .mdc-field__outline-end::before,
+  .mdc-field__outline-panel-inactive,
+  .mdc-field__outline-panel-inactive::before,
+  .mdc-field__outline-panel-inactive::after {
+    @include theme.property(border-width, $width);
+  }
+
+  .mdc-field__label--floating {
+    // Center the label within the outline stroke
+    @include theme.property(
+      transform,
+      'translateY(calc(-50% + width / 2))',
+      $replace: (width: $width)
+    );
+  }
+}
+
+@mixin _set-outline-focus-width($width) {
+  .mdc-field__outline-start::after,
+  .mdc-field__outline-end::after,
+  .mdc-field__outline-panel-active,
+  .mdc-field__outline-panel-active::before,
+  .mdc-field__outline-panel-active::after {
+    @include theme.property(border-width, $width);
+  }
+}
+
+@mixin _shape($shape) {
+  // TODO(b/183660124): support percentages relative to density
+  $component-height: 56px;
+  .mdc-field__outline {
+    @include shape.radius(
+      $shape,
+      $rtl-reflexive: true,
+      $component-height: $component-height
+    );
+  }
+
+  .mdc-field__outline-start,
+  .mdc-field__start::before,
+  .mdc-field__end::after {
+    @include theme.property(
+      padding-inline-start,
+      shape.resolve-radius($shape, $component-height: $component-height)
+    );
+  }
+}

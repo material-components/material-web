@@ -1,0 +1,13 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use './content';
+@use './field';
+@use './label';
+
+@include field.static-styles;
+@include content.static-styles;
+@include label.static-styles;

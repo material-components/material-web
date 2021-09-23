@@ -1,0 +1,17 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use './outlined-field-theme';
+@use './outlined-field';
+
+@include outlined-field.static-styles;
+
+.mdc-field--outlined {
+  @include outlined-field-theme.theme-styles(outlined-field-theme.$light-theme);
+}
