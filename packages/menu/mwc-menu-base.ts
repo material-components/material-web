@@ -235,6 +235,20 @@ export abstract class MenuBase extends BaseElement {
 
         element.removeAttribute(attr);
       },
+      getAttributeFromElementAtIndex: (index, attr) => {
+        const listElement = this.listElement;
+        if (!listElement) {
+          return null;
+        }
+
+        const element = listElement.items[index];
+
+        if (!element) {
+          return null;
+        }
+
+        return element.getAttribute(attr);
+      },
       elementContainsClass: (element, className) =>
           element.classList.contains(className),
       closeSurface: () => {
