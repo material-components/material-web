@@ -11,7 +11,7 @@ import {AriaHasPopup, ariaProperty} from '@material/mwc-base/aria-property';
 import {Ripple} from 'google3/third_party/javascript/material_web_components/m3/ripple/mwc-ripple';
 import {RippleHandlers} from 'google3/third_party/javascript/material_web_components/m3/ripple/ripple-handlers';
 import {eventOptions, html, LitElement, property, query, queryAssignedNodes, queryAsync, state, TemplateResult} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
+import {ClassInfo, classMap} from 'lit-html/directives/class-map.js';
 import {ifDefined} from 'lit-html/directives/if-defined.js';
 
 /** @soyCompatible */
@@ -99,8 +99,8 @@ export abstract class Button extends LitElement {
       </button>`;
   }
 
-  /** @soyTemplate classMap */
-  protected getRenderClasses() {
+  /** @soyTemplate */
+  protected getRenderClasses(): ClassInfo {
     return {
       'mdc-button--icon-leading': !this.trailingIcon && this.hasIcon,
       'mdc-button--icon-trailing': this.trailingIcon && this.hasIcon,
