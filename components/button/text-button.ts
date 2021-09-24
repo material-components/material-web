@@ -4,7 +4,23 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Import the custom element definition side effect
-import './lib/text-button';
+import {customElement} from 'lit/decorators';
 
-export {TextButton} from './lib/text-button';
+import {styles as sharedStyles} from './lib/shared-styles.css';
+import {TextButton as TextButtonBase} from './lib/text-button';
+import {styles as textStyles} from './lib/text-styles.css';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'md-text-button': TextButton;
+  }
+}
+
+/**
+ * @soyCompatible
+ * @final
+ */
+@customElement('md-text-button')
+export class TextButton extends TextButtonBase {
+  static styles = [sharedStyles, textStyles];
+}

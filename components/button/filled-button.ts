@@ -4,7 +4,23 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Import the custom element definition side effect
-import './lib/filled-button';
+import {customElement} from 'lit/decorators';
 
-export {FilledButton} from './lib/filled-button';
+import {FilledButton as FilledButtonBase} from './lib/filled-button';
+import {styles as filledStyles} from './lib/filled-styles.css';
+import {styles as sharedStyles} from './lib/shared-styles.css';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'md-filled-button': FilledButton;
+  }
+}
+
+/**
+ * @soyCompatible
+ * @final
+ */
+@customElement('md-filled-button')
+export class FilledButton extends FilledButtonBase {
+  static styles = [sharedStyles, filledStyles];
+}

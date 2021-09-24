@@ -4,7 +4,23 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Import the custom element definition side effect
-import './lib/outlined-button';
+import {customElement} from 'lit/decorators';
 
-export {OutlinedButton} from './lib/outlined-button';
+import {OutlinedButton as OutlinedButtonBase} from './lib/outlined-button';
+import {styles as outlinedStyles} from './lib/outlined-styles.css';
+import {styles as sharedStyles} from './lib/shared-styles.css';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'md-outlined-button': OutlinedButton;
+  }
+}
+
+/**
+ * @soyCompatible
+ * @final
+ */
+@customElement('md-outlined-button')
+export class OutlinedButton extends OutlinedButtonBase {
+  static styles = [sharedStyles, outlinedStyles];
+}

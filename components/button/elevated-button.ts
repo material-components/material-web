@@ -4,7 +4,23 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Import the custom element definition side effect
-import './lib/elevated-button';
+import {customElement} from 'lit/decorators';
 
-export {ElevatedButton} from './lib/elevated-button';
+import {ElevatedButton as ElevatedButtonBase} from './lib/elevated-button';
+import {styles as elevatedStyles} from './lib/elevated-styles.css';
+import {styles as sharedStyles} from './lib/shared-styles.css';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'md-elevated-button': ElevatedButton;
+  }
+}
+
+/**
+ * @soyCompatible
+ * @final
+ */
+@customElement('md-elevated-button')
+export class ElevatedButton extends ElevatedButtonBase {
+  static styles = [sharedStyles, elevatedStyles];
+}

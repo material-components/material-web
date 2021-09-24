@@ -4,26 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement, html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit-element';
 
 import {Button} from './button';
-import {styles as outlinedStyles} from './outlined-styles.css';
-import {styles as sharedStyles} from './shared-styles.css';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'md-outlined-button': OutlinedButton;
-  }
-}
 
 /**
  * @soyCompatible
- * @final
  */
-@customElement('md-outlined-button')
 export class OutlinedButton extends Button {
-  static styles = [sharedStyles, outlinedStyles];
-
   /** @soyCompatible */
   protected getRenderClasses() {
     return {
