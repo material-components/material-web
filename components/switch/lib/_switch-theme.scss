@@ -29,6 +29,32 @@
 
 @use './switch';
 
+// PRIVATE PROPERTIES
+//
+/// TODO: Change to private when MWC has better access
+/// @access private
+
+$_density-config: (
+  size: (
+    minimum: 28px,
+    default: 48px,
+    maximum: 48px,
+  ),
+);
+$_hairline: color-palette.$grey-300;
+$_inverse-primary: color.scale(
+  theme-color.prop-value(primary),
+  $lightness: 75%
+);
+
+$_on-surface: color-palette.$grey-800;
+$_on-surface-variant: color-palette.$grey-700;
+$_on-surface-state-content: color-palette.$grey-900;
+$_primary-state-content: color.scale(
+  theme-color.prop-value(primary),
+  $blackness: 50%
+);
+
 // PUBLIC PROPERTIES
 
 $selectors: (
@@ -105,32 +131,6 @@ $forced-colors-theme: (
   disabled-unselected-icon-opacity: 1,
   selected-icon-color: ButtonText,
   unselected-icon-color: ButtonText,
-);
-
-// PRIVATE PROPERTIES
-//
-/// TODO: Change to private when MWC has better access
-/// @access private
-
-$_density-config: (
-  size: (
-    minimum: 28px,
-    default: 48px,
-    maximum: 48px,
-  ),
-);
-$_hairline: color-palette.$grey-300;
-$_inverse-primary: color.scale(
-  theme-color.prop-value(primary),
-  $lightness: 75%
-);
-
-$_on-surface: color-palette.$grey-800;
-$_on-surface-variant: color-palette.$grey-700;
-$_on-surface-state-content: color-palette.$grey-900;
-$_primary-state-content: color.scale(
-  theme-color.prop-value(primary),
-  $blackness: 50%
 );
 
 // PUBLIC API
