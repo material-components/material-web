@@ -4,8 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
 @use './text-button';
+@use './text-button-theme';
 
 @include text-button.static-styles();
 
-/// TODO: variant-specific theme styles.
+.mdc-button--text {
+  @include text-button-theme.theme-styles(text-button-theme.$light-theme);
+}

@@ -7,14 +7,72 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.mdc-*' should only be used in this project.
 
+@use 'sass:map';
 @use '@material/shape/shape';
+@use '@material/theme/keys';
 @use '@material/theme/state';
+@use '@material/theme/theme';
+@use '@material/tokens/resolvers';
 
 @use './button-theme';
+@use './icon-theme';
 
 $_selectors: button-theme.$selectors;
+$_custom-property-prefix: 'outlined-button';
 
-/// TODO: variant-specific theme + theme styles mixins.
+$light-theme: map.merge(
+  button-theme.$light-theme,
+  (
+    disabled-label-text-color: rgba(#000, 0.38),
+    disabled-outline-color: rgba(#000, 0.12),
+    focus-label-text-color: #6200ee,
+    focus-outline-color: rgba(#000, 0.12),
+    focus-state-layer-color: #fff,
+    focus-state-layer-opacity: 0.12,
+    hover-label-text-color: #6200ee,
+    hover-outline-color: rgba(#000, 0.12),
+    hover-state-layer-color: #6200ee,
+    hover-state-layer-opacity: 0.04,
+    label-text-color: #6200ee,
+    outline-color: rgba(#000, 0.12),
+    outline-width: 1px,
+    pressed-label-text-color: #6200ee,
+    pressed-state-layer-color: #6200ee,
+    pressed-state-layer-opacity: 0.12,
+    with-icon-disabled-icon-color: rgba(#000, 0.38),
+    with-icon-focus-icon-color: #6200ee,
+    with-icon-hover-icon-color: #6200ee,
+    with-icon-icon-color: #6200ee,
+    with-icon-pressed-icon-color: #6200ee,
+  )
+);
+
+@mixin theme($theme, $resolvers: resolvers.$material) {
+  @include theme.validate-theme($light-theme, $theme);
+  $theme: elevation-theme.resolve-theme-elevation-keys(
+    $theme,
+    $resolvers: $resolvers
+  );
+  @include keys.declare-custom-properties($theme, $_custom-property-prefix);
+}
+
+@mixin theme-styles($theme, $resolvers: resolvers.$material) {
+  $theme: keys.create-theme-properties(
+    $theme,
+    $prefix: $_custom-property-prefix
+  );
+
+  @include button-theme.theme-styles($theme, $resolvers: $resolvers);
+  @include icon-theme.theme-styles($theme, $resolvers: $resolvers);
+  @include _shape-radius(map.get($theme, container-shape));
+  @include _outline-color(
+    (
+      default: map.get($theme, outline-color),
+      disabled: map.get($theme, disabled-outline-color),
+    )
+  );
+  @include _outline-width(map.get($theme, outline-width));
+}
 
 @mixin _shape-radius($radius) {
   .mdc-button__outline {
@@ -50,30 +108,22 @@ $_selectors: button-theme.$selectors;
   }
 }
 
-@mixin _outline-width($widths) {
-  @include state.default($_selectors) {
-    @include _set-outline-width(state.get-default-state($widths));
-  }
-
-  @include state.hover($_selectors) {
-    @include _set-outline-width(state.get-hover-state($widths));
-  }
-
-  @include state.focus($_selectors) {
-    @include _set-outline-width(state.get-focus-state($widths));
-  }
-
-  @include state.pressed($_selectors) {
-    @include _set-outline-width(state.get-pressed-state($widths));
-  }
-
-  @include state.disabled($_selectors) {
-    @include _set-outline-width(state.get-disabled-state($widths));
-  }
-}
-
-@mixin _set-outline-width($width) {
-  .mdc-button__outline {
+@mixin _outline-width($width) {
+  .mdc-button__outline,
+  .mdc-button__ripple {
     @include theme.property(border-width, $width);
+  }
+
+  .mdc-button__ripple {
+    @include theme.property(
+      width,
+      'calc(100% - 2 * outline-width)',
+      $replace: (outline-width: $width)
+    );
+    @include theme.property(
+      height,
+      'calc(100% - 2 * outline-width)',
+      $replace: (outline-width: $width)
+    );
   }
 }

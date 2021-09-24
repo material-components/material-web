@@ -11,6 +11,10 @@
   .mdc-button__outline {
     @include outline;
   }
+  .mdc-button__ripple {
+    border-style: solid;
+    border-color: transparent;
+  }
 }
 
 @mixin outline() {
