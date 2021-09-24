@@ -26,9 +26,9 @@
     "build:style": "node ../../scripts/sass-to-lit-css/index.js mwc-checkbox.scss"
   },
   "devDependencies": {
-    "@material/checkbox": "=13.0.0-canary.65125b3a6.0",
-    "@material/theme": "=13.0.0-canary.65125b3a6.0",
-    "@material/touch-target": "=13.0.0-canary.65125b3a6.0"
+    "@material/checkbox": "=13.0.0-canary.65084baff.0",
+    "@material/theme": "=13.0.0-canary.65084baff.0",
+    "@material/touch-target": "=13.0.0-canary.65084baff.0"
   },
   "publishConfig": {
     "access": "public"
