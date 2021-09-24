@@ -18,14 +18,14 @@
   "dependencies": {
     "@material/mwc-base": "^0.25.1",
     "@material/mwc-ripple": "^0.25.1",
-    "@material/switch": "=13.0.0-canary.c79aa0cdd.0",
+    "@material/switch": "=14.0.0-canary.198431fcd.0",
     "lit-element": "^3.0.0",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@material/dom": "=13.0.0-canary.c79aa0cdd.0",
-    "@material/ripple": "=13.0.0-canary.c79aa0cdd.0",
-    "@material/theme": "=13.0.0-canary.c79aa0cdd.0",
+    "@material/dom": "=14.0.0-canary.198431fcd.0",
+    "@material/ripple": "=14.0.0-canary.198431fcd.0",
+    "@material/theme": "=14.0.0-canary.198431fcd.0",
     "lit-html": "^2.0.0"
   },
   "scripts": {
