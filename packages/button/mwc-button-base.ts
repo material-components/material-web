@@ -16,6 +16,7 @@ import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {eventOptions, html, LitElement, property, query, queryAsync, state, TemplateResult} from 'lit-element';
 import {ClassInfo, classMap} from 'lit-html/directives/class-map.js';
 import {ifDefined} from 'lit-html/directives/if-defined.js';
+import {live} from 'lit-html/directives/live.js';
 
 /** @soyCompatible */
 export class ButtonBase extends LitElement {
@@ -26,6 +27,8 @@ export class ButtonBase extends LitElement {
   @ariaProperty
   @property({type: String, attribute: 'aria-haspopup'})
   ariaHasPopup!: AriaHasPopup;
+
+  @property({type: String}) value = '';
 
   @property({type: Boolean, reflect: true}) raised = false;
 
@@ -108,6 +111,7 @@ export class ButtonBase extends LitElement {
       <button
           id="button"
           class="mdc-button ${classMap(this.getRenderClasses())}"
+          .value="${live(this.value) as unknown as string}"
           ?disabled="${this.disabled}"
           aria-label="${this.label || this.icon}"
           aria-haspopup="${ifDefined(this.ariaHasPopup)}"
