@@ -10,13 +10,15 @@ import {ariaProperty} from '@material/mwc-base/aria-property.js';
 import {FormElement} from '@material/mwc-base/form-element.js';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple.js';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers.js';
-import {MDCSwitchAdapter, MDCSwitchState} from '@material/switch/adapter.js';
-import {MDCSwitchFoundation} from '@material/switch/foundation.js';
 import {html, TemplateResult} from 'lit';
 import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
+import {MDCSwitchFoundation} from './foundation.js';
+import {MDCSwitchAdapter, MDCSwitchState} from './state.js';
+
+/** @soyCompatible */
 export class Switch extends FormElement implements MDCSwitchState {
   // MDCSwitchState
   @property({type: Boolean}) disabled = false;
@@ -63,12 +65,10 @@ export class Switch extends FormElement implements MDCSwitchState {
     // Switch uses a hidden input as its form element, but a different <button>
     // for interaction. It overrides click() from FormElement to avoid clicking
     // the hidden input.
-    if (this.disabled) {
-      return;
+    if (!this.disabled) {
+      this.mdcRoot?.focus();
+      this.mdcRoot?.click();
     }
-
-    this.mdcRoot?.focus();
-    this.mdcRoot?.click();
   }
 
   /** @soyTemplate */
@@ -140,8 +140,7 @@ export class Switch extends FormElement implements MDCSwitchState {
 
   /** @soyTemplate */
   protected renderRipple(): TemplateResult {
-    if (this.shouldRenderRipple) {
-      return html`
+    return !this.shouldRenderRipple ? html`` : html`
         <div class="mdc-switch__ripple">
           <mwc-ripple
             internalUseStateLayerCustomProperties
@@ -150,9 +149,6 @@ export class Switch extends FormElement implements MDCSwitchState {
           </mwc-ripple>
         </div>
       `;
-    } else {
-      return html``;
-    }
   }
 
   /** @soyTemplate */

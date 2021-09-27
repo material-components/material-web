@@ -22,3 +22,10 @@ export interface MDCSwitchState {
    */
   selected: boolean;
 }
+
+export interface MDCSwitchAdapter {
+  /**
+   * The state of the component.
+   */
+  state: MDCSwitchState;
+}
