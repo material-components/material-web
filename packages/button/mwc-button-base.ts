@@ -28,6 +28,8 @@ export class ButtonBase extends LitElement {
   @property({type: String, attribute: 'aria-haspopup'})
   ariaHasPopup!: AriaHasPopup;
 
+  @property({type: String}) value = '';
+
   @property({type: Boolean, reflect: true}) raised = false;
 
   @property({type: Boolean, reflect: true}) unelevated = false;
@@ -109,6 +111,7 @@ export class ButtonBase extends LitElement {
       <button
           id="button"
           class="mdc-button ${classMap(this.getRenderClasses())}"
+          .value="${this.value as unknown as string}">
           ?disabled="${this.disabled}"
           aria-label="${this.label || this.icon}"
           aria-haspopup="${ifDefined(this.ariaHasPopup)}"
