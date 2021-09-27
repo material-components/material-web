@@ -8,9 +8,8 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {customElement} from 'lit/decorators.js';
-
 import {styles} from '@material/mwc-icon-button/mwc-icon-button.css';
+import {customElement} from 'lit/decorators.js';
 
 import {IconButtonToggleBase} from './mwc-icon-button-toggle-base';
 
