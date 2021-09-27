@@ -66,6 +66,7 @@
   vertical-align: middle;
   background: transparent;
   text-decoration: none;
+  transition: elevation-theme.transition-value();
 
   &::-moz-focus-inner {
     padding: 0;
