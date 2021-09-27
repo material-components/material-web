@@ -18,8 +18,7 @@
   "dependencies": {
     "@material/mwc-base": "^0.25.1",
     "@material/snackbar": "=14.0.0-canary.758ce31d9.0",
-    "lit-element": "^3.0.0",
-    "lit-html": "^2.0.0",
+    "lit": "^2.0.0",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
