@@ -22,16 +22,16 @@
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@material/animation": "=13.0.0-canary.c79aa0cdd.0",
-    "@material/elevation": "=13.0.0-canary.c79aa0cdd.0",
-    "@material/fab": "=13.0.0-canary.c79aa0cdd.0",
+    "@material/animation": "=14.0.0-canary.758ce31d9.0",
+    "@material/elevation": "=14.0.0-canary.758ce31d9.0",
+    "@material/fab": "=14.0.0-canary.758ce31d9.0",
     "@material/mwc-base": "^0.25.1",
     "@material/mwc-icon": "^0.25.1",
-    "@material/ripple": "=13.0.0-canary.c79aa0cdd.0",
-    "@material/rtl": "=13.0.0-canary.c79aa0cdd.0",
-    "@material/shape": "=13.0.0-canary.c79aa0cdd.0",
-    "@material/theme": "=13.0.0-canary.c79aa0cdd.0",
-    "@material/tokens": "=13.0.0-canary.c79aa0cdd.0"
+    "@material/ripple": "=14.0.0-canary.758ce31d9.0",
+    "@material/rtl": "=14.0.0-canary.758ce31d9.0",
+    "@material/shape": "=14.0.0-canary.758ce31d9.0",
+    "@material/theme": "=14.0.0-canary.758ce31d9.0",
+    "@material/tokens": "=14.0.0-canary.758ce31d9.0"
   },
   "scripts": {
     "build:style": "node ../../scripts/sass-to-lit-css/index.js mwc-fab.scss"
