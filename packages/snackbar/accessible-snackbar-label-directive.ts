@@ -8,9 +8,9 @@
 // tslint:disable:strip-private-property-underscore
 
 import MDCSnackbarFoundation from '@material/snackbar/foundation';
-import {html, render, TemplateResult} from 'lit-html';
-import {AsyncDirective} from 'lit-html/async-directive.js';
-import {ChildPart, directive, DirectiveParameters, PartInfo, PartType} from 'lit-html/directive.js';
+import {html, render, TemplateResult} from 'lit';
+import {AsyncDirective} from 'lit/async-directive.js';
+import {ChildPart, directive, DirectiveParameters, PartInfo, PartType} from 'lit/directive.js';
 
 const {ARIA_LIVE_DELAY_MS} = MDCSnackbarFoundation.numbers;
 /**

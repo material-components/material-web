@@ -9,7 +9,7 @@
 
 
 import {Fab} from '@material/mwc-fab';
-import {html} from 'lit-html';
+import {html} from 'lit';
 
 import {fixture, TestFixture} from '../../../test/src/util/helpers';
 

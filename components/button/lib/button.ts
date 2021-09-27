@@ -10,9 +10,10 @@ import 'google3/third_party/javascript/material_web_components/m3/ripple/mwc-rip
 import {AriaHasPopup, ariaProperty} from '@material/mwc-base/aria-property';
 import {Ripple} from 'google3/third_party/javascript/material_web_components/m3/ripple/mwc-ripple';
 import {RippleHandlers} from 'google3/third_party/javascript/material_web_components/m3/ripple/ripple-handlers';
-import {eventOptions, html, LitElement, property, query, queryAssignedNodes, queryAsync, state, TemplateResult} from 'lit-element';
-import {ClassInfo, classMap} from 'lit-html/directives/class-map.js';
-import {ifDefined} from 'lit-html/directives/if-defined.js';
+import {html, LitElement, TemplateResult} from 'lit';
+import {eventOptions, property, query, queryAssignedNodes, queryAsync, state} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 /** @soyCompatible */
 export abstract class Button extends LitElement {

@@ -7,7 +7,7 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {customElement} from 'lit-element';
+import {customElement} from 'lit/decorators.js';
 
 import {RadioBase} from './mwc-radio-base';
 import {styles} from './mwc-radio.css';

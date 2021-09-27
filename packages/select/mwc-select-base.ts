@@ -26,10 +26,10 @@ import {Menu} from '@material/mwc-menu';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCSelectAdapter} from '@material/select/adapter';
 import MDCSelectFoundation from '@material/select/foundation';
-import {eventOptions, html, property, query, state} from 'lit-element';
-import {nothing} from 'lit-html';
-import {classMap} from 'lit-html/directives/class-map.js';
-import {ifDefined} from 'lit-html/directives/if-defined.js';
+import {html, nothing} from 'lit';
+import {eventOptions, property, query, state} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 // must be done to get past lit-analyzer checks
 declare global {

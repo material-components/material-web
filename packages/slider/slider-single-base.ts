@@ -12,8 +12,10 @@ import '@material/mwc-ripple/mwc-ripple';
 import {deepActiveElementPath} from '@material/mwc-base/utils';
 import {MDCSliderAdapter} from '@material/slider/adapter';
 import {Thumb, TickMark} from '@material/slider/types';
-import {html, property} from 'lit-element';
-import {styleMap} from 'lit-html/directives/style-map.js';
+import {html} from 'lit';
+import {property} from 'lit/decorators.js';
+import {styleMap} from 'lit/directives/style-map.js';
+
 import {SliderBase} from './slider-base';
 
 export {Thumb} from '@material/slider/types';

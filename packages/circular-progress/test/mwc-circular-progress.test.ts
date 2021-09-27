@@ -8,7 +8,7 @@
 // tslint:disable:strip-private-property-underscore
 
 import {CircularProgress} from '@material/mwc-circular-progress';
-import {html} from 'lit-html';
+import {html} from 'lit';
 
 import {fixture, TestFixture} from '../../../test/src/util/helpers';
 

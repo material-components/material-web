@@ -7,7 +7,8 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {customElement, html, LitElement, TemplateResult} from 'lit-element';
+import {html, LitElement, TemplateResult} from 'lit';
+import {customElement} from 'lit/decorators.js';
 
 import {styles} from './mwc-icon-host.css';
 

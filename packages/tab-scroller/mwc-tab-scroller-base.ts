@@ -11,7 +11,8 @@ import {matches} from '@material/dom/ponyfill';
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {MDCTabScrollerAdapter} from '@material/tab-scroller/adapter';
 import MDCTabScrollerFoundation from '@material/tab-scroller/foundation';
-import {eventOptions, html, query} from 'lit-element';
+import {html} from 'lit';
+import {eventOptions, query} from 'lit/decorators.js';
 
 export class TabScrollerBase extends BaseElement {
   protected mdcFoundation!: MDCTabScrollerFoundation;

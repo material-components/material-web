@@ -9,8 +9,8 @@
 
 
 import {BaseElement} from '@material/mwc-base/base-element';
-import {customElement, query} from 'lit-element';
-import {html} from 'lit-html';
+import {html} from 'lit';
+import {customElement, query} from 'lit/decorators.js';
 
 import {fixture, TestFixture} from '../../../test/src/util/helpers';
 

@@ -18,7 +18,8 @@ import {observer} from '@material/mwc-base/observer';
 import {List, MWCListIndex} from '@material/mwc-list';
 import {ActionDetail} from '@material/mwc-list/mwc-list-foundation';
 import {ListItemBase} from '@material/mwc-list/mwc-list-item-base';
-import {html, property, query} from 'lit-element';
+import {html} from 'lit';
+import {property, query} from 'lit/decorators.js';
 
 import {MenuSurface} from './mwc-menu-surface';
 import {Corner, MenuCorner} from './mwc-menu-surface-base';

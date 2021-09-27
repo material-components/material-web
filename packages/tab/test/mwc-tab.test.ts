@@ -10,7 +10,7 @@
 
 import {Tab} from '@material/mwc-tab';
 import * as hanbi from 'hanbi';
-import {html, render} from 'lit-html';
+import {html, render} from 'lit';
 
 import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 

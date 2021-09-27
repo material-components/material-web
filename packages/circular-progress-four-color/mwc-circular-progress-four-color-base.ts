@@ -8,7 +8,7 @@
 // tslint:disable:strip-private-property-underscore
 
 import {CircularProgressBase} from '@material/mwc-circular-progress/mwc-circular-progress-base';
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 
 /** @soyCompatible */
 export class CircularProgressFourColorBase extends CircularProgressBase {

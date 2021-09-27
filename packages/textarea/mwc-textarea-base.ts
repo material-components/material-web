@@ -9,10 +9,11 @@
 
 
 import {TextAreaCharCounter, TextFieldBase, TextFieldInputMode, TextFieldType} from '@material/mwc-textfield/mwc-textfield-base';
-import {ComplexAttributeConverter, html, property, query, TemplateResult} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
-import {ifDefined} from 'lit-html/directives/if-defined.js';
-import {live} from 'lit-html/directives/live.js';
+import {ComplexAttributeConverter, html, TemplateResult} from 'lit';
+import {property, query} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
+import {live} from 'lit/directives/live.js';
 
 export {TextAreaCharCounter, TextFieldInputMode, TextFieldType};
 

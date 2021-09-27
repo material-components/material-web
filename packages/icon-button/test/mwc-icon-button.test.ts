@@ -9,7 +9,7 @@
 
 
 import {IconButton} from '@material/mwc-icon-button';
-import {html, render} from 'lit-html';
+import {html, render} from 'lit';
 
 const ICON_SELECTOR = 'i.material-icons';
 

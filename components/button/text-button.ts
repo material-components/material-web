@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
 import {styles as sharedStyles} from './lib/shared-styles.css';
 import {TextButton as TextButtonBase} from './lib/text-button';

@@ -5,7 +5,7 @@
  */
 
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
 import {styles} from './lib/switch-styles.css.js'
 import {Switch} from './lib/switch.js';

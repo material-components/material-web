@@ -12,8 +12,9 @@ import {observer} from '@material/mwc-base/observer';
 import {MDCSnackbarAdapter} from '@material/snackbar/adapter';
 import MDCSnackbarFoundation from '@material/snackbar/foundation';
 import {MDCSnackbarCloseEventDetail} from '@material/snackbar/types';
-import {html, property, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
+import {html} from 'lit';
+import {property, query} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 
 import {accessibleSnackbarLabel} from './accessible-snackbar-label-directive';
 

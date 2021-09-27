@@ -9,7 +9,7 @@
 
 
 import {IconButtonToggle} from '@material/mwc-icon-button-toggle';
-import {html, render} from 'lit-html';
+import {html, render} from 'lit';
 
 const ICON_BUTTON_ON_SELECTOR = '.mdc-icon-button.mdc-icon-button--on';
 const ICON_SELECTOR =

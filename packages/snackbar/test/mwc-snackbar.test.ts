@@ -10,7 +10,7 @@
 
 import {Snackbar} from '@material/mwc-snackbar';
 import * as hanbi from 'hanbi';
-import {html, TemplateResult} from 'lit-html';
+import {html, TemplateResult} from 'lit';
 
 import {fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 

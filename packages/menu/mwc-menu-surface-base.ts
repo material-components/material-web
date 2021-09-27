@@ -13,9 +13,10 @@ import MDCMenuSurfaceFoundation from '@material/menu-surface/foundation';
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
 import {deepActiveElementPath, doesElementContainFocus} from '@material/mwc-base/utils';
-import {html, property, query, state} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
-import {styleMap} from 'lit-html/directives/style-map.js';
+import {html} from 'lit';
+import {property, query, state} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {styleMap} from 'lit/directives/style-map.js';
 
 export type Corner = keyof typeof CornerEnum;
 export type AnchorableElement = HTMLElement&{anchor: Element | null};

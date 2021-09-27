@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, TemplateResult} from 'lit-element';
+import {html, TemplateResult} from 'lit';
 
 import {Button} from './button';
 

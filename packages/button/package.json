@@ -18,8 +18,7 @@
   "dependencies": {
     "@material/mwc-icon": "^0.25.1",
     "@material/mwc-ripple": "^0.25.1",
-    "lit-element": "^3.0.0",
-    "lit-html": "^2.0.0",
+    "lit": "^2.0.0",
     "tslib": "^2.0.1"
   },
   "scripts": {

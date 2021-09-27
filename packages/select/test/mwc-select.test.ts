@@ -12,7 +12,7 @@ import '@material/mwc-list/mwc-list-item';
 
 import {ListItem} from '@material/mwc-list/mwc-list-item';
 import {Select} from '@material/mwc-select';
-import {html} from 'lit-html';
+import {html} from 'lit';
 
 import {fixture, rafPromise, simulateFormDataEvent, TestFixture} from '../../../test/src/util/helpers';
 

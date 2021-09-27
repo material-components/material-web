@@ -16,7 +16,7 @@ import {ListItem} from '@material/mwc-list/mwc-list-item';
 import {Menu} from '@material/mwc-menu';
 import {Corner, MenuCorner, MenuSurface} from '@material/mwc-menu/mwc-menu-surface';
 import * as hanbi from 'hanbi';
-import {html, render, TemplateResult} from 'lit-html';
+import {html, render, TemplateResult} from 'lit';
 
 import {fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 

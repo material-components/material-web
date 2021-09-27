@@ -19,7 +19,8 @@ import {TabBase} from '@material/mwc-tab/mwc-tab-base';
 import {MDCTabBarAdapter} from '@material/tab-bar/adapter';
 import MDCTabBarFoundation from '@material/tab-bar/foundation';
 import {MDCTabInteractionEvent} from '@material/tab/types';
-import {html, property, query} from 'lit-element';
+import {html} from 'lit';
+import {property, query} from 'lit/decorators.js';
 
 export class TabBarBase extends BaseElement {
   protected mdcFoundation!: MDCTabBarFoundation;

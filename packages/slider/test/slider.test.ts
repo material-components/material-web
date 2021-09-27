@@ -7,7 +7,7 @@
 import '../slider';
 
 // import * as hanbi from 'hanbi';
-import {html} from 'lit-html';
+import {html} from 'lit';
 
 import {fixture, TestFixture} from '../../../test/src/util/helpers';
 // Style preference for leading underscores.

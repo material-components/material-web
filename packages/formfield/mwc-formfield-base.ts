@@ -14,8 +14,9 @@ import MDCFormFieldFoundation from '@material/form-field/foundation';
 import {BaseElement, EventType, SpecificEventListener} from '@material/mwc-base/base-element';
 import {FormElement} from '@material/mwc-base/form-element';
 import {observer} from '@material/mwc-base/observer';
-import {html, property, query, queryAssignedNodes} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
+import {html} from 'lit';
+import {property, query, queryAssignedNodes} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 
 
 export class FormfieldBase extends BaseElement {

@@ -10,7 +10,7 @@
 
 import {Checkbox} from '@material/mwc-checkbox';
 import * as hanbi from 'hanbi';
-import {html} from 'lit-html';
+import {html} from 'lit';
 
 import {fixture, rafPromise, simulateFormDataEvent, TestFixture} from '../../../test/src/util/helpers';
 

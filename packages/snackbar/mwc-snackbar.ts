@@ -7,7 +7,7 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {customElement} from 'lit-element';
+import {customElement} from 'lit/decorators.js';
 
 import {SnackbarBase} from './mwc-snackbar-base';
 import {styles} from './mwc-snackbar.css';

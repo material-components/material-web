@@ -21,11 +21,10 @@
     "@material/mwc-tab-scroller": "^0.25.1",
     "@material/tab": "=13.0.0-canary.c79aa0cdd.0",
     "@material/tab-bar": "=13.0.0-canary.c79aa0cdd.0",
-    "lit-element": "^3.0.0",
+    "lit": "^2.0.0",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "lit-html": "^2.0.0"
   },
   "scripts": {
     "build:style": "node ../../scripts/sass-to-lit-css/index.js mwc-tab-bar.scss"

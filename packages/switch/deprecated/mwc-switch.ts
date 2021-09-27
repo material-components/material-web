@@ -7,7 +7,7 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {customElement} from 'lit-element';
+import {customElement} from 'lit/decorators.js';
 
 import {SwitchBase} from './mwc-switch-base';
 import {styles} from './mwc-switch.css';

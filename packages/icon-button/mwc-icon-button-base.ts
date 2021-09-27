@@ -12,8 +12,9 @@ import '@material/mwc-ripple/mwc-ripple';
 import {AriaHasPopup, ariaProperty} from '@material/mwc-base/aria-property';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {eventOptions, html, LitElement, property, query, queryAsync, state, TemplateResult} from 'lit-element';
-import {ifDefined} from 'lit-html/directives/if-defined.js';
+import {html, LitElement, TemplateResult} from 'lit';
+import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 /** @soyCompatible */
 export class IconButtonBase extends LitElement {

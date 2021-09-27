@@ -20,7 +20,7 @@
     "@material/mwc-base": "^0.25.1",
     "@material/mwc-circular-progress": "^0.25.1",
     "@material/theme": "=13.0.0-canary.c79aa0cdd.0",
-    "lit-element": "^3.0.0",
+    "lit": "^2.0.0",
     "tslib": "^2.0.1"
   },
   "scripts": {

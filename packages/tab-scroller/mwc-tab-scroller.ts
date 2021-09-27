@@ -7,7 +7,7 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {customElement} from 'lit-element';
+import {customElement} from 'lit/decorators.js';
 
 import {TabScrollerBase} from './mwc-tab-scroller-base';
 import {styles} from './mwc-tab-scroller.css';

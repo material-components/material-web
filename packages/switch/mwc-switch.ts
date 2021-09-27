@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit-element';
+import {customElement} from 'lit/decorators.js';
 
 import {SwitchBase} from './mwc-switch-base';
 import {styles} from './styles.css';

@@ -18,8 +18,9 @@ import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {TabIndicator} from '@material/mwc-tab-indicator';
 import {MDCTabAdapter} from '@material/tab/adapter';
 import MDCTabFoundation from '@material/tab/foundation';
-import {eventOptions, html, property, query, queryAsync, state} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
+import {html} from 'lit';
+import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 
 export interface TabInteractionEventDetail {
   tabId: string;

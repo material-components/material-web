@@ -9,8 +9,8 @@
 
 import {MDCResizeObserver, WithMDCResizeObserver} from '@material/linear-progress/types';
 import {LinearProgress} from '@material/mwc-linear-progress';
-import {html} from 'lit-html';
-import {styleMap} from 'lit-html/directives/style-map';
+import {html} from 'lit';
+import {styleMap} from 'lit/directives/style-map.js';
 
 import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 

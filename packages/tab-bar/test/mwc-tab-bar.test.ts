@@ -11,7 +11,7 @@
 import '@material/mwc-tab';
 
 import {TabBar} from '@material/mwc-tab-bar/mwc-tab-bar';
-import {html, TemplateResult} from 'lit-html';
+import {html, TemplateResult} from 'lit';
 
 import {fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 

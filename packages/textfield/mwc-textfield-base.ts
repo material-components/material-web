@@ -18,10 +18,11 @@ import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
 import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter';
 import MDCTextFieldFoundation from '@material/textfield/foundation';
-import {eventOptions, html, property, PropertyValues, query, state, TemplateResult} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
-import {ifDefined} from 'lit-html/directives/if-defined.js';
-import {live} from 'lit-html/directives/live.js';
+import {html, PropertyValues, TemplateResult} from 'lit';
+import {eventOptions, property, query, state} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
+import {live} from 'lit/directives/live.js';
 
 // must be done to get past lit-analyzer checks
 declare global {

@@ -9,7 +9,7 @@
 
 
 import {Button} from '@material/mwc-button';
-import {html} from 'lit-html';
+import {html} from 'lit';
 
 import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 

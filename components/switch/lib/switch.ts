@@ -13,7 +13,7 @@ import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers.js';
 import {MDCSwitchAdapter, MDCSwitchState} from '@material/switch/adapter.js';
 import {MDCSwitchFoundation} from '@material/switch/foundation.js';
 import {html, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAsync, state} from 'lit/decorators';
+import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 

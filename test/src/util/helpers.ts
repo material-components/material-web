@@ -7,8 +7,8 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {customElement, html, LitElement, property} from 'lit-element';
-import {render, TemplateResult} from 'lit-html';
+import {html, LitElement, render, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 
 interface HasKeyCode {
   keyCode: number;

@@ -7,7 +7,7 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {customElement} from 'lit-element';
+import {customElement} from 'lit/decorators.js';
 
 import {TabBarBase} from './mwc-tab-bar-base';
 import {styles} from './mwc-tab-bar.css';

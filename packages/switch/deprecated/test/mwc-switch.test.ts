@@ -9,7 +9,7 @@
 
 import {Switch} from '@material/mwc-switch/deprecated/mwc-switch';
 import * as hanbi from 'hanbi';
-import {html} from 'lit-html';
+import {html} from 'lit';
 
 import {fixture, TestFixture} from '../../../../test/src/util/helpers';
 

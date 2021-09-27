@@ -12,8 +12,9 @@ import {MDCTabIndicatorAdapter} from '@material/tab-indicator/adapter';
 import MDCFadingTabIndicatorFoundation from '@material/tab-indicator/fading-foundation';
 import MDCTabIndicatorFoundation from '@material/tab-indicator/foundation';
 import MDCSlidingTabIndicatorFoundation from '@material/tab-indicator/sliding-foundation';
-import {html, property, PropertyValues, query} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map.js';
+import {html, PropertyValues} from 'lit';
+import {property, query} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 
 export class TabIndicatorBase extends BaseElement {
   protected mdcFoundation!: MDCTabIndicatorFoundation;

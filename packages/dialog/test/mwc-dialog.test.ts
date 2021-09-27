@@ -17,8 +17,8 @@ import '@material/mwc-textarea';
 import {Button} from '@material/mwc-button';
 import {Dialog} from '@material/mwc-dialog';
 import {DocumentWithBlockingElements} from 'blocking-elements';
-import {customElement, LitElement} from 'lit-element';
-import {html} from 'lit-html';
+import {html, LitElement} from 'lit';
+import {customElement} from 'lit/decorators.js';
 
 import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 

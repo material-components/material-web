@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
 import {FilledButton as FilledButtonBase} from './lib/filled-button';
 import {styles as filledStyles} from './lib/filled-styles.css';

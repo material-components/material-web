@@ -9,7 +9,7 @@
 
 
 import {TextArea} from '@material/mwc-textarea';
-import {html} from 'lit-html';
+import {html} from 'lit';
 
 import {fixture, simulateFormDataEvent, TestFixture} from '../../../test/src/util/helpers';
 

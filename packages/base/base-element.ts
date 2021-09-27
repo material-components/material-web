@@ -9,7 +9,7 @@
 
 
 import {MDCFoundation} from '@material/base';
-import {LitElement} from 'lit-element';
+import {LitElement} from 'lit';
 
 import {Constructor} from './utils';
 
