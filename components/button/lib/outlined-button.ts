@@ -13,7 +13,7 @@ import {Button} from './button';
  */
 export class OutlinedButton extends Button {
   /** @soyCompatible */
-  protected getRenderClasses() {
+  protected override getRenderClasses() {
     return {
       ...super.getRenderClasses(),
       'mdc-button--outlined': true,

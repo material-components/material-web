@@ -22,5 +22,5 @@ declare global {
  */
 @customElement('md-elevated-button')
 export class ElevatedButton extends ElevatedButtonBase {
-  static styles = [sharedStyles, elevatedStyles];
+  static override styles = [sharedStyles, elevatedStyles];
 }

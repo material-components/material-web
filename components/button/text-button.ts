@@ -22,5 +22,5 @@ declare global {
  */
 @customElement('md-text-button')
 export class TextButton extends TextButtonBase {
-  static styles = [sharedStyles, textStyles];
+  static override styles = [sharedStyles, textStyles];
 }

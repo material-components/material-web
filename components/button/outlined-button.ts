@@ -22,5 +22,5 @@ declare global {
  */
 @customElement('md-outlined-button')
 export class OutlinedButton extends OutlinedButtonBase {
-  static styles = [sharedStyles, outlinedStyles];
+  static override styles = [sharedStyles, outlinedStyles];
 }

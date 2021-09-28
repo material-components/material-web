@@ -22,5 +22,5 @@ declare global {
  */
 @customElement('md-filled-button')
 export class FilledButton extends FilledButtonBase {
-  static styles = [sharedStyles, filledStyles];
+  static override styles = [sharedStyles, filledStyles];
 }

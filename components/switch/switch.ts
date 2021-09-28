@@ -18,5 +18,5 @@ declare global {
 
 @customElement('md-switch')
 export class MDSwitch extends Switch {
-  static styles = [styles];
+  static override styles = [styles];
 }

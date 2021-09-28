@@ -21,7 +21,7 @@ import {MDCSwitchAdapter, MDCSwitchState} from './state.js';
 /** @soyCompatible */
 export class Switch extends FormElement implements MDCSwitchState {
   // MDCSwitchState
-  @property({type: Boolean}) disabled = false;
+  @property({type: Boolean}) override disabled = false;
   @property({type: Boolean}) processing = false;
   @property({type: Boolean}) selected = false;
 

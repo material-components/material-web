@@ -11,7 +11,7 @@ import {Button} from './button';
  */
 export class ElevatedButton extends Button {
   /** @soyCompatible */
-  protected getRenderClasses() {
+  protected override getRenderClasses() {
     return {
       ...super.getRenderClasses(),
       'mdc-button--elevated': true,

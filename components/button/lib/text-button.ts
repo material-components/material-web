@@ -11,7 +11,7 @@ import {Button} from './button';
  */
 export class TextButton extends Button {
   /** @soyCompatible */
-  protected getRenderClasses() {
+  protected override getRenderClasses() {
     return {
       ...super.getRenderClasses(),
       'mdc-button--text': true,
