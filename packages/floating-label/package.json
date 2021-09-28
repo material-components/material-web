@@ -16,15 +16,15 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/floating-label": "=13.0.0-canary.c79aa0cdd.0",
+    "@material/floating-label": "=14.0.0-canary.86b50ef74.0",
     "lit": "^2.0.0",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@material/animation": "=13.0.0-canary.c79aa0cdd.0",
-    "@material/base": "=13.0.0-canary.c79aa0cdd.0",
-    "@material/rtl": "=13.0.0-canary.c79aa0cdd.0",
-    "@material/typography": "=13.0.0-canary.c79aa0cdd.0"
+    "@material/animation": "=14.0.0-canary.86b50ef74.0",
+    "@material/base": "=14.0.0-canary.86b50ef74.0",
+    "@material/rtl": "=14.0.0-canary.86b50ef74.0",
+    "@material/typography": "=14.0.0-canary.86b50ef74.0"
   },
   "scripts": {
     "build:style": "node ../../scripts/sass-to-lit-css/index.js mwc-floating-label.scss"
