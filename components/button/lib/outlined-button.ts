@@ -5,6 +5,7 @@
  */
 
 import {html, TemplateResult} from 'lit';
+import {ClassInfo} from 'lit/directives/class-map.js';
 
 import {Button} from './button';
 
@@ -12,8 +13,8 @@ import {Button} from './button';
  * @soyCompatible
  */
 export class OutlinedButton extends Button {
-  /** @soyCompatible */
-  protected override getRenderClasses() {
+  /** @soyTemplate */
+  protected override getRenderClasses(): ClassInfo {
     return {
       ...super.getRenderClasses(),
       'mdc-button--outlined': true,

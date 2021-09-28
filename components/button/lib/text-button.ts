@@ -4,14 +4,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {ClassInfo} from 'lit/directives/class-map.js';
+
 import {Button} from './button';
 
 /**
  * @soyCompatible
  */
 export class TextButton extends Button {
-  /** @soyCompatible */
-  protected override getRenderClasses() {
+  /** @soyTemplate */
+  protected override getRenderClasses(): ClassInfo {
     return {
       ...super.getRenderClasses(),
       'mdc-button--text': true,

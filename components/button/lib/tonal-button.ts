@@ -4,14 +4,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {ClassInfo} from 'lit/directives/class-map.js';
+
 import {Button} from './button';
 
 /**
  * @soyCompatible
  */
 export class TonalButton extends Button {
-  /** @soyCompatible */
-  protected getRenderClasses() {
+  /** @soyTemplate */
+  protected getRenderClasses(): ClassInfo {
     return {
       ...super.getRenderClasses(),
       'mdc-button--tonal': true,
