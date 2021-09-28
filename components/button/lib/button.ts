@@ -35,14 +35,14 @@ export abstract class Button extends LitElement {
 
   @property({type: String}) ariaLabel = '';
 
+  @property({type: Boolean}) hasIcon = false;
+
   @query('#button') buttonElement!: HTMLElement;
 
   @queryAsync('md-ripple') ripple!: Promise<Ripple|null>;
 
   @queryAssignedNodes('icon', true, '*')
   protected iconElement!: HTMLElement[]|null;
-
-  @state() protected hasIcon = false;
 
   @state() protected shouldRenderRipple = false;
 
@@ -109,13 +109,18 @@ export abstract class Button extends LitElement {
   }
 
   /** @soyTemplate */
-  protected renderIcon(): TemplateResult {
-    const containerClasses = classMap({
+  protected getIconContainerClasses(): ClassInfo {
+    return {
       'mdc-button__icon--leading': !this.trailingIcon,
       'mdc-button__icon--trailing': this.trailingIcon,
-    });
+    };
+  }
+
+  /** @soyTemplate */
+  protected renderIcon(): TemplateResult {
     return html`
-      <span class="mdc-button__icon-slot-container ${containerClasses}">
+      <span class="mdc-button__icon-slot-container ${
+        classMap(this.getIconContainerClasses())}">
         <slot name="icon" @slotchange="${this.handleSlotChange}">
           ${this.icon ? this.renderFontIcon() : ''}
         </slot>
