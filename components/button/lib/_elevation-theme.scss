@@ -74,11 +74,10 @@ $_selectors: button-theme.$selectors;
 }
 
 @function resolve-theme-elevation-keys($theme, $resolver) {
-  $elevation-resolver: map.get($resolver, elevation);
-  $shadow-color: map.get($theme, container-shadow-color);
-  @if $elevation-resolver == null {
+  @if $resolver == null {
     @return $theme;
   }
+  $shadow-color: map.get($theme, container-shadow-color);
 
   $elevation-keys: (
     container-elevation,

@@ -6,6 +6,7 @@
 
 @use 'sass:map';
 @use '@material/theme/keys';
+@use '@material/theme/theme';
 @use '@material/tokens/resolvers';
 @use './button-theme';
 @use './elevation-theme';
@@ -46,7 +47,7 @@ $light-theme: map.merge(
   @include theme.validate-theme($light-theme, $theme);
   $theme: elevation-theme.resolve-theme-elevation-keys(
     $theme,
-    $resolvers: $resolvers
+    $resolver: map.get($resolvers, elevation)
   );
   @include keys.declare-custom-properties($theme, $_custom-property-prefix);
 }
