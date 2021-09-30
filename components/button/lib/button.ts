@@ -75,6 +75,7 @@ export abstract class Button extends LitElement {
    * @soyClasses buttonClasses: #button
    */
   protected override render(): TemplateResult {
+    // TODO(b/182405623): restore whitespace
     return html`
       <button
           id="button"
@@ -89,15 +90,35 @@ export abstract class Button extends LitElement {
           @mouseleave="${this.handleRippleMouseLeave}"
           @touchstart="${this.handleRippleActivate}"
           @touchend="${this.handleRippleDeactivate}"
-          @touchcancel="${this.handleRippleDeactivate}">
-        ${this.renderOverlay()}
-        ${this.renderRipple()}
-        ${this.renderOutline()}
-        <span class="mdc-button__touch"></span>
-        ${!this.trailingIcon ? this.renderIcon() : ''}
-        <span class="mdc-button__label">${this.label}</span>
-        ${this.trailingIcon ? this.renderIcon() : ''}
-      </button>`;
+          @touchcancel="${this.handleRippleDeactivate}"><!--
+        -->${this.renderOverlay()}<!--
+        -->${this.renderRipple()}<!--
+        -->${this.renderOutline()}<!--
+        -->${this.renderTouchTarget()}<!--
+        -->${
+    // TODO(b/191914389): move to separate template
+    !this.trailingIcon ? html`<span class="mdc-button__icon-slot-container ${
+                             classMap(this.getIconContainerClasses())}">
+                               <slot name="icon" @slotchange="${
+                             this.handleSlotChange}">
+                                  ${this.icon ? this.renderFontIcon() : ''}
+                               </slot>
+                              </span>` :
+                         ''}<!--
+        -->${this.renderLabel()}<!--
+        -->${
+        this.trailingIcon ?
+        html`<span class="mdc-button__icon-slot-container ${
+            classMap(this.getIconContainerClasses())}">
+               <slot name="icon" @slotchange="${this.handleSlotChange}">
+                 ${
+            this.icon ?
+            this.renderFontIcon() :
+            ''}
+               </slot>
+             </span>` :
+            ''    }<!--
+      --></button>`;
   }
 
   /** @soyTemplate */
@@ -117,14 +138,16 @@ export abstract class Button extends LitElement {
   }
 
   /** @soyTemplate */
-  protected renderIcon(): TemplateResult {
+  protected renderTouchTarget(): TemplateResult {
     return html`
-      <span class="mdc-button__icon-slot-container ${
-        classMap(this.getIconContainerClasses())}">
-        <slot name="icon" @slotchange="${this.handleSlotChange}">
-          ${this.icon ? this.renderFontIcon() : ''}
-        </slot>
-     </span>
+      <span class="mdc-button__touch"></span>
+    `;
+  }
+
+  /** @soyTemplate */
+  protected renderLabel(): TemplateResult {
+    return html`
+      <span class="mdc-button__label">${this.label}</span>
     `;
   }
 
