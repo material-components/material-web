@@ -111,11 +111,7 @@ export class ButtonBase extends LitElement {
       <button
           id="button"
           class="mdc-button ${classMap(this.getRenderClasses())}"
-<<<<<<< HEAD
           .value="${this.value as unknown as string}">
-=======
-          .value="${live(this.value) as unknown as string}"
->>>>>>> d200836fdaeb9ae4f48853fd6a9c1f068b0e76f8
           ?disabled="${this.disabled}"
           aria-label="${this.label || this.icon}"
           aria-haspopup="${ifDefined(this.ariaHasPopup)}"
