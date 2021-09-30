@@ -137,6 +137,14 @@ describe('mwc-textfield:', () => {
       expect(input.getAttribute('aria-labelledby')).toBeNull();
     });
 
+    it('passes step as a string to allow for "any"', async () => {
+      await element.updateComplete;
+      const input = element.shadowRoot!.querySelector('input')!;
+      element.setAttribute('step', 'any');
+      await element.updateComplete;
+      expect(input.step).toEqual('any');
+    });
+
     afterEach(() => {
       if (fixt) {
         fixt.remove();

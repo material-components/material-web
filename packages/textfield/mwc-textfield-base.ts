@@ -166,7 +166,13 @@ export abstract class TextFieldBase extends FormElement {
 
   @property({type: String}) max: number|string = '';
 
-  @property({type: Number}) step: number|null = null;
+  /**
+   * step can be a number or the keyword "any".
+   *
+   * Use `String` typing to pass down the value as a string and let the native
+   * input cast internally as needed.
+   */
+  @property({type: String}) step: number|'any'|null = null;
 
   @property({type: Number}) size: number|null = null;
 
@@ -419,7 +425,8 @@ export abstract class TextFieldBase extends FormElement {
           pattern="${ifDefined(this.pattern ? this.pattern : undefined)}"
           min="${ifDefined(this.min === '' ? undefined : this.min as number)}"
           max="${ifDefined(this.max === '' ? undefined : this.max as number)}"
-          step="${ifDefined(this.step === null ? undefined : this.step)}"
+          step="${
+        ifDefined(this.step === null ? undefined : this.step as number)}"
           size="${ifDefined(this.size === null ? undefined : this.size)}"
           name="${ifDefined(this.name === '' ? undefined : this.name)}"
           inputmode="${ifDefined(this.inputMode)}"
