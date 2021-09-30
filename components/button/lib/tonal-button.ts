@@ -16,7 +16,7 @@ export class TonalButton extends Button {
   protected getRenderClasses(): ClassInfo {
     return {
       ...super.getRenderClasses(),
-      'mdc-button--tonal': true,
+      'md3-button--tonal': true,
     };
   }
 }

@@ -4,13 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
-
 @use '@material/touch-target/touch-target';
 
 @mixin static-styles() {
-  .mdc-button__touch {
+  .md3-button__touch {
     @include touch-target.touch-target;
   }
 }

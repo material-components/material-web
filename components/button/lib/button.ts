@@ -59,7 +59,7 @@ export abstract class Button extends LitElement {
   /** @soyTemplate */
   protected renderRipple(): TemplateResult|string {
     return this.shouldRenderRipple ?
-        html`<md-ripple class="mdc-button__ripple" .disabled="${
+        html`<md-ripple class="md3-button__ripple" .disabled="${
             this.disabled}"></md-ripple>` :
         '';
   }
@@ -79,7 +79,7 @@ export abstract class Button extends LitElement {
     return html`
       <button
           id="button"
-          class="mdc-button ${classMap(this.getRenderClasses())}"
+          class="md3-button ${classMap(this.getRenderClasses())}"
           ?disabled="${this.disabled}"
           aria-label="${this.ariaLabel || this.label}"
           aria-haspopup="${ifDefined(this.ariaHasPopup)}"
@@ -97,7 +97,7 @@ export abstract class Button extends LitElement {
         -->${this.renderTouchTarget()}<!--
         -->${
     // TODO(b/191914389): move to separate template
-    !this.trailingIcon ? html`<span class="mdc-button__icon-slot-container ${
+    !this.trailingIcon ? html`<span class="md3-button__icon-slot-container ${
                              classMap(this.getIconContainerClasses())}">
                                <slot name="icon" @slotchange="${
                              this.handleSlotChange}">
@@ -108,7 +108,7 @@ export abstract class Button extends LitElement {
         -->${this.renderLabel()}<!--
         -->${
         this.trailingIcon ?
-        html`<span class="mdc-button__icon-slot-container ${
+        html`<span class="md3-button__icon-slot-container ${
             classMap(this.getIconContainerClasses())}">
                <slot name="icon" @slotchange="${this.handleSlotChange}">
                  ${
@@ -124,30 +124,30 @@ export abstract class Button extends LitElement {
   /** @soyTemplate */
   protected getRenderClasses(): ClassInfo {
     return {
-      'mdc-button--icon-leading': !this.trailingIcon && this.hasIcon,
-      'mdc-button--icon-trailing': this.trailingIcon && this.hasIcon,
+      'md3-button--icon-leading': !this.trailingIcon && this.hasIcon,
+      'md3-button--icon-trailing': this.trailingIcon && this.hasIcon,
     };
   }
 
   /** @soyTemplate */
   protected getIconContainerClasses(): ClassInfo {
     return {
-      'mdc-button__icon--leading': !this.trailingIcon,
-      'mdc-button__icon--trailing': this.trailingIcon,
+      'md3-button__icon--leading': !this.trailingIcon,
+      'md3-button__icon--trailing': this.trailingIcon,
     };
   }
 
   /** @soyTemplate */
   protected renderTouchTarget(): TemplateResult {
     return html`
-      <span class="mdc-button__touch"></span>
+      <span class="md3-button__touch"></span>
     `;
   }
 
   /** @soyTemplate */
   protected renderLabel(): TemplateResult {
     return html`
-      <span class="mdc-button__label">${this.label}</span>
+      <span class="md3-button__label">${this.label}</span>
     `;
   }
 
@@ -155,7 +155,7 @@ export abstract class Button extends LitElement {
   /** @soyTemplate */
   protected renderFontIcon(): TemplateResult {
     return html`
-    <mwc-icon class="mdc-button__icon">
+    <mwc-icon class="md3-button__icon">
       ${this.icon}
     </mwc-icon>`;
   }

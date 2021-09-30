@@ -4,9 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
-
 @use 'sass:map';
 @use '@material/shape/shape';
 @use '@material/theme/keys';
@@ -75,7 +72,7 @@ $light-theme: map.merge(
 }
 
 @mixin _shape-radius($radius) {
-  .mdc-button__outline {
+  .md3-button__outline {
     @include shape.radius($radius);
   }
 }
@@ -103,18 +100,18 @@ $light-theme: map.merge(
 }
 
 @mixin _set-outline-color($color) {
-  .mdc-button__outline {
+  .md3-button__outline {
     @include theme.property(border-color, $color);
   }
 }
 
 @mixin _outline-width($width) {
-  .mdc-button__outline,
-  .mdc-button__ripple {
+  .md3-button__outline,
+  .md3-button__ripple {
     @include theme.property(border-width, $width);
   }
 
-  .mdc-button__ripple {
+  .md3-button__ripple {
     @include theme.property(
       width,
       'calc(100% - 2 * outline-width)',

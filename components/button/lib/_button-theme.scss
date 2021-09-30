@@ -4,9 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
-
 @use 'sass:map';
 @use '@material/ripple/ripple-theme';
 @use '@material/shape/shape';
@@ -132,7 +129,7 @@ $selectors: (
 @mixin _set-shape-radius($radius) {
   @include shape.radius($radius);
 
-  .mdc-button__ripple {
+  .md3-button__ripple {
     @include shape.radius($radius);
   }
 }
@@ -165,11 +162,11 @@ $selectors: (
 }
 
 @mixin container-with-icon-padding($icon-padding) {
-  &.mdc-button--icon-trailing {
+  &.md3-button--icon-trailing {
     @include theme.property(padding-inline-end, $icon-padding);
   }
 
-  &.mdc-button--icon-leading {
+  &.md3-button--icon-leading {
     @include theme.property(padding-inline-start, $icon-padding);
   }
 }

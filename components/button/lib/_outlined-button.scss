@@ -4,15 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
-
 @mixin static-styles() {
-  .mdc-button__outline {
+  .md3-button__outline {
     @include outline;
   }
 
-  .mdc-button--outlined .mdc-button__ripple {
+  .md3-button--outlined .md3-button__ripple {
     border-style: solid;
     border-color: transparent;
   }

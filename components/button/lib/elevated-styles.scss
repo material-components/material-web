@@ -4,15 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
-
 @use './elevated-button';
 @use './elevated-button-theme';
 
 @include elevated-button.static-styles();
 
-.mdc-button--elevated {
+.md3-button--elevated {
   @include elevated-button-theme.theme-styles(
     elevated-button-theme.$light-theme
   );

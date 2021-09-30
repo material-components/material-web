@@ -4,9 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
-
 @use '@material/elevation/elevation-theme';
 @use '@material/touch-target/touch-target';
 @use '@material/theme/selector-ext';
@@ -19,7 +16,7 @@
     }
   }
 
-  .mdc-button {
+  .md3-button {
     @include root;
 
     &:active {
@@ -31,7 +28,7 @@
     }
   }
 
-  .mdc-button__label {
+  .md3-button__label {
     // Necessary such that label is stacked on top of ripple
     // (since ripple is a positioned element, non-positioned elements
     // appear under it).

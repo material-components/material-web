@@ -17,12 +17,12 @@ export class OutlinedButton extends Button {
   protected override getRenderClasses(): ClassInfo {
     return {
       ...super.getRenderClasses(),
-      'mdc-button--outlined': true,
+      'md3-button--outlined': true,
     };
   }
 
   /** @soyTemplate */
   protected override renderOutline(): TemplateResult {
-    return html`<span class="mdc-button__outline"></span>`;
+    return html`<span class="md3-button__outline"></span>`;
   }
 }

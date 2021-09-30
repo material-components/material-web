@@ -16,7 +16,7 @@ export class FilledButton extends Button {
   protected override getRenderClasses(): ClassInfo {
     return {
       ...super.getRenderClasses(),
-      'mdc-button--filled': true,
+      'md3-button--filled': true,
     };
   }
 }

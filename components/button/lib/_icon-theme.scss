@@ -4,9 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
-
 @use 'sass:map';
 @use '@material/ripple/ripple-theme';
 @use '@material/theme/state';
@@ -54,7 +51,7 @@ $_selectors: button-theme.$selectors;
 
 @mixin _icon-color($color) {
   ::slotted(*),
-  .mdc-button__icon {
+  .md3-button__icon {
     @include theme.property(color, $color);
   }
 }
@@ -62,7 +59,7 @@ $_selectors: button-theme.$selectors;
 @mixin _set-icon-size($size-px) {
   $size-rem: typography.px-to-rem($size-px);
   ::slotted(*),
-  .mdc-button__icon {
+  .md3-button__icon {
     @include theme.property(font-size, $size-rem);
     @include theme.property(width, $size-rem);
     @include theme.property(height, $size-rem);

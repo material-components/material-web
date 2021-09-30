@@ -16,7 +16,7 @@ export class ElevatedButton extends Button {
   protected override getRenderClasses(): ClassInfo {
     return {
       ...super.getRenderClasses(),
-      'mdc-button--elevated': true,
+      'md3-button--elevated': true,
     };
   }
 }

@@ -16,7 +16,7 @@ export class TextButton extends Button {
   protected override getRenderClasses(): ClassInfo {
     return {
       ...super.getRenderClasses(),
-      'mdc-button--text': true,
+      'md3-button--text': true,
     };
   }
 }
