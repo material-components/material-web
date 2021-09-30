@@ -117,7 +117,7 @@ export abstract class Button extends LitElement {
             ''}
                </slot>
              </span>` :
-            ''    }<!--
+        ''}<!--
       --></button>`;
   }
 
