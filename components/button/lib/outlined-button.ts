@@ -23,8 +23,6 @@ export class OutlinedButton extends Button {
 
   /** @soyTemplate */
   protected override renderOutline(): TemplateResult {
-    return html`
-        <span class="mdc-button__outline"></span>
-        `;
+    return html`<span class="mdc-button__outline"></span>`;
   }
 }

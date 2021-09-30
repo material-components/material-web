@@ -11,7 +11,8 @@
   .mdc-button__outline {
     @include outline;
   }
-  .mdc-button__ripple {
+
+  .mdc-button--outlined .mdc-button__ripple {
     border-style: solid;
     border-color: transparent;
   }
