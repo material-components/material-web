@@ -21,7 +21,8 @@ export class OutlinedButton extends Button {
     };
   }
 
-  override renderOutline(): TemplateResult {
+  /** @soyTemplate */
+  protected override renderOutline(): TemplateResult {
     return html`
         <span class="mdc-button__outline"></span>
         `;
