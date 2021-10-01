@@ -11,21 +11,21 @@
   .md3-button__icon-slot-container {
     display: inline-flex;
 
-    ::slotted(*),
+    ::slotted([slot='icon']),
     .md3-button__icon {
       @include icon;
     }
   }
 
   .md3-button__icon--leading {
-    ::slotted(*),
+    ::slotted([slot='icon']),
     .md3-button__icon {
       @include icon-leading;
     }
   }
 
   .md3-button__icon--trailing {
-    ::slotted(*),
+    ::slotted([slot='icon']),
     .md3-button__icon {
       @include icon-trailing;
     }
