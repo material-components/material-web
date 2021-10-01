@@ -37,10 +37,6 @@ $light-theme: map.merge(
 
 @mixin theme($theme, $resolvers: resolvers.$material) {
   @include theme.validate-theme($light-theme, $theme);
-  $theme: elevation-theme.resolve-theme-elevation-keys(
-    $theme,
-    $resolvers: $resolvers
-  );
   @include keys.declare-custom-properties($theme, $_custom-property-prefix);
 }
 
