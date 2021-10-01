@@ -9,7 +9,9 @@
 @use '@material/theme/selector-ext';
 
 @mixin static-styles() {
-  :host {
+  // TODO(b/201687177): Remove once resolved
+  :host,
+  .md3-button__host {
     @include host-root;
     @include selector-ext.append-strict(&, '[disabled]') {
       @include disabled;
