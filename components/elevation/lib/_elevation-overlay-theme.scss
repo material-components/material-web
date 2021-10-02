@@ -1,0 +1,114 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use 'sass:map';
+@use '@material/theme/state';
+@use '@material/theme/theme';
+@use './level-utils';
+
+$_default-theme: (
+  surface-layer-tint-color: transparent,
+  overlay-opacity: 0,
+  focus-overlay-opacity: 0,
+  hover-overlay-opacity: 0,
+  pressed-overlay-opacity: 0,
+);
+
+$selectors: (
+  enabled: ':enabled',
+  disabled: ':disabled',
+  focus: ':focus',
+  hover: ':hover',
+  pressed: ':active',
+);
+
+@mixin theme-styles($theme, $selectors: $_selectors) {
+  @include _overlay-color(
+    (
+      default: map.get($theme, surface-layer-tint-color),
+    ),
+    $selectors
+  );
+
+  @include _overlay-opacity(
+    (
+      default: map.get($theme, overlay-opacity),
+      focus: map.get($theme, focus-overlay-opacity),
+      hover: map.get($theme, hover-overlay-opacity),
+      pressed: map.get($theme, pressed-overlay-opacity),
+    ),
+    $selectors
+  );
+}
+
+@mixin _overlay-color($color-map, $selectors: $_selectors) {
+  @include state.default($selectors) {
+    @include _set-overlay-color(state.get-default-state($color-map));
+  }
+}
+
+@mixin _set-overlay-color($color) {
+  .mdc-elevation-overlay {
+    @include theme.property(background-color, $color);
+  }
+}
+
+@mixin _overlay-opacity($opacity-map, $selectors: $_selectors) {
+  @include state.default($selectors) {
+    @include _set-overlay-opacity(state.get-default-state($opacity-map));
+  }
+
+  @include state.hover($selectors) {
+    @include _set-overlay-opacity(state.get-hover-state($opacity-map));
+  }
+
+  @include state.focus($selectors) {
+    @include _set-overlay-opacity(state.get-focus-state($opacity-map));
+  }
+
+  @include state.pressed($selectors) {
+    @include _set-overlay-opacity(state.get-pressed-state($opacity-map));
+  }
+}
+
+@mixin _set-overlay-opacity($opacity) {
+  .mdc-elevation-overlay {
+    @include theme.property(opacity, $opacity);
+  }
+}
+
+///
+/// Returns the appropriate shadow for the given dp and shadow color.
+///
+/// @throw If the provided dp does not map to an elevation level.
+/// @param {number|null} $dp - the dp of the elevation system
+/// @return {number|null} - the opacity or null
+///
+@function overlay-opacity-by-dp($dp) {
+  $level: level-utils.dp-to-level($dp);
+  @return get-overlay-opacity($level);
+}
+
+$_overlay-opacity: (
+  0: 0,
+  1: 0.05,
+  2: 0.08,
+  3: 0.11,
+  4: 0.12,
+  5: 0.14,
+);
+
+///
+/// Returns the appropriate overlay opacity for the given level.
+/// @param {number} $level - the level of the elevation system
+/// @return {number|null} - the opacity or null
+///
+@function get-overlay-opacity($level) {
+  @return map.get($_overlay-opacity, $level);
+}

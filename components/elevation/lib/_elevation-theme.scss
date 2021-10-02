@@ -1,0 +1,395 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use 'sass:map';
+@use 'sass:meta';
+@use '@material/theme/css';
+@use '@material/theme/custom-properties';
+@use '@material/theme/state';
+@use '@material/theme/theme';
+
+@use './level-utils';
+@use './elevation-overlay-theme';
+
+$_baseline-color: #000;
+$_key-opacity: 0.3;
+$_ambient-opacity: 0.15;
+
+$_shadow-map: (
+  0: (
+    key: '0px 0px 0px 0px',
+    ambient: '0px 0px 0px 0px',
+  ),
+  1: (
+    key: '0px 1px 2px 0px',
+    ambient: '0px 1px 3px 1px',
+  ),
+  2: (
+    key: '0px 1px 2px 0px',
+    ambient: '0px 2px 6px 2px',
+  ),
+  3: (
+    key: '0px 1px 3px 0px',
+    ambient: '0px 4px 8px 3px',
+  ),
+  4: (
+    key: '0px 2px 3px 0px',
+    ambient: '0px 6px 10px 4px',
+  ),
+  5: (
+    key: '0px 4px 4px 0px',
+    ambient: '0px 8px 12px 6px',
+  ),
+);
+
+///
+/// Represents the configurable values of the elevation theme.
+///
+$_theme-values: (
+  focus-shadow: null,
+  focus-overlay-opacity: null,
+  hover-shadow: null,
+  hover-overlay-opacity: null,
+  overlay-opacity: null,
+  pressed-overlay-opacity: null,
+  pressed-shadow: null,
+  shadow: null,
+);
+
+///
+/// Applies the shadow theme-styles with the given $resolver function.
+/// @param {Function} $resolver - a function that returns a valid theme config.
+///   @see resolver for an example and expected arguments and return value.
+/// Accepts the following optional keyword args:
+/// @param {Map} $elevation - A state map of DP levels in the elevation system.
+/// @param {String} $shadow-color - the color used for the shadow.
+///
+@mixin with-resolver(
+  $resolver,
+  $selectors: elevation-overlay-theme.$selectors,
+  $args...
+) {
+  @if $resolver {
+    @include theme-styles(
+      meta.call($resolver, $args...),
+      $selectors: $selectors
+    );
+  }
+}
+
+///
+/// Applies the given theme styles.
+/// @param {Map} $theme - @see $_theme-values for accepted theme properties.
+///
+@mixin theme-styles(
+  $theme: (),
+  $selectors: elevation-overlay-theme.$selectors
+) {
+  @include _box-shadow(
+    (
+      default: map.get($theme, shadow),
+      focus: map.get($theme, focus-shadow),
+      hover: map.get($theme, hover-shadow),
+      pressed: map.get($theme, pressed-shadow),
+    ),
+    $selectors: $selectors
+  );
+
+  @include elevation-overlay-theme.theme-styles(
+    (
+      overlay-opacity: map.get($theme, overlay-opacity),
+      focus-overlay-opacity: map.get($theme, focus-overlay-opacity),
+      hover-overlay-opacity: map.get($theme, hover-overlay-opacity),
+      pressed-overlay-opacity: map.get($theme, pressed-overlay-opacity),
+    ),
+    $selectors: $selectors
+  );
+}
+
+///
+/// Applies the styles for a state map of box shadows
+/// @param {Map} $shadow-map - state map of box shadow values
+/// @param {Map} $selectors - selector map for the state module
+///
+@mixin _box-shadow($shadow-map, $selectors) {
+  @include state.default($selectors) {
+    @include _set-box-shadow(state.get-default-state($shadow-map));
+  }
+
+  @include state.hover($selectors) {
+    @include _set-box-shadow(state.get-hover-state($shadow-map));
+  }
+
+  @include state.focus($selectors) {
+    @include _set-box-shadow(state.get-focus-state($shadow-map));
+  }
+
+  @include state.pressed($selectors) {
+    @include _set-box-shadow(state.get-pressed-state($shadow-map));
+  }
+}
+
+///
+/// Sets the box shadow of the element.
+///
+/// @param {String} $box-shadow - The shadow to apply to the element.
+///
+@mixin _set-box-shadow($box-shadow) {
+  @if custom-properties.is-custom-prop($box-shadow) {
+    // TODO(b/185188458): Use theme.property() once resolved.
+    $fallback: custom-properties.get-fallback($box-shadow);
+
+    // var(--<box-shadow-prop>, var(--elevation-box-shadow-for-gss))
+    $gss-custom-prop: custom-properties.create(
+      custom-properties.get-varname($box-shadow),
+      custom-properties.create(elevation-box-shadow-for-gss)
+    );
+
+    $value: custom-properties.create-var($gss-custom-prop);
+    @include css.declaration(box-shadow, $value, $fallback-value: $fallback);
+    @include custom-properties.declaration(
+      custom-properties.create(elevation-box-shadow-for-gss, $fallback)
+    );
+  } @else {
+    @include theme.property(box-shadow, $box-shadow);
+  }
+}
+
+///
+/// Returns the appropriate elevation theme for the given args.
+/// Warning: this is not to be called by end-user code. Any teams depending
+/// on this function are effectively out of SLO and will be expected to
+/// fix forward any unexpected breakages.
+///
+@function resolver($args...) {
+  $opts: meta.keywords($args);
+  $elevation-map: map.get($opts, elevation);
+  $shadow-color: map.get($opts, shadow-color);
+  $elevation-is-null: _is-map-null($elevation-map);
+
+  @if $elevation-is-null and $shadow-color == null {
+    @return ();
+  }
+
+  @if $elevation-is-null and $shadow-color != null {
+    @debug 'no elevation provided (both elevation and shadow-color are required)';
+    @return ();
+  }
+
+  @if $shadow-color == null and $elevation-is-null {
+    @debug 'no shadow-color provided (both shadow-color and elevation are required)';
+    @return ();
+  }
+
+  $shadow-map: _resolve-box-shadow($elevation-map, $shadow-color);
+  $opacity-map: _resolve-overlay-opacity($elevation-map);
+
+  $theme: (
+    shadow: state.get-default-state($shadow-map),
+    focus-shadow: state.get-focus-state($shadow-map),
+    hover-shadow: state.get-hover-state($shadow-map),
+    pressed-shadow: state.get-pressed-state($shadow-map),
+    overlay-opacity: state.get-default-state($opacity-map),
+    focus-overlay-opacity: state.get-focus-state($opacity-map),
+    hover-overlay-opacity: state.get-hover-state($opacity-map),
+    pressed-overlay-opacity: state.get-pressed-state($opacity-map),
+  );
+
+  // remove null values
+  $keys: map.keys($theme);
+  @each $key in $keys {
+    @if (map.get($theme, $key) == null) {
+      $theme: map.remove($theme, $key);
+    }
+  }
+
+  @return $theme;
+}
+
+@function _is-map-null($map-or-null) {
+  @if $map-or-null == null {
+    @return true;
+  }
+
+  $map: $map-or-null;
+  $keys: map.keys($map);
+  $is-null: true;
+  @each $key in $keys {
+    $is-null: map.get($map, $key) == null and $is-null;
+  }
+
+  @return $is-null;
+}
+
+///
+/// Resolves an elevation state map into a state map of box shadows
+/// @param {Map} $elevation-map - a state map of elevation DPs
+/// @param {color} $shadow-color - the color of the shadow
+/// @return {Map} - State map of box shadows
+///
+@function _resolve-box-shadow($elevation-map, $shadow-color) {
+  @return (
+    default:
+      _resolve-box-shadow-by-dp(
+        state.get-default-state($elevation-map),
+        $shadow-color
+      ),
+    focus:
+      _resolve-box-shadow-by-dp(
+        state.get-focus-state($elevation-map),
+        $shadow-color
+      ),
+    hover:
+      _resolve-box-shadow-by-dp(
+        state.get-hover-state($elevation-map),
+        $shadow-color
+      ),
+    pressed:
+      _resolve-box-shadow-by-dp(
+        state.get-pressed-state($elevation-map),
+        $shadow-color
+      )
+  );
+}
+
+///
+/// Resolves an elevation state map into a state map of overlay opacities
+/// @param {Map} $elevation-map - a state map of elevation DPs
+/// @return {Map} - State map of overlay opacities
+///
+@function _resolve-overlay-opacity($elevation-map) {
+  @return (
+    default:
+      _resolve-overlay-opacity-by-dp(state.get-default-state($elevation-map)),
+    focus: _resolve-overlay-opacity-by-dp(state.get-focus-state($elevation-map)),
+    hover: _resolve-overlay-opacity-by-dp(state.get-hover-state($elevation-map)),
+    pressed:
+      _resolve-overlay-opacity-by-dp(state.get-pressed-state($elevation-map))
+  );
+}
+
+///
+/// Resolves an elevation into a box-shadow
+/// @param {number|null} $elevation - The elevation in DPs
+/// @param {color} $shadow-color - The color of the shadow
+/// @return {string|null} - Box shadow for given elevation. null if elevation
+///     is null
+///
+@function _resolve-box-shadow-by-dp($elevation, $shadow-color) {
+  @if custom-properties.is-custom-prop($elevation) {
+    @return _resolve-custom-prop-shadow($elevation, $shadow-color);
+  }
+
+  @return _box-shadow-by-dp($elevation, $shadow-color);
+}
+
+///
+/// Resolves an elevation into an overlay-opacity
+/// @param {number|null} $elevation - The elevation in DPs
+/// @return {number|null} - Overlay opacity for given elevation. null if
+///     elevation is null
+///
+@function _resolve-overlay-opacity-by-dp($elevation) {
+  @if custom-properties.is-custom-prop($elevation) {
+    @return _resolve-custom-prop-overlay-opacity($elevation);
+  }
+
+  @return elevation-overlay-theme.overlay-opacity-by-dp($elevation);
+}
+
+///
+/// Resolve the shadow as a CSS custom property.
+///
+@function _resolve-custom-prop-shadow($elevation, $shadow-color) {
+  @if $elevation == null {
+    @return null;
+  }
+  $fallback-dp: custom-properties.get-fallback($elevation);
+  $fallback-shadow-color: custom-properties.get-fallback($shadow-color);
+  $elevation-varname: custom-properties.get-varname($elevation);
+
+  /// Create new custom properties derived from the elevation varname. These
+  /// will look like so:
+  /// --<prefix>-<component>-container-elevation-shadow
+
+  $shadow: custom-properties.create(
+    $elevation-varname + '-shadow',
+    _box-shadow-by-dp($fallback-dp, $fallback-shadow-color)
+  );
+
+  @return $shadow;
+}
+
+///
+/// Resolve the overlay opacity as a CSS custom property.
+///
+@function _resolve-custom-prop-overlay-opacity($elevation) {
+  @if $elevation == null {
+    @return null;
+  }
+  $fallback-dp: custom-properties.get-fallback($elevation);
+  $elevation-varname: custom-properties.get-varname($elevation);
+
+  /// Create new custom properties derived from the elevation varname. These
+  /// will look like so:
+  /// --<prefix>-<component>-container-elevation-overlay-opacity
+
+  $overlay-opacity: custom-properties.create(
+    $elevation-varname + '-overlay-opacity',
+    elevation-overlay-theme.overlay-opacity-by-dp($fallback-dp)
+  );
+
+  @return $overlay-opacity;
+}
+
+///
+/// Returns the appropriate shadow for the given dp and shadow color.
+///
+/// @throw If the provided dp does not map to an elevation level.
+/// @param {number|null} $dp - the elevation dp
+/// @param {color|null} $shadow-color - the color of the shadow
+/// @return {list|string|null} - the constructed shadow, none, or null
+///
+@function _box-shadow-by-dp($dp, $shadow-color) {
+  @if $dp == null {
+    @return null;
+  }
+
+  $level: level-utils.dp-to-level($dp);
+  @return _box-shadow-by-level($level, $shadow-color);
+}
+
+///
+/// Returns the appropriate shadow for the given level and shadow color.
+/// @param {number} $level - the level of the elevation system
+/// @param {color} $shadow-color - the color of the shadow
+/// @return {list|string|null} - the constructed shadow, none, or null
+///
+@function _box-shadow-by-level($level, $shadow-color) {
+  // 5 is the max level of GM elevation.
+  @if $level == null or $level < 0 or $level > 5 or $shadow-color == null {
+    @return null;
+  }
+
+  @if $level == 0 {
+    @return none;
+  }
+
+  $spread: map.get($_shadow-map, $level);
+  $key-spread: map.get($spread, key);
+  $ambient-spread: map.get($spread, ambient);
+  $colors: colors($shadow-color);
+  $key-color: map.get($colors, key);
+  $ambient-color: map.get($colors, ambient);
+  @return (#{$key-spread} #{$key-color}, #{$ambient-spread} #{$ambient-color});
+}
+
+@function colors($color) {
+  @return (
+    key: rgba($color, $_key-opacity),
+    ambient: rgba($color, $_ambient-opacity)
+  );
+}
