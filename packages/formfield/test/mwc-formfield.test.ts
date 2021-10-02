@@ -109,6 +109,27 @@ describe('mwc-formfield', () => {
         expect(numClicks).toEqual(1);
       });
 
+      it('formfield click propagates click and focus to control', async () => {
+        let numClicks = 0;
+        const origClick = control.click;
+
+        control.click = () => {
+          numClicks += 1;
+          origClick.call(control);
+        };
+
+        expect(control.checked).toBeFalse();
+        expect(fixt.shadowRoot!.activeElement).toEqual(null);
+        expect(numClicks).toEqual(0);
+        element.click();
+        await element.updateComplete;
+        await control.updateComplete;
+
+        expect(control.checked).toBeTrue();
+        expect(fixt.shadowRoot!.activeElement).toEqual(control);
+        expect(numClicks).toEqual(1);
+      });
+
       it('formfield will not double click control', async () => {
         let numClicks = 0;
         const origClick = control.click;

@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `textfield`
   - Change typing of `step` attribute to `String` to allow `step="any"` declaratively.
 
+### Added
+
+- `formfield`
+  - Forward `click()` calls to slotted element
+
 ## [v0.25.1] - 2021-09-20
 
 ### Changed

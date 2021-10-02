@@ -91,6 +91,10 @@ export class FormfieldBase extends BaseElement {
       </div>`;
   }
 
+  override click() {
+    this._labelClick();
+  }
+
   protected _labelClick() {
     const input = this.input;
     if (input) {
