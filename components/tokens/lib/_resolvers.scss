@@ -1,0 +1,16 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use 'sass:meta';
+@use '@material/mwc-../elevation/lib/elevation-theme';
+
+@function _material-elevation($args...) {
+  @return elevation-theme.resolver($args...);
+}
+
+$material: (
+  elevation: meta.get-function(_material-elevation),
+);
