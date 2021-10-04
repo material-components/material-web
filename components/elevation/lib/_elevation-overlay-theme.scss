@@ -36,9 +36,6 @@ $selectors: (
   @include _overlay-opacity(
     (
       default: map.get($theme, overlay-opacity),
-      focus: map.get($theme, focus-overlay-opacity),
-      hover: map.get($theme, hover-overlay-opacity),
-      pressed: map.get($theme, pressed-overlay-opacity),
     ),
     $selectors
   );

@@ -193,9 +193,6 @@ $_theme-values: (
     hover-shadow: state.get-hover-state($shadow-map),
     pressed-shadow: state.get-pressed-state($shadow-map),
     overlay-opacity: state.get-default-state($opacity-map),
-    focus-overlay-opacity: state.get-focus-state($opacity-map),
-    hover-overlay-opacity: state.get-hover-state($opacity-map),
-    pressed-overlay-opacity: state.get-pressed-state($opacity-map),
   );
 
   // remove null values
@@ -263,11 +260,7 @@ $_theme-values: (
 @function _resolve-overlay-opacity($elevation-map) {
   @return (
     default:
-      _resolve-overlay-opacity-by-dp(state.get-default-state($elevation-map)),
-    focus: _resolve-overlay-opacity-by-dp(state.get-focus-state($elevation-map)),
-    hover: _resolve-overlay-opacity-by-dp(state.get-hover-state($elevation-map)),
-    pressed:
-      _resolve-overlay-opacity-by-dp(state.get-pressed-state($elevation-map))
+      _resolve-overlay-opacity-by-dp(state.get-default-state($elevation-map))
   );
 }
 
