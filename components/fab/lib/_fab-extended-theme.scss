@@ -1,0 +1,34 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use 'sass:map';
+@use '@material/theme/keys';
+@use '@material/theme/theme';
+@use '@material/mwc-../tokens/lib/resolvers';
+@use './fab-shared-theme';
+
+$light-theme: ();
+
+@mixin theme() {
+  @include theme.validate-theme($light-theme, $theme);
+
+  $theme: _resolve-theme($theme, $resolvers);
+  @include keys.declare-custom-properties($theme, fab-extended);
+}
+
+@mixin theme-styles($theme, $resolvers) {
+  @include theme.validate-theme($light-theme, $theme);
+
+  $theme: keys.create-theme-properties($theme, fab);
+
+  @include fab-shared-theme.theme-styles($theme, $resolvers);
+
+  @include _set-container-height(map.get($theme, container-height));
+}
+
+@mixin _set-container-height($height) {
+  @include theme.property(height, $height);
+}

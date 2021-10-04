@@ -1,0 +1,74 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use 'sass:map';
+@use '@material/theme/keys';
+@use '@material/theme/theme';
+@use '@material/mwc-../tokens/lib/resolvers';
+@use './fab-shared-theme';
+
+$_elevation-1-dp: 1;
+$_elevation-2-dp: 3;
+$_elevation-3-dp: 6;
+$_elevation-4-dp: 8;
+
+$surface: #fff;
+$primary: #6200ee;
+$primary-state-layer: #6200ee;
+$primary-state-content: #6200ee;
+
+$light-theme: (
+  container-color: $surface,
+  container-elevation: $_elevation-3-dp,
+  container-height: 56px,
+  container-shadow-color: #000,
+  container-shape: 16px,
+  container-width: 56px,
+  focus-container-elevation: $_elevation-3-dp,
+  focus-icon-color: $primary-state-content,
+  focus-state-layer-color: $primary-state-layer,
+  focus-state-layer-opacity: 0.24,
+  hover-container-elevation: $_elevation-4-dp,
+  hover-icon-color: $primary-state-content,
+  hover-state-layer-color: $primary-state-layer,
+  hover-state-layer-opacity: 0.16,
+  icon-color: $primary,
+  icon-size: 24px,
+  lowered-container-elevation: $_elevation-1-dp,
+  lowered-focus-container-elevation: $_elevation-1-dp,
+  lowered-hover-container-elevation: $_elevation-2-dp,
+  lowered-pressed-container-elevation: $_elevation-1-dp,
+  pressed-container-elevation: $_elevation-3-dp,
+  pressed-icon-color: $primary-state-content,
+  pressed-state-layer-color: $primary-state-layer,
+  pressed-state-layer-opacity: 0.2,
+  surface-tint-layer-color: $primary,
+);
+
+@mixin theme($theme, $resolvers: resolvers.$material) {
+  @include theme.validate-theme($light-theme, $theme);
+
+  $theme: fab-shared-theme.resolve-theme($theme, $resolvers);
+  @include keys.declare-custom-properties($theme, fab);
+}
+
+@mixin theme-styles($theme, $resolvers: resolvers.$material) {
+  @include theme.validate-theme($light-theme, $theme);
+
+  $theme: keys.create-theme-properties($theme, fab);
+
+  @include fab-shared-theme.theme-styles($theme, $resolvers);
+
+  @include _set-container-dimensions(
+    map.get($theme, container-width),
+    map.get($theme, container-height)
+  );
+}
+
+@mixin _set-container-dimensions($width, $height) {
+  @include theme.property(width, $height);
+  @include theme.property(height, $height);
+}

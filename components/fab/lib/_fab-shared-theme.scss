@@ -1,0 +1,293 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use 'sass:map';
+@use 'sass:meta';
+@use '@material/theme/state';
+@use '@material/theme/theme';
+@use 'third_party/javascript/material_web_components/ripple/ripple-theme';
+@use '@material/shape/shape';
+@use '@material/mwc-../elevation/lib/elevation-overlay-theme';
+@use '@material/mwc-../elevation/lib/elevation-theme';
+@use '@material/mwc-../tokens/lib/resolvers';
+
+$selectors: (
+  // May have to change to :not(:disabled) if we decide to support anchor tags
+  enabled: ':enabled',
+  disabled: ':disabled',
+  focus: ':focus',
+  hover: ':hover',
+  pressed: ':active'
+);
+
+@mixin theme-styles($theme, $resolvers: resolvers.$material) {
+  @include _elevation(
+    (
+      default: map.get($theme, container-elevation),
+      hover: map.get($theme, hover-container-elevation),
+      focus: map.get($theme, focus-container-elevation),
+      pressed: map.get($theme, pressed-container-elevation),
+    ),
+    $shadow-color: map.get($theme, container-shadow-color),
+    $resolver: map.get($resolvers, elevation)
+  );
+
+  @include _lowered-elevation(
+    (
+      default: map.get($theme, lowered-container-elevation),
+      hover: map.get($theme, lowered-hover-container-elevation),
+      focus: map.get($theme, lowered-focus-container-elevation),
+      pressed: map.get($theme, lowered-pressed-container-elevation),
+    ),
+    $shadow-color: map.get($theme, container-shadow-color),
+    $resolver: map.get($resolvers, elevation)
+  );
+
+  @include elevation-overlay-theme.theme-styles(
+    (
+      surface-tint-layer-color: map.get($theme, surface-tint-layer-color),
+    ),
+    $selectors
+  );
+
+  @include _container-fill-color(
+    (
+      default: map.get($theme, container-color),
+    )
+  );
+
+  @include _set-container-shape(map.get($theme, container-shape));
+
+  @include _icon-color(
+    (
+      default: map.get($theme, icon-color),
+      hover: map.get($theme, hover-icon-color),
+      focus: map.get($theme, focus-icon-color),
+      pressed: map.get($theme, pressed-icon-color),
+    )
+  );
+
+  @include _set-icon-size(map.get($theme, icon-size));
+
+  @include ripple-theme.theme(
+    (
+      hover-state-layer-color: map.get($theme, hover-state-layer-color),
+      focus-state-layer-color: map.get($theme, focus-state-layer-color),
+      pressed-state-layer-color: map.get($theme, pressed-state-layer-color),
+      hover-state-layer-opacity: map.get($theme, hover-state-layer-opacity),
+      focus-state-layer-opacity: map.get($theme, focus-state-layer-opacity),
+      pressed-state-layer-opacity: map.get($theme, pressed-state-layer-opacity),
+    )
+  );
+}
+
+@mixin _lowered-elevation($elevation-map, $shadow-color, $resolver) {
+  &.md3-fab--lowered {
+    @include _elevation($elevation-map, $shadow-color, $resolver);
+  }
+}
+
+@mixin _elevation($elevation-map, $shadow-color, $resolver) {
+  @include elevation-theme.with-resolver(
+    $resolver,
+    $selectors: $selectors,
+    $elevation: $elevation-map,
+    $shadow-color: $shadow-color
+  );
+}
+
+@mixin _container-fill-color($color-or-map) {
+  @include state.default($selectors) {
+    @include _set-container-fill-color(state.get-default-state($color-or-map));
+  }
+}
+
+@mixin _set-container-fill-color($color) {
+  @include theme.property(background-color, $color);
+}
+
+@mixin _set-container-shape($radius) {
+  &,
+  .md3-fab__ripple {
+    @include shape.radius($radius);
+  }
+}
+
+@mixin _icon-color($color-or-map) {
+  @include state.default($selectors) {
+    @include _set-icon-color(state.get-default-state($color-or-map));
+  }
+
+  @include state.hover($selectors) {
+    @include _set-icon-color(state.get-hover-state($color-or-map));
+  }
+
+  @include state.focus($selectors) {
+    @include _set-icon-color(state.get-focus-state($color-or-map));
+  }
+
+  @include state.pressed($selectors) {
+    @include _set-icon-color(state.get-pressed-state($color-or-map));
+  }
+}
+
+@mixin _set-icon-color($color) {
+  .md3-fab__icon {
+    @include theme.property(color, $color);
+  }
+}
+
+@mixin _set-icon-size($size) {
+  .md3-fab__icon {
+    @include theme.property(width, $size);
+    @include theme.property(height, $size);
+    @include theme.property(--mdc-icon-size, $size);
+  }
+}
+
+@mixin state($ripple-theme) {
+  .md3-fab__ripple {
+    @include ripple-theme.theme($ripple-theme);
+  }
+}
+
+@function resolve-theme($theme, $resolvers) {
+  @return map.merge(
+    $theme,
+    _resolve-theme-elevation(
+      $theme,
+      map.get($resolvers, elevation),
+      $elevation-map: (
+        default: map.get($theme, container-elevation),
+        focus: map.get($theme, focus-container-elevation),
+        hover: map.get($theme, hover-container-elevation),
+        pressed: map.get($theme, pressed-container-elevation)
+      ),
+      $lowered-elevation-map: (
+        default: map.get($theme, lowered-container-elevation),
+        focus: map.get($theme, lowered-focus-container-elevation),
+        hover: map.get($theme, lowered-hover-container-elevation),
+        pressed: map.get($theme, lowered-pressed-container-elevation)
+      )
+    )
+  );
+}
+
+@function _resolve-theme-elevation(
+  $theme,
+  $resolver,
+  $elevation-map,
+  $lowered-elevation-map
+) {
+  @if $resolver == null {
+    @return $theme;
+  }
+
+  // Resolve the value for each state key.
+  $elevation-theme: meta.call(
+    $resolver,
+    $elevation: $elevation-map,
+    $shadow-color: map.get($theme, container-shadow-color)
+  );
+
+  $lowered-elevation-theme: meta.call(
+    $resolver,
+    $elevation: $lowered-elevation-map,
+    $shadow-color: map.get($theme, container-shadow-color)
+  );
+
+  $resolved-theme-values: _elevation-theme-to-fab-theme-props(
+    $elevation-theme,
+    $lowered-elevation-theme
+  );
+
+  // clean up unresolved elevation vals
+  $theme: map.remove(
+    $theme,
+    container-shadow-color,
+    container-elevation,
+    focus-container-elevation,
+    hover-container-elevation,
+    pressed-container-elevation,
+    lowered-container-elevation,
+    lowered-focus-container-elevation,
+    lowered-hover-container-elevation,
+    lowered-pressed-container-elevation
+  );
+
+  // Update the theme with the resolved value.
+  $resolved-theme: map.merge($theme, $resolved-theme-values);
+
+  @return $resolved-theme;
+}
+
+///
+/// Transforms an elevation theme and a lowered theme into fab theme props.
+///    @example
+///      (
+///        shadow: X,
+///        overlay-opacity: Y,
+///        hover-shadow: A,
+///        hover-overlay-opacity: B
+///      ) -> (
+///        container-elevation-shadow: X,
+///        container-overlay-opacity: Y,
+///        hover-container-elevation-shadow: A,
+///        hover-container-overlay-opacity: B
+///      )
+/// @param {Map} $elevation-theme - A theme for elevation
+///     @see elevation-theme.$_theme-values
+/// @param {Map} $lowered-elevation-theme - A theme for elevation for lowered
+///     fab values @see elevation-theme.$_theme-values
+/// @return {Map} - A theme map of elevation values to be turned into custom
+///     props.
+///
+@function _elevation-theme-to-fab-theme-props(
+  $elevation-theme,
+  $lowered-elevation-theme
+) {
+  $resolved-theme-values: (
+    container-elevation-shadow: map.get($elevation-theme, shadow),
+    container-elevation-overlay-opacity:
+      map.get($elevation-theme, overlay-opacity),
+    focus-container-elevation-shadow: map.get($elevation-theme, focus-shadow),
+    focus-container-elevation-overlay-opacity:
+      map.get($elevation-theme, focus-overlay-opacity),
+    hover-container-elevation-shadow: map.get($elevation-theme, hover-shadow),
+    hover-container-elevation-overlay-opacity:
+      map.get($elevation-theme, hover-overlay-opacity),
+    pressed-container-elevation-shadow:
+      map.get($elevation-theme, pressed-shadow),
+    pressed-container-elevation-overlay-opacity:
+      map.get($elevation-theme, pressed-overlay-opacity),
+    lowered-container-elevation-shadow:
+      map.get($lowered-elevation-theme, shadow),
+    lowered-container-elevation-overlay-opacity:
+      map.get($lowered-elevation-theme, overlay-opacity),
+    lowered-focus-container-elevation-shadow:
+      map.get($lowered-elevation-theme, focus-shadow),
+    lowered-focus-container-elevation-overlay-opacity:
+      map.get($lowered-elevation-theme, focus-overlay-opacity),
+    lowered-hover-container-elevation-shadow:
+      map.get($lowered-elevation-theme, hover-shadow),
+    lowered-hover-container-elevation-overlay-opacity:
+      map.get($lowered-elevation-theme, hover-overlay-opacity),
+    lowered-pressed-container-elevation-shadow:
+      map.get($lowered-elevation-theme, pressed-shadow),
+    lowered-pressed-container-elevation-overlay-opacity:
+      map.get($lowered-elevation-theme, pressed-overlay-opacity),
+  );
+
+  // remove null values
+  $keys: map.keys($resolved-theme-values);
+  @each $key in $keys {
+    @if (map.get($resolved-theme-values, $key) == null) {
+      $resolved-theme-values: map.remove($resolved-theme-values, $key);
+    }
+  }
+
+  @return $resolved-theme-values;
+}
