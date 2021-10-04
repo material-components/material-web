@@ -4,16 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
-
 @use 'sass:map';
 @use '@material/theme/state';
 @use '@material/theme/theme';
 @use './level-utils';
 
 $_default-theme: (
-  surface-layer-tint-color: transparent,
+  surface-tint-layer-color: transparent,
   overlay-opacity: 0,
   focus-overlay-opacity: 0,
   hover-overlay-opacity: 0,
@@ -31,7 +28,7 @@ $selectors: (
 @mixin theme-styles($theme, $selectors: $_selectors) {
   @include _overlay-color(
     (
-      default: map.get($theme, surface-layer-tint-color),
+      default: map.get($theme, surface-tint-layer-color),
     ),
     $selectors
   );
@@ -54,7 +51,7 @@ $selectors: (
 }
 
 @mixin _set-overlay-color($color) {
-  .mdc-elevation-overlay {
+  .md3-elevation-overlay {
     @include theme.property(background-color, $color);
   }
 }
@@ -78,7 +75,7 @@ $selectors: (
 }
 
 @mixin _set-overlay-opacity($opacity) {
-  .mdc-elevation-overlay {
+  .md3-elevation-overlay {
     @include theme.property(opacity, $opacity);
   }
 }

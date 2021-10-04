@@ -4,11 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
-
 @mixin static-styles() {
-  .mdc-elevation-overlay {
+  .md3-elevation-overlay {
     position: absolute;
     inset: 0;
     border-radius: inherit;
