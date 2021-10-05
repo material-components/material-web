@@ -17,7 +17,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/mwc-base": "^0.25.1",
-    "@material/tab-indicator": "=14.0.0-canary.586e740dd.0",
+    "@material/tab-indicator": "=14.0.0-canary.2ac92d766.0",
     "lit": "^2.0.0",
     "tslib": "^2.0.1"
   },
