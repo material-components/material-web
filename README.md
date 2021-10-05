@@ -1,12 +1,15 @@
-# Material Web Components
+# Material Web
 
 [![Test Status](https://github.com/material-components/material-web/workflows/tests/badge.svg?branch=master)](https://github.com/material-components/material-web/actions?query=workflow%3Atests+branch%3Amaster) [![GitHub issues by-label](https://img.shields.io/github/issues-raw/material-components/material-web/Type:%20Bug)](https://github.com/material-components/material-web/issues?q=is%3Aissue+is%3Aopen+label%3A%22Type%3A+Bug%22)
 
-> IMPORTANT: The Material Web Components are a work in progress and subject to major changes until 1.0 release.
+> IMPORTANT: Material Web is a work in progress and subject to major changes until 1.0 release.
 
-The Material Web Components (MWC) are a collection of [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) maintained by Google that implement [Material Design](https://material.io/design/).
+Material Web is Google’s UI toolkit for building beautiful, accessible web applications. Material Web is implemented as a collection of [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components). 
 
-We are working to implement the latest design system: [Material You](https://material.io/blog/announcing-material-you). Users of this library should expect some big changes as we work to improve our codebase and ease of use and implement the newest Material Design.
+The Material team is currently working on [Material You](https://material.io/blog/announcing-material-you) (Material Design 3)
+support for Material components. 
+
+Developers using this library should expect some big changes as we work to improve our codebase and ease of use and implement the newest Material Design.
 
 A few notable changes you should expect:
 - UX changes as we adopt the new designs (production users will definitely want to pin to an appropriate release, not mainline)
@@ -97,7 +100,7 @@ Import the component's JavaScript module, use the component in your HTML, and co
     <!-- Use Web Components in your HTML like regular built-in elements. -->
     <mwc-button id="myButton" label="Click Me!" raised></mwc-button>
 
-    <!-- The Material Web Components use standard JavaScript modules. -->
+    <!-- Material Web uses standard JavaScript modules. -->
     <script type="module">
 
       // Importing this module registers <mwc-button> as an element that you
@@ -129,7 +132,7 @@ npx web-dev-server --node-resolve
 
 ## Bare module specifiers
 
-The Material Web Components are published as standard [JavaScript modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) that use *bare module specifiers*. Bare module specifiers are not yet supported by browsers, so it is necessary to use a tool that transforms
+Material Web is published as standard [JavaScript modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) that use *bare module specifiers*. Bare module specifiers are not yet supported by browsers, so it is necessary to use a tool that transforms
 them to a *path* (for example from `@material/mwc-button` to `./node_modules/@material/mwc-button/mwc-button.js`).
 
 Two great choices for tools that do this are:
@@ -148,7 +151,7 @@ render correctly:
 <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
 ```
 
-The Material Web Components default to using the [Roboto](https://fonts.google.com/specimen/Roboto) font for text, and the [Material Icons](https://google.github.io/material-design-icons/) font for icons. These fonts
+Material Web defaults to using the [Roboto](https://fonts.google.com/specimen/Roboto) font for text, and the [Material Icons](https://google.github.io/material-design-icons/) font for icons. These fonts
 are *not* automatically loaded, so it is the application's responsiblity to ensure that they are loaded.
 
 Note that if you load the Material Icons font in a different way to the recommendation shown above, be sure to include [`font-display: block`](https://google.github.io/material-design-icons/) in your `@font-face` CSS rule. This prevents icons from initially displaying their raw *ligature* text before the font has loaded. The `<link>` tag recommended above automaticaly handles this setting.
@@ -156,7 +159,7 @@ Note that if you load the Material Icons font in a different way to the recommen
 
 ## Supporting older browsers
 
-The Material Web Components use modern browser features that are natively supported in the latest versions of Chrome, Safari, Firefox, and Edge. IE11 and some older versions of other browsers are also supported, but they require additional build steps and polyfills.
+Material Web uses modern browser features that are natively supported in the latest versions of Chrome, Safari, Firefox, and Edge. IE11 and some older versions of other browsers are also supported, but they require additional build steps and polyfills.
 
 <table>
   <tr>
@@ -221,7 +224,7 @@ If you support IE11 or other older browsers that do not support the latest versi
 Clone and setup the repo:
 
 ```sh
-git clone git@github.com:material-components/material-components-web-components.git mwc
+git clone git@github.com:material-components/material-web.git mwc
 cd mwc
 npm install
 npm run build
