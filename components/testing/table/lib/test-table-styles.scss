@@ -1,0 +1,14 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use './test-table-theme';
+@use './test-table';
+
+@include test-table.static-styles;
+
+.md-test-table {
+  @include test-table-theme.theme-styles(test-table-theme.$light-theme);
+}

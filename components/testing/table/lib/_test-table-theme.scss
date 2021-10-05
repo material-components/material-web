@@ -1,0 +1,78 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use 'sass:map';
+@use '@material/theme/color-palette';
+@use '@material/theme/keys';
+@use '@material/theme/theme';
+
+$light-theme: (
+  container-color: white,
+  container-image:
+    url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABGdBTUEAALGPC/xhBQAAAB1JREFUGBlj/PHjx38GYgCxCpmIMQykZlQh3pACANu2B+A7h+tPAAAAAElFTkSuQmCC),
+  header-background-color: color-palette.$grey-100,
+  header-color: color-palette.$grey-800,
+  outline-color: color-palette.$grey-300,
+);
+
+$dark-theme: (
+  container-color: color-palette.$grey-900,
+  container-image:
+    url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAAXNSR0IArs4c6QAAAB1JREFUGBlj/PHjhyoDMYBYhUzEGAZSM6oQb0gBAEsKBizlVJKDAAAAAElFTkSuQmCC),
+  header-background-color: color-palette.$grey-800,
+  header-color: color-palette.$grey-100,
+  outline-color: color-palette.$grey-700,
+);
+
+@mixin theme($theme) {
+  @include theme.validate-theme($light-theme, $theme);
+  @include keys.declare-custom-properties($theme, test-table);
+}
+
+@mixin theme-styles($theme) {
+  @include theme.validate-theme($light-theme, $theme);
+
+  $theme: keys.create-theme-properties($theme, test-table);
+
+  @include _container-color(map.get($theme, container-color));
+  @include _container-image(map.get($theme, container-image));
+  @include _header-background-color(map.get($theme, header-background-color));
+  @include _header-color(map.get($theme, header-color));
+  @include _outline-color(map.get($theme, outline-color));
+}
+
+@mixin _container-color($color) {
+  .md-test-table {
+    @include theme.property(background, $color);
+  }
+}
+
+@mixin _container-image($image) {
+  .md-test-table__body {
+    @include theme.property(background-image, $image);
+  }
+}
+
+@mixin _outline-color($color) {
+  .md-test-table,
+  .md-test-table__cell {
+    @include theme.property(border-color, $color);
+  }
+}
+
+@mixin _header-background-color($color) {
+  .md-test-table__cell--header,
+  .md-test-table__cell--caption {
+    @include theme.property(background, $color);
+  }
+}
+
+@mixin _header-color($color) {
+  .md-test-table__cell--header,
+  .md-test-table__cell--caption {
+    @include theme.property(color, $color);
+  }
+}

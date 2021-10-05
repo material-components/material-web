@@ -1,0 +1,10 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@forward './lib/test-table-theme' show
+  $light-theme,
+  $dark-theme,
+  theme;
