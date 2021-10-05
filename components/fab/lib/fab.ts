@@ -13,7 +13,7 @@ import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {html, LitElement, TemplateResult} from 'lit';
 import {eventOptions, property, queryAsync, state} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
 /**
  * Fab Base class logic and template definition
@@ -75,7 +75,7 @@ export class Fab extends LitElement {
   }
 
   /** @soyTemplate */
-  protected getRootClasses(): {[className: string]: boolean} {
+  protected getRootClasses(): ClassInfo {
     return {'md3-fab--lowered': this.lowered};
   }
 

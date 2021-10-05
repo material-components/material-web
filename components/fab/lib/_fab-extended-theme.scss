@@ -6,29 +6,126 @@
 
 @use 'sass:map';
 @use '@material/theme/keys';
+@use '@material/theme/state';
 @use '@material/theme/theme';
+@use '@material/typography/typography';
 @use '@material/mwc-../tokens/lib/resolvers';
 @use './fab-shared-theme';
 
-$light-theme: ();
+$_elevation-1-dp: 1;
+$_elevation-2-dp: 3;
+$_elevation-3-dp: 6;
+$_elevation-4-dp: 8;
 
-@mixin theme() {
+$surface: #fff;
+$primary: #6200ee;
+$primary-state-layer: #6200ee;
+$primary-state-content: #6200ee;
+
+$light-theme: (
+  container-color: $surface,
+  container-elevation: $_elevation-3-dp,
+  container-height: 56px,
+  container-shadow-color: #000,
+  container-shape: 16px,
+  focus-container-elevation: $_elevation-3-dp,
+  focus-icon-color: $primary-state-content,
+  focus-label-text-color: $primary-state-content,
+  focus-state-layer-color: $primary-state-layer,
+  focus-state-layer-opacity: 0.24,
+  hover-container-elevation: $_elevation-4-dp,
+  hover-icon-color: $primary-state-content,
+  hover-label-text-color: $primary-state-content,
+  hover-state-layer-color: $primary-state-layer,
+  hover-state-layer-opacity: 0.16,
+  icon-color: $primary,
+  icon-size: 24px,
+  label-text-color: $primary,
+  label-text-font: typography.get-font(button),
+  label-text-line-height: 20px,
+  label-text-size: 14px,
+  label-text-tracking: typography.get-tracking(button),
+  label-text-weight: typography.get-weight(button),
+  lowered-container-elevation: $_elevation-1-dp,
+  lowered-focus-container-elevation: $_elevation-1-dp,
+  lowered-hover-container-elevation: $_elevation-2-dp,
+  lowered-pressed-container-elevation: $_elevation-1-dp,
+  pressed-container-elevation: $_elevation-3-dp,
+  pressed-icon-color: $primary-state-content,
+  pressed-label-text-color: $primary-state-content,
+  pressed-state-layer-color: $primary-state-layer,
+  pressed-state-layer-opacity: 0.2,
+  surface-tint-layer-color: $primary,
+);
+
+@mixin theme($theme, $resolvers: resolvers.$material) {
   @include theme.validate-theme($light-theme, $theme);
 
-  $theme: _resolve-theme($theme, $resolvers);
+  $theme: fab-shared-theme.resolve-theme($theme, $resolvers);
   @include keys.declare-custom-properties($theme, fab-extended);
 }
 
-@mixin theme-styles($theme, $resolvers) {
+@mixin theme-styles($theme, $resolvers: resolvers.$material) {
   @include theme.validate-theme($light-theme, $theme);
 
-  $theme: keys.create-theme-properties($theme, fab);
+  $theme: keys.create-theme-properties($theme, fab-extended);
 
   @include fab-shared-theme.theme-styles($theme, $resolvers);
 
   @include _set-container-height(map.get($theme, container-height));
+
+  @include _label-color(
+    (
+      default: map.get($theme, label-text-color),
+      focus: map.get($theme, focus-label-text-color),
+      hover: map.get($theme, hover-label-text-color),
+      pressed: map.get($theme, pressed-label-text-color),
+    )
+  );
+
+  @include _label-typography(
+    (
+      font: map.get($theme, label-text-font),
+      line-height: map.get($theme, label-text-line-height),
+      size: map.get($theme, label-text-size),
+      weight: map.get($theme, label-text-weight),
+      tracking: map.get($theme, label-text-tracking),
+    )
+  );
 }
 
 @mixin _set-container-height($height) {
   @include theme.property(height, $height);
+}
+
+@mixin _label-color($color-or-map) {
+  @include state.default(fab-shared-theme.$selectors) {
+    @include _set-label-color(state.get-default-state($color-or-map));
+  }
+
+  @include state.hover(fab-shared-theme.$selectors) {
+    @include _set-label-color(state.get-hover-state($color-or-map));
+  }
+
+  @include state.focus(fab-shared-theme.$selectors) {
+    @include _set-label-color(state.get-focus-state($color-or-map));
+  }
+
+  @include state.pressed(fab-shared-theme.$selectors) {
+    @include _set-label-color(state.get-pressed-state($color-or-map));
+  }
+}
+
+@mixin _set-label-color($color) {
+  .md3-fab__label {
+    @include theme.property(color, $color);
+  }
+}
+
+@mixin _label-typography($typography-map) {
+  @include theme.property(font-family, map.get($typography-map, font));
+  @include theme.property(line-height, map.get($typography-map, line-height));
+  @include theme.property(font-size, map.get($typography-map, size));
+  @include theme.property(font-weight, map.get($typography-map, weight));
+  @include theme.property(letter-spacing, map.get($typography-map, tracking));
 }

@@ -1,0 +1,28 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use 'third_party/javascript/material_web_components/icon/_mwc-icon';
+@use 'third_party/javascript/material_web_components/m3/elevation/lib/surface';
+@use '@material/theme/selector-ext';
+
+@mixin static-styles() {
+  .md3-fab.md3-fab--extended {
+    @include root;
+
+    .md3-fab__label {
+      @include label;
+    }
+  }
+}
+
+@mixin root() {
+  box-sizing: border-box;
+  padding: 16px;
+}
+
+@mixin label() {
+  padding-inline-start: 12px;
+}
