@@ -6,11 +6,12 @@
 
 @use 'sass:map';
 @use 'sass:meta';
-@use '@material/elevation/elevation-theme';
 @use '@material/ripple/ripple-theme';
 @use '@material/theme/state';
 @use '@material/theme/theme';
-@use '@material/tokens/resolvers';
+@use 'third_party/javascript/material_web_components/m3/tokens/resolvers';
+@use 'third_party/javascript/material_web_components/m3/elevation/lib/elevation-theme';
+@use 'third_party/javascript/material_web_components/m3/elevation/lib/elevation-overlay-theme';
 
 @use './button-theme';
 
@@ -27,50 +28,30 @@ $_selectors: button-theme.$selectors;
       hover: map.get($theme, hover-container-elevation),
       pressed: map.get($theme, pressed-container-elevation)
     ),
-    $shadow-color: map.get($theme, container-shadow-color)
+    $shadow-color: map.get($theme, container-shadow-color),
+    $overlay-tint-color: map.get($theme, surface-tint-layer-color)
   );
 }
 
-@mixin _elevation($elevation-resolver, $elevation-map, $shadow-color) {
-  @include state.default($_selectors) {
-    @include elevation-theme.with-resolver(
-      $elevation-resolver,
-      $elevation: state.get-default-state($elevation-map),
-      $shadow-color: $shadow-color
-    );
-  }
+@mixin _elevation(
+  $elevation-resolver,
+  $elevation-map,
+  $shadow-color,
+  $overlay-tint-color
+) {
+  @include elevation-theme.with-resolver(
+    $elevation-resolver,
+    $selectors: $_selectors,
+    $elevation: $elevation-map,
+    $shadow-color: $shadow-color
+  );
 
-  @include state.focus($_selectors) {
-    @include elevation-theme.with-resolver(
-      $elevation-resolver,
-      $elevation: state.get-focus-state($elevation-map),
-      $shadow-color: $shadow-color
-    );
-  }
-
-  @include state.hover($_selectors) {
-    @include elevation-theme.with-resolver(
-      $elevation-resolver,
-      $elevation: state.get-hover-state($elevation-map),
-      $shadow-color: $shadow-color
-    );
-  }
-
-  @include state.pressed($_selectors) {
-    @include elevation-theme.with-resolver(
-      $elevation-resolver,
-      $elevation: state.get-pressed-state($elevation-map),
-      $shadow-color: $shadow-color
-    );
-  }
-
-  @include state.disabled($_selectors) {
-    @include elevation-theme.with-resolver(
-      $elevation-resolver,
-      $elevation: state.get-disabled-state($elevation-map),
-      $shadow-color: $shadow-color
-    );
-  }
+  @include elevation-overlay-theme.theme-styles(
+    (
+      surface-tint-layer-color: $overlay-tint-color,
+    ),
+    $selectors: $_selectors
+  );
 }
 
 @function resolve-theme-elevation-keys($theme, $resolver) {
@@ -88,7 +69,16 @@ $_selectors: button-theme.$selectors;
   );
 
   @each $key in $elevation-keys {
-    $elevation: map.get($theme, $key);
+    // Unlike `theme-styles`, which delegates to elevation module to resolve
+    // each state's elevation and place it under the correct selector, for
+    // runtime theming the state is managed here and the elevation resolver is
+    // passed a stateless (default state) value. This allows us to cleanly
+    // attach each state's resolved value to its corresponding key in
+    // $elevation-keys, without worrying about having to strip state prefixes
+    // from the resolved keys to match the `theme-styles` CSS custom prop names.
+    $elevation: (
+      default: map.get($theme, $key),
+    );
     $resolved-value: meta.call(
       $resolver,
       $elevation: $elevation,

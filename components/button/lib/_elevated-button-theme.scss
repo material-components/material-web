@@ -7,7 +7,7 @@
 @use 'sass:map';
 @use '@material/theme/keys';
 @use '@material/theme/theme';
-@use '@material/tokens/resolvers';
+@use 'third_party/javascript/material_web_components/m3/tokens/resolvers';
 @use './button-theme';
 @use './elevation-theme';
 @use './icon-theme';
@@ -17,21 +17,21 @@ $light-theme: map.merge(
   button-theme.$light-theme,
   (
     container-color: #6200ee,
-    container-elevation: 2,
+    container-elevation: 1,
     container-shadow-color: #000,
     disabled-container-color: rgba(#000, 0.12),
     disabled-container-elevation: 0,
     disabled-label-text-color: rgba(#000, 0.38),
-    focus-container-elevation: 4,
+    focus-container-elevation: 1,
     focus-label-text-color: #fff,
     focus-state-layer-color: #fff,
     focus-state-layer-opacity: 0.24,
-    hover-container-elevation: 4,
+    hover-container-elevation: 3,
     hover-label-text-color: #fff,
     hover-state-layer-color: #fff,
     hover-state-layer-opacity: 0.08,
     label-text-color: #fff,
-    pressed-container-elevation: 8,
+    pressed-container-elevation: 1,
     pressed-label-text-color: #fff,
     pressed-state-layer-color: #fff,
     pressed-state-layer-opacity: 0.24,

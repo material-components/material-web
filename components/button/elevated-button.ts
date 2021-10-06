@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {styles as elevationOverlayStyles} from 'google3/third_party/javascript/material_web_components/m3/elevation/lib/elevation-overlay-styles.css';
 import {customElement} from 'lit/decorators.js';
 
 import {ElevatedButton as ElevatedButtonBase} from './lib/elevated-button';
@@ -22,5 +23,6 @@ declare global {
  */
 @customElement('md-elevated-button')
 export class ElevatedButton extends ElevatedButtonBase {
-  static override styles = [sharedStyles, elevatedStyles];
+  static override styles =
+      [elevationOverlayStyles, sharedStyles, elevatedStyles];
 }

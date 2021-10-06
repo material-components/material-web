@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-@use '@material/elevation/elevation-theme';
 @use '@material/touch-target/touch-target';
 @use '@material/theme/selector-ext';
+@use 'third_party/javascript/material_web_components/m3/elevation/lib/surface' as elevation-surface;
 
 @mixin static-styles() {
   // TODO(b/201687177): Remove once resolved
@@ -51,8 +51,9 @@
 }
 
 @mixin root() {
+  @include elevation-surface.root-static-styles();
+
   display: inline-flex;
-  position: relative;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
@@ -65,7 +66,6 @@
   vertical-align: middle;
   background: transparent;
   text-decoration: none;
-  transition: elevation-theme.transition-value();
 
   &::-moz-focus-inner {
     padding: 0;

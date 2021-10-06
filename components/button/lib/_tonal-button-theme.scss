@@ -7,7 +7,7 @@
 @use 'sass:map';
 @use '@material/theme/keys';
 @use '@material/theme/theme';
-@use '@material/tokens/resolvers';
+@use 'third_party/javascript/material_web_components/m3/tokens/resolvers';
 @use './button-theme';
 @use './elevation-theme';
 @use './icon-theme';
