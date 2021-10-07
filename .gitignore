@@ -2,6 +2,7 @@ node_modules
 /build
 /coverage
 .DS_Store
+.*.sw[nop]
 /lerna-debug.log
 /gh-pages
 /packages/**/*.js
