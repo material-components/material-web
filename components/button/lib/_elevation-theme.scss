@@ -69,23 +69,26 @@ $_selectors: button-theme.$selectors;
   );
 
   @each $key in $elevation-keys {
-    // Unlike `theme-styles`, which delegates to elevation module to resolve
-    // each state's elevation and place it under the correct selector, for
-    // runtime theming the state is managed here and the elevation resolver is
-    // passed a stateless (default state) value. This allows us to cleanly
-    // attach each state's resolved value to its corresponding key in
-    // $elevation-keys, without worrying about having to strip state prefixes
-    // from the resolved keys to match the `theme-styles` CSS custom prop names.
-    $elevation: (
-      default: map.get($theme, $key),
-    );
-    $resolved-value: meta.call(
-      $resolver,
-      $elevation: $elevation,
-      $shadow-color: $shadow-color
-    );
-    // Update the key with the resolved value.
-    $theme: map.set($theme, $key, $resolved-value);
+    $elevation-level: map.get($theme, $key);
+    @if $elevation-level != null {
+      // Unlike `theme-styles`, which delegates to elevation module to resolve
+      // each state's elevation and place it under the correct selector, for
+      // runtime theming the state is managed here and the elevation resolver is
+      // passed a stateless (default state) value. This allows us to cleanly
+      // attach each state's resolved value to its corresponding key in
+      // $elevation-keys, without worrying about having to strip state prefixes
+      // from the resolved keys to match the `theme-styles` CSS custom prop names.
+      $elevation: (
+        default: $elevation-level,
+      );
+      $resolved-value: meta.call(
+        $resolver,
+        $elevation: $elevation,
+        $shadow-color: $shadow-color
+      );
+      // Update the key with the resolved value.
+      $theme: map.set($theme, $key, $resolved-value);
+    }
   }
   @return $theme;
 }
