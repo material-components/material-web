@@ -15,8 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import {style as elevationStyle} from '@material/mwc-elevation-overlay/mwc-elevation-overlay-css';
-import {LitElement, css, html} from 'lit-element';
-import {styleMap} from 'lit-html/directives/style-map';
+import {LitElement, css, html} from 'lit';
+import {styleMap} from 'lit/directives/style-map.js';
 
 import '../shared/demo-header';
 

@@ -17,7 +17,7 @@ limitations under the License.
 import '@material/mwc-snackbar';
 import '@material/mwc-checkbox';
 
-import {html} from 'lit-html';
+import {html} from 'lit';
 
 import {measureFixtureCreation} from '../../util/helpers';
 

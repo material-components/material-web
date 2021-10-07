@@ -16,7 +16,7 @@ limitations under the License.
 */
 import '@material/mwc-slider';
 import '@material/mwc-checkbox';
-import {html} from 'lit-html';
+import {html} from 'lit';
 import {measureFixtureCreation} from '../../util/helpers';
 
 measureFixtureCreation(html`

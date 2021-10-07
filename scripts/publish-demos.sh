@@ -30,7 +30,7 @@ cat <<-EOF >gh-pages/package.json
   "name": "demos",
   "private": true,
   "dependencies": {
-    "lit-element": "^2.0.0",
+    "lit": "^2.0.0",
     "@webcomponents/webcomponentsjs": "^2.0.0"
   }
 }

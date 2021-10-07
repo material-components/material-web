@@ -16,7 +16,7 @@
  */
 import '@material/mwc-list/mwc-list-item';
 
-import {html} from 'lit-html';
+import {html} from 'lit';
 
 import {measureFixtureCreation} from '../../util/helpers';
 

@@ -19,7 +19,7 @@ import '@material/mwc-list/mwc-list-item';
 
 import {ListItem} from '@material/mwc-list/mwc-list-item';
 import {Menu} from '@material/mwc-menu';
-import {html} from 'lit-html';
+import {html} from 'lit';
 
 import {measureFixtureCreation} from '../../util/helpers';
 
