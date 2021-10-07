@@ -81,7 +81,7 @@ export abstract class Button extends LitElement {
           id="button"
           class="md3-button ${classMap(this.getRenderClasses())}"
           ?disabled="${this.disabled}"
-          aria-label="${this.ariaLabel || this.label}"
+          aria-label="${ifDefined(this.ariaLabel)}"
           aria-haspopup="${ifDefined(this.ariaHasPopup)}"
           @focus="${this.handleRippleFocus}"
           @blur="${this.handleRippleBlur}"
