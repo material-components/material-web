@@ -144,6 +144,7 @@ $selectors: (
   .md3-fab__icon {
     @include theme.property(width, $size);
     @include theme.property(height, $size);
+    @include theme.property(font-size, $size);
     @include theme.property(--mdc-icon-size, $size);
   }
 }

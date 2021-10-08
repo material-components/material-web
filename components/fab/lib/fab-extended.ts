@@ -7,12 +7,16 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {html} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {ClassInfo} from 'lit/directives/class-map.js';
 
-import {Fab} from './fab';
+import {FabShared} from './fab-shared';
 
-export class FabExtended extends Fab {
+/**
+ * Fab Extended Base class logic and template definition
+ * @soyCompatible
+ */
+export class FabExtended extends FabShared {
   /** @soyTemplate */
   protected override getRootClasses(): ClassInfo {
     return {
@@ -22,7 +26,7 @@ export class FabExtended extends Fab {
   }
 
   /** @soyTemplate */
-  protected override renderLabel() {
+  protected override renderLabel(): TemplateResult {
     return html`<span class="md3-fab__label">${this.label}</span>`;
   }
 }

@@ -4,4 +4,4 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-@forward "./lib/fab-theme" show theme;
+@forward "./lib/fab-theme" show theme, $light-theme, $dark-theme;
