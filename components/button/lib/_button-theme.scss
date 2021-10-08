@@ -12,13 +12,13 @@
 @use '@material/typography/typography';
 
 $light-theme: (
-  container-height: 36px,
-  container-shape: 4px,
+  container-height: 40px,
+  container-shape: 100px,
   label-text-font: typography.get-font(button),
-  label-text-size: typography.get-size(button),
-  label-text-tracking: typography.get-tracking(button),
-  label-text-transform: uppercase,
-  label-text-weight: typography.get-weight(button),
+  label-text-size: 14px,
+  label-text-tracking: typography.px-to-rem(0.1px),
+  label-text-transform: none,
+  label-text-weight: 500,
   with-icon-icon-size: 18px,
 );
 
