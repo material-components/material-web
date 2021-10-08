@@ -9,9 +9,7 @@
 @use '@material/theme/selector-ext';
 
 @mixin static-styles() {
-  :host,
-  // remove once b/b/201687177 is resolved
-  .md3-fab__host {
+  :host {
     @include host-root;
     @include selector-ext.append-strict(&, '[disabled]') {
       @include disabled;

@@ -3,8 +3,9 @@
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
-@use './fab-extended-theme';
+
 @use './fab-extended';
+@use './fab-extended-theme';
 
 @include fab-extended.static-styles();
 
