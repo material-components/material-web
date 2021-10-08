@@ -4,4 +4,24 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// TODO(b/177366329): Import and export filled field web component
+import {customElement} from 'lit/decorators';
+
+import {FilledField} from './lib/filled-field';
+import {styles as filledStyles} from './lib/filled-styles.css';
+import {styles as sharedStyles} from './lib/shared-styles.css';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'md-filled-field': MdFilledField;
+  }
+}
+
+/**
+ * @soyCompatible
+ * @final
+ * @suppress {const}
+ */
+@customElement('md-filled-field')
+export class MdFilledField extends FilledField {
+  static styles = [sharedStyles, filledStyles];
+}

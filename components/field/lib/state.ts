@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {LabelType} from './constants';
-
 export interface FieldState {
   disabled: boolean;
   error: boolean;
@@ -15,6 +13,11 @@ export interface FieldState {
   populated: boolean;
   required: boolean;
   visibleLabelType: LabelType;
+}
+
+export enum LabelType {
+  FLOATING = 'floating',
+  RESTING = 'resting',
 }
 
 export interface FieldAdapter {

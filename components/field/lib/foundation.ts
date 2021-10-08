@@ -4,16 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCObserverFoundation} from '@material/base/observer-foundation';
+import {ObserverFoundation} from '../../controller/observer-foundation';
 
-import {FieldAdapter} from './adapter';
-import {LabelType} from './constants';
+import {FieldAdapter, LabelType} from './state';
 
-export class FieldFoundation extends MDCObserverFoundation<FieldAdapter> {
-  constructor(adapter: FieldAdapter) {
-    super(adapter);
-  }
-
+export class FieldFoundation extends ObserverFoundation<FieldAdapter> {
   override init() {
     this.observe(this.adapter.state, {
       disabled: this.onDisabledChange,
