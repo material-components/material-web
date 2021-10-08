@@ -4,4 +4,4 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/// TODO: Client theming entrypoint for component variant.
+@forward "./lib/filled-button-theme" show theme, $light-theme;
