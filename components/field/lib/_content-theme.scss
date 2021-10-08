@@ -10,7 +10,6 @@
 @use 'sass:map';
 @use '@material/theme/color-palette';
 @use '@material/theme/state';
-@use '@material/theme/theme';
 @use './field-theme';
 
 $_selectors: field-theme.$selectors;
@@ -49,7 +48,7 @@ $light-theme: (
   // Content elements provided to the field (such as <input>) may use
   // `currentColor` to inherit this property.
   .mdc-field__content {
-    @include theme.property(color, $color);
+    color: $color;
   }
 }
 
@@ -65,6 +64,6 @@ $light-theme: (
 
 @mixin _set-content-opacity($opacity) {
   .mdc-field__content {
-    @include theme.property(opacity, $opacity);
+    opacity: $opacity;
   }
 }

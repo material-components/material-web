@@ -5,7 +5,6 @@
  */
 
 @use 'sass:map';
-@use '@material/theme/theme';
 
 $light-theme: (
   container-height: 56px,
@@ -24,5 +23,5 @@ $selectors: (
 }
 
 @mixin _container-height($height) {
-  @include theme.property(min-height, $height);
+  min-height: $height;
 }

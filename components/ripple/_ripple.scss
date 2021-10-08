@@ -12,7 +12,6 @@
 @use '@material/ripple/ripple-theme';
 @use '@material/theme/theme';
 @use '@material/theme/theme-color';
-@use '@material/theme/custom-properties';
 
 @mixin static-styles() {
   :host {

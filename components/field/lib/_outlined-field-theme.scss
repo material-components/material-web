@@ -11,11 +11,10 @@
 @use 'sass:map';
 @use '@material/shape/shape';
 @use '@material/theme/color-palette';
-@use '@material/theme/custom-properties';
-@use '@material/theme/keys';
 @use '@material/theme/state';
 @use '@material/theme/theme-color';
-@use '@material/theme/theme';
+@use '@material/mwc-../sass/theme';
+@use '@material/mwc-../sass/var';
 @use './content-theme';
 @use './field-theme';
 @use './label-theme';
@@ -39,26 +38,31 @@ $light-theme: map.merge(
     disabled-outline-color: color-palette.$grey-800,
     disabled-outline-opacity: 0.12,
     error-hover-outline-color: $_error-state-content,
-    error-outline-color: error,
-    focus-outline-color: primary,
+    error-outline-color: theme-color.$error,
+    focus-outline-color: theme-color.$primary,
     focus-outline-width: 2px,
     hover-outline-color: color-palette.$grey-900,
     outline-color: color-palette.$grey-600,
     outline-label-padding: 4px,
     outline-width: 1px,
-    shape: small,
+    shape: shape.$small-component-radius,
   )
 );
 
 @mixin theme($theme) {
-  @include theme.validate-theme($light-theme, $theme);
-  @include keys.declare-custom-properties($theme, outlined-field);
+  $theme: theme.create-theme-vars(
+    theme.validate-theme($light-theme, $theme),
+    outlined-field
+  );
+
+  @include theme.emit-theme-vars($theme, outlined-field);
 }
 
 @mixin theme-styles($theme) {
-  @include theme.validate-theme($light-theme, $theme);
-
-  $theme: keys.create-theme-properties($theme, outlined-field);
+  $theme: theme.create-theme-vars(
+    theme.validate-theme-tokens($light-theme, $theme),
+    outlined-field
+  );
 
   @include field-theme.theme-styles($theme);
   @include content-theme.theme-styles($theme);
@@ -106,51 +110,35 @@ $light-theme: map.merge(
     // Outlined variant start section uses min-width instead of padding since it
     // needs to add start/end padding to add extra space as needed for shape and
     // label padding.
-    @include theme.property(min-width, $padding);
+    min-width: $padding;
   }
 }
 
 @mixin _outline-label-padding($padding) {
-  $replace: (
-    value: $padding,
-  );
-
   .mdc-field__outline-start,
   .mdc-field__start::before {
-    @include theme.property(padding-inline-end, $padding);
+    padding-inline-end: $padding;
   }
 
   .mdc-field__outline-start::before,
   .mdc-field__outline-start::after {
-    @include theme.property(margin-inline-end, $padding);
+    margin-inline-end: $padding;
   }
 
   .mdc-field__outline-notch {
-    @include theme.property(padding, 0 value, $replace: $replace);
-    @include theme.property(
-      margin-inline-start,
-      'calc(-1 * value)',
-      $replace: $replace
-    );
-    @include theme.property(margin-inline-end, $padding);
+    padding: 0 $padding;
+    margin-inline-start: calc(-1 * $padding);
+    margin-inline-end: $padding;
   }
 
   .mdc-field__outline-end {
-    @include theme.property(
-      margin-inline-start,
-      'calc(-1 * value)',
-      $replace: $replace
-    );
+    margin-inline-start: calc(-1 * $padding);
   }
 }
 
 @mixin _outline-notch-max-width($container-padding-horizontal) {
   .mdc-field__outline-notch {
-    @include theme.property(
-      max-width,
-      'calc(100% - 2 * value)',
-      $replace: (value: $container-padding-horizontal)
-    );
+    max-width: calc(100% - 2 * $container-padding-horizontal);
   }
 }
 
@@ -174,7 +162,7 @@ $light-theme: map.merge(
 
 @mixin _set-outline-color($color) {
   .mdc-field__outline {
-    @include theme.property(border-color, $color);
+    border-color: $color;
   }
 }
 
@@ -200,7 +188,7 @@ $light-theme: map.merge(
   .mdc-field__outline-start,
   .mdc-field__outline-end,
   .mdc-field__outline-panel-inactive {
-    @include theme.property(opacity, $opacity);
+    opacity: $opacity;
   }
 }
 
@@ -215,16 +203,12 @@ $light-theme: map.merge(
   .mdc-field__outline-panel-inactive,
   .mdc-field__outline-panel-inactive::before,
   .mdc-field__outline-panel-inactive::after {
-    @include theme.property(border-width, $width);
+    border-width: $width;
   }
 
   .mdc-field__label--floating {
     // Center the label within the outline stroke
-    @include theme.property(
-      transform,
-      'translateY(calc(-50% + width / 2))',
-      $replace: (width: $width)
-    );
+    transform: translateY(calc(-50% + $width / 2));
   }
 }
 
@@ -234,27 +218,18 @@ $light-theme: map.merge(
   .mdc-field__outline-panel-active,
   .mdc-field__outline-panel-active::before,
   .mdc-field__outline-panel-active::after {
-    @include theme.property(border-width, $width);
+    border-width: $width;
   }
 }
 
 @mixin _shape($shape) {
-  // TODO(b/183660124): support percentages relative to density
-  $component-height: 56px;
   .mdc-field__outline {
-    @include shape.radius(
-      $shape,
-      $rtl-reflexive: true,
-      $component-height: $component-height
-    );
+    border-radius: $shape;
   }
 
   .mdc-field__outline-start,
   .mdc-field__start::before,
   .mdc-field__end::after {
-    @include theme.property(
-      padding-inline-start,
-      shape.resolve-radius($shape, $component-height: $component-height)
-    );
+    padding-inline-start: $shape;
   }
 }

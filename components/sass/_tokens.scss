@@ -1,0 +1,33 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:meta';
+
+/// Combines one or more token parts into a token.
+///
+/// @example - scss
+///   $key: combine(body, font-size);
+///   // body-font-size
+///
+/// @param {String...} $parts - Arbitrary number of string token parts to
+///     combine.
+/// @return {String} A combined token string.
+@function combine($parts...) {
+  // Allow extra keywords to be passed to other functions without impacting this
+  // function, which does not expect any keywords.
+  $unused: meta.keywords($parts);
+  $token: '';
+  @each $part in $parts {
+    @if $part {
+      @if $token == '' {
+        $token: $part;
+      } @else {
+        $token: #{$token}-#{$part};
+      }
+    }
+  }
+
+  @return $token;
+}

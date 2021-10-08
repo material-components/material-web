@@ -11,10 +11,10 @@
 @use 'sass:map';
 @use '@material/theme/color-palette';
 @use '@material/shape/shape';
-@use '@material/theme/keys';
 @use '@material/theme/state';
 @use '@material/theme/theme-color';
-@use '@material/theme/theme';
+@use '@material/mwc-../sass/theme';
+@use '@material/mwc-../sass/var';
 @use './content-theme';
 @use './field-theme';
 @use './label-theme';
@@ -48,21 +48,26 @@ $light-theme: map.merge(
     hover-state-layer-color: color-palette.$grey-800,
     hover-state-layer-opacity: 0.08,
     hover-stroke-color: color-palette.$grey-900,
-    shape: small,
+    shape: shape.$small-component-radius,
     stroke-color: color-palette.$grey-700,
     stroke-width: 1px,
   )
 );
 
 @mixin theme($theme) {
-  @include theme.validate-theme($light-theme, $theme);
-  @include keys.declare-custom-properties($theme, filled-field);
+  $theme: theme.create-theme-vars(
+    theme.validate-theme($light-theme, $theme),
+    filled-field
+  );
+
+  @include theme.emit-theme-vars($theme);
 }
 
 @mixin theme-styles($theme) {
-  @include theme.validate-theme($light-theme, $theme);
-
-  $theme: keys.create-theme-properties($theme, filled-field);
+  $theme: theme.create-theme-vars(
+    theme.validate-theme-tokens($light-theme, $theme),
+    filled-field
+  );
 
   @include field-theme.theme-styles($theme);
   @include content-theme.theme-styles($theme);
@@ -135,7 +140,7 @@ $light-theme: map.merge(
 @mixin _set-container-color($color) {
   .mdc-field__container {
     &::before {
-      @include theme.property(background, $color);
+      background: $color;
     }
   }
 }
@@ -143,7 +148,7 @@ $light-theme: map.merge(
 @mixin _set-container-hover-color($color) {
   .mdc-field__container {
     &::after {
-      @include theme.property(background, $color);
+      background: $color;
     }
   }
 }
@@ -164,7 +169,7 @@ $light-theme: map.merge(
 @mixin _set-container-opacity($opacity) {
   .mdc-field__container {
     &::before {
-      @include theme.property(opacity, $opacity);
+      opacity: $opacity;
     }
   }
 }
@@ -172,44 +177,40 @@ $light-theme: map.merge(
 @mixin _set-container-hover-opacity($opacity) {
   .mdc-field__container {
     &::after {
-      @include theme.property(opacity, $opacity);
+      opacity: $opacity;
     }
   }
 }
 
 @mixin _container-padding-horizontal($padding) {
   .mdc-field__start {
-    @include theme.property(padding-inline-start, $padding);
+    padding-inline-start: $padding;
   }
 
   .mdc-field__end {
-    @include theme.property(padding-inline-end, $padding);
+    padding-inline-end: $padding;
   }
 }
 
 @mixin _container-padding-vertical($padding) {
   .mdc-field__container {
-    @include theme.property(padding-top, $padding);
-    @include theme.property(padding-bottom, $padding);
+    padding-top: $padding;
+    padding-bottom: $padding;
   }
 }
 
 @mixin _floating-label-text-line-height($line-height) {
   &:not(.mdc-field--no-label) {
     .mdc-field__middle {
-      @include theme.property(padding-top, $line-height);
+      padding-top: $line-height;
     }
   }
 }
 
 @mixin _shape($shape) {
   .mdc-field__container {
-    // TODO(b/177368168): support percentages relative to density
-    @include shape.radius(
-      shape.mask-radius($shape, 1 1 0 0),
-      $rtl-reflexive: true,
-      $component-height: 56px
-    );
+    border-start-start-radius: $shape;
+    broder-start-end-radius: $shape;
   }
 }
 
@@ -234,13 +235,13 @@ $light-theme: map.merge(
 
 @mixin _set-stroke-color($color) {
   .mdc-field__stroke::before {
-    @include theme.property(border-bottom-color, $color);
+    border-bottom-color: $color;
   }
 }
 
 @mixin _set-stroke-focus-color($color) {
   .mdc-field__stroke::after {
-    @include theme.property(border-bottom-color, $color);
+    border-bottom-color: $color;
   }
 }
 
@@ -262,7 +263,7 @@ $light-theme: map.merge(
 
 @mixin _set-stroke-opacity($opacity) {
   .mdc-field__stroke::before {
-    @include theme.property(opacity, $opacity);
+    opacity: $opacity;
   }
 }
 
@@ -270,17 +271,11 @@ $light-theme: map.merge(
   .mdc-field__stroke {
     // Default/focus are on different elements and do not need state selectors
     &::before {
-      @include theme.property(
-        border-bottom-width,
-        state.get-default-state($widths)
-      );
+      border-bottom-width: state.get-default-state($widths);
     }
 
     &::after {
-      @include theme.property(
-        border-bottom-width,
-        state.get-focus-state($widths)
-      );
+      border-bottom-width: state.get-focus-state($widths);
     }
   }
 }

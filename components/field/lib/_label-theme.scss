@@ -8,7 +8,6 @@
 // Selector '.mdc-*' should only be used in this project.
 
 @use 'sass:map';
-@use '@material/theme/theme';
 
 $light-theme: (
   label-text-line-height: 24px,
@@ -45,6 +44,6 @@ $light-theme: (
 }
 
 @mixin _set-label-text-font($font) {
-  @include theme.property(font-size, map.get($font, size));
-  @include theme.property(line-height, map.get($font, line-height));
+  font-size: map.get($font, size);
+  line-height: map.get($font, line-height);
 }
