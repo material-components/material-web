@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+
+## [v0.25.1] - 2021-10-11
+
 ### Fixed
 
 - `textfield`
