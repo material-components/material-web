@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Fixed
+
+- Updated deprecated `lit-element` imports to `lit` in generated `.css.js`
+  files.
 
 ## [v0.25.1] - 2021-10-11
 
@@ -13,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - `textfield`
   - Change typing of `step` attribute to `String` to allow `step="any"` declaratively.
+- Updated deprecated `lit-element` imports to `lit`.
 
 ### Added
 
