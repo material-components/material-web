@@ -5,10 +5,10 @@
 
 @use 'sass:map';
 @use 'sass:meta';
+@use '@material/shape/shape';
 @use '@material/theme/state';
 @use '@material/theme/theme';
 @use 'third_party/javascript/material_web_components/ripple/ripple-theme';
-@use '@material/shape/shape';
 @use '@material/mwc-../elevation/lib/elevation-overlay-theme';
 @use '@material/mwc-../elevation/lib/elevation-theme';
 @use '@material/mwc-../tokens/lib/resolvers';

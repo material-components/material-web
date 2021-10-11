@@ -3,4 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-@forward "./lib/tonal-button-theme" show theme, $light-theme;
+@forward './lib/tonal-button-theme' show
+  $light-theme,
+  theme;

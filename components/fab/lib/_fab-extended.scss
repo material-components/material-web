@@ -4,8 +4,6 @@
 //
 
 @use 'third_party/javascript/material_web_components/icon/_mwc-icon';
-@use 'third_party/javascript/material_web_components/m3/elevation/lib/surface';
-@use '@material/theme/selector-ext';
 
 @mixin static-styles() {
   .md3-fab.md3-fab--extended {
