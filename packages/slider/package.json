@@ -16,10 +16,10 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/dom": "=14.0.0-canary.353ca7e9f.0",
+    "@material/dom": "=14.0.0-canary.c78ff0429.0",
     "@material/mwc-base": "^0.25.1",
     "@material/mwc-ripple": "^0.25.1",
-    "@material/slider": "=14.0.0-canary.353ca7e9f.0",
+    "@material/slider": "=14.0.0-canary.c78ff0429.0",
     "lit": "^2.0.0",
     "tslib": "^2.0.1"
   },
