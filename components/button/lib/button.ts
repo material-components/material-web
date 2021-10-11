@@ -37,7 +37,7 @@ export abstract class Button extends LitElement {
 
   @property({type: Boolean}) hasIcon = false;
 
-  @query('#button') buttonElement!: HTMLElement;
+  @query('.md3-button') buttonElement!: HTMLElement;
 
   @queryAsync('md-ripple') ripple!: Promise<Ripple|null>;
 
@@ -71,14 +71,13 @@ export abstract class Button extends LitElement {
 
   /**
    * @soyTemplate
-   * @soyAttributes buttonAttributes: #button
-   * @soyClasses buttonClasses: #button
+   * @soyAttributes buttonAttributes: .md3-button
+   * @soyClasses buttonClasses: .md3-button
    */
   protected override render(): TemplateResult {
     // TODO(b/182405623): restore whitespace
     return html`
       <button
-          id="button"
           class="md3-button ${classMap(this.getRenderClasses())}"
           ?disabled="${this.disabled}"
           aria-label="${ifDefined(this.ariaLabel)}"
