@@ -11,12 +11,13 @@
 $_default-theme: (
   surface-tint-layer-color: transparent,
   overlay-opacity: 0,
+  disabled-overlay-opacity: 0,
   focus-overlay-opacity: 0,
   hover-overlay-opacity: 0,
   pressed-overlay-opacity: 0,
 );
 
-$selectors: (
+$_selectors: (
   enabled: ':enabled',
   disabled: ':disabled',
   focus: ':focus',
@@ -25,28 +26,18 @@ $selectors: (
 );
 
 @mixin theme-styles($theme, $selectors: $_selectors) {
-  @include _overlay-color(
-    (
-      default: map.get($theme, surface-tint-layer-color),
-    ),
-    $selectors
-  );
+  @include _set-overlay-color(map.get($theme, surface-tint-layer-color));
 
   @include _overlay-opacity(
     (
       default: map.get($theme, overlay-opacity),
+      disabled: map.get($theme, disabled-overlay-opacity),
       focus: map.get($theme, focus-overlay-opacity),
       hover: map.get($theme, hover-overlay-opacity),
       pressed: map.get($theme, pressed-overlay-opacity),
     ),
     $selectors
   );
-}
-
-@mixin _overlay-color($color-map, $selectors: $_selectors) {
-  @include state.default($selectors) {
-    @include _set-overlay-color(state.get-default-state($color-map));
-  }
 }
 
 @mixin _set-overlay-color($color) {
@@ -58,6 +49,10 @@ $selectors: (
 @mixin _overlay-opacity($opacity-map, $selectors: $_selectors) {
   @include state.default($selectors) {
     @include _set-overlay-opacity(state.get-default-state($opacity-map));
+  }
+
+  @include state.disabled($selectors) {
+    @include _set-overlay-opacity(state.get-disabled-state($opacity-map));
   }
 
   @include state.hover($selectors) {

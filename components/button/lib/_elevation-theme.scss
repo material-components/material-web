@@ -48,8 +48,7 @@ $_selectors: button-theme.$selectors;
   @include elevation-overlay-theme.theme-styles(
     (
       surface-tint-layer-color: $overlay-tint-color,
-    ),
-    $selectors: $_selectors
+    )
   );
 }
 

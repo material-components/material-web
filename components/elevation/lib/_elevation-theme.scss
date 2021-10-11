@@ -48,6 +48,8 @@ $_shadow-map: (
 /// Represents the configurable values of the elevation theme.
 ///
 $_theme-values: (
+  disabled-shadow: null,
+  disabled-overlay-opacity: null,
   focus-shadow: null,
   focus-overlay-opacity: null,
   hover-shadow: null,
@@ -90,6 +92,7 @@ $_theme-values: (
   @include _box-shadow(
     (
       default: map.get($theme, shadow),
+      disabled: map.get($theme, disabled-shadow),
       focus: map.get($theme, focus-shadow),
       hover: map.get($theme, hover-shadow),
       pressed: map.get($theme, pressed-shadow),
@@ -100,6 +103,7 @@ $_theme-values: (
   @include elevation-overlay-theme.theme-styles(
     (
       overlay-opacity: map.get($theme, overlay-opacity),
+      disabled-overlay-opacity: map.get($theme, disabled-overlay-opacity),
       focus-overlay-opacity: map.get($theme, focus-overlay-opacity),
       hover-overlay-opacity: map.get($theme, hover-overlay-opacity),
       pressed-overlay-opacity: map.get($theme, pressed-overlay-opacity),
@@ -128,6 +132,10 @@ $_theme-values: (
 
   @include state.pressed($selectors) {
     @include _set-box-shadow(state.get-pressed-state($shadow-map));
+  }
+
+  @include state.disabled($selectors) {
+    @include _set-box-shadow(state.get-disabled-state($shadow-map));
   }
 }
 
@@ -188,10 +196,12 @@ $_theme-values: (
 
   $theme: (
     shadow: state.get-default-state($shadow-map),
+    disabled-shadow: state.get-disabled-state($shadow-map),
     focus-shadow: state.get-focus-state($shadow-map),
     hover-shadow: state.get-hover-state($shadow-map),
     pressed-shadow: state.get-pressed-state($shadow-map),
     overlay-opacity: state.get-default-state($opacity-map),
+    disabled-overlay-opacity: state.get-disabled-state($opacity-map),
     focus-overlay-opacity: state.get-focus-state($opacity-map),
     hover-overlay-opacity: state.get-hover-state($opacity-map),
     pressed-overlay-opacity: state.get-pressed-state($opacity-map),
@@ -236,6 +246,11 @@ $_theme-values: (
         state.get-default-state($elevation-map),
         $shadow-color
       ),
+    disabled:
+      _resolve-box-shadow-by-dp(
+        state.get-disabled-state($elevation-map),
+        $shadow-color
+      ),
     focus:
       _resolve-box-shadow-by-dp(
         state.get-focus-state($elevation-map),
@@ -263,6 +278,8 @@ $_theme-values: (
   @return (
     default:
       _resolve-overlay-opacity-by-dp(state.get-default-state($elevation-map)),
+    disabled:
+      _resolve-overlay-opacity-by-dp(state.get-disabled-state($elevation-map)),
     focus: _resolve-overlay-opacity-by-dp(state.get-focus-state($elevation-map)),
     hover: _resolve-overlay-opacity-by-dp(state.get-hover-state($elevation-map)),
     pressed:
