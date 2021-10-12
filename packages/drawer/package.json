@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-drawer",
-  "version": "0.25.1",
+  "version": "0.25.2",
   "description": "Material Design drawer web component",
   "keywords": [
     "material design",
@@ -17,7 +17,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/drawer": "=14.0.0-canary.c78ff0429.0",
-    "@material/mwc-base": "^0.25.1",
+    "@material/mwc-base": "^0.25.2",
     "blocking-elements": "^0.1.0",
     "lit": "^2.0.0",
     "tslib": "^2.0.1",

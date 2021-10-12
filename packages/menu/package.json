@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-menu",
-  "version": "0.25.1",
+  "version": "0.25.2",
   "description": "Material Design menu web component",
   "keywords": [
     "material design",
@@ -13,8 +13,8 @@
   "dependencies": {
     "@material/menu": "=14.0.0-canary.c78ff0429.0",
     "@material/menu-surface": "=14.0.0-canary.c78ff0429.0",
-    "@material/mwc-base": "^0.25.1",
-    "@material/mwc-list": "^0.25.1",
+    "@material/mwc-base": "^0.25.2",
+    "@material/mwc-list": "^0.25.2",
     "@material/shape": "=14.0.0-canary.c78ff0429.0",
     "@material/theme": "=14.0.0-canary.c78ff0429.0",
     "lit": "^2.0.0",
