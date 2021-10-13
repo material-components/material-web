@@ -8,12 +8,13 @@ import '@material/mwc-icon/mwc-icon';
 import '../../ripple/mwc-ripple';
 
 import {AriaHasPopup, ariaProperty} from '@material/mwc-base/aria-property';
-import {Ripple} from '../../ripple/mwc-ripple';
-import {RippleHandlers} from '../../ripple/ripple-handlers';
 import {html, LitElement, TemplateResult} from 'lit';
 import {eventOptions, property, query, queryAssignedNodes, queryAsync, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
+
+import {Ripple} from '../../ripple/mwc-ripple';
+import {RippleHandlers} from '../../ripple/ripple-handlers';
 
 /** @soyCompatible */
 export abstract class Button extends LitElement {

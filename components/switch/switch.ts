@@ -6,8 +6,8 @@
 
 import {customElement} from 'lit/decorators';
 
-import {styles} from './lib/switch-styles.css'
 import {Switch} from './lib/switch';
+import {styles} from './lib/switch-styles.css'
 
 declare global {
   interface HTMLElementTagNameMap {
