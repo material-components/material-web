@@ -6,16 +6,21 @@
 
 import {customElement} from 'lit/decorators';
 
-import {FormfieldBase} from './lib/formfield-base.js';
-import {styles} from './lib/formfield-styles.css.js';
+import {Formfield} from './lib/formfield-base';
+import {styles as formfieldStyles} from './lib/formfield-styles.css';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-formfield': MDFormfield;
+    'md-formfield': MdFormfield;
   }
 }
 
+/**
+ * @soyCompatible
+ * @final
+ * @suppress {visibility}
+ */
 @customElement('md-formfield')
-export class MDFormfield extends FormfieldBase {
-  static styles = [styles];
+export class MdFormfield extends Formfield {
+  static styles = [formfieldStyles];
 }

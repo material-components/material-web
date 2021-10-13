@@ -5,14 +5,12 @@
  */
 
 import {html, LitElement, TemplateResult} from 'lit';
-import {property, queryAssignedNodes} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
+import {property, queryAssignedNodes} from 'lit/decorators';
+import {ClassInfo, classMap} from 'lit/directives/class-map';
+import {ifDefined} from 'lit/directives/if-defined';
 
-/**
- * @soyCompatible
- */
-export class FormfieldBase extends LitElement {
+/** @soyCompatible */
+export class Formfield extends LitElement {
   @property({type: Boolean}) alignEnd = false;
   @property({type: Boolean}) spaceBetween = false;
 

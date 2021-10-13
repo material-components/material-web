@@ -4,11 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Style preference for leading underscores.
-// tslint:disable:strip-private-property-underscore
-
-
-import {Ripple} from 'google3/third_party/javascript/material_web_components/m3/ripple/mwc-ripple';
+import {Ripple} from '../mwc-ripple';
 
 interface RippleInternals {
   hovering: boolean;

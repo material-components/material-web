@@ -4,11 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Style preference for leading underscores.
-// tslint:disable:strip-private-property-underscore
-
 import {html, TemplateResult} from 'lit';
-import {ClassInfo} from 'lit/directives/class-map.js';
+import {ClassInfo} from 'lit/directives/class-map';
 
 import {FabShared} from './fab-shared';
 

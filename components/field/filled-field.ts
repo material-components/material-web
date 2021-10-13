@@ -19,7 +19,7 @@ declare global {
 /**
  * @soyCompatible
  * @final
- * @suppress {const}
+ * @suppress {visibility}
  */
 @customElement('md-filled-field')
 export class MdFilledField extends FilledField {

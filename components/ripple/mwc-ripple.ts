@@ -4,10 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Style preference for leading underscores.
-// tslint:disable:strip-private-property-underscore
-
-import {customElement} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators';
 
 import {RippleBase} from './mwc-ripple-base';
 import {styles} from './mwc-ripple.css';

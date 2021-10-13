@@ -4,11 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {Button} from 'google3/third_party/javascript/material_web_components/m3/button/lib/button';
 import {html, TemplateResult} from 'lit';
-import {property} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
+import {property} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
+import {ifDefined} from 'lit/directives/if-defined';
+
+import {Button} from './button';
 
 type LinkTarget = '_blank'|'_parent'|'_self'|'_top';
 

@@ -4,13 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ClassInfo} from 'lit/directives/class-map.js';
+import {ClassInfo} from 'lit/directives/class-map';
 
 import {LinkButton} from './link-button';
 
-/**
- * @soyCompatible
- */
+/** @soyCompatible */
 export class FilledLinkButton extends LinkButton {
   /** @soyTemplate */
   protected override getRenderClasses(): ClassInfo {

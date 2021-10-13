@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCObserverFoundation} from '@material/base/observer-foundation.js';
+import {MDCObserverFoundation} from '@material/base/observer-foundation';
 
-import {MDCSwitchState} from './state.js';
+import {MDCSwitchState} from './state';
 
 /**
  * `MDCSwitchFoundation` provides a state-only foundation for a switch

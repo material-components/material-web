@@ -4,11 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {customElement} from 'lit/decorators';
 
-import {customElement} from 'lit/decorators.js';
-
-import {styles} from './lib/switch-styles.css.js'
-import {Switch} from './lib/switch.js';
+import {styles} from './lib/switch-styles.css'
+import {Switch} from './lib/switch';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -16,6 +15,11 @@ declare global {
   }
 }
 
+/**
+ * @soyCompatible
+ * @final
+ * @suppress {visibility}
+ */
 @customElement('md-switch')
 export class MDSwitch extends Switch {
   static override styles = [styles];

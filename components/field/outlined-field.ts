@@ -19,7 +19,7 @@ declare global {
 /**
  * @soyCompatible
  * @final
- * @suppress {const}
+ * @suppress {visibility}
  */
 @customElement('md-outlined-field')
 export class MdOutlinedField extends OutlinedField {

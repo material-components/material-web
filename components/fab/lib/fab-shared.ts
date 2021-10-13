@@ -4,16 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Style preference for leading underscores.
-// tslint:disable:strip-private-property-underscore
-
 import '@material/mwc-ripple/mwc-ripple';
 
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {html, LitElement, TemplateResult} from 'lit';
-import {eventOptions, property, queryAsync, state} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {eventOptions, property, queryAsync, state} from 'lit/decorators';
+import {ClassInfo, classMap} from 'lit/directives/class-map';
 
 /**
  * Fab Base class logic and template definition

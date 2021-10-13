@@ -5,13 +5,11 @@
  */
 
 import {html, TemplateResult} from 'lit';
-import {ClassInfo} from 'lit/directives/class-map.js';
+import {ClassInfo} from 'lit/directives/class-map';
 
 import {Button} from './button';
 
-/**
- * @soyCompatible
- */
+/** @soyCompatible */
 export class ElevatedButton extends Button {
   /** @soyTemplate */
   protected override getRenderClasses(): ClassInfo {

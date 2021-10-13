@@ -5,15 +5,15 @@
  */
 
 import '@material/mwc-icon/mwc-icon';
-import 'google3/third_party/javascript/material_web_components/m3/ripple/mwc-ripple';
+import '../../ripple/mwc-ripple';
 
 import {AriaHasPopup, ariaProperty} from '@material/mwc-base/aria-property';
-import {Ripple} from 'google3/third_party/javascript/material_web_components/m3/ripple/mwc-ripple';
-import {RippleHandlers} from 'google3/third_party/javascript/material_web_components/m3/ripple/ripple-handlers';
+import {Ripple} from '../../ripple/mwc-ripple';
+import {RippleHandlers} from '../../ripple/ripple-handlers';
 import {html, LitElement, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAssignedNodes, queryAsync, state} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
+import {eventOptions, property, query, queryAssignedNodes, queryAsync, state} from 'lit/decorators';
+import {ClassInfo, classMap} from 'lit/directives/class-map';
+import {ifDefined} from 'lit/directives/if-defined';
 
 /** @soyCompatible */
 export abstract class Button extends LitElement {
