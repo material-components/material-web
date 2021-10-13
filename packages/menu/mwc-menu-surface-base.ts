@@ -315,6 +315,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
         await this.updateComplete;
         this.styleMaxHeight = `var(--mdc-menu-max-height, ${height})`;
       },
+      getOwnerDocument: () => document,
     };
   }
 
