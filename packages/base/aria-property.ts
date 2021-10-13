@@ -4,11 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Style preference for leading underscores.
-// tslint:disable:strip-private-property-underscore
-// tslint:disable:no-any
-// eslint-disable @typescript-eslint/no-explicit-any
-
 import {PropertyDeclaration, ReactiveElement} from '@lit/reactive-element';
 
 /**
@@ -54,14 +49,23 @@ function tsDecorator(
     throw new Error(`@ariaProperty requires a setter for ${name}`);
   }
 
+
+  // TODO(b/202853219): Remove this check when internal tooling is
+  // compatible
+  // tslint:disable-next-line:no-any bail if applied to internal generated class
+  if ((prototype as any).dispatchWizEvent) {
+    return descriptor;
+  }
+
   const wrappedDescriptor: PropertyDescriptor = {
     configurable: true,
     enumerable: true,
     set(this: ReactiveElement, value: unknown) {
       if (attribute === '') {
         const options = constructor.getPropertyOptions(name);
-        // the attribute will be a string at runtime
-        attribute = (options.attribute as string);
+        // if attribute is not a string, use `name` instead
+        attribute =
+            typeof options.attribute === 'string' ? options.attribute : name;
       }
       if (this.hasAttribute(attribute)) {
         this.removeAttribute(attribute);
@@ -105,6 +109,7 @@ function tsDecorator(
  */
 export function ariaProperty(
     protoOrDescriptor: {}, name?: string,
+    // tslint:disable-next-line:no-any any is required as a return type from decorators
     descriptor?: PropertyDescriptor): any {
   if (name !== undefined) {
     return tsDecorator(protoOrDescriptor, name, descriptor);
