@@ -280,9 +280,9 @@ In addition to the global theme properties, most MWC components provide a set
 of CSS custom properties to customize their appearance,
 such as changing the fill color, ink color, stroke width, and so on.
 These properties are documented in each component's API doc
-(for example, the [mwc-button API doc](../packages/mdc-button/README.md)).
+(for example, the [mwc-button API doc](../packages/button/README.md)).
 
-For example, to change the fill, text, and and outline colors for all of your application's buttons:
+For example, to change the fill, text, and and outline colors for all of your application's `mwc-button`s:
 
 ```css
 mwc-button {
@@ -291,6 +291,8 @@ mwc-button {
   --mdc-button-outline-color: rgba(20, 20, 200, .2);
 }
 ```
+
+Note: the above selector will not select mwc-buttons enclosed in the shadow roots of other custom elements. [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) can cascade through shadow root boundaries, but selectors cannot. In order to style mwc-buttons inside of other components' shadow roots, you must select the component that encloses the mwc-button or one of the component's ancestors which will apply the above custom properties to that subtree.
 
 You can also use CSS selectors to override global theme properties or 
 component properties for certain components.
