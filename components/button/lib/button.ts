@@ -5,7 +5,7 @@
  */
 
 import '@material/mwc-icon/mwc-icon';
-import '../../focusring/focus-ring';
+import '../../focus/focus-ring';
 import '../../ripple/mwc-ripple';
 
 import {AriaHasPopup, ariaProperty} from '@material/mwc-base/aria-property';
