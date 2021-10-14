@@ -30,6 +30,8 @@ export class FabShared extends LitElement {
 
   @property({type: Boolean}) lowered = false;
 
+  @property({type: Boolean}) reducedTouchTarget = false;
+
   @state() protected shouldRenderRipple = false;
 
   protected rippleHandlers = new RippleHandlers(() => {
@@ -84,7 +86,8 @@ export class FabShared extends LitElement {
 
   /** @soyTemplate */
   protected renderTouchTarget(): TemplateResult {
-    return html``;
+    return this.reducedTouchTarget ? html`` :
+                                     html`<div class="md3-fab__touch"></div>`;
   }
 
   /** @soyTemplate */

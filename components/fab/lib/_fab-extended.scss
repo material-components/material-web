@@ -17,7 +17,8 @@
 
 @mixin root() {
   box-sizing: border-box;
-  padding: 16px;
+  padding-inline-start: 16px;
+  padding-inline-end: 20px;
 }
 
 @mixin label() {

@@ -6,6 +6,7 @@
 @use 'third_party/javascript/material_web_components/icon/_mwc-icon';
 @use 'third_party/javascript/material_web_components/m3/elevation/lib/surface';
 @use '@material/theme/selector-ext';
+@use '@material/touch-target/touch-target';
 
 @mixin static-styles() {
   :host,
@@ -36,6 +37,10 @@
     .md3-fab__icon {
       @include icon;
     }
+
+    .md3-fab__touch {
+      @include touch-target;
+    }
   }
 }
 
@@ -63,6 +68,7 @@
   padding: 0;
   align-items: center;
   justify-content: center;
+  position: relative;
 
   &::-moz-focus-inner {
     padding: 0;
@@ -89,4 +95,8 @@
 
 @mixin icon() {
   @extend %material-icons;
+}
+
+@mixin touch-target() {
+  @include touch-target.touch-target(true);
 }
