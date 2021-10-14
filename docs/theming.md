@@ -282,7 +282,7 @@ such as changing the fill color, ink color, stroke width, and so on.
 These properties are documented in each component's API doc
 (for example, the [mwc-button API doc](../packages/button/README.md)).
 
-For example, to change the fill, text, and and outline colors for all of your application's `mwc-buttons` (* see note below on caveats):
+For example, to change the fill, text, and and outline colors for all of your application's `mwc-button`s:
 
 ```css
 mwc-button {
@@ -292,7 +292,7 @@ mwc-button {
 }
 ```
 
-Note: the above selector will not select buttons enclosed in the shadowdom of another component. To target those components as well, either use the `:root` selector, or supply a custom class that only affects the top-level elements that need to be themed.
+Note: the above selector will not select buttons enclosed in the shadowdom of another component. To target those instances as well, either use the `:root` selector, or append the components containing `mwc-button` in their shadowdoms to the selector (i.e. `mwc-button, my-mwc-button-wrapper { ... }`).
 
 You can also use CSS selectors to override global theme properties or 
 component properties for certain components.
