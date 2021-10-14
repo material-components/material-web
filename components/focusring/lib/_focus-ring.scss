@@ -1,0 +1,70 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+$_container-outer-padding: 2px;
+
+$_inner-ring-width: 2px;
+$_inner-ring-color: #000;
+$_inner-ring-radius: 6px;
+
+$_outer-ring-width: 2px;
+$_outer-ring-color: #fff;
+$_outer-ring-radius: 8px;
+
+@mixin static-styles() {
+  :host {
+    @include host-root;
+  }
+
+  .md3-focus-ring {
+    @include root;
+  }
+
+  .md3-focus-ring--visible {
+    display: block;
+  }
+}
+
+@mixin host-root() {
+  pointer-events: none;
+}
+
+@mixin root() {
+  display: none;
+  position: absolute;
+  box-sizing: border-box;
+
+  @include outer-ring;
+  &::before {
+    @include inner-ring;
+  }
+}
+
+@mixin outer-ring() {
+  // Note that the ring will not respect its parent's border. This will not be
+  // an issue as long as border is set via a sibling node, similar to ripple
+  // and touch target.
+  $container-overflow-px: $_container-outer-padding + $_inner-ring-width +
+    $_outer-ring-width;
+
+  width: calc(100% + #{$container-overflow-px} * 2);
+  height: calc(100% + #{$container-overflow-px} * 2);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: $_outer-ring-width solid $_outer-ring-color;
+  border-radius: $_outer-ring-radius;
+}
+
+@mixin inner-ring() {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+  width: calc(100% - #{$_outer-ring-width} * 2);
+  height: calc(100% - #{$_outer-ring-width} * 2);
+  border: $_inner-ring-width solid $_inner-ring-color;
+  border-radius: $_inner-ring-radius;
+}
