@@ -292,7 +292,7 @@ mwc-button {
 }
 ```
 
-Note: the above selector will not select mwc-buttons enclosed in the shadow roots of other custom elements. [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) can cascade through shadow root boundaries, but selectors cannot. In order to style mwc-buttons inside of other components' shadow roots, you must select the component that encloses the mwc-button or one of the component's ancestors which will apply the above custom properties to that sub/tree.
+Note: the above selector will not select mwc-buttons enclosed in the shadow roots of other custom elements. [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) can cascade through shadow root boundaries, but selectors cannot. In order to style mwc-buttons inside of other components' shadow roots, you must select the component that encloses the mwc-button or one of the component's ancestors which will apply the above custom properties to that subtree.
 
 You can also use CSS selectors to override global theme properties or 
 component properties for certain components.
