@@ -5,6 +5,7 @@
  */
 
 import '@material/mwc-icon/mwc-icon';
+import '../../focusring/focus-ring';
 import '../../ripple/mwc-ripple';
 
 import {AriaHasPopup, ariaProperty} from '@material/mwc-base/aria-property';
@@ -52,24 +53,6 @@ export abstract class Button extends LitElement {
     return this.ripple;
   });
 
-  /** @soyTemplate */
-  protected renderOverlay(): TemplateResult {
-    return html``;
-  }
-
-  /** @soyTemplate */
-  protected renderRipple(): TemplateResult|string {
-    return this.shouldRenderRipple ?
-        html`<md-ripple class="md3-button__ripple" .disabled="${
-            this.disabled}"></md-ripple>` :
-        '';
-  }
-
-  /** @soyTemplate */
-  protected renderOutline(): TemplateResult {
-    return html``;
-  }
-
   /**
    * @soyTemplate
    * @soyAttributes buttonAttributes: .md3-button
@@ -91,6 +74,7 @@ export abstract class Button extends LitElement {
           @touchstart="${this.handleRippleActivate}"
           @touchend="${this.handleRippleDeactivate}"
           @touchcancel="${this.handleRippleDeactivate}"><!--
+        -->${this.renderFocusRing()}<!--
         -->${this.renderOverlay()}<!--
         -->${this.renderRipple()}<!--
         -->${this.renderOutline()}<!--
@@ -142,6 +126,30 @@ export abstract class Button extends LitElement {
     return html`
       <span class="md3-button__touch"></span>
     `;
+  }
+
+  /** @soyTemplate */
+  protected renderOverlay(): TemplateResult {
+    return html``;
+  }
+
+  /** @soyTemplate */
+  protected renderRipple(): TemplateResult|string {
+    return this.shouldRenderRipple ?
+        html`<md-ripple class="md3-button__ripple" .disabled="${
+            this.disabled}"></md-ripple>` :
+        '';
+  }
+
+  /** @soyTemplate */
+  protected renderOutline(): TemplateResult {
+    return html``;
+  }
+
+  /** @soyTemplate */
+  protected renderFocusRing(): TemplateResult {
+    // TODO(b/202994744): conditionally enable focus ring
+    return html`<md-focus-ring .visible="${false}"></md-focus-ring>`;
   }
 
   /** @soyTemplate */

@@ -40,6 +40,7 @@ export abstract class LinkButton extends Button {
           href="${this.href}"
           target="${ifDefined(this.target as LinkTarget)}"
           aria-label="${ifDefined(this.ariaLabel)}"><!--
+        -->${this.renderFocusRing()}<!--
         -->${this.renderOverlay()}<!--
         -->${this.renderRipple()}<!--
         -->${this.renderOutline()}<!--
