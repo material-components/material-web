@@ -28,8 +28,8 @@ export abstract class LinkButton extends Button {
     // TODO(b/182405623): restore whitespace
     return html`
       <span class="md3-button__host"
-          @focus="${this.handleRippleFocus}"
-          @blur="${this.handleRippleBlur}"
+          @focusin="${this.handleRippleFocus}"
+          @focusout="${this.handleRippleBlur}"
           @mousedown="${this.handleRippleActivate}"
           @mouseenter="${this.handleRippleMouseEnter}"
           @mouseleave="${this.handleRippleMouseLeave}"

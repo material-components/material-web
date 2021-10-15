@@ -14,6 +14,7 @@ import {eventOptions, property, query, queryAssignedNodes, queryAsync, state} fr
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 
+import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
 import {Ripple} from '../../ripple/mwc-ripple';
 import {RippleHandlers} from '../../ripple/ripple-handlers';
 
@@ -42,6 +43,8 @@ export abstract class Button extends LitElement {
   @query('.md3-button') buttonElement!: HTMLElement;
 
   @queryAsync('md-ripple') ripple!: Promise<Ripple|null>;
+
+  @state() protected showFocusRing = false;
 
   @queryAssignedNodes('icon', true, '*')
   protected iconElement!: HTMLElement[]|null;
@@ -148,8 +151,8 @@ export abstract class Button extends LitElement {
 
   /** @soyTemplate */
   protected renderFocusRing(): TemplateResult {
-    // TODO(b/202994744): conditionally enable focus ring
-    return html`<md-focus-ring .visible="${false}"></md-focus-ring>`;
+    return html`<md-focus-ring .visible="${
+        this.showFocusRing}"></md-focus-ring>`;
   }
 
   /** @soyTemplate */
@@ -176,7 +179,6 @@ export abstract class Button extends LitElement {
   override focus() {
     const buttonElement = this.buttonElement;
     if (buttonElement) {
-      this.rippleHandlers.startFocus();
       buttonElement.focus();
     }
   }
@@ -184,7 +186,6 @@ export abstract class Button extends LitElement {
   override blur() {
     const buttonElement = this.buttonElement;
     if (buttonElement) {
-      this.rippleHandlers.endFocus();
       buttonElement.blur();
     }
   }
@@ -199,6 +200,7 @@ export abstract class Button extends LitElement {
 
     window.addEventListener('mouseup', onUp);
     this.rippleHandlers.startPress(evt);
+    pointerPress();
   }
 
   protected handleRippleDeactivate() {
@@ -214,11 +216,11 @@ export abstract class Button extends LitElement {
   }
 
   protected handleRippleFocus() {
-    this.rippleHandlers.startFocus();
+    this.showFocusRing = shouldShowStrongFocus();
   }
 
   protected handleRippleBlur() {
-    this.rippleHandlers.endFocus();
+    this.showFocusRing = false;
   }
 
   protected handleSlotChange() {
