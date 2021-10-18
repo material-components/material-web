@@ -59,7 +59,6 @@ export abstract class Button extends LitElement {
   /**
    * @soyTemplate
    * @soyAttributes buttonAttributes: .md3-button
-   * @soyClasses buttonClasses: .md3-button
    */
   protected override render(): TemplateResult {
     // TODO(b/182405623): restore whitespace

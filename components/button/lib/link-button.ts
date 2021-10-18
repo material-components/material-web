@@ -22,7 +22,6 @@ export abstract class LinkButton extends Button {
   /**
    * @soyTemplate
    * @soyAttributes buttonAttributes: .md3-button
-   * @soyClasses buttonClasses: .md3-button
    */
   protected override render(): TemplateResult {
     // TODO(b/182405623): restore whitespace
