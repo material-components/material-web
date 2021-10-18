@@ -25,11 +25,11 @@ let focusObject: StrongFocus = new FocusGlobal();
 /**
  * Set of keyboard event codes that correspond to keyboard navigation
  */
-const KEYBOARD_NAVIGATION_CODES =
+const KEYBOARD_NAVIGATION_KEYS =
     new Set(['Tab', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown']);
 
 const KEYDOWN_HANDLER = (e: KeyboardEvent) => {
-  if (KEYBOARD_NAVIGATION_CODES.has(e.code)) {
+  if (KEYBOARD_NAVIGATION_KEYS.has(e.key)) {
     focusObject.setVisible(true);
   }
 };

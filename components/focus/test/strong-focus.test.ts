@@ -15,8 +15,8 @@ class MockFocus {
   }
 }
 
-function simulateKeydown(code: string) {
-  const ev = new KeyboardEvent('keydown', {code, bubbles: true});
+function simulateKeydown(key: string) {
+  const ev = new KeyboardEvent('keydown', {key, bubbles: true});
   window.dispatchEvent(ev);
 }
 
