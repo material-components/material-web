@@ -15,9 +15,9 @@ type LinkTarget = '_blank'|'_parent'|'_self'|'_top';
 
 /** @soyCompatible */
 export abstract class LinkButton extends Button {
-  @property({type: String}) href = '';
+  @property({type: String}) href!: string;
 
-  @property({type: String}) target = '';
+  @property({type: String}) target!: string;
 
   /**
    * @soyTemplate
@@ -36,7 +36,7 @@ export abstract class LinkButton extends Button {
           @touchend="${this.handleRippleDeactivate}"
           @touchcancel="${this.handleRippleDeactivate}"><!--
       --><a class="md3-button ${classMap(this.getRenderClasses())}"
-          href="${this.href}"
+          href="${ifDefined(this.href)}"
           target="${ifDefined(this.target as LinkTarget)}"
           aria-label="${ifDefined(this.ariaLabel)}"><!--
         -->${this.renderFocusRing()}<!--

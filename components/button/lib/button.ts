@@ -36,7 +36,7 @@ export abstract class Button extends LitElement {
 
   @property({type: String}) label = '';
 
-  @property({type: String}) ariaLabel = '';
+  @property({type: String}) ariaLabel!: string;
 
   @property({type: Boolean}) hasIcon = false;
 
