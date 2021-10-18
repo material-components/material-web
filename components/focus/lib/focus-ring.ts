@@ -14,8 +14,8 @@ export class FocusRing extends LitElement {
 
   /** @soyTemplate */
   protected render(): TemplateResult {
-    return html`<div class="md3-focus-ring ${
-        classMap(this.getRenderClasses())}"></div>`;
+    return html`<span class="md3-focus-ring ${
+        classMap(this.getRenderClasses())}"></span>`;
   }
 
   /** @soyTemplate */
