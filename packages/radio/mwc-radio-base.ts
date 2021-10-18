@@ -165,7 +165,7 @@ export class RadioBase extends FormElement {
     super.connectedCallback();
     // Note that we must defer creating the selection controller until the
     // element has connected, because selection controllers are keyed by the
-    // radio's shadow root. For example, if we're stamping in a lit-html map
+    // radio's shadow root. For example, if we're stamping in a lit map
     // or repeat, then we'll be constructed before we're added to a root node.
     //
     // Also note if we aren't using native shadow DOM, we still need a

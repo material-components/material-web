@@ -30,7 +30,7 @@ function tsDecorator(
       (prototype.constructor as unknown as ReactiveElementInternals);
   if (!descriptor) {
     /**
-     * lit-element uses internal properties with two leading underscores to
+     * lit uses internal properties with two leading underscores to
      * provide storage for accessors
      */
     const litInternalPropertyKey = `__${name}`;
