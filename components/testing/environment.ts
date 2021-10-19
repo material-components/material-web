@@ -13,19 +13,15 @@ import {ReactiveElement, render as litRender, TemplateResult} from 'lit';
  */
 export class Environment {
   /**
-   * The root container for rendering screenshot test elements.
+   * An array of root containers for rendering screenshot test elements.
    */
-  readonly root = document.createElement('div');
+  private readonly roots: HTMLElement[] = [];
 
   constructor() {
-    beforeAll(() => {
-      this.root.id = 'root';
-      this.root.style.display = 'inline-flex';
-      document.body.appendChild(this.root);
-    });
-
     afterAll(() => {
-      document.body.removeChild(this.root);
+      for (const root of this.roots) {
+        root.style.display = 'inline-flex';
+      }
     });
   }
 
@@ -35,7 +31,12 @@ export class Environment {
    * a Lit element to render.
    */
   async waitForStability() {
-    await this.waitForLitRender(this.root);
+    if (!this.roots.length) {
+      return;
+    }
+
+    const currentRoot = this.roots[this.roots.length - 1];
+    await this.waitForLitRender(currentRoot);
   }
 
   /**
@@ -69,6 +70,30 @@ export class Environment {
    * @param template a Lit `TemplateResult` to render.
    */
   render(template: TemplateResult) {
-    litRender(template, this.root);
+    litRender(template, this.createNewRoot());
+  }
+
+  /**
+   * Creates a new root container for screenshot rendering and adds it to the
+   * body.
+   *
+   * Previous root containers will be hidden and displayed at the end of
+   * testing for easier debugging.
+   *
+   * @return A new root container.
+   */
+  private createNewRoot() {
+    if (this.roots.length) {
+      const currentRoot = this.roots[this.roots.length - 1];
+      currentRoot.id = '';
+      currentRoot.style.display = 'none';
+    }
+
+    const root = document.createElement('div');
+    root.id = 'root';
+    root.style.display = 'inline-flex';
+    document.body.appendChild(root);
+    this.roots.push(root);
+    return root;
   }
 }

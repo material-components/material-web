@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, TemplateResult} from 'lit';
+import {html, LitElement, render, TemplateResult} from 'lit';
 import {property} from 'lit/decorators';
 
 export type TestTableTemplate<S extends string = string> = (state: S) =>
@@ -41,11 +41,21 @@ export class TestTable<S extends string = string> extends LitElement {
 
   /** @soyTemplate */
   protected renderTemplates(): TemplateResult {
+    // Render templates in the light DOM for easier styling access
+    render(
+        this.templates.map(
+            (template, rowIndex) => this.states.map((state, colIndex) => html`
+              <div slot="${`${rowIndex}-${colIndex}`}">${template(state)}</div>
+            `)),
+        this);
+
     return html`
-      ${this.templates.map(template => html`
+      ${this.templates.map((template, rowIndex) => html`
         <tr>
-          ${this.states.map(state => html`
-            <td class="md-test-table__cell">${template(state)}</td>
+          ${this.states.map((state, colIndex) => html`
+            <td class="md-test-table__cell">
+              <slot name="${`${rowIndex}-${colIndex}`}"></slot>
+            </td>
           `)}
         </tr>
       `)}
