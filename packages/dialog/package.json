@@ -16,8 +16,8 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/dialog": "=14.0.0-canary.353ca7e9f.0",
-    "@material/dom": "=14.0.0-canary.353ca7e9f.0",
+    "@material/dialog": "=14.0.0-canary.9803d2dc1.0",
+    "@material/dom": "=14.0.0-canary.9803d2dc1.0",
     "@material/mwc-base": "^0.25.2",
     "@material/mwc-button": "^0.25.2",
     "blocking-elements": "^0.1.0",
@@ -29,11 +29,11 @@
     "build:style": "node ../../scripts/sass-to-lit-css/index.js mwc-dialog.scss"
   },
   "devDependencies": {
-    "@material/elevation": "=14.0.0-canary.353ca7e9f.0",
-    "@material/feature-targeting": "=14.0.0-canary.353ca7e9f.0",
-    "@material/rtl": "=14.0.0-canary.353ca7e9f.0",
-    "@material/shape": "=14.0.0-canary.353ca7e9f.0",
-    "@material/theme": "=14.0.0-canary.353ca7e9f.0"
+    "@material/elevation": "=14.0.0-canary.9803d2dc1.0",
+    "@material/feature-targeting": "=14.0.0-canary.9803d2dc1.0",
+    "@material/rtl": "=14.0.0-canary.9803d2dc1.0",
+    "@material/shape": "=14.0.0-canary.9803d2dc1.0",
+    "@material/theme": "=14.0.0-canary.9803d2dc1.0"
   },
   "publishConfig": {
     "access": "public"
