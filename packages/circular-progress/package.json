@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-circular-progress",
-  "version": "0.25.2",
+  "version": "0.25.3",
   "description": "Material Design circular progress web component",
   "keywords": [
     "material design",
@@ -17,7 +17,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@material/circular-progress": "=14.0.0-canary.261f2db59.0",
-    "@material/mwc-base": "^0.25.2",
+    "@material/mwc-base": "^0.25.3",
     "@material/theme": "=14.0.0-canary.261f2db59.0",
     "lit": "^2.0.0",
     "tslib": "^2.0.1"
