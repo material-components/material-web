@@ -1,0 +1,121 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use 'sass:map';
+@use 'third_party/javascript/material_web_components/m3/navigationtab/lib/navigation-tab-theme';
+@use '@material/theme/map-ext';
+@use '@material/theme/theme';
+@use '@material/theme/theme-color';
+@use '@material/theme/shadow-dom';
+@use '@material/typography/typography';
+@use '@material/theme/keys';
+@use '@material/elevation/elevation-theme';
+
+$light-theme: (
+  active-focus-icon-color: theme-color.$on-secondary,
+  active-focus-label-text-color: theme-color.$on-surface,
+  active-focus-state-layer-color: theme-color.$on-surface,
+  active-hover-icon-color: theme-color.$on-secondary,
+  active-hover-label-text-color: theme-color.$on-surface,
+  active-hover-state-layer-color: theme-color.$on-surface,
+  active-icon-color: theme-color.$on-secondary,
+  active-indicator-color: theme-color.$secondary,
+  active-indicator-height: 32px,
+  active-indicator-shape: 16px,
+  active-indicator-width: 64px,
+  active-label-text-color: theme-color.$on-surface,
+  active-pressed-icon-color: theme-color.$on-secondary,
+  active-pressed-label-text-color: theme-color.$on-surface,
+  active-pressed-state-layer-color: theme-color.$secondary,
+  badge-color: theme-color.$error,
+  badge-shape: 3px,
+  badge-size: 6px,
+  container-color: theme-color.$surface,
+  container-elevation: elevation-theme.get-elevation(2),
+  container-height: 80px,
+  container-shadow-color: null,
+  container-shape: 0,
+  focus-state-layer-opacity: 0.24,
+  hover-state-layer-opacity: 0.16,
+  icon-size: 24px,
+  inactive-focus-icon-color: theme-color.$on-surface,
+  inactive-focus-label-text-color: theme-color.$on-surface,
+  inactive-focus-state-layer-color: theme-color.$on-surface,
+  inactive-hover-icon-color: theme-color.$on-surface,
+  inactive-hover-label-text-color: theme-color.$on-surface,
+  inactive-hover-state-layer-color: theme-color.$on-surface,
+  inactive-icon-color: theme-color.$on-surface,
+  inactive-label-text-color: theme-color.$on-surface,
+  inactive-pressed-icon-color: theme-color.$on-surface,
+  inactive-pressed-label-text-color: theme-color.$on-surface,
+  inactive-pressed-state-layer-color: theme-color.$on-surface,
+  label-text-font-family: typography.get-font(overline),
+  label-text-font-size: typography.get-size(overline),
+  label-text-letter-spacing: typography.get-tracking(overline),
+  label-text-line-height: typography.get-line-height(overline),
+  label-text-weight: typography.get-weight(overline),
+  large-badge-color: theme-color.$error,
+  large-badge-label-color: theme-color.$on-error,
+  large-badge-label-font-family: typography.get-font(overline),
+  large-badge-label-font-size: 11px,
+  large-badge-label-letter-spacing: typography.get-tracking(overline),
+  large-badge-label-line-height: 14px,
+  large-badge-label-weight: typography.get-weight(overline),
+  large-badge-shape: 8px,
+  large-badge-size: 16px,
+  pressed-state-layer-opacity: 0.2,
+);
+
+@mixin theme($theme) {
+  @include theme.validate-theme($light-theme, $theme);
+  @if shadow-dom.$css-selector-fallback-declarations {
+    @include theme-styles($theme);
+  }
+  @include keys.declare-custom-properties($theme, navigation-bar);
+}
+
+@mixin theme-styles($theme) {
+  @include theme.validate-theme($light-theme, $theme);
+
+  .mdc-navigation-tab {
+    @include navigation-tab-theme.theme-styles(
+      map-ext.pick($theme, map.keys(navigation-tab-theme.$light-theme)...)
+    );
+  }
+
+  $theme: keys.create-theme-properties($theme, navigation-bar);
+
+  @include _container-color(map.get($theme, container-color));
+  @include _container-shape(map.get($theme, container-shape));
+  @include _container-height(map.get($theme, container-height));
+  @include _container-elevation(map.get($theme, container-elevation));
+}
+
+@mixin _container-color($color) {
+  @include theme.property(background-color, $color);
+}
+
+@mixin _container-height($height) {
+  @include theme.property(height, $height);
+}
+
+@mixin _container-shape($shape-radius) {
+  @include theme.property(border-radius, $shape-radius);
+}
+
+@mixin _container-elevation($elevation) {
+  @if $elevation and map.get($elevation, box-shadow) {
+    @include elevation-theme.shadow(map.get($elevation, box-shadow));
+  }
+
+  @if $elevation and map.get($elevation, overlay-opacity) {
+    @include elevation-theme.overlay-opacity(
+      map.get($elevation, overlay-opacity)
+    );
+  }
+}

@@ -1,0 +1,155 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use '@material/animation/animation';
+
+$animation-duration: 100ms;
+
+@mixin static-styles() {
+  .mdc-navigation-tab {
+    @include _root;
+  }
+
+  .mdc-navigation-tab__icon-content {
+    @include _icon-content;
+  }
+
+  .mdc-navigation-tab__label-text {
+    @include _label-text;
+
+    .mdc-navigation-tab--hide-inactive-label:not(.mdc-navigation-tab--active)
+      & {
+      @include _hide-inactive-label;
+    }
+  }
+
+  .mdc-navigation-tab__active-indicator {
+    @include _indicator;
+
+    .mdc-navigation-tab--active & {
+      @include _indicator-active;
+    }
+  }
+
+  .mdc-navigation-tab__icon {
+    @include _icon;
+  }
+
+  .mdc-navigation-tab__badge {
+    @include _badge;
+
+    &.mdc-navigation-tab__badge-large {
+      @include _badge-large;
+
+      .mdc-navigation-tab__badge-value {
+        @include _badge-value;
+      }
+    }
+  }
+}
+
+@mixin _root() {
+  align-items: center;
+  appearance: none;
+  background: none;
+  border: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  min-height: 48px;
+  min-width: 48px;
+  outline: none;
+  padding: 8px 0px 12px;
+  position: relative;
+  text-align: center;
+  width: 100%;
+
+  // Firefox draws a dotted border around focused buttons unless specifically overridden.
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+}
+
+@mixin _icon-content() {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+@mixin _label-text() {
+  height: 16px;
+  margin-top: 4px;
+  opacity: 1;
+  transition: animation.standard(opacity, $animation-duration),
+    animation.standard(height, $animation-duration);
+  z-index: 1;
+}
+
+@mixin _hide-inactive-label() {
+  height: 0;
+  opacity: 0;
+}
+
+@mixin _indicator() {
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  position: absolute;
+  transition: animation.standard(width, $animation-duration),
+    animation.standard(opacity, $animation-duration);
+  width: 32px;
+}
+
+@mixin _indicator-active() {
+  opacity: 1;
+}
+
+@mixin _icon() {
+  align-self: center;
+  display: inline-block;
+  position: relative;
+
+  &.mdc-navigation-tab__icon--active {
+    display: none;
+  }
+
+  .mdc-navigation-tab--active & {
+    display: none;
+
+    &.mdc-navigation-tab__icon--active {
+      display: inline-block;
+    }
+  }
+}
+
+@mixin _badge() {
+  left: 50%;
+  margin-left: 6px;
+  margin-top: 4px;
+  position: absolute;
+  top: 0px;
+}
+
+@mixin _badge-large() {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 2px;
+  margin-top: 1px;
+}
+
+@mixin _badge-value() {
+  padding: 0px 4px;
+}
