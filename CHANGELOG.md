@@ -6,12 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [v0.25.3] - 2021-10-20
+
 ### Fixed
 
 - Updated deprecated `lit-element` imports to `lit` in generated `.css.js`
   files.
 
-## [v0.25.1] - 2021-10-11
+## [v0.25.2] - 2021-10-11
 
 ### Fixed
 
