@@ -22,9 +22,7 @@ type LinkTarget = '_blank'|'_parent'|'_self'|'_top';
 export class LinkIconButton extends IconButtonBase {
   @property({type: String}) linkHref = '';
 
-  // Default to empty string so that in the generated Wit Soy template, by
-  // default `linkTarget` is falsy and the `target` attribute is not printed.
-  @property({type: String}) linkTarget = '';
+  @property({type: String}) linkTarget!: string;
 
   /** @soyTemplate */
   protected override render(): TemplateResult {
@@ -44,7 +42,7 @@ export class LinkIconButton extends IconButtonBase {
       ><slot></slot
     ></span>
     <a class="mdc-icon-button__link" href="${this.linkHref}"
-        target="${ifDefined(this.linkTarget) as LinkTarget}" aria-label="${
+        target="${ifDefined(this.linkTarget as LinkTarget)}" aria-label="${
         this.ariaLabel || this.icon}"></a>
   </div>`;
   }
