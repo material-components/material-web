@@ -28,7 +28,7 @@ $_selectors: button-theme.$selectors;
       pressed: map.get($theme, pressed-container-elevation)
     ),
     $shadow-color: map.get($theme, container-shadow-color),
-    $overlay-tint-color: map.get($theme, surface-tint-layer-color)
+    $overlay-tint-color: map.get($theme, container-surface-tint-layer-color)
   );
 }
 
