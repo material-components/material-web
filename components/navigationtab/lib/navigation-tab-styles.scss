@@ -1,0 +1,21 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use './navigation-tab';
+@use './navigation-tab-theme';
+
+@include navigation-tab.static-styles();
+
+:host {
+  display: flex;
+  flex-grow: 1;
+}
+
+.mdc-navigation-tab {
+  @include navigation-tab-theme.theme-styles(navigation-tab-theme.$light-theme);
+}

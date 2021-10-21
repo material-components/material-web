@@ -1,0 +1,466 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use 'sass:map';
+@use '@material/theme/state';
+@use '@material/theme/theme';
+@use '@material/theme/shadow-dom';
+@use '@material/theme/theme-color';
+@use '@material/theme/keys';
+@use '@material/ripple/ripple-theme';
+@use '@material/typography/typography';
+
+$light-theme: (
+  active-focus-icon-color: theme-color.$on-secondary,
+  active-focus-label-text-color: theme-color.$on-surface,
+  active-focus-state-layer-color: theme-color.$on-surface,
+  active-hover-icon-color: theme-color.$on-secondary,
+  active-hover-label-text-color: theme-color.$on-surface,
+  active-hover-state-layer-color: theme-color.$on-surface,
+  active-icon-color: theme-color.$on-secondary,
+  active-indicator-color: theme-color.$secondary,
+  active-indicator-height: 32px,
+  active-indicator-shape: 16px,
+  active-indicator-width: 64px,
+  active-label-text-color: theme-color.$on-surface,
+  active-pressed-icon-color: theme-color.$on-secondary,
+  active-pressed-label-text-color: theme-color.$on-surface,
+  active-pressed-state-layer-color: theme-color.$on-surface,
+  badge-color: theme-color.$error,
+  badge-shape: 3px,
+  badge-size: 6px,
+  focus-state-layer-opacity: 0.24,
+  hover-state-layer-opacity: 0.16,
+  icon-size: 24px,
+  inactive-focus-icon-color: theme-color.$on-surface,
+  inactive-focus-label-text-color: theme-color.$on-surface,
+  inactive-focus-state-layer-color: theme-color.$on-surface,
+  inactive-hover-icon-color: theme-color.$on-surface,
+  inactive-hover-label-text-color: theme-color.$on-surface,
+  inactive-hover-state-layer-color: theme-color.$on-surface,
+  inactive-icon-color: theme-color.$on-surface,
+  inactive-label-text-color: theme-color.$on-surface,
+  inactive-pressed-icon-color: theme-color.$on-surface,
+  inactive-pressed-label-text-color: theme-color.$on-surface,
+  inactive-pressed-state-layer-color: theme-color.$on-surface,
+  label-text-font-family: typography.get-font(overline),
+  label-text-font-size: typography.get-size(overline),
+  label-text-letter-spacing: typography.get-tracking(overline),
+  label-text-line-height: typography.get-line-height(overline),
+  label-text-weight: typography.get-weight(overline),
+  large-badge-color: theme-color.$error,
+  large-badge-label-color: theme-color.$on-error,
+  large-badge-label-font-family: typography.get-font(overline),
+  large-badge-label-font-size: 11px,
+  large-badge-label-letter-spacing: normal,
+  large-badge-label-line-height: 13px,
+  large-badge-label-weight: typography.get-weight(overline),
+  large-badge-shape: 8px,
+  large-badge-size: 16px,
+  pressed-state-layer-opacity: 0.2,
+);
+
+@mixin theme($theme) {
+  @include theme.validate-theme($light-theme, $theme);
+
+  @if shadow-dom.$css-selector-fallback-declarations {
+    @include theme-styles($theme);
+  }
+}
+
+@mixin theme-styles($theme) {
+  @include theme.validate-theme($light-theme, $theme);
+
+  $theme: keys.create-theme-properties($theme, navigation-tab);
+
+  @include _icon-size(map.get($theme, icon-size));
+  @include _active-icon-color(
+    (
+      default: map.get($theme, active-icon-color),
+      hover: map.get($theme, active-hover-icon-color),
+      focus: map.get($theme, active-focus-icon-color),
+      pressed: map.get($theme, active-pressed-icon-color),
+    )
+  );
+  @include _inactive-icon-color(
+    (
+      default: map.get($theme, inactive-icon-color),
+      hover: map.get($theme, inactive-hover-icon-color),
+      focus: map.get($theme, inactive-focus-icon-color),
+      pressed: map.get($theme, inactive-pressed-icon-color),
+    )
+  );
+
+  @include _label-text-font-family(map.get($theme, label-text-font-family));
+  @include _label-text-line-height(map.get($theme, label-text-line-height));
+  @include _label-text-font-size(map.get($theme, label-text-font-size));
+  @include _label-text-weight(map.get($theme, label-text-weight));
+  @include _label-text-letter-spacing(
+    map.get($theme, label-text-letter-spacing)
+  );
+  @include _active-label-text-color(
+    (
+      default: map.get($theme, active-label-text-color),
+      hover: map.get($theme, active-hover-label-text-color),
+      focus: map.get($theme, active-focus-label-text-color),
+      pressed: map.get($theme, active-pressed-label-text-color),
+    )
+  );
+  @include _inactive-label-text-color(
+    (
+      default: map.get($theme, inactive-label-text-color),
+      hover: map.get($theme, inactive-hover-label-text-color),
+      focus: map.get($theme, inactive-focus-label-text-color),
+      pressed: map.get($theme, inactive-pressed-label-text-color),
+    )
+  );
+
+  @include _badge-color(map.get($theme, badge-color));
+  @include _badge-size(map.get($theme, badge-size));
+  @include _badge-shape(map.get($theme, badge-shape));
+
+  @include _large-badge-size(map.get($theme, large-badge-size));
+  @include _large-badge-shape(map.get($theme, large-badge-shape));
+  @include _large-badge-label-font-family(
+    map.get($theme, large-badge-label-font-family)
+  );
+  @include _large-badge-label-line-height(
+    map.get($theme, large-badge-label-line-height)
+  );
+  @include _large-badge-label-font-size(
+    map.get($theme, large-badge-label-font-size)
+  );
+  @include _large-badge-label-weight(map.get($theme, large-badge-label-weight));
+  @include _large-badge-label-letter-spacing(
+    map.get($theme, large-badge-label-letter-spacing)
+  );
+  @include _large-badge-color(map.get($theme, large-badge-color));
+  @include _large-badge-label-color(map.get($theme, large-badge-label-color));
+
+  @include _active-indicator-color(map.get($theme, active-indicator-color));
+  @include _active-indicator-height(map.get($theme, active-indicator-height));
+  @include _active-indicator-width(map.get($theme, active-indicator-width));
+  @include _active-indicator-shape(map.get($theme, active-indicator-shape));
+
+  @include ripple-theme.theme(
+    (
+      hover-state-layer-color: map.get($theme, inactive-hover-state-layer-color),
+      focus-state-layer-color: map.get($theme, inactive-focus-state-layer-color),
+      pressed-state-layer-color:
+        map.get($theme, inactive-pressed-state-layer-color),
+      hover-state-layer-opacity: map.get($theme, hover-state-layer-opacity),
+      focus-state-layer-opacity: map.get($theme, focus-state-layer-opacity),
+      pressed-state-layer-opacity: map.get($theme, pressed-state-layer-opacity),
+    )
+  );
+
+  @include _is-active() {
+    @include ripple-theme.theme(
+      (
+        hover-state-layer-color: map.get($theme, active-hover-state-layer-color),
+        focus-state-layer-color: map.get($theme, active-focus-state-layer-color),
+        pressed-state-layer-color:
+          map.get($theme, active-pressed-state-layer-color),
+        hover-state-layer-opacity: map.get($theme, hover-state-layer-opacity),
+        focus-state-layer-opacity: map.get($theme, focus-state-layer-opacity),
+        pressed-state-layer-opacity:
+          map.get($theme, pressed-state-layer-opacity),
+      )
+    );
+  }
+}
+
+@mixin _icon-size($size) {
+  .mdc-navigation-tab__icon {
+    @include theme.property(width, $size);
+    @include theme.property(height, $size);
+    @include theme.property(font-size, $size);
+  }
+}
+
+@mixin _icon-color($color) {
+  .mdc-navigation-tab__icon {
+    @include theme.property(color, $color);
+
+    fill: currentColor;
+  }
+}
+
+@mixin _active-icon-color($color-or-map) {
+  &:not(:disabled) {
+    @include _set-active-icon-color(state.get-default-state($color-or-map));
+
+    &:hover {
+      @include _set-active-icon-color(state.get-hover-state($color-or-map));
+    }
+    &:focus {
+      @include _set-active-icon-color(state.get-focus-state($color-or-map));
+    }
+    &:active {
+      @include _set-active-icon-color(state.get-pressed-state($color-or-map));
+    }
+  }
+
+  &:disabled {
+    @include _set-active-icon-color(state.get-disabled-state($color-or-map));
+  }
+}
+
+@mixin _set-active-icon-color($color) {
+  @include _is-active() {
+    @include _icon-color($color);
+  }
+}
+
+@mixin _inactive-icon-color($color-or-map) {
+  &:not(:disabled) {
+    @include _set-inactive-icon-color(state.get-default-state($color-or-map));
+
+    &:hover {
+      @include _set-inactive-icon-color(state.get-hover-state($color-or-map));
+    }
+    &:focus {
+      @include _set-inactive-icon-color(state.get-focus-state($color-or-map));
+    }
+    &:active {
+      @include _set-inactive-icon-color(state.get-pressed-state($color-or-map));
+    }
+  }
+
+  &:disabled {
+    @include _set-inactive-icon-color(state.get-disabled-state($color-or-map));
+  }
+}
+
+@mixin _set-inactive-icon-color($color) {
+  @include _is-inactive() {
+    @include _icon-color($color);
+  }
+}
+
+@mixin _label-text-color($color) {
+  .mdc-navigation-tab__label-text {
+    @include theme.property(color, $color);
+  }
+}
+
+@mixin _active-label-text-color($color-or-map) {
+  &:not(:disabled) {
+    @include _set-active-label-text-color(
+      state.get-default-state($color-or-map)
+    );
+
+    &:hover {
+      @include _set-active-label-text-color(
+        state.get-hover-state($color-or-map)
+      );
+    }
+    &:focus {
+      @include _set-active-label-text-color(
+        state.get-focus-state($color-or-map)
+      );
+    }
+    &:active {
+      @include _set-active-label-text-color(
+        state.get-pressed-state($color-or-map)
+      );
+    }
+  }
+
+  &:disabled {
+    @include _set-active-label-text-color(
+      state.get-disabled-state($color-or-map)
+    );
+  }
+}
+
+@mixin _set-active-label-text-color($color) {
+  @include _is-active() {
+    @include _label-text-color($color);
+  }
+}
+
+@mixin _inactive-label-text-color($color-or-map) {
+  &:not(:disabled) {
+    @include _set-inactive-label-text-color(
+      state.get-default-state($color-or-map)
+    );
+
+    &:hover {
+      @include _set-inactive-label-text-color(
+        state.get-hover-state($color-or-map)
+      );
+    }
+    &:focus {
+      @include _set-inactive-label-text-color(
+        state.get-focus-state($color-or-map)
+      );
+    }
+    &:active {
+      @include _set-inactive-label-text-color(
+        state.get-pressed-state($color-or-map)
+      );
+    }
+  }
+
+  &:disabled {
+    @include _set-inactive-label-text-color(
+      state.get-disabled-state($color-or-map)
+    );
+  }
+}
+
+@mixin _set-inactive-label-text-color($color) {
+  @include _is-inactive() {
+    @include _label-text-color($color);
+  }
+}
+
+@mixin _label-text-font-family($font-family) {
+  .mdc-navigation-tab__label-text {
+    @include theme.property(font-family, $font-family);
+  }
+}
+
+@mixin _label-text-font-size($font-size) {
+  .mdc-navigation-tab__label-text {
+    @include theme.property(font-size, $font-size);
+  }
+}
+
+@mixin _label-text-letter-spacing($letter-spacing) {
+  .mdc-navigation-tab__label-text {
+    @include theme.property(letter-spacing, $letter-spacing);
+  }
+}
+
+@mixin _label-text-line-height($line-height) {
+  .mdc-navigation-tab__label-text {
+    @include theme.property(line-height, $line-height);
+  }
+}
+
+@mixin _label-text-weight($weight) {
+  .mdc-navigation-tab__label-text {
+    @include theme.property(font-weight, $weight);
+  }
+}
+
+@mixin _badge-color($color) {
+  .mdc-navigation-tab__badge:not(.mdc-navigation-tab__badge-large) {
+    @include theme.property(background-color, $color);
+  }
+}
+
+@mixin _badge-size($size) {
+  .mdc-navigation-tab__badge:not(.mdc-navigation-tab__badge-large) {
+    @include theme.property(height, $size);
+    @include theme.property(width, $size);
+  }
+}
+
+@mixin _badge-shape($shape-radius) {
+  .mdc-navigation-tab__badge:not(.mdc-navigation-tab__badge-large) {
+    @include theme.property(border-radius, $shape-radius);
+  }
+}
+
+@mixin _large-badge-size($size) {
+  .mdc-navigation-tab__badge-large {
+    @include theme.property(height, $size);
+    @include theme.property(min-width, $size);
+  }
+}
+
+@mixin _large-badge-shape($shape-radius) {
+  .mdc-navigation-tab__badge-large {
+    @include theme.property(border-radius, $shape-radius);
+  }
+}
+
+@mixin _large-badge-label-font-family($font-family) {
+  .mdc-navigation-tab__badge-large {
+    @include theme.property(font-family, $font-family);
+  }
+}
+
+@mixin _large-badge-label-font-size($font-size) {
+  .mdc-navigation-tab__badge-large {
+    @include theme.property(font-size, $font-size);
+  }
+}
+
+@mixin _large-badge-label-letter-spacing($letter-spacing) {
+  .mdc-navigation-tab__badge-large {
+    @include theme.property(letter-spacing, $letter-spacing);
+  }
+}
+
+@mixin _large-badge-label-line-height($line-height) {
+  .mdc-navigation-tab__badge-large {
+    @include theme.property(line-height, $line-height);
+  }
+}
+
+@mixin _large-badge-label-weight($weight) {
+  .mdc-navigation-tab__badge-large {
+    @include theme.property(font-weight, $weight);
+  }
+}
+
+@mixin _large-badge-color($color) {
+  .mdc-navigation-tab__badge-large {
+    @include theme.property(background-color, $color);
+  }
+}
+
+@mixin _large-badge-label-color($color) {
+  .mdc-navigation-tab__badge-large {
+    @include theme.property(color, $color);
+  }
+}
+
+@mixin _active-indicator-color($color) {
+  .mdc-navigation-tab__active-indicator {
+    @include theme.property(background-color, $color);
+  }
+}
+
+@mixin _active-indicator-height($height) {
+  // Keep icon-content in sync with active-indicator size.
+  .mdc-navigation-tab__active-indicator,
+  .mdc-navigation-tab__icon-content {
+    @include theme.property(height, $height);
+  }
+}
+
+@mixin _active-indicator-width($width) {
+  // Keep icon-content in sync with active-indicator size.
+  &.mdc-navigation-tab--active .mdc-navigation-tab__active-indicator,
+  .mdc-navigation-tab__icon-content {
+    @include theme.property(width, $width);
+  }
+}
+
+@mixin _active-indicator-shape($shape-radius) {
+  .mdc-navigation-tab__active-indicator {
+    @include theme.property(border-radius, $shape-radius);
+  }
+}
+
+@mixin _is-active() {
+  &.mdc-navigation-tab--active {
+    @content;
+  }
+}
+
+@mixin _is-inactive() {
+  &:not(.mdc-navigation-tab--active) {
+    @content;
+  }
+}
