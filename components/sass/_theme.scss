@@ -86,8 +86,6 @@
 /// @param {Map} $theme - The theme Map to emit custom property declarations
 ///     for.
 @mixin emit-theme-vars($theme) {
-  $theme: create-theme-properties($theme, $prefix);
-
   @each $token, $value in $theme {
     @if meta.type-of($value) == 'map' {
       @include emit-theme-vars($value);
@@ -119,7 +117,9 @@
 /// @param {Map} $theme - User-provided theme Map to validate.
 /// @return {Map} The validated user-provided theme Map.
 @function validate-theme($reference-theme, $theme) {
-  @return _validate-theme-values(validate-theme-keys($reference-theme, $theme));
+  @return _validate-theme-values(
+    validate-theme-tokens($reference-theme, $theme)
+  );
 }
 
 /// Validates a theme's tokens and throws an error if incorrect tokens are

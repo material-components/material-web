@@ -41,9 +41,10 @@ export class Field extends LitElement implements FieldState {
     return {
       'mdc-field--disabled': this.disabled,
       'mdc-field--error': this.error,
-      'mdc-field--focused': this.focused,
+      'mdc-field--focus': this.focused,
       'mdc-field--populated': this.populated,
       'mdc-field--required': this.required,
+      'mdc-field--no-label': !this.label,
     };
   }
 

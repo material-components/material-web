@@ -50,6 +50,10 @@ $_animation-duration: 150ms;
 
   .mdc-field__outline-notch {
     @include outline-notch;
+
+    .mdc-field--no-label & {
+      @include outline-notch-no-label;
+    }
   }
 
   .mdc-field__outline-panel-inactive,
@@ -163,6 +167,10 @@ $_animation-duration: 150ms;
   border: inherit;
   display: flex;
   position: relative;
+}
+
+@mixin outline-notch-no-label() {
+  display: none;
 }
 
 @mixin outline-panel() {

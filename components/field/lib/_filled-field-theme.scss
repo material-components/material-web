@@ -41,8 +41,8 @@ $light-theme: map.merge(
     disabled-stroke-color: color-palette.$grey-700,
     disabled-stroke-opacity: 0.38,
     error-hover-stroke-color: $_error-state-content,
-    error-stroke-color: error,
-    focus-stroke-color: primary,
+    error-stroke-color: theme-color.$error,
+    focus-stroke-color: theme-color.$primary,
     focus-stroke-width: 2px,
     hover-state-layer-color: color-palette.$grey-800,
     hover-state-layer-opacity: 0.08,
@@ -209,7 +209,7 @@ $light-theme: map.merge(
 @mixin _shape($shape) {
   .mdc-field__container {
     border-start-start-radius: $shape;
-    broder-start-end-radius: $shape;
+    border-start-end-radius: $shape;
   }
 }
 

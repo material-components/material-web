@@ -54,7 +54,7 @@ $light-theme: map.merge(
     outlined-field
   );
 
-  @include theme.emit-theme-vars($theme, outlined-field);
+  @include theme.emit-theme-vars($theme);
 }
 
 @mixin theme-styles($theme) {
@@ -126,18 +126,18 @@ $light-theme: map.merge(
 
   .mdc-field__outline-notch {
     padding: 0 $padding;
-    margin-inline-start: calc(-1 * $padding);
+    margin-inline-start: calc(-1 * #{$padding});
     margin-inline-end: $padding;
   }
 
   .mdc-field__outline-end {
-    margin-inline-start: calc(-1 * $padding);
+    margin-inline-start: calc(-1 * #{$padding});
   }
 }
 
 @mixin _outline-notch-max-width($container-padding-horizontal) {
   .mdc-field__outline-notch {
-    max-width: calc(100% - 2 * $container-padding-horizontal);
+    max-width: calc(100% - 2 * #{$container-padding-horizontal});
   }
 }
 
@@ -207,7 +207,7 @@ $light-theme: map.merge(
 
   .mdc-field__label--floating {
     // Center the label within the outline stroke
-    transform: translateY(calc(-50% + $width / 2));
+    transform: translateY(calc(-50% + #{$width} / 2));
   }
 }
 
