@@ -51,7 +51,7 @@
   }
 
   // Remove function name and parens
-  $var: string-ext.trim($var, 'var(', ')');
+  $var: string-ext.trim-once($var, 'var(', ')');
 
   $name: string-ext.trim($var, ' ');
   $fallback: null;
