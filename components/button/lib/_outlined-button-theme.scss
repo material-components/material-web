@@ -32,6 +32,7 @@ $light-theme: map.merge(
     outline-color: #79747e,
     outline-width: 1px,
     pressed-label-text-color: #6750a4,
+    pressed-outline-color: #79747e,
     pressed-state-layer-color: #6750a4,
     pressed-state-layer-opacity: 0.12,
     with-icon-disabled-icon-color: rgba(#1c1b1f, 0.38),
@@ -60,6 +61,7 @@ $light-theme: map.merge(
     (
       default: map.get($theme, outline-color),
       disabled: map.get($theme, disabled-outline-color),
+      pressed: map.get($theme, pressed-outline-color),
     )
   );
   @include _outline-width(map.get($theme, outline-width));
