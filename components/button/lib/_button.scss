@@ -8,9 +8,7 @@
 @use 'third_party/javascript/material_web_components/m3/elevation/lib/surface' as elevation-surface;
 
 @mixin static-styles() {
-  // TODO(b/201687177): Remove once resolved
-  :host,
-  .md3-button__host {
+  :host {
     @include host-root;
     @include selector-ext.append-strict(&, '[disabled]') {
       @include disabled;
@@ -29,11 +27,8 @@
     }
   }
 
-  .md3-button__label {
-    // Necessary such that label is stacked on top of ripple
-    // (since ripple is a positioned element, non-positioned elements
-    // appear under it).
-    position: relative;
+  .md3-link-button-wrapper {
+    width: 100%;
   }
 }
 

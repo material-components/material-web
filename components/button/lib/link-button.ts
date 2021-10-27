@@ -26,7 +26,7 @@ export abstract class LinkButton extends Button {
   protected override render(): TemplateResult {
     // TODO(b/182405623): restore whitespace
     return html`
-      <span class="md3-button__host"
+      <span class="md3-link-button-wrapper"
           @focusin="${this.handleRippleFocus}"
           @focusout="${this.handleRippleBlur}"
           @mousedown="${this.handleRippleActivate}"
