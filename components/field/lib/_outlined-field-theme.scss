@@ -59,7 +59,7 @@ $light-theme: map.merge(
 
 @mixin theme-styles($theme) {
   $theme: theme.create-theme-vars(
-    theme.validate-theme-tokens($light-theme, $theme),
+    theme.validate-theme-styles($light-theme, $theme),
     outlined-field
   );
 

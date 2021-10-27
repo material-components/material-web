@@ -87,12 +87,14 @@
 ///     for.
 @mixin emit-theme-vars($theme) {
   @each $token, $value in $theme {
-    @if meta.type-of($value) == 'map' {
-      @include emit-theme-vars($value);
-    } @else if not var.is-var($value) {
-      @error '"#{$token}": #{$value} is not a var(). Call create-theme-vars($theme) before emit-theme-vars($theme).';
-    } @else {
-      #{var.name($value)}: #{var.fallback($value)};
+    @if $value {
+      @if meta.type-of($value) == 'map' {
+        @include emit-theme-vars($value);
+      } @else if not var.is-var($value) {
+        @error '"#{$token}": #{$value} is not a var(). Call create-theme-vars($theme) before emit-theme-vars($theme).';
+      } @else {
+        #{var.name($value)}: #{var.fallback($value)};
+      }
     }
   }
 }
@@ -100,15 +102,13 @@
 /// Validates a theme's tokens and values and throws an error if incorrect
 /// tokens are present or invalid values are provided.
 ///
-/// Use this in the `theme()` mixin to validate user-provided `$theme` maps
-/// before providing the value to `theme.create-theme-vars()`.
+/// Use this in `theme()` mixins to validate user-provided `$theme` maps before
+/// providing the value to `theme.create-theme-vars()`.
 ///
 /// @example - scss
 ///   @mixin theme($theme) {
-///     $theme: theme.create-theme-vars(
-///       theme.validate-theme($light-theme, $theme),
-///       button
-///     );
+///     $theme: theme.validate-theme($light-theme, $theme);
+///     $theme: theme.create-theme-vars($theme, checkbox);
 ///   }
 ///
 /// @throw If any tokens or values are invalid.
@@ -117,32 +117,55 @@
 /// @param {Map} $theme - User-provided theme Map to validate.
 /// @return {Map} The validated user-provided theme Map.
 @function validate-theme($reference-theme, $theme) {
-  @return _validate-theme-values(
-    validate-theme-tokens($reference-theme, $theme)
+  $theme: _validate-theme-tokens(
+    map.keys($reference-theme),
+    $theme,
+    $require-all: false
+  );
+  @return _validate-theme-values($theme);
+}
+
+/// Validates a theme's tokens and throws an error if incorrect tokens are
+/// present or any tokens are missing.
+///
+/// Use this in internal `theme-styles()` mixins to validate library-provided
+/// `$theme` maps and ensure that all tokens are correct and present.
+///
+/// @example - scss
+///   @mixin theme-styles($theme) {
+///     $theme: theme.validate-theme-styles($light-theme, $theme);
+///     $theme: theme.create-theme-vars($theme, checkbox);
+///   }
+///
+/// @throw If any tokens are invalid or missing.
+/// @param {Map|List} $reference-theme - A complete reference theme Map (or List
+///     of tokens) to validate the user-provided theme.
+/// @param {Map} $theme - The theme Map to validate.
+/// @return {Map} The validated theme Map.
+@function validate-theme-styles($reference-theme, $theme, $require-all: true) {
+  $valid-tokens: $reference-theme;
+  @if meta.type-of($reference-theme) == 'map' {
+    $valid-tokens: map.keys($reference-theme);
+  }
+
+  @return _validate-theme-tokens(
+    $valid-tokens,
+    $theme,
+    $require-all: $require-all
   );
 }
 
 /// Validates a theme's tokens and throws an error if incorrect tokens are
-/// present.
+/// present or optionally missing if `$require-all` is true.
 ///
-/// Use this in internal theme and `theme-styles()` mixins to validate
-/// library-provided `$theme` maps whose values may be custom properties.
-///
-/// @example - scss
-///   @mixin theme-styles($theme) {
-///     $theme: theme.create-theme-vars(
-///       theme.validate-theme-tokens($light-theme, $theme),
-///       button
-///     );
-///   }
-///
-/// @throw If any tokens are invalid.
-/// @param {Map} $reference-theme - A reference theme Map whose token keys will
-///     be used to validate the user-provided theme.
+/// @throw If any tokens are invalid or optionally missing.
+/// @param {List} $valid-tokens - A List of token keys to validate the theme.
 /// @param {Map} $theme - The theme Map to validate.
+/// @param {Bool} $require-all [false] - If true, throw an error if the theme
+///     is missing tokens from the list.
 /// @return {Map} The validated theme Map.
-@function validate-theme-tokens($reference-theme, $theme) {
-  $valid-tokens: map.keys($reference-theme);
+@function _validate-theme-tokens($valid-tokens, $theme, $require-all: false) {
+  $missing-tokens: ();
   $unsupported-tokens: ();
 
   @each $token, $value in $theme {
@@ -153,12 +176,32 @@
         $separator: comma
       );
     } @else if meta.type-of($value) == 'map' {
-      $value: validate-theme-tokens(map.get($reference-theme, $token), $value);
+      $value: validate-theme-tokens(
+        map.get($reference-theme, $token),
+        $value,
+        $require-all: $require-all
+      );
+    }
+  }
+
+  @if $require-all {
+    @each $token in $valid-tokens {
+      @if map.get($theme, $token) == null {
+        $missing-tokens: list.append(
+          $missing-tokens,
+          $token,
+          $separator: comma
+        );
+      }
     }
   }
 
   @if list.length($unsupported-tokens) > 0 {
     @error 'The following tokens are invalid: #{$unsupported-tokens}.';
+  }
+
+  @if list.length($missing-tokens) > 0 {
+    @error 'The following required tokens are missing: #{$missing-tokens}.';
   }
 
   @return $theme;
