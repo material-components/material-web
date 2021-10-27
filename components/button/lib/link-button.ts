@@ -44,15 +44,7 @@ export abstract class LinkButton extends Button {
         -->${this.renderRipple()}<!--
         -->${this.renderOutline()}<!--
         -->${this.renderTouchTarget()}<!--
-        -->${
-        // TODO(b/191914389): move to separate template
-        html`<span class="md3-button__icon-slot-container ${
-            classMap(this.getIconContainerClasses())}">
-                               <slot name="icon" @slotchange="${
-            this.handleSlotChange}">
-                                  ${this.icon ? this.renderFontIcon() : ''}
-                               </slot>
-                              </span>`}<!--
+        -->${this.renderIcon()}<!--
         -->${this.renderLabel()}</a><!--
         Note: link buttons cannot have trailing icons.
         --></span>`;

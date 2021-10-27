@@ -81,29 +81,9 @@ export abstract class Button extends LitElement {
         -->${this.renderRipple()}<!--
         -->${this.renderOutline()}<!--
         -->${this.renderTouchTarget()}<!--
-        -->${
-    // TODO(b/191914389): move to separate template
-    !this.trailingIcon ? html`<span class="md3-button__icon-slot-container ${
-                             classMap(this.getIconContainerClasses())}">
-                               <slot name="icon" @slotchange="${
-                             this.handleSlotChange}">
-                                  ${this.icon ? this.renderFontIcon() : ''}
-                               </slot>
-                              </span>` :
-                         ''}<!--
+        -->${this.renderLeadingIcon()}<!--
         -->${this.renderLabel()}<!--
-        -->${
-        this.trailingIcon ?
-        html`<span class="md3-button__icon-slot-container ${
-            classMap(this.getIconContainerClasses())}">
-               <slot name="icon" @slotchange="${this.handleSlotChange}">
-                 ${
-            this.icon ?
-            this.renderFontIcon() :
-            ''}
-               </slot>
-             </span>` :
-        ''}<!--
+        -->${this.renderTrailingIcon()}<!--
       --></button>`;
   }
 
@@ -156,9 +136,28 @@ export abstract class Button extends LitElement {
 
   /** @soyTemplate */
   protected renderLabel(): TemplateResult {
-    return html`
-      <span class="md3-button__label">${this.label}</span>
-    `;
+    return html`<span class="md3-button__label">${this.label}</span>`;
+  }
+
+  /** @soyTemplate */
+  protected renderLeadingIcon(): TemplateResult|string {
+    return this.trailingIcon ? '' : this.renderIcon();
+  }
+
+  /** @soyTemplate */
+  protected renderTrailingIcon(): TemplateResult|string {
+    return this.trailingIcon ? this.renderIcon() : '';
+  }
+
+  /** @soyTemplate */
+  protected renderIcon(): TemplateResult {
+    // TODO(b/182405623): restore whitespace
+    return html`<span class="md3-button__icon-slot-container ${
+        classMap(this.getIconContainerClasses())}"><!--
+               --><slot name="icon" @slotchange="${this.handleSlotChange}"><!--
+                 -->${this.icon ? this.renderFontIcon() : ''}<!--
+               --></slot><!--
+             --></span>`;
   }
 
   // TODO: investigate removing this
