@@ -92,6 +92,34 @@ describe('observeProperty()', () => {
     expect(state.prop).toBe(true);
     expect(superClassGetter).toHaveBeenCalledTimes(1);
   });
+
+  it('should preserve `this` context in getters/setters', () => {
+    const getter = jasmine.createSpy('getter');
+    const setter = jasmine.createSpy('setter');
+    class TargetClass {
+      privateProp = false;
+      get prop() {
+        getter(this);
+        return this.privateProp;
+      }
+      set prop(prop: boolean) {
+        this.privateProp = prop;
+        setter(this);
+      }
+    }
+
+    const state = new TargetClass();
+    observeProperty(state, 'prop', jasmine.createSpy('observer'));
+    state.prop = true;
+    getter.calls.reset();
+    expect(state.prop).toBe(true);
+    expect(getter)
+        .withContext('`this` in getter should be the instance')
+        .toHaveBeenCalledOnceWith(state);
+    expect(setter)
+        .withContext('`this` in setter should be the instance')
+        .toHaveBeenCalledOnceWith(state);
+  });
 });
 
 describe('setObserversEnabled()', () => {

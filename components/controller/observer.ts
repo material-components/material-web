@@ -96,11 +96,11 @@ export function observeProperty<T extends object, K extends keyof T>(
  * prototype.
  *
  * @template T The observed target type.
- * @param target - The target to observe.
+ * @param obj - The target to observe.
  * @return The installed `TargetObservers` for the provided target.
  */
-function installObserver<T extends object>(target: T): TargetObservers<T> {
-  const prototype = Object.getPrototypeOf(target);
+function installObserver<T extends object>(obj: T): TargetObservers<T> {
+  const prototype = Object.getPrototypeOf(obj);
   if (prototype[isTargetObservers]) {
     return prototype as TargetObservers<T>;
   }
@@ -110,12 +110,12 @@ function installObserver<T extends object>(target: T): TargetObservers<T> {
   // We can work around this by deleting the properties, installing the Proxy,
   // then re-setting the properties.
   const existingKeyValues = new Map<keyof T, T[keyof T]>();
-  const keys = Object.getOwnPropertyNames(target) as Array<keyof T>;
+  const keys = Object.getOwnPropertyNames(obj) as Array<keyof T>;
   for (const key of keys) {
-    const descriptor = getDescriptor(target, key);
+    const descriptor = getDescriptor(obj, key);
     if (descriptor && descriptor.writable) {
       existingKeyValues.set(key, descriptor.value as T[keyof T]);
-      delete target[key];
+      delete obj[key];
     }
   }
 
@@ -128,9 +128,18 @@ function installObserver<T extends object>(target: T): TargetObservers<T> {
           const isTargetObserversKey = key === isTargetObservers ||
               key === isEnabled || key === getObservers;
           const previous = Reflect.get(target, key, receiver);
-          // Do not use receiver when setting the target's key. We do not want
-          // to change whatever the target's inherent receiver is.
-          Reflect.set(target, key, newValue);
+          // If a key has an existing setter, invoke it with the receiver to
+          // preserve the correct `this` context.
+          // Otherwise, the key is either a new or existing plain property and
+          // should be set on the target. Setting a plain property on the
+          // receiver will cause the proxy to no longer be able to observe it.
+          const descriptor = getDescriptor(target, key as keyof T);
+          if (descriptor?.set) {
+            Reflect.set(target, key, newValue, receiver);
+          } else {
+            Reflect.set(target, key, newValue);
+          }
+
           if (!isTargetObserversKey && proxy[isEnabled] &&
               newValue !== previous) {
             for (const observer of proxy[getObservers](key as keyof T)) {
@@ -154,10 +163,10 @@ function installObserver<T extends object>(target: T): TargetObservers<T> {
     return observers;
   };
 
-  Object.setPrototypeOf(target, proxy);
+  Object.setPrototypeOf(obj, proxy);
   // Re-set plain pre-existing properties so that the Proxy can trap them
   for (const [key, value] of existingKeyValues.entries()) {
-    target[key] = value;
+    obj[key] = value;
   }
 
   return proxy;
