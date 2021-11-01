@@ -90,6 +90,6 @@
     "sass": "~1.34.1",
     "shady-css-parser": "^0.1.0",
     "tachometer": "^0.4.13",
-    "typescript": "~4.3.5"
+    "typescript": "~4.4.4"
   }
 }

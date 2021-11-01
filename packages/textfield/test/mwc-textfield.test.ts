@@ -642,7 +642,8 @@ describe('mwc-textfield:', () => {
   describe('date type textfield', () => {
     // IE 8-1 has no support for input[type=date]
     // Feature detection to skip these unit tests in IE, they will always fail
-    if (window.MSInputMethodContext) {
+    // tslint:disable-next-line:no-any MSInputMethodContext has been removed from TS dom typings
+    if ((window as any).MSInputMethodContext) {
       return;
     }
 
