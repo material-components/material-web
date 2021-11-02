@@ -30,6 +30,10 @@ export abstract class Button extends LitElement {
 
   @property({type: Boolean, reflect: true}) disabled = false;
 
+  @property({type: String}) type: 'button' | 'submit' | 'reset' = 'submit';
+
+  @property({type: String}) value = '';
+
   @property({type: Boolean, attribute: 'trailingicon'}) trailingIcon = false;
 
   @property({type: String}) icon = '';
@@ -66,6 +70,8 @@ export abstract class Button extends LitElement {
       <button
           class="md3-button ${classMap(this.getRenderClasses())}"
           ?disabled="${this.disabled}"
+          .type="${this.type}"
+          .value="${this.value}"
           aria-label="${ifDefined(this.ariaLabel)}"
           aria-haspopup="${ifDefined(this.ariaHasPopup)}"
           @focus="${this.handleRippleFocus}"
