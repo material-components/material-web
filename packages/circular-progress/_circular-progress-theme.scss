@@ -9,12 +9,12 @@
 @use '@material/theme/css';
 @use '@material/theme/theme-color';
 
-$light-theme: (
+$light-theme-deprecated: (
   bar-color: theme-color.prop-value(primary),
   track-color: transparent,
 );
 
-@mixin theme($theme: $light-theme) {
+@mixin theme-deprecated($theme: $light-theme-deprecated) {
   @include css.declaration(--mdc-theme-primary, map.get($theme, bar-color));
   @include css.declaration(
     --mdc-circular-progress-track-color,
