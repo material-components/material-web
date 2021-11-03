@@ -105,8 +105,12 @@ $_shadow-map: (
     @return none;
   }
 
-  @if $level == null or $shadow-color == null {
-    @error 'Both $level and $shadow-color are required';
+  @if $level == null {
+    @error '$elevation is required when $shadow-color is provided';
+  }
+
+  @if $shadow-color == null {
+    @error '$shadow-color is required when $elevation is provided';
   }
 
   $key-spread: map.get($_shadow-map, $level, key);
