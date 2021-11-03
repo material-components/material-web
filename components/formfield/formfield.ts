@@ -22,5 +22,5 @@ declare global {
  */
 @customElement('md-formfield')
 export class MdFormfield extends Formfield {
-  static styles = [formfieldStyles];
+  static override styles = [formfieldStyles];
 }

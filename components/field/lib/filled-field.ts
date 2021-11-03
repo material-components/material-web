@@ -29,7 +29,7 @@ export class FilledField extends Field {
   }
 
   /** @soyTemplate */
-  protected renderMiddleContents(): TemplateResult {
+  protected override renderMiddleContents(): TemplateResult {
     return html`
       ${this.renderLabel(LabelType.FLOATING)}
       ${this.renderLabel(LabelType.RESTING)}

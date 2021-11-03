@@ -29,7 +29,7 @@ export class Switch extends FormElement implements MDCSwitchState {
   /** @soyPrefixAttribute */
   @ariaProperty
   @property({type: String, attribute: 'aria-label'})
-  ariaLabel = '';
+  override ariaLabel = '';
 
   /** @soyPrefixAttribute */
   @ariaProperty

@@ -23,5 +23,5 @@ declare global {
  */
 @customElement('md-test-table')
 export class MdTestTable<S extends string = string> extends TestTable<S> {
-  static styles = [testTableStyles];
+  static override styles = [testTableStyles];
 }

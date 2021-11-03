@@ -130,7 +130,9 @@ export class RadioBase extends FormElement {
   @queryAsync('mwc-ripple') override ripple!: Promise<Ripple|null>;
 
   /** @soyPrefixAttribute */
-  @ariaProperty @property({attribute: 'aria-label'}) ariaLabel!: string;
+  @ariaProperty
+  @property({attribute: 'aria-label'})
+  override ariaLabel!: string;
 
   /** @soyPrefixAttribute */
   @ariaProperty

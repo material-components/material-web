@@ -23,5 +23,5 @@ declare global {
  */
 @customElement('md-filled-field')
 export class MdFilledField extends FilledField {
-  static styles = [sharedStyles, filledStyles];
+  static override styles = [sharedStyles, filledStyles];
 }

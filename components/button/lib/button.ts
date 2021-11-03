@@ -28,7 +28,7 @@ export abstract class Button extends LitElement implements ButtonState {
   /** @soyPrefixAttribute */
   @ariaProperty
   @property({type: String, attribute: 'aria-haspopup'})
-  ariaHasPopup!: AriaHasPopup;
+  override ariaHasPopup!: AriaHasPopup;
 
   @property({type: Boolean, reflect: true}) disabled = false;
 
@@ -38,7 +38,7 @@ export abstract class Button extends LitElement implements ButtonState {
 
   @property({type: String}) label = '';
 
-  @property({type: String}) ariaLabel!: string;
+  @property({type: String}) override ariaLabel!: string;
 
   @property({type: Boolean}) hasIcon = false;
 

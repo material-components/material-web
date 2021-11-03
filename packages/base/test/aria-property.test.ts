@@ -20,13 +20,13 @@ import {fixture, TestFixture} from '../../../test/src/util/helpers';
 class TestElement extends LitElement {
   @ariaProperty
   @property({type: String, attribute: 'aria-label'})
-  ariaLabel!: string;
+  override ariaLabel!: string;
 
   protected internalAriaChecked?: string|null = null;
 
   @ariaProperty
   @property({attribute: 'aria-checked'})
-  set ariaChecked(value: string) {
+  override set ariaChecked(value: string) {
     if (value === 'mixed') {
       this.internalAriaChecked = value;
     } else {
@@ -35,7 +35,7 @@ class TestElement extends LitElement {
     this.requestUpdate();
   }
 
-  get ariaChecked(): string {
+  override get ariaChecked(): string {
     return this.internalAriaChecked ?? '';
   }
 

@@ -14,7 +14,7 @@ export type TestTableTemplate<S extends string = string> = (state: S) =>
 export class TestTable<S extends string = string> extends LitElement {
   static override shadowRootOptions: ShadowRootInit = {mode: 'open'};
 
-  @property({type: String}) title = 'Title';
+  @property({type: String}) override title = 'Title';
   @property({type: Array}) states: S[] = [];
   @property({type: Array}) templates: Array<TestTableTemplate<S>> = [];
 

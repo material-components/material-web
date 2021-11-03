@@ -34,7 +34,9 @@ export class SwitchBase extends BaseElement {
   disabled = false;
 
   /** @soyPrefixAttribute */
-  @ariaProperty @property({attribute: 'aria-label'}) ariaLabel!: string;
+  @ariaProperty
+  @property({attribute: 'aria-label'})
+  override ariaLabel!: string;
 
   /** @soyPrefixAttribute */
   @ariaProperty

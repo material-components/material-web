@@ -24,7 +24,7 @@ export class IconButtonToggleBase extends LitElement {
   /** @soyPrefixAttribute */
   @ariaProperty
   @property({type: String, attribute: 'aria-label'})
-  ariaLabel!: string;
+  override ariaLabel!: string;
 
   @property({type: Boolean, reflect: true}) disabled = false;
 

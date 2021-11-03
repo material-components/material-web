@@ -26,7 +26,7 @@ export class Field extends LitElement implements FieldState {
   protected foundation = new FieldFoundation({state: this});
 
   /** @soyTemplate */
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html`
       <span class="mdc-field ${classMap(this.getRenderClasses())}">
         <span class="mdc-field__container">

@@ -25,12 +25,12 @@ export class IconButtonBase extends LitElement {
   /** @soyPrefixAttribute */
   @ariaProperty
   @property({type: String, attribute: 'aria-label'})
-  ariaLabel!: string;
+  override ariaLabel!: string;
 
   /** @soyPrefixAttribute */
   @ariaProperty
   @property({type: String, attribute: 'aria-haspopup'})
-  ariaHasPopup!: AriaHasPopup;
+  override ariaHasPopup!: AriaHasPopup;
 
   @query('button') buttonElement!: HTMLElement;
 

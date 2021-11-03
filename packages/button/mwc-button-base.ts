@@ -26,7 +26,7 @@ export class ButtonBase extends LitElement {
   /** @soyPrefixAttribute */
   @ariaProperty
   @property({type: String, attribute: 'aria-haspopup'})
-  ariaHasPopup!: AriaHasPopup;
+  override ariaHasPopup!: AriaHasPopup;
 
   @property({type: Boolean, reflect: true}) raised = false;
 

@@ -27,7 +27,7 @@ export class CircularProgressBase extends LitElement {
   /** @soyPrefixAttribute */
   @ariaProperty
   @property({type: String, attribute: 'aria-label'})
-  ariaLabel!: string
+  override ariaLabel!: string
 
   open() {
     this.closed = false;

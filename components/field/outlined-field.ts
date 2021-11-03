@@ -23,5 +23,5 @@ declare global {
  */
 @customElement('md-outlined-field')
 export class MdOutlinedField extends OutlinedField {
-  static styles = [sharedStyles, outlinedStyles];
+  static override styles = [sharedStyles, outlinedStyles];
 }

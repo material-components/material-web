@@ -11,7 +11,7 @@ import {Button} from './button';
 /** @soyCompatible */
 export class TonalButton extends Button {
   /** @soyTemplate */
-  protected getRenderClasses(): ClassInfo {
+  protected override getRenderClasses(): ClassInfo {
     return {
       ...super.getRenderClasses(),
       'md3-button--tonal': true,

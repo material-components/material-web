@@ -26,7 +26,7 @@ export class Formfield extends LitElement {
   }
 
   /** @soyTemplate */
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       <div class="mdc-formfield ${classMap(this.getRenderClasses())}">
         <div><slot></slot></div>

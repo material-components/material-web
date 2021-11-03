@@ -37,7 +37,7 @@ export class CheckboxBase extends FormElement {
   /** @soyPrefixAttribute */
   @ariaProperty
   @property({type: String, attribute: 'aria-label'})
-  ariaLabel!: string;
+  override ariaLabel!: string;
 
   /** @soyPrefixAttribute */
   @ariaProperty
