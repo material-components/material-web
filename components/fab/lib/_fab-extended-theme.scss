@@ -4,11 +4,10 @@
 //
 
 @use 'sass:map';
-@use '@material/theme/keys';
 @use '@material/theme/state';
-@use '@material/theme/theme';
 @use '@material/typography/typography';
-@use '@material/mwc-../tokens/lib/resolvers';
+@use '@material/mwc-../sass/resolvers';
+@use '@material/mwc-../sass/theme';
 @use './fab-shared-theme';
 
 $_elevation-1-dp: 1;
@@ -79,19 +78,24 @@ $dark-theme: (
   pressed-label-text-color: $dark-primary,
 );
 
-@mixin theme($theme, $resolvers: resolvers.$material) {
-  @include theme.validate-theme($light-theme, $theme);
+@function _resolve-theme($theme, $resolvers) {
+  @return fab-shared-theme.resolve-theme($theme, $resolvers);
+}
 
-  $theme: fab-shared-theme.resolve-theme($theme, $resolvers);
-  @include keys.declare-custom-properties($theme, fab-extended);
+@mixin theme($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: _resolve-theme($theme, $resolvers);
+  $theme: theme.create-theme-vars($theme, fab-extended);
+
+  @include theme.emit-theme-vars($theme);
 }
 
 @mixin theme-styles($theme, $resolvers: resolvers.$material) {
-  @include theme.validate-theme($light-theme, $theme);
+  $theme: theme.validate-theme-styles($light-theme, $theme);
+  $theme: _resolve-theme($theme, $resolvers);
+  $theme: theme.create-theme-vars($theme, fab-extended);
 
-  $theme: keys.create-theme-properties($theme, fab-extended);
-
-  @include fab-shared-theme.theme-styles($theme, $resolvers);
+  @include fab-shared-theme.theme-styles($theme);
 
   @include _set-container-height(map.get($theme, container-height));
 
@@ -116,7 +120,7 @@ $dark-theme: (
 }
 
 @mixin _set-container-height($height) {
-  @include theme.property(height, $height);
+  height: $height;
 }
 
 @mixin _label-color($color-or-map) {
@@ -139,14 +143,14 @@ $dark-theme: (
 
 @mixin _set-label-color($color) {
   .md3-fab__label {
-    @include theme.property(color, $color);
+    color: $color;
   }
 }
 
 @mixin _label-typography($typography-map) {
-  @include theme.property(font-family, map.get($typography-map, font));
-  @include theme.property(line-height, map.get($typography-map, line-height));
-  @include theme.property(font-size, map.get($typography-map, size));
-  @include theme.property(font-weight, map.get($typography-map, weight));
-  @include theme.property(letter-spacing, map.get($typography-map, tracking));
+  font-family: map.get($typography-map, font);
+  line-height: map.get($typography-map, line-height);
+  font-size: map.get($typography-map, size);
+  font-weight: map.get($typography-map, weight);
+  letter-spacing: map.get($typography-map, tracking);
 }

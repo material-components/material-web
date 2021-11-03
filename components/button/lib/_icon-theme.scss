@@ -6,13 +6,11 @@
 @use 'sass:map';
 @use '@material/ripple/ripple-theme';
 @use '@material/theme/state';
-@use '@material/theme/theme';
-@use '@material/typography/typography';
 @use './button-theme';
 
 $_selectors: button-theme.$selectors;
 
-@mixin theme-styles($theme, $resolvers) {
+@mixin theme-styles($theme) {
   @include _set-icon-color(
     (
       default: map.get($theme, with-icon-icon-color),
@@ -51,16 +49,15 @@ $_selectors: button-theme.$selectors;
 @mixin _icon-color($color) {
   ::slotted([slot='icon']),
   .md3-button__icon {
-    @include theme.property(color, $color);
+    color: $color;
   }
 }
 
-@mixin _set-icon-size($size-px) {
-  $size-rem: typography.px-to-rem($size-px);
+@mixin _set-icon-size($size) {
   ::slotted([slot='icon']),
   .md3-button__icon {
-    @include theme.property(font-size, $size-rem);
-    @include theme.property(width, $size-rem);
-    @include theme.property(height, $size-rem);
+    font-size: $size;
+    width: $size;
+    height: $size;
   }
 }

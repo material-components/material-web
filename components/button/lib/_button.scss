@@ -5,7 +5,7 @@
 
 @use '@material/touch-target/touch-target';
 @use '@material/theme/selector-ext';
-@use 'third_party/javascript/material_web_components/m3/elevation/lib/surface' as elevation-surface;
+@use '@material/mwc-../elevation/lib/surface' as elevation-surface;
 
 @mixin static-styles() {
   :host {

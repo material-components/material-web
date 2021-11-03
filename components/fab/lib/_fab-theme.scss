@@ -4,9 +4,8 @@
 //
 
 @use 'sass:map';
-@use '@material/theme/keys';
-@use '@material/theme/theme';
-@use '@material/mwc-../tokens/lib/resolvers';
+@use '@material/mwc-../sass/resolvers';
+@use '@material/mwc-../sass/theme';
 @use './fab-shared-theme';
 
 $_elevation-1-dp: 1;
@@ -65,19 +64,24 @@ $dark-theme: (
   pressed-state-layer-color: $dark-primary,
 );
 
-@mixin theme($theme, $resolvers: resolvers.$material) {
-  @include theme.validate-theme($light-theme, $theme);
+@function _resolve-theme($theme, $resolvers) {
+  @return fab-shared-theme.resolve-theme($theme, $resolvers);
+}
 
-  $theme: fab-shared-theme.resolve-theme($theme, $resolvers);
-  @include keys.declare-custom-properties($theme, fab);
+@mixin theme($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: _resolve-theme($theme, $resolvers);
+  $theme: theme.create-theme-vars($theme, fab);
+
+  @include theme.emit-theme-vars($theme);
 }
 
 @mixin theme-styles($theme, $resolvers: resolvers.$material) {
-  @include theme.validate-theme($light-theme, $theme);
+  $theme: theme.validate-theme-styles($light-theme, $theme);
+  $theme: _resolve-theme($theme, $resolvers);
+  $theme: theme.create-theme-vars($theme, fab);
 
-  $theme: keys.create-theme-properties($theme, fab);
-
-  @include fab-shared-theme.theme-styles($theme, $resolvers);
+  @include fab-shared-theme.theme-styles($theme);
 
   @include _set-container-dimensions(
     map.get($theme, container-width),
@@ -86,6 +90,6 @@ $dark-theme: (
 }
 
 @mixin _set-container-dimensions($width, $height) {
-  @include theme.property(width, $height);
-  @include theme.property(height, $height);
+  width: $width;
+  height: $height;
 }

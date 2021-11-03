@@ -5,9 +5,7 @@
 
 @use 'sass:map';
 @use '@material/ripple/ripple-theme';
-@use '@material/shape/shape';
 @use '@material/theme/state';
-@use '@material/theme/theme';
 @use '@material/typography/typography';
 
 $light-theme: (
@@ -17,7 +15,7 @@ $light-theme: (
   label-text-size: 14px,
   label-text-tracking: typography.px-to-rem(0.1px),
   label-text-weight: 500,
-  with-icon-icon-size: 18px,
+  with-icon-icon-size: typography.px-to-rem(18px),
 );
 
 $selectors: (
@@ -30,14 +28,13 @@ $selectors: (
   pressed: ':active'
 );
 
-@mixin theme-styles($theme, $resolvers) {
+@mixin theme-styles($theme) {
   @include _set-label-text-typography(
     (
       family: map.get($theme, label-text-font),
       size: map.get($theme, label-text-size),
       tracking: map.get($theme, label-text-tracking),
       weight: map.get($theme, label-text-weight),
-      transform: map.get($theme, label-text-transform),
     )
   );
 
@@ -121,23 +118,22 @@ $selectors: (
 }
 
 @mixin _set-height($height) {
-  @include theme.property(height, $height);
+  height: $height;
 }
 
 @mixin _set-shape-radius($radius) {
-  @include shape.radius($radius);
-
+  &,
   .md3-button__ripple {
-    @include shape.radius($radius);
+    border-radius: $radius;
   }
 }
 
 @mixin _set-container-fill-color($color) {
-  @include theme.property(background-color, $color);
+  background-color: $color;
 }
 
 @mixin _set-ink-color($color) {
-  @include theme.property(color, $color);
+  color: $color;
 }
 
 @mixin _set-label-text-typography($typography-map) {
@@ -147,24 +143,24 @@ $selectors: (
   $weight: map.get($typography-map, weight);
   $transform: map.get($typography-map, transform);
 
-  @include theme.property(font-family, $family);
-  @include theme.property(font-size, $size);
-  @include theme.property(letter-spacing, $tracking);
-  @include theme.property(font-weight, $weight);
-  @include theme.property(text-transform, $transform);
+  font-family: $family;
+  font-size: $size;
+  letter-spacing: $tracking;
+  font-weight: $weight;
+  text-transform: $transform;
 }
 
 @mixin container-padding($padding) {
-  @include theme.property(padding-inline-start, $padding);
-  @include theme.property(padding-inline-end, $padding);
+  padding-inline-start: $padding;
+  padding-inline-end: $padding;
 }
 
 @mixin container-with-icon-padding($icon-padding) {
   &.md3-button--icon-trailing {
-    @include theme.property(padding-inline-end, $icon-padding);
+    padding-inline-end: $icon-padding;
   }
 
   &.md3-button--icon-leading {
-    @include theme.property(padding-inline-start, $icon-padding);
+    padding-inline-start: $icon-padding;
   }
 }

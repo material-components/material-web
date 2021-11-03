@@ -4,102 +4,25 @@
 //
 
 @use 'sass:map';
-@use '@material/theme/state';
-@use '@material/theme/theme';
-@use './level-utils';
 
-$_default-theme: (
-  surface-tint-layer-color: transparent,
+$transparent-theme: (
   overlay-opacity: 0,
-  disabled-overlay-opacity: 0,
-  focus-overlay-opacity: 0,
-  hover-overlay-opacity: 0,
-  pressed-overlay-opacity: 0,
+  surface-tint-layer-color: transparent,
 );
 
-$_selectors: (
-  enabled: ':enabled',
-  disabled: ':disabled',
-  focus: ':focus',
-  hover: ':hover',
-  pressed: ':active',
-);
-
-@mixin theme-styles($theme, $selectors: $_selectors) {
-  @include _set-overlay-color(map.get($theme, surface-tint-layer-color));
-
-  @include _overlay-opacity(
-    (
-      default: map.get($theme, overlay-opacity),
-      disabled: map.get($theme, disabled-overlay-opacity),
-      focus: map.get($theme, focus-overlay-opacity),
-      hover: map.get($theme, hover-overlay-opacity),
-      pressed: map.get($theme, pressed-overlay-opacity),
-    ),
-    $selectors
-  );
+@mixin theme-styles($theme) {
+  @include _overlay-color(map.get($theme, surface-tint-layer-color));
+  @include _overlay-opacity(map.get($theme, overlay-opacity));
 }
 
-@mixin _set-overlay-color($color) {
+@mixin _overlay-color($color) {
   .md3-elevation-overlay {
-    @include theme.property(background-color, $color);
+    background-color: $color;
   }
 }
 
-@mixin _overlay-opacity($opacity-map, $selectors: $_selectors) {
-  @include state.default($selectors) {
-    @include _set-overlay-opacity(state.get-default-state($opacity-map));
-  }
-
-  @include state.disabled($selectors) {
-    @include _set-overlay-opacity(state.get-disabled-state($opacity-map));
-  }
-
-  @include state.hover($selectors) {
-    @include _set-overlay-opacity(state.get-hover-state($opacity-map));
-  }
-
-  @include state.focus($selectors) {
-    @include _set-overlay-opacity(state.get-focus-state($opacity-map));
-  }
-
-  @include state.pressed($selectors) {
-    @include _set-overlay-opacity(state.get-pressed-state($opacity-map));
-  }
-}
-
-@mixin _set-overlay-opacity($opacity) {
+@mixin _overlay-opacity($opacity) {
   .md3-elevation-overlay {
-    @include theme.property(opacity, $opacity);
+    opacity: $opacity;
   }
-}
-
-///
-/// Returns the appropriate shadow for the given dp and shadow color.
-///
-/// @throw If the provided dp does not map to an elevation level.
-/// @param {number|null} $dp - the dp of the elevation system
-/// @return {number|null} - the opacity or null
-///
-@function overlay-opacity-by-dp($dp) {
-  $level: level-utils.dp-to-level($dp);
-  @return get-overlay-opacity($level);
-}
-
-$_overlay-opacity: (
-  0: 0,
-  1: 0.05,
-  2: 0.08,
-  3: 0.11,
-  4: 0.12,
-  5: 0.14,
-);
-
-///
-/// Returns the appropriate overlay opacity for the given level.
-/// @param {number} $level - the level of the elevation system
-/// @return {number|null} - the opacity or null
-///
-@function get-overlay-opacity($level) {
-  @return map.get($_overlay-opacity, $level);
 }
