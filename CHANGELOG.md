@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Changed
+
+- all
+  - Upgrade typescript to 4.4.4
+
 ## [v0.25.3] - 2021-10-20
 
 ### Fixed

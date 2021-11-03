@@ -26,7 +26,7 @@ class TestElement extends LitElement {
 
   @ariaProperty
   @property({attribute: 'aria-checked'})
-  set ariaChecked(value: string|undefined) {
+  set ariaChecked(value: string) {
     if (value === 'mixed') {
       this.internalAriaChecked = value;
     } else {
@@ -35,8 +35,8 @@ class TestElement extends LitElement {
     this.requestUpdate();
   }
 
-  get ariaChecked(): string|undefined {
-    return this.internalAriaChecked as unknown as (string | undefined);
+  get ariaChecked(): string {
+    return this.internalAriaChecked ?? '';
   }
 
   @property({attribute: 'aria-owns'}) @ariaProperty ariaOwns!: string;
@@ -171,7 +171,7 @@ describe('aria-property:', () => {
         expect(shadowTargetElement).not.toBeNull();
         return;
       }
-      expect(component.ariaChecked).toEqual(null as any);
+      expect(component.ariaChecked).toBeFalsy();
       component.setAttribute('aria-checked', 'mixed');
       await component.updateComplete;
       expect(component.getAttribute('aria-checked')).toBeNull();
