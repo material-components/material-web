@@ -18,8 +18,10 @@ import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
 import {Ripple} from '../../ripple/mwc-ripple';
 import {RippleHandlers} from '../../ripple/ripple-handlers';
 
+import {ButtonState} from './state';
+
 /** @soyCompatible */
-export abstract class Button extends LitElement {
+export abstract class Button extends LitElement implements ButtonState {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
