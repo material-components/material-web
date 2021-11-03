@@ -62,7 +62,11 @@ $light-theme: (
 }
 
 @mixin _set-content-opacity($opacity) {
-  .mdc-field__content {
-    opacity: $opacity;
+  &.mdc-field--no-label,
+  &.mdc-field--focus,
+  &.mdc-field--populated {
+    .mdc-field__content {
+      opacity: $opacity;
+    }
   }
 }

@@ -6,14 +6,96 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.mdc-*' should only be used in this project.
 
+@use '@material/mwc-../sass/typography';
+
 @mixin static-styles() {
+  .mdc-field__label {
+    @include label;
+  }
+
   .mdc-field__label--resting {
-    @include label-resting;
+    @include resting;
+  }
+
+  .mdc-field__label--floating {
+    @include floating;
+  }
+
+  .mdc-field__label--hidden {
+    @include hidden;
+  }
+
+  .mdc-field--no-label {
+    .mdc-field__label {
+      @include no-label;
+    }
   }
 }
 
-@mixin label-resting {
+// TODO: Shake animation
+
+@mixin label() {
+  @include typography.static-styles;
+  overflow: hidden;
+  max-width: 100%;
+  // The resting label at 100% height can block pointer events to the content
+  // if it's very long and spans the full width of the field. Additionally,
+  // selecting the label's text doesn't present a good UX, since the user
+  // selection should be re-focused to another element (such as the input)
+  // upon focusing. Finally, since the actual label elements are swapped, it
+  // is not easy to maintain the user's label text selection.
+  pointer-events: none;
+  // TODO: Check with design, should there be any transition from resting to
+  // floating when there is a mismatch between ellipsis, such as opacity
+  // transition?
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+@mixin no-label() {
+  display: none;
+}
+
+@mixin resting {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  // @include gss.annotate($noflip: true);
+  transform-origin: top left;
+  // will-change and z-index place the label on a separate composite layer
+  // and in front of other elements to avoid re-painting them as it animates.
+  will-change: transform, opacity; // TODO: Re-evaluate this after changing animations
+
+  // @include rtl.rtl {
+  //   @include gss.annotate($noflip: true);
+  //   transform-origin: top right;
+  // }
+
+  // This before element is a hack to force the text within the label to be
+  // centered. We cannot use flexbox to center the label because we want to
+  // use text-overflow on the label's content. Flexbox creates pseudo child
+  // elements when dealing with overflow that cannot be directly styled, which
+  // means we would need to wrap the label's text in a separate child element
+  // in order to properly set the text-overflow property.
+  // &::before {
+  //   content: '';
+  //   display: inline-block;
+  //   height: 100%;
+  //   vertical-align: middle;
+  // }
+}
+
+// @mixin resting() {
+//   height: 100%;
+// }
+
+@mixin floating() {
+  // Opacity changes with hidden class. Add will-chance to align with resting
+  // label optimizations for composite layer rendering.
+  will-change: opacity;
+}
+
+@mixin hidden() {
+  opacity: 0;
 }

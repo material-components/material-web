@@ -6,43 +6,144 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.mdc-*' should only be used in this project.
 
+@use 'sass:color';
 @use 'sass:map';
+@use 'sass:meta';
+@use 'sass:string';
+@use '@material/theme/color-palette';
+@use '@material/theme/state';
+@use '@material/theme/theme-color';
+@use '@material/mwc-../sass/typography';
+@use './field-theme';
+
+$_selectors: field-theme.$selectors;
+
+$_error-state-content: color.scale(theme-color.$error, $blackness: 25%);
 
 $light-theme: (
-  label-text-line-height: 24px,
-  label-text-size: 16px,
+  disabled-label-text-color: color-palette.$grey-700,
+  disabled-label-text-opacity: 0.38,
+  error-hover-label-text-color: $_error-state-content,
+  error-label-text-color: theme-color.$error,
   floating-label-text-line-height: 16px,
   floating-label-text-size: 12px,
+  focus-label-text-color: theme-color.$primary,
+  hover-label-text-color: color-palette.$grey-900,
+  label-text-color: color-palette.$grey-700,
+  label-text-font: string.unquote('Roboto, sans-serif'),
+  label-text-line-height: 24px,
+  label-text-size: 16px,
+  label-text-tracking: 0.5px,
+  label-text-weight: 400,
 );
 
+@function resolve-theme($theme, $resolvers) {
+  @return typography.resolve-theme(
+    $theme,
+    map.get($resolvers, typography),
+    label-text
+  );
+}
+
 @mixin theme-styles($theme) {
-  @include _label-floating-text-font(
+  @include _label-color(
     (
-      line-height: map.get($theme, floating-label-text-line-height),
-      size: map.get($theme, floating-label-text-size),
+      default: map.get($theme, label-text-color),
+      focus: map.get($theme, focus-label-text-color),
+      hover: map.get($theme, hover-label-text-color),
+      disabled: map.get($theme, disabled-label-text-color),
     )
   );
-  @include _label-resting-text-font(
+  @include _label-error-color(
     (
-      line-height: map.get($theme, label-text-line-height),
+      default: map.get($theme, error-label-text-color),
+      hover: map.get($theme, error-hover-label-text-color),
+    )
+  );
+  @include _label-typography(
+    (
+      font: map.get($theme, label-text-font),
+      tracking: map.get($theme, label-text-tracking),
+      weight: map.get($theme, label-text-weight),
+    )
+  );
+  @include _label-typography-resting(
+    (
       size: map.get($theme, label-text-size),
+      line-height: map.get($theme, label-text-line-height),
+    )
+  );
+  @include _label-typography-floating(
+    (
+      size: map.get($theme, floating-label-text-size),
+      line-height: map.get($theme, floating-label-text-line-height),
+    )
+  );
+  @include _label-opacity(
+    (
+      disabled: map.get($theme, disabled-label-text-opacity),
     )
   );
 }
 
-@mixin _label-floating-text-font($font) {
+@mixin _label-color($colors) {
+  @include state.default($_selectors) {
+    @include _set-label-color(state.get-default-state($colors));
+  }
+
+  @include state.focus($_selectors) {
+    @include _set-label-color(state.get-focus-state($colors));
+  }
+
+  @include state.hover($_selectors) {
+    @include _set-label-color(state.get-hover-state($colors));
+  }
+
+  @include state.disabled($_selectors) {
+    @include _set-label-color(state.get-disabled-state($colors));
+  }
+}
+
+@mixin _set-label-color($color) {
+  .mdc-field__label {
+    color: $color;
+  }
+}
+
+@mixin _label-error-color($colors) {
+  @include state.error($_selectors) {
+    @include _label-color($colors);
+  }
+}
+
+@mixin _label-opacity($opacities) {
+  @include state.disabled($_selectors) {
+    @include _set-label-opacity(state.get-disabled-state($opacities));
+  }
+}
+
+@mixin _set-label-opacity($opacity) {
+  .mdc-field__label {
+    &:not(.mdc-field__label--hidden) {
+      opacity: $opacity;
+    }
+  }
+}
+
+@mixin _label-typography($font) {
+  .mdc-field__label {
+    @include typography.theme-styles($font);
+  }
+}
+
+@mixin _label-typography-floating($font) {
   .mdc-field__label--floating {
-    @include _set-label-text-font($font);
+    @include typography.theme-styles($font);
   }
 }
 
-@mixin _label-resting-text-font($font) {
+@mixin _label-typography-resting($font) {
   .mdc-field__label--resting {
-    @include _set-label-text-font($font);
+    @include typography.theme-styles($font);
   }
-}
-
-@mixin _set-label-text-font($font) {
-  font-size: map.get($font, size);
-  line-height: map.get($font, line-height);
 }

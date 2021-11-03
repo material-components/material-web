@@ -13,7 +13,7 @@ export class FieldFoundation extends ObserverFoundation<FieldAdapter> {
     this.observe(this.adapter.state, {
       disabled: this.onDisabledChange,
       focused: this.onFocusedChange,
-      label: this.updateLabelAsterisk,
+      label: this.onLabelChange,
       populated: this.onPopulatedChange,
       required: this.updateLabelAsterisk
     });
@@ -23,6 +23,13 @@ export class FieldFoundation extends ObserverFoundation<FieldAdapter> {
     if (this.adapter.state.disabled) {
       this.adapter.state.focused = false;
     }
+  }
+
+  protected onLabelChange(current?: string, previous?: string) {
+    this.updateLabelAsterisk();
+    const previouslyFloating = Boolean(previous) &&
+        (this.adapter.state.focused || this.adapter.state.populated);
+    this.animateLabel(previouslyFloating);
   }
 
   protected updateLabelAsterisk() {
