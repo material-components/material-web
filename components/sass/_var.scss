@@ -110,10 +110,13 @@
       $fallback-fallback: fallback($fallback);
     }
 
-    @return var(#{$name}, #{create($fallback-name, $fallback-fallback)});
+    @return var(
+      #{$name},
+      #{meta.inspect(create($fallback-name, $fallback-fallback))}
+    );
   }
 
-  @return var(#{$name}, #{$fallback});
+  @return var(#{$name}, #{meta.inspect($fallback)});
 }
 
 /// Create a custom property variable name using the configured
