@@ -8,6 +8,7 @@
 
 @include ripple.static-styles;
 
-.md3-ripple-surface {
+// TODO(b/177615373): lower specificity
+.md3-ripple-surface.md3-ripple-surface {
   @include ripple-theme.theme-styles(ripple-theme.$light-theme);
 }
