@@ -194,7 +194,7 @@ export abstract class TextFieldBase extends FormElement {
   // typed to allow undefined.
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  @property({type: String}) inputMode!: TextFieldInputMode;
+  @property({type: String}) override inputMode!: TextFieldInputMode;
 
   @property({type: Boolean}) readOnly = false;
 
