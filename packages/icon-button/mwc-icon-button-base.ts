@@ -85,7 +85,7 @@ export class IconButtonBase extends LitElement {
         @touchend="${this.handleRippleDeactivate}"
         @touchcancel="${this.handleRippleDeactivate}"
     >${this.renderRipple()}
-    <i class="material-icons">${this.icon}</i>
+    ${this.icon ? html`<i class="material-icons">${this.icon}</i>` : ''}
     <span
       ><slot></slot
     ></span>
