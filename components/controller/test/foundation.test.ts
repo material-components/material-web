@@ -10,8 +10,13 @@ import {Foundation} from '../foundation';
 
 describe('Foundation', () => {
   it('#init() should be called on construction', () => {
-    spyOn(Foundation.prototype, 'init');
-    const instance = new Foundation({});
+    class MyFoundation extends Foundation<{}> {
+      // Make init public to test
+      override init() {}
+    }
+
+    spyOn(MyFoundation.prototype, 'init');
+    const instance = new MyFoundation({});
     expect(instance.init).toHaveBeenCalled();
   });
 });

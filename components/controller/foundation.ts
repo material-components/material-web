@@ -12,7 +12,7 @@ export class Foundation<Adapter extends object> {
     this.init();
   }
 
-  init() {
+  protected init() {
     // Subclasses should override this method to perform initialization routines
   }
 }
