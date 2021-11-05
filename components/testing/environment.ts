@@ -31,6 +31,10 @@ export class Environment {
    * a Lit element to render.
    */
   async waitForStability() {
+    await new Promise(resolve => {
+      requestAnimationFrame(resolve);
+    });
+
     if (!this.roots.length) {
       return;
     }
