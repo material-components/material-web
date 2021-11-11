@@ -1,0 +1,92 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:list';
+@use 'sass:selector';
+
+///
+/// Creates a rule that will be applied when a component is within the context
+/// of an RTL layout.
+///
+/// @example - scss
+/// .mdc-foo {
+///   transform: translateX(20px);
+///
+///   @include rtl.rtl {
+///     transform: translateX(-20px);
+///   }
+/// }
+///
+/// @example - css
+///   .mdc-foo {
+///     transform: translateX(20px);
+///   }
+///
+///   :host(:dir(rtl)) .mdc-foo {
+///     transform: translateX(-20px);
+///   }
+///   :host([dir="rtl"]) .mdc-foo, [dir="rtl"] .mdc-foo {
+///     transform: translateX(-20px);
+///   }
+///
+/// Note that this mixin works by checking for an `[dir="rtl"]` on the host.
+/// As a result, nested `dir` values are not supported:
+///
+/// @example - html
+/// <html dir="rtl">
+///   <!-- ... -->
+///   <div dir="ltr">
+///     <div class="mdc-foo">Styled incorrectly as RTL!</div>
+///   </div>
+/// </html>
+///
+/// @content Content to be styled in an RTL context.
+///
+@mixin rtl() {
+  $ambient-rtl-attr: '[dir="rtl"]';
+  $host-dir-rtl-attr: ':host([dir="rtl"])';
+  $host-dir-rtl-func: ':host(:dir(rtl))';
+
+  // fallback selectors for browsers that don't support `:dir()`
+  $rtl-fallback-selectors: list.join(
+    selector.nest($host-dir-rtl-attr, &),
+    selector.nest($ambient-rtl-attr, &)
+  );
+
+  @at-root {
+    #{selector.nest($host-dir-rtl-func, &)} {
+      /*rtl:begin:ignore*/
+      @content;
+      /*rtl:end:ignore*/
+    }
+    #{$rtl-fallback-selectors} {
+      /*rtl:begin:ignore*/
+      @content;
+      /*rtl:end:ignore*/
+    }
+  }
+}
+
+///
+/// Adds RTL ignore annotation
+///
+/// This function should only be used on properties that do not have a
+/// Logical CSS value, and are unaware of RTL.
+///
+/// @example - scss
+///   .mdc-foo {
+///     @include rtl.ignore-next-line;
+///     transform: translateX(20px);
+///   }
+///
+/// @example - css
+///   .mdc-foo {
+///     /*rtl:ignore*/
+///     translateX(20px);
+///   }
+///
+@mixin ignore-next-line() {
+  /*rtl:ignore*/
+}

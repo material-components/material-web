@@ -1,0 +1,18 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use '../../sass/rtl';
+
+:host {
+  display: flex;
+}
+
+.test {
+  @include rtl.ignore-next-line;
+  margin-left: 10px;
+  @include rtl.rtl {
+    margin-left: 20px;
+  }
+}
