@@ -1,0 +1,79 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:map';
+@use '@material/mwc-../sass/resolvers';
+@use '@material/mwc-../sass/theme';
+
+$_custom-property-prefix: 'focus-ring';
+
+$light-theme: (
+  container-outer-padding: 2px,
+  inner-ring-width: 2px,
+  inner-ring-color: #000,
+  inner-ring-radius: 6px,
+  outer-ring-width: 2px,
+  outer-ring-color: #fff,
+  outer-ring-radius: 8px,
+);
+
+@mixin theme($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
+
+  @include theme.emit-theme-vars($theme);
+}
+
+@mixin theme-styles($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme-styles($light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
+
+  $container-outer-padding: map.get($theme, container-outer-padding);
+  $inner-width: map.get($theme, inner-ring-width);
+  $inner-color: map.get($theme, inner-ring-color);
+  $inner-radius: map.get($theme, inner-ring-radius);
+
+  $outer-width: map.get($theme, outer-ring-width);
+  $outer-color: map.get($theme, outer-ring-color);
+  $outer-radius: map.get($theme, outer-ring-radius);
+
+  // Outer
+  @include _outer-ring-size(
+    $container-outer-padding,
+    $inner-width,
+    $outer-width
+  );
+  @include _set-border($outer-width, $outer-color, $outer-radius);
+
+  // Inner
+  &::before {
+    @include _inner-ring-size($outer-width);
+    @include _set-border($inner-width, $inner-color, $inner-radius);
+  }
+}
+
+@mixin _outer-ring-size($container-outer-padding, $inner-width, $outer-width) {
+  // Note that the ring will not respect its parent's border. This will not be
+  // an issue as long as border is set via a sibling node, similar to ripple
+  // and touch target.
+  $size: calc(
+    100% + 2 * (#{$container-outer-padding} + #{$inner-width} + #{$outer-width})
+  );
+
+  width: $size;
+  height: $size;
+}
+
+@mixin _inner-ring-size($outer-ring-width) {
+  $size: calc(100% - #{$outer-ring-width} * 2);
+
+  width: $size;
+  height: $size;
+}
+
+@mixin _set-border($width, $color, $radius) {
+  border: $width solid $color;
+  border-radius: $radius;
+}
