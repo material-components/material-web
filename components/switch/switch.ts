@@ -7,11 +7,11 @@
 import {customElement} from 'lit/decorators';
 
 import {Switch} from './lib/switch';
-import {styles} from './lib/switch-styles.css'
+import {styles} from './lib/switch-styles.css';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-switch': MDSwitch;
+    'm3-switch': MdSwitch;
   }
 }
 
@@ -20,7 +20,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-switch')
-export class MDSwitch extends Switch {
+@customElement('m3-switch')
+export class MdSwitch extends Switch {
   static override styles = [styles];
 }

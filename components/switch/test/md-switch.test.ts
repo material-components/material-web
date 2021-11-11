@@ -9,10 +9,10 @@ import {customElement} from 'lit/decorators';
 import {ifDefined} from 'lit/directives/if-defined';
 
 import {fixture, simulateFormDataEvent, TestFixture} from '../../../../test/src/util/helpers';
-import {MDSwitch} from '../switch';
+import {MdSwitch} from '../switch';
 
-@customElement('md-test-switch')
-class TestSwitch extends MDSwitch {
+@customElement('md3-test-switch')
+class TestSwitch extends MdSwitch {
   getFoundation() {
     return this.mdcFoundation;
   }
@@ -25,7 +25,7 @@ class TestSwitch extends MDSwitch {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-test-switch': TestSwitch;
+    'md3-test-switch': TestSwitch;
   }
 }
 
@@ -38,11 +38,11 @@ interface SwitchProps {
 
 function renderSwitch(propsInit: Partial<SwitchProps> = {}) {
   return html`
-    <md-test-switch
+    <md3-test-switch
       ?selected=${propsInit.selected === true}
       ?disabled=${propsInit.disabled === true}
       .name=${propsInit.name ?? ''}
-      value=${ifDefined(propsInit.value)}></md-test-switch>
+      value=${ifDefined(propsInit.value)}></md3-test-switch>
   `
 }
 
@@ -60,7 +60,7 @@ describe('mwc-switch', () => {
     const fixt = await fixture(template(propsInit));
 
     fixtures.push(fixt);
-    const element = fixt.root.querySelector('md-test-switch')!;
+    const element = fixt.root.querySelector('md3-test-switch')!;
     await element.updateComplete;
     return element;
   }
@@ -104,24 +104,24 @@ describe('mwc-switch', () => {
       expect(selectedInput.checked).toBeTrue();
     });
 
-    it('should add mdc-switch--selected class when true', () => {
-      const toggleRoot = toggle.shadowRoot!.querySelector('.mdc-switch')!;
+    it('should add md3-switch--selected class when true', () => {
+      const toggleRoot = toggle.shadowRoot!.querySelector('.md3-switch')!;
       expect(Array.from(toggleRoot.classList))
-          .not.toContain('mdc-switch--selected');
+          .not.toContain('md3-switch--selected');
 
-      const selectedRoot = selected.shadowRoot!.querySelector('.mdc-switch')!;
+      const selectedRoot = selected.shadowRoot!.querySelector('.md3-switch')!;
       expect(Array.from(selectedRoot.classList))
-          .toContain('mdc-switch--selected');
+          .toContain('md3-switch--selected');
     });
 
-    it('should add mdc-switch--unselected class when false', () => {
-      const toggleRoot = toggle.shadowRoot!.querySelector('.mdc-switch')!;
+    it('should add md3-switch--unselected class when false', () => {
+      const toggleRoot = toggle.shadowRoot!.querySelector('.md3-switch')!;
       expect(Array.from(toggleRoot.classList))
-          .toContain('mdc-switch--unselected');
+          .toContain('md3-switch--unselected');
 
-      const selectedRoot = selected.shadowRoot!.querySelector('.mdc-switch')!;
+      const selectedRoot = selected.shadowRoot!.querySelector('.md3-switch')!;
       expect(Array.from(selectedRoot.classList))
-          .not.toContain('mdc-switch--unselected');
+          .not.toContain('md3-switch--unselected');
     });
   });
 

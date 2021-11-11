@@ -6,17 +6,17 @@
 
 import {MDCObserverFoundation} from '@material/base/observer-foundation';
 
-import {MDCSwitchState} from './state';
+import {MD3SwitchState} from './state';
 
 /**
- * `MDCSwitchFoundation` provides a state-only foundation for a switch
+ * `MD3SwitchFoundation` provides a state-only foundation for a switch
  * component.
  *
  * State observers and event handler entrypoints update a component's adapter's
  * state with the logic needed for switch to function.
  */
-export class MDCSwitchFoundation extends MDCObserverFoundation<MDCSwitchState> {
-  constructor(adapter: MDCSwitchState) {
+export class MD3SwitchFoundation extends MDCObserverFoundation<MD3SwitchState> {
+  constructor(adapter: MD3SwitchState) {
     super(adapter);
     this.handleClick = this.handleClick.bind(this);
   }

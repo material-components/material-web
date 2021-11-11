@@ -7,7 +7,7 @@
 /**
  * The state of the switch.
  */
-export interface MDCSwitchState {
+export interface MD3SwitchState {
   /**
    * Indicates whether or not the switch is disabled.
    */
@@ -23,9 +23,9 @@ export interface MDCSwitchState {
   selected: boolean;
 }
 
-export interface MDCSwitchAdapter {
+export interface MD3SwitchAdapter {
   /**
    * The state of the component.
    */
-  state: MDCSwitchState;
+  state: MD3SwitchState;
 }

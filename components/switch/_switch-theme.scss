@@ -1,0 +1,9 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@forward './lib/switch-theme' show
+  $dark-theme,
+  $light-theme,
+  theme;
