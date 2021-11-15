@@ -107,8 +107,6 @@ npm install @material/mwc-textarea
 | `type`              | `TextFieldType*` | A string specifying the type of control to render.
 | `label`             | `string`         | Sets floating label value.
 | `placeholder`       | `string`         | Sets disappearing input placeholder.
-| `icon`              | `string`         | Leading icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-web/tree/master/packages/icon).
-| `iconTrailing`      | `string`         | Trailing icon to display in input. See [`mwc-icon`](https://github.com/material-components/material-web/tree/master/packages/icon).
 | `disabled`          | `boolean`        | Whether or not the input should be disabled.
 | `charCounter`       | `boolean`\|`TextAreaCharCounter**` | **Note: requires `maxLength` to be set.** Display character counter with max length. Textareas may display an `"external"` or `"internal"` `charCounter`. When `true`, textareas display an external character counter by default.
 | `outlined`          | `boolean`        | Whether or not to show the material outlined variant.
@@ -154,7 +152,6 @@ Inherits CSS Custom properties from:
 
 * [`mwc-ripple`](https://github.com/material-components/material-web/tree/master/packages/ripple)
 * [`mwc-notched-outline`](https://github.com/material-components/material-web/tree/master/packages/notched-outline).
-* [`mwc-icon`](https://github.com/material-components/material-web/tree/master/packages/icon)
 
 | Name                                              | Default               | Description
 | ------------------------------------------------- | --------------------- |------------
@@ -171,7 +168,7 @@ custom properties.
 | Name                  | Description
 | ---------------------  | -----------
 | `--mdc-theme-primary`  | Color when active of the underline ripple, the outline, and the caret.
-| `--mdc-theme-error`    | Color when errored of the underline, the outline, the caret, and the icons.
+| `--mdc-theme-error`    | Color when errored of the underline, the outline, and the caret.
 | `--mdc-typography-subtitle1-<PROPERTY>` | Styles the typography of the texarea, excluding line-height.
 
 
