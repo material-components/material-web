@@ -5,7 +5,7 @@
  */
 
 import {html, LitElement, TemplateResult} from 'lit';
-import {property, state} from 'lit/decorators';
+import {property, queryAsync, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 
 import {FieldFoundation} from './foundation';
@@ -22,8 +22,20 @@ export class Field extends LitElement implements FieldState {
   @property({type: Boolean}) populated = false;
   @property({type: Boolean}) required = false;
   @state() visibleLabelType = LabelType.RESTING;
+  get floatingLabelRect() {
+    return this.floatingLabelEl.then(el => el.getBoundingClientRect());
+  }
+  get restingLabelRect() {
+    return this.restingLabelEl.then(el => el.getBoundingClientRect());
+  }
 
-  protected foundation = new FieldFoundation({state: this});
+  protected foundation = new FieldFoundation(
+      {state: this, animateLabel: this.animateLabel.bind(this)});
+
+  @queryAsync('.mdc-field__label--floating')
+  protected readonly floatingLabelEl!: Promise<HTMLElement>;
+  @queryAsync('.mdc-field__label--resting')
+  protected readonly restingLabelEl!: Promise<HTMLElement>;
 
   /** @soyTemplate */
   override render(): TemplateResult {
@@ -84,5 +96,10 @@ export class Field extends LitElement implements FieldState {
       'mdc-field__label--resting': labelType === LabelType.RESTING,
       'mdc-field__label--hidden': labelType !== this.visibleLabelType,
     };
+  }
+
+  private async animateLabel(...args: Parameters<Animatable['animate']>) {
+    const labelEl = await this.restingLabelEl;
+    return labelEl.animate(...args);
   }
 }

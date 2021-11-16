@@ -13,6 +13,8 @@ export interface FieldState {
   populated: boolean;
   required: boolean;
   visibleLabelType: LabelType;
+  readonly floatingLabelRect: Promise<DOMRect>;
+  readonly restingLabelRect: Promise<DOMRect>;
 }
 
 export enum LabelType {
@@ -22,4 +24,5 @@ export enum LabelType {
 
 export interface FieldAdapter {
   state: FieldState;
+  animateLabel(...args: Parameters<Animatable['animate']>): Promise<Animation>;
 }
