@@ -1,0 +1,17 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use './navigation-bar';
+@use './navigation-bar-theme';
+
+@include navigation-bar.static-styles();
+
+:host {
+  width: 100%;
+}
+
+.md3-navigation-bar {
+  @include navigation-bar-theme.theme-styles(navigation-bar-theme.$light-theme);
+}
