@@ -8,10 +8,14 @@ import {html, TemplateResult} from 'lit';
 import {ClassInfo} from 'lit/directives/class-map';
 
 import {Field} from './field';
-import {LabelType} from './state';
+import {OutlinedFieldFoundation} from './foundation';
+import {LabelType, OutlinedFieldState} from './state';
 
 /** @soyCompatible */
-export class OutlinedField extends Field {
+export class OutlinedField extends Field implements OutlinedFieldState {
+  protected foundation = new OutlinedFieldFoundation(
+      {state: this, animateLabel: this.animateLabel.bind(this)});
+
   /** @soyTemplate */
   protected override getRenderClasses(): ClassInfo {
     return {

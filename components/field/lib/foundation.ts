@@ -7,9 +7,10 @@
 import {ObserverFoundation} from '../../controller/observer-foundation';
 import {Easing} from '../../motion/animation';
 
-import {FieldAdapter, LabelType} from './state';
+import {FieldAdapter, FilledFieldAdapter, LabelType, OutlinedFieldAdapter} from './state';
 
-export class FieldFoundation extends ObserverFoundation<FieldAdapter> {
+export class FieldFoundation<A extends FieldAdapter = FieldAdapter> extends
+    ObserverFoundation<A> {
   private previousAnimation?: AbortController;
 
   protected override init() {
@@ -160,3 +161,44 @@ export class FieldFoundation extends ObserverFoundation<FieldAdapter> {
     return [{transform: floatTransform}, {transform: restTransform}];
   }
 }
+
+export class FilledFieldFoundation extends FieldFoundation<FilledFieldAdapter> {
+  handleClick(event: MouseEvent|TouchEvent) {
+    if (this.adapter.state.disabled) {
+      return;
+    }
+
+    this.updateStrokeTransformOrigin(event);
+  }
+
+  protected override onFocusedChange(current: boolean, previous: boolean) {
+    // Upon losing focus, the stroke resets to expanding from the center, such
+    // as when re-focusing with a keyboard.
+    if (!this.adapter.state.focused) {
+      this.updateStrokeTransformOrigin();
+    }
+
+    super.onFocusedChange(current, previous);
+  }
+
+  private async updateStrokeTransformOrigin(event?: MouseEvent|TouchEvent) {
+    let transformOrigin = '';
+    if (event) {
+      const eventX =
+          this.isTouchEvent(event) ? event.touches[0].clientX : event.clientX;
+      const rootRect = await this.adapter.state.rootRect;
+      transformOrigin = `${eventX - rootRect.x}px`;
+    }
+
+    this.adapter.state.strokeTransformOrigin = transformOrigin;
+  }
+
+  private isTouchEvent(event: Event): event is TouchEvent {
+    // Can't use instanceof TouchEvent since Firefox does not provide the
+    // constructor globally.
+    return !!(event as TouchEvent).touches;
+  }
+}
+
+export class OutlinedFieldFoundation extends
+    FieldFoundation<OutlinedFieldAdapter> {}

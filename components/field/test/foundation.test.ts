@@ -8,8 +8,8 @@ import 'jasmine';
 
 import {Environment} from '../../testing/environment';
 import {spyOnAllFunctions} from '../../testing/jasmine';
-import {FieldFoundation} from '../lib/foundation';
-import {FieldAdapter, LabelType} from '../lib/state';
+import {FieldFoundation, FilledFieldFoundation} from '../lib/foundation';
+import {FieldAdapter, FilledFieldAdapter, LabelType} from '../lib/state';
 
 describe('FieldFoundation', () => {
   const env = new Environment();
@@ -287,5 +287,76 @@ describe('FieldFoundation', () => {
        expect(secondAnimation.cancel)
            .withContext('second animation should play')
            .not.toHaveBeenCalled();
+     });
+});
+
+describe('FilledFieldFoundation', () => {
+  const env = new Environment();
+
+  function setupTest() {
+    const adapter: FilledFieldAdapter = {
+      state: {
+        disabled: false,
+        error: false,
+        labelText: '',
+        focused: false,
+        populated: false,
+        required: false,
+        visibleLabelType: LabelType.RESTING,
+        strokeTransformOrigin: '',
+        get rootRect() {
+          return Promise.resolve(new DOMRect(0, 0, 1, 1));
+        },
+        get floatingLabelRect() {
+          return Promise.resolve(new DOMRect(0, 0, 1, 1));
+        },
+        get restingLabelRect() {
+          return Promise.resolve(new DOMRect(0, 0, 1, 1));
+        },
+      },
+      animateLabel: () => {
+        const animation = new Animation();
+        animation.play();
+        return Promise.resolve(animation);
+      },
+    };
+
+    const foundation = new FilledFieldFoundation(adapter);
+    return {
+      foundation: spyOnAllFunctions(foundation).and.callThrough(),
+      adapter: spyOnAllFunctions(adapter).and.callThrough(),
+    };
+  }
+
+  it('#handleClick() should set strokeTransformOrigin', async () => {
+    const {foundation, adapter} = setupTest();
+    const event = new MouseEvent('click', {clientX: 10});
+    foundation.handleClick(event);
+    await env.waitForStability();
+    expect(adapter.state.strokeTransformOrigin).toBe('10px');
+  });
+
+  it('#handleClick() should do nothing when disabled', async () => {
+    const {foundation, adapter} = setupTest();
+    adapter.state.disabled = true;
+    const event = new MouseEvent('click', {clientX: 10});
+    foundation.handleClick(event);
+    await env.waitForStability();
+    expect(adapter.state.strokeTransformOrigin)
+        .withContext('strokeTransformOrigin should not be set when disabled')
+        .toBe('');
+  });
+
+  it('#onFocusedChange() should reset strokeTransformOrigin when unfocusing',
+     async () => {
+       const {adapter} = setupTest();
+       adapter.state.focused = true;
+       adapter.state.strokeTransformOrigin = '10px';
+       await env.waitForStability();
+       adapter.state.focused = false;
+       await env.waitForStability();
+       expect(adapter.state.strokeTransformOrigin)
+           .withContext('unfocusing should reset strokeTransformOrigin')
+           .toBe('');
      });
 });

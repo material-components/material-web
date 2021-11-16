@@ -8,7 +8,6 @@ import {html, LitElement, TemplateResult} from 'lit';
 import {property, queryAsync, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 
-import {FieldFoundation} from './foundation';
 import {FieldState, LabelType} from './state';
 
 /** @soyCompatible */
@@ -29,9 +28,6 @@ export class Field extends LitElement implements FieldState {
     return this.restingLabelEl.then(el => el.getBoundingClientRect());
   }
 
-  protected foundation = new FieldFoundation(
-      {state: this, animateLabel: this.animateLabel.bind(this)});
-
   @queryAsync('.mdc-field__label--floating')
   protected readonly floatingLabelEl!: Promise<HTMLElement>;
   @queryAsync('.mdc-field__label--resting')
@@ -41,9 +37,16 @@ export class Field extends LitElement implements FieldState {
   override render(): TemplateResult {
     return html`
       <span class="mdc-field ${classMap(this.getRenderClasses())}">
-        <span class="mdc-field__container">
-          ${this.renderContainerContents()}
-        </span>
+        ${this.renderContainer()}
+      </span>
+    `;
+  }
+
+  /** @soyTemplate */
+  protected renderContainer(): TemplateResult {
+    return html`
+      <span class="mdc-field__container">
+        ${this.renderContainerContents()}
       </span>
     `;
   }
@@ -98,7 +101,7 @@ export class Field extends LitElement implements FieldState {
     };
   }
 
-  private async animateLabel(...args: Parameters<Animatable['animate']>) {
+  protected async animateLabel(...args: Parameters<Animatable['animate']>) {
     const labelEl = await this.restingLabelEl;
     return labelEl.animate(...args);
   }

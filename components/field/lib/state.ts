@@ -17,6 +17,13 @@ export interface FieldState {
   readonly restingLabelRect: Promise<DOMRect>;
 }
 
+export interface FilledFieldState extends FieldState {
+  strokeTransformOrigin: string;
+  readonly rootRect: Promise<DOMRect>;
+}
+
+export interface OutlinedFieldState extends FieldState {}
+
 export enum LabelType {
   FLOATING = 'floating',
   RESTING = 'resting',
@@ -25,4 +32,12 @@ export enum LabelType {
 export interface FieldAdapter {
   state: FieldState;
   animateLabel(...args: Parameters<Animatable['animate']>): Promise<Animation>;
+}
+
+export interface FilledFieldAdapter extends FieldAdapter {
+  state: FilledFieldState;
+}
+
+export interface OutlinedFieldAdapter extends FieldAdapter {
+  state: OutlinedFieldState;
 }
