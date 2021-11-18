@@ -24,12 +24,12 @@
     "build:style": "node ../../scripts/sass-to-lit-css/index.js mwc-icon-button.scss"
   },
   "devDependencies": {
-    "@material/feature-targeting": "=14.0.0-canary.a986df922.0",
-    "@material/icon-button": "=14.0.0-canary.a986df922.0",
+    "@material/feature-targeting": "=14.0.0-canary.fae6c652d.0",
+    "@material/icon-button": "=14.0.0-canary.fae6c652d.0",
     "@material/mwc-base": "^0.25.3",
     "@material/mwc-icon": "^0.25.3",
-    "@material/ripple": "=14.0.0-canary.a986df922.0",
-    "@material/theme": "=14.0.0-canary.a986df922.0"
+    "@material/ripple": "=14.0.0-canary.fae6c652d.0",
+    "@material/theme": "=14.0.0-canary.fae6c652d.0"
   },
   "publishConfig": {
     "access": "public"
