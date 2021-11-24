@@ -21,16 +21,16 @@
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@material/animation": "=14.0.0-canary.a986df922.0",
-    "@material/elevation": "=14.0.0-canary.a986df922.0",
-    "@material/fab": "=14.0.0-canary.a986df922.0",
+    "@material/animation": "=14.0.0-canary.78305b6d5.0",
+    "@material/elevation": "=14.0.0-canary.78305b6d5.0",
+    "@material/fab": "=14.0.0-canary.78305b6d5.0",
     "@material/mwc-base": "^0.25.3",
     "@material/mwc-icon": "^0.25.3",
-    "@material/ripple": "=14.0.0-canary.a986df922.0",
-    "@material/rtl": "=14.0.0-canary.a986df922.0",
-    "@material/shape": "=14.0.0-canary.a986df922.0",
-    "@material/theme": "=14.0.0-canary.a986df922.0",
-    "@material/tokens": "=14.0.0-canary.a986df922.0"
+    "@material/ripple": "=14.0.0-canary.78305b6d5.0",
+    "@material/rtl": "=14.0.0-canary.78305b6d5.0",
+    "@material/shape": "=14.0.0-canary.78305b6d5.0",
+    "@material/theme": "=14.0.0-canary.78305b6d5.0",
+    "@material/tokens": "=14.0.0-canary.78305b6d5.0"
   },
   "scripts": {
     "build:style": "node ../../scripts/sass-to-lit-css/index.js mwc-fab.scss"
