@@ -6,8 +6,8 @@
 @use 'sass:map';
 @use '@material/theme/state';
 @use '@material/typography/typography';
-@use '@material/mwc-../sass/resolvers';
-@use '@material/mwc-../sass/theme';
+@use '../../sass/resolvers';
+@use '../../sass/theme';
 @use './fab-shared-theme';
 
 $_elevation-1-dp: 1;

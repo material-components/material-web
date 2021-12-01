@@ -4,7 +4,7 @@
 //
 
 @use 'sass:meta';
-@use '@material/mwc-../elevation/lib/elevation-theme';
+@use '../../elevation/lib/elevation-theme';
 
 @function _material-elevation($args...) {
   @return elevation-theme.resolver($args...);

@@ -12,9 +12,9 @@
 @use '@material/shape/shape';
 @use '@material/theme/state';
 @use '@material/theme/theme-color';
-@use '@material/mwc-../sass/resolvers';
-@use '@material/mwc-../sass/theme';
-@use '@material/mwc-../sass/var';
+@use '../../sass/resolvers';
+@use '../../sass/theme';
+@use '../../sass/var';
 @use './content-theme';
 @use './field-theme';
 @use './label-theme';

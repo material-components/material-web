@@ -4,8 +4,8 @@
 //
 
 @use 'sass:map';
-@use '@material/mwc-../sass/resolvers';
-@use '@material/mwc-../sass/theme';
+@use '../../sass/resolvers';
+@use '../../sass/theme';
 
 $_custom-property-prefix: 'focus-ring';
 

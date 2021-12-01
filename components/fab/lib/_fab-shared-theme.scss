@@ -7,10 +7,10 @@
 @use 'sass:meta';
 @use '@material/theme/state';
 @use 'third_party/javascript/material_web_components/ripple/ripple-theme';
-@use '@material/mwc-../elevation/lib/elevation-theme';
-@use '@material/mwc-../sass/elevation';
-@use '@material/mwc-../sass/resolvers';
-@use '@material/mwc-../sass/theme';
+@use '../../elevation/lib/elevation-theme';
+@use '../../sass/elevation';
+@use '../../sass/resolvers';
+@use '../../sass/theme';
 
 $selectors: (
   // May have to change to :not(:disabled) if we decide to support anchor tags

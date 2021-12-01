@@ -13,7 +13,7 @@
 @use '@material/theme/color-palette';
 @use '@material/theme/state';
 @use '@material/theme/theme-color';
-@use '@material/mwc-../sass/typography';
+@use '../../sass/typography';
 @use './field-theme';
 
 $_selectors: field-theme.$selectors;

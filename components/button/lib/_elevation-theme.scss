@@ -7,7 +7,7 @@
 @use 'sass:meta';
 @use '@material/ripple/ripple-theme';
 @use '@material/theme/state';
-@use '@material/mwc-../elevation/lib/elevation-theme';
+@use '../../elevation/lib/elevation-theme';
 @use './button-theme';
 
 $_selectors: button-theme.$selectors;
