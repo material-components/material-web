@@ -1,0 +1,12 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use './filled-text-field-theme';
+
+.md3-text-field--filled {
+  @include filled-text-field-theme.theme-styles(
+    filled-text-field-theme.$light-theme
+  );
+}
