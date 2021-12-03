@@ -51,14 +51,14 @@
   }
 
   // Remove function name and parens
-  $var: string-ext.trim-once($var, 'var(', ')');
+  $var: string-ext.trim($var, 'var(', ')');
 
-  $name: string-ext.trim($var, ' ');
+  $name: string-ext.trim-repeating($var, ' ');
   $fallback: null;
   $comma: string.index($var, ',');
   @if $comma != null {
-    $name: string-ext.trim(string.slice($var, 1, $comma - 1), ' ');
-    $fallback: string-ext.trim(string.slice($var, $comma + 1), ' ');
+    $name: string-ext.trim-repeating(string.slice($var, 1, $comma - 1), ' ');
+    $fallback: string-ext.trim-repeating(string.slice($var, $comma + 1), ' ');
     @if _is-var-string($fallback) {
       $fallback: _parse($fallback);
       @if $fallback == null {
