@@ -73,6 +73,7 @@ export class IconButtonBase extends LitElement {
   protected override render(): TemplateResult {
     return html`<button
         class="mdc-icon-button mdc-icon-button--display-flex"
+        part="icon-button"
         aria-label="${this.ariaLabel || this.icon}"
         aria-haspopup="${ifDefined(this.ariaHasPopup)}"
         ?disabled="${this.disabled}"
@@ -85,7 +86,7 @@ export class IconButtonBase extends LitElement {
         @touchend="${this.handleRippleDeactivate}"
         @touchcancel="${this.handleRippleDeactivate}"
     >${this.renderRipple()}
-    ${this.icon ? html`<i class="material-icons">${this.icon}</i>` : ''}
+    ${this.icon ? html`<i class="material-icons" part="material-icons">${this.icon}</i>` : ''}
     <span
       ><slot></slot
     ></span>

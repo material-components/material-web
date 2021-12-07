@@ -45,11 +45,11 @@ export class SliderSingleBase extends SliderBase {
     });
 
     return html`
-      <div class="mdc-slider__track">
-        <div class="mdc-slider__track--inactive"></div>
-        <div class="mdc-slider__track--active">
+      <div class="mdc-slider__track" part="track">
+        <div class="mdc-slider__track--inactive" part="track-inactive"></div>
+        <div class="mdc-slider__track--active" part="track-active">
           <div
-              class="mdc-slider__track--active_fill"
+              class="mdc-slider__track--active_fill" part="track-active-fill"
               style=${trackStyles}>
           </div>
         </div>

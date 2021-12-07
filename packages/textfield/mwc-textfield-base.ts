@@ -288,7 +288,7 @@ export abstract class TextFieldBase extends FormElement {
     };
 
     return html`
-      <label class="mdc-text-field ${classMap(classes)}">
+      <label class="mdc-text-field ${classMap(classes)}" part="text-field">
         ${this.renderRipple()}
         ${this.outlined ? this.renderOutline() : this.renderLabel()}
         ${this.renderLeadingIcon()}
@@ -316,7 +316,7 @@ export abstract class TextFieldBase extends FormElement {
   /** @soyTemplate */
   protected renderRipple(): TemplateResult|string {
     return this.outlined ? '' : html`
-      <span class="mdc-text-field__ripple"></span>
+      <span class="mdc-text-field__ripple" part="ripple"></span>
     `;
   }
 
@@ -339,7 +339,7 @@ export abstract class TextFieldBase extends FormElement {
       <span
           .floatingLabelFoundation=${
             floatingLabel(this.label) as unknown as MDCFloatingLabelFoundation}
-          id="label">${this.label}</span>
+          id="label" part="label">${this.label}</span>
     `;
   }
 
@@ -363,7 +363,7 @@ export abstract class TextFieldBase extends FormElement {
     };
 
     return html`<i class="material-icons mdc-text-field__icon ${
-        classMap(classes)}">${icon}</i>`;
+        classMap(classes)}" part="icon">${icon}</i>`;
   }
 
   /** @soyTemplate */
@@ -385,7 +385,7 @@ export abstract class TextFieldBase extends FormElement {
       'mdc-text-field__affix--suffix': isSuffix
     };
 
-    return html`<span class="mdc-text-field__affix ${classMap(classes)}">
+    return html`<span class="mdc-text-field__affix ${classMap(classes)}" part="affix">
         ${content}</span>`;
   }
 
@@ -414,6 +414,7 @@ export abstract class TextFieldBase extends FormElement {
           aria-controls="${ifDefined(ariaControlsOrUndef)}"
           aria-describedby="${ifDefined(ariaDescribedbyOrUndef)}"
           class="mdc-text-field__input"
+          part="input"
           type="${this.type}"
           .value="${live(this.value) as unknown as string}"
           ?disabled="${this.disabled}"
@@ -442,7 +443,7 @@ export abstract class TextFieldBase extends FormElement {
         '' :
         html`
       <span .lineRippleFoundation=${
-            lineRipple() as unknown as MDCLineRippleFoundation}></span>
+            lineRipple() as unknown as MDCLineRippleFoundation} part="line-ripple"></span>
     `;
   }
 
@@ -468,6 +469,7 @@ export abstract class TextFieldBase extends FormElement {
         <div id="helper-text"
              aria-hidden="${ifDefined(ariaHiddenOrUndef)}"
              class="mdc-text-field-helper-text ${classMap(classes)}"
+             part="helper-text"
              >${helperText}</div>
         ${this.renderCharCounter(shouldRenderCharCounter)}
       </div>`;
@@ -478,7 +480,7 @@ export abstract class TextFieldBase extends FormElement {
       |string {
     const length = Math.min(this.value.length, this.maxLength);
     return !shouldRenderCharCounter ? '' : html`
-      <span class="mdc-text-field-character-counter"
+      <span class="mdc-text-field-character-counter" part="character-counter"
             >${length} / ${this.maxLength}</span>`;
   }
 

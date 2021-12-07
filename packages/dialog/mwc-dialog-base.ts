@@ -296,20 +296,20 @@ export class DialogBase extends BaseElement {
     };
 
     return html`
-    <div class="mdc-dialog ${classMap(classes)}"
+    <div class="mdc-dialog ${classMap(classes)}" part="dialog"
         role="alertdialog"
         aria-modal="true"
         aria-labelledby="title"
         aria-describedby="content">
-      <div class="mdc-dialog__container">
-        <div class="mdc-dialog__surface">
+      <div class="mdc-dialog__container" part="container">
+        <div class="mdc-dialog__surface" part="surface">
           ${heading}
-          <div id="content" class="mdc-dialog__content">
+          <div id="content" class="mdc-dialog__content" part="content">
             <slot id="contentSlot"></slot>
           </div>
           <footer
               id="actions"
-              class="${classMap(actionsClasses)}">
+              class="${classMap(actionsClasses)}" part="actions">
             <span>
               <slot name="secondaryAction"></slot>
             </span>
@@ -319,13 +319,13 @@ export class DialogBase extends BaseElement {
           </footer>
         </div>
       </div>
-      <div class="mdc-dialog__scrim"></div>
+      <div class="mdc-dialog__scrim" part="scrim"></div>
     </div>`;
   }
 
   protected renderHeading() {
     return html`
-      <h2 id="title" class="mdc-dialog__title">${this.heading}</h2>`;
+      <h2 id="title" class="mdc-dialog__title" part="title">${this.heading}</h2>`;
   }
 
   protected override firstUpdated() {

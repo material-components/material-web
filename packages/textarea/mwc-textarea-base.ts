@@ -69,7 +69,7 @@ export abstract class TextAreaBase extends TextFieldBase {
 
     return html`
       <label class="mdc-text-field mdc-text-field--textarea ${
-        classMap(classes)}">
+        classMap(classes)}" part="textarea">
         ${this.renderRipple()}
         ${this.outlined ? this.renderOutline() : this.renderLabel()}
         ${this.renderInput()}
@@ -97,6 +97,7 @@ export abstract class TextAreaBase extends TextFieldBase {
       <textarea
           aria-labelledby=${ifDefined(ariaLabelledbyOrUndef)}
           class="mdc-text-field__input"
+          part="input"
           .value="${live(this.value) as unknown as string}"
           rows="${this.rows}"
           cols="${this.cols}"

@@ -155,9 +155,10 @@ export class CheckboxBase extends FormElement {
     /* eslint-enable eqeqeq */
     const ariaChecked = this.indeterminate ? 'mixed' : undefined;
     return html`
-      <div class="mdc-checkbox mdc-checkbox--upgraded ${classMap(classes)}">
+      <div class="mdc-checkbox mdc-checkbox--upgraded ${classMap(classes)}" part="checkbox">
         <input type="checkbox"
               class="mdc-checkbox__native-control"
+              part="native-control"
               name="${ifDefined(this.name)}"
               aria-checked="${ifDefined(ariaChecked)}"
               aria-label="${ifDefined(this.ariaLabel)}"
@@ -177,15 +178,15 @@ export class CheckboxBase extends FormElement {
               @touchstart="${this.handleRippleTouchStart}"
               @touchend="${this.handleRippleDeactivate}"
               @touchcancel="${this.handleRippleDeactivate}">
-        <div class="mdc-checkbox__background"
+        <div class="mdc-checkbox__background" part="background"
           @animationend="${this.resetAnimationClass}">
-          <svg class="mdc-checkbox__checkmark"
+          <svg class="mdc-checkbox__checkmark" part="checkmark"
               viewBox="0 0 24 24">
             <path class="mdc-checkbox__checkmark-path"
                   fill="none"
                   d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
           </svg>
-          <div class="mdc-checkbox__mixedmark"></div>
+          <div class="mdc-checkbox__mixedmark" part="mixedmark"></div>
         </div>
         ${this.renderRipple()}
       </div>`;

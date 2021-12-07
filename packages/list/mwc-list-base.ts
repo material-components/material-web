@@ -248,6 +248,7 @@ export abstract class ListBase extends BaseElement implements Layoutable {
           role="${ifDefined(role)}"
           aria-label="${ifDefined(ariaLabel)}"
           class="mdc-deprecated-list"
+          part="list"
           @keydown=${this.onKeydown}
           @focusin=${this.onFocusIn}
           @focusout=${this.onFocusOut}

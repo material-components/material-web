@@ -98,6 +98,7 @@ export class LinearProgressBase extends LitElement {
       <div
           role="progressbar"
           class="mdc-linear-progress ${classMap(classes)}"
+          part="linear-progress"
           style="${styleMap(rootStyles)}"
           dir="${ifDefined(this.reverse ? 'rtl' : undefined)}"
           aria-label="${ifDefined(this.ariaLabel)}"
@@ -106,20 +107,24 @@ export class LinearProgressBase extends LitElement {
           aria-valuenow="${
         ifDefined(this.indeterminate ? undefined : this.progress)}"
         @transitionend="${this.syncClosedState}">
-        <div class="mdc-linear-progress__buffer">
+        <div class="mdc-linear-progress__buffer" part="buffer">
           <div
             class="mdc-linear-progress__buffer-bar"
+            part="buffer-bar"
             style=${styleMap(bufferBarStyles)}>
           </div>
-          <div class="mdc-linear-progress__buffer-dots"></div>
+          <div class="mdc-linear-progress__buffer-dots" part="buffer-dots></div>
         </div>
         <div
             class="mdc-linear-progress__bar mdc-linear-progress__primary-bar"
+            part="primary-bar"
             style=${styleMap(primaryBarStyles)}>
-          <span class="mdc-linear-progress__bar-inner"></span>
+          <span class="mdc-linear-progress__bar-inner" part="primary-bar-inner"></span>
         </div>
-        <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
-          <span class="mdc-linear-progress__bar-inner"></span>
+        <div
+            class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar"
+            part="secondary-bar">
+          <span class="mdc-linear-progress__bar-inner" part="secondary-bar-inner"></span>
         </div>
       </div>`;
   }

@@ -63,7 +63,7 @@ export class TabBarBase extends BaseElement {
   // TODO(sorvell): can scroller be optional for perf?
   protected override render() {
     return html`
-      <div class="mdc-tab-bar" role="tablist"
+      <div class="mdc-tab-bar" part="tab-bar" role="tablist"
           @MDCTab:interacted="${this._handleTabInteraction}"
           @keydown="${this._handleKeydown}">
         <mwc-tab-scroller><slot></slot></mwc-tab-scroller>

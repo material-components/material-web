@@ -57,6 +57,7 @@ export class CircularProgressBase extends LitElement {
     return html`
       <div
         class="mdc-circular-progress ${classMap(classes)}"
+        part="circular-progress"
         style="${styleMap(styles)}"
         role="progressbar"
         aria-label="${ifDefined(this.ariaLabel)}"
@@ -83,13 +84,13 @@ export class CircularProgressBase extends LitElement {
                                              3 + (this.density + 3) * (1 / 6);
 
     return html`
-      <div class="mdc-circular-progress__determinate-container">
-        <svg class="mdc-circular-progress__determinate-circle-graphic"
+      <div class="mdc-circular-progress__determinate-container" part="determinate-container">
+        <svg class="mdc-circular-progress__determinate-circle-graphic" part="determinate-circle-graphic"
              viewBox="0 0 ${sideLength} ${sideLength}">
-          <circle class="mdc-circular-progress__determinate-track"
+          <circle class="mdc-circular-progress__determinate-track" part="determinate-track"
                   cx="${center}" cy="${center}" r="${circleRadius}"
                   stroke-width="${strokeWidth}"></circle>
-          <circle class="mdc-circular-progress__determinate-circle"
+          <circle class="mdc-circular-progress__determinate-circle" part="determinate-circle"
                   cx="${center}" cy="${center}" r="${circleRadius}"
                   stroke-dasharray="${2 * 3.1415926 * circleRadius}"
                   stroke-dashoffset="${determinateStrokeDashOffset}"
@@ -103,8 +104,8 @@ export class CircularProgressBase extends LitElement {
    */
   protected renderIndeterminateContainer(): TemplateResult {
     return html`
-      <div class="mdc-circular-progress__indeterminate-container">
-        <div class="mdc-circular-progress__spinner-layer">
+      <div class="mdc-circular-progress__indeterminate-container" part="indeterminate-container">
+        <div class="mdc-circular-progress__spinner-layer" part="spinner-layer">
           ${this.renderIndeterminateSpinnerLayer()}
         </div>
       </div>`;
@@ -124,8 +125,8 @@ export class CircularProgressBase extends LitElement {
                                              3 + (this.density + 3) * (1 / 6);
 
     return html`
-        <div class="mdc-circular-progress__circle-clipper mdc-circular-progress__circle-left">
-          <svg class="mdc-circular-progress__indeterminate-circle-graphic"
+        <div class="mdc-circular-progress__circle-clipper mdc-circular-progress__circle-left" part="circle-left">
+          <svg class="mdc-circular-progress__indeterminate-circle-graphic" part="indeterminate-circle-graphic"
                viewBox="0 0 ${sideLength} ${sideLength}">
             <circle cx="${center}" cy="${center}" r="${circleRadius}"
                     stroke-dasharray="${circumference}"
@@ -133,8 +134,8 @@ export class CircularProgressBase extends LitElement {
                     stroke-width="${strokeWidth}"></circle>
           </svg>
         </div>
-        <div class="mdc-circular-progress__gap-patch">
-          <svg class="mdc-circular-progress__indeterminate-circle-graphic"
+        <div class="mdc-circular-progress__gap-patch" part="gap-patch">
+          <svg class="mdc-circular-progress__indeterminate-circle-graphic" part="indeterminate-circle-graphic"
                viewBox="0 0 ${sideLength} ${sideLength}">
             <circle cx="${center}" cy="${center}" r="${circleRadius}"
                     stroke-dasharray="${circumference}"
@@ -142,8 +143,8 @@ export class CircularProgressBase extends LitElement {
                     stroke-width="${strokeWidth * 0.8}"></circle>
           </svg>
         </div>
-        <div class="mdc-circular-progress__circle-clipper mdc-circular-progress__circle-right">
-          <svg class="mdc-circular-progress__indeterminate-circle-graphic"
+        <div class="mdc-circular-progress__circle-clipper mdc-circular-progress__circle-right" part="circle-right">
+          <svg class="mdc-circular-progress__indeterminate-circle-graphic" part="indeterminate-circle-graphic"
                viewBox="0 0 ${sideLength} ${sideLength}">
             <circle cx="${center}" cy="${center}" r="${circleRadius}"
                     stroke-dasharray="${circumference}"

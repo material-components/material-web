@@ -219,6 +219,7 @@ export class RippleBase extends BaseElement implements RippleInterface {
     };
     return html`
         <div class="mdc-ripple-surface mdc-ripple-upgraded ${classMap(classes)}"
+          part="ripple"
           style="${styleMap({
       '--mdc-ripple-fg-scale': this.fgScale,
       '--mdc-ripple-fg-size': this.fgSize,

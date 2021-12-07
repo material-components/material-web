@@ -75,26 +75,26 @@ export abstract class TopAppBarBaseBase extends BaseElement {
 
   protected override render() {
     // clang-format off
-    let title = html`<span class="mdc-top-app-bar__title"><slot name="title"></slot></span>`;
+    let title = html`<span class="mdc-top-app-bar__title" part="title"><slot name="title"></slot></span>`;
     if (this.centerTitle) {
-      title = html`<section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-center">${title}</section>`;
+      title = html`<section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-center" part="section-align-center">${title}</section>`;
     }
     // clang-format on
     return html`
-      <header class="mdc-top-app-bar ${classMap(this.barClasses())}">
-      <div class="mdc-top-app-bar__row">
-        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start" id="navigation">
+      <header class="mdc-top-app-bar ${classMap(this.barClasses())}" part="top-app-bar">
+      <div class="mdc-top-app-bar__row" part="row">
+        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start" id="navigation" part="section-align-start">
           <slot name="navigationIcon"
             @click=${this.handleNavigationClick}></slot>
           ${this.centerTitle ? null : title}
         </section>
         ${this.centerTitle ? title : null}
-        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" id="actions" role="toolbar">
+        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" id="actions" role="toolbar" part="section-align-end">
           <slot name="actionItems"></slot>
         </section>
       </div>
     </header>
-    <div class="${classMap(this.contentClasses())}">
+    <div class="${classMap(this.contentClasses())}" part="content">
       <slot></slot>
     </div>
     `;

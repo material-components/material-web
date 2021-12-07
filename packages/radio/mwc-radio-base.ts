@@ -244,10 +244,11 @@ export class RadioBase extends FormElement {
     };
 
     return html`
-      <div class="mdc-radio ${classMap(classes)}">
+      <div class="mdc-radio ${classMap(classes)}" part="radio">
         <input
           tabindex="${this.formElementTabIndex}"
           class="mdc-radio__native-control"
+          part="native-control"
           type="radio"
           name="${this.name}"
           aria-label="${ifDefined(this.ariaLabel)}"
@@ -265,9 +266,9 @@ export class RadioBase extends FormElement {
           @touchstart="${this.handleRippleTouchStart}"
           @touchend="${this.handleRippleDeactivate}"
           @touchcancel="${this.handleRippleDeactivate}">
-        <div class="mdc-radio__background">
-          <div class="mdc-radio__outer-circle"></div>
-          <div class="mdc-radio__inner-circle"></div>
+        <div class="mdc-radio__background" part="background">
+          <div class="mdc-radio__outer-circle" part="outer-circle"></div>
+          <div class="mdc-radio__inner-circle" part="inner-circle"></div>
         </div>
         ${this.renderRipple()}
       </div>`;

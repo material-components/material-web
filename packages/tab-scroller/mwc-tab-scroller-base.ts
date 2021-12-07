@@ -40,15 +40,16 @@ export class TabScrollerBase extends BaseElement {
 
   protected override render() {
     return html`
-      <div class="mdc-tab-scroller">
-        <div class="mdc-tab-scroller__scroll-area"
+      <div class="mdc-tab-scroller" part="tab-scroller">
+        <div class="mdc-tab-scroller__scroll-area" part="scroll-area"
             @wheel="${this._handleInteraction}"
             @touchstart="${this._handleInteraction}"
             @pointerdown="${this._handleInteraction}"
             @mousedown="${this._handleInteraction}"
             @keydown="${this._handleInteraction}"
             @transitionend="${this._handleTransitionEnd}">
-          <div class="mdc-tab-scroller__scroll-content"><slot></slot></div>
+          <div class="mdc-tab-scroller__scroll-content"
+              part="scroll-content"><slot></slot></div>
         </div>
       </div>
       `;

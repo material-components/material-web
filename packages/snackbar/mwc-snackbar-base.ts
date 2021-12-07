@@ -73,11 +73,11 @@ export class SnackbarBase extends BaseElement {
       'mdc-snackbar--leading': this.leading,
     };
     return html`
-      <div class="mdc-snackbar ${classMap(classes)}" @keydown="${
-        this._handleKeydown}">
+      <div class="mdc-snackbar ${classMap(classes)}" part="snackbar"
+        @keydown="${this._handleKeydown}">
         <div class="mdc-snackbar__surface">
           ${accessibleSnackbarLabel(this.labelText, this.open)}
-          <div class="mdc-snackbar__actions">
+          <div class="mdc-snackbar__actions" part="actions">
             <slot name="action" @click="${this._handleActionClick}"></slot>
             <slot name="dismiss" @click="${this._handleDismissClick}"></slot>
           </div>

@@ -15,17 +15,17 @@ export class CircularProgressFourColorBase extends CircularProgressBase {
   /** @soyTemplate */
   protected override renderIndeterminateContainer(): TemplateResult {
     return html`
-      <div class="mdc-circular-progress__indeterminate-container">
-        <div class="mdc-circular-progress__spinner-layer mdc-circular-progress__color-1">
+      <div class="mdc-circular-progress__indeterminate-container" part="indeterminate-container">
+        <div class="mdc-circular-progress__spinner-layer mdc-circular-progress__color-1" part="color-1">
           ${this.renderIndeterminateSpinnerLayer()}
         </div>
-        <div class="mdc-circular-progress__spinner-layer mdc-circular-progress__color-2">
+        <div class="mdc-circular-progress__spinner-layer mdc-circular-progress__color-2" part="color-2">
           ${this.renderIndeterminateSpinnerLayer()}
         </div>
-        <div class="mdc-circular-progress__spinner-layer mdc-circular-progress__color-3">
+        <div class="mdc-circular-progress__spinner-layer mdc-circular-progress__color-3" part="color-3">
           ${this.renderIndeterminateSpinnerLayer()}
         </div>
-        <div class="mdc-circular-progress__spinner-layer mdc-circular-progress__color-4">
+        <div class="mdc-circular-progress__spinner-layer mdc-circular-progress__color-4" part="color-4">
           ${this.renderIndeterminateSpinnerLayer()}
         </div>
       </div>`;

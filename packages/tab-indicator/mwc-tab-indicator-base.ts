@@ -41,9 +41,9 @@ export class TabIndicatorBase extends BaseElement {
     return html`
       <span class="mdc-tab-indicator ${classMap({
       'mdc-tab-indicator--fade': this.fade
-    })}">
-        <span class="mdc-tab-indicator__content ${classMap(contentClasses)}">${
-        this.icon}</span>
+    })}" part="tab-indicator">
+        <span class="mdc-tab-indicator__content ${classMap(contentClasses)}"
+            part="content">${this.icon}</span>
       </span>
       `;
   }

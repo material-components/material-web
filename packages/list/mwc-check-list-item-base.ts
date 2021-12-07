@@ -42,9 +42,10 @@ export class CheckListItemBase extends ListItemBase {
       ${ripple}
       ${graphic}
       ${this.left ? '' : text}
-      <span class=${classMap(checkboxClasses)}>
+      <span class=${classMap(checkboxClasses)} part="list-item">
         <mwc-checkbox
             reducedTouchTarget
+            part="mwc-checkbox"
             tabindex=${this.tabindex}
             .checked=${this.selected}
             ?disabled=${this.disabled}

@@ -73,6 +73,7 @@ export class FabBase extends LitElement {
      */
     return html`<button
           class="mdc-fab ${classMap(classes)}"
+          part="fab"
           ?disabled="${this.disabled}"
           aria-label="${ariaLabel}"
           @mouseenter=${this.handleRippleMouseEnter}
@@ -86,7 +87,7 @@ export class FabBase extends LitElement {
         -->${this.renderBeforeRipple()}<!--
         -->${this.renderRipple()}<!--
         -->${this.showIconAtEnd ? this.renderLabel() : ''}<!--
-        --><span class="material-icons mdc-fab__icon"><!--
+        --><span class="material-icons mdc-fab__icon" part="icon"><!--
           --><slot name="icon">${this.icon}</slot><!--
        --></span><!--
         -->${!this.showIconAtEnd ? this.renderLabel() : ''}<!--
@@ -105,7 +106,7 @@ export class FabBase extends LitElement {
     const hasTouchTarget = this.mini && !this.reducedTouchTarget;
 
     return html`${
-        hasTouchTarget ? html`<div class="mdc-fab__touch"></div>` : ''}`;
+        hasTouchTarget ? html`<div class="mdc-fab__touch" part="touch"></div>` : ''}`;
   }
 
   /** @soyTemplate */
@@ -113,7 +114,7 @@ export class FabBase extends LitElement {
     const showLabel = this.label !== '' && this.extended;
 
     return html`${
-        showLabel ? html`<span class="mdc-fab__label">${this.label}</span>` :
+        showLabel ? html`<span class="mdc-fab__label" part="label">${this.label}</span>` :
                     ''}`;
   }
 

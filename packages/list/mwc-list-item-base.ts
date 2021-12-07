@@ -173,7 +173,7 @@ export class ListItemBase extends LitElement {
         .activated=${this.activated}>
       </mwc-ripple>`;
     } else if (this.activated) {
-      return html`<div class="fake-activated-ripple"></div>`;
+      return html`<div class="fake-activated-ripple" part="fake-activated-ripple"></div>`;
     } else {
       return '';
     }
@@ -186,14 +186,15 @@ export class ListItemBase extends LitElement {
 
     return html`
       <span class="mdc-deprecated-list-item__graphic material-icons ${
-        classMap(graphicClasses)}">
+        classMap(graphicClasses)}" part="list-item-graphic">
         <slot name="graphic"></slot>
       </span>`;
   }
 
   protected renderMeta() {
     return html`
-      <span class="mdc-deprecated-list-item__meta material-icons">
+      <span class="mdc-deprecated-list-item__meta material-icons"
+          part="list-item-meta">
         <slot name="meta"></slot>
       </span>`;
   }
@@ -201,7 +202,7 @@ export class ListItemBase extends LitElement {
   protected renderText() {
     const inner = this.twoline ? this.renderTwoline() : this.renderSingleLine();
     return html`
-      <span class="mdc-deprecated-list-item__text">
+      <span class="mdc-deprecated-list-item__text" part="list-item-text">
         ${inner}
       </span>`;
   }
@@ -212,10 +213,10 @@ export class ListItemBase extends LitElement {
 
   protected renderTwoline() {
     return html`
-      <span class="mdc-deprecated-list-item__primary-text">
+      <span class="mdc-deprecated-list-item__primary-text" part="primary-text">
         <slot></slot>
       </span>
-      <span class="mdc-deprecated-list-item__secondary-text">
+      <span class="mdc-deprecated-list-item__secondary-text" part="secondary-text">
         <slot name="secondary"></slot>
       </span>
     `;

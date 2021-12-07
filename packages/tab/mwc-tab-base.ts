@@ -112,20 +112,21 @@ export class TabBase extends BaseElement {
       // NOTE: MUST be on same line as spaces will cause vert alignment issues
       // in IE
       iconTemplate = html`
-        <span class="mdc-tab__icon material-icons"><slot name="icon">${
+        <span class="mdc-tab__icon material-icons" part="material-icons"><slot name="icon">${
           this.icon}</slot></span>`;
     }
 
     let labelTemplate = html``;
     if (this.label) {
       labelTemplate = html`
-        <span class="mdc-tab__text-label">${this.label}</span>`;
+        <span class="mdc-tab__text-label" part="text-label">${this.label}</span>`;
     }
 
     return html`
       <button
         @click="${this.handleClick}"
         class="mdc-tab ${classMap(classes)}"
+        part="tab"
         role="tab"
         aria-selected="false"
         tabindex="-1"
@@ -137,7 +138,7 @@ export class TabBase extends BaseElement {
         @touchstart="${this.handleRippleTouchStart}"
         @touchend="${this.handleRippleDeactivate}"
         @touchcancel="${this.handleRippleDeactivate}">
-        <span class="mdc-tab__content">
+        <span class="mdc-tab__content" part="content">
           ${iconTemplate}
           ${labelTemplate}
           ${this.isMinWidthIndicator ? this.renderIndicator() : ''}

@@ -117,6 +117,7 @@ export class SliderBase extends FormElement {
     return html`
     <div
         class="mdc-slider ${rootClasses}"
+        part="slider"
         @pointerdown=${this.onPointerdown}
         @pointerup=${this.onPointerup}
         @contextmenu=${this.onContextmenu}>
@@ -132,6 +133,7 @@ export class SliderBase extends FormElement {
     return html`
       <input
           class="mdc-slider__input end"
+          part="input"
           type="range"
           step=${this.step}
           min=${this.min}
@@ -156,13 +158,13 @@ export class SliderBase extends FormElement {
 
   protected renderTickMarks() {
     return !this.withTickMarks ? nothing : html`
-      <div class="mdc-slider__tick-marks">
+      <div class="mdc-slider__tick-marks" part="tick-marks">
         ${this.tickMarks.map((tickMark) => {
       const isActive = tickMark === TickMark.ACTIVE;
 
       return html`<div class="${
           isActive ? 'mdc-slider__tick-mark--active' :
-                     'mdc-slider__tick-mark--inactive'}"></div>`;
+                     'mdc-slider__tick-mark--inactive'}" part="tick-mark"></div>`;
     })}
       </div>`;
   }
@@ -204,6 +206,7 @@ export class SliderBase extends FormElement {
     return html`
       <div
           class="mdc-slider__thumb end ${endThumbClasses}"
+          part="thumb"
           style=${endThumbStyles}
           @mouseenter=${this.onEndMouseenter}
           @mouseleave=${this.onEndMouseleave}>
@@ -211,16 +214,17 @@ export class SliderBase extends FormElement {
         ${
         this.renderValueIndicator(
             this.valueToValueIndicatorTransform(this.valueEnd))}
-        <div class="mdc-slider__thumb-knob"></div>
+        <div class="mdc-slider__thumb-knob" part="thumb-knob"></div>
       </div>
     `;
   }
 
   protected renderValueIndicator(text: string|number|null) {
     return this.discrete ? html`
-    <div class="mdc-slider__value-indicator-container" aria-hidden="true">
-      <div class="mdc-slider__value-indicator">
-        <span class="mdc-slider__value-indicator-text">
+    <div class="mdc-slider__value-indicator-container"
+        part="value-indicator-container" aria-hidden="true">
+      <div class="mdc-slider__value-indicator" part="value-indicator">
+        <span class="mdc-slider__value-indicator-text" part="value-indicator-text">
           ${text}
         </span>
       </div>

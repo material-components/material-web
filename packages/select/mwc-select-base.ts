@@ -262,9 +262,11 @@ export abstract class SelectBase extends FormElement {
 
     return html`
       <div
-          class="mdc-select ${classMap(classes)}">
+          class="mdc-select ${classMap(classes)}"
+          part="select">
         <input
             class="formElement"
+            part="form-element"
             name="${this.name}"
             .value="${this.value}"
             hidden
@@ -272,6 +274,7 @@ export abstract class SelectBase extends FormElement {
             ?required=${this.required}>
         <!-- @ts-ignore -->
         <div class="mdc-select__anchor"
+            part="anchor"
             aria-autocomplete="none"
             role="combobox"
             aria-expanded=${this.menuOpen}
@@ -287,22 +290,25 @@ export abstract class SelectBase extends FormElement {
           ${this.renderRipple()}
           ${this.outlined ? this.renderOutline() : this.renderLabel()}
           ${this.renderLeadingIcon()}
-          <span class="mdc-select__selected-text-container">
-            <span class="mdc-select__selected-text">${this.selectedText}</span>
+          <span class="mdc-select__selected-text-container" part="selected-text-container">
+            <span class="mdc-select__selected-text" part="selected-text">${this.selectedText}</span>
           </span>
-          <span class="mdc-select__dropdown-icon">
+          <span class="mdc-select__dropdown-icon" part="dropdown-icon">
             <svg
                 class="mdc-select__dropdown-icon-graphic"
+                part="dropdown-icon-graphic"
                 viewBox="7 10 10 5"
                 focusable="false">
               <polygon
                   class="mdc-select__dropdown-icon-inactive"
+                  part="dropdown-icon-inactive"
                   stroke="none"
                   fill-rule="evenodd"
                   points="7 10 12 15 17 10">
               </polygon>
               <polygon
                   class="mdc-select__dropdown-icon-active"
+                  part="dropdown-icon-active"
                   stroke="none"
                   fill-rule="evenodd"
                   points="7 15 12 10 17 15">
@@ -339,7 +345,7 @@ export abstract class SelectBase extends FormElement {
     }
 
     return html`
-      <span class="mdc-select__ripple"></span>
+      <span class="mdc-select__ripple" part="ripple"></span>
     `;
   }
 
@@ -366,7 +372,7 @@ export abstract class SelectBase extends FormElement {
       <span
           .floatingLabelFoundation=${
         floatingLabel(this.label) as unknown as MDCFloatingLabelFoundation}
-          id="label">${this.label}</span>
+          id="label" part="label">${this.label}</span>
     `;
   }
 
@@ -386,7 +392,7 @@ export abstract class SelectBase extends FormElement {
 
     return html`
       <span .lineRippleFoundation=${
-        lineRipple() as unknown as MDCLineRippleFoundation}></span>
+        lineRipple() as unknown as MDCLineRippleFoundation} part="line-ripple"></span>
     `;
   }
 
@@ -402,7 +408,7 @@ export abstract class SelectBase extends FormElement {
 
     return html`
         <p
-          class="mdc-select-helper-text ${classMap(classes)}"
+          class="mdc-select-helper-text ${classMap(classes)}" part="helper-text"
           id="helper-text">${
         showValidationMessage ? this.validationMessage : this.helper}</p>`;
   }

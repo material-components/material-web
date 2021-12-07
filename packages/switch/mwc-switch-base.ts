@@ -78,6 +78,7 @@ export class SwitchBase extends FormElement implements MDCSwitchState {
       <button
         type="button"
         class="mdc-switch ${classMap(this.getRenderClasses())}"
+        part="switch"
         role="switch"
         aria-checked="${this.selected}"
         aria-label="${ifDefined(this.ariaLabel || undefined)}"
@@ -91,8 +92,8 @@ export class SwitchBase extends FormElement implements MDCSwitchState {
         @pointerenter="${this.handlePointerEnter}"
         @pointerleave="${this.handlePointerLeave}"
       >
-        <div class="mdc-switch__track"></div>
-        <div class="mdc-switch__handle-track">
+        <div class="mdc-switch__track" part="track"></div>
+        <div class="mdc-switch__handle-track" part="handle-track">
           ${this.renderHandle()}
         </div>
       </button>
@@ -100,6 +101,7 @@ export class SwitchBase extends FormElement implements MDCSwitchState {
       <input
         type="checkbox"
         aria-hidden="true"
+        part="input"
         name="${this.name}"
         .checked=${this.selected}
         .value=${this.value}
@@ -119,10 +121,10 @@ export class SwitchBase extends FormElement implements MDCSwitchState {
   /** @soyTemplate */
   protected renderHandle(): TemplateResult {
     return html`
-      <div class="mdc-switch__handle">
+      <div class="mdc-switch__handle" part="handle">
         ${this.renderShadow()}
         ${this.renderRipple()}
-        <div class="mdc-switch__icons">
+        <div class="mdc-switch__icons" part="icons">
           ${this.renderOnIcon()}
           ${this.renderOffIcon()}
         </div>
@@ -133,8 +135,8 @@ export class SwitchBase extends FormElement implements MDCSwitchState {
   /** @soyTemplate */
   protected renderShadow(): TemplateResult {
     return html`
-      <div class="mdc-switch__shadow">
-        <div class="mdc-elevation-overlay"></div>
+      <div class="mdc-switch__shadow" part="shadow">
+        <div class="mdc-elevation-overlay" part="elevation-overlay"></div>
       </div>
     `;
   }
@@ -143,7 +145,7 @@ export class SwitchBase extends FormElement implements MDCSwitchState {
   protected renderRipple(): TemplateResult {
     if (this.shouldRenderRipple) {
       return html`
-        <div class="mdc-switch__ripple">
+        <div class="mdc-switch__ripple" part="switch-ripple">
           <mwc-ripple
             internalUseStateLayerCustomProperties
             .disabled="${this.disabled}"
@@ -159,7 +161,7 @@ export class SwitchBase extends FormElement implements MDCSwitchState {
   /** @soyTemplate */
   protected renderOnIcon(): TemplateResult {
     return html`
-      <svg class="mdc-switch__icon mdc-switch__icon--on" viewBox="0 0 24 24">
+      <svg class="mdc-switch__icon mdc-switch__icon--on" viewBox="0 0 24 24" part="icon">
         <path d="M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z" />
       </svg>
     `;
@@ -168,7 +170,7 @@ export class SwitchBase extends FormElement implements MDCSwitchState {
   /** @soyTemplate */
   protected renderOffIcon(): TemplateResult {
     return html`
-      <svg class="mdc-switch__icon mdc-switch__icon--off" viewBox="0 0 24 24">
+      <svg class="mdc-switch__icon mdc-switch__icon--off" viewBox="0 0 24 24" part="icon-off">
         <path d="M20 13H4v-2h16v2z" />
       </svg>
     `;

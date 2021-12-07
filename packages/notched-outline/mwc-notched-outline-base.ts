@@ -59,12 +59,12 @@ export class NotchedOutlineBase extends BaseElement {
     });
 
     return html`
-      <span class="mdc-notched-outline ${classes}">
-        <span class="mdc-notched-outline__leading"></span>
-        <span class="mdc-notched-outline__notch">
+      <span class="mdc-notched-outline ${classes}" part="notched-outline">
+        <span class="mdc-notched-outline__leading" part="leading"></span>
+        <span class="mdc-notched-outline__notch" part="notch">
           <slot></slot>
         </span>
-        <span class="mdc-notched-outline__trailing"></span>
+        <span class="mdc-notched-outline__trailing" part="trailing"></span>
       </span>`;
   }
 }

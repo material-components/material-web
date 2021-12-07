@@ -114,9 +114,9 @@ export class DrawerBase extends BaseElement {
     const dismissible = this.type === 'dismissible' || this.type === 'modal';
     const modal = this.type === 'modal';
     const header = this.hasHeader ? html`
-      <div class="mdc-drawer__header">
-        <h3 class="mdc-drawer__title"><slot name="title"></slot></h3>
-        <h6 class="mdc-drawer__subtitle"><slot name="subtitle"></slot></h6>
+      <div class="mdc-drawer__header" part="header">
+        <h3 class="mdc-drawer__title" part="title"><slot name="title"></slot></h3>
+        <h6 class="mdc-drawer__subtitle" part="subtitle"><slot name="subtitle"></slot></h6>
         <slot name="header"></slot>
       </div>
       ` :
@@ -127,15 +127,15 @@ export class DrawerBase extends BaseElement {
     };
 
     return html`
-      <aside class="mdc-drawer ${classMap(classes)}">
+      <aside class="mdc-drawer ${classMap(classes)}" part="drawer">
         ${header}
-        <div class="mdc-drawer__content"><slot></slot></div>
+        <div class="mdc-drawer__content" part="content"><slot></slot></div>
       </aside>
       ${
-        modal ? html`<div class="mdc-drawer-scrim"
+        modal ? html`<div class="mdc-drawer-scrim" part="scrim"
                           @click="${this._handleScrimClick}"></div>` :
                 ''}
-      <div class="mdc-drawer-app-content">
+      <div class="mdc-drawer-app-content" part="app-content">
         <slot name="appContent"></slot>
       </div>
       `;

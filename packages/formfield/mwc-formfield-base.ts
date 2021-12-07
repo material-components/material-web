@@ -84,9 +84,9 @@ export class FormfieldBase extends BaseElement {
     };
 
     return html`
-      <div class="mdc-form-field ${classMap(classes)}">
+      <div class="mdc-form-field ${classMap(classes)}" part="form-field">
         <slot></slot>
-        <label class="mdc-label"
+        <label class="mdc-label" part="label"
                @click="${this._labelClick}">${this.label}</label>
       </div>`;
   }

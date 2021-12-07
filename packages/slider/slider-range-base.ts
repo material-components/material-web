@@ -65,6 +65,7 @@ export class SliderRangeBase extends SliderBase {
     return html`
     <div
         class="mdc-slider mdc-slider--range ${rootClasses}"
+        part="range"
         @pointerdown=${this.onPointerdown}
         @pointerup=${this.onPointerup}
         @contextmenu=${this.onContextmenu}>
@@ -76,6 +77,7 @@ export class SliderRangeBase extends SliderBase {
     return html`
       <input
           class="mdc-slider__input start"
+          part="input-start"
           type="range"
           step=${this.step}
           min=${this.min}
@@ -97,6 +99,7 @@ export class SliderRangeBase extends SliderBase {
     return html`
       <input
           class="mdc-slider__input end"
+          part="input-end"
           type="range"
           step=${this.step}
           min=${this.valueStart}
@@ -139,11 +142,11 @@ export class SliderRangeBase extends SliderBase {
     });
 
     return html`
-      <div class="mdc-slider__track">
-        <div class="mdc-slider__track--inactive"></div>
-        <div class="mdc-slider__track--active">
+      <div class="mdc-slider__track" part="track">
+        <div class="mdc-slider__track--inactive" part="track-inactive"></div>
+        <div class="mdc-slider__track--active" part="track-active">
           <div
-              class="mdc-slider__track--active_fill"
+              class="mdc-slider__track--active_fill" part="track-active-fill"
               style=${trackStyles}>
           </div>
         </div>
@@ -182,7 +185,7 @@ export class SliderRangeBase extends SliderBase {
         html`<mwc-ripple class="ripple" unbounded></mwc-ripple>`;
     return html`
       <div
-          class="mdc-slider__thumb start ${startThumbClasses}"
+          class="mdc-slider__thumb start ${startThumbClasses}" part="thumb"
           style=${startThumbStyles}
           @mouseenter=${this.onStartMouseenter}
           @mouseleave=${this.onStartMouseleave}>
@@ -190,7 +193,7 @@ export class SliderRangeBase extends SliderBase {
         ${
         this.renderValueIndicator(
             this.valueToValueIndicatorTransform(this.valueStart))}
-        <div class="mdc-slider__thumb-knob"></div>
+        <div class="mdc-slider__thumb-knob" part="thumb-knob"></div>
       </div>
     `;
   }

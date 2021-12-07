@@ -95,6 +95,7 @@ export class IconButtonToggleBase extends LitElement {
     return html`<button
           class="mdc-icon-button mdc-icon-button--display-flex ${
         classMap(classes)}"
+          part="icon-button"
           aria-pressed="${ifDefined(ariaPressedValue)}"
           aria-label="${ifDefined(ariaLabelValue)}"
           @click="${this.handleClick}"
@@ -108,14 +109,14 @@ export class IconButtonToggleBase extends LitElement {
           @touchend="${this.handleRippleDeactivate}"
           @touchcancel="${this.handleRippleDeactivate}"
         >${this.renderRipple()}
-        <span class="mdc-icon-button__icon"
+        <span class="mdc-icon-button__icon" part="icon"
           ><slot name="offIcon"
-            ><i class="material-icons">${this.offIcon}</i
+            ><i class="material-icons" part="material-icons-off">${this.offIcon}</i
           ></slot
         ></span>
-        <span class="mdc-icon-button__icon mdc-icon-button__icon--on"
+        <span class="mdc-icon-button__icon mdc-icon-button__icon--on" part="icon-button-on"
           ><slot name="onIcon"
-            ><i class="material-icons">${this.onIcon}</i
+            ><i class="material-icons" part="material-icons-on">${this.onIcon}</i
           ></slot
         ></span>
       </button>`;

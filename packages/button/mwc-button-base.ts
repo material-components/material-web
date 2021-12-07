@@ -108,6 +108,7 @@ export class ButtonBase extends LitElement {
     return html`
       <button
           id="button"
+          part="button"
           class="mdc-button ${classMap(this.getRenderClasses())}"
           ?disabled="${this.disabled}"
           aria-label="${this.label || this.icon}"
@@ -122,18 +123,18 @@ export class ButtonBase extends LitElement {
           @touchcancel="${this.handleRippleDeactivate}">
         ${this.renderOverlay()}
         ${this.renderRipple()}
-        <span class="leading-icon">
+        <span class="leading-icon" part="leading-icon">
           <slot name="icon">
             ${this.icon && !this.trailingIcon ? this.renderIcon() : ''}
           </slot>
         </span>
-        <span class="mdc-button__label">${this.label}</span>
+        <span class="mdc-button__label" part="label">${this.label}</span>
         <span class="slot-container ${classMap({
       flex: this.expandContent
-    })}">
+    })}" part="slot-container">
           <slot></slot>
         </span>
-        <span class="trailing-icon">
+        <span class="trailing-icon" part="trailing-icon">
           <slot name="trailingIcon">
             ${this.icon && this.trailingIcon ? this.renderIcon() : ''}
           </slot>
@@ -144,7 +145,7 @@ export class ButtonBase extends LitElement {
   /** @soyTemplate */
   protected renderIcon(): TemplateResult {
     return html`
-    <mwc-icon class="mdc-button__icon">
+    <mwc-icon class="mdc-button__icon" part="icon">
       ${this.icon}
     </mwc-icon>`;
   }
