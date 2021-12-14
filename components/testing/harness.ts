@@ -13,10 +13,20 @@ declare global {
 }
 
 /**
+ * Retrieves the element type from a `Harness` type.
+ *
+ * @template H The harness type.
+ */
+export type HarnessElement<H extends Harness> =
+    H extends Harness<infer E>? E : never;
+
+/**
  * A test harness class that can be used to simulate interaction with an
  * element.
+ *
+ * @template E The harness's element type.
  */
-export class Harness<E extends HTMLElement> {
+export class Harness<E extends HTMLElement = HTMLElement> {
   /**
    * The pseudo classes that should be transformed for simulation. Component
    * subclasses may override this to add additional pseudo classes.
@@ -25,6 +35,8 @@ export class Harness<E extends HTMLElement> {
 
   /**
    * Creates a new harness for the given element.
+   *
+   * @param element The element that this harness controls.
    */
   constructor(readonly element: E) {}
 
