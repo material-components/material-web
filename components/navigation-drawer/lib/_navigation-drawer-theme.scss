@@ -1,0 +1,39 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:map';
+@use '@material/theme/custom-properties';
+@use '@material/theme/keys';
+
+$light-theme: (
+  container-width: 360px,
+);
+
+$dark-theme: $light-theme;
+
+@mixin theme-styles($theme: $light-theme) {
+  $resolved-theme: _resolve-theme($theme, null);
+  $properties: keys.create-theme-properties($resolved-theme, navigation-drawer);
+
+  @include _container-width($properties);
+}
+
+@function _resolve-theme($theme, $resolvers) {
+  @return $theme;
+}
+
+@mixin _container-width($properties) {
+  $container-width: map.get($properties, container-width);
+  @if $container-width != null {
+    $container-width-var: custom-properties.create-var($container-width);
+    .md3-navigation-drawer__closed-to-opened {
+      inline-size: $container-width-var;
+    }
+    .md3-navigation-drawer__slot-content {
+      min-inline-size: $container-width-var;
+      max-inline-size: $container-width-var;
+    }
+  }
+}
