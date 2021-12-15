@@ -7,6 +7,10 @@
 // Selector '.mdc-*' should only be used in this project.
 
 @mixin static-styles() {
+  :host {
+    @include host;
+  }
+
   .mdc-field {
     @include root;
   }
@@ -14,6 +18,10 @@
   .mdc-field__container {
     @include container;
   }
+}
+
+@mixin host() {
+  display: inline-flex;
 }
 
 // TODO(b/177368101): add link to diagram explaining difference/purpose between

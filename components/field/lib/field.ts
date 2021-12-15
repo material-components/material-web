@@ -86,8 +86,9 @@ export class Field extends LitElement implements FieldState {
   /** @soyTemplate */
   protected renderLabel(labelType: LabelType): TemplateResult {
     return html`
-      <span class="mdc-field__label
-        ${classMap(this.getRenderLabelClasses(labelType))}"
+      <span class="mdc-field__label ${
+        classMap(this.getRenderLabelClasses(labelType))}"
+        aria-hidden=${labelType !== this.visibleLabelType}
       >${this.labelText}</span>
     `;
   }
