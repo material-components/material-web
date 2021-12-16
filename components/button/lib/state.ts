@@ -7,6 +7,5 @@
 export interface ButtonState {
   disabled: boolean;
   label: string;
-  ariaLabel: string;
   trailingIcon: boolean;
 }

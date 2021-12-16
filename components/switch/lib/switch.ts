@@ -6,7 +6,7 @@
 
 import '@material/mwc-ripple/mwc-ripple';
 
-import {ariaProperty} from '@material/mwc-base/aria-property';
+import {ariaProperty as legacyAriaProperty} from '@material/mwc-base/aria-property';
 import {FormElement} from '@material/mwc-base/form-element';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
@@ -14,6 +14,8 @@ import {html, TemplateResult} from 'lit';
 import {eventOptions, property, query, queryAsync, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
+
+import {ariaProperty} from '../../decorators/aria-property';
 
 import {MDCSwitchFoundation} from './foundation';
 import {MDCSwitchAdapter, MDCSwitchState} from './state';
@@ -26,13 +28,14 @@ export class Switch extends FormElement implements MDCSwitchState {
   @property({type: Boolean}) selected = false;
 
   // Aria
-  /** @soyPrefixAttribute */
   @ariaProperty
-  @property({type: String, attribute: 'aria-label'})
-  override ariaLabel = '';
+  // TODO(b/210730484): replace with @soyParam annotation
+  @property({type: String, attribute: 'data-aria-label', noAccessor: true})
+  override ariaLabel!: string;
 
+  // TODO: Add support in @ariaProperty for idref aria attributes
   /** @soyPrefixAttribute */
-  @ariaProperty
+  @legacyAriaProperty
   @property({type: String, attribute: 'aria-labelledby'})
   ariaLabelledBy = '';
 
@@ -79,7 +82,7 @@ export class Switch extends FormElement implements MDCSwitchState {
         class="mdc-switch ${classMap(this.getRenderClasses())}"
         role="switch"
         aria-checked="${this.selected}"
-        aria-label="${ifDefined(this.ariaLabel || undefined)}"
+        aria-label="${ifDefined(this.ariaLabel)}"
         aria-labelledby="${ifDefined(this.ariaLabelledBy || undefined)}"
         .disabled=${this.disabled}
         @click=${this.handleClick}

@@ -72,9 +72,12 @@ export class Environment {
    * Render a Lit template in the environment's root container.
    *
    * @param template a Lit `TemplateResult` to render.
+   * @return The root container the template was rendered to.
    */
   render(template: TemplateResult) {
-    litRender(template, this.createNewRoot());
+    const root = this.createNewRoot();
+    litRender(template, root);
+    return root;
   }
 
   /**

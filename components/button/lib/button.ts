@@ -8,12 +8,12 @@ import '@material/mwc-icon/mwc-icon';
 import '../../focus/focus-ring';
 import '../../ripple/mwc-ripple';
 
-import {AriaHasPopup, ariaProperty} from '@material/mwc-base/aria-property';
 import {html, LitElement, TemplateResult} from 'lit';
 import {eventOptions, property, query, queryAssignedNodes, queryAsync, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 
+import {ariaProperty} from '../../decorators/aria-property';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
 import {Ripple} from '../../ripple/mwc-ripple';
 import {RippleHandlers} from '../../ripple/ripple-handlers';
@@ -25,10 +25,12 @@ export abstract class Button extends LitElement implements ButtonState {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
-  /** @soyPrefixAttribute */
+  // TODO(b/210730484): replace with @soyParam annotation
+  @property({type: String, attribute: 'data-aria-has-popup', noAccessor: true})
   @ariaProperty
-  @property({type: String, attribute: 'aria-haspopup'})
-  override ariaHasPopup!: AriaHasPopup;
+  // TODO(b/210675600): change to shared type
+  override ariaHasPopup!: 'false'|'true'|'menu'|'listbox'|'tree'|'grid'|
+      'dialog';
 
   @property({type: Boolean, reflect: true}) disabled = false;
 
@@ -38,7 +40,10 @@ export abstract class Button extends LitElement implements ButtonState {
 
   @property({type: String}) label = '';
 
-  @property({type: String}) override ariaLabel!: string;
+  // TODO(b/210730484): replace with @soyParam annotation
+  @property({type: String, attribute: 'data-aria-label', noAccessor: true})
+  @ariaProperty
+  override ariaLabel!: string;
 
   @property({type: Boolean}) hasIcon = false;
 
@@ -176,6 +181,7 @@ export abstract class Button extends LitElement implements ButtonState {
     this.hasIcon = !!this.iconElement && this.iconElement.length > 0;
   }
 
+  // TODO(b/210731759): remove once internal tooling delegates focus
   override focus() {
     const buttonElement = this.buttonElement;
     if (buttonElement) {
@@ -183,6 +189,7 @@ export abstract class Button extends LitElement implements ButtonState {
     }
   }
 
+  // TODO(b/210731759): remove once internal tooling delegates focus
   override blur() {
     const buttonElement = this.buttonElement;
     if (buttonElement) {
