@@ -8,6 +8,8 @@ import {html, LitElement, TemplateResult} from 'lit';
 import {property} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 
+import {Field} from '../../field/lib/field';
+
 import {TextFieldFoundation} from './foundation';
 import {TextFieldState} from './state';
 
@@ -18,7 +20,9 @@ export abstract class TextField extends LitElement implements TextFieldState {
   @property({type: Boolean}) error = false;
   @property({type: String}) label?: string;
   @property({type: Boolean}) required = false;
-  @property({type: String}) value?: string;
+  @property({type: String}) value = '';
+
+  protected abstract readonly field: Promise<Field>;
 
   protected foundation = new TextFieldFoundation({state: this});
 
@@ -45,7 +49,17 @@ export abstract class TextField extends LitElement implements TextFieldState {
       <input class="md3-text-field__input"
         ?disabled=${this.disabled}
         ?required=${this.required}
-        .value=${this.value ?? ''}>
+        .value=${this.value ?? ''}
+        @blur=${this.handleBlur}
+        @focus=${this.handleFocus}>
     `;
+  }
+
+  protected async handleFocus() {
+    (await this.field).focused = true;
+  }
+
+  protected async handleBlur() {
+    (await this.field).focused = false;
   }
 }

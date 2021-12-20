@@ -7,12 +7,18 @@
 import '../../field/outlined-field';
 
 import {html, TemplateResult} from 'lit';
+import {queryAsync} from 'lit/decorators';
 import {ClassInfo} from 'lit/directives/class-map';
+
+import {MdOutlinedField} from '../../field/outlined-field';
 
 import {TextField} from './text-field';
 
 /** @soyCompatible */
 export class OutlinedTextField extends TextField {
+  @queryAsync('md-outlined-field')
+  protected readonly field!: Promise<MdOutlinedField>;
+
   /** @soyTemplate */
   protected override getRenderClasses(): ClassInfo {
     return {
@@ -28,7 +34,7 @@ export class OutlinedTextField extends TextField {
         .disabled=${this.disabled}
         .error=${this.error}
         .label=${this.label}
-        ?populated=${Boolean(this.value)}
+        .populated=${Boolean(this.value)}
         .required=${this.required}
       >
         ${this.renderFieldContent()}

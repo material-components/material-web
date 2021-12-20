@@ -9,7 +9,7 @@ export interface TextFieldState {
   error: boolean;
   label?: string;
   required: boolean;
-  value?: string;
+  value: string;
 }
 
 export interface TextFieldAdapter {
