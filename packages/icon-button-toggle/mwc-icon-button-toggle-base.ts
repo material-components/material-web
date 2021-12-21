@@ -38,7 +38,7 @@ export class IconButtonToggleBase extends LitElement {
   // `aria-label` of the button when `on` is false.
   @property({type: String}) ariaLabelOff!: string;
 
-  @property({type: Boolean, reflect: true}) on = false;
+  @property({type: Boolean, reflect: true}) isOn = false;
 
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 
@@ -50,9 +50,10 @@ export class IconButtonToggleBase extends LitElement {
   });
 
   protected handleClick() {
-    this.on = !this.on;
+    this.isOn = !this.isOn;
     this.dispatchEvent(new CustomEvent(
-        'icon-button-toggle-change', {detail: {isOn: this.on}, bubbles: true}));
+        'icon-button-toggle-change',
+        {detail: {isOn: this.isOn}, bubbles: true}));
   }
 
   override click() {
@@ -84,13 +85,13 @@ export class IconButtonToggleBase extends LitElement {
   protected override render(): TemplateResult {
     /** @classMap */
     const classes = {
-      'mdc-icon-button--on': this.on,
+      'mdc-icon-button--on': this.isOn,
     };
     const hasToggledAriaLabel =
         this.ariaLabelOn !== undefined && this.ariaLabelOff !== undefined;
-    const ariaPressedValue = hasToggledAriaLabel ? undefined : this.on;
+    const ariaPressedValue = hasToggledAriaLabel ? undefined : this.isOn;
     const ariaLabelValue = hasToggledAriaLabel ?
-        (this.on ? this.ariaLabelOn : this.ariaLabelOff) :
+        (this.isOn ? this.ariaLabelOn : this.ariaLabelOff) :
         this.ariaLabel;
     return html`<button
           class="mdc-icon-button mdc-icon-button--display-flex ${
