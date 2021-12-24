@@ -28,7 +28,6 @@ export class NavigationDrawer extends LitElement {
   override render(): TemplateResult {
     const ariaExpanded = this.opened ? 'true' : 'false';
     const ariaHidden = !this.opened ? 'true' : 'false';
-    const frameClasses = this.getFrameClassMap();
 
     return html`
       <div
@@ -38,7 +37,7 @@ export class NavigationDrawer extends LitElement {
         aria-label="${this.ariaLabel}"
         aria-labelledby="${ifDefined(this.ariaLabelledBy)}"
         aria-modal="${this.ariaModal}"
-        class="md3-navigation-drawer__frame ${frameClasses}"
+        class="md3-navigation-drawer__frame ${this.getFrameClasses()}"
         role="dialog">
         <div class="md3-navigation-drawer__slot-content">
           <slot></slot>
@@ -48,7 +47,7 @@ export class NavigationDrawer extends LitElement {
   }
 
   /** @soyTemplate classMap */
-  protected getFrameClassMap() {
+  protected getFrameClasses() {
     return classMap({
       'md3-navigation-drawer__closed-to-opened': this.opened,
       'md3-navigation-drawer__pivot-at-start': this.pivot === 'start',

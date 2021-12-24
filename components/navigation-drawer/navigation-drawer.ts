@@ -6,7 +6,7 @@
 
 import {customElement} from 'lit/decorators';
 
-import {NavigationDrawer as DrawerBase} from './lib/navigation-drawer';
+import {NavigationDrawer} from './lib/navigation-drawer';
 import {styles} from './lib/navigation-drawer-styles.css';
 
 declare global {
@@ -21,6 +21,6 @@ declare global {
  * @suppress {visibility}
  */
 @customElement('md-navigation-drawer')
-export class MdNavigationDrawer extends DrawerBase {
+export class MdNavigationDrawer extends NavigationDrawer {
   static override readonly styles = [styles];
 }

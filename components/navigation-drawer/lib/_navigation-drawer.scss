@@ -11,11 +11,11 @@ $delay: 0s;
 $transition-duration: 0.25s;
 
 @mixin static-styles() {
-  @include _container-styles();
+  @include _frame();
   @include _slot-content();
 }
 
-@mixin _container-styles() {
+@mixin _frame() {
   :host {
     display: flex;
   }
