@@ -38,8 +38,7 @@ export class LinkIconButton extends IconButton {
         @touchend="${this.handleRippleDeactivate}"
         @touchcancel="${this.handleRippleDeactivate}"
     >${this.renderRipple()}
-    ${this.renderIcon()}
-    <span><slot></slot></span>
+    ${this.renderIcon()}<span><slot></slot></span>
     <a class="md3-icon-button__link" href="${this.linkHref}"
         target="${ifDefined(this.linkTarget as LinkTarget)}" aria-label="${
         ifDefined(this.ariaLabel)}"></a>

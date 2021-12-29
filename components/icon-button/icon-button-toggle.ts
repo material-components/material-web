@@ -7,15 +7,15 @@
 import {customElement} from 'lit/decorators.js';
 
 import {styles} from './lib/icon-button-styles.css';
-import {LinkIconButton} from './lib/link-icon-button';
+import {IconButtonToggle} from './lib/icon-button-toggle';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-link-icon-button': MdLinkIconButton;
+    'md-icon-button-toggle': MdIconButtonToggle;
   }
 }
 
-@customElement('md-link-icon-button')
-export class MdLinkIconButton extends LinkIconButton {
+@customElement('md-icon-button-toggle')
+export class MdIconButtonToggle extends IconButtonToggle {
   static override styles = [styles];
 }

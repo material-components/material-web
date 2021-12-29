@@ -9,8 +9,13 @@
     outline: none;
   }
 
+  :host([disabled]) {
+    pointer-events: none;
+  }
+
   .md3-icon-button {
     align-items: center;
+    background-color: transparent;
     border: none;
     box-sizing: border-box;
     color: inherit;
@@ -22,6 +27,13 @@
     position: relative;
     text-decoration: none;
     user-select: none;
+
+    i,
+    svg,
+    img,
+    ::slotted(*) {
+      display: block;
+    }
   }
 
   .md3-icon-button__icon {
@@ -35,10 +47,10 @@
   .md3-icon-button--on {
     .md3-icon-button__icon {
       display: none;
-    }
 
-    &.md3-icon-button__icon--on {
-      display: inline-flex;
+      &.md3-icon-button__icon--on {
+        display: inline-flex;
+      }
     }
   }
 
@@ -47,9 +59,5 @@
     outline: none;
     position: absolute;
     width: 100%;
-  }
-
-  ::slotted(*) {
-    display: block;
   }
 }

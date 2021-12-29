@@ -75,8 +75,10 @@ $light-theme: (
 }
 
 @mixin _state-layer-size($size) {
-  @include theme.property(height, $size);
-  @include theme.property(width, $size);
+  .md3-icon-button {
+    @include theme.property(height, $size);
+    @include theme.property(width, $size);
+  }
 }
 
 @mixin _icon-size($size) {

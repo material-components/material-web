@@ -6,16 +6,16 @@
 
 import {customElement} from 'lit/decorators.js';
 
+import {IconButton} from './lib/icon-button';
 import {styles} from './lib/icon-button-styles.css';
-import {LinkIconButton} from './lib/link-icon-button';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-link-icon-button': MdLinkIconButton;
+    'md-icon-button': MdIconButton;
   }
 }
 
-@customElement('md-link-icon-button')
-export class MdLinkIconButton extends LinkIconButton {
+@customElement('md-icon-button')
+export class MdIconButton extends IconButton {
   static override styles = [styles];
 }

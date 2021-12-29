@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../ripple/mwc-ripple';
-
 import {html, LitElement, TemplateResult} from 'lit';
 import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
@@ -85,8 +83,7 @@ export class IconButton extends LitElement {
         @touchend="${this.handleRippleDeactivate}"
         @touchcancel="${this.handleRippleDeactivate}"
     >${this.renderRipple()}
-    ${this.renderIcon()}
-    <span><slot></slot></span>
+    ${this.renderIcon()}<span><slot></slot></span>
   </button>`;
   }
 
