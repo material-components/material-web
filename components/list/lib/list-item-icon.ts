@@ -7,16 +7,11 @@
 import {html, LitElement, TemplateResult} from 'lit';
 
 /** @soyCompatible */
-export class List extends LitElement {
-  static override shadowRootOptions:
-      ShadowRootInit = {mode: 'open', delegatesFocus: true};
-
+export class ListItemIcon extends LitElement {
   /** @soyTemplate */
   override render(): TemplateResult {
     return html`
-      <ul tabindex="0" class="md3-list">
-        <slot></slot>
-      </ul>
+      <span class="md3-list-item__icon"><slot></slot></span>
     `;
   }
 }
