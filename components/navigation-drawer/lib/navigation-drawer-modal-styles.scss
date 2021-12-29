@@ -1,0 +1,15 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use './navigation-drawer-modal-theme';
+@use './navigation-drawer-modal';
+
+@include navigation-drawer-modal.static-styles();
+
+.md3-navigation-drawer-modal {
+  @include navigation-drawer-modal-theme.theme-styles(
+    navigation-drawer-modal-theme.$light-theme
+  );
+}

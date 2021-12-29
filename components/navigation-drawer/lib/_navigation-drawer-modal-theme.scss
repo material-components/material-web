@@ -1,0 +1,174 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// TODO(b/212498561): use the m3 mixins to assign border radius properties
+
+@use 'sass:map';
+@use '@material/theme/custom-properties';
+@use '@material/theme/keys';
+@use '@material/theme/theme' as mwc-theme;
+@use '@material/elevation/elevation-theme';
+@use 'third_party/javascript/material_web_components/m3/sass/theme';
+@use '../../sass/resolvers';
+
+$light-theme: (
+  container-width: 360px,
+  container-color: #efefef,
+  scrim-color: #fff,
+  scrim-opacity: 0.4,
+  container-shape: (
+    radius: (
+      0,
+      16px,
+      16px,
+      0,
+    ),
+  ),
+);
+
+$dark-theme: (
+  container-width: 360px,
+  container-color: #1f1f1f,
+  scrim-color: #000,
+  scrim-opacity: 0.6,
+  container-shape: (
+    radius: (
+      0,
+      16px,
+      16px,
+      0,
+    ),
+  ),
+);
+
+@mixin theme-styles($theme, $resolvers: resolvers.$material) {
+  $resolved-theme: _resolve-theme($theme, $resolvers);
+  $properties: keys.create-theme-properties(
+    $resolved-theme,
+    navigation-drawer-modal
+  );
+
+  @include _scrim-color($properties);
+  @include _scrim-opacity($properties);
+  @include _frame-width($properties);
+  @include _frame-color($properties);
+  @include _frame-elevation($properties);
+  @include _frame-shape($properties);
+}
+
+@function _resolve-theme($theme, $resolvers) {
+  @return $theme;
+}
+
+@mixin _frame-width($properties) {
+  $container-width: map.get($properties, container-width);
+  @if $container-width != null {
+    $container-width-var: custom-properties.create-var($container-width);
+    .md3-navigation-drawer-modal--closed-to-opened {
+      inline-size: $container-width-var;
+    }
+
+    .md3-navigation-drawer-modal__slot-content {
+      min-inline-size: $container-width-var;
+    }
+  }
+}
+
+@mixin _scrim-color($properties) {
+  $scrim-color: map.get($properties, scrim-color);
+  @if $scrim-color != null {
+    $scrim-color-var: custom-properties.create-var($scrim-color);
+
+    .md3-navigation-drawer-modal__scrim {
+      background-color: $scrim-color-var;
+    }
+  }
+}
+
+@mixin _scrim-opacity($properties) {
+  $scrim-opacity: map.get($properties, scrim-opacity);
+  @if $scrim-opacity != null {
+    $scrim-opacity-var: custom-properties.create-var($scrim-opacity);
+
+    .md3-navigation-drawer-modal--scrim-visible {
+      opacity: $scrim-opacity-var;
+    }
+  }
+}
+
+@mixin _frame-color($properties) {
+  $container-color: map.get($properties, container-color);
+  @if $container-color != null {
+    $container-color-var: custom-properties.create-var($container-color);
+
+    .md3-navigation-drawer-modal__slot-content {
+      background-color: $container-color-var;
+    }
+  }
+}
+
+@mixin _frame-elevation($properties) {
+  $elevation: map.get($properties, modal-frame-elevation);
+  @if $elevation != null {
+    $dp-value: custom-properties.get-fallback($elevation);
+
+    .md3-navigation-drawer-modal__slot-content {
+      @include mwc-theme.property(
+        box-shadow,
+        elevation-theme.elevation-box-shadow($dp-value)
+      );
+    }
+  }
+}
+
+@mixin _frame-shape($properties) {
+  $container-shape: map.get($properties, container-shape);
+  $container-shape-radius: map.get($container-shape, radius);
+  @if $container-shape-radius != null {
+    $border-values: custom-properties.get-fallback($container-shape-radius);
+
+    $radius-start-start: nth($border-values, 1);
+    $radius-start-end: nth($border-values, 2);
+    $radius-end-start: nth($border-values, 4);
+    $radius-end-end: nth($border-values, 3);
+
+    $container-shape-radius-start-start-property: custom-properties.create(
+      navigation-drawer-container-shape-radius-start-start,
+      $radius-start-start
+    );
+    $container-shape-radius-start-end-property: custom-properties.create(
+      navigation-drawer-container-shape-radius-start-end,
+      $radius-start-end
+    );
+    $container-shape-radius-end-start-property: custom-properties.create(
+      navigation-drawer-container-shape-radius-end-start,
+      $radius-end-start
+    );
+    $container-shape-radius-end-end-property: custom-properties.create(
+      navigation-drawer-container-shape-radius-end-end,
+      $radius-end-end
+    );
+
+    $container-shape-radius-start-start-var: custom-properties.create-var(
+      $container-shape-radius-start-start-property
+    );
+    $container-shape-radius-start-end-var: custom-properties.create-var(
+      $container-shape-radius-start-end-property
+    );
+    $container-shape-radius-end-start-var: custom-properties.create-var(
+      $container-shape-radius-end-start-property
+    );
+    $container-shape-radius-end-end-var: custom-properties.create-var(
+      $container-shape-radius-end-end-property
+    );
+
+    .md3-navigation-drawer-modal__slot-content {
+      border-start-start-radius: $container-shape-radius-start-start-var;
+      border-start-end-radius: $container-shape-radius-start-end-var;
+      border-end-start-radius: $container-shape-radius-end-start-var;
+      border-end-end-radius: $container-shape-radius-end-end-var;
+    }
+  }
+}
