@@ -6,7 +6,7 @@
 
 import {MDCObserverFoundation} from '@material/base/observer-foundation';
 
-import {MDCSwitchState} from './state';
+import {MDCSwitchAdapter} from './state';
 
 /**
  * `MDCSwitchFoundation` provides a state-only foundation for a switch
@@ -15,8 +15,9 @@ import {MDCSwitchState} from './state';
  * State observers and event handler entrypoints update a component's adapter's
  * state with the logic needed for switch to function.
  */
-export class MDCSwitchFoundation extends MDCObserverFoundation<MDCSwitchState> {
-  constructor(adapter: MDCSwitchState) {
+export class MDCSwitchFoundation extends
+    MDCObserverFoundation<MDCSwitchAdapter> {
+  constructor(adapter: MDCSwitchAdapter) {
     super(adapter);
     this.handleClick = this.handleClick.bind(this);
   }
@@ -25,7 +26,7 @@ export class MDCSwitchFoundation extends MDCObserverFoundation<MDCSwitchState> {
    * Initializes the foundation and starts observing state changes.
    */
   override init() {
-    this.observe(this.adapter, {
+    this.observe(this.adapter.state, {
       disabled: this.stopProcessingIfDisabled,
       processing: this.stopProcessingIfDisabled,
     });
@@ -36,16 +37,16 @@ export class MDCSwitchFoundation extends MDCObserverFoundation<MDCSwitchState> {
    * selected state.
    */
   handleClick() {
-    if (this.adapter.disabled) {
+    if (this.adapter.state.disabled) {
       return;
     }
 
-    this.adapter.selected = !this.adapter.selected;
+    this.adapter.state.selected = !this.adapter.state.selected;
   }
 
   protected stopProcessingIfDisabled() {
-    if (this.adapter.disabled) {
-      this.adapter.processing = false;
+    if (this.adapter.state.disabled) {
+      this.adapter.state.processing = false;
     }
   }
 }

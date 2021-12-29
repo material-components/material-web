@@ -7,23 +7,26 @@
 import '@material/mwc-ripple/mwc-ripple';
 
 import {ariaProperty as legacyAriaProperty} from '@material/mwc-base/aria-property';
-import {FormElement} from '@material/mwc-base/form-element';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {html, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAsync, state} from 'lit/decorators';
+import {html, LitElement, TemplateResult} from 'lit';
+import {eventOptions, property, queryAsync, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 
+import {FormController, getFormValue} from '../../controller/form-controller';
 import {ariaProperty} from '../../decorators/aria-property';
 
 import {MDCSwitchFoundation} from './foundation';
-import {MDCSwitchAdapter, MDCSwitchState} from './state';
+import {MDCSwitchState} from './state';
 
 /** @soyCompatible */
-export class Switch extends FormElement implements MDCSwitchState {
+export class Switch extends LitElement implements MDCSwitchState {
+  static override shadowRootOptions:
+      ShadowRootInit = {mode: 'open', delegatesFocus: true};
+
   // MDCSwitchState
-  @property({type: Boolean}) override disabled = false;
+  @property({type: Boolean, reflect: true}) disabled = false;
   @property({type: Boolean}) processing = false;
   @property({type: Boolean}) selected = false;
 
@@ -40,7 +43,7 @@ export class Switch extends FormElement implements MDCSwitchState {
   ariaLabelledBy = '';
 
   // Ripple
-  @queryAsync('mwc-ripple') override readonly ripple!: Promise<Ripple|null>;
+  @queryAsync('mwc-ripple') readonly ripple!: Promise<Ripple|null>;
   @state() protected shouldRenderRipple = false;
 
   protected rippleHandlers = new RippleHandlers(() => {
@@ -48,30 +51,26 @@ export class Switch extends FormElement implements MDCSwitchState {
     return this.ripple;
   });
 
-  // FormElement
+  // FormController
+  get form() {
+    return this.closest('form');
+  }
   @property({type: String, reflect: true}) name = '';
   @property({type: String}) value = 'on';
-  @query('input') protected readonly formElement!: HTMLElement;
-
-  protected setFormData(formData: FormData) {
-    if (this.name && this.selected) {
-      formData.append(this.name, this.value);
-    }
+  [getFormValue]() {
+    return this.selected ? this.value : null;
   }
 
-  // BaseElement
-  @query('.mdc-switch') protected readonly mdcRoot!: HTMLElement;
-  protected readonly mdcFoundationClass = MDCSwitchFoundation;
-  protected mdcFoundation?: MDCSwitchFoundation;
+  protected mdcFoundation = new MDCSwitchFoundation({state: this});
+
+  constructor() {
+    super();
+    this.addController(new FormController(this));
+  }
 
   override click() {
-    // Switch uses a hidden input as its form element, but a different <button>
-    // for interaction. It overrides click() from FormElement to avoid clicking
-    // the hidden input.
-    if (!this.disabled) {
-      this.mdcRoot?.focus();
-      this.mdcRoot?.click();
-    }
+    this.mdcFoundation?.handleClick();
+    super.click();
   }
 
   /** @soyTemplate */
@@ -200,9 +199,5 @@ export class Switch extends FormElement implements MDCSwitchState {
 
   protected handlePointerLeave() {
     this.rippleHandlers.endHover();
-  }
-
-  protected createAdapter(): MDCSwitchAdapter {
-    return {state: this};
   }
 }

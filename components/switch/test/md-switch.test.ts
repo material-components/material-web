@@ -242,23 +242,17 @@ describe('mwc-switch', () => {
   });
 
   describe('click()', () => {
-    it('should focus and click root element', () => {
-      const root = toggle.shadowRoot!.querySelector('button')!;
-      spyOn(root, 'focus');
-      spyOn(root, 'click');
+    it('should toggle element', () => {
+      expect(toggle.selected).withContext('is false by default').toBeFalse();
       toggle.click();
-      expect(root.focus).toHaveBeenCalledTimes(1);
-      expect(root.click).toHaveBeenCalledTimes(1);
+      expect(toggle.selected).withContext('should toggle selected').toBeTrue();
     });
 
     it('should do nothing if disabled', () => {
-      const root = toggle.shadowRoot!.querySelector('button')!;
-      spyOn(root, 'focus');
-      spyOn(root, 'click');
+      expect(toggle.selected).withContext('is false by default').toBeFalse();
       toggle.disabled = true;
       toggle.click();
-      expect(root.focus).not.toHaveBeenCalled();
-      expect(root.click).not.toHaveBeenCalled();
+      expect(toggle.selected).withContext('should remain false').toBeFalse();
     });
 
     it('should not focus or click hidden input form element', () => {
