@@ -1,0 +1,55 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin static-styles() {
+  :host {
+    display: inline-flex;
+    outline: none;
+  }
+
+  .md3-icon-button {
+    align-items: center;
+    border: none;
+    box-sizing: border-box;
+    color: inherit;
+    cursor: pointer;
+    display: flex;
+    fill: currentColor;
+    justify-content: center;
+    outline: none;
+    position: relative;
+    text-decoration: none;
+    user-select: none;
+  }
+
+  .md3-icon-button__icon {
+    display: inline-flex;
+
+    &.md3-icon-button__icon--on {
+      display: none;
+    }
+  }
+
+  .md3-icon-button--on {
+    .md3-icon-button__icon {
+      display: none;
+    }
+
+    &.md3-icon-button__icon--on {
+      display: inline-flex;
+    }
+  }
+
+  .md3-icon-button__link {
+    height: 100%;
+    outline: none;
+    position: absolute;
+    width: 100%;
+  }
+
+  ::slotted(*) {
+    display: block;
+  }
+}

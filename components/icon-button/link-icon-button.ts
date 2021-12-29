@@ -9,8 +9,7 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {styles} from '../../icon_button/mwc-icon-button.css';
-
+import {styles} from './lib/icon-button-styles.css';
 import {LinkIconButton} from './lib/link-icon-button';
 
 declare global {

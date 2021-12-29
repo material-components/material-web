@@ -7,10 +7,11 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {IconButtonBase} from '@material/mwc-icon-button/mwc-icon-button-base';
 import {html, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
+
+import {IconButton} from './icon-button';
 
 // Note that we cast `linkTarget` to this type, below. The Lit compiler
 // enforces the `target` attribute value to be of this type, but this is not
@@ -19,7 +20,7 @@ import {ifDefined} from 'lit/directives/if-defined.js';
 type LinkTarget = '_blank'|'_parent'|'_self'|'_top';
 
 /** @soyCompatible */
-export class LinkIconButton extends IconButtonBase {
+export class LinkIconButton extends IconButton {
   @property({type: String}) linkHref = '';
 
   @property({type: String}) linkTarget!: string;
@@ -27,7 +28,7 @@ export class LinkIconButton extends IconButtonBase {
   /** @soyTemplate */
   protected override render(): TemplateResult {
     return html`<div
-        class="mdc-icon-button mdc-icon-button--display-flex"
+        class="md3-icon-button"
         @focus="${this.handleRippleFocus}"
         @blur="${this.handleRippleBlur}"
         @mousedown="${this.handleRippleMouseDown}"
@@ -37,13 +38,11 @@ export class LinkIconButton extends IconButtonBase {
         @touchend="${this.handleRippleDeactivate}"
         @touchcancel="${this.handleRippleDeactivate}"
     >${this.renderRipple()}
-    <i class="material-icons">${this.icon}</i>
-    <span
-      ><slot></slot
-    ></span>
-    <a class="mdc-icon-button__link" href="${this.linkHref}"
+    ${this.renderIcon()}
+    <span><slot></slot></span>
+    <a class="md3-icon-button__link" href="${this.linkHref}"
         target="${ifDefined(this.linkTarget as LinkTarget)}" aria-label="${
-        this.ariaLabel || this.icon}"></a>
+        ifDefined(this.ariaLabel)}"></a>
   </div>`;
   }
 }

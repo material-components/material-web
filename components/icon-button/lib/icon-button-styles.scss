@@ -1,0 +1,13 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use './icon-button';
+@use './icon-button-theme';
+
+@include icon-button.static-styles();
+
+.md3-icon-button {
+  @include icon-button-theme.theme-styles(icon-button-theme.$light-theme);
+}
