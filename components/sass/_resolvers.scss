@@ -5,8 +5,10 @@
 
 @use 'sass:meta';
 @use './elevation';
+@use './typography';
 
 /// Material Design resolvers.
 $material: (
   elevation: meta.get-function('resolver', $module: 'elevation'),
+  typography: meta.get-function('resolver', $module: 'typography'),
 );

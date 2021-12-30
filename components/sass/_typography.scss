@@ -6,6 +6,7 @@
 @use 'sass:map';
 @use 'sass:math';
 @use 'sass:meta';
+@use './string-ext';
 @use './theme';
 
 /// Resolves a theme's typography tokens for the given prefix.
@@ -21,32 +22,37 @@
 ///
 /// @param {Map} $theme - The theme to resolve tokens for.
 /// @param {Function} $resolver - The typography resolver to use.
-/// @param {String} $token-prefix - The prefix of a typography token set.
+/// @param {String...} $token-prefixes - The prefix(es) of a typography token
+///     set.
 /// @return {Map} The theme with resolved typography tokens.
-@function resolve-theme($theme, $resolver, $token-prefix) {
+@function resolve-theme($theme, $resolver, $token-prefixes...) {
   @if $resolver == null {
     @return $theme;
   }
 
-  $typography-theme: meta.call(
-    $resolver,
-    $font: map.get($theme, '#{$token-prefix}-font'),
-    $line-height: map.get($theme, '#{$token-prefix}-line-height'),
-    $size: map.get($theme, '#{$token-prefix}-size'),
-    $tracking: map.get($theme, '#{$token-prefix}-tracking'),
-    $weight: map.get($theme, '#{$token-prefix}-weight')
-  );
+  @each $token-prefix in $token-prefixes {
+    $typography-theme: meta.call(
+      $resolver,
+      $font: map.get($theme, '#{$token-prefix}-font'),
+      $line-height: map.get($theme, '#{$token-prefix}-line-height'),
+      $size: map.get($theme, '#{$token-prefix}-size'),
+      $tracking: map.get($theme, '#{$token-prefix}-tracking'),
+      $weight: map.get($theme, '#{$token-prefix}-weight')
+    );
 
-  @return map.merge(
-    $theme,
-    (
-      '#{$token-prefix}-font': map.get($typography-theme, font),
-      '#{$token-prefix}-line-height': map.get($typography-theme, line-height),
-      '#{$token-prefix}-size': map.get($typography-theme, size),
-      '#{$token-prefix}-tracking': map.get($typography-theme, tracking),
-      '#{$token-prefix}-weight': map.get($typography-theme, weight),
-    )
-  );
+    $theme: map.merge(
+      $theme,
+      (
+        '#{$token-prefix}-font': map.get($typography-theme, font),
+        '#{$token-prefix}-line-height': map.get($typography-theme, line-height),
+        '#{$token-prefix}-size': map.get($typography-theme, size),
+        '#{$token-prefix}-tracking': map.get($typography-theme, tracking),
+        '#{$token-prefix}-weight': map.get($typography-theme, weight),
+      )
+    );
+  }
+
+  @return $theme;
 }
 
 /// Resolves typography tokens, converting `px` to `rem` where appropriate.
@@ -61,7 +67,7 @@
 @function resolver($args...) {
   $args: meta.keywords($args);
   @return (
-    font: map.get($args, font),
+    font: _get-font(map.get($args, font)),
     line-height: _px-to-rem(map.get($args, line-height)),
     size: _px-to-rem(map.get($args, size)),
     tracking: _px-to-rem(map.get($args, tracking)),
@@ -80,6 +86,16 @@
   }
 
   @return math.div($px, 16px) * 1rem;
+}
+
+// TODO(b/183680075): Remove when "Roboto Medium"/"Roboto Regular" is updated
+// to "Roboto".
+@function _get-font($font) {
+  @if $font == 'Roboto Regular' or $font == 'Roboto Medium' {
+    @return 'Roboto';
+  }
+
+  @return $font;
 }
 
 @mixin static-styles() {

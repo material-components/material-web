@@ -6,7 +6,7 @@
 @use 'sass:list';
 @use 'sass:map';
 @use 'sass:meta';
-@use './tokens';
+@use './string-ext';
 @use './var';
 
 /// Transform a user-provided `$theme` map's values into `var()` custom property
@@ -43,7 +43,7 @@
 @function create-theme-vars($theme, $prefix) {
   @each $key, $value in $theme {
     @if $value != null {
-      $token: tokens.combine($prefix, $key);
+      $token: combine-tokens($prefix, $key);
 
       @if meta.type-of($value) == 'map' {
         $value: create-theme-vars($value, $token);
@@ -97,6 +97,33 @@
       }
     }
   }
+}
+
+/// Combines one or more token parts into a token.
+///
+/// @example - scss
+///   $key: combine(body, font-size);
+///   // body-font-size
+///
+/// @param {String...} $parts - Arbitrary number of string token parts to
+///     combine.
+/// @return {String} A combined token string.
+@function combine-tokens($parts...) {
+  // Allow extra keywords to be passed to other functions without impacting this
+  // function, which does not expect any keywords.
+  $unused: meta.keywords($parts);
+  $token: '';
+  @each $part in $parts {
+    @if $part {
+      @if $token == '' {
+        $token: $part;
+      } @else {
+        $token: #{$token}-#{$part};
+      }
+    }
+  }
+
+  @return $token;
 }
 
 /// Validates a theme's tokens and values and throws an error if incorrect
@@ -175,18 +202,26 @@
         $token,
         $separator: comma
       );
-    } @else if meta.type-of($value) == 'map' {
-      $value: validate-theme-tokens(
-        map.get($reference-theme, $token),
-        $value,
-        $require-all: $require-all
-      );
     }
   }
 
   @if $require-all {
+    $ignore-suffix: (
+      // Ignore composite font tokens
+      '-type'
+    );
+
     @each $token in $valid-tokens {
-      @if map.get($theme, $token) == null {
+      $missing: map.get($theme, $token) == null;
+      @if $missing {
+        @each $suffix in $ignore-suffix {
+          @if string-ext.has-suffix($token, $suffix) {
+            $missing: false;
+          }
+        }
+      }
+
+      @if $missing {
         $missing-tokens: list.append(
           $missing-tokens,
           $token,
