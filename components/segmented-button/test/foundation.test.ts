@@ -424,6 +424,386 @@ describe('SegmentedButtonSetFoundation', () => {
     });
   });
 
+  describe('LTR navigation', () => {
+    function setupLtrTest(
+        opts: Omit<SegmentedButtonSetOptions, 'isRTL'|'isMultiselect'>) {
+      return setupTest({
+        isRTL: false,
+        isMultiselect: false,
+        ...opts,
+      });
+    }
+
+    it('handleKeydown(ArrowLeft) makes focusable and focuses the prior button',
+       () => {
+         const buttons: SegmentedButtonState[] = [
+           {
+             label: 'Button 0',
+             focusable: false,
+             selected: false,
+             disabled: false,
+           },
+           {
+             label: 'Button 1',
+             focusable: false,
+             selected: false,
+             disabled: false,
+           },
+           {
+             label: 'Button 2',
+             focusable: true,
+             selected: false,
+             disabled: false,
+           },
+         ];
+
+         const {adapter, foundation} = setupLtrTest({
+           buttons,
+         });
+
+         foundation.handleKeydown(fakeKeyboardEvent({
+           key: 'ArrowLeft',
+           target: buttons[2],
+         }));
+         expect(adapter.state.buttons[0].focusable)
+             .withContext('0th button')
+             .toBeFalse();
+         expect(adapter.state.buttons[1].focusable)
+             .withContext('1st button')
+             .toBeTrue();
+         expect(adapter.state.buttons[2].focusable)
+             .withContext('2nd button')
+             .toBeFalse();
+         expect(adapter.focusButton)
+             .withContext('focuses button')
+             .toHaveBeenCalledOnceWith(1);
+       });
+
+    it('handleKeydown(ArrowLeft) makes focusable and focuses the prior non-disabled button',
+       () => {
+         const buttons: SegmentedButtonState[] = [
+           {
+             label: 'Button 0',
+             focusable: false,
+             selected: false,
+             disabled: false,
+           },
+           {
+             label: 'Button 1',
+             focusable: false,
+             selected: false,
+             disabled: true,
+           },
+           {
+             label: 'Button 2',
+             focusable: true,
+             selected: false,
+             disabled: false,
+           },
+         ];
+
+         const {adapter, foundation} = setupLtrTest({
+           buttons,
+         });
+
+         foundation.handleKeydown(fakeKeyboardEvent({
+           key: 'ArrowLeft',
+           target: buttons[2],
+         }));
+         expect(adapter.state.buttons[0].focusable)
+             .withContext('0th button')
+             .toBeTrue();
+         expect(adapter.state.buttons[1].focusable)
+             .withContext('1st disabled button')
+             .toBeFalse();
+         expect(adapter.state.buttons[2].focusable)
+             .withContext('2nd button')
+             .toBeFalse();
+         expect(adapter.focusButton)
+             .withContext('focuses button')
+             .toHaveBeenCalledOnceWith(0);
+       });
+
+    it('handleKeydown(ArrowRight) makes focusable and focuses the next button',
+       () => {
+         const buttons: SegmentedButtonState[] = [
+           {
+             label: 'Button 0',
+             focusable: true,
+             selected: false,
+             disabled: false,
+           },
+           {
+             label: 'Button 1',
+             focusable: false,
+             selected: false,
+             disabled: false,
+           },
+           {
+             label: 'Button 2',
+             focusable: false,
+             selected: false,
+             disabled: false,
+           },
+         ];
+
+         const {adapter, foundation} = setupLtrTest({
+           buttons,
+         });
+
+         foundation.handleKeydown(fakeKeyboardEvent({
+           key: 'ArrowRight',
+           target: buttons[0],
+         }));
+         expect(adapter.state.buttons[0].focusable)
+             .withContext('0th button')
+             .toBeFalse();
+         expect(adapter.state.buttons[1].focusable)
+             .withContext('1st button')
+             .toBeTrue();
+         expect(adapter.state.buttons[2].focusable)
+             .withContext('2nd button')
+             .toBeFalse();
+         expect(adapter.focusButton)
+             .withContext('focuses button')
+             .toHaveBeenCalledOnceWith(1);
+       });
+
+    it('handleKeydown(ArrowRight) makes focusable and focuses the next non-disabled button',
+       () => {
+         const buttons: SegmentedButtonState[] = [
+           {
+             label: 'Button 0',
+             focusable: true,
+             selected: false,
+             disabled: false,
+           },
+           {
+             label: 'Button 1',
+             focusable: false,
+             selected: false,
+             disabled: true,
+           },
+           {
+             label: 'Button 2',
+             focusable: false,
+             selected: false,
+             disabled: false,
+           },
+         ];
+
+         const {adapter, foundation} = setupLtrTest({
+           buttons,
+         });
+
+         foundation.handleKeydown(fakeKeyboardEvent({
+           key: 'ArrowRight',
+           target: buttons[0],
+         }));
+         expect(adapter.state.buttons[0].focusable)
+             .withContext('0th button')
+             .toBeFalse();
+         expect(adapter.state.buttons[1].focusable)
+             .withContext('1st disabled button')
+             .toBeFalse();
+         expect(adapter.state.buttons[2].focusable)
+             .withContext('2nd button')
+             .toBeTrue();
+         expect(adapter.focusButton)
+             .withContext('focuses button')
+             .toHaveBeenCalledOnceWith(2);
+       });
+  });
+
+  describe('RTL navigation', () => {
+    function setupRtlTest(
+        opts: Omit<SegmentedButtonSetOptions, 'isRTL'|'isMultiselect'>) {
+      return setupTest({
+        isRTL: true,
+        isMultiselect: false,
+        ...opts,
+      });
+    }
+
+    it('handleKeydown(ArrowLeft) makes focusable and focuses the next button',
+       () => {
+         const buttons: SegmentedButtonState[] = [
+           {
+             label: 'Button 0',
+             focusable: true,
+             selected: false,
+             disabled: false,
+           },
+           {
+             label: 'Button 1',
+             focusable: false,
+             selected: false,
+             disabled: false,
+           },
+           {
+             label: 'Button 2',
+             focusable: false,
+             selected: false,
+             disabled: false,
+           },
+         ];
+
+         const {adapter, foundation} = setupRtlTest({
+           buttons,
+         });
+
+         foundation.handleKeydown(
+             fakeKeyboardEvent({key: 'ArrowLeft', target: buttons[0]}));
+         expect(adapter.state.buttons[0].focusable)
+             .withContext('0th button')
+             .toBeFalse();
+         expect(adapter.state.buttons[1].focusable)
+             .withContext('1st button')
+             .toBeTrue();
+         expect(adapter.state.buttons[2].focusable)
+             .withContext('2nd button')
+             .toBeFalse();
+         expect(adapter.focusButton)
+             .withContext('focuses button')
+             .toHaveBeenCalledOnceWith(1);
+       });
+
+    it('handleKeydown(ArrowLeft) makes focusable and focuses the next non-disabled button',
+       () => {
+         const buttons: SegmentedButtonState[] = [
+           {
+             label: 'Button 0',
+             focusable: true,
+             selected: false,
+             disabled: false,
+           },
+           {
+             label: 'Button 1',
+             focusable: false,
+             selected: false,
+             disabled: true,
+           },
+           {
+             label: 'Button 2',
+             focusable: false,
+             selected: false,
+             disabled: false,
+           },
+         ];
+
+         const {adapter, foundation} = setupRtlTest({
+           buttons,
+         });
+
+         foundation.handleKeydown(fakeKeyboardEvent({
+           key: 'ArrowLeft',
+           target: buttons[0],
+         }));
+         expect(adapter.state.buttons[0].focusable)
+             .withContext('0th button')
+             .toBeFalse();
+         expect(adapter.state.buttons[1].focusable)
+             .withContext('1st disabled button')
+             .toBeFalse();
+         expect(adapter.state.buttons[2].focusable)
+             .withContext('2nd button')
+             .toBeTrue();
+         expect(adapter.focusButton)
+             .withContext('focuses button')
+             .toHaveBeenCalledOnceWith(2);
+       });
+
+    it('handleKeydown(ArrowRight) makes focusable and focuses the next button',
+       () => {
+         const buttons: SegmentedButtonState[] = [
+           {
+             label: 'Button 0',
+             focusable: false,
+             selected: false,
+             disabled: false,
+           },
+           {
+             label: 'Button 1',
+             focusable: false,
+             selected: false,
+             disabled: false,
+           },
+           {
+             label: 'Button 2',
+             focusable: true,
+             selected: false,
+             disabled: false,
+           },
+         ];
+
+         const {adapter, foundation} = setupRtlTest({
+           buttons,
+         });
+
+         foundation.handleKeydown(fakeKeyboardEvent({
+           key: 'ArrowRight',
+           target: buttons[2],
+         }));
+         expect(adapter.state.buttons[0].focusable)
+             .withContext('0th button')
+             .toBeFalse();
+         expect(adapter.state.buttons[1].focusable)
+             .withContext('1st button')
+             .toBeTrue();
+         expect(adapter.state.buttons[2].focusable)
+             .withContext('2nd button')
+             .toBeFalse();
+         expect(adapter.focusButton)
+             .withContext('focuses button')
+             .toHaveBeenCalledOnceWith(1);
+       });
+
+    it('handleKeydown(ArrowRight) makes focusable and focuses the next non-disabled button',
+       () => {
+         const buttons: SegmentedButtonState[] = [
+           {
+             label: 'Button 0',
+             focusable: false,
+             selected: false,
+             disabled: false,
+           },
+           {
+             label: 'Button 1',
+             focusable: false,
+             selected: false,
+             disabled: true,
+           },
+           {
+             label: 'Button 2',
+             focusable: true,
+             selected: false,
+             disabled: false,
+           },
+         ];
+
+         const {adapter, foundation} = setupRtlTest({
+           buttons,
+         });
+
+         foundation.handleKeydown(fakeKeyboardEvent({
+           key: 'ArrowRight',
+           target: buttons[2],
+         }));
+         expect(adapter.state.buttons[0].focusable)
+             .withContext('0th button')
+             .toBeTrue();
+         expect(adapter.state.buttons[1].focusable)
+             .withContext('1st disabled button')
+             .toBeFalse();
+         expect(adapter.state.buttons[2].focusable)
+             .withContext('2nd button')
+             .toBeFalse();
+         expect(adapter.focusButton)
+             .withContext('focuses button')
+             .toHaveBeenCalledOnceWith(0);
+       });
+  });
+
   it('#handleClick() does not select disabled buttons', () => {
     const buttons: SegmentedButtonState[] = [
       {
@@ -456,6 +836,286 @@ describe('SegmentedButtonSetFoundation', () => {
         .withContext('1st button')
         .toBeFalse();
   });
+
+  it('#handleKeydown(Home) makes focusable and focuses the first button',
+     () => {
+       const buttons: SegmentedButtonState[] = [
+         {
+           label: 'Button 0',
+           focusable: false,
+           selected: false,
+           disabled: false,
+         },
+         {
+           label: 'Button 1',
+           focusable: false,
+           selected: false,
+           disabled: false,
+         },
+         {
+           label: 'Button 2',
+           focusable: true,
+           selected: false,
+           disabled: false,
+         },
+       ];
+
+       const {adapter, foundation} = setupTest({
+         isRTL: false,
+         isMultiselect: false,
+         buttons,
+       });
+
+       foundation.handleKeydown(
+           fakeKeyboardEvent({key: 'Home', target: buttons[2]}));
+       expect(adapter.state.buttons[0].focusable)
+           .withContext('0th button')
+           .toBeTrue();
+       expect(adapter.state.buttons[1].focusable)
+           .withContext('1st button')
+           .toBeFalse();
+       expect(adapter.state.buttons[2].focusable)
+           .withContext('2nd button')
+           .toBeFalse();
+       expect(adapter.focusButton)
+           .withContext('focuses button')
+           .toHaveBeenCalledOnceWith(0);
+     });
+
+  it('#handleKeydown(Home) makes focusable and focuses the first non-disabled button',
+     () => {
+       const buttons: SegmentedButtonState[] = [
+         {
+           label: 'Button 0',
+           focusable: false,
+           selected: false,
+           disabled: true,
+         },
+         {
+           label: 'Button 1',
+           focusable: false,
+           selected: false,
+           disabled: false,
+         },
+         {
+           label: 'Button 2',
+           focusable: true,
+           selected: false,
+           disabled: false,
+         },
+       ];
+
+       const {adapter, foundation} = setupTest({
+         isRTL: false,
+         isMultiselect: false,
+         buttons,
+       });
+
+       foundation.handleKeydown(fakeKeyboardEvent({
+         key: 'Home',
+         target: buttons[2],
+       }));
+       expect(adapter.state.buttons[0].focusable)
+           .withContext('0th button')
+           .toBeFalse();
+       expect(adapter.state.buttons[1].focusable)
+           .withContext('1st button')
+           .toBeTrue();
+       expect(adapter.state.buttons[2].focusable)
+           .withContext('2nd button')
+           .toBeFalse();
+       expect(adapter.focusButton)
+           .withContext('focuses button')
+           .toHaveBeenCalledOnceWith(1);
+     });
+
+  it('#handleKeydown(End) makes focusable and focuses the last button', () => {
+    const buttons: SegmentedButtonState[] = [
+      {
+        label: 'Button 0',
+        focusable: true,
+        selected: false,
+        disabled: false,
+      },
+      {
+        label: 'Button 1',
+        focusable: false,
+        selected: false,
+        disabled: false,
+      },
+      {
+        label: 'Button 2',
+        focusable: false,
+        selected: false,
+        disabled: false,
+      },
+    ];
+
+    const {adapter, foundation} = setupTest({
+      isRTL: false,
+      isMultiselect: false,
+      buttons,
+    });
+
+    foundation.handleKeydown(fakeKeyboardEvent({
+      key: 'End',
+      target: buttons[0],
+    }));
+    expect(adapter.state.buttons[0].focusable)
+        .withContext('0th button')
+        .toBeFalse();
+    expect(adapter.state.buttons[1].focusable)
+        .withContext('1st button')
+        .toBeFalse();
+    expect(adapter.state.buttons[2].focusable)
+        .withContext('2nd button')
+        .toBeTrue();
+    expect(adapter.focusButton)
+        .withContext('focuses button')
+        .toHaveBeenCalledOnceWith(2);
+  });
+
+  it('#handleKeydown(End) makes focusable and focuses the last non-disabled button',
+     () => {
+       const buttons: SegmentedButtonState[] = [
+         {
+           label: 'Button 0',
+           focusable: true,
+           selected: false,
+           disabled: false,
+         },
+         {
+           label: 'Button 1',
+           focusable: false,
+           selected: false,
+           disabled: false,
+         },
+         {
+           label: 'Button 2',
+           focusable: false,
+           selected: false,
+           disabled: true,
+         },
+       ];
+
+       const {adapter, foundation} = setupTest({
+         isRTL: false,
+         isMultiselect: false,
+         buttons,
+       });
+
+       foundation.handleKeydown(fakeKeyboardEvent({
+         key: 'End',
+         target: buttons[0],
+       }));
+       expect(adapter.state.buttons[0].focusable)
+           .withContext('0th button')
+           .toBeFalse();
+       expect(adapter.state.buttons[1].focusable)
+           .withContext('1st button')
+           .toBeTrue();
+       expect(adapter.state.buttons[2].focusable)
+           .withContext('2nd button')
+           .toBeFalse();
+       expect(adapter.focusButton)
+           .withContext('focuses button')
+           .toHaveBeenCalledOnceWith(1);
+     });
+
+  it('#handleKeydown(ArrowUp) makes focusable and focuses the previous non-disabled button',
+     () => {
+       const buttons: SegmentedButtonState[] = [
+         {
+           label: 'Button 0',
+           focusable: false,
+           selected: false,
+           disabled: false,
+         },
+         {
+           label: 'Button 1',
+           focusable: false,
+           selected: false,
+           disabled: true,
+         },
+         {
+           label: 'Button 2',
+           focusable: true,
+           selected: false,
+           disabled: false,
+         },
+       ];
+
+       const {adapter, foundation} = setupTest({
+         isRTL: false,
+         isMultiselect: false,
+         buttons,
+       });
+
+       foundation.handleKeydown(fakeKeyboardEvent({
+         key: 'ArrowUp',
+         target: buttons[2],
+       }));
+       expect(adapter.state.buttons[0].focusable)
+           .withContext('0th button')
+           .toBeTrue();
+       expect(adapter.state.buttons[1].focusable)
+           .withContext('1st button')
+           .toBeFalse();
+       expect(adapter.state.buttons[2].focusable)
+           .withContext('2nd button')
+           .toBeFalse();
+       expect(adapter.focusButton)
+           .withContext('focuses button')
+           .toHaveBeenCalledOnceWith(0);
+     });
+
+  it('#handleKeydown(ArrowDown) makes focusable and focuses the next non-disabled button',
+     () => {
+       const buttons: SegmentedButtonState[] = [
+         {
+           label: 'Button 0',
+           focusable: true,
+           selected: false,
+           disabled: false,
+         },
+         {
+           label: 'Button 1',
+           focusable: false,
+           selected: false,
+           disabled: true,
+         },
+         {
+           label: 'Button 2',
+           focusable: false,
+           selected: false,
+           disabled: false,
+         },
+       ];
+
+       const {adapter, foundation} = setupTest({
+         isRTL: false,
+         isMultiselect: false,
+         buttons,
+       });
+
+       foundation.handleKeydown(fakeKeyboardEvent({
+         key: 'ArrowDown',
+         target: buttons[0],
+       }));
+       expect(adapter.state.buttons[0].focusable)
+           .withContext('0th button')
+           .toBeFalse();
+       expect(adapter.state.buttons[1].focusable)
+           .withContext('1st button')
+           .toBeFalse();
+       expect(adapter.state.buttons[2].focusable)
+           .withContext('2nd button')
+           .toBeTrue();
+       expect(adapter.focusButton)
+           .withContext('focuses button')
+           .toHaveBeenCalledOnceWith(2);
+     });
+
   const allKeys = [
     'Enter',
     ' ',  // Spacebar

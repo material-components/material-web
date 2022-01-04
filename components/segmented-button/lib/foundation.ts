@@ -37,6 +37,15 @@ export class SegmentedButtonFoundation extends
   }
 }
 
+const navigationKeys = new Set<string>([
+  'End',
+  'Home',
+  'ArrowLeft',
+  'ArrowUp',
+  'ArrowRight',
+  'ArrowDown',
+]);
+
 const interactionKeys = new Set<string>([
   'Enter',
   ' ',  // Spacebar.
@@ -64,6 +73,12 @@ export class SegmentedButtonSetFoundation extends
       e.preventDefault();
       this.toggleSelected(index);
       this.makeButtonFocusable(index, {forceFocus: false});
+      return;
+    }
+
+    if (navigationKeys.has(e.key)) {
+      e.preventDefault();
+      this.navigateFrom(index, e.key);
       return;
     }
   }
@@ -122,6 +137,69 @@ export class SegmentedButtonSetFoundation extends
       if (i === index) continue;
       this.adapter.state.buttons[i].focusable = false;
     }
+  }
+
+  /** Navigates from the given index to the next button. */
+  private navigateFrom(index: number, key: string) {
+    // Ignore out-of-bounds buttons.
+    if (this.indexOutOfBounds(index)) return;
+    const nextIndex = this.nextFocusIndex(index, key);
+    this.makeButtonFocusable(nextIndex, {forceFocus: true});
+  }
+
+  /** Returns the index of the next focusable button. */
+  private nextFocusIndex(index: number, key: string): number {
+    if (key === 'Home') {
+      return this.incrementFocusableIndex(0);
+    }
+
+    if (key === 'End') {
+      return this.decrementFocusableIndex(
+          this.adapter.state.buttons.length - 1);
+    }
+
+    const isRTL = this.adapter.state.isRTL;
+    if (this.shouldIncrementFocus(key, isRTL)) {
+      return this.incrementFocusableIndex(index + 1);
+    }
+
+    if (this.shouldDecrementFocus(key, isRTL)) {
+      return this.decrementFocusableIndex(index - 1);
+    }
+
+    return -1;
+  }
+
+  /** Increments to find the next focusable index. */
+  private incrementFocusableIndex(index: number): number {
+    for (let i = index; i < this.adapter.state.buttons.length; i++) {
+      if (!this.adapter.state.buttons[i].disabled) return i;
+    }
+    return -1;
+  }
+
+  /** Decrements to find the previous focusable index. */
+  private decrementFocusableIndex(index: number): number {
+    for (let i = index; i > -1; i--) {
+      if (!this.adapter.state.buttons[i].disabled) return i;
+    }
+    return -1;
+  }
+
+  /** Returns if the index should be incremented. */
+  private shouldIncrementFocus(key: string, isRTL: boolean): boolean {
+    if (key === 'ArrowDown') return true;
+    if (key === 'ArrowRight' && !isRTL) return true;
+    if (key === 'ArrowLeft' && isRTL) return true;
+    return false;
+  }
+
+  /** Returns if the index should be decremented. */
+  private shouldDecrementFocus(key: string, isRTL: boolean): boolean {
+    if (key === 'ArrowUp') return true;
+    if (key === 'ArrowLeft' && !isRTL) return true;
+    if (key === 'ArrowRight' && isRTL) return true;
+    return false;
   }
 
   /** Returns if the index is out-of-bounds. */
