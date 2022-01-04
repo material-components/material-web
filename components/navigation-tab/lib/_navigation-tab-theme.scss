@@ -4,8 +4,8 @@
 //
 
 @use 'sass:map';
+@use '../../sass/theme';
 @use '@material/theme/state';
-@use '@material/theme/theme';
 @use '@material/theme/shadow-dom';
 @use '@material/theme/theme-color';
 @use '@material/theme/keys';
@@ -68,12 +68,19 @@ $light-theme: (
   @if shadow-dom.$css-selector-fallback-declarations {
     @include theme-styles($theme);
   }
+  $theme: theme.create-theme-vars($theme, 'navigation-tab');
+
+  @include theme.emit-theme-vars($theme);
 }
 
 @mixin theme-styles($theme) {
-  @include theme.validate-theme($light-theme, $theme);
+  $theme: theme.validate-theme-styles(
+    $light-theme,
+    $theme,
+    $require-all: false
+  );
 
-  $theme: keys.create-theme-properties($theme, navigation-tab);
+  $theme: theme.create-theme-vars($theme, 'navigation-tab');
 
   @include _icon-size(map.get($theme, icon-size));
   @include _active-icon-color(
@@ -174,15 +181,15 @@ $light-theme: (
 
 @mixin _icon-size($size) {
   .md3-navigation-tab__icon {
-    @include theme.property(width, $size);
-    @include theme.property(height, $size);
-    @include theme.property(font-size, $size);
+    width: $size;
+    height: $size;
+    font-size: $size;
   }
 }
 
 @mixin _icon-color($color) {
   .md3-navigation-tab__icon {
-    @include theme.property(color, $color);
+    color: $color;
 
     fill: currentColor;
   }
@@ -242,7 +249,7 @@ $light-theme: (
 
 @mixin _label-text-color($color) {
   .md3-navigation-tab__label-text {
-    @include theme.property(color, $color);
+    color: $color;
   }
 }
 
@@ -320,111 +327,111 @@ $light-theme: (
 
 @mixin _label-text-font-family($font-family) {
   .md3-navigation-tab__label-text {
-    @include theme.property(font-family, $font-family);
+    font-family: $font-family;
   }
 }
 
 @mixin _label-text-font-size($font-size) {
   .md3-navigation-tab__label-text {
-    @include theme.property(font-size, $font-size);
+    font-size: $font-size;
   }
 }
 
 @mixin _label-text-letter-spacing($letter-spacing) {
   .md3-navigation-tab__label-text {
-    @include theme.property(letter-spacing, $letter-spacing);
+    letter-spacing: $letter-spacing;
   }
 }
 
 @mixin _label-text-line-height($line-height) {
   .md3-navigation-tab__label-text {
-    @include theme.property(line-height, $line-height);
+    line-height: $line-height;
   }
 }
 
 @mixin _label-text-weight($weight) {
   .md3-navigation-tab__label-text {
-    @include theme.property(font-weight, $weight);
+    font-weight: $weight;
   }
 }
 
 @mixin _badge-color($color) {
   .md3-navigation-tab__badge:not(.md3-navigation-tab__badge-large) {
-    @include theme.property(background-color, $color);
+    background-color: $color;
   }
 }
 
 @mixin _badge-size($size) {
   .md3-navigation-tab__badge:not(.md3-navigation-tab__badge-large) {
-    @include theme.property(height, $size);
-    @include theme.property(width, $size);
+    height: $size;
+    width: $size;
   }
 }
 
 @mixin _badge-shape($shape-radius) {
   .md3-navigation-tab__badge:not(.md3-navigation-tab__badge-large) {
-    @include theme.property(border-radius, $shape-radius);
+    border-radius: $shape-radius;
   }
 }
 
 @mixin _large-badge-size($size) {
   .md3-navigation-tab__badge-large {
-    @include theme.property(height, $size);
-    @include theme.property(min-width, $size);
+    height: $size;
+    min-width: $size;
   }
 }
 
 @mixin _large-badge-shape($shape-radius) {
   .md3-navigation-tab__badge-large {
-    @include theme.property(border-radius, $shape-radius);
+    border-radius: $shape-radius;
   }
 }
 
 @mixin _large-badge-label-font-family($font-family) {
   .md3-navigation-tab__badge-large {
-    @include theme.property(font-family, $font-family);
+    font-family: $font-family;
   }
 }
 
 @mixin _large-badge-label-font-size($font-size) {
   .md3-navigation-tab__badge-large {
-    @include theme.property(font-size, $font-size);
+    font-size: $font-size;
   }
 }
 
 @mixin _large-badge-label-letter-spacing($letter-spacing) {
   .md3-navigation-tab__badge-large {
-    @include theme.property(letter-spacing, $letter-spacing);
+    letter-spacing: $letter-spacing;
   }
 }
 
 @mixin _large-badge-label-line-height($line-height) {
   .md3-navigation-tab__badge-large {
-    @include theme.property(line-height, $line-height);
+    line-height: $line-height;
   }
 }
 
 @mixin _large-badge-label-weight($weight) {
   .md3-navigation-tab__badge-large {
-    @include theme.property(font-weight, $weight);
+    font-weight: $weight;
   }
 }
 
 @mixin _large-badge-color($color) {
   .md3-navigation-tab__badge-large {
-    @include theme.property(background-color, $color);
+    background-color: $color;
   }
 }
 
 @mixin _large-badge-label-color($color) {
   .md3-navigation-tab__badge-large {
-    @include theme.property(color, $color);
+    color: $color;
   }
 }
 
 @mixin _active-indicator-color($color) {
   .md3-navigation-tab__active-indicator {
-    @include theme.property(background-color, $color);
+    background-color: $color;
   }
 }
 
@@ -432,7 +439,7 @@ $light-theme: (
   // Keep icon-content in sync with active-indicator size.
   .md3-navigation-tab__active-indicator,
   .md3-navigation-tab__icon-content {
-    @include theme.property(height, $height);
+    height: $height;
   }
 }
 
@@ -440,13 +447,13 @@ $light-theme: (
   // Keep icon-content in sync with active-indicator size.
   &.md3-navigation-tab--active .md3-navigation-tab__active-indicator,
   .md3-navigation-tab__icon-content {
-    @include theme.property(width, $width);
+    width: $width;
   }
 }
 
 @mixin _active-indicator-shape($shape-radius) {
   .md3-navigation-tab__active-indicator {
-    @include theme.property(border-radius, $shape-radius);
+    border-radius: $shape-radius;
   }
 }
 
