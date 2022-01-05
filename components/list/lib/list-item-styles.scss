@@ -1,0 +1,13 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use './list-item-theme';
+@use './list-item';
+
+@include list-item.static-styles;
+
+.md3-list-item {
+  @include list-item-theme.theme-styles(list-item-theme.$light-theme);
+}
