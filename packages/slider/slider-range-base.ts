@@ -29,6 +29,8 @@ export class SliderRangeBase extends SliderBase {
   @query('.start.mdc-slider__thumb') protected startThumb!: HTMLElement;
   @query('.start.mdc-slider__thumb .mdc-slider__thumb-knob')
   protected startThumbKnob!: HTMLElement;
+  @query('.start.mdc-slider__thumb .mdc-slider__value-indicator-container')
+  protected startValueIndicatorContainer!: HTMLElement;
   @queryAsync('.start .ripple') protected startRipple!: Promise<Ripple|null>;
   @property({type: Number}) valueStart: number = 0;
   @state() protected startThumbWithIndicator = false;
@@ -36,6 +38,7 @@ export class SliderRangeBase extends SliderBase {
   @state() protected shouldRenderStartRipple = false;
   @state() protected startThumbTransformStyle: string = '';
   @state() protected startThumbTransitionStyle: string = '';
+  @state() protected startThumbCssProperties: {[key: string]: string} = {};
 
   protected startRippleHandlers = new RippleHandlers(() => {
     this.shouldRenderStartRipple = true;
@@ -175,6 +178,7 @@ export class SliderRangeBase extends SliderBase {
           `calc(${
               (this.valueStart - this.min) / (this.max - this.min) *
               100}% - 24px)`,
+      ...this.startThumbCssProperties,
     });
 
     const ripple = !this.shouldRenderStartRipple ?
@@ -395,6 +399,14 @@ export class SliderRangeBase extends SliderBase {
 
         return this.endThumbKnob.getBoundingClientRect().width;
       },
+      getValueIndicatorContainerWidth: (thumb) => {
+        if (thumb === Thumb.START) {
+          return this.startValueIndicatorContainer.getBoundingClientRect()
+              .width;
+        }
+
+        return this.endValueIndicatorContainer.getBoundingClientRect().width;
+      },
       getValueToAriaValueTextFn: () => {
         return this.valueToAriaTextTransform
       },
@@ -448,6 +460,10 @@ export class SliderRangeBase extends SliderBase {
             case '-webkit-transition':
               this.startThumbTransitionStyle = value;
               break;
+            default:
+              if (name.startsWith('--')) {
+                this.startThumbCssProperties[name] = value;
+              }
           }
         } else {
           switch (name) {
@@ -459,6 +475,10 @@ export class SliderRangeBase extends SliderBase {
             case '-webkit-transition':
               this.endThumbTransitionStyle = value;
               break;
+            default:
+              if (name.startsWith('--')) {
+                this.endThumbCssProperties[name] = value;
+              }
           }
         }
       },

@@ -31,6 +31,8 @@ export class SliderBase extends FormElement {
   @query('.end.mdc-slider__thumb') protected endThumb!: HTMLElement;
   @query('.end.mdc-slider__thumb .mdc-slider__thumb-knob')
   protected endThumbKnob!: HTMLElement;
+  @query('.end.mdc-slider__thumb .mdc-slider__value-indicator-container')
+  protected endValueIndicatorContainer!: HTMLElement;
   @queryAsync('.end .ripple') protected endRipple!: Promise<Ripple|null>;
   @property({type: Boolean, reflect: true}) override disabled = false;
   @property({type: Number}) min = 0;
@@ -50,6 +52,7 @@ export class SliderBase extends FormElement {
   @state() protected shouldRenderEndRipple = false;
   @state() protected endThumbTransformStyle: string = '';
   @state() protected endThumbTransitionStyle: string = '';
+  @state() protected endThumbCssProperties: {[key: string]: string} = {};
 
   /** @soyPrefixAttribute */
   @ariaProperty
@@ -196,6 +199,7 @@ export class SliderBase extends FormElement {
           `calc(${
               (this.valueEnd - this.min) / (this.max - this.min) *
               100}% - 24px)`,
+      ...this.endThumbCssProperties,
     });
 
     const ripple = !this.shouldRenderEndRipple ?

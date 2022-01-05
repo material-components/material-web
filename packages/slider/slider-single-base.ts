@@ -231,6 +231,13 @@ export class SliderSingleBase extends SliderBase {
 
         return this.endThumbKnob.getBoundingClientRect().width;
       },
+      getValueIndicatorContainerWidth: (thumb) => {
+        if (thumb === Thumb.START) {
+          return 0;
+        }
+
+        return this.endValueIndicatorContainer.getBoundingClientRect().width;
+      },
       getValueToAriaValueTextFn: () => {
         return this.valueToAriaTextTransform
       },
@@ -279,6 +286,10 @@ export class SliderSingleBase extends SliderBase {
           case '-webkit-transition':
             this.endThumbTransitionStyle = value;
             break;
+          default:
+            if (name.startsWith('--')) {
+              this.endThumbCssProperties[name] = value;
+            }
         }
       },
       removeThumbStyleProperty: (name, thumb) => {
