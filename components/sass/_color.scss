@@ -1,0 +1,91 @@
+@use 'sass:list';
+@use 'sass:string';
+
+@function _hex-to-dec($string) {
+  $hex: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'a' 'b' 'c' 'd' 'e' 'f';
+  $string: string.to-lower-case($string);
+  $length: string.length($string);
+
+  $dec: 0;
+  @for $i from 1 through $length {
+    $factor: 1 + (15 * ($length - $i));
+    $index: list.index($hex, string.slice($string, $i, $i));
+    $dec: $dec + $factor * ($index - 1);
+  }
+
+  @return $dec;
+}
+
+@function _hex-to-rgb($string) {
+  $string-lower: string.to-lower-case($string);
+  $r: '';
+  $g: '';
+  $b: '';
+  $hex: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'a' 'b' 'c' 'd' 'e' 'f';
+  $length: string.length($string);
+  $max: if($length == 4, 1, 2);
+
+  // Check for length accuracy
+  @if $length != 4 and $length != 7 {
+    @return $string;
+  }
+
+  // Loop from the second character (omitting #)
+  @for $i from 2 through $length {
+    $c: string.slice($string-lower, $i, $i);
+
+    // If wrong character, return
+    @if list.index($hex, $c) == null {
+      @return $string;
+    }
+
+    @if string.length($r) < $max {
+      $r: $r + $c;
+    } @else if string.length($g) < $max {
+      $g: $g + $c;
+    } @else if string.length($b) < $max {
+      $b: $b + $c;
+    }
+  }
+
+  @if $length == 4 {
+    $r: $r + $r;
+    $g: $g + $g;
+    $b: $b + $b;
+  }
+
+  @return #{_hex-to-dec($r), _hex-to-dec($g), _hex-to-dec($b)};
+}
+
+@function _get-css-var-fallback($value) {
+  @if string.index($value, ', ') {
+    @return string.slice($value, string.index($value, ', ') + 2, -2);
+  }
+
+  @return $value;
+}
+
+@function _suffix-var-with-rgb-string($value) {
+  @if string.index($value, ', ') {
+    @return string.insert($value, '-rgb', string.index($value, ', '));
+  }
+
+  @return $value;
+}
+
+@function _color-var-in-rgba($string) {
+  $string: _suffix-var-with-rgb-string($string);
+  $var_part: string.slice($string, 1, string.index($string, ', '));
+  $fallback_part: _hex-to-rgb(_get-css-var-fallback($string));
+  @return string.insert($var_part, #{$fallback_part ')'}, -1);
+}
+
+///
+/// @param {String} $string - CSS custom property string in var(--foo, #hex) format.
+/// @param {Number} $opacity - Opacity to mix with given color.
+/// @return {String} Returns color string in rgb() format containing
+///     CSS custom property for comma separated rgb color and opacity.
+///     e.g., rgb(var(--gm3-sys-color-on-surface-rgb, 31,31,31), 0.38))
+@function color-var-hex-to-rgba($string, $opacity) {
+  @return #{'rgb(' _color-var-in-rgba($string) ', ' $opacity ')'};
+}

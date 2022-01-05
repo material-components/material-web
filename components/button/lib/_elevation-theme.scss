@@ -28,6 +28,7 @@ $_selectors: button-theme.$selectors;
 }
 
 @mixin theme-styles($theme) {
+  @debug map.get($theme, container-elevation-shadow);
   @include _elevation(
     (
       default: (
