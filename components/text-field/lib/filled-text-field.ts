@@ -31,6 +31,7 @@ export class FilledTextField extends TextField {
   protected override renderField(): TemplateResult {
     return html`
       <md-filled-field
+        id=${this.fieldID}
         .disabled=${this.disabled}
         .error=${this.error}
         .label=${this.label}

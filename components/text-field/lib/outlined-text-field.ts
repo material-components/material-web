@@ -31,6 +31,7 @@ export class OutlinedTextField extends TextField {
   protected override renderField(): TemplateResult {
     return html`
       <md-outlined-field
+        id=${this.fieldID}
         .disabled=${this.disabled}
         .error=${this.error}
         .label=${this.label}
