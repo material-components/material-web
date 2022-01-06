@@ -4,90 +4,114 @@
 //
 
 @use 'sass:map';
+@use '../../sass/theme';
 @use '@material/ripple/ripple-theme';
 @use '@material/theme/keys';
 @use '@material/theme/state';
-@use '@material/theme/theme';
 @use '@material/theme/theme-color';
 
-$_ripple-target: '.md3-icon-button__ripple';
 $_custom-property-prefix: 'icon-button';
 
 $light-theme: (
   disabled-icon-color: theme-color.$on-surface,
   disabled-icon-opacity: 0.38,
-  icon-color: theme-color.$primary,
   icon-size: 24px,
-  focus-icon-color: theme-color.$primary,
-  focus-state-layer-color: theme-color.$primary,
-  focus-state-layer-opacity: 0.12,
-  hover-icon-color: theme-color.$primary,
-  hover-state-layer-color: theme-color.$primary,
-  hover-state-layer-opacity: 0.08,
-  pressed-icon-color: theme-color.$primary,
-  pressed-state-layer-color: theme-color.$primary,
-  pressed-state-layer-opacity: 0.12,
+  selected-focus-icon-color: theme-color.$primary,
+  selected-focus-state-layer-color: theme-color.$primary,
+  selected-focus-state-layer-opacity: 0.12,
+  selected-hover-icon-color: theme-color.$primary,
+  selected-hover-state-layer-color: theme-color.$primary,
+  selected-hover-state-layer-opacity: 0.08,
+  selected-icon-color: theme-color.$primary,
+  selected-pressed-icon-color: theme-color.$primary,
+  selected-pressed-state-layer-color: theme-color.$primary,
+  selected-pressed-state-layer-opacity: 0.12,
+  state-layer-shape: null,
   state-layer-size: 48px,
+  unselected-focus-icon-color: theme-color.$primary,
+  unselected-focus-state-layer-color: theme-color.$primary,
+  unselected-focus-state-layer-opacity: 0.12,
+  unselected-hover-icon-color: theme-color.$primary,
+  unselected-hover-state-layer-color: theme-color.$primary,
+  unselected-hover-state-layer-opacity: 0.08,
+  unselected-icon-color: theme-color.$primary,
+  unselected-pressed-icon-color: theme-color.$primary,
+  unselected-pressed-state-layer-color: theme-color.$primary,
+  unselected-pressed-state-layer-opacity: 0.12,
+  // Deprecated
+  focus-icon-color: null,
+  focus-state-layer-color: null,
+  focus-state-layer-opacity: null,
+  hover-icon-color: null,
+  hover-state-layer-color: null,
+  hover-state-layer-opacity: null,
+  icon-color: null,
+  pressed-icon-color: null,
+  pressed-state-layer-color: null,
+  pressed-state-layer-opacity: null,
 );
 
 @mixin theme($theme) {
-  @include theme.validate-theme($light-theme, $theme);
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
-  @include keys.declare-custom-properties(
-    $theme,
-    $prefix: $_custom-property-prefix
-  );
+  @include theme.emit-theme-vars($theme);
 }
 
 @mixin theme-styles($theme) {
-  @include theme.validate-theme($light-theme, $theme);
-
-  $theme: keys.create-theme-properties(
+  $theme: theme.validate-theme-styles(
+    $light-theme,
     $theme,
-    $prefix: $_custom-property-prefix
+    $require-all: false
   );
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
   @include _state-layer-size($size: map.get($theme, state-layer-size));
   @include _icon-size(map.get($theme, icon-size));
   @include _disabled-icon-opacity(map.get($theme, disabled-icon-opacity));
-  @include _icon-color-with-map(
+  @include _icon-color(
     (
-      default: map.get($theme, icon-color),
+      default: map.get($theme, unselected-icon-color),
       disabled: map.get($theme, disabled-icon-color),
-      focus: map.get($theme, focus-icon-color),
-      hover: map.get($theme, hover-icon-color),
-      pressed: map.get($theme, pressed-icon-color),
+      focus: map.get($theme, unselected-focus-icon-color),
+      hover: map.get($theme, unselected-hover-icon-color),
+      pressed: map.get($theme, unselected-pressed-icon-color),
     )
   );
 
   // States styles
-  @include ripple-theme.theme-styles(
+  @include ripple-theme.theme(
     (
-      focus-state-layer-color: map.get($theme, focus-state-layer-color),
-      focus-state-layer-opacity: map.get($theme, focus-state-layer-opacity),
-      hover-state-layer-color: map.get($theme, hover-state-layer-color),
-      hover-state-layer-opacity: map.get($theme, hover-state-layer-opacity),
-      pressed-state-layer-color: map.get($theme, pressed-state-layer-color),
-      pressed-state-layer-opacity: map.get($theme, pressed-state-layer-opacity),
-    ),
-    $ripple-target: $_ripple-target
+      focus-state-layer-color:
+        map.get($theme, unselected-focus-state-layer-color),
+      focus-state-layer-opacity:
+        map.get($theme, unselected-focus-state-layer-opacity),
+      hover-state-layer-color:
+        map.get($theme, unselected-hover-state-layer-color),
+      hover-state-layer-opacity:
+        map.get($theme, unselected-hover-state-layer-opacity),
+      pressed-state-layer-color:
+        map.get($theme, unselected-pressed-state-layer-color),
+      pressed-state-layer-opacity:
+        map.get($theme, unselected-pressed-state-layer-opacity),
+    )
   );
 }
 
 @mixin _state-layer-size($size) {
   .md3-icon-button {
-    @include theme.property(height, $size);
-    @include theme.property(width, $size);
+    height: $size;
+    width: $size;
   }
 }
 
 @mixin _icon-size($size) {
-  @include theme.property(font-size, $size);
+  font-size: $size;
 
   svg,
   img {
-    @include theme.property(width, $size);
-    @include theme.property(height, $size);
+    height: $size;
+    width: $size;
   }
 }
 
@@ -97,27 +121,27 @@ $light-theme: (
 ///     colors with states {default, disabled, focus, hover, pressed} as keys.
 /// @access private
 ///
-@mixin _icon-color-with-map($color-map) {
-  @include _icon-color(state.get-default-state($color-map));
+@mixin _icon-color($color-map) {
+  @include _set-icon-color(state.get-default-state($color-map));
 
   $disabled: state.get-disabled-state($color-map);
   .md3-icon-button:disabled {
-    @include _icon-color($disabled);
+    @include _set-icon-color($disabled);
   }
 
   $focus: state.get-focus-state($color-map);
   @include ripple-theme.focus {
-    @include _icon-color($focus);
+    @include _set-icon-color($focus);
   }
 
   $hover: state.get-hover-state($color-map);
   .md3-icon-button:hover {
-    @include _icon-color($hover);
+    @include _set-icon-color($hover);
   }
 
   $pressed: state.get-pressed-state($color-map);
   @include ripple-theme.active {
-    @include _icon-color($pressed);
+    @include _set-icon-color($pressed);
   }
 }
 
@@ -125,8 +149,8 @@ $light-theme: (
 /// Sets the font color to the provided color value.
 /// @param {Color} $color - The desired font color.
 ///
-@mixin _icon-color($color) {
-  @include theme.property(color, $color);
+@mixin _set-icon-color($color) {
+  color: $color;
 }
 
 ///
@@ -134,6 +158,6 @@ $light-theme: (
 ///
 @mixin _disabled-icon-opacity($opacity) {
   .md3-icon-button:disabled {
-    @include theme.property(opacity, $opacity);
+    opacity: $opacity;
   }
 }
