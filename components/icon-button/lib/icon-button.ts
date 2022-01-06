@@ -11,6 +11,7 @@ import {ifDefined} from 'lit/directives/if-defined.js';
 import {ariaProperty} from '../../decorators/aria-property';
 import {Ripple} from '../../ripple/mwc-ripple';
 import {RippleHandlers} from '../../ripple/ripple-handlers';
+import {ARIAHasPopup} from '../../types/aria';
 
 /** @soyCompatible */
 export class IconButton extends LitElement {
@@ -26,9 +27,7 @@ export class IconButton extends LitElement {
   /** @soyPrefixAttribute */
   @ariaProperty
   @property({type: String, attribute: 'aria-haspopup'})
-  // TODO(b/210675600): change to shared type
-  override ariaHasPopup!: 'false'|'true'|'menu'|'listbox'|'tree'|'grid'|
-      'dialog';
+  override ariaHasPopup!: ARIAHasPopup;
 
   @query('button') buttonElement!: HTMLElement;
 

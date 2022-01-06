@@ -17,6 +17,7 @@ import {ariaProperty} from '../../decorators/aria-property';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
 import {Ripple} from '../../ripple/mwc-ripple';
 import {RippleHandlers} from '../../ripple/ripple-handlers';
+import {ARIAHasPopup} from '../../types/aria';
 
 import {ButtonState} from './state';
 
@@ -28,9 +29,7 @@ export abstract class Button extends LitElement implements ButtonState {
   // TODO(b/210730484): replace with @soyParam annotation
   @property({type: String, attribute: 'data-aria-has-popup', noAccessor: true})
   @ariaProperty
-  // TODO(b/210675600): change to shared type
-  override ariaHasPopup!: 'false'|'true'|'menu'|'listbox'|'tree'|'grid'|
-      'dialog';
+  override ariaHasPopup!: ARIAHasPopup;
 
   @property({type: Boolean, reflect: true}) disabled = false;
 
