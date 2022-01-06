@@ -36,18 +36,18 @@ $light-theme: map.merge(
     container-padding-vertical: 8px,
     disabled-container-color: color-palette.$grey-400,
     disabled-container-opacity: 0.04,
-    disabled-stroke-color: color-palette.$grey-700,
-    disabled-stroke-opacity: 0.38,
-    error-hover-stroke-color: $_error-state-content,
-    error-stroke-color: theme-color.$error,
-    focus-stroke-color: theme-color.$primary,
-    focus-stroke-width: 2px,
+    disabled-active-indicator-color: color-palette.$grey-700,
+    disabled-active-indicator-opacity: 0.38,
+    error-hover-active-indicator-color: $_error-state-content,
+    error-active-indicator-color: theme-color.$error,
+    focus-active-indicator-color: theme-color.$primary,
+    focus-active-indicator-width: 2px,
     hover-state-layer-color: color-palette.$grey-800,
     hover-state-layer-opacity: 0.08,
-    hover-stroke-color: color-palette.$grey-900,
+    hover-active-indicator-color: color-palette.$grey-900,
     shape: shape.$small-component-radius,
-    stroke-color: color-palette.$grey-700,
-    stroke-width: 1px,
+    active-indicator-color: color-palette.$grey-700,
+    active-indicator-width: 1px,
   )
 );
 
@@ -72,6 +72,32 @@ $light-theme: map.merge(
   @include content-theme.theme-styles($theme);
   @include label-theme.theme-styles($theme);
 
+  @include _active-indicator-color(
+    (
+      default: map.get($theme, active-indicator-color),
+      disabled: map.get($theme, disabled-active-indicator-color),
+      focus: map.get($theme, focus-active-indicator-color),
+      hover: map.get($theme, hover-active-indicator-color),
+    )
+  );
+  @include _active-indicator-error-color(
+    (
+      default: map.get($theme, error-active-indicator-color),
+      focus: map.get($theme, error-active-indicator-color),
+      hover: map.get($theme, error-hover-active-indicator-color),
+    )
+  );
+  @include _active-indicator-opacity(
+    (
+      disabled: map.get($theme, disabled-active-indicator-opacity),
+    )
+  );
+  @include _active-indicator-width(
+    (
+      default: map.get($theme, active-indicator-width),
+      focus: map.get($theme, focus-active-indicator-width),
+    )
+  );
   @include _container-color(
     (
       default: map.get($theme, container-color),
@@ -95,32 +121,74 @@ $light-theme: map.merge(
     map.get($theme, floating-label-text-line-height)
   );
   @include _shape(map.get($theme, shape));
-  @include _stroke-color(
-    (
-      default: map.get($theme, stroke-color),
-      disabled: map.get($theme, disabled-stroke-color),
-      focus: map.get($theme, focus-stroke-color),
-      hover: map.get($theme, hover-stroke-color),
-    )
-  );
-  @include _stroke-error-color(
-    (
-      default: map.get($theme, error-stroke-color),
-      focus: map.get($theme, error-stroke-color),
-      hover: map.get($theme, error-hover-stroke-color),
-    )
-  );
-  @include _stroke-opacity(
-    (
-      disabled: map.get($theme, disabled-stroke-opacity),
-    )
-  );
-  @include _stroke-width(
-    (
-      default: map.get($theme, stroke-width),
-      focus: map.get($theme, focus-stroke-width),
-    )
-  );
+}
+
+@mixin _active-indicator-color($colors) {
+  @include state.independent-elements(focus) {
+    @include state.enabled($_selectors) {
+      @include _set-active-indicator-color(state.get-default-state($colors));
+    }
+
+    // Focus is on a separate element and does not need a focus selector
+    @include _set-active-indicator-focus-color(state.get-focus-state($colors));
+
+    @include state.hover($_selectors) {
+      @include _set-active-indicator-color(state.get-hover-state($colors));
+    }
+
+    @include state.disabled($_selectors) {
+      @include _set-active-indicator-color(state.get-disabled-state($colors));
+    }
+  }
+}
+
+@mixin _set-active-indicator-color($color) {
+  .mdc-field__active-indicator::before {
+    border-bottom-color: $color;
+  }
+}
+
+@mixin _set-active-indicator-focus-color($color) {
+  .mdc-field__active-indicator::after {
+    border-bottom-color: $color;
+  }
+}
+
+@mixin _active-indicator-error-color($colors) {
+  @include state.error($_selectors) {
+    @include _active-indicator-color($colors);
+  }
+}
+
+@mixin _active-indicator-opacity($opacities) {
+  @include state.enabled($_selectors) {
+    @include _set-active-indicator-opacity(state.get-default-state($opacities));
+  }
+
+  @include state.disabled($_selectors) {
+    @include _set-active-indicator-opacity(
+      state.get-disabled-state($opacities)
+    );
+  }
+}
+
+@mixin _set-active-indicator-opacity($opacity) {
+  .mdc-field__active-indicator::before {
+    opacity: $opacity;
+  }
+}
+
+@mixin _active-indicator-width($widths) {
+  .mdc-field__active-indicator {
+    // Default/focus are on different elements and do not need state selectors
+    &::before {
+      border-bottom-width: state.get-default-state($widths);
+    }
+
+    &::after {
+      border-bottom-width: state.get-focus-state($widths);
+    }
+  }
 }
 
 @mixin _container-color($colors) {
@@ -210,71 +278,5 @@ $light-theme: map.merge(
   .mdc-field__container {
     border-start-start-radius: $shape;
     border-start-end-radius: $shape;
-  }
-}
-
-@mixin _stroke-color($colors) {
-  @include state.independent-elements(focus) {
-    @include state.enabled($_selectors) {
-      @include _set-stroke-color(state.get-default-state($colors));
-    }
-
-    // Focus is on a separate element and does not need a focus selector
-    @include _set-stroke-focus-color(state.get-focus-state($colors));
-
-    @include state.hover($_selectors) {
-      @include _set-stroke-color(state.get-hover-state($colors));
-    }
-
-    @include state.disabled($_selectors) {
-      @include _set-stroke-color(state.get-disabled-state($colors));
-    }
-  }
-}
-
-@mixin _set-stroke-color($color) {
-  .mdc-field__stroke::before {
-    border-bottom-color: $color;
-  }
-}
-
-@mixin _set-stroke-focus-color($color) {
-  .mdc-field__stroke::after {
-    border-bottom-color: $color;
-  }
-}
-
-@mixin _stroke-error-color($colors) {
-  @include state.error($_selectors) {
-    @include _stroke-color($colors);
-  }
-}
-
-@mixin _stroke-opacity($opacities) {
-  @include state.enabled($_selectors) {
-    @include _set-stroke-opacity(state.get-default-state($opacities));
-  }
-
-  @include state.disabled($_selectors) {
-    @include _set-stroke-opacity(state.get-disabled-state($opacities));
-  }
-}
-
-@mixin _set-stroke-opacity($opacity) {
-  .mdc-field__stroke::before {
-    opacity: $opacity;
-  }
-}
-
-@mixin _stroke-width($widths) {
-  .mdc-field__stroke {
-    // Default/focus are on different elements and do not need state selectors
-    &::before {
-      border-bottom-width: state.get-default-state($widths);
-    }
-
-    &::after {
-      border-bottom-width: state.get-focus-state($widths);
-    }
   }
 }

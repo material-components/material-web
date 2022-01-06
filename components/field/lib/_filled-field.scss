@@ -30,11 +30,11 @@ $_animation-duration: 150ms;
     }
   }
 
-  .mdc-field__stroke {
-    @include stroke;
+  .mdc-field__active-indicator {
+    @include active-indicator;
 
     .mdc-field--focus & {
-      @include stroke-focus;
+      @include active-indicator-focus;
     }
   }
 }
@@ -74,8 +74,8 @@ $_animation-duration: 150ms;
   top: 0;
 }
 
-@mixin stroke() {
-  // Prevent click events on the stroke element since it has no width and
+@mixin active-indicator() {
+  // Prevent click events on the indicator element since it has no width and
   // causes bugs when handled by the foundation for updating transform-origin.
   bottom: 0;
   pointer-events: none;
@@ -91,7 +91,7 @@ $_animation-duration: 150ms;
     width: 100%;
   }
 
-  // focused stroke
+  // focused indicator
   &::after {
     opacity: 0;
     transform: scaleX(0);
@@ -101,13 +101,13 @@ $_animation-duration: 150ms;
     transform-origin: inherit;
     // Add two transitions: opacity and a delayed transform. With a non-delayed
     // transform transition on the focus selector without an opacity transition,
-    // this will result in the stroke scaling on enter and fading on exit.
+    // this will result in the indicator scaling on enter and fading on exit.
     transition: animation.standard(opacity, $_animation-duration),
       transform 0s ease $_animation-duration;
   }
 }
 
-@mixin stroke-focus() {
+@mixin active-indicator-focus() {
   &::after {
     opacity: 1;
     transform: scaleX(1);
