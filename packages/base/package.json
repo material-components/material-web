@@ -12,16 +12,16 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@lit/reactive-element": "1.0.0-rc.4",
-    "@material/base": "=14.0.0-canary.c047f7c19.0",
-    "@material/dom": "=14.0.0-canary.c047f7c19.0",
+    "@material/base": "=14.0.0-canary.05db65ec0.0",
+    "@material/dom": "=14.0.0-canary.05db65ec0.0",
     "lit": "^2.0.0",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@material/elevation": "=14.0.0-canary.c047f7c19.0",
-    "@material/feature-targeting": "=14.0.0-canary.c047f7c19.0",
-    "@material/ripple": "=14.0.0-canary.c047f7c19.0",
-    "@material/theme": "=14.0.0-canary.c047f7c19.0"
+    "@material/elevation": "=14.0.0-canary.05db65ec0.0",
+    "@material/feature-targeting": "=14.0.0-canary.05db65ec0.0",
+    "@material/ripple": "=14.0.0-canary.05db65ec0.0",
+    "@material/theme": "=14.0.0-canary.05db65ec0.0"
   },
   "publishConfig": {
     "access": "public"
