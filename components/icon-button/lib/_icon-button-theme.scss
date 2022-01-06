@@ -66,18 +66,33 @@ $light-theme: (
   );
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
-  @include _state-layer-size($size: map.get($theme, state-layer-size));
   @include _icon-size(map.get($theme, icon-size));
-  @include _disabled-icon-opacity(map.get($theme, disabled-icon-opacity));
-  @include _icon-color(
-    (
-      default: map.get($theme, unselected-icon-color),
-      disabled: map.get($theme, disabled-icon-color),
-      focus: map.get($theme, unselected-focus-icon-color),
-      hover: map.get($theme, unselected-hover-icon-color),
-      pressed: map.get($theme, unselected-pressed-icon-color),
-    )
-  );
+
+  .md3-icon-button {
+    @include _state-layer-size($size: map.get($theme, state-layer-size));
+    @include _disabled-icon-opacity(map.get($theme, disabled-icon-opacity));
+
+    @include _icon-color(
+      (
+        default: map.get($theme, unselected-icon-color),
+        disabled: map.get($theme, disabled-icon-color),
+        focus: map.get($theme, unselected-focus-icon-color),
+        hover: map.get($theme, unselected-hover-icon-color),
+        pressed: map.get($theme, unselected-pressed-icon-color),
+      )
+    );
+  }
+
+  .md3-icon-button--on {
+    @include _icon-color(
+      (
+        default: map.get($theme, selected-icon-color),
+        focus: map.get($theme, selected-focus-icon-color),
+        hover: map.get($theme, selected-hover-icon-color),
+        pressed: map.get($theme, selected-pressed-icon-color),
+      )
+    );
+  }
 
   // States styles
   @include ripple-theme.theme(
@@ -96,13 +111,30 @@ $light-theme: (
         map.get($theme, unselected-pressed-state-layer-opacity),
     )
   );
+
+  .md3-icon-button--on {
+    @include ripple-theme.theme(
+      (
+        focus-state-layer-color:
+          map.get($theme, selected-focus-state-layer-color),
+        focus-state-layer-opacity:
+          map.get($theme, selected-focus-state-layer-opacity),
+        hover-state-layer-color:
+          map.get($theme, selected-hover-state-layer-color),
+        hover-state-layer-opacity:
+          map.get($theme, selected-hover-state-layer-opacity),
+        pressed-state-layer-color:
+          map.get($theme, selected-pressed-state-layer-color),
+        pressed-state-layer-opacity:
+          map.get($theme, selected-pressed-state-layer-opacity),
+      )
+    );
+  }
 }
 
 @mixin _state-layer-size($size) {
-  .md3-icon-button {
-    height: $size;
-    width: $size;
-  }
+  height: $size;
+  width: $size;
 }
 
 @mixin _icon-size($size) {
@@ -125,7 +157,7 @@ $light-theme: (
   @include _set-icon-color(state.get-default-state($color-map));
 
   $disabled: state.get-disabled-state($color-map);
-  .md3-icon-button:disabled {
+  &:disabled {
     @include _set-icon-color($disabled);
   }
 
@@ -135,7 +167,7 @@ $light-theme: (
   }
 
   $hover: state.get-hover-state($color-map);
-  .md3-icon-button:hover {
+  &:hover {
     @include _set-icon-color($hover);
   }
 
@@ -157,7 +189,7 @@ $light-theme: (
 /// Sets the icon opacity to the given opacity.
 ///
 @mixin _disabled-icon-opacity($opacity) {
-  .md3-icon-button:disabled {
+  &:disabled {
     opacity: $opacity;
   }
 }
