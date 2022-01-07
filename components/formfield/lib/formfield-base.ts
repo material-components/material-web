@@ -5,7 +5,7 @@
  */
 
 import {html, LitElement, TemplateResult} from 'lit';
-import {property, queryAssignedNodes} from 'lit/decorators';
+import {property, queryAssignedElements} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 
@@ -18,7 +18,7 @@ export class Formfield extends LitElement {
 
   @property({type: String}) inputId?: string;
 
-  @queryAssignedNodes('', true, '*')
+  @queryAssignedElements({flatten: true})
   protected slottedInputs!: HTMLElement[]|null;
 
   protected get input() {

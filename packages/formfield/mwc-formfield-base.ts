@@ -15,7 +15,7 @@ import {BaseElement, EventType, SpecificEventListener} from '@material/mwc-base/
 import {FormElement} from '@material/mwc-base/form-element';
 import {observer} from '@material/mwc-base/observer';
 import {html} from 'lit';
-import {property, query, queryAssignedNodes} from 'lit/decorators.js';
+import {property, query, queryAssignedElements} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 
@@ -67,7 +67,7 @@ export class FormfieldBase extends BaseElement {
     };
   }
 
-  @queryAssignedNodes('', true, '*')
+  @queryAssignedElements({flatten: true})
   protected slottedInputs!: HTMLElement[]|null;
 
   @query('label') protected labelEl!: HTMLLabelElement;

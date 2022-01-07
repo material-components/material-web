@@ -13,7 +13,7 @@ import {BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
 import {deepActiveElementPath, doesElementContainFocus, isNodeElement} from '@material/mwc-base/utils';
 import {html} from 'lit';
-import {property, query, queryAssignedNodes} from 'lit/decorators.js';
+import {property, query, queryAssignedElements} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
 import {MDCListAdapter} from './mwc-list-adapter';
@@ -65,9 +65,9 @@ export abstract class ListBase extends BaseElement implements Layoutable {
 
   @query('.mdc-deprecated-list') protected mdcRoot!: HTMLElement;
 
-  @queryAssignedNodes('', true, '*')
+  @queryAssignedElements({flatten: true})
   protected assignedElements!: HTMLElement[]|null;
-  @queryAssignedNodes('', true, '[tabindex="0"]')
+  @queryAssignedElements({flatten: true, selector: '[tabindex="0"]'})
   protected tabbableElements!: HTMLElement[]|null;
 
   @property({type: Boolean})
