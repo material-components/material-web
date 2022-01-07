@@ -8,6 +8,8 @@ import {html, LitElement, TemplateResult} from 'lit';
 import {property, queryAssignedNodes} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 
+import {ListItemIcon} from './list-item-icon';
+
 /** @soyCompatible */
 export class ListItem extends LitElement {
   @property({type: String}) label = '';
@@ -20,39 +22,35 @@ export class ListItem extends LitElement {
   protected endElement!: HTMLElement[]|null;
 
   get leadingIcon() {
-    return this.startElement?.find(
-               (el) => el.classList.contains('md3-list-icon')) ??
-        null;
+    return this.startElement?.find((el) => el instanceof ListItemIcon) ?? null;
   }
 
   get leadingAvatar() {
     return this.startElement?.find(
-               (el) => el.classList.contains('md3-list-avatar')) ??
+               (el) => el.classList.contains('md3-list-item__avatar')) ??
         null;
   }
 
   get leadingThumbnail() {
     return this.startElement?.find(
-               (el) => el.classList.contains('md3-list-thumbnail')) ??
+               (el) => el.classList.contains('md3-list-item__thumbnail')) ??
         null;
   }
 
   get leadingImage() {
     return this.startElement?.find(
-               (el) => el.classList.contains('md3-list-image')) ??
+               (el) => el.classList.contains('md3-list-item__image')) ??
         null;
   }
 
   get leadingVideo() {
     return this.startElement?.find(
-               (el) => el.classList.contains('md3-list-video')) ??
+               (el) => el.classList.contains('md3-list-item__video')) ??
         null;
   }
 
   get trailingIcon() {
-    return this.endElement?.find(
-               (el) => el.classList.contains('md3-list-icon')) ??
-        null;
+    return this.endElement?.find((el) => el instanceof ListItemIcon) ?? null;
   }
 
   /** @soyTemplate */
