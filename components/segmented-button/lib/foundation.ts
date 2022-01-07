@@ -112,6 +112,14 @@ export class SegmentedButtonSetFoundation extends
     }
   }
 
+  handleFocusIn(e: FocusEvent) {
+    // Selection should not follow focus for multiselect.
+    if (this.adapter.state.isMultiselect) return;
+    const state = e.target as unknown as SegmentedButtonState;
+    const index = this.adapter.state.buttons.indexOf(state);
+    this.setSelected(index, true);
+  }
+
   /** Toggles the selected state of the button at the given index. */
   private toggleSelected(index: number) {
     // Ignore interactions from out-of-bounds controls.

@@ -11,6 +11,7 @@ import {spyOnAllFunctions} from '../../testing/jasmine';
 import {SegmentedButtonFoundation, SegmentedButtonSetFoundation} from '../lib/foundation';
 import {SegmentedButtonAdapter, SegmentedButtonSetAdapter, SegmentedButtonState} from '../lib/state';
 
+/** Used to allow passing through a custom target. */
 function fakeMouseEvent(data: object): MouseEvent {
   return {
     ...data,
@@ -18,11 +19,20 @@ function fakeMouseEvent(data: object): MouseEvent {
   } as unknown as MouseEvent;
 }
 
+/** Used to allow passing through a custom target. */
 function fakeKeyboardEvent(data: object): KeyboardEvent {
   return {
     ...data,
     preventDefault: jasmine.createSpy('preventDefault'),
   } as unknown as KeyboardEvent;
+}
+
+/** Used to allow passing through a custom target. */
+function fakeFocusEvent(data: object): FocusEvent {
+  return {
+    ...data,
+    preventDefault: jasmine.createSpy('preventDefault'),
+  } as unknown as FocusEvent;
 }
 
 describe('SegmentedButtonFoundation', () => {
@@ -319,6 +329,37 @@ describe('SegmentedButtonSetFoundation', () => {
             .not.toHaveBeenCalled();
       });
     }
+
+    it('#handleFocusIn() makes the target button selected', () => {
+      const buttons: SegmentedButtonState[] = [
+        {
+          label: 'Button 0',
+          disabled: false,
+          selected: false,
+          focusable: false,
+        },
+        {
+          label: 'Button 1',
+          disabled: false,
+          selected: false,
+          focusable: true,
+        },
+      ];
+
+      const {adapter, foundation} = setupSingleSelectTest({
+        buttons,
+      });
+
+      foundation.handleFocusIn(fakeFocusEvent({
+        target: buttons[1],
+      }));
+      expect(adapter.state.buttons[0].selected)
+          .withContext('0th button')
+          .toBeFalse();
+      expect(adapter.state.buttons[1].selected)
+          .withContext('1st button')
+          .toBeTrue();
+    });
   });
 
   describe('multiselect', () => {
@@ -421,6 +462,37 @@ describe('SegmentedButtonSetFoundation', () => {
       expect(adapter.focusButton)
           .withContext('focuses button')
           .not.toHaveBeenCalled();
+    });
+
+    it('#handleFocusIn() does not update selection', () => {
+      const buttons: SegmentedButtonState[] = [
+        {
+          label: 'Button 0',
+          disabled: false,
+          selected: true,
+          focusable: false,
+        },
+        {
+          label: 'Button 1',
+          disabled: false,
+          selected: false,
+          focusable: true,
+        },
+      ];
+
+      const {adapter, foundation} = setupMultiSelectTest({
+        buttons,
+      });
+
+      foundation.handleFocusIn(fakeFocusEvent({
+        target: buttons[1],
+      }));
+      expect(adapter.state.buttons[0].selected)
+          .withContext('0th button')
+          .toBeTrue();
+      expect(adapter.state.buttons[1].selected)
+          .withContext('1st button')
+          .toBeFalse();
     });
   });
 
