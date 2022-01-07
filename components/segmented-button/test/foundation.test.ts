@@ -804,6 +804,101 @@ describe('SegmentedButtonSetFoundation', () => {
        });
   });
 
+  it('#onButtonsChange() makes the first non-disabled component focusable',
+     () => {
+       const startButtons: SegmentedButtonState[] = [
+         {
+           label: 'Button 0',
+           disabled: false,
+           selected: true,
+           focusable: true,
+         },
+         {
+           label: 'Button 1',
+           disabled: true,
+           selected: false,
+           focusable: false,
+         },
+       ];
+
+       const endButtons: SegmentedButtonState[] = [
+         {
+           label: 'Button X',
+           disabled: true,
+           selected: false,
+           focusable: false,
+         },
+         {
+           label: 'Button Y',
+           disabled: false,
+           selected: false,
+           focusable: false,
+         }
+       ];
+
+       const {adapter} = setupTest({
+         isMultiselect: false,
+         isRTL: false,
+         buttons: startButtons,
+       });
+
+       adapter.state.buttons = endButtons;
+
+       expect(adapter.state.buttons[0].focusable)
+           .withContext('0th button')
+           .toBeFalse();
+       expect(adapter.state.buttons[1].focusable)
+           .withContext('1st button')
+           .toBeTrue();
+     });
+
+  it('#onButtonsChange() makes only one button focusable', () => {
+    const startButtons: SegmentedButtonState[] = [
+      {
+        label: 'Button 0',
+        disabled: false,
+        selected: true,
+        focusable: true,
+      },
+      {
+        label: 'Button 1',
+        disabled: true,
+        selected: false,
+        focusable: false,
+      },
+    ];
+
+    const endButtons: SegmentedButtonState[] = [
+      {
+        label: 'Button X',
+        disabled: false,
+        selected: false,
+        focusable: true,
+      },
+      {
+        label: 'Button Y',
+        disabled: false,
+        selected: false,
+        focusable: true,
+      }
+    ];
+
+    const {adapter} = setupTest({
+      isMultiselect: false,
+      isRTL: false,
+      buttons: startButtons,
+    });
+
+    adapter.state.buttons = endButtons;
+
+    expect(adapter.state.buttons[0].focusable)
+        .withContext('0th button')
+        .toBeTrue();
+    expect(adapter.state.buttons[1].focusable)
+        .withContext('1st button')
+        .toBeFalse();
+  });
+
   it('#handleClick() does not select disabled buttons', () => {
     const buttons: SegmentedButtonState[] = [
       {

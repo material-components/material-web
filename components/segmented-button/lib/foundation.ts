@@ -58,6 +58,35 @@ interface FocusOptions {
 /** Provides the business logic for a set of segmented buttons. */
 export class SegmentedButtonSetFoundation extends
     ObserverFoundation<SegmentedButtonSetAdapter> {
+  protected override init() {
+    this.observe(this.adapter.state, {
+      buttons: this.onButtonsChange,
+    });
+  }
+
+  protected onButtonsChange(buttons: SegmentedButtonState[]) {
+    const focusableButtons = buttons.filter((btn) => btn.focusable);
+    // Early exit if we already have one focusable button.
+    if (focusableButtons.length === 1) return;
+    if (focusableButtons.length > 1) {
+      // Make all buttons except the first one non-focusable.
+      for (let i = 1; i < focusableButtons.length; i++) {
+        focusableButtons[i].focusable = false;
+      }
+      return;
+    }
+
+    const firstEnabledButton = buttons.find((btn) => !btn.disabled);
+    if (firstEnabledButton) {
+      firstEnabledButton.focusable = true;
+      return;
+    }
+  }
+
+  firstUpdated() {
+    this.onButtonsChange(this.adapter.state.buttons);
+  }
+
   handleClick(e: MouseEvent) {
     const state = e.target as unknown as SegmentedButtonState;
     const index = this.adapter.state.buttons.indexOf(state);
