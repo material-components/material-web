@@ -1,0 +1,105 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+@use './var';
+
+/// Resolves one or more shape tokens and expands them into 4 separate logical
+/// tokens for each corner.
+///
+/// @example - scss
+///   $theme: (container-shape: (4px 4px 0 0));
+///   $theme: resolve-theme(
+///     $theme,
+///     map.get($resolvers, shape),
+///     container-shape,
+///   );
+///   // (
+///   //   container-shape-start-start: 4px,
+///   //   container-shape-start-end: 4px,
+///   //   container-shape-end-end: 0,
+///   //   container-shape-end-start: 0,
+///   // )
+///
+/// @param {Map} $theme - The theme to resolve tokens for.
+/// @param {Function} $resolver - The shape resolver to use.
+/// @param {String...} $shape-tokens - The shape tokens to resolve.
+/// @return {Map} The theme with resolved shape tokens.
+@function resolve-theme($theme, $resolver, $shape-tokens...) {
+  @if $resolver == null {
+    @return $theme;
+  }
+
+  @each $token in $shape-tokens {
+    $shape-theme: meta.call($resolver, $shape: map.get($theme, $token));
+
+    $theme: map.merge(
+      $theme,
+      (
+        '#{$token}-start-start': map.get($shape-theme, start-start),
+        '#{$token}-start-end': map.get($shape-theme, start-end),
+        '#{$token}-end-end': map.get($shape-theme, end-end),
+        '#{$token}-end-start': map.get($shape-theme, end-start),
+      )
+    );
+
+    $theme: map.remove($theme, $token);
+  }
+
+  @return $theme;
+}
+
+/// Resolves a shape value by expanding it into logical values for each corner.
+///
+/// @param {Number|List} $shape - The shape token's value.
+/// @return {Map} A map with logical tokens for each corner's value.
+@function resolver($args...) {
+  $args: meta.keywords($args);
+  $shape: map.get($args, shape);
+  @if meta.type-of($shape) != 'list' {
+    @return (
+      start-start: $shape,
+      start-end: $shape,
+      end-end: $shape,
+      end-start: $shape
+    );
+  }
+
+  @if list.length($shape) == 1 {
+    @return (
+      start-start: list.nth($shape, 1),
+      start-end: list.nth($shape, 1),
+      end-end: list.nth($shape, 1),
+      end-start: list.nth($shape, 1)
+    );
+  }
+
+  @if list.length($shape) == 2 {
+    @return (
+      start-start: list.nth($shape, 1),
+      start-end: list.nth($shape, 2),
+      end-end: list.nth($shape, 1),
+      end-start: list.nth($shape, 2)
+    );
+  }
+
+  @if list.length($shape) == 3 {
+    @return (
+      start-start: list.nth($shape, 1),
+      start-end: list.nth($shape, 2),
+      end-end: list.nth($shape, 3),
+      end-start: list.nth($shape, 2)
+    );
+  }
+
+  @return (
+    start-start: list.nth($shape, 1),
+    start-end: list.nth($shape, 2),
+    end-end: list.nth($shape, 3),
+    end-start: list.nth($shape, 4)
+  );
+}

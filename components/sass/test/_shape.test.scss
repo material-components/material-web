@@ -1,0 +1,289 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:map';
+@use 'sass:meta';
+@use 'true' as test;
+@use '../resolvers';
+@use '../shape';
+
+@include test.describe('shape') {
+  @include test.describe('resolve-theme()') {
+    @include test.it('should return $theme if $resolver is null') {
+      // Setup.
+      $theme: (
+        container-shape: 8px,
+      );
+      $resolver: null;
+
+      // Test Case.
+      $result: shape.resolve-theme($theme, $resolver, container-shape);
+
+      // Assertion.
+      @include test.assert-equal(
+        $theme,
+        $result,
+        $description: 'Returned $theme should not be modified'
+      );
+    }
+
+    @include test.it('should expand shape tokens into 4 corner tokens') {
+      // Setup.
+      $theme: (
+        not-a-shape-token: 24px,
+        container-shape: 8px,
+        root-shape: 1px 2px 3px 4px,
+      );
+      $resolver: map.get(resolvers.$material, shape);
+
+      // Test Case.
+      $result: shape.resolve-theme(
+        $theme,
+        $resolver,
+        root-shape,
+        container-shape
+      );
+
+      // Assertion.
+      $expected: (
+        not-a-shape-token: 24px,
+        container-shape-start-start: 8px,
+        container-shape-start-end: 8px,
+        container-shape-end-end: 8px,
+        container-shape-end-start: 8px,
+        root-shape-start-start: 1px,
+        root-shape-start-end: 2px,
+        root-shape-end-end: 3px,
+        root-shape-end-start: 4px,
+      );
+      @include test.assert-equal(
+        $result,
+        $expected,
+        $description:
+          'Should expand shape tokens, remove original tokens, and not touch other tokens'
+      );
+    }
+  }
+
+  @include test.describe('resolver()') {
+    @include test.it('should return null for all corners if given null') {
+      // Test Case.
+      $result: shape.resolver(
+        $shape: null,
+      );
+
+      // Assertion.
+      $is-map: meta.type-of($result) == 'map';
+      @include test.assert-true(
+        $is-map,
+        $description: 'Should always return a Map'
+      );
+      @include test.assert-equal(
+        map.get($result, start-start),
+        null,
+        $description: 'start-start should be null'
+      );
+      @include test.assert-equal(
+        map.get($result, start-end),
+        null,
+        $description: 'start-end should be null'
+      );
+      @include test.assert-equal(
+        map.get($result, end-end),
+        null,
+        $description: 'end-end should be null'
+      );
+      @include test.assert-equal(
+        map.get($result, end-start),
+        null,
+        $description: 'end-start should be null'
+      );
+    }
+
+    @include test.it('should expand radius number to all corners') {
+      // Test Case.
+      $result: shape.resolver(
+        $shape: 8px,
+      );
+
+      // Assertion.
+      $is-map: meta.type-of($result) == 'map';
+      @include test.assert-true(
+        $is-map,
+        $description: 'Should always return a Map'
+      );
+      @include test.assert-equal(
+        map.get($result, start-start),
+        8px,
+        $description: 'start-start should be same as input'
+      );
+      @include test.assert-equal(
+        map.get($result, start-end),
+        8px,
+        $description: 'start-end should be same as input'
+      );
+      @include test.assert-equal(
+        map.get($result, end-end),
+        8px,
+        $description: 'end-end should be same as input'
+      );
+      @include test.assert-equal(
+        map.get($result, end-start),
+        8px,
+        $description: 'end-start should be same as input'
+      );
+    }
+
+    @include test.it('should expand radius list with 1 to all corners') {
+      // Test Case.
+      $result: shape.resolver(
+        $shape: (
+          16px,
+        ),
+      );
+
+      // Assertion.
+      $is-map: meta.type-of($result) == 'map';
+      @include test.assert-true(
+        $is-map,
+        $description: 'Should always return a Map'
+      );
+      @include test.assert-equal(
+        map.get($result, start-start),
+        16px,
+        $description: 'start-start should be the first corner'
+      );
+      @include test.assert-equal(
+        map.get($result, start-end),
+        16px,
+        $description: 'start-end should be the first corner'
+      );
+      @include test.assert-equal(
+        map.get($result, end-end),
+        16px,
+        $description: 'end-end should be the first corner'
+      );
+      @include test.assert-equal(
+        map.get($result, end-start),
+        16px,
+        $description: 'end-start should be the first corner'
+      );
+    }
+
+    @include test.it('should expand radius list with 2 to correct corners') {
+      // Test Case.
+      $result: shape.resolver(
+        $shape: (
+          8px,
+          16px,
+        ),
+      );
+
+      // Assertion.
+      $is-map: meta.type-of($result) == 'map';
+      @include test.assert-true(
+        $is-map,
+        $description: 'Should always return a Map'
+      );
+      @include test.assert-equal(
+        map.get($result, start-start),
+        8px,
+        $description: 'start-start should be the first corner'
+      );
+      @include test.assert-equal(
+        map.get($result, start-end),
+        16px,
+        $description: 'start-end should be the second corner'
+      );
+      @include test.assert-equal(
+        map.get($result, end-end),
+        8px,
+        $description: 'end-end should be the first corner'
+      );
+      @include test.assert-equal(
+        map.get($result, end-start),
+        16px,
+        $description: 'end-start should be the second corner'
+      );
+    }
+
+    @include test.it('should expand radius list with 3 to correct corners') {
+      // Test Case.
+      $result: shape.resolver(
+        $shape: (
+          8px,
+          16px,
+          24px,
+        ),
+      );
+
+      // Assertion.
+      $is-map: meta.type-of($result) == 'map';
+      @include test.assert-true(
+        $is-map,
+        $description: 'Should always return a Map'
+      );
+      @include test.assert-equal(
+        map.get($result, start-start),
+        8px,
+        $description: 'start-start should be the first corner'
+      );
+      @include test.assert-equal(
+        map.get($result, start-end),
+        16px,
+        $description: 'start-end should be the second corner'
+      );
+      @include test.assert-equal(
+        map.get($result, end-end),
+        24px,
+        $description: 'end-end should be the third corner'
+      );
+      @include test.assert-equal(
+        map.get($result, end-start),
+        16px,
+        $description: 'end-start should be the second corner'
+      );
+    }
+
+    @include test.it('should expand radius list with 4 to correct corners') {
+      // Test Case.
+      $result: shape.resolver(
+        $shape: (
+          8px,
+          16px,
+          24px,
+          0,
+        ),
+      );
+
+      // Assertion.
+      $is-map: meta.type-of($result) == 'map';
+      @include test.assert-true(
+        $is-map,
+        $description: 'Should always return a Map'
+      );
+      @include test.assert-equal(
+        map.get($result, start-start),
+        8px,
+        $description: 'start-start should be the first corner'
+      );
+      @include test.assert-equal(
+        map.get($result, start-end),
+        16px,
+        $description: 'start-end should be the second corner'
+      );
+      @include test.assert-equal(
+        map.get($result, end-end),
+        24px,
+        $description: 'end-end should be the third corner'
+      );
+      @include test.assert-equal(
+        map.get($result, end-start),
+        0,
+        $description: 'end-start should be the fourth corner'
+      );
+    }
+  }
+}
