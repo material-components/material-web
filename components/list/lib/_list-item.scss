@@ -4,8 +4,32 @@
 //
 
 @mixin static-styles() {
+  :host {
+    @include host-root;
+  }
+
   .md3-list-item {
-    @include root;
+    @include item-root;
+  }
+
+  .md3-list-item--with-leading-icon {
+    @include icon-item-root;
+  }
+
+  .md3-list-item--with-leading-avatar {
+    @include avatar-item-root;
+  }
+
+  .md3-list-item--with-leading-thumbnail {
+    @include thumbnail-item-root;
+  }
+
+  .md3-list-item--with-leading-image {
+    @include image-item-root;
+  }
+
+  .md3-list-item--with-leading-video {
+    @include video-item-root;
   }
 
   .md3-list-item__icon {
@@ -13,8 +37,67 @@
   }
 }
 
-@mixin root() {
+@mixin host-root() {
   color: unset;
+}
+
+@mixin item-root() {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
+
+  .md3-list-item__start {
+    flex: 0 0 auto;
+  }
+
+  .md3-list-item__body {
+    flex: 1 1 100%;
+  }
+
+  .md3-list-item__end {
+    flex: 0 0 auto;
+  }
+
+  .md3-list-item__label-text {
+    display: block;
+  }
+
+  .md3-list-item__supporting-text {
+    display: block;
+    margin-block-start: 4px;
+  }
+}
+
+@mixin icon-item-root() {
+  .md3-list-item__start {
+    margin-inline-end: 16px;
+  }
+}
+
+@mixin avatar-item-root() {
+  .md3-list-item__start {
+    margin-inline-end: 16px;
+  }
+}
+
+@mixin thumbnail-item-root() {
+  .md3-list-item__start {
+    margin-inline-end: 16px;
+  }
+}
+
+@mixin image-item-root() {
+  .md3-list-item__start {
+    margin-inline-end: 16px;
+  }
+}
+
+@mixin video-item-root() {
+  .md3-list-item__start {
+    margin-inline-end: 8px;
+  }
 }
 
 @mixin icon-root() {
@@ -29,6 +112,8 @@
   white-space: nowrap;
   word-wrap: normal;
   direction: ltr;
+  width: 24px;
+  height: 24px;
 
   /* Support for all WebKit browsers. */
   -webkit-font-smoothing: antialiased;

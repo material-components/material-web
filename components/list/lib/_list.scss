@@ -4,11 +4,24 @@
 //
 
 @mixin static-styles() {
+  :host {
+    @include host-root;
+  }
+
   .md3-list {
     @include root;
   }
 }
 
-@mixin root() {
+@mixin host-root() {
   color: unset;
+}
+
+@mixin root() {
+  display: block;
+  margin: 0;
+  padding: 0;
+  padding-block: 8px;
+  list-style-type: none;
+  width: 500px;
 }

@@ -13,6 +13,7 @@ import {ListItemIcon} from './list-item-icon';
 /** @soyCompatible */
 export class ListItem extends LitElement {
   @property({type: String}) supportingText = '';
+  // TODO: add trailing supporting text.
 
   @queryAssignedNodes('start', true)
   protected startElement!: HTMLElement[]|null;
@@ -88,7 +89,7 @@ export class ListItem extends LitElement {
   /** @soyTemplate */
   protected renderBody(): TemplateResult {
     return html`<div class="md3-list-item__body"><!--
-       --><span class="md3-list-item__label"><!--
+       --><span class="md3-list-item__label-text"><!--
           --><slot @slotchange=${this.handleSlotChange}></slot><!--
        --></span><!--
         -->${this.supportingText !== '' ? this.renderSupportingText() : ''}<!--

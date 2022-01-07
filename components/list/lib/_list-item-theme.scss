@@ -5,6 +5,7 @@
 
 @use 'sass:map';
 @use '@material/theme/state';
+@use '@material/typography/typography';
 @use '../../sass/resolvers';
 @use '../../sass/theme';
 
@@ -13,7 +14,18 @@ $selectors: (
 );
 
 $light-theme: (
-  color: unset,
+  container-height: 56px,
+  label-text-font: typography.get-font(body1),
+  label-text-size: 16px,
+  label-text-tracking: typography.px-to-rem(0.5px),
+  label-text-weight: 400,
+  label-text-color: #1f1f1f,
+  supporting-text-font: typography.get-font(body2),
+  supporting-text-size: 14px,
+  supporting-text-tracking: typography.px-to-rem(0.25px),
+  supporting-text-weight: 300,
+  supporting-text-color: #444746,
+  icon-color: #444746,
 );
 
 @function _resolve-theme($theme, $resolvers) {
@@ -33,19 +45,114 @@ $light-theme: (
   $theme: _resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, list);
 
-  @include _colors(
+  @include _set-label-text-typography(
     (
-      default: map.get($theme, color),
+      family: map.get($theme, label-text-font),
+      size: map.get($theme, label-text-size),
+      tracking: map.get($theme, label-text-tracking),
+      weight: map.get($theme, label-text-weight),
     )
   );
+
+  @include _set_label-text-ink-color(
+    (
+      default: map.get($theme, label-text-color),
+    )
+  );
+
+  @include _set-supporting-text-typography(
+    (
+      family: map.get($theme, supporting-text-font),
+      size: map.get($theme, supporting-text-size),
+      tracking: map.get($theme, supporting-text-tracking),
+      weight: map.get($theme, supporting-text-weight),
+    )
+  );
+
+  @include _set_supporting-text-ink-color(
+    (
+      default: map.get($theme, supporting-text-color),
+    )
+  );
+
+  @include _set-icon-ink-color(
+    (
+      default: map.get($theme, icon-color),
+    )
+  );
+
+  $container-height: map.get($theme, container-height);
+  @include _set-height($container-height);
 }
 
-@mixin _colors($colors) {
-  @include state.enabled($selectors) {
-    @include _set-color(state.get-default-state($colors));
+@mixin _set-label-text-typography($typography-map) {
+  $family: map.get($typography-map, family);
+  $size: map.get($typography-map, size);
+  $tracking: map.get($typography-map, tracking);
+  $weight: map.get($typography-map, weight);
+  $transform: map.get($typography-map, transform);
+
+  .md3-list-item__label-text {
+    font-family: $family;
+    font-size: $size;
+    letter-spacing: $tracking;
+    font-weight: $weight;
+    text-transform: $transform;
   }
 }
 
-@mixin _set-color($color) {
-  color: $color;
+@mixin _set-label-text-ink-color($colors) {
+  @include state.enabled($selectors) {
+    @include _set-label-text-color(state.get-default-state($colors));
+  }
+}
+
+@mixin _set-supporting-text-typography($typography-map) {
+  $family: map.get($typography-map, family);
+  $size: map.get($typography-map, size);
+  $tracking: map.get($typography-map, tracking);
+  $weight: map.get($typography-map, weight);
+  $transform: map.get($typography-map, transform);
+
+  .md3-list-item__supporting-text {
+    font-family: $family;
+    font-size: $size;
+    letter-spacing: $tracking;
+    font-weight: $weight;
+    text-transform: $transform;
+  }
+}
+
+@mixin _set-supporting-text-ink-color($colors) {
+  @include state.enabled($selectors) {
+    @include _set-supporting-text-color(state.get-default-state($colors));
+  }
+}
+
+@mixin _set-icon-ink-color($colors) {
+  @include state.enabled($selectors) {
+    @include _set-icon-color(state.get-default-state($colors));
+  }
+}
+
+@mixin _set-height($height) {
+  height: $height;
+}
+
+@mixin _set-label-text-color($color) {
+  .md3-list-item__label-text {
+    color: $color;
+  }
+}
+
+@mixin _set-supporting-text-color($color) {
+  .md3-list-item__supporting-text {
+    color: $color;
+  }
+}
+
+@mixin _set-icon-color($color) {
+  &.md3-list-item--with-leading-icon .md3-list-item__start {
+    color: $color;
+  }
 }

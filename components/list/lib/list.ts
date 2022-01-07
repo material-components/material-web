@@ -14,7 +14,7 @@ export class List extends LitElement {
   /** @soyTemplate */
   override render(): TemplateResult {
     return html`
-      <ul tabindex="0" class="mdc-list">
+      <ul tabindex="0" class="md3-list">
         <slot></slot>
       </ul>
     `;
