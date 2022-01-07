@@ -16,8 +16,7 @@ export class ListItem extends LitElement {
   @queryAssignedNodes('start', true)
   protected startElement!: HTMLElement[]|null;
 
-  @queryAssignedNodes('end', true)
-  protected endElement!: HTMLElement[]|null;
+  @queryAssignedNodes('end', true) protected endElement!: HTMLElement[]|null;
 
   get leadingIcon() {
     return this.startElement?.find(
