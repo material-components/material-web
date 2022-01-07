@@ -67,7 +67,8 @@ export class ListItem extends LitElement {
   /** @soyTemplate */
   protected getRenderClasses(): ClassInfo {
     return {
-      'md3-list-item--with-one-line': true,
+      'md3-list-item--with-one-line': this.supportingText === '',
+      'md3-list-item--with-two-lines': this.supportingText !== '',
       'md3-list-item--with-leading-icon': !!this.leadingIcon,
       'md3-list-item--with-leading-avatar': !!this.leadingAvatar,
       'md3-list-item--with-leading-thumbnail': !!this.leadingThumbnail,
@@ -90,7 +91,15 @@ export class ListItem extends LitElement {
        --><span class="md3-list-item__label"><!--
           --><slot @slotchange=${this.handleSlotChange}></slot><!--
        --></span><!--
+        -->${this.supportingText !== '' ? this.renderSupportingText() : ''}<!--
     --></div>`;
+  }
+
+  /** @soyTemplate */
+  protected renderSupportingText(): TemplateResult {
+    return html`<span class="md3-list-item__supporting-text"><!--
+          -->${this.supportingText}<!--
+       --></span>`;
   }
 
   /** @soyTemplate */
