@@ -6,7 +6,8 @@
 
 import {customElement} from 'lit/decorators';
 
-import {MultiSelectSegmentedButton, MultiSelectSegmentedButtonSet} from './lib/segmented-button';
+import {MultiSelectSegmentedButton} from './lib/multi-select-segmented-button';
+import {MultiSelectSegmentedButtonSet} from './lib/multi-select-segmented-button-set';
 
 declare global {
   interface HTMLElementTagNameMap {
