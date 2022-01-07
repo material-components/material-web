@@ -20,11 +20,16 @@ $light-theme: (
   label-text-tracking: typography.px-to-rem(0.5px),
   label-text-weight: 400,
   label-text-color: #1f1f1f,
-  supporting-text-font: typography.get-font(body2),
+  supporting-text-font: typography.get-font(body1),
   supporting-text-size: 14px,
   supporting-text-tracking: typography.px-to-rem(0.25px),
   supporting-text-weight: 300,
   supporting-text-color: #444746,
+  trailing-supporting-text-font: typography.get-font(body1),
+  trailing-supporting-text-size: 12px,
+  trailing-supporting-text-tracking: typography.px-to-rem(0.25px),
+  trailing-supporting-text-weight: 300,
+  trailing-supporting-text-color: #444746,
   icon-color: #444746,
 );
 
@@ -72,6 +77,21 @@ $light-theme: (
   @include _set_supporting-text-ink-color(
     (
       default: map.get($theme, supporting-text-color),
+    )
+  );
+
+  @include _set-trailing-supporting-text-typography(
+    (
+      family: map.get($theme, supporting-text-font),
+      size: map.get($theme, supporting-text-size),
+      tracking: map.get($theme, supporting-text-tracking),
+      weight: map.get($theme, supporting-text-weight),
+    )
+  );
+
+  @include _set_trailing-supporting-text-ink-color(
+    (
+      default: map.get($theme, trailing-supporting-text-color),
     )
   );
 
@@ -129,6 +149,30 @@ $light-theme: (
   }
 }
 
+@mixin _set-trailing-supporting-text-typography($typography-map) {
+  $family: map.get($typography-map, family);
+  $size: map.get($typography-map, size);
+  $tracking: map.get($typography-map, tracking);
+  $weight: map.get($typography-map, weight);
+  $transform: map.get($typography-map, transform);
+
+  .md3-list-item__trailing-supporting-text {
+    font-family: $family;
+    font-size: $size;
+    letter-spacing: $tracking;
+    font-weight: $weight;
+    text-transform: $transform;
+  }
+}
+
+@mixin _set-trailing-supporting-text-ink-color($colors) {
+  @include state.enabled($selectors) {
+    @include _set-trailing-supporting-text-color(
+      state.get-default-state($colors)
+    );
+  }
+}
+
 @mixin _set-icon-ink-color($colors) {
   @include state.enabled($selectors) {
     @include _set-icon-color(state.get-default-state($colors));
@@ -146,6 +190,12 @@ $light-theme: (
 }
 
 @mixin _set-supporting-text-color($color) {
+  .md3-list-item__supporting-text {
+    color: $color;
+  }
+}
+
+@mixin _set-trailing-supporting-text-color($color) {
   .md3-list-item__supporting-text {
     color: $color;
   }
