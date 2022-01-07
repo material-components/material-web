@@ -12,7 +12,6 @@ import {ListItemIcon} from './list-item-icon';
 
 /** @soyCompatible */
 export class ListItem extends LitElement {
-  @property({type: String}) label = '';
   @property({type: String}) supportingText = '';
 
   @queryAssignedNodes('start', true)
@@ -88,7 +87,9 @@ export class ListItem extends LitElement {
   /** @soyTemplate */
   protected renderBody(): TemplateResult {
     return html`<div class="md3-list-item__body"><!--
-       --><span class="md3-list-item__label">${this.label}</span><!--
+       --><span class="md3-list-item__label"><!--
+          --><slot @slotchange=${this.handleSlotChange}></slot><!--
+       --></span><!--
     --></div>`;
   }
 
