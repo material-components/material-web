@@ -82,13 +82,18 @@ export class IconButton extends LitElement {
         @touchend="${this.handleRippleDeactivate}"
         @touchcancel="${this.handleRippleDeactivate}"
     >${this.renderRipple()}
-    ${this.renderIcon()}<span><slot></slot></span>
+    ${this.renderIcon()}${this.renderTouchTarget()}<span><slot></slot></span>
   </button>`;
   }
 
   /** @soyTemplate */
   protected renderIcon(): TemplateResult|string {
     return this.icon ? html`<i class="material-icons">${this.icon}</i>` : '';
+  }
+
+  /** @soyTemplate */
+  protected renderTouchTarget(): TemplateResult {
+    return html`<span class="md3-icon-button__touch"></span>`;
   }
 
   @eventOptions({passive: true})

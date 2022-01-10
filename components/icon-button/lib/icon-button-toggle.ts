@@ -103,7 +103,7 @@ export class IconButtonToggle extends LitElement {
           @touchstart="${this.handleRippleTouchStart}"
           @touchend="${this.handleRippleDeactivate}"
           @touchcancel="${this.handleRippleDeactivate}"
-        >${this.renderRipple()}
+        >${this.renderRipple()}${this.renderTouchTarget()}
         <span class="md3-icon-button__icon">
           <slot name="offIcon">
             <i class="material-icons">${this.offIcon}</i>
@@ -115,6 +115,11 @@ export class IconButtonToggle extends LitElement {
           </slot>
         </span>
       </button>`;
+  }
+
+  /** @soyTemplate */
+  protected renderTouchTarget(): TemplateResult {
+    return html`<span class="md3-icon-button__touch"></span>`;
   }
 
   @eventOptions({passive: true})

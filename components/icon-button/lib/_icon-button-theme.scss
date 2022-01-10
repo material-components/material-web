@@ -9,6 +9,7 @@
 @use '@material/theme/keys';
 @use '@material/theme/state';
 @use '@material/theme/theme-color';
+@use '@material/touch-target/touch-target';
 
 $_custom-property-prefix: 'icon-button';
 
@@ -27,7 +28,7 @@ $light-theme: (
   selected-pressed-state-layer-color: theme-color.$primary,
   selected-pressed-state-layer-opacity: 0.12,
   state-layer-shape: null,
-  state-layer-size: 48px,
+  state-layer-size: 40px,
   unselected-focus-icon-color: theme-color.$primary,
   unselected-focus-state-layer-color: theme-color.$primary,
   unselected-focus-state-layer-opacity: 0.12,
@@ -135,6 +136,8 @@ $light-theme: (
 @mixin _state-layer-size($size) {
   height: $size;
   width: $size;
+
+  margin: max(0px, calc((#{touch-target.$height} - #{$size}) / 2));
 }
 
 @mixin _icon-size($size) {
