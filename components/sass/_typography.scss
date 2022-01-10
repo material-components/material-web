@@ -80,7 +80,7 @@
     @return null;
   }
 
-  @if not math.compatible($px, 1px) {
+  @if meta.type-of($px) != 'number' or not math.compatible($px, 1px) {
     // Value is something other than px, use as-is.
     @return $px;
   }
