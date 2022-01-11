@@ -1,0 +1,41 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'true' as test;
+@use '../color';
+
+@include test.describe('color') {
+  @include test.describe('color-var-hex-to-rgba()') {
+    @include test.it(
+      'should return color in rgb() format containing custom property for rgb.'
+    ) {
+      @include test.assert-equal(
+        color.color-var-hex-to-rgba(var(--foo-color-on-surface, #8ab4f8), 0.38),
+        rgb(var(--foo-color-on-surface-rgb, 138, 180, 248), 0.38)
+      );
+    }
+
+    @include test.it(
+      'should return color in rgb() format when hex color passed in shorthand format.'
+    ) {
+      @include test.assert-equal(
+        color.color-var-hex-to-rgba(var(--foo-color-on-surface, #000), 0),
+        rgb(var(--foo-color-on-surface-rgb, 0, 0, 0), 0)
+      );
+    }
+  }
+
+  @include test.describe('hex-to-rgb()') {
+    @include test.it('should return color in comma seperated rgb.') {
+      @include test.assert-equal(color.hex-to-rgb('#8ab4f8'), '138, 180, 248');
+    }
+
+    @include test.it(
+      'should return color in comma seperated rgb for given hex color in shorthand format.'
+    ) {
+      @include test.assert-equal(color.hex-to-rgb('#fff'), '255, 255, 255');
+    }
+  }
+}
