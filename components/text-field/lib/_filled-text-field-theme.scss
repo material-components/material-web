@@ -14,6 +14,19 @@
 @use '../../sass/var';
 
 $light-theme: tokens.md-comp-filled-text-field-values();
+$dark-theme: tokens.md-comp-filled-text-field-values(
+  (
+    md-sys-color: tokens.md-sys-color-values-dark(),
+    md-sys-elevation:
+      tokens.md-sys-elevation-values(
+        $deps: (
+          md-sys-color: tokens.md-sys-color-values-dark(),
+        ),
+        $exclude-hardcoded-values: true,
+      ),
+  ),
+  $exclude-hardcoded-values: true
+);
 
 @function _resolve-theme($theme, $resolvers) {
   $theme: shape.resolve-theme(
