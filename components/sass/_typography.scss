@@ -89,7 +89,7 @@
   @return math.div($px, 16px) * 1rem;
 }
 
-// TODO(b/183680075): Remove when "Roboto Medium"/"Roboto Regular" is updated
+// TODO(b/213328113): Remove when "Roboto Medium"/"Roboto Regular" is updated
 // to "Roboto".
 @function _get-font($font) {
   @if $font == 'Roboto Regular' or $font == 'Roboto Medium' {
