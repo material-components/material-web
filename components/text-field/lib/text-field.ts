@@ -76,7 +76,10 @@ export abstract class TextField extends LitElement implements TextFieldState {
 
   /** @soyTemplate */
   protected getRenderClasses(): ClassInfo {
-    return {};
+    return {
+      'md3-text-field--disabled': this.disabled,
+      'md3-text-field--error': this.error,
+    };
   }
 
   /** @soyTemplate */

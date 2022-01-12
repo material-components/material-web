@@ -12,6 +12,7 @@
 @use '../../sass/tokens';
 @use '../../sass/typography';
 @use '../../sass/var';
+@use './input-theme';
 
 $light-theme: tokens.md-comp-filled-text-field-values();
 $dark-theme: tokens.md-comp-filled-text-field-values(
@@ -29,6 +30,7 @@ $dark-theme: tokens.md-comp-filled-text-field-values(
 );
 
 @function _resolve-theme($theme, $resolvers) {
+  $theme: input-theme.resolve-theme($theme, $resolvers);
   $theme: shape.resolve-theme(
     $theme,
     map.get($resolvers, shape),
@@ -37,7 +39,6 @@ $dark-theme: tokens.md-comp-filled-text-field-values(
   $theme: typography.resolve-theme(
     $theme,
     map.get($resolvers, typography),
-    input-text,
     label-text
   );
 
@@ -74,6 +75,8 @@ $_reference-theme: map.merge(
   $theme: theme.validate-theme-styles($_reference-theme, $theme);
   $theme: _resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, filled-text-field);
+
+  @include input-theme.theme-styles($theme);
 
   $field-theme: (
     active-indicator-color: map.get($theme, active-indicator-color),

@@ -3,34 +3,20 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+$selectors: (
+  disabled: '.md3-text-field--disabled',
+  error: '.md3-text-field--error',
+  focus: ':focus-within',
+  hover: ':hover',
+);
+
 @mixin static-styles() {
   :host {
     @include host;
-  }
-
-  .md3-text-field__input {
-    @include input;
   }
 }
 
 @mixin host() {
   display: inline-flex;
-}
-
-@mixin input() {
-  appearance: none;
-  background: none;
-  border: none;
-  color: currentColor;
-  padding: 0;
-  width: 100%;
-
-  // Remove built-in datepicker icon on Chrome
-  &::-webkit-calendar-picker-indicator {
-    display: none;
-  }
-
-  &:focus {
-    outline: none;
-  }
+  outline: none;
 }
