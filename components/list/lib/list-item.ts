@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, TemplateResult} from 'lit';
-import {property, queryAssignedNodes} from 'lit/decorators';
+import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
+import {property, queryAssignedNodes, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 
 import {ListItemIcon} from './list-item-icon';
@@ -16,41 +16,16 @@ export class ListItem extends LitElement {
   @property({type: String}) trailingSupportingText = '';
 
   @queryAssignedNodes('start', true)
-  protected startElement!: HTMLElement[]|null;
+  protected startElement!: HTMLElement[];
 
-  @queryAssignedNodes('end', true) protected endElement!: HTMLElement[]|null;
+  @queryAssignedNodes('end', true) protected endElement!: HTMLElement[];
 
-  get leadingIcon() {
-    return this.startElement?.find((el) => el instanceof ListItemIcon) ?? null;
-  }
-
-  get leadingAvatar() {
-    return this.startElement?.find(
-               (el) => el.classList.contains('md3-list-item__avatar')) ??
-        null;
-  }
-
-  get leadingThumbnail() {
-    return this.startElement?.find(
-               (el) => el.classList.contains('md3-list-item__thumbnail')) ??
-        null;
-  }
-
-  get leadingImage() {
-    return this.startElement?.find(
-               (el) => el.classList.contains('md3-list-item__image')) ??
-        null;
-  }
-
-  get leadingVideo() {
-    return this.startElement?.find(
-               (el) => el.classList.contains('md3-list-item__video')) ??
-        null;
-  }
-
-  get trailingIcon() {
-    return this.endElement?.find((el) => el instanceof ListItemIcon) ?? null;
-  }
+  @state() protected hasLeadingIcon = false;
+  @state() protected hasTrailingIcon = false;
+  @state() protected hasLeadingAvatar = false;
+  @state() protected hasLeadingThumbnail = false;
+  @state() protected hasLeadingImage = false;
+  @state() protected hasLeadingVideo = false;
 
   /** @soyTemplate */
   override render(): TemplateResult {
@@ -69,12 +44,12 @@ export class ListItem extends LitElement {
     return {
       'md3-list-item--with-one-line': this.supportingText === '',
       'md3-list-item--with-two-lines': this.supportingText !== '',
-      'md3-list-item--with-leading-icon': !!this.leadingIcon,
-      'md3-list-item--with-leading-avatar': !!this.leadingAvatar,
-      'md3-list-item--with-leading-thumbnail': !!this.leadingThumbnail,
-      'md3-list-item--with-leading-image': !!this.leadingImage,
-      'md3-list-item--with-leading-video': !!this.leadingVideo,
-      'md3-list-item--with-trailing-icon': !!this.trailingIcon,
+      'md3-list-item--with-leading-icon': this.hasLeadingIcon,
+      'md3-list-item--with-leading-avatar': this.hasLeadingAvatar,
+      'md3-list-item--with-leading-thumbnail': this.hasLeadingThumbnail,
+      'md3-list-item--with-leading-image': this.hasLeadingImage,
+      'md3-list-item--with-leading-video': this.hasLeadingVideo,
+      'md3-list-item--with-trailing-icon': this.hasTrailingIcon,
     };
   }
 
@@ -123,5 +98,25 @@ export class ListItem extends LitElement {
 
   protected handleSlotChange() {
     this.requestUpdate();
+  }
+
+  override update(changedProperties: PropertyValues<this>) {
+    this.updateItemContext();
+    super.update(changedProperties);
+  }
+
+  private updateItemContext() {
+    this.hasLeadingIcon =
+        this.startElement.some((el) => el instanceof ListItemIcon);
+    this.hasTrailingIcon =
+        this.endElement.some((el) => el instanceof ListItemIcon);
+    this.hasLeadingAvatar = this.startElement.some(
+        (el) => el.classList.contains('md3-list-item__avatar'));
+    this.hasLeadingThumbnail = this.startElement.some(
+        (el) => el.classList.contains('md3-list-item__thumbnail'));
+    this.hasLeadingImage = this.startElement.some(
+        (el) => el.classList.contains('md3-list-item__image'));
+    this.hasLeadingVideo = this.startElement.some(
+        (el) => el.classList.contains('md3-list-item__video'));
   }
 }
