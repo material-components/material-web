@@ -20,13 +20,7 @@ $_selectors: field-theme.$selectors;
     $theme,
     map.get($resolvers, typography),
     label-text,
-    label-text-populated,
-    disabled-label-text,
-    error-label-text,
-    error-focus-label-text,
-    error-hover-label-text,
-    focus-label-text,
-    hover-label-text
+    label-text-populated
   );
 }
 

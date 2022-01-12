@@ -98,6 +98,8 @@ $dark-theme: values(
 }
 
 @mixin theme($theme, $resolvers: resolvers.$material) {
+  // Add resolved tokens so that $theme may specify them.
+  $reference: map.merge($light-theme, _resolve-theme($light-theme, $resolvers));
   $theme: theme.validate-theme($light-theme, $theme);
   $theme: _resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, outlined-field);
