@@ -8,20 +8,17 @@ import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, queryAssignedNodes, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 
-import {ListItemIcon} from './list-item-icon';
-
 /** @soyCompatible */
 export class ListItem extends LitElement {
   @property({type: String}) supportingText = '';
   @property({type: String}) trailingSupportingText = '';
 
-  @queryAssignedNodes('start', true)
-  protected startElement!: HTMLElement[];
+  @queryAssignedNodes('start', true) protected startElement!: HTMLElement[];
 
   @queryAssignedNodes('end', true) protected endElement!: HTMLElement[];
 
-  @state() protected hasLeadingIcon = false;
-  @state() protected hasTrailingIcon = false;
+  @property() hasLeadingIcon = false;
+  @property() hasTrailingIcon = false;
   @state() protected hasLeadingAvatar = false;
   @state() protected hasLeadingThumbnail = false;
   @state() protected hasLeadingImage = false;
@@ -106,10 +103,10 @@ export class ListItem extends LitElement {
   }
 
   private updateItemContext() {
-    this.hasLeadingIcon =
-        this.startElement.some((el) => el instanceof ListItemIcon);
-    this.hasTrailingIcon =
-        this.endElement.some((el) => el instanceof ListItemIcon);
+    this.hasLeadingIcon = this.startElement.some(
+        (el) => el.classList.contains('md3-list-item__icon'));
+    this.hasTrailingIcon = this.endElement.some(
+        (el) => el.classList.contains('md3-list-item__icon'));
     this.hasLeadingAvatar = this.startElement.some(
         (el) => el.classList.contains('md3-list-item__avatar'));
     this.hasLeadingThumbnail = this.startElement.some(
