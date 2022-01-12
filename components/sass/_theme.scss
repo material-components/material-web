@@ -149,7 +149,8 @@
     $theme,
     $require-all: false
   );
-  @return _validate-theme-values($theme);
+
+  @return $theme;
 }
 
 /// Validates a theme's tokens and throws an error if incorrect tokens are
@@ -166,7 +167,7 @@
 ///
 /// @throw If any tokens are invalid or missing.
 /// @param {Map|List} $reference-theme - A complete reference theme Map (or List
-///     of tokens) to validate the user-provided theme.
+///     of tokens) to validate the theme.
 /// @param {Map} $theme - The theme Map to validate.
 /// @return {Map} The validated theme Map.
 @function validate-theme-styles($reference-theme, $theme, $require-all: true) {
@@ -238,36 +239,6 @@
 
   @if list.length($missing-tokens) > 0 {
     @error 'The following required tokens are missing: #{$missing-tokens}.';
-  }
-
-  @return $theme;
-}
-
-/// Validates a theme's values and throws an error if invalid values are
-/// provided.
-///
-/// Only user-provided theme Maps should be validated. Library-provided theme
-/// Maps may use and provide custom properties in their values to internal
-/// mixins such as `theme-styles()`.
-///
-/// @throw If any values are invalid.
-/// @param {Map} $theme - User-provided theme Map to validate.
-/// @return {Map} The validated user-provided theme Map.
-@function _validate-theme-values($theme) {
-  $unsupported-var-tokens: ();
-
-  @each $token, $value in $theme {
-    @if var.is-var($value) {
-      $unsupported-var-tokens: list.append(
-        $unsupported-var-tokens,
-        $token,
-        $separator: comma
-      );
-    }
-  }
-
-  @if list.length($unsupported-var-tokens) > 0 {
-    @error 'var() is not supported for the following theme tokens: #{$unsupported-var-tokens}';
   }
 
   @return $theme;
