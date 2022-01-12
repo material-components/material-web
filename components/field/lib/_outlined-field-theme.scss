@@ -6,45 +6,79 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.mdc-*' should only be used in this project.
 
-@use 'sass:color';
 @use 'sass:map';
-@use '@material/shape/shape';
-@use '@material/theme/color-palette';
+@use 'sass:string';
 @use '@material/theme/state';
-@use '@material/theme/theme-color';
 @use '../../sass/resolvers';
 @use '../../sass/theme';
+@use '../../sass/tokens';
 @use '../../sass/var';
 @use './content-theme';
 @use './field-theme';
 @use './label-theme';
 
-$_selectors: field-theme.$selectors;
-
-$_error-state-content: color.scale(theme-color.$error, $blackness: 25%);
-
-$_base-light-theme: map.merge(
-  field-theme.$light-theme,
-  content-theme.$light-theme
+$_default-deps: (
+  md-sys-color: tokens.md-sys-color-values-light(),
+  md-sys-shape: tokens.md-sys-shape-values(),
+  md-sys-state: tokens.md-sys-state-values(),
+  md-sys-typescale: tokens.md-sys-typescale-values(),
 );
-$_base-light-theme: map.merge($_base-light-theme, label-theme.$light-theme);
 
-$light-theme: map.merge(
-  $_base-light-theme,
-  (
-    disabled-outline-color: color-palette.$grey-800,
-    disabled-outline-opacity: 0.12,
-    error-hover-outline-color: $_error-state-content,
-    error-outline-color: theme-color.$error,
-    focus-outline-color: theme-color.$primary,
-    focus-outline-width: 2px,
-    hover-outline-color: color-palette.$grey-900,
-    outline-color: color-palette.$grey-600,
-    outline-label-padding: 4px,
-    outline-width: 1px,
-    shape: shape.$small-component-radius,
-  )
-);
+@function values($deps: $_default-deps, $exclude-hardcoded-values: false) {
+  $text-field-values: tokens.md-comp-outlined-text-field-values(
+    $deps,
+    $exclude-hardcoded-values
+  );
+  // TODO(b/203778922): Remove *-type when type composite tokens are removed
+  // Remove unused tokens.
+  $values: map.remove(
+    $text-field-values,
+    caret-color,
+    disabled-input-text-color,
+    disabled-input-text-opacity,
+    error-focus-caret-color,
+    error-focus-input-text-color,
+    error-hover-input-text-color,
+    error-input-text-color,
+    focus-input-text-color,
+    hover-input-text-color,
+    input-text-color,
+    input-text-font,
+    input-text-line-height,
+    input-text-size,
+    input-text-tracking,
+    input-text-type,
+    input-text-weight,
+    label-text-type,
+    supporting-text-type
+  );
+
+  // Add missing tokens.
+  $values: map.merge(
+    $values,
+    (
+      container-padding-horizontal: if($exclude-hardcoded-values, null, 16px),
+      container-padding-vertical: if($exclude-hardcoded-values, null, 8px),
+      content-color: map.get($text-field-values, input-text-color),
+      disabled-content-color:
+        map.get($text-field-values, disabled-input-text-color),
+      disabled-content-opacity:
+        map.get($text-field-values, disabled-input-text-opacity),
+      error-content-color: map.get($text-field-values, error-input-text-color),
+      error-focus-content-color:
+        map.get($text-field-values, error-focus-input-text-color),
+      error-hover-content-color:
+        map.get($text-field-values, error-hover-input-text-color),
+      focus-content-color: map.get($text-field-values, focus-input-text-color),
+      hover-content-color: map.get($text-field-values, hover-input-text-color),
+      outline-label-padding: if($exclude-hardcoded-values, null, 4px),
+    )
+  );
+
+  @return $values;
+}
+
+$light-theme: values();
 
 @function _resolve-theme($theme, $resolvers) {
   @return label-theme.resolve-theme($theme, $resolvers);
@@ -58,6 +92,8 @@ $light-theme: map.merge(
   @include theme.emit-theme-vars($theme);
 }
 
+$_selectors: field-theme.$selectors;
+
 @mixin theme-styles($theme, $resolvers: resolvers.$material) {
   $theme: theme.validate-theme-styles($light-theme, $theme);
   $theme: _resolve-theme($theme, $resolvers);
@@ -70,6 +106,7 @@ $light-theme: map.merge(
   @include _container-padding-horizontal(
     map.get($theme, container-padding-horizontal)
   );
+  @include _container-shape(map.get($theme, container-shape));
   @include _outline-color(
     (
       default: map.get($theme, outline-color),
@@ -81,6 +118,7 @@ $light-theme: map.merge(
   @include _outline-error-color(
     (
       default: map.get($theme, error-outline-color),
+      focus: map.get($theme, error-focus-outline-color),
       hover: map.get($theme, error-hover-outline-color),
     )
   );
@@ -96,10 +134,11 @@ $light-theme: map.merge(
   @include _outline-width(
     (
       default: map.get($theme, outline-width),
+      disabled: map.get($theme, disabled-outline-width),
       focus: map.get($theme, focus-outline-width),
+      hover: map.get($theme, hover-outline-width),
     )
   );
-  @include _shape(map.get($theme, shape));
 }
 
 @mixin _container-padding-horizontal($padding) {
@@ -110,6 +149,18 @@ $light-theme: map.merge(
     // needs to add start/end padding to add extra space as needed for shape and
     // label padding.
     min-width: $padding;
+  }
+}
+
+@mixin _container-shape($shape) {
+  .mdc-field__outline {
+    border-radius: $shape;
+  }
+
+  .mdc-field__outline-start,
+  .mdc-field__start::before,
+  .mdc-field__end::after {
+    padding-inline-start: $shape;
   }
 }
 
@@ -192,7 +243,18 @@ $light-theme: map.merge(
 }
 
 @mixin _outline-width($widths) {
-  @include _set-outline-width(state.get-default-state($widths));
+  @include state.enabled($_selectors) {
+    @include _set-outline-width(state.get-default-state($widths));
+  }
+
+  @include state.disabled($_selectors) {
+    @include _set-outline-width(state.get-disabled-state($widths));
+  }
+
+  @include state.hover($_selectors) {
+    @include _set-outline-width(state.get-hover-state($widths));
+  }
+
   @include _set-outline-focus-width(state.get-focus-state($widths));
 }
 
@@ -218,17 +280,5 @@ $light-theme: map.merge(
   .mdc-field__outline-panel-active::before,
   .mdc-field__outline-panel-active::after {
     border-width: $width;
-  }
-}
-
-@mixin _shape($shape) {
-  .mdc-field__outline {
-    border-radius: $shape;
-  }
-
-  .mdc-field__outline-start,
-  .mdc-field__start::before,
-  .mdc-field__end::after {
-    padding-inline-start: $shape;
   }
 }

@@ -6,42 +6,27 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.mdc-*' should only be used in this project.
 
-@use 'sass:color';
 @use 'sass:map';
 @use 'sass:meta';
 @use 'sass:string';
-@use '@material/theme/color-palette';
 @use '@material/theme/state';
-@use '@material/theme/theme-color';
 @use '../../sass/typography';
 @use './field-theme';
 
 $_selectors: field-theme.$selectors;
 
-$_error-state-content: color.scale(theme-color.$error, $blackness: 25%);
-
-$light-theme: (
-  disabled-label-text-color: color-palette.$grey-700,
-  disabled-label-text-opacity: 0.38,
-  error-hover-label-text-color: $_error-state-content,
-  error-label-text-color: theme-color.$error,
-  floating-label-text-line-height: 16px,
-  floating-label-text-size: 12px,
-  focus-label-text-color: theme-color.$primary,
-  hover-label-text-color: color-palette.$grey-900,
-  label-text-color: color-palette.$grey-700,
-  label-text-font: string.unquote('Roboto, sans-serif'),
-  label-text-line-height: 24px,
-  label-text-size: 16px,
-  label-text-tracking: 0.5px,
-  label-text-weight: 400,
-);
-
 @function resolve-theme($theme, $resolvers) {
   @return typography.resolve-theme(
     $theme,
     map.get($resolvers, typography),
-    label-text
+    label-text,
+    label-text-populated,
+    disabled-label-text,
+    error-label-text,
+    error-focus-label-text,
+    error-hover-label-text,
+    focus-label-text,
+    hover-label-text
   );
 }
 
@@ -57,6 +42,7 @@ $light-theme: (
   @include _label-error-color(
     (
       default: map.get($theme, error-label-text-color),
+      focus: map.get($theme, error-focus-label-text-color),
       hover: map.get($theme, error-hover-label-text-color),
     )
   );
@@ -75,8 +61,8 @@ $light-theme: (
   );
   @include _label-typography-floating(
     (
-      size: map.get($theme, floating-label-text-size),
-      line-height: map.get($theme, floating-label-text-line-height),
+      size: map.get($theme, label-text-populated-size),
+      line-height: map.get($theme, label-text-populated-line-height),
     )
   );
   @include _label-opacity(

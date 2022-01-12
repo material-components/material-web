@@ -46,6 +46,7 @@ export class FilledField extends Field implements FilledFieldState {
     /** @styleMap */
     const strokeStyle = {transformOrigin: this.strokeTransformOrigin};
     return html`
+      <span class="mdc-field__state-layer"></span>
       ${super.renderContainerContents()}
       <span class="mdc-field__active-indicator"
         style="${styleMap(strokeStyle)}"></span>

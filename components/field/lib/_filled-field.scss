@@ -20,14 +20,18 @@ $_animation-duration: 150ms;
     }
 
     @include state.hover(field-theme.$selectors) {
-      .mdc-field__container {
-        @include container-hover;
+      .mdc-field__state-layer {
+        @include container-state-layer-hover;
       }
     }
 
     .mdc-field__label--floating {
       @include label-floating;
     }
+  }
+
+  .mdc-field__state-layer {
+    @include container-state-layer;
   }
 
   .mdc-field__active-indicator {
@@ -40,6 +44,9 @@ $_animation-duration: 150ms;
 }
 
 @mixin container() {
+  // If bottom corner radii are set, prevent the active indicator from
+  // overflowing.
+  overflow: hidden;
   // Needed for negative z-index below to place background and state layer
   // behind content.
   z-index: 0;
@@ -63,10 +70,17 @@ $_animation-duration: 150ms;
   }
 }
 
-@mixin container-hover() {
-  &::after {
-    visibility: visible;
-  }
+@mixin container-state-layer() {
+  border-radius: inherit;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  visibility: hidden;
+  z-index: -1;
+}
+
+@mixin container-state-layer-hover() {
+  visibility: visible;
 }
 
 @mixin label-floating() {

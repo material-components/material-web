@@ -7,23 +7,25 @@
 // Selector '.mdc-*' should only be used in this project.
 
 @use 'sass:map';
-@use '@material/theme/color-palette';
 @use '@material/theme/state';
 @use './field-theme';
 
 $_selectors: field-theme.$selectors;
 
-$light-theme: (
-  content-color: color-palette.$grey-800,
-  disabled-content-color: color-palette.$grey-800,
-  disabled-content-opacity: 0.38,
-);
-
 @mixin theme-styles($theme) {
   @include _content-color(
     (
       default: map.get($theme, content-color),
+      hover: map.get($theme, hover-content-color),
+      focus: map.get($theme, focus-content-color),
       disabled: map.get($theme, disabled-content-color),
+    )
+  );
+  @include _content-error-color(
+    (
+      default: map.get($theme, error-content-color),
+      hover: map.get($theme, error-hover-content-color),
+      focus: map.get($theme, error-focus-content-color),
     )
   );
   @include _content-opacity(
@@ -38,8 +40,22 @@ $light-theme: (
     @include _set-content-color(state.get-default-state($colors));
   }
 
+  @include state.hover($_selectors) {
+    @include _set-content-color(state.get-hover-state($colors));
+  }
+
+  @include state.focus($_selectors) {
+    @include _set-content-color(state.get-focus-state($colors));
+  }
+
   @include state.disabled($_selectors) {
     @include _set-content-color(state.get-disabled-state($colors));
+  }
+}
+
+@mixin _content-error-color($colors) {
+  @include state.error($_selectors) {
+    @include _content-color($colors);
   }
 }
 

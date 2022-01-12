@@ -6,53 +6,90 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.mdc-*' should only be used in this project.
 
-@use 'sass:color';
+@use 'sass:list';
 @use 'sass:map';
-@use '@material/theme/color-palette';
-@use '@material/shape/shape';
+@use 'sass:meta';
+@use 'sass:string';
 @use '@material/theme/state';
-@use '@material/theme/theme-color';
 @use '../../sass/resolvers';
+@use '../../sass/shape';
 @use '../../sass/theme';
+@use '../../sass/tokens';
 @use '../../sass/var';
 @use './content-theme';
 @use './field-theme';
 @use './label-theme';
 
-$_selectors: field-theme.$selectors;
-
-$_error-state-content: color.scale(theme-color.$error, $blackness: 25%);
-
-$_base-light-theme: map.merge(
-  field-theme.$light-theme,
-  content-theme.$light-theme
+$_default-deps: (
+  md-sys-color: tokens.md-sys-color-values-light(),
+  md-sys-shape: tokens.md-sys-shape-values(),
+  md-sys-state: tokens.md-sys-state-values(),
+  md-sys-typescale: tokens.md-sys-typescale-values(),
 );
-$_base-light-theme: map.merge($_base-light-theme, label-theme.$light-theme);
 
-$light-theme: map.merge(
-  $_base-light-theme,
-  (
-    container-color: color-palette.$grey-100,
-    container-padding-vertical: 8px,
-    disabled-container-color: color-palette.$grey-400,
-    disabled-container-opacity: 0.04,
-    disabled-active-indicator-color: color-palette.$grey-700,
-    disabled-active-indicator-opacity: 0.38,
-    error-hover-active-indicator-color: $_error-state-content,
-    error-active-indicator-color: theme-color.$error,
-    focus-active-indicator-color: theme-color.$primary,
-    focus-active-indicator-width: 2px,
-    hover-state-layer-color: color-palette.$grey-800,
-    hover-state-layer-opacity: 0.08,
-    hover-active-indicator-color: color-palette.$grey-900,
-    shape: shape.$small-component-radius,
-    active-indicator-color: color-palette.$grey-700,
-    active-indicator-width: 1px,
-  )
-);
+@function values($deps: $_default-deps, $exclude-hardcoded-values: false) {
+  $text-field-values: tokens.md-comp-filled-text-field-values(
+    $deps,
+    $exclude-hardcoded-values
+  );
+  // TODO(b/203778922): Remove *-type when type composite tokens are removed
+  // Remove unused tokens.
+  $values: map.remove(
+    $text-field-values,
+    caret-color,
+    disabled-input-text-color,
+    disabled-input-text-opacity,
+    error-focus-caret-color,
+    error-focus-input-text-color,
+    error-hover-input-text-color,
+    error-input-text-color,
+    focus-input-text-color,
+    hover-input-text-color,
+    input-text-color,
+    input-text-font,
+    input-text-line-height,
+    input-text-size,
+    input-text-tracking,
+    input-text-type,
+    input-text-weight,
+    label-text-type,
+    supporting-text-type
+  );
+
+  // Add missing tokens.
+  $values: map.merge(
+    $values,
+    (
+      container-padding-horizontal: if($exclude-hardcoded-values, null, 16px),
+      container-padding-vertical: if($exclude-hardcoded-values, null, 8px),
+      content-color: map.get($text-field-values, input-text-color),
+      disabled-content-color:
+        map.get($text-field-values, disabled-input-text-color),
+      disabled-content-opacity:
+        map.get($text-field-values, disabled-input-text-opacity),
+      error-content-color: map.get($text-field-values, error-input-text-color),
+      error-focus-content-color:
+        map.get($text-field-values, error-focus-input-text-color),
+      error-hover-content-color:
+        map.get($text-field-values, error-hover-input-text-color),
+      focus-content-color: map.get($text-field-values, focus-input-text-color),
+      hover-content-color: map.get($text-field-values, hover-input-text-color),
+    )
+  );
+
+  @return $values;
+}
+
+$light-theme: values();
 
 @function _resolve-theme($theme, $resolvers) {
-  @return label-theme.resolve-theme($theme, $resolvers);
+  $theme: label-theme.resolve-theme($theme, $resolvers);
+  $theme: shape.resolve-theme(
+    $theme,
+    map.get($resolvers, shape),
+    container-shape
+  );
+  @return $theme;
 }
 
 @mixin theme($theme, $resolvers: resolvers.$material) {
@@ -62,6 +99,8 @@ $light-theme: map.merge(
 
   @include theme.emit-theme-vars($theme);
 }
+
+$_selectors: field-theme.$selectors;
 
 @mixin theme-styles($theme, $resolvers: resolvers.$material) {
   $theme: theme.validate-theme-styles($light-theme, $theme);
@@ -83,7 +122,7 @@ $light-theme: map.merge(
   @include _active-indicator-error-color(
     (
       default: map.get($theme, error-active-indicator-color),
-      focus: map.get($theme, error-active-indicator-color),
+      focus: map.get($theme, error-focus-active-indicator-color),
       hover: map.get($theme, error-hover-active-indicator-color),
     )
   );
@@ -92,23 +131,23 @@ $light-theme: map.merge(
       disabled: map.get($theme, disabled-active-indicator-opacity),
     )
   );
-  @include _active-indicator-width(
+  @include _active-indicator-height(
     (
-      default: map.get($theme, active-indicator-width),
-      focus: map.get($theme, focus-active-indicator-width),
+      default: map.get($theme, active-indicator-height),
+      disabled: map.get($theme, disabled-active-indicator-height),
+      focus: map.get($theme, focus-active-indicator-height),
+      hover: map.get($theme, hover-active-indicator-height),
     )
   );
   @include _container-color(
     (
       default: map.get($theme, container-color),
       disabled: map.get($theme, disabled-container-color),
-      hover: map.get($theme, hover-state-layer-color),
     )
   );
   @include _container-opacity(
     (
       disabled: map.get($theme, disabled-container-opacity),
-      hover: map.get($theme, hover-state-layer-opacity),
     )
   );
   @include _container-padding-horizontal(
@@ -117,10 +156,37 @@ $light-theme: map.merge(
   @include _container-padding-vertical(
     map.get($theme, container-padding-vertical)
   );
-  @include _floating-label-text-line-height(
-    map.get($theme, floating-label-text-line-height)
+  @include _container-shape(
+    (
+      start-start: map.get($theme, container-shape-start-start),
+      start-end: map.get($theme, container-shape-start-end),
+      end-end: map.get($theme, container-shape-end-end),
+      end-start: map.get($theme, container-shape-end-start),
+    )
   );
-  @include _shape(map.get($theme, shape));
+  @include _floating-label-text-line-height(
+    map.get($theme, label-text-populated-line-height)
+  );
+  @include _state-layer-color(
+    (
+      hover: map.get($theme, hover-state-layer-color),
+    )
+  );
+  @include _state-layer-error-color(
+    (
+      hover: map.get($theme, error-hover-state-layer-color),
+    )
+  );
+  @include _state-layer-opacity(
+    (
+      hover: map.get($theme, hover-state-layer-opacity),
+    )
+  );
+  @include _state-layer-error-opacity(
+    (
+      hover: map.get($theme, error-hover-state-layer-opacity),
+    )
+  );
 }
 
 @mixin _active-indicator-color($colors) {
@@ -178,15 +244,37 @@ $light-theme: map.merge(
   }
 }
 
-@mixin _active-indicator-width($widths) {
-  .mdc-field__active-indicator {
-    // Default/focus are on different elements and do not need state selectors
-    &::before {
-      border-bottom-width: state.get-default-state($widths);
-    }
+@mixin _active-indicator-height($heights) {
+  @include state.enabled($_selectors) {
+    @include _set-non-focus-active-indicator-height(
+      state.get-default-state($heights)
+    );
+  }
 
+  @include state.disabled($_selectors) {
+    @include _set-non-focus-active-indicator-height(
+      state.get-disabled-state($heights)
+    );
+  }
+
+  @include state.hover($_selectors) {
+    @include _set-non-focus-active-indicator-height(
+      state.get-hover-state($heights)
+    );
+  }
+
+  .mdc-field__active-indicator {
     &::after {
-      border-bottom-width: state.get-focus-state($widths);
+      // Focus is on a different element and does not need state selectors
+      border-bottom-width: state.get-focus-state($heights);
+    }
+  }
+}
+
+@mixin _set-non-focus-active-indicator-height($height) {
+  .mdc-field__active-indicator {
+    &::before {
+      border-bottom-width: $height;
     }
   }
 }
@@ -195,9 +283,6 @@ $light-theme: map.merge(
   @include state.enabled($_selectors) {
     @include _set-container-color(state.get-default-state($colors));
   }
-
-  // Hover is on a separate element and does not need a hover selector
-  @include _set-container-hover-color(state.get-hover-state($colors));
 
   @include state.disabled($_selectors) {
     @include _set-container-color(state.get-disabled-state($colors));
@@ -212,21 +297,10 @@ $light-theme: map.merge(
   }
 }
 
-@mixin _set-container-hover-color($color) {
-  .mdc-field__container {
-    &::after {
-      background: $color;
-    }
-  }
-}
-
 @mixin _container-opacity($opacities) {
   @include state.enabled($_selectors) {
     @include _set-container-opacity(state.get-default-state($opacities));
   }
-
-  // Hover is on a separate element and does not need a hover selector
-  @include _set-container-hover-opacity(state.get-hover-state($opacities));
 
   @include state.disabled($_selectors) {
     @include _set-container-opacity(state.get-disabled-state($opacities));
@@ -236,14 +310,6 @@ $light-theme: map.merge(
 @mixin _set-container-opacity($opacity) {
   .mdc-field__container {
     &::before {
-      opacity: $opacity;
-    }
-  }
-}
-
-@mixin _set-container-hover-opacity($opacity) {
-  .mdc-field__container {
-    &::after {
       opacity: $opacity;
     }
   }
@@ -266,6 +332,15 @@ $light-theme: map.merge(
   }
 }
 
+@mixin _container-shape($shape) {
+  .mdc-field__container {
+    border-start-start-radius: map.get($shape, start-start);
+    border-start-end-radius: map.get($shape, start-end);
+    border-end-end-radius: map.get($shape, end-end);
+    border-end-start-radius: map.get($shape, end-start);
+  }
+}
+
 @mixin _floating-label-text-line-height($line-height) {
   &:not(.mdc-field--no-label) {
     .mdc-field__middle {
@@ -274,9 +349,38 @@ $light-theme: map.merge(
   }
 }
 
-@mixin _shape($shape) {
-  .mdc-field__container {
-    border-start-start-radius: $shape;
-    border-start-end-radius: $shape;
+@mixin _state-layer-color($colors) {
+  @include state.hover($_selectors) {
+    @include _set-state-layer-color(state.get-hover-state($colors));
+  }
+}
+
+@mixin _set-state-layer-color($color) {
+  .mdc-field__state-layer {
+    background: $color;
+  }
+}
+
+@mixin _state-layer-error-color($colors) {
+  @include state.error($_selectors) {
+    @include _state-layer-color($colors);
+  }
+}
+
+@mixin _state-layer-opacity($opacities) {
+  @include state.hover($_selectors) {
+    @include _set-state-layer-opactiy(state.get-hover-state($opacities));
+  }
+}
+
+@mixin _set-state-layer-opactiy($opacity) {
+  .mdc-field__state-layer {
+    opacity: $opacity;
+  }
+}
+
+@mixin _state-layer-error-opacity($opacities) {
+  @include state.error($_selectors) {
+    @include _state-layer-opacity($opacities);
   }
 }

@@ -206,6 +206,7 @@
   }
 
   @if $require-all {
+    // TODO(b/203778922): Remove when type composite tokens are removed
     $ignore-suffix: (
       // Ignore composite font tokens
       '-type'
