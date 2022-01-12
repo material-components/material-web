@@ -15,8 +15,7 @@ export class ListItem extends LitElement {
   @property({type: String}) supportingText = '';
   @property({type: String}) trailingSupportingText = '';
 
-  @queryAssignedNodes('start', true)
-  protected startElement!: HTMLElement[];
+  @queryAssignedNodes('start', true) protected startElement!: HTMLElement[];
 
   @queryAssignedNodes('end', true) protected endElement!: HTMLElement[];
 
