@@ -35,10 +35,10 @@ $light-theme: (
   badge-size: 6px,
   container-color: theme-color.$surface,
   container-elevation: 1,
-  container-surface-tint-layer-color: null,
   container-height: 80px,
   container-shadow-color: #000,
   container-shape: 0,
+  container-surface-tint-layer-color: null,
   focus-state-layer-opacity: 0.24,
   hover-state-layer-opacity: 0.16,
   icon-size: 24px,
@@ -71,7 +71,7 @@ $light-theme: (
 );
 
 @mixin theme($theme, $resolvers: resolvers.$material) {
-  @include theme.validate-theme($light-theme, $theme);
+  $theme: theme.validate-theme($light-theme, $theme);
   @if shadow-dom.$css-selector-fallback-declarations {
     @include theme-styles($theme);
   }

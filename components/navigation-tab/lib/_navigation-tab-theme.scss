@@ -388,31 +388,31 @@ $light-theme: (
 }
 
 @mixin _large-badge-label-font-family($font-family) {
-  .md3-navigation-tab__badge-large {
+  .md3-navigation-tab__badge-value {
     font-family: $font-family;
   }
 }
 
 @mixin _large-badge-label-font-size($font-size) {
-  .md3-navigation-tab__badge-large {
+  .md3-navigation-tab__badge-value {
     font-size: $font-size;
   }
 }
 
 @mixin _large-badge-label-letter-spacing($letter-spacing) {
-  .md3-navigation-tab__badge-large {
+  .md3-navigation-tab__badge-value {
     letter-spacing: $letter-spacing;
   }
 }
 
 @mixin _large-badge-label-line-height($line-height) {
-  .md3-navigation-tab__badge-large {
+  .md3-navigation-tab__badge-value {
     line-height: $line-height;
   }
 }
 
 @mixin _large-badge-label-weight($weight) {
-  .md3-navigation-tab__badge-large {
+  .md3-navigation-tab__badge-value {
     font-weight: $weight;
   }
 }

@@ -32,7 +32,9 @@ export class NavigationBar extends BaseElement implements
   @property({type: Boolean}) hideInactiveLabels = false;
   tabs: NavigationTab[] = [];
 
-  @queryAssignedNodes('', true, '*') protected tabsSlot!: HTMLElement[];
+  // Needed for lit-to-wiz.
+  // tslint:disable-next-line:deprecation
+  @queryAssignedNodes('', true, '*') protected tabsElement!: HTMLElement[];
 
   /** @soyPrefixAttribute */  // tslint:disable-next-line:no-new-decorators
   @ariaProperty
@@ -52,7 +54,9 @@ export class NavigationBar extends BaseElement implements
             @keydown="${this.handleKeydown}"
             @navigation-tab-interaction="${this.handleNavigationTabInteraction}"
             @navigation-tab-rendered=${this.onNavigationTabConnected}
-          ><slot></slot></div>`;
+          ><div class="md3-elevation-overlay"
+        ></div><div class="md3-navigation-bar__tabs-slot-container"
+        ><slot></slot></div></div>`;
   }
 
   override firstUpdated() {
@@ -86,9 +90,9 @@ export class NavigationBar extends BaseElement implements
   }
 
   layout() {
-    if (!this.tabsSlot) return;
+    if (!this.tabsElement) return;
     const navTabs: NavigationTab[] = [];
-    for (const node of this.tabsSlot) {
+    for (const node of this.tabsElement) {
       if (this.isNavigationTab(node)) {
         navTabs.push(node);
       }
