@@ -15,6 +15,7 @@ $selectors: (
 
 $light-theme: (
   container-height: 56px,
+  container-color: transparent,
   label-text-font: typography.get-font(body1),
   label-text-size: 16px,
   label-text-tracking: typography.px-to-rem(0.5px),
@@ -29,7 +30,7 @@ $light-theme: (
   trailing-supporting-text-size: 12px,
   trailing-supporting-text-tracking: typography.px-to-rem(0.25px),
   trailing-supporting-text-weight: 300,
-  trailing-supporting-text-color: #444746,
+  trailing-supporting-text-color: #646766,
   icon-color: #444746,
 );
 
@@ -49,6 +50,12 @@ $light-theme: (
   $theme: theme.validate-theme-styles($light-theme, $theme);
   $theme: _resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, list);
+
+  @include _set_container-color(
+    (
+      default: map.get($theme, container-color),
+    )
+  );
 
   @include _set-label-text-typography(
     (
@@ -103,6 +110,12 @@ $light-theme: (
 
   $container-height: map.get($theme, container-height);
   @include _set-height($container-height);
+}
+
+@mixin _set-container-color($colors) {
+  @include state.enabled($selectors) {
+    @include _set-container-background-color(state.get-default-state($colors));
+  }
 }
 
 @mixin _set-label-text-typography($typography-map) {
@@ -183,6 +196,10 @@ $light-theme: (
   height: $height;
 }
 
+@mixin _set-container-background-color($color) {
+  background-color: $color;
+}
+
 @mixin _set-label-text-color($color) {
   .md3-list-item__label-text {
     color: $color;
@@ -196,7 +213,7 @@ $light-theme: (
 }
 
 @mixin _set-trailing-supporting-text-color($color) {
-  .md3-list-item__supporting-text {
+  .md3-list-item__trailing-supporting-text {
     color: $color;
   }
 }

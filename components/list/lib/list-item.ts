@@ -29,6 +29,7 @@ export class ListItem extends LitElement {
     // TODO(b/182405623): restore whitespace
     return html`
       <li
+          tabindex="0"
           class="md3-list-item ${classMap(this.getRenderClasses())}"><!--
         -->${this.renderStart()}<!--
         -->${this.renderBody()}<!--
