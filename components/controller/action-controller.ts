@@ -6,8 +6,6 @@
 
 import {ReactiveController, ReactiveControllerHost} from 'lit';
 
-import {bound} from '../decorators/bound';
-
 /**
  * Enumeration to keep track of the lifecycle of a touch event.
  */
@@ -274,99 +272,98 @@ export class ActionController implements ReactiveController {
   /**
    * Pointer down event handler.
    */
-  @bound
-  pointerDown(e: PointerEvent) {
-    if (!this.shouldRespondToEvent(e) || this.phase !== Phase.INACTIVE) {
-      return;
-    }
-    if (this.isTouch(e)) {
-      // after a longpress contextmenu event, an extra `pointerdown` can be
-      // dispatched to the pressed element. Check that the down is within bounds
-      // of the element in this case.
-      if (this.checkBoundsAfterContextMenu && !this.inBounds(e)) {
-        return;
+  pointerDown =
+      (e: PointerEvent) => {
+        if (!this.shouldRespondToEvent(e) || this.phase !== Phase.INACTIVE) {
+          return;
+        }
+        if (this.isTouch(e)) {
+          // after a longpress contextmenu event, an extra `pointerdown` can be
+          // dispatched to the pressed element. Check that the down is within
+          // bounds of the element in this case.
+          if (this.checkBoundsAfterContextMenu && !this.inBounds(e)) {
+            return;
+          }
+          this.checkBoundsAfterContextMenu = false;
+          this.lastPositionEvent = e;
+          this.setPhase(Phase.TOUCH_DELAY);
+          this.touchTimer = setTimeout(() => {
+            this.touchDelayFinished();
+          }, TOUCH_DELAY_MS);
+        } else {
+          const leftButtonPressed = e.buttons === 1;
+          if (!leftButtonPressed ||
+              (this.ignoreClicksWithModifiers && this.eventHasModifiers(e))) {
+            return;
+          }
+          this.setPhase(Phase.WAITING_FOR_MOUSE_CLICK);
+          this.beginPress(e);
+        }
       }
-      this.checkBoundsAfterContextMenu = false;
-      this.lastPositionEvent = e;
-      this.setPhase(Phase.TOUCH_DELAY);
-      this.touchTimer = setTimeout(() => {
-        this.touchDelayFinished();
-      }, TOUCH_DELAY_MS);
-    } else {
-      const leftButtonPressed = e.buttons === 1;
-      if (!leftButtonPressed ||
-          (this.ignoreClicksWithModifiers && this.eventHasModifiers(e))) {
-        return;
-      }
-      this.setPhase(Phase.WAITING_FOR_MOUSE_CLICK);
-      this.beginPress(e);
-    }
-  }
 
   /**
    * Pointer up event handler.
    */
-  @bound
-  pointerUp(e: PointerEvent) {
-    if (!this.isTouch(e) || !this.shouldRespondToEvent(e)) {
-      return;
-    }
-    if (this.phase === Phase.HOLDING) {
-      this.waitForClick();
-    } else if (this.phase === Phase.TOUCH_DELAY) {
-      this.setPhase(Phase.RELEASING);
-      this.beginPress();
-      this.waitForClick();
-    }
-  }
+  pointerUp =
+      (e: PointerEvent) => {
+        if (!this.isTouch(e) || !this.shouldRespondToEvent(e)) {
+          return;
+        }
+        if (this.phase === Phase.HOLDING) {
+          this.waitForClick();
+        } else if (this.phase === Phase.TOUCH_DELAY) {
+          this.setPhase(Phase.RELEASING);
+          this.beginPress();
+          this.waitForClick();
+        }
+      }
 
   /**
    * Click event handler.
    */
-  @bound
-  click(e: MouseEvent) {
-    if (this.disabled ||
-        (this.ignoreClicksWithModifiers && this.eventHasModifiers(e))) {
-      return;
-    }
-    if (this.phase === Phase.WAITING_FOR_MOUSE_CLICK) {
-      this.endPress();
-      this.setPhase(Phase.INACTIVE);
-      return;
-    }
+  click =
+      (e: MouseEvent) => {
+        if (this.disabled ||
+            (this.ignoreClicksWithModifiers && this.eventHasModifiers(e))) {
+          return;
+        }
+        if (this.phase === Phase.WAITING_FOR_MOUSE_CLICK) {
+          this.endPress();
+          this.setPhase(Phase.INACTIVE);
+          return;
+        }
 
-    // keyboard synthesized click event
-    if (this.phase === Phase.INACTIVE && !this.pressed) {
-      this.press();
-    }
-  }
+        // keyboard synthesized click event
+        if (this.phase === Phase.INACTIVE && !this.pressed) {
+          this.press();
+        }
+      }
 
   /**
    * Pointer leave event handler.
    */
-  @bound
-  pointerLeave(e: PointerEvent) {
-    // cancel a held press that moves outside the element
-    if (this.shouldRespondToEvent(e) && !this.isTouch(e) && this.pressed) {
-      this.cancelPress();
-    }
-  }
+  pointerLeave =
+      (e: PointerEvent) => {
+        // cancel a held press that moves outside the element
+        if (this.shouldRespondToEvent(e) && !this.isTouch(e) && this.pressed) {
+          this.cancelPress();
+        }
+      }
 
   /**
    * Pointer cancel event handler.
    */
-  @bound
-  pointerCancel(e: PointerEvent) {
-    if (this.shouldRespondToEvent(e)) {
-      this.cancelPress();
-    }
-  }
+  pointerCancel =
+      (e: PointerEvent) => {
+        if (this.shouldRespondToEvent(e)) {
+          this.cancelPress();
+        }
+      }
 
   /**
    * Contextmenu event handler.
    */
-  @bound
-  contextMenu() {
+  contextMenu = () => {
     if (!this.disabled) {
       this.checkBoundsAfterContextMenu = true;
       this.cancelPress();
