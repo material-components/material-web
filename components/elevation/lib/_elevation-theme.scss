@@ -79,9 +79,9 @@ $_flat-theme: map.merge(
       $box-shadow,
       var.create(elevation-box-shadow-for-gss)
     );
+    #{var.create-name(elevation-box-shadow-for-gss)}: $fallback;
 
     box-shadow: $gss-custom-prop;
-    #{var.create-name(elevation-box-shadow-for-gss)}: $fallback;
   } @else {
     box-shadow: $box-shadow;
   }
