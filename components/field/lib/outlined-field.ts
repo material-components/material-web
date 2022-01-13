@@ -20,7 +20,7 @@ export class OutlinedField extends Field implements OutlinedFieldState {
   protected override getRenderClasses(): ClassInfo {
     return {
       ...super.getRenderClasses(),
-      'mdc-field--outlined': true,
+      'md3-field--outlined': true,
     };
   }
 
@@ -35,14 +35,14 @@ export class OutlinedField extends Field implements OutlinedFieldState {
   /** @soyTemplate */
   protected renderOutline(): TemplateResult {
     return html`
-      <span class="mdc-field__outline">
-        <span class="mdc-field__outline-start"></span>
-        <span class="mdc-field__outline-notch">
-          <span class="mdc-field__outline-panel-inactive"></span>
-          <span class="mdc-field__outline-panel-active"></span>
+      <span class="md3-field__outline">
+        <span class="md3-field__outline-start"></span>
+        <span class="md3-field__outline-notch">
+          <span class="md3-field__outline-panel-inactive"></span>
+          <span class="md3-field__outline-panel-active"></span>
           ${this.renderLabel(LabelType.FLOATING)}
         </span>
-        <span class="mdc-field__outline-end"></span>
+        <span class="md3-field__outline-end"></span>
       </span>
     `;
   }

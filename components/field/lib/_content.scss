@@ -3,29 +3,26 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
-
 @use 'sass:math';
 @use '@material/animation/animation';
 
 @mixin static-styles() {
-  .mdc-field__start,
-  .mdc-field__middle,
-  .mdc-field__end {
+  .md3-field__start,
+  .md3-field__middle,
+  .md3-field__end {
     @include section;
   }
 
-  .mdc-field__middle {
+  .md3-field__middle {
     @include middle;
   }
 
-  .mdc-field__content {
+  .md3-field__content {
     @include content;
 
-    .mdc-field--no-label &,
-    .mdc-field--focus &,
-    .mdc-field--populated & {
+    .md3-field--no-label &,
+    .md3-field--focus &,
+    .md3-field--populated & {
       @include content-visible;
     }
   }

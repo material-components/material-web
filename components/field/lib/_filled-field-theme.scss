@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
-
 @use 'sass:list';
 @use 'sass:map';
 @use 'sass:meta';
@@ -224,13 +221,13 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _set-active-indicator-color($color) {
-  .mdc-field__active-indicator::before {
+  .md3-field__active-indicator::before {
     border-bottom-color: $color;
   }
 }
 
 @mixin _set-active-indicator-focus-color($color) {
-  .mdc-field__active-indicator::after {
+  .md3-field__active-indicator::after {
     border-bottom-color: $color;
   }
 }
@@ -254,7 +251,7 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _set-active-indicator-opacity($opacity) {
-  .mdc-field__active-indicator::before {
+  .md3-field__active-indicator::before {
     opacity: $opacity;
   }
 }
@@ -278,7 +275,7 @@ $_selectors: field-theme.$selectors;
     );
   }
 
-  .mdc-field__active-indicator {
+  .md3-field__active-indicator {
     &::after {
       // Focus is on a different element and does not need state selectors
       border-bottom-width: state.get-focus-state($heights);
@@ -287,7 +284,7 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _set-non-focus-active-indicator-height($height) {
-  .mdc-field__active-indicator {
+  .md3-field__active-indicator {
     &::before {
       border-bottom-width: $height;
     }
@@ -305,7 +302,7 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _set-container-color($color) {
-  .mdc-field__container {
+  .md3-field__container {
     &::before {
       background: $color;
     }
@@ -323,7 +320,7 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _set-container-opacity($opacity) {
-  .mdc-field__container {
+  .md3-field__container {
     &::before {
       opacity: $opacity;
     }
@@ -331,24 +328,24 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _container-padding-horizontal($padding) {
-  .mdc-field__start {
+  .md3-field__start {
     padding-inline-start: $padding;
   }
 
-  .mdc-field__end {
+  .md3-field__end {
     padding-inline-end: $padding;
   }
 }
 
 @mixin _container-padding-vertical($padding) {
-  .mdc-field__container {
+  .md3-field__container {
     padding-top: $padding;
     padding-bottom: $padding;
   }
 }
 
 @mixin _container-shape($shape) {
-  .mdc-field__container {
+  .md3-field__container {
     border-start-start-radius: map.get($shape, start-start);
     border-start-end-radius: map.get($shape, start-end);
     border-end-end-radius: map.get($shape, end-end);
@@ -357,8 +354,8 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _floating-label-text-line-height($line-height) {
-  &:not(.mdc-field--no-label) {
-    .mdc-field__middle {
+  &:not(.md3-field--no-label) {
+    .md3-field__middle {
       padding-top: $line-height;
     }
   }
@@ -371,7 +368,7 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _set-state-layer-color($color) {
-  .mdc-field__state-layer {
+  .md3-field__state-layer {
     background: $color;
   }
 }
@@ -389,7 +386,7 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _set-state-layer-opactiy($opacity) {
-  .mdc-field__state-layer {
+  .md3-field__state-layer {
     opacity: $opacity;
   }
 }

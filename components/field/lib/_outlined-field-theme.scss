@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
-
 @use 'sass:map';
 @use 'sass:string';
 @use '@material/theme/state';
@@ -157,9 +154,9 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _container-padding-horizontal($padding) {
-  .mdc-field__outline-start,
-  .mdc-field__start::before,
-  .mdc-field__end::after {
+  .md3-field__outline-start,
+  .md3-field__start::before,
+  .md3-field__end::after {
     // Outlined variant start section uses min-width instead of padding since it
     // needs to add start/end padding to add extra space as needed for shape and
     // label padding.
@@ -168,41 +165,41 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _container-shape($shape) {
-  .mdc-field__outline {
+  .md3-field__outline {
     border-radius: $shape;
   }
 
-  .mdc-field__outline-start,
-  .mdc-field__start::before,
-  .mdc-field__end::after {
+  .md3-field__outline-start,
+  .md3-field__start::before,
+  .md3-field__end::after {
     padding-inline-start: $shape;
   }
 }
 
 @mixin _outline-label-padding($padding) {
-  .mdc-field__outline-start,
-  .mdc-field__start::before {
+  .md3-field__outline-start,
+  .md3-field__start::before {
     padding-inline-end: $padding;
   }
 
-  .mdc-field__outline-start::before,
-  .mdc-field__outline-start::after {
+  .md3-field__outline-start::before,
+  .md3-field__outline-start::after {
     margin-inline-end: $padding;
   }
 
-  .mdc-field__outline-notch {
+  .md3-field__outline-notch {
     padding: 0 $padding;
     margin-inline-start: calc(-1 * #{$padding});
     margin-inline-end: $padding;
   }
 
-  .mdc-field__outline-end {
+  .md3-field__outline-end {
     margin-inline-start: calc(-1 * #{$padding});
   }
 }
 
 @mixin _outline-notch-max-width($container-padding-horizontal) {
-  .mdc-field__outline-notch {
+  .md3-field__outline-notch {
     max-width: calc(100% - 2 * #{$container-padding-horizontal});
   }
 }
@@ -226,7 +223,7 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _set-outline-color($color) {
-  .mdc-field__outline {
+  .md3-field__outline {
     border-color: $color;
   }
 }
@@ -250,9 +247,9 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _set-outline-inactive-opacity($opacity) {
-  .mdc-field__outline-start,
-  .mdc-field__outline-end,
-  .mdc-field__outline-panel-inactive {
+  .md3-field__outline-start,
+  .md3-field__outline-end,
+  .md3-field__outline-panel-inactive {
     opacity: $opacity;
   }
 }
@@ -274,26 +271,26 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _set-outline-width($width) {
-  .mdc-field__outline-start::before,
-  .mdc-field__outline-end::before,
-  .mdc-field__outline-panel-inactive,
-  .mdc-field__outline-panel-inactive::before,
-  .mdc-field__outline-panel-inactive::after {
+  .md3-field__outline-start::before,
+  .md3-field__outline-end::before,
+  .md3-field__outline-panel-inactive,
+  .md3-field__outline-panel-inactive::before,
+  .md3-field__outline-panel-inactive::after {
     border-width: $width;
   }
 
-  .mdc-field__label--floating {
+  .md3-field__label--floating {
     // Center the label within the outline stroke
     transform: translateY(calc(-50% + #{$width} / 2));
   }
 }
 
 @mixin _set-outline-focus-width($width) {
-  .mdc-field__outline-start::after,
-  .mdc-field__outline-end::after,
-  .mdc-field__outline-panel-active,
-  .mdc-field__outline-panel-active::before,
-  .mdc-field__outline-panel-active::after {
+  .md3-field__outline-start::after,
+  .md3-field__outline-end::after,
+  .md3-field__outline-panel-active,
+  .md3-field__outline-panel-active::before,
+  .md3-field__outline-panel-active::after {
     border-width: $width;
   }
 }

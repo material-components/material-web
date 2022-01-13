@@ -19,7 +19,7 @@ export class FilledField extends Field implements FilledFieldState {
   get rootRect() {
     return this.rootEl.then(el => el.getBoundingClientRect());
   }
-  @queryAsync('.mdc-field') protected readonly rootEl!: Promise<HTMLElement>;
+  @queryAsync('.md3-field') protected readonly rootEl!: Promise<HTMLElement>;
 
   protected foundation = new FilledFieldFoundation(
       {state: this, animateLabel: this.animateLabel.bind(this)});
@@ -28,14 +28,14 @@ export class FilledField extends Field implements FilledFieldState {
   protected override getRenderClasses(): ClassInfo {
     return {
       ...super.getRenderClasses(),
-      'mdc-field--filled': true,
+      'md3-field--filled': true,
     };
   }
 
   /** @soyTemplate */
   protected override renderContainer(): TemplateResult {
     return html`
-      <span class="mdc-field__container" @click=${this.handleClick}>
+      <span class="md3-field__container" @click=${this.handleClick}>
         ${this.renderContainerContents()}
       </span>
     `;
@@ -46,9 +46,9 @@ export class FilledField extends Field implements FilledFieldState {
     /** @styleMap */
     const strokeStyle = {transformOrigin: this.strokeTransformOrigin};
     return html`
-      <span class="mdc-field__state-layer"></span>
+      <span class="md3-field__state-layer"></span>
       ${super.renderContainerContents()}
-      <span class="mdc-field__active-indicator"
+      <span class="md3-field__active-indicator"
         style="${styleMap(strokeStyle)}"></span>
     `;
   }

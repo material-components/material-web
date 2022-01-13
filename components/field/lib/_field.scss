@@ -3,19 +3,16 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
-
 @mixin static-styles() {
   :host {
     @include host;
   }
 
-  .mdc-field {
+  .md3-field {
     @include root;
   }
 
-  .mdc-field__container {
+  .md3-field__container {
     @include container;
   }
 }

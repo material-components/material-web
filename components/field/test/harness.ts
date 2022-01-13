@@ -27,6 +27,6 @@ export class FieldHarness extends Harness<Field> {
 
   protected override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.renderRoot.querySelector('.mdc-field') as HTMLElement;
+    return this.element.renderRoot.querySelector('.md3-field') as HTMLElement;
   }
 }

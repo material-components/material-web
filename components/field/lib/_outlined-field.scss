@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
-
 @use 'sass:map';
 @use '@material/animation/animation';
 @use '@material/theme/gss';
@@ -13,63 +10,63 @@
 $_animation-duration: 150ms;
 
 @mixin static-styles() {
-  .mdc-field--outlined {
-    .mdc-field__start::before,
-    .mdc-field__end::after {
+  .md3-field--outlined {
+    .md3-field__start::before,
+    .md3-field__end::after {
       @include start-and-end-shape-padding;
     }
   }
 
-  .mdc-field__outline {
+  .md3-field__outline {
     @include outline;
   }
 
-  .mdc-field__outline-start,
-  .mdc-field__outline-panel-inactive,
-  .mdc-field__outline-panel-active,
-  .mdc-field__outline-end {
+  .md3-field__outline-start,
+  .md3-field__outline-panel-inactive,
+  .md3-field__outline-panel-active,
+  .md3-field__outline-end {
     @include outline-border;
   }
 
-  .mdc-field__outline-start,
-  .mdc-field__outline-end {
+  .md3-field__outline-start,
+  .md3-field__outline-end {
     @include outline-edges;
 
-    .mdc-field--focus & {
+    .md3-field--focus & {
       @include outline-edges-focus;
     }
   }
 
-  .mdc-field__outline-start {
+  .md3-field__outline-start {
     @include outline-start;
   }
 
-  .mdc-field__outline-end {
+  .md3-field__outline-end {
     @include outline-end;
   }
 
-  .mdc-field__outline-notch {
+  .md3-field__outline-notch {
     @include outline-notch;
 
-    .mdc-field--no-label & {
+    .md3-field--no-label & {
       @include outline-notch-no-label;
     }
   }
 
-  .mdc-field__outline-panel-inactive,
-  .mdc-field__outline-panel-active {
+  .md3-field__outline-panel-inactive,
+  .md3-field__outline-panel-active {
     @include outline-panel;
 
-    .mdc-field--populated &,
-    .mdc-field--focus & {
+    .md3-field--populated &,
+    .md3-field--focus & {
       @include outline-panel-open;
     }
   }
 
-  .mdc-field__outline-panel-active {
+  .md3-field__outline-panel-active {
     @include outline-panel-active;
 
-    .mdc-field--focus & {
+    .md3-field--focus & {
       @include outline-panel-active-focus;
     }
   }

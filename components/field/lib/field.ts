@@ -28,15 +28,15 @@ export class Field extends LitElement implements FieldState {
     return this.restingLabelEl.then(el => el.getBoundingClientRect());
   }
 
-  @queryAsync('.mdc-field__label--floating')
+  @queryAsync('.md3-field__label--floating')
   protected readonly floatingLabelEl!: Promise<HTMLElement>;
-  @queryAsync('.mdc-field__label--resting')
+  @queryAsync('.md3-field__label--resting')
   protected readonly restingLabelEl!: Promise<HTMLElement>;
 
   /** @soyTemplate */
   override render(): TemplateResult {
     return html`
-      <span class="mdc-field ${classMap(this.getRenderClasses())}">
+      <span class="md3-field ${classMap(this.getRenderClasses())}">
         ${this.renderContainer()}
       </span>
     `;
@@ -45,7 +45,7 @@ export class Field extends LitElement implements FieldState {
   /** @soyTemplate */
   protected renderContainer(): TemplateResult {
     return html`
-      <span class="mdc-field__container">
+      <span class="md3-field__container">
         ${this.renderContainerContents()}
       </span>
     `;
@@ -54,23 +54,23 @@ export class Field extends LitElement implements FieldState {
   /** @soyTemplate */
   protected getRenderClasses(): ClassInfo {
     return {
-      'mdc-field--disabled': this.disabled,
-      'mdc-field--error': this.error,
-      'mdc-field--focus': this.focused,
-      'mdc-field--populated': this.populated,
-      'mdc-field--required': this.required,
-      'mdc-field--no-label': !this.label,
+      'md3-field--disabled': this.disabled,
+      'md3-field--error': this.error,
+      'md3-field--focus': this.focused,
+      'md3-field--populated': this.populated,
+      'md3-field--required': this.required,
+      'md3-field--no-label': !this.label,
     };
   }
 
   /** @soyTemplate */
   protected renderContainerContents(): TemplateResult {
     return html`
-      <span class="mdc-field__start">
+      <span class="md3-field__start">
         <slot name="start"></slot>
       </span>
-      <span class="mdc-field__middle">${this.renderMiddleContents()}</span>
-      <span class="mdc-field__end">
+      <span class="md3-field__middle">${this.renderMiddleContents()}</span>
+      <span class="md3-field__end">
         <slot name="end"></slot>
       </span>
     `;
@@ -79,14 +79,14 @@ export class Field extends LitElement implements FieldState {
   /** @soyTemplate */
   protected renderMiddleContents(): TemplateResult {
     return html`
-      <span class="mdc-field__content"><slot></slot></span>
+      <span class="md3-field__content"><slot></slot></span>
     `;
   }
 
   /** @soyTemplate */
   protected renderLabel(labelType: LabelType): TemplateResult {
     return html`
-      <span class="mdc-field__label ${
+      <span class="md3-field__label ${
         classMap(this.getRenderLabelClasses(labelType))}"
         aria-hidden=${labelType !== this.visibleLabelType}
       >${this.labelText}</span>
@@ -96,9 +96,9 @@ export class Field extends LitElement implements FieldState {
   /** @soyTemplate */
   protected getRenderLabelClasses(labelType: LabelType): ClassInfo {
     return {
-      'mdc-field__label--floating': labelType === LabelType.FLOATING,
-      'mdc-field__label--resting': labelType === LabelType.RESTING,
-      'mdc-field__label--hidden': labelType !== this.visibleLabelType,
+      'md3-field__label--floating': labelType === LabelType.FLOATING,
+      'md3-field__label--resting': labelType === LabelType.RESTING,
+      'md3-field__label--hidden': labelType !== this.visibleLabelType,
     };
   }
 

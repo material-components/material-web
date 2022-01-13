@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
-
 @use 'sass:map';
 @use 'sass:meta';
 @use 'sass:string';
@@ -85,7 +82,7 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _set-label-color($color) {
-  .mdc-field__label {
+  .md3-field__label {
     color: $color;
   }
 }
@@ -103,27 +100,27 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _set-label-opacity($opacity) {
-  .mdc-field__label {
-    &:not(.mdc-field__label--hidden) {
+  .md3-field__label {
+    &:not(.md3-field__label--hidden) {
       opacity: $opacity;
     }
   }
 }
 
 @mixin _label-typography($font) {
-  .mdc-field__label {
+  .md3-field__label {
     @include typography.theme-styles($font);
   }
 }
 
 @mixin _label-typography-floating($font) {
-  .mdc-field__label--floating {
+  .md3-field__label--floating {
     @include typography.theme-styles($font);
   }
 }
 
 @mixin _label-typography-resting($font) {
-  .mdc-field__label--resting {
+  .md3-field__label--resting {
     @include typography.theme-styles($font);
   }
 }
