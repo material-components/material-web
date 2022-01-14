@@ -43,6 +43,14 @@ $dark-theme: (
   ),
 );
 
+@mixin theme($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: _resolve-theme($theme, $resolvers);
+  $theme: theme.create-theme-vars($theme, navigation-drawer-modal);
+
+  @include theme.emit-theme-vars($theme);
+}
+
 @mixin theme-styles($theme, $resolvers: resolvers.$material) {
   $resolved-theme: _resolve-theme($theme, $resolvers);
   $properties: keys.create-theme-properties(

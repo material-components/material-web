@@ -7,9 +7,6 @@
 @use './navigation-drawer-modal';
 
 @include navigation-drawer-modal.static-styles();
-
-.md3-navigation-drawer-modal {
-  @include navigation-drawer-modal-theme.theme-styles(
-    navigation-drawer-modal-theme.$light-theme
-  );
-}
+@include navigation-drawer-modal-theme.theme-styles(
+  navigation-drawer-modal-theme.$light-theme
+);
