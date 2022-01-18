@@ -21,18 +21,18 @@ export class TestTable<S extends string = string> extends LitElement {
   /** @soyTemplate */
   protected override render(): TemplateResult {
     return html`
-      <table class="md-test-table">
-        <caption class="md-test-table__cell md-test-table__cell--caption"
+      <table class="md3-test-table">
+        <caption class="md3-test-table__cell md3-test-table__cell--caption"
           >${this.title}</caption>
         <thead>
           <tr>
             ${this.states.map(state => html`
-              <th class="md-test-table__cell md-test-table__cell--header"
+              <th class="md3-test-table__cell md3-test-table__cell--header"
                 >${state}</th>
             `)}
           </tr>
         </thead>
-        <tbody class="md-test-table__body">
+        <tbody class="md3-test-table__body">
           ${this.renderTemplates()}
         </tbody>
       </table>
@@ -53,7 +53,7 @@ export class TestTable<S extends string = string> extends LitElement {
       ${this.templates.map((template, rowIndex) => html`
         <tr>
           ${this.states.map((state, colIndex) => html`
-            <td class="md-test-table__cell">
+            <td class="md3-test-table__cell">
               <slot name="${`${rowIndex}-${colIndex}`}"></slot>
             </td>
           `)}

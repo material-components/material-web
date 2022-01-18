@@ -10,19 +10,19 @@
     @include host;
   }
 
-  .md-test-table {
+  .md3-test-table {
     @include table;
   }
 
-  .md-test-table__body {
+  .md3-test-table__body {
     @include body;
   }
 
-  .md-test-table__cell {
+  .md3-test-table__cell {
     @include cell;
   }
 
-  .md-test-table__cell--caption {
+  .md3-test-table__cell--caption {
     @include cell-caption;
   }
 }

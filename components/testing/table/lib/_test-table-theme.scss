@@ -44,34 +44,34 @@ $dark-theme: (
 }
 
 @mixin _container-color($color) {
-  .md-test-table {
+  .md3-test-table {
     @include theme.property(background, $color);
   }
 }
 
 @mixin _container-image($image) {
-  .md-test-table__body {
+  .md3-test-table__body {
     @include theme.property(background-image, $image);
   }
 }
 
 @mixin _outline-color($color) {
-  .md-test-table,
-  .md-test-table__cell {
+  .md3-test-table,
+  .md3-test-table__cell {
     @include theme.property(border-color, $color);
   }
 }
 
 @mixin _header-background-color($color) {
-  .md-test-table__cell--header,
-  .md-test-table__cell--caption {
+  .md3-test-table__cell--header,
+  .md3-test-table__cell--caption {
     @include theme.property(background, $color);
   }
 }
 
 @mixin _header-color($color) {
-  .md-test-table__cell--header,
-  .md-test-table__cell--caption {
+  .md3-test-table__cell--header,
+  .md3-test-table__cell--caption {
     @include theme.property(color, $color);
   }
 }

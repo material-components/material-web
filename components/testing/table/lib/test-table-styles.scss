@@ -8,6 +8,6 @@
 
 @include test-table.static-styles;
 
-.md-test-table {
+.md3-test-table {
   @include test-table-theme.theme-styles(test-table-theme.$light-theme);
 }
