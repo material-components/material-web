@@ -22,6 +22,7 @@
 @use '@material/tokens/resolvers';
 @use '@material/shape/shape';
 @use '@material/theme/map-ext';
+@use '../../sass/theme' as sass-theme;
 
 @use './switch';
 
@@ -139,7 +140,11 @@ $forced-colors-theme: (
 }
 
 @mixin theme-styles($theme) {
-  @include theme.validate-theme($light-theme, $theme);
+  $theme: sass-theme.validate-theme-styles(
+    $light-theme,
+    $theme,
+    $require-all: false
+  );
 
   $pair: map-ext.split(
     $theme,
@@ -242,8 +247,11 @@ $forced-colors-theme: (
 }
 
 @mixin theme-styles-without-ripple($theme, $resolvers: resolvers.$material) {
-  @include theme.validate-theme($light-theme, $theme);
-
+  $theme: sass-theme.validate-theme-styles(
+    $light-theme,
+    $theme,
+    $require-all: false
+  );
   $theme: keys.create-theme-properties($theme, switch);
 
   @include _selected-handle-color(
