@@ -249,6 +249,7 @@ export class SliderSingleBase extends SliderBase {
         const activeElements = deepActiveElementPath();
         return activeElements[activeElements.length - 1] === this.formElement;
       },
+      shouldHideFocusStylesForPointerEvents: () => false,
       isRTL: () => {
         return getComputedStyle(this).direction === 'rtl';
       },

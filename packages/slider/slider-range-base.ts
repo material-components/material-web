@@ -420,6 +420,7 @@ export class SliderRangeBase extends SliderBase {
 
         return deepActivEl === this.formElement;
       },
+      shouldHideFocusStylesForPointerEvents: () => false,
       isRTL: () => {
         return getComputedStyle(this).direction === 'rtl';
       },
