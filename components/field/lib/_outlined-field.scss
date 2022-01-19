@@ -98,14 +98,9 @@ $_animation-duration: 150ms;
   &::before,
   &::after {
     border: inherit;
-    bottom: 0;
     content: '';
-    @include gss.annotate($noflip: true);
-    left: 0;
+    inset: 0;
     position: absolute;
-    @include gss.annotate($noflip: true);
-    right: 0;
-    top: 0;
   }
 }
 
@@ -173,13 +168,8 @@ $_animation-duration: 150ms;
 @mixin outline-panel() {
   border: inherit;
   border-bottom-style: solid;
-  bottom: 0;
-  @include gss.annotate($noflip: true);
-  left: 0;
+  inset: 0;
   position: absolute;
-  @include gss.annotate($noflip: true);
-  right: 0;
-  top: 0;
 
   &::before,
   &::after {
