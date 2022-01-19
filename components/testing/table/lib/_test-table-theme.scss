@@ -4,74 +4,150 @@
 //
 
 @use 'sass:map';
-@use '@material/theme/color-palette';
-@use '@material/theme/keys';
-@use '@material/theme/theme';
+@use '../../../sass/resolvers';
+@use '../../../sass/theme';
+@use '../../../sass/tokens';
+@use '../../../sass/typography';
 
-$light-theme: (
-  container-color: white,
-  container-image:
-    url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABGdBTUEAALGPC/xhBQAAAB1JREFUGBlj/PHjx38GYgCxCpmIMQykZlQh3pACANu2B+A7h+tPAAAAAElFTkSuQmCC),
-  header-background-color: color-palette.$grey-100,
-  header-color: color-palette.$grey-800,
-  outline-color: color-palette.$grey-300,
+$_default-deps: (
+  md-sys-color: tokens.md-sys-color-values-light(),
+  md-sys-typescale: tokens.md-sys-typescale-values(),
 );
 
-$dark-theme: (
-  container-color: color-palette.$grey-900,
-  container-image:
-    url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAAXNSR0IArs4c6QAAAB1JREFUGBlj/PHjhyoDMYBYhUzEGAZSM6oQb0gBAEsKBizlVJKDAAAAAElFTkSuQmCC),
-  header-background-color: color-palette.$grey-800,
-  header-color: color-palette.$grey-100,
-  outline-color: color-palette.$grey-700,
-);
-
-@mixin theme($theme) {
-  @include theme.validate-theme($light-theme, $theme);
-  @include keys.declare-custom-properties($theme, test-table);
+@function values($deps: $_default-deps, $exclude-hardcoded-values: false) {
+  @return (
+    cell-color: map.get($deps, md-sys-color, background),
+    cell-padding: if($exclude-hardcoded-values, null, 16px),
+    cell-grid-color: map.get($deps, md-sys-color, on-background),
+    cell-grid-opacity: if($exclude-hardcoded-values, null, 0.12),
+    cell-grid-size: if($exclude-hardcoded-values, null, 16px),
+    header-cell-color: map.get($deps, md-sys-color, surface-variant),
+    header-cell-padding: if($exclude-hardcoded-values, null, 8px),
+    header-cell-text-color: map.get($deps, md-sys-color, on-surface-variant),
+    header-cell-text-font: map.get($deps, md-sys-typescale, title-medium-font),
+    header-cell-text-line-height:
+      map.get($deps, md-sys-typescale, title-medium-line-height),
+    header-cell-text-size: map.get($deps, md-sys-typescale, title-medium-size),
+    header-cell-text-tracking:
+      map.get($deps, md-sys-typescale, title-medium-tracking),
+    header-cell-text-weight:
+      map.get($deps, md-sys-typescale, title-medium-weight),
+    outline-color: map.get($deps, md-sys-color, outline)
+  );
 }
 
-@mixin theme-styles($theme) {
-  @include theme.validate-theme($light-theme, $theme);
+$light-theme: values();
+$dark-theme: values(
+  (
+    md-sys-color: tokens.md-sys-color-values-dark(),
+  ),
+  $exclude-hardcoded-values: true
+);
 
-  $theme: keys.create-theme-properties($theme, test-table);
+@function _resolve-theme($theme, $resolvers) {
+  @return typography.resolve-theme(
+    $theme,
+    map.get($resolvers, typography),
+    header-cell-text
+  );
+}
 
-  @include _container-color(map.get($theme, container-color));
-  @include _container-image(map.get($theme, container-image));
-  @include _header-background-color(map.get($theme, header-background-color));
-  @include _header-color(map.get($theme, header-color));
+@mixin theme($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: _resolve-theme($theme, $resolvers);
+  $theme: theme.create-theme-vars($theme, test-table);
+
+  @include theme.emit-theme-vars($theme);
+}
+
+@mixin theme-styles($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme-styles($light-theme, $theme);
+  $theme: _resolve-theme($theme, $resolvers);
+  $theme: theme.create-theme-vars($theme, test-table);
+
+  @include _cell-color(map.get($theme, cell-color));
+  @include _cell-padding(map.get($theme, cell-padding));
+  @include _cell-grid-color(map.get($theme, cell-grid-color));
+  @include _cell-grid-opacity(map.get($theme, cell-grid-opacity));
+  @include _cell-grid-size(map.get($theme, cell-grid-size));
+  @include _header-cell-color(map.get($theme, header-cell-color));
+  @include _header-cell-padding(map.get($theme, header-cell-padding));
+  @include _header-cell-text-color(map.get($theme, header-cell-text-color));
+  @include _header-cell-text-typography(
+    (
+      font: map.get($theme, header-cell-text-font),
+      line-height: map.get($theme, header-cell-text-line-height),
+      size: map.get($theme, header-cell-text-size),
+      tracking: map.get($theme, header-cell-text-tracking),
+      weight: map.get($theme, header-cell-text-weight),
+    )
+  );
   @include _outline-color(map.get($theme, outline-color));
 }
 
-@mixin _container-color($color) {
-  .md3-test-table {
-    @include theme.property(background, $color);
+@mixin _cell-color($color) {
+  background-color: $color;
+}
+
+@mixin _cell-padding($padding) {
+  .md3-test-table__cell {
+    padding: $padding;
   }
 }
 
-@mixin _container-image($image) {
-  .md3-test-table__body {
-    @include theme.property(background-image, $image);
+@mixin _cell-grid-color($color) {
+  .md3-test-table__cell {
+    &::before {
+      background-image: linear-gradient(to right, $color 1px, transparent 1px),
+        linear-gradient(to bottom, $color 1px, transparent 1px);
+    }
+  }
+}
+
+@mixin _cell-grid-opacity($opacity) {
+  .md3-test-table__cell {
+    &::before {
+      opacity: $opacity;
+    }
+  }
+}
+
+@mixin _cell-grid-size($size) {
+  .md3-test-table__cell {
+    &::before {
+      background-size: $size $size;
+    }
+  }
+}
+
+@mixin _header-cell-color($color) {
+  .md3-test-table__header {
+    background: $color;
+  }
+}
+
+@mixin _header-cell-padding($padding) {
+  .md3-test-table__header {
+    padding: $padding;
+  }
+}
+
+@mixin _header-cell-text-color($color) {
+  .md3-test-table__header {
+    color: $color;
+  }
+}
+
+@mixin _header-cell-text-typography($font) {
+  .md3-test-table__header {
+    @include typography.theme-styles($font);
   }
 }
 
 @mixin _outline-color($color) {
-  .md3-test-table,
-  .md3-test-table__cell {
-    @include theme.property(border-color, $color);
-  }
-}
-
-@mixin _header-background-color($color) {
-  .md3-test-table__cell--header,
-  .md3-test-table__cell--caption {
-    @include theme.property(background, $color);
-  }
-}
-
-@mixin _header-color($color) {
-  .md3-test-table__cell--header,
-  .md3-test-table__cell--caption {
-    @include theme.property(color, $color);
+  &,
+  .md3-test-table__cell,
+  .md3-test-table__header {
+    border-color: $color;
   }
 }

@@ -22,19 +22,17 @@ export class TestTable<S extends string = string> extends LitElement {
   protected override render(): TemplateResult {
     return html`
       <table class="md3-test-table">
-        <caption class="md3-test-table__cell md3-test-table__cell--caption"
-          >${this.title}</caption>
         <thead>
           <tr>
             ${this.states.map(state => html`
-              <th class="md3-test-table__cell md3-test-table__cell--header"
-                >${state}</th>
+              <th class="md3-test-table__header">${state}</th>
             `)}
           </tr>
         </thead>
-        <tbody class="md3-test-table__body">
+        <tbody>
           ${this.renderTemplates()}
         </tbody>
+        <caption class="md3-test-table__header">${this.title}</caption>
       </table>
     `;
   }

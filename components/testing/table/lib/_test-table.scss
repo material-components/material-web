@@ -14,16 +14,12 @@
     @include table;
   }
 
-  .md3-test-table__body {
-    @include body;
-  }
-
   .md3-test-table__cell {
     @include cell;
   }
 
-  .md3-test-table__cell--caption {
-    @include cell-caption;
+  .md3-test-table__header {
+    @include header;
   }
 }
 
@@ -34,19 +30,23 @@
 @mixin table() {
   border: 1px solid;
   border-collapse: collapse;
-}
-
-@mixin body() {
-  background-position: 1px 1px;
+  z-index: -1; // Allow background grid to be placed behind content
 }
 
 @mixin cell() {
   border: 1px solid;
-  font-family: sans-serif;
-  padding: 0.5rem;
+  position: relative;
+
+  &::before {
+    inset: -1px 0 0 -1px;
+    content: '';
+    position: absolute;
+    z-index: -1;
+  }
 }
 
-@mixin cell-caption() {
+@mixin header() {
+  border: 1px solid;
   border-top: none;
   caption-side: bottom;
 }
