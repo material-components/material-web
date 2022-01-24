@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {Field} from '../../field/lib/field';
-import {FieldHarness} from '../../field/test/harness';
-import {Harness} from '../../testing/harness';
-import {TextField} from '../lib/text-field';
+import {FieldHarness} from '../field/harness';
+import {Field} from '../field/lib/field';
+import {Harness} from '../testing/harness';
+
+import {TextField} from './lib/text-field';
 
 /**
  * Test harness for text field elements.
