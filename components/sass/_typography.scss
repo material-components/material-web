@@ -67,7 +67,7 @@
 @function resolver($args...) {
   $args: meta.keywords($args);
   @return (
-    font: _get-font(map.get($args, font)),
+    font: map.get($args, font),
     line-height: _px-to-rem(map.get($args, line-height)),
     size: _px-to-rem(map.get($args, size)),
     tracking: _px-to-rem(map.get($args, tracking)),
@@ -87,16 +87,6 @@
   }
 
   @return math.div($px, 16px) * 1rem;
-}
-
-// TODO(b/213328113): Remove when "Roboto Medium"/"Roboto Regular" is updated
-// to "Roboto".
-@function _get-font($font) {
-  @if $font == 'Roboto Regular' or $font == 'Roboto Medium' {
-    @return 'Roboto';
-  }
-
-  @return $font;
 }
 
 @mixin static-styles() {
