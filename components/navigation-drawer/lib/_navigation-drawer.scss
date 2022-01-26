@@ -4,6 +4,7 @@
 //
 
 @use '@material/animation';
+@use '../../elevation/lib/elevation-overlay';
 
 $curve: animation.$standard-curve-timing-function;
 $default: 0s;
@@ -11,16 +12,17 @@ $delay: 0s;
 $transition-duration: 0.25s;
 
 @mixin static-styles() {
-  @include _frame();
+  @include elevation-overlay.static-styles();
+  @include _base();
   @include _slot-content();
 }
 
-@mixin _frame() {
+@mixin _base() {
   :host {
     display: flex;
   }
 
-  .md3-navigation-drawer__frame {
+  .md3-navigation-drawer {
     inline-size: 0;
     box-sizing: border-box;
     display: flex;
@@ -31,16 +33,21 @@ $transition-duration: 0.25s;
 
     transition: inline-size $transition-duration $curve $delay,
       visibility $default $curve $transition-duration;
+
+    .md3-elevation-overlay {
+      width: inherit;
+      z-index: 0;
+    }
   }
 
-  .md3-navigation-drawer__closed-to-opened {
+  .md3-navigation-drawer--opened {
     visibility: visible;
 
     transition: inline-size $transition-duration $curve $delay,
       visibility $default $curve $default;
   }
 
-  .md3-navigation-drawer__pivot-at-start {
+  .md3-navigation-drawer--pivot-at-start {
     justify-content: flex-start;
   }
 }
