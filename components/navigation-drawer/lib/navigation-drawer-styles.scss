@@ -7,4 +7,9 @@
 @use './navigation-drawer';
 
 @include navigation-drawer.static-styles();
-@include navigation-drawer-theme.theme-styles();
+
+.md3-navigation-drawer {
+  @include navigation-drawer-theme.theme-styles(
+    navigation-drawer-theme.$light-theme
+  );
+}

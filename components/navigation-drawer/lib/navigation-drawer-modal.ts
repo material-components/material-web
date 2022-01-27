@@ -41,9 +41,10 @@ export class NavigationDrawerModal extends LitElement {
         aria-label="${ifDefined(this.ariaLabel)}"
         aria-labelledby="${ifDefined(this.ariaLabelledBy)}"
         aria-modal="${this.ariaModal}"
-        class="md3-navigation-drawer-modal__frame ${this.getFrameClasses()}"
+        class="md3-navigation-drawer-modal ${this.getRenderClasses()}"
         @keydown="${this.handleKeyDown}"
-        role="dialog">
+        role="dialog"><div class="md3-elevation-overlay"
+        ></div>
         <div class="md3-navigation-drawer-modal__slot-content">
           <slot></slot>
         </div>
@@ -59,9 +60,9 @@ export class NavigationDrawerModal extends LitElement {
   }
 
   /** @soyTemplate classMap */
-  protected getFrameClasses() {
+  protected getRenderClasses() {
     return classMap({
-      'md3-navigation-drawer-modal--closed-to-opened': this.opened,
+      'md3-navigation-drawer-modal--opened': this.opened,
       'md3-navigation-drawer-modal--pivot-at-start': this.pivot === 'start',
     });
   }
@@ -72,7 +73,7 @@ export class NavigationDrawerModal extends LitElement {
     }
   }
 
-  private handleScrimClick(e: MouseEvent) {
+  private handleScrimClick() {
     this.opened = !this.opened;
   }
 }
