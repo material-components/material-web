@@ -215,7 +215,8 @@ export class RippleBase extends BaseElement implements RippleInterface {
           this.internalUseStateLayerCustomProperties,
     };
     return html`
-        <div class="md3-ripple-surface mdc-ripple-surface mdc-ripple-upgraded ${
+        <div role="none presentation"
+        class="md3-ripple-surface mdc-ripple-surface mdc-ripple-upgraded ${
         classMap(classes)}"
           style="${styleMap({
       '--mdc-ripple-fg-scale': this.fgScale,
