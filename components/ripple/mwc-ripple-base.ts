@@ -4,33 +4,33 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {matches} from '@material/dom/ponyfill';
-import {BaseElement} from '@material/mwc-base/base-element';
-import {RippleInterface} from '@material/mwc-base/utils';
-import {MDCRippleAdapter} from '@material/ripple/adapter';
-import MDCRippleFoundation from '@material/ripple/foundation';
-import {html, PropertyValues, TemplateResult} from 'lit';
-import {property, query, state} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
-import {styleMap} from 'lit/directives/style-map';
+import { matches } from "@material/dom/ponyfill";
+import { BaseElement } from "@material/mwc-base/base-element";
+import { RippleInterface } from "@material/mwc-base/utils";
+import { MDCRippleAdapter } from "@material/ripple/adapter";
+import MDCRippleFoundation from "@material/ripple/foundation";
+import { html, PropertyValues, TemplateResult } from "lit";
+import { property, query, state } from "lit/decorators";
+import { classMap } from "lit/directives/class-map";
+import { styleMap } from "lit/directives/style-map";
 
 /** @soyCompatible */
 export class RippleBase extends BaseElement implements RippleInterface {
-  @query('.mdc-ripple-surface') mdcRoot!: HTMLElement;
+  @query(".mdc-ripple-surface") mdcRoot!: HTMLElement;
 
-  @property({type: Boolean}) primary = false;
+  @property({ type: Boolean }) primary = false;
 
-  @property({type: Boolean}) accent = false;
+  @property({ type: Boolean }) accent = false;
 
-  @property({type: Boolean}) unbounded = false;
+  @property({ type: Boolean }) unbounded = false;
 
-  @property({type: Boolean}) disabled = false;
+  @property({ type: Boolean }) disabled = false;
 
-  @property({type: Boolean}) activated = false;
+  @property({ type: Boolean }) activated = false;
 
-  @property({type: Boolean}) selected = false;
+  @property({ type: Boolean }) selected = false;
 
-  @property({type: Boolean}) internalUseStateLayerCustomProperties = false;
+  @property({ type: Boolean }) internalUseStateLayerCustomProperties = false;
 
   @state() protected hovering = false;
 
@@ -40,24 +40,24 @@ export class RippleBase extends BaseElement implements RippleInterface {
 
   @state() protected fgDeactivation = false;
 
-  @state() protected fgScale = '';
+  @state() protected fgScale = "";
 
-  @state() protected fgSize = '';
+  @state() protected fgSize = "";
 
-  @state() protected translateStart = '';
+  @state() protected translateStart = "";
 
-  @state() protected translateEnd = '';
+  @state() protected translateEnd = "";
 
-  @state() protected leftPos = '';
+  @state() protected leftPos = "";
 
-  @state() protected topPos = '';
+  @state() protected topPos = "";
 
   protected mdcFoundationClass = MDCRippleFoundation;
 
   protected mdcFoundation!: MDCRippleFoundation;
 
   get isActive(): any {
-    return matches(this.parentElement || this, ':active');
+    return matches(this.parentElement || this, ":active");
   }
 
   createAdapter(): MDCRippleAdapter {
@@ -68,13 +68,13 @@ export class RippleBase extends BaseElement implements RippleInterface {
       isSurfaceDisabled: () => this.disabled,
       addClass: (className: string) => {
         switch (className) {
-          case 'mdc-ripple-upgraded--background-focused':
+          case "mdc-ripple-upgraded--background-focused":
             this.bgFocused = true;
             break;
-          case 'mdc-ripple-upgraded--foreground-activation':
+          case "mdc-ripple-upgraded--foreground-activation":
             this.fgActivation = true;
             break;
-          case 'mdc-ripple-upgraded--foreground-deactivation':
+          case "mdc-ripple-upgraded--foreground-deactivation":
             this.fgDeactivation = true;
             break;
           default:
@@ -83,13 +83,13 @@ export class RippleBase extends BaseElement implements RippleInterface {
       },
       removeClass: (className: string) => {
         switch (className) {
-          case 'mdc-ripple-upgraded--background-focused':
+          case "mdc-ripple-upgraded--background-focused":
             this.bgFocused = false;
             break;
-          case 'mdc-ripple-upgraded--foreground-activation':
+          case "mdc-ripple-upgraded--foreground-activation":
             this.fgActivation = false;
             break;
-          case 'mdc-ripple-upgraded--foreground-deactivation':
+          case "mdc-ripple-upgraded--foreground-deactivation":
             this.fgDeactivation = false;
             break;
           default:
@@ -105,22 +105,22 @@ export class RippleBase extends BaseElement implements RippleInterface {
       deregisterResizeHandler: () => undefined,
       updateCssVariable: (varName: string, value: string) => {
         switch (varName) {
-          case '--mdc-ripple-fg-scale':
+          case "--mdc-ripple-fg-scale":
             this.fgScale = value;
             break;
-          case '--mdc-ripple-fg-size':
+          case "--mdc-ripple-fg-size":
             this.fgSize = value;
             break;
-          case '--mdc-ripple-fg-translate-end':
+          case "--mdc-ripple-fg-translate-end":
             this.translateEnd = value;
             break;
-          case '--mdc-ripple-fg-translate-start':
+          case "--mdc-ripple-fg-translate-start":
             this.translateStart = value;
             break;
-          case '--mdc-ripple-left':
+          case "--mdc-ripple-left":
             this.leftPos = value;
             break;
-          case '--mdc-ripple-top':
+          case "--mdc-ripple-top":
             this.topPos = value;
             break;
           default:
@@ -128,9 +128,11 @@ export class RippleBase extends BaseElement implements RippleInterface {
         }
       },
       computeBoundingRect: () =>
-          (this.parentElement || this).getBoundingClientRect(),
-      getWindowPageOffset: () =>
-          ({x: window.pageXOffset, y: window.pageYOffset}),
+        (this.parentElement || this).getBoundingClientRect(),
+      getWindowPageOffset: () => ({
+        x: window.pageXOffset,
+        y: window.pageYOffset,
+      }),
     };
   }
 
@@ -178,7 +180,7 @@ export class RippleBase extends BaseElement implements RippleInterface {
   }
 
   protected override update(changedProperties: PropertyValues<this>) {
-    if (changedProperties.has('disabled')) {
+    if (changedProperties.has("disabled")) {
       // stop hovering when ripple is disabled to prevent a stuck "hover" state
       // When re-enabled, the outer component will get a `mouseenter` event on
       // the first movement, which will call `startHover()`
@@ -192,38 +194,41 @@ export class RippleBase extends BaseElement implements RippleInterface {
   /** @soyTemplate */
   protected override render(): TemplateResult {
     const shouldActivateInPrimary =
-        this.activated && (this.primary || !this.accent);
+      this.activated && (this.primary || !this.accent);
     const shouldSelectInPrimary =
-        this.selected && (this.primary || !this.accent);
+      this.selected && (this.primary || !this.accent);
 
     /** @classMap */
     const classes = {
-      'mdc-ripple-surface--accent': this.accent,
-      'mdc-ripple-surface--primary--activated': shouldActivateInPrimary,
-      'mdc-ripple-surface--accent--activated': this.accent && this.activated,
-      'mdc-ripple-surface--primary--selected': shouldSelectInPrimary,
-      'mdc-ripple-surface--accent--selected': this.accent && this.selected,
-      'mdc-ripple-surface--disabled': this.disabled,
-      'mdc-ripple-surface--hover': this.hovering,
-      'mdc-ripple-surface--primary': this.primary,
-      'mdc-ripple-surface--selected': this.selected,
-      'mdc-ripple-upgraded--background-focused': this.bgFocused,
-      'mdc-ripple-upgraded--foreground-activation': this.fgActivation,
-      'mdc-ripple-upgraded--foreground-deactivation': this.fgDeactivation,
-      'mdc-ripple-upgraded--unbounded': this.unbounded,
-      'mdc-ripple-surface--internal-use-state-layer-custom-properties':
-          this.internalUseStateLayerCustomProperties,
+      "mdc-ripple-surface--accent": this.accent,
+      "mdc-ripple-surface--primary--activated": shouldActivateInPrimary,
+      "mdc-ripple-surface--accent--activated": this.accent && this.activated,
+      "mdc-ripple-surface--primary--selected": shouldSelectInPrimary,
+      "mdc-ripple-surface--accent--selected": this.accent && this.selected,
+      "mdc-ripple-surface--disabled": this.disabled,
+      "mdc-ripple-surface--hover": this.hovering,
+      "mdc-ripple-surface--primary": this.primary,
+      "mdc-ripple-surface--selected": this.selected,
+      "mdc-ripple-upgraded--background-focused": this.bgFocused,
+      "mdc-ripple-upgraded--foreground-activation": this.fgActivation,
+      "mdc-ripple-upgraded--foreground-deactivation": this.fgDeactivation,
+      "mdc-ripple-upgraded--unbounded": this.unbounded,
+      "mdc-ripple-surface--internal-use-state-layer-custom-properties":
+        this.internalUseStateLayerCustomProperties,
     };
-    return html`
-        <div class="md3-ripple-surface mdc-ripple-surface mdc-ripple-upgraded ${
-        classMap(classes)}"
-          style="${styleMap({
-      '--mdc-ripple-fg-scale': this.fgScale,
-      '--mdc-ripple-fg-size': this.fgSize,
-      '--mdc-ripple-fg-translate-end': this.translateEnd,
-      '--mdc-ripple-fg-translate-start': this.translateStart,
-      '--mdc-ripple-left': this.leftPos,
-      '--mdc-ripple-top': this.topPos,
-    })}"></div>`;
+    return html` <div
+      role="none presentation"
+      class="md3-ripple-surface mdc-ripple-surface mdc-ripple-upgraded ${classMap(
+        classes
+      )}"
+      style="${styleMap({
+        "--mdc-ripple-fg-scale": this.fgScale,
+        "--mdc-ripple-fg-size": this.fgSize,
+        "--mdc-ripple-fg-translate-end": this.translateEnd,
+        "--mdc-ripple-fg-translate-start": this.translateStart,
+        "--mdc-ripple-left": this.leftPos,
+        "--mdc-ripple-top": this.topPos,
+      })}"
+    ></div>`;
   }
 }
