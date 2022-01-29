@@ -7,7 +7,7 @@
 import {customElement} from 'lit/decorators';
 
 import {RippleBase} from './mwc-ripple-base';
-import {styles} from './mwc-ripple.css';
+import {styles} from './ripple-styles.css';
 
 declare global {
   interface HTMLElementTagNameMap {
