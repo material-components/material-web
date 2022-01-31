@@ -95,15 +95,6 @@ export abstract class ActionElement extends LitElement implements
   /**
    * Hook method for the ActionController.
    * Subclasses should add this method as an event handler on the interactive
-   * template element with `@blur="${this.handleBlur}"`
-   */
-  handleBlur() {
-    this.actionController.blur();
-  }
-
-  /**
-   * Hook method for the ActionController.
-   * Subclasses should add this method as an event handler on the interactive
    * template element with `@contextmenu="${this.handleContextMenu}"`
    */
   handleContextMenu() {

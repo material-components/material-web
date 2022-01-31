@@ -9,24 +9,6 @@ import {ReactiveController, ReactiveControllerHost} from 'lit';
 import {bound} from '../decorators/bound';
 
 /**
- * Some browsers don't allow focusing <button>s via the keyboard, requiring
- * special handling.
- *
- * @see https://stackoverflow.com/a/1914496/1431146
- * @see https://www.alexlande.com/articles/cross-browser-tabindex-woes/#so-what-happens
- * @see https://bugs.webkit.org/show_bug.cgi?id=13724#c7
- * @see https://bugzilla.mozilla.org/show_bug.cgi?id=756028
- * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Button#Clicking_and_focus
- */
-const BUTTON_FOCUS_ALLOWED: boolean = (() => {
-  const ua = window.navigator.userAgent;
-  const mac = ua.match('Macintosh');
-  const firefox = ua.match(/Gecko\/\d+/);
-  const safari = ua.match(/Version\/\d+/) && ua.match(/Safari\/\d+/);
-  return !mac || !firefox && !safari;
-})();
-
-/**
  * Enumeration to keep track of the lifecycle of a touch event.
  */
 
@@ -78,12 +60,12 @@ enum Phase {
 /**
  * Delay time from touchstart to when element#beginPress is invoked.
  */
-const TOUCH_DELAY_MS = 150;
+export const TOUCH_DELAY_MS = 150;
 
 /**
  * Delay time from beginning to wait for synthetic mouse events till giving up.
  */
-const WAIT_FOR_MOUSE_CLICK_MS = 500;
+export const WAIT_FOR_MOUSE_CLICK_MS = 500;
 
 /**
  * The necessary interface for using an ActionController
@@ -195,6 +177,7 @@ export class ActionController implements ReactiveController {
    * Call `endPress` with cancelled state on element, and cleanup timers
    */
   private cancelPress() {
+    this.pressed = false;
     this.cleanup();
     if (this.phase === Phase.TOUCH_DELAY) {
       this.setPhase(Phase.INACTIVE);
@@ -364,22 +347,6 @@ export class ActionController implements ReactiveController {
     if (!this.disabled) {
       this.checkBoundsAfterContextMenu = true;
       this.cancelPress();
-    }
-  }
-
-  /**
-   * Blur event handler
-   */
-  @bound
-  blur() {
-    // Ignore blur before pointerend/pointercancel/pointerup/click. The reason
-    // for this is that Mac Firefox/Safari blur buttons on pointerdown.
-    if (this.phase !== Phase.TOUCH_DELAY &&
-        (BUTTON_FOCUS_ALLOWED ||
-         this.phase !== Phase.WAITING_FOR_MOUSE_CLICK)) {
-      setTimeout(() => {
-        this.cancelPress();
-      }, 5);
     }
   }
 }
