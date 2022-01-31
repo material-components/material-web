@@ -8,6 +8,8 @@ import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, queryAssignedElements, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 
+import {ARIARole} from '../../types/aria';
+
 /** @soyCompatible */
 export class ListItem extends LitElement {
   @property({type: String}) supportingText = '';
@@ -32,11 +34,17 @@ export class ListItem extends LitElement {
     return html`
       <li
           tabindex="0"
+          role=${this.getAriaRole()}
           class="md3-list-item ${classMap(this.getRenderClasses())}"><!--
         -->${this.renderStart()}<!--
         -->${this.renderBody()}<!--
         -->${this.renderEnd()}<!--
       --></li>`;
+  }
+
+  /** @soyTemplate */
+  protected getAriaRole(): ARIARole {
+    return 'listitem';
   }
 
   /** @soyTemplate */
