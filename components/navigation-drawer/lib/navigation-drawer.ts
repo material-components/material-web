@@ -4,21 +4,35 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {ariaProperty as legacyAriaProperty} from '@material/mwc-base/aria-property';
 import {html, LitElement, TemplateResult} from 'lit';
 import {property} from 'lit/decorators';
 import {classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 
+import {ariaProperty} from '../../decorators/aria-property';
+
 /** @soyCompatible */
 export class NavigationDrawer extends LitElement {
   /* aria properties */
-  @property({attribute: 'aria-describedby', type: String})
+  /** @soyPrefixAttribute */  // tslint:disable-next-line:no-new-decorators
+  @legacyAriaProperty
+  @property({type: String, attribute: 'aria-describedby'})
   ariaDescribedBy: string|undefined;
-  @property({attribute: 'aria-label', type: String})
-  override ariaLabel: string = 'navigational drawer';
-  @property({attribute: 'aria-modal', type: String})
+
+  // tslint:disable-next-line:no-new-decorators
+  @ariaProperty
+  @property({type: String, attribute: 'data-aria-label', noAccessor: true})
+  override ariaLabel: string|undefined;
+
+  // tslint:disable-next-line:no-new-decorators
+  @ariaProperty
+  @property({attribute: 'data-aria-modal', type: String, noAccessor: true})
   override ariaModal: 'true'|'false' = 'false';
-  @property({attribute: 'aria-labelledby', type: String})
+
+  /** @soyPrefixAttribute */  // tslint:disable-next-line:no-new-decorators
+  @legacyAriaProperty
+  @property({type: String, attribute: 'aria-labelledby'})
   ariaLabelledBy: string|undefined;
 
   @property({type: Boolean}) opened = false;
@@ -34,7 +48,7 @@ export class NavigationDrawer extends LitElement {
         aria-describedby="${ifDefined(this.ariaDescribedBy)}"
         aria-expanded="${ariaExpanded}"
         aria-hidden="${ariaHidden}"
-        aria-label="${this.ariaLabel}"
+        aria-label="${ifDefined(this.ariaLabel)}"
         aria-labelledby="${ifDefined(this.ariaLabelledBy)}"
         aria-modal="${this.ariaModal}"
         class="md3-navigation-drawer ${this.getRenderClasses()}"
