@@ -5,6 +5,7 @@
  */
 
 import {ariaProperty as legacyAriaProperty} from '@material/mwc-base/aria-property';
+import {observer} from '@material/mwc-base/observer';
 import {html, LitElement, TemplateResult} from 'lit';
 import {property} from 'lit/decorators';
 import {classMap} from 'lit/directives/class-map';
@@ -35,7 +36,15 @@ export class NavigationDrawer extends LitElement {
   @property({type: String, attribute: 'aria-labelledby'})
   ariaLabelledBy: string|undefined;
 
-  @property({type: Boolean}) opened = false;
+  @property({type: Boolean})  // tslint:disable-next-line:no-new-decorators
+  @observer(function(this: NavigationDrawer, value: boolean) {
+    setTimeout(() => {
+      this.dispatchEvent(new CustomEvent(
+          'navigation-drawer-changed',
+          {detail: {opened: value}, bubbles: true, composed: true}));
+    }, 250);
+  })
+  opened = false;
   @property({type: String}) pivot: 'start'|'end' = 'end';
 
   /** @soyTemplate */
