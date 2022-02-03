@@ -68,6 +68,31 @@ export const TOUCH_DELAY_MS = 150;
 export const WAIT_FOR_MOUSE_CLICK_MS = 500;
 
 /**
+ * Interface for argument to beginPress.
+ */
+export interface BeginPressConfig {
+  /**
+   * Event that was recorded at the start of the interaction.
+   * `null` if the press happened via keyboard.
+   */
+  positionEvent: Event|null;
+}
+
+/**
+ * Interface for argument to endPress.
+ */
+export interface EndPressConfig {
+  /**
+   * `true` if the press was cancelled.
+   */
+  cancelled: boolean;
+  /**
+   * Data object to pass along to clients in the `action` event, if relevant.
+   */
+  actionData?: {};
+}
+
+/**
  * The necessary interface for using an ActionController
  */
 export interface ActionControllerHost extends ReactiveControllerHost,
@@ -75,19 +100,17 @@ export interface ActionControllerHost extends ReactiveControllerHost,
   disabled: boolean;
   /**
    * Determines if pointerdown or click events containing modifier keys should
-   * be ignored
+   * be ignored.
    */
   ignoreClicksWithModifiers?: boolean;
   /**
    * Called when a user interaction is determined to be a press.
-   * `positionEvent` can be used to determine location of the press
    */
-  beginPress(options: {positionEvent: Event|null}): void;
+  beginPress(config: BeginPressConfig): void;
   /**
    * Called when a press ends or is cancelled.
-   * `cancelled` will determine the difference between the two states.
    */
-  endPress(options: {cancelled: boolean}): void;
+  endPress(config: EndPressConfig): void;
 }
 
 // tslint:disable:no-new-decorators
@@ -145,7 +168,7 @@ export class ActionController implements ReactiveController {
   }
 
   /**
-   * Call `beginPress` on element with triggering event, if applicable
+   * Call `beginPress` on element with triggering event, if applicable.
    */
   private beginPress(positionEvent: Event|null = this.lastPositionEvent) {
     this.pressed = true;
@@ -153,7 +176,7 @@ export class ActionController implements ReactiveController {
   }
 
   /**
-   * Call `endPress` on element, and clean up timers
+   * Call `endPress` on element, and clean up timers.
    */
   private endPress() {
     this.pressed = false;
@@ -174,7 +197,7 @@ export class ActionController implements ReactiveController {
   }
 
   /**
-   * Call `endPress` with cancelled state on element, and cleanup timers
+   * Call `endPress` with cancelled state on element, and cleanup timers.
    */
   private cancelPress() {
     this.pressed = false;
@@ -202,7 +225,7 @@ export class ActionController implements ReactiveController {
   private waitForClick() {
     this.setPhase(Phase.WAITING_FOR_MOUSE_CLICK);
     this.clickTimer = setTimeout(() => {
-      // If a click event does not occur, clean up the interaction state
+      // If a click event does not occur, clean up the interaction state.
       if (this.phase === Phase.WAITING_FOR_MOUSE_CLICK) {
         this.cancelPress();
       }
@@ -210,7 +233,7 @@ export class ActionController implements ReactiveController {
   }
 
   /**
-   * Check if event should trigger actions on the element
+   * Check if event should trigger actions on the element.
    */
   private shouldRespondToEvent(e: PointerEvent) {
     return !this.disabled && e.isPrimary;
@@ -219,7 +242,7 @@ export class ActionController implements ReactiveController {
   /**
    * Check if the event is within the bounds of the element.
    *
-   * This is only needed for the "stuck" contextmenu longpress on Chrome
+   * This is only needed for the "stuck" contextmenu longpress on Chrome.
    */
   private inBounds(ev: PointerEvent) {
     const {top, left, bottom, right} = this.element.getBoundingClientRect();
@@ -232,14 +255,14 @@ export class ActionController implements ReactiveController {
   }
 
   /**
-   * Cancel interactions if the element is removed from the DOM
+   * Cancel interactions if the element is removed from the DOM.
    */
   hostDisconnected() {
     this.cancelPress();
   }
 
   /**
-   * If the element becomes disabled, cancel interactions
+   * If the element becomes disabled, cancel interactions.
    */
   hostUpdated() {
     if (this.disabled) {
@@ -249,7 +272,7 @@ export class ActionController implements ReactiveController {
 
   // event listeners
   /**
-   * Pointer down event handler
+   * Pointer down event handler.
    */
   @bound
   pointerDown(e: PointerEvent) {
@@ -281,7 +304,7 @@ export class ActionController implements ReactiveController {
   }
 
   /**
-   * Pointer up event handler
+   * Pointer up event handler.
    */
   @bound
   pointerUp(e: PointerEvent) {
@@ -298,7 +321,7 @@ export class ActionController implements ReactiveController {
   }
 
   /**
-   * Click event handler
+   * Click event handler.
    */
   @bound
   click(e: MouseEvent) {
@@ -319,7 +342,7 @@ export class ActionController implements ReactiveController {
   }
 
   /**
-   * Pointer leave event handler
+   * Pointer leave event handler.
    */
   @bound
   pointerLeave(e: PointerEvent) {
@@ -330,7 +353,7 @@ export class ActionController implements ReactiveController {
   }
 
   /**
-   * Pointer cancel event handler
+   * Pointer cancel event handler.
    */
   @bound
   pointerCancel(e: PointerEvent) {
@@ -340,7 +363,7 @@ export class ActionController implements ReactiveController {
   }
 
   /**
-   * Contextmenu event handler
+   * Contextmenu event handler.
    */
   @bound
   contextMenu() {
