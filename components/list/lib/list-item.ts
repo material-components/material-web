@@ -5,7 +5,7 @@
  */
 
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
-import {property, queryAssignedNodes, state} from 'lit/decorators';
+import {property, queryAssignedElements, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 
 /** @soyCompatible */
@@ -13,9 +13,11 @@ export class ListItem extends LitElement {
   @property({type: String}) supportingText = '';
   @property({type: String}) trailingSupportingText = '';
 
-  @queryAssignedNodes('start', true) protected startElement!: HTMLElement[];
+  @queryAssignedElements({slot: 'start', flatten: true})
+  protected startElement!: HTMLElement[];
 
-  @queryAssignedNodes('end', true) protected endElement!: HTMLElement[];
+  @queryAssignedElements({slot: 'end', flatten: true})
+  protected endElement!: HTMLElement[];
 
   @property() hasLeadingIcon = false;
   @property() hasTrailingIcon = false;

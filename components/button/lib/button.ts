@@ -9,7 +9,7 @@ import '../../focus/focus-ring';
 import '../../ripple/mwc-ripple';
 
 import {html, LitElement, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAssignedNodes, queryAsync, state} from 'lit/decorators';
+import {eventOptions, property, query, queryAssignedElements, queryAsync, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 
@@ -52,7 +52,7 @@ export abstract class Button extends LitElement implements ButtonState {
 
   @state() protected showFocusRing = false;
 
-  @queryAssignedNodes('icon', true, '*')
+  @queryAssignedElements({slot: 'icon', flatten: true})
   protected iconElement!: HTMLElement[]|null;
 
   @state() protected shouldRenderRipple = false;
