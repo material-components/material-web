@@ -8,7 +8,7 @@
 // tslint:disable:strip-private-property-underscore
 
 import {ariaProperty} from '@material/mwc-base/aria-property';
-import {html, LitElement, TemplateResult} from 'lit';
+import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
@@ -153,7 +153,7 @@ export class CircularProgressBase extends LitElement {
         </div>`;
   }
 
-  override update(changedProperties: Map<string, string>) {
+  override update(changedProperties: PropertyValues<this>) {
     super.update(changedProperties);
 
     // Bound progress value in interval [0, 1].
