@@ -4,12 +4,113 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-@use '@material/tab/mixins' as tab;
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+// TODO(b/218510991): Remove IE11 fallbacks
+@use '@material/focusring/focus-ring';
+@use '@material/ripple/ripple';
+@use '@material/ripple/ripple-theme';
+@use '@material/theme/theme';
+@use '@material/theme/theme-color';
+@use '@material/typography/typography';
+@use '@material/rtl/rtl';
+@use 'third_party/javascript/material_web_components/m3/tabs/tab_indicator/lib/tab-indicator' as tab-indicator-mixins;
+
+$icon-size: 24px;
+$height: 48px;
+$stacked-height: 72px;
+$min-width: 90px;
+$horizontal-padding: 24px;
+$text-label-opacity: 0.6;
+$icon-opacity: 0.54;
+$text-label-color-default: rgba(
+  theme-color.prop-value(on-surface),
+  $text-label-opacity
+);
+$icon-color-default: rgba(theme-color.prop-value(on-surface), $icon-opacity);
+$text-label-color-active: primary;
+$icon-color-active: primary;
+$ripple-target: '.mdc-tab__ripple';
+
+@mixin core-styles() {
+  @include without-ripple();
+  @include ripple();
+}
 
 @mixin static-styles() {
-  :host {
-    @include tab.static-styles();
+  .mdc-tab {
+    @include min-width($min-width);
+    @include horizontal-padding($horizontal-padding);
 
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: center;
+    box-sizing: border-box;
+    // Explicitly setting margin to 0 is to override safari default margin for button elements.
+    margin: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border: none;
+    outline: none;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    -webkit-appearance: none;
+    z-index: 1;
+
+    // Firefox still draws a dotted border around focused buttons unless specifically overridden.
+    &::-moz-focus-inner {
+      padding: 0;
+      border: 0;
+    }
+  }
+
+  .mdc-tab--min-width {
+    flex: 0 1 auto;
+  }
+
+  .mdc-tab__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: inherit;
+    pointer-events: none;
+  }
+
+  .mdc-tab__text-label {
+    transition: 150ms color linear;
+
+    display: inline-block;
+    // Setting line-height here overrides the line-height from the typography
+    // mixin above. The line-height needs to be overridden so that the spacing
+    // between the text label and the icon as well as the text label and the
+    // bottom of the tab remain the same.
+    line-height: 1;
+    z-index: 2;
+  }
+
+  .mdc-tab__icon {
+    transition: 150ms color linear;
+    z-index: 2;
+  }
+
+  .mdc-tab--stacked {
+    @include stacked_();
+  }
+
+  .mdc-tab--active {
+    .mdc-tab__text-label,
+    .mdc-tab__icon {
+      transition-delay: 100ms;
+    }
+  }
+
+  .mdc-tab:not(.mdc-tab--stacked) .mdc-tab__icon + .mdc-tab__text-label {
+    @include rtl.reflexive-box(padding, left, 8px);
+  }
+
+  :host {
     -webkit-tap-highlight-color: transparent;
     display: flex;
     flex: 1 0 auto;
@@ -17,4 +118,200 @@
     outline: none;
     position: relative;
   }
+}
+
+// This API is intended for use by frameworks that may want to separate the ripple-related styles
+// from the other tah styles. It is recommended that most users use `mdc-tab-core-styles` instead.
+@mixin without-ripple() {
+  .mdc-tab {
+    @include base_();
+  }
+
+  .mdc-tab__content {
+    @include content_();
+  }
+
+  .mdc-tab__icon {
+    width: $icon-size;
+    height: $icon-size;
+    font-size: $icon-size;
+  }
+
+  .mdc-tab--active {
+    @include active_();
+  }
+
+  .mdc-tab {
+    background: none;
+  }
+
+  @include static-styles();
+}
+
+// This API is intended for use by frameworks that may want to separate the ripple-related styles
+// from the other tah styles. It is recommended that most users use `mdc-tab-core-styles` instead.
+@mixin ripple() {
+  .mdc-tab {
+    @include ripple.surface(
+      $ripple-target: $ripple-target,
+      $include-will-change: false
+    );
+    @include ripple.radius-bounded($ripple-target: $ripple-target);
+    @include ripple-theme.states(
+      $color: primary,
+      $ripple-target: $ripple-target
+    );
+  }
+
+  #{$ripple-target} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    // TODO(b/151931961): Remove the following line once resolved
+    will-change: transform, opacity;
+  }
+}
+
+@mixin horizontal-padding($padding) {
+  padding-right: $padding;
+  padding-left: $padding;
+}
+
+@mixin text-label-color($color) {
+  .mdc-tab__text-label {
+    @include theme.property(color, $color);
+  }
+}
+
+@mixin icon-color($color) {
+  .mdc-tab__icon {
+    @include theme.property(color, $color);
+    fill: currentColor;
+  }
+}
+
+@mixin states-color($color) {
+  @include ripple-theme.states($color, $ripple-target: $ripple-target);
+}
+
+@mixin ink-color($color) {
+  @include icon-color($color);
+  @include states-color($color);
+  @include text-label-color($color);
+}
+
+@mixin active-text-label-color($color) {
+  &.mdc-tab--active {
+    @include text-label-color($color);
+  }
+}
+
+@mixin active-icon-color($color) {
+  &.mdc-tab--active {
+    @include icon-color($color);
+  }
+}
+
+@mixin active-states-color($color) {
+  &.mdc-tab--active {
+    @include states-color($color);
+  }
+}
+
+@mixin parent-positioning() {
+  position: relative;
+}
+
+@mixin fixed-width($width) {
+  flex: 0 1 $width;
+}
+
+///
+/// Sets tab height
+///
+/// @param {Number} $height Height value in `px`.
+///
+@mixin height($height) {
+  height: $height;
+}
+
+///
+/// Sets tab text transform
+///
+/// @param {String} $transform The text-transform property to apply.
+///
+@mixin text-transform($transform) {
+  text-transform: $transform;
+}
+
+///
+/// Sets tab min-width.
+///
+/// @param {Number} $min-width Minimum width value in `px`.
+///
+@mixin min-width($min-width) {
+  min-width: $min-width;
+}
+
+//
+// Private
+//
+
+@mixin base_() {
+  @include typography.typography(button);
+  @include text-label-color($text-label-color-default);
+  @include icon-color($icon-color-default);
+  @include tab-indicator-mixins.surface();
+
+  @include ripple-theme.focus() {
+    &.mdc-tab--active .mdc-tab__focus-ring {
+      @include focus-ring.focus-ring(
+        $inner-ring-radius: 8px,
+        $outer-ring-radius: 10px,
+        $container-outer-padding-vertical: -6px,
+        $container-outer-padding-horizontal: -4px
+      );
+
+      margin-top: -2px;
+      // Set z-index to +1 above the .mdc-tab
+      z-index: 2;
+    }
+
+    .mdc-tab__focus-ring {
+      @include focus-ring.focus-ring(
+        $inner-ring-radius: 8px,
+        $outer-ring-radius: 10px,
+        $container-outer-padding-vertical: -4px,
+        $container-outer-padding-horizontal: -4px
+      );
+
+      // Set z-index to +1 above the .mdc-tab
+      z-index: 2;
+    }
+  }
+}
+
+@mixin content_() {
+  @include tab-indicator-mixins.surface();
+}
+
+@mixin stacked_() {
+  .mdc-tab__content {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mdc-tab__text-label {
+    padding-top: 6px;
+    padding-bottom: 4px;
+  }
+}
+
+@mixin active_() {
+  @include text-label-color($text-label-color-active);
+  @include icon-color($icon-color-active);
 }

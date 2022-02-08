@@ -4,7 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-@use '@material/tab';
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use './tab';
 @use 'third_party/javascript/material_web_components/icon/_mwc-icon.scss';
 @use '@material/ripple';
 @use '@material/rtl';
