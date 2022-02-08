@@ -1,0 +1,105 @@
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use 'sass:map';
+@use 'sass:selector';
+@use '@material/tab/tab-theme' as mdc-tab-theme;
+@use '@material/theme/keys';
+@use '@material/theme/shadow-dom';
+@use '@material/theme/theme';
+@use 'third_party/javascript/material_web_components/ripple/ripple-theme';
+
+$custom-property-prefix: mdc-tab-theme.$custom-property-prefix;
+$primary-light-theme: mdc-tab-theme.$primary-light-theme;
+$secondary-light-theme: mdc-tab-theme.$secondary-light-theme;
+
+@mixin primary-navigation-tab-theme($theme) {
+  @include mdc-tab-theme.primary-navigation-tab-theme($theme);
+}
+@mixin secondary-navigation-tab-theme($theme) {
+  @include mdc-tab-theme.secondary-navigation-tab-theme($theme);
+}
+
+@mixin primary-navigation-tab-theme-styles($theme) {
+  @include theme.validate-theme(mdc-tab-theme.$primary-light-theme, $theme);
+  $theme: keys.create-theme-properties($theme, $custom-property-prefix);
+  .mdc-tab {
+    @include mdc-tab-theme.primary-navigation-tab-theme-styles($theme);
+  }
+
+  @include _is-active() {
+    @include ripple-theme.theme(
+      (
+        hover-state-layer-color: map.get($theme, active-hover-state-layer-color),
+        focus-state-layer-color: map.get($theme, active-focus-state-layer-color),
+        pressed-state-layer-color:
+          map.get($theme, active-pressed-state-layer-color),
+        hover-state-layer-opacity:
+          map.get($theme, active-hover-state-layer-opacity),
+        focus-state-layer-opacity:
+          map.get($theme, active-focus-state-layer-opacity),
+        pressed-state-layer-opacity:
+          map.get($theme, active-pressed-state-layer-opacity),
+      )
+    );
+  }
+
+  @include _is-inactive() {
+    @include ripple-theme.theme(
+      (
+        hover-state-layer-color:
+          map.get($theme, inactive-hover-state-layer-color),
+        focus-state-layer-color:
+          map.get($theme, inactive-focus-state-layer-color),
+        pressed-state-layer-color:
+          map.get($theme, inactive-pressed-state-layer-color),
+        hover-state-layer-opacity:
+          map.get($theme, inactive-hover-state-layer-opacity),
+        focus-state-layer-opacity:
+          map.get($theme, inactive-focus-state-layer-opacity),
+        pressed-state-layer-opacity:
+          map.get($theme, inactive-pressed-state-layer-opacity),
+      )
+    );
+  }
+}
+
+@mixin secondary-navigation-tab-theme-styles-styles($theme) {
+  @include theme.validate-theme(mdc-tab-theme.$secondary-light-theme, $theme);
+  $theme: keys.create-theme-properties($theme, $custom-property-prefix);
+  .mdc-tab {
+    @include mdc-tab-theme.secondary-navigation-tab-theme-styles-styles($theme);
+  }
+
+  @include _is-active() {
+    @include ripple-theme.theme(
+      (
+        hover-state-layer-color: map.get($theme, hover-state-layer-color),
+        focus-state-layer-color: map.get($theme, focus-state-layer-color),
+        pressed-state-layer-color: map.get($theme, pressed-state-layer-color),
+        hover-state-layer-opacity: map.get($theme, hover-state-layer-opacity),
+        focus-state-layer-opacity: map.get($theme, focus-state-layer-opacity),
+        pressed-state-layer-opacity:
+          map.get($theme, pressed-state-layer-opacity),
+      )
+    );
+  }
+}
+
+@mixin _is-active() {
+  @include shadow-dom.host-aware(selector.append(&, '[active]')) {
+    @content;
+  }
+}
+
+@mixin _is-inactive() {
+  @include shadow-dom.host-aware(selector.append(&, ':not([active])')) {
+    @content;
+  }
+}
