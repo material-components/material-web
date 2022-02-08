@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
 @use 'sass:map';
 @use 'sass:selector';
 @use '@material/theme/keys';
@@ -13,12 +11,13 @@
 @use 'third_party/javascript/material_web_components/ripple/ripple-theme';
 @use '@material/elevation/elevation-theme';
 @use '@material/theme/state';
-@use '@material/theme/theme';
 @use '@material/theme/theme-color';
 @use '@material/typography/typography';
+@use '../../../sass/theme';
 
-$custom-property-prefix: 'mdc-tab';
-$_ripple-target: '.mdc-tab__ripple';
+$custom-property-prefix-primary: 'primary-tab';
+$custom-property-prefix-secondary: 'secondary-tab';
+$_ripple-target: '.md3-tab__ripple';
 $primary-light-theme: (
   active-focus-state-layer-color: theme-color.$primary,
   active-focus-state-layer-opacity: 0.12,
@@ -86,22 +85,21 @@ $secondary-light-theme: (
 );
 
 @mixin primary-navigation-tab-theme($theme) {
-  @include keys.declare-custom-properties(
-    $theme,
-    $prefix: $custom-property-prefix
-  );
+  $theme: theme.validate-theme($primary-light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix-primary);
+  @include theme.emit-theme-vars($theme);
 }
 @mixin secondary-navigation-tab-theme($theme) {
-  @include keys.declare-custom-properties(
-    $theme,
-    $prefix: $custom-property-prefix
-  );
+  $theme: theme.validate-theme($secondary-light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix-secondary);
+  @include theme.emit-theme-vars($theme);
 }
 
 @mixin primary-navigation-tab-theme-styles($theme) {
-  @include theme.validate-theme-styles($primary-light-theme, $theme);
-  $theme: keys.create-theme-properties($theme, $custom-property-prefix);
-  .mdc-tab {
+  $theme: theme.validate-theme-styles($primary-light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix-primary);
+
+  .md3-tab {
     // TODO(b/191298796): Use independent state layer color mixins when available.
     @include _active-state-layer-color(
       map.get($theme, active-hover-state-layer-color) or
@@ -232,10 +230,10 @@ $secondary-light-theme: (
   }
 }
 
-@mixin secondary-navigation-tab-theme-styles-styles($theme) {
-  @include theme.validate-theme(mdc-tab-theme.$secondary-light-theme, $theme);
-  $theme: keys.create-theme-properties($theme, $custom-property-prefix);
-  .mdc-tab {
+@mixin secondary-navigation-tab-theme-styles($theme) {
+  $theme: theme.validate-theme-styles($secondary-light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix-secondary);
+  .md3-tab {
     // TODO(b/191298796): Use independent state layer color mixins when available.
     @include _active-state-layer-color(
       map.get($theme, hover-state-layer-color) or
@@ -305,7 +303,7 @@ $secondary-light-theme: (
 }
 
 @mixin _icon-color($color) {
-  .mdc-tab__icon {
+  .md3-tab__icon {
     color: $color;
     fill: currentColor;
   }
@@ -364,7 +362,7 @@ $secondary-light-theme: (
 }
 
 @mixin _label-text-color($color) {
-  .mdc-tab__text-label {
+  .md3-tab__text-label {
     color: $color;
   }
 }
@@ -543,31 +541,31 @@ $secondary-light-theme: (
 }
 
 @mixin _label-text-font-family($font-family) {
-  .mdc-tab__text-label {
+  .md3-tab__text-label {
     font-family: $font-family;
   }
 }
 
 @mixin _label-text-font-size($font-size) {
-  .mdc-tab__text-label {
+  .md3-tab__text-label {
     font-size: $font-size;
   }
 }
 
 @mixin _label-text-letter-spacing($letter-spacing) {
-  .mdc-tab__text-label {
+  .md3-tab__text-label {
     letter-spacing: $letter-spacing;
   }
 }
 
 @mixin _label-text-line-height($line-height) {
-  .mdc-tab__text-label {
+  .md3-tab__text-label {
     line-height: $line-height;
   }
 }
 
 @mixin _label-text-weight($weight) {
-  .mdc-tab__text-label {
+  .md3-tab__text-label {
     font-weight: $weight;
   }
 }
@@ -577,25 +575,25 @@ $secondary-light-theme: (
 }
 
 @mixin _container-height($height) {
-  &:not(.mdc-tab--stacked) {
+  &:not(.md3-tab--stacked) {
     @include _height($height);
   }
 }
 
 @mixin _with-icon-and-label-text-container-height($height) {
-  &.mdc-tab--stacked {
+  &.md3-tab--stacked {
     @include _height($height);
   }
 }
 
 @mixin _is-mdc-active() {
-  &.mdc-tab--active {
+  &.md3-tab--active {
     @content;
   }
 }
 
 @mixin _is-mdc-inactive() {
-  &:not(.mdc-tab--active) {
+  &:not(.md3-tab--active) {
     @content;
   }
 }

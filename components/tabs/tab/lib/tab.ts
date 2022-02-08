@@ -40,7 +40,7 @@ export class TabBase extends BaseElement {
 
   protected readonly mdcFoundationClass = MDCTabFoundation;
 
-  @query('.mdc-tab') protected mdcRoot!: HTMLElement;
+  @query('.md3-tab') protected mdcRoot!: HTMLElement;
 
   @query('md-tab-indicator') protected tabIndicator!: TabIndicator;
 
@@ -83,7 +83,7 @@ export class TabBase extends BaseElement {
    * onTransitionEnd (needed?)
    */
 
-  @query('.mdc-tab__content') protected _contentElement!: HTMLElement;
+  @query('.md3-tab__content') protected _contentElement!: HTMLElement;
 
   @state() protected shouldRenderRipple = false;
 
@@ -101,13 +101,13 @@ export class TabBase extends BaseElement {
   protected override firstUpdated() {
     super.firstUpdated();
     // create an unique id
-    this.id = this.id || `mdc-tab-${++tabIdCounter}`;
+    this.id = this.id || `md3-tab-${++tabIdCounter}`;
   }
 
   protected override render() {
     const classes = {
-      'mdc-tab--min-width': this.minWidth,
-      'mdc-tab--stacked': this.stacked,
+      'md3-tab--min-width': this.minWidth,
+      'md3-tab--stacked': this.stacked,
     };
 
     let iconTemplate = html``;
@@ -115,20 +115,20 @@ export class TabBase extends BaseElement {
       // NOTE: MUST be on same line as spaces will cause vert alignment issues
       // in IE
       iconTemplate = html`
-        <span class="mdc-tab__icon material-icons"><slot name="icon">${
+        <span class="md3-tab__icon material-icons"><slot name="icon">${
           this.icon}</slot></span>`;
     }
 
     let labelTemplate = html``;
     if (this.label) {
       labelTemplate = html`
-        <span class="mdc-tab__text-label">${this.label}</span>`;
+        <span class="md3-tab__text-label">${this.label}</span>`;
     }
 
     return html`
       <button
         @click="${this.handleClick}"
-        class="mdc-tab ${classMap(classes)}"
+        class="md3-tab ${classMap(classes)}"
         role="tab"
         aria-selected="${this._active}"
         tabindex="${this._active ? 0 : -1}"
@@ -140,7 +140,7 @@ export class TabBase extends BaseElement {
         @touchstart="${this.handleRippleTouchStart}"
         @touchend="${this.handleRippleDeactivate}"
         @touchcancel="${this.handleRippleDeactivate}">
-        <span class="mdc-tab__content">
+        <span class="md3-tab__content">
           ${iconTemplate}
           ${labelTemplate}
           ${this.isMinWidthIndicator ? this.renderIndicator() : ''}

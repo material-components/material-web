@@ -4,9 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
-
 // TODO(b/218510991): Remove IE11 fallbacks
 @use '@material/focusring/focus-ring';
 @use '@material/ripple/ripple';
@@ -39,7 +36,7 @@ $ripple-target: '.mdc-tab__ripple';
 }
 
 @mixin static-styles() {
-  .mdc-tab {
+  .md3-tab {
     @include min-width($min-width);
     @include horizontal-padding($horizontal-padding);
 
@@ -66,11 +63,11 @@ $ripple-target: '.mdc-tab__ripple';
     }
   }
 
-  .mdc-tab--min-width {
+  .md3-tab--min-width {
     flex: 0 1 auto;
   }
 
-  .mdc-tab__content {
+  .md3-tab__content {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -78,7 +75,7 @@ $ripple-target: '.mdc-tab__ripple';
     pointer-events: none;
   }
 
-  .mdc-tab__text-label {
+  .md3-tab__text-label {
     transition: 150ms color linear;
 
     display: inline-block;
@@ -90,23 +87,23 @@ $ripple-target: '.mdc-tab__ripple';
     z-index: 2;
   }
 
-  .mdc-tab__icon {
+  .md3-tab__icon {
     transition: 150ms color linear;
     z-index: 2;
   }
 
-  .mdc-tab--stacked {
+  .md3-tab--stacked {
     @include stacked_();
   }
 
-  .mdc-tab--active {
-    .mdc-tab__text-label,
-    .mdc-tab__icon {
+  .md3-tab--active {
+    .md3-tab__text-label,
+    .md3-tab__icon {
       transition-delay: 100ms;
     }
   }
 
-  .mdc-tab:not(.mdc-tab--stacked) .mdc-tab__icon + .mdc-tab__text-label {
+  .md3-tab:not(.md3-tab--stacked) .md3-tab__icon + .md3-tab__text-label {
     @include rtl.reflexive-box(padding, left, 8px);
   }
 
@@ -123,25 +120,25 @@ $ripple-target: '.mdc-tab__ripple';
 // This API is intended for use by frameworks that may want to separate the ripple-related styles
 // from the other tah styles. It is recommended that most users use `mdc-tab-core-styles` instead.
 @mixin without-ripple() {
-  .mdc-tab {
+  .md3-tab {
     @include base_();
   }
 
-  .mdc-tab__content {
+  .md3-tab__content {
     @include content_();
   }
 
-  .mdc-tab__icon {
+  .md3-tab__icon {
     width: $icon-size;
     height: $icon-size;
     font-size: $icon-size;
   }
 
-  .mdc-tab--active {
+  .md3-tab--active {
     @include active_();
   }
 
-  .mdc-tab {
+  .md3-tab {
     background: none;
   }
 
@@ -151,7 +148,7 @@ $ripple-target: '.mdc-tab__ripple';
 // This API is intended for use by frameworks that may want to separate the ripple-related styles
 // from the other tah styles. It is recommended that most users use `mdc-tab-core-styles` instead.
 @mixin ripple() {
-  .mdc-tab {
+  .md3-tab {
     @include ripple.surface(
       $ripple-target: $ripple-target,
       $include-will-change: false
@@ -181,13 +178,13 @@ $ripple-target: '.mdc-tab__ripple';
 }
 
 @mixin text-label-color($color) {
-  .mdc-tab__text-label {
+  .md3-tab__text-label {
     @include theme.property(color, $color);
   }
 }
 
 @mixin icon-color($color) {
-  .mdc-tab__icon {
+  .md3-tab__icon {
     @include theme.property(color, $color);
     fill: currentColor;
   }
@@ -204,19 +201,19 @@ $ripple-target: '.mdc-tab__ripple';
 }
 
 @mixin active-text-label-color($color) {
-  &.mdc-tab--active {
+  &.md3-tab--active {
     @include text-label-color($color);
   }
 }
 
 @mixin active-icon-color($color) {
-  &.mdc-tab--active {
+  &.md3-tab--active {
     @include icon-color($color);
   }
 }
 
 @mixin active-states-color($color) {
-  &.mdc-tab--active {
+  &.md3-tab--active {
     @include states-color($color);
   }
 }
@@ -267,7 +264,7 @@ $ripple-target: '.mdc-tab__ripple';
   @include tab-indicator-mixins.surface();
 
   @include ripple-theme.focus() {
-    &.mdc-tab--active .mdc-tab__focus-ring {
+    &.md3-tab--active .md3-tab__focus-ring {
       @include focus-ring.focus-ring(
         $inner-ring-radius: 8px,
         $outer-ring-radius: 10px,
@@ -276,11 +273,11 @@ $ripple-target: '.mdc-tab__ripple';
       );
 
       margin-top: -2px;
-      // Set z-index to +1 above the .mdc-tab
+      // Set z-index to +1 above the .md3-tab
       z-index: 2;
     }
 
-    .mdc-tab__focus-ring {
+    .md3-tab__focus-ring {
       @include focus-ring.focus-ring(
         $inner-ring-radius: 8px,
         $outer-ring-radius: 10px,
@@ -288,7 +285,7 @@ $ripple-target: '.mdc-tab__ripple';
         $container-outer-padding-horizontal: -4px
       );
 
-      // Set z-index to +1 above the .mdc-tab
+      // Set z-index to +1 above the .md3-tab
       z-index: 2;
     }
   }
@@ -299,13 +296,13 @@ $ripple-target: '.mdc-tab__ripple';
 }
 
 @mixin stacked_() {
-  .mdc-tab__content {
+  .md3-tab__content {
     flex-direction: column;
     align-items: center;
     justify-content: center;
   }
 
-  .mdc-tab__text-label {
+  .md3-tab__text-label {
     padding-top: 6px;
     padding-bottom: 4px;
   }

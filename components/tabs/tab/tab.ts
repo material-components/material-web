@@ -16,11 +16,11 @@ export {TabInteractionEventDetail} from './lib/tab';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mwc-tab': Tab;
+    'md-tab': Tab;
   }
 }
 
-@customElement('mwc-tab')
+@customElement('md-tab')
 export class Tab extends TabBase {
   static override styles = [styles];
 }

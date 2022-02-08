@@ -5,16 +5,16 @@
  */
 
 const cssClasses = {
-  ACTIVE: 'mdc-tab--active',
+  ACTIVE: 'md3-tab--active',
 };
 
 const strings = {
   ARIA_SELECTED: 'aria-selected',
-  CONTENT_SELECTOR: '.mdc-tab__content',
-  INTERACTED_EVENT: 'MDCTab:interacted',
-  RIPPLE_SELECTOR: '.mdc-tab__ripple',
+  CONTENT_SELECTOR: '.md3-tab__content',
+  INTERACTED_EVENT: 'MD3Tab:interacted',
+  RIPPLE_SELECTOR: '.md3-tab__ripple',
   TABINDEX: 'tabIndex',
-  TAB_INDICATOR_SELECTOR: '.mdc-tab-indicator',
+  TAB_INDICATOR_SELECTOR: '.md3-tab-indicator',
 };
 
 export {
