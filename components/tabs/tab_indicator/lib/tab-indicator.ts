@@ -25,9 +25,9 @@ export class TabIndicatorBase extends BaseElement {
                        MDCSlidingTabIndicatorFoundation;
   }
 
-  @query('.mdc-tab-indicator') protected mdcRoot!: HTMLElement;
+  @query('.md3-tab-indicator') protected mdcRoot!: HTMLElement;
 
-  @query('.mdc-tab-indicator__content') protected contentElement!: HTMLElement;
+  @query('.md3-tab-indicator__content') protected contentElement!: HTMLElement;
 
   @property() icon = '';
 
@@ -35,15 +35,15 @@ export class TabIndicatorBase extends BaseElement {
 
   protected override render() {
     const contentClasses = {
-      'mdc-tab-indicator__content--icon': this.icon,
+      'md3-tab-indicator__content--icon': this.icon,
       'material-icons': this.icon,
-      'mdc-tab-indicator__content--underline': !this.icon,
+      'md3-tab-indicator__content--underline': !this.icon,
     };
     return html`
-      <span class="mdc-tab-indicator ${classMap({
-      'mdc-tab-indicator--fade': this.fade
+      <span class="md3-tab-indicator ${classMap({
+      'md3-tab-indicator--fade': this.fade
     })}">
-        <span class="mdc-tab-indicator__content ${classMap(contentClasses)}">${
+        <span class="md3-tab-indicator__content ${classMap(contentClasses)}">${
         this.icon}</span>
       </span>
       `;

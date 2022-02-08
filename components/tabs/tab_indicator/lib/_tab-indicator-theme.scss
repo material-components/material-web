@@ -4,18 +4,52 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-@use '@material/tab-indicator/tab-indicator-theme' as mdc-tab-indicator-theme;
-@use '@material/theme/keys';
-@use '@material/theme/theme';
+@use 'third_party/javascript/material_web_components/m3/sass/theme';
 
-$custom-property-prefix: mdc-tab-indicator-theme.$custom-property-prefix;
-$light-theme: mdc-tab-indicator-theme.$light-theme;
+$custom-property-prefix: 'md3-tab';
+$light-theme: (
+  active-indicator-color: theme-color.$primary,
+  active-indicator-height: 3px,
+  active-indicator-shape: (
+    3px,
+    3px,
+    0,
+    0,
+  ),
+);
 
 @mixin theme($theme) {
-  @include mdc-tab-indicator-theme.theme($theme);
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix);
+  @include theme.emit-theme-vars($theme);
 }
 
 @mixin theme-styles($theme) {
-  $theme: keys.create-theme-properties($theme, $custom-property-prefix);
-  @include mdc-tab-indicator-theme.theme-styles($theme);
+  $theme: theme.validate-theme-styles(
+    $light-theme,
+    $theme,
+    $require-all: false
+  );
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix);
+  @include _underline-color(map.get($theme, active-indicator-color));
+  @include _underline-height(map.get($theme, active-indicator-height));
+  @include _underline-shape(map.get($theme, active-indicator-shape));
+}
+
+@mixin _underline-color($color) {
+  .md3-tab-indicator__content--underline {
+    border-color: $color;
+  }
+}
+
+@mixin _underline-height($height) {
+  .md3-tab-indicator__content--underline {
+    border-top-width: $height;
+  }
+}
+
+@mixin _underline-shape($radius) {
+  .md3-tab-indicator__content--underline {
+    border-radius: $radius;
+  }
 }

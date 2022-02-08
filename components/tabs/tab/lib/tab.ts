@@ -4,12 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import 'google3/third_party/javascript/material_web_components/tab_indicator/md-tab-indicator';
 import '../../tab_indicator/tab-indicator';
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
 // Make TypeScript not remove the import.
-import '@material/mwc-tab-indicator';
+import '@material/md-tab-indicator';
 import '@material/mwc-ripple/mwc-ripple';
 
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
@@ -41,7 +42,7 @@ export class TabBase extends BaseElement {
 
   @query('.mdc-tab') protected mdcRoot!: HTMLElement;
 
-  @query('mwc-tab-indicator') protected tabIndicator!: TabIndicator;
+  @query('md-tab-indicator') protected tabIndicator!: TabIndicator;
 
   @property() label = '';
 
@@ -150,9 +151,9 @@ export class TabBase extends BaseElement {
   }
 
   protected renderIndicator() {
-    return html`<mwc-tab-indicator
+    return html`<md-tab-indicator
         .icon="${this.indicatorIcon}"
-        .fade="${this.isFadingIndicator}"></mwc-tab-indicator>`;
+        .fade="${this.isFadingIndicator}"></md-tab-indicator>`;
   }
 
   // TODO(dfreedm): Make this use selected as a param after Polymer/internal#739

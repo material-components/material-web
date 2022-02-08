@@ -14,11 +14,11 @@ import {styles} from './lib/tab-indicator-styles.css';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mwc-tab-indicator': TabIndicator;
+    'md-tab-indicator': TabIndicator;
   }
 }
 
-@customElement('mwc-tab-indicator')
+@customElement('md-tab-indicator')
 export class TabIndicator extends TabIndicatorBase {
   static override styles = [styles];
 }
