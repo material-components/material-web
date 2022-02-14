@@ -1,0 +1,167 @@
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use 'sass:map';
+@use 'sass:selector';
+@use 'third_party/javascript/material_web_components/ripple/ripple-theme';
+@use '@material/elevation/elevation-theme';
+@use '@material/theme/theme-color';
+@use '@material/typography/typography';
+@use '../../../sass/theme';
+@use './tab-theme';
+
+$custom-property-prefix-primary: 'primary-tab';
+$primary-light-theme: (
+  active-focus-state-layer-color: theme-color.$primary,
+  active-focus-state-layer-opacity: 0.12,
+  active-hover-state-layer-color: theme-color.$primary,
+  active-hover-state-layer-opacity: 0.08,
+  active-pressed-state-layer-color: theme-color.$primary,
+  active-pressed-state-layer-opacity: 0.12,
+  container-color: theme-color.$surface,
+  container-elevation: elevation-theme.get-elevation(0),
+  container-height: 48px,
+  container-shape: 0,
+  inactive-focus-state-layer-color: theme-color.$on-surface,
+  inactive-focus-state-layer-opacity: 0.12,
+  inactive-hover-state-layer-color: theme-color.$on-surface,
+  inactive-hover-state-layer-opacity: 0.08,
+  inactive-pressed-state-layer-color: theme-color.$primary,
+  inactive-pressed-state-layer-opacity: 0.12,
+  with-icon-active-focus-icon-color: theme-color.$primary,
+  with-icon-active-hover-icon-color: theme-color.$primary,
+  with-icon-active-icon-color: theme-color.$primary,
+  with-icon-active-pressed-icon-color: theme-color.$primary,
+  with-icon-and-label-text-container-height: 64px,
+  with-icon-icon-size: 24px,
+  with-icon-inactive-focus-icon-color: theme-color.$on-surface,
+  with-icon-inactive-hover-icon-color: theme-color.$on-surface,
+  with-icon-inactive-icon-color: theme-color.$on-surface,
+  with-icon-inactive-pressed-icon-color: theme-color.$on-surface,
+  with-label-text-active-focus-label-text-color: theme-color.$primary,
+  with-label-text-active-hover-label-text-color: theme-color.$primary,
+  with-label-text-active-label-text-color: theme-color.$primary,
+  with-label-text-active-pressed-label-text-color: theme-color.$primary,
+  with-label-text-inactive-focus-label-text-color: theme-color.$on-surface,
+  with-label-text-inactive-hover-label-text-color: theme-color.$on-surface,
+  with-label-text-inactive-label-text-color: theme-color.$on-surface,
+  with-label-text-inactive-pressed-label-text-color: theme-color.$on-surface,
+  with-label-text-label-text-font-family: typography.get-font(subtitle2),
+  with-label-text-label-text-font-size: typography.get-size(subtitle2),
+  with-label-text-label-text-letter-spacing: typography.get-tracking(subtitle2),
+  with-label-text-label-text-line-height: typography.get-line-height(subtitle2),
+  with-label-text-label-text-weight: typography.get-weight(subtitle2),
+);
+
+@mixin primary-navigation-tab-theme($theme) {
+  $theme: theme.validate-theme($primary-light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix-primary);
+  @include theme.emit-theme-vars($theme);
+}
+
+@mixin primary-navigation-tab-theme-styles($theme) {
+  $theme: theme.validate-theme-styles($primary-light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix-primary);
+
+  @include tab-theme.container-color(map.get($theme, container-color));
+  @include tab-theme.container-elevation(map.get($theme, container-elevation));
+  @include tab-theme.container-height(map.get($theme, container-height));
+  @include tab-theme.container-shape(map.get($theme, container-shape));
+
+  @include tab-theme.with-icon-and-label-text-container-height(
+    map.get($theme, with-icon-and-label-text-container-height)
+  );
+  @include tab-theme.icon-size(map.get($theme, with-icon-icon-size));
+
+  @include tab-theme.active-icon-color(
+    (
+      default: map.get($theme, with-icon-active-icon-color),
+      hover: map.get($theme, with-icon-active-hover-icon-color),
+      focus: map.get($theme, with-icon-active-focus-icon-color),
+      pressed: map.get($theme, with-icon-active-pressed-icon-color),
+    )
+  );
+
+  @include tab-theme.inactive-icon-color(
+    (
+      default: map.get($theme, with-icon-inactive-icon-color),
+      hover: map.get($theme, with-icon-inactive-hover-icon-color),
+      focus: map.get($theme, with-icon-inactive-focus-icon-color),
+      pressed: map.get($theme, with-icon-inactive-pressed-icon-color),
+    )
+  );
+
+  @include tab-theme.active-label-text-color(
+    (
+      default: map.get($theme, with-label-text-active-label-text-color),
+      hover: map.get($theme, with-label-text-active-hover-label-text-color),
+      focus: map.get($theme, with-label-text-active-focus-label-text-color),
+      pressed: map.get($theme, with-label-text-active-pressed-label-text-color),
+    )
+  );
+
+  @include tab-theme.inactive-label-text-color(
+    (
+      default: map.get($theme, with-label-text-inactive-label-text-color),
+      hover: map.get($theme, with-label-text-inactive-hover-label-text-color),
+      focus: map.get($theme, with-label-text-inactive-focus-label-text-color),
+      pressed:
+        map.get($theme, with-label-text-inactive-pressed-label-text-color),
+    )
+  );
+
+  @include tab-theme.label-text-font-family(
+    map.get($theme, with-label-text-label-text-font-family)
+  );
+  @include tab-theme.label-text-font-size(
+    map.get($theme, with-label-text-label-text-font-size)
+  );
+  @include tab-theme.label-text-letter-spacing(
+    map.get($theme, with-label-text-label-text-letter-spacing)
+  );
+  @include tab-theme.label-text-line-height(
+    map.get($theme, with-label-text-label-text-line-height)
+  );
+  @include tab-theme.label-text-weight(
+    map.get($theme, with-label-text-label-text-weight)
+  );
+
+  @include tab-theme.is-active() {
+    @include ripple-theme.theme(
+      (
+        hover-state-layer-color: map.get($theme, active-hover-state-layer-color),
+        focus-state-layer-color: map.get($theme, active-focus-state-layer-color),
+        pressed-state-layer-color:
+          map.get($theme, active-pressed-state-layer-color),
+        hover-state-layer-opacity:
+          map.get($theme, active-hover-state-layer-opacity),
+        focus-state-layer-opacity:
+          map.get($theme, active-focus-state-layer-opacity),
+        pressed-state-layer-opacity:
+          map.get($theme, active-pressed-state-layer-opacity),
+      )
+    );
+  }
+
+  @include tab-theme.is-inactive() {
+    @include ripple-theme.theme(
+      (
+        hover-state-layer-color:
+          map.get($theme, inactive-hover-state-layer-color),
+        focus-state-layer-color:
+          map.get($theme, inactive-focus-state-layer-color),
+        pressed-state-layer-color:
+          map.get($theme, inactive-pressed-state-layer-color),
+        hover-state-layer-opacity:
+          map.get($theme, inactive-hover-state-layer-opacity),
+        focus-state-layer-opacity:
+          map.get($theme, inactive-focus-state-layer-opacity),
+        pressed-state-layer-opacity:
+          map.get($theme, inactive-pressed-state-layer-opacity),
+      )
+    );
+  }
+}

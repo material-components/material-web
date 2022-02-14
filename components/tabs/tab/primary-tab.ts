@@ -7,7 +7,8 @@
 import {customElement} from 'lit/decorators';
 
 import {PrimaryTab} from './lib/primary-tab';
-import {styles} from './lib/tab-styles.css';
+import {styles as primaryStyles} from './lib/primary-tab-styles.css';
+import {styles as sharedStyles} from './lib/shared-styles.css';
 
 export {TabInteractionEventDetail} from './lib/tab';
 
@@ -19,5 +20,5 @@ declare global {
 
 @customElement('md-primary-tab')
 export class MdPrimaryTab extends PrimaryTab {
-  static override styles = [styles];
+  static override styles = [sharedStyles, primaryStyles];
 }

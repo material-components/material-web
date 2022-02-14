@@ -1,0 +1,99 @@
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use 'sass:map';
+@use 'sass:selector';
+@use 'third_party/javascript/material_web_components/ripple/ripple-theme';
+@use '@material/elevation/elevation-theme';
+@use '@material/theme/theme-color';
+@use '@material/typography/typography';
+@use '../../../sass/theme';
+@use './tab-theme';
+
+$custom-property-prefix-secondary: 'secondary-tab';
+$_ripple-target: '.md3-tab__ripple';
+
+// TODO(b/218891998): Update tokens values to support secondary tabs with icons
+$secondary-light-theme: (
+  active-label-text-color: theme-color.$on-surface,
+  container-color: theme-color.$surface,
+  container-elevation: elevation-theme.get-elevation(0),
+  container-height: 48px,
+  container-shadow-color: #000,
+  container-shape: 0,
+  focus-label-text-color: theme-color.$on-surface,
+  focus-state-layer-color: theme-color.$on-surface,
+  focus-state-layer-opacity: 0.12,
+  hover-label-text-color: theme-color.$on-surface,
+  hover-state-layer-color: theme-color.$on-surface,
+  hover-state-layer-opacity: 0.08,
+  inactive-label-text-color: theme-color.$on-surface,
+  label-text-font-family: typography.get-font(subtitle2),
+  label-text-font-size: typography.get-size(subtitle2),
+  label-text-letter-spacing: typography.get-tracking(subtitle2),
+  label-text-line-height: typography.get-line-height(subtitle2),
+  label-text-weight: typography.get-weight(subtitle2),
+  pressed-label-text-color: theme-color.$on-surface,
+  pressed-state-layer-color: theme-color.$on-surface,
+  pressed-state-layer-opacity: 0.12,
+);
+
+@mixin secondary-navigation-tab-theme($theme) {
+  $theme: theme.validate-theme($secondary-light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix-secondary);
+  @include theme.emit-theme-vars($theme);
+}
+
+@mixin secondary-navigation-tab-theme-styles($theme) {
+  $theme: theme.validate-theme-styles($secondary-light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix-secondary);
+
+  @include tab-theme.container-color(map.get($theme, container-color));
+  @include tab-theme.container-elevation(map.get($theme, container-elevation));
+  @include tab-theme.container-height(map.get($theme, container-height));
+  @include tab-theme.container-shape(map.get($theme, container-shape));
+
+  @include tab-theme.active-label-text-color(
+    (
+      default: map.get($theme, active-label-text-color),
+      hover: map.get($theme, hover-label-text-color),
+      focus: map.get($theme, focus-label-text-color),
+      pressed: map.get($theme, pressed-label-text-color),
+    )
+  );
+
+  @include tab-theme.inactive-label-text-color(
+    map.get($theme, inactive-label-text-color)
+  );
+
+  @include tab-theme.label-text-font-family(
+    map.get($theme, label-text-font-family)
+  );
+  @include tab-theme.label-text-font-size(
+    map.get($theme, label-text-font-size)
+  );
+  @include tab-theme.label-text-letter-spacing(
+    map.get($theme, label-text-letter-spacing)
+  );
+  @include tab-theme.label-text-line-height(
+    map.get($theme, label-text-line-height)
+  );
+  @include tab-theme.label-text-weight(map.get($theme, label-text-weight));
+
+  @include tab-theme.is-active() {
+    @include ripple-theme.theme(
+      (
+        hover-state-layer-color: map.get($theme, hover-state-layer-color),
+        focus-state-layer-color: map.get($theme, focus-state-layer-color),
+        pressed-state-layer-color: map.get($theme, pressed-state-layer-color),
+        hover-state-layer-opacity: map.get($theme, hover-state-layer-opacity),
+        focus-state-layer-opacity: map.get($theme, focus-state-layer-opacity),
+        pressed-state-layer-opacity:
+          map.get($theme, pressed-state-layer-opacity),
+      )
+    );
+  }
+}

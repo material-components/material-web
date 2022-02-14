@@ -7,7 +7,8 @@
 import {customElement} from 'lit/decorators';
 
 import {SecondaryTab} from './lib/secondary-tab';
-import {styles} from './lib/tab-styles.css';
+import {styles as secondaryStyles} from './lib/secondary-tab-styles.css';
+import {styles as sharedStyles} from './lib/shared-styles.css';
 
 export {TabInteractionEventDetail} from './lib/tab';
 
@@ -19,5 +20,5 @@ declare global {
 
 @customElement('md-secondary-tab')
 export class MdSecondaryTab extends SecondaryTab {
-  static override styles = [styles];
+  static override styles = [sharedStyles, secondaryStyles];
 }

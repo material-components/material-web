@@ -1,0 +1,24 @@
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use './tab';
+@use 'third_party/javascript/material_web_components/icon/_mwc-icon.scss';
+@use '@material/ripple';
+
+@include tab.core-styles();
+@include ripple.common();
+
+.material-icons {
+  @extend %material-icons;
+}
+
+:host {
+  outline: none;
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
