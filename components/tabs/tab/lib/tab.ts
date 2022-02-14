@@ -6,9 +6,6 @@
 
 import 'google3/third_party/javascript/material_web_components/tab_indicator/md-tab-indicator';
 import '../../tab_indicator/tab-indicator';
-// Style preference for leading underscores.
-// tslint:disable:strip-private-property-underscore
-
 // Make TypeScript not remove the import.
 import '@material/md-tab-indicator';
 import '@material/mwc-ripple/mwc-ripple';
@@ -20,7 +17,7 @@ import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {TabIndicator} from 'google3/third_party/javascript/material_web_components/m3/tabs/tab_indicator/tab-indicator';
 import {html} from 'lit';
 import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
 import {MDCTabAdapter} from './adapter';
 import MDCTabFoundation from './foundation';
@@ -32,7 +29,7 @@ export interface TabInteractionEventDetail {
 // used for generating unique id for each tab
 let tabIdCounter = 0;
 
-export class TabBase extends BaseElement {
+export class Tab extends BaseElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
@@ -65,7 +62,7 @@ export class TabBase extends BaseElement {
 
   @property({type: Boolean}) stacked = false;
 
-  @observer(async function(this: TabBase, value: boolean) {
+  @observer(async function(this: Tab, value: boolean) {
     await this.updateComplete;
     this.mdcFoundation.setFocusOnActivate(value);
   })
@@ -105,11 +102,6 @@ export class TabBase extends BaseElement {
   }
 
   protected override render() {
-    const classes = {
-      'md3-tab--min-width': this.minWidth,
-      'md3-tab--stacked': this.stacked,
-    };
-
     let iconTemplate = html``;
     if (this.hasImageIcon || this.icon) {
       // NOTE: MUST be on same line as spaces will cause vert alignment issues
@@ -128,7 +120,7 @@ export class TabBase extends BaseElement {
     return html`
       <button
         @click="${this.handleClick}"
-        class="md3-tab ${classMap(classes)}"
+        class="md3-tab ${classMap(this.getRootClasses())}"
         role="tab"
         aria-selected="${this._active}"
         tabindex="${this._active ? 0 : -1}"
@@ -148,6 +140,13 @@ export class TabBase extends BaseElement {
         ${this.isMinWidthIndicator ? '' : this.renderIndicator()}
         ${this.renderRipple()}
       </button>`;
+  }
+
+  protected getRootClasses(): ClassInfo {
+    return {
+      'md3-tab--min-width': this.minWidth,
+      'md3-tab--stacked': this.stacked,
+    };
   }
 
   protected renderIndicator() {

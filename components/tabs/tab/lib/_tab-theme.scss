@@ -99,7 +99,7 @@ $secondary-light-theme: (
   $theme: theme.validate-theme-styles($primary-light-theme, $theme);
   $theme: theme.create-theme-vars($theme, $custom-property-prefix-primary);
 
-  .md3-tab {
+  .md3-tab--primary {
     // TODO(b/191298796): Use independent state layer color mixins when available.
     @include _active-state-layer-color(
       map.get($theme, active-hover-state-layer-color) or
@@ -233,7 +233,7 @@ $secondary-light-theme: (
 @mixin secondary-navigation-tab-theme-styles($theme) {
   $theme: theme.validate-theme-styles($secondary-light-theme, $theme);
   $theme: theme.create-theme-vars($theme, $custom-property-prefix-secondary);
-  .md3-tab {
+  .md3-tab--secondary {
     // TODO(b/191298796): Use independent state layer color mixins when available.
     @include _active-state-layer-color(
       map.get($theme, hover-state-layer-color) or

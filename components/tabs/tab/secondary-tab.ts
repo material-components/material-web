@@ -4,23 +4,20 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Style preference for leading underscores.
-// tslint:disable:strip-private-property-underscore
+import {customElement} from 'lit/decorators';
 
-import {customElement} from 'lit/decorators.js';
-
-import {TabBase} from './lib/tab';
+import {SecondaryTab} from './lib/secondary-tab';
 import {styles} from './lib/tab-styles.css';
 
 export {TabInteractionEventDetail} from './lib/tab';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-tab': Tab;
+    'md-secondary-tab': SecondaryTab;
   }
 }
 
-@customElement('md-tab')
-export class Tab extends TabBase {
+@customElement('md-secondary-tab')
+export class MdSecondaryTab extends SecondaryTab {
   static override styles = [styles];
 }
