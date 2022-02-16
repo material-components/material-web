@@ -4,9 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+@use 'sass:map';
 @use 'third_party/javascript/material_web_components/m3/sass/theme';
+@use '@material/theme/theme-color';
 
-$custom-property-prefix: 'md3-tab';
+$custom-property-prefix: 'tab-indicator';
 $light-theme: (
   active-indicator-color: theme-color.$primary,
   active-indicator-height: 3px,

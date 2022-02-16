@@ -5,13 +5,13 @@
  */
 
 const cssClasses = {
-  ACTIVE: 'mdc-tab-indicator--active',
-  FADE: 'mdc-tab-indicator--fade',
-  NO_TRANSITION: 'mdc-tab-indicator--no-transition',
+  ACTIVE: 'md3-tab-indicator--active',
+  FADE: 'md3-tab-indicator--fade',
+  NO_TRANSITION: 'md3-tab-indicator--no-transition',
 };
 
 const strings = {
-  CONTENT_SELECTOR: '.mdc-tab-indicator__content',
+  CONTENT_SELECTOR: '.md3-tab-indicator__content',
 };
 
 export {
