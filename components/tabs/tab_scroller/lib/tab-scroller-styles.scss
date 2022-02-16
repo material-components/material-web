@@ -1,0 +1,17 @@
+/**
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use '@material/tab-scroller' as tabscroller;
+
+@include tabscroller.core-styles();
+
+:host {
+  display: flex;
+}
+
+.mdc-tab-scroller {
+  flex: 1;
+}
