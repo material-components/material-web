@@ -4,12 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Style preference for leading underscores.
-// tslint:disable:strip-private-property-underscore
-
 import {customElement} from 'lit/decorators.js';
 
-import {TabIndicatorBase} from './lib/tab-indicator';
+import {TabIndicator} from './lib/tab-indicator';
 import {styles} from './lib/tab-indicator-styles.css';
 
 declare global {
@@ -19,6 +16,6 @@ declare global {
 }
 
 @customElement('md-tab-indicator')
-export class TabIndicator extends TabIndicatorBase {
+export class MdTabIndicator extends TabIndicator {
   static override styles = [styles];
 }

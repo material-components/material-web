@@ -4,20 +4,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import 'google3/third_party/javascript/material_web_components/tab_indicator/md-tab-indicator';
 import '../../tab_indicator/tab-indicator';
-// Make TypeScript not remove the import.
-import '@material/md-tab-indicator';
 import '@material/mwc-ripple/mwc-ripple';
 
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {TabIndicator} from 'google3/third_party/javascript/material_web_components/m3/tabs/tab_indicator/tab-indicator';
 import {html} from 'lit';
 import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+
+import {MdTabIndicator} from '../../tab_indicator/tab-indicator';
 
 import {MDCTabAdapter} from './adapter';
 import MDCTabFoundation from './foundation';
@@ -39,7 +37,7 @@ export class Tab extends BaseElement {
 
   @query('.md3-tab') protected mdcRoot!: HTMLElement;
 
-  @query('md-tab-indicator') protected tabIndicator!: TabIndicator;
+  @query('md-tab-indicator') protected tabIndicator!: MdTabIndicator;
 
   @property() label = '';
 

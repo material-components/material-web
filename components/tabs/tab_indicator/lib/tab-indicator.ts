@@ -4,9 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Style preference for leading underscores.
-// tslint:disable:strip-private-property-underscore
-
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {html, PropertyValues} from 'lit';
 import {property, query} from 'lit/decorators.js';
@@ -17,7 +14,7 @@ import MDCFadingTabIndicatorFoundation from './fading-foundation';
 import MDCTabIndicatorFoundation from './foundation';
 import MDCSlidingTabIndicatorFoundation from './sliding-foundation';
 
-export class TabIndicatorBase extends BaseElement {
+export class TabIndicator extends BaseElement {
   protected mdcFoundation!: MDCTabIndicatorFoundation;
 
   protected get mdcFoundationClass() {
