@@ -1,0 +1,23 @@
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use '@material/tab-bar' as tabbar;
+@use '@material/tab';
+
+@include tabbar.core-styles();
+
+:host {
+  display: block;
+}
+
+.mdc-tab-bar {
+  flex: 1;
+}
+
+mwc-tab {
+  --mdc-tab-height: #{tab.$height};
+  --mdc-tab-stacked-height: #{tab.$stacked-height};
+}
