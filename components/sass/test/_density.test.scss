@@ -1,0 +1,72 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'true' as test;
+@use '../density';
+
+@include test.describe('density') {
+  @include test.describe('theme-extension()') {
+    $default-size: 48px;
+    $minimum-size: 38px;
+    $maximum-size: 52px;
+    $custom-density: -3;
+    $custom-density-size: 38px;
+    $density-config: (
+      default: $default-size,
+      minimum: $minimum-size,
+      maximum: $maximum-size,
+      #{$custom-density}: $custom-density-size,
+    );
+    $token-map: (
+      density: container-height,
+    );
+
+    @include test.it('should increment in values of 4px') {
+      $theme: (
+        density: -1,
+      );
+      $expected: (
+        container-height: 44px,
+      );
+
+      $theme: density.theme-extension($theme, $token-map, $density-config);
+      @include test.assert-equal($theme, $expected);
+
+      $theme: (
+        density: -2,
+      );
+      $expected: (
+        container-height: 40px,
+      );
+
+      $theme: density.theme-extension($theme, $token-map, $density-config);
+      @include test.assert-equal($theme, $expected);
+    }
+
+    @include test.it('should update custom density values') {
+      $theme: (
+        density: $custom-density,
+      );
+      $expected: (
+        container-height: $custom-density-size,
+      );
+
+      $theme: density.theme-extension($theme, $token-map, $density-config);
+      @include test.assert-equal($theme, $expected);
+    }
+
+    @include test.it(
+      'should throw an error if given a density outside of min/max'
+    ) {
+      $theme: (
+        density: -10,
+      );
+      $expected: 'ERROR [density.theme-extension()]: Density must be between 38px and 52px (inclusive), but received 8px.';
+
+      $theme: density.theme-extension($theme, $token-map, $density-config);
+      @include test.assert-equal($theme, $expected);
+    }
+  }
+}

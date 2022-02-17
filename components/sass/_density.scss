@@ -1,0 +1,66 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:map';
+@use 'throw';
+
+/// Update `$theme` by replacing density token values with the correct size
+/// provided in `$density-config`.
+///
+/// This is intended for backwards compatibility with MDC's density system.
+///
+/// @example - scss
+///   $legacy-theme: (density: -1);
+///   $token-map: (density: container-height);
+///   $density-config: (
+///     default: 48px,
+///     minimum: 40px,
+///     maximum: 48px,
+///   );
+///
+///   $fixed-theme: density.theme-extension(
+///     $legacy-theme,
+///     $token-map,
+///     $density-config
+///   );
+///   // (container-height: 44px)
+///
+/// @param {Map} $theme - The theme Map to update.
+/// @param {Map} $token-map - A map of density token names to the corresponding
+///     token size (ex: `(density: container-height)`).
+/// @param {Map} $density-config - A Map with `default`, `minimum`, and
+///     `maximum` keys for the density size. May also specify density values as
+///     keys for non-linear sizes.
+/// @return {Map} `$theme` with density tokens updated according to `$token-map`
+///     and transformed valiues according to `$density-config`.
+@function theme-extension($theme, $token-map, $density-config) {
+  @each $density-token, $mapped-token in $token-map {
+    $density-scale: map.get($theme, $density-token);
+    @if $density-scale {
+      $value: null;
+      @if map.has-key($density-config, '#{$density-scale}') {
+        $value: map.get($density-config, '#{$density-scale}');
+      } @else {
+        $value: map.get($density-config, default) + $density-scale * 4px;
+      }
+
+      $min-value: map.get($density-config, minimum);
+      $max-value: map.get($density-config, maximum);
+
+      @if ($value < $min-value or $value > $max-value) {
+        @return throw.error(
+          $message:
+            'Density must be between #{$min-value} and #{$max-value} (inclusive), but received #{$value}.',
+          $source: 'density.theme-extension()'
+        );
+      }
+
+      $theme: map.remove($theme, $density-token);
+      $theme: map.set($theme, $mapped-token, $value);
+    }
+  }
+
+  @return $theme;
+}

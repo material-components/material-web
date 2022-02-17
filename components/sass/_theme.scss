@@ -243,3 +243,29 @@
 
   @return $theme;
 }
+
+/// Used in `<component>-theme.theme-extension()` mixins, this function will
+/// update and return `$theme` by replacing any deprecated token names with
+/// new token names.
+///
+/// @example - scss
+///   $legacy-theme: (deprecated-token: 16px);
+///   $token-map: (deprecated-token: new-token);
+///   $fixed-theme: theme.theme-extension($legacy-theme, $token-map);
+///   // (new-token: 16px)
+///
+/// @param {Map} $theme - A theme Map that may have deprecated token keys.
+/// @param {Map} $token-map - A Map whose keys are deprecated tokens and values
+///     are the new tokens to replace them with.
+/// @return {Map} `$theme` with deprecated token names replaced with new tokens.
+@function theme-extension($theme, $token-map) {
+  @each $token, $value in $theme {
+    $mapped-token: map.get($token-map, $token);
+    @if $mapped-token {
+      $theme: map.remove($theme, $token);
+      $theme: map.set($theme, $mapped-token, $value);
+    }
+  }
+
+  @return $theme;
+}

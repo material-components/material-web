@@ -3,6 +3,10 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+@use 'true' with ($catch-errors: true);
+
+@use './color.test';
+@use './density.test';
 @use './shape.test';
 @use './string-ext.test';
-@use './color.test';
+@use './theme.test';

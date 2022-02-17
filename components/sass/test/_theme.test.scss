@@ -1,0 +1,32 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'true' as test;
+@use '../theme';
+
+@include test.describe('theme') {
+  @include test.describe('theme-extension()') {
+    @include test.it('should change old token names to new token names') {
+      $legacy-theme: (
+        old-token: 'old-token-value',
+        same-token: 'same-token-value',
+      );
+
+      $fixed-theme: theme.theme-extension(
+        $legacy-theme,
+        (
+          old-token: new-token,
+        )
+      );
+
+      $expected-theme: (
+        new-token: 'old-token-value',
+        same-token: 'same-token-value',
+      );
+
+      @include test.assert-equal($fixed-theme, $expected-theme);
+    }
+  }
+}
