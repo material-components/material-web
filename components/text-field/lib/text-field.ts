@@ -103,6 +103,7 @@ export abstract class TextField extends LitElement implements TextFieldState {
         @change=${this.redispatchEvent}
         @focus=${this.handleFocus}
         @input=${this.handleInput}
+        @select=${this.redispatchEvent}
       >
     `;
   }
@@ -120,6 +121,7 @@ export abstract class TextField extends LitElement implements TextFieldState {
     this.redispatchEvent(event);
   }
 
-  // TODO(b/209811542): check l2w compatibility
-  protected redispatchEvent = redispatchEvent.bind(this);
+  protected redispatchEvent(event: Event) {
+    redispatchEvent.call(this, event);
+  }
 }
