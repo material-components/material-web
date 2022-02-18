@@ -29,14 +29,16 @@ export class LinkIconButton extends IconButton {
   protected override render(): TemplateResult {
     return html`<div
         class="md3-icon-button"
-        @focus="${this.handleRippleFocus}"
-        @blur="${this.handleRippleBlur}"
-        @mousedown="${this.handleRippleMouseDown}"
-        @mouseenter="${this.handleRippleMouseEnter}"
-        @mouseleave="${this.handleRippleMouseLeave}"
-        @touchstart="${this.handleRippleTouchStart}"
-        @touchend="${this.handleRippleDeactivate}"
-        @touchcancel="${this.handleRippleDeactivate}"
+        @focus="${this.handleFocus}"
+        @blur="${this.handleBlur}"
+        @pointerdown="${this.handlePointerDown}"
+        @pointerup="${this.handlePointerUp}"
+        @pointercancel="${this.handlePointerCancel}"
+        @pointerleave="${this.handlePointerLeave}"
+        @pointerenter="${this.handlePointerEnter}"
+        @click="${this.handleClick}"
+        @clickmod="${this.handleClick}"
+        @contextmenu="${this.handleContextMenu}"
     >${this.renderRipple()}
     ${this.renderIcon()}${this.renderTouchTarget()}<span><slot></slot></span>
     <a class="md3-icon-button__link" href="${this.linkHref}"
