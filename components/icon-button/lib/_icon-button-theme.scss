@@ -1,10 +1,11 @@
 //
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 // SPDX-License-Identifier: Apache-2.0
 //
 
 @use 'sass:map';
 @use '../../sass/theme';
+@use '../../sass/tokens';
 @use '@material/ripple/ripple-theme';
 @use '@material/theme/keys';
 @use '@material/theme/state';
@@ -13,43 +14,12 @@
 
 $_custom-property-prefix: 'icon-button';
 
-$light-theme: (
-  disabled-icon-color: theme-color.$on-surface,
-  disabled-icon-opacity: 0.38,
-  icon-size: 24px,
-  selected-focus-icon-color: theme-color.$primary,
-  selected-focus-state-layer-color: theme-color.$primary,
-  selected-focus-state-layer-opacity: 0.12,
-  selected-hover-icon-color: theme-color.$primary,
-  selected-hover-state-layer-color: theme-color.$primary,
-  selected-hover-state-layer-opacity: 0.08,
-  selected-icon-color: theme-color.$primary,
-  selected-pressed-icon-color: theme-color.$primary,
-  selected-pressed-state-layer-color: theme-color.$primary,
-  selected-pressed-state-layer-opacity: 0.12,
-  state-layer-shape: null,
-  state-layer-size: 40px,
-  unselected-focus-icon-color: theme-color.$primary,
-  unselected-focus-state-layer-color: theme-color.$primary,
-  unselected-focus-state-layer-opacity: 0.12,
-  unselected-hover-icon-color: theme-color.$primary,
-  unselected-hover-state-layer-color: theme-color.$primary,
-  unselected-hover-state-layer-opacity: 0.08,
-  unselected-icon-color: theme-color.$primary,
-  unselected-pressed-icon-color: theme-color.$primary,
-  unselected-pressed-state-layer-color: theme-color.$primary,
-  unselected-pressed-state-layer-opacity: 0.12,
-  // Deprecated
-  focus-icon-color: null,
-  focus-state-layer-color: null,
-  focus-state-layer-opacity: null,
-  hover-icon-color: null,
-  hover-state-layer-color: null,
-  hover-state-layer-opacity: null,
-  icon-color: null,
-  pressed-icon-color: null,
-  pressed-state-layer-color: null,
-  pressed-state-layer-opacity: null,
+$light-theme: tokens.md-comp-icon-button-values();
+$dark-theme: tokens.md-comp-icon-button-values(
+  (
+    md-sys-color: tokens.md-sys-color-values-dark(),
+  ),
+  $exclude-hardcoded-values: true
 );
 
 @mixin theme($theme) {
@@ -68,23 +38,20 @@ $light-theme: (
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
   @include _icon-size(map.get($theme, icon-size));
+  @include _state-layer-size($size: map.get($theme, state-layer-size));
+  @include _disabled-icon-opacity(map.get($theme, disabled-icon-opacity));
 
-  .md3-icon-button {
-    @include _state-layer-size($size: map.get($theme, state-layer-size));
-    @include _disabled-icon-opacity(map.get($theme, disabled-icon-opacity));
+  @include _icon-color(
+    (
+      default: map.get($theme, unselected-icon-color),
+      disabled: map.get($theme, disabled-icon-color),
+      focus: map.get($theme, unselected-focus-icon-color),
+      hover: map.get($theme, unselected-hover-icon-color),
+      pressed: map.get($theme, unselected-pressed-icon-color),
+    )
+  );
 
-    @include _icon-color(
-      (
-        default: map.get($theme, unselected-icon-color),
-        disabled: map.get($theme, disabled-icon-color),
-        focus: map.get($theme, unselected-focus-icon-color),
-        hover: map.get($theme, unselected-hover-icon-color),
-        pressed: map.get($theme, unselected-pressed-icon-color),
-      )
-    );
-  }
-
-  .md3-icon-button--on {
+  &.md3-icon-button--on {
     @include _icon-color(
       (
         default: map.get($theme, selected-icon-color),
@@ -113,7 +80,7 @@ $light-theme: (
     )
   );
 
-  .md3-icon-button--on {
+  &.md3-icon-button--on {
     @include ripple-theme.theme(
       (
         focus-state-layer-color:
