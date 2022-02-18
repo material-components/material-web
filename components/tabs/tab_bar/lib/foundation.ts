@@ -12,7 +12,8 @@ import {MDCTabBarAdapter} from './adapter';
 import {numbers, strings} from './constants';
 
 const ACCEPTABLE_KEYS = new Set<string>();
-// IE11 has no support for new Set with iterable so we need to initialize this by hand
+// IE11 has no support for new Set with iterable so we need to initialize this
+// by hand
 ACCEPTABLE_KEYS.add(strings.ARROW_LEFT_KEY);
 ACCEPTABLE_KEYS.add(strings.ARROW_RIGHT_KEY);
 ACCEPTABLE_KEYS.add(strings.END_KEY);
@@ -21,7 +22,8 @@ ACCEPTABLE_KEYS.add(strings.ENTER_KEY);
 ACCEPTABLE_KEYS.add(strings.SPACE_KEY);
 
 const KEYCODE_MAP = new Map<number, string>();
-// IE11 has no support for new Map with iterable so we need to initialize this by hand
+// IE11 has no support for new Map with iterable so we need to initialize this
+// by hand
 KEYCODE_MAP.set(numbers.ARROW_LEFT_KEYCODE, strings.ARROW_LEFT_KEY);
 KEYCODE_MAP.set(numbers.ARROW_RIGHT_KEYCODE, strings.ARROW_RIGHT_KEY);
 KEYCODE_MAP.set(numbers.END_KEYCODE, strings.END_KEY);
@@ -106,7 +108,8 @@ export class MDCTabBarFoundation extends MDCFoundation<MDCTabBarAdapter> {
       return;
     }
 
-    // Prevent default behavior for movement keys, but not for activation keys, since :active is used to apply ripple
+    // Prevent default behavior for movement keys, but not for activation keys,
+    // since :active is used to apply ripple
     if (!this.isActivationKey(key)) {
       evt.preventDefault();
     }
@@ -171,7 +174,8 @@ export class MDCTabBarFoundation extends MDCFoundation<MDCTabBarAdapter> {
   }
 
   /**
-   * Private method for determining the index of the destination tab based on what key was pressed
+   * Private method for determining the index of the destination tab based on
+   * what key was pressed
    * @param origin The original index from which to determine the destination
    * @param key The name of the key
    */
@@ -179,8 +183,10 @@ export class MDCTabBarFoundation extends MDCFoundation<MDCTabBarAdapter> {
     const isRTL = this.isRTL();
     const maxIndex = this.adapter.getTabListLength() - 1;
     const shouldGoToEnd = key === strings.END_KEY;
-    const shouldDecrement = key === strings.ARROW_LEFT_KEY && !isRTL || key === strings.ARROW_RIGHT_KEY && isRTL;
-    const shouldIncrement = key === strings.ARROW_RIGHT_KEY && !isRTL || key === strings.ARROW_LEFT_KEY && isRTL;
+    const shouldDecrement = key === strings.ARROW_LEFT_KEY && !isRTL ||
+        key === strings.ARROW_RIGHT_KEY && isRTL;
+    const shouldIncrement = key === strings.ARROW_RIGHT_KEY && !isRTL ||
+        key === strings.ARROW_LEFT_KEY && isRTL;
     let index = origin;
 
     if (shouldGoToEnd) {
@@ -203,7 +209,8 @@ export class MDCTabBarFoundation extends MDCFoundation<MDCTabBarAdapter> {
   }
 
   /**
-   * Calculates the scroll increment that will make the tab at the given index visible
+   * Calculates the scroll increment that will make the tab at the given index
+   * visible
    * @param index The index of the tab
    * @param nextIndex The index of the next tab
    * @param scrollPosition The current scroll position
@@ -216,8 +223,10 @@ export class MDCTabBarFoundation extends MDCFoundation<MDCTabBarAdapter> {
       barWidth: number,
       ): number {
     const nextTabDimensions = this.adapter.getTabDimensionsAtIndex(nextIndex);
-    const relativeContentLeft = nextTabDimensions.contentLeft - scrollPosition - barWidth;
-    const relativeContentRight = nextTabDimensions.contentRight - scrollPosition;
+    const relativeContentLeft =
+        nextTabDimensions.contentLeft - scrollPosition - barWidth;
+    const relativeContentRight =
+        nextTabDimensions.contentRight - scrollPosition;
     const leftIncrement = relativeContentRight - numbers.EXTRA_SCROLL_AMOUNT;
     const rightIncrement = relativeContentLeft + numbers.EXTRA_SCROLL_AMOUNT;
 
@@ -229,7 +238,8 @@ export class MDCTabBarFoundation extends MDCFoundation<MDCTabBarAdapter> {
   }
 
   /**
-   * Calculates the scroll increment that will make the tab at the given index visible in RTL
+   * Calculates the scroll increment that will make the tab at the given index
+   * visible in RTL
    * @param index The index of the tab
    * @param nextIndex The index of the next tab
    * @param scrollPosition The current scroll position
@@ -244,8 +254,10 @@ export class MDCTabBarFoundation extends MDCFoundation<MDCTabBarAdapter> {
       scrollContentWidth: number,
       ): number {
     const nextTabDimensions = this.adapter.getTabDimensionsAtIndex(nextIndex);
-    const relativeContentLeft = scrollContentWidth - nextTabDimensions.contentLeft - scrollPosition;
-    const relativeContentRight = scrollContentWidth - nextTabDimensions.contentRight - scrollPosition - barWidth;
+    const relativeContentLeft =
+        scrollContentWidth - nextTabDimensions.contentLeft - scrollPosition;
+    const relativeContentRight = scrollContentWidth -
+        nextTabDimensions.contentRight - scrollPosition - barWidth;
     const leftIncrement = relativeContentRight + numbers.EXTRA_SCROLL_AMOUNT;
     const rightIncrement = relativeContentLeft - numbers.EXTRA_SCROLL_AMOUNT;
 
@@ -257,7 +269,8 @@ export class MDCTabBarFoundation extends MDCFoundation<MDCTabBarAdapter> {
   }
 
   /**
-   * Determines the index of the adjacent tab closest to either edge of the Tab Bar
+   * Determines the index of the adjacent tab closest to either edge of the Tab
+   * Bar
    * @param index The index of the tab
    * @param tabDimensions The dimensions of the tab
    * @param scrollPosition The current scroll position
@@ -294,7 +307,8 @@ export class MDCTabBarFoundation extends MDCFoundation<MDCTabBarAdapter> {
      * the index.
      */
     const relativeRootLeft = tabDimensions.rootLeft - scrollPosition;
-    const relativeRootRight = tabDimensions.rootRight - scrollPosition - barWidth;
+    const relativeRootRight =
+        tabDimensions.rootRight - scrollPosition - barWidth;
     const relativeRootDelta = relativeRootLeft + relativeRootRight;
     const leftEdgeIsCloser = relativeRootLeft < 0 || relativeRootDelta < 0;
     const rightEdgeIsCloser = relativeRootRight > 0 || relativeRootDelta > 0;
@@ -311,7 +325,8 @@ export class MDCTabBarFoundation extends MDCFoundation<MDCTabBarAdapter> {
   }
 
   /**
-   * Determines the index of the adjacent tab closest to either edge of the Tab Bar in RTL
+   * Determines the index of the adjacent tab closest to either edge of the Tab
+   * Bar in RTL
    * @param index The index of the tab
    * @param tabDimensions The dimensions of the tab
    * @param scrollPosition The current scroll position
@@ -325,8 +340,10 @@ export class MDCTabBarFoundation extends MDCFoundation<MDCTabBarAdapter> {
       barWidth: number,
       scrollContentWidth: number,
       ): number {
-    const rootLeft = scrollContentWidth - tabDimensions.rootLeft - barWidth - scrollPosition;
-    const rootRight = scrollContentWidth - tabDimensions.rootRight - scrollPosition;
+    const rootLeft =
+        scrollContentWidth - tabDimensions.rootLeft - barWidth - scrollPosition;
+    const rootRight =
+        scrollContentWidth - tabDimensions.rootRight - scrollPosition;
     const rootDelta = rootLeft + rootRight;
     const leftEdgeIsCloser = rootLeft > 0 || rootDelta > 0;
     const rightEdgeIsCloser = rootRight < 0 || rootDelta < 0;
