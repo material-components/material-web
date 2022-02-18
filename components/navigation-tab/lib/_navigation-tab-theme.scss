@@ -26,10 +26,15 @@ $light-theme: (
   active-indicator-shape: 16px,
   active-indicator-width: 64px,
   active-label-text-color: theme-color.$on-surface,
+  active-large-badge-color: theme-color.$on-secondary,
+  active-large-badge-label-color: theme-color.$secondary,
+  active-large-badge-outline-color: theme-color.$secondary,
   active-pressed-icon-color: theme-color.$on-secondary,
   active-pressed-label-text-color: theme-color.$on-surface,
   active-pressed-state-layer-color: theme-color.$on-surface,
   badge-color: theme-color.$error,
+  badge-outline-color: theme-color.$surface,
+  badge-outline-width: 2px,
   badge-shape: 3px,
   badge-size: 6px,
   focus-state-layer-opacity: 0.24,
@@ -43,13 +48,15 @@ $light-theme: (
   inactive-hover-state-layer-color: theme-color.$on-surface,
   inactive-icon-color: theme-color.$on-surface,
   inactive-label-text-color: theme-color.$on-surface,
+  inactive-large-badge-color: theme-color.$error,
+  inactive-large-badge-label-color: theme-color.$on-error,
+  inactive-large-badge-outline-color: theme-color.$surface,
   inactive-pressed-icon-color: theme-color.$on-surface,
   inactive-pressed-label-text-color: theme-color.$on-surface,
   inactive-pressed-state-layer-color: theme-color.$on-surface,
-  label-text-font-family: typography.get-font(overline),
-  label-text-font-size: typography.get-size(overline),
-  label-text-letter-spacing: typography.get-tracking(overline),
-  label-text-line-height: typography.get-line-height(overline),
+  label-text-font: typography.get-font(overline),
+  label-text-size: 12px,
+  label-text-tracking: typography.px-to-rem(0.1px),
   label-text-weight: typography.get-weight(overline),
   large-badge-color: theme-color.$error,
   large-badge-label-color: theme-color.$on-error,
@@ -58,6 +65,7 @@ $light-theme: (
   large-badge-label-letter-spacing: normal,
   large-badge-label-line-height: 13px,
   large-badge-label-weight: typography.get-weight(overline),
+  large-badge-outline-width: 2px,
   large-badge-shape: 8px,
   large-badge-size: 16px,
   pressed-state-layer-opacity: 0.2,
@@ -101,13 +109,15 @@ $light-theme: (
     )
   );
 
-  @include _label-text-font-family(map.get($theme, label-text-font-family));
-  @include _label-text-line-height(map.get($theme, label-text-line-height));
-  @include _label-text-font-size(map.get($theme, label-text-font-size));
-  @include _label-text-weight(map.get($theme, label-text-weight));
-  @include _label-text-letter-spacing(
-    map.get($theme, label-text-letter-spacing)
+  @include _set-label-text-typography(
+    (
+      family: map.get($theme, label-text-font),
+      size: map.get($theme, label-text-size),
+      tracking: map.get($theme, label-text-tracking),
+      weight: map.get($theme, label-text-weight),
+    )
   );
+
   @include _active-label-text-color(
     (
       default: map.get($theme, active-label-text-color),
@@ -128,6 +138,8 @@ $light-theme: (
   @include _badge-color(map.get($theme, badge-color));
   @include _badge-size(map.get($theme, badge-size));
   @include _badge-shape(map.get($theme, badge-shape));
+  @include _badge-outline-color(map.get($theme, badge-outline-color));
+  @include _badge-outline-width(map.get($theme, badge-outline-width));
 
   @include _large-badge-size(map.get($theme, large-badge-size));
   @include _large-badge-shape(map.get($theme, large-badge-shape));
@@ -144,8 +156,27 @@ $light-theme: (
   @include _large-badge-label-letter-spacing(
     map.get($theme, large-badge-label-letter-spacing)
   );
-  @include _large-badge-color(map.get($theme, large-badge-color));
-  @include _large-badge-label-color(map.get($theme, large-badge-label-color));
+  @include _large-badge-outline-width(
+    map.get($theme, large-badge-outline-width)
+  );
+
+  @include _active-large-badge-color(map.get($theme, active-large-badge-color));
+  @include _active-large-badge-label-color(
+    map.get($theme, active-large-badge-label-color)
+  );
+  @include _active-large-badge-outline-color(
+    map.get($theme, active-large-badge-outline-color)
+  );
+
+  @include _inactive-large-badge-color(
+    map.get($theme, inactive-large-badge-color)
+  );
+  @include _inactive-large-badge-label-color(
+    map.get($theme, inactive-large-badge-label-color)
+  );
+  @include _inactive-large-badge-outline-color(
+    map.get($theme, inactive-large-badge-outline-color)
+  );
 
   @include _active-indicator-color(map.get($theme, active-indicator-color));
   @include _active-indicator-height(map.get($theme, active-indicator-height));
@@ -332,34 +363,16 @@ $light-theme: (
   }
 }
 
-@mixin _label-text-font-family($font-family) {
-  .md3-navigation-tab__label-text {
-    font-family: $font-family;
-  }
-}
+@mixin _set-label-text-typography($typography-map) {
+  $family: map.get($typography-map, family);
+  $size: map.get($typography-map, size);
+  $tracking: map.get($typography-map, tracking);
+  $weight: map.get($typography-map, weight);
 
-@mixin _label-text-font-size($font-size) {
-  .md3-navigation-tab__label-text {
-    font-size: $font-size;
-  }
-}
-
-@mixin _label-text-letter-spacing($letter-spacing) {
-  .md3-navigation-tab__label-text {
-    letter-spacing: $letter-spacing;
-  }
-}
-
-@mixin _label-text-line-height($line-height) {
-  .md3-navigation-tab__label-text {
-    line-height: $line-height;
-  }
-}
-
-@mixin _label-text-weight($weight) {
-  .md3-navigation-tab__label-text {
-    font-weight: $weight;
-  }
+  font-family: $family;
+  font-size: $size;
+  letter-spacing: $tracking;
+  font-weight: $weight;
 }
 
 @mixin _badge-color($color) {
@@ -378,6 +391,18 @@ $light-theme: (
 @mixin _badge-shape($shape-radius) {
   .md3-navigation-tab__badge:not(.md3-navigation-tab__badge-large) {
     border-radius: $shape-radius;
+  }
+}
+
+@mixin _badge-outline-color($color) {
+  .md3-navigation-tab__badge:not(.md3-navigation-tab__badge-large) {
+    border-color: $color;
+  }
+}
+
+@mixin _badge-outline-width($width) {
+  .md3-navigation-tab__badge:not(.md3-navigation-tab__badge-large) {
+    border-width: $width;
   }
 }
 
@@ -424,15 +449,63 @@ $light-theme: (
   }
 }
 
+@mixin _large-badge-outline-width($width) {
+  .md3-navigation-tab__badge-large {
+    border-width: $width;
+  }
+}
+
+@mixin _active-large-badge-color($color) {
+  @include _is-active() {
+    @include _large-badge-color($color);
+  }
+}
+
+@mixin _inactive-large-badge-color($color) {
+  @include _is-inactive() {
+    @include _large-badge-color($color);
+  }
+}
+
 @mixin _large-badge-color($color) {
   .md3-navigation-tab__badge-large {
     background-color: $color;
   }
 }
 
+@mixin _active-large-badge-label-color($color) {
+  @include _is-active() {
+    @include _large-badge-label-color($color);
+  }
+}
+
+@mixin _inactive-large-badge-label-color($color) {
+  @include _is-inactive() {
+    @include _large-badge-label-color($color);
+  }
+}
+
 @mixin _large-badge-label-color($color) {
   .md3-navigation-tab__badge-large {
     color: $color;
+  }
+}
+
+@mixin _active-large-badge-outline-color($color) {
+  @include _is-active() {
+    @include _large-badge-outline-color($color);
+  }
+}
+
+@mixin _inactive-large-badge-outline-color($color) {
+  @include _is-inactive() {
+    @include _large-badge-outline-color($color);
+  }
+}
+
+@mixin _large-badge-outline-color($color) {
+  .md3-navigation-tab__badge-large {
+    border-color: $color;
   }
 }
 
