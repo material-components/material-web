@@ -15,15 +15,11 @@ import {FormController, getFormValue} from '../../controller/form-controller';
 import {ariaProperty} from '../../decorators/aria-property';
 import {Field} from '../../field/lib/field';
 
-import {TextFieldFoundation} from './foundation';
-import {TextFieldState} from './state';
-
 /** @soyCompatible */
-export abstract class TextField extends LitElement implements TextFieldState {
+export abstract class TextField extends LitElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
-  // TextFieldState
   @property({type: Boolean, reflect: true}) disabled = false;
   @property({type: Boolean, reflect: true}) error = false;
   @property({type: String}) label?: string;
@@ -57,8 +53,6 @@ export abstract class TextField extends LitElement implements TextFieldState {
   protected fieldID = 'field';
   @queryAsync('.md3-text-field__input')
   protected readonly input!: Promise<HTMLInputElement>;
-
-  protected foundation = new TextFieldFoundation({state: this});
 
   constructor() {
     super();

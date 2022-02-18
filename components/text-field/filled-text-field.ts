@@ -4,7 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators';
+import '../field/filled-field';
+
+import {html, TemplateResult} from 'lit';
+import {customElement, queryAsync} from 'lit/decorators';
+
+import {MdFilledField} from '../field/filled-field';
 
 import {styles as filledStyles} from './lib/filled-styles.css';
 import {FilledTextField} from './lib/filled-text-field';
@@ -24,4 +29,23 @@ declare global {
 @customElement('md-filled-text-field')
 export class MdFilledTextField extends FilledTextField {
   static override styles = [sharedStyles, filledStyles];
+
+  @queryAsync('md-filled-field')
+  protected readonly field!: Promise<MdFilledField>;
+
+  /** @soyTemplate */
+  protected override renderField(): TemplateResult {
+    return html`
+      <md-filled-field
+        id=${this.fieldID}
+        .disabled=${this.disabled}
+        .error=${this.error}
+        .label=${this.label}
+        .populated=${Boolean(this.value)}
+        .required=${this.required}
+      >
+        ${this.renderFieldContent()}
+      </md-filled-field>
+    `;
+  }
 }
