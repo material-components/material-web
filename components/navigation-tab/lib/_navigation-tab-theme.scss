@@ -5,6 +5,7 @@
 
 @use 'sass:map';
 @use '../../sass/theme';
+@use '../../focus/lib/focus-ring-theme';
 @use '@material/theme/state';
 @use '@material/theme/shadow-dom';
 @use '@material/theme/theme-color';
@@ -177,6 +178,12 @@ $light-theme: (
       )
     );
   }
+
+  @include focus-ring-theme.theme(
+    (
+      container-outer-padding: -4px,
+    )
+  );
 }
 
 @mixin _icon-size($size) {
