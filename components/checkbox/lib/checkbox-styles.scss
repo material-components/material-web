@@ -1,0 +1,17 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use './checkbox';
+@use './checkbox-theme';
+
+:host {
+  display: inline-flex;
+}
+
+@include checkbox.static-styles();
+
+.md3-checkbox {
+  @include checkbox-theme.theme-styles(checkbox-theme.$light-theme);
+}
