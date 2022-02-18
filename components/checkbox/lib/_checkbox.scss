@@ -23,48 +23,16 @@
 @use 'sass:math';
 @use '@material/dom/dom';
 @use '@material/focusring/focus-ring';
-@use '@material/ripple/ripple';
-@use '@material/ripple/ripple-theme';
 @use '@material/touch-target/touch-target';
 @use '../../motion/animation';
 @use '../../sass/var';
 @use './checkbox-theme';
 
-///
-/// Checkbox and ripple styles.
-///
-@mixin core-styles() {
-  @include without-ripple();
-  @include ripple-styles();
-}
-
-/// Checkbox styles (Excluding ripple styles).
-///
-/// NOTE: This API is intended for use by frameworks that may want to separate the ripple-related styles from the other
-/// checkbox styles. It is recommended that most users use `md3-checkbox-core-styles` instead.
-// TODO(b/162887560): Rename to `checkbox-without-ripple-styles()`
-@mixin without-ripple() {
-  // TODO(b/165005345): Include theme-styles() after static-styles().
-  @include theme-styles();
-  @include static-styles();
-}
-
-/// Checkbox static styles.
-/// Checkbox styles that are not customizable should go here.
 @mixin static-styles() {
   @include mark-keyframes_;
 
   .md3-checkbox {
     @include base_;
-
-    @include ripple-theme.focus {
-      .md3-checkbox__focus-ring {
-        @include focus-ring.focus-ring(
-          $container-outer-padding-vertical: 0,
-          $container-outer-padding-horizontal: 0
-        );
-      }
-    }
 
     // Turn off focus ring for IE when HCM is turn off. For some reason this
     // adds space to the bottom on the focused checkbox inside a dialog.
@@ -161,34 +129,6 @@
     .md3-checkbox__mixedmark {
       @include child--upgraded_;
     }
-  }
-}
-
-/// Checkbox theme styles.
-/// Checkbox styles that are customizable should go here.
-@mixin theme-styles() {
-  .md3-checkbox {
-    @include checkbox-theme.theme-deprecated(
-      checkbox-theme.$light-theme-deprecated
-    );
-  }
-}
-
-/// Checkbox's ripple styles.
-///
-/// NOTE: This API is intended for use by frameworks that may want to separate the ripple-related styles from the other
-/// checkbox styles. It is recommended that most users use `md3-checkbox-core-styles` instead.
-@mixin ripple-styles() {
-  .md3-checkbox {
-    @include ripple.surface($ripple-target: checkbox-theme.$ripple-target);
-    @include ripple.radius-unbounded(
-      $ripple-target: checkbox-theme.$ripple-target
-    );
-    @include ripple-theme.behind-content(checkbox-theme.$ripple-target);
-  }
-
-  #{checkbox-theme.$ripple-target} {
-    @include ripple.target-common();
   }
 }
 

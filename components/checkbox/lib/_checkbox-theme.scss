@@ -22,8 +22,6 @@
 
 @use 'sass:map';
 @use 'sass:math';
-@use '@material/ripple/ripple';
-@use '@material/ripple/ripple-theme';
 @use '@material/touch-target/touch-target';
 @use '../../sass/theme';
 @use '../../sass/tokens';
@@ -43,15 +41,17 @@ $mark-stroke-size: math.div(2, 15) * $icon-size !default;
 $border-width: 2px !default;
 $transition-duration: 90ms !default;
 $item-spacing: 4px !default;
-$focus-indicator-opacity: map.get(
-  ripple-theme.$dark-ink-opacities,
-  focus
-) !default;
-
 $minimum-size: 28px !default;
 $maximum-size: $ripple-size !default;
 $ripple-target: '.md3-checkbox__ripple';
 $custom-property-prefix: 'checkbox';
+$_dark-ink-opacities: (
+  hover: 0.04,
+  focus: 0.12,
+  press: 0.12,
+  selected: 0.08,
+  activated: 0.12,
+);
 
 // TODO(b/188417756): State layer (ripple) size token is missing including
 //     `state-layer-size`.
@@ -68,27 +68,22 @@ $light-theme: (
   selected-focus-state-layer-opacity: 0.12,
   selected-hover-icon-color: $baseline-theme-color,
   selected-hover-state-layer-color: $baseline-theme-color,
-  selected-hover-state-layer-opacity:
-    map.get(ripple-theme.$dark-ink-opacities, hover),
+  selected-hover-state-layer-opacity: map.get($_dark-ink-opacities, hover),
   selected-icon-color: $baseline-theme-color,
   selected-pressed-icon-color: $baseline-theme-color,
   selected-pressed-state-layer-color: $_on-surface,
-  selected-pressed-state-layer-opacity:
-    map.get(ripple-theme.$dark-ink-opacities, pressed),
+  selected-pressed-state-layer-opacity: map.get($_dark-ink-opacities, pressed),
   state-layer-size: $ripple-size,
   unselected-focus-icon-color: $baseline-theme-color,
   unselected-focus-state-layer-color: $_on-surface,
-  unselected-focus-state-layer-opacity:
-    map.get(ripple-theme.$dark-ink-opacities, focus),
+  unselected-focus-state-layer-opacity: map.get($_dark-ink-opacities, focus),
   unselected-hover-icon-color: $baseline-theme-color,
   unselected-hover-state-layer-color: $_on-surface,
-  unselected-hover-state-layer-opacity:
-    map.get(ripple-theme.$dark-ink-opacities, hover),
+  unselected-hover-state-layer-opacity: map.get($_dark-ink-opacities, hover),
   unselected-icon-color: $border-color,
   unselected-pressed-icon-color: $border-color,
   unselected-pressed-state-layer-color: $_on-surface,
-  unselected-pressed-state-layer-opacity:
-    map.get(ripple-theme.$dark-ink-opacities, pressed),
+  unselected-pressed-state-layer-opacity: map.get($_dark-ink-opacities, pressed),
 );
 
 $forced-colors-theme: (
@@ -131,38 +126,6 @@ $forced-colors-theme: (
       map.get($theme, selected-hover-icon-color)
     );
   }
-
-  @include ripple-theme.focus() {
-    @include _icon-color(
-      map.get($theme, unselected-focus-icon-color),
-      map.get($theme, selected-focus-icon-color)
-    );
-  }
-
-  @include ripple-theme.active() {
-    @include _icon-color(
-      map.get($theme, unselected-pressed-icon-color),
-      map.get($theme, selected-pressed-icon-color)
-    );
-  }
-
-  @include ripple-color(
-    $color: map.get($theme, unselected-hover-state-layer-color),
-    $opacity-map: (
-      hover: map.get($theme, unselected-hover-state-layer-opacity),
-      focus: map.get($theme, unselected-focus-state-layer-opacity),
-      press: map.get($theme, unselected-pressed-state-layer-opacity),
-    )
-  );
-
-  @include focus-indicator-color(
-    $color: map.get($theme, selected-hover-state-layer-color),
-    $opacity-map: (
-      hover: map.get($theme, selected-hover-state-layer-opacity),
-      focus: map.get($theme, selected-focus-state-layer-opacity),
-      press: map.get($theme, selected-pressed-state-layer-opacity),
-    )
-  );
 
   @include ripple-size(map.get($theme, state-layer-size));
   // Set touch target to ripple size.
@@ -329,33 +292,6 @@ $forced-colors-theme: (
 @mixin disabled-ink-color($color) {
   @include if-disabled_ {
     @include ink-color_($color);
-  }
-}
-
-/// Sets ripple color when checkbox is not in checked state.
-@mixin ripple-color($color, $opacity-map: null) {
-  @include ripple-theme.states(
-    $color: $color,
-    $opacity-map: $opacity-map,
-    $ripple-target: $ripple-target
-  );
-}
-
-/// Sets focus indicator color when checkbox is in checked state.
-@mixin focus-indicator-color($color, $opacity-map: null) {
-  &.md3-checkbox--selected {
-    @include ripple-theme.states(
-      $color: $color,
-      $opacity-map: $opacity-map,
-      $ripple-target: $ripple-target
-    );
-  }
-
-  &.md3-ripple-upgraded--background-focused.md3-checkbox--selected {
-    @include ripple-theme.states-base-color(
-      $color: $color,
-      $ripple-target: $ripple-target
-    );
   }
 }
 
