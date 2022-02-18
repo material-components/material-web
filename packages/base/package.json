@@ -11,7 +11,6 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@lit/reactive-element": "1.0.0-rc.4",
     "@material/base": "=14.0.0-canary.ab4aba1af.0",
     "@material/dom": "=14.0.0-canary.ab4aba1af.0",
     "lit": "^2.0.0",
