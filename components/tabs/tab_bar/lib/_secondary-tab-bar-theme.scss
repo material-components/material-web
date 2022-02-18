@@ -1,0 +1,63 @@
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use 'sass:map';
+@use '@material/theme/map-ext';
+@use '../../../sass/theme';
+@use '../../tab/lib/secondary-tab-theme' as tab-theme;
+@use '../../tab_indicator/lib/tab-indicator-theme';
+@use '@material/theme/theme-color';
+@use '@material/elevation/elevation-theme';
+@use '@material/typography/typography';
+
+$custom-property-prefix: 'secondary-tab-bar';
+// TODO(b/218891998): Update tokens values to support secondary tabs with icons
+$secondary-light-theme: (
+  active-label-text-color: theme-color.$on-surface,
+  container-color: theme-color.$surface,
+  container-elevation: elevation-theme.get-elevation(0),
+  container-height: 48px,
+  container-shadow-color: #000,
+  container-shape: 0,
+  focus-label-text-color: theme-color.$on-surface,
+  focus-state-layer-color: theme-color.$on-surface,
+  focus-state-layer-opacity: 0.12,
+  hover-label-text-color: theme-color.$on-surface,
+  hover-state-layer-color: theme-color.$on-surface,
+  hover-state-layer-opacity: 0.08,
+  inactive-label-text-color: theme-color.$on-surface,
+  label-text-font-family: typography.get-font(subtitle2),
+  label-text-font-size: typography.get-size(subtitle2),
+  label-text-letter-spacing: typography.get-tracking(subtitle2),
+  label-text-line-height: typography.get-line-height(subtitle2),
+  label-text-weight: typography.get-weight(subtitle2),
+  pressed-label-text-color: theme-color.$on-surface,
+  pressed-state-layer-color: theme-color.$on-surface,
+  pressed-state-layer-opacity: 0.12,
+);
+
+@mixin secondary-navigation-tab-theme($theme) {
+  $theme: theme.validate-theme($secondary-light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix);
+  @include theme.emit-theme-vars($theme);
+}
+
+@mixin secondary-navigation-tab-theme-styles($theme) {
+  $theme: theme.validate-theme-styles($secondary-light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix);
+
+  .md3-tab--secondary {
+    @include tab-theme.secondary-navigation-tab-theme-styles(
+      map-ext.pick($theme, map.keys(tab-theme.$secondary-light-theme)...)
+    );
+  }
+
+  .md3-tab-indicator {
+    @include tab-indicator-theme.theme-styles(
+      map-ext.pick($theme, map.keys(tab-indicator-theme.$light-theme)...)
+    );
+  }
+}

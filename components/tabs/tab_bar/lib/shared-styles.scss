@@ -4,8 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-@use '@material/tab-bar' as tabbar;
-@use '@material/tab';
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@use './tab-bar' as tabbar;
 
 @include tabbar.core-styles();
 
@@ -15,9 +17,4 @@
 
 .mdc-tab-bar {
   flex: 1;
-}
-
-mwc-tab {
-  --mdc-tab-height: #{tab.$height};
-  --mdc-tab-stacked-height: #{tab.$stacked-height};
 }

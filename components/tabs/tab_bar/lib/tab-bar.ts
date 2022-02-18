@@ -8,16 +8,18 @@ import {BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
 import {html} from 'lit';
 import {property, query} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
 import {PrimaryTab} from '../../tab/lib/primary-tab';
 import {MDCTabInteractionEvent} from '../../tab/lib/types';
 import {MdPrimaryTab} from '../../tab/primary-tab';
+import {MdSecondaryTab} from '../../tab/secondary-tab';
 import {MdTabScroller} from '../../tab_scroller/tab-scroller';
 
 import {MDCTabBarAdapter} from './adapter';
 import MDCTabBarFoundation from './foundation';
 
-export class TabBar extends BaseElement {
+export abstract class TabBar extends BaseElement {
   protected mdcFoundation!: MDCTabBarFoundation;
 
   protected readonly mdcFoundationClass = MDCTabBarFoundation;
@@ -57,24 +59,28 @@ export class TabBar extends BaseElement {
 
   protected override render() {
     return html`
-      <div class="mdc-tab-bar" role="tablist"
-          @MD3Tab:interacted="${this._handleTabInteraction}"
-          @keydown="${this._handleKeydown}">
+      <div class="${classMap(this.getRootClasses())}"
+           role="tablist"
+           @MD3Tab:interacted="${this._handleTabInteraction}"
+           @keydown="${this._handleKeydown}">
         <mwc-tab-scroller><slot></slot></mwc-tab-scroller>
       </div>
       `;
   }
 
-  // TODO(sorvell): probably want to memoize this and use a `slotChange` event
-  protected _getTabs() {
-    return (this.tabsSlot as HTMLSlotElement)
-               .assignedNodes({flatten: true})
-               .filter((e: Node) => e instanceof PrimaryTab) as MdPrimaryTab[];
+  protected getRootClasses(): ClassInfo {
+    return {
+      'mdc-tab-bar': true,
+    };
   }
+
+  protected abstract _getTabs(): MdPrimaryTab[]|MdSecondaryTab[];
 
   protected _getTab(index: number) {
     return this._getTabs()[index];
   }
+
+  protected abstract _getActiveTabIndex(): number;
 
   protected createAdapter(): MDCTabBarAdapter {
     return {
@@ -126,10 +132,7 @@ export class TabBar extends BaseElement {
         return this._previousActiveIndex;
       },
       getFocusedTabIndex: () => {
-        const tabElements = this._getTabs();
-        const activeElement =
-            (this.getRootNode() as ShadowRoot).activeElement as MdPrimaryTab;
-        return tabElements.indexOf(activeElement);
+        return this._getActiveTabIndex();
       },
       getIndexOfTabById: (id: string) => {
         const tabElements = this._getTabs();

@@ -1,0 +1,90 @@
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use 'sass:map';
+@use '@material/theme/map-ext';
+@use '../../../sass/theme';
+@use '../../tab/lib/primary-tab-theme' as tab-theme;
+@use '../../tab_indicator/lib/tab-indicator-theme';
+@use '@material/theme/theme-color';
+@use '@material/elevation/elevation-theme';
+@use '@material/typography/typography';
+
+$custom-property-prefix: 'primary-tab-bar';
+$primary-light-theme: (
+  active-focus-state-layer-color: theme-color.$primary,
+  active-focus-state-layer-opacity: 0.12,
+  active-hover-state-layer-color: theme-color.$primary,
+  active-hover-state-layer-opacity: 0.04,
+  active-indicator-color: theme-color.$primary,
+  active-indicator-height: 3px,
+  active-indicator-shape: (
+    3px,
+    3px,
+    0,
+    0,
+  ),
+  active-pressed-state-layer-color: theme-color.$primary,
+  active-pressed-state-layer-opacity: 0.1,
+  container-color: theme-color.$surface,
+  container-elevation: elevation-theme.get-elevation(0),
+  container-height: 48px,
+  container-shape: 0,
+  divider-color: theme-color.$surface,
+  divider-height: 1px,
+  inactive-focus-state-layer-color: theme-color.$on-surface,
+  inactive-focus-state-layer-opacity: 0.12,
+  inactive-hover-state-layer-color: theme-color.$on-surface,
+  inactive-hover-state-layer-opacity: 0.04,
+  inactive-pressed-state-layer-color: theme-color.$on-surface,
+  inactive-pressed-state-layer-opacity: 0.1,
+  with-icon-active-focus-icon-color: theme-color.$primary,
+  with-icon-active-hover-icon-color: theme-color.$primary,
+  with-icon-active-icon-color: theme-color.$primary,
+  with-icon-active-pressed-icon-color: theme-color.$primary,
+  with-icon-and-label-text-container-height: 64px,
+  with-icon-icon-size: 24px,
+  with-icon-inactive-focus-icon-color: theme-color.$on-surface,
+  with-icon-inactive-hover-icon-color: theme-color.$on-surface,
+  with-icon-inactive-icon-color: theme-color.$on-surface,
+  with-icon-inactive-pressed-icon-color: theme-color.$on-surface,
+  with-label-text-active-focus-label-text-color: theme-color.$primary,
+  with-label-text-active-hover-label-text-color: theme-color.$primary,
+  with-label-text-active-label-text-color: theme-color.$primary,
+  with-label-text-active-pressed-label-text-color: theme-color.$primary,
+  with-label-text-inactive-focus-label-text-color: theme-color.$on-surface,
+  with-label-text-inactive-hover-label-text-color: theme-color.$on-surface,
+  with-label-text-inactive-label-text-color: theme-color.$on-surface,
+  with-label-text-inactive-pressed-label-text-color: theme-color.$on-surface,
+  with-label-text-label-text-font-family: typography.get-font(subtitle2),
+  with-label-text-label-text-font-size: typography.get-size(subtitle2),
+  with-label-text-label-text-letter-spacing: typography.get-tracking(subtitle2),
+  with-label-text-label-text-line-height: typography.get-line-height(subtitle2),
+  with-label-text-label-text-weight: typography.get-weight(subtitle2),
+);
+
+@mixin primary-navigation-tab-theme($theme) {
+  $theme: theme.validate-theme($primary-light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix);
+  @include theme.emit-theme-vars($theme);
+}
+
+@mixin primary-navigation-tab-theme-styles($theme) {
+  $theme: theme.validate-theme-styles($primary-light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix);
+
+  .md3-tab--primary {
+    @include tab-theme.primary-navigation-tab-theme-styles(
+      map-ext.pick($theme, map.keys(tab-theme.$primary-light-theme)...)
+    );
+  }
+
+  .md3-tab-indicator {
+    @include tab-indicator-theme.theme-styles(
+      map-ext.pick($theme, map.keys(tab-indicator-theme.$light-theme)...)
+    );
+  }
+}
