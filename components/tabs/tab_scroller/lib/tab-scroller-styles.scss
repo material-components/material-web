@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-@use '@material/tab-scroller' as tabscroller;
+@use './tab-scroller';
 
-@include tabscroller.core-styles();
+@include tab-scroller.core-styles();
 
 :host {
   display: flex;
