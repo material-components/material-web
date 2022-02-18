@@ -10,8 +10,8 @@
   display: inline-flex;
 }
 
-@include checkbox.static-styles();
-
 .md3-checkbox {
   @include checkbox-theme.theme-styles(checkbox-theme.$light-theme);
 }
+
+@include checkbox.static-styles();

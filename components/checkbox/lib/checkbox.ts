@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import '../../focus/focus-ring';
+
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
@@ -14,6 +16,7 @@ import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
 import {ariaProperty} from '../../decorators/aria-property';
+import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
 import {Ripple} from '../../ripple/mwc-ripple';
 import {RippleHandlers} from '../../ripple/ripple-handlers';
 
@@ -57,6 +60,8 @@ export class Checkbox extends LitElement {
   @state() protected animationClass = '';
 
   @state() protected shouldRenderRipple = false;
+
+  @state() protected showFocusRing = false;
 
   @state() protected focused = false;
 
@@ -120,6 +125,12 @@ export class Checkbox extends LitElement {
         unbounded></md-ripple>`;
   }
 
+  /** @soyTemplate */
+  protected renderFocusRing(): TemplateResult {
+    return html`<md-focus-ring .visible="${
+        this.showFocusRing}"></md-focus-ring>`;
+  }
+
   /**
    * @soyTemplate
    * @soyAttributes checkboxAttributes: input
@@ -154,6 +165,7 @@ export class Checkbox extends LitElement {
     const ariaChecked = this.indeterminate ? 'mixed' : undefined;
     return html`
       <div class="md3-checkbox md3-checkbox--upgraded ${classMap(classes)}">
+        ${this.renderFocusRing()}
         <input type="checkbox"
               class="md3-checkbox__native-control"
               name="${ifDefined(this.name)}"
@@ -214,6 +226,7 @@ export class Checkbox extends LitElement {
 
     window.addEventListener('mouseup', onUp);
     this.rippleHandlers.startPress(event);
+    pointerPress();
   }
 
   @eventOptions({passive: true})
@@ -234,10 +247,12 @@ export class Checkbox extends LitElement {
   }
 
   protected handleRippleFocus() {
+    this.showFocusRing = shouldShowStrongFocus();
     this.rippleHandlers.startFocus();
   }
 
   protected handleRippleBlur() {
+    this.showFocusRing = false;
     this.rippleHandlers.endFocus();
   }
 
