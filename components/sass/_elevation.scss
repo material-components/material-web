@@ -5,8 +5,8 @@
 
 @use 'sass:map';
 @use 'sass:meta';
-@use '@material/theme/custom-properties';
 @use './color';
+@use './var';
 
 /// Returns the appropriate elevation theme for the given args.
 ///
@@ -121,7 +121,7 @@ $_shadow-map: (
   $key-color: rgba($shadow-color, $_key-opacity);
   $ambient-color: rgba($shadow-color, $_ambient-opacity);
 
-  @if custom-properties.is-custom-prop-string($shadow-color) {
+  @if var.is-var($shadow-color) {
     // TODO(b/213331407): Convert color from hex to rgba CSS color format to
     // enable mixing rgb value with alpha using custom properties.
     // (e.g., rgb(var(--foo-sys-color-on-surface-rgb, 31,31,31), 0.38))

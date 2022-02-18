@@ -126,14 +126,3 @@
 @function trim($string, $prefix, $suffix: $prefix) {
   @return trim-prefix(trim-suffix($string, $suffix), $prefix);
 }
-
-/// Appends a string to the end of given string.
-/// @example -scss
-///   @debug append('foo', '-bar'); // "foo-bar"
-///
-/// @param {String} $string - The string to append to.
-/// @param {String} $suffix - The suffix string to append.
-/// @return {String} Returns new string with the suffix appended.
-@function append($string, $suffix) {
-  @return string.insert($string, $suffix, string.length($string) + 1);
-}
