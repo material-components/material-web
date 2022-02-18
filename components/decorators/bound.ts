@@ -43,10 +43,11 @@ export function bound<V extends Function>(
  */
 export function bound<T extends object>(
     target: T, propertyKey: FunctionKeys<T>): any;
-export function bound<T extends object, K extends keyof T, V extends Function>(
-    target: T, propertyKey: K,
-    methodDescriptor?: TypedPropertyDescriptor<V>): TypedPropertyDescriptor<V> {
-  const descriptor = methodDescriptor || {
+export function
+bound<T extends object, K extends FunctionKeys<T>, V extends T[K]&Function>(
+    target: T, propertyKey: K, methodDescriptor?: TypedPropertyDescriptor<V>):
+    TypedPropertyDescriptor<V> {
+  const descriptor: TypedPropertyDescriptor<V> = methodDescriptor || {
     configurable: true,
     enumerable: true,
     writable: true,
@@ -57,30 +58,35 @@ export function bound<T extends object, K extends keyof T, V extends Function>(
   let set: TypedPropertyDescriptor<V>['set']|undefined;
 
   if (descriptor.get || descriptor.writable) {
-    get = function(this: T) {
+    get = function(this: T): V {
+      const self = this as T;  // Needed for closure conformance
       if (descriptor.get) {
-        return descriptor.get.call(this).bind(this);
+        // Separate variables needed for closure conformance
+        const getter = descriptor.get;
+        const value = getter.call(self);
+        return value.bind(self);
       }
 
-      if (!memoizedBoundValues.has(this)) {
+      if (!memoizedBoundValues.has(self)) {
         const bound =
-            (descriptor.value || this[propertyKey] as unknown as V)?.bind(this);
-        memoizedBoundValues.set(this, bound);
+            (descriptor.value || self[propertyKey] as V)?.bind(self) as V;
+        memoizedBoundValues.set(self, bound);
         return bound;
       }
 
-      return memoizedBoundValues.get(this);
+      return memoizedBoundValues.get(self)!;
     };
   }
 
   if (descriptor.set || descriptor.writable) {
     set = function(this: T, value: V) {
-      value = value.bind(this);
+      const self = this as T;  // Needed for closure conformance
+      value = value.bind(self);
       if (descriptor.set) {
-        descriptor.set.call(this, value);
+        descriptor.set.call(self, value);
       }
 
-      memoizedBoundValues.set(this, value);
+      memoizedBoundValues.set(self, value);
     };
   }
 
