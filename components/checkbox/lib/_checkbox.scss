@@ -20,22 +20,14 @@
 // THE SOFTWARE.
 //
 
-@use 'sass:map';
 @use 'sass:math';
-@use '@material/animation/functions' as functions2;
-@use '@material/animation/variables' as animation-variables;
-@use '@material/density/functions' as density-functions;
 @use '@material/dom/dom';
 @use '@material/focusring/focus-ring';
 @use '@material/ripple/ripple';
 @use '@material/ripple/ripple-theme';
-@use '@material/touch-target/mixins' as touch-target-mixins;
-@use '@material/theme/theme-color';
-@use './checkbox-custom-properties';
-@use '@material/theme/theme';
-@use '@material/theme/color-custom-properties';
-@use '@material/theme/custom-properties';
-@use '@material/touch-target/variables' as touch-target-variables;
+@use '@material/touch-target/touch-target';
+@use '../../motion/animation';
+@use '../../sass/var';
 @use './checkbox-theme';
 
 ///
@@ -49,7 +41,7 @@
 /// Checkbox styles (Excluding ripple styles).
 ///
 /// NOTE: This API is intended for use by frameworks that may want to separate the ripple-related styles from the other
-/// checkbox styles. It is recommended that most users use `mdc-checkbox-core-styles` instead.
+/// checkbox styles. It is recommended that most users use `md3-checkbox-core-styles` instead.
 // TODO(b/162887560): Rename to `checkbox-without-ripple-styles()`
 @mixin without-ripple() {
   // TODO(b/165005345): Include theme-styles() after static-styles().
@@ -135,14 +127,8 @@
 
   .md3-checkbox--touch {
     @include checkbox-theme.touch-target(
-      custom-properties.create(
-        checkbox-state-layer-size,
-        touch-target-variables.$height
-      ),
-      custom-properties.create(
-        checkbox-state-layer-size,
-        checkbox-theme.$ripple-size
-      )
+      var.create(checkbox-state-layer-size, touch-target.$height),
+      var.create(checkbox-state-layer-size, checkbox-theme.$ripple-size)
     );
   }
 
@@ -191,7 +177,7 @@
 /// Checkbox's ripple styles.
 ///
 /// NOTE: This API is intended for use by frameworks that may want to separate the ripple-related styles from the other
-/// checkbox styles. It is recommended that most users use `mdc-checkbox-core-styles` instead.
+/// checkbox styles. It is recommended that most users use `md3-checkbox-core-styles` instead.
 @mixin ripple-styles() {
   .md3-checkbox {
     @include ripple.surface($ripple-target: checkbox-theme.$ripple-target);
@@ -207,7 +193,7 @@
 }
 
 @mixin base_ {
-  display: inline-block;
+  display: inline-flex;
   position: relative;
   flex: 0 0 checkbox-theme.$icon-size;
   box-sizing: content-box;
@@ -231,7 +217,7 @@
 // Animation
 
 @mixin anim_ {
-  $mdc-checkbox-indeterminate-change-duration_: 500ms;
+  $md3-checkbox-indeterminate-change-duration_: 500ms;
 
   // stylelint-disable selector-max-type
 
@@ -250,7 +236,7 @@
       // Instead of delaying the animation, we simply multiply its length by 2 and begin the
       // animation at 50% in order to prevent a flash of styles applied to a checked checkmark
       // as the background is fading in before the animation begins.
-      animation: mdc-checkbox-unchecked-checked-checkmark-path
+      animation: md3-checkbox-unchecked-checked-checkmark-path
         checkbox-theme.$transition-duration * 2 linear 0s;
       transition: none;
     }
@@ -258,7 +244,7 @@
 
   &-unchecked-indeterminate {
     .md3-checkbox__mixedmark {
-      animation: mdc-checkbox-unchecked-indeterminate-mixedmark
+      animation: md3-checkbox-unchecked-indeterminate-mixedmark
         checkbox-theme.$transition-duration linear 0s;
       transition: none;
     }
@@ -266,7 +252,7 @@
 
   &-checked-unchecked {
     .md3-checkbox__checkmark-path {
-      animation: mdc-checkbox-checked-unchecked-checkmark-path
+      animation: md3-checkbox-checked-unchecked-checkmark-path
         checkbox-theme.$transition-duration linear 0s;
       transition: none;
     }
@@ -274,13 +260,13 @@
 
   &-checked-indeterminate {
     .md3-checkbox__checkmark {
-      animation: mdc-checkbox-checked-indeterminate-checkmark
+      animation: md3-checkbox-checked-indeterminate-checkmark
         checkbox-theme.$transition-duration linear 0s;
       transition: none;
     }
 
     .md3-checkbox__mixedmark {
-      animation: mdc-checkbox-checked-indeterminate-mixedmark
+      animation: md3-checkbox-checked-indeterminate-mixedmark
         checkbox-theme.$transition-duration linear 0s;
       transition: none;
     }
@@ -288,23 +274,24 @@
 
   &-indeterminate-checked {
     .md3-checkbox__checkmark {
-      animation: mdc-checkbox-indeterminate-checked-checkmark
-        $mdc-checkbox-indeterminate-change-duration_ linear 0s;
+      animation: md3-checkbox-indeterminate-checked-checkmark
+        $md3-checkbox-indeterminate-change-duration_ linear 0s;
       transition: none;
     }
 
     .md3-checkbox__mixedmark {
-      animation: mdc-checkbox-indeterminate-checked-mixedmark
-        $mdc-checkbox-indeterminate-change-duration_ linear 0s;
+      animation: md3-checkbox-indeterminate-checked-mixedmark
+        $md3-checkbox-indeterminate-change-duration_ linear 0s;
       transition: none;
     }
   }
 
   &-indeterminate-unchecked {
+    // stylelint-disable no-unknown-animations -- Asterisk is treated as
+    // animation name. Supress the lint warning.
     .md3-checkbox__mixedmark {
-      // stylelint-disable-next-line declaration-colon-space-after
-      animation: mdc-checkbox-indeterminate-unchecked-mixedmark
-        $mdc-checkbox-indeterminate-change-duration_ * 0.6 linear 0s;
+      animation: md3-checkbox-indeterminate-unchecked-mixedmark
+        $md3-checkbox-indeterminate-change-duration_ * 0.6 linear 0s;
       transition: none;
     }
   }
@@ -320,7 +307,7 @@
   box-sizing: border-box;
   width: checkbox-theme.$icon-size;
   height: checkbox-theme.$icon-size;
-  // border-color is overridden by the mdc-checkbox-unmarked-stroke-color() mixin
+  // border-color is overridden by the md3-checkbox-unmarked-stroke-color() mixin
   border: checkbox-theme.$border-width solid currentColor;
   border-radius: 2px;
   background-color: transparent;
@@ -348,10 +335,10 @@
 
 @mixin checkmark_() {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
+  inset-inline-start: 0;
   width: 100%;
   opacity: 0;
 
@@ -430,7 +417,7 @@
   $delay: 0ms,
   $duration: checkbox-theme.$transition-duration
 ) {
-  @return functions2.enter($property, $duration, $delay);
+  @return animation.deceleration($property, $duration, $delay);
 }
 
 @function transition-exit(
@@ -438,7 +425,7 @@
   $delay: 0ms,
   $duration: checkbox-theme.$transition-duration
 ) {
-  @return functions2.exit-temporary($property, $duration, $delay);
+  @return animation.sharp($property, $duration, $delay);
 }
 
 // Manual calculation done on SVG
@@ -446,14 +433,14 @@ $mark-path-length_: 29.7833385 !default;
 $indeterminate-checked-easing-function_: cubic-bezier(0.14, 0, 0, 1) !default;
 
 @mixin mark-keyframes_ {
-  @keyframes mdc-checkbox-unchecked-checked-checkmark-path {
+  @keyframes md3-checkbox-unchecked-checked-checkmark-path {
     0%,
     50% {
       stroke-dashoffset: $mark-path-length_;
     }
 
     50% {
-      animation-timing-function: animation-variables.$deceleration-curve-timing-function;
+      animation-timing-function: animation.$deceleration-easing;
     }
 
     100% {
@@ -461,7 +448,7 @@ $indeterminate-checked-easing-function_: cubic-bezier(0.14, 0, 0, 1) !default;
     }
   }
 
-  @keyframes mdc-checkbox-unchecked-indeterminate-mixedmark {
+  @keyframes md3-checkbox-unchecked-indeterminate-mixedmark {
     0%,
     68.2% {
       transform: scaleX(0);
@@ -476,9 +463,9 @@ $indeterminate-checked-easing-function_: cubic-bezier(0.14, 0, 0, 1) !default;
     }
   }
 
-  @keyframes mdc-checkbox-checked-unchecked-checkmark-path {
+  @keyframes md3-checkbox-checked-unchecked-checkmark-path {
     from {
-      animation-timing-function: animation-variables.$acceleration-curve-timing-function;
+      animation-timing-function: animation.$acceleration-easing;
       opacity: 1;
       stroke-dashoffset: 0;
     }
@@ -489,9 +476,9 @@ $indeterminate-checked-easing-function_: cubic-bezier(0.14, 0, 0, 1) !default;
     }
   }
 
-  @keyframes mdc-checkbox-checked-indeterminate-checkmark {
+  @keyframes md3-checkbox-checked-indeterminate-checkmark {
     from {
-      animation-timing-function: animation-variables.$deceleration-curve-timing-function;
+      animation-timing-function: animation.$deceleration-easing;
       transform: rotate(0deg);
       opacity: 1;
     }
@@ -502,7 +489,7 @@ $indeterminate-checked-easing-function_: cubic-bezier(0.14, 0, 0, 1) !default;
     }
   }
 
-  @keyframes mdc-checkbox-indeterminate-checked-checkmark {
+  @keyframes md3-checkbox-indeterminate-checked-checkmark {
     from {
       animation-timing-function: $indeterminate-checked-easing-function_;
       transform: rotate(45deg);
@@ -515,9 +502,9 @@ $indeterminate-checked-easing-function_: cubic-bezier(0.14, 0, 0, 1) !default;
     }
   }
 
-  @keyframes mdc-checkbox-checked-indeterminate-mixedmark {
+  @keyframes md3-checkbox-checked-indeterminate-mixedmark {
     from {
-      animation-timing-function: mdc-animation-deceleration-curve-timing-function;
+      animation-timing-function: md3-animation-deceleration-curve-timing-function;
       transform: rotate(-45deg);
       opacity: 0;
     }
@@ -528,7 +515,7 @@ $indeterminate-checked-easing-function_: cubic-bezier(0.14, 0, 0, 1) !default;
     }
   }
 
-  @keyframes mdc-checkbox-indeterminate-checked-mixedmark {
+  @keyframes md3-checkbox-indeterminate-checked-mixedmark {
     from {
       animation-timing-function: $indeterminate-checked-easing-function_;
       transform: rotate(0deg);
@@ -541,7 +528,7 @@ $indeterminate-checked-easing-function_: cubic-bezier(0.14, 0, 0, 1) !default;
     }
   }
 
-  @keyframes mdc-checkbox-indeterminate-unchecked-mixedmark {
+  @keyframes md3-checkbox-indeterminate-unchecked-mixedmark {
     0% {
       animation-timing-function: linear;
       transform: scaleX(1);

@@ -22,23 +22,20 @@
 
 @use 'sass:map';
 @use 'sass:math';
-@use '@material/density/functions' as density-functions;
-@use '@material/density/variables' as density-variables;
 @use '@material/ripple/ripple';
 @use '@material/ripple/ripple-theme';
-@use '@material/theme/color-custom-properties';
-@use '@material/theme/custom-properties';
-@use '@material/theme/keys';
-@use '@material/theme/theme';
-@use '@material/theme/theme-color';
-@use '@material/theme/shadow-dom';
 @use '@material/touch-target/touch-target';
-@use './checkbox-custom-properties';
+@use '../../sass/theme';
+@use '../../sass/tokens';
+@use '../../sass/var';
 
-$baseline-theme-color: secondary !default;
-$mark-color: theme-color.prop-value(on-secondary) !default;
-$border-color: rgba(theme-color.prop-value(on-surface), 0.54) !default;
-$disabled-color: rgba(theme-color.prop-value(on-surface), 0.38) !default;
+$_sys-color-light-values: tokens.md-sys-color-values-light();
+
+$baseline-theme-color: map.get($_sys-color-light-values, secondary);
+$mark-color: map.get($_sys-color-light-values, on-secondary);
+$border-color: rgba(map.get($_sys-color-light-values, on-surface), 0.54);
+$disabled-color: rgba(map.get($_sys-color-light-values, on-surface), 0.38);
+$_on-surface: map.get($_sys-color-light-values, on-surface);
 
 $ripple-size: 40px !default;
 $icon-size: 18px !default;
@@ -53,15 +50,6 @@ $focus-indicator-opacity: map.get(
 
 $minimum-size: 28px !default;
 $maximum-size: $ripple-size !default;
-$density-scale: density-variables.$default-scale !default;
-$density-config: (
-  size: (
-    minimum: $minimum-size,
-    default: $ripple-size,
-    maximum: $maximum-size,
-  ),
-) !default;
-
 $ripple-target: '.md3-checkbox__ripple';
 $custom-property-prefix: 'checkbox';
 
@@ -76,7 +64,7 @@ $light-theme: (
   disabled-unselected-icon-opacity: null,
   selected-checkmark-color: $mark-color,
   selected-focus-icon-color: $baseline-theme-color,
-  selected-focus-state-layer-color: theme-color.$on-surface,
+  selected-focus-state-layer-color: $_on-surface,
   selected-focus-state-layer-opacity: 0.12,
   selected-hover-icon-color: $baseline-theme-color,
   selected-hover-state-layer-color: $baseline-theme-color,
@@ -84,21 +72,21 @@ $light-theme: (
     map.get(ripple-theme.$dark-ink-opacities, hover),
   selected-icon-color: $baseline-theme-color,
   selected-pressed-icon-color: $baseline-theme-color,
-  selected-pressed-state-layer-color: theme-color.$on-surface,
+  selected-pressed-state-layer-color: $_on-surface,
   selected-pressed-state-layer-opacity:
     map.get(ripple-theme.$dark-ink-opacities, pressed),
   state-layer-size: $ripple-size,
   unselected-focus-icon-color: $baseline-theme-color,
-  unselected-focus-state-layer-color: theme-color.$on-surface,
+  unselected-focus-state-layer-color: $_on-surface,
   unselected-focus-state-layer-opacity:
     map.get(ripple-theme.$dark-ink-opacities, focus),
   unselected-hover-icon-color: $baseline-theme-color,
-  unselected-hover-state-layer-color: theme-color.$on-surface,
+  unselected-hover-state-layer-color: $_on-surface,
   unselected-hover-state-layer-opacity:
     map.get(ripple-theme.$dark-ink-opacities, hover),
   unselected-icon-color: $border-color,
   unselected-pressed-icon-color: $border-color,
-  unselected-pressed-state-layer-color: theme-color.$on-surface,
+  unselected-pressed-state-layer-color: $_on-surface,
   unselected-pressed-state-layer-opacity:
     map.get(ripple-theme.$dark-ink-opacities, pressed),
 );
@@ -112,19 +100,15 @@ $forced-colors-theme: (
 );
 
 @mixin theme($theme) {
-  @include theme.validate-theme($light-theme, $theme);
-  @include keys.declare-custom-properties(
-    $theme,
-    $prefix: $custom-property-prefix
+  $theme: theme.validate-theme($light-theme, $theme);
+  @include theme.emit-theme-vars(
+    theme.create-theme-vars($theme, $custom-property-prefix)
   );
 }
 
 @mixin theme-styles($theme) {
-  @include theme.validate-theme-keys($light-theme, $theme);
-  $theme: keys.create-theme-properties(
-    $theme,
-    $prefix: $custom-property-prefix
-  );
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $prefix: $custom-property-prefix);
 
   @include disabled-container-colors(
     $unmarked-stroke-color: map.get($theme, disabled-unselected-icon-color),
@@ -188,151 +172,16 @@ $forced-colors-theme: (
   );
 }
 
-$light-theme-deprecated: (
-  density-scale: 0,
-  checkmark-color: $mark-color,
-  container-checked-color: $baseline-theme-color,
-  container-checked-hover-color: null,
-  container-disabled-color: $disabled-color,
-  outline-color: $border-color,
-  outline-hover-color: null,
-  ripple-color: theme-color.$on-surface,
-  ripple-opacity: ripple-theme.$dark-ink-opacities,
-  ripple-checked-color: $baseline-theme-color,
-  ripple-checked-opacity: ripple-theme.$dark-ink-opacities,
-);
-
-/// Sets theme to checkbox based on provided theme configuration.
-/// Only emits theme related styles.
-/// @param {Map} $theme - Theme configuration to use for theming checkbox.
-@mixin theme-deprecated($theme) {
-  @include theme.validate-theme($light-theme-deprecated, $theme);
-
-  $ripple-color: map.get($theme, ripple-color);
-  $ripple-opacity: map.get($theme, ripple-opacity);
-  @if $ripple-opacity == null {
-    $ripple-opacity: ();
-  }
-  @if $ripple-color {
-    @include ripple-color($color: $ripple-color, $opacity-map: $ripple-opacity);
-  }
-
-  $ripple-checked-color: map.get($theme, ripple-checked-color);
-  $ripple-checked-opacity: map.get($theme, ripple-checked-opacity);
-  @if $ripple-checked-opacity == null {
-    $ripple-checked-opacity: ();
-  }
-  @if $ripple-checked-color {
-    @include focus-indicator-color(
-      $color: $ripple-checked-color,
-      $opacity-map: $ripple-checked-opacity
-    );
-  }
-
-  $density-scale: map.get($theme, density-scale);
-  @if $density-scale != null {
-    @include density($density-scale: $density-scale);
-  }
-
-  $outline-color: map.get($theme, outline-color);
-  $container-checked-color: map.get($theme, container-checked-color);
-  @if (
-    ($outline-color and not $container-checked-color) or
-      (not $outline-color and $container-checked-color)
-  ) {
-    @error 'Both `outline-color` and `container-checked-color` keys should be provided.';
-  }
-  @if ($outline-color and $container-checked-color) {
-    @include container-colors(
-      $unmarked-stroke-color: $outline-color,
-      $marked-stroke-color: $container-checked-color,
-      $marked-fill-color: $container-checked-color
-    );
-  }
-
-  $outline-hover-color: map.get($theme, outline-hover-color);
-  $container-checked-hover-color: map.get(
-    $theme,
-    container-checked-hover-color
-  );
-  @if (
-    ($outline-hover-color and not $container-checked-hover-color) or
-      (not $outline-hover-color and $container-checked-hover-color)
-  ) {
-    @error 'Both `outline-hover-color` and `container-checked-hover-color` keys should be provided.';
-  }
-  @if ($outline-hover-color and $container-checked-hover-color) {
-    @include ripple-theme.states-selector() {
-      @include container-colors(
-        $unmarked-stroke-color: $outline-hover-color,
-        $marked-stroke-color: $container-checked-hover-color,
-        $marked-fill-color: $container-checked-hover-color
-      );
-    }
-  }
-
-  $container-disabled-color: map.get($theme, container-disabled-color);
-  @if $container-disabled-color {
-    @include disabled-container-colors(
-      $unmarked-stroke-color: $container-disabled-color,
-      $marked-fill-color: $container-disabled-color
-    );
-  }
-
-  $checkmark-color: map.get($theme, checkmark-color);
-  @if $checkmark-color {
-    @include ink-color($checkmark-color);
-    @include disabled-ink-color($checkmark-color);
-  }
-}
-
-///
-/// @param {Number | String} $density-scale - Density scale value for component.
-///     Supported density scale values `-3`, `-2`, `-1`, `0`.
-/// @return Returns ripple size of checkbox for given density scale.
-///
-@function get-ripple-size($density-scale) {
-  @return density-functions.prop-value(
-    $density-config: $density-config,
-    $density-scale: $density-scale,
-    $property-name: size
-  );
-}
-
-///
-/// Sets density scale for checkbox.
-///
-/// @param {Number | String} $density-scale - Density scale value for component. Supported density scale values
-///     `-3`, `-2`, `-1`, `0`.
-///
-@mixin density($density-scale) {
-  $size: get-ripple-size($density-scale);
-
-  @include ripple-size($size);
-  @include touch-target($size, $ripple-size: $size);
-}
-
 /// Sets ripple size of checkbox and optionally set touch target size which can
 /// be more than the size of ripple.
 /// @param {Number} $ripple-size - Visual ripple size of checkbox.
 @mixin ripple-size($ripple-size) {
-  @if $ripple-size and not custom-properties.is-custom-prop($ripple-size) {
-    $ripple-size: custom-properties.create(
-      checkbox-custom-properties.$ripple-size,
-      $ripple-size
-    );
-  }
-  $checkbox-padding: 'calc((_ripple-size - _icon-size) / 2)';
-  $replace: (
-    _ripple-size: $ripple-size,
-    _icon-size: $icon-size,
-  );
-
-  @include theme.property(padding, $checkbox-padding, $replace: $replace);
+  $padding: calc((#{$ripple-size} - #{$icon-size}) / 2);
+  padding: $padding;
 
   .md3-checkbox__background {
-    @include theme.property(top, $checkbox-padding, $replace: $replace);
-    @include theme.property(left, $checkbox-padding, $replace: $replace);
+    inset-inline-start: $padding;
+    inset-block-start: $padding;
   }
 }
 
@@ -341,31 +190,15 @@ $light-theme-deprecated: (
 /// @param {Number} $touch-target-size Size of touch target (Native input) in `px`.
 /// @param {Number} $ripple-size Size of ripple in `px`.
 @mixin touch-target($touch-target-size, $ripple-size) {
-  @if $touch-target-size {
-    @if not custom-properties.is-custom-prop($touch-target-size) {
-      $touch-target-size: custom-properties.create(
-        checkbox-custom-properties.$touch-target-size,
-        $touch-target-size
-      );
-    }
+  margin: calc((#{$touch-target-size} - #{$ripple-size}) / 2);
 
-    $margin: 'calc((_touch-target-size - _ripple-size) / 2)';
-    $replace: (
-      _touch-target-size: $touch-target-size,
-      _ripple-size: $ripple-size,
-    );
-
-    @include theme.property(margin, $margin, $replace: $replace);
-
-    $offset: 'calc((_ripple-size - _touch-target-size) / 2)';
-
-    .md3-checkbox__native-control {
-      @include theme.property(top, $offset, $replace: $replace);
-      @include theme.property(right, $offset, $replace: $replace);
-      @include theme.property(left, $offset, $replace: $replace);
-      @include theme.property(width, $touch-target-size);
-      @include theme.property(height, $touch-target-size);
-    }
+  .md3-checkbox__native-control {
+    $offset: calc((#{$ripple-size} - #{$touch-target-size}) / 2);
+    inset-block-start: $offset;
+    inset-inline-end: $offset;
+    inset-inline-start: $offset;
+    width: $touch-target-size;
+    height: $touch-target-size;
   }
 }
 
@@ -398,46 +231,11 @@ $light-theme-deprecated: (
   $generate-keyframes: true
 ) {
   // Unchecked colors
-  @if (
-    $unmarked-stroke-color and not
-      custom-properties.is-custom-prop($unmarked-stroke-color)
-  ) {
-    $unmarked-stroke-color: custom-properties.create(
-      checkbox-custom-properties.$unchecked-color,
-      theme-color.prop-value($unmarked-stroke-color)
-    );
-  }
-
   @include if-unmarked-enabled_ {
     @include container-colors_($unmarked-stroke-color, $unmarked-fill-color);
   }
 
   // Checked colors
-  @if (
-    $marked-stroke-color and not
-      custom-properties.is-custom-prop($marked-stroke-color)
-  ) {
-    $marked-stroke-color: custom-properties.create(
-      checkbox-custom-properties.$checked-color,
-      custom-properties.create(
-        color-custom-properties.$secondary,
-        theme-color.prop-value($marked-stroke-color)
-      )
-    );
-  }
-  @if (
-    $marked-fill-color and not
-      custom-properties.is-custom-prop($marked-fill-color)
-  ) {
-    $marked-fill-color: custom-properties.create(
-      checkbox-custom-properties.$checked-color,
-      custom-properties.create(
-        color-custom-properties.$secondary,
-        theme-color.prop-value($marked-fill-color)
-      )
-    );
-  }
-
   @include if-marked-enabled_ {
     @include container-colors_($marked-stroke-color, $marked-fill-color);
   }
@@ -448,19 +246,13 @@ $light-theme-deprecated: (
     $unmarked-fill-color and
     $marked-fill-color
   {
-    $uid: theme-color.color-hash($unmarked-stroke-color) +
-      theme-color.color-hash($marked-stroke-color) +
-      theme-color.color-hash($unmarked-fill-color) +
-      theme-color.color-hash($marked-fill-color);
-
     $anim-selector: if(&, '&.md3-checkbox--anim', '.md3-checkbox--anim');
 
     @include container-keyframes_(
       $from-stroke-color: $unmarked-stroke-color,
       $to-stroke-color: $marked-stroke-color,
       $from-fill-color: $unmarked-fill-color,
-      $to-fill-color: $marked-fill-color,
-      $uid: #{$uid}
+      $to-fill-color: $marked-fill-color
     );
 
     // stylelint-disable max-nesting-depth
@@ -469,14 +261,14 @@ $light-theme-deprecated: (
       &-unchecked-checked,
       &-unchecked-indeterminate {
         .md3-checkbox__native-control:enabled ~ .md3-checkbox__background {
-          animation-name: mdc-checkbox-fade-in-background-#{$uid};
+          animation-name: md3-checkbox-fade-in-background;
         }
       }
 
       &-checked-unchecked,
       &-indeterminate-unchecked {
         .md3-checkbox__native-control:enabled ~ .md3-checkbox__background {
-          animation-name: mdc-checkbox-fade-out-background-#{$uid};
+          animation-name: md3-checkbox-fade-out-background;
         }
       }
     }
@@ -498,16 +290,6 @@ $light-theme-deprecated: (
   $marked-stroke-color: transparent,
   $marked-fill-color: $disabled-color
 ) {
-  @if (
-    $unmarked-stroke-color and not
-      custom-properties.is-custom-prop($unmarked-stroke-color)
-  ) {
-    $unmarked-stroke-color: custom-properties.create(
-      checkbox-custom-properties.$disabled-color,
-      theme-color.prop-value($unmarked-stroke-color)
-    );
-  }
-
   @if $unmarked-stroke-color == null {
     $unmarked-fill-color: null;
   }
@@ -516,20 +298,7 @@ $light-theme-deprecated: (
     @include container-colors_($unmarked-stroke-color, $unmarked-fill-color);
   }
 
-  @if (
-    $marked-fill-color and not
-      custom-properties.is-custom-prop($marked-fill-color)
-  ) {
-    $marked-fill-color: custom-properties.create(
-      checkbox-custom-properties.$disabled-color,
-      theme-color.prop-value($marked-fill-color)
-    );
-  }
-
-  @if $marked-fill-color and
-    custom-properties.get-fallback($marked-fill-color) ==
-    GrayText
-  {
+  @if $marked-fill-color and var.fallback($marked-fill-color) == GrayText {
     // Transparent appears white in HCM
     $marked-stroke-color: GrayText;
   }
@@ -548,13 +317,6 @@ $light-theme-deprecated: (
 /// @param {Color} $color - The desired ink color in enabled state
 ///
 @mixin ink-color($color) {
-  @if ($color and not custom-properties.is-custom-prop($color)) {
-    $color: custom-properties.create(
-      checkbox-custom-properties.$ink-color,
-      $color
-    );
-  }
-
   @include if-enabled_ {
     @include ink-color_($color);
   }
@@ -565,13 +327,6 @@ $light-theme-deprecated: (
 /// @param {Color} $color - The desired ink color in disabled state
 ///
 @mixin disabled-ink-color($color) {
-  @if ($color and not custom-properties.is-custom-prop($color)) {
-    $color: custom-properties.create(
-      checkbox-custom-properties.$ink-color,
-      $color
-    );
-  }
-
   @include if-disabled_ {
     @include ink-color_($color);
   }
@@ -693,30 +448,30 @@ $light-theme-deprecated: (
 ///
 /// Sets the stroke & fill colors for the checkbox.
 /// This mixin should be wrapped in a mixin that qualifies state such as
-/// `mdc-checkbox-if-unmarked-enabled_`.
+/// `md3-checkbox-if-unmarked-enabled_`.
 /// @access private
 ///
 @mixin container-colors_($stroke-color, $fill-color) {
   .md3-checkbox__background {
-    @include theme.property(border-color, $stroke-color);
-    @include theme.property(background-color, $fill-color);
+    border-color: $stroke-color;
+    background-color: $fill-color;
   }
 }
 
 ///
 /// Sets the ink color of the checked and indeterminate icons for a checkbox.
 /// This mixin should be wrapped in a mixin that qualifies state such as
-/// `mdc-checkbox-if-unmarked_`.
+/// `md3-checkbox-if-unmarked_`.
 /// @access private
 ///
 @mixin ink-color_($color) {
   .md3-checkbox__background {
     .md3-checkbox__checkmark {
-      @include theme.property(color, $color);
+      color: $color;
     }
 
     .md3-checkbox__mixedmark {
-      @include theme.property(border-color, $color);
+      border-color: $color;
     }
   }
 }
@@ -725,31 +480,30 @@ $light-theme-deprecated: (
   $from-stroke-color,
   $to-stroke-color,
   $from-fill-color,
-  $to-fill-color,
-  $uid
+  $to-fill-color
 ) {
-  @keyframes mdc-checkbox-fade-in-background-#{$uid} {
+  @keyframes md3-checkbox-fade-in-background {
     0% {
-      @include theme.property(border-color, $from-stroke-color);
-      @include theme.property(background-color, $from-fill-color);
+      border-color: $from-stroke-color;
+      background-color: $from-stroke-color;
     }
 
     50% {
-      @include theme.property(border-color, $to-stroke-color);
-      @include theme.property(background-color, $to-fill-color);
+      border-color: $to-stroke-color;
+      background-color: $to-fill-color;
     }
   }
 
-  @keyframes mdc-checkbox-fade-out-background-#{$uid} {
+  @keyframes md3-checkbox-fade-out-background {
     0%,
     80% {
-      @include theme.property(border-color, $to-stroke-color);
-      @include theme.property(background-color, $to-fill-color);
+      border-color: $to-stroke-color;
+      background-color: $to-stroke-color;
     }
 
     100% {
-      @include theme.property(border-color, $from-stroke-color);
-      @include theme.property(background-color, $from-fill-color);
+      border-color: $from-stroke-color;
+      background-color: $from-fill-color;
     }
   }
 }
