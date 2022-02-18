@@ -24,7 +24,6 @@
 @use 'sass:math';
 @use '@material/density/functions' as density-functions;
 @use '@material/density/variables' as density-variables;
-@use '@material/feature-targeting/feature-targeting';
 @use '@material/ripple/ripple';
 @use '@material/ripple/ripple-theme';
 @use '@material/theme/color-custom-properties';
@@ -206,7 +205,7 @@ $light-theme-deprecated: (
 /// Sets theme to checkbox based on provided theme configuration.
 /// Only emits theme related styles.
 /// @param {Map} $theme - Theme configuration to use for theming checkbox.
-@mixin theme-deprecated($theme, $query: feature-targeting.all()) {
+@mixin theme-deprecated($theme) {
   @include theme.validate-theme($light-theme-deprecated, $theme);
 
   $ripple-color: map.get($theme, ripple-color);
@@ -215,11 +214,7 @@ $light-theme-deprecated: (
     $ripple-opacity: ();
   }
   @if $ripple-color {
-    @include ripple-color(
-      $color: $ripple-color,
-      $opacity-map: $ripple-opacity,
-      $query: $query
-    );
+    @include ripple-color($color: $ripple-color, $opacity-map: $ripple-opacity);
   }
 
   $ripple-checked-color: map.get($theme, ripple-checked-color);
@@ -230,14 +225,13 @@ $light-theme-deprecated: (
   @if $ripple-checked-color {
     @include focus-indicator-color(
       $color: $ripple-checked-color,
-      $opacity-map: $ripple-checked-opacity,
-      $query: $query
+      $opacity-map: $ripple-checked-opacity
     );
   }
 
   $density-scale: map.get($theme, density-scale);
   @if $density-scale != null {
-    @include density($density-scale: $density-scale, $query: $query);
+    @include density($density-scale: $density-scale);
   }
 
   $outline-color: map.get($theme, outline-color);
@@ -252,8 +246,7 @@ $light-theme-deprecated: (
     @include container-colors(
       $unmarked-stroke-color: $outline-color,
       $marked-stroke-color: $container-checked-color,
-      $marked-fill-color: $container-checked-color,
-      $query: $query
+      $marked-fill-color: $container-checked-color
     );
   }
 
@@ -273,8 +266,7 @@ $light-theme-deprecated: (
       @include container-colors(
         $unmarked-stroke-color: $outline-hover-color,
         $marked-stroke-color: $container-checked-hover-color,
-        $marked-fill-color: $container-checked-hover-color,
-        $query: $query
+        $marked-fill-color: $container-checked-hover-color
       );
     }
   }
@@ -283,15 +275,14 @@ $light-theme-deprecated: (
   @if $container-disabled-color {
     @include disabled-container-colors(
       $unmarked-stroke-color: $container-disabled-color,
-      $marked-fill-color: $container-disabled-color,
-      $query: $query
+      $marked-fill-color: $container-disabled-color
     );
   }
 
   $checkmark-color: map.get($theme, checkmark-color);
   @if $checkmark-color {
-    @include ink-color($checkmark-color, $query: $query);
-    @include disabled-ink-color($checkmark-color, $query: $query);
+    @include ink-color($checkmark-color);
+    @include disabled-ink-color($checkmark-color);
   }
 }
 
@@ -314,19 +305,17 @@ $light-theme-deprecated: (
 /// @param {Number | String} $density-scale - Density scale value for component. Supported density scale values
 ///     `-3`, `-2`, `-1`, `0`.
 ///
-@mixin density($density-scale, $query: feature-targeting.all()) {
+@mixin density($density-scale) {
   $size: get-ripple-size($density-scale);
 
-  @include ripple-size($size, $query: $query);
-  @include touch-target($size, $ripple-size: $size, $query: $query);
+  @include ripple-size($size);
+  @include touch-target($size, $ripple-size: $size);
 }
 
 /// Sets ripple size of checkbox and optionally set touch target size which can
 /// be more than the size of ripple.
 /// @param {Number} $ripple-size - Visual ripple size of checkbox.
-@mixin ripple-size($ripple-size, $query: feature-targeting.all()) {
-  $feat-structure: feature-targeting.create-target($query, structure);
-
+@mixin ripple-size($ripple-size) {
   @if $ripple-size and not custom-properties.is-custom-prop($ripple-size) {
     $ripple-size: custom-properties.create(
       checkbox-custom-properties.$ripple-size,
@@ -339,15 +328,11 @@ $light-theme-deprecated: (
     _icon-size: $icon-size,
   );
 
-  @include feature-targeting.targets($feat-structure) {
-    @include theme.property(padding, $checkbox-padding, $replace: $replace);
-  }
+  @include theme.property(padding, $checkbox-padding, $replace: $replace);
 
   .md3-checkbox__background {
-    @include feature-targeting.targets($feat-structure) {
-      @include theme.property(top, $checkbox-padding, $replace: $replace);
-      @include theme.property(left, $checkbox-padding, $replace: $replace);
-    }
+    @include theme.property(top, $checkbox-padding, $replace: $replace);
+    @include theme.property(left, $checkbox-padding, $replace: $replace);
   }
 }
 
@@ -355,13 +340,7 @@ $light-theme-deprecated: (
 /// touch target.
 /// @param {Number} $touch-target-size Size of touch target (Native input) in `px`.
 /// @param {Number} $ripple-size Size of ripple in `px`.
-@mixin touch-target(
-  $touch-target-size,
-  $ripple-size,
-  $query: feature-targeting.all()
-) {
-  $feat-structure: feature-targeting.create-target($query, structure);
-
+@mixin touch-target($touch-target-size, $ripple-size) {
   @if $touch-target-size {
     @if not custom-properties.is-custom-prop($touch-target-size) {
       $touch-target-size: custom-properties.create(
@@ -376,20 +355,16 @@ $light-theme-deprecated: (
       _ripple-size: $ripple-size,
     );
 
-    @include feature-targeting.targets($feat-structure) {
-      @include theme.property(margin, $margin, $replace: $replace);
-    }
+    @include theme.property(margin, $margin, $replace: $replace);
 
     $offset: 'calc((_ripple-size - _touch-target-size) / 2)';
 
-    @include feature-targeting.targets($feat-structure) {
-      .md3-checkbox__native-control {
-        @include theme.property(top, $offset, $replace: $replace);
-        @include theme.property(right, $offset, $replace: $replace);
-        @include theme.property(left, $offset, $replace: $replace);
-        @include theme.property(width, $touch-target-size);
-        @include theme.property(height, $touch-target-size);
-      }
+    .md3-checkbox__native-control {
+      @include theme.property(top, $offset, $replace: $replace);
+      @include theme.property(right, $offset, $replace: $replace);
+      @include theme.property(left, $offset, $replace: $replace);
+      @include theme.property(width, $touch-target-size);
+      @include theme.property(height, $touch-target-size);
     }
   }
 }
@@ -420,12 +395,8 @@ $light-theme-deprecated: (
   $unmarked-fill-color: transparent,
   $marked-stroke-color: $baseline-theme-color,
   $marked-fill-color: $baseline-theme-color,
-  $generate-keyframes: true,
-  $query: feature-targeting.all()
+  $generate-keyframes: true
 ) {
-  $feat-animation: feature-targeting.create-target($query, animation);
-  $feat-color: feature-targeting.create-target($query, color);
-
   // Unchecked colors
   @if (
     $unmarked-stroke-color and not
@@ -438,11 +409,7 @@ $light-theme-deprecated: (
   }
 
   @include if-unmarked-enabled_ {
-    @include container-colors_(
-      $unmarked-stroke-color,
-      $unmarked-fill-color,
-      $query: $query
-    );
+    @include container-colors_($unmarked-stroke-color, $unmarked-fill-color);
   }
 
   // Checked colors
@@ -472,11 +439,7 @@ $light-theme-deprecated: (
   }
 
   @include if-marked-enabled_ {
-    @include container-colors_(
-      $marked-stroke-color,
-      $marked-fill-color,
-      $query: $query
-    );
+    @include container-colors_($marked-stroke-color, $marked-fill-color);
   }
 
   @if $generate-keyframes and
@@ -492,15 +455,13 @@ $light-theme-deprecated: (
 
     $anim-selector: if(&, '&.md3-checkbox--anim', '.md3-checkbox--anim');
 
-    @include feature-targeting.targets($feat-animation, $feat-color) {
-      @include container-keyframes_(
-        $from-stroke-color: $unmarked-stroke-color,
-        $to-stroke-color: $marked-stroke-color,
-        $from-fill-color: $unmarked-fill-color,
-        $to-fill-color: $marked-fill-color,
-        $uid: #{$uid}
-      );
-    }
+    @include container-keyframes_(
+      $from-stroke-color: $unmarked-stroke-color,
+      $to-stroke-color: $marked-stroke-color,
+      $from-fill-color: $unmarked-fill-color,
+      $to-fill-color: $marked-fill-color,
+      $uid: #{$uid}
+    );
 
     // stylelint-disable max-nesting-depth
 
@@ -508,18 +469,14 @@ $light-theme-deprecated: (
       &-unchecked-checked,
       &-unchecked-indeterminate {
         .md3-checkbox__native-control:enabled ~ .md3-checkbox__background {
-          @include feature-targeting.targets($feat-animation) {
-            animation-name: mdc-checkbox-fade-in-background-#{$uid};
-          }
+          animation-name: mdc-checkbox-fade-in-background-#{$uid};
         }
       }
 
       &-checked-unchecked,
       &-indeterminate-unchecked {
         .md3-checkbox__native-control:enabled ~ .md3-checkbox__background {
-          @include feature-targeting.targets($feat-animation) {
-            animation-name: mdc-checkbox-fade-out-background-#{$uid};
-          }
+          animation-name: mdc-checkbox-fade-out-background-#{$uid};
         }
       }
     }
@@ -539,8 +496,7 @@ $light-theme-deprecated: (
   $unmarked-stroke-color: $disabled-color,
   $unmarked-fill-color: transparent,
   $marked-stroke-color: transparent,
-  $marked-fill-color: $disabled-color,
-  $query: feature-targeting.all()
+  $marked-fill-color: $disabled-color
 ) {
   @if (
     $unmarked-stroke-color and not
@@ -557,11 +513,7 @@ $light-theme-deprecated: (
   }
 
   @include if-unmarked-disabled_ {
-    @include container-colors_(
-      $unmarked-stroke-color,
-      $unmarked-fill-color,
-      $query: $query
-    );
+    @include container-colors_($unmarked-stroke-color, $unmarked-fill-color);
   }
 
   @if (
@@ -587,11 +539,7 @@ $light-theme-deprecated: (
   }
 
   @include if-marked-disabled_ {
-    @include container-colors_(
-      $marked-stroke-color,
-      $marked-fill-color,
-      $query: $query
-    );
+    @include container-colors_($marked-stroke-color, $marked-fill-color);
   }
 }
 
@@ -599,7 +547,7 @@ $light-theme-deprecated: (
 /// Sets the ink color of the checked and indeterminate icons for an enabled checkbox
 /// @param {Color} $color - The desired ink color in enabled state
 ///
-@mixin ink-color($color, $query: feature-targeting.all()) {
+@mixin ink-color($color) {
   @if ($color and not custom-properties.is-custom-prop($color)) {
     $color: custom-properties.create(
       checkbox-custom-properties.$ink-color,
@@ -608,7 +556,7 @@ $light-theme-deprecated: (
   }
 
   @include if-enabled_ {
-    @include ink-color_($color, $query: $query);
+    @include ink-color_($color);
   }
 }
 
@@ -616,7 +564,7 @@ $light-theme-deprecated: (
 /// Sets the ink color of the checked and indeterminate icons for a disabled checkbox
 /// @param {Color} $color - The desired ink color in disabled state
 ///
-@mixin disabled-ink-color($color, $query: feature-targeting.all()) {
+@mixin disabled-ink-color($color) {
   @if ($color and not custom-properties.is-custom-prop($color)) {
     $color: custom-properties.create(
       checkbox-custom-properties.$ink-color,
@@ -625,37 +573,25 @@ $light-theme-deprecated: (
   }
 
   @include if-disabled_ {
-    @include ink-color_($color, $query: $query);
+    @include ink-color_($color);
   }
 }
 
 /// Sets ripple color when checkbox is not in checked state.
-@mixin ripple-color(
-  $color,
-  $opacity-map: null,
-  $query: feature-targeting.all()
-) {
+@mixin ripple-color($color, $opacity-map: null) {
   @include ripple-theme.states(
     $color: $color,
     $opacity-map: $opacity-map,
-    $query: $query,
     $ripple-target: $ripple-target
   );
 }
 
 /// Sets focus indicator color when checkbox is in checked state.
-@mixin focus-indicator-color(
-  $color,
-  $opacity-map: null,
-  $query: feature-targeting.all()
-) {
-  $feat-color: feature-targeting.create-target($query, color);
-
+@mixin focus-indicator-color($color, $opacity-map: null) {
   &.md3-checkbox--selected {
     @include ripple-theme.states(
       $color: $color,
       $opacity-map: $opacity-map,
-      $query: $query,
       $ripple-target: $ripple-target
     );
   }
@@ -663,7 +599,6 @@ $light-theme-deprecated: (
   &.md3-ripple-upgraded--background-focused.md3-checkbox--selected {
     @include ripple-theme.states-base-color(
       $color: $color,
-      $query: $query,
       $ripple-target: $ripple-target
     );
   }
@@ -761,18 +696,10 @@ $light-theme-deprecated: (
 /// `mdc-checkbox-if-unmarked-enabled_`.
 /// @access private
 ///
-@mixin container-colors_(
-  $stroke-color,
-  $fill-color,
-  $query: feature-targeting.all()
-) {
-  $feat-color: feature-targeting.create-target($query, color);
-
+@mixin container-colors_($stroke-color, $fill-color) {
   .md3-checkbox__background {
-    @include feature-targeting.targets($feat-color) {
-      @include theme.property(border-color, $stroke-color);
-      @include theme.property(background-color, $fill-color);
-    }
+    @include theme.property(border-color, $stroke-color);
+    @include theme.property(background-color, $fill-color);
   }
 }
 
@@ -782,20 +709,14 @@ $light-theme-deprecated: (
 /// `mdc-checkbox-if-unmarked_`.
 /// @access private
 ///
-@mixin ink-color_($color, $query: feature-targeting.all()) {
-  $feat-color: feature-targeting.create-target($query, color);
-
+@mixin ink-color_($color) {
   .md3-checkbox__background {
     .md3-checkbox__checkmark {
-      @include feature-targeting.targets($feat-color) {
-        @include theme.property(color, $color);
-      }
+      @include theme.property(color, $color);
     }
 
     .md3-checkbox__mixedmark {
-      @include feature-targeting.targets($feat-color) {
-        @include theme.property(border-color, $color);
-      }
+      @include theme.property(border-color, $color);
     }
   }
 }
