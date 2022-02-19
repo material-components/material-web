@@ -132,6 +132,7 @@ mwc-button {
 | `disabled` | `boolean` | `false` | Disabled buttons cannot be interacted with and have no visual interaction effect.
 | `trailingIcon` | `boolean` | `false` | When `true`, `icon` will be displayed _after_ `label`.
 | `expandContent` | `boolean` | `false` | When `true`, the space after the label and before any trailing icon, where default slotted content is rendered, is expanded to fit the available space inside the button.
+| `fullwidth` | `boolean` | `false` | When `true`, the button is expanded to fit the entire available space.
 
 ### Methods
 *None*
