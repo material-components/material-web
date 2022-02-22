@@ -16,7 +16,7 @@ $_animation-duration: 150ms;
       @include container;
     }
 
-    @include state.hover(field-theme.$selectors) {
+    &:hover {
       .md3-field__state-layer {
         @include container-state-layer-hover;
       }

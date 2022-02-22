@@ -4,10 +4,6 @@
 //
 
 @use 'sass:map';
-@use '@material/theme/state';
-@use './field-theme';
-
-$_selectors: field-theme.$selectors;
 
 @mixin theme-styles($theme) {
   @include _content-color(
@@ -33,25 +29,23 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _content-color($colors) {
-  @include state.enabled($_selectors) {
-    @include _set-content-color(state.get-default-state($colors));
+  @include _set-content-color(map.get($colors, default));
+
+  &:hover {
+    @include _set-content-color(map.get($colors, hover));
   }
 
-  @include state.hover($_selectors) {
-    @include _set-content-color(state.get-hover-state($colors));
+  &.md3-field--focus {
+    @include _set-content-color(map.get($colors, focus));
   }
 
-  @include state.focus($_selectors) {
-    @include _set-content-color(state.get-focus-state($colors));
-  }
-
-  @include state.disabled($_selectors) {
-    @include _set-content-color(state.get-disabled-state($colors));
+  &.md3-field--disabled {
+    @include _set-content-color(map.get($colors, disabled));
   }
 }
 
 @mixin _content-error-color($colors) {
-  @include state.error($_selectors) {
+  &.md3-field--error {
     @include _content-color($colors);
   }
 }
@@ -65,12 +59,10 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _content-opacity($opacities) {
-  @include state.enabled($_selectors) {
-    @include _set-content-opacity(state.get-default-state($opacities));
-  }
+  @include _set-content-opacity(map.get($opacities, default));
 
-  @include state.disabled($_selectors) {
-    @include _set-content-opacity(state.get-disabled-state($opacities));
+  &.md3-field--disabled {
+    @include _set-content-opacity(map.get($opacities, disabled));
   }
 }
 

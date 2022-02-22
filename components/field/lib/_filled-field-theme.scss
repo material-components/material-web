@@ -7,7 +7,6 @@
 @use 'sass:map';
 @use 'sass:meta';
 @use 'sass:string';
-@use '@material/theme/state';
 @use '../../sass/resolvers';
 @use '../../sass/shape';
 @use '../../sass/theme';
@@ -112,8 +111,6 @@ $dark-theme: values(
   @include theme.emit-theme-vars($theme);
 }
 
-$_selectors: field-theme.$selectors;
-
 @mixin theme-styles($theme, $resolvers: resolvers.$material) {
   $theme: theme.validate-theme-styles($light-theme, $theme);
   $theme: _resolve-theme($theme, $resolvers);
@@ -202,21 +199,17 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _active-indicator-color($colors) {
-  @include state.independent-elements(focus) {
-    @include state.enabled($_selectors) {
-      @include _set-active-indicator-color(state.get-default-state($colors));
-    }
+  @include _set-active-indicator-color(map.get($colors, default));
 
-    // Focus is on a separate element and does not need a focus selector
-    @include _set-active-indicator-focus-color(state.get-focus-state($colors));
+  &:hover {
+    @include _set-active-indicator-color(map.get($colors, hover));
+  }
 
-    @include state.hover($_selectors) {
-      @include _set-active-indicator-color(state.get-hover-state($colors));
-    }
+  // Focus is on a separate element and does not need a focus selector
+  @include _set-active-indicator-focus-color(map.get($colors, focus));
 
-    @include state.disabled($_selectors) {
-      @include _set-active-indicator-color(state.get-disabled-state($colors));
-    }
+  &.md3-field--disabled {
+    @include _set-active-indicator-color(map.get($colors, disabled));
   }
 }
 
@@ -233,20 +226,16 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _active-indicator-error-color($colors) {
-  @include state.error($_selectors) {
+  &.md3-field--error {
     @include _active-indicator-color($colors);
   }
 }
 
 @mixin _active-indicator-opacity($opacities) {
-  @include state.enabled($_selectors) {
-    @include _set-active-indicator-opacity(state.get-default-state($opacities));
-  }
+  @include _set-active-indicator-opacity(map.get($opacities, default));
 
-  @include state.disabled($_selectors) {
-    @include _set-active-indicator-opacity(
-      state.get-disabled-state($opacities)
-    );
+  &.md3-field--disabled {
+    @include _set-active-indicator-opacity(map.get($opacities, disabled));
   }
 }
 
@@ -257,28 +246,22 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _active-indicator-height($heights) {
-  @include state.enabled($_selectors) {
-    @include _set-non-focus-active-indicator-height(
-      state.get-default-state($heights)
-    );
+  @include _set-non-focus-active-indicator-height(map.get($heights, default));
+
+  &:hover {
+    @include _set-non-focus-active-indicator-height(map.get($heights, hover));
   }
 
-  @include state.disabled($_selectors) {
+  &.md3-field--disabled {
     @include _set-non-focus-active-indicator-height(
-      state.get-disabled-state($heights)
-    );
-  }
-
-  @include state.hover($_selectors) {
-    @include _set-non-focus-active-indicator-height(
-      state.get-hover-state($heights)
+      map.get($heights, disabled)
     );
   }
 
   .md3-field__active-indicator {
     &::after {
       // Focus is on a different element and does not need state selectors
-      border-bottom-width: state.get-focus-state($heights);
+      border-bottom-width: map.get($heights, focus);
     }
   }
 }
@@ -292,12 +275,10 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _container-color($colors) {
-  @include state.enabled($_selectors) {
-    @include _set-container-color(state.get-default-state($colors));
-  }
+  @include _set-container-color(map.get($colors, default));
 
-  @include state.disabled($_selectors) {
-    @include _set-container-color(state.get-disabled-state($colors));
+  &.md3-field--disabled {
+    @include _set-container-color(map.get($colors, disabled));
   }
 }
 
@@ -310,12 +291,10 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _container-opacity($opacities) {
-  @include state.enabled($_selectors) {
-    @include _set-container-opacity(state.get-default-state($opacities));
-  }
+  @include _set-container-opacity(map.get($opacities, default));
 
-  @include state.disabled($_selectors) {
-    @include _set-container-opacity(state.get-disabled-state($opacities));
+  &.md3-field--disabled {
+    @include _set-container-opacity(map.get($opacities, disabled));
   }
 }
 
@@ -362,8 +341,8 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _state-layer-color($colors) {
-  @include state.hover($_selectors) {
-    @include _set-state-layer-color(state.get-hover-state($colors));
+  &:hover {
+    @include _set-state-layer-color(map.get($colors, hover));
   }
 }
 
@@ -374,14 +353,14 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _state-layer-error-color($colors) {
-  @include state.error($_selectors) {
+  &.md3-field--error {
     @include _state-layer-color($colors);
   }
 }
 
 @mixin _state-layer-opacity($opacities) {
-  @include state.hover($_selectors) {
-    @include _set-state-layer-opactiy(state.get-hover-state($opacities));
+  &:hover {
+    @include _set-state-layer-opactiy(map.get($opacities, hover));
   }
 }
 
@@ -392,7 +371,7 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _state-layer-error-opacity($opacities) {
-  @include state.error($_selectors) {
+  &.md3-field--error {
     @include _state-layer-opacity($opacities);
   }
 }
