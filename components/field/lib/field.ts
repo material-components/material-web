@@ -2,6 +2,8 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ *
+ * @requirecss {field.lib.shared_styles}
  */
 
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
