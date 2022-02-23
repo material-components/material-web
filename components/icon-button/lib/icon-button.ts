@@ -85,13 +85,17 @@ export class IconButton extends ActionElement {
         @clickmod="${this.handleClick}"
         @contextmenu="${this.handleContextMenu}"
     >${this.renderRipple()}
-    ${this.renderIcon()}${this.renderTouchTarget()}<span><slot></slot></span>
+    ${this.renderIcon(this.icon)}${
+        this.renderTouchTarget()}<span><slot></slot></span>
   </button>`;
   }
 
   /** @soyTemplate */
-  protected renderIcon(): TemplateResult|string {
-    return this.icon ? html`<i class="material-icons">${this.icon}</i>` : '';
+  protected renderIcon(icon: string): TemplateResult|string {
+    // TODO(b/221096356): This method should be abstract.
+    // This should be overridden by subclass to provide the appropriate
+    // font icon (M3 or GM).
+    return '';
   }
 
   /** @soyTemplate */

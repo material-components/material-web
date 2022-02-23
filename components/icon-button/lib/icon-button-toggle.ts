@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAsync, state} from 'lit/decorators';
+import {html, TemplateResult} from 'lit';
+import {property, query, queryAsync, state} from 'lit/decorators';
 import {classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 
@@ -117,16 +117,20 @@ export class IconButtonToggle extends ActionElement {
           @contextmenu="${this.handleContextMenu}"
         >${this.renderRipple()}${this.renderTouchTarget()}
         <span class="md3-icon-button__icon">
-          <slot name="offIcon">
-            <i class="material-icons">${this.offIcon}</i>
-          </slot>
+          <slot name="offIcon">${this.renderIcon(this.offIcon)}</slot>
         </span>
         <span class="md3-icon-button__icon md3-icon-button__icon--on">
-          <slot name="onIcon">
-            <i class="material-icons">${this.onIcon}</i>
-          </slot>
+          <slot name="onIcon">${this.renderIcon(this.onIcon)}</slot>
         </span>
       </button>`;
+  }
+
+  /** @soyTemplate */
+  protected renderIcon(icon: string): TemplateResult|string {
+    // TODO(b/221096356): This method should be abstract.
+    // This should be overridden by subclass to provide the appropriate
+    // font icon (M3 or GM).
+    return '';
   }
 
   /** @soyTemplate */
