@@ -2,6 +2,8 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ *
+ * @requirecss {text_field.lib.shared_styles}
  */
 
 import {html, LitElement, TemplateResult} from 'lit';
@@ -77,7 +79,9 @@ export abstract class TextField extends LitElement {
   }
 
   /** @soyTemplate */
-  protected abstract renderField(): TemplateResult;
+  protected renderField(): TemplateResult {
+    return html``;
+  }
 
   /** @soyTemplate */
   protected renderFieldContent(): TemplateResult {
