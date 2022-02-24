@@ -8,7 +8,7 @@ import {html, TemplateResult} from 'lit';
 import {property, query, queryAsync, state} from 'lit/decorators';
 import {ifDefined} from 'lit/directives/if-defined';
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action_element/action-element';
+import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action-element/action-element';
 import {ariaProperty} from '../../decorators/aria-property';
 import {Ripple} from '../../ripple/mwc-ripple';
 import {RippleHandlers} from '../../ripple/ripple-handlers';
