@@ -17,12 +17,12 @@ export class TabScroller extends BaseElement {
 
   protected mdcFoundationClass = MDCTabScrollerFoundation;
 
-  @query('.mdc-tab-scroller') protected mdcRoot!: HTMLElement;
+  @query('.md3-tab-scroller') protected mdcRoot!: HTMLElement;
 
-  @query('.mdc-tab-scroller__scroll-area')
+  @query('.md3-tab-scroller__scroll-area')
   protected scrollAreaElement!: HTMLElement;
 
-  @query('.mdc-tab-scroller__scroll-content')
+  @query('.md3-tab-scroller__scroll-content')
   protected scrollContentElement!: HTMLElement;
 
   @eventOptions({passive: true})
@@ -38,15 +38,15 @@ export class TabScroller extends BaseElement {
 
   protected override render() {
     return html`
-      <div class="mdc-tab-scroller">
-        <div class="mdc-tab-scroller__scroll-area"
+      <div class="md3-tab-scroller">
+        <div class="md3-tab-scroller__scroll-area"
             @wheel="${this._handleInteraction}"
             @touchstart="${this._handleInteraction}"
             @pointerdown="${this._handleInteraction}"
             @mousedown="${this._handleInteraction}"
             @keydown="${this._handleInteraction}"
             @transitionend="${this._handleTransitionEnd}">
-          <div class="mdc-tab-scroller__scroll-content"><slot></slot></div>
+          <div class="md3-tab-scroller__scroll-content"><slot></slot></div>
         </div>
       </div>
       `;

@@ -15,7 +15,7 @@ export class PrimaryTabBar extends TabBar {
   protected override getRootClasses(): ClassInfo {
     return {
       ...super.getRootClasses(),
-      'mdc-tab-bar--primary': true,
+      'md3-tab-bar--primary': true,
     };
   }
   // TODO(sorvell): probably want to memoize this and use a `slotChange` event

@@ -4,12 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
-
 @use './secondary-tab-bar-theme' as tabbar-theme;
 
-.mdc-tab-bar--secondary {
+.md3-tab-bar--secondary {
   @include tabbar-theme.secondary-navigation-tab-theme-styles(
     tabbar-theme.$secondary-light-theme
   );

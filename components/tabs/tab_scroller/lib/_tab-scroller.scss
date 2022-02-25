@@ -4,9 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
-
 @use '@material/animation/variables' as animation-variables;
 @use '../../tab/lib/tab' as tab-mixins;
 
@@ -22,7 +19,7 @@ $transition-duration: 250ms;
   $duration-ms,
   $timing-function: animation-variables.$standard-curve-timing-function
 ) {
-  &.mdc-tab-scroller--animating .mdc-tab-scroller__scroll-content {
+  &.md3-tab-scroller--animating .md3-tab-scroller__scroll-content {
     transition: $duration-ms transform $timing-function;
   }
 }
@@ -32,14 +29,14 @@ $transition-duration: 250ms;
 }
 
 @mixin core-styles() {
-  .mdc-tab-scroller {
+  .md3-tab-scroller {
     @include transition($duration-ms: $transition-duration);
     overflow-y: hidden;
   }
 
   // Selector for test element used to feature-detect horizontal scrollbar
   // height.
-  .mdc-tab-scroller__test {
+  .md3-tab-scroller__test {
     position: absolute;
     top: -9999px;
     width: 100px;
@@ -47,14 +44,14 @@ $transition-duration: 250ms;
     overflow-x: scroll;
   }
 
-  .mdc-tab-scroller__scroll-area {
+  .md3-tab-scroller__scroll-area {
     -webkit-overflow-scrolling: touch;
     display: flex;
     overflow-x: hidden;
   }
 
-  .mdc-tab-scroller__scroll-area,
-  .mdc-tab-scroller__test {
+  .md3-tab-scroller__scroll-area,
+  .md3-tab-scroller__test {
     &::-webkit-scrollbar {
       display: none;
     }
@@ -62,28 +59,28 @@ $transition-duration: 250ms;
 
   // This modifier class will be added in JS after computing the OS scrollbar
   // size in order to hide the scrollbar.
-  .mdc-tab-scroller__scroll-area--scroll {
+  .md3-tab-scroller__scroll-area--scroll {
     overflow-x: scroll;
   }
 
-  .mdc-tab-scroller__scroll-content {
+  .md3-tab-scroller__scroll-content {
     @include scroll-content_();
   }
 
-  .mdc-tab-scroller--align-start .mdc-tab-scroller__scroll-content {
+  .md3-tab-scroller--align-start .md3-tab-scroller__scroll-content {
     justify-content: flex-start;
   }
 
-  .mdc-tab-scroller--align-end .mdc-tab-scroller__scroll-content {
+  .md3-tab-scroller--align-end .md3-tab-scroller__scroll-content {
     justify-content: flex-end;
   }
 
-  .mdc-tab-scroller--align-center .mdc-tab-scroller__scroll-content {
+  .md3-tab-scroller--align-center .md3-tab-scroller__scroll-content {
     justify-content: center;
   }
 
-  .mdc-tab-scroller--animating {
-    .mdc-tab-scroller__scroll-area {
+  .md3-tab-scroller--animating {
+    .md3-tab-scroller__scroll-area {
       -webkit-overflow-scrolling: auto;
     }
   }

@@ -24,9 +24,9 @@ export abstract class TabBar extends BaseElement {
 
   protected readonly mdcFoundationClass = MDCTabBarFoundation;
 
-  @query('.mdc-tab-bar') protected mdcRoot!: HTMLElement;
+  @query('.md3-tab-bar') protected mdcRoot!: HTMLElement;
 
-  @query('mwc-tab-scroller') protected scrollerElement!: MdTabScroller;
+  @query('md-tab-scroller') protected scrollerElement!: MdTabScroller;
 
   // tabsSlot should have type HTMLSlotElement, but when TypeScript's
   // emitDecoratorMetadata is enabled, the HTMLSlotElement constructor will
@@ -63,14 +63,14 @@ export abstract class TabBar extends BaseElement {
            role="tablist"
            @MD3Tab:interacted="${this._handleTabInteraction}"
            @keydown="${this._handleKeydown}">
-        <mwc-tab-scroller><slot></slot></mwc-tab-scroller>
+        <md-tab-scroller><slot></slot></md-tab-scroller>
       </div>
       `;
   }
 
   protected getRootClasses(): ClassInfo {
     return {
-      'mdc-tab-bar': true,
+      'md3-tab-bar': true,
     };
   }
 

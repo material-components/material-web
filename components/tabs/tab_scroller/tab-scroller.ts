@@ -11,11 +11,11 @@ import {styles} from './lib/tab-scroller-styles.css';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mwc-tab-scroller': TabScroller;
+    'md-tab-scroller': TabScroller;
   }
 }
 
-@customElement('mwc-tab-scroller')
+@customElement('md-tab-scroller')
 export class MdTabScroller extends TabScroller {
   static override styles = [styles];
 }

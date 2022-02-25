@@ -15,7 +15,7 @@ export class SecondaryTabBar extends TabBar {
   protected override getRootClasses(): ClassInfo {
     return {
       ...super.getRootClasses(),
-      'mdc-tab-bar--secondary': true,
+      'md3-tab-bar--secondary': true,
     };
   }
 
