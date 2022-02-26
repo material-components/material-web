@@ -4,6 +4,5 @@
 //
 
 @forward './lib/filled-field-theme' show
-  $dark-theme,
-  $light-theme,
-  theme;
+  theme,
+  values;
