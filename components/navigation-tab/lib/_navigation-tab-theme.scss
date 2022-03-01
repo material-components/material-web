@@ -212,7 +212,8 @@ $light-theme: (
 
   @include focus-ring-theme.theme(
     (
-      container-outer-padding: -4px,
+      container-outer-padding-vertical: -4px,
+      container-outer-padding-horizontal: -4px,
     )
   );
 }
