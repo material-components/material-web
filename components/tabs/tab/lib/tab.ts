@@ -6,15 +6,17 @@
 
 import '../../tab_indicator/tab-indicator';
 import '@material/mwc-ripple/mwc-ripple';
+import '../../../focus/focus-ring';
 
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {html} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
+import {pointerPress, shouldShowStrongFocus} from '../../../focus/strong-focus';
 import {MdTabIndicator} from '../../tab_indicator/tab-indicator';
 
 import {MDCTabAdapter} from './adapter';
@@ -66,6 +68,8 @@ export class Tab extends BaseElement {
   })
   @property({type: Boolean})
   focusOnActivate = true;
+
+  @state() protected showFocusRing = false;
 
   protected _active = false;
 
@@ -137,6 +141,7 @@ export class Tab extends BaseElement {
         </span>
         ${this.isMinWidthIndicator ? '' : this.renderIndicator()}
         ${this.renderRipple()}
+        ${this.renderFocusRing()}
       </button>`;
   }
 
@@ -161,6 +166,15 @@ export class Tab extends BaseElement {
         .internalUseStateLayerCustomProperties="${
             this.useStateLayerCustomProperties}"></mwc-ripple>` :
         '';
+  }
+
+  /** @soyTemplate */
+  protected renderFocusRing(): TemplateResult {
+    return html`
+    <md-focus-ring
+      class="md3-tab__focus-ring"
+      .visible="${this.showFocusRing}">
+    </md-focus-ring>`;
   }
 
   protected createAdapter(): MDCTabAdapter {
@@ -197,7 +211,8 @@ export class Tab extends BaseElement {
   }
 
   activate(clientRect: ClientRect) {
-    // happens only on initialization. We don't want to focus to prevent scroll
+    // happens only on initialization. We don't want to focus to prevent
+    // scroll
     if (!clientRect) {
       this.initFocus = true;
     }
@@ -206,8 +221,8 @@ export class Tab extends BaseElement {
       this.mdcFoundation.activate(clientRect);
       this.setActive(this.mdcFoundation.isActive());
     } else {
-      // happens if this is called by tab-bar on initialization, but tab has not
-      // finished rendering.
+      // happens if this is called by tab-bar on initialization, but tab has
+      // not finished rendering.
       this.updateComplete.then(() => {
         this.mdcFoundation.activate(clientRect);
         this.setActive(this.mdcFoundation.isActive());
@@ -271,6 +286,7 @@ export class Tab extends BaseElement {
 
     window.addEventListener('mouseup', onUp);
     this.rippleHandlers.startPress(event);
+    pointerPress();
   }
 
   @eventOptions({passive: true})
@@ -292,10 +308,12 @@ export class Tab extends BaseElement {
 
   protected handleRippleFocus() {
     this.rippleHandlers.startFocus();
+    this.showFocusRing = shouldShowStrongFocus();
   }
 
   protected handleRippleBlur() {
     this.rippleHandlers.endFocus();
+    this.showFocusRing = false;
   }
 
   get isRippleActive() {

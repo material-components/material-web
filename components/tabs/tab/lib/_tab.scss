@@ -6,6 +6,7 @@
 
 // TODO(b/218510991): Remove IE11 fallbacks
 @use '@material/focusring/focus-ring';
+@use '../../../focus/lib/focus-ring-theme';
 @use '@material/ripple/ripple';
 @use '@material/ripple/ripple-theme';
 @use '@material/theme/theme';
@@ -265,28 +266,37 @@ $ripple-target: '.mdc-tab__ripple';
 
   @include ripple-theme.focus() {
     &.md3-tab--active .md3-tab__focus-ring {
-      @include focus-ring.focus-ring(
-        $inner-ring-radius: 8px,
-        $outer-ring-radius: 10px,
-        $container-outer-padding-vertical: -6px,
-        $container-outer-padding-horizontal: -4px
+      // TODO(b/221897714): focus-ring styles should reference token values for
+      // color.
+      @include focus-ring-theme.theme(
+        (
+          container-outer-padding-horizontal: -6px,
+          container-outer-padding-vertical: -6px,
+          inner-ring-width: 2px,
+          inner-ring-color: #2065bb,
+          inner-ring-radius: 8px,
+          outer-ring-width: 2px,
+          outer-ring-color: #ebf1fc,
+          outer-ring-radius: 10px,
+        )
       );
-
-      margin-top: -2px;
-      // Set z-index to +1 above the .md3-tab
-      z-index: 2;
     }
 
     .md3-tab__focus-ring {
-      @include focus-ring.focus-ring(
-        $inner-ring-radius: 8px,
-        $outer-ring-radius: 10px,
-        $container-outer-padding-vertical: -4px,
-        $container-outer-padding-horizontal: -4px
+      // TODO(b/221897714): focus-ring styles should reference token values for
+      // color.
+      @include focus-ring-theme.theme(
+        (
+          container-outer-padding-horizontal: -4px,
+          container-outer-padding-vertical: -4px,
+          inner-ring-width: 2px,
+          inner-ring-color: #2065bb,
+          inner-ring-radius: 8px,
+          outer-ring-width: 2px,
+          outer-ring-color: #ebf1fc,
+          outer-ring-radius: 10px,
+        )
       );
-
-      // Set z-index to +1 above the .md3-tab
-      z-index: 2;
     }
   }
 }
