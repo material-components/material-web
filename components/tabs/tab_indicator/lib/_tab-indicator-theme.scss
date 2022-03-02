@@ -12,12 +12,7 @@ $custom-property-prefix: 'tab-indicator';
 $light-theme: (
   active-indicator-color: theme-color.$primary,
   active-indicator-height: 3px,
-  active-indicator-shape: (
-    3px,
-    3px,
-    0,
-    0,
-  ),
+  active-indicator-shape: 3px 3px 0 0,
 );
 
 @mixin theme($theme) {
@@ -46,7 +41,7 @@ $light-theme: (
 
 @mixin _underline-height($height) {
   .md3-tab-indicator__content--underline {
-    border-top-width: $height;
+    border-block-start-width: $height;
   }
 }
 

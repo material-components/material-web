@@ -12,7 +12,6 @@
 @use '@material/theme/theme';
 @use '@material/theme/theme-color';
 @use '@material/typography/typography';
-@use '@material/rtl/rtl';
 @use 'third_party/javascript/material_web_components/m3/tabs/tab_indicator/lib/tab-indicator' as tab-indicator-mixins;
 
 $icon-size: 24px;
@@ -29,7 +28,7 @@ $text-label-color-default: rgba(
 $icon-color-default: rgba(theme-color.prop-value(on-surface), $icon-opacity);
 $text-label-color-active: primary;
 $icon-color-active: primary;
-$ripple-target: '.mdc-tab__ripple';
+$ripple-target: '.md3-tab__ripple';
 
 @mixin core-styles() {
   @include without-ripple();
@@ -47,14 +46,14 @@ $ripple-target: '.mdc-tab__ripple';
     box-sizing: border-box;
     // Explicitly setting margin to 0 is to override safari default margin for button elements.
     margin: 0;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding-block-start: 0;
+    padding-block-end: 0;
     border: none;
     outline: none;
     text-align: center;
     white-space: nowrap;
     cursor: pointer;
-    -webkit-appearance: none;
+    appearance: none;
     z-index: 1;
 
     // Firefox still draws a dotted border around focused buttons unless specifically overridden.
@@ -72,7 +71,7 @@ $ripple-target: '.mdc-tab__ripple';
     display: flex;
     align-items: center;
     justify-content: center;
-    height: inherit;
+    block-size: inherit;
     pointer-events: none;
   }
 
@@ -105,11 +104,11 @@ $ripple-target: '.mdc-tab__ripple';
   }
 
   .md3-tab:not(.md3-tab--stacked) .md3-tab__icon + .md3-tab__text-label {
-    @include rtl.reflexive-box(padding, left, 8px);
+    padding-inline-start: 8px;
   }
 
   :host {
-    -webkit-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
     display: flex;
     flex: 1 0 auto;
     justify-content: center;
@@ -130,8 +129,8 @@ $ripple-target: '.mdc-tab__ripple';
   }
 
   .md3-tab__icon {
-    width: $icon-size;
-    height: $icon-size;
+    inline-size: $icon-size;
+    block-size: $icon-size;
     font-size: $icon-size;
   }
 
@@ -163,10 +162,10 @@ $ripple-target: '.mdc-tab__ripple';
 
   #{$ripple-target} {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    inline-size: 100%;
+    block-size: 100%;
     overflow: hidden;
     // TODO(b/151931961): Remove the following line once resolved
     will-change: transform, opacity;
@@ -174,8 +173,8 @@ $ripple-target: '.mdc-tab__ripple';
 }
 
 @mixin horizontal-padding($padding) {
-  padding-right: $padding;
-  padding-left: $padding;
+  padding-block-start: $padding;
+  padding-block-end: $padding;
 }
 
 @mixin text-label-color($color) {
@@ -233,7 +232,7 @@ $ripple-target: '.mdc-tab__ripple';
 /// @param {Number} $height Height value in `px`.
 ///
 @mixin height($height) {
-  height: $height;
+  block-size: $height;
 }
 
 ///
@@ -251,7 +250,7 @@ $ripple-target: '.mdc-tab__ripple';
 /// @param {Number} $min-width Minimum width value in `px`.
 ///
 @mixin min-width($min-width) {
-  min-width: $min-width;
+  min-inline-size: $min-width;
 }
 
 //
@@ -280,6 +279,10 @@ $ripple-target: '.mdc-tab__ripple';
           outer-ring-radius: 10px,
         )
       );
+
+      margin-block-start: -2px;
+      // Set z-index to +1 above the .md3-tab
+      z-index: 2;
     }
 
     .md3-tab__focus-ring {
@@ -313,8 +316,8 @@ $ripple-target: '.mdc-tab__ripple';
   }
 
   .md3-tab__text-label {
-    padding-top: 6px;
-    padding-bottom: 4px;
+    padding-block-start: 6px;
+    padding-block-end: 4px;
   }
 }
 

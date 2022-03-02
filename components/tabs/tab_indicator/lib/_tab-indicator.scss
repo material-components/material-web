@@ -10,11 +10,11 @@
   .md3-tab-indicator {
     display: flex;
     position: absolute;
-    top: 0;
-    left: 0;
+    inset-block-start: 0;
+    inset-inline-start: 0;
     justify-content: center;
-    width: 100%;
-    height: 100%;
+    block-size: 100%;
+    inline-size: 100%;
     pointer-events: none;
     z-index: 1;
   }
@@ -28,12 +28,13 @@
     align-self: flex-end;
     box-sizing: border-box;
     width: 100%;
-    border-top-style: solid;
+    border-block-start-style: solid;
   }
 
   .md3-tab-indicator__content--icon {
     align-self: center;
-    margin: 0 auto;
+    margin-block: 0;
+    margin-inline: auto;
   }
 
   .md3-tab-indicator--active .md3-tab-indicator__content {
@@ -81,7 +82,7 @@
 
 @mixin underline-height($height) {
   .md3-tab-indicator__content--underline {
-    border-top-width: $height;
+    border-block-start-width: $height;
   }
 }
 
@@ -93,8 +94,8 @@
 
 @mixin underline-top-corner-radius($radius) {
   .md3-tab-indicator__content--underline {
-    border-top-left-radius: $radius;
-    border-top-right-radius: $radius;
+    border-start-start-radius: $radius;
+    border-start-end-radius: $radius;
   }
 }
 
@@ -106,7 +107,7 @@
 
 @mixin icon-height($height) {
   .md3-tab-indicator__content--icon {
-    height: $height;
+    inline-size: $height;
     font-size: $height;
   }
 }

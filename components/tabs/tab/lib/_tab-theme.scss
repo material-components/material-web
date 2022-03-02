@@ -188,8 +188,8 @@ $_ripple-target: '.md3-tab__ripple';
 }
 
 @mixin icon-size($size) {
-  width: $size;
-  height: $size;
+  block-size: $size;
+  inline-size: $size;
   font-size: $size;
 }
 
@@ -224,7 +224,7 @@ $_ripple-target: '.md3-tab__ripple';
 }
 
 @mixin _height($height) {
-  height: $height;
+  block-size: $height;
 }
 
 @mixin container-height($height) {

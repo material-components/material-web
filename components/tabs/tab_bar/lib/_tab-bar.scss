@@ -44,7 +44,7 @@ $stacked-density-config: (
     display: flex;
 
     .md3-tab-bar {
-      width: 100%;
+      inline-size: 100%;
       flex: 1;
     }
   }
