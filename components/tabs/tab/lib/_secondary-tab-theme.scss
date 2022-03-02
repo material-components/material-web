@@ -16,7 +16,6 @@
 $custom-property-prefix-secondary: 'secondary-tab';
 $_ripple-target: '.md3-tab__ripple';
 
-// TODO(b/218891998): Update tokens values to support secondary tabs with icons
 $secondary-light-theme: (
   active-label-text-color: theme-color.$on-surface,
   container-color: theme-color.$surface,
@@ -24,6 +23,8 @@ $secondary-light-theme: (
   container-height: 48px,
   container-shadow-color: #000,
   container-shape: 0,
+  divider-color: theme-color.$surface,
+  divider-height: 1px,
   focus-label-text-color: theme-color.$on-surface,
   focus-state-layer-color: theme-color.$on-surface,
   focus-state-layer-opacity: 0.12,
@@ -31,14 +32,21 @@ $secondary-light-theme: (
   hover-state-layer-color: theme-color.$on-surface,
   hover-state-layer-opacity: 0.08,
   inactive-label-text-color: theme-color.$on-surface,
-  label-text-font-family: typography.get-font(subtitle2),
+  label-text-font: typography.get-font(subtitle2),
   label-text-font-size: typography.get-size(subtitle2),
   label-text-letter-spacing: typography.get-tracking(subtitle2),
   label-text-line-height: typography.get-line-height(subtitle2),
   label-text-weight: typography.get-weight(subtitle2),
+  label-text-tracking: typography.get-weight(subtitle2),
   pressed-label-text-color: theme-color.$on-surface,
   pressed-state-layer-color: theme-color.$on-surface,
   pressed-state-layer-opacity: 0.12,
+  with-icon-icon-size: 24px,
+  with-icon-active-icon-color: theme-color.$on-surface,
+  with-icon-inactive-icon-color: theme-color.$on-surface,
+  with-icon-hover-icon-color: theme-color.$on-surface,
+  with-icon-focus-icon-color: theme-color.$on-surface,
+  with-icon-pressed-icon-color: theme-color.$on-surface,
 );
 
 @mixin secondary-navigation-tab-theme($theme) {
@@ -50,6 +58,19 @@ $secondary-light-theme: (
 @mixin secondary-navigation-tab-theme-styles($theme) {
   $theme: theme.validate-theme-styles($secondary-light-theme, $theme);
   $theme: theme.create-theme-vars($theme, $custom-property-prefix-secondary);
+
+  @include tab-theme.icon-size(map.get($theme, with-icon-icon-size));
+  @include tab-theme.active-icon-color(
+    (
+      default: map.get($theme, with-icon-active-icon-color),
+      hover: map.get($theme, with-icon-hover-icon-color),
+      focus: map.get($theme, with-icon-focus-icon-color),
+      pressed: map.get($theme, with-icon-pressed-icon-color),
+    )
+  );
+  @include tab-theme.inactive-icon-color(
+    map.get($theme, with-icon-inactive-icon-color)
+  );
 
   @include tab-theme.container-color(map.get($theme, container-color));
   @include tab-theme.container-elevation(map.get($theme, container-elevation));
@@ -69,9 +90,7 @@ $secondary-light-theme: (
     map.get($theme, inactive-label-text-color)
   );
 
-  @include tab-theme.label-text-font-family(
-    map.get($theme, label-text-font-family)
-  );
+  @include tab-theme.label-text-font-family(map.get($theme, label-text-font));
   @include tab-theme.label-text-font-size(
     map.get($theme, label-text-font-size)
   );

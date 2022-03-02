@@ -14,7 +14,6 @@
 @use '@material/typography/typography';
 
 $custom-property-prefix: 'secondary-tab-bar';
-// TODO(b/218891998): Update tokens values to support secondary tabs with icons
 $secondary-light-theme: (
   active-label-text-color: theme-color.$on-surface,
   container-color: theme-color.$surface,
@@ -22,6 +21,8 @@ $secondary-light-theme: (
   container-height: 48px,
   container-shadow-color: #000,
   container-shape: 0,
+  divider-color: theme-color.$surface,
+  divider-height: 1px,
   focus-label-text-color: theme-color.$on-surface,
   focus-state-layer-color: theme-color.$on-surface,
   focus-state-layer-opacity: 0.12,
@@ -29,14 +30,21 @@ $secondary-light-theme: (
   hover-state-layer-color: theme-color.$on-surface,
   hover-state-layer-opacity: 0.08,
   inactive-label-text-color: theme-color.$on-surface,
-  label-text-font-family: typography.get-font(subtitle2),
+  label-text-font: typography.get-font(subtitle2),
   label-text-font-size: typography.get-size(subtitle2),
   label-text-letter-spacing: typography.get-tracking(subtitle2),
   label-text-line-height: typography.get-line-height(subtitle2),
   label-text-weight: typography.get-weight(subtitle2),
+  label-text-tracking: typography.get-weight(subtitle2),
   pressed-label-text-color: theme-color.$on-surface,
   pressed-state-layer-color: theme-color.$on-surface,
   pressed-state-layer-opacity: 0.12,
+  with-icon-icon-size: 24px,
+  with-icon-active-icon-color: theme-color.$on-surface,
+  with-icon-inactive-icon-color: theme-color.$on-surface,
+  with-icon-hover-icon-color: theme-color.$on-surface,
+  with-icon-focus-icon-color: theme-color.$on-surface,
+  with-icon-pressed-icon-color: theme-color.$on-surface,
 );
 
 @mixin secondary-navigation-tab-theme($theme) {

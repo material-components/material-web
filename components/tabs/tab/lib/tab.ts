@@ -60,8 +60,6 @@ export class Tab extends BaseElement {
 
   @property() indicatorIcon = '';
 
-  @property({type: Boolean}) stacked = false;
-
   @observer(async function(this: Tab, value: boolean) {
     await this.updateComplete;
     this.mdcFoundation.setFocusOnActivate(value);
@@ -148,7 +146,6 @@ export class Tab extends BaseElement {
   protected getRootClasses(): ClassInfo {
     return {
       'md3-tab--min-width': this.minWidth,
-      'md3-tab--stacked': this.stacked,
     };
   }
 
