@@ -6,7 +6,7 @@
 
 import 'jasmine';
 
-import {html, PropertyValues} from 'lit';
+import {html} from 'lit';
 import {customElement} from 'lit/decorators';
 
 import {Environment} from '../../testing/environment';
@@ -22,6 +22,10 @@ declare global {
 
 @customElement('md-test-field')
 class TestField extends Field {
+  get isFocused() {
+    return this.focused;
+  }
+
   get isFloatingLabelVisibleProp() {
     return this.isFloatingLabelVisible;
   }
@@ -62,7 +66,6 @@ describe('Field', () => {
               .label=${props.label}
               .disabled=${props.disabled ?? false}
               .error=${props.error ?? false}
-              .focused=${props.focused ?? false}
               .populated=${props.populated ?? false}
               .required=${props.required ?? false}
               ${directive}
@@ -82,29 +85,33 @@ describe('Field', () => {
     }
 
     await env.waitForStability();
-    return instance;
+    return {
+      instance,
+      harness: new FieldHarness(instance),
+    };
   }
 
   it('should unfocus field when disabled', async () => {
     // Setup.
-    const field = await setupTest({focused: true});
+    const {instance, harness} = await setupTest();
+    await harness.focusWithKeyboard();
     // Test case.
-    field.disabled = true;
+    instance.disabled = true;
     await env.waitForStability();
     // Assertion.
-    expect(field.focused)
+    expect(instance.isFocused)
         .withContext('focused is false after disabled is set to true')
         .toBe(false);
   });
 
   it('should not allow focus when disabled', async () => {
     // Setup.
-    const instance = await setupTest({disabled: true});
-    instance.focused = true;
+    const {instance, harness} = await setupTest({disabled: true});
+    await harness.focusWithKeyboard();
     // Test case.
     await env.waitForStability();
     // Assertion.
-    expect(instance.focused)
+    expect(instance.isFocused)
         .withContext('focused set back to false when disabled')
         .toBe(false);
   });
@@ -113,9 +120,9 @@ describe('Field', () => {
     it('should update visible label type to resting immediately when floating',
        async () => {
          // Setup.
-         const instance = await setupTest({label: 'Label'});
+         const {instance, harness} = await setupTest({label: 'Label'});
          // Test case.
-         instance.focused = true;
+         await harness.focusWithKeyboard();
          // Assertion.
          expect(instance.isFloatingLabelVisibleProp)
              .withContext('should display resting label for animation')
@@ -125,9 +132,10 @@ describe('Field', () => {
     it('should update visible label type to resting immediately when resting',
        async () => {
          // Setup.
-         const instance = await setupTest({label: 'Label', focused: true});
+         const {instance, harness} = await setupTest({label: 'Label'});
+         await harness.focusWithKeyboard();
          // Test case.
-         instance.focused = false;
+         await harness.blur();
          // Assertion.
          expect(instance.isFloatingLabelVisibleProp)
              .withContext('should display resting label for animation')
@@ -137,12 +145,12 @@ describe('Field', () => {
     it('should update visible label type after floating animation ends',
        async () => {
          // Setup.
-         const instance = await setupTest({label: 'Label'});
+         const {instance, harness} = await setupTest({label: 'Label'});
          const animation = new Animation();
          const restingLabel = await instance.restingLabelElement;
          spyOn(restingLabel, 'animate').and.returnValue(animation);
          // Test case.
-         instance.focused = true;
+         await harness.focusWithKeyboard();
          await env.waitForStability();
          animation.play();
          await env.waitForStability();
@@ -155,12 +163,13 @@ describe('Field', () => {
     it('should update visible label type after resting animation ends',
        async () => {
          // Setup.
-         const instance = await setupTest({label: 'Label', focused: true});
+         const {instance, harness} = await setupTest({label: 'Label'});
+         await harness.focusWithKeyboard();
          const animation = new Animation();
          const restingLabel = await instance.restingLabelElement;
          spyOn(restingLabel, 'animate').and.returnValue(animation);
          // Test case.
-         instance.focused = false;
+         await harness.blur();
          await env.waitForStability();
          animation.play();
          await env.waitForStability();
@@ -172,10 +181,10 @@ describe('Field', () => {
 
     it('should animate label when focused changes', async () => {
       // Setup.
-      const instance = await setupTest({label: 'Label'});
+      const {instance, harness} = await setupTest({label: 'Label'});
       spyOn(instance, 'animateLabel');
       // Test case.
-      instance.focused = true;
+      await harness.focusWithKeyboard();
       await env.waitForStability();
       // Assertion.
       expect(instance.animateLabel).toHaveBeenCalledTimes(1);
@@ -183,7 +192,7 @@ describe('Field', () => {
 
     it('should animate label when populated changes', async () => {
       // Setup.
-      const instance = await setupTest({label: 'Label'});
+      const {instance} = await setupTest({label: 'Label'});
       spyOn(instance, 'animateLabel');
       // Test case.
       instance.populated = true;
@@ -194,10 +203,10 @@ describe('Field', () => {
 
     it('should not animate when there is no label', async () => {
       // Setup.
-      const instance = await setupTest({label: undefined});
+      const {instance, harness} = await setupTest({label: undefined});
       spyOn(instance, 'animateLabel');
       // Test case.
-      instance.focused = true;
+      await harness.focusWithKeyboard();
       await env.waitForStability();
       // Assertion.
       expect(instance.animateLabel)
@@ -208,8 +217,8 @@ describe('Field', () => {
     it('should still set the visible label type when there is no label',
        async () => {
          // Setup.
-         const instance = await setupTest({label: undefined});
-         instance.focused = true;
+         const {instance, harness} = await setupTest({label: undefined});
+         await harness.focusWithKeyboard();
          // Test case.
          await env.waitForStability();
          // Assertion.
@@ -219,7 +228,7 @@ describe('Field', () => {
              .toBe(true);
 
          // Test case.
-         instance.focused = false;
+         await harness.blur();
          await env.waitForStability();
          // Test case.
          expect(instance.isFloatingLabelVisibleProp)
@@ -230,10 +239,11 @@ describe('Field', () => {
 
     it('should not animate if focusing a populated field', async () => {
       // Setup.
-      const instance = await setupTest({label: 'Label', populated: true});
+      const {instance, harness} =
+          await setupTest({label: 'Label', populated: true});
       spyOn(instance, 'animateLabel');
       // Test case.
-      instance.focused = true;
+      await harness.focusWithKeyboard();
       await env.waitForStability();
       // Assertion.
       expect(instance.animateLabel)
@@ -243,7 +253,8 @@ describe('Field', () => {
 
     it('should not animate if populating a focused field', async () => {
       // Setup.
-      const instance = await setupTest({label: 'Label', focused: true});
+      const {instance, harness} = await setupTest({label: 'Label'});
+      await harness.focusWithKeyboard();
       spyOn(instance, 'animateLabel');
       // Test case.
       instance.populated = true;
@@ -256,7 +267,7 @@ describe('Field', () => {
 
     it('should cancel previous animation', async () => {
       // Set up.
-      const instance = await setupTest({label: 'Label'});
+      const {instance, harness} = await setupTest({label: 'Label'});
       const restingLabel = await instance.restingLabelElement;
       const firstAnimation = new Animation();
       spyOn(firstAnimation, 'cancel').and.callThrough();
@@ -265,9 +276,9 @@ describe('Field', () => {
       spyOn(restingLabel, 'animate')
           .and.returnValues(firstAnimation, secondAnimation);
       // Test case.
-      instance.focused = true;
+      await harness.focusWithKeyboard();
       await env.waitForStability();
-      instance.focused = false;
+      await harness.blur();
       await env.waitForStability();
       // Assertion.
       expect(firstAnimation.cancel)
@@ -283,7 +294,7 @@ describe('Field', () => {
     it('should render empty string when there is no label', async () => {
       // Setup.
       // Test case.
-      const instance = await setupTest({label: undefined});
+      const {instance} = await setupTest({label: undefined});
       // Assertion.
       expect(instance.labelText)
           .withContext(
@@ -295,7 +306,7 @@ describe('Field', () => {
       // Setup.
       // Test case.
       const labelValue = 'Label';
-      const instance = await setupTest({label: labelValue});
+      const {instance} = await setupTest({label: labelValue});
       // Assertion.
       expect(instance.renderLabelText())
           .withContext('label text should equal label when not required')
@@ -306,7 +317,7 @@ describe('Field', () => {
       // Setup.
       // Test case.
       const labelValue = 'Label';
-      const instance = await setupTest({required: true, label: labelValue});
+      const {instance} = await setupTest({required: true, label: labelValue});
       // Assertion.
       expect(instance.renderLabelText())
           .withContext(
@@ -318,7 +329,7 @@ describe('Field', () => {
        async () => {
          // Setup.
          // Test case.
-         const instance = await setupTest({required: true, label: undefined});
+         const {instance} = await setupTest({required: true, label: undefined});
          // Assertion.
          expect(instance.labelText)
              .withContext(
@@ -327,74 +338,3 @@ describe('Field', () => {
        });
   });
 });
-
-// describe('FilledFieldFoundation', () => {
-//   const env = new Environment();
-
-//   function setupTest() {
-//     const adapter: FilledFieldAdapter = {
-//       state: {
-//         disabled: false,
-//         error: false,
-//         labelText: '',
-//         focused: false,
-//         populated: false,
-//         required: false,
-//         visibleLabelType: LabelType.RESTING,
-//         strokeTransformOrigin: '',
-//         get rootRect() {
-//           return Promise.resolve(new DOMRect(0, 0, 1, 1));
-//         },
-//         get floatingLabelRect() {
-//           return Promise.resolve(new DOMRect(0, 0, 1, 1));
-//         },
-//         get restingLabelRect() {
-//           return Promise.resolve(new DOMRect(0, 0, 1, 1));
-//         },
-//       },
-//       animateLabel: () => {
-//         const animation = new Animation();
-//         animation.play();
-//         return Promise.resolve(animation);
-//       },
-//     };
-
-//     const foundation = new FilledFieldFoundation(adapter);
-//     return {
-//       foundation: spyOnAllFunctions(foundation).and.callThrough(),
-//       adapter: spyOnAllFunctions(adapter).and.callThrough(),
-//     };
-//   }
-
-//   it('#handleClick() should set strokeTransformOrigin', async () => {
-//     const {foundation, adapter} = setupTest();
-//     const event = new MouseEvent('click', {clientX: 10});
-//     foundation.handleClick(event);
-//     await env.waitForStability();
-//     expect(adapter.state.strokeTransformOrigin).toBe('10px');
-//   });
-
-//   it('#handleClick() should do nothing when disabled', async () => {
-//     const {foundation, adapter} = setupTest();
-//     adapter.state.disabled = true;
-//     const event = new MouseEvent('click', {clientX: 10});
-//     foundation.handleClick(event);
-//     await env.waitForStability();
-//     expect(adapter.state.strokeTransformOrigin)
-//         .withContext('strokeTransformOrigin should not be set when disabled')
-//         .toBe('');
-//   });
-
-//   it('#onFocusedChange() should reset strokeTransformOrigin when unfocusing',
-//      async () => {
-//        const {adapter} = setupTest();
-//        adapter.state.focused = true;
-//        adapter.state.strokeTransformOrigin = '10px';
-//        await env.waitForStability();
-//        adapter.state.focused = false;
-//        await env.waitForStability();
-//        expect(adapter.state.strokeTransformOrigin)
-//            .withContext('unfocusing should reset strokeTransformOrigin')
-//            .toBe('');
-//      });
-// }

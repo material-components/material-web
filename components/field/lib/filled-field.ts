@@ -61,12 +61,13 @@ export class FilledField extends Field {
     this.updateStrokeTransformOrigin(event);
   }
 
-  protected override willUpdate(props: PropertyValues<this>) {
-    super.update(props);
+  // TODO(b/218700023): set to protected
+  override handleFocusOut() {
+    super.handleFocusOut();
 
     // Upon losing focus, the stroke resets to expanding from the center, such
     // as when re-focusing with a keyboard.
-    if (props.has('focused') && !this.focused) {
+    if (!this.focused) {
       this.updateStrokeTransformOrigin();
     }
   }

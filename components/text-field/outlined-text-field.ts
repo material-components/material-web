@@ -7,9 +7,7 @@
 import '../field/outlined-field';
 
 import {html, TemplateResult} from 'lit';
-import {customElement, queryAsync} from 'lit/decorators';
-
-import {MdOutlinedField} from '../field/outlined-field';
+import {customElement} from 'lit/decorators';
 
 import {styles as outlinedStyles} from './lib/outlined-styles.css';
 import {OutlinedTextField} from './lib/outlined-text-field';
@@ -29,9 +27,6 @@ declare global {
 @customElement('md-outlined-text-field')
 export class MdOutlinedTextField extends OutlinedTextField {
   static override styles = [sharedStyles, outlinedStyles];
-
-  @queryAsync('md-outlined-field')
-  protected readonly field!: Promise<MdOutlinedField>;
 
   /** @soyTemplate */
   protected override renderField(): TemplateResult {

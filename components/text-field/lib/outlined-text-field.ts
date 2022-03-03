@@ -9,7 +9,7 @@ import {ClassInfo} from 'lit/directives/class-map';
 import {TextField} from './text-field';
 
 /** @soyCompatible */
-export abstract class OutlinedTextField extends TextField {
+export class OutlinedTextField extends TextField {
   /** @soyTemplate */
   protected override getRenderClasses(): ClassInfo {
     return {

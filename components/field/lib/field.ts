@@ -16,12 +16,13 @@ import {createAnimationSignal, Easing} from '../../motion/animation';
 export class Field extends LitElement {
   @property({type: Boolean}) disabled = false;
   @property({type: Boolean}) error = false;
-  @property({type: Boolean}) focused = false;
   @property({type: String}) label?: string;
   @property({type: Boolean}) populated = false;
   @property({type: Boolean}) required = false;
 
   @state() protected isFloatingLabelVisible = false;
+
+  protected focused = false;
 
   protected get shouldLabelBeFloating() {
     return this.focused || this.populated;
@@ -33,6 +34,23 @@ export class Field extends LitElement {
   protected readonly floatingLabelEl!: Promise<HTMLElement>;
   @queryAsync('.md3-field__label--resting')
   protected readonly restingLabelEl!: Promise<HTMLElement>;
+
+  constructor() {
+    super();
+    this.addEventListener('focusin', this.handleFocusin);
+    this.addEventListener('focusout', this.handleFocusOut);
+  }
+
+  override blur() {
+    super.blur();
+    if (this.matches(':focus-within')) {
+      // When bluring a focused field, blur the child that has focus.
+      this.querySelector<HTMLElement>(':focus')?.blur();
+    } else {
+      // Call unfocus logic since there is not a child to dispatch 'focusout'.
+      this.handleFocusOut();
+    }
+  }
 
   /** @soyTemplate */
   override render(): TemplateResult {
@@ -57,7 +75,6 @@ export class Field extends LitElement {
     return {
       'md3-field--disabled': this.disabled,
       'md3-field--error': this.error,
-      'md3-field--focus': this.focused,
       'md3-field--populated': this.populated,
       'md3-field--required': this.required,
       'md3-field--no-label': !this.label,
@@ -123,41 +140,58 @@ export class Field extends LitElement {
     return labelText + optionalAsterisk;
   }
 
-  protected override willUpdate(props: PropertyValues<this>) {
-    // Server-side property updates
-    if (this.disabled && (props.has('disabled') || props.has('focused'))) {
-      // When disabling (or when trying to focus a disabled field), remove
-      // focus styles.
-      this.focused = false;
-    }
-
-    if (!this.shouldAnimateLabel(props)) {
-      // If the label will not be animating, go ahead and sync
-      // `isFloatingLabelVisible` with `shouldLabelBeFloating` since it won't
-      // be updated asynchronously in an animation.
-      // We do this so that the correct label will be visible if a field is
-      // given a label later.
-      this.isFloatingLabelVisible = this.shouldLabelBeFloating;
-    }
-  }
-
   protected override update(props: PropertyValues<this>) {
     // Client-side property updates
-    if (this.shouldAnimateLabel(props)) {
+    if (this.disabled && props.has('disabled')) {
+      // When disabling, remove focus styles.
+      this.blur();
+    }
+
+    if (this.shouldAnimateLabel({wasPopulated: props.get('populated')})) {
       this.animateLabel();
     }
 
     super.update(props);
   }
 
-  protected shouldAnimateLabel(props: PropertyValues<this>) {
-    const wasFocused =
-        props.has('focused') ? props.get('focused') as boolean : this.focused;
-    const wasPopulated = props.has('populated') ?
-        props.get('populated') as boolean :
-        this.populated;
+  protected handleFocusin() {
+    if (this.focused || this.disabled) {
+      return;
+    }
+
+    this.focused = true;
+    if (this.shouldAnimateLabel({wasFocused: false})) {
+      this.animateLabel();
+    }
+  }
+
+  // TODO(b/218700023): set to protected
+  handleFocusOut() {
+    if (this.matches(':focus-within')) {
+      // Prevent flashing when moving focus to separate targets within a field.
+      return;
+    }
+
+    this.focused = false;
+    if (this.shouldAnimateLabel({wasFocused: true})) {
+      this.animateLabel();
+    }
+  }
+
+  protected shouldAnimateLabel({wasFocused, wasPopulated}: {
+    wasFocused?: boolean,
+    wasPopulated?: boolean
+  }) {
+    wasFocused ??= this.focused;
+    wasPopulated ??= this.populated;
     const wasFloating = wasFocused || wasPopulated;
     if (!this.label || wasFloating === this.shouldLabelBeFloating) {
+      // If the label will not be animating, go ahead and sync
+      // `isFloatingLabelVisible` with `shouldLabelBeFloating` since it won't
+      // be updated asynchronously in an animation.
+      // We do this so that the correct label will be visible if a field is
+      // given a label later.
+      this.isFloatingLabelVisible = this.shouldLabelBeFloating;
       return false;
     }
 

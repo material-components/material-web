@@ -15,10 +15,9 @@ import {live} from 'lit/directives/live';
 import {redispatchEvent} from '../../controller/events';
 import {FormController, getFormValue} from '../../controller/form-controller';
 import {ariaProperty} from '../../decorators/aria-property';
-import {Field} from '../../field/lib/field';
 
 /** @soyCompatible */
-export abstract class TextField extends LitElement {
+export class TextField extends LitElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
@@ -50,7 +49,6 @@ export abstract class TextField extends LitElement {
   @property({type: Boolean, reflect: true}) readonly = false;
   @property({type: String, reflect: true}) type = 'text';
 
-  protected abstract readonly field: Promise<Field>;
   @state()
   protected fieldID = 'field';
   @queryAsync('.md3-text-field__input')
@@ -59,6 +57,7 @@ export abstract class TextField extends LitElement {
   constructor() {
     super();
     this.addController(new FormController(this));
+    this.addEventListener('click', this.handleClick);
   }
 
   /** @soyTemplate */
@@ -97,21 +96,21 @@ export abstract class TextField extends LitElement {
         .required=${this.required}
         .type=${this.type}
         .value=${live(this.value)}
-        @blur=${this.handleBlur}
         @change=${this.redispatchEvent}
-        @focus=${this.handleFocus}
         @input=${this.handleInput}
         @select=${this.redispatchEvent}
       >
     `;
   }
 
-  protected async handleBlur() {
-    (await this.field).focused = false;
-  }
+  protected handleClick() {
+    if (this.disabled) {
+      return;
+    }
 
-  protected async handleFocus() {
-    (await this.field).focused = true;
+    if (!this.matches(':focus-within')) {
+      this.focus();
+    }
   }
 
   protected handleInput(event: InputEvent) {

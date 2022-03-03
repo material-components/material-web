@@ -7,9 +7,7 @@
 import '../field/filled-field';
 
 import {html, TemplateResult} from 'lit';
-import {customElement, queryAsync} from 'lit/decorators';
-
-import {MdFilledField} from '../field/filled-field';
+import {customElement} from 'lit/decorators';
 
 import {styles as filledStyles} from './lib/filled-styles.css';
 import {FilledTextField} from './lib/filled-text-field';
@@ -29,9 +27,6 @@ declare global {
 @customElement('md-filled-text-field')
 export class MdFilledTextField extends FilledTextField {
   static override styles = [sharedStyles, filledStyles];
-
-  @queryAsync('md-filled-field')
-  protected readonly field!: Promise<MdFilledField>;
 
   /** @soyTemplate */
   protected override renderField(): TemplateResult {

@@ -200,6 +200,7 @@ export class Harness<E extends HTMLElement = HTMLElement> {
    */
   protected simulatePointerFocus(element: HTMLElement) {
     this.addPseudoClass(element, ':focus');
+    this.addPseudoClass(element, ':focus-within');
     this.addPseudoClass(this.element, ':focus-within');
     element.dispatchEvent(new FocusEvent('focus', {composed: true}));
     element.dispatchEvent(
@@ -214,6 +215,7 @@ export class Harness<E extends HTMLElement = HTMLElement> {
   protected simulateBlur(element: HTMLElement) {
     this.removePseudoClass(element, ':focus');
     this.removePseudoClass(element, ':focus-visible');
+    this.removePseudoClass(element, ':focus-within');
     this.removePseudoClass(this.element, ':focus-within');
     element.dispatchEvent(new FocusEvent('blur', {composed: true}));
     element.dispatchEvent(

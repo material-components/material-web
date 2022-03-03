@@ -62,7 +62,6 @@ describe('Field', () => {
                 .label=${props.label}
                 .disabled=${props.disabled ?? false}
                 .error=${props.error ?? false}
-                .focused=${props.focused ?? false}
                 .populated=${props.populated ?? false}
                 .required=${props.required ?? false}
                 ${directive}
@@ -83,13 +82,16 @@ describe('Field', () => {
       }
 
       await env.waitForStability();
-      return instance;
+      return {
+        instance,
+        harness: new FieldHarness(instance),
+      };
     }
 
     it('should render resting and floating labels', async () => {
       // Set up.
       // Test case.
-      const instance = await setupTest();
+      const {instance} = await setupTest();
       // Assertion.
       expect(instance.floatingLabelElement)
           .withContext('should render .md3-field__label--floating')
@@ -102,7 +104,7 @@ describe('Field', () => {
     describe('#getRenderClasses()', () => {
       it('should add variant-specific class', async () => {
         // Set up.
-        const instance = await setupTest();
+        const {instance} = await setupTest();
         // Test case.
         const classes = instance.getRenderClasses();
         // Assertion.
@@ -115,7 +117,7 @@ describe('Field', () => {
     describe('.strokeTransformOrigin', () => {
       it('should update when clicked', async () => {
         // Set up.
-        const instance = await setupTest();
+        const {instance} = await setupTest();
         spyOn(instance, 'updateStrokeTransformOrigin');
         const event = new MouseEvent('click', {clientX: 10});
         // Test case.
@@ -129,7 +131,7 @@ describe('Field', () => {
 
       it('should be set to eventClientX - rootClientX', async () => {
         // Set up.
-        const instance = await setupTest();
+        const {instance} = await setupTest();
         const rootRect = new DOMRect(5, 5, 200, 56);
         spyOn(instance, 'getBoundingClientRect').and.returnValue(rootRect);
         const event = new MouseEvent('click', {clientX: 10});
@@ -145,7 +147,7 @@ describe('Field', () => {
 
       it('should not update when disabled and clicked', async () => {
         // Set up.
-        const instance = await setupTest({disabled: true});
+        const {instance} = await setupTest({disabled: true});
         spyOn(instance, 'updateStrokeTransformOrigin');
         const event = new MouseEvent('click', {clientX: 10});
         // Test case.
@@ -159,10 +161,10 @@ describe('Field', () => {
 
       it('should be reset when unfocused', async () => {
         // Set up.
-        const instance = await setupTest({focused: true});
+        const {instance, harness} = await setupTest();
         instance.strokeTransformOriginProp = '10px';
         // Test case.
-        instance.focused = false;
+        await harness.blur();
         await env.waitForStability();
         // Assertion.
         expect(instance.strokeTransformOriginProp)
