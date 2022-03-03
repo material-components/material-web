@@ -6,7 +6,7 @@
 // !!! THIS FILE WAS AUTOMATICALLY GENERATED !!!
 // !!! DO NOT MODIFY IT BY HAND !!!
 // Design system display name: Material 3
-// Design system version name: v0.75
+// Design system version name: v0.87
 //
 
 @use 'sass:map';
@@ -25,7 +25,7 @@
 
 $_default: (
   md-ref-palette: md-ref-palette.values(),
-  md-sys-color: md-sys-color.values-light(),
+  md-sys-color: md-sys-color.values-light-dynamic(),
   md-sys-elevation: md-sys-elevation.values(),
   md-sys-shape: md-sys-shape.values(),
   md-sys-state: md-sys-state.values(),
@@ -64,7 +64,7 @@ $_default: (
     container-height: if($exclude-hardcoded-values, null, 100%),
     container-shape: map.get($deps, md-sys-shape, corner-large-end),
     container-surface-tint-layer-color:
-      map.get($deps, md-sys-elevation, surface-tint-color),
+      map.get($deps, md-sys-color, surface-tint),
     container-width: if($exclude-hardcoded-values, null, 360px),
     divider-color: map.get($deps, md-sys-color, outline),
     focus-state-layer-opacity:

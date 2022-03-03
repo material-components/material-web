@@ -6,7 +6,7 @@
 // !!! THIS FILE WAS AUTOMATICALLY GENERATED !!!
 // !!! DO NOT MODIFY IT BY HAND !!!
 // Design system display name: Material 3
-// Design system version name: v0.75
+// Design system version name: v0.87
 //
 
 @function values($exclude-hardcoded-values: false) {
@@ -21,9 +21,6 @@
     corner-large-top: if($exclude-hardcoded-values, null, (16px 16px 0 0)),
     corner-medium: if($exclude-hardcoded-values, null, 12px),
     corner-none: if($exclude-hardcoded-values, null, 0),
-    corner-small: if($exclude-hardcoded-values, null, 8px),
-    large: if($exclude-hardcoded-values, null, 8px),
-    medium: if($exclude-hardcoded-values, null, 8px),
-    small: if($exclude-hardcoded-values, null, 4px)
+    corner-small: if($exclude-hardcoded-values, null, 8px)
   );
 }

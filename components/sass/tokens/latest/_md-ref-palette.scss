@@ -6,7 +6,7 @@
 // !!! THIS FILE WAS AUTOMATICALLY GENERATED !!!
 // !!! DO NOT MODIFY IT BY HAND !!!
 // Design system display name: Material 3
-// Design system version name: v0.75
+// Design system version name: v0.87
 //
 
 @function values($exclude-hardcoded-values: false) {
@@ -66,30 +66,7 @@
     green99: if($exclude-hardcoded-values, null, #f2ffee),
     grey-variant0: if($exclude-hardcoded-values, null, #000),
     grey-variant10: if($exclude-hardcoded-values, null, #191d1c),
-    grey-variant100: if($exclude-hardcoded-values, null, #fff),
     grey-variant20: if($exclude-hardcoded-values, null, #2d312f),
-    grey-variant30: if($exclude-hardcoded-values, null, #444746),
-    grey-variant40: if($exclude-hardcoded-values, null, #5c5f5e),
-    grey-variant50: if($exclude-hardcoded-values, null, #747775),
-    grey-variant60: if($exclude-hardcoded-values, null, #8e918f),
-    grey-variant70: if($exclude-hardcoded-values, null, #a9acaa),
-    grey-variant80: if($exclude-hardcoded-values, null, #c4c7c5),
-    grey-variant90: if($exclude-hardcoded-values, null, #e1e3e1),
-    grey-variant95: if($exclude-hardcoded-values, null, #eff2ef),
-    grey-variant99: if($exclude-hardcoded-values, null, #fafdfb),
-    grey0: if($exclude-hardcoded-values, null, #000),
-    grey10: if($exclude-hardcoded-values, null, #1f1f1f),
-    grey100: if($exclude-hardcoded-values, null, #fff),
-    grey20: if($exclude-hardcoded-values, null, #303030),
-    grey30: if($exclude-hardcoded-values, null, #474747),
-    grey40: if($exclude-hardcoded-values, null, #5e5e5e),
-    grey50: if($exclude-hardcoded-values, null, #757575),
-    grey60: if($exclude-hardcoded-values, null, #8f8f8f),
-    grey70: if($exclude-hardcoded-values, null, #ababab),
-    grey80: if($exclude-hardcoded-values, null, #c7c7c7),
-    grey90: if($exclude-hardcoded-values, null, #e3e3e3),
-    grey95: if($exclude-hardcoded-values, null, #f2f2f2),
-    grey99: if($exclude-hardcoded-values, null, #fdfcfb),
     neutral-variant0: if($exclude-hardcoded-values, null, #000),
     neutral-variant10: if($exclude-hardcoded-values, null, #1d1a22),
     neutral-variant100: if($exclude-hardcoded-values, null, #fff),
@@ -171,16 +148,6 @@
     white: if($exclude-hardcoded-values, null, #fff),
     yellow0: if($exclude-hardcoded-values, null, #000),
     yellow10: if($exclude-hardcoded-values, null, #421f00),
-    yellow100: if($exclude-hardcoded-values, null, #fff),
-    yellow20: if($exclude-hardcoded-values, null, #562d00),
-    yellow30: if($exclude-hardcoded-values, null, #754200),
-    yellow40: if($exclude-hardcoded-values, null, #945700),
-    yellow50: if($exclude-hardcoded-values, null, #b26c00),
-    yellow60: if($exclude-hardcoded-values, null, #d68400),
-    yellow70: if($exclude-hardcoded-values, null, #f09d00),
-    yellow80: if($exclude-hardcoded-values, null, #ffbb29),
-    yellow90: if($exclude-hardcoded-values, null, #ffdf99),
-    yellow95: if($exclude-hardcoded-values, null, #fff0d1),
-    yellow99: if($exclude-hardcoded-values, null, #fffbf0)
+    yellow20: if($exclude-hardcoded-values, null, #562d00)
   );
 }

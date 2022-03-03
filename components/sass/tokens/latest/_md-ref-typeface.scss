@@ -6,18 +6,13 @@
 // !!! THIS FILE WAS AUTOMATICALLY GENERATED !!!
 // !!! DO NOT MODIFY IT BY HAND !!!
 // Design system display name: Material 3
-// Design system version name: v0.75
+// Design system version name: v0.87
 //
 
 @function values($exclude-hardcoded-values: false) {
   @return (
     brand: if($exclude-hardcoded-values, null, Roboto),
-    brand-display-regular: if($exclude-hardcoded-values, null, 'Roboto Regular'),
-    brand-medium: if($exclude-hardcoded-values, null, 'Roboto Medium'),
-    brand-regular: if($exclude-hardcoded-values, null, 'Roboto Regular'),
     plain: if($exclude-hardcoded-values, null, Roboto),
-    plain-medium: if($exclude-hardcoded-values, null, 'Roboto Medium'),
-    plain-regular: if($exclude-hardcoded-values, null, 'Roboto Regular'),
     weight-bold: if($exclude-hardcoded-values, null, 700),
     weight-medium: if($exclude-hardcoded-values, null, 500),
     weight-regular: if($exclude-hardcoded-values, null, 400)

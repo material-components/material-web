@@ -6,7 +6,7 @@
 // !!! THIS FILE WAS AUTOMATICALLY GENERATED !!!
 // !!! DO NOT MODIFY IT BY HAND !!!
 // Design system display name: Material 3
-// Design system version name: v0.75
+// Design system version name: v0.87
 //
 
 @use 'sass:map';
@@ -18,7 +18,7 @@
 @use './md-sys-state';
 
 $_default: (
-  md-sys-color: md-sys-color.values-light(),
+  md-sys-color: md-sys-color.values-light-dynamic(),
   md-sys-shape: md-sys-shape.values(),
   md-sys-state: md-sys-state.values(),
 );
@@ -27,20 +27,7 @@ $_default: (
   @return (
     disabled-icon-color: map.get($deps, md-sys-color, on-surface),
     disabled-icon-opacity: if($exclude-hardcoded-values, null, 0.38),
-    focus-icon-color: map.get($deps, md-sys-color, primary),
-    focus-state-layer-color: map.get($deps, md-sys-color, primary),
-    focus-state-layer-opacity:
-      map.get($deps, md-sys-state, hover-state-layer-opacity),
-    hover-icon-color: map.get($deps, md-sys-color, primary),
-    hover-state-layer-color: map.get($deps, md-sys-color, primary),
-    hover-state-layer-opacity:
-      map.get($deps, md-sys-state, hover-state-layer-opacity),
-    icon-color: map.get($deps, md-sys-color, primary),
     icon-size: if($exclude-hardcoded-values, null, 24px),
-    pressed-icon-color: map.get($deps, md-sys-color, primary),
-    pressed-state-layer-color: map.get($deps, md-sys-color, primary),
-    pressed-state-layer-opacity:
-      map.get($deps, md-sys-state, hover-state-layer-opacity),
     selected-focus-icon-color: map.get($deps, md-sys-color, primary),
     selected-focus-state-layer-color: map.get($deps, md-sys-color, primary),
     selected-focus-state-layer-opacity:
