@@ -8,6 +8,6 @@
 
 .md3-tab-bar--secondary {
   @include tabbar-theme.secondary-navigation-tab-theme-styles(
-    tabbar-theme.$secondary-light-theme
+    tabbar-theme.$light-theme
   );
 }

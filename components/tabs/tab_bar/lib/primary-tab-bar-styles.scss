@@ -8,6 +8,6 @@
 
 .md3-tab-bar--primary {
   @include tabbar-theme.primary-navigation-tab-theme-styles(
-    tabbar-theme.$primary-light-theme
+    tabbar-theme.$light-theme
   );
 }

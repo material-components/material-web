@@ -11,63 +11,38 @@
 @use '@material/theme/theme-color';
 @use '@material/typography/typography';
 @use '../../../sass/theme';
+@use '../../../sass/tokens';
 @use './tab-theme';
 
 $custom-property-prefix-primary: 'primary-tab';
-$primary-light-theme: (
-  active-focus-state-layer-color: theme-color.$primary,
-  active-focus-state-layer-opacity: 0.12,
-  active-hover-state-layer-color: theme-color.$primary,
-  active-hover-state-layer-opacity: 0.08,
-  active-pressed-state-layer-color: theme-color.$primary,
-  active-pressed-state-layer-opacity: 0.12,
-  container-color: theme-color.$surface,
-  container-elevation: elevation-theme.get-elevation(0),
-  container-height: 48px,
-  container-shape: 0,
-  inactive-focus-state-layer-color: theme-color.$on-surface,
-  inactive-focus-state-layer-opacity: 0.12,
-  inactive-hover-state-layer-color: theme-color.$on-surface,
-  inactive-hover-state-layer-opacity: 0.08,
-  inactive-pressed-state-layer-color: theme-color.$primary,
-  inactive-pressed-state-layer-opacity: 0.12,
-  with-icon-active-focus-icon-color: theme-color.$primary,
-  with-icon-active-hover-icon-color: theme-color.$primary,
-  with-icon-active-icon-color: theme-color.$primary,
-  with-icon-active-pressed-icon-color: theme-color.$primary,
-  with-icon-and-label-text-container-height: 64px,
-  with-icon-icon-size: 24px,
-  with-icon-inactive-focus-icon-color: theme-color.$on-surface,
-  with-icon-inactive-hover-icon-color: theme-color.$on-surface,
-  with-icon-inactive-icon-color: theme-color.$on-surface,
-  with-icon-inactive-pressed-icon-color: theme-color.$on-surface,
-  with-label-text-active-focus-label-text-color: theme-color.$primary,
-  with-label-text-active-hover-label-text-color: theme-color.$primary,
-  with-label-text-active-label-text-color: theme-color.$primary,
-  with-label-text-active-pressed-label-text-color: theme-color.$primary,
-  with-label-text-inactive-focus-label-text-color: theme-color.$on-surface,
-  with-label-text-inactive-hover-label-text-color: theme-color.$on-surface,
-  with-label-text-inactive-label-text-color: theme-color.$on-surface,
-  with-label-text-inactive-pressed-label-text-color: theme-color.$on-surface,
-  with-label-text-label-text-font-family: typography.get-font(subtitle2),
-  with-label-text-label-text-font-size: typography.get-size(subtitle2),
-  with-label-text-label-text-letter-spacing: typography.get-tracking(subtitle2),
-  with-label-text-label-text-line-height: typography.get-line-height(subtitle2),
-  with-label-text-label-text-weight: typography.get-weight(subtitle2),
+$light-theme: tokens.md-comp-primary-navigation-tab-values();
+$dark-theme: tokens.md-comp-primary-navigation-tab-values(
+  (
+    md-sys-color: tokens.md-sys-color-values-dark(),
+    md-sys-elevation:
+      tokens.md-sys-elevation-values(
+        $deps: (
+          md-sys-color: tokens.md-sys-color-values-dark(),
+        ),
+        $exclude-hardcoded-values: true,
+      ),
+  ),
+  $exclude-hardcoded-values: true
 );
 
 @mixin primary-navigation-tab-theme($theme) {
-  $theme: theme.validate-theme($primary-light-theme, $theme);
+  $theme: theme.validate-theme($light-theme, $theme);
   $theme: theme.create-theme-vars($theme, $custom-property-prefix-primary);
   @include theme.emit-theme-vars($theme);
 }
 
 @mixin primary-navigation-tab-theme-styles($theme) {
-  $theme: theme.validate-theme-styles($primary-light-theme, $theme);
+  $theme: theme.validate-theme-styles($light-theme, $theme);
+  $theme: tab-theme.resolve-theme($theme);
   $theme: theme.create-theme-vars($theme, $custom-property-prefix-primary);
 
   @include tab-theme.container-color(map.get($theme, container-color));
-  @include tab-theme.container-elevation(map.get($theme, container-elevation));
+  @include tab-theme.container-elevation($theme);
   @include tab-theme.container-height(map.get($theme, container-height));
   @include tab-theme.container-shape(map.get($theme, container-shape));
 

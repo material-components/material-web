@@ -9,13 +9,25 @@
 @use '@material/theme/keys';
 @use '@material/theme/shadow-dom';
 @use 'third_party/javascript/material_web_components/ripple/ripple-theme';
-@use '@material/elevation/elevation-theme';
 @use '@material/theme/state';
 @use '@material/theme/theme-color';
 @use '@material/typography/typography';
 @use '../../../sass/theme';
+@use '../../../sass/resolvers';
+@use '../../../elevation/lib/elevation-theme';
 
 $_ripple-target: '.md3-tab__ripple';
+
+@function resolve-theme($theme, $resolvers: resolvers.$material) {
+  $theme: elevation-theme.resolve-theme(
+    $theme,
+    map.get($resolvers, elevation),
+    $shadow-color-token: container-shadow-color,
+    $elevation-tokens: (container-elevation)
+  );
+
+  @return $theme;
+}
 
 @mixin is-active() {
   @include shadow-dom.host-aware(selector.append(&, '[active]')) {
@@ -170,17 +182,15 @@ $_ripple-target: '.md3-tab__ripple';
   background-color: $color;
 }
 
-@mixin container-elevation($elevation) {
-  // TODO(b/188905911): Use elevation's theme() mixin.
-  @if $elevation and map.get($elevation, box-shadow) {
-    @include elevation-theme.shadow(map.get($elevation, box-shadow));
-  }
-
-  @if $elevation and map.get($elevation, overlay-opacity) {
-    @include elevation-theme.overlay-opacity(
-      map.get($elevation, overlay-opacity)
-    );
-  }
+@mixin container-elevation($theme) {
+  @include elevation-theme.theme-styles(
+    (
+      shadow: map.get($theme, container-elevation-shadow),
+      overlay-opacity: map.get($theme, container-elevation-overlay-opacity),
+      surface-tint-layer-color:
+        map.get($theme, container-surface-tint-layer-color),
+    )
+  );
 }
 
 @mixin container-shape($shape-radius) {
