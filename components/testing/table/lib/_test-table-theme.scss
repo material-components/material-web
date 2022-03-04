@@ -16,10 +16,9 @@ $_default-deps: (
 
 @function values($deps: $_default-deps, $exclude-hardcoded-values: false) {
   @return (
-    cell-color: map.get($deps, md-sys-color, background),
+    cell-color: map.get($deps, md-sys-color, surface),
     cell-padding: if($exclude-hardcoded-values, null, 16px),
-    cell-grid-color: map.get($deps, md-sys-color, on-background),
-    cell-grid-opacity: if($exclude-hardcoded-values, null, 0.12),
+    cell-grid-color: map.get($deps, md-sys-color, surface-variant),
     cell-grid-size: if($exclude-hardcoded-values, null, 16px),
     header-cell-color: map.get($deps, md-sys-color, surface-variant),
     header-cell-padding: if($exclude-hardcoded-values, null, 8px),
@@ -68,7 +67,6 @@ $dark-theme: values(
   @include _cell-color(map.get($theme, cell-color));
   @include _cell-padding(map.get($theme, cell-padding));
   @include _cell-grid-color(map.get($theme, cell-grid-color));
-  @include _cell-grid-opacity(map.get($theme, cell-grid-opacity));
   @include _cell-grid-size(map.get($theme, cell-grid-size));
   @include _header-cell-color(map.get($theme, header-cell-color));
   @include _header-cell-padding(map.get($theme, header-cell-padding));
@@ -86,7 +84,11 @@ $dark-theme: values(
 }
 
 @mixin _cell-color($color) {
-  background-color: $color;
+  .md3-test-table__cell {
+    &::before {
+      background-color: $color;
+    }
+  }
 }
 
 @mixin _cell-padding($padding) {
@@ -100,14 +102,6 @@ $dark-theme: values(
     &::before {
       background-image: linear-gradient(to right, $color 1px, transparent 1px),
         linear-gradient(to bottom, $color 1px, transparent 1px);
-    }
-  }
-}
-
-@mixin _cell-grid-opacity($opacity) {
-  .md3-test-table__cell {
-    &::before {
-      opacity: $opacity;
     }
   }
 }
