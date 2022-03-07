@@ -19,6 +19,13 @@ $light-theme: tokens.md-comp-secondary-navigation-tab-values();
 $dark-theme: tokens.md-comp-secondary-navigation-tab-values(
   (
     md-sys-color: tokens.md-sys-color-values-dark(),
+    md-sys-elevation:
+      tokens.md-sys-elevation-values(
+        $deps: (
+          md-sys-color: tokens.md-sys-color-values-dark(),
+        ),
+        $exclude-hardcoded-values: true,
+      ),
   ),
   $exclude-hardcoded-values: true
 );
@@ -30,14 +37,11 @@ $dark-theme: tokens.md-comp-secondary-navigation-tab-values(
 }
 
 @mixin secondary-navigation-tab-theme-styles($theme) {
-  .md3-tab--secondary {
-    @include tab-theme.secondary-navigation-tab-theme-styles(
+  ::slotted(md-secondary-tab) {
+    @include tab-theme.secondary-navigation-tab-theme(
       map-ext.pick($theme, map.keys(tab-theme.$light-theme)...)
     );
-  }
-
-  .md3-tab-indicator {
-    @include tab-indicator-theme.theme-styles(
+    @include tab-indicator-theme.theme(
       map-ext.pick($theme, map.keys(tab-indicator-theme.$light-theme)...)
     );
   }
