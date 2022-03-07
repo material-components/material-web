@@ -10,7 +10,6 @@ import {html} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
-import {PrimaryTab} from '../../tab/lib/primary-tab';
 import {MDCTabInteractionEvent} from '../../tab/lib/types';
 import {MdPrimaryTab} from '../../tab/primary-tab';
 import {MdSecondaryTab} from '../../tab/secondary-tab';
