@@ -110,6 +110,7 @@ $dark-theme: tokens.md-comp-icon-button-values(
 @mixin _icon-size($size) {
   font-size: $size;
 
+  i,
   svg,
   img {
     height: $size;
