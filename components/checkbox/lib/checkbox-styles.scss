@@ -7,11 +7,8 @@
 @use './checkbox-theme';
 
 :host {
+  @include checkbox-theme.theme-styles(checkbox-theme.$light-theme);
+  @include checkbox.static-styles();
+
   display: inline-flex;
 }
-
-.md3-checkbox {
-  @include checkbox-theme.theme-styles(checkbox-theme.$light-theme);
-}
-
-@include checkbox.static-styles();

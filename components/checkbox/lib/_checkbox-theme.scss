@@ -22,10 +22,13 @@
 
 @use 'sass:map';
 @use 'sass:math';
+@use 'sass:selector';
 @use '@material/touch-target/touch-target';
+@use '@material/theme/shadow-dom';
 @use '../../sass/theme';
 @use '../../sass/tokens';
 @use '../../sass/var';
+@use '../../ripple/ripple-theme';
 
 $_sys-color-light-values: tokens.md-sys-color-values-light();
 
@@ -105,34 +108,71 @@ $forced-colors-theme: (
   $theme: theme.validate-theme($light-theme, $theme);
   $theme: theme.create-theme-vars($theme, $prefix: $custom-property-prefix);
 
-  @include disabled-container-colors(
-    $unmarked-stroke-color: map.get($theme, disabled-unselected-icon-color),
-    $marked-fill-color: map.get($theme, disabled-selected-icon-color)
-  );
+  .md3-checkbox {
+    @include disabled-container-colors(
+      $unmarked-stroke-color: map.get($theme, disabled-unselected-icon-color),
+      $marked-fill-color: map.get($theme, disabled-selected-icon-color)
+    );
 
-  @include ink-color(map.get($theme, selected-checkmark-color));
-  @include disabled-ink-color(
-    map.get($theme, disabled-selected-checkmark-color)
-  );
+    @include ink-color(map.get($theme, selected-checkmark-color));
+    @include disabled-ink-color(
+      map.get($theme, disabled-selected-checkmark-color)
+    );
 
-  @include _icon-color(
-    map.get($theme, unselected-icon-color),
-    map.get($theme, selected-icon-color)
-  );
-
-  &:hover {
     @include _icon-color(
-      map.get($theme, unselected-hover-icon-color),
-      map.get($theme, selected-hover-icon-color)
+      map.get($theme, unselected-icon-color),
+      map.get($theme, selected-icon-color)
+    );
+
+    &:hover {
+      @include _icon-color(
+        map.get($theme, unselected-hover-icon-color),
+        map.get($theme, selected-hover-icon-color)
+      );
+    }
+
+    @include ripple-size(map.get($theme, state-layer-size));
+    @include touch-target(
+      map.get($theme, state-layer-size),
+      map.get($theme, state-layer-size)
     );
   }
 
-  @include ripple-size(map.get($theme, state-layer-size));
-  // Set touch target to ripple size.
-  @include touch-target(
-    map.get($theme, state-layer-size),
-    map.get($theme, state-layer-size)
+  @include ripple-theme.theme(
+    (
+      hover-state-layer-color:
+        map.get($theme, unselected-hover-state-layer-color),
+      focus-state-layer-color:
+        map.get($theme, unselected-focus-state-layer-color),
+      pressed-state-layer-color:
+        map.get($theme, unselected-pressed-state-layer-color),
+      hover-state-layer-opacity:
+        map.get($theme, unselected-hover-state-layer-opacity),
+      focus-state-layer-opacity:
+        map.get($theme, unselected-focus-state-layer-opacity),
+      pressed-state-layer-opacity:
+        map.get($theme, unselected-pressed-state-layer-opacity),
+    )
   );
+
+  @include checked-selector() {
+    @include ripple-theme.theme(
+      (
+        hover-state-layer-color:
+          map.get($theme, selected-hover-state-layer-color),
+        focus-state-layer-color:
+          map.get($theme, selected-focus-state-layer-color),
+        pressed-state-layer-color:
+          map.get($theme, selected-pressed-state-layer-color),
+        hover-state-layer-opacity:
+          map.get($theme, selected-hover-state-layer-opacity),
+        focus-state-layer-opacity:
+          map.get($theme, selected-focus-state-layer-opacity),
+        pressed-state-layer-opacity:
+          map.get($theme, selected-pressed-state-layer-opacity),
+      )
+    );
+  }
 }
 
 /// Sets ripple size of checkbox and optionally set touch target size which can
@@ -441,5 +481,14 @@ $forced-colors-theme: (
       border-color: $from-stroke-color;
       background-color: $from-fill-color;
     }
+  }
+}
+
+@mixin checked-selector() {
+  @include shadow-dom.host-aware(
+    selector.append(&, '[checked]'),
+    selector.append(&, '[indeterminate]')
+  ) {
+    @content;
   }
 }
