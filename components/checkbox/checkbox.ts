@@ -14,7 +14,7 @@ import {styles} from './lib/checkbox-styles.css';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-checkbox': Checkbox;
+    'md-checkbox': MdCheckbox;
   }
 }
 
