@@ -17,7 +17,7 @@ import {ifDefined} from 'lit/directives/if-defined.js';
 
 import {ariaProperty} from '../../decorators/aria-property';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
-import {Ripple} from '../../ripple/mwc-ripple';
+import {MdRipple} from '../../ripple/ripple';
 import {RippleHandlers} from '../../ripple/ripple-handlers';
 
 
@@ -65,7 +65,7 @@ export class Checkbox extends LitElement {
 
   @state() protected focused = false;
 
-  @queryAsync('md-ripple') ripple!: Promise<Ripple|null>;
+  @queryAsync('md-ripple') ripple!: Promise<MdRipple|null>;
 
   // MDC Foundation is unused
   protected mdcFoundationClass = undefined;
@@ -104,7 +104,7 @@ export class Checkbox extends LitElement {
     }
   }
 
-  protected rippleElement: Ripple|null = null;
+  protected rippleElement: MdRipple|null = null;
 
   protected rippleHandlers: RippleHandlers = new RippleHandlers(() => {
     this.shouldRenderRipple = true;
@@ -266,6 +266,6 @@ export class Checkbox extends LitElement {
   }
 
   get isRippleActive() {
-    return this.rippleElement?.isActive || false;
+    return false;
   }
 }

@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {Ripple} from '../mwc-ripple';
+import {MdRipple} from '../ripple';
 
 interface RippleInternals {
-  hovering: boolean;
-  bgFocused: boolean;
-  fgActivation: boolean;
+  hovered: boolean;
+  focused: boolean;
+  pressed: boolean;
 }
 
 function animationTimer(): Promise<void> {
@@ -19,7 +19,7 @@ function animationTimer(): Promise<void> {
 }
 
 describe('md-ripple', () => {
-  let element: Ripple;
+  let element: MdRipple;
   let internals: RippleInternals;
   let container: HTMLDivElement;
 
@@ -39,57 +39,57 @@ describe('md-ripple', () => {
     });
 
     it('initializes as an md-ripple', () => {
-      expect(element).toBeInstanceOf(Ripple);
+      expect(element).toBeInstanceOf(MdRipple);
     });
 
-    it('sets pressed class on startPress()', async () => {
-      element.startPress();
+    it('sets pressed class on beginPress()', async () => {
+      element.beginPress();
       await element.updateComplete;
-      expect(internals.fgActivation).toEqual(true);
+      expect(internals.pressed).toEqual(true);
     });
 
     it('removes pressed class on endPress()', async () => {
-      element.startPress();
+      element.beginPress();
       await animationTimer();
       element.endPress();
       await animationTimer();
-      expect(internals.fgActivation).toEqual(false);
+      expect(internals.pressed).toEqual(false);
     });
 
-    it('sets focused class on startFocus()', async () => {
-      element.startFocus();
+    it('sets focused class on beginFocus()', async () => {
+      element.beginFocus();
       await animationTimer();
-      expect(internals.bgFocused).toEqual(true);
+      expect(internals.focused).toEqual(true);
     });
 
     it('removes focused class on endFocus()', async () => {
-      element.startFocus();
+      element.beginFocus();
       await animationTimer();
       element.endFocus();
       await animationTimer();
-      expect(internals.bgFocused).toEqual(false);
+      expect(internals.focused).toEqual(false);
     });
 
-    it('sets hover class on startHover()', async () => {
-      element.startHover();
+    it('sets hover class on beginHover()', async () => {
+      element.beginHover();
       await element.updateComplete;
-      expect(internals.hovering).toEqual(true);
+      expect(internals.hovered).toEqual(true);
     });
 
     it('removes hover class on endHover()', async () => {
-      element.startHover();
+      element.beginHover();
       await element.updateComplete;
       element.endHover();
       await element.updateComplete;
-      expect(internals.hovering).toEqual(false);
+      expect(internals.hovered).toEqual(false);
     });
 
     it('stops hovering when disabled', async () => {
-      element.startHover();
+      element.beginHover();
       await element.updateComplete;
       element.disabled = true;
       await element.updateComplete;
-      expect(internals.hovering).toEqual(false);
+      expect(internals.hovered).toEqual(false);
     });
   });
 });

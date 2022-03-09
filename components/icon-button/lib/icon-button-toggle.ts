@@ -11,7 +11,7 @@ import {ifDefined} from 'lit/directives/if-defined';
 
 import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action_element/action-element';
 import {ariaProperty} from '../../decorators/aria-property';
-import {Ripple} from '../../ripple/mwc-ripple';
+import {MdRipple} from '../../ripple/ripple';
 import {RippleHandlers} from '../../ripple/ripple-handlers';
 
 /** @soyCompatible */
@@ -37,7 +37,7 @@ export class IconButtonToggle extends ActionElement {
 
   @property({type: Boolean, reflect: true}) isOn = false;
 
-  @queryAsync('md-ripple') ripple!: Promise<Ripple|null>;
+  @queryAsync('md-ripple') ripple!: Promise<MdRipple|null>;
 
   @state() protected shouldRenderRipple = false;
 

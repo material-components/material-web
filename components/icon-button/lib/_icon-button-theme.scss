@@ -6,7 +6,8 @@
 @use 'sass:map';
 @use '../../sass/theme';
 @use '../../sass/tokens';
-@use '@material/ripple/ripple-theme';
+@use 'third_party/javascript/material_web_components/m3/ripple/ripple-theme';
+@use '@material/ripple/ripple-theme' as mdc-ripple-theme;
 @use '@material/theme/keys';
 @use '@material/theme/state';
 @use '@material/theme/theme-color';
@@ -133,7 +134,7 @@ $dark-theme: tokens.md-comp-icon-button-values(
   }
 
   $focus: state.get-focus-state($color-map);
-  @include ripple-theme.focus {
+  @include mdc-ripple-theme.focus {
     @include _set-icon-color($focus);
   }
 
@@ -143,7 +144,7 @@ $dark-theme: tokens.md-comp-icon-button-values(
   }
 
   $pressed: state.get-pressed-state($color-map);
-  @include ripple-theme.active {
+  @include mdc-ripple-theme.active {
     @include _set-icon-color($pressed);
   }
 }
