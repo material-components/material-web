@@ -132,9 +132,15 @@ export class Tab extends BaseElement {
         <span class="md3-tab__content">
           ${iconTemplate}
           ${labelTemplate}
-          ${this.isMinWidthIndicator ? this.renderIndicator() : ''}
+          ${
+        this.isMinWidthIndicator ?
+            this.renderIndicator(this.indicatorIcon, this.isFadingIndicator) :
+            ''}
         </span>
-        ${this.isMinWidthIndicator ? '' : this.renderIndicator()}
+        ${
+        this.isMinWidthIndicator ?
+            '' :
+            this.renderIndicator(this.indicatorIcon, this.isFadingIndicator)}
         ${this.renderRipple()}
         ${this.renderFocusRing()}
       </button>`;
@@ -146,10 +152,10 @@ export class Tab extends BaseElement {
     };
   }
 
-  protected renderIndicator() {
+  protected renderIndicator(indicatorIcon: string, isFadingIndicator: boolean) {
     return html`<md-tab-indicator
-        .icon="${this.indicatorIcon}"
-        .fade="${this.isFadingIndicator}"></md-tab-indicator>`;
+        .icon="${indicatorIcon}"
+        .fade="${isFadingIndicator}"></md-tab-indicator>`;
   }
 
   protected renderIcon(icon: string, classes: ClassInfo): TemplateResult {
