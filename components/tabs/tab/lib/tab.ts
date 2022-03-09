@@ -7,6 +7,7 @@
 import '../../tab_indicator/tab-indicator';
 import '@material/mwc-ripple/mwc-ripple';
 import '../../../focus/focus-ring';
+import '../../../icon/icon';
 
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
@@ -102,13 +103,9 @@ export class Tab extends BaseElement {
   }
 
   protected override render() {
-    let iconTemplate = html``;
+    let iconTemplate: string|TemplateResult = '';
     if (this.hasImageIcon || this.icon) {
-      // NOTE: MUST be on same line as spaces will cause vert alignment issues
-      // in IE
-      iconTemplate = html`
-        <span class="md3-tab__icon material-icons"><slot name="icon">${
-          this.icon}</slot></span>`;
+      iconTemplate = this.renderIcon(this.icon, {'md3-tab__icon': true});
     }
 
     let labelTemplate = html``;
@@ -153,6 +150,11 @@ export class Tab extends BaseElement {
     return html`<md-tab-indicator
         .icon="${this.indicatorIcon}"
         .fade="${this.isFadingIndicator}"></md-tab-indicator>`;
+  }
+
+  protected renderIcon(icon: string, classes: ClassInfo): TemplateResult {
+    return html`<md-icon class="${classMap(classes)}"><slot name="icon">${
+        icon}</slot></md-icon>`;
   }
 
   // TODO(dfreedm): Make this use selected as a param after Polymer/internal#739

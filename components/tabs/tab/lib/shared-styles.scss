@@ -5,15 +5,10 @@
  */
 
 @use './tab';
-@use 'third_party/javascript/material_web_components/icon/_mwc-icon.scss';
 @use '@material/ripple';
 
 @include tab.core-styles();
 @include ripple.common();
-
-.material-icons {
-  @extend %material-icons;
-}
 
 :host {
   outline: none;
