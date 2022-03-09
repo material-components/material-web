@@ -31,7 +31,7 @@ $transition-duration: 250ms;
 @mixin core-styles() {
   .md3-tab-scroller {
     @include transition($duration-ms: $transition-duration);
-    overflow-block: hidden;
+    overflow-y: hidden;
   }
 
   // Selector for test element used to feature-detect horizontal scrollbar
@@ -41,13 +41,13 @@ $transition-duration: 250ms;
     inset-block-start: -9999px;
     inline-size: 100px;
     block-size: 100px;
-    overflow-inline: scroll;
+    overflow-x: scroll;
   }
 
   .md3-tab-scroller__scroll-area {
     -webkit-overflow-scrolling: touch;
     display: flex;
-    overflow-inline: hidden;
+    overflow-x: hidden;
   }
 
   .md3-tab-scroller__scroll-area,
@@ -60,7 +60,7 @@ $transition-duration: 250ms;
   // This modifier class will be added in JS after computing the OS scrollbar
   // size in order to hide the scrollbar.
   .md3-tab-scroller__scroll-area--scroll {
-    overflow-inline: scroll;
+    overflow-x: scroll;
   }
 
   .md3-tab-scroller__scroll-content {
