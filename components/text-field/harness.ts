@@ -26,6 +26,21 @@ export class TextFieldHarness extends Harness<TextField> {
     await (await this.field).hoverLeave();
   }
 
+  override async focusWithKeyboard() {
+    await super.focusWithKeyboard();
+    await (await this.field).focusWithKeyboard();
+  }
+
+  override async focusWithPointer() {
+    await super.focusWithPointer();
+    await (await this.field).focusWithPointer();
+  }
+
+  override async blur() {
+    await super.blur();
+    await (await this.field).blur();
+  }
+
   protected override async getInteractiveElement() {
     await this.element.updateComplete;
     return this.element.renderRoot.querySelector('.md3-text-field__input') as

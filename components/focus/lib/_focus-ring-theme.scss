@@ -10,7 +10,8 @@
 $_custom-property-prefix: 'focus-ring';
 
 $light-theme: (
-  container-outer-padding: 2px,
+  container-outer-padding-vertical: 2px,
+  container-outer-padding-horizontal: 2px,
   inner-ring-width: 2px,
   inner-ring-color: #000,
   inner-ring-radius: 6px,
@@ -30,7 +31,14 @@ $light-theme: (
   $theme: theme.validate-theme-styles($light-theme, $theme);
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
-  $container-outer-padding: map.get($theme, container-outer-padding);
+  $container-outer-padding-vertical: map.get(
+    $theme,
+    container-outer-padding-vertical
+  );
+  $container-outer-padding-horizontal: map.get(
+    $theme,
+    container-outer-padding-horizontal
+  );
   $inner-width: map.get($theme, inner-ring-width);
   $inner-color: map.get($theme, inner-ring-color);
   $inner-radius: map.get($theme, inner-ring-radius);
@@ -41,7 +49,8 @@ $light-theme: (
 
   // Outer
   @include _outer-ring-size(
-    $container-outer-padding,
+    $container-outer-padding-vertical,
+    $container-outer-padding-horizontal,
     $inner-width,
     $outer-width
   );
@@ -54,16 +63,28 @@ $light-theme: (
   }
 }
 
-@mixin _outer-ring-size($container-outer-padding, $inner-width, $outer-width) {
+@mixin _outer-ring-size(
+  $container-outer-padding-vertical,
+  $container-outer-padding-horizontal,
+  $inner-width,
+  $outer-width
+) {
   // Note that the ring will not respect its parent's border. This will not be
   // an issue as long as border is set via a sibling node, similar to ripple
   // and touch target.
-  $size: calc(
-    100% + 2 * (#{$container-outer-padding} + #{$inner-width} + #{$outer-width})
+  $height: calc(
+    100% + 2 *
+      (#{$container-outer-padding-vertical} + #{$inner-width} + #{$outer-width})
+  );
+  $width: calc(
+    100% + 2 *
+      (
+        #{$container-outer-padding-horizontal} + #{$inner-width} + #{$outer-width}
+      )
   );
 
-  width: $size;
-  height: $size;
+  width: $width;
+  height: $height;
 }
 
 @mixin _inner-ring-size($outer-ring-width) {

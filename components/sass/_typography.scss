@@ -6,7 +6,6 @@
 @use 'sass:map';
 @use 'sass:math';
 @use 'sass:meta';
-@use './string-ext';
 @use './theme';
 
 /// Resolves a theme's typography tokens for the given prefix.

@@ -124,7 +124,7 @@ export class LinearProgressBase extends LitElement {
       </div>`;
   }
 
-  override update(changedProperties: Map<string, string>) {
+  override update(changedProperties: PropertyValues<this>) {
     // - When showing the indicator, enable animations immediately.
     // - On first render, disable the animation immediately.
     // - For normal calls to hide the component, let transitionend event trigger
@@ -137,7 +137,7 @@ export class LinearProgressBase extends LitElement {
     super.update(changedProperties);
   }
 
-  override async firstUpdated(changed: PropertyValues) {
+  override async firstUpdated(changed: PropertyValues<this>) {
     super.firstUpdated(changed);
 
     this.attachResizeObserver();
@@ -147,7 +147,7 @@ export class LinearProgressBase extends LitElement {
     this.closedAnimationOff = this.closed;
   }
 
-  protected override updated(changed: PropertyValues) {
+  protected override updated(changed: PropertyValues<this>) {
     // restart animation for timing if reverse changed and is indeterminate.
     // don't restart here if indeterminate has changed as well because we don't
     // want to incur an extra style recalculation

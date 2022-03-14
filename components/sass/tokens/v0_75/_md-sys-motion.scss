@@ -1,0 +1,61 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+//
+// !!! THIS FILE WAS AUTOMATICALLY GENERATED !!!
+// !!! DO NOT MODIFY IT BY HAND !!!
+// Design system display name: Material 3
+// Design system version name: v0.75
+//
+
+@function values($exclude-hardcoded-values: false) {
+  @return (
+    duration-100: if($exclude-hardcoded-values, null, 100ms),
+    duration-1000: if($exclude-hardcoded-values, null, 1000ms),
+    duration-150: if($exclude-hardcoded-values, null, 150ms),
+    duration-200: if($exclude-hardcoded-values, null, 200ms),
+    duration-250: if($exclude-hardcoded-values, null, 250ms),
+    duration-300: if($exclude-hardcoded-values, null, 300ms),
+    duration-350: if($exclude-hardcoded-values, null, 350ms),
+    duration-400: if($exclude-hardcoded-values, null, 400ms),
+    duration-450: if($exclude-hardcoded-values, null, 450ms),
+    duration-50: if($exclude-hardcoded-values, null, 50ms),
+    duration-500: if($exclude-hardcoded-values, null, 500ms),
+    duration-550: if($exclude-hardcoded-values, null, 550ms),
+    duration-600: if($exclude-hardcoded-values, null, 600ms),
+    duration-700: if($exclude-hardcoded-values, null, 700ms),
+    duration-800: if($exclude-hardcoded-values, null, 800ms),
+    duration-900: if($exclude-hardcoded-values, null, 900ms),
+    duration-long1: if($exclude-hardcoded-values, null, 500ms),
+    duration-long2: if($exclude-hardcoded-values, null, 600ms),
+    duration-medium1: if($exclude-hardcoded-values, null, 300ms),
+    duration-medium2: if($exclude-hardcoded-values, null, 400ms),
+    duration-short1: if($exclude-hardcoded-values, null, 100ms),
+    duration-short2: if($exclude-hardcoded-values, null, 200ms),
+    easing-accelerated:
+      if($exclude-hardcoded-values, null, cubic-bezier(0.4, 0, 1, 1)),
+    easing-decelerated:
+      if($exclude-hardcoded-values, null, cubic-bezier(0, 0, 0.2, 1)),
+    easing-emphasized:
+      if($exclude-hardcoded-values, null, cubic-bezier(0.2, 0, 0, 1)),
+    easing-emphasized-accelerate:
+      if($exclude-hardcoded-values, null, cubic-bezier(0.3, 0, 0.8, 0.15)),
+    easing-emphasized-decelerate:
+      if($exclude-hardcoded-values, null, cubic-bezier(0.05, 0.7, 0.1, 1)),
+    easing-legacy:
+      if($exclude-hardcoded-values, null, cubic-bezier(0.4, 0, 0.2, 1)),
+    easing-legacy-accelerate:
+      if($exclude-hardcoded-values, null, cubic-bezier(0.4, 0, 1, 1)),
+    easing-legacy-decelerate:
+      if($exclude-hardcoded-values, null, cubic-bezier(0, 0, 0.2, 1)),
+    easing-linear: if($exclude-hardcoded-values, null, cubic-bezier(0, 0, 1, 1)),
+    easing-standard:
+      if($exclude-hardcoded-values, null, cubic-bezier(0.2, 0, 0, 1)),
+    easing-standard-accelerate:
+      if($exclude-hardcoded-values, null, cubic-bezier(0.3, 0, 1, 1)),
+    easing-standard-decelerate:
+      if($exclude-hardcoded-values, null, cubic-bezier(0, 0, 0, 1)),
+    path: /** TODO: type "motion_path" is not supported. */ null
+  );
+}

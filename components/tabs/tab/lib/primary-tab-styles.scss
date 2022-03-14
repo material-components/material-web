@@ -1,0 +1,13 @@
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use './primary-tab-theme';
+
+.md3-tab--primary {
+  @include primary-tab-theme.primary-navigation-tab-theme-styles(
+    primary-tab-theme.$light-theme
+  );
+}

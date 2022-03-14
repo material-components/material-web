@@ -6,11 +6,7 @@
 @use 'sass:map';
 @use 'sass:meta';
 @use 'sass:string';
-@use '@material/theme/state';
 @use '../../sass/typography';
-@use './field-theme';
-
-$_selectors: field-theme.$selectors;
 
 @function resolve-theme($theme, $resolvers) {
   @return typography.resolve-theme(
@@ -64,20 +60,18 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _label-color($colors) {
-  @include state.default($_selectors) {
-    @include _set-label-color(state.get-default-state($colors));
+  @include _set-label-color(map.get($colors, default));
+
+  &:hover {
+    @include _set-label-color(map.get($colors, hover));
   }
 
-  @include state.focus($_selectors) {
-    @include _set-label-color(state.get-focus-state($colors));
+  &:focus-within {
+    @include _set-label-color(map.get($colors, focus));
   }
 
-  @include state.hover($_selectors) {
-    @include _set-label-color(state.get-hover-state($colors));
-  }
-
-  @include state.disabled($_selectors) {
-    @include _set-label-color(state.get-disabled-state($colors));
+  &.md3-field--disabled {
+    @include _set-label-color(map.get($colors, disabled));
   }
 }
 
@@ -88,14 +82,14 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _label-error-color($colors) {
-  @include state.error($_selectors) {
+  &:not(.md3-field--disabled).md3-field--error {
     @include _label-color($colors);
   }
 }
 
 @mixin _label-opacity($opacities) {
-  @include state.disabled($_selectors) {
-    @include _set-label-opacity(state.get-disabled-state($opacities));
+  &.md3-field--disabled {
+    @include _set-label-opacity(map.get($opacities, disabled));
   }
 }
 

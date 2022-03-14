@@ -3,13 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-$selectors: (
-  disabled: '.md3-text-field--disabled',
-  error: '.md3-text-field--error',
-  focus: ':focus-within',
-  hover: ':hover',
-);
-
 @mixin static-styles() {
   :host {
     @include host;

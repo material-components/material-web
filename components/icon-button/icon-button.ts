@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import '../icon/icon';
+
+import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {IconButton} from './lib/icon-button';
@@ -18,4 +21,9 @@ declare global {
 @customElement('md-icon-button')
 export class MdIconButton extends IconButton {
   static override styles = [styles];
+
+  /** @soyTemplate */
+  protected override renderIcon(icon: string): TemplateResult|string {
+    return icon ? html`<md-icon>${icon}</md-icon>` : '';
+  }
 }

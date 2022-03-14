@@ -6,7 +6,7 @@
 // !!! THIS FILE WAS AUTOMATICALLY GENERATED !!!
 // !!! DO NOT MODIFY IT BY HAND !!!
 // Design system display name: Material 3
-// Design system version name: v0.75
+// Design system version name: v0.87
 //
 
 @use 'sass:map';
@@ -22,7 +22,7 @@
 @use './md-sys-typescale';
 
 $_default: (
-  md-sys-color: md-sys-color.values-light(),
+  md-sys-color: md-sys-color.values-light-dynamic(),
   md-sys-elevation: md-sys-elevation.values(),
   md-sys-shape: md-sys-shape.values(),
   md-sys-state: md-sys-state.values(),
@@ -41,8 +41,6 @@ $_default: (
     disabled-handle-opacity: if($exclude-hardcoded-values, null, 0.38),
     disabled-inactive-track-color: map.get($deps, md-sys-color, on-surface),
     disabled-inactive-track-opacity: if($exclude-hardcoded-values, null, 0.12),
-    disabled-track-color: map.get($deps, md-sys-color, on-surface),
-    disabled-track-opacity: if($exclude-hardcoded-values, null, 0.12),
     focus-handle-color: map.get($deps, md-sys-color, primary),
     focus-state-layer-color: map.get($deps, md-sys-color, primary),
     focus-state-layer-opacity:
@@ -69,6 +67,7 @@ $_default: (
       map.get($deps, md-sys-typescale, label-medium-size),
     label-label-text-line-height:
       map.get($deps, md-sys-typescale, label-medium-line-height),
+    label-label-text-size: map.get($deps, md-sys-typescale, label-medium-size),
     label-label-text-tracking:
       map.get($deps, md-sys-typescale, label-medium-tracking),
     label-label-text-type:
@@ -84,9 +83,8 @@ $_default: (
     pressed-state-layer-color: map.get($deps, md-sys-color, primary),
     pressed-state-layer-opacity:
       map.get($deps, md-sys-state, pressed-state-layer-opacity),
-    state-layer-size: if($exclude-hardcoded-values, null, 48px),
+    state-layer-size: if($exclude-hardcoded-values, null, 40px),
     track-elevation: map.get($deps, md-sys-elevation, level0),
-    track-shape: map.get($deps, md-sys-shape, corner-full),
     with-overlap-handle-outline-color: map.get($deps, md-sys-color, on-primary),
     with-overlap-handle-outline-width: if($exclude-hardcoded-values, null, 1px),
     with-tick-marks-active-container-color:
@@ -102,28 +100,6 @@ $_default: (
     with-tick-marks-inactive-container-color:
       map.get($deps, md-sys-color, on-surface-variant),
     with-tick-marks-inactive-container-opacity:
-      if($exclude-hardcoded-values, null, 0.38),
-    with-value-label-container-color: map.get($deps, md-sys-color, primary),
-    with-value-label-container-elevation:
-      map.get($deps, md-sys-elevation, level0),
-    with-value-label-container-height: if($exclude-hardcoded-values, null, 28px),
-    with-value-label-label-text-color: map.get($deps, md-sys-color, on-primary),
-    with-value-label-label-text-font:
-      map.get($deps, md-sys-typescale, label-medium-font),
-    with-value-label-label-text-font-size:
-      map.get($deps, md-sys-typescale, label-medium-size),
-    with-value-label-label-text-line-height:
-      map.get($deps, md-sys-typescale, label-medium-line-height),
-    with-value-label-label-text-tracking:
-      map.get($deps, md-sys-typescale, label-medium-tracking),
-    with-value-label-label-text-type:
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Typography composite token is not supported. Please use discrete typography tokens. */
-          null
-      ),
-    with-value-label-label-text-weight:
-      map.get($deps, md-sys-typescale, label-medium-weight)
+      if($exclude-hardcoded-values, null, 0.38)
   );
 }

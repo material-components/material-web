@@ -5,7 +5,6 @@
 
 @use 'sass:map';
 @use 'sass:string';
-@use '@material/theme/state';
 @use '../../sass/resolvers';
 @use '../../sass/theme';
 @use '../../sass/tokens';
@@ -103,8 +102,6 @@ $dark-theme: values(
 
   @include theme.emit-theme-vars($theme);
 }
-
-$_selectors: field-theme.$selectors;
 
 @mixin theme-styles($theme, $resolvers: resolvers.$material) {
   $theme: theme.validate-theme-styles($light-theme, $theme);
@@ -205,20 +202,18 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _outline-color($colors) {
-  @include state.enabled($_selectors) {
-    @include _set-outline-color(state.get-default-state($colors));
+  @include _set-outline-color(map.get($colors, default));
+
+  &:hover {
+    @include _set-outline-color(map.get($colors, hover));
   }
 
-  @include state.focus($_selectors) {
-    @include _set-outline-color(state.get-focus-state($colors));
+  &:focus-within {
+    @include _set-outline-color(map.get($colors, focus));
   }
 
-  @include state.hover($_selectors) {
-    @include _set-outline-color(state.get-hover-state($colors));
-  }
-
-  @include state.disabled($_selectors) {
-    @include _set-outline-color(state.get-disabled-state($colors));
+  &.md3-field--disabled {
+    @include _set-outline-color(map.get($colors, disabled));
   }
 }
 
@@ -229,20 +224,16 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _outline-error-color($colors) {
-  @include state.error($_selectors) {
+  &:not(.md3-field--disabled).md3-field--error {
     @include _outline-color($colors);
   }
 }
 
 @mixin _outline-opacity($opacities) {
-  @include state.enabled($_selectors) {
-    @include _set-outline-inactive-opacity(state.get-default-state($opacities));
-  }
+  @include _set-outline-inactive-opacity(map.get($opacities, default));
 
-  @include state.disabled($_selectors) {
-    @include _set-outline-inactive-opacity(
-      state.get-disabled-state($opacities)
-    );
+  &.md3-field--disabled {
+    @include _set-outline-inactive-opacity(map.get($opacities, disabled));
   }
 }
 
@@ -255,19 +246,17 @@ $_selectors: field-theme.$selectors;
 }
 
 @mixin _outline-width($widths) {
-  @include state.enabled($_selectors) {
-    @include _set-outline-width(state.get-default-state($widths));
+  @include _set-outline-width(map.get($widths, default));
+
+  &:hover {
+    @include _set-outline-width(map.get($widths, hover));
   }
 
-  @include state.disabled($_selectors) {
-    @include _set-outline-width(state.get-disabled-state($widths));
-  }
+  @include _set-outline-focus-width(map.get($widths, focus));
 
-  @include state.hover($_selectors) {
-    @include _set-outline-width(state.get-hover-state($widths));
+  &.md3-field--disabled {
+    @include _set-outline-width(map.get($widths, disabled));
   }
-
-  @include _set-outline-focus-width(state.get-focus-state($widths));
 }
 
 @mixin _set-outline-width($width) {

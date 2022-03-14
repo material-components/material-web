@@ -4,17 +4,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
+import {html, TemplateResult} from 'lit';
+import {property, query, queryAsync, state} from 'lit/decorators';
+import {ifDefined} from 'lit/directives/if-defined';
 
+import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action_element/action-element';
 import {ariaProperty} from '../../decorators/aria-property';
-import {Ripple} from '../../ripple/mwc-ripple';
+import {MdRipple} from '../../ripple/ripple';
 import {RippleHandlers} from '../../ripple/ripple-handlers';
 import {ARIAHasPopup} from '../../types/aria';
 
 /** @soyCompatible */
-export class IconButton extends LitElement {
+export class IconButton extends ActionElement {
   @property({type: Boolean, reflect: true}) disabled = false;
 
   @property({type: String}) icon = '';
@@ -31,7 +32,7 @@ export class IconButton extends LitElement {
 
   @query('button') buttonElement!: HTMLElement;
 
-  @queryAsync('md-ripple') ripple!: Promise<Ripple|null>;
+  @queryAsync('md-ripple') ripple!: Promise<MdRipple|null>;
 
   @state() protected shouldRenderRipple = false;
 
@@ -73,22 +74,28 @@ export class IconButton extends LitElement {
         aria-label="${ifDefined(this.ariaLabel)}"
         aria-haspopup="${ifDefined(this.ariaHasPopup)}"
         ?disabled="${this.disabled}"
-        @focus="${this.handleRippleFocus}"
-        @blur="${this.handleRippleBlur}"
-        @mousedown="${this.handleRippleMouseDown}"
-        @mouseenter="${this.handleRippleMouseEnter}"
-        @mouseleave="${this.handleRippleMouseLeave}"
-        @touchstart="${this.handleRippleTouchStart}"
-        @touchend="${this.handleRippleDeactivate}"
-        @touchcancel="${this.handleRippleDeactivate}"
+        @focus="${this.handleFocus}"
+        @blur="${this.handleBlur}"
+        @pointerdown="${this.handlePointerDown}"
+        @pointerup="${this.handlePointerUp}"
+        @pointercancel="${this.handlePointerCancel}"
+        @pointerleave="${this.handlePointerLeave}"
+        @pointerenter="${this.handlePointerEnter}"
+        @click="${this.handleClick}"
+        @clickmod="${this.handleClick}"
+        @contextmenu="${this.handleContextMenu}"
     >${this.renderRipple()}
-    ${this.renderIcon()}${this.renderTouchTarget()}<span><slot></slot></span>
+    ${this.renderIcon(this.icon)}${
+        this.renderTouchTarget()}<span><slot></slot></span>
   </button>`;
   }
 
   /** @soyTemplate */
-  protected renderIcon(): TemplateResult|string {
-    return this.icon ? html`<i class="material-icons">${this.icon}</i>` : '';
+  protected renderIcon(icon: string): TemplateResult|string {
+    // TODO(b/221096356): This method should be abstract.
+    // This should be overridden by subclass to provide the appropriate
+    // font icon (M3 or GM).
+    return '';
   }
 
   /** @soyTemplate */
@@ -96,40 +103,33 @@ export class IconButton extends LitElement {
     return html`<span class="md3-icon-button__touch"></span>`;
   }
 
-  @eventOptions({passive: true})
-  protected handleRippleMouseDown(event?: Event) {
-    const onUp = () => {
-      window.removeEventListener('mouseup', onUp);
-
-      this.handleRippleDeactivate();
-    };
-
-    window.addEventListener('mouseup', onUp);
-    this.rippleHandlers.startPress(event);
+  override beginPress({positionEvent}: BeginPressConfig) {
+    // TODO(b/149026822): remove `?? undefined`
+    this.rippleHandlers.startPress(positionEvent ?? undefined);
   }
 
-  @eventOptions({passive: true})
-  protected handleRippleTouchStart(event?: Event) {
-    this.rippleHandlers.startPress(event);
-  }
-
-  protected handleRippleDeactivate() {
+  override endPress(options: EndPressConfig) {
     this.rippleHandlers.endPress();
+    super.endPress(options);
   }
 
-  protected handleRippleMouseEnter() {
-    this.rippleHandlers.startHover();
+  protected handlePointerEnter(e: PointerEvent) {
+    // TODO(b/149026822): Remove check, handle in ripple
+    if (e.pointerType !== 'touch') {
+      this.rippleHandlers.startHover();
+    }
   }
 
-  protected handleRippleMouseLeave() {
+  override handlePointerLeave(e: PointerEvent) {
+    super.handlePointerLeave(e);
     this.rippleHandlers.endHover();
   }
 
-  protected handleRippleFocus() {
+  protected handleFocus() {
     this.rippleHandlers.startFocus();
   }
 
-  protected handleRippleBlur() {
+  protected handleBlur() {
     this.rippleHandlers.endFocus();
   }
 }

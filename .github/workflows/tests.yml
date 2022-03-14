@@ -3,27 +3,6 @@ name: tests
 on: [push, pull_request]
 
 jobs:
-  format:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
-      with:
-        node-version: 14
-
-    - name: NPM install
-      # ignore-scripts so that we skip postinstall, because postinstall runs
-      # bootstrap, and it's a little nicer to see that here as its own step
-      # when debugging.
-      run: npm ci --ignore-scripts
-
-    - name: Lerna bootstrap
-      run: npm run bootstrap
-
-    - name: Check format
-      run: npm run format:check
-
   tests:
     runs-on: ubuntu-latest
 

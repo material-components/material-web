@@ -4,7 +4,6 @@
 //
 
 @use 'sass:map';
-@use '@material/theme/state';
 @use '../../sass/typography';
 @use './text-field';
 
@@ -18,10 +17,13 @@
   @return $theme;
 }
 
-$_selectors: text-field.$selectors;
-
 @mixin theme-styles($theme) {
-  @include _caret-color(map.get($theme, caret-color));
+  @include _caret-color(
+    (
+      default: map.get($theme, caret-color),
+      focus: map.get($theme, focus-caret-color),
+    )
+  );
   @include _caret-error-color(
     (
       focus: map.get($theme, error-focus-caret-color),
@@ -39,17 +41,15 @@ $_selectors: text-field.$selectors;
 }
 
 @mixin _caret-color($colors) {
-  @include state.default($_selectors) {
-    @include _set-caret-color(state.get-default-state($colors));
-  }
+  @include _set-caret-color(map.get($colors, default));
 
-  @include state.focus($_selectors) {
-    @include _set-caret-color(state.get-focus-state($colors));
+  &:focus-within {
+    @include _set-caret-color(map.get($colors, focus));
   }
 }
 
 @mixin _caret-error-color($colors) {
-  @include state.error($_selectors) {
+  &.md3-text-field--error {
     @include _caret-color($colors);
   }
 }

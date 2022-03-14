@@ -6,26 +6,6 @@
 
 import {ReactiveController, ReactiveControllerHost} from 'lit';
 
-import {bound} from '../decorators/bound';
-
-/**
- * Some browsers don't allow focusing <button>s via the keyboard, requiring
- * special handling.
- *
- * @see https://stackoverflow.com/a/1914496/1431146
- * @see https://www.alexlande.com/articles/cross-browser-tabindex-woes/#so-what-happens
- * @see https://bugs.webkit.org/show_bug.cgi?id=13724#c7
- * @see https://bugzilla.mozilla.org/show_bug.cgi?id=756028
- * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Button#Clicking_and_focus
- */
-const BUTTON_FOCUS_ALLOWED: boolean = (() => {
-  const ua = window.navigator.userAgent;
-  const mac = ua.match('Macintosh');
-  const firefox = ua.match(/Gecko\/\d+/);
-  const safari = ua.match(/Version\/\d+/) && ua.match(/Safari\/\d+/);
-  return !mac || !firefox && !safari;
-})();
-
 /**
  * Enumeration to keep track of the lifecycle of a touch event.
  */
@@ -78,12 +58,37 @@ enum Phase {
 /**
  * Delay time from touchstart to when element#beginPress is invoked.
  */
-const TOUCH_DELAY_MS = 150;
+export const TOUCH_DELAY_MS = 150;
 
 /**
  * Delay time from beginning to wait for synthetic mouse events till giving up.
  */
-const WAIT_FOR_MOUSE_CLICK_MS = 500;
+export const WAIT_FOR_MOUSE_CLICK_MS = 500;
+
+/**
+ * Interface for argument to beginPress.
+ */
+export interface BeginPressConfig {
+  /**
+   * Event that was recorded at the start of the interaction.
+   * `null` if the press happened via keyboard.
+   */
+  positionEvent: Event|null;
+}
+
+/**
+ * Interface for argument to endPress.
+ */
+export interface EndPressConfig {
+  /**
+   * `true` if the press was cancelled.
+   */
+  cancelled: boolean;
+  /**
+   * Data object to pass along to clients in the `action` event, if relevant.
+   */
+  actionData?: {};
+}
 
 /**
  * The necessary interface for using an ActionController
@@ -93,19 +98,17 @@ export interface ActionControllerHost extends ReactiveControllerHost,
   disabled: boolean;
   /**
    * Determines if pointerdown or click events containing modifier keys should
-   * be ignored
+   * be ignored.
    */
   ignoreClicksWithModifiers?: boolean;
   /**
    * Called when a user interaction is determined to be a press.
-   * `positionEvent` can be used to determine location of the press
    */
-  beginPress(options: {positionEvent: Event|null}): void;
+  beginPress(config: BeginPressConfig): void;
   /**
    * Called when a press ends or is cancelled.
-   * `cancelled` will determine the difference between the two states.
    */
-  endPress(options: {cancelled: boolean}): void;
+  endPress(config: EndPressConfig): void;
 }
 
 // tslint:disable:no-new-decorators
@@ -163,7 +166,7 @@ export class ActionController implements ReactiveController {
   }
 
   /**
-   * Call `beginPress` on element with triggering event, if applicable
+   * Call `beginPress` on element with triggering event, if applicable.
    */
   private beginPress(positionEvent: Event|null = this.lastPositionEvent) {
     this.pressed = true;
@@ -171,7 +174,7 @@ export class ActionController implements ReactiveController {
   }
 
   /**
-   * Call `endPress` on element, and clean up timers
+   * Call `endPress` on element, and clean up timers.
    */
   private endPress() {
     this.pressed = false;
@@ -192,9 +195,10 @@ export class ActionController implements ReactiveController {
   }
 
   /**
-   * Call `endPress` with cancelled state on element, and cleanup timers
+   * Call `endPress` with cancelled state on element, and cleanup timers.
    */
   private cancelPress() {
+    this.pressed = false;
     this.cleanup();
     if (this.phase === Phase.TOUCH_DELAY) {
       this.setPhase(Phase.INACTIVE);
@@ -219,7 +223,7 @@ export class ActionController implements ReactiveController {
   private waitForClick() {
     this.setPhase(Phase.WAITING_FOR_MOUSE_CLICK);
     this.clickTimer = setTimeout(() => {
-      // If a click event does not occur, clean up the interaction state
+      // If a click event does not occur, clean up the interaction state.
       if (this.phase === Phase.WAITING_FOR_MOUSE_CLICK) {
         this.cancelPress();
       }
@@ -227,7 +231,7 @@ export class ActionController implements ReactiveController {
   }
 
   /**
-   * Check if event should trigger actions on the element
+   * Check if event should trigger actions on the element.
    */
   private shouldRespondToEvent(e: PointerEvent) {
     return !this.disabled && e.isPrimary;
@@ -236,7 +240,7 @@ export class ActionController implements ReactiveController {
   /**
    * Check if the event is within the bounds of the element.
    *
-   * This is only needed for the "stuck" contextmenu longpress on Chrome
+   * This is only needed for the "stuck" contextmenu longpress on Chrome.
    */
   private inBounds(ev: PointerEvent) {
     const {top, left, bottom, right} = this.element.getBoundingClientRect();
@@ -249,14 +253,14 @@ export class ActionController implements ReactiveController {
   }
 
   /**
-   * Cancel interactions if the element is removed from the DOM
+   * Cancel interactions if the element is removed from the DOM.
    */
   hostDisconnected() {
     this.cancelPress();
   }
 
   /**
-   * If the element becomes disabled, cancel interactions
+   * If the element becomes disabled, cancel interactions.
    */
   hostUpdated() {
     if (this.disabled) {
@@ -266,120 +270,103 @@ export class ActionController implements ReactiveController {
 
   // event listeners
   /**
-   * Pointer down event handler
+   * Pointer down event handler.
    */
-  @bound
-  pointerDown(e: PointerEvent) {
-    if (!this.shouldRespondToEvent(e) || this.phase !== Phase.INACTIVE) {
-      return;
-    }
-    if (this.isTouch(e)) {
-      // after a longpress contextmenu event, an extra `pointerdown` can be
-      // dispatched to the pressed element. Check that the down is within bounds
-      // of the element in this case.
-      if (this.checkBoundsAfterContextMenu && !this.inBounds(e)) {
-        return;
+  pointerDown =
+      (e: PointerEvent) => {
+        if (!this.shouldRespondToEvent(e) || this.phase !== Phase.INACTIVE) {
+          return;
+        }
+        if (this.isTouch(e)) {
+          // after a longpress contextmenu event, an extra `pointerdown` can be
+          // dispatched to the pressed element. Check that the down is within
+          // bounds of the element in this case.
+          if (this.checkBoundsAfterContextMenu && !this.inBounds(e)) {
+            return;
+          }
+          this.checkBoundsAfterContextMenu = false;
+          this.lastPositionEvent = e;
+          this.setPhase(Phase.TOUCH_DELAY);
+          this.touchTimer = setTimeout(() => {
+            this.touchDelayFinished();
+          }, TOUCH_DELAY_MS);
+        } else {
+          const leftButtonPressed = e.buttons === 1;
+          if (!leftButtonPressed ||
+              (this.ignoreClicksWithModifiers && this.eventHasModifiers(e))) {
+            return;
+          }
+          this.setPhase(Phase.WAITING_FOR_MOUSE_CLICK);
+          this.beginPress(e);
+        }
       }
-      this.checkBoundsAfterContextMenu = false;
-      this.lastPositionEvent = e;
-      this.setPhase(Phase.TOUCH_DELAY);
-      this.touchTimer = setTimeout(() => {
-        this.touchDelayFinished();
-      }, TOUCH_DELAY_MS);
-    } else {
-      const leftButtonPressed = e.buttons === 1;
-      if (!leftButtonPressed ||
-          (this.ignoreClicksWithModifiers && this.eventHasModifiers(e))) {
-        return;
+
+  /**
+   * Pointer up event handler.
+   */
+  pointerUp =
+      (e: PointerEvent) => {
+        if (!this.isTouch(e) || !this.shouldRespondToEvent(e)) {
+          return;
+        }
+        if (this.phase === Phase.HOLDING) {
+          this.waitForClick();
+        } else if (this.phase === Phase.TOUCH_DELAY) {
+          this.setPhase(Phase.RELEASING);
+          this.beginPress();
+          this.waitForClick();
+        }
       }
-      this.setPhase(Phase.WAITING_FOR_MOUSE_CLICK);
-      this.beginPress(e);
-    }
-  }
 
   /**
-   * Pointer up event handler
+   * Click event handler.
    */
-  @bound
-  pointerUp(e: PointerEvent) {
-    if (!this.isTouch(e) || !this.shouldRespondToEvent(e)) {
-      return;
-    }
-    if (this.phase === Phase.HOLDING) {
-      this.waitForClick();
-    } else if (this.phase === Phase.TOUCH_DELAY) {
-      this.setPhase(Phase.RELEASING);
-      this.beginPress();
-      this.waitForClick();
-    }
-  }
+  click =
+      (e: MouseEvent) => {
+        if (this.disabled ||
+            (this.ignoreClicksWithModifiers && this.eventHasModifiers(e))) {
+          return;
+        }
+        if (this.phase === Phase.WAITING_FOR_MOUSE_CLICK) {
+          this.endPress();
+          this.setPhase(Phase.INACTIVE);
+          return;
+        }
+
+        // keyboard synthesized click event
+        if (this.phase === Phase.INACTIVE && !this.pressed) {
+          this.press();
+        }
+      }
 
   /**
-   * Click event handler
+   * Pointer leave event handler.
    */
-  @bound
-  click(e: MouseEvent) {
-    if (this.disabled ||
-        (this.ignoreClicksWithModifiers && this.eventHasModifiers(e))) {
-      return;
-    }
-    if (this.phase === Phase.WAITING_FOR_MOUSE_CLICK) {
-      this.endPress();
-      this.setPhase(Phase.INACTIVE);
-      return;
-    }
-
-    // keyboard synthesized click event
-    if (this.phase === Phase.INACTIVE && !this.pressed) {
-      this.press();
-    }
-  }
+  pointerLeave =
+      (e: PointerEvent) => {
+        // cancel a held press that moves outside the element
+        if (this.shouldRespondToEvent(e) && !this.isTouch(e) && this.pressed) {
+          this.cancelPress();
+        }
+      }
 
   /**
-   * Pointer leave event handler
+   * Pointer cancel event handler.
    */
-  @bound
-  pointerLeave(e: PointerEvent) {
-    // cancel a held press that moves outside the element
-    if (this.shouldRespondToEvent(e) && !this.isTouch(e) && this.pressed) {
-      this.cancelPress();
-    }
-  }
+  pointerCancel =
+      (e: PointerEvent) => {
+        if (this.shouldRespondToEvent(e)) {
+          this.cancelPress();
+        }
+      }
 
   /**
-   * Pointer cancel event handler
+   * Contextmenu event handler.
    */
-  @bound
-  pointerCancel(e: PointerEvent) {
-    if (this.shouldRespondToEvent(e)) {
-      this.cancelPress();
-    }
-  }
-
-  /**
-   * Contextmenu event handler
-   */
-  @bound
-  contextMenu() {
+  contextMenu = () => {
     if (!this.disabled) {
       this.checkBoundsAfterContextMenu = true;
       this.cancelPress();
-    }
-  }
-
-  /**
-   * Blur event handler
-   */
-  @bound
-  blur() {
-    // Ignore blur before pointerend/pointercancel/pointerup/click. The reason
-    // for this is that Mac Firefox/Safari blur buttons on pointerdown.
-    if (this.phase !== Phase.TOUCH_DELAY &&
-        (BUTTON_FOCUS_ALLOWED ||
-         this.phase !== Phase.WAITING_FOR_MOUSE_CLICK)) {
-      setTimeout(() => {
-        this.cancelPress();
-      }, 5);
     }
   }
 }

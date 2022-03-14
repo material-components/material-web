@@ -5,13 +5,6 @@
 
 @use 'sass:map';
 
-$selectors: (
-  disabled: '.md3-field--disabled',
-  error: '.md3-field--error',
-  focus: '.md3-field--focus',
-  hover: ':hover',
-);
-
 @mixin theme-styles($theme) {
   @include _container-height(map.get($theme, container-height));
 }

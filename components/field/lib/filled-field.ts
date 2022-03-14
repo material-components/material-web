@@ -4,25 +4,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, TemplateResult} from 'lit';
-import {queryAsync, state} from 'lit/decorators';
+import {html, PropertyValues, TemplateResult} from 'lit';
+import {state} from 'lit/decorators';
 import {ClassInfo} from 'lit/directives/class-map';
 import {styleMap} from 'lit/directives/style-map';
 
 import {Field} from './field';
-import {FilledFieldFoundation} from './foundation';
-import {FilledFieldState, LabelType} from './state';
 
 /** @soyCompatible */
-export class FilledField extends Field implements FilledFieldState {
-  @state() strokeTransformOrigin = '';
-  get rootRect() {
-    return this.rootEl.then(el => el.getBoundingClientRect());
-  }
-  @queryAsync('.md3-field') protected readonly rootEl!: Promise<HTMLElement>;
-
-  protected foundation = new FilledFieldFoundation(
-      {state: this, animateLabel: this.animateLabel.bind(this)});
+export class FilledField extends Field {
+  @state() protected strokeTransformOrigin = '';
 
   /** @soyTemplate */
   protected override getRenderClasses(): ClassInfo {
@@ -56,13 +47,42 @@ export class FilledField extends Field implements FilledFieldState {
   /** @soyTemplate */
   protected override renderMiddleContents(): TemplateResult {
     return html`
-      ${this.renderLabel(LabelType.FLOATING)}
-      ${this.renderLabel(LabelType.RESTING)}
+      ${this.renderFloatingLabel()}
+      ${this.renderRestingLabel()}
       ${super.renderMiddleContents()}
     `;
   }
 
-  private handleClick(e: MouseEvent|TouchEvent) {
-    this.foundation.handleClick(e);
+  protected handleClick(event: MouseEvent|TouchEvent) {
+    if (this.disabled) {
+      return;
+    }
+
+    this.updateStrokeTransformOrigin(event);
+  }
+
+  // TODO(b/218700023): set to protected
+  override handleFocusOut() {
+    super.handleFocusOut();
+
+    // Upon losing focus, the stroke resets to expanding from the center, such
+    // as when re-focusing with a keyboard.
+    if (!this.focused) {
+      this.updateStrokeTransformOrigin();
+    }
+  }
+
+  protected async updateStrokeTransformOrigin(event?: MouseEvent|TouchEvent) {
+    let transformOrigin = '';
+    if (event) {
+      // Can't use instanceof TouchEvent since Firefox does not provide the
+      // constructor globally.
+      const isTouchEvent = 'touches' in event;
+      const eventX = isTouchEvent ? event.touches[0].clientX : event.clientX;
+      const rootRect = this.getBoundingClientRect();
+      transformOrigin = `${eventX - rootRect.x}px`;
+    }
+
+    this.strokeTransformOrigin = transformOrigin;
   }
 }

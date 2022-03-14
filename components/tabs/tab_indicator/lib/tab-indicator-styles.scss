@@ -1,0 +1,19 @@
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use './tab-indicator' as tabindicator;
+@use './tab-indicator-theme' as tabindicator-theme;
+@use 'third_party/javascript/material_web_components/icon/_mwc-icon.scss';
+
+@include tabindicator.core-styles();
+
+.md3-tab-indicator {
+  @include tabindicator-theme.theme-styles(tabindicator-theme.$light-theme);
+}
+
+.material-icons {
+  @extend %material-icons;
+}

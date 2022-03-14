@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import '../field/outlined-field';
+
+import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators';
 
 import {styles as outlinedStyles} from './lib/outlined-styles.css';
@@ -24,4 +27,20 @@ declare global {
 @customElement('md-outlined-text-field')
 export class MdOutlinedTextField extends OutlinedTextField {
   static override styles = [sharedStyles, outlinedStyles];
+
+  /** @soyTemplate */
+  protected override renderField(): TemplateResult {
+    return html`
+      <md-outlined-field
+        id=${this.fieldID}
+        .disabled=${this.disabled}
+        .error=${this.error}
+        .label=${this.label}
+        .populated=${Boolean(this.value)}
+        .required=${this.required}
+      >
+        ${this.renderFieldContent()}
+      </md-outlined-field>
+    `;
+  }
 }

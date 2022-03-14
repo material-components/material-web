@@ -43,7 +43,7 @@ function renderSwitch(propsInit: Partial<SwitchProps> = {}) {
       ?disabled=${propsInit.disabled === true}
       .name=${propsInit.name ?? ''}
       value=${ifDefined(propsInit.value)}></md-test-switch>
-  `
+  `;
 }
 
 function renderSwitchInForm(propsInit: Partial<SwitchProps> = {}) {
@@ -75,7 +75,7 @@ describe('mwc-switch', () => {
 
   beforeEach(async () => {
     toggle = await switchElement();
-  })
+  });
 
   describe('selected', () => {
     let selected: TestSwitch;

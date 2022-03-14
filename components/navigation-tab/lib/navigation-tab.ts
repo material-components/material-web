@@ -5,8 +5,8 @@
  */
 
 import '@material/mwc-ripple/mwc-ripple';
+import '../../focus/focus-ring';
 
-import {ariaProperty} from '@material/mwc-base/aria-property';
 import {BaseElement} from '@material/mwc-base/base-element';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
@@ -14,6 +14,9 @@ import {html, TemplateResult} from 'lit';
 import {eventOptions, property, query, queryAsync, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
+
+import {ariaProperty} from '../../decorators/aria-property';
+import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
 
 import {MDCNavigationTabFoundation} from './foundation';
 import {MDCNavigationTabAdapter, MDCNavigationTabState} from './state';
@@ -30,16 +33,19 @@ export class NavigationTab extends BaseElement implements
 
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 
+  @state() protected showFocusRing = false;
+
   @state() protected shouldRenderRipple = false;
   protected rippleHandlers = new RippleHandlers(() => {
     this.shouldRenderRipple = true;
     return this.ripple;
   });
 
-  /** @soyPrefixAttribute */  // tslint:disable-next-line:no-new-decorators
+  // TODO(b/210730484): replace with @soyParam annotation
+  // tslint:disable-next-line:no-new-decorators
   @ariaProperty
-  @property({attribute: 'aria-label'})
-  override ariaLabel?: string;
+  @property({type: String, attribute: 'data-aria-label', noAccessor: true})
+  override ariaLabel!: string;
 
   // BaseElement
   @query('.md3-navigation-tab') protected mdcRoot!: HTMLElement;
@@ -67,7 +73,7 @@ export class NavigationTab extends BaseElement implements
         @touchstart="${this.handleRippleTouchStart}"
         @touchend="${this.handleRippleTouchEnd}"
         @touchcancel="${this.handleRippleTouchEnd}"
-      >${this.renderRipple()}
+      >${this.renderFocusRing()}${this.renderRipple()}
         <span class="md3-navigation-tab__icon-content"
           ><span class="md3-navigation-tab__active-indicator"
             ></span><span class="md3-navigation-tab__icon"
@@ -86,6 +92,12 @@ export class NavigationTab extends BaseElement implements
       'md3-navigation-tab--hide-inactive-label': this.hideInactiveLabel,
       'md3-navigation-tab--active': this.active,
     };
+  }
+
+  /** @soyTemplate */
+  protected renderFocusRing(): TemplateResult {
+    return html`<md-focus-ring .visible="${
+        this.showFocusRing}"></md-focus-ring>`;
   }
 
   /** @soyTemplate */
@@ -146,10 +158,12 @@ export class NavigationTab extends BaseElement implements
   }
 
   protected handleRippleFocus() {
+    this.showFocusRing = shouldShowStrongFocus();
     this.rippleHandlers.startFocus();
   }
 
   protected handleRippleBlur() {
+    this.showFocusRing = false;
     this.rippleHandlers.endFocus();
   }
 
@@ -163,6 +177,7 @@ export class NavigationTab extends BaseElement implements
 
     window.addEventListener('mouseup', onUp);
     this.rippleHandlers.startPress(event);
+    pointerPress();
   }
 
   protected handleRippleMouseEnter() {

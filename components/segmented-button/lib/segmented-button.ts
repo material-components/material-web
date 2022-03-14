@@ -5,7 +5,7 @@
  */
 
 import {html, LitElement, TemplateResult} from 'lit';
-import {property, query, queryAssignedNodes, state} from 'lit/decorators';
+import {property, query, queryAssignedElements, state} from 'lit/decorators';
 import {ifDefined} from 'lit/directives/if-defined';
 
 import {bound} from '../../decorators/bound';
@@ -84,7 +84,7 @@ abstract class SegmentedButtonSet extends LitElement implements
     SegmentedButtonSetState {
   abstract isMultiselect: boolean;
 
-  @queryAssignedNodes('', true, '*') buttons!: SegmentedButton[];
+  @queryAssignedElements({flatten: true}) buttons!: SegmentedButton[];
 
   get isRTL() {
     return window.getComputedStyle(this).direction === 'rtl';

@@ -6,7 +6,7 @@
 // !!! THIS FILE WAS AUTOMATICALLY GENERATED !!!
 // !!! DO NOT MODIFY IT BY HAND !!!
 // Design system display name: Material 3
-// Design system version name: v0.75
+// Design system version name: v0.87
 //
 
 @use 'sass:map';
@@ -22,7 +22,7 @@
 @use './md-sys-typescale';
 
 $_default: (
-  md-sys-color: md-sys-color.values-light(),
+  md-sys-color: md-sys-color.values-light-dynamic(),
   md-sys-elevation: md-sys-elevation.values(),
   md-sys-shape: md-sys-shape.values(),
   md-sys-state: md-sys-state.values(),
@@ -33,7 +33,7 @@ $_default: (
   @return (
     active-indicator-color: map.get($deps, md-sys-color, secondary-container),
     active-indicator-height: if($exclude-hardcoded-values, null, 32px),
-    active-indicator-shape: map.get($deps, md-sys-shape, corner-large),
+    active-indicator-shape: map.get($deps, md-sys-shape, corner-full),
     active-indicator-width: if($exclude-hardcoded-values, null, 64px),
     active-focus-icon-color:
       map.get($deps, md-sys-color, on-secondary-container),
@@ -45,19 +45,11 @@ $_default: (
     active-hover-state-layer-color: map.get($deps, md-sys-color, on-surface),
     active-icon-color: map.get($deps, md-sys-color, on-secondary-container),
     active-label-text-color: map.get($deps, md-sys-color, on-surface),
-    active-large-badge-label-color:
-      map.get($deps, md-sys-color, secondary-container),
-    active-large-badge-color:
-      map.get($deps, md-sys-color, on-secondary-container),
-    active-large-badge-outline-color:
-      map.get($deps, md-sys-color, secondary-container),
     active-pressed-icon-color:
       map.get($deps, md-sys-color, on-secondary-container),
     active-pressed-label-text-color: map.get($deps, md-sys-color, on-surface),
     active-pressed-state-layer-color: map.get($deps, md-sys-color, on-surface),
     badge-color: map.get($deps, md-sys-color, error),
-    badge-outline-color: map.get($deps, md-sys-color, surface),
-    badge-outline-width: if($exclude-hardcoded-values, null, 2px),
     badge-shape: if($exclude-hardcoded-values, null, 3px),
     badge-size: if($exclude-hardcoded-values, null, 6px),
     container-color: map.get($deps, md-sys-color, surface),
@@ -66,7 +58,7 @@ $_default: (
     container-shadow-color: map.get($deps, md-sys-color, shadow),
     container-shape: map.get($deps, md-sys-shape, corner-none),
     container-surface-tint-layer-color:
-      map.get($deps, md-sys-elevation, surface-tint-color),
+      map.get($deps, md-sys-color, surface-tint),
     focus-state-layer-opacity:
       map.get($deps, md-sys-state, focus-state-layer-opacity),
     hover-state-layer-opacity:
@@ -80,17 +72,10 @@ $_default: (
     inactive-hover-state-layer-color: map.get($deps, md-sys-color, on-surface),
     inactive-icon-color: map.get($deps, md-sys-color, on-surface-variant),
     inactive-label-text-color: map.get($deps, md-sys-color, on-surface-variant),
-    inactive-large-badge-label-color: map.get($deps, md-sys-color, on-error),
-    inactive-large-badge-color: map.get($deps, md-sys-color, error),
-    inactive-large-badge-outline-color: map.get($deps, md-sys-color, surface),
     inactive-pressed-icon-color: map.get($deps, md-sys-color, on-surface),
     inactive-pressed-label-text-color: map.get($deps, md-sys-color, on-surface),
     inactive-pressed-state-layer-color: map.get($deps, md-sys-color, on-surface),
     label-text-font: map.get($deps, md-sys-typescale, label-medium-font),
-    label-text-font-family: map.get($deps, md-sys-typescale, label-medium-font),
-    label-text-font-size: map.get($deps, md-sys-typescale, label-medium-size),
-    label-text-letter-spacing:
-      map.get($deps, md-sys-typescale, label-medium-tracking),
     label-text-line-height:
       map.get($deps, md-sys-typescale, label-medium-line-height),
     label-text-size: map.get($deps, md-sys-typescale, label-medium-size),
@@ -103,26 +88,7 @@ $_default: (
           null
       ),
     label-text-weight: map.get($deps, md-sys-typescale, label-medium-weight),
-    large-badge-label-color: map.get($deps, md-sys-color, on-error),
-    large-badge-label-font-family:
-      map.get($deps, md-sys-typescale, label-small-font),
-    large-badge-label-font-size:
-      map.get($deps, md-sys-typescale, label-small-size),
-    large-badge-label-letter-spacing:
-      map.get($deps, md-sys-typescale, label-small-tracking),
-    large-badge-label-line-height:
-      map.get($deps, md-sys-typescale, label-small-line-height),
-    large-badge-label-type:
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Typography composite token is not supported. Please use discrete typography tokens. */
-          null
-      ),
-    large-badge-label-weight:
-      map.get($deps, md-sys-typescale, label-small-weight),
     large-badge-color: map.get($deps, md-sys-color, error),
-    large-badge-outline-width: if($exclude-hardcoded-values, null, 2px),
     large-badge-shape: if($exclude-hardcoded-values, null, 8px),
     large-badge-size: if($exclude-hardcoded-values, null, 16px),
     pressed-state-layer-opacity:

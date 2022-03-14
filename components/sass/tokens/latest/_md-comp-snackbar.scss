@@ -6,7 +6,7 @@
 // !!! THIS FILE WAS AUTOMATICALLY GENERATED !!!
 // !!! DO NOT MODIFY IT BY HAND !!!
 // Design system display name: Material 3
-// Design system version name: v0.75
+// Design system version name: v0.87
 //
 
 @use 'sass:map';
@@ -22,7 +22,7 @@
 @use './md-sys-typescale';
 
 $_default: (
-  md-sys-color: md-sys-color.values-light(),
+  md-sys-color: md-sys-color.values-light-dynamic(),
   md-sys-elevation: md-sys-elevation.values(),
   md-sys-shape: md-sys-shape.values(),
   md-sys-state: md-sys-state.values(),
@@ -60,8 +60,22 @@ $_default: (
     container-elevation: map.get($deps, md-sys-elevation, level3),
     container-shadow-color: map.get($deps, md-sys-color, shadow),
     container-shape: map.get($deps, md-sys-shape, corner-extra-small),
-    container-width: if($exclude-hardcoded-values, null, 344px),
     icon-color: map.get($deps, md-sys-color, inverse-on-surface),
+    icon-focus-icon-color: map.get($deps, md-sys-color, inverse-on-surface),
+    icon-focus-state-layer-color:
+      map.get($deps, md-sys-color, inverse-on-surface),
+    icon-focus-state-layer-opacity:
+      map.get($deps, md-sys-state, focus-state-layer-opacity),
+    icon-hover-icon-color: map.get($deps, md-sys-color, inverse-on-surface),
+    icon-hover-state-layer-color:
+      map.get($deps, md-sys-color, inverse-on-surface),
+    icon-hover-state-layer-opacity:
+      map.get($deps, md-sys-state, hover-state-layer-opacity),
+    icon-pressed-icon-color: map.get($deps, md-sys-color, inverse-on-surface),
+    icon-pressed-state-layer-color:
+      map.get($deps, md-sys-color, inverse-on-surface),
+    icon-pressed-state-layer-opacity:
+      map.get($deps, md-sys-state, pressed-state-layer-opacity),
     icon-size: if($exclude-hardcoded-values, null, 24px),
     supporting-text-color: map.get($deps, md-sys-color, inverse-on-surface),
     supporting-text-font: map.get($deps, md-sys-typescale, body-medium-font),

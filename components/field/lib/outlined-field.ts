@@ -8,14 +8,9 @@ import {html, TemplateResult} from 'lit';
 import {ClassInfo} from 'lit/directives/class-map';
 
 import {Field} from './field';
-import {OutlinedFieldFoundation} from './foundation';
-import {LabelType, OutlinedFieldState} from './state';
 
 /** @soyCompatible */
-export class OutlinedField extends Field implements OutlinedFieldState {
-  protected foundation = new OutlinedFieldFoundation(
-      {state: this, animateLabel: this.animateLabel.bind(this)});
-
+export class OutlinedField extends Field {
   /** @soyTemplate */
   protected override getRenderClasses(): ClassInfo {
     return {
@@ -40,7 +35,7 @@ export class OutlinedField extends Field implements OutlinedFieldState {
         <span class="md3-field__outline-notch">
           <span class="md3-field__outline-panel-inactive"></span>
           <span class="md3-field__outline-panel-active"></span>
-          ${this.renderLabel(LabelType.FLOATING)}
+          ${this.renderFloatingLabel()}
         </span>
         <span class="md3-field__outline-end"></span>
       </span>
@@ -50,7 +45,7 @@ export class OutlinedField extends Field implements OutlinedFieldState {
   /** @soyTemplate */
   protected override renderMiddleContents(): TemplateResult {
     return html`
-      ${this.renderLabel(LabelType.RESTING)}
+      ${this.renderRestingLabel()}
       ${super.renderMiddleContents()}
     `;
   }

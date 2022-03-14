@@ -30,7 +30,6 @@
 @mixin table() {
   border: 1px solid;
   border-collapse: collapse;
-  z-index: -1; // Allow background grid to be placed behind content
 }
 
 @mixin cell() {

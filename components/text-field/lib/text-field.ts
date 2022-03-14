@@ -2,6 +2,8 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ *
+ * @requirecss {text_field.lib.shared_styles}
  */
 
 import {html, LitElement, TemplateResult} from 'lit';
@@ -13,17 +15,12 @@ import {live} from 'lit/directives/live';
 import {redispatchEvent} from '../../controller/events';
 import {FormController, getFormValue} from '../../controller/form-controller';
 import {ariaProperty} from '../../decorators/aria-property';
-import {Field} from '../../field/lib/field';
-
-import {TextFieldFoundation} from './foundation';
-import {TextFieldState} from './state';
 
 /** @soyCompatible */
-export abstract class TextField extends LitElement implements TextFieldState {
+export class TextField extends LitElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
-  // TextFieldState
   @property({type: Boolean, reflect: true}) disabled = false;
   @property({type: Boolean, reflect: true}) error = false;
   @property({type: String}) label?: string;
@@ -52,17 +49,15 @@ export abstract class TextField extends LitElement implements TextFieldState {
   @property({type: Boolean, reflect: true}) readonly = false;
   @property({type: String, reflect: true}) type = 'text';
 
-  protected abstract readonly field: Promise<Field>;
   @state()
   protected fieldID = 'field';
   @queryAsync('.md3-text-field__input')
   protected readonly input!: Promise<HTMLInputElement>;
 
-  protected foundation = new TextFieldFoundation({state: this});
-
   constructor() {
     super();
     this.addController(new FormController(this));
+    this.addEventListener('click', this.handleClick);
   }
 
   /** @soyTemplate */
@@ -83,7 +78,9 @@ export abstract class TextField extends LitElement implements TextFieldState {
   }
 
   /** @soyTemplate */
-  protected abstract renderField(): TemplateResult;
+  protected renderField(): TemplateResult {
+    return html``;
+  }
 
   /** @soyTemplate */
   protected renderFieldContent(): TemplateResult {
@@ -99,20 +96,21 @@ export abstract class TextField extends LitElement implements TextFieldState {
         .required=${this.required}
         .type=${this.type}
         .value=${live(this.value)}
-        @blur=${this.handleBlur}
         @change=${this.redispatchEvent}
-        @focus=${this.handleFocus}
         @input=${this.handleInput}
+        @select=${this.redispatchEvent}
       >
     `;
   }
 
-  protected async handleBlur() {
-    (await this.field).focused = false;
-  }
+  protected handleClick() {
+    if (this.disabled) {
+      return;
+    }
 
-  protected async handleFocus() {
-    (await this.field).focused = true;
+    if (!this.matches(':focus-within')) {
+      this.focus();
+    }
   }
 
   protected handleInput(event: InputEvent) {
@@ -120,6 +118,7 @@ export abstract class TextField extends LitElement implements TextFieldState {
     this.redispatchEvent(event);
   }
 
-  // TODO(b/209811542): check l2w compatibility
-  protected redispatchEvent = redispatchEvent.bind(this);
+  protected redispatchEvent(event: Event) {
+    redispatchEvent.call(this, event);
+  }
 }

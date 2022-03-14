@@ -6,7 +6,7 @@
 // !!! THIS FILE WAS AUTOMATICALLY GENERATED !!!
 // !!! DO NOT MODIFY IT BY HAND !!!
 // Design system display name: Material 3
-// Design system version name: v0.75
+// Design system version name: v0.87
 //
 
 @use 'sass:map';
@@ -16,7 +16,7 @@
 @use './md-sys-state';
 
 $_default: (
-  md-sys-color: md-sys-color.values-light(),
+  md-sys-color: md-sys-color.values-light-dynamic(),
   md-sys-state: md-sys-state.values(),
 );
 
@@ -40,7 +40,7 @@ $_default: (
     selected-pressed-state-layer-color: map.get($deps, md-sys-color, on-surface),
     selected-pressed-state-layer-opacity:
       map.get($deps, md-sys-state, pressed-state-layer-opacity),
-    state-layer-size: if($exclude-hardcoded-values, null, 48px),
+    state-layer-size: if($exclude-hardcoded-values, null, 40px),
     unselected-focus-icon-color: map.get($deps, md-sys-color, on-surface),
     unselected-focus-state-layer-color: map.get($deps, md-sys-color, on-surface),
     unselected-focus-state-layer-opacity:

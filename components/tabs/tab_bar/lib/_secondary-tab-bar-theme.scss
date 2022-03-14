@@ -1,0 +1,48 @@
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use 'sass:map';
+@use '@material/theme/map-ext';
+@use '../../../sass/theme';
+@use '../../tab/lib/secondary-tab-theme' as tab-theme;
+@use '../../tab_indicator/lib/tab-indicator-theme';
+@use '@material/theme/theme-color';
+@use '@material/elevation/elevation-theme';
+@use '@material/typography/typography';
+@use '../../../sass/tokens';
+
+$custom-property-prefix: 'secondary-tab-bar';
+$light-theme: tokens.md-comp-secondary-navigation-tab-values();
+$dark-theme: tokens.md-comp-secondary-navigation-tab-values(
+  (
+    md-sys-color: tokens.md-sys-color-values-dark(),
+    md-sys-elevation:
+      tokens.md-sys-elevation-values(
+        $deps: (
+          md-sys-color: tokens.md-sys-color-values-dark(),
+        ),
+        $exclude-hardcoded-values: true,
+      ),
+  ),
+  $exclude-hardcoded-values: true
+);
+
+@mixin secondary-navigation-tab-theme($theme) {
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix);
+  @include theme.emit-theme-vars($theme);
+}
+
+@mixin secondary-navigation-tab-theme-styles($theme) {
+  ::slotted(md-secondary-tab) {
+    @include tab-theme.secondary-navigation-tab-theme(
+      map-ext.pick($theme, map.keys(tab-theme.$light-theme)...)
+    );
+    @include tab-indicator-theme.theme(
+      map-ext.pick($theme, map.keys(tab-indicator-theme.$light-theme)...)
+    );
+  }
+}

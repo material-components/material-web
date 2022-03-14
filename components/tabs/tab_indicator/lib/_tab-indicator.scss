@@ -1,0 +1,124 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use '@material/animation/animation';
+
+@mixin static-styles() {
+  .md3-tab-indicator {
+    display: flex;
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    justify-content: center;
+    block-size: 100%;
+    inline-size: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .md3-tab-indicator__content {
+    transform-origin: left;
+    opacity: 0;
+  }
+
+  .md3-tab-indicator__content--underline {
+    align-self: flex-end;
+    box-sizing: border-box;
+    width: 100%;
+    border-block-start-style: solid;
+  }
+
+  .md3-tab-indicator__content--icon {
+    align-self: center;
+    margin-block: 0;
+    margin-inline: auto;
+  }
+
+  .md3-tab-indicator--active .md3-tab-indicator__content {
+    opacity: 1;
+  }
+
+  // Slide by default
+  .md3-tab-indicator .md3-tab-indicator__content {
+    transition: 250ms transform animation.$standard-curve-timing-function;
+  }
+
+  // --no-transition is applied in cases where styles need to be applied immediately to set up a transition
+  .md3-tab-indicator--no-transition .md3-tab-indicator__content {
+    transition: none;
+  }
+
+  .md3-tab-indicator--fade .md3-tab-indicator__content {
+    transition: 150ms opacity linear;
+  }
+
+  .md3-tab-indicator--active.md3-tab-indicator--fade {
+    .md3-tab-indicator__content {
+      transition-delay: 100ms;
+    }
+  }
+}
+
+@mixin core-styles() {
+  .md3-tab-indicator {
+    @include base_();
+  }
+
+  @include static-styles();
+}
+
+@mixin surface() {
+  position: relative;
+}
+
+@mixin underline-color($color) {
+  .md3-tab-indicator__content--underline {
+    border-color: $color;
+  }
+}
+
+@mixin underline-height($height) {
+  .md3-tab-indicator__content--underline {
+    border-block-start-width: $height;
+  }
+}
+
+@mixin underline-shape($radius) {
+  .md3-tab-indicator__content--underline {
+    border-radius: $radius;
+  }
+}
+
+@mixin underline-top-corner-radius($radius) {
+  .md3-tab-indicator__content--underline {
+    border-start-start-radius: $radius;
+    border-start-end-radius: $radius;
+  }
+}
+
+@mixin icon-color($color) {
+  .md3-tab-indicator__content--icon {
+    color: $color;
+  }
+}
+
+@mixin icon-height($height) {
+  .md3-tab-indicator__content--icon {
+    inline-size: $height;
+    font-size: $height;
+  }
+}
+
+//
+// Private
+//
+
+@mixin base_() {
+  @include underline-color(primary);
+  @include icon-color(secondary);
+  @include underline-height(2px);
+  @include icon-height(34px);
+}

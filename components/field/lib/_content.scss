@@ -21,7 +21,7 @@
     @include content;
 
     .md3-field--no-label &,
-    .md3-field--focus &,
+    .md3-field:focus-within &,
     .md3-field--populated & {
       @include content-visible;
     }

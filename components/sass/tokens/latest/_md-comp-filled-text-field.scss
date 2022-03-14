@@ -6,7 +6,7 @@
 // !!! THIS FILE WAS AUTOMATICALLY GENERATED !!!
 // !!! DO NOT MODIFY IT BY HAND !!!
 // Design system display name: Material 3
-// Design system version name: v0.75
+// Design system version name: v0.87
 //
 
 @use 'sass:map';
@@ -20,7 +20,7 @@
 @use './md-sys-typescale';
 
 $_default: (
-  md-sys-color: md-sys-color.values-light(),
+  md-sys-color: md-sys-color.values-light-dynamic(),
   md-sys-shape: md-sys-shape.values(),
   md-sys-state: md-sys-state.values(),
   md-sys-typescale: md-sys-typescale.values(),
@@ -99,6 +99,8 @@ $_default: (
     input-text-font: map.get($deps, md-sys-typescale, body-large-font),
     input-text-line-height:
       map.get($deps, md-sys-typescale, body-large-line-height),
+    input-text-placeholder-color:
+      map.get($deps, md-sys-color, on-surface-variant),
     input-text-size: map.get($deps, md-sys-typescale, body-large-size),
     input-text-tracking: map.get($deps, md-sys-typescale, body-large-tracking),
     input-text-type:

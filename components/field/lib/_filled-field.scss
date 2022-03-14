@@ -16,7 +16,7 @@ $_animation-duration: 150ms;
       @include container;
     }
 
-    @include state.hover(field-theme.$selectors) {
+    &:not(.md3-field--disabled):hover {
       .md3-field__state-layer {
         @include container-state-layer-hover;
       }
@@ -34,7 +34,7 @@ $_animation-duration: 150ms;
   .md3-field__active-indicator {
     @include active-indicator;
 
-    .md3-field--focus & {
+    .md3-field:focus-within & {
       @include active-indicator-focus;
     }
   }

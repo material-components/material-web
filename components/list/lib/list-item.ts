@@ -5,17 +5,21 @@
  */
 
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
-import {property, queryAssignedNodes, state} from 'lit/decorators';
+import {property, queryAssignedElements, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
+
+import {ARIARole} from '../../types/aria';
 
 /** @soyCompatible */
 export class ListItem extends LitElement {
   @property({type: String}) supportingText = '';
   @property({type: String}) trailingSupportingText = '';
 
-  @queryAssignedNodes('start', true) protected startElement!: HTMLElement[];
+  @queryAssignedElements({slot: 'start', flatten: true})
+  protected startElement!: HTMLElement[];
 
-  @queryAssignedNodes('end', true) protected endElement!: HTMLElement[];
+  @queryAssignedElements({slot: 'end', flatten: true})
+  protected endElement!: HTMLElement[];
 
   @property() hasLeadingIcon = false;
   @property() hasTrailingIcon = false;
@@ -30,11 +34,17 @@ export class ListItem extends LitElement {
     return html`
       <li
           tabindex="0"
+          role=${this.getAriaRole()}
           class="md3-list-item ${classMap(this.getRenderClasses())}"><!--
         -->${this.renderStart()}<!--
         -->${this.renderBody()}<!--
         -->${this.renderEnd()}<!--
       --></li>`;
+  }
+
+  /** @soyTemplate */
+  protected getAriaRole(): ARIARole {
+    return 'listitem';
   }
 
   /** @soyTemplate */

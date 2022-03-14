@@ -6,7 +6,9 @@
 
 import {LitElement} from 'lit';
 
-import {ActionController, ActionControllerHost} from '../controller/action-controller';
+import {ActionController, ActionControllerHost, BeginPressConfig, EndPressConfig} from '../controller/action-controller';
+
+export {BeginPressConfig, EndPressConfig};
 
 /**
  * @soyCompatible
@@ -35,7 +37,7 @@ export abstract class ActionElement extends LitElement implements
    * @param options `positionEvent` is the Event that is considered the
    * beginning of the press. Null if this was a keyboard interaction.
    */
-  beginPress(options: {positionEvent: Event|null}) {}
+  beginPress(options: BeginPressConfig) {}
 
   /**
    * Hook method called when the control goes from a pressed to unpressed
@@ -45,7 +47,15 @@ export abstract class ActionElement extends LitElement implements
    *    Subclasses which trigger events on endPress() should check the value
    *    of this flag, and modify their behavior accordingly.
    */
-  endPress(options: {cancelled: boolean}) {}
+  endPress({cancelled, actionData}: EndPressConfig) {
+    if (!cancelled) {
+      this.dispatchEvent(new CustomEvent('action', {
+        detail: actionData,
+        bubbles: true,
+        composed: true,
+      }));
+    }
+  }
 
   /**
    * Hook method for the ActionController.
@@ -90,15 +100,6 @@ export abstract class ActionElement extends LitElement implements
    */
   handleClick(e: MouseEvent) {
     this.actionController.click(e);
-  }
-
-  /**
-   * Hook method for the ActionController.
-   * Subclasses should add this method as an event handler on the interactive
-   * template element with `@blur="${this.handleBlur}"`
-   */
-  handleBlur() {
-    this.actionController.blur();
   }
 
   /**

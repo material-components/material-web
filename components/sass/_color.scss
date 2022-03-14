@@ -1,3 +1,8 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
 @use 'sass:list';
 @use 'sass:string';
 @use 'sass:meta';
@@ -23,16 +28,8 @@
 
   $fallback: var.fallback($var);
   // var(--foo-color-rgb, 31,31,31)
-  $var-rgb: var.create(
-    string-ext.append(var.name($var), '-rgb'),
-    hex-to-rgb($fallback)
-  );
-
-  $output: string-ext.append('rgb(', $var-rgb);
-  $output: string-ext.append($output, ', ');
-  $output: string-ext.append($output, #{$opacity});
-  $output: string-ext.append($output, ')');
-  @return string.unquote($output);
+  $var-rgb: var.create('#{var.name($var)}-rgb', hex-to-rgb($fallback));
+  @return string.unquote('rgb(#{$var-rgb}, #{$opacity})');
 }
 
 $_hex: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'a' 'b' 'c' 'd' 'e' 'f';

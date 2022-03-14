@@ -1,0 +1,494 @@
+//
+// Copyright 2016 Google Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
+
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:selector';
+@use '@material/touch-target/touch-target';
+@use '@material/theme/shadow-dom';
+@use '../../sass/theme';
+@use '../../sass/tokens';
+@use '../../sass/var';
+@use '../../ripple/ripple-theme';
+
+$_sys-color-light-values: tokens.md-sys-color-values-light();
+
+$baseline-theme-color: map.get($_sys-color-light-values, secondary);
+$mark-color: map.get($_sys-color-light-values, on-secondary);
+$border-color: rgba(map.get($_sys-color-light-values, on-surface), 0.54);
+$disabled-color: rgba(map.get($_sys-color-light-values, on-surface), 0.38);
+$_on-surface: map.get($_sys-color-light-values, on-surface);
+
+$ripple-size: 40px !default;
+$icon-size: 18px !default;
+$mark-stroke-size: math.div(2, 15) * $icon-size !default;
+$border-width: 2px !default;
+$transition-duration: 90ms !default;
+$item-spacing: 4px !default;
+$minimum-size: 28px !default;
+$maximum-size: $ripple-size !default;
+$ripple-target: '.md3-checkbox__ripple';
+$custom-property-prefix: 'checkbox';
+$_dark-ink-opacities: (
+  hover: 0.04,
+  focus: 0.12,
+  press: 0.12,
+  selected: 0.08,
+  activated: 0.12,
+);
+
+// TODO(b/188417756): State layer (ripple) size token is missing including
+//     `state-layer-size`.
+// TODO(b/188529841): `selected-checkmark-color` and `disabled-selected-checkmark-color` does not exist in tokens.
+$light-theme: (
+  disabled-selected-checkmark-color: $mark-color,
+  disabled-selected-icon-color: $disabled-color,
+  disabled-selected-icon-opacity: null,
+  disabled-unselected-icon-color: $disabled-color,
+  disabled-unselected-icon-opacity: null,
+  selected-checkmark-color: $mark-color,
+  selected-focus-icon-color: $baseline-theme-color,
+  selected-focus-state-layer-color: $_on-surface,
+  selected-focus-state-layer-opacity: 0.12,
+  selected-hover-icon-color: $baseline-theme-color,
+  selected-hover-state-layer-color: $baseline-theme-color,
+  selected-hover-state-layer-opacity: map.get($_dark-ink-opacities, hover),
+  selected-icon-color: $baseline-theme-color,
+  selected-pressed-icon-color: $baseline-theme-color,
+  selected-pressed-state-layer-color: $_on-surface,
+  selected-pressed-state-layer-opacity: map.get($_dark-ink-opacities, pressed),
+  state-layer-size: $ripple-size,
+  unselected-focus-icon-color: $baseline-theme-color,
+  unselected-focus-state-layer-color: $_on-surface,
+  unselected-focus-state-layer-opacity: map.get($_dark-ink-opacities, focus),
+  unselected-hover-icon-color: $baseline-theme-color,
+  unselected-hover-state-layer-color: $_on-surface,
+  unselected-hover-state-layer-opacity: map.get($_dark-ink-opacities, hover),
+  unselected-icon-color: $border-color,
+  unselected-pressed-icon-color: $border-color,
+  unselected-pressed-state-layer-color: $_on-surface,
+  unselected-pressed-state-layer-opacity: map.get($_dark-ink-opacities, pressed),
+);
+
+$forced-colors-theme: (
+  disabled-selected-checkmark-color: ButtonFace,
+  disabled-selected-icon-color: GrayText,
+  disabled-selected-icon-opacity: 1,
+  disabled-unselected-icon-color: GrayText,
+  disabled-unselected-icon-opacity: 1,
+);
+
+@mixin theme($theme) {
+  $theme: theme.validate-theme($light-theme, $theme);
+  @include theme.emit-theme-vars(
+    theme.create-theme-vars($theme, $custom-property-prefix)
+  );
+}
+
+@mixin theme-styles($theme) {
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $prefix: $custom-property-prefix);
+
+  .md3-checkbox {
+    @include disabled-container-colors(
+      $unmarked-stroke-color: map.get($theme, disabled-unselected-icon-color),
+      $marked-fill-color: map.get($theme, disabled-selected-icon-color)
+    );
+
+    @include ink-color(map.get($theme, selected-checkmark-color));
+    @include disabled-ink-color(
+      map.get($theme, disabled-selected-checkmark-color)
+    );
+
+    @include _icon-color(
+      map.get($theme, unselected-icon-color),
+      map.get($theme, selected-icon-color)
+    );
+
+    &:hover {
+      @include _icon-color(
+        map.get($theme, unselected-hover-icon-color),
+        map.get($theme, selected-hover-icon-color)
+      );
+    }
+
+    @include ripple-size(map.get($theme, state-layer-size));
+    @include touch-target(
+      map.get($theme, state-layer-size),
+      map.get($theme, state-layer-size)
+    );
+  }
+
+  @include ripple-theme.theme(
+    (
+      hover-state-layer-color:
+        map.get($theme, unselected-hover-state-layer-color),
+      focus-state-layer-color:
+        map.get($theme, unselected-focus-state-layer-color),
+      pressed-state-layer-color:
+        map.get($theme, unselected-pressed-state-layer-color),
+      hover-state-layer-opacity:
+        map.get($theme, unselected-hover-state-layer-opacity),
+      focus-state-layer-opacity:
+        map.get($theme, unselected-focus-state-layer-opacity),
+      pressed-state-layer-opacity:
+        map.get($theme, unselected-pressed-state-layer-opacity),
+    )
+  );
+
+  @include checked-selector() {
+    @include ripple-theme.theme(
+      (
+        hover-state-layer-color:
+          map.get($theme, selected-hover-state-layer-color),
+        focus-state-layer-color:
+          map.get($theme, selected-focus-state-layer-color),
+        pressed-state-layer-color:
+          map.get($theme, selected-pressed-state-layer-color),
+        hover-state-layer-opacity:
+          map.get($theme, selected-hover-state-layer-opacity),
+        focus-state-layer-opacity:
+          map.get($theme, selected-focus-state-layer-opacity),
+        pressed-state-layer-opacity:
+          map.get($theme, selected-pressed-state-layer-opacity),
+      )
+    );
+  }
+}
+
+/// Sets ripple size of checkbox and optionally set touch target size which can
+/// be more than the size of ripple.
+/// @param {Number} $ripple-size - Visual ripple size of checkbox.
+@mixin ripple-size($ripple-size) {
+  $padding: calc((#{$ripple-size} - #{$icon-size}) / 2);
+  padding: $padding;
+
+  .md3-checkbox__background {
+    inset-inline-start: $padding;
+    inset-block-start: $padding;
+  }
+}
+
+/// Sets the touch target size and appropriate margin to accommodate the
+/// touch target.
+/// @param {Number} $touch-target-size Size of touch target (Native input) in `px`.
+/// @param {Number} $ripple-size Size of ripple in `px`.
+@mixin touch-target($touch-target-size, $ripple-size) {
+  margin: calc((#{$touch-target-size} - #{$ripple-size}) / 2);
+
+  .md3-checkbox__native-control {
+    $offset: calc((#{$ripple-size} - #{$touch-target-size}) / 2);
+    inset-block-start: $offset;
+    inset-inline-end: $offset;
+    inset-inline-start: $offset;
+    width: $touch-target-size;
+    height: $touch-target-size;
+  }
+}
+
+@mixin _icon-color($unselected-color, $selected-color) {
+  @if $unselected-color and $selected-color {
+    @include container-colors(
+      $unmarked-stroke-color: $unselected-color,
+      $marked-stroke-color: $selected-color,
+      $marked-fill-color: $selected-color
+    );
+  } @else if $unselected-color or $selected-color {
+    @error 'Both unselected and selected icon colors should be provided.';
+  }
+}
+
+///
+/// Sets stroke & fill colors for both marked and unmarked state of enabled checkbox.
+/// Set $generate-keyframes to false to prevent the mixin from generating @keyframes
+/// @param {Color} $unmarked-stroke-color - The desired stroke color for the unmarked state
+/// @param {Color} $unmarked-fill-color - The desired fill color for the unmarked state
+/// @param {Color} $marked-stroke-color - The desired stroke color for the marked state
+/// @param {Color} $marked-fill-color - The desired fill color for the marked state
+/// @param {Boolean} $generate-keyframes [true] - Whether animation keyframes should be generated
+///
+@mixin container-colors(
+  $unmarked-stroke-color: $border-color,
+  $unmarked-fill-color: transparent,
+  $marked-stroke-color: $baseline-theme-color,
+  $marked-fill-color: $baseline-theme-color,
+  $generate-keyframes: true
+) {
+  // Unchecked colors
+  @include if-unmarked-enabled_ {
+    @include container-colors_($unmarked-stroke-color, $unmarked-fill-color);
+  }
+
+  // Checked colors
+  @include if-marked-enabled_ {
+    @include container-colors_($marked-stroke-color, $marked-fill-color);
+  }
+
+  @if $generate-keyframes and
+    $unmarked-stroke-color and
+    $marked-stroke-color and
+    $unmarked-fill-color and
+    $marked-fill-color
+  {
+    $anim-selector: if(&, '&.md3-checkbox--anim', '.md3-checkbox--anim');
+
+    @include container-keyframes_(
+      $from-stroke-color: $unmarked-stroke-color,
+      $to-stroke-color: $marked-stroke-color,
+      $from-fill-color: $unmarked-fill-color,
+      $to-fill-color: $marked-fill-color
+    );
+
+    // stylelint-disable max-nesting-depth
+
+    #{$anim-selector} {
+      &-unchecked-checked,
+      &-unchecked-indeterminate {
+        .md3-checkbox__native-control:enabled ~ .md3-checkbox__background {
+          animation-name: md3-checkbox-fade-in-background;
+        }
+      }
+
+      &-checked-unchecked,
+      &-indeterminate-unchecked {
+        .md3-checkbox__native-control:enabled ~ .md3-checkbox__background {
+          animation-name: md3-checkbox-fade-out-background;
+        }
+      }
+    }
+
+    // stylelint-enable max-nesting-depth
+  }
+}
+
+///
+/// Sets stroke & fill colors for both marked and unmarked state of disabled checkbox.
+/// @param {Color} $unmarked-stroke-color - The desired stroke color for the unmarked state
+/// @param {Color} $unmarked-fill-color - The desired fill color for the unmarked state
+/// @param {Color} $marked-stroke-color - The desired stroke color for the marked state
+/// @param {Color} $marked-fill-color - The desired fill color for the marked state
+///
+@mixin disabled-container-colors(
+  $unmarked-stroke-color: $disabled-color,
+  $unmarked-fill-color: transparent,
+  $marked-stroke-color: transparent,
+  $marked-fill-color: $disabled-color
+) {
+  @if $unmarked-stroke-color == null {
+    $unmarked-fill-color: null;
+  }
+
+  @include if-unmarked-disabled_ {
+    @include container-colors_($unmarked-stroke-color, $unmarked-fill-color);
+  }
+
+  @if $marked-fill-color and var.fallback($marked-fill-color) == GrayText {
+    // Transparent appears white in HCM
+    $marked-stroke-color: GrayText;
+  }
+
+  @if $marked-fill-color == null {
+    $marked-stroke-color: null;
+  }
+
+  @include if-marked-disabled_ {
+    @include container-colors_($marked-stroke-color, $marked-fill-color);
+  }
+}
+
+///
+/// Sets the ink color of the checked and indeterminate icons for an enabled checkbox
+/// @param {Color} $color - The desired ink color in enabled state
+///
+@mixin ink-color($color) {
+  @include if-enabled_ {
+    @include ink-color_($color);
+  }
+}
+
+///
+/// Sets the ink color of the checked and indeterminate icons for a disabled checkbox
+/// @param {Color} $color - The desired ink color in disabled state
+///
+@mixin disabled-ink-color($color) {
+  @include if-disabled_ {
+    @include ink-color_($color);
+  }
+}
+
+//
+// Private
+//
+
+///
+/// Helps select the checkbox background only when its native control is in
+/// enabled state.
+/// @access private
+///
+@mixin if-enabled_ {
+  .md3-checkbox__native-control:enabled ~ {
+    @content;
+  }
+}
+
+///
+/// Helps select the checkbox background only when its native control is in
+/// disabled state.
+/// @access private
+///
+@mixin if-disabled_ {
+  .md3-checkbox__native-control:disabled ~ {
+    @content;
+  }
+}
+
+///
+/// Helps select the checkbox background only when its native control is in
+/// unmarked & enabled state.
+/// @access private
+///
+@mixin if-unmarked-enabled_ {
+  .md3-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate='true'])
+    ~ {
+    @content;
+  }
+}
+
+///
+/// Helps select the checkbox background only when its native control is in
+/// unmarked & disabled state.
+/// @access private
+///
+@mixin if-unmarked-disabled_ {
+  // Note: we must use `[disabled]` instead of `:disabled` below because Edge does not always recalculate the style
+  // property when the `:disabled` pseudo-class is followed by a sibling combinator. See:
+  // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/11295231/
+  .md3-checkbox__native-control[disabled]:not(:checked):not(:indeterminate):not([data-indeterminate='true'])
+    ~ {
+    @content;
+  }
+}
+
+///
+/// Helps select the checkbox background only when its native control is in
+/// marked & enabled state.
+/// @access private
+///
+@mixin if-marked-enabled_ {
+  .md3-checkbox__native-control:enabled:checked,
+  .md3-checkbox__native-control:enabled:indeterminate,
+  .md3-checkbox__native-control[data-indeterminate='true']:enabled {
+    ~ {
+      @content;
+    }
+  }
+}
+
+///
+/// Helps select the checkbox background only when its native control is in
+/// marked & disabled state.
+/// @access private
+///
+@mixin if-marked-disabled_ {
+  // Note: we must use `[disabled]` instead of `:disabled` below because Edge does not always recalculate the style
+  // property when the `:disabled` pseudo-class is followed by a sibling combinator. See:
+  // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/11295231/
+  .md3-checkbox__native-control[disabled]:checked,
+  .md3-checkbox__native-control[disabled]:indeterminate,
+  .md3-checkbox__native-control[data-indeterminate='true'][disabled] {
+    ~ {
+      @content;
+    }
+  }
+}
+
+///
+/// Sets the stroke & fill colors for the checkbox.
+/// This mixin should be wrapped in a mixin that qualifies state such as
+/// `md3-checkbox-if-unmarked-enabled_`.
+/// @access private
+///
+@mixin container-colors_($stroke-color, $fill-color) {
+  .md3-checkbox__background {
+    border-color: $stroke-color;
+    background-color: $fill-color;
+  }
+}
+
+///
+/// Sets the ink color of the checked and indeterminate icons for a checkbox.
+/// This mixin should be wrapped in a mixin that qualifies state such as
+/// `md3-checkbox-if-unmarked_`.
+/// @access private
+///
+@mixin ink-color_($color) {
+  .md3-checkbox__background {
+    .md3-checkbox__checkmark {
+      color: $color;
+    }
+
+    .md3-checkbox__mixedmark {
+      border-color: $color;
+    }
+  }
+}
+
+@mixin container-keyframes_(
+  $from-stroke-color,
+  $to-stroke-color,
+  $from-fill-color,
+  $to-fill-color
+) {
+  @keyframes md3-checkbox-fade-in-background {
+    0% {
+      border-color: $from-stroke-color;
+      background-color: $from-stroke-color;
+    }
+
+    50% {
+      border-color: $to-stroke-color;
+      background-color: $to-fill-color;
+    }
+  }
+
+  @keyframes md3-checkbox-fade-out-background {
+    0%,
+    80% {
+      border-color: $to-stroke-color;
+      background-color: $to-stroke-color;
+    }
+
+    100% {
+      border-color: $from-stroke-color;
+      background-color: $from-fill-color;
+    }
+  }
+}
+
+@mixin checked-selector() {
+  @include shadow-dom.host-aware(
+    selector.append(&, '[checked]'),
+    selector.append(&, '[indeterminate]')
+  ) {
+    @content;
+  }
+}

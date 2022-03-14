@@ -6,16 +6,16 @@
 
 import '@material/mwc-icon/mwc-icon';
 import '../../focus/focus-ring';
-import '../../ripple/mwc-ripple';
+import '../../ripple/ripple';
 
 import {html, LitElement, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAssignedNodes, queryAsync, state} from 'lit/decorators';
+import {eventOptions, property, query, queryAssignedElements, queryAsync, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 
 import {ariaProperty} from '../../decorators/aria-property';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
-import {Ripple} from '../../ripple/mwc-ripple';
+import {MdRipple} from '../../ripple/ripple';
 import {RippleHandlers} from '../../ripple/ripple-handlers';
 import {ARIAHasPopup} from '../../types/aria';
 
@@ -48,11 +48,11 @@ export abstract class Button extends LitElement implements ButtonState {
 
   @query('.md3-button') buttonElement!: HTMLElement;
 
-  @queryAsync('md-ripple') ripple!: Promise<Ripple|null>;
+  @queryAsync('md-ripple') ripple!: Promise<MdRipple|null>;
 
   @state() protected showFocusRing = false;
 
-  @queryAssignedNodes('icon', true, '*')
+  @queryAssignedElements({slot: 'icon', flatten: true})
   protected iconElement!: HTMLElement[]|null;
 
   @state() protected shouldRenderRipple = false;

@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - all
   - Upgrade typescript to 4.4.4
 
+### Fixed
+
+- `linear-progress`, `circular-progress`
+  - Fix `update` typing to use `PropertyValues`
+
 ## [v0.25.3] - 2021-10-20
 
 ### Fixed

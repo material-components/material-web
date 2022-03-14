@@ -1,0 +1,92 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+//
+// !!! THIS FILE WAS AUTOMATICALLY GENERATED !!!
+// !!! DO NOT MODIFY IT BY HAND !!!
+// Design system display name: Material 3
+// Design system version name: v0.75
+//
+
+@use 'sass:map';
+
+@use './md-sys-color';
+
+@use './md-sys-elevation';
+
+@use './md-sys-shape';
+
+@use './md-sys-state';
+
+$_default: (
+  md-sys-color: md-sys-color.values-light(),
+  md-sys-elevation: md-sys-elevation.values(),
+  md-sys-shape: md-sys-shape.values(),
+  md-sys-state: md-sys-state.values(),
+);
+
+@function values($deps: $_default, $exclude-hardcoded-values: false) {
+  @return (
+    disabled-handle-elevation: map.get($deps, md-sys-elevation, level0),
+    disabled-handle-opacity: if($exclude-hardcoded-values, null, 0.38),
+    disabled-selected-handle-color: map.get($deps, md-sys-color, on-surface),
+    disabled-selected-icon-color: map.get($deps, md-sys-color, on-primary),
+    disabled-selected-icon-opacity: if($exclude-hardcoded-values, null, 0.38),
+    disabled-selected-track-color: map.get($deps, md-sys-color, on-surface),
+    disabled-track-opacity: if($exclude-hardcoded-values, null, 0.12),
+    disabled-unselected-handle-color: map.get($deps, md-sys-color, on-surface),
+    disabled-unselected-icon-color: map.get($deps, md-sys-color, on-primary),
+    disabled-unselected-icon-opacity: if($exclude-hardcoded-values, null, 0.38),
+    disabled-unselected-track-color: map.get($deps, md-sys-color, on-surface),
+    handle-elevation: map.get($deps, md-sys-elevation, level1),
+    handle-height: if($exclude-hardcoded-values, null, 20px),
+    handle-shadow-color: map.get($deps, md-sys-color, shadow),
+    handle-shape: map.get($deps, md-sys-shape, corner-full),
+    handle-width: if($exclude-hardcoded-values, null, 20px),
+    selected-focus-handle-color: map.get($deps, md-sys-color, primary),
+    selected-focus-state-layer-color: map.get($deps, md-sys-color, primary),
+    selected-focus-state-layer-opacity:
+      map.get($deps, md-sys-state, focus-state-layer-opacity),
+    selected-focus-track-color: map.get($deps, md-sys-color, primary-container),
+    selected-handle-color: map.get($deps, md-sys-color, primary),
+    selected-hover-handle-color: map.get($deps, md-sys-color, primary),
+    selected-hover-state-layer-color: map.get($deps, md-sys-color, primary),
+    selected-hover-state-layer-opacity:
+      map.get($deps, md-sys-state, hover-state-layer-opacity),
+    selected-hover-track-color: map.get($deps, md-sys-color, primary-container),
+    selected-icon-color: map.get($deps, md-sys-color, on-primary),
+    selected-icon-size: if($exclude-hardcoded-values, null, 18px),
+    selected-pressed-handle-color: map.get($deps, md-sys-color, primary),
+    selected-pressed-state-layer-color: map.get($deps, md-sys-color, primary),
+    selected-pressed-state-layer-opacity:
+      map.get($deps, md-sys-state, pressed-state-layer-opacity),
+    selected-pressed-track-color:
+      map.get($deps, md-sys-color, primary-container),
+    selected-track-color: map.get($deps, md-sys-color, primary-container),
+    state-layer-size: if($exclude-hardcoded-values, null, 48px),
+    track-height: if($exclude-hardcoded-values, null, 14px),
+    track-shape: map.get($deps, md-sys-shape, corner-full),
+    track-width: if($exclude-hardcoded-values, null, 36px),
+    unselected-focus-handle-color: map.get($deps, md-sys-color, on-surface),
+    unselected-focus-state-layer-color: map.get($deps, md-sys-color, on-surface),
+    unselected-focus-state-layer-opacity:
+      map.get($deps, md-sys-state, focus-state-layer-opacity),
+    unselected-focus-track-color: map.get($deps, md-sys-color, outline),
+    unselected-handle-color: map.get($deps, md-sys-color, on-surface),
+    unselected-hover-handle-color: map.get($deps, md-sys-color, on-surface),
+    unselected-hover-state-layer-color: map.get($deps, md-sys-color, on-surface),
+    unselected-hover-state-layer-opacity:
+      map.get($deps, md-sys-state, hover-state-layer-opacity),
+    unselected-hover-track-color: map.get($deps, md-sys-color, outline),
+    unselected-icon-color: map.get($deps, md-sys-color, on-primary),
+    unselected-icon-size: if($exclude-hardcoded-values, null, 18px),
+    unselected-pressed-handle-color: map.get($deps, md-sys-color, on-surface),
+    unselected-pressed-state-layer-color:
+      map.get($deps, md-sys-color, on-surface),
+    unselected-pressed-state-layer-opacity:
+      map.get($deps, md-sys-state, pressed-state-layer-opacity),
+    unselected-pressed-track-color: map.get($deps, md-sys-color, outline),
+    unselected-track-color: map.get($deps, md-sys-color, outline)
+  );
+}

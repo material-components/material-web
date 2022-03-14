@@ -10,7 +10,7 @@ import {observer} from '@material/mwc-base/observer';
 import {deepActiveElementPath} from '@material/mwc-base/utils';
 import {NavigationTab} from 'google3/third_party/javascript/material_web_components/m3/navigation_tab/lib/navigation-tab';
 import {html, TemplateResult} from 'lit';
-import {property, query, queryAssignedNodes} from 'lit/decorators';
+import {property, query, queryAssignedElements} from 'lit/decorators';
 import {ifDefined} from 'lit/directives/if-defined';
 
 import {NavigationTabInteractionEvent} from './constants';
@@ -32,9 +32,8 @@ export class NavigationBar extends BaseElement implements
   @property({type: Boolean}) hideInactiveLabels = false;
   tabs: NavigationTab[] = [];
 
-  // Needed for lit-to-wiz.
-  // tslint:disable-next-line:deprecation
-  @queryAssignedNodes('', true, '*') protected tabsElement!: HTMLElement[];
+  @queryAssignedElements({flatten: true})
+  protected tabsElement!: NavigationTab[];
 
   /** @soyPrefixAttribute */  // tslint:disable-next-line:no-new-decorators
   @ariaProperty
@@ -93,9 +92,7 @@ export class NavigationBar extends BaseElement implements
     if (!this.tabsElement) return;
     const navTabs: NavigationTab[] = [];
     for (const node of this.tabsElement) {
-      if (this.isNavigationTab(node)) {
-        navTabs.push(node);
-      }
+      navTabs.push(node);
     }
     this.tabs = navTabs;
   }
@@ -106,9 +103,5 @@ export class NavigationBar extends BaseElement implements
 
   private handleKeydown(event: KeyboardEvent) {
     this.mdcFoundation.handleKeydown(event);
-  }
-
-  protected isNavigationTab(element: Element): element is NavigationTab {
-    return element instanceof NavigationTab;
   }
 }

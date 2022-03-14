@@ -1,0 +1,108 @@
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use '@material/tab-bar/mixins' as tab-bar;
+@use '@material/animation/variables' as animation-variables;
+@use '@material/density/variables' as density-variables;
+@use '@material/density' as density-functions;
+@use '../../tab/lib/tab' as tab-variables;
+
+$height: tab-variables.$height;
+$minimum-height: 30px;
+$maximum-height: $height;
+$density-scale: density-variables.$default-scale;
+$stacked-density-scale: density-variables.$default-scale;
+$density-config: (
+  height: (
+    default: $height,
+    maximum: $maximum-height,
+    minimum: $minimum-height,
+  ),
+);
+$stacked-height: tab-variables.$stacked-height;
+$stacked-minimum-height: 56px;
+$stacked-maximum-height: $stacked-height;
+$stacked-density-config: (
+  height: (
+    default: $stacked-height,
+    maximum: $stacked-maximum-height,
+    minimum: $stacked-minimum-height,
+  ),
+);
+
+@mixin core-styles() {
+  @include static-styles();
+  @include density($density-scale);
+  @include stacked-density($stacked-density-scale);
+}
+
+@mixin static-styles() {
+  :host {
+    display: flex;
+
+    .md3-tab-bar {
+      inline-size: 100%;
+      flex: 1;
+    }
+  }
+}
+
+///
+/// Sets density scale to default tab bar variant. Use
+/// `mdc-tab-bar-stacked-density()` mixin for stacked tab bar variant.
+///
+/// @param {Number} $density-scale Density scale value. Supported density scales
+///   `-4`, `-3`, `-2`, `-1` and `0`.
+///
+@mixin density($density-scale) {
+  $height: density-functions.prop-value(
+    $density-config: $density-config,
+    $density-scale: $density-scale,
+    $property-name: height,
+  );
+
+  .md3-tab {
+    @include tab-variables.height($height);
+  }
+}
+
+///
+/// Sets density scale to stacked tab bar variant.
+///
+/// @param {Number} $density-scale Density scale value. Supported density scales
+/// `-4`, `-3`, `-2`, `-1` and `0`.
+///
+@mixin stacked-density($density-scale) {
+  $height: density-functions.prop-value(
+    $density-config: $stacked-density-config,
+    $density-scale: $density-scale,
+    $property-name: height,
+  );
+
+  .md3-tab--stacked {
+    @include tab-variables.height($height);
+  }
+}
+
+///
+/// Sets the CSS transition for the tab scrolling animation. This mixin is a
+/// proxy to `mdc-tab-scroller-transition` mixin.
+///
+/// @param {Number | String} $duration-ms - Duration (in ms) of the animation.
+/// @param {String} $timing-function - Optionally overrides the default
+///    animation timing function.
+///
+@mixin tab-scroller-transition(
+  $duration-ms,
+  $timing-function: animation-variables.$standard-curve-timing-function
+) {
+  .md3-tab-scroller {
+    @include tab-scroller-mixins.transition(
+      $duration-ms,
+      $timing-function: $timing-function
+    );
+  }
+}
