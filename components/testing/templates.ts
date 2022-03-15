@@ -86,6 +86,11 @@ export class TemplateBuilder<H extends Harness = never,
    * @return An array of test table templates for every variant and test case.
    */
   all(...testCaseProps: Array<TemplateProps<H>>) {
+    if (!testCaseProps.length) {
+      // Allow calling templates.all() and assume default props.
+      testCaseProps.push({});
+    }
+
     return Array.from(this.variants.values()).flatMap(factory => {
       return testCaseProps.map(props => factory(props));
     });
@@ -197,7 +202,7 @@ export class TemplateBuilder<H extends Harness = never,
           this.stateCallback?.(state, harness);
         });
 
-        return render(directive, props, state);
+        return render(directive, props || {}, state);
       };
     });
 
@@ -300,8 +305,8 @@ export interface SharedTemplateProps {
  * a render function that renders the element for a given state.
  *
  * @template H The harness type.
- * @param props Properties for the element.
+ * @param props Optional properties for the element.
  * @return A function that renders the element for a given state.
  */
-export type TemplateFactory<H extends Harness> = (props: TemplateProps<H>) =>
+export type TemplateFactory<H extends Harness> = (props?: TemplateProps<H>) =>
     (state: string) => TemplateResult;
