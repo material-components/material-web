@@ -12,15 +12,13 @@ import '../../ripple/ripple';
 
 import {ariaProperty as legacyAriaProperty} from '@material/mwc-base/aria-property';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
+import {eventOptions, property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
 import {ariaProperty} from '../../decorators/aria-property';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
 import {MdRipple} from '../../ripple/ripple';
-import {RippleHandlers} from '../../ripple/ripple-handlers';
-
 
 /** @soyCompatible */
 export class Checkbox extends LitElement {
@@ -66,7 +64,7 @@ export class Checkbox extends LitElement {
 
   @state() protected focused = false;
 
-  @queryAsync('md-ripple') ripple!: Promise<MdRipple|null>;
+  @query('md-ripple') ripple!: MdRipple;
 
   // MDC Foundation is unused
   protected mdcFoundationClass = undefined;
@@ -105,22 +103,8 @@ export class Checkbox extends LitElement {
     }
   }
 
-  protected rippleElement: MdRipple|null = null;
-
-  protected rippleHandlers: RippleHandlers = new RippleHandlers(() => {
-    this.shouldRenderRipple = true;
-    this.ripple.then((v) => this.rippleElement = v);
-    return this.ripple;
-  });
-
-  // TODO(dfreedm): Make this use selected as a param after Polymer/internal#739
   /** @soyTemplate */
-  protected renderRipple(): TemplateResult|string {
-    return this.shouldRenderRipple ? this.renderRippleTemplate() : '';
-  }
-
-  /** @soyTemplate */
-  protected renderRippleTemplate(): TemplateResult {
+  protected renderRipple(): TemplateResult {
     return html`<md-ripple
         .disabled="${this.disabled}"
         unbounded></md-ripple>`;
@@ -226,35 +210,35 @@ export class Checkbox extends LitElement {
     };
 
     window.addEventListener('mouseup', onUp);
-    this.rippleHandlers.startPress(event);
+    this.ripple.beginPress(event);
     pointerPress();
   }
 
   @eventOptions({passive: true})
   protected handleRippleTouchStart(event: Event) {
-    this.rippleHandlers.startPress(event);
+    this.ripple.beginPress(event);
   }
 
   protected handleRippleDeactivate() {
-    this.rippleHandlers.endPress();
+    this.ripple.endPress();
   }
 
   protected handleRippleMouseEnter() {
-    this.rippleHandlers.startHover();
+    this.ripple.beginHover();
   }
 
   protected handleRippleMouseLeave() {
-    this.rippleHandlers.endHover();
+    this.ripple.endHover();
   }
 
   protected handleRippleFocus() {
     this.showFocusRing = shouldShowStrongFocus();
-    this.rippleHandlers.startFocus();
+    this.ripple.beginFocus();
   }
 
   protected handleRippleBlur() {
     this.showFocusRing = false;
-    this.rippleHandlers.endFocus();
+    this.ripple.endFocus();
   }
 
   protected handleChange() {

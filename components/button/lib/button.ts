@@ -9,14 +9,13 @@ import '../../focus/focus-ring';
 import '../../ripple/ripple';
 
 import {html, LitElement, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAssignedElements, queryAsync, state} from 'lit/decorators';
+import {eventOptions, property, query, queryAssignedElements, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 
 import {ariaProperty} from '../../decorators/aria-property';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
 import {MdRipple} from '../../ripple/ripple';
-import {RippleHandlers} from '../../ripple/ripple-handlers';
 import {ARIAHasPopup} from '../../types/aria';
 
 import {ButtonState} from './state';
@@ -48,19 +47,12 @@ export abstract class Button extends LitElement implements ButtonState {
 
   @query('.md3-button') buttonElement!: HTMLElement;
 
-  @queryAsync('md-ripple') ripple!: Promise<MdRipple|null>;
+  @query('md-ripple') ripple!: MdRipple;
 
   @state() protected showFocusRing = false;
 
   @queryAssignedElements({slot: 'icon', flatten: true})
   protected iconElement!: HTMLElement[]|null;
-
-  @state() protected shouldRenderRipple = false;
-
-  protected rippleHandlers = new RippleHandlers(() => {
-    this.shouldRenderRipple = true;
-    return this.ripple;
-  });
 
   /**
    * @soyTemplate
@@ -123,10 +115,8 @@ export abstract class Button extends LitElement implements ButtonState {
 
   /** @soyTemplate */
   protected renderRipple(): TemplateResult|string {
-    return this.shouldRenderRipple ?
-        html`<md-ripple class="md3-button__ripple" .disabled="${
-            this.disabled}"></md-ripple>` :
-        '';
+    return html`<md-ripple class="md3-button__ripple" .disabled="${
+        this.disabled}"></md-ripple>`;
   }
 
   /** @soyTemplate */
@@ -205,20 +195,20 @@ export abstract class Button extends LitElement implements ButtonState {
     };
 
     window.addEventListener('mouseup', onUp);
-    this.rippleHandlers.startPress(evt);
+    this.ripple.beginPress(evt);
     pointerPress();
   }
 
   protected handleRippleDeactivate() {
-    this.rippleHandlers.endPress();
+    this.ripple.endPress();
   }
 
   protected handleRippleMouseEnter() {
-    this.rippleHandlers.startHover();
+    this.ripple.beginHover();
   }
 
   protected handleRippleMouseLeave() {
-    this.rippleHandlers.endHover();
+    this.ripple.endHover();
   }
 
   protected handleRippleFocus() {
