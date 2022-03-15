@@ -20,15 +20,15 @@ export class SecondaryTabBar extends TabBar {
   }
 
   // TODO(sorvell): probably want to memoize this and use a `slotChange` event
-  protected _getTabs() {
+  protected getTabs() {
     return (this.tabsSlot as HTMLSlotElement)
                .assignedNodes({flatten: true})
                .filter((e: Node) => e instanceof SecondaryTab) as
         MdSecondaryTab[];
   }
 
-  protected _getActiveTabIndex() {
-    const tabElements = this._getTabs();
+  protected getActiveTabIndex() {
+    const tabElements = this.getTabs();
     const activeElement =
         (this.getRootNode() as ShadowRoot).activeElement as MdSecondaryTab;
     return tabElements.indexOf(activeElement);

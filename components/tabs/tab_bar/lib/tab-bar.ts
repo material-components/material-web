@@ -62,9 +62,13 @@ export abstract class TabBar extends BaseElement {
            role="tablist"
            @MD3Tab:interacted="${this._handleTabInteraction}"
            @keydown="${this._handleKeydown}">
-        <md-tab-scroller><slot></slot></md-tab-scroller>
+        ${this.renderTabScroller()}
       </div>
       `;
+  }
+
+  protected renderTabScroller() {
+    return html`<md-tab-scroller><slot></slot></md-tab-scroller>`;
   }
 
   protected getRootClasses(): ClassInfo {
@@ -73,13 +77,13 @@ export abstract class TabBar extends BaseElement {
     };
   }
 
-  protected abstract _getTabs(): MdPrimaryTab[]|MdSecondaryTab[];
+  protected abstract getTabs(): MdPrimaryTab[]|MdSecondaryTab[];
 
-  protected _getTab(index: number) {
-    return this._getTabs()[index];
+  protected getTab(index: number) {
+    return this.getTabs()[index];
   }
 
-  protected abstract _getActiveTabIndex(): number;
+  protected abstract getActiveTabIndex(): number;
 
   protected createAdapter(): MDCTabBarAdapter {
     return {
@@ -94,20 +98,20 @@ export abstract class TabBar extends BaseElement {
                        .getPropertyValue('direction') === 'rtl',
       setActiveTab: (index: number) => this.mdcFoundation.activateTab(index),
       activateTabAtIndex: (index: number, clientRect: ClientRect) => {
-        const tab = this._getTab(index);
+        const tab = this.getTab(index);
         if (tab !== undefined) {
           tab.activate(clientRect);
         }
         this._previousActiveIndex = index;
       },
       deactivateTabAtIndex: (index: number) => {
-        const tab = this._getTab(index);
+        const tab = this.getTab(index);
         if (tab !== undefined) {
           tab.deactivate();
         }
       },
       focusTabAtIndex: (index: number) => {
-        const tab = this._getTab(index);
+        const tab = this.getTab(index);
         if (tab !== undefined) {
           tab.focus();
         }
@@ -117,12 +121,12 @@ export abstract class TabBar extends BaseElement {
       // updated. If this is necessary, LitElement may need a `forceUpdate`
       // method.
       getTabIndicatorClientRectAtIndex: (index: number) => {
-        const tab = this._getTab(index);
+        const tab = this.getTab(index);
         return tab !== undefined ? tab.computeIndicatorClientRect() :
                                    new DOMRect();
       },
       getTabDimensionsAtIndex: (index: number) => {
-        const tab = this._getTab(index);
+        const tab = this.getTab(index);
         return tab !== undefined ?
             tab.computeDimensions() :
             {rootLeft: 0, rootRight: 0, contentLeft: 0, contentRight: 0};
@@ -131,10 +135,10 @@ export abstract class TabBar extends BaseElement {
         return this._previousActiveIndex;
       },
       getFocusedTabIndex: () => {
-        return this._getActiveTabIndex();
+        return this.getActiveTabIndex();
       },
       getIndexOfTabById: (id: string) => {
-        const tabElements = this._getTabs();
+        const tabElements = this.getTabs();
         for (let i = 0; i < tabElements.length; i++) {
           if (tabElements[i].id === id) {
             return i;
@@ -142,7 +146,7 @@ export abstract class TabBar extends BaseElement {
         }
         return -1;
       },
-      getTabListLength: () => this._getTabs().length,
+      getTabListLength: () => this.getTabs().length,
       notifyTabActivated: (index: number) => {
         // Synchronize the tabs `activeIndex` to the foundation.
         // This is needed when a tab is changed via a click, for example.
