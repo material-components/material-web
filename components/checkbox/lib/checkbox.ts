@@ -5,6 +5,7 @@
  */
 
 import '../../focus/focus-ring';
+import '../../ripple/ripple';
 
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
