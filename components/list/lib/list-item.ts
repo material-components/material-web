@@ -15,18 +15,15 @@ export class ListItem extends LitElement {
   @property({type: String}) supportingText = '';
   @property({type: String}) trailingSupportingText = '';
 
-  @queryAssignedElements({slot: 'start', flatten: true})
-  protected startElement!: HTMLElement[];
+  @queryAssignedElements(
+      {slot: 'start', flatten: true, selector: '[media=icon]'})
+  protected leadingIcon!: HTMLElement[];
 
-  @queryAssignedElements({slot: 'end', flatten: true})
-  protected endElement!: HTMLElement[];
+  @queryAssignedElements({slot: 'end', flatten: true, selector: '[media=icon]'})
+  protected trailingIcon!: HTMLElement[];
 
   @property() hasLeadingIcon = false;
   @property() hasTrailingIcon = false;
-  @state() protected hasLeadingAvatar = false;
-  @state() protected hasLeadingThumbnail = false;
-  @state() protected hasLeadingImage = false;
-  @state() protected hasLeadingVideo = false;
 
   /** @soyTemplate */
   override render(): TemplateResult {
@@ -54,10 +51,6 @@ export class ListItem extends LitElement {
       'md3-list-item--with-one-line': this.supportingText === '',
       'md3-list-item--with-two-lines': this.supportingText !== '',
       'md3-list-item--with-leading-icon': this.hasLeadingIcon,
-      'md3-list-item--with-leading-avatar': this.hasLeadingAvatar,
-      'md3-list-item--with-leading-thumbnail': this.hasLeadingThumbnail,
-      'md3-list-item--with-leading-image': this.hasLeadingImage,
-      'md3-list-item--with-leading-video': this.hasLeadingVideo,
       'md3-list-item--with-trailing-icon': this.hasTrailingIcon,
     };
   }
@@ -110,23 +103,13 @@ export class ListItem extends LitElement {
   }
 
   override update(changedProperties: PropertyValues<this>) {
-    this.updateItemContext();
+    this.updateMetadata();
     super.update(changedProperties);
   }
 
-  private updateItemContext() {
-    this.hasLeadingIcon = this.startElement.some(
-        (el) => el.classList.contains('md3-list-item__icon'));
-    this.hasTrailingIcon = this.endElement.some(
-        (el) => el.classList.contains('md3-list-item__icon'));
-    this.hasLeadingAvatar = this.startElement.some(
-        (el) => el.classList.contains('md3-list-item__avatar'));
-    this.hasLeadingThumbnail = this.startElement.some(
-        (el) => el.classList.contains('md3-list-item__thumbnail'));
-    this.hasLeadingImage = this.startElement.some(
-        (el) => el.classList.contains('md3-list-item__image'));
-    this.hasLeadingVideo = this.startElement.some(
-        (el) => el.classList.contains('md3-list-item__video'));
+  private updateMetadata() {
+    this.hasLeadingIcon = this.leadingIcon.length > 0;
+    this.hasTrailingIcon = this.trailingIcon.length > 0;
   }
 
   protected handleClick() {

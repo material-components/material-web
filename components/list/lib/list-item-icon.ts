@@ -5,9 +5,12 @@
  */
 
 import {html, LitElement, TemplateResult} from 'lit';
+import {property} from 'lit/decorators';
 
 /** @soyCompatible */
 export class ListItemIcon extends LitElement {
+  @property({type: String, reflect: true}) media = 'icon';
+
   /** @soyTemplate */
   override render(): TemplateResult {
     return html`
