@@ -35,7 +35,8 @@ export class ListItem extends LitElement {
       <li
           tabindex="0"
           role=${this.getAriaRole()}
-          class="md3-list-item ${classMap(this.getRenderClasses())}"><!--
+          class="md3-list-item ${classMap(this.getRenderClasses())}"
+          @click=${this.handleClick}><!--
         -->${this.renderStart()}<!--
         -->${this.renderBody()}<!--
         -->${this.renderEnd()}<!--
@@ -126,5 +127,11 @@ export class ListItem extends LitElement {
         (el) => el.classList.contains('md3-list-item__image'));
     this.hasLeadingVideo = this.startElement.some(
         (el) => el.classList.contains('md3-list-item__video'));
+  }
+
+  protected handleClick() {
+    this.dispatchEvent(new CustomEvent(
+        'list-item-interaction',
+        {detail: {state: {selected: false}}, bubbles: true, composed: true}));
   }
 }
