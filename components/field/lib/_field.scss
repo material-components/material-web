@@ -25,6 +25,7 @@
 // root (container + helper text) and container.
 @mixin root() {
   display: inline-flex;
+  flex-direction: column;
   // Allow the use of block/inline reflexive RTL properties without impacting
   // structure when languages change.
   writing-mode: horizontal-tb;
@@ -34,5 +35,6 @@
   align-items: center;
   box-sizing: border-box;
   display: flex;
+  flex: 1;
   position: relative;
 }

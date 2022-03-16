@@ -1,0 +1,23 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use '../../sass/typography';
+
+@mixin static-styles() {
+  .md3-field__supporting-text {
+    @include typography.static-styles;
+
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .md3-field__supporting-text,
+  .md3-field__supporting-text-end {
+    ::slotted(:not(:empty)) {
+      // Can't be an inline display element (<span>) for padding-top to work.
+      display: inline-flex;
+    }
+  }
+}

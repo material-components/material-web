@@ -6,7 +6,9 @@
 @use './content';
 @use './field';
 @use './label';
+@use './supporting-text';
 
 @include field.static-styles;
 @include content.static-styles;
 @include label.static-styles;
+@include supporting-text.static-styles;

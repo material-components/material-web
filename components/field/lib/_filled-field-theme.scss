@@ -15,6 +15,7 @@
 @use './content-theme';
 @use './field-theme';
 @use './label-theme';
+@use './supporting-text-theme';
 
 $_default-deps: (
   md-sys-color: tokens.md-sys-color-values-light(),
@@ -70,6 +71,8 @@ $_default-deps: (
         map.get($text-field-values, error-hover-input-text-color),
       focus-content-color: map.get($text-field-values, focus-input-text-color),
       hover-content-color: map.get($text-field-values, hover-input-text-color),
+      supporting-text-padding: if($exclude-hardcoded-values, null, 16px),
+      supporting-text-padding-top: if($exclude-hardcoded-values, null, 4px),
     )
   );
 
@@ -119,6 +122,7 @@ $dark-theme: values(
   @include field-theme.theme-styles($theme);
   @include content-theme.theme-styles($theme);
   @include label-theme.theme-styles($theme);
+  @include supporting-text-theme.theme-styles($theme);
 
   @include _active-indicator-color(
     (

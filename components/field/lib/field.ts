@@ -57,6 +57,7 @@ export class Field extends LitElement {
     return html`
       <span class="md3-field ${classMap(this.getRenderClasses())}">
         ${this.renderContainer()}
+        ${this.renderSupportingText()}
       </span>
     `;
   }
@@ -138,6 +139,20 @@ export class Field extends LitElement {
     const labelText = this.label ?? '';
     const optionalAsterisk = this.required && labelText ? '*' : '';
     return labelText + optionalAsterisk;
+  }
+
+  /** @soyTemplate */
+  protected renderSupportingText(): TemplateResult {
+    return html`
+      <span class="md3-field__supporting-text">
+        <span class="md3-field__supporting-text-start">
+          <slot name="supporting-text"></slot>
+        </span>
+        <span class="md3-field__supporting-text-end">
+          <slot name="supporting-text-end"></slot>
+        </span>
+      </span>
+    `;
   }
 
   protected override update(props: PropertyValues<this>) {
