@@ -6,7 +6,7 @@
 
 @use 'sass:map';
 @use 'sass:selector';
-@use 'third_party/javascript/material_web_components/ripple/ripple-theme';
+@use '../../../ripple/ripple-theme';
 @use '@material/elevation/elevation-theme';
 @use '@material/theme/theme-color';
 @use '@material/typography/typography';

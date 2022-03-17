@@ -6,7 +6,7 @@
 
 @use 'sass:map';
 @use 'sass:selector';
-@use 'third_party/javascript/material_web_components/ripple/ripple-theme';
+@use '../../../ripple/ripple-theme';
 @use '@material/elevation/elevation-theme';
 @use '@material/theme/theme-color';
 @use '@material/typography/typography';
@@ -86,18 +86,14 @@ $dark-theme: tokens.md-comp-secondary-navigation-tab-values(
     map.get($theme, label-text-line-height)
   );
   @include tab-theme.label-text-weight(map.get($theme, label-text-weight));
-
-  @include tab-theme.is-active() {
-    @include ripple-theme.theme(
-      (
-        hover-state-layer-color: map.get($theme, hover-state-layer-color),
-        focus-state-layer-color: map.get($theme, focus-state-layer-color),
-        pressed-state-layer-color: map.get($theme, pressed-state-layer-color),
-        hover-state-layer-opacity: map.get($theme, hover-state-layer-opacity),
-        focus-state-layer-opacity: map.get($theme, focus-state-layer-opacity),
-        pressed-state-layer-opacity:
-          map.get($theme, pressed-state-layer-opacity),
-      )
-    );
-  }
+  @include ripple-theme.theme(
+    (
+      hover-state-layer-color: map.get($theme, hover-state-layer-color),
+      focus-state-layer-color: map.get($theme, focus-state-layer-color),
+      pressed-state-layer-color: map.get($theme, pressed-state-layer-color),
+      hover-state-layer-opacity: map.get($theme, hover-state-layer-opacity),
+      focus-state-layer-opacity: map.get($theme, focus-state-layer-opacity),
+      pressed-state-layer-opacity: map.get($theme, pressed-state-layer-opacity),
+    )
+  );
 }

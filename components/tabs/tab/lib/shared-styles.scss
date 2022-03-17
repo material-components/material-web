@@ -5,10 +5,7 @@
  */
 
 @use './tab';
-@use '@material/ripple';
-
 @include tab.core-styles();
-@include ripple.common();
 
 :host {
   outline: none;

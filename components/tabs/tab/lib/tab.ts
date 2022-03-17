@@ -5,19 +5,17 @@
  */
 
 import '../../tab_indicator/tab-indicator';
-import '@material/mwc-ripple/mwc-ripple';
 import '../../../focus/focus-ring';
 import '../../../icon/icon';
 
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
-import {Ripple} from '@material/mwc-ripple/mwc-ripple';
-import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {html, TemplateResult} from 'lit';
 import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
 import {pointerPress, shouldShowStrongFocus} from '../../../focus/strong-focus';
+import {MdRipple} from '../../../ripple/ripple';
 import {MdTabIndicator} from '../../tab_indicator/tab-indicator';
 
 import {MDCTabAdapter} from './adapter';
@@ -83,13 +81,7 @@ export class Tab extends BaseElement {
 
   @query('.md3-tab__content') protected _contentElement!: HTMLElement;
 
-  @state() protected shouldRenderRipple = false;
-
-  @state() protected useStateLayerCustomProperties = false;
-
-  @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
-
-  protected rippleElement: Ripple|null = null;
+  @query('md-ripple') ripple!: MdRipple;
 
   override connectedCallback() {
     this.dir = document.dir;
@@ -166,11 +158,7 @@ export class Tab extends BaseElement {
   // TODO(dfreedm): Make this use selected as a param after Polymer/internal#739
   /** @soyCompatible */
   protected renderRipple() {
-    return this.shouldRenderRipple ?
-        html`<mwc-ripple primary
-        .internalUseStateLayerCustomProperties="${
-            this.useStateLayerCustomProperties}"></mwc-ripple>` :
-        '';
+    return html`<md-ripple></md-ripple>`;
   }
 
   /** @soyTemplate */
@@ -263,12 +251,6 @@ export class Tab extends BaseElement {
     this.handleFocus();
   }
 
-  protected rippleHandlers: RippleHandlers = new RippleHandlers(() => {
-    this.shouldRenderRipple = true;
-    this.ripple.then((v) => this.rippleElement = v);
-    return this.ripple;
-  });
-
   protected handleClick() {
     this.handleFocus();
     this.mdcFoundation.handleClick();
@@ -290,38 +272,34 @@ export class Tab extends BaseElement {
     };
 
     window.addEventListener('mouseup', onUp);
-    this.rippleHandlers.startPress(event);
+    this.ripple.beginPress(event);
     pointerPress();
   }
 
   @eventOptions({passive: true})
   protected handleRippleTouchStart(event: Event) {
-    this.rippleHandlers.startPress(event);
+    this.ripple.beginPress(event);
   }
 
   protected handleRippleDeactivate() {
-    this.rippleHandlers.endPress();
+    this.ripple.endPress();
   }
 
   protected handleRippleMouseEnter() {
-    this.rippleHandlers.startHover();
+    this.ripple.beginHover();
   }
 
   protected handleRippleMouseLeave() {
-    this.rippleHandlers.endHover();
+    this.ripple.endHover();
   }
 
   protected handleRippleFocus() {
-    this.rippleHandlers.startFocus();
+    this.ripple.beginFocus();
     this.showFocusRing = shouldShowStrongFocus();
   }
 
   protected handleRippleBlur() {
-    this.rippleHandlers.endFocus();
+    this.ripple.endFocus();
     this.showFocusRing = false;
-  }
-
-  get isRippleActive() {
-    return this.rippleElement?.isActive || false;
   }
 }

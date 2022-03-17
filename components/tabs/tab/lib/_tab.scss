@@ -7,12 +7,10 @@
 // TODO(b/218510991): Remove IE11 fallbacks
 @use '@material/focusring/focus-ring';
 @use '../../../focus/lib/focus-ring-theme';
-@use '@material/ripple/ripple';
-@use '@material/ripple/ripple-theme';
 @use '@material/theme/theme';
 @use '@material/theme/theme-color';
 @use '@material/typography/typography';
-@use 'third_party/javascript/material_web_components/m3/tabs/tab_indicator/lib/tab-indicator' as tab-indicator-mixins;
+@use '../../tab_indicator/lib/tab-indicator' as tab-indicator-mixins;
 
 $icon-size: 24px;
 $height: 48px;
@@ -32,7 +30,6 @@ $ripple-target: '.md3-tab__ripple';
 
 @mixin core-styles() {
   @include without-ripple();
-  @include ripple();
 }
 
 @mixin static-styles() {
@@ -145,33 +142,6 @@ $ripple-target: '.md3-tab__ripple';
   @include static-styles();
 }
 
-// This API is intended for use by frameworks that may want to separate the ripple-related styles
-// from the other tah styles. It is recommended that most users use `mdc-tab-core-styles` instead.
-@mixin ripple() {
-  .md3-tab {
-    @include ripple.surface(
-      $ripple-target: $ripple-target,
-      $include-will-change: false
-    );
-    @include ripple.radius-bounded($ripple-target: $ripple-target);
-    @include ripple-theme.states(
-      $color: primary,
-      $ripple-target: $ripple-target
-    );
-  }
-
-  #{$ripple-target} {
-    position: absolute;
-    inset-block-start: 0;
-    inset-inline-start: 0;
-    inline-size: 100%;
-    block-size: 100%;
-    overflow: hidden;
-    // TODO(b/151931961): Remove the following line once resolved
-    will-change: transform, opacity;
-  }
-}
-
 @mixin horizontal-padding($padding) {
   padding-block-start: $padding;
   padding-block-end: $padding;
@@ -188,10 +158,6 @@ $ripple-target: '.md3-tab__ripple';
     @include theme.property(color, $color);
     fill: currentColor;
   }
-}
-
-@mixin states-color($color) {
-  @include ripple-theme.states($color, $ripple-target: $ripple-target);
 }
 
 @mixin ink-color($color) {
@@ -263,44 +229,42 @@ $ripple-target: '.md3-tab__ripple';
   @include icon-color($icon-color-default);
   @include tab-indicator-mixins.surface();
 
-  @include ripple-theme.focus() {
-    &.md3-tab--active .md3-tab__focus-ring {
-      // TODO(b/221897714): focus-ring styles should reference token values for
-      // color.
-      @include focus-ring-theme.theme(
-        (
-          container-outer-padding-horizontal: -6px,
-          container-outer-padding-vertical: -6px,
-          inner-ring-width: 2px,
-          inner-ring-color: #2065bb,
-          inner-ring-radius: 8px,
-          outer-ring-width: 2px,
-          outer-ring-color: #ebf1fc,
-          outer-ring-radius: 10px,
-        )
-      );
+  &.md3-tab--active .md3-tab__focus-ring {
+    // TODO(b/221897714): focus-ring styles should reference token values for
+    // color.
+    @include focus-ring-theme.theme(
+      (
+        container-outer-padding-horizontal: -6px,
+        container-outer-padding-vertical: -6px,
+        inner-ring-width: 2px,
+        inner-ring-color: #2065bb,
+        inner-ring-radius: 8px,
+        outer-ring-width: 2px,
+        outer-ring-color: #ebf1fc,
+        outer-ring-radius: 10px,
+      )
+    );
 
-      margin-block-start: -2px;
-      // Set z-index to +1 above the .md3-tab
-      z-index: 2;
-    }
+    margin-block-start: -2px;
+    // Set z-index to +1 above the .md3-tab
+    z-index: 2;
+  }
 
-    .md3-tab__focus-ring {
-      // TODO(b/221897714): focus-ring styles should reference token values for
-      // color.
-      @include focus-ring-theme.theme(
-        (
-          container-outer-padding-horizontal: -4px,
-          container-outer-padding-vertical: -4px,
-          inner-ring-width: 2px,
-          inner-ring-color: #2065bb,
-          inner-ring-radius: 8px,
-          outer-ring-width: 2px,
-          outer-ring-color: #ebf1fc,
-          outer-ring-radius: 10px,
-        )
-      );
-    }
+  .md3-tab__focus-ring {
+    // TODO(b/221897714): focus-ring styles should reference token values for
+    // color.
+    @include focus-ring-theme.theme(
+      (
+        container-outer-padding-horizontal: -4px,
+        container-outer-padding-vertical: -4px,
+        inner-ring-width: 2px,
+        inner-ring-color: #2065bb,
+        inner-ring-radius: 8px,
+        outer-ring-width: 2px,
+        outer-ring-color: #ebf1fc,
+        outer-ring-radius: 10px,
+      )
+    );
   }
 }
 
