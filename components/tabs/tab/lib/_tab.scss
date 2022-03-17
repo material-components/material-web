@@ -4,39 +4,21 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// TODO(b/218510991): Remove IE11 fallbacks
-@use '@material/focusring/focus-ring';
 @use '../../../focus/lib/focus-ring-theme';
-@use '@material/theme/theme';
-@use '@material/theme/theme-color';
-@use '@material/typography/typography';
 @use '../../tab_indicator/lib/tab-indicator' as tab-indicator-mixins;
 
-$icon-size: 24px;
 $height: 48px;
 $stacked-height: 72px;
 $min-width: 90px;
 $horizontal-padding: 24px;
-$text-label-opacity: 0.6;
-$icon-opacity: 0.54;
-$text-label-color-default: rgba(
-  theme-color.prop-value(on-surface),
-  $text-label-opacity
-);
-$icon-color-default: rgba(theme-color.prop-value(on-surface), $icon-opacity);
-$text-label-color-active: primary;
-$icon-color-active: primary;
-$ripple-target: '.md3-tab__ripple';
-
-@mixin core-styles() {
-  @include without-ripple();
-}
 
 @mixin static-styles() {
   .md3-tab {
     @include min-width($min-width);
     @include horizontal-padding($horizontal-padding);
+    @include focus-ring();
 
+    background: none;
     display: flex;
     flex: 1 0 auto;
     justify-content: center;
@@ -70,6 +52,7 @@ $ripple-target: '.md3-tab__ripple';
     justify-content: center;
     block-size: inherit;
     pointer-events: none;
+    @include content_();
   }
 
   .md3-tab__text-label {
@@ -114,74 +97,9 @@ $ripple-target: '.md3-tab__ripple';
   }
 }
 
-// This API is intended for use by frameworks that may want to separate the ripple-related styles
-// from the other tah styles. It is recommended that most users use `mdc-tab-core-styles` instead.
-@mixin without-ripple() {
-  .md3-tab {
-    @include base_();
-  }
-
-  .md3-tab__content {
-    @include content_();
-  }
-
-  .md3-tab__icon {
-    inline-size: $icon-size;
-    block-size: $icon-size;
-    font-size: $icon-size;
-  }
-
-  .md3-tab--active {
-    @include active_();
-  }
-
-  .md3-tab {
-    background: none;
-  }
-
-  @include static-styles();
-}
-
 @mixin horizontal-padding($padding) {
   padding-block-start: $padding;
   padding-block-end: $padding;
-}
-
-@mixin text-label-color($color) {
-  .md3-tab__text-label {
-    @include theme.property(color, $color);
-  }
-}
-
-@mixin icon-color($color) {
-  .md3-tab__icon {
-    @include theme.property(color, $color);
-    fill: currentColor;
-  }
-}
-
-@mixin ink-color($color) {
-  @include icon-color($color);
-  @include states-color($color);
-  @include text-label-color($color);
-}
-
-@mixin active-text-label-color($color) {
-  &.md3-tab--active {
-    @include text-label-color($color);
-  }
-}
-
-@mixin active-icon-color($color) {
-  &.md3-tab--active {
-    @include icon-color($color);
-  }
-}
-
-@mixin active-states-color($color) {
-  &.md3-tab--active {
-    @include states-color($color);
-  }
 }
 
 @mixin parent-positioning() {
@@ -223,12 +141,7 @@ $ripple-target: '.md3-tab__ripple';
 // Private
 //
 
-@mixin base_() {
-  @include typography.typography(button);
-  @include text-label-color($text-label-color-default);
-  @include icon-color($icon-color-default);
-  @include tab-indicator-mixins.surface();
-
+@mixin focus-ring() {
   &.md3-tab--active .md3-tab__focus-ring {
     // TODO(b/221897714): focus-ring styles should reference token values for
     // color.
@@ -283,9 +196,4 @@ $ripple-target: '.md3-tab__ripple';
     padding-block-start: 6px;
     padding-block-end: 4px;
   }
-}
-
-@mixin active_() {
-  @include text-label-color($text-label-color-active);
-  @include icon-color($icon-color-active);
 }

@@ -5,7 +5,7 @@
  */
 
 @use './tab';
-@include tab.core-styles();
+@include tab.static-styles();
 
 :host {
   outline: none;
