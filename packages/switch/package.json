@@ -18,14 +18,14 @@
   "dependencies": {
     "@material/mwc-base": "^0.25.3",
     "@material/mwc-ripple": "^0.25.3",
-    "@material/switch": "=14.0.0-canary.868793776.0",
+    "@material/switch": "=14.0.0-canary.ae8a6a3a3.0",
     "lit": "^2.0.0",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@material/dom": "=14.0.0-canary.868793776.0",
-    "@material/ripple": "=14.0.0-canary.868793776.0",
-    "@material/theme": "=14.0.0-canary.868793776.0"
+    "@material/dom": "=14.0.0-canary.ae8a6a3a3.0",
+    "@material/ripple": "=14.0.0-canary.ae8a6a3a3.0",
+    "@material/theme": "=14.0.0-canary.ae8a6a3a3.0"
   },
   "scripts": {
     "build:style": "node ../../scripts/sass-to-lit-css/index.js styles.scss && npm run build:styledeprecated",
