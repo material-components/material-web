@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2018 Google LLC
+ * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -14,9 +14,6 @@ import {MdNavigationTab} from '../navigation-tab';
 
 @customElement('md-test-navigation-tab')
 class TestNavigationTab extends MdNavigationTab {
-  getFoundation() {
-    return this.mdcFoundation;
-  }
 }
 
 declare global {
@@ -70,7 +67,7 @@ describe('mwc-navigation-tab', () => {
       await element.updateComplete;
     });
 
-    it('initializes as an mwc-navigation-tab', () => {
+    it('initializes as an md-navigation-tab', () => {
       expect(element).toBeInstanceOf(MdNavigationTab);
       expect(element.active).toBeFalse();
       expect(element.hideInactiveLabel).toBeFalse();
@@ -93,15 +90,6 @@ describe('mwc-navigation-tab', () => {
       const button = element.shadowRoot!.querySelector('button')!;
       element.focus();
       expect(doesElementContainFocus(button)).toBeTrue();
-    });
-
-    describe('handleClick()', () => {
-      it('should call foundation.handleClick()', () => {
-        const foundation = element.getFoundation();
-        spyOn(foundation, 'handleClick').and.callThrough();
-        element.click();
-        expect(foundation.handleClick).toHaveBeenCalledTimes(1);
-      });
     });
   });
 

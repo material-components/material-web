@@ -7,11 +7,11 @@
 @use '../../sass/theme';
 @use '../../sass/tokens';
 @use '../../focus/lib/focus-ring-theme';
+@use 'third_party/javascript/material_web_components/m3/ripple/ripple-theme';
 @use '@material/theme/state';
 @use '@material/theme/shadow-dom';
 @use '@material/theme/theme-color';
 @use '@material/theme/keys';
-@use '@material/ripple/ripple-theme';
 @use '@material/typography/typography';
 
 $light-theme: tokens.md-comp-navigation-bar-values();

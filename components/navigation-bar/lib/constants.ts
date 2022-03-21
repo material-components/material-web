@@ -1,17 +1,17 @@
 /**
  * @license
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCNavigationTabState} from 'google3/third_party/javascript/material_web_components/m3/navigation_tab/lib/state';
+import {NavigationTabState} from 'google3/third_party/javascript/material_web_components/m3/navigation_tab/lib/state';
 
 /**
  * MDCNavigationTabInteractionEventDetail provides details for the interaction
  * event.
  */
 export interface MDCNavigationTabInteractionEventDetail {
-  state: MDCNavigationTabState;
+  state: NavigationTabState;
 }
 
 /**

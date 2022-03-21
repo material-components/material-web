@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -73,7 +73,7 @@ export class NavigationBar extends BaseElement implements
         const activeElementPath = deepActiveElementPath();
         const activeElement = activeElementPath[activeElementPath.length - 1];
         return this.tabs.findIndex((tab) => {
-          return tab.getRoot() === activeElement;
+          return tab.buttonElement === activeElement;
         });
       },
       isRTL: () =>

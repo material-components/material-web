@@ -1,45 +1,33 @@
 /**
  * @license
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/mwc-ripple/mwc-ripple';
 import '../../focus/focus-ring';
 
-import {BaseElement} from '@material/mwc-base/base-element';
-import {Ripple} from '@material/mwc-ripple/mwc-ripple';
-import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {html, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAsync, state} from 'lit/decorators';
+import {html, PropertyValues, TemplateResult} from 'lit';
+import {property, query, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 
+import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action_element/action-element';
 import {ariaProperty} from '../../decorators/aria-property';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
+import {MdRipple} from '../../ripple/ripple';
 
-import {MDCNavigationTabFoundation} from './foundation';
-import {MDCNavigationTabAdapter, MDCNavigationTabState} from './state';
+import {NavigationTabState} from './state';
 
 /** @soyCompatible */
-export class NavigationTab extends BaseElement implements
-    MDCNavigationTabState {
-  // MDCNavigationTabState
+export class NavigationTab extends ActionElement implements NavigationTabState {
+  disabled = false;
   @property({type: Boolean, reflect: true}) active = false;
   @property({type: Boolean}) hideInactiveLabel = false;
   @property({type: String}) label?: string;
   @property({type: String}) badgeValue = '';
   @property({type: Boolean}) showBadge = false;
 
-  @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
-
   @state() protected showFocusRing = false;
-
-  @state() protected shouldRenderRipple = false;
-  protected rippleHandlers = new RippleHandlers(() => {
-    this.shouldRenderRipple = true;
-    return this.ripple;
-  });
 
   // TODO(b/210730484): replace with @soyParam annotation
   // tslint:disable-next-line:no-new-decorators
@@ -47,13 +35,9 @@ export class NavigationTab extends BaseElement implements
   @property({type: String, attribute: 'data-aria-label', noAccessor: true})
   override ariaLabel!: string;
 
-  // BaseElement
-  @query('.md3-navigation-tab') protected mdcRoot!: HTMLElement;
-  getRoot(): HTMLElement {
-    return this.mdcRoot;
-  }
-  protected readonly mdcFoundationClass = MDCNavigationTabFoundation;
-  protected mdcFoundation!: MDCNavigationTabFoundation;
+  @query('button') buttonElement!: HTMLElement;
+
+  @query('md-ripple') ripple!: MdRipple;
 
   /** @soyTemplate */
   override render(): TemplateResult {
@@ -64,15 +48,16 @@ export class NavigationTab extends BaseElement implements
         aria-selected="${this.active}"
         aria-label="${ifDefined(this.ariaLabel)}"
         tabindex="${this.active ? 0 : -1}"
+        @focus="${this.handleFocus}"
+        @blur="${this.handleBlur}"
+        @pointerdown="${this.handlePointerDown}"
+        @pointerup="${this.handlePointerUp}"
+        @pointercancel="${this.handlePointerCancel}"
+        @pointerleave="${this.handlePointerLeave}"
+        @pointerenter="${this.handlePointerEnter}"
         @click="${this.handleClick}"
-        @focus="${this.handleRippleFocus}"
-        @blur="${this.handleRippleBlur}"
-        @mousedown="${this.handleRippleMouseDown}"
-        @mouseenter="${this.handleRippleMouseEnter}"
-        @mouseleave="${this.handleRippleMouseLeave}"
-        @touchstart="${this.handleRippleTouchStart}"
-        @touchend="${this.handleRippleTouchEnd}"
-        @touchcancel="${this.handleRippleTouchEnd}"
+        @clickmod="${this.handleClick}"
+        @contextmenu="${this.handleContextMenu}"
       >${this.renderFocusRing()}${this.renderRipple()}
         <span class="md3-navigation-tab__icon-content"
           ><span class="md3-navigation-tab__active-indicator"
@@ -102,12 +87,7 @@ export class NavigationTab extends BaseElement implements
 
   /** @soyTemplate */
   protected renderRipple(): TemplateResult|string {
-    return this.shouldRenderRipple ? this.renderRippleTemplate() : '';
-  }
-
-  /** @soyTemplate */
-  protected renderRippleTemplate(): TemplateResult {
-    return html`<mwc-ripple></mwc-ripple>`;
+    return html`<md-ripple></md-ripple>`;
   }
 
   /** @soyTemplate */
@@ -132,68 +112,57 @@ export class NavigationTab extends BaseElement implements
         <span class="md3-navigation-tab__label-text">${this.label}</span>`;
   }
 
-  override firstUpdated() {
-    super.firstUpdated();
+  override firstUpdated(changedProperties: PropertyValues) {
+    super.firstUpdated(changedProperties);
     const event =
         new Event('navigation-tab-rendered', {bubbles: true, composed: true});
     this.dispatchEvent(event);
   }
 
-  protected createAdapter(): MDCNavigationTabAdapter {
-    return {
-      state: this,
-      emitInteractionEvent: (eventDetail) => this.dispatchEvent(new CustomEvent(
-          'navigation-tab-interaction',
-          {detail: {state: eventDetail}, bubbles: true, composed: true})),
-    };
-  }
-
   override focus() {
-    this.mdcRoot.focus();
-    this.handleRippleFocus();
+    const buttonElement = this.buttonElement;
+    if (buttonElement) {
+      this.ripple.beginFocus();
+      buttonElement.focus();
+    }
   }
 
-  protected handleClick() {
-    this.mdcFoundation.handleClick();
+  override blur() {
+    const buttonElement = this.buttonElement;
+    if (buttonElement) {
+      this.ripple.endFocus();
+      buttonElement.blur();
+    }
   }
 
-  protected handleRippleFocus() {
+  override beginPress({positionEvent}: BeginPressConfig) {
+    this.ripple.beginPress(positionEvent);
+  }
+
+  override endPress(options: EndPressConfig) {
+    this.ripple.endPress();
+    super.endPress(options);
+    this.dispatchEvent(new CustomEvent(
+        'navigation-tab-interaction',
+        {detail: {state: this}, bubbles: true, composed: true}));
+  }
+
+  protected handlePointerEnter(e: PointerEvent) {
+    this.ripple.beginHover(e);
+  }
+
+  override handlePointerLeave(e: PointerEvent) {
+    super.handlePointerLeave(e);
+    this.ripple.endHover();
+  }
+
+  protected handleFocus() {
     this.showFocusRing = shouldShowStrongFocus();
-    this.rippleHandlers.startFocus();
+    this.ripple.beginFocus();
   }
 
-  protected handleRippleBlur() {
-    this.showFocusRing = false;
-    this.rippleHandlers.endFocus();
-  }
-
-  @eventOptions({passive: true})
-  protected handleRippleMouseDown(event: Event) {
-    const onUp = () => {
-      window.removeEventListener('mouseup', onUp);
-
-      this.rippleHandlers.endPress();
-    };
-
-    window.addEventListener('mouseup', onUp);
-    this.rippleHandlers.startPress(event);
+  protected handleBlur() {
+    this.ripple.endFocus();
     pointerPress();
-  }
-
-  protected handleRippleMouseEnter() {
-    this.rippleHandlers.startHover();
-  }
-
-  protected handleRippleMouseLeave() {
-    this.rippleHandlers.endHover();
-  }
-
-  @eventOptions({passive: true})
-  protected handleRippleTouchStart(event: Event) {
-    this.rippleHandlers.startPress(event);
-  }
-
-  protected handleRippleTouchEnd() {
-    this.rippleHandlers.endPress();
   }
 }
