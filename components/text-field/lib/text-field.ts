@@ -89,7 +89,7 @@ export class TextField extends LitElement {
         class="md3-text-field__input"
         aria-invalid=${this.error}
         aria-label=${ifDefined(this.ariaLabel)}
-        aria-labelledby="field"
+        aria-labelledby="${this.fieldID}"
         .disabled=${this.disabled}
         .placeholder=${this.placeholder}
         .readonly=${this.readonly}
@@ -119,6 +119,6 @@ export class TextField extends LitElement {
   }
 
   protected redispatchEvent(event: Event) {
-    redispatchEvent.call(this, event);
+    redispatchEvent(this, event);
   }
 }

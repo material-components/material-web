@@ -150,7 +150,7 @@ export class Field extends LitElement {
     `;
   }
 
-  protected override update(props: PropertyValues<this>) {
+  protected override update(props: PropertyValues<Field>) {
     // Client-side property updates
     if (this.disabled && props.has('disabled')) {
       // When disabling, remove focus styles.

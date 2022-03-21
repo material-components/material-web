@@ -27,7 +27,7 @@ describe('redispatchEvent()', () => {
     const event = new Event('foo', {composed: false, bubbles: true});
     const fooHandler = jasmine.createSpy('fooHandler');
     instance.addEventListener('foo', fooHandler);
-    redispatchEvent.bind(instance)(event);
+    redispatchEvent(instance, event);
 
     expect(fooHandler).toHaveBeenCalled();
     const redispatchedEvent = fooHandler.calls.first().args[0] as Event;
@@ -53,7 +53,7 @@ describe('redispatchEvent()', () => {
     const event = new Event('foo', {composed: true, bubbles: true});
     const fooHandler = jasmine.createSpy('fooHandler');
     instance.addEventListener('foo', fooHandler);
-    redispatchEvent.bind(instance)(event);
+    redispatchEvent(instance, event);
 
     expect(fooHandler).toHaveBeenCalledTimes(1);
   });
@@ -65,7 +65,7 @@ describe('redispatchEvent()', () => {
       const event = new Event('foo', {composed: true, bubbles: true});
       const fooHandler = jasmine.createSpy('fooHandler');
       instance.addEventListener('foo', fooHandler);
-      redispatchEvent.bind(instance)(event);
+      redispatchEvent(instance, event);
 
       expect(fooHandler).toHaveBeenCalledTimes(1);
     } finally {
@@ -80,7 +80,7 @@ describe('redispatchEvent()', () => {
           event.preventDefault();
         });
     instance.addEventListener('foo', fooHandler);
-    const result = redispatchEvent.bind(instance)(event);
+    const result = redispatchEvent(instance, event);
     expect(result)
         .withContext('should return false since event was canceled')
         .toBeFalse();
@@ -98,7 +98,7 @@ describe('redispatchEvent()', () => {
     const event = new CustomEvent('foo', {detail: 'bar'});
     const fooHandler = jasmine.createSpy('fooHandler');
     instance.addEventListener('foo', fooHandler);
-    redispatchEvent.bind(instance)(event);
+    redispatchEvent(instance, event);
 
     expect(fooHandler).toHaveBeenCalled();
     const redispatchedEvent = fooHandler.calls.first().args[0] as CustomEvent;

@@ -5,7 +5,7 @@
  */
 
 /**
- * Re-dispatches an event from the `EventTarget` this function is bound to.
+ * Re-dispatches an event from the provided element.
  *
  * This function is useful for forwarding non-composed events, such as `change`
  * events.
@@ -16,21 +16,24 @@
  *     return html`<input @change=${this.redispatchEvent}>`;
  *   }
  *
- *   protected redispatchEvent = redispatchEvent.bind(this);
+ *   protected redispatchEvent(event: Event) {
+ *     redispatchEvent(this, event);
+ *   }
  * }
  *
+ * @param element The element to dispatch the event from.
  * @param event The event to re-dispatch.
  * @return Whether or not the event was dispatched (if cancelable).
  */
-export function redispatchEvent(this: Element, event: Event) {
+export function redispatchEvent(element: Element, event: Event) {
   // For bubbling events in SSR light DOM (or composed), stop their propagation
   // and dispatch the copy.
-  if (event.bubbles && (!this.shadowRoot || event.composed)) {
+  if (event.bubbles && (!element.shadowRoot || event.composed)) {
     event.stopPropagation();
   }
 
   const copy = Reflect.construct(event.constructor, [event.type, event]);
-  const dispatched = this.dispatchEvent(copy);
+  const dispatched = element.dispatchEvent(copy);
   if (!dispatched) {
     event.preventDefault();
   }
