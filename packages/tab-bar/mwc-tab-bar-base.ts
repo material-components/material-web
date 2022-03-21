@@ -94,7 +94,7 @@ export class TabBarBase extends BaseElement {
       isRTL: () => window.getComputedStyle(this.mdcRoot)
                        .getPropertyValue('direction') === 'rtl',
       setActiveTab: (index: number) => this.mdcFoundation.activateTab(index),
-      activateTabAtIndex: (index: number, clientRect: ClientRect) => {
+      activateTabAtIndex: (index: number, clientRect: DOMRect) => {
         const tab = this._getTab(index);
         if (tab !== undefined) {
           tab.activate(clientRect);

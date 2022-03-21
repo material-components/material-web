@@ -168,7 +168,7 @@ export class TabBase extends BaseElement {
       ...addHasRemoveClass(this.mdcRoot),
       setAttr: (attr: string, value: string) =>
           this.mdcRoot.setAttribute(attr, value),
-      activateIndicator: async (previousIndicatorClientRect: ClientRect) => {
+      activateIndicator: async (previousIndicatorClientRect: DOMRect) => {
         await this.tabIndicator.updateComplete;
         this.tabIndicator.activate(previousIndicatorClientRect);
       },
@@ -198,7 +198,7 @@ export class TabBase extends BaseElement {
     };
   }
 
-  activate(clientRect: ClientRect) {
+  activate(clientRect: DOMRect) {
     // happens only on initialization. We don't want to focus to prevent scroll
     if (!clientRect) {
       this.initFocus = true;

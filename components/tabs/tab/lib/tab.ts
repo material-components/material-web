@@ -173,7 +173,7 @@ export class Tab extends BaseElement {
   protected createAdapter(): MDCTabAdapter {
     return {
       ...addHasRemoveClass(this.mdcRoot),
-      activateIndicator: async (previousIndicatorClientRect: ClientRect) => {
+      activateIndicator: async (previousIndicatorClientRect: DOMRect) => {
         await this.tabIndicator.updateComplete;
         this.tabIndicator.activate(previousIndicatorClientRect);
       },
@@ -203,7 +203,7 @@ export class Tab extends BaseElement {
     };
   }
 
-  activate(clientRect: ClientRect) {
+  activate(clientRect: DOMRect) {
     // happens only on initialization. We don't want to focus to prevent
     // scroll
     if (!clientRect) {

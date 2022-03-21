@@ -68,7 +68,7 @@ export class TabIndicatorBase extends BaseElement {
     return this.mdcFoundation.computeContentClientRect();
   }
 
-  activate(previousIndicatorClientRect?: ClientRect) {
+  activate(previousIndicatorClientRect?: DOMRect) {
     this.mdcFoundation.activate(previousIndicatorClientRect);
   }
 
