@@ -28,6 +28,12 @@ declare global {
 export class MdOutlinedTextField extends OutlinedTextField {
   static override styles = [sharedStyles, outlinedStyles];
 
+  constructor() {
+    super();
+    // TODO(b/223268166): remove when l2w supports superclass event handlers
+    this.addEventListener('click', this.handleClick);
+  }
+
   /** @soyTemplate */
   protected override renderField(): TemplateResult {
     return html`

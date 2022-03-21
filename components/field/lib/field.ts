@@ -20,13 +20,8 @@ export class Field extends LitElement {
   @property({type: Boolean}) populated = false;
   @property({type: Boolean}) required = false;
 
-  @state() protected isFloatingLabelVisible = false;
-
-  protected focused = false;
-
-  protected get shouldLabelBeFloating() {
-    return this.focused || this.populated;
-  }
+  @state() protected focused = false;
+  @state() protected isAnimating = false;
 
   protected readonly labelAnimationSignal = createAnimationSignal();
 
@@ -104,13 +99,13 @@ export class Field extends LitElement {
 
   /** @soyTemplate */
   protected renderFloatingLabel(): TemplateResult {
-    const isHidden = !this.isFloatingLabelVisible;
+    const visible = (this.focused || this.populated) && !this.isAnimating;
     /** @classMap */
-    const classes = {'md3-field__label--hidden': isHidden};
+    const classes = {'md3-field__label--hidden': !visible};
     return html`
       <span class="md3-field__label md3-field__label--floating ${
         classMap(classes)}"
-        aria-hidden=${isHidden}
+        aria-hidden=${!visible}
       >${this.renderLabelText()}</span>
     `;
 
@@ -120,13 +115,13 @@ export class Field extends LitElement {
 
   /** @soyTemplate */
   protected renderRestingLabel(): TemplateResult {
-    const isHidden = this.isFloatingLabelVisible;
+    const visible = !(this.focused || this.populated) || this.isAnimating;
     /** @classMap */
-    const classes = {'md3-field__label--hidden': isHidden};
+    const classes = {'md3-field__label--hidden': !visible};
     return html`
       <span class="md3-field__label md3-field__label--resting ${
         classMap(classes)}"
-        aria-hidden=${isHidden}
+        aria-hidden=${!visible}
       >${this.renderLabelText()}</span>
     `;
 
@@ -162,10 +157,7 @@ export class Field extends LitElement {
       this.blur();
     }
 
-    if (this.shouldAnimateLabel({wasPopulated: props.get('populated')})) {
-      this.animateLabel();
-    }
-
+    this.animateLabelIfNeeded({wasPopulated: props.get('populated')});
     super.update(props);
   }
 
@@ -175,9 +167,7 @@ export class Field extends LitElement {
     }
 
     this.focused = true;
-    if (this.shouldAnimateLabel({wasFocused: false})) {
-      this.animateLabel();
-    }
+    this.animateLabelIfNeeded({wasFocused: false});
   }
 
   // TODO(b/218700023): set to protected
@@ -188,40 +178,32 @@ export class Field extends LitElement {
     }
 
     this.focused = false;
-    if (this.shouldAnimateLabel({wasFocused: true})) {
-      this.animateLabel();
-    }
+    this.animateLabelIfNeeded({wasFocused: true});
   }
 
-  protected shouldAnimateLabel({wasFocused, wasPopulated}: {
+  protected async animateLabelIfNeeded({wasFocused, wasPopulated}: {
     wasFocused?: boolean,
     wasPopulated?: boolean
   }) {
+    if (!this.label) {
+      return;
+    }
+
     wasFocused ??= this.focused;
     wasPopulated ??= this.populated;
     const wasFloating = wasFocused || wasPopulated;
-    if (!this.label || wasFloating === this.shouldLabelBeFloating) {
-      // If the label will not be animating, go ahead and sync
-      // `isFloatingLabelVisible` with `shouldLabelBeFloating` since it won't
-      // be updated asynchronously in an animation.
-      // We do this so that the correct label will be visible if a field is
-      // given a label later.
-      this.isFloatingLabelVisible = this.shouldLabelBeFloating;
-      return false;
+    const shouldBeFloating = this.focused || this.populated;
+    if (wasFloating === shouldBeFloating) {
+      return;
     }
 
-    return true;
-  }
-
-  protected async animateLabel() {
+    this.isAnimating = true;
     const signal = this.labelAnimationSignal.start();
 
     // Only one label is visible at a time for clearer text rendering.
     // The resting label is visible and used during animation. At the end of the
     // animation, it will either remain visible (if resting) or hide and the
     // floating label will be shown.
-    this.isFloatingLabelVisible = false;
-
     const labelEl = await this.restingLabelEl;
     const keyframes = await this.getLabelKeyframes();
     if (signal.aborted) {
@@ -246,7 +228,7 @@ export class Field extends LitElement {
 
     animation.addEventListener('finish', () => {
       // At the end of the animation, update the visible label.
-      this.isFloatingLabelVisible = this.shouldLabelBeFloating;
+      this.isAnimating = false;
       this.labelAnimationSignal.finish();
     });
   }
@@ -285,7 +267,7 @@ export class Field extends LitElement {
         yDelta}px)) scale(${scale})`;
     const restTransform = `translateX(0) translateY(-50%) scale(1)`;
 
-    if (this.shouldLabelBeFloating) {
+    if (this.focused || this.populated) {
       return [{transform: restTransform}, {transform: floatTransform}];
     }
 
