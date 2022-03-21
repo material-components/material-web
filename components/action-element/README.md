@@ -41,7 +41,7 @@ from `endPress()` have a `detail` object, it should be included in the call to
 ### Example
 
 ```ts
-import {ActionElement, BeginPressConfig, EndPressConfig} from '../action_element/action-element';
+import {ActionElement, BeginPressConfig, EndPressConfig} from '../action-element/action-element';
 
 import {html} from 'lit';
 import {property} from 'lit/decorators';
@@ -82,7 +82,7 @@ export class MyElement extends ActionElement {
 ### Example with ripple
 
 ```ts
-import {ActionElement, BeginPressConfig, EndPressConfig} from '../action_element/action-element';
+import {ActionElement, BeginPressConfig, EndPressConfig} from '../action-element/action-element';
 import {MdRipple} from '../ripple/ripple';
 
 import {html} from 'lit';
