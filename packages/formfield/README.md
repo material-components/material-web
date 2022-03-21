@@ -27,7 +27,7 @@ npm install @material/mwc-formfield
 > browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
 > tooling step is required to resolve *bare module specifiers*, as well as
 > transpilation and polyfills for IE11. See
-> [here](https://github.com/material-components/material-components-web-components#quick-start)
+> [here](https://github.com/material-components/material-web#quick-start)
 > for detailed instructions.
 
 ## Example usage
@@ -137,7 +137,7 @@ Name    | Type     | Description
 
 #### Global CSS Custom Properties
 
-This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+This component exposes the following global [theming](https://github.com/material-components/material-web/blob/master/docs/theming.md)
 custom properties.
 
 | Name | Description

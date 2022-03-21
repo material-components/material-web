@@ -19,7 +19,7 @@ npm install @material/mwc-tab-bar
 > browsers including Chrome, Firefox, Safari, Edge, and IE11, but an additional
 > tooling step is required to resolve *bare module specifiers*, as well as
 > transpilation and polyfills for IE11. See
-> [here](https://github.com/material-components/material-components-web-components#quick-start)
+> [here](https://github.com/material-components/material-web#quick-start)
 > for detailed instructions.
 
 ## Example usage

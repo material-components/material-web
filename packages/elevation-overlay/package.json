@@ -12,7 +12,7 @@
   "module": "mwc-elevation-overlay.css.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/material-components/material-components-web-components.git",
+    "url": "https://github.com/material-components/material-web.git",
     "directory": "packages/elevation-overlay"
   },
   "license": "Apache-2.0",

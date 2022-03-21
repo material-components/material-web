@@ -11,7 +11,7 @@
   "module": "mwc-notched-outline.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/material-components/material-components-web-components.git",
+    "url": "https://github.com/material-components/material-web.git",
     "directory": "packages/notched-outline"
   },
   "license": "Apache-2.0",

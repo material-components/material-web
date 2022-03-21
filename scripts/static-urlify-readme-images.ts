@@ -28,7 +28,7 @@ import {URL} from 'url';
 const mwcRepoRoot = path.resolve(__dirname, '..', '..');
 
 const githubRaw =
-    `https://raw.githubusercontent.com/material-components/material-components-web-components`;
+    `https://raw.githubusercontent.com/material-components/material-web`;
 
 // Matches markdown image syntax like `![description](url "tooltip")`
 const markdownImageRegexp = /(\!\[.*?\]\()([^) ]+)(.*?\))/g;

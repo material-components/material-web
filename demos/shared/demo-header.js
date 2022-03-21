@@ -61,7 +61,7 @@ class DemoHeader extends LitElement {
           <mwc-icon-button class="white" icon="arrow_back"></mwc-icon-button>
         </a>
         <span slot="title">${this.component}</span>
-        <a href="https://github.com/material-components/material-components-web-components/tree/master/demos/${pkg}index.html" slot="actionItems">
+        <a href="https://github.com/material-components/material-web/tree/master/demos/${pkg}index.html" slot="actionItems">
           <mwc-button outlined label="View Source" class="white"></mwc-button>
         </a>
       </mwc-top-app-bar-fixed>
