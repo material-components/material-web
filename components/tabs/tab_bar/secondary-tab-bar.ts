@@ -5,7 +5,7 @@
  */
 
 
-import {customElement} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators';
 
 import {SecondaryTabBar} from './lib/secondary-tab-bar';
 import {styles as tabbarStyles} from './lib/secondary-tab-bar-styles.css';

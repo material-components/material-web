@@ -15,8 +15,8 @@ import {BaseElement, EventType, SpecificEventListener} from '@material/mwc-base/
 import {FormElement} from '@material/mwc-base/form-element';
 import {observer} from '@material/mwc-base/observer';
 import {html} from 'lit';
-import {property, query, queryAssignedNodes} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
+import {property, query, queryAssignedNodes} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
 
 
 export class FormfieldBase extends BaseElement {

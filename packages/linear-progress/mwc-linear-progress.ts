@@ -7,7 +7,7 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {customElement} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators';
 
 import {LinearProgressBase} from './mwc-linear-progress-base';
 import {styles} from './mwc-linear-progress.css';

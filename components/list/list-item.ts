@@ -7,7 +7,7 @@
 import {customElement} from 'lit/decorators';
 
 import {ListItem} from './lib/list-item';
-import {styles} from './lib/list-item-styles.css'
+import {styles} from './lib/list-item-styles.css';
 
 declare global {
   interface HTMLElementTagNameMap {

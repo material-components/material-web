@@ -13,8 +13,8 @@ import {BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
 import {deepActiveElementPath, doesElementContainFocus, isNodeElement} from '@material/mwc-base/utils';
 import {html} from 'lit';
-import {property, query, queryAssignedNodes} from 'lit/decorators.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
+import {property, query, queryAssignedNodes} from 'lit/decorators';
+import {ifDefined} from 'lit/directives/if-defined';
 
 import {MDCListAdapter} from './mwc-list-adapter';
 import MDCListFoundation, {ActionDetail, isIndexSet, SelectedDetail} from './mwc-list-foundation';

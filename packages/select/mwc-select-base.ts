@@ -27,9 +27,9 @@ import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCSelectAdapter} from '@material/select/adapter';
 import MDCSelectFoundation from '@material/select/foundation';
 import {html, nothing} from 'lit';
-import {eventOptions, property, query, state} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
+import {eventOptions, property, query, state} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
+import {ifDefined} from 'lit/directives/if-defined';
 
 // must be done to get past lit-analyzer checks
 declare global {

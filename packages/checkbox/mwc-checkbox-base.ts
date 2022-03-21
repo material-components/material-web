@@ -14,9 +14,9 @@ import {FormElement} from '@material/mwc-base/form-element';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {html, PropertyValues, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
+import {eventOptions, property, query, queryAsync, state} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
+import {ifDefined} from 'lit/directives/if-defined';
 
 /** @soyCompatible */
 export class CheckboxBase extends FormElement {

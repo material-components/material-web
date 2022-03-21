@@ -7,7 +7,7 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {customElement} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators';
 
 import {NotchedOutlineBase} from './mwc-notched-outline-base';
 import {styles} from './mwc-notched-outline.css';

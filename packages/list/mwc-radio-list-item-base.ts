@@ -12,9 +12,9 @@ import '@material/mwc-radio';
 
 import {Radio} from '@material/mwc-radio';
 import {html} from 'lit';
-import {property, query} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
+import {property, query} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
+import {ifDefined} from 'lit/directives/if-defined';
 
 import {GraphicType, ListItemBase} from './mwc-list-item-base';
 

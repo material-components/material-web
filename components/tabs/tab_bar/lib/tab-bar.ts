@@ -7,8 +7,8 @@
 import {BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
 import {html} from 'lit';
-import {property, query} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {property, query} from 'lit/decorators';
+import {ClassInfo, classMap} from 'lit/directives/class-map';
 
 import {MDCTabInteractionEvent} from '../../tab/lib/types';
 import {MdPrimaryTab} from '../../tab/primary-tab';

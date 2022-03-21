@@ -12,8 +12,8 @@ import '@material/mwc-checkbox';
 
 import {Checkbox} from '@material/mwc-checkbox';
 import {html} from 'lit';
-import {property, query} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
+import {property, query} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
 
 import {GraphicType, ListItemBase} from './mwc-list-item-base';
 

@@ -7,7 +7,7 @@
 import {matches} from '@material/dom/ponyfill';
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {html} from 'lit';
-import {eventOptions, query} from 'lit/decorators.js';
+import {eventOptions, query} from 'lit/decorators';
 
 import {MDCTabScrollerAdapter} from './adapter';
 import MDCTabScrollerFoundation from './foundation';

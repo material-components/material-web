@@ -7,7 +7,7 @@
 import '../icon/icon';
 
 import {html, TemplateResult} from 'lit';
-import {customElement} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators';
 
 import {styles} from './lib/icon-button-styles.css';
 import {IconButtonToggle} from './lib/icon-button-toggle';

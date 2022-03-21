@@ -8,7 +8,7 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {customElement} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators';
 
 import {ListItemBase} from './mwc-list-item-base';
 import {styles} from './mwc-list-item.css';

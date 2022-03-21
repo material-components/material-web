@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {property} from 'lit/decorators.js';
+import {property} from 'lit/decorators';
 import {ClassInfo} from 'lit/directives/class-map';
 
 import {Tab} from './tab';

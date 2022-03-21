@@ -14,9 +14,9 @@ import {AriaHasPopup, ariaProperty} from '@material/mwc-base/aria-property';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {html, LitElement, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
+import {eventOptions, property, query, queryAsync, state} from 'lit/decorators';
+import {ClassInfo, classMap} from 'lit/directives/class-map';
+import {ifDefined} from 'lit/directives/if-defined';
 
 /** @soyCompatible */
 export class ButtonBase extends LitElement {

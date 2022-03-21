@@ -7,7 +7,7 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {customElement} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators';
 
 import {CircularProgressFourColorBase} from './mwc-circular-progress-four-color-base';
 import {styles} from './mwc-circular-progress-four-color.css';

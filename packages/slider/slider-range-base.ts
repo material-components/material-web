@@ -15,10 +15,10 @@ import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {MDCSliderAdapter} from '@material/slider/adapter';
 import {Thumb, TickMark} from '@material/slider/types';
 import {html, nothing, PropertyValues, TemplateResult} from 'lit';
-import {property, query, queryAsync, state} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
-import {styleMap} from 'lit/directives/style-map.js';
+import {property, query, queryAsync, state} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
+import {ifDefined} from 'lit/directives/if-defined';
+import {styleMap} from 'lit/directives/style-map';
 
 import {SliderBase} from './slider-base';
 

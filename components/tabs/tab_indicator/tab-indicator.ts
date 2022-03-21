@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators';
 
 import {TabIndicator} from './lib/tab-indicator';
 import {styles} from './lib/tab-indicator-styles.css';

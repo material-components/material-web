@@ -7,14 +7,11 @@
 import '../../focus/focus-ring';
 import '../../ripple/ripple';
 
-// Style preference for leading underscores.
-// tslint:disable:strip-private-property-underscore
-
 import {ariaProperty as legacyAriaProperty} from '@material/mwc-base/aria-property';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
-import {eventOptions, property, query, state} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
+import {eventOptions, property, query, state} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
+import {ifDefined} from 'lit/directives/if-defined';
 
 import {ariaProperty} from '../../decorators/aria-property';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';

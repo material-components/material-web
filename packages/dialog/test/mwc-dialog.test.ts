@@ -18,7 +18,7 @@ import {Button} from '@material/mwc-button';
 import {Dialog} from '@material/mwc-dialog';
 import {DocumentWithBlockingElements} from 'blocking-elements';
 import {html, LitElement} from 'lit';
-import {customElement} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators';
 
 import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';
 

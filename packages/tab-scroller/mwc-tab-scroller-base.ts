@@ -12,7 +12,7 @@ import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {MDCTabScrollerAdapter} from '@material/tab-scroller/adapter';
 import MDCTabScrollerFoundation from '@material/tab-scroller/foundation';
 import {html} from 'lit';
-import {eventOptions, query} from 'lit/decorators.js';
+import {eventOptions, query} from 'lit/decorators';
 
 export class TabScrollerBase extends BaseElement {
   protected mdcFoundation!: MDCTabScrollerFoundation;

@@ -19,8 +19,8 @@ import {TabIndicator} from '@material/mwc-tab-indicator';
 import {MDCTabAdapter} from '@material/tab/adapter';
 import MDCTabFoundation from '@material/tab/foundation';
 import {html} from 'lit';
-import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
+import {eventOptions, property, query, queryAsync, state} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
 
 export interface TabInteractionEventDetail {
   tabId: string;

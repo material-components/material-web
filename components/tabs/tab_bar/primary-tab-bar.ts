@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators';
 
 import {PrimaryTabBar} from './lib/primary-tab-bar';
 import {styles as tabbarStyles} from './lib/primary-tab-bar-styles.css';

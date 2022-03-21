@@ -4,12 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Style preference for leading underscores.
-// tslint:disable:strip-private-property-underscore
-
 import {html, TemplateResult} from 'lit';
-import {property} from 'lit/decorators.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
+import {property} from 'lit/decorators';
+import {ifDefined} from 'lit/directives/if-defined';
 
 import {IconButton} from './icon-button';
 

@@ -14,8 +14,8 @@ import {observer} from '@material/mwc-base/observer';
 import {Ripple} from '@material/mwc-ripple/mwc-ripple';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {html, LitElement} from 'lit';
-import {property, query, queryAsync, state} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
+import {property, query, queryAsync, state} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
 
 export type SelectionSource = 'interaction'|'property';
 export interface RequestSelectedDetail {

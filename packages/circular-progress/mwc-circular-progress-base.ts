@@ -9,10 +9,10 @@
 
 import {ariaProperty} from '@material/mwc-base/aria-property';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
-import {property} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
-import {styleMap} from 'lit/directives/style-map.js';
+import {property} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
+import {ifDefined} from 'lit/directives/if-defined';
+import {styleMap} from 'lit/directives/style-map';
 
 /** @soyCompatible */
 export class CircularProgressBase extends LitElement {

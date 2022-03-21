@@ -7,7 +7,7 @@
 import '../icon/icon';
 
 import {html, TemplateResult} from 'lit';
-import {customElement} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators';
 
 import {IconButton} from './lib/icon-button';
 import {styles} from './lib/icon-button-styles.css';

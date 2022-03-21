@@ -9,7 +9,7 @@
 
 
 import {styles as textfieldStyles} from '@material/mwc-textfield/mwc-textfield.css';
-import {customElement} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators';
 
 import {TextAreaBase, TextAreaCharCounter, TextFieldInputMode, TextFieldType} from './mwc-textarea-base';
 import {styles as textareaStyles} from './mwc-textarea.css';

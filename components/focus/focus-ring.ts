@@ -7,7 +7,7 @@
 import {customElement} from 'lit/decorators';
 
 import {FocusRing} from './lib/focus-ring';
-import {styles as focusRingStyles} from './lib/focus-ring-styles.css';
+import {styles} from './lib/focus-ring-styles.css';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -22,5 +22,5 @@ declare global {
  */
 @customElement('md-focus-ring')
 export class MdFocusRing extends FocusRing {
-  static override styles = [focusRingStyles];
+  static override styles = [styles];
 }

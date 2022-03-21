@@ -9,7 +9,7 @@
 
 import {MDCFloatingLabelAdapter} from '@material/floating-label/adapter';
 import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation';
-import {AttributePart, directive, Directive, DirectiveParameters, PartInfo, PartType} from 'lit/directive.js';
+import {AttributePart, directive, Directive, DirectiveParameters, PartInfo, PartType} from 'lit/directive';
 
 export interface FloatingLabel extends HTMLLabelElement {
   floatingLabelFoundation: MDCFloatingLabelFoundation;

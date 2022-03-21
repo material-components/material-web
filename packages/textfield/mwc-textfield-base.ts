@@ -19,10 +19,10 @@ import {NotchedOutline} from '@material/mwc-notched-outline';
 import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter';
 import MDCTextFieldFoundation from '@material/textfield/foundation';
 import {html, PropertyValues, TemplateResult} from 'lit';
-import {eventOptions, property, query, state} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
-import {live} from 'lit/directives/live.js';
+import {eventOptions, property, query, state} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
+import {ifDefined} from 'lit/directives/if-defined';
+import {live} from 'lit/directives/live';
 
 // must be done to get past lit-analyzer checks
 declare global {

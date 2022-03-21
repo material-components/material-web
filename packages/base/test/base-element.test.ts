@@ -10,7 +10,7 @@
 
 import {BaseElement} from '@material/mwc-base/base-element';
 import {html} from 'lit';
-import {customElement, query} from 'lit/decorators.js';
+import {customElement, query} from 'lit/decorators';
 
 import {fixture, TestFixture} from '../../../test/src/util/helpers';
 

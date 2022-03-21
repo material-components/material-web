@@ -19,7 +19,7 @@ import {List, MWCListIndex} from '@material/mwc-list';
 import {ActionDetail} from '@material/mwc-list/mwc-list-foundation';
 import {ListItemBase} from '@material/mwc-list/mwc-list-item-base';
 import {html} from 'lit';
-import {property, query} from 'lit/decorators.js';
+import {property, query} from 'lit/decorators';
 
 import {MenuSurface} from './mwc-menu-surface';
 import {Corner, MenuCorner} from './mwc-menu-surface-base';

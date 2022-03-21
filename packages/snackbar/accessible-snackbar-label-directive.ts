@@ -9,8 +9,8 @@
 
 import MDCSnackbarFoundation from '@material/snackbar/foundation';
 import {html, render, TemplateResult} from 'lit';
-import {AsyncDirective} from 'lit/async-directive.js';
-import {ChildPart, directive, DirectiveParameters, PartInfo, PartType} from 'lit/directive.js';
+import {AsyncDirective} from 'lit/async-directive';
+import {ChildPart, directive, DirectiveParameters, PartInfo, PartType} from 'lit/directive';
 
 const {ARIA_LIVE_DELAY_MS} = MDCSnackbarFoundation.numbers;
 /**

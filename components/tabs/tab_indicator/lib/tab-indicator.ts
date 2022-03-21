@@ -6,8 +6,8 @@
 
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {html, PropertyValues} from 'lit';
-import {property, query} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
+import {property, query} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
 
 import {MDCTabIndicatorAdapter} from './adapter';
 import MDCFadingTabIndicatorFoundation from './fading-foundation';

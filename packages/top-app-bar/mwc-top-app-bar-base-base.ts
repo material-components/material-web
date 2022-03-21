@@ -13,8 +13,8 @@ import {MDCTopAppBarAdapter} from '@material/top-app-bar/adapter';
 import {strings} from '@material/top-app-bar/constants';
 import MDCTopAppBarBaseFoundation from '@material/top-app-bar/foundation';
 import {html} from 'lit';
-import {property, query} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
+import {property, query} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
 
 export const passiveEventOptionsIfSupported =
     supportsPassiveEventListener ? {passive: true} : undefined;

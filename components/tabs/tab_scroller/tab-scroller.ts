@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators';
 
 import {TabScroller} from './lib/tab-scroller';
 import {styles} from './lib/tab-scroller-styles.css';

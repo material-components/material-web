@@ -10,8 +10,8 @@
 
 import {ariaProperty} from '@material/mwc-base/aria-property';
 import {html, LitElement} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
+import {customElement, property} from 'lit/decorators';
+import {ifDefined} from 'lit/directives/if-defined';
 
 import {fixture, TestFixture} from '../../../test/src/util/helpers';
 

@@ -11,8 +11,8 @@ import '../../../icon/icon';
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
 import {html, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {eventOptions, property, query, queryAsync, state} from 'lit/decorators';
+import {ClassInfo, classMap} from 'lit/directives/class-map';
 
 import {pointerPress, shouldShowStrongFocus} from '../../../focus/strong-focus';
 import {MdRipple} from '../../../ripple/ripple';

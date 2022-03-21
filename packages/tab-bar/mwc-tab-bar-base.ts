@@ -20,7 +20,7 @@ import {MDCTabBarAdapter} from '@material/tab-bar/adapter';
 import MDCTabBarFoundation from '@material/tab-bar/foundation';
 import {MDCTabInteractionEvent} from '@material/tab/types';
 import {html} from 'lit';
-import {property, query} from 'lit/decorators.js';
+import {property, query} from 'lit/decorators';
 
 export class TabBarBase extends BaseElement {
   protected mdcFoundation!: MDCTabBarFoundation;

@@ -10,10 +10,10 @@
 
 import {TextAreaCharCounter, TextFieldBase, TextFieldInputMode, TextFieldType} from '@material/mwc-textfield/mwc-textfield-base';
 import {ComplexAttributeConverter, html, TemplateResult} from 'lit';
-import {property, query} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
-import {live} from 'lit/directives/live.js';
+import {property, query} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
+import {ifDefined} from 'lit/directives/if-defined';
+import {live} from 'lit/directives/live';
 
 export {TextAreaCharCounter, TextFieldInputMode, TextFieldType};
 

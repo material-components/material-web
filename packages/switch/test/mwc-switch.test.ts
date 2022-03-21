@@ -6,8 +6,8 @@
 
 import {Switch} from '@material/mwc-switch/mwc-switch';
 import {html} from 'lit';
-import {customElement} from 'lit/decorators.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
+import {customElement} from 'lit/decorators';
+import {ifDefined} from 'lit/directives/if-defined';
 
 import {fixture, simulateFormDataEvent, TestFixture} from '../../../test/src/util/helpers';
 
