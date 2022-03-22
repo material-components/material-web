@@ -12,6 +12,7 @@
 @use '@material/typography/typography';
 @use '../../../sass/theme';
 @use '../../../sass/tokens';
+@use '../../../sass/resolvers';
 @use './tab-theme';
 
 $custom-property-prefix-primary: 'primary-tab';
@@ -30,15 +31,19 @@ $dark-theme: tokens.md-comp-primary-navigation-tab-values(
   $exclude-hardcoded-values: true
 );
 
-@mixin primary-navigation-tab-theme($theme) {
+@mixin primary-navigation-tab-theme($theme, $resolvers: resolvers.$material) {
   $theme: theme.validate-theme($light-theme, $theme);
+  $theme: tab-theme.resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, $custom-property-prefix-primary);
   @include theme.emit-theme-vars($theme);
 }
 
-@mixin primary-navigation-tab-theme-styles($theme) {
+@mixin primary-navigation-tab-theme-styles(
+  $theme,
+  $resolvers: resolvers.$material
+) {
   $theme: theme.validate-theme-styles($light-theme, $theme);
-  $theme: tab-theme.resolve-theme($theme);
+  $theme: tab-theme.resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, $custom-property-prefix-primary);
 
   @include tab-theme.container-color(map.get($theme, container-color));

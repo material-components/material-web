@@ -12,12 +12,11 @@
 @use '@material/theme/theme-color';
 @use '@material/typography/typography';
 @use '../../../sass/theme';
-@use '../../../sass/resolvers';
 @use '../../../elevation/lib/elevation-theme';
 
 $_ripple-target: '.md3-tab__ripple';
 
-@function resolve-theme($theme, $resolvers: resolvers.$material) {
+@function resolve-theme($theme, $resolvers) {
   $theme: elevation-theme.resolve-theme(
     $theme,
     map.get($resolvers, elevation),
