@@ -147,14 +147,13 @@ $horizontal-padding: 24px;
     // color.
     @include focus-ring-theme.theme(
       (
+        ring-radius: 10px,
         container-outer-padding-horizontal: -6px,
         container-outer-padding-vertical: -6px,
         inner-ring-width: 2px,
         inner-ring-color: #2065bb,
-        inner-ring-radius: 8px,
         outer-ring-width: 2px,
         outer-ring-color: #ebf1fc,
-        outer-ring-radius: 10px,
       )
     );
 
@@ -168,14 +167,13 @@ $horizontal-padding: 24px;
     // color.
     @include focus-ring-theme.theme(
       (
+        ring-radius: 10px,
         container-outer-padding-horizontal: -4px,
         container-outer-padding-vertical: -4px,
         inner-ring-width: 2px,
         inner-ring-color: #2065bb,
-        inner-ring-radius: 8px,
         outer-ring-width: 2px,
         outer-ring-color: #ebf1fc,
-        outer-ring-radius: 10px,
       )
     );
   }

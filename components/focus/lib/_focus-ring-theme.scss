@@ -10,14 +10,13 @@
 $_custom-property-prefix: 'focus-ring';
 
 $light-theme: (
+  ring-radius: 8px,
   container-outer-padding-vertical: 2px,
   container-outer-padding-horizontal: 2px,
   inner-ring-width: 2px,
   inner-ring-color: #000,
-  inner-ring-radius: 6px,
   outer-ring-width: 2px,
   outer-ring-color: #fff,
-  outer-ring-radius: 8px,
 );
 
 @mixin theme($theme, $resolvers: resolvers.$material) {
@@ -41,11 +40,12 @@ $light-theme: (
   );
   $inner-width: map.get($theme, inner-ring-width);
   $inner-color: map.get($theme, inner-ring-color);
-  $inner-radius: map.get($theme, inner-ring-radius);
 
   $outer-width: map.get($theme, outer-ring-width);
   $outer-color: map.get($theme, outer-ring-color);
-  $outer-radius: map.get($theme, outer-ring-radius);
+
+  $outer-radius: map.get($theme, ring-radius);
+  $inner-radius: calc(#{$outer-radius} - #{$outer-width});
 
   // Outer
   @include _outer-ring-size(
