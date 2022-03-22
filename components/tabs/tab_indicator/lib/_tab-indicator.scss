@@ -62,63 +62,6 @@
   }
 }
 
-@mixin core-styles() {
-  .md3-tab-indicator {
-    @include base_();
-  }
-
-  @include static-styles();
-}
-
 @mixin surface() {
   position: relative;
-}
-
-@mixin underline-color($color) {
-  .md3-tab-indicator__content--underline {
-    border-color: $color;
-  }
-}
-
-@mixin underline-height($height) {
-  .md3-tab-indicator__content--underline {
-    border-block-start-width: $height;
-  }
-}
-
-@mixin underline-shape($radius) {
-  .md3-tab-indicator__content--underline {
-    border-radius: $radius;
-  }
-}
-
-@mixin underline-top-corner-radius($radius) {
-  .md3-tab-indicator__content--underline {
-    border-start-start-radius: $radius;
-    border-start-end-radius: $radius;
-  }
-}
-
-@mixin icon-color($color) {
-  .md3-tab-indicator__content--icon {
-    color: $color;
-  }
-}
-
-@mixin icon-height($height) {
-  .md3-tab-indicator__content--icon {
-    inline-size: $height;
-    font-size: $height;
-  }
-}
-
-//
-// Private
-//
-
-@mixin base_() {
-  @include underline-color(primary);
-  @include icon-color(secondary);
-  @include underline-height(2px);
-  @include icon-height(34px);
 }

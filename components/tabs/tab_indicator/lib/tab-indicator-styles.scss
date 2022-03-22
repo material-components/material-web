@@ -8,7 +8,7 @@
 @use './tab-indicator-theme' as tabindicator-theme;
 @use 'third_party/javascript/material_web_components/icon/_mwc-icon.scss';
 
-@include tabindicator.core-styles();
+@include tabindicator.static-styles();
 
 .md3-tab-indicator {
   @include tabindicator-theme.theme-styles(tabindicator-theme.$light-theme);
