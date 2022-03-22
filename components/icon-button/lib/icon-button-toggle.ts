@@ -54,21 +54,6 @@ export class IconButtonToggle extends ActionElement {
     super.endPress({cancelled, actionData: detail});
   }
 
-  override click() {
-    this.mdcRoot.focus();
-    this.mdcRoot.click();
-  }
-
-  override focus() {
-    this.ripple.beginFocus();
-    this.mdcRoot.focus();
-  }
-
-  override blur() {
-    this.ripple.endFocus();
-    this.mdcRoot.blur();
-  }
-
   /** @soyTemplate */
   protected renderRipple(): TemplateResult {
     return html`<md-ripple .disabled="${
@@ -91,7 +76,6 @@ export class IconButtonToggle extends ActionElement {
           class="md3-icon-button ${classMap(classes)}"
           aria-pressed="${ifDefined(ariaPressedValue)}"
           aria-label="${ifDefined(ariaLabelValue)}"
-          @click="${this.handleClick}"
           ?disabled="${this.disabled}"
           @focus="${this.handleFocus}"
           @blur="${this.handleBlur}"
