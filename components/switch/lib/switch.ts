@@ -17,15 +17,11 @@ import {ifDefined} from 'lit/directives/if-defined';
 import {FormController, getFormValue} from '../../controller/form-controller';
 import {ariaProperty} from '../../decorators/aria-property';
 
-import {MDCSwitchFoundation} from './foundation';
-import {MDCSwitchState} from './state';
-
 /** @soyCompatible */
-export class Switch extends LitElement implements MDCSwitchState {
+export class Switch extends LitElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
-  // MDCSwitchState
   @property({type: Boolean, reflect: true}) disabled = false;
   @property({type: Boolean}) processing = false;
   @property({type: Boolean}) selected = false;
@@ -61,15 +57,13 @@ export class Switch extends LitElement implements MDCSwitchState {
     return this.selected ? this.value : null;
   }
 
-  protected mdcFoundation = new MDCSwitchFoundation({state: this});
-
   constructor() {
     super();
     this.addController(new FormController(this));
   }
 
   override click() {
-    this.mdcFoundation?.handleClick();
+    this.handleClick();
     super.click();
   }
 
@@ -172,7 +166,11 @@ export class Switch extends LitElement implements MDCSwitchState {
   }
 
   protected handleClick() {
-    this.mdcFoundation?.handleClick();
+    if (this.disabled) {
+      return;
+    }
+
+    this.selected = !this.selected;
   }
 
   protected handleFocus() {

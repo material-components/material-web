@@ -13,10 +13,6 @@ import {MDSwitch} from '../switch';
 
 @customElement('md-test-switch')
 class TestSwitch extends MDSwitch {
-  getFoundation() {
-    return this.mdcFoundation;
-  }
-
   async forceRenderRipple() {
     this.shouldRenderRipple = true;
     return this.ripple;
@@ -262,15 +258,6 @@ describe('mwc-switch', () => {
       toggle.click();
       expect(input.focus).not.toHaveBeenCalled();
       expect(input.click).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('handleClick()', () => {
-    it('should call foundation.handleClick()', () => {
-      const foundation = toggle.getFoundation()!;
-      spyOn(foundation, 'handleClick').and.callThrough();
-      toggle.click();
-      expect(foundation.handleClick).toHaveBeenCalledTimes(1);
     });
   });
 
