@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
-
 @use '@material/animation/animation';
 @use '@material/elevation/elevation';
 @use '@material/ripple/ripple';
@@ -17,7 +14,7 @@
 $animation-duration: 75ms;
 $icon-exit-duration: 0.4 * $animation-duration;
 $icon-enter-duration: $animation-duration - $icon-exit-duration;
-$ripple-target: '.mdc-switch__ripple';
+$ripple-target: '.md3-switch__ripple';
 
 // PUBLIC API
 
@@ -25,7 +22,7 @@ $ripple-target: '.mdc-switch__ripple';
   @include static-styles-without-ripple();
 
   // with ripple
-  .mdc-switch {
+  .md3-switch {
     // @include ripple.common; // COPYBARA_COMMENT_THIS_LINE
     @include ripple.surface($ripple-target: $ripple-target);
     @include ripple.radius-unbounded($ripple-target: $ripple-target);
@@ -39,7 +36,7 @@ $ripple-target: '.mdc-switch__ripple';
     outline: none;
   }
 
-  .mdc-switch {
+  .md3-switch {
     @include _root;
 
     &:disabled {
@@ -47,55 +44,55 @@ $ripple-target: '.mdc-switch__ripple';
     }
   }
 
-  .mdc-switch__track {
+  .md3-switch__track {
     @include _track;
     @include _track-off;
 
-    .mdc-switch--selected & {
+    .md3-switch--selected & {
       @include _track-on;
     }
   }
 
-  .mdc-switch__handle-track {
+  .md3-switch__handle-track {
     @include _handle-track;
     @include _handle-track-off;
 
-    .mdc-switch--selected & {
+    .md3-switch--selected & {
       @include _handle-track-on;
     }
   }
 
-  .mdc-switch__handle {
+  .md3-switch__handle {
     @include _handle;
   }
 
-  .mdc-switch__shadow {
+  .md3-switch__shadow {
     @include _shadow;
   }
 
-  .mdc-elevation-overlay {
+  .md3-elevation-overlay {
     @include _overlay;
   }
 
-  .mdc-switch__ripple {
+  .md3-switch__ripple {
     @include _ripple;
 
-    .mdc-switch:disabled & {
+    .md3-switch:disabled & {
       @include _ripple-disabled;
     }
   }
 
-  .mdc-switch__icons {
+  .md3-switch__icons {
     @include _icons;
   }
 
-  .mdc-switch__icon {
+  .md3-switch__icon {
     @include _icon;
     @include _icon-hidden;
   }
 
-  .mdc-switch--selected .mdc-switch__icon--on,
-  .mdc-switch--unselected .mdc-switch__icon--off {
+  .md3-switch--selected .md3-switch__icon--on,
+  .md3-switch--unselected .md3-switch__icon--off {
     @include _icon-visible;
   }
 

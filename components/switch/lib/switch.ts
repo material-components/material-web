@@ -72,7 +72,7 @@ export class Switch extends LitElement {
     return html`
       <button
         type="button"
-        class="mdc-switch ${classMap(this.getRenderClasses())}"
+        class="md3-switch ${classMap(this.getRenderClasses())}"
         role="switch"
         aria-checked="${this.selected}"
         aria-label="${ifDefined(this.ariaLabel)}"
@@ -86,8 +86,8 @@ export class Switch extends LitElement {
         @pointerenter="${this.handlePointerEnter}"
         @pointerleave="${this.handlePointerLeave}"
       >
-        <div class="mdc-switch__track"></div>
-        <div class="mdc-switch__handle-track">
+        <div class="md3-switch__track"></div>
+        <div class="md3-switch__handle-track">
           ${this.renderHandle()}
         </div>
       </button>
@@ -105,19 +105,19 @@ export class Switch extends LitElement {
   /** @soyTemplate */
   protected getRenderClasses(): ClassInfo {
     return {
-      'mdc-switch--processing': this.processing,
-      'mdc-switch--selected': this.selected,
-      'mdc-switch--unselected': !this.selected,
+      'md3-switch--processing': this.processing,
+      'md3-switch--selected': this.selected,
+      'md3-switch--unselected': !this.selected,
     };
   }
 
   /** @soyTemplate */
   protected renderHandle(): TemplateResult {
     return html`
-      <div class="mdc-switch__handle">
+      <div class="md3-switch__handle">
         ${this.renderShadow()}
         ${this.renderRipple()}
-        <div class="mdc-switch__icons">
+        <div class="md3-switch__icons">
           ${this.renderOnIcon()}
           ${this.renderOffIcon()}
         </div>
@@ -128,8 +128,8 @@ export class Switch extends LitElement {
   /** @soyTemplate */
   protected renderShadow(): TemplateResult {
     return html`
-      <div class="mdc-switch__shadow">
-        <div class="mdc-elevation-overlay"></div>
+      <div class="md3-switch__shadow">
+        <div class="md3-elevation-overlay"></div>
       </div>
     `;
   }
@@ -137,7 +137,7 @@ export class Switch extends LitElement {
   /** @soyTemplate */
   protected renderRipple(): TemplateResult {
     return !this.shouldRenderRipple ? html`` : html`
-        <div class="mdc-switch__ripple">
+        <div class="md3-switch__ripple">
           <mwc-ripple
             internalUseStateLayerCustomProperties
             .disabled="${this.disabled}"
@@ -150,7 +150,7 @@ export class Switch extends LitElement {
   /** @soyTemplate */
   protected renderOnIcon(): TemplateResult {
     return html`
-      <svg class="mdc-switch__icon mdc-switch__icon--on" viewBox="0 0 24 24">
+      <svg class="md3-switch__icon md3-switch__icon--on" viewBox="0 0 24 24">
         <path d="M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z" />
       </svg>
     `;
@@ -159,7 +159,7 @@ export class Switch extends LitElement {
   /** @soyTemplate */
   protected renderOffIcon(): TemplateResult {
     return html`
-      <svg class="mdc-switch__icon mdc-switch__icon--off" viewBox="0 0 24 24">
+      <svg class="md3-switch__icon md3-switch__icon--off" viewBox="0 0 24 24">
         <path d="M20 13H4v-2h16v2z" />
       </svg>
     `;

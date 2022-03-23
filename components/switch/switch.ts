@@ -11,7 +11,7 @@ import {styles} from './lib/switch-styles.css';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-switch': MDSwitch;
+    'md-switch': MdSwitch;
   }
 }
 
@@ -21,6 +21,6 @@ declare global {
  * @suppress {visibility}
  */
 @customElement('md-switch')
-export class MDSwitch extends Switch {
+export class MdSwitch extends Switch {
   static override styles = [styles];
 }

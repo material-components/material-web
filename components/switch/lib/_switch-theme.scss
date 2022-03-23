@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
-
 @use 'sass:color';
 @use 'sass:map';
 @use 'sass:meta';
@@ -58,8 +55,8 @@ $selectors: (
   focus: ':focus',
   hover: ':hover',
   pressed: ':active',
-  selected: '.mdc-switch--selected',
-  unselected: '.mdc-switch--unselected',
+  selected: '.md3-switch--selected',
+  unselected: '.md3-switch--unselected',
 );
 
 $light-theme: (
@@ -415,7 +412,7 @@ $forced-colors-theme: (
 }
 
 @mixin _set-handle-color($color) {
-  .mdc-switch__handle {
+  .md3-switch__handle {
     &::after {
       @include theme.property(background, $color);
     }
@@ -435,7 +432,7 @@ $forced-colors-theme: (
 }
 
 @mixin _handle-surface-color($color) {
-  .mdc-switch__handle {
+  .md3-switch__handle {
     // Sets the surface color for the handle. This is used so that when an
     // opacity is applied to the "main" handle color, it will not bleed through
     // and appear transparent on top of the track.
@@ -464,13 +461,13 @@ $forced-colors-theme: (
 }
 
 @mixin _set-handle-elevation($resolver, $args...) {
-  .mdc-switch__shadow {
+  .md3-switch__shadow {
     @include elevation-theme.with-resolver($resolver, $args...);
   }
 }
 
 @mixin _handle-height($height) {
-  .mdc-switch__handle {
+  .md3-switch__handle {
     @include theme.property(height, $height);
   }
 }
@@ -482,7 +479,7 @@ $forced-colors-theme: (
 }
 
 @mixin _set-handle-opacity($opacity) {
-  .mdc-switch__handle {
+  .md3-switch__handle {
     // Only apply to the ::after pseudo element, which is the handle's "main"
     // color. The ::before pseudo element is the surface color, which prevents
     // the handle from bleeding through on the track.
@@ -493,17 +490,17 @@ $forced-colors-theme: (
 }
 
 @mixin _handle-shape($shape) {
-  .mdc-switch__handle {
+  .md3-switch__handle {
     @include shape.radius($shape);
   }
 }
 
 @mixin _handle-width($width) {
-  .mdc-switch__handle {
+  .md3-switch__handle {
     @include theme.property(width, $width);
   }
 
-  .mdc-switch__handle-track {
+  .md3-switch__handle-track {
     @include theme.property(
       width,
       'calc(100% - width)',
@@ -523,7 +520,7 @@ $forced-colors-theme: (
 }
 
 @mixin _set-icon-color($color) {
-  .mdc-switch__icon {
+  .md3-switch__icon {
     @include theme.property(fill, $color);
   }
 }
@@ -547,7 +544,7 @@ $forced-colors-theme: (
 }
 
 @mixin _set-icon-opacity($opacity) {
-  .mdc-switch__icons {
+  .md3-switch__icons {
     @include theme.property(opacity, $opacity);
   }
 }
@@ -565,7 +562,7 @@ $forced-colors-theme: (
 }
 
 @mixin _icon-size($size) {
-  .mdc-switch__icon {
+  .md3-switch__icon {
     @include theme.property(width, $size);
     @include theme.property(height, $size);
   }
@@ -658,14 +655,14 @@ $forced-colors-theme: (
 }
 
 @mixin _state-layer-size($size) {
-  .mdc-switch__ripple {
+  .md3-switch__ripple {
     @include theme.property(height, $size);
     @include theme.property(width, $size);
   }
 }
 
 @mixin _track-height($height) {
-  .mdc-switch__track {
+  .md3-switch__track {
     @include theme.property(height, $height);
   }
 }
@@ -677,7 +674,7 @@ $forced-colors-theme: (
 }
 
 @mixin _set-track-opacity($opacity) {
-  .mdc-switch__track {
+  .md3-switch__track {
     @include theme.property(opacity, $opacity);
   }
 }
@@ -705,7 +702,7 @@ $forced-colors-theme: (
 }
 
 @mixin _set-track-selected-color($color) {
-  .mdc-switch__track::after {
+  .md3-switch__track::after {
     @include theme.property(background, $color);
   }
 }
@@ -733,13 +730,13 @@ $forced-colors-theme: (
 }
 
 @mixin _set-track-unselected-color($color) {
-  .mdc-switch__track::before {
+  .md3-switch__track::before {
     @include theme.property(background, $color);
   }
 }
 
 @mixin _track-shape($shape) {
-  .mdc-switch__track {
+  .md3-switch__track {
     @include shape.radius($shape);
   }
 }
