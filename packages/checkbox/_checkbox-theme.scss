@@ -20,7 +20,7 @@
 @use '@material/touch-target/touch-target';
 
 @mixin theme($theme) {
-  @include checkbox-theme.theme($theme);
+  @include checkbox-theme.theme-internal($theme);
 
   @if shadow-dom.$css-selector-fallback-declarations {
     @include theme-styles($theme);
@@ -29,7 +29,7 @@
 
 @mixin theme-styles($theme) {
   .mdc-checkbox {
-    @include checkbox-theme.theme-styles($theme);
+    @include checkbox-theme.theme-styles-internal($theme);
   }
 
   $theme: keys.create-theme-properties(
