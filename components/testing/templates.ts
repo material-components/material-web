@@ -91,8 +91,8 @@ export class TemplateBuilder<H extends Harness = never,
       testCaseProps.push({});
     }
 
-    return Array.from(this.variants.values()).flatMap(factory => {
-      return testCaseProps.map(props => factory(props));
+    return Array.from(this.variants.entries()).flatMap(([name, factory]) => {
+      return testCaseProps.map(props => ({name, render: factory(props)}));
     });
   }
 
@@ -108,7 +108,7 @@ export class TemplateBuilder<H extends Harness = never,
       throw new Error(`Missing variant '${variant}' in TemplateBuilder.`);
     }
 
-    return factory;
+    return {name: variant, render: factory};
   }
 
   /**
@@ -152,7 +152,7 @@ export class TemplateBuilder<H extends Harness = never,
    *       .withVariants({/* ... *\/})
    *
    * @template NewHarness The new harness type.
-   * @param harnessCtor The constructor for the harness.
+   * @param callback The callback to be called.
    * @return The template builder, now using the provided harness type.
    */
   withStateCallback(callback: TemplateStateCallback<H>) {

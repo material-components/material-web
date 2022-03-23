@@ -7,8 +7,11 @@
 import {html, LitElement, render, TemplateResult} from 'lit';
 import {property} from 'lit/decorators';
 
-export type TestTableTemplate<S extends string = string> = (state: S) =>
-    TemplateResult;
+/** Test table interface. */
+export interface TestTableTemplate<S extends string = string> {
+  render(state: S): TemplateResult;
+  name: string;
+}
 
 /** @soyCompatible */
 export class TestTable<S extends string = string> extends LitElement {
@@ -24,6 +27,7 @@ export class TestTable<S extends string = string> extends LitElement {
       <table class="md3-test-table">
         <thead>
           <tr>
+            <th class="md3-test-table__header"></th>
             ${this.states.map(state => html`
               <th class="md3-test-table__header">${state}</th>
             `)}
@@ -43,13 +47,18 @@ export class TestTable<S extends string = string> extends LitElement {
     render(
         this.templates.map(
             (template, rowIndex) => this.states.map((state, colIndex) => html`
-              <div slot="${`${rowIndex}-${colIndex}`}">${template(state)}</div>
+              <div slot="${`${rowIndex}-${colIndex}`}">
+                ${template.render(state)}
+              </div>
             `)),
         this);
 
     return html`
       ${this.templates.map((template, rowIndex) => html`
         <tr>
+          <th class="md3-test-table__header">
+            ${this.getVariantName(template.name)}
+          </th>
           ${this.states.map((state, colIndex) => html`
             <td class="md3-test-table__cell">
               <slot name="${`${rowIndex}-${colIndex}`}"></slot>
@@ -58,5 +67,11 @@ export class TestTable<S extends string = string> extends LitElement {
         </tr>
       `)}
     `;
+  }
+
+  /** Convert the name from camel case to sentence case. */
+  private getVariantName(name: string) {
+    const withSpaces = name.replace(/([A-Z])/g, ' $1');
+    return withSpaces[0].toUpperCase() + withSpaces.slice(1);
   }
 }

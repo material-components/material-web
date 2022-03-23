@@ -59,7 +59,8 @@ describe('Field', () => {
 
     async function setupTest(props: TemplateProps<FieldHarness> = {}) {
       // Variant type does not matter for shared tests
-      const template = templates.variant('outlined')(props)(State.DEFAULT);
+      const template =
+          templates.variant('outlined').render(props)(State.DEFAULT);
       const instance =
           env.render(template).querySelector('md-test-outlined-field');
       if (!instance) {

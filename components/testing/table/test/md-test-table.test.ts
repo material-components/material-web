@@ -15,8 +15,14 @@ describe('<md-test-table>', () => {
   const env = new Environment();
 
   it('should call template functions with each state', async () => {
-    const template1 = jasmine.createSpy('template1').and.callFake(() => html``);
-    const template2 = jasmine.createSpy('template2').and.callFake(() => html``);
+    const template1 = {
+      name: 'template1',
+      render: jasmine.createSpy('template1').and.callFake(() => html``),
+    };
+    const template2 = {
+      name: 'template2',
+      render: jasmine.createSpy('template2').and.callFake(() => html``),
+    };
     const templates = [template1, template2] as TestTableTemplate[];
     env.render(html`
       <md-test-table
@@ -25,11 +31,11 @@ describe('<md-test-table>', () => {
     `);
 
     await env.waitForStability();
-    expect(template1).toHaveBeenCalledTimes(2);
-    expect(template1.calls.argsFor(0)).toEqual(['A']);
-    expect(template1.calls.argsFor(1)).toEqual(['B']);
-    expect(template2).toHaveBeenCalledTimes(2);
-    expect(template2.calls.argsFor(0)).toEqual(['A']);
-    expect(template2.calls.argsFor(1)).toEqual(['B']);
+    expect(template1.render).toHaveBeenCalledTimes(2);
+    expect(template1.render.calls.argsFor(0)).toEqual(['A']);
+    expect(template1.render.calls.argsFor(1)).toEqual(['B']);
+    expect(template2.render).toHaveBeenCalledTimes(2);
+    expect(template2.render.calls.argsFor(0)).toEqual(['A']);
+    expect(template2.render.calls.argsFor(1)).toEqual(['B']);
   });
 });
