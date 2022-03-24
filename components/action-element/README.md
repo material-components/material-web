@@ -1,5 +1,4 @@
 # Action Element
-
 Action Element is a base class that distills user gestures into a simple API:
 `beginPress()` and `endPress()`.
 
