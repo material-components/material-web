@@ -9,10 +9,13 @@ import {customElement} from 'lit/decorators';
 import {ifDefined} from 'lit/directives/if-defined';
 
 import {fixture, simulateFormDataEvent, TestFixture} from '../../../../test/src/util/helpers';
-import {MdSwitch} from '../switch';
+
+import {Switch} from './switch';
 
 @customElement('md-test-switch')
-class TestSwitch extends MdSwitch {
+class TestSwitch extends Switch {
+  // Not testing styles in unit tests.
+
   async forceRenderRipple() {
     this.shouldRenderRipple = true;
     return this.ripple;
