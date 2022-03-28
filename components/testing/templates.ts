@@ -189,12 +189,12 @@ export class TemplateBuilder<H extends Harness = never,
     const typedThis = this as unknown as TemplateBuilder<H, V|NewVariant>;
     typedThis.variants.set(variant, props => {
       return state => {
-        const directive = ref(element => {
+        const directive = ref(async element => {
           if (!element) {
             return;
           }
 
-          const harness = this.createHarnessAndApplyState(
+          const harness = await this.createHarnessAndApplyState(
               element as HarnessElement<H>, state);
 
           // Allow the component to apply additional state or perform custom
@@ -219,8 +219,8 @@ export class TemplateBuilder<H extends Harness = never,
    * @return The created harness, or undefined if a harness constructor is not
    *     being used.
    */
-  private createHarnessAndApplyState(element: HarnessElement<H>, state: string):
-      H|never {
+  private async createHarnessAndApplyState(
+      element: HarnessElement<H>, state: string): Promise<H|never> {
     if (!this.harnessCtor) {
       return undefined as never;
     }
@@ -229,13 +229,13 @@ export class TemplateBuilder<H extends Harness = never,
     // Common shared component state harness actions
     switch (state) {
       case State.FOCUS:
-        harness.focusWithKeyboard();
+        await harness.focusWithKeyboard();
         break;
       case State.HOVER:
-        harness.hoverEnter();
+        await harness.hoverEnter();
         break;
       case State.PRESSED:
-        harness.press();
+        await harness.press();
         break;
       default:
         break;
