@@ -20,6 +20,11 @@
     "lit": "^2.0.0",
     "tslib": "^2.0.1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/material-components/material-web.git",
+    "directory": "packages/menu"
+  },
   "devDependencies": {
     "@material/shape": "=14.0.0-canary.443f63f50.0"
   },
