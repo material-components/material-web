@@ -5,36 +5,22 @@
 
 @mixin static-styles() {
   :host {
-    @include host;
+    display: inline-flex;
   }
 
   .md3-field {
-    @include root;
+    display: inline-flex;
+    flex-direction: column;
+    // Allow the use of block/inline reflexive RTL properties without impacting
+    // structure when languages change.
+    writing-mode: horizontal-tb;
   }
 
   .md3-field__container {
-    @include container;
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    flex: 1;
+    position: relative;
   }
-}
-
-@mixin host() {
-  display: inline-flex;
-}
-
-// TODO(b/177368101): add link to diagram explaining difference/purpose between
-// root (container + helper text) and container.
-@mixin root() {
-  display: inline-flex;
-  flex-direction: column;
-  // Allow the use of block/inline reflexive RTL properties without impacting
-  // structure when languages change.
-  writing-mode: horizontal-tb;
-}
-
-@mixin container() {
-  align-items: center;
-  box-sizing: border-box;
-  display: flex;
-  flex: 1;
-  position: relative;
 }

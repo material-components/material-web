@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, PropertyValues, TemplateResult} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {state} from 'lit/decorators';
 import {ClassInfo} from 'lit/directives/class-map';
 import {styleMap} from 'lit/directives/style-map';

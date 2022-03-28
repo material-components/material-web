@@ -11,6 +11,6 @@
 
 @mixin _container-height($height) {
   .md3-field__container {
-    min-height: $height;
+    flex-basis: $height;
   }
 }
