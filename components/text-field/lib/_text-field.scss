@@ -5,11 +5,15 @@
 
 @mixin static-styles() {
   :host {
-    @include host;
+    display: inline-flex;
+    outline: none;
   }
-}
 
-@mixin host() {
-  display: inline-flex;
-  outline: none;
+  .md3-text-field__field {
+    cursor: text;
+
+    .md3-text-field--disabled & {
+      cursor: default;
+    }
+  }
 }

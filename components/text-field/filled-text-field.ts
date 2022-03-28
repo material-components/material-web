@@ -32,6 +32,7 @@ export class MdFilledTextField extends FilledTextField {
   protected override renderField(): TemplateResult {
     return html`
       <md-filled-field
+        class="md3-text-field__field"
         id=${this.fieldID}
         .disabled=${this.disabled}
         .error=${this.error}
