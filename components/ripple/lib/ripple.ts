@@ -31,8 +31,6 @@ export class Ripple extends LitElement implements RippleInterface {
   @state() protected focused = false;
   @state() protected pressed = false;
 
-  protected leftPos = '';
-  protected topPos = '';
   protected rippleSize = '';
   protected rippleScale = '';
   protected initialSize = 0;
@@ -140,8 +138,8 @@ export class Ripple extends LitElement implements RippleInterface {
 
     const growAnimation = this.mdRoot.animate(
         {
-          top: [this.topPos, this.topPos],
-          left: [this.leftPos, this.leftPos],
+          top: [0, 0],
+          left: [0, 0],
           height: [this.rippleSize, this.rippleSize],
           width: [this.rippleSize, this.rippleSize],
           transform: [

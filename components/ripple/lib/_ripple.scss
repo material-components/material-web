@@ -49,7 +49,6 @@
   &::before,
   &::after {
     position: absolute;
-    inset: 0;
     opacity: 0;
     pointer-events: none;
     z-index: -1;
@@ -58,6 +57,7 @@
 
   &::before {
     transition: opacity 15ms linear, background-color 15ms linear;
+    inset: 0;
   }
 
   &::after {
