@@ -143,6 +143,7 @@
   white-space: nowrap;
   cursor: pointer;
   vertical-align: bottom;
+  z-index: 0;
 }
 
 @mixin disabled_ {
