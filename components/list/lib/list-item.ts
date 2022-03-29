@@ -102,6 +102,8 @@ export class ListItem extends LitElement {
     this.requestUpdate();
   }
 
+  handleClick() {}
+
   override update(changedProperties: PropertyValues<this>) {
     this.updateMetadata();
     super.update(changedProperties);
@@ -110,11 +112,5 @@ export class ListItem extends LitElement {
   private updateMetadata() {
     this.hasLeadingIcon = this.leadingIcon.length > 0;
     this.hasTrailingIcon = this.trailingIcon.length > 0;
-  }
-
-  protected handleClick() {
-    this.dispatchEvent(new CustomEvent(
-        'list-item-interaction',
-        {detail: {state: {selected: false}}, bubbles: true, composed: true}));
   }
 }
