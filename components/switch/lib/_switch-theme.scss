@@ -373,6 +373,10 @@ $forced-colors-theme: (
     )
   );
 
+  @include _root-height(
+    map.get($theme, handle-height),
+    map.get($theme, track-height)
+  );
   @include _track-shape(map.get($theme, track-shape));
   @include _track-width(map.get($theme, track-width));
 }
@@ -739,6 +743,14 @@ $forced-colors-theme: (
   .md3-switch__track {
     @include shape.radius($shape);
   }
+}
+
+@mixin _root-height($handle-height, $track-height) {
+  @include theme.property(
+    height,
+    'max(height1, height2)',
+    $replace: (height1: $handle-height, height2: $track-height)
+  );
 }
 
 @mixin _track-width($width) {

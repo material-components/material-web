@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import '../../focus/focus-ring';
 import '@material/mwc-ripple/mwc-ripple';
 
 import {ariaProperty as legacyAriaProperty} from '@material/mwc-base/aria-property';
@@ -16,6 +17,7 @@ import {ifDefined} from 'lit/directives/if-defined';
 
 import {FormController, getFormValue} from '../../controller/form-controller';
 import {ariaProperty} from '../../decorators/aria-property';
+import {shouldShowStrongFocus} from '../../focus/strong-focus';
 
 /** @soyCompatible */
 export class Switch extends LitElement {
@@ -37,6 +39,8 @@ export class Switch extends LitElement {
   @legacyAriaProperty
   @property({type: String, attribute: 'aria-labelledby'})
   ariaLabelledBy = '';
+
+  @state() protected showFocusRing = false;
 
   // Ripple
   @queryAsync('mwc-ripple') readonly ripple!: Promise<Ripple|null>;
@@ -86,6 +90,7 @@ export class Switch extends LitElement {
         @pointerenter="${this.handlePointerEnter}"
         @pointerleave="${this.handlePointerLeave}"
       >
+        ${this.renderFocusRing()}
         <div class="md3-switch__track"></div>
         <div class="md3-switch__handle-track">
           ${this.renderHandle()}
@@ -109,6 +114,12 @@ export class Switch extends LitElement {
       'md3-switch--selected': this.selected,
       'md3-switch--unselected': !this.selected,
     };
+  }
+
+  /** @soyTemplate */
+  protected renderFocusRing(): TemplateResult {
+    return html`<md-focus-ring .visible="${
+        this.showFocusRing}"></md-focus-ring>`;
   }
 
   /** @soyTemplate */
@@ -174,10 +185,12 @@ export class Switch extends LitElement {
   }
 
   protected handleFocus() {
+    this.showFocusRing = shouldShowStrongFocus();
     this.rippleHandlers.startFocus();
   }
 
   protected handleBlur() {
+    this.showFocusRing = false;
     this.rippleHandlers.endFocus();
   }
 
