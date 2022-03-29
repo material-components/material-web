@@ -11,9 +11,9 @@
   "module": "mwc-list.js",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/base": "=14.0.0-canary.f31a833fa.0",
-    "@material/dom": "=14.0.0-canary.f31a833fa.0",
-    "@material/list": "=14.0.0-canary.f31a833fa.0",
+    "@material/base": "=14.0.0-canary.eb382f318.0",
+    "@material/dom": "=14.0.0-canary.eb382f318.0",
+    "@material/list": "=14.0.0-canary.eb382f318.0",
     "@material/mwc-base": "^0.25.3",
     "@material/mwc-checkbox": "^0.25.3",
     "@material/mwc-radio": "^0.25.3",
@@ -24,17 +24,17 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/material-components/material-web.git",
-    "directory":"packages/list"
+    "directory": "packages/list"
   },
   "devDependencies": {
-    "@material/density": "=14.0.0-canary.f31a833fa.0",
-    "@material/feature-targeting": "=14.0.0-canary.f31a833fa.0",
+    "@material/density": "=14.0.0-canary.eb382f318.0",
+    "@material/feature-targeting": "=14.0.0-canary.eb382f318.0",
     "@material/mwc-icon": "^0.25.3",
     "@material/mwc-menu": "^0.25.3",
-    "@material/ripple": "=14.0.0-canary.f31a833fa.0",
-    "@material/rtl": "=14.0.0-canary.f31a833fa.0",
-    "@material/theme": "=14.0.0-canary.f31a833fa.0",
-    "@material/typography": "=14.0.0-canary.f31a833fa.0"
+    "@material/ripple": "=14.0.0-canary.eb382f318.0",
+    "@material/rtl": "=14.0.0-canary.eb382f318.0",
+    "@material/theme": "=14.0.0-canary.eb382f318.0",
+    "@material/typography": "=14.0.0-canary.eb382f318.0"
   },
   "scripts": {
     "build:style": "node ../../scripts/sass-to-lit-css/index.js mwc-list.scss mwc-list-item.scss mwc-control-list-item.scss"
