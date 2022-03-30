@@ -196,9 +196,15 @@ export class Checkbox extends ActionElement {
     this.ripple.beginPress(positionEvent);
   }
 
-  override endPress(options: EndPressConfig) {
+  override endPress({cancelled}: EndPressConfig) {
     this.ripple.endPress();
-    super.endPress(options);
+
+    if (cancelled) {
+      return;
+    }
+
+    super.endPress(
+        {cancelled, actionData: {checked: this.formElement.checked}});
   }
 
   protected handleFocus() {
