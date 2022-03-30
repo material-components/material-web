@@ -38,7 +38,7 @@ $border-color: rgba(map.get($_sys-color-light-values, on-surface), 0.54);
 $disabled-color: rgba(map.get($_sys-color-light-values, on-surface), 0.38);
 $_on-surface: map.get($_sys-color-light-values, on-surface);
 
-$ripple-size: 40px !default;
+$ripple-size: 48px !default;
 $icon-size: 18px !default;
 $mark-stroke-size: math.div(2, 15) * $icon-size !default;
 $border-width: 2px !default;

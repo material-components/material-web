@@ -8,22 +8,23 @@ import '../../focus/focus-ring';
 import '../../ripple/ripple';
 
 import {ariaProperty as legacyAriaProperty} from '@material/mwc-base/aria-property';
-import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
-import {eventOptions, property, query, state} from 'lit/decorators';
+import {html, PropertyValues, TemplateResult} from 'lit';
+import {property, query, state} from 'lit/decorators';
 import {classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 
+import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action-element/action-element';
 import {ariaProperty} from '../../decorators/aria-property';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
 import {MdRipple} from '../../ripple/ripple';
 
 /** @soyCompatible */
-export class Checkbox extends LitElement {
+export class Checkbox extends ActionElement {
   @query('input') protected formElement!: HTMLInputElement;
 
   @property({type: Boolean, reflect: true}) checked = false;
 
-  @property({type: Boolean}) indeterminate = false;
+  @property({type: Boolean, reflect: true}) indeterminate = false;
 
   @property({type: Boolean, reflect: true}) disabled = false;
 
@@ -163,12 +164,14 @@ export class Checkbox extends LitElement {
               @change="${this.handleChange}"
               @focus="${this.handleFocus}"
               @blur="${this.handleBlur}"
-              @mousedown="${this.handleRippleMouseDown}"
-              @mouseenter="${this.handleRippleMouseEnter}"
-              @mouseleave="${this.handleRippleMouseLeave}"
-              @touchstart="${this.handleRippleTouchStart}"
-              @touchend="${this.handleRippleDeactivate}"
-              @touchcancel="${this.handleRippleDeactivate}">
+              @pointerdown=${this.handlePointerDown}
+              @pointerenter=${this.handlePointerEnter}
+              @pointerup=${this.handlePointerUp}
+              @pointercancel=${this.handlePointerCancel}
+              @pointerleave=${this.handlePointerLeave}
+              @click=${this.handleClick}
+              @contextmenu=${this.handleContextMenu}
+              >
         <div class="md3-checkbox__background"
           @animationend="${this.resetAnimationClass}">
           <svg class="md3-checkbox__checkmark"
@@ -189,6 +192,15 @@ export class Checkbox extends LitElement {
     }
   }
 
+  override beginPress({positionEvent}: BeginPressConfig) {
+    this.ripple.beginPress(positionEvent);
+  }
+
+  override endPress(options: EndPressConfig) {
+    this.ripple.endPress();
+    super.endPress(options);
+  }
+
   protected handleFocus() {
     this.focused = true;
     this.handleRippleFocus();
@@ -199,33 +211,19 @@ export class Checkbox extends LitElement {
     this.handleRippleBlur();
   }
 
-  protected handleRippleMouseDown(event: Event) {
-    const onUp = () => {
-      window.removeEventListener('mouseup', onUp);
-
-      this.handleRippleDeactivate();
-    };
-
-    window.addEventListener('mouseup', onUp);
-    this.ripple.beginPress(event);
-    pointerPress();
+  protected handlePointerEnter(e: PointerEvent) {
+    this.ripple.beginHover(e);
   }
 
-  @eventOptions({passive: true})
-  protected handleRippleTouchStart(event: Event) {
-    this.ripple.beginPress(event);
-  }
-
-  protected handleRippleDeactivate() {
-    this.ripple.endPress();
-  }
-
-  protected handleRippleMouseEnter() {
-    this.ripple.beginHover();
-  }
-
-  protected handleRippleMouseLeave() {
+  override handlePointerLeave(e: PointerEvent) {
+    super.handlePointerLeave(e);
     this.ripple.endHover();
+  }
+
+  override handlePointerDown(e: PointerEvent) {
+    super.handlePointerDown(e);
+
+    pointerPress();
   }
 
   protected handleRippleFocus() {
