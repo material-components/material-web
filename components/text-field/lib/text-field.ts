@@ -103,13 +103,15 @@ export class TextField extends LitElement {
     `;
   }
 
-  protected handleClick() {
+  protected async handleClick() {
     if (this.disabled) {
       return;
     }
 
     if (!this.matches(':focus-within')) {
-      this.focus();
+      // TODO(b/210731759): replace with this.focus() once SSR supports
+      // delegating focus
+      (await this.input).focus();
     }
   }
 
