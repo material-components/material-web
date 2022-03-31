@@ -21,9 +21,11 @@ export class NavigationBar extends LitElement implements NavigationBarState {
   @property({type: Number})  // tslint:disable-next-line:no-new-decorators
   @observer(function(this: NavigationBar, value: number) {
     this.onActiveIndexChange(this.activeIndex);
-    this.dispatchEvent(new CustomEvent(
-        'navigation-bar-activated',
-        {detail: {tab: this.tabs[value]}, bubbles: true, composed: true}));
+    this.dispatchEvent(new CustomEvent('navigation-bar-activated', {
+      detail: {tab: this.tabs[value], activeIndex: this.activeIndex},
+      bubbles: true,
+      composed: true
+    }));
   })
   activeIndex = 0;
 

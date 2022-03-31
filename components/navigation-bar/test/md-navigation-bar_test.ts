@@ -100,6 +100,19 @@ describe('md-navigation-bar', () => {
       expect(activatedHandler.called).toBeTrue();
     });
 
+    it('activated event detail contains the tab and activeIndex', async () => {
+      let actionEvent: CustomEvent|null = null;
+      element.addEventListener('navigation-bar-activated', (e: Event) => {
+        actionEvent = e as CustomEvent;
+      });
+      const tab = element.tabs[0];
+      element.activeIndex = 0;
+      await rafPromise();
+      expect(actionEvent).toBeInstanceOf(CustomEvent);
+      expect(actionEvent!.detail.tab).toEqual(tab);
+      expect(actionEvent!.detail.activeIndex).toEqual(0);
+    });
+
     it('#handleNavigationTabInteraction () updates on navigation tab click',
        async () => {
          const tab1 = element.children[0] as HTMLElement;
