@@ -68,6 +68,19 @@ describe('md-checkbox', () => {
       await harness.click();
       expect(element.checked).toBeTrue();
     });
+
+    it('should trigger event with event detail including checked status',
+       async () => {
+         let actionEvent: CustomEvent|null = null;
+         element.addEventListener('action', (e: Event) => {
+           actionEvent = e as CustomEvent;
+         });
+         await harness.click();
+         await element.updateComplete;
+
+         expect(actionEvent).toBeInstanceOf(CustomEvent);
+         expect(actionEvent!.detail.checked).toBe(true);
+       });
   });
 
   describe('checked', () => {
