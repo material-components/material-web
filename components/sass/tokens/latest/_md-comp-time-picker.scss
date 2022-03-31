@@ -6,7 +6,7 @@
 // !!! THIS FILE WAS AUTOMATICALLY GENERATED !!!
 // !!! DO NOT MODIFY IT BY HAND !!!
 // Design system display name: Material 3
-// Design system version name: v0.87
+// Design system version name: v0.93
 //
 
 @use 'sass:map';
@@ -152,8 +152,7 @@ $_default: (
       if($exclude-hardcoded-values, null, 80px),
     period-selector-vertical-container-width:
       if($exclude-hardcoded-values, null, 52px),
-    surface-tint-layer-color:
-      map.get($deps, md-sys-elevation, surface-tint-color),
+    surface-tint-layer-color: map.get($deps, md-sys-color, surface-tint),
     time-selector-24h-vertical-container-width:
       if($exclude-hardcoded-values, null, 114px),
     time-selector-container-height: if($exclude-hardcoded-values, null, 80px),

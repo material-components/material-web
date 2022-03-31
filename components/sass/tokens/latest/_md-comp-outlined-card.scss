@@ -6,7 +6,7 @@
 // !!! THIS FILE WAS AUTOMATICALLY GENERATED !!!
 // !!! DO NOT MODIFY IT BY HAND !!!
 // Design system display name: Material 3
-// Design system version name: v0.87
+// Design system version name: v0.93
 //
 
 @use 'sass:map';
@@ -34,6 +34,9 @@ $_default: (
     container-shape: map.get($deps, md-sys-shape, corner-medium),
     container-surface-tint-layer-color:
       map.get($deps, md-sys-color, surface-tint),
+    disabled-container-elevation: map.get($deps, md-sys-elevation, level0),
+    disabled-outline-color: map.get($deps, md-sys-color, outline),
+    disabled-outline-opacity: if($exclude-hardcoded-values, null, 0.12),
     dragged-container-elevation: map.get($deps, md-sys-elevation, level3),
     dragged-outline-color: map.get($deps, md-sys-color, outline),
     dragged-state-layer-color: map.get($deps, md-sys-color, on-surface),

@@ -6,7 +6,7 @@
 // !!! THIS FILE WAS AUTOMATICALLY GENERATED !!!
 // !!! DO NOT MODIFY IT BY HAND !!!
 // Design system display name: Material 3
-// Design system version name: v0.87
+// Design system version name: v0.93
 //
 
 @use 'sass:map';
@@ -106,8 +106,7 @@ $_default: (
       map.get($deps, md-sys-color, on-surface-variant),
     period-selector-unselected-pressed-state-layer-color:
       map.get($deps, md-sys-color, on-surface-variant),
-    surface-tint-layer-color:
-      map.get($deps, md-sys-elevation, surface-tint-color),
+    surface-tint-layer-color: map.get($deps, md-sys-color, surface-tint),
     time-input-field-container-color:
       map.get($deps, md-sys-color, surface-variant),
     time-input-field-container-height: if($exclude-hardcoded-values, null, 72px),

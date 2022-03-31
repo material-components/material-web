@@ -6,7 +6,7 @@
 // !!! THIS FILE WAS AUTOMATICALLY GENERATED !!!
 // !!! DO NOT MODIFY IT BY HAND !!!
 // Design system display name: Material 3
-// Design system version name: v0.87
+// Design system version name: v0.93
 //
 
 @use 'sass:map';
@@ -40,7 +40,7 @@ $_default: (
     menu-container-shadow-color: map.get($deps, md-sys-color, shadow),
     menu-container-shape: map.get($deps, md-sys-shape, corner-extra-small),
     menu-container-surface-tint-layer-color:
-      map.get($deps, md-sys-elevation, surface-tint-color),
+      map.get($deps, md-sys-color, surface-tint),
     menu-divider-color: map.get($deps, md-sys-color, surface-variant),
     menu-divider-height: if($exclude-hardcoded-values, null, 1px),
     menu-list-item-container-height: if($exclude-hardcoded-values, null, 48px),
