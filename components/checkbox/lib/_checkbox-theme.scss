@@ -26,8 +26,8 @@
 @use '@material/touch-target/touch-target';
 @use '@material/theme/shadow-dom';
 @use '../../sass/theme';
-@use '../../sass/tokens';
 @use '../../sass/var';
+@use '../../tokens';
 @use '../../ripple/ripple-theme';
 
 $_sys-color-light-values: tokens.md-sys-color-values-light();

@@ -6,13 +6,13 @@
 
 @use 'sass:map';
 @use 'sass:selector';
-@use '../../../ripple/ripple-theme';
 @use '@material/elevation/elevation-theme';
 @use '@material/theme/theme-color';
 @use '@material/typography/typography';
-@use '../../../sass/theme';
-@use '../../../sass/tokens';
+@use '../../../ripple/ripple-theme';
 @use '../../../sass/resolvers';
+@use '../../../sass/theme';
+@use '../../../tokens';
 @use './tab-theme';
 
 $custom-property-prefix-primary: 'primary-tab';

@@ -5,14 +5,14 @@
  */
 
 @use 'sass:map';
+@use '@material/elevation/elevation-theme';
 @use '@material/theme/map-ext';
+@use '@material/theme/theme-color';
+@use '@material/typography/typography';
 @use '../../../sass/theme';
+@use '../../../tokens';
 @use '../../tab/lib/secondary-tab-theme' as tab-theme;
 @use '../../tab_indicator/lib/tab-indicator-theme';
-@use '@material/theme/theme-color';
-@use '@material/elevation/elevation-theme';
-@use '@material/typography/typography';
-@use '../../../sass/tokens';
 
 $custom-property-prefix: 'secondary-tab-bar';
 $light-theme: tokens.md-comp-secondary-navigation-tab-values();

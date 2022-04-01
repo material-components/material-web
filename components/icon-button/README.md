@@ -72,7 +72,7 @@ md-icon-button {
 ```
 
 For the full list of supported theme keys, see the
-[icon button tokens](https://github.com/material-components/material-web/blob/master/components/sass/tokens/latest/_md-comp-icon-button.scss).
+[icon button tokens](https://github.com/material-components/material-web/blob/master/components/tokens/latest/_md-comp-icon-button.scss).
 
 ## API
 

@@ -7,8 +7,8 @@
 @use 'sass:string';
 @use '../../sass/resolvers';
 @use '../../sass/theme';
-@use '../../sass/tokens';
 @use '../../sass/var';
+@use '../../tokens';
 @use './content-theme';
 @use './field-theme';
 @use './label-theme';

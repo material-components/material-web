@@ -6,8 +6,8 @@
 @use 'sass:map';
 @use '../../../sass/resolvers';
 @use '../../../sass/theme';
-@use '../../../sass/tokens';
 @use '../../../sass/typography';
+@use '../../../tokens';
 
 $_default-deps: (
   md-sys-color: tokens.md-sys-color-values-light(),

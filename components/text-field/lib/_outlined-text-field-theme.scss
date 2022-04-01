@@ -9,8 +9,8 @@
 @use '../../sass/resolvers';
 @use '../../sass/shape';
 @use '../../sass/theme';
-@use '../../sass/tokens';
 @use '../../sass/typography';
+@use '../../tokens';
 @use './input-theme';
 
 $light-theme: tokens.md-comp-outlined-text-field-values();

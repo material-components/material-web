@@ -4,9 +4,9 @@
 //
 
 @use 'sass:map';
-@use '../../sass/theme';
-@use '../../sass/tokens';
 @use '../../focus/lib/focus-ring-theme';
+@use '../../sass/theme';
+@use '../../tokens';
 @use 'third_party/javascript/material_web_components/m3/ripple/ripple-theme';
 @use '@material/theme/state';
 @use '@material/theme/shadow-dom';

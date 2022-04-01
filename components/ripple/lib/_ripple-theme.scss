@@ -5,7 +5,7 @@
 
 @use 'sass:map';
 @use '../../sass/theme';
-@use '../../sass/tokens';
+@use '../../tokens';
 
 @function values($exclude-hardcoded-values: false) {
   $state-values: tokens.md-sys-state-values($exclude-hardcoded-values);

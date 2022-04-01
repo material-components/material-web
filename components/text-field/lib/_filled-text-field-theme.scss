@@ -9,9 +9,9 @@
 @use '../../sass/resolvers';
 @use '../../sass/shape';
 @use '../../sass/theme';
-@use '../../sass/tokens';
 @use '../../sass/typography';
 @use '../../sass/var';
+@use '../../tokens';
 @use './input-theme';
 
 $light-theme: tokens.md-comp-filled-text-field-values();
