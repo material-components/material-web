@@ -79,7 +79,7 @@ describe('Field', () => {
 
   async function setupTest(props: TemplateProps<FieldHarness> = {}) {
     // Variant type does not matter for shared tests
-    const template = templates.variant('field').render(props)(State.DEFAULT);
+    const template = templates.variant('field', props).render(State.DEFAULT);
     const instance = env.render(template).querySelector('md-test-field');
     if (!instance) {
       throw new Error('Could not query rendered <md-test-field>.');

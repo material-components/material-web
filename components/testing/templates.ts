@@ -7,8 +7,10 @@
 import {TemplateResult} from 'lit';
 import {DirectiveResult} from 'lit/directive';
 import {ref} from 'lit/directives/ref';
+import {literal} from 'lit/static-html';
 
 import {Harness, HarnessElement} from './harness';
+import {TestTableTemplate} from './table/test-table';
 
 /**
  * Pre-defined test table template states commonly shared between components.
@@ -56,8 +58,10 @@ export enum State {
  *   // Create specific variant templates. Useful for when the properties are
  *   // not the same for each rendered variant.
  *   const variantTemplates = [
- *     templates.variant('filled')({label: 'Filled'}, {}),
- *     templates.variant('outlined')({label: 'outlined'}, {}),
+ *     templates.variant('filled', {label: 'Filled'}),
+ *     templates.variant('filled', {label: ''}),
+ *     templates.variant('outlined', {label: 'outlined'}, {}),
+ *     templates.variant('outlined', {label: ''}, {}),
  *   ];
  *
  * @template H Optional element harness type.
@@ -68,7 +72,7 @@ export class TemplateBuilder<H extends Harness = never,
   /**
    * A map of variant names and their template factories.
    */
-  private readonly variants = new Map<V, TemplateFactory<H>>();
+  private readonly variants = new Map<V, TemplateVariant<H>>();
   /**
    * The current harness constructor to use when rendering.
    */
@@ -85,30 +89,35 @@ export class TemplateBuilder<H extends Harness = never,
    * @param testCaseProps Element properties to render for every variant.
    * @return An array of test table templates for every variant and test case.
    */
-  all(...testCaseProps: Array<TemplateProps<H>>) {
+  all(...testCaseProps: Array<TemplateProps<H>>): TestTableTemplate[] {
     if (!testCaseProps.length) {
       // Allow calling templates.all() and assume default props.
       testCaseProps.push({});
     }
 
-    return Array.from(this.variants.entries()).flatMap(([name, factory]) => {
-      return testCaseProps.map(props => ({name, render: factory(props)}));
-    });
+    return Array.from(this.variants.values())
+        .flatMap(({display, factory}) => {
+          return testCaseProps.map(props => ({display, render: factory(props)}));
+        });
   }
 
   /**
-   * Retrieves the template factory for a specific variant.
+   * Creates and returns the test table template for a specific variant and
+   * test case.
    *
    * @param variant The variant to render.
-   * @return A test table template for the given variant.
+   * @param testCaseProps Element properties to render for this variant.
+   * @return A test table template for the given variant and test case.
    */
-  variant(variant: V) {
-    const factory = this.variants.get(variant);
-    if (!factory) {
+  variant(variant: V, testCaseProps?: TemplateProps<H>): TestTableTemplate {
+    const displayAndRender = this.variants.get(variant);
+    if (!displayAndRender) {
       throw new Error(`Missing variant '${variant}' in TemplateBuilder.`);
     }
 
-    return {name: variant, render: factory};
+    const {display, factory} = displayAndRender;
+    const render = factory(testCaseProps);
+    return {display, render};
   }
 
   /**
@@ -164,46 +173,61 @@ export class TemplateBuilder<H extends Harness = never,
    * Adds multiple variant render functions to the template builder.
    *
    * @param variants An object whose keys are variant names and values are
-   *     render functions.
+   *     either variant render functions or an object of variant options. The
+   *     options specify a `display` name and the variant `render` function.
    * @return The template builder, now using the provided variants.
    */
-  withVariants<NewVariants extends Record<string, TemplateRender<H>>>(
-      variants: NewVariants) {
+  withVariants(variants:
+                   Record<string, TemplateRender<H>|TemplateVariantOptions<H>>) {
+    // TODO: clean this up by only allowing TemplateVariantOptions and force
+    // users to specify the display name.
     for (const variant of Object.keys(variants)) {
       this.withVariant(variant, variants[variant]);
     }
 
     return this as unknown as
-        TemplateBuilder<H, V|Extract<keyof NewVariants, string>>;
+        TemplateBuilder<H, V|Extract<keyof typeof variants, string>>;
   }
 
   /**
    * Adds a variant render function to the template builder.
    *
    * @param variant The new variant name to add.
-   * @param render The variant's render function.
+   * @param renderOrOptions The variant's render function, or an object with the
+   *     `render` function and a `display` name. The default display name is the
+   *     `variant` name when a render function is provided instead.
    * @return The template builder, now using the provided variant.
    */
   withVariant<NewVariant extends string>(
-      variant: NewVariant, render: TemplateRender<H>) {
+      variant: NewVariant,
+      renderOrOptions: TemplateRender<H>|TemplateVariantOptions<H>) {
+    // TODO: clean this up by only allowing TemplateVariantOptions and force
+    // users to specify the display name.
     const typedThis = this as unknown as TemplateBuilder<H, V|NewVariant>;
-    typedThis.variants.set(variant, props => {
-      return state => {
-        const directive = ref(async element => {
-          if (!element) {
-            return;
-          }
+    const {display, render} = typeof renderOrOptions === 'function' ?
+        {display: variant, render: renderOrOptions} :
+        renderOrOptions;
 
-          const harness = await this.createHarnessAndApplyState(
-              element as HarnessElement<H>, state);
+    typedThis.variants.set(variant, {
+      display: display ?? variant,
+      factory: props => {
+        return state => {
+          const directive = ref(async element => {
+            if (!element) {
+              return;
+            }
 
-          // Allow the component to apply additional state or perform custom
-          // state logic.
-          this.stateCallback?.(state, harness);
-        });
+            const harness = await this.createHarnessAndApplyState(
+                element as HarnessElement<H>, state);
 
-        return render(directive, props || {}, state);
-      };
+            // Allow the component to apply additional state or perform custom
+            // state logic.
+            this.stateCallback?.(state, harness);
+          });
+
+          return render(directive, props || {}, state);
+        };
+      }
     });
 
     return typedThis;
@@ -246,7 +270,37 @@ export class TemplateBuilder<H extends Harness = never,
 }
 
 /**
- * A function that renders an element to display. The function receives a test
+ * A template variant, which includes the display name of the variant and a
+ * factory to create `TestTableTemplate` objects.
+ *
+ * @template H The harness type.
+ */
+export type TemplateVariant<H extends Harness> = {
+  /** The variant's display name. */
+  display: string|ReturnType<typeof literal>;
+  /**
+   * A factory function that takes an object of element properties and returns
+   * another a test table template that renders the variant's element for a
+   * given state.
+   *
+   * @template H The harness type.
+   * @param props Optional properties for the element.
+   * @return A function that renders the element for a given state.
+   */
+  factory: (props?: TemplateProps<H>) => TestTableTemplate['render'];
+}
+
+/** Options for rendering a template variant. */
+export interface TemplateVariantOptions<H extends Harness> {
+  /** A function to render this variant. */
+  render: TemplateRender<H>;
+  /** Custom variant display name. Defaults to the name of the variant. */
+  display?: string|ReturnType<typeof literal>;
+}
+
+// TODO: clean this devx up a bit by swapping props/state args
+/**
+ * A function that renders a variant to display. The function receives a test
  * directive that should be added to the element.
  *
  * If a harness for the element is used, optional properties for the harness's
@@ -299,14 +353,3 @@ export interface SharedTemplateProps {
    */
   content?: TemplateResult;
 }
-
-/**
- * A factory function that takes an object of element properties and returns
- * a render function that renders the element for a given state.
- *
- * @template H The harness type.
- * @param props Optional properties for the element.
- * @return A function that renders the element for a given state.
- */
-export type TemplateFactory<H extends Harness> = (props?: TemplateProps<H>) =>
-    (state: string) => TemplateResult;

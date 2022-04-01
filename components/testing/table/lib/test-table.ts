@@ -4,13 +4,22 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, render, TemplateResult} from 'lit';
+import {render, LitElement, TemplateResult} from 'lit';
+import {html, literal} from 'lit/static-html';
 import {property} from 'lit/decorators';
 
 /** Test table interface. */
 export interface TestTableTemplate<S extends string = string> {
+  /** The row display name. May be a Lit static value for rich HTML. */
+  display: string|ReturnType<typeof literal>;
+  /**
+   * A template's render function. It accepts a state string (the column) and
+   * returns a Lit `TemplateResult`.
+   *
+   * @param state The current state to render in.
+   * @return A `TemplateResult` for the given state.
+   */
   render(state: S): TemplateResult;
-  name: string;
 }
 
 /** @soyCompatible */
@@ -57,7 +66,7 @@ export class TestTable<S extends string = string> extends LitElement {
       ${this.templates.map((template, rowIndex) => html`
         <tr>
           <th class="md3-test-table__header">
-            ${this.getVariantName(template.name)}
+            ${this.getVariantName(template.display)}
           </th>
           ${this.states.map((state, colIndex) => html`
             <td class="md3-test-table__cell">
@@ -70,8 +79,12 @@ export class TestTable<S extends string = string> extends LitElement {
   }
 
   /** Convert the name from camel case to sentence case. */
-  private getVariantName(name: string) {
-    const withSpaces = name.replace(/([A-Z])/g, ' $1');
+  private getVariantName(display: TestTableTemplate['display']) {
+    if (typeof display !== 'string') {
+      return display;
+    }
+
+    const withSpaces = display.replace(/([A-Z])/g, ' $1');
     return withSpaces[0].toUpperCase() + withSpaces.slice(1);
   }
 }

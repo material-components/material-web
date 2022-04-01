@@ -16,11 +16,11 @@ describe('<md-test-table>', () => {
 
   it('should call template functions with each state', async () => {
     const template1 = {
-      name: 'template1',
+      display: 'template1',
       render: jasmine.createSpy('template1').and.callFake(() => html``),
     };
     const template2 = {
-      name: 'template2',
+      display: 'template2',
       render: jasmine.createSpy('template2').and.callFake(() => html``),
     };
     const templates = [template1, template2] as TestTableTemplate[];
