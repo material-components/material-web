@@ -87,7 +87,7 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
 
   /** @soyTemplate */
   protected renderRipple(): TemplateResult|string {
-    return html`<md-ripple></md-ripple>`;
+    return html`<md-ripple class="md3-navigation-tab__ripple"></md-ripple>`;
   }
 
   /** @soyTemplate */
@@ -122,7 +122,6 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
   override focus() {
     const buttonElement = this.buttonElement;
     if (buttonElement) {
-      this.ripple.beginFocus();
       buttonElement.focus();
     }
   }
@@ -130,7 +129,6 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
   override blur() {
     const buttonElement = this.buttonElement;
     if (buttonElement) {
-      this.ripple.endFocus();
       buttonElement.blur();
     }
   }
@@ -147,6 +145,11 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
         {detail: {state: this}, bubbles: true, composed: true}));
   }
 
+  override handlePointerDown(e: PointerEvent) {
+    super.handlePointerDown(e);
+    pointerPress();
+  }
+
   protected handlePointerEnter(e: PointerEvent) {
     this.ripple.beginHover(e);
   }
@@ -157,12 +160,12 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
   }
 
   protected handleFocus() {
-    this.showFocusRing = shouldShowStrongFocus();
     this.ripple.beginFocus();
+    this.showFocusRing = shouldShowStrongFocus();
   }
 
   protected handleBlur() {
     this.ripple.endFocus();
-    pointerPress();
+    this.showFocusRing = false;
   }
 }

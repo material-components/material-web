@@ -48,6 +48,10 @@ $animation-duration: 100ms;
       }
     }
   }
+
+  .md3-navigation-tab__ripple {
+    z-index: 0;
+  }
 }
 
 @mixin _root() {
