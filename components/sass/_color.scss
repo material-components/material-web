@@ -4,10 +4,12 @@
 //
 
 @use 'sass:list';
-@use 'sass:string';
+@use 'sass:map';
 @use 'sass:meta';
-@use './var';
+@use 'sass:string';
+@use './assert';
 @use './string-ext';
+@use './var';
 
 ///
 /// @example - scss
@@ -98,4 +100,89 @@ $_hex: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'a' 'b' 'c' 'd' 'e' 'f';
   }
 
   @return #{_hex-to-dec($r), _hex-to-dec($g), _hex-to-dec($b)};
+}
+
+///
+/// replace-as-rgba returns a map with the color key transformed to an RGBA
+/// color value created by joining the color key value with the opacity key
+/// value. The opacity key is removed from the map. This function is
+/// non-destructive and returns a new instance of the given map. It should only
+/// be used for disabled colors.
+///
+/// If $color is a var string then we would convert the color value to comma
+/// separated rgb value.
+///
+/// @example
+///.  replace-as-rgba((
+///     foo: red,
+///.    bar: 0.5
+///.  ), foo, bar) = (foo: rgba(255, 0, 0, 0.5))
+/// @example
+///.  replace-as-rgba((
+///     foo: var(--foo-color, #8ab4f8),
+///.    bar: 0.5
+///.  ), foo, bar) = (foo: rgb(var(--foo-color-rgb, 138, 180, 248), 0.5))
+///
+/// @param {Map} $map - the map with the given keys.
+/// @param {String} $color-key - the color key in the map.
+/// @param {String} $opacity-key - the opacity key in the map.
+/// @return {Map} The map with the color key replaced by an RGBA representation.
+@function replace-as-rgba($map, $color-key, $opacity-key) {
+  // Make a non-destructive copy of the map.
+  $out: map.merge($map, ());
+
+  $color: map.get($out, $color-key);
+  @if var.is-var($color) {
+    // TODO(b/213331407): Convert color from hex to rgba CSS color format to
+    // enable mixing rgb value with alpha using custom properties.
+    // (e.g., rgb(var(--foo-sys-color-on-surface-rgb, 31,31,31), 0.38))
+    // Remove once the attached bug is resolved.
+    $color: color-var-hex-to-rgba($color, map.get($out, $opacity-key));
+  } @else {
+    $color: assert.is-type($color, 'color');
+    $opacity: assert.is-type(map.get($out, $opacity-key), 'number');
+    $color: rgba($color, $opacity);
+  }
+
+  $out: map.set($out, $color-key, $color);
+  $out: map.remove($out, $opacity-key);
+  @return $out;
+}
+
+///
+/// join-color-and-opacity-pairs returns a map with all given color and opacity
+/// keys joined to create an RGBA color value. This function is non-destructive
+/// and returns a new instance of the given map. It should only be used for
+/// disabled colors.
+///
+/// @example
+///   join-color-and-opacity-pairs((
+///     foo-color: red,
+///     foo-opacity: 0.2,
+///     bar-color: green,
+///     bar-opacity: 0.3,
+///   ), (
+///     (color-key: 'foo-color', opacity-key: 'foo-opacity'),
+///     (color-key: 'bar-color', opacity-key: 'bar-opacity'),
+///   )) = (foo-color: rgba(255, 0, 0, 0.2), bar-color: rgba(0, 255, 0, 0.3))
+///
+/// @param {Map} $map - the map with the values to modify.
+/// @param {List<Map>} $color-opacity-key-pairs - the list of color/opacity key
+///   pairs to join on the list.
+/// @return {$Map} The map with the given color/opacity key pairs replaced by
+///   RGBA representations.
+///
+@function join-color-and-opacity-pairs($map, $color-opacity-key-pairs) {
+  // Make a non-destructive copy of the map.
+  $out: map.merge($map, ());
+  @each $pair in $color-opacity-key-pairs {
+    $color-key: map.get($pair, color-key);
+    $opacity-key: map.get($pair, opacity-key);
+    $has-keys: map.has-key($out, $color-key) and
+      map.has-key($out, $opacity-key);
+    @if $has-keys {
+      $out: replace-as-rgba($out, $color-key, $opacity-key);
+    }
+  }
+  @return $out;
 }

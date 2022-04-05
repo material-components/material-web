@@ -5,9 +5,10 @@
 
 @use './checkbox';
 @use './checkbox-theme';
+@use '../../tokens/latest' as tokens;
 
 :host {
-  @include checkbox-theme.theme-styles(checkbox-theme.$light-theme);
+  @include checkbox-theme.theme-styles(tokens.md-comp-checkbox-values());
   @include checkbox.static-styles();
 
   display: inline-flex;
