@@ -35,13 +35,18 @@ export class LinkIconButton extends IconButton {
         @pointerenter="${this.handlePointerEnter}"
         @click="${this.handleClick}"
         @clickmod="${this.handleClick}"
-        @contextmenu="${this.handleContextMenu}"
-    >${this.renderRipple()}
-    ${this.renderIcon(this.icon)}${
-        this.renderTouchTarget()}<span><slot></slot></span>
-    <a class="md3-icon-button__link" href="${this.linkHref}"
-        target="${ifDefined(this.linkTarget as LinkTarget)}" aria-label="${
-        ifDefined(this.ariaLabel)}"></a>
+        @contextmenu="${this.handleContextMenu}">
+        ${this.renderFocusRing()}
+        ${this.renderRipple()}
+        ${this.renderIcon(this.icon)}
+        ${this.renderTouchTarget()}
+        <span><slot></slot></span>
+        <a class="md3-icon-button__link" href="${this.linkHref}"
+           target="${ifDefined(this.linkTarget as LinkTarget)}"
+           aria-label="${ifDefined(this.ariaLabel)}"
+           @focus="${this.handleFocus}"
+           @blur="${this.handleBlur}">
+        </a>
   </div>`;
   }
 }

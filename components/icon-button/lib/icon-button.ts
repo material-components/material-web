@@ -4,12 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import '../../focus/focus-ring';
+
 import {html, TemplateResult} from 'lit';
-import {property, query} from 'lit/decorators';
+import {property, query, state} from 'lit/decorators';
 import {ifDefined} from 'lit/directives/if-defined';
 
 import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action-element/action-element';
 import {ariaProperty} from '../../decorators/aria-property';
+import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
 import {MdRipple} from '../../ripple/ripple';
 import {ARIAHasPopup} from '../../types/aria';
 
@@ -33,26 +36,12 @@ export class IconButton extends ActionElement {
 
   @query('md-ripple') ripple!: MdRipple;
 
+  @state() protected showFocusRing = false;
+
   /** @soyTemplate */
   protected renderRipple(): TemplateResult|string {
     return html`<md-ripple .disabled="${
         this.disabled}" unbounded> </md-ripple>`;
-  }
-
-  override focus() {
-    const buttonElement = this.buttonElement;
-    if (buttonElement) {
-      this.ripple.beginFocus();
-      buttonElement.focus();
-    }
-  }
-
-  override blur() {
-    const buttonElement = this.buttonElement;
-    if (buttonElement) {
-      this.ripple.endFocus();
-      buttonElement.blur();
-    }
   }
 
   /** @soyTemplate */
@@ -71,10 +60,11 @@ export class IconButton extends ActionElement {
         @pointerenter="${this.handlePointerEnter}"
         @click="${this.handleClick}"
         @clickmod="${this.handleClick}"
-        @contextmenu="${this.handleContextMenu}"
-    >${this.renderRipple()}
-    ${this.renderIcon(this.icon)}${
-        this.renderTouchTarget()}<span><slot></slot></span>
+        @contextmenu="${this.handleContextMenu}">
+        ${this.renderFocusRing()}
+        ${this.renderRipple()}
+        ${this.renderIcon(this.icon)}
+        ${this.renderTouchTarget()}<span><slot></slot></span>
   </button>`;
   }
 
@@ -91,6 +81,12 @@ export class IconButton extends ActionElement {
     return html`<span class="md3-icon-button__touch"></span>`;
   }
 
+  /** @soyTemplate */
+  protected renderFocusRing(): TemplateResult {
+    return html`<md-focus-ring .visible="${
+        this.showFocusRing}"></md-focus-ring>`;
+  }
+
   override beginPress({positionEvent}: BeginPressConfig) {
     this.ripple.beginPress(positionEvent);
   }
@@ -98,6 +94,11 @@ export class IconButton extends ActionElement {
   override endPress(options: EndPressConfig) {
     this.ripple.endPress();
     super.endPress(options);
+  }
+
+  override handlePointerDown(e: PointerEvent) {
+    super.handlePointerDown(e);
+    pointerPress();
   }
 
   protected handlePointerEnter(e: PointerEvent) {
@@ -110,10 +111,10 @@ export class IconButton extends ActionElement {
   }
 
   protected handleFocus() {
-    this.ripple.beginFocus();
+    this.showFocusRing = shouldShowStrongFocus();
   }
 
   protected handleBlur() {
-    this.ripple.endFocus();
+    this.showFocusRing = false;
   }
 }

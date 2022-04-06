@@ -5,12 +5,13 @@
  */
 
 import {html, TemplateResult} from 'lit';
-import {property, query} from 'lit/decorators';
+import {property, query, state} from 'lit/decorators';
 import {classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 
 import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action-element/action-element';
 import {ariaProperty} from '../../decorators/aria-property';
+import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
 import {MdRipple} from '../../ripple/ripple';
 
 /** @soyCompatible */
@@ -37,6 +38,8 @@ export class IconButtonToggle extends ActionElement {
   @property({type: Boolean, reflect: true}) isOn = false;
 
   @query('md-ripple') ripple!: MdRipple;
+
+  @state() protected showFocusRing = false;
 
   override beginPress({positionEvent}: BeginPressConfig) {
     this.ripple.beginPress(positionEvent);
@@ -86,8 +89,10 @@ export class IconButtonToggle extends ActionElement {
           @pointerenter="${this.handlePointerEnter}"
           @click="${this.handleClick}"
           @clickmod="${this.handleClick}"
-          @contextmenu="${this.handleContextMenu}"
-        >${this.renderRipple()}${this.renderTouchTarget()}
+          @contextmenu="${this.handleContextMenu}">
+        ${this.renderFocusRing()}
+        ${this.renderRipple()}
+        ${this.renderTouchTarget()}
         <span class="md3-icon-button__icon">
           <slot name="offIcon">${this.renderIcon(this.offIcon)}</slot>
         </span>
@@ -110,6 +115,17 @@ export class IconButtonToggle extends ActionElement {
     return html`<span class="md3-icon-button__touch"></span>`;
   }
 
+  /** @soyTemplate */
+  protected renderFocusRing(): TemplateResult {
+    return html`<md-focus-ring .visible="${
+        this.showFocusRing}"></md-focus-ring>`;
+  }
+
+  override handlePointerDown(e: PointerEvent) {
+    super.handlePointerDown(e);
+    pointerPress();
+  }
+
   protected handlePointerEnter(e: PointerEvent) {
     this.ripple.beginHover(e);
   }
@@ -120,10 +136,10 @@ export class IconButtonToggle extends ActionElement {
   }
 
   protected handleFocus() {
-    this.ripple.beginFocus();
+    this.showFocusRing = shouldShowStrongFocus();
   }
 
   protected handleBlur() {
-    this.ripple.endFocus();
+    this.showFocusRing = false;
   }
 }
