@@ -143,17 +143,13 @@ $horizontal-padding: 24px;
 
 @mixin focus-ring() {
   &.md3-tab--active .md3-tab__focus-ring {
-    // TODO(b/221897714): focus-ring styles should reference token values for
-    // color.
     @include focus-ring-theme.theme(
       (
         ring-radius: 10px,
         container-outer-padding-horizontal: -6px,
         container-outer-padding-vertical: -6px,
         inner-ring-width: 2px,
-        inner-ring-color: #2065bb,
         outer-ring-width: 2px,
-        outer-ring-color: #ebf1fc,
       )
     );
 
@@ -163,17 +159,13 @@ $horizontal-padding: 24px;
   }
 
   .md3-tab__focus-ring {
-    // TODO(b/221897714): focus-ring styles should reference token values for
-    // color.
     @include focus-ring-theme.theme(
       (
         ring-radius: 10px,
         container-outer-padding-horizontal: -4px,
         container-outer-padding-vertical: -4px,
         inner-ring-width: 2px,
-        inner-ring-color: #2065bb,
         outer-ring-width: 2px,
-        outer-ring-color: #ebf1fc,
       )
     );
   }

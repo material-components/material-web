@@ -6,17 +6,19 @@
 @use 'sass:map';
 @use '../../sass/resolvers';
 @use '../../sass/theme';
+@use '../../tokens';
 
 $_custom-property-prefix: 'focus-ring';
+$_color-sys: tokens.md-sys-color-values-light();
 
 $light-theme: (
   ring-radius: 8px,
   container-outer-padding-vertical: 2px,
   container-outer-padding-horizontal: 2px,
   inner-ring-width: 2px,
-  inner-ring-color: #000,
+  inner-ring-color: map.get($_color-sys, on-tertiary-container),
   outer-ring-width: 2px,
-  outer-ring-color: #fff,
+  outer-ring-color: map.get($_color-sys, tertiary-container),
 );
 
 @mixin theme($theme, $resolvers: resolvers.$material) {
