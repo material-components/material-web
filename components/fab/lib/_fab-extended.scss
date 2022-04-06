@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// TODO(b/228217731): Remove MDC/MWC dependencies
 @use 'third_party/javascript/material_web_components/icon/_mwc-icon';
 
 @mixin static-styles() {

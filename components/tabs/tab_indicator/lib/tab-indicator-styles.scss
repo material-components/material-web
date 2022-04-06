@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// TODO(b/228217731): Remove MDC/MWC dependencies
 @use './tab-indicator' as tabindicator;
 @use './tab-indicator-theme' as tabindicator-theme;
 @use 'third_party/javascript/material_web_components/icon/_mwc-icon.scss';

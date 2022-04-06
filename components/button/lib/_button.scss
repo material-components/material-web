@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// TODO(b/228217731): Remove MDC/MWC dependencies
 @use '@material/touch-target/touch-target';
 @use '@material/theme/selector-ext';
 @use '../../elevation/lib/surface' as elevation-surface;

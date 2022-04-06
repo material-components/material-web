@@ -8,6 +8,7 @@
 @use 'sass:meta';
 @use 'sass:list';
 
+// TODO(b/228217731): Remove MDC/MWC dependencies
 @use '@material/density/density';
 @use '@material/elevation/elevation-theme';
 @use '@material/ripple/ripple-theme';

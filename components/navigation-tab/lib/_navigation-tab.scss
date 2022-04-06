@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// TODO(b/228217731): Remove MDC/MWC dependencies
 @use '@material/animation/animation';
 
 $animation-duration: 100ms;

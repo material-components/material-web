@@ -6,6 +6,7 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.mdc-*' should only be used in this project.
 
+// TODO(b/228217731): Remove MDC/MWC dependencies
 @use '@material/rtl/rtl';
 
 @mixin static-styles() {

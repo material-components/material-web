@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// TODO(b/228217731): Remove MDC/MWC dependencies
 @use '@material/tab-bar/mixins' as tab-bar;
 @use '@material/animation/variables' as animation-variables;
 @use '@material/density/variables' as density-variables;
