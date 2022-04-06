@@ -175,7 +175,7 @@ export class Checkbox extends ActionElement {
         <div class="md3-checkbox__background"
           @animationend="${this.resetAnimationClass}">
           <svg class="md3-checkbox__checkmark"
-              viewBox="0 0 24 24">
+              viewBox="0 0 24 24" aria-hidden="true">
             <path class="md3-checkbox__checkmark-path"
                   fill="none"
                   d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
