@@ -27,17 +27,16 @@ export class ListItem extends LitElement {
 
   /** @soyTemplate */
   override render(): TemplateResult {
-    // TODO(b/182405623): restore whitespace
     return html`
       <li
           tabindex="0"
           role=${this.getAriaRole()}
           class="md3-list-item ${classMap(this.getRenderClasses())}"
-          @click=${this.handleClick}><!--
-        -->${this.renderStart()}<!--
-        -->${this.renderBody()}<!--
-        -->${this.renderEnd()}<!--
-      --></li>`;
+          @click=${this.handleClick}>
+        ${this.renderStart()}
+        ${this.renderBody()}
+        ${this.renderEnd()}
+      </li>`;
   }
 
   /** @soyTemplate */

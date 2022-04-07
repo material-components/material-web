@@ -59,7 +59,6 @@ export abstract class Button extends LitElement implements ButtonState {
    * @soyAttributes buttonAttributes: .md3-button
    */
   protected override render(): TemplateResult {
-    // TODO(b/182405623): restore whitespace
     return html`
       <button
           class="md3-button ${classMap(this.getRenderClasses())}"
@@ -73,16 +72,16 @@ export abstract class Button extends LitElement implements ButtonState {
           @mouseleave="${this.handleRippleMouseLeave}"
           @touchstart="${this.handleRippleActivate}"
           @touchend="${this.handleRippleDeactivate}"
-          @touchcancel="${this.handleRippleDeactivate}"><!--
-        -->${this.renderFocusRing()}<!--
-        -->${this.renderOverlay()}<!--
-        -->${this.renderRipple()}<!--
-        -->${this.renderOutline()}<!--
-        -->${this.renderTouchTarget()}<!--
-        -->${this.renderLeadingIcon()}<!--
-        -->${this.renderLabel()}<!--
-        -->${this.renderTrailingIcon()}<!--
-      --></button>`;
+          @touchcancel="${this.handleRippleDeactivate}">
+        ${this.renderFocusRing()}
+        ${this.renderOverlay()}
+        ${this.renderRipple()}
+        ${this.renderOutline()}
+        ${this.renderTouchTarget()}
+        ${this.renderLeadingIcon()}
+        ${this.renderLabel()}
+        ${this.renderTrailingIcon()}
+      </button>`;
   }
 
   /** @soyTemplate */
@@ -147,13 +146,12 @@ export abstract class Button extends LitElement implements ButtonState {
 
   /** @soyTemplate */
   protected renderIcon(): TemplateResult {
-    // TODO(b/182405623): restore whitespace
     return html`<span class="md3-button__icon-slot-container ${
-        classMap(this.getIconContainerClasses())}"><!--
-               --><slot name="icon" @slotchange="${this.handleSlotChange}"><!--
-                 -->${this.icon ? this.renderFontIcon() : ''}<!--
-               --></slot><!--
-             --></span>`;
+        classMap(this.getIconContainerClasses())}">
+                  <slot name="icon" @slotchange="${this.handleSlotChange}">
+                    ${this.icon ? this.renderFontIcon() : ''}
+                  </slot>
+                </span>`;
   }
 
   // TODO: investigate removing this

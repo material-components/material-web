@@ -24,7 +24,6 @@ export abstract class LinkButton extends Button {
    * @soyAttributes buttonAttributes: .md3-button
    */
   protected override render(): TemplateResult {
-    // TODO(b/182405623): restore whitespace
     return html`
       <span class="md3-link-button-wrapper"
           @focusin="${this.handleRippleFocus}"
@@ -34,19 +33,19 @@ export abstract class LinkButton extends Button {
           @mouseleave="${this.handleRippleMouseLeave}"
           @touchstart="${this.handleRippleActivate}"
           @touchend="${this.handleRippleDeactivate}"
-          @touchcancel="${this.handleRippleDeactivate}"><!--
-      --><a class="md3-button ${classMap(this.getRenderClasses())}"
+          @touchcancel="${this.handleRippleDeactivate}">
+        <a class="md3-button ${classMap(this.getRenderClasses())}"
           href="${ifDefined(this.href)}"
           target="${ifDefined(this.target as LinkTarget)}"
-          aria-label="${ifDefined(this.ariaLabel)}"><!--
-        -->${this.renderFocusRing()}<!--
-        -->${this.renderOverlay()}<!--
-        -->${this.renderRipple()}<!--
-        -->${this.renderOutline()}<!--
-        -->${this.renderTouchTarget()}<!--
-        -->${this.renderIcon()}<!--
-        -->${this.renderLabel()}</a><!--
-        Note: link buttons cannot have trailing icons.
-        --></span>`;
+          aria-label="${ifDefined(this.ariaLabel)}">
+            ${this.renderFocusRing()}
+            ${this.renderOverlay()}
+            ${this.renderRipple()}
+            ${this.renderOutline()}
+            ${this.renderTouchTarget()}
+            ${this.renderIcon()}
+            ${this.renderLabel()}</a>
+      </span>`;
+    // Note: link buttons cannot have trailing icons.
   }
 }
