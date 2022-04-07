@@ -74,12 +74,10 @@
 }
 
 @mixin _focus-ring() {
-  // TOOD(b/228042449): Update to 0px for padding-vertical/horizontal values
-  // below.
   @include focus-ring-theme.theme(
     (
-      container-outer-padding-vertical: 0.000001px,
-      container-outer-padding-horizontal: 0.000001px,
+      container-outer-padding-vertical: 0px,
+      container-outer-padding-horizontal: 0px,
     )
   );
 }
