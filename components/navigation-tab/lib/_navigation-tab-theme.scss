@@ -15,6 +15,8 @@
 @use '@material/theme/keys';
 @use '@material/typography/typography';
 
+$_custom-property-prefix: 'navigation-bar';
+
 $light-theme: tokens.md-comp-navigation-bar-values();
 $dark-theme: tokens.md-comp-navigation-bar-values(
   (
@@ -29,7 +31,7 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
   @if shadow-dom.$css-selector-fallback-declarations {
     @include theme-styles($theme);
   }
-  $theme: theme.create-theme-vars($theme, 'navigation-tab');
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
   @include theme.emit-theme-vars($theme);
 }
@@ -41,7 +43,7 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
     $require-all: false
   );
 
-  $theme: theme.create-theme-vars($theme, 'navigation-tab');
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
   @include _icon-size(map.get($theme, icon-size));
   @include _active-icon-color(
