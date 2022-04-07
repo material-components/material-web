@@ -24,7 +24,6 @@
 @use 'sass:map';
 @use 'sass:math';
 @use 'sass:selector';
-@use '@material/touch-target/touch-target';
 @use '@material/theme/shadow-dom';
 @use '../../sass/theme';
 @use '../../tokens/latest' as tokens;
@@ -144,6 +143,18 @@ $custom-property-prefix: 'checkbox';
           map.get($theme, selected-pressed-state-layer-opacity),
       )
     );
+  }
+}
+
+$_theme-extension-keys: (
+  touch-target-size: null,
+);
+
+@mixin theme-extension($theme) {
+  $theme: theme.validate-theme($_theme-extension-keys, $theme);
+
+  .md3-checkbox {
+    @include _touch-target(map.get($theme, touch-target-size));
   }
 }
 
@@ -318,11 +329,16 @@ $custom-property-prefix: 'checkbox';
 }
 
 @mixin _state-layer-size($size) {
-  height: $size;
-  width: $size;
+  .md3-checkbox__ripple {
+    height: $size;
+    width: $size;
+  }
 }
 
 @mixin _touch-target($size) {
+  height: $size;
+  width: $size;
+
   .md3-checkbox__native-control {
     width: $size;
     height: $size;

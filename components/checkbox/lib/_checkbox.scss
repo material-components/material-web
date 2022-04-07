@@ -23,8 +23,7 @@
 // TODO(b/228217731): Remove MDC/MWC dependencies
 @use 'sass:math';
 @use '@material/dom/dom';
-@use '@material/focusring/focus-ring';
-@use '@material/touch-target/touch-target';
+@use '../../focus/lib/focus-ring-theme';
 @use '../../motion/animation';
 @use '../../sass/var';
 @use './checkbox-theme';
@@ -39,14 +38,6 @@ $_selected-checkmark-padding: $_unselected-outline-width;
 
   .md3-checkbox {
     @include base_;
-
-    // Turn off focus ring for IE when HCM is turn off. For some reason this
-    // adds space to the bottom on the focused checkbox inside a dialog.
-    @media all and (-ms-high-contrast: none) {
-      .md3-checkbox__focus-ring {
-        display: none;
-      }
-    }
   }
 
   @include dom.forced-colors-mode {
@@ -129,6 +120,19 @@ $_selected-checkmark-padding: $_unselected-outline-width;
       @include child--upgraded_;
     }
   }
+
+  .md3-checkbox__ripple {
+    position: absolute;
+    display: inline-flex;
+    z-index: -1;
+  }
+
+  @include focus-ring-theme.theme(
+    (
+      container-outer-padding-vertical: -2px,
+      container-outer-padding-horizontal: -2px,
+    )
+  );
 }
 
 @mixin base_ {

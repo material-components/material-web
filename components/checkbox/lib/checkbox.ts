@@ -182,7 +182,9 @@ export class Checkbox extends ActionElement {
           </svg>
           <div class="md3-checkbox__mixedmark"></div>
         </div>
-        ${this.renderRipple()}
+        <div class="md3-checkbox__ripple">
+          ${this.renderRipple()}
+        </div>
       </div>`;
   }
 
