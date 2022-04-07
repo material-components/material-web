@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {NavigationTabHarness} from '../navigation_tab/harness';
 import {Harness} from '../testing/harness';
 
 import {NavigationBar} from './lib/navigation-bar';
@@ -12,22 +13,19 @@ import {NavigationBar} from './lib/navigation-bar';
  * Test harness for navigation bars.
  */
 export class NavigationBarHarness extends Harness<NavigationBar> {
-  /**
-   * The index of the tab that should be used for interaction simulation.
-   * Defaults to first tab.
-   */
-  private interactiveTab = 0;
+  readonly tab = this.getTab();
 
   /**
-   * Sets the tab that should be used for interaction simulation.
+   * Returns the active tab to be used for interaction simulation.
    */
-  setInteractiveTab(tab: number) {
-    this.interactiveTab = tab;
-  }
-
   protected override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.tabs[this.interactiveTab].renderRoot.querySelector(
-               '.md3-navigation-tab') as HTMLElement;
+    return (await this.tab).getInteractiveElement();
+  }
+
+  protected async getTab() {
+    await this.element.updateComplete;
+    const tab = this.element.tabs[this.element.activeIndex];
+    return new NavigationTabHarness(tab);
   }
 }
