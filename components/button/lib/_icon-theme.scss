@@ -58,7 +58,7 @@ $_selectors: button-theme.$selectors;
   ::slotted([slot='icon']),
   .md3-button__icon {
     font-size: $size;
-    width: $size;
-    height: $size;
+    inline-size: $size;
+    block-size: $size;
   }
 }

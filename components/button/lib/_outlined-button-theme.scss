@@ -108,7 +108,7 @@ $light-theme: map.merge(
   }
 
   .md3-button__ripple {
-    width: calc(100% - 2 * #{$width});
-    height: calc(100% - 2 * #{$width});
+    inline-size: calc(100% - 2 * #{$width});
+    block-size: calc(100% - 2 * #{$width});
   }
 }

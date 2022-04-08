@@ -29,7 +29,7 @@
   }
 
   .md3-link-button-wrapper {
-    width: 100%;
+    inline-size: 100%;
   }
 }
 
@@ -52,7 +52,7 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  min-width: 64px;
+  min-inline-size: 64px;
   border: none;
   outline: none;
   line-height: inherit;
@@ -61,7 +61,7 @@
   vertical-align: middle;
   background: transparent;
   text-decoration: none;
-  width: 100%;
+  inline-size: 100%;
 
   &::-moz-focus-inner {
     padding: 0;

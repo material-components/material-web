@@ -119,7 +119,7 @@ $selectors: (
 }
 
 @mixin _set-height($height) {
-  height: $height;
+  block-size: $height;
 }
 
 @mixin _set-shape-radius($radius) {
