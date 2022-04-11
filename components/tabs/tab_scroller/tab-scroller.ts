@@ -15,6 +15,11 @@ declare global {
   }
 }
 
+/**
+ * @soyCompatible
+ * @final
+ * @suppress {visibility}
+ */
 @customElement('md-tab-scroller')
 export class MdTabScroller extends TabScroller {
   static override styles = [styles];

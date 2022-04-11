@@ -2,16 +2,19 @@
  * @license
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * @requirecss {tabs.tab_scroller.lib.tab_scroller_styles}
  */
+
 
 import {matches} from '@material/dom/ponyfill';
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
-import {html} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {eventOptions, query} from 'lit/decorators';
 
 import {MDCTabScrollerAdapter} from './adapter';
 import MDCTabScrollerFoundation from './foundation';
 
+/** @soyCompatible */
 export class TabScroller extends BaseElement {
   protected mdcFoundation!: MDCTabScrollerFoundation;
 
@@ -36,7 +39,8 @@ export class TabScroller extends BaseElement {
 
   protected _scrollbarHeight = -1;
 
-  protected override render() {
+  /** @soyTemplate */
+  protected override render(): TemplateResult {
     return html`
       <div class="md3-tab-scroller">
         <div class="md3-tab-scroller__scroll-area"
