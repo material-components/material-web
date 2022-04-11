@@ -20,9 +20,7 @@
 // THE SOFTWARE.
 //
 
-// TODO(b/228217731): Remove MDC/MWC dependencies
 @use 'sass:math';
-@use '@material/dom/dom';
 @use '../../focus/lib/focus-ring-theme';
 @use '../../motion/animation';
 @use '../../sass/var';
@@ -38,12 +36,6 @@ $_selected-checkmark-padding: $_unselected-outline-width;
 
   .md3-checkbox {
     @include base_;
-  }
-
-  @include dom.forced-colors-mode {
-    .md3-checkbox__mixedmark {
-      margin: 0 1px; // Extra horizontal space around mixedmark symbol.
-    }
   }
 
   // Needed to disable hover effects on CSS-only (non-JS) checkboxes
@@ -133,6 +125,7 @@ $_selected-checkmark-padding: $_unselected-outline-width;
       container-outer-padding-horizontal: -2px,
     )
   );
+  @include checkbox-theme.high-contrast-styles();
 }
 
 @mixin base_ {

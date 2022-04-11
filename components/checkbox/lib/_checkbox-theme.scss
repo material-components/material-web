@@ -47,6 +47,10 @@ $custom-property-prefix: 'checkbox';
   $theme: map.set($theme, _touch-target-size, 48px);
   $theme: theme.create-theme-vars($theme, $prefix: $custom-property-prefix);
 
+  @include _theme-styles-internal($theme);
+}
+
+@mixin _theme-styles-internal($theme) {
   .md3-checkbox {
     @include _icon-size(map.get($theme, icon-size));
     @include _container-height(map.get($theme, container-height));
@@ -143,6 +147,34 @@ $custom-property-prefix: 'checkbox';
           map.get($theme, selected-pressed-state-layer-opacity),
       )
     );
+  }
+}
+
+@mixin high-contrast-styles() {
+  $high-contrast-theme: (
+    selected-container-color: CanvasText,
+    selected-hover-container-color: CanvasText,
+    selected-focus-container-color: CanvasText,
+    selected-pressed-container-color: CanvasText,
+    selected-disabled-container-color: GrayText,
+    selected-icon-color: Canvas,
+    selected-hover-icon-color: Canvas,
+    selected-focus-icon-color: Canvas,
+    selected-pressed-icon-color: Canvas,
+    selected-disabled-icon-color: Canvas,
+    unselected-outline-color: CanvasText,
+    unselected-hover-outline-color: CanvasText,
+    unselected-focus-outline-color: CanvasText,
+    unselected-pressed-outline-color: CanvasText,
+    unselected-disabled-outline-color: GrayText,
+  );
+  $high-contrast-theme: theme.validate-theme(
+    tokens.md-comp-checkbox-values(),
+    $high-contrast-theme
+  );
+
+  @media (forced-colors: active) {
+    @include _theme-styles-internal($high-contrast-theme);
   }
 }
 
