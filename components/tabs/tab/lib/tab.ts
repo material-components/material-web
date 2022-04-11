@@ -11,19 +11,16 @@ import '../../../icon/icon';
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
 import {html, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAsync, state} from 'lit/decorators';
+import {eventOptions, property, query, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 
 import {pointerPress, shouldShowStrongFocus} from '../../../focus/strong-focus';
 import {MdRipple} from '../../../ripple/ripple';
-import {MdTabIndicator} from '../../tab_indicator/tab-indicator';
+import {TabIndicator} from '../../tab_indicator/lib/tab-indicator';
 
 import {MDCTabAdapter} from './adapter';
 import MDCTabFoundation from './foundation';
-
-export interface TabInteractionEventDetail {
-  tabId: string;
-}
+import {TabInteractionEvent, TabInteractionEventDetail} from './types';
 
 // used for generating unique id for each tab
 let tabIdCounter = 0;
@@ -38,7 +35,7 @@ export class Tab extends BaseElement {
 
   @query('.md3-tab') protected mdcRoot!: HTMLElement;
 
-  @query('md-tab-indicator') protected tabIndicator!: MdTabIndicator;
+  @query('.md3-tab__indicator') protected tabIndicator!: TabIndicator;
 
   @property() label = '';
 
@@ -97,7 +94,7 @@ export class Tab extends BaseElement {
   protected override render() {
     let iconTemplate: string|TemplateResult = '';
     if (this.hasImageIcon || this.icon) {
-      iconTemplate = this.renderIcon(this.icon, {'md3-tab__icon': true});
+      iconTemplate = this.renderIcon(this.icon);
     }
 
     let labelTemplate = html``;
@@ -144,14 +141,13 @@ export class Tab extends BaseElement {
     };
   }
 
-  protected renderIndicator(indicatorIcon: string, isFadingIndicator: boolean) {
-    return html`<md-tab-indicator
-        .icon="${indicatorIcon}"
-        .fade="${isFadingIndicator}"></md-tab-indicator>`;
+  protected renderIndicator(indicatorIcon: string, isFadingIndicator: boolean):
+      TemplateResult {
+    return html``;
   }
 
-  protected renderIcon(icon: string, classes: ClassInfo): TemplateResult {
-    return html`<md-icon class="${classMap(classes)}"><slot name="icon">${
+  protected renderIcon(icon: string): TemplateResult {
+    return html`<md-icon class="md3-tab__icon"><slot name="icon">${
         icon}</slot></md-icon>`;
   }
 
@@ -181,14 +177,17 @@ export class Tab extends BaseElement {
         await this.tabIndicator.updateComplete;
         this.tabIndicator.deactivate();
       },
-      notifyInteracted: () =>
-          this.dispatchEvent(new CustomEvent<TabInteractionEventDetail>(
-              MDCTabFoundation.strings.INTERACTED_EVENT, {
-                detail: {tabId: this.id},
-                bubbles: true,
-                composed: true,
-                cancelable: true,
-              })),
+      notifyInteracted: () => {
+        const event: TabInteractionEvent =
+            new CustomEvent<TabInteractionEventDetail>(
+                MDCTabFoundation.strings.INTERACTED_EVENT, {
+                  detail: {tabId: this.id},
+                  bubbles: true,
+                  composed: true,
+                  cancelable: true,
+                });
+        this.dispatchEvent(event);
+      },
       getOffsetLeft: () => this.offsetLeft,
       getOffsetWidth: () => this.mdcRoot.offsetWidth,
       getContentOffsetLeft: () => this._contentElement.offsetLeft,

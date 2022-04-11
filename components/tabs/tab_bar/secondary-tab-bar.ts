@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
+import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators';
 
 import {SecondaryTabBar} from './lib/secondary-tab-bar';
@@ -13,11 +13,15 @@ import {styles as sharedStyles} from './lib/shared-styles.css';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-secondary-tab-bar': SecondaryTabBar;
+    'md-secondary-tab-bar': MdSecondaryTabBar;
   }
 }
 
 @customElement('md-secondary-tab-bar')
 export class MdSecondaryTabBar extends SecondaryTabBar {
   static override styles = [sharedStyles, tabbarStyles];
+
+  protected override renderTabScroller(): TemplateResult {
+    return html`<md-tab-scroller class="md3-tab-bar__scroller"><slot></slot></md-tab-scroller>`;
+  }
 }

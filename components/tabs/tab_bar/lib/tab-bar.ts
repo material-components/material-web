@@ -4,16 +4,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import '../../tab_scroller/tab-scroller';
+
 import {BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
-import {html} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 
-import {MDCTabInteractionEvent} from '../../tab/lib/types';
-import {MdPrimaryTab} from '../../tab/primary-tab';
-import {MdSecondaryTab} from '../../tab/secondary-tab';
-import {MdTabScroller} from '../../tab_scroller/tab-scroller';
+import {PrimaryTab} from '../../tab/lib/primary-tab';
+import {SecondaryTab} from '../../tab/lib/secondary-tab';
+import {TabInteractionEvent} from '../../tab/lib/types';
+import {TabScroller} from '../../tab_scroller/lib/tab-scroller';
 
 import {MDCTabBarAdapter} from './adapter';
 import MDCTabBarFoundation from './foundation';
@@ -25,7 +27,7 @@ export abstract class TabBar extends BaseElement {
 
   @query('.md3-tab-bar') protected mdcRoot!: HTMLElement;
 
-  @query('md-tab-scroller') protected scrollerElement!: MdTabScroller;
+  @query('.md3-tab-bar__scroller') protected scrollerElement!: TabScroller;
 
   // tabsSlot should have type HTMLSlotElement, but when TypeScript's
   // emitDecoratorMetadata is enabled, the HTMLSlotElement constructor will
@@ -48,7 +50,7 @@ export abstract class TabBar extends BaseElement {
 
   protected _previousActiveIndex = -1;
 
-  protected _handleTabInteraction(e: MDCTabInteractionEvent) {
+  protected _handleTabInteraction(e: TabInteractionEvent) {
     this.mdcFoundation.handleTabInteraction(e);
   }
 
@@ -67,8 +69,8 @@ export abstract class TabBar extends BaseElement {
       `;
   }
 
-  protected renderTabScroller() {
-    return html`<md-tab-scroller><slot></slot></md-tab-scroller>`;
+  protected renderTabScroller(): TemplateResult {
+    return html``;
   }
 
   protected getRootClasses(): ClassInfo {
@@ -77,7 +79,7 @@ export abstract class TabBar extends BaseElement {
     };
   }
 
-  protected abstract getTabs(): MdPrimaryTab[]|MdSecondaryTab[];
+  protected abstract getTabs(): PrimaryTab[]|SecondaryTab[];
 
   protected getTab(index: number) {
     return this.getTabs()[index];

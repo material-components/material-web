@@ -11,7 +11,7 @@ import {styles} from './lib/tab-indicator-styles.css';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-tab-indicator': TabIndicator;
+    'md-tab-indicator': MdTabIndicator;
   }
 }
 

@@ -11,7 +11,7 @@ import {styles} from './lib/tab-scroller-styles.css';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-tab-scroller': TabScroller;
+    'md-tab-scroller': MdTabScroller;
   }
 }
 

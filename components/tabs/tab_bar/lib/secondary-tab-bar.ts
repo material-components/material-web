@@ -7,7 +7,6 @@
 import {ClassInfo} from 'lit/directives/class-map';
 
 import {SecondaryTab} from '../../tab/lib/secondary-tab';
-import {MdSecondaryTab} from '../../tab/secondary-tab';
 
 import {TabBar} from './tab-bar';
 
@@ -24,13 +23,13 @@ export class SecondaryTabBar extends TabBar {
     return (this.tabsSlot as HTMLSlotElement)
                .assignedNodes({flatten: true})
                .filter((e: Node) => e instanceof SecondaryTab) as
-        MdSecondaryTab[];
+        SecondaryTab[];
   }
 
   protected getActiveTabIndex() {
     const tabElements = this.getTabs();
     const activeElement =
-        (this.getRootNode() as ShadowRoot).activeElement as MdSecondaryTab;
+        (this.getRootNode() as ShadowRoot).activeElement as SecondaryTab;
     return tabElements.indexOf(activeElement);
   }
 }

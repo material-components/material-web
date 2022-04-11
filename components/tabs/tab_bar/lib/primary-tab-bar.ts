@@ -7,7 +7,6 @@
 import {ClassInfo} from 'lit/directives/class-map';
 
 import {PrimaryTab} from '../../tab/lib/primary-tab';
-import {MdPrimaryTab} from '../../tab/primary-tab';
 
 import {TabBar} from './tab-bar';
 
@@ -18,17 +17,18 @@ export class PrimaryTabBar extends TabBar {
       'md3-tab-bar--primary': true,
     };
   }
+
   // TODO(sorvell): probably want to memoize this and use a `slotChange` event
   protected getTabs() {
     return (this.tabsSlot as HTMLSlotElement)
                .assignedNodes({flatten: true})
-               .filter((e: Node) => e instanceof PrimaryTab) as MdPrimaryTab[];
+               .filter((e: Node) => e instanceof PrimaryTab) as PrimaryTab[];
   }
 
   protected getActiveTabIndex() {
     const tabElements = this.getTabs();
     const activeElement =
-        (this.getRootNode() as ShadowRoot).activeElement as MdPrimaryTab;
+        (this.getRootNode() as ShadowRoot).activeElement as PrimaryTab;
     return tabElements.indexOf(activeElement);
   }
 }
