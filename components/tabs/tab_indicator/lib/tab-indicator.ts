@@ -2,10 +2,13 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ *
+ * @requirecss {tabs.tab_indicator.lib.tab_indicator_styles}
  */
 
+
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
-import {html, PropertyValues} from 'lit';
+import {html, PropertyValues, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators';
 import {classMap} from 'lit/directives/class-map';
 
@@ -14,6 +17,7 @@ import MDCFadingTabIndicatorFoundation from './fading-foundation';
 import MDCTabIndicatorFoundation from './foundation';
 import MDCSlidingTabIndicatorFoundation from './sliding-foundation';
 
+/** @soyCompatible */
 export class TabIndicator extends BaseElement {
   protected mdcFoundation!: MDCTabIndicatorFoundation;
 
@@ -30,7 +34,8 @@ export class TabIndicator extends BaseElement {
 
   @property({type: Boolean}) fade = false;
 
-  protected override render() {
+  /** @soyTemplate */
+  protected override render(): TemplateResult {
     const contentClasses = {
       'md3-tab-indicator__content--icon': this.icon,
       'material-icons': this.icon,

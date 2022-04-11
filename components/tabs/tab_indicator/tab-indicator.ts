@@ -15,6 +15,11 @@ declare global {
   }
 }
 
+/**
+ * @soyCompatible
+ * @final
+ * @suppress {visibility}
+ */
 @customElement('md-tab-indicator')
 export class MdTabIndicator extends TabIndicator {
   static override styles = [styles];
