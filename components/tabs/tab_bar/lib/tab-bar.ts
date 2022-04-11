@@ -62,8 +62,8 @@ export abstract class TabBar extends BaseElement {
     return html`
       <div class="${classMap(this.getRootClasses())}"
            role="tablist"
-           @MD3Tab:interacted="${this._handleTabInteraction}"
-           @keydown="${this._handleKeydown}">
+           @keydown="${this._handleKeydown}"
+           @tab-interaction="${this._handleTabInteraction}">
         ${this.renderTabScroller()}
       </div>
       `;

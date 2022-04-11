@@ -8,7 +8,9 @@ import {ClassInfo} from 'lit/directives/class-map';
 
 import {Tab} from './tab';
 
+/** @soyCompatible */
 export class SecondaryTab extends Tab {
+  /** @soyTemplate */
   protected override getRootClasses(): ClassInfo {
     return {
       ...super.getRootClasses(),

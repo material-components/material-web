@@ -2,9 +2,11 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ *
+ * @requirecss {tabs.tab.lib.shared_styles}
  */
 
-import '../../tab_indicator/tab-indicator';
+
 import '../../../focus/focus-ring';
 import '../../../icon/icon';
 
@@ -25,6 +27,7 @@ import {TabInteractionEvent, TabInteractionEventDetail} from './types';
 // used for generating unique id for each tab
 let tabIdCounter = 0;
 
+/** @soyCompatible */
 export class Tab extends BaseElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
@@ -91,7 +94,8 @@ export class Tab extends BaseElement {
     this.id = this.id || `md3-tab-${++tabIdCounter}`;
   }
 
-  protected override render() {
+  /** @soyTemplate */
+  protected override render(): TemplateResult {
     let iconTemplate: string|TemplateResult = '';
     if (this.hasImageIcon || this.icon) {
       iconTemplate = this.renderIcon(this.icon);
@@ -141,19 +145,21 @@ export class Tab extends BaseElement {
     };
   }
 
+  /** @soyTemplate */
   protected renderIndicator(indicatorIcon: string, isFadingIndicator: boolean):
       TemplateResult {
     return html``;
   }
 
+  /** @soyTemplate */
   protected renderIcon(icon: string): TemplateResult {
     return html`<md-icon class="md3-tab__icon"><slot name="icon">${
         icon}</slot></md-icon>`;
   }
 
   // TODO(dfreedm): Make this use selected as a param after Polymer/internal#739
-  /** @soyCompatible */
-  protected renderRipple() {
+  /** @soyTemplate */
+  protected renderRipple(): TemplateResult {
     return html`<md-ripple></md-ripple>`;
   }
 
@@ -179,13 +185,12 @@ export class Tab extends BaseElement {
       },
       notifyInteracted: () => {
         const event: TabInteractionEvent =
-            new CustomEvent<TabInteractionEventDetail>(
-                MDCTabFoundation.strings.INTERACTED_EVENT, {
-                  detail: {tabId: this.id},
-                  bubbles: true,
-                  composed: true,
-                  cancelable: true,
-                });
+            new CustomEvent<TabInteractionEventDetail>('tab-interaction', {
+              detail: {tabId: this.id},
+              bubbles: true,
+              composed: true,
+              cancelable: true,
+            });
         this.dispatchEvent(event);
       },
       getOffsetLeft: () => this.offsetLeft,

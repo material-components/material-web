@@ -9,9 +9,11 @@ import {ClassInfo} from 'lit/directives/class-map';
 
 import {Tab} from './tab';
 
+/** @soyCompatible */
 export class PrimaryTab extends Tab {
   @property({type: Boolean}) stacked = false;
 
+  /** @soyTemplate */
   protected override getRootClasses(): ClassInfo {
     return {
       ...super.getRootClasses(),

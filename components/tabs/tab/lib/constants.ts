@@ -11,7 +11,6 @@ const cssClasses = {
 const strings = {
   ARIA_SELECTED: 'aria-selected',
   CONTENT_SELECTOR: '.md3-tab__content',
-  INTERACTED_EVENT: 'MD3Tab:interacted',
   RIPPLE_SELECTOR: '.md3-tab__ripple',
   TABINDEX: 'tabIndex',
   TAB_INDICATOR_SELECTOR: '.md3-tab-indicator',

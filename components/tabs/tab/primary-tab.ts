@@ -21,10 +21,16 @@ declare global {
   }
 }
 
+/**
+ * @soyCompatible
+ * @final
+ * @suppress {visibility}
+ */
 @customElement('md-primary-tab')
 export class MdPrimaryTab extends PrimaryTab {
   static override styles = [sharedStyles, primaryStyles];
 
+  /** @soyTemplate */
   protected override renderIndicator(
       indicatorIcon: string, isFadingIndicator: boolean): TemplateResult {
     return html`<md-tab-indicator
