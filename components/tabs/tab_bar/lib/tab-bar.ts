@@ -2,9 +2,8 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * @requirecss {tabs.tab_bar.lib.shared_styles}
  */
-
-import '../../tab_scroller/tab-scroller';
 
 import {BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
@@ -19,7 +18,9 @@ import {TabScroller} from '../../tab_scroller/lib/tab-scroller';
 
 import {MDCTabBarAdapter} from './adapter';
 import MDCTabBarFoundation from './foundation';
+import {TabBarActivatedEvent, TabBarActivatedEventDetail} from './types';
 
+/** @soyCompatible */
 export abstract class TabBar extends BaseElement {
   protected mdcFoundation!: MDCTabBarFoundation;
 
@@ -58,7 +59,8 @@ export abstract class TabBar extends BaseElement {
     this.mdcFoundation.handleKeyDown(e);
   }
 
-  protected override render() {
+  /** @soyTemplate */
+  protected override render(): TemplateResult {
     return html`
       <div class="${classMap(this.getRootClasses())}"
            role="tablist"
@@ -69,6 +71,7 @@ export abstract class TabBar extends BaseElement {
       `;
   }
 
+  /** @soyTemplate */
   protected renderTabScroller(): TemplateResult {
     return html``;
   }
@@ -153,9 +156,11 @@ export abstract class TabBar extends BaseElement {
         // Synchronize the tabs `activeIndex` to the foundation.
         // This is needed when a tab is changed via a click, for example.
         this.activeIndex = index;
-        this.dispatchEvent(new CustomEvent(
-            MDCTabBarFoundation.strings.TAB_ACTIVATED_EVENT,
-            {detail: {index}, bubbles: true, cancelable: true}));
+        const event: TabBarActivatedEvent =
+            new CustomEvent<TabBarActivatedEventDetail>(
+                'tab-bar-activated',
+                {detail: {index}, bubbles: true, cancelable: true});
+        this.dispatchEvent(event);
       },
     };
   }

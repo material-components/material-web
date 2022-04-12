@@ -10,7 +10,9 @@ import {PrimaryTab} from '../../tab/lib/primary-tab';
 
 import {TabBar} from './tab-bar';
 
+/** @soyCompatible */
 export class PrimaryTabBar extends TabBar {
+  /** @soyTemplate */
   protected override getRootClasses(): ClassInfo {
     return {
       ...super.getRootClasses(),

@@ -11,7 +11,6 @@ const strings = {
   ENTER_KEY: 'Enter',
   HOME_KEY: 'Home',
   SPACE_KEY: 'Space',
-  TAB_ACTIVATED_EVENT: 'MD3TabBar:activated',
   TAB_SCROLLER_SELECTOR: '.md3-tab-scroller',
   TAB_SELECTOR: '.md3-tab',
 };

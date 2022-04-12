@@ -4,12 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-export interface MDCTabBarActivatedEventDetail {
+export interface TabBarActivatedEventDetail {
   index: number;
 }
 
-// Note: CustomEvent<T> is not supported by Closure Compiler.
-
-export interface MDCTabBarActivatedEvent extends Event {
-  readonly detail: MDCTabBarActivatedEventDetail;
-}
+export type TabBarActivatedEvent = CustomEvent<TabBarActivatedEventDetail>;
