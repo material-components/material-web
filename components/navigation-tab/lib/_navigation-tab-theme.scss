@@ -7,7 +7,8 @@
 @use 'sass:map';
 @use '../../focus/lib/focus-ring-theme';
 @use '../../sass/theme';
-@use '../../tokens';
+// TODO(b/228865846): update to latest (see go/m3-web-navigation-bar-tokens-diff)
+@use '../../tokens/v0_75' as tokens;
 @use 'third_party/javascript/material_web_components/m3/ripple/ripple-theme';
 @use '@material/theme/state';
 @use '@material/theme/shadow-dom';

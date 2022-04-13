@@ -9,7 +9,8 @@
 @use '../../navigation_tab/lib/navigation-tab-theme';
 @use '../../sass/resolvers';
 @use '../../sass/theme';
-@use '../../tokens';
+// TODO(b/228865846): update to latest (see go/m3-web-navigation-bar-tokens-diff)
+@use '../../tokens/v0_75' as tokens;
 @use '@material/theme/map-ext';
 @use '@material/theme/theme-color';
 @use '@material/typography/typography';
