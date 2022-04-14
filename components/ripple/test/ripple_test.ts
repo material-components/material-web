@@ -6,21 +6,21 @@
 
 import {MdRipple} from '../ripple';
 
-interface RippleInternals {
-  hovered: boolean;
-  focused: boolean;
-  pressed: boolean;
+enum RippleStateClasses {
+  HOVERED = 'md3-ripple--hovered',
+  FOCUSED = 'md3-ripple--focused',
+  PRESSED = 'md3-ripple--pressed',
 }
 
-function animationTimer(): Promise<void> {
+function animationTimer(time = 200): Promise<void> {
   return new Promise((resolve) => {
-    setTimeout(resolve, 200);
+    setTimeout(resolve, time);
   });
 }
 
 describe('md-ripple', () => {
   let element: MdRipple;
-  let internals: RippleInternals;
+  let surface: HTMLDivElement;
   let container: HTMLDivElement;
 
   describe('basic', () => {
@@ -29,9 +29,10 @@ describe('md-ripple', () => {
       document.body.appendChild(container);
 
       element = document.createElement('md-ripple');
-      internals = element as unknown as RippleInternals;
       container.appendChild(element);
       await element.updateComplete;
+
+      surface = element.renderRoot.querySelector('.md3-ripple-surface')!;
     });
 
     afterEach(() => {
@@ -45,21 +46,24 @@ describe('md-ripple', () => {
     it('sets pressed class on beginPress()', async () => {
       element.beginPress();
       await element.updateComplete;
-      expect(internals.pressed).toEqual(true);
+
+      expect(surface).toHaveClass(RippleStateClasses.PRESSED);
     });
 
     it('removes pressed class on endPress()', async () => {
       element.beginPress();
       await animationTimer();
       element.endPress();
-      await animationTimer();
-      expect(internals.pressed).toEqual(false);
+      await animationTimer(450);
+
+      expect(surface).not.toHaveClass(RippleStateClasses.PRESSED);
     });
 
     it('sets focused class on beginFocus()', async () => {
       element.beginFocus();
       await animationTimer();
-      expect(internals.focused).toEqual(true);
+
+      expect(surface).toHaveClass(RippleStateClasses.FOCUSED);
     });
 
     it('removes focused class on endFocus()', async () => {
@@ -67,13 +71,15 @@ describe('md-ripple', () => {
       await animationTimer();
       element.endFocus();
       await animationTimer();
-      expect(internals.focused).toEqual(false);
+
+      expect(surface).not.toHaveClass(RippleStateClasses.FOCUSED);
     });
 
     it('sets hover class on beginHover()', async () => {
       element.beginHover();
       await element.updateComplete;
-      expect(internals.hovered).toEqual(true);
+
+      expect(surface).toHaveClass(RippleStateClasses.HOVERED);
     });
 
     it('removes hover class on endHover()', async () => {
@@ -81,7 +87,8 @@ describe('md-ripple', () => {
       await element.updateComplete;
       element.endHover();
       await element.updateComplete;
-      expect(internals.hovered).toEqual(false);
+
+      expect(surface).not.toHaveClass(RippleStateClasses.HOVERED);
     });
 
     it('stops hovering when disabled', async () => {
@@ -89,7 +96,8 @@ describe('md-ripple', () => {
       await element.updateComplete;
       element.disabled = true;
       await element.updateComplete;
-      expect(internals.hovered).toEqual(false);
+
+      expect(surface).not.toHaveClass(RippleStateClasses.HOVERED);
     });
   });
 });
