@@ -9,5 +9,5 @@
 @include fab-extended.static-styles();
 
 .md3-fab {
-  @include fab-extended-theme.theme-styles(fab-extended-theme.$light-theme);
+  @include fab-extended-theme.theme-styles(fab-extended-theme.$surface-theme);
 }

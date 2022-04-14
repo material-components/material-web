@@ -4,6 +4,8 @@
 //
 
 @forward './lib/fab-extended-theme' show
-  $dark-theme,
-  $light-theme,
+  primary-theme,
+  secondary-theme,
+  tertiary-theme,
+  branded-theme,
   theme;

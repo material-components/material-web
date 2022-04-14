@@ -6,5 +6,5 @@
 @use './fab-theme';
 
 .md3-fab {
-  @include fab-theme.theme-styles(fab-theme.$light-theme);
+  @include fab-theme.theme-styles(fab-theme.$surface-theme);
 }

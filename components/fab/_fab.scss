@@ -4,6 +4,14 @@
 //
 
 @forward './lib/fab-theme' show
-  $dark-theme,
-  $light-theme,
+  small-primary-theme,
+  primary-theme,
+  large-primary-theme,
+  small-secondary-theme,
+  secondary-theme,
+  large-secondary-theme,
+  small-surface-theme,
+  large-surface-theme,
+  branded-theme,
+  large-branded-theme,
   theme;
