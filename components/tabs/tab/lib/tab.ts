@@ -68,6 +68,8 @@ export class Tab extends BaseElement {
 
   @state() protected showFocusRing = false;
 
+  @property({type: String, attribute: 'data-tab-id'}) override id!: string;
+
   protected _active = false;
 
   protected initFocus = false;
@@ -114,6 +116,7 @@ export class Tab extends BaseElement {
         role="tab"
         aria-selected="${this._active}"
         tabindex="${this._active ? 0 : -1}"
+        id="${this.id}"
         @focus="${this.focus}"
         @blur="${this.handleBlur}"
         @mousedown="${this.handleRippleMouseDown}"
