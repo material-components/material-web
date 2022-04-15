@@ -2,6 +2,8 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ *
+ * @requirecss {segmented_button.lib.shared_styles}
  */
 
 import {html, LitElement, TemplateResult} from 'lit';

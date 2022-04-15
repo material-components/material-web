@@ -7,6 +7,7 @@
 import {customElement} from 'lit/decorators';
 
 import {SingleSelectSegmentedButtonSet} from './lib/segmented-button-set';
+import {styles} from './lib/shared-styles.css';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -21,4 +22,5 @@ declare global {
 @customElement('md-single-select-segmented-button-set')
 export class MdSingleSelectSegmentedButtonSet extends
     SingleSelectSegmentedButtonSet {
+  static override styles = [styles];
 }
