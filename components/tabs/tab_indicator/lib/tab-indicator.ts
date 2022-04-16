@@ -36,6 +36,7 @@ export class TabIndicator extends BaseElement {
 
   /** @soyTemplate */
   protected override render(): TemplateResult {
+    /** @classMap */
     const contentClasses = {
       'md3-tab-indicator__content--icon': this.icon,
       'material-icons': this.icon,
