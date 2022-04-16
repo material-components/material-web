@@ -52,10 +52,7 @@ export class Tab extends BaseElement {
 
   @property({type: Boolean}) isMinWidthIndicator = false;
 
-  @property({type: Boolean, reflect: true, attribute: 'active'})
-  get active(): boolean {
-    return this._active;
-  }
+  @property({type: Boolean, reflect: true, attribute: 'active'}) active = false;
 
   @property() indicatorIcon = '';
 
@@ -67,8 +64,6 @@ export class Tab extends BaseElement {
   focusOnActivate = true;
 
   @state() protected showFocusRing = false;
-
-  protected _active = false;
 
   protected initFocus = false;
 
@@ -96,24 +91,14 @@ export class Tab extends BaseElement {
 
   /** @soyTemplate */
   protected override render(): TemplateResult {
-    let iconTemplate: string|TemplateResult = '';
-    if (this.hasImageIcon || this.icon) {
-      iconTemplate = this.renderIcon(this.icon);
-    }
-
-    let labelTemplate = html``;
-    if (this.label) {
-      labelTemplate = html`
-        <span class="md3-tab__text-label">${this.label}</span>`;
-    }
-
+    const shouldRenderIcon = this.hasImageIcon || this.icon;
     return html`
       <button
         @click="${this.handleClick}"
         class="md3-tab ${classMap(this.getRootClasses())}"
         role="tab"
-        aria-selected="${this._active}"
-        tabindex="${this._active ? 0 : -1}"
+        aria-selected="${this.active}"
+        tabindex="${this.active ? 0 : -1}"
         @focus="${this.focus}"
         @blur="${this.handleBlur}"
         @mousedown="${this.handleRippleMouseDown}"
@@ -123,8 +108,8 @@ export class Tab extends BaseElement {
         @touchend="${this.handleRippleDeactivate}"
         @touchcancel="${this.handleRippleDeactivate}">
         <span class="md3-tab__content">
-          ${iconTemplate}
-          ${labelTemplate}
+          ${shouldRenderIcon ? this.renderIcon(this.icon) : ''}
+          ${this.label ? this.renderLabel(this.label) : ''}
           ${
         this.isMinWidthIndicator ?
             this.renderIndicator(this.indicatorIcon, this.isFadingIndicator) :
@@ -139,6 +124,7 @@ export class Tab extends BaseElement {
       </button>`;
   }
 
+  /** @soyTemplate */
   protected getRootClasses(): ClassInfo {
     return {
       'md3-tab--min-width': this.minWidth,
@@ -155,6 +141,12 @@ export class Tab extends BaseElement {
   protected renderIcon(icon: string): TemplateResult {
     return html`<md-icon class="md3-tab__icon"><slot name="icon">${
         icon}</slot></md-icon>`;
+  }
+
+  /** @soyTemplate */
+  protected renderLabel(label: string): TemplateResult {
+    return html`
+        <span class="md3-tab__text-label">${label}</span>`;
   }
 
   // TODO(dfreedm): Make this use selected as a param after Polymer/internal#739
@@ -216,29 +208,20 @@ export class Tab extends BaseElement {
 
     if (this.mdcFoundation) {
       this.mdcFoundation.activate(clientRect);
-      this.setActive(this.mdcFoundation.isActive());
+      this.active = this.mdcFoundation.isActive();
     } else {
       // happens if this is called by tab-bar on initialization, but tab has
       // not finished rendering.
       this.updateComplete.then(() => {
         this.mdcFoundation.activate(clientRect);
-        this.setActive(this.mdcFoundation.isActive());
+        this.active = this.mdcFoundation.isActive();
       });
     }
   }
 
   deactivate() {
     this.mdcFoundation.deactivate();
-    this.setActive(this.mdcFoundation.isActive());
-  }
-
-  protected setActive(newValue: boolean) {
-    const oldValue = this.active;
-
-    if (oldValue !== newValue) {
-      this._active = newValue;
-      this.requestUpdate('active', oldValue);
-    }
+    this.active = this.mdcFoundation.isActive();
   }
 
   computeDimensions() {
@@ -249,8 +232,9 @@ export class Tab extends BaseElement {
     return this.tabIndicator.computeContentClientRect();
   }
 
-  // NOTE: needed only for ShadyDOM where delegatesFocus is not implemented
   override focus() {
+    // TODO(b/210731759): Workaround for ShadyDOM where delegatesFocus is not
+    // implemented.
     this.mdcRoot.focus();
     this.handleFocus();
   }
