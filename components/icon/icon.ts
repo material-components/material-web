@@ -15,6 +15,11 @@ declare global {
   }
 }
 
+/**
+ * @soyCompatible
+ * @final
+ * @suppress {visibility}
+ */
 @customElement('md-icon')
 export class MdIcon extends Icon {
   static override styles = [styles];
