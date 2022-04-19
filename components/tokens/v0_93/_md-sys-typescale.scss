@@ -1,0 +1,204 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+//
+// !!! THIS FILE WAS AUTOMATICALLY GENERATED !!!
+// !!! DO NOT MODIFY IT BY HAND !!!
+// Design system display name: Material 3
+// Design system version name: v0.93
+//
+
+@use 'sass:map';
+
+@use './md-ref-typeface';
+
+$_default: (
+  md-ref-typeface: md-ref-typeface.values(),
+);
+
+@function values($deps: $_default, $exclude-hardcoded-values: false) {
+  @return (
+    body-large:
+      if(
+        $exclude-hardcoded-values,
+        null,
+        /** Typography composite token is not supported. Please use discrete typography tokens. */
+          null
+      ),
+    body-large-font: map.get($deps, md-ref-typeface, plain),
+    body-large-line-height: if($exclude-hardcoded-values, null, 24px),
+    body-large-size: if($exclude-hardcoded-values, null, 16px),
+    body-large-tracking: if($exclude-hardcoded-values, null, 0.5px),
+    body-large-weight: map.get($deps, md-ref-typeface, weight-regular),
+    body-medium:
+      if(
+        $exclude-hardcoded-values,
+        null,
+        /** Typography composite token is not supported. Please use discrete typography tokens. */
+          null
+      ),
+    body-medium-font: map.get($deps, md-ref-typeface, plain),
+    body-medium-line-height: if($exclude-hardcoded-values, null, 20px),
+    body-medium-size: if($exclude-hardcoded-values, null, 14px),
+    body-medium-tracking: if($exclude-hardcoded-values, null, 0.25px),
+    body-medium-weight: map.get($deps, md-ref-typeface, weight-regular),
+    body-small:
+      if(
+        $exclude-hardcoded-values,
+        null,
+        /** Typography composite token is not supported. Please use discrete typography tokens. */
+          null
+      ),
+    body-small-font: map.get($deps, md-ref-typeface, plain),
+    body-small-line-height: if($exclude-hardcoded-values, null, 16px),
+    body-small-size: if($exclude-hardcoded-values, null, 12px),
+    body-small-tracking: if($exclude-hardcoded-values, null, 0.4px),
+    body-small-weight: map.get($deps, md-ref-typeface, weight-regular),
+    display-large:
+      if(
+        $exclude-hardcoded-values,
+        null,
+        /** Typography composite token is not supported. Please use discrete typography tokens. */
+          null
+      ),
+    display-large-font: map.get($deps, md-ref-typeface, brand),
+    display-large-line-height: if($exclude-hardcoded-values, null, 64px),
+    display-large-size: if($exclude-hardcoded-values, null, 57px),
+    display-large-tracking: if($exclude-hardcoded-values, null, -0.25px),
+    display-large-weight: map.get($deps, md-ref-typeface, weight-regular),
+    display-medium:
+      if(
+        $exclude-hardcoded-values,
+        null,
+        /** Typography composite token is not supported. Please use discrete typography tokens. */
+          null
+      ),
+    display-medium-font: map.get($deps, md-ref-typeface, brand),
+    display-medium-line-height: if($exclude-hardcoded-values, null, 52px),
+    display-medium-size: if($exclude-hardcoded-values, null, 45px),
+    display-medium-tracking: if($exclude-hardcoded-values, null, 0),
+    display-medium-weight: map.get($deps, md-ref-typeface, weight-regular),
+    display-small:
+      if(
+        $exclude-hardcoded-values,
+        null,
+        /** Typography composite token is not supported. Please use discrete typography tokens. */
+          null
+      ),
+    display-small-font: map.get($deps, md-ref-typeface, brand),
+    display-small-line-height: if($exclude-hardcoded-values, null, 44px),
+    display-small-size: if($exclude-hardcoded-values, null, 36px),
+    display-small-tracking: if($exclude-hardcoded-values, null, 0),
+    display-small-weight: map.get($deps, md-ref-typeface, weight-regular),
+    headline-large:
+      if(
+        $exclude-hardcoded-values,
+        null,
+        /** Typography composite token is not supported. Please use discrete typography tokens. */
+          null
+      ),
+    headline-large-font: map.get($deps, md-ref-typeface, brand),
+    headline-large-line-height: if($exclude-hardcoded-values, null, 40px),
+    headline-large-size: if($exclude-hardcoded-values, null, 32px),
+    headline-large-tracking: if($exclude-hardcoded-values, null, 0),
+    headline-large-weight: map.get($deps, md-ref-typeface, weight-regular),
+    headline-medium:
+      if(
+        $exclude-hardcoded-values,
+        null,
+        /** Typography composite token is not supported. Please use discrete typography tokens. */
+          null
+      ),
+    headline-medium-font: map.get($deps, md-ref-typeface, brand),
+    headline-medium-line-height: if($exclude-hardcoded-values, null, 36px),
+    headline-medium-size: if($exclude-hardcoded-values, null, 28px),
+    headline-medium-tracking: if($exclude-hardcoded-values, null, 0),
+    headline-medium-weight: map.get($deps, md-ref-typeface, weight-regular),
+    headline-small:
+      if(
+        $exclude-hardcoded-values,
+        null,
+        /** Typography composite token is not supported. Please use discrete typography tokens. */
+          null
+      ),
+    headline-small-font: map.get($deps, md-ref-typeface, brand),
+    headline-small-line-height: if($exclude-hardcoded-values, null, 32px),
+    headline-small-size: if($exclude-hardcoded-values, null, 24px),
+    headline-small-tracking: if($exclude-hardcoded-values, null, 0),
+    headline-small-weight: map.get($deps, md-ref-typeface, weight-regular),
+    label-large:
+      if(
+        $exclude-hardcoded-values,
+        null,
+        /** Typography composite token is not supported. Please use discrete typography tokens. */
+          null
+      ),
+    label-large-font: map.get($deps, md-ref-typeface, plain),
+    label-large-line-height: if($exclude-hardcoded-values, null, 20px),
+    label-large-size: if($exclude-hardcoded-values, null, 14px),
+    label-large-tracking: if($exclude-hardcoded-values, null, 0.1px),
+    label-large-weight: map.get($deps, md-ref-typeface, weight-medium),
+    label-medium:
+      if(
+        $exclude-hardcoded-values,
+        null,
+        /** Typography composite token is not supported. Please use discrete typography tokens. */
+          null
+      ),
+    label-medium-font: map.get($deps, md-ref-typeface, plain),
+    label-medium-line-height: if($exclude-hardcoded-values, null, 16px),
+    label-medium-size: if($exclude-hardcoded-values, null, 12px),
+    label-medium-text-transform: if($exclude-hardcoded-values, null, none),
+    label-medium-tracking: if($exclude-hardcoded-values, null, 0.5px),
+    label-medium-weight: map.get($deps, md-ref-typeface, weight-medium),
+    label-small:
+      if(
+        $exclude-hardcoded-values,
+        null,
+        /** Typography composite token is not supported. Please use discrete typography tokens. */
+          null
+      ),
+    label-small-font: map.get($deps, md-ref-typeface, plain),
+    label-small-line-height: if($exclude-hardcoded-values, null, 16px),
+    label-small-size: if($exclude-hardcoded-values, null, 11px),
+    label-small-tracking: if($exclude-hardcoded-values, null, 0.5px),
+    label-small-weight: map.get($deps, md-ref-typeface, weight-medium),
+    title-large:
+      if(
+        $exclude-hardcoded-values,
+        null,
+        /** Typography composite token is not supported. Please use discrete typography tokens. */
+          null
+      ),
+    title-large-font: map.get($deps, md-ref-typeface, brand),
+    title-large-line-height: if($exclude-hardcoded-values, null, 28px),
+    title-large-size: if($exclude-hardcoded-values, null, 22px),
+    title-large-tracking: if($exclude-hardcoded-values, null, 0),
+    title-large-weight: map.get($deps, md-ref-typeface, weight-regular),
+    title-medium:
+      if(
+        $exclude-hardcoded-values,
+        null,
+        /** Typography composite token is not supported. Please use discrete typography tokens. */
+          null
+      ),
+    title-medium-font: map.get($deps, md-ref-typeface, plain),
+    title-medium-line-height: if($exclude-hardcoded-values, null, 24px),
+    title-medium-size: if($exclude-hardcoded-values, null, 16px),
+    title-medium-tracking: if($exclude-hardcoded-values, null, 0.15px),
+    title-medium-weight: map.get($deps, md-ref-typeface, weight-medium),
+    title-small:
+      if(
+        $exclude-hardcoded-values,
+        null,
+        /** Typography composite token is not supported. Please use discrete typography tokens. */
+          null
+      ),
+    title-small-font: map.get($deps, md-ref-typeface, plain),
+    title-small-line-height: if($exclude-hardcoded-values, null, 20px),
+    title-small-size: if($exclude-hardcoded-values, null, 14px),
+    title-small-tracking: if($exclude-hardcoded-values, null, 0.1px),
+    title-small-weight: map.get($deps, md-ref-typeface, weight-medium)
+  );
+}

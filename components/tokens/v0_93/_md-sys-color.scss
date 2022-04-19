@@ -1,0 +1,1006 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+//
+// !!! THIS FILE WAS AUTOMATICALLY GENERATED !!!
+// !!! DO NOT MODIFY IT BY HAND !!!
+// Design system display name: Material 3
+// Design system version name: v0.93
+//
+
+@use 'sass:map';
+
+@use './md-ref-palette';
+
+$_default-dark-dynamic: (
+  md-ref-palette: md-ref-palette.values(),
+);
+
+@function values-dark-dynamic($deps: $_default-dark-dynamic) {
+  @return (
+    background:
+      if(
+        map.get($deps, md-ref-palette, neutral10),
+        var(
+          --md-sys-color-background,
+          map.get($deps, md-ref-palette, neutral10)
+        ),
+        null
+      ),
+    error:
+      if(
+        map.get($deps, md-ref-palette, error80),
+        var(--md-sys-color-error, map.get($deps, md-ref-palette, error80)),
+        null
+      ),
+    error-container:
+      if(
+        map.get($deps, md-ref-palette, error30),
+        var(
+          --md-sys-color-error-container,
+          map.get($deps, md-ref-palette, error30)
+        ),
+        null
+      ),
+    inverse-on-surface:
+      if(
+        map.get($deps, md-ref-palette, neutral20),
+        var(
+          --md-sys-color-inverse-on-surface,
+          map.get($deps, md-ref-palette, neutral20)
+        ),
+        null
+      ),
+    inverse-primary:
+      if(
+        map.get($deps, md-ref-palette, primary40),
+        var(
+          --md-sys-color-inverse-primary,
+          map.get($deps, md-ref-palette, primary40)
+        ),
+        null
+      ),
+    inverse-surface:
+      if(
+        map.get($deps, md-ref-palette, neutral90),
+        var(
+          --md-sys-color-inverse-surface,
+          map.get($deps, md-ref-palette, neutral90)
+        ),
+        null
+      ),
+    on-background:
+      if(
+        map.get($deps, md-ref-palette, neutral90),
+        var(
+          --md-sys-color-on-background,
+          map.get($deps, md-ref-palette, neutral90)
+        ),
+        null
+      ),
+    on-error:
+      if(
+        map.get($deps, md-ref-palette, error20),
+        var(--md-sys-color-on-error, map.get($deps, md-ref-palette, error20)),
+        null
+      ),
+    on-error-container:
+      if(
+        map.get($deps, md-ref-palette, error80),
+        var(
+          --md-sys-color-on-error-container,
+          map.get($deps, md-ref-palette, error80)
+        ),
+        null
+      ),
+    on-primary:
+      if(
+        map.get($deps, md-ref-palette, primary20),
+        var(
+          --md-sys-color-on-primary,
+          map.get($deps, md-ref-palette, primary20)
+        ),
+        null
+      ),
+    on-primary-container:
+      if(
+        map.get($deps, md-ref-palette, primary90),
+        var(
+          --md-sys-color-on-primary-container,
+          map.get($deps, md-ref-palette, primary90)
+        ),
+        null
+      ),
+    on-secondary:
+      if(
+        map.get($deps, md-ref-palette, secondary20),
+        var(
+          --md-sys-color-on-secondary,
+          map.get($deps, md-ref-palette, secondary20)
+        ),
+        null
+      ),
+    on-secondary-container:
+      if(
+        map.get($deps, md-ref-palette, secondary90),
+        var(
+          --md-sys-color-on-secondary-container,
+          map.get($deps, md-ref-palette, secondary90)
+        ),
+        null
+      ),
+    on-surface:
+      if(
+        map.get($deps, md-ref-palette, neutral90),
+        var(
+          --md-sys-color-on-surface,
+          map.get($deps, md-ref-palette, neutral90)
+        ),
+        null
+      ),
+    on-surface-variant:
+      if(
+        map.get($deps, md-ref-palette, neutral-variant80),
+        var(
+          --md-sys-color-on-surface-variant,
+          map.get($deps, md-ref-palette, neutral-variant80)
+        ),
+        null
+      ),
+    on-tertiary:
+      if(
+        map.get($deps, md-ref-palette, tertiary20),
+        var(
+          --md-sys-color-on-tertiary,
+          map.get($deps, md-ref-palette, tertiary20)
+        ),
+        null
+      ),
+    on-tertiary-container:
+      if(
+        map.get($deps, md-ref-palette, tertiary90),
+        var(
+          --md-sys-color-on-tertiary-container,
+          map.get($deps, md-ref-palette, tertiary90)
+        ),
+        null
+      ),
+    outline:
+      if(
+        map.get($deps, md-ref-palette, neutral-variant60),
+        var(
+          --md-sys-color-outline,
+          map.get($deps, md-ref-palette, neutral-variant60)
+        ),
+        null
+      ),
+    primary:
+      if(
+        map.get($deps, md-ref-palette, primary80),
+        var(--md-sys-color-primary, map.get($deps, md-ref-palette, primary80)),
+        null
+      ),
+    primary-container:
+      if(
+        map.get($deps, md-ref-palette, primary30),
+        var(
+          --md-sys-color-primary-container,
+          map.get($deps, md-ref-palette, primary30)
+        ),
+        null
+      ),
+    secondary:
+      if(
+        map.get($deps, md-ref-palette, secondary80),
+        var(
+          --md-sys-color-secondary,
+          map.get($deps, md-ref-palette, secondary80)
+        ),
+        null
+      ),
+    secondary-container:
+      if(
+        map.get($deps, md-ref-palette, secondary30),
+        var(
+          --md-sys-color-secondary-container,
+          map.get($deps, md-ref-palette, secondary30)
+        ),
+        null
+      ),
+    shadow:
+      if(
+        map.get($deps, md-ref-palette, neutral0),
+        var(--md-sys-color-shadow, map.get($deps, md-ref-palette, neutral0)),
+        null
+      ),
+    surface:
+      if(
+        map.get($deps, md-ref-palette, neutral10),
+        var(--md-sys-color-surface, map.get($deps, md-ref-palette, neutral10)),
+        null
+      ),
+    surface-tint:
+      if(
+        map.get($deps, md-ref-palette, primary80),
+        var(--md-sys-color-primary, map.get($deps, md-ref-palette, primary80)),
+        null
+      ),
+    surface-tint-color:
+      if(
+        map.get($deps, md-ref-palette, primary80),
+        var(--md-sys-color-primary, map.get($deps, md-ref-palette, primary80)),
+        null
+      ),
+    surface-variant:
+      if(
+        map.get($deps, md-ref-palette, neutral-variant30),
+        var(
+          --md-sys-color-surface-variant,
+          map.get($deps, md-ref-palette, neutral-variant30)
+        ),
+        null
+      ),
+    tertiary:
+      if(
+        map.get($deps, md-ref-palette, tertiary80),
+        var(
+          --md-sys-color-tertiary,
+          map.get($deps, md-ref-palette, tertiary80)
+        ),
+        null
+      ),
+    tertiary-container:
+      if(
+        map.get($deps, md-ref-palette, tertiary30),
+        var(
+          --md-sys-color-tertiary-container,
+          map.get($deps, md-ref-palette, tertiary30)
+        ),
+        null
+      )
+  );
+}
+
+$_default-dark-non-dynamic: (
+  md-ref-palette: md-ref-palette.values(),
+);
+
+@function values-dark-non-dynamic(
+  $deps: $_default-dark-non-dynamic,
+  $exclude-hardcoded-values: false
+) {
+  @return (
+    background:
+      if(
+        map.get($deps, md-ref-palette, neutral10),
+        var(
+          --md-sys-color-background,
+          map.get($deps, md-ref-palette, neutral10)
+        ),
+        null
+      ),
+    error:
+      if(
+        map.get($deps, md-ref-palette, error80),
+        var(--md-sys-color-error, map.get($deps, md-ref-palette, error80)),
+        null
+      ),
+    error-container:
+      if(
+        map.get($deps, md-ref-palette, error30),
+        var(
+          --md-sys-color-error-container,
+          map.get($deps, md-ref-palette, error30)
+        ),
+        null
+      ),
+    inverse-on-surface:
+      if(
+        map.get($deps, md-ref-palette, neutral20),
+        var(
+          --md-sys-color-inverse-on-surface,
+          map.get($deps, md-ref-palette, neutral20)
+        ),
+        null
+      ),
+    inverse-primary:
+      if(
+        map.get($deps, md-ref-palette, primary40),
+        var(
+          --md-sys-color-inverse-primary,
+          map.get($deps, md-ref-palette, primary40)
+        ),
+        null
+      ),
+    inverse-surface:
+      if(
+        map.get($deps, md-ref-palette, neutral90),
+        var(
+          --md-sys-color-inverse-surface,
+          map.get($deps, md-ref-palette, neutral90)
+        ),
+        null
+      ),
+    on-background:
+      if(
+        map.get($deps, md-ref-palette, neutral90),
+        var(
+          --md-sys-color-on-background,
+          map.get($deps, md-ref-palette, neutral90)
+        ),
+        null
+      ),
+    on-error:
+      if(
+        map.get($deps, md-ref-palette, error20),
+        var(--md-sys-color-on-error, map.get($deps, md-ref-palette, error20)),
+        null
+      ),
+    on-error-container:
+      if(
+        map.get($deps, md-ref-palette, error80),
+        var(
+          --md-sys-color-on-error-container,
+          map.get($deps, md-ref-palette, error80)
+        ),
+        null
+      ),
+    on-primary:
+      if(
+        map.get($deps, md-ref-palette, primary20),
+        var(
+          --md-sys-color-on-primary,
+          map.get($deps, md-ref-palette, primary20)
+        ),
+        null
+      ),
+    on-primary-container:
+      if(
+        map.get($deps, md-ref-palette, primary90),
+        var(
+          --md-sys-color-on-primary-container,
+          map.get($deps, md-ref-palette, primary90)
+        ),
+        null
+      ),
+    on-secondary:
+      if(
+        map.get($deps, md-ref-palette, secondary20),
+        var(
+          --md-sys-color-on-secondary,
+          map.get($deps, md-ref-palette, secondary20)
+        ),
+        null
+      ),
+    on-secondary-container:
+      if(
+        map.get($deps, md-ref-palette, secondary90),
+        var(
+          --md-sys-color-on-secondary-container,
+          map.get($deps, md-ref-palette, secondary90)
+        ),
+        null
+      ),
+    on-surface:
+      if(
+        map.get($deps, md-ref-palette, neutral90),
+        var(
+          --md-sys-color-on-surface,
+          map.get($deps, md-ref-palette, neutral90)
+        ),
+        null
+      ),
+    on-surface-variant:
+      if(
+        map.get($deps, md-ref-palette, neutral-variant80),
+        var(
+          --md-sys-color-on-surface-variant,
+          map.get($deps, md-ref-palette, neutral-variant80)
+        ),
+        null
+      ),
+    on-tertiary:
+      if(
+        map.get($deps, md-ref-palette, tertiary20),
+        var(
+          --md-sys-color-on-tertiary,
+          map.get($deps, md-ref-palette, tertiary20)
+        ),
+        null
+      ),
+    on-tertiary-container:
+      if(
+        map.get($deps, md-ref-palette, tertiary90),
+        var(
+          --md-sys-color-on-tertiary-container,
+          map.get($deps, md-ref-palette, tertiary90)
+        ),
+        null
+      ),
+    outline:
+      if(
+        map.get($deps, md-ref-palette, neutral-variant60),
+        var(
+          --md-sys-color-outline,
+          map.get($deps, md-ref-palette, neutral-variant60)
+        ),
+        null
+      ),
+    primary:
+      if(
+        map.get($deps, md-ref-palette, primary80),
+        var(--md-sys-color-primary, map.get($deps, md-ref-palette, primary80)),
+        null
+      ),
+    primary-container:
+      if(
+        map.get($deps, md-ref-palette, primary30),
+        var(
+          --md-sys-color-primary-container,
+          map.get($deps, md-ref-palette, primary30)
+        ),
+        null
+      ),
+    secondary:
+      if(
+        map.get($deps, md-ref-palette, secondary80),
+        var(
+          --md-sys-color-secondary,
+          map.get($deps, md-ref-palette, secondary80)
+        ),
+        null
+      ),
+    secondary-container:
+      if(
+        map.get($deps, md-ref-palette, secondary30),
+        var(
+          --md-sys-color-secondary-container,
+          map.get($deps, md-ref-palette, secondary30)
+        ),
+        null
+      ),
+    shadow:
+      if(
+        map.get($deps, md-ref-palette, neutral0),
+        var(--md-sys-color-shadow, map.get($deps, md-ref-palette, neutral0)),
+        null
+      ),
+    surface:
+      if(
+        map.get($deps, md-ref-palette, neutral10),
+        var(--md-sys-color-surface, map.get($deps, md-ref-palette, neutral10)),
+        null
+      ),
+    surface-tint: if($exclude-hardcoded-values, null, #d1e1ff),
+    surface-tint-color:
+      if(
+        map.get($deps, md-ref-palette, primary80),
+        var(--md-sys-color-primary, map.get($deps, md-ref-palette, primary80)),
+        null
+      ),
+    surface-variant:
+      if(
+        map.get($deps, md-ref-palette, neutral-variant30),
+        var(
+          --md-sys-color-surface-variant,
+          map.get($deps, md-ref-palette, neutral-variant30)
+        ),
+        null
+      ),
+    tertiary:
+      if(
+        map.get($deps, md-ref-palette, tertiary80),
+        var(
+          --md-sys-color-tertiary,
+          map.get($deps, md-ref-palette, tertiary80)
+        ),
+        null
+      ),
+    tertiary-container:
+      if(
+        map.get($deps, md-ref-palette, tertiary30),
+        var(
+          --md-sys-color-tertiary-container,
+          map.get($deps, md-ref-palette, tertiary30)
+        ),
+        null
+      )
+  );
+}
+
+$_default-light-dynamic: (
+  md-ref-palette: md-ref-palette.values(),
+);
+
+@function values-light-dynamic($deps: $_default-light-dynamic) {
+  @return (
+    background:
+      if(
+        map.get($deps, md-ref-palette, neutral99),
+        var(
+          --md-sys-color-background,
+          map.get($deps, md-ref-palette, neutral99)
+        ),
+        null
+      ),
+    error:
+      if(
+        map.get($deps, md-ref-palette, error40),
+        var(--md-sys-color-error, map.get($deps, md-ref-palette, error40)),
+        null
+      ),
+    error-container:
+      if(
+        map.get($deps, md-ref-palette, error90),
+        var(
+          --md-sys-color-error-container,
+          map.get($deps, md-ref-palette, error90)
+        ),
+        null
+      ),
+    inverse-on-surface:
+      if(
+        map.get($deps, md-ref-palette, neutral95),
+        var(
+          --md-sys-color-inverse-on-surface,
+          map.get($deps, md-ref-palette, neutral95)
+        ),
+        null
+      ),
+    inverse-primary:
+      if(
+        map.get($deps, md-ref-palette, primary80),
+        var(
+          --md-sys-color-inverse-primary,
+          map.get($deps, md-ref-palette, primary80)
+        ),
+        null
+      ),
+    inverse-surface:
+      if(
+        map.get($deps, md-ref-palette, neutral20),
+        var(
+          --md-sys-color-inverse-surface,
+          map.get($deps, md-ref-palette, neutral20)
+        ),
+        null
+      ),
+    on-background:
+      if(
+        map.get($deps, md-ref-palette, neutral10),
+        var(
+          --md-sys-color-on-background,
+          map.get($deps, md-ref-palette, neutral10)
+        ),
+        null
+      ),
+    on-error:
+      if(
+        map.get($deps, md-ref-palette, error100),
+        var(--md-sys-color-on-error, map.get($deps, md-ref-palette, error100)),
+        null
+      ),
+    on-error-container:
+      if(
+        map.get($deps, md-ref-palette, error10),
+        var(
+          --md-sys-color-on-error-container,
+          map.get($deps, md-ref-palette, error10)
+        ),
+        null
+      ),
+    on-primary:
+      if(
+        map.get($deps, md-ref-palette, primary100),
+        var(
+          --md-sys-color-on-primary,
+          map.get($deps, md-ref-palette, primary100)
+        ),
+        null
+      ),
+    on-primary-container:
+      if(
+        map.get($deps, md-ref-palette, primary10),
+        var(
+          --md-sys-color-on-primary-container,
+          map.get($deps, md-ref-palette, primary10)
+        ),
+        null
+      ),
+    on-secondary:
+      if(
+        map.get($deps, md-ref-palette, secondary100),
+        var(
+          --md-sys-color-on-secondary,
+          map.get($deps, md-ref-palette, secondary100)
+        ),
+        null
+      ),
+    on-secondary-container:
+      if(
+        map.get($deps, md-ref-palette, secondary10),
+        var(
+          --md-sys-color-on-secondary-container,
+          map.get($deps, md-ref-palette, secondary10)
+        ),
+        null
+      ),
+    on-surface:
+      if(
+        map.get($deps, md-ref-palette, neutral10),
+        var(
+          --md-sys-color-on-surface,
+          map.get($deps, md-ref-palette, neutral10)
+        ),
+        null
+      ),
+    on-surface-variant:
+      if(
+        map.get($deps, md-ref-palette, neutral-variant30),
+        var(
+          --md-sys-color-on-surface-variant,
+          map.get($deps, md-ref-palette, neutral-variant30)
+        ),
+        null
+      ),
+    on-tertiary:
+      if(
+        map.get($deps, md-ref-palette, tertiary100),
+        var(
+          --md-sys-color-on-tertiary,
+          map.get($deps, md-ref-palette, tertiary100)
+        ),
+        null
+      ),
+    on-tertiary-container:
+      if(
+        map.get($deps, md-ref-palette, tertiary10),
+        var(
+          --md-sys-color-on-tertiary-container,
+          map.get($deps, md-ref-palette, tertiary10)
+        ),
+        null
+      ),
+    outline:
+      if(
+        map.get($deps, md-ref-palette, neutral-variant50),
+        var(
+          --md-sys-color-outline,
+          map.get($deps, md-ref-palette, neutral-variant50)
+        ),
+        null
+      ),
+    primary:
+      if(
+        map.get($deps, md-ref-palette, primary40),
+        var(--md-sys-color-primary, map.get($deps, md-ref-palette, primary40)),
+        null
+      ),
+    primary-container:
+      if(
+        map.get($deps, md-ref-palette, primary90),
+        var(
+          --md-sys-color-primary-container,
+          map.get($deps, md-ref-palette, primary90)
+        ),
+        null
+      ),
+    secondary:
+      if(
+        map.get($deps, md-ref-palette, secondary40),
+        var(
+          --md-sys-color-secondary,
+          map.get($deps, md-ref-palette, secondary40)
+        ),
+        null
+      ),
+    secondary-container:
+      if(
+        map.get($deps, md-ref-palette, secondary90),
+        var(
+          --md-sys-color-secondary-container,
+          map.get($deps, md-ref-palette, secondary90)
+        ),
+        null
+      ),
+    shadow:
+      if(
+        map.get($deps, md-ref-palette, neutral0),
+        var(--md-sys-color-shadow, map.get($deps, md-ref-palette, neutral0)),
+        null
+      ),
+    surface:
+      if(
+        map.get($deps, md-ref-palette, neutral99),
+        var(--md-sys-color-surface, map.get($deps, md-ref-palette, neutral99)),
+        null
+      ),
+    surface-tint:
+      if(
+        map.get($deps, md-ref-palette, primary40),
+        var(--md-sys-color-primary, map.get($deps, md-ref-palette, primary40)),
+        null
+      ),
+    surface-tint-color:
+      if(
+        map.get($deps, md-ref-palette, primary40),
+        var(--md-sys-color-primary, map.get($deps, md-ref-palette, primary40)),
+        null
+      ),
+    surface-variant:
+      if(
+        map.get($deps, md-ref-palette, neutral-variant90),
+        var(
+          --md-sys-color-surface-variant,
+          map.get($deps, md-ref-palette, neutral-variant90)
+        ),
+        null
+      ),
+    tertiary:
+      if(
+        map.get($deps, md-ref-palette, tertiary40),
+        var(
+          --md-sys-color-tertiary,
+          map.get($deps, md-ref-palette, tertiary40)
+        ),
+        null
+      ),
+    tertiary-container:
+      if(
+        map.get($deps, md-ref-palette, tertiary90),
+        var(
+          --md-sys-color-tertiary-container,
+          map.get($deps, md-ref-palette, tertiary90)
+        ),
+        null
+      )
+  );
+}
+
+$_default-light-non-dynamic: (
+  md-ref-palette: md-ref-palette.values(),
+);
+
+@function values-light-non-dynamic(
+  $deps: $_default-light-non-dynamic,
+  $exclude-hardcoded-values: false
+) {
+  @return (
+    background:
+      if(
+        map.get($deps, md-ref-palette, neutral100),
+        var(
+          --md-sys-color-background,
+          map.get($deps, md-ref-palette, neutral100)
+        ),
+        null
+      ),
+    error:
+      if(
+        map.get($deps, md-ref-palette, error40),
+        var(--md-sys-color-error, map.get($deps, md-ref-palette, error40)),
+        null
+      ),
+    error-container:
+      if(
+        map.get($deps, md-ref-palette, error90),
+        var(
+          --md-sys-color-error-container,
+          map.get($deps, md-ref-palette, error90)
+        ),
+        null
+      ),
+    inverse-on-surface:
+      if(
+        map.get($deps, md-ref-palette, neutral95),
+        var(
+          --md-sys-color-inverse-on-surface,
+          map.get($deps, md-ref-palette, neutral95)
+        ),
+        null
+      ),
+    inverse-primary:
+      if(
+        map.get($deps, md-ref-palette, primary80),
+        var(
+          --md-sys-color-inverse-primary,
+          map.get($deps, md-ref-palette, primary80)
+        ),
+        null
+      ),
+    inverse-surface:
+      if(
+        map.get($deps, md-ref-palette, neutral20),
+        var(
+          --md-sys-color-inverse-surface,
+          map.get($deps, md-ref-palette, neutral20)
+        ),
+        null
+      ),
+    on-background:
+      if(
+        map.get($deps, md-ref-palette, neutral10),
+        var(
+          --md-sys-color-on-background,
+          map.get($deps, md-ref-palette, neutral10)
+        ),
+        null
+      ),
+    on-error:
+      if(
+        map.get($deps, md-ref-palette, error100),
+        var(--md-sys-color-on-error, map.get($deps, md-ref-palette, error100)),
+        null
+      ),
+    on-error-container:
+      if(
+        map.get($deps, md-ref-palette, error10),
+        var(
+          --md-sys-color-on-error-container,
+          map.get($deps, md-ref-palette, error10)
+        ),
+        null
+      ),
+    on-primary:
+      if(
+        map.get($deps, md-ref-palette, primary100),
+        var(
+          --md-sys-color-on-primary,
+          map.get($deps, md-ref-palette, primary100)
+        ),
+        null
+      ),
+    on-primary-container:
+      if(
+        map.get($deps, md-ref-palette, primary10),
+        var(
+          --md-sys-color-on-primary-container,
+          map.get($deps, md-ref-palette, primary10)
+        ),
+        null
+      ),
+    on-secondary:
+      if(
+        map.get($deps, md-ref-palette, secondary100),
+        var(
+          --md-sys-color-on-secondary,
+          map.get($deps, md-ref-palette, secondary100)
+        ),
+        null
+      ),
+    on-secondary-container:
+      if(
+        map.get($deps, md-ref-palette, secondary10),
+        var(
+          --md-sys-color-on-secondary-container,
+          map.get($deps, md-ref-palette, secondary10)
+        ),
+        null
+      ),
+    on-surface:
+      if(
+        map.get($deps, md-ref-palette, neutral10),
+        var(
+          --md-sys-color-on-surface,
+          map.get($deps, md-ref-palette, neutral10)
+        ),
+        null
+      ),
+    on-surface-variant:
+      if(
+        map.get($deps, md-ref-palette, neutral-variant30),
+        var(
+          --md-sys-color-on-surface-variant,
+          map.get($deps, md-ref-palette, neutral-variant30)
+        ),
+        null
+      ),
+    on-tertiary:
+      if(
+        map.get($deps, md-ref-palette, tertiary100),
+        var(
+          --md-sys-color-on-tertiary,
+          map.get($deps, md-ref-palette, tertiary100)
+        ),
+        null
+      ),
+    on-tertiary-container:
+      if(
+        map.get($deps, md-ref-palette, tertiary10),
+        var(
+          --md-sys-color-on-tertiary-container,
+          map.get($deps, md-ref-palette, tertiary10)
+        ),
+        null
+      ),
+    outline:
+      if(
+        map.get($deps, md-ref-palette, neutral-variant50),
+        var(
+          --md-sys-color-outline,
+          map.get($deps, md-ref-palette, neutral-variant50)
+        ),
+        null
+      ),
+    primary:
+      if(
+        map.get($deps, md-ref-palette, primary40),
+        var(--md-sys-color-primary, map.get($deps, md-ref-palette, primary40)),
+        null
+      ),
+    primary-container:
+      if(
+        map.get($deps, md-ref-palette, primary90),
+        var(
+          --md-sys-color-primary-container,
+          map.get($deps, md-ref-palette, primary90)
+        ),
+        null
+      ),
+    secondary:
+      if(
+        map.get($deps, md-ref-palette, secondary40),
+        var(
+          --md-sys-color-secondary,
+          map.get($deps, md-ref-palette, secondary40)
+        ),
+        null
+      ),
+    secondary-container:
+      if(
+        map.get($deps, md-ref-palette, secondary90),
+        var(
+          --md-sys-color-secondary-container,
+          map.get($deps, md-ref-palette, secondary90)
+        ),
+        null
+      ),
+    shadow:
+      if(
+        map.get($deps, md-ref-palette, neutral0),
+        var(--md-sys-color-shadow, map.get($deps, md-ref-palette, neutral0)),
+        null
+      ),
+    surface:
+      if(
+        map.get($deps, md-ref-palette, neutral100),
+        var(--md-sys-color-surface, map.get($deps, md-ref-palette, neutral100)),
+        null
+      ),
+    surface-tint: if($exclude-hardcoded-values, null, #6991d6),
+    surface-tint-color:
+      if(
+        map.get($deps, md-ref-palette, primary40),
+        var(--md-sys-color-primary, map.get($deps, md-ref-palette, primary40)),
+        null
+      ),
+    surface-variant:
+      if(
+        map.get($deps, md-ref-palette, neutral-variant90),
+        var(
+          --md-sys-color-surface-variant,
+          map.get($deps, md-ref-palette, neutral-variant90)
+        ),
+        null
+      ),
+    tertiary:
+      if(
+        map.get($deps, md-ref-palette, tertiary40),
+        var(
+          --md-sys-color-tertiary,
+          map.get($deps, md-ref-palette, tertiary40)
+        ),
+        null
+      ),
+    tertiary-container:
+      if(
+        map.get($deps, md-ref-palette, tertiary90),
+        var(
+          --md-sys-color-tertiary-container,
+          map.get($deps, md-ref-palette, tertiary90)
+        ),
+        null
+      )
+  );
+}
