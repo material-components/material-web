@@ -76,6 +76,7 @@ export abstract class TabBar extends BaseElement {
     return html``;
   }
 
+  /** @soyTemplate */
   protected getRootClasses(): ClassInfo {
     return {
       'md3-tab-bar': true,
