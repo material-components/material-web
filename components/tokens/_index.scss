@@ -3,4 +3,32 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-@forward './v0_75';
+@use './latest';
+
+@forward './latest';
+
+// Backwards compatibility
+
+$_default-deps: (
+  md-ref-palette: latest.md-ref-palette-values(),
+);
+
+/// Equivalent to tokens.md-sys-color-values-light-dynamic().
+///
+/// The non-dynamic token context is not used in Material You for the web
+/// platform.
+/// @deprecated
+@function md-sys-color-values-light($deps: $_default-deps) {
+  @warn 'DEPRECATED: use tokens.md-sys-color-values-light-dynamic() instead.';
+  @return latest.md-sys-color-values-light-dynamic($deps);
+}
+
+/// Equivalent to tokens.md-sys-color-values-dark-dynamic().
+///
+/// The non-dynamic token context is not used in Material You for the web
+/// platform.
+/// @deprecated
+@function md-sys-color-values-dark($deps: $_default-deps) {
+  @warn 'DEPRECATED: use tokens.md-sys-color-values-light-dynamic() instead.';
+  @return latest.md-sys-color-values-dark-dynamic($deps);
+}
