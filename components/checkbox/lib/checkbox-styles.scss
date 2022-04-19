@@ -5,7 +5,7 @@
 
 @use './checkbox';
 @use './checkbox-theme';
-@use '../../tokens/latest' as tokens;
+@use '../../tokens';
 
 :host {
   @include checkbox-theme.theme-styles(tokens.md-comp-checkbox-values());

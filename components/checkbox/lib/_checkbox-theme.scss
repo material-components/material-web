@@ -26,7 +26,7 @@
 @use 'sass:selector';
 @use '@material/theme/shadow-dom';
 @use '../../sass/theme';
-@use '../../tokens/latest' as tokens;
+@use '../../tokens';
 @use '../../sass/var';
 @use '../../sass/color';
 @use '../../ripple/ripple-theme';
