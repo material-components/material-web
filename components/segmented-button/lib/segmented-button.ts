@@ -8,6 +8,7 @@
 
 import {html, LitElement, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators';
+import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 
 import {SegmentedButtonFoundation} from './foundation';
@@ -53,13 +54,22 @@ export abstract class SegmentedButton extends LitElement implements
 
   override render(): TemplateResult {
     return html`
-      <button role="option" tabindex="${
-        this.focusable ? '0' : '-1'}" aria-selected=${
-        ifDefined(this.ariaSelectedValue)} .disabled=${this.disabled}>
+      <button role="option"
+        tabindex="${this.focusable ? '0' : '-1'}"
+        aria-selected=${ifDefined(this.ariaSelectedValue)}
+        .disabled=${this.disabled}
+        class="md3-segmented-button ${classMap(this.getRenderClasses())}">
         <span aria-hidden="true">${this.selected ? '✔' : ''}</span>
         <span>${this.label ?? ''}</span>
       </button>
     `;
+  }
+
+  /** @soyTemplate */
+  protected getRenderClasses(): ClassInfo {
+    return {
+        // TODO(b/213634341): Write styles.
+    };
   }
 
   focusButton() {

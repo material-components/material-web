@@ -1,0 +1,18 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use '../../sass/resolvers';
+
+$light-theme: (/* TODO(b/213634341): Write styles. */);
+
+$dark-theme: (/* TODO(b/213634341): Write styles. */);
+
+@mixin theme($theme, $resolvers: resolvers.$material) {
+  /* TODO(b/213634341): Write styles. */
+}
+
+@mixin theme-styles($theme, $resolvers: resolvers.$material) {
+  /* TODO(b/213634341): Write styles. */
+}
