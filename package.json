@@ -74,7 +74,6 @@
     "karma-firefox-launcher": "^1.0.0",
     "karma-jasmine": "^4.0.1",
     "karma-mocha-reporter": "^2.2.5",
-    "karma-sauce-launcher": "^2.0.2",
     "karma-sourcemap-loader": "^0.3.7",
     "lerna": "^3.13.1",
     "lit-analyzer": "^1.2.1",
