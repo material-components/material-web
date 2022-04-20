@@ -1,0 +1,558 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use 'sass:map';
+@use '@material/density/functions' as density-functions;
+@use '@material/feature-targeting/feature-targeting';
+@use '@material/theme/theme';
+@use '@material/theme/keys';
+@use '@material/density/variables' as density-variables;
+@use '@material/theme/theme-color';
+@use '@material/ripple/ripple-theme';
+
+$ripple-size: 40px !default;
+$icon-size: 20px !default;
+$transition-duration: 120ms !default;
+$ripple-opacity: 0.14 !default;
+$baseline-theme-color: secondary !default;
+$unchecked-color: rgba(theme-color.prop-value(on-surface), 0.54) !default;
+$disabled-circle-color: rgba(theme-color.prop-value(on-surface), 0.38) !default;
+
+$minimum-size: 28px !default;
+$maximum-size: $ripple-size !default;
+$density-scale: density-variables.$default-scale !default;
+$density-config: (
+  size: (
+    minimum: $minimum-size,
+    default: $ripple-size,
+    maximum: $maximum-size,
+  ),
+) !default;
+
+$ripple-target: '.md3-radio__ripple';
+$unselected-ripple-target: '.md3-radio__native-control:enabled:not(:checked) ~ #{$ripple-target}';
+$custom-property-prefix: 'radio';
+
+// TODO(b/188417756): `icon-size` token key is not supported.
+$light-theme: (
+  disabled-selected-icon-color: theme-color.$on-surface,
+  disabled-selected-icon-opacity: 0.38,
+  disabled-unselected-icon-color: theme-color.$on-surface,
+  disabled-unselected-icon-opacity: 0.38,
+  selected-focus-icon-color: theme-color.$primary,
+  selected-focus-state-layer-color: theme-color.$primary,
+  selected-focus-state-layer-opacity: 0.12,
+  selected-hover-icon-color: theme-color.$primary,
+  selected-hover-state-layer-color: theme-color.$primary,
+  selected-hover-state-layer-opacity: 0.04,
+  selected-icon-color: theme-color.$primary,
+  selected-pressed-icon-color: theme-color.$primary,
+  selected-pressed-state-layer-color: theme-color.$primary,
+  selected-pressed-state-layer-opacity: 0.1,
+  state-layer-size: $ripple-size,
+  unselected-focus-icon-color: theme-color.$on-surface,
+  unselected-focus-state-layer-color: theme-color.$on-surface,
+  unselected-focus-state-layer-opacity: 0.12,
+  unselected-hover-icon-color: theme-color.$on-surface,
+  unselected-hover-state-layer-color: theme-color.$on-surface,
+  unselected-hover-state-layer-opacity: 0.04,
+  unselected-icon-color: theme-color.$on-surface,
+  unselected-pressed-icon-color: theme-color.$on-surface,
+  unselected-pressed-state-layer-color: theme-color.$on-surface,
+  unselected-pressed-state-layer-opacity: 0.1,
+);
+
+@mixin theme($theme) {
+  @include theme.validate-theme($light-theme, $theme);
+  @include keys.declare-custom-properties(
+    $theme,
+    $prefix: $custom-property-prefix
+  );
+}
+
+@mixin theme-styles($theme) {
+  @include theme.validate-theme-keys($light-theme, $theme);
+
+  $theme: keys.create-theme-properties(
+    $theme,
+    $prefix: $custom-property-prefix
+  );
+
+  @include _disabled-selected-icon-color(
+    map.get($theme, disabled-selected-icon-color)
+  );
+  @include _disabled-selected-icon-opacity(
+    map.get($theme, disabled-selected-icon-opacity)
+  );
+  @include _disabled-unselected-icon-color(
+    map.get($theme, disabled-unselected-icon-color)
+  );
+  @include _disabled-unselected-icon-opacity(
+    map.get($theme, disabled-unselected-icon-opacity)
+  );
+
+  // selected
+  @include ripple-theme.focus() {
+    @include _selected-icon-color(map.get($theme, selected-focus-icon-color));
+    @include _selected-state-layer-color(
+      map.get($theme, selected-focus-state-layer-color)
+    );
+    @include _selected-focus-state-layer-opacity(
+      map.get($theme, selected-focus-state-layer-opacity)
+    );
+  }
+  @include ripple-theme.hover() {
+    @include _selected-icon-color(map.get($theme, selected-hover-icon-color));
+    @include _selected-state-layer-color(
+      map.get($theme, selected-hover-state-layer-color)
+    );
+    @include _selected-hover-state-layer-opacity(
+      map.get($theme, selected-hover-state-layer-opacity)
+    );
+  }
+  @include _selected-icon-color(map.get($theme, selected-icon-color));
+  @include ripple-theme.active() {
+    @include _selected-icon-color(map.get($theme, selected-pressed-icon-color));
+    @include _selected-state-layer-color(
+      map.get($theme, selected-pressed-state-layer-color)
+    );
+    @include _selected-pressed-state-layer-opacity(
+      map.get($theme, selected-pressed-state-layer-opacity)
+    );
+  }
+
+  // unselected
+  @include ripple-theme.focus() {
+    @include _unselected-icon-color(
+      map.get($theme, unselected-focus-icon-color)
+    );
+    @include _unselected-state-layer-color(
+      map.get($theme, unselected-focus-state-layer-color)
+    );
+    @include _unselected-focus-state-layer-opacity(
+      map.get($theme, unselected-focus-state-layer-opacity)
+    );
+  }
+  @include ripple-theme.hover() {
+    @include _unselected-icon-color(
+      map.get($theme, unselected-hover-icon-color)
+    );
+    @include _unselected-state-layer-color(
+      map.get($theme, unselected-hover-state-layer-color)
+    );
+    @include _unselected-hover-state-layer-opacity(
+      map.get($theme, unselected-hover-state-layer-opacity)
+    );
+  }
+  @include _unselected-icon-color(map.get($theme, unselected-icon-color));
+  @include ripple-theme.active() {
+    @include _unselected-icon-color(
+      map.get($theme, unselected-pressed-icon-color)
+    );
+    @include _unselected-state-layer-color(
+      map.get($theme, unselected-pressed-state-layer-color)
+    );
+    @include _unselected-pressed-state-layer-opacity(
+      map.get($theme, unselected-pressed-state-layer-opacity)
+    );
+  }
+
+  @include ripple-size(map.get($theme, state-layer-size));
+  // Set touch target size same as ripple size.
+  @include touch-target(
+    $size: map.get($theme, state-layer-size),
+    $ripple-size: map.get($theme, state-layer-size)
+  );
+}
+
+@mixin _disabled-selected-icon-color($color) {
+  @include disabled-checked-stroke-color($color);
+  @include disabled-ink-color($color);
+}
+
+@mixin _disabled-selected-icon-opacity($opacity) {
+  @include _disabled-checked-stroke-opacity($opacity);
+  @include _disabled-ink-opacity($opacity);
+}
+
+@mixin _disabled-unselected-icon-color($color) {
+  @include disabled-unchecked-stroke-color($color);
+}
+
+@mixin _disabled-unselected-icon-opacity($opacity) {
+  @include _disabled-unchecked-stroke-opacity($opacity);
+}
+
+@mixin _selected-icon-color($color) {
+  @include checked-stroke-color($color);
+  @include ink-color($color);
+}
+
+@mixin _selected-state-layer-color($color) {
+  @include ripple-theme.states-base-color(
+    $color: $color,
+    $ripple-target: $ripple-target
+  );
+}
+
+@mixin _selected-hover-state-layer-opacity($opacity) {
+  @include ripple-theme.states-hover-opacity(
+    $opacity: $opacity,
+    $ripple-target: $ripple-target
+  );
+}
+
+@mixin _selected-focus-state-layer-opacity($opacity) {
+  @include ripple-theme.states-focus-opacity(
+    $opacity: $opacity,
+    $ripple-target: $ripple-target
+  );
+}
+
+@mixin _selected-pressed-state-layer-opacity($opacity) {
+  @include ripple-theme.states-press-opacity(
+    $opacity: $opacity,
+    $ripple-target: $ripple-target
+  );
+}
+
+@mixin _unselected-icon-color($color) {
+  @include unchecked-stroke-color($color);
+}
+
+@mixin _unselected-state-layer-color($color) {
+  @include ripple-theme.states-base-color(
+    $color: $color,
+    $ripple-target: $unselected-ripple-target
+  );
+}
+
+@mixin _unselected-hover-state-layer-opacity($opacity) {
+  @include ripple-theme.states-hover-opacity(
+    $opacity: $opacity,
+    $ripple-target: $unselected-ripple-target
+  );
+}
+
+@mixin _unselected-focus-state-layer-opacity($opacity) {
+  @include ripple-theme.states-focus-opacity(
+    $opacity: $opacity,
+    $ripple-target: $unselected-ripple-target
+  );
+}
+
+@mixin _unselected-pressed-state-layer-opacity($opacity) {
+  @include ripple-theme.states-press-opacity(
+    $opacity: $opacity,
+    $ripple-target: $unselected-ripple-target
+  );
+}
+
+///
+/// Sets the stroke color of an unchecked, enabled radio button.
+/// @param {Color} $color - The desired stroke color.
+///
+@mixin unchecked-stroke-color($color, $query: feature-targeting.all()) {
+  @include _if-enabled-unchecked {
+    @include _stroke-color($color, $query: $query);
+  }
+}
+
+///
+/// Sets the stroke color of a checked, enabled radio button.
+/// @param {Color} $color - The desired stroke color.
+///
+@mixin checked-stroke-color($color, $query: feature-targeting.all()) {
+  @include _if-enabled-checked {
+    @include _stroke-color($color, $query: $query);
+  }
+}
+
+///
+/// Sets the ink color of an enabled radio button.
+/// @param {Color} $color - The desired ink color.
+///
+@mixin ink-color($color, $query: feature-targeting.all()) {
+  @include _if-enabled {
+    @include _ink-color($color, $query: $query);
+  }
+}
+
+///
+/// Sets the stroke color of an unchecked, disabled radio button.
+/// @param {Color} $color - The desired stroke color.
+///
+@mixin disabled-unchecked-stroke-color(
+  $color,
+  $query: feature-targeting.all()
+) {
+  @include _if-disabled-unchecked {
+    @include _stroke-color($color, $query: $query);
+  }
+}
+
+@mixin _disabled-unchecked-stroke-opacity($opacity) {
+  @include _if-disabled-unchecked {
+    @include _stroke-opacity($opacity);
+  }
+}
+
+///
+/// Sets the stroke color of a checked, disabled radio button.
+/// @param {Color} $color - The desired stroke color.
+///
+@mixin disabled-checked-stroke-color($color, $query: feature-targeting.all()) {
+  @include if-disabled-checked_ {
+    @include _stroke-color($color, $query: $query);
+  }
+}
+
+@mixin _disabled-checked-stroke-opacity($opacity) {
+  @include if-disabled-checked_ {
+    @include _stroke-opacity($opacity);
+  }
+}
+
+///
+/// Sets the ink color of a disabled radio button.
+/// @param {Color} $color - The desired ink color
+///
+@mixin disabled-ink-color($color, $query: feature-targeting.all()) {
+  @include if-disabled_ {
+    @include _ink-color($color, $query: $query);
+  }
+}
+
+@mixin _disabled-ink-opacity($opacity) {
+  @include if-disabled_ {
+    @include _ink-opacity($opacity);
+  }
+}
+
+@mixin focus-indicator-color($color, $query: feature-targeting.all()) {
+  $feat-color: feature-targeting.create-target($query, color);
+
+  .md3-radio__background::before {
+    @include feature-targeting.targets($feat-color) {
+      @include theme.property(background-color, $color);
+    }
+  }
+}
+
+///
+/// Sets radio touch target size which can be more than the ripple size. Param `$ripple-size` is required for custom
+/// ripple size.
+///
+/// @param {Number} $size Size of touch target (Native input) in `px`.
+/// @param {Number} $ripple-size Size of ripple in `px`. Required only for custom ripple size.
+///
+@mixin touch-target(
+  $size: $ripple-size,
+  $ripple-size: $ripple-size,
+  $query: feature-targeting.all()
+) {
+  $feat-structure: feature-targeting.create-target($query, structure);
+  $offset: 'calc((__ripple_size - __size) / 2)';
+  $replace: (
+    __ripple_size: $ripple-size,
+    __size: $size,
+  );
+
+  .md3-radio__native-control {
+    @include feature-targeting.targets($feat-structure) {
+      @include theme.property('top', $offset, $replace: $replace);
+      @include theme.property('right', $offset, $replace: $replace);
+      @include theme.property('left', $offset, $replace: $replace);
+      @include theme.property('width', $size);
+      @include theme.property('height', $size);
+    }
+  }
+}
+
+///
+/// Sets density scale for radio.
+///
+/// @param {Number | String} $density-scale - Density scale value for component. Supported density scale values
+///     `-3`, `-2`, `-1`, `0`.
+///
+@mixin density($density-scale, $query: feature-targeting.all()) {
+  $size: density-functions.prop-value(
+    $density-config: $density-config,
+    $density-scale: $density-scale,
+    $property-name: size,
+  );
+
+  @include ripple-size($size, $query: $query);
+  // Sets touch target size same as ripple size.
+  @include touch-target($size: $size, $ripple-size: $size, $query: $query);
+
+  @if $density-scale != 0 {
+    @include touch-target-reset_($query: $query);
+  }
+}
+
+///
+/// Sets radio ripple size.
+///
+/// @param {Number} $size - Ripple size in `px`.
+///
+@mixin ripple-size($size, $query: feature-targeting.all()) {
+  $feat-structure: feature-targeting.create-target($query, structure);
+  $replace: (
+    __size: $size,
+    __icon_size: $icon-size,
+  );
+
+  @include feature-targeting.targets($feat-structure) {
+    $padding: 'calc((__size - __icon_size) / 2)';
+
+    @include theme.property('padding', $padding, $replace: $replace);
+  }
+
+  .md3-radio__background::before {
+    @include feature-targeting.targets($feat-structure) {
+      $padding-offset: 'calc(-1 * (__size - __icon_size) / 2)';
+
+      @include theme.property('top', $padding-offset, $replace: $replace);
+      @include theme.property('left', $padding-offset, $replace: $replace);
+      @include theme.property('width', $size);
+      @include theme.property('height', $size);
+    }
+  }
+}
+
+///
+/// Resets touch target-related styles. This is called from the density mixin to
+/// automatically remove the increased touch target, since dense components
+/// don't have the same default a11y requirements.
+/// @access private
+///
+@mixin touch-target-reset_($query: feature-targeting.all()) {
+  $feat-structure: feature-targeting.create-target($query, structure);
+
+  @include feature-targeting.targets($feat-structure) {
+    margin: 0;
+  }
+}
+
+///
+/// Helps select the radio background only when its native control is in the
+/// enabled state.
+/// @access private
+///
+@mixin _if-enabled {
+  .md3-radio__native-control:enabled + {
+    @content;
+  }
+}
+
+///
+/// Helps select the radio background only when its native control is in the
+/// enabled & unchecked state.
+/// @access private
+///
+@mixin _if-enabled-unchecked {
+  .md3-radio__native-control:enabled:not(:checked) + {
+    @content;
+  }
+}
+
+///
+/// Helps select the radio background only when its native control is in the
+/// enabled & checked state.
+/// @access private
+///
+@mixin _if-enabled-checked {
+  .md3-radio__native-control:enabled:checked + {
+    @content;
+  }
+}
+
+///
+/// Helps select the radio background only when its native control is in the
+/// disabled state.
+/// @access private
+///
+@mixin if-disabled_ {
+  [aria-disabled='true'] .md3-radio__native-control,
+  .md3-radio__native-control:disabled {
+    + {
+      @content;
+    }
+  }
+}
+
+///
+/// Helps select the radio background only when its native control is in the
+/// disabled & unchecked state.
+/// @access private
+///
+@mixin _if-disabled-unchecked {
+  [aria-disabled='true'] .md3-radio__native-control,
+  .md3-radio__native-control:disabled {
+    &:not(:checked) + {
+      @content;
+    }
+  }
+}
+
+///
+/// Helps select the radio background only when its native control is in the
+/// disabled & checked state.
+/// @access private
+///
+@mixin if-disabled-checked_ {
+  [aria-disabled='true'] .md3-radio__native-control,
+  .md3-radio__native-control:disabled {
+    &:checked + {
+      @content;
+    }
+  }
+}
+
+///
+/// Sets the ink color for radio. This is wrapped in a mixin
+/// that qualifies state such as `_if-enabled`
+/// @access private
+///
+@mixin _ink-color($color, $query: feature-targeting.all()) {
+  $feat-color: feature-targeting.create-target($query, color);
+
+  .md3-radio__background .md3-radio__inner-circle {
+    @include feature-targeting.targets($feat-color) {
+      @include theme.property(border-color, $color);
+    }
+  }
+}
+
+@mixin _ink-opacity($opacity) {
+  .md3-radio__background .md3-radio__inner-circle {
+    @include theme.property(opacity, $opacity);
+  }
+}
+
+///
+/// Sets the stroke color for radio. This is wrapped in a mixin
+/// that qualifies state such as `_if-enabled`
+/// @access private
+///
+@mixin _stroke-color($color, $query: feature-targeting.all()) {
+  $feat-color: feature-targeting.create-target($query, color);
+
+  .md3-radio__background .md3-radio__outer-circle {
+    @include feature-targeting.targets($feat-color) {
+      @include theme.property(border-color, $color);
+    }
+  }
+}
+
+@mixin _stroke-opacity($opacity) {
+  .md3-radio__background .md3-radio__outer-circle {
+    @include theme.property(opacity, $opacity);
+  }
+}
