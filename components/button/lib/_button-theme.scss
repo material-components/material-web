@@ -8,19 +8,9 @@
 
 // TODO(b/228217731): Remove MDC/MWC dependencies
 @use 'sass:map';
+@use '../../sass/color';
 @use 'third_party/javascript/material_web_components/m3/ripple/ripple-theme';
 @use '../../compat/theme/state';
-@use '@material/typography/typography';
-
-$light-theme: (
-  container-height: 40px,
-  container-shape: 100px,
-  label-text-font: typography.get-font(button),
-  label-text-size: 14px,
-  label-text-tracking: typography.px-to-rem(0.1px),
-  label-text-weight: 500,
-  with-icon-icon-size: typography.px-to-rem(18px),
-);
 
 $selectors: (
   // :not(:disabled) is used to support link styled as button
@@ -75,6 +65,53 @@ $selectors: (
 
   $shape: map.get($theme, container-shape);
   @include _set-shape-radius($shape);
+}
+
+@function flatten-disabled-colors($theme) {
+  @return color.join-color-and-opacity-pairs(
+    $theme,
+    (
+      (
+        color-key: 'disabled-container-color',
+        opacity-key: 'disabled-container-opacity'
+      ),
+      (
+        color-key: 'disabled-label-text-color',
+        opacity-key: 'disabled-label-text-opacity'
+      ),
+      (
+        color-key: 'with-icon-disabled-icon-color',
+        opacity-key: 'with-icon-disabled-icon-opacity'
+      ),
+      (
+        color-key: 'disabled-outline-color',
+        opacity-key: 'disabled-outline-opacity'
+      )
+    )
+  );
+}
+
+@function remove-unsupported-tokens($theme) {
+  // b/193825150: Text and Outlined Button don't have `container-shadow-color`,
+  // leaving `container-elevation` useless.
+  @if not map.get($theme, 'container-shadow-color') {
+    $theme: map.remove($theme, 'container-elevation');
+  }
+
+  $unsupported-tokens: (
+    // `dragged` tokens don't make sense for Button.
+    'dragged-container-elevation',
+    'dragged-label-text-color',
+    'dragged-state-layer-color',
+    'dragged-state-layer-opacity',
+    'with-icon-dragged-icon-color',
+    // b/189346077#comment2: `label-text-line-height` is included in token set
+    // "just in case", but it's okay to ignore.
+    'label-text-line-height',
+    // b/203778922: `label-text-type` used by other platforms but not web.
+    'label-text-type'
+  );
+  @return map.remove($theme, $unsupported-tokens);
 }
 
 @mixin _container-fill-color($color-or-map) {

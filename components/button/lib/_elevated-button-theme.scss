@@ -6,43 +6,24 @@
 @use 'sass:map';
 @use '../../sass/resolvers';
 @use '../../sass/theme';
+@use '../../sass/typography';
+@use '../../tokens';
 @use './button-theme';
 @use './elevation-theme';
 @use './icon-theme';
 
 $_custom-property-prefix: 'elevated-button';
-$light-theme: map.merge(
-  button-theme.$light-theme,
-  (
-    container-color: #fffbfe,
-    container-elevation: 1,
-    container-shadow-color: #000,
-    container-surface-tint-layer-color: #6750a4,
-    disabled-container-color: rgba(#1c1b1f, 0.12),
-    disabled-container-elevation: 0,
-    disabled-label-text-color: rgba(#1c1b1f, 0.38),
-    focus-container-elevation: 1,
-    focus-label-text-color: #6750a4,
-    focus-state-layer-color: #6750a4,
-    focus-state-layer-opacity: 0.12,
-    hover-container-elevation: 3,
-    hover-label-text-color: #6750a4,
-    hover-state-layer-color: #6750a4,
-    hover-state-layer-opacity: 0.08,
-    label-text-color: #6750a4,
-    pressed-container-elevation: 1,
-    pressed-label-text-color: #6750a4,
-    pressed-state-layer-color: #6750a4,
-    pressed-state-layer-opacity: 0.12,
-    with-icon-disabled-icon-color: rgba(#1c1b1f, 0.38),
-    with-icon-focus-icon-color: #6750a4,
-    with-icon-hover-icon-color: #6750a4,
-    with-icon-icon-color: #6750a4,
-    with-icon-pressed-icon-color: #6750a4,
-  )
-);
+
+$light-theme: tokens.md-comp-elevated-button-values();
 
 @function _resolve-theme($theme, $resolvers) {
+  $theme: button-theme.flatten-disabled-colors($theme);
+  $theme: button-theme.remove-unsupported-tokens($theme);
+  $theme: typography.resolve-theme(
+    $theme,
+    map.get($resolvers, 'typography'),
+    'label-text'
+  );
   @return elevation-theme.resolve-theme($theme, $resolvers);
 }
 
