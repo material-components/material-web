@@ -50,6 +50,7 @@ export class Checkbox extends ActionElement {
   /**
    * Touch target extends beyond visual boundary of a component by default.
    * Set to `true` to remove touch target added to the component.
+   * test change.
    * @see https://material.io/design/usability/accessibility.html
    */
   @property({type: Boolean}) reducedTouchTarget = false;
