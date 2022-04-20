@@ -81,9 +81,7 @@ $dark-theme: tokens.md-comp-secondary-navigation-tab-values(
   );
 
   @include tab-theme.label-text-font-family(map.get($theme, label-text-font));
-  @include tab-theme.label-text-font-size(
-    map.get($theme, label-text-font-size)
-  );
+  @include tab-theme.label-text-font-size(map.get($theme, label-text-size));
   @include tab-theme.label-text-letter-spacing(
     map.get($theme, label-text-letter-spacing)
   );
