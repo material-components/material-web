@@ -12,8 +12,7 @@
 @use '../../navigation_tab/lib/navigation-tab-theme';
 @use '../../sass/resolvers';
 @use '../../sass/theme';
-// TODO(b/228865846): update to latest (see go/m3-web-navigation-bar-tokens-diff)
-@use '../../tokens/v0_75' as tokens;
+@use '../../tokens/latest' as tokens;
 @use '@material/theme/map-ext';
 @use '@material/theme/theme-color';
 @use '@material/typography/typography';
@@ -22,11 +21,11 @@
 $light-theme: tokens.md-comp-navigation-bar-values();
 $dark-theme: tokens.md-comp-navigation-bar-values(
   (
-    md-sys-color: tokens.md-sys-color-values-dark(),
+    md-sys-color: tokens.md-sys-color-values-dark-non-dynamic(),
     md-sys-elevation:
       tokens.md-sys-elevation-values(
         $deps: (
-          md-sys-color: tokens.md-sys-color-values-dark(),
+          md-sys-color: tokens.md-sys-color-values-dark-non-dynamic(),
         ),
       ),
   ),

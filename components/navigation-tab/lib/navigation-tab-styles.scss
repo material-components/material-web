@@ -8,8 +8,11 @@
 
 @use './navigation-tab';
 @use './navigation-tab-theme';
+@use '../../badge/lib/badge';
+@use '../../badge/lib/badge-theme';
 
 @include navigation-tab.static-styles();
+@include badge.static-styles();
 
 :host {
   display: flex;
@@ -17,5 +20,6 @@
 }
 
 .md3-navigation-tab {
+  @include badge-theme.theme-styles(badge-theme.$light-theme);
   @include navigation-tab-theme.theme-styles(navigation-tab-theme.$light-theme);
 }

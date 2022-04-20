@@ -183,17 +183,14 @@ describe('mwc-navigation-tab', () => {
     });
 
     it('displays small badge', () => {
-      const badge =
-          element.shadowRoot!.querySelector('.md3-navigation-tab__badge')!;
-      expect(badge.classList.contains('md3-navigation-tab__badge-large'))
-          .toBeFalse();
+      const badge = element.shadowRoot!.querySelector('.md3-badge')!;
+      expect(badge.classList.contains('md3-badge--large')).toBeFalse();
     });
 
     it('does not display badge if showBadge is false', async () => {
       element.showBadge = false;
       await element.updateComplete;
-      const badge =
-          element.shadowRoot!.querySelector('.md3-navigation-tab__badge');
+      const badge = element.shadowRoot!.querySelector('.md3-badge');
       expect(badge).toEqual(null);
     });
   });
@@ -206,15 +203,12 @@ describe('mwc-navigation-tab', () => {
     });
 
     it('displays large badge', () => {
-      const badge =
-          element.shadowRoot!.querySelector('.md3-navigation-tab__badge')!;
-      expect(badge.classList.contains('md3-navigation-tab__badge-large'))
-          .toBeTrue();
+      const badge = element.shadowRoot!.querySelector('.md3-badge')!;
+      expect(badge.classList.contains('md3-badge--large')).toBeTrue();
     });
 
     it('displays badge value', () => {
-      const badge =
-          element.shadowRoot!.querySelector('.md3-navigation-tab__badge')!;
+      const badge = element.shadowRoot!.querySelector('.md3-badge')!;
       expect(badge.textContent!.trim()).toEqual('9');
     });
   });

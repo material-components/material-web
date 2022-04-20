@@ -92,17 +92,17 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
 
   /** @soyTemplate */
   protected renderBadge(): TemplateResult|'' {
-    return this.showBadge ? html`<span class="md3-navigation-tab__badge ${
-                                classMap(this.getBadgeClasses())}">
-        <p class="md3-navigation-tab__badge-value">${this.badgeValue}</p>
+    return this.showBadge ?
+        html`<span class="md3-badge ${classMap(this.getBadgeClasses())}">
+        <p class="md3-badge__value">${this.badgeValue}</p>
         </span>` :
-                            '';
+        '';
   }
 
   /** @soyTemplate */
   protected getBadgeClasses(): ClassInfo {
     return {
-      'md3-navigation-tab__badge-large': this.badgeValue,
+      'md3-badge--large': this.badgeValue,
     };
   }
 

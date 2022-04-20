@@ -41,18 +41,6 @@ $animation-duration: 100ms;
     @include _icon;
   }
 
-  .md3-navigation-tab__badge {
-    @include _badge;
-
-    &.md3-navigation-tab__badge-large {
-      @include _badge-large;
-
-      .md3-navigation-tab__badge-value {
-        @include _badge-value;
-      }
-    }
-  }
-
   .md3-navigation-tab__ripple {
     z-index: 0;
   }
@@ -137,24 +125,4 @@ $animation-duration: 100ms;
       display: inline-block;
     }
   }
-}
-
-@mixin _badge() {
-  left: 50%;
-  margin-left: 6px;
-  margin-top: 4px;
-  position: absolute;
-  top: 0px;
-}
-
-@mixin _badge-large() {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-left: 2px;
-  margin-top: 1px;
-}
-
-@mixin _badge-value() {
-  padding: 0px 4px;
 }
