@@ -20,11 +20,11 @@ $custom-property-prefix-primary: 'primary-tab';
 $light-theme: tokens.md-comp-primary-navigation-tab-values();
 $dark-theme: tokens.md-comp-primary-navigation-tab-values(
   (
-    md-sys-color: tokens.md-sys-color-values-dark(),
+    md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
     md-sys-elevation:
       tokens.md-sys-elevation-values(
         $deps: (
-          md-sys-color: tokens.md-sys-color-values-dark(),
+          md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
         ),
         $exclude-hardcoded-values: true,
       ),

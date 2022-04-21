@@ -13,7 +13,7 @@
 @use '../../../tokens';
 
 $_default-deps: (
-  md-sys-color: tokens.md-sys-color-values-light(),
+  md-sys-color: tokens.md-sys-color-values-light-dynamic(),
   md-sys-typescale: tokens.md-sys-typescale-values(),
 );
 
@@ -41,7 +41,7 @@ $_default-deps: (
 $light-theme: values();
 $dark-theme: values(
   (
-    md-sys-color: tokens.md-sys-color-values-dark(),
+    md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
   ),
   $exclude-hardcoded-values: true
 );

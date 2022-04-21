@@ -22,11 +22,11 @@ $_ripple-target: '.md3-tab__ripple';
 $light-theme: tokens.md-comp-secondary-navigation-tab-values();
 $dark-theme: tokens.md-comp-secondary-navigation-tab-values(
   (
-    md-sys-color: tokens.md-sys-color-values-dark(),
+    md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
     md-sys-elevation:
       tokens.md-sys-elevation-values(
         $deps: (
-          md-sys-color: tokens.md-sys-color-values-dark(),
+          md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
         ),
         $exclude-hardcoded-values: true,
       ),

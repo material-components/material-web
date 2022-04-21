@@ -22,7 +22,7 @@ $_custom-property-prefix: 'icon-button';
 $light-theme: tokens.md-comp-icon-button-values();
 $dark-theme: tokens.md-comp-icon-button-values(
   (
-    md-sys-color: tokens.md-sys-color-values-dark(),
+    md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
   ),
   $exclude-hardcoded-values: true
 );

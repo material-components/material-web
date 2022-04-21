@@ -9,7 +9,7 @@
 @use '../../tokens';
 
 $_custom-property-prefix: 'focus-ring';
-$_color-sys: tokens.md-sys-color-values-light();
+$_color-sys: tokens.md-sys-color-values-light-dynamic();
 
 $light-theme: (
   ring-radius: 8px,
