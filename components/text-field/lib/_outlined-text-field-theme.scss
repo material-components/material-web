@@ -140,6 +140,7 @@ $_reference-theme: map.merge(
     label-text-color: map.get($theme, label-text-color),
     label-text-font: map.get($theme, label-text-font),
     label-text-line-height: map.get($theme, label-text-line-height),
+    label-text-padding-bottom: map.get($theme, label-text-padding-bottom),
     label-text-populated-line-height:
       map.get($theme, label-text-populated-line-height),
     label-text-populated-size: map.get($theme, label-text-populated-size),

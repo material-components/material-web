@@ -71,6 +71,7 @@ $_default-deps: (
         map.get($text-field-values, error-hover-input-text-color),
       focus-content-color: map.get($text-field-values, focus-input-text-color),
       hover-content-color: map.get($text-field-values, hover-input-text-color),
+      label-text-padding-bottom: if($exclude-hardcoded-values, null, 8px),
       outline-label-padding: if($exclude-hardcoded-values, null, 4px),
       supporting-text-padding: if($exclude-hardcoded-values, null, 16px),
       supporting-text-padding-top: if($exclude-hardcoded-values, null, 4px),
@@ -118,6 +119,13 @@ $dark-theme: values(
   @include content-theme.theme-styles($theme);
   @include label-theme.theme-styles($theme);
   @include supporting-text-theme.theme-styles($theme);
+
+  .md3-field__label--floating {
+    // Center the label within the outline stroke
+    transform: translateY(
+      calc(-100% + map.get($theme, label-text-padding-bottom))
+    );
+  }
 
   @include _container-padding-horizontal(
     map.get($theme, container-padding-horizontal)
@@ -273,11 +281,6 @@ $dark-theme: values(
   .md3-field__outline-panel-inactive::before,
   .md3-field__outline-panel-inactive::after {
     border-width: $width;
-  }
-
-  .md3-field__label--floating {
-    // Center the label within the outline stroke
-    transform: translateY(calc(-50% + #{$width} / 2));
   }
 }
 
