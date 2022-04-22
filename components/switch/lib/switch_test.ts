@@ -14,12 +14,6 @@ import {Switch} from './switch';
 
 @customElement('md-test-switch')
 class TestSwitch extends Switch {
-  // Not testing styles in unit tests.
-
-  async forceRenderRipple() {
-    this.shouldRenderRipple = true;
-    return this.ripple;
-  }
 }
 
 declare global {
@@ -147,14 +141,6 @@ describe('md-switch', () => {
 
       const selectedButton = disabled.shadowRoot!.querySelector('button')!;
       expect(selectedButton.disabled).toBeTrue();
-    });
-
-    it('should disable ripple', async () => {
-      const toggleRipple = await toggle.forceRenderRipple();
-      expect(toggleRipple?.disabled).toBeFalse();
-
-      const disabledRipple = await disabled.forceRenderRipple();
-      expect(disabledRipple?.disabled).toBeTrue();
     });
   });
 
