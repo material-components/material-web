@@ -24,7 +24,30 @@
 @use '@material/shape/shape';
 @use '@material/theme/map-ext';
 
+@use '../../tokens';
 @use './switch';
+
+$_default-deps: (
+  md-sys-color: tokens.md-sys-color-values-light-dynamic(),
+  md-sys-elevation: tokens.md-sys-elevation-values(),
+  md-sys-shape: tokens.md-sys-shape-values(),
+  md-sys-state: tokens.md-sys-state-values(),
+);
+
+@function values($deps: $_default-deps, $exclude-hardcoded-values: false) {
+  $values: tokens.md-comp-switch-values($deps, $exclude-hardcoded-values);
+
+  // Add missing tokens.
+  $values: map.merge(
+    $values,
+    (
+      // TODO(b/230013081): remove this once the missing token is added.
+      unselected-track-outline-color: map.get($deps, md-sys-color, outline)
+    )
+  );
+
+  @return $values;
+}
 
 // PRIVATE PROPERTIES
 //
