@@ -88,16 +88,6 @@
   @return math.div($px, 16px) * 1rem;
 }
 
-@mixin static-styles() {
-  @include _font-smoothing;
-}
-
-/// Applies antialiasing via font-smoothing to text.
-@mixin _font-smoothing() {
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-}
-
 $_reference-theme: (
   font: null,
   line-height: null,

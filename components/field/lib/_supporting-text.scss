@@ -6,12 +6,8 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@use '../../sass/typography';
-
 @mixin static-styles() {
   .md3-field__supporting-text {
-    @include typography.static-styles;
-
     display: flex;
     justify-content: space-between;
   }
