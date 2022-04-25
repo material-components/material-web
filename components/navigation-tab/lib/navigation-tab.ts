@@ -160,12 +160,10 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
   }
 
   protected handleFocus() {
-    this.ripple.beginFocus();
     this.showFocusRing = shouldShowStrongFocus();
   }
 
   protected handleBlur() {
-    this.ripple.endFocus();
     this.showFocusRing = false;
   }
 }
