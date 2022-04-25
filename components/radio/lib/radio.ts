@@ -11,14 +11,12 @@ import '../../focus/focus-ring';
 import '../../ripple/ripple';
 
 import {ariaProperty as legacyAriaProperty} from '@material/mwc-base/aria-property';
-import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element';
-import {observer} from '@material/mwc-base/observer';
-import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {html, TemplateResult} from 'lit';
-import {property, query, queryAsync, state} from 'lit/decorators';
+import {property, query, state} from 'lit/decorators';
 import {classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 
+import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action-element/action-element';
 import {ariaProperty} from '../../decorators/aria-property';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
 import {MdRipple} from '../../ripple/ripple';
@@ -31,10 +29,12 @@ import {SingleSelectionController} from './single-selection-controller';
  * @fires checked
  * @soyCompatible
  */
-export class Radio extends FormElement {
+export class Radio extends ActionElement {
   @query('.md3-radio') protected mdcRoot!: HTMLElement;
 
   @query('input') protected formElement!: HTMLInputElement;
+
+  @query('md-ripple') ripple!: MdRipple;
 
   protected _checked = false;
 
@@ -75,7 +75,7 @@ export class Radio extends FormElement {
     if (this.formElement) {
       this.formElement.checked = isChecked;
     }
-    this._selectionController?.update(this);
+    this.selectionController?.update(this);
 
     if (isChecked === false) {
       // Remove focus ring when unchecked on other radio programmatically.
@@ -89,24 +89,9 @@ export class Radio extends FormElement {
     this.dispatchEvent(new Event('checked', {bubbles: true, composed: true}));
   }
 
-  @property({type: Boolean})
-  @observer(function(this: Radio, disabled: boolean) {
-    this.mdcFoundation.setDisabled(disabled);
-  })
-  override disabled = false;
+  @property({type: Boolean}) override disabled = false;
 
-  @property({type: String})
-  @observer(function(this: Radio, value: string) {
-    this._handleUpdatedValue(value);
-  })
-  value = 'on';
-
-  _handleUpdatedValue(newValue: string) {
-    // the observer function can't access protected fields (according to
-    // closure compiler) because it's not a method on the class, so we need this
-    // wrapper.
-    this.formElement.value = newValue;
-  }
+  @property({type: String}) value = 'on';
 
   @property({type: String}) name = '';
 
@@ -121,7 +106,7 @@ export class Radio extends FormElement {
 
   protected mdcFoundation!: MDCRadioFoundation;
 
-  protected _selectionController?: SingleSelectionController;
+  protected selectionController?: SingleSelectionController;
 
   /**
    * input's tabindex is updated based on checked status.
@@ -130,9 +115,6 @@ export class Radio extends FormElement {
   @property({type: Number}) formElementTabIndex = 0;
 
   @state() protected focused = false;
-  @state() protected shouldRenderRipple = false;
-
-  @queryAsync('md-ripple') override ripple!: Promise<MdRipple|null>;
 
   /** @soyPrefixAttribute */
   @ariaProperty
@@ -146,20 +128,10 @@ export class Radio extends FormElement {
 
   protected rippleElement: MdRipple|null = null;
 
-  protected rippleHandlers: RippleHandlers = new RippleHandlers(() => {
-    this.shouldRenderRipple = true;
-    this.ripple.then((v) => {
-      this.rippleElement = v;
-    });
-
-    return this.ripple;
-  });
-
   /** @soyTemplate */
   protected renderRipple(): TemplateResult|string {
-    return this.shouldRenderRipple ? html`<md-ripple unbounded accent
-        .disabled="${this.disabled}"></md-ripple>` :
-                                     '';
+    return html`<md-ripple unbounded 
+        .disabled="${this.disabled}"></md-ripple>`;
   }
 
   /** @soyTemplate */
@@ -185,56 +157,66 @@ export class Radio extends FormElement {
     // implementation and testing to use one in all cases.
     //
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    this._selectionController = SingleSelectionController.getController(this);
-    this._selectionController.register(this);
+    this.selectionController = SingleSelectionController.getController(this);
+    this.selectionController.register(this);
 
     // Radios maybe checked before connected, update selection as soon it is
     // connected to DOM. Last checked radio button in the DOM will be selected.
     //
     // NOTE: If we update selection only after firstUpdate() we might mistakenly
     // update checked status before other radios are rendered.
-    this._selectionController.update(this);
+    this.selectionController.update(this);
   }
 
   override disconnectedCallback() {
     // The controller is initialized in connectedCallback, so if we are in
     // disconnectedCallback then it must be initialized.
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this._selectionController!.unregister(this);
-    this._selectionController = undefined;
-  }
-
-  override focus() {
-    this.formElement.focus();
+    this.selectionController!.unregister(this);
+    this.selectionController = undefined;
   }
 
   protected createAdapter(): MDCRadioAdapter {
     return {
-      ...addHasRemoveClass(this.mdcRoot),
+      addClass: (className: string) => {
+        this.mdcRoot.classList.add(className);
+      },
+      removeClass: (className: string) => {
+        this.mdcRoot.classList.remove(className);
+      },
       setNativeControlDisabled: (disabled: boolean) => {
         this.formElement.disabled = disabled;
       },
     };
   }
 
-  protected handleFocus() {
-    this.focused = true;
-    this.handleRippleFocus();
-
-    this.showFocusRing = shouldShowStrongFocus();
+  override beginPress({positionEvent}: BeginPressConfig) {
+    this.ripple.beginPress(positionEvent);
   }
 
-  protected handleClick() {
-    // Firefox has weird behavior with radios if they are not focused
+  override endPress({cancelled}: EndPressConfig) {
+    this.ripple.endPress();
+    super.endPress(
+        {cancelled, actionData: {checked: this.formElement.checked}});
+  }
+
+  override click() {
     this.formElement.focus();
+    this.formElement.click();
+  }
+
+  protected handleFocus() {
+    this.focused = true;
+    this.showFocusRing = shouldShowStrongFocus();
+
+    this.ripple.beginFocus();
   }
 
   protected handleBlur() {
     this.focused = false;
-    this.formElement.blur();
-    this.rippleHandlers.endFocus();
-
     this.showFocusRing = false;
+
+    this.ripple.endFocus();
   }
 
   protected setFormData(formData: FormData) {
@@ -273,9 +255,12 @@ export class Radio extends FormElement {
           @focus="${this.handleFocus}"
           @click="${this.handleClick}"
           @blur="${this.handleBlur}"
+          @pointerenter=${this.handlePointerEnter}
           @pointerdown=${this.handlePointerDown}
-          @pointerenter="${this.handlePointerEnter}"
-          @pointerleave="${this.handlePointerLeave}">
+          @pointerup=${this.handlePointerUp}
+          @pointercancel=${this.handlePointerCancel}
+          @pointerleave=${this.handlePointerLeave}
+          >
         <div class="md3-radio__background">
           <div class="md3-radio__outer-circle"></div>
           <div class="md3-radio__inner-circle"></div>
@@ -284,33 +269,19 @@ export class Radio extends FormElement {
       </div>`;
   }
 
-  protected handlePointerDown(event: Event) {
-    const onUp = () => {
-      window.removeEventListener('mouseup', onUp);
+  protected handlePointerEnter() {
+    this.ripple.beginHover();
+  }
 
-      this.handleRippleDeactivate();
-    };
-
-    window.addEventListener('mouseup', onUp);
-    this.rippleHandlers.startPress(event);
+  override handlePointerDown(event: PointerEvent) {
+    super.handlePointerDown(event);
 
     pointerPress();
   }
 
-  protected handleRippleDeactivate() {
-    this.rippleHandlers.endPress();
-  }
-
-  protected handlePointerEnter() {
-    this.rippleHandlers.startHover();
-  }
-
-  protected handlePointerLeave() {
-    this.rippleHandlers.endHover();
-  }
-
-  protected handleRippleFocus() {
-    this.rippleHandlers.startFocus();
+  override handlePointerLeave(e: PointerEvent) {
+    super.handlePointerLeave(e);
+    this.ripple.endHover();
   }
 
   protected changeHandler() {
