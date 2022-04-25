@@ -6,7 +6,7 @@
 
 import {ClassInfo} from 'lit/directives/class-map';
 
-import {MultiSelectSegmentedButton} from './segmented-button';
+import {MultiSelectSegmentedButton} from './multi-select-segmented-button';
 
 /** @soyCompatible */
 export class OutlinedMultiSelectSegmentedButton extends

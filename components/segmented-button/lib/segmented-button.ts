@@ -19,6 +19,7 @@ import {SegmentedButtonState} from './state';
  * segmented button component. It is intended **only** for use as a child of a
  * `SementedButtonSet` component. It is **not** intended for use in any other
  * context.
+ * @soyCompatible
  */
 export abstract class SegmentedButton extends LitElement implements
     SegmentedButtonState {
@@ -52,6 +53,7 @@ export abstract class SegmentedButton extends LitElement implements
     }
   }
 
+  /** @soyTemplate */
   override render(): TemplateResult {
     return html`
       <button role="option"
@@ -75,12 +77,4 @@ export abstract class SegmentedButton extends LitElement implements
   focusButton() {
     this.option.focus();
   }
-}
-
-export class SingleSelectSegmentedButton extends SegmentedButton {
-  isMultiselect = false;
-}
-
-export class MultiSelectSegmentedButton extends SegmentedButton {
-  isMultiselect = true;
 }

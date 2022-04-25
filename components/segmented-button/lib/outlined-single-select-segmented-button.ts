@@ -6,7 +6,7 @@
 
 import {ClassInfo} from 'lit/directives/class-map';
 
-import {SingleSelectSegmentedButton} from './segmented-button';
+import {SingleSelectSegmentedButton} from './single-select-segmented-button';
 
 /** @soyCompatible */
 export class OutlinedSingleSelectSegmentedButton extends

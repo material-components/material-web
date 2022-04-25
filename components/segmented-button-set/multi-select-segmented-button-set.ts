@@ -6,7 +6,7 @@
 
 import {customElement} from 'lit/decorators';
 
-import {MultiSelectSegmentedButtonSet} from './lib/segmented-button-set';
+import {MultiSelectSegmentedButtonSet} from './lib/multi-select-segmented-button-set';
 import {styles} from './lib/shared-styles.css';
 
 declare global {

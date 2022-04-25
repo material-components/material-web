@@ -20,8 +20,9 @@ import {SegmentedButtonSetState} from './state';
  * SegmentedButtonSet is the parent component for two or more
  * `SegmentedButton` components. **Only** `SegmentedButton` components may be
  * used as children.
+ * @soyCompatible
  */
-abstract class SegmentedButtonSet extends LitElement implements
+export abstract class SegmentedButtonSet extends LitElement implements
     SegmentedButtonSetState {
   abstract isMultiselect: boolean;
 
@@ -58,6 +59,7 @@ abstract class SegmentedButtonSet extends LitElement implements
     this.foundation.handleFocusIn(e);
   }
 
+  /** @soyTemplate */
   override render(): TemplateResult {
     return html`
     <span role="listbox" aria-orientation="horizontal" aria-multiselectable=${
@@ -67,20 +69,4 @@ abstract class SegmentedButtonSet extends LitElement implements
     </span>
     `;
   }
-}
-
-/**
- * SingleSelectSegmentedButtonSet implements the single-select behavior for a
- * group of two or more child segmented buttons.
- */
-export class SingleSelectSegmentedButtonSet extends SegmentedButtonSet {
-  isMultiselect = false;
-}
-
-/**
- * MultiSelectSegmentedButtonSet implements the multi-select behavior for a
- * group of two or more child segmented buttons.
- */
-export class MultiSelectSegmentedButtonSet extends SegmentedButtonSet {
-  isMultiselect = true;
 }
