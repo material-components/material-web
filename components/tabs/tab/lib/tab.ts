@@ -8,7 +8,6 @@
 
 
 import '../../../focus/focus-ring';
-import '../../../icon/icon';
 
 import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
 import {observer} from '@material/mwc-base/observer';
@@ -139,8 +138,7 @@ export class Tab extends BaseElement {
 
   /** @soyTemplate */
   protected renderIcon(icon: string): TemplateResult {
-    return html`<md-icon class="md3-tab__icon"><slot name="icon">${
-        icon}</slot></md-icon>`;
+    return html``;
   }
 
   /** @soyTemplate */

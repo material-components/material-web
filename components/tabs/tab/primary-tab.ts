@@ -5,6 +5,7 @@
  */
 
 import '../tab_indicator/tab-indicator';
+import '../../icon/icon';
 
 import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators';
@@ -37,5 +38,11 @@ export class MdPrimaryTab extends PrimaryTab {
          class="md3-tab__indicator"
         .icon="${indicatorIcon}"
         .fade="${isFadingIndicator}"></md-tab-indicator>`;
+  }
+
+  /** @soyTemplate */
+  protected override renderIcon(icon: string): TemplateResult {
+    return html`<md-icon class="md3-tab__icon"><slot name="icon">${
+        icon}</slot></md-icon>`;
   }
 }
