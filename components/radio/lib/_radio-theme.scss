@@ -8,7 +8,6 @@
 
 @use 'sass:map';
 @use '@material/density/functions' as density-functions;
-@use '@material/feature-targeting/feature-targeting';
 @use '@material/theme/theme';
 @use '@material/theme/keys';
 @use '@material/density/variables' as density-variables;
@@ -257,9 +256,9 @@ $light-theme: (
 /// Sets the stroke color of an unchecked, enabled radio button.
 /// @param {Color} $color - The desired stroke color.
 ///
-@mixin unchecked-stroke-color($color, $query: feature-targeting.all()) {
+@mixin unchecked-stroke-color($color) {
   @include _if-enabled-unchecked {
-    @include _stroke-color($color, $query: $query);
+    @include _stroke-color($color);
   }
 }
 
@@ -267,9 +266,9 @@ $light-theme: (
 /// Sets the stroke color of a checked, enabled radio button.
 /// @param {Color} $color - The desired stroke color.
 ///
-@mixin checked-stroke-color($color, $query: feature-targeting.all()) {
+@mixin checked-stroke-color($color) {
   @include _if-enabled-checked {
-    @include _stroke-color($color, $query: $query);
+    @include _stroke-color($color);
   }
 }
 
@@ -277,9 +276,9 @@ $light-theme: (
 /// Sets the ink color of an enabled radio button.
 /// @param {Color} $color - The desired ink color.
 ///
-@mixin ink-color($color, $query: feature-targeting.all()) {
+@mixin ink-color($color) {
   @include _if-enabled {
-    @include _ink-color($color, $query: $query);
+    @include _ink-color($color);
   }
 }
 
@@ -287,12 +286,9 @@ $light-theme: (
 /// Sets the stroke color of an unchecked, disabled radio button.
 /// @param {Color} $color - The desired stroke color.
 ///
-@mixin disabled-unchecked-stroke-color(
-  $color,
-  $query: feature-targeting.all()
-) {
+@mixin disabled-unchecked-stroke-color($color) {
   @include _if-disabled-unchecked {
-    @include _stroke-color($color, $query: $query);
+    @include _stroke-color($color);
   }
 }
 
@@ -306,9 +302,9 @@ $light-theme: (
 /// Sets the stroke color of a checked, disabled radio button.
 /// @param {Color} $color - The desired stroke color.
 ///
-@mixin disabled-checked-stroke-color($color, $query: feature-targeting.all()) {
+@mixin disabled-checked-stroke-color($color) {
   @include if-disabled-checked_ {
-    @include _stroke-color($color, $query: $query);
+    @include _stroke-color($color);
   }
 }
 
@@ -322,9 +318,9 @@ $light-theme: (
 /// Sets the ink color of a disabled radio button.
 /// @param {Color} $color - The desired ink color
 ///
-@mixin disabled-ink-color($color, $query: feature-targeting.all()) {
+@mixin disabled-ink-color($color) {
   @include if-disabled_ {
-    @include _ink-color($color, $query: $query);
+    @include _ink-color($color);
   }
 }
 
@@ -334,13 +330,9 @@ $light-theme: (
   }
 }
 
-@mixin focus-indicator-color($color, $query: feature-targeting.all()) {
-  $feat-color: feature-targeting.create-target($query, color);
-
+@mixin focus-indicator-color($color) {
   .md3-radio__background::before {
-    @include feature-targeting.targets($feat-color) {
-      @include theme.property(background-color, $color);
-    }
+    @include theme.property(background-color, $color);
   }
 }
 
@@ -351,12 +343,7 @@ $light-theme: (
 /// @param {Number} $size Size of touch target (Native input) in `px`.
 /// @param {Number} $ripple-size Size of ripple in `px`. Required only for custom ripple size.
 ///
-@mixin touch-target(
-  $size: $ripple-size,
-  $ripple-size: $ripple-size,
-  $query: feature-targeting.all()
-) {
-  $feat-structure: feature-targeting.create-target($query, structure);
+@mixin touch-target($size: $ripple-size, $ripple-size: $ripple-size) {
   $offset: 'calc((__ripple_size - __size) / 2)';
   $replace: (
     __ripple_size: $ripple-size,
@@ -364,13 +351,11 @@ $light-theme: (
   );
 
   .md3-radio__native-control {
-    @include feature-targeting.targets($feat-structure) {
-      @include theme.property('top', $offset, $replace: $replace);
-      @include theme.property('right', $offset, $replace: $replace);
-      @include theme.property('left', $offset, $replace: $replace);
-      @include theme.property('width', $size);
-      @include theme.property('height', $size);
-    }
+    @include theme.property('top', $offset, $replace: $replace);
+    @include theme.property('right', $offset, $replace: $replace);
+    @include theme.property('left', $offset, $replace: $replace);
+    @include theme.property('width', $size);
+    @include theme.property('height', $size);
   }
 }
 
@@ -380,19 +365,19 @@ $light-theme: (
 /// @param {Number | String} $density-scale - Density scale value for component. Supported density scale values
 ///     `-3`, `-2`, `-1`, `0`.
 ///
-@mixin density($density-scale, $query: feature-targeting.all()) {
+@mixin density($density-scale) {
   $size: density-functions.prop-value(
     $density-config: $density-config,
     $density-scale: $density-scale,
     $property-name: size,
   );
 
-  @include ripple-size($size, $query: $query);
+  @include ripple-size($size);
   // Sets touch target size same as ripple size.
-  @include touch-target($size: $size, $ripple-size: $size, $query: $query);
+  @include touch-target($size: $size, $ripple-size: $size);
 
   @if $density-scale != 0 {
-    @include touch-target-reset_($query: $query);
+    @include touch-target-reset_();
   }
 }
 
@@ -401,28 +386,23 @@ $light-theme: (
 ///
 /// @param {Number} $size - Ripple size in `px`.
 ///
-@mixin ripple-size($size, $query: feature-targeting.all()) {
-  $feat-structure: feature-targeting.create-target($query, structure);
+@mixin ripple-size($size) {
   $replace: (
     __size: $size,
     __icon_size: $icon-size,
   );
 
-  @include feature-targeting.targets($feat-structure) {
-    $padding: 'calc((__size - __icon_size) / 2)';
+  $padding: 'calc((__size - __icon_size) / 2)';
 
-    @include theme.property('padding', $padding, $replace: $replace);
-  }
+  @include theme.property('padding', $padding, $replace: $replace);
 
   .md3-radio__background::before {
-    @include feature-targeting.targets($feat-structure) {
-      $padding-offset: 'calc(-1 * (__size - __icon_size) / 2)';
+    $padding-offset: 'calc(-1 * (__size - __icon_size) / 2)';
 
-      @include theme.property('top', $padding-offset, $replace: $replace);
-      @include theme.property('left', $padding-offset, $replace: $replace);
-      @include theme.property('width', $size);
-      @include theme.property('height', $size);
-    }
+    @include theme.property('top', $padding-offset, $replace: $replace);
+    @include theme.property('left', $padding-offset, $replace: $replace);
+    @include theme.property('width', $size);
+    @include theme.property('height', $size);
   }
 }
 
@@ -432,12 +412,8 @@ $light-theme: (
 /// don't have the same default a11y requirements.
 /// @access private
 ///
-@mixin touch-target-reset_($query: feature-targeting.all()) {
-  $feat-structure: feature-targeting.create-target($query, structure);
-
-  @include feature-targeting.targets($feat-structure) {
-    margin: 0;
-  }
+@mixin touch-target-reset_() {
+  margin: 0;
 }
 
 ///
@@ -520,13 +496,9 @@ $light-theme: (
 /// that qualifies state such as `_if-enabled`
 /// @access private
 ///
-@mixin _ink-color($color, $query: feature-targeting.all()) {
-  $feat-color: feature-targeting.create-target($query, color);
-
+@mixin _ink-color($color) {
   .md3-radio__background .md3-radio__inner-circle {
-    @include feature-targeting.targets($feat-color) {
-      @include theme.property(border-color, $color);
-    }
+    @include theme.property(border-color, $color);
   }
 }
 
@@ -541,13 +513,9 @@ $light-theme: (
 /// that qualifies state such as `_if-enabled`
 /// @access private
 ///
-@mixin _stroke-color($color, $query: feature-targeting.all()) {
-  $feat-color: feature-targeting.create-target($query, color);
-
+@mixin _stroke-color($color) {
   .md3-radio__background .md3-radio__outer-circle {
-    @include feature-targeting.targets($feat-color) {
-      @include theme.property(border-color, $color);
-    }
+    @include theme.property(border-color, $color);
   }
 }
 
