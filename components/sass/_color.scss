@@ -145,7 +145,6 @@ $_hex: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'a' 'b' 'c' 'd' 'e' 'f';
   }
 
   $out: map.set($out, $color-key, $color);
-  $out: map.remove($out, $opacity-key);
   @return $out;
 }
 

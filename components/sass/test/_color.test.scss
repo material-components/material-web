@@ -54,6 +54,7 @@
         ),
         (
           foo-color: rgba(138, 180, 248, 0.38),
+          foo-opacity: 0.38,
         )
       );
     }
@@ -72,6 +73,7 @@
         ),
         (
           foo-color: rgb(var(--foo-color-rgb, 138, 180, 248), 0.38),
+          foo-opacity: 0.38,
         )
       );
     }
@@ -96,7 +98,9 @@
         ),
         (
           foo-color: rgba(255, 0, 0, 0.1),
+          foo-opacity: 0.1,
           bar-color: rgba(0, 128, 0, 0.2),
+          bar-opacity: 0.2,
         )
       );
     }
