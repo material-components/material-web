@@ -260,18 +260,14 @@ $light-theme: (
 /// @param {Number} $ripple-size Size of ripple in `px`. Required only for custom ripple size.
 ///
 @mixin touch-target($size: $ripple-size, $ripple-size: $ripple-size) {
-  $offset: 'calc((__ripple_size - __size) / 2)';
-  $replace: (
-    __ripple_size: $ripple-size,
-    __size: $size,
-  );
+  $offset: calc((#{$ripple-size} - #{$size}) / 2);
 
   .md3-radio__native-control {
-    @include mdc-theme.property('top', $offset, $replace: $replace);
-    @include mdc-theme.property('right', $offset, $replace: $replace);
-    @include mdc-theme.property('left', $offset, $replace: $replace);
-    @include mdc-theme.property('width', $size);
-    @include mdc-theme.property('height', $size);
+    inset-block-start: $offset;
+    inset-block-end: $offset;
+    inset-inline-start: $offset;
+    width: $size;
+    height: $size;
   }
 }
 
@@ -298,14 +294,7 @@ $light-theme: (
 }
 
 @mixin _ripple-padding($size) {
-  $replace: (
-    __size: $size,
-    __icon_size: $icon-size,
-  );
-
-  $padding: 'calc((__size - __icon_size) / 2)';
-
-  @include mdc-theme.property('padding', $padding, $replace: $replace);
+  padding: calc(($size - $icon-size) / 2);
 }
 
 ///

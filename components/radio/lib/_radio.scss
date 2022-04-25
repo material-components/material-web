@@ -6,7 +6,6 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@use 'sass:map';
 @use '@material/animation/animation';
 @use '@material/dom/dom';
 @use '@material/touch-target/mixins' as touch-target-mixins;
@@ -19,7 +18,6 @@
 @mixin core-styles() {
   .md3-radio {
     @include radio-theme.density(radio-theme.$density-scale);
-
     @include dom.forced-colors-mode {
       &.md3-radio--disabled {
         @include radio-theme.disabled-unchecked-stroke-color(GrayText);
@@ -27,72 +25,67 @@
         @include radio-theme.disabled-ink-color(GrayText);
       }
     }
-  }
 
-  .md3-radio {
-    display: inline-block;
+    display: inline-flex;
     position: relative;
     flex: 0 0 auto;
     box-sizing: content-box;
     width: radio-theme.$icon-size;
     height: radio-theme.$icon-size;
     cursor: pointer;
-    /* @alternate */
     will-change: opacity, transform, border-color, color;
+  }
 
-    &__background {
-      display: inline-block;
-      position: relative;
-      box-sizing: border-box;
-      width: radio-theme.$icon-size;
-      height: radio-theme.$icon-size;
-    }
+  .md3-radio__background {
+    display: inline-flex;
+    position: relative;
+    box-sizing: border-box;
+    width: radio-theme.$icon-size;
+    height: radio-theme.$icon-size;
+  }
 
-    &__outer-circle {
-      position: absolute;
-      top: 0;
-      left: 0;
-      box-sizing: border-box;
-      width: 100%;
-      height: 100%;
-      border-width: 2px;
-      border-style: solid;
-      border-radius: 50%;
+  .md3-radio__outer-circle {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 50%;
+    transition: exit(border-color);
+  }
 
-      transition: exit(border-color);
-    }
+  .md3-radio__inner-circle {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    transform: scale(0, 0);
+    border-width: 10px;
+    border-style: solid;
+    border-radius: 50%;
+    transition: exit(transform), exit(border-color);
+  }
 
-    &__inner-circle {
-      position: absolute;
-      top: 0;
-      left: 0;
-      box-sizing: border-box;
-      width: 100%;
-      height: 100%;
-      transform: scale(0, 0);
-      border-width: 10px;
-      border-style: solid;
-      border-radius: 50%;
+  .md3-radio__native-control {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    cursor: inherit;
+    z-index: 1;
+  }
 
-      transition: exit(transform), exit(border-color);
-    }
-
-    &__native-control {
-      position: absolute;
-      margin: 0;
-      padding: 0;
-      opacity: 0;
-      cursor: inherit;
-      z-index: 1;
-    }
-
-    &--touch {
-      @include touch-target-mixins.margin(
-        $component-height: radio-theme.$ripple-size,
-        $component-width: radio-theme.$ripple-size
-      );
-      @include radio-theme.touch-target($size: touch-target-variables.$height);
-    }
+  .md3-radio--touch {
+    @include touch-target-mixins.margin(
+      $component-height: radio-theme.$ripple-size,
+      $component-width: radio-theme.$ripple-size
+    );
+    @include radio-theme.touch-target($size: touch-target-variables.$height);
   }
 
   .md3-radio__native-control:checked,
@@ -119,7 +112,6 @@
     + .md3-radio__background {
       .md3-radio__inner-circle {
         transform: scale(0.5);
-
         transition: enter(transform), enter(border-color);
       }
     }
