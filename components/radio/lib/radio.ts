@@ -7,6 +7,7 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
+import '../../focus/focus-ring';
 import '../../ripple/ripple';
 
 import {ariaProperty as legacyAriaProperty} from '@material/mwc-base/aria-property';
@@ -14,11 +15,12 @@ import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element';
 import {observer} from '@material/mwc-base/observer';
 import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
 import {html, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAsync, state} from 'lit/decorators';
+import {property, query, queryAsync, state} from 'lit/decorators';
 import {classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 
 import {ariaProperty} from '../../decorators/aria-property';
+import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
 import {MdRipple} from '../../ripple/ripple';
 
 import {MDCRadioAdapter} from './adapter';
@@ -35,6 +37,8 @@ export class Radio extends FormElement {
   @query('input') protected formElement!: HTMLInputElement;
 
   protected _checked = false;
+
+  @state() protected showFocusRing = false;
 
   @property({type: Boolean}) global = false;
 
@@ -158,6 +162,12 @@ export class Radio extends FormElement {
                                      '';
   }
 
+  /** @soyTemplate */
+  protected renderFocusRing(): TemplateResult {
+    return html`<md-focus-ring .visible="${
+        this.showFocusRing}"></md-focus-ring>`;
+  }
+
   get isRippleActive() {
     return false;
   }
@@ -210,6 +220,8 @@ export class Radio extends FormElement {
   protected handleFocus() {
     this.focused = true;
     this.handleRippleFocus();
+
+    this.showFocusRing = shouldShowStrongFocus();
   }
 
   protected handleClick() {
@@ -221,6 +233,8 @@ export class Radio extends FormElement {
     this.focused = false;
     this.formElement.blur();
     this.rippleHandlers.endFocus();
+
+    this.showFocusRing = false;
   }
 
   protected setFormData(formData: FormData) {
@@ -244,6 +258,7 @@ export class Radio extends FormElement {
 
     return html`
       <div class="md3-radio ${classMap(classes)}">
+        ${this.renderFocusRing()}
         <input
           tabindex="${this.formElementTabIndex}"
           class="md3-radio__native-control"
@@ -258,12 +273,9 @@ export class Radio extends FormElement {
           @focus="${this.handleFocus}"
           @click="${this.handleClick}"
           @blur="${this.handleBlur}"
-          @mousedown="${this.handleRippleMouseDown}"
-          @mouseenter="${this.handleRippleMouseEnter}"
-          @mouseleave="${this.handleRippleMouseLeave}"
-          @touchstart="${this.handleRippleTouchStart}"
-          @touchend="${this.handleRippleDeactivate}"
-          @touchcancel="${this.handleRippleDeactivate}">
+          @pointerdown=${this.handlePointerDown}
+          @pointerenter="${this.handlePointerEnter}"
+          @pointerleave="${this.handlePointerLeave}">
         <div class="md3-radio__background">
           <div class="md3-radio__outer-circle"></div>
           <div class="md3-radio__inner-circle"></div>
@@ -272,7 +284,7 @@ export class Radio extends FormElement {
       </div>`;
   }
 
-  protected handleRippleMouseDown(event: Event) {
+  protected handlePointerDown(event: Event) {
     const onUp = () => {
       window.removeEventListener('mouseup', onUp);
 
@@ -281,22 +293,19 @@ export class Radio extends FormElement {
 
     window.addEventListener('mouseup', onUp);
     this.rippleHandlers.startPress(event);
-  }
 
-  @eventOptions({passive: true})
-  protected handleRippleTouchStart(event: Event) {
-    this.rippleHandlers.startPress(event);
+    pointerPress();
   }
 
   protected handleRippleDeactivate() {
     this.rippleHandlers.endPress();
   }
 
-  protected handleRippleMouseEnter() {
+  protected handlePointerEnter() {
     this.rippleHandlers.startHover();
   }
 
-  protected handleRippleMouseLeave() {
+  protected handlePointerLeave() {
     this.rippleHandlers.endHover();
   }
 
