@@ -7,12 +7,15 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
+@use 'sass:selector';
 @use '@material/density/functions' as density-functions;
-@use '@material/theme/theme';
+@use '@material/theme/theme' as mdc-theme;
 @use '@material/theme/keys';
 @use '@material/density/variables' as density-variables;
 @use '@material/theme/theme-color';
-@use '@material/ripple/ripple-theme';
+@use '@material/theme/shadow-dom';
+@use '../../ripple/ripple-theme';
+@use '../../sass/theme';
 
 $ripple-size: 40px !default;
 $icon-size: 20px !default;
@@ -33,8 +36,6 @@ $density-config: (
   ),
 ) !default;
 
-$ripple-target: '.md3-radio__ripple';
-$unselected-ripple-target: '.md3-radio__native-control:enabled:not(:checked) ~ #{$ripple-target}';
 $custom-property-prefix: 'radio';
 
 // TODO(b/188417756): `icon-size` token key is not supported.
@@ -67,7 +68,7 @@ $light-theme: (
 );
 
 @mixin theme($theme) {
-  @include theme.validate-theme($light-theme, $theme);
+  $theme: theme.validate-theme($light-theme, $theme);
   @include keys.declare-custom-properties(
     $theme,
     $prefix: $custom-property-prefix
@@ -75,12 +76,8 @@ $light-theme: (
 }
 
 @mixin theme-styles($theme) {
-  @include theme.validate-theme-keys($light-theme, $theme);
-
-  $theme: keys.create-theme-properties(
-    $theme,
-    $prefix: $custom-property-prefix
-  );
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $prefix: $custom-property-prefix);
 
   @include _disabled-selected-icon-color(
     map.get($theme, disabled-selected-icon-color)
@@ -96,77 +93,52 @@ $light-theme: (
   );
 
   // selected
-  @include ripple-theme.focus() {
-    @include _selected-icon-color(map.get($theme, selected-focus-icon-color));
-    @include _selected-state-layer-color(
-      map.get($theme, selected-focus-state-layer-color)
-    );
-    @include _selected-focus-state-layer-opacity(
-      map.get($theme, selected-focus-state-layer-opacity)
-    );
-  }
-  @include ripple-theme.hover() {
-    @include _selected-icon-color(map.get($theme, selected-hover-icon-color));
-    @include _selected-state-layer-color(
-      map.get($theme, selected-hover-state-layer-color)
-    );
-    @include _selected-hover-state-layer-opacity(
-      map.get($theme, selected-hover-state-layer-opacity)
-    );
-  }
   @include _selected-icon-color(map.get($theme, selected-icon-color));
-  @include ripple-theme.active() {
-    @include _selected-icon-color(map.get($theme, selected-pressed-icon-color));
-    @include _selected-state-layer-color(
-      map.get($theme, selected-pressed-state-layer-color)
-    );
-    @include _selected-pressed-state-layer-opacity(
-      map.get($theme, selected-pressed-state-layer-opacity)
-    );
-  }
 
   // unselected
-  @include ripple-theme.focus() {
-    @include _unselected-icon-color(
-      map.get($theme, unselected-focus-icon-color)
-    );
-    @include _unselected-state-layer-color(
-      map.get($theme, unselected-focus-state-layer-color)
-    );
-    @include _unselected-focus-state-layer-opacity(
-      map.get($theme, unselected-focus-state-layer-opacity)
-    );
-  }
-  @include ripple-theme.hover() {
-    @include _unselected-icon-color(
-      map.get($theme, unselected-hover-icon-color)
-    );
-    @include _unselected-state-layer-color(
-      map.get($theme, unselected-hover-state-layer-color)
-    );
-    @include _unselected-hover-state-layer-opacity(
-      map.get($theme, unselected-hover-state-layer-opacity)
-    );
-  }
   @include _unselected-icon-color(map.get($theme, unselected-icon-color));
-  @include ripple-theme.active() {
-    @include _unselected-icon-color(
-      map.get($theme, unselected-pressed-icon-color)
-    );
-    @include _unselected-state-layer-color(
-      map.get($theme, unselected-pressed-state-layer-color)
-    );
-    @include _unselected-pressed-state-layer-opacity(
-      map.get($theme, unselected-pressed-state-layer-opacity)
-    );
-  }
-
-  @include ripple-size(map.get($theme, state-layer-size));
+  @include _ripple-padding(map.get($theme, state-layer-size));
   // Set touch target size same as ripple size.
   @include touch-target(
     $size: map.get($theme, state-layer-size),
     $ripple-size: map.get($theme, state-layer-size)
   );
+
+  @include ripple-theme.theme(
+    (
+      hover-state-layer-color:
+        map.get($theme, unselected-hover-state-layer-color),
+      focus-state-layer-color:
+        map.get($theme, unselected-focus-state-layer-color),
+      pressed-state-layer-color:
+        map.get($theme, unselected-pressed-state-layer-color),
+      hover-state-layer-opacity:
+        map.get($theme, unselected-hover-state-layer-opacity),
+      focus-state-layer-opacity:
+        map.get($theme, unselected-focus-state-layer-opacity),
+      pressed-state-layer-opacity:
+        map.get($theme, unselected-pressed-state-layer-opacity),
+    )
+  );
+
+  @include _checked-selector() {
+    @include ripple-theme.theme(
+      (
+        hover-state-layer-color:
+          map.get($theme, selected-hover-state-layer-color),
+        focus-state-layer-color:
+          map.get($theme, selected-focus-state-layer-color),
+        pressed-state-layer-color:
+          map.get($theme, selected-pressed-state-layer-color),
+        hover-state-layer-opacity:
+          map.get($theme, selected-hover-state-layer-opacity),
+        focus-state-layer-opacity:
+          map.get($theme, selected-focus-state-layer-opacity),
+        pressed-state-layer-opacity:
+          map.get($theme, selected-pressed-state-layer-opacity),
+      )
+    );
+  }
 }
 
 @mixin _disabled-selected-icon-color($color) {
@@ -192,64 +164,8 @@ $light-theme: (
   @include ink-color($color);
 }
 
-@mixin _selected-state-layer-color($color) {
-  @include ripple-theme.states-base-color(
-    $color: $color,
-    $ripple-target: $ripple-target
-  );
-}
-
-@mixin _selected-hover-state-layer-opacity($opacity) {
-  @include ripple-theme.states-hover-opacity(
-    $opacity: $opacity,
-    $ripple-target: $ripple-target
-  );
-}
-
-@mixin _selected-focus-state-layer-opacity($opacity) {
-  @include ripple-theme.states-focus-opacity(
-    $opacity: $opacity,
-    $ripple-target: $ripple-target
-  );
-}
-
-@mixin _selected-pressed-state-layer-opacity($opacity) {
-  @include ripple-theme.states-press-opacity(
-    $opacity: $opacity,
-    $ripple-target: $ripple-target
-  );
-}
-
 @mixin _unselected-icon-color($color) {
   @include unchecked-stroke-color($color);
-}
-
-@mixin _unselected-state-layer-color($color) {
-  @include ripple-theme.states-base-color(
-    $color: $color,
-    $ripple-target: $unselected-ripple-target
-  );
-}
-
-@mixin _unselected-hover-state-layer-opacity($opacity) {
-  @include ripple-theme.states-hover-opacity(
-    $opacity: $opacity,
-    $ripple-target: $unselected-ripple-target
-  );
-}
-
-@mixin _unselected-focus-state-layer-opacity($opacity) {
-  @include ripple-theme.states-focus-opacity(
-    $opacity: $opacity,
-    $ripple-target: $unselected-ripple-target
-  );
-}
-
-@mixin _unselected-pressed-state-layer-opacity($opacity) {
-  @include ripple-theme.states-press-opacity(
-    $opacity: $opacity,
-    $ripple-target: $unselected-ripple-target
-  );
 }
 
 ///
@@ -332,7 +248,7 @@ $light-theme: (
 
 @mixin focus-indicator-color($color) {
   .md3-radio__background::before {
-    @include theme.property(background-color, $color);
+    @include mdc-theme.property(background-color, $color);
   }
 }
 
@@ -351,11 +267,11 @@ $light-theme: (
   );
 
   .md3-radio__native-control {
-    @include theme.property('top', $offset, $replace: $replace);
-    @include theme.property('right', $offset, $replace: $replace);
-    @include theme.property('left', $offset, $replace: $replace);
-    @include theme.property('width', $size);
-    @include theme.property('height', $size);
+    @include mdc-theme.property('top', $offset, $replace: $replace);
+    @include mdc-theme.property('right', $offset, $replace: $replace);
+    @include mdc-theme.property('left', $offset, $replace: $replace);
+    @include mdc-theme.property('width', $size);
+    @include mdc-theme.property('height', $size);
   }
 }
 
@@ -372,7 +288,7 @@ $light-theme: (
     $property-name: size,
   );
 
-  @include ripple-size($size);
+  @include _ripple-padding($size);
   // Sets touch target size same as ripple size.
   @include touch-target($size: $size, $ripple-size: $size);
 
@@ -381,12 +297,7 @@ $light-theme: (
   }
 }
 
-///
-/// Sets radio ripple size.
-///
-/// @param {Number} $size - Ripple size in `px`.
-///
-@mixin ripple-size($size) {
+@mixin _ripple-padding($size) {
   $replace: (
     __size: $size,
     __icon_size: $icon-size,
@@ -394,16 +305,7 @@ $light-theme: (
 
   $padding: 'calc((__size - __icon_size) / 2)';
 
-  @include theme.property('padding', $padding, $replace: $replace);
-
-  .md3-radio__background::before {
-    $padding-offset: 'calc(-1 * (__size - __icon_size) / 2)';
-
-    @include theme.property('top', $padding-offset, $replace: $replace);
-    @include theme.property('left', $padding-offset, $replace: $replace);
-    @include theme.property('width', $size);
-    @include theme.property('height', $size);
-  }
+  @include mdc-theme.property('padding', $padding, $replace: $replace);
 }
 
 ///
@@ -498,13 +400,13 @@ $light-theme: (
 ///
 @mixin _ink-color($color) {
   .md3-radio__background .md3-radio__inner-circle {
-    @include theme.property(border-color, $color);
+    @include mdc-theme.property(border-color, $color);
   }
 }
 
 @mixin _ink-opacity($opacity) {
   .md3-radio__background .md3-radio__inner-circle {
-    @include theme.property(opacity, $opacity);
+    @include mdc-theme.property(opacity, $opacity);
   }
 }
 
@@ -515,12 +417,18 @@ $light-theme: (
 ///
 @mixin _stroke-color($color) {
   .md3-radio__background .md3-radio__outer-circle {
-    @include theme.property(border-color, $color);
+    @include mdc-theme.property(border-color, $color);
   }
 }
 
 @mixin _stroke-opacity($opacity) {
   .md3-radio__background .md3-radio__outer-circle {
-    @include theme.property(opacity, $opacity);
+    @include mdc-theme.property(opacity, $opacity);
+  }
+}
+
+@mixin _checked-selector() {
+  @include shadow-dom.host-aware(selector.append(&, '[checked]')) {
+    @content;
   }
 }
