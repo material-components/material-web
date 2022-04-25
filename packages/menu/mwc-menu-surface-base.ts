@@ -221,6 +221,11 @@ export abstract class MenuSurfaceBase extends BaseElement {
         this.open = true;
         this.mdcRoot.dispatchEvent(ev);
       },
+      notifyOpening: () => {
+        const init: CustomEventInit = {bubbles: true, composed: true};
+        const ev = new CustomEvent('opening', init);
+        this.mdcRoot.dispatchEvent(ev);
+      },
       isElementInContainer: () => false,
       isRtl: () => {
         if (this.mdcRoot) {
