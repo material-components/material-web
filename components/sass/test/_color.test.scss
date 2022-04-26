@@ -77,6 +77,23 @@
         )
       );
     }
+
+    @include test.it('allows for non-colors to remain') {
+      @include test.assert-equal(
+        color.replace-as-rgba(
+          (
+            foo-color: GrayText,
+            foo-opacity: 0.38,
+          ),
+          $color-key: foo-color,
+          $opacity-key: foo-opacity
+        ),
+        (
+          foo-color: GrayText,
+          foo-opacity: 0.38,
+        )
+      );
+    }
   }
 
   @include test.describe('join-color-and-opacity-pairs()') {

@@ -138,8 +138,7 @@ $_hex: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'a' 'b' 'c' 'd' 'e' 'f';
     // (e.g., rgb(var(--foo-sys-color-on-surface-rgb, 31,31,31), 0.38))
     // Remove once the attached bug is resolved.
     $color: color-var-hex-to-rgba($color, map.get($out, $opacity-key));
-  } @else {
-    $color: assert.is-type($color, 'color');
+  } @else if meta.type-of($color) == 'color' {
     $opacity: assert.is-type(map.get($out, $opacity-key), 'number');
     $color: rgba($color, $opacity);
   }
