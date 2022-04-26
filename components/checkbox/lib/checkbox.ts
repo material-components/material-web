@@ -211,12 +211,12 @@ export class Checkbox extends ActionElement {
 
   protected handleFocus() {
     this.focused = true;
-    this.handleRippleFocus();
+    this.showFocusRing = shouldShowStrongFocus();
   }
 
   protected handleBlur() {
     this.focused = false;
-    this.handleRippleBlur();
+    this.showFocusRing = false;
   }
 
   protected handlePointerEnter(e: PointerEvent) {
@@ -232,16 +232,6 @@ export class Checkbox extends ActionElement {
     super.handlePointerDown(e);
 
     pointerPress();
-  }
-
-  protected handleRippleFocus() {
-    this.showFocusRing = shouldShowStrongFocus();
-    this.ripple.beginFocus();
-  }
-
-  protected handleRippleBlur() {
-    this.showFocusRing = false;
-    this.ripple.endFocus();
   }
 
   protected handleChange() {
