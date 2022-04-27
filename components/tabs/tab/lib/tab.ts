@@ -262,6 +262,7 @@ export class Tab extends BaseElement {
     window.addEventListener('mouseup', onUp);
     this.ripple.beginPress(event);
     pointerPress();
+    this.showFocusRing = shouldShowStrongFocus();
   }
 
   @eventOptions({passive: true})

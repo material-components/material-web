@@ -148,6 +148,7 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
   override handlePointerDown(e: PointerEvent) {
     super.handlePointerDown(e);
     pointerPress();
+    this.showFocusRing = shouldShowStrongFocus();
   }
 
   protected handlePointerEnter(e: PointerEvent) {

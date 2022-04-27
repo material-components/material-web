@@ -99,6 +99,7 @@ export class IconButton extends ActionElement {
   override handlePointerDown(e: PointerEvent) {
     super.handlePointerDown(e);
     pointerPress();
+    this.showFocusRing = shouldShowStrongFocus();
   }
 
   protected handlePointerEnter(e: PointerEvent) {

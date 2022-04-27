@@ -195,6 +195,7 @@ export abstract class Button extends LitElement implements ButtonState {
     window.addEventListener('mouseup', onUp);
     this.ripple.beginPress(evt);
     pointerPress();
+    this.showFocusRing = shouldShowStrongFocus();
   }
 
   protected handleRippleDeactivate() {

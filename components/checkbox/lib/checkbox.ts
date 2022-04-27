@@ -232,6 +232,7 @@ export class Checkbox extends ActionElement {
     super.handlePointerDown(e);
 
     pointerPress();
+    this.showFocusRing = shouldShowStrongFocus();
   }
 
   protected handleChange() {

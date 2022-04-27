@@ -9,6 +9,7 @@
 
 
 import {KEY} from 'google3/third_party/javascript/material_components_web/dom/keyboard';
+import {MdFocusRing} from 'google3/third_party/javascript/material_web_components/m3/focus/focus-ring';
 import {html} from 'lit';
 
 import {fixture, TestFixture} from '../../../test/src/util/helpers';
@@ -287,6 +288,36 @@ describe('md-radio', () => {
       a2.checked = false;
       expect(a1.checked).toBeFalse();
       expect(a2.checked).toBeFalse();
+    });
+  });
+
+  describe('focus ring', () => {
+    let focusRing: MdFocusRing;
+
+    beforeEach(async () => {
+      fixt = await fixture(defaultRadio);
+      element = fixt.root.querySelector('md-radio')!;
+      focusRing = element.shadowRoot!.querySelector('md-focus-ring')!;
+      harness = new RadioHarness(element);
+    });
+
+    it('hidden on non-keyboard focus', async () => {
+      await harness.click();
+      expect(focusRing.visible).toBeFalse();
+    });
+
+    it('visible on keyboard focus and hides on blur', async () => {
+      await harness.focusWithKeyboard();
+      expect(focusRing.visible).toBeTrue();
+      await harness.blur();
+      expect(focusRing.visible).toBeFalse();
+    });
+
+    it('hidden after pointer interaction', async () => {
+      await harness.focusWithKeyboard();
+      expect(focusRing.visible).toBeTrue();
+      await harness.click();
+      expect(focusRing.visible).toBeFalse();
     });
   });
 });

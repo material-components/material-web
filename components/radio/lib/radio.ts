@@ -277,6 +277,7 @@ export class Radio extends ActionElement {
     super.handlePointerDown(event);
 
     pointerPress();
+    this.showFocusRing = shouldShowStrongFocus();
   }
 
   override handlePointerLeave(e: PointerEvent) {

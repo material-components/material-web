@@ -5,11 +5,13 @@
  */
 
 import {doesElementContainFocus} from '@material/mwc-base/utils';
+import {MdFocusRing} from 'google3/third_party/javascript/material_web_components/m3/focus/focus-ring';
 import {fixture, TestFixture} from 'google3/third_party/javascript/material_web_components/testing/helpers';
 import * as hanbi from 'hanbi';
 import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators';
 
+import {NavigationTabHarness} from '../harness';
 import {MdNavigationTab} from '../navigation-tab';
 
 @customElement('md-test-navigation-tab')
@@ -55,6 +57,7 @@ const navTabElement = (propsInit: Partial<NavigationTabProps>) => {
 describe('mwc-navigation-tab', () => {
   let fixt: TestFixture;
   let element: TestNavigationTab;
+  let harness: NavigationTabHarness;
 
   afterEach(() => {
     fixt.remove();
@@ -64,6 +67,7 @@ describe('mwc-navigation-tab', () => {
     beforeEach(async () => {
       fixt = await fixture(defaultNavTabElement);
       element = fixt.root.querySelector('md-test-navigation-tab')!;
+      harness = new NavigationTabHarness(element);
       await element.updateComplete;
     });
 
@@ -76,13 +80,11 @@ describe('mwc-navigation-tab', () => {
       expect(element.showBadge).toBeFalse();
     });
 
-    it('emits interaction event on click', () => {
+    it('emits interaction event on click', async () => {
       const interactionHandler = hanbi.spy();
       element.addEventListener(
           'navigation-tab-interaction', interactionHandler.handler);
-      const tab = element.shadowRoot!.querySelector<HTMLElement>(
-          '.md3-navigation-tab')!;
-      tab.click();
+      await harness.click();
       expect(interactionHandler.called).toBeTrue();
     });
 
@@ -233,6 +235,37 @@ describe('mwc-navigation-tab', () => {
     it('nodes with `slot=inactiveIcon` will serve as the inactive icon', () => {
       const icon = element.querySelector<HTMLElement>('[slot="inactiveIcon"]')!;
       expect(icon.textContent!.trim()).toEqual('star_border');
+    });
+  });
+
+  describe('focus ring', () => {
+    let focusRing: MdFocusRing;
+
+    beforeEach(async () => {
+      fixt = await fixture(defaultNavTabElement);
+      element = fixt.root.querySelector('md-test-navigation-tab')!;
+      focusRing = element.shadowRoot!.querySelector('md-focus-ring')!;
+      harness = new NavigationTabHarness(element);
+      await element.updateComplete;
+    });
+
+    it('hidden on non-keyboard focus', async () => {
+      await harness.click();
+      expect(focusRing.visible).toBeFalse();
+    });
+
+    it('visible on keyboard focus and hides on blur', async () => {
+      await harness.focusWithKeyboard();
+      expect(focusRing.visible).toBeTrue();
+      await harness.blur();
+      expect(focusRing.visible).toBeFalse();
+    });
+
+    it('hidden after pointer interaction', async () => {
+      await harness.focusWithKeyboard();
+      expect(focusRing.visible).toBeTrue();
+      await harness.click();
+      expect(focusRing.visible).toBeFalse();
     });
   });
 });
