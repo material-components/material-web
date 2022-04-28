@@ -20,6 +20,9 @@
 // THE SOFTWARE.
 //
 
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
 // TODO(b/228217731): Remove MDC/MWC dependencies
 @use 'sass:map';
 @use 'sass:math';
@@ -205,6 +208,10 @@ $_theme-extension-keys: (
       (
         color-key: selected-disabled-container-color,
         opacity-key: selected-disabled-container-opacity
+      ),
+      (
+        color-key: unselected-disabled-outline-color,
+        opacity-key: unselected-disabled-container-opacity
       )
     )
   );
@@ -504,7 +511,7 @@ $_selected-selector: ".md3-checkbox__native-control:checked, .md3-checkbox__nati
     }
 
     .md3-checkbox__mixedmark {
-      border-color: $color;
+      color: $color;
     }
   }
 }

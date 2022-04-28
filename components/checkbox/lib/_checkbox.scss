@@ -20,6 +20,9 @@
 // THE SOFTWARE.
 //
 
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
 @use 'sass:math';
 @use '../../focus/lib/focus-ring-theme';
 @use '../../motion/animation';
@@ -27,9 +30,9 @@
 @use './checkbox-theme';
 
 $_transition-duration: 90ms;
-$_mark-stroke-size: math.div(2, 15) * 18px;
+$_mark-stroke-size: 4px;
 $_unselected-outline-width: 2px;
-$_selected-checkmark-padding: $_unselected-outline-width;
+$_selected-checkmark-padding: 2.8px;
 
 @mixin static-styles() {
   @include mark-keyframes_;
@@ -303,7 +306,7 @@ $_selected-checkmark-padding: $_unselected-outline-width;
   );
 
   stroke: currentColor;
-  stroke-width: $_mark-stroke-size * 1.3;
+  stroke-width: $_mark-stroke-size;
   stroke-dashoffset: $mark-path-length_;
   stroke-dasharray: $mark-path-length_;
 }
@@ -315,15 +318,16 @@ $_selected-checkmark-padding: $_unselected-outline-width;
 // Mixed mark
 
 @mixin mixedmark_() {
-  width: calc(
-    100% - #{($_unselected-outline-width + $_selected-checkmark-padding) * 2}
-  );
+  width: 100%;
   height: 0;
   transform: scaleX(0) rotate(0deg);
-  border-width: math.div(math.floor($_mark-stroke-size), 2);
+  border-width: math.div(math.floor($_mark-stroke-size), 4);
   border-style: solid;
+  background-color: currentColor;
+  border-color: currentColor;
   opacity: 0;
   transition: transition-exit(opacity), transition-exit(transform);
+  margin: $_unselected-outline-width * 2;
 }
 
 @mixin mixedmark--checked_ {
