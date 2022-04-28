@@ -1,0 +1,16 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use './badge';
+@use './badge-theme';
+
+@include badge.static-styles;
+
+.md3-badge {
+  @include badge-theme.theme-styles(badge-theme.$light-theme);
+}
