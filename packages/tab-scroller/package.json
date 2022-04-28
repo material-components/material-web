@@ -16,9 +16,9 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@material/dom": "=14.0.0-canary.53b3cad2f.0",
+    "@material/dom": "=15.0.0-canary.432c815e5.0",
     "@material/mwc-base": "^0.25.3",
-    "@material/tab-scroller": "=14.0.0-canary.53b3cad2f.0",
+    "@material/tab-scroller": "=15.0.0-canary.432c815e5.0",
     "lit": "^2.0.0",
     "tslib": "^2.0.1"
   },
