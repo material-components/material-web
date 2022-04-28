@@ -15,7 +15,7 @@ $_custom-property-prefix: 'badge';
 $light-theme: tokens.md-comp-badge-values();
 $dark-theme: tokens.md-comp-badge-values(
   (
-    md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
+    md-sys-color: tokens.md-sys-color-values-dark-non-dynamic(),
   ),
   $exclude-hardcoded-values: true
 );
@@ -58,39 +58,39 @@ $dark-theme: tokens.md-comp-badge-values(
 }
 
 @mixin _color($color) {
-  .md3-badge:not(.md3-badge--large) {
+  &:not(.md3-badge--large) {
     background-color: $color;
   }
 }
 
 @mixin _size($size) {
-  .md3-badge:not(.md3-badge--large) {
+  &:not(.md3-badge--large) {
     height: $size;
     width: $size;
   }
 }
 
 @mixin _shape($shape-radius) {
-  .md3-badge:not(.md3-badge--large) {
+  &:not(.md3-badge--large) {
     border-radius: $shape-radius;
   }
 }
 
 @mixin _large-color($color) {
-  .md3-badge--large {
+  &.md3-badge--large {
     background-color: $color;
   }
 }
 
 @mixin _large-size($size) {
-  .md3-badge--large {
+  &.md3-badge--large {
     height: $size;
     min-width: $size;
   }
 }
 
 @mixin _large-shape($shape-radius) {
-  .md3-badge--large {
+  &.md3-badge--large {
     border-radius: $shape-radius;
   }
 }
@@ -112,7 +112,7 @@ $dark-theme: tokens.md-comp-badge-values(
 }
 
 @mixin _large-label-text-color($color) {
-  .md3-badge--large {
+  &.md3-badge--large {
     color: $color;
   }
 }

@@ -47,19 +47,6 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
     $require-all: false
   );
 
-  .md3-badge {
-    @include badge-theme.theme-styles(
-      (
-        color: map.get($theme, badge-color),
-        size: map.get($theme, badge-size),
-        shape: map.get($theme, badge-shape),
-        large-color: map.get($theme, large-badge-color),
-        large-size: map.get($theme, large-badge-size),
-        large-shape: map.get($theme, large-badge-shape),
-      )
-    );
-  }
-
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
   @include _icon-size(map.get($theme, icon-size));
@@ -142,6 +129,17 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
     (
       container-outer-padding-vertical: -4px,
       container-outer-padding-horizontal: -4px,
+    )
+  );
+
+  @include badge-theme.theme(
+    (
+      color: map.get($theme, badge-color),
+      size: map.get($theme, badge-size),
+      shape: map.get($theme, badge-shape),
+      large-color: map.get($theme, large-badge-color),
+      large-size: map.get($theme, large-badge-size),
+      large-shape: map.get($theme, large-badge-shape),
     )
   );
 }

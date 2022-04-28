@@ -184,15 +184,15 @@ describe('mwc-navigation-tab', () => {
       await element.updateComplete;
     });
 
-    it('displays small badge', () => {
-      const badge = element.shadowRoot!.querySelector('.md3-badge')!;
-      expect(badge.classList.contains('md3-badge--large')).toBeFalse();
+    it('displays badge', () => {
+      const badge = element.shadowRoot!.querySelector('md-badge')!;
+      expect(badge).toBeDefined();
     });
 
     it('does not display badge if showBadge is false', async () => {
       element.showBadge = false;
       await element.updateComplete;
-      const badge = element.shadowRoot!.querySelector('.md3-badge');
+      const badge = element.shadowRoot!.querySelector('md-badge');
       expect(badge).toEqual(null);
     });
   });
@@ -204,14 +204,9 @@ describe('mwc-navigation-tab', () => {
       await element.updateComplete;
     });
 
-    it('displays large badge', () => {
-      const badge = element.shadowRoot!.querySelector('.md3-badge')!;
-      expect(badge.classList.contains('md3-badge--large')).toBeTrue();
-    });
-
     it('displays badge value', () => {
-      const badge = element.shadowRoot!.querySelector('.md3-badge')!;
-      expect(badge.textContent!.trim()).toEqual('9');
+      const badge = element.shadowRoot!.querySelector('md-badge')!;
+      expect(badge.value).toEqual('9');
     });
   });
 
