@@ -3,20 +3,9 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
-// TODO(b/228217731): Remove MDC/MWC dependencies
-@use '@material/dom/dom';
 @use './switch';
 @use './switch-theme';
 
 @include switch.static-styles();
 
-.md3-switch {
-  @include switch-theme.theme-styles(switch-theme.$light-theme);
-
-  @include dom.forced-colors-mode {
-    @include switch-theme.theme-styles(switch-theme.$forced-colors-theme);
-  }
-}
+@include switch-theme.theme-styles(switch-theme.$light-theme);
