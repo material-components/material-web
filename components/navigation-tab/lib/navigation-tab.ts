@@ -137,6 +137,11 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
   override endPress(options: EndPressConfig) {
     this.ripple.endPress();
     super.endPress(options);
+    if (!options.cancelled) {
+      this.dispatchEvent(new CustomEvent(
+          'navigation-tab-interaction',
+          {detail: {state: this}, bubbles: true, composed: true}));
+    }
   }
 
   override handlePointerDown(e: PointerEvent) {
@@ -147,9 +152,6 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
 
   override handlePointerUp(e: PointerEvent) {
     super.handlePointerUp(e);
-    this.dispatchEvent(new CustomEvent(
-        'navigation-tab-interaction',
-        {detail: {state: this}, bubbles: true, composed: true}));
   }
 
   protected handlePointerEnter(e: PointerEvent) {
