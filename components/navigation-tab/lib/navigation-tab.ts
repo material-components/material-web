@@ -60,7 +60,7 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
         @clickmod="${this.handleClick}"
         @contextmenu="${this.handleContextMenu}"
       >${this.renderFocusRing()}${this.renderRipple()}
-        <span class="md3-navigation-tab__icon-content"
+        <span aria-hidden="true" class="md3-navigation-tab__icon-content"
           ><span class="md3-navigation-tab__active-indicator"
             ></span><span class="md3-navigation-tab__icon"
           ><slot name="inactiveIcon"></slot
@@ -100,8 +100,13 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
 
   /** @soyTemplate */
   protected renderLabel(): TemplateResult|'' {
-    return !this.label ? '' : html`
-        <span class="md3-navigation-tab__label-text">${this.label}</span>`;
+    const ariaHidden = this.ariaLabel ? 'true' : 'false';
+    return !this.label ?
+        '' :
+        html`
+        <span aria-hidden="${
+            ariaHidden}" class="md3-navigation-tab__label-text">${
+            this.label}</span>`;
   }
 
   override firstUpdated(changedProperties: PropertyValues) {
@@ -132,15 +137,19 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
   override endPress(options: EndPressConfig) {
     this.ripple.endPress();
     super.endPress(options);
-    this.dispatchEvent(new CustomEvent(
-        'navigation-tab-interaction',
-        {detail: {state: this}, bubbles: true, composed: true}));
   }
 
   override handlePointerDown(e: PointerEvent) {
     super.handlePointerDown(e);
     pointerPress();
     this.showFocusRing = shouldShowStrongFocus();
+  }
+
+  override handlePointerUp(e: PointerEvent) {
+    super.handlePointerUp(e);
+    this.dispatchEvent(new CustomEvent(
+        'navigation-tab-interaction',
+        {detail: {state: this}, bubbles: true, composed: true}));
   }
 
   protected handlePointerEnter(e: PointerEvent) {
