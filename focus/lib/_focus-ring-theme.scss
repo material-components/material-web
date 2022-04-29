@@ -3,6 +3,9 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
 @use 'sass:map';
 @use '@material/web/sass/resolvers';
 @use '@material/web/sass/theme';
@@ -32,6 +35,12 @@ $light-theme: (
   $theme: theme.validate-theme-styles($light-theme, $theme);
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
+  &.md3-focus-ring--visible {
+    @include _theme-styles($theme);
+  }
+}
+
+@mixin _theme-styles($theme) {
   $container-outer-padding-vertical: map.get(
     $theme,
     container-outer-padding-vertical
@@ -57,6 +66,8 @@ $light-theme: (
     $outer-width
   );
   @include _set-border($outer-width, $outer-color, $outer-radius);
+  padding: calc($inner-width + $container-outer-padding-vertical)
+    calc($inner-width + $container-outer-padding-horizontal);
 
   // Inner
   &::before {

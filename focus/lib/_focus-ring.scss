@@ -7,8 +7,10 @@
 // Selector '.md3-*' should only be used in this project.
 
 @mixin static-styles() {
-  :host {
-    @include host-root;
+
+  .md3-focus-ring__container {
+    display: inline-flex;
+    position: relative;
   }
 
   .md3-focus-ring {
@@ -16,18 +18,16 @@
   }
 
   .md3-focus-ring--visible {
-    display: block;
+    border-color: unset;
   }
 }
 
-@mixin host-root() {
-  pointer-events: none;
-}
-
 @mixin root() {
-  display: none;
+  display: inline-flex;
   position: absolute;
   box-sizing: border-box;
+
+  border-color: transparent;
 
   &::before {
     @include inner-ring;
@@ -38,4 +38,6 @@
   inset: 0;
   position: absolute;
   content: '';
+
+  border-color: transparent;
 }
