@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-dialog",
-  "version": "0.25.3",
+  "version": "0.26.0",
   "description": "Material Design dialog web component",
   "keywords": [
     "material design",
@@ -18,8 +18,8 @@
   "dependencies": {
     "@material/dialog": "=14.0.0",
     "@material/dom": "=14.0.0",
-    "@material/mwc-base": "^0.25.3",
-    "@material/mwc-button": "^0.25.3",
+    "@material/mwc-base": "^0.26.0",
+    "@material/mwc-button": "^0.26.0",
     "blocking-elements": "^0.1.0",
     "lit": "^2.0.0",
     "tslib": "^2.0.1",

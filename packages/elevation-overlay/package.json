@@ -1,6 +1,6 @@
 {
   "name": "@material/mwc-elevation-overlay",
-  "version": "0.25.3",
+  "version": "0.26.0",
   "description": "Material semi-transparent covering of an element indicating its state",
   "keywords": [
     "material design",
