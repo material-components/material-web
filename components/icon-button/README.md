@@ -60,7 +60,7 @@ starring an item.
 <img src="images/icon-button-theme.png" alt="Icon button with custom theme (green icon and red ripple on focus)" width="64px">
 
 ```
-@use '@material/md-icon-button' as icon-button;
+@use '@material/md-icon-button/md-icon-button' as icon-button;
 
 md-icon-button {
   @include icon-button.theme((

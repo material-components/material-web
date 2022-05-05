@@ -7,10 +7,10 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {CheckboxBase} from './mwc-checkbox-base';
-import {styles} from './mwc-checkbox.css';
+import {CheckboxBase} from './mwc-checkbox-base.js';
+import {styles} from './mwc-checkbox.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

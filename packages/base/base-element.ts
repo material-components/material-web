@@ -8,13 +8,13 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {MDCFoundation} from '@material/base';
+import {MDCFoundation} from '@material/base/foundation.js';
 import {LitElement} from 'lit';
 
-import {Constructor} from './utils';
+import {Constructor} from './utils.js';
 
-export {CustomEventListener, EventType, SpecificEventListener} from '@material/base/types';
-export {addHasRemoveClass} from './utils';
+export {CustomEventListener, EventType, SpecificEventListener} from '@material/base/types.js';
+export {addHasRemoveClass} from './utils.js';
 
 /** @soyCompatible */
 export abstract class BaseElement extends LitElement {

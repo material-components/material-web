@@ -7,7 +7,7 @@
 @use 'sass:map';
 @use 'sass:meta';
 @use 'third_party/javascript/material_web_components/m3/ripple/ripple-theme';
-@use '@material/theme/state';
+@use '../../compat/theme/state';
 @use '../../elevation/lib/elevation-theme';
 @use './button-theme';
 

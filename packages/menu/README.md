@@ -46,8 +46,8 @@ so its main slot has the same interface as the main slot of a `mwc-list`.
 </div>
 
 <script type="module">
-  import '@material/mwc-menu';
-  import '@material/mwc-list/mwc-list-item';
+  import '@material/mwc-menu/mwc-menu.js';
+  import '@material/mwc-list/mwc-list-item.js';
 
   // anchor must share a parent with menu that is `position: relative`
   menu.anchor = button;
@@ -127,8 +127,8 @@ so its main slot has the same interface as the main slot of a `mwc-list`.
   </mwc-menu>
 </div>
 <script type="module">
-  import '@material/mwc-menu';
-  import '@material/mwc-list/mwc-list-item';
+  import '@material/mwc-menu/mwc-menu.js';
+  import '@material/mwc-list/mwc-list-item.js';
 
   menu.anchor = button;
 

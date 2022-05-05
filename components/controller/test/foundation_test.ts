@@ -6,7 +6,7 @@
 
 import 'jasmine';
 
-import {Foundation} from '../foundation';
+import {Foundation} from '../foundation.js';
 
 describe('Foundation', () => {
   it('#init() should be called on construction', () => {

@@ -7,12 +7,12 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {MDCResizeObserver, WithMDCResizeObserver} from '@material/linear-progress/types';
-import {LinearProgress} from '@material/mwc-linear-progress';
+import {MDCResizeObserver, WithMDCResizeObserver} from '@material/linear-progress/types.js';
+import {LinearProgress} from '@material/mwc-linear-progress/mwc-linear-progress.js';
 import {html} from 'lit';
-import {styleMap} from 'lit/directives/style-map';
+import {styleMap} from 'lit/directives/style-map.js';
 
-import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers.js';
 
 const awaitIndeterminateReady = async (element: LinearProgress) => {
   await element.updateComplete;

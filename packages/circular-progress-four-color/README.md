@@ -20,7 +20,7 @@ indeterminate mode.
 
 ```html
 <script type="module">
-  import '@material/mwc-circular-progress-four-color';
+  import '@material/mwc-circular-progress-four-color/mwc-circular-progress-four-color.js';
 </script>
 <mwc-circular-progress-four-color progress="0.7"></mwc-circular-progress-four-color>
 ```

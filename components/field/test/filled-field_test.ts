@@ -7,12 +7,12 @@
 import 'jasmine';
 
 import {html} from 'lit';
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {Environment} from '../../testing/environment';
-import {State, TemplateBuilder, TemplateProps} from '../../testing/templates';
-import {FieldHarness} from '../harness';
-import {FilledField} from '../lib/filled-field';
+import {Environment} from '../../testing/environment.js';
+import {State, TemplateBuilder, TemplateProps} from '../../testing/templates.js';
+import {FieldHarness} from '../harness.js';
+import {FilledField} from '../lib/filled-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {

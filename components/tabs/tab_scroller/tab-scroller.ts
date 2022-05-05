@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {TabScroller} from './lib/tab-scroller';
-import {styles} from './lib/tab-scroller-styles.css';
+import {TabScroller} from './lib/tab-scroller.js';
+import {styles} from './lib/tab-scroller-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../icon/icon';
+import '../icon/icon.js';
 
 import {html, TemplateResult} from 'lit';
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {styles} from './lib/icon-button-styles.css';
-import {IconButtonToggle} from './lib/icon-button-toggle';
+import {styles} from './lib/icon-button-styles.css.js';
+import {IconButtonToggle} from './lib/icon-button-toggle.js';
 
 declare global {
   interface HTMLElementTagNameMap {

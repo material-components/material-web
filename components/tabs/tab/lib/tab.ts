@@ -7,21 +7,21 @@
  */
 
 
-import '../../../focus/focus-ring';
+import '../../../focus/focus-ring.js';
 
-import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
-import {observer} from '@material/mwc-base/observer';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
+import {observer} from '@material/mwc-base/observer.js';
 import {html, TemplateResult} from 'lit';
-import {eventOptions, property, query, state} from 'lit/decorators';
-import {ClassInfo, classMap} from 'lit/directives/class-map';
+import {eventOptions, property, query, state} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
-import {pointerPress, shouldShowStrongFocus} from '../../../focus/strong-focus';
-import {MdRipple} from '../../../ripple/ripple';
-import {TabIndicator} from '../../tab_indicator/lib/tab-indicator';
+import {pointerPress, shouldShowStrongFocus} from '../../../focus/strong-focus.js';
+import {MdRipple} from '../../../ripple/ripple.js';
+import {TabIndicator} from '../../tab_indicator/lib/tab-indicator.js';
 
-import {MDCTabAdapter} from './adapter';
-import MDCTabFoundation from './foundation';
-import {TabInteractionEvent, TabInteractionEventDetail} from './types';
+import {MDCTabAdapter} from './adapter.js';
+import MDCTabFoundation from './foundation.js';
+import {TabInteractionEvent, TabInteractionEventDetail} from './types.js';
 
 // used for generating unique id for each tab
 let tabIdCounter = 0;
@@ -64,6 +64,8 @@ export class Tab extends BaseElement {
 
   @state() protected showFocusRing = false;
 
+  @property({type: String, attribute: 'data-tab-id'}) override id!: string;
+
   protected initFocus = false;
 
   /**
@@ -98,6 +100,7 @@ export class Tab extends BaseElement {
         role="tab"
         aria-selected="${this.active}"
         tabindex="${this.active ? 0 : -1}"
+        id="${this.id}"
         @focus="${this.focus}"
         @blur="${this.handleBlur}"
         @mousedown="${this.handleRippleMouseDown}"

@@ -12,10 +12,10 @@ import {KEY} from 'google3/third_party/javascript/material_components_web/dom/ke
 import {MdFocusRing} from 'google3/third_party/javascript/material_web_components/m3/focus/focus-ring';
 import {html} from 'lit';
 
-import {fixture, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, TestFixture} from '../../../test/src/util/helpers.js';
 
-import {RadioHarness} from './harness';
-import {MdRadio} from './radio';
+import {RadioHarness} from './harness.js';
+import {MdRadio} from './radio.js';
 
 const defaultRadio = html`<md-radio></md-radio>`;
 

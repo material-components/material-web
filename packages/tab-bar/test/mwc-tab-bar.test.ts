@@ -8,12 +8,12 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import '@material/mwc-tab';
+import '@material/mwc-tab/mwc-tab.js';
 
-import {TabBar} from '@material/mwc-tab-bar/mwc-tab-bar';
+import {TabBar} from '@material/mwc-tab-bar/mwc-tab-bar.js';
 import {html, TemplateResult} from 'lit';
 
-import {fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../test/src/util/helpers.js';
 
 interface TabBarProps {
   activeIndex: number;

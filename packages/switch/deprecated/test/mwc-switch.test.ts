@@ -7,11 +7,11 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {Switch} from '@material/mwc-switch/deprecated/mwc-switch';
+import {Switch} from '@material/mwc-switch/deprecated/mwc-switch.js';
 import * as hanbi from 'hanbi';
 import {html} from 'lit';
 
-import {fixture, TestFixture} from '../../../../test/src/util/helpers';
+import {fixture, TestFixture} from '../../../../test/src/util/helpers.js';
 
 interface SwitchProps {
   checked: boolean;

@@ -8,7 +8,7 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {Icon} from '@material/mwc-icon';
+import {Icon} from '@material/mwc-icon/mwc-icon.js';
 
 
 describe('mwc-icon', () => {

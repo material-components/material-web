@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCTabScrollerRTL} from './rtl-scroller';
-import {MDCTabScrollerAnimation, MDCTabScrollerHorizontalEdges} from './types';
+import {MDCTabScrollerRTL} from './rtl-scroller.js';
+import {MDCTabScrollerAnimation, MDCTabScrollerHorizontalEdges} from './types.js';
 
 export class MDCTabScrollerRTLDefault extends MDCTabScrollerRTL {
   getScrollPositionRTL(): number {

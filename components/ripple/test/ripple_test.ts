@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MdRipple} from '../ripple';
+import {MdRipple} from '../ripple.js';
 
 enum RippleStateClasses {
   HOVERED = 'md3-ripple--hovered',

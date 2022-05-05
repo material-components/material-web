@@ -7,9 +7,9 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {MDCLineRippleAdapter} from '@material/line-ripple/adapter';
-import {MDCLineRippleFoundation} from '@material/line-ripple/foundation';
-import {AttributePart, directive, Directive, DirectiveParameters, PartInfo, PartType} from 'lit/directive';
+import {MDCLineRippleAdapter} from '@material/line-ripple/adapter.js';
+import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
+import {AttributePart, directive, Directive, DirectiveParameters, PartInfo, PartType} from 'lit/directive.js';
 
 export interface LineRipple extends HTMLElement {
   lineRippleFoundation: MDCLineRippleFoundation;

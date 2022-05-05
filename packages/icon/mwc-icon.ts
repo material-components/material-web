@@ -8,9 +8,9 @@
 // tslint:disable:strip-private-property-underscore
 
 import {html, LitElement, TemplateResult} from 'lit';
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {styles} from './mwc-icon-host.css';
+import {styles} from './mwc-icon-host.css.js';
 
 /** @soyCompatible */
 @customElement('mwc-icon')

@@ -8,19 +8,19 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import '@material/mwc-button';
-import '@material/mwc-dialog';
-import '@material/mwc-menu';
-import '@material/mwc-select';
-import '@material/mwc-textarea';
+import '@material/mwc-button/mwc-button.js';
+import '@material/mwc-dialog/mwc-dialog.js';
+import '@material/mwc-menu/mwc-menu.js';
+import '@material/mwc-select/mwc-select.js';
+import '@material/mwc-textarea/mwc-textarea.js';
 
-import {Button} from '@material/mwc-button';
-import {Dialog} from '@material/mwc-dialog';
+import {Button} from '@material/mwc-button/mwc-button.js';
+import {Dialog} from '@material/mwc-dialog/mwc-dialog.js';
 import {DocumentWithBlockingElements} from 'blocking-elements';
 import {html, LitElement} from 'lit';
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers.js';
 
 const blockingElements =
     (document as DocumentWithBlockingElements).$blockingElements;

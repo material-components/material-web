@@ -8,10 +8,10 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {Radio} from '@material/mwc-radio';
+import {Radio} from '@material/mwc-radio/mwc-radio.js';
 import {html} from 'lit';
 
-import {fixture, simulateFormDataEvent, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, simulateFormDataEvent, TestFixture} from '../../../test/src/util/helpers.js';
 
 const defaultRadio = html`<mwc-radio></mwc-radio>`;
 

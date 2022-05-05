@@ -6,10 +6,10 @@
 
 import 'jasmine';
 
-import {SegmentedButtonState} from '../../segmented_button/lib/state';
-import {spyOnAllFunctions} from '../../testing/jasmine';
-import {SegmentedButtonSetFoundation} from '../lib/foundation';
-import {SegmentedButtonSetAdapter} from '../lib/state';
+import {SegmentedButtonState} from '../../segmented_button/lib/state.js';
+import {spyOnAllFunctions} from '../../testing/jasmine.js';
+import {SegmentedButtonSetFoundation} from '../lib/foundation.js';
+import {SegmentedButtonSetAdapter} from '../lib/state.js';
 
 
 /** Used to allow passing through a custom target. */

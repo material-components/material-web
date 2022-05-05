@@ -8,17 +8,17 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import '@material/mwc-list/mwc-list-item';
+import '@material/mwc-list/mwc-list-item.js';
 
-import {Corner as CornerEnum} from '@material/menu-surface/constants';
-import {List} from '@material/mwc-list';
-import {ListItem} from '@material/mwc-list/mwc-list-item';
-import {Menu} from '@material/mwc-menu';
-import {Corner, MenuCorner, MenuSurface} from '@material/mwc-menu/mwc-menu-surface';
+import {Corner as CornerEnum} from '@material/menu-surface/constants.js';
+import {List} from '@material/mwc-list/mwc-list.js';
+import {ListItem} from '@material/mwc-list/mwc-list-item.js';
+import {Menu} from '@material/mwc-menu/mwc-menu.js';
+import {Corner, MenuCorner, MenuSurface} from '@material/mwc-menu/mwc-menu-surface.js';
 import * as hanbi from 'hanbi';
 import {html, render, TemplateResult} from 'lit';
 
-import {fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../test/src/util/helpers.js';
 
 const defaultMenu = html`<mwc-menu></mwc-menu>`;
 const defaultSurface = html`<mwc-menu-surface></mwc-menu-surface>`;

@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {OutlinedSingleSelectSegmentedButton} from './lib/outlined-single-select-segmented-button';
-import {styles as outlinedStyles} from './lib/outlined-styles.css';
-import {styles as sharedStyles} from './lib/shared-styles.css';
+import {OutlinedSingleSelectSegmentedButton} from './lib/outlined-single-select-segmented-button.js';
+import {styles as outlinedStyles} from './lib/outlined-styles.css.js';
+import {styles as sharedStyles} from './lib/shared-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

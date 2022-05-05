@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ARIARole} from '../../types/aria';
+import {ARIARole} from '../../types/aria.js';
 
-import {ListItem} from './list-item';
+import {ListItem} from './list-item.js';
 
 /** @soyCompatible */
 export class OptionListItem extends ListItem {

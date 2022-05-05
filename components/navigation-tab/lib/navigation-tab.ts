@@ -4,20 +4,20 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../badge/badge';
-import '../../focus/focus-ring';
+import '../../badge/badge.js';
+import '../../focus/focus-ring.js';
 
 import {html, PropertyValues, TemplateResult} from 'lit';
-import {property, query, state} from 'lit/decorators';
-import {ClassInfo, classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
+import {property, query, state} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action-element/action-element';
-import {ariaProperty} from '../../decorators/aria-property';
-import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
-import {MdRipple} from '../../ripple/ripple';
+import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action-element/action-element.js';
+import {ariaProperty} from '../../decorators/aria-property.js';
+import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
+import {MdRipple} from '../../ripple/ripple.js';
 
-import {NavigationTabState} from './state';
+import {NavigationTabState} from './state.js';
 
 /** @soyCompatible */
 export class NavigationTab extends ActionElement implements NavigationTabState {
@@ -60,7 +60,7 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
         @clickmod="${this.handleClick}"
         @contextmenu="${this.handleContextMenu}"
       >${this.renderFocusRing()}${this.renderRipple()}
-        <span class="md3-navigation-tab__icon-content"
+        <span aria-hidden="true" class="md3-navigation-tab__icon-content"
           ><span class="md3-navigation-tab__active-indicator"
             ></span><span class="md3-navigation-tab__icon"
           ><slot name="inactiveIcon"></slot
@@ -100,8 +100,13 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
 
   /** @soyTemplate */
   protected renderLabel(): TemplateResult|'' {
-    return !this.label ? '' : html`
-        <span class="md3-navigation-tab__label-text">${this.label}</span>`;
+    const ariaHidden = this.ariaLabel ? 'true' : 'false';
+    return !this.label ?
+        '' :
+        html`
+        <span aria-hidden="${
+            ariaHidden}" class="md3-navigation-tab__label-text">${
+            this.label}</span>`;
   }
 
   override firstUpdated(changedProperties: PropertyValues) {
@@ -132,15 +137,21 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
   override endPress(options: EndPressConfig) {
     this.ripple.endPress();
     super.endPress(options);
-    this.dispatchEvent(new CustomEvent(
-        'navigation-tab-interaction',
-        {detail: {state: this}, bubbles: true, composed: true}));
+    if (!options.cancelled) {
+      this.dispatchEvent(new CustomEvent(
+          'navigation-tab-interaction',
+          {detail: {state: this}, bubbles: true, composed: true}));
+    }
   }
 
   override handlePointerDown(e: PointerEvent) {
     super.handlePointerDown(e);
     pointerPress();
     this.showFocusRing = shouldShowStrongFocus();
+  }
+
+  override handlePointerUp(e: PointerEvent) {
+    super.handlePointerUp(e);
   }
 
   protected handlePointerEnter(e: PointerEvent) {

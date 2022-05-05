@@ -7,14 +7,14 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
-import {MDCTabIndicatorAdapter} from '@material/tab-indicator/adapter';
-import MDCFadingTabIndicatorFoundation from '@material/tab-indicator/fading-foundation';
-import MDCTabIndicatorFoundation from '@material/tab-indicator/foundation';
-import MDCSlidingTabIndicatorFoundation from '@material/tab-indicator/sliding-foundation';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
+import {MDCTabIndicatorAdapter} from '@material/tab-indicator/adapter.js';
+import MDCFadingTabIndicatorFoundation from '@material/tab-indicator/fading-foundation.js';
+import MDCTabIndicatorFoundation from '@material/tab-indicator/foundation.js';
+import MDCSlidingTabIndicatorFoundation from '@material/tab-indicator/sliding-foundation.js';
 import {html, PropertyValues} from 'lit';
-import {property, query} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
+import {property, query} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 
 export class TabIndicatorBase extends BaseElement {
   protected mdcFoundation!: MDCTabIndicatorFoundation;

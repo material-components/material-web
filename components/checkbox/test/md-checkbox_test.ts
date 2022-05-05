@@ -7,9 +7,9 @@
 import {MdFocusRing} from 'google3/third_party/javascript/material_web_components/m3/focus/focus-ring';
 import {html} from 'lit';
 
-import {fixture, TestFixture} from '../../../../test/src/util/helpers';
-import {MdCheckbox} from '../checkbox';
-import {CheckboxHarness} from '../harness';
+import {fixture, TestFixture} from '../../../../test/src/util/helpers.js';
+import {MdCheckbox} from '../checkbox.js';
+import {CheckboxHarness} from '../harness.js';
 
 interface CheckboxProps {
   checked: boolean;

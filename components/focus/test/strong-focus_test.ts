@@ -6,7 +6,7 @@
 
 import 'jasmine';
 
-import * as strongFocus from '../strong-focus';
+import * as strongFocus from '../strong-focus.js';
 
 class MockFocus {
   constructor(public visible = false) {}

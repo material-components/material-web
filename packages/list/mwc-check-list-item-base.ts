@@ -8,14 +8,14 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import '@material/mwc-checkbox';
+import '@material/mwc-checkbox/mwc-checkbox.js';
 
-import {Checkbox} from '@material/mwc-checkbox';
+import {Checkbox} from '@material/mwc-checkbox/mwc-checkbox.js';
 import {html} from 'lit';
-import {property, query} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
+import {property, query} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 
-import {GraphicType, ListItemBase} from './mwc-list-item-base';
+import {GraphicType, ListItemBase} from './mwc-list-item-base.js';
 
 export class CheckListItemBase extends ListItemBase {
   @query('slot') protected override slotElement!: HTMLSlotElement|null;

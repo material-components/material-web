@@ -7,15 +7,15 @@
  */
 
 
-import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
 import {html, PropertyValues, TemplateResult} from 'lit';
-import {property, query} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
+import {property, query} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 
-import {MDCTabIndicatorAdapter} from './adapter';
-import MDCFadingTabIndicatorFoundation from './fading-foundation';
-import MDCTabIndicatorFoundation from './foundation';
-import MDCSlidingTabIndicatorFoundation from './sliding-foundation';
+import {MDCTabIndicatorAdapter} from './adapter.js';
+import MDCFadingTabIndicatorFoundation from './fading-foundation.js';
+import MDCTabIndicatorFoundation from './foundation.js';
+import MDCSlidingTabIndicatorFoundation from './sliding-foundation.js';
 
 /** @soyCompatible */
 export class TabIndicator extends BaseElement {

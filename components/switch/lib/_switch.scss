@@ -6,86 +6,61 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-// TODO(b/228217731): Remove MDC/MWC dependencies
-@use '@material/animation/animation';
-@use '@material/elevation/elevation';
-@use '@material/ripple/ripple';
-@use '@material/rtl/rtl';
-@use '@material/theme/gss';
-
 // PUBLIC PROPERTIES
 
+@use '../../motion/animation';
+@use '../../sass/touch-target';
+
+// TODO(b/230768994): update animation timing
 $animation-duration: 75ms;
 $icon-exit-duration: 0.4 * $animation-duration;
 $icon-enter-duration: $animation-duration - $icon-exit-duration;
-$ripple-target: '.md3-switch__ripple';
 
 // PUBLIC API
 
 @mixin static-styles() {
-  @include static-styles-without-ripple();
-
-  // with ripple
-  .md3-switch {
-    // @include ripple.common; // COPYBARA_COMMENT_THIS_LINE
-    @include ripple.surface($ripple-target: $ripple-target);
-    @include ripple.radius-unbounded($ripple-target: $ripple-target);
-  }
-}
-
-@mixin static-styles-without-ripple() {
-  // @include elevation.overlay-common; // COPYBARA_COMMENT_THIS_LINE
   :host {
     display: inline-flex;
     outline: none;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .md3-switch {
     @include _root;
-
-    &:disabled {
-      @include _disabled;
-    }
   }
 
+  // Track
   .md3-switch__track {
     @include _track;
-    @include _track-off;
 
-    .md3-switch--selected & {
-      @include _track-on;
+    &::before {
+      @include _track-before;
+
+      .md3-switch--selected & {
+        @include _track-selected-before;
+      }
     }
   }
 
-  .md3-switch__handle-track {
-    @include _handle-track;
-    @include _handle-track-off;
-
-    .md3-switch--selected & {
-      @include _handle-track-on;
-    }
+  // Handle container
+  .md3-switch__handle-container {
+    @include _handle-container;
   }
 
+  // Handle
   .md3-switch__handle {
     @include _handle;
-  }
 
-  .md3-switch__shadow {
-    @include _shadow;
-  }
+    &::before {
+      @include _handle-before;
 
-  .md3-elevation-overlay {
-    @include _overlay;
-  }
-
-  .md3-switch__ripple {
-    @include _ripple;
-
-    .md3-switch:disabled & {
-      @include _ripple-disabled;
+      .md3-switch--selected & {
+        @include _handle-selected-before;
+      }
     }
   }
 
+  // Icons
   .md3-switch__icons {
     @include _icons;
   }
@@ -100,16 +75,37 @@ $ripple-target: '.md3-switch__ripple';
     @include _icon-visible;
   }
 
+  // Touch target
+  .md3-switch__touch {
+    @include touch-target.touch-target();
+  }
+
+  // Disabled
+  .md3-switch:disabled {
+    @include _disabled;
+  }
+
+  // Disabled - Track
+  .md3-switch__track {
+    .md3-switch:disabled & {
+      background-color: transparent;
+      border-color: transparent;
+
+      &::before {
+        background-clip: content-box;
+      }
+    }
+    .md3-switch--selected:disabled & {
+      background-clip: border-box;
+    }
+  }
+
   input {
     @include _input;
   }
 }
 
 // PRIVATE API
-
-@mixin _input() {
-  display: none;
-}
 
 @mixin _root() {
   align-items: center;
@@ -120,7 +116,6 @@ $ripple-target: '.md3-switch__ripple';
   flex-shrink: 0; // Stop from collapsing in flex containers
   margin: 0;
   outline: none;
-  overflow: visible;
   padding: 0;
   position: relative;
 }
@@ -131,148 +126,84 @@ $ripple-target: '.md3-switch__ripple';
 }
 
 @mixin _track() {
-  overflow: hidden;
   position: relative;
   width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 
-  &::before,
-  &::after {
-    border: 1px solid transparent; // high contrast mode
-    border-radius: inherit;
-    box-sizing: border-box;
-    content: '';
-    inset: 0;
-    position: absolute;
-  }
+  border-radius: inherit;
+
+  // Center content
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@mixin _track-on() {
-  &::before {
-    transition: animation.exit-temporary(transform, $animation-duration);
-    transform: translateX(100%);
-    @include rtl.rtl {
-      transform: translateX(-100%);
-    }
-  }
+@mixin _track-before() {
+  @include _before-base();
 
-  &::after {
-    transition: animation.enter(transform, $animation-duration);
-    transform: translateX(0);
-  }
+  border-style: solid;
 }
 
-@mixin _track-off() {
-  &::before {
-    transition: animation.enter(transform, $animation-duration);
-    transform: translateX(0);
-  }
-
-  &::after {
-    transition: animation.exit-temporary(transform, $animation-duration);
-    transform: translateX(-100%);
-    @include rtl.rtl {
-      transform: translateX(100%);
-    }
-  }
+// When selected, turn off ::before
+@mixin _track-selected-before() {
+  opacity: 0;
 }
 
-@mixin _handle-track() {
-  // The handle track is used to move the handle across the width of the switch
-  // and may overflow the bounds of the component. It should not be used for
-  // pointer events.
-  inset: 0;
-  pointer-events: none;
-  position: absolute;
-  transition: animation.standard(transform, $animation-duration);
-}
-
-@mixin _handle-track-on() {
-  transform: translateX(100%);
-
-  @include rtl.rtl {
-    transform: translateX(-100%);
-  }
-}
-
-@mixin _handle-track-off() {
-  transform: translateX(0);
+@mixin _handle-container() {
+  position: relative;
 }
 
 @mixin _handle() {
+  transition-property: transform margin-inline-start margin-inline-end;
+  transition-duration: #{$animation-duration};
+  transition-timing-function: animation.$standard-easing;
+
+  transform-origin: center;
+}
+
+@mixin _handle-before() {
+  @include _before-base();
+}
+
+@mixin _before-base() {
+  content: '';
   display: flex;
-  pointer-events: auto;
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  // IE11 needs explicit left/right
-  @include rtl.reflexive(left, 0, right, auto);
-
-  &::before,
-  &::after {
-    border: 1px solid transparent; // high contrast mode
-    border-radius: inherit;
-    box-sizing: border-box;
-    content: '';
-    inset: 0;
-    position: absolute;
-    transition: animation.standard(background-color, $animation-duration),
-      animation.standard(border-color, $animation-duration);
-    // Move the handle background colors beneath the shadow overlay color,
-    // rather than move the overlay on top of the handle with a positive
-    // z-index, which would require moving all other content on top of the
-    // overlay with an even greater z-index.
-    z-index: -1;
-  }
-}
-
-@mixin _shadow() {
+  height: 100%;
+  width: 100%;
   border-radius: inherit;
-  inset: 0;
-  position: absolute;
+  box-sizing: border-box;
+
+  transition-property: opacity;
+  transition-duration: #{$animation-duration};
 }
 
-@mixin _overlay() {
-  inset: 0;
-}
-
-@mixin _ripple() {
-  @include gss.annotate($noflip: true);
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  // Move ripple beneath shadow overlay and handle background colors (see
-  // handle() mixin for explanation).
-  z-index: -1;
-}
-
-@mixin _ripple-disabled() {
-  display: none;
+// When selected, turn off ::before
+@mixin _handle-selected-before() {
+  opacity: 0;
 }
 
 @mixin _icons() {
-  height: 100%;
   position: relative;
+  height: 100%;
   width: 100%;
-  z-index: 1;
 }
 
 @mixin _icon() {
+  position: absolute;
   inset: 0;
   margin: auto;
-  position: absolute;
 }
 
 @mixin _icon-hidden() {
   opacity: 0;
-  transition: animation.exit-permanent(opacity, $icon-exit-duration);
 }
 
 @mixin _icon-visible() {
   opacity: 1;
-  transition: animation.enter(
-    opacity,
-    $icon-enter-duration,
-    $delay: $icon-exit-duration
-  );
+}
+
+@mixin _input() {
+  display: none;
 }

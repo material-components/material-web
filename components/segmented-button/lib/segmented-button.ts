@@ -7,12 +7,12 @@
  */
 
 import {html, LitElement, TemplateResult} from 'lit';
-import {property, query, state} from 'lit/decorators';
-import {ClassInfo, classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
+import {property, query, state} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {SegmentedButtonFoundation} from './foundation';
-import {SegmentedButtonState} from './state';
+import {SegmentedButtonFoundation} from './foundation.js';
+import {SegmentedButtonState} from './state.js';
 
 /**
  * SegmentedButton is a web component implementation of the Material Design

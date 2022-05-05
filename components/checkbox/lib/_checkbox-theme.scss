@@ -27,7 +27,7 @@
 @use 'sass:map';
 @use 'sass:math';
 @use 'sass:selector';
-@use '@material/theme/shadow-dom';
+@use '../../compat/theme/shadow-dom';
 @use '../../sass/theme';
 @use '../../tokens';
 @use '../../sass/var';

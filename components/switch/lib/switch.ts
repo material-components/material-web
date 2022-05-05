@@ -4,20 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../focus/focus-ring';
-import '@material/mwc-ripple/mwc-ripple';
+import '../../focus/focus-ring.js';
 
-import {ariaProperty as legacyAriaProperty} from '@material/mwc-base/aria-property';
-import {Ripple} from '@material/mwc-ripple/mwc-ripple';
-import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
+import {ariaProperty as legacyAriaProperty} from '@material/mwc-base/aria-property.js';
 import {html, LitElement, TemplateResult} from 'lit';
-import {eventOptions, property, queryAsync, state} from 'lit/decorators';
-import {ClassInfo, classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
+import {eventOptions, property, state} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {FormController, getFormValue} from '../../controller/form-controller';
-import {ariaProperty} from '../../decorators/aria-property';
-import {shouldShowStrongFocus} from '../../focus/strong-focus';
+import {FormController, getFormValue} from '../../controller/form-controller.js';
+import {ariaProperty} from '../../decorators/aria-property.js';
+import {pointerPress as focusRingPointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 
 /** @soyCompatible */
 export class Switch extends LitElement {
@@ -27,6 +24,8 @@ export class Switch extends LitElement {
   @property({type: Boolean, reflect: true}) disabled = false;
   @property({type: Boolean}) processing = false;
   @property({type: Boolean}) selected = false;
+  @property({type: Boolean}) icons = false;
+  @property({type: Boolean}) onlySelectedIcon = false;
 
   // Aria
   @ariaProperty
@@ -41,15 +40,6 @@ export class Switch extends LitElement {
   ariaLabelledBy = '';
 
   @state() protected showFocusRing = false;
-
-  // Ripple
-  @queryAsync('mwc-ripple') readonly ripple!: Promise<Ripple|null>;
-  @state() protected shouldRenderRipple = false;
-
-  protected rippleHandlers = new RippleHandlers(() => {
-    this.shouldRenderRipple = true;
-    return this.ripple;
-  });
 
   // FormController
   get form() {
@@ -73,6 +63,7 @@ export class Switch extends LitElement {
 
   /** @soyTemplate */
   protected override render(): TemplateResult {
+    // TODO(b/230763631): update this template to include spans instead of divs
     return html`
       <button
         type="button"
@@ -86,13 +77,9 @@ export class Switch extends LitElement {
         @focus="${this.handleFocus}"
         @blur="${this.handleBlur}"
         @pointerdown="${this.handlePointerDown}"
-        @pointerup="${this.handlePointerUp}"
-        @pointerenter="${this.handlePointerEnter}"
-        @pointerleave="${this.handlePointerLeave}"
       >
         ${this.renderFocusRing()}
-        <div class="md3-switch__track"></div>
-        <div class="md3-switch__handle-track">
+        <div class="md3-switch__track">
           ${this.renderHandle()}
         </div>
       </button>
@@ -124,56 +111,62 @@ export class Switch extends LitElement {
 
   /** @soyTemplate */
   protected renderHandle(): TemplateResult {
+    const classes = classMap({
+      'md3-switch__handle--big': this.icons && !this.onlySelectedIcon,
+    });
     return html`
-      <div class="md3-switch__handle">
-        ${this.renderShadow()}
-        ${this.renderRipple()}
-        <div class="md3-switch__icons">
-          ${this.renderOnIcon()}
-          ${this.renderOffIcon()}
-        </div>
+    <div class="md3-switch__handle-container">
+      <div class="md3-switch__handle ${classes}">
+        ${this.shouldShowIcons() ? this.renderIcons() : html``}
       </div>
+      ${this.renderTouchTarget()}
+    </div>
     `;
   }
 
   /** @soyTemplate */
-  protected renderShadow(): TemplateResult {
+  private renderIcons(): TemplateResult {
     return html`
-      <div class="md3-switch__shadow">
-        <div class="md3-elevation-overlay"></div>
+      <div class="md3-switch__icons">
+        ${this.renderOnIcon()}
+        ${this.onlySelectedIcon ? html`` : this.renderOffIcon()}
       </div>
     `;
   }
 
-  /** @soyTemplate */
-  protected renderRipple(): TemplateResult {
-    return !this.shouldRenderRipple ? html`` : html`
-        <div class="md3-switch__ripple">
-          <mwc-ripple
-            internalUseStateLayerCustomProperties
-            .disabled="${this.disabled}"
-            unbounded>
-          </mwc-ripple>
-        </div>
-      `;
-  }
-
-  /** @soyTemplate */
+  /**
+   * https://fonts.google.com/icons?selected=Material%20Symbols%20Outlined%3Acheck%3AFILL%400%3Bwght%40500%3BGRAD%400%3Bopsz%4024
+   *
+   * @soyTemplate
+   */
   protected renderOnIcon(): TemplateResult {
     return html`
       <svg class="md3-switch__icon md3-switch__icon--on" viewBox="0 0 24 24">
-        <path d="M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z" />
+        <path d="M9.55 18.2 3.65 12.3 5.275 10.675 9.55 14.95 18.725 5.775 20.35 7.4Z"/>
+      </svg>
+    `;
+  }
+
+  /**
+   * https://fonts.google.com/icons?selected=Material%20Symbols%20Outlined%3Aclose%3AFILL%400%3Bwght%40500%3BGRAD%400%3Bopsz%4024
+   *
+   * @soyTemplate
+   */
+  protected renderOffIcon(): TemplateResult {
+    return html`
+      <svg class="md3-switch__icon md3-switch__icon--off" viewBox="0 0 24 24">
+        <path d="M6.4 19.2 4.8 17.6 10.4 12 4.8 6.4 6.4 4.8 12 10.4 17.6 4.8 19.2 6.4 13.6 12 19.2 17.6 17.6 19.2 12 13.6Z"/>
       </svg>
     `;
   }
 
   /** @soyTemplate */
-  protected renderOffIcon(): TemplateResult {
-    return html`
-      <svg class="md3-switch__icon md3-switch__icon--off" viewBox="0 0 24 24">
-        <path d="M20 13H4v-2h16v2z" />
-      </svg>
-    `;
+  private renderTouchTarget(): TemplateResult {
+    return html`<span class="md3-switch__touch"></span>`;
+  }
+
+  private shouldShowIcons() {
+    return this.icons || this.onlySelectedIcon;
   }
 
   protected handleClick() {
@@ -186,29 +179,15 @@ export class Switch extends LitElement {
 
   protected handleFocus() {
     this.showFocusRing = shouldShowStrongFocus();
-    this.rippleHandlers.startFocus();
   }
 
   protected handleBlur() {
     this.showFocusRing = false;
-    this.rippleHandlers.endFocus();
   }
 
   @eventOptions({passive: true})
   protected handlePointerDown(event: PointerEvent) {
-    (event.target as HTMLElement).setPointerCapture(event.pointerId);
-    this.rippleHandlers.startPress(event);
-  }
-
-  protected handlePointerUp() {
-    this.rippleHandlers.endPress();
-  }
-
-  protected handlePointerEnter() {
-    this.rippleHandlers.startHover();
-  }
-
-  protected handlePointerLeave() {
-    this.rippleHandlers.endHover();
+    focusRingPointerPress();
+    this.showFocusRing = false;
   }
 }

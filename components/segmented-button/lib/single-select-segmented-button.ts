@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {SegmentedButton} from './segmented-button';
+import {SegmentedButton} from './segmented-button.js';
 
 /** @soyCompatible */
 export class SingleSelectSegmentedButton extends SegmentedButton {

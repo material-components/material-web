@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {FilledField} from './lib/filled-field';
-import {styles as filledStyles} from './lib/filled-styles.css';
-import {styles as sharedStyles} from './lib/shared-styles.css';
+import {FilledField} from './lib/filled-field.js';
+import {styles as filledStyles} from './lib/filled-styles.css.js';
+import {styles as sharedStyles} from './lib/shared-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

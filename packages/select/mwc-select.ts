@@ -8,10 +8,10 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {SelectBase} from './mwc-select-base';
-import {styles} from './mwc-select.css';
+import {SelectBase} from './mwc-select-base.js';
+import {styles} from './mwc-select.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

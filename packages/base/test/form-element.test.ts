@@ -8,11 +8,11 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {FormElement} from '@material/mwc-base/form-element';
+import {FormElement} from '@material/mwc-base/form-element.js';
 import {html, LitElement} from 'lit';
-import {customElement, property, query} from 'lit/decorators';
+import {customElement, property, query} from 'lit/decorators.js';
 
-import {fixture, simulateFormDataEvent, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, simulateFormDataEvent, TestFixture} from '../../../test/src/util/helpers.js';
 
 interface FormElementInternals {
   containingForm: HTMLFormElement|null;

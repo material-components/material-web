@@ -8,18 +8,18 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import '@material/mwc-formfield';
-import '@material/mwc-checkbox';
-import '@material/mwc-radio';
-import '@material/mwc-switch/mwc-switch';
+import '@material/mwc-formfield/mwc-formfield.js';
+import '@material/mwc-checkbox/mwc-checkbox.js';
+import '@material/mwc-radio/mwc-radio.js';
+import '@material/mwc-switch/mwc-switch.js';
 
-import {Checkbox} from '@material/mwc-checkbox';
-import {Formfield} from '@material/mwc-formfield';
-import {Radio} from '@material/mwc-radio';
-import {Switch} from '@material/mwc-switch/mwc-switch';
+import {Checkbox} from '@material/mwc-checkbox/mwc-checkbox.js';
+import {Formfield} from '@material/mwc-formfield/mwc-formfield.js';
+import {Radio} from '@material/mwc-radio/mwc-radio.js';
+import {Switch} from '@material/mwc-switch/mwc-switch.js';
 import {html} from 'lit';
 
-import {fixture, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, TestFixture} from '../../../test/src/util/helpers.js';
 
 const defaultEl = html`<mwc-formfield></mwc-formfield>`;
 

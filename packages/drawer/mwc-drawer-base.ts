@@ -15,16 +15,16 @@
 import 'blocking-elements';
 import 'wicg-inert';
 
-import {MDCDrawerAdapter} from '@material/drawer/adapter';
-import {strings} from '@material/drawer/constants';
-import MDCDismissibleDrawerFoundation from '@material/drawer/dismissible/foundation';
-import MDCModalDrawerFoundation from '@material/drawer/modal/foundation';
-import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
-import {observer} from '@material/mwc-base/observer';
+import {MDCDrawerAdapter} from '@material/drawer/adapter.js';
+import {strings} from '@material/drawer/constants.js';
+import MDCDismissibleDrawerFoundation from '@material/drawer/dismissible/foundation.js';
+import MDCModalDrawerFoundation from '@material/drawer/modal/foundation.js';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
+import {observer} from '@material/mwc-base/observer.js';
 import {DocumentWithBlockingElements} from 'blocking-elements';
 import {html, PropertyValues} from 'lit';
-import {property, query} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
+import {property, query} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 
 interface InertableHTMLElement extends HTMLElement {
   inert?: boolean;

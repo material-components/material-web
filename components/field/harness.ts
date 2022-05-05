@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {Harness} from '../testing/harness';
+import {Harness} from '../testing/harness.js';
 
-import {Field} from './lib/field';
+import {Field} from './lib/field.js';
 
 /**
  * Test harness for field elements.

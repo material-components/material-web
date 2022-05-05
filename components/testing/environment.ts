@@ -35,12 +35,10 @@ export class Environment {
       requestAnimationFrame(resolve);
     });
 
-    if (!this.roots.length) {
-      return;
+    const currentRoot = this.getCurrentRoot();
+    if (currentRoot) {
+      await this.waitForLitRender(currentRoot);
     }
-
-    const currentRoot = this.roots[this.roots.length - 1];
-    await this.waitForLitRender(currentRoot);
   }
 
   /**
@@ -90,8 +88,8 @@ export class Environment {
    * @return A new root container.
    */
   private createNewRoot() {
-    if (this.roots.length) {
-      const currentRoot = this.roots[this.roots.length - 1];
+    const currentRoot = this.getCurrentRoot();
+    if (currentRoot) {
       currentRoot.id = '';
       currentRoot.style.display = 'none';
     }
@@ -102,5 +100,15 @@ export class Environment {
     document.body.appendChild(root);
     this.roots.push(root);
     return root;
+  }
+
+  /**
+   * Get the current root container.
+   *
+   * @return The current root container or undefined is nothing as been rendered
+   *     yet.
+   */
+  protected getCurrentRoot(): HTMLElement|undefined {
+    return this.roots[this.roots.length - 1];
   }
 }

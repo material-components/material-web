@@ -6,7 +6,7 @@
 
 import {ReactiveController, ReactiveControllerHost} from 'lit';
 
-import {bound} from '../decorators/bound';
+import {bound} from '../decorators/bound.js';
 
 /**
  * An element that `FormController` may use.

@@ -4,16 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {doesElementContainFocus} from '@material/mwc-base/utils';
+import {doesElementContainFocus} from '@material/mwc-base/utils.js';
 import {KEY} from 'google3/third_party/javascript/material_components_web/dom/keyboard';
 import {fixture, rafPromise, TestFixture} from 'google3/third_party/javascript/material_web_components/testing/helpers';
 import * as hanbi from 'hanbi';
 import {html} from 'lit';
-import {customElement} from 'lit/decorators';
-import {ifDefined} from 'lit/directives/if-defined';
+import {customElement} from 'lit/decorators.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {MdNavigationTab} from '../../navigation_tab/navigation-tab';
-import {MdNavigationBar} from '../navigation-bar';
+import {NavigationTabHarness} from '../../navigation_tab/harness.js';
+import {MdNavigationTab} from '../../navigation_tab/navigation-tab.js';
+import {MdNavigationBar} from '../navigation-bar.js';
 
 @customElement('md-test-navigation-bar')
 class TestMdNavigationBar extends MdNavigationBar {
@@ -115,14 +116,12 @@ describe('md-navigation-bar', () => {
 
     it('#handleNavigationTabInteraction () updates on navigation tab click',
        async () => {
-         const tab1 = element.children[0] as HTMLElement;
-         const tab2 = element.children[1] as HTMLElement;
-         const tab1Button = tab1.shadowRoot!.querySelector('button')!;
-         const tab2Button = tab2.shadowRoot!.querySelector('button')!;
+         const tab1Harness = new NavigationTabHarness(element.tabs[0]);
+         const tab2Harness = new NavigationTabHarness(element.tabs[1]);
 
-         tab1Button.click();
+         await tab1Harness.click();
          expect(element.activeIndex).toEqual(0);
-         tab2Button.click();
+         await tab2Harness.click();
          expect(element.activeIndex).toEqual(1);
        });
 

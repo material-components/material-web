@@ -5,20 +5,20 @@
  * @requirecss {tabs.tab_bar.lib.shared_styles}
  */
 
-import {BaseElement} from '@material/mwc-base/base-element';
-import {observer} from '@material/mwc-base/observer';
+import {BaseElement} from '@material/mwc-base/base-element.js';
+import {observer} from '@material/mwc-base/observer.js';
 import {html, TemplateResult} from 'lit';
-import {property, query} from 'lit/decorators';
-import {ClassInfo, classMap} from 'lit/directives/class-map';
+import {property, query} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
-import {PrimaryTab} from '../../tab/lib/primary-tab';
-import {SecondaryTab} from '../../tab/lib/secondary-tab';
-import {TabInteractionEvent} from '../../tab/lib/types';
-import {TabScroller} from '../../tab_scroller/lib/tab-scroller';
+import {PrimaryTab} from '../../tab/lib/primary-tab.js';
+import {SecondaryTab} from '../../tab/lib/secondary-tab.js';
+import {TabInteractionEvent} from '../../tab/lib/types.js';
+import {TabScroller} from '../../tab_scroller/lib/tab-scroller.js';
 
-import {MDCTabBarAdapter} from './adapter';
-import MDCTabBarFoundation from './foundation';
-import {TabBarActivatedEvent, TabBarActivatedEventDetail} from './types';
+import {MDCTabBarAdapter} from './adapter.js';
+import MDCTabBarFoundation from './foundation.js';
+import {TabBarActivatedEvent, TabBarActivatedEventDetail} from './types.js';
 
 /** @soyCompatible */
 export abstract class TabBar extends BaseElement {

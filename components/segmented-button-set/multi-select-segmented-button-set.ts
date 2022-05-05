@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {MultiSelectSegmentedButtonSet} from './lib/multi-select-segmented-button-set';
-import {styles} from './lib/shared-styles.css';
+import {MultiSelectSegmentedButtonSet} from './lib/multi-select-segmented-button-set.js';
+import {styles} from './lib/shared-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

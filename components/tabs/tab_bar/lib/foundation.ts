@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCFoundation} from '@material/base/foundation';
+import {MDCFoundation} from '@material/base/foundation.js';
 
-import {MDCTabDimensions, TabInteractionEvent} from '../../tab/lib/types';
+import {MDCTabDimensions, TabInteractionEvent} from '../../tab/lib/types.js';
 
-import {MDCTabBarAdapter} from './adapter';
-import {numbers, strings} from './constants';
+import {MDCTabBarAdapter} from './adapter.js';
+import {numbers, strings} from './constants.js';
 
 const ACCEPTABLE_KEYS = new Set<string>();
 // IE11 has no support for new Set with iterable so we need to initialize this by hand

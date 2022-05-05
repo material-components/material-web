@@ -7,10 +7,10 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {CircularProgressBase} from './mwc-circular-progress-base';
-import {styles} from './mwc-circular-progress.css';
+import {CircularProgressBase} from './mwc-circular-progress-base.js';
+import {styles} from './mwc-circular-progress.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

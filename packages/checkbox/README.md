@@ -33,7 +33,7 @@ npm install @material/mwc-checkbox
 <mwc-checkbox checked></mwc-checkbox>
 
 <script type="module">
-  import '@material/mwc-checkbox';
+  import '@material/mwc-checkbox/mwc-checkbox.js';
 
   const checkbox = document.body.querySelector('mwc-checkbox')
   checkbox.addEventListener('change', () => {
@@ -122,8 +122,8 @@ to associate an interactive label with the checkbox.
 </mwc-formfield>
 
 <script type="module">
-  import '@material/mwc-checkbox';
-  import '@material/mwc-formfield';
+  import '@material/mwc-checkbox/mwc-checkbox.js';
+  import '@material/mwc-formfield/mwc-formfield.js';
 </script>
 ```
 

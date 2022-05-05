@@ -7,7 +7,7 @@
 // TODO(b/228217731): Remove MDC/MWC dependencies
 @use 'sass:map';
 @use 'third_party/javascript/material_web_components/m3/sass/theme';
-@use '@material/theme/theme-color';
+@use '../../../compat/theme/theme-color';
 
 $custom-property-prefix: 'tab-indicator';
 $light-theme: (

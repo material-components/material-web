@@ -4,18 +4,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/mwc-ripple/mwc-ripple';
+import '@material/mwc-ripple/mwc-ripple.js';
 
-import {ariaProperty} from '@material/mwc-base/aria-property';
-import {FormElement} from '@material/mwc-base/form-element';
-import {Ripple} from '@material/mwc-ripple/mwc-ripple';
-import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {MDCSwitchAdapter, MDCSwitchState} from '@material/switch/adapter';
-import {MDCSwitchFoundation} from '@material/switch/foundation';
+import {ariaProperty} from '@material/mwc-base/aria-property.js';
+import {FormElement} from '@material/mwc-base/form-element.js';
+import {Ripple} from '@material/mwc-ripple/mwc-ripple.js';
+import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers.js';
+import {MDCSwitchAdapter, MDCSwitchState} from '@material/switch/adapter.js';
+import {MDCSwitchFoundation} from '@material/switch/foundation.js';
 import {html, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAsync, state} from 'lit/decorators';
-import {ClassInfo, classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
+import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 export class SwitchBase extends FormElement implements MDCSwitchState {
   // MDCSwitchState

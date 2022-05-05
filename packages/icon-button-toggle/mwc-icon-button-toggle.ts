@@ -8,11 +8,11 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {styles} from '@material/mwc-icon-button/mwc-icon-button.css';
+import {styles} from '@material/mwc-icon-button/mwc-icon-button.css.js';
 
-import {IconButtonToggleBase} from './mwc-icon-button-toggle-base';
+import {IconButtonToggleBase} from './mwc-icon-button-toggle-base.js';
 
 declare global {
   interface HTMLElementTagNameMap {

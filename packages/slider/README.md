@@ -35,7 +35,7 @@ work still to be done:
 
 ```html
 <script type="module">
-  import '@material/mwc-slider';
+  import '@material/mwc-slider/mwc-slider.js';
 </script>
 
 <mwc-slider value="25" min="10" max="50"></mwc-slider>
@@ -57,7 +57,7 @@ work still to be done:
 
 ```html
 <script type="module">
-  import '@material/mwc-slider/slider-range.js';
+  import '@material/mwc-slider/slider-range.js.js';
 </script>
 
 <mwc-slider-range

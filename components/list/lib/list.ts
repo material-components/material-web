@@ -6,9 +6,9 @@
 
 import {html, LitElement, TemplateResult} from 'lit';
 
-import {ARIARole} from '../../types/aria';
+import {ARIARole} from '../../types/aria.js';
 
-import {ListItemInteractionEvent} from './constants';
+import {ListItemInteractionEvent} from './constants.js';
 
 /** @soyCompatible */
 export class List extends LitElement {

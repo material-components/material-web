@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {TabIndicator} from './lib/tab-indicator';
-import {styles} from './lib/tab-indicator-styles.css';
+import {TabIndicator} from './lib/tab-indicator.js';
+import {styles} from './lib/tab-indicator-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -36,8 +36,8 @@ npm install @material/mwc-tab-bar
 </mwc-tab-bar>
 
 <script type="module">
-  import '@material/mwc-tab-bar';
-  import '@material/mwc-tab';
+  import '@material/mwc-tab-bar/mwc-tab-bar.js';
+  import '@material/mwc-tab/mwc-tab.js';
 </script>
 ```
 

@@ -19,7 +19,7 @@ process.
 
 ```html
 <script type="module">
-  import '@material/mwc-circular-progress';
+  import '@material/mwc-circular-progress/mwc-circular-progress.js';
 </script>
 <mwc-circular-progress progress="0.7"></mwc-circular-progress>
 ```

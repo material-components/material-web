@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {property} from 'lit/decorators';
-import {ClassInfo} from 'lit/directives/class-map';
+import {property} from 'lit/decorators.js';
+import {ClassInfo} from 'lit/directives/class-map.js';
 
-import {Tab} from './tab';
+import {Tab} from './tab.js';
 
 /** @soyCompatible */
 export class PrimaryTab extends Tab {

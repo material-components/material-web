@@ -8,19 +8,19 @@
 // tslint:disable:strip-private-property-underscore
 
 // Make TypeScript not remove the imports.
-import '@material/mwc-tab';
-import '@material/mwc-tab-scroller';
+import '@material/mwc-tab/mwc-tab.js';
+import '@material/mwc-tab-scroller/mwc-tab-scroller.js';
 
-import {BaseElement} from '@material/mwc-base/base-element';
-import {observer} from '@material/mwc-base/observer';
-import {Tab} from '@material/mwc-tab';
-import {TabScroller} from '@material/mwc-tab-scroller';
-import {TabBase} from '@material/mwc-tab/mwc-tab-base';
-import {MDCTabBarAdapter} from '@material/tab-bar/adapter';
-import MDCTabBarFoundation from '@material/tab-bar/foundation';
-import {MDCTabInteractionEvent} from '@material/tab/types';
+import {BaseElement} from '@material/mwc-base/base-element.js';
+import {observer} from '@material/mwc-base/observer.js';
+import {Tab} from '@material/mwc-tab/mwc-tab.js';
+import {TabScroller} from '@material/mwc-tab-scroller/mwc-tab-scroller.js';
+import {TabBase} from '@material/mwc-tab/mwc-tab-base.js';
+import {MDCTabBarAdapter} from '@material/tab-bar/adapter.js';
+import MDCTabBarFoundation from '@material/tab-bar/foundation.js';
+import {MDCTabInteractionEvent} from '@material/tab/types.js';
 import {html} from 'lit';
-import {property, query} from 'lit/decorators';
+import {property, query} from 'lit/decorators.js';
 
 export class TabBarBase extends BaseElement {
   protected mdcFoundation!: MDCTabBarFoundation;

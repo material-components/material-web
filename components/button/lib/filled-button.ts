@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ClassInfo} from 'lit/directives/class-map';
+import {ClassInfo} from 'lit/directives/class-map.js';
 
-import {Button} from './button';
+import {Button} from './button.js';
 
 /** @soyCompatible */
 export class FilledButton extends Button {

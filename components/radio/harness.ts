@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {Harness} from '../testing/harness';
+import {Harness} from '../testing/harness.js';
 
-import {Radio} from './lib/radio';
+import {Radio} from './lib/radio.js';
 
 /**
  * Test harness for radio.

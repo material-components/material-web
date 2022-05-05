@@ -8,7 +8,7 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {IconButtonToggle} from '@material/mwc-icon-button-toggle';
+import {IconButtonToggle} from '@material/mwc-icon-button-toggle/mwc-icon-button-toggle.js';
 import {html, render} from 'lit';
 
 const ICON_BUTTON_ON_SELECTOR = '.mdc-icon-button.mdc-icon-button--on';

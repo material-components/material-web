@@ -84,8 +84,8 @@ to associate an interactive label with the switch.
 </mwc-formfield>
 
 <script type="module">
-  import '@material/mwc-switch';
-  import '@material/mwc-formfield';
+  import '@material/mwc-switch/mwc-switch.js';
+  import '@material/mwc-formfield/mwc-formfield.js';
 </script>
 ```
 
@@ -118,7 +118,7 @@ properties. The `theme()` mixin can be used for simple and complex theming,
 such as density.
 
 ```scss
-@use '@material/mwc-switch';
+@use '@material/mwc-switch/mwc-switch';
 
 mwc-switch {
   @include mwc-switch.theme((

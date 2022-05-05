@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ClassInfo} from 'lit/directives/class-map';
+import {ClassInfo} from 'lit/directives/class-map.js';
 
-import {Tab} from './tab';
+import {Tab} from './tab.js';
 
 /** @soyCompatible */
 export class SecondaryTab extends Tab {

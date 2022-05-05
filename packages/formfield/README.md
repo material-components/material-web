@@ -42,8 +42,8 @@ npm install @material/mwc-formfield
 </mwc-formfield>
 
 <script type="module">
-  import '@material/mwc-checkbox';
-  import '@material/mwc-formfield';
+  import '@material/mwc-checkbox/mwc-checkbox.js';
+  import '@material/mwc-formfield/mwc-formfield.js';
 </script>
 ```
 
@@ -62,8 +62,8 @@ npm install @material/mwc-formfield
 </mwc-formfield>
 
 <script type="module">
-  import '@material/mwc-checkbox';
-  import '@material/mwc-formfield';
+  import '@material/mwc-checkbox/mwc-checkbox.js';
+  import '@material/mwc-formfield/mwc-formfield.js';
 </script>
 ```
 
@@ -87,8 +87,8 @@ npm install @material/mwc-formfield
 </mwc-formfield>
 
 <script type="module">
-  import '@material/mwc-radio';
-  import '@material/mwc-formfield';
+  import '@material/mwc-radio/mwc-radio.js';
+  import '@material/mwc-formfield/mwc-formfield.js';
 </script>
 ```
 
@@ -102,8 +102,8 @@ npm install @material/mwc-formfield
 </mwc-formfield>
 
 <script type="module">
-  import '@material/mwc-switch';
-  import '@material/mwc-formfield';
+  import '@material/mwc-switch/mwc-switch.js';
+  import '@material/mwc-formfield/mwc-formfield.js';
 </script>
 ```
 

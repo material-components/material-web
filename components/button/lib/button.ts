@@ -4,21 +4,21 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/mwc-icon/mwc-icon';
-import '../../focus/focus-ring';
-import '../../ripple/ripple';
+import '@material/mwc-icon/mwc-icon.js';
+import '../../focus/focus-ring.js';
+import '../../ripple/ripple.js';
 
 import {html, LitElement, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAssignedElements, state} from 'lit/decorators';
-import {ClassInfo, classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
+import {eventOptions, property, query, queryAssignedElements, state} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {ariaProperty} from '../../decorators/aria-property';
-import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
-import {MdRipple} from '../../ripple/ripple';
-import {ARIAHasPopup} from '../../types/aria';
+import {ariaProperty} from '../../decorators/aria-property.js';
+import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
+import {MdRipple} from '../../ripple/ripple.js';
+import {ARIAHasPopup} from '../../types/aria.js';
 
-import {ButtonState} from './state';
+import {ButtonState} from './state.js';
 
 /** @soyCompatible */
 export abstract class Button extends LitElement implements ButtonState {

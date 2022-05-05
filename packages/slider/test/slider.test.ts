@@ -4,16 +4,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../slider';
+import '../slider.js';
 
 // import * as hanbi from 'hanbi';
 import {html} from 'lit';
 
-import {fixture, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, TestFixture} from '../../../test/src/util/helpers.js';
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {Slider} from '../slider';
+import {Slider} from '../slider.js';
 
 const basic = html`
   <mwc-slider></mwc-slider>

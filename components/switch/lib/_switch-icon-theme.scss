@@ -1,0 +1,52 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use 'sass:map';
+
+$_selected: '.md3-switch--selected';
+$_unselected: '.md3-switch--unselected';
+
+@mixin theme-styles($theme) {
+  .md3-switch__icon {
+    @include _icon($theme);
+  }
+}
+
+// PRIVATE API - icons
+
+@mixin _icon($theme) {
+  // icon size
+
+  #{$_selected} & {
+    width: map.get($theme, selected-icon-size);
+    height: map.get($theme, selected-icon-size);
+  }
+
+  #{$_unselected} & {
+    width: map.get($theme, unselected-icon-size);
+    height: map.get($theme, unselected-icon-size);
+  }
+
+  // icon color
+
+  #{$_selected} & {
+    fill: map.get($theme, selected-icon-color);
+  }
+
+  #{$_selected}:disabled & {
+    fill: map.get($theme, disabled-selected-icon-color);
+  }
+
+  #{$_unselected} & {
+    fill: map.get($theme, unselected-icon-color);
+  }
+
+  #{$_unselected}:disabled & {
+    fill: map.get($theme, disabled-unselected-icon-color);
+  }
+}

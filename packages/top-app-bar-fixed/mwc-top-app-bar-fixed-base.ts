@@ -7,9 +7,9 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {TopAppBarBase} from '@material/mwc-top-app-bar/mwc-top-app-bar-base';
-import {passiveEventOptionsIfSupported} from '@material/mwc-top-app-bar/mwc-top-app-bar-base-base';
-import MDCFixedTopAppBarFoundation from '@material/top-app-bar/fixed/foundation';
+import {TopAppBarBase} from '@material/mwc-top-app-bar/mwc-top-app-bar-base.js';
+import {passiveEventOptionsIfSupported} from '@material/mwc-top-app-bar/mwc-top-app-bar-base-base.js';
+import MDCFixedTopAppBarFoundation from '@material/top-app-bar/fixed/foundation.js';
 
 export class TopAppBarFixedBase extends TopAppBarBase {
   protected override mdcFoundation!: MDCFixedTopAppBarFoundation;

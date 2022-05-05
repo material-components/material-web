@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {Foundation} from './foundation';
-import {observeProperty, ObserverRecord} from './observer';
+import {Foundation} from './foundation.js';
+import {observeProperty, ObserverRecord} from './observer.js';
 
 /**
  * Legacy observer foundation class for components.

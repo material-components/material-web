@@ -7,11 +7,11 @@
 import 'jasmine';
 
 import {html, LitElement} from 'lit';
-import {customElement, property, query} from 'lit/decorators';
-import {ifDefined} from 'lit/directives/if-defined';
+import {customElement, property, query} from 'lit/decorators.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {Environment} from '../../testing/environment';
-import {ariaProperty} from '../aria-property';
+import {Environment} from '../../testing/environment.js';
+import {ariaProperty} from '../aria-property.js';
 
 describe('@ariaProperty', () => {
   const env = new Environment();

@@ -6,10 +6,8 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-// TODO(b/228217731): Remove MDC/MWC dependencies
 @use 'sass:map';
-@use '@material/animation/animation';
-@use '@material/theme/state';
+@use '../../motion/animation';
 @use './field-theme';
 
 $_animation-duration: 150ms;

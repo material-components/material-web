@@ -38,7 +38,7 @@ npm install @material/mwc-snackbar
 </mwc-snackbar>
 
 <script type="module">
-  import '@material/mwc-snackbar';
+  import '@material/mwc-snackbar/mwc-snackbar.js';
   const snackbar = document.querySelector('#photoErrorSnackbar');
   sendPhoto.then(...).catch(() => snackbar.show());
 </script>

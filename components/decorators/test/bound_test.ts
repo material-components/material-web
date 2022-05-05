@@ -6,7 +6,7 @@
 
 import 'jasmine';
 
-import {bound} from '../bound';
+import {bound} from '../bound.js';
 
 describe('@bound', () => {
   class MyClass {

@@ -4,17 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../focus/focus-ring';
+import '../../focus/focus-ring.js';
 
 import {html, TemplateResult} from 'lit';
-import {property, query, state} from 'lit/decorators';
-import {ifDefined} from 'lit/directives/if-defined';
+import {property, query, state} from 'lit/decorators.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action-element/action-element';
-import {ariaProperty} from '../../decorators/aria-property';
-import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
-import {MdRipple} from '../../ripple/ripple';
-import {ARIAHasPopup} from '../../types/aria';
+import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action-element/action-element.js';
+import {ariaProperty} from '../../decorators/aria-property.js';
+import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
+import {MdRipple} from '../../ripple/ripple.js';
+import {ARIAHasPopup} from '../../types/aria.js';
 
 /** @soyCompatible */
 export class IconButton extends ActionElement {

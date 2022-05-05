@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {Harness} from '../testing/harness';
+import {Harness} from '../testing/harness.js';
 
-import {Button} from './lib/button';
+import {Button} from './lib/button.js';
 
 /**
  * Test harness for buttons.

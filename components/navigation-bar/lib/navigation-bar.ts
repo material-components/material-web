@@ -4,17 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {KEY, normalizeKey} from '@material/dom/keyboard';
-import {ariaProperty} from '@material/mwc-base/aria-property';
-import {observer} from '@material/mwc-base/observer';
-import {deepActiveElementPath} from '@material/mwc-base/utils';
+import {KEY, normalizeKey} from '@material/dom/keyboard.js';
+import {ariaProperty} from '@material/mwc-base/aria-property.js';
+import {observer} from '@material/mwc-base/observer.js';
+import {deepActiveElementPath} from '@material/mwc-base/utils.js';
 import {NavigationTab} from 'google3/third_party/javascript/material_web_components/m3/navigation_tab/lib/navigation-tab';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
-import {property, queryAssignedElements} from 'lit/decorators';
-import {ifDefined} from 'lit/directives/if-defined';
+import {property, queryAssignedElements} from 'lit/decorators.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {NavigationTabInteractionEvent} from './constants';
-import {NavigationBarState} from './state';
+import {NavigationTabInteractionEvent} from './constants.js';
+import {NavigationBarState} from './state.js';
 
 /** @soyCompatible */
 export class NavigationBar extends LitElement implements NavigationBarState {

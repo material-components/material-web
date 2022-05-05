@@ -5,14 +5,14 @@
  */
 
 import {html, TemplateResult} from 'lit';
-import {property, query, state} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
+import {property, query, state} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action-element/action-element';
-import {ariaProperty} from '../../decorators/aria-property';
-import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
-import {MdRipple} from '../../ripple/ripple';
+import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action-element/action-element.js';
+import {ariaProperty} from '../../decorators/aria-property.js';
+import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
+import {MdRipple} from '../../ripple/ripple.js';
 
 /** @soyCompatible */
 export class IconButtonToggle extends ActionElement {

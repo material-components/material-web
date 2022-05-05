@@ -4,17 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../tab_indicator/tab-indicator';
-import '../../icon/icon';
+import '../tab_indicator/tab-indicator.js';
+import '../../icon/icon.js';
 
 import {html, TemplateResult} from 'lit';
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {SecondaryTab} from './lib/secondary-tab';
-import {styles as secondaryStyles} from './lib/secondary-tab-styles.css';
-import {styles as sharedStyles} from './lib/shared-styles.css';
+import {SecondaryTab} from './lib/secondary-tab.js';
+import {styles as secondaryStyles} from './lib/secondary-tab-styles.css.js';
+import {styles as sharedStyles} from './lib/shared-styles.css.js';
 
-export {TabInteractionEventDetail} from './lib/types';
+export {TabInteractionEventDetail} from './lib/types.js';
 
 declare global {
   interface HTMLElementTagNameMap {

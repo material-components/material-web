@@ -7,14 +7,14 @@
  */
 
 import {html, LitElement, TemplateResult} from 'lit';
-import {property, state, queryAsync} from 'lit/decorators';
-import {ClassInfo, classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
-import {live} from 'lit/directives/live';
+import {property, state, queryAsync} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
+import {live} from 'lit/directives/live.js';
 
-import {redispatchEvent} from '../../controller/events';
-import {FormController, getFormValue} from '../../controller/form-controller';
-import {ariaProperty} from '../../decorators/aria-property';
+import {redispatchEvent} from '../../controller/events.js';
+import {FormController, getFormValue} from '../../controller/form-controller.js';
+import {ariaProperty} from '../../decorators/aria-property.js';
 
 /** @soyCompatible */
 export class TextField extends LitElement {

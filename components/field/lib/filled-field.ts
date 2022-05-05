@@ -5,11 +5,11 @@
  */
 
 import {html, TemplateResult} from 'lit';
-import {state} from 'lit/decorators';
-import {ClassInfo} from 'lit/directives/class-map';
-import {styleMap} from 'lit/directives/style-map';
+import {state} from 'lit/decorators.js';
+import {ClassInfo} from 'lit/directives/class-map.js';
+import {styleMap} from 'lit/directives/style-map.js';
 
-import {Field} from './field';
+import {Field} from './field.js';
 
 /** @soyCompatible */
 export class FilledField extends Field {

@@ -7,18 +7,18 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import '@material/mwc-ripple/mwc-ripple';
+import '@material/mwc-ripple/mwc-ripple.js';
 
-import {ariaProperty} from '@material/mwc-base/aria-property';
-import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
-import {observer} from '@material/mwc-base/observer';
-import {Ripple} from '@material/mwc-ripple/mwc-ripple';
-import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {MDCSwitchAdapter} from '@material/switch/deprecated/adapter';
-import MDCSwitchFoundation from '@material/switch/deprecated/foundation';
+import {ariaProperty} from '@material/mwc-base/aria-property.js';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
+import {observer} from '@material/mwc-base/observer.js';
+import {Ripple} from '@material/mwc-ripple/mwc-ripple.js';
+import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers.js';
+import {MDCSwitchAdapter} from '@material/switch/deprecated/adapter.js';
+import MDCSwitchFoundation from '@material/switch/deprecated/foundation.js';
 import {html} from 'lit';
-import {eventOptions, property, query, queryAsync, state} from 'lit/decorators';
-import {ifDefined} from 'lit/directives/if-defined';
+import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 export class SwitchBase extends BaseElement {
   @property({type: Boolean})
