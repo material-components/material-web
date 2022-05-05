@@ -28,6 +28,11 @@ export class ButtonBase extends LitElement {
   @property({type: String, attribute: 'aria-haspopup'})
   override ariaHasPopup!: AriaHasPopup;
 
+  /** @soyPrefixAttribute */
+  @ariaProperty
+  @property({type: String, attribute: 'aria-expanded'})
+    override ariaExpanded!: 'true' | 'false';
+
   @property({type: Boolean, reflect: true}) raised = false;
 
   @property({type: Boolean, reflect: true}) unelevated = false;
@@ -112,6 +117,7 @@ export class ButtonBase extends LitElement {
           ?disabled="${this.disabled}"
           aria-label="${this.label || this.icon}"
           aria-haspopup="${ifDefined(this.ariaHasPopup)}"
+          aria-expanded="${ifDefined(this.ariaExpanded)}"
           @focus="${this.handleRippleFocus}"
           @blur="${this.handleRippleBlur}"
           @mousedown="${this.handleRippleActivate}"

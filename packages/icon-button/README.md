@@ -93,6 +93,7 @@ For technical details about the Material Icons font, see the
 | Name | Type | Default | Description
 | ---- | ---- | ------- | -----------
 | `aria-haspopup` | `string` | `undefined` | Indicates the availability and type of an interactive popup element, such as menu or dialog, that can be triggered by the button.
+| `aria-expanded` | `string` | `undefined` | Indicates the expanded or collapsed state of content the button may control, such as a menu.
 | `icon` | `string` | `''` | Icon to display, and `aria-label` value when `label` is not defined.
 | `aria-label` | `string` | `''` | Accessible label for the button.
 | `disabled` | `boolean` | `false` | Disabled buttons cannot be interacted with and have no visual interaction effect.

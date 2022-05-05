@@ -32,6 +32,11 @@ export class IconButtonBase extends LitElement {
   @property({type: String, attribute: 'aria-haspopup'})
   override ariaHasPopup!: AriaHasPopup;
 
+  /** @soyPrefixAttribute */
+  @ariaProperty
+  @property({type: String, attribute: 'aria-expanded'})
+  override ariaExpanded!: 'true' | 'false';
+
   @query('button') buttonElement!: HTMLElement;
 
   @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
@@ -75,6 +80,7 @@ export class IconButtonBase extends LitElement {
         class="mdc-icon-button mdc-icon-button--display-flex"
         aria-label="${this.ariaLabel || this.icon}"
         aria-haspopup="${ifDefined(this.ariaHasPopup)}"
+        aria-expanded="${ifDefined(this.ariaExpanded)}"
         ?disabled="${this.disabled}"
         @focus="${this.handleRippleFocus}"
         @blur="${this.handleRippleBlur}"

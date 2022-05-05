@@ -123,6 +123,7 @@ mwc-button {
 | Name | Type | Default | Description
 | ---- | ---- | ------- | -----------
 | `aria-haspopup` | `string` | `undefined` | Indicates the availability and type of an interactive popup element, such as menu or dialog, that can be triggered by the button.
+| `aria-expanded` | `string` | `undefined` | Indicates the expanded or collapsed state of content the button may control, such as a menu.
 | `icon` | `string` | `''` | Icon to display, and `aria-label` value when `label` is not defined.
 | `label` | `string` | `''` | Label to display for the button, and `aria-label`.
 | `raised` | `boolean` | `false` | Creates a contained button that is elevated above the surface.
