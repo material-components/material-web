@@ -40,7 +40,6 @@ $icon-enter-duration: $animation-duration - $icon-exit-duration;
         @include _track-selected-before;
       }
     }
-  }
 
   // Handle container
   .md3-switch__handle-container {
