@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCTabIndicatorFoundation} from './foundation';
+import {MDCTabIndicatorFoundation} from './foundation.js';
 
 /* istanbul ignore next: subclass is not a branch statement */
 export class MDCFadingTabIndicatorFoundation extends MDCTabIndicatorFoundation {

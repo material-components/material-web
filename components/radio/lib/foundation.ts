@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCFoundation} from '@material/base/foundation';
-import {MDCRadioAdapter} from './adapter';
-import {cssClasses, strings} from './constants';
+import {MDCFoundation} from '@material/base/foundation.js';
+import {MDCRadioAdapter} from './adapter.js';
+import {cssClasses, strings} from './constants.js';
 
 export class MDCRadioFoundation extends MDCFoundation<MDCRadioAdapter> {
   static override get cssClasses() {

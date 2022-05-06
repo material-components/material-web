@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ObserverFoundation} from '../../controller/observer-foundation';
-import {SegmentedButtonState} from '../../segmented_button/lib/state';
+import {ObserverFoundation} from '../../controller/observer-foundation.js';
+import {SegmentedButtonState} from '../../segmented_button/lib/state.js';
 
-import {SegmentedButtonSetAdapter} from './state';
+import {SegmentedButtonSetAdapter} from './state.js';
 
 const navigationKeys = new Set<string>([
   'End',

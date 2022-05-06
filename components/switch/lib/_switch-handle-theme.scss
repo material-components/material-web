@@ -1,0 +1,150 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use 'sass:map';
+
+$_selected: '.md3-switch--selected';
+$_unselected: '.md3-switch--unselected';
+
+@mixin theme-styles($theme) {
+  .md3-switch__handle-container {
+    @include _handle-container($theme);
+  }
+
+  .md3-switch__handle {
+    @include _handle($theme);
+    @include _handle-selected($theme);
+    &::before {
+      @include _handle-unselected($theme);
+    }
+  }
+}
+
+@mixin _handle-container($theme) {
+  @include _handle-position(
+    map.get($theme, track-height),
+    map.get($theme, track-width)
+  );
+}
+
+@mixin _handle-position($track-height, $track-width) {
+  $margin: calc($track-width - $track-height);
+
+  #{$_selected} & {
+    margin-inline-start: $margin;
+  }
+
+  #{$_unselected} & {
+    margin-inline-end: $margin;
+  }
+}
+
+@mixin _handle($theme) {
+  // Handle shape
+  border-start-start-radius: map.get($theme, handle-shape-start-start);
+  border-start-end-radius: map.get($theme, handle-shape-start-end);
+  border-end-end-radius: map.get($theme, handle-shape-end-end);
+  border-end-start-radius: map.get($theme, handle-shape-end-start);
+
+  @include _handle-size(
+    (
+      handle-height: map.get($theme, handle-height),
+      handle-width: map.get($theme, handle-width),
+      unselected-handle-height: map.get($theme, unselected-handle-height),
+      unselected-handle-width: map.get($theme, unselected-handle-width),
+      selected-handle-height: map.get($theme, selected-handle-height),
+      selected-handle-width: map.get($theme, selected-handle-width),
+      pressed-handle-height: map.get($theme, pressed-handle-height),
+      pressed-handle-width: map.get($theme, pressed-handle-width),
+    )
+  );
+}
+
+@mixin _handle-size($sizes) {
+  height: map.get($sizes, handle-height);
+  width: map.get($sizes, handle-width);
+
+  // TODO(b/230484095): Use token instead of hard coded values
+  #{$_selected} &,
+  #{$_unselected} &.md3-switch__handle--big {
+    transform: scale(1.2);
+  }
+  #{$_unselected} & {
+    transform: scale(0.8);
+  }
+  #{$_selected}:enabled:active & {
+    transform: scale(1.4);
+  }
+  #{$_unselected}:enabled:active & {
+    transform: scale(1.4);
+  }
+}
+
+@mixin _handle-selected($theme) {
+  @include _selected-handle-color(
+    (
+      default: map.get($theme, selected-handle-color),
+      disabled: map.get($theme, disabled-selected-handle-color),
+      focus: map.get($theme, selected-focus-handle-color),
+      hover: map.get($theme, selected-hover-handle-color),
+      pressed: map.get($theme, selected-pressed-handle-color),
+    )
+  );
+}
+
+@mixin _selected-handle-color($colors) {
+  background-color: map.get($colors, default);
+
+  #{$_selected}:hover & {
+    background-color: map.get($colors, hover);
+  }
+
+  #{$_selected}:focus-visible & {
+    background-color: map.get($colors, focus);
+  }
+
+  #{$_selected}:active & {
+    background-color: map.get($colors, pressed);
+  }
+
+  #{$_selected}:disabled & {
+    background-color: map.get($colors, disabled);
+  }
+}
+
+@mixin _handle-unselected($theme) {
+  @include _unselected-handle-color(
+    (
+      default: map.get($theme, unselected-handle-color),
+      disabled: map.get($theme, disabled-unselected-handle-color),
+      focus: map.get($theme, unselected-focus-handle-color),
+      hover: map.get($theme, unselected-hover-handle-color),
+      pressed: map.get($theme, unselected-pressed-handle-color),
+    )
+  );
+}
+
+@mixin _unselected-handle-color($colors) {
+  background-color: map.get($colors, default);
+
+  #{$_unselected}:hover & {
+    background-color: map.get($colors, hover);
+  }
+
+  #{$_unselected}:focus-visible & {
+    background-color: map.get($colors, focus);
+  }
+
+  #{$_unselected}:active & {
+    background-color: map.get($colors, pressed);
+  }
+
+  #{$_unselected}:disabled & {
+    background-color: map.get($colors, disabled);
+  }
+}

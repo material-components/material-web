@@ -7,25 +7,25 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import '@material/mwc-list';
-import './mwc-menu-surface';
+import '@material/mwc-list/mwc-list.js';
+import './mwc-menu-surface.js';
 
-import {MDCMenuAdapter} from '@material/menu/adapter';
-import {DefaultFocusState as DefaultFocusStateEnum} from '@material/menu/constants';
-import MDCMenuFoundation from '@material/menu/foundation';
-import {BaseElement} from '@material/mwc-base/base-element';
-import {observer} from '@material/mwc-base/observer';
-import {List, MWCListIndex} from '@material/mwc-list';
-import {ActionDetail} from '@material/mwc-list/mwc-list-foundation';
-import {ListItemBase} from '@material/mwc-list/mwc-list-item-base';
+import {MDCMenuAdapter} from '@material/menu/adapter.js';
+import {DefaultFocusState as DefaultFocusStateEnum} from '@material/menu/constants.js';
+import MDCMenuFoundation from '@material/menu/foundation.js';
+import {BaseElement} from '@material/mwc-base/base-element.js';
+import {observer} from '@material/mwc-base/observer.js';
+import {List, MWCListIndex} from '@material/mwc-list/mwc-list.js';
+import {ActionDetail} from '@material/mwc-list/mwc-list-foundation.js';
+import {ListItemBase} from '@material/mwc-list/mwc-list-item-base.js';
 import {html} from 'lit';
-import {property, query} from 'lit/decorators';
+import {property, query} from 'lit/decorators.js';
 
-import {MenuSurface} from './mwc-menu-surface';
-import {Corner, MenuCorner} from './mwc-menu-surface-base';
+import {MenuSurface} from './mwc-menu-surface.js';
+import {Corner, MenuCorner} from './mwc-menu-surface-base.js';
 
-export {ActionDetail, createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex, SelectedDetail} from '@material/mwc-list/mwc-list-foundation';
-export {Corner, MenuCorner} from './mwc-menu-surface-base';
+export {ActionDetail, createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex, SelectedDetail} from '@material/mwc-list/mwc-list-foundation.js';
+export {Corner, MenuCorner} from './mwc-menu-surface-base.js';
 
 export type DefaultFocusState = keyof typeof DefaultFocusStateEnum;
 

@@ -4,17 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {doesElementContainFocus} from '@material/mwc-base/utils';
+import {doesElementContainFocus} from '@material/mwc-base/utils.js';
 import {KEY} from 'google3/third_party/javascript/material_components_web/dom/keyboard';
 import {fixture, rafPromise, TestFixture} from 'google3/third_party/javascript/material_web_components/testing/helpers';
 import * as hanbi from 'hanbi';
 import {html} from 'lit';
-import {customElement} from 'lit/decorators';
-import {ifDefined} from 'lit/directives/if-defined';
+import {customElement} from 'lit/decorators.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {NavigationTabHarness} from '../../navigation_tab/harness';
-import {MdNavigationTab} from '../../navigation_tab/navigation-tab';
-import {MdNavigationBar} from '../navigation-bar';
+import {NavigationTabHarness} from '../../navigation_tab/harness.js';
+import {MdNavigationTab} from '../../navigation_tab/navigation-tab.js';
+import {MdNavigationBar} from '../navigation-bar.js';
 
 @customElement('md-test-navigation-bar')
 class TestMdNavigationBar extends MdNavigationBar {

@@ -9,7 +9,7 @@
 // TODO(b/228217731): Remove MDC/MWC dependencies
 @use 'sass:map';
 @use 'sass:meta';
-@use '@material/theme/state';
+@use '../../compat/theme/state';
 @use 'third_party/javascript/material_web_components/ripple/ripple-theme';
 @use '../../elevation/lib/elevation-theme';
 @use '../../sass/elevation';

@@ -8,19 +8,19 @@
 // tslint:disable:strip-private-property-underscore
 
 // Make TypeScript not remove the import.
-import '@material/mwc-tab-indicator';
-import '@material/mwc-ripple/mwc-ripple';
+import '@material/mwc-tab-indicator/mwc-tab-indicator.js';
+import '@material/mwc-ripple/mwc-ripple.js';
 
-import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
-import {observer} from '@material/mwc-base/observer';
-import {Ripple} from '@material/mwc-ripple/mwc-ripple';
-import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {TabIndicator} from '@material/mwc-tab-indicator';
-import {MDCTabAdapter} from '@material/tab/adapter';
-import MDCTabFoundation from '@material/tab/foundation';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
+import {observer} from '@material/mwc-base/observer.js';
+import {Ripple} from '@material/mwc-ripple/mwc-ripple.js';
+import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers.js';
+import {TabIndicator} from '@material/mwc-tab-indicator/mwc-tab-indicator.js';
+import {MDCTabAdapter} from '@material/tab/adapter.js';
+import MDCTabFoundation from '@material/tab/foundation.js';
 import {html} from 'lit';
-import {eventOptions, property, query, queryAsync, state} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
+import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 
 export interface TabInteractionEventDetail {
   tabId: string;

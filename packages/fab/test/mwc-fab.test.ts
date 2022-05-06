@@ -8,10 +8,10 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {Fab} from '@material/mwc-fab';
+import {Fab} from '@material/mwc-fab/mwc-fab.js';
 import {html} from 'lit';
 
-import {fixture, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, TestFixture} from '../../../test/src/util/helpers.js';
 
 interface FabProps {
   text: string;

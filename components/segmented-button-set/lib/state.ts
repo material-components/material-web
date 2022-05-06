@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {SegmentedButtonState} from '../../segmented_button/lib/state';
+import {SegmentedButtonState} from '../../segmented_button/lib/state.js';
 
 /** The state of a set of segmented buttons. */
 export interface SegmentedButtonSetState {

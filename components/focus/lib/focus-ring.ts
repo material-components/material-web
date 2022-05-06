@@ -5,8 +5,8 @@
  */
 
 import {html, LitElement, TemplateResult} from 'lit';
-import {property} from 'lit/decorators';
-import {ClassInfo, classMap} from 'lit/directives/class-map';
+import {property} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
 /** @soyCompatible */
 export class FocusRing extends LitElement {

@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCFoundation} from '@material/base/foundation';
-import {MDCTabScrollerAdapter} from './adapter';
-import {cssClasses, strings} from './constants';
-import {MDCTabScrollerRTLDefault} from './rtl-default-scroller';
-import {MDCTabScrollerRTLNegative} from './rtl-negative-scroller';
-import {MDCTabScrollerRTLReverse} from './rtl-reverse-scroller';
-import {MDCTabScrollerRTL} from './rtl-scroller';
-import {MDCTabScrollerAnimation, MDCTabScrollerHorizontalEdges} from './types';
+import {MDCFoundation} from '@material/base/foundation.js';
+import {MDCTabScrollerAdapter} from './adapter.js';
+import {cssClasses, strings} from './constants.js';
+import {MDCTabScrollerRTLDefault} from './rtl-default-scroller.js';
+import {MDCTabScrollerRTLNegative} from './rtl-negative-scroller.js';
+import {MDCTabScrollerRTLReverse} from './rtl-reverse-scroller.js';
+import {MDCTabScrollerRTL} from './rtl-scroller.js';
+import {MDCTabScrollerAnimation, MDCTabScrollerHorizontalEdges} from './types.js';
 
 export class MDCTabScrollerFoundation extends MDCFoundation<MDCTabScrollerAdapter> {
   static override get cssClasses() {

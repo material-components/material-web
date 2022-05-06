@@ -8,7 +8,7 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {RippleInterface} from '@material/mwc-base/utils';
+import {RippleInterface} from '@material/mwc-base/utils.js';
 
 /**
  * Class that encapsulates the events handlers for `mwc-ripple`

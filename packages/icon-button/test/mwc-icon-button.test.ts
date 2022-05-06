@@ -8,7 +8,7 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {IconButton} from '@material/mwc-icon-button';
+import {IconButton} from '@material/mwc-icon-button/mwc-icon-button.js';
 import {html, render} from 'lit';
 
 const ICON_SELECTOR = 'i.material-icons';

@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {NavigationDrawerModal} from './lib/navigation-drawer-modal';
-import {styles} from './lib/navigation-drawer-modal-styles.css';
+import {NavigationDrawerModal} from './lib/navigation-drawer-modal.js';
+import {styles} from './lib/navigation-drawer-modal-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

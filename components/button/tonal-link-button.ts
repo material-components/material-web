@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {styles as sharedStyles} from './lib/shared-styles.css';
-import {TonalLinkButton} from './lib/tonal-link-button';
-import {styles as tonalStyles} from './lib/tonal-styles.css';
+import {styles as sharedStyles} from './lib/shared-styles.css.js';
+import {TonalLinkButton} from './lib/tonal-link-button.js';
+import {styles as tonalStyles} from './lib/tonal-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

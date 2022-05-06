@@ -4,20 +4,20 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../badge/badge';
-import '../../focus/focus-ring';
+import '../../badge/badge.js';
+import '../../focus/focus-ring.js';
 
 import {html, PropertyValues, TemplateResult} from 'lit';
-import {property, query, state} from 'lit/decorators';
-import {ClassInfo, classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
+import {property, query, state} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action-element/action-element';
-import {ariaProperty} from '../../decorators/aria-property';
-import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
-import {MdRipple} from '../../ripple/ripple';
+import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action-element/action-element.js';
+import {ariaProperty} from '../../decorators/aria-property.js';
+import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
+import {MdRipple} from '../../ripple/ripple.js';
 
-import {NavigationTabState} from './state';
+import {NavigationTabState} from './state.js';
 
 /** @soyCompatible */
 export class NavigationTab extends ActionElement implements NavigationTabState {

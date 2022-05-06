@@ -5,8 +5,8 @@
  */
 
 import {render, LitElement, TemplateResult} from 'lit';
-import {html, literal} from 'lit/static-html';
-import {property} from 'lit/decorators';
+import {html, literal} from 'lit/static-html.js';
+import {property} from 'lit/decorators.js';
 
 /** Test table interface. */
 export interface TestTableTemplate<S extends string = string> {

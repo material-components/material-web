@@ -5,10 +5,10 @@
  */
 
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
-import {property, queryAssignedElements, state} from 'lit/decorators';
-import {ClassInfo, classMap} from 'lit/directives/class-map';
+import {property, queryAssignedElements, state} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
-import {ARIARole} from '../../types/aria';
+import {ARIARole} from '../../types/aria.js';
 
 /** @soyCompatible */
 export class ListItem extends LitElement {

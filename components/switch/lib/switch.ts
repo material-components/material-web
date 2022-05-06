@@ -4,17 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../focus/focus-ring';
+import '../../focus/focus-ring.js';
 
-import {ariaProperty as legacyAriaProperty} from '@material/mwc-base/aria-property';
+import {ariaProperty as legacyAriaProperty} from '@material/mwc-base/aria-property.js';
 import {html, LitElement, TemplateResult} from 'lit';
-import {eventOptions, property, state} from 'lit/decorators';
-import {ClassInfo, classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
+import {eventOptions, property, state} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {FormController, getFormValue} from '../../controller/form-controller';
-import {ariaProperty} from '../../decorators/aria-property';
-import {pointerPress as focusRingPointerPress, shouldShowStrongFocus} from '../../focus/strong-focus';
+import {FormController, getFormValue} from '../../controller/form-controller.js';
+import {ariaProperty} from '../../decorators/aria-property.js';
+import {pointerPress as focusRingPointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 
 /** @soyCompatible */
 export class Switch extends LitElement {
@@ -25,6 +25,7 @@ export class Switch extends LitElement {
   @property({type: Boolean}) processing = false;
   @property({type: Boolean}) selected = false;
   @property({type: Boolean}) icons = false;
+  @property({type: Boolean}) onlySelectedIcon = false;
 
   // Aria
   @ariaProperty
@@ -110,39 +111,62 @@ export class Switch extends LitElement {
 
   /** @soyTemplate */
   protected renderHandle(): TemplateResult {
+    const classes = classMap({
+      'md3-switch__handle--big': this.icons && !this.onlySelectedIcon,
+    });
     return html`
-      <div class="md3-switch__handle">
-        ${this.icons ? this.maybeRenderIcons() : html``}
+    <div class="md3-switch__handle-container">
+      <div class="md3-switch__handle ${classes}">
+        ${this.shouldShowIcons() ? this.renderIcons() : html``}
       </div>
+      ${this.renderTouchTarget()}
+    </div>
     `;
   }
 
   /** @soyTemplate */
-  private maybeRenderIcons(): TemplateResult {
+  private renderIcons(): TemplateResult {
     return html`
       <div class="md3-switch__icons">
         ${this.renderOnIcon()}
-        ${this.renderOffIcon()}
+        ${this.onlySelectedIcon ? html`` : this.renderOffIcon()}
       </div>
     `;
   }
 
-  /** @soyTemplate */
+  /**
+   * https://fonts.google.com/icons?selected=Material%20Symbols%20Outlined%3Acheck%3AFILL%400%3Bwght%40500%3BGRAD%400%3Bopsz%4024
+   *
+   * @soyTemplate
+   */
   protected renderOnIcon(): TemplateResult {
     return html`
       <svg class="md3-switch__icon md3-switch__icon--on" viewBox="0 0 24 24">
-        <path d="M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z" />
+        <path d="M9.55 18.2 3.65 12.3 5.275 10.675 9.55 14.95 18.725 5.775 20.35 7.4Z"/>
+      </svg>
+    `;
+  }
+
+  /**
+   * https://fonts.google.com/icons?selected=Material%20Symbols%20Outlined%3Aclose%3AFILL%400%3Bwght%40500%3BGRAD%400%3Bopsz%4024
+   *
+   * @soyTemplate
+   */
+  protected renderOffIcon(): TemplateResult {
+    return html`
+      <svg class="md3-switch__icon md3-switch__icon--off" viewBox="0 0 24 24">
+        <path d="M6.4 19.2 4.8 17.6 10.4 12 4.8 6.4 6.4 4.8 12 10.4 17.6 4.8 19.2 6.4 13.6 12 19.2 17.6 17.6 19.2 12 13.6Z"/>
       </svg>
     `;
   }
 
   /** @soyTemplate */
-  protected renderOffIcon(): TemplateResult {
-    return html`
-      <svg class="md3-switch__icon md3-switch__icon--off" viewBox="0 0 24 24">
-        <path d="M20 13H4v-2h16v2z" />
-      </svg>
-    `;
+  private renderTouchTarget(): TemplateResult {
+    return html`<span class="md3-switch__touch"></span>`;
+  }
+
+  private shouldShowIcons() {
+    return this.icons || this.onlySelectedIcon;
   }
 
   protected handleClick() {

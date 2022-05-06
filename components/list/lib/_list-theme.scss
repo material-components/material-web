@@ -5,7 +5,7 @@
 
 // TODO(b/228217731): Remove MDC/MWC dependencies
 @use 'sass:map';
-@use '@material/theme/state';
+@use '../../compat/theme/state';
 @use '../../sass/resolvers';
 @use '../../sass/theme';
 

@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {Harness} from '../testing/harness';
+import {Harness} from '../testing/harness.js';
 
-import {Fab} from './lib/fab';
+import {Fab} from './lib/fab.js';
 
 /**
  * Test harness for floating action buttons.

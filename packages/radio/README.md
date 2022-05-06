@@ -33,7 +33,7 @@ npm install @material/mwc-radio
 <mwc-radio name="myGroup" value="value2" checked></mwc-radio>
 
 <script type="module">
-  import '@material/mwc-radio';
+  import '@material/mwc-radio/mwc-radio.js';
 </script>
 ```
 
@@ -96,8 +96,8 @@ to associate an interactive label with the radio.
 </mwc-formfield>
 
 <script type="module">
-  import '@material/mwc-radio';
-  import '@material/mwc-formfield';
+  import '@material/mwc-radio/mwc-radio.js';
+  import '@material/mwc-formfield/mwc-formfield.js';
 </script>
 ```
 

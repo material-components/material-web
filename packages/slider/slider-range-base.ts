@@ -7,22 +7,22 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import '@material/mwc-ripple/mwc-ripple';
+import '@material/mwc-ripple/mwc-ripple.js';
 
-import {deepActiveElementPath} from '@material/mwc-base/utils';
-import {Ripple} from '@material/mwc-ripple/mwc-ripple';
-import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {MDCSliderAdapter} from '@material/slider/adapter';
-import {Thumb, TickMark} from '@material/slider/types';
+import {deepActiveElementPath} from '@material/mwc-base/utils.js';
+import {Ripple} from '@material/mwc-ripple/mwc-ripple.js';
+import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers.js';
+import {MDCSliderAdapter} from '@material/slider/adapter.js';
+import {Thumb, TickMark} from '@material/slider/types.js';
 import {html, nothing, PropertyValues, TemplateResult} from 'lit';
-import {property, query, queryAsync, state} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
-import {styleMap} from 'lit/directives/style-map';
+import {property, query, queryAsync, state} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
+import {styleMap} from 'lit/directives/style-map.js';
 
-import {SliderBase} from './slider-base';
+import {SliderBase} from './slider-base.js';
 
-export {Thumb} from '@material/slider/types';
+export {Thumb} from '@material/slider/types.js';
 
 export class SliderRangeBase extends SliderBase {
   @query('input.start') protected startInput!: HTMLInputElement;

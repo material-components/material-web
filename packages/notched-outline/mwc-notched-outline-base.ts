@@ -7,12 +7,12 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {BaseElement} from '@material/mwc-base/base-element';
-import {MDCNotchedOutlineAdapter} from '@material/notched-outline/adapter';
-import {MDCNotchedOutlineFoundation} from '@material/notched-outline/foundation';
+import {BaseElement} from '@material/mwc-base/base-element.js';
+import {MDCNotchedOutlineAdapter} from '@material/notched-outline/adapter.js';
+import {MDCNotchedOutlineFoundation} from '@material/notched-outline/foundation.js';
 import {html} from 'lit';
-import {property, query} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
+import {property, query} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 
 export class NotchedOutlineBase extends BaseElement {
   @query('.mdc-notched-outline') protected mdcRoot!: HTMLElement;

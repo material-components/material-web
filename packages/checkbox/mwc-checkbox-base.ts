@@ -7,16 +7,16 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import '@material/mwc-ripple/mwc-ripple';
+import '@material/mwc-ripple/mwc-ripple.js';
 
-import {ariaProperty} from '@material/mwc-base/aria-property';
-import {FormElement} from '@material/mwc-base/form-element';
-import {Ripple} from '@material/mwc-ripple/mwc-ripple';
-import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
+import {ariaProperty} from '@material/mwc-base/aria-property.js';
+import {FormElement} from '@material/mwc-base/form-element.js';
+import {Ripple} from '@material/mwc-ripple/mwc-ripple.js';
+import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers.js';
 import {html, PropertyValues, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAsync, state} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
+import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 /** @soyCompatible */
 export class CheckboxBase extends FormElement {

@@ -9,7 +9,7 @@
 // TODO(b/228217731): Remove MDC/MWC dependencies
 @use 'third_party/javascript/material_web_components/icon/_mwc-icon';
 @use 'third_party/javascript/material_web_components/m3/elevation/lib/surface';
-@use '@material/theme/selector-ext';
+@use '../../compat/theme/selector-ext';
 @use '@material/touch-target/touch-target';
 
 @mixin static-styles() {

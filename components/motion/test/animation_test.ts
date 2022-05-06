@@ -6,7 +6,7 @@
 
 import 'jasmine';
 
-import {AnimationSignal, createAnimationSignal} from '../animation';
+import {AnimationSignal, createAnimationSignal} from '../animation.js';
 
 describe('createAnimationSignal()', () => {
   let task: AnimationSignal;

@@ -13,10 +13,10 @@
 @use '../../tokens/latest' as tokens;
 @use '../../badge/lib/badge-theme';
 @use 'third_party/javascript/material_web_components/m3/ripple/ripple-theme';
-@use '@material/theme/state';
-@use '@material/theme/shadow-dom';
-@use '@material/theme/theme-color';
-@use '@material/theme/keys';
+@use '../../compat/theme/state';
+@use '../../compat/theme/shadow-dom';
+@use '../../compat/theme/theme-color';
+@use '../../compat/theme/keys';
 @use '@material/typography/typography';
 
 $_custom-property-prefix: 'navigation-bar';

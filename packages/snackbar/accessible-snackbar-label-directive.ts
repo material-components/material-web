@@ -7,10 +7,10 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import MDCSnackbarFoundation from '@material/snackbar/foundation';
+import MDCSnackbarFoundation from '@material/snackbar/foundation.js';
 import {html, render, TemplateResult} from 'lit';
-import {AsyncDirective} from 'lit/async-directive';
-import {ChildPart, directive, DirectiveParameters, PartInfo, PartType} from 'lit/directive';
+import {AsyncDirective} from 'lit/async-directive.js';
+import {ChildPart, directive, DirectiveParameters, PartInfo, PartType} from 'lit/directive.js';
 
 const {ARIA_LIVE_DELAY_MS} = MDCSnackbarFoundation.numbers;
 /**

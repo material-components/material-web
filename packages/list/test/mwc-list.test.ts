@@ -8,19 +8,19 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import '@material/mwc-icon';
+import '@material/mwc-icon/mwc-icon.js';
 
-import {isNodeElement} from '@material/mwc-base/utils';
-import {IndexDiff, List, SelectedDetail} from '@material/mwc-list';
-import {CheckListItem} from '@material/mwc-list/mwc-check-list-item';
-import {GraphicType, ListItem, RequestSelectedDetail} from '@material/mwc-list/mwc-list-item';
-import {ListItemBase} from '@material/mwc-list/mwc-list-item-base';
-import {RadioListItem} from '@material/mwc-list/mwc-radio-list-item';
-import {isIndexSet} from '@material/mwc-menu';
+import {isNodeElement} from '@material/mwc-base/utils.js';
+import {IndexDiff, List, SelectedDetail} from '@material/mwc-list/mwc-list.js';
+import {CheckListItem} from '@material/mwc-list/mwc-check-list-item.js';
+import {GraphicType, ListItem, RequestSelectedDetail} from '@material/mwc-list/mwc-list-item.js';
+import {ListItemBase} from '@material/mwc-list/mwc-list-item-base.js';
+import {RadioListItem} from '@material/mwc-list/mwc-radio-list-item.js';
+import {isIndexSet} from '@material/mwc-menu/mwc-menu.js';
 import {html, TemplateResult} from 'lit';
-import {ifDefined} from 'lit/directives/if-defined';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {fixture, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, TestFixture} from '../../../test/src/util/helpers.js';
 
 const defaultListItemProps = {
   twoLine: false,

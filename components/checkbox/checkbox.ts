@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {Checkbox} from './lib/checkbox';
-import {styles} from './lib/checkbox-styles.css';
+import {Checkbox} from './lib/checkbox.js';
+import {styles} from './lib/checkbox-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

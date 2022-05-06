@@ -8,11 +8,11 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {Snackbar} from '@material/mwc-snackbar';
+import {Snackbar} from '@material/mwc-snackbar/mwc-snackbar.js';
 import * as hanbi from 'hanbi';
 import {html, TemplateResult} from 'lit';
 
-import {fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, ieSafeKeyboardEvent, rafPromise, TestFixture} from '../../../test/src/util/helpers.js';
 
 interface SnackBarProps {
   timeoutMs: number;

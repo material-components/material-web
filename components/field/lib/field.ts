@@ -7,10 +7,10 @@
  */
 
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
-import {property, queryAsync, state} from 'lit/decorators';
-import {ClassInfo, classMap} from 'lit/directives/class-map';
+import {property, queryAsync, state} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
-import {createAnimationSignal, Easing} from '../../motion/animation';
+import {createAnimationSignal, Easing} from '../../motion/animation.js';
 
 /** @soyCompatible */
 export class Field extends LitElement {

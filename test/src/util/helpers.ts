@@ -8,7 +8,7 @@
 // tslint:disable:strip-private-property-underscore
 
 import {html, LitElement, render, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators';
+import {customElement, property} from 'lit/decorators.js';
 
 interface HasKeyCode {
   keyCode: number;

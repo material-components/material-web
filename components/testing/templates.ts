@@ -5,12 +5,12 @@
  */
 
 import {TemplateResult} from 'lit';
-import {DirectiveResult} from 'lit/directive';
-import {ref} from 'lit/directives/ref';
-import {literal} from 'lit/static-html';
+import {DirectiveResult} from 'lit/directive.js';
+import {ref} from 'lit/directives/ref.js';
+import {literal} from 'lit/static-html.js';
 
-import {Harness, HarnessElement} from './harness';
-import {TestTableTemplate} from './table/test-table';
+import {Harness, HarnessElement} from './harness.js';
+import {TestTableTemplate} from './table/test-table.js';
 
 /**
  * Pre-defined test table template states commonly shared between components.

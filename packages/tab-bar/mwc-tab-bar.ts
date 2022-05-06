@@ -7,10 +7,10 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {TabBarBase} from './mwc-tab-bar-base';
-import {styles} from './mwc-tab-bar.css';
+import {TabBarBase} from './mwc-tab-bar-base.js';
+import {styles} from './mwc-tab-bar.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

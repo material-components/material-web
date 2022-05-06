@@ -6,7 +6,7 @@
 
 import {LitElement} from 'lit';
 
-import {ActionController, ActionControllerHost, BeginPressConfig, EndPressConfig} from '../controller/action-controller';
+import {ActionController, ActionControllerHost, BeginPressConfig, EndPressConfig} from '../controller/action-controller.js';
 
 export {BeginPressConfig, EndPressConfig};
 

@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ClassInfo} from 'lit/directives/class-map';
+import {ClassInfo} from 'lit/directives/class-map.js';
 
-import {SingleSelectSegmentedButton} from './single-select-segmented-button';
+import {SingleSelectSegmentedButton} from './single-select-segmented-button.js';
 
 /** @soyCompatible */
 export class OutlinedSingleSelectSegmentedButton extends

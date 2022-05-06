@@ -8,10 +8,10 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {property} from 'lit/decorators';
+import {property} from 'lit/decorators.js';
 
-import {addHasRemoveClass, BaseElement, CustomEventListener, EventType, SpecificEventListener} from './base-element';
-import {RippleInterface} from './utils';
+import {addHasRemoveClass, BaseElement, CustomEventListener, EventType, SpecificEventListener} from './base-element.js';
+import {RippleInterface} from './utils.js';
 
 export {
   addHasRemoveClass,

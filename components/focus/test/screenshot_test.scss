@@ -1,0 +1,14 @@
+@use '../lib/focus-ring-theme';
+
+// Default button has 1px border and 1px margin. This plus the 2px padding
+// means the padding it set to 4px
+$_focus-ring-padding: 4px;
+
+.test-button {
+  @include focus-ring-theme.theme(
+    (
+      container-outer-padding-vertical: $_focus-ring-padding,
+      container-outer-padding-horizontal: $_focus-ring-padding,
+    )
+  );
+}

@@ -7,12 +7,12 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {matches} from '@material/dom/ponyfill';
-import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
-import {MDCTabScrollerAdapter} from '@material/tab-scroller/adapter';
-import MDCTabScrollerFoundation from '@material/tab-scroller/foundation';
+import {matches} from '@material/dom/ponyfill.js';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
+import {MDCTabScrollerAdapter} from '@material/tab-scroller/adapter.js';
+import MDCTabScrollerFoundation from '@material/tab-scroller/foundation.js';
 import {html} from 'lit';
-import {eventOptions, query} from 'lit/decorators';
+import {eventOptions, query} from 'lit/decorators.js';
 
 export class TabScrollerBase extends BaseElement {
   protected mdcFoundation!: MDCTabScrollerFoundation;

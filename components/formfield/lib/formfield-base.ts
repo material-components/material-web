@@ -5,9 +5,9 @@
  */
 
 import {html, LitElement, TemplateResult} from 'lit';
-import {property, queryAssignedElements} from 'lit/decorators';
-import {ClassInfo, classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
+import {property, queryAssignedElements} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 /** @soyCompatible */
 export class Formfield extends LitElement {

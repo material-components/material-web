@@ -4,15 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {doesElementContainFocus} from '@material/mwc-base/utils';
+import {doesElementContainFocus} from '@material/mwc-base/utils.js';
 import {MdFocusRing} from 'google3/third_party/javascript/material_web_components/m3/focus/focus-ring';
 import {fixture, TestFixture} from 'google3/third_party/javascript/material_web_components/testing/helpers';
 import * as hanbi from 'hanbi';
 import {html, TemplateResult} from 'lit';
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {NavigationTabHarness} from '../harness';
-import {MdNavigationTab} from '../navigation-tab';
+import {NavigationTabHarness} from '../harness.js';
+import {MdNavigationTab} from '../navigation-tab.js';
 
 @customElement('md-test-navigation-tab')
 class TestNavigationTab extends MdNavigationTab {

@@ -6,10 +6,8 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-// TODO(b/228217731): Remove MDC/MWC dependencies
 @use 'sass:map';
-@use '@material/animation/animation';
-@use '@material/theme/gss';
+@use '../../motion/animation';
 
 $_animation-duration: 150ms;
 
@@ -184,17 +182,15 @@ $_animation-duration: 150ms;
     transition: animation.standard(transform, $_animation-duration);
   }
 
+  // Note: no need to do any RTL flipping here. If RTLCSS flips this, it's also
+  // ok, we just need one to be left and one to be right.
   &::before {
-    @include gss.annotate($noflip: true);
     right: 50%;
-    @include gss.annotate($noflip: true);
     transform-origin: top left;
   }
 
   &::after {
-    @include gss.annotate($noflip: true);
     left: 50%;
-    @include gss.annotate($noflip: true);
     transform-origin: top right;
   }
 }

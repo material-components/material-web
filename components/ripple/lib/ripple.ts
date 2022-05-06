@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {RippleInterface} from '@material/mwc-base/utils';
+import {RippleInterface} from '@material/mwc-base/utils.js';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
-import {property, query, state} from 'lit/decorators';
-import {ClassInfo, classMap} from 'lit/directives/class-map';
+import {property, query, state} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
-import {createAnimationSignal, Easing} from '../../motion/animation';
+import {createAnimationSignal, Easing} from '../../motion/animation.js';
 
 const PRESS_GROW_MS = 450;
 const MINIMUM_PRESS_MS = 225;

@@ -7,22 +7,22 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import '@material/mwc-notched-outline';
+import '@material/mwc-notched-outline/mwc-notched-outline.js';
 
-import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation';
-import {MDCLineRippleFoundation} from '@material/line-ripple/foundation';
-import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element';
-import {observer} from '@material/mwc-base/observer';
-import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label';
-import {lineRipple, LineRipple} from '@material/mwc-line-ripple';
-import {NotchedOutline} from '@material/mwc-notched-outline';
-import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter';
-import MDCTextFieldFoundation from '@material/textfield/foundation';
+import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
+import {MDCLineRippleFoundation} from '@material/line-ripple/foundation.js';
+import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element.js';
+import {observer} from '@material/mwc-base/observer.js';
+import {floatingLabel, FloatingLabel} from '@material/mwc-floating-label/mwc-floating-label-directive.js';
+import {lineRipple, LineRipple} from '@material/mwc-line-ripple/mwc-line-ripple-directive.js';
+import {NotchedOutline} from '@material/mwc-notched-outline/mwc-notched-outline.js';
+import {MDCTextFieldAdapter, MDCTextFieldInputAdapter, MDCTextFieldLabelAdapter, MDCTextFieldLineRippleAdapter, MDCTextFieldOutlineAdapter, MDCTextFieldRootAdapter} from '@material/textfield/adapter.js';
+import MDCTextFieldFoundation from '@material/textfield/foundation.js';
 import {html, PropertyValues, TemplateResult} from 'lit';
-import {eventOptions, property, query, state} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
-import {live} from 'lit/directives/live';
+import {eventOptions, property, query, state} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
+import {live} from 'lit/directives/live.js';
 
 // must be done to get past lit-analyzer checks
 declare global {

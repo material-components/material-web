@@ -8,15 +8,15 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import '@material/mwc-radio';
+import '@material/mwc-radio/mwc-radio.js';
 
-import {Radio} from '@material/mwc-radio';
+import {Radio} from '@material/mwc-radio/mwc-radio.js';
 import {html} from 'lit';
-import {property, query} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
+import {property, query} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {GraphicType, ListItemBase} from './mwc-list-item-base';
+import {GraphicType, ListItemBase} from './mwc-list-item-base.js';
 
 export class RadioListItemBase extends ListItemBase {
   @query('slot') protected override slotElement!: HTMLSlotElement|null;

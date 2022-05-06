@@ -21,9 +21,9 @@
  * THE SOFTWARE.
  */
 
-import {MDCFoundation} from '@material/base/foundation';
-import {MDCCheckboxAdapter} from './adapter';
-import {cssClasses, numbers, strings} from './constants';
+import {MDCFoundation} from '@material/base/foundation.js';
+import {MDCCheckboxAdapter} from './adapter.js';
+import {cssClasses, numbers, strings} from './constants.js';
 
 export class MDCCheckboxFoundation extends MDCFoundation<MDCCheckboxAdapter> {
   static override get cssClasses() {

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {SegmentedButtonSet} from './segmented-button-set';
+import {SegmentedButtonSet} from './segmented-button-set.js';
 
 /**
  * MultiSelectSegmentedButtonSet implements the multi-select behavior for a

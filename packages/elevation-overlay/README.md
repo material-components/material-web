@@ -43,7 +43,7 @@ npm install @material/mwc-elevation-overlay
 <my-element></my-element>
 
 <script type="module">
-  import {styles as elevationStyle} from '@material/mwc-elevation-overlay/mwc-elevation-overlay.css';
+  import {styles as elevationStyle} from '@material/mwc-elevation-overlay/mwc-elevation-overlay.css.js';
   import {LitElement, css, html} from 'lit';
 
   class MyElement extends LitElement {

@@ -7,13 +7,13 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {MDCResizeObserver, WithMDCResizeObserver} from '@material/linear-progress/types';
-import {ariaProperty} from '@material/mwc-base/aria-property';
+import {MDCResizeObserver, WithMDCResizeObserver} from '@material/linear-progress/types.js';
+import {ariaProperty} from '@material/mwc-base/aria-property.js';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
-import {property, query, state} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
-import {styleMap} from 'lit/directives/style-map';
+import {property, query, state} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
+import {styleMap} from 'lit/directives/style-map.js';
 
 /** @soyCompatible */
 export class LinearProgressBase extends LitElement {

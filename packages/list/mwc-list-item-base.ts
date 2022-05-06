@@ -8,14 +8,14 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import '@material/mwc-ripple/mwc-ripple';
+import '@material/mwc-ripple/mwc-ripple.js';
 
-import {observer} from '@material/mwc-base/observer';
-import {Ripple} from '@material/mwc-ripple/mwc-ripple';
-import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
+import {observer} from '@material/mwc-base/observer.js';
+import {Ripple} from '@material/mwc-ripple/mwc-ripple.js';
+import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers.js';
 import {html, LitElement} from 'lit';
-import {property, query, queryAsync, state} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
+import {property, query, queryAsync, state} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 
 export type SelectionSource = 'interaction'|'property';
 export interface RequestSelectedDetail {

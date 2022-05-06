@@ -9,14 +9,14 @@
 
 // tslint:disable:no-new-decorators
 
-import {MDCFormFieldAdapter} from '@material/form-field/adapter';
-import MDCFormFieldFoundation from '@material/form-field/foundation';
-import {BaseElement, EventType, SpecificEventListener} from '@material/mwc-base/base-element';
-import {FormElement} from '@material/mwc-base/form-element';
-import {observer} from '@material/mwc-base/observer';
+import {MDCFormFieldAdapter} from '@material/form-field/adapter.js';
+import MDCFormFieldFoundation from '@material/form-field/foundation.js';
+import {BaseElement, EventType, SpecificEventListener} from '@material/mwc-base/base-element.js';
+import {FormElement} from '@material/mwc-base/form-element.js';
+import {observer} from '@material/mwc-base/observer.js';
 import {html} from 'lit';
-import {property, query, queryAssignedNodes} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
+import {property, query, queryAssignedNodes} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 
 
 export class FormfieldBase extends BaseElement {

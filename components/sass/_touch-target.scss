@@ -1,0 +1,22 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+$_default-touch-target-height: 48px !default;
+$_default-touch-target-width: 48px !default;
+
+/// Styles applied to the component's inner touch target element.
+/// @param $height [$_default-touch-target-height] - Touch target height.
+/// @param $width [$_default-touch-target-width] - Touch target width.
+@mixin touch-target(
+  $height: $_default-touch-target-height,
+  $width: $_default-touch-target-width
+) {
+  position: absolute;
+  top: 50%;
+  height: $height;
+  left: 50%;
+  width: $width;
+  transform: translate(-50%, -50%);
+}

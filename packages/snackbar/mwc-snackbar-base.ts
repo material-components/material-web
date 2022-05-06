@@ -7,16 +7,16 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
-import {observer} from '@material/mwc-base/observer';
-import {MDCSnackbarAdapter} from '@material/snackbar/adapter';
-import MDCSnackbarFoundation from '@material/snackbar/foundation';
-import {MDCSnackbarCloseEventDetail} from '@material/snackbar/types';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
+import {observer} from '@material/mwc-base/observer.js';
+import {MDCSnackbarAdapter} from '@material/snackbar/adapter.js';
+import MDCSnackbarFoundation from '@material/snackbar/foundation.js';
+import {MDCSnackbarCloseEventDetail} from '@material/snackbar/types.js';
 import {html} from 'lit';
-import {property, query} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
+import {property, query} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 
-import {accessibleSnackbarLabel} from './accessible-snackbar-label-directive';
+import {accessibleSnackbarLabel} from './accessible-snackbar-label-directive.js';
 
 const {
   OPENING_EVENT,

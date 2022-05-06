@@ -12,7 +12,7 @@
 @use '../../sass/shape';
 @use '../../elevation/lib/elevation-theme';
 @use '../../sass/resolvers';
-@use '@material/theme/theme-color';
+@use '../../compat/theme/theme-color';
 
 $light-theme: (
   container-color: theme-color.$surface,

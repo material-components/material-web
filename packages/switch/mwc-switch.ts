@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {SwitchBase} from './mwc-switch-base';
-import {styles} from './styles.css';
+import {SwitchBase} from './mwc-switch-base.js';
+import {styles} from './styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

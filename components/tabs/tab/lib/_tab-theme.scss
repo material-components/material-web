@@ -7,10 +7,10 @@
 // TODO(b/228217731): Remove MDC/MWC dependencies
 @use 'sass:map';
 @use 'sass:selector';
-@use '@material/theme/keys';
-@use '@material/theme/shadow-dom';
-@use '@material/theme/state';
-@use '@material/theme/theme-color';
+@use '../../../compat/theme/keys';
+@use '../../../compat/theme/shadow-dom';
+@use '../../../compat/theme/state';
+@use '../../../compat/theme/theme-color';
 @use '@material/typography/typography';
 @use '../../../sass/theme';
 @use '../../../elevation/lib/elevation-theme';

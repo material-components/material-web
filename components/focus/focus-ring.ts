@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {FocusRing} from './lib/focus-ring';
-import {styles} from './lib/focus-ring-styles.css';
+import {FocusRing} from './lib/focus-ring.js';
+import {styles} from './lib/focus-ring-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

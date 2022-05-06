@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCFoundation} from '@material/base/foundation';
+import {MDCFoundation} from '@material/base/foundation.js';
 
-import {MDCTabIndicatorAdapter} from './adapter';
-import {cssClasses, strings} from './constants';
+import {MDCTabIndicatorAdapter} from './adapter.js';
+import {cssClasses, strings} from './constants.js';
 
 export abstract class MDCTabIndicatorFoundation extends
     MDCFoundation<MDCTabIndicatorAdapter> {

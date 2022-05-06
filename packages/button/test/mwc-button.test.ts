@@ -8,10 +8,10 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {Button} from '@material/mwc-button';
+import {Button} from '@material/mwc-button/mwc-button.js';
 import {html} from 'lit';
 
-import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers.js';
 
 const ICON_SELECTOR = '.mdc-button__icon';
 

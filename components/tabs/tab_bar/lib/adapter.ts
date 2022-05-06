@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCTabDimensions} from '../../tab/lib/types';
+import {MDCTabDimensions} from '../../tab/lib/types.js';
 
 /**
  * Defines the shape of the adapter expected by the foundation.

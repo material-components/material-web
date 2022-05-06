@@ -8,13 +8,13 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {cssClasses as floatingClasses} from '@material/floating-label/constants';
-import {FloatingLabel} from '@material/mwc-floating-label';
-import {TextField} from '@material/mwc-textfield';
-import {cssClasses} from '@material/textfield/constants';
+import {cssClasses as floatingClasses} from '@material/floating-label/constants.js';
+import {FloatingLabel} from '@material/mwc-floating-label/mwc-floating-label-directive.js';
+import {TextField} from '@material/mwc-textfield/mwc-textfield.js';
+import {cssClasses} from '@material/textfield/constants.js';
 import {html} from 'lit';
 
-import {fixture, rafPromise, simulateFormDataEvent, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, rafPromise, simulateFormDataEvent, TestFixture} from '../../../test/src/util/helpers.js';
 
 const basic = (outlined = false) => html`
   <mwc-textfield ?outlined=${outlined}></mwc-textfield>

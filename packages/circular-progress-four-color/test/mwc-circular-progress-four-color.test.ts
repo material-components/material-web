@@ -7,10 +7,10 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {CircularProgressFourColor} from '@material/mwc-circular-progress-four-color';
+import {CircularProgressFourColor} from '@material/mwc-circular-progress-four-color/mwc-circular-progress-four-color.js';
 import {html} from 'lit';
 
-import {fixture, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, TestFixture} from '../../../test/src/util/helpers.js';
 
 const INDETERMINATE_CLASS = 'mdc-circular-progress--indeterminate';
 

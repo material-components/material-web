@@ -12,9 +12,9 @@
 @use '../../tokens';
 @use 'third_party/javascript/material_web_components/m3/ripple/ripple-theme';
 @use '@material/ripple/ripple-theme' as mdc-ripple-theme;
-@use '@material/theme/keys';
-@use '@material/theme/state';
-@use '@material/theme/theme-color';
+@use '../../compat/theme/keys';
+@use '../../compat/theme/state';
+@use '../../compat/theme/theme-color';
 @use '@material/touch-target/touch-target';
 
 $_custom-property-prefix: 'icon-button';

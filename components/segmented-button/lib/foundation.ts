@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ObserverFoundation} from '../../controller/observer-foundation';
+import {ObserverFoundation} from '../../controller/observer-foundation.js';
 
-import {SegmentedButtonAdapter} from './state';
+import {SegmentedButtonAdapter} from './state.js';
 
 /** Provdes the business logic for a segmented button. */
 export class SegmentedButtonFoundation extends

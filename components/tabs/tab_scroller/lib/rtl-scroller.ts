@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCTabScrollerAdapter} from './adapter';
-import {MDCTabScrollerAnimation} from './types';
+import {MDCTabScrollerAdapter} from './adapter.js';
+import {MDCTabScrollerAnimation} from './types.js';
 
 export abstract class MDCTabScrollerRTL {
   constructor(protected readonly adapter: MDCTabScrollerAdapter) {}

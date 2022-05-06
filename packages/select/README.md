@@ -46,8 +46,8 @@ its main slot has the same interface as the main slot of a `mwc-list`.
 </mwc-select>
 
 <script type="module">
-  import '@material/mwc-select';
-  import '@material/mwc-list/mwc-list-item';
+  import '@material/mwc-select/mwc-select.js';
+  import '@material/mwc-list/mwc-list-item.js';
 </script>
 ```
 

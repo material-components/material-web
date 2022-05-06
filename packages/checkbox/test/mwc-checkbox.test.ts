@@ -8,11 +8,11 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {Checkbox} from '@material/mwc-checkbox';
+import {Checkbox} from '@material/mwc-checkbox/mwc-checkbox.js';
 import * as hanbi from 'hanbi';
 import {html} from 'lit';
 
-import {fixture, rafPromise, simulateFormDataEvent, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, rafPromise, simulateFormDataEvent, TestFixture} from '../../../test/src/util/helpers.js';
 
 interface CheckboxInternals {
   formElement: HTMLInputElement;

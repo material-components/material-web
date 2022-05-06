@@ -6,13 +6,13 @@
  */
 
 
-import {matches} from '@material/dom/ponyfill';
-import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
+import {matches} from '@material/dom/ponyfill.js';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
 import {html, TemplateResult} from 'lit';
-import {eventOptions, query} from 'lit/decorators';
+import {eventOptions, query} from 'lit/decorators.js';
 
-import {MDCTabScrollerAdapter} from './adapter';
-import MDCTabScrollerFoundation from './foundation';
+import {MDCTabScrollerAdapter} from './adapter.js';
+import MDCTabScrollerFoundation from './foundation.js';
 
 /** @soyCompatible */
 export class TabScroller extends BaseElement {

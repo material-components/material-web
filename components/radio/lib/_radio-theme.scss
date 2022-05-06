@@ -9,11 +9,11 @@
 @use 'sass:map';
 @use 'sass:selector';
 @use '@material/density/functions' as density-functions;
-@use '@material/theme/theme' as mdc-theme;
-@use '@material/theme/keys';
+@use '../../compat/theme/theme' as mdc-theme;
+@use '../../compat/theme/keys';
 @use '@material/density/variables' as density-variables;
-@use '@material/theme/theme-color';
-@use '@material/theme/shadow-dom';
+@use '../../compat/theme/theme-color';
+@use '../../compat/theme/shadow-dom';
 @use '../../ripple/ripple-theme';
 @use '../../sass/theme';
 

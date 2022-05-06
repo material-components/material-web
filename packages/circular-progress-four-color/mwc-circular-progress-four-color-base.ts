@@ -7,7 +7,7 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {CircularProgressBase} from '@material/mwc-circular-progress/mwc-circular-progress-base';
+import {CircularProgressBase} from '@material/mwc-circular-progress/mwc-circular-progress-base.js';
 import {html, TemplateResult} from 'lit';
 
 /** @soyCompatible */

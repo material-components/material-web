@@ -7,8 +7,8 @@
 // TODO(b/228217731): Remove MDC/MWC dependencies
 @use 'sass:map';
 @use '@material/elevation/elevation-theme';
-@use '@material/theme/map-ext';
-@use '@material/theme/theme-color';
+@use '../../../compat/theme/map-ext';
+@use '../../../compat/theme/theme-color';
 @use '@material/typography/typography';
 @use '../../../sass/theme';
 @use '../../../tokens';

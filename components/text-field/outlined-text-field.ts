@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../field/outlined-field';
+import '../field/outlined-field.js';
 
 import {html, TemplateResult} from 'lit';
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {styles as outlinedStyles} from './lib/outlined-styles.css';
-import {OutlinedTextField} from './lib/outlined-text-field';
-import {styles as sharedStyles} from './lib/shared-styles.css';
+import {styles as outlinedStyles} from './lib/outlined-styles.css.js';
+import {OutlinedTextField} from './lib/outlined-text-field.js';
+import {styles as sharedStyles} from './lib/shared-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

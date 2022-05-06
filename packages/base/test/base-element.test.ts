@@ -8,11 +8,11 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {BaseElement} from '@material/mwc-base/base-element';
+import {BaseElement} from '@material/mwc-base/base-element.js';
 import {html} from 'lit';
-import {customElement, query} from 'lit/decorators';
+import {customElement, query} from 'lit/decorators.js';
 
-import {fixture, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, TestFixture} from '../../../test/src/util/helpers.js';
 
 
 @customElement('test-element')

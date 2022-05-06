@@ -8,14 +8,14 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {MenuBase} from './mwc-menu-base';
-import {styles} from './mwc-menu.css';
+import {MenuBase} from './mwc-menu-base.js';
+import {styles} from './mwc-menu.css.js';
 
-export {createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex} from '@material/mwc-list/mwc-list-foundation';
-export {DefaultFocusState} from './mwc-menu-base';
-export {Corner, MenuCorner} from './mwc-menu-surface-base';
+export {createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex} from '@material/mwc-list/mwc-list-foundation.js';
+export {DefaultFocusState} from './mwc-menu-base.js';
+export {Corner, MenuCorner} from './mwc-menu-surface-base.js';
 
 declare global {
   interface HTMLElementTagNameMap {

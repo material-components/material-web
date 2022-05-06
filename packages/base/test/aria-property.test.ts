@@ -8,12 +8,12 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {ariaProperty} from '@material/mwc-base/aria-property';
+import {ariaProperty} from '@material/mwc-base/aria-property.js';
 import {html, LitElement} from 'lit';
-import {customElement, property} from 'lit/decorators';
-import {ifDefined} from 'lit/directives/if-defined';
+import {customElement, property} from 'lit/decorators.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {fixture, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, TestFixture} from '../../../test/src/util/helpers.js';
 
 
 @customElement('test-aria-element')

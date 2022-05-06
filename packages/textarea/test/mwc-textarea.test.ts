@@ -8,10 +8,10 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {TextArea} from '@material/mwc-textarea';
+import {TextArea} from '@material/mwc-textarea/mwc-textarea.js';
 import {html} from 'lit';
 
-import {fixture, simulateFormDataEvent, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, simulateFormDataEvent, TestFixture} from '../../../test/src/util/helpers.js';
 
 const basic = html`
   <mwc-textarea></mwc-textarea>

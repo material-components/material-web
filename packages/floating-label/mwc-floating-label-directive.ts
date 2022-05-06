@@ -7,9 +7,9 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {MDCFloatingLabelAdapter} from '@material/floating-label/adapter';
-import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation';
-import {AttributePart, directive, Directive, DirectiveParameters, PartInfo, PartType} from 'lit/directive';
+import {MDCFloatingLabelAdapter} from '@material/floating-label/adapter.js';
+import {MDCFloatingLabelFoundation} from '@material/floating-label/foundation.js';
+import {AttributePart, directive, Directive, DirectiveParameters, PartInfo, PartType} from 'lit/directive.js';
 
 export interface FloatingLabel extends HTMLLabelElement {
   floatingLabelFoundation: MDCFloatingLabelFoundation;

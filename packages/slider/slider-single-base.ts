@@ -7,18 +7,18 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import '@material/mwc-ripple/mwc-ripple';
+import '@material/mwc-ripple/mwc-ripple.js';
 
-import {deepActiveElementPath} from '@material/mwc-base/utils';
-import {MDCSliderAdapter} from '@material/slider/adapter';
-import {Thumb, TickMark} from '@material/slider/types';
+import {deepActiveElementPath} from '@material/mwc-base/utils.js';
+import {MDCSliderAdapter} from '@material/slider/adapter.js';
+import {Thumb, TickMark} from '@material/slider/types.js';
 import {html} from 'lit';
-import {property} from 'lit/decorators';
-import {styleMap} from 'lit/directives/style-map';
+import {property} from 'lit/decorators.js';
+import {styleMap} from 'lit/directives/style-map.js';
 
-import {SliderBase} from './slider-base';
+import {SliderBase} from './slider-base.js';
 
-export {Thumb} from '@material/slider/types';
+export {Thumb} from '@material/slider/types.js';
 
 
 export class SliderSingleBase extends SliderBase {

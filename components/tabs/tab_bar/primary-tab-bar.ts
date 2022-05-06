@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../tab_scroller/tab-scroller';
+import '../tab_scroller/tab-scroller.js';
 
 import {html, TemplateResult} from 'lit';
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {PrimaryTabBar} from './lib/primary-tab-bar';
-import {styles as tabbarStyles} from './lib/primary-tab-bar-styles.css';
-import {styles as sharedStyles} from './lib/shared-styles.css';
+import {PrimaryTabBar} from './lib/primary-tab-bar.js';
+import {styles as tabbarStyles} from './lib/primary-tab-bar-styles.css.js';
+import {styles as sharedStyles} from './lib/shared-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

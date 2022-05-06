@@ -7,10 +7,10 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import MDCTopAppBarFoundation from '@material/top-app-bar/standard/foundation';
-import {property} from 'lit/decorators';
+import MDCTopAppBarFoundation from '@material/top-app-bar/standard/foundation.js';
+import {property} from 'lit/decorators.js';
 
-import {passiveEventOptionsIfSupported, TopAppBarBaseBase} from './mwc-top-app-bar-base-base';
+import {passiveEventOptionsIfSupported, TopAppBarBaseBase} from './mwc-top-app-bar-base-base.js';
 
 export class TopAppBarBase extends TopAppBarBaseBase {
   protected mdcFoundationClass = MDCTopAppBarFoundation;

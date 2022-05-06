@@ -7,15 +7,15 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {matches} from '@material/dom/ponyfill';
-import {BaseElement} from '@material/mwc-base/base-element';
-import {RippleInterface} from '@material/mwc-base/utils';
-import {MDCRippleAdapter} from '@material/ripple/adapter';
-import MDCRippleFoundation from '@material/ripple/foundation';
+import {matches} from '@material/dom/ponyfill.js';
+import {BaseElement} from '@material/mwc-base/base-element.js';
+import {RippleInterface} from '@material/mwc-base/utils.js';
+import {MDCRippleAdapter} from '@material/ripple/adapter.js';
+import MDCRippleFoundation from '@material/ripple/foundation.js';
 import {html, PropertyValues, TemplateResult} from 'lit';
-import {property, query, state} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
-import {styleMap} from 'lit/directives/style-map';
+import {property, query, state} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {styleMap} from 'lit/directives/style-map.js';
 
 /** @soyCompatible */
 export class RippleBase extends BaseElement implements RippleInterface {

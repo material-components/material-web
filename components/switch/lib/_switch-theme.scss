@@ -16,6 +16,10 @@
 @use '../../sass/var';
 @use '../../tokens';
 
+@use './switch-track-theme';
+@use './switch-handle-theme';
+@use './switch-icon-theme';
+
 $_default-deps: (
   md-sys-color: tokens.md-sys-color-values-light-dynamic(),
   md-sys-elevation: tokens.md-sys-elevation-values(),
@@ -42,13 +46,8 @@ $_default-deps: (
 
 $_touch-target-size: 48px;
 
-$_selectors: (
-  selected: '.md3-switch--selected',
-  unselected: '.md3-switch--unselected',
-);
-
-$_selected: map.get($_selectors, selected);
-$_unselected: map.get($_selectors, unselected);
+$_selected: '.md3-switch--selected';
+$_unselected: '.md3-switch--unselected';
 
 // PUBLIC PROPERTIES
 
@@ -93,24 +92,11 @@ $forced-colors-theme: (
     @include _root($theme);
   }
 
-  .md3-switch__track {
-    @include _track-selected($theme);
-    &::before {
-      @include _track-unselected($theme);
-    }
-  }
+  @include switch-track-theme.theme-styles($theme);
 
-  .md3-switch__handle {
-    @include _handle($theme);
-    @include _handle-selected($theme);
-    &::before {
-      @include _handle-unselected($theme);
-    }
-  }
+  @include switch-handle-theme.theme-styles($theme);
 
-  .md3-switch__icon {
-    @include _icon($theme);
-  }
+  @include switch-icon-theme.theme-styles($theme);
 }
 
 // PRIVATE API
@@ -140,259 +126,6 @@ $forced-colors-theme: (
       ring-radius: 22px,
     )
   );
-}
-
-// PRIVATE API - track
-
-@mixin _track-selected($theme) {
-  @include _track-selected-color(
-    (
-      default: map.get($theme, selected-track-color),
-      disabled: map.get($theme, disabled-selected-track-color),
-      focus: map.get($theme, selected-focus-track-color),
-      hover: map.get($theme, selected-hover-track-color),
-      pressed: map.get($theme, selected-pressed-track-color),
-    )
-  );
-}
-
-@mixin _track-selected-color($colors) {
-  background-color: map.get($colors, default);
-
-  #{$_selected}:hover & {
-    background-color: map.get($colors, hover);
-  }
-
-  #{$_selected}:focus-visible & {
-    background-color: map.get($colors, focus);
-  }
-
-  #{$_selected}:active & {
-    background-color: map.get($colors, pressed);
-  }
-
-  #{$_selected}:disabled & {
-    background-color: map.get($colors, disabled);
-  }
-}
-
-@mixin _track-unselected($theme) {
-  @include _track-unselected-color(
-    (
-      default: map.get($theme, unselected-track-color),
-      disabled: map.get($theme, disabled-unselected-track-color),
-      focus: map.get($theme, unselected-focus-track-color),
-      hover: map.get($theme, unselected-hover-track-color),
-      pressed: map.get($theme, unselected-pressed-track-color),
-    )
-  );
-
-  @include _track-outline-color(
-    (
-      default: map.get($theme, unselected-track-outline-color),
-      disabled: map.get($theme, disabled-unselected-track-outline-color),
-      focus: map.get($theme, unselected-focus-track-outline-color),
-      hover: map.get($theme, unselected-hover-track-outline-color),
-      pressed: map.get($theme, unselected-pressed-track-outline-color),
-    )
-  );
-}
-
-@mixin _track-unselected-color($colors) {
-  background-color: map.get($colors, default);
-
-  #{$_unselected}:hover & {
-    background-color: map.get($colors, hover);
-  }
-
-  #{$_unselected}:focus-visible & {
-    background-color: map.get($colors, focus);
-  }
-
-  #{$_unselected}:active & {
-    background-color: map.get($colors, pressed);
-  }
-
-  #{$_unselected}:disabled & {
-    background-color: map.get($colors, disabled);
-  }
-}
-
-@mixin _track-outline-color($colors) {
-  border-color: map.get($colors, default);
-
-  #{$_unselected}:hover & {
-    border-color: map.get($colors, hover);
-  }
-
-  #{$_unselected}:focus-visible & {
-    border-color: map.get($colors, focus);
-  }
-
-  #{$_unselected}:active & {
-    border-color: map.get($colors, pressed);
-  }
-
-  #{$_unselected}:disabled & {
-    border-color: map.get($colors, disabled);
-  }
-}
-
-// PRIVATE API - handle
-
-@mixin _handle($theme) {
-  // Handle shape
-  border-start-start-radius: map.get($theme, handle-shape-start-start);
-  border-start-end-radius: map.get($theme, handle-shape-start-end);
-  border-end-end-radius: map.get($theme, handle-shape-end-end);
-  border-end-start-radius: map.get($theme, handle-shape-end-start);
-
-  @include _handle-position(
-    map.get($theme, track-height),
-    map.get($theme, track-width)
-  );
-
-  @include _handle-size(
-    (
-      handle-height: map.get($theme, handle-height),
-      handle-width: map.get($theme, handle-width),
-      unselected-handle-height: map.get($theme, unselected-handle-height),
-      unselected-handle-width: map.get($theme, unselected-handle-width),
-      selected-handle-height: map.get($theme, selected-handle-height),
-      selected-handle-width: map.get($theme, selected-handle-width),
-      pressed-handle-height: map.get($theme, pressed-handle-height),
-      pressed-handle-width: map.get($theme, pressed-handle-width),
-    )
-  );
-}
-
-@mixin _handle-position($track-height, $track-width) {
-  $margin: calc($track-width - $track-height);
-
-  #{$_selected} & {
-    margin-inline-start: $margin;
-  }
-
-  #{$_unselected} & {
-    margin-inline-end: $margin;
-  }
-}
-
-@mixin _handle-size($sizes) {
-  height: map.get($sizes, handle-height);
-  width: map.get($sizes, handle-width);
-
-  // TODO(b/230484095): Use token instead of hard coded values
-  #{$_selected} & {
-    transform: scale(1.2);
-  }
-  #{$_unselected} & {
-    transform: scale(0.8);
-  }
-  #{$_selected}:enabled:active & {
-    transform: scale(1.4);
-  }
-  #{$_unselected}:enabled:active & {
-    transform: scale(1.4);
-  }
-}
-
-@mixin _handle-selected($theme) {
-  @include _selected-handle-color(
-    (
-      default: map.get($theme, selected-handle-color),
-      disabled: map.get($theme, disabled-selected-handle-color),
-      focus: map.get($theme, selected-focus-handle-color),
-      hover: map.get($theme, selected-hover-handle-color),
-      pressed: map.get($theme, selected-pressed-handle-color),
-    )
-  );
-}
-
-@mixin _selected-handle-color($colors) {
-  background-color: map.get($colors, default);
-
-  #{$_selected}:hover & {
-    background-color: map.get($colors, hover);
-  }
-
-  #{$_selected}:focus-visible & {
-    background-color: map.get($colors, focus);
-  }
-
-  #{$_selected}:active & {
-    background-color: map.get($colors, pressed);
-  }
-
-  #{$_selected}:disabled & {
-    background-color: map.get($colors, disabled);
-  }
-}
-
-@mixin _handle-unselected($theme) {
-  @include _unselected-handle-color(
-    (
-      default: map.get($theme, unselected-handle-color),
-      disabled: map.get($theme, disabled-unselected-handle-color),
-      focus: map.get($theme, unselected-focus-handle-color),
-      hover: map.get($theme, unselected-hover-handle-color),
-      pressed: map.get($theme, unselected-pressed-handle-color),
-    )
-  );
-}
-
-@mixin _unselected-handle-color($colors) {
-  background-color: map.get($colors, default);
-
-  #{$_unselected}:hover & {
-    background-color: map.get($colors, hover);
-  }
-
-  #{$_unselected}:focus-visible & {
-    background-color: map.get($colors, focus);
-  }
-
-  #{$_unselected}:active & {
-    background-color: map.get($colors, pressed);
-  }
-
-  #{$_unselected}:disabled & {
-    background-color: map.get($colors, disabled);
-  }
-}
-
-// PRIVATE API - icons
-
-@mixin _icon($theme) {
-  // icon size
-
-  #{$_selected} & {
-    width: map.get($theme, selected-icon-size);
-    height: map.get($theme, selected-icon-size);
-  }
-
-  #{$_unselected} & {
-    width: map.get($theme, unselected-icon-size);
-    height: map.get($theme, unselected-icon-size);
-  }
-
-  // icon color
-
-  #{$_selected} & {
-    fill: map.get($theme, selected-icon-color);
-  }
-
-  #{$_selected}:disabled & {
-    fill: map.get($theme, disabled-selected-icon-color);
-  }
-
-  #{$_unselected} & {
-    fill: map.get($theme, unselected-icon-color);
-  }
-
-  #{$_unselected}:disabled & {
-    fill: map.get($theme, disabled-unselected-icon-color);
-  }
 }
 
 @function _flatten-disable-colors($theme) {

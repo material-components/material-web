@@ -34,7 +34,7 @@ npm install @material/mwc-textarea
 <mwc-textarea label="My Textarea"></mwc-textarea>
 
 <script type="module">
-  import '@material/mwc-textarea';
+  import '@material/mwc-textarea/mwc-textarea.js';
 </script>
 ```
 

@@ -8,13 +8,13 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {MenuSurfaceBase} from './mwc-menu-surface-base';
-import {styles} from './mwc-menu-surface.css';
+import {MenuSurfaceBase} from './mwc-menu-surface-base.js';
+import {styles} from './mwc-menu-surface.css.js';
 
-export {MDCMenuDistance} from '@material/menu-surface/types';
-export {Corner, MenuCorner} from './mwc-menu-surface-base';
+export {MDCMenuDistance} from '@material/menu-surface/types.js';
+export {Corner, MenuCorner} from './mwc-menu-surface-base.js';
 
 declare global {
   interface HTMLElementTagNameMap {

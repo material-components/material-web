@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ListItemState} from './state';
+import {ListItemState} from './state.js';
 
 /**
  * ListItemInteractionEventDetail provides details for the interaction

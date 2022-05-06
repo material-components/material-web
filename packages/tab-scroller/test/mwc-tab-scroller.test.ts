@@ -8,7 +8,7 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {TabScroller} from '@material/mwc-tab-scroller/mwc-tab-scroller';
+import {TabScroller} from '@material/mwc-tab-scroller/mwc-tab-scroller.js';
 
 describe('mwc-tab-scroller', () => {
   let element: TabScroller;

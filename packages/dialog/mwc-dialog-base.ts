@@ -10,19 +10,19 @@
 import 'blocking-elements';
 import 'wicg-inert';
 
-import {MDCDialogAdapter} from '@material/dialog/adapter';
-import {cssClasses} from '@material/dialog/constants';
-import MDCDialogFoundation from '@material/dialog/foundation';
-import {applyPassive} from '@material/dom/events';
-import {closest, matches} from '@material/dom/ponyfill';
-import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
-import {observer} from '@material/mwc-base/observer';
+import {MDCDialogAdapter} from '@material/dialog/adapter.js';
+import {cssClasses} from '@material/dialog/constants.js';
+import MDCDialogFoundation from '@material/dialog/foundation.js';
+import {applyPassive} from '@material/dom/events.js';
+import {closest, matches} from '@material/dom/ponyfill.js';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
+import {observer} from '@material/mwc-base/observer.js';
 import {DocumentWithBlockingElements} from 'blocking-elements';
 import {html} from 'lit';
-import {property, query} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
+import {property, query} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 
-export {MDCDialogCloseEventDetail} from '@material/dialog/types';
+export {MDCDialogCloseEventDetail} from '@material/dialog/types.js';
 
 const blockingElements =
     (document as DocumentWithBlockingElements).$blockingElements;

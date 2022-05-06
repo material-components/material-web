@@ -9,6 +9,7 @@
 // PUBLIC PROPERTIES
 
 @use '../../motion/animation';
+@use '../../sass/touch-target';
 
 // TODO(b/230768994): update animation timing
 $animation-duration: 75ms;
@@ -26,10 +27,6 @@ $icon-enter-duration: $animation-duration - $icon-exit-duration;
 
   .md3-switch {
     @include _root;
-
-    &:disabled {
-      @include _disabled;
-    }
   }
 
   // Track
@@ -44,18 +41,9 @@ $icon-enter-duration: $animation-duration - $icon-exit-duration;
       }
     }
 
-    // Track - disabled
-    .md3-switch:disabled & {
-      background-color: transparent;
-      border-color: transparent;
-
-      &::before {
-        background-clip: content-box;
-      }
-    }
-    .md3-switch--selected:disabled & {
-      background-clip: border-box;
-    }
+  // Handle container
+  .md3-switch__handle-container {
+    @include _handle-container;
   }
 
   // Handle
@@ -86,6 +74,31 @@ $icon-enter-duration: $animation-duration - $icon-exit-duration;
     @include _icon-visible;
   }
 
+  // Touch target
+  .md3-switch__touch {
+    @include touch-target.touch-target();
+  }
+
+  // Disabled
+  .md3-switch:disabled {
+    @include _disabled;
+  }
+
+  // Disabled - Track
+  .md3-switch__track {
+    .md3-switch:disabled & {
+      background-color: transparent;
+      border-color: transparent;
+
+      &::before {
+        background-clip: content-box;
+      }
+    }
+    .md3-switch--selected:disabled & {
+      background-clip: border-box;
+    }
+  }
+
   input {
     @include _input;
   }
@@ -112,7 +125,6 @@ $icon-enter-duration: $animation-duration - $icon-exit-duration;
 }
 
 @mixin _track() {
-  overflow: hidden;
   position: relative;
   width: 100%;
   height: 100%;
@@ -129,13 +141,16 @@ $icon-enter-duration: $animation-duration - $icon-exit-duration;
 @mixin _track-before() {
   @include _before-base();
 
-  border-width: 2px;
   border-style: solid;
 }
 
 // When selected, turn off ::before
 @mixin _track-selected-before() {
   opacity: 0;
+}
+
+@mixin _handle-container() {
+  position: relative;
 }
 
 @mixin _handle() {

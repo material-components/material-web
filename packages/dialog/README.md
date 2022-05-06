@@ -47,7 +47,7 @@ npm install @material/mwc-dialog
 </mwc-dialog>
 
 <script type="module">
-  import '@material/mwc-dialog';
+  import '@material/mwc-dialog/mwc-dialog.js';
 </script>
 
 <style>
@@ -130,10 +130,10 @@ npm install @material/mwc-dialog
 </mwc-dialog>
 
 <script type="module">
-  import '@material/mwc-dialog';
-  import '@material/mwc-button/mwc-button';
-  import '@material/mwc-radio/mwc-radio';
-  import '@material/mwc-formfield/mwc-formfield';
+  import '@material/mwc-dialog/mwc-dialog.js';
+  import '@material/mwc-button/mwc-button.js';
+  import '@material/mwc-radio/mwc-radio.js';
+  import '@material/mwc-formfield/mwc-formfield.js';
 </script>
 ```
 

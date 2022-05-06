@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {Switch} from '@material/mwc-switch/mwc-switch';
+import {Switch} from '@material/mwc-switch/mwc-switch.js';
 import {html} from 'lit';
-import {customElement} from 'lit/decorators';
-import {ifDefined} from 'lit/directives/if-defined';
+import {customElement} from 'lit/decorators.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {fixture, simulateFormDataEvent, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, simulateFormDataEvent, TestFixture} from '../../../test/src/util/helpers.js';
 
 @customElement('mwc-test-switch')
 class TestSwitch extends Switch {

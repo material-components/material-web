@@ -6,10 +6,10 @@
 
 import 'jasmine';
 
-import {Environment} from '../../testing/environment';
-import {spyOnAllFunctions} from '../../testing/jasmine';
-import {SegmentedButtonFoundation} from '../lib/foundation';
-import {SegmentedButtonAdapter} from '../lib/state';
+import {Environment} from '../../testing/environment.js';
+import {spyOnAllFunctions} from '../../testing/jasmine.js';
+import {SegmentedButtonFoundation} from '../lib/foundation.js';
+import {SegmentedButtonAdapter} from '../lib/state.js';
 
 describe('SegmentedButtonFoundation', () => {
   const env = new Environment();

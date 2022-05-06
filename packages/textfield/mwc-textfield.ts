@@ -8,10 +8,10 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {TextAreaCharCounter, TextFieldBase, TextFieldInputMode, TextFieldType} from './mwc-textfield-base';
-import {styles} from './mwc-textfield.css';
+import {TextAreaCharCounter, TextFieldBase, TextFieldInputMode, TextFieldType} from './mwc-textfield-base.js';
+import {styles} from './mwc-textfield.css.js';
 
 export {TextAreaCharCounter, TextFieldInputMode, TextFieldType};
 

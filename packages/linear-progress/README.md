@@ -18,7 +18,7 @@ Progress indicators express an unspecified wait time or display the length of a 
 
 ```html
 <script type="module">
-  import '@material/mwc-linear-progress';
+  import '@material/mwc-linear-progress/mwc-linear-progress.js';
 </script>
 <mwc-linear-progress progress="0.5"></mwc-linear-progress>
 ```

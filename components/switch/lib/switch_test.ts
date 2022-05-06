@@ -5,12 +5,12 @@
  */
 
 import {html} from 'lit';
-import {customElement} from 'lit/decorators';
-import {ifDefined} from 'lit/directives/if-defined';
+import {customElement} from 'lit/decorators.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {fixture, simulateFormDataEvent, TestFixture} from '../../../../test/src/util/helpers';
+import {fixture, simulateFormDataEvent, TestFixture} from '../../../../test/src/util/helpers.js';
 
-import {Switch} from './switch';
+import {Switch} from './switch.js';
 
 @customElement('md-test-switch')
 class TestSwitch extends Switch {

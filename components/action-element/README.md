@@ -40,10 +40,10 @@ from `endPress()` have a `detail` object, it should be included in the call to
 ### Example
 
 ```ts
-import {ActionElement, BeginPressConfig, EndPressConfig} from '../action-element/action-element';
+import {ActionElement, BeginPressConfig, EndPressConfig} from '../action-element/action-element.js';
 
 import {html} from 'lit';
-import {property} from 'lit/decorators';
+import {property} from 'lit/decorators.js';
 
 export class MyElement extends ActionElement {
   @property({type: Boolean}) disabled = false;
@@ -81,11 +81,11 @@ export class MyElement extends ActionElement {
 ### Example with ripple
 
 ```ts
-import {ActionElement, BeginPressConfig, EndPressConfig} from '../action-element/action-element';
-import {MdRipple} from '../ripple/ripple';
+import {ActionElement, BeginPressConfig, EndPressConfig} from '../action-element/action-element.js';
+import {MdRipple} from '../ripple/ripple.js';
 
 import {html} from 'lit';
-import {property, query} from 'lit/decorators';
+import {property, query} from 'lit/decorators.js';
 
 
 export class MyElementWithRipple extends ActionElement {

@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ariaProperty as legacyAriaProperty} from '@material/mwc-base/aria-property';
-import {observer} from '@material/mwc-base/observer';
+import {ariaProperty as legacyAriaProperty} from '@material/mwc-base/aria-property.js';
+import {observer} from '@material/mwc-base/observer.js';
 import {html, LitElement, TemplateResult} from 'lit';
-import {property} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
+import {property} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {ariaProperty} from '../../decorators/aria-property';
+import {ariaProperty} from '../../decorators/aria-property.js';
 
 /** @soyCompatible */
 export class NavigationDrawer extends LitElement {

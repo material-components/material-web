@@ -7,14 +7,14 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element';
-import {supportsPassiveEventListener} from '@material/mwc-base/utils';
-import {MDCTopAppBarAdapter} from '@material/top-app-bar/adapter';
-import {strings} from '@material/top-app-bar/constants';
-import MDCTopAppBarBaseFoundation from '@material/top-app-bar/foundation';
+import {addHasRemoveClass, BaseElement} from '@material/mwc-base/base-element.js';
+import {supportsPassiveEventListener} from '@material/mwc-base/utils.js';
+import {MDCTopAppBarAdapter} from '@material/top-app-bar/adapter.js';
+import {strings} from '@material/top-app-bar/constants.js';
+import MDCTopAppBarBaseFoundation from '@material/top-app-bar/foundation.js';
 import {html} from 'lit';
-import {property, query} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
+import {property, query} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 
 export const passiveEventOptionsIfSupported =
     supportsPassiveEventListener ? {passive: true} : undefined;

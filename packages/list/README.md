@@ -40,8 +40,8 @@ npm install @material/mwc-list
 </mwc-list>
 
 <script type="module">
-  import '@material/mwc-list/mwc-list.js';
-  import '@material/mwc-list/mwc-list-item.js';
+  import '@material/mwc-list/mwc-list.js.js';
+  import '@material/mwc-list/mwc-list-item.js.js';
 </script>
 ```
 
@@ -106,9 +106,9 @@ _Note_: it is not recommended to mix graphic sizes in the same list.
 </mwc-list>
 
 <script type="module">
-  import '@material/mwc-list/mwc-list-item.js';
-  import '@material/mwc-list/mwc-list.js';
-  import '@material/mwc-icon';
+  import '@material/mwc-list/mwc-list-item.js.js';
+  import '@material/mwc-list/mwc-list.js.js';
+  import '@material/mwc-icon/mwc-icon.js';
 </script>
 ```
 
@@ -210,8 +210,8 @@ API to `mwc-list-item`.
 </mwc-list>
 
 <script type="module">
-  import '@material/mwc-list/mwc-check-list-item.js';
-  import '@material/mwc-list/mwc-list.js';
+  import '@material/mwc-list/mwc-check-list-item.js.js';
+  import '@material/mwc-list/mwc-list.js.js';
 </script>
 ```
 
@@ -250,8 +250,8 @@ A radio list can also have `multi`.
   <mwc-radio-list-item group="c">Item 3</mwc-radio-list-item>
 </mwc-list>
 <script type="module">
-  import '@material/mwc-list/mwc-radio-list-item.js';
-  import '@material/mwc-list/mwc-list.js';
+  import '@material/mwc-list/mwc-radio-list-item.js.js';
+  import '@material/mwc-list/mwc-list.js.js';
 </script>
 ```
 
@@ -510,8 +510,8 @@ If you listen for a `selected` event you may be able to use the following
 pattern:
 
 ```ts
-import '@material/mwc-list';
-import {isEventMulti} from '@material/mwc-list';
+import '@material/mwc-list/mwc-list.js';
+import {isEventMulti} from '@material/mwc-list/mwc-list.js';
 
 const onSelected = (evt: SelectedEvent) => {
   if (isEventMulti(evt)) {

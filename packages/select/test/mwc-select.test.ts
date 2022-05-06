@@ -8,13 +8,13 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import '@material/mwc-list/mwc-list-item';
+import '@material/mwc-list/mwc-list-item.js';
 
-import {ListItem} from '@material/mwc-list/mwc-list-item';
-import {Select} from '@material/mwc-select';
+import {ListItem} from '@material/mwc-list/mwc-list-item.js';
+import {Select} from '@material/mwc-select/mwc-select.js';
 import {html} from 'lit';
 
-import {fixture, rafPromise, simulateFormDataEvent, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, rafPromise, simulateFormDataEvent, TestFixture} from '../../../test/src/util/helpers.js';
 
 interface WithSelectedText {
   selectedText: string;

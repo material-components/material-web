@@ -8,10 +8,10 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {Drawer} from '@material/mwc-drawer';
+import {Drawer} from '@material/mwc-drawer/mwc-drawer.js';
 import {html} from 'lit';
 
-import {fixture, TestFixture, waitForEvent} from '../../../test/src/util/helpers';
+import {fixture, TestFixture, waitForEvent} from '../../../test/src/util/helpers.js';
 
 const SCRIM_SELECTOR = '.mdc-drawer-scrim';
 const HEADER_SELECTOR = '.mdc-drawer__header';

@@ -4,7 +4,7 @@
 //
 
 // TODO(b/228217731): Remove MDC/MWC dependencies
-@use '@material/theme/css';
+@use '../../compat/theme/css';
 
 $duration: 280ms;
 $easing: cubic-bezier(0.4, 0, 0.2, 1);

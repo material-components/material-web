@@ -13,10 +13,10 @@
 @use '../../sass/resolvers';
 @use '../../sass/theme';
 @use '../../tokens/latest' as tokens;
-@use '@material/theme/map-ext';
-@use '@material/theme/theme-color';
+@use '../../compat/theme/map-ext';
+@use '../../compat/theme/theme-color';
 @use '@material/typography/typography';
-@use '@material/theme/keys';
+@use '../../compat/theme/keys';
 
 $light-theme: tokens.md-comp-navigation-bar-values();
 $dark-theme: tokens.md-comp-navigation-bar-values(

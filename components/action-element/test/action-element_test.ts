@@ -7,10 +7,10 @@
 import 'jasmine';
 
 import {html} from 'lit';
-import {customElement, property} from 'lit/decorators';
+import {customElement, property} from 'lit/decorators.js';
 
-import {Environment} from '../../testing/environment';
-import {ActionElement} from '../action-element';
+import {Environment} from '../../testing/environment.js';
+import {ActionElement} from '../action-element.js';
 
 declare global {
   interface HTMLElementTagNameMap {

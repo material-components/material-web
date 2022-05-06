@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {Harness} from '../testing/harness';
+import {Harness} from '../testing/harness.js';
 
-import {Checkbox} from './lib/checkbox';
+import {Checkbox} from './lib/checkbox.js';
 
 /**
  * Test harness for checkbox.

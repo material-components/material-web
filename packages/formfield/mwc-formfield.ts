@@ -7,10 +7,10 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {FormfieldBase} from './mwc-formfield-base';
-import {styles} from './mwc-formfield.css';
+import {FormfieldBase} from './mwc-formfield-base.js';
+import {styles} from './mwc-formfield.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

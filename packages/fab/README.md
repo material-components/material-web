@@ -39,7 +39,7 @@ npm install @material/mwc-fab
 <mwc-fab icon="edit"></mwc-fab>
 
 <script type="module">
-  import '@material/mwc-fab';
+  import '@material/mwc-fab/mwc-fab.js';
   const fab = document.querySelector('mwc-fab');
   fab.addEventListener('click', () => {
     edit();
@@ -59,8 +59,8 @@ npm install @material/mwc-fab
 </mwc-fab>
 
 <script type="module">
-  import '@material/mwc-fab';
-  import '@material/mwc-icon';
+  import '@material/mwc-fab/mwc-fab.js';
+  import '@material/mwc-icon/mwc-icon.js';
 </script>
 ```
 

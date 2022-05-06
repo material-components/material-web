@@ -8,11 +8,11 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {Tab} from '@material/mwc-tab';
+import {Tab} from '@material/mwc-tab/mwc-tab.js';
 import * as hanbi from 'hanbi';
 import {html, render} from 'lit';
 
-import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers';
+import {fixture, rafPromise, TestFixture} from '../../../test/src/util/helpers.js';
 
 interface TabProps {
   label: string;

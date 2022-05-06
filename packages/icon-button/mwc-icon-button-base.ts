@@ -7,14 +7,14 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import '@material/mwc-ripple/mwc-ripple';
+import '@material/mwc-ripple/mwc-ripple.js';
 
-import {AriaHasPopup, ariaProperty} from '@material/mwc-base/aria-property';
-import {Ripple} from '@material/mwc-ripple/mwc-ripple';
-import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
+import {AriaHasPopup, ariaProperty} from '@material/mwc-base/aria-property.js';
+import {Ripple} from '@material/mwc-ripple/mwc-ripple.js';
+import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers.js';
 import {html, LitElement, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAsync, state} from 'lit/decorators';
-import {ifDefined} from 'lit/directives/if-defined';
+import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 /** @soyCompatible */
 export class IconButtonBase extends LitElement {

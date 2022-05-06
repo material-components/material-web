@@ -7,12 +7,12 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {styles} from './mwc-slider.css';
-import {SliderRangeBase} from './slider-range-base';
+import {styles} from './mwc-slider.css.js';
+import {SliderRangeBase} from './slider-range-base.js';
 
-export {Thumb} from '@material/slider/types';
+export {Thumb} from '@material/slider/types.js';
 
 declare global {
   interface HTMLElementTagNameMap {

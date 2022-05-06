@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {Ripple} from './lib/ripple';
-import {styles} from './lib/ripple-styles.css';
+import {Ripple} from './lib/ripple.js';
+import {styles} from './lib/ripple-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

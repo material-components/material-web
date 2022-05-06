@@ -7,20 +7,20 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import '@material/mwc-ripple/mwc-ripple';
+import '@material/mwc-ripple/mwc-ripple.js';
 
-import {ariaProperty} from '@material/mwc-base/aria-property';
-import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element';
-import {observer} from '@material/mwc-base/observer';
-import {SingleSelectionController} from '@material/mwc-radio/single-selection-controller';
-import {Ripple} from '@material/mwc-ripple/mwc-ripple';
-import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers';
-import {MDCRadioAdapter} from '@material/radio/adapter';
-import MDCRadioFoundation from '@material/radio/foundation';
+import {ariaProperty} from '@material/mwc-base/aria-property.js';
+import {addHasRemoveClass, FormElement} from '@material/mwc-base/form-element.js';
+import {observer} from '@material/mwc-base/observer.js';
+import {SingleSelectionController} from '@material/mwc-radio/single-selection-controller.js';
+import {Ripple} from '@material/mwc-ripple/mwc-ripple.js';
+import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers.js';
+import {MDCRadioAdapter} from '@material/radio/adapter.js';
+import MDCRadioFoundation from '@material/radio/foundation.js';
 import {html, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAsync, state} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
+import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 /**
  * @fires checked

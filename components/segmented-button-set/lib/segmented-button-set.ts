@@ -7,14 +7,14 @@
  */
 
 import {html, LitElement, TemplateResult} from 'lit';
-import {queryAssignedElements} from 'lit/decorators';
-import {ifDefined} from 'lit/directives/if-defined';
+import {queryAssignedElements} from 'lit/decorators.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {bound} from '../../decorators/bound';
-import {SegmentedButton} from '../../segmented_button/lib/segmented-button';
+import {bound} from '../../decorators/bound.js';
+import {SegmentedButton} from '../../segmented_button/lib/segmented-button.js';
 
-import {SegmentedButtonSetFoundation} from './foundation';
-import {SegmentedButtonSetState} from './state';
+import {SegmentedButtonSetFoundation} from './foundation.js';
+import {SegmentedButtonSetState} from './state.js';
 
 /**
  * SegmentedButtonSet is the parent component for two or more

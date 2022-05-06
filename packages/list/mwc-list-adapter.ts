@@ -7,7 +7,7 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {IndexDiff, MWCListIndex} from './mwc-list-foundation';
+import {IndexDiff, MWCListIndex} from './mwc-list-foundation.js';
 
 /**
  * Defines the shape of the adapter expected by the foundation.

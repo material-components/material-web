@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {Badge} from './lib/badge';
-import {styles} from './lib/badge-styles.css';
+import {Badge} from './lib/badge.js';
+import {styles} from './lib/badge-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {
