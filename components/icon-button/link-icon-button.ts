@@ -9,8 +9,9 @@ import '../icon/icon.js';
 import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-import {styles} from './lib/icon-button-styles.css.js';
+import {styles as sharedStyles} from './lib/icon-button-styles.css.js';
 import {LinkIconButton} from './lib/link-icon-button.js';
+import {styles} from './lib/standard-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -20,7 +21,7 @@ declare global {
 
 @customElement('md-link-icon-button')
 export class MdLinkIconButton extends LinkIconButton {
-  static override styles = [styles];
+  static override styles = [sharedStyles, styles];
 
   /** @soyTemplate */
   protected override renderIcon(icon: string): TemplateResult|string {
