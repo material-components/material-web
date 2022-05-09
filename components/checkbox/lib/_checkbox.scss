@@ -235,7 +235,6 @@ $_selected-checkmark-padding: 2.8px;
 }
 
 @mixin background_() {
-  background-clip: padding-box;
   display: inline-flex;
   position: absolute;
   align-items: center;

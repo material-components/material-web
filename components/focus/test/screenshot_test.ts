@@ -52,7 +52,7 @@ class TestButton extends LitElement {
 }
 
 class TestButtonHarness extends Harness<TestButton> {
-  override async getInteractiveElement() {
+  protected override async getInteractiveElement() {
     await this.element.updateComplete;
     return this.element.renderRoot.querySelector<HTMLElement>('button')!;
   }
@@ -81,7 +81,8 @@ describe('<md-focus-ring>', () => {
     expect(await env.diffRootWithRtl('strong_focus')).toHaveAllPassed();
   });
 
-  function renderTable(title: string, props: TemplateProps<Harness> = {}) {
+  function renderTable(
+      title: string, props: TemplateProps<TestButtonHarness> = {}) {
     const testTemplates = templates.all(props);
     env.render(html`
       <md-test-table

@@ -187,7 +187,6 @@ export class Switch extends LitElement {
 
   @eventOptions({passive: true})
   protected handlePointerDown(event: PointerEvent) {
-    (event.target as HTMLElement).setPointerCapture(event.pointerId);
     focusRingPointerPress();
     this.showFocusRing = false;
   }

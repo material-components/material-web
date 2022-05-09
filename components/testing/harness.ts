@@ -18,7 +18,34 @@ declare global {
  * @template H The harness type.
  */
 export type HarnessElement<H extends Harness> =
-    H extends Harness<infer E>? E : never;
+    H extends Harness<infer E>? ElementWithHarness<E, H>: never;
+
+/**
+ * Harnesses will attach themselves to their element for convenience.
+ *
+ * @template E The element type.
+ * @template H The harness type.
+ */
+export type ElementWithHarness<E extends HTMLElement = HTMLElement,
+                                         H extends Harness<E> = Harness<E>> =
+    E&{
+  /**
+   * The harness for this element.
+   */
+  harness: H;
+};
+
+/**
+ * Checks whether or not an element has a Harness attached to it on the
+ * `element.harness` property.
+ *
+ * @param element The element to check.
+ * @return True if the element has a harness property.
+ */
+export function isElementWithHarness(element: Element):
+    element is ElementWithHarness {
+  return (element as unknown as ElementWithHarness).harness instanceof Harness;
+}
 
 /**
  * A test harness class that can be used to simulate interaction with an
@@ -34,11 +61,19 @@ export class Harness<E extends HTMLElement = HTMLElement> {
   protected transformPseudoClasses = defaultTransformPseudoClasses;
 
   /**
+   * The element that this harness controls.
+   */
+  readonly element: E&ElementWithHarness<E, this>;
+
+  /**
    * Creates a new harness for the given element.
    *
    * @param element The element that this harness controls.
    */
-  constructor(readonly element: E) {}
+  constructor(element: E) {
+    this.element = element as ElementWithHarness<E, this>;
+    this.element.harness = this;
+  }
 
   /**
    * Resets the element's simulated classes to the default state.

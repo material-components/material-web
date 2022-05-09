@@ -22,9 +22,8 @@ export class PrimaryTabBar extends TabBar {
 
   // TODO(sorvell): probably want to memoize this and use a `slotChange` event
   protected getTabs() {
-    return (this.tabsSlot as HTMLSlotElement)
-               .assignedNodes({flatten: true})
-               .filter((e: Node) => e instanceof PrimaryTab) as PrimaryTab[];
+    return this.tabsSlot.filter((e: Node) => e instanceof PrimaryTab) as
+        PrimaryTab[];
   }
 
   protected getActiveTabIndex() {

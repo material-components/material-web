@@ -9,7 +9,7 @@ import {DirectiveResult} from 'lit/directive.js';
 import {ref} from 'lit/directives/ref.js';
 import {literal} from 'lit/static-html.js';
 
-import {Harness, HarnessElement} from './harness.js';
+import {Harness, HarnessElement, isElementWithHarness} from './harness.js';
 import {TestTableTemplate} from './table/test-table.js';
 
 /**
@@ -95,10 +95,9 @@ export class TemplateBuilder<H extends Harness = never,
       testCaseProps.push({});
     }
 
-    return Array.from(this.variants.values())
-        .flatMap(({display, factory}) => {
-          return testCaseProps.map(props => ({display, render: factory(props)}));
-        });
+    return Array.from(this.variants.values()).flatMap(({display, factory}) => {
+      return testCaseProps.map(props => ({display, render: factory(props)}));
+    });
   }
 
   /**
@@ -177,8 +176,8 @@ export class TemplateBuilder<H extends Harness = never,
    *     options specify a `display` name and the variant `render` function.
    * @return The template builder, now using the provided variants.
    */
-  withVariants(variants:
-                   Record<string, TemplateRender<H>|TemplateVariantOptions<H>>) {
+  withVariants(
+      variants: Record<string, TemplateRender<H>|TemplateVariantOptions<H>>) {
     // TODO: clean this up by only allowing TemplateVariantOptions and force
     // users to specify the display name.
     for (const variant of Object.keys(variants)) {
@@ -249,7 +248,9 @@ export class TemplateBuilder<H extends Harness = never,
       return undefined as never;
     }
 
-    const harness = new this.harnessCtor(element);
+    const harness = isElementWithHarness(element) ?
+        element.harness as H :
+        new this.harnessCtor(element);
     // Common shared component state harness actions
     switch (state) {
       case State.FOCUS:

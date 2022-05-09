@@ -8,7 +8,7 @@
 import {BaseElement} from '@material/mwc-base/base-element.js';
 import {observer} from '@material/mwc-base/observer.js';
 import {html, TemplateResult} from 'lit';
-import {property, query} from 'lit/decorators.js';
+import {property, query, queryAssignedElements} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
 import {PrimaryTab} from '../../tab/lib/primary-tab.js';
@@ -34,7 +34,7 @@ export abstract class TabBar extends BaseElement {
   // emitDecoratorMetadata is enabled, the HTMLSlotElement constructor will
   // be emitted into the runtime, which will cause an "HTMLSlotElement is
   // undefined" error in browsers that don't define it (e.g. IE11).
-  @query('slot') protected tabsSlot!: HTMLElement;
+  @queryAssignedElements({flatten: true}) protected tabsSlot!: HTMLElement[];
 
   @observer(async function(this: TabBar) {
     await this.updateComplete;
