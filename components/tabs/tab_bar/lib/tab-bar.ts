@@ -6,8 +6,7 @@
  */
 
 import {BaseElement} from '@material/mwc-base/base-element.js';
-import {observer} from '@material/mwc-base/observer.js';
-import {html, TemplateResult} from 'lit';
+import {html, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
@@ -36,26 +35,17 @@ export abstract class TabBar extends BaseElement {
   // undefined" error in browsers that don't define it (e.g. IE11).
   @queryAssignedElements({flatten: true}) protected tabsSlot!: HTMLElement[];
 
-  @observer(async function(this: TabBar) {
-    await this.updateComplete;
-    // only provoke the foundation if we are out of sync with it, i.e.
-    // ignore an foundation generated set.
-    // use `activeIndex` directly to avoid staleness if it was set before the
-    // first render.
-    if (this.activeIndex !== this._previousActiveIndex) {
-      this.mdcFoundation.activateTab(this.activeIndex);
-    }
-  })
-  @property({type: Number})
-  activeIndex = 0;
+  @property({type: Number}) activeIndex = 0;
 
   protected _previousActiveIndex = -1;
 
-  protected _handleTabInteraction(e: TabInteractionEvent) {
+  protected async _handleTabInteraction(e: TabInteractionEvent) {
+    await this.updateComplete;
     this.mdcFoundation.handleTabInteraction(e);
   }
 
-  protected _handleKeydown(e: KeyboardEvent) {
+  protected async _handleKeydown(e: KeyboardEvent) {
+    await this.updateComplete;
     this.mdcFoundation.handleKeyDown(e);
   }
 
@@ -179,6 +169,17 @@ export abstract class TabBar extends BaseElement {
       this.createFoundation();
     }
     return result;
+  }
+
+  protected override async updated(changedProperties: PropertyValues) {
+    await this.updateComplete;
+    // only provoke the foundation if we are out of sync with it, i.e.
+    // ignore an foundation generated set.
+    // use `activeIndex` directly to avoid staleness if it was set before the
+    // first render.
+    if (this.activeIndex !== this._previousActiveIndex) {
+      this.mdcFoundation.activateTab(this.activeIndex);
+    }
   }
 
   scrollIndexIntoView(index: number) {
