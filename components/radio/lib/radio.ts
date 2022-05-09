@@ -208,15 +208,11 @@ export class Radio extends ActionElement {
   protected handleFocus() {
     this.focused = true;
     this.showFocusRing = shouldShowStrongFocus();
-
-    this.ripple.beginFocus();
   }
 
   protected handleBlur() {
     this.focused = false;
     this.showFocusRing = false;
-
-    this.ripple.endFocus();
   }
 
   protected setFormData(formData: FormData) {
