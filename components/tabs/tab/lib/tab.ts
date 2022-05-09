@@ -131,6 +131,7 @@ export class Tab extends BaseElement {
   protected getRootClasses(): ClassInfo {
     return {
       'md3-tab--min-width': this.minWidth,
+      'md3-tab--active': this.active,
     };
   }
 
