@@ -8,6 +8,7 @@ import '../../focus/focus-ring.js';
 
 import {html, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
 import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action-element/action-element.js';
@@ -47,7 +48,7 @@ export class IconButton extends ActionElement {
   /** @soyTemplate */
   protected override render(): TemplateResult {
     return html`<button
-        class="md3-icon-button"
+        class="md3-icon-button ${classMap(this.getRenderClasses())}"
         aria-label="${ifDefined(this.ariaLabel)}"
         aria-haspopup="${ifDefined(this.ariaHasPopup)}"
         ?disabled="${this.disabled}"
@@ -66,6 +67,11 @@ export class IconButton extends ActionElement {
         ${this.renderIcon(this.icon)}
         ${this.renderTouchTarget()}<span><slot></slot></span>
   </button>`;
+  }
+
+  /** @soyTemplate */
+  protected getRenderClasses(): ClassInfo {
+    return {};
   }
 
   /** @soyTemplate */

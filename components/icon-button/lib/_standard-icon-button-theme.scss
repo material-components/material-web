@@ -6,16 +6,11 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-// TODO(b/228217731): Remove MDC/MWC dependencies
 @use 'sass:map';
+@use '../../ripple/ripple-theme';
 @use '../../sass/theme';
 @use '../../tokens';
-@use 'third_party/javascript/material_web_components/m3/ripple/ripple-theme';
-@use '@material/ripple/ripple-theme' as mdc-ripple-theme;
-@use '../../compat/theme/keys';
-@use '../../compat/theme/state';
-@use '../../compat/theme/theme-color';
-@use '@material/touch-target/touch-target';
+@use './icon-button-theme';
 
 $_custom-property-prefix: 'icon-button';
 
@@ -29,6 +24,7 @@ $dark-theme: tokens.md-comp-icon-button-values(
 
 @mixin theme($theme) {
   $theme: theme.validate-theme($light-theme, $theme);
+  $theme: icon-button-theme.flatten-disabled-colors($theme);
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
   @include theme.emit-theme-vars($theme);
@@ -40,13 +36,15 @@ $dark-theme: tokens.md-comp-icon-button-values(
     $theme,
     $require-all: false
   );
+  $theme: icon-button-theme.flatten-disabled-colors($theme);
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
-  @include _icon-size(map.get($theme, icon-size));
-  @include _state-layer-size($size: map.get($theme, state-layer-size));
-  @include _disabled-icon-opacity(map.get($theme, disabled-icon-opacity));
+  @include icon-button-theme.icon-size(map.get($theme, icon-size));
+  @include icon-button-theme.state-layer-size(
+    $size: map.get($theme, state-layer-size)
+  );
 
-  @include _icon-color(
+  @include icon-button-theme.icon-color(
     (
       default: map.get($theme, unselected-icon-color),
       disabled: map.get($theme, disabled-icon-color),
@@ -57,7 +55,7 @@ $dark-theme: tokens.md-comp-icon-button-values(
   );
 
   &.md3-icon-button--on {
-    @include _icon-color(
+    @include icon-button-theme.icon-color(
       (
         default: map.get($theme, selected-icon-color),
         focus: map.get($theme, selected-focus-icon-color),
@@ -102,70 +100,5 @@ $dark-theme: tokens.md-comp-icon-button-values(
           map.get($theme, selected-pressed-state-layer-opacity),
       )
     );
-  }
-}
-
-@mixin _state-layer-size($size) {
-  height: $size;
-  width: $size;
-
-  margin: max(0px, calc((#{touch-target.$height} - #{$size}) / 2));
-}
-
-@mixin _icon-size($size) {
-  font-size: $size;
-
-  i,
-  svg,
-  img {
-    height: $size;
-    width: $size;
-  }
-}
-
-///
-/// Sets the icon color to the given color.
-/// @param {map} $color-map - The desired icon color, specified as a map of
-///     colors with states {default, disabled, focus, hover, pressed} as keys.
-/// @access private
-///
-@mixin _icon-color($color-map) {
-  @include _set-icon-color(state.get-default-state($color-map));
-
-  $disabled: state.get-disabled-state($color-map);
-  &:disabled {
-    @include _set-icon-color($disabled);
-  }
-
-  $focus: state.get-focus-state($color-map);
-  @include mdc-ripple-theme.focus {
-    @include _set-icon-color($focus);
-  }
-
-  $hover: state.get-hover-state($color-map);
-  &:hover {
-    @include _set-icon-color($hover);
-  }
-
-  $pressed: state.get-pressed-state($color-map);
-  @include mdc-ripple-theme.active {
-    @include _set-icon-color($pressed);
-  }
-}
-
-///
-/// Sets the font color to the provided color value.
-/// @param {Color} $color - The desired font color.
-///
-@mixin _set-icon-color($color) {
-  color: $color;
-}
-
-///
-/// Sets the icon opacity to the given opacity.
-///
-@mixin _disabled-icon-opacity($opacity) {
-  &:disabled {
-    opacity: $opacity;
   }
 }

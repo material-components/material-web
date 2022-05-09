@@ -1,0 +1,116 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// This file contains common theme mixins that are shared across icon button
+// variants.
+
+// TODO(b/228217731): Remove MDC/MWC dependencies
+@use 'sass:map';
+@use '../../compat/theme/keys';
+@use '../../compat/theme/state';
+@use '../../compat/theme/theme-color';
+@use '../../ripple/ripple-theme';
+@use '../../sass/color';
+@use '../../sass/theme';
+@use '../../tokens';
+@use '@material/ripple/ripple-theme' as mdc-ripple-theme;
+@use '@material/touch-target/touch-target';
+
+@mixin state-layer-size($size) {
+  height: $size;
+  width: $size;
+
+  margin: max(0px, calc((#{touch-target.$height} - #{$size}) / 2));
+}
+
+@mixin state-layer-shape($shape) {
+  border-radius: $shape;
+}
+
+@mixin icon-size($size) {
+  font-size: $size;
+
+  i,
+  svg,
+  img {
+    height: $size;
+    width: $size;
+  }
+}
+
+///
+/// Sets the icon color to the given color.
+/// @param {map} $color-map - The desired icon color, specified as a map of
+///     colors with states {default, disabled, focus, hover, pressed} as keys.
+/// @access private
+///
+@mixin icon-color($color-map) {
+  @include _set-icon-color(state.get-default-state($color-map));
+
+  $disabled: state.get-disabled-state($color-map);
+  &:disabled {
+    @include _set-icon-color($disabled);
+  }
+
+  $focus: state.get-focus-state($color-map);
+  @include mdc-ripple-theme.focus {
+    @include _set-icon-color($focus);
+  }
+
+  $hover: state.get-hover-state($color-map);
+  &:hover {
+    @include _set-icon-color($hover);
+  }
+
+  $pressed: state.get-pressed-state($color-map);
+  @include mdc-ripple-theme.active {
+    @include _set-icon-color($pressed);
+  }
+}
+
+///
+/// Sets the font color to the provided color value.
+/// @param {Color} $color - The desired font color.
+///
+@mixin _set-icon-color($color) {
+  color: $color;
+}
+
+///
+// Flattens disabled colors for icon button theme keys (across all variants).
+///
+@function flatten-disabled-colors($theme) {
+  // If opacity value is null (e.g. for dark theme map, only the color
+  // changes, so the opacity value is null), use the default opacity value.
+  // Otherwise, the color is not flattened, meaning that the color would
+  // be applied without any opacity, which is incorrect.
+  $opacity-keys: [ 'disabled-container-opacity', 'disabled-icon-opacity' ];
+  $light-theme: tokens.md-comp-icon-button-values();
+  $light-theme-filled: tokens.md-comp-filled-icon-button-values();
+
+  @each $opacity-key in $opacity-keys {
+    @if not map.get($theme, $opacity-key) {
+      // If opacity value is null.
+      $light-theme-value: map.get($light-theme, $opacity-key);
+      $light-theme-filled-value: map.get($light-theme-filled, $opacity-key);
+      @if $light-theme-value {
+        $theme: map.set($theme, $opacity-key, $light-theme-value);
+      } @else if $light-theme-filled-value {
+        $theme: map.set($theme, $opacity-key, $light-theme-filled-value);
+      }
+    }
+  }
+
+  @return color.join-color-and-opacity-pairs(
+    $theme,
+    (
+      (
+        color-key: 'disabled-container-color',
+        opacity-key: 'disabled-container-opacity'
+      ),
+      (color-key: 'disabled-icon-color', opacity-key: 'disabled-icon-opacity')
+    )
+  );
+}

@@ -25,7 +25,7 @@
   }
 
   @if meta.type-of($opacity) != 'number' {
-    @error '#{$number} is not a valid number.';
+    @error '#{$opacity} is not a valid number.';
   }
 
   $fallback: var.fallback($var);
