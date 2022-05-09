@@ -152,14 +152,12 @@ $icon-enter-duration: $animation-duration - $icon-exit-duration;
 
 @mixin _handle-container() {
   position: relative;
+  transition: animation.standard(margin, $animation-duration);
 }
 
 @mixin _handle() {
-  transition-property: transform margin-inline-start margin-inline-end;
-  transition-duration: #{$animation-duration};
-  transition-timing-function: animation.$standard-easing;
-
   transform-origin: center;
+  transition: animation.standard(transform, $animation-duration);
 }
 
 @mixin _handle-before() {
@@ -194,6 +192,9 @@ $icon-enter-duration: $animation-duration - $icon-exit-duration;
   position: absolute;
   inset: 0;
   margin: auto;
+
+  transition-property: fill;
+  transition-duration: #{$animation-duration};
 }
 
 @mixin _icon-hidden() {
