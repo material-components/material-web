@@ -6,6 +6,7 @@
  */
 
 import {BaseElement} from '@material/mwc-base/base-element.js';
+import {deepActiveElementPath} from '@material/mwc-base/utils.js';
 import {html, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
@@ -79,7 +80,14 @@ export abstract class TabBar extends BaseElement {
     return this.getTabs()[index];
   }
 
-  protected abstract getActiveTabIndex(): number;
+  protected getActiveTabIndex() {
+    const tabElements = this.getTabs();
+    const activeElementPath = deepActiveElementPath();
+    const focusedTabIndex = tabElements.findIndex((tab) => {
+      return tab.mdcRoot === activeElementPath[activeElementPath.length - 1];
+    });
+    return focusedTabIndex;
+  }
 
   protected createAdapter(): MDCTabBarAdapter {
     return {

@@ -33,6 +33,15 @@ export class TabScroller extends BaseElement {
     this.mdcFoundation.handleInteraction();
   }
 
+  protected handleKeydown(e: KeyboardEvent) {
+    // Keydown events should be propagated up to the tab bar element
+    // When converted to a wiz controller, however, the default is to stop
+    // event propagation in order to avoid unforseen integration bugs with
+    // clients. We, thus, separate out the keydown handler so only the keydown
+    // event is bubbled.
+    this._handleInteraction();
+  }
+
   protected _handleTransitionEnd(e: Event) {
     this.mdcFoundation.handleTransitionEnd(e);
   }
@@ -48,7 +57,7 @@ export class TabScroller extends BaseElement {
             @touchstart="${this._handleInteraction}"
             @pointerdown="${this._handleInteraction}"
             @mousedown="${this._handleInteraction}"
-            @keydown="${this._handleInteraction}"
+            @keydown="${this.handleKeydown}"
             @transitionend="${this._handleTransitionEnd}">
           <div class="md3-tab-scroller__scroll-content"><slot></slot></div>
         </div>

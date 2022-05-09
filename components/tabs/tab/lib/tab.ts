@@ -35,7 +35,7 @@ export class Tab extends BaseElement {
 
   protected readonly mdcFoundationClass = MDCTabFoundation;
 
-  @query('.md3-tab') protected mdcRoot!: HTMLElement;
+  @query('.md3-tab') mdcRoot!: HTMLElement;
 
   @query('.md3-tab__indicator') protected tabIndicator!: TabIndicator;
 

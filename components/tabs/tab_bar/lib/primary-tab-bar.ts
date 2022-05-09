@@ -25,11 +25,4 @@ export class PrimaryTabBar extends TabBar {
     return this.tabsSlot.filter((e: Node) => e instanceof PrimaryTab) as
         PrimaryTab[];
   }
-
-  protected getActiveTabIndex() {
-    const tabElements = this.getTabs();
-    const activeElement =
-        (this.getRootNode() as ShadowRoot).activeElement as PrimaryTab;
-    return tabElements.indexOf(activeElement);
-  }
 }
