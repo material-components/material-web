@@ -4,7 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+<!-- ## Unreleased -->
+
+## [v0.26.1] - 2022-05-09
+
+### Fixed
+
+- Add `.js` to import paths
+
+## [v0.26.0] - 2022-05-03
 
 ### Changed
 
