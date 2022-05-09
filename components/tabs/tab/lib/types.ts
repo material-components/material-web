@@ -21,3 +21,9 @@ export interface TabInteractionEventDetail {
 }
 
 export type TabInteractionEvent = CustomEvent<TabInteractionEventDetail>;
+
+export interface IndicatorOptions {
+  indicatorIcon: string;
+  isFadingIndicator: boolean;
+  isActive: boolean;
+}

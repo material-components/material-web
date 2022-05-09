@@ -21,7 +21,7 @@ import {TabIndicator} from '../../tab_indicator/lib/tab-indicator.js';
 
 import {MDCTabAdapter} from './adapter.js';
 import MDCTabFoundation from './foundation.js';
-import {TabInteractionEvent, TabInteractionEventDetail} from './types.js';
+import {IndicatorOptions, TabInteractionEvent, TabInteractionEventDetail} from './types.js';
 
 // used for generating unique id for each tab
 let tabIdCounter = 0;
@@ -93,6 +93,11 @@ export class Tab extends BaseElement {
   /** @soyTemplate */
   protected override render(): TemplateResult {
     const shouldRenderIcon = this.hasImageIcon || this.icon;
+    const indicatorOptions = {
+      indicatorIcon: this.indicatorIcon,
+      isFadingIndicator: this.isFadingIndicator,
+      isActive: this.active
+    };
     return html`
       <button
         @click="${this.handleClick}"
@@ -113,14 +118,10 @@ export class Tab extends BaseElement {
           ${shouldRenderIcon ? this.renderIcon(this.icon) : ''}
           ${this.label ? this.renderLabel(this.label) : ''}
           ${
-        this.isMinWidthIndicator ?
-            this.renderIndicator(this.indicatorIcon, this.isFadingIndicator) :
-            ''}
+        this.isMinWidthIndicator ? this.renderIndicator(indicatorOptions) : ''}
         </span>
         ${
-        this.isMinWidthIndicator ?
-            '' :
-            this.renderIndicator(this.indicatorIcon, this.isFadingIndicator)}
+        this.isMinWidthIndicator ? '' : this.renderIndicator(indicatorOptions)}
         ${this.renderRipple()}
         ${this.renderFocusRing()}
       </button>`;
@@ -134,8 +135,7 @@ export class Tab extends BaseElement {
   }
 
   /** @soyTemplate */
-  protected renderIndicator(indicatorIcon: string, isFadingIndicator: boolean):
-      TemplateResult {
+  protected renderIndicator(opts: IndicatorOptions): TemplateResult {
     return html``;
   }
 
