@@ -11,8 +11,8 @@ import * as hanbi from 'hanbi';
 import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-import {NavigationTabHarness} from '../harness.js';
-import {MdNavigationTab} from '../navigation-tab.js';
+import {NavigationTabHarness} from './harness.js';
+import {MdNavigationTab} from './navigation-tab.js';
 
 @customElement('md-test-navigation-tab')
 class TestNavigationTab extends MdNavigationTab {

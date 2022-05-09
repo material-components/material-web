@@ -12,9 +12,10 @@ import {html} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {NavigationTabHarness} from '../../navigation_tab/harness.js';
-import {MdNavigationTab} from '../../navigation_tab/navigation-tab.js';
-import {MdNavigationBar} from '../navigation-bar.js';
+import {NavigationTabHarness} from '../navigation_tab/harness.js';
+import {MdNavigationTab} from '../navigation_tab/navigation-tab.js';
+
+import {MdNavigationBar} from './navigation-bar.js';
 
 @customElement('md-test-navigation-bar')
 class TestMdNavigationBar extends MdNavigationBar {
