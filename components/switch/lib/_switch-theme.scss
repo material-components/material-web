@@ -60,7 +60,7 @@ $_forced-colors-theme: (
   disabled-track-opacity: 1,
   disabled-unselected-handle-color: GrayText,
   disabled-unselected-handle-opacity: 1,
-  disabled-unselected-icon-color: GrayText,
+  disabled-unselected-icon-color: Canvas,
   disabled-unselected-icon-opacity: 1,
   selected-focus-track-color: ButtonText,
   selected-hover-track-color: ButtonText,
@@ -70,7 +70,7 @@ $_forced-colors-theme: (
   unselected-focus-handle-color: ButtonText,
   unselected-handle-color: ButtonText,
   unselected-hover-handle-color: ButtonText,
-  unselected-icon-color: ButtonText,
+  unselected-icon-color: Canvas,
   unselected-pressed-handle-color: ButtonText,
 );
 
