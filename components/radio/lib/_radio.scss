@@ -8,16 +8,10 @@
 
 @use '@material/animation/animation';
 @use '@material/dom/dom';
-@use '@material/touch-target/mixins' as touch-target-mixins;
-@use '@material/touch-target/variables' as touch-target-variables;
 @use './radio-theme';
 
-///
-/// Radio core styles.
-///
-@mixin core-styles() {
+@mixin static-styles() {
   .md3-radio {
-    @include radio-theme.density(radio-theme.$density-scale);
     @include dom.forced-colors-mode {
       &.md3-radio--disabled {
         @include radio-theme.disabled-unchecked-stroke-color(GrayText);
@@ -80,14 +74,6 @@
     z-index: 1;
   }
 
-  .md3-radio--touch {
-    @include touch-target-mixins.margin(
-      $component-height: radio-theme.$ripple-size,
-      $component-width: radio-theme.$ripple-size
-    );
-    @include radio-theme.touch-target($size: touch-target-variables.$height);
-  }
-
   .md3-radio__native-control:checked,
   .md3-radio__native-control:disabled {
     + .md3-radio__background {
@@ -123,8 +109,6 @@
       cursor: default;
     }
   }
-
-  @include radio-theme.theme-styles(radio-theme.$light-theme);
 }
 
 @function enter($name) {

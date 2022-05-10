@@ -4,9 +4,11 @@
 //
 
 @use './radio';
+@use './radio-theme';
 
 :host {
-  @include radio.core-styles();
+  @include radio-theme.theme-styles(radio-theme.$light-theme);
+  @include radio.static-styles();
 
   display: inline-flex;
 }

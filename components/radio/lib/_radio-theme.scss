@@ -76,32 +76,50 @@ $light-theme: (
 
 @mixin theme-styles($theme) {
   $theme: theme.validate-theme($light-theme, $theme);
+  // Set touch target manually until tokens provide this information.
+  $theme: map.set($theme, _touch-target-size, 48px);
   $theme: theme.create-theme-vars($theme, $prefix: $custom-property-prefix);
 
-  @include _disabled-selected-icon-color(
-    map.get($theme, disabled-selected-icon-color)
-  );
-  @include _disabled-selected-icon-opacity(
-    map.get($theme, disabled-selected-icon-opacity)
-  );
-  @include _disabled-unselected-icon-color(
-    map.get($theme, disabled-unselected-icon-color)
-  );
-  @include _disabled-unselected-icon-opacity(
-    map.get($theme, disabled-unselected-icon-opacity)
-  );
+  .md3-radio {
+    @include _disabled-selected-icon-color(
+      map.get($theme, disabled-selected-icon-color)
+    );
+    @include _disabled-selected-icon-opacity(
+      map.get($theme, disabled-selected-icon-opacity)
+    );
+    @include _disabled-unselected-icon-color(
+      map.get($theme, disabled-unselected-icon-color)
+    );
+    @include _disabled-unselected-icon-opacity(
+      map.get($theme, disabled-unselected-icon-opacity)
+    );
 
-  // selected
-  @include _selected-icon-color(map.get($theme, selected-icon-color));
+    // selected
+    @include _selected-icon-color(map.get($theme, selected-icon-color));
 
-  // unselected
-  @include _unselected-icon-color(map.get($theme, unselected-icon-color));
-  @include _ripple-padding(map.get($theme, state-layer-size));
-  // Set touch target size same as ripple size.
-  @include touch-target(
-    $size: map.get($theme, state-layer-size),
-    $ripple-size: map.get($theme, state-layer-size)
-  );
+    // unselected
+    @include _unselected-icon-color(map.get($theme, unselected-icon-color));
+    @include _ripple-padding(map.get($theme, state-layer-size));
+    @include touch-target(
+      $size: map.get($theme, state-layer-size),
+      $ripple-size: map.get($theme, state-layer-size)
+    );
+  }
+
+  .md3-radio--touch {
+    margin: calc(
+      (
+          #{map.get($theme, _touch-target-size)} - #{map.get(
+              $theme,
+              state-layer-size
+            )}
+        ) / 2
+    );
+    @include touch-target(
+      $size: map.get($theme, _touch-target-size),
+      $ripple-size: map.get($theme, state-layer-size)
+    );
+  }
 
   @include ripple-theme.theme(
     (

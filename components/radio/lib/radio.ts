@@ -30,8 +30,6 @@ import {SingleSelectionController} from './single-selection-controller.js';
  * @soyCompatible
  */
 export class Radio extends ActionElement {
-  @query('.md3-radio') protected mdcRoot!: HTMLElement;
-
   @query('input') protected formElement!: HTMLInputElement;
 
   @query('md-ripple') ripple!: MdRipple;
@@ -176,19 +174,7 @@ export class Radio extends ActionElement {
     this.selectionController = undefined;
   }
 
-  protected createAdapter(): MDCRadioAdapter {
-    return {
-      addClass: (className: string) => {
-        this.mdcRoot.classList.add(className);
-      },
-      removeClass: (className: string) => {
-        this.mdcRoot.classList.remove(className);
-      },
-      setNativeControlDisabled: (disabled: boolean) => {
-        this.formElement.disabled = disabled;
-      },
-    };
-  }
+  protected createAdapter() {}
 
   override beginPress({positionEvent}: BeginPressConfig) {
     this.ripple.beginPress(positionEvent);
@@ -196,6 +182,11 @@ export class Radio extends ActionElement {
 
   override endPress({cancelled}: EndPressConfig) {
     this.ripple.endPress();
+
+    if (cancelled) {
+      return;
+    }
+
     super.endPress(
         {cancelled, actionData: {checked: this.formElement.checked}});
   }
