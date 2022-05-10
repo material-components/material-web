@@ -111,16 +111,17 @@ export class Switch extends LitElement {
 
   /** @soyTemplate */
   protected renderHandle(): TemplateResult {
-    const classes = classMap({
+    /** @classMap */
+    const classes = {
       'md3-switch__handle--big': this.icons && !this.onlySelectedIcon,
-    });
+    };
     return html`
-    <div class="md3-switch__handle-container">
-      <div class="md3-switch__handle ${classes}">
-        ${this.shouldShowIcons() ? this.renderIcons() : html``}
+      <div class="md3-switch__handle-container">
+        <div class="md3-switch__handle ${classMap(classes)}">
+          ${this.shouldShowIcons() ? this.renderIcons() : html``}
+        </div>
+        ${this.renderTouchTarget()}
       </div>
-      ${this.renderTouchTarget()}
-    </div>
     `;
   }
 
@@ -165,7 +166,8 @@ export class Switch extends LitElement {
     return html`<span class="md3-switch__touch"></span>`;
   }
 
-  private shouldShowIcons() {
+  /** @soyTemplate */
+  private shouldShowIcons(): boolean {
     return this.icons || this.onlySelectedIcon;
   }
 
