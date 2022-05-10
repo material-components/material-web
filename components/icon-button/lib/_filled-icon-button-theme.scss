@@ -3,6 +3,9 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
 @use 'sass:map';
 @use '../../compat/theme/state';
 @use '../../sass/resolvers';
@@ -53,6 +56,13 @@ $dark-theme: tokens.md-comp-filled-icon-button-values(
     )
   );
 
+  @include _container-color(
+    (
+      default: map.get($theme, 'container-color'),
+      disabled: map.get($theme, 'disabled-container-color'),
+    )
+  );
+
   @include ripple-theme.theme(
     (
       focus-state-layer-color: map.get($theme, 'focus-state-layer-color'),
@@ -65,12 +75,65 @@ $dark-theme: tokens.md-comp-filled-icon-button-values(
     )
   );
 
-  @include _container-color(
-    (
-      default: map.get($theme, 'container-color'),
-      disabled: map.get($theme, 'disabled-container-color'),
-    )
-  );
+  &.md3-icon-button--toggle-filled {
+    @include icon-button-theme.icon-color(
+      (
+        default: map.get($theme, 'toggle-unselected-icon-color'),
+        disabled: map.get($theme, 'disabled-icon-color'),
+        focus: map.get($theme, 'toggle-unselected-focus-icon-color'),
+        hover: map.get($theme, 'toggle-unselected-hover-icon-color'),
+        pressed: map.get($theme, 'toggle-unselected-pressed-icon-color'),
+      )
+    );
+
+    @include _container-color(
+      (
+        default: map.get($theme, 'unselected-container-color'),
+        disabled: map.get($theme, 'disabled-container-color'),
+      )
+    );
+
+    @include ripple-theme.theme(
+      (
+        focus-state-layer-color:
+          map.get($theme, 'toggle-unselected-focus-state-layer-color'),
+        hover-state-layer-color:
+          map.get($theme, 'toggle-unselected-hover-state-layer-color'),
+        pressed-state-layer-color:
+          map.get($theme, 'toggle-unselected-pressed-state-layer-color'),
+      )
+    );
+  }
+
+  &.md3-icon-button--toggle-filled.md3-icon-button--on {
+    @include icon-button-theme.icon-color(
+      (
+        default: map.get($theme, 'toggle-selected-icon-color'),
+        disabled: map.get($theme, 'disabled-icon-color'),
+        focus: map.get($theme, 'toggle-selected-focus-icon-color'),
+        hover: map.get($theme, 'toggle-selected-hover-icon-color'),
+        pressed: map.get($theme, 'toggle-selected-pressed-icon-color'),
+      )
+    );
+
+    @include _container-color(
+      (
+        default: map.get($theme, 'selected-container-color'),
+        disabled: map.get($theme, 'disabled-container-color'),
+      )
+    );
+
+    @include ripple-theme.theme(
+      (
+        focus-state-layer-color:
+          map.get($theme, 'toggle-selected-focus-state-layer-color'),
+        hover-state-layer-color:
+          map.get($theme, 'toggle-selected-hover-state-layer-color'),
+        pressed-state-layer-color:
+          map.get($theme, 'toggle-selected-pressed-state-layer-color'),
+      )
+    );
+  }
 }
 
 ///

@@ -6,7 +6,7 @@
 
 import {html, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
 import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action-element/action-element.js';
@@ -65,10 +65,6 @@ export class IconButtonToggle extends ActionElement {
 
   /** @soyTemplate */
   protected override render(): TemplateResult {
-    /** @classMap */
-    const classes = {
-      'md3-icon-button--on': this.isOn,
-    };
     const hasToggledAriaLabel =
         this.ariaLabelOn !== undefined && this.ariaLabelOff !== undefined;
     const ariaPressedValue = hasToggledAriaLabel ? undefined : this.isOn;
@@ -76,7 +72,7 @@ export class IconButtonToggle extends ActionElement {
         (this.isOn ? this.ariaLabelOn : this.ariaLabelOff) :
         this.ariaLabel;
     return html`<button
-          class="md3-icon-button ${classMap(classes)}"
+          class="md3-icon-button ${classMap(this.getRenderClasses())}"
           aria-pressed="${ifDefined(ariaPressedValue)}"
           aria-label="${ifDefined(ariaLabelValue)}"
           ?disabled="${this.disabled}"
@@ -100,6 +96,13 @@ export class IconButtonToggle extends ActionElement {
           <slot name="onIcon">${this.renderIcon(this.onIcon)}</slot>
         </span>
       </button>`;
+  }
+
+  /** @soyTemplate */
+  protected getRenderClasses(): ClassInfo {
+    return {
+      'md3-icon-button--on': this.isOn,
+    };
   }
 
   /** @soyTemplate */
