@@ -38,12 +38,13 @@ $density-config: (
 
 $custom-property-prefix: 'radio';
 
-// TODO(b/188417756): `icon-size` token key is not supported.
+// TODO(b/232175916): `icon-size` token key is not supported.
 $light-theme: (
   disabled-selected-icon-color: theme-color.$on-surface,
   disabled-selected-icon-opacity: 0.38,
   disabled-unselected-icon-color: theme-color.$on-surface,
   disabled-unselected-icon-opacity: 0.38,
+  icon-size: null,
   selected-focus-icon-color: theme-color.$primary,
   selected-focus-state-layer-color: theme-color.$primary,
   selected-focus-state-layer-opacity: 0.12,
