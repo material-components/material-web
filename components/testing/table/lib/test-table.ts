@@ -4,9 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {render, LitElement, TemplateResult} from 'lit';
-import {html, literal} from 'lit/static-html.js';
+import {LitElement, render, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
+import {guard} from 'lit/directives/guard.js';
+import {html, literal} from 'lit/static-html.js';
 
 /** Test table interface. */
 export interface TestTableTemplate<S extends string = string> {
@@ -43,7 +44,7 @@ export class TestTable<S extends string = string> extends LitElement {
           </tr>
         </thead>
         <tbody>
-          ${this.renderTemplates()}
+          ${guard([this.templates, this.states], () => this.renderTemplates())}
         </tbody>
         <caption class="md3-test-table__header">${this.title}</caption>
       </table>
