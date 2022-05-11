@@ -481,6 +481,7 @@ export class Harness<E extends HTMLElement = HTMLElement> {
       clientY: (rect.top + rect.bottom) / 2,
       screenX: (rect.left + rect.right) / 2,
       screenY: (rect.top + rect.bottom) / 2,
+      buttons: 1,  // Primary button (usually the left button)
     };
   }
 
