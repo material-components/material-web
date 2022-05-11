@@ -273,6 +273,10 @@ export class Radio extends ActionElement {
   }
 
   protected changeHandler() {
+    if (this.disabled) {
+      return;
+    }
+
     this.checked = this.formElement.checked;
   }
 }
