@@ -274,7 +274,8 @@ export class ActionController implements ReactiveController {
    */
   pointerDown =
       (e: PointerEvent) => {
-        if (!this.shouldRespondToEvent(e) || this.phase !== Phase.INACTIVE) {
+        if (this.disabled || !this.shouldRespondToEvent(e) ||
+            this.phase !== Phase.INACTIVE) {
           return;
         }
         if (this.isTouch(e)) {
@@ -306,7 +307,8 @@ export class ActionController implements ReactiveController {
    */
   pointerUp =
       (e: PointerEvent) => {
-        if (!this.isTouch(e) || !this.shouldRespondToEvent(e)) {
+        if (this.disabled || !this.isTouch(e) ||
+            !this.shouldRespondToEvent(e)) {
           return;
         }
         if (this.phase === Phase.HOLDING) {
