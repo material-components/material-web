@@ -58,6 +58,7 @@ $dark-theme: tokens.md-comp-icon-button-values(
     @include icon-button-theme.icon-color(
       (
         default: map.get($theme, selected-icon-color),
+        disabled: map.get($theme, disabled-icon-color),
         focus: map.get($theme, selected-focus-icon-color),
         hover: map.get($theme, selected-hover-icon-color),
         pressed: map.get($theme, selected-pressed-icon-color),
