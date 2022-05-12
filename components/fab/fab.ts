@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2018 Google LLC
+ * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -14,7 +14,7 @@ import {styles as fabStyles} from './lib/fab-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'm3-fab': MdFab;
+    'md-fab': MdFab;
   }
 }
 
@@ -23,7 +23,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('m3-fab')
+@customElement('md-fab')
 export class MdFab extends Fab {
   static override styles = [overlayStyles, sharedStyles, fabStyles];
 }

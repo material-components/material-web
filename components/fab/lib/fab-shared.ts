@@ -1,26 +1,24 @@
 /**
  * @license
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/mwc-ripple/mwc-ripple.js';
+import '../../ripple/ripple.js';
 
-import {Ripple} from '@material/mwc-ripple/mwc-ripple.js';
-import {RippleHandlers} from '@material/mwc-ripple/ripple-handlers.js';
-import {html, LitElement, TemplateResult} from 'lit';
-import {eventOptions, property, queryAsync, state} from 'lit/decorators.js';
+import {html, TemplateResult} from 'lit';
+import {property, query} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
+import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action-element/action-element.js';
+import {MdRipple} from '../../ripple/ripple.js';
+
 /**
- * Fab Base class logic and template definition
  * @soyCompatible
  */
-export class FabShared extends LitElement {
+export class FabShared extends ActionElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
-
-  @queryAsync('mwc-ripple') ripple!: Promise<Ripple|null>;
 
   @property({type: Boolean}) disabled = false;
 
@@ -32,12 +30,7 @@ export class FabShared extends LitElement {
 
   @property({type: Boolean}) reducedTouchTarget = false;
 
-  @state() protected shouldRenderRipple = false;
-
-  protected rippleHandlers = new RippleHandlers(() => {
-    this.shouldRenderRipple = true;
-    return this.ripple;
-  });
+  @query('md-ripple') ripple!: MdRipple;
 
   /**
    * @soyTemplate
@@ -46,35 +39,29 @@ export class FabShared extends LitElement {
   protected override render(): TemplateResult {
     const ariaLabel = this.label ? this.label : this.icon;
 
-    /*
-     * Some internal styling is sensitive to whitespace in this template, take
-     * care when modifying it.
-     */
     return html`
       <button
-          class="md3-fab md3-surface ${classMap(this.getRootClasses())}"
-          ?disabled="${this.disabled}"
-          aria-label="${ariaLabel}"
-          @mouseenter=${this.handleRippleMouseEnter}
-          @mouseleave=${this.handleRippleMouseLeave}
-          @focus=${this.handleRippleFocus}
-          @blur=${this.handleRippleBlur}
-          @mousedown=${this.handleRippleActivate}
-          @touchstart=${this.handleRippleStartPress}
-          @touchend=${this.handleRippleDeactivate}
-          @touchcancel=${this.handleRippleDeactivate}><!--
-        -->${this.renderElevationOverlay()}<!--
-        -->${this.renderRipple()}<!--
-        --><span class="material-icons md3-fab__icon"><!--
-          --><slot name="icon">${this.icon}</slot><!--
-        --></span><!--
-        -->${this.renderLabel()}<!--
-        -->${this.renderTouchTarget()}<!--
+        class="md3-fab md3-surface ${classMap(this.getRenderClasses())}"
+        ?disabled="${this.disabled}"
+        aria-label="${ariaLabel}"
+        @pointerdown="${this.handlePointerDown}"
+        @pointerup="${this.handlePointerUp}"
+        @pointercancel="${this.handlePointerCancel}"
+        @pointerleave="${this.handlePointerLeave}"
+        @pointerenter="${this.handlePointerEnter}"
+        @click="${this.handleClick}"
+        @clickmod="${this.handleClick}"
+        @contextmenu="${this.handleContextMenu}"
+      >${this.renderElevationOverlay()}${this.renderRipple()}
+        <span class="material-icons md3-fab__icon">
+          <slot name="icon">${this.icon}</slot>
+        </span>
+        ${this.renderLabel()}${this.renderTouchTarget()}
       </button>`;
   }
 
   /** @soyTemplate */
-  protected getRootClasses(): ClassInfo {
+  protected getRenderClasses(): ClassInfo {
     return {'md3-fab--lowered': this.lowered};
   }
 
@@ -91,8 +78,8 @@ export class FabShared extends LitElement {
   }
 
   /** @soyTemplate */
-  protected renderLabel(): TemplateResult {
-    return html``;
+  protected renderLabel(): TemplateResult|string {
+    return '';
   }
 
   /** @soyTemplate */
@@ -102,47 +89,33 @@ export class FabShared extends LitElement {
 
   /** @soyTemplate */
   protected renderRipple(): TemplateResult {
-    return this.shouldRenderRipple ? html`
-      <mwc-ripple
-          class="md3-fab__ripple"
-          internalUseStateLayerCustomProperties>
-      </mwc-ripple>` :
-                                     html``;
+    return html`<md-ripple class="md3-fab__ripple" .disabled="${
+        this.disabled}"></md-ripple>`;
   }
 
-  protected handleRippleActivate(event?: Event) {
-    const onUp = () => {
-      window.removeEventListener('mouseup', onUp);
-
-      this.handleRippleDeactivate();
-    };
-
-    window.addEventListener('mouseup', onUp);
-    this.handleRippleStartPress(event);
+  override beginPress({positionEvent}: BeginPressConfig) {
+    this.ripple.beginPress(positionEvent);
   }
 
-  @eventOptions({passive: true})
-  protected handleRippleStartPress(event?: Event) {
-    this.rippleHandlers.startPress(event);
+  override endPress(options: EndPressConfig) {
+    this.ripple.endPress();
+    super.endPress(options);
   }
 
-  protected handleRippleDeactivate() {
-    this.rippleHandlers.endPress();
+  override handlePointerDown(e: PointerEvent) {
+    super.handlePointerDown(e);
   }
 
-  protected handleRippleMouseEnter() {
-    this.rippleHandlers.startHover();
+  override handlePointerUp(e: PointerEvent) {
+    super.handlePointerUp(e);
   }
 
-  protected handleRippleMouseLeave() {
-    this.rippleHandlers.endHover();
+  protected handlePointerEnter(e: PointerEvent) {
+    this.ripple.beginHover(e);
   }
 
-  protected handleRippleFocus() {
-    this.rippleHandlers.startFocus();
-  }
-
-  protected handleRippleBlur() {
-    this.rippleHandlers.endFocus();
+  override handlePointerLeave(e: PointerEvent) {
+    super.handlePointerLeave(e);
+    this.ripple.endHover();
   }
 }
