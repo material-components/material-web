@@ -6,6 +6,7 @@
 
 import {html, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
 import {IconButton} from './icon-button.js';
@@ -25,7 +26,7 @@ export class LinkIconButton extends IconButton {
   /** @soyTemplate */
   protected override render(): TemplateResult {
     return html`<div
-        class="md3-icon-button"
+        class="md3-icon-button ${classMap(this.getRenderClasses())}"
         @focus="${this.handleFocus}"
         @blur="${this.handleBlur}"
         @pointerdown="${this.handlePointerDown}"
