@@ -10,8 +10,8 @@ import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {ClassInfo} from 'lit/directives/class-map.js';
 
-import {MdIconButton} from './icon-button.js';
 import {styles} from './lib/filled-styles.css.js';
+import {IconButton} from './lib/icon-button.js';
 import {styles as sharedStyles} from './lib/icon-button-styles.css.js';
 
 declare global {
@@ -21,7 +21,7 @@ declare global {
 }
 
 @customElement('md-filled-icon-button')
-export class MdFilledIconButton extends MdIconButton {
+export class MdFilledIconButton extends IconButton {
   static override styles = [sharedStyles, styles];
 
   /** @soyTemplate */

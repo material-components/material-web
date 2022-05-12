@@ -9,18 +9,18 @@ import '../icon/icon.js';
 import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
+import {IconButton} from './lib/icon-button.js';
 import {styles as sharedStyles} from './lib/icon-button-styles.css.js';
-import {LinkIconButton} from './lib/link-icon-button.js';
 import {styles} from './lib/standard-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-link-icon-button': MdLinkIconButton;
+    'md-standard-icon-button': MdStandardIconButton;
   }
 }
 
-@customElement('md-link-icon-button')
-export class MdLinkIconButton extends LinkIconButton {
+@customElement('md-standard-icon-button')
+export class MdStandardIconButton extends IconButton {
   static override styles = [sharedStyles, styles];
 
   /** @soyTemplate */

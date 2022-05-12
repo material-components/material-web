@@ -15,12 +15,12 @@ import {styles} from './lib/standard-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-icon-button-toggle': MdIconButtonToggle;
+    'md-standard-icon-button-toggle': MdStandardIconButtonToggle;
   }
 }
 
-@customElement('md-icon-button-toggle')
-export class MdIconButtonToggle extends IconButtonToggle {
+@customElement('md-standard-icon-button-toggle')
+export class MdStandardIconButtonToggle extends IconButtonToggle {
   static override styles = [sharedStyles, styles];
 
   /** @soyTemplate */
