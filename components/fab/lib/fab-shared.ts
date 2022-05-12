@@ -61,9 +61,8 @@ export class FabShared extends ActionElement {
         ${this.renderElevationOverlay()}
         ${this.renderFocusRing()}
         ${this.renderRipple()}
-        <span class="material-icons md3-fab__icon">
-          <slot name="icon">${this.icon}</slot>
-        </span>
+        ${this.renderIcon(this.icon)}
+        <span class="md3-fab__icon"><slot name="icon"></slot></span>
         ${this.renderLabel()}
         ${this.renderTouchTarget()}
       </button>`;
@@ -75,9 +74,11 @@ export class FabShared extends ActionElement {
   }
 
   /** @soyTemplate */
-  protected renderIcon(): TemplateResult {
-    // TODO(b/191914389): reimplement once Wit issue is resolved
-    return html``;
+  protected renderIcon(icon: string): TemplateResult|string {
+    // TODO(b/221096356): This method should be abstract.
+    // This should be overridden by subclass to provide the appropriate
+    // font icon (M3 or GM).
+    return '';
   }
 
   /** @soyTemplate */

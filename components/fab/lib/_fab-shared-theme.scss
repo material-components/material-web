@@ -207,10 +207,14 @@ $selectors: (
 
 @mixin _set-icon-size($size) {
   .md3-fab__icon {
-    width: $size;
-    height: $size;
     font-size: $size;
-    --mdc-icon-size: $size;
+  }
+
+  i,
+  svg,
+  img {
+    height: $size;
+    width: $size;
   }
 }
 

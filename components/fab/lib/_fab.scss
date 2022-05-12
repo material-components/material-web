@@ -7,7 +7,6 @@
 // Selector '.md3-*' should only be used in this project.
 
 // TODO(b/228217731): Remove MDC/MWC dependencies
-@use 'third_party/javascript/material_web_components/icon/_mwc-icon';
 @use 'third_party/javascript/material_web_components/m3/elevation/lib/surface';
 @use '../../compat/theme/selector-ext';
 @use '@material/touch-target/touch-target';
@@ -37,7 +36,6 @@
       @include hover;
     }
 
-    .material-icons,
     .md3-fab__icon {
       @include icon;
     }
@@ -98,7 +96,7 @@
 }
 
 @mixin icon() {
-  @extend %material-icons;
+  display: contents;
 }
 
 @mixin touch-target() {

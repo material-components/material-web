@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import '../icon/icon.js';
+
+import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {styles as overlayStyles} from '../elevation/lib/elevation-overlay-styles.css.js';
@@ -26,4 +29,9 @@ declare global {
 @customElement('md-fab-extended')
 export class MdFabExtended extends FabExtended {
   static override styles = [overlayStyles, sharedStyles, extendedStyles];
+
+  /** @soyTemplate */
+  protected override renderIcon(icon: string): TemplateResult|string {
+    return icon ? html`<md-icon class="md3-fab__icon">${icon}</md-icon>` : '';
+  }
 }
