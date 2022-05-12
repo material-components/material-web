@@ -6,20 +6,24 @@
 @use 'sass:map';
 @use '../../sass/resolvers';
 @use '../../sass/theme';
+@use '../../sass/typography';
 @use './button-theme';
 @use './elevation-theme';
 @use './icon-theme';
 
 $_custom-property-prefix: 'tonal-button';
+
 $light-theme: map.merge(
   button-theme.$light-theme,
   (
     container-color: #e8def8,
     container-elevation: 0,
     container-shadow-color: #000,
-    disabled-container-color: rgba(#1c1b1f, 0.12),
+    disabled-container-color: #1c1b1f,
+    disabled-container-opacity: 0.12,
     disabled-container-elevation: 0,
-    disabled-label-text-color: rgba(#1c1b1f, 0.38),
+    disabled-label-text-color: #1c1b1f,
+    disabled-label-text-opacity: 0.38,
     focus-container-elevation: 0,
     focus-label-text-color: #1d192b,
     focus-state-layer-color: #1d192b,
@@ -33,7 +37,8 @@ $light-theme: map.merge(
     pressed-label-text-color: #1d192b,
     pressed-state-layer-color: #1d192b,
     pressed-state-layer-opacity: 0.12,
-    with-icon-disabled-icon-color: rgba(#1c1b1f, 0.38),
+    with-icon-disabled-icon-color: #1c1b1f,
+    with-icon-disabled-icon-opacity: 0.38,
     with-icon-focus-icon-color: #1d192b,
     with-icon-hover-icon-color: #1d192b,
     with-icon-icon-color: #1d192b,
@@ -42,6 +47,13 @@ $light-theme: map.merge(
 );
 
 @function _resolve-theme($theme, $resolvers) {
+  $theme: button-theme.flatten-disabled-colors($theme);
+  $theme: button-theme.remove-unsupported-tokens($theme);
+  $theme: typography.resolve-theme(
+    $theme,
+    map.get($resolvers, 'typography'),
+    'label-text'
+  );
   @return elevation-theme.resolve-theme($theme, $resolvers);
 }
 
