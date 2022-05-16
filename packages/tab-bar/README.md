@@ -263,6 +263,7 @@ _Note: example is in the state of hovering over the first tab._
 
 | Name     | Description
 | -------- | -------------
+| `focus() => void` | Focuses the currently active tab.
 | `scrollIndexIntoView(index:number) => void` | For long, scrollable `tab-bar`s, scrolls the tab at the given index into view.
 
 ### Events

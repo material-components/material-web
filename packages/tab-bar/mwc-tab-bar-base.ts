@@ -173,6 +173,13 @@ export class TabBarBase extends BaseElement {
     return result;
   }
 
+  override focus() {
+    const tab = this._getTab(this.activeIndex);
+    if (tab !== undefined) {
+      tab.focus();
+    }
+  }
+
   scrollIndexIntoView(index: number) {
     this.mdcFoundation.scrollIntoView(index);
   }
