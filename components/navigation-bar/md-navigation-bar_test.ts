@@ -120,9 +120,9 @@ describe('md-navigation-bar', () => {
          const tab1Harness = new NavigationTabHarness(element.tabs[0]);
          const tab2Harness = new NavigationTabHarness(element.tabs[1]);
 
-         await tab1Harness.click();
+         await tab1Harness.clickWithMouse();
          expect(element.activeIndex).toEqual(0);
-         await tab2Harness.click();
+         await tab2Harness.clickWithMouse();
          expect(element.activeIndex).toEqual(1);
        });
 

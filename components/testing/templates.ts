@@ -260,7 +260,7 @@ export class TemplateBuilder<H extends Harness = never,
         await harness.hoverEnter();
         break;
       case State.PRESSED:
-        await harness.press();
+        await harness.clickWithMouseStart();
         break;
       default:
         break;

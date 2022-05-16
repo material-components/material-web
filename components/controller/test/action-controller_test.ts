@@ -85,151 +85,9 @@ class MyActionElement extends LitElement implements ActionControllerHost {
 }
 
 class ActionControllerHarness extends Harness<MyActionElement> {
-  protected extraMouseProps?: MouseEventInit;
-
-  resetExtraMouseProps() {
-    this.extraMouseProps = undefined;
-  }
-
-  setExtraMouseProps(extra: MouseEventInit) {
-    this.extraMouseProps = extra;
-  }
-
-  /**
-   * Simulates clicking an element with the keyboard.
-   */
-  async clickWithKeyboard(
-      modifiers?:
-          Pick<KeyboardEventInit, 'altKey'|'ctrlKey'|'metaKey'|'shiftKey'>) {
-    const el = await this.getInteractiveElement();
-    this.simulateKeypress(el, 'Space', modifiers);
-    this.setExtraMouseProps({
-      ...modifiers,
-      clientX: 0,
-      clientY: 0,
-      screenX: 0,
-      screenY: 0,
-    });
-    el.dispatchEvent(new MouseEvent('click', this.createMouseEventInit(el)));
-  }
-
-  async rightPress() {
-    const element = await this.getInteractiveElement();
-    this.setExtraMouseProps({buttons: 2});
-    this.simulateMousePress(element);
-    this.simulatePointerFocus(element);
-  }
-
-  async clickWithModifierKeys(
-      modifiers:
-          Pick<MouseEventInit, 'altKey'|'ctrlKey'|'metaKey'|'shiftKey'>) {
-    this.setExtraMouseProps(modifiers);
-    await this.click();
-  }
-
-  async contextMenu() {
-    const el = await this.getInteractiveElement();
-    el.dispatchEvent(
-        new MouseEvent('contextmenu', this.createMouseEventInit(el)));
-  }
-
-  async touchPress() {
-    this.simulateTouchPress(await this.getInteractiveElement());
-  }
-
-  async touchRelease(delayClick = 0) {
-    this.simulateTouchRelease(await this.getInteractiveElement(), delayClick);
-  }
-
-  async touchCancel() {
-    this.simulateTouchCancel(await this.getInteractiveElement());
-  }
-
-  async nonPrimaryTap() {
-    const el = await this.getInteractiveElement();
-    const pointerInit: PointerEventInit = {
-      ...this.createMouseEventInit(el),
-      pointerType: 'touch',
-    };
-
-    el.dispatchEvent(new PointerEvent('pointerdown', pointerInit));
-    el.dispatchEvent(new PointerEvent('pointerup', pointerInit));
-  }
-
   protected override async getInteractiveElement() {
     await this.element.updateComplete;
     return this.element.renderRoot.querySelector('div') as HTMLElement;
-  }
-
-  protected override createMouseEventInit(element: HTMLElement):
-      MouseEventInit {
-    return {
-      ...super.createMouseEventInit(element),
-      buttons: 1,
-      ...this.extraMouseProps,
-    };
-  }
-
-  /**
-   * override mouse release to send a click event using the extra mouse init
-   * props
-   */
-  protected override simulateMouseRelease(element: HTMLElement) {
-    this.removePseudoClass(element, ':active');
-    const mouseInit = this.createMouseEventInit(element);
-    const pointerInit: PointerEventInit = {
-      ...mouseInit,
-      isPrimary: true,
-      pointerType: 'mouse',
-    };
-
-    element.dispatchEvent(new PointerEvent('pointerup', pointerInit));
-    element.dispatchEvent(new MouseEvent('mouseup', mouseInit));
-    element.dispatchEvent(new MouseEvent('click', mouseInit));
-  }
-
-  /**
-   * override touch release to send a click event using the extra mouse init
-   * props
-   */
-  protected override simulateTouchRelease(
-      element: HTMLElement, delayClick = 0) {
-    this.removePseudoClass(element, ':active');
-    const mouseInit = this.createMouseEventInit(element);
-    const pointerInit: PointerEventInit = {
-      ...mouseInit,
-      isPrimary: true,
-      pointerType: 'touch',
-    };
-
-    const touch = this.createTouch(element);
-    element.dispatchEvent(new PointerEvent('pointerup', pointerInit));
-    element.dispatchEvent(
-        new TouchEvent('touchend', {changedTouches: [touch]}));
-    element.dispatchEvent(new MouseEvent('mousedown', mouseInit));
-    element.dispatchEvent(new MouseEvent('mouseup', mouseInit));
-    const fireClick = () => {
-      element.dispatchEvent(new MouseEvent('click', mouseInit));
-    };
-    if (delayClick > 0) {
-      setTimeout(fireClick, delayClick);
-    } else {
-      fireClick();
-    }
-  }
-
-  protected simulateTouchCancel(element: HTMLElement) {
-    this.removePseudoClass(element, ':active');
-    const mouseInit = this.createMouseEventInit(element);
-    const pointerInit: PointerEventInit = {
-      ...mouseInit,
-      isPrimary: true,
-      pointerType: 'touch',
-    };
-    const touch = this.createTouch(element);
-    element.dispatchEvent(new PointerEvent('pointercancel', pointerInit));
-    element.dispatchEvent(
-        new TouchEvent('touchcancel', {changedTouches: [touch]}));
   }
 }
 
@@ -237,10 +95,6 @@ describe('ActionController', () => {
   const env = new Environment();
   let el!: MyActionElement;
   let harness!: ActionControllerHarness;
-
-  afterEach(() => {
-    harness?.resetExtraMouseProps();
-  });
 
   describe('mouse', () => {
     beforeEach(async () => {
@@ -251,14 +105,14 @@ describe('ActionController', () => {
     });
 
     it('calls beginPress on down', async () => {
-      await harness.press();
+      await harness.clickWithMouseStart();
       expect(el.lastBegin).toBeDefined();
       expect(el.lastBegin!.positionEvent).toBeInstanceOf(PointerEvent);
       expect(el.lastBegin!.positionEvent).toBeInstanceOf(PointerEvent);
     });
 
     it('calls endPress on up', async () => {
-      await harness.click();
+      await harness.clickWithMouse();
       expect(el.lastBegin).toBeDefined();
       expect(el.lastBegin!.positionEvent).toBeInstanceOf(PointerEvent);
       expect(el.lastEnd).toBeDefined();
@@ -266,27 +120,27 @@ describe('ActionController', () => {
     });
 
     it('ignores presses from other mouse buttons', async () => {
-      await harness.rightPress();
+      await harness.rightClickWithMouse();
       expect(el.lastBegin).not.toBeDefined();
       expect(el.lastEnd).not.toBeDefined();
     });
 
     it('goes through the expected phases during a press', async () => {
-      await harness.press();
+      await harness.clickWithMouseStart();
       const ac = el.actionController as unknown as ActionControllerInternals;
       expect(ac.phase).toEqual('WAITING_FOR_MOUSE_CLICK');
-      await harness.release();
+      await harness.clickWithMouseEnd();
       expect(ac.phase).toEqual('INACTIVE');
     });
 
     it('cancels press if cursor leaves element during press', async () => {
-      await harness.press();
+      await harness.clickWithMouseStart();
       await harness.hoverLeave();
       expect(el.lastEnd).toEqual({cancelled: true});
     });
 
     it('allows clicks with modifier keys by default', async () => {
-      await harness.clickWithModifierKeys({altKey: true});
+      await harness.clickWithMouse({altKey: true});
       expect(el.lastBegin).toBeDefined();
       expect(el.lastBegin!.positionEvent).toBeInstanceOf(PointerEvent);
       expect(el.lastEnd).toEqual({cancelled: false});
@@ -296,13 +150,13 @@ describe('ActionController', () => {
        async () => {
          el.ignoreClicksWithModifiers = true;
          await el.updateComplete;
-         await harness.clickWithModifierKeys({altKey: true});
+         await harness.clickWithMouse({altKey: true});
          expect(el.lastBegin).not.toBeDefined();
          expect(el.lastEnd).not.toBeDefined();
        });
 
     it('cancels when removed from dom', async () => {
-      await harness.press();
+      await harness.clickWithMouseStart();
       expect(el.lastBegin).toBeDefined();
       expect(el.lastBegin!.positionEvent).toBeInstanceOf(PointerEvent);
       el.remove();
@@ -349,7 +203,7 @@ describe('ActionController', () => {
     });
 
     it('calls beginPress on down after hysteresis', async () => {
-      await harness.touchPress();
+      await harness.tapStart();
       await new Promise((resolve) => {
         setTimeout(resolve, TOUCH_DELAY_MS);
       });
@@ -368,7 +222,7 @@ describe('ActionController', () => {
     it('goes through the expected phases during a long press', async () => {
       const ac = el.actionController as unknown as ActionControllerInternals;
       expect(ac.phase).toEqual('INACTIVE');
-      await harness.touchPress();
+      await harness.tapStart();
       expect(ac.phase).toEqual('TOUCH_DELAY');
       await new Promise((resolve) => {
         setTimeout(resolve, TOUCH_DELAY_MS);
@@ -376,11 +230,9 @@ describe('ActionController', () => {
       expect(ac.phase).toEqual('HOLDING');
       expect(el.lastBegin).toBeDefined();
       expect(el.lastBegin!.positionEvent).toBeInstanceOf(PointerEvent);
-      await harness.touchRelease(50);
+      await harness.tapEnd();
       expect(ac.phase).toEqual('WAITING_FOR_MOUSE_CLICK');
-      await new Promise((resolve) => {
-        setTimeout(resolve, 50);
-      });
+      await harness.tapEndClick();
       expect(ac.phase).toEqual('INACTIVE');
       expect(el.lastEnd).toEqual({cancelled: false});
     });
@@ -388,23 +240,21 @@ describe('ActionController', () => {
     it('goes through the expected phases during a short press', async () => {
       const ac = el.actionController as unknown as ActionControllerInternals;
       expect(ac.phase).toEqual('INACTIVE');
-      await harness.touchPress();
+      await harness.tapStart();
       expect(ac.phase).toEqual('TOUCH_DELAY');
       expect(el.lastBegin).not.toBeDefined();
-      await harness.touchRelease(50);
+      await harness.tapEnd();
       expect(el.lastBegin).toBeDefined();
       expect(el.lastBegin!.positionEvent).toBeInstanceOf(PointerEvent);
       expect(ac.phase).toEqual('WAITING_FOR_MOUSE_CLICK');
-      await new Promise((resolve) => {
-        setTimeout(resolve, 50);
-      });
+      await harness.tapEndClick();
       expect(ac.phase).toEqual('INACTIVE');
       expect(el.lastEnd).toEqual({cancelled: false});
     });
 
     it('cancels press if a held press is very long', async () => {
-      await harness.touchPress();
-      await harness.touchRelease(1000);
+      await harness.tapStart();
+      await harness.tapEnd();
       expect(el.lastBegin).toBeDefined();
       expect(el.lastBegin!.positionEvent).toBeInstanceOf(PointerEvent);
       await new Promise((resolve) => {
@@ -414,7 +264,7 @@ describe('ActionController', () => {
     });
 
     it('ignores non-primary touch gestures', async () => {
-      await harness.nonPrimaryTap();
+      await harness.tap({isPrimary: false});
       expect(el.lastBegin).not.toBeDefined();
       expect(el.lastEnd).not.toBeDefined();
     });
@@ -422,19 +272,19 @@ describe('ActionController', () => {
     describe('contextmenu', () => {
       it('ignores the interaction if the context menu opens during a short press',
          async () => {
-           await harness.touchPress();
-           await harness.contextMenu();
+           await harness.tapStart();
+           await harness.tapStartContextMenu();
            expect(el.lastBegin).not.toBeDefined();
            expect(el.lastEnd).not.toBeDefined();
          });
 
       it('cancels press if the context menu opens during a longer press',
          async () => {
-           await harness.touchPress();
+           await harness.tapStart();
            await new Promise((resolve) => {
              setTimeout(resolve, TOUCH_DELAY_MS);
            });
-           await harness.contextMenu();
+           await harness.tapStartContextMenu();
            expect(el.lastBegin).toBeDefined();
            expect(el.lastBegin!.positionEvent).toBeInstanceOf(PointerEvent);
            expect(el.lastEnd).toEqual({cancelled: true});
@@ -442,12 +292,11 @@ describe('ActionController', () => {
 
       it('ignores out of bounds downs after the contextmenu opens',
          async () => {
-           await harness.touchPress();
-           await harness.contextMenu();
+           await harness.tapStart();
+           await harness.tapStartContextMenu();
            // set a _way out of bounds_ position, which would indicate pressing
            // on a different element
-           harness.setExtraMouseProps({clientX: 9000, clientY: 9000});
-           await harness.touchPress();
+           await harness.tapStart({clientX: 9000, clientY: 9000});
            await new Promise((resolve) => {
              setTimeout(resolve, TOUCH_DELAY_MS);
            });
@@ -458,21 +307,21 @@ describe('ActionController', () => {
     describe('cancel', () => {
       it('ignores the interaction if `pointercancel` happens during a short press',
          async () => {
-           await harness.touchPress();
-           await harness.touchCancel();
+           await harness.tapStart();
+           await harness.tapCancel();
            expect(el.lastBegin).not.toBeDefined();
            expect(el.lastEnd).not.toBeDefined();
          });
 
       it('cancels press if a `pointercancel` event fires during a longer press',
          async () => {
-           await harness.touchPress();
+           await harness.tapStart();
            await new Promise((resolve) => {
              setTimeout(resolve, TOUCH_DELAY_MS);
            });
            expect(el.lastBegin).toBeDefined();
            expect(el.lastBegin!.positionEvent).toBeInstanceOf(PointerEvent);
-           await harness.touchCancel();
+           await harness.tapCancel();
            expect(el.lastEnd).toEqual({cancelled: true});
          });
     });
@@ -495,7 +344,7 @@ describe('ActionController', () => {
     });
 
     it('cancels press when disabled', async () => {
-      await harness.press();
+      await harness.clickWithMouseStart();
       expect(ac.pressed).toEqual(true);
       expect(el.lastBegin).toBeDefined();
       el.disabled = true;
@@ -507,7 +356,7 @@ describe('ActionController', () => {
     it('does not register interactions when disabled', async () => {
       el.disabled = true;
       await el.updateComplete;
-      await harness.click();
+      await harness.clickWithMouse();
       expect(el.lastBegin).not.toBeDefined();
       expect(el.lastEnd).not.toBeDefined();
     });

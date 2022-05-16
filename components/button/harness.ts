@@ -17,9 +17,8 @@ export class ButtonHarness extends Harness<Button> {
     return this.element.renderRoot.querySelector('.md3-button') as HTMLElement;
   }
 
-  override async press() {
-    await this.hoverEnter();
-    await super.press();
+  override async clickWithMouseStart(init: PointerEventInit = {}) {
+    await super.clickWithMouseStart(init);
     // The ripple adapter unconditionally returns true for
     // `containsEventTarget`, which effectively blocks simultaneous ripple
     // activations. We need simulatenous activations for testing though, so

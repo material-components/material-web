@@ -60,14 +60,14 @@ describe('md-checkbox', () => {
     });
 
     it('user input updates checked state', async () => {
-      await harness.click();
+      await harness.clickWithMouse();
       await element.updateComplete;
       expect(element.checked).toEqual(true);
     });
 
     it('change event has updated values for `checked`', async () => {
       expect(element.checked).toBeFalse();
-      await harness.click();
+      await harness.clickWithMouse();
       expect(element.checked).toBeTrue();
     });
 
@@ -77,7 +77,7 @@ describe('md-checkbox', () => {
          element.addEventListener('action', (e: Event) => {
            actionEvent = e as CustomEvent;
          });
-         await harness.click();
+         await harness.clickWithMouse();
          await element.updateComplete;
 
          expect(actionEvent).toBeInstanceOf(CustomEvent);
@@ -173,7 +173,7 @@ describe('md-checkbox', () => {
     });
 
     it('hidden on non-keyboard focus', async () => {
-      await harness.click();
+      await harness.clickWithMouse();
       expect(focusRing.visible).toBeFalse();
     });
 
@@ -187,7 +187,7 @@ describe('md-checkbox', () => {
     it('hidden after pointer interaction', async () => {
       await harness.focusWithKeyboard();
       expect(focusRing.visible).toBeTrue();
-      await harness.click();
+      await harness.clickWithMouse();
       expect(focusRing.visible).toBeFalse();
     });
   });

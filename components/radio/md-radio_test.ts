@@ -63,7 +63,7 @@ describe('md-radio', () => {
       fixt = await fixture(radioGroup);
       element = fixt.root.querySelectorAll('md-radio')[1];
       harness = new RadioHarness(element);
-      await harness.click();
+      await harness.clickWithMouse();
       expect(element.checked).toBeTrue();
     });
 
@@ -75,7 +75,7 @@ describe('md-radio', () => {
 
          const a3 = fixt.root.querySelectorAll('md-radio')[2];
          harness = new RadioHarness(a3);
-         await harness.click();
+         await harness.clickWithMouse();
          expect(a3.checked).toBeTrue();
          expect(a2.checked).toBeFalse();
        });
@@ -87,10 +87,10 @@ describe('md-radio', () => {
       const a2 = fixt.root.querySelectorAll('md-radio')[1];
       expect(a2.checked).toBeTrue();
 
-      await (new RadioHarness(a1)).click();
+      await (new RadioHarness(a1)).clickWithMouse();
       expect(a1.checked).toBeFalse();
 
-      await (new RadioHarness(a1)).click();
+      await (new RadioHarness(a1)).clickWithMouse();
       expect(a2.checked).toBeTrue();
     });
   });
@@ -302,7 +302,7 @@ describe('md-radio', () => {
     });
 
     it('hidden on non-keyboard focus', async () => {
-      await harness.click();
+      await harness.clickWithMouse();
       expect(focusRing.visible).toBeFalse();
     });
 
@@ -316,7 +316,7 @@ describe('md-radio', () => {
     it('hidden after pointer interaction', async () => {
       await harness.focusWithKeyboard();
       expect(focusRing.visible).toBeTrue();
-      await harness.click();
+      await harness.clickWithMouse();
       expect(focusRing.visible).toBeFalse();
     });
   });

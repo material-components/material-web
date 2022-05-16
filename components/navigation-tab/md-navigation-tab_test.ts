@@ -84,7 +84,7 @@ describe('mwc-navigation-tab', () => {
       const interactionHandler = hanbi.spy();
       element.addEventListener(
           'navigation-tab-interaction', interactionHandler.handler);
-      await harness.click();
+      await harness.clickWithMouse();
       expect(interactionHandler.called).toBeTrue();
     });
 
@@ -245,7 +245,7 @@ describe('mwc-navigation-tab', () => {
     });
 
     it('hidden on non-keyboard focus', async () => {
-      await harness.click();
+      await harness.clickWithMouse();
       expect(focusRing.visible).toBeFalse();
     });
 
@@ -259,7 +259,7 @@ describe('mwc-navigation-tab', () => {
     it('hidden after pointer interaction', async () => {
       await harness.focusWithKeyboard();
       expect(focusRing.visible).toBeTrue();
-      await harness.click();
+      await harness.clickWithMouse();
       expect(focusRing.visible).toBeFalse();
     });
   });
