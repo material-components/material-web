@@ -252,6 +252,7 @@ export class TemplateBuilder<H extends Harness = never,
         element.harness as H :
         new this.harnessCtor(element);
     // Common shared component state harness actions
+    await harness.reset();
     switch (state) {
       case State.FOCUS:
         await harness.focusWithKeyboard();
