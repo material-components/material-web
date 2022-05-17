@@ -6,7 +6,7 @@
 
 import '@material/web/focus/focus-ring';
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '@material/web/actionelement/action-element';
+import {ActionElement, PressBeginEvent, PressEndEvent} from '@material/web/actionelement/action-element';
 import {ariaProperty} from '@material/web/decorators/aria-property';
 import {pointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus';
 import {MdRipple} from '@material/web/ripple/ripple';
@@ -41,6 +41,12 @@ export abstract class IconButton extends ActionElement {
   @query('md-ripple') ripple!: MdRipple;
 
   @state() protected showFocusRing = false;
+
+  constructor() {
+    super();
+    this.addEventListener('pressbegin', this.handlePressBegin);
+    this.addEventListener('pressend', this.handlePressEnd);
+  }
 
   /** @soyTemplate */
   protected renderRipple(): TemplateResult|string {
@@ -108,13 +114,14 @@ export abstract class IconButton extends ActionElement {
     this.flipIcon = isRtl;
   }
 
-  override beginPress({positionEvent}: BeginPressConfig) {
-    this.ripple.beginPress(positionEvent);
+  // protected handlePressBegin(event: PressBeginEvent) {
+  protected handlePressBegin(event: CustomEvent) {
+    this.ripple.beginPress(event.detail.positionEvent);
   }
 
-  override endPress(options: EndPressConfig) {
+  // protected handlePressEnd(event: PressEndEvent) {
+  protected handlePressEnd(event: CustomEvent) {
     this.ripple.endPress();
-    super.endPress(options);
   }
 
   override handlePointerDown(e: PointerEvent) {

@@ -7,7 +7,7 @@
 import '@material/web/focus/focus-ring';
 import '@material/web/ripple/ripple';
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '@material/web/actionelement/action-element';
+import {ActionElement, PressBeginEvent, PressEndEvent} from '@material/web/actionelement/action-element';
 import {ariaProperty as legacyAriaProperty} from '@material/web/compat/base/aria-property';
 import {ariaProperty} from '@material/web/decorators/aria-property';
 import {pointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus';
@@ -67,6 +67,12 @@ export class Checkbox extends ActionElement {
   protected mdcFoundationClass = undefined;
 
   protected mdcFoundation = undefined;
+
+  constructor() {
+    super();
+    this.addEventListener('pressbegin', this.handlePressBegin);
+    this.addEventListener('pressend', this.handlePressEnd);
+  }
 
   protected createAdapter() {
     return {};
@@ -193,22 +199,13 @@ export class Checkbox extends ActionElement {
     }
   }
 
-  override beginPress({positionEvent}: BeginPressConfig) {
-    this.ripple.beginPress(positionEvent);
+  // protected handlePressBegin(event: PressBeginEvent) {
+  protected handlePressBegin(event: CustomEvent) {
+    this.ripple.beginPress(event.detail.positionEvent);
   }
 
-  override endPress({cancelled}: EndPressConfig) {
+  protected handlePressEnd() {
     this.ripple.endPress();
-
-    if (cancelled) {
-      return;
-    }
-
-    super.endPress({
-      cancelled,
-      actionData:
-          {checked: this.formElement.checked, value: this.formElement.value}
-    });
   }
 
   protected handleFocus() {

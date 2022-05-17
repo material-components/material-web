@@ -11,7 +11,7 @@ import '@material/web/focus/focus-ring';
 import '@material/web/ripple/ripple';
 
 import {ariaProperty as legacyAriaProperty} from '@material/mwc-base/aria-property';
-import {ActionElement, BeginPressConfig, EndPressConfig} from '@material/web/actionelement/action-element';
+import {ActionElement, PressBeginEvent, PressEndEvent} from '@material/web/actionelement/action-element';
 import {ariaProperty} from '@material/web/decorators/aria-property';
 import {pointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus';
 import {MdRipple} from '@material/web/ripple/ripple';
@@ -124,6 +124,12 @@ export class Radio extends ActionElement {
 
   protected rippleElement: MdRipple|null = null;
 
+  constructor() {
+    super();
+    this.addEventListener('pressbegin', this.handlePressBegin);
+    this.addEventListener('pressend', this.handlePressEnd);
+  }
+
   /** @soyTemplate */
   protected renderRipple(): TemplateResult|string {
     return html`<md-ripple unbounded 
@@ -185,22 +191,15 @@ export class Radio extends ActionElement {
 
   protected createAdapter() {}
 
-  override beginPress({positionEvent}: BeginPressConfig) {
-    this.ripple.beginPress(positionEvent);
+
+  // protected handlePressBegin(event: PressBeginEvent) {
+  protected handlePressBegin(event: CustomEvent) {
+    this.ripple.beginPress(event.detail.positionEvent);
   }
 
-  override endPress({cancelled}: EndPressConfig) {
+  // protected handlePressEnd(event: PressEndEvent) {
+  protected handlePressEnd(event: CustomEvent) {
     this.ripple.endPress();
-
-    if (cancelled) {
-      return;
-    }
-
-    super.endPress({
-      cancelled,
-      actionData:
-          {checked: this.formElement.checked, value: this.formElement.value}
-    });
   }
 
   override click() {

@@ -75,19 +75,31 @@ describe('md-checkbox', () => {
       expect(changeHandler).toHaveBeenCalledWith(jasmine.any(Event));
     });
 
-    it('should trigger an event with event detail including checked status',
-       async () => {
-         const pressEndSpy = jasmine.createSpy('pressEndHandler');
-         element.addEventListener('action', pressEndSpy);
+    it('triggers a `pressbegin` event', async () => {
+      const pressBeginSpy = jasmine.createSpy('pressBeginHandler');
+      element.addEventListener('pressbegin', pressBeginSpy);
 
-         await harness.clickWithMouse();
-         await element.updateComplete;
+      await harness.clickWithMouse();
+      await element.updateComplete;
 
-         expect(pressEndSpy).toHaveBeenCalledWith(jasmine.any(CustomEvent));
-         expect(pressEndSpy).toHaveBeenCalledWith(jasmine.objectContaining({
-           detail: jasmine.objectContaining({checked: true}),
-         }));
-       });
+      expect(pressBeginSpy).toHaveBeenCalledWith(jasmine.any(CustomEvent));
+      expect(pressBeginSpy).toHaveBeenCalledWith(jasmine.objectContaining({
+        detail: {positionEvent: jasmine.anything()},
+      }));
+    });
+
+    it('triggers a `pressend` event', async () => {
+      const pressEndSpy = jasmine.createSpy('pressEndHandler');
+      element.addEventListener('pressend', pressEndSpy);
+
+      await harness.clickWithMouse();
+      await element.updateComplete;
+
+      expect(pressEndSpy).toHaveBeenCalledWith(jasmine.any(CustomEvent));
+      expect(pressEndSpy).toHaveBeenCalledWith(jasmine.objectContaining({
+        detail: {cancelled: false},
+      }));
+    });
   });
 
   describe('checked', () => {

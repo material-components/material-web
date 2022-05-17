@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '@material/web/actionelement/action-element';
+import {ActionElement, PressBeginEvent, PressEndEvent} from '@material/web/actionelement/action-element';
 import {ariaProperty} from '@material/web/decorators/aria-property';
 import {pointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus';
 import {MdRipple} from '@material/web/ripple/ripple';
@@ -38,20 +38,27 @@ export abstract class IconButtonToggle extends ActionElement {
 
   @state() protected showFocusRing = false;
 
-  override beginPress({positionEvent}: BeginPressConfig) {
-    this.ripple.beginPress(positionEvent);
+  constructor() {
+    super();
+    this.addEventListener('pressbegin', this.handlePressBegin);
+    this.addEventListener('pressend', this.handlePressEnd);
   }
 
-  override endPress({cancelled}: EndPressConfig) {
+  // protected handlePressBegin(event: PressBeginEvent) {
+  protected handlePressBegin(event: CustomEvent) {
+    this.ripple.beginPress(event.detail.positionEvent);
+  }
+
+  // protected handlePressEnd(event: PressEndEvent) {
+  protected handlePressEnd(event: CustomEvent) {
     this.ripple.endPress();
-    if (cancelled) {
+    if (event.detail.cancelled) {
       return;
     }
     this.isOn = !this.isOn;
     const detail = {isOn: this.isOn};
     this.dispatchEvent(new CustomEvent(
         'icon-button-toggle-change', {detail, bubbles: true, composed: true}));
-    super.endPress({cancelled, actionData: detail});
   }
 
   /** @soyTemplate */
@@ -62,7 +69,8 @@ export abstract class IconButtonToggle extends ActionElement {
 
   /** @soyTemplate */
   protected override render(): TemplateResult {
-    const hasToggledAriaLabel = this.ariaLabelOn && this.ariaLabelOff;
+    const hasToggledAriaLabel =
+        this.ariaLabelOn !== undefined && this.ariaLabelOff !== undefined;
     const ariaPressedValue = hasToggledAriaLabel ? undefined : this.isOn;
     const ariaLabelValue = hasToggledAriaLabel ?
         (this.isOn ? this.ariaLabelOn : this.ariaLabelOff) :

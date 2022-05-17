@@ -6,7 +6,7 @@
 
 import '@material/web/focus/focus-ring';
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '@material/web/actionelement/action-element';
+import {ActionElement, PressBeginEvent, PressEndEvent} from '@material/web/actionelement/action-element';
 import {ariaProperty} from '@material/web/decorators/aria-property';
 import {pointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus';
 import {MdRipple} from '@material/web/ripple/ripple';
@@ -14,6 +14,9 @@ import {html, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
+
+/** Required for l2w */
+export {PressBeginEvent, PressEndEvent};
 
 /**
  * SegmentedButton is a web component implementation of the Material Design
@@ -40,6 +43,12 @@ export class SegmentedButton extends ActionElement {
   protected iconElement!: HTMLElement[];
   @query('md-ripple') ripple!: MdRipple;
 
+  constructor() {
+    super();
+    this.addEventListener('pressbegin', this.handlePressBegin);
+    this.addEventListener('pressend', this.handlePressEnd);
+  }
+
   protected override update(props: PropertyValues<SegmentedButton>) {
     this.animState = this.nextAnimationState(props);
     super.update(props);
@@ -65,14 +74,15 @@ export class SegmentedButton extends ActionElement {
     return '';
   }
 
-  override beginPress({positionEvent}: BeginPressConfig) {
-    this.ripple.beginPress(positionEvent);
+  // protected handlePressBegin(event: PressBeginEvent) {
+  protected handlePressBegin(event: CustomEvent) {
+    this.ripple.beginPress(event.detail.positionEvent);
   }
 
-  override endPress(options: EndPressConfig) {
+  // protected handlePressEnd(event: PressEndEvent) {
+  protected handlePressEnd(event: CustomEvent) {
     this.ripple.endPress();
-    super.endPress(options);
-    if (!options.cancelled) {
+    if (!event.detail.cancelled) {
       const event = new Event(
           'segmented-button-interaction', {bubbles: true, composed: true});
       this.dispatchEvent(event);

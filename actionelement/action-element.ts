@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ActionController, ActionControllerHost, BeginPressConfig, EndPressConfig} from '@material/web/controller/action-controller';
+import {ActionController, ActionControllerHost, PressBeginDetail, PressBeginEvent, PressEndDetail, PressEndEvent} from '@material/web/controller/action-controller';
 import {LitElement} from 'lit';
 
-export {BeginPressConfig, EndPressConfig};
+export {PressBeginEvent, PressEndEvent};
 
 /**
  * @soyCompatible
@@ -33,27 +33,25 @@ export abstract class ActionElement extends LitElement implements
    * 'active' at this point, and possibly fire an event. Subclasses should
    * override this method if more needs to be done.
    *
-   * @param options `positionEvent` is the Event that is considered the
+   * @param detail `positionEvent` is the Event that is considered the
    * beginning of the press. Null if this was a keyboard interaction.
    */
-  beginPress(options: BeginPressConfig) {}
+  beginPress(detail: PressBeginDetail) {
+    // CustomEvent needs to be called directly with a string in order to be
+    // converted later.
+    this.dispatchEvent(new CustomEvent('pressbegin', {detail}));
+  }
 
   /**
    * Hook method called when the control goes from a pressed to unpressed
    * state.
    *
-   * @param options If `cancelled` is true, means the user canceled the action.
+   * @param detail If `cancelled` is true, means the user canceled the action.
    *    Subclasses which trigger events on endPress() should check the value
    *    of this flag, and modify their behavior accordingly.
    */
-  endPress({cancelled, actionData}: EndPressConfig) {
-    if (!cancelled) {
-      this.dispatchEvent(new CustomEvent('action', {
-        detail: actionData,
-        bubbles: true,
-        composed: true,
-      }));
-    }
+  endPress(detail: PressEndDetail) {
+    this.dispatchEvent(new CustomEvent('pressend', {detail}));
   }
 
   /**

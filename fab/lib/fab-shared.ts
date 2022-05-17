@@ -7,7 +7,7 @@
 import '@material/web/focus/focus-ring';
 import '@material/web/ripple/ripple';
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '@material/web/actionelement/action-element';
+import {ActionElement, PressBeginEvent, PressEndEvent} from '@material/web/actionelement/action-element';
 import {pointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus';
 import {MdRipple} from '@material/web/ripple/ripple';
 import {html, TemplateResult} from 'lit';
@@ -34,6 +34,12 @@ export abstract class FabShared extends ActionElement {
   @query('md-ripple') ripple!: MdRipple;
 
   @state() protected showFocusRing = false;
+
+  constructor() {
+    super();
+    this.addEventListener('pressbegin', this.handlePressBegin);
+    this.addEventListener('pressend', this.handlePressEnd);
+  }
 
   /**
    * @soyTemplate
@@ -104,13 +110,14 @@ export abstract class FabShared extends ActionElement {
         this.showFocusRing}"></md-focus-ring>`;
   }
 
-  override beginPress({positionEvent}: BeginPressConfig) {
-    this.ripple.beginPress(positionEvent);
+  // protected handlePressBegin(event: PressBeginEvent) {
+  protected handlePressBegin(event: CustomEvent) {
+    this.ripple.beginPress(event.detail.positionEvent);
   }
 
-  override endPress(options: EndPressConfig) {
+  // protected handlePressEnd(event: PressEndEvent) {
+  protected handlePressEnd(event: CustomEvent) {
     this.ripple.endPress();
-    super.endPress(options);
   }
 
   override handlePointerDown(e: PointerEvent) {

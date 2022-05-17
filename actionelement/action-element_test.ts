@@ -26,45 +26,61 @@ class TestActionElement extends ActionElement {
 describe('Action Element', () => {
   const env = new Environment();
   let el!: TestActionElement;
-  let actionEvent: CustomEvent|null = null;
 
   beforeEach(async () => {
-    actionEvent = null;
     const root = env.render(html`<test-action-element></test-action-element>`);
     el = root.querySelector('test-action-element')!;
-    el.addEventListener('action', (ev: Event) => {
-      actionEvent = ev as CustomEvent;
-    });
     await env.waitForStability();
   });
 
-  it('fires action event from endPress', () => {
+  it('fires `pressbegin` event', () => {
+    const pressBeginSpy = jasmine.createSpy('pressBeginHandler');
+    el.addEventListener('pressbegin', pressBeginSpy);
+
+    el.beginPress({positionEvent: new CustomEvent('click')});
+
+    expect(pressBeginSpy).toHaveBeenCalledWith(jasmine.any(CustomEvent));
+  });
+
+  it('fires `pressbegin` event with detail', () => {
+    const pressBeginSpy = jasmine.createSpy('pressBeginHandler');
+    el.addEventListener('pressbegin', pressBeginSpy);
+
+    el.beginPress({positionEvent: new CustomEvent('click')});
+
+    expect(pressBeginSpy).toHaveBeenCalledWith(jasmine.objectContaining({
+      detail: {positionEvent: jasmine.anything()},
+    }));
+  });
+
+  it('fires `pressend` event', () => {
+    const pressEndSpy = jasmine.createSpy('pressend');
+    el.addEventListener('pressend', pressEndSpy);
+
     el.endPress({cancelled: false});
-    expect(actionEvent).toBeInstanceOf(CustomEvent);
-    expect(actionEvent!.detail).toBeNull();
+
+    expect(pressEndSpy).toHaveBeenCalledWith(jasmine.any(CustomEvent));
   });
 
-  it('fires action event with actionData', () => {
-    const data = {
-      test: true,
-    };
-    el.endPress({cancelled: false, actionData: data});
-    expect(actionEvent).toBeInstanceOf(CustomEvent);
-    expect(actionEvent!.detail).toEqual(data);
+  it('fires `pressend` event with detail', () => {
+    const pressEndSpy = jasmine.createSpy('pressend');
+    el.addEventListener('pressend', pressEndSpy);
+
+    el.endPress({cancelled: false});
+
+    expect(pressEndSpy).toHaveBeenCalledWith(jasmine.objectContaining({
+      detail: {cancelled: false},
+    }));
   });
 
-  describe('cancelled', () => {
-    it('does not fire action event from endPress', () => {
-      el.endPress({cancelled: true});
-      expect(actionEvent).toBeNull();
-    });
+  it('fires `pressend` event with {cancelled: true}', () => {
+    const pressEndSpy = jasmine.createSpy('pressend');
+    el.addEventListener('pressend', pressEndSpy);
 
-    it('does not fire action event with actionData', () => {
-      const data = {
-        test: true,
-      };
-      el.endPress({cancelled: true, actionData: data});
-      expect(actionEvent).toBeNull();
-    });
+    el.endPress({cancelled: true});
+
+    expect(pressEndSpy).toHaveBeenCalledWith(jasmine.objectContaining({
+      detail: {cancelled: true}
+    }));
   });
 });

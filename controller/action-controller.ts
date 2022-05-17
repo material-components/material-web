@@ -68,7 +68,7 @@ export const WAIT_FOR_MOUSE_CLICK_MS = 500;
 /**
  * Interface for argument to beginPress.
  */
-export interface BeginPressConfig {
+export interface PressBeginDetail {
   /**
    * Event that was recorded at the start of the interaction.
    * `null` if the press happened via keyboard.
@@ -79,16 +79,18 @@ export interface BeginPressConfig {
 /**
  * Interface for argument to endPress.
  */
-export interface EndPressConfig {
+export interface PressEndDetail {
   /**
    * `true` if the press was cancelled.
    */
   cancelled: boolean;
-  /**
-   * Data object to pass along to clients in the `action` event, if relevant.
-   */
-  actionData?: {};
 }
+
+/** Event for beginPress. */
+export interface PressBeginEvent extends CustomEvent<PressBeginDetail> {}
+
+/** Event for endPress. */
+export interface PressEndEvent extends CustomEvent<PressEndDetail> {}
 
 /**
  * The necessary interface for using an ActionController
@@ -104,11 +106,11 @@ export interface ActionControllerHost extends ReactiveControllerHost,
   /**
    * Called when a user interaction is determined to be a press.
    */
-  beginPress(config: BeginPressConfig): void;
+  beginPress(config: PressBeginDetail): void;
   /**
    * Called when a press ends or is cancelled.
    */
-  endPress(config: EndPressConfig): void;
+  endPress(config: PressEndDetail): void;
 }
 
 /**
@@ -367,5 +369,12 @@ export class ActionController implements ReactiveController {
       this.checkBoundsAfterContextMenu = true;
       this.cancelPress();
     }
+  }
+}
+
+declare global {
+  interface HTMLElementEventMap {
+    pressbegin: CustomEvent<PressBeginDetail>;
+    pressend: CustomEvent<PressEndDetail>;
   }
 }

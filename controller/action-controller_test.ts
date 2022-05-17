@@ -11,7 +11,7 @@ import {Harness} from '@material/web/testing/harness';
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators';
 
-import {ActionController, ActionControllerHost, BeginPressConfig, EndPressConfig, TOUCH_DELAY_MS, WAIT_FOR_MOUSE_CLICK_MS} from './action-controller';
+import {ActionController, ActionControllerHost, PressBeginDetail, PressEndDetail, TOUCH_DELAY_MS, WAIT_FOR_MOUSE_CLICK_MS} from './action-controller';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -36,14 +36,14 @@ class MyActionElement extends LitElement implements ActionControllerHost {
 
   actionController = new ActionController(this);
 
-  lastBegin?: BeginPressConfig;
-  lastEnd?: EndPressConfig;
+  lastBegin?: PressBeginDetail;
+  lastEnd?: PressEndDetail;
 
-  beginPress(info: BeginPressConfig) {
+  beginPress(info: PressBeginDetail) {
     this.lastBegin = info;
   }
 
-  endPress(info: EndPressConfig) {
+  endPress(info: PressEndDetail) {
     this.lastEnd = info;
   }
 
