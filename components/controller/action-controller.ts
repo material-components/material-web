@@ -111,7 +111,6 @@ export interface ActionControllerHost extends ReactiveControllerHost,
   endPress(config: EndPressConfig): void;
 }
 
-// tslint:disable:no-new-decorators
 /**
  * ActionController normalizes user interaction on components and distills it
  * into calling `beginPress` and `endPress` on the component.
