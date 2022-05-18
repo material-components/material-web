@@ -48,15 +48,30 @@ $custom-property-prefix: 'radio';
       map.get($theme, disabled-unselected-icon-opacity)
     );
 
-    // selected
+    @include _selected-focus-icon-color(
+      map.get($theme, selected-focus-icon-color)
+    );
+    @include _selected-hover-icon-color(
+      map.get($theme, selected-hover-icon-color)
+    );
     @include _selected-icon-color(map.get($theme, selected-icon-color));
-
-    // unselected
-    @include _unselected-icon-color(map.get($theme, unselected-icon-color));
+    @include _selected-pressed-icon-color(
+      map.get($theme, selected-pressed-icon-color)
+    );
     @include _ripple-padding(map.get($theme, state-layer-size));
     @include touch-target(
       $size: map.get($theme, state-layer-size),
       $ripple-size: map.get($theme, state-layer-size)
+    );
+    @include _unselected-focus-icon-color(
+      map.get($theme, unselected-focus-icon-color)
+    );
+    @include _unselected-hover-icon-color(
+      map.get($theme, unselected-hover-icon-color)
+    );
+    @include _unselected-icon-color(map.get($theme, unselected-icon-color));
+    @include _unselected-pressed-icon-color(
+      map.get($theme, unselected-pressed-icon-color)
     );
   }
 
@@ -130,42 +145,71 @@ $custom-property-prefix: 'radio';
   @include _disabled-unchecked-stroke-opacity($opacity);
 }
 
+@mixin _selected-hover-icon-color($color) {
+  @include _if-input-selected {
+    &:hover + {
+      @include _stroke-color($color);
+      @include _ink-color($color);
+    }
+  }
+}
+
+@mixin _selected-focus-icon-color($color) {
+  @include _if-input-selected {
+    &:focus + {
+      @include _stroke-color($color);
+      @include _ink-color($color);
+    }
+  }
+}
+
+@mixin _selected-pressed-icon-color($color) {
+  @include _if-input-selected {
+    &:active + {
+      @include _stroke-color($color);
+      @include _ink-color($color);
+    }
+  }
+}
+
 @mixin _selected-icon-color($color) {
-  @include checked-stroke-color($color);
-  @include ink-color($color);
+  @include _if-input-selected {
+    & + {
+      @include _stroke-color($color);
+      @include _ink-color($color);
+    }
+  }
+}
+
+@mixin _unselected-hover-icon-color($color) {
+  @include _if-input-unselected {
+    &:hover + {
+      @include _stroke-color($color);
+    }
+  }
+}
+
+@mixin _unselected-focus-icon-color($color) {
+  @include _if-input-unselected {
+    &:focus + {
+      @include _stroke-color($color);
+    }
+  }
+}
+
+@mixin _unselected-pressed-icon-color($color) {
+  @include _if-input-unselected {
+    &:active + {
+      @include _stroke-color($color);
+    }
+  }
 }
 
 @mixin _unselected-icon-color($color) {
-  @include unchecked-stroke-color($color);
-}
-
-///
-/// Sets the stroke color of an unchecked, enabled radio button.
-/// @param {Color} $color - The desired stroke color.
-///
-@mixin unchecked-stroke-color($color) {
-  @include _if-enabled-unchecked {
-    @include _stroke-color($color);
-  }
-}
-
-///
-/// Sets the stroke color of a checked, enabled radio button.
-/// @param {Color} $color - The desired stroke color.
-///
-@mixin checked-stroke-color($color) {
-  @include _if-enabled-checked {
-    @include _stroke-color($color);
-  }
-}
-
-///
-/// Sets the ink color of an enabled radio button.
-/// @param {Color} $color - The desired ink color.
-///
-@mixin ink-color($color) {
-  @include _if-enabled {
-    @include _ink-color($color);
+  @include _if-input-unselected {
+    & + {
+      @include _stroke-color($color);
+    }
   }
 }
 
@@ -217,12 +261,6 @@ $custom-property-prefix: 'radio';
   }
 }
 
-@mixin focus-indicator-color($color) {
-  .md3-radio__background::before {
-    @include mdc-theme.property(background-color, $color);
-  }
-}
-
 ///
 /// Sets radio touch target size which can be more than the ripple size. Param `$ripple-size` is required for custom
 /// ripple size.
@@ -246,45 +284,14 @@ $custom-property-prefix: 'radio';
   padding: calc(($size - $icon-size) / 2);
 }
 
-///
-/// Resets touch target-related styles. This is called from the density mixin to
-/// automatically remove the increased touch target, since dense components
-/// don't have the same default a11y requirements.
-/// @access private
-///
-@mixin touch-target-reset_() {
-  margin: 0;
-}
-
-///
-/// Helps select the radio background only when its native control is in the
-/// enabled state.
-/// @access private
-///
-@mixin _if-enabled {
-  .md3-radio__native-control:enabled + {
+@mixin _if-input-unselected {
+  .md3-radio__native-control:enabled:not(:checked) {
     @content;
   }
 }
 
-///
-/// Helps select the radio background only when its native control is in the
-/// enabled & unchecked state.
-/// @access private
-///
-@mixin _if-enabled-unchecked {
-  .md3-radio__native-control:enabled:not(:checked) + {
-    @content;
-  }
-}
-
-///
-/// Helps select the radio background only when its native control is in the
-/// enabled & checked state.
-/// @access private
-///
-@mixin _if-enabled-checked {
-  .md3-radio__native-control:enabled:checked + {
+@mixin _if-input-selected {
+  .md3-radio__native-control:enabled:checked {
     @content;
   }
 }
@@ -295,7 +302,6 @@ $custom-property-prefix: 'radio';
 /// @access private
 ///
 @mixin if-disabled_ {
-  [aria-disabled='true'] .md3-radio__native-control,
   .md3-radio__native-control:disabled {
     + {
       @content;
@@ -309,7 +315,6 @@ $custom-property-prefix: 'radio';
 /// @access private
 ///
 @mixin _if-disabled-unchecked {
-  [aria-disabled='true'] .md3-radio__native-control,
   .md3-radio__native-control:disabled {
     &:not(:checked) + {
       @content;
@@ -323,7 +328,6 @@ $custom-property-prefix: 'radio';
 /// @access private
 ///
 @mixin if-disabled-checked_ {
-  [aria-disabled='true'] .md3-radio__native-control,
   .md3-radio__native-control:disabled {
     &:checked + {
       @content;
