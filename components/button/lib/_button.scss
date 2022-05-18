@@ -10,6 +10,7 @@
 @use '@material/touch-target/touch-target';
 @use '../../compat/theme/selector-ext';
 @use '../../elevation/lib/surface' as elevation-surface;
+@use './button-theme';
 
 @mixin static-styles() {
   :host {
@@ -50,6 +51,9 @@
 
 @mixin root() {
   @include elevation-surface.root-static-styles();
+  // TODO(b/181413732): move this out to theme configs once padding tokens are defined
+  @include button-theme.container-padding(24px);
+  @include button-theme.container-with-icon-padding(16px);
 
   display: inline-flex;
   align-items: center;
