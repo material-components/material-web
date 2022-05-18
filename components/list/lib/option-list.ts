@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ARIARole} from '../../types/aria.js';
+import {ARIARole} from 'third_party/javascript/material/web/types/aria';
 
 import {List} from './list.js';
 

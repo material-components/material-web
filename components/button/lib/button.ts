@@ -12,11 +12,11 @@ import {html, LitElement, TemplateResult} from 'lit';
 import {eventOptions, property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
+import {ARIAHasPopup} from 'third_party/javascript/material/web/types/aria';
 
 import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {MdRipple} from '../../ripple/ripple.js';
-import {ARIAHasPopup} from '../../types/aria.js';
 
 import {ButtonState} from './state.js';
 

@@ -10,12 +10,12 @@ import {html, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
+import {ARIAHasPopup} from 'third_party/javascript/material/web/types/aria';
 
 import {ActionElement, BeginPressConfig, EndPressConfig} from '../../action-element/action-element.js';
 import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {MdRipple} from '../../ripple/ripple.js';
-import {ARIAHasPopup} from '../../types/aria.js';
 
 /** @soyCompatible */
 export class IconButton extends ActionElement {

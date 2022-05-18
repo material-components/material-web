@@ -6,7 +6,7 @@
 
 import {html, LitElement, TemplateResult} from 'lit';
 
-import {ARIARole} from '../../types/aria.js';
+import {ARIARole} from 'third_party/javascript/material/web/types/aria';
 
 import {ListItemInteractionEvent} from './constants.js';
 

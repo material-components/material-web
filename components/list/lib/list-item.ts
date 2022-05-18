@@ -7,8 +7,7 @@
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, queryAssignedElements, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
-
-import {ARIARole} from '../../types/aria.js';
+import {ARIARole} from 'third_party/javascript/material/web/types/aria';
 
 /** @soyCompatible */
 export class ListItem extends LitElement {

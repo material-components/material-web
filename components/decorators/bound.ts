@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {FunctionKeys} from '../types/keys.js';
+import {FunctionKeys} from 'third_party/javascript/material/web/types/keys';
 
 /**
  * Binds a class's method to its instance.
