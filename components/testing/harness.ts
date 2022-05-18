@@ -91,30 +91,30 @@ export class Harness<E extends HTMLElement = HTMLElement> {
    * @param init Additional event options.
    */
   async clickWithMouse(init: PointerEventInit = {}) {
-    await this.clickWithMouseStart(init);
-    await this.clickWithMouseEnd(init);
+    await this.startClickWithMouse(init);
+    await this.endClickWithMouse(init);
   }
 
   /**
-   * Begins a click with a mouse. Use this along with `clickWithMouseEnd()` to
+   * Begins a click with a mouse. Use this along with `endClickWithMouse()` to
    * customize the length of the click.
    *
    * @param init Additional event options.
    */
-  async clickWithMouseStart(init: PointerEventInit = {}) {
+  async startClickWithMouse(init: PointerEventInit = {}) {
     const element = await this.getInteractiveElement();
-    await this.hoverEnter();
+    await this.startHover();
     this.simulateMousePress(element, init);
     this.simulatePointerFocus(element);
   }
 
   /**
-   * Finishes a click with a mouse. Use this along with `clickWithMouseStart()`
+   * Finishes a click with a mouse. Use this along with `startClickWithMouse()`
    * to customize the length of the click. This will generate a `click` event.
    *
    * @param init Additional event options.
    */
-  async clickWithMouseEnd(init: PointerEventInit = {}) {
+  async endClickWithMouse(init: PointerEventInit = {}) {
     const element = await this.getInteractiveElement();
     this.simulateMouseRelease(element, init);
     if ((init?.button ?? 0) === 0) {
@@ -131,18 +131,18 @@ export class Harness<E extends HTMLElement = HTMLElement> {
    */
   async clickWithKeyboard(init: KeyboardEventInit = {}) {
     const element = await this.getInteractiveElement();
-    await this.clickWithKeyboardStart(init);
-    await this.clickWithKeyboardEnd(init);
+    await this.startClickWithKeyboard(init);
+    await this.endClickWithKeyboard(init);
     this.simulateClick(element, init);
   }
 
   /**
    * Begins a click with the keyboard (defaults to spacebar). Use this along
-   * with `clickWithKeyboardEnd()` to customize the length of the click.
+   * with `endClickWithKeyboard()` to customize the length of the click.
    *
    * @param init Additional event options.
    */
-  async clickWithKeyboardStart(init: KeyboardEventInit = {}) {
+  async startClickWithKeyboard(init: KeyboardEventInit = {}) {
     const element = await this.getInteractiveElement();
     await this.focusWithKeyboard(init);
     this.simulateKeydown(element, init.key ?? ' ', init);
@@ -151,11 +151,11 @@ export class Harness<E extends HTMLElement = HTMLElement> {
 
   /**
    * Finishes a click with the keyboard (defaults to spacebar). Use this along
-   * with `clickWithKeyboardStart()` to customize the length of the click.
+   * with `startClickWithKeyboard()` to customize the length of the click.
    *
    * @param init Additional event options.
    */
-  async clickWithKeyboardEnd(init: KeyboardEventInit = {}) {
+  async endClickWithKeyboard(init: KeyboardEventInit = {}) {
     const element = await this.getInteractiveElement();
     this.simulateKeyup(element, init.key ?? ' ', init);
     this.simulateClick(element, init);
@@ -168,7 +168,7 @@ export class Harness<E extends HTMLElement = HTMLElement> {
   async rightClickWithMouse() {
     const element = await this.getInteractiveElement();
     const rightMouseButton = {button: 2, buttons: 2};
-    await this.clickWithMouseStart(rightMouseButton);
+    await this.startClickWithMouse(rightMouseButton);
     // Note: contextmenu right clicks do not generate the up events
     this.simulateContextmenu(element, rightMouseButton);
   }
@@ -186,35 +186,35 @@ export class Harness<E extends HTMLElement = HTMLElement> {
     this.simulateTouchRelease(element, init, touchInit);
     if ((init?.isPrimary ?? true) === true) {
       // Dispatch a click for primary touches only (default).
-      await this.tapEndClick(init);
+      await this.endTapClick(init);
     }
   }
 
   /**
-   * Begins a touch tap. Use this along with `tapEnd()` to customize the length
+   * Begins a touch tap. Use this along with `endTap()` to customize the length
    * or number of taps.
    *
    * @param init Additional event options.
    * @param touchInit Additional touch event options.
    */
-  async tapStart(init: PointerEventInit = {}, touchInit: TouchEventInit = {}) {
+  async startTap(init: PointerEventInit = {}, touchInit: TouchEventInit = {}) {
     const element = await this.getInteractiveElement();
     this.simulateTouchPress(element, init, touchInit);
   }
 
   /**
-   * Simulates a `contextmenu` event for touch. Use this along with `tapStart()`
+   * Simulates a `contextmenu` event for touch. Use this along with `startTap()`
    * to generate a tap-and-hold context menu interaction.
    *
    * @param init Additional event options.
    */
-  async tapStartContextMenu(init: MouseEventInit = {}) {
+  async startTapContextMenu(init: MouseEventInit = {}) {
     const element = await this.getInteractiveElement();
     this.simulateContextmenu(element, init);
   }
 
   /**
-   * Finished a touch tap. Use this along with `tapStart()` to customize the
+   * Finished a touch tap. Use this along with `startTap()` to customize the
    * length or number of taps.
    *
    * This will NOT generate a `click` event.
@@ -222,18 +222,18 @@ export class Harness<E extends HTMLElement = HTMLElement> {
    * @param init Additional event options.
    * @param touchInit Additional touch event options.
    */
-  async tapEnd(init: PointerEventInit = {}, touchInit: TouchEventInit = {}) {
+  async endTap(init: PointerEventInit = {}, touchInit: TouchEventInit = {}) {
     const element = await this.getInteractiveElement();
     this.simulateTouchRelease(element, init, touchInit);
   }
 
   /**
-   * Simulates a `click` event for touch. Use this along with `tapEnd()` to
+   * Simulates a `click` event for touch. Use this along with `endTap()` to
    * control the timing of tap and click events.
    *
    * @param init Additional event options.
    */
-  async tapEndClick(init: PointerEventInit = {}) {
+  async endTapClick(init: PointerEventInit = {}) {
     const element = await this.getInteractiveElement();
     this.simulateClick(element, {
       pointerType: 'touch',
@@ -247,7 +247,7 @@ export class Harness<E extends HTMLElement = HTMLElement> {
    * @param init Additional event options.
    * @param touchInit Additional touch event options.
    */
-  async tapCancel(init: PointerEventInit = {}, touchInit: TouchEventInit = {}) {
+  async cancelTap(init: PointerEventInit = {}, touchInit: TouchEventInit = {}) {
     const element = await this.getInteractiveElement();
     this.simulateTouchCancel(element, init, touchInit);
   }
@@ -255,17 +255,17 @@ export class Harness<E extends HTMLElement = HTMLElement> {
   /**
    * Hovers over the element with a simulated mouse.
    */
-  async hoverEnter() {
+  async startHover() {
     const element = await this.getInteractiveElement();
-    this.simulateHoverEnter(element);
+    this.simulateStartHover(element);
   }
 
   /**
    * Moves the simulated mouse cursor off of the element.
    */
-  async hoverLeave() {
+  async endHover() {
     const element = await this.getInteractiveElement();
-    this.simulateHoverLeave(element);
+    this.simulateEndHover(element);
   }
 
   /**
@@ -283,7 +283,7 @@ export class Harness<E extends HTMLElement = HTMLElement> {
    */
   async focusWithPointer() {
     const element = await this.getInteractiveElement();
-    await this.hoverEnter();
+    await this.startHover();
     this.simulatePointerFocus(element);
   }
 
@@ -292,7 +292,7 @@ export class Harness<E extends HTMLElement = HTMLElement> {
    */
   async blur() {
     const element = await this.getInteractiveElement();
-    await this.hoverLeave();
+    await this.endHover();
     this.simulateBlur(element);
   }
 
@@ -418,7 +418,7 @@ export class Harness<E extends HTMLElement = HTMLElement> {
    * @param element The element to hover over.
    * @param init Additional event options.
    */
-  protected simulateHoverEnter(
+  protected simulateStartHover(
       element: HTMLElement, init: PointerEventInit = {}) {
     this.addPseudoClass(element, ':hover');
     const rect = element.getBoundingClientRect();
@@ -457,7 +457,7 @@ export class Harness<E extends HTMLElement = HTMLElement> {
    * @param element The element to stop hovering over.
    * @param init Additional event options.
    */
-  protected simulateHoverLeave(
+  protected simulateEndHover(
       element: HTMLElement, init: PointerEventInit = {}) {
     this.removePseudoClass(element, ':hover');
     const rect = element.getBoundingClientRect();

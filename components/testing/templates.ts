@@ -258,10 +258,10 @@ export class TemplateBuilder<H extends Harness = never,
         await harness.focusWithKeyboard();
         break;
       case State.HOVER:
-        await harness.hoverEnter();
+        await harness.startHover();
         break;
       case State.PRESSED:
-        await harness.clickWithMouseStart();
+        await harness.startClickWithMouse();
         break;
       default:
         break;

@@ -67,14 +67,14 @@ export class TextFieldHarness extends Harness<TextField> {
     await super.reset();
   }
 
-  override async hoverEnter() {
-    await super.hoverEnter();
-    await (await this.field).hoverEnter();
+  override async startHover() {
+    await super.startHover();
+    await (await this.field).startHover();
   }
 
-  override async hoverLeave() {
-    await super.hoverLeave();
-    await (await this.field).hoverLeave();
+  override async endHover() {
+    await super.endHover();
+    await (await this.field).endHover();
   }
 
   override async focusWithKeyboard() {

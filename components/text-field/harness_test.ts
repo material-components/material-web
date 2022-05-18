@@ -124,22 +124,22 @@ describe('TextFieldHarness', () => {
       // Setup.
       const harness = setupTest();
       const field = await harness.field;
-      spyOn(field, 'hoverEnter').and.callThrough();
+      spyOn(field, 'startHover').and.callThrough();
       // Test case.
-      await harness.hoverEnter();
+      await harness.startHover();
       // Assertion.
-      expect(field.hoverEnter).toHaveBeenCalledTimes(1);
+      expect(field.startHover).toHaveBeenCalledTimes(1);
     });
 
     it('should call hoverLeave() on the field harness', async () => {
       // Setup.
       const harness = setupTest();
       const field = await harness.field;
-      spyOn(field, 'hoverLeave').and.callThrough();
+      spyOn(field, 'endHover').and.callThrough();
       // Test case.
-      await harness.hoverLeave();
+      await harness.endHover();
       // Assertion.
-      expect(field.hoverLeave).toHaveBeenCalledTimes(1);
+      expect(field.endHover).toHaveBeenCalledTimes(1);
     });
 
     it('should call focusWithKeyboard() on the field harness', async () => {
