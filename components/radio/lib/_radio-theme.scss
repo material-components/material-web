@@ -8,65 +8,18 @@
 
 @use 'sass:map';
 @use 'sass:selector';
-@use '@material/density/functions' as density-functions;
 @use '../../compat/theme/theme' as mdc-theme;
 @use '../../compat/theme/keys';
-@use '@material/density/variables' as density-variables;
+@use '../../tokens';
 @use '../../compat/theme/theme-color';
 @use '../../compat/theme/shadow-dom';
 @use '../../ripple/ripple-theme';
 @use '../../sass/theme';
 
-$ripple-size: 40px !default;
-$icon-size: 20px !default;
-$transition-duration: 120ms !default;
-$ripple-opacity: 0.14 !default;
-$baseline-theme-color: secondary !default;
-$unchecked-color: rgba(theme-color.prop-value(on-surface), 0.54) !default;
-$disabled-circle-color: rgba(theme-color.prop-value(on-surface), 0.38) !default;
-
-$minimum-size: 28px !default;
-$maximum-size: $ripple-size !default;
-$density-scale: density-variables.$default-scale !default;
-$density-config: (
-  size: (
-    minimum: $minimum-size,
-    default: $ripple-size,
-    maximum: $maximum-size,
-  ),
-) !default;
-
-$custom-property-prefix: 'radio';
-
 // TODO(b/232175916): `icon-size` token key is not supported.
-$light-theme: (
-  disabled-selected-icon-color: theme-color.$on-surface,
-  disabled-selected-icon-opacity: 0.38,
-  disabled-unselected-icon-color: theme-color.$on-surface,
-  disabled-unselected-icon-opacity: 0.38,
-  icon-size: null,
-  selected-focus-icon-color: theme-color.$primary,
-  selected-focus-state-layer-color: theme-color.$primary,
-  selected-focus-state-layer-opacity: 0.12,
-  selected-hover-icon-color: theme-color.$primary,
-  selected-hover-state-layer-color: theme-color.$primary,
-  selected-hover-state-layer-opacity: 0.04,
-  selected-icon-color: theme-color.$primary,
-  selected-pressed-icon-color: theme-color.$primary,
-  selected-pressed-state-layer-color: theme-color.$primary,
-  selected-pressed-state-layer-opacity: 0.1,
-  state-layer-size: $ripple-size,
-  unselected-focus-icon-color: theme-color.$on-surface,
-  unselected-focus-state-layer-color: theme-color.$on-surface,
-  unselected-focus-state-layer-opacity: 0.12,
-  unselected-hover-icon-color: theme-color.$on-surface,
-  unselected-hover-state-layer-color: theme-color.$on-surface,
-  unselected-hover-state-layer-opacity: 0.04,
-  unselected-icon-color: theme-color.$on-surface,
-  unselected-pressed-icon-color: theme-color.$on-surface,
-  unselected-pressed-state-layer-color: theme-color.$on-surface,
-  unselected-pressed-state-layer-opacity: 0.1,
-);
+$light-theme: tokens.md-comp-radio-button-values();
+$icon-size: map.get($light-theme, icon-size);
+$custom-property-prefix: 'radio';
 
 @mixin theme($theme) {
   $theme: theme.validate-theme($light-theme, $theme);
@@ -286,28 +239,6 @@ $light-theme: (
     inset-inline-start: $offset;
     width: $size;
     height: $size;
-  }
-}
-
-///
-/// Sets density scale for radio.
-///
-/// @param {Number | String} $density-scale - Density scale value for component. Supported density scale values
-///     `-3`, `-2`, `-1`, `0`.
-///
-@mixin density($density-scale) {
-  $size: density-functions.prop-value(
-    $density-config: $density-config,
-    $density-scale: $density-scale,
-    $property-name: size,
-  );
-
-  @include _ripple-padding($size);
-  // Sets touch target size same as ripple size.
-  @include touch-target($size: $size, $ripple-size: $size);
-
-  @if $density-scale != 0 {
-    @include touch-target-reset_();
   }
 }
 

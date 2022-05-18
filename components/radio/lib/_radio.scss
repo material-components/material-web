@@ -6,13 +6,12 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@use '@material/animation/animation';
-@use '@material/dom/dom';
+@use '../../motion/animation';
 @use './radio-theme';
 
 @mixin static-styles() {
   .md3-radio {
-    @include dom.forced-colors-mode {
+    @media (forced-colors: active) {
       &.md3-radio--disabled {
         @include radio-theme.disabled-unchecked-stroke-color(GrayText);
         @include radio-theme.disabled-checked-stroke-color(GrayText);
@@ -111,10 +110,12 @@
   }
 }
 
+$_transition-duration: 120ms;
+
 @function enter($name) {
-  @return animation.enter($name, radio-theme.$transition-duration);
+  @return animation.deceleration($name, $_transition-duration);
 }
 
 @function exit($name) {
-  @return animation.exit-temporary($name, radio-theme.$transition-duration);
+  @return animation.sharp($name, $_transition-duration);
 }
