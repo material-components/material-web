@@ -187,8 +187,11 @@ export class Radio extends ActionElement {
       return;
     }
 
-    super.endPress(
-        {cancelled, actionData: {checked: this.formElement.checked}});
+    super.endPress({
+      cancelled,
+      actionData:
+          {checked: this.formElement.checked, value: this.formElement.value}
+    });
   }
 
   override click() {

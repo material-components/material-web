@@ -205,8 +205,11 @@ export class Checkbox extends ActionElement {
       return;
     }
 
-    super.endPress(
-        {cancelled, actionData: {checked: this.formElement.checked}});
+    super.endPress({
+      cancelled,
+      actionData:
+          {checked: this.formElement.checked, value: this.formElement.value}
+    });
   }
 
   protected handleFocus() {
