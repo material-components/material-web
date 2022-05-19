@@ -58,11 +58,8 @@ $custom-property-prefix: 'radio';
     @include _selected-pressed-icon-color(
       map.get($theme, selected-pressed-icon-color)
     );
-    @include _ripple-padding(map.get($theme, state-layer-size));
-    @include touch-target(
-      $size: map.get($theme, state-layer-size),
-      $ripple-size: map.get($theme, state-layer-size)
-    );
+    @include _state-layer-size(map.get($theme, state-layer-size));
+    @include _touch-target($size: map.get($theme, state-layer-size));
     @include _unselected-focus-icon-color(
       map.get($theme, unselected-focus-icon-color)
     );
@@ -76,18 +73,7 @@ $custom-property-prefix: 'radio';
   }
 
   .md3-radio--touch {
-    margin: calc(
-      (
-          #{map.get($theme, _touch-target-size)} - #{map.get(
-              $theme,
-              state-layer-size
-            )}
-        ) / 2
-    );
-    @include touch-target(
-      $size: map.get($theme, _touch-target-size),
-      $ripple-size: map.get($theme, state-layer-size)
-    );
+    @include _touch-target($size: map.get($theme, _touch-target-size));
   }
 
   @include ripple-theme.theme(
@@ -124,6 +110,18 @@ $custom-property-prefix: 'radio';
           map.get($theme, selected-pressed-state-layer-opacity),
       )
     );
+  }
+}
+
+$_theme-extension-keys: (
+  touch-target-size: null,
+);
+
+@mixin theme-extension($theme) {
+  $theme: theme.validate-theme($_theme-extension-keys, $theme);
+
+  .md3-radio {
+    @include _touch-target(map.get($theme, touch-target-size));
   }
 }
 
@@ -270,27 +268,16 @@ $custom-property-prefix: 'radio';
   }
 }
 
-///
-/// Sets radio touch target size which can be more than the ripple size. Param `$ripple-size` is required for custom
-/// ripple size.
-///
-/// @param {Number} $size Size of touch target (Native input) in `px`.
-/// @param {Number} $ripple-size Size of ripple in `px`. Required only for custom ripple size.
-///
-@mixin touch-target($size: $ripple-size, $ripple-size: $ripple-size) {
-  $offset: calc((#{$ripple-size} - #{$size}) / 2);
-
-  .md3-radio__native-control {
-    inset-block-start: $offset;
-    inset-block-end: $offset;
-    inset-inline-start: $offset;
-    width: $size;
-    height: $size;
-  }
+@mixin _touch-target($size) {
+  block-size: $size;
+  inline-size: $size;
 }
 
-@mixin _ripple-padding($size) {
-  padding: calc(($size - $icon-size) / 2);
+@mixin _state-layer-size($size) {
+  .md3-radio__ripple {
+    block-size: $size;
+    inline-size: $size;
+  }
 }
 
 @mixin _if-input-unselected {

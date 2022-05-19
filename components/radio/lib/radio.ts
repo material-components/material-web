@@ -252,7 +252,9 @@ export class Radio extends ActionElement {
           <div class="md3-radio__outer-circle"></div>
           <div class="md3-radio__inner-circle"></div>
         </div>
-        ${this.renderRipple()}
+        <div class="md3-radio__ripple">
+          ${this.renderRipple()}
+        </div>
       </div>`;
   }
 
