@@ -12,11 +12,7 @@
 @mixin static-styles() {
   .md3-radio {
     @media (forced-colors: active) {
-      &.md3-radio--disabled {
-        @include radio-theme.disabled-unchecked-stroke-color(GrayText);
-        @include radio-theme.disabled-checked-stroke-color(GrayText);
-        @include radio-theme.disabled-ink-color(GrayText);
-      }
+      @include radio-theme.high-contrast-styles();
     }
 
     display: inline-flex;

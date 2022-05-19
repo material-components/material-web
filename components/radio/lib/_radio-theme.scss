@@ -127,6 +127,15 @@ $custom-property-prefix: 'radio';
   }
 }
 
+@mixin high-contrast-styles() {
+  &.md3-radio--disabled {
+    @include _disabled-selected-icon-color(GrayText);
+    @include _disabled-selected-icon-opacity(1);
+    @include _disabled-unselected-icon-color(GrayText);
+    @include _disabled-unselected-icon-opacity(1);
+  }
+}
+
 @mixin _disabled-selected-icon-color($color) {
   @include disabled-checked-stroke-color($color);
   @include disabled-ink-color($color);
