@@ -12,10 +12,6 @@
 
 @mixin static-styles() {
   .md3-radio {
-    @media (forced-colors: active) {
-      @include radio-theme.high-contrast-styles();
-    }
-
     display: inline-flex;
     position: relative;
     cursor: pointer;
@@ -28,8 +24,8 @@
     display: inline-flex;
     position: relative;
     box-sizing: border-box;
-    block-size: radio-theme.$icon-size;
-    inline-size: radio-theme.$icon-size;
+    align-items: center;
+    justify-content: center;
   }
 
   .md3-radio__outer-circle {
@@ -47,14 +43,10 @@
 
   .md3-radio__inner-circle {
     position: absolute;
-    inset-block-start: 0;
-    inset-inline-start: 0;
     box-sizing: border-box;
-    block-size: 100%;
-    inline-size: 100%;
-    transform: scale(0, 0);
-    border-width: 10px;
-    border-style: solid;
+    block-size: 50%;
+    inline-size: 50%;
+    transform: scale(0);
     border-radius: 50%;
     transition: exit(transform), exit(border-color);
   }
@@ -100,7 +92,7 @@
   .md3-radio__native-control:checked {
     + .md3-radio__background {
       .md3-radio__inner-circle {
-        transform: scale(0.5);
+        transform: scale(1);
         transition: enter(transform), enter(border-color);
       }
     }
@@ -119,6 +111,12 @@
       container-outer-padding-horizontal: -2px,
     )
   );
+
+  @media (forced-colors: active) {
+    .md3-radio {
+      @include radio-theme.high-contrast-styles();
+    }
+  }
 }
 
 $_transition-duration: 120ms;

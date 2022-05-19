@@ -16,9 +16,7 @@
 @use '../../ripple/ripple-theme';
 @use '../../sass/theme';
 
-// TODO(b/232175916): `icon-size` token key is not supported.
 $light-theme: tokens.md-comp-radio-button-values();
-$icon-size: map.get($light-theme, icon-size);
 $custom-property-prefix: 'radio';
 
 @mixin theme($theme) {
@@ -47,7 +45,7 @@ $custom-property-prefix: 'radio';
     @include _disabled-unselected-icon-opacity(
       map.get($theme, disabled-unselected-icon-opacity)
     );
-
+    @include _icon-size(map.get($theme, icon-size));
     @include _selected-focus-icon-color(
       map.get($theme, selected-focus-icon-color)
     );
@@ -126,12 +124,18 @@ $_theme-extension-keys: (
 }
 
 @mixin high-contrast-styles() {
-  &.md3-radio--disabled {
-    @include _disabled-selected-icon-color(GrayText);
-    @include _disabled-selected-icon-opacity(1);
-    @include _disabled-unselected-icon-color(GrayText);
-    @include _disabled-unselected-icon-opacity(1);
-  }
+  @include _disabled-selected-icon-color(GrayText);
+  @include _disabled-selected-icon-opacity(1);
+  @include _disabled-unselected-icon-color(GrayText);
+  @include _disabled-unselected-icon-opacity(1);
+  @include _selected-icon-color(CanvasText);
+  @include _selected-hover-icon-color(CanvasText);
+  @include _selected-focus-icon-color(CanvasText);
+  @include _selected-pressed-icon-color(CanvasText);
+  @include _unselected-icon-color(CanvasText);
+  @include _unselected-hover-icon-color(CanvasText);
+  @include _unselected-focus-icon-color(CanvasText);
+  @include _unselected-pressed-icon-color(CanvasText);
 }
 
 @mixin _disabled-selected-icon-color($color) {
@@ -150,6 +154,13 @@ $_theme-extension-keys: (
 
 @mixin _disabled-unselected-icon-opacity($opacity) {
   @include _disabled-unchecked-stroke-opacity($opacity);
+}
+
+@mixin _icon-size($size) {
+  .md3-radio__background {
+    height: $size;
+    width: $size;
+  }
 }
 
 @mixin _selected-hover-icon-color($color) {
@@ -338,7 +349,7 @@ $_theme-extension-keys: (
 ///
 @mixin _ink-color($color) {
   .md3-radio__background .md3-radio__inner-circle {
-    @include mdc-theme.property(border-color, $color);
+    background-color: $color;
   }
 }
 
