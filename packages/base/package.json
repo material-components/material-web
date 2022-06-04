@@ -6,7 +6,7 @@
   "module": "base-element.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/material-components/material-components-web-components.git",
+    "url": "https://github.com/material-components/material-web.git",
     "directory": "packages/base"
   },
   "license": "Apache-2.0",

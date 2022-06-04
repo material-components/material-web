@@ -88,7 +88,7 @@ Name                                  | Default                                 
 
 #### Global Custom Properties
 
-This component exposes the following global [theming](https://github.com/material-components/material-components-web-components/blob/master/docs/theming.md)
+This component exposes the following global [theming](https://github.com/material-components/material-web/blob/master/docs/theming.md)
 custom properties.
 
 | Name                                 | Description
