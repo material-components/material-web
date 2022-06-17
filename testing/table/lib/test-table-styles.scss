@@ -1,0 +1,20 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use './test-table-theme';
+@use './test-table';
+
+@include test-table.static-styles;
+
+.md3-test-table {
+  @include test-table-theme.theme-styles(test-table-theme.$light-theme);
+}
+
+.md3-test-table--dark {
+  @include test-table-theme.theme(test-table-theme.$dark-theme);
+}

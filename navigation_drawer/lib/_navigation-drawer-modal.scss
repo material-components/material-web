@@ -1,0 +1,78 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use '@material/web/motion/animation';
+@use '@material/web/elevation/lib/elevation-overlay';
+
+$_curve: animation.$standard-easing;
+$_delay: 0s;
+$_transition-duration: 0.25s;
+
+@mixin static-styles() {
+  @include elevation-overlay.static-styles();
+  @include _base();
+  @include _slot-content();
+  @include _scrim();
+}
+
+@mixin _base() {
+  .md3-navigation-drawer-modal {
+    bottom: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    inline-size: 0;
+
+    transition: inline-size $_transition-duration $_curve $_delay,
+      visibility $_delay $_curve $_transition-duration;
+
+    .md3-elevation-overlay {
+      width: inherit;
+      z-index: 0;
+    }
+  }
+
+  .md3-navigation-drawer-modal--opened {
+    transition: inline-size $_transition-duration $_curve $_delay,
+      visibility $_delay $_curve $_delay;
+  }
+
+  .md3-navigation-drawer-modal--pivot-at-start {
+    justify-content: flex-start;
+  }
+}
+
+@mixin _slot-content() {
+  .md3-navigation-drawer-modal__slot-content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+}
+
+@mixin _scrim() {
+  .md3-navigation-drawer-modal__scrim {
+    inset: 0;
+    opacity: 0;
+    position: absolute;
+    visibility: hidden;
+
+    transition: opacity $_transition-duration $_curve $_delay,
+      visibility $_delay $_curve $_transition-duration;
+  }
+
+  .md3-navigation-drawer-modal--scrim-visible {
+    visibility: visible;
+
+    transition: opacity $_transition-duration $_curve $_delay,
+      visibility $_delay $_curve $_delay;
+  }
+}

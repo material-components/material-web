@@ -1,0 +1,202 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use 'sass:map';
+@use 'sass:meta';
+
+@use '@material/web/elevation/lib/elevation-theme';
+@use 'third_party/javascript/material_web_components/m3/ripple/ripple-theme';
+@use '@material/web/sass/elevation';
+@use '@material/web/sass/resolvers';
+@use '@material/web/sass/theme';
+
+@function resolve-theme($theme, $resolvers) {
+  $theme: elevation-theme.resolve-theme(
+    $theme,
+    map.get($resolvers, elevation),
+    $shadow-color-token: container-shadow-color,
+    $elevation-tokens: (
+      container-elevation,
+      focus-container-elevation,
+      hover-container-elevation,
+      pressed-container-elevation,
+      lowered-container-elevation,
+      lowered-focus-container-elevation,
+      lowered-hover-container-elevation,
+      lowered-pressed-container-elevation
+    )
+  );
+
+  @return $theme;
+}
+
+@mixin theme-styles($theme) {
+  @include _elevation(
+    (
+      default: (
+        shadow: map.get($theme, container-elevation-shadow),
+        overlay-opacity: map.get($theme, container-elevation-overlay-opacity),
+      ),
+      hover: (
+        shadow: map.get($theme, hover-container-elevation-shadow),
+        overlay-opacity:
+          map.get($theme, hover-container-elevation-overlay-opacity),
+      ),
+      focus: (
+        shadow: map.get($theme, focus-container-elevation-shadow),
+        overlay-opacity:
+          map.get($theme, focus-container-elevation-overlay-opacity),
+      ),
+      pressed: (
+        shadow: map.get($theme, pressed-container-elevation-shadow),
+        overlay-opacity:
+          map.get($theme, pressed-container-elevation-overlay-opacity),
+      ),
+    )
+  );
+
+  @include _lowered-elevation(
+    (
+      default: (
+        shadow: map.get($theme, lowered-container-elevation-shadow),
+        overlay-opacity:
+          map.get($theme, lowered-container-elevation-overlay-opacity),
+      ),
+      hover: (
+        shadow: map.get($theme, lowered-hover-container-elevation-shadow),
+        overlay-opacity:
+          map.get($theme, lowered-hover-container-elevation-overlay-opacity),
+      ),
+      focus: (
+        shadow: map.get($theme, lowered-focus-container-elevation-shadow),
+        overlay-opacity:
+          map.get($theme, lowered-focus-container-elevation-overlay-opacity),
+      ),
+      pressed: (
+        shadow: map.get($theme, lowered-pressed-container-elevation-shadow),
+        overlay-opacity:
+          map.get($theme, lowered-pressed-container-elevation-overlay-opacity),
+      ),
+    )
+  );
+
+  @include elevation-theme.theme-styles(
+    (
+      surface-tint-layer-color:
+        map.get($theme, container-surface-tint-layer-color),
+    )
+  );
+
+  @include _container-fill-color(
+    (
+      default: map.get($theme, container-color),
+    )
+  );
+
+  @include _set-container-shape(map.get($theme, container-shape));
+
+  @include _icon-color(
+    (
+      default: map.get($theme, icon-color),
+      hover: map.get($theme, hover-icon-color),
+      focus: map.get($theme, focus-icon-color),
+      pressed: map.get($theme, pressed-icon-color),
+    )
+  );
+
+  @include _set-icon-size(map.get($theme, icon-size));
+
+  @include ripple-theme.theme(
+    (
+      hover-state-layer-color: map.get($theme, hover-state-layer-color),
+      focus-state-layer-color: map.get($theme, focus-state-layer-color),
+      pressed-state-layer-color: map.get($theme, pressed-state-layer-color),
+      hover-state-layer-opacity: map.get($theme, hover-state-layer-opacity),
+      focus-state-layer-opacity: map.get($theme, focus-state-layer-opacity),
+      pressed-state-layer-opacity: map.get($theme, pressed-state-layer-opacity),
+    )
+  );
+}
+
+@mixin _lowered-elevation($elevation-map) {
+  &.md3-fab--lowered {
+    @include _elevation($elevation-map);
+  }
+}
+
+@mixin _elevation($elevation-map) {
+  &:enabled {
+    @include elevation-theme.theme-styles(map.get($elevation-map, default));
+  }
+
+  &:hover {
+    @include elevation-theme.theme-styles(map.get($elevation-map, hover));
+  }
+
+  &:focus {
+    @include elevation-theme.theme-styles(map.get($elevation-map, focus));
+  }
+
+  &:active {
+    @include elevation-theme.theme-styles(map.get($elevation-map, pressed));
+  }
+}
+
+@mixin _container-fill-color($color-or-map) {
+  &:enabled {
+    @include _set-container-fill-color(map.get($color-or-map, default));
+  }
+}
+
+@mixin _set-container-fill-color($color) {
+  background-color: $color;
+}
+
+@mixin _set-container-shape($radius) {
+  &,
+  .md3-fab__ripple {
+    border-radius: $radius;
+  }
+}
+
+@mixin _icon-color($color-or-map) {
+  &:enabled {
+    @include _set-icon-color(map.get($color-or-map, default));
+  }
+
+  &:hover {
+    @include _set-icon-color(map.get($color-or-map, hover));
+  }
+
+  &:focus {
+    @include _set-icon-color(map.get($color-or-map, focus));
+  }
+
+  &:active {
+    @include _set-icon-color(map.get($color-or-map, pressed));
+  }
+}
+
+@mixin _set-icon-color($color) {
+  ::slotted(*),
+  .md3-fab__icon {
+    color: $color;
+  }
+}
+
+@mixin _set-icon-size($size) {
+  ::slotted(*),
+  .md3-fab__icon,
+  i,
+  svg,
+  img {
+    font-size: $size;
+    height: $size;
+    width: $size;
+  }
+}

@@ -1,0 +1,64 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use '@material/web/motion/animation';
+@use '@material/web/elevation/lib/elevation-overlay';
+
+$curve: animation.$standard-easing;
+$default: 0s;
+$delay: 0s;
+$transition-duration: 0.25s;
+
+@mixin static-styles() {
+  @include elevation-overlay.static-styles();
+  @include _base();
+  @include _slot-content();
+}
+
+@mixin _base() {
+  :host {
+    display: flex;
+  }
+
+  .md3-navigation-drawer {
+    inline-size: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+    overflow: hidden;
+    overflow-y: auto;
+    visibility: hidden;
+
+    transition: inline-size $transition-duration $curve $delay,
+      visibility $default $curve $transition-duration;
+
+    .md3-elevation-overlay {
+      width: inherit;
+      z-index: 0;
+    }
+  }
+
+  .md3-navigation-drawer--opened {
+    visibility: visible;
+
+    transition: inline-size $transition-duration $curve $delay,
+      visibility $default $curve $default;
+  }
+
+  .md3-navigation-drawer--pivot-at-start {
+    justify-content: flex-start;
+  }
+}
+
+@mixin _slot-content() {
+  .md3-navigation-drawer__slot-content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+}

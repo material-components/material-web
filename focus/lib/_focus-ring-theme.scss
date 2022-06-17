@@ -1,0 +1,89 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:map';
+@use '@material/web/sass/resolvers';
+@use '@material/web/sass/theme';
+@use '@material/web/tokens';
+
+$_custom-property-prefix: 'focus-ring';
+$_color-sys: tokens.md-sys-color-values-light-dynamic();
+
+$light-theme: (
+  ring-radius: 8px,
+  container-outer-padding-vertical: 2px,
+  container-outer-padding-horizontal: 2px,
+  inner-ring-width: 2px,
+  inner-ring-color: map.get($_color-sys, on-tertiary-container),
+  outer-ring-width: 2px,
+  outer-ring-color: map.get($_color-sys, tertiary-container),
+);
+
+@mixin theme($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
+
+  @include theme.emit-theme-vars($theme);
+}
+
+@mixin theme-styles($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme-styles($light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
+
+  $container-outer-padding-vertical: map.get(
+    $theme,
+    container-outer-padding-vertical
+  );
+  $container-outer-padding-horizontal: map.get(
+    $theme,
+    container-outer-padding-horizontal
+  );
+  $inner-width: map.get($theme, inner-ring-width);
+  $inner-color: map.get($theme, inner-ring-color);
+
+  $outer-width: map.get($theme, outer-ring-width);
+  $outer-color: map.get($theme, outer-ring-color);
+
+  $outer-radius: map.get($theme, ring-radius);
+  $inner-radius: calc(#{$outer-radius} - #{$outer-width});
+
+  // Outer
+  @include _outer-ring-size(
+    $container-outer-padding-vertical,
+    $container-outer-padding-horizontal,
+    $inner-width,
+    $outer-width
+  );
+  @include _set-border($outer-width, $outer-color, $outer-radius);
+
+  // Inner
+  &::before {
+    @include _set-border($inner-width, $inner-color, $inner-radius);
+  }
+}
+
+@mixin _outer-ring-size(
+  $container-outer-padding-vertical,
+  $container-outer-padding-horizontal,
+  $inner-width,
+  $outer-width
+) {
+  // Note that the ring will not respect its parent's border. This will not be
+  // an issue as long as border is set via a sibling node, similar to ripple
+  // and touch target.
+  $vertical-inset: calc(
+    -1 * (#{$container-outer-padding-vertical} + #{$inner-width} + #{$outer-width})
+  );
+  $horizontal-inset: calc(
+    -1 * (#{$container-outer-padding-horizontal} + #{$inner-width} + #{$outer-width})
+  );
+
+  inset: $vertical-inset $horizontal-inset;
+}
+
+@mixin _set-border($width, $color, $radius) {
+  border: $width solid $color;
+  border-radius: $radius;
+}

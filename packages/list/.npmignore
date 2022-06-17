@@ -1,7 +1,0 @@
-.tsbuildinfo
-tsconfig.json
-*.tgz
-images/*
-test/*
-*.ts
-!*.d.ts

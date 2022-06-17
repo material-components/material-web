@@ -1,6 +1,0 @@
-**/node_modules
-packages/*/dist
-packages/**/*.d.ts
-packages/*/*-css.ts
-
-karma.*.js

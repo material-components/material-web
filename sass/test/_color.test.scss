@@ -1,0 +1,201 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'true' as test;
+@use '../color';
+
+@include test.describe('color') {
+  @include test.describe('color-var-hex-to-rgba()') {
+    @include test.it(
+      'should return color in rgb() format containing custom property for rgb.'
+    ) {
+      @include test.assert-equal(
+        color.color-var-hex-to-rgba(var(--foo-color-on-surface, #8ab4f8), 0.38),
+        rgb(var(--foo-color-on-surface-rgb, 138, 180, 248), 0.38)
+      );
+    }
+
+    @include test.it(
+      'should return color in rgb() format when hex color passed in shorthand format.'
+    ) {
+      @include test.assert-equal(
+        color.color-var-hex-to-rgba(var(--foo-color-on-surface, #000), 0),
+        rgb(var(--foo-color-on-surface-rgb, 0, 0, 0), 0)
+      );
+    }
+  }
+
+  @include test.describe('hex-to-rgb()') {
+    @include test.it('should return color in comma seperated rgb.') {
+      @include test.assert-equal(color.hex-to-rgb('#8ab4f8'), '138, 180, 248');
+    }
+
+    @include test.it(
+      'should return color in comma seperated rgb for given hex color in shorthand format.'
+    ) {
+      @include test.assert-equal(color.hex-to-rgb('#fff'), '255, 255, 255');
+    }
+  }
+
+  @include test.describe('replace-as-rgba()') {
+    @include test.it(
+      'should replace color value with color with opacity in rgba format'
+    ) {
+      @include test.assert-equal(
+        color.replace-as-rgba(
+          (
+            foo-color: #8ab4f8,
+            foo-opacity: 0.38,
+          ),
+          $color-key: foo-color,
+          $opacity-key: foo-opacity
+        ),
+        (
+          foo-color: rgba(138, 180, 248, 0.38),
+          foo-opacity: 0.38,
+        )
+      );
+    }
+
+    @include test.it(
+      'should replace color value containing var string with color with opacity in rgba format containing var string suffixed with -rgb'
+    ) {
+      @include test.assert-equal(
+        color.replace-as-rgba(
+          (
+            foo-color: var(--foo-color, #8ab4f8),
+            foo-opacity: 0.38,
+          ),
+          $color-key: foo-color,
+          $opacity-key: foo-opacity
+        ),
+        (
+          foo-color: rgb(var(--foo-color-rgb, 138, 180, 248), 0.38),
+          foo-opacity: 0.38,
+        )
+      );
+    }
+
+    @include test.it('allows for non-colors to remain') {
+      @include test.assert-equal(
+        color.replace-as-rgba(
+          (
+            foo-color: GrayText,
+            foo-opacity: 0.38,
+          ),
+          $color-key: foo-color,
+          $opacity-key: foo-opacity
+        ),
+        (
+          foo-color: GrayText,
+          foo-opacity: 0.38,
+        )
+      );
+    }
+
+    @include test.it('joins given keys') {
+      $want: (
+        foo-color: rgba(255, 0, 0, 0.1),
+        foo-opacity: 0.1,
+        untouched-color: blue,
+        untouched-opacity: 0.1,
+      );
+      $got: color.replace-as-rgba(
+        (
+          foo-color: red,
+          foo-opacity: 0.1,
+          untouched-color: blue,
+          untouched-opacity: 0.1,
+        ),
+        'foo-color',
+        'foo-opacity'
+      );
+      @include test.assert-equal($got, $want);
+    }
+  }
+
+  @include test.describe('join-color-and-opacity-pairs()') {
+    @include test.it(
+      'should merge the color with opacity values for all given color and opacity pairs'
+    ) {
+      @include test.assert-equal(
+        color.join-color-and-opacity-pairs(
+          (
+            foo-color: red,
+            foo-opacity: 0.1,
+            bar-color: green,
+            bar-opacity: 0.2,
+          ),
+          (
+            (color-key: foo-color, opacity-key: foo-opacity),
+            (color-key: bar-color, opacity-key: bar-opacity)
+          )
+        ),
+        (
+          foo-color: rgba(255, 0, 0, 0.1),
+          foo-opacity: 0.1,
+          bar-color: rgba(0, 128, 0, 0.2),
+          bar-opacity: 0.2,
+        )
+      );
+    }
+
+    @include test.it('joins given keys') {
+      $want: (
+        foo-color: rgba(255, 0, 0, 0.1),
+        bar-color: rgba(0, 0, 255, 0.2),
+        baz-color: green,
+        foo-opacity: 0.1,
+        bar-opacity: 0.2,
+        baz-opacity: 0.3,
+      );
+      $got: color.join-color-and-opacity-pairs(
+        (
+          foo-color: red,
+          foo-opacity: 0.1,
+          bar-color: blue,
+          bar-opacity: 0.2,
+          baz-color: green,
+          baz-opacity: 0.3,
+        ),
+        (
+          (
+            color-key: foo-color,
+            opacity-key: foo-opacity,
+          ),
+          (
+            color-key: bar-color,
+            opacity-key: bar-opacity,
+          )
+        )
+      );
+      @include test.assert-equal($got, $want);
+    }
+
+    @include test.it('no-op for non-existent keys') {
+      $want: (
+        foo-color: green,
+        foo-opacity: 0.3,
+      );
+      $got: color.join-color-and-opacity-pairs(
+        (
+          foo-color: green,
+          foo-opacity: 0.3,
+        ),
+        (
+          (
+            color-key: bar-color,
+            opacity-key: bar-opacity,
+          ),
+          (
+            color-key: bar-color,
+            opacity-key: bar-opacity,
+          )
+        )
+      );
+      @include test.assert-equal($got, $want);
+    }
+  }
+}

@@ -1,0 +1,39 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@mixin static-styles() {
+  .md3-fab--extended {
+    @include root;
+
+    .md3-fab__label {
+      @include label;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .md3-fab--extended {
+      @include high-contrast-styles;
+    }
+  }
+}
+
+@mixin root() {
+  box-sizing: border-box;
+  padding-inline-start: 16px;
+  padding-inline-end: 20px;
+}
+
+@mixin label() {
+  padding-inline-start: 12px;
+}
+
+@mixin high-contrast-styles() {
+  // Adjust the padding-inline to account for the 1px border in HCM.
+  padding-inline-start: 15px;
+  padding-inline-end: 19px;
+}

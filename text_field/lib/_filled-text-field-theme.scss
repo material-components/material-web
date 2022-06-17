@@ -1,0 +1,199 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:color';
+@use 'sass:map';
+@use '@material/web/field/lib/filled-field-theme';
+@use '@material/web/sass/resolvers';
+@use '@material/web/sass/shape';
+@use '@material/web/sass/theme';
+@use '@material/web/sass/typography';
+@use '@material/web/sass/var';
+@use '@material/web/tokens';
+@use './input-theme';
+
+$light-theme: tokens.md-comp-filled-text-field-values();
+$dark-theme: tokens.md-comp-filled-text-field-values(
+  (
+    md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
+    md-sys-elevation:
+      tokens.md-sys-elevation-values(
+        $deps: (
+          md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
+        ),
+        $exclude-hardcoded-values: true,
+      ),
+  ),
+  $exclude-hardcoded-values: true
+);
+$forced-colors-theme: (
+  disabled-active-indicator-color: GrayText,
+  disabled-active-indicator-opacity: 1,
+  disabled-input-text-color: GrayText,
+  disabled-input-text-opacity: 1,
+  disabled-label-text-color: GrayText,
+  disabled-label-text-opacity: 1,
+  disabled-leading-icon-color: GrayText,
+  disabled-leading-icon-opacity: 1,
+  disabled-supporting-text-color: GrayText,
+  disabled-supporting-text-opacity: 1,
+  disabled-trailing-icon-color: GrayText,
+  disabled-trailing-icon-opacity: 1,
+);
+
+@function _resolve-theme($theme, $resolvers) {
+  $theme: input-theme.resolve-theme($theme, $resolvers);
+  $theme: shape.resolve-theme(
+    $theme,
+    map.get($resolvers, shape),
+    container-shape
+  );
+  $theme: typography.resolve-theme(
+    $theme,
+    map.get($resolvers, typography),
+    label-text
+  );
+
+  @return $theme;
+}
+
+// Add missing tokens
+$_reference-theme: map.merge(
+  $light-theme,
+  (
+    container-padding-horizontal: null,
+    container-padding-vertical: null,
+  )
+);
+
+@mixin theme($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme($_reference-theme, $theme);
+  $theme: _resolve-theme($theme, $resolvers);
+  $theme: theme.create-theme-vars($theme, filled-text-field);
+
+  @include theme.emit-theme-vars($theme);
+}
+
+@mixin theme-styles($theme, $resolvers: resolvers.$material) {
+  // Add missing tokens
+  $theme: map.merge(
+    (
+      container-padding-horizontal: 16px,
+      container-padding-vertical: 8px,
+    ),
+    $theme
+  );
+
+  $theme: theme.validate-theme-styles($_reference-theme, $theme);
+  $theme: _resolve-theme($theme, $resolvers);
+  $theme: theme.create-theme-vars($theme, filled-text-field);
+
+  @include input-theme.theme-styles($theme);
+
+  $field-theme: (
+    active-indicator-color: map.get($theme, active-indicator-color),
+    active-indicator-height: map.get($theme, active-indicator-height),
+    container-color: map.get($theme, container-color),
+    container-height: map.get($theme, container-height),
+    container-padding-horizontal: map.get($theme, container-padding-horizontal),
+    container-padding-vertical: map.get($theme, container-padding-vertical),
+    container-shape-start-start: map.get($theme, container-shape-start-start),
+    container-shape-start-end: map.get($theme, container-shape-start-end),
+    container-shape-end-end: map.get($theme, container-shape-end-end),
+    container-shape-end-start: map.get($theme, container-shape-end-start),
+    content-color: map.get($theme, input-text-color),
+    disabled-active-indicator-color:
+      map.get($theme, disabled-active-indicator-color),
+    disabled-active-indicator-height:
+      map.get($theme, disabled-active-indicator-height),
+    disabled-active-indicator-opacity:
+      map.get($theme, disabled-active-indicator-opacity),
+    disabled-container-color: map.get($theme, disabled-container-color),
+    disabled-container-opacity: map.get($theme, disabled-container-opacity),
+    disabled-content-color: map.get($theme, disabled-input-text-color),
+    disabled-content-opacity: map.get($theme, disabled-input-text-opacity),
+    disabled-label-text-color: map.get($theme, disabled-label-text-color),
+    disabled-label-text-opacity: map.get($theme, disabled-label-text-opacity),
+    disabled-leading-icon-color: map.get($theme, disabled-leading-icon-color),
+    disabled-leading-icon-opacity:
+      map.get($theme, disabled-leading-icon-opacity),
+    disabled-supporting-text-color:
+      map.get($theme, disabled-supporting-text-color),
+    disabled-supporting-text-opacity:
+      map.get($theme, disabled-supporting-text-opacity),
+    disabled-trailing-icon-color: map.get($theme, disabled-trailing-icon-color),
+    disabled-trailing-icon-opacity:
+      map.get($theme, disabled-trailing-icon-opacity),
+    error-active-indicator-color: map.get($theme, error-active-indicator-color),
+    error-focus-active-indicator-color:
+      map.get($theme, error-focus-active-indicator-color),
+    error-focus-content-color: map.get($theme, error-focus-input-text-color),
+    error-focus-label-text-color: map.get($theme, error-focus-label-text-color),
+    error-focus-leading-icon-color:
+      map.get($theme, error-focus-leading-icon-color),
+    error-focus-supporting-text-color:
+      map.get($theme, error-focus-supporting-text-color),
+    error-focus-trailing-icon-color:
+      map.get($theme, error-focus-trailing-icon-color),
+    error-hover-active-indicator-color:
+      map.get($theme, error-hover-active-indicator-color),
+    error-hover-content-color: map.get($theme, error-hover-input-text-color),
+    error-hover-label-text-color: map.get($theme, error-hover-label-text-color),
+    error-hover-leading-icon-color:
+      map.get($theme, error-hover-leading-icon-color),
+    error-hover-state-layer-color:
+      map.get($theme, error-hover-state-layer-color),
+    error-hover-state-layer-opacity:
+      map.get($theme, error-hover-state-layer-opacity),
+    error-hover-supporting-text-color:
+      map.get($theme, error-hover-supporting-text-color),
+    error-hover-trailing-icon-color:
+      map.get($theme, error-hover-trailing-icon-color),
+    error-content-color: map.get($theme, error-input-text-color),
+    error-label-text-color: map.get($theme, error-label-text-color),
+    error-leading-icon-color: map.get($theme, error-leading-icon-color),
+    error-supporting-text-color: map.get($theme, error-supporting-text-color),
+    error-trailing-icon-color: map.get($theme, error-trailing-icon-color),
+    focus-active-indicator-color: map.get($theme, focus-active-indicator-color),
+    focus-active-indicator-height:
+      map.get($theme, focus-active-indicator-height),
+    focus-content-color: map.get($theme, focus-input-text-color),
+    focus-label-text-color: map.get($theme, focus-label-text-color),
+    focus-leading-icon-color: map.get($theme, focus-leading-icon-color),
+    focus-supporting-text-color: map.get($theme, focus-supporting-text-color),
+    focus-trailing-icon-color: map.get($theme, focus-trailing-icon-color),
+    hover-active-indicator-color: map.get($theme, hover-active-indicator-color),
+    hover-active-indicator-height:
+      map.get($theme, hover-active-indicator-height),
+    hover-content-color: map.get($theme, hover-input-text-color),
+    hover-label-text-color: map.get($theme, hover-label-text-color),
+    hover-leading-icon-color: map.get($theme, hover-leading-icon-color),
+    hover-state-layer-color: map.get($theme, hover-state-layer-color),
+    hover-state-layer-opacity: map.get($theme, hover-state-layer-opacity),
+    hover-supporting-text-color: map.get($theme, hover-supporting-text-color),
+    hover-trailing-icon-color: map.get($theme, hover-trailing-icon-color),
+    label-text-color: map.get($theme, label-text-color),
+    label-text-font: map.get($theme, label-text-font),
+    label-text-line-height: map.get($theme, label-text-line-height),
+    label-text-populated-line-height:
+      map.get($theme, label-text-populated-line-height),
+    label-text-populated-size: map.get($theme, label-text-populated-size),
+    label-text-size: map.get($theme, label-text-size),
+    label-text-tracking: map.get($theme, label-text-tracking),
+    label-text-weight: map.get($theme, label-text-weight),
+    leading-icon-color: map.get($theme, leading-icon-color),
+    leading-icon-size: map.get($theme, leading-icon-size),
+    supporting-text-color: map.get($theme, supporting-text-color),
+    supporting-text-font: map.get($theme, supporting-text-font),
+    supporting-text-line-height: map.get($theme, supporting-text-line-height),
+    supporting-text-size: map.get($theme, supporting-text-size),
+    supporting-text-tracking: map.get($theme, supporting-text-tracking),
+    supporting-text-weight: map.get($theme, supporting-text-weight),
+    trailing-icon-color: map.get($theme, trailing-icon-color),
+    trailing-icon-size: map.get($theme, trailing-icon-size),
+  );
+
+  @include filled-field-theme.theme($field-theme);
+}

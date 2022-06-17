@@ -1,0 +1,61 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.mdc-*' should only be used in this project.
+
+@mixin static-styles() {
+  :host {
+    @include host-root;
+  }
+
+  .mdc-formfield {
+    @include root;
+
+    .mdc-formfield__label {
+      @include label;
+    }
+  }
+
+  .mdc-formfield--align-end .mdc-formfield__label {
+    @include align-end;
+  }
+
+  .mdc-formfield--space-between {
+    @include space-between;
+  }
+}
+
+@mixin host-root() {
+  display: inline-flex;
+}
+
+@mixin root() {
+  align-items: center;
+  display: inline-flex;
+  vertical-align: middle;
+  width: 100%;
+}
+
+@mixin label() {
+  margin-inline: 0 auto;
+  padding-inline: 4px 0;
+
+  order: 0;
+}
+@mixin align-end() {
+  margin-inline: auto 0;
+  padding-inline: 0 4px;
+
+  order: -1;
+}
+
+@mixin space-between() {
+  justify-content: space-between;
+
+  .mdc-formfield__label {
+    margin: 0;
+  }
+}
