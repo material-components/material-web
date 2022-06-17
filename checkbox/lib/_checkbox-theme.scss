@@ -11,7 +11,7 @@
 @use 'sass:math';
 @use 'sass:selector';
 
-@use 'third_party/javascript/material_web_components/m3/ripple/ripple-theme';
+@use '@material/web/ripple/ripple-theme';
 @use '@material/web/compat/theme/shadow-dom';
 @use '@material/web/sass/color';
 @use '@material/web/sass/theme';
