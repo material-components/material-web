@@ -7,7 +7,7 @@
 import '@material/web/focus/focus-ring';
 import '@material/web/ripple/ripple';
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '@material/web/action-element/action-element';
+import {ActionElement, BeginPressConfig, EndPressConfig} from '@material/web/actionelement/action-element';
 import {pointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus';
 import {MdRipple} from '@material/web/ripple/ripple';
 import {html, TemplateResult} from 'lit';
