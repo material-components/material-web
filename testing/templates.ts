@@ -343,8 +343,18 @@ export type TemplateStateCallback<H extends Harness> =
  * @template H The harness type.
  */
 export type TemplateProps<H extends Harness> = Partial<Pick<
-    HarnessElement<H>, Exclude<keyof HarnessElement<H>, keyof HTMLElement>>>&
+    HarnessElement<H>,
+    Exclude<keyof HarnessElement<H>, TemplatePropsKeysToExclude>>>&
     SharedTemplateProps;
+
+/**
+ * The keys to exclude when generating `TemplateProps` properties. The keys that
+ * are excluded are `HTMLElement` properties, with the exception of a few listed
+ * below.
+ *
+ * - prefix: needed for text field's prefix property
+ */
+export type TemplatePropsKeysToExclude = Exclude<keyof HTMLElement, 'prefix'>;
 
 /**
  * Shared element properties for all harnesses.
