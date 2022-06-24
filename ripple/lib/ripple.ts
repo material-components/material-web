@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {RippleInterface} from '@material/mwc-base/utils';
 import {createAnimationSignal, Easing} from '@material/web/motion/animation';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators';
@@ -20,7 +19,7 @@ const PRESS_PSEUDO = '::after';
 const ANIMATION_FILL = 'forwards';
 
 /** @soyCompatible */
-export class Ripple extends LitElement implements RippleInterface {
+export class Ripple extends LitElement {
   @query('.md3-ripple-surface') mdRoot!: HTMLElement;
 
   @property({type: Boolean}) unbounded = false;

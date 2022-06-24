@@ -6,7 +6,8 @@
 
 import '@material/web/focus/focus-ring';
 
-import {ariaProperty as legacyAriaProperty} from '@material/mwc-base/aria-property';
+// TODO(b/236840525): remove compat dependencies
+import {ariaProperty as legacyAriaProperty} from '@material/web/compat/base/aria-property';
 import {FormController, getFormValue} from '@material/web/controller/form-controller';
 import {ariaProperty} from '@material/web/decorators/aria-property';
 import {pointerPress as focusRingPointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus';

@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ariaProperty as legacyAriaProperty} from '@material/mwc-base/aria-property';
-import {observer} from '@material/mwc-base/observer';
+// TODO(b/231221156): remove compat dependencies
+import {ariaProperty as legacyAriaProperty} from '@material/web/compat/base/aria-property';
+import {observer} from '@material/web/compat/base/observer';
 import {ariaProperty} from '@material/web/decorators/aria-property';
 import {html, LitElement, TemplateResult} from 'lit';
 import {property} from 'lit/decorators';
