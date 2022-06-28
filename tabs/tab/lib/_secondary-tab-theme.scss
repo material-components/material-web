@@ -1,0 +1,115 @@
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use 'sass:map';
+@use 'sass:selector';
+
+// TODO(b/228217731): Remove compat dependencies
+@use '@material/web/ripple/ripple-theme';
+@use '@material/web/compat/theme/theme-color';
+@use '@material/web/sass/resolvers';
+@use '@material/web/sass/theme';
+@use '@material/web/tokens';
+
+@use './tab-theme';
+
+$custom-property-prefix-secondary: 'secondary-tab';
+$_ripple-target: '.md3-tab__ripple';
+
+$light-theme: tokens.md-comp-secondary-navigation-tab-values();
+$dark-theme: tokens.md-comp-secondary-navigation-tab-values(
+  (
+    md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
+    md-sys-elevation:
+      tokens.md-sys-elevation-values(
+        $deps: (
+          md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
+        ),
+        $exclude-hardcoded-values: true,
+      ),
+  ),
+  $exclude-hardcoded-values: true
+);
+
+@mixin theme($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: tab-theme.resolve-theme($theme, $resolvers);
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix-secondary);
+  @include theme.emit-theme-vars($theme);
+}
+
+@mixin theme-styles($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme-styles($light-theme, $theme);
+  $theme: tab-theme.resolve-theme($theme, $resolvers);
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix-secondary);
+
+  @include tab-theme.icon-size(map.get($theme, with-icon-icon-size));
+  @include tab-theme.active-icon-color(
+    (
+      default: map.get($theme, with-icon-active-icon-color),
+      hover: map.get($theme, with-icon-hover-icon-color),
+      focus: map.get($theme, with-icon-focus-icon-color),
+      pressed: map.get($theme, with-icon-pressed-icon-color),
+    )
+  );
+  @include tab-theme.inactive-icon-color(
+    map.get($theme, with-icon-inactive-icon-color)
+  );
+
+  @include tab-theme.container-color(map.get($theme, container-color));
+  @include tab-theme.container-elevation($theme);
+  @include tab-theme.container-height(map.get($theme, container-height));
+  @include tab-theme.container-shape(map.get($theme, container-shape));
+
+  @include tab-theme.active-label-text-color(
+    (
+      default: map.get($theme, active-label-text-color),
+      hover: map.get($theme, hover-label-text-color),
+      focus: map.get($theme, focus-label-text-color),
+      pressed: map.get($theme, pressed-label-text-color),
+    )
+  );
+
+  @include tab-theme.inactive-label-text-color(
+    map.get($theme, inactive-label-text-color)
+  );
+
+  @include tab-theme.label-text-font-family(map.get($theme, label-text-font));
+  @include tab-theme.label-text-font-size(map.get($theme, label-text-size));
+  @include tab-theme.label-text-letter-spacing(
+    map.get($theme, label-text-letter-spacing)
+  );
+  @include tab-theme.label-text-line-height(
+    map.get($theme, label-text-line-height)
+  );
+  @include tab-theme.label-text-weight(map.get($theme, label-text-weight));
+  @include ripple-theme.theme(
+    (
+      hover-state-layer-color: map.get($theme, hover-state-layer-color),
+      focus-state-layer-color: map.get($theme, focus-state-layer-color),
+      pressed-state-layer-color: map.get($theme, pressed-state-layer-color),
+      hover-state-layer-opacity: map.get($theme, hover-state-layer-opacity),
+      focus-state-layer-opacity: map.get($theme, focus-state-layer-opacity),
+      pressed-state-layer-opacity: map.get($theme, pressed-state-layer-opacity),
+    )
+  );
+}
+
+/// GM2 backwards compatibility.
+///
+/// Supported tokens:
+/// - container-height
+/// - container-min-width
+/// - with-label-text-text-transform
+@mixin theme-extension($theme) {
+  $theme: theme.validate-theme($_theme-extension-keys, $theme);
+  .md3-tab--secondary {
+    @include tab-theme.theme-extension($theme);
+  }
+}

@@ -1,0 +1,60 @@
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use 'sass:map';
+
+// TODO(b/228217731): Remove compat dependencies
+@use '@material/web/compat/theme/map-ext';
+@use '@material/web/compat/theme/theme-color';
+@use '@material/web/sass/resolvers';
+@use '@material/web/tokens';
+
+@use '../../tab/lib/primary-tab-theme';
+@use '../../tab_indicator/lib/tab-indicator-theme';
+
+$custom-property-prefix: 'primary-tab-bar';
+$light-theme: tokens.md-comp-primary-navigation-tab-values();
+$dark-theme: tokens.md-comp-primary-navigation-tab-values(
+  (
+    md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
+    md-sys-elevation:
+      tokens.md-sys-elevation-values(
+        $deps: (
+          md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
+        ),
+        $exclude-hardcoded-values: true,
+      ),
+  ),
+  $exclude-hardcoded-values: true
+);
+
+@mixin theme($theme, $resolvers: resolvers.$material) {
+  // Theme validation happens within the tab and tab-indicator theme mixins.
+  @include primary-tab-theme.theme(
+    map-ext.pick($theme, map.keys(primary-tab-theme.$light-theme)...),
+    $resolvers
+  );
+  @include tab-indicator-theme.theme(
+    map-ext.pick($theme, map.keys(tab-indicator-theme.$light-theme)...)
+  );
+}
+
+@mixin theme-styles($theme, $resolvers: resolvers.$material) {
+  ::slotted(md-primary-tab) {
+    .md3-tab--primary {
+      @include primary-tab-theme.theme-styles(
+        map-ext.pick($theme, map.keys(primary-tab-theme.$light-theme)...),
+        $resolvers
+      );
+    }
+    @include tab-indicator-theme.theme-styles(
+      map-ext.pick($theme, map.keys(tab-indicator-theme.$light-theme)...)
+    );
+  }
+}

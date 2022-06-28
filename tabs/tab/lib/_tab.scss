@@ -1,0 +1,162 @@
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use '@material/web/focus/lib/focus-ring-theme';
+
+@use '../../tab_indicator/lib/tab-indicator' as tab-indicator-mixins;
+
+$height: 48px;
+$stacked-height: 72px;
+$min-width: 90px;
+$horizontal-padding: 24px;
+
+@mixin static-styles() {
+  .md3-tab {
+    min-inline-size: $min-width;
+    @include horizontal-padding($horizontal-padding);
+    @include focus-ring();
+
+    background: none;
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: center;
+    box-sizing: border-box;
+    // Explicitly setting margin to 0 is to override safari default margin for button elements.
+    margin: 0;
+    padding-block-start: 0;
+    padding-block-end: 0;
+    border: none;
+    outline: none;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    appearance: none;
+    z-index: 1;
+
+    // Firefox still draws a dotted border around focused buttons unless specifically overridden.
+    &::-moz-focus-inner {
+      padding: 0;
+      border: 0;
+    }
+  }
+
+  .md3-tab--min-width {
+    flex: 0 1 auto;
+  }
+
+  .md3-tab__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    block-size: inherit;
+    pointer-events: none;
+    @include content_();
+  }
+
+  .md3-tab__text-label {
+    transition: 150ms color linear;
+
+    display: inline-block;
+    // Setting line-height here overrides the line-height from the typography
+    // mixin above. The line-height needs to be overridden so that the spacing
+    // between the text label and the icon as well as the text label and the
+    // bottom of the tab remain the same.
+    line-height: 1;
+    z-index: 2;
+  }
+
+  .md3-tab__icon {
+    transition: 150ms color linear;
+    z-index: 2;
+  }
+
+  .md3-tab--stacked {
+    @include stacked_();
+  }
+
+  .md3-tab--active {
+    .md3-tab__text-label,
+    .md3-tab__icon {
+      transition-delay: 100ms;
+    }
+  }
+
+  .md3-tab:not(.md3-tab--stacked) .md3-tab__icon + .md3-tab__text-label {
+    padding-inline-start: 8px;
+  }
+
+  :host {
+    tap-highlight-color: transparent;
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: center;
+    outline: none;
+    position: relative;
+  }
+}
+
+@mixin horizontal-padding($padding) {
+  padding-block-start: $padding;
+  padding-block-end: $padding;
+}
+
+@mixin parent-positioning() {
+  position: relative;
+}
+
+@mixin fixed-width($width) {
+  flex: 0 1 $width;
+}
+
+//
+// Private
+//
+
+@mixin focus-ring() {
+  &.md3-tab--active .md3-tab__focus-ring {
+    @include focus-ring-theme.theme(
+      (
+        ring-radius: 10px,
+        container-outer-padding-horizontal: -6px,
+        container-outer-padding-vertical: -6px,
+      )
+    );
+
+    margin-block-start: -2px;
+    // Set z-index to +1 above the .md3-tab
+    z-index: 2;
+  }
+
+  .md3-tab__focus-ring {
+    @include focus-ring-theme.theme(
+      (
+        ring-radius: 10px,
+        container-outer-padding-horizontal: -4px,
+        container-outer-padding-vertical: -4px,
+      )
+    );
+  }
+}
+
+@mixin content_() {
+  @include tab-indicator-mixins.surface();
+}
+
+@mixin stacked_() {
+  .md3-tab__content {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .md3-tab__text-label {
+    padding-block-start: 6px;
+    padding-block-end: 4px;
+  }
+}

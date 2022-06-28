@@ -1,0 +1,16 @@
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use './tab';
+@include tab.static-styles();
+
+:host {
+  outline: none;
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+  tap-highlight-color: transparent;
+}

@@ -1,0 +1,20 @@
+/**
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use './tab-scroller';
+
+@include tab-scroller.core-styles();
+
+:host {
+  display: flex;
+}
+
+.md3-tab-scroller {
+  flex: 1;
+}

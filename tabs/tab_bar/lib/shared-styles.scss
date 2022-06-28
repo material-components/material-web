@@ -1,0 +1,20 @@
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use './tab-bar' as tabbar;
+
+@include tabbar.core-styles();
+
+:host {
+  display: block;
+}
+
+.md3-tab-bar {
+  flex: 1;
+}

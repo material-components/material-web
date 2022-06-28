@@ -1,0 +1,58 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@mixin static-styles() {
+  .md3-tab-indicator {
+    display: flex;
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    justify-content: center;
+    block-size: 100%;
+    inline-size: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .md3-tab-indicator__content {
+    transform-origin: left;
+    opacity: 0;
+  }
+
+  .md3-tab-indicator__content--underline {
+    align-self: flex-end;
+    box-sizing: border-box;
+    width: 100%;
+    border-block-start-style: solid;
+  }
+
+  .md3-tab-indicator__content--icon {
+    align-self: center;
+    margin-block: 0;
+    margin-inline: auto;
+  }
+
+  .md3-tab-indicator--active .md3-tab-indicator__content {
+    opacity: 1;
+  }
+
+  .md3-tab-indicator--fade .md3-tab-indicator__content {
+    transition: 150ms opacity linear;
+  }
+
+  .md3-tab-indicator--active.md3-tab-indicator--fade {
+    .md3-tab-indicator__content {
+      transition-delay: 100ms;
+    }
+  }
+}
+
+@mixin surface() {
+  position: relative;
+}

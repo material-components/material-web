@@ -1,0 +1,56 @@
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+// TODO(b/228217731): Remove MDC/MWC dependencies
+@use 'sass:map';
+@use '@material/web/sass/theme';
+@use '@material/web/compat/theme/theme-color';
+
+$custom-property-prefix: 'tab-indicator';
+$light-theme: (
+  active-indicator-color: theme-color.$primary,
+  active-indicator-height: 3px,
+  active-indicator-shape: 3px 3px 0 0,
+);
+
+@mixin theme($theme) {
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix);
+  @include theme.emit-theme-vars($theme);
+}
+
+@mixin theme-styles($theme) {
+  $theme: theme.validate-theme-styles(
+    $light-theme,
+    $theme,
+    $require-all: false
+  );
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix);
+  @include _underline-color(map.get($theme, active-indicator-color));
+  @include _underline-height(map.get($theme, active-indicator-height));
+  @include _underline-shape(map.get($theme, active-indicator-shape));
+}
+
+@mixin _underline-color($color) {
+  .md3-tab-indicator__content--underline {
+    border-color: $color;
+  }
+}
+
+@mixin _underline-height($height) {
+  .md3-tab-indicator__content--underline {
+    border-block-start-width: $height;
+  }
+}
+
+@mixin _underline-shape($radius) {
+  .md3-tab-indicator__content--underline {
+    border-radius: $radius;
+  }
+}

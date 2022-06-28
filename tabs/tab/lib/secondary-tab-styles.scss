@@ -1,0 +1,14 @@
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use './secondary-tab-theme';
+
+.md3-tab--secondary {
+  @include secondary-tab-theme.theme-styles(secondary-tab-theme.$light-theme);
+}
