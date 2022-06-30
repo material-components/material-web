@@ -15,6 +15,25 @@ import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 import {live} from 'lit/directives/live';
 
+/**
+ * Input types that are compatible with the text field.
+ */
+export type TextFieldType =
+    'email'|'number'|'password'|'search'|'tel'|'text'|'url';
+
+/**
+ * Input types that are not fully supported for the text field.
+ */
+export type UnsupportedTextFieldType =
+    'color'|'date'|'datetime-local'|'file'|'month'|'time'|'week';
+
+/**
+ * Input types that are incompatible with the text field.
+ */
+export type InvalidTextFieldType =
+    'button'|'checkbox'|'hidden'|'image'|'radio'|'range'|'reset'|'submit';
+
+
 /** @soyCompatible */
 export class TextField extends LitElement {
   static override shadowRootOptions:
@@ -59,7 +78,10 @@ export class TextField extends LitElement {
   // <input> properties
   @property({type: String, reflect: true}) placeholder = '';
   @property({type: Boolean, reflect: true}) readonly = false;
-  @property({type: String, reflect: true}) type = 'text';
+  // TODO(b/237284412): replace with exported types
+  @property({type: String, reflect: true})
+  type: 'email'|'number'|'password'|'search'|'tel'|'text'|'url'|'color'|'date'|
+      'datetime-local'|'file'|'month'|'time'|'week' = 'text';
 
   /**
    * Returns true when the text field has been interacted with. Native
@@ -115,22 +137,27 @@ export class TextField extends LitElement {
 
   /** @soyTemplate */
   protected renderField(): TemplateResult {
+    // TODO(b/237286701): replace with lit static
     return html``;
   }
 
   /** @soyTemplate */
   protected renderFieldContent(): TemplateResult {
+    // TODO(b/237281840): replace ternary operators with double pipes
+    // TODO(b/237283903): remove when custom isTruthy directive is supported
+    const placeholderValue = this.placeholder ? this.placeholder : undefined;
+
     return html`
       <input
         class="md3-text-field__input"
         aria-invalid=${this.error}
         aria-label=${ifDefined(this.ariaLabel)}
-        aria-labelledby="${this.fieldID}"
-        .disabled=${this.disabled}
-        .placeholder=${this.placeholder}
-        .readonly=${this.readonly}
-        .required=${this.required}
-        .type=${this.type}
+        aria-labelledby=${this.fieldID}
+        ?disabled=${this.disabled}
+        placeholder=${ifDefined(placeholderValue)}
+        ?readonly=${this.readonly}
+        ?required=${this.required}
+        type=${this.type}
         .value=${live(this.value)}
         @change=${this.redispatchEvent}
         @input=${this.handleInput}
@@ -139,14 +166,14 @@ export class TextField extends LitElement {
     `;
   }
 
-  protected override update(changedProperties: PropertyValues<TextField>) {
-    if (changedProperties.has('defaultValue') && !this.dirty) {
+  protected override willUpdate(changedProperties: PropertyValues<TextField>) {
+    if (!changedProperties.has('value') && !this.dirty) {
       // Do this here instead of in a setter so that the order of setting both
       // value and defaultValue does not matter.
-      this.value = this.defaultValue;
+      this.value = this.value || this.defaultValue;
     }
 
-    super.update(changedProperties);
+    super.willUpdate(changedProperties);
   }
 
   protected handleInput(event: InputEvent) {

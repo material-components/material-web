@@ -40,7 +40,7 @@ export class MdOutlinedTextField extends OutlinedTextField {
         .disabled=${this.disabled}
         .error=${this.error}
         .label=${this.label}
-        .populated=${Boolean(this.value)}
+        .populated=${!!this.value}
         .required=${this.required}
       >
         ${this.renderFieldContent()}
