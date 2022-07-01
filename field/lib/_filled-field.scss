@@ -90,7 +90,7 @@ $_animation-duration: 150ms;
 @mixin active-indicator() {
   // Prevent click events on the indicator element since it has no width and
   // causes bugs when handled by the foundation for updating transform-origin.
-  bottom: 0;
+  inset: auto 0 0 0;
   pointer-events: none;
   position: absolute;
   width: 100%;
@@ -98,7 +98,7 @@ $_animation-duration: 150ms;
   &::before,
   &::after {
     border-bottom-style: solid;
-    bottom: 0;
+    inset: auto 0 0 0;
     content: '';
     position: absolute;
     width: 100%;
