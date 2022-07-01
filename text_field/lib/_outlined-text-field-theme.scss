@@ -63,6 +63,8 @@ $_reference-theme: map.merge(
   (
     container-padding-horizontal: null,
     container-padding-vertical: null,
+    input-text-prefix-padding: null,
+    input-text-suffix-padding: null,
     outline-label-padding: null,
   )
 );
@@ -81,6 +83,8 @@ $_reference-theme: map.merge(
     (
       container-padding-horizontal: 16px,
       container-padding-vertical: 8px,
+      input-text-prefix-padding: 2px,
+      input-text-suffix-padding: 2px,
       outline-label-padding: 4px,
     ),
     $theme

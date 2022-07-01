@@ -57,6 +57,14 @@ export class TextField extends LitElement {
    * value.
    */
   @property({type: String}) defaultValue = '';
+  /**
+   * An optional prefix to display before the input value.
+   */
+  @property({type: String}) prefixText = '';
+  /**
+   * An optional suffix to display after the input value.
+   */
+  @property({type: String}) suffixText = '';
 
   // ARIA
   // TODO(b/210730484): replace with @soyParam annotation
@@ -147,8 +155,10 @@ export class TextField extends LitElement {
     // TODO(b/237283903): remove when custom isTruthy directive is supported
     const placeholderValue = this.placeholder ? this.placeholder : undefined;
 
-    return html`
-      <input
+    const prefix = this.renderPrefix();
+    const suffix = this.renderSuffix();
+
+    return html`${prefix}<input
         class="md3-text-field__input"
         aria-invalid=${this.error}
         aria-label=${ifDefined(this.ariaLabel)}
@@ -162,8 +172,27 @@ export class TextField extends LitElement {
         @change=${this.redispatchEvent}
         @input=${this.handleInput}
         @select=${this.redispatchEvent}
-      >
-    `;
+      >${suffix}`;
+  }
+
+  /** @soyTemplate */
+  protected renderPrefix(): TemplateResult {
+    return this.prefixText ?
+        html`<span class="md3-text-field__prefix">${this.prefixText}</span>` :
+        html``;
+
+    // TODO(b/217441842): Create shared function once argument bug is fixed
+    // return this.renderAffix(/* isSuffix */ false);
+  }
+
+  /** @soyTemplate */
+  protected renderSuffix(): TemplateResult {
+    return this.suffixText ?
+        html`<span class="md3-text-field__suffix">${this.suffixText}</span>` :
+        html``;
+
+    // TODO(b/217441842): Create shared function once argument bug is fixed
+    // return this.renderAffix(/* isSuffix */ true);
   }
 
   protected override willUpdate(changedProperties: PropertyValues<TextField>) {

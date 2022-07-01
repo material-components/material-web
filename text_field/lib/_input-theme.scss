@@ -41,6 +41,21 @@
       weight: map.get($theme, input-text-weight),
     )
   );
+
+  &:not(.md3-text-field--disabled) {
+    .md3-text-field__prefix,
+    .md3-text-field__suffix {
+      color: map.get($theme, input-text-prefix-color);
+    }
+  }
+
+  .md3-text-field__prefix {
+    padding-inline-end: map.get($theme, input-text-prefix-padding);
+  }
+
+  .md3-text-field__suffix {
+    padding-inline-start: map.get($theme, input-text-suffix-padding);
+  }
 }
 
 @mixin _caret-color($colors) {
@@ -64,7 +79,9 @@
 }
 
 @mixin _typography($font) {
-  .md3-text-field__input {
+  .md3-text-field__input,
+  .md3-text-field__prefix,
+  .md3-text-field__suffix {
     @include typography.theme-styles($font);
   }
 }
