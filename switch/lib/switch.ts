@@ -63,6 +63,9 @@ export class Switch extends LitElement {
 
   /** @soyTemplate */
   protected override render(): TemplateResult {
+    const ariaLabelValue = this.ariaLabel ? this.ariaLabel : undefined;
+    const ariaLabelledByValue =
+        this.ariaLabelledBy ? this.ariaLabelledBy : undefined;
     // TODO(b/230763631): update this template to include spans instead of divs
     return html`
       <button
@@ -70,8 +73,8 @@ export class Switch extends LitElement {
         class="md3-switch ${classMap(this.getRenderClasses())}"
         role="switch"
         aria-checked="${this.selected}"
-        aria-label="${ifDefined(this.ariaLabel)}"
-        aria-labelledby="${ifDefined(this.ariaLabelledBy || undefined)}"
+        aria-label="${ifDefined(ariaLabelValue)}"
+        aria-labelledby="${ifDefined(ariaLabelledByValue)}"
         .disabled=${this.disabled}
         @click=${this.handleClick}
         @focus="${this.handleFocus}"
