@@ -1,5 +1,5 @@
 /**
- * @requirecss {text_field.lib.shared_styles}
+ * @requirecss {textfield.lib.shared_styles}
  *
  * @license
  * Copyright 2021 Google LLC
