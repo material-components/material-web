@@ -1,0 +1,163 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// This file contains common theme mixins that are shared across icon button
+// variants.
+
+// TODO(b/228217731): Remove compat dependencies
+@use 'sass:map';
+
+@use '@material/web/compat/touchtarget/touch-target';
+@use '@material/web/ripple/ripple-theme';
+@use '@material/web/compat/theme/keys';
+@use '@material/web/compat/theme/theme-color';
+@use '@material/web/sass/color';
+@use '@material/web/sass/theme';
+@use '@material/web/tokens';
+
+@mixin state-layer-size($size) {
+  height: $size;
+  width: $size;
+
+  @if $size {
+    margin: max(0px, calc((#{touch-target.$height} - #{$size}) / 2));
+  }
+}
+
+@mixin state-layer-shape($shape) {
+  border-radius: $shape;
+}
+
+@mixin icon-size($size) {
+  font-size: $size;
+
+  i,
+  svg,
+  img {
+    height: $size;
+    width: $size;
+  }
+}
+
+///
+/// Sets the icon color to the given color.
+/// @param {map} $color-map - The desired icon color, specified as a map of
+///     colors with states {default, disabled, focus, hover, pressed} as keys.
+/// @access private
+///
+@mixin icon-color($color-map) {
+  @include _set-icon-color(map.get($color-map, 'default'));
+
+  &:disabled {
+    @include _set-icon-color(map.get($color-map, 'disabled'));
+  }
+
+  &:focus {
+    @include _set-icon-color(map.get($color-map, 'focus'));
+  }
+
+  &:hover {
+    @include _set-icon-color(map.get($color-map, 'hover'));
+  }
+
+  &:not(:disabled):active {
+    @include _set-icon-color(map.get($color-map, 'pressed'));
+  }
+}
+
+///
+/// Sets the font color to the provided color value.
+/// @param {Color} $color - The desired font color.
+///
+@mixin _set-icon-color($color) {
+  color: $color;
+}
+
+///
+/// Sets the container color to the given color.
+/// @param {map} $color-map - The desired icon color, specified as a map of
+///     colors with states {default, disabled} as keys.
+///
+@mixin container-color($color-map) {
+  @include _set-container-color(map.get($color-map, 'default'));
+
+  &:disabled {
+    @include _set-container-color(map.get($color-map, 'disabled'));
+  }
+}
+
+///
+/// Sets the container color to the provided color value.
+/// @param {Color} $color - The desired background color.
+///
+@mixin _set-container-color($color) {
+  background-color: $color;
+}
+
+///
+// Flattens disabled colors for icon button theme keys (across all variants).
+/// @param {String} $variant - The variant, specified as one of ('filled',
+///     'outlined', 'standard').
+///
+@function flatten-disabled-colors($theme, $variant: 'standard') {
+  // If opacity value is null (e.g. for dark theme map, only the color
+  // changes, so the opacity value is null), use the default opacity value.
+  // Otherwise, the color is not flattened, meaning that the color would
+  // be applied without any opacity, which is incorrect.
+  $opacity-keys: [ 'disabled-container-opacity', 'disabled-icon-opacity',
+    'disabled-outline-opacity', 'disabled-selected-container-opacity' ];
+
+  @each $opacity-key in $opacity-keys {
+    // If opacity value is null, use the opacity value from the default tokens.
+    @if not map.get($theme, $opacity-key) {
+      $light-theme-value: map.get(
+        tokens.md-comp-icon-button-values(),
+        $opacity-key
+      );
+      $light-theme-filled-value: map.get(
+        tokens.md-comp-filled-icon-button-values(),
+        $opacity-key
+      );
+      $light-theme-filled-tonal-value: map.get(
+        tokens.md-comp-filled-tonal-icon-button-values(),
+        $opacity-key
+      );
+      $light-theme-outlined-value: map.get(
+        tokens.md-comp-outlined-icon-button-values(),
+        $opacity-key
+      );
+
+      @if $variant == 'standard' and $light-theme-value {
+        $theme: map.set($theme, $opacity-key, $light-theme-value);
+      } @else if $variant == 'filled' and $light-theme-filled-value {
+        $theme: map.set($theme, $opacity-key, $light-theme-filled-value);
+      } @else if $variant == 'filled-tonal' and $light-theme-filled-tonal-value
+      {
+        $theme: map.set($theme, $opacity-key, $light-theme-filled-tonal-value);
+      } @else if $variant == 'outlined' and $light-theme-outlined-value {
+        $theme: map.set($theme, $opacity-key, $light-theme-outlined-value);
+      }
+    }
+  }
+
+  @return color.join-color-and-opacity-pairs(
+    $theme,
+    (
+      (
+        color-key: 'disabled-container-color',
+        opacity-key: 'disabled-container-opacity'
+      ),
+      (color-key: 'disabled-icon-color', opacity-key: 'disabled-icon-opacity'),
+      (
+        color-key: 'disabled-outline-color',
+        opacity-key: 'disabled-outline-opacity'
+      ),
+      (
+        color-key: 'disabled-selected-container-color',
+        opacity-key: 'disabled-selected-container-opacity'
+      )
+    )
+  );
+}

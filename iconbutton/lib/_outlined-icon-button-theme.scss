@@ -1,0 +1,187 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use 'sass:map';
+@use '@material/web/sass/resolvers';
+@use '@material/web/sass/color';
+@use '@material/web/sass/theme';
+@use '@material/web/tokens';
+@use './icon-button-theme';
+@use '@material/web/ripple/ripple-theme';
+
+$_custom-property-prefix: 'outlined-icon-button';
+
+// TODO(b/233323674): Remove when missing tokens have been added.
+$_missing-light-theme-tokens: (
+  disabled-selected-container-color:
+    map.get(tokens.md-sys-color-values-light-dynamic(), on-surface),
+  disabled-selected-container-opacity: 0.12,
+);
+// TODO(b/233323674): Remove when missing tokens have been added.
+$_missing-dark-theme-tokens: (
+  disabled-selected-container-color:
+    map.get(tokens.md-sys-color-values-dark-dynamic(), on-surface),
+  disabled-selected-container-opacity: 0.12,
+);
+$light-theme: map.merge(
+  tokens.md-comp-outlined-icon-button-values(),
+  $_missing-light-theme-tokens
+);
+$dark-theme: map.merge(
+  tokens.md-comp-outlined-icon-button-values(
+    (
+      md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
+    ),
+    $exclude-hardcoded-values: true
+  ),
+  $_missing-dark-theme-tokens
+);
+
+@mixin theme($theme) {
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: icon-button-theme.flatten-disabled-colors(
+    $theme,
+    $variant: 'outlined'
+  );
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
+
+  @include theme.emit-theme-vars($theme);
+}
+
+@mixin theme-styles($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme-styles($light-theme, $theme);
+  $theme: icon-button-theme.flatten-disabled-colors(
+    $theme,
+    $variant: 'outlined'
+  );
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
+
+  @include icon-button-theme.state-layer-size(
+    map.get($theme, 'container-size')
+  );
+  @include icon-button-theme.state-layer-shape(
+    map.get($theme, 'container-shape')
+  );
+  @include icon-button-theme.icon-size(map.get($theme, 'icon-size'));
+
+  // Unselected icon button toggle.
+  &:not(.md3-icon-button--on) {
+    @include icon-button-theme.icon-color(
+      (
+        default: map.get($theme, 'unselected-icon-color'),
+        disabled: map.get($theme, 'disabled-icon-color'),
+        focus: map.get($theme, 'unselected-focus-icon-color'),
+        hover: map.get($theme, 'unselected-hover-icon-color'),
+        pressed: map.get($theme, 'unselected-pressed-icon-color'),
+      )
+    );
+
+    @include _outline-color(
+      (
+        default: map.get($theme, 'unselected-outline-color'),
+        disabled: map.get($theme, 'disabled-outline-color'),
+      )
+    );
+    @include _outline-width(map.get($theme, 'unselected-outline-width'));
+
+    @include ripple-theme.theme(
+      (
+        focus-state-layer-color:
+          map.get($theme, 'unselected-focus-state-layer-color'),
+        focus-state-layer-opacity: map.get($theme, 'focus-state-layer-opacity'),
+        hover-state-layer-color:
+          map.get($theme, 'unselected-hover-state-layer-color'),
+        hover-state-layer-opacity: map.get($theme, 'hover-state-layer-opacity'),
+        pressed-state-layer-color:
+          map.get($theme, 'unselected-pressed-state-layer-color'),
+        pressed-state-layer-opacity:
+          map.get($theme, 'pressed-state-layer-opacity'),
+      )
+    );
+  }
+
+  // Selected icon button toggle.
+  &.md3-icon-button--on {
+    @include icon-button-theme.icon-color(
+      (
+        default: map.get($theme, 'selected-icon-color'),
+        disabled: map.get($theme, 'disabled-icon-color'),
+        focus: map.get($theme, 'selected-focus-icon-color'),
+        hover: map.get($theme, 'selected-hover-icon-color'),
+        pressed: map.get($theme, 'selected-pressed-icon-color'),
+      )
+    );
+
+    @include icon-button-theme.container-color(
+      (
+        default: map.get($theme, 'selected-container-color'),
+        disabled: map.get($theme, 'disabled-selected-container-color'),
+      )
+    );
+
+    @include ripple-theme.theme(
+      (
+        focus-state-layer-color:
+          map.get($theme, 'selected-focus-state-layer-color'),
+        focus-state-layer-opacity: map.get($theme, 'focus-state-layer-opacity'),
+        hover-state-layer-color:
+          map.get($theme, 'selected-hover-state-layer-color'),
+        hover-state-layer-opacity: map.get($theme, 'hover-state-layer-opacity'),
+        pressed-state-layer-color:
+          map.get($theme, 'selected-pressed-state-layer-color'),
+        pressed-state-layer-opacity:
+          map.get($theme, 'pressed-state-layer-opacity'),
+      )
+    );
+  }
+
+  @media (forced-colors: active) {
+    // Selected button in HCM has an outline.
+    &.md3-icon-button--on {
+      @include _outline-color(
+        (
+          default: map.get($theme, 'unselected-outline-color'),
+          disabled: map.get($theme, 'disabled-outline-color'),
+        )
+      );
+      @include _outline-width(map.get($theme, 'unselected-outline-width'));
+    }
+  }
+}
+
+///
+/// Sets the outline color to the given color.
+/// @param {map} $color-map - The desired icon color, specified as a map of
+///     colors with states {default, disabled} as keys.
+///
+@mixin _outline-color($color-map) {
+  &::before {
+    @include _set-outline-color(map.get($color-map, 'default'));
+  }
+
+  &:disabled::before {
+    @include _set-outline-color(map.get($color-map, 'disabled'));
+  }
+}
+
+///
+/// Sets the outline color to the provided color value.
+/// @param {Color} $color - The desired background color.
+///
+@mixin _set-outline-color($color) {
+  border-color: $color;
+}
+
+///
+/// Sets the outline width to the given width.
+///
+@mixin _outline-width($width) {
+  &::before {
+    border-width: $width;
+  }
+}
