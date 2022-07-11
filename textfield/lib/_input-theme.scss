@@ -47,6 +47,10 @@
     .md3-text-field__suffix {
       color: map.get($theme, input-text-prefix-color);
     }
+
+    .md3-text-field__input::placeholder {
+      color: map.get($theme, input-text-placeholder-color);
+    }
   }
 
   .md3-text-field__prefix {

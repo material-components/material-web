@@ -22,6 +22,11 @@
   text-align: inherit;
   width: 100%;
 
+  &::placeholder {
+    color: currentColor;
+    opacity: 1;
+  }
+
   // Remove built-in datepicker icon on Chrome
   &::-webkit-calendar-picker-indicator {
     display: none;
