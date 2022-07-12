@@ -6,8 +6,8 @@
 
 import {doesElementContainFocus} from '@material/mwc-base/utils';
 import {KEY} from 'google3/third_party/javascript/material_components_web/dom/keyboard';
-import {NavigationTabHarness} from 'google3/third_party/javascript/material_web_components/m3/navigation_tab/harness';
-import {MdNavigationTab} from 'google3/third_party/javascript/material_web_components/m3/navigation_tab/navigation-tab';
+import {NavigationTabHarness} from 'google3/third_party/javascript/material/web/navigationtab/harness';
+import {MdNavigationTab} from 'google3/third_party/javascript/material/web/navigationtab/navigation-tab';
 import {fixture, rafPromise, TestFixture} from 'google3/third_party/javascript/material_web_components/testing/helpers';
 import * as hanbi from 'hanbi';
 import {html} from 'lit';
