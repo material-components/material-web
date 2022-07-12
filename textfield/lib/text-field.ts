@@ -65,12 +65,19 @@ export class TextField extends LitElement {
    * An optional suffix to display after the input value.
    */
   @property({type: String}) suffixText = '';
+  /**
+   * The ID on the field element, used for SSR.
+   */
+  @property({type: String}) fieldId = 'field';
 
   // ARIA
   // TODO(b/210730484): replace with @soyParam annotation
   @property({type: String, attribute: 'data-aria-label', noAccessor: true})
   @ariaProperty
   override ariaLabel!: string;
+  @property({type: String, attribute: 'data-aria-labelledby', noAccessor: true})
+  @ariaProperty
+  ariaLabelledBy!: string;
 
   // FormElement
   get form() {
@@ -96,7 +103,6 @@ export class TextField extends LitElement {
    * validation errors only display in response to user interactions.
    */
   @state() protected dirty = false;
-  @state() protected fieldID = 'field';
   @query('.md3-text-field__input')
   protected readonly input?: HTMLInputElement|null;
 
@@ -154,6 +160,8 @@ export class TextField extends LitElement {
     // TODO(b/237281840): replace ternary operators with double pipes
     // TODO(b/237283903): remove when custom isTruthy directive is supported
     const placeholderValue = this.placeholder ? this.placeholder : undefined;
+    const ariaLabelledByValue =
+        this.ariaLabelledBy ? this.ariaLabelledBy : this.fieldId;
 
     const prefix = this.renderPrefix();
     const suffix = this.renderSuffix();
@@ -162,7 +170,7 @@ export class TextField extends LitElement {
         class="md3-text-field__input"
         aria-invalid=${this.error}
         aria-label=${ifDefined(this.ariaLabel)}
-        aria-labelledby=${this.fieldID}
+        aria-labelledby=${ariaLabelledByValue}
         ?disabled=${this.disabled}
         placeholder=${ifDefined(placeholderValue)}
         ?readonly=${this.readonly}

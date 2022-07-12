@@ -27,7 +27,7 @@ class TestTextField extends FilledTextField {
     return html`
       <md-filled-field
         class="md3-text-field__field"
-        id=${this.fieldID}
+        id=${this.fieldId}
         .disabled=${this.disabled}
         .error=${this.error}
         .label=${this.label}
