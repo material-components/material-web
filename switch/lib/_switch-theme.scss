@@ -122,20 +122,17 @@ $_forced-colors-theme: (
   border-end-start-radius: map.get($theme, track-shape-end-start);
 
   @include _focus-ring(
-    $width: map.get($theme, track-width),
-    $height: map.get($theme, track-height)
+    // TODO(b/231741594): use `track-shape` once this is not deleted.
+    $track-shape: map.get($theme, track-shape-start-start)
   );
 
   @include _forced-colors-mode-theme;
 }
 
-@mixin _focus-ring($height, $width) {
-  $radius: min($height, $width);
-
-  // TODO(b/230413957): remove the hard coded value
+@mixin _focus-ring($track-shape) {
   @include focus-ring-theme.theme(
     (
-      ring-radius: 22px,
+      ring-radius: $track-shape,
     )
   );
 }
