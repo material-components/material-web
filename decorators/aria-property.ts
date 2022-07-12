@@ -31,8 +31,8 @@ import {ReactiveElement} from 'lit';
  * @category Decorator
  * @ExportDecoratedItems
  */
-export function ariaProperty(
-    prototype: ReactiveElement, property: keyof ARIAMixin) {
+export function ariaProperty<E extends ReactiveElement, K extends keyof E&
+                             `aria${string}`>(prototype: E, property: K) {
   // Replace the ARIAMixin property with data-* attribute syncing instead of
   // using the native aria-* attribute reflection. This preserves the attribute
   // for SSR and avoids screenreader conflicts after delegating the attribute
@@ -75,9 +75,9 @@ export function ariaProperty(
       // tslint is failing here, but the types are correct (ARIAMixin
       // properties do not obfuscate with closure)
       // tslint:disable-next-line:no-dict-access-on-struct-type
-      return this[property];
+      return (this as E)[property];
     },
-    set(this: ReactiveElement, value: string) {
+    set(this: ReactiveElement, value: E[K]) {
       if (removingAttribute) {
         // Ignore this update, which is triggered below
         return;
@@ -88,7 +88,7 @@ export function ariaProperty(
       // tslint is failing here, but the types are correct (ARIAMixin
       // properties do not obfuscate with closure)
       // tslint:disable-next-line:no-dict-access-on-struct-type
-      this[property] = value;
+      (this as E)[property] = value;
       // Remove the `aria-*` attribute, which will call this setter again with
       // the incorrect value. Ignore these updates.
       removingAttribute = true;
