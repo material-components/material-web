@@ -1,0 +1,131 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use '@material/web/focus/lib/focus-ring-theme';
+@use '@material/web/motion/animation';
+
+@use './radio-theme';
+
+@mixin static-styles() {
+  .md3-radio {
+    display: inline-flex;
+    position: relative;
+    cursor: pointer;
+    will-change: opacity, transform, border-color, color;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .md3-radio__background {
+    display: inline-flex;
+    position: relative;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .md3-radio__outer-circle {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    box-sizing: border-box;
+    block-size: 100%;
+    inline-size: 100%;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 50%;
+    transition: exit(border-color);
+  }
+
+  .md3-radio__inner-circle {
+    position: absolute;
+    box-sizing: border-box;
+    block-size: 50%;
+    inline-size: 50%;
+    transform: scale(0);
+    border-radius: 50%;
+    transition: exit(transform), exit(border-color);
+  }
+
+  .md3-radio__ripple {
+    position: absolute;
+    display: inline-flex;
+    z-index: -1;
+  }
+
+  .md3-radio__native-control {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    cursor: inherit;
+    z-index: 1;
+    block-size: 100%;
+    inline-size: 100%;
+    inset: 0;
+  }
+
+  .md3-radio__native-control:checked,
+  .md3-radio__native-control:disabled {
+    + .md3-radio__background {
+      transition: enter(opacity), enter(transform);
+
+      .md3-radio__outer-circle {
+        transition: enter(border-color);
+      }
+
+      .md3-radio__inner-circle {
+        transition: enter(transform), enter(border-color);
+      }
+    }
+  }
+
+  .md3-radio--disabled {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .md3-radio__native-control:checked {
+    + .md3-radio__background {
+      .md3-radio__inner-circle {
+        transform: scale(1);
+        transition: enter(transform), enter(border-color);
+      }
+    }
+  }
+
+  .md3-radio__native-control:disabled,
+  [aria-disabled='true'] .md3-radio__native-control {
+    + .md3-radio__background {
+      cursor: default;
+    }
+  }
+
+  @include focus-ring-theme.theme(
+    (
+      container-outer-padding-vertical: -2px,
+      container-outer-padding-horizontal: -2px,
+    )
+  );
+
+  @media (forced-colors: active) {
+    .md3-radio {
+      @include radio-theme.high-contrast-styles();
+    }
+  }
+}
+
+$_transition-duration: 120ms;
+
+@function enter($name) {
+  @return animation.deceleration($name, $_transition-duration);
+}
+
+@function exit($name) {
+  @return animation.sharp($name, $_transition-duration);
+}

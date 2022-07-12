@@ -1,0 +1,14 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use './radio';
+@use './radio-theme';
+
+:host {
+  @include radio-theme.theme-styles(radio-theme.$light-theme);
+  @include radio.static-styles();
+
+  display: inline-flex;
+}
