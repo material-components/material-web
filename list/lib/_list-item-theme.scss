@@ -1,0 +1,229 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+// TODO(b/228217731): Remove compat dependencies
+@use 'sass:map';
+@use 'sass:string';
+@use '@material/web/compat/theme/state';
+@use '@material/web/sass/resolvers';
+@use '@material/web/sass/theme';
+
+$selectors: (
+  disabled: '.md3-list-item--disabled',
+);
+
+$light-theme: (
+  container-height: 56px,
+  container-color: transparent,
+  label-text-font: string.unquote('Roboto, sans-serif'),
+  label-text-size: 16px,
+  label-text-tracking: 0.03125rem,
+  label-text-weight: 400,
+  label-text-color: #1f1f1f,
+  supporting-text-font: string.unquote('Roboto, sans-serif'),
+  supporting-text-size: 14px,
+  supporting-text-tracking: 0.015625rem,
+  supporting-text-weight: 300,
+  supporting-text-color: #444746,
+  trailing-supporting-text-font: string.unquote('Roboto, sans-serif'),
+  trailing-supporting-text-size: 12px,
+  trailing-supporting-text-tracking: 0.015625rem,
+  trailing-supporting-text-weight: 300,
+  trailing-supporting-text-color: #646766,
+  icon-color: #444746,
+);
+
+@function _resolve-theme($theme, $resolvers) {
+  @return $theme;
+}
+
+@mixin theme($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: _resolve-theme($theme, $resolvers);
+  $theme: theme.create-theme-vars($theme, list);
+
+  @include theme.emit-theme-vars($theme);
+}
+
+@mixin theme-styles($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme-styles($light-theme, $theme);
+  $theme: _resolve-theme($theme, $resolvers);
+  $theme: theme.create-theme-vars($theme, list);
+
+  @include _set_container-color(
+    (
+      default: map.get($theme, container-color),
+    )
+  );
+
+  @include _set-label-text-typography(
+    (
+      family: map.get($theme, label-text-font),
+      size: map.get($theme, label-text-size),
+      tracking: map.get($theme, label-text-tracking),
+      weight: map.get($theme, label-text-weight),
+    )
+  );
+
+  @include _set_label-text-ink-color(
+    (
+      default: map.get($theme, label-text-color),
+    )
+  );
+
+  @include _set-supporting-text-typography(
+    (
+      family: map.get($theme, supporting-text-font),
+      size: map.get($theme, supporting-text-size),
+      tracking: map.get($theme, supporting-text-tracking),
+      weight: map.get($theme, supporting-text-weight),
+    )
+  );
+
+  @include _set_supporting-text-ink-color(
+    (
+      default: map.get($theme, supporting-text-color),
+    )
+  );
+
+  @include _set-trailing-supporting-text-typography(
+    (
+      family: map.get($theme, supporting-text-font),
+      size: map.get($theme, supporting-text-size),
+      tracking: map.get($theme, supporting-text-tracking),
+      weight: map.get($theme, supporting-text-weight),
+    )
+  );
+
+  @include _set_trailing-supporting-text-ink-color(
+    (
+      default: map.get($theme, trailing-supporting-text-color),
+    )
+  );
+
+  @include _set-icon-ink-color(
+    (
+      default: map.get($theme, icon-color),
+    )
+  );
+
+  $container-height: map.get($theme, container-height);
+  @include _set-height($container-height);
+}
+
+@mixin _set-container-color($colors) {
+  @include state.enabled($selectors) {
+    @include _set-container-background-color(state.get-default-state($colors));
+  }
+}
+
+@mixin _set-label-text-typography($typography-map) {
+  $family: map.get($typography-map, family);
+  $size: map.get($typography-map, size);
+  $tracking: map.get($typography-map, tracking);
+  $weight: map.get($typography-map, weight);
+  $transform: map.get($typography-map, transform);
+
+  .md3-list-item__label-text {
+    font-family: $family;
+    font-size: $size;
+    letter-spacing: $tracking;
+    font-weight: $weight;
+    text-transform: $transform;
+  }
+}
+
+@mixin _set-label-text-ink-color($colors) {
+  @include state.enabled($selectors) {
+    @include _set-label-text-color(state.get-default-state($colors));
+  }
+}
+
+@mixin _set-supporting-text-typography($typography-map) {
+  $family: map.get($typography-map, family);
+  $size: map.get($typography-map, size);
+  $tracking: map.get($typography-map, tracking);
+  $weight: map.get($typography-map, weight);
+  $transform: map.get($typography-map, transform);
+
+  .md3-list-item__supporting-text {
+    font-family: $family;
+    font-size: $size;
+    letter-spacing: $tracking;
+    font-weight: $weight;
+    text-transform: $transform;
+  }
+}
+
+@mixin _set-supporting-text-ink-color($colors) {
+  @include state.enabled($selectors) {
+    @include _set-supporting-text-color(state.get-default-state($colors));
+  }
+}
+
+@mixin _set-trailing-supporting-text-typography($typography-map) {
+  $family: map.get($typography-map, family);
+  $size: map.get($typography-map, size);
+  $tracking: map.get($typography-map, tracking);
+  $weight: map.get($typography-map, weight);
+  $transform: map.get($typography-map, transform);
+
+  .md3-list-item__trailing-supporting-text {
+    font-family: $family;
+    font-size: $size;
+    letter-spacing: $tracking;
+    font-weight: $weight;
+    text-transform: $transform;
+  }
+}
+
+@mixin _set-trailing-supporting-text-ink-color($colors) {
+  @include state.enabled($selectors) {
+    @include _set-trailing-supporting-text-color(
+      state.get-default-state($colors)
+    );
+  }
+}
+
+@mixin _set-icon-ink-color($colors) {
+  @include state.enabled($selectors) {
+    @include _set-icon-color(state.get-default-state($colors));
+  }
+}
+
+@mixin _set-height($height) {
+  height: $height;
+}
+
+@mixin _set-container-background-color($color) {
+  background-color: $color;
+}
+
+@mixin _set-label-text-color($color) {
+  .md3-list-item__label-text {
+    color: $color;
+  }
+}
+
+@mixin _set-supporting-text-color($color) {
+  .md3-list-item__supporting-text {
+    color: $color;
+  }
+}
+
+@mixin _set-trailing-supporting-text-color($color) {
+  .md3-list-item__trailing-supporting-text {
+    color: $color;
+  }
+}
+
+@mixin _set-icon-color($color) {
+  &.md3-list-item--with-leading-icon .md3-list-item__start {
+    color: $color;
+  }
+}
