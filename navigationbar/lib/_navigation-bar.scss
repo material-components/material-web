@@ -1,0 +1,28 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use '@material/web/elevation/lib/elevation-overlay';
+
+@mixin static-styles() {
+  @include elevation-overlay.static-styles();
+
+  .md3-navigation-bar {
+    display: flex;
+    position: relative;
+    width: 100%;
+
+    .md3-elevation-overlay {
+      z-index: 0;
+    }
+
+    .md3-navigation-bar__tabs-slot-container {
+      display: inherit;
+      width: inherit;
+    }
+  }
+}
