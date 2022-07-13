@@ -68,14 +68,6 @@
 }
 
 ///
-/// Sets the font color to the provided color value.
-/// @param {Color} $color - The desired font color.
-///
-@mixin _set-icon-color($color) {
-  color: $color;
-}
-
-///
 /// Sets the container color to the given color.
 /// @param {map} $color-map - The desired icon color, specified as a map of
 ///     colors with states {default, disabled} as keys.
@@ -86,14 +78,6 @@
   &:disabled {
     @include _set-container-color(map.get($color-map, 'disabled'));
   }
-}
-
-///
-/// Sets the container color to the provided color value.
-/// @param {Color} $color - The desired background color.
-///
-@mixin _set-container-color($color) {
-  background-color: $color;
 }
 
 ///
@@ -160,4 +144,20 @@
       )
     )
   );
+}
+
+///
+/// Sets the font color to the provided color value.
+/// @param {Color} $color - The desired font color.
+///
+@mixin _set-icon-color($color) {
+  color: $color;
+}
+
+///
+/// Sets the container color to the provided color value.
+/// @param {Color} $color - The desired background color.
+///
+@mixin _set-container-color($color) {
+  background-color: $color;
 }
