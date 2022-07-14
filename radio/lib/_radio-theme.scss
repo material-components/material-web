@@ -136,6 +136,36 @@ $_theme-extension-keys: (
   @include _unselected-pressed-icon-color(CanvasText);
 }
 
+///
+/// Sets the stroke color of a checked, disabled radio button.
+/// @param {Color} $color - The desired stroke color.
+///
+@mixin disabled-checked-stroke-color($color) {
+  @include _if-disabled-checked {
+    @include _stroke-color($color);
+  }
+}
+
+///
+/// Sets the stroke color of an unchecked, disabled radio button.
+/// @param {Color} $color - The desired stroke color.
+///
+@mixin disabled-unchecked-stroke-color($color) {
+  @include _if-disabled-unchecked {
+    @include _stroke-color($color);
+  }
+}
+
+///
+/// Sets the ink color of a disabled radio button.
+/// @param {Color} $color - The desired ink color
+///
+@mixin disabled-ink-color($color) {
+  @include _if-disabled {
+    @include _ink-color($color);
+  }
+}
+
 @mixin _disabled-selected-icon-color($color) {
   @include disabled-checked-stroke-color($color);
   @include disabled-ink-color($color);
@@ -229,50 +259,20 @@ $_theme-extension-keys: (
   }
 }
 
-///
-/// Sets the stroke color of an unchecked, disabled radio button.
-/// @param {Color} $color - The desired stroke color.
-///
-@mixin disabled-unchecked-stroke-color($color) {
-  @include _if-disabled-unchecked {
-    @include _stroke-color($color);
-  }
-}
-
 @mixin _disabled-unchecked-stroke-opacity($opacity) {
   @include _if-disabled-unchecked {
     @include _stroke-opacity($opacity);
   }
 }
 
-///
-/// Sets the stroke color of a checked, disabled radio button.
-/// @param {Color} $color - The desired stroke color.
-///
-@mixin disabled-checked-stroke-color($color) {
-  @include if-disabled-checked_ {
-    @include _stroke-color($color);
-  }
-}
-
 @mixin _disabled-checked-stroke-opacity($opacity) {
-  @include if-disabled-checked_ {
+  @include _if-disabled-checked {
     @include _stroke-opacity($opacity);
   }
 }
 
-///
-/// Sets the ink color of a disabled radio button.
-/// @param {Color} $color - The desired ink color
-///
-@mixin disabled-ink-color($color) {
-  @include if-disabled_ {
-    @include _ink-color($color);
-  }
-}
-
 @mixin _disabled-ink-opacity($opacity) {
-  @include if-disabled_ {
+  @include _if-disabled {
     @include _ink-opacity($opacity);
   }
 }
@@ -286,6 +286,44 @@ $_theme-extension-keys: (
   .md3-radio__ripple {
     block-size: $size;
     inline-size: $size;
+  }
+}
+
+///
+/// Sets the ink color for radio. This is wrapped in a mixin
+/// that qualifies state such as `_if-enabled`
+///
+@mixin _ink-color($color) {
+  .md3-radio__background .md3-radio__inner-circle {
+    background-color: $color;
+  }
+}
+
+@mixin _ink-opacity($opacity) {
+  .md3-radio__background .md3-radio__inner-circle {
+    opacity: $opacity;
+  }
+}
+
+///
+/// Sets the stroke color for radio. This is wrapped in a mixin
+/// that qualifies state such as `_if-enabled`
+///
+@mixin _stroke-color($color) {
+  .md3-radio__background .md3-radio__outer-circle {
+    border-color: $color;
+  }
+}
+
+@mixin _stroke-opacity($opacity) {
+  .md3-radio__background .md3-radio__outer-circle {
+    opacity: $opacity;
+  }
+}
+
+@mixin _checked-selector() {
+  @include shadow-dom.host-aware(selector.append(&, '[checked]')) {
+    @content;
   }
 }
 
@@ -304,9 +342,8 @@ $_theme-extension-keys: (
 ///
 /// Helps select the radio background only when its native control is in the
 /// disabled state.
-/// @access private
 ///
-@mixin if-disabled_ {
+@mixin _if-disabled {
   .md3-radio__native-control:disabled {
     + {
       @content;
@@ -317,7 +354,6 @@ $_theme-extension-keys: (
 ///
 /// Helps select the radio background only when its native control is in the
 /// disabled & unchecked state.
-/// @access private
 ///
 @mixin _if-disabled-unchecked {
   .md3-radio__native-control:disabled {
@@ -330,52 +366,11 @@ $_theme-extension-keys: (
 ///
 /// Helps select the radio background only when its native control is in the
 /// disabled & checked state.
-/// @access private
 ///
-@mixin if-disabled-checked_ {
+@mixin _if-disabled-checked {
   .md3-radio__native-control:disabled {
     &:checked + {
       @content;
     }
-  }
-}
-
-///
-/// Sets the ink color for radio. This is wrapped in a mixin
-/// that qualifies state such as `_if-enabled`
-/// @access private
-///
-@mixin _ink-color($color) {
-  .md3-radio__background .md3-radio__inner-circle {
-    background-color: $color;
-  }
-}
-
-@mixin _ink-opacity($opacity) {
-  .md3-radio__background .md3-radio__inner-circle {
-    opacity: $opacity;
-  }
-}
-
-///
-/// Sets the stroke color for radio. This is wrapped in a mixin
-/// that qualifies state such as `_if-enabled`
-/// @access private
-///
-@mixin _stroke-color($color) {
-  .md3-radio__background .md3-radio__outer-circle {
-    border-color: $color;
-  }
-}
-
-@mixin _stroke-opacity($opacity) {
-  .md3-radio__background .md3-radio__outer-circle {
-    opacity: $opacity;
-  }
-}
-
-@mixin _checked-selector() {
-  @include shadow-dom.host-aware(selector.append(&, '[checked]')) {
-    @content;
   }
 }
