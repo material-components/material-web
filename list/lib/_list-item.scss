@@ -107,7 +107,7 @@
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
-  font-size: 24px;
+  font-size: inherit;
   line-height: 1;
   letter-spacing: normal;
   text-transform: none;
@@ -115,8 +115,8 @@
   white-space: nowrap;
   word-wrap: normal;
   direction: ltr;
-  width: 24px;
-  height: 24px;
+  height: 100%;
+  width: 100%;
 
   /* Support for all WebKit browsers. */
   -webkit-font-smoothing: antialiased;
