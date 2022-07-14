@@ -48,7 +48,7 @@
   }
 
   .md3-tab-scroller__scroll-content {
-    @include scroll-content_();
+    @include _scroll-content();
   }
 
   .md3-tab-scroller--align-start .md3-tab-scroller__scroll-content {
@@ -74,7 +74,7 @@
 // Private
 //
 
-@mixin scroll-content_() {
+@mixin _scroll-content() {
   @include tab-mixins.parent-positioning();
 
   display: flex;

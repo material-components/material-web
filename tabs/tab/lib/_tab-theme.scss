@@ -38,23 +38,17 @@ $_ripple-target: '.md3-tab__ripple';
   @return $theme;
 }
 
-@mixin is-active() {
-  &.md3-tab--active {
-    @content;
-  }
-}
+$_theme-extension-keys: (
+  container-height: null,
+  container-min-width: null,
+  with-label-text-text-transform: null,
+);
 
-@mixin is-inactive() {
-  &:not(.md3-tab--active) {
-    @content;
-  }
-}
-
-@mixin _icon-color($color) {
-  .md3-tab__icon {
-    color: $color;
-    fill: currentColor;
-  }
+@mixin theme-extension($theme) {
+  $theme: theme.validate-theme($_theme-extension-keys, $theme);
+  @include height(map.get($theme, container-height));
+  @include text-transform(map.get($theme, with-label-text-text-transform));
+  @include min-width(map.get($theme, container-min-width));
 }
 
 @mixin active-icon-color($color-or-map) {
@@ -77,12 +71,6 @@ $_ripple-target: '.md3-tab__ripple';
   }
 }
 
-@mixin _set-active-icon-color($color) {
-  @include is-active() {
-    @include _icon-color($color);
-  }
-}
-
 @mixin inactive-icon-color($color-or-map) {
   &:not(:disabled) {
     @include _set-inactive-icon-color(state.get-default-state($color-or-map));
@@ -100,18 +88,6 @@ $_ripple-target: '.md3-tab__ripple';
 
   &:disabled {
     @include _set-inactive-icon-color(state.get-disabled-state($color-or-map));
-  }
-}
-
-@mixin _set-inactive-icon-color($color) {
-  @include is-inactive() {
-    @include _icon-color($color);
-  }
-}
-
-@mixin _label-text-color($color) {
-  .md3-tab__text-label {
-    color: $color;
   }
 }
 
@@ -145,12 +121,6 @@ $_ripple-target: '.md3-tab__ripple';
   }
 }
 
-@mixin _set-active-label-text-color($color) {
-  @include is-active() {
-    @include _label-text-color($color);
-  }
-}
-
 @mixin inactive-label-text-color($color-or-map) {
   &:not(:disabled) {
     @include _set-inactive-label-text-color(
@@ -178,12 +148,6 @@ $_ripple-target: '.md3-tab__ripple';
     @include _set-inactive-label-text-color(
       state.get-disabled-state($color-or-map)
     );
-  }
-}
-
-@mixin _set-inactive-label-text-color($color) {
-  @include is-inactive() {
-    @include _label-text-color($color);
   }
 }
 
@@ -242,19 +206,15 @@ $_ripple-target: '.md3-tab__ripple';
   }
 }
 
-@mixin _height($height) {
-  block-size: $height;
-}
-
 @mixin container-height($height) {
   &:not(.md3-tab--stacked) {
-    @include _height($height);
+    @include height($height);
   }
 }
 
 @mixin with-icon-and-label-text-container-height($height) {
   &.md3-tab--stacked {
-    @include _height($height);
+    @include height($height);
   }
 }
 
@@ -285,15 +245,51 @@ $_ripple-target: '.md3-tab__ripple';
   min-inline-size: $min-width;
 }
 
-$_theme-extension-keys: (
-  container-height: null,
-  container-min-width: null,
-  with-label-text-text-transform: null,
-);
+@mixin is-active() {
+  &.md3-tab--active {
+    @content;
+  }
+}
 
-@mixin theme-extension($theme) {
-  $theme: theme.validate-theme($_theme-extension-keys, $theme);
-  @include height(map.get($theme, container-height));
-  @include text-transform(map.get($theme, with-label-text-text-transform));
-  @include min-width(map.get($theme, container-min-width));
+@mixin is-inactive() {
+  &:not(.md3-tab--active) {
+    @content;
+  }
+}
+
+@mixin _icon-color($color) {
+  .md3-tab__icon {
+    color: $color;
+    fill: currentColor;
+  }
+}
+
+@mixin _set-active-icon-color($color) {
+  @include is-active() {
+    @include _icon-color($color);
+  }
+}
+
+@mixin _set-inactive-icon-color($color) {
+  @include is-inactive() {
+    @include _icon-color($color);
+  }
+}
+
+@mixin _label-text-color($color) {
+  .md3-tab__text-label {
+    color: $color;
+  }
+}
+
+@mixin _set-active-label-text-color($color) {
+  @include is-active() {
+    @include _label-text-color($color);
+  }
+}
+
+@mixin _set-inactive-label-text-color($color) {
+  @include is-inactive() {
+    @include _label-text-color($color);
+  }
 }
