@@ -1,0 +1,12 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern -- allow `md3-` class selectors.
+
+@mixin static-styles() {
+  .md3-segmented-button-set--outlined {
+    // TODO(b/213634341): Write styles.
+  }
+}

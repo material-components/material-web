@@ -1,0 +1,298 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern -- allow `md3-` class selectors.
+
+@use 'sass:map';
+@use '@material/web/sass/color';
+@use '@material/web/sass/typography';
+@use '@material/web/ripple/ripple-theme';
+
+@mixin unselected-ripple($ripple) {
+  &.md3-segmented-button--unselected {
+    @include ripple-theme.theme(
+      (
+        focus-state-layer-color: map.get($ripple, 'focus-state-layer-color'),
+        focus-state-layer-opacity: map.get($ripple, 'focus-state-layer-opacity'),
+        hover-state-layer-color: map.get($ripple, 'hover-state-layer-color'),
+        hover-state-layer-opacity: map.get($ripple, 'hover-state-layer-opacity'),
+        pressed-state-layer-color: map.get($ripple, 'pressed-state-layer-color'),
+        pressed-state-layer-opacity:
+          map.get($ripple, 'pressed-state-layer-opacity'),
+      )
+    );
+  }
+}
+
+@mixin selected-ripple($ripple) {
+  &.md3-segmented-button--selected {
+    @include ripple-theme.theme(
+      (
+        focus-state-layer-color: map.get($ripple, 'focus-state-layer-color'),
+        focus-state-layer-opacity: map.get($ripple, 'focus-state-layer-opacity'),
+        hover-state-layer-color: map.get($ripple, 'hover-state-layer-color'),
+        hover-state-layer-opacity: map.get($ripple, 'hover-state-layer-opacity'),
+        pressed-state-layer-color: map.get($ripple, 'pressed-state-layer-color'),
+        pressed-state-layer-opacity:
+          map.get($ripple, 'pressed-state-layer-opacity'),
+      )
+    );
+  }
+}
+
+///
+/// Container color applies the given color to the segmented button container.
+/// @param {Color} $color - the color to apply.
+///
+@mixin container-color($color) {
+  &.md3-segmented-button--selected:enabled {
+    background-color: $color;
+  }
+}
+
+///
+/// Outline color applies the given color to the segmented button outline.
+/// @param {Map} $colors - a map of state keys with color values. Accepted keys
+///     include ('default', 'disabled').
+///
+@mixin outline-colors($colors) {
+  .md3-segmented-button__outline {
+    border-color: map.get($colors, 'default');
+  }
+
+  &:disabled .md3-segmented-button__outline {
+    border-color: map.get($colors, 'disabled');
+  }
+}
+
+///
+/// Unselected icon colors sets the color of the icon in the unselected state.
+/// @param {Map} $colors - a map of state keys with color values. Accepted keys
+///     include ('default', 'hover', 'focus', 'pressed', 'disabled').
+///
+@mixin unselected-icon-colors($colors) {
+  @include _icon-color(map.get($colors, 'default'));
+
+  &:hover {
+    @include _icon-color(map.get($colors, 'hover'));
+  }
+
+  &:focus {
+    @include _icon-color(map.get($colors, 'focus'));
+  }
+
+  &:active {
+    @include _icon-color(map.get($colors, 'pressed'));
+  }
+
+  &:disabled {
+    @include _icon-color(map.get($colors, 'disabled'));
+  }
+}
+
+///
+/// Selected icon colors sets the color of the icon in the selected state.
+/// @param {Map} $colors - a map of state keys with color values. Accepted keys
+///     include ('default', 'hover', 'focus', 'pressed', 'disabled').
+///
+@mixin selected-icon-colors($colors) {
+  &.md3-segmented-button--selected {
+    @include _icon-color(map.get($colors, 'default'));
+    @include _checkmark-color(map.get($colors, 'default'));
+
+    &:hover {
+      @include _checkmark-color(map.get($colors, 'hover'));
+    }
+
+    &:focus {
+      @include _checkmark-color(map.get($colors, 'focus'));
+    }
+
+    &:active {
+      @include _checkmark-color(map.get($colors, 'pressed'));
+    }
+
+    &:disabled {
+      @include _checkmark-color(map.get($colors, 'disabled'));
+    }
+  }
+}
+
+///
+/// Icon size applies the given size to the segmented button icon and checkmark
+/// when included.
+/// @param {Number} $size - the size of the icon.
+///
+@mixin icon-size($size) {
+  .md3-segmented-button__graphic,
+  .md3-segmented-button__checkmark,
+  .md3-segmented-button__icon,
+  .md3-segmented-button__icon ::slotted([slot='icon']) {
+    height: $size;
+    width: $size;
+    font-size: $size;
+  }
+}
+
+///
+/// Visible graphic width sets the width of the graphic area when it is visible
+/// (i.e. when it has content and should take up space on the screen). The
+/// graphic should only take up space under the following conditions:
+///
+///   1. The segmented button has an icon and a label.
+///   2. The segmented button is selected and has a label and a checkmark.
+///   3. The segmented button is selected with a checkmark and an icon but has
+///      no label.
+///
+/// @param {Number} $width - the width of the visible graphic.
+///
+@mixin visible-graphic-width($width) {
+  &.md3-segmented-button--with-icon.md3-segmented-button--with-label,
+  &.md3-segmented-button--selected.md3-segmented-button--with-label.md3-segmented-button--with-checkmark,
+  &.md3-segmented-button--selected.md3-segmented-button--without-label.md3-segmented-button--with-checkmark {
+    .md3-segmented-button__graphic {
+      width: $width;
+    }
+  }
+}
+
+///
+/// Checkmark color sets the color of the selected-state checkmark.
+/// @param {Map} $colors - a map of state keys with color values. Accepted keys
+///     include ('default', 'hover', 'focus', 'pressed', 'disabled').
+///
+@mixin checkmark-color($colors) {
+  .md3-segmented-button__checkmark-path {
+    stroke: $color;
+  }
+}
+
+///
+/// Text label font sets the font properties of the text label.
+/// @param {Map} $font-map - a map of font keys with font values. Accepted keys
+///     include ('font', 'size', 'tracking', weight').
+///
+@mixin text-label-font($font-map) {
+  .md3-segmented-button__label-text {
+    font-family: map.get($font-map, 'font');
+    font-size: map.get($font-map, 'size');
+    letter-spacing: map.get($font-map, 'tracking');
+    font-weight: map.get($font-map, 'weight');
+  }
+}
+
+///
+/// Unselected text label color applies the map of state keys and color values
+/// to the text label only when the button is both unselected and enabled.
+/// @param {Map} $colors - a map of state keys with color values. Accepted keys
+///     include ('default', 'hover', 'focus', 'pressed', 'disabled').
+///
+@mixin unselected-text-label-color($colors) {
+  &.md3-segmented-button--unselected:enabled {
+    @include _text-label-colors($colors);
+  }
+
+  &:disabled {
+    @include _text-label-color(map.get($colors, 'disabled'));
+  }
+}
+
+///
+/// Selected text label color applies the map of state keys and color values
+/// to the text label only when the button is both selected and enabled.
+/// @param {Map} $colors - a map of state keys with color values. Accepted keys
+///     include ('default', 'hover', 'focus', 'pressed').
+///
+@mixin selected-text-label-color($colors) {
+  &.md3-segmented-button--selected:enabled {
+    @include _text-label-colors($colors);
+  }
+}
+
+///
+/// Icon label color sets the color of the icon.
+/// @param {Color} $color - the color of the icon.
+///
+@mixin _icon-color($color) {
+  .md3-segmented-button__icon {
+    color: $color;
+  }
+}
+
+///
+/// Checkmark label color sets the color of the checkmark.
+/// @param {Color} $color - the color of the checkmark.
+///
+@mixin _checkmark-color($color) {
+  .md3-segmented-button__checkmark-path {
+    stroke: $color;
+  }
+}
+
+///
+/// Text label colors applies the given color map to the label text for the
+/// configured states.
+/// @param {Map} $colors - a map of state keys with color values. Accepted keys
+///     include ('default', 'hover', 'focus', 'pressed', 'disabled').
+///
+@mixin _text-label-colors($colors) {
+  @include _text-label-color(map.get($colors, 'default'));
+
+  &:hover {
+    @include _text-label-color(map.get($colors, 'hover'));
+  }
+
+  &:focus {
+    @include _text-label-color(map.get($colors, 'focus'));
+  }
+
+  &:active {
+    @include _text-label-color(map.get($colors, 'pressed'));
+  }
+}
+
+///
+/// Text label color sets the color of the text label.
+/// @param {Color} $color - the color of the text label.
+///
+@mixin _text-label-color($color) {
+  .md3-segmented-button__label-text {
+    color: $color;
+  }
+}
+
+///
+/// Resolve theme returns the given theme with all values resolved.
+///
+@function resolve-theme($theme, $resolvers) {
+  $theme: typography.resolve-theme(
+    $theme,
+    map.get($resolvers, 'typography'),
+    'label-text'
+  );
+  $theme: _flatten-disabled-colors($theme);
+  @return $theme;
+}
+
+@function _flatten-disabled-colors($theme) {
+  @return color.join-color-and-opacity-pairs(
+    $theme,
+    (
+      (
+        color-key: 'disabled-container-color',
+        opacity-key: 'disabled-container-opacity'
+      ),
+      (
+        color-key: 'disabled-label-text-color',
+        opacity-key: 'disabled-label-text-opacity'
+      ),
+      (color-key: 'disabled-icon-color', opacity-key: 'disabled-icon-opacity'),
+      (
+        color-key: 'disabled-outline-color',
+        opacity-key: 'disabled-outline-opacity'
+      )
+    )
+  );
+}

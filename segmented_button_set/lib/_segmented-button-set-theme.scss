@@ -1,0 +1,41 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:map';
+@use '@material/web/sass/shape';
+
+///
+/// Container height sets the height of the container.
+/// @param {Number} $height - the height of the container.
+///
+@mixin container-height($height) {
+  height: $height;
+}
+
+///
+/// Container shape sets the shape of the container.
+/// @param {Map} $shape - a map of CSS logical radius keys with number values.
+///     Accepted keys include ('start-start', 'end-start', 'start-end',
+///     'end-end').
+///
+@mixin container-shape($shape) {
+  ::slotted(:first-child) {
+    border-start-start-radius: map.get($shape, 'start-start');
+    border-end-start-radius: map.get($shape, 'end-start');
+  }
+
+  ::slotted(:last-child) {
+    border-start-end-radius: map.get($shape, 'start-end');
+    border-end-end-radius: map.get($shape, 'end-end');
+  }
+}
+
+///
+/// Resolve theme returns the given theme with all values resolved.
+///
+@function resolve-theme($theme, $resolvers) {
+  $theme: shape.resolve-theme($theme, map.get($resolvers, 'shape'), 'shape');
+  @return $theme;
+}

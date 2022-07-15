@@ -1,0 +1,19 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern -- allow `md3-` class selectors.
+
+@mixin static-styles() {
+  .md3-segmented-button__outline {
+    border-radius: inherit;
+    border-style: solid;
+    // TODO(b/233762888): Move border-width and inset into theme after generating latest version of tokens.
+    border-width: 1px;
+    inset: 0px -0.5px;
+    pointer-events: none;
+    position: absolute;
+    z-index: 1;
+  }
+}
