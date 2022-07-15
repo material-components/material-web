@@ -18,75 +18,95 @@ $_mark-stroke-size: 4px;
 $_unselected-outline-width: 2px;
 $_selected-checkmark-padding: 2.8px;
 
+// Manual calculation done on SVG
+$_mark-path-length: 29.7833385 !default;
+$_indeterminate-checked-easing-function: cubic-bezier(0.14, 0, 0, 1) !default;
+
+@function transition-enter(
+  $property,
+  $delay: 0ms,
+  $duration: $_transition-duration
+) {
+  @return animation.deceleration($property, $duration, $delay);
+}
+
+@function transition-exit(
+  $property,
+  $delay: 0ms,
+  $duration: $_transition-duration
+) {
+  @return animation.sharp($property, $duration, $delay);
+}
+
 @mixin static-styles() {
-  @include mark-keyframes_;
+  @include _mark-keyframes();
 
   .md3-checkbox {
-    @include base_;
+    @include _base();
   }
 
   // Needed to disable hover effects on CSS-only (non-JS) checkboxes
   .md3-checkbox--disabled {
-    @include disabled_;
+    @include _disabled();
   }
 
   .md3-checkbox__background {
-    @include background_();
+    @include _background();
   }
 
   .md3-checkbox__checkmark {
-    @include checkmark_();
+    @include _checkmark();
   }
 
   .md3-checkbox__checkmark-path {
-    @include checkmark-path_();
+    @include _checkmark-path();
   }
 
   .md3-checkbox__mixedmark {
-    @include mixedmark_();
+    @include _mixedmark();
   }
 
   .md3-checkbox--anim {
-    @include anim_;
+    @include _anim();
   }
 
   .md3-checkbox__native-control:checked ~ .md3-checkbox__background,
   .md3-checkbox__native-control:indeterminate ~ .md3-checkbox__background,
   .md3-checkbox__native-control[data-indeterminate='true']
     ~ .md3-checkbox__background {
-    @include background--marked_;
+    @include _background--marked();
 
     .md3-checkbox__checkmark-path {
-      @include checkmark-path--marked_;
+      @include _checkmark-path--marked();
     }
   }
 
   .md3-checkbox__native-control {
-    @include native-control_;
+    @include _native-control();
 
     &:disabled {
-      @include disabled_;
+      @include _disabled();
     }
   }
 
   .md3-checkbox__native-control:checked ~ .md3-checkbox__background {
     .md3-checkbox__checkmark {
-      @include checkmark--checked_();
+      @include _checkmark--checked();
     }
 
     .md3-checkbox__mixedmark {
-      @include mixedmark--checked_;
+      @include _mixedmark--checked();
     }
   }
   .md3-checkbox__native-control:indeterminate ~ .md3-checkbox__background,
   .md3-checkbox__native-control[data-indeterminate='true']
     ~ .md3-checkbox__background {
     .md3-checkbox__checkmark {
-      @include checkmark--indeterminate_();
+      @include _checkmark--indeterminate();
     }
 
     .md3-checkbox__mixedmark {
-      @include mixedmark--indeterminate_;
+      @include _mixedmark--indeterminate();
     }
   }
 
@@ -96,7 +116,7 @@ $_selected-checkmark-padding: 2.8px;
     .md3-checkbox__checkmark,
     .md3-checkbox__checkmark-path,
     .md3-checkbox__mixedmark {
-      @include child--upgraded_;
+      @include _child--upgraded();
     }
   }
 
@@ -115,7 +135,7 @@ $_selected-checkmark-padding: 2.8px;
   @include checkbox-theme.high-contrast-styles();
 }
 
-@mixin base_ {
+@mixin _base() {
   display: inline-flex;
   position: relative;
   line-height: 0;
@@ -128,18 +148,18 @@ $_selected-checkmark-padding: 2.8px;
   flex-direction: column;
 }
 
-@mixin disabled_ {
+@mixin _disabled() {
   cursor: default;
   pointer-events: none;
 }
 
-@mixin child--upgraded_ {
+@mixin _child--upgraded() {
   transition: none;
 }
 
 // Animation
 
-@mixin anim_ {
+@mixin _anim() {
   $md3-checkbox-indeterminate-change-duration_: 500ms;
 
   &-unchecked-checked,
@@ -218,7 +238,7 @@ $_selected-checkmark-padding: 2.8px;
   }
 }
 
-@mixin background_() {
+@mixin _background() {
   display: inline-flex;
   position: absolute;
   align-items: center;
@@ -232,13 +252,13 @@ $_selected-checkmark-padding: 2.8px;
   transition: transition-exit(background-color), transition-exit(border-color);
 }
 
-@mixin background--marked_ {
+@mixin _background--marked() {
   transition: transition-enter(border-color), transition-enter(background-color);
 }
 
 // Native input
 
-@mixin native-control_ {
+@mixin _native-control() {
   position: absolute;
   margin: 0;
   padding: 0;
@@ -248,7 +268,7 @@ $_selected-checkmark-padding: 2.8px;
 
 // Check mark
 
-@mixin checkmark_() {
+@mixin _checkmark() {
   padding: $_selected-checkmark-padding;
   position: absolute;
   inset: 0;
@@ -264,14 +284,14 @@ $_selected-checkmark-padding: 2.8px;
   }
 }
 
-@mixin checkmark--checked_() {
+@mixin _checkmark--checked() {
   transition: transition-enter(opacity, 0ms, $_transition-duration * 2),
     transition-enter(transform, 0ms, $_transition-duration * 2);
 
   opacity: 1;
 }
 
-@mixin checkmark--indeterminate_() {
+@mixin _checkmark--indeterminate() {
   transform: rotate(45deg);
   opacity: 0;
 
@@ -281,7 +301,7 @@ $_selected-checkmark-padding: 2.8px;
 
 // Check mark path
 
-@mixin checkmark-path_() {
+@mixin _checkmark-path() {
   transition: transition-exit(
     stroke-dashoffset,
     0ms,
@@ -290,17 +310,17 @@ $_selected-checkmark-padding: 2.8px;
 
   stroke: currentColor;
   stroke-width: $_mark-stroke-size;
-  stroke-dashoffset: $mark-path-length_;
-  stroke-dasharray: $mark-path-length_;
+  stroke-dashoffset: $_mark-path-length;
+  stroke-dasharray: $_mark-path-length;
 }
 
-@mixin checkmark-path--marked_ {
+@mixin _checkmark-path--marked() {
   stroke-dashoffset: 0;
 }
 
 // Mixed mark
 
-@mixin mixedmark_() {
+@mixin _mixedmark() {
   width: 100%;
   height: 0;
   transform: scaleX(0) rotate(0deg);
@@ -313,40 +333,20 @@ $_selected-checkmark-padding: 2.8px;
   margin: $_unselected-outline-width * 2;
 }
 
-@mixin mixedmark--checked_ {
+@mixin _mixedmark--checked() {
   transform: scaleX(1) rotate(-45deg);
 }
 
-@mixin mixedmark--indeterminate_ {
+@mixin _mixedmark--indeterminate() {
   transform: scaleX(1) rotate(0deg);
   opacity: 1;
 }
 
-@function transition-enter(
-  $property,
-  $delay: 0ms,
-  $duration: $_transition-duration
-) {
-  @return animation.deceleration($property, $duration, $delay);
-}
-
-@function transition-exit(
-  $property,
-  $delay: 0ms,
-  $duration: $_transition-duration
-) {
-  @return animation.sharp($property, $duration, $delay);
-}
-
-// Manual calculation done on SVG
-$mark-path-length_: 29.7833385 !default;
-$indeterminate-checked-easing-function_: cubic-bezier(0.14, 0, 0, 1) !default;
-
-@mixin mark-keyframes_ {
+@mixin _mark-keyframes() {
   @keyframes md3-checkbox-unchecked-checked-checkmark-path {
     0%,
     50% {
-      stroke-dashoffset: $mark-path-length_;
+      stroke-dashoffset: $_mark-path-length;
     }
 
     50% {
@@ -382,7 +382,7 @@ $indeterminate-checked-easing-function_: cubic-bezier(0.14, 0, 0, 1) !default;
 
     to {
       opacity: 0;
-      stroke-dashoffset: $mark-path-length_ * -1;
+      stroke-dashoffset: $_mark-path-length * -1;
     }
   }
 
@@ -401,7 +401,7 @@ $indeterminate-checked-easing-function_: cubic-bezier(0.14, 0, 0, 1) !default;
 
   @keyframes md3-checkbox-indeterminate-checked-checkmark {
     from {
-      animation-timing-function: $indeterminate-checked-easing-function_;
+      animation-timing-function: $_indeterminate-checked-easing-function;
       transform: rotate(45deg);
       opacity: 0;
     }
@@ -427,7 +427,7 @@ $indeterminate-checked-easing-function_: cubic-bezier(0.14, 0, 0, 1) !default;
 
   @keyframes md3-checkbox-indeterminate-checked-mixedmark {
     from {
-      animation-timing-function: $indeterminate-checked-easing-function_;
+      animation-timing-function: $_indeterminate-checked-easing-function;
       transform: rotate(0deg);
       opacity: 1;
     }
