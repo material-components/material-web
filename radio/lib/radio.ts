@@ -289,7 +289,8 @@ export class Radio extends ActionElement {
       return;
     }
 
-    this.checked = this.formElement.checked;
+    // Per spec, the change event on a radio input always represents checked.
+    this.checked = true;
     this.dispatchEvent(new Event('change', {
       bubbles: true,
       composed: true,
