@@ -8,7 +8,7 @@ import {KEY, normalizeKey} from '@material/dom/keyboard';
 import {ariaProperty} from '@material/mwc-base/aria-property';
 import {observer} from '@material/mwc-base/observer';
 import {deepActiveElementPath} from '@material/mwc-base/utils';
-import {NavigationTab} from '@material/web/navigation-tab/lib/navigation-tab';
+import {NavigationTab} from '@material/web/navigationtab/lib/navigation-tab';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators';
 import {ifDefined} from 'lit/directives/if-defined';
