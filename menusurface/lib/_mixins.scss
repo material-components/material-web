@@ -1,0 +1,119 @@
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+$fade-in-duration: 0.03s !default;
+$fade-out-duration: 0.075s !default;
+$scale-duration: 0.12s !default;
+$min-distance-from-edge: 32px !default;
+$z-index: 8 !default; // One above mdc-dialog
+$shape-radius: medium !default;
+$deceleration-curve-timing-function: cubic-bezier(0, 0, 0.2, 1) !default;
+
+@mixin core-styles() {
+  // postcss-bem-linter: define menu-surface
+  .md3-menu-surface {
+    @include base_();
+    // TODO(b/239422022): Remove in favor of theming API.
+    // @include elevation-mixins.elevation($z-value: 8);
+    @include fill-color(surface);
+    @include ink-color(on-surface);
+    @include shape-radius($shape-radius);
+
+    // TODO(b/239421773): Fix this for RTL.
+    transform-origin: top left;
+  }
+
+  .md3-menu-surface--anchor {
+    position: relative;
+    overflow: visible;
+  }
+
+  .md3-menu-surface--fixed {
+    position: fixed;
+  }
+
+  .md3-menu-surface--fullwidth {
+    width: 100%;
+  }
+  // postcss-bem-linter: end
+}
+
+@mixin ink-color($color) {
+  color: $color;
+}
+
+@mixin fill-color($color) {
+  background-color: $color;
+}
+
+@mixin shape-radius($radius) {
+  border-radius: $radius;
+}
+
+// Used by filled variants of GM components to conditionally flatten the top
+// corners of the menu.
+@mixin flatten-top-when-opened-below() {
+  .md3-menu-surface--is-open-below {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+  }
+}
+
+//
+// Private
+//
+
+@mixin base_() {
+  display: none;
+  position: absolute;
+  box-sizing: border-box;
+
+  $max-width: calc(100vw - #{$min-distance-from-edge});
+  $max-height: calc(100vh - #{$min-distance-from-edge});
+
+  max-width: $max-width;
+  max-height: $max-height;
+  margin: 0;
+  padding: 0;
+  transform: scale(1);
+  transform-origin: top left;
+  opacity: 0;
+  overflow: auto;
+  will-change: transform, opacity;
+  z-index: $z-index;
+
+  transition: opacity $fade-in-duration linear,
+    transform $scale-duration $deceleration-curve-timing-function,
+    height 250ms $deceleration-curve-timing-function;
+
+  &:focus {
+    outline: none;
+  }
+
+  &--animating-open {
+    display: inline-block;
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  // Render this after `--animating-open` to override `opacity` & `transform`
+  // CSS properties.
+  &--open {
+    display: inline-block;
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  &--animating-closed {
+    display: inline-block;
+    opacity: 0;
+
+    transition: opacity $fade-out-duration linear;
+  }
+}
