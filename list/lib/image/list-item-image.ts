@@ -9,15 +9,16 @@ import {property} from 'lit/decorators';
 import {ifDefined} from 'lit/directives/if-defined';
 
 /** @soyCompatible */
-export class ListItemAvatar extends LitElement {
-  @property({type: String, reflect: true}) avatar = '';
+export class ListItemImage extends LitElement {
+  @property({type: String, reflect: true}) media = 'image';
+  @property({type: String, reflect: true}) image = '';
   @property({type: String, reflect: true}) altText?: string;
 
   /** @soyTemplate */
   override render(): TemplateResult {
     return html`
-       <img src="${this.avatar}" alt="${ifDefined(this.altText)}"
-        class="md3-list-item__avatar" />
-     `;
+        <img src="${this.image}" alt="${ifDefined(this.altText)}"
+         class="md3-list-item__image" />
+      `;
   }
 }

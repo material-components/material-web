@@ -12,76 +12,14 @@
 @use '@material/web/compat/theme/state';
 @use '@material/web/sass/resolvers';
 @use '@material/web/sass/theme';
+@use './image/list-item-image-theme';
+@use './tokens';
 
 $selectors: (
   disabled: '.md3-list-item--disabled',
 );
 
-$light-theme: (
-  list-item-one-line-container-height: 56px,
-  list-item-two-line-container-height: 72px,
-  list-item-three-line-container-height: 88px,
-  list-item-container-color: transparent,
-  list-item-label-text-font: string.unquote('Roboto, sans-serif'),
-  list-item-label-text-size: 16px,
-  list-item-label-text-tracking: 0.03125rem,
-  list-item-label-text-weight: 400,
-  list-item-label-text-color: #1f1f1f,
-  list-item-supporting-text-font: string.unquote('Roboto, sans-serif'),
-  list-item-supporting-text-size: 14px,
-  list-item-supporting-text-tracking: 0.015625rem,
-  list-item-supporting-text-weight: 300,
-  list-item-supporting-text-color: #444746,
-  list-item-trailing-supporting-text-font: string.unquote('Roboto, sans-serif'),
-  list-item-trailing-supporting-text-size: 12px,
-  list-item-trailing-supporting-text-tracking: 0.015625rem,
-  list-item-trailing-supporting-text-weight: 300,
-  list-item-trailing-supporting-text-color: #646766,
-  list-item-leading-icon-color: #444746,
-  list-item-container-shape: null,
-  list-item-label-text-line-height: null,
-  list-item-supporting-text-line-height: 20px,
-  list-item-overline-color: null,
-  list-item-overline-font: null,
-  list-item-overline-line-height: null,
-  list-item-overline-size: null,
-  list-item-overline-tracking: null,
-  list-item-overline-weight: null,
-  list-item-leading-icon-size: 24px,
-  list-item-leading-video-shape: null,
-  list-item-leading-video-width: null,
-  list-item-leading-video-height: null,
-  list-item-leading-avatar-color: null,
-  list-item-leading-avatar-shape: 9999px,
-  list-item-leading-avatar-size: 40px,
-  list-item-leading-avatar-label-color: null,
-  list-item-leading-avatar-label-font: null,
-  list-item-leading-avatar-label-line-height: null,
-  list-item-leading-avatar-label-size: null,
-  list-item-leading-avatar-label-tracking: null,
-  list-item-leading-avatar-label-weight: null,
-  list-item-leading-image-width: null,
-  list-item-leading-image-height: null,
-  list-item-leading-image-shape: null,
-  list-item-trailing-supporting-text-line-height: null,
-  list-item-trailing-icon-color: #444746,
-  list-item-trailing-icon-size: 24px,
-  list-item-selected-trailing-icon-color: null,
-  list-item-unselected-trailing-icon-color: null,
-  list-item-disabled-label-text-color: null,
-  list-item-disabled-label-text-opacity: null,
-  list-item-disabled-state-layer-color: null,
-  list-item-disabled-state-layer-opacity: null,
-  list-item-disabled-leading-icon-color: null,
-  list-item-disabled-leading-icon-opacity: null,
-  list-item-disabled-trailing-icon-color: null,
-  list-item-disabled-trailing-icon-opacity: null,
-  list-item-hover-state-layer-color: null,
-  list-item-hover-state-layer-opacity: null,
-  list-item-hover-label-text-color: null,
-  list-item-hover-leading-icon-color: null,
-  list-item-hover-trailing-icon-color: null,
-);
+$light-theme: tokens.md-comp-list-values();
 
 @function _resolve-theme($theme, $resolvers) {
   @return $theme;
@@ -180,6 +118,16 @@ $light-theme: (
   @include _set-leading-icon-size(map.get($theme, list-item-leading-icon-size));
   @include _set-trailing-icon-size(
     map.get($theme, list-item-trailing-icon-size)
+  );
+  @include list-item-image-theme.theme(
+    (
+      list-item-leading-image-height:
+        map.get($theme, list-item-leading-image-height),
+      list-item-leading-image-width:
+        map.get($theme, list-item-leading-image-width),
+      list-item-leading-image-shape:
+        map.get($theme, list-item-leading-image-shape),
+    )
   );
 }
 
