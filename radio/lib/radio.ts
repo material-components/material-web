@@ -15,7 +15,7 @@ import {ActionElement, BeginPressConfig, EndPressConfig} from '@material/web/act
 import {ariaProperty} from '@material/web/decorators/aria-property';
 import {pointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus';
 import {MdRipple} from '@material/web/ripple/ripple';
-import {html, TemplateResult} from 'lit';
+import {html, PropertyValues, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators';
 import {classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
@@ -75,16 +75,8 @@ export class Radio extends ActionElement {
       return;
     }
     this._checked = isChecked;
-    if (this.formElement) {
-      this.formElement.checked = isChecked;
-    }
     this.selectionController?.update(this);
 
-    if (isChecked === false) {
-      // Remove focus ring when unchecked on other radio programmatically.
-      // Blur on input since this determines the focus style.
-      this.formElement?.blur();
-    }
     this.requestUpdate('checked', oldValue);
 
     // useful when unchecks self and wrapping element needs to synchronize
@@ -178,6 +170,17 @@ export class Radio extends ActionElement {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.selectionController!.unregister(this);
     this.selectionController = undefined;
+  }
+
+  override updated(changedProperties: PropertyValues) {
+    if (changedProperties.has('checked') && this.formElement) {
+      this.formElement.checked = this.checked;
+      if (!this.checked) {
+        // Remove focus ring when unchecked on other radio programmatically.
+        // Blur on input since this determines the focus style.
+        this.formElement?.blur();
+      }
+    }
   }
 
   protected createAdapter() {}
