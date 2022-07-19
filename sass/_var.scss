@@ -9,87 +9,6 @@
 @use './feature-flags';
 @use './string-ext';
 
-/// Indicates whether or not a value is a custom property `var()` string.
-///
-/// @example - scss
-///   $is-var: var.is-var('var(--foo)'); // true
-///
-/// @param {*} $var - The value to test.
-/// @return {Bool} True if the value is a custom property `var()` string, or
-///     false if not.
-@function is-var($var) {
-  @return _parse($var) != null;
-}
-
-/// Indicates whether or not a value is a `var()` string.
-///
-/// @param {*} $var - The value to test.
-/// @return {Bool} True if the value is a custom property `var()` string, or
-///     false if not.
-@function _is-var-string($var) {
-  @return meta.type-of($var) == 'string' and string-ext.has-prefix($var, 'var(');
-}
-
-/// Parses a `var()` string into a Map with `name` and `fallback` keys. This
-/// function returns null if the value is invalid.
-///
-/// @param {*} $var - The value to parse.
-/// @return {Map} A Map containing a string `name` key with the custom property
-///     name and a `fallback` key with the fallback value (which may be null).
-///     The returned Map itself may be null if the provided value is not valid.
-@function _parse($var) {
-  @if meta.type-of($var) ==
-    'map' and
-    map.has-key($var, name) and
-    map.has-key($var, fallback)
-  {
-    @return $var;
-  }
-
-  @if not _is-var-string($var) {
-    @return null;
-  }
-
-  // Remove function name and parens
-  $var: string-ext.trim($var, 'var(', ')');
-
-  $name: string-ext.trim-repeating($var, ' ');
-  $fallback: null;
-  $comma: string.index($var, ',');
-  @if $comma != null {
-    $name: string-ext.trim-repeating(string.slice($var, 1, $comma - 1), ' ');
-    $fallback: string-ext.trim-repeating(string.slice($var, $comma + 1), ' ');
-    @if _is-var-string($fallback) {
-      $fallback: _parse($fallback);
-      @if $fallback == null {
-        // Invalid var() fallback string
-        @return null;
-      }
-    }
-  }
-
-  @if $name == '' or $fallback == '' {
-    @return null;
-  }
-
-  @return (name: $name, fallback: $fallback);
-}
-
-/// Parses a `var()` string into a Map with `name` and `fallback` keys.
-///
-/// @throw If the value is not a custom property.
-/// @param {*} $var - The value to parse.
-/// @return {Map} A Map containing a string `name` key with the custom property
-///     name and a `fallback` key with the fallback value (which may be null).
-@function _parse-and-validate($var) {
-  $var-map: _parse($var);
-  @if $var-map == null {
-    @error '"#{$var}" is not a valid var() string';
-  }
-
-  @return $var-map;
-}
-
 /// Creates a custom property `var()` string according to the configured
 /// `var-fallbacks` feature flag.
 ///
@@ -238,4 +157,85 @@
   }
 
   @return set-fallback($var, $new-fallback);
+}
+
+/// Indicates whether or not a value is a custom property `var()` string.
+///
+/// @example - scss
+///   $is-var: var.is-var('var(--foo)'); // true
+///
+/// @param {*} $var - The value to test.
+/// @return {Bool} True if the value is a custom property `var()` string, or
+///     false if not.
+@function is-var($var) {
+  @return _parse($var) != null;
+}
+
+/// Indicates whether or not a value is a `var()` string.
+///
+/// @param {*} $var - The value to test.
+/// @return {Bool} True if the value is a custom property `var()` string, or
+///     false if not.
+@function _is-var-string($var) {
+  @return meta.type-of($var) == 'string' and string-ext.has-prefix($var, 'var(');
+}
+
+/// Parses a `var()` string into a Map with `name` and `fallback` keys. This
+/// function returns null if the value is invalid.
+///
+/// @param {*} $var - The value to parse.
+/// @return {Map} A Map containing a string `name` key with the custom property
+///     name and a `fallback` key with the fallback value (which may be null).
+///     The returned Map itself may be null if the provided value is not valid.
+@function _parse($var) {
+  @if meta.type-of($var) ==
+    'map' and
+    map.has-key($var, name) and
+    map.has-key($var, fallback)
+  {
+    @return $var;
+  }
+
+  @if not _is-var-string($var) {
+    @return null;
+  }
+
+  // Remove function name and parens
+  $var: string-ext.trim($var, 'var(', ')');
+
+  $name: string-ext.trim-repeating($var, ' ');
+  $fallback: null;
+  $comma: string.index($var, ',');
+  @if $comma != null {
+    $name: string-ext.trim-repeating(string.slice($var, 1, $comma - 1), ' ');
+    $fallback: string-ext.trim-repeating(string.slice($var, $comma + 1), ' ');
+    @if _is-var-string($fallback) {
+      $fallback: _parse($fallback);
+      @if $fallback == null {
+        // Invalid var() fallback string
+        @return null;
+      }
+    }
+  }
+
+  @if $name == '' or $fallback == '' {
+    @return null;
+  }
+
+  @return (name: $name, fallback: $fallback);
+}
+
+/// Parses a `var()` string into a Map with `name` and `fallback` keys.
+///
+/// @throw If the value is not a custom property.
+/// @param {*} $var - The value to parse.
+/// @return {Map} A Map containing a string `name` key with the custom property
+///     name and a `fallback` key with the fallback value (which may be null).
+@function _parse-and-validate($var) {
+  $var-map: _parse($var);
+  @if $var-map == null {
+    @error '"#{$var}" is not a valid var() string';
+  }
+
+  @return $var-map;
 }

@@ -11,6 +11,8 @@
 @use './string-ext';
 @use './var';
 
+$_hex: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'a' 'b' 'c' 'd' 'e' 'f';
+
 ///
 /// @example - scss
 ///   @debug color-var-hex-to-rgba(var(--foo-color-on-surface, #8ab4f8), 0.38);
@@ -32,26 +34,6 @@
   // var(--foo-color-rgb, 31,31,31)
   $var-rgb: var.create('#{var.name($var)}-rgb', hex-to-rgb($fallback));
   @return string.unquote('rgb(#{$var-rgb}, #{$opacity})');
-}
-
-$_hex: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'a' 'b' 'c' 'd' 'e' 'f';
-
-/// @example - scss
-///   @debug _hex-to-dec('f8'); // 248
-/// @param {String} $string - Hex number in string format.
-/// @return {Number} Returns decimal number for given hex number.
-@function _hex-to-dec($string) {
-  $string: string.to-lower-case($string);
-  $length: string.length($string);
-
-  $dec: 0;
-  @for $i from 1 through $length {
-    $factor: 1 + (15 * ($length - $i));
-    $index: list.index($_hex, string.slice($string, $i, $i));
-    $dec: $dec + $factor * ($index - 1);
-  }
-
-  @return $dec;
 }
 
 /// @example - scss
@@ -183,4 +165,22 @@ $_hex: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'a' 'b' 'c' 'd' 'e' 'f';
     }
   }
   @return $out;
+}
+
+/// @example - scss
+///   @debug _hex-to-dec('f8'); // 248
+/// @param {String} $string - Hex number in string format.
+/// @return {Number} Returns decimal number for given hex number.
+@function _hex-to-dec($string) {
+  $string: string.to-lower-case($string);
+  $length: string.length($string);
+
+  $dec: 0;
+  @for $i from 1 through $length {
+    $factor: 1 + (15 * ($length - $i));
+    $index: list.index($_hex, string.slice($string, $i, $i));
+    $dec: $dec + $factor * ($index - 1);
+  }
+
+  @return $dec;
 }
