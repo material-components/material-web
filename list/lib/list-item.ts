@@ -12,6 +12,7 @@ import {ClassInfo, classMap} from 'lit/directives/class-map';
 /** @soyCompatible */
 export class ListItem extends LitElement {
   @property({type: String}) supportingText = '';
+  @property({type: String}) multiLineSupportingText = '';
   @property({type: String}) trailingSupportingText = '';
 
   @queryAssignedElements(
@@ -46,8 +47,11 @@ export class ListItem extends LitElement {
   /** @soyTemplate */
   protected getRenderClasses(): ClassInfo {
     return {
-      'md3-list-item--with-one-line': this.supportingText === '',
-      'md3-list-item--with-two-lines': this.supportingText !== '',
+      'md3-list-item--with-one-line':
+          this.supportingText === '' && this.multiLineSupportingText === '',
+      'md3-list-item--with-two-line':
+          this.supportingText !== '' && this.multiLineSupportingText === '',
+      'md3-list-item--with-three-line': this.multiLineSupportingText !== '',
       'md3-list-item--with-leading-icon': this.hasLeadingIcon,
       'md3-list-item--with-trailing-icon': this.hasTrailingIcon,
     };
@@ -66,7 +70,11 @@ export class ListItem extends LitElement {
        --><span class="md3-list-item__label-text"><!--
           --><slot @slotchange=${this.handleSlotChange}></slot><!--
        --></span><!--
-        -->${this.supportingText !== '' ? this.renderSupportingText() : ''}<!--
+        -->${
+        this.multiLineSupportingText !== '' ?
+            this.renderMultiLineSupportingText() :
+            this.supportingText !== '' ? this.renderSupportingText() :
+                                         ''}<!--
     --></div>`;
   }
 
@@ -74,6 +82,13 @@ export class ListItem extends LitElement {
   protected renderSupportingText(): TemplateResult {
     return html`<span class="md3-list-item__supporting-text"><!--
           -->${this.supportingText}<!--
+       --></span>`;
+  }
+
+  /** @soyTemplate */
+  protected renderMultiLineSupportingText(): TemplateResult {
+    return html`<span class="md3-list-item__supporting-text md3-list-item__supporting-text--multi-line"><!--
+          -->${this.multiLineSupportingText}<!--
        --></span>`;
   }
 

@@ -19,6 +19,10 @@
     @include icon-item-root;
   }
 
+  .md3-list-item__end {
+    padding-inline-start: 16px;
+  }
+
   .md3-list-item--with-leading-avatar {
     @include avatar-item-root;
   }
@@ -45,18 +49,21 @@
 }
 
 @mixin item-root() {
+  align-items: flex-start;
+  box-sizing: border-box;
   display: flex;
-  flex-flow: row nowrap;
+  padding-block-end: 12px;
+  padding-block-start: 12px;
+  padding-inline-end: 24px;
   width: 100%;
-  justify-content: space-evenly;
-  align-items: center;
 
   .md3-list-item__start {
     flex: 0 0 auto;
   }
 
   .md3-list-item__body {
-    flex: 1 1 100%;
+    flex: 1 0 0;
+    padding-inline-start: 16px;
   }
 
   .md3-list-item__end {
@@ -64,42 +71,52 @@
   }
 
   .md3-list-item__label-text {
-    display: block;
+    display: flex;
   }
 
   .md3-list-item__supporting-text {
-    display: block;
-    margin-block-start: 4px;
+    display: flex;
+    padding-block-start: 4px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .md3-list-item__supporting-text--multi-line {
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    overflow: hidden;
+    white-space: normal;
   }
 }
 
 @mixin icon-item-root() {
   .md3-list-item__start {
-    margin-inline-end: 16px;
+    padding-inline-start: 16px;
   }
 }
 
 @mixin avatar-item-root() {
   .md3-list-item__start {
-    margin-inline-end: 16px;
+    padding-inline-start: 16px;
   }
 }
 
 @mixin thumbnail-item-root() {
   .md3-list-item__start {
-    margin-inline-end: 16px;
+    padding-inline-start: 16px;
   }
 }
 
 @mixin image-item-root() {
   .md3-list-item__start {
-    margin-inline-end: 16px;
+    padding-inline-start: 16px;
   }
 }
 
 @mixin video-item-root() {
   .md3-list-item__start {
-    margin-inline-end: 8px;
+    padding-inline-start: 0;
   }
 }
 

@@ -18,7 +18,9 @@ $selectors: (
 );
 
 $light-theme: (
-  list-item-container-height: 56px,
+  list-item-one-line-container-height: 56px,
+  list-item-two-line-container-height: 72px,
+  list-item-three-line-container-height: 88px,
   list-item-container-color: transparent,
   list-item-label-text-font: string.unquote('Roboto, sans-serif'),
   list-item-label-text-size: 16px,
@@ -38,7 +40,7 @@ $light-theme: (
   list-item-leading-icon-color: #444746,
   list-item-container-shape: null,
   list-item-label-text-line-height: null,
-  list-item-supporting-text-line-height: null,
+  list-item-supporting-text-line-height: 20px,
   list-item-overline-color: null,
   list-item-overline-font: null,
   list-item-overline-line-height: null,
@@ -62,8 +64,8 @@ $light-theme: (
   list-item-leading-image-height: null,
   list-item-leading-image-shape: null,
   list-item-trailing-supporting-text-line-height: null,
-  list-item-trailing-icon-color: null,
-  list-item-trailing-icon-size: null,
+  list-item-trailing-icon-color: #444746,
+  list-item-trailing-icon-size: 24px,
   list-item-selected-trailing-icon-color: null,
   list-item-unselected-trailing-icon-color: null,
   list-item-disabled-label-text-color: null,
@@ -165,7 +167,15 @@ $light-theme: (
     )
   );
 
-  @include _set-height(map.get($theme, list-item-container-height));
+  @include _set-one-line-container-height(
+    map.get($theme, list-item-one-line-container-height)
+  );
+  @include _set-two-line-container-height(
+    map.get($theme, list-item-two-line-container-height)
+  );
+  @include _set-three-line-container-height(
+    map.get($theme, list-item-three-line-container-height)
+  );
   @include _set-container-shape(map.get($theme, list-item-container-shape));
   @include _set-leading-icon-size(map.get($theme, list-item-leading-icon-size));
   @include _set-trailing-icon-size(
@@ -289,8 +299,22 @@ $light-theme: (
   }
 }
 
-@mixin _set-height($height) {
-  height: $height;
+@mixin _set-one-line-container-height($height) {
+  &.md3-list-item--with-one-line {
+    height: $height;
+  }
+}
+
+@mixin _set-two-line-container-height($height) {
+  &.md3-list-item--with-two-line {
+    height: $height;
+  }
+}
+
+@mixin _set-three-line-container-height($height) {
+  &.md3-list-item--with-three-line {
+    height: $height;
+  }
 }
 
 @mixin _set-container-background-color($color) {
