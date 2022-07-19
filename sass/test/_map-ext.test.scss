@@ -1,0 +1,42 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:map';
+@use 'sass:list';
+@use 'true' as test;
+@use '../map-ext';
+
+@include test.describe('map-ext') {
+  @include test.describe('pick()') {
+    @include test.it('should return map containing items specified in $list') {
+      $map: map-ext.pick(
+        (
+          one: 1,
+          two: 2,
+          three: 3,
+        ),
+        (two, three, four)
+      );
+
+      @include test.assert-equal(map.get($map, 'one'), null);
+      @include test.assert-equal(map.get($map, 'two'), 2);
+      @include test.assert-equal(map.get($map, 'three'), 3);
+      @include test.assert-equal(map.get($map, 'four'), null);
+    }
+
+    @include test.it('should return empty map for `$list`') {
+      $map: map-ext.pick(
+        (
+          one: 1,
+          two: 2,
+          three: 3,
+        ),
+        ()
+      );
+
+      @include test.assert-equal(list.length(map.keys($map)), 0);
+    }
+  }
+}

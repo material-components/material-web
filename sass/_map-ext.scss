@@ -1,0 +1,25 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:map';
+
+/// Picks only specified items in a map.
+///
+/// @example - scss
+///   @debug pick((one: 1, two: 2, three: 3), (two, three));
+///          // (two: 2, three: 3)
+///
+/// @param {Map} $map - Map input to pick.
+/// @param {List} $list - List containing items to pick.
+/// @return {Map} Returns a map containing items specified in `$list`.
+@function pick($map, $list) {
+  $result: ();
+  @each $key in $list {
+    $value: map.get($map, $key);
+    $result: map.set($result, $key, $value);
+  }
+
+  @return $result;
+}
