@@ -31,7 +31,6 @@ export class SegmentedButtonSet extends LitElement {
   @queryAssignedElements({flatten: true}) buttons!: SegmentedButton[];
 
   private handleSegmentedButtonInteraction(e: CustomEvent) {
-    // TODO(b/229912696): Support interactions.
     const index = this.buttons.indexOf(e.target as SegmentedButton);
     this.toggleSelection(index);
   }
@@ -40,10 +39,12 @@ export class SegmentedButtonSet extends LitElement {
     if (this.indexOutOfBounds(index)) return;
     if (this.multiselect) {
       this.buttons[index].selected = !this.buttons[index].selected;
+      this.emitSelectionEvent(index);
       return;
     }
     // Single-select segmented buttons are not unselectable.
     this.buttons[index].selected = true;
+    this.emitSelectionEvent(index);
     // Deselect all other buttons for single-select.
     for (let i = 0; i < this.buttons.length; i++) {
       if (i === index) continue;
@@ -55,23 +56,33 @@ export class SegmentedButtonSet extends LitElement {
     return index < 0 || index >= this.buttons.length;
   }
 
+  private emitSelectionEvent(index: number) {
+    this.dispatchEvent(new CustomEvent('segmented-button-set-selection', {
+      detail: {
+        button: this.buttons[index],
+        selected: this.buttons[index].selected,
+        index,
+      },
+      bubbles: true,
+      composed: true
+    }));
+  }
+
   /** @soyTemplate */
   override render(): TemplateResult {
     return html`
-    <span
-      role="group"
-      @segmented-button-interaction="${this.handleSegmentedButtonInteraction}"
-      aria-label="${ifDefined(this.ariaLabel)}"
-      class="md3-segmented-button-set ${classMap(this.getRenderClasses())}">
-      <slot></slot>
-    </span>
-    `;
+     <span
+       role="group"
+       @segmented-button-interaction="${this.handleSegmentedButtonInteraction}"
+       aria-label="${ifDefined(this.ariaLabel)}"
+       class="md3-segmented-button-set ${classMap(this.getRenderClasses())}">
+       <slot></slot>
+     </span>
+     `;
   }
 
   /** @soyTemplate */
   protected getRenderClasses(): ClassInfo {
-    return {
-        // TODO(b/213634341): Write styles.
-    };
+    return {};
   }
 }
