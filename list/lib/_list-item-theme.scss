@@ -13,6 +13,7 @@
 @use '@material/web/sass/resolvers';
 @use '@material/web/sass/theme';
 @use './image/list-item-image-theme';
+@use './video/list-item-video-theme';
 @use './tokens';
 
 $selectors: (
@@ -127,6 +128,16 @@ $light-theme: tokens.md-comp-list-values();
         map.get($theme, list-item-leading-image-width),
       list-item-leading-image-shape:
         map.get($theme, list-item-leading-image-shape),
+    )
+  );
+  @include list-item-video-theme.theme(
+    (
+      list-item-leading-video-height:
+        map.get($theme, list-item-leading-video-height),
+      list-item-leading-video-width:
+        map.get($theme, list-item-leading-video-width),
+      list-item-leading-video-shape:
+        map.get($theme, list-item-leading-video-shape),
     )
   );
 }
