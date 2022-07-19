@@ -12,13 +12,6 @@
 $_animation-duration: 150ms;
 
 @mixin static-styles() {
-  .md3-field--outlined {
-    .md3-field__start::before,
-    .md3-field__end::after {
-      @include start-and-end-shape-padding;
-    }
-  }
-
   .md3-field__outline {
     @include outline;
   }
@@ -72,16 +65,6 @@ $_animation-duration: 150ms;
       @include outline-panel-active-focus;
     }
   }
-}
-
-@mixin start-and-end-shape-padding() {
-  // Add a child element that will grow to compensate for the outline's shape.
-  // This is needed to prevent the outline border from clipping with the label
-  // and is mirrored in the container padding to align the content and resting
-  // label with the adjusted floating label.
-  box-sizing: border-box;
-  content: '';
-  display: flex;
 }
 
 @mixin outline() {

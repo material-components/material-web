@@ -127,9 +127,7 @@ $dark-theme: values(
     );
   }
 
-  @include _container-padding-horizontal(
-    map.get($theme, container-padding-horizontal)
-  );
+  @include _container-padding-horizontal($theme);
   @include _container-shape(map.get($theme, container-shape));
   @include _outline-color(
     (
@@ -165,14 +163,22 @@ $dark-theme: values(
   );
 }
 
-@mixin _container-padding-horizontal($padding) {
+@mixin _container-padding-horizontal($theme) {
+  // Add padding that will grow to compensate for the outline's shape.
+  // This is needed to prevent the outline border from clipping with the label
+  // and is mirrored in the container padding to align the content and resting
+  // label with the adjusted floating label.
+  $padding: map.get($theme, container-padding-horizontal);
+  $shape: map.get($theme, container-shape);
+  $label-padding: map.get($theme, outline-label-padding);
+
   .md3-field__outline-start,
-  .md3-field__start::before,
-  .md3-field__end::after {
-    // Outlined variant start section uses min-width instead of padding since it
-    // needs to add start/end padding to add extra space as needed for shape and
-    // label padding.
-    min-width: $padding;
+  .md3-field__start {
+    padding-inline-start: max($padding, $shape + $label-padding);
+  }
+
+  .md3-field__end {
+    padding-inline-end: max($padding, $shape);
   }
 }
 
@@ -180,20 +186,9 @@ $dark-theme: values(
   .md3-field__outline {
     border-radius: $shape;
   }
-
-  .md3-field__outline-start,
-  .md3-field__start::before,
-  .md3-field__end::after {
-    padding-inline-start: $shape;
-  }
 }
 
 @mixin _outline-label-padding($padding) {
-  .md3-field__outline-start,
-  .md3-field__start::before {
-    padding-inline-end: $padding;
-  }
-
   .md3-field__outline-start::before,
   .md3-field__outline-start::after {
     margin-inline-end: $padding;
