@@ -23,10 +23,6 @@
     padding-inline-start: 16px;
   }
 
-  .md3-list-item--with-leading-avatar {
-    @include avatar-item-root;
-  }
-
   .md3-list-item--with-leading-thumbnail {
     @include thumbnail-item-root;
   }
@@ -91,12 +87,6 @@
 }
 
 @mixin icon-item-root() {
-  .md3-list-item__start {
-    padding-inline-start: 16px;
-  }
-}
-
-@mixin avatar-item-root() {
   .md3-list-item__start {
     padding-inline-start: 16px;
   }

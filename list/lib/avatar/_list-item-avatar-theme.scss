@@ -1,0 +1,30 @@
+@use 'sass:map';
+@use '@material/web/sass/theme';
+@use '@material/web/sass/map-ext';
+@use '../list-item-theme';
+
+$light-theme: map-ext.pick(
+  list-item-theme.$light-theme,
+  (
+    list-item-leading-avatar-color,
+    list-item-leading-avatar-shape,
+    list-item-leading-avatar-size
+  )
+);
+
+@mixin theme-styles($theme) {
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, list);
+
+  @include _shape(map.get($theme, list-item-leading-avatar-shape));
+  @include _size(map.get($theme, list-item-leading-avatar-size));
+}
+
+@mixin _shape($shape) {
+  border-radius: $shape;
+}
+
+@mixin _size($size) {
+  height: $size;
+  width: $size;
+}
