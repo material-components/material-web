@@ -89,8 +89,6 @@ export class SingleSelectionController {
 
   private mouseIsDown = false;
 
-  private updating = false;
-
   /**
    * Get a controller for the given element. If no controller exists, one will
    * be created. Defaults to getting the controller scoped to the element's root
@@ -305,10 +303,6 @@ export class SingleSelectionController {
    * @param element Element from which to calculate selection controller update.
    */
   update(element: CheckableElement) {
-    if (this.updating) {
-      return;
-    }
-    this.updating = true;
     const set = this.getSet(element.name);
     if (element.checked) {
       for (const e of set.set) {
@@ -330,6 +324,5 @@ export class SingleSelectionController {
         e.formElementTabIndex = e.checked ? 0 : -1;
       }
     }
-    this.updating = false;
   }
 }
