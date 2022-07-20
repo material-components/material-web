@@ -61,7 +61,7 @@ export abstract class ActionElement extends LitElement implements
    * Subclasses should add this method as an event handler on the interactive
    * template element with `@pointerdown="${this.handlePointerDown}"`
    */
-  handlePointerDown(e: PointerEvent) {
+  protected handlePointerDown(e: PointerEvent) {
     this.actionController.pointerDown(e);
   }
 
@@ -70,7 +70,7 @@ export abstract class ActionElement extends LitElement implements
    * Subclasses should add this method as an event handler on the interactive
    * template element with `@pointerup="${this.handlePointerUp}"`
    */
-  handlePointerUp(e: PointerEvent) {
+  protected handlePointerUp(e: PointerEvent) {
     this.actionController.pointerUp(e);
   }
 
@@ -79,7 +79,7 @@ export abstract class ActionElement extends LitElement implements
    * Subclasses should add this method as an event handler on the interactive
    * template element with `@pointercancel="${this.handlePointerCancel}"`
    */
-  handlePointerCancel(e: PointerEvent) {
+  protected handlePointerCancel(e: PointerEvent) {
     this.actionController.pointerCancel(e);
   }
 
@@ -88,7 +88,7 @@ export abstract class ActionElement extends LitElement implements
    * Subclasses should add this method as an event handler on the interactive
    * template element with `@pointerleave="${this.handlePointerleave}"`
    */
-  handlePointerLeave(e: PointerEvent) {
+  protected handlePointerLeave(e: PointerEvent) {
     this.actionController.pointerLeave(e);
   }
 
@@ -97,7 +97,7 @@ export abstract class ActionElement extends LitElement implements
    * Subclasses should add this method as an event handler on the interactive
    * template element with `@click="${this.handleClick}"`
    */
-  handleClick(e: MouseEvent) {
+  protected handleClick(e: MouseEvent) {
     this.actionController.click(e);
   }
 
@@ -106,7 +106,7 @@ export abstract class ActionElement extends LitElement implements
    * Subclasses should add this method as an event handler on the interactive
    * template element with `@contextmenu="${this.handleContextMenu}"`
    */
-  handleContextMenu() {
+  protected handleContextMenu() {
     this.actionController.contextMenu();
   }
 }
