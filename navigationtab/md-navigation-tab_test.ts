@@ -7,7 +7,6 @@
 import {doesElementContainFocus} from '@material/mwc-base/utils';
 import {MdFocusRing} from '@material/web/focus/focus-ring';
 import {fixture, TestFixture} from 'google3/third_party/javascript/material_web_components/testing/helpers';
-import * as hanbi from 'hanbi';
 import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators';
 
@@ -81,11 +80,11 @@ describe('mwc-navigation-tab', () => {
     });
 
     it('emits interaction event on click', async () => {
-      const interactionHandler = hanbi.spy();
+      const interactionHandler = jasmine.createSpy();
       element.addEventListener(
-          'navigation-tab-interaction', interactionHandler.handler);
+          'navigation-tab-interaction', interactionHandler);
       await harness.clickWithMouse();
-      expect(interactionHandler.called).toBeTrue();
+      expect(interactionHandler).toHaveBeenCalled();
     });
 
     it('focus() sets focus on button element', () => {
@@ -96,11 +95,11 @@ describe('mwc-navigation-tab', () => {
   });
 
   it('on render navigation-tab-rendered event fires', async () => {
-    const renderedHandler = hanbi.spy();
+    const renderedHandler = jasmine.createSpy();
     fixt = await fixture(navTabElement({
-      onNavigationTabRendered: () => renderedHandler.handler(),
+      onNavigationTabRendered: () => renderedHandler(),
     }));
-    expect(renderedHandler.called).toBeTrue();
+    expect(renderedHandler).toHaveBeenCalled();
   });
 
   describe('active', () => {

@@ -9,7 +9,6 @@ import {KEY} from 'google3/third_party/javascript/material_components_web/dom/ke
 import {NavigationTabHarness} from 'google3/third_party/javascript/material/web/navigationtab/harness';
 import {MdNavigationTab} from 'google3/third_party/javascript/material/web/navigationtab/navigation-tab';
 import {fixture, rafPromise, TestFixture} from 'google3/third_party/javascript/material_web_components/testing/helpers';
-import * as hanbi from 'hanbi';
 import {html} from 'lit';
 import {customElement} from 'lit/decorators';
 import {ifDefined} from 'lit/directives/if-defined';
@@ -93,12 +92,11 @@ describe('md-navigation-bar', () => {
     });
 
     it('on change emits activated event', async () => {
-      const activatedHandler = hanbi.spy();
-      element.addEventListener(
-          'navigation-bar-activated', activatedHandler.handler);
+      const activatedHandler = jasmine.createSpy();
+      element.addEventListener('navigation-bar-activated', activatedHandler);
       element.activeIndex = 0;
       await rafPromise();
-      expect(activatedHandler.called).toBeTrue();
+      expect(activatedHandler).toHaveBeenCalled();
     });
 
     it('activated event detail contains the tab and activeIndex', async () => {
