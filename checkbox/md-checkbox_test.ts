@@ -11,29 +11,6 @@ import {html} from 'lit';
 import {MdCheckbox} from './checkbox';
 import {CheckboxHarness} from './harness';
 
-interface CheckboxProps {
-  checked: boolean;
-  indeterminate: boolean;
-  disabled: boolean;
-  value: string;
-  name: string;
-  reduceTouchTarget: boolean;
-}
-
-const defaultCheckbox = html`<md-checkbox></md-checkbox>`;
-
-const checkbox = (propsInit: Partial<CheckboxProps>) => {
-  return html`
-    <md-checkbox
-      ?checked=${propsInit.checked === true}
-      ?indeterminate=${propsInit.indeterminate === true}
-      ?disabled=${propsInit.disabled === true}
-      value=${propsInit.value ?? ''}
-      ?reduceTouchTarget=${propsInit.reduceTouchTarget === true}>
-    </md-checkbox>
-  `;
-};
-
 describe('md-checkbox', () => {
   let fixt: TestFixture;
   let element: MdCheckbox;
@@ -45,7 +22,7 @@ describe('md-checkbox', () => {
 
   describe('basic', () => {
     beforeEach(async () => {
-      fixt = await fixture(defaultCheckbox);
+      fixt = await fixture(html`<md-checkbox></md-checkbox>`);
       element = fixt.root.querySelector('md-checkbox')!;
       harness = new CheckboxHarness(element);
     });
@@ -92,7 +69,11 @@ describe('md-checkbox', () => {
 
   describe('checked', () => {
     beforeEach(async () => {
-      fixt = await fixture(checkbox({checked: true}));
+      fixt = await fixture(html`
+        <md-checkbox
+          ?checked=${true}>
+        </md-checkbox>
+      `);
       element = fixt.root.querySelector('md-checkbox')!;
       harness = new CheckboxHarness(element);
       await element.updateComplete;
@@ -109,7 +90,11 @@ describe('md-checkbox', () => {
 
   describe('indeterminate', () => {
     beforeEach(async () => {
-      fixt = await fixture(checkbox({indeterminate: true}));
+      fixt = await fixture(html`
+        <md-checkbox
+          ?indeterminate=${true}>
+        </md-checkbox>
+      `);
       element = fixt.root.querySelector('md-checkbox')!;
       harness = new CheckboxHarness(element);
       await element.updateComplete;
@@ -132,7 +117,11 @@ describe('md-checkbox', () => {
 
   describe('disabled', () => {
     beforeEach(async () => {
-      fixt = await fixture(checkbox({disabled: true}));
+      fixt = await fixture(html`
+        <md-checkbox
+          ?disabled=${true}>
+        </md-checkbox>
+      `);
       element = fixt.root.querySelector('md-checkbox')!;
       harness = new CheckboxHarness(element);
       await element.updateComplete;
@@ -151,7 +140,11 @@ describe('md-checkbox', () => {
 
   describe('value', () => {
     beforeEach(async () => {
-      fixt = await fixture(checkbox({value: 'new value'}));
+      fixt = await fixture(html`
+        <md-checkbox
+          value="new value">
+        </md-checkbox>
+      `);
       element = fixt.root.querySelector('md-checkbox')!;
       harness = new CheckboxHarness(element);
       await element.updateComplete;
@@ -171,7 +164,7 @@ describe('md-checkbox', () => {
     let focusRing: MdFocusRing;
 
     beforeEach(async () => {
-      fixt = await fixture(defaultCheckbox);
+      fixt = await fixture(html`<md-checkbox></md-checkbox>`);
       element = fixt.root.querySelector('md-checkbox')!;
       focusRing = element.shadowRoot!.querySelector('md-focus-ring')!;
       harness = new CheckboxHarness(element);
