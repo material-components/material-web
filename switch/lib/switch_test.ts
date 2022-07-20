@@ -21,14 +21,7 @@ declare global {
   }
 }
 
-interface SwitchProps {
-  selected: boolean;
-  disabled: boolean;
-  name: string;
-  value: string;
-}
-
-function renderSwitch(propsInit: Partial<SwitchProps> = {}) {
+function renderSwitch(propsInit: Partial<TestSwitch> = {}) {
   return html`
     <md-test-switch
       ?selected=${propsInit.selected === true}
@@ -38,7 +31,7 @@ function renderSwitch(propsInit: Partial<SwitchProps> = {}) {
   `;
 }
 
-function renderSwitchInForm(propsInit: Partial<SwitchProps> = {}) {
+function renderSwitchInForm(propsInit: Partial<TestSwitch> = {}) {
   return html`
     <form>${renderSwitch(propsInit)}</form>
   `;
@@ -48,7 +41,7 @@ describe('md-switch', () => {
   const fixtures: TestFixture[] = [];
 
   async function switchElement(
-      propsInit: Partial<SwitchProps> = {}, template = renderSwitch) {
+      propsInit: Partial<TestSwitch> = {}, template = renderSwitch) {
     const fixt = await fixture(template(propsInit));
 
     fixtures.push(fixt);

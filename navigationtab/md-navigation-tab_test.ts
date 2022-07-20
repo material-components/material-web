@@ -7,7 +7,7 @@
 import {doesElementContainFocus} from '@material/mwc-base/utils';
 import {MdFocusRing} from '@material/web/focus/focus-ring';
 import {fixture, TestFixture} from 'google3/third_party/javascript/material_web_components/testing/helpers';
-import {html, TemplateResult} from 'lit';
+import {html} from 'lit';
 import {customElement} from 'lit/decorators';
 
 import {NavigationTabHarness} from './harness';
@@ -23,36 +23,6 @@ declare global {
   }
 }
 
-interface NavigationTabProps {
-  active: boolean;
-  hideInactiveLabel: boolean;
-  label: string;
-  ariaLabel: string;
-  badgeValue: string;
-  showBadge: boolean;
-  activeIconTemplate: TemplateResult;
-  inactiveIconTemplate: TemplateResult;
-  onNavigationTabRendered(): void;
-}
-
-const defaultNavTabElement =
-    html`<md-test-navigation-tab></md-test-navigation-tab>`;
-
-const navTabElement = (propsInit: Partial<NavigationTabProps>) => {
-  return html`
-    <md-test-navigation-tab
-      ?active=${propsInit.active === true}
-      .hideInactiveLabel=${propsInit.hideInactiveLabel === true}
-      .showBadge=${propsInit.showBadge === true}
-      .label=${propsInit.label}
-      .ariaLabel=${propsInit.ariaLabel}
-      .badgeValue=${propsInit.badgeValue ?? ''}
-      @navigation-tab-rendered=${propsInit.onNavigationTabRendered}>
-      ${propsInit.activeIconTemplate ?? html``}
-      ${propsInit.inactiveIconTemplate ?? html``}</md-test-navigation-tab>
-  `;
-};
-
 describe('mwc-navigation-tab', () => {
   let fixt: TestFixture;
   let element: TestNavigationTab;
@@ -64,7 +34,9 @@ describe('mwc-navigation-tab', () => {
 
   describe('basic', () => {
     beforeEach(async () => {
-      fixt = await fixture(defaultNavTabElement);
+      fixt = await fixture(html`
+        <md-test-navigation-tab></md-test-navigation-tab>
+      `);
       element = fixt.root.querySelector('md-test-navigation-tab')!;
       harness = new NavigationTabHarness(element);
       await element.updateComplete;
@@ -96,15 +68,21 @@ describe('mwc-navigation-tab', () => {
 
   it('on render navigation-tab-rendered event fires', async () => {
     const renderedHandler = jasmine.createSpy();
-    fixt = await fixture(navTabElement({
-      onNavigationTabRendered: () => renderedHandler(),
-    }));
+    fixt = await fixture(html`
+      <md-test-navigation-tab
+        @navigation-tab-rendered=${() => renderedHandler()}>
+      </md-test-navigation-tab>
+    `);
     expect(renderedHandler).toHaveBeenCalled();
   });
 
   describe('active', () => {
     beforeEach(async () => {
-      fixt = await fixture(navTabElement({active: true}));
+      fixt = await fixture(html`
+        <md-test-navigation-tab
+          ?active=${true}>
+        </md-test-navigation-tab>
+      `);
       element = fixt.root.querySelector('md-test-navigation-tab')!;
       await element.updateComplete;
     });
@@ -136,7 +114,11 @@ describe('mwc-navigation-tab', () => {
 
   describe('hideInactiveLabel', () => {
     beforeEach(async () => {
-      fixt = await fixture(navTabElement({hideInactiveLabel: true}));
+      fixt = await fixture(html`
+        <md-test-navigation-tab
+          .hideInactiveLabel=${true}>
+        </md-test-navigation-tab>
+      `);
       element = fixt.root.querySelector('md-test-navigation-tab')!;
       await element.updateComplete;
     });
@@ -151,7 +133,11 @@ describe('mwc-navigation-tab', () => {
 
   describe('label', () => {
     beforeEach(async () => {
-      fixt = await fixture(navTabElement({label: 'foo'}));
+      fixt = await fixture(html`
+        <md-test-navigation-tab
+          label="foo">
+        </md-test-navigation-tab>
+      `);
       element = fixt.root.querySelector('md-test-navigation-tab')!;
       await element.updateComplete;
     });
@@ -165,7 +151,12 @@ describe('mwc-navigation-tab', () => {
 
   describe('ariaLabel', () => {
     beforeEach(async () => {
-      fixt = await fixture(navTabElement({ariaLabel: 'bar', label: 'foo'}));
+      fixt = await fixture(html`
+        <md-test-navigation-tab
+          label="foo"
+          aria-label="bar">
+        </md-test-navigation-tab>
+      `);
       element = fixt.root.querySelector('md-test-navigation-tab')!;
       await element.updateComplete;
     });
@@ -178,7 +169,11 @@ describe('mwc-navigation-tab', () => {
 
   describe('showBadge', () => {
     beforeEach(async () => {
-      fixt = await fixture(navTabElement({showBadge: true}));
+      fixt = await fixture(html`
+        <md-test-navigation-tab
+          .showBadge=${true}>
+        </md-test-navigation-tab>
+      `);
       element = fixt.root.querySelector('md-test-navigation-tab')!;
       await element.updateComplete;
     });
@@ -198,7 +193,12 @@ describe('mwc-navigation-tab', () => {
 
   describe('badgeValue', () => {
     beforeEach(async () => {
-      fixt = await fixture(navTabElement({badgeValue: '9', showBadge: true}));
+      fixt = await fixture(html`
+        <md-test-navigation-tab
+          .showBadge=${true}
+          .badgeValue=${'9'}>
+        </md-test-navigation-tab>
+      `);
       element = fixt.root.querySelector('md-test-navigation-tab')!;
       await element.updateComplete;
     });
@@ -211,12 +211,12 @@ describe('mwc-navigation-tab', () => {
 
   describe('icons', () => {
     beforeEach(async () => {
-      fixt = await fixture(navTabElement({
-        activeIconTemplate:
-            html`<i slot="activeIcon" class="material-icons">star</i>`,
-        inactiveIconTemplate:
-            html`<i slot="inactiveIcon" class="material-icons">star_border</i>`
-      }));
+      fixt = await fixture(html`
+        <md-test-navigation-tab>
+          <i slot="activeIcon" class="material-icons">star</i>
+          <i slot="inactiveIcon" class="material-icons">star_border</i>
+        </md-test-navigation-tab>
+      `);
       element = fixt.root.querySelector('md-test-navigation-tab')!;
       await element.updateComplete;
     });
@@ -236,7 +236,9 @@ describe('mwc-navigation-tab', () => {
     let focusRing: MdFocusRing;
 
     beforeEach(async () => {
-      fixt = await fixture(defaultNavTabElement);
+      fixt = await fixture(html`
+        <md-test-navigation-tab></md-test-navigation-tab>
+      `);
       element = fixt.root.querySelector('md-test-navigation-tab')!;
       focusRing = element.shadowRoot!.querySelector('md-focus-ring')!;
       harness = new NavigationTabHarness(element);

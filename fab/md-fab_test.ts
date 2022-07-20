@@ -7,34 +7,10 @@
 import {fixture, TestFixture} from '@material/web/compat/testing/helpers';  // TODO(b/235474830): remove the use of fixtures
 import {MdFocusRing} from '@material/web/focus/focus-ring';
 import {MdIcon} from '@material/web/icon/icon';
-import {html, TemplateResult} from 'lit';
+import {html} from 'lit';
 
 import {MdFabExtended} from './fab-extended';
 import {FabHarness} from './harness';
-
-interface FabProps {
-  disabled: boolean;
-  icon: string;
-  label: string;
-  lowered: boolean;
-  reducedTouchTarget: boolean;
-  iconTemplate: TemplateResult;
-}
-
-const defaultFab = html`<md-fab-extended></md-fab-extended>`;
-
-const fab = (propsInit: Partial<FabProps>) => {
-  return html`
-    <md-fab-extended
-      ?disabled=${propsInit.disabled === true}
-      ?lowered=${propsInit.lowered === true}
-      icon=${propsInit.icon ?? ''}
-      label=${propsInit.label ?? ''}
-      ?reducedTouchTarget=${propsInit.reducedTouchTarget === true}>
-      ${propsInit.iconTemplate ?? html``}
-    </md-fab-extended>
-  `;
-};
 
 describe('md-fab-extended', () => {
   let fixt: TestFixture;
@@ -47,7 +23,7 @@ describe('md-fab-extended', () => {
 
   describe('basic', () => {
     beforeEach(async () => {
-      fixt = await fixture(defaultFab);
+      fixt = await fixture(html`<md-fab-extended></md-fab-extended>`);
       element = fixt.root.querySelector('md-fab-extended')!;
       harness = new FabHarness(element);
     });
@@ -63,7 +39,11 @@ describe('md-fab-extended', () => {
 
   describe('lowered', () => {
     beforeEach(async () => {
-      fixt = await fixture(fab({lowered: true}));
+      fixt = await fixture(html`
+        <md-fab-extended
+          ?lowered=${true}>
+        </md-fab-extended>
+      `);
       element = fixt.root.querySelector('md-fab-extended')!;
       harness = new FabHarness(element);
       await element.updateComplete;
@@ -77,7 +57,11 @@ describe('md-fab-extended', () => {
 
   describe('disabled', () => {
     beforeEach(async () => {
-      fixt = await fixture(fab({disabled: true}));
+      fixt = await fixture(html`
+        <md-fab-extended
+          ?disabled=${true}>
+        </md-fab-extended>
+      `);
       element = fixt.root.querySelector('md-fab-extended')!;
       harness = new FabHarness(element);
       await element.updateComplete;
@@ -96,7 +80,11 @@ describe('md-fab-extended', () => {
 
   describe('icon', () => {
     beforeEach(async () => {
-      fixt = await fixture(fab({icon: 'star'}));
+      fixt = await fixture(html`
+        <md-fab-extended
+          icon="star">
+        </md-fab-extended>
+      `);
       element = fixt.root.querySelector('md-fab-extended')!;
       harness = new FabHarness(element);
       await element.updateComplete;
@@ -117,9 +105,11 @@ describe('md-fab-extended', () => {
 
   describe('icon slot', () => {
     beforeEach(async () => {
-      fixt = await fixture(fab({
-        iconTemplate: html`<i slot="icon" class="material-icons">star</i>`
-      }));
+      fixt = await fixture(html`
+        <md-fab-extended>
+          <i slot="icon" class="material-icons">star</i>
+        </md-fab-extended>
+      `);
       element = fixt.root.querySelector('md-fab-extended')!;
       harness = new FabHarness(element);
       await element.updateComplete;
@@ -133,7 +123,11 @@ describe('md-fab-extended', () => {
 
   describe('label', () => {
     beforeEach(async () => {
-      fixt = await fixture(fab({label: 'foo'}));
+      fixt = await fixture(html`
+        <md-fab-extended
+          label="foo">
+        </md-fab-extended>
+      `);
       element = fixt.root.querySelector('md-fab-extended')!;
       harness = new FabHarness(element);
       await element.updateComplete;
@@ -155,7 +149,7 @@ describe('md-fab-extended', () => {
     let focusRing: MdFocusRing;
 
     beforeEach(async () => {
-      fixt = await fixture(defaultFab);
+      fixt = await fixture(html`<md-fab-extended></md-fab-extended>`);
       element = fixt.root.querySelector('md-fab-extended')!;
       focusRing = element.shadowRoot!.querySelector('md-focus-ring')!;
       harness = new FabHarness(element);

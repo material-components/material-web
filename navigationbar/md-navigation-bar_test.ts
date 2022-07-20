@@ -29,18 +29,7 @@ declare global {
   }
 }
 
-interface NavigationBarProps {
-  activeIndex: number;
-  hideInactiveLabels: boolean;
-  ariaLabel?: string;
-}
-
-const defaultNavBarElement = html`
-    <md-test-navigation-bar>
-      <md-test-navigation-tab label="One"></md-test-navigation-tab>
-    </md-test-navigation-bar>`;
-
-const navBarWithNavTabsElement = (propsInit: Partial<NavigationBarProps>) => {
+const navBarWithNavTabsElement = (propsInit: Partial<TestMdNavigationBar>) => {
   return html`
       <md-test-navigation-bar
           .activeIndex="${propsInit.activeIndex ?? 0}"
@@ -69,7 +58,10 @@ describe('md-navigation-bar', () => {
 
   describe('basic', () => {
     beforeEach(async () => {
-      fixt = await fixture(defaultNavBarElement);
+      fixt = await fixture(html`
+        <md-test-navigation-bar>
+          <md-test-navigation-tab label="One"></md-test-navigation-tab>
+        </md-test-navigation-bar>`);
       element = fixt.root.querySelector('md-test-navigation-bar')!;
       await element.updateComplete;
     });
