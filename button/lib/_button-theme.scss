@@ -1,0 +1,207 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+// TODO(b/228217731): Remove MDC/MWC dependencies
+@use 'sass:map';
+@use '@material/web/sass/color';
+@use '@material/web/ripple/ripple-theme';
+@use '@material/web/compat/theme/state';
+
+$selectors: (
+  // :not(:disabled) is used to support link styled as button
+  // as link does not support :enabled style
+  enabled: ':not(:disabled)',
+  disabled: ':disabled',
+  focus: ':focus',
+  hover: ':hover',
+  pressed: ':active'
+);
+
+@mixin theme-styles($theme) {
+  @include _set-label-text-typography(
+    (
+      family: map.get($theme, label-text-font),
+      size: map.get($theme, label-text-size),
+      tracking: map.get($theme, label-text-tracking),
+      weight: map.get($theme, label-text-weight),
+    )
+  );
+
+  @include _container-fill-color(
+    (
+      default: map.get($theme, container-color),
+      disabled: map.get($theme, disabled-container-color),
+    )
+  );
+
+  @include _ink-color(
+    (
+      default: map.get($theme, label-text-color),
+      hover: map.get($theme, hover-label-text-color),
+      focus: map.get($theme, focus-label-text-color),
+      pressed: map.get($theme, pressed-label-text-color),
+      disabled: map.get($theme, disabled-label-text-color),
+    )
+  );
+
+  @include ripple-theme.theme(
+    (
+      hover-state-layer-color: map.get($theme, hover-state-layer-color),
+      focus-state-layer-color: map.get($theme, focus-state-layer-color),
+      pressed-state-layer-color: map.get($theme, pressed-state-layer-color),
+      hover-state-layer-opacity: map.get($theme, hover-state-layer-opacity),
+      focus-state-layer-opacity: map.get($theme, focus-state-layer-opacity),
+      pressed-state-layer-opacity: map.get($theme, pressed-state-layer-opacity),
+    )
+  );
+
+  $container-height: map.get($theme, container-height);
+  @include _set-height($container-height);
+
+  $shape: map.get($theme, container-shape);
+  @include _set-shape-radius($shape);
+}
+
+@mixin container-padding($padding) {
+  padding-inline-start: $padding;
+  padding-inline-end: $padding;
+}
+
+@mixin container-with-icon-padding($icon-padding) {
+  &.md3-button--icon-trailing {
+    padding-inline-end: $icon-padding;
+  }
+
+  &.md3-button--icon-leading {
+    padding-inline-start: $icon-padding;
+  }
+}
+
+@function flatten-disabled-colors($theme) {
+  @return color.join-color-and-opacity-pairs(
+    $theme,
+    (
+      (
+        color-key: 'disabled-container-color',
+        opacity-key: 'disabled-container-opacity'
+      ),
+      (
+        color-key: 'disabled-label-text-color',
+        opacity-key: 'disabled-label-text-opacity'
+      ),
+      (
+        color-key: 'with-icon-disabled-icon-color',
+        opacity-key: 'with-icon-disabled-icon-opacity'
+      ),
+      (
+        color-key: 'disabled-outline-color',
+        opacity-key: 'disabled-outline-opacity'
+      )
+    )
+  );
+}
+
+@function remove-unsupported-tokens($theme) {
+  // b/193825150: Text and Outlined Button don't have `container-shadow-color`,
+  // leaving `container-elevation` useless.
+  @if not map.get($theme, 'container-shadow-color') {
+    $theme: map.remove($theme, 'container-elevation');
+  }
+
+  $unsupported-tokens: (
+    // TODO(b/233225796): Clean up this removal of `dragged` tokens.
+    'dragged-container-elevation',
+    'dragged-label-text-color',
+    'dragged-state-layer-color',
+    'dragged-state-layer-opacity',
+    'with-icon-dragged-icon-color',
+    // b/189346077#comment2: `label-text-line-height` is included in token set
+    // "just in case", but it's okay to ignore.
+    'label-text-line-height',
+    // b/203778922: `label-text-type` used by other platforms but not web.
+    'label-text-type'
+  );
+  @return map.remove($theme, $unsupported-tokens);
+}
+
+@mixin _container-fill-color($color-or-map) {
+  @include state.default($selectors) {
+    @include _set-container-fill-color(state.get-default-state($color-or-map));
+  }
+
+  @include state.hover($selectors) {
+    @include _set-container-fill-color(state.get-hover-state($color-or-map));
+  }
+
+  @include state.focus($selectors) {
+    @include _set-container-fill-color(state.get-focus-state($color-or-map));
+  }
+
+  @include state.pressed($selectors) {
+    @include _set-container-fill-color(state.get-pressed-state($color-or-map));
+  }
+
+  @include state.disabled($selectors) {
+    @include _set-container-fill-color(state.get-disabled-state($color-or-map));
+  }
+}
+
+@mixin _ink-color($color-or-map) {
+  @include state.default($selectors) {
+    @include _set-ink-color(state.get-default-state($color-or-map));
+  }
+
+  @include state.hover($selectors) {
+    @include _set-ink-color(state.get-hover-state($color-or-map));
+  }
+
+  @include state.focus($selectors) {
+    @include _set-ink-color(state.get-focus-state($color-or-map));
+  }
+
+  @include state.pressed($selectors) {
+    @include _set-ink-color(state.get-pressed-state($color-or-map));
+  }
+
+  @include state.disabled($selectors) {
+    @include _set-ink-color(state.get-disabled-state($color-or-map));
+  }
+}
+
+@mixin _set-height($height) {
+  block-size: $height;
+}
+
+@mixin _set-shape-radius($radius) {
+  &,
+  .md3-button__ripple {
+    border-radius: $radius;
+  }
+}
+
+@mixin _set-container-fill-color($color) {
+  background-color: $color;
+}
+
+@mixin _set-ink-color($color) {
+  color: $color;
+}
+
+@mixin _set-label-text-typography($typography-map) {
+  $family: map.get($typography-map, family);
+  $size: map.get($typography-map, size);
+  $tracking: map.get($typography-map, tracking);
+  $weight: map.get($typography-map, weight);
+  $transform: map.get($typography-map, transform);
+
+  font-family: $family;
+  font-size: $size;
+  letter-spacing: $tracking;
+  font-weight: $weight;
+  text-transform: $transform;
+}

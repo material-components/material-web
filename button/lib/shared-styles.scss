@@ -1,0 +1,12 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use './button';
+@use './icon';
+@use './touch-target';
+
+@include button.static-styles;
+@include icon.static-styles;
+@include touch-target.static-styles;

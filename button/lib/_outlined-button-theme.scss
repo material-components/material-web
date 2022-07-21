@@ -1,0 +1,105 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+// TODO(b/228217731): Remove compat dependencies
+@use 'sass:map';
+@use '@material/web/compat/theme/state';
+@use '@material/web/sass/resolvers';
+@use '@material/web/sass/theme';
+@use '@material/web/sass/typography';
+@use '@material/web/tokens';
+@use './button-theme';
+@use './icon-theme';
+
+$_selectors: button-theme.$selectors;
+$_custom-property-prefix: 'outlined-button';
+
+$light-theme: tokens.md-comp-outlined-button-values();
+
+@mixin theme($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: _resolve-theme($theme, $resolvers);
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
+
+  @include theme.emit-theme-vars($theme);
+}
+
+@mixin theme-styles($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme-styles($light-theme, $theme);
+  $theme: _resolve-theme($theme, $resolvers);
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
+
+  @include button-theme.theme-styles($theme);
+  @include icon-theme.theme-styles($theme);
+  @include _shape-radius(map.get($theme, container-shape));
+  @include _outline-color(
+    (
+      default: map.get($theme, outline-color),
+      disabled: map.get($theme, disabled-outline-color),
+      pressed: map.get($theme, pressed-outline-color),
+    )
+  );
+  @include _outline-width(map.get($theme, outline-width));
+}
+
+@function _resolve-theme($theme, $resolvers) {
+  $theme: button-theme.flatten-disabled-colors($theme);
+  $theme: button-theme.remove-unsupported-tokens($theme);
+  $theme: typography.resolve-theme(
+    $theme,
+    map.get($resolvers, 'typography'),
+    'label-text'
+  );
+  @return $theme;
+}
+
+@mixin _shape-radius($radius) {
+  .md3-button__outline {
+    border-radius: $radius;
+  }
+}
+
+@mixin _outline-color($colors) {
+  @include state.default($_selectors) {
+    @include _set-outline-color(state.get-default-state($colors));
+  }
+
+  @include state.hover($_selectors) {
+    @include _set-outline-color(state.get-hover-state($colors));
+  }
+
+  @include state.focus($_selectors) {
+    @include _set-outline-color(state.get-focus-state($colors));
+  }
+
+  @include state.pressed($_selectors) {
+    @include _set-outline-color(state.get-pressed-state($colors));
+  }
+
+  @include state.disabled($_selectors) {
+    @include _set-outline-color(state.get-disabled-state($colors));
+  }
+}
+
+@mixin _set-outline-color($color) {
+  .md3-button__outline {
+    border-color: $color;
+  }
+}
+
+@mixin _outline-width($width) {
+  .md3-button__outline,
+  .md3-button__ripple {
+    border-width: $width;
+  }
+
+  .md3-button__ripple {
+    inline-size: calc(100% - 2 * #{$width});
+    block-size: calc(100% - 2 * #{$width});
+  }
+}

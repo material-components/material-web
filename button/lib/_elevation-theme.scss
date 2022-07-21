@@ -1,0 +1,94 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// TODO(b/228217731): Remove MDC/MWC dependencies
+@use 'sass:map';
+@use 'sass:meta';
+
+@use '@material/web/elevation/lib/elevation-theme';
+@use '@material/web/ripple/ripple-theme';
+@use '@material/web/compat/theme/state';
+
+@use './button-theme';
+
+$_selectors: button-theme.$selectors;
+
+@mixin theme-styles($theme) {
+  @debug map.get($theme, container-elevation-shadow);
+  @include _elevation(
+    (
+      default: (
+        shadow: map.get($theme, container-elevation-shadow),
+        overlay-opacity: map.get($theme, container-elevation-overlay-opacity),
+      ),
+      hover: (
+        shadow: map.get($theme, hover-container-elevation-shadow),
+        overlay-opacity:
+          map.get($theme, hover-container-elevation-overlay-opacity),
+      ),
+      focus: (
+        shadow: map.get($theme, focus-container-elevation-shadow),
+        overlay-opacity:
+          map.get($theme, focus-container-elevation-overlay-opacity),
+      ),
+      pressed: (
+        shadow: map.get($theme, pressed-container-elevation-shadow),
+        overlay-opacity:
+          map.get($theme, pressed-container-elevation-overlay-opacity),
+      ),
+      disabled: (
+        shadow: map.get($theme, disabled-container-elevation-shadow),
+        overlay-opacity:
+          map.get($theme, disabled-container-elevation-overlay-opacity),
+      ),
+    )
+  );
+
+  @include elevation-theme.theme-styles(
+    (
+      surface-tint-layer-color:
+        map.get($theme, container-surface-tint-layer-color),
+    )
+  );
+}
+
+@function resolve-theme($theme, $resolvers) {
+  @return elevation-theme.resolve-theme(
+    $theme,
+    map.get($resolvers, elevation),
+    $shadow-color-token: container-shadow-color,
+    $elevation-tokens: (
+      container-elevation,
+      disabled-container-elevation,
+      focus-container-elevation,
+      hover-container-elevation,
+      pressed-container-elevation
+    )
+  );
+}
+
+@mixin _elevation($elevations) {
+  @include state.default($_selectors) {
+    @include elevation-theme.theme-styles(state.get-default-state($elevations));
+  }
+
+  @include state.hover($_selectors) {
+    @include elevation-theme.theme-styles(state.get-hover-state($elevations));
+  }
+
+  @include state.focus($_selectors) {
+    @include elevation-theme.theme-styles(state.get-focus-state($elevations));
+  }
+
+  @include state.pressed($_selectors) {
+    @include elevation-theme.theme-styles(state.get-pressed-state($elevations));
+  }
+
+  @include state.disabled($_selectors) {
+    @include elevation-theme.theme-styles(
+      state.get-disabled-state($elevations)
+    );
+  }
+}
