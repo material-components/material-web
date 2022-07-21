@@ -7,7 +7,7 @@
 import {ARIARole} from '@material/web/types/aria';
 import {html, LitElement, TemplateResult} from 'lit';
 
-import {ListItemInteractionEvent} from './constants';
+import {ListItemInteractionEvent} from './listitem/constants';
 
 /** @soyCompatible */
 export class List extends LitElement {

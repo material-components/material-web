@@ -6,8 +6,8 @@
 
 import {customElement} from 'lit/decorators';
 
-import {styles} from './lib/list-item-styles.css'
-import {OptionListItem} from './lib/option-list-item';
+import {styles} from './lib/listitem/list-item-styles.css'
+import {OptionListItem} from './lib/listitem/option-list-item';
 
 declare global {
   interface HTMLElementTagNameMap {
