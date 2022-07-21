@@ -27,12 +27,12 @@ export abstract class IconButton extends ActionElement {
   @property({type: Boolean}) flipIcon = false;
 
   /** @soyPrefixAttribute */
-  @ariaProperty
+  @ariaProperty  // tslint:disable-line:no-new-decorators
   @property({type: String, attribute: 'aria-label'})
   override ariaLabel!: string;
 
   /** @soyPrefixAttribute */
-  @ariaProperty
+  @ariaProperty  // tslint:disable-line:no-new-decorators
   @property({type: String, attribute: 'aria-haspopup'})
   override ariaHasPopup!: ARIAHasPopup;
 

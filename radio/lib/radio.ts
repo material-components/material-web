@@ -108,17 +108,17 @@ export class Radio extends ActionElement {
   @state() protected focused = false;
 
   /** @soyPrefixAttribute */
-  @ariaProperty
+  @ariaProperty  // tslint:disable-line:no-new-decorators
   @property({attribute: 'aria-label'})
   override ariaLabel!: string;
 
   /** @soyPrefixAttribute */
-  @legacyAriaProperty
+  @legacyAriaProperty  // tslint:disable-line:no-new-decorators
   @property({attribute: 'aria-labelledby'})
   ariaLabelledBy!: string;
 
   /** @soyPrefixAttribute */
-  @legacyAriaProperty
+  @legacyAriaProperty  // tslint:disable-line:no-new-decorators
   @property({type: String, attribute: 'aria-describedby'})
   ariaDescribedBy!: undefined|string;
 

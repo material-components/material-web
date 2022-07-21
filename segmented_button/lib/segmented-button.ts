@@ -30,7 +30,7 @@ export class SegmentedButton extends ActionElement {
   @property({type: Boolean}) hasIcon = false;
 
   /** @soyPrefixAttribute */
-  @ariaProperty
+  @ariaProperty  // tslint:disable-line:no-new-decorators
   @property({type: String, attribute: 'aria-label'})
   override ariaLabel!: string;
 

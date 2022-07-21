@@ -24,7 +24,7 @@ export class SegmentedButtonSet extends LitElement {
   @property({type: Boolean}) multiselect = false;
 
   /** @soyPrefixAttribute */
-  @ariaProperty
+  @ariaProperty  // tslint:disable-line:no-new-decorators
   @property({type: String, attribute: 'aria-label'})
   override ariaLabel!: string;
 

@@ -28,14 +28,14 @@ export class Switch extends LitElement {
   @property({type: Boolean}) onlySelectedIcon = false;
 
   // Aria
-  @ariaProperty
+  @ariaProperty  // tslint:disable-line:no-new-decorators
   // TODO(b/210730484): replace with @soyParam annotation
   @property({type: String, attribute: 'data-aria-label', noAccessor: true})
   override ariaLabel!: string;
 
   // TODO: Add support in @ariaProperty for idref aria attributes
   /** @soyPrefixAttribute */
-  @legacyAriaProperty
+  @legacyAriaProperty  // tslint:disable-line:no-new-decorators
   @property({type: String, attribute: 'aria-labelledby'})
   ariaLabelledBy = '';
 

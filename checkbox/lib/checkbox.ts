@@ -32,17 +32,17 @@ export class Checkbox extends ActionElement {
   @property({type: String}) value = 'on';
 
   /** @soyPrefixAttribute */
-  @ariaProperty
+  @ariaProperty  // tslint:disable-line:no-new-decorators
   @property({type: String, attribute: 'aria-label'})
   override ariaLabel!: string;
 
   /** @soyPrefixAttribute */
-  @legacyAriaProperty
+  @legacyAriaProperty  // tslint:disable-line:no-new-decorators
   @property({type: String, attribute: 'aria-labelledby'})
   ariaLabelledBy!: undefined|string;
 
   /** @soyPrefixAttribute */
-  @legacyAriaProperty
+  @legacyAriaProperty  // tslint:disable-line:no-new-decorators
   @property({type: String, attribute: 'aria-describedby'})
   ariaDescribedBy!: undefined|string;
 

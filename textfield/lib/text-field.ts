@@ -73,10 +73,10 @@ export class TextField extends LitElement {
   // ARIA
   // TODO(b/210730484): replace with @soyParam annotation
   @property({type: String, attribute: 'data-aria-label', noAccessor: true})
-  @ariaProperty
+  @ariaProperty  // tslint:disable-line:no-new-decorators
   override ariaLabel!: string;
   @property({type: String, attribute: 'data-aria-labelledby', noAccessor: true})
-  @ariaProperty
+  @ariaProperty  // tslint:disable-line:no-new-decorators
   ariaLabelledBy!: string;
 
   // FormElement

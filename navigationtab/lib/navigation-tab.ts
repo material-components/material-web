@@ -30,8 +30,7 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
   @state() protected showFocusRing = false;
 
   // TODO(b/210730484): replace with @soyParam annotation
-  // tslint:disable-next-line:no-new-decorators
-  @ariaProperty
+  @ariaProperty  // tslint:disable-line:no-new-decorators
   @property({type: String, attribute: 'data-aria-label', noAccessor: true})
   override ariaLabel!: string;
 

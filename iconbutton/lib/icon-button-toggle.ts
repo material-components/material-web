@@ -16,7 +16,7 @@ import {ifDefined} from 'lit/directives/if-defined';
 /** @soyCompatible */
 export abstract class IconButtonToggle extends ActionElement {
   /** @soyPrefixAttribute */
-  @ariaProperty
+  @ariaProperty  // tslint:disable-line:no-new-decorators
   @property({type: String, attribute: 'aria-label'})
   override ariaLabel!: string;
 

@@ -16,7 +16,7 @@ export class TabPanel extends LitElement {
 
   /** @soyPrefixAttribute */
   // TODO(b/229296098): Use M3 ariaProperty decorator.
-  @legacyAriaProperty
+  @legacyAriaProperty  // tslint:disable-line:no-new-decorators
   @property({type: String, attribute: 'aria-labelledby'})
   ariaLabelledBy!: string;
 
