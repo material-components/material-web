@@ -5,8 +5,8 @@
  */
 
 import {ARIARole} from '@material/web/types/aria';
-import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
-import {property, queryAssignedElements, state} from 'lit/decorators';
+import {html, LitElement, TemplateResult} from 'lit';
+import {property} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 
 /** @soyCompatible */
@@ -14,16 +14,7 @@ export class ListItem extends LitElement {
   @property({type: String}) supportingText = '';
   @property({type: String}) multiLineSupportingText = '';
   @property({type: String}) trailingSupportingText = '';
-
-  @queryAssignedElements(
-      {slot: 'start', flatten: true, selector: '[media=icon]'})
-  protected leadingIcon!: HTMLElement[];
-
-  @queryAssignedElements({slot: 'end', flatten: true, selector: '[media=icon]'})
-  protected trailingIcon!: HTMLElement[];
-
-  @property() hasLeadingIcon = false;
-  @property() hasTrailingIcon = false;
+  @property({type: Boolean}) disabled = false;
 
   /** @soyTemplate */
   override render(): TemplateResult {
@@ -52,8 +43,7 @@ export class ListItem extends LitElement {
       'md3-list-item--with-two-line':
           this.supportingText !== '' && this.multiLineSupportingText === '',
       'md3-list-item--with-three-line': this.multiLineSupportingText !== '',
-      'md3-list-item--with-leading-icon': this.hasLeadingIcon,
-      'md3-list-item--with-trailing-icon': this.hasTrailingIcon,
+      'md3-list-item--disabled': this.disabled,
     };
   }
 
@@ -116,14 +106,4 @@ export class ListItem extends LitElement {
   }
 
   handleClick() {}
-
-  override update(changedProperties: PropertyValues<this>) {
-    this.updateMetadata();
-    super.update(changedProperties);
-  }
-
-  private updateMetadata() {
-    this.hasLeadingIcon = this.leadingIcon.length > 0;
-    this.hasTrailingIcon = this.trailingIcon.length > 0;
-  }
 }

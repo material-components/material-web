@@ -12,6 +12,7 @@
 @use '@material/web/compat/theme/state';
 @use '@material/web/sass/resolvers';
 @use '@material/web/sass/theme';
+@use '../icon/list-item-icon-theme';
 @use '../image/list-item-image-theme';
 @use '../video/list-item-video-theme';
 @use '../tokens';
@@ -39,7 +40,7 @@ $light-theme: tokens.md-comp-list-values();
   $theme: _resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, list);
 
-  @include _set_container-color(
+  @include _set-container-color(
     (
       default: map.get($theme, list-item-container-color),
     )
@@ -55,10 +56,14 @@ $light-theme: tokens.md-comp-list-values();
     )
   );
 
-  @include _set_label-text-ink-color(
+  @include _set-label-text-ink-color(
     (
       default: map.get($theme, list-item-label-text-color),
+      disabled: map.get($theme, list-item-disabled-label-text-color),
     )
+  );
+  @include _set-disabled-label-text-opacity(
+    map.get($theme, list-item-disabled-label-text-opacity)
   );
 
   @include _set-supporting-text-typography(
@@ -71,10 +76,14 @@ $light-theme: tokens.md-comp-list-values();
     )
   );
 
-  @include _set_supporting-text-ink-color(
+  @include _set-supporting-text-ink-color(
     (
       default: map.get($theme, list-item-supporting-text-color),
+      disabled: map.get($theme, list-item-disabled-supporting-text-color),
     )
+  );
+  @include _set-disabled-supporting-text-opacity(
+    map.get($theme, list-item-disabled-supporting-text-opacity)
   );
 
   @include _set-trailing-supporting-text-typography(
@@ -88,21 +97,9 @@ $light-theme: tokens.md-comp-list-values();
     )
   );
 
-  @include _set_trailing-supporting-text-ink-color(
+  @include _set-trailing-supporting-text-ink-color(
     (
       default: map.get($theme, trailing-supporting-text-color),
-    )
-  );
-
-  @include _set-leading-icon-color(
-    (
-      default: map.get($theme, list-item-leading-icon-color),
-    )
-  );
-
-  @include _set-trailing-icon-color(
-    (
-      default: map.get($theme, list-item-trailing-icon-color),
     )
   );
 
@@ -116,10 +113,6 @@ $light-theme: tokens.md-comp-list-values();
     map.get($theme, list-item-three-line-container-height)
   );
   @include _set-container-shape(map.get($theme, list-item-container-shape));
-  @include _set-leading-icon-size(map.get($theme, list-item-leading-icon-size));
-  @include _set-trailing-icon-size(
-    map.get($theme, list-item-trailing-icon-size)
-  );
   @include list-item-image-theme.theme(
     (
       list-item-leading-image-height:
@@ -140,21 +133,75 @@ $light-theme: tokens.md-comp-list-values();
         map.get($theme, list-item-leading-video-shape),
     )
   );
-}
 
-@mixin _set-leading-icon-size($size) {
-  &.md3-list-item--with-leading-icon .md3-list-item__start {
-    font-size: $size;
-    height: $size;
-    width: $size;
+  .md3-list-item__start {
+    @include list-item-icon-theme.theme(
+      (
+        list-item-icon-color: map.get($theme, list-item-leading-icon-color),
+        list-item-icon-size: map.get($theme, list-item-leading-icon-size),
+      )
+    );
+  }
+
+  .md3-list-item__end {
+    @include list-item-icon-theme.theme(
+      (
+        list-item-icon-color: map.get($theme, list-item-trailing-icon-color),
+        list-item-icon-size: map.get($theme, list-item-trailing-icon-size),
+      )
+    );
+  }
+
+  &.md3-list-item--disabled .md3-list-item__start {
+    @include list-item-icon-theme.theme(
+      (
+        list-item-icon-color:
+          map.get($theme, list-item-disabled-leading-icon-color),
+        list-item-icon-opacity:
+          map.get($theme, list-item-disabled-leading-icon-opacity),
+      )
+    );
+  }
+
+  &.md3-list-item--disabled .md3-list-item__end {
+    @include list-item-icon-theme.theme(
+      (
+        list-item-icon-color:
+          map.get($theme, list-item-disabled-trailing-icon-color),
+        list-item-icon-opacity:
+          map.get($theme, list-item-disabled-trailing-icon-opacity),
+      )
+    );
+  }
+
+  &:hover .md3-list-item__start {
+    @include list-item-icon-theme.theme(
+      (
+        list-item-icon-color:
+          map.get($theme, list-item-hover-leading-icon-color),
+      )
+    );
+  }
+
+  &:hover .md3-list-item__end {
+    @include list-item-icon-theme.theme(
+      (
+        list-item-icon-color:
+          map.get($theme, list-item-hover-trailing-icon-color),
+      )
+    );
   }
 }
 
-@mixin _set-trailing-icon-size($size) {
-  &.md3-list-item--with-trailing-icon .md3-list-item__end {
-    font-size: $size;
-    height: $size;
-    width: $size;
+@mixin _set-disabled-label-text-opacity($opacity) {
+  &.md3-list-item--disabled .md3-list-item__label-text {
+    opacity: $opacity;
+  }
+}
+
+@mixin _set-disabled-supporting-text-opacity($opacity) {
+  &.md3-list-item--disabled .md3-list-item__supporting-text {
+    opacity: $opacity;
   }
 }
 
@@ -190,6 +237,10 @@ $light-theme: tokens.md-comp-list-values();
   @include state.enabled($selectors) {
     @include _set-label-text-color(state.get-default-state($colors));
   }
+
+  &.md3-list-item--disabled {
+    @include _set-label-text-color(state.get-disabled-state($colors));
+  }
 }
 
 @mixin _set-supporting-text-typography($typography-map) {
@@ -213,6 +264,10 @@ $light-theme: tokens.md-comp-list-values();
 @mixin _set-supporting-text-ink-color($colors) {
   @include state.enabled($selectors) {
     @include _set-supporting-text-color(state.get-default-state($colors));
+  }
+
+  &.md3-list-item--disabled {
+    @include _set-supporting-text-color(state.get-disabled-state($colors));
   }
 }
 
@@ -239,22 +294,6 @@ $light-theme: tokens.md-comp-list-values();
     @include _set-trailing-supporting-text-color(
       state.get-default-state($colors)
     );
-  }
-}
-
-@mixin _set-leading-icon-color($colors) {
-  @include state.enabled($selectors) {
-    &.md3-list-item--with-leading-icon .md3-list-item__start {
-      color: state.get-default-state($colors);
-    }
-  }
-}
-
-@mixin _set-trailing-icon-color($colors) {
-  @include state.enabled($selectors) {
-    &.md3-list-item--with-trailing-icon .md3-list-item__end {
-      color: state.get-default-state($colors);
-    }
   }
 }
 

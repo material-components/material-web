@@ -1,0 +1,32 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:map';
+@use '@material/web/sass/theme';
+@use '../tokens';
+
+$light-theme: (
+  list-item-icon-color: #000,
+  list-item-icon-size: 0,
+  list-item-icon-opacity: 1,
+);
+
+$_custom-property-prefix: 'list-item-icon';
+
+@mixin theme($theme) {
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
+
+  @include theme.emit-theme-vars($theme);
+}
+
+@mixin theme-styles($theme) {
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
+
+  color: map.get($theme, list-item-icon-color);
+  font-size: map.get($theme, list-item-icon-size);
+  opacity: map.get($theme, list-item-icon-opacity);
+}
