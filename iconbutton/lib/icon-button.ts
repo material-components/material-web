@@ -63,7 +63,6 @@ export abstract class IconButton extends ActionElement {
         @pointerleave="${this.handlePointerLeave}"
         @pointerenter="${this.handlePointerEnter}"
         @click="${this.handleClick}"
-        @clickmod="${this.handleClick}"
         @contextmenu="${this.handleContextMenu}">
         ${this.renderFocusRing()}
         ${this.renderRipple()}

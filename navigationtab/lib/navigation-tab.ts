@@ -56,7 +56,6 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
         @pointerleave="${this.handlePointerLeave}"
         @pointerenter="${this.handlePointerEnter}"
         @click="${this.handleClick}"
-        @clickmod="${this.handleClick}"
         @contextmenu="${this.handleContextMenu}"
       >${this.renderFocusRing()}${this.renderRipple()}
         <span aria-hidden="true" class="md3-navigation-tab__icon-content"

@@ -55,7 +55,6 @@ export abstract class FabShared extends ActionElement {
         @pointerleave="${this.handlePointerLeave}"
         @pointerenter="${this.handlePointerEnter}"
         @click="${this.handleClick}"
-        @clickmod="${this.handleClick}"
         @contextmenu="${this.handleContextMenu}">
         ${this.renderElevationOverlay()}
         ${this.renderFocusRing()}
