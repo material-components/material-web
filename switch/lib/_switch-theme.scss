@@ -98,6 +98,10 @@ $_forced-colors-theme: (
   $theme: _resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, switch);
 
+  :host {
+    @include _focus-ring($theme);
+  }
+
   .md3-switch {
     @include _root($theme);
   }
@@ -121,15 +125,13 @@ $_forced-colors-theme: (
   border-end-end-radius: map.get($theme, track-shape-end-end);
   border-end-start-radius: map.get($theme, track-shape-end-start);
 
-  @include _focus-ring(
-    // TODO(b/231741594): use `track-shape` once this is not deleted.
-    $track-shape: map.get($theme, track-shape-start-start)
-  );
-
   @include _forced-colors-mode-theme;
 }
 
-@mixin _focus-ring($track-shape) {
+@mixin _focus-ring($theme) {
+  // TODO(b/231741594): use `track-shape` once this is not deleted.
+  $track-shape: map.get($theme, track-shape-start-start);
+
   @include focus-ring-theme.theme(
     (
       ring-radius: $track-shape,
