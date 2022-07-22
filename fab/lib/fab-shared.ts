@@ -93,7 +93,7 @@ export abstract class FabShared extends ActionElement {
 
   /** @soyTemplate */
   protected renderRipple(): TemplateResult {
-    return html`<md-ripple class="md3-fab__ripple" .disabled="${
+    return html`<md-ripple class="md3-fab__ripple" ?disabled="${
         this.disabled}"></md-ripple>`;
   }
 

@@ -126,8 +126,8 @@ export class Radio extends ActionElement {
 
   /** @soyTemplate */
   protected renderRipple(): TemplateResult|string {
-    return html`<md-ripple unbounded 
-        .disabled="${this.disabled}"></md-ripple>`;
+    return html`<md-ripple unbounded
+        ?disabled="${this.disabled}"></md-ripple>`;
   }
 
   /** @soyTemplate */
@@ -248,7 +248,7 @@ export class Radio extends ActionElement {
           aria-label="${ifDefined(this.ariaLabel)}"
           aria-labelledby="${ifDefined(this.ariaLabelledBy)}"
           aria-describedby="${ifDefined(this.ariaDescribedBy)}"
-          .checked="${this.checked}"
+          ?checked="${this.checked}"
           .value="${this.value}"
           ?disabled="${this.disabled}"
           @change="${this.changeHandler}"

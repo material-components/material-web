@@ -119,7 +119,7 @@ export abstract class Button extends ActionElement implements ButtonState {
 
   /** @soyTemplate */
   protected renderRipple(): TemplateResult|string {
-    return html`<md-ripple class="md3-button__ripple" .disabled="${
+    return html`<md-ripple class="md3-button__ripple" ?disabled="${
         this.disabled}"></md-ripple>`;
   }
 

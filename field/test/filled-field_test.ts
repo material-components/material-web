@@ -60,7 +60,7 @@ describe('Field', () => {
             return html`
               <md-test-filled-field
                 .label=${props.label}
-                .disabled=${props.disabled ?? false}
+                ?disabled=${props.disabled ?? false}
                 .error=${props.error ?? false}
                 .populated=${props.populated ?? false}
                 .required=${props.required ?? false}

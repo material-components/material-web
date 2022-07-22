@@ -75,7 +75,7 @@ export class Switch extends ActionElement {
         aria-checked="${this.selected}"
         aria-label="${ifDefined(ariaLabelValue)}"
         aria-labelledby="${ifDefined(ariaLabelledByValue)}"
-        .disabled=${this.disabled}
+        ?disabled=${this.disabled}
         @click=${this.handleClick}
         @focus="${this.handleFocus}"
         @blur="${this.handleBlur}"
@@ -95,7 +95,7 @@ export class Switch extends ActionElement {
         type="checkbox"
         aria-hidden="true"
         name="${this.name}"
-        .checked=${this.selected}
+        ?checked=${this.selected}
         .value=${this.value}
       >
     `;

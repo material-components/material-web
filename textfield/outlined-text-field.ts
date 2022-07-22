@@ -37,7 +37,7 @@ export class MdOutlinedTextField extends OutlinedTextField {
       <md-outlined-field
         class="md3-text-field__field"
         id=${this.fieldId}
-        .disabled=${this.disabled}
+        ?disabled=${this.disabled}
         .error=${this.error}
         .label=${this.label}
         .populated=${!!this.value}

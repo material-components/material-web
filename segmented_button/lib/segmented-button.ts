@@ -114,7 +114,7 @@ export class SegmentedButton extends ActionElement {
         tabindex="${this.disabled ? '-1' : '0'}"
         aria-label="${ifDefined(this.ariaLabel)}"
         aria-pressed=${this.selected}
-        .disabled=${this.disabled}
+        ?disabled=${this.disabled}
         @focus="${this.handleFocus}"
         @blur="${this.handleBlur}"
         @pointerdown="${this.handlePointerDown}"
@@ -159,7 +159,7 @@ export class SegmentedButton extends ActionElement {
 
   /** @soyTemplate */
   protected renderRipple(): TemplateResult|string {
-    return html`<md-ripple .disabled="${
+    return html`<md-ripple ?disabled="${
         this.disabled}" class="md3-segmented-button__ripple"> </md-ripple>`;
   }
 

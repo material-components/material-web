@@ -44,7 +44,7 @@ export abstract class IconButton extends ActionElement {
 
   /** @soyTemplate */
   protected renderRipple(): TemplateResult|string {
-    return html`<md-ripple .disabled="${
+    return html`<md-ripple ?disabled="${
         this.disabled}" unbounded> </md-ripple>`;
   }
 

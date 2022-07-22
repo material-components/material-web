@@ -103,7 +103,7 @@ export class Checkbox extends ActionElement {
   /** @soyTemplate */
   protected renderRipple(): TemplateResult {
     return html`<md-ripple
-        .disabled="${this.disabled}"
+        ?disabled="${this.disabled}"
         unbounded></md-ripple>`;
   }
 
@@ -158,7 +158,7 @@ export class Checkbox extends ActionElement {
               data-indeterminate="${this.indeterminate ? 'true' : 'false'}"
               ?disabled="${this.disabled}"
               .indeterminate="${this.indeterminate}"
-              .checked="${this.checked}"
+              ?checked="${this.checked}"
               .value="${this.value}"
               @change="${this.handleChange}"
               @focus="${this.handleFocus}"
