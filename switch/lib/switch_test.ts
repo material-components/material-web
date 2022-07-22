@@ -69,11 +69,11 @@ describe('md-switch', () => {
       selected = await switchElement({selected: true});
     });
 
-    it('should be false by default', () => {
+    it('is false by default', () => {
       expect(toggle.selected).toBeFalse();
     });
 
-    it('should set `aria-checked` of button', () => {
+    it('sets `aria-checked` of button', () => {
       const toggleButton = toggle.shadowRoot!.querySelector('button')!;
       expect(toggleButton.getAttribute('aria-checked')).toEqual('false');
 
@@ -81,7 +81,7 @@ describe('md-switch', () => {
       expect(selectedButton.getAttribute('aria-checked')).toEqual('true');
     });
 
-    it('should set checked of hidden input', () => {
+    it('sets checked of hidden input', () => {
       const toggleInput = toggle.shadowRoot!.querySelector('input')!;
       expect(toggleInput.checked).toBeFalse();
 
@@ -89,7 +89,7 @@ describe('md-switch', () => {
       expect(selectedInput.checked).toBeTrue();
     });
 
-    it('should add md3-switch--selected class when true', () => {
+    it('adds md3-switch--selected class when true', () => {
       const toggleRoot = toggle.shadowRoot!.querySelector('.md3-switch')!;
       expect(Array.from(toggleRoot.classList))
           .not.toContain('md3-switch--selected');
@@ -99,7 +99,7 @@ describe('md-switch', () => {
           .toContain('md3-switch--selected');
     });
 
-    it('should add md3-switch--unselected class when false', () => {
+    it('adds md3-switch--unselected class when false', () => {
       const toggleRoot = toggle.shadowRoot!.querySelector('.md3-switch')!;
       expect(Array.from(toggleRoot.classList))
           .toContain('md3-switch--unselected');
@@ -111,7 +111,7 @@ describe('md-switch', () => {
   });
 
   describe('processing', () => {
-    it('should be false by default', () => {
+    it('is false by default', () => {
       expect(toggle.processing).toBeFalse();
     });
   });
@@ -123,11 +123,11 @@ describe('md-switch', () => {
       disabled = await switchElement({disabled: true});
     });
 
-    it('should be false by default', () => {
+    it('is false by default', () => {
       expect(toggle.disabled).toBeFalse();
     });
 
-    it('should set disabled of button', () => {
+    it('sets disabled of button', () => {
       const toggleButton = toggle.shadowRoot!.querySelector('button')!;
       expect(toggleButton.disabled).toBeFalse();
 
@@ -137,7 +137,7 @@ describe('md-switch', () => {
   });
 
   describe('aria', () => {
-    it('should be an empty string by default', () => {
+    it('is an empty string by default', () => {
       expect(toggle.ariaLabel).toEqual('');
     });
 
@@ -185,17 +185,17 @@ describe('md-switch', () => {
       named = await switchElement({name: 'foo'});
     });
 
-    it('should be an empty string by default', () => {
+    it('is an empty string by default', () => {
       expect(toggle.name).toEqual('');
     });
 
-    it('should reflect as an attribute', async () => {
+    it('reflects as an attribute', async () => {
       toggle.name = 'foo';
       await toggle.updateComplete;
       expect(toggle.getAttribute('name')).toEqual('foo');
     });
 
-    it('should set name of hidden input', () => {
+    it('sets name of hidden input', () => {
       const input = named.shadowRoot!.querySelector('input')!;
       expect(input.getAttribute('name')).toEqual('foo');
     });
@@ -208,31 +208,31 @@ describe('md-switch', () => {
       withValue = await switchElement({value: 'bar'});
     });
 
-    it('should be "on" by default', () => {
+    it('is "on" by default', () => {
       expect(toggle.value).toEqual('on');
     });
 
-    it('should set value of hidden input', () => {
+    it('sets value of hidden input', () => {
       const input = withValue.shadowRoot!.querySelector('input')!;
       expect(input.value).toEqual('bar');
     });
   });
 
   describe('click()', () => {
-    it('should toggle element', () => {
+    it('toggles element', () => {
       expect(toggle.selected).withContext('is false by default').toBeFalse();
       toggle.click();
       expect(toggle.selected).withContext('should toggle selected').toBeTrue();
     });
 
-    it('should do nothing if disabled', () => {
+    it('does nothing if disabled', () => {
       expect(toggle.selected).withContext('is false by default').toBeFalse();
       toggle.disabled = true;
       toggle.click();
       expect(toggle.selected).withContext('should remain false').toBeFalse();
     });
 
-    it('should not focus or click hidden input form element', () => {
+    it('does not focus or click hidden input form element', () => {
       const input = toggle.shadowRoot!.querySelector('input')!;
       spyOn(input, 'focus');
       spyOn(input, 'click');

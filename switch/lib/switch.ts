@@ -6,18 +6,18 @@
 
 import '@material/web/focus/focus-ring';
 
-// TODO(b/236840525): remove compat dependencies
-import {ariaProperty as legacyAriaProperty} from '@material/web/compat/base/aria-property';
+import {ActionElement, EndPressConfig} from '@material/web/actionelement/action-element';
+import {ariaProperty as legacyAriaProperty} from '@material/web/compat/base/aria-property';  // TODO(b/236840525): remove compat dependencies
 import {FormController, getFormValue} from '@material/web/controller/form-controller';
 import {ariaProperty} from '@material/web/decorators/aria-property';
 import {pointerPress as focusRingPointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus';
-import {html, LitElement, TemplateResult} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {eventOptions, property, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 
 /** @soyCompatible */
-export class Switch extends LitElement {
+export class Switch extends ActionElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
@@ -57,7 +57,7 @@ export class Switch extends LitElement {
   }
 
   override click() {
-    this.handleClick();
+    this.endPress({cancelled: false});
     super.click();
   }
 
@@ -79,7 +79,11 @@ export class Switch extends LitElement {
         @click=${this.handleClick}
         @focus="${this.handleFocus}"
         @blur="${this.handleBlur}"
-        @pointerdown="${this.handlePointerDown}"
+        @pointerdown=${this.handlePointerDown}
+        @pointerup=${this.handlePointerUp}
+        @pointercancel=${this.handlePointerCancel}
+        @pointerleave=${this.handlePointerLeave}
+        @contextmenu=${this.handleContextMenu}
       >
         ${this.renderFocusRing()}
         <div class="md3-switch__track">
@@ -174,12 +178,13 @@ export class Switch extends LitElement {
     return this.icons || this.onlySelectedIcon;
   }
 
-  protected handleClick() {
-    if (this.disabled) {
+  override endPress({cancelled}: EndPressConfig) {
+    if (cancelled || this.disabled) {
       return;
     }
 
     this.selected = !this.selected;
+    super.endPress({cancelled, actionData: {selected: this.selected}});
   }
 
   protected handleFocus() {
@@ -191,7 +196,8 @@ export class Switch extends LitElement {
   }
 
   @eventOptions({passive: true})
-  protected handlePointerDown(event: PointerEvent) {
+  override handlePointerDown(event: PointerEvent) {
+    super.handlePointerDown(event);
     focusRingPointerPress();
     this.showFocusRing = false;
   }
