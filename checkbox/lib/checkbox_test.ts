@@ -7,13 +7,25 @@
 import {fixture, TestFixture} from '@material/web/compat/testing/helpers';  // TODO(b/235474830): remove the use of fixtures
 import {MdFocusRing} from '@material/web/focus/focus-ring';
 import {html} from 'lit';
+import {customElement} from 'lit/decorators';
 
-import {MdCheckbox} from './checkbox';
-import {CheckboxHarness} from './harness';
+import {CheckboxHarness} from '../harness';
 
-describe('md-checkbox', () => {
+import {Checkbox} from './checkbox';
+
+@customElement('md-test-checkbox')
+class TestCheckbox extends Checkbox {
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'md-test-checkbox': TestCheckbox;
+  }
+}
+
+describe('checkbox', () => {
   let fixt: TestFixture;
-  let element: MdCheckbox;
+  let element: TestCheckbox;
   let harness: CheckboxHarness;
 
   afterEach(() => {
@@ -22,13 +34,13 @@ describe('md-checkbox', () => {
 
   describe('basic', () => {
     beforeEach(async () => {
-      fixt = await fixture(html`<md-checkbox></md-checkbox>`);
-      element = fixt.root.querySelector('md-checkbox')!;
+      fixt = await fixture(html`<md-test-checkbox></md-test-checkbox>`);
+      element = fixt.root.querySelector('md-test-checkbox')!;
       harness = new CheckboxHarness(element);
     });
 
-    it('initializes as an md-checkbox', () => {
-      expect(element).toBeInstanceOf(MdCheckbox);
+    it('initializes as an checkbox', () => {
+      expect(element).toBeInstanceOf(TestCheckbox);
       expect(element.checked).toEqual(false);
       expect(element.indeterminate).toEqual(false);
       expect(element.disabled).toEqual(false);
@@ -70,11 +82,11 @@ describe('md-checkbox', () => {
   describe('checked', () => {
     beforeEach(async () => {
       fixt = await fixture(html`
-        <md-checkbox
+        <md-test-checkbox
           ?checked=${true}>
-        </md-checkbox>
+        </md-test-checkbox>
       `);
-      element = fixt.root.querySelector('md-checkbox')!;
+      element = fixt.root.querySelector('md-test-checkbox')!;
       harness = new CheckboxHarness(element);
       await element.updateComplete;
     });
@@ -91,11 +103,11 @@ describe('md-checkbox', () => {
   describe('indeterminate', () => {
     beforeEach(async () => {
       fixt = await fixture(html`
-        <md-checkbox
+        <md-test-checkbox
           ?indeterminate=${true}>
-        </md-checkbox>
+        </md-test-checkbox>
       `);
-      element = fixt.root.querySelector('md-checkbox')!;
+      element = fixt.root.querySelector('md-test-checkbox')!;
       harness = new CheckboxHarness(element);
       await element.updateComplete;
     });
@@ -118,11 +130,11 @@ describe('md-checkbox', () => {
   describe('disabled', () => {
     beforeEach(async () => {
       fixt = await fixture(html`
-        <md-checkbox
+        <md-test-checkbox
           ?disabled=${true}>
-        </md-checkbox>
+        </md-test-checkbox>
       `);
-      element = fixt.root.querySelector('md-checkbox')!;
+      element = fixt.root.querySelector('md-test-checkbox')!;
       harness = new CheckboxHarness(element);
       await element.updateComplete;
     });
@@ -141,11 +153,11 @@ describe('md-checkbox', () => {
   describe('value', () => {
     beforeEach(async () => {
       fixt = await fixture(html`
-        <md-checkbox
+        <md-test-checkbox
           value="new value">
-        </md-checkbox>
+        </md-test-checkbox>
       `);
-      element = fixt.root.querySelector('md-checkbox')!;
+      element = fixt.root.querySelector('md-test-checkbox')!;
       harness = new CheckboxHarness(element);
       await element.updateComplete;
     });
@@ -164,8 +176,8 @@ describe('md-checkbox', () => {
     let focusRing: MdFocusRing;
 
     beforeEach(async () => {
-      fixt = await fixture(html`<md-checkbox></md-checkbox>`);
-      element = fixt.root.querySelector('md-checkbox')!;
+      fixt = await fixture(html`<md-test-checkbox></md-test-checkbox>`);
+      element = fixt.root.querySelector('md-test-checkbox')!;
       focusRing = element.shadowRoot!.querySelector('md-focus-ring')!;
       harness = new CheckboxHarness(element);
     });
