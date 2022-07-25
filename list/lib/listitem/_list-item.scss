@@ -15,14 +15,6 @@
     @include item-root;
   }
 
-  .md3-list-item--with-leading-icon {
-    @include icon-item-root;
-  }
-
-  .md3-list-item__end {
-    padding-inline-start: 16px;
-  }
-
   .md3-list-item--with-leading-thumbnail {
     @include thumbnail-item-root;
   }
@@ -41,12 +33,11 @@
 }
 
 @mixin item-root() {
-  align-items: flex-start;
+  align-items: center;
   box-sizing: border-box;
   display: flex;
   padding-block-end: 12px;
   padding-block-start: 12px;
-  padding-inline-end: 24px;
   width: 100%;
 
   .md3-list-item__start {
@@ -54,12 +45,15 @@
   }
 
   .md3-list-item__body {
+    box-sizing: border-box;
     flex: 1 0 0;
     padding-inline-start: 16px;
+    width: 100%;
   }
 
   .md3-list-item__end {
     flex: 0 0 auto;
+    padding-inline-end: 24px;
   }
 
   .md3-list-item__label-text {
@@ -67,10 +61,12 @@
   }
 
   .md3-list-item__supporting-text {
-    display: flex;
+    display: block;
     padding-block-start: 4px;
     text-overflow: ellipsis;
     white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
   }
 
   .md3-list-item__supporting-text--multi-line {
@@ -79,6 +75,10 @@
     display: -webkit-box;
     overflow: hidden;
     white-space: normal;
+  }
+
+  .md3-list-item__trailing-supporting-text {
+    padding-inline-start: 16px;
   }
 }
 
