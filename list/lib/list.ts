@@ -5,14 +5,26 @@
  */
 
 import {ARIARole} from '@material/web/types/aria';
-import {html, LitElement, TemplateResult} from 'lit';
+import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
+import {queryAssignedElements} from 'lit/decorators';
 
 import {ListItemInteractionEvent} from './listitem/constants';
+import {ListItem} from './listitem/list-item';
 
 /** @soyCompatible */
 export class List extends LitElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
+
+  items: ListItem[] = [];
+
+  @queryAssignedElements() protected assignedElements!: HTMLElement[]|null;
+
+  override firstUpdated(changedProperties: PropertyValues) {
+    super.firstUpdated(changedProperties);
+
+    this.updateItems();
+  }
 
   /** @soyTemplate */
   protected getAriaRole(): ARIARole {
@@ -31,10 +43,24 @@ export class List extends LitElement {
     `;
   }
 
-
   handleItemInteraction(event: ListItemInteractionEvent) {
     if (event.detail.state.isSelected) {
       // TODO: manage selection state.
     }
+  }
+
+  /** Updates `this.items` based on slot elements in the DOM. */
+  protected updateItems() {
+    const elements = this.assignedElements || [];
+    this.items = elements.filter(this.isListItem, this);
+  }
+
+  protected getListItemTagName() {
+    return 'md-list-item';
+  }
+
+  /** @return Whether the given element is an <md-list-item> element. */
+  private isListItem(element: Element): element is ListItem {
+    return element.tagName.toLowerCase() === this.getListItemTagName();
   }
 }
