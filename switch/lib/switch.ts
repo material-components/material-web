@@ -25,7 +25,7 @@ export class Switch extends ActionElement {
   @property({type: Boolean}) processing = false;
   @property({type: Boolean}) selected = false;
   @property({type: Boolean}) icons = false;
-  @property({type: Boolean}) onlySelectedIcon = false;
+  @property({type: Boolean}) showOnlySelectedIcon = false;
 
   // Aria
   @ariaProperty  // tslint:disable-line:no-new-decorators
@@ -120,7 +120,7 @@ export class Switch extends ActionElement {
   protected renderHandle(): TemplateResult {
     /** @classMap */
     const classes = {
-      'md3-switch__handle--big': this.icons && !this.onlySelectedIcon,
+      'md3-switch__handle--big': this.icons && !this.showOnlySelectedIcon,
     };
     return html`
       <div class="md3-switch__handle-container">
@@ -137,7 +137,7 @@ export class Switch extends ActionElement {
     return html`
       <div class="md3-switch__icons">
         ${this.renderOnIcon()}
-        ${this.onlySelectedIcon ? html`` : this.renderOffIcon()}
+        ${this.showOnlySelectedIcon ? html`` : this.renderOffIcon()}
       </div>
     `;
   }
@@ -175,7 +175,7 @@ export class Switch extends ActionElement {
 
   /** @soyTemplate */
   private shouldShowIcons(): boolean {
-    return this.icons || this.onlySelectedIcon;
+    return this.icons || this.showOnlySelectedIcon;
   }
 
   override endPress({cancelled}: EndPressConfig) {
