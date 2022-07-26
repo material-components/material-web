@@ -7,7 +7,7 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-// TODO(b/): remove compat dependencies
+// TODO(b/239222919): remove compat dependencies
 import {observer} from '@material/web/compat/base/observer';
 import {deepActiveElementPath, doesElementContainFocus} from '@material/web/compat/base/utils';
 import {html, LitElement} from 'lit';
@@ -17,7 +17,7 @@ import {styleMap} from 'lit/directives/style-map';
 
 import {MDCMenuSurfaceAdapter} from './adapter';
 import {Corner as CornerEnum, CornerBit} from './constants';
-import MDCMenuSurfaceFoundation from './foundation';
+import {MDCMenuSurfaceFoundation} from './foundation';
 
 export type Corner = keyof typeof CornerEnum;
 export type AnchorableElement = HTMLElement&{anchor: Element | null};
