@@ -26,6 +26,13 @@
   .md3-list-item--with-leading-video {
     @include video-item-root;
   }
+
+  .md3-list-item__ripple {
+    display: inline-flex;
+    inset: 0;
+    position: absolute;
+    z-index: 0;
+  }
 }
 
 @mixin host-root() {
@@ -39,9 +46,15 @@
   padding-block-end: 12px;
   padding-block-start: 12px;
   width: 100%;
+  position: relative;
+
+  &.md3-list-item--enabled {
+    cursor: pointer;
+  }
 
   .md3-list-item__start {
     flex: 0 0 auto;
+    z-index: 1;
   }
 
   .md3-list-item__body {
@@ -49,11 +62,13 @@
     flex: 1 0 0;
     padding-inline-start: 16px;
     width: 100%;
+    z-index: 1;
   }
 
   .md3-list-item__end {
     flex: 0 0 auto;
     padding-inline-end: 24px;
+    z-index: 1;
   }
 
   .md3-list-item__label-text {

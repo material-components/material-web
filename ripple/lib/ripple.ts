@@ -88,13 +88,13 @@ export class Ripple extends LitElement {
     this.rippleSize = `${this.initialSize}px`;
   }
 
-  protected getNormalizedEventCoords(positionEvent: Event):
+  protected getNormalizedPointerEventCoords(pointerEvent: PointerEvent):
       {x: number, y: number} {
     const {scrollX, scrollY} = window;
     const {left, top} = this.getDimensions();
     const documentX = scrollX + left;
     const documentY = scrollY + top;
-    const {pageX, pageY} = (positionEvent as PointerEvent);
+    const {pageX, pageY} = pointerEvent;
     return {x: pageX - documentX, y: pageY - documentY};
   }
 
@@ -107,8 +107,8 @@ export class Ripple extends LitElement {
     };
 
     let startPoint;
-    if (positionEvent) {
-      startPoint = this.getNormalizedEventCoords(positionEvent);
+    if (positionEvent instanceof PointerEvent) {
+      startPoint = this.getNormalizedPointerEventCoords(positionEvent);
     } else {
       startPoint = {
         x: width / 2,

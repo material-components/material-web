@@ -15,9 +15,10 @@ export class OptionListItem extends ListItem {
     return 'option';
   }
 
-  override handleClick() {
+  override handleClick(e: MouseEvent) {
     this.dispatchEvent(new CustomEvent(
         'list-item-interaction',
         {detail: {state: {isSelected: false}}, bubbles: true, composed: true}));
+    super.handleClick(e);
   }
 }
