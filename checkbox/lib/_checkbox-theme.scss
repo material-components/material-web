@@ -6,16 +6,11 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-// TODO(b/228217731): Remove MDC/MWC dependencies
 @use 'sass:map';
-@use 'sass:math';
-@use 'sass:selector';
 
 @use '@material/web/ripple/ripple-theme';
-@use '@material/web/compat/theme/shadow-dom';
 @use '@material/web/sass/color';
 @use '@material/web/sass/theme';
-@use '@material/web/sass/var';
 @use '@material/web/tokens';
 
 $custom-property-prefix: 'checkbox';
@@ -157,23 +152,25 @@ $_theme-extension-keys: (
     )
   );
 
-  @include _checked-selector() {
-    @include ripple-theme.theme(
-      (
-        hover-state-layer-color:
-          map.get($theme, selected-hover-state-layer-color),
-        focus-state-layer-color:
-          map.get($theme, selected-focus-state-layer-color),
-        pressed-state-layer-color:
-          map.get($theme, selected-pressed-state-layer-color),
-        hover-state-layer-opacity:
-          map.get($theme, selected-hover-state-layer-opacity),
-        focus-state-layer-opacity:
-          map.get($theme, selected-focus-state-layer-opacity),
-        pressed-state-layer-opacity:
-          map.get($theme, selected-pressed-state-layer-opacity),
-      )
-    );
+  @include _if-selected() {
+    .md3-checkbox__ripple {
+      @include ripple-theme.theme(
+        (
+          hover-state-layer-color:
+            map.get($theme, selected-hover-state-layer-color),
+          focus-state-layer-color:
+            map.get($theme, selected-focus-state-layer-color),
+          pressed-state-layer-color:
+            map.get($theme, selected-pressed-state-layer-color),
+          hover-state-layer-opacity:
+            map.get($theme, selected-hover-state-layer-opacity),
+          focus-state-layer-opacity:
+            map.get($theme, selected-focus-state-layer-opacity),
+          pressed-state-layer-opacity:
+            map.get($theme, selected-pressed-state-layer-opacity),
+        )
+      );
+    }
   }
 }
 
@@ -213,24 +210,26 @@ $_theme-extension-keys: (
 }
 
 @mixin _selected-icon-color($color) {
-  @include _if-selected {
-    @include _ink-color(map.get($color, default));
+  // NOTE: Target checkmark when checkbox is selected and unselected so that the
+  // checkmark will have the same color during checked to uncheck animation.
+  .md3-checkbox__native-control ~ {
+    @include _checkmark-color(map.get($color, default));
   }
 
-  @include _if-selected-hover {
-    @include _ink-color(map.get($color, hover));
+  .md3-checkbox__native-control:hover ~ {
+    @include _checkmark-color(map.get($color, hover));
   }
 
-  @include _if-selected-focus {
-    @include _ink-color(map.get($color, focus));
+  .md3-checkbox__native-control:focus ~ {
+    @include _checkmark-color(map.get($color, focus));
   }
 
-  @include _if-selected-pressed {
-    @include _ink-color(map.get($color, pressed));
+  .md3-checkbox__native-control:active ~ {
+    @include _checkmark-color(map.get($color, pressed));
   }
 
-  @include _if-selected-disabled {
-    @include _ink-color(map.get($color, disabled));
+  .md3-checkbox__native-control:disabled ~ {
+    @include _checkmark-color(map.get($color, disabled));
   }
 }
 
@@ -488,7 +487,7 @@ $_selected-selector: ".md3-checkbox__native-control:checked, .md3-checkbox__nati
   }
 }
 
-@mixin _ink-color($color) {
+@mixin _checkmark-color($color) {
   .md3-checkbox__background {
     .md3-checkbox__checkmark {
       color: $color;
@@ -529,14 +528,5 @@ $_selected-selector: ".md3-checkbox__native-control:checked, .md3-checkbox__nati
       border-color: $from-outline-color;
       background-color: $from-container-color;
     }
-  }
-}
-
-@mixin _checked-selector() {
-  @include shadow-dom.host-aware(
-    selector.append(&, '[checked]'),
-    selector.append(&, '[indeterminate]')
-  ) {
-    @content;
   }
 }

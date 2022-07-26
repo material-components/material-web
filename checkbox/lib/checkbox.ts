@@ -55,22 +55,9 @@ export class Checkbox extends ActionElement {
 
   @state() protected animationClass = '';
 
-  @state() protected shouldRenderRipple = false;
-
   @state() protected showFocusRing = false;
 
-  @state() protected focused = false;
-
   @query('md-ripple') ripple!: MdRipple;
-
-  // MDC Foundation is unused
-  protected mdcFoundationClass = undefined;
-
-  protected mdcFoundation = undefined;
-
-  protected createAdapter() {
-    return {};
-  }
 
   protected override update(changedProperties: PropertyValues) {
     const oldIndeterminate = changedProperties.get('indeterminate');
@@ -119,34 +106,27 @@ export class Checkbox extends ActionElement {
    * @soyClasses checkboxClasses: .md3-checkbox
    */
   protected override render(): TemplateResult {
-    const selected = this.indeterminate || this.checked;
-    /* eslint-disable eqeqeq */
-    // tslint:disable:triple-equals
     /** @classMap */
     const classes = {
       'md3-checkbox--disabled': this.disabled,
-      'md3-checkbox--selected': selected,
       'md3-checkbox--touch': !this.reducedTouchTarget,
-      'md3-ripple-upgraded--background-focused': this.focused,
       // transition animiation classes
       'md3-checkbox--anim-checked-indeterminate':
-          this.animationClass == 'checked-indeterminate',
+          this.animationClass === 'checked-indeterminate',
       'md3-checkbox--anim-checked-unchecked':
-          this.animationClass == 'checked-unchecked',
+          this.animationClass === 'checked-unchecked',
       'md3-checkbox--anim-indeterminate-checked':
-          this.animationClass == 'indeterminate-checked',
+          this.animationClass === 'indeterminate-checked',
       'md3-checkbox--anim-indeterminate-unchecked':
-          this.animationClass == 'indeterminate-unchecked',
+          this.animationClass === 'indeterminate-unchecked',
       'md3-checkbox--anim-unchecked-checked':
-          this.animationClass == 'unchecked-checked',
+          this.animationClass === 'unchecked-checked',
       'md3-checkbox--anim-unchecked-indeterminate':
-          this.animationClass == 'unchecked-indeterminate',
+          this.animationClass === 'unchecked-indeterminate',
     };
-    // tslint:enable:triple-equals
-    /* eslint-enable eqeqeq */
     const ariaChecked = this.indeterminate ? 'mixed' : undefined;
     return html`
-      <div class="md3-checkbox md3-checkbox--upgraded ${classMap(classes)}">
+      <div class="md3-checkbox ${classMap(classes)}">
         ${this.renderFocusRing()}
         <input type="checkbox"
               class="md3-checkbox__native-control"
@@ -212,12 +192,10 @@ export class Checkbox extends ActionElement {
   }
 
   protected handleFocus() {
-    this.focused = true;
     this.showFocusRing = shouldShowStrongFocus();
   }
 
   protected handleBlur() {
-    this.focused = false;
     this.showFocusRing = false;
   }
 
@@ -249,9 +227,5 @@ export class Checkbox extends ActionElement {
 
   protected resetAnimationClass() {
     this.animationClass = '';
-  }
-
-  get isRippleActive() {
-    return false;
   }
 }

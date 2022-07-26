@@ -9,7 +9,6 @@
 @use 'sass:math';
 @use '@material/web/focus/lib/focus-ring-theme';
 @use '@material/web/motion/animation';
-@use '@material/web/sass/var';
 
 @use './checkbox-theme';
 
@@ -40,14 +39,10 @@ $_indeterminate-checked-easing-function: cubic-bezier(0.14, 0, 0, 1) !default;
 
 @mixin static-styles() {
   @include _mark-keyframes();
+  @include _animation();
 
   .md3-checkbox {
     @include _base();
-  }
-
-  // Needed to disable hover effects on CSS-only (non-JS) checkboxes
-  .md3-checkbox--disabled {
-    @include _disabled();
   }
 
   .md3-checkbox__background {
@@ -66,10 +61,6 @@ $_indeterminate-checked-easing-function: cubic-bezier(0.14, 0, 0, 1) !default;
     @include _mixedmark();
   }
 
-  .md3-checkbox--anim {
-    @include _anim();
-  }
-
   .md3-checkbox__native-control:checked ~ .md3-checkbox__background,
   .md3-checkbox__native-control:indeterminate ~ .md3-checkbox__background,
   .md3-checkbox__native-control[data-indeterminate='true']
@@ -83,10 +74,11 @@ $_indeterminate-checked-easing-function: cubic-bezier(0.14, 0, 0, 1) !default;
 
   .md3-checkbox__native-control {
     @include _native-control();
+  }
 
-    &:disabled {
-      @include _disabled();
-    }
+  .md3-checkbox--disabled,
+  .md3-checkbox__native-control:disabled {
+    @include _disabled();
   }
 
   .md3-checkbox__native-control:checked ~ .md3-checkbox__background {
@@ -107,16 +99,6 @@ $_indeterminate-checked-easing-function: cubic-bezier(0.14, 0, 0, 1) !default;
 
     .md3-checkbox__mixedmark {
       @include _mixedmark--indeterminate();
-    }
-  }
-
-  // JS checkbox
-  .md3-checkbox.md3-checkbox--upgraded {
-    .md3-checkbox__background,
-    .md3-checkbox__checkmark,
-    .md3-checkbox__checkmark-path,
-    .md3-checkbox__mixedmark {
-      @include _child--upgraded();
     }
   }
 
@@ -153,19 +135,13 @@ $_indeterminate-checked-easing-function: cubic-bezier(0.14, 0, 0, 1) !default;
   pointer-events: none;
 }
 
-@mixin _child--upgraded() {
-  transition: none;
-}
-
-// Animation
-
-@mixin _anim() {
+@mixin _animation() {
   $md3-checkbox-indeterminate-change-duration_: 500ms;
 
-  &-unchecked-checked,
-  &-unchecked-indeterminate,
-  &-checked-unchecked,
-  &-indeterminate-unchecked {
+  .md3-checkbox--anim-unchecked-checked,
+  .md3-checkbox--anim-unchecked-indeterminate,
+  .md3-checkbox--anim-checked-unchecked,
+  .md3-checkbox--anim-indeterminate-unchecked {
     .md3-checkbox__background {
       animation-duration: $_transition-duration * 2;
       animation-timing-function: linear;
@@ -174,7 +150,7 @@ $_indeterminate-checked-easing-function: cubic-bezier(0.14, 0, 0, 1) !default;
 
   // stylelint-disable no-unknown-animations -- Asterisk is treated as
   // animation name. Supress the lint warning.
-  &-unchecked-checked {
+  .md3-checkbox--anim-unchecked-checked {
     .md3-checkbox__checkmark-path {
       // Instead of delaying the animation, we simply multiply its length by 2 and begin the
       // animation at 50% in order to prevent a flash of styles applied to a checked checkmark
@@ -185,7 +161,7 @@ $_indeterminate-checked-easing-function: cubic-bezier(0.14, 0, 0, 1) !default;
     }
   }
 
-  &-unchecked-indeterminate {
+  .md3-checkbox--anim-unchecked-indeterminate {
     .md3-checkbox__mixedmark {
       animation: md3-checkbox-unchecked-indeterminate-mixedmark
         $_transition-duration linear 0s;
@@ -193,7 +169,7 @@ $_indeterminate-checked-easing-function: cubic-bezier(0.14, 0, 0, 1) !default;
     }
   }
 
-  &-checked-unchecked {
+  .md3-checkbox--anim-checked-unchecked {
     .md3-checkbox__checkmark-path {
       animation: md3-checkbox-checked-unchecked-checkmark-path
         $_transition-duration linear 0s;
@@ -201,7 +177,7 @@ $_indeterminate-checked-easing-function: cubic-bezier(0.14, 0, 0, 1) !default;
     }
   }
 
-  &-checked-indeterminate {
+  .md3-checkbox--anim-checked-indeterminate {
     .md3-checkbox__checkmark {
       animation: md3-checkbox-checked-indeterminate-checkmark
         $_transition-duration linear 0s;
@@ -215,7 +191,7 @@ $_indeterminate-checked-easing-function: cubic-bezier(0.14, 0, 0, 1) !default;
     }
   }
 
-  &-indeterminate-checked {
+  .md3-checkbox--anim-indeterminate-checked {
     .md3-checkbox__checkmark {
       animation: md3-checkbox-indeterminate-checked-checkmark
         $md3-checkbox-indeterminate-change-duration_ linear 0s;
@@ -229,7 +205,7 @@ $_indeterminate-checked-easing-function: cubic-bezier(0.14, 0, 0, 1) !default;
     }
   }
 
-  &-indeterminate-unchecked {
+  .md3-checkbox--anim-indeterminate-unchecked {
     .md3-checkbox__mixedmark {
       animation: md3-checkbox-indeterminate-unchecked-mixedmark
         $md3-checkbox-indeterminate-change-duration_ * 0.6 linear 0s;
@@ -274,14 +250,8 @@ $_indeterminate-checked-easing-function: cubic-bezier(0.14, 0, 0, 1) !default;
   inset: 0;
   box-sizing: border-box;
   width: 100%;
-  opacity: 0;
   border: none;
-
   transition: transition-exit(opacity, 0ms, $_transition-duration * 2);
-
-  .md3-checkbox--upgraded & {
-    opacity: 1;
-  }
 }
 
 @mixin _checkmark--checked() {
