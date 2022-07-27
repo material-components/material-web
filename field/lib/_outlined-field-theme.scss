@@ -9,6 +9,7 @@
 @use 'sass:map';
 @use 'sass:string';
 @use '@material/web/sass/resolvers';
+@use '@material/web/sass/shape';
 @use '@material/web/sass/theme';
 @use '@material/web/sass/var';
 @use '@material/web/tokens';
@@ -97,13 +98,19 @@ $dark-theme: values(
 );
 
 @function _resolve-theme($theme, $resolvers) {
-  @return label-theme.resolve-theme($theme, $resolvers);
+  $theme: label-theme.resolve-theme($theme, $resolvers);
+  $theme: shape.resolve-theme(
+    $theme,
+    map.get($resolvers, shape),
+    container-shape
+  );
+  @return $theme;
 }
 
 @mixin theme($theme, $resolvers: resolvers.$material) {
   // Add resolved tokens so that $theme may specify them.
   $reference: map.merge($light-theme, _resolve-theme($light-theme, $resolvers));
-  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: theme.validate-theme($reference, $theme);
   $theme: _resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, outlined-field);
 
@@ -128,7 +135,14 @@ $dark-theme: values(
   }
 
   @include _container-padding-horizontal($theme);
-  @include _container-shape(map.get($theme, container-shape));
+  @include _container-shape(
+    (
+      start-start: map.get($theme, container-shape-start-start),
+      start-end: map.get($theme, container-shape-start-end),
+      end-end: map.get($theme, container-shape-end-end),
+      end-start: map.get($theme, container-shape-end-start),
+    )
+  );
   @include _outline-color(
     (
       default: map.get($theme, outline-color),
@@ -169,22 +183,32 @@ $dark-theme: values(
   // and is mirrored in the container padding to align the content and resting
   // label with the adjusted floating label.
   $padding: map.get($theme, container-padding-horizontal);
-  $shape: map.get($theme, container-shape);
+  $shape-start: max(
+    map.get($theme, container-shape-start-start),
+    map.get($theme, container-shape-end-start)
+  );
+  $shape-end: max(
+    map.get($theme, container-shape-start-end),
+    map.get($theme, container-shape-end-end)
+  );
   $label-padding: map.get($theme, outline-label-padding);
 
   .md3-field__outline-start,
   .md3-field__start {
-    padding-inline-start: max($padding, $shape + $label-padding);
+    padding-inline-start: max($padding, $shape-start + $label-padding);
   }
 
   .md3-field__end {
-    padding-inline-end: max($padding, $shape);
+    padding-inline-end: max($padding, $shape-end);
   }
 }
 
 @mixin _container-shape($shape) {
   .md3-field__outline {
-    border-radius: $shape;
+    border-start-start-radius: map.get($shape, start-start);
+    border-start-end-radius: map.get($shape, start-end);
+    border-end-end-radius: map.get($shape, end-end);
+    border-end-start-radius: map.get($shape, end-start);
   }
 }
 

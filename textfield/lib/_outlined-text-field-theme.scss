@@ -98,7 +98,10 @@ $_reference-theme: map.merge(
 
   $field-theme: (
     container-height: map.get($theme, container-height),
-    container-shape: map.get($theme, container-shape),
+    container-shape-start-start: map.get($theme, container-shape-start-start),
+    container-shape-start-end: map.get($theme, container-shape-start-end),
+    container-shape-end-end: map.get($theme, container-shape-end-end),
+    container-shape-end-start: map.get($theme, container-shape-end-start),
     disabled-content-color: map.get($theme, disabled-input-text-color),
     disabled-content-opacity: map.get($theme, disabled-input-text-opacity),
     disabled-label-text-color: map.get($theme, disabled-label-text-color),
