@@ -65,20 +65,17 @@ $selectors: (
 
   $shape: map.get($theme, container-shape);
   @include _set-shape-radius($shape);
-}
 
-@mixin container-padding($padding) {
-  padding-inline-start: $padding;
-  padding-inline-end: $padding;
-}
-
-@mixin container-with-icon-padding($icon-padding) {
-  &.md3-button--icon-trailing {
-    padding-inline-end: $icon-padding;
-  }
-
+  // TODO(b/181413732): Verify tokens below are named correctly
+  padding-inline-start: map.get($theme, 'spacing-leading');
+  padding-inline-end: map.get($theme, 'spacing-trailing');
   &.md3-button--icon-leading {
-    padding-inline-start: $icon-padding;
+    padding-inline-start: map.get($theme, 'with-icon-spacing-leading');
+    padding-inline-end: map.get($theme, 'with-icon-spacing-trailing');
+  }
+  &.md3-button--icon-trailing {
+    padding-inline-start: map.get($theme, 'with-trailing-icon-spacing-leading');
+    padding-inline-end: map.get($theme, 'with-trailing-icon-spacing-trailing');
   }
 }
 
