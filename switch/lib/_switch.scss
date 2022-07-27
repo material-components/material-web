@@ -100,7 +100,7 @@ $icon-enter-duration: $animation-duration - $icon-exit-duration;
     }
   }
 
-  input {
+  .md3-switch__input {
     @include _input;
   }
 }

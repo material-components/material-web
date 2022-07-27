@@ -92,6 +92,7 @@ export class Switch extends ActionElement {
       </button>
 
       <input
+        class="md3-switch__input"
         type="checkbox"
         aria-hidden="true"
         name="${this.name}"
