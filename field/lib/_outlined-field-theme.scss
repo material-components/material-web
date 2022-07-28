@@ -194,12 +194,14 @@ $dark-theme: values(
   $label-padding: map.get($theme, outline-label-padding);
 
   .md3-field__outline-start,
-  .md3-field__start {
+  &:not(.md3-field--with-start) .md3-field__start {
     padding-inline-start: max($padding, $shape-start + $label-padding);
   }
 
-  .md3-field__end {
-    padding-inline-end: max($padding, $shape-end);
+  &:not(.md3-field--with-end) {
+    .md3-field__end {
+      padding-inline-end: max($padding, $shape-end);
+    }
   }
 }
 

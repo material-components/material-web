@@ -19,6 +19,15 @@ export class Field extends LitElement {
   @property({type: Boolean}) populated = false;
   @property({type: Boolean}) required = false;
 
+  /**
+   * Whether or not the field has leading content.
+   */
+  @property({type: Boolean}) hasStart = false;
+  /**
+   * Whether or not the field has trailing content.
+   */
+  @property({type: Boolean}) hasEnd = false;
+
   @state() protected focused = false;
   @state() protected isAnimating = false;
 
@@ -59,6 +68,8 @@ export class Field extends LitElement {
     return {
       'md3-field--disabled': this.disabled,
       'md3-field--error': this.error,
+      'md3-field--with-start': this.hasStart,
+      'md3-field--with-end': this.hasEnd,
       'md3-field--populated': this.populated,
       'md3-field--required': this.required,
       'md3-field--no-label': !this.label,

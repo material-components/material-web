@@ -9,11 +9,7 @@
 @use 'sass:map';
 
 @mixin theme-styles($theme) {
-  @include _container-height(map.get($theme, container-height));
-}
-
-@mixin _container-height($height) {
   .md3-field__container {
-    flex-basis: $height;
+    flex-basis: map.get($theme, container-height);
   }
 }

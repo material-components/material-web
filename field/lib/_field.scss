@@ -26,4 +26,26 @@
     flex: 1;
     position: relative;
   }
+
+  .md3-field--disabled {
+    pointer-events: none;
+  }
+
+  // TODO(b/239188049): remove when layout tokens are ready
+  .md3-field--with-start .md3-field__start,
+  .md3-field--with-end .md3-field__end {
+    min-width: 48px;
+  }
+
+  .md3-field--with-start {
+    .md3-field__start {
+      margin-inline-end: 4px;
+    }
+  }
+
+  .md3-field--with-end {
+    .md3-field__end {
+      margin-inline-start: 4px;
+    }
+  }
 }

@@ -314,12 +314,16 @@ $dark-theme: values(
 }
 
 @mixin _container-padding-horizontal($padding) {
-  .md3-field__start {
-    padding-inline-start: $padding;
+  &:not(.md3-field--with-start) {
+    .md3-field__start {
+      padding-inline-start: $padding;
+    }
   }
 
-  .md3-field__end {
-    padding-inline-end: $padding;
+  &:not(.md3-field--with-end) {
+    .md3-field__end {
+      padding-inline-end: $padding;
+    }
   }
 }
 
