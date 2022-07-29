@@ -33,17 +33,26 @@ export class MdFilledTextField extends FilledTextField {
 
   /** @soyTemplate */
   protected override renderField(): TemplateResult {
+    // TODO(b/239690585): move start/end slots to renderFieldContent
     return html`
       <md-filled-field
         class="md3-text-field__field"
         id=${this.fieldId}
         ?disabled=${this.disabled}
-        .error=${this.error}
+        ?error=${this.error}
+        ?hasEnd=${this.hasTrailingIcon}
+        ?hasStart=${this.hasLeadingIcon}
         .label=${this.label}
-        .populated=${!!this.value}
-        .required=${this.required}
+        ?populated=${!!this.value}
+        ?required=${this.required}
       >
+        <span slot="start">
+          ${this.renderLeadingIcon()}
+        </span>
         ${this.renderFieldContent()}
+        <span slot="end">
+          ${this.renderTrailingIcon()}
+        </span>
       </md-filled-field>
     `;
   }

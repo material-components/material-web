@@ -11,7 +11,7 @@ import {FormController, getFormValue} from '@material/web/controller/form-contro
 import {stringConverter} from '@material/web/controller/string-converter';
 import {ariaProperty} from '@material/web/decorators/aria-property';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
-import {property, query, state} from 'lit/decorators';
+import {property, query, queryAssignedElements, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 import {live} from 'lit/directives/live';
@@ -69,6 +69,14 @@ export class TextField extends LitElement {
    * The ID on the field element, used for SSR.
    */
   @property({type: String}) fieldId = 'field';
+  /**
+   * Whether or not the text field has a leading icon. Used for SSR.
+   */
+  @property({type: Boolean}) hasLeadingIcon = false;
+  /**
+   * Whether or not the text field has a trailing icon. Used for SSR.
+   */
+  @property({type: Boolean}) hasTrailingIcon = false;
 
   // ARIA
   // TODO(b/210730484): replace with @soyParam annotation
@@ -107,6 +115,11 @@ export class TextField extends LitElement {
   @state() protected dirty = false;
   @query('.md3-text-field__input')
   protected readonly input?: HTMLInputElement|null;
+
+  @queryAssignedElements({slot: 'leadingicon'})
+  private readonly leadingIcons!: Element[];
+  @queryAssignedElements({slot: 'trailingicon'})
+  private readonly trailingIcons!: Element[];
 
   constructor() {
     super();
@@ -159,30 +172,54 @@ export class TextField extends LitElement {
 
   /** @soyTemplate */
   protected renderFieldContent(): TemplateResult {
+    const prefix = this.renderPrefix();
+    const suffix = this.renderSuffix();
+    const input = this.renderInput();
+
+    return html`${prefix}${input}${suffix}`;
+  }
+
+  /** @soyTemplate */
+  protected renderLeadingIcon(): TemplateResult {
+    return html`
+      <span class="md3-text-field__icon md3-text-field__icon--leading">
+        <slot name="leadingicon" @slotchange=${this.handleIconChange}></slot>
+      </span>
+    `;
+  }
+
+  /** @soyTemplate */
+  protected renderTrailingIcon(): TemplateResult {
+    return html`
+      <span class="md3-text-field__icon md3-text-field__icon--trailing">
+        <slot name="trailingicon" @slotchange=${this.handleIconChange}></slot>
+      </span>
+    `;
+  }
+
+  /** @soyTemplate */
+  protected renderInput(): TemplateResult {
     // TODO(b/237281840): replace ternary operators with double pipes
     // TODO(b/237283903): remove when custom isTruthy directive is supported
     const placeholderValue = this.placeholder ? this.placeholder : undefined;
     const ariaLabelledByValue =
         this.ariaLabelledBy ? this.ariaLabelledBy : this.fieldId;
 
-    const prefix = this.renderPrefix();
-    const suffix = this.renderSuffix();
-
-    return html`${prefix}<input
-        class="md3-text-field__input"
-        aria-invalid=${this.error}
-        aria-label=${ifDefined(this.ariaLabel)}
-        aria-labelledby=${ariaLabelledByValue}
-        ?disabled=${this.disabled}
-        placeholder=${ifDefined(placeholderValue)}
-        ?readonly=${this.readonly}
-        ?required=${this.required}
-        type=${this.type}
-        .value=${live(this.value)}
-        @change=${this.redispatchEvent}
-        @input=${this.handleInput}
-        @select=${this.redispatchEvent}
-      >${suffix}`;
+    return html`<input
+      class="md3-text-field__input"
+      aria-invalid=${this.error}
+      aria-label=${ifDefined(this.ariaLabel)}
+      aria-labelledby=${ariaLabelledByValue}
+      ?disabled=${this.disabled}
+      placeholder=${ifDefined(placeholderValue)}
+      ?readonly=${this.readonly}
+      ?required=${this.required}
+      type=${this.type}
+      .value=${live(this.value)}
+      @change=${this.redispatchEvent}
+      @input=${this.handleInput}
+      @select=${this.redispatchEvent}
+    >`;
   }
 
   /** @soyTemplate */
@@ -223,5 +260,10 @@ export class TextField extends LitElement {
 
   protected redispatchEvent(event: Event) {
     redispatchEvent(this, event);
+  }
+
+  private handleIconChange() {
+    this.hasLeadingIcon = this.leadingIcons.length > 0;
+    this.hasTrailingIcon = this.trailingIcons.length > 0;
   }
 }

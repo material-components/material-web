@@ -11,6 +11,7 @@
 @use '@material/web/sass/theme';
 @use '@material/web/sass/typography';
 @use '@material/web/tokens';
+@use './icon-theme';
 @use './input-theme';
 
 $light-theme: tokens.md-comp-outlined-text-field-values();
@@ -95,6 +96,7 @@ $_reference-theme: map.merge(
   $theme: theme.create-theme-vars($theme, outlined-text-field);
 
   @include input-theme.theme-styles($theme);
+  @include icon-theme.theme-styles($theme);
 
   $field-theme: (
     container-height: map.get($theme, container-height),

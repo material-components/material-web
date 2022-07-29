@@ -12,6 +12,7 @@
 @use '@material/web/sass/typography';
 @use '@material/web/sass/var';
 @use '@material/web/tokens';
+@use './icon-theme';
 @use './input-theme';
 
 $light-theme: tokens.md-comp-filled-text-field-values();
@@ -95,6 +96,7 @@ $_reference-theme: map.merge(
   $theme: theme.create-theme-vars($theme, filled-text-field);
 
   @include input-theme.theme-styles($theme);
+  @include icon-theme.theme-styles($theme);
 
   $field-theme: (
     active-indicator-color: map.get($theme, active-indicator-color),

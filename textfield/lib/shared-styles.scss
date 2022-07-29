@@ -3,8 +3,10 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+@use './icon';
 @use './input';
 @use './text-field';
 
 @include text-field.static-styles;
 @include input.static-styles;
+@include icon.static-styles;
