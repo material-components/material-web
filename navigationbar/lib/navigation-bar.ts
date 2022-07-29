@@ -5,7 +5,7 @@
  */
 
 import {KEY, normalizeKey} from '@material/dom/keyboard';
-import {ariaProperty} from '@material/mwc-base/aria-property';
+import {AnyDuringAriaMigration, ariaProperty} from '@material/mwc-base/aria-property';
 import {observer} from '@material/mwc-base/observer';
 import {deepActiveElementPath} from '@material/mwc-base/utils';
 import {NavigationTab} from '@material/web/navigationtab/lib/navigation-tab';
@@ -48,7 +48,7 @@ export class NavigationBar extends LitElement implements NavigationBarState {
   /** @soyPrefixAttribute */  // tslint:disable-next-line:no-new-decorators
   @ariaProperty
   @property({attribute: 'aria-label'})
-  override ariaLabel?: string;
+  override ariaLabel: string|AnyDuringAriaMigration;
 
   /** @soyTemplate */
   override render(): TemplateResult {

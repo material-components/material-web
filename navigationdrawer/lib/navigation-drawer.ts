@@ -5,7 +5,7 @@
  */
 
 // TODO(b/231221156): remove compat dependencies
-import {ariaProperty as legacyAriaProperty} from '@material/web/compat/base/aria-property';
+import {AnyDuringAriaMigration, ariaProperty as legacyAriaProperty} from '@material/web/compat/base/aria-property';
 import {observer} from '@material/web/compat/base/observer';
 import {ariaProperty} from '@material/web/decorators/aria-property';
 import {html, LitElement, TemplateResult} from 'lit';
@@ -24,7 +24,7 @@ export class NavigationDrawer extends LitElement {
   // tslint:disable-next-line:no-new-decorators
   @ariaProperty
   @property({type: String, attribute: 'data-aria-label', noAccessor: true})
-  override ariaLabel: string|undefined;
+  override ariaLabel: string|AnyDuringAriaMigration;
 
   // tslint:disable-next-line:no-new-decorators
   @ariaProperty

@@ -117,3 +117,11 @@ export function ariaProperty(
     throw new Error('@ariaProperty only supports TypeScript Decorators');
   }
 }
+
+/**
+ * A temporary alias for the time of AriaMixin properties type migration from
+ * (string|undefined) to (string|null).
+ */
+// tslint:disable:ban-types
+// tslint:disable-next-line:no-any
+export type AnyDuringAriaMigration = any;
