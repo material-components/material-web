@@ -8,6 +8,7 @@
 
 import {redispatchEvent} from '@material/web/controller/events';
 import {FormController, getFormValue} from '@material/web/controller/form-controller';
+import {stringConverter} from '@material/web/controller/string-converter';
 import {ariaProperty} from '@material/web/decorators/aria-property';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators';
@@ -32,7 +33,6 @@ export type UnsupportedTextFieldType =
  */
 export type InvalidTextFieldType =
     'button'|'checkbox'|'hidden'|'image'|'radio'|'range'|'reset'|'submit';
-
 
 /** @soyCompatible */
 export class TextField extends LitElement {
@@ -84,14 +84,16 @@ export class TextField extends LitElement {
     return this.closest('form');
   }
 
-  @property({type: String, reflect: true}) name = '';
+  @property({type: String, reflect: true, converter: stringConverter})
+  name = '';
 
   [getFormValue]() {
     return this.value;
   }
 
   // <input> properties
-  @property({type: String, reflect: true}) placeholder = '';
+  @property({type: String, reflect: true, converter: stringConverter})
+  placeholder = '';
   @property({type: Boolean, reflect: true}) readonly = false;
   // TODO(b/237284412): replace with exported types
   @property({type: String, reflect: true})
