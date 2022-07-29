@@ -212,6 +212,24 @@
 }
 
 ///
+/// Container start padding sets the given padding as the starting padding for
+/// the container. It uses CSS logical properties.
+/// @param {Number} $padding - the padding to use.
+///
+@mixin container-start-padding($padding) {
+  padding-inline-start: $padding;
+}
+
+///
+/// Container end padding sets the given padding as the ending padding for
+/// the container. It uses CSS logical properties.
+/// @param {Number} $padding - the padding to use.
+///
+@mixin container-end-padding($padding) {
+  padding-inline-end: $padding;
+}
+
+///
 /// Icon label color sets the color of the icon.
 /// @param {Color} $color - the color of the icon.
 ///

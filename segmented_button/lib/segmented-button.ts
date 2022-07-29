@@ -108,7 +108,6 @@ export class SegmentedButton extends ActionElement {
 
   /** @soyTemplate */
   override render(): TemplateResult {
-    // TODO(b/219531586): Remove clickmod handler once resolved.
     return html`
       <button
         tabindex="${this.disabled ? '-1' : '0'}"
@@ -123,7 +122,6 @@ export class SegmentedButton extends ActionElement {
         @pointerleave="${this.handlePointerLeave}"
         @pointerenter="${this.handlePointerEnter}"
         @click="${this.handleClick}"
-        @clickmod="${this.handleClick}"
         @contextmenu="${this.handleContextMenu}"
         class="md3-segmented-button ${classMap(this.getRenderClasses())}">
         ${this.renderFocusRing()}

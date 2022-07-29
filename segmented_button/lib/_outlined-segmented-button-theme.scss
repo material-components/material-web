@@ -24,8 +24,16 @@ $dark-theme: tokens.md-comp-outlined-segmented-button-values(
     $theme,
     $require-all: false
   );
+  $theme: _extend-theme($theme);
   $theme: segmented-button-theme.resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, 'segmented-button');
+
+  @include segmented-button-theme.container-start-padding(
+    map.get($theme, 'spacing-leading')
+  );
+  @include segmented-button-theme.container-end-padding(
+    map.get($theme, 'spacing-trailing')
+  );
 
   @include segmented-button-theme.unselected-ripple(
     (
@@ -139,4 +147,21 @@ $dark-theme: tokens.md-comp-outlined-segmented-button-values(
       'disabled': map.get($theme, 'disabled-label-text-color'),
     )
   );
+}
+
+///
+/// Applies missing tokens to the given theme. This is a temporary function
+/// that will be deleted once the corresponding tokens are added to the design
+/// system information.
+///
+@function _extend-theme($theme) {
+  // TODO(b/198759625): Remove spacing tokens once provided.
+  $theme: map.merge(
+    $theme,
+    (
+      'spacing-leading': 12px,
+      'spacing-trailing': 12px,
+    )
+  );
+  @return $theme;
 }
