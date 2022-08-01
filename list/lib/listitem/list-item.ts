@@ -19,6 +19,7 @@ export class ListItem extends ActionElement {
   @property({type: String}) multiLineSupportingText = '';
   @property({type: String}) trailingSupportingText = '';
   @property({type: Boolean}) disabled = false;
+  @property({type: String}) headline = '';
   @query('md-ripple') ripple!: MdRipple;
 
   /** @soyTemplate */
@@ -81,7 +82,7 @@ export class ListItem extends ActionElement {
   protected renderBody(): TemplateResult {
     return html`<div class="md3-list-item__body"><!--
        --><span class="md3-list-item__label-text"><!--
-          --><slot @slotchange=${this.handleSlotChange}></slot><!--
+          -->${this.headline}<!--
        --></span><!--
         -->${
         this.multiLineSupportingText !== '' ?

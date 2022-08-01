@@ -96,10 +96,9 @@ $light-theme: tokens.md-comp-list-values();
         map.get($theme, list-item-trailing-supporting-text-line-height),
     )
   );
-
   @include _set-trailing-supporting-text-ink-color(
     (
-      default: map.get($theme, trailing-supporting-text-color),
+      default: map.get($theme, list-item-trailing-supporting-text-color),
     )
   );
 
