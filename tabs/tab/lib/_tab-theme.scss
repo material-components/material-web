@@ -171,9 +171,11 @@ $_theme-extension-keys: (
 }
 
 @mixin icon-size($size) {
-  block-size: $size;
-  inline-size: $size;
-  font-size: $size;
+  .md3-tab__icon {
+    block-size: $size;
+    inline-size: $size;
+    font-size: $size;
+  }
 }
 
 @mixin label-text-font-family($font-family) {
