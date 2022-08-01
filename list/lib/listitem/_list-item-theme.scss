@@ -298,19 +298,19 @@ $light-theme: tokens.md-comp-list-values();
 
 @mixin _set-one-line-container-height($height) {
   &.md3-list-item--with-one-line {
-    height: $height;
+    min-height: $height;
   }
 }
 
 @mixin _set-two-line-container-height($height) {
   &.md3-list-item--with-two-line {
-    height: $height;
+    min-height: $height;
   }
 }
 
 @mixin _set-three-line-container-height($height) {
   &.md3-list-item--with-three-line {
-    height: $height;
+    min-height: $height;
   }
 }
 

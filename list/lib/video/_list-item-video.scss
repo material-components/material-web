@@ -7,8 +7,12 @@
 // Selector '.md3-*' should only be used in this project.
 
 @mixin static-styles() {
+  display: inline-flex;
+
   .md3-list-item__video {
     display: inline-flex;
+    margin-block-end: 12px;
+    margin-block-start: 12px;
     object-fit: cover;
   }
 }
