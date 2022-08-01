@@ -13,7 +13,10 @@ export class ListItemAvatar extends LitElement {
   @property({type: String, reflect: true}) avatar = '';
   @property({type: String, reflect: true}) altText?: string;
 
-  /** @soyTemplate */
+  /**
+   * @soyTemplate
+   * @soyClasses imageClasses: .md3-list-item__avatar
+   */
   override render(): TemplateResult {
     return html`
        <img src="${this.avatar}" alt="${ifDefined(this.altText)}"
