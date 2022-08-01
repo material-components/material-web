@@ -4,58 +4,37 @@
 //
 
 // stylelint-disable selector-class-pattern --
-// Selector '.mdc-*' should only be used in this project.
+// Selector '.md3-*' should only be used in this project.
 
 @mixin static-styles() {
   :host {
-    @include host-root;
+    display: inline-flex;
   }
 
-  .mdc-formfield {
-    @include root;
-
-    .mdc-formfield__label {
-      @include label;
-    }
+  .md3-formfield {
+    align-items: center;
+    display: inline-flex;
+    vertical-align: middle;
+    width: 100%;
   }
 
-  .mdc-formfield--align-end .mdc-formfield__label {
-    @include align-end;
+  .md3-formfield__label {
+    margin-inline: 0 auto;
+    order: 0;
+    padding-inline: 4px 0;
   }
 
-  .mdc-formfield--space-between {
-    @include space-between;
+  .md3-formfield--align-end .md3-formfield__label {
+    margin-inline: auto 0;
+    order: -1;
+    padding-inline: 0 4px;
   }
-}
 
-@mixin host-root() {
-  display: inline-flex;
-}
+  .md3-formfield--space-between {
+    justify-content: space-between;
+  }
 
-@mixin root() {
-  align-items: center;
-  display: inline-flex;
-  vertical-align: middle;
-  width: 100%;
-}
-
-@mixin label() {
-  margin-inline: 0 auto;
-  padding-inline: 4px 0;
-
-  order: 0;
-}
-@mixin align-end() {
-  margin-inline: auto 0;
-  padding-inline: 0 4px;
-
-  order: -1;
-}
-
-@mixin space-between() {
-  justify-content: space-between;
-
-  .mdc-formfield__label {
+  .md3-formfield--space-between .md3-formfield__label {
     margin: 0;
   }
 }
