@@ -18,7 +18,8 @@ export class List extends LitElement {
 
   items: ListItem[] = [];
 
-  @queryAssignedElements() protected assignedElements!: HTMLElement[]|null;
+  @queryAssignedElements({flatten: true})
+  protected assignedElements!: HTMLElement[]|null;
 
   override firstUpdated(changedProperties: PropertyValues) {
     super.firstUpdated(changedProperties);

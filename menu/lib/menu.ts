@@ -26,7 +26,7 @@ import {MDCMenuFoundation} from './foundation';
 export type DefaultFocusState = keyof typeof DefaultFocusStateEnum;
 
 interface ActionDetail {
-  index: number;
+  item: ListItem;
 }
 
 /**
@@ -293,9 +293,7 @@ export abstract class Menu extends LitElement {
   protected onAction(evt: CustomEvent<ActionDetail>) {
     const listElement = this.listElement;
     if (this.mdcFoundation && listElement) {
-      const index = evt.detail.index;
-
-      const el = listElement.items[index];
+      const el = evt.detail.item;
 
       if (el) {
         this.mdcFoundation.handleItemAction(el);

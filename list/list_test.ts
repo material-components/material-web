@@ -10,8 +10,6 @@ import './list-item';
 import {Environment} from '@material/web/testing/environment';
 import {html} from 'lit';
 
-import {MdList} from './list';
-
 const LIST_TEMPLATE = html`
   <md-list>
     <md-list-item>One</md-list-item>
