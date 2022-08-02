@@ -3,50 +3,25 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// TODO(b/228217731): Remove MDC/MWC dependencies
 @use 'sass:map';
-@use '@material/web/compat/theme/state';
-@use '@material/web/sass/resolvers';
 @use '@material/web/sass/theme';
-
-$selectors: (
-  disabled: '.md3-list--disabled',
-);
+@use './tokens';
 
 $light-theme: (
-  color: unset,
+  container-color:
+    map.get(tokens.md-comp-list-values(), list-item-container-color),
 );
 
-@function _resolve-theme($theme, $resolvers) {
-  @return $theme;
-}
-
-@mixin theme($theme, $resolvers: resolvers.$material) {
+@mixin theme($theme) {
   $theme: theme.validate-theme($light-theme, $theme);
-  $theme: _resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, list);
 
   @include theme.emit-theme-vars($theme);
 }
 
-@mixin theme-styles($theme, $resolvers: resolvers.$material) {
+@mixin theme-styles($theme) {
   $theme: theme.validate-theme-styles($light-theme, $theme);
-  $theme: _resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, list);
 
-  @include _colors(
-    (
-      default: map.get($theme, color),
-    )
-  );
-}
-
-@mixin _colors($colors) {
-  @include state.enabled($selectors) {
-    @include _set-color(state.get-default-state($colors));
-  }
-}
-
-@mixin _set-color($color) {
-  color: $color;
+  background-color: map.get($theme, container-color);
 }
