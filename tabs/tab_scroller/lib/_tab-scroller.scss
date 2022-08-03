@@ -7,8 +7,6 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@use '../../tab/lib/tab' as tab-mixins;
-
 @mixin static-styles() {
   @include core-styles();
 }
@@ -48,19 +46,7 @@
   }
 
   .md3-tab-scroller__scroll-content {
-    @include _scroll-content();
-  }
-
-  .md3-tab-scroller--align-start .md3-tab-scroller__scroll-content {
-    justify-content: flex-start;
-  }
-
-  .md3-tab-scroller--align-end .md3-tab-scroller__scroll-content {
-    justify-content: flex-end;
-  }
-
-  .md3-tab-scroller--align-center .md3-tab-scroller__scroll-content {
-    justify-content: center;
+    @include scroll-content();
   }
 
   .md3-tab-scroller--animating {
@@ -70,13 +56,22 @@
   }
 }
 
-//
-// Private
-//
-
-@mixin _scroll-content() {
-  @include tab-mixins.parent-positioning();
-
+@mixin scroll-content() {
   display: flex;
   flex: 1 0 auto;
+  position: relative;
+}
+
+@mixin scroll-content-alignment() {
+  .md3-tab-scroller--align-start & {
+    justify-content: flex-start;
+  }
+
+  .md3-tab-scroller--align-end & {
+    justify-content: flex-end;
+  }
+
+  .md3-tab-scroller--align-center & {
+    justify-content: center;
+  }
 }

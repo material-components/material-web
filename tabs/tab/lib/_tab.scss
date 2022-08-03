@@ -102,12 +102,8 @@ $horizontal-padding: 24px;
 }
 
 @mixin horizontal-padding($padding) {
-  padding-block-start: $padding;
-  padding-block-end: $padding;
-}
-
-@mixin parent-positioning() {
-  position: relative;
+  padding-inline-start: $padding;
+  padding-inline-end: $padding;
 }
 
 @mixin fixed-width($width) {

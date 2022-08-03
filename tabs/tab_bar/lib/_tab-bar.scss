@@ -10,6 +10,7 @@
 // TODO(b/228217731): Remove compat dependencies
 @use '@material/web/compat/density/density';
 @use '../../tab/lib/tab' as tab-variables;
+@use '../../tab_scroller/lib/tab-scroller' as tab-scroller-mixins;
 
 $height: tab-variables.$height;
 $minimum-height: 30px;
@@ -51,7 +52,8 @@ $stacked-density-config: (
   }
 
   .md3-tab-bar__scroller-content {
-    display: flex;
+    @include tab-scroller-mixins.scroll-content();
+    @include tab-scroller-mixins.scroll-content-alignment();
   }
 }
 
