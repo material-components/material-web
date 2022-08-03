@@ -73,7 +73,6 @@ $_animation-duration: 150ms;
   pointer-events: none;
   height: 100%;
   position: absolute;
-  transition: animation.standard(border-color, $_animation-duration);
   width: 100%;
 }
 

@@ -222,6 +222,7 @@ export class Field extends LitElement {
     //
     // Re-calculating the animation each time will prevent any visual glitches
     // from appearing.
+    // TODO(b/241113345): use animation tokens
     const animation =
         labelEl.animate(keyframes, {duration: 150, easing: Easing.STANDARD});
 
