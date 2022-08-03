@@ -6,17 +6,22 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
+@use '../../motion/animation';
+
 @mixin static-styles() {
   .md3-field__supporting-text {
     display: flex;
     justify-content: space-between;
+    opacity: 0;
+    transition: animation.standard(opacity, 150ms);
   }
 
-  .md3-field__supporting-text,
+  .md3-field__supporting-text--visible {
+    opacity: 1;
+  }
+
+  .md3-field__supporting-text-start,
   .md3-field__supporting-text-end {
-    ::slotted(:not(:empty)) {
-      // Can't be an inline display element (<span>) for padding-top to work.
-      display: inline-flex;
-    }
+    display: flex;
   }
 }

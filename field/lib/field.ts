@@ -18,6 +18,7 @@ export class Field extends LitElement {
   @property({type: String}) label?: string;
   @property({type: Boolean}) populated = false;
   @property({type: Boolean}) required = false;
+  @property({type: Boolean}) showSupportingText = false;
 
   /**
    * Whether or not the field has leading content.
@@ -137,8 +138,13 @@ export class Field extends LitElement {
 
   /** @soyTemplate */
   protected renderSupportingText(): TemplateResult {
+    const visible = this.showSupportingText || this.focused;
+    /** @classMap */
+    const classes = {'md3-field__supporting-text--visible': visible};
+
     return html`
-      <span class="md3-field__supporting-text">
+      <span class="md3-field__supporting-text ${classMap(classes)}"
+          aria-hidden=${!visible}>
         <span class="md3-field__supporting-text-start">
           <slot name="supporting-text"></slot>
         </span>

@@ -99,6 +99,7 @@ $dark-theme: values(
 
 @function _resolve-theme($theme, $resolvers) {
   $theme: label-theme.resolve-theme($theme, $resolvers);
+  $theme: supporting-text-theme.resolve-theme($theme, $resolvers);
   $theme: shape.resolve-theme(
     $theme,
     map.get($resolvers, shape),

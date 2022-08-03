@@ -50,7 +50,7 @@
   }
 
   &.md3-field--disabled {
-    .md3-field__supporting-text {
+    .md3-field__supporting-text--visible {
       opacity: map.get($theme, disabled-supporting-text-opacity);
     }
   }
