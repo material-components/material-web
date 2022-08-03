@@ -12,8 +12,14 @@
     outline: none;
   }
 
+  .md3-text-field {
+    display: inline-flex;
+    flex: 1;
+  }
+
   .md3-text-field__field {
     cursor: text;
+    flex: 1;
 
     .md3-text-field--disabled & {
       cursor: default;

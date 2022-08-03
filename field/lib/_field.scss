@@ -13,6 +13,7 @@
 
   .md3-field {
     display: inline-flex;
+    flex: 1;
     flex-direction: column;
     // Allow the use of block/inline reflexive RTL properties without impacting
     // structure when languages change.

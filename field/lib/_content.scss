@@ -44,6 +44,7 @@ $_enter-delay: $_label-duration - $_visible-duration;
     //
     // See https://www.w3.org/TR/css-flexbox-1/#baseline-participation
     align-self: baseline;
+    flex: 1;
   }
 
   .md3-field__content {
