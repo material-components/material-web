@@ -17,7 +17,7 @@ import {property, query} from 'lit/decorators';
 
 import {List} from '../../list/lib/list';
 import {ListItem} from '../../list/lib/listitem/list-item';
-import {Corner, MenuCorner, MenuSurface} from '../../menusurface/lib/menu-surface';
+import {Corner, MenuSurface} from '../../menusurface/lib/menu-surface';
 
 import {MDCMenuAdapter} from './adapter';
 import {DefaultFocusState as DefaultFocusStateEnum} from './constants';
@@ -54,7 +54,7 @@ export abstract class Menu extends LitElement {
   // TODO(b/240174946): Add aria-label support.
   // @property({type: String}) ariaLabel: string|null = null;
 
-  @property({type: String}) corner: Corner = 'TOP_START';
+  @property({type: String}) corner: Corner = 'BOTTOM_START';
 
   @property({type: Number}) x: number|null = null;
 
@@ -70,7 +70,7 @@ export abstract class Menu extends LitElement {
 
   @property({type: Boolean}) fullwidth = false;
 
-  @property({type: String}) menuCorner: MenuCorner = 'START';
+  @property({type: Boolean}) flipMenuHorizontally = false;
 
   @property({type: Boolean}) stayOpenOnBodyClick: boolean = false;
 
@@ -126,7 +126,7 @@ export abstract class Menu extends LitElement {
           .absolute=${this.absolute}
           .fixed=${this.fixed}
           .fullwidth=${this.fullwidth}
-          .menuCorner=${this.menuCorner}
+          .flipMenuHorizontally=${this.flipMenuHorizontally}
           ?stayOpenOnBodyClick=${this.stayOpenOnBodyClick}
           class="md3-menu md3-menu-surface"
           @closed=${this.onClosed}

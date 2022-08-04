@@ -21,7 +21,6 @@ import {MDCMenuSurfaceFoundation} from './foundation';
 
 export type Corner = keyof typeof CornerEnum;
 export type AnchorableElement = HTMLElement&{anchor: Element | null};
-export type MenuCorner = 'START'|'END';
 
 // tslint:disable:no-bitwise
 
@@ -120,43 +119,34 @@ export abstract class MenuSurface extends LitElement {
       }
     }
   })
-
   protected bitwiseCorner: CornerEnum = CornerEnum.TOP_START;
-  protected previousMenuCorner: MenuCorner|null = null;
 
-  // must be defined before observer of anchor corner for initialization
-  @property({type: String})
-  @observer(function(this: MenuSurface, value: MenuCorner) {
-    if (this.mdcFoundation) {
-      const isValidValue = value === 'START' || value === 'END';
-      const isFirstTimeSet = this.previousMenuCorner === null;
-      const cornerChanged =
-          !isFirstTimeSet && value !== this.previousMenuCorner;
-      const initiallySetToEnd = isFirstTimeSet && value === 'END';
+  protected previousFlipMenuHorizontally = false;
 
-      if (isValidValue && (cornerChanged || initiallySetToEnd)) {
-        this.bitwiseCorner = this.bitwiseCorner ^ CornerBit.RIGHT;
-        this.mdcFoundation.flipCornerHorizontally();
-        this.previousMenuCorner = value;
-      }
+  /**
+   * Whether to align the menu surface to the opposite side of the default
+   * alignment.
+   */
+  @observer(function(this: MenuSurface, flipMenuHorizontally: boolean) {
+    if (!this.mdcFoundation) return;
+
+    if (this.previousFlipMenuHorizontally !== flipMenuHorizontally) {
+      this.mdcFoundation.flipCornerHorizontally();
     }
+    this.previousFlipMenuHorizontally = flipMenuHorizontally;
   })
-  menuCorner: MenuCorner = 'START';
+  @property({type: Boolean})
+  flipMenuHorizontally = false;
 
   @property({type: String})
   @observer(function(this: MenuSurface, value: Corner) {
     if (this.mdcFoundation) {
       if (value) {
-        let newCorner = stringToCorner[value];
-        if (this.menuCorner === 'END') {
-          newCorner = newCorner ^ CornerBit.RIGHT;
-        }
-
-        this.bitwiseCorner = newCorner;
+        this.bitwiseCorner = stringToCorner[value];
       }
     }
   })
-  corner: Corner = 'TOP_START';
+  corner: Corner = 'BOTTOM_START';
 
   @state() protected styleTop = '';
   @state() protected styleLeft = '';

@@ -63,10 +63,10 @@ const numbers = {
  * Enum for bits in the {@see Corner) bitmap.
  */
 enum CornerBit {
-  BOTTOM = 1,
-  CENTER = 2,
-  RIGHT = 4,
-  FLIP_RTL = 8,
+  BOTTOM = 1,    // 0001
+  CENTER = 2,    // 0010
+  RIGHT = 4,     // 0100
+  FLIP_RTL = 8,  // 1000
 }
 
 /**

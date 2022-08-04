@@ -139,7 +139,7 @@ export class MDCMenuSurfaceFoundation {
   }
 
   /**
-   * Flip menu corner horizontally.
+   * Flips menu corner horizontally.
    */
   flipCornerHorizontally() {
     this.originCorner = this.originCorner ^ CornerBit.RIGHT;
@@ -313,7 +313,7 @@ export class MDCMenuSurfaceFoundation {
     // Compute measurements for autoposition methods reuse.
     this.measurements = this.getAutoLayoutmeasurements();
 
-    const corner = this.getoriginCorner();
+    const corner = this.getOriginCorner();
     const maxMenuSurfaceHeight = this.getMenuSurfaceMaxHeight(corner);
     const verticalAlignment =
         this.hasBit(corner, CornerBit.BOTTOM) ? 'bottom' : 'top';
@@ -399,7 +399,7 @@ export class MDCMenuSurfaceFoundation {
    * Only LEFT or RIGHT bit is used to position the menu surface ignoring RTL
    * context. E.g., menu surface will be positioned from right side on TOP_END.
    */
-  private getoriginCorner(): Corner {
+  private getOriginCorner(): Corner {
     let corner = this.originCorner;
 
     const {viewportDistance, anchorSize, surfaceSize} = this.measurements;
