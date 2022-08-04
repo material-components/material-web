@@ -31,7 +31,6 @@ class TestTextField extends TextField {
     return html`
       <md-filled-field
         class="md3-text-field__field"
-        id=${this.fieldId}
         ?disabled=${this.disabled}
         .error=${this.error}
         .label=${this.label}

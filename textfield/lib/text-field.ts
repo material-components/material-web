@@ -66,10 +66,6 @@ export class TextField extends LitElement {
    */
   @property({type: String}) suffixText = '';
   /**
-   * The ID on the field element, used for SSR.
-   */
-  @property({type: String}) fieldId = 'field';
-  /**
    * Whether or not the text field has a leading icon. Used for SSR.
    */
   @property({type: Boolean}) hasLeadingIcon = false;
@@ -202,14 +198,17 @@ export class TextField extends LitElement {
     // TODO(b/237281840): replace ternary operators with double pipes
     // TODO(b/237283903): remove when custom isTruthy directive is supported
     const placeholderValue = this.placeholder ? this.placeholder : undefined;
+    const ariaLabelValue = this.ariaLabel ? this.ariaLabel :
+        this.label                        ? this.label :
+                                            undefined;
     const ariaLabelledByValue =
-        this.ariaLabelledBy ? this.ariaLabelledBy : this.fieldId;
+        this.ariaLabelledBy ? this.ariaLabelledBy : undefined;
 
     return html`<input
       class="md3-text-field__input"
       aria-invalid=${this.error}
-      aria-label=${ifDefined(this.ariaLabel)}
-      aria-labelledby=${ariaLabelledByValue}
+      aria-label=${ifDefined(ariaLabelValue)}
+      aria-labelledby=${ifDefined(ariaLabelledByValue)}
       ?disabled=${this.disabled}
       placeholder=${ifDefined(placeholderValue)}
       ?readonly=${this.readonly}
