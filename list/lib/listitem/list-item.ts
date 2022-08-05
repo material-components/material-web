@@ -19,15 +19,18 @@ export class ListItem extends ActionElement {
   @property({type: String}) multiLineSupportingText = '';
   @property({type: String}) trailingSupportingText = '';
   @property({type: Boolean}) disabled = false;
+  @property({type: Number}) itemTabIndex = -1;
   @property({type: String}) headline = '';
   @query('md-ripple') ripple!: MdRipple;
+  @query('[data-query-md3-list-item]') listItemRoot!: HTMLElement;
 
   /** @soyTemplate */
   override render(): TemplateResult {
     return html`
       <li
-          tabindex="0"
+          tabindex=${this.itemTabIndex}
           role=${this.getAriaRole()}
+          data-query-md3-list-item
           class="md3-list-item ${classMap(this.getRenderClasses())}"
           @pointerdown=${this.handlePointerDown}
           @pointerenter=${this.handlePointerEnter}
@@ -165,5 +168,14 @@ export class ListItem extends ActionElement {
     e.preventDefault();
     // TODO(b/240124486): Replace with beginPress provided by action element.
     this.ripple.endPress();
+  }
+
+  activate() {
+    this.itemTabIndex = 0;
+    this.listItemRoot.focus();
+  }
+
+  deactivate() {
+    this.itemTabIndex = -1;
   }
 }

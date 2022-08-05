@@ -27,4 +27,28 @@ describe('list tests', () => {
 
     expect(element.items.length).toBe(3);
   });
+
+  it('focusListRoot() should focus on the list element', async () => {
+    const list = env.render(LIST_TEMPLATE).querySelector('md-list')!;
+    await env.waitForStability();
+
+    list.focusListRoot();
+    expect(document.activeElement).toEqual(list);
+  });
+
+  it('activateFirstItem() should focus on the first list item', async () => {
+    const list = env.render(LIST_TEMPLATE).querySelector('md-list')!;
+    await env.waitForStability();
+
+    list.activateFirstItem();
+    expect(document.activeElement).toEqual(list.items[0]);
+  });
+
+  it('activateLastItem() should focus on the last list item', async () => {
+    const list = env.render(LIST_TEMPLATE).querySelector('md-list')!;
+    await env.waitForStability();
+
+    list.activateLastItem();
+    expect(document.activeElement).toEqual(list.items[list.items.length - 1]);
+  });
 });
