@@ -23,11 +23,11 @@ $_hex: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'a' 'b' 'c' 'd' 'e' 'f';
 ///     CSS custom property for comma separated rgb color.
 @function color-var-hex-to-rgba($var, $opacity) {
   @if not var.is-var($var) {
-    @error '#{$var} is not a valid custom property.';
+    @error '"#{$var}" is not a valid custom property.';
   }
 
   @if meta.type-of($opacity) != 'number' {
-    @error '#{$opacity} is not a valid number.';
+    @error '"#{$opacity}" is not a valid number. Expecting to combine it with "#{$var}"';
   }
 
   $fallback: var.fallback($var);
