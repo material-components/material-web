@@ -30,19 +30,36 @@ export class SegmentedButtonSet extends LitElement {
 
   @queryAssignedElements({flatten: true}) buttons!: SegmentedButton[];
 
-  private handleSegmentedButtonInteraction(e: CustomEvent) {
-    const index = this.buttons.indexOf(e.target as SegmentedButton);
-    this.toggleSelection(index);
+  getButtonDisabled(index: number): boolean {
+    if (this.indexOutOfBounds(index)) return false;
+    return this.buttons[index].disabled;
   }
 
-  private toggleSelection(index: number) {
+  setButtonDisabled(index: number, disabled: boolean) {
     if (this.indexOutOfBounds(index)) return;
+    this.buttons[index].disabled = disabled;
+  }
+
+  getButtonSelected(index: number): boolean {
+    if (this.indexOutOfBounds(index)) return false;
+    return this.buttons[index].selected;
+  }
+
+  setButtonSelected(index: number, selected: boolean) {
+    // Ignore out-of-index values.
+    if (this.indexOutOfBounds(index)) return;
+    // Ignore disabled buttons.
+    if (this.getButtonDisabled(index)) return;
+
     if (this.multiselect) {
-      this.buttons[index].selected = !this.buttons[index].selected;
+      this.buttons[index].selected = selected;
       this.emitSelectionEvent(index);
       return;
     }
+
     // Single-select segmented buttons are not unselectable.
+    if (!selected) return;
+
     this.buttons[index].selected = true;
     this.emitSelectionEvent(index);
     // Deselect all other buttons for single-select.
@@ -50,6 +67,16 @@ export class SegmentedButtonSet extends LitElement {
       if (i === index) continue;
       this.buttons[i].selected = false;
     }
+  }
+
+  private handleSegmentedButtonInteraction(e: CustomEvent) {
+    const index = this.buttons.indexOf(e.target as SegmentedButton);
+    this.toggleSelection(index);
+  }
+
+  private toggleSelection(index: number) {
+    if (this.indexOutOfBounds(index)) return;
+    this.setButtonSelected(index, !this.buttons[index].selected);
   }
 
   private indexOutOfBounds(index: number): boolean {
