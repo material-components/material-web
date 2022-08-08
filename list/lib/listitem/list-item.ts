@@ -183,6 +183,7 @@ export class ListItem extends ActionElement {
     this.ripple.endHover();
   }
 
+  /** @bubbleWizEvent */
   protected handleKeyDown(e: KeyboardEvent) {
     if (e.key !== ' ' && e.key !== 'Enter') return;
 
@@ -202,6 +203,11 @@ export class ListItem extends ActionElement {
   activate() {
     this.itemTabIndex = 0;
     this.listItemRoot.focus();
+    this.showFocusRing = true;
+  }
+
+  isActive() {
+    return this.itemTabIndex === 0 && this.showFocusRing;
   }
 
   deactivate() {
