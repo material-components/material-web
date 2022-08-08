@@ -43,7 +43,7 @@ export class MdPrimaryTab extends PrimaryTab {
 
   /** @soyTemplate */
   protected override renderIcon(icon: string): TemplateResult {
-    return html`<md-icon class="md3-tab__icon"><slot name="icon">${
-        icon}</slot></md-icon>`;
+    return icon ? html`<md-icon class="md3-tab__icon">${icon}</md-icon>` :
+                  html``;
   }
 }

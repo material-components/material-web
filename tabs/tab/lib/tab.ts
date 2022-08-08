@@ -115,7 +115,7 @@ export class Tab extends BaseElement {
         @touchend="${this.handleRippleDeactivate}"
         @touchcancel="${this.handleRippleDeactivate}">
         <span class="md3-tab__content">
-          ${shouldRenderIcon ? this.renderIcon(this.icon) : ''}
+          ${shouldRenderIcon ? this.renderIconSlot(this.icon) : ''}
           ${this.label ? this.renderLabel(this.label) : ''}
           ${
         this.isMinWidthIndicator ? this.renderIndicator(indicatorOptions) : ''}
@@ -138,6 +138,13 @@ export class Tab extends BaseElement {
   /** @soyTemplate */
   protected renderIndicator(opts: IndicatorOptions): TemplateResult {
     return html``;
+  }
+
+  /** @soyTemplate */
+  protected renderIconSlot(icon: string): TemplateResult {
+    return html`<span class="md3-tab__icon">
+      <slot name="icon">${this.renderIcon(icon)}</slot>
+      </span>`;
   }
 
   /** @soyTemplate */
