@@ -5,12 +5,14 @@
  */
 
 import '@material/web/ripple/ripple';
+import '@material/web/focus/focus-ring';
 
 import {ActionElement, BeginPressConfig, EndPressConfig} from '@material/web/actionelement/action-element';
+import {pointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus';
 import {MdRipple} from '@material/web/ripple/ripple';
 import {ARIARole} from '@material/web/types/aria';
 import {html, TemplateResult} from 'lit';
-import {property, query} from 'lit/decorators';
+import {property, query, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 
 /** @soyCompatible */
@@ -23,6 +25,7 @@ export class ListItem extends ActionElement {
   @property({type: String}) headline = '';
   @query('md-ripple') ripple!: MdRipple;
   @query('[data-query-md3-list-item]') listItemRoot!: HTMLElement;
+  @state() protected showFocusRing = false;
 
   /** @soyTemplate */
   override render(): TemplateResult {
@@ -41,6 +44,8 @@ export class ListItem extends ActionElement {
           @keyup=${this.handleKeyUp}
           @click=${this.handleClick}
           @contextmenu=${this.handleContextMenu}
+          @focus=${this.handleFocus}
+          @blur=${this.handleBlur}
           >
         ${this.renderStart()}
         ${this.renderBody()}
@@ -48,12 +53,21 @@ export class ListItem extends ActionElement {
         <div class="md3-list-item__ripple">
           ${this.renderRipple()}
         </div>
+        <div class="md3-list-item__focus-ring">
+          ${this.renderFocusRing()}
+        </div>
       </li>`;
   }
 
   /** @soyTemplate */
   protected renderRipple(): TemplateResult {
     return html`<md-ripple ?disabled="${this.disabled}"></md-ripple>`;
+  }
+
+  /** @soyTemplate */
+  protected renderFocusRing(): TemplateResult {
+    return html`<md-focus-ring .visible="${
+        this.showFocusRing}"></md-focus-ring>`;
   }
 
   /** @soyTemplate */
@@ -142,6 +156,21 @@ export class ListItem extends ActionElement {
     if (cancelled) return;
 
     super.endPress({cancelled, actionData: {item: this}});
+  }
+
+  protected handleFocus() {
+    this.showFocusRing = shouldShowStrongFocus();
+  }
+
+  protected handleBlur() {
+    this.showFocusRing = false;
+  }
+
+  override handlePointerDown(e: PointerEvent) {
+    super.handlePointerDown(e);
+
+    pointerPress();
+    this.showFocusRing = shouldShowStrongFocus();
   }
 
   protected handlePointerEnter(e: PointerEvent) {

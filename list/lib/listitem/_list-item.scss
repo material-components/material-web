@@ -6,9 +6,17 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
+@use '@material/web/focus/lib/focus-ring-theme';
+
 @mixin static-styles() {
   :host {
     @include host-root;
+    @include focus-ring-theme.theme(
+      (
+        container-outer-padding-vertical: -2px,
+        container-outer-padding-horizontal: -2px,
+      )
+    );
   }
 
   .md3-list-item {
@@ -33,6 +41,10 @@
     position: absolute;
     z-index: 0;
   }
+
+  .md3-list-item__focus-ring {
+    z-index: 1;
+  }
 }
 
 @mixin host-root() {
@@ -43,8 +55,9 @@
   align-items: center;
   box-sizing: border-box;
   display: flex;
-  width: 100%;
+  outline: none;
   position: relative;
+  width: 100%;
 
   &.md3-list-item--enabled {
     cursor: pointer;

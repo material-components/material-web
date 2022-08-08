@@ -22,9 +22,9 @@
 
 @mixin root() {
   display: block;
-  margin: 0;
-  padding: 0;
-  padding-block: 8px;
   list-style-type: none;
+  margin: 0;
   min-width: 300px;
+  outline: none;
+  padding: 8px 0;
 }
