@@ -175,19 +175,27 @@ export class TextField extends LitElement {
     return html`${prefix}${input}${suffix}`;
   }
 
-  /** @soyTemplate */
+  /**
+   * @soyTemplate
+   * @slotName start
+   */
   protected renderLeadingIcon(): TemplateResult {
     return html`
-      <span class="md3-text-field__icon md3-text-field__icon--leading">
+      <span class="md3-text-field__icon md3-text-field__icon--leading" 
+          slot="start">
         <slot name="leadingicon" @slotchange=${this.handleIconChange}></slot>
       </span>
     `;
   }
 
-  /** @soyTemplate */
+  /**
+   * @soyTemplate
+   * @slotName end
+   */
   protected renderTrailingIcon(): TemplateResult {
     return html`
-      <span class="md3-text-field__icon md3-text-field__icon--trailing">
+      <span class="md3-text-field__icon md3-text-field__icon--trailing" 
+          slot="end">
         <slot name="trailingicon" @slotchange=${this.handleIconChange}></slot>
       </span>
     `;
