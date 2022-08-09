@@ -5,7 +5,7 @@
  */
 
 import './menu';
-import '../list/list-item';
+import './menu-item';
 
 import {Environment} from '@material/web/testing/environment';
 import {html} from 'lit';
@@ -87,9 +87,9 @@ function getMenuTemplate(propsInit: Partial<MdMenu> = {}) {
         Open Menu
       </button>
       <md-menu .quick="${propsInit.quick ?? true}">
-        <md-list-item>One</md-list-item>
-        <md-list-item>Two</md-list-item>
-        <md-list-item>Three</md-list-item>
+        <md-menu-item .headline=${'One'}></md-menu-item>
+        <md-menu-item .headline=${'Two'}></md-menu-item>
+        <md-menu-item .headline=${'Three'}></md-menu-item>
       </md-menu>
     </div>
   `;

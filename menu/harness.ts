@@ -6,9 +6,8 @@
 
 import {Harness} from '@material/web/testing/harness';
 
-import {ListItemHarness} from '../list/lib/listitem/harness';
-
 import {Menu} from './lib/menu';
+import {MenuItemHarness} from './lib/menuitem/harness';
 
 /**
  * Test harness for menu.
@@ -16,6 +15,6 @@ import {Menu} from './lib/menu';
 export class MenuHarness extends Harness<Menu> {
   /** @return ListItem harnesses for the menu's items. */
   getItems() {
-    return this.element.items.map((item) => new ListItemHarness(item));
+    return this.element.items.map((item) => new MenuItemHarness(item));
   }
 }

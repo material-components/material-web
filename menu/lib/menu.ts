@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -12,8 +12,10 @@ import '../../menusurface/menu-surface';
 
 // TODO(b/239222919): remove compat dependencies
 import {observer} from '@material/web/compat/base/observer';
+import {ariaProperty} from '@material/web/decorators/aria-property';
 import {html, LitElement} from 'lit';
 import {property, query} from 'lit/decorators';
+import {ifDefined} from 'lit/directives/if-defined';
 
 import {List} from '../../list/lib/list';
 import {ListItem} from '../../list/lib/listitem/list-item';
@@ -47,12 +49,13 @@ export abstract class Menu extends LitElement {
 
   @property({type: Object}) anchor: HTMLElement|null = null;
 
+  @ariaProperty  // tslint:disable-line:no-new-decorators
+  @property({type: String, attribute: 'data-aria-label', noAccessor: true})
+  override ariaLabel!: string;
+
   @property({type: Boolean, reflect: true}) open = false;
 
   @property({type: Boolean}) quick = false;
-
-  // TODO(b/240174946): Add aria-label support.
-  // @property({type: String}) ariaLabel: string|null = null;
 
   @property({type: String}) corner: Corner = 'BOTTOM_START';
 
@@ -133,10 +136,18 @@ export abstract class Menu extends LitElement {
           @opened=${this.onOpened}
           @keydown=${this.onKeydown}>
         <md-list
+          aria-label="${ifDefined(this.ariaLabel)}"
+          .listTabIndex=${-1}
+          .listItemTagName=${this.getMenuItemTagName()}
+          role=${'menu'}
           @action=${this.onAction}>
         <slot></slot>
       </md-list>
     </md-menu-surface>`;
+  }
+
+  protected getMenuItemTagName() {
+    return 'md-menu-item';
   }
 
   protected createAdapter(): MDCMenuAdapter {
