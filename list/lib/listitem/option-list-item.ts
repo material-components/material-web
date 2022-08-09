@@ -10,10 +10,7 @@ import {ListItem} from './list-item';
 
 /** @soyCompatible */
 export class OptionListItem extends ListItem {
-  /** @soyTemplate */
-  protected override getAriaRole(): ARIARole {
-    return 'option';
-  }
+  override role: ARIARole = 'option';
 
   override handleClick(e: MouseEvent) {
     this.dispatchEvent(new CustomEvent(

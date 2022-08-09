@@ -22,15 +22,15 @@ describe('list tests', () => {
   const env = new Environment();
 
   it('`items` property returns correct items', async () => {
-    const element = env.render(LIST_TEMPLATE).querySelector('md-list')!;
-    await env.waitForStability();
+    const list = env.render(LIST_TEMPLATE).querySelector('md-list')!;
+    await list.updateComplete;
 
-    expect(element.items.length).toBe(3);
+    expect(list.items.length).toBe(3);
   });
 
   it('focusListRoot() should focus on the list element', async () => {
     const list = env.render(LIST_TEMPLATE).querySelector('md-list')!;
-    await env.waitForStability();
+    await list.updateComplete;
 
     list.focusListRoot();
     expect(document.activeElement).toEqual(list);
@@ -38,7 +38,7 @@ describe('list tests', () => {
 
   it('activateFirstItem() should focus on the first list item', async () => {
     const list = env.render(LIST_TEMPLATE).querySelector('md-list')!;
-    await env.waitForStability();
+    await list.updateComplete;
 
     list.activateFirstItem();
     expect(document.activeElement).toEqual(list.items[0]);
@@ -46,9 +46,29 @@ describe('list tests', () => {
 
   it('activateLastItem() should focus on the last list item', async () => {
     const list = env.render(LIST_TEMPLATE).querySelector('md-list')!;
-    await env.waitForStability();
+    await list.updateComplete;
 
     list.activateLastItem();
     expect(document.activeElement).toEqual(list.items[list.items.length - 1]);
   });
+
+  it('setting `role` attribute sets role on <ul> element', async () => {
+    const listItem = env.render(html`<md-list role="menu"></md-list>`)
+                         .querySelector('md-list')!;
+    await env.waitForStability();
+
+    expect(listItem.shadowRoot!.querySelector('ul')!.getAttribute('role'))
+        .toBe('menu');
+  });
+
+  it('setting `aria-label` attribute sets aria-label on <ul> element',
+     async () => {
+       const listItem = env.render(html`<md-list aria-label="foo"></md-list>`)
+                            .querySelector('md-list')!;
+       await env.waitForStability();
+
+       expect(
+           listItem.shadowRoot!.querySelector('ul')!.getAttribute('aria-label'))
+           .toBe('foo');
+     });
 });

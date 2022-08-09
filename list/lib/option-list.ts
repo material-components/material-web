@@ -10,8 +10,5 @@ import {List} from './list';
 
 /** @soyCompatible */
 export class OptionList extends List {
-  /** @soyTemplate */
-  protected override getAriaRole(): ARIARole {
-    return 'listbox';
-  }
+  override role: ARIARole = 'listbox';
 }

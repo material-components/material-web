@@ -32,7 +32,8 @@ import {ReactiveElement} from 'lit';
  * @ExportDecoratedItems
  */
 export function ariaProperty<E extends ReactiveElement, K extends keyof E&
-                             `aria${string}`>(prototype: E, property: K) {
+                             (`aria${string}` | 'role')>(
+    prototype: E, property: K) {
   // Replace the ARIAMixin property with data-* attribute syncing instead of
   // using the native aria-* attribute reflection. This preserves the attribute
   // for SSR and avoids screenreader conflicts after delegating the attribute

@@ -35,4 +35,14 @@ describe('list item tests', () => {
                'tabindex'))
         .toBe('-1');
   });
+
+  it('setting `role` attribute sets role on <li> element', async () => {
+    const listItem =
+        env.render(html`<md-list-item role="menuitem">One</md-list-item>`)
+            .querySelector('md-list-item')!;
+    await env.waitForStability();
+
+    expect(listItem.shadowRoot!.querySelector('li')!.getAttribute('role'))
+        .toBe('menuitem');
+  });
 });

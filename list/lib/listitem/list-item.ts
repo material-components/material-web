@@ -8,6 +8,7 @@ import '@material/web/ripple/ripple';
 import '@material/web/focus/focus-ring';
 
 import {ActionElement, BeginPressConfig, EndPressConfig} from '@material/web/actionelement/action-element';
+import {ariaProperty} from '@material/web/decorators/aria-property';
 import {pointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus';
 import {MdRipple} from '@material/web/ripple/ripple';
 import {ARIARole} from '@material/web/types/aria';
@@ -17,6 +18,10 @@ import {ClassInfo, classMap} from 'lit/directives/class-map';
 
 /** @soyCompatible */
 export class ListItem extends ActionElement {
+  @ariaProperty  // tslint:disable-line:no-new-decorators
+  @property({type: String, attribute: 'data-role', noAccessor: true})
+  role: ARIARole = 'listitem';
+
   @property({type: String}) supportingText = '';
   @property({type: String}) multiLineSupportingText = '';
   @property({type: String}) trailingSupportingText = '';
@@ -32,7 +37,7 @@ export class ListItem extends ActionElement {
     return html`
       <li
           tabindex=${this.itemTabIndex}
-          role=${this.getAriaRole()}
+          role=${this.role}
           data-query-md3-list-item
           class="md3-list-item ${classMap(this.getRenderClasses())}"
           @pointerdown=${this.handlePointerDown}

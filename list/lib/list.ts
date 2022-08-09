@@ -4,9 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {ariaProperty} from '@material/web/decorators/aria-property';
 import {ARIARole} from '@material/web/types/aria';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators';
+import {ifDefined} from 'lit/directives/if-defined';
 
 import {ListItemInteractionEvent} from './listitem/constants';
 import {ListItem} from './listitem/list-item';
@@ -23,12 +25,22 @@ export class List extends LitElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
+  @ariaProperty  // tslint:disable-line:no-new-decorators
+  @property({type: String, attribute: 'data-aria-label', noAccessor: true})
+  override ariaLabel!: string;
+
+  @ariaProperty  // tslint:disable-line:no-new-decorators
+  @property({type: String, attribute: 'data-role', noAccessor: true})
+  role: ARIARole = 'list';
+
   @property({type: Number}) listTabIndex: number = 0;
 
   items: ListItem[] = [];
   activeListItem: ListItem|null = null;
 
   @query('.md3-list') listRoot!: HTMLElement;
+
+  @property({type: String}) listItemTagName = 'md-list-item';
 
   @queryAssignedElements({flatten: true})
   protected assignedElements!: HTMLElement[]|null;
@@ -40,16 +52,12 @@ export class List extends LitElement {
   }
 
   /** @soyTemplate */
-  protected getAriaRole(): ARIARole {
-    return 'list';
-  }
-
-  /** @soyTemplate */
   override render(): TemplateResult {
     return html`
       <ul class="md3-list"
+          aria-label="${ifDefined(this.ariaLabel)}"
           tabindex=${this.listTabIndex}
-          role=${this.getAriaRole()}
+          role=${this.role}
           @list-item-interaction=${this.handleItemInteraction}
           @keydown=${this.handleKeydown}
           >
@@ -124,13 +132,9 @@ export class List extends LitElement {
     this.items = elements.filter(this.isListItem, this);
   }
 
-  protected getListItemTagName() {
-    return 'md-list-item';
-  }
-
-  /** @return Whether the given element is an <md-list-item> element. */
+  /** @return Whether the given element is a list item element. */
   private isListItem(element: Element): element is ListItem {
-    return element.tagName.toLowerCase() === this.getListItemTagName();
+    return element.tagName.toLowerCase() === this.listItemTagName;
   }
 
   private getFirstItem(): ListItem {
