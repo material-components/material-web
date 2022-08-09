@@ -55,6 +55,11 @@ $forced-colors-theme: (
     map.get($resolvers, typography),
     label-text
   );
+  $theme: typography.resolve-theme(
+    $theme,
+    map.get($resolvers, typography),
+    supporting-text
+  );
   @return $theme;
 }
 

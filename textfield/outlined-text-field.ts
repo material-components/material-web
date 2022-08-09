@@ -47,6 +47,7 @@ export class MdOutlinedTextField extends OutlinedTextField {
         ${this.renderLeadingIcon()}
         ${this.renderFieldContent()}
         ${this.renderTrailingIcon()}
+        ${this.renderSupportingText()}
       </md-outlined-field>
     `;
   }

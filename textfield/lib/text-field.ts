@@ -73,6 +73,15 @@ export class TextField extends LitElement {
    * Whether or not the text field has a trailing icon. Used for SSR.
    */
   @property({type: Boolean}) hasTrailingIcon = false;
+  /**
+   * Conveys additional information below the text field, such as how it should
+   * be used.
+   */
+  @property({type: String}) supportingText = '';
+  /**
+   * The ID on the supporting text element, used for SSR.
+   */
+  @property({type: String}) supportingTextId = 'support';
 
   // ARIA
   // TODO(b/210730484): replace with @soyParam annotation
@@ -206,6 +215,8 @@ export class TextField extends LitElement {
     // TODO(b/237281840): replace ternary operators with double pipes
     // TODO(b/237283903): remove when custom isTruthy directive is supported
     const placeholderValue = this.placeholder ? this.placeholder : undefined;
+    const ariaDescribedByValue =
+        this.supportingText ? this.supportingTextId : undefined;
     const ariaLabelValue = this.ariaLabel ? this.ariaLabel :
         this.label                        ? this.label :
                                             undefined;
@@ -214,6 +225,7 @@ export class TextField extends LitElement {
 
     return html`<input
       class="md3-text-field__input"
+      aria-describedby=${ifDefined(ariaDescribedByValue)}
       aria-invalid=${this.error}
       aria-label=${ifDefined(ariaLabelValue)}
       aria-labelledby=${ifDefined(ariaLabelledByValue)}
@@ -247,6 +259,17 @@ export class TextField extends LitElement {
 
     // TODO(b/217441842): Create shared function once argument bug is fixed
     // return this.renderAffix(/* isSuffix */ true);
+  }
+
+  /**
+   * @soyTemplate
+   * @slotName supporting-text
+   */
+  protected renderSupportingText(): TemplateResult {
+    return this.supportingText ?
+        html`<span id=${this.supportingTextId} slot="supporting-text">${
+            this.supportingText}</span>` :
+        html``;
   }
 
   protected override willUpdate(changedProperties: PropertyValues<TextField>) {

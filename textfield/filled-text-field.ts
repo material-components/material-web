@@ -47,6 +47,7 @@ export class MdFilledTextField extends FilledTextField {
         ${this.renderLeadingIcon()}
         ${this.renderFieldContent()}
         ${this.renderTrailingIcon()}
+        ${this.renderSupportingText()}
       </md-filled-field>
     `;
   }
