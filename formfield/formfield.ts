@@ -6,7 +6,7 @@
 
 import {customElement} from 'lit/decorators';
 
-import {Formfield} from './lib/formfield-base';
+import {Formfield} from './lib/formfield';
 import {styles as formfieldStyles} from './lib/formfield-styles.css';
 
 declare global {
