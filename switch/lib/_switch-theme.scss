@@ -39,6 +39,25 @@ $_default-deps: (
     )
   );
 
+  // Mark opacity tokens as not hardcoded
+  @if $exclude-hardcoded-values {
+    // If opacity value is null (e.g. for dark theme map, only the color
+    // changes, so the opacity value is null), use the default opacity value.
+    // Otherwise, the color is not flattened, meaning that the color would
+    // be applied without any opacity, which is incorrect.
+    $fullValues: tokens.md-comp-switch-values($deps);
+    $values: map.merge(
+      $values,
+      (
+        disabled-selected-handle-opacity: map.get($fullValues, disabled-selected-handle-opacity),
+        disabled-unselected-handle-opacity: map.get($fullValues, disabled-unselected-handle-opacity),
+        disabled-track-opacity: map.get($fullValues, disabled-track-opacity),
+        disabled-selected-icon-opacity: map.get($fullValues, disabled-selected-icon-opacity),
+        disabled-unselected-icon-opacity: map.get($fullValues, disabled-unselected-icon-opacity),
+      )
+    )
+  }
+
   @return $values;
 }
 
@@ -52,6 +71,12 @@ $_unselected: '.md3-switch--unselected';
 // PUBLIC PROPERTIES
 
 $light-theme: values();
+$dark-theme: values(
+  (
+    md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
+  ),
+  $exclude-hardcoded-values: true
+);
 
 $_forced-colors-theme: (
   disabled-selected-icon-color: GrayText,
