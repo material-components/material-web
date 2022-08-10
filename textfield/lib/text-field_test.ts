@@ -176,5 +176,73 @@ describe('TextField', () => {
     });
   });
 
+  describe('valueAsDate', () => {
+    it('should get input.valueAsDate', async () => {
+      const {testElement, input} = await setupTest();
+      const spy = spyOnProperty(input, 'valueAsDate', 'get').and.callThrough();
+
+      expect(testElement.valueAsDate).toBe(null);
+
+      expect(spy).toHaveBeenCalled();
+    });
+
+    it('should set input.valueAsDate', async () => {
+      const {testElement, input} = await setupTest();
+      testElement.type = 'date';
+      await env.waitForStability();
+      const spy = spyOnProperty(input, 'valueAsDate', 'set').and.callThrough();
+
+      const value = new Date();
+      testElement.valueAsDate = value;
+
+      expect(spy).toHaveBeenCalledWith(value);
+    });
+
+    it('should set value to string version of date', async () => {
+      const {testElement} = await setupTest();
+      testElement.type = 'date';
+      await env.waitForStability();
+
+      const expectedValue = '2022-01-01';
+      testElement.valueAsDate = new Date(expectedValue);
+
+      expect(testElement.value).toBe(expectedValue);
+    });
+  });
+
+  describe('valueAsNumber', () => {
+    it('should get input.valueAsNumber', async () => {
+      const {testElement, input} = await setupTest();
+      const spy =
+          spyOnProperty(input, 'valueAsNumber', 'get').and.callThrough();
+
+      expect(testElement.valueAsNumber).toEqual(NaN);
+
+      expect(spy).toHaveBeenCalled();
+    });
+
+    it('should set input.valueAsNumber', async () => {
+      const {testElement, input} = await setupTest();
+      testElement.type = 'number';
+      await env.waitForStability();
+      const spy =
+          spyOnProperty(input, 'valueAsNumber', 'set').and.callThrough();
+
+      testElement.valueAsNumber = 100;
+
+      expect(spy).toHaveBeenCalledWith(100);
+    });
+
+    it('should set value to string version of number', async () => {
+      const {testElement} = await setupTest();
+      testElement.type = 'number';
+      await env.waitForStability();
+
+      testElement.valueAsNumber = 100;
+
+      expect(testElement.value).toBe('100');
+    });
+  });
+
   // TODO(b/235238545): Add shared FormController tests.
 });

@@ -114,6 +114,28 @@ export class TextField extends LitElement {
       'datetime-local'|'file'|'month'|'time'|'week' = 'text';
 
   /**
+   * The text field's value as a number.
+   */
+  get valueAsNumber() {
+    return this.getInput().valueAsNumber;
+  }
+  set valueAsNumber(value: number) {
+    this.getInput().valueAsNumber = value;
+    this.value = this.getInput().value;
+  }
+
+  /**
+   * The text field's value as a Date.
+   */
+  get valueAsDate() {
+    return this.getInput().valueAsDate;
+  }
+  set valueAsDate(value: Date|null) {
+    this.getInput().valueAsDate = value;
+    this.value = this.getInput().value;
+  }
+
+  /**
    * Returns true when the text field has been interacted with. Native
    * validation errors only display in response to user interactions.
    */
