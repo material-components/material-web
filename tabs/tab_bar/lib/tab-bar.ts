@@ -132,9 +132,23 @@ export abstract class TabBar extends BaseElement {
       },
       getTabDimensionsAtIndex: (index: number) => {
         const tab = this.getTab(index);
-        return tab !== undefined ?
-            tab.computeDimensions() :
-            {rootLeft: 0, rootRight: 0, contentLeft: 0, contentRight: 0};
+        if (tab === undefined) {
+          return {rootLeft: 0, rootRight: 0, contentLeft: 0, contentRight: 0};
+        }
+
+        // In certain shadow DOM environments, the offsetLeft value of the tab
+        // is not calculated in relation to the scollerContent element. We
+        // examine the tab's offsetParent to determine if this is the case. If
+        // so, then we provide tab's computeDimensions method the offsetLeft of
+        // the scrollers' contentElement so the proper offsetLeft value can
+        // be calculated. See b/242052409 for more info.
+        const tabOffsetParent = tab.offsetParent;
+        let scrollContentOffsetLeft;
+        if (!this.scrollerElement.isScrollerContentElement(tabOffsetParent)) {
+          scrollContentOffsetLeft =
+              this.scrollerElement.getScrollContentOffsetLeft();
+        }
+        return tab.computeDimensions(scrollContentOffsetLeft);
       },
       getPreviousActiveTabIndex: () => {
         return this._previousActiveIndex;

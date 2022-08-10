@@ -21,7 +21,7 @@ import {TabIndicator} from '../../tab_indicator/lib/tab-indicator';
 
 import {MDCTabAdapter} from './adapter';
 import MDCTabFoundation from './foundation';
-import {IndicatorOptions, TabInteractionEvent, TabInteractionEventDetail} from './types';
+import {IndicatorOptions, MDCTabDimensions, TabInteractionEvent, TabInteractionEventDetail} from './types';
 
 // used for generating unique id for each tab
 let tabIdCounter = 0;
@@ -194,10 +194,6 @@ export class Tab extends BaseElement {
             });
         this.dispatchEvent(event);
       },
-      getOffsetLeft: () => this.offsetLeft,
-      getOffsetWidth: () => this.mdcRoot.offsetWidth,
-      getContentOffsetLeft: () => this._contentElement.offsetLeft,
-      getContentOffsetWidth: () => this._contentElement.offsetWidth,
       focus: () => {
         if (this.initFocus) {
           this.initFocus = false;
@@ -233,8 +229,28 @@ export class Tab extends BaseElement {
     this.active = this.mdcFoundation.isActive();
   }
 
-  computeDimensions() {
-    return this.mdcFoundation.computeDimensions();
+  computeDimensions(scrollContentOffsetLeft?: number): MDCTabDimensions {
+    const rootWidth = this.mdcRoot.offsetWidth;
+    let rootLeft = this.offsetLeft;
+    const contentWidth = this._contentElement.offsetWidth;
+    const contentLeft = this._contentElement.offsetLeft;
+
+    if (scrollContentOffsetLeft) {
+      // If provided the offsetLeft value of the scrollContent element, this
+      // indicates that the tab's offsetParent is not the scrollContent
+      // element -- and so the value must be adjusted in order to give us
+      // the expected position of the tab relative to that of the
+      // scrollContent container. See b/242052409 for more on when this
+      // would occur.
+      rootLeft = rootLeft - scrollContentOffsetLeft;
+    }
+
+    return {
+      contentLeft: rootLeft + contentLeft,
+      contentRight: rootLeft + contentLeft + contentWidth,
+      rootLeft,
+      rootRight: rootLeft + rootWidth,
+    };
   }
 
   computeIndicatorClientRect() {

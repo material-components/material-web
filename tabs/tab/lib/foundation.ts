@@ -5,9 +5,9 @@
  */
 
 import {MDCFoundation} from '@material/base/foundation';
+
 import {MDCTabAdapter} from './adapter';
 import {cssClasses, strings} from './constants';
-import {MDCTabDimensions} from './types';
 
 export class MDCTabFoundation extends MDCFoundation<MDCTabAdapter> {
   static override get cssClasses() {
@@ -27,10 +27,6 @@ export class MDCTabFoundation extends MDCFoundation<MDCTabAdapter> {
       activateIndicator: () => undefined,
       deactivateIndicator: () => undefined,
       notifyInteracted: () => undefined,
-      getOffsetLeft: () => 0,
-      getOffsetWidth: () => 0,
-      getContentOffsetLeft: () => 0,
-      getContentOffsetWidth: () => 0,
       focus: () => undefined,
     };
     // tslint:enable:object-literal-sort-keys
@@ -81,23 +77,6 @@ export class MDCTabFoundation extends MDCFoundation<MDCTabAdapter> {
 
     this.adapter.removeClass(cssClasses.ACTIVE);
     this.adapter.deactivateIndicator();
-  }
-
-  /**
-   * Returns the dimensions of the Tab
-   */
-  computeDimensions(): MDCTabDimensions {
-    const rootWidth = this.adapter.getOffsetWidth();
-    const rootLeft = this.adapter.getOffsetLeft();
-    const contentWidth = this.adapter.getContentOffsetWidth();
-    const contentLeft = this.adapter.getContentOffsetLeft();
-
-    return {
-      contentLeft: rootLeft + contentLeft,
-      contentRight: rootLeft + contentLeft + contentWidth,
-      rootLeft,
-      rootRight: rootLeft + rootWidth,
-    };
   }
 }
 

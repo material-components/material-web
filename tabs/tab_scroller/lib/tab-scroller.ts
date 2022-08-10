@@ -138,6 +138,25 @@ export class TabScroller extends BaseElement {
   }
 
   /**
+   * Returns the offsetLeft of the scroll content
+   * @return {number}
+   */
+  getScrollContentOffsetLeft() {
+    return this.scrollContentElement.offsetLeft;
+  }
+
+  /**
+   * Returns whether or not the provided element is the tab scroller's
+   * scroll content element. This is used to determine how the tab's
+   * offsetLeft value should be calculated -- the returned offsetLeft
+   * value of Tab differs across shadow DOM and non-shadow DOM environments.
+   * See b/242052409 for more info.
+   */
+  isScrollerContentElement(el: Element|null) {
+    return el === this.scrollContentElement;
+  }
+
+  /**
    * Increments the scroll value by the given amount
    * @param {number} scrollXIncrement The pixel value by which to increment the
    *     scroll value

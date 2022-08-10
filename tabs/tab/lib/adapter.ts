@@ -46,26 +46,6 @@ export interface MDCTabAdapter {
   notifyInteracted(): void;
 
   /**
-   * Returns the offsetLeft value of the root element.
-   */
-  getOffsetLeft(): number;
-
-  /**
-   * Returns the offsetWidth value of the root element.
-   */
-  getOffsetWidth(): number;
-
-  /**
-   * Returns the offsetLeft of the content element.
-   */
-  getContentOffsetLeft(): number;
-
-  /**
-   * Returns the offsetWidth of the content element.
-   */
-  getContentOffsetWidth(): number;
-
-  /**
    * Applies focus to the root element
    */
   focus(): void;
