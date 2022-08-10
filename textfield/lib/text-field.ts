@@ -15,6 +15,7 @@ import {property, query, queryAssignedElements, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 import {live} from 'lit/directives/live';
+import {html as staticHtml, literal} from 'lit/static-html';
 
 /**
  * Input types that are compatible with the text field.
@@ -142,6 +143,8 @@ export class TextField extends LitElement {
   @state() protected dirty = false;
   @query('.md3-text-field__input')
   protected readonly input?: HTMLInputElement|null;
+  // TODO(b/241841846): make abstract
+  protected readonly fieldTag = literal`div`;
 
   @queryAssignedElements({slot: 'leadingicon'})
   private readonly leadingIcons!: Element[];
@@ -193,17 +196,25 @@ export class TextField extends LitElement {
 
   /** @soyTemplate */
   protected renderField(): TemplateResult {
-    // TODO(b/237286701): replace with lit static
-    return html``;
-  }
-
-  /** @soyTemplate */
-  protected renderFieldContent(): TemplateResult {
     const prefix = this.renderPrefix();
     const suffix = this.renderSuffix();
     const input = this.renderInput();
 
-    return html`${prefix}${input}${suffix}`;
+    return staticHtml`<${this.fieldTag}
+      class="md3-text-field__field"
+      ?disabled=${this.disabled}
+      ?error=${this.error}
+      ?hasEnd=${this.hasTrailingIcon}
+      ?hasStart=${this.hasLeadingIcon}
+      .label=${this.label}
+      ?populated=${!!this.value}
+      ?required=${this.required}
+    >
+      ${this.renderLeadingIcon()}
+      ${prefix}${input}${suffix}
+      ${this.renderTrailingIcon()}
+      ${this.renderSupportingText()}
+    </${this.fieldTag}>`;
   }
 
   /**

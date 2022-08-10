@@ -6,8 +6,8 @@
 
 import '@material/web/field/filled-field';
 
-import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators';
+import {literal} from 'lit/static-html';
 
 // TODO(b/236285090): update with HCM best practices
 import {styles as filledForcedColorsStyles} from './lib/filled-forced-colors-styles.css';
@@ -31,24 +31,5 @@ export class MdFilledTextField extends FilledTextField {
   static override styles =
       [sharedStyles, filledStyles, filledForcedColorsStyles];
 
-  /** @soyTemplate */
-  protected override renderField(): TemplateResult {
-    return html`
-      <md-filled-field
-        class="md3-text-field__field"
-        ?disabled=${this.disabled}
-        ?error=${this.error}
-        ?hasEnd=${this.hasTrailingIcon}
-        ?hasStart=${this.hasLeadingIcon}
-        .label=${this.label}
-        ?populated=${!!this.value}
-        ?required=${this.required}
-      >
-        ${this.renderLeadingIcon()}
-        ${this.renderFieldContent()}
-        ${this.renderTrailingIcon()}
-        ${this.renderSupportingText()}
-      </md-filled-field>
-    `;
-  }
+  protected override readonly fieldTag = literal`md-filled-field`;
 }

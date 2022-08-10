@@ -6,8 +6,8 @@
 
 import '@material/web/field/outlined-field';
 
-import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators';
+import {literal} from 'lit/static-html';
 
 // TODO(b/236285090): update with HCM best practices
 import {styles as outlinedForcedColorsStyles} from './lib/outlined-forced-colors-styles.css';
@@ -31,24 +31,5 @@ export class MdOutlinedTextField extends OutlinedTextField {
   static override styles =
       [sharedStyles, outlinedStyles, outlinedForcedColorsStyles];
 
-  /** @soyTemplate */
-  protected override renderField(): TemplateResult {
-    return html`
-      <md-outlined-field
-        class="md3-text-field__field"
-        ?disabled=${this.disabled}
-        ?error=${this.error}
-        ?hasEnd=${this.hasTrailingIcon}
-        ?hasStart=${this.hasLeadingIcon}
-        .label=${this.label}
-        ?populated=${!!this.value}
-        ?required=${this.required}
-      >
-        ${this.renderLeadingIcon()}
-        ${this.renderFieldContent()}
-        ${this.renderTrailingIcon()}
-        ${this.renderSupportingText()}
-      </md-outlined-field>
-    `;
-  }
+  protected override readonly fieldTag = literal`md-outlined-field`;
 }

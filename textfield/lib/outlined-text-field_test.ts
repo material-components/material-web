@@ -10,6 +10,7 @@ import '@material/web/field/outlined-field';
 import {Environment} from '@material/web/testing/environment';
 import {html} from 'lit';
 import {customElement} from 'lit/decorators';
+import {literal} from 'lit/static-html';
 
 import {TextFieldHarness} from '../harness';
 
@@ -23,20 +24,7 @@ declare global {
 
 @customElement('md-test-outlined-text-field')
 class TestTextField extends OutlinedTextField {
-  protected override renderField() {
-    return html`
-       <md-outlined-field
-         class="md3-text-field__field"
-         ?disabled=${this.disabled}
-         .error=${this.error}
-         .label=${this.label}
-         .populated=${Boolean(this.value)}
-         .required=${this.required}
-       >
-         ${this.renderFieldContent()}
-       </md-outlined-field>
-     `;
-  }
+  protected override readonly fieldTag = literal`md-outlined-field`;
 
   override getRenderClasses() {
     return super.getRenderClasses();
