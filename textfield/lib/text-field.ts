@@ -141,7 +141,7 @@ export class TextField extends LitElement {
 
     // TODO(b/210731759): replace with super.focus() once SSR supports
     // delegating focus
-    this.input?.focus();
+    this.getInput().focus();
   }
 
   /**
@@ -290,6 +290,20 @@ export class TextField extends LitElement {
 
   protected redispatchEvent(event: Event) {
     redispatchEvent(this, event);
+  }
+
+  protected getInput() {
+    if (!this.input) {
+      // If the input is not yet defined, synchronously render.
+      // e.g.
+      // const textField = document.createElement('md-outlined-text-field');
+      // document.body.appendChild(textField);
+      // textField.focus(); // synchronously render
+      this.connectedCallback();
+      this.scheduleUpdate();
+    }
+
+    return this.input!;
   }
 
   private handleIconChange() {
