@@ -49,13 +49,17 @@ $_default-deps: (
     $values: map.merge(
       $values,
       (
-        disabled-selected-handle-opacity: map.get($fullValues, disabled-selected-handle-opacity),
-        disabled-unselected-handle-opacity: map.get($fullValues, disabled-unselected-handle-opacity),
+        disabled-selected-handle-opacity:
+          map.get($fullValues, disabled-selected-handle-opacity),
+        disabled-unselected-handle-opacity:
+          map.get($fullValues, disabled-unselected-handle-opacity),
         disabled-track-opacity: map.get($fullValues, disabled-track-opacity),
-        disabled-selected-icon-opacity: map.get($fullValues, disabled-selected-icon-opacity),
-        disabled-unselected-icon-opacity: map.get($fullValues, disabled-unselected-icon-opacity),
+        disabled-selected-icon-opacity:
+          map.get($fullValues, disabled-selected-icon-opacity),
+        disabled-unselected-icon-opacity:
+          map.get($fullValues, disabled-unselected-icon-opacity),
       )
-    )
+    );
   }
 
   @return $values;
