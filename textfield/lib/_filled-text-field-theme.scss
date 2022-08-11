@@ -19,13 +19,6 @@ $light-theme: tokens.md-comp-filled-text-field-values();
 $dark-theme: tokens.md-comp-filled-text-field-values(
   (
     md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
-    md-sys-elevation:
-      tokens.md-sys-elevation-values(
-        $deps: (
-          md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
-        ),
-        $exclude-hardcoded-values: true,
-      ),
   ),
   $exclude-hardcoded-values: true
 );
