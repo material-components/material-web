@@ -22,12 +22,7 @@ $light-theme: tokens.md-comp-navigation-bar-values();
 $dark-theme: tokens.md-comp-navigation-bar-values(
   (
     md-sys-color: tokens.md-sys-color-values-dark-non-dynamic(),
-    md-sys-elevation:
-      tokens.md-sys-elevation-values(
-        $deps: (
-          md-sys-color: tokens.md-sys-color-values-dark-non-dynamic(),
-        ),
-      ),
+    md-sys-elevation: tokens.md-sys-elevation-values(),
   ),
   $exclude-hardcoded-values: true
 );
