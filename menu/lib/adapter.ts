@@ -65,15 +65,6 @@ export interface MDCMenuAdapter {
   getMenuItemCount(): number;
 
   /**
-   * Focuses the menu item at given index.
-   * @param index Index of the menu item that will be focused every time the menu opens.
-   */
-  focusItemAtIndex(index: number): void;
-
-  /** Focuses the list root element. */
-  focusListRoot(): void;
-
-  /**
    * @return Returns selected list item index within the same selection group which is
    * a sibling of item at given `index`.
    * @param index Index of the menu item with possible selected sibling.

@@ -7,7 +7,7 @@
 import {MDCMenuSurfaceFoundation} from '../../menusurface/lib/foundation';
 
 import {MDCMenuAdapter} from './adapter';
-import {cssClasses, DefaultFocusState, numbers, strings} from './constants';
+import {cssClasses, numbers, strings} from './constants';
 
 const LIST_ITEM_DISABLED_CLASS = 'md3-list-item--disabled';
 
@@ -26,7 +26,6 @@ export class MDCMenuFoundation {
 
   private readonly adapter: MDCMenuAdapter;
   private closeAnimationEndTimerId = 0;
-  private defaultFocusState = DefaultFocusState.LIST_ROOT;
   private selectedIndex = -1;
 
   /**
@@ -45,8 +44,6 @@ export class MDCMenuFoundation {
       getElementIndex: () => -1,
       notifySelected: () => undefined,
       getMenuItemCount: () => 0,
-      focusItemAtIndex: () => undefined,
-      focusListRoot: () => undefined,
       getSelectedSiblingOfItemAtIndex: () => -1,
       isSelectableItemAtIndex: () => false,
     };
@@ -95,32 +92,6 @@ export class MDCMenuFoundation {
         this.setSelectedIndex(recomputedIndex);
       }
     }, MDCMenuSurfaceFoundation.numbers.TRANSITION_CLOSE_DURATION);
-  }
-
-  handleMenuSurfaceOpened() {
-    switch (this.defaultFocusState) {
-      case DefaultFocusState.FIRST_ITEM:
-        this.adapter.focusItemAtIndex(0);
-        break;
-      case DefaultFocusState.LAST_ITEM:
-        this.adapter.focusItemAtIndex(this.adapter.getMenuItemCount() - 1);
-        break;
-      case DefaultFocusState.NONE:
-        // Do nothing.
-        break;
-      default:
-        this.adapter.focusListRoot();
-        break;
-    }
-  }
-
-  /**
-   * Sets default focus state where the menu should focus every time when menu
-   * is opened. Focuses the list root (`DefaultFocusState.LIST_ROOT`) element by
-   * default.
-   */
-  setDefaultFocusState(focusState: DefaultFocusState) {
-    this.defaultFocusState = focusState;
   }
 
   /** @return Index of the currently selected list item within the menu. */

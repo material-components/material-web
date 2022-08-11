@@ -101,13 +101,15 @@ export abstract class MenuSurface extends LitElement {
         this.mdcFoundation.open();
         // wasOpen helps with first render (when it is `undefined`) perf
       } else if (wasOpen !== undefined) {
-        this.mdcFoundation.close();
+        this.mdcFoundation.close(this.skipRestoreFocus);
       }
     }
   })
   open = false;
 
-  @property({type: Boolean}) stayOpenOnBodyClick: boolean = false;
+  @property({type: Boolean}) stayOpenOnBodyClick = false;
+
+  @property({type: Boolean}) skipRestoreFocus = false;
 
   @state()
   @observer(function(this: MenuSurface, value: CornerEnum) {

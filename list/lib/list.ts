@@ -122,6 +122,10 @@ export class List extends LitElement {
     this.activeListItem.activate();
   }
 
+  resetActiveListItem() {
+    this.activeListItem = null;
+  }
+
   focusListRoot() {
     this.listRoot.focus();
   }

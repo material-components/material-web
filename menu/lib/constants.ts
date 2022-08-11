@@ -24,10 +24,10 @@ const numbers = {
 };
 
 enum DefaultFocusState {
-  NONE = 0,
-  LIST_ROOT = 1,
-  FIRST_ITEM = 2,
-  LAST_ITEM = 3,
+  NONE = 'NONE',
+  LIST_ROOT = 'LIST_ROOT',
+  FIRST_ITEM = 'FIRST_ITEM',
+  LAST_ITEM = 'LAST_ITEM',
 }
 
 export {cssClasses, strings, numbers, DefaultFocusState};

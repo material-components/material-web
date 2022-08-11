@@ -10,8 +10,6 @@
 import '../../list/list';
 import '../../menusurface/menu-surface';
 
-// TODO(b/239222919): remove compat dependencies
-import {observer} from '@material/web/compat/base/observer';
 import {ariaProperty} from '@material/web/decorators/aria-property';
 import {html, LitElement} from 'lit';
 import {property, query} from 'lit/decorators';
@@ -22,10 +20,8 @@ import {ListItem} from '../../list/lib/listitem/list-item';
 import {Corner, MenuSurface} from '../../menusurface/lib/menu-surface';
 
 import {MDCMenuAdapter} from './adapter';
-import {DefaultFocusState as DefaultFocusStateEnum} from './constants';
+import {DefaultFocusState} from './constants';
 import {MDCMenuFoundation} from './foundation';
-
-export type DefaultFocusState = keyof typeof DefaultFocusStateEnum;
 
 interface ActionDetail {
   item: ListItem;
@@ -75,15 +71,12 @@ export abstract class Menu extends LitElement {
 
   @property({type: Boolean}) flipMenuHorizontally = false;
 
-  @property({type: Boolean}) stayOpenOnBodyClick: boolean = false;
+  @property({type: Boolean}) stayOpenOnBodyClick = false;
+
+  @property({type: Boolean}) skipRestoreFocus = false;
 
   @property({type: String})
-  @observer(function(this: Menu, value: DefaultFocusState) {
-    if (this.mdcFoundation) {
-      this.mdcFoundation.setDefaultFocusState(DefaultFocusStateEnum[value]);
-    }
-  })
-  defaultFocus: DefaultFocusState = 'LIST_ROOT';
+  defaultFocus: DefaultFocusState = DefaultFocusState.LIST_ROOT;
 
   protected listUpdateComplete: null|Promise<unknown> = null;
 
@@ -94,16 +87,6 @@ export abstract class Menu extends LitElement {
     }
 
     return this.listElementInternal;
-  }
-
-  override click() {
-    if (this.mdcRoot) {
-      this.mdcRoot.focus();
-      this.mdcRoot.click();
-      return;
-    }
-
-    super.click();
   }
 
   get items(): ListItem[] {
@@ -130,6 +113,7 @@ export abstract class Menu extends LitElement {
           .fixed=${this.fixed}
           .fullwidth=${this.fullwidth}
           .flipMenuHorizontally=${this.flipMenuHorizontally}
+          .skipRestoreFocus=${this.skipRestoreFocus}
           ?stayOpenOnBodyClick=${this.stayOpenOnBodyClick}
           class="md3-menu md3-menu-surface"
           @closed=${this.onClosed}
@@ -137,9 +121,10 @@ export abstract class Menu extends LitElement {
           @keydown=${this.onKeydown}>
         <md-list
           aria-label="${ifDefined(this.ariaLabel)}"
-          .listTabIndex=${-1}
-          .listItemTagName=${this.getMenuItemTagName()}
           role=${'menu'}
+          .listTabIndex=${
+        - 1}
+          .listItemTagName=${this.getMenuItemTagName()}
           @action=${this.onAction}>
         <slot></slot>
       </md-list>
@@ -216,7 +201,8 @@ export abstract class Menu extends LitElement {
       },
       elementContainsClass: (element, className) =>
           element.classList.contains(className),
-      closeSurface: () => {
+      closeSurface: (skipRestoreFocus) => {
+        this.skipRestoreFocus = Boolean(skipRestoreFocus);
         this.open = false;
       },
       getElementIndex: (element) => {
@@ -235,22 +221,6 @@ export abstract class Menu extends LitElement {
         }
 
         return listElement.items.length;
-      },
-      focusItemAtIndex: (index) => {
-        const listElement = this.listElement;
-        if (!listElement) {
-          return;
-        }
-        const element = listElement.items[index];
-
-        if (element) {
-          (element as HTMLElement).focus();
-        }
-      },
-      focusListRoot: () => {
-        if (this.listElement) {
-          this.listElement.focus();
-        }
       },
       getSelectedSiblingOfItemAtIndex: (index) => {
         const listElement = this.listElement;
@@ -313,10 +283,24 @@ export abstract class Menu extends LitElement {
   }
 
   protected onOpened() {
+    this.skipRestoreFocus = false;
     this.open = true;
 
-    if (this.mdcFoundation) {
-      this.mdcFoundation.handleMenuSurfaceOpened();
+    this.listElement?.resetActiveListItem();
+    switch (this.defaultFocus) {
+      case DefaultFocusState.FIRST_ITEM:
+        this.listElement?.activateFirstItem();
+        break;
+      case DefaultFocusState.LAST_ITEM:
+        this.listElement?.activateLastItem();
+        break;
+      case DefaultFocusState.NONE:
+        // Do nothing.
+        break;
+      case DefaultFocusState.LIST_ROOT:
+      default:
+        this.listElement?.focus();
+        break;
     }
   }
 
@@ -353,23 +337,5 @@ export abstract class Menu extends LitElement {
 
   show() {
     this.open = true;
-  }
-
-  getFocusedItemIndex() {
-    // TODO(b/240177152): Implement keyboard navigation support.
-    // const listElement = this.listElement;
-    // if (listElement) {
-    //   return listElement.getFocusedItemIndex();
-    // }
-
-    return -1;
-  }
-
-  focusItemAtIndex(index: number) {
-    // TODO(b/240177152): Implement keyboard navigation support.
-    // const listElement = this.listElement;
-    // if (listElement) {
-    //   listElement.focusItemAtIndex(index);
-    // }
   }
 }

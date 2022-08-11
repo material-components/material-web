@@ -11,18 +11,17 @@ import {Environment} from '@material/web/testing/environment';
 import {html} from 'lit';
 
 import {MenuHarness} from './harness';
+import {DefaultFocusState} from './lib/constants';
 import {MdMenu} from './menu';
 
 describe('menu tests', () => {
   let menu: MdMenu;
   let harness: MenuHarness;
+  let anchor: HTMLButtonElement;
   const env = new Environment();
 
   beforeEach(async () => {
-    const el = env.render(getMenuTemplate());
-    menu = el.querySelector('md-menu')!;
-    harness = await new MenuHarness(menu);
-    await env.waitForStability();
+    ({menu, harness, anchor} = await setUp(env));
   });
 
   describe('open/close', () => {
@@ -78,7 +77,83 @@ describe('menu tests', () => {
       expect(menu.open).toBe(false);
     });
   });
+
+  describe('focus management', () => {
+    it('with `defaultFocus=FIRST_ITEM`, focuses on first menu item on open',
+       async () => {
+         ({menu, harness} =
+              await setUp(env, {defaultFocus: DefaultFocusState.FIRST_ITEM}));
+         menu.show();
+         await menu.updateComplete;
+
+         const firstItem = harness.getItems()[0].element;
+         expect(document.activeElement).toBe(firstItem);
+       });
+
+    it('with `defaultFocus=LAST_ITEM`, focuses on last menu item on open',
+       async () => {
+         ({menu, harness} =
+              await setUp(env, {defaultFocus: DefaultFocusState.LAST_ITEM}));
+         menu.show();
+         await menu.updateComplete;
+
+         const items = harness.getItems();
+         const lastItem = items[items.length - 1].element;
+         expect(document.activeElement).toBe(lastItem);
+       });
+
+    it('with `defaultFocus=LIST_ROOT`, focuses on menu root on open',
+       async () => {
+         ({menu} =
+              await setUp(env, {defaultFocus: DefaultFocusState.LIST_ROOT}));
+         menu.show();
+         await menu.updateComplete;
+
+         expect(document.activeElement).toBe(menu);
+       });
+
+    it('on TAB, closes the menu without restoring focus to the anchor',
+       async () => {
+         anchor.focus();
+         expect(document.activeElement).toBe(anchor);
+
+         menu.show();
+         await menu.updateComplete;
+         expect(document.activeElement).not.toBe(anchor);
+
+         const menuSurface = menu.renderRoot.querySelector('md-menu-surface')!;
+         menuSurface.dispatchEvent(new KeyboardEvent('keydown', {key: 'Tab'}));
+         expect(menu.open).toBe(false);
+         expect(document.activeElement).not.toBe(anchor);
+       });
+
+    it('on ESC, closes the menu and restores focus to the anchor',
+        async () => {
+         anchor.focus();
+         expect(document.activeElement).toBe(anchor);
+
+          menu.show();
+          await menu.updateComplete;
+         expect(document.activeElement).not.toBe(anchor);
+
+          const menuSurface = menu.renderRoot.querySelector('md-menu-surface')!;
+          menuSurface.mdcRoot.dispatchEvent(
+              new KeyboardEvent('keydown', {key: 'Escape'}));
+          expect(menu.open).toBe(false);
+          expect(document.activeElement).not.toBe(anchor);
+        });
+  });
 });
+
+async function setUp(env: Environment, propsInit: Partial<MdMenu> = {}) {
+  const el = env.render(getMenuTemplate(propsInit));
+  const menu = el.querySelector('md-menu')!;
+  const harness = await new MenuHarness(menu);
+  const anchor = el.querySelector('button')!;
+  await env.waitForStability();
+
+  return {menu, harness, anchor};
+}
 
 function getMenuTemplate(propsInit: Partial<MdMenu> = {}) {
   return html`
@@ -86,7 +161,8 @@ function getMenuTemplate(propsInit: Partial<MdMenu> = {}) {
       <button @click=${setAnchorAndOpen}>
         Open Menu
       </button>
-      <md-menu .quick="${propsInit.quick ?? true}">
+      <md-menu .quick="${propsInit.quick ?? true}"
+          .defaultFocus="${propsInit.defaultFocus ?? 'LIST_ROOT'}">
         <md-menu-item .headline=${'One'}></md-menu-item>
         <md-menu-item .headline=${'Two'}></md-menu-item>
         <md-menu-item .headline=${'Three'}></md-menu-item>
