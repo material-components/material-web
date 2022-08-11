@@ -15,14 +15,15 @@ import {DefaultFocusState as DefaultFocusStateEnum} from '@material/menu/constan
 import MDCMenuFoundation from '@material/menu/foundation.js';
 import {BaseElement} from '@material/mwc-base/base-element.js';
 import {observer} from '@material/mwc-base/observer.js';
-import {List, MWCListIndex} from '@material/mwc-list/mwc-list.js';
 import {ActionDetail} from '@material/mwc-list/mwc-list-foundation.js';
 import {ListItemBase} from '@material/mwc-list/mwc-list-item-base.js';
+import {List, MWCListIndex} from '@material/mwc-list/mwc-list.js';
 import {html} from 'lit';
 import {property, query} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 
-import {MenuSurface} from './mwc-menu-surface.js';
 import {Corner, MenuCorner} from './mwc-menu-surface-base.js';
+import {MenuSurface} from './mwc-menu-surface.js';
 
 export {ActionDetail, createSetFromIndex, isEventMulti, isIndexSet, MWCListIndex, SelectedDetail} from '@material/mwc-list/mwc-list-foundation.js';
 export {Corner, MenuCorner} from './mwc-menu-surface-base.js';
@@ -131,39 +132,63 @@ export abstract class MenuBase extends BaseElement {
   }
 
   override render() {
-    const itemRoles = this.innerRole === 'menu' ? 'menuitem' : 'option';
+    return this.renderSurface();
+  }
 
+  protected renderSurface() {
+    const classes = this.getSurfaceClasses();
     return html`
       <mwc-menu-surface
-          ?hidden=${!this.open}
-          .anchor=${this.anchor}
-          .open=${this.open}
-          .quick=${this.quick}
-          .corner=${this.corner}
-          .x=${this.x}
-          .y=${this.y}
-          .absolute=${this.absolute}
-          .fixed=${this.fixed}
-          .fullwidth=${this.fullwidth}
-          .menuCorner=${this.menuCorner}
-          ?stayOpenOnBodyClick=${this.stayOpenOnBodyClick}
-          class="mdc-menu mdc-menu-surface"
-          @closed=${this.onClosed}
-          @opened=${this.onOpened}
-          @keydown=${this.onKeydown}>
-        <mwc-list
+        ?hidden=${!this.open}
+        .anchor=${this.anchor}
+        .open=${this.open}
+        .quick=${this.quick}
+        .corner=${this.corner}
+        .x=${this.x}
+        .y=${this.y}
+        .absolute=${this.absolute}
+        .fixed=${this.fixed}
+        .fullwidth=${this.fullwidth}
+        .menuCorner=${this.menuCorner}
+        ?stayOpenOnBodyClick=${this.stayOpenOnBodyClick}
+        class=${classMap(classes)}
+        @closed=${this.onClosed}
+        @opened=${this.onOpened}
+        @keydown=${this.onKeydown}>
+      ${this.renderList()}
+    </mwc-menu-surface>`;
+  }
+
+  protected getSurfaceClasses() {
+    return {
+      'mdc-menu': true,
+      'mdc-menu-surface': true,
+    };
+  }
+
+  protected renderList() {
+    const itemRoles = this.innerRole === 'menu' ? 'menuitem' : 'option';
+    const classes = this.renderListClasses();
+
+    return html`
+      <mwc-list
           rootTabbable
           .innerAriaLabel=${this.innerAriaLabel}
           .innerRole=${this.innerRole}
           .multi=${this.multi}
-          class="mdc-deprecated-list"
+          class=${classMap(classes)}
           .itemRoles=${itemRoles}
           .wrapFocus=${this.wrapFocus}
           .activatable=${this.activatable}
           @action=${this.onAction}>
         <slot></slot>
-      </mwc-list>
-    </mwc-menu-surface>`;
+      </mwc-list>`;
+  }
+
+  protected renderListClasses() {
+    return {
+      'mdc-deprecated-list': true,
+    };
   }
 
   protected createAdapter(): MDCMenuAdapter {
@@ -263,7 +288,7 @@ export abstract class MenuBase extends BaseElement {
 
         return -1;
       },
-      notifySelected: () => { /** handled by list */ },
+      notifySelected: () => {/** handled by list */},
       getMenuItemCount: () => {
         const listElement = this.listElement;
         if (!listElement) {
