@@ -30,6 +30,7 @@
     -webkit-overflow-scrolling: touch;
     display: flex;
     overflow-x: hidden;
+    scrollbar-width: none;
   }
 
   .md3-tab-scroller__scroll-area,
