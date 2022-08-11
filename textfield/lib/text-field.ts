@@ -109,6 +109,37 @@ export class TextField extends LitElement {
   @property({type: String, reflect: true, converter: stringConverter})
   placeholder = '';
   @property({type: Boolean, reflect: true}) readonly = false;
+
+  /**
+   * Gets or sets the direction in which selection occurred.
+   */
+  get selectionDirection() {
+    return this.getInput().selectionDirection;
+  }
+  set selectionDirection(value: 'forward'|'backward'|'none'|null) {
+    this.getInput().selectionDirection = value;
+  }
+
+  /**
+   * Gets or sets the end position or offset of a text selection.
+   */
+  get selectionEnd() {
+    return this.getInput().selectionEnd;
+  }
+  set selectionEnd(value: number|null) {
+    this.getInput().selectionEnd = value;
+  }
+
+  /**
+   * Gets or sets the starting position or offset of a text selection.
+   */
+  get selectionStart() {
+    return this.getInput().selectionStart;
+  }
+  set selectionStart(value: number|null) {
+    this.getInput().selectionStart = value;
+  }
+
   // TODO(b/237284412): replace with exported types
   @property({type: String, reflect: true})
   type: 'email'|'number'|'password'|'search'|'tel'|'text'|'url'|'color'|'date'|
@@ -167,6 +198,47 @@ export class TextField extends LitElement {
     // TODO(b/210731759): replace with super.focus() once SSR supports
     // delegating focus
     this.getInput().focus();
+  }
+
+  /**
+   * Selects all the text in the text field.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/select
+   */
+  select() {
+    this.getInput().select();
+  }
+
+  /**
+   * Replaces a range of text with a new string.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setRangeText
+   */
+  setRangeText(replacement: string): void;
+  setRangeText(
+      replacement: string, start: number, end: number,
+      selectionMode?: SelectionMode): void;
+  setRangeText(...args: unknown[]) {
+    // Calling setRangeText with 1 vs 3-4 arguments has different behavior.
+    // Use spread syntax and type casting to ensure correct usage.
+    this.getInput().setRangeText(
+        ...args as Parameters<HTMLInputElement['setRangeText']>);
+    this.value = this.getInput().value;
+  }
+
+  /**
+   * Sets the start and end positions of a selection in the text field.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setSelectionRange
+   *
+   * @param start The offset into the text field for the start of the selection.
+   * @param end The offset into the text field for the end of the selection.
+   * @param direction The direction in which the selection is performed.
+   */
+  setSelectionRange(
+      start: number|null, end: number|null,
+      direction?: 'forward'|'backward'|'none') {
+    this.getInput().setSelectionRange(start, end, direction);
   }
 
   /**
