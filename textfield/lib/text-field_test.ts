@@ -232,5 +232,130 @@ describe('TextField', () => {
     });
   });
 
+  describe('native validation', () => {
+    it('should expose input validity', async () => {
+      const {testElement, input} = await setupTest();
+      const spy = spyOnProperty(input, 'validity', 'get').and.callThrough();
+
+      expect(testElement.validity).toEqual(jasmine.any(Object));
+      expect(spy).toHaveBeenCalled();
+    });
+
+    it('should expose input validationMessage', async () => {
+      const {testElement, input} = await setupTest();
+      const spy =
+          spyOnProperty(input, 'validationMessage', 'get').and.callThrough();
+
+      expect(testElement.validationMessage).toEqual(jasmine.any(String));
+      expect(spy).toHaveBeenCalled();
+    });
+
+    it('should expose input willValidate', async () => {
+      const {testElement, input} = await setupTest();
+      const spy = spyOnProperty(input, 'willValidate', 'get').and.callThrough();
+
+      expect(testElement.willValidate).toEqual(jasmine.any(Boolean));
+      expect(spy).toHaveBeenCalled();
+    });
+
+    describe('checkValidity()', () => {
+      it('should return true if the text field is valid', async () => {
+        const {testElement} = await setupTest();
+
+        expect(testElement.checkValidity()).toBeTrue();
+      });
+
+      it('should return false if the text field is invalid', async () => {
+        const {testElement} = await setupTest();
+        testElement.required = true;
+
+        expect(testElement.checkValidity()).toBeFalse();
+      });
+
+      it('should not dispatch an invalid event when valid', async () => {
+        const {testElement} = await setupTest();
+        const invalidHandler = jasmine.createSpy('invalidHandler');
+        testElement.addEventListener('invalid', invalidHandler);
+
+        testElement.checkValidity();
+
+        expect(invalidHandler).not.toHaveBeenCalled();
+      });
+
+      it('should dispatch an invalid event when invalid', async () => {
+        const {testElement} = await setupTest();
+        const invalidHandler = jasmine.createSpy('invalidHandler');
+        testElement.addEventListener('invalid', invalidHandler);
+        testElement.required = true;
+
+        testElement.checkValidity();
+
+        expect(invalidHandler).toHaveBeenCalled();
+      });
+    });
+
+    describe('reportValidity()', () => {
+      it('should return true when valid and set error to false', async () => {
+        const {testElement} = await setupTest();
+        testElement.error = true;
+
+        const valid = testElement.reportValidity();
+
+        expect(valid).withContext('valid').toBeTrue();
+        expect(testElement.error).withContext('testElement.error').toBeFalse();
+      });
+
+      it('should return false when invalid and set error to true', async () => {
+        const {testElement} = await setupTest();
+        testElement.required = true;
+
+        const valid = testElement.reportValidity();
+
+        expect(valid).withContext('valid').toBeFalse();
+        expect(testElement.error).withContext('testElement.error').toBeTrue();
+      });
+
+      it('should update errorText to validationMessage', async () => {
+        const {testElement} = await setupTest();
+        const errorMessage = 'Error message';
+        testElement.setCustomValidity(errorMessage);
+
+        testElement.reportValidity();
+
+        expect(testElement.errorText).toEqual(errorMessage);
+      });
+
+      it('should not update error or errorText if invalid event is canceled',
+         async () => {
+           const {testElement} = await setupTest();
+           testElement.addEventListener('invalid', e => {
+             e.preventDefault();
+           });
+           const errorMessage = 'Error message';
+           testElement.setCustomValidity(errorMessage);
+
+           const valid = testElement.reportValidity();
+
+           expect(valid).withContext('valid').toBeFalse();
+           expect(testElement.error)
+               .withContext('testElement.error')
+               .toBeFalse();
+           expect(testElement.errorText).toEqual('');
+         });
+    });
+
+    describe('setCustomValidity()', () => {
+      it('should call input.setCustomValidity()', async () => {
+        const {testElement, input} = await setupTest();
+        spyOn(input, 'setCustomValidity').and.callThrough();
+
+        const errorMessage = 'Error message';
+        testElement.setCustomValidity(errorMessage);
+
+        expect(input.setCustomValidity).toHaveBeenCalledWith(errorMessage);
+      });
+    });
+  });
+
   // TODO(b/235238545): Add shared FormController tests.
 });

@@ -43,12 +43,17 @@ export class TextField extends LitElement {
   @property({type: Boolean, reflect: true}) disabled = false;
   /**
    * Gets or sets whether or not the text field is in a visually invalid state.
+   *
+   * Calling `reportValidity()` will automatically update `error`.
    */
   @property({type: Boolean, reflect: true}) error = false;
   /**
    * The error message that replaces supporting text when `error` is true. If
    * `errorText` is an empty string, then the supporting text will continue to
    * show.
+   *
+   * Calling `reportValidity()` will automatically update `errorText` to the
+   * native `validationMessage`.
    */
   @property({type: String}) errorText = '';
   @property({type: String}) label?: string;
@@ -155,6 +160,26 @@ export class TextField extends LitElement {
       'datetime-local'|'file'|'month'|'time'|'week' = 'text';
 
   /**
+   * Returns the native validation error message that would be displayed upon
+   * calling `reportValidity()`.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validationMessage
+   */
+  get validationMessage() {
+    return this.getInput().validationMessage;
+  }
+
+  /**
+   * Returns a ValidityState object that represents the validity states of the
+   * text field.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validity
+   */
+  get validity() {
+    return this.getInput().validity;
+  }
+
+  /**
    * The text field's value as a number.
    */
   get valueAsNumber() {
@@ -174,6 +199,16 @@ export class TextField extends LitElement {
   set valueAsDate(value: Date|null) {
     this.getInput().valueAsDate = value;
     this.value = this.getInput().value;
+  }
+
+  /**
+   * Returns whether an element will successfully validate based on forms
+   * validation rules and constraints.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/willValidate
+   */
+  get willValidate() {
+    return this.getInput().willValidate;
   }
 
   /**
@@ -197,6 +232,21 @@ export class TextField extends LitElement {
     this.addEventListener('click', this.focus);
   }
 
+  /**
+   * Checks the text field's native validation and returns whether or not the
+   * element is valid.
+   *
+   * If invalid, this method will dispatch the `invalid` event.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity
+   *
+   * @return true if the text field is valid, or false if not.
+   */
+  checkValidity() {
+    const {valid} = this.checkValidityAndDispatch();
+    return valid;
+  }
+
   override focus() {
     if (this.disabled || this.matches(':focus-within')) {
       // Don't shift focus from an element within the text field, like an icon
@@ -210,12 +260,53 @@ export class TextField extends LitElement {
   }
 
   /**
+   * Checks the text field's native validation and returns whether or not the
+   * element is valid.
+   *
+   * If invalid, this method will dispatch the `invalid` event.
+   *
+   * This method will update `error` to the current validity state and
+   * `errorText` to the current `validationMessage`, unless the invalid event is
+   * canceled.
+   *
+   * Use `setCustomValidity()` to customize the `validationMessage`.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/reportValidity
+   *
+   * @return true if the text field is valid, or false if not.
+   */
+  reportValidity() {
+    const {valid, canceled} = this.checkValidityAndDispatch();
+    if (!canceled) {
+      this.error = !valid;
+      this.errorText = this.validationMessage;
+    }
+
+    return valid;
+  }
+
+  /**
    * Selects all the text in the text field.
    *
    * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/select
    */
   select() {
     this.getInput().select();
+  }
+
+  /**
+   * Sets the text field's native validation error message. This is used to
+   * customize `validationMessage`.
+   *
+   * When the error is not an empty string, the text field is considered invalid
+   * and `validity.customError` will be true.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setCustomValidity
+   *
+   * @param error The error message to display.
+   */
+  setCustomValidity(error: string) {
+    this.getInput().setCustomValidity(error);
   }
 
   /**
@@ -423,7 +514,24 @@ export class TextField extends LitElement {
       this.scheduleUpdate();
     }
 
+    if (this.isUpdatePending) {
+      // If there are pending updates, synchronously perform them. This ensures
+      // that constraint validation properties (like `required`) are synced
+      // before interacting with input APIs that depend on them.
+      this.scheduleUpdate();
+    }
+
     return this.input!;
+  }
+
+  private checkValidityAndDispatch() {
+    const valid = this.getInput().checkValidity();
+    let canceled = false;
+    if (!valid) {
+      canceled = !this.dispatchEvent(new Event('invalid', {cancelable: true}));
+    }
+
+    return {valid, canceled};
   }
 
   private handleIconChange() {
