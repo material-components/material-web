@@ -5,7 +5,8 @@
  */
 
 import {Harness} from '@material/web/testing/harness';
-import {NavigationTabHarness} from 'google3/third_party/javascript/material/web/navigationtab/harness';
+
+import {NavigationTabHarness} from '../navigationtab/harness';
 
 import {NavigationBar} from './lib/navigation-bar';
 

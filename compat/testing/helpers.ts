@@ -78,7 +78,7 @@ export class TestFixture extends LitElement {
   }
 }
 
-const defaultOpts = {
+const defaultOpts: FixtureOptions = {
   shouldAttachContents: true,
   document: document,
   afterRender: null,

@@ -10,8 +10,8 @@
 import '@material/web/focus/focus-ring';
 import '@material/web/ripple/ripple';
 
-import {ariaProperty as legacyAriaProperty} from '@material/mwc-base/aria-property';
 import {ActionElement, BeginPressConfig, EndPressConfig} from '@material/web/actionelement/action-element';
+import {ariaProperty as legacyAriaProperty} from '@material/web/compat/base/aria-property';
 import {ariaProperty} from '@material/web/decorators/aria-property';
 import {pointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus';
 import {MdRipple} from '@material/web/ripple/ripple';

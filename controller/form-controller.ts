@@ -7,6 +7,12 @@
 import {bound} from '@material/web/decorators/bound';
 import {ReactiveController, ReactiveControllerHost} from 'lit';
 
+declare global {
+  interface Window {
+    ShadyDOM?: {inUse: boolean;};
+  }
+}
+
 /**
  * An element that `FormController` may use.
  */

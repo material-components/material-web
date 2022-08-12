@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {doesElementContainFocus} from '@material/mwc-base/utils';
+import {doesElementContainFocus} from '@material/web/compat/base/utils';
+import {fixture, TestFixture} from '@material/web/compat/testing/helpers';
 import {MdFocusRing} from '@material/web/focus/focus-ring';
-import {fixture, TestFixture} from 'google3/third_party/javascript/material_web_components/testing/helpers';
 import {html} from 'lit';
 import {customElement} from 'lit/decorators';
 

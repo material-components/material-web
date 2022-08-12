@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {isNavigationEvent, KEY, normalizeKey} from '@material/dom/keyboard';
+// TODO(b/242194005): remove MDC deps
+import {isNavigationEvent, KEY, normalizeKey} from '@material/web/compat/dom/keyboard';
 
 import {MDCChipActionAdapter} from './adapter';
 import {MDCChipActionAttributes, MDCChipActionEvents, MDCChipActionFocusBehavior, MDCChipActionInteractionTrigger, MDCChipActionType} from './constants';

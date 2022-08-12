@@ -4,11 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {doesElementContainFocus} from '@material/mwc-base/utils';
-import {KEY} from 'google3/third_party/javascript/material_components_web/dom/keyboard';
-import {NavigationTabHarness} from 'google3/third_party/javascript/material/web/navigationtab/harness';
-import {MdNavigationTab} from 'google3/third_party/javascript/material/web/navigationtab/navigation-tab';
-import {fixture, rafPromise, TestFixture} from 'google3/third_party/javascript/material_web_components/testing/helpers';
+import {doesElementContainFocus} from '@material/web/compat/base/utils';
+import {fixture, rafPromise, TestFixture} from '@material/web/compat/testing/helpers';
+import {NavigationTabHarness} from '@material/web/navigationtab/harness';
+import {MdNavigationTab} from '@material/web/navigationtab/navigation-tab';
 import {html} from 'lit';
 import {customElement} from 'lit/decorators';
 import {ifDefined} from 'lit/directives/if-defined';
@@ -18,25 +17,31 @@ import {MdNavigationBar} from './navigation-bar';
 @customElement('md-test-navigation-bar')
 class TestMdNavigationBar extends MdNavigationBar {
 }
-@customElement('md-test-navigation-tab')
+@customElement('md-test-navigation-bar-tab')
 class TestMdNavigationTab extends MdNavigationTab {
 }
 
 declare global {
   interface HTMLElementTagNameMap {
     'md-test-navigation-bar': TestMdNavigationBar;
-    'md-test-navigation-tab': TestMdNavigationTab;
+    'md-test-navigation-bar-tab': TestMdNavigationTab;
   }
 }
 
-const navBarWithNavTabsElement = (propsInit: Partial<TestMdNavigationBar>) => {
+interface NavigationBarProps {
+  activeIndex: number;
+  hideInactiveLabels: boolean;
+  ariaLabel?: string;
+}
+
+const navBarWithNavTabsElement = (propsInit: Partial<NavigationBarProps>) => {
   return html`
       <md-test-navigation-bar
           .activeIndex="${propsInit.activeIndex ?? 0}"
           .hideInactiveLabels="${propsInit.hideInactiveLabels === true}"
           aria-label="${ifDefined(propsInit.ariaLabel)}">
-        <md-test-navigation-tab label="One"></md-test-navigation-tab>
-        <md-test-navigation-tab label="Two"></md-test-navigation-tab>
+        <md-test-navigation-bar-tab label="One"></md-test-navigation-bar-tab>
+        <md-test-navigation-bar-tab label="Two"></md-test-navigation-bar-tab>
       </md-test-navigation-bar>
   `;
 };
@@ -44,8 +49,8 @@ const navBarWithNavTabsElement = (propsInit: Partial<TestMdNavigationBar>) => {
 // The following is a Navbar with the tabs being out of sync with the bar.
 const navBarWithIncorrectTabsElement = html`
     <md-test-navigation-bar activeIndex="0">
-      <md-test-navigation-tab label="One" hideInactiveLabel></md-test-navigation-tab>
-      <md-test-navigation-tab label="One" active></md-test-navigation-tab>
+      <md-test-navigation-bar-tab label="One" hideInactiveLabel></md-test-navigation-bar-tab>
+      <md-test-navigation-bar-tab label="One" active></md-test-navigation-bar-tab>
     </md-test-navigation-bar>`;
 
 describe('md-navigation-bar', () => {
@@ -60,7 +65,7 @@ describe('md-navigation-bar', () => {
     beforeEach(async () => {
       fixt = await fixture(html`
         <md-test-navigation-bar>
-          <md-test-navigation-tab label="One"></md-test-navigation-tab>
+          <md-test-navigation-bar-tab label="One"></md-test-navigation-bar-tab>
         </md-test-navigation-bar>`);
       element = fixt.root.querySelector('md-test-navigation-bar')!;
       await element.updateComplete;
@@ -222,9 +227,9 @@ describe('md-navigation-bar', () => {
 
     it('(Enter) activates the focused tab', async () => {
       const eventRight =
-          new KeyboardEvent('keydown', {key: KEY.ARROW_RIGHT, bubbles: true});
+          new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true});
       const eventEnter =
-          new KeyboardEvent('keydown', {key: KEY.ENTER, bubbles: true});
+          new KeyboardEvent('keydown', {key: 'Enter', bubbles: true});
       tab1.focus();
       expect(element.activeIndex).toBe(0);
       bar.dispatchEvent(eventRight);
@@ -236,9 +241,9 @@ describe('md-navigation-bar', () => {
 
     it('(Spacebar) activates the focused tab', async () => {
       const eventRight =
-          new KeyboardEvent('keydown', {key: KEY.ARROW_RIGHT, bubbles: true});
+          new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true});
       const eventSpacebar =
-          new KeyboardEvent('keydown', {key: KEY.SPACEBAR, bubbles: true});
+          new KeyboardEvent('keydown', {key: 'Spacebar', bubbles: true});
       tab1.focus();
       expect(element.activeIndex).toBe(0);
       bar.dispatchEvent(eventRight);
@@ -249,8 +254,7 @@ describe('md-navigation-bar', () => {
     });
 
     it('(Home) sets focus on the first tab', () => {
-      const event =
-          new KeyboardEvent('keydown', {key: KEY.HOME, bubbles: true});
+      const event = new KeyboardEvent('keydown', {key: 'Home', bubbles: true});
       tab2.focus();
       expect(doesElementContainFocus(tab1)).toBeFalse();
       bar.dispatchEvent(event);
@@ -258,14 +262,14 @@ describe('md-navigation-bar', () => {
     });
 
     it('(End) sets focus on the last tab', () => {
-      const event = new KeyboardEvent('keydown', {key: KEY.END, bubbles: true});
+      const event = new KeyboardEvent('keydown', {key: 'End', bubbles: true});
       bar.dispatchEvent(event);
       expect(doesElementContainFocus(tab2)).toBeTrue();
     });
 
     describe('(ArrowLeft)', () => {
       // Use the same key for all tests
-      const key = KEY.ARROW_LEFT;
+      const key = 'ArrowLeft';
 
       it(`sets focus on previous tab`, () => {
         const event = new KeyboardEvent('keydown', {key, bubbles: true});
@@ -292,7 +296,7 @@ describe('md-navigation-bar', () => {
 
     describe('(ArrowRight)', () => {
       // Use the same key for all tests
-      const key = KEY.ARROW_RIGHT;
+      const key = 'ArrowRight';
 
       it(`sets focus on next tab`, () => {
         const event = new KeyboardEvent('keydown', {key, bubbles: true});

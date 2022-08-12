@@ -16,7 +16,7 @@ import {classMap} from 'lit/directives/class-map';
 import {styleMap} from 'lit/directives/style-map';
 
 import {MDCMenuSurfaceAdapter} from './adapter';
-import {Corner as CornerEnum, CornerBit} from './constants';
+import {Corner as CornerEnum} from './constants';
 import {MDCMenuSurfaceFoundation} from './foundation';
 
 export type Corner = keyof typeof CornerEnum;

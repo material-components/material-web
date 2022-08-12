@@ -10,7 +10,6 @@
 
 import {fixture, TestFixture} from '@material/web/compat/testing/helpers';  // TODO(b/235474830): remove the use of fixtures
 import {MdFocusRing} from '@material/web/focus/focus-ring';
-import {KEY} from 'google3/third_party/javascript/material_components_web/dom/keyboard';
 import {html} from 'lit';
 
 import {RadioHarness} from './harness';
@@ -117,7 +116,7 @@ describe('md-radio', () => {
       expect(a2.checked).toBeTrue();
 
       const eventRight =
-          new KeyboardEvent('keydown', {key: KEY.ARROW_RIGHT, bubbles: true});
+          new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true});
       a2.dispatchEvent(eventRight);
 
       const a3 = fixt.root.querySelectorAll('md-radio')[2];
@@ -133,7 +132,7 @@ describe('md-radio', () => {
          expect(a2.checked).toBeTrue();
 
          const eventRight = new KeyboardEvent(
-             'keydown', {key: KEY.ARROW_RIGHT, bubbles: true});
+             'keydown', {key: 'ArrowRight', bubbles: true});
          a2.dispatchEvent(eventRight);
          const a3 = fixt.root.querySelectorAll('md-radio')[2];
          a3.dispatchEvent(eventRight);
