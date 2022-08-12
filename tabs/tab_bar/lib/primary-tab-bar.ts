@@ -21,7 +21,7 @@ export class PrimaryTabBar extends TabBar {
   }
 
   // TODO(sorvell): probably want to memoize this and use a `slotChange` event
-  protected getTabs() {
+  getTabs() {
     return this.tabsSlot.filter((e: Node) => e instanceof PrimaryTab) as
         PrimaryTab[];
   }

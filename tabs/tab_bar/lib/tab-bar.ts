@@ -75,7 +75,7 @@ export abstract class TabBar extends BaseElement {
     };
   }
 
-  protected abstract getTabs(): PrimaryTab[]|SecondaryTab[];
+  abstract getTabs(): PrimaryTab[]|SecondaryTab[];
 
   protected getTab(index: number) {
     return this.getTabs()[index];
