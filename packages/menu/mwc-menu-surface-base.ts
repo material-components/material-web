@@ -98,14 +98,7 @@ export abstract class MenuSurfaceBase extends BaseElement {
 
   @property({type: Boolean, reflect: true})
   @observer(function(this: MenuSurfaceBase, isOpen: boolean, wasOpen: boolean) {
-    if (this.mdcFoundation) {
-      if (isOpen) {
-        this.mdcFoundation.open();
-        // wasOpen helps with first render (when it is `undefined`) perf
-      } else if (wasOpen !== undefined) {
-        this.mdcFoundation.close();
-      }
-    }
+    this.onOpenChanged(isOpen, wasOpen);
   })
   open = false;
 
@@ -173,12 +166,33 @@ export abstract class MenuSurfaceBase extends BaseElement {
   protected onBodyClickBound: (evt: MouseEvent) => void = () => undefined;
 
   override render() {
-    const classes = {
+    return this.renderSurface();
+  }
+
+  protected renderSurface() {
+    const classes = this.getRootClasses();
+    const styles = this.getRootStyles();
+    return html`
+      <div
+          class=${classMap(classes)}
+          style="${styleMap(styles)}"
+          @keydown=${this.onKeydown}
+          @opened=${this.registerBodyClick}
+          @closed=${this.deregisterBodyClick}>
+        ${this.renderContent()}
+      </div>`;
+  }
+
+  protected getRootClasses() {
+    return {
+      'mdc-menu-surface': true,
       'mdc-menu-surface--fixed': this.fixed,
       'mdc-menu-surface--fullwidth': this.fullwidth,
     };
+  }
 
-    const styles = {
+  protected getRootStyles() {
+    return {
       'top': this.styleTop,
       'left': this.styleLeft,
       'right': this.styleRight,
@@ -186,16 +200,10 @@ export abstract class MenuSurfaceBase extends BaseElement {
       'max-height': this.styleMaxHeight,
       'transform-origin': this.styleTransformOrigin,
     };
+  }
 
-    return html`
-      <div
-          class="mdc-menu-surface ${classMap(classes)}"
-          style="${styleMap(styles)}"
-          @keydown=${this.onKeydown}
-          @opened=${this.registerBodyClick}
-          @closed=${this.deregisterBodyClick}>
-        <slot></slot>
-      </div>`;
+  protected renderContent() {
+    return html`<slot></slot>`;
   }
 
   createAdapter(): MDCMenuSurfaceAdapter {
@@ -349,6 +357,17 @@ export abstract class MenuSurfaceBase extends BaseElement {
   protected deregisterBodyClick() {
     document.body.removeEventListener(
         'click', this.onBodyClickBound, {capture: true});
+  }
+
+  protected onOpenChanged(isOpen: boolean, wasOpen: boolean) {
+    if (this.mdcFoundation) {
+      if (isOpen) {
+        this.mdcFoundation.open();
+        // wasOpen helps with first render (when it is `undefined`) perf
+      } else if (wasOpen !== undefined) {
+        this.mdcFoundation.close();
+      }
+    }
   }
 
   close() {
