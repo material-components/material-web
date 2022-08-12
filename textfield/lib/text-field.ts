@@ -41,7 +41,16 @@ export class TextField extends LitElement {
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
   @property({type: Boolean, reflect: true}) disabled = false;
+  /**
+   * Gets or sets whether or not the text field is in a visually invalid state.
+   */
   @property({type: Boolean, reflect: true}) error = false;
+  /**
+   * The error message that replaces supporting text when `error` is true. If
+   * `errorText` is an empty string, then the supporting text will continue to
+   * show.
+   */
+  @property({type: String}) errorText = '';
   @property({type: String}) label?: string;
   @property({type: Boolean, reflect: true}) required = false;
   /**
@@ -321,7 +330,7 @@ export class TextField extends LitElement {
     // TODO(b/237283903): remove when custom isTruthy directive is supported
     const placeholderValue = this.placeholder ? this.placeholder : undefined;
     const ariaDescribedByValue =
-        this.supportingText ? this.supportingTextId : undefined;
+        this.getSupportingText() ? this.supportingTextId : undefined;
     const ariaLabelValue = this.ariaLabel ? this.ariaLabel :
         this.label                        ? this.label :
                                             undefined;
@@ -371,10 +380,16 @@ export class TextField extends LitElement {
    * @slotName supporting-text
    */
   protected renderSupportingText(): TemplateResult {
-    return this.supportingText ?
+    const text = this.getSupportingText();
+    return text ?
         html`<span id=${this.supportingTextId} slot="supporting-text">${
-            this.supportingText}</span>` :
+            text}</span>` :
         html``;
+  }
+
+  /** @soyTemplate */
+  protected getSupportingText(): string {
+    return this.error && this.errorText ? this.errorText : this.supportingText;
   }
 
   protected override willUpdate(changedProperties: PropertyValues<TextField>) {
