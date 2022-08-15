@@ -188,6 +188,7 @@ export class ListItem extends ActionElement {
     this.ripple.endHover();
   }
 
+  /** @bubbleWizEvent */
   protected handleKeyDown(e: KeyboardEvent) {
     if (e.key !== ' ' && e.key !== 'Enter') return;
 
@@ -204,11 +205,25 @@ export class ListItem extends ActionElement {
     this.ripple.endPress();
   }
 
+  /**
+   * Focuses list item and makes list item focusable via keyboard.
+   */
   activate() {
     this.itemTabIndex = 0;
     this.listItemRoot.focus();
+    this.showFocusRing = true;
   }
 
+  /**
+   * Returns true if list item is currently focused and is focusable.
+   */
+  isActive() {
+    return this.itemTabIndex === 0 && this.showFocusRing;
+  }
+
+  /**
+   * Removes list item from sequential keyboard navigation.
+   */
   deactivate() {
     this.itemTabIndex = -1;
   }

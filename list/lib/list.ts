@@ -69,6 +69,14 @@ export class List extends LitElement {
   handleKeydown(event: KeyboardEvent) {
     if (Object.values(NAVIGATABLE_KEYS).indexOf(event.key) === -1) return;
 
+    for (const item of this.items) {
+      if (item.isActive()) {
+        this.activeListItem = item;
+      }
+
+      item.deactivate();
+    }
+
     if (event.key === NAVIGATABLE_KEYS.ArrowDown) {
       event.preventDefault();
       if (this.activeListItem) {
@@ -97,13 +105,7 @@ export class List extends LitElement {
       this.activeListItem = this.getLastItem();
     }
 
-    if (!this.activeListItem) return;
-
-    for (const item of this.items) {
-      item.deactivate();
-    }
-
-    this.activeListItem.activate();
+    this.activeListItem?.activate();
   }
 
   handleItemInteraction(event: ListItemInteractionEvent) {
