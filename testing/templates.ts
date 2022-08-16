@@ -7,7 +7,7 @@
 import {TemplateResult} from 'lit';
 import {DirectiveResult} from 'lit/directive';
 import {ref} from 'lit/directives/ref';
-import {literal} from 'lit/static-html';
+import {literal, StaticValue} from 'lit/static-html';
 
 import {Harness, HarnessElement, isElementWithHarness} from './harness';
 import {TestTableTemplate} from './table/test-table';
@@ -277,9 +277,9 @@ export class TemplateBuilder<H extends Harness = never,
  *
  * @template H The harness type.
  */
-export type TemplateVariant<H extends Harness> = {
+export interface TemplateVariant<H extends Harness> {
   /** The variant's display name. */
-  display: string|ReturnType<typeof literal>;
+  display: string|StaticValue;
   /**
    * A factory function that takes an object of element properties and returns
    * another a test table template that renders the variant's element for a
