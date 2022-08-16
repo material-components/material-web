@@ -1,0 +1,9 @@
+node_modules
+package-lock.json
+*.js
+!css-to-ts.js
+*.css
+*.css.ts
+*.map
+*.d.ts
+!types/*.d.ts

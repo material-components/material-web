@@ -1,0 +1,35 @@
+{
+  "name": "@material/web",
+  "version": "0.27.0",
+  "description": "Material web components",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/material-components/material-web.git"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/material-components/material-web/issues"
+  },
+  "homepage": "https://github.com/material-components/material-web#readme",
+  "scripts": {
+    "clean": "npm run clean:sass && npm run clean:ts",
+    "clean:sass": "find . -name '*.css*' -type f -delete",
+    "clean:ts": "tsc --build --clean",
+    "build": "npm run build:sass && npm run build:ts",
+    "prebuild:sass": "[ -d node_modules/@material/web ] || (mkdir -p node_modules/@material && ln -s ../../ node_modules/@material/web)",
+    "build:sass": "sass --style=compressed --load-path=node_modules --load-path=node_modules/sass-true/sass $(ls -d */ | grep -v node_modules)",
+    "prebuild:ts": "find . -name '*.css' -type f | xargs node css-to-ts.js",
+    "build:ts": "tsc"
+  },
+  "dependencies": {
+    "lit": "^2.3.0",
+    "tslib": "^2.4.0"
+  },
+  "devDependencies": {
+    "@types/jasmine": "^4.0.3",
+    "jasmine": "^4.2.0",
+    "sass": "^1.52.3",
+    "sass-true": "^6.1.0",
+    "typescript": "^4.7.3"
+  }
+}
