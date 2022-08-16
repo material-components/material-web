@@ -1,5 +1,5 @@
 /**
- * @requirecss {segmented_button_set.lib.shared_styles}
+ * @requirecss {segmentedbuttonset.lib.shared_styles}
  *
  * @license
  * Copyright 2021 Google LLC
@@ -12,7 +12,7 @@ import {property, queryAssignedElements} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 
-import {SegmentedButton} from '../../segmented_button/lib/segmented-button';
+import {SegmentedButton} from '../../segmentedbutton/lib/segmented-button';
 
 /**
  * SegmentedButtonSet is the parent component for two or more
