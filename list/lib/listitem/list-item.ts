@@ -15,12 +15,17 @@ import {ARIARole} from '@material/web/types/aria';
 import {html, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
+import {ifDefined} from 'lit/directives/if-defined';
 
 /** @soyCompatible */
 export class ListItem extends ActionElement {
   @ariaProperty  // tslint:disable-line:no-new-decorators
   @property({type: String, attribute: 'data-role', noAccessor: true})
   role: ARIARole = 'listitem';
+
+  @ariaProperty  // tslint:disable-line:no-new-decorators
+  @property({type: String, attribute: 'data-aria-selected', noAccessor: true})
+  override ariaSelected!: 'true'|'false';
 
   @property({type: String}) supportingText = '';
   @property({type: String}) multiLineSupportingText = '';
@@ -38,6 +43,7 @@ export class ListItem extends ActionElement {
       <li
           tabindex=${this.itemTabIndex}
           role=${this.role}
+          aria-selected=${ifDefined(this.ariaSelected || undefined)}
           data-query-md3-list-item
           class="md3-list-item ${classMap(this.getRenderClasses())}"
           @pointerdown=${this.handlePointerDown}
@@ -202,6 +208,7 @@ export class ListItem extends ActionElement {
 
     e.preventDefault();
     // TODO(b/240124486): Replace with beginPress provided by action element.
+    super.endPress({cancelled: false, actionData: {item: this}});
     this.ripple.endPress();
   }
 

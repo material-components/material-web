@@ -10,7 +10,6 @@ import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators';
 import {ifDefined} from 'lit/directives/if-defined';
 
-import {ListItemInteractionEvent} from './listitem/constants';
 import {ListItem} from './listitem/list-item';
 
 const NAVIGATABLE_KEYS = {
@@ -58,7 +57,7 @@ export class List extends LitElement {
           aria-label="${ifDefined(this.ariaLabel)}"
           tabindex=${this.listTabIndex}
           role=${this.role}
-          @list-item-interaction=${this.handleItemInteraction}
+          @action=${this.handleAction}
           @keydown=${this.handleKeydown}
           >
         <slot></slot>
@@ -108,11 +107,7 @@ export class List extends LitElement {
     this.activeListItem?.activate();
   }
 
-  handleItemInteraction(event: ListItemInteractionEvent) {
-    if (event.detail.state.isSelected) {
-      // TODO: manage selection state.
-    }
-  }
+  protected handleAction(event: CustomEvent) {}
 
   activateFirstItem() {
     this.activeListItem = this.getFirstItem();
