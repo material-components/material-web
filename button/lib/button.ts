@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/mwc-icon/mwc-icon';
+import '@material/web/icon/icon';
 import '@material/web/focus/focus-ring';
 import '@material/web/ripple/ripple';
 
@@ -15,6 +15,7 @@ import {ariaProperty} from '@material/web/decorators/aria-property';
 import {pointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus';
 import {MdRipple} from '@material/web/ripple/ripple';
 import {ARIAHasPopup} from '@material/web/types/aria';
+import {html as staticHtml, literal} from 'lit/static-html';
 import {html, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
@@ -26,6 +27,8 @@ import {ButtonState} from './state';
 export abstract class Button extends ActionElement implements ButtonState {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
+
+  protected readonly iconTag = literal`md-icon`;
 
   // TODO(b/210730484): replace with @soyParam annotation
   @property({type: String, attribute: 'data-aria-has-popup', noAccessor: true})
@@ -159,13 +162,12 @@ export abstract class Button extends ActionElement implements ButtonState {
                 </span>`;
   }
 
-  // TODO: investigate removing this
   /** @soyTemplate */
   protected renderFontIcon(): TemplateResult {
-    return html`
-    <mwc-icon class="md3-button__icon">
+    return staticHtml`
+    <${this.iconTag} class="md3-button__icon">
       ${this.icon}
-    </mwc-icon>`;
+    </${this.iconTag}>`;
   }
 
   override update(changedProperties: Map<string, string>) {
