@@ -1,0 +1,46 @@
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use './chip-set-theme';
+
+// stylelint-disable selector-class-pattern -- MDC internal usage.
+
+@mixin core-styles() {
+  @include _static-styles();
+  @include _theme-styles();
+}
+
+@mixin _static-styles() {
+  .md3-chip-set {
+    display: flex;
+  }
+
+  .md3-chip-set:focus {
+    outline: none;
+  }
+
+  .md3-chip-set__chips {
+    display: flex;
+    flex-flow: wrap;
+    min-width: 0;
+  }
+
+  .md3-chip-set--overflow .md3-chip-set__chips {
+    flex-flow: nowrap;
+  }
+}
+
+@mixin _theme-styles() {
+  .md3-chip-set {
+    @include chip-set-theme.horizontal-space-between-chips(
+      chip-set-theme.$space-between-chips
+    );
+
+    @include chip-set-theme.vertical-space-between-chips(
+      chip-set-theme.$space-between-chips
+    );
+  }
+}
