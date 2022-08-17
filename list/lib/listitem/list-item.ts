@@ -31,6 +31,8 @@ export class ListItem extends ActionElement {
   @property({type: String, attribute: 'data-aria-checked', noAccessor: true})
   override ariaChecked!: 'true'|'false';
 
+  @property({type: String}) itemId!: string;
+
   @property({type: String}) supportingText = '';
   @property({type: String}) multiLineSupportingText = '';
   @property({type: String}) trailingSupportingText = '';
@@ -39,7 +41,7 @@ export class ListItem extends ActionElement {
   @property({type: String}) headline = '';
   @query('md-ripple') ripple!: MdRipple;
   @query('[data-query-md3-list-item]') listItemRoot!: HTMLElement;
-  @state() protected showFocusRing = false;
+  @property({type: Boolean}) showFocusRing = false;
 
   /** @soyTemplate */
   override render(): TemplateResult {
@@ -49,6 +51,7 @@ export class ListItem extends ActionElement {
           role=${this.role}
           aria-selected=${ifDefined(this.ariaSelected || undefined)}
           aria-checked=${ifDefined(this.ariaChecked || undefined)}
+          id=${ifDefined(this.itemId || undefined)}
           data-query-md3-list-item
           class="md3-list-item ${classMap(this.getRenderClasses())}"
           @pointerdown=${this.handlePointerDown}
@@ -204,7 +207,8 @@ export class ListItem extends ActionElement {
     if (e.key !== ' ' && e.key !== 'Enter') return;
 
     e.preventDefault();
-    // TODO(b/240124486): Replace with beginPress provided by action element.
+    // TODO(b/240124486): Replace with beginPress provided by action
+    // element.
     this.ripple.beginPress(e);
   }
 

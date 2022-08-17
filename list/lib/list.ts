@@ -29,6 +29,11 @@ export class List extends LitElement {
   override ariaLabel!: string;
 
   @ariaProperty  // tslint:disable-line:no-new-decorators
+  @property(
+      {type: String, attribute: 'data-aria-activedescendant', noAccessor: true})
+  ariaActivedescendant!: string;
+
+  @ariaProperty  // tslint:disable-line:no-new-decorators
   @property({type: String, attribute: 'data-role', noAccessor: true})
   role: ARIARole = 'list';
 
@@ -69,11 +74,11 @@ export class List extends LitElement {
     if (Object.values(NAVIGATABLE_KEYS).indexOf(event.key) === -1) return;
 
     for (const item of this.items) {
-      if (item.isActive()) {
+      if (this.isListItemActive(item)) {
         this.activeListItem = item;
       }
 
-      item.deactivate();
+      this.deactivateListItem(item);
     }
 
     if (event.key === NAVIGATABLE_KEYS.ArrowDown) {
@@ -104,7 +109,21 @@ export class List extends LitElement {
       this.activeListItem = this.getLastItem();
     }
 
-    this.activeListItem?.activate();
+    if (this.activeListItem) {
+      this.activateListItem(this.activeListItem);
+    }
+  }
+
+  protected activateListItem(item: ListItem) {
+    item.activate();
+  }
+
+  protected deactivateListItem(item: ListItem) {
+    item.deactivate();
+  }
+
+  protected isListItemActive(item: ListItem): boolean {
+    return item.isActive();
   }
 
   protected handleAction(event: CustomEvent) {}
