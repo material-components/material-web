@@ -27,6 +27,10 @@ export class ListItem extends ActionElement {
   @property({type: String, attribute: 'data-aria-selected', noAccessor: true})
   override ariaSelected!: 'true'|'false';
 
+  @ariaProperty  // tslint:disable-line:no-new-decorators
+  @property({type: String, attribute: 'data-aria-checked', noAccessor: true})
+  override ariaChecked!: 'true'|'false';
+
   @property({type: String}) supportingText = '';
   @property({type: String}) multiLineSupportingText = '';
   @property({type: String}) trailingSupportingText = '';
@@ -44,6 +48,7 @@ export class ListItem extends ActionElement {
           tabindex=${this.itemTabIndex}
           role=${this.role}
           aria-selected=${ifDefined(this.ariaSelected || undefined)}
+          aria-checked=${ifDefined(this.ariaChecked || undefined)}
           data-query-md3-list-item
           class="md3-list-item ${classMap(this.getRenderClasses())}"
           @pointerdown=${this.handlePointerDown}
