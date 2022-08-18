@@ -1,0 +1,58 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:map';
+
+@use '@material/web/elevation/lib/elevation-theme';
+@use '@material/web/sass/resolvers';
+@use '@material/web/sass/theme';
+@use '@material/web/tokens';
+
+$_custom-property-prefix: 'menu-surface';
+
+@function _resolve-elevation-theme($theme, $resolvers) {
+  $theme: elevation-theme.resolve-theme(
+    $theme,
+    map.get($resolvers, 'elevation'),
+    $shadow-color-token: 'container-shadow-color',
+    $elevation-tokens: (container-elevation)
+  );
+  @return $theme;
+}
+
+// Use menu tokens for default menu surface values.
+$_theme: _resolve-elevation-theme(
+  tokens.md-comp-menu-values(),
+  resolvers.$material
+);
+// Note that we don't use tokens here because menu surface does not have
+// tokens. Components that use menu surface are expected to pass through
+// their own tokens.
+$light-theme: (
+  // This should be the result of resolving the `container-elevation` and
+  // `container-shadow-color` keys (via `elevation-theme.resolve-theme()`).
+  container-elevation-shadow: map.get($_theme, 'container-elevation-shadow'),
+  container-shape: map.get($_theme, 'container-shape')
+);
+
+@mixin theme($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
+
+  @include theme.emit-theme-vars($theme);
+}
+
+@mixin theme-styles($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme-styles($light-theme, $theme);
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
+
+  @include elevation-theme.theme-styles(
+    (
+      shadow: map.get($theme, 'container-elevation-shadow'),
+    )
+  );
+
+  border-radius: map.get($theme, 'container-shape');
+}
