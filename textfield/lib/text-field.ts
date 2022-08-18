@@ -417,16 +417,12 @@ export class TextField extends LitElement {
 
   /** @soyTemplate */
   protected renderInput(): TemplateResult {
-    // TODO(b/237281840): replace ternary operators with double pipes
     // TODO(b/237283903): remove when custom isTruthy directive is supported
-    const placeholderValue = this.placeholder ? this.placeholder : undefined;
+    const placeholderValue = this.placeholder || undefined;
     const ariaDescribedByValue =
         this.getSupportingText() ? this.supportingTextId : undefined;
-    const ariaLabelValue = this.ariaLabel ? this.ariaLabel :
-        this.label                        ? this.label :
-                                            undefined;
-    const ariaLabelledByValue =
-        this.ariaLabelledBy ? this.ariaLabelledBy : undefined;
+    const ariaLabelValue = this.ariaLabel || this.label || undefined;
+    const ariaLabelledByValue = this.ariaLabelledBy || undefined;
 
     return html`<input
       class="md3-text-field__input"
