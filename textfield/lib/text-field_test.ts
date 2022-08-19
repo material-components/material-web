@@ -355,6 +355,47 @@ describe('TextField', () => {
         expect(input.setCustomValidity).toHaveBeenCalledWith(errorMessage);
       });
     });
+
+    describe('minLength and maxLength', () => {
+      it('should set attribute on input', async () => {
+        const {testElement, input} = await setupTest();
+        testElement.minLength = 2;
+        testElement.maxLength = 5;
+        await env.waitForStability();
+
+        expect(input.getAttribute('minLength'))
+            .withContext('minLength')
+            .toEqual('2');
+        expect(input.getAttribute('maxLength'))
+            .withContext('maxLength')
+            .toEqual('5');
+      });
+
+      it('should not set attribute if value is -1', async () => {
+        const {testElement, input} = await setupTest();
+        testElement.minLength = 2;
+        testElement.maxLength = 5;
+        await env.waitForStability();
+
+        expect(input.hasAttribute('minlength'))
+            .withContext('should have minlength')
+            .toBeTrue();
+        expect(input.hasAttribute('maxlength'))
+            .withContext('should have maxlength')
+            .toBeTrue();
+
+        testElement.minLength = -1;
+        testElement.maxLength = -1;
+        await env.waitForStability();
+
+        expect(input.hasAttribute('minlength'))
+            .withContext('should not have minlength')
+            .toBeFalse();
+        expect(input.hasAttribute('maxlength'))
+            .withContext('should not have maxlength')
+            .toBeFalse();
+      });
+    });
   });
 
   // TODO(b/235238545): Add shared FormController tests.

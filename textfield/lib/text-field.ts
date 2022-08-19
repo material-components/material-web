@@ -120,6 +120,20 @@ export abstract class TextField extends LitElement {
   }
 
   // <input> properties
+  /**
+   * The maximum number of characters a user can enter into the text field. Set
+   * to -1 for none.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#maxlength
+   */
+  @property({type: Number}) maxLength = -1;
+  /**
+   * The minimum number of characters a user can enter into the text field. Set
+   * to -1 for none.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#minlength
+   */
+  @property({type: Number}) minLength = -1;
   @property({type: String, reflect: true, converter: stringConverter})
   placeholder = '';
   @property({type: Boolean, reflect: true}) readonly = false;
@@ -422,6 +436,8 @@ export abstract class TextField extends LitElement {
         this.getSupportingText() ? this.supportingTextId : undefined;
     const ariaLabelValue = this.ariaLabel || this.label || undefined;
     const ariaLabelledByValue = this.ariaLabelledBy || undefined;
+    const maxLengthValue = this.maxLength > -1 ? this.maxLength : undefined;
+    const minLengthValue = this.minLength > -1 ? this.minLength : undefined;
 
     return html`<input
       class="md3-text-field__input"
@@ -430,6 +446,8 @@ export abstract class TextField extends LitElement {
       aria-label=${ifDefined(ariaLabelValue)}
       aria-labelledby=${ifDefined(ariaLabelledByValue)}
       ?disabled=${this.disabled}
+      maxlength=${ifDefined(maxLengthValue)}
+      minlength=${ifDefined(minLengthValue)}
       placeholder=${ifDefined(placeholderValue)}
       ?readonly=${this.readonly}
       ?required=${this.required}
