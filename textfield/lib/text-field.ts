@@ -15,7 +15,7 @@ import {property, query, queryAssignedElements, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 import {live} from 'lit/directives/live';
-import {html as staticHtml, literal} from 'lit/static-html';
+import {html as staticHtml, StaticValue} from 'lit/static-html';
 
 /**
  * Input types that are compatible with the text field.
@@ -36,7 +36,7 @@ export type InvalidTextFieldType =
     'button'|'checkbox'|'hidden'|'image'|'radio'|'range'|'reset'|'submit';
 
 /** @soyCompatible */
-export class TextField extends LitElement {
+export abstract class TextField extends LitElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
@@ -218,8 +218,7 @@ export class TextField extends LitElement {
   @state() protected dirty = false;
   @query('.md3-text-field__input')
   protected readonly input?: HTMLInputElement|null;
-  // TODO(b/241841846): make abstract
-  protected readonly fieldTag = literal`div`;
+  protected abstract readonly fieldTag: StaticValue;
 
   @queryAssignedElements({slot: 'leadingicon'})
   private readonly leadingIcons!: Element[];
