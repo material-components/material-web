@@ -4,6 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-@use './mixins';
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
 
-@include mixins.core-styles();
+@use './menu';
+@use './menu-theme';
+
+@include menu.static-styles();
+
+.md3-menu {
+  @include menu-theme.theme-styles(menu-theme.$light-theme);
+}

@@ -1,0 +1,118 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:map';
+
+@use '@material/web/elevation/lib/elevation-theme';
+@use '@material/web/list/list';
+@use '@material/web/list/list-item';
+@use '@material/web/menusurface/menu-surface';
+@use '@material/web/sass/resolvers';
+@use '@material/web/sass/theme';
+@use '@material/web/tokens';
+
+$_custom-property-prefix: 'menu';
+
+$light-theme: tokens.md-comp-menu-values();
+
+@mixin theme($theme) {
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: _resolve-theme($theme, $resolvers);
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
+
+  @include theme.emit-theme-vars($theme);
+}
+
+@mixin theme-styles($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme-styles($light-theme, $theme);
+  $theme: _resolve-theme($theme, $resolvers);
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
+
+  @include menu-surface.theme(
+    (
+      container-elevation-shadow: map.get($theme, 'container-elevation-shadow'),
+      container-shape: map.get($theme, 'container-shape'),
+    ),
+    $resolvers
+  );
+
+  @include list.theme(
+    (
+      container-color: map.get($theme, 'container-color'),
+      container-surface-tint-layer-color:
+        map.get($theme, 'container-surface-tint-layer-color'),
+      container-elevation-overlay-opacity:
+        map.get($theme, 'container-elevation-overlay-opacity'),
+    )
+  );
+  @include list-item.theme(
+    (
+      list-item-container-color: map.get($theme, 'container-color'),
+      list-item-one-line-container-height:
+        map.get($theme, 'list-item-container-height'),
+      list-item-disabled-label-text-color:
+        map.get($theme, 'list-item-disabled-label-text-color'),
+      list-item-disabled-label-text-opacity:
+        map.get($theme, 'list-item-disabled-label-text-opacity'),
+      list-item-hover-label-text-color:
+        map.get($theme, 'list-item-hover-label-text-color'),
+      list-item-hover-state-layer-color:
+        map.get($theme, 'list-item-hover-state-layer-color'),
+      list-item-hover-state-layer-opacity:
+        map.get($theme, 'list-item-hover-state-layer-opacity'),
+      list-item-label-text-color: map.get($theme, 'list-item-label-text-color'),
+      list-item-label-text-font: map.get($theme, 'list-item-label-text-font'),
+      list-item-label-text-line-height:
+        map.get($theme, 'list-item-label-text-line-height'),
+      list-item-label-text-size: map.get($theme, 'list-item-label-text-size'),
+      list-item-label-text-tracking:
+        map.get($theme, 'list-item-label-text-tracking'),
+      list-item-label-text-weight:
+        map.get($theme, 'list-item-label-text-tracking'),
+      list-item-disabled-leading-icon-color:
+        map.get(
+          $theme,
+          'list-item-with-leading-icon-disabled-leading-icon-color'
+        ),
+      list-item-disabled-leading-icon-opacity:
+        map.get(
+          $theme,
+          'list-item-with-leading-icon-disabled-leading-icon-opacity'
+        ),
+      list-item-hover-leading-icon-color:
+        map.get($theme, 'list-item-with-leading-icon-hover-icon-color'),
+      list-item-leading-icon-color:
+        map.get($theme, 'list-item-with-leading-icon-leading-icon-color'),
+      list-item-leading-icon-size:
+        map.get($theme, 'list-item-with-leading-icon-leading-icon-size'),
+      list-item-disabled-trailing-icon-color:
+        map.get(
+          $theme,
+          'list-item-with-trailing-icon-disabled-trailing-icon-color'
+        ),
+      list-item-disabled-trailing-icon-opacity:
+        map.get(
+          $theme,
+          'list-item-with-trailing-icon-disabled-trailing-icon-opacity'
+        ),
+      list-item-hover-trailing-icon-color:
+        map.get($theme, 'list-item-with-trailing-icon-hover-icon-color'),
+      list-item-trailing-icon-color:
+        map.get($theme, 'list-item-with-trailing-icon-trailing-icon-color'),
+      list-item-trailing-icon-size:
+        map.get($theme, 'list-item-with-leading-icon-trailing-icon-size'),
+    )
+  );
+}
+
+@function _resolve-theme($theme, $resolvers) {
+  $theme: elevation-theme.resolve-theme(
+    $theme,
+    map.get($resolvers, 'elevation'),
+    $shadow-color-token: 'container-shadow-color',
+    $elevation-tokens: (container-elevation)
+  );
+  @return $theme;
+}

@@ -115,7 +115,7 @@ export abstract class Menu extends LitElement {
           .flipMenuHorizontally=${this.flipMenuHorizontally}
           .skipRestoreFocus=${this.skipRestoreFocus}
           ?stayOpenOnBodyClick=${this.stayOpenOnBodyClick}
-          class="md3-menu md3-menu-surface"
+          class="md3-menu"
           @closed=${this.onClosed}
           @opened=${this.onOpened}
           @keydown=${this.onKeydown}>
