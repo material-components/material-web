@@ -6,13 +6,21 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
+@use '@material/web/elevation/lib/elevation-overlay';
+
 @mixin static-styles() {
+  @include elevation-overlay.static-styles();
+
   :host {
     @include host-root;
   }
 
   .md3-list {
     @include root;
+
+    .md3-elevation-overlay {
+      z-index: 0;
+    }
   }
 }
 
@@ -27,4 +35,7 @@
   min-width: 300px;
   outline: none;
   padding: 8px 0;
+  // Add position so the elevation overlay (which is absolutely positioned)
+  // can be positioned relative to the list root.
+  position: relative;
 }

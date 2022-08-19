@@ -4,7 +4,9 @@
 //
 
 @use 'sass:map';
+@use '@material/web/elevation/lib/elevation-theme';
 @use '@material/web/sass/theme';
+@use '@material/web/tokens' as m3-tokens;
 @use './tokens';
 @use './divider/list-divider-theme';
 
@@ -15,6 +17,9 @@ $light-theme: (
     map.get(tokens.md-comp-list-values(), 'list-divider-color'),
   list-divider-height:
     map.get(tokens.md-comp-list-values(), 'list-divider-height'),
+  container-surface-tint-layer-color:
+    map.get(m3-tokens.md-sys-color-values-light-dynamic(), 'surface-tint'),
+  container-elevation-overlay-opacity: 0,
 );
 
 @mixin theme($theme) {
@@ -28,11 +33,19 @@ $light-theme: (
   $theme: theme.validate-theme-styles($light-theme, $theme);
   $theme: theme.create-theme-vars($theme, list);
 
-  background-color: map.get($theme, 'container-color');
   @include list-divider-theme.theme(
     (
       list-divider-color: map.get($theme, 'list-divider-color'),
       list-divider-height: map.get($theme, 'list-divider-height'),
     )
   );
+  @include elevation-theme.theme-styles(
+    (
+      surface-tint-layer-color:
+        map.get($theme, 'container-surface-tint-layer-color'),
+      overlay-opacity: map.get($theme, 'container-elevation-overlay-opacity'),
+    )
+  );
+
+  background-color: map.get($theme, 'container-color');
 }

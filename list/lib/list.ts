@@ -65,7 +65,8 @@ export class List extends LitElement {
           @action=${this.handleAction}
           @keydown=${this.handleKeydown}
           >
-        <slot></slot>
+        <span><slot></slot></span>
+        <div class="md3-elevation-overlay"></div>
       </ul>
     `;
   }
