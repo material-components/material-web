@@ -7,7 +7,6 @@
 import 'jasmine';
 
 import {Environment} from '@material/web/testing/environment';
-import {State, TemplateBuilder, TemplateProps} from '@material/web/testing/templates';
 import {html} from 'lit';
 import {customElement} from 'lit/decorators';
 
@@ -39,31 +38,21 @@ describe('Field', () => {
   describe('<md-outlined-field>', () => {
     const env = new Environment();
 
-    const templates =
-        new TemplateBuilder().withHarness(FieldHarness).withVariants({
-          outlined(directive, props) {
-            return html`
-              <md-test-outlined-field
-                .label=${props.label}
-                ?disabled=${props.disabled ?? false}
-                .error=${props.error ?? false}
-                .populated=${props.populated ?? false}
-                .required=${props.required ?? false}
-                ${directive}
-              >
-                <input>
-              </md-test-outlined-field>
-            `;
-          },
-        });
-
-    async function setupTest(props: TemplateProps<FieldHarness> = {}) {
+    async function setupTest(props: Partial<OutlinedField> = {}) {
       // Variant type does not matter for shared tests
-      const template =
-          templates.variant('outlined', props).render(State.DEFAULT);
-      const instance = template ?
-          env.render(template).querySelector('md-test-outlined-field') :
-          null;
+      const template = html`
+        <md-test-outlined-field
+          .label=${props.label}
+          ?disabled=${props.disabled ?? false}
+          .error=${props.error ?? false}
+          .populated=${props.populated ?? false}
+          .required=${props.required ?? false}
+        >
+          <input>
+        </md-test-outlined-field>
+      `;
+      const root = env.render(template);
+      const instance = root.querySelector('md-test-outlined-field');
       if (!instance) {
         throw new Error('Could not query rendered <md-test-outlined-field>.');
       }

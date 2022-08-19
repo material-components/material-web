@@ -7,7 +7,6 @@
 import 'jasmine';
 
 import {Environment} from '@material/web/testing/environment';
-import {State, TemplateBuilder, TemplateProps} from '@material/web/testing/templates';
 import {html} from 'lit';
 import {customElement} from 'lit/decorators';
 
@@ -59,29 +58,21 @@ class TestField extends Field {
 describe('Field', () => {
   const env = new Environment();
 
-  const templates =
-      new TemplateBuilder().withHarness(FieldHarness).withVariants({
-        field(directive, props) {
-          return html`
-            <md-test-field
-              .label=${props.label}
-              ?disabled=${props.disabled ?? false}
-              .error=${props.error ?? false}
-              .populated=${props.populated ?? false}
-              .required=${props.required ?? false}
-              ${directive}
-            >
-              <input>
-            </md-test-field>
-          `;
-        },
-      });
-
-  async function setupTest(props: TemplateProps<FieldHarness> = {}) {
+  async function setupTest(props: Partial<Field> = {}) {
     // Variant type does not matter for shared tests
-    const template = templates.variant('field', props).render(State.DEFAULT);
-    const instance =
-        template ? env.render(template).querySelector('md-test-field') : null;
+    const template = html`
+      <md-test-field
+        .label=${props.label}
+        ?disabled=${props.disabled ?? false}
+        .error=${props.error ?? false}
+        .populated=${props.populated ?? false}
+        .required=${props.required ?? false}
+      >
+        <input>
+      </md-test-field>
+    `;
+    const root = env.render(template);
+    const instance = root.querySelector('md-test-field');
     if (!instance) {
       throw new Error('Could not query rendered <md-test-field>.');
     }
