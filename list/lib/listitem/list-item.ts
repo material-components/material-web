@@ -13,7 +13,7 @@ import {pointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-fo
 import {MdRipple} from '@material/web/ripple/ripple';
 import {ARIARole} from '@material/web/types/aria';
 import {html, TemplateResult} from 'lit';
-import {property, query, state} from 'lit/decorators';
+import {property, query} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
 
