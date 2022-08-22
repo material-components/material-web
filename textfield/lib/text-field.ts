@@ -506,6 +506,18 @@ export abstract class TextField extends LitElement {
     super.willUpdate(changedProperties);
   }
 
+  protected override updated() {
+    // If a property such as `type` changes and causes the internal <input>
+    // value to change without dispatching an event, re-sync it.
+    const value = this.getInput().value;
+    if (this.value !== value) {
+      // Note this is typically inefficient in updated() since it schedules
+      // another update. However, it is needed for the <input> to fully render
+      // before checking its value.
+      this.value = value;
+    }
+  }
+
   protected handleInput(event: InputEvent) {
     this.dirty = true;
     this.value = (event.target as HTMLInputElement).value;
