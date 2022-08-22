@@ -305,6 +305,17 @@ export class Harness<E extends HTMLElement = HTMLElement> {
   }
 
   /**
+   * Simulates a keypress on an element.
+   *
+   * @param key The key to press.
+   * @param init Additional event options.
+   */
+  async keypress(key: string, init: KeyboardEventInit = {}) {
+    const element = await this.getInteractiveElement();
+    this.simulateKeypress(element, key, init);
+  }
+
+  /**
    * Returns the element that should be used for interaction simulation.
    * Defaults to the host element itself.
    *
