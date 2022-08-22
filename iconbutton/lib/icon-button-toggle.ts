@@ -12,6 +12,7 @@ import {html, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators';
 import {ClassInfo, classMap} from 'lit/directives/class-map';
 import {ifDefined} from 'lit/directives/if-defined';
+import {html as staticHtml, literal} from 'lit/static-html';
 
 /** @soyCompatible */
 export abstract class IconButtonToggle extends ActionElement {
@@ -38,6 +39,12 @@ export abstract class IconButtonToggle extends ActionElement {
 
   @state() protected showFocusRing = false;
 
+  protected readonly rippleElementTag = literal`md-ripple`;
+
+  protected readonly focusElementTag = literal`md-focus-ring`;
+
+  protected readonly iconElementTag = literal`md-icon`;
+
   override beginPress({positionEvent}: BeginPressConfig) {
     this.ripple.beginPress(positionEvent);
   }
@@ -56,8 +63,8 @@ export abstract class IconButtonToggle extends ActionElement {
 
   /** @soyTemplate */
   protected renderRipple(): TemplateResult {
-    return html`<md-ripple ?disabled="${
-        this.disabled}" unbounded> </md-ripple>`;
+    return staticHtml`<${this.rippleElementTag} ?disabled="${
+        this.disabled}" unbounded> </${this.rippleElementTag}>`;
   }
 
   /** @soyTemplate */
@@ -101,7 +108,11 @@ export abstract class IconButtonToggle extends ActionElement {
   }
 
   /** @soyTemplate */
-  protected abstract renderIcon(icon: string): TemplateResult|string;
+  protected renderIcon(icon: string): TemplateResult|string {
+    return icon ?
+        staticHtml`<${this.iconElementTag}>${icon}</${this.iconElementTag}>` :
+        '';
+  }
 
   /** @soyTemplate */
   protected renderTouchTarget(): TemplateResult {
@@ -110,8 +121,8 @@ export abstract class IconButtonToggle extends ActionElement {
 
   /** @soyTemplate */
   protected renderFocusRing(): TemplateResult {
-    return html`<md-focus-ring .visible="${
-        this.showFocusRing}"></md-focus-ring>`;
+    return staticHtml`<${this.focusElementTag} .visible="${
+        this.showFocusRing}"></${this.focusElementTag}>`;
   }
 
   override handlePointerDown(e: PointerEvent) {

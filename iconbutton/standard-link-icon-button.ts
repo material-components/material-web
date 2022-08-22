@@ -6,7 +6,6 @@
 
 import '@material/web/icon/icon';
 
-import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators';
 import {ClassInfo} from 'lit/directives/class-map';
 
@@ -20,14 +19,10 @@ declare global {
   }
 }
 
+/** @soyCompatible */
 @customElement('md-standard-link-icon-button')
 export class MdStandardLinkIconButton extends LinkIconButton {
   static override styles = [sharedStyles, styles];
-
-  /** @soyTemplate */
-  protected override renderIcon(icon: string): TemplateResult|string {
-    return icon ? html`<md-icon>${icon}</md-icon>` : '';
-  }
 
   /** @soyTemplate */
   protected override getRenderClasses(): ClassInfo {

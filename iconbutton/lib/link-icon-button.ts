@@ -49,9 +49,4 @@ export class LinkIconButton extends IconButton {
         </a>
   </div>`;
   }
-
-  /** @soyTemplate */
-  protected override renderIcon(icon: string): TemplateResult|string {
-    return '';
-  }
 }
