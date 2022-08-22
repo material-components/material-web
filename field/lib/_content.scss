@@ -49,6 +49,7 @@ $_enter-delay: $_label-duration - $_visible-duration;
 
   .md3-field__content {
     display: flex;
+    flex: 1;
     opacity: 0;
     transition: animation.standard(opacity, $_visible-duration);
 
