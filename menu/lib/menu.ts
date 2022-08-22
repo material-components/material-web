@@ -4,9 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Style preference for leading underscores.
-// tslint:disable:strip-private-property-underscore
-
 import '../../list/list';
 import '../../menusurface/menu-surface';
 
@@ -20,12 +17,14 @@ import {ListItem} from '../../list/lib/listitem/list-item';
 import {Corner, MenuSurface} from '../../menusurface/lib/menu-surface';
 
 import {MDCMenuAdapter} from './adapter';
-import {DefaultFocusState} from './constants';
 import {MDCMenuFoundation} from './foundation';
 
 interface ActionDetail {
   item: ListItem;
 }
+
+/** Element to focus on when menu is first opened. */
+export type DefaultFocusState = 'NONE'|'LIST_ROOT'|'FIRST_ITEM'|'LAST_ITEM';
 
 /**
  * @fires selected {SelectedDetail}
@@ -75,8 +74,7 @@ export abstract class Menu extends LitElement {
 
   @property({type: Boolean}) skipRestoreFocus = false;
 
-  @property({type: String})
-  defaultFocus: DefaultFocusState = DefaultFocusState.LIST_ROOT;
+  @property({type: String}) defaultFocus: DefaultFocusState = 'LIST_ROOT';
 
   protected listUpdateComplete: null|Promise<unknown> = null;
 
@@ -288,16 +286,16 @@ export abstract class Menu extends LitElement {
 
     this.listElement?.resetActiveListItem();
     switch (this.defaultFocus) {
-      case DefaultFocusState.FIRST_ITEM:
+      case 'FIRST_ITEM':
         this.listElement?.activateFirstItem();
         break;
-      case DefaultFocusState.LAST_ITEM:
+      case 'LAST_ITEM':
         this.listElement?.activateLastItem();
         break;
-      case DefaultFocusState.NONE:
+      case 'NONE':
         // Do nothing.
         break;
-      case DefaultFocusState.LIST_ROOT:
+      case 'LIST_ROOT':
       default:
         this.listElement?.focus();
         break;

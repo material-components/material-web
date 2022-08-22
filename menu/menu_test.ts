@@ -11,7 +11,6 @@ import {Environment} from '@material/web/testing/environment';
 import {html} from 'lit';
 
 import {MenuHarness} from './harness';
-import {DefaultFocusState} from './lib/constants';
 import {MdMenu} from './menu';
 
 describe('menu tests', () => {
@@ -81,8 +80,7 @@ describe('menu tests', () => {
   describe('focus management', () => {
     it('with `defaultFocus=FIRST_ITEM`, focuses on first menu item on open',
        async () => {
-         ({menu, harness} =
-              await setUp(env, {defaultFocus: DefaultFocusState.FIRST_ITEM}));
+         ({menu, harness} = await setUp(env, {defaultFocus: 'FIRST_ITEM'}));
          menu.show();
          await menu.updateComplete;
 
@@ -92,8 +90,7 @@ describe('menu tests', () => {
 
     it('with `defaultFocus=LAST_ITEM`, focuses on last menu item on open',
        async () => {
-         ({menu, harness} =
-              await setUp(env, {defaultFocus: DefaultFocusState.LAST_ITEM}));
+         ({menu, harness} = await setUp(env, {defaultFocus: 'LAST_ITEM'}));
          menu.show();
          await menu.updateComplete;
 
@@ -104,8 +101,7 @@ describe('menu tests', () => {
 
     it('with `defaultFocus=LIST_ROOT`, focuses on menu root on open',
        async () => {
-         ({menu} =
-              await setUp(env, {defaultFocus: DefaultFocusState.LIST_ROOT}));
+         ({menu} = await setUp(env, {defaultFocus: 'LIST_ROOT'}));
          menu.show();
          await menu.updateComplete;
 

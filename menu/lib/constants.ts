@@ -23,11 +23,4 @@ const numbers = {
   FOCUS_ROOT_INDEX: -1,
 };
 
-enum DefaultFocusState {
-  NONE = 'NONE',
-  LIST_ROOT = 'LIST_ROOT',
-  FIRST_ITEM = 'FIRST_ITEM',
-  LAST_ITEM = 'LAST_ITEM',
-}
-
-export {cssClasses, strings, numbers, DefaultFocusState};
+export {cssClasses, strings, numbers};
