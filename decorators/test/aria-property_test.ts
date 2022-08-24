@@ -101,14 +101,4 @@ describe('@ariaProperty', () => {
         .withContext('boolean should coerce to string')
         .toBe('true');
   });
-
-  it('should not request an update if the value stays the same', async () => {
-    const value = 'Aria label';
-    element.ariaLabel = value;
-    await element.updateComplete;
-    element.ariaLabel = value;
-    expect(element.isUpdatePending)
-        .withContext('there should not be an update pending')
-        .toBeFalse();
-  });
 });

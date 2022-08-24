@@ -47,18 +47,17 @@ export function ariaProperty<E extends ReactiveElement, K extends keyof E&
     set(this: ReactiveElement, value: unknown) {
       // Coerce non-string values to a string
       const strValue = String(value ?? '');
-      const oldValue = this.dataset[property];
-      if (strValue === oldValue) {
-        return;
-      }
-
       if (strValue) {
         this.dataset[property] = strValue;
       } else {
         delete this.dataset[property];
       }
 
-      this.requestUpdate(property, oldValue);
+      // lit will call this setter whenever the data-* attribute changes.
+      // However, this.dataset[property] will automatically be updated to the
+      // current value. To avoid bugs, always request an update regardless of
+      // the old value.
+      this.requestUpdate();
     }
   });
 
