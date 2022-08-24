@@ -6,7 +6,7 @@
 
 import 'jasmine';
 
-import {isStrongFocusForced, pointerPress, setForceStrongFocus, setup, shouldShowStrongFocus} from './strong-focus';
+import {isStrongFocusForced, pointerPress, setForceStrongFocus, setup, shouldShowStrongFocus} from './strong-focus.js';
 
 class MockFocus {
   constructor(public visible = false) {}

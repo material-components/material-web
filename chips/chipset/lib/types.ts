@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCChipAnimationEventDetail, MDCChipInteractionEventDetail, MDCChipNavigationEventDetail} from '../../chip/lib/types';
+import {MDCChipAnimationEventDetail, MDCChipInteractionEventDetail, MDCChipNavigationEventDetail} from '../../chip/lib/types.js';
 
 /**
  * MDCChipSetInteractionEventDetail provides detail about the interaction event.

@@ -4,15 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import './standard-icon-button-toggle';
-import './standard-link-icon-button';
-import './standard-icon-button';
+import './standard-icon-button-toggle.js';
+import './standard-link-icon-button.js';
+import './standard-icon-button.js';
 
-import {Environment} from '@material/web/testing/environment';
+import {Environment} from '@material/web/testing/environment.js';
 import {html} from 'lit';
 
-import {IconButtonHarness} from './harness';
-import {MdStandardIconButtonToggle} from './standard-icon-button-toggle';
+import {IconButtonHarness} from './harness.js';
+import {MdStandardIconButtonToggle} from './standard-icon-button-toggle.js';
 
 const ICON_BUTTON_TEMPLATE = html`
   <md-standard-icon-button .icon="${'star'}" aria-label="Star">

@@ -6,18 +6,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {redispatchEvent} from '@material/web/controller/events';
-import {FormController, getFormValue} from '@material/web/controller/form-controller';
-import {stringConverter} from '@material/web/controller/string-converter';
-import {ariaProperty} from '@material/web/decorators/aria-property';
+import {redispatchEvent} from '@material/web/controller/events.js';
+import {FormController, getFormValue} from '@material/web/controller/form-controller.js';
+import {stringConverter} from '@material/web/controller/string-converter.js';
+import {ariaProperty} from '@material/web/decorators/aria-property.js';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
-import {property, query, queryAssignedElements, state} from 'lit/decorators';
-import {ClassInfo, classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
-import {live} from 'lit/directives/live';
-import {html as staticHtml, StaticValue} from 'lit/static-html';
+import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
+import {live} from 'lit/directives/live.js';
+import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
-import {ARIAAutoComplete, ARIAExpanded, ARIARole} from '../../types/aria';
+import {ARIAAutoComplete, ARIAExpanded, ARIARole} from '../../types/aria.js';
 
 /**
  * Input types that are compatible with the text field.

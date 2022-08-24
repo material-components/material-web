@@ -4,16 +4,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/field/filled-field';
+import '@material/web/field/filled-field.js';
 
-import {customElement} from 'lit/decorators';
-import {literal} from 'lit/static-html';
+import {customElement} from 'lit/decorators.js';
+import {literal} from 'lit/static-html.js';
 
 // TODO(b/236285090): update with HCM best practices
-import {styles as filledForcedColorsStyles} from './lib/filled-forced-colors-styles.css';
-import {styles as filledStyles} from './lib/filled-styles.css';
-import {FilledTextField} from './lib/filled-text-field';
-import {styles as sharedStyles} from './lib/shared-styles.css';
+import {styles as filledForcedColorsStyles} from './lib/filled-forced-colors-styles.css.js';
+import {styles as filledStyles} from './lib/filled-styles.css.js';
+import {FilledTextField} from './lib/filled-text-field.js';
+import {styles as sharedStyles} from './lib/shared-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

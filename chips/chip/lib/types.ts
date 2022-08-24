@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCChipActionType} from '../../action/lib/constants';
-import {MDCChipActionInteractionEventDetail, MDCChipActionNavigationEventDetail} from '../../action/lib/types';
+import {MDCChipActionType} from '../../action/lib/constants.js';
+import {MDCChipActionInteractionEventDetail, MDCChipActionNavigationEventDetail} from '../../action/lib/types.js';
 
-import {MDCChipAnimation} from './constants';
+import {MDCChipAnimation} from './constants.js';
 
 /** MDCChipInteractionEventDetail provides details for the interaction event. */
 export interface MDCChipInteractionEventDetail {

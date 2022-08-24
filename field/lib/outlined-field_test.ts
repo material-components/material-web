@@ -6,12 +6,12 @@
 
 import 'jasmine';
 
-import {Environment} from '@material/web/testing/environment';
+import {Environment} from '@material/web/testing/environment.js';
 import {html} from 'lit';
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {FieldHarness} from '../harness';
-import {OutlinedField} from '../lib/outlined-field';
+import {FieldHarness} from '../harness.js';
+import {OutlinedField} from '../lib/outlined-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ActionController, ActionControllerHost, BeginPressConfig, EndPressConfig} from '@material/web/controller/action-controller';
+import {ActionController, ActionControllerHost, BeginPressConfig, EndPressConfig} from '@material/web/controller/action-controller.js';
 import {LitElement} from 'lit';
 
 export {BeginPressConfig, EndPressConfig};

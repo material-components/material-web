@@ -6,8 +6,8 @@
 
 import 'jasmine';
 
-import {ObserverRecord} from './observer';
-import {ObserverFoundation} from './observer-foundation';
+import {ObserverRecord} from './observer.js';
+import {ObserverFoundation} from './observer-foundation.js';
 
 describe('ObserverFoundation', () => {
   class TestObserverFoundation extends ObserverFoundation<{}> {

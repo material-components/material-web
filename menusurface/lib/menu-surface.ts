@@ -8,16 +8,16 @@
 // tslint:disable:strip-private-property-underscore
 
 // TODO(b/239222919): remove compat dependencies
-import {observer} from '@material/web/compat/base/observer';
-import {deepActiveElementPath, doesElementContainFocus} from '@material/web/compat/base/utils';
+import {observer} from '@material/web/compat/base/observer.js';
+import {deepActiveElementPath, doesElementContainFocus} from '@material/web/compat/base/utils.js';
 import {html, LitElement} from 'lit';
-import {property, query, state} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
-import {styleMap} from 'lit/directives/style-map';
+import {property, query, state} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {styleMap} from 'lit/directives/style-map.js';
 
-import {MDCMenuSurfaceAdapter} from './adapter';
-import {Corner as CornerEnum} from './constants';
-import {MDCMenuSurfaceFoundation} from './foundation';
+import {MDCMenuSurfaceAdapter} from './adapter.js';
+import {Corner as CornerEnum} from './constants.js';
+import {MDCMenuSurfaceFoundation} from './foundation.js';
 
 export type Corner = keyof typeof CornerEnum;
 export type AnchorableElement = HTMLElement&{anchor: Element | null};

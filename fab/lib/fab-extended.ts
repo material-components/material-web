@@ -5,9 +5,9 @@
  */
 
 import {html, TemplateResult} from 'lit';
-import {ClassInfo} from 'lit/directives/class-map';
+import {ClassInfo} from 'lit/directives/class-map.js';
 
-import {FabShared} from './fab-shared';
+import {FabShared} from './fab-shared.js';
 
 /**
  * @soyCompatible

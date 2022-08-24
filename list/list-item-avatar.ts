@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {ListItemAvatar} from './lib/avatar/list-item-avatar';
-import {styles} from './lib/avatar/list-item-avatar-styles.css';
+import {ListItemAvatar} from './lib/avatar/list-item-avatar.js';
+import {styles} from './lib/avatar/list-item-avatar-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

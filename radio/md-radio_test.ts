@@ -8,12 +8,12 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {fixture, TestFixture} from '@material/web/compat/testing/helpers';  // TODO(b/235474830): remove the use of fixtures
-import {MdFocusRing} from '@material/web/focus/focus-ring';
+import {fixture, TestFixture} from '@material/web/compat/testing/helpers.js';  // TODO(b/235474830): remove the use of fixtures
+import {MdFocusRing} from '@material/web/focus/focus-ring.js';
 import {html} from 'lit';
 
-import {RadioHarness} from './harness';
-import {MdRadio} from './radio';
+import {RadioHarness} from './harness.js';
+import {MdRadio} from './radio.js';
 
 const defaultRadio = html`<md-radio></md-radio>`;
 

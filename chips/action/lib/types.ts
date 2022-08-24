@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCChipActionInteractionTrigger, MDCChipActionType} from './constants';
+import {MDCChipActionInteractionTrigger, MDCChipActionType} from './constants.js';
 
 /**
  * MDCChipActionInteractionEventDetail provides the details for the interaction

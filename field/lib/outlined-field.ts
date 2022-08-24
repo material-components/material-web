@@ -5,9 +5,9 @@
  */
 
 import {html, TemplateResult} from 'lit';
-import {ClassInfo} from 'lit/directives/class-map';
+import {ClassInfo} from 'lit/directives/class-map.js';
 
-import {Field} from './field';
+import {Field} from './field.js';
 
 /** @soyCompatible */
 export class OutlinedField extends Field {

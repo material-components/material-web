@@ -5,11 +5,11 @@
  */
 
 // TODO(b/242194005): remove MDC deps
-import {isNavigationEvent, KEY, normalizeKey} from '@material/web/compat/dom/keyboard';
+import {isNavigationEvent, KEY, normalizeKey} from '@material/web/compat/dom/keyboard.js';
 
-import {MDCChipActionAdapter} from './adapter';
-import {MDCChipActionAttributes, MDCChipActionEvents, MDCChipActionFocusBehavior, MDCChipActionInteractionTrigger, MDCChipActionType} from './constants';
-import {MDCChipActionInteractionEventDetail, MDCChipActionNavigationEventDetail} from './types';
+import {MDCChipActionAdapter} from './adapter.js';
+import {MDCChipActionAttributes, MDCChipActionEvents, MDCChipActionFocusBehavior, MDCChipActionInteractionTrigger, MDCChipActionType} from './constants.js';
+import {MDCChipActionInteractionEventDetail, MDCChipActionNavigationEventDetail} from './types.js';
 
 const triggerMap = new Map<string, MDCChipActionInteractionTrigger>();
 triggerMap.set(KEY.SPACEBAR, MDCChipActionInteractionTrigger.SPACEBAR_KEY);

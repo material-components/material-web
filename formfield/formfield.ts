@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {Formfield} from './lib/formfield';
-import {styles as formfieldStyles} from './lib/formfield-styles.css';
+import {Formfield} from './lib/formfield.js';
+import {styles as formfieldStyles} from './lib/formfield-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

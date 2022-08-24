@@ -4,17 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import './menu';
-import './menu-button';
-import './menu-item';
-import '../button/filled-button';
+import './menu.js';
+import './menu-button.js';
+import './menu-item.js';
+import '../button/filled-button.js';
 
-import {Environment} from '@material/web/testing/environment';
+import {Environment} from '@material/web/testing/environment.js';
 import {html} from 'lit';
 
-import {ButtonHarness} from '../button/harness';
+import {ButtonHarness} from '../button/harness.js';
 
-import {MenuHarness} from './harness';
+import {MenuHarness} from './harness.js';
 
 describe('menu tests', () => {
   const env = new Environment();

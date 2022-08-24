@@ -6,11 +6,11 @@
 
 import 'jasmine';
 
-import {Environment} from '@material/web/testing/environment';
+import {Environment} from '@material/web/testing/environment.js';
 import {html} from 'lit';
-import {customElement, property} from 'lit/decorators';
+import {customElement, property} from 'lit/decorators.js';
 
-import {ActionElement} from './action-element';
+import {ActionElement} from './action-element.js';
 
 declare global {
   interface HTMLElementTagNameMap {

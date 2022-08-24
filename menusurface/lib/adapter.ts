@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCMenuDimensions, MDCMenuDistance, MDCMenuPoint} from './types';
+import {MDCMenuDimensions, MDCMenuDistance, MDCMenuPoint} from './types.js';
 
 /**
  * Defines the shape of the adapter expected by the foundation.

@@ -5,10 +5,10 @@
  */
 
 import {LitElement, render, TemplateResult} from 'lit';
-import {property} from 'lit/decorators';
-import {ClassInfo, classMap} from 'lit/directives/class-map';
-import {guard} from 'lit/directives/guard';
-import {html, literal} from 'lit/static-html';
+import {property} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {guard} from 'lit/directives/guard.js';
+import {html, literal} from 'lit/static-html.js';
 
 /** Test table interface. */
 export interface TestTableTemplate<S extends string = string> {

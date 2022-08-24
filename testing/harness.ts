@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {defaultTransformPseudoClasses, getTransformedPseudoClass, transformPseudoClasses} from './transform-pseudo-classes';
+import {defaultTransformPseudoClasses, getTransformedPseudoClass, transformPseudoClasses} from './transform-pseudo-classes.js';
 
 declare global {
   interface DocumentOrShadowRoot {

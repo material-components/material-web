@@ -6,7 +6,7 @@
 
 import 'jasmine';
 
-import {redispatchEvent} from './events';
+import {redispatchEvent} from './events.js';
 
 describe('redispatchEvent()', () => {
   let instance: HTMLDivElement;

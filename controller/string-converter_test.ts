@@ -6,7 +6,7 @@
 
 import 'jasmine';
 
-import {stringConverter} from './string-converter';
+import {stringConverter} from './string-converter.js';
 
 describe('stringConverter', () => {
   describe('.fromAttribute', () => {

@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import './list';
-import './list-item';
+import './list.js';
+import './list-item.js';
 
-import {Environment} from '@material/web/testing/environment';
+import {Environment} from '@material/web/testing/environment.js';
 import {html} from 'lit';
 
 const LIST_TEMPLATE = html`

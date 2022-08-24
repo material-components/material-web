@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {fixture, TestFixture} from '@material/web/compat/testing/helpers';  // TODO(b/235474830): remove the use of fixtures
-import {MdFocusRing} from '@material/web/focus/focus-ring';
+import {fixture, TestFixture} from '@material/web/compat/testing/helpers.js';  // TODO(b/235474830): remove the use of fixtures
+import {MdFocusRing} from '@material/web/focus/focus-ring.js';
 import {html} from 'lit';
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {CheckboxHarness} from '../harness';
+import {CheckboxHarness} from '../harness.js';
 
-import {Checkbox} from './checkbox';
+import {Checkbox} from './checkbox.js';
 
 @customElement('md-test-checkbox')
 class TestCheckbox extends Checkbox {

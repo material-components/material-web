@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCMenuItemEventDetail} from './types';
+import {MDCMenuItemEventDetail} from './types.js';
 
 /**
  * Implement this adapter for your framework of choice to delegate updates to

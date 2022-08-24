@@ -6,7 +6,7 @@
 
 import 'jasmine';
 
-import {observeProperty, setObserversEnabled} from './observer';
+import {observeProperty, setObserversEnabled} from './observer.js';
 
 describe('observeProperty()', () => {
   it('should call Observer when property value changes', () => {

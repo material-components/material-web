@@ -4,17 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/focus/focus-ring';
+import '@material/web/focus/focus-ring.js';
 
-import {ActionElement, EndPressConfig} from '@material/web/actionelement/action-element';
-import {ariaProperty as legacyAriaProperty} from '@material/web/compat/base/aria-property';  // TODO(b/236840525): remove compat dependencies
-import {FormController, getFormValue} from '@material/web/controller/form-controller';
-import {ariaProperty} from '@material/web/decorators/aria-property';
-import {pointerPress as focusRingPointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus';
+import {ActionElement, EndPressConfig} from '@material/web/actionelement/action-element.js';
+import {ariaProperty as legacyAriaProperty} from '@material/web/compat/base/aria-property.js';  // TODO(b/236840525): remove compat dependencies
+import {FormController, getFormValue} from '@material/web/controller/form-controller.js';
+import {ariaProperty} from '@material/web/decorators/aria-property.js';
+import {pointerPress as focusRingPointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus.js';
 import {html, TemplateResult} from 'lit';
-import {eventOptions, property, state} from 'lit/decorators';
-import {ClassInfo, classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
+import {eventOptions, property, state} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 /** @soyCompatible */
 export class Switch extends ActionElement {

@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {doesElementContainFocus} from '@material/web/compat/base/utils';
-import {fixture, TestFixture} from '@material/web/compat/testing/helpers';
-import {MdFocusRing} from '@material/web/focus/focus-ring';
+import {doesElementContainFocus} from '@material/web/compat/base/utils.js';
+import {fixture, TestFixture} from '@material/web/compat/testing/helpers.js';
+import {MdFocusRing} from '@material/web/focus/focus-ring.js';
 import {html} from 'lit';
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {NavigationTabHarness} from './harness';
-import {MdNavigationTab} from './navigation-tab';
+import {NavigationTabHarness} from './harness.js';
+import {MdNavigationTab} from './navigation-tab.js';
 
 @customElement('md-test-navigation-tab')
 class TestNavigationTab extends MdNavigationTab {

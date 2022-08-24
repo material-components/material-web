@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCMenuSurfaceAdapter} from './adapter';
-import {Corner, CornerBit, cssClasses, numbers, strings} from './constants';
-import {MDCMenuDimensions, MDCMenuDistance, MDCMenuPoint} from './types';
+import {MDCMenuSurfaceAdapter} from './adapter.js';
+import {Corner, CornerBit, cssClasses, numbers, strings} from './constants.js';
+import {MDCMenuDimensions, MDCMenuDistance, MDCMenuPoint} from './types.js';
 
 interface AutoLayoutMeasurements {
   anchorSize: MDCMenuDimensions;

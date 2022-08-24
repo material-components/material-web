@@ -5,9 +5,9 @@
  */
 
 import {html, TemplateResult} from 'lit';
-import {ClassInfo} from 'lit/directives/class-map';
+import {ClassInfo} from 'lit/directives/class-map.js';
 
-import {SegmentedButton} from './segmented-button';
+import {SegmentedButton} from './segmented-button.js';
 
 /** @soyCompatible */
 export class OutlinedSegmentedButton extends SegmentedButton {

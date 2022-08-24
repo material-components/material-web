@@ -5,16 +5,16 @@
  */
 
 import 'jasmine';
-import '@material/web/field/filled-field';
+import '@material/web/field/filled-field.js';
 
-import {Environment} from '@material/web/testing/environment';
+import {Environment} from '@material/web/testing/environment.js';
 import {html} from 'lit';
-import {customElement} from 'lit/decorators';
-import {literal} from 'lit/static-html';
+import {customElement} from 'lit/decorators.js';
+import {literal} from 'lit/static-html.js';
 
-import {TextFieldHarness} from '../harness';
+import {TextFieldHarness} from '../harness.js';
 
-import {TextField} from './text-field';
+import {TextField} from './text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {

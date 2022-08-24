@@ -5,13 +5,13 @@
  */
 
 import 'jasmine';
-import './filled-text-field';
+import './filled-text-field.js';
 
-import {Environment} from '@material/web/testing/environment';
-import {Harness} from '@material/web/testing/harness';
+import {Environment} from '@material/web/testing/environment.js';
+import {Harness} from '@material/web/testing/harness.js';
 import {html} from 'lit';
 
-import {TextFieldHarness} from './harness';
+import {TextFieldHarness} from './harness.js';
 
 describe('TextFieldHarness', () => {
   const env = new Environment();

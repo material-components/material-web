@@ -5,9 +5,9 @@
  */
 
 import {html, LitElement, PropertyValues} from 'lit';
-import {queryAssignedElements} from 'lit/decorators';
+import {queryAssignedElements} from 'lit/decorators.js';
 
-import {Menu} from './menu';
+import {Menu} from './menu.js';
 
 /**
  * Menu button component that automatically attaches a slotted menu to the

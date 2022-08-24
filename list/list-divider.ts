@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {ListDivider} from './lib/divider/list-divider';
-import {styles} from './lib/divider/list-divider-styles.css';
+import {ListDivider} from './lib/divider/list-divider.js';
+import {styles} from './lib/divider/list-divider-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

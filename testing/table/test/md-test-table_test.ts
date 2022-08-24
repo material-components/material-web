@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../test-table';
+import '../test-table.js';
 
-import {Environment} from '@material/web/testing/environment';
+import {Environment} from '@material/web/testing/environment.js';
 import {html} from 'lit';
 
-import {TestTableTemplate} from '../test-table';
+import {TestTableTemplate} from '../test-table.js';
 
 describe('<md-test-table>', () => {
   const env = new Environment();

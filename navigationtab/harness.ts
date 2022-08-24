@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {Harness} from '@material/web/testing/harness';
+import {Harness} from '@material/web/testing/harness.js';
 
-import {NavigationTab} from './lib/navigation-tab';
+import {NavigationTab} from './lib/navigation-tab.js';
 
 /**
  * Test harness for navigation tab elements.

@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {KEY} from '@material/web/compat/dom/keyboard';
+import {KEY} from '@material/web/compat/dom/keyboard.js';
 
-import {MDCChipActionFocusBehavior, MDCChipActionType} from '../../action/lib/constants';
-import {MDCChipAnimation} from '../../chip/lib/constants';
+import {MDCChipActionFocusBehavior, MDCChipActionType} from '../../action/lib/constants.js';
+import {MDCChipAnimation} from '../../chip/lib/constants.js';
 
-import {MDCChipSetAdapter} from './adapter';
-import {MDCChipSetAttributes, MDCChipSetEvents} from './constants';
-import {ChipAnimationEvent, ChipInteractionEvent, ChipNavigationEvent, MDCChipSetInteractionEventDetail, MDCChipSetRemovalEventDetail, MDCChipSetSelectionEventDetail} from './types';
+import {MDCChipSetAdapter} from './adapter.js';
+import {MDCChipSetAttributes, MDCChipSetEvents} from './constants.js';
+import {ChipAnimationEvent, ChipInteractionEvent, ChipNavigationEvent, MDCChipSetInteractionEventDetail, MDCChipSetRemovalEventDetail, MDCChipSetSelectionEventDetail} from './types.js';
 
 interface FocusAction {
   action: MDCChipActionType;

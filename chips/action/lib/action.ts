@@ -4,15 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/focus/focus-ring';
-import '@material/web/ripple/ripple';
+import '@material/web/focus/focus-ring.js';
+import '@material/web/ripple/ripple.js';
 
-import {ActionElement} from '@material/web/actionelement/action-element';
-import {ariaProperty} from '@material/web/decorators/aria-property';
-import {MdRipple} from '@material/web/ripple/ripple';
+import {ActionElement} from '@material/web/actionelement/action-element.js';
+import {ariaProperty} from '@material/web/decorators/aria-property.js';
+import {MdRipple} from '@material/web/ripple/ripple.js';
 import {html, TemplateResult} from 'lit';
-import {property, query, state} from 'lit/decorators';
-import {ClassInfo, classMap} from 'lit/directives/class-map';
+import {property, query, state} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
 /**
  * Base class for all actions.

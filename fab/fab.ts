@@ -4,16 +4,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/icon/icon';
+import '@material/web/icon/icon.js';
 
 import {html, TemplateResult} from 'lit';
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {styles as overlayStyles} from '../elevation/lib/elevation-overlay-styles.css';
+import {styles as overlayStyles} from '../elevation/lib/elevation-overlay-styles.css.js';
 
-import {Fab} from './lib/fab';
-import {styles as sharedStyles} from './lib/fab-shared-styles.css';
-import {styles as fabStyles} from './lib/fab-styles.css';
+import {Fab} from './lib/fab.js';
+import {styles as sharedStyles} from './lib/fab-shared-styles.css.js';
+import {styles as fabStyles} from './lib/fab-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

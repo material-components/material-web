@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCMenuSurfaceFoundation} from '../../menusurface/lib/foundation';
+import {MDCMenuSurfaceFoundation} from '../../menusurface/lib/foundation.js';
 
-import {MDCMenuAdapter} from './adapter';
-import {cssClasses, numbers, strings} from './constants';
+import {MDCMenuAdapter} from './adapter.js';
+import {cssClasses, numbers, strings} from './constants.js';
 
 const LIST_ITEM_DISABLED_CLASS = 'md3-list-item--disabled';
 

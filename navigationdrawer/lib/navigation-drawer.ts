@@ -5,13 +5,13 @@
  */
 
 // TODO(b/231221156): remove compat dependencies
-import {AnyDuringAriaMigration, ariaProperty as legacyAriaProperty} from '@material/web/compat/base/aria-property';
-import {observer} from '@material/web/compat/base/observer';
-import {ariaProperty} from '@material/web/decorators/aria-property';
+import {AnyDuringAriaMigration, ariaProperty as legacyAriaProperty} from '@material/web/compat/base/aria-property.js';
+import {observer} from '@material/web/compat/base/observer.js';
+import {ariaProperty} from '@material/web/decorators/aria-property.js';
 import {html, LitElement, TemplateResult} from 'lit';
-import {property} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
+import {property} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 /** @soyCompatible */
 export class NavigationDrawer extends LitElement {

@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {fixture, TestFixture} from '@material/web/compat/testing/helpers';  // TODO(b/235474830): remove the use of fixtures
-import {MdFocusRing} from '@material/web/focus/focus-ring';
-import {MdIcon} from '@material/web/icon/icon';
+import {fixture, TestFixture} from '@material/web/compat/testing/helpers.js';  // TODO(b/235474830): remove the use of fixtures
+import {MdFocusRing} from '@material/web/focus/focus-ring.js';
+import {MdIcon} from '@material/web/icon/icon.js';
 import {html} from 'lit';
 
-import {MdFabExtended} from './fab-extended';
-import {FabHarness} from './harness';
+import {MdFabExtended} from './fab-extended.js';
+import {FabHarness} from './harness.js';
 
 describe('md-fab-extended', () => {
   let fixt: TestFixture;

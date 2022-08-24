@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCChipActionAttributes, MDCChipActionType} from './constants';
-import {MDCChipActionFoundation} from './foundation';
+import {MDCChipActionAttributes, MDCChipActionType} from './constants.js';
+import {MDCChipActionFoundation} from './foundation.js';
 
 /**
  * MDCChipPrimaryActionFoundation provides the business logic for the primary

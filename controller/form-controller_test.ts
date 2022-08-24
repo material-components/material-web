@@ -6,11 +6,11 @@
 
 import 'jasmine';
 
-import {Environment} from '@material/web/testing/environment';
+import {Environment} from '@material/web/testing/environment.js';
 import {html, LitElement, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators';
+import {customElement, property} from 'lit/decorators.js';
 
-import {FormController, FormElement, getFormValue} from './form-controller';
+import {FormController, FormElement, getFormValue} from './form-controller.js';
 
 function submitForm(form: HTMLFormElement) {
   return new Promise<FormData>(resolve => {

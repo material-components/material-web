@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCChipActionFocusBehavior, MDCChipActionType} from '../../action/lib/constants';
-import {MDCChipAnimation} from '../../chip/lib/constants';
+import {MDCChipActionFocusBehavior, MDCChipActionType} from '../../action/lib/constants.js';
+import {MDCChipAnimation} from '../../chip/lib/constants.js';
 
-import {MDCChipSetAttributes, MDCChipSetEvents} from './constants';
+import {MDCChipSetAttributes, MDCChipSetEvents} from './constants.js';
 
 /**
  * Defines the shape of the adapter expected by the foundation.

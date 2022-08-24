@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
-import {Menu} from './lib/menu';
-import {styles} from './lib/menu-styles.css';
+import {Menu} from './lib/menu.js';
+import {styles} from './lib/menu-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

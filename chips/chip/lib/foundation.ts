@@ -4,15 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {AnimationFrame} from '@material/web/compat/animation/animationframe';
-import {KEY} from '@material/web/compat/dom/keyboard';
+import {AnimationFrame} from '@material/web/compat/animation/animationframe.js';
+import {KEY} from '@material/web/compat/dom/keyboard.js';
 
-import {MDCChipActionFocusBehavior, MDCChipActionInteractionTrigger, MDCChipActionType} from '../../action/lib/constants';
-import {MDCChipActionInteractionEventDetail} from '../../action/lib/types';
+import {MDCChipActionFocusBehavior, MDCChipActionInteractionTrigger, MDCChipActionType} from '../../action/lib/constants.js';
+import {MDCChipActionInteractionEventDetail} from '../../action/lib/types.js';
 
-import {MDCChipAdapter} from './adapter';
-import {MDCChipAnimation, MDCChipAttributes, MDCChipCssClasses, MDCChipEvents} from './constants';
-import {ActionInteractionEvent, ActionNavigationEvent, MDCChipAnimationEventDetail, MDCChipInteractionEventDetail, MDCChipNavigationEventDetail} from './types';
+import {MDCChipAdapter} from './adapter.js';
+import {MDCChipAnimation, MDCChipAttributes, MDCChipCssClasses, MDCChipEvents} from './constants.js';
+import {ActionInteractionEvent, ActionNavigationEvent, MDCChipAnimationEventDetail, MDCChipInteractionEventDetail, MDCChipNavigationEventDetail} from './types.js';
 
 interface Navigation {
   from: MDCChipActionType;

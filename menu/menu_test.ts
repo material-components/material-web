@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import './menu';
-import './menu-item';
+import './menu.js';
+import './menu-item.js';
 
-import {Environment} from '@material/web/testing/environment';
+import {Environment} from '@material/web/testing/environment.js';
 import {html} from 'lit';
 
-import {MenuHarness} from './harness';
-import {MdMenu} from './menu';
+import {MenuHarness} from './harness.js';
+import {MdMenu} from './menu.js';
 
 describe('menu tests', () => {
   let menu: MdMenu;

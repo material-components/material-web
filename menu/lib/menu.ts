@@ -4,20 +4,20 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../list/list';
-import '../../menusurface/menu-surface';
+import '../../list/list.js';
+import '../../menusurface/menu-surface.js';
 
-import {ariaProperty} from '@material/web/decorators/aria-property';
+import {ariaProperty} from '@material/web/decorators/aria-property.js';
 import {html, LitElement} from 'lit';
-import {property, query} from 'lit/decorators';
-import {ifDefined} from 'lit/directives/if-defined';
+import {property, query} from 'lit/decorators.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {List} from '../../list/lib/list';
-import {ListItem} from '../../list/lib/listitem/list-item';
-import {Corner, MenuSurface} from '../../menusurface/lib/menu-surface';
+import {List} from '../../list/lib/list.js';
+import {ListItem} from '../../list/lib/listitem/list-item.js';
+import {Corner, MenuSurface} from '../../menusurface/lib/menu-surface.js';
 
-import {MDCMenuAdapter} from './adapter';
-import {MDCMenuFoundation} from './foundation';
+import {MDCMenuAdapter} from './adapter.js';
+import {MDCMenuFoundation} from './foundation.js';
 
 interface ActionDetail {
   item: ListItem;

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MDCChipActionAttributes, MDCChipActionEvents} from './constants';
+import {MDCChipActionAttributes, MDCChipActionEvents} from './constants.js';
 
 /**
  * Defines the shape of the adapter expected by the foundation.

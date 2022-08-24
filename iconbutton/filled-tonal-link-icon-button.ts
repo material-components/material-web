@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/icon/icon';
+import '@material/web/icon/icon.js';
 
-import {customElement} from 'lit/decorators';
-import {ClassInfo} from 'lit/directives/class-map';
+import {customElement} from 'lit/decorators.js';
+import {ClassInfo} from 'lit/directives/class-map.js';
 
-import {styles} from './lib/filled-tonal-styles.css';
-import {styles as sharedStyles} from './lib/icon-button-styles.css';
-import {LinkIconButton} from './lib/link-icon-button';
+import {styles} from './lib/filled-tonal-styles.css.js';
+import {styles as sharedStyles} from './lib/icon-button-styles.css.js';
+import {LinkIconButton} from './lib/link-icon-button.js';
 
 declare global {
   interface HTMLElementTagNameMap {

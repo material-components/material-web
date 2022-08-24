@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ClassInfo} from 'lit/directives/class-map';
+import {ClassInfo} from 'lit/directives/class-map.js';
 
-import {SegmentedButtonSet} from './segmented-button-set';
+import {SegmentedButtonSet} from './segmented-button-set.js';
 
 /** @soyCompatible */
 export class OutlinedSegmentedButtonSet extends SegmentedButtonSet {

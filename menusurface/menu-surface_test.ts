@@ -4,15 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import './menu-surface';
-import '../list/list-item';
+import './menu-surface.js';
+import '../list/list-item.js';
 
-import {Environment} from '@material/web/testing/environment';
-import {listenOnce} from '@material/web/testing/events';
+import {Environment} from '@material/web/testing/environment.js';
+import {listenOnce} from '@material/web/testing/events.js';
 import {html} from 'lit';
-import {styleMap} from 'lit/directives/style-map';
+import {styleMap} from 'lit/directives/style-map.js';
 
-import {MdMenuSurface} from './menu-surface';
+import {MdMenuSurface} from './menu-surface.js';
 
 const ANCHOR_WIDTH = '100px';
 const ANCHOR_HEIGHT = '50px';

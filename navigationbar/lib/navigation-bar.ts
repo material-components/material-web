@@ -4,17 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {KEY, normalizeKey} from '@material/web/compat/dom/keyboard';
-import {AnyDuringAriaMigration, ariaProperty} from '@material/web/compat/base/aria-property';
-import {observer} from '@material/web/compat/base/observer';
-import {deepActiveElementPath} from '@material/web/compat/base/utils';
-import {NavigationTab} from '@material/web/navigationtab/lib/navigation-tab';
+import {KEY, normalizeKey} from '@material/web/compat/dom/keyboard.js';
+import {AnyDuringAriaMigration, ariaProperty} from '@material/web/compat/base/aria-property.js';
+import {observer} from '@material/web/compat/base/observer.js';
+import {deepActiveElementPath} from '@material/web/compat/base/utils.js';
+import {NavigationTab} from '@material/web/navigationtab/lib/navigation-tab.js';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
-import {property, queryAssignedElements} from 'lit/decorators';
-import {ifDefined} from 'lit/directives/if-defined';
+import {property, queryAssignedElements} from 'lit/decorators.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {NavigationTabInteractionEvent} from './constants';
-import {NavigationBarState} from './state';
+import {NavigationTabInteractionEvent} from './constants.js';
+import {NavigationBarState} from './state.js';
 
 /** @soyCompatible */
 export class NavigationBar extends LitElement implements NavigationBarState {

@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {Harness} from '@material/web/testing/harness';
+import {Harness} from '@material/web/testing/harness.js';
 
-import {ListItem} from './list-item';
+import {ListItem} from './list-item.js';
 
 /**
  * Test harness for list item.

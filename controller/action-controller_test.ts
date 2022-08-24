@@ -6,12 +6,12 @@
 
 import 'jasmine';
 
-import {Environment} from '@material/web/testing/environment';
-import {Harness} from '@material/web/testing/harness';
+import {Environment} from '@material/web/testing/environment.js';
+import {Harness} from '@material/web/testing/harness.js';
 import {html, LitElement} from 'lit';
-import {customElement, property} from 'lit/decorators';
+import {customElement, property} from 'lit/decorators.js';
 
-import {ActionController, ActionControllerHost, BeginPressConfig, EndPressConfig, TOUCH_DELAY_MS, WAIT_FOR_MOUSE_CLICK_MS} from './action-controller';
+import {ActionController, ActionControllerHost, BeginPressConfig, EndPressConfig, TOUCH_DELAY_MS, WAIT_FOR_MOUSE_CLICK_MS} from './action-controller.js';
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -5,9 +5,9 @@
  */
 
 import {html, TemplateResult} from 'lit';
-import {ClassInfo, classMap} from 'lit/directives/class-map';
-import {ifDefined} from 'lit/directives/if-defined';
-import {PrimaryAction} from './primary-action';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
+import {PrimaryAction} from './primary-action.js';
 
 /** @soyCompatible */
 export class PresentationalAction extends PrimaryAction {
