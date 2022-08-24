@@ -17,6 +17,8 @@ import {ifDefined} from 'lit/directives/if-defined';
 import {live} from 'lit/directives/live';
 import {html as staticHtml, StaticValue} from 'lit/static-html';
 
+import {ARIAAutoComplete, ARIAExpanded, ARIARole} from '../../types/aria';
+
 /**
  * Input types that are compatible with the text field.
  */
@@ -100,12 +102,35 @@ export abstract class TextField extends LitElement {
 
   // ARIA
   // TODO(b/210730484): replace with @soyParam annotation
+  @property(
+      {type: String, attribute: 'data-aria-autocomplete', noAccessor: true})
+  @ariaProperty  // tslint:disable-line:no-new-decorators
+  override ariaAutoComplete: ARIAAutoComplete|null = null;
+
+  @property({type: String, attribute: 'data-aria-controls', noAccessor: true})
+  @ariaProperty  // tslint:disable-line:no-new-decorators
+  ariaControls: string|null = null;
+
+  @property(
+      {type: String, attribute: 'data-aria-activedescendant', noAccessor: true})
+  @ariaProperty  // tslint:disable-line:no-new-decorators
+  ariaActiveDescendant: string|null = null;
+
+  @property({type: String, attribute: 'data-aria-expanded', noAccessor: true})
+  @ariaProperty  // tslint:disable-line:no-new-decorators
+  override ariaExpanded: ARIAExpanded|null = null;
+
   @property({type: String, attribute: 'data-aria-label', noAccessor: true})
   @ariaProperty  // tslint:disable-line:no-new-decorators
   override ariaLabel!: string;
+
   @property({type: String, attribute: 'data-aria-labelledby', noAccessor: true})
   @ariaProperty  // tslint:disable-line:no-new-decorators
   ariaLabelledBy!: string;
+
+  @property({type: String, attribute: 'data-role', noAccessor: true})
+  @ariaProperty  // tslint:disable-line:no-new-decorators
+  role: ARIARole|null = null;
 
   // FormElement
   get form() {
@@ -432,16 +457,25 @@ export abstract class TextField extends LitElement {
   protected renderInput(): TemplateResult {
     // TODO(b/237283903): remove when custom isTruthy directive is supported
     const placeholderValue = this.placeholder || undefined;
+    const ariaActiveDescendantValue = this.ariaActiveDescendant || undefined;
+    const ariaAutoCompleteValue = this.ariaAutoComplete || undefined;
+    const ariaControlsValue = this.ariaControls || undefined;
     const ariaDescribedByValue =
         this.getSupportingText() ? this.supportingTextId : undefined;
+    const ariaExpandedValue = this.ariaExpanded || undefined;
     const ariaLabelValue = this.ariaLabel || this.label || undefined;
     const ariaLabelledByValue = this.ariaLabelledBy || undefined;
     const maxLengthValue = this.maxLength > -1 ? this.maxLength : undefined;
     const minLengthValue = this.minLength > -1 ? this.minLength : undefined;
+    const roleValue = this.role || undefined;
 
     return html`<input
       class="md3-text-field__input"
+      aria-activedescendant=${ifDefined(ariaActiveDescendantValue)}
+      aria-autocomplete=${ifDefined(ariaAutoCompleteValue)}
+      aria-controls=${ifDefined(ariaControlsValue)}
       aria-describedby=${ifDefined(ariaDescribedByValue)}
+      aria-expanded=${ifDefined(ariaExpandedValue)}
       aria-invalid=${this.error}
       aria-label=${ifDefined(ariaLabelValue)}
       aria-labelledby=${ifDefined(ariaLabelledByValue)}
@@ -449,6 +483,7 @@ export abstract class TextField extends LitElement {
       maxlength=${ifDefined(maxLengthValue)}
       minlength=${ifDefined(minLengthValue)}
       placeholder=${ifDefined(placeholderValue)}
+      role=${ifDefined(roleValue)}
       ?readonly=${this.readonly}
       ?required=${this.required}
       type=${this.type}

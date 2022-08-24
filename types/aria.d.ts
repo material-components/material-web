@@ -9,6 +9,16 @@
  */
 
 /**
+ * Valid values for `aria-expanded`.
+ */
+export type ARIAAutoComplete = 'none'|'inline'|'list'|'both';
+
+/**
+ * Valid values for `aria-expanded`.
+ */
+export type ARIAExpanded = 'true'|'false';
+
+/**
  * Valid values for `aria-haspopup`.
  */
 export type ARIAHasPopup =
