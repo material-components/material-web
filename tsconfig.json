@@ -3,7 +3,7 @@
     "allowUnreachableCode": false,
     "baseUrl": ".",
     "declaration": true,
-    "declarationMap": true,
+    "declarationMap": false,
     "downlevelIteration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -22,6 +22,7 @@
     },
     "skipLibCheck": true,
     "sourceMap": true,
+    "inlineSources": true,
     "strict": true,
     "strictNullChecks": false,
     "target": "es2020"
