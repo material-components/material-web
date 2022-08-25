@@ -445,6 +445,35 @@ describe('TextField', () => {
             .toBeFalse();
       });
     });
+
+    describe('pattern', () => {
+      it('should set attribute on input', async () => {
+        const {testElement, input} = await setupTest();
+        testElement.pattern = 'foo';
+        await env.waitForStability();
+
+        expect(input.getAttribute('pattern'))
+            .withContext('pattern')
+            .toEqual('foo');
+      });
+
+      it('should not set attribute if value is empty', async () => {
+        const {testElement, input} = await setupTest();
+        testElement.pattern = 'foo';
+        await env.waitForStability();
+
+        expect(input.hasAttribute('pattern'))
+            .withContext('should have pattern')
+            .toBeTrue();
+
+        testElement.pattern = '';
+        await env.waitForStability();
+
+        expect(input.hasAttribute('pattern'))
+            .withContext('should not have pattern')
+            .toBeFalse();
+      });
+    });
   });
 
   describe('stepUp()', () => {

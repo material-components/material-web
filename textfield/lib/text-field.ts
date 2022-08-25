@@ -171,6 +171,13 @@ export abstract class TextField extends LitElement {
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#minlength
    */
   @property({type: Number}) minLength = -1;
+  /**
+   * A regular expression that the text field's value must match to pass
+   * constraint validation.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#pattern
+   */
+  @property({type: String}) pattern = '';
   @property({type: String, reflect: true, converter: stringConverter})
   placeholder = '';
   @property({type: Boolean, reflect: true}) readonly = false;
@@ -517,6 +524,7 @@ export abstract class TextField extends LitElement {
     const maxLengthValue = this.maxLength > -1 ? this.maxLength : undefined;
     const minValue = this.min || undefined;
     const minLengthValue = this.minLength > -1 ? this.minLength : undefined;
+    const patternValue = this.pattern || undefined;
     const roleValue = this.role || undefined;
     const stepValue = this.step || undefined;
 
@@ -537,6 +545,7 @@ export abstract class TextField extends LitElement {
       maxlength=${ifDefined(maxLengthValue)}
       min=${ifDefined(minValue as unknown as number)}
       minlength=${ifDefined(minLengthValue)}
+      pattern=${ifDefined(patternValue)}
       placeholder=${ifDefined(placeholderValue)}
       role=${ifDefined(roleValue)}
       ?readonly=${this.readonly}
