@@ -396,6 +396,81 @@ describe('TextField', () => {
             .toBeFalse();
       });
     });
+
+    describe('min, max, and step', () => {
+      it('should set attribute on input', async () => {
+        const {testElement, input} = await setupTest();
+        testElement.type = 'number';
+        testElement.min = '2';
+        testElement.max = '5';
+        testElement.step = '1';
+        await env.waitForStability();
+
+        expect(input.getAttribute('min')).withContext('min').toEqual('2');
+        expect(input.getAttribute('max')).withContext('max').toEqual('5');
+        expect(input.getAttribute('step')).withContext('step').toEqual('1');
+      });
+
+      it('should not set attribute if value is empty', async () => {
+        const {testElement, input} = await setupTest();
+        testElement.type = 'number';
+        testElement.min = '2';
+        testElement.max = '5';
+        testElement.step = '1';
+        await env.waitForStability();
+
+        expect(input.hasAttribute('min'))
+            .withContext('should have min')
+            .toBeTrue();
+        expect(input.hasAttribute('max'))
+            .withContext('should have max')
+            .toBeTrue();
+        expect(input.hasAttribute('step'))
+            .withContext('should have step')
+            .toBeTrue();
+
+        testElement.min = '';
+        testElement.max = '';
+        testElement.step = '';
+        await env.waitForStability();
+
+        expect(input.hasAttribute('min'))
+            .withContext('should not have min')
+            .toBeFalse();
+        expect(input.hasAttribute('max'))
+            .withContext('should not have max')
+            .toBeFalse();
+        expect(input.hasAttribute('step'))
+            .withContext('should not have step')
+            .toBeFalse();
+      });
+    });
+  });
+
+  describe('stepUp()', () => {
+    it('should increment the value by `step`', async () => {
+      const {testElement} = await setupTest();
+      testElement.type = 'number';
+      testElement.valueAsNumber = 10;
+      testElement.step = '5';
+
+      testElement.stepUp();
+
+      expect(testElement.valueAsNumber).toEqual(15);
+    });
+  });
+
+  describe('stepDown()', () => {
+    it('should decrement the value by `step`', async () => {
+      const {testElement} = await setupTest();
+      testElement.type = 'number';
+      testElement.valueAsNumber = 10;
+      testElement.step = '5';
+
+      testElement.stepDown();
+
+      expect(testElement.valueAsNumber).toEqual(5);
+    });
   });
 
   // TODO(b/235238545): Add shared FormController tests.

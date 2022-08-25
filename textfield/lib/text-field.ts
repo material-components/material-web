@@ -146,12 +146,24 @@ export abstract class TextField extends LitElement {
 
   // <input> properties
   /**
+   * Defines the greatest value in the range of permitted values.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max
+   */
+  @property({type: String}) max = '';
+  /**
    * The maximum number of characters a user can enter into the text field. Set
    * to -1 for none.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#maxlength
    */
   @property({type: Number}) maxLength = -1;
+  /**
+   * Defines the most negative value in the range of permitted values.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min
+   */
+  @property({type: String}) min = '';
   /**
    * The minimum number of characters a user can enter into the text field. Set
    * to -1 for none.
@@ -192,6 +204,14 @@ export abstract class TextField extends LitElement {
   set selectionStart(value: number|null) {
     this.getInput().selectionStart = value;
   }
+
+  /**
+   * Returns or sets the element's step attribute, which works with min and max
+   * to limit the increments at which a numeric or date-time value can be set.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
+   */
+  @property({type: String}) step = '';
 
   // TODO(b/237284412): replace with exported types
   @property({type: String, reflect: true})
@@ -380,6 +400,34 @@ export abstract class TextField extends LitElement {
   }
 
   /**
+   * Decrements the value of a numeric type text field by `step` or `n` `step`
+   * number of times.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepDown
+   *
+   * @param stepDecrement The number of steps to decrement, defaults to 1.
+   */
+  stepDown(stepDecrement?: number) {
+    const input = this.getInput();
+    input.stepDown(stepDecrement);
+    this.value = input.value;
+  }
+
+  /**
+   * Increments the value of a numeric type text field by `step` or `n` `step`
+   * number of times.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepUp
+   *
+   * @param stepIncrement The number of steps to increment, defaults to 1.
+   */
+  stepUp(stepIncrement?: number) {
+    const input = this.getInput();
+    input.stepUp(stepIncrement);
+    this.value = input.value;
+  }
+
+  /**
    * Reset the text field to its default value.
    */
   reset() {
@@ -465,10 +513,15 @@ export abstract class TextField extends LitElement {
     const ariaExpandedValue = this.ariaExpanded || undefined;
     const ariaLabelValue = this.ariaLabel || this.label || undefined;
     const ariaLabelledByValue = this.ariaLabelledBy || undefined;
+    const maxValue = this.max || undefined;
     const maxLengthValue = this.maxLength > -1 ? this.maxLength : undefined;
+    const minValue = this.min || undefined;
     const minLengthValue = this.minLength > -1 ? this.minLength : undefined;
     const roleValue = this.role || undefined;
+    const stepValue = this.step || undefined;
 
+    // TODO(b/243805848): remove `as unknown as number` once lit analyzer is
+    // fixed
     return html`<input
       class="md3-text-field__input"
       aria-activedescendant=${ifDefined(ariaActiveDescendantValue)}
@@ -480,12 +533,15 @@ export abstract class TextField extends LitElement {
       aria-label=${ifDefined(ariaLabelValue)}
       aria-labelledby=${ifDefined(ariaLabelledByValue)}
       ?disabled=${this.disabled}
+      max=${ifDefined(maxValue as unknown as number)}
       maxlength=${ifDefined(maxLengthValue)}
+      min=${ifDefined(minValue as unknown as number)}
       minlength=${ifDefined(minLengthValue)}
       placeholder=${ifDefined(placeholderValue)}
       role=${ifDefined(roleValue)}
       ?readonly=${this.readonly}
       ?required=${this.required}
+      step=${ifDefined(stepValue as unknown as number)}
       type=${this.type}
       .value=${live(this.value)}
       @change=${this.redispatchEvent}
