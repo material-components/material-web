@@ -282,6 +282,7 @@ export abstract class TextField extends LitElement {
    * validation errors only display in response to user interactions.
    */
   @state() protected dirty = false;
+  @state() protected focused = false;
   @query('.md3-text-field__input')
   protected readonly input?: HTMLInputElement|null;
   protected abstract readonly fieldTag: StaticValue;
@@ -295,6 +296,8 @@ export abstract class TextField extends LitElement {
     super();
     this.addController(new FormController(this));
     this.addEventListener('click', this.focus);
+    this.addEventListener('focusin', this.handleFocusin);
+    this.addEventListener('focusout', this.handleFocusout);
   }
 
   /**
@@ -469,6 +472,7 @@ export abstract class TextField extends LitElement {
       class="md3-text-field__field"
       ?disabled=${this.disabled}
       ?error=${this.error}
+      ?focused=${this.focused}
       ?hasEnd=${this.hasTrailingIcon}
       ?hasStart=${this.hasLeadingIcon}
       .label=${this.label}
@@ -616,6 +620,19 @@ export abstract class TextField extends LitElement {
       // before checking its value.
       this.value = value;
     }
+  }
+
+  protected handleFocusin(event: FocusEvent) {
+    this.focused = true;
+  }
+
+  protected handleFocusout(event: FocusEvent) {
+    if (this.matches(':focus-within')) {
+      // Changing focus to another child within the text field, like a button
+      return;
+    }
+
+    this.focused = false;
   }
 
   protected handleInput(event: InputEvent) {

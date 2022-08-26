@@ -69,7 +69,7 @@
     @include _set-label-color(map.get($colors, hover));
   }
 
-  &:focus-within {
+  &.md3-field--focused {
     @include _set-label-color(map.get($colors, focus));
   }
 

@@ -38,7 +38,7 @@
     @include _set-content-color(map.get($colors, hover));
   }
 
-  &:focus-within {
+  &.md3-field--focused {
     @include _set-content-color(map.get($colors, focus));
   }
 
@@ -71,7 +71,7 @@
 
 @mixin _set-content-opacity($opacity) {
   &.md3-field--no-label,
-  &:focus-within,
+  &.md3-field--focused,
   &.md3-field--populated {
     .md3-field__content {
       opacity: $opacity;

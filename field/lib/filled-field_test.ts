@@ -153,6 +153,7 @@ describe('Field', () => {
       it('should be reset when unfocused', async () => {
         // Set up.
         const {instance, harness} = await setupTest();
+        await harness.focusWithKeyboard();
         instance.strokeTransformOriginProp = '10px';
         // Test case.
         await harness.blur();

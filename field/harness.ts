@@ -12,6 +12,21 @@ import {Field} from './lib/field.js';
  * Test harness for field elements.
  */
 export class FieldHarness extends Harness<Field> {
+  override async focusWithKeyboard(init: KeyboardEventInit = {}) {
+    this.element.focused = true;
+    await super.focusWithKeyboard(init);
+  }
+
+  override async focusWithPointer() {
+    this.element.focused = true;
+    await super.focusWithPointer();
+  }
+
+  override async blur() {
+    this.element.focused = false;
+    await super.blur();
+  }
+
   protected override async getInteractiveElement() {
     await this.element.updateComplete;
     return (this.element.querySelector(':not([slot])') ||

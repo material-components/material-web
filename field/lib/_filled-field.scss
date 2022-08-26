@@ -36,7 +36,7 @@ $_animation-duration: 150ms;
   .md3-field__active-indicator {
     @include active-indicator;
 
-    .md3-field:focus-within & {
+    .md3-field--focused & {
       @include active-indicator-focus;
     }
   }

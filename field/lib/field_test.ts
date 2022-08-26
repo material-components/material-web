@@ -21,10 +21,6 @@ declare global {
 
 @customElement('md-test-field')
 class TestField extends Field {
-  get isFocused() {
-    return this.focused;
-  }
-
   get floatingLabelElement() {
     return this.floatingLabelEl;
   }
@@ -93,7 +89,7 @@ describe('Field', () => {
     instance.disabled = true;
     await env.waitForStability();
     // Assertion.
-    expect(instance.isFocused)
+    expect(instance.focused)
         .withContext('focused is false after disabled is set to true')
         .toBe(false);
   });
@@ -105,7 +101,7 @@ describe('Field', () => {
     // Test case.
     await env.waitForStability();
     // Assertion.
-    expect(instance.isFocused)
+    expect(instance.focused)
         .withContext('focused set back to false when disabled')
         .toBe(false);
   });

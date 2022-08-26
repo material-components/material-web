@@ -238,7 +238,7 @@ $dark-theme: values(
     @include _set-outline-color(map.get($colors, hover));
   }
 
-  &:focus-within {
+  &.md3-field--focused {
     @include _set-outline-color(map.get($colors, focus));
   }
 

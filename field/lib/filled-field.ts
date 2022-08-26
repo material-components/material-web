@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, TemplateResult} from 'lit';
+import {html, PropertyValues, TemplateResult} from 'lit';
 import {state} from 'lit/decorators.js';
 import {ClassInfo} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
@@ -61,15 +61,15 @@ export class FilledField extends Field {
     this.updateStrokeTransformOrigin(event);
   }
 
-  // TODO(b/218700023): set to protected
-  override handleFocusOut() {
-    super.handleFocusOut();
-
+  protected override update(props: PropertyValues<this>) {
     // Upon losing focus, the stroke resets to expanding from the center, such
     // as when re-focusing with a keyboard.
-    if (!this.focused) {
+    const unfocusing = props.has('focused') && !this.focused;
+    if (unfocusing) {
       this.updateStrokeTransformOrigin();
     }
+
+    super.update(props);
   }
 
   protected async updateStrokeTransformOrigin(event?: MouseEvent|TouchEvent) {

@@ -15,6 +15,7 @@ import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 export class Field extends LitElement {
   @property({type: Boolean}) disabled = false;
   @property({type: Boolean}) error = false;
+  @property({type: Boolean}) focused = false;
   @property({type: String}) label?: string;
   @property({type: Boolean}) populated = false;
   @property({type: Boolean}) required = false;
@@ -28,7 +29,6 @@ export class Field extends LitElement {
    */
   @property({type: Boolean}) hasEnd = false;
 
-  @state() protected focused = false;
   @state() protected isAnimating = false;
 
   protected readonly labelAnimationSignal = createAnimationSignal();
@@ -37,12 +37,6 @@ export class Field extends LitElement {
   protected readonly floatingLabelEl!: Promise<HTMLElement>;
   @queryAsync('.md3-field__label--resting')
   protected readonly restingLabelEl!: Promise<HTMLElement>;
-
-  constructor() {
-    super();
-    this.addEventListener('focusin', this.handleFocusin);
-    this.addEventListener('focusout', this.handleFocusOut);
-  }
 
   /** @soyTemplate */
   override render(): TemplateResult {
@@ -68,6 +62,7 @@ export class Field extends LitElement {
     return {
       'md3-field--disabled': this.disabled,
       'md3-field--error': this.error,
+      'md3-field--focused': this.focused,
       'md3-field--with-start': this.hasStart,
       'md3-field--with-end': this.hasEnd,
       'md3-field--populated': this.populated,
@@ -153,36 +148,18 @@ export class Field extends LitElement {
     // Client-side property updates
 
     // When disabling, remove focus styles if focused.
-    const wasFocused = this.focused;
-    const needsToUnfocus = props.has('disabled') && this.disabled && wasFocused;
-    if (needsToUnfocus) {
+    if (this.disabled && this.focused) {
+      props.set('focused', true);
       this.focused = false;
     }
 
     // Animate if focused or populated change.
-    this.animateLabelIfNeeded(
-        {wasFocused, wasPopulated: props.get('populated')});
+    this.animateLabelIfNeeded({
+      wasFocused: props.get('focused'),
+      wasPopulated: props.get('populated')
+    });
+
     super.update(props);
-  }
-
-  protected handleFocusin() {
-    if (this.focused || this.disabled) {
-      return;
-    }
-
-    this.focused = true;
-    this.animateLabelIfNeeded({wasFocused: false});
-  }
-
-  // TODO(b/218700023): set to protected
-  handleFocusOut() {
-    if (this.matches(':focus-within')) {
-      // Prevent flashing when moving focus to separate targets within a field.
-      return;
-    }
-
-    this.focused = false;
-    this.animateLabelIfNeeded({wasFocused: true});
   }
 
   protected async animateLabelIfNeeded({wasFocused, wasPopulated}: {

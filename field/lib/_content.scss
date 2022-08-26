@@ -54,7 +54,7 @@ $_enter-delay: $_label-duration - $_visible-duration;
     transition: animation.standard(opacity, $_visible-duration);
 
     .md3-field--no-label &,
-    .md3-field:focus-within &,
+    .md3-field--focused &,
     .md3-field--populated & {
       opacity: 1;
       transition-delay: $_enter-delay;

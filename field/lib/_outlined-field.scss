@@ -27,7 +27,7 @@ $_animation-duration: 150ms;
   .md3-field__outline-end {
     @include outline-edges;
 
-    .md3-field:focus-within & {
+    .md3-field--focused & {
       @include outline-edges-focus;
     }
   }
@@ -53,7 +53,7 @@ $_animation-duration: 150ms;
     @include outline-panel;
 
     .md3-field--populated &,
-    .md3-field:focus-within & {
+    .md3-field--focused & {
       @include outline-panel-open;
     }
   }
@@ -61,7 +61,7 @@ $_animation-duration: 150ms;
   .md3-field__outline-panel-active {
     @include outline-panel-active;
 
-    .md3-field:focus-within & {
+    .md3-field--focused & {
       @include outline-panel-active-focus;
     }
   }
