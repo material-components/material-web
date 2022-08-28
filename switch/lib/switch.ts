@@ -72,7 +72,7 @@ export class Switch extends ActionElement {
         type="button"
         class="md3-switch ${classMap(this.getRenderClasses())}"
         role="switch"
-        aria-checked="${this.selected}"
+        aria-pressed="${this.selected}"
         aria-label="${ifDefined(ariaLabelValue)}"
         aria-labelledby="${ifDefined(ariaLabelledByValue)}"
         ?disabled=${this.disabled}
