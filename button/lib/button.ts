@@ -66,12 +66,13 @@ export abstract class Button extends ActionElement implements ButtonState {
    * @soyAttributes buttonAttributes: .md3-button
    */
   protected override render(): TemplateResult {
+    // TODO(b/237283903): Replace ifDefined(... || undefined) with ifTruthy(...)
     return html`
       <button
           class="md3-button ${classMap(this.getRenderClasses())}"
           ?disabled="${this.disabled}"
-          aria-label="${ifDefined(this.ariaLabel)}"
-          aria-haspopup="${ifDefined(this.ariaHasPopup)}"
+          aria-label="${ifDefined(this.ariaLabel || undefined)}"
+          aria-haspopup="${ifDefined(this.ariaHasPopup || undefined)}"
           @focus="${this.handleFocus}"
           @blur="${this.handleBlur}"
           @pointerdown="${this.handlePointerDown}"
