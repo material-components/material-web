@@ -14,6 +14,13 @@
     "url": "https://github.com/material-components/material-web/issues"
   },
   "homepage": "https://github.com/material-components/material-web#readme",
+  "keywords": [
+    "material design",
+    "web components",
+    "UI toolkit",
+    "material you",
+    "google"
+  ],
   "scripts": {
     "clean": "npm run clean:sass && npm run clean:ts",
     "clean:sass": "find . -name '*.css*' -type f -delete",
