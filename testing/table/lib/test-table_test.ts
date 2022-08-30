@@ -4,14 +4,25 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../test-table.js';
+import './test-table.js';
 
 import {Environment} from '@material/web/testing/environment.js';
 import {html} from 'lit';
+import {customElement} from 'lit/decorators.js';
 
-import {TestTableTemplate} from '../test-table.js';
+import {TestTable, TestTableTemplate} from './test-table.js';
 
-describe('<md-test-table>', () => {
+declare global {
+  interface HTMLElementTagNameMap {
+    'test-test-table': TestTestTable;
+  }
+}
+
+@customElement('test-test-table')
+class TestTestTable<S extends string = string> extends TestTable<S> {
+}
+
+describe('<test-test-table>', () => {
   const env = new Environment();
 
   it('should call template functions with each state', async () => {
@@ -25,9 +36,9 @@ describe('<md-test-table>', () => {
     };
     const templates = [template1, template2] as TestTableTemplate[];
     env.render(html`
-      <md-test-table
+      <test-test-table
         .states=${['A', 'B']}
-        .templates=${templates}></md-test-table>
+        .templates=${templates}></test-test-table>
     `);
 
     await env.waitForStability();
