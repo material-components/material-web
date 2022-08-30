@@ -198,7 +198,7 @@ Material Web uses modern browser features that are natively supported in the lat
 
 #### Web Components
 
-To support Web Components in IE11 and other older browsers, install the [Web Components Polyfills](https://github.com/webcomponents/polyfills/tree/mwc/packages/webcomponentsjs):
+To support Web Components in IE11 and other older browsers, install the [Web Components Polyfills](https://github.com/webcomponents/polyfills/tree/master/packages/webcomponentsjs):
 
 ```sh
 npm install @webcomponents/webcomponentsjs
