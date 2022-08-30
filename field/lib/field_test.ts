@@ -11,7 +11,8 @@ import {html} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {FieldHarness} from '../harness.js';
-import {Field} from '../lib/field.js';
+
+import {Field} from './field.js';
 
 declare global {
   interface HTMLElementTagNameMap {
