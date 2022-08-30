@@ -45,7 +45,9 @@ export abstract class Autocomplete extends LitElement {
 
   /** @soyTemplate */
   override render(): TemplateResult {
-    return html`<div class="md3-autocomplete">
+    return html`<div class="md3-autocomplete"
+            @click=${this.handleClick}
+            @focusout=${this.handleFocusout}>
             ${this.renderTextField()}
             ${this.renderMenuSurface()}</div>`;
   }
@@ -80,8 +82,46 @@ export abstract class Autocomplete extends LitElement {
     return staticHtml`<${this.menuSurfaceTag}
       class="md3-autocomplete__menu-surface"
       .corner=${'BOTTOM_START'}
+      ?stayOpenOnBodyClick=${true}
     >
       <${this.listTag}><slot></slot></${this.listTag}>
     </${this.menuSurfaceTag}>`;
+  }
+
+  isOpen() {
+    return this.menuSurface?.open || false;
+  }
+
+  open() {
+    this.menuSurface?.show();
+    // TODO(b/242594859): Add once supported by textfield
+    // this.textField.ariaExpanded = true;
+  }
+
+  close() {
+    this.menuSurface?.close();
+    // TODO(b/242594859): Add once supported by textfield
+    // this.textField.ariaExpanded = false;
+    // this.setActiveDescendant();
+  }
+
+  protected handleClick(event: PointerEvent) {
+    // When clicking the list (not items nor text field) the menu should stay
+    // open.
+    if (this.isOpen() &&
+        (event.target as Node)?.parentNode !== this.menuSurface) {
+      this.close();
+    } else {
+      this.open();
+    }
+  }
+
+  // TODO(b/243389569): Revisit focus control when extending textfield
+  protected handleFocusout() {
+    if (this.matches(':focus-within')) {
+      this.textField?.focus();
+      return;
+    }
+    this.close();
   }
 }

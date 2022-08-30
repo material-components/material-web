@@ -28,5 +28,5 @@ declare global {
 export class MdFilledAutocomplete extends Autocomplete {
   protected override readonly listTag = literal`md-list`;
   protected override readonly menuSurfaceTag = literal`md-menu-surface`;
-  protected override readonly textFieldTag = literal`md-filled-field`;
+  protected override readonly textFieldTag = literal`md-filled-text-field`;
 }
