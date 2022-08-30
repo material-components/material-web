@@ -11,6 +11,10 @@ import {ifDefined} from 'lit/directives/if-defined.js';
 
 import {Button} from './button.js';
 
+// Note that we cast `linkTarget` to this type, below. The Lit compiler
+// enforces the `target` attribute value to be of this type, but this is not
+// compatible with the generated Wit Soy/JS, which expects `linkTarget`
+// to be a string type.
 type LinkTarget = '_blank'|'_parent'|'_self'|'_top';
 
 /** @soyCompatible */
