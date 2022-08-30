@@ -12,6 +12,8 @@ import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 import {MenuSurface} from '../../menusurface/lib/menu-surface.js';
 import {TextField} from '../../textfield/lib/text-field.js';
 
+import {AutocompleteItem} from './autocompleteitem/autocomplete-item.js';
+
 /** @soyCompatible */
 export abstract class Autocomplete extends LitElement {
   static override shadowRootOptions:
@@ -47,7 +49,8 @@ export abstract class Autocomplete extends LitElement {
   override render(): TemplateResult {
     return html`<div class="md3-autocomplete"
             @click=${this.handleClick}
-            @focusout=${this.handleFocusout}>
+            @focusout=${this.handleFocusout}
+            @action=${this.handleAction}>
             ${this.renderTextField()}
             ${this.renderMenuSurface()}</div>`;
   }
@@ -123,5 +126,10 @@ export abstract class Autocomplete extends LitElement {
       return;
     }
     this.close();
+  }
+
+  handleAction(event: CustomEvent<{item: AutocompleteItem}>) {
+    const detail = event.detail;
+    this.value = detail.item.headline;
   }
 }
