@@ -4,4 +4,6 @@
 //
 
 @forward './lib/switch-theme' show
-  theme;
+  theme,
+  $light-theme,
+  $dark-theme;

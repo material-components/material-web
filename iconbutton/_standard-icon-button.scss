@@ -4,4 +4,6 @@
 //
 
 @forward './lib/standard-icon-button-theme' show
-  theme;
+  theme,
+  $light-theme,
+  $dark-theme;
