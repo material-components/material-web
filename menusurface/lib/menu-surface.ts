@@ -10,6 +10,7 @@
 // TODO(b/239222919): remove compat dependencies
 import {observer} from '@material/web/compat/base/observer.js';
 import {deepActiveElementPath, doesElementContainFocus} from '@material/web/compat/base/utils.js';
+import {isRtl} from '@material/web/controller/is-rtl.js';
 import {html, LitElement} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
@@ -234,13 +235,7 @@ export abstract class MenuSurface extends LitElement {
         this.mdcRoot.dispatchEvent(ev);
       },
       isElementInContainer: () => false,
-      isRtl: () => {
-        if (this.mdcRoot) {
-          return getComputedStyle(this.mdcRoot).direction === 'rtl';
-        }
-
-        return false;
-      },
+      isRtl: () => this.mdcRoot ? isRtl(this.mdcRoot) : false,
       setTransformOrigin: (origin) => {
         const root = this.mdcRoot;
         if (!root) {

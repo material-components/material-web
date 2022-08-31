@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {KEY, normalizeKey} from '@material/web/compat/dom/keyboard.js';
 import {AnyDuringAriaMigration, ariaProperty} from '@material/web/compat/base/aria-property.js';
 import {observer} from '@material/web/compat/base/observer.js';
 import {deepActiveElementPath} from '@material/web/compat/base/utils.js';
+import {KEY, normalizeKey} from '@material/web/compat/dom/keyboard.js';
+import {isRtl} from '@material/web/controller/is-rtl.js';
 import {NavigationTab} from '@material/web/navigationtab/lib/navigation-tab.js';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
@@ -95,8 +96,7 @@ export class NavigationBar extends LitElement implements NavigationBarState {
       return tab.buttonElement ===
           activeElementPath[activeElementPath.length - 1];
     });
-    const isRTL =
-        getComputedStyle(this).getPropertyValue('direction') === 'rtl';
+    const isRTL = isRtl(this);
     const maxIndex = this.tabs.length - 1;
 
     if (key === KEY.ENTER || key === KEY.SPACEBAR) {
