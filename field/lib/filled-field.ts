@@ -53,6 +53,7 @@ export class FilledField extends Field {
     `;
   }
 
+  /** @bubbleWizEvent */
   protected handleClick(event: MouseEvent|TouchEvent) {
     if (this.disabled) {
       return;
