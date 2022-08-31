@@ -10,7 +10,7 @@ import {redispatchEvent} from '@material/web/controller/events.js';
 import {FormController, getFormValue} from '@material/web/controller/form-controller.js';
 import {stringConverter} from '@material/web/controller/string-converter.js';
 import {ariaProperty} from '@material/web/decorators/aria-property.js';
-import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
+import {html, LitElement, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
@@ -473,6 +473,7 @@ export abstract class TextField extends LitElement {
     const prefix = this.renderPrefix();
     const suffix = this.renderSuffix();
     const input = this.renderInput();
+    const inputValue = this.getInputValue();
 
     return staticHtml`<${this.fieldTag}
       class="md3-text-field__field"
@@ -482,7 +483,7 @@ export abstract class TextField extends LitElement {
       ?hasEnd=${this.hasTrailingIcon}
       ?hasStart=${this.hasLeadingIcon}
       .label=${this.label}
-      ?populated=${!!this.value}
+      ?populated=${!!inputValue}
       ?required=${this.required}
     >
       ${this.renderLeadingIcon()}
@@ -566,11 +567,16 @@ export abstract class TextField extends LitElement {
       ?required=${this.required}
       step=${ifDefined(stepValue as unknown as number)}
       type=${this.type}
-      .value=${live(this.value)}
+      .value=${live(this.getInputValue())}
       @change=${this.redispatchEvent}
       @input=${this.handleInput}
       @select=${this.redispatchEvent}
     >`;
+  }
+
+  /** @soyTemplate */
+  protected getInputValue(): string {
+    return this.dirty ? this.value : this.value || this.defaultValue;
   }
 
   /** @soyTemplate */
@@ -608,16 +614,6 @@ export abstract class TextField extends LitElement {
   /** @soyTemplate */
   protected getSupportingText(): string {
     return this.error && this.errorText ? this.errorText : this.supportingText;
-  }
-
-  protected override willUpdate(changedProperties: PropertyValues<TextField>) {
-    if (!changedProperties.has('value') && !this.dirty) {
-      // Do this here instead of in a setter so that the order of setting both
-      // value and defaultValue does not matter.
-      this.value = this.value || this.defaultValue;
-    }
-
-    super.willUpdate(changedProperties);
   }
 
   protected override updated() {
