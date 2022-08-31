@@ -28,6 +28,10 @@ const ICON_BUTTON_TOGGLE_TEMPLATE = html`
   </md-standard-icon-button-toggle>
 `;
 
+interface IconButtonInternals {
+  flipIcon: boolean;
+}
+
 describe('icon button tests', () => {
   const env = new Environment();
 
@@ -166,7 +170,7 @@ describe('icon button tests', () => {
           env.render(template).querySelector('md-standard-icon-button')!;
       await env.waitForStability();
 
-      expect(element.flipIcon).toBeTrue();
+      expect((element as unknown as IconButtonInternals).flipIcon).toBeTrue();
     });
 
     it('if `flipsIconInRtl=true`, does not flip icon in an LTR context',
@@ -181,7 +185,8 @@ describe('icon button tests', () => {
              env.render(template).querySelector('md-standard-icon-button')!;
          await env.waitForStability();
 
-         expect(element.flipIcon).toBeFalse();
+         expect((element as unknown as IconButtonInternals).flipIcon)
+             .toBeFalse();
        });
   });
 

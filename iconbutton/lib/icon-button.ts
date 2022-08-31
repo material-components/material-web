@@ -8,6 +8,7 @@ import '@material/web/focus/focus-ring.js';
 import '@material/web/icon/icon.js';
 
 import {ActionElement, BeginPressConfig, EndPressConfig} from '@material/web/actionelement/action-element.js';
+import {isRtl} from '@material/web/controller/is-rtl.js';
 import {ariaProperty} from '@material/web/decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus.js';
 import {MdRipple} from '@material/web/ripple/ripple.js';
@@ -26,7 +27,7 @@ export abstract class IconButton extends ActionElement {
 
   @property({type: Boolean}) flipIconInRtl = false;
 
-  @property({type: Boolean}) flipIcon = false;
+  @state() protected flipIcon: boolean = isRtl(this, this.flipIconInRtl);
 
   /** @soyPrefixAttribute */
   @ariaProperty  // tslint:disable-line:no-new-decorators
@@ -106,17 +107,8 @@ export abstract class IconButton extends ActionElement {
   }
 
   override connectedCallback() {
-    this.maybeFlipIconInRtl();
-
+    this.flipIcon = isRtl(this, this.flipIconInRtl);
     super.connectedCallback();
-  }
-
-  private maybeFlipIconInRtl() {
-    if (!this.flipIconInRtl) return;
-
-    const isRtl =
-        getComputedStyle(this).getPropertyValue('direction') === 'rtl';
-    this.flipIcon = isRtl;
   }
 
   override beginPress({positionEvent}: BeginPressConfig) {
