@@ -15,6 +15,7 @@ import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {live} from 'lit/directives/live.js';
+import {styleMap} from 'lit/directives/style-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 import {ARIAAutoComplete, ARIAExpanded, ARIARole} from '../../types/aria.js';
@@ -99,6 +100,11 @@ export abstract class TextField extends LitElement {
    * The ID on the supporting text element, used for SSR.
    */
   @property({type: String}) supportingTextId = 'support';
+  /**
+   * Override the input text CSS `direction`. Useful for RTL languages that use
+   * LTR notation for fractions.
+   */
+  @property({type: String}) textDirection = '';
 
   // ARIA
   // TODO(b/210730484): replace with @soyParam annotation
@@ -532,10 +538,14 @@ export abstract class TextField extends LitElement {
     const roleValue = this.role || undefined;
     const stepValue = this.step || undefined;
 
+    /** @styleMap */
+    const style = {direction: this.textDirection};
+
     // TODO(b/243805848): remove `as unknown as number` once lit analyzer is
     // fixed
     return html`<input
       class="md3-text-field__input"
+      style=${styleMap(style)}
       aria-activedescendant=${ifDefined(ariaActiveDescendantValue)}
       aria-autocomplete=${ifDefined(ariaAutoCompleteValue)}
       aria-controls=${ifDefined(ariaControlsValue)}
