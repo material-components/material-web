@@ -186,7 +186,7 @@ export abstract class TextField extends LitElement {
   @property({type: String}) pattern = '';
   @property({type: String, reflect: true, converter: stringConverter})
   placeholder = '';
-  @property({type: Boolean, reflect: true}) readonly = false;
+  @property({type: Boolean, reflect: true}) readOnly = false;
 
   /**
    * Gets or sets the direction in which selection occurred.
@@ -563,7 +563,7 @@ export abstract class TextField extends LitElement {
       pattern=${ifDefined(patternValue)}
       placeholder=${ifDefined(placeholderValue)}
       role=${ifDefined(roleValue)}
-      ?readonly=${this.readonly}
+      ?readonly=${this.readOnly}
       ?required=${this.required}
       step=${ifDefined(stepValue as unknown as number)}
       type=${this.type}
