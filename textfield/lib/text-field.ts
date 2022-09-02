@@ -126,10 +126,18 @@ export abstract class TextField extends LitElement {
   @ariaProperty  // tslint:disable-line:no-new-decorators
   override ariaExpanded: ARIAExpanded|null = null;
 
+  /**
+   * The `aria-label` of the text field's input.
+   */
   @property({type: String, attribute: 'data-aria-label', noAccessor: true})
   @ariaProperty  // tslint:disable-line:no-new-decorators
   override ariaLabel!: string;
 
+  /**
+   * The `aria-labelledby` of the text field's input.
+   *
+   * Note: currently only usable in SSR light DOM.
+   */
   @property({type: String, attribute: 'data-aria-labelledby', noAccessor: true})
   @ariaProperty  // tslint:disable-line:no-new-decorators
   ariaLabelledBy!: string;
@@ -186,6 +194,13 @@ export abstract class TextField extends LitElement {
   @property({type: String}) pattern = '';
   @property({type: String, reflect: true, converter: stringConverter})
   placeholder = '';
+
+  /**
+   * Indicates whether or not a user should be able to edit the text field's
+   * value.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#readonly
+   */
   @property({type: Boolean, reflect: true}) readOnly = false;
 
   /**
@@ -301,7 +316,8 @@ export abstract class TextField extends LitElement {
   constructor() {
     super();
     this.addController(new FormController(this));
-    this.addEventListener('click', this.focus);
+    // TODO(b/244574653): replace this.handleClick with this.focus
+    this.addEventListener('click', this.handleClick);
     this.addEventListener('focusin', this.handleFocusin);
     this.addEventListener('focusout', this.handleFocusout);
   }
@@ -321,6 +337,9 @@ export abstract class TextField extends LitElement {
     return valid;
   }
 
+  /**
+   * Focuses the text field's input text.
+   */
   override focus() {
     if (this.disabled || this.matches(':focus-within')) {
       // Don't shift focus from an element within the text field, like an icon
@@ -331,6 +350,13 @@ export abstract class TextField extends LitElement {
     // TODO(b/210731759): replace with super.focus() once SSR supports
     // delegating focus
     this.getInput().focus();
+  }
+
+  /**
+   * Unfocuses the text field.
+   */
+  override blur() {
+    this.getInput().blur();
   }
 
   /**
@@ -628,10 +654,17 @@ export abstract class TextField extends LitElement {
     }
   }
 
+  /** @bubbleWizEvent */
+  protected handleClick() {
+    this.focus();
+  }
+
+  /** @bubbleWizEvent */
   protected handleFocusin(event: FocusEvent) {
     this.focused = true;
   }
 
+  /** @bubbleWizEvent */
   protected handleFocusout(event: FocusEvent) {
     if (this.matches(':focus-within')) {
       // Changing focus to another child within the text field, like a button

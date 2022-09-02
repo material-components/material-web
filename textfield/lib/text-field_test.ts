@@ -8,10 +8,11 @@ import 'jasmine';
 import '@material/web/field/filled-field.js';
 
 import {Environment} from '@material/web/testing/environment.js';
-import {html} from 'lit';
+import {html, render} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {literal} from 'lit/static-html.js';
 
+import {Harness} from '../../testing/harness.js';
 import {TextFieldHarness} from '../harness.js';
 
 import {TextField} from './text-field.js';
@@ -65,6 +66,21 @@ describe('TextField', () => {
       expect(harness.element.focus).toHaveBeenCalled();
     });
 
+    it('should call focus() when elements inside text field are clicked',
+       async () => {
+         const {harness} = await setupTest();
+         spyOn(harness.element, 'focus').and.callThrough();
+         // Add a trailing icon button to click on
+         render(html`<button slot="trailingicon">X</button>`, harness.element);
+         const button = harness.element.querySelector('button');
+
+         expect(button).toBeDefined();
+         const buttonHarness = new Harness(button!);
+         await buttonHarness.clickWithMouse();
+
+         expect(harness.element.focus).toHaveBeenCalled();
+       });
+
     it('focus() should not focus when disabled', async () => {
       const {harness, input} = await setupTest();
       harness.element.disabled = true;
@@ -82,6 +98,15 @@ describe('TextField', () => {
       harness.element.focus();
 
       expect(input.focus).toHaveBeenCalled();
+    });
+
+    it('blur() should blur input', async () => {
+      const {harness, input} = await setupTest();
+      spyOn(input, 'blur');
+
+      harness.element.blur();
+
+      expect(input.blur).toHaveBeenCalled();
     });
   });
 
