@@ -105,6 +105,10 @@ export abstract class TextField extends LitElement {
    * LTR notation for fractions.
    */
   @property({type: String}) textDirection = '';
+  /**
+   * The ID on the character counter element, used for SSR.
+   */
+  @property({type: String}) counterId = 'counter';
 
   // ARIA
   // TODO(b/210730484): replace with @soyParam annotation
@@ -480,10 +484,10 @@ export abstract class TextField extends LitElement {
   /** @soyTemplate */
   override render(): TemplateResult {
     return html`
-      <span class="md3-text-field ${classMap(this.getRenderClasses())}">
-        ${this.renderField()}
-      </span>
-    `;
+       <span class="md3-text-field ${classMap(this.getRenderClasses())}">
+         ${this.renderField()}
+       </span>
+     `;
   }
 
   /** @soyTemplate */
@@ -502,21 +506,22 @@ export abstract class TextField extends LitElement {
     const inputValue = this.getInputValue();
 
     return staticHtml`<${this.fieldTag}
-      class="md3-text-field__field"
-      ?disabled=${this.disabled}
-      ?error=${this.error}
-      ?focused=${this.focused}
-      ?hasEnd=${this.hasTrailingIcon}
-      ?hasStart=${this.hasLeadingIcon}
-      .label=${this.label}
-      ?populated=${!!inputValue}
-      ?required=${this.required}
-    >
-      ${this.renderLeadingIcon()}
-      ${prefix}${input}${suffix}
-      ${this.renderTrailingIcon()}
-      ${this.renderSupportingText()}
-    </${this.fieldTag}>`;
+       class="md3-text-field__field"
+       ?disabled=${this.disabled}
+       ?error=${this.error}
+       ?focused=${this.focused}
+       ?hasEnd=${this.hasTrailingIcon}
+       ?hasStart=${this.hasLeadingIcon}
+       .label=${this.label}
+       ?populated=${!!inputValue}
+       ?required=${this.required}
+     >
+       ${this.renderLeadingIcon()}
+       ${prefix}${input}${suffix}
+       ${this.renderTrailingIcon()}
+       ${this.renderSupportingText()}
+       ${this.renderCounter()}
+     </${this.fieldTag}>`;
   }
 
   /**
@@ -525,11 +530,11 @@ export abstract class TextField extends LitElement {
    */
   protected renderLeadingIcon(): TemplateResult {
     return html`
-      <span class="md3-text-field__icon md3-text-field__icon--leading" 
-          slot="start">
-        <slot name="leadingicon" @slotchange=${this.handleIconChange}></slot>
-      </span>
-    `;
+       <span class="md3-text-field__icon md3-text-field__icon--leading"
+           slot="start">
+         <slot name="leadingicon" @slotchange=${this.handleIconChange}></slot>
+       </span>
+     `;
   }
 
   /**
@@ -538,11 +543,11 @@ export abstract class TextField extends LitElement {
    */
   protected renderTrailingIcon(): TemplateResult {
     return html`
-      <span class="md3-text-field__icon md3-text-field__icon--trailing" 
-          slot="end">
-        <slot name="trailingicon" @slotchange=${this.handleIconChange}></slot>
-      </span>
-    `;
+       <span class="md3-text-field__icon md3-text-field__icon--trailing"
+           slot="end">
+         <slot name="trailingicon" @slotchange=${this.handleIconChange}></slot>
+       </span>
+     `;
   }
 
   /** @soyTemplate */
@@ -552,8 +557,7 @@ export abstract class TextField extends LitElement {
     const ariaActiveDescendantValue = this.ariaActiveDescendant || undefined;
     const ariaAutoCompleteValue = this.ariaAutoComplete || undefined;
     const ariaControlsValue = this.ariaControls || undefined;
-    const ariaDescribedByValue =
-        this.getSupportingText() ? this.supportingTextId : undefined;
+    const ariaDescribedByValue = this.getAriaDescribedBy() || undefined;
     const ariaExpandedValue = this.ariaExpanded || undefined;
     const ariaLabelValue = this.ariaLabel || this.label || undefined;
     const ariaLabelledByValue = this.ariaLabelledBy || undefined;
@@ -571,38 +575,49 @@ export abstract class TextField extends LitElement {
     // TODO(b/243805848): remove `as unknown as number` once lit analyzer is
     // fixed
     return html`<input
-      class="md3-text-field__input"
-      style=${styleMap(style)}
-      aria-activedescendant=${ifDefined(ariaActiveDescendantValue)}
-      aria-autocomplete=${ifDefined(ariaAutoCompleteValue)}
-      aria-controls=${ifDefined(ariaControlsValue)}
-      aria-describedby=${ifDefined(ariaDescribedByValue)}
-      aria-expanded=${ifDefined(ariaExpandedValue)}
-      aria-invalid=${this.error}
-      aria-label=${ifDefined(ariaLabelValue)}
-      aria-labelledby=${ifDefined(ariaLabelledByValue)}
-      ?disabled=${this.disabled}
-      max=${ifDefined(maxValue as unknown as number)}
-      maxlength=${ifDefined(maxLengthValue)}
-      min=${ifDefined(minValue as unknown as number)}
-      minlength=${ifDefined(minLengthValue)}
-      pattern=${ifDefined(patternValue)}
-      placeholder=${ifDefined(placeholderValue)}
-      role=${ifDefined(roleValue)}
-      ?readonly=${this.readOnly}
-      ?required=${this.required}
-      step=${ifDefined(stepValue as unknown as number)}
-      type=${this.type}
-      .value=${live(this.getInputValue())}
-      @change=${this.redispatchEvent}
-      @input=${this.handleInput}
-      @select=${this.redispatchEvent}
-    >`;
+       class="md3-text-field__input"
+       style=${styleMap(style)}
+       aria-activedescendant=${ifDefined(ariaActiveDescendantValue)}
+       aria-autocomplete=${ifDefined(ariaAutoCompleteValue)}
+       aria-controls=${ifDefined(ariaControlsValue)}
+       aria-describedby=${ifDefined(ariaDescribedByValue)}
+       aria-expanded=${ifDefined(ariaExpandedValue)}
+       aria-invalid=${this.error}
+       aria-label=${ifDefined(ariaLabelValue)}
+       aria-labelledby=${ifDefined(ariaLabelledByValue)}
+       ?disabled=${this.disabled}
+       max=${ifDefined(maxValue as unknown as number)}
+       maxlength=${ifDefined(maxLengthValue)}
+       min=${ifDefined(minValue as unknown as number)}
+       minlength=${ifDefined(minLengthValue)}
+       pattern=${ifDefined(patternValue)}
+       placeholder=${ifDefined(placeholderValue)}
+       role=${ifDefined(roleValue)}
+       ?readonly=${this.readOnly}
+       ?required=${this.required}
+       step=${ifDefined(stepValue as unknown as number)}
+       type=${this.type}
+       .value=${live(this.getInputValue())}
+       @change=${this.redispatchEvent}
+       @input=${this.handleInput}
+       @select=${this.redispatchEvent}
+     >`;
   }
 
   /** @soyTemplate */
   protected getInputValue(): string {
     return this.dirty ? this.value : this.value || this.defaultValue;
+  }
+
+  /** @soyTemplate */
+  protected getAriaDescribedBy(): string {
+    const hasSupport = !!this.getSupportingText();
+    const hasCounter = this.hasCounter();
+    // TODO(b/244609052): remove parens
+    return (hasSupport || hasCounter) ?
+        `${hasSupport ? this.supportingTextId : ''} ${
+            hasCounter ? this.counterId : ''}` :
+        '';
   }
 
   /** @soyTemplate */
@@ -640,6 +655,31 @@ export abstract class TextField extends LitElement {
   /** @soyTemplate */
   protected getSupportingText(): string {
     return this.error && this.errorText ? this.errorText : this.supportingText;
+  }
+
+  /**
+   * @soyTemplate
+   * @slotName supporting-text-end
+   */
+  protected renderCounter(): TemplateResult {
+    const counter = html`<span id=${this.counterId}
+       class="md3-text-field__counter"
+       slot="supporting-text-end">${this.getCounterText()}</span>`;
+    // TODO(b/244473435): add aria-label and announcements
+    return this.hasCounter() ? counter : html``;
+  }
+
+  // TODO(b/244197198): replace with !!this.getCounterText()
+  /** @soyTemplate */
+  protected hasCounter(): boolean {
+    return this.maxLength > -1;
+  }
+
+  /** @soyTemplate */
+  protected getCounterText(): TemplateResult {
+    // TODO(b/244197198): replace with string return
+    const length = this.value.length;
+    return this.hasCounter() ? html`${length} / ${this.maxLength}` : html``;
   }
 
   protected override updated() {
