@@ -10,7 +10,7 @@ import {redispatchEvent} from '@material/web/controller/events.js';
 import {FormController, getFormValue} from '@material/web/controller/form-controller.js';
 import {stringConverter} from '@material/web/controller/string-converter.js';
 import {ariaProperty} from '@material/web/decorators/aria-property.js';
-import {html, LitElement, TemplateResult} from 'lit';
+import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
@@ -308,6 +308,19 @@ export abstract class TextField extends LitElement {
    */
   @state() protected dirty = false;
   @state() protected focused = false;
+  /**
+   * Returns true when the text field's `value` property has been changed from
+   * it's initial value.
+   *
+   * Setting `value` should always overwrite `defaultValue`, even when `value`
+   * is an empty string. This flag ensures that behavior.
+   */
+  @state() protected valueHasChanged = false;
+  /**
+   * Whether or not to ignore the next `value` change when computing
+   * `valueHasChanged`.
+   */
+  protected ignoreNextValueChange = false;
   @query('.md3-text-field__input')
   protected readonly input?: HTMLInputElement|null;
   protected abstract readonly fieldTag: StaticValue;
@@ -478,6 +491,8 @@ export abstract class TextField extends LitElement {
    */
   reset() {
     this.dirty = false;
+    this.valueHasChanged = false;
+    this.ignoreNextValueChange = true;
     this.value = this.defaultValue;
   }
 
@@ -606,7 +621,8 @@ export abstract class TextField extends LitElement {
 
   /** @soyTemplate */
   protected getInputValue(): string {
-    return this.dirty ? this.value : this.value || this.defaultValue;
+    const alwaysShowValue = this.dirty || this.valueHasChanged;
+    return alwaysShowValue ? this.value : this.defaultValue || this.value;
   }
 
   /** @soyTemplate */
@@ -682,11 +698,30 @@ export abstract class TextField extends LitElement {
     return this.hasCounter() ? html`${length} / ${this.maxLength}` : html``;
   }
 
+  protected override update(changedProperties: PropertyValues<TextField>) {
+    // Consider a value change anything that is not the initial empty string
+    // value.
+    const valueHasChanged = changedProperties.has('value') &&
+        changedProperties.get('value') !== undefined;
+    if (valueHasChanged && !this.ignoreNextValueChange) {
+      this.valueHasChanged = true;
+    }
+
+    if (this.ignoreNextValueChange) {
+      this.ignoreNextValueChange = false;
+    }
+
+    super.update(changedProperties);
+  }
+
   protected override updated() {
     // If a property such as `type` changes and causes the internal <input>
     // value to change without dispatching an event, re-sync it.
     const value = this.getInput().value;
     if (this.value !== value) {
+      // Don't consider these updates (such as setting `defaultValue`) as
+      // the developer directly changing the `value`.
+      this.ignoreNextValueChange = true;
       // Note this is typically inefficient in updated() since it schedules
       // another update. However, it is needed for the <input> to fully render
       // before checking its value.
