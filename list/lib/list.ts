@@ -37,6 +37,8 @@ export class List extends LitElement {
   @property({type: String, attribute: 'data-role', noAccessor: true})
   role: ARIARole = 'list';
 
+  @property({type: String}) listId = '';
+
   @property({type: Number}) listTabIndex: number = 0;
 
   items: ListItem[] = [];
@@ -60,6 +62,7 @@ export class List extends LitElement {
     return html`
       <ul class="md3-list"
           aria-label="${ifDefined(this.ariaLabel)}"
+          id=${ifDefined(this.listId || undefined)}
           tabindex=${this.listTabIndex}
           role=${this.role}
           @action=${this.handleAction}

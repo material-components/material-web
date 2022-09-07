@@ -41,6 +41,10 @@ export abstract class Autocomplete extends LitElement {
   placeholder = '';
 
   /**
+   * The ID on the list element, used for SSR.
+   */
+  @property({type: String}) listId = 'autocomplete-list';
+  /**
    * The ID prefix for the item elements, used for SSR.
    */
   @property({type: String}) itemIdPrefix = 'autocomplete-item';
@@ -89,6 +93,7 @@ export abstract class Autocomplete extends LitElement {
       role="combobox"
       aria-autocomplete="list"
       aria-activedescendant=${activeDescendant}
+      aria-controls=${this.listId}
       ?disabled=${this.disabled}
       ?error=${this.error}
       errorText=${this.errorText}
@@ -114,6 +119,7 @@ export abstract class Autocomplete extends LitElement {
     >
       <${this.listTag}
         class="md3-autocomplete__list"
+        listId=${this.listId}
         role="listbox">
         <slot></slot>
       </${this.listTag}>
