@@ -4,7 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MdRipple} from '../ripple.js';
+import {customElement} from 'lit/decorators.js';
+
+import {Ripple} from './ripple.js';
 
 enum RippleStateClasses {
   HOVERED = 'md3-ripple--hovered',
@@ -12,14 +14,18 @@ enum RippleStateClasses {
   PRESSED = 'md3-ripple--pressed',
 }
 
-function animationTimer(time = 200): Promise<void> {
-  return new Promise((resolve) => {
-    setTimeout(resolve, time);
-  });
+declare global {
+  interface HTMLElementTagNameMap {
+    'test-ripple': TestRipple;
+  }
 }
 
-describe('md-ripple', () => {
-  let element: MdRipple;
+@customElement('test-ripple')
+class TestRipple extends Ripple {
+}
+
+describe('ripple', () => {
+  let element: TestRipple;
   let surface: HTMLDivElement;
   let container: HTMLDivElement;
 
@@ -28,7 +34,7 @@ describe('md-ripple', () => {
       container = document.createElement('div');
       document.body.appendChild(container);
 
-      element = document.createElement('md-ripple');
+      element = document.createElement('test-ripple');
       container.appendChild(element);
       await element.updateComplete;
 
@@ -39,8 +45,8 @@ describe('md-ripple', () => {
       document.body.removeChild(container);
     });
 
-    it('initializes as an md-ripple', () => {
-      expect(element).toBeInstanceOf(MdRipple);
+    it('initializes as an test-ripple', () => {
+      expect(element).toBeInstanceOf(TestRipple);
     });
 
     it('sets pressed class on beginPress()', async () => {
@@ -101,3 +107,11 @@ describe('md-ripple', () => {
     });
   });
 });
+
+
+
+function animationTimer(time = 200): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, time);
+  });
+}
