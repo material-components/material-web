@@ -8,6 +8,8 @@ import 'jasmine';
 
 import {ReactiveElement, render as litRender, TemplateResult} from 'lit';
 
+import {installSkipWebAnimations} from './skip-animations.js';
+
 /**
  * Test environment setup for screenshot tests.
  */
@@ -23,6 +25,15 @@ export class Environment {
         root.style.display = 'inline-flex';
       }
     });
+  }
+
+  /**
+   * This marks the enviroment to run without web animations. This is useful
+   * when the tested code calls `.animate`.
+   */
+  withoutWebAnimations() {
+    installSkipWebAnimations();
+    return this;
   }
 
   /**
