@@ -4,11 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// TODO(b/243558385): remove compat dependencies
+import {observer} from '@material/web/compat/base/observer.js';
+import {redispatchEvent} from '@material/web/controller/events.js';
 import {stringConverter} from '@material/web/controller/string-converter.js';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
-import {property, query} from 'lit/decorators.js';
+import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
+import {List} from '../../list/lib/list.js';
 import {MenuSurface} from '../../menusurface/lib/menu-surface.js';
 import {TextField} from '../../textfield/lib/text-field.js';
 
@@ -36,21 +40,37 @@ export abstract class Autocomplete extends LitElement {
   @property({type: String, reflect: true, converter: stringConverter})
   placeholder = '';
 
+  /**
+   * The ID prefix for the item elements, used for SSR.
+   */
+  @property({type: String}) itemIdPrefix = 'autocomplete-item';
+
   protected abstract readonly textFieldTag: StaticValue;
   protected abstract readonly menuSurfaceTag: StaticValue;
   protected abstract readonly listTag: StaticValue;
 
   @query('.md3-autocomplete__text-field') textField?: TextField|null;
   @query('.md3-autocomplete__menu-surface') menuSurface?: MenuSurface|null;
-  // TODO(esgonzalez): Implement query list with getter
-  // @query('.md3-autocomplete__list') list?: List|null;
+  @query('.md3-autocomplete__list') list?: List|null;
+
+  @queryAssignedElements({flatten: true})
+  protected slottedItems?: AutocompleteItem[];
+
+  @state()  // tslint:disable-next-line:no-new-decorators
+  @observer(function(this: Autocomplete) {
+    this.updateSelectedItem();
+  })
+  protected selectedItem: AutocompleteItem|null = null;
 
   /** @soyTemplate */
   override render(): TemplateResult {
     return html`<div class="md3-autocomplete"
             @click=${this.handleClick}
             @focusout=${this.handleFocusout}
-            @action=${this.handleAction}>
+            @action=${this.handleAction}
+            @input=${this.handleInput}
+            @keydown=${this.handleKeydown}
+            @keyup=${this.handleKeyup}>
             ${this.renderTextField()}
             ${this.renderMenuSurface()}</div>`;
   }
@@ -62,8 +82,13 @@ export abstract class Autocomplete extends LitElement {
 
   /** @soyTemplate */
   protected renderTextField(): TemplateResult {
+    const activeDescendant = this.selectedItem?.itemId ?? '';
+
     return staticHtml`<${this.textFieldTag}
       class="md3-autocomplete__text-field"
+      role="combobox"
+      aria-autocomplete="list"
+      aria-activedescendant=${activeDescendant}
       ?disabled=${this.disabled}
       ?error=${this.error}
       errorText=${this.errorText}
@@ -84,10 +109,14 @@ export abstract class Autocomplete extends LitElement {
   protected renderMenuSurface(): TemplateResult {
     return staticHtml`<${this.menuSurfaceTag}
       class="md3-autocomplete__menu-surface"
-      .corner=${'BOTTOM_START'}
+      .corner="BOTTOM_START"
       ?stayOpenOnBodyClick=${true}
     >
-      <${this.listTag}><slot></slot></${this.listTag}>
+      <${this.listTag}
+        class="md3-autocomplete__list"
+        role="listbox">
+        <slot></slot>
+      </${this.listTag}>
     </${this.menuSurfaceTag}>`;
   }
 
@@ -97,15 +126,15 @@ export abstract class Autocomplete extends LitElement {
 
   open() {
     this.menuSurface?.show();
-    // TODO(b/242594859): Add once supported by textfield
-    // this.textField.ariaExpanded = true;
+    if (!this.textField) return;
+    this.textField.ariaExpanded = 'true';
   }
 
   close() {
     this.menuSurface?.close();
-    // TODO(b/242594859): Add once supported by textfield
-    // this.textField.ariaExpanded = false;
-    // this.setActiveDescendant();
+    this.selectedItem = null;
+    if (!this.textField) return;
+    this.textField.ariaExpanded = 'false';
   }
 
   protected handleClick(event: PointerEvent) {
@@ -128,8 +157,158 @@ export abstract class Autocomplete extends LitElement {
     this.close();
   }
 
-  handleAction(event: CustomEvent<{item: AutocompleteItem}>) {
+  protected handleAction(event: CustomEvent<{item: AutocompleteItem}>) {
     const detail = event.detail;
     this.value = detail.item.headline;
+  }
+
+  protected handleInput(event: InputEvent) {
+    if (!event.target) return;
+    this.value = (event.target as HTMLInputElement).value;
+    redispatchEvent(this, event);
+  }
+
+  protected handleKeydown(event: KeyboardEvent) {
+    let bubble = true;
+    const altKey = event.altKey;
+
+    switch (event.key) {
+      case 'Enter':
+        if (this.selectedItem) {
+          this.value = this.selectedItem.headline;
+        }
+        this.close();
+        bubble = false;
+        break;
+
+      case 'ArrowDown':
+        if (!this.slottedItems) return;
+        if (this.slottedItems.length) {
+          if (this.selectedItem) {
+            this.selectedItem = this.getNextItem();
+          } else {
+            this.open();
+            if (!altKey) {
+              this.selectedItem = this.slottedItems[0];
+            }
+          }
+        }
+        bubble = false;
+        break;
+
+      case 'ArrowUp':
+        if (!this.slottedItems) return;
+        if (this.slottedItems.length) {
+          if (this.selectedItem) {
+            this.selectedItem = this.getPreviousItem();
+          } else {
+            this.open();
+            if (!altKey) {
+              this.selectedItem =
+                  this.slottedItems[this.slottedItems.length - 1];
+            }
+          }
+        }
+        bubble = false;
+        break;
+
+      case 'Escape':
+        if (this.isOpen()) {
+          this.close();
+        } else {
+          this.value = '';
+        }
+        this.selectedItem = null;
+        bubble = false;
+        break;
+
+      case 'Tab':
+        if (this.selectedItem) {
+          this.value = this.selectedItem.headline;
+        }
+        this.close();
+        break;
+
+      case 'Home':
+        this.textField?.setSelectionRange(0, 0);
+        this.selectedItem = null;
+        bubble = false;
+        break;
+
+      case 'End':
+        this.textField?.setSelectionRange(this.value.length, this.value.length);
+        this.selectedItem = null;
+        bubble = false;
+        break;
+
+      default:
+        break;
+    }
+
+    if (bubble) return;
+    event.stopPropagation();
+    event.preventDefault();
+  }
+
+  protected handleKeyup(event: KeyboardEvent) {
+    let bubble = true;
+
+    switch (event.key) {
+      case 'Backspace':
+      case 'ArrowLeft':
+      case 'ArrowRight':
+        this.selectedItem = null;
+        bubble = false;
+        break;
+
+      default:
+        break;
+    }
+
+    if (bubble) return;
+    event.stopPropagation();
+    event.preventDefault();
+  }
+
+  /**
+   * When selectedItem is updated, item prefixes and aria-selected status will
+   * be updated along with scrolling the selected item into view, if needed.
+   */
+  private updateSelectedItem() {
+    if (!this.slottedItems) return;
+    this.slottedItems.forEach((item, index) => {
+      item.itemId = `${this.itemIdPrefix}-${index}`;
+
+      if (this.selectedItem && item === this.selectedItem && this.list) {
+        item.ariaSelected = 'true';
+
+        // Scroll into view
+        if (this.list.scrollTop + this.list.offsetHeight <
+            item.offsetTop + item.offsetHeight) {
+          this.list.scrollTop =
+              item.offsetTop + item.offsetHeight - this.list.offsetHeight;
+        } else if (this.list.scrollTop > item.offsetTop + 2) {
+          this.list.scrollTop = item.offsetTop;
+        }
+      } else {
+        item.ariaSelected = 'false';
+      }
+    });
+  }
+
+  private getPreviousItem(): AutocompleteItem|null {
+    if (!this.slottedItems) return null;
+    const index =
+        this.selectedItem ? this.slottedItems.indexOf(this.selectedItem) : 0;
+    const length = this.slottedItems.length;
+    return this.slottedItems[(index - 1 + length) % length];
+  }
+
+  private getNextItem(): AutocompleteItem|null {
+    if (!this.slottedItems) return null;
+    const index =
+        this.selectedItem ? this.slottedItems.indexOf(this.selectedItem) : 0;
+    const length = this.slottedItems.length;
+    return this.slottedItems[(index + 1) % length];
   }
 }
