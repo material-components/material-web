@@ -58,25 +58,21 @@ describe('ripple', () => {
 
     it('removes pressed class on endPress()', async () => {
       element.beginPress();
-      await animationTimer();
       element.endPress();
-      await animationTimer(450);
 
       expect(surface).not.toHaveClass(RippleStateClasses.PRESSED);
     });
 
     it('sets focused class on beginFocus()', async () => {
       element.beginFocus();
-      await animationTimer();
+      await element.updateComplete;
 
       expect(surface).toHaveClass(RippleStateClasses.FOCUSED);
     });
 
     it('removes focused class on endFocus()', async () => {
       element.beginFocus();
-      await animationTimer();
       element.endFocus();
-      await animationTimer();
 
       expect(surface).not.toHaveClass(RippleStateClasses.FOCUSED);
     });
@@ -107,11 +103,3 @@ describe('ripple', () => {
     });
   });
 });
-
-
-
-function animationTimer(time = 200): Promise<void> {
-  return new Promise((resolve) => {
-    setTimeout(resolve, time);
-  });
-}
