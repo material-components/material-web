@@ -6,9 +6,7 @@
 
 // TODO(b/243558385): remove compat dependencies
 import {observer} from '@material/web/compat/base/observer.js';
-import {redispatchEvent} from '@material/web/controller/events.js';
-import {stringConverter} from '@material/web/controller/string-converter.js';
-import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
+import {html, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
@@ -19,26 +17,12 @@ import {TextField} from '../../textfield/lib/text-field.js';
 import {AutocompleteItem} from './autocompleteitem/autocomplete-item.js';
 
 /** @soyCompatible */
-export abstract class Autocomplete extends LitElement {
+export abstract class Autocomplete extends TextField {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
-  // TextField properties
-  // TODO(b/243143708): Add all the remaining text field properties
-  @property({type: Boolean, reflect: true}) disabled = false;
-  @property({type: Boolean, reflect: true}) error = false;
-  @property({type: String}) errorText = '';
-  @property({type: String}) label?: string;
-  @property({type: Boolean, reflect: true}) required = false;
-  @property({type: String}) value = '';
-  @property({type: String}) prefixText = '';
-  @property({type: String}) suffixText = '';
-  @property({type: Boolean}) hasLeadingIcon = false;
-  @property({type: Boolean}) hasTrailingIcon = false;
-  @property({type: String}) supportingText = '';
-  @property({type: String}) supportingTextId = 'support';
-  @property({type: String, reflect: true, converter: stringConverter})
-  placeholder = '';
+  override readonly role = 'combobox';
+  override readonly ariaAutoComplete = 'list';
 
   /**
    * The ID on the list element, used for SSR.
@@ -49,11 +33,9 @@ export abstract class Autocomplete extends LitElement {
    */
   @property({type: String}) itemIdPrefix = 'autocomplete-item';
 
-  protected abstract readonly textFieldTag: StaticValue;
   protected abstract readonly menuSurfaceTag: StaticValue;
   protected abstract readonly listTag: StaticValue;
 
-  @query('.md3-autocomplete__text-field') textField?: TextField|null;
   @query('.md3-autocomplete__menu-surface') menuSurface?: MenuSurface|null;
   @query('.md3-autocomplete__list') list?: List|null;
 
@@ -63,51 +45,26 @@ export abstract class Autocomplete extends LitElement {
   @state()  // tslint:disable-next-line:no-new-decorators
   @observer(function(this: Autocomplete) {
     this.updateSelectedItem();
+    this.ariaActiveDescendant = this.selectedItem?.itemId ?? null;
   })
   protected selectedItem: AutocompleteItem|null = null;
 
   /** @soyTemplate */
   override render(): TemplateResult {
     return html`<div class="md3-autocomplete"
-            @click=${this.handleClick}
+            @click=${this.handleClicked}
             @focusout=${this.handleFocusout}
             @action=${this.handleAction}
             @input=${this.handleInput}
             @keydown=${this.handleKeydown}
             @keyup=${this.handleKeyup}>
-            ${this.renderTextField()}
+            ${super.render()}
             ${this.renderMenuSurface()}</div>`;
   }
 
   override firstUpdated(changedProperties: PropertyValues) {
     super.firstUpdated(changedProperties);
-    this.menuSurface!.anchor = this.textField!;
-  }
-
-  /** @soyTemplate */
-  protected renderTextField(): TemplateResult {
-    const activeDescendant = this.selectedItem?.itemId ?? '';
-
-    return staticHtml`<${this.textFieldTag}
-      class="md3-autocomplete__text-field"
-      role="combobox"
-      aria-autocomplete="list"
-      aria-activedescendant=${activeDescendant}
-      aria-controls=${this.listId}
-      ?disabled=${this.disabled}
-      ?error=${this.error}
-      errorText=${this.errorText}
-      ?hasTrailingIcon=${this.hasTrailingIcon}
-      ?hasLeadingIcon=${this.hasLeadingIcon}
-      label=${this.label}
-      value=${this.value}
-      prefixText=${this.prefixText}
-      suffixText=${this.suffixText}
-      supportingText=${this.supportingText}
-      supportingTextId=${this.supportingTextId}
-      ?required=${this.required}
-      placeholder=${this.placeholder}>
-    </${this.textFieldTag}>`;
+    this.menuSurface!.anchor = this;
   }
 
   /** @soyTemplate */
@@ -132,18 +89,16 @@ export abstract class Autocomplete extends LitElement {
 
   open() {
     this.menuSurface?.show();
-    if (!this.textField) return;
-    this.textField.ariaExpanded = 'true';
+    this.ariaExpanded = 'true';
   }
 
   close() {
     this.menuSurface?.close();
     this.selectedItem = null;
-    if (!this.textField) return;
-    this.textField.ariaExpanded = 'false';
+    this.ariaExpanded = 'false';
   }
 
-  protected handleClick(event: PointerEvent) {
+  protected handleClicked(event: PointerEvent) {
     // When clicking the list (not items nor text field) the menu should stay
     // open.
     if (this.isOpen() &&
@@ -154,24 +109,18 @@ export abstract class Autocomplete extends LitElement {
     }
   }
 
-  // TODO(b/243389569): Revisit focus control when extending textfield
-  protected handleFocusout() {
+  protected override handleFocusout() {
     if (this.matches(':focus-within')) {
-      this.textField?.focus();
+      this.getInput().focus();
       return;
     }
     this.close();
+    this.focused = false;
   }
 
   protected handleAction(event: CustomEvent<{item: AutocompleteItem}>) {
     const detail = event.detail;
     this.value = detail.item.headline;
-  }
-
-  protected handleInput(event: InputEvent) {
-    if (!event.target) return;
-    this.value = (event.target as HTMLInputElement).value;
-    redispatchEvent(this, event);
   }
 
   protected handleKeydown(event: KeyboardEvent) {
@@ -236,13 +185,13 @@ export abstract class Autocomplete extends LitElement {
         break;
 
       case 'Home':
-        this.textField?.setSelectionRange(0, 0);
+        this.setSelectionRange(0, 0);
         this.selectedItem = null;
         bubble = false;
         break;
 
       case 'End':
-        this.textField?.setSelectionRange(this.value.length, this.value.length);
+        this.setSelectionRange(this.value.length, this.value.length);
         this.selectedItem = null;
         bubble = false;
         break;
