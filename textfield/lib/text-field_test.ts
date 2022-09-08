@@ -162,6 +162,27 @@ describe('TextField', () => {
       expect(harness.element.defaultValue).toBe('');
       expect(harness.element.value).toBe('');
     });
+
+    it('should allow defaultValue to update value again', async () => {
+      const {harness} = await setupTest();
+
+      // defaultValue changes value
+      harness.element.defaultValue = 'First default';
+      await env.waitForStability();
+      expect(harness.element.value).toBe('First default');
+
+      // Setting value programatically causes it to stick
+      harness.element.value = 'Value';
+      harness.element.defaultValue = 'Second default';
+      await env.waitForStability();
+      expect(harness.element.value).toBe('Value');
+
+      // Resetting should return to original functionality
+      harness.element.reset();
+      harness.element.defaultValue = 'Third default';
+      await env.waitForStability();
+      expect(harness.element.value).toBe('Third default');
+    });
   });
 
   describe('default value', () => {
@@ -172,6 +193,17 @@ describe('TextField', () => {
       await env.waitForStability();
 
       expect(harness.element.value).toBe('Default');
+    });
+
+    it('should update `value` multiple times', async () => {
+      const {harness} = await setupTest();
+
+      harness.element.defaultValue = 'First default';
+      await env.waitForStability();
+      harness.element.defaultValue = 'Second default';
+      await env.waitForStability();
+
+      expect(harness.element.value).toBe('Second default');
     });
 
     it('should NOT update `value` after user input', async () => {
@@ -187,6 +219,24 @@ describe('TextField', () => {
 
       expect(harness.element.value).toBe('Value');
     });
+
+    it('should render `value` instead of `defaultValue` when `value` changes',
+       async () => {
+         const {harness, input} = await setupTest();
+
+         harness.element.defaultValue = 'Default';
+         await env.waitForStability();
+         expect(input.value).toBe('Default');
+
+         harness.element.value = 'Value';
+         await env.waitForStability();
+         expect(input.value).toBe('Value');
+
+         harness.element.value = '';
+         await env.waitForStability();
+         expect(input.value).toBe('');
+         expect(harness.element.defaultValue).toBe('Default');
+       });
   });
 
   describe('valueAsDate', () => {
