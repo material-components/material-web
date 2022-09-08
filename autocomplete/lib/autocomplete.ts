@@ -81,10 +81,7 @@ export abstract class Autocomplete extends TextField {
       .corner="BOTTOM_START"
       ?stayOpenOnBodyClick=${true}
     >
-      <${this.listTag}
-        class="md3-autocomplete__list"
-        listId=${this.listId}
-        role="listbox">
+      <${this.listTag} class="md3-autocomplete__list">
         <slot></slot>
       </${this.listTag}>
     </${this.menuSurfaceTag}>`;

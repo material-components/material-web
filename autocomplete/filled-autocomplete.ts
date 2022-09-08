@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/list/list.js';
+import '@material/web/autocomplete/autocomplete-list.js';
 import '@material/web/menu-surface/menu-surface.js';
 import '@material/web/field/filled-field.js';
 
@@ -36,7 +36,7 @@ export class MdFilledAutocomplete extends Autocomplete {
     sharedStyles, filledStyles, filledForcedColorsStyles, autocompleteStyles
   ];
 
-  protected override readonly listTag = literal`md-list`;
+  protected override readonly listTag = literal`md-autocomplete-list`;
   protected override readonly menuSurfaceTag = literal`md-menu-surface`;
   protected override readonly fieldTag = literal`md-filled-field`;
 

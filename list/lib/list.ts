@@ -8,6 +8,7 @@ import {ariaProperty} from '@material/web/decorators/aria-property.js';
 import {ARIARole} from '@material/web/types/aria.js';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
 import {ListItem} from './listitem/list-item.js';
@@ -60,7 +61,7 @@ export class List extends LitElement {
   /** @soyTemplate */
   override render(): TemplateResult {
     return html`
-      <ul class="md3-list"
+      <ul class="md3-list ${classMap(this.getRenderClasses())}"
           aria-label="${ifDefined(this.ariaLabel)}"
           id=${ifDefined(this.listId || undefined)}
           tabindex=${this.listTabIndex}
@@ -72,6 +73,11 @@ export class List extends LitElement {
         <div class="md3-elevation-overlay"></div>
       </ul>
     `;
+  }
+
+  /** @soyTemplate */
+  protected getRenderClasses(): ClassInfo {
+    return {};
   }
 
   handleKeydown(event: KeyboardEvent) {
