@@ -31,7 +31,7 @@ $_current-config: $_initial-config;
 /// mixin.
 ///
 /// @example - scss
-///   @include config.set($var-fallbacks: none) {
+///   @include feature-flags.with($var-fallbacks: none) {
 ///     // No fallback values will be emitted within this mixin scope
 ///     @include another-mixin();
 ///   }
@@ -47,9 +47,9 @@ $_current-config: $_initial-config;
 ///     properties.
 /// @param {String} $var-fallbacks [all] - What to emit for custom property
 ///     fallback values. (`all`, `none`, `vars`)
-@mixin set($config...) {
+@mixin with($config...) {
   @if not meta.content-exists() {
-    @error 'Content scope is required: config.set($options...) { /* scope */ }';
+    @error 'Content scope is required: feature-flags.with($options...) { /* scope */ }';
   }
 
   $config: meta.keywords($config);
