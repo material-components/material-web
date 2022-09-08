@@ -321,6 +321,15 @@ export abstract class TextField extends LitElement {
    * `valueHasChanged`.
    */
   protected ignoreNextValueChange = false;
+  /**
+   * Whether or not a native error has been reported via `reportValidity()`.
+   */
+  @state() protected nativeError = false;
+  /**
+   * The validation message displayed from a native error via
+   * `reportValidity()`.
+   */
+  @state() protected nativeErrorText = '';
   @query('.md3-text-field__input')
   protected readonly input?: HTMLInputElement|null;
   protected abstract readonly fieldTag: StaticValue;
@@ -395,8 +404,8 @@ export abstract class TextField extends LitElement {
   reportValidity() {
     const {valid, canceled} = this.checkValidityAndDispatch();
     if (!canceled) {
-      this.error = !valid;
-      this.errorText = this.validationMessage;
+      this.nativeError = !valid;
+      this.nativeErrorText = this.validationMessage;
     }
 
     return valid;
@@ -494,6 +503,8 @@ export abstract class TextField extends LitElement {
     this.valueHasChanged = false;
     this.ignoreNextValueChange = true;
     this.value = this.defaultValue;
+    this.nativeError = false;
+    this.nativeErrorText = '';
   }
 
   /** @soyTemplate */
@@ -509,8 +520,13 @@ export abstract class TextField extends LitElement {
   protected getRenderClasses(): ClassInfo {
     return {
       'md3-text-field--disabled': this.disabled,
-      'md3-text-field--error': this.error,
+      'md3-text-field--error': this.getError(),
     };
+  }
+
+  /** @soyTemplate */
+  protected getError(): boolean {
+    return this.error || this.nativeError;
   }
 
   /** @soyTemplate */
@@ -521,22 +537,22 @@ export abstract class TextField extends LitElement {
     const inputValue = this.getInputValue();
 
     return staticHtml`<${this.fieldTag}
-       class="md3-text-field__field"
-       ?disabled=${this.disabled}
-       ?error=${this.error}
-       ?focused=${this.focused}
-       ?hasEnd=${this.hasTrailingIcon}
-       ?hasStart=${this.hasLeadingIcon}
-       .label=${this.label}
-       ?populated=${!!inputValue}
-       ?required=${this.required}
-     >
-       ${this.renderLeadingIcon()}
-       ${prefix}${input}${suffix}
-       ${this.renderTrailingIcon()}
-       ${this.renderSupportingText()}
-       ${this.renderCounter()}
-     </${this.fieldTag}>`;
+      class="md3-text-field__field"
+      ?disabled=${this.disabled}
+      ?error=${this.getError()}
+      ?focused=${this.focused}
+      ?hasEnd=${this.hasTrailingIcon}
+      ?hasStart=${this.hasLeadingIcon}
+      .label=${this.label}
+      ?populated=${!!inputValue}
+      ?required=${this.required}
+    >
+      ${this.renderLeadingIcon()}
+      ${prefix}${input}${suffix}
+      ${this.renderTrailingIcon()}
+      ${this.renderSupportingText()}
+      ${this.renderCounter()}
+    </${this.fieldTag}>`;
   }
 
   /**
@@ -597,7 +613,7 @@ export abstract class TextField extends LitElement {
        aria-controls=${ifDefined(ariaControlsValue)}
        aria-describedby=${ifDefined(ariaDescribedByValue)}
        aria-expanded=${ifDefined(ariaExpandedValue)}
-       aria-invalid=${this.error}
+       aria-invalid=${this.getError()}
        aria-label=${ifDefined(ariaLabelValue)}
        aria-labelledby=${ifDefined(ariaLabelledByValue)}
        ?disabled=${this.disabled}
@@ -670,7 +686,8 @@ export abstract class TextField extends LitElement {
 
   /** @soyTemplate */
   protected getSupportingText(): string {
-    return this.error && this.errorText ? this.errorText : this.supportingText;
+    const errorText = this.error ? this.errorText : this.nativeErrorText;
+    return this.getError() && errorText ? errorText : this.supportingText;
   }
 
   /**

@@ -30,6 +30,14 @@ class TestTextField extends TextField {
   }
 
   protected override readonly fieldTag = literal`md-filled-field`;
+
+  override getError() {
+    return super.getError();
+  }
+
+  override getSupportingText() {
+    return super.getSupportingText();
+  }
 }
 
 describe('TextField', () => {
@@ -171,7 +179,7 @@ describe('TextField', () => {
       await env.waitForStability();
       expect(harness.element.value).toBe('First default');
 
-      // Setting value programatically causes it to stick
+      // Setting value programmatically causes it to stick
       harness.element.value = 'Value';
       harness.element.defaultValue = 'Second default';
       await env.waitForStability();
@@ -372,12 +380,13 @@ describe('TextField', () => {
     describe('reportValidity()', () => {
       it('should return true when valid and set error to false', async () => {
         const {testElement} = await setupTest();
-        testElement.error = true;
 
         const valid = testElement.reportValidity();
 
         expect(valid).withContext('valid').toBeTrue();
-        expect(testElement.error).withContext('testElement.error').toBeFalse();
+        expect(testElement.getError())
+            .withContext('testElement.getError()')
+            .toBeFalse();
       });
 
       it('should return false when invalid and set error to true', async () => {
@@ -387,20 +396,23 @@ describe('TextField', () => {
         const valid = testElement.reportValidity();
 
         expect(valid).withContext('valid').toBeFalse();
-        expect(testElement.error).withContext('testElement.error').toBeTrue();
+        expect(testElement.getError())
+            .withContext('testElement.getError()')
+            .toBeTrue();
       });
 
-      it('should update errorText to validationMessage', async () => {
+      it('should update supporting text to validationMessage', async () => {
         const {testElement} = await setupTest();
         const errorMessage = 'Error message';
         testElement.setCustomValidity(errorMessage);
 
         testElement.reportValidity();
 
-        expect(testElement.errorText).toEqual(errorMessage);
+        expect(testElement.validationMessage).toEqual(errorMessage);
+        expect(testElement.getSupportingText()).toEqual(errorMessage);
       });
 
-      it('should not update error or errorText if invalid event is canceled',
+      it('should not update error or supporting text if invalid event is canceled',
          async () => {
            const {testElement} = await setupTest();
            testElement.addEventListener('invalid', e => {
@@ -412,11 +424,25 @@ describe('TextField', () => {
            const valid = testElement.reportValidity();
 
            expect(valid).withContext('valid').toBeFalse();
-           expect(testElement.error)
-               .withContext('testElement.error')
+           expect(testElement.getError())
+               .withContext('testElement.getError()')
                .toBeFalse();
-           expect(testElement.errorText).toEqual('');
+           expect(testElement.getSupportingText()).toEqual('');
          });
+
+      it('should be overridden by error and errorText', async () => {
+        const {testElement} = await setupTest();
+        testElement.error = true;
+        const errorMessage = 'Error message';
+        testElement.errorText = errorMessage;
+
+        const valid = testElement.reportValidity();
+        expect(valid).withContext('native validity should be valid').toBeTrue();
+        expect(testElement.getError())
+            .withContext('testElement.getError()')
+            .toBeTrue();
+        expect(testElement.getSupportingText()).toEqual(errorMessage);
+      });
     });
 
     describe('setCustomValidity()', () => {
