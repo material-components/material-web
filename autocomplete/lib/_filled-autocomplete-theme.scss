@@ -1,0 +1,263 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use 'sass:map';
+@use '@material/web/elevation/lib/elevation-theme';
+@use '@material/web/field/lib/filled-field-theme';
+@use '@material/web/list/lib/listitem/list-item-theme';
+@use '@material/web/list/list';
+@use '@material/web/list/list-item';
+@use '@material/web/menusurface/menu-surface';
+@use '@material/web/sass/resolvers';
+@use '@material/web/sass/shape';
+@use '@material/web/sass/theme';
+@use '@material/web/textfield/lib/filled-text-field-theme';
+@use '@material/web/tokens';
+
+$custom-property-prefix: 'filled-autocomplete';
+$light-theme: tokens.md-comp-filled-autocomplete-values();
+$dark-theme: tokens.md-comp-filled-autocomplete-values(
+  (
+    md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
+  ),
+  $exclude-hardcoded-values: true
+);
+
+@mixin theme($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme($light-theme, $theme);
+  $theme: _resolve-theme($theme, $resolvers);
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix);
+
+  @include theme.emit-theme-vars($theme);
+}
+
+@mixin theme-styles($theme, $resolvers: resolvers.$material) {
+  $theme: theme.validate-theme-styles($light-theme, $theme);
+  $theme: _resolve-theme($theme, $resolvers);
+  $theme: theme.create-theme-vars($theme, $custom-property-prefix);
+
+  .md3-text-field--filled {
+    $text-field-theme: (
+      active-indicator-color: map.get($theme, text-field-active-indicator-color),
+      active-indicator-height:
+        map.get($theme, text-field-active-indicator-height),
+      caret-color: map.get($theme, text-field-caret-color),
+      container-color: map.get($theme, text-field-container-color),
+      container-height: map.get($theme, text-field-container-height),
+      disabled-active-indicator-color:
+        map.get($theme, text-field-disabled-active-indicator-color),
+      disabled-active-indicator-height:
+        map.get($theme, text-field-disabled-active-indicator-height),
+      disabled-active-indicator-opacity:
+        map.get($theme, text-field-disabled-active-indicator-opacity),
+      disabled-container-color:
+        map.get($theme, text-field-disabled-container-color),
+      disabled-container-opacity:
+        map.get($theme, text-field-disabled-container-opacity),
+      disabled-input-text-color:
+        map.get($theme, text-field-disabled-input-text-color),
+      disabled-input-text-opacity:
+        map.get($theme, text-field-disabled-input-text-opacity),
+      disabled-label-text-color:
+        map.get($theme, text-field-disabled-label-text-color),
+      disabled-label-text-opacity:
+        map.get($theme, text-field-disabled-label-text-opacity),
+      disabled-leading-icon-color:
+        map.get($theme, text-field-disabled-leading-icon-color),
+      disabled-leading-icon-opacity:
+        map.get($theme, text-field-disabled-leading-icon-opacity),
+      disabled-supporting-text-color:
+        map.get($theme, text-field-disabled-supporting-text-color),
+      disabled-supporting-text-opacity:
+        map.get($theme, text-field-disabled-supporting-text-opacity),
+      disabled-trailing-icon-color:
+        map.get($theme, text-field-disabled-trailing-icon-color),
+      disabled-trailing-icon-opacity:
+        map.get($theme, text-field-disabled-trailing-icon-opacity),
+      error-active-indicator-color:
+        map.get($theme, text-field-error-active-indicator-color),
+      error-focus-active-indicator-color:
+        map.get($theme, text-field-error-focus-active-indicator-color),
+      error-focus-caret-color:
+        map.get($theme, text-field-error-focus-caret-color),
+      error-focus-input-text-color:
+        map.get($theme, text-field-error-focus-input-text-color),
+      error-focus-label-text-color:
+        map.get($theme, text-field-error-focus-label-text-color),
+      error-focus-leading-icon-color:
+        map.get($theme, text-field-error-focus-leading-icon-color),
+      error-focus-supporting-text-color:
+        map.get($theme, text-field-error-focus-supporting-text-color),
+      error-focus-trailing-icon-color:
+        map.get($theme, text-field-error-focus-trailing-icon-color),
+      error-hover-active-indicator-color:
+        map.get($theme, text-field-error-hover-active-indicator-color),
+      error-hover-input-text-color:
+        map.get($theme, text-field-error-hover-input-text-color),
+      error-hover-label-text-color:
+        map.get($theme, text-field-error-hover-label-text-color),
+      error-hover-leading-icon-color:
+        map.get($theme, text-field-error-hover-leading-icon-color),
+      error-hover-state-layer-color:
+        map.get($theme, text-field-error-hover-state-layer-color),
+      error-hover-state-layer-opacity:
+        map.get($theme, text-field-error-hover-state-layer-opacity),
+      error-hover-supporting-text-color:
+        map.get($theme, text-field-error-hover-supporting-text-color),
+      error-hover-trailing-icon-color:
+        map.get($theme, text-field-error-hover-trailing-icon-color),
+      error-input-text-color: map.get($theme, text-field-error-input-text-color),
+      error-label-text-color: map.get($theme, text-field-error-label-text-color),
+      error-leading-icon-color:
+        map.get($theme, text-field-error-leading-icon-color),
+      error-supporting-text-color:
+        map.get($theme, text-field-error-supporting-text-color),
+      error-trailing-icon-color:
+        map.get($theme, text-field-error-trailing-icon-color),
+      focus-active-indicator-color:
+        map.get($theme, text-field-focus-active-indicator-color),
+      focus-active-indicator-height:
+        map.get($theme, text-field-focus-active-indicator-height),
+      focus-input-text-color: map.get($theme, text-field-focus-input-text-color),
+      focus-label-text-color: map.get($theme, text-field-focus-label-text-color),
+      focus-leading-icon-color:
+        map.get($theme, text-field-focus-leading-icon-color),
+      focus-supporting-text-color:
+        map.get($theme, text-field-focus-supporting-text-color),
+      focus-trailing-icon-color:
+        map.get($theme, text-field-focus-trailing-icon-color),
+      hover-active-indicator-color:
+        map.get($theme, text-field-hover-active-indicator-color),
+      hover-active-indicator-height:
+        map.get($theme, text-field-hover-active-indicator-height),
+      hover-input-text-color: map.get($theme, text-field-hover-input-text-color),
+      hover-label-text-color: map.get($theme, text-field-hover-label-text-color),
+      hover-leading-icon-color:
+        map.get($theme, text-field-hover-leading-icon-color),
+      hover-state-layer-color:
+        map.get($theme, text-field-hover-state-layer-color),
+      hover-state-layer-opacity:
+        map.get($theme, text-field-hover-state-layer-opacity),
+      hover-supporting-text-color:
+        map.get($theme, text-field-hover-supporting-text-color),
+      hover-trailing-icon-color:
+        map.get($theme, text-field-hover-trailing-icon-color),
+      input-text-color: map.get($theme, text-field-input-text-color),
+      input-text-font: map.get($theme, text-field-input-text-font),
+      input-text-line-height: map.get($theme, text-field-input-text-line-height),
+      input-text-size: map.get($theme, text-field-input-text-size),
+      input-text-tracking: map.get($theme, text-field-input-text-tracking),
+      input-text-type: map.get($theme, text-field-input-text-type),
+      input-text-weight: map.get($theme, text-field-input-text-weight),
+      label-text-color: map.get($theme, text-field-label-text-color),
+      label-text-font: map.get($theme, text-field-label-text-font),
+      label-text-line-height: map.get($theme, text-field-label-text-line-height),
+      label-text-populated-line-height:
+        map.get($theme, text-field-label-text-populated-line-height),
+      label-text-populated-size:
+        map.get($theme, text-field-label-text-populated-size),
+      label-text-size: map.get($theme, text-field-label-text-size),
+      label-text-tracking: map.get($theme, text-field-label-text-tracking),
+      label-text-type: map.get($theme, text-field-label-text-type),
+      label-text-weight: map.get($theme, text-field-label-text-weight),
+      leading-icon-color: map.get($theme, text-field-leading-icon-color),
+      leading-icon-size: map.get($theme, text-field-leading-icon-size),
+      supporting-text-color: map.get($theme, text-field-supporting-text-color),
+      supporting-text-font: map.get($theme, text-field-supporting-text-font),
+      supporting-text-line-height:
+        map.get($theme, text-field-supporting-text-line-height),
+      supporting-text-size: map.get($theme, text-field-supporting-text-size),
+      supporting-text-tracking:
+        map.get($theme, text-field-supporting-text-tracking),
+      supporting-text-weight: map.get($theme, text-field-supporting-text-weight),
+      trailing-icon-color: map.get($theme, text-field-trailing-icon-color),
+      trailing-icon-size: map.get($theme, text-field-trailing-icon-size),
+    );
+
+    @include filled-text-field-theme.theme($text-field-theme, $resolvers);
+    // Textfield cannot resolve shape when created as vars.
+    @include filled-field-theme.theme(
+      (
+        container-shape-start-start:
+          map.get($theme, text-field-container-shape-start-start),
+        container-shape-start-end:
+          map.get($theme, text-field-container-shape-start-end),
+        container-shape-end-end:
+          map.get($theme, text-field-container-shape-end-end),
+        container-shape-end-start:
+          map.get($theme, text-field-container-shape-end-start),
+      )
+    );
+  }
+
+  .md3-autocomplete__menu-surface {
+    @include menu-surface.theme(
+      (
+        container-elevation-shadow:
+          map.get($theme, menu-container-elevation-shadow),
+        container-shape: map.get($theme, menu-container-shape),
+      ),
+      $resolvers
+    );
+
+    @include list.theme(
+      (
+        container-color: map.get($theme, menu-container-color),
+        container-surface-tint-layer-color:
+          map.get($theme, menu-container-surface-tint-layer-color),
+        container-elevation-overlay-opacity:
+          map.get($theme, menu-container-elevation-overlay-opacity),
+      )
+    );
+
+    @include list-item.theme(
+      (
+        list-item-container-color: map.get($theme, menu-container-color),
+        list-item-one-line-container-height:
+          map.get($theme, menu-list-item-container-height),
+        list-item-label-text-color:
+          map.get($theme, menu-list-item-label-text-color),
+        list-item-label-text-font:
+          map.get($theme, menu-list-item-label-text-font),
+        list-item-label-text-line-height:
+          map.get($theme, menu-list-item-label-text-line-height),
+        list-item-label-text-size:
+          map.get($theme, menu-list-item-label-text-size),
+        list-item-label-text-tracking:
+          map.get($theme, menu-list-item-label-text-tracking),
+        list-item-label-text-weight:
+          map.get($theme, menu-list-item-label-text-weight),
+      )
+    );
+  }
+
+  ::slotted([data-aria-selected='true']) {
+    @include list-item-theme.theme(
+      (
+        list-item-container-color:
+          map.get($theme, menu-list-item-selected-container-color),
+      ),
+      $resolvers
+    );
+  }
+}
+
+@function _resolve-theme($theme, $resolvers) {
+  $theme: elevation-theme.resolve-theme(
+    $theme,
+    map.get($resolvers, 'elevation'),
+    $shadow-color-token: 'menu-container-shadow-color',
+    $elevation-tokens: (menu-container-elevation)
+  );
+  $theme: shape.resolve-theme(
+    $theme,
+    map.get($resolvers, shape),
+    text-field-container-shape
+  );
+  @return $theme;
+}

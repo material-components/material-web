@@ -8,6 +8,7 @@
 import {observer} from '@material/web/compat/base/observer.js';
 import {html, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 import {List} from '../../list/lib/list.js';
@@ -51,7 +52,8 @@ export abstract class Autocomplete extends TextField {
 
   /** @soyTemplate */
   override render(): TemplateResult {
-    return html`<div class="md3-autocomplete"
+    return html`<div class="md3-autocomplete ${
+        classMap(this.getAutocompleteRenderClasses())}"
             @click=${this.handleClicked}
             @focusout=${this.handleFocusout}
             @action=${this.handleAction}
@@ -60,6 +62,11 @@ export abstract class Autocomplete extends TextField {
             @keyup=${this.handleKeyup}>
             ${super.render()}
             ${this.renderMenuSurface()}</div>`;
+  }
+
+  /** @soyTemplate */
+  protected getAutocompleteRenderClasses(): ClassInfo {
+    return {};
   }
 
   override firstUpdated(changedProperties: PropertyValues) {
@@ -236,6 +243,7 @@ export abstract class Autocomplete extends TextField {
 
       if (this.selectedItem && item === this.selectedItem && this.list) {
         item.ariaSelected = 'true';
+        item.showFocusRing = true;
 
         // Scroll into view
         if (this.list.scrollTop + this.list.offsetHeight <
@@ -247,6 +255,7 @@ export abstract class Autocomplete extends TextField {
         }
       } else {
         item.ariaSelected = 'false';
+        item.showFocusRing = false;
       }
     });
   }
