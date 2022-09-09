@@ -10,6 +10,7 @@
 @use '@material/web/compat/touchtarget/touch-target';
 @use '@material/web/elevation/lib/surface' as elevation-surface;
 @use '@material/web/compat/theme/selector-ext';
+@use '@material/web/sass/dom';
 
 @use './button-theme';
 
@@ -30,6 +31,12 @@
 
     &:hover {
       @include hover;
+    }
+
+    @media (forced-colors: active) {
+      &::before {
+        @include dom.transparent-border();
+      }
     }
   }
 
