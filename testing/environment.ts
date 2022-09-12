@@ -20,7 +20,21 @@ export class Environment {
   private readonly roots: HTMLElement[] = [];
 
   constructor() {
+    // Replace RAF with setTimeout, since setTimeout is overridden to be
+    // synchronous in Jasmine clock installation.
+    window.requestAnimationFrame = (callback: FrameRequestCallback) => {
+      return setTimeout(callback, 1);
+    };
+    window.cancelAnimationFrame = (id: number) => {
+      clearTimeout(id);
+    };
+
+    beforeAll(() => {
+      jasmine.clock().install();
+    });
+
     afterAll(() => {
+      jasmine.clock().uninstall();
       for (const root of this.roots) {
         root.style.display = 'inline-flex';
       }
@@ -42,9 +56,9 @@ export class Environment {
    * a Lit element to render.
    */
   async waitForStability() {
-    await new Promise(resolve => {
-      requestAnimationFrame(resolve);
-    });
+    // Move forward any `requestAnimationFrame()`s since they are replaced with
+    // setTimeout(callback, 1) for jasmine clock support.
+    jasmine.clock().tick(1);
 
     const currentRoot = this.getCurrentRoot();
     if (currentRoot) {

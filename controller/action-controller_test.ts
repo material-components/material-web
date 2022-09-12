@@ -204,9 +204,7 @@ describe('ActionController', () => {
 
     it('calls beginPress on down after hysteresis', async () => {
       await harness.startTap();
-      await new Promise((resolve) => {
-        setTimeout(resolve, TOUCH_DELAY_MS);
-      });
+      jasmine.clock().tick(TOUCH_DELAY_MS);
       expect(el.lastBegin).toBeDefined();
       expect(el.lastBegin!.positionEvent).toBeInstanceOf(PointerEvent);
     });
@@ -224,9 +222,7 @@ describe('ActionController', () => {
       expect(ac.phase).toEqual('INACTIVE');
       await harness.startTap();
       expect(ac.phase).toEqual('TOUCH_DELAY');
-      await new Promise((resolve) => {
-        setTimeout(resolve, TOUCH_DELAY_MS);
-      });
+      jasmine.clock().tick(TOUCH_DELAY_MS);
       expect(ac.phase).toEqual('HOLDING');
       expect(el.lastBegin).toBeDefined();
       expect(el.lastBegin!.positionEvent).toBeInstanceOf(PointerEvent);
@@ -257,9 +253,7 @@ describe('ActionController', () => {
       await harness.endTap();
       expect(el.lastBegin).toBeDefined();
       expect(el.lastBegin!.positionEvent).toBeInstanceOf(PointerEvent);
-      await new Promise((resolve) => {
-        setTimeout(resolve, WAIT_FOR_MOUSE_CLICK_MS);
-      });
+      jasmine.clock().tick(WAIT_FOR_MOUSE_CLICK_MS);
       expect(el.lastEnd).toEqual({cancelled: true});
     });
 
@@ -281,9 +275,7 @@ describe('ActionController', () => {
       it('cancels press if the context menu opens during a longer press',
          async () => {
            await harness.startTap();
-           await new Promise((resolve) => {
-             setTimeout(resolve, TOUCH_DELAY_MS);
-           });
+           jasmine.clock().tick(TOUCH_DELAY_MS);
            await harness.startTapContextMenu();
            expect(el.lastBegin).toBeDefined();
            expect(el.lastBegin!.positionEvent).toBeInstanceOf(PointerEvent);
@@ -297,9 +289,7 @@ describe('ActionController', () => {
            // set a _way out of bounds_ position, which would indicate pressing
            // on a different element
            await harness.startTap({clientX: 9000, clientY: 9000});
-           await new Promise((resolve) => {
-             setTimeout(resolve, TOUCH_DELAY_MS);
-           });
+           jasmine.clock().tick(TOUCH_DELAY_MS);
            expect(el.lastBegin).not.toBeDefined();
          });
     });
@@ -316,9 +306,7 @@ describe('ActionController', () => {
       it('cancels press if a `pointercancel` event fires during a longer press',
          async () => {
            await harness.startTap();
-           await new Promise((resolve) => {
-             setTimeout(resolve, TOUCH_DELAY_MS);
-           });
+           jasmine.clock().tick(TOUCH_DELAY_MS);
            expect(el.lastBegin).toBeDefined();
            expect(el.lastBegin!.positionEvent).toBeInstanceOf(PointerEvent);
            await harness.cancelTap();
