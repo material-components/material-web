@@ -309,6 +309,12 @@ export abstract class TextField extends LitElement {
   @state() protected dirty = false;
   @state() protected focused = false;
   /**
+   * When set to true, the error text's `role="alert"` will be removed, then
+   * re-added after an animation frame. This will re-announce an error message
+   * to screen readers.
+   */
+  @state() protected refreshErrorAlert = false;
+  /**
    * Returns true when the text field's `value` property has been changed from
    * it's initial value.
    *
@@ -391,11 +397,13 @@ export abstract class TextField extends LitElement {
    *
    * If invalid, this method will dispatch the `invalid` event.
    *
-   * This method will update `error` to the current validity state and
-   * `errorText` to the current `validationMessage`, unless the invalid event is
-   * canceled.
+   * This method will display or clear an error text message equal to the text
+   * field's `validationMessage`, unless the invalid event is canceled.
    *
    * Use `setCustomValidity()` to customize the `validationMessage`.
+   *
+   * This method can also be used to re-announce error messages to screen
+   * readers.
    *
    * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/reportValidity
    *
@@ -404,8 +412,15 @@ export abstract class TextField extends LitElement {
   reportValidity() {
     const {valid, canceled} = this.checkValidityAndDispatch();
     if (!canceled) {
+      const prevMessage = this.getErrorText();
       this.nativeError = !valid;
       this.nativeErrorText = this.validationMessage;
+
+      const needsRefresh =
+          this.shouldErrorAnnounce() && prevMessage === this.getErrorText();
+      if (needsRefresh) {
+        this.refreshErrorAlert = true;
+      }
     }
 
     return valid;
@@ -677,17 +692,33 @@ export abstract class TextField extends LitElement {
    * @slotName supporting-text
    */
   protected renderSupportingText(): TemplateResult {
+    const shouldAlert = this.shouldErrorAnnounce();
     const text = this.getSupportingText();
-    return text ?
-        html`<span id=${this.supportingTextId} slot="supporting-text">${
-            text}</span>` :
-        html``;
+    const template = html`<span id=${this.supportingTextId} 
+      slot="supporting-text" 
+      role=${ifDefined(shouldAlert ? 'alert' : undefined)}>${text}</span>`;
+
+    return text ? template : html``;
   }
 
   /** @soyTemplate */
   protected getSupportingText(): string {
-    const errorText = this.error ? this.errorText : this.nativeErrorText;
+    const errorText = this.getErrorText();
     return this.getError() && errorText ? errorText : this.supportingText;
+  }
+
+  /** @soyTemplate */
+  protected getErrorText(): string {
+    return this.error ? this.errorText : this.nativeErrorText;
+  }
+
+  /** @soyTemplate */
+  protected shouldErrorAnnounce(): boolean {
+    // Announce if there is an error and error text visible.
+    // If refreshErrorAlert is true, do not announce. This will remove the
+    // role="alert" attribute. Another render cycle will happen after an
+    // animation frame to re-add the role.
+    return this.getError() && !!this.getErrorText() && !this.refreshErrorAlert;
   }
 
   /**
@@ -743,6 +774,14 @@ export abstract class TextField extends LitElement {
       // another update. However, it is needed for the <input> to fully render
       // before checking its value.
       this.value = value;
+    }
+
+    if (this.refreshErrorAlert) {
+      // The past render cycle removed the role="alert" from the error message.
+      // Re-add it after an animation frame to re-announce the error.
+      requestAnimationFrame(() => {
+        this.refreshErrorAlert = false;
+      });
     }
   }
 
