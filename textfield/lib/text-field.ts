@@ -97,18 +97,10 @@ export abstract class TextField extends LitElement {
    */
   @property({type: String}) supportingText = '';
   /**
-   * The ID on the supporting text element, used for SSR.
-   */
-  @property({type: String}) supportingTextId = 'support';
-  /**
    * Override the input text CSS `direction`. Useful for RTL languages that use
    * LTR notation for fractions.
    */
   @property({type: String}) textDirection = '';
-  /**
-   * The ID on the character counter element, used for SSR.
-   */
-  @property({type: String}) counterId = 'counter';
 
   // ARIA
   // TODO(b/210730484): replace with @soyParam annotation
@@ -340,10 +332,14 @@ export abstract class TextField extends LitElement {
   protected readonly input?: HTMLInputElement|null;
   protected abstract readonly fieldTag: StaticValue;
 
+  /** @soyUniqueAttribute */
+  private readonly counterId = 'counter';
   @queryAssignedElements({slot: 'leadingicon'})
   private readonly leadingIcons!: Element[];
   @queryAssignedElements({slot: 'trailingicon'})
   private readonly trailingIcons!: Element[];
+  /** @soyUniqueAttribute */
+  private readonly supportingTextId = 'support';
 
   constructor() {
     super();
