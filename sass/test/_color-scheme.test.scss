@@ -1,0 +1,191 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'true' as test;
+@use '../color-scheme';
+
+@include test.describe('color-scheme') {
+  @include test.describe('dark-color-scheme()') {
+    // TODO(b/246011692): find a bigger way to test this without testing tokens
+    @include test.it('returns CSS custom property for dark theme') {
+      @include test.it('returns CSS custom property') {
+        @include test.assert {
+          @include test.output {
+            @include color-scheme.dark-color-scheme();
+          }
+
+          @include test.expect {
+            --md-sys-color-background: #1c1b1f;
+            --md-sys-color-background-rgb: 28, 27, 31;
+            --md-sys-color-error: #f2b8b5;
+            --md-sys-color-error-rgb: 242, 184, 181;
+            --md-sys-color-error-container: #8c1d18;
+            --md-sys-color-error-container-rgb: 140, 29, 24;
+            --md-sys-color-inverse-on-surface: #313033;
+            --md-sys-color-inverse-on-surface-rgb: 49, 48, 51;
+            --md-sys-color-inverse-primary: #6750a4;
+            --md-sys-color-inverse-primary-rgb: 103, 80, 164;
+            --md-sys-color-inverse-surface: #e6e1e5;
+            --md-sys-color-inverse-surface-rgb: 230, 225, 229;
+            --md-sys-color-on-background: #e6e1e5;
+            --md-sys-color-on-background-rgb: 230, 225, 229;
+            --md-sys-color-on-error: #601410;
+            --md-sys-color-on-error-rgb: 96, 20, 16;
+            --md-sys-color-on-error-container: #f2b8b5;
+            --md-sys-color-on-error-container-rgb: 242, 184, 181;
+            --md-sys-color-on-primary: #381e72;
+            --md-sys-color-on-primary-rgb: 56, 30, 114;
+            --md-sys-color-on-primary-container: #eaddff;
+            --md-sys-color-on-primary-container-rgb: 234, 221, 255;
+            --md-sys-color-on-secondary: #332d41;
+            --md-sys-color-on-secondary-rgb: 51, 45, 65;
+            --md-sys-color-on-secondary-container: #e8def8;
+            --md-sys-color-on-secondary-container-rgb: 232, 222, 248;
+            --md-sys-color-on-surface: #e6e1e5;
+            --md-sys-color-on-surface-rgb: 230, 225, 229;
+            --md-sys-color-on-surface-variant: #cac4d0;
+            --md-sys-color-on-surface-variant-rgb: 202, 196, 208;
+            --md-sys-color-on-tertiary: #492532;
+            --md-sys-color-on-tertiary-rgb: 73, 37, 50;
+            --md-sys-color-on-tertiary-container: #ffd8e4;
+            --md-sys-color-on-tertiary-container-rgb: 255, 216, 228;
+            --md-sys-color-outline: #938f99;
+            --md-sys-color-outline-rgb: 147, 143, 153;
+            --md-sys-color-primary: #d0bcff;
+            --md-sys-color-primary-rgb: 208, 188, 255;
+            --md-sys-color-primary-container: #4f378b;
+            --md-sys-color-primary-container-rgb: 79, 55, 139;
+            --md-sys-color-secondary: #ccc2dc;
+            --md-sys-color-secondary-rgb: 204, 194, 220;
+            --md-sys-color-secondary-container: #4a4458;
+            --md-sys-color-secondary-container-rgb: 74, 68, 88;
+            --md-sys-color-shadow: #000;
+            --md-sys-color-shadow-rgb: 0, 0, 0;
+            --md-sys-color-surface: #1c1b1f;
+            --md-sys-color-surface-rgb: 28, 27, 31;
+            --md-sys-color-surface-tint: #d1e1ff;
+            --md-sys-color-surface-tint-rgb: 209, 225, 255;
+            --md-sys-color-surface-tint-color: #d0bcff;
+            --md-sys-color-surface-tint-color-rgb: 208, 188, 255;
+            --md-sys-color-surface-variant: #49454f;
+            --md-sys-color-surface-variant-rgb: 73, 69, 79;
+            --md-sys-color-tertiary: #efb8c8;
+            --md-sys-color-tertiary-rgb: 239, 184, 200;
+            --md-sys-color-tertiary-container: #633b48;
+            --md-sys-color-tertiary-container-rgb: 99, 59, 72;
+          }
+        }
+      }
+    }
+  }
+
+  @include test.describe('light-color-scheme()') {
+    // TODO(b/246011692): find a bigger way to test this without testing tokens
+    @include test.it('returns CSS custom propertyfor light theme') {
+      @include test.assert {
+        @include test.output {
+          @include color-scheme.light-color-scheme();
+        }
+
+        @include test.expect {
+          --md-sys-color-background: #fff;
+          --md-sys-color-background-rgb: 255, 255, 255;
+          --md-sys-color-error: #b3261e;
+          --md-sys-color-error-rgb: 179, 38, 30;
+          --md-sys-color-error-container: #f9dedc;
+          --md-sys-color-error-container-rgb: 249, 222, 220;
+          --md-sys-color-inverse-on-surface: #f4eff4;
+          --md-sys-color-inverse-on-surface-rgb: 244, 239, 244;
+          --md-sys-color-inverse-primary: #d0bcff;
+          --md-sys-color-inverse-primary-rgb: 208, 188, 255;
+          --md-sys-color-inverse-surface: #313033;
+          --md-sys-color-inverse-surface-rgb: 49, 48, 51;
+          --md-sys-color-on-background: #1c1b1f;
+          --md-sys-color-on-background-rgb: 28, 27, 31;
+          --md-sys-color-on-error: #fff;
+          --md-sys-color-on-error-rgb: 255, 255, 255;
+          --md-sys-color-on-error-container: #410e0b;
+          --md-sys-color-on-error-container-rgb: 65, 14, 11;
+          --md-sys-color-on-primary: #fff;
+          --md-sys-color-on-primary-rgb: 255, 255, 255;
+          --md-sys-color-on-primary-container: #21005d;
+          --md-sys-color-on-primary-container-rgb: 33, 0, 93;
+          --md-sys-color-on-secondary: #fff;
+          --md-sys-color-on-secondary-rgb: 255, 255, 255;
+          --md-sys-color-on-secondary-container: #1d192b;
+          --md-sys-color-on-secondary-container-rgb: 29, 25, 43;
+          --md-sys-color-on-surface: #1c1b1f;
+          --md-sys-color-on-surface-rgb: 28, 27, 31;
+          --md-sys-color-on-surface-variant: #49454f;
+          --md-sys-color-on-surface-variant-rgb: 73, 69, 79;
+          --md-sys-color-on-tertiary: #fff;
+          --md-sys-color-on-tertiary-rgb: 255, 255, 255;
+          --md-sys-color-on-tertiary-container: #31111d;
+          --md-sys-color-on-tertiary-container-rgb: 49, 17, 29;
+          --md-sys-color-outline: #79747e;
+          --md-sys-color-outline-rgb: 121, 116, 126;
+          --md-sys-color-primary: #6750a4;
+          --md-sys-color-primary-rgb: 103, 80, 164;
+          --md-sys-color-primary-container: #eaddff;
+          --md-sys-color-primary-container-rgb: 234, 221, 255;
+          --md-sys-color-secondary: #625b71;
+          --md-sys-color-secondary-rgb: 98, 91, 113;
+          --md-sys-color-secondary-container: #e8def8;
+          --md-sys-color-secondary-container-rgb: 232, 222, 248;
+          --md-sys-color-shadow: #000;
+          --md-sys-color-shadow-rgb: 0, 0, 0;
+          --md-sys-color-surface: #fff;
+          --md-sys-color-surface-rgb: 255, 255, 255;
+          --md-sys-color-surface-tint: #6991d6;
+          --md-sys-color-surface-tint-rgb: 105, 145, 214;
+          --md-sys-color-surface-tint-color: #6750a4;
+          --md-sys-color-surface-tint-color-rgb: 103, 80, 164;
+          --md-sys-color-surface-variant: #e7e0ec;
+          --md-sys-color-surface-variant-rgb: 231, 224, 236;
+          --md-sys-color-tertiary: #7d5260;
+          --md-sys-color-tertiary-rgb: 125, 82, 96;
+          --md-sys-color-tertiary-container: #ffd8e4;
+          --md-sys-color-tertiary-container-rgb: 255, 216, 228;
+        }
+      }
+    }
+  }
+
+  @include test.describe('color-scheme()') {
+    @include test.it('returns CSS custom property') {
+      @include test.assert {
+        @include test.output {
+          @include color-scheme.color-scheme(
+            (
+              background: #f00,
+            )
+          );
+        }
+
+        @include test.expect {
+          --md-sys-color-background: #f00;
+          --md-sys-color-background-rgb: 255, 0, 0;
+        }
+      }
+    }
+
+    @include test.it('returns CSS custom property with var') {
+      @include test.assert {
+        @include test.output {
+          @include color-scheme.color-scheme(
+            (
+              background: var(--foo-custom-color, #f00),
+            )
+          );
+        }
+
+        @include test.expect {
+          --md-sys-color-background: var(--foo-custom-color, #f00);
+          --md-sys-color-background-rgb: 255, 0, 0;
+        }
+      }
+    }
+  }
+}
