@@ -23,7 +23,10 @@ export class LinkIconButton extends IconButton {
 
   @property({type: String}) linkTarget!: string;
 
-  /** @soyTemplate */
+  /**
+   * @soyTemplate
+   * @soyAttributes linkAttributes: .md3-icon-button__link
+   */
   protected override render(): TemplateResult {
     return html`<div
         class="md3-icon-button ${classMap(this.getRenderClasses())}"
