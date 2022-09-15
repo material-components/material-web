@@ -186,7 +186,7 @@ $_forced-colors-theme: (
 }
 
 @mixin _forced-colors-mode-theme {
-  // TODO(b/230630968): create a foced-colors-mode mixin
+  // TODO(b/230630968): create a forced-colors-mode mixin
   @media screen and (forced-colors: active) {
     @include theme($_forced-colors-theme);
   }
