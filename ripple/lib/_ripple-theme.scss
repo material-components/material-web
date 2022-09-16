@@ -75,6 +75,8 @@
     $unbounded: theme.create-theme-vars($unbounded, ripple);
     @include _container-shape(map.get($unbounded, state-layer-shape));
   }
+
+  @include _forced-colors;
 }
 
 @mixin _container-shape($shape) {
@@ -95,4 +97,11 @@
     #{$color} max(calc(100% - 70px), 65%),
     transparent 100%
   );
+}
+
+@mixin _forced-colors {
+  // TODO(b/230630968): create a forced-colors-mode mixin
+  @media screen and (forced-colors: active) {
+    display: none;
+  }
 }
