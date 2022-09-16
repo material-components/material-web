@@ -5,14 +5,16 @@
  */
 
 import '@material/web/focus/focus-ring.js';
+import '@material/web/ripple/ripple.js';
 
-import {ActionElement, EndPressConfig} from '@material/web/actionelement/action-element.js';
+import {ActionElement, EndPressConfig, BeginPressConfig} from '@material/web/actionelement/action-element.js';
 import {ariaProperty as legacyAriaProperty} from '@material/web/compat/base/aria-property.js';  // TODO(b/236840525): remove compat dependencies
 import {FormController, getFormValue} from '@material/web/controller/form-controller.js';
 import {ariaProperty} from '@material/web/decorators/aria-property.js';
 import {pointerPress as focusRingPointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus.js';
+import {MdRipple} from '@material/web/ripple/ripple.js';
 import {html, TemplateResult} from 'lit';
-import {eventOptions, property, state} from 'lit/decorators.js';
+import {eventOptions, property, query, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
@@ -40,6 +42,9 @@ export class Switch extends ActionElement {
   ariaLabelledBy = '';
 
   @state() protected showFocusRing = false;
+
+  // Ripple
+  @query('md-ripple') readonly ripple!: MdRipple;
 
   // FormController
   get form() {
@@ -80,6 +85,7 @@ export class Switch extends ActionElement {
         @focus="${this.handleFocus}"
         @blur="${this.handleBlur}"
         @pointerdown=${this.handlePointerDown}
+        @pointerenter=${this.handlePointerEnter}
         @pointerup=${this.handlePointerUp}
         @pointercancel=${this.handlePointerCancel}
         @pointerleave=${this.handlePointerLeave}
@@ -112,6 +118,18 @@ export class Switch extends ActionElement {
   }
 
   /** @soyTemplate */
+  protected renderRipple(): TemplateResult {
+    return html`
+      <div class="md3-switch__ripple">
+        <md-ripple
+          ?disabled="${this.disabled}"
+          unbounded>
+        </md-ripple>
+      </div>
+    `;
+  }
+
+  /** @soyTemplate */
   protected renderFocusRing(): TemplateResult {
     return html`<md-focus-ring .visible="${
         this.showFocusRing}"></md-focus-ring>`;
@@ -125,6 +143,7 @@ export class Switch extends ActionElement {
     };
     return html`
       <div class="md3-switch__handle-container">
+        ${this.renderRipple()}
         <div class="md3-switch__handle ${classMap(classes)}">
           ${this.shouldShowIcons() ? this.renderIcons() : html``}
         </div>
@@ -179,7 +198,13 @@ export class Switch extends ActionElement {
     return this.icons || this.showOnlySelectedIcon;
   }
 
+  override beginPress({positionEvent}: BeginPressConfig) {
+    this.ripple.beginPress(positionEvent);
+  }
+
   override endPress({cancelled}: EndPressConfig) {
+    this.ripple.endPress();
+
     if (cancelled || this.disabled) {
       return;
     }
@@ -194,6 +219,15 @@ export class Switch extends ActionElement {
 
   protected handleBlur() {
     this.showFocusRing = false;
+  }
+
+  protected handlePointerEnter(e: PointerEvent) {
+    this.ripple.beginHover(e);
+  }
+
+  override handlePointerLeave(e: PointerEvent) {
+    super.handlePointerLeave(e);
+    this.ripple.endHover();
   }
 
   @eventOptions({passive: true})

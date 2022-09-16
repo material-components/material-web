@@ -60,6 +60,15 @@ $icon-enter-duration: $animation-duration - $icon-exit-duration;
     }
   }
 
+  // Ripple
+  .md3-switch__ripple {
+    position: absolute;
+    display: inline-flex;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+  }
+
   // Icons
   .md3-switch__icons {
     @include _icons;

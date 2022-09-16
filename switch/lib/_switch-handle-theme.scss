@@ -8,6 +8,8 @@
 
 @use 'sass:map';
 
+@use '@material/web/ripple/ripple-theme';
+
 $_selected: '.md3-switch--selected';
 $_unselected: '.md3-switch--unselected';
 
@@ -22,6 +24,10 @@ $_unselected: '.md3-switch--unselected';
     &::before {
       @include _handle-unselected($theme);
     }
+  }
+
+  .md3-switch__ripple {
+    @include _ripple($theme);
   }
 }
 
@@ -133,5 +139,55 @@ $_unselected: '.md3-switch--unselected';
 
   #{$_unselected}:disabled & {
     background-color: map.get($colors, disabled);
+  }
+}
+
+@mixin _ripple($theme) {
+  @include _state-layer-size(map.get($theme, state-layer-size));
+  @include _state-layer-color($theme);
+}
+
+@mixin _state-layer-size($size) {
+  height: $size;
+  width: $size;
+}
+
+@mixin _state-layer-color($theme) {
+  #{$_selected} & {
+    @include ripple-theme.theme(
+      (
+        hover-state-layer-color:
+          map.get($theme, selected-hover-state-layer-color),
+        focus-state-layer-color:
+          map.get($theme, selected-focus-state-layer-color),
+        pressed-state-layer-color:
+          map.get($theme, selected-pressed-state-layer-color),
+        hover-state-layer-opacity:
+          map.get($theme, selected-hover-state-layer-opacity),
+        focus-state-layer-opacity:
+          map.get($theme, selected-focus-state-layer-opacity),
+        pressed-state-layer-opacity:
+          map.get($theme, selected-pressed-state-layer-opacity),
+      )
+    );
+  }
+
+  #{$_unselected} & {
+    @include ripple-theme.theme(
+      (
+        hover-state-layer-color:
+          map.get($theme, unselected-hover-state-layer-color),
+        focus-state-layer-color:
+          map.get($theme, unselected-focus-state-layer-color),
+        pressed-state-layer-color:
+          map.get($theme, unselected-pressed-state-layer-color),
+        hover-state-layer-opacity:
+          map.get($theme, unselected-hover-state-layer-opacity),
+        focus-state-layer-opacity:
+          map.get($theme, unselected-focus-state-layer-opacity),
+        pressed-state-layer-opacity:
+          map.get($theme, unselected-pressed-state-layer-opacity),
+      )
+    );
   }
 }
