@@ -7,18 +7,23 @@
 import '@material/web/focus/focus-ring.js';
 import '@material/web/ripple/ripple.js';
 
-import {ActionElement} from '@material/web/actionelement/action-element.js';
+import {ActionElement, BeginPressConfig, EndPressConfig} from '@material/web/actionelement/action-element.js';
+import {KEY} from '@material/web/compat/dom/keyboard.js';
 import {ariaProperty} from '@material/web/decorators/aria-property.js';
+import {pointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus.js';
 import {MdRipple} from '@material/web/ripple/ripple.js';
 import {html, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {Md3ChipActionEventType} from './events.js';
 
 /**
  * Base class for all actions.
  * @soyCompatible
  */
 export abstract class Action extends ActionElement {
+  @property({type: Boolean, reflect: true}) isDeletable = false;
+
   @property({type: Boolean, reflect: true}) isFocusable = false;
 
   @property({type: Boolean, reflect: true}) isTouchable = false;
@@ -66,5 +71,91 @@ export abstract class Action extends ActionElement {
   protected renderFocusRing(): TemplateResult {
     return html`
       <md-focus-ring .visible="${this.showFocusRing}"></md-focus-ring>`;
+  }
+
+  protected handleFocus() {
+    this.showFocusRing = shouldShowStrongFocus();
+  }
+
+  protected handleBlur() {
+    this.showFocusRing = false;
+  }
+
+  override beginPress({positionEvent}: BeginPressConfig) {
+    this.ripple?.beginPress(positionEvent);
+  }
+
+  override endPress(options: EndPressConfig) {
+    super.endPress(options);
+    this.ripple?.endPress();
+    if (!options.cancelled) {
+      this.dispatchCustomEvent(this.getInteractionEvent());
+    }
+  }
+
+  protected handlePointerEnter(e: PointerEvent) {
+    this.ripple?.beginHover(e);
+  }
+
+  override handlePointerLeave(e: PointerEvent) {
+    super.handlePointerLeave(e);
+    this.ripple?.endHover();
+  }
+
+  override handlePointerDown(e: PointerEvent) {
+    super.handlePointerDown(e);
+    pointerPress();
+    this.showFocusRing = shouldShowStrongFocus();
+  }
+
+  override handleClick(e: MouseEvent) {
+    super.handleClick(e);
+    this.dispatchCustomEvent(this.getInteractionEvent());
+  }
+
+  protected handleKeyDown(e: KeyboardEvent) {
+    switch (e.key) {
+      case KEY.ENTER:
+      case KEY.SPACEBAR:
+        this.dispatchCustomEvent(this.getInteractionEvent());
+        break;
+      case KEY.DELETE:
+      case KEY.BACKSPACE:
+        if (this.isDeletable) {
+          this.dispatchCustomEvent(Md3ChipActionEventType.DELETE);
+        }
+        break;
+      case KEY.ARROW_LEFT:
+        this.dispatchCustomEvent(this.isRTL() ?
+            Md3ChipActionEventType.NAVIGATE_TO_NEXT :
+            Md3ChipActionEventType.NAVIGATE_TO_PREV);
+        break;
+      case KEY.ARROW_RIGHT:
+        this.dispatchCustomEvent(this.isRTL() ?
+            Md3ChipActionEventType.NAVIGATE_TO_PREV :
+            Md3ChipActionEventType.NAVIGATE_TO_NEXT);
+        break;
+      case KEY.HOME:
+        this.dispatchCustomEvent(Md3ChipActionEventType.NAVIGATE_TO_FIRST);
+        break;
+      case KEY.END:
+        this.dispatchCustomEvent(Md3ChipActionEventType.NAVIGATE_TO_LAST);
+        break;
+      default:
+        // Unhandled key, do nothing.
+    }
+  }
+
+  protected getInteractionEvent(): string {
+    return Md3ChipActionEventType.SELECT;
+  }
+
+  private dispatchCustomEvent(eventType: string) {
+    this.dispatchEvent(
+        new CustomEvent(eventType, {bubbles: true, composed: true}));
+  }
+
+  private isRTL(): boolean {
+    return getComputedStyle(this).getPropertyValue('direction') === 'rtl';
   }
 }

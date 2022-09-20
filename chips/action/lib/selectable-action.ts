@@ -23,7 +23,17 @@ export class SelectableAction extends PrimaryAction {
           aria-selected="${this.selected}"
           aria-disabled="${this.disabled}"
           tabindex="${this.isFocusable ? 0 : -1}"
-          role="option">
+          role="option"
+          @focus="${this.handleFocus}"
+          @blur="${this.handleBlur}"
+          @pointerenter="${this.handlePointerEnter}"
+          @pointerleave="${this.handlePointerLeave}"
+          @pointerdown="${this.handlePointerDown}"
+          @pointerup="${this.handlePointerUp}"
+          @pointercancel="${this.handlePointerCancel}"
+          @click="${this.handleClick}"
+          @contextmenu="${this.handleContextMenu}"
+          @keydown="${this.handleKeyDown}">
         ${this.renderTouchTarget()}
         ${this.renderRipple()}
         ${this.renderFocusRing()}

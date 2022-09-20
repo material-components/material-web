@@ -8,6 +8,7 @@ import {html, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
+import {EndPressConfig} from '@material/web/actionelement/action-element.js';
 import {PrimaryAction} from './primary-action.js';
 
 type LinkTarget = '_blank'|'_parent'|'_self'|'_top';
@@ -29,7 +30,15 @@ export class LinkAction extends PrimaryAction {
             aria-label="${ifDefined(this.ariaLabel)}"
             href="${ifDefined(this.href)}"
             target="${ifDefined(this.target as LinkTarget)}"
-            tabindex="${this.isFocusable ? 0 : -1}">
+            tabindex="${this.isFocusable ? 0 : -1}"
+            @focus="${this.handleFocus}"
+            @blur="${this.handleBlur}"
+            @pointerenter="${this.handlePointerEnter}"
+            @pointerleave="${this.handlePointerLeave}"
+            @pointerdown="${this.handlePointerDown}"
+            @pointerup="${this.handlePointerUp}"
+            @pointercancel="${this.handlePointerCancel}"
+            @contextmenu="${this.handleContextMenu}">
           ${this.renderTouchTarget()}
           ${this.renderRipple()}
           ${this.renderFocusRing()}
@@ -37,5 +46,10 @@ export class LinkAction extends PrimaryAction {
           ${this.renderLabel()}
         </a>
       </span>`;
+  }
+
+  override endPress(options: EndPressConfig) {
+    super.endPress(options);
+    this.ripple?.endPress();
   }
 }

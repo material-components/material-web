@@ -15,8 +15,6 @@ import {Action} from './action.js';
  * @soyCompatible
  */
 export class PrimaryAction extends Action {
-  @property({type: Boolean, reflect: true}) isDeletable = false;
-
   @property({type: String}) label = '';
 
   @property({type: String}) icon = '';
@@ -28,7 +26,17 @@ export class PrimaryAction extends Action {
           aria-label="${ifDefined(this.ariaLabel)}"
           tabindex="${this.isFocusable ? 0 : -1}"
           type="button"
-          ?disabled="${this.disabled}">
+          ?disabled="${this.disabled}"
+          @focus="${this.handleFocus}"
+          @blur="${this.handleBlur}"
+          @pointerenter="${this.handlePointerEnter}"
+          @pointerleave="${this.handlePointerLeave}"
+          @pointerdown="${this.handlePointerDown}"
+          @pointerup="${this.handlePointerUp}"
+          @pointercancel="${this.handlePointerCancel}"
+          @click="${this.handleClick}"
+          @contextmenu="${this.handleContextMenu}"
+          @keydown="${this.handleKeyDown}">
         ${this.renderTouchTarget()}
         ${this.renderRipple()}
         ${this.renderFocusRing()}

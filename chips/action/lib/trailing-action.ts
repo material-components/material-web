@@ -9,6 +9,7 @@ import {property} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {Action} from './action.js';
+import {Md3ChipActionEventType} from './events.js';
 
 /** @soyCompatible */
 export class TrailingAction extends Action {
@@ -21,7 +22,17 @@ export class TrailingAction extends Action {
           aria-label="${ifDefined(this.ariaLabel)}"
           aria-hidden="${!this.isNavigable}"
           tabindex="${this.isFocusable ? 0 : -1}"
-          type="button">
+          type="button"
+          @focus="${this.handleFocus}"
+          @blur="${this.handleBlur}"
+          @pointerenter="${this.handlePointerEnter}"
+          @pointerleave="${this.handlePointerLeave}"
+          @pointerdown="${this.handlePointerDown}"
+          @pointerup="${this.handlePointerUp}"
+          @pointercancel="${this.handlePointerCancel}"
+          @click="${this.handleClick}"
+          @contextmenu="${this.handleContextMenu}"
+          @keydown="${this.handleKeyDown}">
         ${this.renderTouchTarget()}
         ${this.renderRipple()}
         ${this.renderFocusRing()}
@@ -55,5 +66,9 @@ export class TrailingAction extends Action {
                    13.4 12l5.6 5.6-1.4 1.4-5.6-5.6Z"/>
         </svg>
       </span>`;
+  }
+
+  override getInteractionEvent(): string {
+    return Md3ChipActionEventType.DELETE;
   }
 }
