@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../action/trailing-action.js';
+import '../../action/delete-action.js';
 
 import {ActionElement} from '@material/web/actionelement/action-element.js';
 import {ariaProperty} from '@material/web/decorators/aria-property.js';
@@ -34,9 +34,7 @@ export abstract class Chip extends ActionElement {
 
   @property({type: Boolean, reflect: true}) hasAvatar = false;
 
-  @property({type: Boolean, reflect: true}) hasTrailingAction = false;
-
-  @property({type: Boolean, reflect: true}) hasNavigableTrailingAction = false;
+  @property({type: Boolean, reflect: true}) hasDeleteAction = false;
 
   @property({type: String}) icon = '';
 
@@ -67,7 +65,7 @@ export abstract class Chip extends ActionElement {
       'md3-chip--with-primary-graphic': hasIcon,
       'md3-chip--with-primary-icon': hasIcon,
       'md3-chip--with-avatar': this.hasAvatar,
-      'md3-chip--with-trailing-action': this.hasTrailingAction,
+      'md3-chip--with-delete-action': this.hasDeleteAction,
     };
   }
 
@@ -79,26 +77,20 @@ export abstract class Chip extends ActionElement {
   }
 
   /** @soyTemplate */
-  protected renderTrailingAction(): TemplateResult {
-    if (!this.hasTrailingAction) {
+  protected renderDeleteAction(): TemplateResult {
+    if (!this.hasDeleteAction) {
       return html``;
     } else {
-      const trailingAction = html`
-        <md-trailing-action
+      return html`
+        <span class="md3-chip__cell md3-chip__cell--delete"
+              role="gridcell">
+          <md-delete-action
             ?disabled=${this.disabled}
             ?isFocusable=${this.isFocusable}
             ?isTouchable=${this.isTouchable}
-            ?isNavigable=${this.hasNavigableTrailingAction}
             .ariaLabel=${this.closeActionAriaLabel}>
-        </md-trailing-action>`;
-
-      return this.hasNavigableTrailingAction ?
-          html`
-            <span class="md3-chip__cell md3-chip__cell--trailing"
-                  role="gridcell">
-              ${trailingAction}
-            </span>` :
-          trailingAction;
+          </md-delete-action>
+        </span>`;
     }
   }
 }

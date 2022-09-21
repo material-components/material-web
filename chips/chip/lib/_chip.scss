@@ -29,11 +29,11 @@
 
 @mixin ripple-styles() {
   @include chip-theme.ripple-color(chip-theme.$ripple-color);
-  @include chip-theme.trailing-action-ripple-color(
+  @include chip-theme.delete-action-ripple-color(
     chip-theme.$ripple-color
   );
-  @include chip-theme.trailing-action-ripple-size(
-    chip-theme.$trailing-action-size
+  @include chip-theme.delete-action-ripple-size(
+    chip-theme.$delete-action-size
   );
 
   .md3-chip__action {
@@ -66,7 +66,7 @@
     left: 0;
   }
 
-  #{chip-theme.$ripple-target-trailing} {
+  #{chip-theme.$ripple-target-delete} {
     top: 50%;
     transform: translateY(-50%);
   }
@@ -96,7 +96,7 @@
     overflow-x: hidden;
   }
 
-  .md3-chip__cell--trailing {
+  .md3-chip__cell--delete {
     flex: 1 0 auto;
   }
 
@@ -127,7 +127,7 @@
     overflow-x: hidden;
   }
 
-  .md3-chip__action--trailing {
+  .md3-chip__action--delete {
     position: relative;
     overflow: visible;
   }
@@ -324,7 +324,7 @@
     @include chip-theme.text-label-color((disabled: GrayText));
     @include chip-theme.icon-color((disabled: GrayText));
     @include chip-theme.checkmark-color((disabled: GrayText));
-    @include chip-theme.trailing-action-color((disabled: GrayText));
+    @include chip-theme.delete-action-color((disabled: GrayText));
   }
 
   ///
@@ -346,7 +346,7 @@
     // }
   }
 
-  .md3-chip__action--trailing:not(.md3-chip__action--presentational) {
+  .md3-chip__action--delete:not(.md3-chip__action--presentational) {
     // TODO(kainby): Convert to md3 ripple
     // @include ripple-theme.focus() {
       .md3-chip__focus-ring {
@@ -374,30 +374,30 @@
       chip-theme.$graphic-trailing-padding,
       chip-theme.$trailing-padding
     );
-    @include chip-theme.with-trailing-action-horizontal-padding(
+    @include chip-theme.with-delete-action-horizontal-padding(
       chip-theme.$leading-padding,
-      chip-theme.$trailing-action-leading-padding,
-      chip-theme.$trailing-action-trailing-padding
+      chip-theme.$delete-action-leading-padding,
+      chip-theme.$delete-action-trailing-padding
     );
-    @include chip-theme.with-graphic-and-trailing-action-horizontal-padding(
+    @include chip-theme.with-graphic-and-delete-action-horizontal-padding(
       chip-theme.$graphic-leading-padding,
       chip-theme.$graphic-trailing-padding,
-      chip-theme.$trailing-action-leading-padding,
-      chip-theme.$trailing-action-trailing-padding
+      chip-theme.$delete-action-leading-padding,
+      chip-theme.$delete-action-trailing-padding
     );
     @include chip-theme.container-color(chip-theme.$container-color);
     @include chip-theme.text-label-color(chip-theme.$text-label-color);
     @include chip-theme.icon-color(chip-theme.$icon-color);
     @include chip-theme.checkmark-color(chip-theme.$checkmark-color);
-    @include chip-theme.trailing-action-color(
-      chip-theme.$trailing-action-color
+    @include chip-theme.delete-action-color(
+      chip-theme.$delete-action-color
     );
     @include chip-theme.text-label-type-scale(chip-theme.$type-scale);
     @include chip-theme.graphic-size(chip-theme.$leading-icon-size);
     @include chip-theme.icon-size(chip-theme.$leading-icon-size);
     @include chip-theme.checkmark-size(chip-theme.$checkmark-size);
-    @include chip-theme.trailing-action-size(
-      chip-theme.$trailing-action-size
+    @include chip-theme.delete-action-size(
+      chip-theme.$delete-action-size
     );
 
     @include _high-contrast-mode();
@@ -415,11 +415,11 @@
       chip-theme.$avatar-trailing-padding,
       chip-theme.$trailing-padding
     );
-    @include chip-theme.with-graphic-and-trailing-action-horizontal-padding(
+    @include chip-theme.with-graphic-and-delete-action-horizontal-padding(
       chip-theme.$avatar-leading-padding,
       chip-theme.$avatar-trailing-padding,
-      chip-theme.$trailing-action-leading-padding,
-      chip-theme.$trailing-action-trailing-padding
+      chip-theme.$delete-action-leading-padding,
+      chip-theme.$delete-action-trailing-padding
     );
     @include chip-theme.graphic-size(chip-theme.$avatar-size);
     @include chip-theme.icon-size(chip-theme.$avatar-size);

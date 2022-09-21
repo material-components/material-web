@@ -12,15 +12,12 @@ import {Action} from './action.js';
 import {Md3ChipActionEventType} from './events.js';
 
 /** @soyCompatible */
-export class TrailingAction extends Action {
-  @property({type: Boolean, reflect: true}) isNavigable = false;
-
+export class DeleteAction extends Action {
   /** @soyTemplate */
   protected override render(): TemplateResult {
     return html`
       <button class="${classMap(this.getRootClasses())}"
           aria-label="${ifDefined(this.ariaLabel)}"
-          aria-hidden="${!this.isNavigable}"
           tabindex="${this.isFocusable ? 0 : -1}"
           type="button"
           @focus="${this.handleFocus}"
@@ -36,7 +33,7 @@ export class TrailingAction extends Action {
         ${this.renderTouchTarget()}
         ${this.renderRipple()}
         ${this.renderFocusRing()}
-        ${this.renderCloseIcon()}
+        ${this.renderDeleteIcon()}
       </button>`;
   }
 
@@ -44,7 +41,7 @@ export class TrailingAction extends Action {
   protected override getRootClasses(): ClassInfo {
     return {
       ...super.getRootClasses(),
-      'md3-chip__action--trailing': true,
+      'md3-chip__action--delete': true,
     };
   }
 
@@ -52,14 +49,14 @@ export class TrailingAction extends Action {
   protected override getRippleClasses(): ClassInfo {
     return {
       ...super.getRippleClasses(),
-      'md3-chip__ripple--trailing': true,
+      'md3-chip__ripple--delete': true,
     };
   }
 
   /** @soyTemplate */
-  private renderCloseIcon(): TemplateResult {
+  private renderDeleteIcon(): TemplateResult {
     return html`
-      <span class="md3-chip__icon md3-chip__icon--trailing" aria-hidden="true">
+      <span class="md3-chip__icon md3-chip__icon--delete" aria-hidden="true">
         <svg xmlns="http://www.w3.org/2000/svg"
              height="24" width="24" fill="#041E49">
           <path d="M6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5l5.6 5.6L17.6 5 19 6.4 

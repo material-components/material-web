@@ -5,11 +5,11 @@
  */
 
 import {customElement} from 'lit/decorators.js';
-import {TrailingAction} from './lib/trailing-action.js';
+import {DeleteAction} from './lib/delete-action.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-trailing-action': MdTrailingAction;
+    'md-delete-action': MdDeleteAction;
   }
 }
 
@@ -18,5 +18,5 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-trailing-action')
-export class MdTrailingAction extends TrailingAction {}
+@customElement('md-delete-action')
+export class MdDeleteAction extends DeleteAction {}

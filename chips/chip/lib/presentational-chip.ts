@@ -23,7 +23,7 @@ export class PresentationalChip extends Chip {
         <span class="md3-chip__cell md3-chip__cell--primary" role="gridcell">
           ${this.renderPrimaryAction()}
         </span>
-        ${this.renderTrailingAction()}
+        ${this.renderDeleteAction()}
       </span>`;
   }
 

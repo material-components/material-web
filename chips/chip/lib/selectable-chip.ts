@@ -24,7 +24,7 @@ export class SelectableChip extends Chip {
       <span class="${classMap(this.getRootClasses())}" role="presentation">
         ${this.renderOverlay()}
         ${this.renderPrimaryAction()}
-        ${this.renderTrailingAction()}
+        ${this.renderDeleteAction()}
       </span>`;
   }
 

@@ -46,11 +46,11 @@ $container-color: color.mix(
 $text-label-color: rgba(theme-color.prop-value(on-surface), 0.87);
 $icon-color: rgba(theme-color.prop-value(on-surface), 0.87);
 $checkmark-color: rgba(theme-color.prop-value(on-surface), 0.87);
-$trailing-action-color: rgba(theme-color.prop-value(on-surface), 0.87);
+$delete-action-color: rgba(theme-color.prop-value(on-surface), 0.87);
 $ripple-color: on-surface;
 $checkmark-size: 20px;
 $leading-icon-size: 20px;
-$trailing-action-size: 18px;
+$delete-action-size: 18px;
 $leading-padding: 12px;
 $trailing-padding: 12px;
 $avatar-size: 24px;
@@ -58,11 +58,11 @@ $avatar-leading-padding: 4px;
 $avatar-trailing-padding: 8px;
 $graphic-leading-padding: 6px;
 $graphic-trailing-padding: 6px;
-$trailing-action-leading-padding: 8px;
-$trailing-action-trailing-padding: 8px;
+$delete-action-leading-padding: 8px;
+$delete-action-trailing-padding: 8px;
 $ripple-target: '.md3-chip__ripple';
 $ripple-target-primary: '.md3-chip__ripple--primary';
-$ripple-target-trailing: '.md3-chip__ripple--trailing';
+$ripple-target-delete: '.md3-chip__ripple--delete';
 
 // Filter chip colors
 $filter-selected-container-color: color.mix(
@@ -178,13 +178,13 @@ $_light-theme: (
   with-leading-icon-leading-icon-color: null,
   with-leading-icon-leading-icon-size: null,
   with-leading-icon-pressed-leading-icon-color: null,
-  with-trailing-icon-disabled-trailing-icon-color: null,
-  with-trailing-icon-disabled-trailing-icon-opacity: null,
-  with-trailing-icon-focus-trailing-icon-color: null,
-  with-trailing-icon-hover-trailing-icon-color: null,
-  with-trailing-icon-pressed-trailing-icon-color: null,
-  with-trailing-icon-trailing-icon-color: null,
-  with-trailing-icon-trailing-icon-size: null,
+  with-delete-icon-disabled-delete-icon-color: null,
+  with-delete-icon-disabled-delete-icon-opacity: null,
+  with-delete-icon-focus-delete-icon-color: null,
+  with-delete-icon-hover-delete-icon-color: null,
+  with-delete-icon-pressed-delete-icon-color: null,
+  with-delete-icon-delete-icon-color: null,
+  with-delete-icon-delete-icon-size: null,
 );
 $_custom-property-prefix: 'chip';
 
@@ -389,13 +389,13 @@ $_custom-property-prefix: 'chip';
       pressed: map.get($theme, with-leading-icon-pressed-leading-icon-color),
     )
   );
-  @include trailing-action-color(
+  @include delete-action-color(
     (
-      disabled: map.get($theme, with-trailing-icon-disabled-trailing-icon-color),
-      focus: map.get($theme, with-trailing-icon-focus-trailing-icon-color),
-      hover: map.get($theme, with-trailing-icon-hover-trailing-icon-color),
-      enabled: map.get($theme, with-trailing-icon-trailing-icon-color),
-      pressed: map.get($theme, with-trailing-icon-pressed-trailing-icon-color),
+      disabled: map.get($theme, with-delete-icon-disabled-delete-icon-color),
+      focus: map.get($theme, with-delete-icon-focus-delete-icon-color),
+      hover: map.get($theme, with-delete-icon-hover-delete-icon-color),
+      enabled: map.get($theme, with-delete-icon-delete-icon-color),
+      pressed: map.get($theme, with-delete-icon-pressed-delete-icon-color),
     )
   );
   @include _ripple-theme(
@@ -529,12 +529,12 @@ $_custom-property-prefix: 'chip';
 }
 
 ///
-/// Sets the ripple color of the chip's trailing action.
+/// Sets the ripple color of the chip's delete action.
 /// @param {Color} $color - The color of the ripple.
 /// @param {Map} $opacity-map [null] - The optional opacity map for the states.
 ///
-@mixin trailing-action-ripple-color($color, $opacity-map: null) {
-  .md3-chip__action--trailing {
+@mixin delete-action-ripple-color($color, $opacity-map: null) {
+  .md3-chip__action--delete {
     // TODO(kainby): Translate to md3 ripple
     // @include ripple-theme.states(
     //   $color: $color,
@@ -545,11 +545,11 @@ $_custom-property-prefix: 'chip';
 }
 
 ///
-/// Sets the size of the trailing action's ripple.
+/// Sets the size of the delete action's ripple.
 /// @param {Number} $size - The size of the ripple.
 ///
-@mixin trailing-action-ripple-size($size) {
-  .md3-chip__ripple--trailing {
+@mixin delete-action-ripple-size($size) {
+  .md3-chip__ripple--delete {
     height: $size;
     width: $size;
   }
@@ -1046,11 +1046,11 @@ $_custom-property-prefix: 'chip';
 }
 
 ///
-/// Sets the size of the trailing action.
-/// @param {Number} $size - The size of the trailing action.
+/// Sets the size of the delete action.
+/// @param {Number} $size - The size of the delete action.
 ///
-@mixin trailing-action-size($size) {
-  .md3-chip__icon--trailing {
+@mixin delete-action-size($size) {
+  .md3-chip__icon--delete {
     height: $size;
     width: $size;
     font-size: $size;
@@ -1058,52 +1058,52 @@ $_custom-property-prefix: 'chip';
 }
 
 ///
-/// Customizes the trailing action color, using a Color or state Map.
+/// Customizes the delete action color, using a Color or state Map.
 /// - To set only the default color, provide a single Color.
 /// - To set one or more state colors, provide a state Map with optional keys.
 /// - Supported state Map keys: `default`, `hover`, `focus`, `disabled`.
 ///
 /// @example
-///   @include trailing-action-color(blue);
-///   @include trailing-action-color((disabled: gray));
+///   @include delete-action-color(blue);
+///   @include delete-action-color((disabled: gray));
 ///
-/// @param {Color | Map} $color-or-map - The trailing action's color or a state Map
+/// @param {Color | Map} $color-or-map - The delete action's color or a state Map
 ///
-@mixin trailing-action-color($color-or-map) {
-  @include _trailing-action-color(
+@mixin delete-action-color($color-or-map) {
+  @include _delete-action-color(
     state.get-default-state($color-or-map)
   );
 
   @include _is-enabled() {
-    @include _trailing-action-color(
+    @include _delete-action-color(
       state.get-enabled-state($color-or-map)
     );
   }
 
-  .md3-chip__action--trailing:hover {
-    @include _trailing-action-color(
+  .md3-chip__action--delete:hover {
+    @include _delete-action-color(
       state.get-hover-state($color-or-map)
     );
   }
 
-  .md3-chip__action--trailing {
+  .md3-chip__action--delete {
     // TODO(kainby): Translate to md3 ripple
     // @include ripple-theme.focus() {
-    //   @include _trailing-action-color(
+    //   @include _delete-action-color(
     //     state.get-focus-state($color-or-map)
     //   );
     // }
   }
 
   @include _is-disabled() {
-    @include _trailing-action-color(
+    @include _delete-action-color(
       state.get-disabled-state($color-or-map)
     );
   }
 }
 
-@mixin _trailing-action-color($color) {
-  .md3-chip__icon--trailing {
+@mixin _delete-action-color($color) {
+  .md3-chip__icon--delete {
     @if $color {
       color: $color;
     }
@@ -1230,23 +1230,23 @@ $_custom-property-prefix: 'chip';
 }
 
 ///
-/// Sets the horizontal padding for chips with a trailing action.
+/// Sets the horizontal padding for chips with a delete action.
 /// @param {Number} $primary-leading - The leading padding for the primary action.
-/// @param {Number} $trailing-action-leading - The leading padding for the trailing action.
-/// @param {Number} $trailing-action-trailing - The trailing padding for the trailing action.
+/// @param {Number} $delete-action-leading - The leading padding for the delete action.
+/// @param {Number} $delete-action-trailing - The trailing padding for the delete action.
 ///
-@mixin with-trailing-action-horizontal-padding(
+@mixin with-delete-action-horizontal-padding(
   $primary-leading,
-  $trailing-action-leading,
-  $trailing-action-trailing
+  $delete-action-leading,
+  $delete-action-trailing
 ) {
-  &.md3-chip--with-trailing-action {
-    .md3-chip__action--trailing {
-      padding-inline: $trailing-action-leading $trailing-action-trailing;
+  &.md3-chip--with-delete-action {
+    .md3-chip__action--delete {
+      padding-inline: $delete-action-leading $delete-action-trailing;
     }
 
-    #{$ripple-target-trailing} {
-      inset-inline-start: $trailing-action-leading;
+    #{$ripple-target-delete} {
+      inset-inline-start: $delete-action-leading;
     }
 
     .md3-chip__action--primary {
@@ -1256,29 +1256,29 @@ $_custom-property-prefix: 'chip';
 }
 
 ///
-/// Sets the horizontal padding for chips with a graphic and trailing action.
+/// Sets the horizontal padding for chips with a graphic and delete action.
 /// @param {Number} $graphic-leading - The leading padding for the graphic.
 /// @param {Number} $graphic-trailing - The trailing padding for the graphic.
-/// @param {Number} $trailing-action-leading - The leading padding for the trailing action.
-/// @param {Number} $trailing-action-trailing - The trailing padding for the trailing action.
+/// @param {Number} $delete-action-leading - The leading padding for the delete action.
+/// @param {Number} $delete-action-trailing - The trailing padding for the delete action.
 ///
-@mixin with-graphic-and-trailing-action-horizontal-padding(
+@mixin with-graphic-and-delete-action-horizontal-padding(
   $graphic-leading,
   $graphic-trailing,
-  $trailing-action-leading,
-  $trailing-action-trailing
+  $delete-action-leading,
+  $delete-action-trailing
 ) {
-  &.md3-chip--with-primary-graphic.md3-chip--with-trailing-action {
+  &.md3-chip--with-primary-graphic.md3-chip--with-delete-action {
     .md3-chip__graphic {
       padding-inline: $graphic-leading $graphic-trailing;
     }
 
-    .md3-chip__action--trailing {
-      padding-inline: $trailing-action-leading $trailing-action-trailing;
+    .md3-chip__action--delete {
+      padding-inline: $delete-action-leading $delete-action-trailing;
     }
 
-    #{$ripple-target-trailing} {
-      inset-inline-start: $trailing-action-leading;
+    #{$ripple-target-delete} {
+      inset-inline-start: $delete-action-leading;
     }
 
     .md3-chip__action--primary {
