@@ -22,7 +22,7 @@ $space-between-chips: 8px;
   .md3-chip-set__chips {
     // Set the margin to the negative horizontal space to account for chips
     // being inset on the leading edge.
-    // TODO(kainby): Explore using CSS grid layout instead.
+    // TODO(b/248173007): Explore using CSS grid layout instead.
     margin-inline-start: -$space;
   }
 

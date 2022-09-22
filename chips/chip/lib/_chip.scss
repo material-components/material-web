@@ -12,7 +12,7 @@
 @use '@material/web/compat/touchtarget/touch-target';
 @use '@material/web/focus/lib/focus-ring-theme';
 @use '@material/web/motion/animation';
-// TODO(kainby): Uncomment when styles are translated to md3 ripple
+// TODO(b/240224981): Uncomment when styles are translated to md3 ripple
 // @use '@material/web/ripple/ripple-theme';
 @use '@material/web/sass/dom';
 @use './chip-theme';
@@ -37,7 +37,7 @@
   );
 
   .md3-chip__action {
-    // TODO(kainby): Translate to md3 ripple
+    // TODO(b/240224981): Translate to md3 ripple
     // @include ripple.surface(
     //   $ripple-target: chip-theme.$ripple-target,
     //   $include-will-change: false
@@ -61,7 +61,7 @@
     height: 100%;
     width: 100%;
     top: 0;
-    // TODO(kainby): Translate to logical properties
+    // TODO(b/240224981): Translate to md3 rtl / logical properties
     // @include rtl.ignore-next-line();
     left: 0;
   }
@@ -83,7 +83,7 @@
   .md3-chip {
     position: relative;
     max-width: 100%;
-    // TODO(kainby): Translate to md3 elevation
+    // TODO(b/240224981): Translate to md3 elevation
     // @include elevation-theme.overlay-dimensions(100%, $query: $query);
   }
 
@@ -175,7 +175,7 @@
     position: absolute;
     opacity: 0;
     top: 50%;
-    // TODO(kainby): Translate to logical properties
+    // TODO(b/240224981): Translate to logical properties
     // @include rtl.ignore-next-line();
     left: 50%;
   }
@@ -222,7 +222,7 @@
     }
 
     .md3-chip__checkmark {
-      // TODO(kainby): Translate to md3 animation
+      // TODO(b/240224981): Translate to md3 animation
       // transition: animation.linear(opacity, 50ms),
       //   animation.standard(transform, 100ms);
       transform: translate(-75%, -50%);
@@ -336,7 +336,7 @@
   }
 
   .md3-chip__action--primary:not(.md3-chip__action--presentational) {
-    // TODO(kainby): Convert to md3 ripple
+    // TODO(b/240224981): Convert to md3 ripple
     // @include ripple-theme.focus() {
     //   .md3-chip__focus-ring {
     //     z-index: 1;
@@ -347,7 +347,7 @@
   }
 
   .md3-chip__action--delete:not(.md3-chip__action--presentational) {
-    // TODO(kainby): Convert to md3 ripple
+    // TODO(b/240224981): Convert to md3 ripple
     // @include ripple-theme.focus() {
       .md3-chip__focus-ring {
         z-index: 1;

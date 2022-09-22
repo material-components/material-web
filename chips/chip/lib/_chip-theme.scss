@@ -22,7 +22,7 @@
 @use '@material/web/sass/resolvers';
 @use '@material/web/sass/theme';
 @use '@material/web/sass/typography';
-// TODO(kainby): Uncomment when styles are traslated to md3 shape.
+// TODO(b/240224981): Uncomment when styles are traslated to md3 shape.
 // @use '@material/web/sass/shape';
 
 $height: 32px;
@@ -519,7 +519,7 @@ $_custom-property-prefix: 'chip';
 
 @mixin _ripple-color($color, $opacity-map) {
   .md3-chip__action--primary {
-    // TODO(kainby): Translate to md3 ripple
+    // TODO(b/240224981): Translate to md3 ripple
     // @include ripple-theme.states(
     //   $color: $color,
     //   $opacity-map: $opacity-map,
@@ -535,7 +535,7 @@ $_custom-property-prefix: 'chip';
 ///
 @mixin delete-action-ripple-color($color, $opacity-map: null) {
   .md3-chip__action--delete {
-    // TODO(kainby): Translate to md3 ripple
+    // TODO(b/240224981): Translate to md3 ripple
     // @include ripple-theme.states(
     //   $color: $color,
     //   $opacity-map: $opacity-map,
@@ -595,23 +595,23 @@ $_custom-property-prefix: 'chip';
 }
 
 @mixin _container-shape($radius) {
-  // TODO(kainby): Translate to md3 shape
+  // TODO(b/240224981): Translate to md3 shape
   // @include shape.radius($radius);
 
   #{$ripple-target} {
-    // TODO(kainby): Translate to md3 shape
+    // TODO(b/240224981): Translate to md3 shape
     // @include shape.radius($radius);
   }
 
   .md3-chip__action--primary:before {
-    // TODO(kainby): Translate to md3 shape
+    // TODO(b/240224981): Translate to md3 shape
     // @include shape.radius($radius);
   }
 }
 
 @mixin _avatar-shape($radius) {
   .md3-chip__icon--primary {
-    // TODO(kainby): Translate to md3 shape
+    // TODO(b/240224981): Translate to md3 shape
     // @include shape.radius($radius);
   }
 }
@@ -632,7 +632,7 @@ $_custom-property-prefix: 'chip';
     $property-name: height,
   );
 
-// TODO(kainby): Translate to md3 shape
+// TODO(b/240224981): Translate to md3 shape
 //   @include shape.radius(
 //     $radius,
 //     $rtl-reflexive,
@@ -756,7 +756,7 @@ $_custom-property-prefix: 'chip';
 
 @mixin _focus-outline-color($color) {
   .md3-chip__action--primary:not(.md3-chip__action--presentational) {
-    // TODO(kainby): Translate to md3 ripple
+    // TODO(b/240224981): Translate to md3 ripple
     // @include ripple-theme.focus() {
     //   &:before {
     //     @if $color {
@@ -851,7 +851,7 @@ $_custom-property-prefix: 'chip';
   }
 
   .md3-chip__action--primary:not(.md3-chip__action--presentational) {
-    // TODO(kainby): Translate to md3 ripple
+    // TODO(b/240224981): Translate to md3 ripple
     // @include ripple-theme.focus() {
     //   @include _text-label-color(state.get-focus-state($color-or-map));
     // }
@@ -906,7 +906,7 @@ $_custom-property-prefix: 'chip';
 ///
 @mixin text-label-type-scale($type-scale) {
   .md3-chip__text-label {
-    // TODO(kainby): Translate to md3 typography
+    // TODO(b/240224981): Translate to md3 typography
     // @include typography.typography($type-scale);
   }
 }
@@ -959,7 +959,7 @@ $_custom-property-prefix: 'chip';
   }
 
   .md3-chip__action--primary:not(.md3-chip__action--presentational) {
-    // TODO(kainby): Translate to md3 ripple
+    // TODO(b/240224981): Translate to md3 ripple
     // @include ripple-theme.focus() {
     //   @include _icon-color(state.get-focus-state($color-or-map));
     // }
@@ -1010,7 +1010,7 @@ $_custom-property-prefix: 'chip';
   }
 
   .md3-chip__action--primary:not(.md3-chip__action--presentational) {
-    // TODO(kainby): Translate to md3 ripple
+    // TODO(b/240224981): Translate to md3 ripple
     // @include ripple-theme.focus() {
     //   @include _icon-container-color(
     //     state.get-focus-state($color-or-map)
@@ -1087,7 +1087,7 @@ $_custom-property-prefix: 'chip';
   }
 
   .md3-chip__action--delete {
-    // TODO(kainby): Translate to md3 ripple
+    // TODO(b/240224981): Translate to md3 ripple
     // @include ripple-theme.focus() {
     //   @include _delete-action-color(
     //     state.get-focus-state($color-or-map)
@@ -1145,7 +1145,7 @@ $_custom-property-prefix: 'chip';
   }
 
   .md3-chip__action--primary {
-    // TODO(kainby): Translate to md3 ripple
+    // TODO(b/240224981): Translate to md3 ripple
     // @include ripple-theme.focus() {
     //   @include _checkmark-color(state.get-focus-state($color-or-map));
     // }
@@ -1288,7 +1288,7 @@ $_custom-property-prefix: 'chip';
 }
 
 @mixin _container-elevation($resolver, $shadow-color, $map) {
-  // TODO(kainby): Use M3 resolver.
+  // TODO(b/240224981): Use M3 resolver.
   @include elevation-theme.theme-styles((shadow: $shadow-color));
 }
 
