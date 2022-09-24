@@ -1,0 +1,9 @@
+/**
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/// @deprecated Import './linear-progress' or './linear-progress-theme' instead.
+@forward './lib/linear-progress' show core-styles;
+@forward './lib/linear-progress-theme' show bar-color, buffer-color, track-height;
