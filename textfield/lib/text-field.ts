@@ -758,7 +758,7 @@ export abstract class TextField extends LitElement {
     super.update(changedProperties);
   }
 
-  protected override updated() {
+  protected override updated(changedProperties: PropertyValues) {
     // If a property such as `type` changes and causes the internal <input>
     // value to change without dispatching an event, re-sync it.
     const value = this.getInput().value;

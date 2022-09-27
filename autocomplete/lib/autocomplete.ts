@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// TODO(b/243558385): remove compat dependencies
-import {observer} from '@material/web/compat/base/observer.js';
 import {html, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
@@ -43,12 +41,7 @@ export abstract class Autocomplete extends TextField {
   @queryAssignedElements({flatten: true})
   protected slottedItems?: AutocompleteItem[];
 
-  @state()  // tslint:disable-next-line:no-new-decorators
-  @observer(function(this: Autocomplete) {
-    this.updateSelectedItem();
-    this.ariaActiveDescendant = this.selectedItem?.itemId ?? null;
-  })
-  protected selectedItem: AutocompleteItem|null = null;
+  @state() protected selectedItem: AutocompleteItem|null = null;
 
   /** @soyTemplate */
   override render(): TemplateResult {
@@ -67,6 +60,14 @@ export abstract class Autocomplete extends TextField {
   /** @soyTemplate */
   protected getAutocompleteRenderClasses(): ClassInfo {
     return {};
+  }
+
+  protected override updated(changedProperties: PropertyValues) {
+    super.updated(changedProperties);
+    if (changedProperties.has('selectedItem')) {
+      this.updateSelectedItem();
+      this.ariaActiveDescendant = this.selectedItem?.itemId ?? null;
+    }
   }
 
   override firstUpdated(changedProperties: PropertyValues) {
