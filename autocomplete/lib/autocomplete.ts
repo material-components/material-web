@@ -78,10 +78,7 @@ export abstract class Autocomplete extends TextField {
   /** @soyTemplate */
   protected renderMenuSurface(): TemplateResult {
     return staticHtml`<${this.menuSurfaceTag}
-      class="md3-autocomplete__menu-surface"
-      .corner="BOTTOM_START"
-      ?stayOpenOnBodyClick=${true}
-    >
+      class="md3-autocomplete__menu-surface">
       <${this.listTag} class="md3-autocomplete__list">
         <slot></slot>
       </${this.listTag}>

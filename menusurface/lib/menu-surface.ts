@@ -13,7 +13,7 @@ import {deepActiveElementPath, doesElementContainFocus} from '@material/web/comp
 import {isRtl} from '@material/web/controller/is-rtl.js';
 import {html, LitElement} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 
 import {MDCMenuSurfaceAdapter} from './adapter.js';
@@ -165,11 +165,6 @@ export abstract class MenuSurface extends LitElement {
   protected onBodyClickBound: (evt: MouseEvent) => void = () => undefined;
 
   override render() {
-    const classes = {
-      'md3-menu-surface--fixed': this.fixed,
-      'md3-menu-surface--fullwidth': this.fullwidth,
-    };
-
     const styles = {
       'top': this.styleTop,
       'left': this.styleLeft,
@@ -181,13 +176,21 @@ export abstract class MenuSurface extends LitElement {
 
     return html`
       <div
-          class="md3-menu-surface ${classMap(classes)}"
+          class="md3-menu-surface ${classMap(this.getRenderClasses())}"
           style="${styleMap(styles)}"
           @keydown=${this.onKeydown}
           @opened=${this.registerBodyClick}
           @closed=${this.deregisterBodyClick}>
         <slot></slot>
       </div>`;
+  }
+
+  /** @soyTemplate */
+  protected getRenderClasses(): ClassInfo {
+    return {
+      'md3-menu-surface--fixed': this.fixed,
+      'md3-menu-surface--fullwidth': this.fullwidth,
+    };
   }
 
   protected override firstUpdated() {

@@ -5,7 +5,7 @@
  */
 
 import '@material/web/autocomplete/autocomplete-list.js';
-import '@material/web/menu-surface/menu-surface.js';
+import '@material/web/autocomplete/autocomplete-surface.js';
 import '@material/web/field/filled-field.js';
 
 import {customElement} from 'lit/decorators.js';
@@ -37,7 +37,7 @@ export class MdFilledAutocomplete extends Autocomplete {
   ];
 
   protected override readonly listTag = literal`md-autocomplete-list`;
-  protected override readonly menuSurfaceTag = literal`md-menu-surface`;
+  protected override readonly menuSurfaceTag = literal`md-autocomplete-surface`;
   protected override readonly fieldTag = literal`md-filled-field`;
 
   /** @soyTemplate */
