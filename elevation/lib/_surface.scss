@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// TODO(b/228217731): Remove MDC/MWC dependencies
-@use '@material/web/compat/theme/css';
-
 $duration: 280ms;
 $easing: cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -14,5 +11,5 @@ $easing: cubic-bezier(0.4, 0, 0.2, 1);
   transition: border #{$duration} #{$easing}, box-shadow #{$duration} #{$easing};
   // used for interacting with overlays
   z-index: 0;
-  @include css.declaration(--mdc-ripple-z-index, -1);
+  --mdc-ripple-z-index: -1;
 }
