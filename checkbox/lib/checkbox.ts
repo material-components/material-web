@@ -8,7 +8,6 @@ import '@material/web/focus/focus-ring.js';
 import '@material/web/ripple/ripple.js';
 
 import {ActionElement, BeginPressConfig, EndPressConfig} from '@material/web/actionelement/action-element.js';
-import {ariaProperty as legacyAriaProperty} from '@material/web/compat/base/aria-property.js';
 import {ariaProperty} from '@material/web/decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus.js';
 import {MdRipple} from '@material/web/ripple/ripple.js';
@@ -31,20 +30,18 @@ export class Checkbox extends ActionElement {
 
   @property({type: String}) value = 'on';
 
-  /** @soyPrefixAttribute */
   @ariaProperty  // tslint:disable-line:no-new-decorators
-  @property({type: String, attribute: 'aria-label'})
+  @property({type: String, attribute: 'data-aria-label', noAccessor: true})
   override ariaLabel!: string;
 
-  /** @soyPrefixAttribute */
-  @legacyAriaProperty  // tslint:disable-line:no-new-decorators
-  @property({type: String, attribute: 'aria-labelledby'})
-  ariaLabelledBy!: undefined|string;
+  @ariaProperty  // tslint:disable-line:no-new-decorators
+  @property({type: String, attribute: 'data-aria-labelledby', noAccessor: true})
+  ariaLabelledBy?: string;
 
-  /** @soyPrefixAttribute */
-  @legacyAriaProperty  // tslint:disable-line:no-new-decorators
-  @property({type: String, attribute: 'aria-describedby'})
-  ariaDescribedBy!: undefined|string;
+  @ariaProperty  // tslint:disable-line:no-new-decorators
+  @property(
+      {type: String, attribute: 'data-aria-describedby', noAccessor: true})
+  ariaDescribedBy?: string;
 
   /**
    * Touch target extends beyond visual boundary of a component by default.
