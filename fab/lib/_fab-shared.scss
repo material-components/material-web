@@ -6,18 +6,17 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-// TODO(b/228217731): Remove MDC/MWC dependencies
 @use '@material/web/sass/touch-target';
 @use '@material/web/elevation/lib/surface';
-@use '@material/web/compat/theme/selector-ext';
 @use '@material/web/focus/lib/focus-ring-theme';
 
 @mixin static-styles() {
   :host {
     @include host-root;
-    @include selector-ext.append-strict(&, '[disabled]') {
-      @include disabled;
-    }
+  }
+
+  :host([disabled]) {
+    @include disabled;
   }
 
   .md3-fab {

@@ -4,163 +4,137 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {fixture, TestFixture} from '@material/web/compat/testing/helpers.js';  // TODO(b/235474830): remove the use of fixtures
-import {MdFocusRing} from '@material/web/focus/focus-ring.js';
-import {MdIcon} from '@material/web/icon/icon.js';
-import {html} from 'lit';
+import '@material/web/icon/icon.js';
+
+import {html, render} from 'lit';
+
+import {Environment} from '../testing/environment.js';
 
 import {MdFabExtended} from './fab-extended.js';
 import {FabHarness} from './harness.js';
 
 describe('md-fab-extended', () => {
-  let fixt: TestFixture;
-  let element: MdFabExtended;
-  let harness: FabHarness;
+  const env = new Environment();
 
-  afterEach(() => {
-    fixt.remove();
-  });
+  async function setupTest() {
+    const element = env.render(html`<md-fab-extended></md-fab-extended>`)
+                        .querySelector('md-fab-extended');
+    if (!element) {
+      throw new Error('Could not query rendered <md-fab-extended>.');
+    }
+
+    await env.waitForStability();
+    const button = element.renderRoot.querySelector('button');
+    if (!button) {
+      throw new Error('Could not query rendered <button>.');
+    }
+
+    const focusRing = element.renderRoot.querySelector('md-focus-ring');
+    if (!focusRing) {
+      throw new Error('Could not query rendered <md-focus-ring>.');
+    }
+
+    return {
+      button,
+      focusRing,
+      harness: new FabHarness(element),
+    };
+  }
 
   describe('basic', () => {
-    beforeEach(async () => {
-      fixt = await fixture(html`<md-fab-extended></md-fab-extended>`);
-      element = fixt.root.querySelector('md-fab-extended')!;
-      harness = new FabHarness(element);
-    });
-
-    it('initializes as an md-fab-extended', () => {
-      expect(element).toBeInstanceOf(MdFabExtended);
-      expect(element.lowered).toEqual(false);
-      expect(element.disabled).toEqual(false);
-      expect(element.label).toEqual('');
-      expect(element.icon).toEqual('');
+    it('initializes as an md-fab-extended', async () => {
+      const {harness} = await setupTest();
+      expect(harness.element).toBeInstanceOf(MdFabExtended);
+      expect(harness.element.lowered).toEqual(false);
+      expect(harness.element.disabled).toEqual(false);
+      expect(harness.element.label).toEqual('');
+      expect(harness.element.icon).toEqual('');
     });
   });
 
   describe('lowered', () => {
-    beforeEach(async () => {
-      fixt = await fixture(html`
-        <md-fab-extended
-          ?lowered=${true}>
-        </md-fab-extended>
-      `);
-      element = fixt.root.querySelector('md-fab-extended')!;
-      harness = new FabHarness(element);
-      await element.updateComplete;
-    });
-
     it('sets the correct classes', async () => {
-      const button = await harness.getInteractiveElement();
+      const {harness, button} = await setupTest();
+      harness.element.lowered = true;
+      await env.waitForStability();
+
       expect(button.classList.contains('md3-fab--lowered')).toBeTrue();
     });
   });
 
   describe('disabled', () => {
-    beforeEach(async () => {
-      fixt = await fixture(html`
-        <md-fab-extended
-          ?disabled=${true}>
-        </md-fab-extended>
-      `);
-      element = fixt.root.querySelector('md-fab-extended')!;
-      harness = new FabHarness(element);
-      await element.updateComplete;
-    });
-
     it('get/set updates the disabled property on the native button element',
        async () => {
-         const button = await harness.getInteractiveElement();
+         const {harness, button} = await setupTest();
+         harness.element.disabled = true;
+         await env.waitForStability();
 
          expect(button.disabled).toEqual(true);
-         element.disabled = false;
-         await element.updateComplete;
+         harness.element.disabled = false;
+         await env.waitForStability();
          expect(button.disabled).toEqual(false);
        });
   });
 
   describe('icon', () => {
-    beforeEach(async () => {
-      fixt = await fixture(html`
-        <md-fab-extended
-          icon="star">
-        </md-fab-extended>
-      `);
-      element = fixt.root.querySelector('md-fab-extended')!;
-      harness = new FabHarness(element);
-      await element.updateComplete;
-    });
-
     it('will generate an md-icon', async () => {
-      const icon = (await harness.getInteractiveElement())
-                       .querySelector<MdIcon>('md-icon')!;
+      const {harness, button} = await setupTest();
+      harness.element.icon = 'star';
+      await env.waitForStability();
+
+      const icon = button.querySelector('md-icon')!;
       expect(icon.textContent!.trim()).toEqual('star');
     });
 
     it('serves as `aria-label` of native button when label is empty',
        async () => {
-         const button = await harness.getInteractiveElement();
+         const {harness, button} = await setupTest();
+         harness.element.icon = 'star';
+         await env.waitForStability();
+
          expect(button.getAttribute('aria-label')).toEqual('star');
        });
   });
 
   describe('icon slot', () => {
-    beforeEach(async () => {
-      fixt = await fixture(html`
-        <md-fab-extended>
-          <i slot="icon" class="material-icons">star</i>
-        </md-fab-extended>
-      `);
-      element = fixt.root.querySelector('md-fab-extended')!;
-      harness = new FabHarness(element);
-      await element.updateComplete;
-    });
-
-    it('node with `slot=icon` will serve as the fab icon', () => {
-      const icon = element.querySelector<HTMLElement>('[slot="icon"]')!;
+    it('node with `slot=icon` will serve as the fab icon', async () => {
+      const {harness} = await setupTest();
+      render(
+          html`<i slot="icon" class="material-icons">star</i>`,
+          harness.element);
+      const icon = harness.element.querySelector<HTMLElement>('[slot="icon"]')!;
       expect(icon.textContent!.trim()).toEqual('star');
     });
   });
 
   describe('label', () => {
-    beforeEach(async () => {
-      fixt = await fixture(html`
-        <md-fab-extended
-          label="foo">
-        </md-fab-extended>
-      `);
-      element = fixt.root.querySelector('md-fab-extended')!;
-      harness = new FabHarness(element);
-      await element.updateComplete;
-    });
-
     it('displays label text', async () => {
-      const content = (await harness.getInteractiveElement())
-                          .querySelector('.md3-fab__label')!;
+      const {harness, button} = await setupTest();
+      harness.element.label = 'foo';
+      await env.waitForStability();
+
+      const content = button.querySelector('.md3-fab__label')!;
       expect(content.textContent!.trim()).toEqual('foo');
     });
 
     it('serves as `aria-label` of native button', async () => {
-      const button = await harness.getInteractiveElement();
+      const {harness, button} = await setupTest();
+      harness.element.label = 'foo';
+      await env.waitForStability();
+
       expect(button.getAttribute('aria-label')).toEqual('foo');
     });
   });
 
   describe('focus ring', () => {
-    let focusRing: MdFocusRing;
-
-    beforeEach(async () => {
-      fixt = await fixture(html`<md-fab-extended></md-fab-extended>`);
-      element = fixt.root.querySelector('md-fab-extended')!;
-      focusRing = element.shadowRoot!.querySelector('md-focus-ring')!;
-      harness = new FabHarness(element);
-    });
-
     it('hidden on non-keyboard focus', async () => {
+      const {harness, focusRing} = await setupTest();
       await harness.clickWithMouse();
       expect(focusRing.visible).toBeFalse();
     });
 
     it('visible on keyboard focus and hides on blur', async () => {
+      const {harness, focusRing} = await setupTest();
       await harness.focusWithKeyboard();
       expect(focusRing.visible).toBeTrue();
       await harness.blur();
@@ -168,6 +142,7 @@ describe('md-fab-extended', () => {
     });
 
     it('hidden after pointer interaction', async () => {
+      const {harness, focusRing} = await setupTest();
       await harness.focusWithKeyboard();
       expect(focusRing.visible).toBeTrue();
       await harness.clickWithMouse();
