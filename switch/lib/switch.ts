@@ -7,8 +7,7 @@
 import '@material/web/focus/focus-ring.js';
 import '@material/web/ripple/ripple.js';
 
-import {ActionElement, EndPressConfig, BeginPressConfig} from '@material/web/actionelement/action-element.js';
-import {ariaProperty as legacyAriaProperty} from '@material/web/compat/base/aria-property.js';  // TODO(b/236840525): remove compat dependencies
+import {ActionElement, BeginPressConfig, EndPressConfig} from '@material/web/actionelement/action-element.js';
 import {FormController, getFormValue} from '@material/web/controller/form-controller.js';
 import {ariaProperty} from '@material/web/decorators/aria-property.js';
 import {pointerPress as focusRingPointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus.js';
@@ -36,9 +35,8 @@ export class Switch extends ActionElement {
   override ariaLabel!: string;
 
   // TODO: Add support in @ariaProperty for idref aria attributes
-  /** @soyPrefixAttribute */
-  @legacyAriaProperty  // tslint:disable-line:no-new-decorators
-  @property({type: String, attribute: 'aria-labelledby'})
+  @ariaProperty  // tslint:disable-line:no-new-decorators
+  @property({type: String, attribute: 'data-aria-labelledby', noAccessor: true})
   ariaLabelledBy = '';
 
   @state() protected showFocusRing = false;

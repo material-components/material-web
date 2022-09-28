@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {fixture, simulateFormDataEvent, TestFixture} from '@material/web/compat/testing/helpers.js'; // TODO(b/235474830): remove the use of fixtures
 import {html} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
+
+import {Environment} from '../../testing/environment.js';
 
 import {Switch} from './switch.js';
 
@@ -38,23 +39,18 @@ function renderSwitchInForm(propsInit: Partial<TestSwitch> = {}) {
 }
 
 describe('md-switch', () => {
-  const fixtures: TestFixture[] = [];
+  const env = new Environment();
 
   async function switchElement(
       propsInit: Partial<TestSwitch> = {}, template = renderSwitch) {
-    const fixt = await fixture(template(propsInit));
-
-    fixtures.push(fixt);
-    const element = fixt.root.querySelector('md-test-switch')!;
-    await element.updateComplete;
+    const root = env.render(html`<div>${template(propsInit)}</div>`);
+    await env.waitForStability();
+    const element = root.querySelector('md-test-switch');
+    if (!element) {
+      throw new Error('Could not query rendered <md-test-switch>.');
+    }
     return element;
   }
-
-  afterEach(() => {
-    for (const fixt of fixtures) {
-      fixt.remove();
-    }
-  });
 
   let toggle: TestSwitch;
 
@@ -245,10 +241,21 @@ describe('md-switch', () => {
   describe('form submission', () => {
     let form: HTMLFormElement;
 
+    // TODO(b/235238545): replace with shared FormController tests.
+    function simulateFormDataEvent() {
+      const event = new Event('formdata');
+      // new FormData(form) will send a 'formdata' event and coallesce the
+      // additions, but this only works in Chrome and Firefox
+      const formData = new FormData();
+      (event as FormDataEvent as any).formData = formData;
+      form.dispatchEvent(event);
+      return formData;
+    }
+
     it('does not submit if not selected', async () => {
       toggle = await switchElement({name: 'foo'}, renderSwitchInForm);
       form = toggle.parentElement as HTMLFormElement;
-      const formData = simulateFormDataEvent(form);
+      const formData = simulateFormDataEvent();
       expect(formData.get('foo')).toBeNull();
     });
 
@@ -256,14 +263,14 @@ describe('md-switch', () => {
       toggle = await switchElement(
           {name: 'foo', selected: true, disabled: true}, renderSwitchInForm);
       form = toggle.parentElement as HTMLFormElement;
-      const formData = simulateFormDataEvent(form);
+      const formData = simulateFormDataEvent();
       expect(formData.get('foo')).toBeNull();
     });
 
     it('does not submit if name is not provided', async () => {
       toggle = await switchElement({selected: true}, renderSwitchInForm);
       form = toggle.parentElement as HTMLFormElement;
-      const formData = simulateFormDataEvent(form);
+      const formData = simulateFormDataEvent();
       const keys = Array.from(formData.keys());
       expect(keys.length).toEqual(0);
     });
@@ -272,7 +279,7 @@ describe('md-switch', () => {
       toggle = await switchElement(
           {name: 'foo', selected: true, value: 'bar'}, renderSwitchInForm);
       form = toggle.parentElement as HTMLFormElement;
-      const formData = simulateFormDataEvent(form);
+      const formData = simulateFormDataEvent();
       expect(formData.get('foo')).toEqual('bar');
     });
   });
