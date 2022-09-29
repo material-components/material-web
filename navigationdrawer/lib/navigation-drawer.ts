@@ -4,11 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// TODO(b/231221156): remove compat dependencies
-import {AnyDuringAriaMigration, ariaProperty as legacyAriaProperty} from '@material/web/compat/base/aria-property.js';
-import {observer} from '@material/web/compat/base/observer.js';
 import {ariaProperty} from '@material/web/decorators/aria-property.js';
-import {html, LitElement, TemplateResult} from 'lit';
+import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
@@ -16,34 +13,28 @@ import {ifDefined} from 'lit/directives/if-defined.js';
 /** @soyCompatible */
 export class NavigationDrawer extends LitElement {
   /* aria properties */
-  /** @soyPrefixAttribute */  // tslint:disable-next-line:no-new-decorators
-  @legacyAriaProperty
-  @property({type: String, attribute: 'aria-describedby'})
+  // tslint:disable-next-line:no-new-decorators
+  @ariaProperty
+  @property(
+      {type: String, attribute: 'data-aria-describedby', noAccessor: true})
   ariaDescribedBy: string|undefined;
 
   // tslint:disable-next-line:no-new-decorators
   @ariaProperty
   @property({type: String, attribute: 'data-aria-label', noAccessor: true})
-  override ariaLabel: string|AnyDuringAriaMigration;
+  override ariaLabel!: string;
 
   // tslint:disable-next-line:no-new-decorators
   @ariaProperty
   @property({attribute: 'data-aria-modal', type: String, noAccessor: true})
   override ariaModal: 'true'|'false' = 'false';
 
-  /** @soyPrefixAttribute */  // tslint:disable-next-line:no-new-decorators
-  @legacyAriaProperty
-  @property({type: String, attribute: 'aria-labelledby'})
+  // tslint:disable-next-line:no-new-decorators
+  @ariaProperty
+  @property({type: String, attribute: 'data-aria-labelledby', noAccessor: true})
   ariaLabelledBy: string|undefined;
 
   @property({type: Boolean})  // tslint:disable-next-line:no-new-decorators
-  @observer(function(this: NavigationDrawer, value: boolean) {
-    setTimeout(() => {
-      this.dispatchEvent(new CustomEvent(
-          'navigation-drawer-changed',
-          {detail: {opened: value}, bubbles: true, composed: true}));
-    }, 250);
-  })
   opened = false;
   @property({type: String}) pivot: 'start'|'end' = 'end';
 
@@ -76,5 +67,16 @@ export class NavigationDrawer extends LitElement {
       'md3-navigation-drawer--opened': this.opened,
       'md3-navigation-drawer--pivot-at-start': this.pivot === 'start',
     });
+  }
+
+  protected override updated(changedProperties:
+                                 PropertyValues<NavigationDrawer>) {
+    if (changedProperties.has('opened')) {
+      setTimeout(() => {
+        this.dispatchEvent(new CustomEvent(
+            'navigation-drawer-changed',
+            {detail: {opened: this.opened}, bubbles: true, composed: true}));
+      }, 250);
+    }
   }
 }

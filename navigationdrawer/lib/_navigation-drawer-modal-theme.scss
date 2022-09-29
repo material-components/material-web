@@ -6,17 +6,15 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-// TODO(b/228217731): Remove MDC/MWC dependencies
 @use 'sass:map';
 
 @use '@material/web/elevation/lib/elevation-theme';
-@use '@material/web/compat/theme/theme-color';
 @use '@material/web/sass/resolvers';
 @use '@material/web/sass/shape';
 @use '@material/web/sass/theme';
 
 $light-theme: (
-  container-color: theme-color.$surface,
+  container-color: #fff,
   container-height: 100%,
   container-shape: 0 16px 16px 0,
   container-surface-tint-layer-color: null,
