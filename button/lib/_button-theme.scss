@@ -6,21 +6,9 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-// TODO(b/228217731): Remove MDC/MWC dependencies
 @use 'sass:map';
 @use '@material/web/sass/color';
 @use '@material/web/ripple/ripple-theme';
-@use '@material/web/compat/theme/state';
-
-$selectors: (
-  // :not(:disabled) is used to support link styled as button
-  // as link does not support :enabled style
-  enabled: ':not(:disabled)',
-  disabled: ':disabled',
-  focus: ':focus',
-  hover: ':hover',
-  pressed: ':active'
-);
 
 @mixin theme-styles($theme) {
   @include _set-label-text-typography(
@@ -127,46 +115,44 @@ $selectors: (
 }
 
 @mixin _container-fill-color($color-or-map) {
-  @include state.default($selectors) {
-    @include _set-container-fill-color(state.get-default-state($color-or-map));
+  &:not(:disabled) {
+    @include _set-container-fill-color(map.get($color-or-map, default));
   }
 
-  @include state.hover($selectors) {
-    @include _set-container-fill-color(state.get-hover-state($color-or-map));
+  &:hover {
+    @include _set-container-fill-color(map.get($color-or-map, hover));
   }
 
-  @include state.focus($selectors) {
-    @include _set-container-fill-color(state.get-focus-state($color-or-map));
+  &:focus {
+    @include _set-container-fill-color(map.get($color-or-map, focus));
   }
 
-  @include state.pressed($selectors) {
-    @include _set-container-fill-color(state.get-pressed-state($color-or-map));
+  &:active {
+    @include _set-container-fill-color(map.get($color-or-map, pressed));
   }
 
-  @include state.disabled($selectors) {
-    @include _set-container-fill-color(state.get-disabled-state($color-or-map));
+  &:disabled {
+    @include _set-container-fill-color(map.get($color-or-map, disabled));
   }
 }
 
 @mixin _ink-color($color-or-map) {
-  @include state.default($selectors) {
-    @include _set-ink-color(state.get-default-state($color-or-map));
+  @include _set-ink-color(map.get($color-or-map, default));
+
+  &:hover {
+    @include _set-ink-color(map.get($color-or-map, hover));
   }
 
-  @include state.hover($selectors) {
-    @include _set-ink-color(state.get-hover-state($color-or-map));
+  &:focus {
+    @include _set-ink-color(map.get($color-or-map, focus));
   }
 
-  @include state.focus($selectors) {
-    @include _set-ink-color(state.get-focus-state($color-or-map));
+  &:active {
+    @include _set-ink-color(map.get($color-or-map, pressed));
   }
 
-  @include state.pressed($selectors) {
-    @include _set-ink-color(state.get-pressed-state($color-or-map));
-  }
-
-  @include state.disabled($selectors) {
-    @include _set-ink-color(state.get-disabled-state($color-or-map));
+  &:disabled {
+    @include _set-ink-color(map.get($color-or-map, disabled));
   }
 }
 

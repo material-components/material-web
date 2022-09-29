@@ -6,13 +6,8 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-// TODO(b/228217731): Remove MDC/MWC dependencies
 @use 'sass:map';
 @use '@material/web/ripple/ripple-theme';
-@use '@material/web/compat/theme/state';
-@use './button-theme';
-
-$_selectors: button-theme.$selectors;
 
 @mixin theme-styles($theme) {
   @include _set-icon-color(
@@ -29,24 +24,22 @@ $_selectors: button-theme.$selectors;
 }
 
 @mixin _set-icon-color($colors) {
-  @include state.default($_selectors) {
-    @include _icon-color(state.get-default-state($colors));
+  @include _icon-color(map.get($colors, default));
+
+  &:hover {
+    @include _icon-color(map.get($colors, hover));
   }
 
-  @include state.hover($_selectors) {
-    @include _icon-color(state.get-hover-state($colors));
+  &:focus {
+    @include _icon-color(map.get($colors, focus));
   }
 
-  @include state.focus($_selectors) {
-    @include _icon-color(state.get-focus-state($colors));
+  &:active {
+    @include _icon-color(map.get($colors, pressed));
   }
 
-  @include state.pressed($_selectors) {
-    @include _icon-color(state.get-pressed-state($colors));
-  }
-
-  @include state.disabled($_selectors) {
-    @include _icon-color(state.get-disabled-state($colors));
+  &:disabled {
+    @include _icon-color(map.get($colors, disabled));
   }
 }
 

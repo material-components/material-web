@@ -6,11 +6,13 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-// TODO(b/228217731): Remove compat dependencies
-@use '@material/web/compat/touchtarget/touch-target';
-
 @mixin static-styles() {
   .md3-button__touch {
-    @include touch-target.touch-target;
+    position: absolute;
+    top: 50%;
+    height: 48px;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
   }
 }

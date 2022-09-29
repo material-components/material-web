@@ -3,20 +3,13 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// TODO(b/228217731): Remove MDC/MWC dependencies
 @use 'sass:map';
 @use 'sass:meta';
 
 @use '@material/web/elevation/lib/elevation-theme';
 @use '@material/web/ripple/ripple-theme';
-@use '@material/web/compat/theme/state';
-
-@use './button-theme';
-
-$_selectors: button-theme.$selectors;
 
 @mixin theme-styles($theme) {
-  @debug map.get($theme, container-elevation-shadow);
   @include _elevation(
     (
       default: (
@@ -70,25 +63,23 @@ $_selectors: button-theme.$selectors;
 }
 
 @mixin _elevation($elevations) {
-  @include state.default($_selectors) {
-    @include elevation-theme.theme-styles(state.get-default-state($elevations));
+  @include elevation-theme.theme-styles(map.get($elevations, default));
+
+  &:hover {
+    @include elevation-theme.theme-styles(map.get($elevations, hover));
   }
 
-  @include state.hover($_selectors) {
-    @include elevation-theme.theme-styles(state.get-hover-state($elevations));
+  &:focus {
+    @include elevation-theme.theme-styles(map.get($elevations, focus));
   }
 
-  @include state.focus($_selectors) {
-    @include elevation-theme.theme-styles(state.get-focus-state($elevations));
+  &:active {
+    @include elevation-theme.theme-styles(map.get($elevations, pressed));
   }
 
-  @include state.pressed($_selectors) {
-    @include elevation-theme.theme-styles(state.get-pressed-state($elevations));
-  }
-
-  @include state.disabled($_selectors) {
+  &:disabled {
     @include elevation-theme.theme-styles(
-      state.get-disabled-state($elevations)
+      map.get($elevations, disabled)
     );
   }
 }

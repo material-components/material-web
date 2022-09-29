@@ -6,10 +6,7 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-// TODO(b/228217731): Remove compat dependencies
-@use '@material/web/compat/touchtarget/touch-target';
 @use '@material/web/elevation/lib/surface' as elevation-surface;
-@use '@material/web/compat/theme/selector-ext';
 @use '@material/web/sass/dom';
 
 @use './button-theme';
@@ -17,9 +14,10 @@
 @mixin static-styles() {
   :host {
     @include host-root;
-    @include selector-ext.append-strict(&, '[disabled]') {
-      @include disabled;
-    }
+  }
+
+  :host([disabled]) {
+    @include disabled;
   }
 
   .md3-button {

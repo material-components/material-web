@@ -6,9 +6,7 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-// TODO(b/228217731): Remove compat dependencies
 @use 'sass:map';
-@use '@material/web/compat/theme/state';
 @use '@material/web/sass/resolvers';
 @use '@material/web/sass/theme';
 @use '@material/web/sass/typography';
@@ -16,7 +14,6 @@
 @use './button-theme';
 @use './icon-theme';
 
-$_selectors: button-theme.$selectors;
 $_custom-property-prefix: 'outlined-button';
 
 $light-theme: tokens.md-comp-outlined-button-values();
@@ -72,24 +69,22 @@ $light-theme: tokens.md-comp-outlined-button-values();
 }
 
 @mixin _outline-color($colors) {
-  @include state.default($_selectors) {
-    @include _set-outline-color(state.get-default-state($colors));
+  @include _set-outline-color(map.get($colors, default));
+
+  &:hover {
+    @include _set-outline-color(map.get($colors, hover));
   }
 
-  @include state.hover($_selectors) {
-    @include _set-outline-color(state.get-hover-state($colors));
+  &:focus {
+    @include _set-outline-color(map.get($colors, focus));
   }
 
-  @include state.focus($_selectors) {
-    @include _set-outline-color(state.get-focus-state($colors));
+  &:active {
+    @include _set-outline-color(map.get($colors, pressed));
   }
 
-  @include state.pressed($_selectors) {
-    @include _set-outline-color(state.get-pressed-state($colors));
-  }
-
-  @include state.disabled($_selectors) {
-    @include _set-outline-color(state.get-disabled-state($colors));
+  &:disabled {
+    @include _set-outline-color(map.get($colors, disabled));
   }
 }
 
