@@ -6,20 +6,14 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-// TODO(b/228217731): Remove compat dependencies
 @use 'sass:map';
 @use 'sass:string';
-@use '@material/web/compat/theme/state';
 @use '@material/web/sass/resolvers';
 @use '@material/web/sass/theme';
 @use '../icon/list-item-icon-theme';
 @use '../image/list-item-image-theme';
 @use '../video/list-item-video-theme';
 @use '../tokens';
-
-$selectors: (
-  disabled: '.md3-list-item--disabled',
-);
 
 $light-theme: tokens.md-comp-list-values();
 
@@ -209,9 +203,7 @@ $light-theme: tokens.md-comp-list-values();
 }
 
 @mixin _set-container-color($colors) {
-  @include state.enabled($selectors) {
-    @include _set-container-background-color(state.get-default-state($colors));
-  }
+  @include _set-container-background-color(map.get($colors, default));
 }
 
 @mixin _set-label-text-typography($typography-map) {
@@ -233,12 +225,10 @@ $light-theme: tokens.md-comp-list-values();
 }
 
 @mixin _set-label-text-ink-color($colors) {
-  @include state.enabled($selectors) {
-    @include _set-label-text-color(state.get-default-state($colors));
-  }
+  @include _set-label-text-color(map.get($colors, default));
 
   &.md3-list-item--disabled {
-    @include _set-label-text-color(state.get-disabled-state($colors));
+    @include _set-label-text-color(map.get($colors, disabled));
   }
 }
 
@@ -261,12 +251,10 @@ $light-theme: tokens.md-comp-list-values();
 }
 
 @mixin _set-supporting-text-ink-color($colors) {
-  @include state.enabled($selectors) {
-    @include _set-supporting-text-color(state.get-default-state($colors));
-  }
+  @include _set-supporting-text-color(map.get($colors, default));
 
   &.md3-list-item--disabled {
-    @include _set-supporting-text-color(state.get-disabled-state($colors));
+    @include _set-supporting-text-color(map.get($colors, disabled));
   }
 }
 
@@ -289,9 +277,9 @@ $light-theme: tokens.md-comp-list-values();
 }
 
 @mixin _set-trailing-supporting-text-ink-color($colors) {
-  @include state.enabled($selectors) {
+  &:not(.md3-list-item--disabled) {
     @include _set-trailing-supporting-text-color(
-      state.get-default-state($colors)
+      map.get($colors, default)
     );
   }
 }
