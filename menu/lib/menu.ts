@@ -306,14 +306,14 @@ export abstract class Menu extends LitElement {
     this.open = false;
   }
 
-  // tslint:disable:ban-ts-ignore
+  // tslint:disable:ban-ts-suppressions
   protected override async getUpdateComplete() {
     await this.listUpdateComplete;
     // @ts-ignore
     const result = await super.getUpdateComplete();
     return result;
   }
-  // tslint:enable:ban-ts-ignore
+  // tslint:enable:ban-ts-suppressions
 
   protected override async firstUpdated() {
     if (this.mdcFoundation !== undefined) {
