@@ -8,13 +8,8 @@
 
 @use 'sass:map';
 
-// TODO(b/228217731): Remove compat dependencies
 @use '@material/web/badge/lib/badge-theme';
 @use '@material/web/ripple/ripple-theme';
-@use '@material/web/compat/theme/keys';
-@use '@material/web/compat/theme/shadow-dom';
-@use '@material/web/compat/theme/state';
-@use '@material/web/compat/theme/theme-color';
 @use '@material/web/focus/lib/focus-ring-theme';
 @use '@material/web/sass/theme';
 @use '@material/web/tokens/latest' as tokens;
@@ -32,9 +27,6 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
 @mixin theme($theme) {
   $theme: theme.validate-theme($light-theme, $theme);
 
-  @if shadow-dom.$css-selector-fallback-declarations {
-    @include theme-styles($theme);
-  }
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
   @include theme.emit-theme-vars($theme);
@@ -162,21 +154,21 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
 
 @mixin _active-icon-color($color-or-map) {
   &:not(:disabled) {
-    @include _set-active-icon-color(state.get-default-state($color-or-map));
+    @include _set-active-icon-color(map.get($color-or-map, default));
 
     &:hover {
-      @include _set-active-icon-color(state.get-hover-state($color-or-map));
+      @include _set-active-icon-color(map.get($color-or-map, hover));
     }
     &:focus {
-      @include _set-active-icon-color(state.get-focus-state($color-or-map));
+      @include _set-active-icon-color(map.get($color-or-map, focus));
     }
     &:active {
-      @include _set-active-icon-color(state.get-pressed-state($color-or-map));
+      @include _set-active-icon-color(map.get($color-or-map, pressed));
     }
   }
 
   &:disabled {
-    @include _set-active-icon-color(state.get-disabled-state($color-or-map));
+    @include _set-active-icon-color(map.get($color-or-map, disabled));
   }
 }
 
@@ -188,21 +180,21 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
 
 @mixin _inactive-icon-color($color-or-map) {
   &:not(:disabled) {
-    @include _set-inactive-icon-color(state.get-default-state($color-or-map));
+    @include _set-inactive-icon-color(map.get($color-or-map, default));
 
     &:hover {
-      @include _set-inactive-icon-color(state.get-hover-state($color-or-map));
+      @include _set-inactive-icon-color(map.get($color-or-map, hover));
     }
     &:focus {
-      @include _set-inactive-icon-color(state.get-focus-state($color-or-map));
+      @include _set-inactive-icon-color(map.get($color-or-map, focus));
     }
     &:active {
-      @include _set-inactive-icon-color(state.get-pressed-state($color-or-map));
+      @include _set-inactive-icon-color(map.get($color-or-map, pressed));
     }
   }
 
   &:disabled {
-    @include _set-inactive-icon-color(state.get-disabled-state($color-or-map));
+    @include _set-inactive-icon-color(map.get($color-or-map, disabled));
   }
 }
 
@@ -221,29 +213,29 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
 @mixin _active-label-text-color($color-or-map) {
   &:not(:disabled) {
     @include _set-active-label-text-color(
-      state.get-default-state($color-or-map)
+      map.get($color-or-map, default)
     );
 
     &:hover {
       @include _set-active-label-text-color(
-        state.get-hover-state($color-or-map)
+        map.get($color-or-map, hover)
       );
     }
     &:focus {
       @include _set-active-label-text-color(
-        state.get-focus-state($color-or-map)
+        map.get($color-or-map, focus)
       );
     }
     &:active {
       @include _set-active-label-text-color(
-        state.get-pressed-state($color-or-map)
+        map.get($color-or-map, pressed)
       );
     }
   }
 
   &:disabled {
     @include _set-active-label-text-color(
-      state.get-disabled-state($color-or-map)
+      map.get($color-or-map, disabled)
     );
   }
 }
@@ -257,29 +249,29 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
 @mixin _inactive-label-text-color($color-or-map) {
   &:not(:disabled) {
     @include _set-inactive-label-text-color(
-      state.get-default-state($color-or-map)
+      map.get($color-or-map, default)
     );
 
     &:hover {
       @include _set-inactive-label-text-color(
-        state.get-hover-state($color-or-map)
+        map.get($color-or-map, hover)
       );
     }
     &:focus {
       @include _set-inactive-label-text-color(
-        state.get-focus-state($color-or-map)
+        map.get($color-or-map, focus)
       );
     }
     &:active {
       @include _set-inactive-label-text-color(
-        state.get-pressed-state($color-or-map)
+        map.get($color-or-map, pressed)
       );
     }
   }
 
   &:disabled {
     @include _set-inactive-label-text-color(
-      state.get-disabled-state($color-or-map)
+      map.get($color-or-map, disabled)
     );
   }
 }
