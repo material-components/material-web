@@ -10,7 +10,6 @@
 @use 'sass:selector';
 
 @use '@material/web/ripple/ripple-theme';
-@use '@material/web/compat/theme/shadow-dom';
 @use '@material/web/sass/theme';
 @use '@material/web/tokens';
 
@@ -322,8 +321,10 @@ $_theme-extension-keys: (
 }
 
 @mixin _checked-selector() {
-  @include shadow-dom.host-aware(selector.append(&, '[checked]')) {
-    @content;
+  @at-root {
+    :host([checked]) {
+      @content;
+    }
   }
 }
 

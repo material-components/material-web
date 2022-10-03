@@ -8,9 +8,10 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {fixture, TestFixture} from '@material/web/compat/testing/helpers.js';  // TODO(b/235474830): remove the use of fixtures
 import {MdFocusRing} from '@material/web/focus/focus-ring.js';
 import {html} from 'lit';
+
+import {Environment} from '../testing/environment.js';
 
 import {RadioHarness} from './harness.js';
 import {MdRadio} from './radio.js';
@@ -42,24 +43,23 @@ const repeatedRadio = (values: string[]) => {
 };
 
 describe('md-radio', () => {
-  let fixt: TestFixture;
+  const env = new Environment();
+
   let element: MdRadio;
   let harness: RadioHarness;
 
-  afterEach(() => {
-    fixt.remove();
-  });
-
   describe('basic', () => {
     it('initializes as an md-radio', async () => {
-      fixt = await fixture(defaultRadio);
-      element = fixt.root.querySelector('md-radio')!;
+      const root = env.render(defaultRadio);
+      await env.waitForStability();
+      element = root.querySelector('md-radio')!;
       expect(element).toBeInstanceOf(MdRadio);
     });
 
     it('clicking a radio should select it', async () => {
-      fixt = await fixture(radioGroup);
-      element = fixt.root.querySelectorAll('md-radio')[1];
+      const root = env.render(radioGroup);
+      await env.waitForStability();
+      element = root.querySelectorAll('md-radio')[1];
       harness = new RadioHarness(element);
       await harness.clickWithMouse();
       expect(element.checked).toBeTrue();
@@ -67,11 +67,12 @@ describe('md-radio', () => {
 
     it('clicking a radio should unselect other radio which is already selected',
        async () => {
-         fixt = await fixture(radioGroupPreSelected);
-         const a2 = fixt.root.querySelectorAll('md-radio')[1];
+         const root = env.render(radioGroupPreSelected);
+         await env.waitForStability();
+         const a2 = root.querySelectorAll('md-radio')[1];
          expect(a2.checked).toBeTrue();
 
-         const a3 = fixt.root.querySelectorAll('md-radio')[2];
+         const a3 = root.querySelectorAll('md-radio')[2];
          harness = new RadioHarness(a3);
          await harness.clickWithMouse();
          expect(a3.checked).toBeTrue();
@@ -79,10 +80,11 @@ describe('md-radio', () => {
        });
 
     it('disabled radio should not be selected when clicked', async () => {
-      fixt = await fixture(radioGroupDisabled);
-      const a1 = fixt.root.querySelectorAll('md-radio')[0];
+      const root = env.render(radioGroupDisabled);
+      await env.waitForStability();
+      const a1 = root.querySelectorAll('md-radio')[0];
       expect(a1.checked).toBeFalse();
-      const a2 = fixt.root.querySelectorAll('md-radio')[1];
+      const a2 = root.querySelectorAll('md-radio')[1];
       expect(a2.checked).toBeTrue();
 
       await (new RadioHarness(a1)).clickWithMouse();
@@ -95,11 +97,12 @@ describe('md-radio', () => {
 
   describe('events', () => {
     it('Should trigger change event when a radio is selected', async () => {
-      fixt = await fixture(radioGroupPreSelected);
+      const root = env.render(radioGroupPreSelected);
+      await env.waitForStability();
       const changeHandler = jasmine.createSpy('changeHandler');
-      fixt.root.addEventListener('change', changeHandler);
+      root.addEventListener('change', changeHandler);
 
-      const a3 = fixt.root.querySelectorAll('md-radio')[2];
+      const a3 = root.querySelectorAll('md-radio')[2];
       harness = new RadioHarness(a3);
       await harness.clickWithMouse();
 
@@ -111,45 +114,48 @@ describe('md-radio', () => {
 
   describe('navigation', () => {
     it('Using arrow right should select the next radio button', async () => {
-      fixt = await fixture(radioGroupPreSelected);
-      const a2 = fixt.root.querySelectorAll('md-radio')[1];
+      const root = env.render(radioGroupPreSelected);
+      await env.waitForStability();
+      const a2 = root.querySelectorAll('md-radio')[1];
       expect(a2.checked).toBeTrue();
 
       const eventRight =
           new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true});
       a2.dispatchEvent(eventRight);
 
-      const a3 = fixt.root.querySelectorAll('md-radio')[2];
+      const a3 = root.querySelectorAll('md-radio')[2];
       expect(a3.checked).toBeTrue();
       expect(a2.checked).toBeFalse();
     });
 
     it('Using arrow right on the last radio should select the first radio in that group',
        async () => {
-         fixt = await fixture(radioGroupPreSelected);
+         const root = env.render(radioGroupPreSelected);
+         await env.waitForStability();
 
-         const a2 = fixt.root.querySelectorAll('md-radio')[1];
+         const a2 = root.querySelectorAll('md-radio')[1];
          expect(a2.checked).toBeTrue();
 
-         const eventRight = new KeyboardEvent(
-             'keydown', {key: 'ArrowRight', bubbles: true});
+         const eventRight =
+             new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true});
          a2.dispatchEvent(eventRight);
-         const a3 = fixt.root.querySelectorAll('md-radio')[2];
+         const a3 = root.querySelectorAll('md-radio')[2];
          a3.dispatchEvent(eventRight);
 
          expect(a3.checked).toBeFalse();
-         const a1 = fixt.root.querySelectorAll('md-radio')[0];
+         const a1 = root.querySelectorAll('md-radio')[0];
          expect(a1.checked).toBeTrue();
-         const b1 = fixt.root.querySelectorAll('md-radio')[3];
+         const b1 = root.querySelectorAll('md-radio')[3];
          expect(b1.checked).toBeFalse();
        });
   });
 
   describe('manages selection groups', () => {
     it('synchronously', async () => {
-      fixt = await fixture(radioGroup);
+      const root = env.render(radioGroup);
+      await env.waitForStability();
 
-      const [a1, a2, b1] = [...fixt.root.querySelectorAll('md-radio')];
+      const [a1, a2, b1] = [...root.querySelectorAll('md-radio')];
 
       expect(a1.checked).toBeFalse();
       expect(a2.checked).toBeFalse();
@@ -187,9 +193,10 @@ describe('md-radio', () => {
     });
 
     it('after updates settle', async () => {
-      fixt = await fixture(radioGroup);
+      const root = env.render(radioGroup);
+      await env.waitForStability();
 
-      const radios = [...fixt.root.querySelectorAll('md-radio')];
+      const radios = [...root.querySelectorAll('md-radio')];
       const [a1, a2, b1] = radios;
       const allUpdatesComplete = () =>
           Promise.all(radios.map((radio) => radio.updateComplete));
@@ -234,8 +241,8 @@ describe('md-radio', () => {
     });
 
     it('when checked before connected', async () => {
-      fixt = await fixture(html`<main></main>`);
-      const container = fixt.root.querySelector('main')!;
+      const root = env.render(html`<main></main>`);
+      const container = root.querySelector('main')!;
 
       const r1 = document.createElement('md-radio');
       r1.name = 'a';
@@ -283,8 +290,9 @@ describe('md-radio', () => {
 
     it('in a lit repeat', async () => {
       const values = ['a1', 'a2'];
-      fixt = await fixture(repeatedRadio(values));
-      const [a1, a2] = fixt.root.querySelectorAll('md-radio');
+      const root = env.render(repeatedRadio(values));
+      await env.waitForStability();
+      const [a1, a2] = root.querySelectorAll('md-radio');
 
       expect(a1.checked).toBeFalse();
       expect(a2.checked).toBeFalse();
@@ -309,8 +317,9 @@ describe('md-radio', () => {
     let focusRing: MdFocusRing;
 
     beforeEach(async () => {
-      fixt = await fixture(defaultRadio);
-      element = fixt.root.querySelector('md-radio')!;
+      const root = env.render(defaultRadio);
+      await env.waitForStability();
+      element = root.querySelector('md-radio')!;
       focusRing = element.shadowRoot!.querySelector('md-focus-ring')!;
       harness = new RadioHarness(element);
     });
