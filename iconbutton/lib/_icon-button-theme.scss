@@ -6,13 +6,9 @@
 // This file contains common theme mixins that are shared across icon button
 // variants.
 
-// TODO(b/228217731): Remove compat dependencies
 @use 'sass:map';
 
-@use '@material/web/compat/touchtarget/touch-target';
 @use '@material/web/ripple/ripple-theme';
-@use '@material/web/compat/theme/keys';
-@use '@material/web/compat/theme/theme-color';
 @use '@material/web/sass/color';
 @use '@material/web/sass/theme';
 @use '@material/web/tokens';
@@ -22,7 +18,8 @@
   width: $size;
 
   @if $size {
-    margin: max(0px, calc((#{touch-target.$height} - #{$size}) / 2));
+    $touch-target-height: 48px;
+    margin: max(0px, calc((#{$touch-target-height} - #{$size}) / 2));
   }
 }
 
