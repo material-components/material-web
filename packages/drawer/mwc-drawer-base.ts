@@ -27,7 +27,7 @@ import {property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 interface InertableHTMLElement extends HTMLElement {
-  inert?: boolean;
+  inert: boolean;
 }
 
 const blockingElements =
