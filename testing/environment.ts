@@ -36,7 +36,7 @@ export class Environment {
     afterAll(() => {
       jasmine.clock().uninstall();
       for (const root of this.roots) {
-        root.style.display = 'inline-flex';
+        document.body.appendChild(root);
       }
     });
   }
@@ -115,8 +115,7 @@ export class Environment {
   private createNewRoot() {
     const currentRoot = this.getCurrentRoot();
     if (currentRoot) {
-      currentRoot.id = '';
-      currentRoot.style.display = 'none';
+      document.body.removeChild(currentRoot);
     }
 
     const root = document.createElement('div');
