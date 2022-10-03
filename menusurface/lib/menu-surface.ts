@@ -7,11 +7,8 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-// TODO(b/239222919): remove compat dependencies
-import {observer} from '@material/web/compat/base/observer.js';
-import {deepActiveElementPath, doesElementContainFocus} from '@material/web/compat/base/utils.js';
 import {isRtl} from '@material/web/controller/is-rtl.js';
-import {html, LitElement} from 'lit';
+import {html, LitElement, PropertyValues} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
@@ -48,81 +45,24 @@ export abstract class MenuSurface extends LitElement {
 
   @query('slot') slotElement!: HTMLSlotElement|null;
 
-  @property({type: Boolean})
-  @observer(function(this: MenuSurface, isAbsolute: boolean) {
-    if (this.mdcFoundation && !this.fixed) {
-      this.mdcFoundation.setIsHoisted(isAbsolute);
-    }
-  })
-  absolute = false;
+  @property({type: Boolean}) absolute = false;
 
   @property({type: Boolean}) fullwidth = false;
 
-  @property({type: Boolean})
-  @observer(function(this: MenuSurface, isFixed: boolean) {
-    if (this.mdcFoundation && !this.absolute) {
-      this.mdcFoundation.setFixedPosition(isFixed);
-    }
-  })
-  fixed = false;
+  @property({type: Boolean}) fixed = false;
 
-  @property({type: Number})
-  @observer(function(this: MenuSurface, value: number|null) {
-    if (this.mdcFoundation && this.y !== null && value !== null) {
-      this.mdcFoundation.setAbsolutePosition(value, this.y);
-      this.mdcFoundation.setAnchorMargin(
-          {left: value, top: this.y, right: -value, bottom: this.y});
-    }
-  })
-  x: number|null = null;
+  @property({type: Number}) x: number|null = null;
 
-  @property({type: Number})
-  @observer(function(this: MenuSurface, value: number|null) {
-    if (this.mdcFoundation && this.x !== null && value !== null) {
-      this.mdcFoundation.setAbsolutePosition(this.x, value);
-      this.mdcFoundation.setAnchorMargin(
-          {left: this.x, top: value, right: -this.x, bottom: value});
-    }
-  })
-  y: number|null = null;
+  @property({type: Number}) y: number|null = null;
 
   // must be defined before open or else race condition in foundation occurs.
-  @property({type: Boolean})
-  @observer(function(this: MenuSurface, value: boolean) {
-    if (this.mdcFoundation) {
-      this.mdcFoundation.setQuickOpen(value);
-    }
-  })
-  quick = false;
+  @property({type: Boolean}) quick = false;
 
-  @property({type: Boolean, reflect: true})
-  @observer(function(this: MenuSurface, isOpen: boolean, wasOpen: boolean) {
-    if (this.mdcFoundation) {
-      if (isOpen) {
-        this.mdcFoundation.open();
-        // wasOpen helps with first render (when it is `undefined`) perf
-      } else if (wasOpen !== undefined) {
-        this.mdcFoundation.close(this.skipRestoreFocus);
-      }
-    }
-  })
-  open = false;
+  @property({type: Boolean, reflect: true}) open = false;
 
   @property({type: Boolean}) stayOpenOnBodyClick = false;
 
   @property({type: Boolean}) skipRestoreFocus = false;
-
-  @state()
-  @observer(function(this: MenuSurface, value: CornerEnum) {
-    if (this.mdcFoundation) {
-      if (value) {
-        this.mdcFoundation.setAnchorCorner(value);
-      } else {
-        this.mdcFoundation.setAnchorCorner(value);
-      }
-    }
-  })
-  protected bitwiseCorner: CornerEnum = CornerEnum.TOP_START;
 
   protected previousFlipMenuHorizontally = false;
 
@@ -130,26 +70,9 @@ export abstract class MenuSurface extends LitElement {
    * Whether to align the menu surface to the opposite side of the default
    * alignment.
    */
-  @observer(function(this: MenuSurface, flipMenuHorizontally: boolean) {
-    if (!this.mdcFoundation) return;
+  @property({type: Boolean}) flipMenuHorizontally = false;
 
-    if (this.previousFlipMenuHorizontally !== flipMenuHorizontally) {
-      this.mdcFoundation.flipCornerHorizontally();
-    }
-    this.previousFlipMenuHorizontally = flipMenuHorizontally;
-  })
-  @property({type: Boolean})
-  flipMenuHorizontally = false;
-
-  @property({type: String})
-  @observer(function(this: MenuSurface, value: Corner) {
-    if (this.mdcFoundation) {
-      if (value) {
-        this.bitwiseCorner = stringToCorner[value];
-      }
-    }
-  })
-  corner: Corner = 'BOTTOM_START';
+  @property({type: String}) corner: Corner = 'BOTTOM_START';
 
   @state() protected styleTop = '';
   @state() protected styleLeft = '';
@@ -191,6 +114,49 @@ export abstract class MenuSurface extends LitElement {
       'md3-menu-surface--fixed': this.fixed,
       'md3-menu-surface--fullwidth': this.fullwidth,
     };
+  }
+
+  protected override updated(changedProperties: PropertyValues<MenuSurface>) {
+    if (changedProperties.has('absolute') && !this.fixed) {
+      this.mdcFoundation.setIsHoisted(this.absolute);
+    }
+
+    if (changedProperties.has('fixed') && !this.absolute) {
+      this.mdcFoundation.setFixedPosition(this.fixed);
+    }
+
+    if ((changedProperties.has('x') || changedProperties.has('y')) &&
+        this.x !== null && this.y !== null) {
+      this.mdcFoundation.setAbsolutePosition(this.x, this.y);
+      this.mdcFoundation.setAnchorMargin(
+          {left: this.x, top: this.y, right: -this.y, bottom: this.y});
+    }
+
+    if (changedProperties.has('quick')) {
+      this.mdcFoundation.setQuickOpen(this.quick);
+    }
+
+    if (changedProperties.has('open')) {
+      const wasOpen = changedProperties.get('open');
+      if (this.open) {
+        this.mdcFoundation.open();
+        // wasOpen helps with first render (when it is `undefined`) perf
+      } else if (wasOpen !== undefined) {
+        this.mdcFoundation.close(this.skipRestoreFocus);
+      }
+    }
+
+    if (changedProperties.has('flipMenuHorizontally')) {
+      if (this.previousFlipMenuHorizontally !== this.flipMenuHorizontally) {
+        this.mdcFoundation.flipCornerHorizontally();
+      }
+      this.previousFlipMenuHorizontally = this.flipMenuHorizontally;
+    }
+
+    if (changedProperties.has('corner') && this.corner) {
+      const bitwiseCorner = stringToCorner[this.corner];
+      this.mdcFoundation.setAnchorCorner(bitwiseCorner);
+    }
   }
 
   protected override firstUpdated() {
@@ -248,17 +214,10 @@ export abstract class MenuSurface extends LitElement {
         this.styleTransformOrigin = origin;
       },
       isFocused: () => {
-        return doesElementContainFocus(this);
+        return this.matches(':focus-within');
       },
       saveFocus: () => {
-        const activeElementPath = deepActiveElementPath();
-        const pathLength = activeElementPath.length;
-
-        if (!pathLength) {
-          this.previouslyFocused = null;
-        }
-
-        this.previouslyFocused = activeElementPath[pathLength - 1];
+        this.previouslyFocused = document.activeElement;
       },
       restoreFocus: () => {
         if (!this.previouslyFocused) {
