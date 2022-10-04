@@ -6,14 +6,11 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-// TODO(b/228217731): Remove compat dependencies
 @use 'sass:map';
 
 @use '@material/web/elevation/lib/elevation-theme';
 @use '@material/web/navigationtab/lib/navigation-tab-theme';
-@use '@material/web/compat/theme/keys';
-@use '@material/web/compat/theme/map-ext';
-@use '@material/web/compat/theme/theme-color';
+@use '@material/web/sass/map-ext';
 @use '@material/web/sass/resolvers';
 @use '@material/web/sass/theme';
 @use '@material/web/tokens/latest' as tokens;
@@ -55,7 +52,7 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
 
   .md3-navigation-tab {
     @include navigation-tab-theme.theme-styles(
-      map-ext.pick($theme, map.keys(navigation-tab-theme.$light-theme)...)
+      map-ext.pick($theme, map.keys(navigation-tab-theme.$light-theme))
     );
   }
 

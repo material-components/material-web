@@ -4,64 +4,65 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {AnyDuringAriaMigration, ariaProperty} from '@material/web/compat/base/aria-property.js';
-import {observer} from '@material/web/compat/base/observer.js';
-import {deepActiveElementPath} from '@material/web/compat/base/utils.js';
-import {KEY, normalizeKey} from '@material/web/compat/dom/keyboard.js';
 import {isRtl} from '@material/web/controller/is-rtl.js';
 import {NavigationTab} from '@material/web/navigationtab/lib/navigation-tab.js';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
+import {ariaProperty} from '../../decorators/aria-property.js';
+
 import {NavigationTabInteractionEvent} from './constants.js';
 import {NavigationBarState} from './state.js';
 
 /** @soyCompatible */
 export class NavigationBar extends LitElement implements NavigationBarState {
-  @property({type: Number})  // tslint:disable-next-line:no-new-decorators
-  @observer(function(this: NavigationBar, value: number) {
-    this.onActiveIndexChange(this.activeIndex);
-    this.dispatchEvent(new CustomEvent('navigation-bar-activated', {
-      detail: {tab: this.tabs[value], activeIndex: this.activeIndex},
-      bubbles: true,
-      composed: true
-    }));
-  })
-  activeIndex = 0;
+  @property({type: Number}) activeIndex = 0;
 
-  @property({type: Boolean})  // tslint:disable-next-line:no-new-decorators
-  @observer(function(this: NavigationBar, value: boolean) {
-    this.onHideInactiveLabelsChange(this.hideInactiveLabels);
-  })
-  hideInactiveLabels = false;
+  @property({type: Boolean}) hideInactiveLabels = false;
 
-  // tslint:disable-next-line:no-new-decorators
-  @observer(function(this: NavigationBar) {
-    this.onHideInactiveLabelsChange(this.hideInactiveLabels);
-    this.onActiveIndexChange(this.activeIndex);
-  })
   tabs: NavigationTab[] = [];
 
   @queryAssignedElements({flatten: true})
   protected tabsElement!: NavigationTab[];
 
-  /** @soyPrefixAttribute */  // tslint:disable-next-line:no-new-decorators
+  // tslint:disable-next-line:no-new-decorators
   @ariaProperty
-  @property({attribute: 'aria-label'})
-  override ariaLabel: string|AnyDuringAriaMigration;
+  @property({attribute: 'data-aria-label', noAccessor: true})
+  override ariaLabel!: string;
 
   /** @soyTemplate */
   override render(): TemplateResult {
     return html`<div class="md3-navigation-bar"
             role="tablist"
-            aria-label="${ifDefined(this.ariaLabel)}"
+            aria-label="${ifDefined(this.ariaLabel || undefined)}"
             @keydown="${this.handleKeydown}"
             @navigation-tab-interaction="${this.handleNavigationTabInteraction}"
             @navigation-tab-rendered=${this.handleNavigationTabConnected}
           ><div class="md3-elevation-overlay"
         ></div><div class="md3-navigation-bar__tabs-slot-container"
         ><slot></slot></div></div>`;
+  }
+
+  protected override updated(changedProperties: PropertyValues<NavigationBar>) {
+    if (changedProperties.has('activeIndex')) {
+      this.onActiveIndexChange(this.activeIndex);
+      this.dispatchEvent(new CustomEvent('navigation-bar-activated', {
+        detail:
+            {tab: this.tabs[this.activeIndex], activeIndex: this.activeIndex},
+        bubbles: true,
+        composed: true
+      }));
+    }
+
+    if (changedProperties.has('hideInactiveLabels')) {
+      this.onHideInactiveLabelsChange(this.hideInactiveLabels);
+    }
+
+    if (changedProperties.has('tabs')) {
+      this.onHideInactiveLabelsChange(this.hideInactiveLabels);
+      this.onActiveIndexChange(this.activeIndex);
+    }
   }
 
   override firstUpdated(changedProperties: PropertyValues) {
@@ -90,32 +91,30 @@ export class NavigationBar extends LitElement implements NavigationBarState {
   }
 
   private handleKeydown(event: KeyboardEvent) {
-    const key = normalizeKey(event);
-    const activeElementPath = deepActiveElementPath();
+    const key = event.key;
     const focusedTabIndex = this.tabs.findIndex((tab) => {
-      return tab.buttonElement ===
-          activeElementPath[activeElementPath.length - 1];
+      return tab.matches(':focus-within');
     });
     const isRTL = isRtl(this);
     const maxIndex = this.tabs.length - 1;
 
-    if (key === KEY.ENTER || key === KEY.SPACEBAR) {
+    if (key === 'Enter' || key === 'Spacebar') {
       this.activeIndex = focusedTabIndex;
       return;
     }
 
-    if (key === KEY.HOME) {
+    if (key === 'Home') {
       this.tabs[0].focus();
       return;
     }
 
-    if (key === KEY.END) {
+    if (key === 'End') {
       this.tabs[maxIndex].focus();
       return;
     }
 
-    const toNextTab = (key === KEY.ARROW_RIGHT && !isRTL) ||
-        (key === KEY.ARROW_LEFT && isRTL);
+    const toNextTab =
+        (key === 'ArrowRight' && !isRTL) || (key === 'ArrowLeft' && isRTL);
     if (toNextTab && focusedTabIndex === maxIndex) {
       this.tabs[0].focus();
       return;
@@ -125,8 +124,8 @@ export class NavigationBar extends LitElement implements NavigationBarState {
       return;
     }
 
-    const toPreviousTab = (key === KEY.ARROW_LEFT && !isRTL) ||
-        (key === KEY.ARROW_RIGHT && isRTL);
+    const toPreviousTab =
+        (key === 'ArrowLeft' && !isRTL) || (key === 'ArrowRight' && isRTL);
     if (toPreviousTab && focusedTabIndex === 0) {
       this.tabs[maxIndex].focus();
       return;
