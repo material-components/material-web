@@ -8,8 +8,6 @@
 // stylelint-disable selector-class-pattern --
 // Internal styling for Chip MDC component.
 
-@use '@material/web/compat/theme/theme-color';
-@use '@material/web/compat/touchtarget/touch-target';
 @use '@material/web/focus/lib/focus-ring-theme';
 @use '@material/web/motion/animation';
 // TODO(b/240224981): Uncomment when styles are translated to md3 ripple
@@ -145,13 +143,18 @@
   }
 
   .md3-chip--touch {
-    @include touch-target.margin(
-      $component-height: chip-theme.$height,
-    );
+    $margin: math.div(48px - chip-theme.$height, 2);
+    margin-top: $margin;
+    margin-bottom: $margin;
   }
 
   .md3-chip__action-touch {
-    @include touch-target.touch-target();
+    position: absolute;
+    top: 50%;
+    height: 48px;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
   }
 
   .md3-chip__text-label {

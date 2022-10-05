@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {KEY} from '@material/web/compat/dom/keyboard.js';
-
 import {MDCChipActionFocusBehavior, MDCChipActionType} from '../../action/lib/constants.js';
 import {MDCChipAnimation} from '../../chip/lib/constants.js';
 
@@ -70,7 +68,8 @@ export class MDCChipSetFoundation {
       return;
     }
 
-    if (animation === MDCChipAnimation.ENTER && isComplete && addedAnnouncement) {
+    if (animation === MDCChipAnimation.ENTER && isComplete &&
+        addedAnnouncement) {
       this.adapter.announceMessage(addedAnnouncement);
       return;
     }
@@ -101,40 +100,40 @@ export class MDCChipSetFoundation {
     const {chipID, key, isRTL, source} = detail;
     const index = this.adapter.getChipIndexById(chipID);
 
-    const toNextChip = (key === KEY.ARROW_RIGHT && !isRTL) ||
-        (key === KEY.ARROW_LEFT && isRTL);
+    const toNextChip =
+        (key === 'ArrowRight' && !isRTL) || (key === 'ArrowLeft' && isRTL);
     if (toNextChip) {
       // Start from the next chip so we increment the index
       this.focusNextChipFrom(index + 1);
       return;
     }
 
-    const toPreviousChip = (key === KEY.ARROW_LEFT && !isRTL) ||
-        (key === KEY.ARROW_RIGHT && isRTL);
+    const toPreviousChip =
+        (key === 'ArrowLeft' && !isRTL) || (key === 'ArrowRight' && isRTL);
     if (toPreviousChip) {
       // Start from the previous chip so we decrement the index
       this.focusPrevChipFrom(index - 1);
       return;
     }
 
-    if (key === KEY.ARROW_DOWN) {
+    if (key === 'ArrowDown') {
       // Start from the next chip so we increment the index
       this.focusNextChipFrom(index + 1, source);
       return;
     }
 
-    if (key === KEY.ARROW_UP) {
+    if (key === 'ArrowUp') {
       // Start from the previous chip so we decrement the index
       this.focusPrevChipFrom(index - 1, source);
       return;
     }
 
-    if (key === KEY.HOME) {
+    if (key === 'Home') {
       this.focusNextChipFrom(0, source);
       return;
     }
 
-    if (key === KEY.END) {
+    if (key === 'End') {
       this.focusPrevChipFrom(this.adapter.getChipCount() - 1, source);
       return;
     }

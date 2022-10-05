@@ -4,13 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {AnimationFrame} from '@material/web/compat/animation/animationframe.js';
-import {KEY} from '@material/web/compat/dom/keyboard.js';
-
 import {MDCChipActionFocusBehavior, MDCChipActionInteractionTrigger, MDCChipActionType} from '../../action/lib/constants.js';
 import {MDCChipActionInteractionEventDetail} from '../../action/lib/types.js';
 
 import {MDCChipAdapter} from './adapter.js';
+import {AnimationFrame} from './animationframe.js';
 import {MDCChipAnimation, MDCChipAttributes, MDCChipCssClasses, MDCChipEvents} from './constants.js';
 import {ActionInteractionEvent, ActionNavigationEvent, MDCChipAnimationEventDetail, MDCChipInteractionEventDetail, MDCChipNavigationEventDetail} from './types.js';
 
@@ -224,8 +222,8 @@ export class MDCChipFoundation {
   }
 
   private directionFromKey(key: string, isRTL: boolean): Direction {
-    const isLeftKey = key === KEY.ARROW_LEFT;
-    const isRightKey = key === KEY.ARROW_RIGHT;
+    const isLeftKey = key === 'ArrowLeft';
+    const isRightKey = key === 'ArrowRight';
     if (!isRTL && isLeftKey || isRTL && isRightKey) {
       return Direction.LEFT;
     }
@@ -318,4 +316,3 @@ export class MDCChipFoundation {
     }
   }
 }
-

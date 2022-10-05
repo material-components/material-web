@@ -5,7 +5,6 @@
  */
 
 @use 'sass:map';
-@use '@material/web/compat/theme/keys';
 @use '@material/web/sass/resolvers';
 @use '@material/web/sass/theme';
 @use './chip-theme';
@@ -116,17 +115,12 @@ $_custom-property-prefix: 'filter-chip';
     }
   }
 
-  @include keys.declare-custom-properties(
-    $theme,
-    $prefix: $_custom-property-prefix
-  );
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
+  @include theme.emit-theme-vars($theme);
 }
 
 @mixin theme-styles($theme, $resolvers: resolvers.$material) {
   @include theme.validate-theme($_light-theme, $theme);
-  $theme: keys.create-theme-properties(
-    $theme,
-    $prefix: $_custom-property-prefix
-  );
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
   @include chip-theme.theme-styles($theme, $resolvers: $resolvers);
 }

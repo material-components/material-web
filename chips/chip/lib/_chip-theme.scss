@@ -12,10 +12,6 @@
 @use 'sass:math';
 @use 'sass:color';
 
-@use '@material/web/compat/density/density';
-@use '@material/web/compat/theme/keys';
-@use '@material/web/compat/theme/state';
-@use '@material/web/compat/theme/theme-color';
 @use '@material/web/elevation/lib/elevation-theme';
 @use '@material/web/ripple/ripple-theme';
 @use '@material/web/sass/dom';
@@ -28,7 +24,7 @@
 $height: 32px;
 $minimum-height: 24px;
 $maximum-height: $height;
-$density-scale: density.$default-scale;
+$density-scale: 0;
 $density-config: (
   height: (
     default: $height,
@@ -39,14 +35,14 @@ $density-config: (
 $radius: math.div($height, 2);
 $type-scale: body2;
 $container-color: color.mix(
-  theme-color.prop-value(on-surface),
-  theme-color.prop-value(surface),
+  #000,
+  #fff,
   12%
 );
-$text-label-color: rgba(theme-color.prop-value(on-surface), 0.87);
-$icon-color: rgba(theme-color.prop-value(on-surface), 0.87);
-$checkmark-color: rgba(theme-color.prop-value(on-surface), 0.87);
-$delete-action-color: rgba(theme-color.prop-value(on-surface), 0.87);
+$text-label-color: rgba(#000, 0.87);
+$icon-color: rgba(#000, 0.87);
+$checkmark-color: rgba(#000, 0.87);
+$delete-action-color: rgba(#000, 0.87);
 $ripple-color: on-surface;
 $checkmark-size: 20px;
 $leading-icon-size: 20px;
@@ -66,7 +62,7 @@ $ripple-target-delete: '.md3-chip__ripple--delete';
 
 // Filter chip colors
 $filter-selected-container-color: color.mix(
-  theme-color.prop-value(on-surface),
+  #000,
   $container-color,
   8%
 );
@@ -191,18 +187,13 @@ $_custom-property-prefix: 'chip';
 @mixin theme($theme, $resolvers: resolvers.$material) {
   @include theme.validate-theme($_light-theme, $theme);
   $theme: _resolve-theme($theme, $resolvers: $resolvers);
-  @include keys.declare-custom-properties(
-    $theme,
-    $prefix: $_custom-property-prefix
-  );
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
+  @include theme.emit-theme-vars($theme);
 }
 
 @mixin theme-styles($theme, $resolvers: resolvers.$material) {
   @include theme.validate-theme-keys($_light-theme, $theme);
-  $theme: keys.create-theme-properties(
-    $theme,
-    $prefix: $_custom-property-prefix
-  );
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
   @include _container-shape(map.get($theme, container-shape));
   @include _avatar-shape(map.get($theme, with-avatar-avatar-shape));
@@ -560,19 +551,19 @@ $_custom-property-prefix: 'chip';
 /// @param {Number | String} $density-scale - Density scale value for component.
 ///     Supported density scale values are `-2`, `-1`, `0`.
 ///
-@mixin density($density-scale) {
-  $height: density.prop-value(
-    $density-config: $density-config,
-    $density-scale: $density-scale,
-    $property-name: height,
-  );
+// @mixin density($density-scale) {
+//   $height: density.prop-value(
+//     $density-config: $density-config,
+//     $density-scale: $density-scale,
+//     $property-name: height,
+//   );
 
-  @include height($height);
+//   @include height($height);
 
-  @if $density-scale != 0 {
-    @include _reset-touch-target();
-  }
-}
+//   @if $density-scale != 0 {
+//     @include _reset-touch-target();
+//   }
+// }
 
 ///
 /// Resets touch target-related styles. This is called from the density mixin to
@@ -626,11 +617,11 @@ $_custom-property-prefix: 'chip';
   $rtl-reflexive: false,
   $density-scale: $density-scale
 ) {
-  $height: density.prop-value(
-    $density-config: $density-config,
-    $density-scale: $density-scale,
-    $property-name: height,
-  );
+  // $height: density.prop-value(
+  //   $density-config: $density-config,
+  //   $density-scale: $density-scale,
+  //   $property-name: height,
+  // );
 
 // TODO(b/240224981): Translate to md3 shape
 //   @include shape.radius(
@@ -699,13 +690,13 @@ $_custom-property-prefix: 'chip';
 /// @param {Color | Map} $color-or-map - The outline's color or a state Map
 ///
 @mixin outline-color($color-or-map) {
-  @include _outline-color(state.get-default-state($color-or-map));
+  @include _outline-color(map.get($color-or-map, default));
   @include _is-enabled() {
-    @include _outline-color(state.get-enabled-state($color-or-map));
+    @include _outline-color(map.get($color-or-map, enabled));
   }
-  @include _focus-outline-color(state.get-focus-state($color-or-map));
+  @include _focus-outline-color(map.get($color-or-map, focus));
   @include _is-disabled() {
-    @include _outline-color(state.get-disabled-state($color-or-map));
+    @include _outline-color(map.get($color-or-map, disabled));
   }
 }
 
@@ -790,12 +781,12 @@ $_custom-property-prefix: 'chip';
 /// @param {Color | Map} $color-or-map - The container's color or a state Map
 ///
 @mixin container-color($color-or-map) {
-  @include _container-color(state.get-default-state($color-or-map));
+  @include _container-color(map.get($color-or-map, default));
   @include _is-enabled() {
-    @include _container-color(state.get-enabled-state($color-or-map));
+    @include _container-color(map.get($color-or-map, enabled));
   }
   @include _is-disabled() {
-    @include _container-color(state.get-disabled-state($color-or-map));
+    @include _container-color(map.get($color-or-map, disabled));
   }
 }
 
@@ -842,23 +833,23 @@ $_custom-property-prefix: 'chip';
 /// @param {Color | Map} $color-or-map - The label's color or a state Map
 ///
 @mixin text-label-color($color-or-map) {
-  @include _text-label-color(state.get-default-state($color-or-map));
+  @include _text-label-color(map.get($color-or-map, default));
   @include _is-enabled() {
-    @include _text-label-color(state.get-enabled-state($color-or-map));
+    @include _text-label-color(map.get($color-or-map, enabled));
   }
   .md3-chip__action--primary:not(.md3-chip__action--presentational):hover {
-    @include _text-label-color(state.get-hover-state($color-or-map));
+    @include _text-label-color(map.get($color-or-map, hover));
   }
 
   .md3-chip__action--primary:not(.md3-chip__action--presentational) {
     // TODO(b/240224981): Translate to md3 ripple
     // @include ripple-theme.focus() {
-    //   @include _text-label-color(state.get-focus-state($color-or-map));
+    //   @include _text-label-color(map.get($color-or-map, focus));
     // }
   }
 
   @include _is-disabled() {
-    @include _text-label-color(state.get-disabled-state($color-or-map));
+    @include _text-label-color(map.get($color-or-map, disabled));
   }
 }
 
@@ -948,25 +939,25 @@ $_custom-property-prefix: 'chip';
 /// @param {Color | Map} $color-or-map - The icon's color or a state Map
 ///
 @mixin icon-color($color-or-map) {
-  @include _icon-color(state.get-default-state($color-or-map));
+  @include _icon-color(map.get($color-or-map, default));
 
   @include _is-enabled() {
-    @include _icon-color(state.get-enabled-state($color-or-map));
+    @include _icon-color(map.get($color-or-map, enabled));
   }
 
   .md3-chip__action--primary:not(.md3-chip__action--presentational):hover {
-    @include _icon-color(state.get-hover-state($color-or-map));
+    @include _icon-color(map.get($color-or-map, hover));
   }
 
   .md3-chip__action--primary:not(.md3-chip__action--presentational) {
     // TODO(b/240224981): Translate to md3 ripple
     // @include ripple-theme.focus() {
-    //   @include _icon-color(state.get-focus-state($color-or-map));
+    //   @include _icon-color(map.get($color-or-map, focus));
     // }
   }
 
   @include _is-disabled() {
-    @include _icon-color(state.get-disabled-state($color-or-map));
+    @include _icon-color(map.get($color-or-map, disabled));
   }
 }
 
@@ -1000,12 +991,12 @@ $_custom-property-prefix: 'chip';
 ///
 @mixin icon-container-color($color-or-map) {
   @include _icon-container-color(
-    state.get-default-state($color-or-map)
+    map.get($color-or-map, default)
   );
 
   .md3-chip__action--primary:not(.md3-chip__action--presentational):hover {
     @include _icon-container-color(
-      state.get-hover-state($color-or-map)
+      map.get($color-or-map, hover)
     );
   }
 
@@ -1013,14 +1004,14 @@ $_custom-property-prefix: 'chip';
     // TODO(b/240224981): Translate to md3 ripple
     // @include ripple-theme.focus() {
     //   @include _icon-container-color(
-    //     state.get-focus-state($color-or-map)
+    //     map.get($color-or-map, focus)
     //   );
     // }
   }
 
   &.md3-chip--disabled {
     @include _icon-container-color(
-      state.get-disabled-state($color-or-map)
+      map.get($color-or-map, disabled)
     );
   }
 }
@@ -1071,18 +1062,18 @@ $_custom-property-prefix: 'chip';
 ///
 @mixin delete-action-color($color-or-map) {
   @include _delete-action-color(
-    state.get-default-state($color-or-map)
+    map.get($color-or-map, default)
   );
 
   @include _is-enabled() {
     @include _delete-action-color(
-      state.get-enabled-state($color-or-map)
+      map.get($color-or-map, enabled)
     );
   }
 
   .md3-chip__action--delete:hover {
     @include _delete-action-color(
-      state.get-hover-state($color-or-map)
+      map.get($color-or-map, hover)
     );
   }
 
@@ -1090,14 +1081,14 @@ $_custom-property-prefix: 'chip';
     // TODO(b/240224981): Translate to md3 ripple
     // @include ripple-theme.focus() {
     //   @include _delete-action-color(
-    //     state.get-focus-state($color-or-map)
+    //     map.get($color-or-map, focus)
     //   );
     // }
   }
 
   @include _is-disabled() {
     @include _delete-action-color(
-      state.get-disabled-state($color-or-map)
+      map.get($color-or-map, disabled)
     );
   }
 }
@@ -1134,25 +1125,25 @@ $_custom-property-prefix: 'chip';
 /// @param {Color | Map} $color-or-map - The checkmark's color or a state Map
 ///
 @mixin checkmark-color($color-or-map) {
-  @include _checkmark-color(state.get-default-state($color-or-map));
+  @include _checkmark-color(map.get($color-or-map, default));
 
   @include _is-enabled() {
-    @include _checkmark-color(state.get-enabled-state($color-or-map));
+    @include _checkmark-color(map.get($color-or-map, enabled));
   }
 
   .md3-chip__action--primary:not(.md3-chip__action--presentational):hover {
-    @include _checkmark-color(state.get-hover-state($color-or-map));
+    @include _checkmark-color(map.get($color-or-map, hover));
   }
 
   .md3-chip__action--primary {
     // TODO(b/240224981): Translate to md3 ripple
     // @include ripple-theme.focus() {
-    //   @include _checkmark-color(state.get-focus-state($color-or-map));
+    //   @include _checkmark-color(map.get($color-or-map, focus));
     // }
   }
 
   @include _is-disabled() {
-    @include _checkmark-color(state.get-disabled-state($color-or-map));
+    @include _checkmark-color(map.get($color-or-map, disabled));
   }
 }
 
@@ -1178,12 +1169,12 @@ $_custom-property-prefix: 'chip';
 ///
 @mixin checkmark-container-color($color-or-map) {
   @include _checkmark-container-color(
-    state.get-default-state($color-or-map)
+    map.get($color-or-map, default)
   );
 
   &.md3-chip--disabled {
     @include _checkmark-container-color(
-      state.get-disabled-state($color-or-map)
+      map.get($color-or-map, disabled)
     );
   }
 }

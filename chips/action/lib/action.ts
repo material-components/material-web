@@ -8,13 +8,13 @@ import '@material/web/focus/focus-ring.js';
 import '@material/web/ripple/ripple.js';
 
 import {ActionElement, BeginPressConfig, EndPressConfig} from '@material/web/actionelement/action-element.js';
-import {KEY} from '@material/web/compat/dom/keyboard.js';
 import {ariaProperty} from '@material/web/decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus.js';
 import {MdRipple} from '@material/web/ripple/ripple.js';
 import {html, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+
 import {Md3ChipActionEventType} from './events.js';
 
 /**
@@ -55,8 +55,9 @@ export abstract class Action extends ActionElement {
 
   /** @soyTemplate */
   protected renderTouchTarget(): TemplateResult {
-    return  this.isTouchable ?
-        html`<span class="md3-chip__action-touch"></span>` : html`` ;
+    return this.isTouchable ?
+        html`<span class="md3-chip__action-touch"></span>` :
+        html``;
   }
 
   /** @soyTemplate */
@@ -115,30 +116,30 @@ export abstract class Action extends ActionElement {
 
   protected handleKeyDown(e: KeyboardEvent) {
     switch (e.key) {
-      case KEY.ENTER:
-      case KEY.SPACEBAR:
+      case 'Enter':
+      case ' ':
         this.dispatchCustomEvent(this.getInteractionEvent());
         break;
-      case KEY.DELETE:
-      case KEY.BACKSPACE:
+      case 'Delete':
+      case 'Backspace':
         if (this.isDeletable) {
           this.dispatchCustomEvent(Md3ChipActionEventType.DELETE);
         }
         break;
-      case KEY.ARROW_LEFT:
-        this.dispatchCustomEvent(this.isRTL() ?
-            Md3ChipActionEventType.NAVIGATE_TO_NEXT :
-            Md3ChipActionEventType.NAVIGATE_TO_PREV);
+      case 'ArrowLeft':
+        this.dispatchCustomEvent(
+            this.isRTL() ? Md3ChipActionEventType.NAVIGATE_TO_NEXT :
+                           Md3ChipActionEventType.NAVIGATE_TO_PREV);
         break;
-      case KEY.ARROW_RIGHT:
-        this.dispatchCustomEvent(this.isRTL() ?
-            Md3ChipActionEventType.NAVIGATE_TO_PREV :
-            Md3ChipActionEventType.NAVIGATE_TO_NEXT);
+      case 'ArrowRight':
+        this.dispatchCustomEvent(
+            this.isRTL() ? Md3ChipActionEventType.NAVIGATE_TO_PREV :
+                           Md3ChipActionEventType.NAVIGATE_TO_NEXT);
         break;
-      case KEY.HOME:
+      case 'Home':
         this.dispatchCustomEvent(Md3ChipActionEventType.NAVIGATE_TO_FIRST);
         break;
-      case KEY.END:
+      case 'End':
         this.dispatchCustomEvent(Md3ChipActionEventType.NAVIGATE_TO_LAST);
         break;
       default:
