@@ -98,7 +98,7 @@ export class NavigationBar extends LitElement implements NavigationBarState {
     const isRTL = isRtl(this);
     const maxIndex = this.tabs.length - 1;
 
-    if (key === 'Enter' || key === 'Spacebar') {
+    if (key === 'Enter' || key === ' ') {
       this.activeIndex = focusedTabIndex;
       return;
     }

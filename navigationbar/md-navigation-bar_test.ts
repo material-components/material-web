@@ -241,7 +241,7 @@ describe('md-navigation-bar', () => {
       const eventRight =
           new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true});
       const eventSpacebar =
-          new KeyboardEvent('keydown', {key: 'Spacebar', bubbles: true});
+          new KeyboardEvent('keydown', {key: ' ', bubbles: true});
       tab1.focus();
       expect(element.activeIndex).toBe(0);
       bar.dispatchEvent(eventRight);
