@@ -9,11 +9,11 @@ import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
-import {List} from '../../list/lib/list.js';
-import {MenuSurface} from '../../menusurface/lib/menu-surface.js';
 import {TextField} from '../../textfield/lib/text-field.js';
 
 import {AutocompleteItem} from './autocompleteitem/autocomplete-item.js';
+import {AutocompleteList} from './autocompletelist/autocomplete-list.js';
+import {AutocompleteSurface} from './autocompletesurface/autocomplete-surface.js';
 
 /** @soyCompatible */
 export abstract class Autocomplete extends TextField {
@@ -35,12 +35,14 @@ export abstract class Autocomplete extends TextField {
   protected abstract readonly menuSurfaceTag: StaticValue;
   protected abstract readonly listTag: StaticValue;
 
-  @query('.md3-autocomplete__menu-surface') menuSurface?: MenuSurface|null;
-  @query('.md3-autocomplete__list') list?: List|null;
+  @query('.md3-autocomplete__menu-surface')
+  menuSurface?: AutocompleteSurface|null;
+  @query('.md3-autocomplete__list') list?: AutocompleteList|null;
 
   @queryAssignedElements({flatten: true})
   protected slottedItems?: AutocompleteItem[];
 
+  @property({type: String}) override value = '';
   @state() protected selectedItem: AutocompleteItem|null = null;
 
   /** @soyTemplate */
@@ -67,6 +69,11 @@ export abstract class Autocomplete extends TextField {
     if (changedProperties.has('selectedItem')) {
       this.updateSelectedItem();
       this.ariaActiveDescendant = this.selectedItem?.itemId ?? null;
+    }
+    if (changedProperties.has('value')) {
+      this.dispatchEvent(new CustomEvent(
+          'autocomplete-value-changed',
+          {detail: {value: this.value}, bubbles: true, composed: true}));
     }
   }
 

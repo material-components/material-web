@@ -1,0 +1,20 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use "sass:map";
+@use './outlined-autocomplete-theme';
+@use './autocomplete';
+
+@include autocomplete.static-styles;
+
+.md3-autocomplete--outlined {
+  // TODO(b/251183088): Clean up container-shape once token is correct.
+  @include outlined-autocomplete-theme.theme-styles(
+    map.merge(outlined-autocomplete-theme.$light-theme, (text-field-container-shape: 4px))
+  );
+}
