@@ -4,9 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {List} from '@material/web/list/lib/list.js';
-import {ARIARole} from '@material/web/types/aria.js';
 import {ClassInfo} from 'lit/directives/class-map.js';
+
+import {List} from '../../../list/lib/list.js';
+import {ARIARole} from '../../../types/aria.js';
 
 /** Base class for autocomplete list component. */
 export class AutocompleteList extends List {

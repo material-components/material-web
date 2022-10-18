@@ -12,14 +12,14 @@
 @use 'sass:math';
 @use 'sass:color';
 
-@use '@material/web/elevation/lib/elevation-theme';
-@use '@material/web/ripple/ripple-theme';
-@use '@material/web/sass/dom';
-@use '@material/web/sass/resolvers';
-@use '@material/web/sass/theme';
-@use '@material/web/sass/typography';
+@use '../../../elevation/lib/elevation-theme';
+@use '../../../ripple/ripple-theme';
+@use '../../../sass/dom';
+@use '../../../sass/resolvers';
+@use '../../../sass/theme';
+@use '../../../sass/typography';
 // TODO(b/240224981): Uncomment when styles are traslated to md3 shape.
-// @use '@material/web/sass/shape';
+// @use '../../../sass/shape';
 
 $height: 32px;
 $minimum-height: 24px;

@@ -7,11 +7,12 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
-import {isRtl} from '@material/web/controller/is-rtl.js';
 import {html, LitElement, PropertyValues} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
+
+import {isRtl} from '../../controller/is-rtl.js';
 
 import {MDCMenuSurfaceAdapter} from './adapter.js';
 import {Corner as CornerEnum} from './constants.js';

@@ -5,8 +5,8 @@
 
 @use 'sass:map';
 @use 'sass:meta';
-@use '@material/web/sass/theme';
-@use '@material/web/sass/var';
+@use '../../sass/theme';
+@use '../../sass/var';
 @use './elevation-overlay-theme';
 
 @function resolve-theme(

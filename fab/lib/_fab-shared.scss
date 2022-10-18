@@ -6,9 +6,9 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@use '@material/web/sass/touch-target';
-@use '@material/web/elevation/lib/surface';
-@use '@material/web/focus/lib/focus-ring-theme';
+@use '../../sass/touch-target';
+@use '../../elevation/lib/surface';
+@use '../../focus/lib/focus-ring-theme';
 
 @mixin static-styles() {
   :host {

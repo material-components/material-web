@@ -7,8 +7,8 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-@use '@material/web/sass/theme';
-@use '@material/web/tokens';
+@use '../../sass/theme';
+@use '../../tokens';
 
 @function values($exclude-hardcoded-values: false) {
   $state-values: tokens.md-sys-state-values($exclude-hardcoded-values);

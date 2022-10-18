@@ -7,9 +7,10 @@
 import 'jasmine';
 import './filled-text-field.js';
 
-import {Environment} from '@material/web/testing/environment.js';
-import {Harness} from '@material/web/testing/harness.js';
 import {html} from 'lit';
+
+import {Environment} from '../testing/environment.js';
+import {Harness} from '../testing/harness.js';
 
 import {TextFieldHarness} from './harness.js';
 

@@ -6,11 +6,12 @@
 
 import '../../action/delete-action.js';
 
-import {ActionElement} from '@material/web/actionelement/action-element.js';
-import {ariaProperty} from '@material/web/decorators/aria-property.js';
 import {html, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
 import {ClassInfo} from 'lit/directives/class-map.js';
+
+import {ActionElement} from '../../../actionelement/action-element.js';
+import {ariaProperty} from '../../../decorators/aria-property.js';
 
 /** Defines the border type of a chip. */
 export enum BorderType {

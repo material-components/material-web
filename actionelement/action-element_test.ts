@@ -6,9 +6,10 @@
 
 import 'jasmine';
 
-import {Environment} from '@material/web/testing/environment.js';
 import {html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
+
+import {Environment} from '../testing/environment.js';
 
 import {ActionElement} from './action-element.js';
 

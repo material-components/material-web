@@ -4,7 +4,7 @@
 //
 
 @use 'sass:map';
-@use '@material/web/sass/theme';
+@use '../../../sass/theme';
 @use '../tokens';
 
 $light-theme: (

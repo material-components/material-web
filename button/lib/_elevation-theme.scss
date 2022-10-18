@@ -6,8 +6,8 @@
 @use 'sass:map';
 @use 'sass:meta';
 
-@use '@material/web/elevation/lib/elevation-theme';
-@use '@material/web/ripple/ripple-theme';
+@use '../../elevation/lib/elevation-theme';
+@use '../../ripple/ripple-theme';
 
 @mixin theme-styles($theme) {
   @include _elevation(

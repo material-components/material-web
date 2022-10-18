@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ListItem} from '@material/web/list/lib/listitem/list-item.js';
-import {ARIARole} from '@material/web/types/aria.js';
+import {ListItem} from '../../../list/lib/listitem/list-item.js';
+import {ARIARole} from '../../../types/aria.js';
 
 /** Base class for menu item component. */
 export class MenuItem extends ListItem {

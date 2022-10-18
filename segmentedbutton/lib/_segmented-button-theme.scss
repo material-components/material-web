@@ -6,9 +6,9 @@
 // stylelint-disable selector-class-pattern -- allow `md3-` class selectors.
 
 @use 'sass:map';
-@use '@material/web/sass/color';
-@use '@material/web/sass/typography';
-@use '@material/web/ripple/ripple-theme';
+@use '../../sass/color';
+@use '../../sass/typography';
+@use '../../ripple/ripple-theme';
 
 @mixin unselected-ripple($ripple) {
   &.md3-segmented-button--unselected {

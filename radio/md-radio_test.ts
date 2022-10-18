@@ -8,9 +8,9 @@
 // tslint:disable:strip-private-property-underscore
 
 
-import {MdFocusRing} from '@material/web/focus/focus-ring.js';
 import {html} from 'lit';
 
+import {MdFocusRing} from '../focus/focus-ring.js';
 import {Environment} from '../testing/environment.js';
 
 import {RadioHarness} from './harness.js';

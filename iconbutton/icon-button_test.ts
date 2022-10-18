@@ -8,8 +8,9 @@ import './standard-icon-button-toggle.js';
 import './standard-link-icon-button.js';
 import './standard-icon-button.js';
 
-import {Environment} from '@material/web/testing/environment.js';
 import {html} from 'lit';
+
+import {Environment} from '../testing/environment.js';
 
 import {IconButtonHarness} from './harness.js';
 import {MdStandardIconButtonToggle} from './standard-icon-button-toggle.js';

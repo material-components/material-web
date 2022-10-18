@@ -5,12 +5,12 @@
 
 @use 'sass:color';
 @use 'sass:map';
-@use '@material/web/field/lib/outlined-field-theme';
-@use '@material/web/sass/resolvers';
-@use '@material/web/sass/shape';
-@use '@material/web/sass/theme';
-@use '@material/web/sass/typography';
-@use '@material/web/tokens';
+@use '../../field/lib/outlined-field-theme';
+@use '../../sass/resolvers';
+@use '../../sass/shape';
+@use '../../sass/theme';
+@use '../../sass/typography';
+@use '../../tokens';
 @use './icon-theme';
 @use './input-theme';
 

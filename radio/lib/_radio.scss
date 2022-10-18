@@ -6,8 +6,8 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@use '@material/web/focus/lib/focus-ring-theme';
-@use '@material/web/motion/animation';
+@use '../../focus/lib/focus-ring-theme';
+@use '../../motion/animation';
 
 @use './radio-theme';
 

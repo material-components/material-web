@@ -5,8 +5,8 @@
  */
 
 @use 'sass:map';
-@use '@material/web/sass/resolvers';
-@use '@material/web/sass/theme';
+@use '../../../sass/resolvers';
+@use '../../../sass/theme';
 @use './chip-theme';
 
 $_light-theme: (

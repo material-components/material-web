@@ -4,12 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ariaProperty} from '@material/web/decorators/aria-property.js';
-import {ARIARole} from '@material/web/types/aria.js';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
+
+import {ariaProperty} from '../../decorators/aria-property.js';
+import {ARIARole} from '../../types/aria.js';
 
 import {ListItem} from './listitem/list-item.js';
 

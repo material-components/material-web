@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MenuSurface} from '@material/web/menu-surface/lib/menu-surface.js';
 import {ClassInfo} from 'lit/directives/class-map.js';
+
+import {MenuSurface} from '../../../menusurface/lib/menu-surface.js';
 
 /** Base class for autocomplete surface component. */
 export class AutocompleteSurface extends MenuSurface {

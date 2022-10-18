@@ -8,7 +8,9 @@ import {html, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
-import {EndPressConfig} from '@material/web/actionelement/action-element.js';
+
+import {EndPressConfig} from '../../../actionelement/action-element.js';
+
 import {PrimaryAction} from './primary-action.js';
 
 type LinkTarget = '_blank'|'_parent'|'_self'|'_top';

@@ -6,8 +6,8 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@use '@material/web/elevation/lib/surface' as elevation-surface;
-@use '@material/web/sass/dom';
+@use '../../elevation/lib/surface' as elevation-surface;
+@use '../../sass/dom';
 
 @use './button-theme';
 

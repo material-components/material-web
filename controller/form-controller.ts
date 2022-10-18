@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {bound} from '@material/web/decorators/bound.js';
 import {ReactiveController, ReactiveControllerHost} from 'lit';
+
+import {bound} from '../decorators/bound.js';
 
 declare global {
   interface Window {

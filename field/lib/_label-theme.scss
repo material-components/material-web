@@ -9,7 +9,7 @@
 @use 'sass:map';
 @use 'sass:meta';
 @use 'sass:string';
-@use '@material/web/sass/typography';
+@use '../../sass/typography';
 
 @function resolve-theme($theme, $resolvers) {
   @return typography.resolve-theme(

@@ -7,8 +7,8 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-@use '@material/web/sass/color';
-@use '@material/web/ripple/ripple-theme';
+@use '../../sass/color';
+@use '../../ripple/ripple-theme';
 
 @mixin theme-styles($theme) {
   @include _set-label-text-typography(

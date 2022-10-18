@@ -6,9 +6,10 @@
 
 import './test-table.js';
 
-import {Environment} from '@material/web/testing/environment.js';
 import {html} from 'lit';
 import {customElement} from 'lit/decorators.js';
+
+import {Environment} from '../../environment.js';
 
 import {TestTable, TestTableTemplate} from './test-table.js';
 

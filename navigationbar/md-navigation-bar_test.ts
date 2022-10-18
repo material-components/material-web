@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {NavigationTabHarness} from '@material/web/navigationtab/harness.js';
-import {MdNavigationTab} from '@material/web/navigationtab/navigation-tab.js';
 import {html} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
+import {NavigationTabHarness} from '../navigationtab/harness.js';
+import {MdNavigationTab} from '../navigationtab/navigation-tab.js';
 import {Environment} from '../testing/environment.js';
 
 import {NavigationBarHarness} from './harness.js';

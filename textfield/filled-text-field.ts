@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/field/filled-field.js';
+import '../field/filled-field.js';
 
 import {customElement} from 'lit/decorators.js';
 import {literal} from 'lit/static-html.js';

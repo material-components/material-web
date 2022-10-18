@@ -9,9 +9,9 @@
 @use 'sass:map';
 @use 'sass:selector';
 
-@use '@material/web/ripple/ripple-theme';
-@use '@material/web/sass/theme';
-@use '@material/web/tokens';
+@use '../../ripple/ripple-theme';
+@use '../../sass/theme';
+@use '../../tokens';
 
 $light-theme: tokens.md-comp-radio-button-values();
 $custom-property-prefix: 'radio';

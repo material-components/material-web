@@ -8,11 +8,11 @@
 
 @use 'sass:map';
 @use 'sass:string';
-@use '@material/web/sass/resolvers';
-@use '@material/web/sass/shape';
-@use '@material/web/sass/theme';
-@use '@material/web/sass/var';
-@use '@material/web/tokens';
+@use '../../sass/resolvers';
+@use '../../sass/shape';
+@use '../../sass/theme';
+@use '../../sass/var';
+@use '../../tokens';
 @use './content-theme';
 @use './field-theme';
 @use './label-theme';

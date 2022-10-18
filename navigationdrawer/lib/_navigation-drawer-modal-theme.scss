@@ -8,10 +8,10 @@
 
 @use 'sass:map';
 
-@use '@material/web/elevation/lib/elevation-theme';
-@use '@material/web/sass/resolvers';
-@use '@material/web/sass/shape';
-@use '@material/web/sass/theme';
+@use '../../elevation/lib/elevation-theme';
+@use '../../sass/resolvers';
+@use '../../sass/shape';
+@use '../../sass/theme';
 
 $light-theme: (
   container-color: #fff,

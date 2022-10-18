@@ -4,18 +4,19 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/focus/focus-ring.js';
-import '@material/web/ripple/ripple.js';
+import '../../focus/focus-ring.js';
+import '../../ripple/ripple.js';
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '@material/web/actionelement/action-element.js';
-import {FormController, getFormValue} from '@material/web/controller/form-controller.js';
-import {ariaProperty} from '@material/web/decorators/aria-property.js';
-import {pointerPress as focusRingPointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus.js';
-import {MdRipple} from '@material/web/ripple/ripple.js';
 import {html, TemplateResult} from 'lit';
 import {eventOptions, property, query, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
+
+import {ActionElement, BeginPressConfig, EndPressConfig} from '../../actionelement/action-element.js';
+import {FormController, getFormValue} from '../../controller/form-controller.js';
+import {ariaProperty} from '../../decorators/aria-property.js';
+import {pointerPress as focusRingPointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
+import {MdRipple} from '../../ripple/ripple.js';
 
 /** @soyCompatible */
 export class Switch extends ActionElement {

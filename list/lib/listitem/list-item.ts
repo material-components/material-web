@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/ripple/ripple.js';
-import '@material/web/focus/focus-ring.js';
+import '../../../ripple/ripple.js';
+import '../../../focus/focus-ring.js';
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '@material/web/actionelement/action-element.js';
-import {ariaProperty} from '@material/web/decorators/aria-property.js';
-import {pointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus.js';
-import {MdRipple} from '@material/web/ripple/ripple.js';
-import {ARIARole} from '@material/web/types/aria.js';
+import {ActionElement, BeginPressConfig, EndPressConfig} from '../../../actionelement/action-element.js';
+import {ariaProperty} from '../../../decorators/aria-property.js';
+import {pointerPress, shouldShowStrongFocus} from '../../../focus/strong-focus.js';
+import {MdRipple} from '../../../ripple/ripple.js';
+import {ARIARole} from '../../../types/aria.js';
 import {html, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ListHarness} from '@material/web/list/harness.js';
+import {ListHarness} from '../../../list/harness.js';
 
 /**
  * Test harness for autocomplete list.

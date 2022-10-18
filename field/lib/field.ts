@@ -6,10 +6,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {createAnimationSignal, Easing} from '@material/web/motion/animation.js';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+
+import {createAnimationSignal, Easing} from '../../motion/animation.js';
 
 /** @soyCompatible */
 export class Field extends LitElement {

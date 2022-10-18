@@ -5,8 +5,8 @@
 
 // stylelint-disable selector-class-pattern -- allow `md3-` class selectors.
 
-@use '@material/web/motion/animation';
-@use '@material/web/sass/touch-target';
+@use '../../motion/animation';
+@use '../../sass/touch-target';
 
 @mixin static-styles() {
   @keyframes md3-segmented-button-checkmark-selection-draw-in {

@@ -8,11 +8,11 @@
 // stylelint-disable selector-class-pattern --
 // Internal styling for Chip MDC component.
 
-@use '@material/web/focus/lib/focus-ring-theme';
-@use '@material/web/motion/animation';
+@use '../../../focus/lib/focus-ring-theme';
+@use '../../../motion/animation';
 // TODO(b/240224981): Uncomment when styles are translated to md3 ripple
-// @use '@material/web/ripple/ripple-theme';
-@use '@material/web/sass/dom';
+// @use '../../../ripple/ripple-theme';
+@use '../../../sass/dom';
 @use './chip-theme';
 
 @mixin core-styles() {

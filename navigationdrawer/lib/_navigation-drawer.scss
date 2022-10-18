@@ -6,8 +6,8 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@use '@material/web/motion/animation';
-@use '@material/web/elevation/lib/elevation-overlay';
+@use '../../motion/animation';
+@use '../../elevation/lib/elevation-overlay';
 
 $curve: animation.$standard-easing;
 $default: 0s;

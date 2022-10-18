@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MdFocusRing} from '@material/web/focus/focus-ring.js';
 import {html} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
+import {MdFocusRing} from '../../focus/focus-ring.js';
 import {Environment} from '../../testing/environment.js';
 import {CheckboxHarness} from '../harness.js';
 

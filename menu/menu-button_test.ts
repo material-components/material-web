@@ -9,10 +9,10 @@ import './menu-button.js';
 import './menu-item.js';
 import '../button/filled-button.js';
 
-import {Environment} from '@material/web/testing/environment.js';
 import {html} from 'lit';
 
 import {ButtonHarness} from '../button/harness.js';
+import {Environment} from '../testing/environment.js';
 
 import {MenuHarness} from './harness.js';
 
@@ -58,8 +58,7 @@ describe('menu tests', () => {
     expect(document.activeElement).toBe(menu);
   });
 
-  it(
-      'on synthetic button click, sets default focus to FIRST_ITEM',
+  it('on synthetic button click, sets default focus to FIRST_ITEM',
      async () => {
        const {button, menu, menuHarness} = await setUp(env);
 

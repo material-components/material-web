@@ -7,17 +7,17 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-@use '@material/web/elevation/lib/elevation-theme';
-@use '@material/web/field/lib/outlined-field-theme';
-@use '@material/web/list/lib/listitem/list-item-theme';
-@use '@material/web/list/list';
-@use '@material/web/list/list-item';
-@use '@material/web/menusurface/menu-surface';
-@use '@material/web/sass/resolvers';
-@use '@material/web/sass/shape';
-@use '@material/web/sass/theme';
-@use '@material/web/textfield/lib/outlined-text-field-theme';
-@use '@material/web/tokens';
+@use '../../elevation/lib/elevation-theme';
+@use '../../field/lib/outlined-field-theme';
+@use '../../list/lib/listitem/list-item-theme';
+@use '../../list/list';
+@use '../../list/list-item';
+@use '../../menusurface/menu-surface';
+@use '../../sass/resolvers';
+@use '../../sass/shape';
+@use '../../sass/theme';
+@use '../../textfield/lib/outlined-text-field-theme';
+@use '../../tokens';
 
 $custom-property-prefix: 'outlined-autocomplete';
 $light-theme: tokens.md-comp-outlined-autocomplete-values();

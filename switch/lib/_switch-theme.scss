@@ -8,13 +8,13 @@
 
 @use 'sass:map';
 
-@use '@material/web/focus/lib/focus-ring-theme';
-@use '@material/web/sass/color';
-@use '@material/web/sass/resolvers';
-@use '@material/web/sass/shape';
-@use '@material/web/sass/theme';
-@use '@material/web/sass/var';
-@use '@material/web/tokens';
+@use '../../focus/lib/focus-ring-theme';
+@use '../../sass/color';
+@use '../../sass/resolvers';
+@use '../../sass/shape';
+@use '../../sass/theme';
+@use '../../sass/var';
+@use '../../tokens';
 
 @use './switch-track-theme';
 @use './switch-handle-theme';

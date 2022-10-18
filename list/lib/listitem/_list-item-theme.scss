@@ -8,8 +8,8 @@
 
 @use 'sass:map';
 @use 'sass:string';
-@use '@material/web/sass/resolvers';
-@use '@material/web/sass/theme';
+@use '../../../sass/resolvers';
+@use '../../../sass/theme';
 @use '../icon/list-item-icon-theme';
 @use '../image/list-item-image-theme';
 @use '../video/list-item-video-theme';

@@ -6,12 +6,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ariaProperty} from '@material/web/decorators/aria-property.js';
 import {html, LitElement, TemplateResult} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
+import {ariaProperty} from '../../decorators/aria-property.js';
 import {SegmentedButton} from '../../segmentedbutton/lib/segmented-button.js';
 
 /**

@@ -1,6 +1,11 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
 @use 'sass:map';
-@use '@material/web/sass/theme';
-@use '@material/web/sass/map-ext';
+@use '../../../sass/theme';
+@use '../../../sass/map-ext';
 @use '../listitem/list-item-theme';
 
 $light-theme: map-ext.pick(

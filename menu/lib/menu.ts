@@ -7,11 +7,11 @@
 import '../../list/list.js';
 import '../../menusurface/menu-surface.js';
 
-import {ariaProperty} from '@material/web/decorators/aria-property.js';
 import {html, LitElement} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
+import {ariaProperty} from '../../decorators/aria-property.js';
 import {List} from '../../list/lib/list.js';
 import {ListItem} from '../../list/lib/listitem/list-item.js';
 import {Corner, MenuSurface} from '../../menusurface/lib/menu-surface.js';

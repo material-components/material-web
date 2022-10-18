@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/icon/icon.js';
+import '../icon/icon.js';
 
 import {customElement} from 'lit/decorators.js';
 import {ClassInfo} from 'lit/directives/class-map.js';

@@ -4,9 +4,9 @@
 //
 
 @use 'sass:map';
-@use '@material/web/elevation/lib/elevation-theme';
-@use '@material/web/sass/theme';
-@use '@material/web/tokens' as m3-tokens;
+@use '../../elevation/lib/elevation-theme';
+@use '../../sass/theme';
+@use '../../tokens' as m3-tokens;
 @use './tokens';
 @use './divider/list-divider-theme';
 

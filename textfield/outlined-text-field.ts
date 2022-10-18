@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/field/outlined-field.js';
+import '../field/outlined-field.js';
 
 import {customElement} from 'lit/decorators.js';
 import {literal} from 'lit/static-html.js';

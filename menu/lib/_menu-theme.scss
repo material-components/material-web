@@ -5,13 +5,13 @@
 
 @use 'sass:map';
 
-@use '@material/web/elevation/lib/elevation-theme';
-@use '@material/web/list/list';
-@use '@material/web/list/list-item';
-@use '@material/web/menusurface/menu-surface';
-@use '@material/web/sass/resolvers';
-@use '@material/web/sass/theme';
-@use '@material/web/tokens';
+@use '../../elevation/lib/elevation-theme';
+@use '../../list/list';
+@use '../../list/list-item';
+@use '../../menusurface/menu-surface';
+@use '../../sass/resolvers';
+@use '../../sass/theme';
+@use '../../tokens';
 
 $_custom-property-prefix: 'menu';
 

@@ -7,8 +7,9 @@
 import './menu.js';
 import './menu-item.js';
 
-import {Environment} from '@material/web/testing/environment.js';
 import {html} from 'lit';
+
+import {Environment} from '../testing/environment.js';
 
 import {MenuHarness} from './harness.js';
 import {MdMenu} from './menu.js';
@@ -123,21 +124,20 @@ describe('menu tests', () => {
          expect(document.activeElement).not.toBe(anchor);
        });
 
-    it('on ESC, closes the menu and restores focus to the anchor',
-        async () => {
-         anchor.focus();
-         expect(document.activeElement).toBe(anchor);
+    it('on ESC, closes the menu and restores focus to the anchor', async () => {
+      anchor.focus();
+      expect(document.activeElement).toBe(anchor);
 
-          menu.show();
-          await menu.updateComplete;
-         expect(document.activeElement).not.toBe(anchor);
+      menu.show();
+      await menu.updateComplete;
+      expect(document.activeElement).not.toBe(anchor);
 
-          const menuSurface = menu.renderRoot.querySelector('md-menu-surface')!;
-          menuSurface.mdcRoot.dispatchEvent(
-              new KeyboardEvent('keydown', {key: 'Escape'}));
-          expect(menu.open).toBe(false);
-          expect(document.activeElement).not.toBe(anchor);
-        });
+      const menuSurface = menu.renderRoot.querySelector('md-menu-surface')!;
+      menuSurface.mdcRoot.dispatchEvent(
+          new KeyboardEvent('keydown', {key: 'Escape'}));
+      expect(menu.open).toBe(false);
+      expect(document.activeElement).not.toBe(anchor);
+    });
   });
 });
 

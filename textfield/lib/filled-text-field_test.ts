@@ -5,13 +5,13 @@
  */
 
 import 'jasmine';
-import '@material/web/field/filled-field.js';
+import '../../field/filled-field.js';
 
-import {Environment} from '@material/web/testing/environment.js';
 import {html} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {literal} from 'lit/static-html.js';
 
+import {Environment} from '../../testing/environment.js';
 import {TextFieldHarness} from '../harness.js';
 
 import {FilledTextField} from './filled-text-field.js';

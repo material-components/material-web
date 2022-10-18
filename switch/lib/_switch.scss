@@ -8,8 +8,8 @@
 
 // PUBLIC PROPERTIES
 
-@use '@material/web/motion/animation';
-@use '@material/web/sass/touch-target';
+@use '../../motion/animation';
+@use '../../sass/touch-target';
 
 // TODO(b/230768994): update animation timing
 $animation-duration: 75ms;

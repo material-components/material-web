@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/autocomplete/autocomplete-list.js';
-import '@material/web/autocomplete/autocomplete-surface.js';
-import '@material/web/field/outlined-field.js';
+import '../field/outlined-field.js';
+import './autocomplete-list.js';
+import './autocomplete-surface.js';
 
 import {customElement} from 'lit/decorators.js';
 import {ClassInfo} from 'lit/directives/class-map.js';

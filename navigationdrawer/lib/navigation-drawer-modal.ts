@@ -4,11 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ariaProperty} from '@material/web/decorators/aria-property.js';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
+
+import {ariaProperty} from '../../decorators/aria-property.js';
 
 /** @soyCompatible */
 export class NavigationDrawerModal extends LitElement {

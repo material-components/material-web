@@ -8,11 +8,11 @@
 
 @use 'sass:map';
 
-@use '@material/web/ripple/ripple-theme';
-@use '@material/web/sass/color';
-@use '@material/web/sass/resolvers';
-@use '@material/web/sass/theme';
-@use '@material/web/tokens';
+@use '../../ripple/ripple-theme';
+@use '../../sass/color';
+@use '../../sass/resolvers';
+@use '../../sass/theme';
+@use '../../tokens';
 
 @use './icon-button-theme';
 

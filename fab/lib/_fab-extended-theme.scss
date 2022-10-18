@@ -7,9 +7,9 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-@use '@material/web/sass/resolvers';
-@use '@material/web/sass/theme';
-@use '@material/web/tokens';
+@use '../../sass/resolvers';
+@use '../../sass/theme';
+@use '../../tokens';
 @use './fab-shared-theme';
 
 $surface-theme: tokens.md-comp-extended-fab-surface-values();

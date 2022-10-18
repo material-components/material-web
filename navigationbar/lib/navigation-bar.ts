@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {isRtl} from '@material/web/controller/is-rtl.js';
-import {NavigationTab} from '@material/web/navigationtab/lib/navigation-tab.js';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
+import {isRtl} from '../../controller/is-rtl.js';
 import {ariaProperty} from '../../decorators/aria-property.js';
+import {NavigationTab} from '../../navigationtab/lib/navigation-tab.js';
 
 import {NavigationTabInteractionEvent} from './constants.js';
 import {NavigationBarState} from './state.js';

@@ -4,15 +4,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '@material/web/actionelement/action-element.js';
-import {ariaProperty} from '@material/web/decorators/aria-property.js';
-import {pointerPress, shouldShowStrongFocus} from '@material/web/focus/strong-focus.js';
-import {MdRipple} from '@material/web/ripple/ripple.js';
 import {html, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {html as staticHtml, literal} from 'lit/static-html.js';
+
+import {ActionElement, BeginPressConfig, EndPressConfig} from '../../actionelement/action-element.js';
+import {ariaProperty} from '../../decorators/aria-property.js';
+import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
+import {MdRipple} from '../../ripple/ripple.js';
 
 /** @soyCompatible */
 export abstract class IconButtonToggle extends ActionElement {

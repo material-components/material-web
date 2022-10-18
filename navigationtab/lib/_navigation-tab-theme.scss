@@ -8,11 +8,11 @@
 
 @use 'sass:map';
 
-@use '@material/web/badge/lib/badge-theme';
-@use '@material/web/ripple/ripple-theme';
-@use '@material/web/focus/lib/focus-ring-theme';
-@use '@material/web/sass/theme';
-@use '@material/web/tokens/latest' as tokens;
+@use '../../badge/lib/badge-theme';
+@use '../../ripple/ripple-theme';
+@use '../../focus/lib/focus-ring-theme';
+@use '../../sass/theme';
+@use '../../tokens';
 
 $_custom-property-prefix: 'navigation-bar';
 

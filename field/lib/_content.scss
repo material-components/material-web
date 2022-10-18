@@ -7,7 +7,7 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:math';
-@use '@material/web/motion/animation';
+@use '../../motion/animation';
 
 // Duration of the label animation.
 $_label-duration: 150ms;

@@ -4,8 +4,8 @@
 //
 
 @use 'sass:map';
-@use '@material/web/sass/theme';
-@use '@material/web/sass/map-ext';
+@use '../../../sass/theme';
+@use '../../../sass/map-ext';
 @use '../tokens';
 
 $light-theme: map-ext.pick(

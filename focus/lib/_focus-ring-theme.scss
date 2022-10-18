@@ -4,9 +4,9 @@
 //
 
 @use 'sass:map';
-@use '@material/web/sass/resolvers';
-@use '@material/web/sass/theme';
-@use '@material/web/tokens';
+@use '../../sass/resolvers';
+@use '../../sass/theme';
+@use '../../tokens';
 
 $_custom-property-prefix: 'focus-ring';
 $_color-sys: tokens.md-sys-color-values-light-dynamic();

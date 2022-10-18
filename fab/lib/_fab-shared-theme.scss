@@ -9,11 +9,11 @@
 @use 'sass:map';
 @use 'sass:meta';
 
-@use '@material/web/elevation/lib/elevation-theme';
-@use '@material/web/ripple/ripple-theme';
-@use '@material/web/sass/elevation';
-@use '@material/web/sass/resolvers';
-@use '@material/web/sass/theme';
+@use '../../elevation/lib/elevation-theme';
+@use '../../ripple/ripple-theme';
+@use '../../sass/elevation';
+@use '../../sass/resolvers';
+@use '../../sass/theme';
 
 @function resolve-theme($theme, $resolvers) {
   $theme: elevation-theme.resolve-theme(

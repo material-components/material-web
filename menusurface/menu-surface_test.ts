@@ -7,10 +7,11 @@
 import './menu-surface.js';
 import '../list/list-item.js';
 
-import {Environment} from '@material/web/testing/environment.js';
-import {listenOnce} from '@material/web/testing/events.js';
 import {html} from 'lit';
 import {styleMap} from 'lit/directives/style-map.js';
+
+import {Environment} from '../testing/environment.js';
+import {listenOnce} from '../testing/events.js';
 
 import {MdMenuSurface} from './menu-surface.js';
 

@@ -7,8 +7,9 @@
 import './list.js';
 import './list-item.js';
 
-import {Environment} from '@material/web/testing/environment.js';
 import {html} from 'lit';
+
+import {Environment} from '../testing/environment.js';
 
 const LIST_TEMPLATE = html`
   <md-list>

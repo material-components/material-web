@@ -6,10 +6,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {redispatchEvent} from '@material/web/controller/events.js';
-import {FormController, getFormValue} from '@material/web/controller/form-controller.js';
-import {stringConverter} from '@material/web/controller/string-converter.js';
-import {ariaProperty} from '@material/web/decorators/aria-property.js';
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
@@ -18,6 +14,10 @@ import {live} from 'lit/directives/live.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
+import {redispatchEvent} from '../../controller/events.js';
+import {FormController, getFormValue} from '../../controller/form-controller.js';
+import {stringConverter} from '../../controller/string-converter.js';
+import {ariaProperty} from '../../decorators/aria-property.js';
 import {ARIAAutoComplete, ARIAExpanded, ARIARole} from '../../types/aria.js';
 
 /**

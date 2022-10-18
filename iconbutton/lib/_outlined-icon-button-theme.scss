@@ -7,12 +7,12 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-@use '@material/web/sass/resolvers';
-@use '@material/web/sass/color';
-@use '@material/web/sass/theme';
-@use '@material/web/tokens';
+@use '../../ripple/ripple-theme';
+@use '../../sass/resolvers';
+@use '../../sass/color';
+@use '../../sass/theme';
+@use '../../tokens';
 @use './icon-button-theme';
-@use '@material/web/ripple/ripple-theme';
 
 $_custom-property-prefix: 'outlined-icon-button';
 
