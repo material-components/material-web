@@ -7,37 +7,56 @@
 @use 'sass:meta';
 
 @use '../../elevation/lib/elevation-theme';
-@use '../../ripple/ripple-theme';
 
 @mixin theme-styles($theme) {
-  @include _elevation(
-    (
-      default: (
+  & {
+    @include elevation-theme.theme-styles(
+      (
         shadow: map.get($theme, container-elevation-shadow),
         overlay-opacity: map.get($theme, container-elevation-overlay-opacity),
-      ),
-      hover: (
+      )
+    );
+  }
+
+  &:hover {
+    @include elevation-theme.theme-styles(
+      (
         shadow: map.get($theme, hover-container-elevation-shadow),
         overlay-opacity:
           map.get($theme, hover-container-elevation-overlay-opacity),
-      ),
-      focus: (
+      )
+    );
+  }
+
+  &:focus {
+    @include elevation-theme.theme-styles(
+      (
         shadow: map.get($theme, focus-container-elevation-shadow),
         overlay-opacity:
           map.get($theme, focus-container-elevation-overlay-opacity),
-      ),
-      pressed: (
+      )
+    );
+  }
+
+  &:active {
+    @include elevation-theme.theme-styles(
+      (
         shadow: map.get($theme, pressed-container-elevation-shadow),
         overlay-opacity:
           map.get($theme, pressed-container-elevation-overlay-opacity),
-      ),
-      disabled: (
+      )
+    );
+  }
+
+  &:disabled {
+    @include elevation-theme.theme-styles(
+      (
         shadow: map.get($theme, disabled-container-elevation-shadow),
         overlay-opacity:
           map.get($theme, disabled-container-elevation-overlay-opacity),
-      ),
-    )
-  );
+      )
+    );
+  }
 
   @include elevation-theme.theme-styles(
     (
@@ -60,26 +79,4 @@
       pressed-container-elevation
     )
   );
-}
-
-@mixin _elevation($elevations) {
-  @include elevation-theme.theme-styles(map.get($elevations, default));
-
-  &:hover {
-    @include elevation-theme.theme-styles(map.get($elevations, hover));
-  }
-
-  &:focus {
-    @include elevation-theme.theme-styles(map.get($elevations, focus));
-  }
-
-  &:active {
-    @include elevation-theme.theme-styles(map.get($elevations, pressed));
-  }
-
-  &:disabled {
-    @include elevation-theme.theme-styles(
-      map.get($elevations, disabled)
-    );
-  }
 }

@@ -15,35 +15,23 @@
 
     ::slotted([slot='icon']),
     .md3-button__icon {
-      @include icon;
+      display: inline-flex;
+      position: relative;
+      writing-mode: horizontal-tb;
     }
   }
 
   .md3-button__icon--leading {
     ::slotted([slot='icon']),
     .md3-button__icon {
-      @include icon-leading;
+      margin-inline-end: 8px;
     }
   }
 
   .md3-button__icon--trailing {
     ::slotted([slot='icon']),
     .md3-button__icon {
-      @include icon-trailing;
+      margin-inline-start: 8px;
     }
   }
-}
-
-@mixin icon() {
-  display: inline-flex;
-  position: relative;
-  writing-mode: horizontal-tb;
-}
-
-@mixin icon-leading() {
-  margin-inline-end: 8px;
-}
-
-@mixin icon-trailing() {
-  margin-inline-start: 8px;
 }

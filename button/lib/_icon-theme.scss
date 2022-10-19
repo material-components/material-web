@@ -7,52 +7,44 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-@use '../../ripple/ripple-theme';
 
 @mixin theme-styles($theme) {
-  @include _set-icon-color(
-    (
-      default: map.get($theme, with-icon-icon-color),
-      hover: map.get($theme, with-icon-hover-icon-color),
-      focus: map.get($theme, with-icon-focus-icon-color),
-      pressed: map.get($theme, with-icon-pressed-icon-color),
-      disabled: map.get($theme, with-icon-disabled-icon-color),
-    )
-  );
-
-  @include _set-icon-size(map.get($theme, with-icon-icon-size));
-}
-
-@mixin _set-icon-color($colors) {
-  @include _icon-color(map.get($colors, default));
+  ::slotted([slot='icon']),
+  .md3-button__icon {
+    color: map.get($theme, with-icon-icon-color);
+  }
 
   &:hover {
-    @include _icon-color(map.get($colors, hover));
+    ::slotted([slot='icon']),
+    .md3-button__icon {
+      color: map.get($theme, with-icon-hover-icon-color);
+    }
   }
 
   &:focus {
-    @include _icon-color(map.get($colors, focus));
+    ::slotted([slot='icon']),
+    .md3-button__icon {
+      color: map.get($theme, with-icon-focus-icon-color);
+    }
   }
 
   &:active {
-    @include _icon-color(map.get($colors, pressed));
+    ::slotted([slot='icon']),
+    .md3-button__icon {
+      color: map.get($theme, with-icon-pressed-icon-color);
+    }
   }
 
   &:disabled {
-    @include _icon-color(map.get($colors, disabled));
+    ::slotted([slot='icon']),
+    .md3-button__icon {
+      color: map.get($theme, with-icon-disabled-icon-color);
+    }
   }
-}
 
-@mixin _icon-color($color) {
   ::slotted([slot='icon']),
   .md3-button__icon {
-    color: $color;
-  }
-}
-
-@mixin _set-icon-size($size) {
-  ::slotted([slot='icon']),
-  .md3-button__icon {
+    $size: map.get($theme, with-icon-icon-size);
     font-size: $size;
     inline-size: $size;
     block-size: $size;

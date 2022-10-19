@@ -40,15 +40,34 @@ $light-theme: tokens.md-comp-outlined-button-values();
 
   @include button-theme.theme-styles($theme);
   @include icon-theme.theme-styles($theme);
-  @include _shape-radius(map.get($theme, container-shape));
-  @include _outline-color(
-    (
-      default: map.get($theme, outline-color),
-      disabled: map.get($theme, disabled-outline-color),
-      pressed: map.get($theme, pressed-outline-color),
-    )
-  );
-  @include _outline-width(map.get($theme, outline-width));
+
+  .md3-button__outline {
+    border-color: map.get($theme, outline-color);
+    border-radius: map.get($theme, container-shape);
+  }
+
+  &:active {
+    .md3-button__outline {
+      border-color: map.get($theme, pressed-outline-color);
+    }
+  }
+
+  &:disabled {
+    .md3-button__outline {
+      border-color: map.get($theme, disabled-outline-color);
+    }
+  }
+
+  $width: map.get($theme, outline-width);
+  .md3-button__outline,
+  .md3-button__ripple {
+    border-width: $width;
+  }
+
+  .md3-button__ripple {
+    inline-size: calc(100% - 2 * #{$width});
+    block-size: calc(100% - 2 * #{$width});
+  }
 }
 
 @function _resolve-theme($theme, $resolvers) {
@@ -60,48 +79,4 @@ $light-theme: tokens.md-comp-outlined-button-values();
     'label-text'
   );
   @return $theme;
-}
-
-@mixin _shape-radius($radius) {
-  .md3-button__outline {
-    border-radius: $radius;
-  }
-}
-
-@mixin _outline-color($colors) {
-  @include _set-outline-color(map.get($colors, default));
-
-  &:hover {
-    @include _set-outline-color(map.get($colors, hover));
-  }
-
-  &:focus {
-    @include _set-outline-color(map.get($colors, focus));
-  }
-
-  &:active {
-    @include _set-outline-color(map.get($colors, pressed));
-  }
-
-  &:disabled {
-    @include _set-outline-color(map.get($colors, disabled));
-  }
-}
-
-@mixin _set-outline-color($color) {
-  .md3-button__outline {
-    border-color: $color;
-  }
-}
-
-@mixin _outline-width($width) {
-  .md3-button__outline,
-  .md3-button__ripple {
-    border-width: $width;
-  }
-
-  .md3-button__ripple {
-    inline-size: calc(100% - 2 * #{$width});
-    block-size: calc(100% - 2 * #{$width});
-  }
 }

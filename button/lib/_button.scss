@@ -9,26 +9,53 @@
 @use '../../elevation/lib/surface' as elevation-surface;
 @use '../../sass/dom';
 
-@use './button-theme';
-
 @mixin static-styles() {
   :host {
-    @include host-root;
+    display: inline-flex;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    /**
+     * Override vertical-align with shortest value "top". Vertical-align's default
+     * "baseline" value causes buttons to be misaligned next to each other if one
+     * button has an icon and the other does not.
+     */
+    vertical-align: top;
   }
 
   :host([disabled]) {
-    @include disabled;
+    cursor: default;
+    pointer-events: none;
   }
 
   .md3-button {
-    @include root;
+    @include elevation-surface.root-static-styles();
+  
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-inline-size: 64px;
+    border: none;
+    outline: none;
+    line-height: inherit;
+    user-select: none;
+    -webkit-appearance: none;
+    vertical-align: middle;
+    background: transparent;
+    text-decoration: none;
+    inline-size: 100%;
+  
+    &::-moz-focus-inner {
+      padding: 0;
+      border: 0;
+    }
 
     &:active {
-      @include active;
+      outline: none;
     }
 
     &:hover {
-      @include hover;
+      cursor: pointer;
     }
 
     @media (forced-colors: active) {
@@ -41,53 +68,4 @@
   .md3-link-button-wrapper {
     inline-size: 100%;
   }
-}
-
-@mixin host-root() {
-  display: inline-flex;
-  outline: none;
-  -webkit-tap-highlight-color: transparent;
-  /**
-   * Override vertical-align with shortest value "top". Vertical-align's default
-   * "baseline" value causes buttons to be misaligned next to each other if one
-   * button has an icon and the other does not.
-   */
-  vertical-align: top;
-}
-
-@mixin root() {
-  @include elevation-surface.root-static-styles();
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  min-inline-size: 64px;
-  border: none;
-  outline: none;
-  line-height: inherit;
-  user-select: none;
-  -webkit-appearance: none;
-  vertical-align: middle;
-  background: transparent;
-  text-decoration: none;
-  inline-size: 100%;
-
-  &::-moz-focus-inner {
-    padding: 0;
-    border: 0;
-  }
-}
-
-@mixin active() {
-  outline: none;
-}
-
-@mixin hover() {
-  cursor: pointer;
-}
-
-@mixin disabled() {
-  cursor: default;
-  pointer-events: none;
 }

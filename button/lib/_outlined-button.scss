@@ -8,18 +8,14 @@
 
 @mixin static-styles() {
   .md3-button__outline {
-    @include outline;
+    inset: 0;
+    position: absolute;
+    border-style: solid;
+    box-sizing: border-box;
   }
 
   .md3-button--outlined .md3-button__ripple {
     border-style: solid;
     border-color: transparent;
   }
-}
-
-@mixin outline() {
-  inset: 0;
-  position: absolute;
-  border-style: solid;
-  box-sizing: border-box;
 }

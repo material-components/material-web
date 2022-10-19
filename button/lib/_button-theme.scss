@@ -11,31 +11,40 @@
 @use '../../ripple/ripple-theme';
 
 @mixin theme-styles($theme) {
-  @include _set-label-text-typography(
-    (
-      family: map.get($theme, label-text-font),
-      size: map.get($theme, label-text-size),
-      tracking: map.get($theme, label-text-tracking),
-      weight: map.get($theme, label-text-weight),
-    )
-  );
+  & {
+    block-size: map.get($theme, 'container-height');
+    font-family: map.get($theme, label-text-font);
+    font-size: map.get($theme, label-text-size);
+    letter-spacing: map.get($theme, label-text-tracking);
+    font-weight: map.get($theme, label-text-weight);
+  }
 
-  @include _container-fill-color(
-    (
-      default: map.get($theme, container-color),
-      disabled: map.get($theme, disabled-container-color),
-    )
-  );
+  &,
+  .md3-button__ripple {
+    border-radius: map.get($theme, 'container-shape');
+  }
 
-  @include _ink-color(
-    (
-      default: map.get($theme, label-text-color),
-      hover: map.get($theme, hover-label-text-color),
-      focus: map.get($theme, focus-label-text-color),
-      pressed: map.get($theme, pressed-label-text-color),
-      disabled: map.get($theme, disabled-label-text-color),
-    )
-  );
+  &:not(:disabled) {
+    background-color: map.get($theme, container-color);
+    color: map.get($theme, label-text-color);
+  }
+
+  &:hover {
+    color: map.get($theme, hover-label-text-color);
+  }
+
+  &:focus {
+    color: map.get($theme, focus-label-text-color);
+  }
+
+  &:active {
+    color: map.get($theme, pressed-label-text-color);
+  }
+
+  &:disabled {
+    background-color: map.get($theme, disabled-container-color);
+    color: map.get($theme, disabled-label-text-color);
+  }
 
   @include ripple-theme.theme(
     (
@@ -48,15 +57,11 @@
     )
   );
 
-  $container-height: map.get($theme, container-height);
-  @include _set-height($container-height);
-
-  $shape: map.get($theme, container-shape);
-  @include _set-shape-radius($shape);
-
   // TODO(b/181413732): Verify tokens below are named correctly
-  padding-inline-start: map.get($theme, 'spacing-leading');
-  padding-inline-end: map.get($theme, 'spacing-trailing');
+  & {
+    padding-inline-start: map.get($theme, 'spacing-leading');
+    padding-inline-end: map.get($theme, 'spacing-trailing');
+  }
   &.md3-button--icon-leading {
     padding-inline-start: map.get($theme, 'with-icon-spacing-leading');
     padding-inline-end: map.get($theme, 'with-icon-spacing-trailing');
@@ -112,79 +117,4 @@
     'label-text-type'
   );
   @return map.remove($theme, $unsupported-tokens);
-}
-
-@mixin _container-fill-color($color-or-map) {
-  &:not(:disabled) {
-    @include _set-container-fill-color(map.get($color-or-map, default));
-  }
-
-  &:hover {
-    @include _set-container-fill-color(map.get($color-or-map, hover));
-  }
-
-  &:focus {
-    @include _set-container-fill-color(map.get($color-or-map, focus));
-  }
-
-  &:active {
-    @include _set-container-fill-color(map.get($color-or-map, pressed));
-  }
-
-  &:disabled {
-    @include _set-container-fill-color(map.get($color-or-map, disabled));
-  }
-}
-
-@mixin _ink-color($color-or-map) {
-  @include _set-ink-color(map.get($color-or-map, default));
-
-  &:hover {
-    @include _set-ink-color(map.get($color-or-map, hover));
-  }
-
-  &:focus {
-    @include _set-ink-color(map.get($color-or-map, focus));
-  }
-
-  &:active {
-    @include _set-ink-color(map.get($color-or-map, pressed));
-  }
-
-  &:disabled {
-    @include _set-ink-color(map.get($color-or-map, disabled));
-  }
-}
-
-@mixin _set-height($height) {
-  block-size: $height;
-}
-
-@mixin _set-shape-radius($radius) {
-  &,
-  .md3-button__ripple {
-    border-radius: $radius;
-  }
-}
-
-@mixin _set-container-fill-color($color) {
-  background-color: $color;
-}
-
-@mixin _set-ink-color($color) {
-  color: $color;
-}
-
-@mixin _set-label-text-typography($typography-map) {
-  $family: map.get($typography-map, family);
-  $size: map.get($typography-map, size);
-  $tracking: map.get($typography-map, tracking);
-  $weight: map.get($typography-map, weight);
-  $transform: map.get($typography-map, transform);
-
-  font-family: $family;
-  font-size: $size;
-  letter-spacing: $tracking;
-  font-weight: $weight;
-  text-transform: $transform;
 }
