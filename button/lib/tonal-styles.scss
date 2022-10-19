@@ -3,14 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 @use './tonal-button';
-@use './tonal-button-theme';
 
-@include tonal-button.static-styles();
-
-.md3-button--tonal {
-  @include tonal-button-theme.theme-styles(tonal-button-theme.$light-theme);
-}
+@include tonal-button.styles;

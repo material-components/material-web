@@ -3,6 +3,4 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-@forward './lib/text-button-theme' show
-  $light-theme,
-  theme;
+@forward './lib/text-button' show theme;

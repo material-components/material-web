@@ -3,14 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 @use './text-button';
-@use './text-button-theme';
 
-@include text-button.static-styles();
-
-.md3-button--text {
-  @include text-button-theme.theme-styles(text-button-theme.$light-theme);
-}
+@include text-button.styles;

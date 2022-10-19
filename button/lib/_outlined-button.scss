@@ -3,19 +3,85 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+@use 'sass:map';
+@use '../../sass/resolvers';
+@use '../../sass/theme';
+@use '../../sass/typography';
+@use '../../tokens';
+@use './shared';
+
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@mixin static-styles() {
-  .md3-button__outline {
-    inset: 0;
-    position: absolute;
-    border-style: solid;
-    box-sizing: border-box;
+$_custom-property-prefix: 'outlined-button';
+
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme(
+    tokens.md-comp-outlined-button-values(),
+    $tokens
+  );
+  $tokens: _resolve-theme($tokens);
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: tokens.md-comp-outlined-button-values();
+
+  // TODO(b/198759625): Remove once spacing tokens are formally added
+  $tokens: map.set($tokens, 'spacing-leading', 24px);
+  $tokens: map.set($tokens, 'spacing-trailing', 24px);
+  $tokens: map.set($tokens, 'with-icon-spacing-leading', 16px);
+  $tokens: map.set($tokens, 'with-icon-spacing-trailing', 24px);
+  $tokens: map.set($tokens, 'with-trailing-icon-spacing-leading', 24px);
+  $tokens: map.set($tokens, 'with-trailing-icon-spacing-trailing', 16px);
+  $tokens: _resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
   }
 
-  .md3-button--outlined .md3-button__ripple {
+  .md3-button__outline {
+    inset: 0;
+    border-style: solid;
+    position: absolute;
+    box-sizing: border-box;
+    border-color: var(--_outline-color);
+    border-radius: var(--_container-shape);
+
+    .md3-button:active & {
+      border-color: var(--_pressed-outline-color);
+    }
+
+    .md3-button:disabled & {
+      border-color: var(--_disabled-outline-color);
+    }
+  }
+
+  .md3-button__outline,
+  .md3-button__ripple {
+    border-width: var(--_outline-width);
+  }
+
+  .md3-button__ripple {
+    inline-size: calc(100% - 2 * var(--_outline-width));
+    block-size: calc(100% - 2 * var(--_outline-width));
     border-style: solid;
     border-color: transparent;
   }
+}
+
+@function _resolve-tokens($tokens) {
+  $tokens: shared.flatten-disabled-colors($tokens);
+  $tokens: shared.remove-unsupported-tokens($tokens);
+  $tokens: typography.resolve-theme(
+    $tokens,
+    map.get(resolvers.$material, 'typography'),
+    'label-text'
+  );
+  @return $tokens;
 }

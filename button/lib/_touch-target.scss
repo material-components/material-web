@@ -6,7 +6,7 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@mixin static-styles() {
+@mixin styles() {
   .md3-button__touch {
     position: absolute;
     top: 50%;

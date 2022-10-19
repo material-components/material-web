@@ -3,13 +3,17 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
 @use 'sass:map';
 @use 'sass:meta';
 
 @use '../../elevation/lib/elevation-theme';
+@use '../../sass/resolvers';
 
-@mixin theme-styles() {
-  & {
+@mixin styles() {
+  .md3-button {
     @include elevation-theme.theme-styles(
       (
         shadow: var(--_container-elevation-shadow),
@@ -19,7 +23,7 @@
     );
   }
 
-  &:hover {
+  .md3-button:hover {
     @include elevation-theme.theme-styles(
       (
         shadow: var(--_hover-container-elevation-shadow),
@@ -28,7 +32,7 @@
     );
   }
 
-  &:focus {
+  .md3-button:focus {
     @include elevation-theme.theme-styles(
       (
         shadow: var(--_focus-container-elevation-shadow),
@@ -37,7 +41,7 @@
     );
   }
 
-  &:active {
+  .md3-button:active {
     @include elevation-theme.theme-styles(
       (
         shadow: var(--_pressed-container-elevation-shadow),
@@ -46,7 +50,7 @@
     );
   }
 
-  &:disabled {
+  .md3-button:disabled {
     @include elevation-theme.theme-styles(
       (
         shadow: var(--_disabled-container-elevation-shadow),
@@ -56,10 +60,10 @@
   }
 }
 
-@function resolve-theme($theme, $resolvers) {
+@function resolve-tokens($tokens) {
   @return elevation-theme.resolve-theme(
-    $theme,
-    map.get($resolvers, elevation),
+    $tokens,
+    map.get(resolvers.$material, elevation),
     $shadow-color-token: container-shadow-color,
     $elevation-tokens: (
       container-elevation,

@@ -6,7 +6,7 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@mixin static-styles() {
+@mixin styles() {
   // The icon CSS class overrides styles defined in the .material-icons CSS
   // class, which is loaded separately so the order of CSS definitions is not
   // guaranteed. Therefore, increase specifity to ensure overrides apply.
@@ -18,6 +18,26 @@
       display: inline-flex;
       position: relative;
       writing-mode: horizontal-tb;
+      color: var(--_with-icon-icon-color);
+      font-size: var(--_with-icon-icon-size);
+      inline-size: var(--_with-icon-icon-size);
+      block-size: var(--_with-icon-icon-size);
+
+      .md3-button:hover & {
+        color: var(--_with-icon-hover-icon-color);
+      }
+
+      .md3-button:focus & {
+        color: var(--_with-icon-focus-icon-color);
+      }
+
+      .md3-button:active & {
+        color: var(--_with-icon-pressed-icon-color);
+      }
+
+      .md3-button:disabled & {
+        color: var(--_with-icon-disabled-icon-color);
+      }
     }
   }
 

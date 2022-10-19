@@ -3,14 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 @use './filled-button';
-@use './filled-button-theme';
 
-@include filled-button.static-styles();
-
-.md3-button--filled {
-  @include filled-button-theme.theme-styles(filled-button-theme.$light-theme);
-}
+@include filled-button.styles;

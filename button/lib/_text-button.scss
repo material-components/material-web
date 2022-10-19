@@ -3,6 +3,56 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-@mixin static-styles() {
-  // Intentionally blank for future-proofing.
+@use 'sass:map';
+@use '../../sass/resolvers';
+@use '../../sass/theme';
+@use '../../sass/typography';
+@use '../../tokens';
+@use './shared';
+
+$_custom-property-prefix: 'text-button';
+
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme(tokens.md-comp-text-button-values(), $tokens);
+  $tokens: _resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: tokens.md-comp-text-button-values();
+
+  // TODO(b/198759625): Remove once spacing tokens are formally added
+  $tokens: map.set($tokens, 'spacing-leading', 12px);
+  $tokens: map.set($tokens, 'spacing-trailing', 12px);
+  $tokens: map.set($tokens, 'with-icon-spacing-leading', 12px);
+  $tokens: map.set($tokens, 'with-icon-spacing-trailing', 16px);
+  $tokens: map.set($tokens, 'with-trailing-icon-spacing-leading', 16px);
+  $tokens: map.set($tokens, 'with-trailing-icon-spacing-trailing', 12px);
+  $tokens: _resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+}
+
+@function _resolve-tokens($tokens) {
+  // TODO(b/233066105): Clean up this removal of extraneous tokens
+  $tokens: map.remove(
+    $tokens,
+    'disabled-container-color',
+    'disabled-container-opacity'
+  );
+  $tokens: shared.flatten-disabled-colors($tokens);
+  $tokens: shared.remove-unsupported-tokens($tokens);
+  $tokens: typography.resolve-theme(
+    $tokens,
+    map.get(resolvers.$material, 'typography'),
+    'label-text'
+  );
+  @return $tokens;
 }

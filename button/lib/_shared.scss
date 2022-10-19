@@ -7,11 +7,15 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-@use '../../sass/color';
+@use '../../elevation/lib/surface' as elevation-surface;
 @use '../../ripple/ripple-theme';
+@use '../../sass/color';
+@use '../../sass/dom';
+@use '../../sass/typography';
+@use '../../sass/resolvers';
 
-@mixin theme-styles() {
-  & {
+@mixin styles() {
+  * {
     @include ripple-theme.theme(
       (
         hover-state-layer-color: var(--_hover-state-layer-color),
@@ -24,59 +28,111 @@
     );
   }
 
-  & {
+  :host {
+    display: inline-flex;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    /**
+     * Override vertical-align with shortest value "top". Vertical-align's default
+     * "baseline" value causes buttons to be misaligned next to each other if one
+     * button has an icon and the other does not.
+     */
+    vertical-align: top;
+  }
+
+  :host([disabled]) {
+    cursor: default;
+    pointer-events: none;
+
+    border-start-start-radius: var(
+      --md-comp-button-shape-start-start,
+      var(--md-comp-button-shape)
+    );
+  }
+
+  .md3-button {
+    @include elevation-surface.root-static-styles();
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-inline-size: 64px;
+    border: none;
+    outline: none;
+    line-height: inherit;
+    user-select: none;
+    -webkit-appearance: none;
+    vertical-align: middle;
+    background: transparent;
+    text-decoration: none;
+    inline-size: 100%;
     block-size: var(--_container-height);
     font-family: var(--_label-text-font);
     font-size: var(--_label-text-size);
     letter-spacing: var(--_label-text-tracking);
     font-weight: var(--_label-text-weight);
+    background-color: var(--_container-color);
+    color: var(--_label-text-color);
+    // TODO(b/181413732): Verify token below are named correctly
+    padding-inline-start: var(--_spacing-leading);
+    padding-inline-end: var(--_spacing-trailing);
+
+    &::-moz-focus-inner {
+      padding: 0;
+      border: 0;
+    }
+
+    &:hover {
+      color: var(--_hover-label-text-color);
+      cursor: pointer;
+    }
+
+    &:focus {
+      color: var(--_focus-label-text-color);
+    }
+
+    &:active {
+      color: var(--_pressed-label-text-color);
+      outline: none;
+    }
+
+    &:disabled {
+      background-color: var(--_disabled-container-color);
+      color: var(--_disabled-label-text-color);
+    }
+
+    @media (forced-colors: active) {
+      &::before {
+        @include dom.transparent-border();
+      }
+    }
   }
 
-  &,
+  .md3-button,
   .md3-button__ripple {
     border-radius: var(--_container-shape);
   }
 
-  &:not(:disabled) {
-    background-color: var(--_container-color);
-    color: var(--_label-text-color);
-  }
-
-  &:hover {
-    color: var(--_hover-label-text-color);
-  }
-
-  &:focus {
-    color: var(--_focus-label-text-color);
-  }
-
-  &:active {
-    color: var(--_pressed-label-text-color);
-  }
-
-  &:disabled {
-    background-color: var(--_disabled-container-color);
-    color: var(--_disabled-label-text-color);
-  }
-
-  // TODO(b/181413732): Verify tokens below are named correctly
-  & {
-    padding-inline-start: var(--_spacing-leading);
-    padding-inline-end: var(--_spacing-trailing);
-  }
-  &.md3-button--icon-leading {
+  // TODO(b/181413732): Verify token below are named correctly
+  .md3-button--icon-leading {
     padding-inline-start: var(--_with-icon-spacing-leading);
     padding-inline-end: var(--_with-icon-spacing-trailing);
   }
-  &.md3-button--icon-trailing {
+
+  .md3-button--icon-trailing {
     padding-inline-start: var(--_with-trailing-icon-spacing-leading);
     padding-inline-end: var(--_with-trailing-icon-spacing-trailing);
   }
+
+  .md3-link-button-wrapper {
+    inline-size: 100%;
+  }
 }
 
-@function flatten-disabled-colors($theme) {
+@function flatten-disabled-colors($tokens) {
   @return color.join-color-and-opacity-pairs(
-    $theme,
+    $tokens,
     (
       (
         color-key: 'disabled-container-color',
@@ -98,11 +154,11 @@
   );
 }
 
-@function remove-unsupported-tokens($theme) {
+@function remove-unsupported-tokens($tokens) {
   // b/193825150: Text and Outlined Button don't have `container-shadow-color`,
   // leaving `container-elevation` useless.
-  @if not map.get($theme, 'container-shadow-color') {
-    $theme: map.remove($theme, 'container-elevation');
+  @if not map.get($tokens, 'container-shadow-color') {
+    $tokens: map.remove($tokens, 'container-elevation');
   }
 
   $unsupported-tokens: (
@@ -118,5 +174,5 @@
     // b/203778922: `label-text-type` used by other platforms but not web.
     'label-text-type'
   );
-  @return map.remove($theme, $unsupported-tokens);
+  @return map.remove($tokens, $unsupported-tokens);
 }
