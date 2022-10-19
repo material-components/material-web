@@ -10,7 +10,6 @@
 @use '../../tokens';
 @use './button-theme';
 @use './elevation-theme';
-@use './icon-theme';
 
 $_custom-property-prefix: 'tonal-button';
 
@@ -36,9 +35,11 @@ $light-theme: tokens.md-comp-filled-tonal-button-values();
   $theme: _resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
-  @include button-theme.theme-styles($theme);
-  @include icon-theme.theme-styles($theme);
-  @include elevation-theme.theme-styles($theme);
+  & {
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
 }
 
 @function _resolve-theme($theme, $resolvers) {

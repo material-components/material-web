@@ -8,6 +8,7 @@ import {customElement} from 'lit/decorators.js';
 
 import {FilledLinkButton} from './lib/filled-link-button.js';
 import {styles as filledStyles} from './lib/filled-styles.css.js';
+import {styles as sharedElevationStyles} from './lib/shared-elevation-styles.css.js';
 import {styles as sharedStyles} from './lib/shared-styles.css.js';
 
 declare global {
@@ -23,5 +24,5 @@ declare global {
  */
 @customElement('md-filled-link-button')
 export class MdFilledLinkButton extends FilledLinkButton {
-  static override styles = [sharedStyles, filledStyles];
+  static override styles = [sharedStyles, sharedElevationStyles, filledStyles];
 }

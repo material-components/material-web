@@ -8,12 +8,13 @@
 
 @use '../../elevation/lib/elevation-theme';
 
-@mixin theme-styles($theme) {
+@mixin theme-styles() {
   & {
     @include elevation-theme.theme-styles(
       (
-        shadow: map.get($theme, container-elevation-shadow),
-        overlay-opacity: map.get($theme, container-elevation-overlay-opacity),
+        shadow: var(--_container-elevation-shadow),
+        overlay-opacity: var(--_container-elevation-overlay-opacity),
+        surface-tint-layer-color: var(--_container-surface-tint-layer-color),
       )
     );
   }
@@ -21,9 +22,8 @@
   &:hover {
     @include elevation-theme.theme-styles(
       (
-        shadow: map.get($theme, hover-container-elevation-shadow),
-        overlay-opacity:
-          map.get($theme, hover-container-elevation-overlay-opacity),
+        shadow: var(--_hover-container-elevation-shadow),
+        overlay-opacity: var(--_hover-container-elevation-overlay-opacity),
       )
     );
   }
@@ -31,9 +31,8 @@
   &:focus {
     @include elevation-theme.theme-styles(
       (
-        shadow: map.get($theme, focus-container-elevation-shadow),
-        overlay-opacity:
-          map.get($theme, focus-container-elevation-overlay-opacity),
+        shadow: var(--_focus-container-elevation-shadow),
+        overlay-opacity: var(--_focus-container-elevation-overlay-opacity),
       )
     );
   }
@@ -41,9 +40,8 @@
   &:active {
     @include elevation-theme.theme-styles(
       (
-        shadow: map.get($theme, pressed-container-elevation-shadow),
-        overlay-opacity:
-          map.get($theme, pressed-container-elevation-overlay-opacity),
+        shadow: var(--_pressed-container-elevation-shadow),
+        overlay-opacity: var(--_pressed-container-elevation-overlay-opacity),
       )
     );
   }
@@ -51,19 +49,11 @@
   &:disabled {
     @include elevation-theme.theme-styles(
       (
-        shadow: map.get($theme, disabled-container-elevation-shadow),
-        overlay-opacity:
-          map.get($theme, disabled-container-elevation-overlay-opacity),
+        shadow: var(--_disabled-container-elevation-shadow),
+        overlay-opacity: var(--_disabled-container-elevation-overlay-opacity),
       )
     );
   }
-
-  @include elevation-theme.theme-styles(
-    (
-      surface-tint-layer-color:
-        map.get($theme, container-surface-tint-layer-color),
-    )
-  );
 }
 
 @function resolve-theme($theme, $resolvers) {

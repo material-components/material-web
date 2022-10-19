@@ -10,65 +10,67 @@
 @use '../../sass/color';
 @use '../../ripple/ripple-theme';
 
-@mixin theme-styles($theme) {
+@mixin theme-styles() {
   & {
-    block-size: map.get($theme, 'container-height');
-    font-family: map.get($theme, label-text-font);
-    font-size: map.get($theme, label-text-size);
-    letter-spacing: map.get($theme, label-text-tracking);
-    font-weight: map.get($theme, label-text-weight);
+    @include ripple-theme.theme(
+      (
+        hover-state-layer-color: var(--_hover-state-layer-color),
+        focus-state-layer-color: var(--_focus-state-layer-color),
+        pressed-state-layer-color: var(--_pressed-state-layer-color),
+        hover-state-layer-opacity: var(--_hover-state-layer-opacity),
+        focus-state-layer-opacity: var(--_focus-state-layer-opacity),
+        pressed-state-layer-opacity: var(--_pressed-state-layer-opacity),
+      )
+    );
+  }
+
+  & {
+    block-size: var(--_container-height);
+    font-family: var(--_label-text-font);
+    font-size: var(--_label-text-size);
+    letter-spacing: var(--_label-text-tracking);
+    font-weight: var(--_label-text-weight);
   }
 
   &,
   .md3-button__ripple {
-    border-radius: map.get($theme, 'container-shape');
+    border-radius: var(--_container-shape);
   }
 
   &:not(:disabled) {
-    background-color: map.get($theme, container-color);
-    color: map.get($theme, label-text-color);
+    background-color: var(--_container-color);
+    color: var(--_label-text-color);
   }
 
   &:hover {
-    color: map.get($theme, hover-label-text-color);
+    color: var(--_hover-label-text-color);
   }
 
   &:focus {
-    color: map.get($theme, focus-label-text-color);
+    color: var(--_focus-label-text-color);
   }
 
   &:active {
-    color: map.get($theme, pressed-label-text-color);
+    color: var(--_pressed-label-text-color);
   }
 
   &:disabled {
-    background-color: map.get($theme, disabled-container-color);
-    color: map.get($theme, disabled-label-text-color);
+    background-color: var(--_disabled-container-color);
+    color: var(--_disabled-label-text-color);
   }
-
-  @include ripple-theme.theme(
-    (
-      hover-state-layer-color: map.get($theme, hover-state-layer-color),
-      focus-state-layer-color: map.get($theme, focus-state-layer-color),
-      pressed-state-layer-color: map.get($theme, pressed-state-layer-color),
-      hover-state-layer-opacity: map.get($theme, hover-state-layer-opacity),
-      focus-state-layer-opacity: map.get($theme, focus-state-layer-opacity),
-      pressed-state-layer-opacity: map.get($theme, pressed-state-layer-opacity),
-    )
-  );
 
   // TODO(b/181413732): Verify tokens below are named correctly
   & {
-    padding-inline-start: map.get($theme, 'spacing-leading');
-    padding-inline-end: map.get($theme, 'spacing-trailing');
+    padding-inline-start: var(--_spacing-leading);
+    padding-inline-end: var(--_spacing-trailing);
   }
   &.md3-button--icon-leading {
-    padding-inline-start: map.get($theme, 'with-icon-spacing-leading');
-    padding-inline-end: map.get($theme, 'with-icon-spacing-trailing');
+    padding-inline-start: var(--_with-icon-spacing-leading);
+    padding-inline-end: var(--_with-icon-spacing-trailing);
   }
   &.md3-button--icon-trailing {
-    padding-inline-start: map.get($theme, 'with-trailing-icon-spacing-leading');
-    padding-inline-end: map.get($theme, 'with-trailing-icon-spacing-trailing');
+    padding-inline-start: var(--_with-trailing-icon-spacing-leading);
+    padding-inline-end: var(--_with-trailing-icon-spacing-trailing);
   }
 }
 

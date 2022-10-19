@@ -6,6 +6,7 @@
 
 import {customElement} from 'lit/decorators.js';
 
+import {styles as sharedElevationStyles} from './lib/shared-elevation-styles.css.js';
 import {styles as sharedStyles} from './lib/shared-styles.css.js';
 import {TonalButton} from './lib/tonal-button.js';
 import {styles as tonalStyles} from './lib/tonal-styles.css.js';
@@ -23,5 +24,5 @@ declare global {
  */
 @customElement('md-tonal-button')
 export class MdTonalButton extends TonalButton {
-  static override styles = [sharedStyles, tonalStyles];
+  static override styles = [sharedStyles, sharedElevationStyles, tonalStyles];
 }

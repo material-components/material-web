@@ -70,19 +70,5 @@ $_flat-theme: map.merge(
 ///
 /// @param {String} $box-shadow - The shadow to apply to the element.
 @mixin _box-shadow($box-shadow) {
-  @if var.is-var($box-shadow) {
-    // TODO(b/185188458): Set box-shadow directly once resolved
-    $fallback: var.deep-fallback($box-shadow);
-
-    // var(--<box-shadow-prop>, var(--elevation-box-shadow-for-gss))
-    $gss-custom-prop: var.deep-set-fallback(
-      $box-shadow,
-      var.create(elevation-box-shadow-for-gss)
-    );
-    #{var.create-name(elevation-box-shadow-for-gss)}: $fallback;
-
-    box-shadow: $gss-custom-prop;
-  } @else {
-    box-shadow: $box-shadow;
-  }
+  box-shadow: $box-shadow;
 }

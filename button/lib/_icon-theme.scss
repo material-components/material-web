@@ -8,43 +8,43 @@
 
 @use 'sass:map';
 
-@mixin theme-styles($theme) {
+@mixin theme-styles() {
   ::slotted([slot='icon']),
   .md3-button__icon {
-    color: map.get($theme, with-icon-icon-color);
+    color: var(--_with-icon-icon-color);
   }
 
   &:hover {
     ::slotted([slot='icon']),
     .md3-button__icon {
-      color: map.get($theme, with-icon-hover-icon-color);
+      color: var(--_with-icon-hover-icon-color);
     }
   }
 
   &:focus {
     ::slotted([slot='icon']),
     .md3-button__icon {
-      color: map.get($theme, with-icon-focus-icon-color);
+      color: var(--_with-icon-focus-icon-color);
     }
   }
 
   &:active {
     ::slotted([slot='icon']),
     .md3-button__icon {
-      color: map.get($theme, with-icon-pressed-icon-color);
+      color: var(--_with-icon-pressed-icon-color);
     }
   }
 
   &:disabled {
     ::slotted([slot='icon']),
     .md3-button__icon {
-      color: map.get($theme, with-icon-disabled-icon-color);
+      color: var(--_with-icon-disabled-icon-color);
     }
   }
 
   ::slotted([slot='icon']),
   .md3-button__icon {
-    $size: map.get($theme, with-icon-icon-size);
+    $size: var(--_with-icon-icon-size);
     font-size: $size;
     inline-size: $size;
     block-size: $size;

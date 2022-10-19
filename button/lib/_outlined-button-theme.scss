@@ -12,7 +12,6 @@
 @use '../../sass/typography';
 @use '../../tokens';
 @use './button-theme';
-@use './icon-theme';
 
 $_custom-property-prefix: 'outlined-button';
 
@@ -38,35 +37,37 @@ $light-theme: tokens.md-comp-outlined-button-values();
   $theme: _resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
-  @include button-theme.theme-styles($theme);
-  @include icon-theme.theme-styles($theme);
+  & {
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
 
   .md3-button__outline {
-    border-color: map.get($theme, outline-color);
-    border-radius: map.get($theme, container-shape);
+    border-color: var(--_outline-color);
+    border-radius: var(--_container-shape);
   }
 
   &:active {
     .md3-button__outline {
-      border-color: map.get($theme, pressed-outline-color);
+      border-color: var(--_pressed-outline-color);
     }
   }
 
   &:disabled {
     .md3-button__outline {
-      border-color: map.get($theme, disabled-outline-color);
+      border-color: var(--_disabled-outline-color);
     }
   }
 
-  $width: map.get($theme, outline-width);
   .md3-button__outline,
   .md3-button__ripple {
-    border-width: $width;
+    border-width: var(--_outline-width);
   }
 
   .md3-button__ripple {
-    inline-size: calc(100% - 2 * #{$width});
-    block-size: calc(100% - 2 * #{$width});
+    inline-size: calc(100% - 2 * var(--_outline-width));
+    block-size: calc(100% - 2 * var(--_outline-width));
   }
 }
 
