@@ -44,28 +44,34 @@
 
   $theme: theme.create-theme-vars($theme, ripple);
 
-  @include _container-shape(map.get($theme, state-layer-shape));
+  & {
+    border-radius: map.get($theme, state-layer-shape);
+  }
 
   &::before {
-    @include _hover-focus-color(map.get($theme, hover-state-layer-color));
+    background-color: map.get($theme, hover-state-layer-color);
   }
 
   &::after {
-    @include _press-color(map.get($theme, pressed-state-layer-color));
+    background: radial-gradient(
+      closest-side,
+      #{map.get($theme, pressed-state-layer-color)} max(calc(100% - 70px), 65%),
+      transparent 100%
+    );
   }
 
   &.md3-ripple--hovered::before {
-    @include _ripple-opacity(map.get($theme, hover-state-layer-opacity));
-    @include _hover-focus-color(map.get($theme, hover-state-layer-color));
+    background-color: map.get($theme, hover-state-layer-color);
+    opacity: map.get($theme, hover-state-layer-opacity);
   }
 
   &.md3-ripple--focused::before {
-    @include _ripple-opacity(map.get($theme, focus-state-layer-opacity));
-    @include _hover-focus-color(map.get($theme, focus-state-layer-color));
+    background-color: map.get($theme, focus-state-layer-color);
+    opacity: map.get($theme, focus-state-layer-opacity);
   }
 
   &.md3-ripple--pressed::after {
-    @include _ripple-opacity(map.get($theme, pressed-state-layer-opacity));
+    opacity: map.get($theme, pressed-state-layer-opacity);
   }
 
   &.md3-ripple--unbounded {
@@ -73,33 +79,9 @@
       state-layer-shape: map.get(tokens.md-sys-shape-values(), corner-full),
     );
     $unbounded: theme.create-theme-vars($unbounded, ripple);
-    @include _container-shape(map.get($unbounded, state-layer-shape));
+    border-radius: map.get($unbounded, state-layer-shape);
   }
 
-  @include _forced-colors;
-}
-
-@mixin _container-shape($shape) {
-  border-radius: $shape;
-}
-
-@mixin _hover-focus-color($color) {
-  background-color: $color;
-}
-
-@mixin _ripple-opacity($opacity) {
-  opacity: $opacity;
-}
-
-@mixin _press-color($color) {
-  background: radial-gradient(
-    closest-side,
-    #{$color} max(calc(100% - 70px), 65%),
-    transparent 100%
-  );
-}
-
-@mixin _forced-colors {
   // TODO(b/230630968): create a forced-colors-mode mixin
   @media screen and (forced-colors: active) {
     display: none;

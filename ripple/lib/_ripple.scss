@@ -8,77 +8,56 @@
 
 @mixin static-styles() {
   :host {
-    @include common;
-    @include host;
+    display: flex;
   }
 
   :host([disabled]) {
-    @include disabled;
+    opacity: 0;
+  }
+
+  :host,
+  .md3-ripple-surface {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
   }
 
   .md3-ripple-surface {
-    @include common;
-    @include surface;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+
+    &::before,
+    &::after {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+      z-index: -1;
+      content: '';
+    }
+
+    &::before {
+      transition: opacity 15ms linear, background-color 15ms linear;
+      inset: 0;
+    }
+
+    &::after {
+      // press ripple fade-out
+      transition: opacity 375ms linear;
+      transform-origin: center center;
+    }
   }
 
   .md3-ripple--focused {
-    @include focused;
+    &::before {
+      transition-duration: 75ms;
+    }
   }
 
   .md3-ripple--pressed {
-    @include pressed;
-  }
-}
-
-@mixin disabled() {
-  opacity: 0;
-}
-
-@mixin common() {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-@mixin host() {
-  display: flex;
-}
-
-@mixin surface() {
-  outline: none;
-  -webkit-tap-highlight-color: transparent;
-
-  &::before,
-  &::after {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-    z-index: -1;
-    content: '';
-  }
-
-  &::before {
-    transition: opacity 15ms linear, background-color 15ms linear;
-    inset: 0;
-  }
-
-  &::after {
-    // press ripple fade-out
-    transition: opacity 375ms linear;
-    transform-origin: center center;
-  }
-}
-
-@mixin focused() {
-  &::before {
-    transition-duration: 75ms;
-  }
-}
-
-@mixin pressed() {
-  &::after {
-    // press ripple fade-in
-    transition-duration: 105ms;
+    &::after {
+      // press ripple fade-in
+      transition-duration: 105ms;
+    }
   }
 }
