@@ -1,0 +1,29 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:map';
+@use '../../tokens';
+
+@function values($exclude-hardcoded-values: false) {
+  $state-values: tokens.md-sys-state-values($exclude-hardcoded-values);
+  $default-shape: map.get(
+    tokens.md-sys-shape-values($exclude-hardcoded-values),
+    corner-none
+  );
+  $default-color: if($exclude-hardcoded-values, null, black);
+  // add missing tokens
+  $values: map.merge(
+    $state-values,
+    (
+      state-layer-shape: $default-shape,
+      focus-state-layer-color: $default-color,
+      hover-state-layer-color: $default-color,
+      pressed-state-layer-color: $default-color,
+      dragged-state-layer-color: $default-color,
+    )
+  );
+
+  @return $values;
+}

@@ -1,6 +1,15 @@
 //
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 // SPDX-License-Identifier: Apache-2.0
 //
 
-@forward './lib/ripple-theme' show values, theme;
+@use 'sass:map';
+@use '../sass/theme';
+@use './lib/md-comp-ripple';
+
+@mixin theme($theme) {
+  $theme: theme.validate-theme(md-comp-ripple.values(), $theme);
+  $theme: theme.create-theme-vars($theme, ripple);
+
+  @include theme.emit-theme-vars($theme);
+}

@@ -6,7 +6,28 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@mixin static-styles() {
+@use 'sass:map';
+@use '../../sass/theme';
+@use '../../tokens';
+@use './md-comp-ripple';
+
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme(md-comp-ripple.values(), $tokens);
+  $tokens: theme.create-theme-vars($tokens, ripple);
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: md-comp-ripple.values();
+  $tokens: theme.create-theme-vars($tokens, ripple);
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+
   :host {
     display: flex;
   }
@@ -24,6 +45,7 @@
   }
 
   .md3-ripple-surface {
+    border-radius: var(--_state-layer-shape);
     outline: none;
     -webkit-tap-highlight-color: transparent;
 
@@ -37,27 +59,53 @@
     }
 
     &::before {
+      background-color: var(--_hover-state-layer-color);
       transition: opacity 15ms linear, background-color 15ms linear;
       inset: 0;
     }
 
     &::after {
       // press ripple fade-out
+      background: radial-gradient(
+        closest-side,
+        var(--_pressed-state-layer-color) max(calc(100% - 70px), 65%),
+        transparent 100%
+      );
       transition: opacity 375ms linear;
       transform-origin: center center;
     }
   }
 
-  .md3-ripple--focused {
-    &::before {
-      transition-duration: 75ms;
-    }
+  .md3-ripple--hovered::before {
+    background-color: var(--_hover-state-layer-color);
+    opacity: var(--_hover-state-layer-opacity);
   }
 
-  .md3-ripple--pressed {
-    &::after {
-      // press ripple fade-in
-      transition-duration: 105ms;
+  .md3-ripple--focused::before {
+    background-color: var(--_focus-state-layer-color);
+    opacity: var(--_focus-state-layer-opacity);
+    transition-duration: 75ms;
+  }
+
+  .md3-ripple--pressed::after {
+    // press ripple fade-in
+    opacity: var(--_pressed-state-layer-opacity);
+    transition-duration: 105ms;
+  }
+
+  .md3-ripple--unbounded {
+    $unbounded: (
+      state-layer-shape: map.get(tokens.md-sys-shape-values(), 'corner-full'),
+    );
+    $unbounded: theme.create-theme-vars($unbounded, ripple);
+
+    --_state-layer-shape: #{map.get($unbounded, 'state-layer-shape')};
+  }
+
+  // TODO(b/230630968): create a forced-colors-mode mixin
+  @media screen and (forced-colors: active) {
+    :host {
+      display: none;
     }
   }
 }

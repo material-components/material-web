@@ -3,14 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 @use './ripple';
-@use './ripple-theme';
 
-@include ripple.static-styles();
-
-.md3-ripple-surface {
-  @include ripple-theme.theme-styles(ripple-theme.values());
-}
+@include ripple.styles;
