@@ -40,46 +40,52 @@
 }
 
 @mixin theme-styles($theme) {
-  $theme: theme.validate-theme-styles(values(), $theme, $require-all: false);
-
+  $theme: theme.validate-theme-styles(values(), $theme);
   $theme: theme.create-theme-vars($theme, ripple);
 
   & {
-    border-radius: map.get($theme, state-layer-shape);
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
+
+  &.md3-ripple--unbounded {
+    $unbounded: (
+      state-layer-shape: map.get(tokens.md-sys-shape-values(), 'corner-full'),
+    );
+    $unbounded: theme.create-theme-vars($unbounded, ripple);
+
+    --_state-layer-shape: #{map.get($unbounded, 'state-layer-shape')};
+  }
+
+  & {
+    border-radius: var(--_state-layer-shape);
   }
 
   &::before {
-    background-color: map.get($theme, hover-state-layer-color);
+    background-color: var(--_hover-state-layer-color);
   }
 
   &::after {
     background: radial-gradient(
       closest-side,
-      #{map.get($theme, pressed-state-layer-color)} max(calc(100% - 70px), 65%),
+      #{var(--_pressed-state-layer-color)} max(calc(100% - 70px), 65%),
       transparent 100%
     );
   }
 
   &.md3-ripple--hovered::before {
-    background-color: map.get($theme, hover-state-layer-color);
-    opacity: map.get($theme, hover-state-layer-opacity);
+    background-color: var(--_hover-state-layer-color);
+    opacity: var(--_hover-state-layer-opacity);
   }
 
   &.md3-ripple--focused::before {
-    background-color: map.get($theme, focus-state-layer-color);
-    opacity: map.get($theme, focus-state-layer-opacity);
+    background-color: var(--_focus-state-layer-color);
+    opacity: var(--_focus-state-layer-opacity);
   }
 
   &.md3-ripple--pressed::after {
-    opacity: map.get($theme, pressed-state-layer-opacity);
-  }
-
-  &.md3-ripple--unbounded {
-    $unbounded: (
-      state-layer-shape: map.get(tokens.md-sys-shape-values(), corner-full),
-    );
-    $unbounded: theme.create-theme-vars($unbounded, ripple);
-    border-radius: map.get($unbounded, state-layer-shape);
+    opacity: var(--_pressed-state-layer-opacity);
   }
 
   // TODO(b/230630968): create a forced-colors-mode mixin
