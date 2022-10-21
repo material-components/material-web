@@ -8,10 +8,6 @@
 
 @mixin static-styles() {
   .md3-fab--regular {
-    @include root;
+    padding: 0;
   }
-}
-
-@mixin root() {
-  padding: 0;
 }

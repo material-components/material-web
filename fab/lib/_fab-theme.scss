@@ -91,17 +91,12 @@ $surface-theme: tokens.md-comp-fab-surface-values();
 
   @include fab-shared-theme.theme-styles($theme);
 
-  @include _set-container-dimensions(
-    map.get($theme, container-width),
-    map.get($theme, container-height)
-  );
+  & {
+    width: map.get($theme, container-width);
+    height: map.get($theme, container-height);
+  }
 }
 
 @function _resolve-theme($theme, $resolvers) {
   @return fab-shared-theme.resolve-theme($theme, $resolvers);
-}
-
-@mixin _set-container-dimensions($width, $height) {
-  width: $width;
-  height: $height;
 }

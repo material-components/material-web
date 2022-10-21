@@ -12,102 +12,66 @@
 
 @mixin static-styles() {
   :host {
-    @include host-root;
+    display: inline-flex;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    /**
+     * Override vertical-align with shortest value "top". Vertical-align's default
+     * "baseline" value causes buttons to be misaligned next to each other if one
+     * button has an icon and the other does not.
+     */
+    vertical-align: top;
   }
 
   :host([disabled]) {
-    @include disabled;
+    cursor: default;
+    pointer-events: none;
   }
 
   .md3-fab {
-    @include root;
+    @include surface.root-static-styles;
+    display: inline-flex;
+    border: none;
+    outline: none;
+    user-select: none;
+    -webkit-appearance: none;
+    vertical-align: middle;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 
     .md3-fab__ripple {
-      @include ripple;
+      overflow: hidden;
     }
 
     &:active {
-      @include active;
+      outline: none;
     }
 
     &:hover {
-      @include hover;
+      cursor: pointer;
     }
 
     .md3-fab__icon {
-      @include icon;
+      display: inline-flex;
     }
 
     .md3-fab__touch {
-      @include touch-target;
+      @include touch-target.touch-target();
     }
   }
 
   @media (forced-colors: active) {
     .md3-fab {
-      @include high-contrast-styles;
+      // Adjust the focus ring padding to account for the 1px border in HCM.
+      @include focus-ring-theme.theme(
+        (
+          container-outer-padding-vertical: 3px,
+          container-outer-padding-horizontal: 3px,
+        )
+      );
+      border: 1px solid ButtonText;
     }
   }
-}
-
-@mixin host-root() {
-  display: inline-flex;
-  outline: none;
-  -webkit-tap-highlight-color: transparent;
-  /**
-   * Override vertical-align with shortest value "top". Vertical-align's default
-   * "baseline" value causes buttons to be misaligned next to each other if one
-   * button has an icon and the other does not.
-   */
-  vertical-align: top;
-}
-
-@mixin root() {
-  @include surface.root-static-styles;
-  display: inline-flex;
-  border: none;
-  outline: none;
-  user-select: none;
-  -webkit-appearance: none;
-  vertical-align: middle;
-  text-decoration: none;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-@mixin active() {
-  outline: none;
-}
-
-@mixin hover() {
-  cursor: pointer;
-}
-
-@mixin disabled() {
-  cursor: default;
-  pointer-events: none;
-}
-
-@mixin ripple() {
-  overflow: hidden;
-}
-
-@mixin icon() {
-  display: inline-flex;
-}
-
-@mixin touch-target() {
-  @include touch-target.touch-target();
-}
-
-@mixin high-contrast-styles() {
-  // Adjust the focus ring padding to account for the 1px border in HCM.
-  @include focus-ring-theme.theme(
-    (
-      container-outer-padding-vertical: 3px,
-      container-outer-padding-horizontal: 3px,
-    )
-  );
-  border: 1px solid ButtonText;
 }

@@ -50,59 +50,37 @@ $surface-theme: tokens.md-comp-extended-fab-surface-values();
   @include fab-shared-theme.theme-styles($theme);
 
   height: map.get($theme, container-height);
+  font-family: map.get($theme, label-text-font);
+  line-height: map.get($theme, label-text-line-height);
+  font-size: map.get($theme, label-text-size);
+  font-weight: map.get($theme, label-text-weight);
+  letter-spacing: map.get($theme, label-text-tracking);
 
-  @include _label-color(
-    (
-      default: map.get($theme, label-text-color),
-      focus: map.get($theme, focus-label-text-color),
-      hover: map.get($theme, hover-label-text-color),
-      pressed: map.get($theme, pressed-label-text-color),
-    )
-  );
+  &:enabled {
+    .md3-fab__label {
+      color: map.get($theme, label-text-color);
+    }
+  }
 
-  @include _label-typography(
-    (
-      font: map.get($theme, label-text-font),
-      line-height: map.get($theme, label-text-line-height),
-      size: map.get($theme, label-text-size),
-      weight: map.get($theme, label-text-weight),
-      tracking: map.get($theme, label-text-tracking),
-    )
-  );
+  &:hover {
+    .md3-fab__label {
+      color: map.get($theme, hover-label-text-color);
+    }
+  }
+
+  &:focus {
+    .md3-fab__label {
+      color: map.get($theme, focus-label-text-color);
+    }
+  }
+
+  &:active {
+    .md3-fab__label {
+      color: map.get($theme, pressed-label-text-color);
+    }
+  }
 }
 
 @function _resolve-theme($theme, $resolvers) {
   @return fab-shared-theme.resolve-theme($theme, $resolvers);
-}
-
-@mixin _label-color($color-or-map) {
-  &:enabled {
-    @include _set-label-color(map.get($color-or-map, default));
-  }
-
-  &:hover {
-    @include _set-label-color(map.get($color-or-map, hover));
-  }
-
-  &:focus {
-    @include _set-label-color(map.get($color-or-map, focus));
-  }
-
-  &:active {
-    @include _set-label-color(map.get($color-or-map, pressed));
-  }
-}
-
-@mixin _set-label-color($color) {
-  .md3-fab__label {
-    color: $color;
-  }
-}
-
-@mixin _label-typography($typography-map) {
-  font-family: map.get($typography-map, font);
-  line-height: map.get($typography-map, line-height);
-  font-size: map.get($typography-map, size);
-  font-weight: map.get($typography-map, weight);
-  letter-spacing: map.get($typography-map, tracking);
 }

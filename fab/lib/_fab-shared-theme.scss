@@ -36,54 +36,111 @@
 }
 
 @mixin theme-styles($theme) {
-  @include _elevation(
-    (
-      default: (
+  &,
+  .md3-fab__ripple {
+    border-radius: map.get($theme, container-shape);
+  }
+
+  &:enabled {
+    background-color: map.get($theme, container-color);
+
+    ::slotted(*),
+    .md3-fab__icon {
+      color: map.get($theme, icon-color);
+    }
+
+    @include elevation-theme.theme-styles(
+      (
         shadow: map.get($theme, container-elevation-shadow),
         overlay-opacity: map.get($theme, container-elevation-overlay-opacity),
-      ),
-      hover: (
+      )
+    );
+
+    &.md3-fab--lowered {
+      @include elevation-theme.theme-styles(
+        (
+          shadow: map.get($theme, lowered-container-elevation-shadow),
+          overlay-opacity:
+            map.get($theme, lowered-container-elevation-overlay-opacity),
+        )
+      );
+    }
+  }
+
+  &:hover {
+    ::slotted(*),
+    .md3-fab__icon {
+      color: map.get($theme, hover-icon-color);
+    }
+
+    @include elevation-theme.theme-styles(
+      (
         shadow: map.get($theme, hover-container-elevation-shadow),
         overlay-opacity:
           map.get($theme, hover-container-elevation-overlay-opacity),
-      ),
-      focus: (
+      )
+    );
+
+    &.md3-fab--lowered {
+      @include elevation-theme.theme-styles(
+        (
+          shadow: map.get($theme, lowered-hover-container-elevation-shadow),
+          overlay-opacity:
+            map.get($theme, lowered-hover-container-elevation-overlay-opacity),
+        )
+      );
+    }
+  }
+
+  &:focus {
+    ::slotted(*),
+    .md3-fab__icon {
+      color: map.get($theme, focus-icon-color);
+    }
+
+    @include elevation-theme.theme-styles(
+      (
         shadow: map.get($theme, focus-container-elevation-shadow),
         overlay-opacity:
           map.get($theme, focus-container-elevation-overlay-opacity),
-      ),
-      pressed: (
+      )
+    );
+
+    &.md3-fab--lowered {
+      @include elevation-theme.theme-styles(
+        (
+          shadow: map.get($theme, lowered-focus-container-elevation-shadow),
+          overlay-opacity:
+            map.get($theme, lowered-focus-container-elevation-overlay-opacity),
+        )
+      );
+    }
+  }
+
+  &:active {
+    ::slotted(*),
+    .md3-fab__icon {
+      color: map.get($theme, pressed-icon-color);
+    }
+
+    @include elevation-theme.theme-styles(
+      (
         shadow: map.get($theme, pressed-container-elevation-shadow),
         overlay-opacity:
           map.get($theme, pressed-container-elevation-overlay-opacity),
-      ),
-    )
-  );
+      )
+    );
 
-  @include _lowered-elevation(
-    (
-      default: (
-        shadow: map.get($theme, lowered-container-elevation-shadow),
-        overlay-opacity:
-          map.get($theme, lowered-container-elevation-overlay-opacity),
-      ),
-      hover: (
-        shadow: map.get($theme, lowered-hover-container-elevation-shadow),
-        overlay-opacity:
-          map.get($theme, lowered-hover-container-elevation-overlay-opacity),
-      ),
-      focus: (
-        shadow: map.get($theme, lowered-focus-container-elevation-shadow),
-        overlay-opacity:
-          map.get($theme, lowered-focus-container-elevation-overlay-opacity),
-      ),
-      pressed: (
-        shadow: map.get($theme, lowered-pressed-container-elevation-shadow),
-        overlay-opacity:
-          map.get($theme, lowered-pressed-container-elevation-overlay-opacity),
-      ),
-    )
-  );
+    &.md3-fab--lowered {
+      @include elevation-theme.theme-styles(
+        (
+          shadow: map.get($theme, lowered-pressed-container-elevation-shadow),
+          overlay-opacity:
+            map.get($theme, lowered-pressed-container-elevation-overlay-opacity),
+        )
+      );
+    }
+  }
 
   @include elevation-theme.theme-styles(
     (
@@ -92,24 +149,15 @@
     )
   );
 
-  @include _container-fill-color(
-    (
-      default: map.get($theme, container-color),
-    )
-  );
-
-  @include _set-container-shape(map.get($theme, container-shape));
-
-  @include _icon-color(
-    (
-      default: map.get($theme, icon-color),
-      hover: map.get($theme, hover-icon-color),
-      focus: map.get($theme, focus-icon-color),
-      pressed: map.get($theme, pressed-icon-color),
-    )
-  );
-
-  @include _set-icon-size(map.get($theme, icon-size));
+  ::slotted(*),
+  .md3-fab__icon,
+  i,
+  svg,
+  img {
+    font-size: map.get($theme, icon-size);
+    height: map.get($theme, icon-size);
+    width: map.get($theme, icon-size);
+  }
 
   @include ripple-theme.theme(
     (
@@ -121,82 +169,4 @@
       pressed-state-layer-opacity: map.get($theme, pressed-state-layer-opacity),
     )
   );
-}
-
-@mixin _lowered-elevation($elevation-map) {
-  &.md3-fab--lowered {
-    @include _elevation($elevation-map);
-  }
-}
-
-@mixin _elevation($elevation-map) {
-  &:enabled {
-    @include elevation-theme.theme-styles(map.get($elevation-map, default));
-  }
-
-  &:hover {
-    @include elevation-theme.theme-styles(map.get($elevation-map, hover));
-  }
-
-  &:focus {
-    @include elevation-theme.theme-styles(map.get($elevation-map, focus));
-  }
-
-  &:active {
-    @include elevation-theme.theme-styles(map.get($elevation-map, pressed));
-  }
-}
-
-@mixin _container-fill-color($color-or-map) {
-  &:enabled {
-    @include _set-container-fill-color(map.get($color-or-map, default));
-  }
-}
-
-@mixin _set-container-fill-color($color) {
-  background-color: $color;
-}
-
-@mixin _set-container-shape($radius) {
-  &,
-  .md3-fab__ripple {
-    border-radius: $radius;
-  }
-}
-
-@mixin _icon-color($color-or-map) {
-  &:enabled {
-    @include _set-icon-color(map.get($color-or-map, default));
-  }
-
-  &:hover {
-    @include _set-icon-color(map.get($color-or-map, hover));
-  }
-
-  &:focus {
-    @include _set-icon-color(map.get($color-or-map, focus));
-  }
-
-  &:active {
-    @include _set-icon-color(map.get($color-or-map, pressed));
-  }
-}
-
-@mixin _set-icon-color($color) {
-  ::slotted(*),
-  .md3-fab__icon {
-    color: $color;
-  }
-}
-
-@mixin _set-icon-size($size) {
-  ::slotted(*),
-  .md3-fab__icon,
-  i,
-  svg,
-  img {
-    font-size: $size;
-    height: $size;
-    width: $size;
-  }
 }
