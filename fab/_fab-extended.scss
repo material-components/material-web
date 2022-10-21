@@ -3,9 +3,4 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-@forward './lib/fab-extended-theme' show
-  primary-theme,
-  secondary-theme,
-  tertiary-theme,
-  branded-theme,
-  theme;
+@forward './lib/fab-extended' show theme;

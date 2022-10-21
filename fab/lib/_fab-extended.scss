@@ -6,14 +6,60 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@mixin static-styles() {
+@use 'sass:map';
+@use '../../sass/resolvers';
+@use '../../sass/theme';
+@use '../../tokens';
+@use './shared';
+
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme(
+    tokens.md-comp-extended-fab-surface-values(),
+    $tokens
+  );
+  $tokens: shared.resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, fab-extended);
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: tokens.md-comp-extended-fab-surface-values();
+  $tokens: shared.resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, fab-extended);
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+
   .md3-fab--extended {
     box-sizing: border-box;
     padding-inline-start: 16px;
     padding-inline-end: 20px;
+    height: var(--_container-height);
+    font-family: var(--_label-text-font);
+    line-height: var(--_label-text-line-height);
+    font-size: var(--_label-text-size);
+    font-weight: var(--_label-text-weight);
+    letter-spacing: var(--_label-text-tracking);
+  }
 
-    .md3-fab__label {
-      padding-inline-start: 12px;
+  .md3-fab__label {
+    padding-inline-start: 12px;
+    color: var(--_label-text-color);
+
+    .md3-fab:hover & {
+      color: var(--_hover-label-text-color);
+    }
+
+    .md3-fab:focus & {
+      color: var(--_focus-label-text-color);
+    }
+
+    .md3-fab:active & {
+      color: var(--_pressed-label-text-color);
     }
   }
 

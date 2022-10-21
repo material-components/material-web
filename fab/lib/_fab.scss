@@ -6,7 +6,35 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@mixin static-styles() {
+@use '../../sass/theme';
+@use '../../tokens';
+@use './shared';
+
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme(tokens.md-comp-fab-surface-values(), $tokens);
+  $tokens: shared.resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, fab);
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: tokens.md-comp-fab-surface-values();
+
+  $tokens: shared.resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, fab);
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+
+  .md3-fab {
+    width: var(--_container-width);
+    height: var(--_container-height);
+  }
+
   .md3-fab--regular {
     padding: 0;
   }

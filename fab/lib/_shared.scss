@@ -1,0 +1,211 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use 'sass:map';
+@use 'sass:meta';
+@use '../../elevation/lib/elevation-theme';
+@use '../../elevation/lib/surface';
+@use '../../focus/focus-ring';
+@use '../../ripple/ripple-theme';
+@use '../../sass/elevation';
+@use '../../sass/resolvers';
+@use '../../sass/theme';
+@use '../../sass/touch-target';
+
+@mixin styles() {
+  :host {
+    display: inline-flex;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    /**
+     * Override vertical-align with shortest value "top". Vertical-align's default
+     * "baseline" value causes buttons to be misaligned next to each other if one
+     * button has an icon and the other does not.
+     */
+    vertical-align: top;
+  }
+
+  :host([disabled]) {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .md3-fab {
+    @include surface.root-static-styles;
+    display: inline-flex;
+    border: none;
+    outline: none;
+    user-select: none;
+    -webkit-appearance: none;
+    vertical-align: middle;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: var(--_container-color);
+
+    @include elevation-theme.theme-styles(
+      (
+        shadow: var(--_container-elevation-shadow),
+        overlay-opacity: var(--_container-elevation-overlay-opacity),
+        surface-tint-layer-color: var(--_container-surface-tint-layer-color),
+      )
+    );
+
+    &.md3-fab--lowered {
+      @include elevation-theme.theme-styles(
+        (
+          shadow: var(--_lowered-container-elevation-shadow),
+          overlay-opacity: var(--_lowered-container-elevation-overlay-opacity),
+        )
+      );
+    }
+
+    &:hover {
+      cursor: pointer;
+
+      @include elevation-theme.theme-styles(
+        (
+          shadow: var(--_hover-container-elevation-shadow),
+          overlay-opacity: var(--_hover-container-elevation-overlay-opacity),
+        )
+      );
+
+      &.md3-fab--lowered {
+        @include elevation-theme.theme-styles(
+          (
+            shadow: var(--_lowered-hover-container-elevation-shadow),
+            overlay-opacity:
+              var(--_lowered-hover-container-elevation-overlay-opacity),
+          )
+        );
+      }
+    }
+
+    &:focus {
+      @include elevation-theme.theme-styles(
+        (
+          shadow: var(--_focus-container-elevation-shadow),
+          overlay-opacity: var(--_focus-container-elevation-overlay-opacity),
+        )
+      );
+
+      &.md3-fab--lowered {
+        @include elevation-theme.theme-styles(
+          (
+            shadow: var(--_lowered-focus-container-elevation-shadow),
+            overlay-opacity:
+              var(--_lowered-focus-container-elevation-overlay-opacity),
+          )
+        );
+      }
+    }
+
+    &:active {
+      outline: none;
+
+      @include elevation-theme.theme-styles(
+        (
+          shadow: var(--_pressed-container-elevation-shadow),
+          overlay-opacity: var(--_pressed-container-elevation-overlay-opacity),
+        )
+      );
+
+      &.md3-fab--lowered {
+        @include elevation-theme.theme-styles(
+          (
+            shadow: var(--_lowered-pressed-container-elevation-shadow),
+            overlay-opacity:
+              var(--_lowered-pressed-container-elevation-overlay-opacity),
+          )
+        );
+      }
+    }
+  }
+
+  .md3-fab__ripple {
+    overflow: hidden;
+
+    @include ripple-theme.theme(
+      (
+        hover-state-layer-color: var(--_hover-state-layer-color),
+        focus-state-layer-color: var(--_focus-state-layer-color),
+        pressed-state-layer-color: var(--_pressed-state-layer-color),
+        hover-state-layer-opacity: var(--_hover-state-layer-opacity),
+        focus-state-layer-opacity: var(--_focus-state-layer-opacity),
+        pressed-state-layer-opacity: var(--_pressed-state-layer-opacity),
+      )
+    );
+  }
+
+  .md3-fab,
+  .md3-fab__ripple {
+    border-radius: var(--_container-shape);
+  }
+
+  .md3-fab__icon {
+    display: inline-flex;
+  }
+
+  .md3-fab__touch {
+    @include touch-target.touch-target();
+  }
+
+  ::slotted(*),
+  .md3-fab__icon {
+    color: var(--_icon-color);
+    font-size: var(--_icon-size);
+    height: var(--_icon-size);
+    width: var(--_icon-size);
+
+    .md3-fab:hover & {
+      color: var(--_hover-icon-color);
+    }
+
+    .md3-fab:focus & {
+      color: var(--_focus-icon-color);
+    }
+
+    .md3-fab:active & {
+      color: var(--_pressed-icon-color);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .md3-fab {
+      // Adjust the focus ring padding to account for the 1px border in HCM.
+      @include focus-ring.theme(
+        (
+          container-outer-padding-vertical: 3px,
+          container-outer-padding-horizontal: 3px,
+        )
+      );
+      border: 1px solid ButtonText;
+    }
+  }
+}
+
+@function resolve-tokens($tokens) {
+  $tokens: elevation-theme.resolve-theme(
+    $tokens,
+    map.get(resolvers.$material, elevation),
+    $shadow-color-token: container-shadow-color,
+    $elevation-tokens: (
+      container-elevation,
+      focus-container-elevation,
+      hover-container-elevation,
+      pressed-container-elevation,
+      lowered-container-elevation,
+      lowered-focus-container-elevation,
+      lowered-hover-container-elevation,
+      lowered-pressed-container-elevation
+    )
+  );
+
+  @return $tokens;
+}
