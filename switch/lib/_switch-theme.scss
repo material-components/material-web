@@ -8,7 +8,7 @@
 
 @use 'sass:map';
 
-@use '../../focus/lib/focus-ring-theme';
+@use '../../focus/focus-ring';
 @use '../../sass/color';
 @use '../../sass/resolvers';
 @use '../../sass/shape';
@@ -178,7 +178,7 @@ $_forced-colors-theme: (
   // TODO(b/231741594): use `track-shape` once this is not deleted.
   $track-shape: map.get($theme, track-shape-start-start);
 
-  @include focus-ring-theme.theme(
+  @include focus-ring.theme(
     (
       ring-radius: $track-shape,
     )

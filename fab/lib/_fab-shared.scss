@@ -8,7 +8,7 @@
 
 @use '../../sass/touch-target';
 @use '../../elevation/lib/surface';
-@use '../../focus/lib/focus-ring-theme';
+@use '../../focus/focus-ring';
 
 @mixin static-styles() {
   :host {
@@ -65,7 +65,7 @@
   @media (forced-colors: active) {
     .md3-fab {
       // Adjust the focus ring padding to account for the 1px border in HCM.
-      @include focus-ring-theme.theme(
+      @include focus-ring.theme(
         (
           container-outer-padding-vertical: 3px,
           container-outer-padding-horizontal: 3px,

@@ -9,7 +9,7 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@use '../../focus/lib/focus-ring-theme';
+@use '../../focus/focus-ring';
 @use '../../sass/touch-target';
 
 @mixin static-styles() {
@@ -81,7 +81,7 @@
 }
 
 @mixin _focus-ring() {
-  @include focus-ring-theme.theme(
+  @include focus-ring.theme(
     (
       container-outer-padding-vertical: 0px,
       container-outer-padding-horizontal: 0px,

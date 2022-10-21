@@ -6,20 +6,62 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@mixin static-styles() {
+@use 'sass:map';
+@use '../../sass/theme';
+@use '../../tokens';
+@use './md-comp-focus-ring';
+
+$_custom-property-prefix: 'focus-ring';
+
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme(md-comp-focus-ring.values(), $tokens);
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: md-comp-focus-ring.values();
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+
   :host {
     pointer-events: none;
   }
 
   .md3-focus-ring {
+    // Outer
     display: none;
     position: absolute;
     box-sizing: border-box;
+    border: var(--_outer-ring-width) solid var(--_outer-ring-color);
+    border-radius: var(--_ring-radius);
+    // Note that the ring will not respect its parent's border. This will not be
+    // an issue as long as border is set via a sibling node, similar to ripple
+    // and touch target.
+    $vertical-inset: calc(
+      -1 * (var(--_container-outer-padding-vertical) + var(--_inner-ring-width) +
+            var(--_outer-ring-width))
+    );
+    $horizontal-inset: calc(
+      -1 * (var(--_container-outer-padding-horizontal) +
+            var(--_inner-ring-width) + var(--_outer-ring-width))
+    );
 
+    inset: $vertical-inset $horizontal-inset;
+
+    // Inner
     &::before {
       inset: 0;
       position: absolute;
       content: '';
+      border: var(--_inner-ring-width) solid var(--_inner-ring-color);
+      border-radius: calc(var(--_ring-radius) - var(--_outer-ring-width));
     }
   }
 

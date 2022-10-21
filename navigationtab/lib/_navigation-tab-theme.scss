@@ -10,7 +10,7 @@
 
 @use '../../badge/lib/badge-theme';
 @use '../../ripple/ripple-theme';
-@use '../../focus/lib/focus-ring-theme';
+@use '../../focus/focus-ring';
 @use '../../sass/theme';
 @use '../../tokens';
 
@@ -117,7 +117,7 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
     );
   }
 
-  @include focus-ring-theme.theme(
+  @include focus-ring.theme(
     (
       container-outer-padding-vertical: -4px,
       container-outer-padding-horizontal: -4px,
@@ -212,31 +212,21 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
 
 @mixin _active-label-text-color($color-or-map) {
   &:not(:disabled) {
-    @include _set-active-label-text-color(
-      map.get($color-or-map, default)
-    );
+    @include _set-active-label-text-color(map.get($color-or-map, default));
 
     &:hover {
-      @include _set-active-label-text-color(
-        map.get($color-or-map, hover)
-      );
+      @include _set-active-label-text-color(map.get($color-or-map, hover));
     }
     &:focus {
-      @include _set-active-label-text-color(
-        map.get($color-or-map, focus)
-      );
+      @include _set-active-label-text-color(map.get($color-or-map, focus));
     }
     &:active {
-      @include _set-active-label-text-color(
-        map.get($color-or-map, pressed)
-      );
+      @include _set-active-label-text-color(map.get($color-or-map, pressed));
     }
   }
 
   &:disabled {
-    @include _set-active-label-text-color(
-      map.get($color-or-map, disabled)
-    );
+    @include _set-active-label-text-color(map.get($color-or-map, disabled));
   }
 }
 
@@ -248,31 +238,21 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
 
 @mixin _inactive-label-text-color($color-or-map) {
   &:not(:disabled) {
-    @include _set-inactive-label-text-color(
-      map.get($color-or-map, default)
-    );
+    @include _set-inactive-label-text-color(map.get($color-or-map, default));
 
     &:hover {
-      @include _set-inactive-label-text-color(
-        map.get($color-or-map, hover)
-      );
+      @include _set-inactive-label-text-color(map.get($color-or-map, hover));
     }
     &:focus {
-      @include _set-inactive-label-text-color(
-        map.get($color-or-map, focus)
-      );
+      @include _set-inactive-label-text-color(map.get($color-or-map, focus));
     }
     &:active {
-      @include _set-inactive-label-text-color(
-        map.get($color-or-map, pressed)
-      );
+      @include _set-inactive-label-text-color(map.get($color-or-map, pressed));
     }
   }
 
   &:disabled {
-    @include _set-inactive-label-text-color(
-      map.get($color-or-map, disabled)
-    );
+    @include _set-inactive-label-text-color(map.get($color-or-map, disabled));
   }
 }
 

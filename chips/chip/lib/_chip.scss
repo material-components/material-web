@@ -8,7 +8,7 @@
 // stylelint-disable selector-class-pattern --
 // Internal styling for Chip MDC component.
 
-@use '../../../focus/lib/focus-ring-theme';
+@use '../../../focus/focus-ring';
 @use '../../../motion/animation';
 // TODO(b/240224981): Uncomment when styles are translated to md3 ripple
 // @use '../../../ripple/ripple-theme';
@@ -27,12 +27,8 @@
 
 @mixin ripple-styles() {
   @include chip-theme.ripple-color(chip-theme.$ripple-color);
-  @include chip-theme.delete-action-ripple-color(
-    chip-theme.$ripple-color
-  );
-  @include chip-theme.delete-action-ripple-size(
-    chip-theme.$delete-action-size
-  );
+  @include chip-theme.delete-action-ripple-color(chip-theme.$ripple-color);
+  @include chip-theme.delete-action-ripple-size(chip-theme.$delete-action-size);
 
   .md3-chip__action {
     // TODO(b/240224981): Translate to md3 ripple
@@ -316,18 +312,38 @@
 
 @mixin _high-contrast-mode() {
   @include dom.forced-colors-mode {
-    @include chip-theme.outline-color((
-      default: CanvasText,
-      disabled: GrayText,
-    ));
-    @include chip-theme.selected-outline-color((
-      default: CanvasText,
-      disabled: GrayText,
-    ));
-    @include chip-theme.text-label-color((disabled: GrayText));
-    @include chip-theme.icon-color((disabled: GrayText));
-    @include chip-theme.checkmark-color((disabled: GrayText));
-    @include chip-theme.delete-action-color((disabled: GrayText));
+    @include chip-theme.outline-color(
+      (
+        default: CanvasText,
+        disabled: GrayText,
+      )
+    );
+    @include chip-theme.selected-outline-color(
+      (
+        default: CanvasText,
+        disabled: GrayText,
+      )
+    );
+    @include chip-theme.text-label-color(
+      (
+        disabled: GrayText,
+      )
+    );
+    @include chip-theme.icon-color(
+      (
+        disabled: GrayText,
+      )
+    );
+    @include chip-theme.checkmark-color(
+      (
+        disabled: GrayText,
+      )
+    );
+    @include chip-theme.delete-action-color(
+      (
+        disabled: GrayText,
+      )
+    );
   }
 
   ///
@@ -352,14 +368,16 @@
   .md3-chip__action--delete:not(.md3-chip__action--presentational) {
     // TODO(b/240224981): Convert to md3 ripple
     // @include ripple-theme.focus() {
-      .md3-chip__focus-ring {
-        z-index: 1;
-        display: block;
-        @include focus-ring-theme.theme((
+    .md3-chip__focus-ring {
+      z-index: 1;
+      display: block;
+      @include focus-ring.theme(
+        (
           container-outer-padding-vertical: 2px,
           container-outer-padding-horizontal: -2px,
-        ));
-      }
+        )
+      );
+    }
     // }
   }
 }
@@ -392,16 +410,12 @@
     @include chip-theme.text-label-color(chip-theme.$text-label-color);
     @include chip-theme.icon-color(chip-theme.$icon-color);
     @include chip-theme.checkmark-color(chip-theme.$checkmark-color);
-    @include chip-theme.delete-action-color(
-      chip-theme.$delete-action-color
-    );
+    @include chip-theme.delete-action-color(chip-theme.$delete-action-color);
     @include chip-theme.text-label-type-scale(chip-theme.$type-scale);
     @include chip-theme.graphic-size(chip-theme.$leading-icon-size);
     @include chip-theme.icon-size(chip-theme.$leading-icon-size);
     @include chip-theme.checkmark-size(chip-theme.$checkmark-size);
-    @include chip-theme.delete-action-size(
-      chip-theme.$delete-action-size
-    );
+    @include chip-theme.delete-action-size(chip-theme.$delete-action-size);
 
     @include _high-contrast-mode();
   }

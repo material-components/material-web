@@ -7,7 +7,7 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:math';
-@use '../../focus/lib/focus-ring-theme';
+@use '../../focus/focus-ring';
 @use '../../motion/animation';
 @use './checkbox-theme';
 
@@ -107,7 +107,7 @@ $_indeterminate-checked-easing-function: cubic-bezier(0.14, 0, 0, 1) !default;
     z-index: -1;
   }
 
-  @include focus-ring-theme.theme(
+  @include focus-ring.theme(
     (
       container-outer-padding-vertical: -2px,
       container-outer-padding-horizontal: -2px,

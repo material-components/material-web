@@ -1,0 +1,23 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:map';
+@use '../../tokens';
+
+$_default: (
+  md-sys-color: tokens.md-sys-color-values-light-dynamic(),
+);
+
+@function values($deps: $_default, $exclude-hardcoded-values: false) {
+  @return (
+    ring-radius: if($exclude-hardcoded-values, null, 8px),
+    container-outer-padding-vertical: if($exclude-hardcoded-values, null, 2px),
+    container-outer-padding-horizontal: if($exclude-hardcoded-values, null, 2px),
+    inner-ring-width: if($exclude-hardcoded-values, null, 2px),
+    inner-ring-color: map.get($deps, md-sys-color, on-tertiary-container),
+    outer-ring-width: if($exclude-hardcoded-values, null, 2px),
+    outer-ring-color: map.get($deps, md-sys-color, tertiary-container)
+  );
+}
