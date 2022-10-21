@@ -10,9 +10,9 @@
 
 @use '../../ripple/ripple-theme';
 
-@mixin theme-styles($theme) {
+@mixin theme-styles() {
   .md3-switch__handle-container {
-    $margin: calc(map.get($theme, track-width) - map.get($theme, track-height));
+    $margin: calc(var(--_track-width) - var(--_track-height));
 
     .md3-switch--selected & {
       margin-inline-start: $margin;
@@ -25,13 +25,13 @@
 
   .md3-switch__handle {
     // Handle shape
-    border-start-start-radius: map.get($theme, handle-shape-start-start);
-    border-start-end-radius: map.get($theme, handle-shape-start-end);
-    border-end-end-radius: map.get($theme, handle-shape-end-end);
-    border-end-start-radius: map.get($theme, handle-shape-end-start);
-    height: map.get($theme, handle-height);
-    width: map.get($theme, handle-width);
-    background-color: map.get($theme, selected-handle-color);
+    border-start-start-radius: var(--_handle-shape-start-start);
+    border-start-end-radius: var(--_handle-shape-start-end);
+    border-end-end-radius: var(--_handle-shape-end-end);
+    border-end-start-radius: var(--_handle-shape-end-start);
+    height: var(--_handle-height);
+    width: var(--_handle-width);
+    background-color: var(--_selected-handle-color);
 
     // TODO(b/230484095): Use token instead of hard coded values
     .md3-switch--selected &,
@@ -47,61 +47,56 @@
     }
 
     .md3-switch--selected:hover & {
-      background-color: map.get($theme, selected-hover-handle-color);
+      background-color: var(--_selected-hover-handle-color);
     }
 
     .md3-switch--selected:focus-visible & {
-      background-color: map.get($theme, selected-focus-handle-color);
+      background-color: var(--_selected-focus-handle-color);
     }
 
     .md3-switch--selected:active & {
-      background-color: map.get($theme, selected-pressed-handle-color);
+      background-color: var(--_selected-pressed-handle-color);
     }
 
     .md3-switch--selected:disabled & {
-      background-color: map.get($theme, disabled-selected-handle-color);
+      background-color: var(--_disabled-selected-handle-color);
     }
 
     &::before {
-      background-color: map.get($theme, unselected-handle-color);
+      background-color: var(--_unselected-handle-color);
 
       .md3-switch--unselected:hover & {
-        background-color: map.get($theme, unselected-hover-handle-color);
+        background-color: var(--_unselected-hover-handle-color);
       }
 
       .md3-switch--unselected:focus-visible & {
-        background-color: map.get($theme, unselected-focus-handle-color);
+        background-color: var(--_unselected-focus-handle-color);
       }
 
       .md3-switch--unselected:active & {
-        background-color: map.get($theme, unselected-pressed-handle-color);
+        background-color: var(--_unselected-pressed-handle-color);
       }
 
       .md3-switch--unselected:disabled & {
-        background-color: map.get($theme, disabled-unselected-handle-color);
+        background-color: var(--_disabled-unselected-handle-color);
       }
     }
   }
 
   .md3-switch__ripple {
-    height: map.get($theme, state-layer-size);
-    width: map.get($theme, state-layer-size);
+    height: var(--_state-layer-size);
+    width: var(--_state-layer-size);
 
     .md3-switch--selected & {
       @include ripple-theme.theme(
         (
-          hover-state-layer-color:
-            map.get($theme, selected-hover-state-layer-color),
-          focus-state-layer-color:
-            map.get($theme, selected-focus-state-layer-color),
-          pressed-state-layer-color:
-            map.get($theme, selected-pressed-state-layer-color),
-          hover-state-layer-opacity:
-            map.get($theme, selected-hover-state-layer-opacity),
-          focus-state-layer-opacity:
-            map.get($theme, selected-focus-state-layer-opacity),
+          hover-state-layer-color: var(--_selected-hover-state-layer-color),
+          focus-state-layer-color: var(--_selected-focus-state-layer-color),
+          pressed-state-layer-color: var(--_selected-pressed-state-layer-color),
+          hover-state-layer-opacity: var(--_selected-hover-state-layer-opacity),
+          focus-state-layer-opacity: var(--_selected-focus-state-layer-opacity),
           pressed-state-layer-opacity:
-            map.get($theme, selected-pressed-state-layer-opacity),
+            var(--_selected-pressed-state-layer-opacity),
         )
       );
     }
@@ -109,18 +104,16 @@
     .md3-switch--unselected & {
       @include ripple-theme.theme(
         (
-          hover-state-layer-color:
-            map.get($theme, unselected-hover-state-layer-color),
-          focus-state-layer-color:
-            map.get($theme, unselected-focus-state-layer-color),
+          hover-state-layer-color: var(--_unselected-hover-state-layer-color),
+          focus-state-layer-color: var(--_unselected-focus-state-layer-color),
           pressed-state-layer-color:
-            map.get($theme, unselected-pressed-state-layer-color),
+            var(--_unselected-pressed-state-layer-color),
           hover-state-layer-opacity:
-            map.get($theme, unselected-hover-state-layer-opacity),
+            var(--_unselected-hover-state-layer-opacity),
           focus-state-layer-opacity:
-            map.get($theme, unselected-focus-state-layer-opacity),
+            var(--_unselected-focus-state-layer-opacity),
           pressed-state-layer-opacity:
-            map.get($theme, unselected-pressed-state-layer-opacity),
+            var(--_unselected-pressed-state-layer-opacity),
         )
       );
     }

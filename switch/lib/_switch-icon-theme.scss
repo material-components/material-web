@@ -8,26 +8,26 @@
 
 @use 'sass:map';
 
-@mixin theme-styles($theme) {
+@mixin theme-styles() {
   .md3-switch__icon {
     .md3-switch--selected & {
-      width: map.get($theme, selected-icon-size);
-      height: map.get($theme, selected-icon-size);
-      fill: map.get($theme, selected-icon-color);
+      width: var(--_selected-icon-size);
+      height: var(--_selected-icon-size);
+      fill: var(--_selected-icon-color);
     }
 
     .md3-switch--unselected & {
-      width: map.get($theme, unselected-icon-size);
-      height: map.get($theme, unselected-icon-size);
-      fill: map.get($theme, unselected-icon-color);
+      width: var(--_unselected-icon-size);
+      height: var(--_unselected-icon-size);
+      fill: var(--_unselected-icon-color);
     }
 
     .md3-switch--selected:disabled & {
-      fill: map.get($theme, disabled-selected-icon-color);
+      fill: var(--_disabled-selected-icon-color);
     }
 
     .md3-switch--unselected:disabled & {
-      fill: map.get($theme, disabled-unselected-icon-color);
+      fill: var(--_disabled-unselected-icon-color);
     }
   }
 }

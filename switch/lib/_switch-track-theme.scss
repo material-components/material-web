@@ -8,49 +8,49 @@
 
 @use 'sass:map';
 
-@mixin theme-styles($theme) {
+@mixin theme-styles() {
   .md3-switch__track {
-    background-color: map.get($theme, selected-track-color);
+    background-color: var(--_selected-track-color);
 
     .md3-switch--selected:hover & {
-      background-color: map.get($theme, selected-hover-track-color);
+      background-color: var(--_selected-hover-track-color);
     }
 
     .md3-switch--selected:focus-visible & {
-      background-color: map.get($theme, selected-focus-track-color);
+      background-color: var(--_selected-focus-track-color);
     }
 
     .md3-switch--selected:active & {
-      background-color: map.get($theme, selected-pressed-track-color);
+      background-color: var(--_selected-pressed-track-color);
     }
 
     .md3-switch--selected:disabled & {
-      background-color: map.get($theme, disabled-selected-track-color);
+      background-color: var(--_disabled-selected-track-color);
     }
 
     &::before {
-      border-width: map.get($theme, track-outline-width);
-      background-color: map.get($theme, unselected-track-color);
-      border-color: map.get($theme, unselected-track-outline-color);
+      border-width: var(--_track-outline-width);
+      background-color: var(--_unselected-track-color);
+      border-color: var(--_unselected-track-outline-color);
 
       .md3-switch--unselected:hover & {
-        background-color: map.get($theme, unselected-hover-track-color);
-        border-color: map.get($theme, unselected-hover-track-outline-color);
+        background-color: var(--_unselected-hover-track-color);
+        border-color: var(--_unselected-hover-track-outline-color);
       }
 
       .md3-switch--unselected:focus-visible & {
-        background-color: map.get($theme, unselected-focus-track-color);
-        border-color: map.get($theme, unselected-focus-track-outline-color);
+        background-color: var(--_unselected-focus-track-color);
+        border-color: var(--_unselected-focus-track-outline-color);
       }
 
       .md3-switch--unselected:active & {
-        background-color: map.get($theme, unselected-pressed-track-color);
-        border-color: map.get($theme, unselected-pressed-track-outline-color);
+        background-color: var(--_unselected-pressed-track-color);
+        border-color: var(--_unselected-pressed-track-outline-color);
       }
 
       .md3-switch--unselected:disabled & {
-        background-color: map.get($theme, disabled-unselected-track-color);
-        border-color: map.get($theme, disabled-unselected-track-outline-color);
+        background-color: var(--_disabled-unselected-track-color);
+        border-color: var(--_disabled-unselected-track-outline-color);
       }
     }
   }
