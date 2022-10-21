@@ -8,34 +8,22 @@
 
 @mixin static-styles() {
   :host {
-    @include host-root;
+    pointer-events: none;
   }
 
   .md3-focus-ring {
-    @include root;
+    display: none;
+    position: absolute;
+    box-sizing: border-box;
+
+    &::before {
+      inset: 0;
+      position: absolute;
+      content: '';
+    }
   }
 
   .md3-focus-ring--visible {
     display: block;
   }
-}
-
-@mixin host-root() {
-  pointer-events: none;
-}
-
-@mixin root() {
-  display: none;
-  position: absolute;
-  box-sizing: border-box;
-
-  &::before {
-    @include inner-ring;
-  }
-}
-
-@mixin inner-ring() {
-  inset: 0;
-  position: absolute;
-  content: '';
 }

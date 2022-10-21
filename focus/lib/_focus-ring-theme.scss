@@ -50,26 +50,7 @@ $light-theme: (
   $inner-radius: calc(#{$outer-radius} - #{$outer-width});
 
   // Outer
-  @include _outer-ring-size(
-    $container-outer-padding-vertical,
-    $container-outer-padding-horizontal,
-    $inner-width,
-    $outer-width
-  );
-  @include _set-border($outer-width, $outer-color, $outer-radius);
 
-  // Inner
-  &::before {
-    @include _set-border($inner-width, $inner-color, $inner-radius);
-  }
-}
-
-@mixin _outer-ring-size(
-  $container-outer-padding-vertical,
-  $container-outer-padding-horizontal,
-  $inner-width,
-  $outer-width
-) {
   // Note that the ring will not respect its parent's border. This will not be
   // an issue as long as border is set via a sibling node, similar to ripple
   // and touch target.
@@ -81,9 +62,12 @@ $light-theme: (
   );
 
   inset: $vertical-inset $horizontal-inset;
-}
+  border: $outer-width solid $outer-color;
+  border-radius: $outer-radius;
 
-@mixin _set-border($width, $color, $radius) {
-  border: $width solid $color;
-  border-radius: $radius;
+  // Inner
+  &::before {
+    border: $inner-width solid $inner-color;
+    border-radius: $inner-radius;
+  }
 }
