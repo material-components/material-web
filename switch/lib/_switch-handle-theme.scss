@@ -10,184 +10,119 @@
 
 @use '../../ripple/ripple-theme';
 
-$_selected: '.md3-switch--selected';
-$_unselected: '.md3-switch--unselected';
-
 @mixin theme-styles($theme) {
   .md3-switch__handle-container {
-    @include _handle-container($theme);
+    $margin: calc(map.get($theme, track-width) - map.get($theme, track-height));
+
+    .md3-switch--selected & {
+      margin-inline-start: $margin;
+    }
+
+    .md3-switch--unselected & {
+      margin-inline-end: $margin;
+    }
   }
 
   .md3-switch__handle {
-    @include _handle($theme);
-    @include _handle-selected($theme);
+    // Handle shape
+    border-start-start-radius: map.get($theme, handle-shape-start-start);
+    border-start-end-radius: map.get($theme, handle-shape-start-end);
+    border-end-end-radius: map.get($theme, handle-shape-end-end);
+    border-end-start-radius: map.get($theme, handle-shape-end-start);
+    height: map.get($theme, handle-height);
+    width: map.get($theme, handle-width);
+    background-color: map.get($theme, selected-handle-color);
+
+    // TODO(b/230484095): Use token instead of hard coded values
+    .md3-switch--selected &,
+    .md3-switch--unselected &.md3-switch__handle--big {
+      transform: scale(1.2);
+    }
+    .md3-switch--unselected & {
+      transform: scale(0.8);
+    }
+    .md3-switch--selected:enabled:active &,
+    .md3-switch--unselected:enabled:active & {
+      transform: scale(1.4);
+    }
+
+    .md3-switch--selected:hover & {
+      background-color: map.get($theme, selected-hover-handle-color);
+    }
+
+    .md3-switch--selected:focus-visible & {
+      background-color: map.get($theme, selected-focus-handle-color);
+    }
+
+    .md3-switch--selected:active & {
+      background-color: map.get($theme, selected-pressed-handle-color);
+    }
+
+    .md3-switch--selected:disabled & {
+      background-color: map.get($theme, disabled-selected-handle-color);
+    }
+
     &::before {
-      @include _handle-unselected($theme);
+      background-color: map.get($theme, unselected-handle-color);
+
+      .md3-switch--unselected:hover & {
+        background-color: map.get($theme, unselected-hover-handle-color);
+      }
+
+      .md3-switch--unselected:focus-visible & {
+        background-color: map.get($theme, unselected-focus-handle-color);
+      }
+
+      .md3-switch--unselected:active & {
+        background-color: map.get($theme, unselected-pressed-handle-color);
+      }
+
+      .md3-switch--unselected:disabled & {
+        background-color: map.get($theme, disabled-unselected-handle-color);
+      }
     }
   }
 
   .md3-switch__ripple {
-    @include _ripple($theme);
-  }
-}
+    height: map.get($theme, state-layer-size);
+    width: map.get($theme, state-layer-size);
 
-@mixin _handle-container($theme) {
-  @include _handle-position(
-    map.get($theme, track-height),
-    map.get($theme, track-width)
-  );
-}
+    .md3-switch--selected & {
+      @include ripple-theme.theme(
+        (
+          hover-state-layer-color:
+            map.get($theme, selected-hover-state-layer-color),
+          focus-state-layer-color:
+            map.get($theme, selected-focus-state-layer-color),
+          pressed-state-layer-color:
+            map.get($theme, selected-pressed-state-layer-color),
+          hover-state-layer-opacity:
+            map.get($theme, selected-hover-state-layer-opacity),
+          focus-state-layer-opacity:
+            map.get($theme, selected-focus-state-layer-opacity),
+          pressed-state-layer-opacity:
+            map.get($theme, selected-pressed-state-layer-opacity),
+        )
+      );
+    }
 
-@mixin _handle-position($track-height, $track-width) {
-  $margin: calc($track-width - $track-height);
-
-  #{$_selected} & {
-    margin-inline-start: $margin;
-  }
-
-  #{$_unselected} & {
-    margin-inline-end: $margin;
-  }
-}
-
-@mixin _handle($theme) {
-  // Handle shape
-  border-start-start-radius: map.get($theme, handle-shape-start-start);
-  border-start-end-radius: map.get($theme, handle-shape-start-end);
-  border-end-end-radius: map.get($theme, handle-shape-end-end);
-  border-end-start-radius: map.get($theme, handle-shape-end-start);
-
-  @include _handle-size($theme);
-}
-
-@mixin _handle-size($theme) {
-  height: map.get($theme, handle-height);
-  width: map.get($theme, handle-width);
-
-  // TODO(b/230484095): Use token instead of hard coded values
-  #{$_selected} &,
-  #{$_unselected} &.md3-switch__handle--big {
-    transform: scale(1.2);
-  }
-  #{$_unselected} & {
-    transform: scale(0.8);
-  }
-  #{$_selected}:enabled:active &,
-  #{$_unselected}:enabled:active & {
-    transform: scale(1.4);
-  }
-}
-
-@mixin _handle-selected($theme) {
-  @include _selected-handle-color(
-    (
-      default: map.get($theme, selected-handle-color),
-      disabled: map.get($theme, disabled-selected-handle-color),
-      focus: map.get($theme, selected-focus-handle-color),
-      hover: map.get($theme, selected-hover-handle-color),
-      pressed: map.get($theme, selected-pressed-handle-color),
-    )
-  );
-}
-
-@mixin _selected-handle-color($colors) {
-  background-color: map.get($colors, default);
-
-  #{$_selected}:hover & {
-    background-color: map.get($colors, hover);
-  }
-
-  #{$_selected}:focus-visible & {
-    background-color: map.get($colors, focus);
-  }
-
-  #{$_selected}:active & {
-    background-color: map.get($colors, pressed);
-  }
-
-  #{$_selected}:disabled & {
-    background-color: map.get($colors, disabled);
-  }
-}
-
-@mixin _handle-unselected($theme) {
-  @include _unselected-handle-color(
-    (
-      default: map.get($theme, unselected-handle-color),
-      disabled: map.get($theme, disabled-unselected-handle-color),
-      focus: map.get($theme, unselected-focus-handle-color),
-      hover: map.get($theme, unselected-hover-handle-color),
-      pressed: map.get($theme, unselected-pressed-handle-color),
-    )
-  );
-}
-
-@mixin _unselected-handle-color($colors) {
-  background-color: map.get($colors, default);
-
-  #{$_unselected}:hover & {
-    background-color: map.get($colors, hover);
-  }
-
-  #{$_unselected}:focus-visible & {
-    background-color: map.get($colors, focus);
-  }
-
-  #{$_unselected}:active & {
-    background-color: map.get($colors, pressed);
-  }
-
-  #{$_unselected}:disabled & {
-    background-color: map.get($colors, disabled);
-  }
-}
-
-@mixin _ripple($theme) {
-  @include _state-layer-size(map.get($theme, state-layer-size));
-  @include _state-layer-color($theme);
-}
-
-@mixin _state-layer-size($size) {
-  height: $size;
-  width: $size;
-}
-
-@mixin _state-layer-color($theme) {
-  #{$_selected} & {
-    @include ripple-theme.theme(
-      (
-        hover-state-layer-color:
-          map.get($theme, selected-hover-state-layer-color),
-        focus-state-layer-color:
-          map.get($theme, selected-focus-state-layer-color),
-        pressed-state-layer-color:
-          map.get($theme, selected-pressed-state-layer-color),
-        hover-state-layer-opacity:
-          map.get($theme, selected-hover-state-layer-opacity),
-        focus-state-layer-opacity:
-          map.get($theme, selected-focus-state-layer-opacity),
-        pressed-state-layer-opacity:
-          map.get($theme, selected-pressed-state-layer-opacity),
-      )
-    );
-  }
-
-  #{$_unselected} & {
-    @include ripple-theme.theme(
-      (
-        hover-state-layer-color:
-          map.get($theme, unselected-hover-state-layer-color),
-        focus-state-layer-color:
-          map.get($theme, unselected-focus-state-layer-color),
-        pressed-state-layer-color:
-          map.get($theme, unselected-pressed-state-layer-color),
-        hover-state-layer-opacity:
-          map.get($theme, unselected-hover-state-layer-opacity),
-        focus-state-layer-opacity:
-          map.get($theme, unselected-focus-state-layer-opacity),
-        pressed-state-layer-opacity:
-          map.get($theme, unselected-pressed-state-layer-opacity),
-      )
-    );
+    .md3-switch--unselected & {
+      @include ripple-theme.theme(
+        (
+          hover-state-layer-color:
+            map.get($theme, unselected-hover-state-layer-color),
+          focus-state-layer-color:
+            map.get($theme, unselected-focus-state-layer-color),
+          pressed-state-layer-color:
+            map.get($theme, unselected-pressed-state-layer-color),
+          hover-state-layer-opacity:
+            map.get($theme, unselected-hover-state-layer-opacity),
+          focus-state-layer-opacity:
+            map.get($theme, unselected-focus-state-layer-opacity),
+          pressed-state-layer-opacity:
+            map.get($theme, unselected-pressed-state-layer-opacity),
+        )
+      );
+    }
   }
 }

@@ -26,36 +26,73 @@ $icon-enter-duration: $animation-duration - $icon-exit-duration;
   }
 
   .md3-switch {
-    @include _root;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    flex-shrink: 0; // Stop from collapsing in flex containers
+    margin: 0;
+    outline: none;
+    padding: 0;
+    position: relative;
   }
 
   // Track
+  .md3-switch__handle,
   .md3-switch__track {
-    @include _track;
+    &::before {
+      content: '';
+      display: flex;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      border-radius: inherit;
+      box-sizing: border-box;
+
+      transition-property: opacity;
+      transition-duration: #{$animation-duration};
+    }
+  }
+
+  .md3-switch__track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+
+    border-radius: inherit;
+
+    // Center content
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &::before {
-      @include _track-before;
+      border-style: solid;
 
       .md3-switch--selected & {
-        @include _track-selected-before;
+        // When selected, turn off ::before
+        opacity: 0;
       }
     }
   }
 
   // Handle container
   .md3-switch__handle-container {
-    @include _handle-container;
+    position: relative;
+    transition: animation.standard(margin, $animation-duration);
   }
 
   // Handle
   .md3-switch__handle {
-    @include _handle;
+    transform-origin: center;
+    transition: animation.standard(transform, $animation-duration);
 
     &::before {
-      @include _handle-before;
-
       .md3-switch--selected & {
-        @include _handle-selected-before;
+        // When selected, turn off ::before
+        opacity: 0;
       }
     }
   }
@@ -66,22 +103,29 @@ $icon-enter-duration: $animation-duration - $icon-exit-duration;
     display: inline-flex;
     left: 50%;
     top: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
   }
 
   // Icons
   .md3-switch__icons {
-    @include _icons;
+    position: relative;
+    height: 100%;
+    width: 100%;
   }
 
   .md3-switch__icon {
-    @include _icon;
-    @include _icon-hidden;
+    position: absolute;
+    inset: 0;
+    margin: auto;
+
+    transition-property: fill;
+    transition-duration: #{$animation-duration};
+    opacity: 0;
   }
 
   .md3-switch--selected .md3-switch__icon--on,
   .md3-switch--unselected .md3-switch__icon--off {
-    @include _icon-visible;
+    opacity: 1;
   }
 
   // Touch target
@@ -91,7 +135,8 @@ $icon-enter-duration: $animation-duration - $icon-exit-duration;
 
   // Disabled
   .md3-switch:disabled {
-    @include _disabled;
+    cursor: default;
+    pointer-events: none;
   }
 
   // Disabled - Track
@@ -110,110 +155,6 @@ $icon-enter-duration: $animation-duration - $icon-exit-duration;
   }
 
   .md3-switch__input {
-    @include _input;
+    display: none;
   }
-}
-
-// PRIVATE API
-
-@mixin _root() {
-  align-items: center;
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: inline-flex;
-  flex-shrink: 0; // Stop from collapsing in flex containers
-  margin: 0;
-  outline: none;
-  padding: 0;
-  position: relative;
-}
-
-@mixin _disabled() {
-  cursor: default;
-  pointer-events: none;
-}
-
-@mixin _track() {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-
-  border-radius: inherit;
-
-  // Center content
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-@mixin _track-before() {
-  @include _before-base();
-
-  border-style: solid;
-}
-
-// When selected, turn off ::before
-@mixin _track-selected-before() {
-  opacity: 0;
-}
-
-@mixin _handle-container() {
-  position: relative;
-  transition: animation.standard(margin, $animation-duration);
-}
-
-@mixin _handle() {
-  transform-origin: center;
-  transition: animation.standard(transform, $animation-duration);
-}
-
-@mixin _handle-before() {
-  @include _before-base();
-}
-
-@mixin _before-base() {
-  content: '';
-  display: flex;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  border-radius: inherit;
-  box-sizing: border-box;
-
-  transition-property: opacity;
-  transition-duration: #{$animation-duration};
-}
-
-// When selected, turn off ::before
-@mixin _handle-selected-before() {
-  opacity: 0;
-}
-
-@mixin _icons() {
-  position: relative;
-  height: 100%;
-  width: 100%;
-}
-
-@mixin _icon() {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-
-  transition-property: fill;
-  transition-duration: #{$animation-duration};
-}
-
-@mixin _icon-hidden() {
-  opacity: 0;
-}
-
-@mixin _icon-visible() {
-  opacity: 1;
-}
-
-@mixin _input() {
-  display: none;
 }

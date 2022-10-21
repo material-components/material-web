@@ -145,11 +145,30 @@ $_forced-colors-theme: (
   $theme: theme.create-theme-vars($theme, switch);
 
   :host {
-    @include _focus-ring($theme);
+    // TODO(b/231741594): use `track-shape` once this is not deleted.
+    $track-shape: map.get($theme, track-shape-start-start);
+
+    @include focus-ring.theme(
+      (
+        ring-radius: $track-shape,
+      )
+    );
   }
 
   .md3-switch {
-    @include _root($theme);
+    width: map.get($theme, track-width);
+    height: map.get($theme, track-height);
+
+    // Track shape
+    border-start-start-radius: map.get($theme, track-shape-start-start);
+    border-start-end-radius: map.get($theme, track-shape-start-end);
+    border-end-end-radius: map.get($theme, track-shape-end-end);
+    border-end-start-radius: map.get($theme, track-shape-end-start);
+
+    // TODO(b/230630968): create a forced-colors-mode mixin
+    @media screen and (forced-colors: active) {
+      @include theme($_forced-colors-theme);
+    }
   }
 
   @include switch-track-theme.theme-styles($theme);
@@ -157,39 +176,6 @@ $_forced-colors-theme: (
   @include switch-handle-theme.theme-styles($theme);
 
   @include switch-icon-theme.theme-styles($theme);
-}
-
-// PRIVATE API
-
-@mixin _root($theme) {
-  width: map.get($theme, track-width);
-  height: map.get($theme, track-height);
-
-  // Track shape
-  border-start-start-radius: map.get($theme, track-shape-start-start);
-  border-start-end-radius: map.get($theme, track-shape-start-end);
-  border-end-end-radius: map.get($theme, track-shape-end-end);
-  border-end-start-radius: map.get($theme, track-shape-end-start);
-
-  @include _forced-colors-mode-theme;
-}
-
-@mixin _focus-ring($theme) {
-  // TODO(b/231741594): use `track-shape` once this is not deleted.
-  $track-shape: map.get($theme, track-shape-start-start);
-
-  @include focus-ring.theme(
-    (
-      ring-radius: $track-shape,
-    )
-  );
-}
-
-@mixin _forced-colors-mode-theme {
-  // TODO(b/230630968): create a forced-colors-mode mixin
-  @media screen and (forced-colors: active) {
-    @include theme($_forced-colors-theme);
-  }
 }
 
 @function _flatten-disable-colors($theme) {
