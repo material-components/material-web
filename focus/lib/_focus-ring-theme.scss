@@ -32,22 +32,11 @@ $light-theme: (
   $theme: theme.validate-theme-styles($light-theme, $theme);
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
-  $container-outer-padding-vertical: map.get(
-    $theme,
-    container-outer-padding-vertical
-  );
-  $container-outer-padding-horizontal: map.get(
-    $theme,
-    container-outer-padding-horizontal
-  );
-  $inner-width: map.get($theme, inner-ring-width);
-  $inner-color: map.get($theme, inner-ring-color);
-
-  $outer-width: map.get($theme, outer-ring-width);
-  $outer-color: map.get($theme, outer-ring-color);
-
-  $outer-radius: map.get($theme, ring-radius);
-  $inner-radius: calc(#{$outer-radius} - #{$outer-width});
+  & {
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
 
   // Outer
 
@@ -55,19 +44,21 @@ $light-theme: (
   // an issue as long as border is set via a sibling node, similar to ripple
   // and touch target.
   $vertical-inset: calc(
-    -1 * (#{$container-outer-padding-vertical} + #{$inner-width} + #{$outer-width})
+    -1 * (var(--_container-outer-padding-vertical) + var(--_inner-ring-width) +
+          var(--_outer-ring-width))
   );
   $horizontal-inset: calc(
-    -1 * (#{$container-outer-padding-horizontal} + #{$inner-width} + #{$outer-width})
+    -1 * (var(--_container-outer-padding-horizontal) + var(--_inner-ring-width) +
+          var(--_outer-ring-width))
   );
 
   inset: $vertical-inset $horizontal-inset;
-  border: $outer-width solid $outer-color;
-  border-radius: $outer-radius;
+  border: var(--_outer-ring-width) solid var(--_outer-ring-color);
+  border-radius: var(--_ring-radius);
 
   // Inner
   &::before {
-    border: $inner-width solid $inner-color;
-    border-radius: $inner-radius;
+    border: var(--_inner-ring-width) solid var(--_inner-ring-color);
+    border-radius: calc(var(--_ring-radius) - var(--_outer-ring-width));
   }
 }
