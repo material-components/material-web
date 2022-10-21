@@ -89,11 +89,15 @@ $surface-theme: tokens.md-comp-fab-surface-values();
   $theme: _resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, fab);
 
-  @include fab-shared-theme.theme-styles($theme);
+  & {
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
 
   & {
-    width: map.get($theme, container-width);
-    height: map.get($theme, container-height);
+    width: var(--_container-width);
+    height: var(--_container-height);
   }
 }
 

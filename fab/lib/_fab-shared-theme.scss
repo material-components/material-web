@@ -35,33 +35,32 @@
   @return $theme;
 }
 
-@mixin theme-styles($theme) {
+@mixin theme-styles() {
   &,
   .md3-fab__ripple {
-    border-radius: map.get($theme, container-shape);
+    border-radius: var(--_container-shape);
   }
 
   &:enabled {
-    background-color: map.get($theme, container-color);
+    background-color: var(--_container-color);
 
     ::slotted(*),
     .md3-fab__icon {
-      color: map.get($theme, icon-color);
+      color: var(--_icon-color);
     }
 
     @include elevation-theme.theme-styles(
       (
-        shadow: map.get($theme, container-elevation-shadow),
-        overlay-opacity: map.get($theme, container-elevation-overlay-opacity),
+        shadow: var(--_container-elevation-shadow),
+        overlay-opacity: var(--_container-elevation-overlay-opacity),
       )
     );
 
     &.md3-fab--lowered {
       @include elevation-theme.theme-styles(
         (
-          shadow: map.get($theme, lowered-container-elevation-shadow),
-          overlay-opacity:
-            map.get($theme, lowered-container-elevation-overlay-opacity),
+          shadow: var(--_lowered-container-elevation-shadow),
+          overlay-opacity: var(--_lowered-container-elevation-overlay-opacity),
         )
       );
     }
@@ -70,23 +69,22 @@
   &:hover {
     ::slotted(*),
     .md3-fab__icon {
-      color: map.get($theme, hover-icon-color);
+      color: var(--_hover-icon-color);
     }
 
     @include elevation-theme.theme-styles(
       (
-        shadow: map.get($theme, hover-container-elevation-shadow),
-        overlay-opacity:
-          map.get($theme, hover-container-elevation-overlay-opacity),
+        shadow: var(--_hover-container-elevation-shadow),
+        overlay-opacity: var(--_hover-container-elevation-overlay-opacity),
       )
     );
 
     &.md3-fab--lowered {
       @include elevation-theme.theme-styles(
         (
-          shadow: map.get($theme, lowered-hover-container-elevation-shadow),
+          shadow: var(--_lowered-hover-container-elevation-shadow),
           overlay-opacity:
-            map.get($theme, lowered-hover-container-elevation-overlay-opacity),
+            var(--_lowered-hover-container-elevation-overlay-opacity),
         )
       );
     }
@@ -95,23 +93,22 @@
   &:focus {
     ::slotted(*),
     .md3-fab__icon {
-      color: map.get($theme, focus-icon-color);
+      color: var(--_focus-icon-color);
     }
 
     @include elevation-theme.theme-styles(
       (
-        shadow: map.get($theme, focus-container-elevation-shadow),
-        overlay-opacity:
-          map.get($theme, focus-container-elevation-overlay-opacity),
+        shadow: var(--_focus-container-elevation-shadow),
+        overlay-opacity: var(--_focus-container-elevation-overlay-opacity),
       )
     );
 
     &.md3-fab--lowered {
       @include elevation-theme.theme-styles(
         (
-          shadow: map.get($theme, lowered-focus-container-elevation-shadow),
+          shadow: var(--_lowered-focus-container-elevation-shadow),
           overlay-opacity:
-            map.get($theme, lowered-focus-container-elevation-overlay-opacity),
+            var(--_lowered-focus-container-elevation-overlay-opacity),
         )
       );
     }
@@ -120,23 +117,22 @@
   &:active {
     ::slotted(*),
     .md3-fab__icon {
-      color: map.get($theme, pressed-icon-color);
+      color: var(--_pressed-icon-color);
     }
 
     @include elevation-theme.theme-styles(
       (
-        shadow: map.get($theme, pressed-container-elevation-shadow),
-        overlay-opacity:
-          map.get($theme, pressed-container-elevation-overlay-opacity),
+        shadow: var(--_pressed-container-elevation-shadow),
+        overlay-opacity: var(--_pressed-container-elevation-overlay-opacity),
       )
     );
 
     &.md3-fab--lowered {
       @include elevation-theme.theme-styles(
         (
-          shadow: map.get($theme, lowered-pressed-container-elevation-shadow),
+          shadow: var(--_lowered-pressed-container-elevation-shadow),
           overlay-opacity:
-            map.get($theme, lowered-pressed-container-elevation-overlay-opacity),
+            var(--_lowered-pressed-container-elevation-overlay-opacity),
         )
       );
     }
@@ -144,8 +140,7 @@
 
   @include elevation-theme.theme-styles(
     (
-      surface-tint-layer-color:
-        map.get($theme, container-surface-tint-layer-color),
+      surface-tint-layer-color: var(--_container-surface-tint-layer-color),
     )
   );
 
@@ -154,19 +149,19 @@
   i,
   svg,
   img {
-    font-size: map.get($theme, icon-size);
-    height: map.get($theme, icon-size);
-    width: map.get($theme, icon-size);
+    font-size: var(--_icon-size);
+    height: var(--_icon-size);
+    width: var(--_icon-size);
   }
 
   @include ripple-theme.theme(
     (
-      hover-state-layer-color: map.get($theme, hover-state-layer-color),
-      focus-state-layer-color: map.get($theme, focus-state-layer-color),
-      pressed-state-layer-color: map.get($theme, pressed-state-layer-color),
-      hover-state-layer-opacity: map.get($theme, hover-state-layer-opacity),
-      focus-state-layer-opacity: map.get($theme, focus-state-layer-opacity),
-      pressed-state-layer-opacity: map.get($theme, pressed-state-layer-opacity),
+      hover-state-layer-color: var(--_hover-state-layer-color),
+      focus-state-layer-color: var(--_focus-state-layer-color),
+      pressed-state-layer-color: var(--_pressed-state-layer-color),
+      hover-state-layer-opacity: var(--_hover-state-layer-opacity),
+      focus-state-layer-opacity: var(--_focus-state-layer-opacity),
+      pressed-state-layer-opacity: var(--_pressed-state-layer-opacity),
     )
   );
 }

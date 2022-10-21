@@ -47,36 +47,40 @@ $surface-theme: tokens.md-comp-extended-fab-surface-values();
   $theme: _resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, fab-extended);
 
-  @include fab-shared-theme.theme-styles($theme);
+  & {
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
 
-  height: map.get($theme, container-height);
-  font-family: map.get($theme, label-text-font);
-  line-height: map.get($theme, label-text-line-height);
-  font-size: map.get($theme, label-text-size);
-  font-weight: map.get($theme, label-text-weight);
-  letter-spacing: map.get($theme, label-text-tracking);
+  height: var(--_container-height);
+  font-family: var(--_label-text-font);
+  line-height: var(--_label-text-line-height);
+  font-size: var(--_label-text-size);
+  font-weight: var(--_label-text-weight);
+  letter-spacing: var(--_label-text-tracking);
 
   &:enabled {
     .md3-fab__label {
-      color: map.get($theme, label-text-color);
+      color: var(--_label-text-color);
     }
   }
 
   &:hover {
     .md3-fab__label {
-      color: map.get($theme, hover-label-text-color);
+      color: var(--_hover-label-text-color);
     }
   }
 
   &:focus {
     .md3-fab__label {
-      color: map.get($theme, focus-label-text-color);
+      color: var(--_focus-label-text-color);
     }
   }
 
   &:active {
     .md3-fab__label {
-      color: map.get($theme, pressed-label-text-color);
+      color: var(--_pressed-label-text-color);
     }
   }
 }

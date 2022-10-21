@@ -3,6 +3,14 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
 @use './fab-shared';
+@use './fab-shared-theme';
 
 @include fab-shared.static-styles;
+
+.md3-fab {
+  @include fab-shared-theme.theme-styles;
+}
