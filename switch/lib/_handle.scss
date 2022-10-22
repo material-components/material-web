@@ -10,7 +10,7 @@
 
 @use '../../ripple/ripple-theme';
 
-@mixin theme-styles() {
+@mixin styles() {
   .md3-switch__handle-container {
     $margin: calc(var(--_track-width) - var(--_track-height));
 

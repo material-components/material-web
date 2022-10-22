@@ -8,7 +8,7 @@
 
 @use 'sass:map';
 
-@mixin theme-styles() {
+@mixin styles() {
   .md3-switch__track {
     background-color: var(--_selected-track-color);
 

@@ -8,21 +8,93 @@
 
 // PUBLIC PROPERTIES
 
+@use 'sass:map';
+@use '../../focus/focus-ring';
 @use '../../motion/animation';
+@use '../../sass/color';
+@use '../../sass/resolvers';
+@use '../../sass/shape';
+@use '../../sass/theme';
 @use '../../sass/touch-target';
+@use '../../sass/var';
+@use '../../tokens';
+
+@use './track';
+@use './handle';
+@use './icon';
 
 // TODO(b/230768994): update animation timing
 $animation-duration: 75ms;
 $icon-exit-duration: 0.4 * $animation-duration;
 $icon-enter-duration: $animation-duration - $icon-exit-duration;
 
-// PUBLIC API
+$_touch-target-size: 48px;
 
-@mixin static-styles() {
+$_forced-colors-theme: (
+  disabled-selected-icon-color: GrayText,
+  disabled-selected-icon-opacity: 1,
+  disabled-selected-track-color: GrayText,
+  disabled-track-opacity: 1,
+  disabled-unselected-handle-color: GrayText,
+  disabled-unselected-handle-opacity: 1,
+  disabled-unselected-icon-color: Canvas,
+  disabled-unselected-icon-opacity: 1,
+  selected-focus-track-color: ButtonText,
+  selected-hover-track-color: ButtonText,
+  selected-icon-color: ButtonText,
+  selected-pressed-track-color: ButtonText,
+  selected-track-color: ButtonText,
+  unselected-focus-handle-color: ButtonText,
+  unselected-handle-color: ButtonText,
+  unselected-hover-handle-color: ButtonText,
+  unselected-icon-color: Canvas,
+  unselected-pressed-handle-color: ButtonText,
+);
+
+@mixin theme($tokens) {
+  $tokens: _warn-of-not-implemented($tokens);
+  $tokens: theme.validate-theme(tokens.md-comp-switch-values(), $tokens);
+  $tokens: _resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, switch);
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: tokens.md-comp-switch-values();
+  $tokens: _resolve-tokens($tokens);
+
+  // Add missing tokens.
+  $tokens: map.merge(
+    $tokens,
+    (
+      // TODO(b/230013081): remove this once the missing token is added.
+      unselected-track-outline-color:
+        map.get(tokens.md-sys-color-values-light-dynamic(), outline)
+    )
+  );
+
+  $tokens: theme.create-theme-vars($tokens, switch);
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+
   :host {
     display: inline-flex;
     outline: none;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  md-focus-ring {
+    // TODO(b/231741594): use `track-shape` once this is not deleted.
+    @include focus-ring.theme(
+      (
+        ring-radius: var(--_track-shape-start-start),
+      )
+    );
   }
 
   .md3-switch {
@@ -36,6 +108,19 @@ $icon-enter-duration: $animation-duration - $icon-exit-duration;
     outline: none;
     padding: 0;
     position: relative;
+    width: var(--_track-width);
+    height: var(--_track-height);
+
+    // Track shape
+    border-start-start-radius: var(--_track-shape-start-start);
+    border-start-end-radius: var(--_track-shape-start-end);
+    border-end-end-radius: var(--_track-shape-end-end);
+    border-end-start-radius: var(--_track-shape-end-start);
+
+    // TODO(b/230630968): create a forced-colors-mode mixin
+    @media screen and (forced-colors: active) {
+      @include theme($_forced-colors-theme);
+    }
   }
 
   // Track
@@ -157,4 +242,73 @@ $icon-enter-duration: $animation-duration - $icon-exit-duration;
   .md3-switch__input {
     display: none;
   }
+
+  @include track.styles();
+  @include handle.styles();
+  @include icon.styles();
+}
+
+@function _resolve-tokens($theme) {
+  $theme: shape.resolve-theme(
+    $theme,
+    map.get(resolvers.$material, shape),
+    track-shape,
+    handle-shape
+  );
+  $theme: _flatten-disable-colors($theme);
+  @return $theme;
+}
+
+@function _flatten-disable-colors($theme) {
+  @return color.join-color-and-opacity-pairs(
+    $theme,
+    (
+      // Disabled Handle
+      (
+          color-key: disabled-selected-handle-color,
+          opacity-key: disabled-selected-handle-opacity
+        ),
+      (
+        color-key: disabled-unselected-handle-color,
+        opacity-key: disabled-unselected-handle-opacity
+      ),
+      // Disabled Track
+      (
+          color-key: disabled-selected-track-color,
+          opacity-key: disabled-track-opacity
+        ),
+      (
+        color-key: disabled-unselected-track-color,
+        opacity-key: disabled-track-opacity
+      ),
+      (
+        color-key: disabled-unselected-track-outline-color,
+        opacity-key: disabled-track-opacity
+      ),
+      // Disabled Icon
+      (
+          color-key: disabled-selected-icon-color,
+          opacity-key: disabled-selected-icon-opacity
+        ),
+      (
+        color-key: disabled-unselected-icon-color,
+        opacity-key: disabled-unselected-icon-opacity
+      )
+    )
+  );
+}
+
+@function _warn-of-not-implemented($theme) {
+  // TODO(b/230484095): remove this warning once these are implemented.
+  @if (
+    map.get($theme, selected-handle-height) or
+      map.get($theme, selected-handle-width) or
+      map.get($theme, unselected-handle-height) or
+      map.get($theme, unselected-handle-width) or
+      map.get($theme, pressed-handle-height) or
+      map.get($theme, pressed-handle-width)
+  ) {
+    @warn '`handle-height` and `handle-width` are not yet implemented. see b/230484095';
+  }
+  @return $theme;
 }

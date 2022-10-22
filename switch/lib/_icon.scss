@@ -8,7 +8,7 @@
 
 @use 'sass:map';
 
-@mixin theme-styles() {
+@mixin styles() {
   .md3-switch__icon {
     .md3-switch--selected & {
       width: var(--_selected-icon-size);

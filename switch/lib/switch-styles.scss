@@ -4,8 +4,5 @@
 //
 
 @use './switch';
-@use './switch-theme';
 
-@include switch.static-styles();
-
-@include switch-theme.theme-styles(switch-theme.$light-theme);
+@include switch.styles;
