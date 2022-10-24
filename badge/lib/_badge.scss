@@ -8,34 +8,22 @@
 
 @mixin static-styles() {
   .md3-badge {
-    @include _root;
+    inset-inline-start: 50%;
+    margin-inline-start: 6px;
+    margin-block-start: 4px;
+    position: absolute;
+    inset-block-start: 0px;
 
     &.md3-badge--large {
-      @include _large;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-inline-start: 2px;
+      margin-block-start: 1px;
 
       .md3-badge__value {
-        @include _value;
+        padding: 0px 4px;
       }
     }
   }
-}
-
-@mixin _root() {
-  inset-inline-start: 50%;
-  margin-inline-start: 6px;
-  margin-block-start: 4px;
-  position: absolute;
-  inset-block-start: 0px;
-}
-
-@mixin _large() {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-inline-start: 2px;
-  margin-block-start: 1px;
-}
-
-@mixin _value() {
-  padding: 0px 4px;
 }
