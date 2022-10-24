@@ -36,26 +36,32 @@ $dark-theme: tokens.md-comp-badge-values(
 
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
+  & {
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
+
   &:not(.md3-badge--large) {
-    background-color: map.get($theme, color);
-    border-radius: map.get($theme, shape);
-    height: map.get($theme, size);
-    width: map.get($theme, size);
+    background-color: var(--_color);
+    border-radius: var(--_shape);
+    height: var(--_size);
+    width: var(--_size);
   }
 
   &.md3-badge--large {
-    background-color: map.get($theme, large-color);
-    border-radius: map.get($theme, large-shape);
-    height: map.get($theme, large-size);
-    min-width: map.get($theme, large-size);
-    color: map.get($theme, large-label-text-color);
+    background-color: var(--_large-color);
+    border-radius: var(--_large-shape);
+    height: var(--_large-size);
+    min-width: var(--_large-size);
+    color: var(--_large-label-text-color);
   }
 
   .md3-badge__value {
-    font-family: map.get($theme, large-label-text-font);
-    font-size: map.get($theme, large-label-text-size);
-    letter-spacing: map.get($theme, large-label-text-tracking);
-    line-height: map.get($theme, large-label-text-line-height);
-    font-weight: map.get($theme, large-label-text-weight);
+    font-family: var(--_large-label-text-font);
+    font-size: var(--_large-label-text-size);
+    letter-spacing: var(--_large-label-text-tracking);
+    line-height: var(--_large-label-text-line-height);
+    font-weight: var(--_large-label-text-weight);
   }
 }
