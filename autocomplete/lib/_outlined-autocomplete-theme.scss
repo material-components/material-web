@@ -41,132 +41,126 @@ $dark-theme: tokens.md-comp-outlined-autocomplete-values(
   $theme: _resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, $custom-property-prefix);
 
+  & {
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
+
   .md3-text-field--outlined {
-    $text-field-theme: (
-      caret-color: map.get($theme, text-field-caret-color),
-      container-height: map.get($theme, text-field-container-height),
-      disabled-input-text-color:
-        map.get($theme, text-field-disabled-input-text-color),
-      disabled-input-text-opacity:
-        map.get($theme, text-field-disabled-input-text-opacity),
-      disabled-label-text-color:
-        map.get($theme, text-field-disabled-label-text-color),
-      disabled-label-text-opacity:
-        map.get($theme, text-field-disabled-label-text-opacity),
-      disabled-leading-icon-color:
-        map.get($theme, text-field-disabled-leading-icon-color),
-      disabled-leading-icon-opacity:
-        map.get($theme, text-field-disabled-leading-icon-opacity),
-      disabled-outline-color: map.get($theme, text-field-disabled-outline-color),
-      disabled-outline-opacity: map.get($theme, text-field-disabled-outline-opacity),
-      disabled-outline-width: map.get($theme, text-field-disabled-outline-width),
-      disabled-supporting-text-color:
-        map.get($theme, text-field-disabled-supporting-text-color),
-      disabled-supporting-text-opacity:
-        map.get($theme, text-field-disabled-supporting-text-opacity),
-      disabled-trailing-icon-color:
-        map.get($theme, text-field-disabled-trailing-icon-color),
-      disabled-trailing-icon-opacity:
-        map.get($theme, text-field-disabled-trailing-icon-opacity),
-      error-focus-caret-color:
-        map.get($theme, text-field-error-focus-caret-color),
-      error-focus-input-text-color:
-        map.get($theme, text-field-error-focus-input-text-color),
-      error-focus-label-text-color:
-        map.get($theme, text-field-error-focus-label-text-color),
-      error-focus-leading-icon-color:
-        map.get($theme, text-field-error-focus-leading-icon-color),
-      error-focus-outline-color: map.get($theme, text-field-error-focus-outline-color),
-      error-focus-supporting-text-color:
-        map.get($theme, text-field-error-focus-supporting-text-color),
-      error-focus-trailing-icon-color:
-        map.get($theme, text-field-error-focus-trailing-icon-color),
-      error-hover-input-text-color:
-        map.get($theme, text-field-error-hover-input-text-color),
-      error-hover-label-text-color:
-        map.get($theme, text-field-error-hover-label-text-color),
-      error-hover-leading-icon-color:
-        map.get($theme, text-field-error-hover-leading-icon-color),
-        error-hover-outline-color: map.get($theme, text-field-error-hover-outline-color),
-      error-hover-supporting-text-color:
-        map.get($theme, text-field-error-hover-supporting-text-color),
-      error-hover-trailing-icon-color:
-        map.get($theme, text-field-error-hover-trailing-icon-color),
-      error-input-text-color: map.get($theme, text-field-error-input-text-color),
-      error-label-text-color: map.get($theme, text-field-error-label-text-color),
-      error-leading-icon-color:
-        map.get($theme, text-field-error-leading-icon-color),
-      error-outline-color: map.get($theme, text-field-error-outline-color),
-      error-supporting-text-color:
-        map.get($theme, text-field-error-supporting-text-color),
-      error-trailing-icon-color:
-        map.get($theme, text-field-error-trailing-icon-color),
-      focus-input-text-color: map.get($theme, text-field-focus-input-text-color),
-      focus-label-text-color: map.get($theme, text-field-focus-label-text-color),
-      focus-leading-icon-color:
-        map.get($theme, text-field-focus-leading-icon-color),
-      focus-outline-color: map.get($theme, text-field-focus-outline-color),
-      focus-outline-width: map.get($theme, text-field-focus-outline-width),
-      focus-supporting-text-color:
-        map.get($theme, text-field-focus-supporting-text-color),
-      focus-trailing-icon-color:
-        map.get($theme, text-field-focus-trailing-icon-color),
-      hover-input-text-color: map.get($theme, text-field-hover-input-text-color),
-      hover-label-text-color: map.get($theme, text-field-hover-label-text-color),
-      hover-leading-icon-color:
-        map.get($theme, text-field-hover-leading-icon-color),
-      hover-outline-color: map.get($theme, text-field-hover-outline-color),
-      hover-outline-width: map.get($theme, text-field-hover-outline-width),
-      hover-supporting-text-color:
-        map.get($theme, text-field-hover-supporting-text-color),
-      hover-trailing-icon-color:
-        map.get($theme, text-field-hover-trailing-icon-color),
-      input-text-color: map.get($theme, text-field-input-text-color),
-      input-text-font: map.get($theme, text-field-input-text-font),
-      input-text-line-height: map.get($theme, text-field-input-text-line-height),
-      input-text-size: map.get($theme, text-field-input-text-size),
-      input-text-tracking: map.get($theme, text-field-input-text-tracking),
-      input-text-type: map.get($theme, text-field-input-text-type),
-      input-text-weight: map.get($theme, text-field-input-text-weight),
-      label-text-color: map.get($theme, text-field-label-text-color),
-      label-text-font: map.get($theme, text-field-label-text-font),
-      label-text-line-height: map.get($theme, text-field-label-text-line-height),
-      label-text-populated-line-height:
-        map.get($theme, text-field-label-text-populated-line-height),
-      label-text-populated-size:
-        map.get($theme, text-field-label-text-populated-size),
-      label-text-size: map.get($theme, text-field-label-text-size),
-      label-text-tracking: map.get($theme, text-field-label-text-tracking),
-      label-text-type: map.get($theme, text-field-label-text-type),
-      label-text-weight: map.get($theme, text-field-label-text-weight),
-      leading-icon-color: map.get($theme, text-field-leading-icon-color),
-      leading-icon-size: map.get($theme, text-field-leading-icon-size),
-      outline-color: map.get($theme, text-field-outline-color),
-      outline-width: map.get($theme, text-field-outline-width),
-      supporting-text-color: map.get($theme, text-field-supporting-text-color),
-      supporting-text-font: map.get($theme, text-field-supporting-text-font),
-      supporting-text-line-height:
-        map.get($theme, text-field-supporting-text-line-height),
-      supporting-text-size: map.get($theme, text-field-supporting-text-size),
-      supporting-text-tracking:
-        map.get($theme, text-field-supporting-text-tracking),
-      supporting-text-weight: map.get($theme, text-field-supporting-text-weight),
-      trailing-icon-color: map.get($theme, text-field-trailing-icon-color),
-      trailing-icon-size: map.get($theme, text-field-trailing-icon-size),
+    @include outlined-text-field-theme.theme(
+      (
+        caret-color: var(--_text-field-caret-color),
+        container-height: var(--_text-field-container-height),
+        disabled-input-text-color: var(--_text-field-disabled-input-text-color),
+        disabled-input-text-opacity:
+          var(--_text-field-disabled-input-text-opacity),
+        disabled-label-text-color: var(--_text-field-disabled-label-text-color),
+        disabled-label-text-opacity:
+          var(--_text-field-disabled-label-text-opacity),
+        disabled-leading-icon-color:
+          var(--_text-field-disabled-leading-icon-color),
+        disabled-leading-icon-opacity:
+          var(--_text-field-disabled-leading-icon-opacity),
+        disabled-outline-color: var(--_text-field-disabled-outline-color),
+        disabled-outline-opacity: var(--_text-field-disabled-outline-opacity),
+        disabled-outline-width: var(--_text-field-disabled-outline-width),
+        disabled-supporting-text-color:
+          var(--_text-field-disabled-supporting-text-color),
+        disabled-supporting-text-opacity:
+          var(--_text-field-disabled-supporting-text-opacity),
+        disabled-trailing-icon-color:
+          var(--_text-field-disabled-trailing-icon-color),
+        disabled-trailing-icon-opacity:
+          var(--_text-field-disabled-trailing-icon-opacity),
+        error-focus-caret-color: var(--_text-field-error-focus-caret-color),
+        error-focus-input-text-color:
+          var(--_text-field-error-focus-input-text-color),
+        error-focus-label-text-color:
+          var(--_text-field-error-focus-label-text-color),
+        error-focus-leading-icon-color:
+          var(--_text-field-error-focus-leading-icon-color),
+        error-focus-outline-color: var(--_text-field-error-focus-outline-color),
+        error-focus-supporting-text-color:
+          var(--_text-field-error-focus-supporting-text-color),
+        error-focus-trailing-icon-color:
+          var(--_text-field-error-focus-trailing-icon-color),
+        error-hover-input-text-color:
+          var(--_text-field-error-hover-input-text-color),
+        error-hover-label-text-color:
+          var(--_text-field-error-hover-label-text-color),
+        error-hover-leading-icon-color:
+          var(--_text-field-error-hover-leading-icon-color),
+        error-hover-outline-color: var(--_text-field-error-hover-outline-color),
+        error-hover-supporting-text-color:
+          var(--_text-field-error-hover-supporting-text-color),
+        error-hover-trailing-icon-color:
+          var(--_text-field-error-hover-trailing-icon-color),
+        error-input-text-color: var(--_text-field-error-input-text-color),
+        error-label-text-color: var(--_text-field-error-label-text-color),
+        error-leading-icon-color: var(--_text-field-error-leading-icon-color),
+        error-outline-color: var(--_text-field-error-outline-color),
+        error-supporting-text-color:
+          var(--_text-field-error-supporting-text-color),
+        error-trailing-icon-color: var(--_text-field-error-trailing-icon-color),
+        focus-input-text-color: var(--_text-field-focus-input-text-color),
+        focus-label-text-color: var(--_text-field-focus-label-text-color),
+        focus-leading-icon-color: var(--_text-field-focus-leading-icon-color),
+        focus-outline-color: var(--_text-field-focus-outline-color),
+        focus-outline-width: var(--_text-field-focus-outline-width),
+        focus-supporting-text-color:
+          var(--_text-field-focus-supporting-text-color),
+        focus-trailing-icon-color: var(--_text-field-focus-trailing-icon-color),
+        hover-input-text-color: var(--_text-field-hover-input-text-color),
+        hover-label-text-color: var(--_text-field-hover-label-text-color),
+        hover-leading-icon-color: var(--_text-field-hover-leading-icon-color),
+        hover-outline-color: var(--_text-field-hover-outline-color),
+        hover-outline-width: var(--_text-field-hover-outline-width),
+        hover-supporting-text-color:
+          var(--_text-field-hover-supporting-text-color),
+        hover-trailing-icon-color: var(--_text-field-hover-trailing-icon-color),
+        input-text-color: var(--_text-field-input-text-color),
+        input-text-font: var(--_text-field-input-text-font),
+        input-text-line-height: var(--_text-field-input-text-line-height),
+        input-text-size: var(--_text-field-input-text-size),
+        input-text-tracking: var(--_text-field-input-text-tracking),
+        input-text-type: var(--_text-field-input-text-type),
+        input-text-weight: var(--_text-field-input-text-weight),
+        label-text-color: var(--_text-field-label-text-color),
+        label-text-font: var(--_text-field-label-text-font),
+        label-text-line-height: var(--_text-field-label-text-line-height),
+        label-text-populated-line-height:
+          var(--_text-field-label-text-populated-line-height),
+        label-text-populated-size: var(--_text-field-label-text-populated-size),
+        label-text-size: var(--_text-field-label-text-size),
+        label-text-tracking: var(--_text-field-label-text-tracking),
+        label-text-type: var(--_text-field-label-text-type),
+        label-text-weight: var(--_text-field-label-text-weight),
+        leading-icon-color: var(--_text-field-leading-icon-color),
+        leading-icon-size: var(--_text-field-leading-icon-size),
+        outline-color: var(--_text-field-outline-color),
+        outline-width: var(--_text-field-outline-width),
+        supporting-text-color: var(--_text-field-supporting-text-color),
+        supporting-text-font: var(--_text-field-supporting-text-font),
+        supporting-text-line-height:
+          var(--_text-field-supporting-text-line-height),
+        supporting-text-size: var(--_text-field-supporting-text-size),
+        supporting-text-tracking: var(--_text-field-supporting-text-tracking),
+        supporting-text-weight: var(--_text-field-supporting-text-weight),
+        trailing-icon-color: var(--_text-field-trailing-icon-color),
+        trailing-icon-size: var(--_text-field-trailing-icon-size),
+      ),
+      $resolvers
     );
 
-    @include outlined-text-field-theme.theme($text-field-theme, $resolvers);
     // Textfield cannot resolve shape when created as vars.
     @include outlined-field-theme.theme(
       (
         container-shape-start-start:
-          map.get($theme, text-field-container-shape-start-start),
-        container-shape-start-end:
-          map.get($theme, text-field-container-shape-start-end),
-        container-shape-end-end:
-          map.get($theme, text-field-container-shape-end-end),
-        container-shape-end-start:
-          map.get($theme, text-field-container-shape-end-start),
+          var(--_text-field-container-shape-start-start),
+        container-shape-start-end: var(--_text-field-container-shape-start-end),
+        container-shape-end-end: var(--_text-field-container-shape-end-end),
+        container-shape-end-start: var(--_text-field-container-shape-end-start),
       )
     );
   }
@@ -174,40 +168,35 @@ $dark-theme: tokens.md-comp-outlined-autocomplete-values(
   .md3-autocomplete__menu-surface {
     @include menu-surface.theme(
       (
-        container-elevation-shadow:
-          map.get($theme, menu-container-elevation-shadow),
-        container-shape: map.get($theme, menu-container-shape),
+        container-elevation-shadow: var(--_menu-container-elevation-shadow),
+        container-shape: var(--_menu-container-shape),
       ),
       $resolvers
     );
 
     @include list.theme(
       (
-        container-color: map.get($theme, menu-container-color),
+        container-color: var(--_menu-container-color),
         container-surface-tint-layer-color:
-          map.get($theme, menu-container-surface-tint-layer-color),
+          var(--_menu-container-surface-tint-layer-color),
         container-elevation-overlay-opacity:
-          map.get($theme, menu-container-elevation-overlay-opacity),
+          var(--_menu-container-elevation-overlay-opacity),
       )
     );
 
     @include list-item.theme(
       (
-        list-item-container-color: map.get($theme, menu-container-color),
+        list-item-container-color: var(--_menu-container-color),
         list-item-one-line-container-height:
-          map.get($theme, menu-list-item-container-height),
-        list-item-label-text-color:
-          map.get($theme, menu-list-item-label-text-color),
-        list-item-label-text-font:
-          map.get($theme, menu-list-item-label-text-font),
+          var(--_menu-list-item-container-height),
+        list-item-label-text-color: var(--_menu-list-item-label-text-color),
+        list-item-label-text-font: var(--_menu-list-item-label-text-font),
         list-item-label-text-line-height:
-          map.get($theme, menu-list-item-label-text-line-height),
-        list-item-label-text-size:
-          map.get($theme, menu-list-item-label-text-size),
+          var(--_menu-list-item-label-text-line-height),
+        list-item-label-text-size: var(--_menu-list-item-label-text-size),
         list-item-label-text-tracking:
-          map.get($theme, menu-list-item-label-text-tracking),
-        list-item-label-text-weight:
-          map.get($theme, menu-list-item-label-text-weight),
+          var(--_menu-list-item-label-text-tracking),
+        list-item-label-text-weight: var(--_menu-list-item-label-text-weight),
       )
     );
   }
@@ -216,7 +205,7 @@ $dark-theme: tokens.md-comp-outlined-autocomplete-values(
     @include list-item-theme.theme(
       (
         list-item-container-color:
-          map.get($theme, menu-list-item-selected-container-color),
+          var(--_menu-list-item-selected-container-color),
       ),
       $resolvers
     );
