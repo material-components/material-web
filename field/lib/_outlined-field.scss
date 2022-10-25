@@ -13,182 +13,134 @@ $_animation-duration: 150ms;
 
 @mixin static-styles() {
   .md3-field__outline {
-    @include outline;
+    display: flex;
+    // Allow events to target elements underneath the outline, such as icons.
+    pointer-events: none;
+    height: 100%;
+    position: absolute;
+    width: 100%;
   }
 
   .md3-field__outline-start,
   .md3-field__outline-panel-inactive,
   .md3-field__outline-panel-active,
   .md3-field__outline-end {
-    @include outline-border;
+    // ::before is inactive border, ::after is active border. Borders are
+    // absolutely positioned within their elements.
+    &::before,
+    &::after {
+      border: inherit;
+      content: '';
+      inset: 0;
+      position: absolute;
+    }
   }
 
   .md3-field__outline-start,
   .md3-field__outline-end {
-    @include outline-edges;
+    border: inherit;
+    border-radius: inherit;
+    box-sizing: border-box;
+    position: relative;
+
+    &::before,
+    &::after {
+      border-bottom-style: solid;
+      border-top-style: solid;
+    }
+
+    &::after {
+      opacity: 0;
+      transition: animation.standard(opacity, $_animation-duration);
+    }
 
     .md3-field--focused & {
-      @include outline-edges-focus;
+      &::after {
+        opacity: 1;
+      }
     }
   }
 
   .md3-field__outline-start {
-    @include outline-start;
+    &::before,
+    &::after {
+      border-inline-start-style: solid;
+      border-inline-end-style: none;
+      border-start-start-radius: inherit;
+      border-start-end-radius: 0;
+      border-end-start-radius: inherit;
+      border-end-end-radius: 0;
+    }
   }
 
   .md3-field__outline-end {
-    @include outline-end;
+    flex-grow: 1;
+
+    &::before,
+    &::after {
+      border-inline-start-style: none;
+      border-inline-end-style: solid;
+      border-start-start-radius: 0;
+      border-start-end-radius: inherit;
+      border-end-start-radius: 0;
+      border-end-end-radius: inherit;
+    }
   }
 
   .md3-field__outline-notch {
-    @include outline-notch;
+    align-items: flex-start;
+    border: inherit;
+    display: flex;
+    position: relative;
 
     .md3-field--no-label & {
-      @include outline-notch-no-label;
+      display: none;
     }
   }
 
   .md3-field__outline-panel-inactive,
   .md3-field__outline-panel-active {
-    @include outline-panel;
+    border: inherit;
+    border-bottom-style: solid;
+    inset: 0;
+    position: absolute;
+
+    &::before,
+    &::after {
+      border-top-style: solid;
+      border-bottom: none;
+      bottom: auto;
+      transform: scaleX(1);
+      transition: animation.standard(transform, $_animation-duration);
+    }
+
+    // Note: no need to do any RTL flipping here. If RTLCSS flips this, it's also
+    // ok, we just need one to be left and one to be right.
+    &::before {
+      right: 50%;
+      transform-origin: top left;
+    }
+
+    &::after {
+      left: 50%;
+      transform-origin: top right;
+    }
 
     .md3-field--populated &,
     .md3-field--focused & {
-      @include outline-panel-open;
+      &::before,
+      &::after {
+        transform: scaleX(0);
+      }
     }
   }
 
   .md3-field__outline-panel-active {
-    @include outline-panel-active;
-
-    .md3-field--focused & {
-      @include outline-panel-active-focus;
-    }
-  }
-}
-
-@mixin outline() {
-  display: flex;
-  // Allow events to target elements underneath the outline, such as icons.
-  pointer-events: none;
-  height: 100%;
-  position: absolute;
-  width: 100%;
-}
-
-@mixin outline-border() {
-  // ::before is inactive border, ::after is active border. Borders are
-  // absolutely positioned within their elements.
-  &::before,
-  &::after {
-    border: inherit;
-    content: '';
-    inset: 0;
-    position: absolute;
-  }
-}
-
-@mixin outline-edges() {
-  border: inherit;
-  border-radius: inherit;
-  box-sizing: border-box;
-  position: relative;
-
-  &::before,
-  &::after {
-    border-bottom-style: solid;
-    border-top-style: solid;
-  }
-
-  &::after {
     opacity: 0;
     transition: animation.standard(opacity, $_animation-duration);
+
+    .md3-field--focused & {
+      opacity: 1;
+    }
   }
-}
-
-@mixin outline-edges-focus() {
-  &::after {
-    opacity: 1;
-  }
-}
-
-@mixin outline-start() {
-  &::before,
-  &::after {
-    border-inline-start-style: solid;
-    border-inline-end-style: none;
-    border-start-start-radius: inherit;
-    border-start-end-radius: 0;
-    border-end-start-radius: inherit;
-    border-end-end-radius: 0;
-  }
-}
-
-@mixin outline-end() {
-  flex-grow: 1;
-
-  &::before,
-  &::after {
-    border-inline-start-style: none;
-    border-inline-end-style: solid;
-    border-start-start-radius: 0;
-    border-start-end-radius: inherit;
-    border-end-start-radius: 0;
-    border-end-end-radius: inherit;
-  }
-}
-
-@mixin outline-notch() {
-  align-items: flex-start;
-  border: inherit;
-  display: flex;
-  position: relative;
-}
-
-@mixin outline-notch-no-label() {
-  display: none;
-}
-
-@mixin outline-panel() {
-  border: inherit;
-  border-bottom-style: solid;
-  inset: 0;
-  position: absolute;
-
-  &::before,
-  &::after {
-    border-top-style: solid;
-    border-bottom: none;
-    bottom: auto;
-    transform: scaleX(1);
-    transition: animation.standard(transform, $_animation-duration);
-  }
-
-  // Note: no need to do any RTL flipping here. If RTLCSS flips this, it's also
-  // ok, we just need one to be left and one to be right.
-  &::before {
-    right: 50%;
-    transform-origin: top left;
-  }
-
-  &::after {
-    left: 50%;
-    transform-origin: top right;
-  }
-}
-
-@mixin outline-panel-open() {
-  &::before,
-  &::after {
-    transform: scaleX(0);
-  }
-}
-
-@mixin outline-panel-active() {
-  opacity: 0;
-  transition: animation.standard(opacity, $_animation-duration);
-}
-
-@mixin outline-panel-active-focus() {
-  opacity: 1;
 }

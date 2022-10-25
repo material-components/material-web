@@ -9,72 +9,55 @@
 @use 'sass:map';
 
 @mixin theme-styles($theme) {
-  @include _content-color(
-    (
-      default: map.get($theme, content-color),
-      hover: map.get($theme, hover-content-color),
-      focus: map.get($theme, focus-content-color),
-      disabled: map.get($theme, disabled-content-color),
-    )
-  );
-  @include _content-error-color(
-    (
-      default: map.get($theme, error-content-color),
-      hover: map.get($theme, error-hover-content-color),
-      focus: map.get($theme, error-focus-content-color),
-    )
-  );
-  @include _content-opacity(
-    (
-      disabled: map.get($theme, disabled-content-opacity),
-    )
-  );
-}
-
-@mixin _content-color($colors) {
-  @include _set-content-color(map.get($colors, default));
-
-  &:hover {
-    @include _set-content-color(map.get($colors, hover));
-  }
-
-  &.md3-field--focused {
-    @include _set-content-color(map.get($colors, focus));
-  }
-
-  &.md3-field--disabled {
-    @include _set-content-color(map.get($colors, disabled));
-  }
-}
-
-@mixin _content-error-color($colors) {
-  &:not(.md3-field--disabled).md3-field--error {
-    @include _content-color($colors);
-  }
-}
-
-@mixin _set-content-color($color) {
   // Content elements provided to the field (such as <input>) may use
   // `currentColor` to inherit this property.
   .md3-field__content {
-    color: $color;
+    color: map.get($theme, content-color);
   }
-}
 
-@mixin _content-opacity($opacities) {
-  @include _set-content-opacity(map.get($opacities, default));
+  &:hover {
+    .md3-field__content {
+      color: map.get($theme, hover-content-color);
+    }
+  }
+
+  &.md3-field--focused {
+    .md3-field__content {
+      color: map.get($theme, focus-content-color);
+    }
+  }
 
   &.md3-field--disabled {
-    @include _set-content-opacity(map.get($opacities, disabled));
-  }
-}
-
-@mixin _set-content-opacity($opacity) {
-  &.md3-field--no-label,
-  &.md3-field--focused,
-  &.md3-field--populated {
     .md3-field__content {
-      opacity: $opacity;
+      color: map.get($theme, disabled-content-color);
+    }
+  }
+
+  &:not(.md3-field--disabled).md3-field--error {
+    .md3-field__content {
+      color: map.get($theme, error-content-color);
+    }
+
+    &:hover {
+      .md3-field__content {
+        color: map.get($theme, error-hover-content-color);
+      }
+    }
+
+    &.md3-field--focused {
+      .md3-field__content {
+        color: map.get($theme, error-focus-content-color);
+      }
+    }
+  }
+
+  &.md3-field--disabled {
+    &.md3-field--no-label,
+    &.md3-field--focused,
+    &.md3-field--populated {
+      .md3-field__content {
+        opacity: map.get($theme, disabled-content-opacity);
+      }
     }
   }
 }

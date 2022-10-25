@@ -121,262 +121,95 @@ $dark-theme: values(
   @include label-theme.theme-styles($theme);
   @include supporting-text-theme.theme-styles($theme);
 
-  @include _active-indicator-color(
-    (
-      default: map.get($theme, active-indicator-color),
-      disabled: map.get($theme, disabled-active-indicator-color),
-      focus: map.get($theme, focus-active-indicator-color),
-      hover: map.get($theme, hover-active-indicator-color),
-    )
-  );
-  @include _active-indicator-error-color(
-    (
-      default: map.get($theme, error-active-indicator-color),
-      focus: map.get($theme, error-focus-active-indicator-color),
-      hover: map.get($theme, error-hover-active-indicator-color),
-    )
-  );
-  @include _active-indicator-opacity(
-    (
-      disabled: map.get($theme, disabled-active-indicator-opacity),
-    )
-  );
-  @include _active-indicator-height(
-    (
-      default: map.get($theme, active-indicator-height),
-      disabled: map.get($theme, disabled-active-indicator-height),
-      focus: map.get($theme, focus-active-indicator-height),
-      hover: map.get($theme, hover-active-indicator-height),
-    )
-  );
-  @include _container-color(
-    (
-      default: map.get($theme, container-color),
-      disabled: map.get($theme, disabled-container-color),
-    )
-  );
-  @include _container-opacity(
-    (
-      disabled: map.get($theme, disabled-container-opacity),
-    )
-  );
-  @include _container-padding-horizontal(
-    map.get($theme, container-padding-horizontal)
-  );
-  @include _container-padding-vertical(
-    map.get($theme, container-padding-vertical)
-  );
-  @include _container-shape(
-    (
-      start-start: map.get($theme, container-shape-start-start),
-      start-end: map.get($theme, container-shape-start-end),
-      end-end: map.get($theme, container-shape-end-end),
-      end-start: map.get($theme, container-shape-end-start),
-    )
-  );
-  @include _floating-label-text-line-height(
-    map.get($theme, label-text-populated-line-height)
-  );
-  @include _state-layer-color(
-    (
-      hover: map.get($theme, hover-state-layer-color),
-    )
-  );
-  @include _state-layer-error-color(
-    (
-      hover: map.get($theme, error-hover-state-layer-color),
-    )
-  );
-  @include _state-layer-opacity(
-    (
-      hover: map.get($theme, hover-state-layer-opacity),
-    )
-  );
-  @include _state-layer-error-opacity(
-    (
-      hover: map.get($theme, error-hover-state-layer-opacity),
-    )
-  );
-}
-
-@mixin _active-indicator-color($colors) {
-  @include _set-active-indicator-color(map.get($colors, default));
-
-  &:hover {
-    @include _set-active-indicator-color(map.get($colors, hover));
-  }
-
-  // Focus is on a separate element and does not need a focus selector
-  @include _set-active-indicator-focus-color(map.get($colors, focus));
-
-  &.md3-field--disabled {
-    @include _set-active-indicator-color(map.get($colors, disabled));
-  }
-}
-
-@mixin _set-active-indicator-color($color) {
-  .md3-field__active-indicator::before {
-    border-bottom-color: $color;
-  }
-}
-
-@mixin _set-active-indicator-focus-color($color) {
-  .md3-field__active-indicator::after {
-    border-bottom-color: $color;
-  }
-}
-
-@mixin _active-indicator-error-color($colors) {
-  &:not(.md3-field--disabled).md3-field--error {
-    @include _active-indicator-color($colors);
-  }
-}
-
-@mixin _active-indicator-opacity($opacities) {
-  @include _set-active-indicator-opacity(map.get($opacities, default));
-
-  &.md3-field--disabled {
-    @include _set-active-indicator-opacity(map.get($opacities, disabled));
-  }
-}
-
-@mixin _set-active-indicator-opacity($opacity) {
-  .md3-field__active-indicator::before {
-    opacity: $opacity;
-  }
-}
-
-@mixin _active-indicator-height($heights) {
-  @include _set-non-focus-active-indicator-height(map.get($heights, default));
-
-  &:hover {
-    @include _set-non-focus-active-indicator-height(map.get($heights, hover));
-  }
-
-  &.md3-field--disabled {
-    @include _set-non-focus-active-indicator-height(
-      map.get($heights, disabled)
-    );
-  }
-
-  .md3-field__active-indicator {
-    &::after {
-      // Focus is on a different element and does not need state selectors
-      border-bottom-width: map.get($heights, focus);
-    }
-  }
-}
-
-@mixin _set-non-focus-active-indicator-height($height) {
-  .md3-field__active-indicator {
-    &::before {
-      border-bottom-width: $height;
-    }
-  }
-}
-
-@mixin _container-color($colors) {
-  @include _set-container-color(map.get($colors, default));
-
-  &.md3-field--disabled {
-    @include _set-container-color(map.get($colors, disabled));
-  }
-}
-
-@mixin _set-container-color($color) {
   .md3-field__container {
+    border-start-start-radius: map.get($theme, container-shape-start-start);
+    border-start-end-radius: map.get($theme, container-shape-start-end);
+    border-end-end-radius: map.get($theme, container-shape-end-end);
+    border-end-start-radius: map.get($theme, container-shape-end-start);
+    padding-top: map.get($theme, container-padding-vertical);
+    padding-bottom: map.get($theme, container-padding-vertical);
+
     &::before {
-      background: $color;
+      background: map.get($theme, container-color);
     }
   }
-}
 
-@mixin _container-opacity($opacities) {
-  @include _set-container-opacity(map.get($opacities, default));
-
-  &.md3-field--disabled {
-    @include _set-container-opacity(map.get($opacities, disabled));
+  .md3-field__active-indicator::before {
+    border-bottom-color: map.get($theme, active-indicator-color);
+    border-bottom-width: map.get($theme, active-indicator-height);
   }
-}
 
-@mixin _set-container-opacity($opacity) {
-  .md3-field__container {
-    &::before {
-      opacity: $opacity;
-    }
-  }
-}
-
-@mixin _container-padding-horizontal($padding) {
   &:not(.md3-field--with-start) {
     .md3-field__start {
-      padding-inline-start: $padding;
+      padding-inline-start: map.get($theme, container-padding-horizontal);
     }
   }
 
   &:not(.md3-field--with-end) {
     .md3-field__end {
-      padding-inline-end: $padding;
+      padding-inline-end: map.get($theme, container-padding-horizontal);
     }
   }
-}
 
-@mixin _container-padding-vertical($padding) {
-  .md3-field__container {
-    padding-top: $padding;
-    padding-bottom: $padding;
-  }
-}
-
-@mixin _container-shape($shape) {
-  .md3-field__container {
-    border-start-start-radius: map.get($shape, start-start);
-    border-start-end-radius: map.get($shape, start-end);
-    border-end-end-radius: map.get($shape, end-end);
-    border-end-start-radius: map.get($shape, end-start);
-  }
-}
-
-@mixin _floating-label-text-line-height($line-height) {
   &:not(.md3-field--no-label) {
     .md3-field__middle {
-      padding-top: $line-height;
+      padding-top: map.get($theme, label-text-populated-line-height);
     }
   }
-}
 
-@mixin _state-layer-color($colors) {
   &:hover {
-    @include _set-state-layer-color(map.get($colors, hover));
-  }
-}
+    .md3-field__active-indicator::before {
+      border-bottom-color: map.get($theme, hover-active-indicator-color);
+      border-bottom-width: map.get($theme, hover-active-indicator-height);
+    }
 
-@mixin _set-state-layer-color($color) {
-  .md3-field__state-layer {
-    background: $color;
+    .md3-field__state-layer {
+      background: map.get($theme, hover-state-layer-color);
+      opacity: map.get($theme, hover-state-layer-opacity);
+    }
   }
-}
 
-@mixin _state-layer-error-color($colors) {
+  // Focus is on a separate element and does not need a focus selector
+  .md3-field__active-indicator::after {
+    border-bottom-color: map.get($theme, focus-active-indicator-color);
+    border-bottom-width: map.get($theme, focus-active-indicator-height);
+  }
+
+  &.md3-field--disabled {
+    .md3-field__active-indicator::before {
+      border-bottom-color: map.get($theme, disabled-active-indicator-color);
+      border-bottom-width: map.get($theme, disabled-active-indicator-height);
+      opacity: map.get($theme, disabled-active-indicator-opacity);
+    }
+
+    .md3-field__container::before {
+      background: map.get($theme, disabled-container-color);
+      opacity: map.get($theme, disabled-container-opacity);
+    }
+  }
+
   &:not(.md3-field--disabled).md3-field--error {
-    @include _state-layer-color($colors);
-  }
-}
+    .md3-field__active-indicator::before {
+      border-bottom-color: map.get($theme, error-active-indicator-color);
+    }
 
-@mixin _state-layer-opacity($opacities) {
-  &:hover {
-    @include _set-state-layer-opactiy(map.get($opacities, hover));
-  }
-}
+    &:hover {
+      .md3-field__active-indicator::before {
+        border-bottom-color: map.get(
+          $theme,
+          error-hover-active-indicator-color
+        );
+      }
 
-@mixin _set-state-layer-opactiy($opacity) {
-  .md3-field__state-layer {
-    opacity: $opacity;
-  }
-}
+      .md3-field__state-layer {
+        background: map.get($theme, error-hover-state-layer-color);
+        opacity: map.get($theme, error-hover-state-layer-opacity);
+      }
+    }
 
-@mixin _state-layer-error-opacity($opacities) {
-  &:not(.md3-field--disabled).md3-field--error {
-    @include _state-layer-opacity($opacities);
+    // Focus is on a separate element and does not need a focus selector
+    .md3-field__active-indicator::after {
+      border-bottom-color: map.get($theme, error-focus-active-indicator-color);
+    }
   }
 }

@@ -15,115 +15,91 @@ $_animation-duration: 150ms;
 @mixin static-styles() {
   .md3-field--filled {
     .md3-field__container {
-      @include container;
+      // If bottom corner radii are set, prevent the active indicator from
+      // overflowing.
+      overflow: hidden;
+      // Needed for negative z-index below to place background and state layer
+      // behind content.
+      z-index: 0;
+
+      // ::before is used for background color so that opacity may be changed
+      // without affecting content
+      &::before,
+      // ::after is used for the state layer color and opacity
+      &::after {
+        border-radius: inherit;
+        content: '';
+        display: flex;
+        height: 100%;
+        position: absolute;
+        width: 100%;
+        z-index: -1;
+      }
+
+      &::after {
+        visibility: hidden;
+      }
     }
 
     &:not(.md3-field--disabled):hover {
       .md3-field__state-layer {
-        @include container-state-layer-hover;
+        visibility: visible;
       }
     }
 
     .md3-field__label--floating {
-      @include label-floating;
+      position: absolute;
+      top: 0;
     }
   }
 
   .md3-field__state-layer {
-    @include container-state-layer;
-  }
-
-  .md3-field__active-indicator {
-    @include active-indicator;
-
-    .md3-field--focused & {
-      @include active-indicator-focus;
-    }
-  }
-}
-
-@mixin container() {
-  // If bottom corner radii are set, prevent the active indicator from
-  // overflowing.
-  overflow: hidden;
-  // Needed for negative z-index below to place background and state layer
-  // behind content.
-  z-index: 0;
-
-  // ::before is used for background color so that opacity may be changed
-  // without affecting content
-  &::before,
-  // ::after is used for the state layer color and opacity
-  &::after {
     border-radius: inherit;
-    content: '';
-    display: flex;
     height: 100%;
     position: absolute;
     width: 100%;
+    visibility: hidden;
     z-index: -1;
   }
 
-  &::after {
-    visibility: hidden;
-  }
-}
-
-@mixin container-state-layer() {
-  border-radius: inherit;
-  height: 100%;
-  position: absolute;
-  width: 100%;
-  visibility: hidden;
-  z-index: -1;
-}
-
-@mixin container-state-layer-hover() {
-  visibility: visible;
-}
-
-@mixin label-floating() {
-  position: absolute;
-  top: 0;
-}
-
-@mixin active-indicator() {
-  // Prevent click events on the indicator element since it has no width and
-  // causes bugs when handled by the foundation for updating transform-origin.
-  inset: auto 0 0 0;
-  pointer-events: none;
-  position: absolute;
-  width: 100%;
-
-  &::before,
-  &::after {
-    border-bottom-style: solid;
+  .md3-field__active-indicator {
+    // Prevent click events on the indicator element since it has no width and
+    // causes bugs when handled by the foundation for updating transform-origin.
     inset: auto 0 0 0;
-    content: '';
+    pointer-events: none;
     position: absolute;
     width: 100%;
-  }
 
-  // focused indicator
-  &::after {
-    opacity: 0;
-    transform: scaleX(0);
-    // The foundation needs to update the transform-origin style attribute in
-    // response to click events. Psuedo elements cannot have their style
-    // updated, but their transform-origin can be inherited.
-    transform-origin: inherit;
-    // Add two transitions: opacity and a delayed transform. With a non-delayed
-    // transform transition on the focus selector without an opacity transition,
-    // this will result in the indicator scaling on enter and fading on exit.
-    transition: animation.standard(opacity, $_animation-duration),
-      transform 0s ease $_animation-duration;
-  }
-}
+    &::before,
+    &::after {
+      border-bottom-style: solid;
+      inset: auto 0 0 0;
+      content: '';
+      position: absolute;
+      width: 100%;
+    }
 
-@mixin active-indicator-focus() {
-  &::after {
-    opacity: 1;
-    transform: scaleX(1);
-    transition: animation.standard(transform, $_animation-duration);
+    // focused indicator
+    &::after {
+      opacity: 0;
+      transform: scaleX(0);
+      // The element needs to update the transform-origin style attribute in
+      // response to click events. Psuedo elements cannot have their style
+      // updated, but their transform-origin can be inherited.
+      transform-origin: inherit;
+      // Add two transitions: opacity and a delayed transform. With a non-delayed
+      // transform transition on the focus selector without an opacity transition,
+      // this will result in the indicator scaling on enter and fading on exit.
+      transition: animation.standard(opacity, $_animation-duration),
+        transform 0s ease $_animation-duration;
+    }
+
+    .md3-field--focused & {
+      &::after {
+        opacity: 1;
+        transform: scaleX(1);
+        transition: animation.standard(transform, $_animation-duration);
+      }
+    }
   }
 }

@@ -128,50 +128,15 @@ $dark-theme: values(
     );
   }
 
-  @include _container-padding-horizontal($theme);
-  @include _container-shape(
-    (
-      start-start: map.get($theme, container-shape-start-start),
-      start-end: map.get($theme, container-shape-start-end),
-      end-end: map.get($theme, container-shape-end-end),
-      end-start: map.get($theme, container-shape-end-start),
-    )
-  );
-  @include _outline-color(
-    (
-      default: map.get($theme, outline-color),
-      disabled: map.get($theme, disabled-outline-color),
-      focus: map.get($theme, focus-outline-color),
-      hover: map.get($theme, hover-outline-color),
-    )
-  );
-  @include _outline-error-color(
-    (
-      default: map.get($theme, error-outline-color),
-      focus: map.get($theme, error-focus-outline-color),
-      hover: map.get($theme, error-hover-outline-color),
-    )
-  );
-  @include _outline-label-padding(map.get($theme, outline-label-padding));
-  @include _outline-opacity(
-    (
-      disabled: map.get($theme, disabled-outline-opacity),
-    )
-  );
-  @include _outline-notch-max-width(
-    map.get($theme, container-padding-horizontal)
-  );
-  @include _outline-width(
-    (
-      default: map.get($theme, outline-width),
-      disabled: map.get($theme, disabled-outline-width),
-      focus: map.get($theme, focus-outline-width),
-      hover: map.get($theme, hover-outline-width),
-    )
-  );
-}
+  .md3-field__outline {
+    border-start-start-radius: map.get($theme, container-shape-start-start);
+    border-start-end-radius: map.get($theme, container-shape-start-end);
+    border-end-end-radius: map.get($theme, container-shape-end-end);
+    border-end-start-radius: map.get($theme, container-shape-end-start);
+    border-color: map.get($theme, outline-color);
+    color: map.get($theme, outline-color); // Needed for Firefox HCM
+  }
 
-@mixin _container-padding-horizontal($theme) {
   // Add padding that will grow to compensate for the outline's shape.
   // This is needed to prevent the outline border from clipping with the label
   // and is mirrored in the container padding to align the content and resting
@@ -197,115 +162,104 @@ $dark-theme: values(
       padding-inline-end: max($padding, $shape-end);
     }
   }
-}
 
-@mixin _container-shape($shape) {
-  .md3-field__outline {
-    border-start-start-radius: map.get($shape, start-start);
-    border-start-end-radius: map.get($shape, start-end);
-    border-end-end-radius: map.get($shape, end-end);
-    border-end-start-radius: map.get($shape, end-start);
-  }
-}
-
-@mixin _outline-label-padding($padding) {
   .md3-field__outline-start::before,
   .md3-field__outline-start::after {
-    margin-inline-end: $padding;
+    margin-inline-end: map.get($theme, outline-label-padding);
   }
 
   .md3-field__outline-notch {
-    padding: 0 $padding;
-    margin-inline-start: calc(-1 * #{$padding});
-    margin-inline-end: $padding;
+    padding: 0 map.get($theme, outline-label-padding);
+    margin-inline-start: calc(-1 * map.get($theme, outline-label-padding));
+    margin-inline-end: map.get($theme, outline-label-padding);
+    max-width: calc(100% - 2 * map.get($theme, container-padding-horizontal));
   }
 
   .md3-field__outline-end {
-    margin-inline-start: calc(-1 * #{$padding});
-  }
-}
-
-@mixin _outline-notch-max-width($container-padding-horizontal) {
-  .md3-field__outline-notch {
-    max-width: calc(100% - 2 * #{$container-padding-horizontal});
-  }
-}
-
-@mixin _outline-color($colors) {
-  @include _set-outline-color(map.get($colors, default));
-
-  &:hover {
-    @include _set-outline-color(map.get($colors, hover));
+    margin-inline-start: calc(-1 * map.get($theme, outline-label-padding));
   }
 
-  &.md3-field--focused {
-    @include _set-outline-color(map.get($colors, focus));
-  }
-
-  &.md3-field--disabled {
-    @include _set-outline-color(map.get($colors, disabled));
-  }
-}
-
-@mixin _set-outline-color($color) {
-  .md3-field__outline {
-    border-color: $color;
-    color: $color; // Needed for Firefox HCM
-  }
-}
-
-@mixin _outline-error-color($colors) {
-  &:not(.md3-field--disabled).md3-field--error {
-    @include _outline-color($colors);
-  }
-}
-
-@mixin _outline-opacity($opacities) {
-  @include _set-outline-inactive-opacity(map.get($opacities, default));
-
-  &.md3-field--disabled {
-    @include _set-outline-inactive-opacity(map.get($opacities, disabled));
-  }
-}
-
-@mixin _set-outline-inactive-opacity($opacity) {
-  .md3-field__outline-start,
-  .md3-field__outline-end,
-  .md3-field__outline-panel-inactive {
-    opacity: $opacity;
-  }
-}
-
-@mixin _outline-width($widths) {
-  @include _set-outline-width(map.get($widths, default));
-
-  &:hover {
-    @include _set-outline-width(map.get($widths, hover));
-  }
-
-  @include _set-outline-focus-width(map.get($widths, focus));
-
-  &.md3-field--disabled {
-    @include _set-outline-width(map.get($widths, disabled));
-  }
-}
-
-@mixin _set-outline-width($width) {
   .md3-field__outline-start::before,
   .md3-field__outline-end::before,
   .md3-field__outline-panel-inactive,
   .md3-field__outline-panel-inactive::before,
   .md3-field__outline-panel-inactive::after {
-    border-width: $width;
+    border-width: map.get($theme, outline-width);
   }
-}
 
-@mixin _set-outline-focus-width($width) {
+  // States
+
+  &:hover {
+    .md3-field__outline {
+      border-color: map.get($theme, hover-outline-color);
+      color: map.get($theme, hover-outline-color); // Needed for Firefox HCM
+    }
+
+    .md3-field__outline-start::before,
+    .md3-field__outline-end::before,
+    .md3-field__outline-panel-inactive,
+    .md3-field__outline-panel-inactive::before,
+    .md3-field__outline-panel-inactive::after {
+      border-width: map.get($theme, hover-outline-width);
+    }
+  }
+
+  &.md3-field--focused {
+    .md3-field__outline {
+      border-color: map.get($theme, focus-outline-color);
+      color: map.get($theme, focus-outline-color); // Needed for Firefox HCM
+    }
+  }
+
   .md3-field__outline-start::after,
   .md3-field__outline-end::after,
   .md3-field__outline-panel-active,
   .md3-field__outline-panel-active::before,
   .md3-field__outline-panel-active::after {
-    border-width: $width;
+    border-width: map.get($theme, focus-outline-width);
+  }
+
+  &.md3-field--disabled {
+    .md3-field__outline {
+      border-color: map.get($theme, disabled-outline-color);
+      color: map.get($theme, disabled-outline-color); // Needed for Firefox HCM
+    }
+
+    .md3-field__outline-start,
+    .md3-field__outline-end,
+    .md3-field__outline-panel-inactive {
+      opacity: map.get($theme, disabled-outline-opacity);
+    }
+
+    .md3-field__outline-start::before,
+    .md3-field__outline-end::before,
+    .md3-field__outline-panel-inactive,
+    .md3-field__outline-panel-inactive::before,
+    .md3-field__outline-panel-inactive::after {
+      border-width: map.get($theme, disabled-outline-width);
+    }
+  }
+
+  &:not(.md3-field--disabled).md3-field--error {
+    .md3-field__outline {
+      border-color: map.get($theme, error-outline-color);
+      color: map.get($theme, error-outline-color); // Needed for Firefox HCM
+    }
+
+    &:hover {
+      .md3-field__outline {
+        border-color: map.get($theme, error-hover-outline-color);
+        // Needed for Firefox HCM
+        color: map.get($theme, error-hover-outline-color);
+      }
+    }
+
+    &.md3-field--focused {
+      .md3-field__outline {
+        border-color: map.get($theme, error-focus-outline-color);
+        // Needed for Firefox HCM
+        color: map.get($theme, error-focus-outline-color);
+      }
+    }
   }
 }

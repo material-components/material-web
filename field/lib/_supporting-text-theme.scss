@@ -18,26 +18,10 @@
 }
 
 @mixin theme-styles($theme) {
-  @include _color(
-    (
-      default: map.get($theme, supporting-text-color),
-      focus: map.get($theme, focus-supporting-text-color),
-      hover: map.get($theme, hover-supporting-text-color),
-      disabled: map.get($theme, disabled-supporting-text-color),
-    )
-  );
-
-  &:not(.md3-field--disabled).md3-field--error {
-    @include _color(
-      (
-        default: map.get($theme, error-supporting-text-color),
-        focus: map.get($theme, error-focus-supporting-text-color),
-        hover: map.get($theme, error-hover-supporting-text-color),
-      )
-    );
-  }
-
   .md3-field__supporting-text {
+    color: map.get($theme, supporting-text-color);
+    padding: 0 map.get($theme, supporting-text-padding);
+
     @include typography.theme-styles(
       (
         font: map.get($theme, supporting-text-font),
@@ -49,59 +33,55 @@
     );
   }
 
-  &.md3-field--disabled {
-    .md3-field__supporting-text {
-      opacity: map.get($theme, disabled-supporting-text-opacity);
-    }
-  }
-
-  @include _padding(
-    map.get($theme, supporting-text-padding),
-    map.get($theme, supporting-text-padding-top)
-  );
-}
-
-@mixin _color($colors) {
-  .md3-field__supporting-text {
-    color: map.get($colors, default);
-  }
-
-  &:hover {
-    .md3-field__supporting-text {
-      color: map.get($colors, hover);
-    }
-  }
-
-  &.md3-field--focus {
-    .md3-field__supporting-text {
-      color: map.get($colors, focus);
-    }
-  }
-
-  &.md3-field--disabled {
-    .md3-field__supporting-text {
-      color: map.get($colors, disabled);
-    }
-  }
-}
-
-@mixin _padding($padding-horizontal, $padding-top) {
-  .md3-field__supporting-text {
-    padding: 0 $padding-horizontal;
-  }
-
   // Add padding to slotted elements instead of the wrappers so that it does not
   // show when the supporting text is empty.
   .md3-field__supporting-text-start,
   .md3-field__supporting-text-end {
     ::slotted(:not(:empty)) {
-      padding-top: $padding-top;
+      padding-top: map.get($theme, supporting-text-padding-top);
     }
   }
 
   .md3-field__supporting-text-end {
     ::slotted(:not(:empty)) {
-      padding-inline-start: $padding-horizontal;
+      padding-inline-start: map.get($theme, supporting-text-padding);
+    }
+  }
+
+  &:hover {
+    .md3-field__supporting-text {
+      color: map.get($theme, hover-supporting-text-color);
+    }
+  }
+
+  &.md3-field--focus {
+    .md3-field__supporting-text {
+      color: map.get($theme, focus-supporting-text-color);
+    }
+  }
+
+  &.md3-field--disabled {
+    .md3-field__supporting-text {
+      color: map.get($theme, disabled-supporting-text-color);
+      opacity: map.get($theme, disabled-supporting-text-opacity);
+    }
+  }
+
+  &:not(.md3-field--disabled).md3-field--error {
+    .md3-field__supporting-text {
+      color: map.get($theme, error-supporting-text-color);
+    }
+
+    &:hover {
+      .md3-field__supporting-text {
+        color: map.get($theme, error-hover-supporting-text-color);
+      }
+    }
+
+    &.md3-field--focus {
+      .md3-field__supporting-text {
+        color: map.get($theme, error-focus-supporting-text-color);
+      }
     }
   }
 }

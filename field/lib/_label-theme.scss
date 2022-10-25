@@ -21,103 +21,73 @@
 }
 
 @mixin theme-styles($theme) {
-  @include _label-color(
-    (
-      default: map.get($theme, label-text-color),
-      focus: map.get($theme, focus-label-text-color),
-      hover: map.get($theme, hover-label-text-color),
-      disabled: map.get($theme, disabled-label-text-color),
-    )
-  );
-  @include _label-error-color(
-    (
-      default: map.get($theme, error-label-text-color),
-      focus: map.get($theme, error-focus-label-text-color),
-      hover: map.get($theme, error-hover-label-text-color),
-    )
-  );
-  @include _label-typography(
-    (
-      font: map.get($theme, label-text-font),
-      tracking: map.get($theme, label-text-tracking),
-      weight: map.get($theme, label-text-weight),
-    )
-  );
-  @include _label-typography-resting(
-    (
-      size: map.get($theme, label-text-size),
-      line-height: map.get($theme, label-text-line-height),
-    )
-  );
-  @include _label-typography-floating(
-    (
-      size: map.get($theme, label-text-populated-size),
-      line-height: map.get($theme, label-text-populated-line-height),
-    )
-  );
-  @include _label-opacity(
-    (
-      disabled: map.get($theme, disabled-label-text-opacity),
-    )
-  );
-}
+  .md3-field__label {
+    color: map.get($theme, label-text-color);
 
-@mixin _label-color($colors) {
-  @include _set-label-color(map.get($colors, default));
+    @include typography.theme-styles(
+      (
+        font: map.get($theme, label-text-font),
+        tracking: map.get($theme, label-text-tracking),
+        weight: map.get($theme, label-text-weight),
+      )
+    );
+  }
+
+  .md3-field__label--floating {
+    @include typography.theme-styles(
+      (
+        size: map.get($theme, label-text-populated-size),
+        line-height: map.get($theme, label-text-populated-line-height),
+      )
+    );
+  }
+
+  .md3-field__label--resting {
+    @include typography.theme-styles(
+      (
+        size: map.get($theme, label-text-size),
+        line-height: map.get($theme, label-text-line-height),
+      )
+    );
+  }
 
   &:hover {
-    @include _set-label-color(map.get($colors, hover));
+    .md3-field__label {
+      color: map.get($theme, hover-label-text-color);
+    }
   }
 
   &.md3-field--focused {
-    @include _set-label-color(map.get($colors, focus));
-  }
-
-  &.md3-field--disabled {
-    @include _set-label-color(map.get($colors, disabled));
-  }
-}
-
-@mixin _set-label-color($color) {
-  .md3-field__label {
-    color: $color;
-  }
-}
-
-@mixin _label-error-color($colors) {
-  &:not(.md3-field--disabled).md3-field--error {
-    @include _label-color($colors);
-  }
-}
-
-@mixin _label-opacity($opacities) {
-  &.md3-field--disabled {
-    @include _set-label-opacity(map.get($opacities, disabled));
-  }
-}
-
-@mixin _set-label-opacity($opacity) {
-  .md3-field__label {
-    &:not(.md3-field__label--hidden) {
-      opacity: $opacity;
+    .md3-field__label {
+      color: map.get($theme, focus-label-text-color);
     }
   }
-}
 
-@mixin _label-typography($font) {
-  .md3-field__label {
-    @include typography.theme-styles($font);
+  &.md3-field--disabled {
+    .md3-field__label {
+      color: map.get($theme, disabled-label-text-color);
+
+      &:not(.md3-field__label--hidden) {
+        opacity: map.get($theme, disabled-label-text-opacity);
+      }
+    }
   }
-}
 
-@mixin _label-typography-floating($font) {
-  .md3-field__label--floating {
-    @include typography.theme-styles($font);
-  }
-}
+  &:not(.md3-field--disabled).md3-field--error {
+    .md3-field__label {
+      color: map.get($theme, error-label-text-color);
+    }
 
-@mixin _label-typography-resting($font) {
-  .md3-field__label--resting {
-    @include typography.theme-styles($font);
+    &:hover {
+      .md3-field__label {
+        color: map.get($theme, error-hover-label-text-color);
+      }
+    }
+
+    &.md3-field--focused {
+      .md3-field__label {
+        color: map.get($theme, error-focus-label-text-color);
+      }
+    }
   }
 }
