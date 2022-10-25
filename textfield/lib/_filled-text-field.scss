@@ -1,0 +1,145 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:map';
+@use '../../field/filled-field';
+@use '../../sass/theme';
+@use '../../tokens';
+@use './shared';
+
+@mixin theme($tokens) {
+  // Add missing tokens
+  $reference: map.merge(
+    tokens.md-comp-filled-text-field-values(),
+    (
+      container-padding-horizontal: null,
+      container-padding-vertical: null,
+      input-text-prefix-padding: null,
+      input-text-suffix-padding: null,
+    )
+  );
+
+  $tokens: theme.validate-theme($reference, $tokens);
+  $tokens: shared.resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, filled-text-field);
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: tokens.md-comp-filled-text-field-values();
+  // Add missing tokens
+  $tokens: map.merge(
+    (
+      container-padding-horizontal: 16px,
+      container-padding-vertical: 8px,
+      input-text-prefix-padding: 2px,
+      input-text-suffix-padding: 2px,
+    ),
+    $tokens
+  );
+
+  $tokens: shared.resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, filled-text-field);
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+
+    @include filled-field.theme(
+      (
+        active-indicator-color: var(--_active-indicator-color),
+        active-indicator-height: var(--_active-indicator-height),
+        container-color: var(--_container-color),
+        container-height: var(--_container-height),
+        container-padding-horizontal: var(--_container-padding-horizontal),
+        container-padding-vertical: var(--_container-padding-vertical),
+        container-shape-start-start: var(--_container-shape-start-start),
+        container-shape-start-end: var(--_container-shape-start-end),
+        container-shape-end-end: var(--_container-shape-end-end),
+        container-shape-end-start: var(--_container-shape-end-start),
+        content-color: var(--_input-text-color),
+        disabled-active-indicator-color: var(--_disabled-active-indicator-color),
+        disabled-active-indicator-height:
+          var(--_disabled-active-indicator-height),
+        disabled-active-indicator-opacity:
+          var(--_disabled-active-indicator-opacity),
+        disabled-container-color: var(--_disabled-container-color),
+        disabled-container-opacity: var(--_disabled-container-opacity),
+        disabled-content-color: var(--_disabled-input-text-color),
+        disabled-content-opacity: var(--_disabled-input-text-opacity),
+        disabled-label-text-color: var(--_disabled-label-text-color),
+        disabled-label-text-opacity: var(--_disabled-label-text-opacity),
+        disabled-leading-icon-color: var(--_disabled-leading-icon-color),
+        disabled-leading-icon-opacity: var(--_disabled-leading-icon-opacity),
+        disabled-supporting-text-color: var(--_disabled-supporting-text-color),
+        disabled-supporting-text-opacity:
+          var(--_disabled-supporting-text-opacity),
+        disabled-trailing-icon-color: var(--_disabled-trailing-icon-color),
+        disabled-trailing-icon-opacity: var(--_disabled-trailing-icon-opacity),
+        error-active-indicator-color: var(--_error-active-indicator-color),
+        error-focus-active-indicator-color:
+          var(--_error-focus-active-indicator-color),
+        error-focus-content-color: var(--_error-focus-input-text-color),
+        error-focus-label-text-color: var(--_error-focus-label-text-color),
+        error-focus-leading-icon-color: var(--_error-focus-leading-icon-color),
+        error-focus-supporting-text-color:
+          var(--_error-focus-supporting-text-color),
+        error-focus-trailing-icon-color: var(--_error-focus-trailing-icon-color),
+        error-hover-active-indicator-color:
+          var(--_error-hover-active-indicator-color),
+        error-hover-content-color: var(--_error-hover-input-text-color),
+        error-hover-label-text-color: var(--_error-hover-label-text-color),
+        error-hover-leading-icon-color: var(--_error-hover-leading-icon-color),
+        error-hover-state-layer-color: var(--_error-hover-state-layer-color),
+        error-hover-state-layer-opacity: var(--_error-hover-state-layer-opacity),
+        error-hover-supporting-text-color:
+          var(--_error-hover-supporting-text-color),
+        error-hover-trailing-icon-color: var(--_error-hover-trailing-icon-color),
+        error-content-color: var(--_error-input-text-color),
+        error-label-text-color: var(--_error-label-text-color),
+        error-leading-icon-color: var(--_error-leading-icon-color),
+        error-supporting-text-color: var(--_error-supporting-text-color),
+        error-trailing-icon-color: var(--_error-trailing-icon-color),
+        focus-active-indicator-color: var(--_focus-active-indicator-color),
+        focus-active-indicator-height: var(--_focus-active-indicator-height),
+        focus-content-color: var(--_focus-input-text-color),
+        focus-label-text-color: var(--_focus-label-text-color),
+        focus-leading-icon-color: var(--_focus-leading-icon-color),
+        focus-supporting-text-color: var(--_focus-supporting-text-color),
+        focus-trailing-icon-color: var(--_focus-trailing-icon-color),
+        hover-active-indicator-color: var(--_hover-active-indicator-color),
+        hover-active-indicator-height: var(--_hover-active-indicator-height),
+        hover-content-color: var(--_hover-input-text-color),
+        hover-label-text-color: var(--_hover-label-text-color),
+        hover-leading-icon-color: var(--_hover-leading-icon-color),
+        hover-state-layer-color: var(--_hover-state-layer-color),
+        hover-state-layer-opacity: var(--_hover-state-layer-opacity),
+        hover-supporting-text-color: var(--_hover-supporting-text-color),
+        hover-trailing-icon-color: var(--_hover-trailing-icon-color),
+        label-text-color: var(--_label-text-color),
+        label-text-font: var(--_label-text-font),
+        label-text-line-height: var(--_label-text-line-height),
+        label-text-populated-line-height:
+          var(--_label-text-populated-line-height),
+        label-text-populated-size: var(--_label-text-populated-size),
+        label-text-size: var(--_label-text-size),
+        label-text-tracking: var(--_label-text-tracking),
+        label-text-weight: var(--_label-text-weight),
+        leading-icon-color: var(--_leading-icon-color),
+        leading-icon-size: var(--_leading-icon-size),
+        supporting-text-color: var(--_supporting-text-color),
+        supporting-text-font: var(--_supporting-text-font),
+        supporting-text-line-height: var(--_supporting-text-line-height),
+        supporting-text-size: var(--_supporting-text-size),
+        supporting-text-tracking: var(--_supporting-text-tracking),
+        supporting-text-weight: var(--_supporting-text-weight),
+        trailing-icon-color: var(--_trailing-icon-color),
+        trailing-icon-size: var(--_trailing-icon-size),
+      )
+    );
+  }
+}

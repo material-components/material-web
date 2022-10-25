@@ -6,12 +6,25 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@use './outlined-text-field-theme';
+@use './outlined-text-field';
 
 @media (forced-colors: active) {
-  .md3-text-field--outlined {
-    @include outlined-text-field-theme.theme(
-      outlined-text-field-theme.$forced-colors-theme
+  .md3-text-field {
+    @include outlined-text-field.theme(
+      (
+        disabled-input-text-color: GrayText,
+        disabled-input-text-opacity: 1,
+        disabled-label-text-color: GrayText,
+        disabled-label-text-opacity: 1,
+        disabled-leading-icon-color: GrayText,
+        disabled-leading-icon-opacity: 1,
+        disabled-outline-color: GrayText,
+        disabled-outline-opacity: 1,
+        disabled-supporting-text-color: GrayText,
+        disabled-supporting-text-opacity: 1,
+        disabled-trailing-icon-color: GrayText,
+        disabled-trailing-icon-opacity: 1,
+      )
     );
   }
 }
