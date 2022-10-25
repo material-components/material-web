@@ -31,11 +31,17 @@ $light-theme: (
   $theme: theme.validate-theme($light-theme, $theme);
   $theme: theme.create-theme-vars($theme, $prefix: $custom-property-prefix);
 
+  & {
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
+
   .md3-formfield__label {
-    color: map.get($theme, label-text-color);
+    color: var(--_label-text-color);
   }
 
   &.md3-formfield--disabled .md3-formfield__label {
-    color: map.get($theme, disabled-label-text-color);
+    color: var(--_disabled-label-text-color);
   }
 }
