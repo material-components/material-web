@@ -8,8 +8,8 @@
 
 @use 'sass:map';
 
-@mixin theme-styles($theme) {
+@mixin theme-styles() {
   .md3-field__container {
-    flex-basis: map.get($theme, container-height);
+    flex-basis: var(--_container-height);
   }
 }

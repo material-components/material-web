@@ -8,45 +8,45 @@
 
 @use 'sass:map';
 
-@mixin theme-styles($theme) {
+@mixin theme-styles() {
   // Content elements provided to the field (such as <input>) may use
   // `currentColor` to inherit this property.
   .md3-field__content {
-    color: map.get($theme, content-color);
+    color: var(--_content-color);
   }
 
   &:hover {
     .md3-field__content {
-      color: map.get($theme, hover-content-color);
+      color: var(--_hover-content-color);
     }
   }
 
   &.md3-field--focused {
     .md3-field__content {
-      color: map.get($theme, focus-content-color);
+      color: var(--_focus-content-color);
     }
   }
 
   &.md3-field--disabled {
     .md3-field__content {
-      color: map.get($theme, disabled-content-color);
+      color: var(--_disabled-content-color);
     }
   }
 
   &:not(.md3-field--disabled).md3-field--error {
     .md3-field__content {
-      color: map.get($theme, error-content-color);
+      color: var(--_error-content-color);
     }
 
     &:hover {
       .md3-field__content {
-        color: map.get($theme, error-hover-content-color);
+        color: var(--_error-hover-content-color);
       }
     }
 
     &.md3-field--focused {
       .md3-field__content {
-        color: map.get($theme, error-focus-content-color);
+        color: var(--_error-focus-content-color);
       }
     }
   }
@@ -56,7 +56,7 @@
     &.md3-field--focused,
     &.md3-field--populated {
       .md3-field__content {
-        opacity: map.get($theme, disabled-content-opacity);
+        opacity: var(--_disabled-content-opacity);
       }
     }
   }

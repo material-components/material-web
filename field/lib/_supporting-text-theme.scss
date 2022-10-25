@@ -17,18 +17,18 @@
   );
 }
 
-@mixin theme-styles($theme) {
+@mixin theme-styles() {
   .md3-field__supporting-text {
-    color: map.get($theme, supporting-text-color);
-    padding: 0 map.get($theme, supporting-text-padding);
+    color: var(--_supporting-text-color);
+    padding: 0 var(--_supporting-text-padding);
 
     @include typography.theme-styles(
       (
-        font: map.get($theme, supporting-text-font),
-        tracking: map.get($theme, supporting-text-tracking),
-        weight: map.get($theme, supporting-text-weight),
-        size: map.get($theme, supporting-text-size),
-        line-height: map.get($theme, supporting-text-line-height),
+        font: var(--_supporting-text-font),
+        tracking: var(--_supporting-text-tracking),
+        weight: var(--_supporting-text-weight),
+        size: var(--_supporting-text-size),
+        line-height: var(--_supporting-text-line-height),
       )
     );
   }
@@ -38,49 +38,49 @@
   .md3-field__supporting-text-start,
   .md3-field__supporting-text-end {
     ::slotted(:not(:empty)) {
-      padding-top: map.get($theme, supporting-text-padding-top);
+      padding-top: var(--_supporting-text-padding-top);
     }
   }
 
   .md3-field__supporting-text-end {
     ::slotted(:not(:empty)) {
-      padding-inline-start: map.get($theme, supporting-text-padding);
+      padding-inline-start: var(--_supporting-text-padding);
     }
   }
 
   &:hover {
     .md3-field__supporting-text {
-      color: map.get($theme, hover-supporting-text-color);
+      color: var(--_hover-supporting-text-color);
     }
   }
 
   &.md3-field--focus {
     .md3-field__supporting-text {
-      color: map.get($theme, focus-supporting-text-color);
+      color: var(--_focus-supporting-text-color);
     }
   }
 
   &.md3-field--disabled {
     .md3-field__supporting-text {
-      color: map.get($theme, disabled-supporting-text-color);
-      opacity: map.get($theme, disabled-supporting-text-opacity);
+      color: var(--_disabled-supporting-text-color);
+      opacity: var(--_disabled-supporting-text-opacity);
     }
   }
 
   &:not(.md3-field--disabled).md3-field--error {
     .md3-field__supporting-text {
-      color: map.get($theme, error-supporting-text-color);
+      color: var(--_error-supporting-text-color);
     }
 
     &:hover {
       .md3-field__supporting-text {
-        color: map.get($theme, error-hover-supporting-text-color);
+        color: var(--_error-hover-supporting-text-color);
       }
     }
 
     &.md3-field--focus {
       .md3-field__supporting-text {
-        color: map.get($theme, error-focus-supporting-text-color);
+        color: var(--_error-focus-supporting-text-color);
       }
     }
   }

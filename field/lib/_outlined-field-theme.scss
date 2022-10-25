@@ -13,8 +13,6 @@
 @use '../../sass/theme';
 @use '../../sass/var';
 @use '../../tokens';
-@use './content-theme';
-@use './field-theme';
 @use './label-theme';
 @use './supporting-text-theme';
 
@@ -50,6 +48,9 @@ $_default-deps: (
     input-text-tracking,
     input-text-type,
     input-text-weight,
+    input-text-placeholder-color,
+    input-text-prefix-color,
+    input-text-suffix-color,
     label-text-type,
     supporting-text-type
   );
@@ -116,67 +117,67 @@ $dark-theme: values(
   $theme: _resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, outlined-field);
 
-  @include field-theme.theme-styles($theme);
-  @include content-theme.theme-styles($theme);
-  @include label-theme.theme-styles($theme);
-  @include supporting-text-theme.theme-styles($theme);
+  & {
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
 
   .md3-field__label--floating {
     // Center the label within the outline stroke
-    transform: translateY(
-      calc(-100% + map.get($theme, label-text-padding-bottom))
-    );
+    transform: translateY(calc(-100% + var(--_label-text-padding-bottom)));
   }
 
   .md3-field__outline {
-    border-start-start-radius: map.get($theme, container-shape-start-start);
-    border-start-end-radius: map.get($theme, container-shape-start-end);
-    border-end-end-radius: map.get($theme, container-shape-end-end);
-    border-end-start-radius: map.get($theme, container-shape-end-start);
-    border-color: map.get($theme, outline-color);
-    color: map.get($theme, outline-color); // Needed for Firefox HCM
+    border-start-start-radius: var(--_container-shape-start-start);
+    border-start-end-radius: var(--_container-shape-start-end);
+    border-end-end-radius: var(--_container-shape-end-end);
+    border-end-start-radius: var(--_container-shape-end-start);
+    border-color: var(--_outline-color);
+    color: var(--_outline-color); // Needed for Firefox HCM
   }
 
   // Add padding that will grow to compensate for the outline's shape.
   // This is needed to prevent the outline border from clipping with the label
   // and is mirrored in the container padding to align the content and resting
   // label with the adjusted floating label.
-  $padding: map.get($theme, container-padding-horizontal);
   $shape-start: max(
-    map.get($theme, container-shape-start-start),
-    map.get($theme, container-shape-end-start)
+    var(--_container-shape-start-start),
+    var(--_container-shape-end-start)
   );
   $shape-end: max(
-    map.get($theme, container-shape-start-end),
-    map.get($theme, container-shape-end-end)
+    var(--_container-shape-start-end),
+    var(--_container-shape-end-end)
   );
-  $label-padding: map.get($theme, outline-label-padding);
 
   .md3-field__outline-start,
   &:not(.md3-field--with-start) .md3-field__start {
-    padding-inline-start: max($padding, $shape-start + $label-padding);
+    padding-inline-start: max(
+      var(--_container-padding-horizontal),
+      $shape-start + var(--_outline-label-padding)
+    );
   }
 
   &:not(.md3-field--with-end) {
     .md3-field__end {
-      padding-inline-end: max($padding, $shape-end);
+      padding-inline-end: max(var(--_container-padding-horizontal), $shape-end);
     }
   }
 
   .md3-field__outline-start::before,
   .md3-field__outline-start::after {
-    margin-inline-end: map.get($theme, outline-label-padding);
+    margin-inline-end: var(--_outline-label-padding);
   }
 
   .md3-field__outline-notch {
-    padding: 0 map.get($theme, outline-label-padding);
-    margin-inline-start: calc(-1 * map.get($theme, outline-label-padding));
-    margin-inline-end: map.get($theme, outline-label-padding);
-    max-width: calc(100% - 2 * map.get($theme, container-padding-horizontal));
+    padding: 0 var(--_outline-label-padding);
+    margin-inline-start: calc(-1 * var(--_outline-label-padding));
+    margin-inline-end: var(--_outline-label-padding);
+    max-width: calc(100% - 2 * var(--_container-padding-horizontal));
   }
 
   .md3-field__outline-end {
-    margin-inline-start: calc(-1 * map.get($theme, outline-label-padding));
+    margin-inline-start: calc(-1 * var(--_outline-label-padding));
   }
 
   .md3-field__outline-start::before,
@@ -184,15 +185,15 @@ $dark-theme: values(
   .md3-field__outline-panel-inactive,
   .md3-field__outline-panel-inactive::before,
   .md3-field__outline-panel-inactive::after {
-    border-width: map.get($theme, outline-width);
+    border-width: var(--_outline-width);
   }
 
   // States
 
   &:hover {
     .md3-field__outline {
-      border-color: map.get($theme, hover-outline-color);
-      color: map.get($theme, hover-outline-color); // Needed for Firefox HCM
+      border-color: var(--_hover-outline-color);
+      color: var(--_hover-outline-color); // Needed for Firefox HCM
     }
 
     .md3-field__outline-start::before,
@@ -200,14 +201,14 @@ $dark-theme: values(
     .md3-field__outline-panel-inactive,
     .md3-field__outline-panel-inactive::before,
     .md3-field__outline-panel-inactive::after {
-      border-width: map.get($theme, hover-outline-width);
+      border-width: var(--_hover-outline-width);
     }
   }
 
   &.md3-field--focused {
     .md3-field__outline {
-      border-color: map.get($theme, focus-outline-color);
-      color: map.get($theme, focus-outline-color); // Needed for Firefox HCM
+      border-color: var(--_focus-outline-color);
+      color: var(--_focus-outline-color); // Needed for Firefox HCM
     }
   }
 
@@ -216,19 +217,19 @@ $dark-theme: values(
   .md3-field__outline-panel-active,
   .md3-field__outline-panel-active::before,
   .md3-field__outline-panel-active::after {
-    border-width: map.get($theme, focus-outline-width);
+    border-width: var(--_focus-outline-width);
   }
 
   &.md3-field--disabled {
     .md3-field__outline {
-      border-color: map.get($theme, disabled-outline-color);
-      color: map.get($theme, disabled-outline-color); // Needed for Firefox HCM
+      border-color: var(--_disabled-outline-color);
+      color: var(--_disabled-outline-color); // Needed for Firefox HCM
     }
 
     .md3-field__outline-start,
     .md3-field__outline-end,
     .md3-field__outline-panel-inactive {
-      opacity: map.get($theme, disabled-outline-opacity);
+      opacity: var(--_disabled-outline-opacity);
     }
 
     .md3-field__outline-start::before,
@@ -236,29 +237,29 @@ $dark-theme: values(
     .md3-field__outline-panel-inactive,
     .md3-field__outline-panel-inactive::before,
     .md3-field__outline-panel-inactive::after {
-      border-width: map.get($theme, disabled-outline-width);
+      border-width: var(--_disabled-outline-width);
     }
   }
 
   &:not(.md3-field--disabled).md3-field--error {
     .md3-field__outline {
-      border-color: map.get($theme, error-outline-color);
-      color: map.get($theme, error-outline-color); // Needed for Firefox HCM
+      border-color: var(--_error-outline-color);
+      color: var(--_error-outline-color); // Needed for Firefox HCM
     }
 
     &:hover {
       .md3-field__outline {
-        border-color: map.get($theme, error-hover-outline-color);
+        border-color: var(--_error-hover-outline-color);
         // Needed for Firefox HCM
-        color: map.get($theme, error-hover-outline-color);
+        color: var(--_error-hover-outline-color);
       }
     }
 
     &.md3-field--focused {
       .md3-field__outline {
-        border-color: map.get($theme, error-focus-outline-color);
+        border-color: var(--_error-focus-outline-color);
         // Needed for Firefox HCM
-        color: map.get($theme, error-focus-outline-color);
+        color: var(--_error-focus-outline-color);
       }
     }
   }

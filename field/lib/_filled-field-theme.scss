@@ -15,8 +15,6 @@
 @use '../../sass/theme';
 @use '../../sass/var';
 @use '../../tokens';
-@use './content-theme';
-@use './field-theme';
 @use './label-theme';
 @use './supporting-text-theme';
 
@@ -52,6 +50,9 @@ $_default-deps: (
     input-text-tracking,
     input-text-type,
     input-text-weight,
+    input-text-placeholder-color,
+    input-text-prefix-color,
+    input-text-suffix-color,
     label-text-type,
     supporting-text-type
   );
@@ -116,100 +117,98 @@ $dark-theme: values(
   $theme: _resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, filled-field);
 
-  @include field-theme.theme-styles($theme);
-  @include content-theme.theme-styles($theme);
-  @include label-theme.theme-styles($theme);
-  @include supporting-text-theme.theme-styles($theme);
+  & {
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
 
   .md3-field__container {
-    border-start-start-radius: map.get($theme, container-shape-start-start);
-    border-start-end-radius: map.get($theme, container-shape-start-end);
-    border-end-end-radius: map.get($theme, container-shape-end-end);
-    border-end-start-radius: map.get($theme, container-shape-end-start);
-    padding-top: map.get($theme, container-padding-vertical);
-    padding-bottom: map.get($theme, container-padding-vertical);
+    border-start-start-radius: var(--_container-shape-start-start);
+    border-start-end-radius: var(--_container-shape-start-end);
+    border-end-end-radius: var(--_container-shape-end-end);
+    border-end-start-radius: var(--_container-shape-end-start);
+    padding-top: var(--_container-padding-vertical);
+    padding-bottom: var(--_container-padding-vertical);
 
     &::before {
-      background: map.get($theme, container-color);
+      background: var(--_container-color);
     }
   }
 
   .md3-field__active-indicator::before {
-    border-bottom-color: map.get($theme, active-indicator-color);
-    border-bottom-width: map.get($theme, active-indicator-height);
+    border-bottom-color: var(--_active-indicator-color);
+    border-bottom-width: var(--_active-indicator-height);
   }
 
   &:not(.md3-field--with-start) {
     .md3-field__start {
-      padding-inline-start: map.get($theme, container-padding-horizontal);
+      padding-inline-start: var(--_container-padding-horizontal);
     }
   }
 
   &:not(.md3-field--with-end) {
     .md3-field__end {
-      padding-inline-end: map.get($theme, container-padding-horizontal);
+      padding-inline-end: var(--_container-padding-horizontal);
     }
   }
 
   &:not(.md3-field--no-label) {
     .md3-field__middle {
-      padding-top: map.get($theme, label-text-populated-line-height);
+      padding-top: var(--_label-text-populated-line-height);
     }
   }
 
   &:hover {
     .md3-field__active-indicator::before {
-      border-bottom-color: map.get($theme, hover-active-indicator-color);
-      border-bottom-width: map.get($theme, hover-active-indicator-height);
+      border-bottom-color: var(--_hover-active-indicator-color);
+      border-bottom-width: var(--_hover-active-indicator-height);
     }
 
     .md3-field__state-layer {
-      background: map.get($theme, hover-state-layer-color);
-      opacity: map.get($theme, hover-state-layer-opacity);
+      background: var(--_hover-state-layer-color);
+      opacity: var(--_hover-state-layer-opacity);
     }
   }
 
   // Focus is on a separate element and does not need a focus selector
   .md3-field__active-indicator::after {
-    border-bottom-color: map.get($theme, focus-active-indicator-color);
-    border-bottom-width: map.get($theme, focus-active-indicator-height);
+    border-bottom-color: var(--_focus-active-indicator-color);
+    border-bottom-width: var(--_focus-active-indicator-height);
   }
 
   &.md3-field--disabled {
     .md3-field__active-indicator::before {
-      border-bottom-color: map.get($theme, disabled-active-indicator-color);
-      border-bottom-width: map.get($theme, disabled-active-indicator-height);
-      opacity: map.get($theme, disabled-active-indicator-opacity);
+      border-bottom-color: var(--_disabled-active-indicator-color);
+      border-bottom-width: var(--_disabled-active-indicator-height);
+      opacity: var(--_disabled-active-indicator-opacity);
     }
 
     .md3-field__container::before {
-      background: map.get($theme, disabled-container-color);
-      opacity: map.get($theme, disabled-container-opacity);
+      background: var(--_disabled-container-color);
+      opacity: var(--_disabled-container-opacity);
     }
   }
 
   &:not(.md3-field--disabled).md3-field--error {
     .md3-field__active-indicator::before {
-      border-bottom-color: map.get($theme, error-active-indicator-color);
+      border-bottom-color: var(--_error-active-indicator-color);
     }
 
     &:hover {
       .md3-field__active-indicator::before {
-        border-bottom-color: map.get(
-          $theme,
-          error-hover-active-indicator-color
-        );
+        border-bottom-color: var(--_error-hover-active-indicator-color);
       }
 
       .md3-field__state-layer {
-        background: map.get($theme, error-hover-state-layer-color);
-        opacity: map.get($theme, error-hover-state-layer-opacity);
+        background: var(--_error-hover-state-layer-color);
+        opacity: var(--_error-hover-state-layer-opacity);
       }
     }
 
     // Focus is on a separate element and does not need a focus selector
     .md3-field__active-indicator::after {
-      border-bottom-color: map.get($theme, error-focus-active-indicator-color);
+      border-bottom-color: var(--_error-focus-active-indicator-color);
     }
   }
 }
