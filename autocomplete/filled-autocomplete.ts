@@ -18,6 +18,7 @@ import {styles as sharedStyles} from '../textfield/lib/shared-styles.css.js';
 
 import {Autocomplete} from './lib/autocomplete.js';
 import {styles as autocompleteStyles} from './lib/filled-styles.css.js';
+import {styles as sharedAutocompleteStyles} from './lib/shared-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -33,7 +34,8 @@ declare global {
 @customElement('md-filled-autocomplete')
 export class MdFilledAutocomplete extends Autocomplete {
   static override styles = [
-    sharedStyles, filledStyles, filledForcedColorsStyles, autocompleteStyles
+    sharedStyles, filledStyles, filledForcedColorsStyles,
+    sharedAutocompleteStyles, autocompleteStyles
   ];
 
   protected override readonly listTag = literal`md-autocomplete-list`;

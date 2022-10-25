@@ -3,6 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-@use './autocomplete-list';
+@use './shared';
 
-@include autocomplete-list.styles;
+@include shared.styles;

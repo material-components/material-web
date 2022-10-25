@@ -7,20 +7,16 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-@use '../../elevation/lib/elevation-theme';
-@use '../../field/lib/outlined-field-theme';
-@use '../../list/lib/listitem/list-item-theme';
+@use '../../field/outlined-field';
 @use '../../list/list';
 @use '../../list/list-item';
 @use '../../menusurface/menu-surface';
-@use '../../sass/resolvers';
-@use '../../sass/shape';
 @use '../../sass/theme';
-@use '../../textfield/lib/outlined-text-field-theme';
+@use '../../textfield/outlined-text-field';
 @use '../../tokens';
+@use './shared';
 
 $custom-property-prefix: 'outlined-autocomplete';
-$light-theme: tokens.md-comp-outlined-autocomplete-values();
 $dark-theme: tokens.md-comp-outlined-autocomplete-values(
   (
     md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
@@ -28,27 +24,38 @@ $dark-theme: tokens.md-comp-outlined-autocomplete-values(
   $exclude-hardcoded-values: true
 );
 
-@mixin theme($theme, $resolvers: resolvers.$material) {
-  $theme: theme.validate-theme($light-theme, $theme);
-  $theme: _resolve-theme($theme, $resolvers);
-  $theme: theme.create-theme-vars($theme, $custom-property-prefix);
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme(
+    tokens.md-comp-outlined-autocomplete-values(),
+    $theme
+  );
+  $tokens: shared.resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, $custom-property-prefix);
 
-  @include theme.emit-theme-vars($theme);
+  @include theme.emit-theme-vars($tokens);
 }
 
-@mixin theme-styles($theme, $resolvers: resolvers.$material) {
-  $theme: theme.validate-theme-styles($light-theme, $theme);
-  $theme: _resolve-theme($theme, $resolvers);
-  $theme: theme.create-theme-vars($theme, $custom-property-prefix);
+@mixin styles() {
+  $tokens: tokens.md-comp-outlined-autocomplete-values();
+  $tokens: shared.resolve-tokens($tokens);
+  // TODO(b/251183088): Clean up container-shape once token is correct.
+  $tokens: map.merge(
+    $tokens,
+    (
+      text-field-container-shape: 4px,
+    )
+  );
 
-  & {
-    @each $token, $value in $theme {
+  $tokens: theme.create-theme-vars($tokens, $custom-property-prefix);
+
+  * {
+    @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
   }
 
-  .md3-text-field--outlined {
-    @include outlined-text-field-theme.theme(
+  .md3-text-field {
+    @include outlined-text-field.theme(
       (
         caret-color: var(--_text-field-caret-color),
         container-height: var(--_text-field-container-height),
@@ -149,12 +156,11 @@ $dark-theme: tokens.md-comp-outlined-autocomplete-values(
         supporting-text-weight: var(--_text-field-supporting-text-weight),
         trailing-icon-color: var(--_text-field-trailing-icon-color),
         trailing-icon-size: var(--_text-field-trailing-icon-size),
-      ),
-      $resolvers
+      )
     );
 
     // Textfield cannot resolve shape when created as vars.
-    @include outlined-field-theme.theme(
+    @include outlined-field.theme(
       (
         container-shape-start-start:
           var(--_text-field-container-shape-start-start),
@@ -170,8 +176,7 @@ $dark-theme: tokens.md-comp-outlined-autocomplete-values(
       (
         container-elevation-shadow: var(--_menu-container-elevation-shadow),
         container-shape: var(--_menu-container-shape),
-      ),
-      $resolvers
+      )
     );
 
     @include list.theme(
@@ -201,28 +206,12 @@ $dark-theme: tokens.md-comp-outlined-autocomplete-values(
     );
   }
 
-  ::slotted([data-aria-selected='true']) {
-    @include list-item-theme.theme(
+  .md3-autocomplete ::slotted([data-aria-selected='true']) {
+    @include list-item.theme(
       (
         list-item-container-color:
           var(--_menu-list-item-selected-container-color),
-      ),
-      $resolvers
+      )
     );
   }
-}
-
-@function _resolve-theme($theme, $resolvers) {
-  $theme: elevation-theme.resolve-theme(
-    $theme,
-    map.get($resolvers, 'elevation'),
-    $shadow-color-token: 'menu-container-shadow-color',
-    $elevation-tokens: (menu-container-elevation)
-  );
-  $theme: shape.resolve-theme(
-    $theme,
-    map.get($resolvers, shape),
-    text-field-container-shape
-  );
-  @return $theme;
 }
