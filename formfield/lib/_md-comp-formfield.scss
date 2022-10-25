@@ -1,0 +1,18 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:map';
+@use '../../tokens';
+
+$_default: (
+  md-sys-color: tokens.md-sys-color-values-light-dynamic(),
+);
+
+@function values($deps: $_default, $exclude-hardcoded-values: false) {
+  @return (
+    label-text-color: map.get($deps, md-sys-color, on-surface),
+    disabled-label-text-color: map.get($deps, md-sys-color, on-surface-variant)
+  );
+}

@@ -6,7 +6,28 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@mixin static-styles() {
+@use '../../sass/theme';
+@use './md-comp-formfield';
+
+$custom-property-prefix: 'formfield';
+
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme(md-comp-formfield.values(), $tokens);
+  $tokens: theme.create-theme-vars($tokens, $custom-property-prefix);
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: md-comp-formfield.values();
+  $tokens: theme.create-theme-vars($tokens, $custom-property-prefix);
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+
   :host {
     display: inline-flex;
   }
@@ -19,9 +40,14 @@
   }
 
   .md3-formfield__label {
+    color: var(--_label-text-color);
     margin-inline: 0 auto;
     order: 0;
     padding-inline: 4px 0;
+
+    .md3-formfield--disabled & {
+      color: var(--_disabled-label-text-color);
+    }
   }
 
   .md3-formfield--align-end .md3-formfield__label {
