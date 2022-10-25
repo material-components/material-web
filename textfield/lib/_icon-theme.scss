@@ -10,91 +10,73 @@
 @use '../../iconbutton/standard-icon-button';
 
 @mixin theme-styles($theme) {
-  @include _leading-icon-color(
-    (
-      default: map.get($theme, leading-icon-color),
-      hover: map.get($theme, hover-leading-icon-color),
-      focus: map.get($theme, focus-leading-icon-color),
-      disabled: map.get($theme, disabled-leading-icon-color),
-    )
-  );
-  @include _trailing-icon-color(
-    (
-      default: map.get($theme, trailing-icon-color),
-      hover: map.get($theme, hover-trailing-icon-color),
-      focus: map.get($theme, focus-trailing-icon-color),
-      disabled: map.get($theme, disabled-trailing-icon-color),
-    )
-  );
+  .md3-text-field__icon--leading {
+    color: map.get($theme, leading-icon-color);
+  }
 
-  &.md3-text-field--error:not(.md3-text-field--disabled) {
-    @include _leading-icon-color(
-      (
-        default: map.get($theme, error-leading-icon-color),
-        hover: map.get($theme, error-hover-leading-icon-color),
-        focus: map.get($theme, error-focus-leading-icon-color),
-      )
-    );
-    @include _trailing-icon-color(
-      (
-        default: map.get($theme, error-trailing-icon-color),
-        hover: map.get($theme, error-hover-trailing-icon-color),
-        focus: map.get($theme, error-focus-trailing-icon-color),
-      )
-    );
+  .md3-text-field__icon--trailing {
+    color: map.get($theme, trailing-icon-color);
+  }
+
+  &:hover {
+    .md3-text-field__icon--leading {
+      color: map.get($theme, hover-leading-icon-color);
+    }
+
+    .md3-text-field__icon--trailing {
+      color: map.get($theme, hover-trailing-icon-color);
+    }
+  }
+
+  &:focus-within {
+    .md3-text-field__icon--leading {
+      color: map.get($theme, focus-leading-icon-color);
+    }
+
+    .md3-text-field__icon--trailing {
+      color: map.get($theme, focus-trailing-icon-color);
+    }
   }
 
   &.md3-text-field--disabled {
     .md3-text-field__icon--leading {
+      color: map.get($theme, disabled-leading-icon-color);
       opacity: map.get($theme, disabled-leading-icon-opacity);
     }
 
     .md3-text-field__icon--trailing {
+      color: map.get($theme, disabled-trailing-icon-color);
       opacity: map.get($theme, disabled-trailing-icon-opacity);
     }
   }
-}
 
-@mixin _leading-icon-color($colors) {
-  @include _set-leading-icon-color(map.get($colors, default));
+  &.md3-text-field--error:not(.md3-text-field--disabled) {
+    .md3-text-field__icon--leading {
+      color: map.get($theme, error-leading-icon-color);
+    }
 
-  &:hover {
-    @include _set-leading-icon-color(map.get($colors, hover));
-  }
+    .md3-text-field__icon--trailing {
+      color: map.get($theme, error-trailing-icon-color);
+    }
 
-  &:focus-within {
-    @include _set-leading-icon-color(map.get($colors, focus));
-  }
+    &:hover {
+      .md3-text-field__icon--leading {
+        color: map.get($theme, error-hover-leading-icon-color);
+      }
 
-  &.md3-text-field--disabled {
-    @include _set-leading-icon-color(map.get($colors, disabled));
-  }
-}
+      .md3-text-field__icon--trailing {
+        color: map.get($theme, error-hover-trailing-icon-color);
+      }
+    }
 
-@mixin _set-leading-icon-color($color) {
-  .md3-text-field__icon--leading {
-    color: $color;
-  }
-}
+    &:focus-within {
+      .md3-text-field__icon--leading {
+        color: map.get($theme, error-focus-leading-icon-color);
+      }
 
-@mixin _trailing-icon-color($colors) {
-  @include _set-trailing-icon-color(map.get($colors, default));
-
-  &:hover {
-    @include _set-trailing-icon-color(map.get($colors, hover));
-  }
-
-  &:focus-within {
-    @include _set-trailing-icon-color(map.get($colors, focus));
-  }
-
-  &.md3-text-field--disabled {
-    @include _set-trailing-icon-color(map.get($colors, disabled));
-  }
-}
-
-@mixin _set-trailing-icon-color($color) {
-  .md3-text-field__icon--trailing {
-    color: $color;
+      .md3-text-field__icon--trailing {
+        color: map.get($theme, error-focus-trailing-icon-color);
+      }
+    }
   }
 }

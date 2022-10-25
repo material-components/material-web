@@ -21,26 +21,35 @@
 }
 
 @mixin theme-styles($theme) {
-  @include _caret-color(
-    (
-      default: map.get($theme, caret-color),
-      focus: map.get($theme, focus-caret-color),
-    )
-  );
-  @include _caret-error-color(
-    (
-      focus: map.get($theme, error-focus-caret-color),
-    )
-  );
-  @include _typography(
-    (
-      font: map.get($theme, input-text-font),
-      line-height: map.get($theme, input-text-line-height),
-      size: map.get($theme, input-text-size),
-      tracking: map.get($theme, input-text-tracking),
-      weight: map.get($theme, input-text-weight),
-    )
-  );
+  .md3-text-field__input {
+    caret-color: map.get($theme, caret-color);
+  }
+
+  &:focus-within {
+    .md3-text-field__input {
+      caret-color: map.get($theme, focus-caret-color);
+    }
+  }
+
+  &.md3-text-field--error:focus-within {
+    .md3-text-field__input {
+      caret-color: map.get($theme, error-focus-caret-color);
+    }
+  }
+
+  .md3-text-field__input,
+  .md3-text-field__prefix,
+  .md3-text-field__suffix {
+    @include typography.theme-styles(
+      (
+        font: map.get($theme, input-text-font),
+        line-height: map.get($theme, input-text-line-height),
+        size: map.get($theme, input-text-size),
+        tracking: map.get($theme, input-text-tracking),
+        weight: map.get($theme, input-text-weight),
+      )
+    );
+  }
 
   &:not(.md3-text-field--disabled) {
     .md3-text-field__prefix,
@@ -59,33 +68,5 @@
 
   .md3-text-field__suffix {
     padding-inline-start: map.get($theme, input-text-suffix-padding);
-  }
-}
-
-@mixin _caret-color($colors) {
-  @include _set-caret-color(map.get($colors, default));
-
-  &:focus-within {
-    @include _set-caret-color(map.get($colors, focus));
-  }
-}
-
-@mixin _caret-error-color($colors) {
-  &.md3-text-field--error {
-    @include _caret-color($colors);
-  }
-}
-
-@mixin _set-caret-color($color) {
-  .md3-text-field__input {
-    caret-color: $color;
-  }
-}
-
-@mixin _typography($font) {
-  .md3-text-field__input,
-  .md3-text-field__prefix,
-  .md3-text-field__suffix {
-    @include typography.theme-styles($font);
   }
 }

@@ -8,31 +8,27 @@
 
 @mixin static-styles() {
   .md3-text-field__input {
-    @include input;
-  }
-}
-
-@mixin input() {
-  appearance: none;
-  background: none;
-  border: none;
-  color: currentColor;
-  outline: none;
-  padding: 0;
-  text-align: inherit;
-  width: 100%;
-
-  &::placeholder {
+    appearance: none;
+    background: none;
+    border: none;
     color: currentColor;
-    opacity: 1;
-  }
+    outline: none;
+    padding: 0;
+    text-align: inherit;
+    width: 100%;
 
-  // Remove built-in datepicker icon on Chrome
-  &::-webkit-calendar-picker-indicator {
-    display: none;
-  }
+    &::placeholder {
+      color: currentColor;
+      opacity: 1;
+    }
 
-  @media (forced-colors: active) {
-    background-color: Field; // Remove white background in Firefox HCM
+    // Remove built-in datepicker icon on Chrome
+    &::-webkit-calendar-picker-indicator {
+      display: none;
+    }
+
+    @media (forced-colors: active) {
+      background-color: Field; // Remove white background in Firefox HCM
+    }
   }
 }
