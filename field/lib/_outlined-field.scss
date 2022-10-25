@@ -8,11 +8,41 @@
 
 @use 'sass:map';
 @use '../../motion/animation';
+@use '../../sass/theme';
+@use './md-comp-outlined-field';
+@use './shared';
 
 $_animation-duration: 150ms;
 
-@mixin static-styles() {
+@mixin theme($tokens) {
+  $reference: md-comp-outlined-field.values();
+  // Add resolved tokens so that $theme may specify them.
+  $reference: map.merge($reference, shared.resolve-tokens($reference));
+  $tokens: theme.validate-theme($reference, $tokens);
+  $tokens: shared.resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, outlined-field);
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: md-comp-outlined-field.values();
+  $tokens: shared.resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, outlined-field);
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+
   .md3-field__outline {
+    border-start-start-radius: var(--_container-shape-start-start);
+    border-start-end-radius: var(--_container-shape-start-end);
+    border-end-end-radius: var(--_container-shape-end-end);
+    border-end-start-radius: var(--_container-shape-end-start);
+    border-color: var(--_outline-color);
+    color: var(--_outline-color); // Needed for Firefox HCM
     display: flex;
     // Allow events to target elements underneath the outline, such as icons.
     pointer-events: none;
@@ -70,11 +100,13 @@ $_animation-duration: 150ms;
       border-start-end-radius: 0;
       border-end-start-radius: inherit;
       border-end-end-radius: 0;
+      margin-inline-end: var(--_outline-label-padding);
     }
   }
 
   .md3-field__outline-end {
     flex-grow: 1;
+    margin-inline-start: calc(-1 * var(--_outline-label-padding));
 
     &::before,
     &::after {
@@ -91,6 +123,10 @@ $_animation-duration: 150ms;
     align-items: flex-start;
     border: inherit;
     display: flex;
+    margin-inline-start: calc(-1 * var(--_outline-label-padding));
+    margin-inline-end: var(--_outline-label-padding);
+    max-width: calc(100% - 2 * var(--_container-padding-horizontal));
+    padding: 0 var(--_outline-label-padding);
     position: relative;
 
     .md3-field--no-label & {
@@ -141,6 +177,122 @@ $_animation-duration: 150ms;
 
     .md3-field--focused & {
       opacity: 1;
+    }
+  }
+
+  .md3-field__label--floating {
+    // Center the label within the outline stroke
+    transform: translateY(calc(-100% + var(--_label-text-padding-bottom)));
+  }
+
+  // Add padding that will grow to compensate for the outline's shape.
+  // This is needed to prevent the outline border from clipping with the label
+  // and is mirrored in the container padding to align the content and resting
+  // label with the adjusted floating label.
+  $shape-start: max(
+    var(--_container-shape-start-start),
+    var(--_container-shape-end-start)
+  );
+  $shape-end: max(
+    var(--_container-shape-start-end),
+    var(--_container-shape-end-end)
+  );
+
+  .md3-field__outline-start,
+  .md3-field:not(.md3-field--with-start) .md3-field__start {
+    padding-inline-start: max(
+      var(--_container-padding-horizontal),
+      $shape-start + var(--_outline-label-padding)
+    );
+  }
+
+  .md3-field:not(.md3-field--with-end) {
+    .md3-field__end {
+      padding-inline-end: max(var(--_container-padding-horizontal), $shape-end);
+    }
+  }
+
+  .md3-field__outline-start::before,
+  .md3-field__outline-end::before,
+  .md3-field__outline-panel-inactive,
+  .md3-field__outline-panel-inactive::before,
+  .md3-field__outline-panel-inactive::after {
+    border-width: var(--_outline-width);
+  }
+
+  // States
+
+  :hover {
+    .md3-field__outline {
+      border-color: var(--_hover-outline-color);
+      color: var(--_hover-outline-color); // Needed for Firefox HCM
+    }
+
+    .md3-field__outline-start::before,
+    .md3-field__outline-end::before,
+    .md3-field__outline-panel-inactive,
+    .md3-field__outline-panel-inactive::before,
+    .md3-field__outline-panel-inactive::after {
+      border-width: var(--_hover-outline-width);
+    }
+  }
+
+  .md3-field--focused {
+    .md3-field__outline {
+      border-color: var(--_focus-outline-color);
+      color: var(--_focus-outline-color); // Needed for Firefox HCM
+    }
+  }
+
+  .md3-field__outline-start::after,
+  .md3-field__outline-end::after,
+  .md3-field__outline-panel-active,
+  .md3-field__outline-panel-active::before,
+  .md3-field__outline-panel-active::after {
+    border-width: var(--_focus-outline-width);
+  }
+
+  .md3-field--disabled {
+    .md3-field__outline {
+      border-color: var(--_disabled-outline-color);
+      color: var(--_disabled-outline-color); // Needed for Firefox HCM
+    }
+
+    .md3-field__outline-start,
+    .md3-field__outline-end,
+    .md3-field__outline-panel-inactive {
+      opacity: var(--_disabled-outline-opacity);
+    }
+
+    .md3-field__outline-start::before,
+    .md3-field__outline-end::before,
+    .md3-field__outline-panel-inactive,
+    .md3-field__outline-panel-inactive::before,
+    .md3-field__outline-panel-inactive::after {
+      border-width: var(--_disabled-outline-width);
+    }
+  }
+
+  .md3-field--error:not(.md3-field--disabled) {
+    .md3-field__outline {
+      border-color: var(--_error-outline-color);
+      color: var(--_error-outline-color); // Needed for Firefox HCM
+    }
+
+    &:hover {
+      .md3-field__outline {
+        border-color: var(--_error-hover-outline-color);
+        // Needed for Firefox HCM
+        color: var(--_error-hover-outline-color);
+      }
+    }
+
+    &.md3-field--focused {
+      .md3-field__outline {
+        border-color: var(--_error-focus-outline-color);
+        // Needed for Firefox HCM
+        color: var(--_error-focus-outline-color);
+      }
     }
   }
 }

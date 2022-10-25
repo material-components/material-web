@@ -5,6 +5,8 @@
 
 @use 'sass:map';
 @use '../../field/outlined-field';
+@use '../../sass/resolvers';
+@use '../../sass/shape';
 @use '../../sass/theme';
 @use '../../tokens';
 @use './shared';

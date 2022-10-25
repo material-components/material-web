@@ -3,26 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
+@use './shared';
 
-@use './content';
-@use './content-theme';
-@use './field';
-@use './field-theme';
-@use './label';
-@use './label-theme';
-@use './supporting-text';
-@use './supporting-text-theme';
-
-@include field.static-styles;
-@include content.static-styles;
-@include label.static-styles;
-@include supporting-text.static-styles;
-
-.md3-field {
-  @include content-theme.theme-styles;
-  @include field-theme.theme-styles;
-  @include label-theme.theme-styles;
-  @include supporting-text-theme.theme-styles;
-}
+@include shared.styles;

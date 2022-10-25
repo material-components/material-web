@@ -3,6 +3,4 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-@forward './lib/filled-field-theme' show
-  theme,
-  values;
+@forward './lib/filled-field' show theme;

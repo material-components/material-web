@@ -1,0 +1,74 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:map';
+@use '../../tokens';
+
+$_default-deps: (
+  md-sys-color: tokens.md-sys-color-values-light-dynamic(),
+  md-sys-shape: tokens.md-sys-shape-values(),
+  md-sys-state: tokens.md-sys-state-values(),
+  md-sys-typescale: tokens.md-sys-typescale-values(),
+);
+
+@function values($deps: $_default-deps, $exclude-hardcoded-values: false) {
+  $text-field-values: tokens.md-comp-outlined-text-field-values(
+    $deps,
+    $exclude-hardcoded-values
+  );
+  // TODO(b/203778922): Remove *-type when type composite tokens are removed
+  // Remove unused tokens.
+  $values: map.remove(
+    $text-field-values,
+    caret-color,
+    disabled-input-text-color,
+    disabled-input-text-opacity,
+    error-focus-caret-color,
+    error-focus-input-text-color,
+    error-hover-input-text-color,
+    error-input-text-color,
+    focus-input-text-color,
+    hover-input-text-color,
+    input-text-color,
+    input-text-font,
+    input-text-line-height,
+    input-text-size,
+    input-text-tracking,
+    input-text-type,
+    input-text-weight,
+    input-text-placeholder-color,
+    input-text-prefix-color,
+    input-text-suffix-color,
+    label-text-type,
+    supporting-text-type
+  );
+
+  // Add missing tokens.
+  $values: map.merge(
+    $values,
+    (
+      container-padding-horizontal: if($exclude-hardcoded-values, null, 16px),
+      container-padding-vertical: if($exclude-hardcoded-values, null, 8px),
+      content-color: map.get($text-field-values, input-text-color),
+      disabled-content-color:
+        map.get($text-field-values, disabled-input-text-color),
+      disabled-content-opacity:
+        map.get($text-field-values, disabled-input-text-opacity),
+      error-content-color: map.get($text-field-values, error-input-text-color),
+      error-focus-content-color:
+        map.get($text-field-values, error-focus-input-text-color),
+      error-hover-content-color:
+        map.get($text-field-values, error-hover-input-text-color),
+      focus-content-color: map.get($text-field-values, focus-input-text-color),
+      hover-content-color: map.get($text-field-values, hover-input-text-color),
+      label-text-padding-bottom: if($exclude-hardcoded-values, null, 8px),
+      outline-label-padding: if($exclude-hardcoded-values, null, 4px),
+      supporting-text-padding: if($exclude-hardcoded-values, null, 16px),
+      supporting-text-padding-top: if($exclude-hardcoded-values, null, 4px),
+    )
+  );
+
+  @return $values;
+}

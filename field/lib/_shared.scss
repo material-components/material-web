@@ -6,7 +6,15 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@mixin static-styles() {
+@use 'sass:map';
+@use '../../sass/resolvers';
+@use '../../sass/shape';
+@use '../../sass/typography';
+@use './content';
+@use './label';
+@use './supporting-text';
+
+@mixin styles() {
   :host {
     display: inline-flex;
   }
@@ -25,6 +33,7 @@
     box-sizing: border-box;
     display: flex;
     flex: 1;
+    flex-basis: var(--_container-height);
     position: relative;
   }
 
@@ -49,4 +58,24 @@
       margin-inline-start: 4px;
     }
   }
+
+  @include content.styles;
+  @include label.styles;
+  @include supporting-text.styles;
+}
+
+@function resolve-tokens($tokens) {
+  $tokens: typography.resolve-theme(
+    $tokens,
+    map.get(resolvers.$material, typography),
+    label-text,
+    label-text-populated,
+    supporting-text
+  );
+
+  @return shape.resolve-theme(
+    $tokens,
+    map.get(resolvers.$material, shape),
+    container-shape
+  );
 }

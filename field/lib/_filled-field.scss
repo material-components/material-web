@@ -8,49 +8,76 @@
 
 @use 'sass:map';
 @use '../../motion/animation';
-@use './field-theme';
+@use '../../sass/resolvers';
+@use '../../sass/shape';
+@use '../../sass/theme';
+@use './md-comp-filled-field';
+@use './shared';
 
 $_animation-duration: 150ms;
 
-@mixin static-styles() {
-  .md3-field--filled {
-    .md3-field__container {
-      // If bottom corner radii are set, prevent the active indicator from
-      // overflowing.
-      overflow: hidden;
-      // Needed for negative z-index below to place background and state layer
-      // behind content.
-      z-index: 0;
+@mixin theme($tokens) {
+  $reference: md-comp-filled-field.values();
+  // Add resolved tokens so that $theme may specify them.
+  $reference: map.merge($reference, shared.resolve-tokens($reference));
+  $tokens: theme.validate-theme($reference, $tokens);
+  $tokens: shared.resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, filled-field);
 
-      // ::before is used for background color so that opacity may be changed
-      // without affecting content
-      &::before,
-      // ::after is used for the state layer color and opacity
-      &::after {
-        border-radius: inherit;
-        content: '';
-        display: flex;
-        height: 100%;
-        position: absolute;
-        width: 100%;
-        z-index: -1;
-      }
+  @include theme.emit-theme-vars($tokens);
+}
 
-      &::after {
-        visibility: hidden;
-      }
+@mixin styles() {
+  $tokens: md-comp-filled-field.values();
+  $tokens: shared.resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, filled-field);
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+
+  .md3-field__container {
+    border-start-start-radius: var(--_container-shape-start-start);
+    border-start-end-radius: var(--_container-shape-start-end);
+    border-end-end-radius: var(--_container-shape-end-end);
+    border-end-start-radius: var(--_container-shape-end-start);
+    // If bottom corner radii are set, prevent the active indicator from
+    // overflowing.
+    overflow: hidden;
+    padding-top: var(--_container-padding-vertical);
+    padding-bottom: var(--_container-padding-vertical);
+    // Needed for negative z-index below to place background and state layer
+    // behind content.
+    z-index: 0;
+
+    // ::before is used for background color so that opacity may be changed
+    // without affecting content
+    &::before {
+      background: var(--_container-color);
     }
 
-    &:not(.md3-field--disabled):hover {
-      .md3-field__state-layer {
-        visibility: visible;
-      }
+    // ::after is used for the state layer color and opacity
+    &::after {
+      visibility: hidden;
     }
 
-    .md3-field__label--floating {
+    &::before,
+    &::after {
+      border-radius: inherit;
+      content: '';
+      display: flex;
+      height: 100%;
       position: absolute;
-      top: 0;
+      width: 100%;
+      z-index: -1;
     }
+  }
+
+  .md3-field__label--floating {
+    position: absolute;
+    top: 0;
   }
 
   .md3-field__state-layer {
@@ -60,6 +87,10 @@ $_animation-duration: 150ms;
     width: 100%;
     visibility: hidden;
     z-index: -1;
+
+    .md3-field:not(.md3-field--disabled):hover & {
+      visibility: visible;
+    }
   }
 
   .md3-field__active-indicator {
@@ -72,7 +103,8 @@ $_animation-duration: 150ms;
 
     &::before,
     &::after {
-      border-bottom-style: solid;
+      border-bottom: var(--_active-indicator-height) solid
+        var(--_active-indicator-color);
       inset: auto 0 0 0;
       content: '';
       position: absolute;
@@ -100,6 +132,77 @@ $_animation-duration: 150ms;
         transform: scaleX(1);
         transition: animation.standard(transform, $_animation-duration);
       }
+    }
+  }
+
+  .md3-field:not(.md3-field--with-start) {
+    .md3-field__start {
+      padding-inline-start: var(--_container-padding-horizontal);
+    }
+  }
+
+  .md3-field:not(.md3-field--with-end) {
+    .md3-field__end {
+      padding-inline-end: var(--_container-padding-horizontal);
+    }
+  }
+
+  .md3-field:not(.md3-field--no-label) {
+    .md3-field__middle {
+      padding-top: var(--_label-text-populated-line-height);
+    }
+  }
+
+  :hover {
+    .md3-field__active-indicator::before {
+      border-bottom-color: var(--_hover-active-indicator-color);
+      border-bottom-width: var(--_hover-active-indicator-height);
+    }
+
+    .md3-field__state-layer {
+      background: var(--_hover-state-layer-color);
+      opacity: var(--_hover-state-layer-opacity);
+    }
+  }
+
+  // Focus is on a separate element and does not need a focus selector
+  .md3-field__active-indicator::after {
+    border-bottom-color: var(--_focus-active-indicator-color);
+    border-bottom-width: var(--_focus-active-indicator-height);
+  }
+
+  .md3-field--disabled {
+    .md3-field__active-indicator::before {
+      border-bottom-color: var(--_disabled-active-indicator-color);
+      border-bottom-width: var(--_disabled-active-indicator-height);
+      opacity: var(--_disabled-active-indicator-opacity);
+    }
+
+    .md3-field__container::before {
+      background: var(--_disabled-container-color);
+      opacity: var(--_disabled-container-opacity);
+    }
+  }
+
+  .md3-field--error:not(.md3-field--disabled) {
+    .md3-field__active-indicator::before {
+      border-bottom-color: var(--_error-active-indicator-color);
+    }
+
+    &:hover {
+      .md3-field__active-indicator::before {
+        border-bottom-color: var(--_error-hover-active-indicator-color);
+      }
+
+      .md3-field__state-layer {
+        background: var(--_error-hover-state-layer-color);
+        opacity: var(--_error-hover-state-layer-opacity);
+      }
+    }
+
+    // Focus is on a separate element and does not need a focus selector
+    .md3-field__active-indicator::after {
+      border-bottom-color: var(--_error-focus-active-indicator-color);
     }
   }
 }

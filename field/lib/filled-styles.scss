@@ -3,14 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
-@use './filled-field-theme';
 @use './filled-field';
 
-@include filled-field.static-styles;
-
-.md3-field--filled {
-  @include filled-field-theme.theme-styles(filled-field-theme.$light-theme);
-}
+@include filled-field.styles;
