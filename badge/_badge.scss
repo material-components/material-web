@@ -3,6 +3,4 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-@use './badge';
-
-@include badge.styles;
+@forward './lib/badge' show theme;

@@ -6,13 +6,43 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@mixin static-styles() {
+@use 'sass:map';
+@use '../../sass/theme';
+@use '../../tokens';
+
+$_custom-property-prefix: 'badge';
+
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme(tokens.md-comp-badge-values(), $tokens);
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: tokens.md-comp-badge-values();
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+
   .md3-badge {
     inset-inline-start: 50%;
     margin-inline-start: 6px;
     margin-block-start: 4px;
     position: absolute;
     inset-block-start: 0px;
+    background-color: var(--_color);
+    border-radius: var(--_shape);
+    height: var(--_size);
+
+    &:not(.md3-badge--large) {
+      // Separate selector since large uses min-width
+      width: var(--_size);
+    }
 
     &.md3-badge--large {
       display: flex;
@@ -20,10 +50,23 @@
       justify-content: center;
       margin-inline-start: 2px;
       margin-block-start: 1px;
+      background-color: var(--_large-color);
+      border-radius: var(--_large-shape);
+      height: var(--_large-size);
+      min-width: var(--_large-size);
+      color: var(--_large-label-text-color);
 
       .md3-badge__value {
         padding: 0px 4px;
       }
     }
+  }
+
+  .md3-badge__value {
+    font-family: var(--_large-label-text-font);
+    font-size: var(--_large-label-text-size);
+    letter-spacing: var(--_large-label-text-tracking);
+    line-height: var(--_large-label-text-line-height);
+    font-weight: var(--_large-label-text-weight);
   }
 }

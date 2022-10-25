@@ -8,7 +8,7 @@
 
 @use 'sass:map';
 
-@use '../../badge/lib/badge-theme';
+@use '../../badge/badge';
 @use '../../ripple/ripple-theme';
 @use '../../focus/focus-ring';
 @use '../../sass/theme';
@@ -124,7 +124,7 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
     )
   );
 
-  @include badge-theme.theme(
+  @include badge.theme(
     (
       color: map.get($theme, badge-color),
       size: map.get($theme, badge-size),
