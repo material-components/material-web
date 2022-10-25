@@ -7,75 +7,74 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-@use '../../iconbutton/standard-icon-button';
 
-@mixin theme-styles($theme) {
+@mixin theme-styles() {
   .md3-text-field__icon--leading {
-    color: map.get($theme, leading-icon-color);
+    color: var(--_leading-icon-color);
   }
 
   .md3-text-field__icon--trailing {
-    color: map.get($theme, trailing-icon-color);
+    color: var(--_trailing-icon-color);
   }
 
   &:hover {
     .md3-text-field__icon--leading {
-      color: map.get($theme, hover-leading-icon-color);
+      color: var(--_hover-leading-icon-color);
     }
 
     .md3-text-field__icon--trailing {
-      color: map.get($theme, hover-trailing-icon-color);
+      color: var(--_hover-trailing-icon-color);
     }
   }
 
   &:focus-within {
     .md3-text-field__icon--leading {
-      color: map.get($theme, focus-leading-icon-color);
+      color: var(--_focus-leading-icon-color);
     }
 
     .md3-text-field__icon--trailing {
-      color: map.get($theme, focus-trailing-icon-color);
+      color: var(--_focus-trailing-icon-color);
     }
   }
 
   &.md3-text-field--disabled {
     .md3-text-field__icon--leading {
-      color: map.get($theme, disabled-leading-icon-color);
-      opacity: map.get($theme, disabled-leading-icon-opacity);
+      color: var(--_disabled-leading-icon-color);
+      opacity: var(--_disabled-leading-icon-opacity);
     }
 
     .md3-text-field__icon--trailing {
-      color: map.get($theme, disabled-trailing-icon-color);
-      opacity: map.get($theme, disabled-trailing-icon-opacity);
+      color: var(--_disabled-trailing-icon-color);
+      opacity: var(--_disabled-trailing-icon-opacity);
     }
   }
 
   &.md3-text-field--error:not(.md3-text-field--disabled) {
     .md3-text-field__icon--leading {
-      color: map.get($theme, error-leading-icon-color);
+      color: var(--_error-leading-icon-color);
     }
 
     .md3-text-field__icon--trailing {
-      color: map.get($theme, error-trailing-icon-color);
+      color: var(--_error-trailing-icon-color);
     }
 
     &:hover {
       .md3-text-field__icon--leading {
-        color: map.get($theme, error-hover-leading-icon-color);
+        color: var(--_error-hover-leading-icon-color);
       }
 
       .md3-text-field__icon--trailing {
-        color: map.get($theme, error-hover-trailing-icon-color);
+        color: var(--_error-hover-trailing-icon-color);
       }
     }
 
     &:focus-within {
       .md3-text-field__icon--leading {
-        color: map.get($theme, error-focus-leading-icon-color);
+        color: var(--_error-focus-leading-icon-color);
       }
 
       .md3-text-field__icon--trailing {
-        color: map.get($theme, error-focus-trailing-icon-color);
+        color: var(--_error-focus-trailing-icon-color);
       }
     }
   }

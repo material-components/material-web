@@ -20,20 +20,20 @@
   @return $theme;
 }
 
-@mixin theme-styles($theme) {
+@mixin theme-styles() {
   .md3-text-field__input {
-    caret-color: map.get($theme, caret-color);
+    caret-color: var(--_caret-color);
   }
 
   &:focus-within {
     .md3-text-field__input {
-      caret-color: map.get($theme, focus-caret-color);
+      caret-color: var(--_focus-caret-color);
     }
   }
 
   &.md3-text-field--error:focus-within {
     .md3-text-field__input {
-      caret-color: map.get($theme, error-focus-caret-color);
+      caret-color: var(--_error-focus-caret-color);
     }
   }
 
@@ -42,11 +42,11 @@
   .md3-text-field__suffix {
     @include typography.theme-styles(
       (
-        font: map.get($theme, input-text-font),
-        line-height: map.get($theme, input-text-line-height),
-        size: map.get($theme, input-text-size),
-        tracking: map.get($theme, input-text-tracking),
-        weight: map.get($theme, input-text-weight),
+        font: var(--_input-text-font),
+        line-height: var(--_input-text-line-height),
+        size: var(--_input-text-size),
+        tracking: var(--_input-text-tracking),
+        weight: var(--_input-text-weight),
       )
     );
   }
@@ -54,19 +54,19 @@
   &:not(.md3-text-field--disabled) {
     .md3-text-field__prefix,
     .md3-text-field__suffix {
-      color: map.get($theme, input-text-prefix-color);
+      color: var(--_input-text-prefix-color);
     }
 
     .md3-text-field__input::placeholder {
-      color: map.get($theme, input-text-placeholder-color);
+      color: var(--_input-text-placeholder-color);
     }
   }
 
   .md3-text-field__prefix {
-    padding-inline-end: map.get($theme, input-text-prefix-padding);
+    padding-inline-end: var(--_input-text-prefix-padding);
   }
 
   .md3-text-field__suffix {
-    padding-inline-start: map.get($theme, input-text-suffix-padding);
+    padding-inline-start: var(--_input-text-suffix-padding);
   }
 }

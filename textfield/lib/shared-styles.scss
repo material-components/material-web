@@ -3,10 +3,20 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
 @use './icon';
+@use './icon-theme';
 @use './input';
+@use './input-theme';
 @use './text-field';
 
 @include text-field.static-styles;
 @include input.static-styles;
 @include icon.static-styles;
+
+.md3-text-field {
+  @include icon-theme.theme-styles;
+  @include input-theme.theme-styles;
+}
