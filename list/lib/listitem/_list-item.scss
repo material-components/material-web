@@ -7,8 +7,44 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use '../../../focus/focus-ring';
+@use '../../../sass/theme';
+@use '../icon/list-item-icon';
+@use '../image/list-item-image';
+@use '../video/list-item-video';
+@use '../tokens';
 
-@mixin static-styles() {
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme(tokens.md-comp-list-values(), $tokens);
+  $tokens: theme.create-theme-vars($tokens, list);
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: tokens.md-comp-list-values();
+  $tokens: theme.create-theme-vars($tokens, list);
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+
+    @include list-item-image.theme(
+      (
+        list-item-leading-image-height: var(--_list-item-leading-image-height),
+        list-item-leading-image-width: var(--_list-item-leading-image-width),
+        list-item-leading-image-shape: var(--_list-item-leading-image-shape),
+      )
+    );
+    @include list-item-video.theme(
+      (
+        list-item-leading-video-height: var(--_list-item-leading-video-height),
+        list-item-leading-video-width: var(--_list-item-leading-video-width),
+        list-item-leading-video-shape: var(--_list-item-leading-video-shape),
+      )
+    );
+  }
+
   :host {
     color: unset;
 
@@ -27,15 +63,54 @@
     outline: none;
     position: relative;
     width: 100%;
+    background-color: var(--_list-item-container-color);
+    border-radius: var(--_list-item-container-shape);
 
     &.md3-list-item--enabled {
       cursor: pointer;
     }
   }
 
+  .md3-list-item--with-one-line {
+    min-height: var(--_list-item-one-line-container-height);
+  }
+
+  .md3-list-item--with-two-line {
+    min-height: var(--_list-item-two-line-container-height);
+  }
+
+  .md3-list-item--with-three-line {
+    min-height: var(--_list-item-three-line-container-height);
+  }
+
   .md3-list-item__start {
     flex: 0 0 auto;
     z-index: 1;
+
+    @include list-item-icon.theme(
+      (
+        list-item-icon-color: var(--_list-item-leading-icon-color),
+        list-item-icon-size: var(--_list-item-leading-icon-size),
+      )
+    );
+
+    :hover & {
+      @include list-item-icon.theme(
+        (
+          list-item-icon-color: var(--_list-item-hover-leading-icon-color),
+        )
+      );
+    }
+
+    .md3-list-item--disabled & {
+      @include list-item-icon.theme(
+        (
+          list-item-icon-color: var(--_list-item-disabled-leading-icon-color),
+          list-item-icon-opacity:
+            var(--_list-item-disabled-leading-icon-opacity),
+        )
+      );
+    }
 
     .md3-list-item--with-leading-thumbnail &,
     .md3-list-item--with-leading-image & {
@@ -59,10 +134,46 @@
     flex: 0 0 auto;
     padding-inline-end: 24px;
     z-index: 1;
+
+    @include list-item-icon.theme(
+      (
+        list-item-icon-color: var(--_list-item-trailing-icon-color),
+        list-item-icon-size: var(--_list-item-trailing-icon-size),
+      )
+    );
+
+    :hover & {
+      @include list-item-icon.theme(
+        (
+          list-item-icon-color: var(--_list-item-hover-trailing-icon-color),
+        )
+      );
+    }
+
+    .md3-list-item--disabled & {
+      @include list-item-icon.theme(
+        (
+          list-item-icon-color: var(--_list-item-disabled-trailing-icon-color),
+          list-item-icon-opacity:
+            var(--_list-item-disabled-trailing-icon-opacity),
+        )
+      );
+    }
   }
 
   .md3-list-item__label-text {
     display: flex;
+    color: var(--_list-item-label-text-color);
+    font-family: var(--_list-item-label-text-font);
+    font-size: var(--_list-item-label-text-size);
+    letter-spacing: var(--_list-item-label-text-tracking);
+    font-weight: var(--_list-item-label-text-weight);
+    line-height: var(--_list-item-label-text-line-height);
+
+    .md3-list-item--disabled & {
+      color: var(--_list-item-disabled-label-text-color);
+      opacity: var(--_list-item-disabled-label-text-opacity);
+    }
   }
 
   .md3-list-item__supporting-text {
@@ -72,6 +183,17 @@
     white-space: nowrap;
     overflow: hidden;
     width: 100%;
+    color: var(--_list-item-supporting-text-color);
+    font-family: var(--_list-item-supporting-text-font);
+    font-size: var(--_list-item-supporting-text-size);
+    letter-spacing: var(--_list-item-supporting-text-tracking);
+    font-weight: var(--_list-item-supporting-text-weight);
+    line-height: var(--_list-item-supporting-text-line-height);
+
+    .md3-list-item--disabled & {
+      color: var(--_list-item-disabled-supporting-text-color);
+      opacity: var(--_list-item-disabled-supporting-text-opacity);
+    }
   }
 
   .md3-list-item__supporting-text--multi-line {
@@ -84,6 +206,15 @@
 
   .md3-list-item__trailing-supporting-text {
     padding-inline-start: 16px;
+    font-family: var(--_list-item-trailing-supporting-text-font);
+    font-size: var(--_list-item-trailing-supporting-text-size);
+    letter-spacing: var(--_list-item-trailing-supporting-text-tracking);
+    font-weight: var(--_list-item-trailing-supporting-text-weight);
+    line-height: var(--_list-item-trailing-supporting-text-line-height);
+
+    .md3-list-item:not(.md3-list-item--disabled) & {
+      color: var(--_list-item-trailing-supporting-text-color);
+    }
   }
 
   .md3-list-item__ripple {

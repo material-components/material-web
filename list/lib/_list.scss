@@ -6,16 +6,49 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
+@use 'sass:map';
 @use '../../elevation/lib/elevation-overlay';
+@use '../../elevation/lib/elevation-theme';
+@use '../../sass/theme';
+@use '../../tokens' as m3-tokens;
+@use './tokens';
+@use './divider/list-divider';
 
-@mixin static-styles() {
-  @include elevation-overlay.static-styles();
+$_reference: (
+  container-color:
+    map.get(tokens.md-comp-list-values(), 'list-item-container-color'),
+  list-divider-color:
+    map.get(tokens.md-comp-list-values(), 'list-divider-color'),
+  list-divider-height:
+    map.get(tokens.md-comp-list-values(), 'list-divider-height'),
+  container-surface-tint-layer-color:
+    map.get(m3-tokens.md-sys-color-values-light-dynamic(), 'surface-tint'),
+  container-elevation-overlay-opacity: 0,
+);
+
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme($_reference, $tokens);
+  $tokens: theme.create-theme-vars($tokens, list);
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: $_reference;
+  $tokens: theme.create-theme-vars($tokens, list);
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
 
   :host {
     color: unset;
   }
 
   .md3-list {
+    background-color: var(--_container-color);
     display: block;
     list-style-type: none;
     margin: 0;
@@ -25,6 +58,20 @@
     // Add position so the elevation overlay (which is absolutely positioned)
     // can be positioned relative to the list root.
     position: relative;
+
+    @include elevation-overlay.static-styles;
+    @include list-divider.theme(
+      (
+        list-divider-color: var(--_list-divider-color),
+        list-divider-height: var(--_list-divider-height),
+      )
+    );
+    @include elevation-theme.theme-styles(
+      (
+        surface-tint-layer-color: var(--_container-surface-tint-layer-color),
+        overlay-opacity: var(--_container-elevation-overlay-opacity),
+      )
+    );
 
     .md3-elevation-overlay {
       z-index: 0;

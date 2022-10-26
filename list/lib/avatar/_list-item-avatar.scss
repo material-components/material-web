@@ -6,9 +6,33 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@mixin static-styles() {
+@use '../../../sass/map-ext';
+@use '../../../sass/theme';
+@use '../tokens';
+
+@mixin styles() {
+  $tokens: map-ext.pick(
+    tokens.md-comp-list-values(),
+    (
+      list-item-leading-avatar-color,
+      list-item-leading-avatar-shape,
+      list-item-leading-avatar-size
+    )
+  );
+
+  $tokens: theme.create-theme-vars($tokens, list);
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+
   .md3-list-item__avatar {
+    border-radius: var(--_list-item-leading-avatar-shape);
     display: inline-flex;
+    height: var(--_list-item-leading-avatar-size);
     margin-inline-start: 16px;
+    width: var(--_list-item-leading-avatar-size);
   }
 }

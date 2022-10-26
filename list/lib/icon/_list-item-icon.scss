@@ -6,12 +6,42 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@mixin static-styles() {
+@use 'sass:map';
+@use '../../../sass/map-ext';
+@use '../../../sass/theme';
+
+$_custom-property-prefix: 'list-item-icon';
+
+$_reference: (
+  list-item-icon-color: #000,
+  list-item-icon-size: 0,
+  list-item-icon-opacity: 1,
+);
+
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme($_reference, $tokens);
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: $_reference;
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+
   .md3-list-item__icon {
+    color: var(--_list-item-icon-color);
+    opacity: var(--_list-item-icon-opacity);
     font-family: 'Material Icons';
     font-weight: normal;
     font-style: normal;
-    font-size: inherit;
+    font-size: var(--_list-item-icon-size);
     line-height: 1;
     letter-spacing: normal;
     text-transform: none;

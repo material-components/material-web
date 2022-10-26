@@ -3,16 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 @use './list-divider';
-@use './list-divider-theme';
 
-:host {
-  @include list-divider.static-styles();
-
-  .md3-list__divider {
-    @include list-divider-theme.theme-styles(list-divider-theme.$light-theme);
-  }
-}
+@include list-divider.styles;
