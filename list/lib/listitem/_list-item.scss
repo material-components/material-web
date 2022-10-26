@@ -10,7 +10,8 @@
 
 @mixin static-styles() {
   :host {
-    @include host-root;
+    color: unset;
+
     @include focus-ring.theme(
       (
         container-outer-padding-vertical: -2px,
@@ -20,52 +21,30 @@
   }
 
   .md3-list-item {
-    @include item-root;
-  }
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    outline: none;
+    position: relative;
+    width: 100%;
 
-  .md3-list-item--with-leading-thumbnail {
-    @include thumbnail-item-root;
-  }
-
-  .md3-list-item--with-leading-image {
-    @include image-item-root;
-  }
-
-  .md3-list-item--with-leading-video {
-    @include video-item-root;
-  }
-
-  .md3-list-item__ripple {
-    display: inline-flex;
-    inset: 0;
-    position: absolute;
-    z-index: 0;
-  }
-
-  .md3-list-item__focus-ring {
-    z-index: 1;
-  }
-}
-
-@mixin host-root() {
-  color: unset;
-}
-
-@mixin item-root() {
-  align-items: center;
-  box-sizing: border-box;
-  display: flex;
-  outline: none;
-  position: relative;
-  width: 100%;
-
-  &.md3-list-item--enabled {
-    cursor: pointer;
+    &.md3-list-item--enabled {
+      cursor: pointer;
+    }
   }
 
   .md3-list-item__start {
     flex: 0 0 auto;
     z-index: 1;
+
+    .md3-list-item--with-leading-thumbnail &,
+    .md3-list-item--with-leading-image & {
+      padding-inline-start: 16px;
+    }
+
+    .md3-list-item--with-leading-video & {
+      padding-inline-start: 0;
+    }
   }
 
   .md3-list-item__body {
@@ -106,28 +85,15 @@
   .md3-list-item__trailing-supporting-text {
     padding-inline-start: 16px;
   }
-}
 
-@mixin icon-item-root() {
-  .md3-list-item__start {
-    padding-inline-start: 16px;
+  .md3-list-item__ripple {
+    display: inline-flex;
+    inset: 0;
+    position: absolute;
+    z-index: 0;
   }
-}
 
-@mixin thumbnail-item-root() {
-  .md3-list-item__start {
-    padding-inline-start: 16px;
-  }
-}
-
-@mixin image-item-root() {
-  .md3-list-item__start {
-    padding-inline-start: 16px;
-  }
-}
-
-@mixin video-item-root() {
-  .md3-list-item__start {
-    padding-inline-start: 0;
+  .md3-list-item__focus-ring {
+    z-index: 1;
   }
 }

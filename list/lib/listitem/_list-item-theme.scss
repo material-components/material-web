@@ -34,78 +34,71 @@ $light-theme: tokens.md-comp-list-values();
   $theme: _resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, list);
 
-  @include _set-container-color(
-    (
-      default: map.get($theme, list-item-container-color),
-    )
-  );
+  background-color: map.get($theme, list-item-container-color);
+  border-radius: map.get($theme, list-item-container-shape);
 
-  @include _set-label-text-typography(
-    (
-      family: map.get($theme, list-item-label-text-font),
-      size: map.get($theme, list-item-label-text-size),
-      tracking: map.get($theme, list-item-label-text-tracking),
-      weight: map.get($theme, list-item-label-text-weight),
-      line-height: map.get($theme, list-item-label-text-line-height),
-    )
-  );
+  .md3-list-item__label-text {
+    color: map.get($theme, list-item-label-text-color);
+    font-family: map.get($theme, list-item-label-text-font);
+    font-size: map.get($theme, list-item-label-text-size);
+    letter-spacing: map.get($theme, list-item-label-text-tracking);
+    font-weight: map.get($theme, list-item-label-text-weight);
+    line-height: map.get($theme, list-item-label-text-line-height);
+  }
 
-  @include _set-label-text-ink-color(
-    (
-      default: map.get($theme, list-item-label-text-color),
-      disabled: map.get($theme, list-item-disabled-label-text-color),
-    )
-  );
-  @include _set-disabled-label-text-opacity(
-    map.get($theme, list-item-disabled-label-text-opacity)
-  );
+  .md3-list-item__supporting-text {
+    color: map.get($theme, list-item-supporting-text-color);
+    font-family: map.get($theme, list-item-supporting-text-font);
+    font-size: map.get($theme, list-item-supporting-text-size);
+    letter-spacing: map.get($theme, list-item-supporting-text-tracking);
+    font-weight: map.get($theme, list-item-supporting-text-weight);
+    line-height: map.get($theme, list-item-supporting-text-line-height);
+  }
 
-  @include _set-supporting-text-typography(
-    (
-      family: map.get($theme, list-item-supporting-text-font),
-      size: map.get($theme, list-item-supporting-text-size),
-      tracking: map.get($theme, list-item-supporting-text-tracking),
-      weight: map.get($theme, list-item-supporting-text-weight),
-      line-height: map.get($theme, list-item-supporting-text-line-height),
-    )
-  );
+  .md3-list-item__trailing-supporting-text {
+    font-family: map.get($theme, list-item-trailing-supporting-text-font);
+    font-size: map.get($theme, list-item-trailing-supporting-text-size);
+    letter-spacing: map.get(
+      $theme,
+      list-item-trailing-supporting-text-tracking
+    );
+    font-weight: map.get($theme, list-item-trailing-supporting-text-weight);
+    line-height: map.get(
+      $theme,
+      list-item-trailing-supporting-text-line-height
+    );
+  }
 
-  @include _set-supporting-text-ink-color(
-    (
-      default: map.get($theme, list-item-supporting-text-color),
-      disabled: map.get($theme, list-item-disabled-supporting-text-color),
-    )
-  );
-  @include _set-disabled-supporting-text-opacity(
-    map.get($theme, list-item-disabled-supporting-text-opacity)
-  );
+  &.md3-list-item--disabled {
+    .md3-list-item__label-text {
+      color: map.get($theme, list-item-disabled-label-text-color);
+      opacity: map.get($theme, list-item-disabled-label-text-opacity);
+    }
 
-  @include _set-trailing-supporting-text-typography(
-    (
-      family: map.get($theme, list-item-trailing-supporting-text-font),
-      size: map.get($theme, list-item-trailing-supporting-text-size),
-      tracking: map.get($theme, list-item-trailing-supporting-text-tracking),
-      weight: map.get($theme, list-item-trailing-supporting-text-weight),
-      line-height:
-        map.get($theme, list-item-trailing-supporting-text-line-height),
-    )
-  );
-  @include _set-trailing-supporting-text-ink-color(
-    (
-      default: map.get($theme, list-item-trailing-supporting-text-color),
-    )
-  );
+    .md3-list-item__supporting-text {
+      color: map.get($theme, list-item-disabled-supporting-text-color);
+      opacity: map.get($theme, list-item-disabled-supporting-text-opacity);
+    }
+  }
 
-  @include _set-one-line-container-height(
-    map.get($theme, list-item-one-line-container-height)
-  );
-  @include _set-two-line-container-height(
-    map.get($theme, list-item-two-line-container-height)
-  );
-  @include _set-three-line-container-height(
-    map.get($theme, list-item-three-line-container-height)
-  );
-  @include _set-container-shape(map.get($theme, list-item-container-shape));
+  &:not(.md3-list-item--disabled) {
+    .md3-list-item__trailing-supporting-text {
+      color: map.get($theme, list-item-trailing-supporting-text-color);
+    }
+  }
+
+  &.md3-list-item--with-one-line {
+    min-height: map.get($theme, list-item-one-line-container-height);
+  }
+
+  &.md3-list-item--with-two-line {
+    min-height: map.get($theme, list-item-two-line-container-height);
+  }
+
+  &.md3-list-item--with-three-line {
+    min-height: map.get($theme, list-item-three-line-container-height);
+  }
+
   @include list-item-image-theme.theme(
     (
       list-item-leading-image-height:
@@ -183,143 +176,5 @@ $light-theme: tokens.md-comp-list-values();
           map.get($theme, list-item-hover-trailing-icon-color),
       )
     );
-  }
-}
-
-@mixin _set-disabled-label-text-opacity($opacity) {
-  &.md3-list-item--disabled .md3-list-item__label-text {
-    opacity: $opacity;
-  }
-}
-
-@mixin _set-disabled-supporting-text-opacity($opacity) {
-  &.md3-list-item--disabled .md3-list-item__supporting-text {
-    opacity: $opacity;
-  }
-}
-
-@mixin _set-container-shape($shape) {
-  border-radius: $shape;
-}
-
-@mixin _set-container-color($colors) {
-  @include _set-container-background-color(map.get($colors, default));
-}
-
-@mixin _set-label-text-typography($typography-map) {
-  $family: map.get($typography-map, family);
-  $size: map.get($typography-map, size);
-  $tracking: map.get($typography-map, tracking);
-  $weight: map.get($typography-map, weight);
-  $transform: map.get($typography-map, transform);
-  $line-height: map.get($typography-map, line-height);
-
-  .md3-list-item__label-text {
-    font-family: $family;
-    font-size: $size;
-    letter-spacing: $tracking;
-    font-weight: $weight;
-    text-transform: $transform;
-    line-height: $line-height;
-  }
-}
-
-@mixin _set-label-text-ink-color($colors) {
-  @include _set-label-text-color(map.get($colors, default));
-
-  &.md3-list-item--disabled {
-    @include _set-label-text-color(map.get($colors, disabled));
-  }
-}
-
-@mixin _set-supporting-text-typography($typography-map) {
-  $family: map.get($typography-map, family);
-  $size: map.get($typography-map, size);
-  $tracking: map.get($typography-map, tracking);
-  $weight: map.get($typography-map, weight);
-  $transform: map.get($typography-map, transform);
-  $line-height: map.get($typography-map, line-height);
-
-  .md3-list-item__supporting-text {
-    font-family: $family;
-    font-size: $size;
-    letter-spacing: $tracking;
-    font-weight: $weight;
-    text-transform: $transform;
-    line-height: $line-height;
-  }
-}
-
-@mixin _set-supporting-text-ink-color($colors) {
-  @include _set-supporting-text-color(map.get($colors, default));
-
-  &.md3-list-item--disabled {
-    @include _set-supporting-text-color(map.get($colors, disabled));
-  }
-}
-
-@mixin _set-trailing-supporting-text-typography($typography-map) {
-  $family: map.get($typography-map, family);
-  $size: map.get($typography-map, size);
-  $tracking: map.get($typography-map, tracking);
-  $weight: map.get($typography-map, weight);
-  $transform: map.get($typography-map, transform);
-  $line-height: map.get($typography-map, line-height);
-
-  .md3-list-item__trailing-supporting-text {
-    font-family: $family;
-    font-size: $size;
-    letter-spacing: $tracking;
-    font-weight: $weight;
-    text-transform: $transform;
-    line-height: $line-height;
-  }
-}
-
-@mixin _set-trailing-supporting-text-ink-color($colors) {
-  &:not(.md3-list-item--disabled) {
-    @include _set-trailing-supporting-text-color(
-      map.get($colors, default)
-    );
-  }
-}
-
-@mixin _set-one-line-container-height($height) {
-  &.md3-list-item--with-one-line {
-    min-height: $height;
-  }
-}
-
-@mixin _set-two-line-container-height($height) {
-  &.md3-list-item--with-two-line {
-    min-height: $height;
-  }
-}
-
-@mixin _set-three-line-container-height($height) {
-  &.md3-list-item--with-three-line {
-    min-height: $height;
-  }
-}
-
-@mixin _set-container-background-color($color) {
-  background-color: $color;
-}
-
-@mixin _set-label-text-color($color) {
-  .md3-list-item__label-text {
-    color: $color;
-  }
-}
-
-@mixin _set-supporting-text-color($color) {
-  .md3-list-item__supporting-text {
-    color: $color;
-  }
-}
-
-@mixin _set-trailing-supporting-text-color($color) {
-  .md3-list-item__trailing-supporting-text {
-    color: $color;
   }
 }

@@ -12,30 +12,22 @@
   @include elevation-overlay.static-styles();
 
   :host {
-    @include host-root;
+    color: unset;
   }
 
   .md3-list {
-    @include root;
+    display: block;
+    list-style-type: none;
+    margin: 0;
+    min-width: 300px;
+    outline: none;
+    padding: 8px 0;
+    // Add position so the elevation overlay (which is absolutely positioned)
+    // can be positioned relative to the list root.
+    position: relative;
 
     .md3-elevation-overlay {
       z-index: 0;
     }
   }
-}
-
-@mixin host-root() {
-  color: unset;
-}
-
-@mixin root() {
-  display: block;
-  list-style-type: none;
-  margin: 0;
-  min-width: 300px;
-  outline: none;
-  padding: 8px 0;
-  // Add position so the elevation overlay (which is absolutely positioned)
-  // can be positioned relative to the list root.
-  position: relative;
 }
