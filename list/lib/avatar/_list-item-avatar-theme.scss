@@ -21,7 +21,13 @@ $light-theme: map-ext.pick(
   $theme: theme.validate-theme($light-theme, $theme);
   $theme: theme.create-theme-vars($theme, list);
 
-  border-radius: map.get($theme, list-item-leading-avatar-shape);
-  height: map.get($theme, list-item-leading-avatar-size);
-  width: map.get($theme, list-item-leading-avatar-size);
+  & {
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
+
+  border-radius: var(--_list-item-leading-avatar-shape);
+  height: var(--_list-item-leading-avatar-size);
+  width: var(--_list-item-leading-avatar-size);
 }

@@ -30,7 +30,13 @@ $_custom-property-prefix: 'list-item-video';
   $theme: theme.validate-theme($light-theme, $theme);
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
-  height: map.get($theme, list-item-leading-video-height);
-  width: map.get($theme, list-item-leading-video-width);
-  border-radius: map.get($theme, list-item-leading-video-shape);
+  & {
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
+
+  height: var(--_list-item-leading-video-height);
+  width: var(--_list-item-leading-video-width);
+  border-radius: var(--_list-item-leading-video-shape);
 }

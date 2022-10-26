@@ -33,19 +33,24 @@ $light-theme: (
   $theme: theme.validate-theme-styles($light-theme, $theme);
   $theme: theme.create-theme-vars($theme, list);
 
+  & {
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
+
   @include list-divider-theme.theme(
     (
-      list-divider-color: map.get($theme, 'list-divider-color'),
-      list-divider-height: map.get($theme, 'list-divider-height'),
+      list-divider-color: var(--_list-divider-color),
+      list-divider-height: var(--_list-divider-height),
     )
   );
   @include elevation-theme.theme-styles(
     (
-      surface-tint-layer-color:
-        map.get($theme, 'container-surface-tint-layer-color'),
-      overlay-opacity: map.get($theme, 'container-elevation-overlay-opacity'),
+      surface-tint-layer-color: var(--_container-surface-tint-layer-color),
+      overlay-opacity: var(--_container-elevation-overlay-opacity),
     )
   );
 
-  background-color: map.get($theme, 'container-color');
+  background-color: var(--_container-color);
 }

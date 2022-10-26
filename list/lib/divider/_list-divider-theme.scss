@@ -25,6 +25,12 @@ $_custom-property-prefix: 'list-divider';
   $theme: theme.validate-theme($light-theme, $theme);
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
-  background-color: map.get($theme, 'list-divider-color');
-  height: map.get($theme, 'list-divider-height');
+  & {
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
+
+  background-color: var(--_list-divider-color);
+  height: var(--_list-divider-height);
 }

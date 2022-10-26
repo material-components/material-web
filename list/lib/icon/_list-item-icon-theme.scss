@@ -26,7 +26,13 @@ $_custom-property-prefix: 'list-item-icon';
   $theme: theme.validate-theme($light-theme, $theme);
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
-  color: map.get($theme, list-item-icon-color);
-  font-size: map.get($theme, list-item-icon-size);
-  opacity: map.get($theme, list-item-icon-opacity);
+  & {
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
+
+  color: var(--_list-item-icon-color);
+  font-size: var(--_list-item-icon-size);
+  opacity: var(--_list-item-icon-opacity);
 }
