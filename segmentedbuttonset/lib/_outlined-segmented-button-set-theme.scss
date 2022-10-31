@@ -38,16 +38,5 @@ $dark-theme: tokens.md-comp-outlined-segmented-button-values(
   $theme: segmented-button-set-theme.resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, 'segmented-button');
 
-  @include segmented-button-set-theme.container-height(
-    map.get($theme, 'container-height')
-  );
-
-  @include segmented-button-set-theme.container-shape(
-    (
-      'start-start': map.get($theme, 'shape-start-start'),
-      'end-start': map.get($theme, 'shape-end-start'),
-      'start-end': map.get($theme, 'shape-start-end'),
-      'end-end': map.get($theme, 'shape-end-end'),
-    )
-  );
+  @include segmented-button-set-theme.theme-styles($theme);
 }

@@ -6,29 +6,17 @@
 @use 'sass:map';
 @use '../../sass/shape';
 
-///
-/// Container height sets the height of the container.
-/// @param {Number} $height - the height of the container.
-///
-@mixin container-height($height) {
-  height: $height;
-}
+@mixin theme-styles($theme) {
+  height: map.get($theme, 'container-height');
 
-///
-/// Container shape sets the shape of the container.
-/// @param {Map} $shape - a map of CSS logical radius keys with number values.
-///     Accepted keys include ('start-start', 'end-start', 'start-end',
-///     'end-end').
-///
-@mixin container-shape($shape) {
   ::slotted(:first-child) {
-    border-start-start-radius: map.get($shape, 'start-start');
-    border-end-start-radius: map.get($shape, 'end-start');
+    border-start-start-radius: map.get($theme, 'shape-start-start');
+    border-end-start-radius: map.get($theme, 'shape-end-start');
   }
 
   ::slotted(:last-child) {
-    border-start-end-radius: map.get($shape, 'start-end');
-    border-end-end-radius: map.get($shape, 'end-end');
+    border-start-end-radius: map.get($theme, 'shape-start-end');
+    border-end-end-radius: map.get($theme, 'shape-end-end');
   }
 }
 
