@@ -12,116 +12,89 @@ $animation-duration: 100ms;
 
 @mixin static-styles() {
   .md3-navigation-tab {
-    @include _root;
+    align-items: center;
+    appearance: none;
+    background: none;
+    border: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    min-height: 48px;
+    min-width: 48px;
+    outline: none;
+    padding: 8px 0px 12px;
+    position: relative;
+    text-align: center;
+    width: 100%;
+
+    // Firefox draws a dotted border around focused buttons unless specifically overridden.
+    &::-moz-focus-inner {
+      border: 0;
+      padding: 0;
+    }
   }
 
   .md3-navigation-tab__icon-content {
-    @include _icon-content;
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
   }
 
   .md3-navigation-tab__label-text {
-    @include _label-text;
+    height: 16px;
+    margin-top: 4px;
+    opacity: 1;
+    transition: animation.standard(opacity, $animation-duration),
+      animation.standard(height, $animation-duration);
+    z-index: 1;
 
     .md3-navigation-tab--hide-inactive-label:not(.md3-navigation-tab--active)
       & {
-      @include _hide-inactive-label;
+      height: 0;
+      opacity: 0;
     }
   }
 
   .md3-navigation-tab__active-indicator {
-    @include _indicator;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    position: absolute;
+    transition: animation.standard(width, $animation-duration),
+      animation.standard(opacity, $animation-duration);
+    width: 32px;
 
     .md3-navigation-tab--active & {
-      @include _indicator-active;
+      opacity: 1;
     }
   }
 
   .md3-navigation-tab__icon {
-    @include _icon;
+    fill: currentColor;
+    align-self: center;
+    display: inline-block;
+    position: relative;
+
+    &.md3-navigation-tab__icon--active {
+      display: none;
+    }
+
+    .md3-navigation-tab--active & {
+      display: none;
+
+      &.md3-navigation-tab__icon--active {
+        display: inline-block;
+      }
+    }
   }
 
   .md3-navigation-tab__ripple {
     z-index: 0;
-  }
-}
-
-@mixin _root() {
-  align-items: center;
-  appearance: none;
-  background: none;
-  border: none;
-  box-sizing: border-box;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  min-height: 48px;
-  min-width: 48px;
-  outline: none;
-  padding: 8px 0px 12px;
-  position: relative;
-  text-align: center;
-  width: 100%;
-
-  // Firefox draws a dotted border around focused buttons unless specifically overridden.
-  &::-moz-focus-inner {
-    border: 0;
-    padding: 0;
-  }
-}
-
-@mixin _icon-content() {
-  align-items: center;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  position: relative;
-  z-index: 1;
-}
-
-@mixin _label-text() {
-  height: 16px;
-  margin-top: 4px;
-  opacity: 1;
-  transition: animation.standard(opacity, $animation-duration),
-    animation.standard(height, $animation-duration);
-  z-index: 1;
-}
-
-@mixin _hide-inactive-label() {
-  height: 0;
-  opacity: 0;
-}
-
-@mixin _indicator() {
-  display: flex;
-  justify-content: center;
-  opacity: 0;
-  position: absolute;
-  transition: animation.standard(width, $animation-duration),
-    animation.standard(opacity, $animation-duration);
-  width: 32px;
-}
-
-@mixin _indicator-active() {
-  opacity: 1;
-}
-
-@mixin _icon() {
-  align-self: center;
-  display: inline-block;
-  position: relative;
-
-  &.md3-navigation-tab__icon--active {
-    display: none;
-  }
-
-  .md3-navigation-tab--active & {
-    display: none;
-
-    &.md3-navigation-tab__icon--active {
-      display: inline-block;
-    }
   }
 }

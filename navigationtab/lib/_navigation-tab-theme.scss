@@ -41,68 +41,57 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
 
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
-  @include _icon-size(map.get($theme, icon-size));
-  @include _active-icon-color(
-    (
-      default: map.get($theme, active-icon-color),
-      hover: map.get($theme, active-hover-icon-color),
-      focus: map.get($theme, active-focus-icon-color),
-      pressed: map.get($theme, active-pressed-icon-color),
-    )
-  );
-  @include _inactive-icon-color(
-    (
-      default: map.get($theme, inactive-icon-color),
-      hover: map.get($theme, inactive-hover-icon-color),
-      focus: map.get($theme, inactive-focus-icon-color),
-      pressed: map.get($theme, inactive-pressed-icon-color),
-    )
-  );
+  font-family: map.get($theme, label-text-font);
+  font-size: map.get($theme, label-text-size);
+  letter-spacing: map.get($theme, label-text-tracking);
+  font-weight: map.get($theme, label-text-weight);
+  line-height: map.get($theme, label-text-line-height);
 
-  @include _set-label-text-typography(
-    (
-      family: map.get($theme, label-text-font),
-      size: map.get($theme, label-text-size),
-      tracking: map.get($theme, label-text-tracking),
-      weight: map.get($theme, label-text-weight),
-    )
-  );
+  .md3-navigation-tab__icon {
+    width: map.get($theme, icon-size);
+    height: map.get($theme, icon-size);
+    font-size: map.get($theme, icon-size);
+  }
 
-  @include _active-label-text-color(
-    (
-      default: map.get($theme, active-label-text-color),
-      hover: map.get($theme, active-hover-label-text-color),
-      focus: map.get($theme, active-focus-label-text-color),
-      pressed: map.get($theme, active-pressed-label-text-color),
-    )
-  );
-  @include _inactive-label-text-color(
-    (
-      default: map.get($theme, inactive-label-text-color),
-      hover: map.get($theme, inactive-hover-label-text-color),
-      focus: map.get($theme, inactive-focus-label-text-color),
-      pressed: map.get($theme, inactive-pressed-label-text-color),
-    )
-  );
+  &.md3-navigation-tab--active {
+    .md3-navigation-tab__icon {
+      color: map.get($theme, active-icon-color);
+    }
 
-  @include _active-indicator-color(map.get($theme, active-indicator-color));
-  @include _active-indicator-height(map.get($theme, active-indicator-height));
-  @include _active-indicator-width(map.get($theme, active-indicator-width));
-  @include _active-indicator-shape(map.get($theme, active-indicator-shape));
+    .md3-navigation-tab__label-text {
+      color: map.get($theme, active-label-text-color);
+    }
 
-  @include ripple-theme.theme(
-    (
-      hover-state-layer-color: map.get($theme, inactive-hover-state-layer-color),
-      focus-state-layer-color: map.get($theme, inactive-focus-state-layer-color),
-      pressed-state-layer-color:
-        map.get($theme, inactive-pressed-state-layer-color),
-      hover-state-layer-opacity: map.get($theme, hover-state-layer-opacity),
-      focus-state-layer-opacity: map.get($theme, focus-state-layer-opacity),
-      pressed-state-layer-opacity: map.get($theme, pressed-state-layer-opacity),
-    )
-  );
+    &:hover {
+      .md3-navigation-tab__icon {
+        color: map.get($theme, active-hover-icon-color);
+      }
 
-  @include _is-active() {
+      .md3-navigation-tab__label-text {
+        color: map.get($theme, active-hover-label-text-color);
+      }
+    }
+
+    &:focus {
+      .md3-navigation-tab__icon {
+        color: map.get($theme, active-focus-icon-color);
+      }
+
+      .md3-navigation-tab__label-text {
+        color: map.get($theme, active-focus-label-text-color);
+      }
+    }
+
+    &:active {
+      .md3-navigation-tab__icon {
+        color: map.get($theme, active-pressed-icon-color);
+      }
+
+      .md3-navigation-tab__label-text {
+        color: map.get($theme, active-pressed-label-text-color);
+      }
+    }
+
     @include ripple-theme.theme(
       (
         hover-state-layer-color: map.get($theme, active-hover-state-layer-color),
@@ -115,6 +104,78 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
           map.get($theme, pressed-state-layer-opacity),
       )
     );
+  }
+
+  &:not(.md3-navigation-tab--active) {
+    .md3-navigation-tab__icon {
+      color: map.get($theme, inactive-icon-color);
+    }
+
+    .md3-navigation-tab__label-text {
+      color: map.get($theme, inactive-label-text-color);
+    }
+
+    &:hover {
+      .md3-navigation-tab__icon {
+        color: map.get($theme, inactive-hover-icon-color);
+      }
+
+      .md3-navigation-tab__label-text {
+        color: map.get($theme, inactive-hover-label-text-color);
+      }
+    }
+
+    &:focus {
+      .md3-navigation-tab__icon {
+        color: map.get($theme, inactive-focus-icon-color);
+      }
+
+      .md3-navigation-tab__label-text {
+        color: map.get($theme, inactive-focus-label-text-color);
+      }
+    }
+
+    &:active {
+      .md3-navigation-tab__icon {
+        color: map.get($theme, inactive-pressed-icon-color);
+      }
+
+      .md3-navigation-tab__label-text {
+        color: map.get($theme, inactive-pressed-label-text-color);
+      }
+    }
+
+    @include ripple-theme.theme(
+      (
+        hover-state-layer-color:
+          map.get($theme, inactive-hover-state-layer-color),
+        focus-state-layer-color:
+          map.get($theme, inactive-focus-state-layer-color),
+        pressed-state-layer-color:
+          map.get($theme, inactive-pressed-state-layer-color),
+        hover-state-layer-opacity: map.get($theme, hover-state-layer-opacity),
+        focus-state-layer-opacity: map.get($theme, focus-state-layer-opacity),
+        pressed-state-layer-opacity:
+          map.get($theme, pressed-state-layer-opacity),
+      )
+    );
+  }
+
+  .md3-navigation-tab__active-indicator {
+    background-color: map.get($theme, active-indicator-color);
+    border-radius: map.get($theme, active-indicator-shape);
+  }
+
+  // Keep icon-content in sync with active-indicator size.
+  .md3-navigation-tab__active-indicator,
+  .md3-navigation-tab__icon-content {
+    height: map.get($theme, active-indicator-height);
+  }
+
+  // Keep icon-content in sync with active-indicator size.
+  &.md3-navigation-tab--active .md3-navigation-tab__active-indicator,
+  .md3-navigation-tab__icon-content {
+    width: map.get($theme, active-indicator-width);
   }
 
   @include focus-ring.theme(
@@ -134,182 +195,4 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
       large-shape: map.get($theme, large-badge-shape),
     )
   );
-}
-
-@mixin _icon-size($size) {
-  .md3-navigation-tab__icon {
-    width: $size;
-    height: $size;
-    font-size: $size;
-  }
-}
-
-@mixin _icon-color($color) {
-  .md3-navigation-tab__icon {
-    color: $color;
-
-    fill: currentColor;
-  }
-}
-
-@mixin _active-icon-color($color-or-map) {
-  &:not(:disabled) {
-    @include _set-active-icon-color(map.get($color-or-map, default));
-
-    &:hover {
-      @include _set-active-icon-color(map.get($color-or-map, hover));
-    }
-    &:focus {
-      @include _set-active-icon-color(map.get($color-or-map, focus));
-    }
-    &:active {
-      @include _set-active-icon-color(map.get($color-or-map, pressed));
-    }
-  }
-
-  &:disabled {
-    @include _set-active-icon-color(map.get($color-or-map, disabled));
-  }
-}
-
-@mixin _set-active-icon-color($color) {
-  @include _is-active() {
-    @include _icon-color($color);
-  }
-}
-
-@mixin _inactive-icon-color($color-or-map) {
-  &:not(:disabled) {
-    @include _set-inactive-icon-color(map.get($color-or-map, default));
-
-    &:hover {
-      @include _set-inactive-icon-color(map.get($color-or-map, hover));
-    }
-    &:focus {
-      @include _set-inactive-icon-color(map.get($color-or-map, focus));
-    }
-    &:active {
-      @include _set-inactive-icon-color(map.get($color-or-map, pressed));
-    }
-  }
-
-  &:disabled {
-    @include _set-inactive-icon-color(map.get($color-or-map, disabled));
-  }
-}
-
-@mixin _set-inactive-icon-color($color) {
-  @include _is-inactive() {
-    @include _icon-color($color);
-  }
-}
-
-@mixin _label-text-color($color) {
-  .md3-navigation-tab__label-text {
-    color: $color;
-  }
-}
-
-@mixin _active-label-text-color($color-or-map) {
-  &:not(:disabled) {
-    @include _set-active-label-text-color(map.get($color-or-map, default));
-
-    &:hover {
-      @include _set-active-label-text-color(map.get($color-or-map, hover));
-    }
-    &:focus {
-      @include _set-active-label-text-color(map.get($color-or-map, focus));
-    }
-    &:active {
-      @include _set-active-label-text-color(map.get($color-or-map, pressed));
-    }
-  }
-
-  &:disabled {
-    @include _set-active-label-text-color(map.get($color-or-map, disabled));
-  }
-}
-
-@mixin _set-active-label-text-color($color) {
-  @include _is-active() {
-    @include _label-text-color($color);
-  }
-}
-
-@mixin _inactive-label-text-color($color-or-map) {
-  &:not(:disabled) {
-    @include _set-inactive-label-text-color(map.get($color-or-map, default));
-
-    &:hover {
-      @include _set-inactive-label-text-color(map.get($color-or-map, hover));
-    }
-    &:focus {
-      @include _set-inactive-label-text-color(map.get($color-or-map, focus));
-    }
-    &:active {
-      @include _set-inactive-label-text-color(map.get($color-or-map, pressed));
-    }
-  }
-
-  &:disabled {
-    @include _set-inactive-label-text-color(map.get($color-or-map, disabled));
-  }
-}
-
-@mixin _set-inactive-label-text-color($color) {
-  @include _is-inactive() {
-    @include _label-text-color($color);
-  }
-}
-
-@mixin _set-label-text-typography($typography-map) {
-  $family: map.get($typography-map, family);
-  $size: map.get($typography-map, size);
-  $tracking: map.get($typography-map, tracking);
-  $weight: map.get($typography-map, weight);
-
-  font-family: $family;
-  font-size: $size;
-  letter-spacing: $tracking;
-  font-weight: $weight;
-}
-
-@mixin _active-indicator-color($color) {
-  .md3-navigation-tab__active-indicator {
-    background-color: $color;
-  }
-}
-
-@mixin _active-indicator-height($height) {
-  // Keep icon-content in sync with active-indicator size.
-  .md3-navigation-tab__active-indicator,
-  .md3-navigation-tab__icon-content {
-    height: $height;
-  }
-}
-
-@mixin _active-indicator-width($width) {
-  // Keep icon-content in sync with active-indicator size.
-  &.md3-navigation-tab--active .md3-navigation-tab__active-indicator,
-  .md3-navigation-tab__icon-content {
-    width: $width;
-  }
-}
-
-@mixin _active-indicator-shape($shape-radius) {
-  .md3-navigation-tab__active-indicator {
-    border-radius: $shape-radius;
-  }
-}
-
-@mixin _is-active() {
-  &.md3-navigation-tab--active {
-    @content;
-  }
-}
-
-@mixin _is-inactive() {
-  &:not(.md3-navigation-tab--active) {
-    @content;
-  }
 }
