@@ -3,19 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 @use './navigation-tab';
-@use './navigation-tab-theme';
 
-@include navigation-tab.static-styles();
-
-:host {
-  display: flex;
-  flex-grow: 1;
-}
-
-.md3-navigation-tab {
-  @include navigation-tab-theme.theme-styles(navigation-tab-theme.$light-theme);
-}
+@include navigation-tab.styles;

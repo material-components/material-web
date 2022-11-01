@@ -3,13 +3,9 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 @use 'sass:map';
 
 @use '../../elevation/lib/elevation-theme';
-@use '../../navigationtab/lib/navigation-tab-theme';
 @use '../../sass/map-ext';
 @use '../../sass/resolvers';
 @use '../../sass/theme';
@@ -49,12 +45,6 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
     $shadow-color-token: container-shadow-color,
     $elevation-tokens: (container-elevation)
   );
-
-  .md3-navigation-tab {
-    @include navigation-tab-theme.theme-styles(
-      map-ext.pick($theme, map.keys(navigation-tab-theme.$light-theme))
-    );
-  }
 
   $theme: theme.create-theme-vars($theme, 'navigation-bar');
 
