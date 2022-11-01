@@ -41,141 +41,141 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
 
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
-  font-family: map.get($theme, label-text-font);
-  font-size: map.get($theme, label-text-size);
-  letter-spacing: map.get($theme, label-text-tracking);
-  font-weight: map.get($theme, label-text-weight);
-  line-height: map.get($theme, label-text-line-height);
+  & {
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
+
+  font-family: var(--_label-text-font);
+  font-size: var(--_label-text-size);
+  letter-spacing: var(--_label-text-tracking);
+  font-weight: var(--_label-text-weight);
+  line-height: var(--_label-text-line-height);
 
   .md3-navigation-tab__icon {
-    width: map.get($theme, icon-size);
-    height: map.get($theme, icon-size);
-    font-size: map.get($theme, icon-size);
+    width: var(--_icon-size);
+    height: var(--_icon-size);
+    font-size: var(--_icon-size);
   }
 
   &.md3-navigation-tab--active {
     .md3-navigation-tab__icon {
-      color: map.get($theme, active-icon-color);
+      color: var(--_active-icon-color);
     }
 
     .md3-navigation-tab__label-text {
-      color: map.get($theme, active-label-text-color);
+      color: var(--_active-label-text-color);
     }
 
     &:hover {
       .md3-navigation-tab__icon {
-        color: map.get($theme, active-hover-icon-color);
+        color: var(--_active-hover-icon-color);
       }
 
       .md3-navigation-tab__label-text {
-        color: map.get($theme, active-hover-label-text-color);
+        color: var(--_active-hover-label-text-color);
       }
     }
 
     &:focus {
       .md3-navigation-tab__icon {
-        color: map.get($theme, active-focus-icon-color);
+        color: var(--_active-focus-icon-color);
       }
 
       .md3-navigation-tab__label-text {
-        color: map.get($theme, active-focus-label-text-color);
+        color: var(--_active-focus-label-text-color);
       }
     }
 
     &:active {
       .md3-navigation-tab__icon {
-        color: map.get($theme, active-pressed-icon-color);
+        color: var(--_active-pressed-icon-color);
       }
 
       .md3-navigation-tab__label-text {
-        color: map.get($theme, active-pressed-label-text-color);
+        color: var(--_active-pressed-label-text-color);
       }
     }
 
     @include ripple-theme.theme(
       (
-        hover-state-layer-color: map.get($theme, active-hover-state-layer-color),
-        focus-state-layer-color: map.get($theme, active-focus-state-layer-color),
-        pressed-state-layer-color:
-          map.get($theme, active-pressed-state-layer-color),
-        hover-state-layer-opacity: map.get($theme, hover-state-layer-opacity),
-        focus-state-layer-opacity: map.get($theme, focus-state-layer-opacity),
-        pressed-state-layer-opacity:
-          map.get($theme, pressed-state-layer-opacity),
+        hover-state-layer-color: var(--_active-hover-state-layer-color),
+        focus-state-layer-color: var(--_active-focus-state-layer-color),
+        pressed-state-layer-color: var(--_active-pressed-state-layer-color),
+        hover-state-layer-opacity: var(--_hover-state-layer-opacity),
+        focus-state-layer-opacity: var(--_focus-state-layer-opacity),
+        pressed-state-layer-opacity: var(--_pressed-state-layer-opacity),
       )
     );
   }
 
   &:not(.md3-navigation-tab--active) {
     .md3-navigation-tab__icon {
-      color: map.get($theme, inactive-icon-color);
+      color: var(--_inactive-icon-color);
     }
 
     .md3-navigation-tab__label-text {
-      color: map.get($theme, inactive-label-text-color);
+      color: var(--_inactive-label-text-color);
     }
 
     &:hover {
       .md3-navigation-tab__icon {
-        color: map.get($theme, inactive-hover-icon-color);
+        color: var(--_inactive-hover-icon-color);
       }
 
       .md3-navigation-tab__label-text {
-        color: map.get($theme, inactive-hover-label-text-color);
+        color: var(--_inactive-hover-label-text-color);
       }
     }
 
     &:focus {
       .md3-navigation-tab__icon {
-        color: map.get($theme, inactive-focus-icon-color);
+        color: var(--_inactive-focus-icon-color);
       }
 
       .md3-navigation-tab__label-text {
-        color: map.get($theme, inactive-focus-label-text-color);
+        color: var(--_inactive-focus-label-text-color);
       }
     }
 
     &:active {
       .md3-navigation-tab__icon {
-        color: map.get($theme, inactive-pressed-icon-color);
+        color: var(--_inactive-pressed-icon-color);
       }
 
       .md3-navigation-tab__label-text {
-        color: map.get($theme, inactive-pressed-label-text-color);
+        color: var(--_inactive-pressed-label-text-color);
       }
     }
 
     @include ripple-theme.theme(
       (
-        hover-state-layer-color:
-          map.get($theme, inactive-hover-state-layer-color),
-        focus-state-layer-color:
-          map.get($theme, inactive-focus-state-layer-color),
-        pressed-state-layer-color:
-          map.get($theme, inactive-pressed-state-layer-color),
-        hover-state-layer-opacity: map.get($theme, hover-state-layer-opacity),
-        focus-state-layer-opacity: map.get($theme, focus-state-layer-opacity),
-        pressed-state-layer-opacity:
-          map.get($theme, pressed-state-layer-opacity),
+        hover-state-layer-color: var(--_inactive-hover-state-layer-color),
+        focus-state-layer-color: var(--_inactive-focus-state-layer-color),
+        pressed-state-layer-color: var(--_inactive-pressed-state-layer-color),
+        hover-state-layer-opacity: var(--_hover-state-layer-opacity),
+        focus-state-layer-opacity: var(--_focus-state-layer-opacity),
+        pressed-state-layer-opacity: var(--_pressed-state-layer-opacity),
       )
     );
   }
 
   .md3-navigation-tab__active-indicator {
-    background-color: map.get($theme, active-indicator-color);
-    border-radius: map.get($theme, active-indicator-shape);
+    background-color: var(--_active-indicator-color);
+    border-radius: var(--_active-indicator-shape);
   }
 
   // Keep icon-content in sync with active-indicator size.
   .md3-navigation-tab__active-indicator,
   .md3-navigation-tab__icon-content {
-    height: map.get($theme, active-indicator-height);
+    height: var(--_active-indicator-height);
   }
 
   // Keep icon-content in sync with active-indicator size.
   &.md3-navigation-tab--active .md3-navigation-tab__active-indicator,
   .md3-navigation-tab__icon-content {
-    width: map.get($theme, active-indicator-width);
+    width: var(--_active-indicator-width);
   }
 
   @include focus-ring.theme(
@@ -187,12 +187,12 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
 
   @include badge.theme(
     (
-      color: map.get($theme, badge-color),
-      size: map.get($theme, badge-size),
-      shape: map.get($theme, badge-shape),
-      large-color: map.get($theme, large-badge-color),
-      large-size: map.get($theme, large-badge-size),
-      large-shape: map.get($theme, large-badge-shape),
+      color: var(--_badge-color),
+      size: var(--_badge-size),
+      shape: var(--_badge-shape),
+      large-color: var(--_large-badge-color),
+      large-size: var(--_large-badge-size),
+      large-shape: var(--_large-badge-shape),
     )
   );
 }
