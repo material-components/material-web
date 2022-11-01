@@ -3,6 +3,14 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
 @use './segmented-button';
+@use './segmented-button-theme';
 
 @include segmented-button.static-styles;
+
+.md3-segmented-button {
+  @include segmented-button-theme.theme-styles;
+}

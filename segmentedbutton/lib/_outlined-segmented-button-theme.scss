@@ -28,7 +28,11 @@ $dark-theme: tokens.md-comp-outlined-segmented-button-values(
   $theme: segmented-button-theme.resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, 'segmented-button');
 
-  @include segmented-button-theme.theme-styles($theme);
+  & {
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
 }
 
 ///

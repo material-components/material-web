@@ -6,17 +6,17 @@
 @use 'sass:map';
 @use '../../sass/shape';
 
-@mixin theme-styles($theme) {
-  height: map.get($theme, 'container-height');
+@mixin theme-styles() {
+  height: var(--_container-height);
 
   ::slotted(:first-child) {
-    border-start-start-radius: map.get($theme, 'shape-start-start');
-    border-end-start-radius: map.get($theme, 'shape-end-start');
+    border-start-start-radius: var(--_shape-start-start);
+    border-end-start-radius: var(--_shape-end-start);
   }
 
   ::slotted(:last-child) {
-    border-start-end-radius: map.get($theme, 'shape-start-end');
-    border-end-end-radius: map.get($theme, 'shape-end-end');
+    border-start-end-radius: var(--_shape-start-end);
+    border-end-end-radius: var(--_shape-end-end);
   }
 }
 
