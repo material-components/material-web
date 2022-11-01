@@ -48,9 +48,10 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
 
   $theme: theme.create-theme-vars($theme, 'navigation-bar');
 
-  @include _container-color(map.get($theme, container-color));
-  @include _container-shape(map.get($theme, container-shape));
-  @include _container-height(map.get($theme, container-height));
+  background-color: map.get($theme, container-color);
+  border-radius: map.get($theme, container-shape);
+  height: map.get($theme, container-height);
+
   @include elevation-theme.theme-styles(
     (
       shadow: map.get($theme, container-elevation-shadow),
@@ -59,16 +60,4 @@ $dark-theme: tokens.md-comp-navigation-bar-values(
         map.get($theme, container-surface-tint-layer-color),
     )
   );
-}
-
-@mixin _container-color($color) {
-  background-color: $color;
-}
-
-@mixin _container-height($height) {
-  height: $height;
-}
-
-@mixin _container-shape($shape-radius) {
-  border-radius: $shape-radius;
 }
