@@ -1,9 +1,8 @@
-/**
- * @license
- * Copyright 2022 Google LLC
- * SPDX-License-Identifier: Apache-2.0
- */
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
 
 @use './menu-button';
 
-@include menu-button.static-styles();
+@include menu-button.styles;

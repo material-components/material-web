@@ -3,6 +3,109 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-@mixin static-styles() {
-  // Intentionally blank for future-proofing.
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use 'sass:map';
+
+@use '../../elevation/lib/elevation-theme';
+@use '../../list/list';
+@use '../../list/list-item';
+@use '../../menusurface/menu-surface';
+@use '../../sass/resolvers';
+@use '../../sass/theme';
+@use '../../tokens';
+
+$_custom-property-prefix: 'menu';
+
+@mixin theme($theme) {
+  $theme: theme.validate-theme(tokens.md-comp-menu-values(), $theme);
+  $theme: _resolve-tokens($tokens);
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
+
+  @include theme.emit-theme-vars($theme);
+}
+
+@mixin styles() {
+  $tokens: tokens.md-comp-menu-values();
+  $tokens: _resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+
+  .md3-menu {
+    @include menu-surface.theme(
+      (
+        container-elevation-shadow: var(--_container-elevation-shadow),
+        container-shape: var(--_container-shape),
+      )
+    );
+
+    @include list.theme(
+      (
+        container-color: var(--_container-color),
+        container-surface-tint-layer-color:
+          var(--_container-surface-tint-layer-color),
+        container-elevation-overlay-opacity:
+          var(--_container-elevation-overlay-opacity),
+      )
+    );
+    @include list-item.theme(
+      (
+        list-item-container-color: var(--_container-color),
+        list-item-one-line-container-height: var(--_list-item-container-height),
+        list-item-disabled-label-text-color:
+          var(--_list-item-disabled-label-text-color),
+        list-item-disabled-label-text-opacity:
+          var(--_list-item-disabled-label-text-opacity),
+        list-item-hover-label-text-color:
+          var(--_list-item-hover-label-text-color),
+        list-item-hover-state-layer-color:
+          var(--_list-item-hover-state-layer-color),
+        list-item-hover-state-layer-opacity:
+          var(--_list-item-hover-state-layer-opacity),
+        list-item-label-text-color: var(--_list-item-label-text-color),
+        list-item-label-text-font: var(--_list-item-label-text-font),
+        list-item-label-text-line-height:
+          var(--_list-item-label-text-line-height),
+        list-item-label-text-size: var(--_list-item-label-text-size),
+        list-item-label-text-tracking: var(--_list-item-label-text-tracking),
+        list-item-label-text-weight: var(--_list-item-label-text-tracking),
+        list-item-disabled-leading-icon-color:
+          var(--_list-item-with-leading-icon-disabled-leading-icon-color),
+        list-item-disabled-leading-icon-opacity:
+          var(--_list-item-with-leading-icon-disabled-leading-icon-opacity),
+        list-item-hover-leading-icon-color:
+          var(--_list-item-with-leading-icon-hover-icon-color),
+        list-item-leading-icon-color:
+          var(--_list-item-with-leading-icon-leading-icon-color),
+        list-item-leading-icon-size:
+          var(--_list-item-with-leading-icon-leading-icon-size),
+        list-item-disabled-trailing-icon-color:
+          var(--_list-item-with-trailing-icon-disabled-trailing-icon-color),
+        list-item-disabled-trailing-icon-opacity:
+          var(--_list-item-with-trailing-icon-disabled-trailing-icon-opacity),
+        list-item-hover-trailing-icon-color:
+          var(--_list-item-with-trailing-icon-hover-icon-color),
+        list-item-trailing-icon-color:
+          var(--_list-item-with-trailing-icon-trailing-icon-color),
+        list-item-trailing-icon-size:
+          var(--_list-item-with-leading-icon-trailing-icon-size),
+      )
+    );
+  }
+}
+
+@function _resolve-tokens($tokens) {
+  $tokens: elevation-theme.resolve-theme(
+    $tokens,
+    map.get(resolvers.$material, 'elevation'),
+    $shadow-color-token: 'container-shadow-color',
+    $elevation-tokens: (container-elevation)
+  );
+  @return $tokens;
 }
