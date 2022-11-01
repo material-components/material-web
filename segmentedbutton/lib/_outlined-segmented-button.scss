@@ -3,9 +3,33 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern -- allow `md3-` class selectors.
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
 
-@mixin static-styles() {
+@use 'sass:map';
+@use '../../sass/theme';
+@use '../../tokens';
+@use './shared';
+
+@mixin styles() {
+  $tokens: tokens.md-comp-outlined-segmented-button-values();
+  // TODO(b/198759625): Remove spacing tokens once provided.
+  $tokens: map.merge(
+    $tokens,
+    (
+      'spacing-leading': 12px,
+      'spacing-trailing': 12px,
+    )
+  );
+  $tokens: shared.resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, 'segmented-button');
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+
   .md3-segmented-button__outline {
     border-radius: inherit;
     border-style: solid;

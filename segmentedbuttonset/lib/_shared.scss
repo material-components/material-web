@@ -1,0 +1,46 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
+@use 'sass:map';
+@use '../../sass/resolvers';
+@use '../../sass/shape';
+
+@mixin styles() {
+  :host {
+    display: flex;
+    outline: none;
+  }
+
+  .md3-segmented-button-set {
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    grid-auto-rows: auto;
+    width: 100%;
+    height: var(--_container-height);
+
+    ::slotted(:first-child) {
+      border-start-start-radius: var(--_shape-start-start);
+      border-end-start-radius: var(--_shape-end-start);
+    }
+
+    ::slotted(:last-child) {
+      border-start-end-radius: var(--_shape-start-end);
+      border-end-end-radius: var(--_shape-end-end);
+    }
+  }
+}
+
+@function resolve-tokens($tokens) {
+  $tokens: shape.resolve-theme(
+    $tokens,
+    map.get(resolvers.$material, 'shape'),
+    'shape'
+  );
+  @return $tokens;
+}

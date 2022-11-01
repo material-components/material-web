@@ -3,15 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern -- allow `md3-` class selectors.
-
 @use './outlined-segmented-button';
-@use './outlined-segmented-button-theme';
 
-@include outlined-segmented-button.static-styles;
-
-.md3-segmented-button--outlined {
-  @include outlined-segmented-button-theme.theme-styles(
-    outlined-segmented-button-theme.$light-theme
-  );
-}
+@include outlined-segmented-button.styles;
