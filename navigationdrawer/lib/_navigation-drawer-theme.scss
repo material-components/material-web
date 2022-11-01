@@ -44,17 +44,22 @@ $light-theme: (
 
   $theme: theme.create-theme-vars($theme, 'navigation-drawer');
 
-  @include _container-color(map.get($theme, container-color));
-  @include _container-shape(
-    (
-      start-start: map.get($theme, container-shape-start-start),
-      start-end: map.get($theme, container-shape-start-end),
-      end-end: map.get($theme, container-shape-end-end),
-      end-start: map.get($theme, container-shape-end-start),
-    )
-  );
-  @include _container-height(map.get($theme, container-height));
-  @include _container-width(map.get($theme, container-width));
+  background-color: map.get($theme, container-color);
+  border-start-start-radius: map.get($theme, container-shape-start-start);
+  border-start-end-radius: map.get($theme, container-shape-start-end);
+  border-end-end-radius: map.get($theme, container-shape-end-end);
+  border-end-start-radius: map.get($theme, container-shape-end-start);
+  height: map.get($theme, container-height);
+
+  &.md3-navigation-drawer-modal--opened {
+    inline-size: map.get($theme, container-width);
+  }
+
+  .md3-navigation-drawer-modal__slot-content {
+    min-inline-size: map.get($theme, container-width);
+    max-inline-size: map.get($theme, container-width);
+  }
+
   @include elevation-theme.theme-styles(
     (
       shadow: map.get($theme, standard-container-elevation-shadow),
@@ -80,32 +85,4 @@ $light-theme: (
   );
 
   @return $theme;
-}
-
-@mixin _container-color($color) {
-  background-color: $color;
-}
-
-@mixin _container-height($height) {
-  height: $height;
-}
-
-@mixin _container-shape($shape) {
-  border-start-start-radius: map.get($shape, start-start);
-  border-start-end-radius: map.get($shape, start-end);
-  border-end-end-radius: map.get($shape, end-end);
-  border-end-start-radius: map.get($shape, end-start);
-}
-
-@mixin _container-width($width) {
-  @if $width != null {
-    &.md3-navigation-drawer--opened {
-      inline-size: $width;
-    }
-
-    .md3-navigation-drawer__slot-content {
-      min-inline-size: $width;
-      max-inline-size: $width;
-    }
-  }
 }

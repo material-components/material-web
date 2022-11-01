@@ -16,11 +16,7 @@ $transition-duration: 0.25s;
 
 @mixin static-styles() {
   @include elevation-overlay.static-styles();
-  @include _base();
-  @include _slot-content();
-}
 
-@mixin _base() {
   :host {
     display: flex;
   }
@@ -53,9 +49,7 @@ $transition-duration: 0.25s;
   .md3-navigation-drawer--pivot-at-start {
     justify-content: flex-start;
   }
-}
 
-@mixin _slot-content() {
   .md3-navigation-drawer__slot-content {
     display: flex;
     flex-direction: column;

@@ -15,12 +15,7 @@ $_transition-duration: 0.25s;
 
 @mixin static-styles() {
   @include elevation-overlay.static-styles();
-  @include _base();
-  @include _slot-content();
-  @include _scrim();
-}
 
-@mixin _base() {
   .md3-navigation-drawer-modal {
     bottom: 0;
     box-sizing: border-box;
@@ -48,17 +43,13 @@ $_transition-duration: 0.25s;
   .md3-navigation-drawer-modal--pivot-at-start {
     justify-content: flex-start;
   }
-}
 
-@mixin _slot-content() {
   .md3-navigation-drawer-modal__slot-content {
     display: flex;
     flex-direction: column;
     position: relative;
   }
-}
 
-@mixin _scrim() {
   .md3-navigation-drawer-modal__scrim {
     inset: 0;
     opacity: 0;
