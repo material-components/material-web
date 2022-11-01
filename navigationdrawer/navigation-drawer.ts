@@ -8,6 +8,7 @@ import {customElement} from 'lit/decorators.js';
 
 import {NavigationDrawer} from './lib/navigation-drawer.js';
 import {styles} from './lib/navigation-drawer-styles.css.js';
+import {styles as sharedStyles} from './lib/shared-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -22,5 +23,5 @@ declare global {
  */
 @customElement('md-navigation-drawer')
 export class MdNavigationDrawer extends NavigationDrawer {
-  static override readonly styles = [styles];
+  static override readonly styles = [sharedStyles, styles];
 }

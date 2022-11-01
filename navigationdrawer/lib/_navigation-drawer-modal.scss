@@ -6,14 +6,50 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
+@use 'sass:map';
 @use '../../motion/animation';
 @use '../../elevation/lib/elevation-overlay';
+@use '../../elevation/lib/elevation-theme';
+@use '../../sass/theme';
+@use './shared';
 
 $_curve: animation.$standard-easing;
 $_delay: 0s;
 $_transition-duration: 0.25s;
 
-@mixin static-styles() {
+$_reference: (
+  container-color: #fff,
+  container-height: 100%,
+  container-shape: 0 16px 16px 0,
+  container-surface-tint-layer-color: null,
+  container-width: 360px,
+  // TODO(b/216384393): Temporary existing token to use for shadow color
+  divider-color: #000,
+  modal-container-elevation: 1,
+  scrim-color: null,
+  scrim-opacity: 0.04,
+  standard-container-elevation: 0,
+);
+
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme($_reference, $tokens);
+  $tokens: shared.resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, 'navigation-drawer-modal');
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: $_reference;
+  $tokens: shared.resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, 'navigation-drawer-modal');
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+
   @include elevation-overlay.static-styles();
 
   .md3-navigation-drawer-modal {
@@ -29,6 +65,13 @@ $_transition-duration: 0.25s;
     transition: inline-size $_transition-duration $_curve $_delay,
       visibility $_delay $_curve $_transition-duration;
 
+    @include elevation-theme.theme-styles(
+      (
+        overlay-opacity: var(--_modal-container-elevation-overlay-opacity),
+        surface-tint-layer-color: var(--_container-surface-tint-layer-color),
+      )
+    );
+
     .md3-elevation-overlay {
       width: inherit;
       z-index: 0;
@@ -38,6 +81,12 @@ $_transition-duration: 0.25s;
   .md3-navigation-drawer-modal--opened {
     transition: inline-size $_transition-duration $_curve $_delay,
       visibility $_delay $_curve $_delay;
+
+    @include elevation-theme.theme-styles(
+      (
+        shadow: var(--_modal-container-elevation-shadow),
+      )
+    );
   }
 
   .md3-navigation-drawer-modal--pivot-at-start {
@@ -55,6 +104,7 @@ $_transition-duration: 0.25s;
     opacity: 0;
     position: absolute;
     visibility: hidden;
+    background-color: var(--_scrim-color);
 
     transition: opacity $_transition-duration $_curve $_delay,
       visibility $_delay $_curve $_transition-duration;
@@ -62,6 +112,7 @@ $_transition-duration: 0.25s;
 
   .md3-navigation-drawer-modal--scrim-visible {
     visibility: visible;
+    opacity: var(--_scrim-opacity);
 
     transition: opacity $_transition-duration $_curve $_delay,
       visibility $_delay $_curve $_delay;
