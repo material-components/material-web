@@ -3,18 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 @use './navigation-bar';
-@use './navigation-bar-theme';
 
-@include navigation-bar.static-styles();
-
-:host {
-  width: 100%;
-}
-
-.md3-navigation-bar {
-  @include navigation-bar-theme.theme-styles(navigation-bar-theme.$light-theme);
-}
+@include navigation-bar.styles;
