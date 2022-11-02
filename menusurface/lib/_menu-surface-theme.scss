@@ -48,11 +48,17 @@ $light-theme: (
   $theme: theme.validate-theme-styles($light-theme, $theme);
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
+  & {
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
+
   @include elevation-theme.theme-styles(
     (
-      shadow: map.get($theme, 'container-elevation-shadow'),
+      shadow: var(--_container-elevation-shadow),
     )
   );
 
-  border-radius: map.get($theme, 'container-shape');
+  border-radius: var(--_container-shape);
 }
