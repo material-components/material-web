@@ -1,0 +1,35 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:map';
+@use '../../elevation/lib/elevation-theme';
+@use '../../sass/resolvers';
+@use '../../tokens';
+
+$_default-deps: (
+  md-sys-color: tokens.md-sys-color-values-light-dynamic(),
+  md-sys-elevation: tokens.md-sys-elevation-values(),
+  md-sys-shape: tokens.md-sys-shape-values(),
+);
+
+@function values($deps: $_default-deps, $exclude-hardcoded-values: false) {
+  // Use menu tokens for default menu surface values.
+  $menu-values: tokens.md-comp-menu-values($deps, $exclude-hardcoded-values);
+  // Note that we don't use "real" elevation tokens here because menu surface
+  // does not have defined tokens. Components that use menu surface are expected
+  // to pass through their own resolved tokens.
+  $menu-values: elevation-theme.resolve-theme(
+    $menu-values,
+    map.get(resolvers.$material, 'elevation'),
+    $shadow-color-token: 'container-shadow-color',
+    $elevation-tokens: (container-elevation)
+  );
+
+  @return (
+    container-elevation-shadow:
+      map.get($menu-values, container-elevation-shadow),
+    container-shape: map.get($menu-values, container-shape)
+  );
+}

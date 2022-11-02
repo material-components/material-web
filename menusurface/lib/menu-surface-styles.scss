@@ -3,14 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 @use './menu-surface';
-@use './menu-surface-theme';
 
-@include menu-surface.static-styles();
-
-.md3-menu-surface {
-  @include menu-surface-theme.theme-styles(menu-surface-theme.$light-theme);
-}
+@include menu-surface.styles;

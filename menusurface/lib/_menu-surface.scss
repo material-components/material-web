@@ -6,6 +6,12 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
+@use 'sass:map';
+@use '../../elevation/lib/elevation-theme';
+@use '../../sass/theme';
+@use './md-comp-menu-surface';
+
+$_custom-property-prefix: 'menu-surface';
 $_fade-in-duration: 0.03s;
 $_fade-out-duration: 0.075s;
 $_scale-duration: 0.12s;
@@ -15,8 +21,25 @@ $_max-height: calc(100vh - #{$_min-distance-from-edge});
 $_z-index: 8; // One above md3-dialog
 $_deceleration-curve-timing-function: cubic-bezier(0, 0, 0.2, 1) !default;
 
-@mixin static-styles() {
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme(md-comp-menu-surface.values(), $tokens);
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: md-comp-menu-surface.values();
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+
   .md3-menu-surface {
+    border-radius: var(--_container-shape);
     box-sizing: border-box;
     display: none;
     opacity: 0;
@@ -33,6 +56,12 @@ $_deceleration-curve-timing-function: cubic-bezier(0, 0, 0.2, 1) !default;
       height 250ms $_deceleration-curve-timing-function;
     will-change: transform, opacity;
     z-index: $_z-index;
+
+    @include elevation-theme.theme-styles(
+      (
+        shadow: var(--_container-elevation-shadow),
+      )
+    );
 
     .md3-elevation-overlay {
       z-index: 0;

@@ -3,5 +3,4 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-@forward './lib/menu-surface-theme' show
-  theme;
+@forward './lib/menu-surface' show theme;
