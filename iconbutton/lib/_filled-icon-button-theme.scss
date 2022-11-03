@@ -39,30 +39,27 @@ $dark-theme: tokens.md-comp-filled-icon-button-values(
   $theme: icon-button-theme.flatten-disabled-colors($theme, $variant: 'filled');
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
-  @include icon-button-theme.state-layer-size(
-    map.get($theme, 'container-size')
-  );
-  @include icon-button-theme.state-layer-shape(
-    map.get($theme, 'container-shape')
-  );
-  @include icon-button-theme.icon-size(map.get($theme, 'icon-size'));
+  @include icon-button-theme.theme-styles($theme);
 
-  @include icon-button-theme.icon-color(
-    (
-      default: map.get($theme, 'icon-color'),
-      disabled: map.get($theme, 'disabled-icon-color'),
-      focus: map.get($theme, 'focus-icon-color'),
-      hover: map.get($theme, 'hover-icon-color'),
-      pressed: map.get($theme, 'pressed-icon-color'),
-    )
-  );
+  background-color: map.get($theme, 'container-color');
+  color: map.get($theme, 'icon-color');
 
-  @include icon-button-theme.container-color(
-    (
-      default: map.get($theme, 'container-color'),
-      disabled: map.get($theme, 'disabled-container-color'),
-    )
-  );
+  &:hover {
+    color: map.get($theme, 'hover-icon-color');
+  }
+
+  &:focus {
+    color: map.get($theme, 'focus-icon-color');
+  }
+
+  &:active {
+    color: map.get($theme, 'pressed-icon-color');
+  }
+
+  &:disabled {
+    background-color: map.get($theme, 'disabled-container-color');
+    color: map.get($theme, 'disabled-icon-color');
+  }
 
   @include ripple-theme.theme(
     (
@@ -77,22 +74,22 @@ $dark-theme: tokens.md-comp-filled-icon-button-values(
   );
 
   &.md3-icon-button--toggle-filled {
-    @include icon-button-theme.icon-color(
-      (
-        default: map.get($theme, 'toggle-unselected-icon-color'),
-        disabled: map.get($theme, 'disabled-icon-color'),
-        focus: map.get($theme, 'toggle-unselected-focus-icon-color'),
-        hover: map.get($theme, 'toggle-unselected-hover-icon-color'),
-        pressed: map.get($theme, 'toggle-unselected-pressed-icon-color'),
-      )
-    );
+    &:not(:disabled) {
+      background-color: map.get($theme, 'unselected-container-color');
+      color: map.get($theme, 'toggle-unselected-icon-color');
 
-    @include icon-button-theme.container-color(
-      (
-        default: map.get($theme, 'unselected-container-color'),
-        disabled: map.get($theme, 'disabled-container-color'),
-      )
-    );
+      &:hover {
+        color: map.get($theme, 'toggle-unselected-hover-icon-color');
+      }
+
+      &:focus {
+        color: map.get($theme, 'toggle-unselected-focus-icon-color');
+      }
+
+      &:active {
+        color: map.get($theme, 'toggle-unselected-pressed-icon-color');
+      }
+    }
 
     @include ripple-theme.theme(
       (
@@ -107,22 +104,22 @@ $dark-theme: tokens.md-comp-filled-icon-button-values(
   }
 
   &.md3-icon-button--on {
-    @include icon-button-theme.icon-color(
-      (
-        default: map.get($theme, 'toggle-selected-icon-color'),
-        disabled: map.get($theme, 'disabled-icon-color'),
-        focus: map.get($theme, 'toggle-selected-focus-icon-color'),
-        hover: map.get($theme, 'toggle-selected-hover-icon-color'),
-        pressed: map.get($theme, 'toggle-selected-pressed-icon-color'),
-      )
-    );
+    &:not(:disabled) {
+      background-color: map.get($theme, 'selected-container-color');
+      color: map.get($theme, 'toggle-selected-icon-color');
 
-    @include icon-button-theme.container-color(
-      (
-        default: map.get($theme, 'selected-container-color'),
-        disabled: map.get($theme, 'disabled-container-color'),
-      )
-    );
+      &:hover {
+        color: map.get($theme, 'toggle-selected-hover-icon-color');
+      }
+
+      &:focus {
+        color: map.get($theme, 'toggle-selected-focus-icon-color');
+      }
+
+      &:active {
+        color: map.get($theme, 'toggle-selected-pressed-icon-color');
+      }
+    }
 
     @include ripple-theme.theme(
       (

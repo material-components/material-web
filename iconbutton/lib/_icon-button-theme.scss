@@ -13,67 +13,23 @@
 @use '../../sass/theme';
 @use '../../tokens';
 
-@mixin state-layer-size($size) {
-  height: $size;
-  width: $size;
+@mixin theme-styles($theme) {
+  $touch-target-height: 48px;
 
-  @if $size {
-    $touch-target-height: 48px;
-    margin: max(0px, calc((#{$touch-target-height} - #{$size}) / 2));
-  }
-}
-
-@mixin state-layer-shape($shape) {
-  border-radius: $shape;
-}
-
-@mixin icon-size($size) {
-  font-size: $size;
+  height: map.get($theme, container-size);
+  width: map.get($theme, container-size);
+  margin: max(
+    0px,
+    calc((#{$touch-target-height} - #{map.get($theme, container-size)}) / 2)
+  );
+  font-size: map.get($theme, icon-size);
+  border-radius: map.get($theme, 'container-shape');
 
   i,
   svg,
   img {
-    height: $size;
-    width: $size;
-  }
-}
-
-///
-/// Sets the icon color to the given color.
-/// @param {map} $color-map - The desired icon color, specified as a map of
-///     colors with states {default, disabled, focus, hover, pressed} as keys.
-/// @access private
-///
-@mixin icon-color($color-map) {
-  @include _set-icon-color(map.get($color-map, 'default'));
-
-  &:disabled {
-    @include _set-icon-color(map.get($color-map, 'disabled'));
-  }
-
-  &:focus {
-    @include _set-icon-color(map.get($color-map, 'focus'));
-  }
-
-  &:hover {
-    @include _set-icon-color(map.get($color-map, 'hover'));
-  }
-
-  &:not(:disabled):active {
-    @include _set-icon-color(map.get($color-map, 'pressed'));
-  }
-}
-
-///
-/// Sets the container color to the given color.
-/// @param {map} $color-map - The desired icon color, specified as a map of
-///     colors with states {default, disabled} as keys.
-///
-@mixin container-color($color-map) {
-  @include _set-container-color(map.get($color-map, 'default'));
-
-  &:disabled {
-    @include _set-container-color(map.get($color-map, 'disabled'));
+    height: map.get($theme, icon-size);
+    width: map.get($theme, icon-size);
   }
 }
 
@@ -141,20 +97,4 @@
       )
     )
   );
-}
-
-///
-/// Sets the font color to the provided color value.
-/// @param {Color} $color - The desired font color.
-///
-@mixin _set-icon-color($color) {
-  color: $color;
-}
-
-///
-/// Sets the container color to the provided color value.
-/// @param {Color} $color - The desired background color.
-///
-@mixin _set-container-color($color) {
-  background-color: $color;
 }

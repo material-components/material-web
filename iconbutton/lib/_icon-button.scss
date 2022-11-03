@@ -17,7 +17,12 @@
     display: inline-flex;
     outline: none;
 
-    @include _focus-ring();
+    @include focus-ring.theme(
+      (
+        container-outer-padding-vertical: 0px,
+        container-outer-padding-horizontal: 0px,
+      )
+    );
   }
 
   :host([disabled]) {
@@ -78,13 +83,4 @@
   .md3-icon-button__touch {
     @include touch-target.touch-target;
   }
-}
-
-@mixin _focus-ring() {
-  @include focus-ring.theme(
-    (
-      container-outer-padding-vertical: 0px,
-      container-outer-padding-horizontal: 0px,
-    )
-  );
 }

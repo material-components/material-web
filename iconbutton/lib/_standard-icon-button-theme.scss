@@ -41,34 +41,17 @@ $dark-theme: tokens.md-comp-icon-button-values(
   $theme: icon-button-theme.flatten-disabled-colors($theme);
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
-  @include icon-button-theme.icon-size(map.get($theme, icon-size));
-  @include icon-button-theme.state-layer-size(
-    $size: map.get($theme, state-layer-size)
+  @include icon-button-theme.theme-styles($theme);
+
+  $touch-target-height: 48px;
+  color: map.get($theme, 'unselected-icon-color');
+  height: map.get($theme, state-layer-size);
+  width: map.get($theme, state-layer-size);
+  margin: max(
+    0px,
+    calc((#{$touch-target-height} - #{map.get($theme, state-layer-size)}) / 2)
   );
 
-  @include icon-button-theme.icon-color(
-    (
-      default: map.get($theme, unselected-icon-color),
-      disabled: map.get($theme, disabled-icon-color),
-      focus: map.get($theme, unselected-focus-icon-color),
-      hover: map.get($theme, unselected-hover-icon-color),
-      pressed: map.get($theme, unselected-pressed-icon-color),
-    )
-  );
-
-  &.md3-icon-button--on {
-    @include icon-button-theme.icon-color(
-      (
-        default: map.get($theme, selected-icon-color),
-        disabled: map.get($theme, disabled-icon-color),
-        focus: map.get($theme, selected-focus-icon-color),
-        hover: map.get($theme, selected-hover-icon-color),
-        pressed: map.get($theme, selected-pressed-icon-color),
-      )
-    );
-  }
-
-  // States styles
   @include ripple-theme.theme(
     (
       focus-state-layer-color:
@@ -86,7 +69,39 @@ $dark-theme: tokens.md-comp-icon-button-values(
     )
   );
 
+  &:hover {
+    color: map.get($theme, 'unselected-hover-icon-color');
+  }
+
+  &:focus {
+    color: map.get($theme, 'unselected-focus-icon-color');
+  }
+
+  &:active {
+    color: map.get($theme, 'unselected-pressed-icon-color');
+  }
+
+  &:disabled {
+    color: map.get($theme, 'disabled-icon-color');
+  }
+
   &.md3-icon-button--on {
+    &:not(:disabled) {
+      color: map.get($theme, 'selected-icon-color');
+
+      &:hover {
+        color: map.get($theme, 'selected-hover-icon-color');
+      }
+
+      &:focus {
+        color: map.get($theme, 'selected-focus-icon-color');
+      }
+
+      &:active {
+        color: map.get($theme, 'selected-pressed-icon-color');
+      }
+    }
+
     @include ripple-theme.theme(
       (
         focus-state-layer-color:
