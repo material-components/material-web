@@ -41,81 +41,74 @@ $dark-theme: tokens.md-comp-icon-button-values(
   $theme: icon-button-theme.flatten-disabled-colors($theme);
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
-  @include icon-button-theme.theme-styles($theme);
+  & {
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
 
   $touch-target-height: 48px;
-  color: map.get($theme, 'unselected-icon-color');
-  height: map.get($theme, state-layer-size);
-  width: map.get($theme, state-layer-size);
+  color: var(--_unselected-icon-color);
+  height: var(--_state-layer-size);
+  width: var(--_state-layer-size);
   margin: max(
     0px,
-    calc((#{$touch-target-height} - #{map.get($theme, state-layer-size)}) / 2)
+    calc((#{$touch-target-height} - #{var(--_state-layer-size)}) / 2)
   );
-
   @include ripple-theme.theme(
     (
-      focus-state-layer-color:
-        map.get($theme, unselected-focus-state-layer-color),
-      focus-state-layer-opacity:
-        map.get($theme, unselected-focus-state-layer-opacity),
-      hover-state-layer-color:
-        map.get($theme, unselected-hover-state-layer-color),
-      hover-state-layer-opacity:
-        map.get($theme, unselected-hover-state-layer-opacity),
-      pressed-state-layer-color:
-        map.get($theme, unselected-pressed-state-layer-color),
+      focus-state-layer-color: var(--_unselected-focus-state-layer-color),
+      focus-state-layer-opacity: var(--_unselected-focus-state-layer-opacity),
+      hover-state-layer-color: var(--_unselected-hover-state-layer-color),
+      hover-state-layer-opacity: var(--_unselected-hover-state-layer-opacity),
+      pressed-state-layer-color: var(--_unselected-pressed-state-layer-color),
       pressed-state-layer-opacity:
-        map.get($theme, unselected-pressed-state-layer-opacity),
+        var(--_unselected-pressed-state-layer-opacity),
     )
   );
 
   &:hover {
-    color: map.get($theme, 'unselected-hover-icon-color');
+    color: var(--_unselected-hover-icon-color);
   }
 
   &:focus {
-    color: map.get($theme, 'unselected-focus-icon-color');
+    color: var(--_unselected-focus-icon-color);
   }
 
   &:active {
-    color: map.get($theme, 'unselected-pressed-icon-color');
+    color: var(--_unselected-pressed-icon-color);
   }
 
   &:disabled {
-    color: map.get($theme, 'disabled-icon-color');
+    color: var(--_disabled-icon-color);
   }
 
   &.md3-icon-button--on {
     &:not(:disabled) {
-      color: map.get($theme, 'selected-icon-color');
+      color: var(--_selected-icon-color);
 
       &:hover {
-        color: map.get($theme, 'selected-hover-icon-color');
+        color: var(--_selected-hover-icon-color);
       }
 
       &:focus {
-        color: map.get($theme, 'selected-focus-icon-color');
+        color: var(--_selected-focus-icon-color);
       }
 
       &:active {
-        color: map.get($theme, 'selected-pressed-icon-color');
+        color: var(--_selected-pressed-icon-color);
       }
     }
 
     @include ripple-theme.theme(
       (
-        focus-state-layer-color:
-          map.get($theme, selected-focus-state-layer-color),
-        focus-state-layer-opacity:
-          map.get($theme, selected-focus-state-layer-opacity),
-        hover-state-layer-color:
-          map.get($theme, selected-hover-state-layer-color),
-        hover-state-layer-opacity:
-          map.get($theme, selected-hover-state-layer-opacity),
-        pressed-state-layer-color:
-          map.get($theme, selected-pressed-state-layer-color),
+        focus-state-layer-color: var(--_selected-focus-state-layer-color),
+        focus-state-layer-opacity: var(--_selected-focus-state-layer-opacity),
+        hover-state-layer-color: var(--_selected-hover-state-layer-color),
+        hover-state-layer-opacity: var(--_selected-hover-state-layer-opacity),
+        pressed-state-layer-color: var(--_selected-pressed-state-layer-color),
         pressed-state-layer-opacity:
-          map.get($theme, selected-pressed-state-layer-opacity),
+          var(--_selected-pressed-state-layer-opacity),
       )
     );
   }

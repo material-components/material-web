@@ -61,86 +61,81 @@ $dark-theme: map.merge(
   );
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
-  @include icon-button-theme.theme-styles($theme);
-  // Unselected icon button toggle.
+  & {
+    @each $token, $value in $theme {
+      --_#{$token}: #{$value};
+    }
+  }
 
-  color: map.get($theme, 'unselected-icon-color');
+  color: var(--_unselected-icon-color);
 
   @include ripple-theme.theme(
     (
-      focus-state-layer-color:
-        map.get($theme, 'unselected-focus-state-layer-color'),
-      focus-state-layer-opacity: map.get($theme, 'focus-state-layer-opacity'),
-      hover-state-layer-color:
-        map.get($theme, 'unselected-hover-state-layer-color'),
-      hover-state-layer-opacity: map.get($theme, 'hover-state-layer-opacity'),
-      pressed-state-layer-color:
-        map.get($theme, 'unselected-pressed-state-layer-color'),
-      pressed-state-layer-opacity:
-        map.get($theme, 'pressed-state-layer-opacity'),
+      focus-state-layer-color: var(--_unselected-focus-state-layer-color),
+      focus-state-layer-opacity: var(--_focus-state-layer-opacity),
+      hover-state-layer-color: var(--_unselected-hover-state-layer-color),
+      hover-state-layer-opacity: var(--_over-state-layer-opacity),
+      pressed-state-layer-color: var(--_unselected-pressed-state-layer-color),
+      pressed-state-layer-opacity: var(--_pressed-state-layer-opacity),
     )
   );
 
   &::before {
-    border-color: map.get($theme, 'unselected-outline-color');
-    border-width: map.get($theme, 'unselected-outline-width');
+    border-color: var(--_unselected-outline-color);
+    border-width: var(--_unselected-outline-width);
   }
 
   &:hover {
-    color: map.get($theme, 'unselected-hover-icon-color');
+    color: var(--_unselected-hover-icon-color);
   }
 
   &:focus {
-    color: map.get($theme, 'unselected-focus-icon-color');
+    color: var(--_unselected-focus-icon-color);
   }
 
   &:active {
-    color: map.get($theme, 'unselected-pressed-icon-color');
+    color: var(--_unselected-pressed-icon-color);
   }
 
   &:disabled {
-    color: map.get($theme, 'disabled-icon-color');
+    color: var(--_disabled-icon-color);
 
     &::before {
-      border-color: map.get($theme, 'disabled-outline-color');
+      border-color: var(--_disabled-outline-color);
     }
   }
 
   // Selected icon button toggle.
   &.md3-icon-button--on {
     &:not(:disabled) {
-      background-color: map.get($theme, 'selected-container-color');
-      color: map.get($theme, 'selected-icon-color');
+      background-color: var(--_selected-container-color);
+      color: var(--_selected-icon-color);
 
       &:hover {
-        color: map.get($theme, 'selected-hover-icon-color');
+        color: var(--_selected-hover-icon-color);
       }
 
       &:focus {
-        color: map.get($theme, 'selected-focus-icon-color');
+        color: var(--_selected-focus-icon-color);
       }
 
       &:active {
-        color: map.get($theme, 'selected-pressed-icon-color');
+        color: var(--_selected-pressed-icon-color);
       }
     }
 
     &:disabled {
-      background-color: map.get($theme, 'disabled-selected-container-color');
+      background-color: var(--_disabled-selected-container-color);
     }
 
     @include ripple-theme.theme(
       (
-        focus-state-layer-color:
-          map.get($theme, 'selected-focus-state-layer-color'),
-        focus-state-layer-opacity: map.get($theme, 'focus-state-layer-opacity'),
-        hover-state-layer-color:
-          map.get($theme, 'selected-hover-state-layer-color'),
-        hover-state-layer-opacity: map.get($theme, 'hover-state-layer-opacity'),
-        pressed-state-layer-color:
-          map.get($theme, 'selected-pressed-state-layer-color'),
-        pressed-state-layer-opacity:
-          map.get($theme, 'pressed-state-layer-opacity'),
+        focus-state-layer-color: var(--_selected-focus-state-layer-color),
+        focus-state-layer-opacity: var(--_focus-state-layer-opacity),
+        hover-state-layer-color: var(--_selected-hover-state-layer-color),
+        hover-state-layer-opacity: var(--_hover-state-layer-opacity),
+        pressed-state-layer-color: var(--_selected-pressed-state-layer-color),
+        pressed-state-layer-opacity: var(--_pressed-state-layer-opacity),
       )
     );
   }
@@ -149,12 +144,12 @@ $dark-theme: map.merge(
     // Selected button in HCM has an outline.
     &.md3-icon-button--on {
       &::before {
-        border-color: map.get($theme, 'unselected-outline-color');
-        border-width: map.get($theme, 'unselected-outline-width');
+        border-color: var(--_unselected-outline-color);
+        border-width: var(--_unselected-outline-width);
       }
 
       &:disabled::before {
-        border-color: map.get($theme, 'disabled-outline-color');
+        border-color: var(--_disabled-outline-color);
       }
     }
   }

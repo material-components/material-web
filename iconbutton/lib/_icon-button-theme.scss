@@ -13,23 +13,23 @@
 @use '../../sass/theme';
 @use '../../tokens';
 
-@mixin theme-styles($theme) {
+@mixin theme-styles() {
   $touch-target-height: 48px;
 
-  height: map.get($theme, container-size);
-  width: map.get($theme, container-size);
+  height: var(--_container-size);
+  width: var(--_container-size);
+  font-size: var(--_icon-size);
   margin: max(
     0px,
-    calc((#{$touch-target-height} - #{map.get($theme, container-size)}) / 2)
+    calc((#{$touch-target-height} - var(--_container-size)) / 2)
   );
-  font-size: map.get($theme, icon-size);
-  border-radius: map.get($theme, 'container-shape');
+  border-radius: var(--_container-shape);
 
   i,
   svg,
   img {
-    height: map.get($theme, icon-size);
-    width: map.get($theme, icon-size);
+    height: var(--_icon-size);
+    width: var(--_icon-size);
   }
 }
 

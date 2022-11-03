@@ -3,6 +3,14 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
 @use './icon-button';
+@use './icon-button-theme';
 
 @include icon-button.static-styles;
+
+.md3-icon-button {
+  @include icon-button-theme.theme-styles;
+}
