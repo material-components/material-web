@@ -1,13 +1,105 @@
 //
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 // SPDX-License-Identifier: Apache-2.0
 //
 
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@mixin static-styles() {
+@use 'sass:map';
+@use '../../ripple/ripple-theme';
+@use '../../sass/theme';
+@use '../../tokens';
+@use './shared';
+
+$_custom-property-prefix: 'icon-button';
+
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme(tokens.md-comp-icon-button-values(), $tokens);
+  $tokens: shared.flatten-disabled-colors($tokens);
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: tokens.md-comp-icon-button-values();
+  $tokens: shared.flatten-disabled-colors($tokens);
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+
   .md3-icon-button--standard {
+    $touch-target-height: 48px;
     background-color: transparent;
+    color: var(--_unselected-icon-color);
+    height: var(--_state-layer-size);
+    width: var(--_state-layer-size);
+    margin: max(
+      0px,
+      calc((#{$touch-target-height} - #{var(--_state-layer-size)}) / 2)
+    );
+
+    @include ripple-theme.theme(
+      (
+        focus-state-layer-color: var(--_unselected-focus-state-layer-color),
+        focus-state-layer-opacity: var(--_unselected-focus-state-layer-opacity),
+        hover-state-layer-color: var(--_unselected-hover-state-layer-color),
+        hover-state-layer-opacity: var(--_unselected-hover-state-layer-opacity),
+        pressed-state-layer-color: var(--_unselected-pressed-state-layer-color),
+        pressed-state-layer-opacity:
+          var(--_unselected-pressed-state-layer-opacity),
+      )
+    );
+
+    &:hover {
+      color: var(--_unselected-hover-icon-color);
+    }
+
+    &:focus {
+      color: var(--_unselected-focus-icon-color);
+    }
+
+    &:active {
+      color: var(--_unselected-pressed-icon-color);
+    }
+
+    &:disabled {
+      color: var(--_disabled-icon-color);
+    }
+  }
+
+  .md3-icon-button--on {
+    &:not(:disabled) {
+      color: var(--_selected-icon-color);
+
+      &:hover {
+        color: var(--_selected-hover-icon-color);
+      }
+
+      &:focus {
+        color: var(--_selected-focus-icon-color);
+      }
+
+      &:active {
+        color: var(--_selected-pressed-icon-color);
+      }
+    }
+
+    @include ripple-theme.theme(
+      (
+        focus-state-layer-color: var(--_selected-focus-state-layer-color),
+        focus-state-layer-opacity: var(--_selected-focus-state-layer-opacity),
+        hover-state-layer-color: var(--_selected-hover-state-layer-color),
+        hover-state-layer-opacity: var(--_selected-hover-state-layer-opacity),
+        pressed-state-layer-color: var(--_selected-pressed-state-layer-color),
+        pressed-state-layer-opacity:
+          var(--_selected-pressed-state-layer-opacity),
+      )
+    );
   }
 }

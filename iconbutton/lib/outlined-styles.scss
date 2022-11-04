@@ -3,16 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 @use './outlined-icon-button';
-@use './outlined-icon-button-theme';
 
-@include outlined-icon-button.static-styles();
-
-.md3-icon-button--outlined {
-  @include outlined-icon-button-theme.theme-styles(
-    outlined-icon-button-theme.$light-theme
-  );
-}
+@include outlined-icon-button.styles;

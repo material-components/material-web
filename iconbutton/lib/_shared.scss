@@ -3,33 +3,105 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// This file contains common theme mixins that are shared across icon button
+// This file contains common static styles that are shared across icon button
 // variants.
 
-@use 'sass:map';
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
 
-@use '../../ripple/ripple-theme';
+@use 'sass:map';
+@use '../../focus/focus-ring';
 @use '../../sass/color';
-@use '../../sass/theme';
+@use '../../sass/touch-target';
 @use '../../tokens';
 
-@mixin theme-styles() {
-  $touch-target-height: 48px;
+@mixin styles() {
+  :host {
+    display: inline-flex;
+    outline: none;
 
-  height: var(--_container-size);
-  width: var(--_container-size);
-  font-size: var(--_icon-size);
-  margin: max(
-    0px,
-    calc((#{$touch-target-height} - var(--_container-size)) / 2)
-  );
-  border-radius: var(--_container-shape);
+    @include focus-ring.theme(
+      (
+        container-outer-padding-vertical: 0px,
+        container-outer-padding-horizontal: 0px,
+      )
+    );
+  }
 
-  i,
-  svg,
-  img {
-    height: var(--_icon-size);
-    width: var(--_icon-size);
+  :host([disabled]) {
+    pointer-events: none;
+  }
+
+  .md3-icon-button {
+    $touch-target-height: 48px;
+
+    align-items: center;
+    border: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    fill: currentColor;
+    justify-content: center;
+    outline: none;
+    position: relative;
+    text-decoration: none;
+    user-select: none;
+    z-index: 0;
+    height: var(--_container-size);
+    width: var(--_container-size);
+    font-size: var(--_icon-size);
+    margin: max(
+      0px,
+      calc((#{$touch-target-height} - var(--_container-size)) / 2)
+    );
+    border-radius: var(--_container-shape);
+
+    i,
+    svg,
+    img {
+      height: var(--_icon-size);
+      width: var(--_icon-size);
+    }
+
+    i,
+    svg,
+    img,
+    ::slotted(*) {
+      display: block;
+    }
+  }
+
+  .md3-icon-button--flip-icon .md3-icon-button__icon {
+    transform: scaleX(-1);
+  }
+
+  .md3-icon-button__icon {
+    display: inline-flex;
+
+    &.md3-icon-button__icon--on {
+      display: none;
+    }
+  }
+
+  .md3-icon-button--on {
+    .md3-icon-button__icon {
+      display: none;
+
+      &.md3-icon-button__icon--on {
+        display: inline-flex;
+      }
+    }
+  }
+
+  .md3-icon-button__link {
+    height: 100%;
+    outline: none;
+    position: absolute;
+    width: 100%;
+  }
+
+  .md3-icon-button__touch {
+    @include touch-target.touch-target;
   }
 }
 

@@ -6,9 +6,92 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@mixin static-styles() {
+@use 'sass:map';
+@use '../../ripple/ripple-theme';
+@use '../../sass/resolvers';
+@use '../../sass/color';
+@use '../../sass/theme';
+@use '../../tokens';
+@use './shared';
+
+$_custom-property-prefix: 'outlined-icon-button';
+
+@mixin theme($tokens) {
+  // TODO(b/233323674): Remove when missing tokens have been added.
+  $reference: map.merge(
+    tokens.md-comp-outlined-icon-button-values(),
+    (
+      disabled-selected-container-color:
+        map.get(tokens.md-sys-color-values-light-dynamic(), on-surface),
+      disabled-selected-container-opacity: 0.12,
+    )
+  );
+  $tokens: theme.validate-theme($reference, $tokens);
+  $tokens: shared.flatten-disabled-colors($tokens, $variant: 'outlined');
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: tokens.md-comp-outlined-icon-button-values();
+  // TODO(b/233323674): Remove when missing tokens have been added.
+  $tokens: map.merge(
+    $tokens,
+    (
+      disabled-selected-container-color:
+        map.get(tokens.md-sys-color-values-light-dynamic(), on-surface),
+      disabled-selected-container-opacity: 0.12,
+    )
+  );
+  $tokens: shared.flatten-disabled-colors($tokens, $variant: 'outlined');
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  * {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+
   .md3-icon-button--outlined {
     background-color: transparent;
+    color: var(--_unselected-icon-color);
+
+    @include ripple-theme.theme(
+      (
+        focus-state-layer-color: var(--_unselected-focus-state-layer-color),
+        focus-state-layer-opacity: var(--_focus-state-layer-opacity),
+        hover-state-layer-color: var(--_unselected-hover-state-layer-color),
+        hover-state-layer-opacity: var(--_hover-state-layer-opacity),
+        pressed-state-layer-color: var(--_unselected-pressed-state-layer-color),
+        pressed-state-layer-opacity: var(--_pressed-state-layer-opacity),
+      )
+    );
+
+    &::before {
+      border-color: var(--_unselected-outline-color);
+      border-width: var(--_unselected-outline-width);
+    }
+
+    &:hover {
+      color: var(--_unselected-hover-icon-color);
+    }
+
+    &:focus {
+      color: var(--_unselected-focus-icon-color);
+    }
+
+    &:active {
+      color: var(--_unselected-pressed-icon-color);
+    }
+
+    &:disabled {
+      color: var(--_disabled-icon-color);
+
+      &::before {
+        border-color: var(--_disabled-outline-color);
+      }
+    }
   }
 
   .md3-icon-button--outlined::before {
@@ -26,5 +109,54 @@
   // Selected toggle buttons have no outline.
   .md3-icon-button--outlined.md3-icon-button--on::before {
     border-width: 0;
+  }
+
+  // Selected icon button toggle.
+  .md3-icon-button--on {
+    &:not(:disabled) {
+      background-color: var(--_selected-container-color);
+      color: var(--_selected-icon-color);
+
+      &:hover {
+        color: var(--_selected-hover-icon-color);
+      }
+
+      &:focus {
+        color: var(--_selected-focus-icon-color);
+      }
+
+      &:active {
+        color: var(--_selected-pressed-icon-color);
+      }
+    }
+
+    &:disabled {
+      background-color: var(--_disabled-selected-container-color);
+    }
+
+    @include ripple-theme.theme(
+      (
+        focus-state-layer-color: var(--_selected-focus-state-layer-color),
+        focus-state-layer-opacity: var(--_focus-state-layer-opacity),
+        hover-state-layer-color: var(--_selected-hover-state-layer-color),
+        hover-state-layer-opacity: var(--_hover-state-layer-opacity),
+        pressed-state-layer-color: var(--_selected-pressed-state-layer-color),
+        pressed-state-layer-opacity: var(--_pressed-state-layer-opacity),
+      )
+    );
+  }
+
+  @media (forced-colors: active) {
+    // Selected button in HCM has an outline.
+    .md3-icon-button--on {
+      &::before {
+        border-color: var(--_unselected-outline-color);
+        border-width: var(--_unselected-outline-width);
+      }
+
+      &:disabled::before {
+        border-color: var(--_disabled-outline-color);
+      }
+    }
   }
 }

@@ -11,7 +11,7 @@ import {ClassInfo} from 'lit/directives/class-map.js';
 
 import {styles} from './lib/filled-styles.css.js';
 import {IconButton} from './lib/icon-button.js';
-import {styles as sharedStyles} from './lib/icon-button-styles.css.js';
+import {styles as sharedStyles} from './lib/shared-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -3,5 +3,4 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-@forward './lib/filled-icon-button-theme' show
-  theme;
+@forward './lib/filled-icon-button' show theme;

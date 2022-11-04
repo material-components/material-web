@@ -10,8 +10,8 @@ import {customElement} from 'lit/decorators.js';
 import {ClassInfo} from 'lit/directives/class-map.js';
 
 import {styles} from './lib/filled-tonal-styles.css.js';
-import {styles as sharedStyles} from './lib/icon-button-styles.css.js';
 import {LinkIconButton} from './lib/link-icon-button.js';
+import {styles as sharedStyles} from './lib/shared-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {
