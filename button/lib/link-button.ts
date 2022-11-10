@@ -6,7 +6,7 @@
 
 import {html, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
 import {Button} from './button.js';
@@ -23,13 +23,30 @@ export abstract class LinkButton extends Button {
 
   @property({type: String}) target!: string;
 
+  // Note: link buttons cannot have trailing icons.
+  protected override getRenderClasses(): ClassInfo {
+    return {
+      'md3-button--icon-leading': this.hasIcon,
+    };
+  }
+
+  protected override getIconContainerClasses(): ClassInfo {
+    return {
+      'md3-button__icon--leading': true,
+    };
+  }
+
   /**
    * @soyTemplate
    * @soyAttributes buttonAttributes: .md3-button
    */
   protected override render(): TemplateResult {
     return html`
-      <span class="md3-link-button-wrapper"
+      <span class="md3-link-button-wrapper">
+        <a class="md3-button ${classMap(this.getRenderClasses())}"
+          href="${ifDefined(this.href)}"
+          target="${ifDefined(this.target as LinkTarget)}"
+          aria-label="${ifDefined(this.ariaLabel)}"
           @focus="${this.handleFocus}"
           @blur="${this.handleBlur}"
           @pointerdown="${this.handlePointerDown}"
@@ -39,10 +56,6 @@ export abstract class LinkButton extends Button {
           @pointerenter="${this.handlePointerEnter}"
           @click="${this.handleClick}"
           @contextmenu="${this.handleContextMenu}">
-        <a class="md3-button ${classMap(this.getRenderClasses())}"
-          href="${ifDefined(this.href)}"
-          target="${ifDefined(this.target as LinkTarget)}"
-          aria-label="${ifDefined(this.ariaLabel)}">
             ${this.renderFocusRing()}
             ${this.renderOverlay()}
             ${this.renderRipple()}
@@ -51,6 +64,5 @@ export abstract class LinkButton extends Button {
             ${this.renderIcon()}
             ${this.renderLabel()}</a>
       </span>`;
-    // Note: link buttons cannot have trailing icons.
   }
 }
