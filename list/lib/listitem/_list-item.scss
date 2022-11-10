@@ -6,22 +6,24 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
+@use 'sass:map';
 @use '../../../focus/focus-ring';
 @use '../../../sass/theme';
 @use '../icon/list-item-icon';
 @use '../image/list-item-image';
 @use '../video/list-item-video';
-@use '../tokens';
+@use '../tokens' as list-tokens;
+@use '../../../tokens';
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-list-values(), $tokens);
+  $tokens: theme.validate-theme(list-tokens.md-comp-list-values(), $tokens);
   $tokens: theme.create-theme-vars($tokens, list);
 
   @include theme.emit-theme-vars($tokens);
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-list-values();
+  $tokens: list-tokens.md-comp-list-values();
   $tokens: theme.create-theme-vars($tokens, list);
 
   * {
@@ -50,8 +52,9 @@
 
     @include focus-ring.theme(
       (
-        container-outer-padding-vertical: -2px,
-        container-outer-padding-horizontal: -4px,
+        offset-vertical: -2px,
+        offset-horizontal: -3px,
+        shape: map.get(tokens.md-sys-shape-values(), corner-extra-small),
       )
     );
   }

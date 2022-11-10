@@ -108,8 +108,8 @@
 
   @include focus-ring.theme(
     (
-      container-outer-padding-vertical: -2px,
-      container-outer-padding-horizontal: -2px,
+      offset-vertical: -2px,
+      offset-horizontal: -2px,
     )
   );
 

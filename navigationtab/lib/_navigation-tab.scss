@@ -70,8 +70,9 @@ $_custom-property-prefix: 'navigation-bar';
 
     @include focus-ring.theme(
       (
-        container-outer-padding-vertical: -4px,
-        container-outer-padding-horizontal: -4px,
+        offset-vertical: -2px,
+        offset-horizontal: -2px,
+        shape: map.get(tokens.md-sys-shape-values(), corner-small),
       )
     );
 

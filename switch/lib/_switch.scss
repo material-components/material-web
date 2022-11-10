@@ -92,7 +92,12 @@ $_forced-colors-theme: (
     // TODO(b/231741594): use `track-shape` once this is not deleted.
     @include focus-ring.theme(
       (
-        ring-radius: var(--_track-shape-start-start),
+        shape: (
+          var(--_track-shape-start-start),
+          var(--_track-shape-start-end),
+          var(--_track-shape-end-start),
+          var(--_track-shape-end-end),
+        ),
       )
     );
   }

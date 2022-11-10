@@ -7,9 +7,11 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:math';
+@use 'sass:map';
 @use '../../focus/focus-ring';
 @use '../../motion/animation';
 @use './checkbox-theme';
+@use '../../tokens';
 
 $_transition-duration: 90ms;
 $_mark-stroke-size: 4px;
@@ -109,8 +111,9 @@ $_indeterminate-checked-easing-function: cubic-bezier(0.14, 0, 0, 1) !default;
 
   @include focus-ring.theme(
     (
-      container-outer-padding-vertical: -2px,
-      container-outer-padding-horizontal: -2px,
+      offset-vertical: -2px,
+      offset-horizontal: -2px,
+      shape: map.get(tokens.md-sys-shape-values(), corner-small),
     )
   );
   @include checkbox-theme.high-contrast-styles();

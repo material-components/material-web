@@ -8,6 +8,8 @@
 
 @use 'sass:map';
 @use '../../sass/theme';
+@use '../../sass/shape';
+@use '../../sass/resolvers';
 @use '../../tokens';
 @use './md-comp-focus-ring';
 
@@ -15,6 +17,7 @@ $_custom-property-prefix: 'focus-ring';
 
 @mixin theme($tokens) {
   $tokens: theme.validate-theme(md-comp-focus-ring.values(), $tokens);
+  $tokens: _resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   @include theme.emit-theme-vars($tokens);
@@ -22,6 +25,7 @@ $_custom-property-prefix: 'focus-ring';
 
 @mixin styles() {
   $tokens: md-comp-focus-ring.values();
+  $tokens: _resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   * {
@@ -35,37 +39,33 @@ $_custom-property-prefix: 'focus-ring';
   }
 
   .md3-focus-ring {
-    // Outer
     display: none;
     position: absolute;
     box-sizing: border-box;
-    border: var(--_outer-ring-width) solid var(--_outer-ring-color);
-    border-radius: var(--_ring-radius);
+    border: var(--_width) solid var(--_color);
+    border-start-start-radius: var(--_shape-start-start);
+    border-start-end-radius: var(--_shape-start-end);
+    border-end-start-radius: var(--_shape-end-start);
+    border-end-end-radius: var(--_shape-end-end);
     // Note that the ring will not respect its parent's border. This will not be
     // an issue as long as border is set via a sibling node, similar to ripple
     // and touch target.
-    $vertical-inset: calc(
-      -1 * (var(--_container-outer-padding-vertical) + var(--_inner-ring-width) +
-            var(--_outer-ring-width))
-    );
-    $horizontal-inset: calc(
-      -1 * (var(--_container-outer-padding-horizontal) +
-            var(--_inner-ring-width) + var(--_outer-ring-width))
-    );
+    $vertical-inset: calc(-1 * (var(--_offset-vertical) + var(--_width)));
+    $horizontal-inset: calc(-1 * (var(--_offset-horizontal) + var(--_width)));
 
     inset: $vertical-inset $horizontal-inset;
-
-    // Inner
-    &::before {
-      inset: 0;
-      position: absolute;
-      content: '';
-      border: var(--_inner-ring-width) solid var(--_inner-ring-color);
-      border-radius: calc(var(--_ring-radius) - var(--_outer-ring-width));
-    }
   }
 
   .md3-focus-ring--visible {
     display: block;
   }
+}
+
+@function _resolve-tokens($tokens) {
+  $tokens: shape.resolve-theme(
+    $tokens,
+    map.get(resolvers.$material, shape),
+    shape
+  );
+  @return $tokens;
 }

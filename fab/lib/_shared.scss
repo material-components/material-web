@@ -49,6 +49,12 @@
     position: relative;
     background-color: var(--_container-color);
 
+    @include focus-ring.theme(
+      (
+        shape: var(--_container-shape),
+      )
+    );
+
     @include elevation-theme.theme-styles(
       (
         shadow: var(--_container-elevation-shadow),
@@ -181,8 +187,8 @@
       // Adjust the focus ring padding to account for the 1px border in HCM.
       @include focus-ring.theme(
         (
-          container-outer-padding-vertical: 3px,
-          container-outer-padding-horizontal: 3px,
+          offset-vertical: 3px,
+          offset-horizontal: 3px,
         )
       );
       border: 1px solid ButtonText;

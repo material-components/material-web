@@ -8,16 +8,20 @@
 
 $_default: (
   md-sys-color: tokens.md-sys-color-values-light-dynamic(),
+  md-sys-shape: tokens.md-sys-shape-values(),
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   @return (
-    ring-radius: if($exclude-hardcoded-values, null, 8px),
-    container-outer-padding-vertical: if($exclude-hardcoded-values, null, 2px),
-    container-outer-padding-horizontal: if($exclude-hardcoded-values, null, 2px),
-    inner-ring-width: if($exclude-hardcoded-values, null, 2px),
-    inner-ring-color: map.get($deps, md-sys-color, on-tertiary-container),
-    outer-ring-width: if($exclude-hardcoded-values, null, 2px),
-    outer-ring-color: map.get($deps, md-sys-color, tertiary-container)
+    shape:
+      if(
+        $exclude-hardcoded-values,
+        null,
+        map.get($deps, md-sys-shape, corner-full)
+      ),
+    offset-vertical: if($exclude-hardcoded-values, null, 2px),
+    offset-horizontal: if($exclude-hardcoded-values, null, 2px),
+    width: if($exclude-hardcoded-values, null, 3px),
+    color: map.get($deps, md-sys-color, secondary)
   );
 }

@@ -10,7 +10,6 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-@use '../../focus/focus-ring';
 @use '../../sass/color';
 @use '../../sass/touch-target';
 @use '../../tokens';
@@ -19,13 +18,6 @@
   :host {
     display: inline-flex;
     outline: none;
-
-    @include focus-ring.theme(
-      (
-        container-outer-padding-vertical: 0px,
-        container-outer-padding-horizontal: 0px,
-      )
-    );
   }
 
   :host([disabled]) {
