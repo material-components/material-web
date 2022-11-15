@@ -1,0 +1,75 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Polymer/tachometer/master/config.schema.json",
+  "root": "../../../../",
+  "sampleSize": 50,
+  "timeout": 0,
+  "benchmarks": [
+    {
+      "browser": {
+        "name": "chrome",
+        "headless": true
+      },
+      "measurement": [
+        {
+          "mode": "performance",
+          "entryName": "benchmark"
+        }
+      ],
+      "expand": [
+        {
+          "url": "index.html?tag=baseline-el&benchmark=layout",
+          "name": "baseline-el"
+        },
+        {
+          "url": "index.html?tag=md-filled-button&path=button/filled-button.js&benchmark=layout",
+          "name": "md-filled-button"
+        },
+        {
+          "url": "index.html?tag=wo-ripple-button&path=benchmarks/render/button-breakdown.js&benchmark=layout",
+          "name": "wo-ripple-button"
+        },
+        {
+          "url": "index.html?tag=wo-ripple-focus-button&path=benchmarks/render/button-breakdown.js&benchmark=layout",
+          "name": "wo-ripple-focus-button"
+        },
+        {
+          "url": "index.html?tag=wo-ripple-focus-styles-button&path=benchmarks/render/button-breakdown.js&benchmark=layout",
+          "name": "wo-ripple-focus-styles-button"
+        },
+        {
+          "url": "index.html?tag=wo-ripple-focus-styles-sloticon-button&path=benchmarks/render/button-breakdown.js&benchmark=layout",
+          "name": "wo-ripple-focus-styles-sloticon-button"
+        },
+        {
+          "url": "index.html?tag=wo-ripple-focus-styles-sloticon-render-button&path=benchmarks/render/button-breakdown.js&benchmark=layout",
+          "name": "wo-ripple-focus-styles-sloticon-render-button"
+        },
+        {
+          "url": "index.html?tag=wo-ripple-focus-styles-sloticon-render-ae-button&path=benchmarks/render/button-breakdown.js&benchmark=layout",
+          "name": "wo-ripple-focus-styles-sloticon-render-ae-button"
+        },
+        {
+          "url": "index.html?tag=wo-ripple-focus-styles-sloticon-render-ae-reflecting-button&path=benchmarks/render/button-breakdown.js&benchmark=layout",
+          "name": "wo-ripple-focus-styles-sloticon-render-ae-reflecting-button"
+        },
+        {
+          "url": "index.html?tag=wo-ripple-focus-styles-sloticon-render-ae-reflecting-queries-button&path=benchmarks/render/button-breakdown.js&benchmark=layout",
+          "name": "wo-ripple-focus-styles-sloticon-render-ae-reflecting-queries-button"
+        },
+        {
+          "url": "index.html?tag=wo-ripple-focus-styles-sloticon-render-ae-reflecting-queries-props-button&path=benchmarks/render/button-breakdown.js&benchmark=layout",
+          "name": "wo-ripple-focus-styles-sloticon-render-ae-reflecting-queries-props-button"
+        },
+        {
+          "url": "index.html?tag=wo-ripple-focus-styles-sloticon-render-ae-reflecting-queries-props-delegates-button&path=benchmarks/render/button-breakdown.js&benchmark=layout",
+          "name": "wo-ripple-focus-styles-sloticon-render-ae-reflecting-queries-props-delegates-button"
+        },
+        {
+          "url": "index.html?tag=wo-ripple-focus-styles-sloticon-render-ae-reflecting-queries-props-delegates-templates-button&path=benchmarks/render/button-breakdown.js&benchmark=layout",
+          "name": "wo-ripple-focus-styles-sloticon-render-ae-reflecting-queries-props-delegates-templates-button"
+        }
+
+      ]
+    }
+  ]
+}

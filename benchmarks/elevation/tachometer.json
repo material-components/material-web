@@ -1,0 +1,38 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Polymer/tachometer/master/config.schema.json",
+  "root": "../../../../",
+  "sampleSize": 50,
+  "timeout": 0,
+  "benchmarks": [
+    {
+      "browser": {
+        "name": "chrome",
+        "headless": true
+      },
+      "measurement": [
+        {
+          "mode": "performance",
+          "entryName": "benchmark"
+        }
+      ],
+      "expand": [
+        {
+          "url": "index.html?tag=comp-three-node",
+          "name": "comp-three-node"
+        },
+        {
+          "url": "index.html?tag=comp-one-node",
+          "name": "comp-one-node"
+        },
+        {
+          "url": "index.html?tag=css-one-node",
+          "name": "css-one-node"
+        },
+        {
+          "url": "index.html?tag=css-three-node",
+          "name": "css-three-node"
+        }
+      ]
+    }
+  ]
+}
