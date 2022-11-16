@@ -22,7 +22,11 @@
     "prebuild:sass": "[ -d node_modules/@material/web ] || (mkdir -p node_modules/@material && ln -s ../../ node_modules/@material/web)",
     "build:sass": "sass --style=compressed --load-path=node_modules --load-path=node_modules/sass-true/sass $(ls -d */ | grep -v node_modules)",
     "prebuild:ts": "find . -name '*.css' -type f | xargs node css-to-ts.js",
-    "build:ts": "tsc"
+    "build:ts": "tsc",
+    "benchmark:custom-properties": "tach --config benchmarks/custom-properties/tachometer.json",
+    "benchmark:button-render": "tach --config benchmarks/button/tachometer-button-render.json",
+    "benchmark:button-layout": "tach --config benchmarks/button/tachometer-button-layout.json",
+    "benchmark:elevation": "tach --config benchmarks/elevation/tachometer.json"
   },
   "files": [
     "**/*.js",
@@ -43,6 +47,8 @@
     "jasmine": "^4.2.0",
     "sass": "^1.52.3",
     "sass-true": "^6.1.0",
-    "typescript": "~4.7.3"
+    "typescript": "~4.7.3",
+    "tachometer": "^0.7.0",
+    "chromedriver": "^107.0.0"
   }
 }

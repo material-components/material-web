@@ -1,0 +1,50 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Polymer/tachometer/master/config.schema.json",
+  "root": "../../../../",
+  "sampleSize": 50,
+  "timeout": 0,
+  "benchmarks": [
+    {
+      "browser": {
+        "name": "chrome",
+        "headless": true
+      },
+      "measurement": [
+        {
+          "mode": "performance",
+          "entryName": "render"
+        }
+      ],
+      "expand": [
+        {
+          "url": "index.html?tag=custom-props",
+          "name": "custom-props baseline"
+        },
+        {
+          "url": "index.html?tag=switch-props",
+          "name": "switch-props"
+        },
+        {
+          "url": "index.html?tag=switch-button-props",
+          "name": "switch-button-props"
+        },
+        {
+          "url": "index.html?tag=synth-props&count=1000",
+          "name": "synth-props: count=1000"
+        },
+        {
+          "url": "index.html?tag=synth-props&count=10000",
+          "name": "synth-props: count=10000"
+        },
+        {
+          "url": "index.html?tag=switch-button-props&selector=*",
+          "name": "switch-button-props: selector=*"
+        },
+        {
+          "url": "index.html?tag=synth-props&count=10000&selector=*",
+          "name": "synth-props: count=10000, selector=*"
+        }
+      ]
+    }
+  ]
+}
