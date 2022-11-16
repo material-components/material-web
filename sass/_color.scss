@@ -85,51 +85,6 @@ $_hex: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'a' 'b' 'c' 'd' 'e' 'f';
 }
 
 ///
-/// replace-as-rgba returns a map with the color key transformed to an RGBA
-/// color value created by joining the color key value with the opacity key
-/// value. The opacity key is removed from the map. This function is
-/// non-destructive and returns a new instance of the given map. It should only
-/// be used for disabled colors.
-///
-/// If $color is a var string then we would convert the color value to comma
-/// separated rgb value.
-///
-/// @example
-///.  replace-as-rgba((
-///     foo: red,
-///.    bar: 0.5
-///.  ), foo, bar) = (foo: rgba(255, 0, 0, 0.5))
-/// @example
-///.  replace-as-rgba((
-///     foo: var(--foo-color, #8ab4f8),
-///.    bar: 0.5
-///.  ), foo, bar) = (foo: rgb(var(--foo-color-rgb, 138, 180, 248), 0.5))
-///
-/// @param {Map} $map - the map with the given keys.
-/// @param {String} $color-key - the color key in the map.
-/// @param {String} $opacity-key - the opacity key in the map.
-/// @return {Map} The map with the color key replaced by an RGBA representation.
-@function replace-as-rgba($map, $color-key, $opacity-key) {
-  // Make a non-destructive copy of the map.
-  $out: map.merge($map, ());
-
-  $color: map.get($out, $color-key);
-  @if var.is-var($color) {
-    // TODO(b/213331407): Convert color from hex to rgba CSS color format to
-    // enable mixing rgb value with alpha using custom properties.
-    // (e.g., rgb(var(--foo-sys-color-on-surface-rgb, 31,31,31), 0.38))
-    // Remove once the attached bug is resolved.
-    $color: color-var-hex-to-rgba($color, map.get($out, $opacity-key));
-  } @else if meta.type-of($color) == 'color' {
-    $opacity: assert.is-type(map.get($out, $opacity-key), 'number');
-    $color: rgba($color, $opacity);
-  }
-
-  $out: map.set($out, $color-key, $color);
-  @return $out;
-}
-
-///
 /// join-color-and-opacity-pairs returns a map with all given color and opacity
 /// keys joined to create an RGBA color value. This function is non-destructive
 /// and returns a new instance of the given map. It should only be used for
@@ -153,15 +108,40 @@ $_hex: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'a' 'b' 'c' 'd' 'e' 'f';
 ///   RGBA representations.
 ///
 @function join-color-and-opacity-pairs($map, $color-opacity-key-pairs) {
-  // Make a non-destructive copy of the map.
-  $out: map.merge($map, ());
+  // Make a copy of the map.
+  $original: $map;
+  $out: $map;
+  @if meta.type-of($color-opacity-key-pairs) == 'map' {
+    // Sass will automatically turn double paren lists of maps into a single
+    // map. Convert them back to a list.
+    $color-opacity-key-pairs: list.append((), $color-opacity-key-pairs);
+  }
   @each $pair in $color-opacity-key-pairs {
     $color-key: map.get($pair, color-key);
     $opacity-key: map.get($pair, opacity-key);
-    $has-keys: map.has-key($out, $color-key) and
-      map.has-key($out, $opacity-key);
+    // Check if the $original map has the color/opacity keys, since $out may
+    // have removed opacity keys.
+    $has-keys: map.has-key($original, $color-key) and
+      map.has-key($original, $opacity-key);
     @if $has-keys {
-      $out: replace-as-rgba($out, $color-key, $opacity-key);
+      $color: map.get($original, $color-key);
+      @if var.is-var($color) {
+        // TODO(b/213331407): Convert color from hex to rgba CSS color format to
+        // enable mixing rgb value with alpha using custom properties.
+        // (e.g., rgb(var(--foo-sys-color-on-surface-rgb, 31,31,31), 0.38))
+        // Remove once the attached bug is resolved.
+        $color: color-var-hex-to-rgba($color, map.get($original, $opacity-key));
+      } @else if meta.type-of($color) == 'color' {
+        $opacity: assert.is-type(map.get($original, $opacity-key), 'number');
+        $color: rgba($color, $opacity);
+      }
+
+      $out: map.set($out, $color-key, $color);
+
+      // Remove opacity keys from the $out map, but keep them in the
+      // $original map in case there are subsequent color/opacity pairs that
+      // need to reference the same opacity.
+      $out: map.remove($out, $opacity-key);
     }
   }
   @return $out;
