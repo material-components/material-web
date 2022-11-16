@@ -174,5 +174,5 @@
     // b/203778922: `label-text-type` used by other platforms but not web.
     'label-text-type'
   );
-  @return map.remove($tokens, $unsupported-tokens);
+  @return map.remove($tokens, $unsupported-tokens...);
 }

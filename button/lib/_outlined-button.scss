@@ -43,6 +43,10 @@ $_custom-property-prefix: 'outlined-button';
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
+
+    // Set tokens for shared styles that include support for container color
+    --_container-color: transparent;
+    --_disabled-container-color: transparent;
   }
 
   .md3-button__outline {
@@ -52,6 +56,14 @@ $_custom-property-prefix: 'outlined-button';
     box-sizing: border-box;
     border-color: var(--_outline-color);
     border-radius: var(--_container-shape);
+
+    .md3-button:hover & {
+      border-color: var(--_hover-outline-color);
+    }
+
+    .md3-button:focus & {
+      border-color: var(--_focus-outline-color);
+    }
 
     .md3-button:active & {
       border-color: var(--_pressed-outline-color);

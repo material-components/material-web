@@ -3,7 +3,11 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// stylelint-disable selector-class-pattern --
+// Selector '.md3-*' should only be used in this project.
+
 @use 'sass:map';
+@use '../../elevation/lib/elevation-theme';
 @use '../../sass/resolvers';
 @use '../../sass/theme';
 @use '../../sass/typography';
@@ -42,6 +46,14 @@ $_custom-property-prefix: 'elevated-button';
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
+  }
+
+  .md3-button {
+    @include elevation-theme.theme-styles(
+      (
+        surface-tint-layer-color: var(--_container-surface-tint-layer-color),
+      )
+    );
   }
 }
 

@@ -37,6 +37,10 @@ $_custom-property-prefix: 'text-button';
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
+
+    // Set tokens for shared styles that include support for container color
+    --_container-color: transparent;
+    --_disabled-container-color: transparent;
   }
 }
 
