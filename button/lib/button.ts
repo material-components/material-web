@@ -6,61 +6,94 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../icon/icon.js';
-import '../../focus/focus-ring.js';
-import '../../ripple/ripple.js';
+import "../../icon/icon.js";
+import "../../focus/focus-ring.js";
+import "../../ripple/ripple.js";
 
-import {html, TemplateResult} from 'lit';
-import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
-import {html as staticHtml, literal} from 'lit/static-html.js';
+import { html, TemplateResult } from "lit";
+import {
+  property,
+  query,
+  queryAssignedElements,
+  state,
+} from "lit/decorators.js";
+import { ClassInfo, classMap } from "lit/directives/class-map.js";
+import { ifDefined } from "lit/directives/if-defined.js";
+import { html as staticHtml, literal } from "lit/static-html.js";
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '../../actionelement/action-element.js';
-import {ariaProperty} from '../../decorators/aria-property.js';
-import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
-import {MdRipple} from '../../ripple/ripple.js';
-import {ARIAHasPopup} from '../../types/aria.js';
+import {
+  ActionElement,
+  BeginPressConfig,
+  EndPressConfig,
+} from "../../actionelement/action-element.js";
+import { ariaProperty } from "../../decorators/aria-property.js";
+import {
+  pointerPress,
+  shouldShowStrongFocus,
+} from "../../focus/strong-focus.js";
+import { MdRipple } from "../../ripple/ripple.js";
+import { ARIAHasPopup } from "../../types/aria.js";
 
-import {ButtonState} from './state.js';
+import { ButtonState } from "./state.js";
 
-/** @soyCompatible */
 export abstract class Button extends ActionElement implements ButtonState {
-  static override shadowRootOptions:
-      ShadowRootInit = {mode: 'open', delegatesFocus: true};
+  static override shadowRootOptions: ShadowRootInit = {
+    mode: "open",
+    delegatesFocus: true,
+  };
 
   protected readonly iconTag = literal`md-icon`;
 
-  // TODO(b/210730484): replace with @soyParam annotation
-  @property({type: String, attribute: 'data-aria-has-popup', noAccessor: true})
-  @ariaProperty  // tslint:disable-line:no-new-decorators
+  /**
+   * Indicates that the button provides an accessible popup.
+   */
+  @property({
+    type: String,
+    attribute: "data-aria-has-popup",
+    noAccessor: true,
+  })
+  @ariaProperty // tslint:disable-line:no-new-decorators
   override ariaHasPopup!: ARIAHasPopup;
 
-  @property({type: Boolean, reflect: true}) disabled = false;
+  /**
+   * Sets the button to a disabled state in which it cannot be clicked.
+   */
+  @property({ type: Boolean, reflect: true }) disabled = false;
 
-  @property({type: Boolean, attribute: 'trailingicon'}) trailingIcon = false;
+  /**
+   * Displays the icon after the label.
+   */
+  @property({ type: Boolean, attribute: "trailingicon" }) trailingIcon = false;
 
-  @property({type: String}) icon = '';
+  /**
+   * The icon to display, e.g. `menu`.
+   */
+  @property({ type: String }) icon = "";
 
-  @property({type: String}) label = '';
+  /**
+   * The label string to display.
+   */
+  @property({ type: String }) label = "";
 
-  // TODO(b/210730484): replace with @soyParam annotation
-  @property({type: String, attribute: 'data-aria-label', noAccessor: true})
-  @ariaProperty  // tslint:disable-line:no-new-decorators
+  /**
+   * Provides an accessible label.
+   */
+  @property({ type: String, attribute: "data-aria-label", noAccessor: true })
+  @ariaProperty // tslint:disable-line:no-new-decorators
   override ariaLabel!: string;
 
-  @property({type: Boolean}) hasIcon = false;
+  @property({ type: Boolean }) hasIcon = false;
 
-  @property({type: Boolean}) preventClickDefault = false;
+  @property({ type: Boolean }) preventClickDefault = false;
 
-  @query('.md3-button') buttonElement!: HTMLElement;
+  @query(".md3-button") buttonElement!: HTMLElement;
 
-  @query('md-ripple') ripple!: MdRipple;
+  @query("md-ripple") ripple!: MdRipple;
 
   @state() protected showFocusRing = false;
 
-  @queryAssignedElements({slot: 'icon', flatten: true})
-  protected iconElement!: HTMLElement[]|null;
+  @queryAssignedElements({ slot: "icon", flatten: true })
+  protected iconElement!: HTMLElement[] | null;
 
   /**
    * @soyTemplate
@@ -68,53 +101,47 @@ export abstract class Button extends ActionElement implements ButtonState {
    */
   protected override render(): TemplateResult {
     // TODO(b/237283903): Replace ifDefined(... || undefined) with ifTruthy(...)
-    return html`
-      <button
-          class="md3-button ${classMap(this.getRenderClasses())}"
-          ?disabled="${this.disabled}"
-          aria-label="${ifDefined(this.ariaLabel || undefined)}"
-          aria-haspopup="${ifDefined(this.ariaHasPopup || undefined)}"
-          @focus="${this.handleFocus}"
-          @blur="${this.handleBlur}"
-          @pointerdown="${this.handlePointerDown}"
-          @pointerup="${this.handlePointerUp}"
-          @pointercancel="${this.handlePointerCancel}"
-          @pointerleave="${this.handlePointerLeave}"
-          @pointerenter="${this.handlePointerEnter}"
-          @click="${this.handleClick}"
-          @contextmenu="${this.handleContextMenu}">
-        ${this.renderFocusRing()}
-        ${this.renderOverlay()}
-        ${this.renderRipple()}
-        ${this.renderOutline()}
-        ${this.renderTouchTarget()}
-        ${this.renderLeadingIcon()}
-        ${this.renderLabel()}
-        ${this.renderTrailingIcon()}
-      </button>`;
+    return html` <button
+      class="md3-button ${classMap(this.getRenderClasses())}"
+      ?disabled="${this.disabled}"
+      aria-label="${ifDefined(this.ariaLabel || undefined)}"
+      aria-haspopup="${ifDefined(this.ariaHasPopup || undefined)}"
+      @focus="${this.handleFocus}"
+      @blur="${this.handleBlur}"
+      @pointerdown="${this.handlePointerDown}"
+      @pointerup="${this.handlePointerUp}"
+      @pointercancel="${this.handlePointerCancel}"
+      @pointerleave="${this.handlePointerLeave}"
+      @pointerenter="${this.handlePointerEnter}"
+      @click="${this.handleClick}"
+      @contextmenu="${this.handleContextMenu}"
+    >
+      ${this.renderFocusRing()} ${this.renderOverlay()} ${this.renderRipple()}
+      ${this.renderOutline()} ${this.renderTouchTarget()}
+      ${this.renderLeadingIcon()} ${this.renderLabel()}
+      ${this.renderTrailingIcon()}
+    </button>`;
   }
 
   /** @soyTemplate */
   protected getRenderClasses(): ClassInfo {
     return {
-      'md3-button--icon-leading': !this.trailingIcon && this.hasIcon,
-      'md3-button--icon-trailing': this.trailingIcon && this.hasIcon,
+      "md3-button--icon-leading": !this.trailingIcon && this.hasIcon,
+      "md3-button--icon-trailing": this.trailingIcon && this.hasIcon,
     };
   }
 
   /** @soyTemplate */
   protected getIconContainerClasses(): ClassInfo {
     return {
-      'md3-button__icon--leading': !this.trailingIcon,
-      'md3-button__icon--trailing': this.trailingIcon,
+      "md3-button__icon--leading": !this.trailingIcon,
+      "md3-button__icon--trailing": this.trailingIcon,
     };
   }
 
   /** @soyTemplate */
   protected renderTouchTarget(): TemplateResult {
-    return html`
-      <span class="md3-button__touch"></span>
-    `;
+    return html` <span class="md3-button__touch"></span> `;
   }
 
   /** @soyTemplate */
@@ -123,9 +150,11 @@ export abstract class Button extends ActionElement implements ButtonState {
   }
 
   /** @soyTemplate */
-  protected renderRipple(): TemplateResult|string {
-    return html`<md-ripple class="md3-button__ripple" ?disabled="${
-        this.disabled}"></md-ripple>`;
+  protected renderRipple(): TemplateResult | string {
+    return html`<md-ripple
+      class="md3-button__ripple"
+      ?disabled="${this.disabled}"
+    ></md-ripple>`;
   }
 
   /** @soyTemplate */
@@ -135,8 +164,9 @@ export abstract class Button extends ActionElement implements ButtonState {
 
   /** @soyTemplate */
   protected renderFocusRing(): TemplateResult {
-    return html`<md-focus-ring .visible="${
-        this.showFocusRing}"></md-focus-ring>`;
+    return html`<md-focus-ring
+      .visible="${this.showFocusRing}"
+    ></md-focus-ring>`;
   }
 
   /** @soyTemplate */
@@ -145,23 +175,26 @@ export abstract class Button extends ActionElement implements ButtonState {
   }
 
   /** @soyTemplate */
-  protected renderLeadingIcon(): TemplateResult|string {
-    return this.trailingIcon ? '' : this.renderIcon();
+  protected renderLeadingIcon(): TemplateResult | string {
+    return this.trailingIcon ? "" : this.renderIcon();
   }
 
   /** @soyTemplate */
-  protected renderTrailingIcon(): TemplateResult|string {
-    return this.trailingIcon ? this.renderIcon() : '';
+  protected renderTrailingIcon(): TemplateResult | string {
+    return this.trailingIcon ? this.renderIcon() : "";
   }
 
   /** @soyTemplate */
   protected renderIcon(): TemplateResult {
-    return html`<span class="md3-button__icon-slot-container ${
-        classMap(this.getIconContainerClasses())}">
-                  <slot name="icon" @slotchange="${this.handleSlotChange}">
-                    ${this.icon ? this.renderFontIcon() : ''}
-                  </slot>
-                </span>`;
+    return html`<span
+      class="md3-button__icon-slot-container ${classMap(
+        this.getIconContainerClasses()
+      )}"
+    >
+      <slot name="icon" @slotchange="${this.handleSlotChange}">
+        ${this.icon ? this.renderFontIcon() : ""}
+      </slot>
+    </span>`;
   }
 
   /** @soyTemplate */
@@ -193,7 +226,7 @@ export abstract class Button extends ActionElement implements ButtonState {
     }
   }
 
-  override beginPress({positionEvent}: BeginPressConfig) {
+  override beginPress({ positionEvent }: BeginPressConfig) {
     this.ripple.beginPress(positionEvent);
   }
 
