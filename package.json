@@ -15,14 +15,10 @@
   },
   "homepage": "https://github.com/material-components/material-web#readme",
   "scripts": {
-    "clean": "npm run clean:sass && npm run clean:ts",
-    "clean:sass": "find . -name '*.css*' -type f -delete",
-    "clean:ts": "tsc --build --clean",
-    "build": "npm run build:sass && npm run build:ts",
-    "prebuild:sass": "[ -d node_modules/@material/web ] || (mkdir -p node_modules/@material && ln -s ../../ node_modules/@material/web)",
-    "build:sass": "sass --style=compressed --load-path=node_modules --load-path=node_modules/sass-true/sass $(ls -d */ | grep -v node_modules)",
-    "prebuild:ts": "find . -name '*.css' -type f | xargs node css-to-ts.js",
-    "build:ts": "tsc"
+    "build": "wireit",
+    "build:ts": "wireit",
+    "build:css-to-ts": "wireit",
+    "build:sass": "wireit"
   },
   "files": [
     "**/*.js",
@@ -32,7 +28,8 @@
     "!css-to-ts.js",
     "!**/test/**",
     "!**/testing/**",
-    "!**/*_test.*"
+    "!**/*_test.*",
+    "!.wireit/**"
   ],
   "dependencies": {
     "lit": "^2.3.0",
@@ -43,6 +40,57 @@
     "jasmine": "^4.2.0",
     "sass": "^1.52.3",
     "sass-true": "^6.1.0",
-    "typescript": "~4.7.3"
+    "typescript": "~4.7.3",
+    "wireit": "^0.8.0"
+  },
+  "wireit": {
+    "build": {
+      "dependencies": [
+        "build:ts"
+      ]
+    },
+    "build:ts": {
+      "command": "tsc --pretty",
+      "files": [
+        "tsconfig.json",
+        "**/*.ts",
+        "!**/*.d.ts",
+        "!**/*.css.ts"
+      ],
+      "output": [
+        ".tsbuildinfo",
+        "**/*.js",
+        "**/*.js.map",
+        "**/*.d.ts",
+        "!*.js",
+        "!types/"
+      ],
+      "clean": "if-file-deleted",
+      "dependencies": [
+        "build:css-to-ts"
+      ]
+    },
+    "build:css-to-ts": {
+      "command": "find . \\( -path ./.wireit -o -path ./node_modules \\) -prune -o -name '*.css' -print | xargs node css-to-ts.js",
+      "files": [
+        "css-to-ts.js"
+      ],
+      "output": [
+        "**/*.css.ts"
+      ],
+      "dependencies": [
+        "build:sass"
+      ]
+    },
+    "build:sass": {
+      "command": "sass --style=compressed --load-path=node_modules --load-path=node_modules/sass-true/sass $(ls -d */ | grep -v node_modules)",
+      "files": [
+        "**/*.scss"
+      ],
+      "output": [
+        "**/*.css",
+        "**/*.css.map"
+      ]
+    }
   }
 }

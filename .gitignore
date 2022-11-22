@@ -7,3 +7,4 @@ package-lock.json
 *.map
 *.d.ts
 !types/*.d.ts
+.wireit/
