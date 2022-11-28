@@ -17,7 +17,7 @@
 @use '../../sass/theme';
 @use '../../sass/touch-target';
 @use '../../sass/var';
-@use '../../tokens';
+@use '../../tokens/v0_96' as tokens; // TODO(b/250071215): update to current
 
 @use './track';
 @use './handle';

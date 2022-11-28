@@ -12,7 +12,7 @@
 @use 'sass:map';
 @use '../../sass/color';
 @use '../../sass/touch-target';
-@use '../../tokens';
+@use '../../tokens/v0_96' as tokens; // TODO(b/250071215): update to current
 
 @mixin styles() {
   :host {

@@ -15,7 +15,7 @@
 /// Declares set of CSS custom properties for baseline dark color scheme
 /// overrides.
 @mixin dark-color-scheme(
-  $color-values-dark: tokens.md-sys-color-values-dark-non-dynamic()
+  $color-values-dark: tokens.md-sys-color-values-dark()
 ) {
   @include color-scheme(
     _get-color-scheme-var-fallbacks($color-values-dark),
@@ -26,7 +26,7 @@
 /// Declares set of CSS custom properties for baseline light color scheme
 /// overrides.
 @mixin light-color-scheme(
-  $color-values-light: tokens.md-sys-color-values-light-non-dynamic()
+  $color-values-light: tokens.md-sys-color-values-light()
 ) {
   @include color-scheme(
     _get-color-scheme-var-fallbacks($color-values-light),
@@ -34,7 +34,7 @@
   );
 }
 
-$_baseline-color-scheme: tokens.md-sys-color-values-light-non-dynamic();
+$_baseline-color-scheme: tokens.md-sys-color-values-light();
 
 /// Declares set of CSS custom properties for custom color scheme override.
 /// @param {Map} $color-scheme - Map containing custom color scheme values.

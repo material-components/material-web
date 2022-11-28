@@ -11,7 +11,7 @@
 @use '../../../sass/resolvers';
 @use '../../../sass/theme';
 @use '../../../sass/typography';
-@use '../../../tokens';
+@use '../../../tokens/v0_96' as tokens; // TODO(b/250071215): update to current
 
 $_default-deps: (
   md-sys-color: tokens.md-sys-color-values-light-dynamic(),

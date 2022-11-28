@@ -10,7 +10,6 @@
 @use '../../sass/theme';
 @use '../../sass/shape';
 @use '../../sass/resolvers';
-@use '../../tokens';
 @use './md-comp-focus-ring';
 
 $_custom-property-prefix: 'focus-ring';

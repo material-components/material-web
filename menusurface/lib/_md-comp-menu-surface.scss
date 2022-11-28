@@ -9,7 +9,7 @@
 @use '../../tokens';
 
 $_default-deps: (
-  md-sys-color: tokens.md-sys-color-values-light-dynamic(),
+  md-sys-color: tokens.md-sys-color-values-light(),
   md-sys-elevation: tokens.md-sys-elevation-values(),
   md-sys-shape: tokens.md-sys-shape-values(),
 );

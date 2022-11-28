@@ -7,7 +7,7 @@
 @use '../../tokens';
 
 $_default: (
-  md-sys-color: tokens.md-sys-color-values-light-dynamic(),
+  md-sys-color: tokens.md-sys-color-values-light(),
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {

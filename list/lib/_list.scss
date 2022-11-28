@@ -10,7 +10,7 @@
 @use '../../elevation/lib/elevation-overlay';
 @use '../../elevation/lib/elevation-theme';
 @use '../../sass/theme';
-@use '../../tokens' as m3-tokens;
+@use '../../tokens/v0_96' as m3-tokens; // TODO(b/250071215): update to current
 @use './tokens';
 @use './divider/list-divider';
 

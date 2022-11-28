@@ -20,7 +20,7 @@
 $custom-property-prefix: 'filled-autocomplete';
 $dark-theme: tokens.md-comp-filled-autocomplete-values(
   (
-    md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
+    md-sys-color: tokens.md-sys-color-values-dark(),
   ),
   $exclude-hardcoded-values: true
 );

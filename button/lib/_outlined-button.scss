@@ -7,7 +7,7 @@
 @use '../../sass/resolvers';
 @use '../../sass/theme';
 @use '../../sass/typography';
-@use '../../tokens';
+@use '../../tokens/v0_96' as tokens; // TODO(b/250071215): update to current
 @use './shared';
 
 // stylelint-disable selector-class-pattern --

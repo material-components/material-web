@@ -11,7 +11,7 @@
 
 @use '../../ripple/ripple-theme';
 @use '../../sass/theme';
-@use '../../tokens';
+@use '../../tokens/v0_96' as tokens; // TODO(b/250071215): update to current
 
 $light-theme: tokens.md-comp-radio-button-values();
 $custom-property-prefix: 'radio';
