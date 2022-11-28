@@ -14,6 +14,7 @@ $_custom-property-prefix: 'badge';
 
 @mixin theme($tokens) {
   $tokens: theme.validate-theme(tokens.md-comp-badge-values(), $tokens);
+  $tokens: _resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   @include theme.emit-theme-vars($tokens);
@@ -21,6 +22,7 @@ $_custom-property-prefix: 'badge';
 
 @mixin styles() {
   $tokens: tokens.md-comp-badge-values();
+  $tokens: _resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   * {
@@ -69,4 +71,10 @@ $_custom-property-prefix: 'badge';
     line-height: var(--_large-label-text-line-height);
     font-weight: var(--_large-label-text-weight);
   }
+}
+
+@function _resolve-tokens($tokens) {
+  // Remove unsupported tokens
+  $tokens: map.remove($tokens, large-label-text-type);
+  @return $tokens;
 }
