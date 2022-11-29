@@ -17,7 +17,7 @@
 @use '../../sass/theme';
 @use '../../sass/touch-target';
 @use '../../sass/var';
-@use '../../tokens/v0_96' as tokens; // TODO(b/250071215): update to current
+@use '../../tokens';
 
 @use './track';
 @use './handle';
@@ -63,17 +63,6 @@ $_forced-colors-theme: (
 @mixin styles() {
   $tokens: tokens.md-comp-switch-values();
   $tokens: _resolve-tokens($tokens);
-
-  // Add missing tokens.
-  $tokens: map.merge(
-    $tokens,
-    (
-      // TODO(b/230013081): remove this once the missing token is added.
-      unselected-track-outline-color:
-        map.get(tokens.md-sys-color-values-light-dynamic(), outline)
-    )
-  );
-
   $tokens: theme.create-theme-vars($tokens, switch);
 
   * {
