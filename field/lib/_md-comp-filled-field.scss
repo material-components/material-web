@@ -4,10 +4,10 @@
 //
 
 @use 'sass:map';
-@use '../../tokens/v0_96' as tokens; // TODO(b/250071215): update to current
+@use '../../tokens';
 
 $_default-deps: (
-  md-sys-color: tokens.md-sys-color-values-light-dynamic(),
+  md-sys-color: tokens.md-sys-color-values-light(),
   md-sys-shape: tokens.md-sys-shape-values(),
   md-sys-state: tokens.md-sys-state-values(),
   md-sys-typescale: tokens.md-sys-typescale-values(),
