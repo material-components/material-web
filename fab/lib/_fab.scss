@@ -7,7 +7,7 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use '../../sass/theme';
-@use '../../tokens/v0_96' as tokens; // TODO(b/250071215): update to current
+@use '../../tokens';
 @use './shared';
 
 @mixin theme($tokens) {
