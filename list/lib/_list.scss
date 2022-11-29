@@ -10,7 +10,7 @@
 @use '../../elevation/lib/elevation-overlay';
 @use '../../elevation/lib/elevation-theme';
 @use '../../sass/theme';
-@use '../../tokens/v0_96' as m3-tokens; // TODO(b/250071215): update to current
+@use '../../tokens' as m3-tokens;
 @use './tokens';
 @use './divider/list-divider';
 
@@ -22,7 +22,7 @@ $_reference: (
   list-divider-height:
     map.get(tokens.md-comp-list-values(), 'list-divider-height'),
   container-surface-tint-layer-color:
-    map.get(m3-tokens.md-sys-color-values-light-dynamic(), 'surface-tint'),
+    map.get(m3-tokens.md-sys-color-values-light(), 'surface-tint'),
   container-elevation-overlay-opacity: 0,
 );
 

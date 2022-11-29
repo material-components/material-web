@@ -9,7 +9,7 @@
 @use 'sass:map';
 @use '../../ripple/ripple-theme';
 @use '../../sass/theme';
-@use '../../tokens/v0_96' as tokens; // TODO(b/250071215): update to current
+@use '../../tokens';
 @use './shared';
 
 $_custom-property-prefix: 'filled-icon-button';

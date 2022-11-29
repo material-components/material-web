@@ -11,7 +11,7 @@
 @use '../../sass/resolvers';
 @use '../../sass/color';
 @use '../../sass/theme';
-@use '../../tokens/v0_96' as tokens; // TODO(b/250071215): update to current
+@use '../../tokens';
 @use './shared';
 
 $_custom-property-prefix: 'outlined-icon-button';
@@ -22,7 +22,7 @@ $_custom-property-prefix: 'outlined-icon-button';
     tokens.md-comp-outlined-icon-button-values(),
     (
       disabled-selected-container-color:
-        map.get(tokens.md-sys-color-values-light-dynamic(), on-surface),
+        map.get(tokens.md-sys-color-values-light(), on-surface),
       disabled-selected-container-opacity: 0.12,
     )
   );
@@ -40,7 +40,7 @@ $_custom-property-prefix: 'outlined-icon-button';
     $tokens,
     (
       disabled-selected-container-color:
-        map.get(tokens.md-sys-color-values-light-dynamic(), on-surface),
+        map.get(tokens.md-sys-color-values-light(), on-surface),
       disabled-selected-container-opacity: 0.12,
     )
   );
