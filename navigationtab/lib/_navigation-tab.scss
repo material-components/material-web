@@ -13,7 +13,7 @@
 @use '../../focus/focus-ring';
 @use '../../motion/animation';
 @use '../../sass/theme';
-@use '../../tokens/v0_96' as tokens; // TODO(b/250071215): update to current
+@use '../../tokens';
 
 $animation-duration: 100ms;
 $_custom-property-prefix: 'navigation-bar';
