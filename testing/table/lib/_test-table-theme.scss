@@ -11,10 +11,10 @@
 @use '../../../sass/resolvers';
 @use '../../../sass/theme';
 @use '../../../sass/typography';
-@use '../../../tokens/v0_96' as tokens; // TODO(b/250071215): update to current
+@use '../../../tokens';
 
 $_default-deps: (
-  md-sys-color: tokens.md-sys-color-values-light-dynamic(),
+  md-sys-color: tokens.md-sys-color-values-light(),
   md-sys-typescale: tokens.md-sys-typescale-values(),
 );
 
@@ -47,7 +47,7 @@ $_default-deps: (
 $light-theme: values();
 $dark-theme: values(
   (
-    md-sys-color: tokens.md-sys-color-values-dark-dynamic(),
+    md-sys-color: tokens.md-sys-color-values-dark(),
   ),
   $exclude-hardcoded-values: true
 );
