@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-@use '../../tokens/v0_96' as tokens; // TODO(b/250071215): update to current
+@use '../../tokens';
 @use './checkbox';
 @use './checkbox-theme';
 
