@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import 'jasmine';
+// import 'jasmine'; (google3-only)
 
 import {ObserverRecord} from './observer.js';
 import {ObserverFoundation} from './observer-foundation.js';

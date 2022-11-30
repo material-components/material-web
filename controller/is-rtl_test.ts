@@ -1,4 +1,4 @@
-import 'jasmine';
+// import 'jasmine'; (google3-only)
 
 import {isRtl} from './is-rtl.js';
 
