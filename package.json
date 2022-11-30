@@ -18,7 +18,8 @@
     "build": "wireit",
     "build:ts": "wireit",
     "build:css-to-ts": "wireit",
-    "build:sass": "wireit"
+    "build:sass": "wireit",
+    "test": "wireit"
   },
   "type": "module",
   "files": [
@@ -27,6 +28,7 @@
     "**/*.d.ts",
     "**/*.scss",
     "!css-to-ts.js",
+    "!web-test-runner.config.js",
     "!**/test/**",
     "!**/testing/**",
     "!**/*_test.*",
@@ -95,6 +97,16 @@
         "**/*.css",
         "**/*.css.map"
       ]
+    },
+    "test": {
+      "command": "wtr",
+      "dependencies": [
+        "build:ts"
+      ],
+      "files": [
+        "web-test-runner.config.js"
+      ],
+      "output": []
     }
   }
 }
