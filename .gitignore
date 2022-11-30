@@ -1,5 +1,4 @@
 node_modules
-package-lock.json
 *.js
 !web-test-runner.config.js
 !css-to-ts.js
