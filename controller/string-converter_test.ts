@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import 'jasmine';
+// import 'jasmine';
 
 import {stringConverter} from './string-converter.js';
 

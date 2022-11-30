@@ -1,4 +1,4 @@
-import 'jasmine';
+// import 'jasmine';
 
 import {isRtl} from './is-rtl.js';
 

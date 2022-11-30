@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import 'jasmine';
+// import 'jasmine';
 
 import {html, LitElement} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';

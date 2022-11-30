@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import 'jasmine';
+// import 'jasmine';
 
 import {AnimationSignal, createAnimationSignal} from './animation.js';
 

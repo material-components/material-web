@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import 'jasmine';
+// import 'jasmine';
 
 import {ReactiveElement, render as litRender, TemplateResult} from 'lit';
 
