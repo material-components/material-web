@@ -20,6 +20,7 @@
     "build:css-to-ts": "wireit",
     "build:sass": "wireit"
   },
+  "type": "module",
   "files": [
     "**/*.js",
     "**/*.js.map",
