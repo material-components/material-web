@@ -10,6 +10,11 @@ import {jasmineTestRunnerConfig} from 'web-test-runner-jasmine';
 export default {
   ...jasmineTestRunnerConfig(),
   nodeResolve: true,
-  files: ['**/*_test.js', '!node_modules/', '!.wireit/'],
-  browsers: [playwrightLauncher({product: 'chromium'})],
+  files: ['**/*test.js', '!node_modules/', '!.wireit/'],
+  browsers: [playwrightLauncher({
+    product: 'chromium',
+    // Firefox errors with "Touch is not defined"
+    // product: 'firefox',
+    product: 'webkit',
+  })],
 };
