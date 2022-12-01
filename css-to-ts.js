@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-const fs = require('fs');
+import * as fs from 'fs';
 
 for (let i = 2; i < process.argv.length; i++) {
   try {

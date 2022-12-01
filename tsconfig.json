@@ -20,11 +20,11 @@
     "paths": {
       "@material/web/*": ["./*"]
     },
-    "skipLibCheck": true,
     "sourceMap": true,
     "inlineSources": true,
     "strict": true,
     "strictNullChecks": false,
-    "target": "es2020"
+    "target": "es2020",
+    "types": ["lit", "jasmine"]
   }
 }

@@ -18,14 +18,17 @@
     "build": "wireit",
     "build:ts": "wireit",
     "build:css-to-ts": "wireit",
-    "build:sass": "wireit"
+    "build:sass": "wireit",
+    "test": "wireit"
   },
+  "type": "module",
   "files": [
     "**/*.js",
     "**/*.js.map",
     "**/*.d.ts",
     "**/*.scss",
     "!css-to-ts.js",
+    "!web-test-runner.config.js",
     "!**/test/**",
     "!**/testing/**",
     "!**/*_test.*",
@@ -37,11 +40,14 @@
   },
   "devDependencies": {
     "@types/jasmine": "^4.0.3",
-    "jasmine": "^4.2.0",
+    "@web/test-runner": "^0.15.0",
+    "@web/test-runner-playwright": "^0.9.0",
+    "jasmine": "^4.5.0",
     "sass": "^1.52.3",
     "sass-true": "^6.1.0",
-    "typescript": "~4.7.3",
-    "wireit": "^0.8.0"
+    "typescript": "~4.7.4",
+    "web-test-runner-jasmine": "^0.0.2",
+    "wireit": "^0.9.0"
   },
   "wireit": {
     "build": {
@@ -91,6 +97,16 @@
         "**/*.css",
         "**/*.css.map"
       ]
+    },
+    "test": {
+      "command": "wtr",
+      "dependencies": [
+        "build:ts"
+      ],
+      "files": [
+        "web-test-runner.config.js"
+      ],
+      "output": []
     }
   }
 }
