@@ -10,22 +10,22 @@ import '../../icon/icon.js';
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, TemplateResult} from 'lit';
-import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
+import {html, LitElement, TemplateResult} from 'lit';
+import {property, query, queryAssignedElements, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {html as staticHtml, literal} from 'lit/static-html.js';
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '../../actionelement/action-element.js';
 import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
+import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 import {ARIAHasPopup} from '../../types/aria.js';
 
 import {ButtonState} from './state.js';
 
 /** @soyCompatible */
-export abstract class Button extends ActionElement implements ButtonState {
+export abstract class Button extends LitElement implements ButtonState {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
@@ -55,7 +55,7 @@ export abstract class Button extends ActionElement implements ButtonState {
 
   @query('.md3-button') buttonElement!: HTMLElement;
 
-  @query('md-ripple') ripple!: MdRipple;
+  @queryAsync('md-ripple') ripple!: Promise<MdRipple>;
 
   @state() protected showFocusRing = false;
 
@@ -74,15 +74,11 @@ export abstract class Button extends ActionElement implements ButtonState {
           ?disabled="${this.disabled}"
           aria-label="${ifDefined(this.ariaLabel || undefined)}"
           aria-haspopup="${ifDefined(this.ariaHasPopup || undefined)}"
+          @pointerdown="${this.handlePointerDown}"
           @focus="${this.handleFocus}"
           @blur="${this.handleBlur}"
-          @pointerdown="${this.handlePointerDown}"
-          @pointerup="${this.handlePointerUp}"
-          @pointercancel="${this.handlePointerCancel}"
-          @pointerleave="${this.handlePointerLeave}"
-          @pointerenter="${this.handlePointerEnter}"
           @click="${this.handleClick}"
-          @contextmenu="${this.handleContextMenu}">
+          ${ripple(this.ripple)}>
         ${this.renderFocusRing()}
         ${this.renderOverlay()}
         ${this.renderRipple()}
@@ -193,28 +189,9 @@ export abstract class Button extends ActionElement implements ButtonState {
     }
   }
 
-  override beginPress({positionEvent}: BeginPressConfig) {
-    this.ripple.beginPress(positionEvent);
-  }
-
-  override endPress(options: EndPressConfig) {
-    this.ripple.endPress();
-    super.endPress(options);
-  }
-
-  override handlePointerDown(e: PointerEvent) {
-    super.handlePointerDown(e);
+  handlePointerDown(e: PointerEvent) {
     pointerPress();
     this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  protected handlePointerEnter(e: PointerEvent) {
-    this.ripple.beginHover(e);
-  }
-
-  override handlePointerLeave(e: PointerEvent) {
-    super.handlePointerLeave(e);
-    this.ripple.endHover();
   }
 
   /** Delegate clicks on host element to inner button element. */
@@ -222,9 +199,7 @@ export abstract class Button extends ActionElement implements ButtonState {
     this.buttonElement.click();
   }
 
-  // TODO(b/236044151): Remove when preventDefault supported by L2W
-  override handleClick(e: MouseEvent) {
-    super.handleClick(e);
+  handleClick(e: MouseEvent) {
     if (this.preventClickDefault) {
       e.preventDefault();
     }

@@ -9,6 +9,8 @@ import {property} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
+import {ripple} from '../../ripple/directive.js';
+
 import {Button} from './button.js';
 
 // Note that we cast `linkTarget` to this type, below. The Lit compiler
@@ -50,12 +52,9 @@ export abstract class LinkButton extends Button {
           @focus="${this.handleFocus}"
           @blur="${this.handleBlur}"
           @pointerdown="${this.handlePointerDown}"
-          @pointerup="${this.handlePointerUp}"
-          @pointercancel="${this.handlePointerCancel}"
-          @pointerleave="${this.handlePointerLeave}"
-          @pointerenter="${this.handlePointerEnter}"
           @click="${this.handleClick}"
-          @contextmenu="${this.handleContextMenu}">
+          ${ripple(this.ripple)}
+          >
             ${this.renderFocusRing()}
             ${this.renderOverlay()}
             ${this.renderRipple()}
