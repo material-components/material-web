@@ -108,6 +108,29 @@ describe('checkbox', () => {
          await env.waitForStability();
          expect(input.checked).toEqual(false);
        });
+
+    it('get/set updates the checked property after user updates checked state',
+       async () => {
+         const {harness, input} = await setupTest();
+
+         // Simulate user interaction setting checked to true.
+         await harness.clickWithMouse();
+         await env.waitForStability();
+         expect(input.checked).toEqual(true);
+         expect(harness.element.checked).toEqual(true);
+
+         // Set custom element checked to false.
+         harness.element.checked = false;
+         await env.waitForStability();
+         expect(input.checked).toEqual(false);
+         expect(harness.element.checked).toEqual(false);
+
+         // Set custom element checked to true.
+         harness.element.checked = true;
+         await env.waitForStability();
+         expect(input.checked).toEqual(true);
+         expect(harness.element.checked).toEqual(true);
+       });
   });
 
   describe('indeterminate', () => {
