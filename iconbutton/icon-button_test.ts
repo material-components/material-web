@@ -104,7 +104,7 @@ describe('icon button tests', () => {
          expect(button.getAttribute('aria-label')).toBe('test');
        });
 
-    it('toggles the `on` state when button is clicked', async () => {
+    it('toggles the `selected` state when button is clicked', async () => {
       const {element, harness} =
           await setUpTest('md-standard-icon-button-toggle');
       if (!(element instanceof MdStandardIconButtonToggle)) {
@@ -112,14 +112,14 @@ describe('icon button tests', () => {
             'Icon button is not instance of MdStandardIconButtonToggle.');
       }
 
-      expect(element.isOn).toBeFalse();
+      expect(element.selected).toBeFalse();
       await harness.clickWithMouse();
-      expect(element.isOn).toBeTrue();
+      expect(element.selected).toBeTrue();
       await harness.clickWithMouse();
-      expect(element.isOn).toBeFalse();
+      expect(element.selected).toBeFalse();
     });
 
-    it('setting `on` updates the aria-pressed attribute on the native button element',
+    it('setting `selected` updates the aria-pressed attribute on the native button element',
        async () => {
          const {element} = await setUpTest('md-standard-icon-button-toggle');
          if (!(element instanceof MdStandardIconButtonToggle)) {
@@ -127,12 +127,12 @@ describe('icon button tests', () => {
                'Icon button is not instance of MdStandardIconButtonToggle.');
          }
 
-         element.isOn = true;
+         element.selected = true;
          await element.updateComplete;
          const button = element.shadowRoot!.querySelector('button')!;
          expect(button.getAttribute('aria-pressed')).toEqual('true');
 
-         element.isOn = false;
+         element.selected = false;
          await element.updateComplete;
          expect(button.getAttribute('aria-pressed')).toEqual('false');
        });
@@ -148,14 +148,14 @@ describe('icon button tests', () => {
       await element.updateComplete;
 
       const button = element.shadowRoot!.querySelector('button')!;
-      expect(element.isOn).toBeFalse();
+      expect(element.selected).toBeFalse();
       expect(button.getAttribute('aria-label')).toEqual('aria label off');
       expect(button.getAttribute('aria-pressed')).toBeNull();
 
       // Toggle
       button.click();
       await element.updateComplete;
-      expect(element.isOn).toBeTrue();
+      expect(element.selected).toBeTrue();
       expect(button.getAttribute('aria-label')).toEqual('aria label on');
       expect(button.getAttribute('aria-pressed')).toBeNull();
     });

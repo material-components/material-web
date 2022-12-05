@@ -34,7 +34,7 @@ export abstract class IconButtonToggle extends ActionElement {
   // `aria-label` of the button when `on` is false.
   @property({type: String}) ariaLabelOff!: string;
 
-  @property({type: Boolean, reflect: true}) isOn = false;
+  @property({type: Boolean, reflect: true}) selected = false;
 
   @query('md-ripple') ripple!: MdRipple;
 
@@ -55,8 +55,8 @@ export abstract class IconButtonToggle extends ActionElement {
     if (cancelled) {
       return;
     }
-    this.isOn = !this.isOn;
-    const detail = {isOn: this.isOn};
+    this.selected = !this.selected;
+    const detail = {selected: this.selected};
     this.dispatchEvent(new CustomEvent(
         'icon-button-toggle-change', {detail, bubbles: true, composed: true}));
     super.endPress({cancelled, actionData: detail});
@@ -71,9 +71,9 @@ export abstract class IconButtonToggle extends ActionElement {
   /** @soyTemplate */
   protected override render(): TemplateResult {
     const hasToggledAriaLabel = this.ariaLabelOn && this.ariaLabelOff;
-    const ariaPressedValue = hasToggledAriaLabel ? undefined : this.isOn;
+    const ariaPressedValue = hasToggledAriaLabel ? undefined : this.selected;
     const ariaLabelValue = hasToggledAriaLabel ?
-        (this.isOn ? this.ariaLabelOn : this.ariaLabelOff) :
+        (this.selected ? this.ariaLabelOn : this.ariaLabelOff) :
         this.ariaLabel;
     return html`<button
           class="md3-icon-button ${classMap(this.getRenderClasses())}"
@@ -104,7 +104,7 @@ export abstract class IconButtonToggle extends ActionElement {
   /** @soyTemplate */
   protected getRenderClasses(): ClassInfo {
     return {
-      'md3-icon-button--on': this.isOn,
+      'md3-icon-button--on': this.selected,
     };
   }
 
