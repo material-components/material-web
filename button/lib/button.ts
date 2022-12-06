@@ -14,6 +14,7 @@ import {html, LitElement, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
+import {when} from 'lit/directives/when.js';
 import {html as staticHtml, literal} from 'lit/static-html.js';
 
 import {ariaProperty} from '../../decorators/aria-property.js';
@@ -55,9 +56,11 @@ export abstract class Button extends LitElement implements ButtonState {
 
   @query('.md3-button') buttonElement!: HTMLElement;
 
-  @queryAsync('md-ripple') ripple!: Promise<MdRipple>;
+  @queryAsync('md-ripple') ripple!: Promise<MdRipple|null>;
 
   @state() protected showFocusRing = false;
+
+  @state() protected showRipple = false;
 
   @queryAssignedElements({slot: 'icon', flatten: true})
   protected iconElement!: HTMLElement[]|null;
@@ -67,6 +70,10 @@ export abstract class Button extends LitElement implements ButtonState {
    * @soyAttributes buttonAttributes: .md3-button
    */
   protected override render(): TemplateResult {
+    const getRipple = () => {
+      this.showRipple = true;
+      return this.ripple;
+    };
     // TODO(b/237283903): Replace ifDefined(... || undefined) with ifTruthy(...)
     return html`
       <button
@@ -78,10 +85,10 @@ export abstract class Button extends LitElement implements ButtonState {
           @focus="${this.handleFocus}"
           @blur="${this.handleBlur}"
           @click="${this.handleClick}"
-          ${ripple(this.ripple)}>
+          ${ripple(getRipple)}>
         ${this.renderFocusRing()}
         ${this.renderOverlay()}
-        ${this.renderRipple()}
+        ${when(this.showRipple, () => this.renderRipple())}
         ${this.renderOutline()}
         ${this.renderTouchTarget()}
         ${this.renderLeadingIcon()}
@@ -119,7 +126,7 @@ export abstract class Button extends LitElement implements ButtonState {
   }
 
   /** @soyTemplate */
-  protected renderRipple(): TemplateResult|string {
+  protected renderRipple(): TemplateResult {
     return html`<md-ripple class="md3-button__ripple" ?disabled="${
         this.disabled}"></md-ripple>`;
   }

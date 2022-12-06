@@ -8,6 +8,7 @@ import {html, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
+import {when} from 'lit/directives/when.js';
 
 import {ripple} from '../../ripple/directive.js';
 
@@ -43,6 +44,10 @@ export abstract class LinkButton extends Button {
    * @soyAttributes buttonAttributes: .md3-button
    */
   protected override render(): TemplateResult {
+    const getRipple = () => {
+      this.showRipple = true;
+      return this.ripple;
+    };
     return html`
       <span class="md3-link-button-wrapper">
         <a class="md3-button ${classMap(this.getRenderClasses())}"
@@ -53,11 +58,10 @@ export abstract class LinkButton extends Button {
           @blur="${this.handleBlur}"
           @pointerdown="${this.handlePointerDown}"
           @click="${this.handleClick}"
-          ${ripple(this.ripple)}
-          >
+          ${ripple(getRipple)}>
             ${this.renderFocusRing()}
             ${this.renderOverlay()}
-            ${this.renderRipple()}
+            ${when(this.showRipple, () => this.renderRipple())}
             ${this.renderOutline()}
             ${this.renderTouchTarget()}
             ${this.renderIcon()}
