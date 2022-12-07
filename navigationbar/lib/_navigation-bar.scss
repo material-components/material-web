@@ -7,8 +7,8 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-@use '../../elevation/lib/elevation-theme';
-@use '../../elevation/lib/elevation-overlay';
+@use '../../elevationold/lib/elevation-theme';
+@use '../../elevationold/lib/elevation-overlay';
 @use '../../sass/map-ext';
 @use '../../sass/resolvers';
 @use '../../sass/theme';

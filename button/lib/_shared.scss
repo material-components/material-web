@@ -7,7 +7,7 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-@use '../../elevation/lib/surface' as elevation-surface;
+@use '../../elevationold/lib/surface' as elevation-surface;
 @use '../../ripple/ripple-theme';
 @use '../../sass/color';
 @use '../../sass/dom';

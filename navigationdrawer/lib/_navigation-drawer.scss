@@ -9,8 +9,8 @@
 @use 'sass:map';
 
 @use '../../motion/animation';
-@use '../../elevation/lib/elevation-overlay';
-@use '../../elevation/lib/elevation-theme';
+@use '../../elevationold/lib/elevation-overlay';
+@use '../../elevationold/lib/elevation-theme';
 @use '../../sass/theme';
 @use './shared';
 

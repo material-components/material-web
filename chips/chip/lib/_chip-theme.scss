@@ -12,7 +12,7 @@
 @use 'sass:math';
 @use 'sass:color';
 
-@use '../../../elevation/lib/elevation-theme';
+@use '../../../elevationold/lib/elevation-theme';
 @use '../../../ripple/ripple-theme';
 @use '../../../sass/dom';
 @use '../../../sass/resolvers';
@@ -34,11 +34,7 @@ $density-config: (
 );
 $radius: math.div($height, 2);
 $type-scale: body2;
-$container-color: color.mix(
-  #000,
-  #fff,
-  12%
-);
+$container-color: color.mix(#000, #fff, 12%);
 $text-label-color: rgba(#000, 0.87);
 $icon-color: rgba(#000, 0.87);
 $checkmark-color: rgba(#000, 0.87);
@@ -61,11 +57,7 @@ $ripple-target-primary: '.md3-chip__ripple--primary';
 $ripple-target-delete: '.md3-chip__ripple--delete';
 
 // Filter chip colors
-$filter-selected-container-color: color.mix(
-  #000,
-  $container-color,
-  8%
-);
+$filter-selected-container-color: color.mix(#000, $container-color, 8%);
 
 $_light-theme: (
   container-elevation: null,
@@ -199,10 +191,12 @@ $_custom-property-prefix: 'chip';
   @include _avatar-shape(map.get($theme, with-avatar-avatar-shape));
   @include graphic-size(map.get($theme, with-avatar-avatar-size));
   @include height(map.get($theme, container-height));
-  @include elevation-theme.theme-styles((
-    surface-tint-layer-color:
+  @include elevation-theme.theme-styles(
+    (
+      surface-tint-layer-color:
         map.get($theme, container-surface-tint-layer-color),
-  ));
+    )
+  );
   @include _container-elevation(
     map.get($resolvers, elevation),
     $shadow-color: map.get($theme, container-shadow-color),
@@ -623,36 +617,36 @@ $_custom-property-prefix: 'chip';
   //   $property-name: height,
   // );
 
-// TODO(b/240224981): Translate to md3 shape
-//   @include shape.radius(
-//     $radius,
-//     $rtl-reflexive,
-//     $component-height: $height,
-//   );
+  // TODO(b/240224981): Translate to md3 shape
+  //   @include shape.radius(
+  //     $radius,
+  //     $rtl-reflexive,
+  //     $component-height: $height,
+  //   );
 
-//   #{$ripple-target} {
-//     @include shape.radius(
-//       $radius,
-//       $rtl-reflexive,
-//       $component-height: $height,
-//     );
-//   }
+  //   #{$ripple-target} {
+  //     @include shape.radius(
+  //       $radius,
+  //       $rtl-reflexive,
+  //       $component-height: $height,
+  //     );
+  //   }
 
-//   .md3-chip__action--primary:before {
-//     @include shape.radius(
-//       $radius,
-//       $rtl-reflexive,
-//       $component-height: $height,
-//     );
-//   }
+  //   .md3-chip__action--primary:before {
+  //     @include shape.radius(
+  //       $radius,
+  //       $rtl-reflexive,
+  //       $component-height: $height,
+  //     );
+  //   }
 
-//   .md3-chip__icon--primary {
-//     @include shape.radius(
-//       $radius,
-//       $rtl-reflexive,
-//       $component-height: $height,
-//     );
-//   }
+  //   .md3-chip__icon--primary {
+  //     @include shape.radius(
+  //       $radius,
+  //       $rtl-reflexive,
+  //       $component-height: $height,
+  //     );
+  //   }
 }
 
 ///
@@ -990,14 +984,10 @@ $_custom-property-prefix: 'chip';
 /// @param {Color | Map} $color-or-map - The icon's container color or a state Map
 ///
 @mixin icon-container-color($color-or-map) {
-  @include _icon-container-color(
-    map.get($color-or-map, default)
-  );
+  @include _icon-container-color(map.get($color-or-map, default));
 
   .md3-chip__action--primary:not(.md3-chip__action--presentational):hover {
-    @include _icon-container-color(
-      map.get($color-or-map, hover)
-    );
+    @include _icon-container-color(map.get($color-or-map, hover));
   }
 
   .md3-chip__action--primary:not(.md3-chip__action--presentational) {
@@ -1010,9 +1000,7 @@ $_custom-property-prefix: 'chip';
   }
 
   &.md3-chip--disabled {
-    @include _icon-container-color(
-      map.get($color-or-map, disabled)
-    );
+    @include _icon-container-color(map.get($color-or-map, disabled));
   }
 }
 
@@ -1061,20 +1049,14 @@ $_custom-property-prefix: 'chip';
 /// @param {Color | Map} $color-or-map - The delete action's color or a state Map
 ///
 @mixin delete-action-color($color-or-map) {
-  @include _delete-action-color(
-    map.get($color-or-map, default)
-  );
+  @include _delete-action-color(map.get($color-or-map, default));
 
   @include _is-enabled() {
-    @include _delete-action-color(
-      map.get($color-or-map, enabled)
-    );
+    @include _delete-action-color(map.get($color-or-map, enabled));
   }
 
   .md3-chip__action--delete:hover {
-    @include _delete-action-color(
-      map.get($color-or-map, hover)
-    );
+    @include _delete-action-color(map.get($color-or-map, hover));
   }
 
   .md3-chip__action--delete {
@@ -1087,9 +1069,7 @@ $_custom-property-prefix: 'chip';
   }
 
   @include _is-disabled() {
-    @include _delete-action-color(
-      map.get($color-or-map, disabled)
-    );
+    @include _delete-action-color(map.get($color-or-map, disabled));
   }
 }
 
@@ -1168,14 +1148,10 @@ $_custom-property-prefix: 'chip';
 /// @param {Color | Map} $color-or-map - The checkmark container's color or a state Map
 ///
 @mixin checkmark-container-color($color-or-map) {
-  @include _checkmark-container-color(
-    map.get($color-or-map, default)
-  );
+  @include _checkmark-container-color(map.get($color-or-map, default));
 
   &.md3-chip--disabled {
-    @include _checkmark-container-color(
-      map.get($color-or-map, disabled)
-    );
+    @include _checkmark-container-color(map.get($color-or-map, disabled));
   }
 }
 
@@ -1211,7 +1187,7 @@ $_custom-property-prefix: 'chip';
 ) {
   &.md3-chip--with-primary-graphic {
     .md3-chip__graphic {
-       padding-inline: $graphic-leading $graphic-trailing;
+      padding-inline: $graphic-leading $graphic-trailing;
     }
 
     .md3-chip__action--primary {
@@ -1280,7 +1256,11 @@ $_custom-property-prefix: 'chip';
 
 @mixin _container-elevation($resolver, $shadow-color, $map) {
   // TODO(b/240224981): Use M3 resolver.
-  @include elevation-theme.theme-styles((shadow: $shadow-color));
+  @include elevation-theme.theme-styles(
+    (
+      shadow: $shadow-color,
+    )
+  );
 }
 
 @mixin _selected-container-elevation($resolver, $shadow-color, $map) {

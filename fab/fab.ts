@@ -9,7 +9,7 @@ import '../icon/icon.js';
 import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-import {styles as overlayStyles} from '../elevation/lib/elevation-overlay-styles.css.js';
+import {styles as overlayStyles} from '../elevationold/lib/elevation-overlay-styles.css.js';
 
 import {Fab} from './lib/fab.js';
 import {styles as sharedStyles} from './lib/fab-shared-styles.css.js';
