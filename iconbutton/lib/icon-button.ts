@@ -76,9 +76,8 @@ export abstract class IconButton extends ActionElement {
         @contextmenu="${this.handleContextMenu}">
         ${this.renderFocusRing()}
         ${this.renderRipple()}
-        <span class="md3-icon-button__icon">${this.renderIcon(this.icon)}</span>
+        ${this.renderIcon()}
         ${this.renderTouchTarget()}
-        <span class="md3-icon-button__icon"><slot></slot></span>
   </button>`;
   }
 
@@ -90,10 +89,12 @@ export abstract class IconButton extends ActionElement {
   }
 
   /** @soyTemplate */
-  protected renderIcon(icon: string): TemplateResult|string {
-    return icon ?
-        staticHtml`<${this.iconElementTag}>${icon}</${this.iconElementTag}>` :
-        '';
+  protected renderIcon(): TemplateResult {
+    // Note, it's important not to render the icon property as a slot fallback
+    // to avoid any whitespace from overridding it.
+    return staticHtml`<span class="md3-icon-button__icon"><${
+        this.iconElementTag}>${this.icon ? this.icon : html`<slot></slot>`}</${
+        this.iconElementTag}></span>`;
   }
 
   /** @soyTemplate */

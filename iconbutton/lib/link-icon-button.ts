@@ -41,9 +41,8 @@ export class LinkIconButton extends IconButton {
         @contextmenu="${this.handleContextMenu}">
         ${this.renderFocusRing()}
         ${this.renderRipple()}
-        ${this.renderIcon(this.icon)}
+        ${this.renderIcon()}
         ${this.renderTouchTarget()}
-        <span><slot></slot></span>
         <a class="md3-icon-button__link" href="${this.linkHref}"
            target="${ifDefined(this.linkTarget as LinkTarget)}"
            aria-label="${ifDefined(this.ariaLabel)}"
