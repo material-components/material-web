@@ -32,7 +32,7 @@ $_deceleration-curve-timing-function: cubic-bezier(0, 0, 0.2, 1) !default;
   $tokens: md-comp-menu-surface.values();
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
-  * {
+  :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }

@@ -48,7 +48,7 @@ $dark-theme: tokens.md-comp-outlined-autocomplete-values(
 
   $tokens: theme.create-theme-vars($tokens, $custom-property-prefix);
 
-  * {
+  :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }

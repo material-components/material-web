@@ -25,7 +25,7 @@ $_custom-property-prefix: 'badge';
   $tokens: _resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
-  * {
+  :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }

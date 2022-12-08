@@ -41,13 +41,11 @@ $_custom-property-prefix: 'list-item-video';
 
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
-  * {
+  :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
-  }
 
-  :host {
     display: inline-flex;
   }
 

@@ -29,7 +29,7 @@ $_reference: (
   $tokens: $_reference;
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
-  * {
+  :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }

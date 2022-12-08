@@ -46,7 +46,7 @@ $_reference: (
 
   $tokens: theme.create-theme-vars($tokens, 'navigation-drawer');
 
-  * {
+  :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }

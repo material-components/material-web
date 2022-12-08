@@ -37,13 +37,11 @@ $_reference: (
   $tokens: $_reference;
   $tokens: theme.create-theme-vars($tokens, list);
 
-  * {
+  :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
-  }
 
-  :host {
     color: unset;
   }
 

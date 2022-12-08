@@ -22,7 +22,7 @@
   $tokens: md-comp-ripple.values();
   $tokens: theme.create-theme-vars($tokens, ripple);
 
-  * {
+  :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }

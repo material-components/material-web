@@ -46,7 +46,7 @@
   $tokens: shared.resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, filled-text-field);
 
-  * {
+  :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }

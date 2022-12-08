@@ -28,7 +28,7 @@
   $tokens: shared.resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, fab-extended);
 
-  * {
+  :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }

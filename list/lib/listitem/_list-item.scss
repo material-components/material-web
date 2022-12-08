@@ -26,10 +26,12 @@
   $tokens: list-tokens.md-comp-list-values();
   $tokens: theme.create-theme-vars($tokens, list);
 
-  * {
+  :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
+
+    color: unset;
 
     @include list-item-image.theme(
       (
@@ -45,11 +47,6 @@
         list-item-leading-video-shape: var(--_list-item-leading-video-shape),
       )
     );
-  }
-
-  :host {
-    color: unset;
-
     @include focus-ring.theme(
       (
         offset-vertical: -2px,

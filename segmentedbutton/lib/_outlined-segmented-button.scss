@@ -24,7 +24,7 @@
   $tokens: shared.resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, 'segmented-button');
 
-  * {
+  :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }

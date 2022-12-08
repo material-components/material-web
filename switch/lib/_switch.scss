@@ -65,13 +65,16 @@ $_forced-colors-theme: (
   $tokens: _resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, switch);
 
-  * {
+  :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
-  }
 
-  :host {
+    // TODO(b/230630968): create a forced-colors-mode mixin
+    @media screen and (forced-colors: active) {
+      @include theme($_forced-colors-theme);
+    }
+
     display: inline-flex;
     outline: none;
     -webkit-tap-highlight-color: transparent;
@@ -110,11 +113,6 @@ $_forced-colors-theme: (
     border-start-end-radius: var(--_track-shape-start-end);
     border-end-end-radius: var(--_track-shape-end-end);
     border-end-start-radius: var(--_track-shape-end-start);
-
-    // TODO(b/230630968): create a forced-colors-mode mixin
-    @media screen and (forced-colors: active) {
-      @include theme($_forced-colors-theme);
-    }
   }
 
   // Track

@@ -15,7 +15,7 @@ describe('testing', () => {
     describe('getUnusedTokens()', () => {
       it('should return empty when all tokens are used', () => {
         const styles = css`
-          * {
+          :host {
             --_color: var(--md-comp-foo-color);
           }
 
@@ -30,7 +30,7 @@ describe('testing', () => {
 
       it('should return tokens that are defined, but not used', () => {
         const styles = css`
-          * {
+          :host {
             --_color: var(--md-comp-foo-color);
             --_unused: var(--md-comp-foo-unused);
           }
@@ -50,7 +50,7 @@ describe('testing', () => {
     describe('getUndefinedTokens()', () => {
       it('should return empty when all tokens are defined', () => {
         const styles = css`
-          * {
+          :host {
             --_color: var(--md-comp-foo-color);
           }
 
@@ -65,7 +65,7 @@ describe('testing', () => {
 
       it('should return tokens that are used and not defined', () => {
         const styles = css`
-          * {
+          :host {
             --_color: var(--md-comp-foo-color);
           }
 

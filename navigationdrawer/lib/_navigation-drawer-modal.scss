@@ -44,7 +44,7 @@ $_reference: (
   $tokens: shared.resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, 'navigation-drawer-modal');
 
-  * {
+  :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }

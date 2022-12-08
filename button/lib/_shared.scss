@@ -15,19 +15,6 @@
 @use '../../sass/resolvers';
 
 @mixin styles() {
-  * {
-    @include ripple-theme.theme(
-      (
-        hover-state-layer-color: var(--_hover-state-layer-color),
-        focus-state-layer-color: var(--_focus-state-layer-color),
-        pressed-state-layer-color: var(--_pressed-state-layer-color),
-        hover-state-layer-opacity: var(--_hover-state-layer-opacity),
-        focus-state-layer-opacity: var(--_focus-state-layer-opacity),
-        pressed-state-layer-opacity: var(--_pressed-state-layer-opacity),
-      )
-    );
-  }
-
   :host {
     display: inline-flex;
     outline: none;
@@ -38,6 +25,17 @@
      * button has an icon and the other does not.
      */
     vertical-align: top;
+
+    @include ripple-theme.theme(
+      (
+        hover-state-layer-color: var(--_hover-state-layer-color),
+        focus-state-layer-color: var(--_focus-state-layer-color),
+        pressed-state-layer-color: var(--_pressed-state-layer-color),
+        hover-state-layer-opacity: var(--_hover-state-layer-opacity),
+        focus-state-layer-opacity: var(--_focus-state-layer-opacity),
+        pressed-state-layer-opacity: var(--_pressed-state-layer-opacity),
+      )
+    );
   }
 
   :host([disabled]) {

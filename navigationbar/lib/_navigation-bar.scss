@@ -41,15 +41,13 @@
 
   $tokens: theme.create-theme-vars($tokens, 'navigation-bar');
 
-  * {
-    @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
-    }
-  }
-
   @include elevation-overlay.static-styles();
 
   :host {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+
     width: 100%;
   }
 

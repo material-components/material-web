@@ -3,13 +3,10 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 @use './filled-text-field';
 
 @media (forced-colors: active) {
-  .md3-text-field {
+  :host {
     @include filled-text-field.theme(
       (
         disabled-active-indicator-color: GrayText,

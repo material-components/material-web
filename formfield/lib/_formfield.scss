@@ -22,13 +22,11 @@ $custom-property-prefix: 'formfield';
   $tokens: md-comp-formfield.values();
   $tokens: theme.create-theme-vars($tokens, $custom-property-prefix);
 
-  * {
+  :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
-  }
 
-  :host {
     display: inline-flex;
   }
 

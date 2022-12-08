@@ -32,7 +32,7 @@ $_animation-duration: 150ms;
   $tokens: shared.resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, filled-field);
 
-  * {
+  :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
