@@ -8,7 +8,7 @@ import {defaultTransformPseudoClasses, getTransformedPseudoClass, transformPseud
 
 declare global {
   interface DocumentOrShadowRoot {
-    adoptedStyleSheets?: CSSStyleSheet[];
+    adoptedStyleSheets: CSSStyleSheet[];
   }
 }
 
