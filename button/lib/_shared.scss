@@ -112,6 +112,10 @@
     border-radius: var(--_container-shape);
   }
 
+  .md3-button__ripple {
+    z-index: -1; // Place behind content
+  }
+
   // TODO(b/181413732): Verify token below are named correctly
   .md3-button--icon-leading {
     padding-inline-start: var(--_with-icon-spacing-leading);

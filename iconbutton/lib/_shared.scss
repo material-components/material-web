@@ -63,6 +63,10 @@
     }
   }
 
+  md-ripple {
+    z-index: -1; // Place behind content
+  }
+
   .md3-icon-button--flip-icon .md3-icon-button__icon {
     transform: scaleX(-1);
   }

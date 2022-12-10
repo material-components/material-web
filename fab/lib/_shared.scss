@@ -147,6 +147,7 @@
 
   .md3-fab__ripple {
     overflow: hidden;
+    z-index: -1; // Place behind content
   }
 
   .md3-fab,
