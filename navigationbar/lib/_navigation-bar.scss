@@ -6,11 +6,7 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@use 'sass:map';
-@use '../../elevationold/lib/elevation-theme';
-@use '../../elevationold/lib/elevation-overlay';
-@use '../../sass/map-ext';
-@use '../../sass/resolvers';
+@use '../../elevation/lib/elevation';
 @use '../../sass/theme';
 @use '../../tokens';
 
@@ -19,12 +15,7 @@
     tokens.md-comp-navigation-bar-values(),
     $tokens
   );
-  $tokens: elevation-theme.resolve-theme(
-    $tokens,
-    map.get(resolvers.$material, elevation),
-    $shadow-color-token: container-shadow-color,
-    $elevation-tokens: (container-elevation)
-  );
+  $tokens: elevation.resolve-tokens($tokens, 'container-elevation');
   $tokens: theme.create-theme-vars($tokens, 'navigation-bar');
 
   @include theme.emit-theme-vars($tokens);
@@ -32,16 +23,9 @@
 
 @mixin styles() {
   $tokens: tokens.md-comp-navigation-bar-values();
-  $tokens: elevation-theme.resolve-theme(
-    $tokens,
-    map.get(resolvers.$material, elevation),
-    $shadow-color-token: container-shadow-color,
-    $elevation-tokens: (container-elevation)
-  );
+  $tokens: elevation.resolve-tokens($tokens, 'container-elevation');
 
   $tokens: theme.create-theme-vars($tokens, 'navigation-bar');
-
-  @include elevation-overlay.static-styles();
 
   :host {
     @each $token, $value in $tokens {
@@ -59,21 +43,24 @@
     border-radius: var(--_container-shape);
     height: var(--_container-height);
 
-    @include elevation-theme.theme-styles(
+    @include elevation.theme(
       (
-        shadow: var(--_container-elevation-shadow),
-        overlay-opacity: var(--_container-elevation-overlay-opacity),
-        surface-tint-layer-color: var(--_container-surface-tint-layer-color),
+        duration: 280ms,
+        level: var(--_container-elevation),
+        shadow-color: var(--_container-shadow-color),
+        surface-tint-color: var(--_container-surface-tint-layer-color),
       )
     );
-
-    .md3-elevation-overlay {
-      z-index: 0;
-    }
 
     .md3-navigation-bar__tabs-slot-container {
       display: inherit;
       width: inherit;
     }
+  }
+
+  md-elevation {
+    inset: 0;
+    position: absolute;
+    z-index: 0;
   }
 }
