@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import '../../elevation/elevation.js';
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
@@ -57,7 +58,7 @@ export abstract class FabShared extends ActionElement {
         @pointerenter="${this.handlePointerEnter}"
         @click="${this.handleClick}"
         @contextmenu="${this.handleContextMenu}">
-        ${this.renderElevationOverlay()}
+        ${this.renderElevation()}
         ${this.renderFocusRing()}
         ${this.renderRipple()}
         <span class="md3-fab__icon">
@@ -88,8 +89,8 @@ export abstract class FabShared extends ActionElement {
   }
 
   /** @soyTemplate */
-  protected renderElevationOverlay(): TemplateResult {
-    return html`<div class="md3-elevation-overlay"></div>`;
+  protected renderElevation(): TemplateResult {
+    return html`<md-elevation shadow surface></md-elevation>`;
   }
 
   /** @soyTemplate */

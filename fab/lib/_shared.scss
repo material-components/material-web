@@ -8,12 +8,9 @@
 
 @use 'sass:map';
 @use 'sass:meta';
-@use '../../elevationold/lib/elevation-theme';
-@use '../../elevationold/lib/surface';
+@use '../../elevation/lib/elevation';
 @use '../../focus/focus-ring';
 @use '../../ripple/ripple-theme';
-@use '../../sass/elevation';
-@use '../../sass/resolvers';
 @use '../../sass/theme';
 @use '../../sass/touch-target';
 
@@ -36,7 +33,6 @@
   }
 
   .md3-fab {
-    @include surface.root-static-styles;
     display: inline-flex;
     border: none;
     outline: none;
@@ -47,6 +43,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    z-index: 0; // Needed for elevation and ripple
     background-color: var(--_container-color);
 
     @include focus-ring.theme(
@@ -66,19 +63,20 @@
       )
     );
 
-    @include elevation-theme.theme-styles(
+    @include elevation.theme(
       (
-        shadow: var(--_container-elevation-shadow),
-        overlay-opacity: var(--_container-elevation-overlay-opacity),
-        surface-tint-layer-color: var(--_container-surface-tint-layer-color),
+        // TODO: replace duration with animation tokens
+        duration: 280ms,
+        level: var(--_container-elevation),
+        shadow-color: var(--_container-shadow-color),
+        surface-tint-color: var(--_container-surface-tint-layer-color)
       )
     );
 
     &.md3-fab--lowered {
-      @include elevation-theme.theme-styles(
+      @include elevation.theme(
         (
-          shadow: var(--_lowered-container-elevation-shadow),
-          overlay-opacity: var(--_lowered-container-elevation-overlay-opacity),
+          level: var(--_lowered-container-elevation),
         )
       );
     }
@@ -86,38 +84,32 @@
     &:hover {
       cursor: pointer;
 
-      @include elevation-theme.theme-styles(
+      @include elevation.theme(
         (
-          shadow: var(--_hover-container-elevation-shadow),
-          overlay-opacity: var(--_hover-container-elevation-overlay-opacity),
+          level: var(--_hover-container-elevation),
         )
       );
 
       &.md3-fab--lowered {
-        @include elevation-theme.theme-styles(
+        @include elevation.theme(
           (
-            shadow: var(--_lowered-hover-container-elevation-shadow),
-            overlay-opacity:
-              var(--_lowered-hover-container-elevation-overlay-opacity),
+            level: var(--_lowered-hover-container-elevation),
           )
         );
       }
     }
 
     &:focus {
-      @include elevation-theme.theme-styles(
+      @include elevation.theme(
         (
-          shadow: var(--_focus-container-elevation-shadow),
-          overlay-opacity: var(--_focus-container-elevation-overlay-opacity),
+          level: var(--_focus-container-elevation),
         )
       );
 
       &.md3-fab--lowered {
-        @include elevation-theme.theme-styles(
+        @include elevation.theme(
           (
-            shadow: var(--_lowered-focus-container-elevation-shadow),
-            overlay-opacity:
-              var(--_lowered-focus-container-elevation-overlay-opacity),
+            level: var(--_lowered-focus-container-elevation),
           )
         );
       }
@@ -126,23 +118,26 @@
     &:active {
       outline: none;
 
-      @include elevation-theme.theme-styles(
+      @include elevation.theme(
         (
-          shadow: var(--_pressed-container-elevation-shadow),
-          overlay-opacity: var(--_pressed-container-elevation-overlay-opacity),
+          level: var(--_pressed-container-elevation),
         )
       );
 
       &.md3-fab--lowered {
-        @include elevation-theme.theme-styles(
+        @include elevation.theme(
           (
-            shadow: var(--_lowered-pressed-container-elevation-shadow),
-            overlay-opacity:
-              var(--_lowered-pressed-container-elevation-overlay-opacity),
+            level: var(--_lowered-pressed-container-elevation),
           )
         );
       }
     }
+  }
+
+  md-elevation {
+    inset: 0;
+    position: absolute;
+    z-index: -1; // Place behind content
   }
 
   .md3-fab__ripple {
@@ -198,20 +193,16 @@
 }
 
 @function resolve-tokens($tokens) {
-  $tokens: elevation-theme.resolve-theme(
+  $tokens: elevation.resolve-tokens(
     $tokens,
-    map.get(resolvers.$material, elevation),
-    $shadow-color-token: container-shadow-color,
-    $elevation-tokens: (
-      container-elevation,
-      focus-container-elevation,
-      hover-container-elevation,
-      pressed-container-elevation,
-      lowered-container-elevation,
-      lowered-focus-container-elevation,
-      lowered-hover-container-elevation,
-      lowered-pressed-container-elevation
-    )
+    'container-elevation',
+    'focus-container-elevation',
+    'hover-container-elevation',
+    'pressed-container-elevation',
+    'lowered-container-elevation',
+    'lowered-focus-container-elevation',
+    'lowered-hover-container-elevation',
+    'lowered-pressed-container-elevation'
   );
 
   @return $tokens;
