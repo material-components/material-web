@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import '../../elevation/elevation.js';
+
+import {html, TemplateResult} from 'lit';
 import {ClassInfo} from 'lit/directives/class-map.js';
 
 import {Button} from './button.js';
@@ -16,5 +19,10 @@ export class TonalButton extends Button {
       ...super.getRenderClasses(),
       'md3-button--tonal': true,
     };
+  }
+
+  /** @soyTemplate */
+  protected override renderElevation(): TemplateResult {
+    return html`<md-elevation shadow></md-elevation>`;
   }
 }

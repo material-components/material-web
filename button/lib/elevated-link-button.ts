@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import '../../elevation/elevation.js';
+
 import {html, TemplateResult} from 'lit';
 import {ClassInfo} from 'lit/directives/class-map.js';
 
@@ -20,7 +22,7 @@ export class ElevatedLinkButton extends LinkButton {
   }
 
   /** @soyTemplate */
-  protected override renderOverlay(): TemplateResult {
-    return html`<div class="md3-elevation-overlay"></div>`;
+  protected override renderElevation(): TemplateResult {
+    return html`<md-elevation shadow surface></md-elevation>`;
   }
 }

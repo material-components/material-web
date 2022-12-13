@@ -9,68 +9,66 @@
 @use 'sass:map';
 @use 'sass:meta';
 
-@use '../../elevationold/lib/elevation-theme';
-@use '../../sass/resolvers';
+@use '../../elevation/lib/elevation';
 
 @mixin styles() {
+  md-elevation {
+    inset: 0;
+    position: absolute;
+  }
+
   .md3-button {
-    @include elevation-theme.theme-styles(
+    @include elevation.theme(
       (
-        shadow: var(--_container-elevation-shadow),
-        overlay-opacity: var(--_container-elevation-overlay-opacity),
-        surface-tint-layer-color: var(--_container-surface-tint-layer-color),
+        // TODO: replace duration with animation tokens
+        duration: 280ms,
+        level: var(--_container-elevation),
+        shadow-color: var(--_container-shadow-color),
+        surface-tint-color: var(--_container-surface-tint-layer-color)
       )
     );
   }
 
   .md3-button:hover {
-    @include elevation-theme.theme-styles(
+    @include elevation.theme(
       (
-        shadow: var(--_hover-container-elevation-shadow),
-        overlay-opacity: var(--_hover-container-elevation-overlay-opacity),
+        level: var(--_hover-container-elevation),
       )
     );
   }
 
   .md3-button:focus {
-    @include elevation-theme.theme-styles(
+    @include elevation.theme(
       (
-        shadow: var(--_focus-container-elevation-shadow),
-        overlay-opacity: var(--_focus-container-elevation-overlay-opacity),
+        level: var(--_focus-container-elevation),
       )
     );
   }
 
   .md3-button:active {
-    @include elevation-theme.theme-styles(
+    @include elevation.theme(
       (
-        shadow: var(--_pressed-container-elevation-shadow),
-        overlay-opacity: var(--_pressed-container-elevation-overlay-opacity),
+        level: var(--_pressed-container-elevation),
       )
     );
   }
 
   .md3-button:disabled {
-    @include elevation-theme.theme-styles(
+    @include elevation.theme(
       (
-        shadow: var(--_disabled-container-elevation-shadow),
-        overlay-opacity: var(--_disabled-container-elevation-overlay-opacity),
+        level: var(--_disabled-container-elevation),
       )
     );
   }
 }
 
 @function resolve-tokens($tokens) {
-  @return elevation-theme.resolve-theme(
+  @return elevation.resolve-tokens(
     $tokens,
-    map.get(resolvers.$material, elevation),
-    $shadow-color-token: container-shadow-color,
-    $elevation-tokens: (
-      container-elevation,
-      disabled-container-elevation,
-      focus-container-elevation,
-      hover-container-elevation,
-      pressed-container-elevation
-    )
+    'container-elevation',
+    'disabled-container-elevation',
+    'focus-container-elevation',
+    'hover-container-elevation',
+    'pressed-container-elevation'
   );
 }

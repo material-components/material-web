@@ -60,7 +60,7 @@ export abstract class LinkButton extends Button {
           @click="${this.handleClick}"
           ${ripple(getRipple)}>
             ${this.renderFocusRing()}
-            ${this.renderOverlay()}
+            ${this.renderElevation()}
             ${when(this.showRipple, () => this.renderRipple())}
             ${this.renderOutline()}
             ${this.renderTouchTarget()}

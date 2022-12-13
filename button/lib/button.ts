@@ -87,7 +87,7 @@ export abstract class Button extends LitElement implements ButtonState {
           @click="${this.handleClick}"
           ${ripple(getRipple)}>
         ${this.renderFocusRing()}
-        ${this.renderOverlay()}
+        ${this.renderElevation()}
         ${when(this.showRipple, () => this.renderRipple())}
         ${this.renderOutline()}
         ${this.renderTouchTarget()}
@@ -121,7 +121,7 @@ export abstract class Button extends LitElement implements ButtonState {
   }
 
   /** @soyTemplate */
-  protected renderOverlay(): TemplateResult {
+  protected renderElevation(): TemplateResult {
     return html``;
   }
 

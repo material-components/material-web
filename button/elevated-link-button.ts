@@ -6,8 +6,6 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {styles as elevationOverlayStyles} from '../elevationold/lib/elevation-overlay-styles.css.js';
-
 import {ElevatedLinkButton} from './lib/elevated-link-button.js';
 import {styles as elevatedStyles} from './lib/elevated-styles.css.js';
 import {styles as sharedElevationStyles} from './lib/shared-elevation-styles.css.js';
@@ -26,7 +24,6 @@ declare global {
  */
 @customElement('md-elevated-link-button')
 export class MdElevatedLinkButton extends ElevatedLinkButton {
-  static override styles = [
-    elevationOverlayStyles, sharedStyles, sharedElevationStyles, elevatedStyles
-  ];
+  static override styles =
+      [sharedStyles, sharedElevationStyles, elevatedStyles];
 }
