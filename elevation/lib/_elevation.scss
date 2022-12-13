@@ -1,0 +1,218 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:list';
+@use 'sass:map';
+@use '../../sass/theme';
+@use '../../sass/var';
+@use './md-comp-elevation';
+
+// TODO(b/261603279): remove once tokens are updated to use level instead of dp
+@function resolve-tokens($tokens, $elevation-keys...) {
+  @each $elevation-key in $elevation-keys {
+    $dp: map.get($tokens, $elevation-key);
+    @if $dp != null and not var.is-var($dp) {
+      $valid-dps: (0, 1, 3, 6, 8, 12);
+      @if list.index($valid-dps, $dp) == null {
+        @error '#{$elevation-key} must be expressed in dp values (#{$valid-dps}), but received #{$dp}. See b/261603279.';
+      }
+
+      $dp-to-level: list.index($valid-dps, $dp) - 1;
+      $tokens: map.set($tokens, $elevation-key, $dp-to-level);
+    }
+  }
+
+  @return $tokens;
+}
+
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme(md-comp-elevation.values(), $tokens);
+  $tokens: resolve-tokens($tokens, 'level');
+  $tokens: theme.create-theme-vars($tokens, 'elevation');
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: md-comp-elevation.values();
+  $tokens: resolve-tokens($tokens, 'level');
+  $tokens: theme.create-theme-vars($tokens, 'elevation');
+
+  :host {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+
+    border-radius: inherit;
+    display: flex;
+    position: relative;
+  }
+
+  :host(:not([surface])) .surface,
+  :host(:not([shadow])) .shadow {
+    display: none;
+  }
+
+  .surface,
+  .shadow,
+  .shadow::before,
+  .shadow::after {
+    border-radius: inherit;
+    content: '';
+    inset: 0;
+    position: absolute;
+    transition-property: box-shadow, opacity;
+    transition-duration: var(--_duration);
+    transition-timing-function: var(--_easing);
+  }
+
+  // Key box shadows
+  .shadow::before {
+    // level0: box-shadow: 0px 0px 0px 0px;
+    // level1: box-shadow: 0px 1px 2px 0px;
+    // level2: box-shadow: 0px 1px 2px 0px;
+    // level3: box-shadow: 0px 1px 3px 0px;
+    // level4: box-shadow: 0px 2px 3px 0px;
+    // level5: box-shadow: 0px 4px 4px 0px;
+
+    // Add a clamped value for each level to build the correct values.
+    // Sass will simplify nested calc()s.
+
+    // 0 + 0 = 0
+    // $level0-y: 0; // +0 is a no-op
+    // 0 + 1 = 1
+    $level1-y: clamp(0, var(--_level), 1);
+    // 1 + 0 = 1
+    // $level2-y: 0; // +0 is a no-op
+    // 1 + 0 = 1
+    // $level3-y: 0; // +0 is a no-op
+    // 1 + 1 = 2
+    $level4-y: clamp(0, var(--_level) - 3, 1);
+    // 2 + 2 = 4
+    $level5-y: calc(2 * clamp(0, var(--_level) - 4, 1));
+    // Convert to px.
+    $y: calc(1px * ($level1-y + $level4-y + $level5-y));
+
+    // 0 + 0 = 0
+    // $level0-blur: 0; // +0 is a no-op
+    // 0 + 2 = 2
+    $level1-blur: calc(2 * clamp(0, var(--_level), 1));
+    // 2 + 0 = 2
+    // $level2-blur: 0; // +0 is a no-op
+    // 2 + 1 = 3
+    $level3-blur: clamp(0, var(--_level) - 2, 1);
+    // 3 + 0 = 3
+    // $level4-blur: 0; // +0 is a no-op
+    // 3 + 1 = 4
+    $level5-blur: clamp(0, var(--_level) - 4, 1);
+    // Convert to px.
+    $blur: calc(1px * ($level1-blur + $level3-blur + $level5-blur));
+
+    box-shadow: 0px $y $blur 0px var(--_shadow-color);
+    opacity: 0.3;
+  }
+
+  // Ambient box shadows
+  .shadow::after {
+    // level0: box-shadow: 0px 0px 0px 0px;
+    // level1: box-shadow: 0px 1px 3px 1px;
+    // level2: box-shadow: 0px 2px 6px 2px;
+    // level3: box-shadow: 0px 4px 8px 3px;
+    // level4: box-shadow: 0px 6px 10px 4px;
+    // level5: box-shadow: 0px 8px 12px 6px;
+
+    // Add a clamped value for each level to build the correct values.
+    // Sass will simplify nested calc()s.
+
+    // 0 + 0 = 0
+    // $level0-y: 0; // +0 is a no-op
+    // 0 + 1 = 1
+    $level1-y: clamp(0, var(--_level), 1);
+    // 1 + 1 = 2
+    $level2-y: clamp(0, var(--_level) - 1, 1);
+    // 2 + 2 = 4
+    // $level3-y: 2 * clamp(0, var(--_level) - 2, 1);
+    // 4 + 2 = 6
+    // $level4-y: 2 * clamp(0, var(--_level) - 3, 1);
+    // 6 + 2 = 8
+    // $level5-y: 2 * clamp(0, var(--_level) - 4, 1);
+    // Levels 3-5 can be simplified by changing the max clamp value.
+    $level3to5-y: calc(2 * clamp(0, var(--_level) - 2, 3));
+    // Convert to px.
+    $y: calc(1px * ($level1-y + $level2-y + $level3to5-y));
+
+    // 0 + 0 = 0
+    // $level0-blur: 0; // +0 is a no-op
+    // 0 + 3 = 3
+    // $level1-blur: 3 * clamp(0, var(--_level), 1);
+    // 3 + 3 = 6
+    // $level2-blur: 3 * clamp(0, var(--_level) - 1, 1);
+    // Levels 1-2 can be simplified by changing the max clamp value.
+    $level1to2-blur: calc(3 * clamp(0, var(--_level), 2));
+    // 6 + 2 = 8
+    // $level3-blur: 2 * clamp(0, var(--_level) - 2, 1);
+    // 8 + 2 = 10
+    // $level4-blur: 2 * clamp(0, var(--_level) - 3, 1);
+    // 10 + 2 = 12
+    // $level5-blur: 2 * clamp(0, var(--_level) - 4, 1);
+    // Levels 3-5 can be simplified by changing the max clamp value.
+    $level3to5-blur: calc(2 * clamp(0, var(--_level) - 2, 3));
+    // Convert to px.
+    $blur: calc(1px * ($level1to2-blur + $level3to5-blur));
+
+    // 0 + 0 = 0
+    // $level0-spread: 0; // +0 is a no-op
+    // 0 + 1 = 1
+    // $level1-spread: clamp(0, var(--_level), 1);
+    // 1 + 1 = 2
+    // $level2-spread: clamp(0, var(--_level) - 1, 1);
+    // 2 + 1 = 3
+    // $level3-spread: clamp(0, var(--_level) - 2, 1);
+    // 3 + 1 = 4
+    // $level4-spread: clamp(0, var(--_level) - 3, 1);
+    // 4 + 2 = 6
+    // Levels 1-4 can be simplified by changing the max clamp value
+    $level1to4-spread: clamp(0, var(--_level), 4);
+    $level5-spread: calc(2 * clamp(0, var(--_level) - 4, 1));
+    // Convert to px.
+    $spread: calc(1px * ($level1to4-spread + $level5-spread));
+
+    opacity: 0.15;
+    box-shadow: 0px $y $blur $spread var(--_shadow-color);
+  }
+
+  .surface {
+    // Surface tint opacities:
+    // level0: opacity: 0;
+    // level1: opacity: 0.05;
+    // level2: opacity: 0.08;
+    // level3: opacity: 0.11;
+    // level4: opacity: 0.12;
+    // level5: opacity: 0.14;
+
+    // Add a clamped value for each level to build the correct values.
+    // Sass will simplify nested calc()s.
+
+    // 0 + 0 = 0
+    // $level0-opacity: 0; // +0 is a no-op
+    // 0 + 0.05 = 0.05
+    $level1-opacity: clamp(0, var(--_level), 0.05);
+    // 0.05 + 0.03 = 0.08
+    $level2-opacity: clamp(0, var(--_level) - 1, 0.03);
+    // 0.08 + 0.03 = 0.11
+    $level3-opacity: clamp(0, var(--_level) - 2, 0.03);
+    // (can't simplify levels 2-3 since the value is < 1)
+    // 0.11 + 0.01 = 0.12
+    $level4-opacity: clamp(0, var(--_level) - 3, 0.01);
+    // 0.12 + 0.02 = 0.14
+    $level5-opacity: clamp(0, var(--_level) - 4, 0.02);
+    $opacity: calc(
+      $level1-opacity + $level2-opacity + $level3-opacity + $level4-opacity +
+        $level5-opacity
+    );
+
+    background: var(--_surface-tint-color);
+    opacity: $opacity;
+  }
+}
