@@ -106,12 +106,6 @@ describe('md-switch', () => {
     });
   });
 
-  describe('processing', () => {
-    it('is false by default', () => {
-      expect(toggle.processing).toBeFalse();
-    });
-  });
-
   describe('disabled', () => {
     let disabled: TestSwitch;
 

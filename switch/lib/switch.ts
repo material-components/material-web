@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// tslint:disable:no-new-decorators
+
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
@@ -23,20 +25,33 @@ export class Switch extends ActionElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
+  /**
+   * Disables the switch and makes it non-interactive.
+   */
   @property({type: Boolean, reflect: true}) disabled = false;
-  @property({type: Boolean}) processing = false;
+
+  /**
+   * Puts the switch in the selected state and sets the form submission value to
+   * the `value` property.
+   */
   @property({type: Boolean}) selected = false;
+
+  /**
+   * Shows both the selected and deselected icons.
+   */
   @property({type: Boolean}) icons = false;
+
+  /**
+   * Shows only the selected icon, and not the deselected icon. If `true`,
+   * overrides the behavior of the `icons` property.
+   */
   @property({type: Boolean}) showOnlySelectedIcon = false;
 
-  // Aria
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  // TODO(b/210730484): replace with @soyParam annotation
+  @ariaProperty
   @property({type: String, attribute: 'data-aria-label', noAccessor: true})
   override ariaLabel!: string;
 
-  // TODO: Add support in @ariaProperty for idref aria attributes
-  @ariaProperty  // tslint:disable-line:no-new-decorators
+  @ariaProperty
   @property({type: String, attribute: 'data-aria-labelledby', noAccessor: true})
   ariaLabelledBy = '';
 
@@ -49,8 +64,18 @@ export class Switch extends ActionElement {
   get form() {
     return this.closest('form');
   }
+
+  /**
+   * The HTML name to use in form submission.
+   */
   @property({type: String, reflect: true}) name = '';
+
+  /**
+   * The value associated with this switch on form submission. `null` is
+   * submitted when `selected` is `false`.
+   */
   @property({type: String}) value = 'on';
+
   [getFormValue]() {
     return this.selected ? this.value : null;
   }
@@ -110,7 +135,6 @@ export class Switch extends ActionElement {
   /** @soyTemplate */
   protected getRenderClasses(): ClassInfo {
     return {
-      'md3-switch--processing': this.processing,
       'md3-switch--selected': this.selected,
       'md3-switch--unselected': !this.selected,
     };
