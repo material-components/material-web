@@ -7,223 +7,121 @@
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, PropertyValues, TemplateResult} from 'lit';
-import {property, query, state} from 'lit/decorators.js';
+import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
+import {property, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
+import {when} from 'lit/directives/when.js';
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '../../actionelement/action-element.js';
+import {redispatchEvent} from '../../controller/events.js';
 import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
+import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 
-/** @soyCompatible */
-export class Checkbox extends ActionElement {
-  @query('input') protected formElement!: HTMLInputElement;
-
+/**
+ * A checkbox component.
+ */
+export class Checkbox extends LitElement {
   @property({type: Boolean, reflect: true}) checked = false;
-
-  @property({type: Boolean, reflect: true}) indeterminate = false;
-
   @property({type: Boolean, reflect: true}) disabled = false;
-
-  @property({type: String, reflect: true}) name = '';
-
-  @property({type: String}) value = 'on';
+  @property({type: Boolean, reflect: true}) error = false;
+  @property({type: Boolean, reflect: true}) indeterminate = false;
 
   @ariaProperty  // tslint:disable-line:no-new-decorators
   @property({type: String, attribute: 'data-aria-label', noAccessor: true})
   override ariaLabel!: string;
 
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  @property({type: String, attribute: 'data-aria-labelledby', noAccessor: true})
-  ariaLabelledBy?: string;
+  @state() private prevChecked = false;
+  @state() private prevDisabled = false;
+  @state() private prevIndeterminate = false;
+  @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
+  @state() private showFocusRing = false;
+  @state() private showRipple = false;
 
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  @property(
-      {type: String, attribute: 'data-aria-describedby', noAccessor: true})
-  ariaDescribedBy?: string;
-
-  /**
-   * Touch target extends beyond visual boundary of a component by default.
-   * Set to `true` to remove touch target added to the component.
-   * @see https://material.io/design/usability/accessibility.html
-   */
-  @property({type: Boolean}) reducedTouchTarget = false;
-
-  @state() protected animationClass = '';
-
-  @state() protected showFocusRing = false;
-
-  @query('md-ripple') ripple!: MdRipple;
-
-  protected override update(changedProperties: PropertyValues) {
-    const oldIndeterminate = changedProperties.get('indeterminate');
-    const oldChecked = changedProperties.get('checked');
-    const oldDisabled = changedProperties.get('disabled');
-    if (oldIndeterminate !== undefined || oldChecked !== undefined ||
-        oldDisabled !== undefined) {
-      const oldState = this.calculateAnimationStateName(
-          !!oldChecked, !!oldIndeterminate, !!oldDisabled);
-      const newState = this.calculateAnimationStateName(
-          this.checked, this.indeterminate, this.disabled);
-      this.animationClass = `${oldState}-${newState}`;
+  protected override update(changed: PropertyValues<Checkbox>) {
+    if (changed.has('checked') || changed.has('disabled') ||
+        changed.has('indeterminate')) {
+      this.prevChecked = changed.get('checked') ?? this.checked;
+      this.prevDisabled = changed.get('disabled') ?? this.disabled;
+      this.prevIndeterminate =
+          changed.get('indeterminate') ?? this.indeterminate;
     }
-    super.update(changedProperties);
+
+    super.update(changed);
   }
 
-  protected calculateAnimationStateName(
-      checked: boolean, indeterminate: boolean, disabled: boolean): string {
-    if (disabled) {
-      return 'disabled';
-    } else if (indeterminate) {
-      return 'indeterminate';
-    } else if (checked) {
-      return 'checked';
-    } else {
-      return 'unchecked';
-    }
-  }
-
-  /** @soyTemplate */
-  protected renderRipple(): TemplateResult {
-    return html`<md-ripple
-        ?disabled="${this.disabled}"
-        unbounded></md-ripple>`;
-  }
-
-  /** @soyTemplate */
-  protected renderFocusRing(): TemplateResult {
-    return html`<md-focus-ring .visible="${
-        this.showFocusRing}"></md-focus-ring>`;
-  }
-
-  /**
-   * @soyTemplate
-   * @soyAttributes checkboxAttributes: input
-   * @soyClasses checkboxClasses: .md3-checkbox
-   */
   protected override render(): TemplateResult {
-    /** @classMap */
-    const classes = {
-      'md3-checkbox--disabled': this.disabled,
-      'md3-checkbox--touch': !this.reducedTouchTarget,
-      // transition animiation classes
-      'md3-checkbox--anim-checked-indeterminate':
-          this.animationClass === 'checked-indeterminate',
-      'md3-checkbox--anim-checked-unchecked':
-          this.animationClass === 'checked-unchecked',
-      'md3-checkbox--anim-indeterminate-checked':
-          this.animationClass === 'indeterminate-checked',
-      'md3-checkbox--anim-indeterminate-unchecked':
-          this.animationClass === 'indeterminate-unchecked',
-      'md3-checkbox--anim-unchecked-checked':
-          this.animationClass === 'unchecked-checked',
-      'md3-checkbox--anim-unchecked-indeterminate':
-          this.animationClass === 'unchecked-indeterminate',
-    };
-    const ariaChecked = this.indeterminate ? 'mixed' : undefined;
-    return html`
-      <div class="md3-checkbox ${classMap(classes)}">
-        ${this.renderFocusRing()}
-        <input type="checkbox"
-              class="md3-checkbox__native-control"
-              name="${ifDefined(this.name)}"
-              aria-checked="${ifDefined(ariaChecked)}"
-              aria-label="${ifDefined(this.ariaLabel)}"
-              aria-labelledby="${ifDefined(this.ariaLabelledBy)}"
-              aria-describedby="${ifDefined(this.ariaDescribedBy)}"
-              data-indeterminate="${this.indeterminate ? 'true' : 'false'}"
-              .disabled="${this.disabled}"
-              .indeterminate="${this.indeterminate}"
-              .checked="${this.checked}"
-              .value="${this.value}"
-              @change="${this.handleChange}"
-              @focus="${this.handleFocus}"
-              @blur="${this.handleBlur}"
-              @pointerdown=${this.handlePointerDown}
-              @pointerenter=${this.handlePointerEnter}
-              @pointerup=${this.handlePointerUp}
-              @pointercancel=${this.handlePointerCancel}
-              @pointerleave=${this.handlePointerLeave}
-              @click=${this.handleClick}
-              @contextmenu=${this.handleContextMenu}
-              >
-        <div class="md3-checkbox__background"
-          @animationend="${this.resetAnimationClass}">
-          <svg class="md3-checkbox__checkmark"
-              viewBox="0 0 24 24" aria-hidden="true">
-            <path class="md3-checkbox__checkmark-path"
-                  fill="none"
-                  d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
-          </svg>
-          <div class="md3-checkbox__mixedmark"></div>
-        </div>
-        <div class="md3-checkbox__ripple">
-          ${this.renderRipple()}
-        </div>
-      </div>`;
-  }
+    const prevNone = !this.prevChecked && !this.prevIndeterminate;
+    const prevChecked = this.prevChecked && !this.prevIndeterminate;
+    const prevIndeterminate = this.prevIndeterminate;
+    const isChecked = this.checked && !this.indeterminate;
+    const isIndeterminate = this.indeterminate;
 
-  protected setFormData(formData: FormData) {
-    if (this.name && this.checked) {
-      formData.append(this.name, this.value);
-    }
-  }
-
-  override beginPress({positionEvent}: BeginPressConfig) {
-    this.ripple.beginPress(positionEvent);
-  }
-
-  override endPress({cancelled}: EndPressConfig) {
-    this.ripple.endPress();
-
-    if (cancelled) {
-      return;
-    }
-
-    super.endPress({
-      cancelled,
-      actionData:
-          {checked: this.formElement.checked, value: this.formElement.value}
+    const containerClasses = classMap({
+      'selected': isChecked || isIndeterminate,
+      'unselected': !isChecked && !isIndeterminate,
+      'checked': isChecked,
+      'indeterminate': isIndeterminate,
+      'error': this.error && !this.disabled,
+      'prev-unselected': prevNone,
+      'prev-checked': prevChecked,
+      'prev-indeterminate': prevIndeterminate,
+      'prev-disabled': this.prevDisabled,
     });
+
+    return html`
+      <div class="container ${containerClasses}">
+        <div class="outline"></div>
+        <div class="background"></div>
+        <md-focus-ring .visible=${this.showFocusRing}></md-focus-ring>
+        ${when(this.showRipple, this.renderRipple)}
+        <svg class="icon" viewBox="0 0 18 18">
+          <rect class="mark short" />
+          <rect class="mark long" />
+        </svg>
+      </div>
+      <input type="checkbox"
+        aria-checked=${isIndeterminate ? 'mixed' : nothing}
+        aria-label=${this.ariaLabel || nothing}
+        ?disabled=${this.disabled}
+        .indeterminate=${this.indeterminate}
+        .checked=${this.checked}
+        @blur=${this.handleBlur}
+        @change=${this.handleChange}
+        @focus=${this.handleFocus}
+        @pointerdown=${this.handlePointerDown}
+        ${ripple(this.getRipple)}
+      >
+     `;
   }
 
-  protected handleFocus() {
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  protected handleBlur() {
+  private handleBlur() {
     this.showFocusRing = false;
   }
 
-  protected handlePointerEnter(e: PointerEvent) {
-    this.ripple.beginHover(e);
+  private handleChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    this.checked = target.checked;
+    this.indeterminate = target.indeterminate;
+
+    redispatchEvent(this, event);
   }
 
-  override handlePointerLeave(e: PointerEvent) {
-    super.handlePointerLeave(e);
-    this.ripple.endHover();
+  private handleFocus() {
+    this.showFocusRing = shouldShowStrongFocus();
   }
 
-  override handlePointerDown(e: PointerEvent) {
-    super.handlePointerDown(e);
-
+  private handlePointerDown() {
     pointerPress();
     this.showFocusRing = shouldShowStrongFocus();
   }
 
-  protected handleChange() {
-    this.checked = this.formElement.checked;
-    this.indeterminate = this.formElement.indeterminate;
+  private readonly getRipple = () => {  // bind to this
+    this.showRipple = true;
+    return this.ripple;
+  };
 
-    this.dispatchEvent(new Event('change', {
-      bubbles: true,
-      composed: true,
-    }));
-  }
-
-  protected resetAnimationClass() {
-    this.animationClass = '';
-  }
+  private readonly renderRipple = () => {  // bind to this
+    return html`<md-ripple ?disabled=${this.disabled} unbounded></md-ripple>`;
+  };
 }

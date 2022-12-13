@@ -14,6 +14,6 @@ import {Checkbox} from './lib/checkbox.js';
 export class CheckboxHarness extends Harness<Checkbox> {
   override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.renderRoot.querySelector('input') as HTMLInputElement;
+    return this.element.renderRoot.querySelector('input')!;
   }
 }

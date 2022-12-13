@@ -3,424 +3,456 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 @use 'sass:math';
 @use 'sass:map';
 @use '../../focus/focus-ring';
-@use '../../motion/animation';
-@use './checkbox-theme';
+@use '../../ripple/ripple';
+@use '../../sass/theme';
 @use '../../tokens';
 
-$_transition-duration: 90ms;
-$_mark-stroke-size: 4px;
-$_unselected-outline-width: 2px;
-$_selected-checkmark-padding: 2.8px;
+// Motion token values.
+$_md-sys-motion: tokens.md-sys-motion-values();
+// The stroke width of the icon marks.
+$_mark-stroke: 2px;
+// The coordinates in an 18px viewBox of the bottom left corner of the
+// indeterminate icon. Y is negative to fix an issue in Safari (see below).
+$_indeterminate-bottom-left: 4px, -10px;
+// The coordinates in an 18px viewBox of the bottom left corner of the
+// checkmark icon. Y is negative to fix an issue in Safari (see below).
+$_checkmark-bottom-left: 7px, -14px;
 
-// Manual calculation done on SVG
-$_mark-path-length: 29.7833385 !default;
-$_indeterminate-checked-easing-function: cubic-bezier(0.14, 0, 0, 1) !default;
+@mixin theme($tokens) {
+  $tokens: _resolve-tokens($tokens);
+  $tokens: theme.validate-theme(
+    _resolve-tokens(tokens.md-comp-checkbox-values()),
+    $tokens
+  );
+  $tokens: theme.create-theme-vars($tokens, checkbox);
 
-@function transition-enter(
-  $property,
-  $delay: 0ms,
-  $duration: $_transition-duration
-) {
-  @return animation.deceleration($property, $duration, $delay);
+  @include theme.emit-theme-vars($tokens);
 }
 
-@function transition-exit(
-  $property,
-  $delay: 0ms,
-  $duration: $_transition-duration
-) {
-  @return animation.sharp($property, $duration, $delay);
-}
+@mixin styles() {
+  $tokens: _resolve-tokens(tokens.md-comp-checkbox-values());
+  $tokens: theme.create-theme-vars($tokens, checkbox);
 
-@mixin static-styles() {
-  @include _mark-keyframes();
-  @include _animation();
-
-  .md3-checkbox {
-    @include _base();
-  }
-
-  .md3-checkbox__background {
-    @include _background();
-  }
-
-  .md3-checkbox__checkmark {
-    @include _checkmark();
-  }
-
-  .md3-checkbox__checkmark-path {
-    @include _checkmark-path();
-  }
-
-  .md3-checkbox__mixedmark {
-    @include _mixedmark();
-  }
-
-  .md3-checkbox__native-control:checked ~ .md3-checkbox__background,
-  .md3-checkbox__native-control:indeterminate ~ .md3-checkbox__background,
-  .md3-checkbox__native-control[data-indeterminate='true']
-    ~ .md3-checkbox__background {
-    @include _background--marked();
-
-    .md3-checkbox__checkmark-path {
-      @include _checkmark-path--marked();
-    }
-  }
-
-  .md3-checkbox__native-control {
-    @include _native-control();
-  }
-
-  .md3-checkbox--disabled,
-  .md3-checkbox__native-control:disabled {
-    @include _disabled();
-  }
-
-  .md3-checkbox__native-control:checked ~ .md3-checkbox__background {
-    .md3-checkbox__checkmark {
-      @include _checkmark--checked();
+  :host {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
     }
 
-    .md3-checkbox__mixedmark {
-      @include _mixedmark--checked();
-    }
-  }
-  .md3-checkbox__native-control:indeterminate ~ .md3-checkbox__background,
-  .md3-checkbox__native-control[data-indeterminate='true']
-    ~ .md3-checkbox__background {
-    .md3-checkbox__checkmark {
-      @include _checkmark--indeterminate();
-    }
-
-    .md3-checkbox__mixedmark {
-      @include _mixedmark--indeterminate();
-    }
-  }
-
-  .md3-checkbox__ripple {
-    position: absolute;
+    border-radius: var(--_container-shape);
     display: inline-flex;
-    z-index: -1;
+    height: 48px;
+    position: relative;
+    vertical-align: top; // Fix extra space when placed inside display: block
+    width: 48px;
   }
 
-  @include focus-ring.theme(
-    (
-      offset-vertical: -2px,
-      offset-horizontal: -2px,
-      shape: map.get(tokens.md-sys-shape-values(), corner-small),
-    )
+  input {
+    appearance: none;
+    inset: 0;
+    margin: 0;
+    outline: none;
+    position: absolute;
+  }
+
+  .container {
+    border-radius: inherit;
+    height: 100%;
+    position: relative;
+    width: 100%;
+  }
+
+  // Center elements within the container.
+  .outline,
+  .background,
+  md-ripple,
+  .icon {
+    inset: 0;
+    margin: auto;
+    position: absolute;
+  }
+
+  .outline,
+  .background {
+    border-radius: inherit;
+    height: var(--_container-height);
+    width: var(--_container-width);
+  }
+
+  .outline {
+    border-color: var(--_unselected-outline-color);
+    border-style: solid;
+    border-width: var(--_unselected-outline-width);
+    box-sizing: border-box;
+  }
+
+  .background {
+    background-color: var(--_selected-container-color);
+  }
+
+  // Background and icon transitions.
+  .background,
+  .icon {
+    opacity: 0; // Background and icon fade in
+    transition-duration: 150ms, 50ms; // Exit duration for scale and opacity.
+    transition-property: transform, opacity;
+    // Exit easing function for scale, linear for opacity.
+    transition-timing-function: map.get(
+        $_md-sys-motion,
+        easing-emphasized-accelerate
+      ),
+      linear;
+    transform: scale(0.6); // Background and icon scale from 60% to 100%.
+  }
+
+  .selected .background,
+  .selected .icon {
+    opacity: 1;
+    // Enter duration for scale and opacity.
+    transition-duration: 350ms, 50ms;
+    // Enter easing function for scale, linear for opacity.
+    transition-timing-function: map.get(
+        $_md-sys-motion,
+        easing-emphasized-decelerate
+      ),
+      linear;
+    transform: scale(1);
+  }
+
+  // Focus ring
+
+  md-focus-ring {
+    @include focus-ring.theme(
+      (
+        offset-vertical: -2px,
+        offset-horizontal: -2px,
+        shape: map.get(tokens.md-sys-shape-values(), corner-small),
+      )
+    );
+  }
+
+  // Ripple
+
+  md-ripple {
+    height: var(--_state-layer-size);
+    width: var(--_state-layer-size);
+
+    @include ripple.theme(
+      (
+        focus-state-layer-color: var(--_unselected-focus-state-layer-color),
+        focus-state-layer-opacity: var(--_unselected-focus-state-layer-opacity),
+        hover-state-layer-color: var(--_unselected-hover-state-layer-color),
+        hover-state-layer-opacity: var(--_unselected-hover-state-layer-opacity),
+        pressed-state-layer-color: var(--_unselected-pressed-state-layer-color),
+        pressed-state-layer-opacity:
+          var(--_unselected-pressed-state-layer-opacity),
+        state-layer-shape: var(--_state-layer-shape),
+      )
+    );
+  }
+
+  .selected md-ripple {
+    @include ripple.theme(
+      (
+        focus-state-layer-color: var(--_selected-focus-state-layer-color),
+        focus-state-layer-opacity: var(--_selected-focus-state-layer-opacity),
+        hover-state-layer-color: var(--_selected-hover-state-layer-color),
+        hover-state-layer-opacity: var(--_selected-hover-state-layer-opacity),
+        pressed-state-layer-color: var(--_selected-pressed-state-layer-color),
+        pressed-state-layer-opacity:
+          var(--_selected-pressed-state-layer-opacity),
+      )
+    );
+  }
+
+  .error md-ripple {
+    @include ripple.theme(
+      (
+        focus-state-layer-color: var(--_error-focus-state-layer-color),
+        // TODO(b/262409702): add once token is added
+        // focus-state-layer-opacity: var(--_error-focus-state-layer-opacity),
+        hover-state-layer-color: var(--_error-hover-state-layer-color),
+        hover-state-layer-opacity: var(--_error-hover-state-layer-opacity),
+        pressed-state-layer-color: var(--_error-pressed-state-layer-color),
+        pressed-state-layer-opacity: var(--_error-pressed-state-layer-opacity),
+      )
+    );
+  }
+
+  // Icon and icon marks
+
+  .icon {
+    // The icon is created with two <rect> marks for animation:
+    // 1. Short end
+    //   - the smaller leading part of the checkmark
+    //   - hidden behind long end for indeterminate mark
+    // 2. Long end
+    //   - the larger trailing part of the checkmark
+    //   - the entirety of the indeterminate mark
+    fill: var(--_selected-icon-color);
+    height: var(--_icon-size);
+    width: var(--_icon-size);
+  }
+
+  // The short end of the checkmark. Initially hidden underneath the
+  // indeterminate mark.
+  .mark.short {
+    height: $_mark-stroke;
+    transition-property: transform, height;
+    width: $_mark-stroke;
+  }
+
+  // The long end of the checkmark. Initially the indeterminate mark.
+  .mark.long {
+    height: $_mark-stroke;
+    transition-property: transform, width;
+    width: 10px;
+  }
+
+  // Exit duration and easing.
+  .mark {
+    animation-duration: 150ms;
+    animation-timing-function: map.get(
+      $_md-sys-motion,
+      easing-emphasized-accelerate
+    );
+    transition-duration: 150ms;
+    transition-timing-function: map.get(
+      $_md-sys-motion,
+      easing-emphasized-accelerate
+    );
+  }
+
+  // Enter duration and easing.
+  .selected .mark {
+    animation-duration: 350ms;
+    animation-timing-function: map.get(
+      $_md-sys-motion,
+      easing-emphasized-decelerate
+    );
+    transition-duration: 350ms;
+    transition-timing-function: map.get(
+      $_md-sys-motion,
+      easing-emphasized-decelerate
+    );
+  }
+
+  // Creates the checkmark icon.
+  .checked,
+  // Keep the checkmark shape when unselecting a checked checkbox.
+  .prev-checked.unselected {
+    .mark {
+      // Transform from the bottom left of the rectangles, whch turn into the
+      // bottom-most point of the checkmark.
+      // Fix Safari's transform-origin bug from "top left" to "bottom left"
+      $scale: scaleY(-1);
+      // Move the "bottom left" corner to the checkmark location.
+      $translate: translate($_checkmark-bottom-left);
+      // Rotate the checkmark.
+      $rotate: rotate(45deg);
+      transform: $scale $translate $rotate;
+    }
+
+    .mark.short {
+      // The right triangle that forms the short end has an X, Y length of
+      // 4dp, 4dp. The hypoteneuse is √(4*4 + 4*4), which is the length of the
+      // short end when checked.
+      height: 1px * math.sqrt(32);
+    }
+
+    .mark.long {
+      // The right triangle that forms the long end has an X, Y length of
+      // 8dp, 8dp. The hypoteneuse is √(8*8 + 8*8), which is the length of the
+      // long end when checked.
+      width: 1px * math.sqrt(128);
+    }
+  }
+
+  // Creates the indeterminate icon.
+  .indeterminate,
+  // Keep the indeterminate shape when unselecting an indeterminate checkbox.
+  .prev-indeterminate.unselected {
+    .mark {
+      transform: scaleY(-1) translate($_indeterminate-bottom-left) rotate(0deg);
+    }
+  }
+
+  // When selecting an unselected checkbox, don't transition between the
+  // checked and indeterminate states. The checkmark icon or indeterminate icon
+  // should fade in from its final position.
+  .prev-unselected .mark {
+    transition-property: none;
+  }
+
+  // When checking a checkbox, the long mark of the checkmark grows from the
+  // bottom-most point of the checkmark. An animation provides the starting
+  // width to animate from.
+  .prev-unselected.checked .mark.long {
+    animation-name: prev-unselected-to-checked;
+  }
+  @keyframes prev-unselected-to-checked {
+    from {
+      width: 0;
+    }
+  }
+
+  // States
+
+  .error .outline {
+    border-color: var(--_unselected-error-outline-color);
+    // TODO(b/262410085): add once token is added
+    // border-width: var(--_unselected-error-outline-width);
+  }
+
+  .error .background {
+    background: var(--_selected-error-container-color);
+  }
+
+  .error .icon {
+    fill: var(--_selected-error-icon-color);
+  }
+
+  :host(:hover) .outline {
+    border-color: var(--_unselected-hover-outline-color);
+    border-width: var(--_unselected-hover-outline-width);
+  }
+
+  :host(:hover) .background {
+    background: var(--_selected-hover-container-color);
+  }
+
+  :host(:hover) .icon {
+    fill: var(--_selected-hover-icon-color);
+  }
+
+  :host(:hover) .error .outline {
+    border-color: var(--_unselected-error-hover-outline-color);
+    border-width: var(--_unselected-error-hover-outline-width);
+  }
+
+  :host(:hover) .error .background {
+    background: var(--_selected-error-hover-container-color);
+  }
+
+  :host(:hover) .error .icon {
+    fill: var(--_selected-error-hover-icon-color);
+  }
+
+  :host(:focus-within) .outline {
+    border-color: var(--_unselected-focus-outline-color);
+    border-width: var(--_unselected-focus-outline-width);
+  }
+
+  :host(:focus-within) .background {
+    background: var(--_selected-focus-container-color);
+  }
+
+  :host(:focus-within) .icon {
+    fill: var(--_selected-focus-icon-color);
+  }
+
+  :host(:focus-within) .error .outline {
+    border-color: var(--_unselected-error-focus-outline-color);
+    border-width: var(--_unselected-error-focus-outline-width);
+  }
+
+  :host(:focus-within) .error .background {
+    background: var(--_selected-error-focus-container-color);
+  }
+
+  :host(:focus-within) .error .icon {
+    fill: var(--_selected-error-focus-icon-color);
+  }
+
+  :host(:active) .outline {
+    border-color: var(--_unselected-pressed-outline-color);
+    border-width: var(--_unselected-pressed-outline-width);
+  }
+
+  :host(:active) .background {
+    background: var(--_selected-pressed-container-color);
+  }
+
+  :host(:active) .icon {
+    fill: var(--_selected-pressed-icon-color);
+  }
+
+  :host(:active) .error .outline {
+    border-color: var(--_unselected-error-pressed-outline-color);
+    border-width: var(--_unselected-error-pressed-outline-width);
+  }
+
+  :host(:active) .error .background {
+    background: var(--_selected-error-pressed-container-color);
+  }
+
+  :host(:active) .error .icon {
+    fill: var(--_selected-error-pressed-icon-color);
+  }
+
+  // Don't animate to/from disabled states because the outline is hidden when
+  // selected. Without this, there'd be a FOUC if the checkbox state is
+  // programmatically  changed while disabled.
+  :host([disabled]),
+  .prev-disabled {
+    .background,
+    .icon,
+    .mark {
+      animation-duration: 0s;
+      transition-duration: 0s;
+    }
+  }
+
+  :host([disabled]) .outline {
+    border-color: var(--_unselected-disabled-outline-color);
+    border-width: var(--_unselected-disabled-outline-width);
+    opacity: var(--_unselected-disabled-container-opacity);
+  }
+
+  :host([disabled]) .selected .outline {
+    // Hide the outline behind the transparent selected container color.
+    // This can be removed once disabled colors are flattened.
+    visibility: hidden;
+  }
+
+  :host([disabled]) .selected .background {
+    // Set disabled opacity only when selected since opacity is used to show
+    // or hide the container background.
+    background: var(--_selected-disabled-container-color);
+    opacity: var(--_selected-disabled-container-opacity);
+  }
+
+  :host([disabled]) .icon {
+    fill: var(--_selected-disabled-icon-color);
+  }
+}
+
+@function _resolve-tokens($tokens) {
+  // Remove deprecated tokens
+  $tokens: map.remove(
+    $tokens,
+    'disabled-unselected-icon-color',
+    'disabled-unselected-icon-opacity',
+    'disabled-selected-icon-color',
+    'disabled-selected-icon-opacity',
+    'unselected-icon-color',
+    'unselected-focus-icon-color',
+    'unselected-hover-icon-color',
+    'unselected-pressed-icon-color'
   );
-  @include checkbox-theme.high-contrast-styles();
-}
-
-@mixin _base() {
-  display: inline-flex;
-  position: relative;
-  line-height: 0;
-  white-space: nowrap;
-  cursor: pointer;
-  vertical-align: bottom;
-  z-index: 0;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-@mixin _disabled() {
-  cursor: default;
-  pointer-events: none;
-}
-
-@mixin _animation() {
-  $md3-checkbox-indeterminate-change-duration_: 500ms;
-
-  .md3-checkbox--anim-unchecked-checked,
-  .md3-checkbox--anim-unchecked-indeterminate,
-  .md3-checkbox--anim-checked-unchecked,
-  .md3-checkbox--anim-indeterminate-unchecked {
-    .md3-checkbox__background {
-      animation-duration: $_transition-duration * 2;
-      animation-timing-function: linear;
-    }
-  }
-
-  // stylelint-disable no-unknown-animations -- Asterisk is treated as
-  // animation name. Supress the lint warning.
-  .md3-checkbox--anim-unchecked-checked {
-    .md3-checkbox__checkmark-path {
-      // Instead of delaying the animation, we simply multiply its length by 2 and begin the
-      // animation at 50% in order to prevent a flash of styles applied to a checked checkmark
-      // as the background is fading in before the animation begins.
-      animation: md3-checkbox-unchecked-checked-checkmark-path
-        $_transition-duration * 2 linear 0s;
-      transition: none;
-    }
-  }
-
-  .md3-checkbox--anim-unchecked-indeterminate {
-    .md3-checkbox__mixedmark {
-      animation: md3-checkbox-unchecked-indeterminate-mixedmark
-        $_transition-duration linear 0s;
-      transition: none;
-    }
-  }
-
-  .md3-checkbox--anim-checked-unchecked {
-    .md3-checkbox__checkmark-path {
-      animation: md3-checkbox-checked-unchecked-checkmark-path
-        $_transition-duration linear 0s;
-      transition: none;
-    }
-  }
-
-  .md3-checkbox--anim-checked-indeterminate {
-    .md3-checkbox__checkmark {
-      animation: md3-checkbox-checked-indeterminate-checkmark
-        $_transition-duration linear 0s;
-      transition: none;
-    }
-
-    .md3-checkbox__mixedmark {
-      animation: md3-checkbox-checked-indeterminate-mixedmark
-        $_transition-duration linear 0s;
-      transition: none;
-    }
-  }
-
-  .md3-checkbox--anim-indeterminate-checked {
-    .md3-checkbox__checkmark {
-      animation: md3-checkbox-indeterminate-checked-checkmark
-        $md3-checkbox-indeterminate-change-duration_ linear 0s;
-      transition: none;
-    }
-
-    .md3-checkbox__mixedmark {
-      animation: md3-checkbox-indeterminate-checked-mixedmark
-        $md3-checkbox-indeterminate-change-duration_ linear 0s;
-      transition: none;
-    }
-  }
-
-  .md3-checkbox--anim-indeterminate-unchecked {
-    .md3-checkbox__mixedmark {
-      animation: md3-checkbox-indeterminate-unchecked-mixedmark
-        $md3-checkbox-indeterminate-change-duration_ * 0.6 linear 0s;
-      transition: none;
-    }
-  }
-}
-
-@mixin _background() {
-  display: inline-flex;
-  position: absolute;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  border-style: solid;
-  background-color: transparent;
-  pointer-events: none;
-  will-change: background-color, border-color;
-
-  transition: transition-exit(background-color), transition-exit(border-color);
-}
-
-@mixin _background--marked() {
-  transition: transition-enter(border-color), transition-enter(background-color);
-}
-
-// Native input
-
-@mixin _native-control() {
-  position: absolute;
-  margin: 0;
-  padding: 0;
-  opacity: 0;
-  cursor: inherit;
-}
-
-// Check mark
-
-@mixin _checkmark() {
-  padding: $_selected-checkmark-padding;
-  position: absolute;
-  inset: 0;
-  box-sizing: border-box;
-  width: 100%;
-  border: none;
-  transition: transition-exit(opacity, 0ms, $_transition-duration * 2);
-}
-
-@mixin _checkmark--checked() {
-  transition: transition-enter(opacity, 0ms, $_transition-duration * 2),
-    transition-enter(transform, 0ms, $_transition-duration * 2);
-
-  opacity: 1;
-}
-
-@mixin _checkmark--indeterminate() {
-  transform: rotate(45deg);
-  opacity: 0;
-
-  transition: transition-exit(opacity, 0ms, $_transition-duration),
-    transition-exit(transform, 0ms, $_transition-duration);
-}
-
-// Check mark path
-
-@mixin _checkmark-path() {
-  transition: transition-exit(
-    stroke-dashoffset,
-    0ms,
-    $_transition-duration * 2
+  // Remove unsupported tokens
+  $tokens: map.remove(
+    $tokens,
+    'selected-disabled-container-outline-width',
+    'selected-error-focus-outline-width',
+    'selected-error-hover-outline-width',
+    'selected-error-pressed-outline-width',
+    'selected-focus-outline-width',
+    'selected-hover-outline-width',
+    'selected-outline-width',
+    'selected-pressed-outline-width'
   );
-
-  stroke: currentColor;
-  stroke-width: $_mark-stroke-size;
-  stroke-dashoffset: $_mark-path-length;
-  stroke-dasharray: $_mark-path-length;
-}
-
-@mixin _checkmark-path--marked() {
-  stroke-dashoffset: 0;
-}
-
-// Mixed mark
-
-@mixin _mixedmark() {
-  width: 100%;
-  height: 0;
-  transform: scaleX(0) rotate(0deg);
-  border-width: math.div(math.floor($_mark-stroke-size), 4);
-  border-style: solid;
-  background-color: currentColor;
-  border-color: currentColor;
-  opacity: 0;
-  transition: transition-exit(opacity), transition-exit(transform);
-  margin: $_unselected-outline-width * 2;
-}
-
-@mixin _mixedmark--checked() {
-  transform: scaleX(1) rotate(-45deg);
-}
-
-@mixin _mixedmark--indeterminate() {
-  transform: scaleX(1) rotate(0deg);
-  opacity: 1;
-}
-
-@mixin _mark-keyframes() {
-  @keyframes md3-checkbox-unchecked-checked-checkmark-path {
-    0%,
-    50% {
-      stroke-dashoffset: $_mark-path-length;
-    }
-
-    50% {
-      animation-timing-function: animation.$deceleration-easing;
-    }
-
-    100% {
-      stroke-dashoffset: 0;
-    }
-  }
-
-  @keyframes md3-checkbox-unchecked-indeterminate-mixedmark {
-    0%,
-    68.2% {
-      transform: scaleX(0);
-    }
-
-    68.2% {
-      animation-timing-function: cubic-bezier(0, 0, 0, 1);
-    }
-
-    100% {
-      transform: scaleX(1);
-    }
-  }
-
-  @keyframes md3-checkbox-checked-unchecked-checkmark-path {
-    from {
-      animation-timing-function: animation.$acceleration-easing;
-      opacity: 1;
-      stroke-dashoffset: 0;
-    }
-
-    to {
-      opacity: 0;
-      stroke-dashoffset: $_mark-path-length * -1;
-    }
-  }
-
-  @keyframes md3-checkbox-checked-indeterminate-checkmark {
-    from {
-      animation-timing-function: animation.$deceleration-easing;
-      transform: rotate(0deg);
-      opacity: 1;
-    }
-
-    to {
-      transform: rotate(45deg);
-      opacity: 0;
-    }
-  }
-
-  @keyframes md3-checkbox-indeterminate-checked-checkmark {
-    from {
-      animation-timing-function: $_indeterminate-checked-easing-function;
-      transform: rotate(45deg);
-      opacity: 0;
-    }
-
-    to {
-      transform: rotate(360deg);
-      opacity: 1;
-    }
-  }
-
-  @keyframes md3-checkbox-checked-indeterminate-mixedmark {
-    from {
-      animation-timing-function: md3-animation-deceleration-curve-timing-function;
-      transform: rotate(-45deg);
-      opacity: 0;
-    }
-
-    to {
-      transform: rotate(0deg);
-      opacity: 1;
-    }
-  }
-
-  @keyframes md3-checkbox-indeterminate-checked-mixedmark {
-    from {
-      animation-timing-function: $_indeterminate-checked-easing-function;
-      transform: rotate(0deg);
-      opacity: 1;
-    }
-
-    to {
-      transform: rotate(315deg);
-      opacity: 0;
-    }
-  }
-
-  @keyframes md3-checkbox-indeterminate-unchecked-mixedmark {
-    0% {
-      animation-timing-function: linear;
-      transform: scaleX(1);
-      opacity: 1;
-    }
-
-    32.8%,
-    100% {
-      transform: scaleX(0);
-      opacity: 0;
-    }
-  }
+  @return $tokens;
 }

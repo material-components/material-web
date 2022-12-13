@@ -5,21 +5,17 @@
  */
 
 import {html} from 'lit';
-import {customElement} from 'lit/decorators.js';
 
-import {MdFocusRing} from '../../focus/focus-ring.js';
 import {Environment} from '../../testing/environment.js';
 import {CheckboxHarness} from '../harness.js';
 
 import {Checkbox} from './checkbox.js';
 
-@customElement('md-test-checkbox')
-class TestCheckbox extends Checkbox {
-}
+customElements.define('md-test-checkbox', Checkbox);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-test-checkbox': TestCheckbox;
+    'md-test-checkbox': Checkbox;
   }
 }
 
@@ -39,8 +35,7 @@ describe('checkbox', () => {
       throw new Error('Could not query rendered <input>.');
     }
 
-    const focusRing =
-        element.renderRoot.querySelector<MdFocusRing>('md-focus-ring');
+    const focusRing = element.renderRoot.querySelector('md-focus-ring');
     if (!focusRing) {
       throw new Error('Could not query rendered <md-focus-ring>.');
     }
@@ -55,11 +50,13 @@ describe('checkbox', () => {
   describe('basic', () => {
     it('initializes as an checkbox', async () => {
       const {harness} = await setupTest();
-      expect(harness.element).toBeInstanceOf(TestCheckbox);
+      expect(harness.element).toBeInstanceOf(Checkbox);
       expect(harness.element.checked).toEqual(false);
       expect(harness.element.indeterminate).toEqual(false);
       expect(harness.element.disabled).toEqual(false);
-      expect(harness.element.value).toEqual('on');
+      expect(harness.element.error).toEqual(false);
+      // TODO(b/261219117): re-add with FormController
+      // expect(harness.element.value).toEqual('on');
     });
 
     it('user input updates checked state', async () => {
@@ -80,21 +77,6 @@ describe('checkbox', () => {
       expect(changeHandler).toHaveBeenCalledTimes(1);
       expect(changeHandler).toHaveBeenCalledWith(jasmine.any(Event));
     });
-
-    it('should trigger an event with event detail including checked status',
-       async () => {
-         const {harness} = await setupTest();
-         const pressEndSpy = jasmine.createSpy('pressEndHandler');
-         harness.element.addEventListener('action', pressEndSpy);
-
-         await harness.clickWithMouse();
-         await env.waitForStability();
-
-         expect(pressEndSpy).toHaveBeenCalledWith(jasmine.any(CustomEvent));
-         expect(pressEndSpy).toHaveBeenCalledWith(jasmine.objectContaining({
-           detail: jasmine.objectContaining({checked: true}),
-         }));
-       });
   });
 
   describe('checked', () => {
@@ -165,18 +147,20 @@ describe('checkbox', () => {
        });
   });
 
-  describe('value', () => {
-    it('get/set updates the value of the native checkbox element', async () => {
-      const {harness, input} = await setupTest();
-      harness.element.value = 'new value';
-      await env.waitForStability();
+  // TODO(b/261219117): re-add with FormController
+  // describe('value', () => {
+  //   it('get/set updates the value of the native checkbox element', async ()
+  //   => {
+  //     const {harness, input} = await setupTest();
+  //     harness.element.value = 'new value';
+  //     await env.waitForStability();
 
-      expect(input.value).toEqual('new value');
-      harness.element.value = 'new value 2';
-      await env.waitForStability();
-      expect(input.value).toEqual('new value 2');
-    });
-  });
+  //     expect(input.value).toEqual('new value');
+  //     harness.element.value = 'new value 2';
+  //     await env.waitForStability();
+  //     expect(input.value).toEqual('new value 2');
+  //   });
+  // });
 
   describe('focus ring', () => {
     it('hidden on non-keyboard focus', async () => {
