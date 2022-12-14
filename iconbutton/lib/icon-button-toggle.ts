@@ -4,19 +4,23 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, TemplateResult} from 'lit';
-import {property, query, state} from 'lit/decorators.js';
+import '../../focus/focus-ring.js';
+import '../../icon/icon.js';
+import '../../ripple/ripple.js';
+
+import {html, LitElement, TemplateResult} from 'lit';
+import {property, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
-import {html as staticHtml, literal} from 'lit/static-html.js';
+import {when} from 'lit/directives/when.js';
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '../../actionelement/action-element.js';
 import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
+import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 
 /** @soyCompatible */
-export abstract class IconButtonToggle extends ActionElement {
+export class IconButtonToggle extends LitElement {
   /** @soyPrefixAttribute */
   @ariaProperty  // tslint:disable-line:no-new-decorators
   @property({type: String, attribute: 'aria-label'})
@@ -36,37 +40,20 @@ export abstract class IconButtonToggle extends ActionElement {
 
   @property({type: Boolean, reflect: true}) selected = false;
 
-  @query('md-ripple') ripple!: MdRipple;
+  @queryAsync('md-ripple') ripple!: Promise<MdRipple|null>;
 
   @state() protected showFocusRing = false;
 
-  protected readonly rippleElementTag = literal`md-ripple`;
+  @state() protected showRipple = false;
 
-  protected readonly focusElementTag = literal`md-focus-ring`;
+  protected readonly getRipple = () => {
+    this.showRipple = true;
+    return this.ripple;
+  };
 
-  protected readonly iconElementTag = literal`md-icon`;
-
-  override beginPress({positionEvent}: BeginPressConfig) {
-    this.ripple.beginPress(positionEvent);
-  }
-
-  override endPress({cancelled}: EndPressConfig) {
-    this.ripple.endPress();
-    if (cancelled) {
-      return;
-    }
-    this.selected = !this.selected;
-    const detail = {selected: this.selected};
-    this.dispatchEvent(new CustomEvent(
-        'icon-button-toggle-change', {detail, bubbles: true, composed: true}));
-    super.endPress({cancelled, actionData: detail});
-  }
-
-  /** @soyTemplate */
-  protected renderRipple(): TemplateResult {
-    return staticHtml`<${this.rippleElementTag} ?disabled="${
-        this.disabled}" unbounded> </${this.rippleElementTag}>`;
-  }
+  protected readonly renderRipple = () => {
+    return html`<md-ripple ?disabled="${this.disabled}" unbounded></md-ripple>`;
+  };
 
   /** @soyTemplate */
   protected override render(): TemplateResult {
@@ -83,14 +70,10 @@ export abstract class IconButtonToggle extends ActionElement {
           @focus="${this.handleFocus}"
           @blur="${this.handleBlur}"
           @pointerdown="${this.handlePointerDown}"
-          @pointerup="${this.handlePointerUp}"
-          @pointercancel="${this.handlePointerCancel}"
-          @pointerleave="${this.handlePointerLeave}"
-          @pointerenter="${this.handlePointerEnter}"
           @click="${this.handleClick}"
-          @contextmenu="${this.handleContextMenu}">
+          ${ripple(this.getRipple)}>
         ${this.renderFocusRing()}
-        ${this.renderRipple()}
+        ${when(this.showRipple, this.renderRipple)}
         ${this.renderTouchTarget()}
         <span class="md3-icon-button__icon">
           <slot name="offIcon">${this.renderIcon(this.offIcon)}</slot>
@@ -110,9 +93,7 @@ export abstract class IconButtonToggle extends ActionElement {
 
   /** @soyTemplate */
   protected renderIcon(icon: string): TemplateResult|string {
-    return icon ?
-        staticHtml`<${this.iconElementTag}>${icon}</${this.iconElementTag}>` :
-        '';
+    return icon ? html`<md-icon>${icon}</md-icon>` : '';
   }
 
   /** @soyTemplate */
@@ -122,23 +103,13 @@ export abstract class IconButtonToggle extends ActionElement {
 
   /** @soyTemplate */
   protected renderFocusRing(): TemplateResult {
-    return staticHtml`<${this.focusElementTag} .visible="${
-        this.showFocusRing}"></${this.focusElementTag}>`;
+    return html`<md-focus-ring .visible="${
+        this.showFocusRing}"></md-focus-ring>`;
   }
 
-  override handlePointerDown(e: PointerEvent) {
-    super.handlePointerDown(e);
+  protected handlePointerDown(e: PointerEvent) {
     pointerPress();
     this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  protected handlePointerEnter(e: PointerEvent) {
-    this.ripple.beginHover(e);
-  }
-
-  override handlePointerLeave(e: PointerEvent) {
-    super.handlePointerLeave(e);
-    this.ripple.endHover();
   }
 
   protected handleFocus() {
@@ -147,5 +118,12 @@ export abstract class IconButtonToggle extends ActionElement {
 
   protected handleBlur() {
     this.showFocusRing = false;
+  }
+
+  protected handleClick() {
+    this.selected = !this.selected;
+    const detail = {selected: this.selected};
+    this.dispatchEvent(new CustomEvent(
+        'icon-button-toggle-change', {detail, bubbles: true, composed: true}));
   }
 }

@@ -8,6 +8,9 @@ import {html, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
+import {when} from 'lit/directives/when.js';
+
+import {ripple} from '../../ripple/directive.js';
 
 import {IconButton} from './icon-button.js';
 
@@ -33,14 +36,9 @@ export class LinkIconButton extends IconButton {
         @focus="${this.handleFocus}"
         @blur="${this.handleBlur}"
         @pointerdown="${this.handlePointerDown}"
-        @pointerup="${this.handlePointerUp}"
-        @pointercancel="${this.handlePointerCancel}"
-        @pointerleave="${this.handlePointerLeave}"
-        @pointerenter="${this.handlePointerEnter}"
-        @click="${this.handleClick}"
-        @contextmenu="${this.handleContextMenu}">
+        ${ripple(this.getRipple)}>
         ${this.renderFocusRing()}
-        ${this.renderRipple()}
+        ${when(this.showRipple, this.renderRipple)}
         ${this.renderIcon()}
         ${this.renderTouchTarget()}
         <a class="md3-icon-button__link" href="${this.linkHref}"
