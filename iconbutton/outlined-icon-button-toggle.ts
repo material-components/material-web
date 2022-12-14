@@ -17,12 +17,25 @@ declare global {
   }
 }
 
-/** @soyCompatible */
+/**
+ * @summary Icon buttons help people take supplementary actions with a single
+ * tap. This variant can toggle between icons.
+ *
+ * @description
+ * __Emphasis:__ Low emphasis – For optional or supplementary actions with the
+ * least amount of prominence.
+ *
+ * __Rationale:__ The most compact and unobtrusive type of button, icon buttons
+ * are used for optional supplementary actions such as "Bookmark" or "Star."
+ *
+ * __Example usages:__
+ * - Add to Favorites
+ * - Print
+ */
 @customElement('md-outlined-icon-button-toggle')
 export class MdOutlinedIconButtonToggle extends IconButtonToggle {
   static override styles = [sharedStyles, styles];
 
-  /** @soyTemplate */
   protected override getRenderClasses(): ClassInfo {
     return {
       ...super.getRenderClasses(),

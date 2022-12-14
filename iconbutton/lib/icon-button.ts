@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// This is required for @ariaProperty
+// tslint:disable:no-new-decorators
+
 import '../../focus/focus-ring.js';
 import '../../icon/icon.js';
 import '../../ripple/ripple.js';
@@ -21,24 +24,29 @@ import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 import {ARIAHasPopup} from '../../types/aria.js';
 
-/** @soyCompatible */
+// tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class IconButton extends LitElement {
   @property({type: Boolean, reflect: true}) disabled = false;
 
+  /**
+   * The glyph of the icon to display from the applied icon font. See the
+   * associated typography tokens for more info.
+   */
   @property({type: String}) icon = '';
 
+  /**
+   * Flips the icon if it is in an RTL context at startup.
+   */
   @property({type: Boolean}) flipIconInRtl = false;
 
   @state() protected flipIcon: boolean = isRtl(this, this.flipIconInRtl);
 
-  /** @soyPrefixAttribute */
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  @property({type: String, attribute: 'aria-label'})
+  @ariaProperty
+  @property({type: String, attribute: 'data-aria-label'})
   override ariaLabel!: string;
 
-  /** @soyPrefixAttribute */
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  @property({type: String, attribute: 'aria-haspopup'})
+  @ariaProperty
+  @property({type: String, attribute: 'data-aria-haspopup'})
   override ariaHasPopup!: ARIAHasPopup;
 
   @query('button') protected buttonElement!: HTMLElement;
@@ -58,7 +66,6 @@ export class IconButton extends LitElement {
     return html`<md-ripple ?disabled="${this.disabled}" unbounded></md-ripple>`;
   };
 
-  /** @soyTemplate */
   protected override render(): TemplateResult {
     return html`<button
         class="md3-icon-button ${classMap(this.getRenderClasses())}"
@@ -76,14 +83,12 @@ export class IconButton extends LitElement {
   </button>`;
   }
 
-  /** @soyTemplate */
   protected getRenderClasses(): ClassInfo {
     return {
       'md3-icon-button--flip-icon': this.flipIcon,
     };
   }
 
-  /** @soyTemplate */
   protected renderIcon(): TemplateResult {
     // Note, it's important not to render the icon property as a slot fallback
     // to avoid any whitespace from overridding it.
@@ -91,12 +96,10 @@ export class IconButton extends LitElement {
         this.icon ? this.icon : html`<slot></slot>`}</md-icon></span>`;
   }
 
-  /** @soyTemplate */
   protected renderTouchTarget(): TemplateResult {
     return html`<span class="md3-icon-button__touch"></span>`;
   }
 
-  /** @soyTemplate */
   protected renderFocusRing(): TemplateResult {
     return html`<md-focus-ring .visible="${
         this.showFocusRing}"></md-focus-ring>`;

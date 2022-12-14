@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// Required for @ariaProperty
+// tslint:disable:no-new-decorators
+
 import '../../focus/focus-ring.js';
 import '../../icon/icon.js';
 import '../../ripple/ripple.js';
@@ -19,25 +22,50 @@ import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 
-/** @soyCompatible */
+/**
+ * @fires icon-button-toggle-change {CustomEvent<{selected: boolean}>}
+ * Dispatched whenever `selected` is changed via user click
+ */
 export class IconButtonToggle extends LitElement {
-  /** @soyPrefixAttribute */
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  @property({type: String, attribute: 'aria-label'})
+  @ariaProperty
+  @property({type: String, attribute: 'data-aria-label'})
   override ariaLabel!: string;
 
+  /**
+   * Disables the icon button and makes it non-interactive.
+   */
   @property({type: Boolean, reflect: true}) disabled = false;
 
+  /**
+   * The glyph of the icon to display from the applied icon font when toggle
+   * button is selected or "on". See the associated typography tokens for more
+   * info.
+   */
   @property({type: String}) onIcon = '';
 
+  /**
+   * The glyph of the icon to display from the applied icon font when toggle
+   * button is not selected or "off". See the associated typography tokens for
+   * more info.
+   */
   @property({type: String}) offIcon = '';
 
-  // `aria-label` of the button when `on` is true.
+  /**
+   * The `aria-label` of the button when the toggle button is selected or "on".
+   */
   @property({type: String}) ariaLabelOn!: string;
 
-  // `aria-label` of the button when `on` is false.
+  /**
+   * The `aria-label` of the button when the toggle button is not selected or
+   * "off".
+   */
   @property({type: String}) ariaLabelOff!: string;
 
+  /**
+   * Sets the toggle button to the "on" state and displays the `onIcon`. If
+   * false, sets the toggle button to the "off" state and displays the
+   * `offIcon`.
+   */
   @property({type: Boolean, reflect: true}) selected = false;
 
   @queryAsync('md-ripple') ripple!: Promise<MdRipple|null>;
@@ -55,7 +83,6 @@ export class IconButtonToggle extends LitElement {
     return html`<md-ripple ?disabled="${this.disabled}" unbounded></md-ripple>`;
   };
 
-  /** @soyTemplate */
   protected override render(): TemplateResult {
     const hasToggledAriaLabel = this.ariaLabelOn && this.ariaLabelOff;
     const ariaPressedValue = hasToggledAriaLabel ? undefined : this.selected;
@@ -84,24 +111,20 @@ export class IconButtonToggle extends LitElement {
       </button>`;
   }
 
-  /** @soyTemplate */
   protected getRenderClasses(): ClassInfo {
     return {
       'md3-icon-button--on': this.selected,
     };
   }
 
-  /** @soyTemplate */
   protected renderIcon(icon: string): TemplateResult|string {
     return icon ? html`<md-icon>${icon}</md-icon>` : '';
   }
 
-  /** @soyTemplate */
   protected renderTouchTarget(): TemplateResult {
     return html`<span class="md3-icon-button__touch"></span>`;
   }
 
-  /** @soyTemplate */
   protected renderFocusRing(): TemplateResult {
     return html`<md-focus-ring .visible="${
         this.showFocusRing}"></md-focus-ring>`;
