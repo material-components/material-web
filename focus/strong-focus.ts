@@ -28,11 +28,11 @@ let focusObject: StrongFocus = new FocusGlobal();
 const KEYBOARD_NAVIGATION_KEYS =
     new Set(['Tab', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown']);
 
-const KEYDOWN_HANDLER = (e: KeyboardEvent) => {
+function keydownHandler(e: KeyboardEvent) {
   if (KEYBOARD_NAVIGATION_KEYS.has(e.key)) {
     focusObject.setVisible(true);
   }
-};
+}
 
 /**
  * Set up integration with alternate global focus tracking object
@@ -45,9 +45,9 @@ const KEYDOWN_HANDLER = (e: KeyboardEvent) => {
 export function setup(focusGlobal: StrongFocus, enableKeydownHandler = false) {
   focusObject = focusGlobal;
   if (enableKeydownHandler) {
-    window.addEventListener('keydown', KEYDOWN_HANDLER);
+    window.addEventListener('keydown', keydownHandler);
   } else {
-    window.removeEventListener('keydown', KEYDOWN_HANDLER);
+    window.removeEventListener('keydown', keydownHandler);
   }
 }
 
@@ -72,6 +72,8 @@ export function shouldShowStrongFocus() {
  * Control if strong focus should always be shown on component focus
  *
  * Defaults to `false`
+ *
+ * @param force Forces strong focus on the page. Disables strong focus if false.
  */
 export function setForceStrongFocus(force: boolean) {
   alwaysStrong = force;
