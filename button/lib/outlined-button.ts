@@ -9,9 +9,8 @@ import {ClassInfo} from 'lit/directives/class-map.js';
 
 import {Button} from './button.js';
 
-/** @soyCompatible */
+// tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class OutlinedButton extends Button {
-  /** @soyTemplate */
   protected override getRenderClasses(): ClassInfo {
     return {
       ...super.getRenderClasses(),
@@ -19,7 +18,6 @@ export class OutlinedButton extends Button {
     };
   }
 
-  /** @soyTemplate */
   protected override renderOutline(): TemplateResult {
     return html`<span class="md3-button__outline"></span>`;
   }

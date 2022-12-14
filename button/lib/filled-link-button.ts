@@ -11,9 +11,8 @@ import {ClassInfo} from 'lit/directives/class-map.js';
 
 import {LinkButton} from './link-button.js';
 
-/** @soyCompatible */
+// tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class FilledLinkButton extends LinkButton {
-  /** @soyTemplate */
   protected override getRenderClasses(): ClassInfo {
     return {
       ...super.getRenderClasses(),

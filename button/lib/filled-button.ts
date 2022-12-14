@@ -11,9 +11,8 @@ import {ClassInfo} from 'lit/directives/class-map.js';
 
 import {Button} from './button.js';
 
-/** @soyCompatible */
+// tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class FilledButton extends Button {
-  /** @soyTemplate */
   protected override getRenderClasses(): ClassInfo {
     return {
       ...super.getRenderClasses(),

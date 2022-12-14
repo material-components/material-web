@@ -6,6 +6,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// This is required for @ariaProperty
+// tslint:disable:no-new-decorators
+
 import '../../icon/icon.js';
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
@@ -25,38 +28,61 @@ import {ARIAHasPopup} from '../../types/aria.js';
 
 import {ButtonState} from './state.js';
 
-/** @soyCompatible */
+// tslint:disable-next-line:enforce-comments-on-exported-symbols
 export abstract class Button extends LitElement implements ButtonState {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
   protected readonly iconTag = literal`md-icon`;
 
-  // TODO(b/210730484): replace with @soyParam annotation
   @property({type: String, attribute: 'data-aria-has-popup', noAccessor: true})
-  @ariaProperty  // tslint:disable-line:no-new-decorators
+  @ariaProperty
   override ariaHasPopup!: ARIAHasPopup;
 
-  @property({type: Boolean, reflect: true}) disabled = false;
-
-  @property({type: Boolean, attribute: 'trailingicon'}) trailingIcon = false;
-
-  @property({type: String}) icon = '';
-
-  @property({type: String}) label = '';
-
-  // TODO(b/210730484): replace with @soyParam annotation
   @property({type: String, attribute: 'data-aria-label', noAccessor: true})
-  @ariaProperty  // tslint:disable-line:no-new-decorators
+  @ariaProperty
   override ariaLabel!: string;
 
+  /**
+   * Whether or not the button is disabled.
+   */
+  @property({type: Boolean, reflect: true}) disabled = false;
+
+  /**
+   * Whether to render the icon at the inline end of the label rather than the
+   * inline start.
+   *
+   * _Note:_ Link buttons cannot have trailing icons.
+   */
+  @property({type: Boolean, attribute: 'trailingicon'}) trailingIcon = false;
+
+  /**
+   * The label of the icon to render.
+   *
+   * See md-icon's documentation for usage.
+   */
+  @property({type: String}) icon = '';
+
+  /**
+   * The button's visible label.
+   */
+  @property({type: String}) label = '';
+
+  /**
+   * Whether to display the icon or not.
+   */
   @property({type: Boolean}) hasIcon = false;
 
+  /**
+   * Whether `preventDefault()` should be called on the underlying button.
+   * Useful for preventing certain native functionalities like preventing form
+   * submissions.
+   */
   @property({type: Boolean}) preventClickDefault = false;
 
-  @query('.md3-button') buttonElement!: HTMLElement;
+  @query('.md3-button') protected buttonElement!: HTMLElement;
 
-  @queryAsync('md-ripple') ripple!: Promise<MdRipple|null>;
+  @queryAsync('md-ripple') protected ripple!: Promise<MdRipple|null>;
 
   @state() protected showFocusRing = false;
 
@@ -65,10 +91,6 @@ export abstract class Button extends LitElement implements ButtonState {
   @queryAssignedElements({slot: 'icon', flatten: true})
   protected iconElement!: HTMLElement[]|null;
 
-  /**
-   * @soyTemplate
-   * @soyAttributes buttonAttributes: .md3-button
-   */
   protected override render(): TemplateResult {
     const getRipple = () => {
       this.showRipple = true;
@@ -97,7 +119,6 @@ export abstract class Button extends LitElement implements ButtonState {
       </button>`;
   }
 
-  /** @soyTemplate */
   protected getRenderClasses(): ClassInfo {
     return {
       'md3-button--icon-leading': !this.trailingIcon && this.hasIcon,
@@ -105,7 +126,6 @@ export abstract class Button extends LitElement implements ButtonState {
     };
   }
 
-  /** @soyTemplate */
   protected getIconContainerClasses(): ClassInfo {
     return {
       'md3-button__icon--leading': !this.trailingIcon,
@@ -113,51 +133,42 @@ export abstract class Button extends LitElement implements ButtonState {
     };
   }
 
-  /** @soyTemplate */
   protected renderTouchTarget(): TemplateResult {
     return html`
       <span class="md3-button__touch"></span>
     `;
   }
 
-  /** @soyTemplate */
   protected renderElevation(): TemplateResult {
     return html``;
   }
 
-  /** @soyTemplate */
   protected renderRipple(): TemplateResult {
     return html`<md-ripple class="md3-button__ripple" ?disabled="${
         this.disabled}"></md-ripple>`;
   }
 
-  /** @soyTemplate */
   protected renderOutline(): TemplateResult {
     return html``;
   }
 
-  /** @soyTemplate */
   protected renderFocusRing(): TemplateResult {
     return html`<md-focus-ring .visible="${
         this.showFocusRing}"></md-focus-ring>`;
   }
 
-  /** @soyTemplate */
   protected renderLabel(): TemplateResult {
     return html`<span class="md3-button__label">${this.label}</span>`;
   }
 
-  /** @soyTemplate */
   protected renderLeadingIcon(): TemplateResult|string {
     return this.trailingIcon ? '' : this.renderIcon();
   }
 
-  /** @soyTemplate */
   protected renderTrailingIcon(): TemplateResult|string {
     return this.trailingIcon ? this.renderIcon() : '';
   }
 
-  /** @soyTemplate */
   protected renderIcon(): TemplateResult {
     return html`<span class="md3-button__icon-slot-container ${
         classMap(this.getIconContainerClasses())}">
@@ -167,7 +178,6 @@ export abstract class Button extends LitElement implements ButtonState {
                 </span>`;
   }
 
-  /** @soyTemplate */
   protected renderFontIcon(): TemplateResult {
     return staticHtml`
     <${this.iconTag} class="md3-button__icon">
@@ -180,33 +190,16 @@ export abstract class Button extends LitElement implements ButtonState {
     this.hasIcon = !!this.iconElement && this.iconElement.length > 0;
   }
 
-  // TODO(b/210731759): remove once internal tooling delegates focus
-  override focus() {
-    const buttonElement = this.buttonElement;
-    if (buttonElement) {
-      buttonElement.focus();
-    }
-  }
-
-  // TODO(b/210731759): remove once internal tooling delegates focus
-  override blur() {
-    const buttonElement = this.buttonElement;
-    if (buttonElement) {
-      buttonElement.blur();
-    }
-  }
-
-  handlePointerDown(e: PointerEvent) {
+  protected handlePointerDown(e: PointerEvent) {
     pointerPress();
     this.showFocusRing = shouldShowStrongFocus();
   }
 
-  /** Delegate clicks on host element to inner button element. */
   override click() {
     this.buttonElement.click();
   }
 
-  handleClick(e: MouseEvent) {
+  protected handleClick(e: MouseEvent) {
     if (this.preventClickDefault) {
       e.preventDefault();
     }
