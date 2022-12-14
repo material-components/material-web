@@ -91,11 +91,12 @@ export abstract class Button extends LitElement implements ButtonState {
   @queryAssignedElements({slot: 'icon', flatten: true})
   protected iconElement!: HTMLElement[]|null;
 
+  protected readonly getRipple = () => {
+    this.showRipple = true;
+    return this.ripple;
+  };
+
   protected override render(): TemplateResult {
-    const getRipple = () => {
-      this.showRipple = true;
-      return this.ripple;
-    };
     // TODO(b/237283903): Replace ifDefined(... || undefined) with ifTruthy(...)
     return html`
       <button
@@ -107,10 +108,10 @@ export abstract class Button extends LitElement implements ButtonState {
           @focus="${this.handleFocus}"
           @blur="${this.handleBlur}"
           @click="${this.handleClick}"
-          ${ripple(getRipple)}>
+          ${ripple(this.getRipple)}>
         ${this.renderFocusRing()}
         ${this.renderElevation()}
-        ${when(this.showRipple, () => this.renderRipple())}
+        ${when(this.showRipple, this.renderRipple)}
         ${this.renderOutline()}
         ${this.renderTouchTarget()}
         ${this.renderLeadingIcon()}
@@ -143,10 +144,10 @@ export abstract class Button extends LitElement implements ButtonState {
     return html``;
   }
 
-  protected renderRipple(): TemplateResult {
+  protected renderRipple = () => {
     return html`<md-ripple class="md3-button__ripple" ?disabled="${
         this.disabled}"></md-ripple>`;
-  }
+  };
 
   protected renderOutline(): TemplateResult {
     return html``;

@@ -53,10 +53,6 @@ export abstract class LinkButton extends Button {
   }
 
   protected override render(): TemplateResult {
-    const getRipple = () => {
-      this.showRipple = true;
-      return this.ripple;
-    };
     return html`
       <span class="md3-link-button-wrapper">
         <a class="md3-button ${classMap(this.getRenderClasses())}"
@@ -67,10 +63,10 @@ export abstract class LinkButton extends Button {
           @blur="${this.handleBlur}"
           @pointerdown="${this.handlePointerDown}"
           @click="${this.handleClick}"
-          ${ripple(getRipple)}>
+          ${ripple(this.getRipple)}>
             ${this.renderFocusRing()}
             ${this.renderElevation()}
-            ${when(this.showRipple, () => this.renderRipple())}
+            ${when(this.showRipple, this.renderRipple)}
             ${this.renderOutline()}
             ${this.renderTouchTarget()}
             ${this.renderIcon()}
