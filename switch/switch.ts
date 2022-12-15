@@ -22,7 +22,6 @@ declare global {
  * There's one type of switch in Material. Use this selection control when the
  * user needs to toggle a single item on or off.
  *
- * @soyCompatible
  * @final
  * @suppress {visibility}
  */

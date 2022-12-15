@@ -77,14 +77,6 @@ describe('md-switch', () => {
       expect(selectedButton.getAttribute('aria-checked')).toEqual('true');
     });
 
-    it('sets checked of hidden input', () => {
-      const toggleInput = toggle.shadowRoot!.querySelector('input')!;
-      expect(toggleInput.checked).toBeFalse();
-
-      const selectedInput = selected.shadowRoot!.querySelector('input')!;
-      expect(selectedInput.checked).toBeTrue();
-    });
-
     it('adds md3-switch--selected class when true', () => {
       const toggleRoot = toggle.shadowRoot!.querySelector('.md3-switch')!;
       expect(Array.from(toggleRoot.classList))
@@ -169,12 +161,6 @@ describe('md-switch', () => {
   });
 
   describe('name', () => {
-    let named: TestSwitch;
-
-    beforeEach(async () => {
-      named = await switchElement({name: 'foo'});
-    });
-
     it('is an empty string by default', () => {
       expect(toggle.name).toEqual('');
     });
@@ -184,27 +170,11 @@ describe('md-switch', () => {
       await toggle.updateComplete;
       expect(toggle.getAttribute('name')).toEqual('foo');
     });
-
-    it('sets name of hidden input', () => {
-      const input = named.shadowRoot!.querySelector('input')!;
-      expect(input.getAttribute('name')).toEqual('foo');
-    });
   });
 
   describe('value', () => {
-    let withValue: TestSwitch;
-
-    beforeEach(async () => {
-      withValue = await switchElement({value: 'bar'});
-    });
-
     it('is "on" by default', () => {
       expect(toggle.value).toEqual('on');
-    });
-
-    it('sets value of hidden input', () => {
-      const input = withValue.shadowRoot!.querySelector('input')!;
-      expect(input.value).toEqual('bar');
     });
   });
 
@@ -220,15 +190,6 @@ describe('md-switch', () => {
       toggle.disabled = true;
       toggle.click();
       expect(toggle.selected).withContext('should remain false').toBeFalse();
-    });
-
-    it('does not focus or click hidden input form element', () => {
-      const input = toggle.shadowRoot!.querySelector('input')!;
-      spyOn(input, 'focus');
-      spyOn(input, 'click');
-      toggle.click();
-      expect(input.focus).not.toHaveBeenCalled();
-      expect(input.click).not.toHaveBeenCalled();
     });
   });
 

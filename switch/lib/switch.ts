@@ -20,7 +20,12 @@ import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress as focusRingPointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {MdRipple} from '../../ripple/ripple.js';
 
-/** @soyCompatible */
+/**
+ * @fires input {InputEvent} Fired whenever `selected` changes due to user
+ * interaction (bubbles and composed).
+ * @fires change {Event} Fired whenever `selected` changes due to user
+ * interaction (bubbles).
+ */
 export class Switch extends ActionElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
@@ -90,7 +95,6 @@ export class Switch extends ActionElement {
     super.click();
   }
 
-  /** @soyTemplate */
   protected override render(): TemplateResult {
     const ariaLabelValue = this.ariaLabel ? this.ariaLabel : undefined;
     const ariaLabelledByValue =
@@ -120,19 +124,9 @@ export class Switch extends ActionElement {
           ${this.renderHandle()}
         </div>
       </button>
-
-      <input
-        class="md3-switch__input"
-        type="checkbox"
-        aria-hidden="true"
-        name="${this.name}"
-        ?checked=${this.selected}
-        .value=${this.value}
-      >
     `;
   }
 
-  /** @soyTemplate */
   protected getRenderClasses(): ClassInfo {
     return {
       'md3-switch--selected': this.selected,
@@ -140,7 +134,6 @@ export class Switch extends ActionElement {
     };
   }
 
-  /** @soyTemplate */
   protected renderRipple(): TemplateResult {
     return html`
       <div class="md3-switch__ripple">
@@ -152,13 +145,11 @@ export class Switch extends ActionElement {
     `;
   }
 
-  /** @soyTemplate */
   protected renderFocusRing(): TemplateResult {
     return html`<md-focus-ring .visible="${
         this.showFocusRing}"></md-focus-ring>`;
   }
 
-  /** @soyTemplate */
   protected renderHandle(): TemplateResult {
     /** @classMap */
     const classes = {
@@ -175,7 +166,6 @@ export class Switch extends ActionElement {
     `;
   }
 
-  /** @soyTemplate */
   private renderIcons(): TemplateResult {
     return html`
       <div class="md3-switch__icons">
@@ -187,8 +177,6 @@ export class Switch extends ActionElement {
 
   /**
    * https://fonts.google.com/icons?selected=Material%20Symbols%20Outlined%3Acheck%3AFILL%400%3Bwght%40500%3BGRAD%400%3Bopsz%4024
-   *
-   * @soyTemplate
    */
   protected renderOnIcon(): TemplateResult {
     return html`
@@ -200,8 +188,6 @@ export class Switch extends ActionElement {
 
   /**
    * https://fonts.google.com/icons?selected=Material%20Symbols%20Outlined%3Aclose%3AFILL%400%3Bwght%40500%3BGRAD%400%3Bopsz%4024
-   *
-   * @soyTemplate
    */
   protected renderOffIcon(): TemplateResult {
     return html`
@@ -211,12 +197,10 @@ export class Switch extends ActionElement {
     `;
   }
 
-  /** @soyTemplate */
   private renderTouchTarget(): TemplateResult {
     return html`<span class="md3-switch__touch"></span>`;
   }
 
-  /** @soyTemplate */
   private shouldShowIcons(): boolean {
     return this.icons || this.showOnlySelectedIcon;
   }
@@ -233,6 +217,11 @@ export class Switch extends ActionElement {
     }
 
     this.selected = !this.selected;
+    this.dispatchEvent(
+        new InputEvent('input', {bubbles: true, composed: true}));
+    // Bubbles but does not compose to mimic native browser <input> & <select>
+    // Additionally, native change event is not an InputEvent.
+    this.dispatchEvent(new Event('change', {bubbles: true}));
     super.endPress({cancelled, actionData: {selected: this.selected}});
   }
 

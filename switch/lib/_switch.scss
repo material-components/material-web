@@ -231,10 +231,6 @@ $_forced-colors-theme: (
     }
   }
 
-  .md3-switch__input {
-    display: none;
-  }
-
   @include track.styles();
   @include handle.styles();
   @include icon.styles();
