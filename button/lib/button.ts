@@ -20,6 +20,7 @@ import {ifDefined} from 'lit/directives/if-defined.js';
 import {when} from 'lit/directives/when.js';
 import {html as staticHtml, literal} from 'lit/static-html.js';
 
+import {dispatchActivationClick, isActivationClick} from '../../controller/events.js';
 import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
@@ -90,6 +91,27 @@ export abstract class Button extends LitElement implements ButtonState {
 
   @queryAssignedElements({slot: 'icon', flatten: true})
   protected iconElement!: HTMLElement[]|null;
+
+  constructor() {
+    super();
+    this.addEventListener('click', this.handleActivationClick);
+  }
+
+  private readonly handleActivationClick = (event: MouseEvent) => {
+    if (!isActivationClick((event))) {
+      return;
+    }
+    this.focus();
+    dispatchActivationClick(this.buttonElement);
+  };
+
+  override focus() {
+    this.buttonElement.focus();
+  }
+
+  override blur() {
+    this.buttonElement.blur();
+  }
 
   protected readonly getRipple = () => {
     this.showRipple = true;
@@ -194,10 +216,6 @@ export abstract class Button extends LitElement implements ButtonState {
   protected handlePointerDown(e: PointerEvent) {
     pointerPress();
     this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  override click() {
-    this.buttonElement.click();
   }
 
   protected handleClick(e: MouseEvent) {
