@@ -3,6 +3,4 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-@use './icon';
-
-@include icon.styles;
+@forward './lib/icon' show theme;

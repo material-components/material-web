@@ -1,0 +1,19 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@function values($exclude-hardcoded-values: false) {
+  $values: (
+    (
+      color: if($exclude-hardcoded-values, null, inherit),
+      // TODO(b/225384738): Change to 'Material Symbols Outlined'
+      font: if($exclude-hardcoded-values, null, 'Material Icons'),
+      font-variation-settings: if($exclude-hardcoded-values, null, inherit),
+      size: if($exclude-hardcoded-values, null, 24px),
+      weight: if($exclude-hardcoded-values, null, 400),
+    )
+  );
+
+  @return $values;
+}

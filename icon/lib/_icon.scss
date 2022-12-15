@@ -1,0 +1,54 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use '../../sass/theme';
+@use './md-comp-icon';
+
+$_custom-property-prefix: 'icon';
+
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme(md-comp-icon.values(), $tokens);
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: md-comp-icon.values();
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  :host {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+
+    display: inline-flex;
+    color: var(--_color);
+    font-family: var(--_font);
+    font-weight: var(--_weight);
+    font-style: normal;
+    font-size: var(--_size);
+    font-variation-settings: var(--_font-varation-settings);
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  span ::slotted(svg) {
+    fill: currentColor;
+    height: var(--_size);
+    width: var(--_size);
+  }
+}
