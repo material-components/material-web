@@ -8,6 +8,9 @@ import {ReactiveController, ReactiveControllerHost} from 'lit';
 
 import {bound} from '../decorators/bound.js';
 
+import {isFormAssociated} from './form-associated.js';
+import {shimLabelSupport, SUPPORTS_FACE_LABEL} from './shim-label-activation.js';
+
 declare global {
   interface Window {
     ShadyDOM?: {inUse: boolean;};
@@ -48,6 +51,13 @@ export const getFormValue = Symbol('getFormValue');
 
 /**
  * A `ReactiveController` that adds `<form>` support to an element.
+ *
+ * Elements should also set `static formAssociated = true` which
+ * provides platform support for forms. When an element is form associated,
+ * it can be activated via clicks on associated label elements. It is the
+ * responsibility of the element to process this click and perform any necessary
+ * activation tasks, for example focusing and clicking on an internal element.
+ *
  */
 export class FormController implements ReactiveController {
   private form?: HTMLFormElement|null;
@@ -71,6 +81,12 @@ export class FormController implements ReactiveController {
     // null if the child was removed.
     this.form = this.element.form;
     this.form?.addEventListener('formdata', this.formDataListener);
+
+    // TODO(b/261871554) Label activation shim is currently only needed for
+    // Safari. Remove it when no longer needed.
+    if (isFormAssociated(this.element) && !SUPPORTS_FACE_LABEL) {
+      shimLabelSupport(this.element.getRootNode() as Document | ShadowRoot);
+    }
   }
 
   hostDisconnected() {
