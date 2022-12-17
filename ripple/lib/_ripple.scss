@@ -42,6 +42,9 @@
     inset: 0;
     pointer-events: none;
     overflow: hidden;
+    // TODO(https://bugs.webkit.org/show_bug.cgi?id=247546)
+    // Remove Safari workaround for incorrect ripple overflow when addressed.
+    transform: scale(1);
   }
 
   .md3-ripple-surface {
