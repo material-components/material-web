@@ -9,6 +9,7 @@ import {customElement} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
 import {Environment} from '../../testing/environment.js';
+import {Harness} from '../../testing/harness.js';
 
 import {Switch} from './switch.js';
 
@@ -194,47 +195,36 @@ describe('md-switch', () => {
   });
 
   describe('form submission', () => {
-    let form: HTMLFormElement;
-
-    // TODO(b/235238545): replace with shared FormController tests.
-    function simulateFormDataEvent() {
-      const event = new Event('formdata');
-      // new FormData(form) will send a 'formdata' event and coallesce the
-      // additions, but this only works in Chrome and Firefox
-      const formData = new FormData();
-      (event as FormDataEvent as any).formData = formData;
-      form.dispatchEvent(event);
-      return formData;
+    async function switchInForm(
+        propsInit: Partial<TestSwitch> = {}, template = renderSwitchInForm) {
+      const element = await switchElement(propsInit, template);
+      return new Harness(element);
     }
 
     it('does not submit if not selected', async () => {
-      toggle = await switchElement({name: 'foo'}, renderSwitchInForm);
-      form = toggle.parentElement as HTMLFormElement;
-      const formData = simulateFormDataEvent();
+      const harness = await switchInForm({name: 'foo'});
+      const formData = await harness.submitForm();
       expect(formData.get('foo')).toBeNull();
     });
 
     it('does not submit if disabled', async () => {
-      toggle = await switchElement(
-          {name: 'foo', selected: true, disabled: true}, renderSwitchInForm);
-      form = toggle.parentElement as HTMLFormElement;
-      const formData = simulateFormDataEvent();
+      const harness =
+          await switchInForm({name: 'foo', selected: true, disabled: true});
+      const formData = await harness.submitForm();
       expect(formData.get('foo')).toBeNull();
     });
 
     it('does not submit if name is not provided', async () => {
-      toggle = await switchElement({selected: true}, renderSwitchInForm);
-      form = toggle.parentElement as HTMLFormElement;
-      const formData = simulateFormDataEvent();
+      const harness = await switchInForm({selected: true});
+      const formData = await harness.submitForm();
       const keys = Array.from(formData.keys());
       expect(keys.length).toEqual(0);
     });
 
     it('submits under correct conditions', async () => {
-      toggle = await switchElement(
-          {name: 'foo', selected: true, value: 'bar'}, renderSwitchInForm);
-      form = toggle.parentElement as HTMLFormElement;
-      const formData = simulateFormDataEvent();
+      const harness =
+          await switchInForm({name: 'foo', selected: true, value: 'bar'});
+      const formData = await harness.submitForm();
       expect(formData.get('foo')).toEqual('bar');
     });
   });

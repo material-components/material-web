@@ -47,10 +47,10 @@ class TestTextField extends TextField {
 describe('TextField', () => {
   const env = new Environment();
 
-  async function setupTest() {
+  async function setupTest(
+      template = html`<md-test-text-field></md-test-text-field>`) {
     // Variant type does not matter for shared tests
-    const element = env.render(html`<md-test-text-field></md-test-text-field>`)
-                        .querySelector('md-test-text-field');
+    const element = env.render(template).querySelector('md-test-text-field');
     if (!element) {
       throw new Error('Could not query rendered <md-test-text-field>.');
     }
@@ -659,5 +659,36 @@ describe('TextField', () => {
     });
   });
 
-  // TODO(b/235238545): Add shared FormController tests.
+  describe('form submission', () => {
+    async function setupFormTest(propsInit: Partial<TestTextField> = {}) {
+      const template = html`
+        <form>
+          <md-test-text-field
+            ?disabled=${propsInit.disabled === true}
+            .name=${propsInit.name ?? ''}
+            .value=${propsInit.value ?? ''}>
+          </md-test-text-field>
+        </form>`;
+      return setupTest(template);
+    }
+
+    it('does not submit if disabled', async () => {
+      const {harness} = await setupFormTest({name: 'foo', disabled: true});
+      const formData = await harness.submitForm();
+      expect(formData.get('foo')).toBeNull();
+    });
+
+    it('does not submit if name is not provided', async () => {
+      const {harness} = await setupFormTest();
+      const formData = await harness.submitForm();
+      const keys = Array.from(formData.keys());
+      expect(keys.length).toEqual(0);
+    });
+
+    it('submits under correct conditions', async () => {
+      const {harness} = await setupFormTest({name: 'foo', value: 'bar'});
+      const formData = await harness.submitForm();
+      expect(formData.get('foo')).toEqual('bar');
+    });
+  });
 });

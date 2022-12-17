@@ -33,6 +33,11 @@ export type ElementWithHarness<E extends HTMLElement = HTMLElement,
    * The harness for this element.
    */
   harness: H;
+
+  /**
+   * Associated form element.
+   */
+  form?: HTMLFormElement|null;
 };
 
 /**
@@ -313,6 +318,30 @@ export class Harness<E extends HTMLElement = HTMLElement> {
   async keypress(key: string, init: KeyboardEventInit = {}) {
     const element = await this.getInteractiveElement();
     this.simulateKeypress(element, key, init);
+  }
+
+  /**
+   * Simulates submitting the element's associated form element.
+   *
+   * @param form (Optional) form to submit, defaults to the elemnt's form.
+   * @returns The submitted form data or null if the element has no associated
+   * form.
+   */
+  submitForm(form = this.element.form) {
+    if (!form) {
+      return new FormData();
+    }
+    return new Promise<FormData>(resolve => {
+      const submitListener = (event: SubmitEvent) => {
+        event.preventDefault();
+        const data = new FormData(form);
+        resolve(data);
+        return false;
+      };
+
+      form.addEventListener('submit', submitListener, {once: true});
+      form.requestSubmit();
+    });
   }
 
   /**

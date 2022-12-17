@@ -15,21 +15,6 @@ import {Harness} from '../testing/harness.js';
 import {dispatchActivationClick, isActivationClick} from './events.js';
 import {FormController, FormElement, getFormValue} from './form-controller.js';
 
-function submitForm(form: HTMLFormElement) {
-  return new Promise<FormData>(resolve => {
-    const submitListener = (event: SubmitEvent) => {
-      event.preventDefault();
-      form.removeEventListener('submit', submitListener);
-      const data = new FormData(form);
-      resolve(data);
-      return false;
-    };
-
-    form.addEventListener('submit', submitListener);
-    form.requestSubmit();
-  });
-}
-
 declare global {
   interface HTMLElementTagNameMap {
     'my-form-element': MyFormElement;
@@ -56,7 +41,6 @@ class MyFormElement extends LitElement implements FormElement {
     this.addController(new FormController(this));
   }
 }
-
 
 @customElement('my-form-data-element')
 class MyFormDataElement extends MyFormElement {
@@ -126,15 +110,16 @@ describe('FormController', () => {
     `);
 
     await env.waitForStability();
-    return root.querySelector('form')!;
+    const element =
+        root.querySelector('form')!.firstElementChild! as HTMLElement;
+    return new Harness(element);
   }
 
   it('should add element\'s name/value pair to the form', async () => {
-    const form = await setupTest(html`
+    const harness = await setupTest(html`
       <my-form-element name="element" value="foo"></my-form-element>
     `);
-
-    const data = await submitForm(form);
+    const data = await harness.submitForm();
     expect(data.has('element'))
         .withContext('should add name to data')
         .toBeTrue();
@@ -145,11 +130,12 @@ describe('FormController', () => {
 
   it('should add form associated element\'s name/value pair to the form',
      async () => {
-       const form = await setupTest(html`
-      <my-checked-form-associated-element name="element" value="foo"></my-checked-form-associated-element>
-    `);
+       const harness = await setupTest(
+           html`
+        <my-checked-form-associated-element name="element" value="foo">
+        </my-checked-form-associated-element>`);
 
-       const data = await submitForm(form);
+       const data = await harness.submitForm();
        expect(data.has('element'))
            .withContext('should add name to data')
            .toBeTrue();
@@ -159,46 +145,48 @@ describe('FormController', () => {
      });
 
   it('should not add data when disconnected', async () => {
-    const form = await setupTest(html`
+    const harness = await setupTest(html`
       <my-form-element name="element" value="foo"></my-form-element>
     `);
 
-    form.removeChild(form.querySelector('my-form-element')!);
-
-    const data = await submitForm(form);
+    const form = harness.element.form!;
+    harness.element.remove();
+    expect(harness.element.form).toBeNull();
+    const data = await harness.submitForm(form);
     expect(data.has('element'))
         .withContext('should not add disconnected element to data')
         .toBeFalse();
   });
 
   it('should not add data when element is disabled', async () => {
-    const form = await setupTest(html`
+    const harness = await setupTest(html`
       <my-form-element name="element" value="foo" disabled></my-form-element>
     `);
 
-    const data = await submitForm(form);
+    const data = await harness.submitForm();
     expect(data.has('element'))
         .withContext('should not add disabled element to data')
         .toBeFalse();
   });
 
   it('should not add data when value is null', async () => {
-    const form = await setupTest(html`
+    const harness = await setupTest(html`
       <my-form-element name="element"></my-form-element>
     `);
 
-    const data = await submitForm(form);
+    const data = await harness.submitForm();
     expect(data.has('element'))
         .withContext('should not add null value to data')
         .toBeFalse();
   });
 
   it('should add all entries if element returns FormData', async () => {
-    const form = await setupTest(html`
+    const harness = await setupTest(
+        html`
       <my-form-data-element value="foo"></my-form-data-element>
     `);
 
-    const data = await submitForm(form);
+    const data = await harness.submitForm();
     expect(data.has('element-value'))
         .withContext('should add element-value data')
         .toBe(true);
@@ -217,17 +205,23 @@ describe('FormController', () => {
     const setupLabelTest = async (
         template: TemplateResult,
         harnessTag = 'my-checked-form-associated-element') => {
-      const form = await setupTest(template);
-      const label = new Harness(form.querySelector<HTMLLabelElement>('label')!);
+      const root = env.render(html`
+        <form>${template}</form>
+      `);
+      await env.waitForStability();
+      const label = new Harness(root.querySelector<HTMLLabelElement>('label')!);
       const face = new CheckedFormElementHarness(
-          form.querySelector<MyCheckedFormElement>(harnessTag)!);
+          root.querySelector<MyCheckedFormElement>(harnessTag)!);
       return {label, face};
     };
 
     it('should activate via click event', async () => {
       const {face} = await setupLabelTest(html`
-    <label><my-checked-form-associated-element value="foo"></my-checked-form-associated-element></label>
-  `);
+        <label>
+          <my-checked-form-associated-element value="foo">
+          </my-checked-form-associated-element>
+        </label>
+      `);
       expect(face.element.checked).toBeFalse();
       await face.clickWithMouse();
       expect(face.element.checked).toBeTrue();
@@ -237,8 +231,11 @@ describe('FormController', () => {
 
     it('should activate via click method', async () => {
       const {face} = await setupLabelTest(html`
-    <label><my-checked-form-associated-element value="foo"></my-checked-form-associated-element></label>
-  `);
+        <label>
+          <my-checked-form-associated-element value="foo">
+          </my-checked-form-associated-element>
+        </label>
+      `);
       expect(face.element.checked).toBeFalse();
       face.element.click();
       await env.waitForStability();
@@ -251,8 +248,11 @@ describe('FormController', () => {
     it('should activate form associated elements via surrounding label',
        async () => {
          const {label, face} = await setupLabelTest(html`
-       <label>label <my-checked-form-associated-element value="foo"></my-checked-form-associated-element></label>
-     `);
+          <label>
+            label
+            <my-checked-form-associated-element value="foo">
+            </my-checked-form-associated-element>
+          </label>`);
          expect(face.element.checked).toBeFalse();
          await face.clickWithMouse();
          expect(face.element.checked).toBeTrue();
@@ -264,8 +264,10 @@ describe('FormController', () => {
 
     it('should not generate extra clicks when activated', async () => {
       const {label, face} = await setupLabelTest(html`
-      <label><my-checked-form-associated-element value="foo"></my-checked-form-associated-element></label>
-    `);
+        <label>
+          <my-checked-form-associated-element value="foo">
+          </my-checked-form-associated-element>
+        </label>`);
       expect(face.element.checked).toBeFalse();
       const clickListener = jasmine.createSpy('clickListener');
       face.element.addEventListener('click', clickListener);
@@ -281,9 +283,9 @@ describe('FormController', () => {
     it('should activate form associated elements via label with matching `for`',
        async () => {
          const {label, face} = await setupLabelTest(html`
-        <label for="a">a</label>
-        <my-checked-form-associated-element id="a" value="foo"></my-checked-form-associated-element>
-      `);
+          <label for="a">a</label>
+          <my-checked-form-associated-element id="a" value="foo">
+          </my-checked-form-associated-element>`);
          expect(face.element.checked).toBeFalse();
          await face.clickWithMouse();
          expect(face.element.checked).toBeTrue();
@@ -301,8 +303,11 @@ describe('FormController', () => {
     it('should *not* activate disabled form associated elements via label',
        async () => {
          const {label, face} = await setupLabelTest(html`
-       <label>label <my-checked-form-associated-element disabled value="foo"></my-checked-form-associated-element></label>
-     `);
+          <label>
+            label
+            <my-checked-form-associated-element disabled value="foo">
+            </my-checked-form-associated-element>
+          </label>`);
          expect(face.element.checked).toBeFalse();
          await label.clickWithMouse();
          expect(face.element.checked).toBeFalse();
@@ -312,8 +317,11 @@ describe('FormController', () => {
        async () => {
          const {label, face} = await setupLabelTest(
              html`
-       <label>label <my-checked-form-element value="foo"></my-checked-form-element></label>
-     `,
+          <label>
+            label
+            <my-checked-form-element value="foo">
+            </my-checked-form-element>
+          </label>`,
              `my-checked-form-element`);
          expect(face.element.checked).toBeFalse();
          await face.clickWithMouse();
