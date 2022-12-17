@@ -39,6 +39,12 @@ function renderSwitchInForm(propsInit: Partial<TestSwitch> = {}) {
   `;
 }
 
+function renderSwitchInLabel(propsInit: Partial<TestSwitch> = {}) {
+  return html`
+    <label>${renderSwitch(propsInit)}</label>
+  `;
+}
+
 describe('md-switch', () => {
   const env = new Environment();
 
@@ -226,6 +232,21 @@ describe('md-switch', () => {
           await switchInForm({name: 'foo', selected: true, value: 'bar'});
       const formData = await harness.submitForm();
       expect(formData.get('foo')).toEqual('bar');
+    });
+
+    describe('label activation', () => {
+      let label: HTMLLabelElement;
+
+      it('toggles when label is clicked', async () => {
+        toggle = await switchElement({}, renderSwitchInLabel);
+        label = toggle.parentElement as HTMLLabelElement;
+        label.click();
+        await env.waitForStability();
+        expect(toggle.selected).toBeTrue();
+        label.click();
+        await env.waitForStability();
+        expect(toggle.selected).toBeFalse();
+      });
     });
   });
 });

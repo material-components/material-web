@@ -15,6 +15,7 @@ import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
 import {ActionElement, BeginPressConfig, EndPressConfig} from '../../actionelement/action-element.js';
+import {isActivationClick} from '../../controller/events.js';
 import {FormController, getFormValue} from '../../controller/form-controller.js';
 import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress as focusRingPointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
@@ -29,6 +30,8 @@ import {MdRipple} from '../../ripple/ripple.js';
 export class Switch extends ActionElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
+
+  static formAssociated = true;
 
   /**
    * Disables the switch and makes it non-interactive.
@@ -65,7 +68,9 @@ export class Switch extends ActionElement {
   // Ripple
   @query('md-ripple') readonly ripple!: MdRipple;
 
-  // FormController
+  /**
+   * The associated form element with which this element's value will submit.
+   */
   get form() {
     return this.closest('form');
   }
@@ -88,12 +93,17 @@ export class Switch extends ActionElement {
   constructor() {
     super();
     this.addController(new FormController(this));
+    this.addEventListener('click', (event: MouseEvent) => {
+      if (!isActivationClick(event)) {
+        return;
+      }
+      this.button?.focus();
+      this.endPress({cancelled: false});
+    });
   }
 
-  override click() {
-    this.endPress({cancelled: false});
-    super.click();
-  }
+  // Button
+  @query('button', true) private readonly button!: HTMLButtonElement|null;
 
   protected override render(): TemplateResult {
     const ariaLabelValue = this.ariaLabel ? this.ariaLabel : undefined;
