@@ -11,13 +11,15 @@ import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
 import {html, PropertyValues, TemplateResult} from 'lit';
-import {property, query, state} from 'lit/decorators.js';
+import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
+import {when} from 'lit/directives/when.js';
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '../../actionelement/action-element.js';
+import {ActionElement, EndPressConfig} from '../../actionelement/action-element.js';
 import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
+import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 
 import {SingleSelectionController} from './single-selection-controller.js';
@@ -28,8 +30,6 @@ import {SingleSelectionController} from './single-selection-controller.js';
  */
 export class Radio extends ActionElement {
   @query('input') protected formElement!: HTMLInputElement;
-
-  @query('md-ripple') ripple!: MdRipple;
 
   protected _checked = false;
 
@@ -120,13 +120,8 @@ export class Radio extends ActionElement {
       {type: String, attribute: 'data-aria-describedby', noAccessor: true})
   ariaDescribedBy!: undefined|string;
 
-  protected rippleElement: MdRipple|null = null;
-
-  /** @soyTemplate */
-  protected renderRipple(): TemplateResult|string {
-    return html`<md-ripple unbounded
-        ?disabled="${this.disabled}"></md-ripple>`;
-  }
+  @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
+  @state() private showRipple = false;
 
   /** @soyTemplate */
   protected renderFocusRing(): TemplateResult {
@@ -181,15 +176,7 @@ export class Radio extends ActionElement {
     }
   }
 
-  protected createAdapter() {}
-
-  override beginPress({positionEvent}: BeginPressConfig) {
-    this.ripple.beginPress(positionEvent);
-  }
-
   override endPress({cancelled}: EndPressConfig) {
-    this.ripple.endPress();
-
     if (cancelled) {
       return;
     }
@@ -253,24 +240,19 @@ export class Radio extends ActionElement {
           @focus="${this.handleFocus}"
           @click="${this.handleClick}"
           @blur="${this.handleBlur}"
-          @pointerenter=${this.handlePointerEnter}
           @pointerdown=${this.handlePointerDown}
           @pointerup=${this.handlePointerUp}
           @pointercancel=${this.handlePointerCancel}
-          @pointerleave=${this.handlePointerLeave}
+          ${ripple(this.getRipple)}
           >
         <div class="md3-radio__background">
           <div class="md3-radio__outer-circle"></div>
           <div class="md3-radio__inner-circle"></div>
         </div>
         <div class="md3-radio__ripple">
-          ${this.renderRipple()}
+          ${when(this.showRipple, this.renderRipple)}
         </div>
       </div>`;
-  }
-
-  protected handlePointerEnter() {
-    this.ripple.beginHover();
   }
 
   override handlePointerDown(event: PointerEvent) {
@@ -278,11 +260,6 @@ export class Radio extends ActionElement {
 
     pointerPress();
     this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  override handlePointerLeave(e: PointerEvent) {
-    super.handlePointerLeave(e);
-    this.ripple.endHover();
   }
 
   protected changeHandler() {
@@ -297,4 +274,13 @@ export class Radio extends ActionElement {
       composed: true,
     }));
   }
+
+  private readonly getRipple = () => {
+    this.showRipple = true;
+    return this.ripple;
+  };
+
+  private readonly renderRipple = () => {
+    return html`<md-ripple unbounded ?disabled=${this.disabled}></md-ripple>`;
+  };
 }
