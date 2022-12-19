@@ -10,13 +10,12 @@
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, PropertyValues, TemplateResult} from 'lit';
+import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {when} from 'lit/directives/when.js';
 
-import {ActionElement, EndPressConfig} from '../../actionelement/action-element.js';
 import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
@@ -28,7 +27,7 @@ import {SingleSelectionController} from './single-selection-controller.js';
  * @fires checked
  * @soyCompatible
  */
-export class Radio extends ActionElement {
+export class Radio extends LitElement {
   @query('input') protected formElement!: HTMLInputElement;
 
   protected _checked = false;
@@ -84,7 +83,7 @@ export class Radio extends ActionElement {
     this.dispatchEvent(new Event('checked', {bubbles: true, composed: true}));
   }
 
-  @property({type: Boolean}) override disabled = false;
+  @property({type: Boolean}) disabled = false;
 
   @property({type: String}) value = 'on';
 
@@ -176,18 +175,6 @@ export class Radio extends ActionElement {
     }
   }
 
-  override endPress({cancelled}: EndPressConfig) {
-    if (cancelled) {
-      return;
-    }
-
-    super.endPress({
-      cancelled,
-      actionData:
-          {checked: this.formElement.checked, value: this.formElement.value}
-    });
-  }
-
   override click() {
     this.formElement.focus();
     this.formElement.click();
@@ -238,11 +225,8 @@ export class Radio extends ActionElement {
           ?disabled="${this.disabled}"
           @change="${this.changeHandler}"
           @focus="${this.handleFocus}"
-          @click="${this.handleClick}"
           @blur="${this.handleBlur}"
           @pointerdown=${this.handlePointerDown}
-          @pointerup=${this.handlePointerUp}
-          @pointercancel=${this.handlePointerCancel}
           ${ripple(this.getRipple)}
           >
         <div class="md3-radio__background">
@@ -253,13 +237,6 @@ export class Radio extends ActionElement {
           ${when(this.showRipple, this.renderRipple)}
         </div>
       </div>`;
-  }
-
-  override handlePointerDown(event: PointerEvent) {
-    super.handlePointerDown(event);
-
-    pointerPress();
-    this.showFocusRing = shouldShowStrongFocus();
   }
 
   protected changeHandler() {
@@ -273,6 +250,11 @@ export class Radio extends ActionElement {
       bubbles: true,
       composed: true,
     }));
+  }
+
+  private handlePointerDown(event: PointerEvent) {
+    pointerPress();
+    this.showFocusRing = shouldShowStrongFocus();
   }
 
   private readonly getRipple = () => {
