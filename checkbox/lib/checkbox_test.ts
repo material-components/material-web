@@ -22,9 +22,9 @@ declare global {
 describe('checkbox', () => {
   const env = new Environment();
 
-  async function setupTest() {
-    const element = env.render(html`<md-test-checkbox></md-test-checkbox>`)
-                        .querySelector('md-test-checkbox');
+  async function setupTest(
+      template = html`<md-test-checkbox></md-test-checkbox>`) {
+    const element = env.render(template).querySelector('md-test-checkbox');
     if (!element) {
       throw new Error('Could not query rendered <md-test-checkbox>.');
     }
@@ -55,8 +55,7 @@ describe('checkbox', () => {
       expect(harness.element.indeterminate).toEqual(false);
       expect(harness.element.disabled).toEqual(false);
       expect(harness.element.error).toEqual(false);
-      // TODO(b/261219117): re-add with FormController
-      // expect(harness.element.value).toEqual('on');
+      expect(harness.element.value).toEqual('on');
     });
 
     it('user input updates checked state', async () => {
@@ -147,20 +146,69 @@ describe('checkbox', () => {
        });
   });
 
-  // TODO(b/261219117): re-add with FormController
-  // describe('value', () => {
-  //   it('get/set updates the value of the native checkbox element', async ()
-  //   => {
-  //     const {harness, input} = await setupTest();
-  //     harness.element.value = 'new value';
-  //     await env.waitForStability();
+  describe('form submission', () => {
+    async function setupFormTest(propsInit: Partial<Checkbox> = {}) {
+      return await setupTest(html`
+        <form>
+          <md-test-checkbox
+           .checked=${propsInit.checked === true}
+           .disabled=${propsInit.disabled === true}
+           .name=${propsInit.name ?? ''}
+           .value=${propsInit.value ?? ''}
+          ></md-test-checkbox>
+        </form>`);
+    }
 
-  //     expect(input.value).toEqual('new value');
-  //     harness.element.value = 'new value 2';
-  //     await env.waitForStability();
-  //     expect(input.value).toEqual('new value 2');
-  //   });
-  // });
+    it('does not submit if not checked', async () => {
+      const {harness} = await setupFormTest({name: 'foo'});
+      const formData = await harness.submitForm();
+      expect(formData.get('foo')).toBeNull();
+    });
+
+    it('does not submit if disabled', async () => {
+      const {harness} =
+          await setupFormTest({name: 'foo', checked: true, disabled: true});
+      const formData = await harness.submitForm();
+      expect(formData.get('foo')).toBeNull();
+    });
+
+    it('does not submit if name is not provided', async () => {
+      const {harness} = await setupFormTest({checked: true});
+      const formData = await harness.submitForm();
+      const keys = Array.from(formData.keys());
+      expect(keys.length).toEqual(0);
+    });
+
+    it('submits under correct conditions', async () => {
+      const {harness} =
+          await setupFormTest({name: 'foo', checked: true, value: 'bar'});
+      const formData = await harness.submitForm();
+      expect(formData.get('foo')).toEqual('bar');
+    });
+  });
+
+  describe('label activation', () => {
+    async function setupLabelTest() {
+      const test = await setupTest(html`
+          <label>
+            <md-test-checkbox></md-test-checkbox>
+          </label>
+        `);
+      const label = (test.harness.element.getRootNode() as HTMLElement)
+                        .querySelector<HTMLLabelElement>('label')!;
+      return {...test, label};
+    }
+
+    it('toggles when label is clicked', async () => {
+      const {harness: {element}, label} = await setupLabelTest();
+      label.click();
+      await env.waitForStability();
+      expect(element.checked).toBeTrue();
+      label.click();
+      await env.waitForStability();
+      expect(element.checked).toBeFalse();
+    });
+  });
 
   describe('focus ring', () => {
     it('hidden on non-keyboard focus', async () => {

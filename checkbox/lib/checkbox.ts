@@ -8,11 +8,12 @@ import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
 import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
-import {property, queryAsync, state} from 'lit/decorators.js';
+import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
 
-import {redispatchEvent} from '../../controller/events.js';
+import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../controller/events.js';
+import {FormController, getFormValue} from '../../controller/form-controller.js';
 import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
@@ -22,10 +23,18 @@ import {MdRipple} from '../../ripple/ripple.js';
  * A checkbox component.
  */
 export class Checkbox extends LitElement {
+  static formAssociated = true;
+
   @property({type: Boolean, reflect: true}) checked = false;
   @property({type: Boolean, reflect: true}) disabled = false;
   @property({type: Boolean, reflect: true}) error = false;
   @property({type: Boolean, reflect: true}) indeterminate = false;
+  @property() value = 'on';
+  @property() name = '';
+
+  get form() {
+    return this.closest('form');
+  }
 
   @ariaProperty  // tslint:disable-line:no-new-decorators
   @property({type: String, attribute: 'data-aria-label', noAccessor: true})
@@ -35,8 +44,29 @@ export class Checkbox extends LitElement {
   @state() private prevDisabled = false;
   @state() private prevIndeterminate = false;
   @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
+  @query('input') private readonly input!: HTMLInputElement|null;
   @state() private showFocusRing = false;
   @state() private showRipple = false;
+
+  constructor() {
+    super();
+    this.addController(new FormController(this));
+    this.addEventListener('click', (event: MouseEvent) => {
+      if (!isActivationClick(event)) {
+        return;
+      }
+      this.focus();
+      dispatchActivationClick(this.input!);
+    });
+  }
+
+  override focus() {
+    this.input?.focus();
+  }
+
+  [getFormValue]() {
+    return this.checked ? this.value : null;
+  }
 
   protected override update(changed: PropertyValues<Checkbox>) {
     if (changed.has('checked') || changed.has('disabled') ||
