@@ -12,6 +12,7 @@
 
 @mixin styles() {
   .md3-switch__handle-container {
+    display: flex;
     $margin: calc(var(--_track-width) - var(--_track-height));
 
     .md3-switch--selected & {
