@@ -7,7 +7,7 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-@use '../../ripple/ripple-theme';
+@use '../../ripple/ripple';
 @use '../../sass/color';
 @use '../../sass/dom';
 @use '../../sass/typography';
@@ -25,7 +25,7 @@
      */
     vertical-align: top;
 
-    @include ripple-theme.theme(
+    @include ripple.theme(
       (
         hover-state-layer-color: var(--_hover-state-layer-color),
         focus-state-layer-color: var(--_focus-state-layer-color),

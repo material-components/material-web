@@ -7,7 +7,7 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-@use '../../ripple/ripple-theme';
+@use '../../ripple/ripple';
 @use '../../sass/theme';
 @use '../../tokens';
 @use './shared';
@@ -44,7 +44,7 @@ $_custom-property-prefix: 'icon-button';
       calc((#{$touch-target-height} - #{var(--_state-layer-size)}) / 2)
     );
 
-    @include ripple-theme.theme(
+    @include ripple.theme(
       (
         focus-state-layer-color: var(--_unselected-focus-state-layer-color),
         focus-state-layer-opacity: var(--_unselected-focus-state-layer-opacity),
@@ -90,7 +90,7 @@ $_custom-property-prefix: 'icon-button';
       }
     }
 
-    @include ripple-theme.theme(
+    @include ripple.theme(
       (
         focus-state-layer-color: var(--_selected-focus-state-layer-color),
         focus-state-layer-opacity: var(--_selected-focus-state-layer-opacity),

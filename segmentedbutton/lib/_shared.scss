@@ -8,7 +8,7 @@
 
 @use 'sass:map';
 @use '../../motion/animation';
-@use '../../ripple/ripple-theme';
+@use '../../ripple/ripple';
 @use '../../sass/color';
 @use '../../sass/resolvers';
 @use '../../sass/touch-target';
@@ -193,7 +193,7 @@
       }
     }
 
-    @include ripple-theme.theme(
+    @include ripple.theme(
       (
         hover-state-layer-color: var(--_unselected-hover-state-layer-color),
         hover-state-layer-opacity: var(--_hover-state-layer-opacity),
@@ -240,7 +240,7 @@
       }
     }
 
-    @include ripple-theme.theme(
+    @include ripple.theme(
       (
         hover-state-layer-color: var(--_selected-hover-state-layer-color),
         hover-state-layer-opacity: var(--_hover-state-layer-opacity),

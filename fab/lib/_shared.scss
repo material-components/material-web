@@ -10,7 +10,7 @@
 @use 'sass:meta';
 @use '../../elevation/lib/elevation';
 @use '../../focus/focus-ring';
-@use '../../ripple/ripple-theme';
+@use '../../ripple/ripple';
 @use '../../sass/theme';
 @use '../../sass/touch-target';
 
@@ -52,7 +52,7 @@
       )
     );
 
-    @include ripple-theme.theme(
+    @include ripple.theme(
       (
         hover-state-layer-color: var(--_hover-state-layer-color),
         focus-state-layer-color: var(--_focus-state-layer-color),

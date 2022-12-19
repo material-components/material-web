@@ -9,7 +9,7 @@
 @use 'sass:map';
 @use 'sass:selector';
 
-@use '../../ripple/ripple-theme';
+@use '../../ripple/ripple';
 @use '../../sass/theme';
 @use '../../tokens';
 
@@ -71,7 +71,7 @@ $custom-property-prefix: 'radio';
     @include _touch-target($size: map.get($theme, _touch-target-size));
   }
 
-  @include ripple-theme.theme(
+  @include ripple.theme(
     (
       hover-state-layer-color:
         map.get($theme, unselected-hover-state-layer-color),
@@ -89,7 +89,7 @@ $custom-property-prefix: 'radio';
   );
 
   @include _checked-selector() {
-    @include ripple-theme.theme(
+    @include ripple.theme(
       (
         hover-state-layer-color:
           map.get($theme, selected-hover-state-layer-color),

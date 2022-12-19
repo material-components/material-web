@@ -8,7 +8,7 @@
 
 @use 'sass:map';
 
-@use '../../ripple/ripple-theme';
+@use '../../ripple/ripple';
 
 @mixin styles() {
   .md3-switch__handle-container {
@@ -88,7 +88,7 @@
     width: var(--_state-layer-size);
 
     .md3-switch--selected & {
-      @include ripple-theme.theme(
+      @include ripple.theme(
         (
           hover-state-layer-color: var(--_selected-hover-state-layer-color),
           focus-state-layer-color: var(--_selected-focus-state-layer-color),
@@ -102,7 +102,7 @@
     }
 
     .md3-switch--unselected & {
-      @include ripple-theme.theme(
+      @include ripple.theme(
         (
           hover-state-layer-color: var(--_unselected-hover-state-layer-color),
           focus-state-layer-color: var(--_unselected-focus-state-layer-color),

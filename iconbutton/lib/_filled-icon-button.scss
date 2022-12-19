@@ -7,7 +7,7 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-@use '../../ripple/ripple-theme';
+@use '../../ripple/ripple';
 @use '../../sass/theme';
 @use '../../tokens';
 @use './shared';
@@ -57,7 +57,7 @@ $_custom-property-prefix: 'filled-icon-button';
       color: var(--_disabled-icon-color);
     }
 
-    @include ripple-theme.theme(
+    @include ripple.theme(
       (
         focus-state-layer-color: var(--_focus-state-layer-color),
         focus-state-layer-opacity: var(--_focus-state-layer-opacity),
@@ -87,7 +87,7 @@ $_custom-property-prefix: 'filled-icon-button';
       }
     }
 
-    @include ripple-theme.theme(
+    @include ripple.theme(
       (
         focus-state-layer-color:
           var(--_toggle-unselected-focus-state-layer-color),
@@ -117,7 +117,7 @@ $_custom-property-prefix: 'filled-icon-button';
       }
     }
 
-    @include ripple-theme.theme(
+    @include ripple.theme(
       (
         focus-state-layer-color: var(--_toggle-selected-focus-state-layer-color),
         hover-state-layer-color: var(--_toggle-selected-hover-state-layer-color),

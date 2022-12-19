@@ -7,7 +7,7 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-@use '../../ripple/ripple-theme';
+@use '../../ripple/ripple';
 @use '../../sass/resolvers';
 @use '../../sass/color';
 @use '../../sass/theme';
@@ -57,7 +57,7 @@ $_custom-property-prefix: 'outlined-icon-button';
     background-color: transparent;
     color: var(--_unselected-icon-color);
 
-    @include ripple-theme.theme(
+    @include ripple.theme(
       (
         focus-state-layer-color: var(--_unselected-focus-state-layer-color),
         focus-state-layer-opacity: var(--_focus-state-layer-opacity),
@@ -134,7 +134,7 @@ $_custom-property-prefix: 'outlined-icon-button';
       background-color: var(--_disabled-selected-container-color);
     }
 
-    @include ripple-theme.theme(
+    @include ripple.theme(
       (
         focus-state-layer-color: var(--_selected-focus-state-layer-color),
         focus-state-layer-opacity: var(--_focus-state-layer-opacity),

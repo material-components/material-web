@@ -356,7 +356,7 @@
 
   .md3-chip__action--primary:not(.md3-chip__action--presentational) {
     // TODO(b/240224981): Convert to md3 ripple
-    // @include ripple-theme.focus() {
+    // @include ripple.focus() {
     //   .md3-chip__focus-ring {
     //     z-index: 1;
     //     display: block;
@@ -367,7 +367,7 @@
 
   .md3-chip__action--delete:not(.md3-chip__action--presentational) {
     // TODO(b/240224981): Convert to md3 ripple
-    // @include ripple-theme.focus() {
+    // @include ripple.focus() {
     .md3-chip__focus-ring {
       z-index: 1;
       display: block;
