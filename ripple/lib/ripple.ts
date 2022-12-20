@@ -23,7 +23,10 @@ const ANIMATION_FILL = 'forwards';
 export class Ripple extends LitElement {
   @query('.md3-ripple-surface') mdRoot!: HTMLElement;
 
-  @property({type: Boolean}) unbounded = false;
+  // TODO(https://bugs.webkit.org/show_bug.cgi?id=247546)
+  // Remove Safari workaround that requires reflecting `unbounded` so
+  // it can be styled against.
+  @property({type: Boolean, reflect: true}) unbounded = false;
   @property({type: Boolean, reflect: true}) disabled = false;
 
   @state() protected hovered = false;

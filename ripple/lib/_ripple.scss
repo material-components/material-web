@@ -42,9 +42,6 @@
     inset: 0;
     pointer-events: none;
     overflow: hidden;
-    // TODO(https://bugs.webkit.org/show_bug.cgi?id=247546)
-    // Remove Safari workaround for incorrect ripple overflow when addressed.
-    transform: scale(1);
   }
 
   .md3-ripple-surface {
@@ -95,13 +92,33 @@
     transition-duration: 105ms;
   }
 
-  .md3-ripple--unbounded {
+  // TODO(https://bugs.webkit.org/show_bug.cgi?id=247546)
+  // Remove Safari workaround for incorrect ripple overflow:
+  // setting shape token to `:host([unbounded])` so border-radius can be set
+  // only in this state.
+  // This addresses `hover` and `pressed` state oveflow.
+  .md3-ripple--unbounded,
+  :host([unbounded]) {
     $unbounded: (
       state-layer-shape: map.get(tokens.md-sys-shape-values(), 'corner-full'),
     );
     $unbounded: theme.create-theme-vars($unbounded, ripple);
 
     --_state-layer-shape: #{map.get($unbounded, 'state-layer-shape')};
+  }
+
+  // TODO(https://bugs.webkit.org/show_bug.cgi?id=247546)
+  // Remove Safari workaround for incorrect ripple overflow when addressed.
+  // This addresses `hover` and `pressed` state oveflow.
+  :host([unbounded]) {
+    border-radius: var(--_state-layer-shape);
+  }
+
+  // TODO(https://bugs.webkit.org/show_bug.cgi?id=247546)
+  // Remove Safari workaround for incorrect ripple overflow when addressed.
+  // This addresses `during animation` state oveflow.
+  .md3-ripple--unbounded {
+    transform: scale(1);
   }
 
   // TODO(b/230630968): create a forced-colors-mode mixin
