@@ -128,7 +128,7 @@ $_checkmark-bottom-left: 7px, -14px;
       (
         offset-vertical: -2px,
         offset-horizontal: -2px,
-        shape: map.get(tokens.md-sys-shape-values(), corner-small),
+        shape: map.get(tokens.md-sys-shape-values(), corner-full),
       )
     );
   }
