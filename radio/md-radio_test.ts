@@ -45,6 +45,16 @@ const repeatedRadio = (values: string[]) => {
 describe('md-radio', () => {
   const env = new Environment();
 
+  // Note, this would be better in the harness, but waiting in the test setup
+  // can be flakey without access to the test `env`.
+  async function simulateKeyDown(element: HTMLElement, key: string) {
+    const event = new KeyboardEvent('keydown', {key, bubbles: true});
+    element.dispatchEvent(event);
+    // TODO(https://bugzilla.mozilla.org/show_bug.cgi?id=1804576)
+    // Remove delay when issue addressed.
+    await env.waitForStability();
+  }
+
   let element: MdRadio;
   let harness: RadioHarness;
 
@@ -119,9 +129,7 @@ describe('md-radio', () => {
       const a2 = root.querySelectorAll('md-radio')[1];
       expect(a2.checked).toBeTrue();
 
-      const eventRight =
-          new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true});
-      a2.dispatchEvent(eventRight);
+      await simulateKeyDown(a2, 'ArrowRight');
 
       const a3 = root.querySelectorAll('md-radio')[2];
       expect(a3.checked).toBeTrue();
@@ -136,11 +144,9 @@ describe('md-radio', () => {
          const a2 = root.querySelectorAll('md-radio')[1];
          expect(a2.checked).toBeTrue();
 
-         const eventRight =
-             new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true});
-         a2.dispatchEvent(eventRight);
+         await simulateKeyDown(a2, 'ArrowRight');
          const a3 = root.querySelectorAll('md-radio')[2];
-         a3.dispatchEvent(eventRight);
+         await simulateKeyDown(a3, 'ArrowRight');
 
          expect(a3.checked).toBeFalse();
          const a1 = root.querySelectorAll('md-radio')[0];
@@ -341,6 +347,113 @@ describe('md-radio', () => {
       expect(focusRing.visible).toBeTrue();
       await harness.clickWithMouse();
       expect(focusRing.visible).toBeFalse();
+    });
+  });
+
+  describe('form submission', () => {
+    async function setupFormTest() {
+      const root = env.render(html`
+        <form>
+          <md-radio id="first" name="a" value="first"></md-radio>
+          <md-radio id="disabled" name="a" value="disabled" disabled></md-radio>
+          <md-radio id="unNamed" value="unnamed"></md-radio>
+          <md-radio id="ownGroup" name="b" value="ownGroup"></md-radio>
+          <md-radio id="last" name="a" value="last"></md-radio>
+        </form>`);
+      await env.waitForStability();
+      const harnesses = new Map<string, RadioHarness>();
+      Array.from(root.querySelectorAll('md-radio')).forEach((el: MdRadio) => {
+        harnesses.set(el.id, new RadioHarness(el));
+      });
+      return harnesses;
+    }
+
+    it('does not submit if not checked', async () => {
+      const harness = (await setupFormTest()).get('first')!;
+      const formData = await harness.submitForm();
+      const keys = Array.from(formData.keys());
+      expect(keys.length).toEqual(0);
+    });
+
+    it('does not submit if disabled', async () => {
+      const harness = (await setupFormTest()).get('disabled')!;
+      expect(harness.element.disabled).toBeTrue();
+      harness.element.checked = true;
+      const formData = await harness.submitForm();
+      const keys = Array.from(formData.keys());
+      expect(keys.length).toEqual(0);
+    });
+
+    it('does not submit if name is not provided', async () => {
+      const harness = (await setupFormTest()).get('unNamed')!;
+      expect(harness.element.name).toBe('');
+      const formData = await harness.submitForm();
+      const keys = Array.from(formData.keys());
+      expect(keys.length).toEqual(0);
+    });
+
+    it('submits under correct conditions', async () => {
+      const harness = (await setupFormTest()).get('first')!;
+      harness.element.checked = true;
+      const formData = await harness.submitForm();
+      const {name, value} = harness.element;
+      const keys = Array.from(formData.keys());
+      expect(keys.length).toEqual(1);
+      expect(formData.get(name)).toEqual(value);
+    });
+
+    it('submits changes to group value under correct conditions', async () => {
+      const harnesses = await setupFormTest();
+      const first = harnesses.get('first')!;
+      const last = harnesses.get('last')!;
+      const ownGroup = harnesses.get('ownGroup')!;
+
+      // check first and submit
+      first.element.checked = true;
+      let formData = await first.submitForm();
+      expect(Array.from(formData.keys()).length).toEqual(1);
+      expect(formData.get(first.element.name)).toEqual(first.element.value);
+
+      // check last and submit
+      last.element.checked = true;
+      formData = await last.submitForm();
+      expect(Array.from(formData.keys()).length).toEqual(1);
+      expect(formData.get(last.element.name)).toEqual(last.element.value);
+
+      // check ownGroup and submit
+      ownGroup.element.checked = true;
+      formData = await ownGroup.submitForm();
+      expect(Array.from(formData.keys()).length).toEqual(2);
+      expect(formData.get(last.element.name)).toEqual(last.element.value);
+      expect(formData.get(ownGroup.element.name))
+          .toEqual(ownGroup.element.value);
+    });
+  });
+
+  describe('label activation', () => {
+    async function setupLabelTest() {
+      const root = env.render(html`
+        <label> <md-radio name="a"></md-radio></label>
+        <label> <md-radio name="a"></md-radio></label>
+     `);
+      await env.waitForStability();
+      // [[label, radio]]
+      return Array.from(root.querySelectorAll('label'))
+          .map(el => ([el, el.firstElementChild as MdRadio] as const));
+    }
+
+    it('toggles when label is clicked', async () => {
+      const [[label1, radio1], [label2, radio2], ] = await setupLabelTest();
+
+      label1.click();
+      await env.waitForStability();
+      expect(radio1.checked).toBeTrue();
+      expect(radio2.checked).toBeFalse();
+
+      label2.click();
+      await env.waitForStability();
+      expect(radio1.checked).toBeFalse();
+      expect(radio2.checked).toBeTrue();
     });
   });
 });

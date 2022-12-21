@@ -15,6 +15,8 @@ import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
 
+import {dispatchActivationClick, isActivationClick} from '../../controller/events.js';
+import {FormController, getFormValue} from '../../controller/form-controller.js';
 import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
@@ -27,6 +29,11 @@ import {SingleSelectionController} from './single-selection-controller.js';
  * @soyCompatible
  */
 export class Radio extends LitElement {
+  static override shadowRootOptions:
+      ShadowRootInit = {...LitElement.shadowRootOptions, delegatesFocus: true};
+
+  static formAssociated = true;
+
   @property({type: Boolean, reflect: true})
   get checked(): boolean {
     return this._checked;
@@ -70,9 +77,15 @@ export class Radio extends LitElement {
 
   @property({type: Boolean}) disabled = false;
 
+  /**
+   * The element value to use in form submission when checked.
+   */
   @property({type: String}) value = 'on';
 
-  @property({type: String}) name = '';
+  /**
+   * The HTML name to use in form submission.
+   */
+  @property({type: String, reflect: true}) name = '';
 
   /**
    * Touch target extends beyond visual boundary of a component by default.
@@ -91,6 +104,13 @@ export class Radio extends LitElement {
   @property({attribute: 'data-aria-label', noAccessor: true})
   override ariaLabel!: string;
 
+  /**
+   * The associated form element with which this element's value will submit.
+   */
+  get form() {
+    return this.closest('form');
+  }
+
   @state() private focused = false;
   @query('input') private readonly input!: HTMLInputElement|null;
   @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
@@ -98,9 +118,24 @@ export class Radio extends LitElement {
   @state() private showFocusRing = false;
   @state() private showRipple = false;
 
-  override click() {
+  constructor() {
+    super();
+    this.addController(new FormController(this));
+    this.addEventListener('click', (event: Event) => {
+      if (!isActivationClick(event)) {
+        return;
+      }
+      this.focus();
+      dispatchActivationClick(this.input!);
+    });
+  }
+
+  [getFormValue]() {
+    return this.checked ? this.value : null;
+  }
+
+  override focus() {
     this.input?.focus();
-    this.input?.click();
   }
 
   override connectedCallback() {
