@@ -10,10 +10,9 @@
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
+import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
 import {when} from 'lit/directives/when.js';
 
 import {ariaProperty} from '../../decorators/aria-property.js';
@@ -28,20 +27,8 @@ import {SingleSelectionController} from './single-selection-controller.js';
  * @soyCompatible
  */
 export class Radio extends LitElement {
-  @query('input') protected formElement!: HTMLInputElement;
-
-  protected _checked = false;
-
-  @state() protected showFocusRing = false;
-
-  @property({type: Boolean}) global = false;
-
   @property({type: Boolean, reflect: true})
   get checked(): boolean {
-    return this.getChecked();
-  }
-
-  protected getChecked(): boolean {
     return this._checked;
   }
 
@@ -65,10 +52,6 @@ export class Radio extends LitElement {
    * and we couldn't tell that radio1 was the most recently checked.
    */
   set checked(isChecked: boolean) {
-    this.setChecked(isChecked);
-  }
-
-  protected setChecked(isChecked: boolean) {
     const oldValue = this._checked;
     if (isChecked === oldValue) {
       return;
@@ -83,6 +66,8 @@ export class Radio extends LitElement {
     this.dispatchEvent(new Event('checked', {bubbles: true, composed: true}));
   }
 
+  private _checked = false;  // tslint:disable-line:enforce-name-casing
+
   @property({type: Boolean}) disabled = false;
 
   @property({type: String}) value = 'on';
@@ -96,40 +81,26 @@ export class Radio extends LitElement {
    */
   @property({type: Boolean}) reducedTouchTarget = false;
 
-  protected selectionController?: SingleSelectionController;
-
   /**
    * input's tabindex is updated based on checked status.
    * Tab navigation will be removed from unchecked radios.
    */
   @property({type: Number}) formElementTabIndex = 0;
 
-  @state() protected focused = false;
-
   @ariaProperty  // tslint:disable-line:no-new-decorators
   @property({attribute: 'data-aria-label', noAccessor: true})
   override ariaLabel!: string;
 
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  @property({attribute: 'data-aria-labelledby', noAccessor: true})
-  ariaLabelledBy!: string;
-
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  @property(
-      {type: String, attribute: 'data-aria-describedby', noAccessor: true})
-  ariaDescribedBy!: undefined|string;
-
+  @state() private focused = false;
+  @query('input') private readonly input!: HTMLInputElement|null;
   @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
+  private selectionController?: SingleSelectionController;
+  @state() private showFocusRing = false;
   @state() private showRipple = false;
 
-  /** @soyTemplate */
-  protected renderFocusRing(): TemplateResult {
-    return html`<md-focus-ring .visible="${
-        this.showFocusRing}"></md-focus-ring>`;
-  }
-
-  get isRippleActive() {
-    return false;
+  override click() {
+    this.input?.focus();
+    this.input?.click();
   }
 
   override connectedCallback() {
@@ -165,34 +136,13 @@ export class Radio extends LitElement {
   }
 
   override updated(changedProperties: PropertyValues) {
-    if (changedProperties.has('checked') && this.formElement) {
-      this.formElement.checked = this.checked;
+    if (changedProperties.has('checked') && this.input) {
+      this.input.checked = this.checked;
       if (!this.checked) {
         // Remove focus ring when unchecked on other radio programmatically.
         // Blur on input since this determines the focus style.
-        this.formElement?.blur();
+        this.input.blur();
       }
-    }
-  }
-
-  override click() {
-    this.formElement.focus();
-    this.formElement.click();
-  }
-
-  protected handleFocus() {
-    this.focused = true;
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  protected handleBlur() {
-    this.focused = false;
-    this.showFocusRing = false;
-  }
-
-  protected setFormData(formData: FormData) {
-    if (this.name && this.checked) {
-      formData.append(this.name, this.value);
     }
   }
 
@@ -217,13 +167,11 @@ export class Radio extends LitElement {
           class="md3-radio__native-control"
           type="radio"
           name="${this.name}"
-          aria-label="${ifDefined(this.ariaLabel)}"
-          aria-labelledby="${ifDefined(this.ariaLabelledBy)}"
-          aria-describedby="${ifDefined(this.ariaDescribedBy)}"
-          ?checked="${this.checked}"
+          aria-label="${this.ariaLabel || nothing}"
+          .checked="${this.checked}"
           .value="${this.value}"
           ?disabled="${this.disabled}"
-          @change="${this.changeHandler}"
+          @change="${this.handleChange}"
           @focus="${this.handleFocus}"
           @blur="${this.handleBlur}"
           @pointerdown=${this.handlePointerDown}
@@ -239,7 +187,17 @@ export class Radio extends LitElement {
       </div>`;
   }
 
-  protected changeHandler() {
+  private handleBlur() {
+    this.focused = false;
+    this.showFocusRing = false;
+  }
+
+  private handleFocus() {
+    this.focused = true;
+    this.showFocusRing = shouldShowStrongFocus();
+  }
+
+  private handleChange() {
     if (this.disabled) {
       return;
     }
@@ -265,4 +223,8 @@ export class Radio extends LitElement {
   private readonly renderRipple = () => {
     return html`<md-ripple unbounded ?disabled=${this.disabled}></md-ripple>`;
   };
+
+  private renderFocusRing(): TemplateResult {
+    return html`<md-focus-ring .visible=${this.showFocusRing}></md-focus-ring>`;
+  }
 }
