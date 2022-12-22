@@ -12,6 +12,7 @@
 @use '../../sass/color';
 @use '../../sass/theme';
 @use '../../tokens';
+@use '../../focus/focus-ring';
 @use './shared';
 
 $_custom-property-prefix: 'outlined-icon-button';
@@ -28,6 +29,7 @@ $_custom-property-prefix: 'outlined-icon-button';
   );
   $tokens: theme.validate-theme($reference, $tokens);
   $tokens: shared.flatten-disabled-colors($tokens, $variant: 'outlined');
+  $tokens: shared.resolve-shape-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   @include theme.emit-theme-vars($tokens);
@@ -45,12 +47,24 @@ $_custom-property-prefix: 'outlined-icon-button';
     )
   );
   $tokens: shared.flatten-disabled-colors($tokens, $variant: 'outlined');
+  $tokens: shared.resolve-shape-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
+
+    @include focus-ring.theme(
+      (
+        shape: (
+          var(--_container-shape-start-start),
+          var(--_container-shape-start-end),
+          var(--_container-shape-end-end),
+          var(--_container-shape-end-start),
+        ),
+      )
+    );
   }
 
   .md3-icon-button--outlined {

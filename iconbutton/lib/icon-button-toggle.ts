@@ -80,7 +80,7 @@ export class IconButtonToggle extends LitElement {
   };
 
   protected readonly renderRipple = () => {
-    return html`<md-ripple ?disabled="${this.disabled}" unbounded></md-ripple>`;
+    return html`<md-ripple ?disabled="${this.disabled}"></md-ripple>`;
   };
 
   protected override render(): TemplateResult {

@@ -8,6 +8,7 @@
 
 @use 'sass:map';
 @use '../../ripple/ripple';
+@use '../../focus/focus-ring';
 @use '../../sass/theme';
 @use '../../tokens';
 @use './shared';
@@ -20,6 +21,7 @@ $_custom-property-prefix: 'filled-tonal-icon-button';
     $tokens
   );
   $tokens: shared.flatten-disabled-colors($tokens, $variant: 'filled-tonal');
+  $tokens: shared.resolve-shape-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   @include theme.emit-theme-vars($tokens);
@@ -28,12 +30,24 @@ $_custom-property-prefix: 'filled-tonal-icon-button';
 @mixin styles() {
   $tokens: tokens.md-comp-filled-tonal-icon-button-values();
   $tokens: shared.flatten-disabled-colors($tokens, $variant: 'filled-tonal');
+  $tokens: shared.resolve-shape-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
+
+    @include focus-ring.theme(
+      (
+        shape: (
+          var(--_container-shape-start-start),
+          var(--_container-shape-start-end),
+          var(--_container-shape-end-end),
+          var(--_container-shape-end-start),
+        ),
+      )
+    );
   }
 
   .md3-icon-button {

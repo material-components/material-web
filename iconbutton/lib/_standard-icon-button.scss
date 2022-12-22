@@ -9,6 +9,7 @@
 @use 'sass:map';
 @use '../../ripple/ripple';
 @use '../../sass/theme';
+@use '../../focus/focus-ring';
 @use '../../tokens';
 @use './shared';
 
@@ -17,6 +18,7 @@ $_custom-property-prefix: 'icon-button';
 @mixin theme($tokens) {
   $tokens: theme.validate-theme(tokens.md-comp-icon-button-values(), $tokens);
   $tokens: shared.flatten-disabled-colors($tokens);
+  $tokens: shared.resolve-shape-tokens($tokens, $property: 'state-layer-shape');
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   @include theme.emit-theme-vars($tokens);
@@ -25,12 +27,24 @@ $_custom-property-prefix: 'icon-button';
 @mixin styles() {
   $tokens: tokens.md-comp-icon-button-values();
   $tokens: shared.flatten-disabled-colors($tokens);
+  $tokens: shared.resolve-shape-tokens($tokens, $property: 'state-layer-shape');
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
+
+    @include focus-ring.theme(
+      (
+        shape: (
+          var(--_state-layer-shape-start-start),
+          var(--_state-layer-shape-start-end),
+          var(--_state-layer-shape-end-end),
+          var(--_state-layer-shape-end-start),
+        ),
+      )
+    );
   }
 
   .md3-icon-button--standard {
@@ -101,5 +115,13 @@ $_custom-property-prefix: 'icon-button';
           var(--_selected-pressed-state-layer-opacity),
       )
     );
+  }
+
+  md-ripple {
+    // TODO(b/263517885): replace with ripple.theme(state-layer-shape)
+    border-start-start-radius: var(--_state-layer-shape-start-start);
+    border-start-end-radius: var(--_state-layer-shape-start-end);
+    border-end-start-radius: var(--_state-layer-shape-end-start);
+    border-end-end-radius: var(--_state-layer-shape-end-end);
   }
 }

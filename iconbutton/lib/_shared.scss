@@ -12,6 +12,8 @@
 @use 'sass:map';
 @use '../../sass/color';
 @use '../../sass/touch-target';
+@use '../../sass/shape';
+@use '../../sass/resolvers';
 @use '../../tokens';
 
 @mixin styles() {
@@ -46,7 +48,10 @@
       0px,
       calc((#{$touch-target-height} - var(--_container-size)) / 2)
     );
-    border-radius: var(--_container-shape);
+    border-start-start-radius: var(--_container-shape-start-start);
+    border-start-end-radius: var(--_container-shape-start-end);
+    border-end-start-radius: var(--_container-shape-end-start);
+    border-end-end-radius: var(--_container-shape-end-end);
 
     i,
     svg,
@@ -65,6 +70,11 @@
 
   md-ripple {
     z-index: -1; // Place behind content
+    // TODO(b/263517885): replace with ripple.theme(container-shape)
+    border-start-start-radius: var(--_container-shape-start-start);
+    border-start-end-radius: var(--_container-shape-start-end);
+    border-end-start-radius: var(--_container-shape-end-start);
+    border-end-end-radius: var(--_container-shape-end-end);
   }
 
   .md3-icon-button--flip-icon .md3-icon-button__icon {
@@ -164,5 +174,13 @@
         opacity-key: 'disabled-selected-container-opacity'
       )
     )
+  );
+}
+
+@function resolve-shape-tokens($tokens, $property: 'container-shape') {
+  @return shape.resolve-theme(
+    $tokens,
+    map.get(resolvers.$material, 'shape'),
+    $property
   );
 }
