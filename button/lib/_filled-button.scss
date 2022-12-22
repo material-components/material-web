@@ -7,6 +7,7 @@
 @use '../../sass/resolvers';
 @use '../../sass/theme';
 @use '../../sass/typography';
+@use '../../sass/shape';
 @use '../../tokens';
 @use './elevation';
 @use './shared';
@@ -48,6 +49,11 @@ $_custom-property-prefix: 'filled-button';
     $tokens,
     map.get(resolvers.$material, 'typography'),
     'label-text'
+  );
+  $tokens: shape.resolve-theme(
+    $tokens,
+    map.get(resolvers.$material, 'shape'),
+    'container-shape'
   );
   @return elevation.resolve-tokens($tokens);
 }

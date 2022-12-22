@@ -12,6 +12,7 @@
 @use '../../sass/dom';
 @use '../../sass/typography';
 @use '../../sass/resolvers';
+@use '../../focus/focus-ring';
 
 @mixin styles() {
   :host {
@@ -35,16 +36,22 @@
         pressed-state-layer-opacity: var(--_pressed-state-layer-opacity),
       )
     );
+
+    @include focus-ring.theme(
+      (
+        shape: (
+          var(--_container-shape-start-start),
+          var(--_container-shape-start-end),
+          var(--_container-shape-end-end),
+          var(--_container-shape-end-start),
+        ),
+      )
+    );
   }
 
   :host([disabled]) {
     cursor: default;
     pointer-events: none;
-
-    border-start-start-radius: var(
-      --md-comp-button-shape-start-start,
-      var(--md-comp-button-shape)
-    );
   }
 
   .md3-button {
@@ -108,7 +115,10 @@
 
   .md3-button,
   .md3-button__ripple {
-    border-radius: var(--_container-shape);
+    border-start-start-radius: var(--_container-shape-start-start);
+    border-start-end-radius: var(--_container-shape-start-end);
+    border-end-start-radius: var(--_container-shape-end-start);
+    border-end-end-radius: var(--_container-shape-end-end);
   }
 
   md-elevation,
