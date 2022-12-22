@@ -15,6 +15,8 @@ import {styles as outlinedStyles} from './lib/outlined-styles.css.js';
 import {OutlinedTextField} from './lib/outlined-text-field.js';
 import {styles as sharedStyles} from './lib/shared-styles.css.js';
 
+export {TextFieldType} from './lib/text-field.js';
+
 declare global {
   interface HTMLElementTagNameMap {
     'md-outlined-text-field': MdOutlinedTextField;

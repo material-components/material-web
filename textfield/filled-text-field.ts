@@ -15,6 +15,8 @@ import {styles as filledStyles} from './lib/filled-styles.css.js';
 import {FilledTextField} from './lib/filled-text-field.js';
 import {styles as sharedStyles} from './lib/shared-styles.css.js';
 
+export {TextFieldType} from './lib/text-field.js';
+
 declare global {
   interface HTMLElementTagNameMap {
     'md-filled-text-field': MdFilledTextField;
