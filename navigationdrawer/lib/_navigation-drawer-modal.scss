@@ -7,9 +7,8 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
+@use '../../elevation/elevation';
 @use '../../motion/animation';
-@use '../../elevationold/lib/elevation-overlay';
-@use '../../elevationold/lib/elevation-theme';
 @use '../../sass/theme';
 @use './shared';
 
@@ -48,9 +47,13 @@ $_reference: (
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
-  }
 
-  @include elevation-overlay.static-styles();
+    @include elevation.theme(
+      (
+        level: var(--_modal-container-elevation),
+      )
+    );
+  }
 
   .md3-navigation-drawer-modal {
     bottom: 0;
@@ -64,29 +67,11 @@ $_reference: (
 
     transition: inline-size $_transition-duration $_curve $_delay,
       visibility $_delay $_curve $_transition-duration;
-
-    @include elevation-theme.theme-styles(
-      (
-        overlay-opacity: var(--_modal-container-elevation-overlay-opacity),
-        surface-tint-layer-color: var(--_container-surface-tint-layer-color),
-      )
-    );
-
-    .md3-elevation-overlay {
-      width: inherit;
-      z-index: 0;
-    }
   }
 
   .md3-navigation-drawer-modal--opened {
     transition: inline-size $_transition-duration $_curve $_delay,
       visibility $_delay $_curve $_delay;
-
-    @include elevation-theme.theme-styles(
-      (
-        shadow: var(--_modal-container-elevation-shadow),
-      )
-    );
   }
 
   .md3-navigation-drawer-modal--pivot-at-start {
