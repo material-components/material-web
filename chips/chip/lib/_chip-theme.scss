@@ -12,7 +12,7 @@
 @use 'sass:math';
 @use 'sass:color';
 
-@use '../../../elevationold/lib/elevation-theme';
+@use '../../../elevation/lib/elevation';
 @use '../../../ripple/ripple';
 @use '../../../sass/dom';
 @use '../../../sass/resolvers';
@@ -191,10 +191,10 @@ $_custom-property-prefix: 'chip';
   @include _avatar-shape(map.get($theme, with-avatar-avatar-shape));
   @include graphic-size(map.get($theme, with-avatar-avatar-size));
   @include height(map.get($theme, container-height));
-  @include elevation-theme.theme-styles(
+  @include elevation.theme(
     (
-      surface-tint-layer-color:
-        map.get($theme, container-surface-tint-layer-color),
+      shadow-color: map.get($theme, elevated-container-shadow-color),
+      surface-tint-color: map.get($theme, container-surface-tint-layer-color),
     )
   );
   @include _container-elevation(
@@ -426,26 +426,22 @@ $_custom-property-prefix: 'chip';
 }
 
 @function _resolve-theme($theme, $resolvers) {
-  $theme: elevation-theme.resolve-theme(
+  $theme: elevation.resolve-tokens(
     $theme,
-    map.get($resolvers, elevation),
-    $shadow-color-token: elevated-container-shadow-color,
-    $elevation-tokens: (
-      container-elevation,
-      elevated-container-elevation,
-      elevated-disabled-container-elevation,
-      elevated-focus-container-elevation,
-      elevated-hover-container-elevation,
-      elevated-pressed-container-elevation,
-      elevated-selected-container-elevation,
-      flat-container-elevation,
-      flat-selected-focus-container-elevation,
-      flat-selected-hover-container-elevation,
-      flat-selected-pressed-container-elevation,
-      flat-unselected-focus-container-elevation,
-      flat-unselected-hover-container-elevation,
-      flat-unselected-pressed-container-elevation
-    )
+    'container-elevation',
+    'elevated-container-elevation',
+    'elevated-disabled-container-elevation',
+    'elevated-focus-container-elevation',
+    'elevated-hover-container-elevation',
+    'elevated-pressed-container-elevation',
+    'elevated-selected-container-elevation',
+    'flat-container-elevation',
+    'flat-selected-focus-container-elevation',
+    'flat-selected-hover-container-elevation',
+    'flat-selected-pressed-container-elevation',
+    'flat-unselected-focus-container-elevation',
+    'flat-unselected-hover-container-elevation',
+    'flat-unselected-pressed-container-elevation'
   );
   @return $theme;
 }

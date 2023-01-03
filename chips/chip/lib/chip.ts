@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import '../../../elevation/elevation.js';
 import '../../action/delete-action.js';
 
 import {html, TemplateResult} from 'lit';
@@ -73,7 +74,7 @@ export abstract class Chip extends ActionElement {
   /** @soyTemplate */
   protected renderOverlay(): TemplateResult {
     return this.borderType === BorderType.ELEVATED ?
-        html`<div class="md3-elevation-overlay" aria-hidden="true"></div>` :
+        html`<md-elevation aria-hidden="true" shadow surface></md-elevation>` :
         html``;
   }
 

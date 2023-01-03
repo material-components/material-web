@@ -77,8 +77,6 @@
   .md3-chip {
     position: relative;
     max-width: 100%;
-    // TODO(b/240224981): Translate to md3 elevation
-    // @include elevation-theme.overlay-dimensions(100%, $query: $query);
   }
 
   .md3-chip__cell,
