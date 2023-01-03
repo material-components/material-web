@@ -1,0 +1,19 @@
+name: commitlint
+
+on: [pull_request]
+
+jobs:
+  commitlint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+
+      - run: npm ci
+      - run: 'echo "${PR_TITLE}" | npx commitlint'
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
