@@ -7,7 +7,7 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-@use '../../elevationold/lib/elevation-theme';
+@use '../../elevation/lib/elevation';
 @use '../../sass/theme';
 @use './md-comp-menu-surface';
 
@@ -23,6 +23,7 @@ $_deceleration-curve-timing-function: cubic-bezier(0, 0, 0.2, 1) !default;
 
 @mixin theme($tokens) {
   $tokens: theme.validate-theme(md-comp-menu-surface.values(), $tokens);
+  $tokens: elevation.resolve-tokens($tokens, 'container-elevation');
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   @include theme.emit-theme-vars($tokens);
@@ -30,6 +31,7 @@ $_deceleration-curve-timing-function: cubic-bezier(0, 0, 0.2, 1) !default;
 
 @mixin styles() {
   $tokens: md-comp-menu-surface.values();
+  $tokens: elevation.resolve-tokens($tokens, 'container-elevation');
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   :host {
@@ -57,13 +59,15 @@ $_deceleration-curve-timing-function: cubic-bezier(0, 0, 0.2, 1) !default;
     will-change: transform, opacity;
     z-index: $_z-index;
 
-    @include elevation-theme.theme-styles(
+    @include elevation.theme(
       (
-        shadow: var(--_container-elevation-shadow),
+        level: var(--_container-elevation),
+        shadow-color: var(--_container-shadow-color),
+        surface-tint-color: var(--_container-surface-tint-layer-color),
       )
     );
 
-    .md3-elevation-overlay {
+    md-elevation {
       z-index: 0;
     }
 

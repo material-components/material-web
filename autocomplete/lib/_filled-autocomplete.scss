@@ -186,7 +186,7 @@ $dark-theme: tokens.md-comp-filled-autocomplete-values(
   .md3-autocomplete__menu-surface {
     @include menu-surface.theme(
       (
-        container-elevation-shadow: var(--_menu-container-elevation-shadow),
+        container-elevation: var(--_menu-container-elevation),
         container-shape: var(--_menu-container-shape),
       )
     );

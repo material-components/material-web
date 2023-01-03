@@ -4,8 +4,7 @@
 //
 
 @use 'sass:map';
-@use '../../elevationold/lib/elevation-theme';
-@use '../../sass/resolvers';
+@use '../../elevation/lib/elevation';
 @use '../../tokens';
 
 $_default-deps: (
@@ -17,19 +16,12 @@ $_default-deps: (
 @function values($deps: $_default-deps, $exclude-hardcoded-values: false) {
   // Use menu tokens for default menu surface values.
   $menu-values: tokens.md-comp-menu-values($deps, $exclude-hardcoded-values);
-  // Note that we don't use "real" elevation tokens here because menu surface
-  // does not have defined tokens. Components that use menu surface are expected
-  // to pass through their own resolved tokens.
-  $menu-values: elevation-theme.resolve-theme(
-    $menu-values,
-    map.get(resolvers.$material, 'elevation'),
-    $shadow-color-token: 'container-shadow-color',
-    $elevation-tokens: (container-elevation)
-  );
 
   @return (
-    container-elevation-shadow:
-      map.get($menu-values, container-elevation-shadow),
-    container-shape: map.get($menu-values, container-shape)
+    container-elevation: map.get($menu-values, container-elevation),
+    container-shadow-color: map.get($menu-values, container-shadow-color),
+    container-shape: map.get($menu-values, container-shape),
+    container-surface-tint-layer-color:
+      map.get($menu-values, container-surface-tint-layer-color)
   );
 }

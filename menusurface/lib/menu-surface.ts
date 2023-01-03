@@ -7,6 +7,8 @@
 // Style preference for leading underscores.
 // tslint:disable:strip-private-property-underscore
 
+import '../../elevation/elevation.js';
+
 import {html, LitElement, PropertyValues} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
@@ -105,6 +107,7 @@ export abstract class MenuSurface extends LitElement {
           @keydown=${this.onKeydown}
           @opened=${this.registerBodyClick}
           @closed=${this.deregisterBodyClick}>
+        <md-elevation shadow></md-elevation>
         <slot></slot>
       </div>`;
   }

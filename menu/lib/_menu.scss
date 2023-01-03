@@ -8,7 +8,7 @@
 
 @use 'sass:map';
 
-@use '../../elevationold/lib/elevation-theme';
+@use '../../elevation/lib/elevation';
 @use '../../list/list';
 @use '../../list/list-item';
 @use '../../menusurface/menu-surface';
@@ -40,8 +40,11 @@ $_custom-property-prefix: 'menu';
   .md3-menu {
     @include menu-surface.theme(
       (
-        container-elevation-shadow: var(--_container-elevation-shadow),
+        container-elevation: var(--_container-elevation),
         container-shape: var(--_container-shape),
+        container-shadow-color: var(--_container-shadow-color),
+        container-surface-tint-layer-color:
+          var(--_container-surface-tint-layer-color),
       )
     );
 
@@ -101,11 +104,6 @@ $_custom-property-prefix: 'menu';
 }
 
 @function _resolve-tokens($tokens) {
-  $tokens: elevation-theme.resolve-theme(
-    $tokens,
-    map.get(resolvers.$material, 'elevation'),
-    $shadow-color-token: 'container-shadow-color',
-    $elevation-tokens: (container-elevation)
-  );
+  $tokens: elevation.resolve-tokens($tokens, 'container-elevation');
   @return $tokens;
 }
