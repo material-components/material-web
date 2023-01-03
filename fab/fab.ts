@@ -9,8 +9,6 @@ import '../icon/icon.js';
 import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-import {styles as overlayStyles} from '../elevationold/lib/elevation-overlay-styles.css.js';
-
 import {Fab} from './lib/fab.js';
 import {styles as sharedStyles} from './lib/fab-shared-styles.css.js';
 import {styles as fabStyles} from './lib/fab-styles.css.js';
@@ -28,7 +26,7 @@ declare global {
  */
 @customElement('md-fab')
 export class MdFab extends Fab {
-  static override styles = [overlayStyles, sharedStyles, fabStyles];
+  static override styles = [sharedStyles, fabStyles];
 
   /** @soyTemplate */
   protected override renderIcon(icon: string): TemplateResult|string {
