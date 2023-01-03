@@ -6,11 +6,8 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@use 'sass:map';
-
 @use '../../motion/animation';
-@use '../../elevationold/lib/elevation-overlay';
-@use '../../elevationold/lib/elevation-theme';
+@use '../../elevation/elevation';
 @use '../../sass/theme';
 @use './shared';
 
@@ -50,9 +47,15 @@ $_reference: (
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
-  }
 
-  @include elevation-overlay.static-styles();
+    @include elevation.theme(
+      (
+        level: var(--_standard-container-elevation),
+        shadow-color: var(--_divider-color),
+        surface-tint-color: var(--_container-surface-tint-layer-color),
+      )
+    );
+  }
 
   :host {
     display: flex;
@@ -69,19 +72,13 @@ $_reference: (
 
     transition: inline-size $transition-duration $curve $delay,
       visibility $default $curve $transition-duration;
+  }
 
-    @include elevation-theme.theme-styles(
-      (
-        shadow: var(--_standard-container-elevation-shadow),
-        overlay-opacity: var(--_standard-container-elevation-overlay-opacity),
-        surface-tint-layer-color: var(--_container-surface-tint-layer-color),
-      )
-    );
-
-    .md3-elevation-overlay {
-      width: inherit;
-      z-index: 0;
-    }
+  md-elevation {
+    inset: 0;
+    position: absolute;
+    width: inherit;
+    z-index: 0;
   }
 
   .md3-navigation-drawer--opened {
