@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {playwrightLauncher} from '@web/test-runner-playwright.js';
+import {playwrightLauncher} from '@web/test-runner-playwright';
 import {jasmineTestRunnerConfig} from 'web-test-runner-jasmine';
 
 export default {
