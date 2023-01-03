@@ -20,7 +20,9 @@ import {ifDefined} from 'lit/directives/if-defined.js';
 /** @soyCompatible */
 export class ListItem extends ActionElement {
   @ariaProperty  // tslint:disable-line:no-new-decorators
+  // tslint:disable-next-line:decorator-placement
   @property({type: String, attribute: 'data-role', noAccessor: true})
+  // @ts-ignore(b/264292293): Use `override` with TS 4.9+
   role: ARIARole = 'listitem';
 
   @ariaProperty  // tslint:disable-line:no-new-decorators

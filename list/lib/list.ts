@@ -38,7 +38,9 @@ export class List extends LitElement {
   ariaActivedescendant!: string;
 
   @ariaProperty  // tslint:disable-line:no-new-decorators
+  // tslint:disable-next-line:decorator-placement
   @property({type: String, attribute: 'data-role', noAccessor: true})
+  // @ts-ignore(b/264292293): Use `override` with TS 4.9+
   role: ARIARole = 'list';
 
   @property({type: String}) listId = '';

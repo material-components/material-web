@@ -138,9 +138,12 @@ export abstract class TextField extends LitElement {
   @ariaProperty  // tslint:disable-line:no-new-decorators
   ariaLabelledBy!: string;
 
+  // tslint:disable:decorator-placement
   @property({type: String, attribute: 'data-role', noAccessor: true})
   @ariaProperty  // tslint:disable-line:no-new-decorators
+  // @ts-ignore(b/264292293): Use `override` with TS 4.9+
   role: ARIARole|null = null;
+  // tslint:enable:decorator-placement
 
   // FormElement
   get form() {
