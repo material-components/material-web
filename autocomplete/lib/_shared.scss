@@ -7,7 +7,7 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-@use '../../elevationold/lib/elevation-theme';
+@use '../../elevation/lib/elevation';
 @use '../../sass/resolvers';
 @use '../../sass/shape';
 
@@ -19,12 +19,7 @@
 }
 
 @function resolve-tokens($tokens) {
-  $tokens: elevation-theme.resolve-theme(
-    $tokens,
-    map.get(resolvers.$material, 'elevation'),
-    $shadow-color-token: 'menu-container-shadow-color',
-    $elevation-tokens: (menu-container-elevation)
-  );
+  $tokens: elevation.resolve-tokens($tokens, 'menu-container-elevation');
   $tokens: shape.resolve-theme(
     $tokens,
     map.get(resolvers.$material, shape),

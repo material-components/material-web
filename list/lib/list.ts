@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import '../../elevation/elevation.js';
+
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
@@ -71,7 +73,7 @@ export class List extends LitElement {
           @keydown=${this.handleKeydown}
           >
         <span><slot></slot></span>
-        <div class="md3-elevation-overlay"></div>
+        <md-elevation surface></md-elevation>
       </ul>
     `;
   }

@@ -7,7 +7,6 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-@use '../../elevationold/lib/elevation-theme';
 @use '../../field/filled-field';
 @use '../../list/list';
 @use '../../list/list-item';
@@ -188,6 +187,7 @@ $dark-theme: tokens.md-comp-filled-autocomplete-values(
       (
         container-elevation: var(--_menu-container-elevation),
         container-shape: var(--_menu-container-shape),
+        container-shadow-color: var(--_menu-container-shadow-color),
       )
     );
 
@@ -196,8 +196,7 @@ $dark-theme: tokens.md-comp-filled-autocomplete-values(
         container-color: var(--_menu-container-color),
         container-surface-tint-layer-color:
           var(--_menu-container-surface-tint-layer-color),
-        container-elevation-overlay-opacity:
-          var(--_menu-container-elevation-overlay-opacity),
+        container-elevation: var(--_menu-container-elevation),
       )
     );
 

@@ -53,8 +53,7 @@ $_custom-property-prefix: 'menu';
         container-color: var(--_container-color),
         container-surface-tint-layer-color:
           var(--_container-surface-tint-layer-color),
-        container-elevation-overlay-opacity:
-          var(--_container-elevation-overlay-opacity),
+        container-elevation: var(--_container-elevation),
       )
     );
     @include list-item.theme(
