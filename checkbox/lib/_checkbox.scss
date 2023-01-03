@@ -56,6 +56,9 @@ $_checkmark-bottom-left: 7px, -14px;
     margin: 0;
     outline: none;
     position: absolute;
+    opacity: 0;
+    block-size: 100%;
+    inline-size: 100%;
   }
 
   .container {
