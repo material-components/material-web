@@ -20,6 +20,7 @@
   :host {
     display: inline-flex;
     outline: none;
+    -webkit-tap-highlight-color: transparent;
   }
 
   :host([disabled]) {

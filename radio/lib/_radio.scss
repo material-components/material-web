@@ -12,6 +12,10 @@
 @use './radio-theme';
 
 @mixin static-styles() {
+  :host {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   .md3-radio {
     display: inline-flex;
     position: relative;
