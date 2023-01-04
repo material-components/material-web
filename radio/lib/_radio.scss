@@ -3,133 +3,165 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
+@use 'sass:map';
 @use '../../focus/focus-ring';
 @use '../../motion/animation';
+@use '../../ripple/ripple';
+@use '../../sass/theme';
+@use '../../tokens';
 
-@use './radio-theme';
+$_md-sys-motion: tokens.md-sys-motion-values();
 
-@mixin static-styles() {
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme(tokens.md-comp-radio-button-values(), $tokens);
+  $tokens: theme.create-theme-vars($tokens, 'radio');
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: tokens.md-comp-radio-button-values();
+  $tokens: theme.create-theme-vars($tokens, 'radio');
+
   :host {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+
+    @include ripple.theme(
+      (
+        focus-state-layer-color: var(--_unselected-focus-state-layer-color),
+        focus-state-layer-opacity: var(--_unselected-focus-state-layer-opacity),
+        hover-state-layer-color: var(--_unselected-hover-state-layer-color),
+        hover-state-layer-opacity: var(--_unselected-hover-state-layer-opacity),
+        pressed-state-layer-color: var(--_unselected-pressed-state-layer-color),
+        pressed-state-layer-opacity:
+          var(--_unselected-pressed-state-layer-opacity),
+      )
+    );
+
+    @include focus-ring.theme(
+      (
+        offset-vertical: -2px,
+        offset-horizontal: -2px,
+      )
+    );
+
+    display: inline-flex;
+    height: 48px;
+    position: relative;
+    vertical-align: top; // Fix extra space when placed inside display: block
+    width: 48px;
+    // Remove highlight color for mobile Safari
     -webkit-tap-highlight-color: transparent;
   }
 
-  .md3-radio {
-    display: inline-flex;
-    position: relative;
-    cursor: pointer;
-    will-change: opacity, transform, border-color, color;
-    justify-content: center;
-    align-items: center;
+  :host([checked]) {
+    @include ripple.theme(
+      (
+        focus-state-layer-color: var(--_selected-focus-state-layer-color),
+        focus-state-layer-opacity: var(--_selected-focus-state-layer-opacity),
+        hover-state-layer-color: var(--_selected-hover-state-layer-color),
+        hover-state-layer-opacity: var(--_selected-hover-state-layer-opacity),
+        pressed-state-layer-color: var(--_selected-pressed-state-layer-color),
+        pressed-state-layer-opacity:
+          var(--_selected-pressed-state-layer-opacity),
+      )
+    );
   }
 
-  .md3-radio__background {
-    display: inline-flex;
-    position: relative;
-    box-sizing: border-box;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .md3-radio__outer-circle {
-    position: absolute;
-    inset-block-start: 0;
-    inset-inline-start: 0;
-    box-sizing: border-box;
-    block-size: 100%;
-    inline-size: 100%;
-    border-width: 2px;
-    border-style: solid;
-    border-radius: 50%;
-    transition: exit(border-color);
-  }
-
-  .md3-radio__inner-circle {
-    position: absolute;
-    box-sizing: border-box;
-    block-size: 50%;
-    inline-size: 50%;
-    transform: scale(0);
-    border-radius: 50%;
-    transition: exit(transform), exit(border-color);
-  }
-
-  .md3-radio__ripple {
-    position: absolute;
-    display: inline-flex;
-    z-index: -1;
-  }
-
-  .md3-radio__native-control {
-    position: absolute;
-    margin: 0;
-    padding: 0;
-    opacity: 0;
-    cursor: inherit;
-    z-index: 1;
-    block-size: 100%;
-    inline-size: 100%;
+  input,
+  md-ripple,
+  md-focus-ring,
+  .icon {
     inset: 0;
+    margin: auto;
+    position: absolute;
   }
 
-  .md3-radio__native-control:checked,
-  .md3-radio__native-control:disabled {
-    + .md3-radio__background {
-      transition: enter(opacity), enter(transform);
-
-      .md3-radio__outer-circle {
-        transition: enter(border-color);
-      }
-
-      .md3-radio__inner-circle {
-        transition: enter(transform), enter(border-color);
-      }
-    }
+  input {
+    appearance: none;
+    outline: none;
   }
 
-  .md3-radio--disabled {
-    cursor: default;
-    pointer-events: none;
+  md-ripple {
+    height: var(--_state-layer-size);
+    width: var(--_state-layer-size);
   }
 
-  .md3-radio__native-control:checked {
-    + .md3-radio__background {
-      .md3-radio__inner-circle {
-        transform: scale(1);
-        transition: enter(transform), enter(border-color);
-      }
-    }
+  .icon {
+    fill: var(--_unselected-icon-color);
+    height: var(--_icon-size);
+    width: var(--_icon-size);
   }
 
-  .md3-radio__native-control:disabled,
-  [aria-disabled='true'] .md3-radio__native-control {
-    + .md3-radio__background {
-      cursor: default;
-    }
+  .inner-circle {
+    opacity: 0;
+    transition-duration: 150ms, 50ms; // Exit duration for scale and opacity.
+    transition-property: transform, opacity;
+    // Exit easing function for scale, linear for opacity.
+    transition-timing-function: map.get(
+        $_md-sys-motion,
+        easing-emphasized-accelerate
+      ),
+      linear;
+    transform: scale(0.6);
+    transform-origin: center;
   }
 
-  @include focus-ring.theme(
-    (
-      offset-vertical: -2px,
-      offset-horizontal: -2px,
-    )
-  );
-
-  @media (forced-colors: active) {
-    .md3-radio {
-      @include radio-theme.high-contrast-styles();
-    }
+  :host([checked]) .icon {
+    fill: var(--_selected-icon-color);
   }
-}
 
-$_transition-duration: 120ms;
+  :host([checked]) .inner-circle {
+    opacity: 1;
+    // Enter duration for scale and opacity.
+    transition-duration: 350ms, 50ms;
+    // Enter easing function for scale, linear for opacity.
+    transition-timing-function: map.get(
+        $_md-sys-motion,
+        easing-emphasized-decelerate
+      ),
+      linear;
+    transform: scale(1);
+  }
 
-@function enter($name) {
-  @return animation.deceleration($name, $_transition-duration);
-}
+  // Don't animate when disabled
+  :host([disabled]) .inner-circle {
+    transition-duration: 0s;
+  }
 
-@function exit($name) {
-  @return animation.sharp($name, $_transition-duration);
+  :host(:hover) .icon {
+    fill: var(--_unselected-hover-icon-color);
+  }
+
+  :host(:focus-within) .icon {
+    fill: var(--_unselected-focus-icon-color);
+  }
+
+  :host(:active) .icon {
+    fill: var(--_unselected-pressed-icon-color);
+  }
+
+  :host([disabled]) .icon {
+    fill: var(--_disabled-unselected-icon-color);
+    opacity: var(--_disabled-unselected-icon-opacity);
+  }
+
+  :host([checked]:hover) .icon {
+    fill: var(--_selected-hover-icon-color);
+  }
+
+  :host([checked]:focus-within) .icon {
+    fill: var(--_selected-focus-icon-color);
+  }
+
+  :host([checked]:active) .icon {
+    fill: var(--_selected-pressed-icon-color);
+  }
+
+  :host([checked][disabled]) .icon {
+    fill: var(--_disabled-selected-icon-color);
+    opacity: var(--_disabled-selected-icon-opacity);
+  }
 }

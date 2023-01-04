@@ -1,0 +1,27 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use './radio';
+
+@media (forced-colors: active) {
+  :host {
+    @include radio.theme(
+      (
+        disabled-selected-icon-color: GrayText,
+        disabled-selected-icon-opacity: 1,
+        disabled-unselected-icon-color: GrayText,
+        disabled-unselected-icon-opacity: 1,
+        selected-icon-color: CanvasText,
+        selected-hover-icon-color: CanvasText,
+        selected-focus-icon-color: CanvasText,
+        selected-pressed-icon-color: CanvasText,
+        unselected-icon-color: CanvasText,
+        unselected-hover-icon-color: CanvasText,
+        unselected-focus-icon-color: CanvasText,
+        unselected-pressed-icon-color: CanvasText,
+      )
+    );
+  }
+}

@@ -8,6 +8,7 @@ import {html} from 'lit';
 
 import {MdFocusRing} from '../focus/focus-ring.js';
 import {Environment} from '../testing/environment.js';
+import {createTokenTests} from '../testing/tokens.js';
 
 import {RadioHarness} from './harness.js';
 import {MdRadio} from './radio.js';
@@ -32,7 +33,7 @@ const radioGroupPreSelected = html`
   <md-radio id="b1" name="b"></md-radio>
 `;
 
-describe('md-radio', () => {
+describe('<md-radio>', () => {
   const env = new Environment();
 
   // Note, this would be better in the harness, but waiting in the test setup
@@ -52,6 +53,10 @@ describe('md-radio', () => {
     const harnesses = radios.map(radio => new RadioHarness(radio));
     return {harnesses, root};
   }
+
+  describe('.styles', () => {
+    createTokenTests(MdRadio.styles);
+  });
 
   describe('basic', () => {
     it('initializes as an md-radio', async () => {
