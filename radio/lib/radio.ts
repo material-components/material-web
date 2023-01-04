@@ -15,7 +15,7 @@ import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
 
-import {dispatchActivationClick, isActivationClick} from '../../controller/events.js';
+import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../controller/events.js';
 import {FormController, getFormValue} from '../../controller/form-controller.js';
 import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
@@ -23,6 +23,8 @@ import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 
 import {SingleSelectionController} from './single-selection-controller.js';
+
+const CHECKED = Symbol('checked');
 
 /**
  * @fires checked
@@ -35,45 +37,21 @@ export class Radio extends LitElement {
   static formAssociated = true;
 
   @property({type: Boolean, reflect: true})
-  get checked(): boolean {
-    return this._checked;
+  get checked() {
+    return this[CHECKED];
   }
-
-  /**
-   * We define our own getter/setter for `checked` because we need to track
-   * changes to it synchronously.
-   *
-   * The order in which the `checked` property is set across radio buttons
-   * within the same group is very important. However, we can't rely on
-   * UpdatingElement's `updated` callback to observe these changes (which is
-   * also what the `@observer` decorator uses), because it batches changes to
-   * all properties.
-   *
-   * Consider:
-   *
-   *   radio1.disabled = true;
-   *   radio2.checked = true;
-   *   radio1.checked = true;
-   *
-   * In this case we'd first see all changes for radio1, and then for radio2,
-   * and we couldn't tell that radio1 was the most recently checked.
-   */
-  set checked(isChecked: boolean) {
-    const oldValue = this._checked;
-    if (isChecked === oldValue) {
+  set checked(checked: boolean) {
+    const wasChecked = this.checked;
+    if (wasChecked === checked) {
       return;
     }
-    this._checked = isChecked;
-    this.selectionController?.update(this);
 
-    this.requestUpdate('checked', oldValue);
-
-    // useful when unchecks self and wrapping element needs to synchronize
-    // TODO(b/168543810): Remove triggering event on programmatic API call.
-    this.dispatchEvent(new Event('checked', {bubbles: true, composed: true}));
+    this[CHECKED] = checked;
+    this.requestUpdate('checked', wasChecked);
+    this.selectionController.handleCheckedChange();
   }
 
-  private _checked = false;  // tslint:disable-line:enforce-name-casing
+  [CHECKED] = false;
 
   @property({type: Boolean}) disabled = false;
 
@@ -94,12 +72,6 @@ export class Radio extends LitElement {
    */
   @property({type: Boolean}) reducedTouchTarget = false;
 
-  /**
-   * input's tabindex is updated based on checked status.
-   * Tab navigation will be removed from unchecked radios.
-   */
-  @property({type: Number}) formElementTabIndex = 0;
-
   @ariaProperty  // tslint:disable-line:no-new-decorators
   @property({attribute: 'data-aria-label', noAccessor: true})
   override ariaLabel!: string;
@@ -114,13 +86,14 @@ export class Radio extends LitElement {
   @state() private focused = false;
   @query('input') private readonly input!: HTMLInputElement|null;
   @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
-  private selectionController?: SingleSelectionController;
+  private readonly selectionController = new SingleSelectionController(this);
   @state() private showFocusRing = false;
   @state() private showRipple = false;
 
   constructor() {
     super();
     this.addController(new FormController(this));
+    this.addController(this.selectionController);
     this.addEventListener('click', (event: Event) => {
       if (!isActivationClick(event)) {
         return;
@@ -136,38 +109,6 @@ export class Radio extends LitElement {
 
   override focus() {
     this.input?.focus();
-  }
-
-  override connectedCallback() {
-    super.connectedCallback();
-    // Note that we must defer creating the selection controller until the
-    // element has connected, because selection controllers are keyed by the
-    // radio's shadow root. For example, if we're stamping in a lit map
-    // or repeat, then we'll be constructed before we're added to a root node.
-    //
-    // Also note if we aren't using native shadow DOM, we still need a
-    // SelectionController, because we should update checked status of other
-    // radios in the group when selection changes. It also simplifies
-    // implementation and testing to use one in all cases.
-    //
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    this.selectionController = SingleSelectionController.getController(this);
-    this.selectionController.register(this);
-
-    // Radios maybe checked before connected, update selection as soon it is
-    // connected to DOM. Last checked radio button in the DOM will be selected.
-    //
-    // NOTE: If we update selection only after firstUpdate() we might mistakenly
-    // update checked status before other radios are rendered.
-    this.selectionController.update(this);
-  }
-
-  override disconnectedCallback() {
-    // The controller is initialized in connectedCallback, so if we are in
-    // disconnectedCallback then it must be initialized.
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this.selectionController!.unregister(this);
-    this.selectionController = undefined;
   }
 
   override updated(changedProperties: PropertyValues) {
@@ -198,7 +139,6 @@ export class Radio extends LitElement {
       <div class="md3-radio ${classMap(classes)}">
         ${this.renderFocusRing()}
         <input
-          tabindex="${this.formElementTabIndex}"
           class="md3-radio__native-control"
           type="radio"
           name="${this.name}"
@@ -232,17 +172,14 @@ export class Radio extends LitElement {
     this.showFocusRing = shouldShowStrongFocus();
   }
 
-  private handleChange() {
+  private handleChange(event: Event) {
     if (this.disabled) {
       return;
     }
 
     // Per spec, the change event on a radio input always represents checked.
     this.checked = true;
-    this.dispatchEvent(new Event('change', {
-      bubbles: true,
-      composed: true,
-    }));
+    redispatchEvent(this, event);
   }
 
   private handlePointerDown(event: PointerEvent) {

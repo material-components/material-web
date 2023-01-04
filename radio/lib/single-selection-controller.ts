@@ -1,328 +1,225 @@
 /**
  * @license
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Style preference for leading underscores.
-// tslint:disable:strip-private-property-underscore
+import {ReactiveController} from 'lit';
 
 /**
- * Unique symbol for marking roots
+ * An element that supports single-selection with `SingleSelectionController`.
  */
-const selectionController = Symbol('selection controller');
-
-/**
- * Set of checkable elements with added metadata
- */
-export class SingleSelectionSet {
-  selected: CheckableElement|null = null;
-  ordered: CheckableElement[]|null = null;
-  readonly set = new Set<CheckableElement>();
+export interface SingleSelectionElement extends HTMLElement {
+  /**
+   * Whether or not the element is selected.
+   */
+  checked: boolean;
 }
 
 /**
- * Element that is checkable consumed by
- * `SingleSelectionController` and `SingleSelectionSet`
- */
-export type CheckableElement = HTMLElement&{
-  name: string;
-  checked: boolean;
-  formElementTabIndex?: number;
-};
-
-/**
- * Controller that provides behavior similar to a native `<input type="radio">`
- * group.
+ * A `ReactiveController` that provides root node-scoped single selection for
+ * elements, similar to native `<input type="radio">` selection.
  *
- * Behaviors:
+ * To use, elements should add the controller and call
+ * `selectionController.handleCheckedChange()` in a getter/setter. This must
+ * be synchronous to match native behavior.
  *
- * - Selection via key navigation (currently LTR is supported)
- * - Deselection of other grouped, checkable controls upon selection
- * - Grouping of checkable elements by name
- *   - Defaults grouping scope to host shadow root
- *   - Document-wide scoping enabled
- * - Land focus only on checked element. Focuses leading element when none
- *   checked.
+ * @example
+ * const CHECKED = Symbol('checked');
  *
- * Intended Usage:
- *
- * ```ts
- * class MyElement extends HTMLElement {
- *   private selectionController: SingleSelectionController | null = null;
- *   name = "";
- *   global = false;
- *
- *   private _checked = false;
+ * class MyToggle extends LitElement {
+ *   get checked() { return this[CHECKED]; }
  *   set checked(checked: boolean) {
- *     const oldVal = this._checked;
- *     if (checked === oldVal) return;
- *
- *     this._checked = checked;
- *
- *     if (this.selectionController) {
- *       this.selectionController.update(this)
+ *     const oldValue = this.checked;
+ *     if (oldValue === checked) {
+ *       return;
  *     }
+ *
+ *     this[CHECKED] = checked;
+ *     this.selectionController.handleCheckedChange();
+ *     this.requestUpdate('checked', oldValue);
  *   }
  *
- *   get checked() {
- *     return this._checked;
- *   }
+ *   [CHECKED] = false;
  *
- *   connectedCallback() {
- *     this.selectionController = SelectionController.getController(this);
- *     this.selectionController.register(this);
- *     this.selectionController.update(this);
- *   }
+ *   private selectionController = new SingleSelectionController(this);
  *
- *   disconnectedCallback() {
- *     this.selectionController!.unregister(this);
- *     this.selectionController = null;
+ *   constructor() {
+ *     super();
+ *     this.addController(this.selectionController);
  *   }
  * }
- * ```
  */
-export class SingleSelectionController {
-  private readonly sets: {[name: string]: SingleSelectionSet} = {};
+export class SingleSelectionController implements ReactiveController {
+  private focused = false;
+  private root: ParentNode|null = null;
 
-  private focusedSet: SingleSelectionSet|null = null;
+  constructor(private readonly host: SingleSelectionElement) {}
 
-  private mouseIsDown = false;
+  hostConnected() {
+    this.root = this.host.getRootNode() as ParentNode;
+    this.host.addEventListener('keydown', this.handleKeyDown);
+    this.host.addEventListener('focusin', this.handleFocusIn);
+    this.host.addEventListener('focusout', this.handleFocusOut);
+    if (this.host.checked) {
+      // Uncheck other siblings when attached if already checked. This mimics
+      // native <input type="radio"> behavior.
+      this.uncheckSiblings();
+    }
+
+    // Update for the newly added host.
+    this.updateTabIndices();
+  }
+
+  hostDisconnected() {
+    this.host.removeEventListener('keydown', this.handleKeyDown);
+    this.host.removeEventListener('focusin', this.handleFocusIn);
+    this.host.removeEventListener('focusout', this.handleFocusOut);
+    // Update for siblings that are still connected.
+    this.updateTabIndices();
+    this.root = null;
+  }
 
   /**
-   * Get a controller for the given element. If no controller exists, one will
-   * be created. Defaults to getting the controller scoped to the element's root
-   * node shadow root unless `element.global` is true. Then, it will get a
-   * `window.document`-scoped controller.
-   *
-   * @param element Element from which to get / create a SelectionController. If
-   *     `element.global` is true, it gets a selection controller scoped to
-   *     `window.document`.
+   * Should be called whenever the host's `checked` property changes
+   * synchronously.
    */
-  static getController(element: HTMLElement|HTMLElement&{global: boolean}) {
-    const useGlobal =
-        !('global' in element) || ('global' in element && element.global);
-    const root = useGlobal ? document as Document &
-            {[selectionController]?: SingleSelectionController} :
-                             (element as Element).getRootNode() as Node &
-            {[selectionController]?: SingleSelectionController};
-    let controller = root[selectionController];
-    if (controller === undefined) {
-      controller = new SingleSelectionController(root);
-      root[selectionController] = controller;
-    }
-    return controller;
-  }
-
-  constructor(element: Node) {
-    element.addEventListener('keydown', (e: Event) => {
-      this.keyDownHandler(e as KeyboardEvent);
-    });
-    element.addEventListener('mousedown', () => {
-      this.mousedownHandler();
-    });
-    element.addEventListener('mouseup', () => {
-      this.mouseupHandler();
-    });
-  }
-
-  protected keyDownHandler(e: KeyboardEvent) {
-    const element = e.target as EventTarget | CheckableElement;
-    if (!('checked' in element)) {
+  handleCheckedChange() {
+    if (!this.host.checked) {
       return;
     }
-    if (!this.has(element)) {
-      return;
-    }
-    if (e.key == 'ArrowRight' || e.key == 'ArrowDown') {
-      this.selectNext(element);
-    } else if (e.key == 'ArrowLeft' || e.key == 'ArrowUp') {
-      this.selectPrevious(element);
-    }
+
+    this.uncheckSiblings();
+    this.updateTabIndices();
   }
 
-  protected mousedownHandler() {
-    this.mouseIsDown = true;
-  }
+  private readonly handleFocusIn = () => {
+    this.focused = true;
+    this.updateTabIndices();
+  };
 
-  protected mouseupHandler() {
-    this.mouseIsDown = false;
-  }
+  private readonly handleFocusOut = () => {
+    this.focused = false;
+    this.updateTabIndices();
+  };
 
-  /**
-   * Whether or not the controller controls  the given element.
-   *
-   * @param element element to check
-   */
-  has(element: CheckableElement) {
-    const set = this.getSet(element.name);
-    return set.set.has(element);
-  }
-
-  /**
-   * Selects and returns the controlled element previous to the given element in
-   * document position order. See
-   * [Node.compareDocumentPosition](https://developer.mozilla.org/en-US/docs/Web/API/Node/compareDocumentPosition).
-   *
-   * @param element element relative from which preceding element is fetched
-   */
-  selectPrevious(element: CheckableElement) {
-    const order = this.getOrdered(element);
-    const i = order.indexOf(element);
-    const previous = order[i - 1] || order[order.length - 1];
-    this.select(previous);
-
-    return previous;
-  }
-
-  /**
-   * Selects and returns the controlled element next to the given element in
-   * document position order. See
-   * [Node.compareDocumentPosition](https://developer.mozilla.org/en-US/docs/Web/API/Node/compareDocumentPosition).
-   *
-   * @param element element relative from which following element is fetched
-   */
-  selectNext(element: CheckableElement) {
-    const order = this.getOrdered(element);
-    const i = order.indexOf(element);
-    const next = order[i + 1] || order[0];
-    this.select(next);
-
-    return next;
-  }
-
-  select(element: CheckableElement) {
-    element.click();
-  }
-
-  /**
-   * Focuses the selected element in the given element's selection set. User's
-   * mouse selection will override this focus.
-   *
-   * @param element Element from which selection set is derived and subsequently
-   *     focused.
-   * @deprecated update() method now handles focus management by setting
-   *     appropriate tabindex to form element.
-   */
-  focus(element: CheckableElement) {
-    // Only manage focus state when using keyboard
-    if (this.mouseIsDown) {
-      return;
-    }
-    const set = this.getSet(element.name);
-    const currentFocusedSet = this.focusedSet;
-    this.focusedSet = set;
-    if (currentFocusedSet != set && set.selected && set.selected != element) {
-      set.selected.focus();
-    }
-  }
-
-  /**
-   * @return Returns true if atleast one radio is selected in the radio group.
-   */
-  isAnySelected(element: CheckableElement): boolean {
-    const set = this.getSet(element.name);
-
-    for (const e of set.set) {
-      if (e.checked) {
-        return true;
+  private uncheckSiblings() {
+    for (const sibling of this.getNamedSiblings()) {
+      if (sibling !== this.host) {
+        sibling.checked = false;
       }
     }
-
-    return false;
   }
 
   /**
-   * Returns the elements in the given element's selection set in document
-   * position order.
-   * [Node.compareDocumentPosition](https://developer.mozilla.org/en-US/docs/Web/API/Node/compareDocumentPosition).
-   *
-   * @param element Element from which selection set is derived and subsequently
-   *     ordered.
+   * Updates the `tabindex` of the host and its siblings.
    */
-  getOrdered(element: CheckableElement) {
-    const set = this.getSet(element.name);
-    if (!set.ordered) {
-      set.ordered = Array.from(set.set);
-      set.ordered.sort(
-          (a, b) =>
-              a.compareDocumentPosition(b) == Node.DOCUMENT_POSITION_PRECEDING ?
-              1 :
-              0);
-    }
-    return set.ordered;
-  }
+  private updateTabIndices() {
+    // There are three tabindex states for a group of elements:
+    // 1. If any are checked, that element is focusable.
+    const siblings = this.getNamedSiblings();
+    const checkedSibling = siblings.find(sibling => sibling.checked);
+    // 2. If an element is focused, the others are no longer focusable.
+    if (checkedSibling || this.focused) {
+      const focusable = checkedSibling || this.host;
+      focusable.removeAttribute('tabindex');
 
-  /**
-   * Gets the selection set of the given name and creates one if it does not yet
-   * exist.
-   *
-   * @param name Name of set
-   */
-  getSet(name: string): SingleSelectionSet {
-    if (!this.sets[name]) {
-      this.sets[name] = new SingleSelectionSet();
-    }
-    return this.sets[name];
-  }
-
-  /**
-   * Register the element in the selection controller.
-   *
-   * @param element Element to register. Registers in set of `element.name`.
-   */
-  register(element: CheckableElement) {
-    // TODO(b/168546148): Remove accessing 'name' via getAttribute() when new
-    // base class is created without single selection controller. Component
-    // maybe booted up after it is connected to DOM in which case properties
-    // (including `name`) are not updated yet.
-    const name = element.name || element.getAttribute('name') || '';
-    const set = this.getSet(name);
-    set.set.add(element);
-    set.ordered = null;
-  }
-
-  /**
-   * Unregister the element from selection controller.
-   *
-   * @param element Element to register. Registers in set of `element.name`.
-   */
-  unregister(element: CheckableElement) {
-    const set = this.getSet(element.name);
-    set.set.delete(element);
-    set.ordered = null;
-    if (set.selected == element) {
-      set.selected = null;
-    }
-  }
-
-  /**
-   * Unselects other elements in element's set if element is checked. Noop
-   * otherwise.
-   *
-   * @param element Element from which to calculate selection controller update.
-   */
-  update(element: CheckableElement) {
-    const set = this.getSet(element.name);
-    if (element.checked) {
-      for (const e of set.set) {
-        if (e == element) {
-          continue;
+      for (const sibling of siblings) {
+        if (sibling !== focusable) {
+          sibling.tabIndex = -1;
         }
-        e.checked = false;
       }
-      set.selected = element;
+      return;
     }
 
-    // When tabbing through land focus on the checked radio in the group.
-    if (this.isAnySelected(element)) {
-      for (const e of set.set) {
-        if (e.formElementTabIndex === undefined) {
-          break;
+    // 3. If none are checked or focused, all are focusable.
+    for (const sibling of siblings) {
+      sibling.removeAttribute('tabindex');
+    }
+  }
+
+  /**
+   * Retrieves all siblings in the host element's root with the same `name`
+   * attribute.
+   */
+  private getNamedSiblings() {
+    const name = this.host.getAttribute('name');
+    if (!name || !this.root) {
+      return [];
+    }
+
+    return Array.from(
+        this.root.querySelectorAll<SingleSelectionElement>(`[name="${name}"]`));
+  }
+
+  /**
+   * Handles arrow key events from the host. Using the arrow keys will
+   * select and check the next or previous sibling with the host's
+   * `name` attribute.
+   */
+  private readonly handleKeyDown = (event: KeyboardEvent) => {
+    const isDown = event.key === 'ArrowDown';
+    const isUp = event.key === 'ArrowUp';
+    const isLeft = event.key === 'ArrowLeft';
+    const isRight = event.key === 'ArrowRight';
+    // Ignore non-arrow keys
+    if (!isLeft && !isRight && !isDown && !isUp) {
+      return;
+    }
+
+    // Don't try to select another sibling if there aren't any.
+    const siblings = this.getNamedSiblings();
+    if (!siblings.length) {
+      return;
+    }
+
+    // Prevent default interactions on the element for arrow keys,
+    // since this controller will introduce new behavior.
+    event.preventDefault();
+
+    // Check if moving forwards or backwards
+    const isRtl = getComputedStyle(this.host).direction === 'rtl';
+    const forwards = isRtl ? isLeft || isDown : isRight || isDown;
+
+    const hostIndex = siblings.indexOf(this.host);
+    let nextIndex = forwards ? hostIndex + 1 : hostIndex - 1;
+    // Search for the next sibling that is not disabled to select.
+    // If we return to the host index, there is nothing to select.
+    while (nextIndex !== hostIndex) {
+      if (nextIndex >= siblings.length) {
+        // Return to start if moving past the last item.
+        nextIndex = 0;
+      } else if (nextIndex < 0) {
+        // Go to end if moving before the first item.
+        nextIndex = siblings.length - 1;
+      }
+
+      // Check if the next sibling is disabled. If so,
+      // move the index and continue searching.
+      const nextSibling = siblings[nextIndex];
+      if (nextSibling.hasAttribute('disabled')) {
+        if (forwards) {
+          nextIndex++;
+        } else {
+          nextIndex--;
         }
 
-        e.formElementTabIndex = e.checked ? 0 : -1;
+        continue;
       }
+
+      // Uncheck and remove focusability from other siblings.
+      for (const sibling of siblings) {
+        if (sibling !== nextSibling) {
+          sibling.checked = false;
+          sibling.tabIndex = -1;
+        }
+      }
+
+      // The next sibling should be checked and focused.
+      nextSibling.checked = true;
+      nextSibling.removeAttribute('tabindex');
+      nextSibling.focus();
+      break;
     }
-  }
+  };
 }
