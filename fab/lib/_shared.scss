@@ -81,6 +81,24 @@
       );
     }
 
+    // apply elevation in order of focused, hovered, pressed
+    // this ensures a button will have hover elevation after being focused
+    &:focus {
+      @include elevation.theme(
+        (
+          level: var(--_focus-container-elevation),
+        )
+      );
+
+      &.md3-fab--lowered {
+        @include elevation.theme(
+          (
+            level: var(--_lowered-focus-container-elevation),
+          )
+        );
+      }
+    }
+
     &:hover {
       cursor: pointer;
 
@@ -94,22 +112,6 @@
         @include elevation.theme(
           (
             level: var(--_lowered-hover-container-elevation),
-          )
-        );
-      }
-    }
-
-    &:focus {
-      @include elevation.theme(
-        (
-          level: var(--_focus-container-elevation),
-        )
-      );
-
-      &.md3-fab--lowered {
-        @include elevation.theme(
-          (
-            level: var(--_lowered-focus-container-elevation),
           )
         );
       }
@@ -158,7 +160,7 @@
     @include touch-target.touch-target();
   }
 
-  ::slotted(*),
+  .md3-fab__icon ::slotted(*),
   .md3-fab__icon {
     color: var(--_icon-color);
     font-size: var(--_icon-size);

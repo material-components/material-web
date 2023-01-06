@@ -27,38 +27,40 @@
         surface-tint-color: var(--_container-surface-tint-layer-color)
       )
     );
-  }
 
-  .md3-button:hover {
-    @include elevation.theme(
-      (
-        level: var(--_hover-container-elevation),
-      )
-    );
-  }
+    // apply elevation in order of focused, hovered, pressed, disabled
+    // this ensures a button will have hover elevation after being focused
+    &:focus {
+      @include elevation.theme(
+        (
+          level: var(--_focus-container-elevation),
+        )
+      );
+    }
 
-  .md3-button:focus {
-    @include elevation.theme(
-      (
-        level: var(--_focus-container-elevation),
-      )
-    );
-  }
+    &:hover {
+      @include elevation.theme(
+        (
+          level: var(--_hover-container-elevation),
+        )
+      );
+    }
 
-  .md3-button:active {
-    @include elevation.theme(
-      (
-        level: var(--_pressed-container-elevation),
-      )
-    );
-  }
+    &:active {
+      @include elevation.theme(
+        (
+          level: var(--_pressed-container-elevation),
+        )
+      );
+    }
 
-  .md3-button:disabled {
-    @include elevation.theme(
-      (
-        level: var(--_disabled-container-elevation),
-      )
-    );
+    &:disabled {
+      @include elevation.theme(
+        (
+          level: var(--_disabled-container-elevation),
+        )
+      );
+    }
   }
 }
 
