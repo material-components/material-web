@@ -107,8 +107,8 @@ export class Radio extends LitElement {
           <rect width="100%" height="100%" fill="white" />
           <circle cx="10" cy="10" r="8" fill="black" />
         </mask>
-        <circle cx="10" cy="10" r="10" mask="url(#cutout)" />
-        <circle cx="10" cy="10" r="5" class="inner-circle" />
+        <circle class="outer circle" cx="10" cy="10" r="10" mask="url(#cutout)" />
+        <circle class="inner circle" cx="10" cy="10" r="5" />
       </svg>
       <input
         type="radio"

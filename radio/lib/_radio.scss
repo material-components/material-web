@@ -95,39 +95,39 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     width: var(--_icon-size);
   }
 
-  .inner-circle {
+  .outer.circle {
+    // Outline color enter/exit transition
+    transition: fill 50ms linear;
+  }
+
+  .inner.circle {
     opacity: 0;
-    transition-duration: 150ms, 50ms; // Exit duration for scale and opacity.
-    transition-property: transform, opacity;
-    // Exit easing function for scale, linear for opacity.
-    transition-timing-function: map.get(
-        $_md-sys-motion,
-        easing-emphasized-accelerate
-      ),
-      linear;
-    transform: scale(0.6);
     transform-origin: center;
+    transition: opacity 50ms linear;
   }
 
   :host([checked]) .icon {
     fill: var(--_selected-icon-color);
   }
 
-  :host([checked]) .inner-circle {
+  :host([checked]) .inner.circle {
+    animation: inner-circle-grow 300ms
+      map.get($_md-sys-motion, easing-emphasized-decelerate);
     opacity: 1;
-    // Enter duration for scale and opacity.
-    transition-duration: 350ms, 50ms;
-    // Enter easing function for scale, linear for opacity.
-    transition-timing-function: map.get(
-        $_md-sys-motion,
-        easing-emphasized-decelerate
-      ),
-      linear;
-    transform: scale(1);
+  }
+
+  @keyframes inner-circle-grow {
+    from {
+      transform: scale(0);
+    }
+    to {
+      transform: scale(1);
+    }
   }
 
   // Don't animate when disabled
-  :host([disabled]) .inner-circle {
+  :host([disabled]) .circle {
+    animation-duration: 0s;
     transition-duration: 0s;
   }
 
