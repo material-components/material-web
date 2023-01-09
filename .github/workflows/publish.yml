@@ -1,0 +1,33 @@
+name: publish
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - "*"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+      - uses: google/wireit@setup-github-actions-caching/v1
+
+      - run: npm ci
+      - run: npm run build
+        env:
+          WIREIT_FAILURES: continue
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: 'https://wombat-dressing-room.appspot.com/'
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
