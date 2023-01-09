@@ -1,7 +1,8 @@
 {
   "bootstrap-sha": "41d41cc2788f237f376d32409f51ca59e9b2bf75",
-  "release-as": "1.0.0-alpha.3",
-  "prerelease": true,
+  "include-component-in-tag": false,
+  "include-v-in-tag": true,
+  "pull-request-title-pattern": "chore: release ${version}",
   "packages": {
     ".": {}
   }
