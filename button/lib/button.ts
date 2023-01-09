@@ -9,16 +9,13 @@
 // This is required for @ariaProperty
 // tslint:disable:no-new-decorators
 
-import '../../icon/icon.js';
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, TemplateResult} from 'lit';
+import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
 import {when} from 'lit/directives/when.js';
-import {html as staticHtml, literal} from 'lit/static-html.js';
 
 import {dispatchActivationClick, isActivationClick} from '../../controller/events.js';
 import {ariaProperty} from '../../decorators/aria-property.js';
@@ -33,8 +30,6 @@ import {ButtonState} from './state.js';
 export abstract class Button extends LitElement implements ButtonState {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
-
-  protected readonly iconTag = literal`md-icon`;
 
   @property({type: String, attribute: 'data-aria-has-popup', noAccessor: true})
   @ariaProperty
@@ -56,13 +51,6 @@ export abstract class Button extends LitElement implements ButtonState {
    * _Note:_ Link buttons cannot have trailing icons.
    */
   @property({type: Boolean, attribute: 'trailingicon'}) trailingIcon = false;
-
-  /**
-   * The label of the icon to render.
-   *
-   * See md-icon's documentation for usage.
-   */
-  @property({type: String}) icon = '';
 
   /**
    * The button's visible label.
@@ -90,7 +78,7 @@ export abstract class Button extends LitElement implements ButtonState {
   @state() protected showRipple = false;
 
   @queryAssignedElements({slot: 'icon', flatten: true})
-  protected iconElement!: HTMLElement[]|null;
+  protected assignedIcons!: HTMLElement[];
 
   constructor() {
     super();
@@ -124,8 +112,8 @@ export abstract class Button extends LitElement implements ButtonState {
       <button
           class="md3-button ${classMap(this.getRenderClasses())}"
           ?disabled="${this.disabled}"
-          aria-label="${ifDefined(this.ariaLabel || undefined)}"
-          aria-haspopup="${ifDefined(this.ariaHasPopup || undefined)}"
+          aria-label="${this.ariaLabel || nothing}"
+          aria-haspopup="${this.ariaHasPopup || nothing}"
           @pointerdown="${this.handlePointerDown}"
           @focus="${this.handleFocus}"
           @blur="${this.handleBlur}"
@@ -196,21 +184,8 @@ export abstract class Button extends LitElement implements ButtonState {
     return html`<span class="md3-button__icon-slot-container ${
         classMap(this.getIconContainerClasses())}">
                   <slot name="icon" @slotchange="${this.handleSlotChange}">
-                    ${this.icon ? this.renderFontIcon() : ''}
                   </slot>
                 </span>`;
-  }
-
-  protected renderFontIcon(): TemplateResult {
-    return staticHtml`
-    <${this.iconTag} class="md3-button__icon">
-      ${this.icon}
-    </${this.iconTag}>`;
-  }
-
-  override update(changedProperties: Map<string, string>) {
-    super.update(changedProperties);
-    this.hasIcon = !!this.iconElement && this.iconElement.length > 0;
   }
 
   protected handlePointerDown(e: PointerEvent) {
@@ -233,6 +208,6 @@ export abstract class Button extends LitElement implements ButtonState {
   }
 
   protected handleSlotChange() {
-    this.requestUpdate();
+    this.hasIcon = this.assignedIcons.length > 0;
   }
 }
