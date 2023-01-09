@@ -15,6 +15,7 @@
 @use '../../sass/shape';
 @use '../../sass/resolvers';
 @use '../../tokens';
+@use '../../icon/icon';
 
 @mixin styles() {
   :host {
@@ -35,7 +36,6 @@
     box-sizing: border-box;
     cursor: pointer;
     display: flex;
-    fill: currentColor;
     justify-content: center;
     outline: none;
     position: relative;
@@ -44,7 +44,6 @@
     z-index: 0;
     height: var(--_container-size);
     width: var(--_container-size);
-    font-size: var(--_icon-size);
     margin: max(
       0px,
       calc((#{$touch-target-height} - var(--_container-size)) / 2)
@@ -53,20 +52,15 @@
     border-start-end-radius: var(--_container-shape-start-end);
     border-end-start-radius: var(--_container-shape-end-start);
     border-end-end-radius: var(--_container-shape-end-end);
+  }
 
-    i,
-    svg,
-    img {
-      height: var(--_icon-size);
-      width: var(--_icon-size);
-    }
-
-    i,
-    svg,
-    img,
-    ::slotted(*) {
-      display: block;
-    }
+  .md3-icon-button__icon {
+    @include icon.theme(
+      (
+        size: var(--_icon-size),
+        weight: inherit,
+      )
+    );
   }
 
   md-ripple {

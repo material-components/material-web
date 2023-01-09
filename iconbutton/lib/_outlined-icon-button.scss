@@ -18,16 +18,10 @@
 $_custom-property-prefix: 'outlined-icon-button';
 
 @mixin theme($tokens) {
-  // TODO(b/233323674): Remove when missing tokens have been added.
-  $reference: map.merge(
+  $tokens: theme.validate-theme(
     tokens.md-comp-outlined-icon-button-values(),
-    (
-      disabled-selected-container-color:
-        map.get(tokens.md-sys-color-values-light(), on-surface),
-      disabled-selected-container-opacity: 0.12,
-    )
+    $tokens
   );
-  $tokens: theme.validate-theme($reference, $tokens);
   $tokens: shared.flatten-disabled-colors($tokens, $variant: 'outlined');
   $tokens: shared.resolve-shape-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
@@ -37,15 +31,6 @@ $_custom-property-prefix: 'outlined-icon-button';
 
 @mixin styles() {
   $tokens: tokens.md-comp-outlined-icon-button-values();
-  // TODO(b/233323674): Remove when missing tokens have been added.
-  $tokens: map.merge(
-    $tokens,
-    (
-      disabled-selected-container-color:
-        map.get(tokens.md-sys-color-values-light(), on-surface),
-      disabled-selected-container-opacity: 0.12,
-    )
-  );
   $tokens: shared.flatten-disabled-colors($tokens, $variant: 'outlined');
   $tokens: shared.resolve-shape-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);

@@ -67,6 +67,8 @@ $_custom-property-prefix: 'icon-button';
         pressed-state-layer-color: var(--_unselected-pressed-state-layer-color),
         pressed-state-layer-opacity:
           var(--_unselected-pressed-state-layer-opacity),
+        // TODO(b/263517885): replace with ripple.theme(state-layer-shape)
+        state-layer-shape: var(--_state-layer-shape-start-start),
       )
     );
 
@@ -115,13 +117,5 @@ $_custom-property-prefix: 'icon-button';
           var(--_selected-pressed-state-layer-opacity),
       )
     );
-  }
-
-  md-ripple {
-    // TODO(b/263517885): replace with ripple.theme(state-layer-shape)
-    border-start-start-radius: var(--_state-layer-shape-start-start);
-    border-start-end-radius: var(--_state-layer-shape-start-end);
-    border-end-start-radius: var(--_state-layer-shape-end-start);
-    border-end-end-radius: var(--_state-layer-shape-end-end);
   }
 }
