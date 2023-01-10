@@ -22,6 +22,10 @@
     display: inline-flex;
     outline: none;
     -webkit-tap-highlight-color: transparent;
+    height: max(48px, var(--_container-size));
+    width: max(48px, var(--_container-size));
+    align-items: center;
+    justify-content: center;
   }
 
   :host([disabled]) {
@@ -29,8 +33,6 @@
   }
 
   .md3-icon-button {
-    $touch-target-height: 48px;
-
     align-items: center;
     border: none;
     box-sizing: border-box;
@@ -44,10 +46,6 @@
     z-index: 0;
     height: var(--_container-size);
     width: var(--_container-size);
-    margin: max(
-      0px,
-      calc((#{$touch-target-height} - var(--_container-size)) / 2)
-    );
     border-start-start-radius: var(--_container-shape-start-start);
     border-start-end-radius: var(--_container-shape-start-end);
     border-end-start-radius: var(--_container-shape-end-start);

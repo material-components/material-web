@@ -35,6 +35,9 @@ $_custom-property-prefix: 'icon-button';
       --_#{$token}: #{$value};
     }
 
+    height: max(48px, var(--_state-layer-size));
+    width: max(48px, var(--_state-layer-size));
+
     @include focus-ring.theme(
       (
         shape: (
@@ -48,15 +51,10 @@ $_custom-property-prefix: 'icon-button';
   }
 
   .md3-icon-button--standard {
-    $touch-target-height: 48px;
     background-color: transparent;
     color: var(--_unselected-icon-color);
     height: var(--_state-layer-size);
     width: var(--_state-layer-size);
-    margin: max(
-      0px,
-      calc((#{$touch-target-height} - #{var(--_state-layer-size)}) / 2)
-    );
 
     @include ripple.theme(
       (
