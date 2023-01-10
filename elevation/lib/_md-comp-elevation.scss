@@ -18,6 +18,6 @@ $_default-deps: (
     easing: map.get($deps, md-sys-motion, easing-emphasized),
     level: map.get($deps, md-sys-elevation, level0),
     shadow-color: map.get($deps, md-sys-color, shadow),
-    surface-tint-color: map.get($deps, md-sys-color, surface-tint-color)
+    surface-tint: map.get($deps, md-sys-color, surface-tint)
   );
 }

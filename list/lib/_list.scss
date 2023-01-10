@@ -45,7 +45,7 @@ $_reference: (
     @include elevation.theme(
       (
         level: var(--_container-elevation),
-        surface-tint-color: var(--_container-surface-tint-layer-color),
+        surface-tint: var(--_container-surface-tint-layer-color),
       )
     );
 

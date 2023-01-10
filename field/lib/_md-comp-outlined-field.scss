@@ -4,7 +4,7 @@
 //
 
 @use 'sass:map';
-@use '../../tokens';
+@use '../../tokens/v0_150' as tokens;
 
 $_default-deps: (
   md-sys-color: tokens.md-sys-color-values-light(),

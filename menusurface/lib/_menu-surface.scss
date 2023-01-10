@@ -63,7 +63,7 @@ $_deceleration-curve-timing-function: cubic-bezier(0, 0, 0.2, 1) !default;
       (
         level: var(--_container-elevation),
         shadow-color: var(--_container-shadow-color),
-        surface-tint-color: var(--_container-surface-tint-layer-color),
+        surface-tint: var(--_container-surface-tint-layer-color),
       )
     );
 

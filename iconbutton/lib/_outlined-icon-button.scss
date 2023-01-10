@@ -88,7 +88,8 @@ $_custom-property-prefix: 'outlined-icon-button';
       color: var(--_disabled-icon-color);
 
       &::before {
-        border-color: var(--_disabled-outline-color);
+        border-color: var(--_disabled-unselected-outline-color);
+        opacity: var(--_disabled-unselected-outline-opacity);
       }
     }
   }
@@ -154,7 +155,8 @@ $_custom-property-prefix: 'outlined-icon-button';
       }
 
       &:disabled::before {
-        border-color: var(--_disabled-outline-color);
+        border-color: var(--_disabled-unselected-outline-color);
+        opacity: var(--_disabled-unselected-outline-opacity);
       }
     }
   }

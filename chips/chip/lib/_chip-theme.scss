@@ -194,7 +194,7 @@ $_custom-property-prefix: 'chip';
   @include elevation.theme(
     (
       shadow-color: map.get($theme, elevated-container-shadow-color),
-      surface-tint-color: map.get($theme, container-surface-tint-layer-color),
+      surface-tint: map.get($theme, container-surface-tint-layer-color),
     )
   );
   @include _container-elevation(

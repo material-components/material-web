@@ -52,7 +52,7 @@ $_reference: (
       (
         level: var(--_standard-container-elevation),
         shadow-color: var(--_divider-color),
-        surface-tint-color: var(--_container-surface-tint-layer-color),
+        surface-tint: var(--_container-surface-tint-layer-color),
       )
     );
   }

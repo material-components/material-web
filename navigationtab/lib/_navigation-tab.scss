@@ -38,6 +38,14 @@ $_custom-property-prefix: 'navigation-bar';
       --_#{$token}: #{$value};
     }
 
+    @include focus-ring.theme(
+      (
+        offset-vertical: -2px,
+        offset-horizontal: -2px,
+        shape: map.get(tokens.md-sys-shape-values(), corner-small),
+      )
+    );
+
     display: flex;
     flex-grow: 1;
   }
@@ -65,25 +73,6 @@ $_custom-property-prefix: 'navigation-bar';
     letter-spacing: var(--_label-text-tracking);
     font-weight: var(--_label-text-weight);
     line-height: var(--_label-text-line-height);
-
-    @include focus-ring.theme(
-      (
-        offset-vertical: -2px,
-        offset-horizontal: -2px,
-        shape: map.get(tokens.md-sys-shape-values(), corner-small),
-      )
-    );
-
-    @include badge.theme(
-      (
-        color: var(--_badge-color),
-        size: var(--_badge-size),
-        shape: var(--_badge-shape),
-        large-color: var(--_large-badge-color),
-        large-size: var(--_large-badge-size),
-        large-shape: var(--_large-badge-shape),
-      )
-    );
 
     // Firefox draws a dotted border around focused buttons unless specifically overridden.
     &::-moz-focus-inner {

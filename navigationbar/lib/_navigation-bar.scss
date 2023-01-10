@@ -32,6 +32,15 @@
       --_#{$token}: #{$value};
     }
 
+    @include elevation.theme(
+      (
+        duration: 280ms,
+        level: var(--_container-elevation),
+        shadow-color: var(--_container-shadow-color),
+        surface-tint: var(--_container-surface-tint-layer-color),
+      )
+    );
+
     width: 100%;
   }
 
@@ -42,15 +51,6 @@
     background-color: var(--_container-color);
     border-radius: var(--_container-shape);
     height: var(--_container-height);
-
-    @include elevation.theme(
-      (
-        duration: 280ms,
-        level: var(--_container-elevation),
-        shadow-color: var(--_container-shadow-color),
-        surface-tint-color: var(--_container-surface-tint-layer-color),
-      )
-    );
 
     .md3-navigation-bar__tabs-slot-container {
       display: inherit;

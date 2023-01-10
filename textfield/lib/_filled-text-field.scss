@@ -8,7 +8,7 @@
 @use '../../sass/resolvers';
 @use '../../sass/shape';
 @use '../../sass/theme';
-@use '../../tokens';
+@use '../../tokens/v0_150' as tokens;
 @use './shared';
 
 @mixin theme($tokens) {

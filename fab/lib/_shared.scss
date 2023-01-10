@@ -69,7 +69,7 @@
         duration: 280ms,
         level: var(--_container-elevation),
         shadow-color: var(--_container-shadow-color),
-        surface-tint-color: var(--_container-surface-tint-layer-color)
+        surface-tint: var(--_container-surface-tint-layer-color)
       )
     );
 

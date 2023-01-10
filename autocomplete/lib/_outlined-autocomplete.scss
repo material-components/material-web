@@ -13,7 +13,7 @@
 @use '../../menusurface/menu-surface';
 @use '../../sass/theme';
 @use '../../textfield/outlined-text-field';
-@use '../../tokens';
+@use '../../tokens/v0_150' as tokens;
 @use './shared';
 
 $custom-property-prefix: 'outlined-autocomplete';
