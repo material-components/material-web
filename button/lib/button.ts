@@ -137,13 +137,6 @@ export abstract class Button extends LitElement implements ButtonState {
     };
   }
 
-  protected getIconContainerClasses(): ClassInfo {
-    return {
-      'md3-button__icon--leading': !this.trailingIcon,
-      'md3-button__icon--trailing': this.trailingIcon,
-    };
-  }
-
   protected renderTouchTarget(): TemplateResult {
     return html`
       <span class="md3-button__touch"></span>
@@ -181,11 +174,8 @@ export abstract class Button extends LitElement implements ButtonState {
   }
 
   protected renderIcon(): TemplateResult {
-    return html`<span class="md3-button__icon-slot-container ${
-        classMap(this.getIconContainerClasses())}">
-                  <slot name="icon" @slotchange="${this.handleSlotChange}">
-                  </slot>
-                </span>`;
+    return html`<slot name="icon" @slotchange="${
+        this.handleSlotChange}"></slot>`;
   }
 
   protected handlePointerDown(e: PointerEvent) {

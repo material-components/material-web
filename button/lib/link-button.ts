@@ -46,12 +46,6 @@ export abstract class LinkButton extends Button {
     };
   }
 
-  protected override getIconContainerClasses(): ClassInfo {
-    return {
-      'md3-button__icon--leading': true,
-    };
-  }
-
   protected override render(): TemplateResult {
     return html`
       <span class="md3-link-button-wrapper">

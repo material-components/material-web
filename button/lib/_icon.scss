@@ -10,10 +10,8 @@
   // The icon CSS class overrides styles defined in the .material-icons CSS
   // class, which is loaded separately so the order of CSS definitions is not
   // guaranteed. Therefore, increase specifity to ensure overrides apply.
-  .md3-button__icon-slot-container {
-    display: inline-flex;
-
-    ::slotted([slot='icon']) {
+  ::slotted([slot='icon']) {
+    .md3-button & {
       display: inline-flex;
       position: relative;
       writing-mode: horizontal-tb;
@@ -21,30 +19,22 @@
       font-size: var(--_with-icon-icon-size);
       inline-size: var(--_with-icon-icon-size);
       block-size: var(--_with-icon-icon-size);
-
-      .md3-button:hover & {
-        color: var(--_with-icon-hover-icon-color);
-      }
-
-      .md3-button:focus & {
-        color: var(--_with-icon-focus-icon-color);
-      }
-
-      .md3-button:active & {
-        color: var(--_with-icon-pressed-icon-color);
-      }
-
-      .md3-button:disabled & {
-        color: var(--_with-icon-disabled-icon-color);
-      }
     }
-  }
 
-  .md3-button__icon--leading ::slotted([slot='icon']) {
-    margin-inline-end: 8px;
-  }
+    .md3-button:hover & {
+      color: var(--_with-icon-hover-icon-color);
+    }
 
-  .md3-button__icon--trailing ::slotted([slot='icon']) {
-    margin-inline-start: 8px;
+    .md3-button:focus & {
+      color: var(--_with-icon-focus-icon-color);
+    }
+
+    .md3-button:active & {
+      color: var(--_with-icon-pressed-icon-color);
+    }
+
+    .md3-button:disabled & {
+      color: var(--_with-icon-disabled-icon-color);
+    }
   }
 }

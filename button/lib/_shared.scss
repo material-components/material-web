@@ -81,6 +81,7 @@
     // TODO(b/181413732): Verify token below are named correctly
     padding-inline-start: var(--_spacing-leading);
     padding-inline-end: var(--_spacing-trailing);
+    gap: 8px;
 
     &::-moz-focus-inner {
       padding: 0;
