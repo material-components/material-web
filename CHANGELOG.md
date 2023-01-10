@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.0.0-pre.1](https://github.com/material-components/material-web/compare/v1.0.0-pre.0...v1.0.0-pre.1) (2023-01-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* **button:** Remove icon property from Button, require slotted icons
+
+### Bug Fixes
+
+* **button:** remove icon property from Button, require slotted icons ([d3b517a](https://github.com/material-components/material-web/commit/d3b517ad0054b8d12ca7bc27e19ad40db987ba4b))
+* **icon, iconbutton:** Cleanup styling ([12c9364](https://github.com/material-components/material-web/commit/12c93641a550c594561883943fa5556d1cc40ca7))
+* **icon:** Remove fixed left-to-right direction to fix RTL styling ([5a27f05](https://github.com/material-components/material-web/commit/5a27f05cd7534d7c2118b8d205f78ab0eb307b94))
+* **radio:** update motion to current spec ([95897b3](https://github.com/material-components/material-web/commit/95897b3e25ef3915c6047239b1794172822b1b35))
+
+
+### Miscellaneous Chores
+
+* update next version ([ea33cb8](https://github.com/material-components/material-web/commit/ea33cb81224eb46cde33201e331d59e07046f29a))
+
 ## [1.0.0-pre.0](https://github.com/material-components/material-web/compare/v0.1.0-alpha.2...v1.0.0-pre.0) (2023-01-09)
 
 
