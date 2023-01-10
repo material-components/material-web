@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 @use 'sass:map';
 @use '../../sass/theme';
 @use '../../sass/shape';
@@ -32,13 +29,10 @@ $_custom-property-prefix: 'focus-ring';
       --_#{$token}: #{$value};
     }
 
-    pointer-events: none;
-  }
-
-  .md3-focus-ring {
     display: none;
     position: absolute;
     box-sizing: border-box;
+    pointer-events: none;
     border: var(--_width) solid var(--_color);
     border-start-start-radius: var(--_shape-start-start);
     border-start-end-radius: var(--_shape-start-end);
@@ -49,12 +43,11 @@ $_custom-property-prefix: 'focus-ring';
     // and touch target.
     $vertical-inset: calc(-1 * (var(--_offset-vertical) + var(--_width)));
     $horizontal-inset: calc(-1 * (var(--_offset-horizontal) + var(--_width)));
-
     inset: $vertical-inset $horizontal-inset;
   }
 
-  .md3-focus-ring--visible {
-    display: block;
+  :host([visible]) {
+    display: flex;
   }
 }
 

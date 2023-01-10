@@ -4,9 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, TemplateResult} from 'lit';
+import {LitElement} from 'lit';
 import {property} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
 /**
  * @summary An accessible, themable ring designed to be shown on
@@ -25,16 +24,5 @@ export class FocusRing extends LitElement {
   /**
    * Makes the focus ring visible.
    */
-  @property({type: Boolean}) visible = false;
-
-  protected override render(): TemplateResult {
-    return html`<span class="md3-focus-ring ${
-        classMap(this.getRenderClasses())}"></span>`;
-  }
-
-  protected getRenderClasses(): ClassInfo {
-    return {
-      'md3-focus-ring--visible': this.visible,
-    };
-  }
+  @property({type: Boolean, reflect: true}) visible = false;
 }
