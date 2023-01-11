@@ -23,7 +23,7 @@ import {SingleSelectionController} from './single-selection-controller.js';
 const CHECKED = Symbol('checked');
 
 /**
- * @fires checked
+ * A radio component.
  */
 export class Radio extends LitElement {
   static override shadowRootOptions:
@@ -31,6 +31,9 @@ export class Radio extends LitElement {
 
   static formAssociated = true;
 
+  /**
+   * Whether or not the radio is selected.
+   */
   @property({type: Boolean, reflect: true})
   get checked() {
     return this[CHECKED];
@@ -48,6 +51,9 @@ export class Radio extends LitElement {
 
   [CHECKED] = false;
 
+  /**
+   * Whether or not the radio is disabled.
+   */
   @property({type: Boolean, reflect: true}) disabled = false;
 
   /**
