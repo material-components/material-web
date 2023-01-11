@@ -14,6 +14,7 @@ import {when} from 'lit/directives/when.js';
 
 import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../controller/events.js';
 import {FormController, getFormValue} from '../../controller/form-controller.js';
+import {stringConverter} from '../../controller/string-converter.js';
 import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
@@ -25,13 +26,44 @@ import {MdRipple} from '../../ripple/ripple.js';
 export class Checkbox extends LitElement {
   static formAssociated = true;
 
+  /**
+   * Whether or not the checkbox is selected.
+   */
   @property({type: Boolean, reflect: true}) checked = false;
-  @property({type: Boolean, reflect: true}) disabled = false;
-  @property({type: Boolean, reflect: true}) error = false;
-  @property({type: Boolean, reflect: true}) indeterminate = false;
-  @property() value = 'on';
-  @property() name = '';
 
+  /**
+   * Whether or not the checkbox is disabled.
+   */
+  @property({type: Boolean, reflect: true}) disabled = false;
+
+  /**
+   * Whether or not the checkbox is invalid.
+   */
+  @property({type: Boolean, reflect: true}) error = false;
+
+  /**
+   * Whether or not the checkbox is indeterminate.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#indeterminate_state_checkboxes
+   */
+  @property({type: Boolean, reflect: true}) indeterminate = false;
+
+  /**
+   * The value of the checkbox that is submitted with a form when selected.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#value
+   */
+  @property() value = 'on';
+
+  /**
+   * The HTML name to use in form submission.
+   */
+  @property({type: String, reflect: true, converter: stringConverter})
+  name = '';
+
+  /**
+   * The associated form element with which this element's value will submit.
+   */
   get form() {
     return this.closest('form');
   }
