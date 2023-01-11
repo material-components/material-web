@@ -87,7 +87,7 @@ $_custom-property-prefix: 'icon-button';
     }
   }
 
-  .md3-icon-button--on {
+  .md3-icon-button--selected {
     &:not(:disabled) {
       color: var(--_selected-icon-color);
 

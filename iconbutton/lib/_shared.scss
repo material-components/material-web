@@ -77,16 +77,16 @@
   .md3-icon-button__icon {
     display: inline-flex;
 
-    &.md3-icon-button__icon--on {
+    &.md3-icon-button__icon--selected {
       display: none;
     }
   }
 
-  .md3-icon-button--on {
+  .md3-icon-button--selected {
     .md3-icon-button__icon {
       display: none;
 
-      &.md3-icon-button__icon--on {
+      &.md3-icon-button__icon--selected {
         display: inline-flex;
       }
     }

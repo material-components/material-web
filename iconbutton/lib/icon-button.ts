@@ -11,10 +11,9 @@ import '../../focus/focus-ring.js';
 import '../../icon/icon.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, TemplateResult} from 'lit';
-import {property, query, queryAsync, state} from 'lit/decorators.js';
+import {html, LitElement, nothing, TemplateResult} from 'lit';
+import {property, query, queryAssignedElements, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
 import {when} from 'lit/directives/when.js';
 
 import {isRtl} from '../../controller/is-rtl.js';
@@ -26,18 +25,27 @@ import {ARIAHasPopup} from '../../types/aria.js';
 
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class IconButton extends LitElement {
-  @property({type: Boolean, reflect: true}) disabled = false;
-
   /**
-   * The glyph of the icon to display from the applied icon font. See the
-   * associated typography tokens for more info.
+   * Disables the icon button and makes it non-interactive.
    */
-  @property({type: String}) icon = '';
+  @property({type: Boolean, reflect: true}) disabled = false;
 
   /**
    * Flips the icon if it is in an RTL context at startup.
    */
   @property({type: Boolean}) flipIconInRtl = false;
+
+  /**
+   * The `aria-label` of the button when the icon button is selected or "on".
+   */
+  @property({type: String}) ariaLabelSelected!: string;
+
+  /**
+   * Sets the icon button to the "on" state and displays the `selectedIcon`. If
+   * false, sets the toggle button to the "off" state and displays the
+   * default icon.
+   */
+  @property({type: Boolean, reflect: true}) selected = false;
 
   @state() protected flipIcon: boolean = isRtl(this, this.flipIconInRtl);
 
@@ -57,6 +65,11 @@ export class IconButton extends LitElement {
 
   @state() protected showRipple = false;
 
+  @state() protected hasSelectedIcon = false;
+
+  @queryAssignedElements({slot: 'selectedIcon', flatten: true})
+  protected selectedIconElements!: HTMLElement[];
+
   protected getRipple = () => {
     this.showRipple = true;
     return this.ripple;
@@ -67,18 +80,26 @@ export class IconButton extends LitElement {
   };
 
   protected override render(): TemplateResult {
+    const hasToggledAriaLabel = this.ariaLabel && this.ariaLabelSelected;
+    const ariaPressedValue = hasToggledAriaLabel ? nothing : this.selected;
+    const ariaLabelValue = (hasToggledAriaLabel && this.selected) ?
+        this.ariaLabelSelected :
+        this.ariaLabel;
     return html`<button
         class="md3-icon-button ${classMap(this.getRenderClasses())}"
-        aria-label="${ifDefined(this.ariaLabel)}"
-        aria-haspopup="${ifDefined(this.ariaHasPopup)}"
+        aria-pressed="${ariaPressedValue}"
+        aria-label="${ariaLabelValue || nothing}"
+        aria-haspopup="${this.ariaHasPopup || nothing}"
         ?disabled="${this.disabled}"
         @focus="${this.handleFocus}"
         @blur="${this.handleBlur}"
         @pointerdown="${this.handlePointerDown}"
+        @click="${this.handleClick}"
         ${ripple(this.getRipple)}>
         ${this.renderFocusRing()}
         ${when(this.showRipple, this.renderRipple)}
         ${this.renderIcon()}
+        ${this.renderSelectedIcon()}
         ${this.renderTouchTarget()}
   </button>`;
   }
@@ -86,14 +107,17 @@ export class IconButton extends LitElement {
   protected getRenderClasses(): ClassInfo {
     return {
       'md3-icon-button--flip-icon': this.flipIcon,
+      'md3-icon-button--selected': this.hasSelectedIcon && this.selected,
     };
   }
 
   protected renderIcon(): TemplateResult {
-    // Note, it's important not to render the icon property as a slot fallback
-    // to avoid any whitespace from overridding it.
-    return html`<span class="md3-icon-button__icon"><md-icon>${
-        this.icon ? this.icon : html`<slot></slot>`}</md-icon></span>`;
+    return html`<md-icon class="md3-icon-button__icon"><slot></slot></md-icon>`;
+  }
+
+  protected renderSelectedIcon() {
+    return html`<md-icon class="md3-icon-button__icon md3-icon-button__icon--selected"><slot name="selectedIcon" @slotchange="${
+        this.handleSelectedSlotChange}"></slot></md-icon>`;
   }
 
   protected renderTouchTarget(): TemplateResult {
@@ -121,5 +145,19 @@ export class IconButton extends LitElement {
 
   protected handleBlur() {
     this.showFocusRing = false;
+  }
+
+  protected handleSelectedSlotChange() {
+    this.hasSelectedIcon = this.selectedIconElements.length > 0;
+  }
+
+  protected handleClick() {
+    if (!this.hasSelectedIcon) {
+      return;
+    }
+    this.selected = !this.selected;
+    const detail = {selected: this.selected};
+    this.dispatchEvent(new CustomEvent(
+        'icon-button-toggle-change', {detail, bubbles: true, composed: true}));
   }
 }

@@ -40,6 +40,7 @@ export class MdFilledIconButton extends IconButton {
     return {
       ...super.getRenderClasses(),
       'md3-icon-button--filled': true,
+      'md3-icon-button--toggle-filled': this.hasSelectedIcon,
     };
   }
 }

@@ -40,6 +40,7 @@ export class MdFilledTonalIconButton extends IconButton {
     return {
       ...super.getRenderClasses(),
       'md3-icon-button--filled-tonal': true,
+      'md3-icon-button--toggle-filled-tonal': this.hasSelectedIcon,
     };
   }
 }
