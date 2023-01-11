@@ -10,7 +10,7 @@ import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
-import {createAnimationSignal, Easing} from '../../motion/animation.js';
+import {createAnimationSignal, EASING} from '../../motion/animation.js';
 
 /** @soyCompatible */
 export class Field extends LitElement {
@@ -202,7 +202,7 @@ export class Field extends LitElement {
     // from appearing.
     // TODO(b/241113345): use animation tokens
     const animation =
-        labelEl.animate(keyframes, {duration: 150, easing: Easing.STANDARD});
+        labelEl.animate(keyframes, {duration: 150, easing: EASING.STANDARD});
 
     signal.addEventListener('abort', () => {
       // Cancel if requested (another animation starts playing).

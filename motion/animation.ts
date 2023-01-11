@@ -7,11 +7,18 @@
 /**
  * Easing functions to use for web animations.
  *
+ * **NOTE:** `EASING.EMPHASIZED` is approximated with unknown accuracy.
+ *
  * TODO(b/241113345): replace with tokens
  */
-export enum Easing {
-  STANDARD = 'cubic-bezier(0.2, 0, 0, 1)',
-}
+export const EASING = {
+  STANDARD: 'cubic-bezier(0.2, 0, 0, 1)',
+  STANDARD_ACCELERATE: 'cubic-bezier(.3,0,1,1)',
+  STANDARD_DECELERATE: 'cubic-bezier(0,0,0,1)',
+  EMPHASIZED: 'cubic-bezier(.3,0,0,1)',
+  EMPHASIZED_ACCELERATE: 'cubic-bezier(.3,0,.8,.15)',
+  EMPHASIZED_DECELERATE: 'cubic-bezier(.05,.7,.1,1)',
+} as const;
 
 /**
  * A signal that is used for abortable tasks.

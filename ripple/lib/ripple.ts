@@ -8,7 +8,7 @@ import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
-import {createAnimationSignal, Easing} from '../../motion/animation.js';
+import {createAnimationSignal, EASING} from '../../motion/animation.js';
 
 const PRESS_GROW_MS = 450;
 const MINIMUM_PRESS_MS = 225;
@@ -152,7 +152,7 @@ export class Ripple extends LitElement {
         {
           pseudoElement: PRESS_PSEUDO,
           duration: PRESS_GROW_MS,
-          easing: Easing.STANDARD,
+          easing: EASING.STANDARD,
           fill: ANIMATION_FILL
         });
 
