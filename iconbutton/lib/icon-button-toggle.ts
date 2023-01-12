@@ -11,10 +11,9 @@ import '../../focus/focus-ring.js';
 import '../../icon/icon.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, TemplateResult} from 'lit';
+import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {property, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
 import {when} from 'lit/directives/when.js';
 
 import {ariaProperty} from '../../decorators/aria-property.js';
@@ -35,20 +34,6 @@ export class IconButtonToggle extends LitElement {
    * Disables the icon button and makes it non-interactive.
    */
   @property({type: Boolean, reflect: true}) disabled = false;
-
-  /**
-   * The glyph of the icon to display from the applied icon font when toggle
-   * button is selected or "on". See the associated typography tokens for more
-   * info.
-   */
-  @property({type: String}) onIcon = '';
-
-  /**
-   * The glyph of the icon to display from the applied icon font when toggle
-   * button is not selected or "off". See the associated typography tokens for
-   * more info.
-   */
-  @property({type: String}) offIcon = '';
 
   /**
    * The `aria-label` of the button when the toggle button is selected or "on".
@@ -85,14 +70,14 @@ export class IconButtonToggle extends LitElement {
 
   protected override render(): TemplateResult {
     const hasToggledAriaLabel = this.ariaLabelOn && this.ariaLabelOff;
-    const ariaPressedValue = hasToggledAriaLabel ? undefined : this.selected;
+    const ariaPressedValue = hasToggledAriaLabel ? nothing : this.selected;
     const ariaLabelValue = hasToggledAriaLabel ?
         (this.selected ? this.ariaLabelOn : this.ariaLabelOff) :
         this.ariaLabel;
     return html`<button
           class="md3-icon-button ${classMap(this.getRenderClasses())}"
-          aria-pressed="${ifDefined(ariaPressedValue)}"
-          aria-label="${ifDefined(ariaLabelValue)}"
+          aria-pressed="${ariaPressedValue}"
+          aria-label="${ariaLabelValue || nothing}"
           ?disabled="${this.disabled}"
           @focus="${this.handleFocus}"
           @blur="${this.handleBlur}"
@@ -102,12 +87,12 @@ export class IconButtonToggle extends LitElement {
         ${this.renderFocusRing()}
         ${when(this.showRipple, this.renderRipple)}
         ${this.renderTouchTarget()}
-        <span class="md3-icon-button__icon">
-          <slot name="offIcon">${this.renderIcon(this.offIcon)}</slot>
-        </span>
-        <span class="md3-icon-button__icon md3-icon-button__icon--on">
-          <slot name="onIcon">${this.renderIcon(this.onIcon)}</slot>
-        </span>
+        <md-icon class="md3-icon-button__icon">
+          <slot name="offIcon"></slot>
+        </md-icon>
+        <md-icon class="md3-icon-button__icon md3-icon-button__icon--on">
+          <slot name="onIcon"></slot>
+        </md-icon>
       </button>`;
   }
 
@@ -117,15 +102,11 @@ export class IconButtonToggle extends LitElement {
     };
   }
 
-  protected renderIcon(icon: string): TemplateResult|string {
-    return icon ? html`<md-icon>${icon}</md-icon>` : '';
-  }
-
-  protected renderTouchTarget(): TemplateResult {
+  protected renderTouchTarget() {
     return html`<span class="md3-icon-button__touch"></span>`;
   }
 
-  protected renderFocusRing(): TemplateResult {
+  protected renderFocusRing() {
     return html`<md-focus-ring .visible="${
         this.showFocusRing}"></md-focus-ring>`;
   }

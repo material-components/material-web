@@ -16,16 +16,19 @@ import {IconButtonHarness} from './harness.js';
 import {MdStandardIconButtonToggle} from './standard-icon-button-toggle.js';
 
 const ICON_BUTTON_TEMPLATE = html`
-  <md-standard-icon-button .icon="${'star'}" aria-label="Star">
+  <md-standard-icon-button aria-label="Star">
+    star
   </md-standard-icon-button>
 `;
 const LINK_ICON_BUTTON_TEMPLATE = html`
-  <md-standard-link-icon-button .icon="${'star'}" aria-label="Star">
+  <md-standard-link-icon-button aria-label="Star">
+    star
   </md-standard-link-icon-button>
 `;
 const ICON_BUTTON_TOGGLE_TEMPLATE = html`
-  <md-standard-icon-button-toggle .onIcon="${'star'}"
-      .offIcon="${'star_border'}" aria-label="Star">
+  <md-standard-icon-button-toggle aria-label="Star">
+      <md-icon slot="onIcon">star</md-icon>
+      <md-icon slot="offIcon">star_border</md-icon>
   </md-standard-icon-button-toggle>
 `;
 
@@ -163,8 +166,8 @@ describe('icon button tests', () => {
     it('if `flipsIconInRtl=true`, flips icon in an RTL context', async () => {
       const template = html`
           <div dir="rtl">
-            <md-standard-icon-button .icon="${'star'}" aria-label="Star"
-                .flipIconInRtl="${true}">
+            <md-standard-icon-button aria-label="Star" .flipIconInRtl="${true}">
+                star
             </md-standard-icon-button>
           </div>`;
       const element =
@@ -178,8 +181,9 @@ describe('icon button tests', () => {
        async () => {
          const template = html`
             <div dir="ltr">
-              <md-standard-icon-button .icon="${'star'}" aria-label="Star"
-                  .flipIconInRtl="${true}">
+              <md-standard-icon-button aria-label="Star" .flipIconInRtl="${
+             true}">
+                  star
               </md-standard-icon-button>
             </div>`;
          const element =

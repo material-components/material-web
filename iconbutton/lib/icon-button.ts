@@ -29,12 +29,6 @@ export class IconButton extends LitElement {
   @property({type: Boolean, reflect: true}) disabled = false;
 
   /**
-   * The glyph of the icon to display from the applied icon font. See the
-   * associated typography tokens for more info.
-   */
-  @property({type: String}) icon = '';
-
-  /**
    * Flips the icon if it is in an RTL context at startup.
    */
   @property({type: Boolean}) flipIconInRtl = false;
@@ -92,8 +86,7 @@ export class IconButton extends LitElement {
   protected renderIcon(): TemplateResult {
     // Note, it's important not to render the icon property as a slot fallback
     // to avoid any whitespace from overridding it.
-    return html`<span class="md3-icon-button__icon"><md-icon>${
-        this.icon ? this.icon : html`<slot></slot>`}</md-icon></span>`;
+    return html`<md-icon class="md3-icon-button__icon"><slot></slot></md-icon>`;
   }
 
   protected renderTouchTarget(): TemplateResult {
