@@ -26,6 +26,9 @@ import {ARIAHasPopup} from '../../types/aria.js';
 
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class IconButton extends LitElement {
+  /**
+   * Disables the icon button and makes it non-interactive.
+   */
   @property({type: Boolean, reflect: true}) disabled = false;
 
   /**

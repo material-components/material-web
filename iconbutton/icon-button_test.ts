@@ -146,8 +146,8 @@ describe('icon button tests', () => {
         throw new Error(
             'Icon button is not instance of MdStandardIconButtonToggle.');
       }
-      element.ariaLabelOn = 'aria label on';
-      element.ariaLabelOff = 'aria label off';
+      element.ariaLabelSelected = 'aria label on';
+      element.ariaLabel = 'aria label off';
       await element.updateComplete;
 
       const button = element.shadowRoot!.querySelector('button')!;
