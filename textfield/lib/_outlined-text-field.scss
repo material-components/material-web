@@ -8,7 +8,7 @@
 @use '../../sass/resolvers';
 @use '../../sass/shape';
 @use '../../sass/theme';
-@use '../../tokens/v0_150' as tokens;
+@use '../../tokens';
 @use './shared';
 
 @mixin theme($tokens) {
@@ -37,7 +37,7 @@
   $tokens: map.merge(
     (
       container-padding-horizontal: 16px,
-      container-padding-vertical: 8px,
+      container-padding-vertical: 16px,
       input-text-prefix-padding: 2px,
       input-text-suffix-padding: 2px,
       outline-label-padding: 4px,
@@ -55,7 +55,8 @@
 
     @include outlined-field.theme(
       (
-        container-height: var(--_container-height),
+        container-padding-horizontal: var(--_container-padding-horizontal),
+        container-padding-vertical: var(--_container-padding-vertical),
         container-shape-start-start: var(--_container-shape-start-start),
         container-shape-start-end: var(--_container-shape-start-end),
         container-shape-end-end: var(--_container-shape-end-end),

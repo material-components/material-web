@@ -13,7 +13,7 @@
 @use '../../menusurface/menu-surface';
 @use '../../sass/theme';
 @use '../../textfield/filled-text-field';
-@use '../../tokens/v0_150' as tokens;
+@use '../../tokens';
 @use './shared';
 
 $custom-property-prefix: 'filled-autocomplete';
@@ -53,7 +53,6 @@ $dark-theme: tokens.md-comp-filled-autocomplete-values(
         active-indicator-height: var(--_text-field-active-indicator-height),
         caret-color: var(--_text-field-caret-color),
         container-color: var(--_text-field-container-color),
-        container-height: var(--_text-field-container-height),
         disabled-active-indicator-color:
           var(--_text-field-disabled-active-indicator-color),
         disabled-active-indicator-height:

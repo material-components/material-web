@@ -8,7 +8,7 @@
 @use '../../sass/resolvers';
 @use '../../sass/shape';
 @use '../../sass/theme';
-@use '../../tokens/v0_150' as tokens;
+@use '../../tokens';
 @use './shared';
 
 @mixin theme($tokens) {
@@ -36,9 +36,10 @@
   $tokens: map.merge(
     (
       container-padding-horizontal: 16px,
-      container-padding-vertical: 8px,
+      container-padding-vertical: 16px,
       input-text-prefix-padding: 2px,
       input-text-suffix-padding: 2px,
+      with-label-container-padding-vertical: 8px,
     ),
     $tokens
   );
@@ -56,7 +57,6 @@
         active-indicator-color: var(--_active-indicator-color),
         active-indicator-height: var(--_active-indicator-height),
         container-color: var(--_container-color),
-        container-height: var(--_container-height),
         container-padding-horizontal: var(--_container-padding-horizontal),
         container-padding-vertical: var(--_container-padding-vertical),
         container-shape-start-start: var(--_container-shape-start-start),
@@ -141,6 +141,8 @@
         supporting-text-weight: var(--_supporting-text-weight),
         trailing-icon-color: var(--_trailing-icon-color),
         trailing-icon-size: var(--_trailing-icon-size),
+        with-label-container-padding-vertical:
+          var(--_with-label-container-padding-vertical),
       )
     );
   }

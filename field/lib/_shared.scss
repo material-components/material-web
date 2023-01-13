@@ -34,6 +34,8 @@
     display: flex;
     flex: 1;
     flex-basis: var(--_container-height);
+    padding-top: var(--_container-padding-vertical);
+    padding-bottom: var(--_container-padding-vertical);
     position: relative;
   }
 

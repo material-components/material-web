@@ -13,7 +13,7 @@
 @use '../../menusurface/menu-surface';
 @use '../../sass/theme';
 @use '../../textfield/outlined-text-field';
-@use '../../tokens/v0_150' as tokens;
+@use '../../tokens';
 @use './shared';
 
 $custom-property-prefix: 'outlined-autocomplete';
@@ -58,7 +58,6 @@ $dark-theme: tokens.md-comp-outlined-autocomplete-values(
     @include outlined-text-field.theme(
       (
         caret-color: var(--_text-field-caret-color),
-        container-height: var(--_text-field-container-height),
         disabled-input-text-color: var(--_text-field-disabled-input-text-color),
         disabled-input-text-opacity:
           var(--_text-field-disabled-input-text-opacity),

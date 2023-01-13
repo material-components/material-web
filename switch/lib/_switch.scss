@@ -17,7 +17,7 @@
 @use '../../sass/theme';
 @use '../../sass/touch-target';
 @use '../../sass/var';
-@use '../../tokens/v0_150' as tokens;
+@use '../../tokens';
 
 @use './track';
 @use './handle';

@@ -4,7 +4,7 @@
 //
 
 @use 'sass:map';
-@use '../../tokens/v0_150' as tokens;
+@use '../../tokens';
 
 $_default-deps: (
   md-sys-color: tokens.md-sys-color-values-light(),
@@ -50,7 +50,7 @@ $_default-deps: (
     $values,
     (
       container-padding-horizontal: if($exclude-hardcoded-values, null, 16px),
-      container-padding-vertical: if($exclude-hardcoded-values, null, 8px),
+      container-padding-vertical: if($exclude-hardcoded-values, null, 16px),
       content-color: map.get($text-field-values, input-text-color),
       disabled-content-color:
         map.get($text-field-values, disabled-input-text-color),
@@ -65,6 +65,8 @@ $_default-deps: (
       hover-content-color: map.get($text-field-values, hover-input-text-color),
       supporting-text-padding: if($exclude-hardcoded-values, null, 16px),
       supporting-text-padding-top: if($exclude-hardcoded-values, null, 4px),
+      with-label-container-padding-vertical:
+        if($exclude-hardcoded-values, null, 8px),
     )
   );
 

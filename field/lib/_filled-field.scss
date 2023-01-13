@@ -46,8 +46,6 @@ $_animation-duration: 150ms;
     // If bottom corner radii are set, prevent the active indicator from
     // overflowing.
     overflow: hidden;
-    padding-top: var(--_container-padding-vertical);
-    padding-bottom: var(--_container-padding-vertical);
     // Needed for negative z-index below to place background and state layer
     // behind content.
     z-index: 0;
@@ -148,6 +146,11 @@ $_animation-duration: 150ms;
   }
 
   .md3-field:not(.md3-field--no-label) {
+    .md3-field__container {
+      padding-bottom: var(--_with-label-container-padding-vertical);
+      padding-top: var(--_with-label-container-padding-vertical);
+    }
+
     .md3-field__middle {
       padding-top: var(--_label-text-populated-line-height);
     }

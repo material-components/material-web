@@ -30,8 +30,8 @@
     border-start-end-radius: var(--_handle-shape-start-end);
     border-end-end-radius: var(--_handle-shape-end-end);
     border-end-start-radius: var(--_handle-shape-end-start);
-    height: var(--_handle-height);
-    width: var(--_handle-width);
+    height: 20px;
+    width: 20px;
     background-color: var(--_selected-handle-color);
 
     // TODO(b/230484095): Use token instead of hard coded values
