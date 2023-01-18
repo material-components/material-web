@@ -21,19 +21,22 @@ import {ripple} from '../../ripple/directive.js';
 import {IconButton} from './icon-button.js';
 
 /**
- * @fires icon-button-toggle-change {CustomEvent<{selected: boolean}>}
+ * @fires change {Event}
+ * Dispatched whenever `selected` is changed via user click
+ *
+ * @fires input {InputEvent}
  * Dispatched whenever `selected` is changed via user click
  */
 export class IconButtonToggle extends IconButton {
   /**
-   * The `aria-label` of the button when the toggle button is selected or "on".
+   * The `aria-label` of the button when the toggle button is selected.
    */
   @property({type: String}) ariaLabelSelected!: string;
 
   /**
-   * Sets the toggle button to the "on" state and displays the `onIcon`. If
-   * false, sets the toggle button to the "off" state and displays the
-   * `offIcon`.
+   * Sets the selected state. When false, displays the default icon. When true,
+   * displays the `selectedIcon`, or the default icon If no `selectedIcon` is
+   * provided.
    */
   @property({type: Boolean, reflect: true}) selected = false;
 
@@ -56,26 +59,33 @@ export class IconButtonToggle extends IconButton {
         ${this.renderFocusRing()}
         ${when(this.showRipple, this.renderRipple)}
         ${this.renderTouchTarget()}
-        ${this.renderIcon()}
-        ${this.renderSelectedIcon()}
+        ${!this.selected ? this.renderIcon() : nothing}
+        ${this.selected ? this.renderSelectedIcon() : nothing}
       </button>`;
   }
 
   protected renderSelectedIcon() {
-    return html`<md-icon class="md3-icon-button__icon md3-icon-button__icon--on"><slot name="selectedIcon"></slot></md-icon>`;
+    // Use default slot as fallback to not require specifying multiple icons
+    return html`<md-icon class="md3-icon-button__icon md3-icon-button__icon--selected"><slot name="selectedIcon"><slot></slot></slot></md-icon>`;
   }
 
   protected override getRenderClasses(): ClassInfo {
     return {
       ...super.getRenderClasses(),
-      'md3-icon-button--on': this.selected,
+      'md3-icon-button--selected': this.selected,
     };
   }
 
   protected handleClick() {
+    if (this.disabled) {
+      return;
+    }
+
     this.selected = !this.selected;
-    const detail = {selected: this.selected};
-    this.dispatchEvent(new CustomEvent(
-        'icon-button-toggle-change', {detail, bubbles: true, composed: true}));
+    this.dispatchEvent(
+        new InputEvent('input', {bubbles: true, composed: true}));
+    // Bubbles but does not compose to mimic native browser <input> & <select>
+    // Additionally, native change event is not an InputEvent.
+    this.dispatchEvent(new Event('change', {bubbles: true}));
   }
 }

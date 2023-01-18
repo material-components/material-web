@@ -122,6 +122,24 @@ describe('icon button tests', () => {
       expect(element.selected).toBeFalse();
     });
 
+    it('fires input and change events when clicked', async () => {
+      const {element, harness} =
+          await setUpTest('md-standard-icon-button-toggle');
+      if (!(element instanceof MdStandardIconButtonToggle)) {
+        throw new Error(
+            'Icon button is not instance of MdStandardIconButtonToggle.');
+      }
+      let changeEvent = false;
+      let inputEvent = false;
+      element.addEventListener('input', () => inputEvent = true);
+      element.addEventListener('change', () => changeEvent = true);
+      expect(element.selected).toBeFalse();
+      await harness.clickWithMouse();
+      expect(element.selected).toBeTrue();
+      expect(inputEvent).toBeTrue();
+      expect(changeEvent).toBeTrue();
+    });
+
     it('setting `selected` updates the aria-pressed attribute on the native button element',
        async () => {
          const {element} = await setUpTest('md-standard-icon-button-toggle');

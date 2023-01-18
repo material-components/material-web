@@ -76,20 +76,6 @@
 
   .md3-icon-button__icon {
     display: inline-flex;
-
-    &.md3-icon-button__icon--on {
-      display: none;
-    }
-  }
-
-  .md3-icon-button--on {
-    .md3-icon-button__icon {
-      display: none;
-
-      &.md3-icon-button__icon--on {
-        display: inline-flex;
-      }
-    }
   }
 
   .md3-icon-button__link {

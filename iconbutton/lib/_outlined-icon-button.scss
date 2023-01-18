@@ -107,12 +107,12 @@ $_custom-property-prefix: 'outlined-icon-button';
   }
 
   // Selected toggle buttons have no outline.
-  .md3-icon-button--outlined.md3-icon-button--on::before {
+  .md3-icon-button--outlined.md3-icon-button--selected::before {
     border-width: 0;
   }
 
   // Selected icon button toggle.
-  .md3-icon-button--on {
+  .md3-icon-button--selected {
     &:not(:disabled) {
       background-color: var(--_selected-container-color);
       color: var(--_selected-icon-color);
@@ -148,7 +148,7 @@ $_custom-property-prefix: 'outlined-icon-button';
 
   @media (forced-colors: active) {
     // Selected button in HCM has an outline.
-    .md3-icon-button--on {
+    .md3-icon-button--selected {
       &::before {
         border-color: var(--_unselected-outline-color);
         border-width: var(--_unselected-outline-width);

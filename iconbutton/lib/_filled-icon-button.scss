@@ -113,7 +113,7 @@ $_custom-property-prefix: 'filled-icon-button';
     );
   }
 
-  .md3-icon-button--on {
+  .md3-icon-button--selected {
     &:not(:disabled) {
       background-color: var(--_selected-container-color);
       color: var(--_toggle-selected-icon-color);
