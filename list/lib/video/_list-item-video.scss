@@ -9,7 +9,7 @@
 @use 'sass:map';
 @use '../../../sass/theme';
 @use '../../../sass/map-ext';
-@use '../tokens';
+@use '../../../tokens';
 
 $_custom-property-prefix: 'list-item-video';
 
@@ -17,7 +17,8 @@ $_custom-property-prefix: 'list-item-video';
   $reference: map-ext.pick(
     tokens.md-comp-list-values(),
     (
-      list-item-leading-video-height,
+      list-item-small-leading-video-height,
+      list-item-large-leading-video-height,
       list-item-leading-video-width,
       list-item-leading-video-shape
     )
@@ -33,7 +34,8 @@ $_custom-property-prefix: 'list-item-video';
   $tokens: map-ext.pick(
     tokens.md-comp-list-values(),
     (
-      list-item-leading-video-height,
+      list-item-small-leading-video-height,
+      list-item-large-leading-video-height,
       list-item-leading-video-width,
       list-item-leading-video-shape
     )
@@ -54,8 +56,12 @@ $_custom-property-prefix: 'list-item-video';
     margin-block-end: 12px;
     margin-block-start: 12px;
     object-fit: cover;
-    height: var(--_list-item-leading-video-height);
+    height: var(--_list-item-small-leading-video-height);
     width: var(--_list-item-leading-video-width);
     border-radius: var(--_list-item-leading-video-shape);
+
+    &.large {
+      height: var(--_list-item-large-leading-video-height);
+    }
   }
 }

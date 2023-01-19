@@ -1,22 +1,25 @@
 /**
  * @license
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
 
 import {customElement} from 'lit/decorators.js';
 
-import {List} from './lib/list.js';
-import {styles} from './lib/list-styles.css.js';
+import {styles as privateProps} from './lib/listitem/list-item-private-styles.css.js';
+import {styles} from './lib/listitem/list-item-styles.css.js';
+import {ListItemLink} from './lib/listitemlink/list-item-link.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-list': MdList;
+    'md-list-item-link': MdListItemLink;
   }
 }
 
 /**
- * @summary Lists are continuous, vertical indexes of text or images.
+ * @summary
+ * Lists are continuous, vertical indexes of text or images. Items are placed
+ * inside the list. This is a linkable variant.
  *
  * @description
  * Lists consist of one or more list items, and can contain actions represented
@@ -34,7 +37,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-list')
-export class MdList extends List {
-  static override styles = [styles];
+@customElement('md-list-item-link')
+export class MdListItemLink extends ListItemLink {
+  static override styles = [privateProps, styles];
 }

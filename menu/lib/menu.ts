@@ -88,12 +88,6 @@ export abstract class Menu extends LitElement {
   }
 
   get items(): ListItem[] {
-    const listElement = this.listElement;
-
-    if (listElement) {
-      return listElement.items;
-    }
-
     return [];
   }
 
@@ -122,104 +116,33 @@ export abstract class Menu extends LitElement {
           role=${'menu'}
           .listTabIndex=${
         - 1}
-          .listItemTagName=${this.getMenuItemTagName()}
           @action=${this.onAction}>
         <slot></slot>
       </md-list>
     </md-menu-surface>`;
   }
 
-  protected getMenuItemTagName() {
-    return 'md-menu-item';
-  }
-
   protected createAdapter(): MDCMenuAdapter {
     return {
-      addClassToElementAtIndex: (index, className) => {
-        const listElement = this.listElement;
-        if (!listElement) {
-          return;
-        }
-
-        const element = listElement.items[index];
-
-        if (!element) {
-          return;
-        }
-
-        element.classList.add(className);
-      },
-      removeClassFromElementAtIndex: (index, className) => {
-        const listElement = this.listElement;
-        if (!listElement) {
-          return;
-        }
-
-        const element = listElement.items[index];
-
-        if (!element) {
-          return;
-        }
-
-        element.classList.remove(className);
-      },
+      addClassToElementAtIndex: () => {},
+      removeClassFromElementAtIndex: () => {},
       addAttributeToElementAtIndex: (index, attr, value) => {
           // TODO(b/240174946): This method is only used for setting
           // `aria-checked` and `aria-disabled` on the menu items when selected
           // and disabled states change. Remove this in favor of adding to the
           // template declaratively.
       },
-      removeAttributeFromElementAtIndex: (index, attr) => {
-        const listElement = this.listElement;
-        if (!listElement) {
-          return;
-        }
-
-        const element = listElement.items[index];
-
-        if (!element) {
-          return;
-        }
-
-        element.removeAttribute(attr);
-      },
-      getAttributeFromElementAtIndex: (index, attr) => {
-        const listElement = this.listElement;
-        if (!listElement) {
-          return null;
-        }
-
-        const element = listElement.items[index];
-
-        if (!element) {
-          return null;
-        }
-
-        return element.getAttribute(attr);
-      },
+      removeAttributeFromElementAtIndex: () => {},
+      getAttributeFromElementAtIndex: () => '',
       elementContainsClass: (element, className) =>
           element.classList.contains(className),
       closeSurface: (skipRestoreFocus) => {
         this.skipRestoreFocus = Boolean(skipRestoreFocus);
         this.open = false;
       },
-      getElementIndex: (element) => {
-        const listElement = this.listElement;
-        if (listElement) {
-          return listElement.items.indexOf(element as ListItem);
-        }
-
-        return -1;
-      },
+      getElementIndex: () => 0,
       notifySelected: () => {/** handled by list */},
-      getMenuItemCount: () => {
-        const listElement = this.listElement;
-        if (!listElement) {
-          return 0;
-        }
-
-        return listElement.items.length;
-      },
+      getMenuItemCount: () => 1,
       getSelectedSiblingOfItemAtIndex: (index) => {
         const listElement = this.listElement;
 
@@ -245,21 +168,7 @@ export abstract class Menu extends LitElement {
 
         return -1;
       },
-      isSelectableItemAtIndex: (index) => {
-        const listElement = this.listElement;
-
-        if (!listElement) {
-          return false;
-        }
-
-        const elementAtIndex = listElement.items[index];
-
-        if (!elementAtIndex) {
-          return false;
-        }
-
-        return elementAtIndex.hasAttribute('group');
-      },
+      isSelectableItemAtIndex: () => false,
     };
   }
 
@@ -280,27 +189,7 @@ export abstract class Menu extends LitElement {
     }
   }
 
-  protected onOpened() {
-    this.skipRestoreFocus = false;
-    this.open = true;
-
-    this.listElement?.resetActiveListItem();
-    switch (this.defaultFocus) {
-      case 'FIRST_ITEM':
-        this.listElement?.activateFirstItem();
-        break;
-      case 'LAST_ITEM':
-        this.listElement?.activateLastItem();
-        break;
-      case 'NONE':
-        // Do nothing.
-        break;
-      case 'LIST_ROOT':
-      default:
-        this.listElement?.focus();
-        break;
-    }
-  }
+  protected onOpened() {}
 
   protected onClosed() {
     this.open = false;

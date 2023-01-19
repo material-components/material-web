@@ -10,7 +10,7 @@ import {property} from 'lit/decorators.js';
 import {ariaProperty} from '../../../decorators/aria-property.js';
 import {ARIARole} from '../../../types/aria.js';
 
-/** @soyCompatible */
+// tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class ListDivider extends LitElement {
   @ariaProperty  // tslint:disable-line:no-new-decorators
   // tslint:disable-next-line:decorator-placement
@@ -18,11 +18,9 @@ export class ListDivider extends LitElement {
   // @ts-ignore(b/264292293): Use `override` with TS 4.9+
   role: ARIARole = 'separator';
 
-  /** @soyTemplate */
   override render(): TemplateResult {
     return html`
-       <li role="separator" class="md3-list__divider">
-       </li>
+       <li role=${this.role} class="divider"></li>
      `;
   }
 }

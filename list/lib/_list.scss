@@ -7,47 +7,30 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-@use '../../elevation/lib/elevation';
+@use 'sass:string';
+@use './listitem/list-item';
 @use '../../sass/theme';
-@use '../../tokens' as m3-tokens;
-@use './tokens';
+@use '../../tokens';
 @use './divider/list-divider';
-
-$_reference: (
-  container-color:
-    map.get(tokens.md-comp-list-values(), 'list-item-container-color'),
-  list-divider-color:
-    map.get(tokens.md-comp-list-values(), 'list-divider-color'),
-  list-divider-height:
-    map.get(tokens.md-comp-list-values(), 'list-divider-height'),
-  container-surface-tint-layer-color:
-    map.get(m3-tokens.md-sys-color-values-light(), 'surface-tint'),
-  container-elevation: 0,
-);
+@use '../../elevation/lib/elevation';
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme($_reference, $tokens);
-  $tokens: _resolve-tokens($tokens);
+  $reference: resolve-tokens(tokens.md-comp-list-values());
+  $tokens: resolve-tokens($tokens);
+  $tokens: theme.validate-theme($reference, $tokens);
   $tokens: theme.create-theme-vars($tokens, list);
 
   @include theme.emit-theme-vars($tokens);
 }
 
 @mixin styles() {
-  $tokens: _resolve-tokens($_reference);
+  $tokens: resolve-tokens(tokens.md-comp-list-values());
   $tokens: theme.create-theme-vars($tokens, list);
 
   :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
-
-    @include elevation.theme(
-      (
-        level: var(--_container-elevation),
-        surface-tint: var(--_container-surface-tint-layer-color),
-      )
-    );
 
     color: unset;
   }
@@ -63,22 +46,32 @@ $_reference: (
     // Add position so the elevation overlay (which is absolutely positioned)
     // can be positioned relative to the list root.
     position: relative;
-
-    @include list-divider.theme(
-      (
-        list-divider-color: var(--_list-divider-color),
-        list-divider-height: var(--_list-divider-height),
-      )
-    );
-  }
-
-  md-elevation {
-    inset: 0;
-    position: absolute;
-    z-index: 0;
   }
 }
 
-@function _resolve-tokens($tokens) {
-  @return elevation.resolve-tokens($tokens, 'container-elevation');
+/// Resolves the tokens that are specific to list.
+///
+/// The tokenset for list include list plus all of list item. We do not want to
+/// duplicate tokens and custom properties across md-list and md-list-item.
+/// So here we resolve list-items tokens, and resolve the difference between
+/// the full set of tokens and the ones specific to list-item.
+@function resolve-tokens($tokens) {
+  // We need container color so rename so that we don't lose it
+  $tokens: map.set(
+    $tokens,
+    container-color,
+    map.get($tokens, list-item-container-color)
+  );
+  $list-item-tokens: list-item.resolve-tokens($tokens);
+  $list-tokens: ();
+
+  @each $token, $value in $tokens {
+    $is-unique: not map.has-key($list-item-tokens, $token);
+
+    @if $is-unique {
+      $list-tokens: map.set($list-tokens, $token, $value);
+    }
+  }
+
+  @return $list-tokens;
 }

@@ -16,7 +16,8 @@ declare global {
 }
 
 /**
- * @soyCompatible
+ * @summary An image that is expected to be slotted into a list item.
+ *
  * @final
  * @suppress {visibility}
  */

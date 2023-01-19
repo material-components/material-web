@@ -3,34 +3,27 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 @use 'sass:map';
+@use 'sass:string';
 @use '../../../focus/focus-ring';
 @use '../../../sass/theme';
+@use '../../../sass/map-ext';
 @use '../icon/list-item-icon';
 @use '../image/list-item-image';
 @use '../video/list-item-video';
-@use '../tokens' as list-tokens;
+@use '../../../ripple/ripple';
 @use '../../../tokens';
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(list-tokens.md-comp-list-values(), $tokens);
+  $tokens: theme.validate-theme(tokens.md-comp-list-values(), $tokens);
+  $tokens: resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, list);
 
   @include theme.emit-theme-vars($tokens);
 }
 
 @mixin styles() {
-  $tokens: list-tokens.md-comp-list-values();
-  $tokens: theme.create-theme-vars($tokens, list);
-
   :host {
-    @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
-    }
-
     color: unset;
 
     @include list-item-image.theme(
@@ -42,7 +35,10 @@
     );
     @include list-item-video.theme(
       (
-        list-item-leading-video-height: var(--_list-item-leading-video-height),
+        list-item-small-leading-video-height:
+          var(--_list-item-small-leading-video-height),
+        list-item-large-leading-video-height:
+          var(--_list-item-large-leading-video-height),
         list-item-leading-video-width: var(--_list-item-leading-video-width),
         list-item-leading-video-shape: var(--_list-item-leading-video-shape),
       )
@@ -54,36 +50,52 @@
         shape: map.get(tokens.md-sys-shape-values(), corner-extra-small),
       )
     );
+    @include ripple.theme(
+      (
+        hover-state-layer-color: var(--_list-item-hover-state-layer-color),
+        hover-state-layer-opacity: var(--_list-item-hover-state-layer-opacity),
+        pressed-state-layer-color: var(--_list-item-pressed-state-layer-color),
+        pressed-state-layer-opacity:
+          var(--_list-item-pressed-state-layer-opacity),
+        focus-state-layer-color: var(--_list-item-focus-state-layer-color),
+        focus-state-layer-opacity: var(--_list-item-focus-state-layer-opacity),
+      )
+    );
   }
 
-  .md3-list-item {
+  .list-item {
     align-items: center;
     box-sizing: border-box;
     display: flex;
     outline: none;
     position: relative;
     width: 100%;
+    text-decoration: none;
     background-color: var(--_list-item-container-color);
     border-radius: var(--_list-item-container-shape);
 
-    &.md3-list-item--enabled {
+    &.enabled {
       cursor: pointer;
+    }
+
+    &.disabled {
+      pointer-events: none;
     }
   }
 
-  .md3-list-item--with-one-line {
+  .with-one-line {
     min-height: var(--_list-item-one-line-container-height);
   }
 
-  .md3-list-item--with-two-line {
+  .with-two-line {
     min-height: var(--_list-item-two-line-container-height);
   }
 
-  .md3-list-item--with-three-line {
+  .with-three-line {
     min-height: var(--_list-item-three-line-container-height);
   }
 
-  .md3-list-item__start {
+  .start {
     flex: 0 0 auto;
     z-index: 1;
 
@@ -97,12 +109,21 @@
     :hover & {
       @include list-item-icon.theme(
         (
-          list-item-icon-color: var(--_list-item-hover-leading-icon-color),
+          list-item-icon-color: var(--_list-item-hover-leading-icon-icon-color),
         )
       );
     }
 
-    .md3-list-item--disabled & {
+    :active & {
+      @include list-item-icon.theme(
+        (
+          list-item-icon-color:
+            var(--_list-item-pressed-leading-icon-icon-color),
+        )
+      );
+    }
+
+    .disabled & {
       @include list-item-icon.theme(
         (
           list-item-icon-color: var(--_list-item-disabled-leading-icon-color),
@@ -112,17 +133,17 @@
       );
     }
 
-    .md3-list-item--with-leading-thumbnail &,
-    .md3-list-item--with-leading-image & {
+    .with-leading-thumbnail &,
+    .with-leading-image & {
       padding-inline-start: 16px;
     }
 
-    .md3-list-item--with-leading-video & {
+    .with-leading-video & {
       padding-inline-start: 0;
     }
   }
 
-  .md3-list-item__body {
+  .body {
     box-sizing: border-box;
     flex: 1 0 0;
     padding-inline-start: 16px;
@@ -130,7 +151,7 @@
     z-index: 1;
   }
 
-  .md3-list-item__end {
+  .end {
     flex: 0 0 auto;
     padding-inline-end: 24px;
     z-index: 1;
@@ -145,12 +166,21 @@
     :hover & {
       @include list-item-icon.theme(
         (
-          list-item-icon-color: var(--_list-item-hover-trailing-icon-color),
+          list-item-icon-color: var(--_list-item-hover-trailing-icon-icon-color),
         )
       );
     }
 
-    .md3-list-item--disabled & {
+    :active & {
+      @include list-item-icon.theme(
+        (
+          list-item-icon-color:
+            var(--_list-item-pressed-trailing-icon-icon-color),
+        )
+      );
+    }
+
+    .disabled & {
       @include list-item-icon.theme(
         (
           list-item-icon-color: var(--_list-item-disabled-trailing-icon-color),
@@ -161,7 +191,7 @@
     }
   }
 
-  .md3-list-item__label-text {
+  .label-text {
     display: flex;
     color: var(--_list-item-label-text-color);
     font-family: var(--_list-item-label-text-font);
@@ -170,13 +200,13 @@
     font-weight: var(--_list-item-label-text-weight);
     line-height: var(--_list-item-label-text-line-height);
 
-    .md3-list-item--disabled & {
+    .disabled & {
       color: var(--_list-item-disabled-label-text-color);
       opacity: var(--_list-item-disabled-label-text-opacity);
     }
   }
 
-  .md3-list-item__supporting-text {
+  .supporting-text {
     display: block;
     padding-block-start: 4px;
     text-overflow: ellipsis;
@@ -190,13 +220,13 @@
     font-weight: var(--_list-item-supporting-text-weight);
     line-height: var(--_list-item-supporting-text-line-height);
 
-    .md3-list-item--disabled & {
-      color: var(--_list-item-disabled-supporting-text-color);
-      opacity: var(--_list-item-disabled-supporting-text-opacity);
+    .disabled & {
+      color: var(--_list-item-disabled-label-text-color);
+      opacity: var(--_list-item-disabled-label-text-opacity);
     }
   }
 
-  .md3-list-item__supporting-text--multi-line {
+  .supporting-text--multi-line {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     display: -webkit-box;
@@ -204,7 +234,7 @@
     white-space: normal;
   }
 
-  .md3-list-item__trailing-supporting-text {
+  .trailing-supporting-text {
     padding-inline-start: 16px;
     font-family: var(--_list-item-trailing-supporting-text-font);
     font-size: var(--_list-item-trailing-supporting-text-size);
@@ -212,19 +242,54 @@
     font-weight: var(--_list-item-trailing-supporting-text-weight);
     line-height: var(--_list-item-trailing-supporting-text-line-height);
 
-    .md3-list-item:not(.md3-list-item--disabled) & {
+    .list-item:not(.disabled) & {
       color: var(--_list-item-trailing-supporting-text-color);
+    }
+
+    .disabled & {
+      color: var(--_list-item-disabled-label-text-color);
+      opacity: var(--_list-item-disabled-label-text-opacity);
     }
   }
 
-  .md3-list-item__ripple {
+  .ripple {
     display: inline-flex;
     inset: 0;
     position: absolute;
     z-index: 0;
   }
 
-  .md3-list-item__focus-ring {
+  .focus-ring {
     z-index: 1;
+  }
+}
+
+/// Resolves the tokens that are specific to list-item.
+///
+/// The tokenset for list include list plus all of list item. We do not want to
+/// duplicate tokens and custom properties across md-list and md-list-item.
+/// So here we resolve list-items tokens by selecting only tokens that have
+/// 'list-item' in its name.
+@function resolve-tokens($tokens) {
+  $list-item-tokens: ();
+
+  @each $token, $value in $tokens {
+    $index: string.index($token, list-item);
+
+    @if $index {
+      $list-item-tokens: map.set($list-item-tokens, $token, $value);
+    }
+  }
+  @return $list-item-tokens;
+}
+
+@mixin private-props() {
+  $tokens: resolve-tokens(tokens.md-comp-list-values());
+  $tokens: theme.create-theme-vars($tokens, list);
+
+  :host {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
   }
 }

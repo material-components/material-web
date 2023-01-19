@@ -24,10 +24,6 @@ export abstract class Autocomplete extends TextField {
   override readonly ariaAutoComplete = 'list';
 
   /**
-   * The ID on the list element, used for SSR.
-   */
-  @property({type: String}) listId = 'autocomplete-list';
-  /**
    * The ID prefix for the item elements, used for SSR.
    */
   @property({type: String}) itemIdPrefix = 'autocomplete-item';
@@ -68,7 +64,8 @@ export abstract class Autocomplete extends TextField {
     super.updated(changedProperties);
     if (changedProperties.has('selectedItem')) {
       this.updateSelectedItem();
-      this.ariaActiveDescendant = this.selectedItem?.itemId ?? null;
+      // TODO(b/265209253): implement
+      // this.ariaActiveDescendant = this.selectedItem?.itemId ?? null;
     }
     if (changedProperties.has('value')) {
       this.dispatchEvent(new CustomEvent(
@@ -78,6 +75,7 @@ export abstract class Autocomplete extends TextField {
   }
 
   override firstUpdated(changedProperties: PropertyValues) {
+    console.warn('<md-autocomplete> is not yet implemented.');
     super.firstUpdated(changedProperties);
     this.menuSurface!.anchor = this;
   }
@@ -241,11 +239,11 @@ export abstract class Autocomplete extends TextField {
   private updateSelectedItem() {
     if (!this.slottedItems) return;
     this.slottedItems.forEach((item, index) => {
-      item.itemId = `${this.itemIdPrefix}-${index}`;
+      // TODO(b/265209253): implement
+      // item.itemId = `${this.itemIdPrefix}-${index}`;
 
       if (this.selectedItem && item === this.selectedItem && this.list) {
         item.ariaSelected = 'true';
-        item.showFocusRing = true;
 
         // Scroll into view
         if (this.list.scrollTop + this.list.offsetHeight <
@@ -257,7 +255,6 @@ export abstract class Autocomplete extends TextField {
         }
       } else {
         item.ariaSelected = 'false';
-        item.showFocusRing = false;
       }
     });
   }

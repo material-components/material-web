@@ -16,7 +16,8 @@ declare global {
 }
 
 /**
- * @soyCompatible
+ * @summary A horizontal list item divider.
+ *
  * @final
  * @suppress {visibility}
  */

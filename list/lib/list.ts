@@ -4,9 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../elevation/elevation.js';
+// Required for @ariaProperty
+// tslint:disable:no-new-decorators
 
-import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
+import {html, LitElement, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
@@ -16,177 +17,294 @@ import {ARIARole} from '../../types/aria.js';
 
 import {ListItem} from './listitem/list-item.js';
 
-const NAVIGATABLE_KEYS = {
+const NAVIGABLE_KEYS = {
   ArrowDown: 'ArrowDown',
   ArrowUp: 'ArrowUp',
   Home: 'Home',
   End: 'End',
-};
+} as const;
 
-/** @soyCompatible */
+type NavigatableValues = typeof NAVIGABLE_KEYS[keyof typeof NAVIGABLE_KEYS];
+
+const navigableKeySet = new Set(Object.values(NAVIGABLE_KEYS));
+
+function isNavigableKey(key: string): key is NavigatableValues {
+  return navigableKeySet.has(key as NavigatableValues);
+}
+
+// tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class List extends LitElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
-  @ariaProperty  // tslint:disable-line:no-new-decorators
+  @ariaProperty
   @property({type: String, attribute: 'data-aria-label', noAccessor: true})
   override ariaLabel!: string;
 
-  @ariaProperty  // tslint:disable-line:no-new-decorators
+  @ariaProperty
   @property(
       {type: String, attribute: 'data-aria-activedescendant', noAccessor: true})
   ariaActivedescendant!: string;
 
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  // tslint:disable-next-line:decorator-placement
+  @ariaProperty
+  // tslint:disable-next-line
   @property({type: String, attribute: 'data-role', noAccessor: true})
   // @ts-ignore(b/264292293): Use `override` with TS 4.9+
   role: ARIARole = 'list';
 
-  @property({type: String}) listId = '';
-
+  /**
+   * The tabindex of the underlying list.
+   */
   @property({type: Number}) listTabIndex: number = 0;
-
-  items: ListItem[] = [];
-  activeListItem: ListItem|null = null;
 
   @query('.md3-list') listRoot!: HTMLElement;
 
-  @property({type: String}) listItemTagName = 'md-list-item';
+  /**
+   * An array of selectable and disableable list items. Queries every assigned
+   * element that has the `md-list-item` attribute.
+   *
+   * _NOTE:_ This is a shallow, flattened query via
+   * `HTMLSlotElement.queryAssignedElements` and thus will _only_ include direct
+   * children / directly slotted elements.
+   */
+  @queryAssignedElements({flatten: true, selector: '[md-list-item]'})
+  items!: ListItem[];
 
-  @queryAssignedElements({flatten: true})
-  protected assignedElements!: HTMLElement[]|null;
-
-  override firstUpdated(changedProperties: PropertyValues) {
-    super.firstUpdated(changedProperties);
-
-    this.updateItems();
-  }
-
-  /** @soyTemplate */
   override render(): TemplateResult {
-    return html`
-      <ul class="md3-list ${classMap(this.getRenderClasses())}"
-          aria-label="${ifDefined(this.ariaLabel)}"
-          id=${ifDefined(this.listId || undefined)}
-          tabindex=${this.listTabIndex}
-          role=${this.role}
-          @action=${this.handleAction}
-          @keydown=${this.handleKeydown}
-          >
-        <span><slot></slot></span>
-        <md-elevation surface></md-elevation>
-      </ul>
-    `;
+    return this.renderList();
   }
 
-  /** @soyTemplate */
-  protected getRenderClasses(): ClassInfo {
+  /**
+   * Renders the main list element.
+   */
+  protected renderList() {
+    return html`
+    <ul class="md3-list ${classMap(this.getListClasses())}"
+        aria-label="${ifDefined(this.ariaLabel)}"
+        tabindex=${this.listTabIndex}
+        role=${this.role}
+        @keydown=${this.handleKeydown}
+        >
+      ${this.renderContent()}
+    </ul>
+  `;
+  }
+
+  /**
+   * The classes to be applied to the underlying list.
+   */
+  protected getListClasses(): ClassInfo {
     return {};
   }
 
-  handleKeydown(event: KeyboardEvent) {
-    if (Object.values(NAVIGATABLE_KEYS).indexOf(event.key) === -1) return;
+  /**
+   * The content to be slotted into the list.
+   */
+  protected renderContent() {
+    return html`<span><slot @click=${(e: Event) => {
+      e.stopPropagation();
+    }}></slot></span>`;
+  }
 
-    for (const item of this.items) {
-      if (this.isListItemActive(item)) {
-        this.activeListItem = item;
-      }
+  /**
+   * Handles keyboard navigation in the list.
+   *
+   * @param event {KeyboardEvent} The keyboard event that triggers this handler.
+   */
+  protected handleKeydown(event: KeyboardEvent) {
+    const key = event.key;
+    if (!isNavigableKey(key)) {
+      return;
+    }
+    // do not use this.items directly so we don't re-query the DOM unnecessarily
+    const items = this.items;
 
-      this.deactivateListItem(item);
+    if (!items.length) {
+      return;
     }
 
-    if (event.key === NAVIGATABLE_KEYS.ArrowDown) {
-      event.preventDefault();
-      if (this.activeListItem) {
-        this.activeListItem = this.getNextItem(this.activeListItem);
-      } else {
-        this.activeListItem = this.getFirstItem();
-      }
+    const selectedItemRecord = List.getSelectedItem(items);
+
+    if (selectedItemRecord) {
+      selectedItemRecord.item.selected = false;
     }
 
-    if (event.key === NAVIGATABLE_KEYS.ArrowUp) {
-      event.preventDefault();
-      if (this.activeListItem) {
-        this.activeListItem = this.getPrevItem(this.activeListItem);
-      } else {
-        this.activeListItem = this.getLastItem();
-      }
+    event.preventDefault();
+
+    switch (key) {
+      // Select the next item
+      case NAVIGABLE_KEYS.ArrowDown:
+        if (selectedItemRecord) {
+          const next = List.getNextItem(items, selectedItemRecord.index);
+
+          if (next) next.selected = true;
+        } else {
+          List.selectFirstItem(items);
+        }
+        break;
+
+      // Select the previous item
+      case NAVIGABLE_KEYS.ArrowUp:
+        if (selectedItemRecord) {
+          const prev = List.getPrevItem(items, selectedItemRecord.index);
+          if (prev) prev.selected = true;
+        } else {
+          items[items.length - 1].selected = true;
+        }
+        break;
+
+      // Select the first item
+      case NAVIGABLE_KEYS.Home:
+        List.selectFirstItem(items);
+        break;
+
+      // Select the last item
+      case NAVIGABLE_KEYS.End:
+        List.selectLastItem(items);
+        break;
+
+      default:
+        break;
     }
+  }
 
-    if (event.key === NAVIGATABLE_KEYS.Home) {
-      event.preventDefault();
-      this.activeListItem = this.getFirstItem();
+  /**
+   * Selects the first non-disabled item of a given array of items.
+   *
+   * @param items {Array<ListItem>} The items from which to select the
+   * first item.
+   */
+  static selectFirstItem<T extends ListItem>(items: T[]) {
+    // NOTE: These selector functions are static and not on the instance such
+    // that multiple operations can be chained and we do not have to re-query
+    // the DOM
+    const firstItem = List.getFirstSelectableItem(items);
+    if (firstItem) {
+      firstItem.selected = true;
     }
+  }
 
-    if (event.key === NAVIGATABLE_KEYS.End) {
-      event.preventDefault();
-      this.activeListItem = this.getLastItem();
+  /**
+   * Selects the last non-disabled item of a given array of items.
+   *
+   * @param items {Array<ListItem>} The items from which to select the
+   * last item.
+   */
+  static selectLastItem<T extends ListItem>(items: T[]) {
+    const lastItem = List.getLastSelectableItem(items);
+    if (lastItem) {
+      lastItem.selected = true;
     }
+  }
 
-    if (this.activeListItem) {
-      this.activateListItem(this.activeListItem);
+  /**
+   * Deselects the currently selected item of a given array of items.
+   *
+   * @param items {Array<ListItem>} The items from which to deselect the
+   * selected item.
+   * @returns A record of the deleselcted selected item including the item and
+   * the index of the item or `null` if none are deselected.
+   */
+  static deselectSelectedItem<T extends ListItem>(items: T[]) {
+    const activeItem = List.getSelectedItem(items);
+    if (activeItem) {
+      activeItem.item.selected = false;
     }
+    return activeItem;
   }
 
-  protected activateListItem(item: ListItem) {
-    item.activate();
-  }
-
-  protected deactivateListItem(item: ListItem) {
-    item.deactivate();
-  }
-
-  protected isListItemActive(item: ListItem): boolean {
-    return item.isActive();
-  }
-
-  protected handleAction(event: CustomEvent) {}
-
-  activateFirstItem() {
-    this.activeListItem = this.getFirstItem();
-    this.activeListItem.activate();
-  }
-
-  activateLastItem() {
-    this.activeListItem = this.getLastItem();
-    this.activeListItem.activate();
-  }
-
-  resetActiveListItem() {
-    this.activeListItem = null;
-  }
-
-  focusListRoot() {
+  override focus() {
     this.listRoot.focus();
   }
 
-  /** Updates `this.items` based on slot elements in the DOM. */
-  protected updateItems() {
-    const elements = this.assignedElements || [];
-    this.items = elements.filter(this.isListItem, this);
+  /**
+   * Retrieves the the first selected item of a given array of items.
+   *
+   * @param items {Array<ListItem>} The items to search.
+   * @returns A record of the first selected item including the item and the
+   * index of the item or `null` if none are selected.
+   */
+  static getSelectedItem<T extends ListItem>(items: T[]) {
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      if (item.selected) {
+        return {
+          item,
+          index: i,
+        };
+      }
+    }
+    return null;
   }
 
-  /** @return Whether the given element is a list item element. */
-  private isListItem(element: Element): element is ListItem {
-    return element.tagName.toLowerCase() === this.listItemTagName;
+  /**
+   * Retrieves the the first non-disabled item of a given array of items. This
+   * the first item that is not disabled.
+   *
+   * @param items {Array<ListItem>} The items to search.
+   * @returns The first selectable item or `null` if none are selectable.
+   */
+  static getFirstSelectableItem<T extends ListItem>(items: T[]) {
+    for (const item of items) {
+      if (!item.disabled) {
+        return item;
+      }
+    }
+
+    return null;
   }
 
-  private getFirstItem(): ListItem {
-    return this.items[0];
+  /**
+   * Retrieves the the last non-disabled item of a given array of items.
+   *
+   * @param items {Array<ListItem>} The items to search.
+   * @returns The last selectable item or `null` if none are selectable.
+   */
+  static getLastSelectableItem<T extends ListItem>(items: T[]) {
+    for (let i = items.length - 1; i >= 0; i--) {
+      const item = items[i];
+      if (!item.disabled) {
+        return item;
+      }
+    }
+
+    return null;
   }
 
-  private getLastItem(): ListItem {
-    return this.items[this.items.length - 1];
+  /**
+   * Retrieves the the next non-disabled item of a given array of items.
+   *
+   * @param items {Array<ListItem>} The items to search.
+   * @param index {{index: number}} The index to search from.
+   * @returns The next selectable item or `null` if none are selectable.
+   */
+  protected static getNextItem<T extends ListItem>(items: T[], index: number) {
+    for (let i = 1; i < items.length; i++) {
+      const nextIndex = (i + index) % items.length;
+      const item = items[nextIndex];
+      if (!item.disabled) {
+        return item;
+      }
+    }
+    return null;
   }
 
-  private getPrevItem(item: ListItem): ListItem {
-    const curIndex = this.items.indexOf(item);
-    return this.items[curIndex === 0 ? this.items.length - 1 : curIndex - 1];
-  }
+  /**
+   * Retrieves the the previous non-disabled item of a given array of items.
+   *
+   * @param items {Array<ListItem>} The items to search.
+   * @param index {{index: number}} The index to search from.
+   * @returns The previous selectable item or `null` if none are selectable.
+   */
+  protected static getPrevItem<T extends ListItem>(items: T[], index: number) {
+    for (let i = 1; i < items.length; i++) {
+      const prevIndex = (index - i + items.length) % items.length;
+      const item = items[prevIndex];
 
-  private getNextItem(item: ListItem): ListItem {
-    const curIndex = this.items.indexOf(item);
-    return this.items[(curIndex + 1) % this.items.length];
+      if (!item.disabled) {
+        return item;
+      }
+    }
+    return null;
   }
 }

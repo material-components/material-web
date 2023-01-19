@@ -5,13 +5,9 @@
  */
 
 import {html, LitElement, TemplateResult} from 'lit';
-import {property} from 'lit/decorators.js';
 
-/** @soyCompatible */
+// tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class ListItemIcon extends LitElement {
-  @property({type: String, reflect: true}) media = 'icon';
-
-  /** @soyTemplate */
   override render(): TemplateResult {
     return html`
       <span class="md3-list-item__icon"><slot></slot></span>

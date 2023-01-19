@@ -14,9 +14,9 @@ export class AutocompleteList extends List {
   override role: ARIARole = 'listbox';
 
   /** @soyTemplate */
-  protected override getRenderClasses(): ClassInfo {
+  protected override getListClasses(): ClassInfo {
     return {
-      ...super.getRenderClasses(),
+      ...super.getListClasses(),
       'md3-autocomplete-list': true,
     };
   }

@@ -8,8 +8,6 @@
 
 @use 'sass:map';
 @use '../../field/filled-field';
-@use '../../list/list';
-@use '../../list/list-item';
 @use '../../menusurface/menu-surface';
 @use '../../sass/theme';
 @use '../../textfield/filled-text-field';
@@ -189,39 +187,9 @@ $dark-theme: tokens.md-comp-filled-autocomplete-values(
         container-shadow-color: var(--_menu-container-shadow-color),
       )
     );
-
-    @include list.theme(
-      (
-        container-color: var(--_menu-container-color),
-        container-surface-tint-layer-color:
-          var(--_menu-container-surface-tint-layer-color),
-        container-elevation: var(--_menu-container-elevation),
-      )
-    );
-
-    @include list-item.theme(
-      (
-        list-item-container-color: var(--_menu-container-color),
-        list-item-one-line-container-height:
-          var(--_menu-list-item-container-height),
-        list-item-label-text-color: var(--_menu-list-item-label-text-color),
-        list-item-label-text-font: var(--_menu-list-item-label-text-font),
-        list-item-label-text-line-height:
-          var(--_menu-list-item-label-text-line-height),
-        list-item-label-text-size: var(--_menu-list-item-label-text-size),
-        list-item-label-text-tracking:
-          var(--_menu-list-item-label-text-tracking),
-        list-item-label-text-weight: var(--_menu-list-item-label-text-weight),
-      )
-    );
   }
 
   .md3-autocomplete ::slotted([data-aria-selected='true']) {
-    @include list-item.theme(
-      (
-        list-item-container-color:
-          var(--_menu-list-item-selected-container-color),
-      )
-    );
+    // TODO(b/265209322): list item selected styles
   }
 }

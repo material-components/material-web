@@ -16,7 +16,8 @@ declare global {
 }
 
 /**
- * @soyCompatible
+ * @summary A video that is expected to be slotted into a list item.
+ *
  * @final
  * @suppress {visibility}
  */

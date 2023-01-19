@@ -33,6 +33,8 @@ $_reference: (
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
+
+    display: inline-flex;
   }
 
   .md3-list-item__icon {
@@ -45,7 +47,7 @@ $_reference: (
     line-height: 1;
     letter-spacing: normal;
     text-transform: none;
-    display: inline-block;
+    display: inline-flex;
     white-space: nowrap;
     word-wrap: normal;
     direction: ltr;

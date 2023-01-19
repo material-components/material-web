@@ -8,7 +8,7 @@
 
 @use '../../../sass/map-ext';
 @use '../../../sass/theme';
-@use '../tokens';
+@use '../../../tokens';
 
 @mixin styles() {
   $tokens: map-ext.pick(

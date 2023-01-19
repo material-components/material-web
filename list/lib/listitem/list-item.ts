@@ -4,245 +4,283 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// Required for @ariaProperty
+// tslint:disable:no-new-decorators
+
 import '../../../ripple/ripple.js';
 import '../../../focus/focus-ring.js';
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '../../../actionelement/action-element.js';
+import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
+import {property, query, queryAsync, state} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+
 import {ariaProperty} from '../../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../../focus/strong-focus.js';
+import {ripple} from '../../../ripple/directive.js';
 import {MdRipple} from '../../../ripple/ripple.js';
 import {ARIARole} from '../../../types/aria.js';
-import {html, TemplateResult} from 'lit';
-import {property, query} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
 
-/** @soyCompatible */
-export class ListItem extends ActionElement {
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  // tslint:disable-next-line:decorator-placement
+interface ListItemSelf {
+  selected: boolean;
+  disabled: boolean;
+}
+
+/**
+ * The interface of an item that is compatible with md-list. An item that is
+ * selectable and disablable.
+ */
+export type ListItem = ListItemSelf&HTMLElement;
+
+// tslint:disable-next-line:enforce-comments-on-exported-symbols
+export class ListItemEl extends LitElement implements ListItem {
+  @ariaProperty
+  // tslint:disable-next-line
   @property({type: String, attribute: 'data-role', noAccessor: true})
   // @ts-ignore(b/264292293): Use `override` with TS 4.9+
   role: ARIARole = 'listitem';
-
-  @ariaProperty  // tslint:disable-line:no-new-decorators
+  @ariaProperty
   @property({type: String, attribute: 'data-aria-selected', noAccessor: true})
   override ariaSelected!: 'true'|'false';
-
-  @ariaProperty  // tslint:disable-line:no-new-decorators
+  @ariaProperty
   @property({type: String, attribute: 'data-aria-checked', noAccessor: true})
   override ariaChecked!: 'true'|'false';
 
-  @property({type: String}) itemId!: string;
+  /**
+   * The primary, headline text of the list item.
+   */
+  @property() headline = '';
 
-  @property({type: String}) supportingText = '';
-  @property({type: String}) multiLineSupportingText = '';
-  @property({type: String}) trailingSupportingText = '';
+  /**
+   * The one-line supporting text below the headline.
+   */
+  @property() supportingText = '';
+
+  /**
+   * The multi-line supporting text below the headline. __NOTE:__ if set to a
+   * truthy value, overrides the visibility and behavior of `supportingText`.
+   */
+  @property() multiLineSupportingText = '';
+
+  /**
+   * The supporting text placed at the end of the item. Overriden by elements
+   * slotted into the `end` slot.
+   */
+  @property() trailingSupportingText = '';
+
+  /**
+   * Disables the item and makes it non-selectable and non-interactive.
+   */
   @property({type: Boolean}) disabled = false;
-  @property({type: Number}) itemTabIndex = -1;
-  @property({type: String}) headline = '';
-  @query('md-ripple') ripple!: MdRipple;
-  @query('[data-query-md3-list-item]') listItemRoot!: HTMLElement;
-  @property({type: Boolean}) showFocusRing = false;
 
-  /** @soyTemplate */
+  /**
+   * The tabindex of the underlying item.
+   *
+   * __NOTE:__ this is overriden by the keyboard behavior of `md-list` and by
+   * setting `selected`.
+   */
+  @property({type: Number}) itemTabIndex = -1;
+
+  /**
+   * Whether or not the element is in the selected state. When selected,
+   * tabindex is set to 0, and in some list item variants (like md-list-item),
+   * focuses the underlying item.
+   */
+  @property({type: Boolean, reflect: true}) selected = false;
+
+  /**
+   * READONLY. Sets the `md-list-item` attribute on the element.
+   */
+  @property({type: Boolean, attribute: 'md-list-item', reflect: true})
+  isListItem = true;
+
+  @queryAsync('md-ripple') protected ripple!: Promise<MdRipple|null>;
+  @query('.list-item') protected listItemRoot!: HTMLElement;
+
+  @state() protected showFocusRing = false;
+  @state() protected showRipple = false;
+
+  /**
+   * Only meant to be overriden by subclassing and not by the user. This is
+   * so that we have control over focus on specific variants such as disabling
+   * focus on <md-autocomplete-item> but enabling it for <md-menu-item>.
+   */
+  protected focusOnSelection = true;
+
+  protected getRipple = () => {
+    this.showRipple = true;
+    return this.ripple;
+  };
+
+  private isFirstUpdate = true;
+
+  override willUpdate(changed: PropertyValues<this>) {
+    if (changed.has('selected') && !this.disabled) {
+      if (this.selected) {
+        this.itemTabIndex = 0;
+
+        if (this.focusOnSelection) {
+          this.showFocusRing = shouldShowStrongFocus();
+        }
+
+        // Do not reset anything if it's the first render because user could
+        // have set `itemTabIndex` manually.
+      } else if (!this.isFirstUpdate) {
+        this.itemTabIndex = -1;
+      }
+    }
+  }
+
   override render(): TemplateResult {
+    return this.renderListItem(html`
+      ${this.renderStart()}
+      ${this.renderBody()}
+      ${this.renderEnd()}
+      <div class="ripple">
+        ${this.renderRipple()}
+      </div>
+      <div class="focus-ring">
+        ${this.renderFocusRing()}
+      </div>`);
+  }
+
+  /**
+   * Renders the root list item.
+   *
+   * @param content {unkown} the child content of the list item.
+   */
+  protected renderListItem(content: unknown) {
     return html`
       <li
-          tabindex=${this.itemTabIndex}
+          tabindex=${this.disabled ? -1 : this.itemTabIndex}
           role=${this.role}
-          aria-selected=${ifDefined(this.ariaSelected || undefined)}
-          aria-checked=${ifDefined(this.ariaChecked || undefined)}
-          id=${ifDefined(this.itemId || undefined)}
-          data-query-md3-list-item
-          class="md3-list-item ${classMap(this.getRenderClasses())}"
-          @pointerdown=${this.handlePointerDown}
-          @pointerenter=${this.handlePointerEnter}
-          @pointerup=${this.handlePointerUp}
-          @pointercancel=${this.handlePointerCancel}
-          @pointerleave=${this.handlePointerLeave}
-          @keydown=${this.handleKeyDown}
-          @keyup=${this.handleKeyUp}
-          @click=${this.handleClick}
-          @contextmenu=${this.handleContextMenu}
-          @focus=${this.handleFocus}
-          @blur=${this.handleBlur}
-          >
-        ${this.renderStart()}
-        ${this.renderBody()}
-        ${this.renderEnd()}
-        <div class="md3-list-item__ripple">
-          ${this.renderRipple()}
-        </div>
-        <div class="md3-list-item__focus-ring">
-          ${this.renderFocusRing()}
-        </div>
-      </li>`;
+          aria-selected=${this.ariaSelected || nothing}
+          aria-checked=${this.ariaChecked || nothing}
+          class="list-item ${classMap(this.getRenderClasses())}"
+          @pointerdown=${this.onPointerdown}
+          @focus=${this.onFocus}
+          @blur=${this.onBlur}
+          @click=${this.onClick}
+          @pointerenter=${this.onPointerenter}
+          @pointerleave=${this.onPointerleave}
+          @keydown=${this.onKeydown}
+          ${ripple(this.getRipple)}>${content}</li>`;
   }
 
-  /** @soyTemplate */
-  protected renderRipple(): TemplateResult {
-    return html`<md-ripple ?disabled="${this.disabled}"></md-ripple>`;
+  /**
+   * Handles rendering of the ripple element.
+   */
+  protected renderRipple(): TemplateResult|typeof nothing {
+    return this.showRipple ?
+        html`<md-ripple ?disabled="${this.disabled}"></md-ripple>` :
+        nothing;
   }
 
-  /** @soyTemplate */
+  /**
+   * Handles rendering of the focus ring.
+   */
   protected renderFocusRing(): TemplateResult {
     return html`<md-focus-ring .visible="${
         this.showFocusRing}"></md-focus-ring>`;
   }
 
-  /** @soyTemplate */
-  protected getAriaRole(): ARIARole {
-    return 'listitem';
-  }
-
-  /** @soyTemplate */
+  /**
+   * Classes applied to the list item root.
+   */
   protected getRenderClasses(): ClassInfo {
     return {
-      'md3-list-item--with-one-line':
+      'with-one-line':
           this.supportingText === '' && this.multiLineSupportingText === '',
-      'md3-list-item--with-two-line':
+      'with-two-line':
           this.supportingText !== '' && this.multiLineSupportingText === '',
-      'md3-list-item--with-three-line': this.multiLineSupportingText !== '',
-      'md3-list-item--disabled': this.disabled,
-      'md3-list-item--enabled': !this.disabled,
+      'with-three-line': this.multiLineSupportingText !== '',
+      'disabled': this.disabled,
+      'enabled': !this.disabled,
     };
   }
 
-  /** @soyTemplate */
+  /**
+   * The content rendered at the start of the list item.
+   */
   protected renderStart(): TemplateResult {
-    return html`<div class="md3-list-item__start"><!--
-      --><slot name="start" @slotchange=${this.handleSlotChange}></slot><!--
-    --></div>`;
+    return html`<div class="start"><slot name="start"></slot></div>`;
   }
 
-  /** @soyTemplate */
+  /**
+   * Handles rendering the headline and supporting text.
+   */
   protected renderBody(): TemplateResult {
-    return html`<div class="md3-list-item__body"><!--
-       --><span class="md3-list-item__label-text"><!--
-          -->${this.headline}<!--
-       --></span><!--
-        -->${
-        this.multiLineSupportingText !== '' ?
-            this.renderMultiLineSupportingText() :
-            this.supportingText !== '' ? this.renderSupportingText() :
-                                         ''}<!--
-    --></div>`;
+    const supportingText = this.multiLineSupportingText !== '' ?
+        this.renderMultiLineSupportingText() :
+        this.supportingText !== '' ? this.renderSupportingText() :
+                                     '';
+
+    return html`<div class="body"
+      ><span class="label-text">${this.headline}</span>${supportingText}</div>`;
   }
 
-  /** @soyTemplate */
+  /**
+   * Renders the one-line supporting text.
+   */
   protected renderSupportingText(): TemplateResult {
-    return html`<span class="md3-list-item__supporting-text"><!--
-          -->${this.supportingText}<!--
-       --></span>`;
+    return html`<span class="supporting-text">${this.supportingText}</span>`;
   }
 
-  /** @soyTemplate */
+  /**
+   * Renders the multi-line supporting text
+   */
   protected renderMultiLineSupportingText(): TemplateResult {
-    return html`<span class="md3-list-item__supporting-text md3-list-item__supporting-text--multi-line"><!--
-          -->${this.multiLineSupportingText}<!--
-       --></span>`;
+    return html`<span class="supporting-text supporting-text--multi-line"
+      >${this.multiLineSupportingText}</span>`;
   }
 
-  /** @soyTemplate */
+  /**
+   * The content rendered at the end of the list item.
+   */
   protected renderEnd(): TemplateResult {
-    return html`<div class="md3-list-item__end"><!--
-      --><slot name="end" @slotchange=${this.handleSlotChange}><!--
-        -->${
-        this.trailingSupportingText !== '' ?
-            this.renderTrailingSupportingText() :
-            ''}<!--
-      --></slot><!--
-    --></div>`;
+    const supportingText = this.trailingSupportingText !== '' ?
+        this.renderTrailingSupportingText() :
+        '';
+    return html`<div class="end"
+      ><slot name="end">${supportingText}</slot></div>`;
   }
 
-  /** @soyTemplate */
+  /**
+   * Renders the supporting text at the end of the list item.
+   */
   protected renderTrailingSupportingText(): TemplateResult {
-    return html`<span class="md3-list-item__trailing-supporting-text"><!--
-          -->${this.trailingSupportingText}<!--
-       --></span>`;
+    return html`<span class="trailing-supporting-text"
+      >${this.trailingSupportingText}</span>`;
   }
 
-  protected handleSlotChange() {
-    this.requestUpdate();
-  }
-
-  override beginPress({positionEvent}: BeginPressConfig) {
-    this.ripple.beginPress(positionEvent);
-  }
-
-  override endPress({cancelled}: EndPressConfig) {
-    this.ripple.endPress();
-
-    if (cancelled) return;
-
-    super.endPress({cancelled, actionData: {item: this}});
-  }
-
-  protected handleFocus() {
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  protected handleBlur() {
-    this.showFocusRing = false;
-  }
-
-  override handlePointerDown(e: PointerEvent) {
-    super.handlePointerDown(e);
-
+  protected onPointerdown() {
     pointerPress();
     this.showFocusRing = shouldShowStrongFocus();
   }
 
-  protected handlePointerEnter(e: PointerEvent) {
-    this.ripple.beginHover(e);
+  protected onFocus() {
+    this.showFocusRing = shouldShowStrongFocus();
   }
 
-  override handlePointerLeave(e: PointerEvent) {
-    super.handlePointerLeave(e);
-
-    this.ripple.endHover();
+  protected onBlur() {
+    this.showFocusRing = false;
   }
 
-  /** @bubbleWizEvent */
-  protected handleKeyDown(e: KeyboardEvent) {
-    if (e.key !== ' ' && e.key !== 'Enter') return;
+  // For easier overriding in menu-item
+  protected onClick(e: Event) {}
+  protected onKeydown(e: KeyboardEvent) {}
+  protected onPointerenter(e: Event) {}
+  protected onPointerleave(e: Event) {}
 
-    e.preventDefault();
-    // TODO(b/240124486): Replace with beginPress provided by action
-    // element.
-    this.ripple.beginPress(e);
-  }
+  override updated(changed: PropertyValues<this>) {
+    super.updated(changed);
 
-  protected handleKeyUp(e: KeyboardEvent) {
-    if (e.key !== ' ' && e.key !== 'Enter') return;
+    // will focus the list item root if it is selected but not on the first
+    // update or else it may cause the page to jump on first load.
+    if (changed.has('selected') && !this.isFirstUpdate && this.selected &&
+        this.focusOnSelection) {
+      this.listItemRoot.focus();
+    }
 
-    e.preventDefault();
-    // TODO(b/240124486): Replace with beginPress provided by action element.
-    super.endPress({cancelled: false, actionData: {item: this}});
-    this.ripple.endPress();
-  }
-
-  /**
-   * Focuses list item and makes list item focusable via keyboard.
-   */
-  activate() {
-    this.itemTabIndex = 0;
-    this.listItemRoot.focus();
-    this.showFocusRing = true;
-  }
-
-  /**
-   * Returns true if list item is currently focused and is focusable.
-   */
-  isActive() {
-    return this.itemTabIndex === 0 && this.showFocusRing;
-  }
-
-  /**
-   * Removes list item from sequential keyboard navigation.
-   */
-  deactivate() {
-    this.itemTabIndex = -1;
+    this.isFirstUpdate = false;
   }
 }

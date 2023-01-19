@@ -3,20 +3,14 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 @use '../../../sass/map-ext';
 @use '../../../sass/theme';
-@use '../tokens';
+@use '../../../tokens';
 
-$_custom-property-prefix: 'list-divider';
+$_custom-property-prefix: 'divider';
 
 @mixin theme($tokens) {
-  $reference: map-ext.pick(
-    tokens.md-comp-list-values(),
-    (list-divider-color, list-divider-height)
-  );
+  $reference: tokens.md-comp-divider-values();
   $tokens: theme.validate-theme($reference, $tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
@@ -24,11 +18,7 @@ $_custom-property-prefix: 'list-divider';
 }
 
 @mixin styles() {
-  $tokens: map-ext.pick(
-    tokens.md-comp-list-values(),
-    (list-divider-color, list-divider-height)
-  );
-
+  $tokens: tokens.md-comp-divider-values();
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   :host {
@@ -37,10 +27,10 @@ $_custom-property-prefix: 'list-divider';
     }
   }
 
-  .md3-list__divider {
+  .divider {
     background-clip: content-box;
-    background-color: var(--_list-divider-color);
-    height: var(--_list-divider-height);
+    background-color: var(--_color);
+    height: var(--_thickness);
     padding: 0;
   }
 }
