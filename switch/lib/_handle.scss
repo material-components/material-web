@@ -7,11 +7,17 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
-
+@use '../../tokens';
 @use '../../ripple/ripple';
+
+$_md-sys-motion: tokens.md-sys-motion-values();
+$_easing-standard: map.get($_md-sys-motion, easing-standard);
 
 @mixin styles() {
   .md3-switch__handle-container {
+    position: relative;
+    // this easing is custom to perform the "overshoot" animation
+    transition: margin 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: flex;
     $margin: calc(var(--_track-width) - var(--_track-height));
 
@@ -22,6 +28,10 @@
     .md3-switch--unselected & {
       margin-inline-end: $margin;
     }
+
+    .md3-switch:disabled & {
+      transition: none;
+    }
   }
 
   .md3-switch__handle {
@@ -30,21 +40,53 @@
     border-start-end-radius: var(--_handle-shape-start-end);
     border-end-end-radius: var(--_handle-shape-end-end);
     border-end-start-radius: var(--_handle-shape-end-start);
-    height: 20px;
-    width: 20px;
+    height: var(--_unselected-handle-height);
+    width: var(--_unselected-handle-width);
     background-color: var(--_selected-handle-color);
 
-    // TODO(b/230484095): Use token instead of hard coded values
+    transform-origin: center;
+    transition-property: height, width, background-color;
+    transition-duration: 250ms, 250ms, 67ms;
+    transition-timing-function: $_easing-standard, $_easing-standard, linear;
+    z-index: 0;
+
+    &::before {
+      content: '';
+      display: flex;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      border-radius: inherit;
+      box-sizing: border-box;
+
+      transition: opacity 67ms linear;
+
+      .md3-switch--selected & {
+        // When selected, turn off ::before
+        opacity: 0;
+      }
+
+      .md3-switch:disabled & {
+        transition: none;
+      }
+    }
+
+    .md3-switch:disabled & {
+      transition: none;
+    }
+
     .md3-switch--selected &,
     .md3-switch--unselected &.md3-switch__handle--big {
-      transform: scale(1.2);
+      height: var(--_selected-handle-height);
+      width: var(--_selected-handle-width);
     }
-    .md3-switch--unselected & {
-      transform: scale(0.8);
-    }
+
     .md3-switch--selected:enabled:active &,
     .md3-switch--unselected:enabled:active & {
-      transform: scale(1.4);
+      height: var(--_pressed-handle-height);
+      width: var(--_pressed-handle-width);
+      transition-timing-function: linear;
+      transition-duration: 100ms;
     }
 
     .md3-switch--selected:hover & {
@@ -85,6 +127,11 @@
   }
 
   .md3-switch__ripple {
+    position: absolute;
+    display: inline-flex;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     height: var(--_state-layer-size);
     width: var(--_state-layer-size);
 

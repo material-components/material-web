@@ -10,7 +10,6 @@
 
 @use 'sass:map';
 @use '../../focus/focus-ring';
-@use '../../motion/animation';
 @use '../../sass/color';
 @use '../../sass/resolvers';
 @use '../../sass/shape';
@@ -22,13 +21,6 @@
 @use './track';
 @use './handle';
 @use './icon';
-
-// TODO(b/230768994): update animation timing
-$animation-duration: 75ms;
-$icon-exit-duration: 0.4 * $animation-duration;
-$icon-enter-duration: $animation-duration - $icon-exit-duration;
-
-$_touch-target-size: 48px;
 
 $_forced-colors-theme: (
   disabled-selected-icon-color: GrayText,
@@ -52,7 +44,6 @@ $_forced-colors-theme: (
 );
 
 @mixin theme($tokens) {
-  $tokens: _warn-of-not-implemented($tokens);
   $tokens: theme.validate-theme(tokens.md-comp-switch-values(), $tokens);
   $tokens: _resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, switch);
@@ -77,11 +68,11 @@ $_forced-colors-theme: (
 
     display: inline-flex;
     outline: none;
+    vertical-align: top;
     -webkit-tap-highlight-color: transparent;
   }
 
   md-focus-ring {
-    // TODO(b/231741594): use `track-shape` once this is not deleted.
     @include focus-ring.theme(
       (
         shape: (
@@ -113,96 +104,6 @@ $_forced-colors-theme: (
     border-start-end-radius: var(--_track-shape-start-end);
     border-end-end-radius: var(--_track-shape-end-end);
     border-end-start-radius: var(--_track-shape-end-start);
-  }
-
-  // Track
-  .md3-switch__handle,
-  .md3-switch__track {
-    &::before {
-      content: '';
-      display: flex;
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      border-radius: inherit;
-      box-sizing: border-box;
-
-      transition-property: opacity;
-      transition-duration: #{$animation-duration};
-    }
-  }
-
-  .md3-switch__track {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-
-    border-radius: inherit;
-
-    // Center content
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &::before {
-      border-style: solid;
-
-      .md3-switch--selected & {
-        // When selected, turn off ::before
-        opacity: 0;
-      }
-    }
-  }
-
-  // Handle container
-  .md3-switch__handle-container {
-    position: relative;
-    transition: animation.standard(margin, $animation-duration);
-  }
-
-  // Handle
-  .md3-switch__handle {
-    transform-origin: center;
-    transition: animation.standard(transform, $animation-duration);
-
-    &::before {
-      .md3-switch--selected & {
-        // When selected, turn off ::before
-        opacity: 0;
-      }
-    }
-  }
-
-  // Ripple
-  .md3-switch__ripple {
-    position: absolute;
-    display: inline-flex;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  // Icons
-  .md3-switch__icons {
-    position: relative;
-    height: 100%;
-    width: 100%;
-  }
-
-  .md3-switch__icon {
-    position: absolute;
-    inset: 0;
-    margin: auto;
-
-    transition-property: fill;
-    transition-duration: #{$animation-duration};
-    opacity: 0;
-  }
-
-  .md3-switch--selected .md3-switch__icon--on,
-  .md3-switch--unselected .md3-switch__icon--off {
-    opacity: 1;
   }
 
   // Touch target
@@ -284,19 +185,4 @@ $_forced-colors-theme: (
       )
     )
   );
-}
-
-@function _warn-of-not-implemented($theme) {
-  // TODO(b/230484095): remove this warning once these are implemented.
-  @if (
-    map.get($theme, selected-handle-height) or
-      map.get($theme, selected-handle-width) or
-      map.get($theme, unselected-handle-height) or
-      map.get($theme, unselected-handle-width) or
-      map.get($theme, pressed-handle-height) or
-      map.get($theme, pressed-handle-width)
-  ) {
-    @warn '`handle-height` and `handle-width` are not yet implemented. see b/230484095';
-  }
-  @return $theme;
 }

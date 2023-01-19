@@ -7,8 +7,44 @@
 // Selector '.md3-*' should only be used in this project.
 
 @use 'sass:map';
+@use '../../tokens';
+
+$_md-sys-motion: tokens.md-sys-motion-values();
+$_easing-standard: map.get($_md-sys-motion, easing-standard);
 
 @mixin styles() {
+  .md3-switch__icons {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+
+  .md3-switch__icon {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+
+    transition: fill 67ms linear, opacity 33ms linear,
+      transform 167ms $_easing-standard;
+    opacity: 0;
+
+    .md3-switch:disabled & {
+      transition: none;
+    }
+  }
+
+  .md3-switch--selected .md3-switch__icon--on,
+  .md3-switch--unselected .md3-switch__icon--off {
+    opacity: 1;
+  }
+
+  // rotate selected icon into view when there is no unselected icon
+  .md3-switch--unselected
+    .md3-switch__handle:not(.md3-switch__handle--big)
+    .md3-switch__icon--on {
+    transform: rotate(-45deg);
+  }
+
   .md3-switch__icon {
     .md3-switch--selected & {
       width: var(--_selected-icon-size);
