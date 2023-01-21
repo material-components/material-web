@@ -1,6 +1,4 @@
 /**
- * @requirecss {field.lib.shared_styles}
- *
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
