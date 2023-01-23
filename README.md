@@ -56,7 +56,7 @@ Icon button                   | 🟢     | 🔴    | 🔴
 Checkbox                      | 🟢     | 🟢    | 🔴
 Chips                         | 🔴     | 🔴    | 🔴
 Dialog                        | 🔴     | 🔴    | 🔴
-Divider                       | 🔴     | 🔴    | 🔴
+Divider                       | 🟡     | 🔴    | 🔴
 Elevation                     | 🟢     | 🔴    | 🔴
 Focus ring                    | 🟢     | 🔴    | 🔴
 Field                         | 🟢     | 🟢    | 🔴
