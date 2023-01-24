@@ -12,26 +12,9 @@ open-source design system.
 > Note: Looking for Material 2? `<mwc-*` components are now on the
 > [`mwc` branch](https://github.com/material-components/material-web/tree/mwc).
 
-## Quick start
+## Links
 
-[Material Web quick start playground](https://lit.dev/playground/#gist=37d28012c5ec6de30809bdf4a6e26cb6).
-
-```shell
-npm install @material/web
-```
-
-```js
-import '@material/web/checkbox/checkbox.js';
-```
-
-```html
-<script type="module" src="./index.js"></script>
-
-<label>
-  Material 3
-  <md-checkbox></md-checkbox>
-</label>
-```
+- [Quick start](docs/quick-start.md)
 
 ## Roadmap
 
