@@ -45,4 +45,10 @@
     height: 100%;
     width: 100%;
   }
+
+  @media (forced-colors: active) {
+    :host::before {
+      background: CanvasText;
+    }
+  }
 }
