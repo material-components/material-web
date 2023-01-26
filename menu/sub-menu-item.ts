@@ -1,21 +1,23 @@
 /**
  * @license
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
 
 import {customElement} from 'lit/decorators.js';
 
-import {Menu} from './lib/menu.js';
-import {styles} from './lib/menu-styles.css.js';
+import {styles as listItemStyles} from '../list/lib/listitem/list-item-styles.css.js';
+
+import {styles as privateProps} from './lib/menuitem/menu-item-private-styles.css.js';
+import {styles} from './lib/menuitem/menu-item-styles.css.js';
+import {SubMenuItem} from './lib/submenuitem/sub-menu-item.js';
 
 export {ListItem} from '../list/lib/listitem/list-item.js';
-export {Corner, DefaultFocusState} from './lib/menu.js';
 export {CloseMenuEvent, DeselectItemsEvent, MenuItem} from './lib/shared.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-menu': MdMenu;
+    'md-sub-menu-item': MdSubMenuItem;
   }
 }
 
@@ -23,15 +25,17 @@ declare global {
  * @summary Menus display a list of choices on a temporary surface.
  *
  * @description
- * Menus appear when users interact with a button, action, or other control.
+ * Menu items are the selectable choices within the menu. Menu items must
+ * implement the `MenuItem` interface and also have the `md-menu-item`
+ * attribute. Additionally menu items are list items so they must also have the
+ * `md-list-item` attribute.
  *
- * They can be opened from a variety of elements, most commonly icon buttons,
- * buttons, and text fields.
+ * Menu items can control a menu by selectively firing the `close-menu` and
+ * `deselect-items` events.
  *
- * md-menu listens for the `close-menu` and `deselect-items` events.
- *
- * - `close-menu` closes the menu when dispatched from a child element.
- * - `deselect-items` deselects all of its immediate menu-item children.
+ * This menu item will open a sub-menu that is slotted in the `submenu` slot.
+ * Additionally, the containing menu must either have `has-overflow` or `fixed`
+ * set to `true` in order to display the containing menu properly.
  *
  * @example
  * ```html
@@ -61,7 +65,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-menu')
-export class MdMenu extends Menu {
-  static override styles = [styles];
+@customElement('md-sub-menu-item')
+export class MdSubMenuItem extends SubMenuItem {
+  static override styles = [privateProps, listItemStyles, styles];
 }

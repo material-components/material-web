@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -8,16 +8,17 @@ import {customElement} from 'lit/decorators.js';
 
 import {styles as listItemStyles} from '../list/lib/listitem/list-item-styles.css.js';
 
-import {MenuItemEl} from './lib/menuitem/menu-item.js';
 import {styles as privateProps} from './lib/menuitem/menu-item-private-styles.css.js';
 import {styles} from './lib/menuitem/menu-item-styles.css.js';
+import {MenuItemLink} from './lib/menuitemlink/menu-item-link.js';
 
 export {ListItem} from '../list/lib/listitem/list-item.js';
 export {CloseMenuEvent, DeselectItemsEvent, MenuItem} from './lib/shared.js';
 
+
 declare global {
   interface HTMLElementTagNameMap {
-    'md-menu-item': MdMenuItem;
+    'md-menu-item-link': MdMenuItemLink;
   }
 }
 
@@ -33,10 +34,12 @@ declare global {
  * Menu items can control a menu by selectively firing the `close-menu` and
  * `deselect-items` events.
  *
+ * This is a linkable variant.
+ *
  * @final
  * @suppress {visibility}
  */
-@customElement('md-menu-item')
-export class MdMenuItem extends MenuItemEl {
+@customElement('md-menu-item-link')
+export class MdMenuItemLink extends MenuItemLink {
   static override styles = [privateProps, listItemStyles, styles];
 }

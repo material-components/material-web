@@ -126,3 +126,26 @@
 @function trim($string, $prefix, $suffix: $prefix) {
   @return trim-prefix(trim-suffix($string, $suffix), $prefix);
 }
+
+/// Returns a new string with the first match of a pattern replaced by a
+/// replacement.
+///
+/// @example - scss
+///   @debug trim('foo bar baz', 'bar', 'quux'); // "foo quux baz"
+///
+/// @param {String} $string - The string to be searched.
+/// @param {String} $pattern - The pattern to search for.
+/// @param {String} $replacement - The value to replace the pattern.
+/// @return {String} The string with the first match of pattern replaced by the
+///     replacement or the initial string itself.
+@function replace($string, $pattern, $replacement) {
+  $pattern-index: string.index($string, $pattern);
+  @if not $pattern-index {
+    @return $string;
+  }
+
+  $before: string.slice($string, 1, $pattern-index - 1);
+  $after: string.slice($string, string.length($pattern) + $pattern-index);
+
+  @return $before + $replacement + $after;
+}

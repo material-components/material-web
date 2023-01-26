@@ -23,3 +23,27 @@
 
   @return $result;
 }
+
+/// Duplicates a key in the map with a new name.
+///
+/// Throws an error if key is not in map.
+///
+/// @example - scss
+///   @debug duplicate-key((width: 2, height: 3), width, container-width);
+///          // (width: 2, height: 3, container-width: 2)
+///
+/// @example - scss
+///   @debug duplicate-key((width: 2, height: 3), width, height);
+///          // (width: 2, height: 2)
+///
+/// @param {Map} $map - Map input to duplicate key.
+/// @param {String} $name - Name of key to duplicate.
+/// @param {String} $new-name - Name of duplicated key.
+/// @return {Map} Returns a map containing the duplicated key.
+@function duplicate-key($map, $name, $new-name) {
+  $value: map.get($map, $name);
+  @if not map.has-key($map, $name) {
+    @error "Key " + $name + " does not exist in map " + $map;
+  }
+  @return map.set($map, $new-name, $value);
+}

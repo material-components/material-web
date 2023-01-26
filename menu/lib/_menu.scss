@@ -3,10 +3,113 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+@use 'sass:map';
+
+@use '../../list/list';
+@use './menuitem/menu-item';
+@use '../../list/list-divider';
+@use '../../sass/resolvers';
+@use '../../sass/theme';
+@use '../../tokens';
+@use '../../elevation/lib/elevation';
+@use '../../focus/focus-ring';
+
+$_custom-property-prefix: 'menu';
+
 @mixin theme($theme) {
-  // TODO(b/265220743): implement styles
+  $theme: theme.validate-theme(tokens.md-comp-menu-values(), $theme);
+  $theme: _resolve-tokens($theme);
+  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
+
+  @include theme.emit-theme-vars($theme);
 }
 
 @mixin styles() {
-  // TODO(b/265220743): implement styles
+  $tokens: tokens.md-comp-menu-values();
+  $tokens: _resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  :host {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+
+    @include list.theme(
+      (
+        container-color: var(--_container-color),
+      )
+    );
+
+    @include list-divider.theme(
+      (
+        color: var(--_divider-color),
+        thickness: var(--_divider-height),
+      )
+    );
+
+    @include elevation.theme(
+      (
+        level: var(--_container-elevation),
+        shadow-color: var(--_container-shadow-color),
+        surface-tint: var(--_container-surface-tint-layer-color),
+      )
+    );
+
+    @include focus-ring.theme(
+      (
+        shape: var(--_container-shape),
+      )
+    );
+  }
+
+  .menu {
+    border-radius: var(--_container-shape);
+    display: none;
+    opacity: 0;
+    z-index: 20;
+    position: absolute;
+    user-select: none;
+    max-height: inherit;
+    height: inherit;
+
+    &.fixed {
+      position: fixed;
+    }
+
+    md-list {
+      height: inherit;
+      max-height: inherit;
+      display: block;
+      overflow: auto;
+    }
+
+    &.has-overflow md-list {
+      overflow: visible;
+    }
+
+    &.animating md-list {
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    &.animating ::slotted(.hidden) {
+      opacity: 0;
+    }
+
+    slot {
+      display: block;
+      height: inherit;
+      max-height: inherit;
+    }
+  }
+
+  md-elevation {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+}
+
+@function _resolve-tokens($tokens) {
+  @return elevation.resolve-tokens($tokens, 'elevation-key');
 }

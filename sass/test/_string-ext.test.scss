@@ -124,4 +124,37 @@
       );
     }
   }
+
+  @include test.describe('replace()') {
+    @include test.it('should replace a pattern') {
+      @include test.assert-equal(
+        string-ext.replace('foo bar baz', 'foo', 'quux'),
+        'quux bar baz'
+      );
+
+      @include test.assert-equal(
+        string-ext.replace('foo bar baz', 'bar', 'quux'),
+        'foo quux baz'
+      );
+
+      @include test.assert-equal(
+        string-ext.replace('foo bar baz', 'baz', 'quux'),
+        'foo bar quux'
+      );
+    }
+
+    @include test.it('should return the string if pattern dont match') {
+      @include test.assert-equal(
+        string-ext.replace('foo bar baz', 'quux', 'womp'),
+        'foo bar baz'
+      );
+    }
+
+    @include test.it('replaces only first match') {
+      @include test.assert-equal(
+        string-ext.replace('womp womp', 'womp', 'doo'),
+        'doo womp'
+      );
+    }
+  }
 }
