@@ -1,0 +1,86 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'sass:map';
+@use 'sass:string';
+@use '../../sass/color';
+@use '../../sass/shape';
+@use '../../sass/theme';
+@use '../../sass/var';
+@use '../../tokens';
+@use '../../sass/string-ext';
+
+$_md-sys-motion: tokens.md-sys-motion-values();
+$_md-sys-color: tokens.md-sys-color-values-light();
+
+$_tokens: (
+  // Container size
+  container-max-inline-size: min(560px, calc(100% - 48px)),
+  container-min-inline-size: 280px,
+  container-max-block-size: min(560px, calc(100% - 48px)),
+  container-min-block-size: 140px,
+  // Container position
+  container-inset-inline-start: auto,
+  container-inset-inline-end: auto,
+  container-inset-block-start: auto,
+  container-inset-block-end: auto,
+
+  // Transition
+  // Basing on https://m3.material.io/styles/motion/easing-and-duration/applying-easing-and-duration#27a05b8b-02b1-4695-a7e4-70797f205222
+  opening-transition-duration: map.get($_md-sys-motion, 'duration-medium4'),
+  opening-transition-easing:
+    map.get($_md-sys-motion, 'easing-emphasized-decelerate'),
+  closing-transition-duration: map.get($_md-sys-motion, 'duration-short4'),
+  closing-transition-easing:
+    map.get($_md-sys-motion, 'easing-emphasized-accelerate'),
+  // Scrim
+  scrim-color: rgba(0, 0, 0, 0.32),
+  // Content
+  container-block-padding: 24px,
+  container-inline-padding: 24px,
+  header-spacing: 16px,
+  action-spacing: 8px,
+  content-block-start-spacing: 16px,
+  content-block-end-spacing: 24px,
+  // Divider
+  with-divider-divider-height: 1px,
+  with-divider-divider-color: map.get($_md-sys-color, 'outline')
+);
+
+$_fullscreen-tokens: (
+  fullscreen-header-block-size: 56px,
+  fullscreen-footer-block-size: 56px,
+  // Note, the 8px here is not per spec, but needed to make the explicit 56px not be cramped.
+  fullscreen-container-block-padding: 8px,
+);
+
+@function _map-without-keys-with-prefix($map, $prefix) {
+  $filtered: ();
+  @each $prop, $value in $map {
+    @if not string-ext.has-prefix($prop, $prefix) {
+      $filtered: map.set($filtered, $prop, $value);
+    }
+  }
+  @return $filtered;
+}
+
+@function remove-unsupported-tokens($tokens) {
+  $remove-prefix: 'action-';
+  $tokens: _map-without-keys-with-prefix($tokens, $remove-prefix);
+
+  // b/203778922: `*-type` used by other platforms but not web.
+  $unsupported-tokens: ('headline-type', 'supporting-text-type');
+  @return map.remove($tokens, $unsupported-tokens...);
+}
+
+/**
+ * Extended token set for dialog. Note, currently ignoring tokens for 
+ * `action-*-label-text` and `action-*-state-layer` since actions are 
+ * spec'd as standard text buttons.
+ */
+@function md-comp-dialog-values() {
+  $tokens: remove-unsupported-tokens(tokens.md-comp-dialog-values());
+  @return map.merge(map.merge($tokens, $_tokens), $_fullscreen-tokens);
+}

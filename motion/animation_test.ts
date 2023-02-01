@@ -5,8 +5,7 @@
  */
 
 // import 'jasmine'; (google3-only)
-
-import {AnimationSignal, createAnimationSignal} from './animation.js';
+import {AnimationSignal, createAnimationSignal, createThrottle, msFromTimeCSSValue} from './animation.js';
 
 describe('createAnimationSignal()', () => {
   let task: AnimationSignal;
@@ -53,5 +52,40 @@ describe('createAnimationSignal()', () => {
           .withContext('starting a new task should not finished tasks')
           .toBeFalse();
     });
+  });
+});
+
+
+describe('createThrottle()', () => {
+  it('throttles calls', async () => {
+    const throttle = createThrottle();
+    const key = 'foo';
+    const fn = jasmine.createSpy();
+    let timeoutResolver: Function|null = null;
+    const timeout = new Promise(r => {
+      timeoutResolver = r;
+    });
+    const timeoutFn = async () => {
+      await timeout;
+    };
+    const t1 = throttle(key, fn, timeoutFn);
+    const t2 = throttle(key, fn, timeoutFn);
+    const t3 = throttle(key, fn, timeoutFn);
+    expect(fn).not.toHaveBeenCalled();
+    timeoutResolver!();
+    await Promise.all([t1, t2, t3]);
+    expect(fn).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('msFromTimeCSSValue()', () => {
+  it('parses values in ms', () => {
+    const n = msFromTimeCSSValue('57ms');
+    expect(n).toBe(57);
+  });
+
+  it('parses values in s', () => {
+    const n = msFromTimeCSSValue('1.23s');
+    expect(n).toBe(1230);
   });
 });

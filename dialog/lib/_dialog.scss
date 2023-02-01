@@ -1,0 +1,386 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// PUBLIC PROPERTIES
+
+@use 'sass:map';
+@use './tokens';
+@use '../../sass/color';
+@use '../../sass/resolvers';
+@use '../../sass/shape';
+@use '../../sass/theme';
+@use '../../sass/var';
+
+@mixin styles() {
+  $tokens: tokens.md-comp-dialog-values();
+  $tokens: theme.create-theme-vars($tokens, 'dialog');
+
+  :host {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+
+    // Private properties for drag data.
+    --_container-drag-inline-start: initial;
+    --_container-drag-block-start: initial;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :host {
+      --_opening-transition-duration: 0;
+      --_closing-transition-duration: 0;
+    }
+  }
+
+  .dialog {
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    inset: 0;
+    block-size: 100vh;
+    inline-size: 100vw;
+    max-block-size: 100vh;
+    max-inline-size: 100vw;
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    overflow: clip;
+  }
+
+  // stylelint-disable-next-line selector-pseudo-class-no-unknown --
+  // New platform pseudo-class
+  .dialog:not(:modal) {
+    z-index: 10000;
+    pointer-events: none;
+  }
+
+  .dialog[open] {
+    display: flex;
+  }
+
+  .dialog::backdrop {
+    // Per spec, custom properties don't inherit to backdrop so we avoid using it.
+    background: none;
+  }
+
+  // Note, using ::before as scrim because ::backdrop cannot inherit custom properties.
+  .dialog::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    block-size: 100vh;
+    inline-size: 100vw;
+    pointer-events: none;
+  }
+
+  // Hide scrim when modeless.
+  :host([modeless]) .dialog:before {
+    display: none;
+  }
+
+  .container {
+    position: absolute;
+
+    inset-inline-start: var(
+      --_container-drag-inline-start,
+      var(--_container-inset-inline-start)
+    );
+    inset-inline-end: var(--_container-inset-inline-end);
+    inset-block-start: var(
+      --_container-drag-block-start,
+      var(--_container-inset-block-start)
+    );
+    inset-block-end: var(--_container-inset-block-end);
+
+    background-color: var(--_container-color);
+    border-radius: var(--_container-shape);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    pointer-events: auto;
+    min-block-size: var(--_container-min-block-size);
+    max-block-size: var(--_container-max-block-size);
+    min-inline-size: var(--_container-min-inline-size);
+    max-inline-size: var(--_container-max-inline-size);
+    padding-block-start: var(--_container-block-padding);
+    padding-block-end: var(--_container-block-padding);
+  }
+
+  md-elevation {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    --md-elevation-level: var(--_container-elevation);
+    --md-elevation-surface-tine-color: var(
+      --_container-surface-tint-layer-color
+    );
+  }
+
+  .container > * {
+    box-sizing: border-box;
+    // Apply pad left/right here so scrollbar is not indented.
+    padding-inline-start: var(--_container-inline-padding);
+    padding-inline-end: var(--_container-inline-padding);
+  }
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--_header-spacing);
+    -webkit-font-smoothing: antialiased;
+    color: var(--_headline-color);
+    font-family: var(--_headline-font);
+    line-height: var(--_headline-line-height);
+    font-size: var(--_headline-size);
+    letter-spacing: var(--_headline-tracking);
+    font-weight: var(--_headline-weight);
+  }
+
+  .content {
+    flex: 1;
+    overflow: auto;
+    margin-block-start: var(--_content-block-start-spacing);
+    margin-block-end: var(--_content-block-end-spacing);
+    -webkit-font-smoothing: antialiased;
+    color: var(--_supporting-text-color);
+    font-family: var(--_supporting-text-font);
+    line-height: var(--_supporting-text-line-height);
+    font-size: var(--_supporting-text-size);
+    letter-spacing: var(--_supporting-text-tracking);
+    font-weight: var(--_supporting-text-weight);
+  }
+
+  .footer {
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    gap: var(--_action-spacing);
+  }
+
+  .footerHidden {
+    --_content-block-end-spacing: 0px;
+  }
+
+  .footerHidden .footer {
+    display: none;
+  }
+
+  .stacked .footer {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .scrollable .content {
+    border-block-start: var(--_with-divider-divider-height) solid transparent;
+    border-block-end: var(--_with-divider-divider-height) solid transparent;
+  }
+
+  .scroll-divider-header .content {
+    border-block-start-color: var(--_with-divider-divider-color);
+  }
+
+  .scroll-divider-footer:not(.footerHidden) .content {
+    border-block-end-color: var(--_with-divider-divider-color);
+  }
+
+  .dragging {
+    user-select: none;
+    cursor: move;
+    touch-action: none;
+  }
+
+  // Transitions for open/closed states
+  .container {
+    will-change: transform, opacity;
+    transition-property: transform;
+    overflow: hidden;
+  }
+
+  .container > * {
+    transition-timing-function: inherit;
+    transition-duration: inherit;
+    transition-property: opacity, transform;
+    will-change: transform, opacity;
+    opacity: 0;
+  }
+
+  :host([transition][showing-open]) .container > * {
+    opacity: 1;
+    transform: none;
+  }
+
+  :host([transition][showing-open]) .container {
+    opacity: 1;
+    transform: none;
+  }
+
+  .dialog::before {
+    transition: background-color linear;
+    background-color: transparent;
+  }
+
+  :host([showing-open]) .dialog::before {
+    background-color: var(--_scrim-color);
+  }
+
+  :host([opening]) .dialog::before {
+    transition-duration: calc(var(--_opening-transition-duration) / 2);
+  }
+
+  :host([closing]) .dialog::before {
+    transition-duration: calc(var(--_closing-transition-duration) / 2);
+  }
+
+  :host([opening]) .container {
+    transition-duration: var(--_opening-transition-duration);
+    transition-timing-function: var(--_opening-transition-easing);
+  }
+
+  :host([closing]) .container {
+    transition-duration: var(--_closing-transition-duration);
+    transition-timing-function: var(--_closing-transition-easing);
+  }
+
+  :host([trasition][closing]) .container > * {
+    transform: none;
+    opacity: 0;
+  }
+
+  :host([transition='grow-down']) {
+    --_opening-transform: scale(1, 0.1) translateY(-20%);
+    --_closing-transform: scale(1, 0.9) translateY(-10%);
+    --_origin: top;
+    --_opening-content-transform: scale(1, 2);
+    --_origin-footer: bottom;
+  }
+
+  :host([transition='grow-up']) {
+    --_opening-transform: scale(1, 0.1) translateY(20%);
+    --_closing-transform: scale(1, 0.9) translateY(10%);
+    --_origin: bottom;
+    --_opening-content-transform: scale(1, 2);
+    --_origin-footer: bottom;
+  }
+
+  :host([transition='grow-left']) {
+    --_opening-transform: scale(0.1, 1) translateX(20%);
+    --_closing-transform: scale(0.9, 1) translateX(10%);
+    --_origin: right;
+    --_opening-content-transform: none;
+    --_origin-footer: none;
+  }
+
+  :host([transition='grow-right']) {
+    --_opening-transform: scale(0.1, 1) translateX(-20%);
+    --_closing-transform: scale(0.9, 1) translateX(-10%);
+    --_origin: left;
+    --_opening-content-transform: none;
+    --_origin-footer: none;
+  }
+
+  :host([transition^='grow-']) .container {
+    transform-origin: var(--_origin);
+    transform: var(--_opening-transform);
+  }
+
+  :host([transition^='grow-']) .container > * {
+    transform-origin: var(--_origin);
+    transform: var(--_opening-content-transform);
+  }
+
+  :host([transition^='grow-']) .footer {
+    transform-origin: var(--_origin-footer);
+  }
+
+  :host([transition^='grow-'][closing]) {
+    transform: var(--_closing-transform);
+  }
+
+  :host([transition='shrink']) .container {
+    transform: scale(1.2);
+  }
+
+  :host([transition='grow']) .container {
+    transform: scale(0.8);
+  }
+
+  :host([transition='shrink'][closing]) .container,
+  :host([transition='grow'][closing]) .container {
+    transition-duration: 0;
+    transform: none;
+  }
+
+  // fullscreen
+  :host([showing-fullscreen]) {
+    --_container-max-block-size: none;
+    --_container-max-inline-size: none;
+  }
+
+  :host([showing-fullscreen]) .container {
+    block-size: 100vh;
+    inline-size: 100vw;
+    border-radius: 0px;
+    padding-block-start: 0;
+    padding-block-end: 0;
+  }
+
+  :host([showing-fullscreen]) .header {
+    justify-content: space-between;
+    flex-direction: row;
+    max-block-size: var(--_fullscreen-header-block-size);
+    padding-block-start: var(--_fullscreen-container-block-padding);
+    // TODO: should there be explicit tokens for these?
+    padding-inline: 4px;
+    --_header-spacing: 4px;
+  }
+
+  :host([showing-fullscreen]) .content {
+    margin-block-start: 0;
+    margin-block-end: 0;
+  }
+
+  :host([showing-fullscreen]) .footer {
+    max-block-size: var(--_fullscreen-footer-block-size);
+    padding-block-end: var(--_fullscreen-container-block-padding);
+  }
+
+  // Hide bottom divider on fullscreen since it's common not to have footer actions.
+  :host([showing-fullscreen]) .scroll-divider-footer .content {
+    border-block-end-color: transparent;
+  }
+
+  // High contrast mode
+  @media screen and (forced-colors: active), (-ms-high-contrast: active) {
+    .container {
+      outline: windowtext solid 2px;
+    }
+  }
+
+  // Slot styling
+  [name='headline-prefix']::slotted(*),
+  [name='headline-suffix']::slotted(*) {
+    color: var(--_with-icon-icon-color);
+    font-size: var(--_with-icon-icon-size);
+  }
+
+  [name='header']::slotted(*) {
+    flex: 1;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+  }
+
+  :host([showing-fullscreen]) [name='headline']::slotted(*) {
+    flex: 1;
+  }
+}

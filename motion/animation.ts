@@ -89,3 +89,36 @@ export function createAnimationSignal(): AnimationSignal {
     },
   };
 }
+
+/**
+ * Returns a function which can be used to throttle function calls
+ * mapped to a key via a given function that should produce a promise that
+ * determines the throtle amount (defaults to requestAnimationFrame).
+ */
+export function createThrottle() {
+  const stack = new Set();
+  return async (
+             key = '', cb: (...args: unknown[]) => unknown,
+             timeout = async () => {
+               await new Promise(requestAnimationFrame);
+             }) => {
+    if (!stack.has(key)) {
+      stack.add(key);
+      await timeout();
+      if (stack.has(key)) {
+        stack.delete(key);
+        cb();
+      }
+    }
+  };
+}
+
+/**
+ * Parses an number in milliseconds from a css time value
+ */
+export function msFromTimeCSSValue(value: string) {
+  const match = value.trim().match(/([\d.]+)(\s*s$)?/);
+  const time = match?.[1];
+  const seconds = match?.[2];
+  return Number(time ?? 0) * (seconds ? 1000 : 1);
+}
