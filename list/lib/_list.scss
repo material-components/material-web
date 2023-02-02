@@ -11,7 +11,6 @@
 @use './listitem/list-item';
 @use '../../sass/theme';
 @use '../../tokens';
-@use './divider/list-divider';
 @use '../../elevation/lib/elevation';
 
 @mixin theme($tokens) {

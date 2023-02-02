@@ -7,7 +7,6 @@
 
 @use '../../list/list';
 @use './menuitem/menu-item';
-@use '../../list/list-divider';
 @use '../../sass/resolvers';
 @use '../../sass/theme';
 @use '../../tokens';
@@ -37,13 +36,6 @@ $_custom-property-prefix: 'menu';
     @include list.theme(
       (
         container-color: var(--_container-color),
-      )
-    );
-
-    @include list-divider.theme(
-      (
-        color: var(--_divider-color),
-        thickness: var(--_divider-height),
       )
     );
 
