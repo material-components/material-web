@@ -11,7 +11,7 @@ import {styles} from './lib/menu-styles.css.js';
 
 export {ListItem} from '../list/lib/listitem/list-item.js';
 export {Corner, DefaultFocusState} from './lib/menu.js';
-export {CloseMenuEvent, DeselectItemsEvent, MenuItem} from './lib/shared.js';
+export {CloseMenuEvent, DeactivateItemsEvent, MenuItem} from './lib/shared.js';
 
 declare global {
   interface HTMLElementTagNameMap {

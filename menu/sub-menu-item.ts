@@ -13,7 +13,7 @@ import {styles} from './lib/menuitem/menu-item-styles.css.js';
 import {SubMenuItem} from './lib/submenuitem/sub-menu-item.js';
 
 export {ListItem} from '../list/lib/listitem/list-item.js';
-export {CloseMenuEvent, DeselectItemsEvent, MenuItem} from './lib/shared.js';
+export {CloseMenuEvent, DeactivateItemsEvent, MenuItem} from './lib/shared.js';
 
 declare global {
   interface HTMLElementTagNameMap {

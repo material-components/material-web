@@ -30,7 +30,7 @@ $_custom-property-prefix: 'menu';
 }
 
 @mixin styles() {
-  :host([selected]) .list-item {
+  :host([active]) .list-item {
     background-color: var(--_list-item-selected-container-color);
   }
 

@@ -13,7 +13,7 @@ import {styles} from './lib/menuitem/menu-item-styles.css.js';
 import {MenuItemLink} from './lib/menuitemlink/menu-item-link.js';
 
 export {ListItem} from '../list/lib/listitem/list-item.js';
-export {CloseMenuEvent, DeselectItemsEvent, MenuItem} from './lib/shared.js';
+export {CloseMenuEvent, DeactivateItemsEvent, MenuItem} from './lib/shared.js';
 
 
 declare global {

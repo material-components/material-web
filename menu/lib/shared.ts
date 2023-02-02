@@ -15,9 +15,10 @@ interface MenuItemSelf {
    */
   headline: string;
   /**
-   * Whether or not the item is selected (focuses on selection).
+   * Whether or not the item is in the selected visual state (focuses on
+   * selection).
    */
-  selected: boolean;
+  active: boolean;
   /**
    * If it is a sub-menu-item, a method that can close the submenu.
    */
@@ -81,11 +82,11 @@ export class CloseMenuEvent<T extends Reason = DefaultReasons> extends Event {
 export const DefaultCloseMenuEvent = CloseMenuEvent<DefaultReasons>;
 
 /**
- * The event that requests the parent md-menu to deselect all other items.
+ * The event that requests the parent md-menu to deactivate all other items.
  */
-export class DeselectItemsEvent extends Event {
+export class DeactivateItemsEvent extends Event {
   constructor() {
-    super('deselect-items', {bubbles: true, composed: true});
+    super('deactivate-items', {bubbles: true, composed: true});
   }
 }
 

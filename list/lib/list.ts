@@ -60,7 +60,7 @@ export class List extends LitElement {
   @query('.md3-list') listRoot!: HTMLElement;
 
   /**
-   * An array of selectable and disableable list items. Queries every assigned
+   * An array of activatable and disableable list items. Queries every assigned
    * element that has the `md-list-item` attribute.
    *
    * _NOTE:_ This is a shallow, flattened query via
@@ -111,7 +111,7 @@ export class List extends LitElement {
    *
    * @param event {KeyboardEvent} The keyboard event that triggers this handler.
    */
-  protected handleKeydown(event: KeyboardEvent) {
+  handleKeydown(event: KeyboardEvent) {
     const key = event.key;
     if (!isNavigableKey(key)) {
       return;
@@ -123,44 +123,44 @@ export class List extends LitElement {
       return;
     }
 
-    const selectedItemRecord = List.getSelectedItem(items);
+    const activeItemRecord = List.getActiveItem(items);
 
-    if (selectedItemRecord) {
-      selectedItemRecord.item.selected = false;
+    if (activeItemRecord) {
+      activeItemRecord.item.active = false;
     }
 
     event.preventDefault();
 
     switch (key) {
-      // Select the next item
+      // Activate the next item
       case NAVIGABLE_KEYS.ArrowDown:
-        if (selectedItemRecord) {
-          const next = List.getNextItem(items, selectedItemRecord.index);
+        if (activeItemRecord) {
+          const next = List.getNextItem(items, activeItemRecord.index);
 
-          if (next) next.selected = true;
+          if (next) next.active = true;
         } else {
-          List.selectFirstItem(items);
+          List.activateFirstItem(items);
         }
         break;
 
-      // Select the previous item
+      // Activate the previous item
       case NAVIGABLE_KEYS.ArrowUp:
-        if (selectedItemRecord) {
-          const prev = List.getPrevItem(items, selectedItemRecord.index);
-          if (prev) prev.selected = true;
+        if (activeItemRecord) {
+          const prev = List.getPrevItem(items, activeItemRecord.index);
+          if (prev) prev.active = true;
         } else {
-          items[items.length - 1].selected = true;
+          items[items.length - 1].active = true;
         }
         break;
 
-      // Select the first item
+      // Activate the first item
       case NAVIGABLE_KEYS.Home:
-        List.selectFirstItem(items);
+        List.activateFirstItem(items);
         break;
 
-      // Select the last item
+      // Activate the last item
       case NAVIGABLE_KEYS.End:
-        List.selectLastItem(items);
+        List.activateLastItem(items);
         break;
 
       default:
@@ -169,46 +169,46 @@ export class List extends LitElement {
   }
 
   /**
-   * Selects the first non-disabled item of a given array of items.
+   * Activates the first non-disabled item of a given array of items.
    *
-   * @param items {Array<ListItem>} The items from which to select the
+   * @param items {Array<ListItem>} The items from which to activate the
    * first item.
    */
-  static selectFirstItem<T extends ListItem>(items: T[]) {
+  static activateFirstItem<T extends ListItem>(items: T[]) {
     // NOTE: These selector functions are static and not on the instance such
     // that multiple operations can be chained and we do not have to re-query
     // the DOM
-    const firstItem = List.getFirstSelectableItem(items);
+    const firstItem = List.getFirstActivatableItem(items);
     if (firstItem) {
-      firstItem.selected = true;
+      firstItem.active = true;
     }
   }
 
   /**
-   * Selects the last non-disabled item of a given array of items.
+   * Activates the last non-disabled item of a given array of items.
    *
-   * @param items {Array<ListItem>} The items from which to select the
+   * @param items {Array<ListItem>} The items from which to activate the
    * last item.
    */
-  static selectLastItem<T extends ListItem>(items: T[]) {
-    const lastItem = List.getLastSelectableItem(items);
+  static activateLastItem<T extends ListItem>(items: T[]) {
+    const lastItem = List.getLastActivatableItem(items);
     if (lastItem) {
-      lastItem.selected = true;
+      lastItem.active = true;
     }
   }
 
   /**
-   * Deselects the currently selected item of a given array of items.
+   * Deactivates the currently active item of a given array of items.
    *
-   * @param items {Array<ListItem>} The items from which to deselect the
-   * selected item.
-   * @returns A record of the deleselcted selected item including the item and
-   * the index of the item or `null` if none are deselected.
+   * @param items {Array<ListItem>} The items from which to deactivate the
+   * active item.
+   * @returns A record of the deleselcted activated item including the item and
+   * the index of the item or `null` if none are deactivated.
    */
-  static deselectSelectedItem<T extends ListItem>(items: T[]) {
-    const activeItem = List.getSelectedItem(items);
+  static deactivateActiveItem<T extends ListItem>(items: T[]) {
+    const activeItem = List.getActiveItem(items);
     if (activeItem) {
-      activeItem.item.selected = false;
+      activeItem.item.active = false;
     }
     return activeItem;
   }
@@ -218,16 +218,16 @@ export class List extends LitElement {
   }
 
   /**
-   * Retrieves the the first selected item of a given array of items.
+   * Retrieves the the first activated item of a given array of items.
    *
    * @param items {Array<ListItem>} The items to search.
-   * @returns A record of the first selected item including the item and the
-   * index of the item or `null` if none are selected.
+   * @returns A record of the first activated item including the item and the
+   * index of the item or `null` if none are activated.
    */
-  static getSelectedItem<T extends ListItem>(items: T[]) {
+  static getActiveItem<T extends ListItem>(items: T[]) {
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
-      if (item.selected) {
+      if (item.active) {
         return {
           item,
           index: i,
@@ -242,9 +242,9 @@ export class List extends LitElement {
    * the first item that is not disabled.
    *
    * @param items {Array<ListItem>} The items to search.
-   * @returns The first selectable item or `null` if none are selectable.
+   * @returns The first activatable item or `null` if none are activatable.
    */
-  static getFirstSelectableItem<T extends ListItem>(items: T[]) {
+  static getFirstActivatableItem<T extends ListItem>(items: T[]) {
     for (const item of items) {
       if (!item.disabled) {
         return item;
@@ -258,9 +258,9 @@ export class List extends LitElement {
    * Retrieves the the last non-disabled item of a given array of items.
    *
    * @param items {Array<ListItem>} The items to search.
-   * @returns The last selectable item or `null` if none are selectable.
+   * @returns The last activatable item or `null` if none are activatable.
    */
-  static getLastSelectableItem<T extends ListItem>(items: T[]) {
+  static getLastActivatableItem<T extends ListItem>(items: T[]) {
     for (let i = items.length - 1; i >= 0; i--) {
       const item = items[i];
       if (!item.disabled) {
@@ -276,7 +276,7 @@ export class List extends LitElement {
    *
    * @param items {Array<ListItem>} The items to search.
    * @param index {{index: number}} The index to search from.
-   * @returns The next selectable item or `null` if none are selectable.
+   * @returns The next activatable item or `null` if none are activatable.
    */
   protected static getNextItem<T extends ListItem>(items: T[], index: number) {
     for (let i = 1; i < items.length; i++) {
@@ -294,7 +294,7 @@ export class List extends LitElement {
    *
    * @param items {Array<ListItem>} The items to search.
    * @param index {{index: number}} The index to search from.
-   * @returns The previous selectable item or `null` if none are selectable.
+   * @returns The previous activatable item or `null` if none are activatable.
    */
   protected static getPrevItem<T extends ListItem>(items: T[], index: number) {
     for (let i = 1; i < items.length; i++) {

@@ -36,7 +36,7 @@ const TYPEAHEAD_TEXT = 2;
 /**
  * This controller listens to `keydown` events and searches the header text of
  * an array of `MenuItem`s with the corresponding entered keys within the buffer
- * time and selects the item.
+ * time and activates the item.
  *
  * @example
  * ```ts
@@ -48,12 +48,12 @@ const TYPEAHEAD_TEXT = 2;
  *   <div
  *       @keydown=${typeaheadController.onKeydown}
  *       tabindex="0"
- *       class="selectedItemText">
+ *       class="activeItemText">
  *     <!-- focusable element that will receive keydown events -->
  *     Apple
  *   </div>
  *   <div>
- *     <md-menu-item selected header="Apple"></md-menu-item>
+ *     <md-menu-item active header="Apple"></md-menu-item>
  *     <md-menu-item header="Apricot"></md-menu-item>
  *     <md-menu-item header="Banana"></md-menu-item>
  *     <md-menu-item header="Olive"></md-menu-item>
@@ -80,9 +80,9 @@ export class TypeaheadController {
    */
   protected isTypingAhead = false;
   /**
-   * The record of the last selected item.
+   * The record of the last active item.
    */
-  protected lastSelectedRecord: TypeaheadRecord|null = null;
+  protected lastActiveRecord: TypeaheadRecord|null = null;
 
   /**
    * @param getProperties A function that returns the options of the typeahead
@@ -125,8 +125,8 @@ export class TypeaheadController {
     // middle of a typeahead
     if (e.code === 'Space' || e.code === 'Enter' ||
         e.code.startsWith('Arrow') || e.code === 'Escape') {
-      if (this.lastSelectedRecord) {
-        this.lastSelectedRecord[TYPEAHEAD_ITEM].selected = false;
+      if (this.lastActiveRecord) {
+        this.lastActiveRecord[TYPEAHEAD_ITEM].active = false;
       }
       return;
     }
@@ -136,18 +136,18 @@ export class TypeaheadController {
     // and a normalized header.
     this.typeaheadRecords = this.items.map(
         (el, index) => [index, el, el.headline.trim().toLowerCase()]);
-    this.lastSelectedRecord =
-        this.typeaheadRecords.find(record => record[TYPEAHEAD_ITEM].selected) ??
+    this.lastActiveRecord =
+        this.typeaheadRecords.find(record => record[TYPEAHEAD_ITEM].active) ??
         null;
-    if (this.lastSelectedRecord) {
-      this.lastSelectedRecord[TYPEAHEAD_ITEM].selected = false;
+    if (this.lastActiveRecord) {
+      this.lastActiveRecord[TYPEAHEAD_ITEM].active = false;
     }
     this.typeahead(e);
   }
 
   /**
    * Performs the typeahead. Based on the normalized items and the current text
-   * buffer, finds the _next_ item with matching text and selects it.
+   * buffer, finds the _next_ item with matching text and activates it.
    *
    * @example
    *
@@ -155,31 +155,31 @@ export class TypeaheadController {
    * buffer: ''
    * user types: o
    *
-   * selects Olive
+   * activates Olive
    *
    * @example
    *
-   * items: Apple, Banana, Olive (selected), Orange, Cucumber
+   * items: Apple, Banana, Olive (active), Orange, Cucumber
    * buffer: 'o'
    * user types: l
    *
-   * selects Olive
+   * activates Olive
    *
    * @example
    *
-   * items: Apple, Banana, Olive (selected), Orange, Cucumber
+   * items: Apple, Banana, Olive (active), Orange, Cucumber
    * buffer: ''
    * user types: o
    *
-   * selects Orange
+   * activates Orange
    *
    * @example
    *
-   * items: Apple, Banana, Olive, Orange (selected), Cucumber
+   * items: Apple, Banana, Olive, Orange (active), Cucumber
    * buffer: ''
    * user types: o
    *
-   * selects Olive
+   * activates Olive
    */
   protected typeahead(e: KeyboardEvent) {
     clearTimeout(this.cancelTypeaheadTimeout);
@@ -188,8 +188,8 @@ export class TypeaheadController {
     if (e.code === 'Enter' || e.code.startsWith('Arrow') ||
         e.code === 'Escape') {
       this.endTypeahead();
-      if (this.lastSelectedRecord) {
-        this.lastSelectedRecord[TYPEAHEAD_ITEM].selected = false;
+      if (this.lastActiveRecord) {
+        this.lastActiveRecord[TYPEAHEAD_ITEM].active = false;
       }
       return;
     }
@@ -205,8 +205,8 @@ export class TypeaheadController {
 
     this.typaheadBuffer += e.key.toLowerCase();
 
-    const lastSelectedIndex =
-        this.lastSelectedRecord ? this.lastSelectedRecord[TYPEAHEAD_INDEX] : -1;
+    const lastActiveIndex =
+        this.lastActiveRecord ? this.lastActiveRecord[TYPEAHEAD_INDEX] : -1;
     const numRecords = this.typeaheadRecords.length;
 
     /**
@@ -218,40 +218,40 @@ export class TypeaheadController {
      * 0: [0, <reference>, 'apple']
      * 1: [1, <reference>, 'apricot']
      * 2: [2, <reference>, 'banana']
-     * 3: [3, <reference>, 'olive'] <-- lastSelectedIndex
+     * 3: [3, <reference>, 'olive'] <-- lastActiveIndex
      * 4: [4, <reference>, 'orange']
      * 5: [5, <reference>, 'strawberry']
      * 
-     * this.typeaheadRecords.sort((a,b) => rebaseIndexOnSelected(a)
-     *                                       - rebaseIndexOnSelected(b)) ===
-     * 0: [3, <reference>, 'olive'] <-- lastSelectedIndex
+     * this.typeaheadRecords.sort((a,b) => rebaseIndexOnActive(a)
+     *                                       - rebaseIndexOnActive(b)) ===
+     * 0: [3, <reference>, 'olive'] <-- lastActiveIndex
      * 1: [4, <reference>, 'orange']
      * 2: [5, <reference>, 'strawberry']
      * 3: [0, <reference>, 'apple']
      * 4: [1, <reference>, 'apricot']
      * 5: [2, <reference>, 'banana']
      */
-    const rebaseIndexOnSelected = (record: TypeaheadRecord) => {
-      return (record[TYPEAHEAD_INDEX] + numRecords - lastSelectedIndex) %
+    const rebaseIndexOnActive = (record: TypeaheadRecord) => {
+      return (record[TYPEAHEAD_INDEX] + numRecords - lastActiveIndex) %
           numRecords;
     };
 
-    // records filtered and sorted / rebased around the last selected index
+    // records filtered and sorted / rebased around the last active index
     const matchingRecords =
         this.typeaheadRecords
             .filter(
                 record => !record[TYPEAHEAD_ITEM].disabled &&
                     record[TYPEAHEAD_TEXT].startsWith(this.typaheadBuffer))
             .sort(
-                (a, b) => rebaseIndexOnSelected(a) - rebaseIndexOnSelected(b));
+                (a, b) => rebaseIndexOnActive(a) - rebaseIndexOnActive(b));
 
     // Just leave if there's nothing that matches. Native select will just
     // choose the first thing that starts with the next letter in the alphabet
     // but that's out of scope and hard to localize
     if (matchingRecords.length === 0) {
       clearTimeout(this.cancelTypeaheadTimeout);
-      if (this.lastSelectedRecord) {
-        this.lastSelectedRecord[TYPEAHEAD_ITEM].selected = false;
+      if (this.lastActiveRecord) {
+        this.lastActiveRecord[TYPEAHEAD_ITEM].active = false;
       }
       this.endTypeahead();
       return;
@@ -262,18 +262,18 @@ export class TypeaheadController {
 
     // This is likely the case that someone is trying to "tab" through different
     // entries that start with the same letter
-    if (this.lastSelectedRecord === matchingRecords[0] && isNewQuery) {
+    if (this.lastActiveRecord === matchingRecords[0] && isNewQuery) {
       nextRecord = matchingRecords[1] ?? matchingRecords[0];
     } else {
       nextRecord = matchingRecords[0];
     }
 
-    if (this.lastSelectedRecord) {
-      this.lastSelectedRecord[TYPEAHEAD_ITEM].selected = false;
+    if (this.lastActiveRecord) {
+      this.lastActiveRecord[TYPEAHEAD_ITEM].active = false;
     }
 
-    this.lastSelectedRecord = nextRecord;
-    nextRecord[TYPEAHEAD_ITEM].selected = true;
+    this.lastActiveRecord = nextRecord;
+    nextRecord[TYPEAHEAD_ITEM].active = true;
     return;
   }
 

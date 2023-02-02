@@ -259,7 +259,7 @@ export abstract class Menu extends LitElement {
   protected renderMenuItems() {
     return html`<slot
         @close-menu=${this.onCloseMenu}
-        @deselect-items=${this.onDeselectItems}></slot>`;
+        @deactivate-items=${this.onDeactivateItems}></slot>`;
   }
 
   /**
@@ -307,23 +307,23 @@ export abstract class Menu extends LitElement {
     if (!this.listElement) return;
 
     const items = this.listElement.items;
-    const activeItemRecord = List.getSelectedItem(items);
+    const activeItemRecord = List.getActiveItem(items);
 
-    if (activeItemRecord) {
-      activeItemRecord.item.selected = false;
+    if (activeItemRecord && this.defaultFocus !== 'NONE') {
+      activeItemRecord.item.active = false;
     }
 
     switch (this.defaultFocus) {
       case 'FIRST_ITEM':
-        const first = List.getFirstSelectableItem(items);
+        const first = List.getFirstActivatableItem(items);
         if (first) {
-          first.selected = true;
+          first.active = true;
         }
         break;
       case 'LAST_ITEM':
-        const last = List.getLastSelectableItem(items);
+        const last = List.getLastActivatableItem(items);
         if (last) {
-          last.selected = true;
+          last.active = true;
         }
         break;
       case 'LIST_ROOT':
@@ -594,11 +594,11 @@ export abstract class Menu extends LitElement {
     this.close();
   }
 
-  protected onDeselectItems(e: Event) {
+  protected onDeactivateItems(e: Event) {
     e.stopPropagation();
     const items = this.items;
     for (const item of items) {
-      item.selected = false;
+      item.active = false;
     }
   }
 

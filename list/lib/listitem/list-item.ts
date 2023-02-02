@@ -21,7 +21,7 @@ import {MdRipple} from '../../../ripple/ripple.js';
 import {ARIARole} from '../../../types/aria.js';
 
 interface ListItemSelf {
-  selected: boolean;
+  active: boolean;
   disabled: boolean;
 }
 
@@ -81,11 +81,11 @@ export class ListItemEl extends LitElement implements ListItem {
   @property({type: Number}) itemTabIndex = -1;
 
   /**
-   * Whether or not the element is in the selected state. When selected,
+   * Whether or not the element is in the selected visual state. When active,
    * tabindex is set to 0, and in some list item variants (like md-list-item),
    * focuses the underlying item.
    */
-  @property({type: Boolean, reflect: true}) selected = false;
+   @property({type: Boolean, reflect: true}) active = false;
 
   /**
    * READONLY. Sets the `md-list-item` attribute on the element.
@@ -114,8 +114,8 @@ export class ListItemEl extends LitElement implements ListItem {
   private isFirstUpdate = true;
 
   override willUpdate(changed: PropertyValues<this>) {
-    if (changed.has('selected') && !this.disabled) {
-      if (this.selected) {
+    if (changed.has('active') && !this.disabled) {
+      if (this.active) {
         this.itemTabIndex = 0;
 
         if (this.focusOnSelection) {
@@ -276,7 +276,7 @@ export class ListItemEl extends LitElement implements ListItem {
 
     // will focus the list item root if it is selected but not on the first
     // update or else it may cause the page to jump on first load.
-    if (changed.has('selected') && !this.isFirstUpdate && this.selected &&
+    if (changed.has('active') && !this.isFirstUpdate && this.active &&
         this.focusOnSelection) {
       this.listItemRoot.focus();
     }

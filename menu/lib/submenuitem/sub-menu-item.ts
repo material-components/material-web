@@ -11,14 +11,14 @@ import {List} from '../../../list/lib/list.js';
 import {ARIARole} from '../../../types/aria.js';
 import {Corner, Menu} from '../menu.js';
 import {MenuItemEl} from '../menuitem/menu-item.js';
-import {CLOSE_REASON, CloseMenuEvent, DeselectItemsEvent, KEYDOWN_CLOSE_KEYS, NAVIGABLE_KEY, SELECTION_KEY} from '../shared.js';
+import {CLOSE_REASON, CloseMenuEvent, DeactivateItemsEvent, KEYDOWN_CLOSE_KEYS, NAVIGABLE_KEY, SELECTION_KEY} from '../shared.js';
 
 function stopPropagation(e: Event) {
   e.stopPropagation();
 }
 
 /**
- * @fires deselect-items {DeselectItemsEvent} Requests the parent menu to
+ * @fires deactivate-items {DeactivateItemsEvent} Requests the parent menu to
  *     deselect other items when a submenu opens
  */
 export class SubMenuItem extends MenuItemEl {
@@ -113,11 +113,11 @@ export class SubMenuItem extends MenuItemEl {
     if (!submenu) return;
 
     const submenuItems = submenu.items;
-    const firstSelectableItem = List.getFirstSelectableItem(submenuItems);
+    const firstActivatableItem = List.getFirstActivatableItem(submenuItems);
 
-    if (firstSelectableItem) {
+    if (firstActivatableItem) {
       this.show(() => {
-        firstSelectableItem.selected = true;
+        firstActivatableItem.active = true;
       });
 
       return;
@@ -151,12 +151,12 @@ export class SubMenuItem extends MenuItemEl {
     if (e.reason.kind === CLOSE_REASON.KEYDOWN &&
         e.reason.key === KEYDOWN_CLOSE_KEYS.ESCAPE) {
       e.stopPropagation();
-      this.selected = true;
-      // It might already be selected so manually focus
+      this.active = true;
+      // It might already be active so manually focus
       this.listItemRoot.focus();
       return;
     }
-    this.selected = false;
+    this.active = false;
   }
 
   protected async onSubMenuKeydown(e: KeyboardEvent) {
@@ -169,9 +169,9 @@ export class SubMenuItem extends MenuItemEl {
     if (!shouldClose) return;
 
     this.close(() => {
-      List.deselectSelectedItem(this.submenuEl!.items);
+      List.deactivateActiveItem(this.submenuEl!.items);
       this.listItemRoot.focus();
-      this.selected = true;
+      this.active = true;
     });
   }
 
@@ -191,7 +191,7 @@ export class SubMenuItem extends MenuItemEl {
     menu.anchorCorner = this.anchorCorner;
     menu.menuCorner = this.menuCorner;
     menu.anchor = this;
-    // We manually set focus with `selected` on keyboard navigation. And we
+    // We manually set focus with `active` on keyboard navigation. And we
     // want to focus the root on hover, so the user can pick up navigation with
     // keyboard after hover.
     menu.defaultFocus = 'LIST_ROOT';
@@ -201,10 +201,10 @@ export class SubMenuItem extends MenuItemEl {
     const menuAlreadyOpen = menu.open;
     menu.show();
 
-    // Deselect other items. This can be the case if the user has tabbed around
-    // the menu and then mouses over an md-sub-menu.
-    this.dispatchEvent(new DeselectItemsEvent());
-    this.selected = true;
+    // Deactivate other items. This can be the case if the user has tabbed
+    // around the menu and then mouses over an md-sub-menu.
+    this.dispatchEvent(new DeactivateItemsEvent());
+    this.active = true;
 
     // This is the case of mouse hovering when already opened via keyboard or
     // vice versa
@@ -226,7 +226,7 @@ export class SubMenuItem extends MenuItemEl {
 
     menu.quick = true;
     menu.close();
-    this.selected = false;
+    this.active = false;
     menu.addEventListener('closed', onClosed, {once: true});
   }
 

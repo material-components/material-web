@@ -13,7 +13,7 @@ import {styles as privateProps} from './lib/menuitem/menu-item-private-styles.cs
 import {styles} from './lib/menuitem/menu-item-styles.css.js';
 
 export {ListItem} from '../list/lib/listitem/list-item.js';
-export {CloseMenuEvent, DeselectItemsEvent, MenuItem} from './lib/shared.js';
+export {CloseMenuEvent, DeactivateItemsEvent, MenuItem} from './lib/shared.js';
 
 declare global {
   interface HTMLElementTagNameMap {
