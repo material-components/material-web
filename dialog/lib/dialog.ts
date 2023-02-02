@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/elevation/elevation.js';
+import '../../elevation/elevation.js';
 
 import {html, LitElement, PropertyValues} from 'lit';
-import {property, query, state} from 'lit/decorators.js.js';
-import {classMap} from 'lit/directives/class-map.js.js';
+import {property, query, state} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 
-import {createThrottle, msFromTimeCSSValue} from '../../motion/animation.js.js';
+import {createThrottle, msFromTimeCSSValue} from '../../motion/animation.js';
 
 // This is required for decorators.
 // tslint:disable:no-new-decorators
@@ -187,15 +187,13 @@ export class Dialog extends LitElement {
   // used to determin where users can drag from.
   @query(`.header`, true) private readonly headerElement!: HTMLDivElement;
 
-  /* Private properties that reflect for styling. */
-  // tslint:disable:no-unused-variable
-  @property({type: Boolean, reflect: true, attribute: 'showing-fullscreen'})
-  private showingFullscreen = false;
-  @property({type: Boolean, reflect: true, attribute: 'showing-open'})
-  private showingOpen = false;
-  @property({type: Boolean, reflect: true}) private opening = false;
-  @property({type: Boolean, reflect: true}) private closing = false;
-  // tslint:enable:no-unused-variable
+  /**
+   * Private properties that reflect for styling manually in `updated`.
+   */
+  @state() private showingFullscreen = false;
+  @state() private showingOpen = false;
+  @state() private opening = false;
+  @state() private closing = false;
 
   /**
    * Transition kind. Supported options include: grow, shrink, grow-down,
@@ -320,6 +318,14 @@ export class Dialog extends LitElement {
       this.style.removeProperty('--_container-drag-inline-start');
       this.style.removeProperty('--_container-drag-block-start');
     }
+    // Reflect internal state to facilitate styling.
+    this.reflectStateProp(changed, 'opening', this.opening);
+    this.reflectStateProp(changed, 'closing', this.closing);
+    this.reflectStateProp(
+        changed, 'showingFullscreen', this.showingFullscreen,
+        'showing-fullscreen');
+    this.reflectStateProp(
+        changed, 'showingOpen', this.showingOpen, 'showing-open');
     if (!changed.has('open')) {
       return;
     }
@@ -342,6 +348,28 @@ export class Dialog extends LitElement {
     // Avoids dispatching initial state.
     const shouldDispatchAction = changed.get('open') !== undefined;
     this.performTransition(shouldDispatchAction);
+  }
+
+  /**
+   * Internal state is reflected here as attributes to effect styling. This
+   * could be done via internal classes, but it's published on the host
+   * to facilitate the (currently undocumented) possibility of customizing
+   * styling of user content based on these states.
+   * Note, in the future this could be done with `:state(...)` when browser
+   * support improves.
+   */
+  private reflectStateProp(
+      changed: PropertyValues, key: string, value: unknown,
+      attribute?: string) {
+    attribute ??= key;
+    if (!changed.has(key)) {
+      return;
+    }
+    if (value) {
+      this.setAttribute(attribute, '');
+    } else {
+      this.removeAttribute(attribute);
+    }
   }
 
   private dialogClosedResolver?: () => void;

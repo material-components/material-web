@@ -470,7 +470,10 @@ export abstract class Menu extends LitElement {
     const surfaceEl = this.surfaceEl;
     const slotEl = this.slotEl;
 
-    if (!surfaceEl || !slotEl) return;
+    if (!surfaceEl || !slotEl) {
+      reject();
+      return animationEnded;
+    }
 
     const openDirection = this.openDirection;
     const closingDownwards = openDirection === 'UP';
