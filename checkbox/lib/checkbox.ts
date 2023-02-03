@@ -24,6 +24,9 @@ import {MdRipple} from '../../ripple/ripple.js';
  * A checkbox component.
  */
 export class Checkbox extends LitElement {
+  /**
+   * @nocollapse
+   */
   static formAssociated = true;
 
   /**

@@ -32,6 +32,9 @@ export class Switch extends LitElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
+  /**
+   * @nocollapse
+   */
   static formAssociated = true;
 
   /**
