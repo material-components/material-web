@@ -1,5 +1,41 @@
 # Changelog
 
+## [1.0.0-pre.2](https://github.com/material-components/material-web/compare/v1.0.0-pre.1...v1.0.0-pre.2) (2023-02-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* **iconbutton:** Make a few API improvements
+* **textfield:** remove container-height token
+* **iconbutton:** normalize toggle variant API with regular icon button
+* **iconbutton:** remove icon properties, use slots instead
+
+### Features
+
+* **divider:** add divider component ([9431c16](https://github.com/material-components/material-web/commit/9431c1643140969e52ca3a065a9ec1c4fb299b3b))
+* **menu,list:** expose menu theme mixins and remove divider ([e15c4b8](https://github.com/material-components/material-web/commit/e15c4b86d584cfda5dc850cb697bc9b9552e9536))
+* **tokens:** generate tokens v0.152 ([c61f46c](https://github.com/material-components/material-web/commit/c61f46c618c38d45c49e85f809330d40e5de40d3))
+
+
+### Bug Fixes
+
+* **all:** remove `[@requirecss](https://github.com/requirecss)` comments ([80590ae](https://github.com/material-components/material-web/commit/80590ae88dab9944335e78862da048ff92fee99f))
+* **forms:** fix form association for switch, checkbox, and radio, including label activation ([1ddba0c](https://github.com/material-components/material-web/commit/1ddba0ca3cfa7d9964ffd24a0e5aab488a83179e))
+* **switch:** update to latest animations, and implement sizing tokens ([9e9bf84](https://github.com/material-components/material-web/commit/9e9bf845be82ce1753ffb0d3bf7fec7947f09428))
+
+
+### Miscellaneous Chores
+
+* update next version ([a539286](https://github.com/material-components/material-web/commit/a539286c3f5f34b7c2969b963b3859ed633a74ef))
+
+
+### Code Refactoring
+
+* **iconbutton:** Make a few API improvements ([c72e7fd](https://github.com/material-components/material-web/commit/c72e7fd6f74ecd257d9542f9ef1ec2a64e02b1bf))
+* **iconbutton:** normalize toggle variant API with regular icon button ([31391eb](https://github.com/material-components/material-web/commit/31391eb610f987a3f66ca07722a8ebca6a0b0a78))
+* **iconbutton:** remove icon properties, use slots instead ([36f1a1a](https://github.com/material-components/material-web/commit/36f1a1a0b34dba43d4a859a19d30070b9998ca9a))
+* **textfield:** remove container-height token ([1d81416](https://github.com/material-components/material-web/commit/1d81416863a2682fc123b6219c155998db574da7))
+
 ## [1.0.0-pre.1](https://github.com/material-components/material-web/compare/v1.0.0-pre.0...v1.0.0-pre.1) (2023-01-09)
 
 
