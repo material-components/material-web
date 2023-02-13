@@ -11,7 +11,6 @@
 @use 'sass:map';
 @use '../../focus/focus-ring';
 @use '../../sass/color';
-@use '../../sass/resolvers';
 @use '../../sass/shape';
 @use '../../sass/theme';
 @use '../../sass/touch-target';
@@ -45,16 +44,18 @@ $_forced-colors-theme: (
 
 @mixin theme($tokens) {
   $tokens: theme.validate-theme(tokens.md-comp-switch-values(), $tokens);
-  $tokens: _resolve-tokens($tokens);
-  $tokens: theme.create-theme-vars($tokens, switch);
+  $tokens: _flatten-disable-colors($tokens);
+  $tokens: theme.create-theme-vars($tokens, 'switch');
+  $tokens: shape.resolve-tokens($tokens, 'track-shape', 'handle-shape');
 
   @include theme.emit-theme-vars($tokens);
 }
 
 @mixin styles() {
   $tokens: tokens.md-comp-switch-values();
-  $tokens: _resolve-tokens($tokens);
-  $tokens: theme.create-theme-vars($tokens, switch);
+  $tokens: _flatten-disable-colors($tokens);
+  $tokens: theme.create-theme-vars($tokens, 'switch');
+  $tokens: shape.resolve-tokens($tokens, 'track-shape', 'handle-shape');
 
   :host {
     @each $token, $value in $tokens {
@@ -135,17 +136,6 @@ $_forced-colors-theme: (
   @include track.styles();
   @include handle.styles();
   @include icon.styles();
-}
-
-@function _resolve-tokens($theme) {
-  $theme: shape.resolve-theme(
-    $theme,
-    map.get(resolvers.$material, shape),
-    track-shape,
-    handle-shape
-  );
-  $theme: _flatten-disable-colors($theme);
-  @return $theme;
 }
 
 @function _flatten-disable-colors($theme) {

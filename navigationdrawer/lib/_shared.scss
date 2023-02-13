@@ -9,8 +9,6 @@
 @use 'sass:map';
 
 @use '../../elevation/lib/elevation';
-@use '../../sass/resolvers';
-@use '../../sass/shape';
 
 @mixin styles() {
   .md3-navigation-drawer-modal {
@@ -34,11 +32,6 @@
 
 @function resolve-tokens($tokens) {
   $tokens: elevation.resolve-tokens($tokens, 'modal-container-elevation');
-  $tokens: shape.resolve-theme(
-    $tokens,
-    map.get(resolvers.$material, shape),
-    container-shape
-  );
 
   @return $tokens;
 }

@@ -10,9 +10,10 @@
 @use '../../field/filled-field';
 @use '../../menusurface/menu-surface';
 @use '../../sass/theme';
+@use '../../sass/shape';
 @use '../../textfield/filled-text-field';
 @use '../../tokens';
-@use './shared';
+@use '../../elevation/lib/elevation';
 
 $custom-property-prefix: 'filled-autocomplete';
 $dark-theme: tokens.md-comp-filled-autocomplete-values(
@@ -27,16 +28,18 @@ $dark-theme: tokens.md-comp-filled-autocomplete-values(
     tokens.md-comp-filled-autocomplete-values(),
     $tokens
   );
-  $tokens: shared.resolve-tokens($tokens);
+  $tokens: elevation.resolve-tokens($tokens, 'menu-container-elevation');
   $tokens: theme.create-theme-vars($tokens, $custom-property-prefix);
+  $tokens: shape.resolve-tokens($tokens, 'text-field-container-shape');
 
   @include theme.emit-theme-vars($tokens);
 }
 
 @mixin styles() {
   $tokens: tokens.md-comp-filled-autocomplete-values();
-  $tokens: shared.resolve-tokens($tokens);
+  $tokens: elevation.resolve-tokens($tokens, 'menu-container-elevation');
   $tokens: theme.create-theme-vars($tokens, $custom-property-prefix);
+  $tokens: shape.resolve-tokens($tokens, 'text-field-container-shape');
 
   :host {
     @each $token, $value in $tokens {
@@ -170,11 +173,8 @@ $dark-theme: tokens.md-comp-filled-autocomplete-values(
     // Textfield cannot resolve shape when created as vars.
     @include filled-field.theme(
       (
-        container-shape-start-start:
-          var(--_text-field-container-shape-start-start),
-        container-shape-start-end: var(--_text-field-container-shape-start-end),
-        container-shape-end-end: var(--_text-field-container-shape-end-end),
-        container-shape-end-start: var(--_text-field-container-shape-end-start),
+        container-shape:
+          shape.corners-to-shape-token('--_text-field-container-shape'),
       )
     );
   }

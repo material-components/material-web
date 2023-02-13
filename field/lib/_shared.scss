@@ -8,7 +8,6 @@
 
 @use 'sass:map';
 @use '../../sass/resolvers';
-@use '../../sass/shape';
 @use '../../sass/typography';
 @use './content';
 @use './label';
@@ -75,9 +74,5 @@
     supporting-text
   );
 
-  @return shape.resolve-theme(
-    $tokens,
-    map.get(resolvers.$material, shape),
-    container-shape
-  );
+  @return $tokens;
 }

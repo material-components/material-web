@@ -21,6 +21,7 @@ $_custom-property-prefix: 'tonal-button';
   );
   $tokens: _resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
   @include theme.emit-theme-vars($tokens);
 }
@@ -37,6 +38,7 @@ $_custom-property-prefix: 'tonal-button';
   $tokens: map.set($tokens, 'with-trailing-icon-spacing-trailing', 16px);
   $tokens: _resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
   :host {
     @each $token, $value in $tokens {
@@ -52,11 +54,6 @@ $_custom-property-prefix: 'tonal-button';
     $tokens,
     map.get(resolvers.$material, 'typography'),
     'label-text'
-  );
-  $tokens: shape.resolve-theme(
-    $tokens,
-    map.get(resolvers.$material, 'shape'),
-    'container-shape'
   );
   @return elevation.resolve-tokens($tokens);
 }

@@ -9,6 +9,7 @@
 @use '../../motion/animation';
 @use '../../elevation/elevation';
 @use '../../sass/theme';
+@use '../../sass/shape';
 @use './shared';
 
 $curve: animation.$standard-easing;
@@ -28,11 +29,13 @@ $_reference: (
   standard-container-elevation: 0,
 );
 
+$_custom-property-prefix: 'navigation-drawer';
+
 @mixin theme($tokens) {
   $tokens: theme.validate-theme($_reference, $tokens);
   $tokens: shared.resolve-tokens($tokens);
-
-  $tokens: theme.create-theme-vars($tokens, 'navigation-drawer');
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
   @include theme.emit-theme-vars($tokens);
 }
@@ -40,8 +43,8 @@ $_reference: (
 @mixin styles() {
   $tokens: $_reference;
   $tokens: shared.resolve-tokens($tokens);
-
-  $tokens: theme.create-theme-vars($tokens, 'navigation-drawer');
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
   :host {
     @each $token, $value in $tokens {

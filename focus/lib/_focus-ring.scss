@@ -6,23 +6,22 @@
 @use 'sass:map';
 @use '../../sass/theme';
 @use '../../sass/shape';
-@use '../../sass/resolvers';
 @use './md-comp-focus-ring';
 
 $_custom-property-prefix: 'focus-ring';
 
 @mixin theme($tokens) {
   $tokens: theme.validate-theme(md-comp-focus-ring.values(), $tokens);
-  $tokens: _resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+  $tokens: shape.resolve-tokens($tokens, 'shape');
 
   @include theme.emit-theme-vars($tokens);
 }
 
 @mixin styles() {
   $tokens: md-comp-focus-ring.values();
-  $tokens: _resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+  $tokens: shape.resolve-tokens($tokens, 'shape');
 
   :host {
     @each $token, $value in $tokens {
@@ -49,13 +48,4 @@ $_custom-property-prefix: 'focus-ring';
   :host([visible]) {
     display: flex;
   }
-}
-
-@function _resolve-tokens($tokens) {
-  $tokens: shape.resolve-theme(
-    $tokens,
-    map.get(resolvers.$material, shape),
-    shape
-  );
-  @return $tokens;
 }

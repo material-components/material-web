@@ -12,7 +12,8 @@
 @use '../../sass/theme';
 @use '../../textfield/outlined-text-field';
 @use '../../tokens';
-@use './shared';
+@use '../../elevation/lib/elevation';
+@use '../../sass/shape';
 
 $custom-property-prefix: 'outlined-autocomplete';
 $dark-theme: tokens.md-comp-outlined-autocomplete-values(
@@ -27,15 +28,15 @@ $dark-theme: tokens.md-comp-outlined-autocomplete-values(
     tokens.md-comp-outlined-autocomplete-values(),
     $theme
   );
-  $tokens: shared.resolve-tokens($tokens);
+  $tokens: elevation.resolve-tokens($tokens, 'menu-container-elevation');
   $tokens: theme.create-theme-vars($tokens, $custom-property-prefix);
+  $tokens: shape.resolve-tokens($tokens, 'text-field-container-shape');
 
   @include theme.emit-theme-vars($tokens);
 }
 
 @mixin styles() {
   $tokens: tokens.md-comp-outlined-autocomplete-values();
-  $tokens: shared.resolve-tokens($tokens);
   // TODO(b/251183088): Clean up container-shape once token is correct.
   $tokens: map.merge(
     $tokens,
@@ -43,8 +44,9 @@ $dark-theme: tokens.md-comp-outlined-autocomplete-values(
       text-field-container-shape: 4px,
     )
   );
-
+  $tokens: elevation.resolve-tokens($tokens, 'menu-container-elevation');
   $tokens: theme.create-theme-vars($tokens, $custom-property-prefix);
+  $tokens: shape.resolve-tokens($tokens, 'text-field-container-shape');
 
   :host {
     @each $token, $value in $tokens {
@@ -159,11 +161,8 @@ $dark-theme: tokens.md-comp-outlined-autocomplete-values(
     // Textfield cannot resolve shape when created as vars.
     @include outlined-field.theme(
       (
-        container-shape-start-start:
-          var(--_text-field-container-shape-start-start),
-        container-shape-start-end: var(--_text-field-container-shape-start-end),
-        container-shape-end-end: var(--_text-field-container-shape-end-end),
-        container-shape-end-start: var(--_text-field-container-shape-end-start),
+        container-shape:
+          shape.corners-to-shape-token('--_text-field-container-shape'),
       )
     );
   }

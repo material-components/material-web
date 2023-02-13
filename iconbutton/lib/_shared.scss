@@ -153,9 +153,5 @@
 }
 
 @function resolve-shape-tokens($tokens, $property: 'container-shape') {
-  @return shape.resolve-theme(
-    $tokens,
-    map.get(resolvers.$material, 'shape'),
-    $property
-  );
+  @return shape.resolve-tokens($tokens, $property);
 }

@@ -8,7 +8,6 @@
 
 @use 'sass:map';
 @use '../../sass/resolvers';
-@use '../../sass/shape';
 @use '../../sass/typography';
 @use './icon';
 @use './input';
@@ -43,11 +42,6 @@
 }
 
 @function resolve-tokens($tokens) {
-  $tokens: shape.resolve-theme(
-    $tokens,
-    map.get(resolvers.$material, shape),
-    container-shape
-  );
   $tokens: typography.resolve-theme(
     $tokens,
     map.get(resolvers.$material, typography),

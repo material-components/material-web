@@ -22,7 +22,8 @@ $_animation-duration: 150ms;
   $reference: map.merge($reference, shared.resolve-tokens($reference));
   $tokens: theme.validate-theme($reference, $tokens);
   $tokens: shared.resolve-tokens($tokens);
-  $tokens: theme.create-theme-vars($tokens, filled-field);
+  $tokens: theme.create-theme-vars($tokens, 'filled-field');
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
   @include theme.emit-theme-vars($tokens);
 }
@@ -30,7 +31,8 @@ $_animation-duration: 150ms;
 @mixin styles() {
   $tokens: md-comp-filled-field.values();
   $tokens: shared.resolve-tokens($tokens);
-  $tokens: theme.create-theme-vars($tokens, filled-field);
+  $tokens: theme.create-theme-vars($tokens, 'filled-field');
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
   :host {
     @each $token, $value in $tokens {

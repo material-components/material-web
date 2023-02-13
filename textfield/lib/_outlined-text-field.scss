@@ -26,7 +26,8 @@
 
   $tokens: theme.validate-theme($reference, $tokens);
   $tokens: shared.resolve-tokens($tokens);
-  $tokens: theme.create-theme-vars($tokens, outlined-text-field);
+  $tokens: theme.create-theme-vars($tokens, 'outlined-text-field');
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
   @include theme.emit-theme-vars($tokens);
 }
@@ -46,21 +47,21 @@
   );
 
   $tokens: shared.resolve-tokens($tokens);
-  $tokens: theme.create-theme-vars($tokens, outlined-text-field);
+  $tokens: theme.create-theme-vars($tokens, 'outlined-text-field');
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
   :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
 
+    $container-shape: shape.corners-to-shape-token('--_container-shape');
+
     @include outlined-field.theme(
       (
         container-padding-horizontal: var(--_container-padding-horizontal),
         container-padding-vertical: var(--_container-padding-vertical),
-        container-shape-start-start: var(--_container-shape-start-start),
-        container-shape-start-end: var(--_container-shape-start-end),
-        container-shape-end-end: var(--_container-shape-end-end),
-        container-shape-end-start: var(--_container-shape-end-start),
+        container-shape: $container-shape,
         disabled-content-color: var(--_disabled-input-text-color),
         disabled-content-opacity: var(--_disabled-input-text-opacity),
         disabled-label-text-color: var(--_disabled-label-text-color),

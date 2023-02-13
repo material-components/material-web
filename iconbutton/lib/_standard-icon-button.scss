@@ -14,12 +14,13 @@
 @use './shared';
 
 $_custom-property-prefix: 'icon-button';
+$_shape-property: 'state-layer-shape';
 
 @mixin theme($tokens) {
   $tokens: theme.validate-theme(tokens.md-comp-icon-button-values(), $tokens);
   $tokens: shared.flatten-disabled-colors($tokens);
-  $tokens: shared.resolve-shape-tokens($tokens, $property: 'state-layer-shape');
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+  $tokens: shared.resolve-shape-tokens($tokens, $property: $_shape-property);
 
   @include theme.emit-theme-vars($tokens);
 }
@@ -27,8 +28,8 @@ $_custom-property-prefix: 'icon-button';
 @mixin styles() {
   $tokens: tokens.md-comp-icon-button-values();
   $tokens: shared.flatten-disabled-colors($tokens);
-  $tokens: shared.resolve-shape-tokens($tokens, $property: 'state-layer-shape');
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+  $tokens: shared.resolve-shape-tokens($tokens, $property: $_shape-property);
 
   :host {
     @each $token, $value in $tokens {

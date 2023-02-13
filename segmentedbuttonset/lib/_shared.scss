@@ -6,10 +6,6 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@use 'sass:map';
-@use '../../sass/resolvers';
-@use '../../sass/shape';
-
 @mixin styles() {
   :host {
     display: flex;
@@ -34,13 +30,4 @@
       border-end-end-radius: var(--_shape-end-end);
     }
   }
-}
-
-@function resolve-tokens($tokens) {
-  $tokens: shape.resolve-theme(
-    $tokens,
-    map.get(resolvers.$material, 'shape'),
-    'shape'
-  );
-  @return $tokens;
 }

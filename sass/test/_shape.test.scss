@@ -13,63 +13,6 @@
 @use '../theme';
 
 @include test.describe('shape') {
-  @include test.describe('resolve-theme()') {
-    @include test.it('should return $theme if $resolver is null') {
-      // Setup.
-      $theme: (
-        container-shape: 8px,
-      );
-      $resolver: null;
-
-      // Test Case.
-      $result: shape.resolve-theme($theme, $resolver, container-shape);
-
-      // Assertion.
-      @include test.assert-equal(
-        $theme,
-        $result,
-        $description: 'Returned $theme should not be modified'
-      );
-    }
-
-    @include test.it('should expand shape tokens into 4 corner tokens') {
-      // Setup.
-      $theme: (
-        not-a-shape-token: 24px,
-        container-shape: 8px,
-        root-shape: 1px 2px 3px 4px,
-      );
-      $resolver: map.get(resolvers.$material, shape);
-
-      // Test Case.
-      $result: shape.resolve-theme(
-        $theme,
-        $resolver,
-        root-shape,
-        container-shape
-      );
-
-      // Assertion.
-      $expected: (
-        not-a-shape-token: 24px,
-        container-shape-start-start: 8px,
-        container-shape-start-end: 8px,
-        container-shape-end-end: 8px,
-        container-shape-end-start: 8px,
-        root-shape-start-start: 1px,
-        root-shape-start-end: 2px,
-        root-shape-end-end: 3px,
-        root-shape-end-start: 4px,
-      );
-      @include test.assert-equal(
-        $result,
-        $expected,
-        $description:
-          'Should expand shape tokens, remove original tokens, and not touch other tokens'
-      );
-    }
-  }
-
   @include test.describe('resolver()') {
     @include test.it('should return null for all corners if given null') {
       // Test Case.

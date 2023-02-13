@@ -25,7 +25,8 @@
 
   $tokens: theme.validate-theme($reference, $tokens);
   $tokens: shared.resolve-tokens($tokens);
-  $tokens: theme.create-theme-vars($tokens, filled-text-field);
+  $tokens: theme.create-theme-vars($tokens, 'filled-text-field');
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
   @include theme.emit-theme-vars($tokens);
 }
@@ -45,7 +46,8 @@
   );
 
   $tokens: shared.resolve-tokens($tokens);
-  $tokens: theme.create-theme-vars($tokens, filled-text-field);
+  $tokens: theme.create-theme-vars($tokens, 'filled-text-field');
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
   :host {
     @each $token, $value in $tokens {
@@ -59,10 +61,7 @@
         container-color: var(--_container-color),
         container-padding-horizontal: var(--_container-padding-horizontal),
         container-padding-vertical: var(--_container-padding-vertical),
-        container-shape-start-start: var(--_container-shape-start-start),
-        container-shape-start-end: var(--_container-shape-start-end),
-        container-shape-end-end: var(--_container-shape-end-end),
-        container-shape-end-start: var(--_container-shape-end-start),
+        container-shape: shape.corners-to-shape-token('--_container-shape'),
         content-color: var(--_input-text-color),
         disabled-active-indicator-color: var(--_disabled-active-indicator-color),
         disabled-active-indicator-height:

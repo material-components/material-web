@@ -9,6 +9,7 @@
 @use 'sass:map';
 @use '../../motion/animation';
 @use '../../sass/theme';
+@use '../../sass/shape';
 @use './md-comp-outlined-field';
 @use './shared';
 
@@ -20,7 +21,8 @@ $_animation-duration: 150ms;
   $reference: map.merge($reference, shared.resolve-tokens($reference));
   $tokens: theme.validate-theme($reference, $tokens);
   $tokens: shared.resolve-tokens($tokens);
-  $tokens: theme.create-theme-vars($tokens, outlined-field);
+  $tokens: theme.create-theme-vars($tokens, 'outlined-field');
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
   @include theme.emit-theme-vars($tokens);
 }
@@ -28,7 +30,8 @@ $_animation-duration: 150ms;
 @mixin styles() {
   $tokens: md-comp-outlined-field.values();
   $tokens: shared.resolve-tokens($tokens);
-  $tokens: theme.create-theme-vars($tokens, outlined-field);
+  $tokens: theme.create-theme-vars($tokens, 'outlined-field');
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
   :host {
     @each $token, $value in $tokens {

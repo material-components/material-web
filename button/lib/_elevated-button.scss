@@ -21,6 +21,7 @@ $_custom-property-prefix: 'elevated-button';
   );
   $tokens: _resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
   @include theme.emit-theme-vars($tokens);
 }
@@ -38,6 +39,7 @@ $_custom-property-prefix: 'elevated-button';
 
   $tokens: _resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
   :host {
     @each $token, $value in $tokens {
@@ -53,11 +55,6 @@ $_custom-property-prefix: 'elevated-button';
     $tokens,
     map.get(resolvers.$material, 'typography'),
     'label-text'
-  );
-  $tokens: shape.resolve-theme(
-    $tokens,
-    map.get(resolvers.$material, 'shape'),
-    'container-shape'
   );
   @return elevation.resolve-tokens($tokens);
 }

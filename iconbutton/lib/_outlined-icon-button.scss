@@ -23,8 +23,8 @@ $_custom-property-prefix: 'outlined-icon-button';
     $tokens
   );
   $tokens: shared.flatten-disabled-colors($tokens, $variant: 'outlined');
-  $tokens: shared.resolve-shape-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+  $tokens: shared.resolve-shape-tokens($tokens);
 
   @include theme.emit-theme-vars($tokens);
 }
@@ -32,8 +32,8 @@ $_custom-property-prefix: 'outlined-icon-button';
 @mixin styles() {
   $tokens: tokens.md-comp-outlined-icon-button-values();
   $tokens: shared.flatten-disabled-colors($tokens, $variant: 'outlined');
-  $tokens: shared.resolve-shape-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+  $tokens: shared.resolve-shape-tokens($tokens);
 
   :host {
     @each $token, $value in $tokens {
