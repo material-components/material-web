@@ -5,6 +5,8 @@
 
 @use 'true' as test;
 @use '../string-ext';
+@use 'sass:meta';
+@use 'sass:list';
 
 @include test.describe('string-ext') {
   @include test.describe('has-prefix()') {
@@ -155,6 +157,40 @@
         string-ext.replace('womp womp', 'womp', 'doo'),
         'doo womp'
       );
+    }
+  }
+
+  @include test.describe('split()') {
+    @include test.it('should return a list') {
+      $result: string-ext.split('foo bar baz');
+      @include test.assert-equal(meta.type-of($result), 'list');
+    }
+
+    @include test.it('should return ordered substrings') {
+      $result: string-ext.split('foo bar baz');
+      $expected: (foo bar baz);
+      @include test.assert-equal(list.length($result), 3);
+      @include test.assert-equal($result, $expected);
+    }
+
+    @include test.it('should handle comma separated lists') {
+      $result: string-ext.split('foo, bar, baz');
+      $expected: (foo bar baz);
+      @include test.assert-equal(list.length($result), 3);
+      @include test.assert-equal($result, $expected);
+    }
+
+    @include test.it('should handle slash separated lists') {
+      $result: string-ext.split('foo/ bar/ baz');
+      $expected: (foo bar baz);
+      @include test.assert-equal(list.length($result), 3);
+      @include test.assert-equal($result, $expected);
+    }
+
+    @include test.it('should one-item list for simple strings') {
+      $result: string-ext.split('foo');
+      $expected: list.append((), foo);
+      @include test.assert-equal($result, $expected);
     }
   }
 }

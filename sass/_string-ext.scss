@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+@use 'sass:list';
 @use 'sass:string';
 
 /// Checks if a string starts with a given prefix.
@@ -148,4 +149,45 @@
   $after: string.slice($string, string.length($pattern) + $pattern-index);
 
   @return $before + $replacement + $after;
+}
+
+/// Divides a string into an ordered list of substrings.
+///
+/// @example - scss
+///   @debug split("1px 2px 3px 4px"); // (1px 2px 3px 4px)
+///   @debug split("1px, 2px, 3px, 4px"); // (1px 2px 3px 4px)
+///   @debug split("1px/2px/3px/4px"); // (1px 2px 3px 4px)
+///
+/// @param {String} $str - The string to split
+/// @return {List} The list of substrings
+@function split($str) {
+  $list: ();
+  $item: '';
+  // list separator precedence is comma, slash, space
+  $separator: ' ';
+  @if string.index($str, ',') {
+    $separator: ',';
+  } @else if string.index($str, '/') {
+    $separator: '/';
+  }
+  @for $i from 1 through string.length($str) {
+    $chr: string.slice($str, $i, $i);
+    @if $chr == $separator {
+      @if $item != '' {
+        // remove surrounding whitespace
+        $item: string.unquote(trim($item, ' '));
+        $list: list.append($list, $item);
+      }
+      $item: '';
+    } @else {
+      $item: $item + $chr;
+    }
+  }
+  // append final item
+  @if $item != '' {
+    // remove surrounding whitespace
+    $item: string.unquote(trim($item, ' '));
+    $list: list.append($list, $item);
+  }
+  @return $list;
 }

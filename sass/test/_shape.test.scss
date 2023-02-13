@@ -3,11 +3,14 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+@use 'sass:list';
 @use 'sass:map';
 @use 'sass:meta';
 @use 'true' as test;
 @use '../resolvers';
 @use '../shape';
+@use '../var';
+@use '../theme';
 
 @include test.describe('shape') {
   @include test.describe('resolve-theme()') {
@@ -284,6 +287,112 @@
         0,
         $description: 'end-start should be the fourth corner'
       );
+    }
+  }
+
+  @include test.describe('corners-to-shape-token') {
+    @include test.it('should return a list with expanded radius list') {
+      $result: shape.corners-to-shape-token(foo);
+
+      @include test.assert-equal(meta.type-of($result), 'list');
+      @include test.assert-equal(list.length($result), 4);
+
+      @include test.assert-equal(
+        list.nth($result, 1),
+        var.create(foo-start-start)
+      );
+      @include test.assert-equal(
+        list.nth($result, 2),
+        var.create(foo-start-end)
+      );
+      @include test.assert-equal(list.nth($result, 3), var.create(foo-end-end));
+      @include test.assert-equal(
+        list.nth($result, 4),
+        var.create(foo-end-start)
+      );
+    }
+  }
+
+  @include test.describe('resolve-tokens') {
+    // Setup.
+    $theme: (
+      not-a-shape-token: 24px,
+      container-shape: 8px,
+      root-shape: (
+        1px,
+        2px,
+        3px,
+        4px,
+      ),
+    );
+
+    @include test.it('should expand shape tokens into 4 corner tokens') {
+      $tokens: theme.create-theme-vars($theme, foo);
+      // Test Case.
+      $result: shape.resolve-tokens($tokens, root-shape, container-shape);
+
+      // Assertion.
+      $expected: (
+        container-shape-start-start:
+          var(
+            --md-foo-container-shape-start-start,
+            var(--md-foo-container-shape, 8px)
+          ),
+        container-shape-start-end:
+          var(
+            --md-foo-container-shape-start-end,
+            var(--md-foo-container-shape, 8px)
+          ),
+        container-shape-end-end:
+          var(
+            --md-foo-container-shape-end-end,
+            var(--md-foo-container-shape, 8px)
+          ),
+        container-shape-end-start:
+          var(
+            --md-foo-container-shape-end-start,
+            var(--md-foo-container-shape, 8px)
+          ),
+        root-shape-start-start:
+          var(--md-foo-root-shape-start-start, var(--md-foo-root-shape, 1px)),
+        root-shape-start-end:
+          var(--md-foo-root-shape-start-end, var(--md-foo-root-shape, 2px)),
+        root-shape-end-end:
+          var(--md-foo-root-shape-end-end, var(--md-foo-root-shape, 3px)),
+        root-shape-end-start:
+          var(--md-foo-root-shape-end-start, var(--md-foo-root-shape, 4px)),
+        not-a-shape-token: var(--md-foo-not-a-shape-token, 24px),
+      );
+      @include test.assert-equal(
+        $result,
+        $expected,
+        $description:
+          'Should expand shape tokens, remove original tokens, and not touch other tokens'
+      );
+    }
+
+    @include test.it('gracefully handles missing shape tokens') {
+      $tokens: theme.create-theme-vars(
+        (
+          shape: 10px,
+          not-affected: 10px,
+        ),
+        foo
+      );
+      $result: shape.resolve-tokens($tokens, shape, missing);
+
+      $expected: (
+        shape-start-start:
+          var(--md-foo-shape-start-start, var(--md-foo-shape, 10px)),
+        shape-start-end:
+          var(--md-foo-shape-start-end, var(--md-foo-shape, 10px)),
+        shape-end-end: var(--md-foo-shape-end-end, var(--md-foo-shape, 10px)),
+        shape-end-start:
+          var(--md-foo-shape-end-start, var(--md-foo-shape, 10px)),
+        not-affected: var(--md-foo-not-affected, 10px),
+      );
+
+      @include test.assert-equal($result, $expected);
     }
   }
 }
