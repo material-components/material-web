@@ -46,7 +46,7 @@
     // Remove Safari workaround for incorrect ripple overflow when addressed.
     // This addresses `hover` and `pressed` state oveflow.
     will-change: transform;
-    border-radius: var(--_state-layer-shape);
+    border-radius: var(--_shape);
     outline: none;
     -webkit-tap-highlight-color: transparent;
 
@@ -59,7 +59,7 @@
     }
 
     &::before {
-      background-color: var(--_hover-state-layer-color);
+      background-color: var(--_hover-color);
       transition: opacity 15ms linear, background-color 15ms linear;
       inset: 0;
     }
@@ -68,7 +68,7 @@
       // press ripple fade-out
       background: radial-gradient(
         closest-side,
-        var(--_pressed-state-layer-color) max(calc(100% - 70px), 65%),
+        var(--_pressed-color) max(calc(100% - 70px), 65%),
         transparent 100%
       );
       transition: opacity 375ms linear;
@@ -77,29 +77,29 @@
   }
 
   .hovered::before {
-    background-color: var(--_hover-state-layer-color);
-    opacity: var(--_hover-state-layer-opacity);
+    background-color: var(--_hover-color);
+    opacity: var(--_hover-opacity);
   }
 
   .focused::before {
-    background-color: var(--_focus-state-layer-color);
-    opacity: var(--_focus-state-layer-opacity);
+    background-color: var(--_focus-color);
+    opacity: var(--_focus-opacity);
     transition-duration: 75ms;
   }
 
   .pressed::after {
     // press ripple fade-in
-    opacity: var(--_pressed-state-layer-opacity);
+    opacity: var(--_pressed-opacity);
     transition-duration: 105ms;
   }
 
   .unbounded {
     $unbounded: (
-      state-layer-shape: map.get(tokens.md-sys-shape-values(), 'corner-full'),
+      shape: map.get(tokens.md-sys-shape-values(), 'corner-full'),
     );
     $unbounded: theme.create-theme-vars($unbounded, ripple);
 
-    --_state-layer-shape: #{map.get($unbounded, 'state-layer-shape')};
+    --_shape: #{map.get($unbounded, 'shape')};
   }
 
   @media screen and (forced-colors: active) {

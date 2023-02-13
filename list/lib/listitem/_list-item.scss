@@ -52,13 +52,12 @@
     );
     @include ripple.theme(
       (
-        hover-state-layer-color: var(--_list-item-hover-state-layer-color),
-        hover-state-layer-opacity: var(--_list-item-hover-state-layer-opacity),
-        pressed-state-layer-color: var(--_list-item-pressed-state-layer-color),
-        pressed-state-layer-opacity:
-          var(--_list-item-pressed-state-layer-opacity),
-        focus-state-layer-color: var(--_list-item-focus-state-layer-color),
-        focus-state-layer-opacity: var(--_list-item-focus-state-layer-opacity),
+        hover-color: var(--_list-item-hover-state-layer-color),
+        hover-opacity: var(--_list-item-hover-state-layer-opacity),
+        pressed-color: var(--_list-item-pressed-state-layer-color),
+        pressed-opacity: var(--_list-item-pressed-state-layer-opacity),
+        focus-color: var(--_list-item-focus-state-layer-color),
+        focus-opacity: var(--_list-item-focus-state-layer-opacity),
       )
     );
   }

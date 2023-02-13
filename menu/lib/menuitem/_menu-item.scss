@@ -44,7 +44,7 @@ $_custom-property-prefix: 'menu';
     */
     @include ripple.theme(
       (
-        hover-state-layer-opacity: 0,
+        hover-opacity: 0,
       )
     );
   }

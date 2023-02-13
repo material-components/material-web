@@ -195,12 +195,12 @@
 
     @include ripple.theme(
       (
-        hover-state-layer-color: var(--_unselected-hover-state-layer-color),
-        hover-state-layer-opacity: var(--_hover-state-layer-opacity),
-        focus-state-layer-color: var(--_unselected-focus-state-layer-color),
-        focus-state-layer-opacity: var(--_focus-state-layer-opacity),
-        pressed-state-layer-color: var(--_unselected-pressed-state-layer-color),
-        pressed-state-layer-opacity: var(--_pressed-state-layer-opacity),
+        hover-color: var(--_unselected-hover-state-layer-color),
+        hover-opacity: var(--_hover-state-layer-opacity),
+        focus-color: var(--_unselected-focus-state-layer-color),
+        focus-opacity: var(--_focus-state-layer-opacity),
+        pressed-color: var(--_unselected-pressed-state-layer-color),
+        pressed-opacity: var(--_pressed-state-layer-opacity),
       )
     );
   }
@@ -242,12 +242,12 @@
 
     @include ripple.theme(
       (
-        hover-state-layer-color: var(--_selected-hover-state-layer-color),
-        hover-state-layer-opacity: var(--_hover-state-layer-opacity),
-        focus-state-layer-color: var(--_selected-focus-state-layer-color),
-        focus-state-layer-opacity: var(--_focus-state-layer-opacity),
-        pressed-state-layer-color: var(--_selected-pressed-state-layer-color),
-        pressed-state-layer-opacity: var(--_pressed-state-layer-opacity),
+        hover-color: var(--_selected-hover-state-layer-color),
+        hover-opacity: var(--_hover-state-layer-opacity),
+        focus-color: var(--_selected-focus-state-layer-color),
+        focus-opacity: var(--_focus-state-layer-opacity),
+        pressed-color: var(--_selected-pressed-state-layer-color),
+        pressed-opacity: var(--_pressed-state-layer-opacity),
       )
     );
   }

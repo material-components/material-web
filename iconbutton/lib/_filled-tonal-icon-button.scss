@@ -73,12 +73,12 @@ $_custom-property-prefix: 'filled-tonal-icon-button';
 
     @include ripple.theme(
       (
-        focus-state-layer-color: var(--_focus-state-layer-color),
-        focus-state-layer-opacity: var(--_focus-state-layer-opacity),
-        hover-state-layer-color: var(--_hover-state-layer-color),
-        hover-state-layer-opacity: var(--_hover-state-layer-opacity),
-        pressed-state-layer-color: var(--_pressed-state-layer-color),
-        pressed-state-layer-opacity: var(--_pressed-state-layer-opacity),
+        focus-color: var(--_focus-state-layer-color),
+        focus-opacity: var(--_focus-state-layer-opacity),
+        hover-color: var(--_hover-state-layer-color),
+        hover-opacity: var(--_hover-state-layer-opacity),
+        pressed-color: var(--_pressed-state-layer-color),
+        pressed-opacity: var(--_pressed-state-layer-opacity),
       )
     );
   }
@@ -103,12 +103,9 @@ $_custom-property-prefix: 'filled-tonal-icon-button';
 
     @include ripple.theme(
       (
-        focus-state-layer-color:
-          var(--_toggle-unselected-focus-state-layer-color),
-        hover-state-layer-color:
-          var(--_toggle-unselected-hover-state-layer-color),
-        pressed-state-layer-color:
-          var(--_toggle-unselected-pressed-state-layer-color),
+        focus-color: var(--_toggle-unselected-focus-state-layer-color),
+        hover-color: var(--_toggle-unselected-hover-state-layer-color),
+        pressed-color: var(--_toggle-unselected-pressed-state-layer-color),
       )
     );
   }
@@ -133,10 +130,9 @@ $_custom-property-prefix: 'filled-tonal-icon-button';
 
     @include ripple.theme(
       (
-        focus-state-layer-color: var(--_toggle-selected-focus-state-layer-color),
-        hover-state-layer-color: var(--_toggle-selected-hover-state-layer-color),
-        pressed-state-layer-color:
-          var(--_toggle-selected-pressed-state-layer-color),
+        focus-color: var(--_toggle-selected-focus-state-layer-color),
+        hover-color: var(--_toggle-selected-hover-state-layer-color),
+        pressed-color: var(--_toggle-selected-pressed-state-layer-color),
       )
     );
   }

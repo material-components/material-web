@@ -385,42 +385,32 @@ $_custom-property-prefix: 'chip';
   );
   @include _ripple-theme(
     (
-      focus-state-layer-color: map.get($theme, focus-state-layer-color),
-      focus-state-layer-opacity: map.get($theme, focus-state-layer-opacity),
-      hover-state-layer-color: map.get($theme, hover-state-layer-color),
-      hover-state-layer-opacity: map.get($theme, hover-state-layer-opacity),
-      pressed-state-layer-color: map.get($theme, pressed-state-layer-color),
-      pressed-state-layer-opacity: map.get($theme, pressed-state-layer-opacity),
+      focus-color: map.get($theme, focus-state-layer-color),
+      focus-opacity: map.get($theme, focus-state-layer-opacity),
+      hover-color: map.get($theme, hover-state-layer-color),
+      hover-opacity: map.get($theme, hover-state-layer-opacity),
+      pressed-color: map.get($theme, pressed-state-layer-color),
+      pressed-opacity: map.get($theme, pressed-state-layer-opacity),
     )
   );
   @include _selected-ripple-theme(
     (
-      focus-state-layer-color: map.get($theme, selected-focus-state-layer-color),
-      focus-state-layer-opacity:
-        map.get($theme, selected-focus-state-layer-opacity),
-      hover-state-layer-color: map.get($theme, selected-hover-state-layer-color),
-      hover-state-layer-opacity:
-        map.get($theme, selected-hover-state-layer-opacity),
-      pressed-state-layer-color:
-        map.get($theme, selected-pressed-state-layer-color),
-      pressed-state-layer-opacity:
-        map.get($theme, selected-pressed-state-layer-opacity),
+      focus-color: map.get($theme, selected-focus-state-layer-color),
+      focus-opacity: map.get($theme, selected-focus-state-layer-opacity),
+      hover-color: map.get($theme, selected-hover-state-layer-color),
+      hover-opacity: map.get($theme, selected-hover-state-layer-opacity),
+      pressed-color: map.get($theme, selected-pressed-state-layer-color),
+      pressed-opacity: map.get($theme, selected-pressed-state-layer-opacity),
     )
   );
   @include _unselected-ripple-theme(
     (
-      focus-state-layer-color:
-        map.get($theme, unselected-focus-state-layer-color),
-      focus-state-layer-opacity:
-        map.get($theme, unselected-focus-state-layer-opacity),
-      hover-state-layer-color:
-        map.get($theme, unselected-hover-state-layer-color),
-      hover-state-layer-opacity:
-        map.get($theme, unselected-hover-state-layer-opacity),
-      pressed-state-layer-color:
-        map.get($theme, unselected-pressed-state-layer-color),
-      pressed-state-layer-opacity:
-        map.get($theme, unselected-pressed-state-layer-opacity),
+      focus-color: map.get($theme, unselected-focus-state-layer-color),
+      focus-opacity: map.get($theme, unselected-focus-state-layer-opacity),
+      hover-color: map.get($theme, unselected-hover-state-layer-color),
+      hover-opacity: map.get($theme, unselected-hover-state-layer-opacity),
+      pressed-color: map.get($theme, unselected-pressed-state-layer-color),
+      pressed-opacity: map.get($theme, unselected-pressed-state-layer-opacity),
     )
   );
 }
@@ -450,16 +440,12 @@ $_custom-property-prefix: 'chip';
   .md3-chip__action--primary {
     @include ripple.theme(
       (
-        focus-state-layer-color: map.get($ripple-theme, focus-state-layer-color),
-        focus-state-layer-opacity:
-          map.get($ripple-theme, focus-state-layer-opacity),
-        hover-state-layer-color: map.get($ripple-theme, hover-state-layer-color),
-        hover-state-layer-opacity:
-          map.get($ripple-theme, hover-state-layer-opacity),
-        pressed-state-layer-color:
-          map.get($ripple-theme, pressed-state-layer-color),
-        pressed-state-layer-opacity:
-          map.get($ripple-theme, pressed-state-layer-opacity),
+        focus-color: map.get($ripple-theme, focus-state-layer-color),
+        focus-opacity: map.get($ripple-theme, focus-state-layer-opacity),
+        hover-color: map.get($ripple-theme, hover-state-layer-color),
+        hover-opacity: map.get($ripple-theme, hover-state-layer-opacity),
+        pressed-color: map.get($ripple-theme, pressed-state-layer-color),
+        pressed-opacity: map.get($ripple-theme, pressed-state-layer-opacity),
       ),
       $ripple-target: $ripple-target
     );

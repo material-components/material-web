@@ -59,15 +59,14 @@ $_shape-property: 'state-layer-shape';
 
     @include ripple.theme(
       (
-        focus-state-layer-color: var(--_unselected-focus-state-layer-color),
-        focus-state-layer-opacity: var(--_unselected-focus-state-layer-opacity),
-        hover-state-layer-color: var(--_unselected-hover-state-layer-color),
-        hover-state-layer-opacity: var(--_unselected-hover-state-layer-opacity),
-        pressed-state-layer-color: var(--_unselected-pressed-state-layer-color),
-        pressed-state-layer-opacity:
-          var(--_unselected-pressed-state-layer-opacity),
+        focus-color: var(--_unselected-focus-state-layer-color),
+        focus-opacity: var(--_unselected-focus-state-layer-opacity),
+        hover-color: var(--_unselected-hover-state-layer-color),
+        hover-opacity: var(--_unselected-hover-state-layer-opacity),
+        pressed-color: var(--_unselected-pressed-state-layer-color),
+        pressed-opacity: var(--_unselected-pressed-state-layer-opacity),
         // TODO(b/263517885): replace with ripple.theme(state-layer-shape)
-        state-layer-shape: var(--_state-layer-shape-start-start),
+        shape: var(--_state-layer-shape-start-start),
       )
     );
 
@@ -107,13 +106,12 @@ $_shape-property: 'state-layer-shape';
 
     @include ripple.theme(
       (
-        focus-state-layer-color: var(--_selected-focus-state-layer-color),
-        focus-state-layer-opacity: var(--_selected-focus-state-layer-opacity),
-        hover-state-layer-color: var(--_selected-hover-state-layer-color),
-        hover-state-layer-opacity: var(--_selected-hover-state-layer-opacity),
-        pressed-state-layer-color: var(--_selected-pressed-state-layer-color),
-        pressed-state-layer-opacity:
-          var(--_selected-pressed-state-layer-opacity),
+        focus-color: var(--_selected-focus-state-layer-color),
+        focus-opacity: var(--_selected-focus-state-layer-opacity),
+        hover-color: var(--_selected-hover-state-layer-color),
+        hover-opacity: var(--_selected-hover-state-layer-opacity),
+        pressed-color: var(--_selected-pressed-state-layer-color),
+        pressed-opacity: var(--_selected-pressed-state-layer-opacity),
       )
     );
   }
