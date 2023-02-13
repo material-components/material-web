@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
+import {html, LitElement, PropertyValues} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {classMap} from 'lit/directives/class-map.js';
 
 import {createAnimationSignal, EASING} from '../../motion/animation.js';
 
@@ -19,41 +19,79 @@ const SOFT_EDGE_CONTAINER_RATIO = 0.35;
 const PRESS_PSEUDO = '::after';
 const ANIMATION_FILL = 'forwards';
 
-/** @soyCompatible */
+/**
+ * A ripple component.
+ */
 export class Ripple extends LitElement {
-  @query('.md3-ripple-surface') mdRoot!: HTMLElement;
-
   // TODO(https://bugs.webkit.org/show_bug.cgi?id=247546)
   // Remove Safari workaround that requires reflecting `unbounded` so
   // it can be styled against.
+  /**
+   * Sets the ripple to be an unbounded circle.
+   */
   @property({type: Boolean, reflect: true}) unbounded = false;
+
+  /**
+   * Disables the ripple.
+   */
   @property({type: Boolean, reflect: true}) disabled = false;
 
-  @state() protected hovered = false;
-  @state() protected focused = false;
-  @state() protected pressed = false;
+  @state() private hovered = false;
+  @state() private focused = false;
+  @state() private pressed = false;
 
-  protected rippleSize = '';
-  protected rippleScale = '';
-  protected initialSize = 0;
-  protected pressAnimationSignal = createAnimationSignal();
-  protected growAnimation: Animation|null = null;
-  protected delayedEndPressHandle: number|null = null;
+  @query('.surface') private readonly mdRoot!: HTMLElement;
+  private rippleSize = '';
+  private rippleScale = '';
+  private initialSize = 0;
+  private readonly pressAnimationSignal = createAnimationSignal();
+  private growAnimation: Animation|null = null;
+  private delayedEndPressHandle?: number;
 
-  /** @soyTemplate */
-  protected override render(): TemplateResult {
-    return html`<div class="md3-ripple-surface ${
-        classMap(this.getRenderRippleClasses())}"></div>`;
+  beginHover(hoverEvent?: Event) {
+    if ((hoverEvent as PointerEvent)?.pointerType !== 'touch') {
+      this.hovered = true;
+    }
   }
 
-  /** @soyTemplate */
-  protected getRenderRippleClasses(): ClassInfo {
-    return {
-      'md3-ripple--hovered': this.hovered,
-      'md3-ripple--focused': this.focused,
-      'md3-ripple--pressed': this.pressed,
-      'md3-ripple--unbounded': this.unbounded,
+  endHover() {
+    this.hovered = false;
+  }
+
+  beginFocus() {
+    this.focused = true;
+  }
+
+  endFocus() {
+    this.focused = false;
+  }
+
+  beginPress(positionEvent?: Event|null) {
+    this.pressed = true;
+    clearTimeout(this.delayedEndPressHandle);
+    this.startPressAnimation(positionEvent);
+  }
+
+  endPress() {
+    const pressAnimationPlayState = this.growAnimation?.currentTime ?? Infinity;
+    if (pressAnimationPlayState >= MINIMUM_PRESS_MS) {
+      this.pressed = false;
+    } else {
+      this.delayedEndPressHandle = setTimeout(() => {
+        this.pressed = false;
+      }, MINIMUM_PRESS_MS - pressAnimationPlayState);
+    }
+  }
+
+  protected override render() {
+    const classes = {
+      'hovered': this.hovered,
+      'focused': this.focused,
+      'pressed': this.pressed,
+      'unbounded': this.unbounded,
     };
+
+    return html`<div class="surface ${classMap(classes)}"></div>`;
   }
 
   protected override update(changedProps: PropertyValues<this>) {
@@ -65,11 +103,11 @@ export class Ripple extends LitElement {
     super.update(changedProps);
   }
 
-  protected getDimensions() {
+  private getDimensions() {
     return (this.parentElement ?? this).getBoundingClientRect();
   }
 
-  protected determineRippleSize() {
+  private determineRippleSize() {
     const {height, width} = this.getDimensions();
     const maxDim = Math.max(height, width);
     const softEdgeSize =
@@ -92,7 +130,7 @@ export class Ripple extends LitElement {
     this.rippleSize = `${this.initialSize}px`;
   }
 
-  protected getNormalizedPointerEventCoords(pointerEvent: PointerEvent):
+  private getNormalizedPointerEventCoords(pointerEvent: PointerEvent):
       {x: number, y: number} {
     const {scrollX, scrollY} = window;
     const {left, top} = this.getDimensions();
@@ -102,7 +140,7 @@ export class Ripple extends LitElement {
     return {x: pageX - documentX, y: pageY - documentY};
   }
 
-  protected getTranslationCoordinates(positionEvent?: Event|null) {
+  private getTranslationCoordinates(positionEvent?: Event|null) {
     const {height, width} = this.getDimensions();
     // end in the center
     const endPoint = {
@@ -129,7 +167,7 @@ export class Ripple extends LitElement {
     return {startPoint, endPoint};
   }
 
-  protected startPressAnimation(positionEvent?: Event|null) {
+  private startPressAnimation(positionEvent?: Event|null) {
     this.determineRippleSize();
     const {startPoint, endPoint} =
         this.getTranslationCoordinates(positionEvent);
@@ -167,65 +205,5 @@ export class Ripple extends LitElement {
     });
 
     this.growAnimation = growAnimation;
-  }
-
-  /**
-   * @deprecated Use beginHover
-   */
-  startHover(hoverEvent?: Event) {
-    this.beginHover(hoverEvent);
-  }
-
-  beginHover(hoverEvent?: Event) {
-    if ((hoverEvent as PointerEvent)?.pointerType !== 'touch') {
-      this.hovered = true;
-    }
-  }
-
-  endHover() {
-    this.hovered = false;
-  }
-
-  /**
-   * @deprecated Use beginFocus
-   */
-  startFocus() {
-    this.beginFocus();
-  }
-
-  beginFocus() {
-    this.focused = true;
-  }
-
-  endFocus() {
-    this.focused = false;
-  }
-
-  /**
-   * @deprecated Use beginPress
-   */
-  startPress(positionEvent?: Event|null) {
-    this.beginPress(positionEvent);
-  }
-
-  beginPress(positionEvent?: Event|null) {
-    this.pressed = true;
-    if (this.delayedEndPressHandle !== null) {
-      clearTimeout(this.delayedEndPressHandle);
-      this.delayedEndPressHandle = null;
-    }
-    this.startPressAnimation(positionEvent);
-  }
-
-  endPress() {
-    const pressAnimationPlayState = this.growAnimation?.currentTime ?? Infinity;
-    if (pressAnimationPlayState >= MINIMUM_PRESS_MS) {
-      this.pressed = false;
-    } else {
-      this.delayedEndPressHandle = setTimeout(() => {
-        this.pressed = false;
-        this.delayedEndPressHandle = null;
-      }, MINIMUM_PRESS_MS - pressAnimationPlayState);
-    }
   }
 }

@@ -9,9 +9,9 @@ import {customElement} from 'lit/decorators.js';
 import {Ripple} from './ripple.js';
 
 enum RippleStateClasses {
-  HOVERED = 'md3-ripple--hovered',
-  FOCUSED = 'md3-ripple--focused',
-  PRESSED = 'md3-ripple--pressed',
+  HOVERED = 'hovered',
+  FOCUSED = 'focused',
+  PRESSED = 'pressed',
 }
 
 declare global {
@@ -38,7 +38,7 @@ describe('ripple', () => {
       container.appendChild(element);
       await element.updateComplete;
 
-      surface = element.renderRoot.querySelector('.md3-ripple-surface')!;
+      surface = element.renderRoot.querySelector('.surface')!;
     });
 
     afterEach(() => {

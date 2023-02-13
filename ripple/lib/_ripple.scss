@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 @use 'sass:map';
 @use '../../sass/theme';
 @use '../../tokens';
@@ -37,14 +34,14 @@
   }
 
   :host,
-  .md3-ripple-surface {
+  .surface {
     position: absolute;
     inset: 0;
     pointer-events: none;
     overflow: hidden;
   }
 
-  .md3-ripple-surface {
+  .surface {
     // TODO(https://bugs.webkit.org/show_bug.cgi?id=247546)
     // Remove Safari workaround for incorrect ripple overflow when addressed.
     // This addresses `hover` and `pressed` state oveflow.
@@ -79,24 +76,24 @@
     }
   }
 
-  .md3-ripple--hovered::before {
+  .hovered::before {
     background-color: var(--_hover-state-layer-color);
     opacity: var(--_hover-state-layer-opacity);
   }
 
-  .md3-ripple--focused::before {
+  .focused::before {
     background-color: var(--_focus-state-layer-color);
     opacity: var(--_focus-state-layer-opacity);
     transition-duration: 75ms;
   }
 
-  .md3-ripple--pressed::after {
+  .pressed::after {
     // press ripple fade-in
     opacity: var(--_pressed-state-layer-opacity);
     transition-duration: 105ms;
   }
 
-  .md3-ripple--unbounded {
+  .unbounded {
     $unbounded: (
       state-layer-shape: map.get(tokens.md-sys-shape-values(), 'corner-full'),
     );
@@ -105,7 +102,6 @@
     --_state-layer-shape: #{map.get($unbounded, 'state-layer-shape')};
   }
 
-  // TODO(b/230630968): create a forced-colors-mode mixin
   @media screen and (forced-colors: active) {
     :host {
       display: none;
