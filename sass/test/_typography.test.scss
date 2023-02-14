@@ -1,0 +1,56 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:map';
+@use 'sass:meta';
+@use 'true' as test;
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../map-ext';
+@use '../typography';
+// go/keep-sorted end
+
+@include test.describe('typography') {
+  $input: (
+    'text-font': 'Roboto',
+    'text-line-height': 1rem,
+    'text-size': 1rem,
+    'text-tracking': 0.005rem,
+    'text-weight': 400,
+    'text-type': '400 1rem/1rem Roboto',
+  );
+
+  @include test.describe('resolve-tokens()') {
+    @include test.it('should return a map') {
+      $result: typography.resolve-tokens($input);
+      @include test.assert-equal(meta.type-of($result), 'map');
+    }
+
+    @include test.it('does not modify input without a list of tokens') {
+      $expected: $input;
+      $result: typography.resolve-tokens($input);
+      @include test.assert-equal($expected, $result);
+    }
+
+    @include test.it('should remove typography tokens aside from `-type`') {
+      $expected: map-ext.pick($input, ('text-type'));
+      $result: typography.resolve-tokens($input, 'text');
+      @include test.assert-equal($expected, $result);
+    }
+
+    @include test.it('only modifies specified tokens') {
+      $input: map.merge(
+        $input,
+        (
+          'other-token': 16px,
+        )
+      );
+      $expected: map-ext.pick($input, ('text-type', 'other-token'));
+      $result: typography.resolve-tokens($input, 'text');
+      @include test.assert-equal($expected, $result);
+    }
+  }
+}
