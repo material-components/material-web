@@ -39,10 +39,18 @@
             --md-sys-color-on-primary-rgb: 56, 30, 114;
             --md-sys-color-on-primary-container: #eaddff;
             --md-sys-color-on-primary-container-rgb: 234, 221, 255;
+            --md-sys-color-on-primary-fixed: #21005d;
+            --md-sys-color-on-primary-fixed-rgb: 33, 0, 93;
+            --md-sys-color-on-primary-fixed-variant: #4f378b;
+            --md-sys-color-on-primary-fixed-variant-rgb: 79, 55, 139;
             --md-sys-color-on-secondary: #332d41;
             --md-sys-color-on-secondary-rgb: 51, 45, 65;
             --md-sys-color-on-secondary-container: #e8def8;
             --md-sys-color-on-secondary-container-rgb: 232, 222, 248;
+            --md-sys-color-on-secondary-fixed: #1d192b;
+            --md-sys-color-on-secondary-fixed-rgb: 29, 25, 43;
+            --md-sys-color-on-secondary-fixed-variant: #4a4458;
+            --md-sys-color-on-secondary-fixed-variant-rgb: 74, 68, 88;
             --md-sys-color-on-surface: #e6e1e5;
             --md-sys-color-on-surface-rgb: 230, 225, 229;
             --md-sys-color-on-surface-variant: #cac4d0;
@@ -51,6 +59,10 @@
             --md-sys-color-on-tertiary-rgb: 73, 37, 50;
             --md-sys-color-on-tertiary-container: #ffd8e4;
             --md-sys-color-on-tertiary-container-rgb: 255, 216, 228;
+            --md-sys-color-on-tertiary-fixed: #31111d;
+            --md-sys-color-on-tertiary-fixed-rgb: 49, 17, 29;
+            --md-sys-color-on-tertiary-fixed-variant: #633b48;
+            --md-sys-color-on-tertiary-fixed-variant-rgb: 99, 59, 72;
             --md-sys-color-outline: #938f99;
             --md-sys-color-outline-rgb: 147, 143, 153;
             --md-sys-color-outline-variant: #49454f;
@@ -59,12 +71,20 @@
             --md-sys-color-primary-rgb: 208, 188, 255;
             --md-sys-color-primary-container: #4f378b;
             --md-sys-color-primary-container-rgb: 79, 55, 139;
+            --md-sys-color-primary-fixed: #eaddff;
+            --md-sys-color-primary-fixed-rgb: 234, 221, 255;
+            --md-sys-color-primary-fixed-dim: #d0bcff;
+            --md-sys-color-primary-fixed-dim-rgb: 208, 188, 255;
             --md-sys-color-scrim: #000;
             --md-sys-color-scrim-rgb: 0, 0, 0;
             --md-sys-color-secondary: #ccc2dc;
             --md-sys-color-secondary-rgb: 204, 194, 220;
             --md-sys-color-secondary-container: #4a4458;
             --md-sys-color-secondary-container-rgb: 74, 68, 88;
+            --md-sys-color-secondary-fixed: #e8def8;
+            --md-sys-color-secondary-fixed-rgb: 232, 222, 248;
+            --md-sys-color-secondary-fixed-dim: #ccc2dc;
+            --md-sys-color-secondary-fixed-dim-rgb: 204, 194, 220;
             --md-sys-color-shadow: #000;
             --md-sys-color-shadow-rgb: 0, 0, 0;
             --md-sys-color-surface: #1c1b1f;
@@ -91,6 +111,10 @@
             --md-sys-color-tertiary-rgb: 239, 184, 200;
             --md-sys-color-tertiary-container: #633b48;
             --md-sys-color-tertiary-container-rgb: 99, 59, 72;
+            --md-sys-color-tertiary-fixed: #ffd8e4;
+            --md-sys-color-tertiary-fixed-rgb: 255, 216, 228;
+            --md-sys-color-tertiary-fixed-dim: #efb8c8;
+            --md-sys-color-tertiary-fixed-dim-rgb: 239, 184, 200;
           }
         }
       }
@@ -128,10 +152,18 @@
           --md-sys-color-on-primary-rgb: 255, 255, 255;
           --md-sys-color-on-primary-container: #21005d;
           --md-sys-color-on-primary-container-rgb: 33, 0, 93;
+          --md-sys-color-on-primary-fixed: #21005d;
+          --md-sys-color-on-primary-fixed-rgb: 33, 0, 93;
+          --md-sys-color-on-primary-fixed-variant: #4f378b;
+          --md-sys-color-on-primary-fixed-variant-rgb: 79, 55, 139;
           --md-sys-color-on-secondary: #fff;
           --md-sys-color-on-secondary-rgb: 255, 255, 255;
           --md-sys-color-on-secondary-container: #1d192b;
           --md-sys-color-on-secondary-container-rgb: 29, 25, 43;
+          --md-sys-color-on-secondary-fixed: #1d192b;
+          --md-sys-color-on-secondary-fixed-rgb: 29, 25, 43;
+          --md-sys-color-on-secondary-fixed-variant: #4a4458;
+          --md-sys-color-on-secondary-fixed-variant-rgb: 74, 68, 88;
           --md-sys-color-on-surface: #1c1b1f;
           --md-sys-color-on-surface-rgb: 28, 27, 31;
           --md-sys-color-on-surface-variant: #49454f;
@@ -140,6 +172,10 @@
           --md-sys-color-on-tertiary-rgb: 255, 255, 255;
           --md-sys-color-on-tertiary-container: #31111d;
           --md-sys-color-on-tertiary-container-rgb: 49, 17, 29;
+          --md-sys-color-on-tertiary-fixed: #31111d;
+          --md-sys-color-on-tertiary-fixed-rgb: 49, 17, 29;
+          --md-sys-color-on-tertiary-fixed-variant: #633b48;
+          --md-sys-color-on-tertiary-fixed-variant-rgb: 99, 59, 72;
           --md-sys-color-outline: #79747e;
           --md-sys-color-outline-rgb: 121, 116, 126;
           --md-sys-color-outline-variant: #cac4d0;
@@ -148,12 +184,20 @@
           --md-sys-color-primary-rgb: 103, 80, 164;
           --md-sys-color-primary-container: #eaddff;
           --md-sys-color-primary-container-rgb: 234, 221, 255;
+          --md-sys-color-primary-fixed: #eaddff;
+          --md-sys-color-primary-fixed-rgb: 234, 221, 255;
+          --md-sys-color-primary-fixed-dim: #d0bcff;
+          --md-sys-color-primary-fixed-dim-rgb: 208, 188, 255;
           --md-sys-color-scrim: #000;
           --md-sys-color-scrim-rgb: 0, 0, 0;
           --md-sys-color-secondary: #625b71;
           --md-sys-color-secondary-rgb: 98, 91, 113;
           --md-sys-color-secondary-container: #e8def8;
           --md-sys-color-secondary-container-rgb: 232, 222, 248;
+          --md-sys-color-secondary-fixed: #e8def8;
+          --md-sys-color-secondary-fixed-rgb: 232, 222, 248;
+          --md-sys-color-secondary-fixed-dim: #ccc2dc;
+          --md-sys-color-secondary-fixed-dim-rgb: 204, 194, 220;
           --md-sys-color-shadow: #000;
           --md-sys-color-shadow-rgb: 0, 0, 0;
           --md-sys-color-surface: #fffbfe;
@@ -180,6 +224,10 @@
           --md-sys-color-tertiary-rgb: 125, 82, 96;
           --md-sys-color-tertiary-container: #ffd8e4;
           --md-sys-color-tertiary-container-rgb: 255, 216, 228;
+          --md-sys-color-tertiary-fixed: #ffd8e4;
+          --md-sys-color-tertiary-fixed-rgb: 255, 216, 228;
+          --md-sys-color-tertiary-fixed-dim: #efb8c8;
+          --md-sys-color-tertiary-fixed-dim-rgb: 239, 184, 200;
         }
       }
     }
