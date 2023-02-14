@@ -90,7 +90,7 @@ Token                    | Default value
 `--md-divider-color`     | `--md-sys-color-outline-variant`
 `--md-divider-thickness` | `1px`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/master/tokens/v0_152/_md-comp-divider.scss#L22-L23)
+*   [All tokens](https://github.com/material-components/material-web/blob/master/tokens/v0_152/_md-comp-divider.scss)
     <!-- {.external} -->
 
 ### Example
