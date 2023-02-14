@@ -6,13 +6,17 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
+// go/keep-sorted start
 @use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../motion/animation';
 @use '../../ripple/ripple';
 @use '../../sass/color';
 @use '../../sass/resolvers';
 @use '../../sass/touch-target';
 @use '../../sass/typography';
+// go/keep-sorted end
 
 @mixin styles() {
   @keyframes md3-segmented-button-checkmark-selection-draw-in {

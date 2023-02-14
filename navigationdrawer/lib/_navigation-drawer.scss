@@ -6,11 +6,13 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-@use '../../motion/animation';
+// go/keep-sorted start
 @use '../../elevation/elevation';
-@use '../../sass/theme';
+@use '../../motion/animation';
 @use '../../sass/shape';
+@use '../../sass/theme';
 @use './shared';
+// go/keep-sorted end
 
 $curve: animation.$standard-easing;
 $default: 0s;

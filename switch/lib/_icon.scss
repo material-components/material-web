@@ -6,8 +6,12 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
+// go/keep-sorted start
 @use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../tokens';
+// go/keep-sorted end
 
 $_md-sys-motion: tokens.md-sys-motion-values();
 $_easing-standard: map.get($_md-sys-motion, easing-standard);

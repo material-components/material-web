@@ -3,8 +3,10 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// go/keep-sorted start
 @use '../../sass/theme';
 @use '../../tokens';
+// go/keep-sorted end
 
 @mixin theme($tokens) {
   $tokens: theme.validate-theme(tokens.md-comp-divider-values(), $tokens);

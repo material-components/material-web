@@ -6,14 +6,18 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
+// go/keep-sorted start
 @use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../../focus/focus-ring';
 @use '../../ripple/ripple';
-@use '../../sass/resolvers';
 @use '../../sass/color';
+@use '../../sass/resolvers';
 @use '../../sass/theme';
 @use '../../tokens';
-@use '../../focus/focus-ring';
 @use './shared';
+// go/keep-sorted end
 
 $_custom-property-prefix: 'outlined-icon-button';
 

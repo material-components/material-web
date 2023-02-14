@@ -3,9 +3,11 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-@use '../../sass/theme';
+// go/keep-sorted start
 @use '../../sass/shape';
+@use '../../sass/theme';
 @use '../../tokens';
+// go/keep-sorted end
 
 $_custom-property-prefix: 'segmented-button';
 

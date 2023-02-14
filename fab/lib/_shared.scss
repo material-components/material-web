@@ -6,13 +6,17 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
+// go/keep-sorted start
 @use 'sass:map';
 @use 'sass:meta';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../elevation/lib/elevation';
 @use '../../focus/focus-ring';
 @use '../../ripple/ripple';
 @use '../../sass/theme';
 @use '../../sass/touch-target';
+// go/keep-sorted end
 
 @mixin styles() {
   :host {

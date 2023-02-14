@@ -5,13 +5,17 @@
 
 // PUBLIC PROPERTIES
 
+// go/keep-sorted start
 @use 'sass:map';
-@use './tokens';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../sass/color';
 @use '../../sass/resolvers';
 @use '../../sass/shape';
 @use '../../sass/theme';
 @use '../../sass/var';
+@use './tokens';
+// go/keep-sorted end
 
 @mixin styles() {
   $tokens: tokens.md-comp-dialog-values();

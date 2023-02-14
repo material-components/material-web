@@ -3,13 +3,17 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// go/keep-sorted start
 @use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../field/filled-field';
 @use '../../sass/resolvers';
 @use '../../sass/shape';
 @use '../../sass/theme';
 @use '../../tokens';
 @use './shared';
+// go/keep-sorted end
 
 @mixin theme($tokens) {
   // Add missing tokens

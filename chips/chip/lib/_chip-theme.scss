@@ -8,10 +8,12 @@
 // stylelint-disable selector-class-pattern --
 // Internal styling for Chip MDC component.
 
+// go/keep-sorted start
+@use 'sass:color';
 @use 'sass:map';
 @use 'sass:math';
-@use 'sass:color';
-
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../../elevation/lib/elevation';
 @use '../../../ripple/ripple';
 @use '../../../sass/dom';
@@ -20,6 +22,7 @@
 @use '../../../sass/typography';
 // TODO(b/240224981): Uncomment when styles are traslated to md3 shape.
 // @use '../../../sass/shape';
+// go/keep-sorted end
 
 $height: 32px;
 $minimum-height: 24px;

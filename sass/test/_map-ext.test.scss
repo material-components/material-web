@@ -3,10 +3,14 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-@use 'sass:map';
+// go/keep-sorted start
 @use 'sass:list';
+@use 'sass:map';
 @use 'true' as test;
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../map-ext';
+// go/keep-sorted end
 
 @include test.describe('map-ext') {
   @include test.describe('pick()') {

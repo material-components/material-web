@@ -3,8 +3,12 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// go/keep-sorted start
 @use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../tokens';
+// go/keep-sorted end
 
 $_default-deps: (
   md-sys-color: tokens.md-sys-color-values-light(),

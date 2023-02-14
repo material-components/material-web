@@ -3,14 +3,18 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// go/keep-sorted start
 @use 'sass:list';
 @use 'sass:map';
 @use 'sass:meta';
 @use 'true' as test;
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../resolvers';
 @use '../shape';
-@use '../var';
 @use '../theme';
+@use '../var';
+// go/keep-sorted end
 
 @include test.describe('shape') {
   @include test.describe('resolver()') {

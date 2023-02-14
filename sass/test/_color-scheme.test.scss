@@ -3,8 +3,12 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// go/keep-sorted start
 @use 'true' as test;
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../color-scheme';
+// go/keep-sorted end
 
 @include test.describe('color-scheme') {
   @include test.describe('dark-color-scheme()') {

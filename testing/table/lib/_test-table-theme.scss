@@ -6,12 +6,15 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
+// go/keep-sorted start
 @use 'sass:map';
-
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../../sass/resolvers';
 @use '../../../sass/theme';
 @use '../../../sass/typography';
 @use '../../../tokens';
+// go/keep-sorted end
 
 $_default-deps: (
   md-sys-color: tokens.md-sys-color-values-light(),

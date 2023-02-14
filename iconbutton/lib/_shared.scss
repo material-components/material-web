@@ -9,13 +9,17 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
+// go/keep-sorted start
 @use 'sass:map';
-@use '../../sass/color';
-@use '../../sass/touch-target';
-@use '../../sass/shape';
-@use '../../sass/resolvers';
-@use '../../tokens';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../icon/icon';
+@use '../../sass/color';
+@use '../../sass/resolvers';
+@use '../../sass/shape';
+@use '../../sass/touch-target';
+@use '../../tokens';
+// go/keep-sorted end
 
 @mixin styles() {
   :host {

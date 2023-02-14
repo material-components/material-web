@@ -3,8 +3,10 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// go/keep-sorted start
 @use '../../sass/theme';
 @use './md-comp-icon';
+// go/keep-sorted end
 
 $_custom-property-prefix: 'icon';
 

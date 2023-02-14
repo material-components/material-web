@@ -3,14 +3,18 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// go/keep-sorted start
 @use 'sass:map';
 @use 'sass:string';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../sass/color';
 @use '../../sass/shape';
+@use '../../sass/string-ext';
 @use '../../sass/theme';
 @use '../../sass/var';
 @use '../../tokens';
-@use '../../sass/string-ext';
+// go/keep-sorted end
 
 $_md-sys-motion: tokens.md-sys-motion-values();
 $_md-sys-color: tokens.md-sys-color-values-light();
@@ -76,8 +80,8 @@ $_fullscreen-tokens: (
 }
 
 /**
- * Extended token set for dialog. Note, currently ignoring tokens for 
- * `action-*-label-text` and `action-*-state-layer` since actions are 
+ * Extended token set for dialog. Note, currently ignoring tokens for
+ * `action-*-label-text` and `action-*-state-layer` since actions are
  * spec'd as standard text buttons.
  */
 @function md-comp-dialog-values() {

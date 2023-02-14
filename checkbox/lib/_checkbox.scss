@@ -3,12 +3,16 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-@use 'sass:math';
+// go/keep-sorted start
 @use 'sass:map';
+@use 'sass:math';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../focus/focus-ring';
 @use '../../ripple/ripple';
 @use '../../sass/theme';
 @use '../../tokens';
+// go/keep-sorted end
 
 // Motion token values.
 $_md-sys-motion: tokens.md-sys-motion-values();

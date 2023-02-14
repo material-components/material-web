@@ -3,15 +3,18 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// go/keep-sorted start
 @use 'sass:map';
-
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../../elevation/lib/elevation';
+@use '../../focus/focus-ring';
 @use '../../list/list';
-@use './menuitem/menu-item';
 @use '../../sass/resolvers';
 @use '../../sass/theme';
 @use '../../tokens';
-@use '../../elevation/lib/elevation';
-@use '../../focus/focus-ring';
+@use './menuitem/menu-item';
+// go/keep-sorted end
 
 $_custom-property-prefix: 'menu';
 

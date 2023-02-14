@@ -3,12 +3,16 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// go/keep-sorted start
 @use 'sass:list';
 @use 'sass:map';
 @use 'sass:meta';
 @use 'sass:string';
+// go/keep-sorted end
+// go/keep-sorted start
 @use './string-ext';
 @use './var';
+// go/keep-sorted end
 
 /// Resolves one or more shape tokens and expands them into 4 separate logical
 /// tokens for each corner.

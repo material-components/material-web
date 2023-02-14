@@ -3,7 +3,9 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// go/keep-sorted start
 @use 'sass:meta';
+// go/keep-sorted end
 
 ///
 /// is-type returns the given value if it matches the given type. If not, it

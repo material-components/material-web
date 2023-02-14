@@ -3,11 +3,15 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// go/keep-sorted start
 @use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../tokens';
 @use './color';
 @use './theme';
 @use './var';
+// go/keep-sorted end
 
 // TODO(b/213571555): Following Sass mixins will call color scheme APIs which
 // are generated using tokens compiler when ready.

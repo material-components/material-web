@@ -6,10 +6,14 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
+// go/keep-sorted start
 @use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../elevation/lib/elevation';
 @use '../../sass/theme';
 @use './md-comp-menu-surface';
+// go/keep-sorted end
 
 $_custom-property-prefix: 'menu-surface';
 $_fade-in-duration: 0.03s;

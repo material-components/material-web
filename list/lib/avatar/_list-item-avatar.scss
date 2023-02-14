@@ -6,9 +6,11 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
+// go/keep-sorted start
 @use '../../../sass/map-ext';
 @use '../../../sass/theme';
 @use '../../../tokens';
+// go/keep-sorted end
 
 @mixin styles() {
   $tokens: map-ext.pick(

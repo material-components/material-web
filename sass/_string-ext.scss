@@ -3,8 +3,10 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// go/keep-sorted start
 @use 'sass:list';
 @use 'sass:string';
+// go/keep-sorted end
 
 /// Checks if a string starts with a given prefix.
 ///

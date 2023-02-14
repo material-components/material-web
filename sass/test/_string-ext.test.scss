@@ -3,10 +3,14 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-@use 'true' as test;
-@use '../string-ext';
-@use 'sass:meta';
+// go/keep-sorted start
 @use 'sass:list';
+@use 'sass:meta';
+@use 'true' as test;
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../string-ext';
+// go/keep-sorted end
 
 @include test.describe('string-ext') {
   @include test.describe('has-prefix()') {

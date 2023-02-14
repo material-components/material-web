@@ -3,9 +3,11 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// go/keep-sorted start
 @use './icon';
 @use './shared';
 @use './touch-target';
+// go/keep-sorted end
 
 @include shared.styles;
 @include icon.styles;

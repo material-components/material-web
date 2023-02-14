@@ -3,14 +3,18 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// go/keep-sorted start
 @use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../sass/resolvers';
+@use '../../sass/shape';
 @use '../../sass/theme';
 @use '../../sass/typography';
-@use '../../sass/shape';
 @use '../../tokens';
 @use './elevation';
 @use './shared';
+// go/keep-sorted end
 
 $_custom-property-prefix: 'elevated-button';
 

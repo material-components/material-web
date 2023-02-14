@@ -3,11 +3,15 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// go/keep-sorted start
 @use 'sass:list';
 @use 'sass:map';
 @use 'sass:meta';
+// go/keep-sorted end
+// go/keep-sorted start
 @use './string-ext';
 @use './var';
+// go/keep-sorted end
 
 /// Transform a user-provided `$theme` map's values into `var()` custom property
 /// values.

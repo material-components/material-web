@@ -3,13 +3,17 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// go/keep-sorted start
 @use 'sass:list';
 @use 'sass:map';
 @use 'sass:meta';
 @use 'sass:string';
+// go/keep-sorted end
+// go/keep-sorted start
 @use './assert';
 @use './string-ext';
 @use './var';
+// go/keep-sorted end
 
 $_hex: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'a' 'b' 'c' 'd' 'e' 'f';
 

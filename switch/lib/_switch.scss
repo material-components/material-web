@@ -8,7 +8,10 @@
 
 // PUBLIC PROPERTIES
 
+// go/keep-sorted start
 @use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../focus/focus-ring';
 @use '../../sass/color';
 @use '../../sass/shape';
@@ -16,10 +19,10 @@
 @use '../../sass/touch-target';
 @use '../../sass/var';
 @use '../../tokens';
-
-@use './track';
 @use './handle';
 @use './icon';
+@use './track';
+// go/keep-sorted end
 
 $_forced-colors-theme: (
   disabled-selected-icon-color: GrayText,
