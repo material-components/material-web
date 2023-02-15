@@ -6,11 +6,13 @@
 
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property, queryAsync, state} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {classMap} from 'lit/directives/class-map.js';
 
 import {createAnimationSignal, EASING} from '../../motion/animation.js';
 
-/** @soyCompatible */
+/**
+ * A field component.
+ */
 export class Field extends LitElement {
   @property({type: Boolean}) disabled = false;
   @property({type: Boolean}) error = false;
@@ -23,125 +25,18 @@ export class Field extends LitElement {
    * Whether or not the field has leading content.
    */
   @property({type: Boolean}) hasStart = false;
+
   /**
    * Whether or not the field has trailing content.
    */
   @property({type: Boolean}) hasEnd = false;
 
-  @state() protected isAnimating = false;
-
-  protected readonly labelAnimationSignal = createAnimationSignal();
-
+  @state() private isAnimating = false;
+  private readonly labelAnimationSignal = createAnimationSignal();
   @queryAsync('.md3-field__label--floating')
-  protected readonly floatingLabelEl!: Promise<HTMLElement>;
+  private readonly floatingLabelEl!: Promise<HTMLElement>;
   @queryAsync('.md3-field__label--resting')
-  protected readonly restingLabelEl!: Promise<HTMLElement>;
-
-  /** @soyTemplate */
-  override render(): TemplateResult {
-    return html`
-      <span class="md3-field ${classMap(this.getRenderClasses())}">
-        ${this.renderContainer()}
-        ${this.renderSupportingText()}
-      </span>
-    `;
-  }
-
-  /** @soyTemplate */
-  protected renderContainer(): TemplateResult {
-    return html`
-      <span class="md3-field__container">
-        ${this.renderContainerContents()}
-      </span>
-    `;
-  }
-
-  /** @soyTemplate */
-  protected getRenderClasses(): ClassInfo {
-    return {
-      'md3-field--disabled': this.disabled,
-      'md3-field--error': this.error,
-      'md3-field--focused': this.focused,
-      'md3-field--with-start': this.hasStart,
-      'md3-field--with-end': this.hasEnd,
-      'md3-field--populated': this.populated,
-      'md3-field--required': this.required,
-      'md3-field--no-label': !this.label,
-    };
-  }
-
-  /** @soyTemplate */
-  protected renderContainerContents(): TemplateResult {
-    return html`
-      <span class="md3-field__start">
-        <slot name="start"></slot>
-      </span>
-      <span class="md3-field__middle">${this.renderMiddleContents()}</span>
-      <span class="md3-field__end">
-        <slot name="end"></slot>
-      </span>
-    `;
-  }
-
-  /** @soyTemplate */
-  protected renderMiddleContents(): TemplateResult {
-    return html`
-      <span class="md3-field__content"><slot></slot></span>
-    `;
-  }
-
-  /** @soyTemplate */
-  protected renderFloatingLabel(): TemplateResult {
-    const visible = (this.focused || this.populated) && !this.isAnimating;
-    /** @classMap */
-    const classes = {'md3-field__label--hidden': !visible};
-    return html`
-      <span class="md3-field__label md3-field__label--floating ${
-        classMap(classes)}"
-        aria-hidden=${!visible}
-      >${this.renderLabelText()}</span>
-    `;
-
-    // TODO(b/217441842): Create shared function once argument bug is fixed
-    // return this.renderLabel(LabelType.FLOATING);
-  }
-
-  /** @soyTemplate */
-  protected renderRestingLabel(): TemplateResult {
-    const visible = !(this.focused || this.populated) || this.isAnimating;
-    /** @classMap */
-    const classes = {'md3-field__label--hidden': !visible};
-    return html`
-      <span class="md3-field__label md3-field__label--resting ${
-        classMap(classes)}"
-        aria-hidden=${!visible}
-      >${this.renderLabelText()}</span>
-    `;
-
-    // TODO(b/217441842): Create shared function once argument bug is fixed
-    // return this.renderLabel(LabelType.RESTING);
-  }
-
-  /** @soyTemplate */
-  protected renderLabelText(): string {
-    const labelText = this.label ?? '';
-    const optionalAsterisk = this.required && labelText ? '*' : '';
-    return labelText + optionalAsterisk;
-  }
-
-  /** @soyTemplate */
-  protected renderSupportingText(): TemplateResult {
-    return html`
-      <span class="md3-field__supporting-text">
-        <span class="md3-field__supporting-text-start">
-          <slot name="supporting-text"></slot>
-        </span>
-        <span class="md3-field__supporting-text-end">
-          <slot name="supporting-text-end"></slot>
-        </span>
-      </span>
-    `;
-  }
+  private readonly restingLabelEl!: Promise<HTMLElement>;
 
   protected override update(props: PropertyValues<Field>) {
     // Client-side property updates
@@ -161,7 +56,91 @@ export class Field extends LitElement {
     super.update(props);
   }
 
-  protected async animateLabelIfNeeded({wasFocused, wasPopulated}: {
+  protected override render(): TemplateResult {
+    const classes = {
+      'md3-field--disabled': this.disabled,
+      'md3-field--error': this.error,
+      'md3-field--focused': this.focused,
+      'md3-field--with-start': this.hasStart,
+      'md3-field--with-end': this.hasEnd,
+      'md3-field--populated': this.populated,
+      'md3-field--required': this.required,
+      'md3-field--no-label': !this.label,
+    };
+
+    return html`
+      <span class="md3-field ${classMap(classes)}">
+        <span class="md3-field__container">
+          ${this.renderContainerContents()}
+        </span>
+
+        <span class="md3-field__supporting-text">
+          <span class="md3-field__supporting-text-start">
+            <slot name="supporting-text"></slot>
+          </span>
+          <span class="md3-field__supporting-text-end">
+            <slot name="supporting-text-end"></slot>
+          </span>
+        </span>
+      </span>
+    `;
+  }
+
+  protected renderContainerContents() {
+    return html`
+      <span class="md3-field__start">
+        <slot name="start"></slot>
+      </span>
+      <span class="md3-field__middle">${this.renderMiddleContents()}</span>
+      <span class="md3-field__end">
+        <slot name="end"></slot>
+      </span>
+    `;
+  }
+
+  protected renderMiddleContents() {
+    return html`
+      <span class="md3-field__content"><slot></slot></span>
+    `;
+  }
+
+  protected renderFloatingLabel() {
+    return this.renderLabel(/*isFloating*/ true);
+  }
+
+  protected renderRestingLabel() {
+    return this.renderLabel(/*isFloating*/ false);
+  }
+
+  private renderLabel(isFloating: boolean) {
+    let visible: boolean;
+    if (isFloating) {
+      // Floating label is visible when focused/populated. It is never visible
+      // while animating.
+      visible = (this.focused || this.populated) && !this.isAnimating;
+    } else {
+      // Resting label is visible when unfocused or while animating.
+      visible = !(this.focused || this.populated) || this.isAnimating;
+    }
+
+    const classes = {
+      'md3-field__label--hidden': !visible,
+      'md3-field__label--floating': isFloating,
+      'md3-field__label--resting': !isFloating,
+    };
+
+    let labelText = this.label ?? '';
+    // Add '*' if a label is present and the field is required
+    labelText += this.required && labelText ? '*' : '';
+
+    return html`
+      <span class="md3-field__label ${classMap(classes)}"
+        aria-hidden=${!visible}
+      >${labelText}</span>
+    `;
+  }
+
+  private async animateLabelIfNeeded({wasFocused, wasPopulated}: {
     wasFocused?: boolean,
     wasPopulated?: boolean
   }) {
@@ -214,7 +193,7 @@ export class Field extends LitElement {
     });
   }
 
-  protected async getLabelKeyframes() {
+  private async getLabelKeyframes() {
     const floatingLabelEl = await this.floatingLabelEl;
     const restingLabelEl = await this.restingLabelEl;
     const {

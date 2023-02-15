@@ -23,30 +23,13 @@ declare global {
 @customElement('md-test-filled-field')
 class TestFilledField extends FilledField {
   get strokeTransformOriginProp() {
-    return this.strokeTransformOrigin;
-  }
-  set strokeTransformOriginProp(strokeTransformOrigin: string) {
-    this.strokeTransformOrigin = strokeTransformOrigin;
-  }
+    const element =
+        this.renderRoot.querySelector('.md3-field__active-indicator');
+    if (!element) {
+      return '';
+    }
 
-  get restingLabelElement() {
-    return this.restingLabelEl;
-  }
-
-  get floatingLabelElement() {
-    return this.floatingLabelEl;
-  }
-
-  override getRenderClasses() {
-    return super.getRenderClasses();
-  }
-
-  override handleClick(event: MouseEvent|TouchEvent) {
-    super.handleClick(event);
-  }
-
-  override updateStrokeTransformOrigin(event?: MouseEvent|TouchEvent) {
-    return super.updateStrokeTransformOrigin(event);
+    return getComputedStyle(element).transformOrigin.split(' ')[0];
   }
 }
 
@@ -80,89 +63,52 @@ describe('Field', () => {
       };
     }
 
-    it('should render resting and floating labels', async () => {
-      // Set up.
-      // Test case.
-      const {instance} = await setupTest();
-      // Assertion.
-      expect(instance.floatingLabelElement)
-          .withContext('should render .md3-field__label--floating')
-          .toBeTruthy();
-      expect(instance.restingLabelElement)
-          .withContext('should render .md3-field__label--resting')
-          .toBeTruthy();
-    });
-
-    describe('#getRenderClasses()', () => {
-      it('should add variant-specific class', async () => {
-        // Set up.
-        const {instance} = await setupTest();
-        // Test case.
-        const classes = instance.getRenderClasses();
-        // Assertion.
-        expect(classes['md3-field--filled'])
-            .withContext('should set variant class to true')
-            .toBeTrue();
-      });
-    });
-
     describe('.strokeTransformOrigin', () => {
-      it('should update when clicked', async () => {
+      it('should be set to eventClientX - rootClientX on click', async () => {
         // Set up.
-        const {instance} = await setupTest();
-        spyOn(instance, 'updateStrokeTransformOrigin');
-        const event = new MouseEvent('click', {clientX: 10});
-        // Test case.
-        instance.handleClick(event);
-        await env.waitForStability();
-        // Assertion.
-        expect(instance.updateStrokeTransformOrigin)
-            .withContext('should update stroke transform when clicked')
-            .toHaveBeenCalledTimes(1);
-      });
-
-      it('should be set to eventClientX - rootClientX', async () => {
-        // Set up.
-        const {instance} = await setupTest();
+        const {instance, harness} = await setupTest();
         const rootRect = new DOMRect(5, 5, 200, 56);
         spyOn(instance, 'getBoundingClientRect').and.returnValue(rootRect);
-        const event = new MouseEvent('click', {clientX: 10});
         // Test case.
-        instance.handleClick(event);
+        const clientX = 10;
+        await harness.clickWithMouse({clientX});
         await env.waitForStability();
         // Assertion.
         expect(instance.strokeTransformOriginProp)
             .withContext(`should be event.clientX (${
-                event.clientX}) - root.clientX (${rootRect.x})`)
-            .toBe(`${event.clientX - rootRect.x}px`);
+                clientX}) - root.clientX (${rootRect.x})`)
+            .toBe(`${clientX - rootRect.x}px`);
       });
 
       it('should not update when disabled and clicked', async () => {
         // Set up.
-        const {instance} = await setupTest({disabled: true});
-        spyOn(instance, 'updateStrokeTransformOrigin');
-        const event = new MouseEvent('click', {clientX: 10});
+        const {instance, harness} = await setupTest({disabled: true});
         // Test case.
-        instance.handleClick(event);
+        await harness.clickWithMouse({clientX: 10});
         await env.waitForStability();
         // Assertion.
-        expect(instance.updateStrokeTransformOrigin)
+        expect(instance.strokeTransformOriginProp)
             .withContext('should not update stroke transform when disabled')
-            .not.toHaveBeenCalled();
+            .toBe('0px');
       });
 
       it('should be reset when unfocused', async () => {
         // Set up.
         const {instance, harness} = await setupTest();
+        await harness.clickWithMouse({clientX: 10});
+        await env.waitForStability();
+        expect(instance.strokeTransformOriginProp)
+            .withContext('should have a pre-set transform origin')
+            .toBeTruthy();
+
         await harness.focusWithKeyboard();
-        instance.strokeTransformOriginProp = '10px';
         // Test case.
         await harness.blur();
         await env.waitForStability();
         // Assertion.
         expect(instance.strokeTransformOriginProp)
             .withContext('should rest stroke transform when unfocused')
-            .toBe('');
+            .toBe('0px');
       });
     });
   });

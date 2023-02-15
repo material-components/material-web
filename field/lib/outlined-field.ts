@@ -4,31 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, TemplateResult} from 'lit';
-import {ClassInfo} from 'lit/directives/class-map.js';
+import {html} from 'lit';
 
 import {Field} from './field.js';
 
-/** @soyCompatible */
+/**
+ * An outlined field component.
+ */
 export class OutlinedField extends Field {
-  /** @soyTemplate */
-  protected override getRenderClasses(): ClassInfo {
-    return {
-      ...super.getRenderClasses(),
-      'md3-field--outlined': true,
-    };
-  }
-
-  /** @soyTemplate */
-  protected override renderContainerContents(): TemplateResult {
-    return html`
-      ${this.renderOutline()}
-      ${super.renderContainerContents()}
-    `;
-  }
-
-  /** @soyTemplate */
-  protected renderOutline(): TemplateResult {
+  protected override renderContainerContents() {
     return html`
       <span class="md3-field__outline">
         <span class="md3-field__outline-start"></span>
@@ -39,11 +23,11 @@ export class OutlinedField extends Field {
         </span>
         <span class="md3-field__outline-end"></span>
       </span>
+      ${super.renderContainerContents()}
     `;
   }
 
-  /** @soyTemplate */
-  protected override renderMiddleContents(): TemplateResult {
+  protected override renderMiddleContents() {
     return html`
       ${this.renderRestingLabel()}
       ${super.renderMiddleContents()}

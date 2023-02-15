@@ -22,33 +22,18 @@ declare global {
 
 @customElement('md-test-field')
 class TestField extends Field {
-  get floatingLabelElement() {
-    return this.floatingLabelEl;
+  get labelText() {
+    return this.renderRoot.querySelector('.md3-field__label')?.textContent ??
+        '';
   }
 
-  get restingLabelElement() {
-    return this.restingLabelEl;
-  }
-
-  labelText?: string;
-
-  // Ensure floating/resting labels are rendered
+  // Ensure floating/resting labels are both rendered
   protected override renderMiddleContents() {
     return html`
       ${this.renderFloatingLabel()}
       ${this.renderRestingLabel()}
       ${super.renderMiddleContents()}
     `;
-  }
-
-  override renderLabelText(): string {
-    this.labelText = super.renderLabelText();
-    return this.labelText;
-  }
-
-  override animateLabelIfNeeded(...args:
-                                    Parameters<Field['animateLabelIfNeeded']>) {
-    return super.animateLabelIfNeeded(...args);
   }
 }
 
@@ -311,7 +296,7 @@ describe('Field', () => {
       const labelValue = 'Label';
       const {instance} = await setupTest({label: labelValue});
       // Assertion.
-      expect(instance.renderLabelText())
+      expect(instance.labelText)
           .withContext('label text should equal label when not required')
           .toBe(labelValue);
     });
@@ -322,7 +307,7 @@ describe('Field', () => {
       const labelValue = 'Label';
       const {instance} = await setupTest({required: true, label: labelValue});
       // Assertion.
-      expect(instance.renderLabelText())
+      expect(instance.labelText)
           .withContext(
               'label text should equal label with asterisk when required')
           .toBe(`${labelValue}*`);
