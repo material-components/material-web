@@ -8,7 +8,7 @@ import {html, LitElement, PropertyValues} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
-import {createAnimationSignal, EASING} from '../../motion/animation.js';
+import {EASING} from '../../motion/animation.js';
 
 const PRESS_GROW_MS = 450;
 const MINIMUM_PRESS_MS = 225;
@@ -44,8 +44,7 @@ export class Ripple extends LitElement {
   private rippleSize = '';
   private rippleScale = '';
   private initialSize = 0;
-  private readonly pressAnimationSignal = createAnimationSignal();
-  private growAnimation: Animation|null = null;
+  private growAnimation?: Animation;
   private delayedEndPressHandle?: number;
 
   beginHover(hoverEvent?: Event) {
@@ -168,15 +167,14 @@ export class Ripple extends LitElement {
   }
 
   private startPressAnimation(positionEvent?: Event|null) {
+    this.growAnimation?.cancel();
     this.determineRippleSize();
     const {startPoint, endPoint} =
         this.getTranslationCoordinates(positionEvent);
     const translateStart = `${startPoint.x}px, ${startPoint.y}px`;
     const translateEnd = `${endPoint.x}px, ${endPoint.y}px`;
 
-    const signal = this.pressAnimationSignal.start();
-
-    const growAnimation = this.mdRoot.animate(
+    this.growAnimation = this.mdRoot.animate(
         {
           top: [0, 0],
           left: [0, 0],
@@ -193,17 +191,5 @@ export class Ripple extends LitElement {
           easing: EASING.STANDARD,
           fill: ANIMATION_FILL
         });
-
-    growAnimation.addEventListener('finish', () => {
-      this.pressAnimationSignal.finish();
-      this.growAnimation = null;
-    });
-
-    signal.addEventListener('abort', () => {
-      growAnimation.cancel();
-      this.growAnimation = null;
-    });
-
-    this.growAnimation = growAnimation;
   }
 }
