@@ -8,18 +8,19 @@ import '../../elevation/elevation.js';
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, TemplateResult} from 'lit';
-import {property, query, state} from 'lit/decorators.js';
+import {html, LitElement, TemplateResult} from 'lit';
+import {property, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {when} from 'lit/directives/when.js';
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '../../actionelement/action-element.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
+import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 
 /**
  * @soyCompatible
  */
-export abstract class FabShared extends ActionElement {
+export abstract class FabShared extends LitElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
@@ -33,9 +34,9 @@ export abstract class FabShared extends ActionElement {
 
   @property({type: Boolean}) reducedTouchTarget = false;
 
-  @query('md-ripple') ripple!: MdRipple;
-
-  @state() protected showFocusRing = false;
+  @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
+  @state() private showFocusRing = false;
+  @state() private showRipple = false;
 
   /**
    * @soyTemplate
@@ -43,6 +44,10 @@ export abstract class FabShared extends ActionElement {
    */
   protected override render(): TemplateResult {
     const ariaLabel = this.label ? this.label : this.icon;
+    const getRipple = () => {
+      this.showRipple = true;
+      return this.ripple;
+    };
 
     return html`
       <button
@@ -52,15 +57,10 @@ export abstract class FabShared extends ActionElement {
         @focus="${this.handleFocus}"
         @blur="${this.handleBlur}"
         @pointerdown="${this.handlePointerDown}"
-        @pointerup="${this.handlePointerUp}"
-        @pointercancel="${this.handlePointerCancel}"
-        @pointerleave="${this.handlePointerLeave}"
-        @pointerenter="${this.handlePointerEnter}"
-        @click="${this.handleClick}"
-        @contextmenu="${this.handleContextMenu}">
+        ${ripple(getRipple)}>
         ${this.renderElevation()}
         ${this.renderFocusRing()}
-        ${this.renderRipple()}
+        ${when(this.showRipple, this.renderRipple)}
         <span class="md3-fab__icon">
           <slot name="icon">${this.renderIcon(this.icon)}</slot>
         </span>
@@ -94,46 +94,26 @@ export abstract class FabShared extends ActionElement {
   }
 
   /** @soyTemplate */
-  protected renderRipple(): TemplateResult {
-    return html`<md-ripple class="md3-fab__ripple" ?disabled="${
-        this.disabled}"></md-ripple>`;
-  }
-
-  /** @soyTemplate */
   protected renderFocusRing(): TemplateResult {
     return html`<md-focus-ring .visible="${
         this.showFocusRing}"></md-focus-ring>`;
   }
 
-  override beginPress({positionEvent}: BeginPressConfig) {
-    this.ripple.beginPress(positionEvent);
-  }
-
-  override endPress(options: EndPressConfig) {
-    this.ripple.endPress();
-    super.endPress(options);
-  }
-
-  override handlePointerDown(e: PointerEvent) {
-    super.handlePointerDown(e);
+  private handlePointerDown(e: PointerEvent) {
     pointerPress();
     this.showFocusRing = shouldShowStrongFocus();
   }
 
-  protected handlePointerEnter(e: PointerEvent) {
-    this.ripple.beginHover(e);
-  }
-
-  override handlePointerLeave(e: PointerEvent) {
-    super.handlePointerLeave(e);
-    this.ripple.endHover();
-  }
-
-  protected handleFocus() {
+  private handleFocus() {
     this.showFocusRing = shouldShowStrongFocus();
   }
 
-  protected handleBlur() {
+  private handleBlur() {
     this.showFocusRing = false;
   }
+
+  private readonly renderRipple = () => {
+    return html`<md-ripple class="md3-fab__ripple" ?disabled="${
+        this.disabled}"></md-ripple>`;
+  };
 }
