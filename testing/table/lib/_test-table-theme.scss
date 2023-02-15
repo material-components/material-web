@@ -12,7 +12,6 @@
 // go/keep-sorted start
 @use '../../../sass/resolvers';
 @use '../../../sass/theme';
-@use '../../../sass/typography';
 @use '../../../tokens';
 // go/keep-sorted end
 
@@ -26,23 +25,16 @@ $_default-deps: (
     cell-color: map.get($deps, md-sys-color, surface),
     cell-padding: if($exclude-hardcoded-values, null, 16px),
     cell-text-color: map.get($deps, md-sys-color, on-surface),
-    cell-text-font: map.get($deps, md-sys-typescale, body-medium-font),
-    cell-text-line-height:
-      map.get($deps, md-sys-typescale, body-medium-line-height),
-    cell-text-size: map.get($deps, md-sys-typescale, body-medium-size),
+    cell-text-type: map.get($deps, 'md-sys-typescale', 'body-medium'),
     cell-grid-color: map.get($deps, md-sys-color, surface-variant),
     cell-grid-size: if($exclude-hardcoded-values, null, 16px),
     header-cell-color: map.get($deps, md-sys-color, surface-variant),
     header-cell-padding: if($exclude-hardcoded-values, null, 8px),
     header-cell-text-color: map.get($deps, md-sys-color, on-surface-variant),
-    header-cell-text-font: map.get($deps, md-sys-typescale, title-medium-font),
-    header-cell-text-line-height:
-      map.get($deps, md-sys-typescale, title-medium-line-height),
-    header-cell-text-size: map.get($deps, md-sys-typescale, title-medium-size),
+    header-cell-text-type: map.get($deps, 'md-sys-typescale', 'title-medium'),
+    // TODO(b/269348572): remove token after converting all components
     header-cell-text-tracking:
-      map.get($deps, md-sys-typescale, title-medium-tracking),
-    header-cell-text-weight:
-      map.get($deps, md-sys-typescale, title-medium-weight),
+      map.get($deps, 'md-sys-typescale', 'title-medium-tracking'),
     outline-color: map.get($deps, md-sys-color, outline)
   );
 }
@@ -55,17 +47,8 @@ $dark-theme: values(
   $exclude-hardcoded-values: true
 );
 
-@function _resolve-theme($theme, $resolvers) {
-  @return typography.resolve-theme(
-    $theme,
-    map.get($resolvers, typography),
-    header-cell-text
-  );
-}
-
 @mixin theme($theme, $resolvers: resolvers.$material) {
   $theme: theme.validate-theme($light-theme, $theme);
-  $theme: _resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, test-table);
 
   @include theme.emit-theme-vars($theme);
@@ -73,7 +56,6 @@ $dark-theme: values(
 
 @mixin theme-styles($theme, $resolvers: resolvers.$material) {
   $theme: theme.validate-theme-styles($light-theme, $theme);
-  $theme: _resolve-theme($theme, $resolvers);
   $theme: theme.create-theme-vars($theme, test-table);
 
   @include _cell-color(map.get($theme, cell-color));
@@ -81,24 +63,15 @@ $dark-theme: values(
   @include _cell-grid-color(map.get($theme, cell-grid-color));
   @include _cell-grid-size(map.get($theme, cell-grid-size));
   @include _cell-text-color(map.get($theme, 'cell-text-color'));
-  @include _cell-text-font(
-    (
-      font: map.get($theme, 'cell-text-font'),
-      font-size: map.get($theme, 'cell-text-font-size'),
-      line-height: map.get($theme, 'cell-text-line-height'),
-    )
-  );
+  @include _cell-text-font(map.get($theme, 'cell-text-type'));
 
   @include _header-cell-color(map.get($theme, header-cell-color));
   @include _header-cell-padding(map.get($theme, header-cell-padding));
   @include _header-cell-text-color(map.get($theme, header-cell-text-color));
   @include _header-cell-text-typography(
     (
-      font: map.get($theme, header-cell-text-font),
-      line-height: map.get($theme, header-cell-text-line-height),
-      size: map.get($theme, header-cell-text-size),
-      tracking: map.get($theme, header-cell-text-tracking),
-      weight: map.get($theme, header-cell-text-weight),
+      'type': map.get($theme, 'header-cell-text-type'),
+      'tracking': map.get($theme, 'header-cell-text-tracking'),
     )
   );
   @include _outline-color(map.get($theme, outline-color));
@@ -118,11 +91,9 @@ $dark-theme: values(
   }
 }
 
-@mixin _cell-text-font($font-map) {
+@mixin _cell-text-font($font) {
   .md3-test-table__text {
-    font-family: map.get($font-map, 'font');
-    font-size: map.get($font-map, 'font-size');
-    line-height: map.get($font-map, 'line-height');
+    font: $font;
   }
 }
 
@@ -169,7 +140,9 @@ $dark-theme: values(
 
 @mixin _header-cell-text-typography($font) {
   .md3-test-table__header {
-    @include typography.theme-styles($font);
+    font: map.get($font, 'type');
+    // TODO(b/269348572): remove token after converting all components
+    letter-spacing: map.get($font, 'tracking');
   }
 }
 
