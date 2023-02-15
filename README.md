@@ -54,7 +54,7 @@ Select                        | 🟡     | 🔴    | 🔴
 Slider                        | 🔴     | 🔴    | 🔴
 Switch                        | 🟢     | 🟢    | 🔴
 Tabs                          | 🔴     | 🔴    | 🔴
-Text field                    | 🟢     | 🟢    | 🔴
+Text field                    | 🟢     | 🟢    | 🟡
 
 ### 1.1+ Components
 
