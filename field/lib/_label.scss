@@ -35,7 +35,7 @@
     );
   }
 
-  .label--resting {
+  .label.resting {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -50,7 +50,7 @@
     );
   }
 
-  .label--floating {
+  .label.floating {
     @include typography.theme-styles(
       (
         size: var(--_label-text-populated-size),
@@ -59,53 +59,39 @@
     );
   }
 
-  .label--hidden {
+  .label.hidden {
     opacity: 0;
   }
 
-  .no-label {
-    .label {
-      display: none;
-    }
+  .no-label .label {
+    display: none;
   }
 
-  :hover {
-    .label {
-      color: var(--_hover-label-text-color);
-    }
+  :hover .label {
+    color: var(--_hover-label-text-color);
   }
 
-  .focused {
-    .label {
-      color: var(--_focus-label-text-color);
-    }
+  .focused .label {
+    color: var(--_focus-label-text-color);
   }
 
-  .disabled {
-    .label {
-      color: var(--_disabled-label-text-color);
-
-      &:not(.label--hidden) {
-        opacity: var(--_disabled-label-text-opacity);
-      }
-    }
+  .disabled .label {
+    color: var(--_disabled-label-text-color);
   }
 
-  .error:not(.disabled) {
-    .label {
-      color: var(--_error-label-text-color);
-    }
+  .disabled .label:not(.hidden) {
+    opacity: var(--_disabled-label-text-opacity);
+  }
 
-    &:hover {
-      .label {
-        color: var(--_error-hover-label-text-color);
-      }
-    }
+  .error .label {
+    color: var(--_error-label-text-color);
+  }
 
-    &.focused {
-      .label {
-        color: var(--_error-focus-label-text-color);
-      }
-    }
+  .error:hover .label {
+    color: var(--_error-hover-label-text-color);
+  }
+
+  .error.focused .label {
+    color: var(--_error-focus-label-text-color);
   }
 }

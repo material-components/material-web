@@ -29,54 +29,41 @@
   .supporting-text-end {
     // Can't be an inline display element (<span>) for padding-top to work.
     display: flex;
+  }
 
+  .supporting-text-start ::slotted(:not(:empty)),
+  .supporting-text-end ::slotted(:not(:empty)) {
     // Add padding to slotted elements instead of the wrappers so that it does not
     // show when the supporting text is empty.
-    ::slotted(:not(:empty)) {
-      padding-top: var(--_supporting-text-padding-top);
-    }
+    padding-top: var(--_supporting-text-padding-top);
   }
 
-  .supporting-text-end {
-    ::slotted(:not(:empty)) {
-      padding-inline-start: var(--_supporting-text-padding);
-    }
+  .supporting-text-end ::slotted(:not(:empty)) {
+    padding-inline-start: var(--_supporting-text-padding);
   }
 
-  :hover {
-    .supporting-text {
-      color: var(--_hover-supporting-text-color);
-    }
+  :hover .supporting-text {
+    color: var(--_hover-supporting-text-color);
   }
 
-  .focus {
-    .supporting-text {
-      color: var(--_focus-supporting-text-color);
-    }
+  .focus .supporting-text {
+    color: var(--_focus-supporting-text-color);
   }
 
-  .disabled {
-    .supporting-text {
-      color: var(--_disabled-supporting-text-color);
-      opacity: var(--_disabled-supporting-text-opacity);
-    }
+  .disabled .supporting-text {
+    color: var(--_disabled-supporting-text-color);
+    opacity: var(--_disabled-supporting-text-opacity);
   }
 
-  .error:not(.disabled) {
-    .supporting-text {
-      color: var(--_error-supporting-text-color);
-    }
+  .error .supporting-text {
+    color: var(--_error-supporting-text-color);
+  }
 
-    &:hover {
-      .supporting-text {
-        color: var(--_error-hover-supporting-text-color);
-      }
-    }
+  .error:hover .supporting-text {
+    color: var(--_error-hover-supporting-text-color);
+  }
 
-    &.focus {
-      .supporting-text {
-        color: var(--_error-focus-supporting-text-color);
-      }
-    }
+  .error.focus .supporting-text {
+    color: var(--_error-focus-supporting-text-color);
   }
 }

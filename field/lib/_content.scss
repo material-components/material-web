@@ -56,58 +56,42 @@ $_enter-delay: $_label-duration - $_visible-duration;
     // Content elements provided to the field (such as <input>) may use
     // `currentColor` to inherit this property.
     color: var(--_content-color);
-
-    .no-label &,
-    .focused &,
-    .populated & {
-      opacity: 1;
-      transition-delay: $_enter-delay;
-    }
   }
 
-  .disabled {
-    &.no-label,
-    &.focused,
-    &.populated {
-      .content {
-        opacity: var(--_disabled-content-opacity);
-      }
-    }
+  .no-label .content,
+  .focused .content,
+  .populated .content {
+    opacity: 1;
+    transition-delay: $_enter-delay;
   }
 
-  :hover {
-    .content {
-      color: var(--_hover-content-color);
-    }
+  .disabled.no-label .content,
+  .disabled.focused .content,
+  .disabled.populated .content {
+    opacity: var(--_disabled-content-opacity);
   }
 
-  .focused {
-    .content {
-      color: var(--_focus-content-color);
-    }
+  :hover .content {
+    color: var(--_hover-content-color);
   }
 
-  .disabled {
-    .content {
-      color: var(--_disabled-content-color);
-    }
+  .focused .content {
+    color: var(--_focus-content-color);
   }
 
-  .error:not(.disabled) {
-    .content {
-      color: var(--_error-content-color);
-    }
+  .disabled .content {
+    color: var(--_disabled-content-color);
+  }
 
-    &:hover {
-      .content {
-        color: var(--_error-hover-content-color);
-      }
-    }
+  .error .content {
+    color: var(--_error-content-color);
+  }
 
-    &.focused {
-      .content {
-        color: var(--_error-focus-content-color);
-      }
-    }
+  .error:hover .content {
+    color: var(--_error-hover-content-color);
+  }
+
+  .error.focused .content {
+    color: var(--_error-focus-content-color);
   }
 }

@@ -76,7 +76,7 @@ $_animation-duration: 150ms;
     }
   }
 
-  .label--floating {
+  .label.floating {
     position: absolute;
     top: 0;
   }
@@ -88,10 +88,10 @@ $_animation-duration: 150ms;
     width: 100%;
     visibility: hidden;
     z-index: -1;
+  }
 
-    .field:not(.disabled):hover & {
-      visibility: visible;
-    }
+  .field:not(.disabled):hover .state-layer {
+    visibility: visible;
   }
 
   .active-indicator {
@@ -126,49 +126,34 @@ $_animation-duration: 150ms;
       transition: animation.standard(opacity, $_animation-duration),
         transform 0s ease $_animation-duration;
     }
-
-    .focused & {
-      &::after {
-        opacity: 1;
-        transform: scaleX(1);
-        transition: animation.standard(transform, $_animation-duration);
-      }
-    }
   }
 
-  .field:not(.with-start) {
-    .start {
-      padding-inline-start: var(--_container-padding-horizontal);
-    }
+  .focused .active-indicator::after {
+    opacity: 1;
+    transform: scaleX(1);
+    transition: animation.standard(transform, $_animation-duration);
   }
 
-  .field:not(.with-end) {
-    .end {
-      padding-inline-end: var(--_container-padding-horizontal);
-    }
+  .field:not(.with-start) .start {
+    padding-inline-start: var(--_container-padding-horizontal);
   }
 
-  .field:not(.no-label) {
-    .container {
-      padding-bottom: var(--_with-label-container-padding-vertical);
-      padding-top: var(--_with-label-container-padding-vertical);
-    }
-
-    .middle {
-      padding-top: var(--_label-text-populated-line-height);
-    }
+  .field:not(.with-end) .end {
+    padding-inline-end: var(--_container-padding-horizontal);
   }
 
-  :hover {
-    .active-indicator::before {
-      border-bottom-color: var(--_hover-active-indicator-color);
-      border-bottom-width: var(--_hover-active-indicator-height);
-    }
+  .field:not(.no-label) .container {
+    padding-bottom: var(--_with-label-container-padding-vertical);
+    padding-top: var(--_with-label-container-padding-vertical);
+  }
 
-    .state-layer {
-      background: var(--_hover-state-layer-color);
-      opacity: var(--_hover-state-layer-opacity);
-    }
+  .field:not(.no-label) .middle {
+    padding-top: var(--_label-text-populated-line-height);
+  }
+
+  :hover .active-indicator::before {
+    border-bottom-color: var(--_hover-active-indicator-color);
+    border-bottom-width: var(--_hover-active-indicator-height);
   }
 
   // Focus is on a separate element and does not need a focus selector
@@ -177,38 +162,37 @@ $_animation-duration: 150ms;
     border-bottom-width: var(--_focus-active-indicator-height);
   }
 
-  .disabled {
-    .active-indicator::before {
-      border-bottom-color: var(--_disabled-active-indicator-color);
-      border-bottom-width: var(--_disabled-active-indicator-height);
-      opacity: var(--_disabled-active-indicator-opacity);
-    }
-
-    .container::before {
-      background: var(--_disabled-container-color);
-      opacity: var(--_disabled-container-opacity);
-    }
+  :hover .state-layer {
+    background: var(--_hover-state-layer-color);
+    opacity: var(--_hover-state-layer-opacity);
   }
 
-  .error:not(.disabled) {
-    .active-indicator::before {
-      border-bottom-color: var(--_error-active-indicator-color);
-    }
+  .disabled .active-indicator::before {
+    border-bottom-color: var(--_disabled-active-indicator-color);
+    border-bottom-width: var(--_disabled-active-indicator-height);
+    opacity: var(--_disabled-active-indicator-opacity);
+  }
 
-    &:hover {
-      .active-indicator::before {
-        border-bottom-color: var(--_error-hover-active-indicator-color);
-      }
+  .disabled .container::before {
+    background: var(--_disabled-container-color);
+    opacity: var(--_disabled-container-opacity);
+  }
 
-      .state-layer {
-        background: var(--_error-hover-state-layer-color);
-        opacity: var(--_error-hover-state-layer-opacity);
-      }
-    }
+  .error .active-indicator::before {
+    border-bottom-color: var(--_error-active-indicator-color);
+  }
 
-    // Focus is on a separate element and does not need a focus selector
-    .active-indicator::after {
-      border-bottom-color: var(--_error-focus-active-indicator-color);
-    }
+  .error:hover .active-indicator::before {
+    border-bottom-color: var(--_error-hover-active-indicator-color);
+  }
+
+  .error:hover .state-layer {
+    background: var(--_error-hover-state-layer-color);
+    opacity: var(--_error-hover-state-layer-opacity);
+  }
+
+  // Focus is on a separate element and does not need a focus selector
+  .error .active-indicator::after {
+    border-bottom-color: var(--_error-focus-active-indicator-color);
   }
 }

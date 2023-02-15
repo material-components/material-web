@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
+import {html, LitElement, PropertyValues} from 'lit';
 import {property, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
@@ -33,9 +33,9 @@ export class Field extends LitElement {
 
   @state() private isAnimating = false;
   private readonly labelAnimationSignal = createAnimationSignal();
-  @queryAsync('.label--floating')
+  @queryAsync('.label.floating')
   private readonly floatingLabelEl!: Promise<HTMLElement>;
-  @queryAsync('.label--resting')
+  @queryAsync('.label.resting')
   private readonly restingLabelEl!: Promise<HTMLElement>;
 
   protected override update(props: PropertyValues<Field>) {
@@ -56,10 +56,10 @@ export class Field extends LitElement {
     super.update(props);
   }
 
-  protected override render(): TemplateResult {
+  protected override render() {
     const classes = {
       'disabled': this.disabled,
-      'error': this.error,
+      'error': this.error && !this.disabled,
       'focused': this.focused,
       'with-start': this.hasStart,
       'with-end': this.hasEnd,
@@ -124,9 +124,9 @@ export class Field extends LitElement {
     }
 
     const classes = {
-      'label--hidden': !visible,
-      'label--floating': isFloating,
-      'label--resting': !isFloating,
+      'hidden': !visible,
+      'floating': isFloating,
+      'resting': !isFloating,
     };
 
     let labelText = this.label ?? '';

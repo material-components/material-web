@@ -87,12 +87,11 @@ $_animation-duration: 150ms;
       opacity: 0;
       transition: animation.standard(opacity, $_animation-duration);
     }
+  }
 
-    .focused & {
-      &::after {
-        opacity: 1;
-      }
-    }
+  .focused .outline-start::after,
+  .focused .outline-end::after {
+    opacity: 1;
   }
 
   .outline-start {
@@ -132,10 +131,10 @@ $_animation-duration: 150ms;
     max-width: calc(100% - 2 * var(--_container-padding-horizontal));
     padding: 0 var(--_outline-label-padding);
     position: relative;
+  }
 
-    .no-label & {
-      display: none;
-    }
+  .no-label .outline-notch {
+    display: none;
   }
 
   .outline-panel-inactive,
@@ -165,26 +164,28 @@ $_animation-duration: 150ms;
       left: 50%;
       transform-origin: top right;
     }
+  }
 
-    .populated &,
-    .focused & {
-      &::before,
-      &::after {
-        transform: scaleX(0);
-      }
+  .populated .outline-panel-inactive,
+  .populated .outline-panel-active,
+  .focused .outline-panel-inactive,
+  .focused .outline-panel-active {
+    &::before,
+    &::after {
+      transform: scaleX(0);
     }
   }
 
   .outline-panel-active {
     opacity: 0;
     transition: animation.standard(opacity, $_animation-duration);
-
-    .focused & {
-      opacity: 1;
-    }
   }
 
-  .label--floating {
+  .focused .outline-panel-active {
+    opacity: 1;
+  }
+
+  .label.floating {
     // Center the label within the outline stroke
     transform: translateY(calc(-100% + var(--_label-text-padding-bottom)));
   }
@@ -210,10 +211,8 @@ $_animation-duration: 150ms;
     );
   }
 
-  .field:not(.with-end) {
-    .end {
-      padding-inline-end: max(var(--_container-padding-horizontal), $shape-end);
-    }
+  .field:not(.with-end) .end {
+    padding-inline-end: max(var(--_container-padding-horizontal), $shape-end);
   }
 
   .outline-start::before,
@@ -226,26 +225,22 @@ $_animation-duration: 150ms;
 
   // States
 
-  :hover {
-    .outline {
-      border-color: var(--_hover-outline-color);
-      color: var(--_hover-outline-color); // Needed for Firefox HCM
-    }
-
-    .outline-start::before,
-    .outline-end::before,
-    .outline-panel-inactive,
-    .outline-panel-inactive::before,
-    .outline-panel-inactive::after {
-      border-width: var(--_hover-outline-width);
-    }
+  :hover .outline {
+    border-color: var(--_hover-outline-color);
+    color: var(--_hover-outline-color); // Needed for Firefox HCM
   }
 
-  .focused {
-    .outline {
-      border-color: var(--_focus-outline-color);
-      color: var(--_focus-outline-color); // Needed for Firefox HCM
-    }
+  :hover .outline-start::before,
+  :hover .outline-end::before,
+  :hover .outline-panel-inactive,
+  :hover .outline-panel-inactive::before,
+  :hover .outline-panel-inactive::after {
+    border-width: var(--_hover-outline-width);
+  }
+
+  .focused .outline {
+    border-color: var(--_focus-outline-color);
+    color: var(--_focus-outline-color); // Needed for Firefox HCM
   }
 
   .outline-start::after,
@@ -256,47 +251,39 @@ $_animation-duration: 150ms;
     border-width: var(--_focus-outline-width);
   }
 
-  .disabled {
-    .outline {
-      border-color: var(--_disabled-outline-color);
-      color: var(--_disabled-outline-color); // Needed for Firefox HCM
-    }
-
-    .outline-start,
-    .outline-end,
-    .outline-panel-inactive {
-      opacity: var(--_disabled-outline-opacity);
-    }
-
-    .outline-start::before,
-    .outline-end::before,
-    .outline-panel-inactive,
-    .outline-panel-inactive::before,
-    .outline-panel-inactive::after {
-      border-width: var(--_disabled-outline-width);
-    }
+  .disabled .outline {
+    border-color: var(--_disabled-outline-color);
+    color: var(--_disabled-outline-color); // Needed for Firefox HCM
   }
 
-  .error:not(.disabled) {
-    .outline {
-      border-color: var(--_error-outline-color);
-      color: var(--_error-outline-color); // Needed for Firefox HCM
-    }
+  .disabled .outline-start,
+  .disabled .outline-end,
+  .disabled .outline-panel-inactive {
+    opacity: var(--_disabled-outline-opacity);
+  }
 
-    &:hover {
-      .outline {
-        border-color: var(--_error-hover-outline-color);
-        // Needed for Firefox HCM
-        color: var(--_error-hover-outline-color);
-      }
-    }
+  .disabled .outline-start::before,
+  .disabled .outline-end::before,
+  .disabled .outline-panel-inactive,
+  .disabled .outline-panel-inactive::before,
+  .disabled .outline-panel-inactive::after {
+    border-width: var(--_disabled-outline-width);
+  }
 
-    &.focused {
-      .outline {
-        border-color: var(--_error-focus-outline-color);
-        // Needed for Firefox HCM
-        color: var(--_error-focus-outline-color);
-      }
-    }
+  .error .outline {
+    border-color: var(--_error-outline-color);
+    color: var(--_error-outline-color); // Needed for Firefox HCM
+  }
+
+  .error:hover .outline {
+    border-color: var(--_error-hover-outline-color);
+    // Needed for Firefox HCM
+    color: var(--_error-hover-outline-color);
+  }
+
+  .error.focused .outline {
+    border-color: var(--_error-focus-outline-color);
+    // Needed for Firefox HCM
+    color: var(--_error-focus-outline-color);
   }
 }
