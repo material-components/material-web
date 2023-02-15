@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 // go/keep-sorted start
 @use 'sass:math';
 // go/keep-sorted end
@@ -22,9 +19,9 @@ $_visible-duration: math.round(math.div($_label-duration * 5, 9));
 $_enter-delay: $_label-duration - $_visible-duration;
 
 @mixin styles() {
-  .md3-field__start,
-  .md3-field__middle,
-  .md3-field__end {
+  .start,
+  .middle,
+  .end {
     display: flex;
     align-items: center;
     box-sizing: border-box;
@@ -34,12 +31,12 @@ $_enter-delay: $_label-duration - $_visible-duration;
     position: relative;
   }
 
-  .md3-field__start,
-  .md3-field__end {
+  .start,
+  .end {
     justify-content: center;
   }
 
-  .md3-field__middle {
+  .middle {
     // The container of the field aligns sections by "center". Only the middle
     // section opts in to baseline alignment.
     //
@@ -51,7 +48,7 @@ $_enter-delay: $_label-duration - $_visible-duration;
     flex: 1;
   }
 
-  .md3-field__content {
+  .content {
     display: flex;
     flex: 1;
     opacity: 0;
@@ -60,55 +57,55 @@ $_enter-delay: $_label-duration - $_visible-duration;
     // `currentColor` to inherit this property.
     color: var(--_content-color);
 
-    .md3-field--no-label &,
-    .md3-field--focused &,
-    .md3-field--populated & {
+    .no-label &,
+    .focused &,
+    .populated & {
       opacity: 1;
       transition-delay: $_enter-delay;
     }
   }
 
-  .md3-field--disabled {
-    &.md3-field--no-label,
-    &.md3-field--focused,
-    &.md3-field--populated {
-      .md3-field__content {
+  .disabled {
+    &.no-label,
+    &.focused,
+    &.populated {
+      .content {
         opacity: var(--_disabled-content-opacity);
       }
     }
   }
 
   :hover {
-    .md3-field__content {
+    .content {
       color: var(--_hover-content-color);
     }
   }
 
-  .md3-field--focused {
-    .md3-field__content {
+  .focused {
+    .content {
       color: var(--_focus-content-color);
     }
   }
 
-  .md3-field--disabled {
-    .md3-field__content {
+  .disabled {
+    .content {
       color: var(--_disabled-content-color);
     }
   }
 
-  .md3-field--error:not(.md3-field--disabled) {
-    .md3-field__content {
+  .error:not(.disabled) {
+    .content {
       color: var(--_error-content-color);
     }
 
     &:hover {
-      .md3-field__content {
+      .content {
         color: var(--_error-hover-content-color);
       }
     }
 
-    &.md3-field--focused {
-      .md3-field__content {
+    &.focused {
+      .content {
         color: var(--_error-focus-content-color);
       }
     }

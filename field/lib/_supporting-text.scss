@@ -3,15 +3,12 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 // go/keep-sorted start
 @use '../../sass/typography';
 // go/keep-sorted end
 
 @mixin styles() {
-  .md3-field__supporting-text {
+  .supporting-text {
     color: var(--_supporting-text-color);
     display: flex;
     justify-content: space-between;
@@ -28,8 +25,8 @@
     );
   }
 
-  .md3-field__supporting-text-start,
-  .md3-field__supporting-text-end {
+  .supporting-text-start,
+  .supporting-text-end {
     // Can't be an inline display element (<span>) for padding-top to work.
     display: flex;
 
@@ -40,44 +37,44 @@
     }
   }
 
-  .md3-field__supporting-text-end {
+  .supporting-text-end {
     ::slotted(:not(:empty)) {
       padding-inline-start: var(--_supporting-text-padding);
     }
   }
 
   :hover {
-    .md3-field__supporting-text {
+    .supporting-text {
       color: var(--_hover-supporting-text-color);
     }
   }
 
-  .md3-field--focus {
-    .md3-field__supporting-text {
+  .focus {
+    .supporting-text {
       color: var(--_focus-supporting-text-color);
     }
   }
 
-  .md3-field--disabled {
-    .md3-field__supporting-text {
+  .disabled {
+    .supporting-text {
       color: var(--_disabled-supporting-text-color);
       opacity: var(--_disabled-supporting-text-opacity);
     }
   }
 
-  .md3-field--error:not(.md3-field--disabled) {
-    .md3-field__supporting-text {
+  .error:not(.disabled) {
+    .supporting-text {
       color: var(--_error-supporting-text-color);
     }
 
     &:hover {
-      .md3-field__supporting-text {
+      .supporting-text {
         color: var(--_error-hover-supporting-text-color);
       }
     }
 
-    &.md3-field--focus {
-      .md3-field__supporting-text {
+    &.focus {
+      .supporting-text {
         color: var(--_error-focus-supporting-text-color);
       }
     }

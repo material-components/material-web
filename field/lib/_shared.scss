@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 // go/keep-sorted start
 @use 'sass:map';
 // go/keep-sorted end
@@ -22,7 +19,7 @@
     display: inline-flex;
   }
 
-  .md3-field {
+  .field {
     display: inline-flex;
     flex: 1;
     flex-direction: column;
@@ -31,7 +28,7 @@
     writing-mode: horizontal-tb;
   }
 
-  .md3-field__container {
+  .container {
     align-items: center;
     box-sizing: border-box;
     display: flex;
@@ -42,24 +39,24 @@
     position: relative;
   }
 
-  .md3-field--disabled {
+  .disabled {
     pointer-events: none;
   }
 
   // TODO(b/239188049): remove when layout tokens are ready
-  .md3-field--with-start .md3-field__start,
-  .md3-field--with-end .md3-field__end {
+  .with-start .start,
+  .with-end .end {
     min-width: 48px;
   }
 
-  .md3-field--with-start {
-    .md3-field__start {
+  .with-start {
+    .start {
       margin-inline-end: 4px;
     }
   }
 
-  .md3-field--with-end {
-    .md3-field__end {
+  .with-end {
+    .end {
       margin-inline-start: 4px;
     }
   }

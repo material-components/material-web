@@ -35,9 +35,9 @@ export class FilledField extends Field {
   protected override renderContainerContents() {
     const strokeStyle = {transformOrigin: this.strokeTransformOrigin};
     return html`
-      <span class="md3-field__state-layer"></span>
+      <span class="state-layer"></span>
       ${super.renderContainerContents()}
-      <span class="md3-field__active-indicator"
+      <span class="active-indicator"
         style="${styleMap(strokeStyle)}"></span>
     `;
   }

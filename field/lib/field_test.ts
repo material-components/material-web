@@ -23,8 +23,7 @@ declare global {
 @customElement('md-test-field')
 class TestField extends Field {
   get labelText() {
-    return this.renderRoot.querySelector('.md3-field__label')?.textContent ??
-        '';
+    return this.renderRoot.querySelector('.label')?.textContent ?? '';
   }
 
   // Ensure floating/resting labels are both rendered
@@ -106,7 +105,7 @@ describe('Field', () => {
            // Assertion.
            expect(floatingLabel.classList)
                .withContext('should display resting label for animation')
-               .not.toContain('md3-field__label--hidden');
+               .not.toContain('label--hidden');
          });
 
       it('should update visible label type to resting immediately when resting',
@@ -120,7 +119,7 @@ describe('Field', () => {
            // Assertion.
            expect(restingLabel.classList)
                .withContext('should display resting label for animation')
-               .not.toContain('md3-field__label--hidden');
+               .not.toContain('label--hidden');
          });
 
       it('should update visible label type after floating animation ends',
@@ -139,7 +138,7 @@ describe('Field', () => {
            // Assertion.
            expect(floatingLabel.classList)
                .withContext('visible label should be floating after focusing')
-               .not.toContain('md3-field__label--hidden');
+               .not.toContain('label--hidden');
          });
 
       it('should update visible label type after resting animation ends',
@@ -158,7 +157,7 @@ describe('Field', () => {
            // Assertion.
            expect(restingLabel.classList)
                .withContext('visible label should be resting after unfocusing')
-               .not.toContain('md3-field__label--hidden');
+               .not.toContain('label--hidden');
          });
 
       it('should animate label when focused changes', async () => {
@@ -211,7 +210,7 @@ describe('Field', () => {
            expect(floatingLabel.classList)
                .withContext(
                    'focusing should still set visible label type to floating')
-               .toContain('md3-field__label--hidden');
+               .toContain('label--hidden');
 
            // Test case.
            await harness.blur();
@@ -220,7 +219,7 @@ describe('Field', () => {
            expect(floatingLabel.classList)
                .withContext(
                    'unfocusing should still set visible label type to resting')
-               .not.toContain('md3-field__label--hidden');
+               .not.toContain('label--hidden');
          });
 
       it('should not animate if focusing a populated field', async () => {

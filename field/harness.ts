@@ -30,6 +30,6 @@ export class FieldHarness extends Harness<Field> {
   protected override async getInteractiveElement() {
     await this.element.updateComplete;
     return (this.element.querySelector(':not([slot])') ||
-            this.element.renderRoot.querySelector('.md3-field')) as HTMLElement;
+            this.element.renderRoot.querySelector('.field')) as HTMLElement;
   }
 }

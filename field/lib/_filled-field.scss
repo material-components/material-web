@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 // go/keep-sorted start
 @use 'sass:map';
 // go/keep-sorted end
@@ -44,7 +41,7 @@ $_animation-duration: 150ms;
     }
   }
 
-  .md3-field__container {
+  .container {
     border-start-start-radius: var(--_container-shape-start-start);
     border-start-end-radius: var(--_container-shape-start-end);
     border-end-end-radius: var(--_container-shape-end-end);
@@ -79,12 +76,12 @@ $_animation-duration: 150ms;
     }
   }
 
-  .md3-field__label--floating {
+  .label--floating {
     position: absolute;
     top: 0;
   }
 
-  .md3-field__state-layer {
+  .state-layer {
     border-radius: inherit;
     height: 100%;
     position: absolute;
@@ -92,12 +89,12 @@ $_animation-duration: 150ms;
     visibility: hidden;
     z-index: -1;
 
-    .md3-field:not(.md3-field--disabled):hover & {
+    .field:not(.disabled):hover & {
       visibility: visible;
     }
   }
 
-  .md3-field__active-indicator {
+  .active-indicator {
     // Prevent click events on the indicator element since it has no width and
     // causes bugs when handled by the foundation for updating transform-origin.
     inset: auto 0 0 0;
@@ -130,7 +127,7 @@ $_animation-duration: 150ms;
         transform 0s ease $_animation-duration;
     }
 
-    .md3-field--focused & {
+    .focused & {
       &::after {
         opacity: 1;
         transform: scaleX(1);
@@ -139,78 +136,78 @@ $_animation-duration: 150ms;
     }
   }
 
-  .md3-field:not(.md3-field--with-start) {
-    .md3-field__start {
+  .field:not(.with-start) {
+    .start {
       padding-inline-start: var(--_container-padding-horizontal);
     }
   }
 
-  .md3-field:not(.md3-field--with-end) {
-    .md3-field__end {
+  .field:not(.with-end) {
+    .end {
       padding-inline-end: var(--_container-padding-horizontal);
     }
   }
 
-  .md3-field:not(.md3-field--no-label) {
-    .md3-field__container {
+  .field:not(.no-label) {
+    .container {
       padding-bottom: var(--_with-label-container-padding-vertical);
       padding-top: var(--_with-label-container-padding-vertical);
     }
 
-    .md3-field__middle {
+    .middle {
       padding-top: var(--_label-text-populated-line-height);
     }
   }
 
   :hover {
-    .md3-field__active-indicator::before {
+    .active-indicator::before {
       border-bottom-color: var(--_hover-active-indicator-color);
       border-bottom-width: var(--_hover-active-indicator-height);
     }
 
-    .md3-field__state-layer {
+    .state-layer {
       background: var(--_hover-state-layer-color);
       opacity: var(--_hover-state-layer-opacity);
     }
   }
 
   // Focus is on a separate element and does not need a focus selector
-  .md3-field__active-indicator::after {
+  .active-indicator::after {
     border-bottom-color: var(--_focus-active-indicator-color);
     border-bottom-width: var(--_focus-active-indicator-height);
   }
 
-  .md3-field--disabled {
-    .md3-field__active-indicator::before {
+  .disabled {
+    .active-indicator::before {
       border-bottom-color: var(--_disabled-active-indicator-color);
       border-bottom-width: var(--_disabled-active-indicator-height);
       opacity: var(--_disabled-active-indicator-opacity);
     }
 
-    .md3-field__container::before {
+    .container::before {
       background: var(--_disabled-container-color);
       opacity: var(--_disabled-container-opacity);
     }
   }
 
-  .md3-field--error:not(.md3-field--disabled) {
-    .md3-field__active-indicator::before {
+  .error:not(.disabled) {
+    .active-indicator::before {
       border-bottom-color: var(--_error-active-indicator-color);
     }
 
     &:hover {
-      .md3-field__active-indicator::before {
+      .active-indicator::before {
         border-bottom-color: var(--_error-hover-active-indicator-color);
       }
 
-      .md3-field__state-layer {
+      .state-layer {
         background: var(--_error-hover-state-layer-color);
         opacity: var(--_error-hover-state-layer-opacity);
       }
     }
 
     // Focus is on a separate element and does not need a focus selector
-    .md3-field__active-indicator::after {
+    .active-indicator::after {
       border-bottom-color: var(--_error-focus-active-indicator-color);
     }
   }

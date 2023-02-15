@@ -14,14 +14,14 @@ import {Field} from './field.js';
 export class OutlinedField extends Field {
   protected override renderContainerContents() {
     return html`
-      <span class="md3-field__outline">
-        <span class="md3-field__outline-start"></span>
-        <span class="md3-field__outline-notch">
-          <span class="md3-field__outline-panel-inactive"></span>
-          <span class="md3-field__outline-panel-active"></span>
+      <span class="outline">
+        <span class="outline-start"></span>
+        <span class="outline-notch">
+          <span class="outline-panel-inactive"></span>
+          <span class="outline-panel-active"></span>
           ${this.renderFloatingLabel()}
         </span>
-        <span class="md3-field__outline-end"></span>
+        <span class="outline-end"></span>
       </span>
       ${super.renderContainerContents()}
     `;

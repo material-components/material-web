@@ -33,9 +33,9 @@ export class Field extends LitElement {
 
   @state() private isAnimating = false;
   private readonly labelAnimationSignal = createAnimationSignal();
-  @queryAsync('.md3-field__label--floating')
+  @queryAsync('.label--floating')
   private readonly floatingLabelEl!: Promise<HTMLElement>;
-  @queryAsync('.md3-field__label--resting')
+  @queryAsync('.label--resting')
   private readonly restingLabelEl!: Promise<HTMLElement>;
 
   protected override update(props: PropertyValues<Field>) {
@@ -58,27 +58,27 @@ export class Field extends LitElement {
 
   protected override render(): TemplateResult {
     const classes = {
-      'md3-field--disabled': this.disabled,
-      'md3-field--error': this.error,
-      'md3-field--focused': this.focused,
-      'md3-field--with-start': this.hasStart,
-      'md3-field--with-end': this.hasEnd,
-      'md3-field--populated': this.populated,
-      'md3-field--required': this.required,
-      'md3-field--no-label': !this.label,
+      'disabled': this.disabled,
+      'error': this.error,
+      'focused': this.focused,
+      'with-start': this.hasStart,
+      'with-end': this.hasEnd,
+      'populated': this.populated,
+      'required': this.required,
+      'no-label': !this.label,
     };
 
     return html`
-      <span class="md3-field ${classMap(classes)}">
-        <span class="md3-field__container">
+      <span class="field ${classMap(classes)}">
+        <span class="container">
           ${this.renderContainerContents()}
         </span>
 
-        <span class="md3-field__supporting-text">
-          <span class="md3-field__supporting-text-start">
+        <span class="supporting-text">
+          <span class="supporting-text-start">
             <slot name="supporting-text"></slot>
           </span>
-          <span class="md3-field__supporting-text-end">
+          <span class="supporting-text-end">
             <slot name="supporting-text-end"></slot>
           </span>
         </span>
@@ -88,11 +88,11 @@ export class Field extends LitElement {
 
   protected renderContainerContents() {
     return html`
-      <span class="md3-field__start">
+      <span class="start">
         <slot name="start"></slot>
       </span>
-      <span class="md3-field__middle">${this.renderMiddleContents()}</span>
-      <span class="md3-field__end">
+      <span class="middle">${this.renderMiddleContents()}</span>
+      <span class="end">
         <slot name="end"></slot>
       </span>
     `;
@@ -100,7 +100,7 @@ export class Field extends LitElement {
 
   protected renderMiddleContents() {
     return html`
-      <span class="md3-field__content"><slot></slot></span>
+      <span class="content"><slot></slot></span>
     `;
   }
 
@@ -124,9 +124,9 @@ export class Field extends LitElement {
     }
 
     const classes = {
-      'md3-field__label--hidden': !visible,
-      'md3-field__label--floating': isFloating,
-      'md3-field__label--resting': !isFloating,
+      'label--hidden': !visible,
+      'label--floating': isFloating,
+      'label--resting': !isFloating,
     };
 
     let labelText = this.label ?? '';
@@ -134,7 +134,7 @@ export class Field extends LitElement {
     labelText += this.required && labelText ? '*' : '';
 
     return html`
-      <span class="md3-field__label ${classMap(classes)}"
+      <span class="label ${classMap(classes)}"
         aria-hidden=${!visible}
       >${labelText}</span>
     `;

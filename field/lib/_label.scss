@@ -7,11 +7,8 @@
 @use '../../sass/typography';
 // go/keep-sorted end
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 @mixin styles() {
-  .md3-field__label {
+  .label {
     color: var(--_label-text-color);
     overflow: hidden;
     max-width: 100%;
@@ -38,7 +35,7 @@
     );
   }
 
-  .md3-field__label--resting {
+  .label--resting {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -53,7 +50,7 @@
     );
   }
 
-  .md3-field__label--floating {
+  .label--floating {
     @include typography.theme-styles(
       (
         size: var(--_label-text-populated-size),
@@ -62,51 +59,51 @@
     );
   }
 
-  .md3-field__label--hidden {
+  .label--hidden {
     opacity: 0;
   }
 
-  .md3-field--no-label {
-    .md3-field__label {
+  .no-label {
+    .label {
       display: none;
     }
   }
 
   :hover {
-    .md3-field__label {
+    .label {
       color: var(--_hover-label-text-color);
     }
   }
 
-  .md3-field--focused {
-    .md3-field__label {
+  .focused {
+    .label {
       color: var(--_focus-label-text-color);
     }
   }
 
-  .md3-field--disabled {
-    .md3-field__label {
+  .disabled {
+    .label {
       color: var(--_disabled-label-text-color);
 
-      &:not(.md3-field__label--hidden) {
+      &:not(.label--hidden) {
         opacity: var(--_disabled-label-text-opacity);
       }
     }
   }
 
-  .md3-field--error:not(.md3-field--disabled) {
-    .md3-field__label {
+  .error:not(.disabled) {
+    .label {
       color: var(--_error-label-text-color);
     }
 
     &:hover {
-      .md3-field__label {
+      .label {
         color: var(--_error-hover-label-text-color);
       }
     }
 
-    &.md3-field--focused {
-      .md3-field__label {
+    &.focused {
+      .label {
         color: var(--_error-focus-label-text-color);
       }
     }

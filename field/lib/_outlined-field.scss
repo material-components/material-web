@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 // go/keep-sorted start
 @use 'sass:map';
 // go/keep-sorted end
@@ -43,7 +40,7 @@ $_animation-duration: 150ms;
     }
   }
 
-  .md3-field__outline {
+  .outline {
     border-start-start-radius: var(--_container-shape-start-start);
     border-start-end-radius: var(--_container-shape-start-end);
     border-end-end-radius: var(--_container-shape-end-end);
@@ -58,10 +55,10 @@ $_animation-duration: 150ms;
     width: 100%;
   }
 
-  .md3-field__outline-start,
-  .md3-field__outline-panel-inactive,
-  .md3-field__outline-panel-active,
-  .md3-field__outline-end {
+  .outline-start,
+  .outline-panel-inactive,
+  .outline-panel-active,
+  .outline-end {
     // ::before is inactive border, ::after is active border. Borders are
     // absolutely positioned within their elements.
     &::before,
@@ -73,8 +70,8 @@ $_animation-duration: 150ms;
     }
   }
 
-  .md3-field__outline-start,
-  .md3-field__outline-end {
+  .outline-start,
+  .outline-end {
     border: inherit;
     border-radius: inherit;
     box-sizing: border-box;
@@ -91,14 +88,14 @@ $_animation-duration: 150ms;
       transition: animation.standard(opacity, $_animation-duration);
     }
 
-    .md3-field--focused & {
+    .focused & {
       &::after {
         opacity: 1;
       }
     }
   }
 
-  .md3-field__outline-start {
+  .outline-start {
     &::before,
     &::after {
       border-inline-start-style: solid;
@@ -111,7 +108,7 @@ $_animation-duration: 150ms;
     }
   }
 
-  .md3-field__outline-end {
+  .outline-end {
     flex-grow: 1;
     margin-inline-start: calc(-1 * var(--_outline-label-padding));
 
@@ -126,7 +123,7 @@ $_animation-duration: 150ms;
     }
   }
 
-  .md3-field__outline-notch {
+  .outline-notch {
     align-items: flex-start;
     border: inherit;
     display: flex;
@@ -136,13 +133,13 @@ $_animation-duration: 150ms;
     padding: 0 var(--_outline-label-padding);
     position: relative;
 
-    .md3-field--no-label & {
+    .no-label & {
       display: none;
     }
   }
 
-  .md3-field__outline-panel-inactive,
-  .md3-field__outline-panel-active {
+  .outline-panel-inactive,
+  .outline-panel-active {
     border: inherit;
     border-bottom-style: solid;
     inset: 0;
@@ -169,8 +166,8 @@ $_animation-duration: 150ms;
       transform-origin: top right;
     }
 
-    .md3-field--populated &,
-    .md3-field--focused & {
+    .populated &,
+    .focused & {
       &::before,
       &::after {
         transform: scaleX(0);
@@ -178,16 +175,16 @@ $_animation-duration: 150ms;
     }
   }
 
-  .md3-field__outline-panel-active {
+  .outline-panel-active {
     opacity: 0;
     transition: animation.standard(opacity, $_animation-duration);
 
-    .md3-field--focused & {
+    .focused & {
       opacity: 1;
     }
   }
 
-  .md3-field__label--floating {
+  .label--floating {
     // Center the label within the outline stroke
     transform: translateY(calc(-100% + var(--_label-text-padding-bottom)));
   }
@@ -205,97 +202,97 @@ $_animation-duration: 150ms;
     var(--_container-shape-end-end)
   );
 
-  .md3-field__outline-start,
-  .md3-field:not(.md3-field--with-start) .md3-field__start {
+  .outline-start,
+  .field:not(.with-start) .start {
     padding-inline-start: max(
       var(--_container-padding-horizontal),
       $shape-start + var(--_outline-label-padding)
     );
   }
 
-  .md3-field:not(.md3-field--with-end) {
-    .md3-field__end {
+  .field:not(.with-end) {
+    .end {
       padding-inline-end: max(var(--_container-padding-horizontal), $shape-end);
     }
   }
 
-  .md3-field__outline-start::before,
-  .md3-field__outline-end::before,
-  .md3-field__outline-panel-inactive,
-  .md3-field__outline-panel-inactive::before,
-  .md3-field__outline-panel-inactive::after {
+  .outline-start::before,
+  .outline-end::before,
+  .outline-panel-inactive,
+  .outline-panel-inactive::before,
+  .outline-panel-inactive::after {
     border-width: var(--_outline-width);
   }
 
   // States
 
   :hover {
-    .md3-field__outline {
+    .outline {
       border-color: var(--_hover-outline-color);
       color: var(--_hover-outline-color); // Needed for Firefox HCM
     }
 
-    .md3-field__outline-start::before,
-    .md3-field__outline-end::before,
-    .md3-field__outline-panel-inactive,
-    .md3-field__outline-panel-inactive::before,
-    .md3-field__outline-panel-inactive::after {
+    .outline-start::before,
+    .outline-end::before,
+    .outline-panel-inactive,
+    .outline-panel-inactive::before,
+    .outline-panel-inactive::after {
       border-width: var(--_hover-outline-width);
     }
   }
 
-  .md3-field--focused {
-    .md3-field__outline {
+  .focused {
+    .outline {
       border-color: var(--_focus-outline-color);
       color: var(--_focus-outline-color); // Needed for Firefox HCM
     }
   }
 
-  .md3-field__outline-start::after,
-  .md3-field__outline-end::after,
-  .md3-field__outline-panel-active,
-  .md3-field__outline-panel-active::before,
-  .md3-field__outline-panel-active::after {
+  .outline-start::after,
+  .outline-end::after,
+  .outline-panel-active,
+  .outline-panel-active::before,
+  .outline-panel-active::after {
     border-width: var(--_focus-outline-width);
   }
 
-  .md3-field--disabled {
-    .md3-field__outline {
+  .disabled {
+    .outline {
       border-color: var(--_disabled-outline-color);
       color: var(--_disabled-outline-color); // Needed for Firefox HCM
     }
 
-    .md3-field__outline-start,
-    .md3-field__outline-end,
-    .md3-field__outline-panel-inactive {
+    .outline-start,
+    .outline-end,
+    .outline-panel-inactive {
       opacity: var(--_disabled-outline-opacity);
     }
 
-    .md3-field__outline-start::before,
-    .md3-field__outline-end::before,
-    .md3-field__outline-panel-inactive,
-    .md3-field__outline-panel-inactive::before,
-    .md3-field__outline-panel-inactive::after {
+    .outline-start::before,
+    .outline-end::before,
+    .outline-panel-inactive,
+    .outline-panel-inactive::before,
+    .outline-panel-inactive::after {
       border-width: var(--_disabled-outline-width);
     }
   }
 
-  .md3-field--error:not(.md3-field--disabled) {
-    .md3-field__outline {
+  .error:not(.disabled) {
+    .outline {
       border-color: var(--_error-outline-color);
       color: var(--_error-outline-color); // Needed for Firefox HCM
     }
 
     &:hover {
-      .md3-field__outline {
+      .outline {
         border-color: var(--_error-hover-outline-color);
         // Needed for Firefox HCM
         color: var(--_error-hover-outline-color);
       }
     }
 
-    &.md3-field--focused {
-      .md3-field__outline {
+    &.focused {
+      .outline {
         border-color: var(--_error-focus-outline-color);
         // Needed for Firefox HCM
         color: var(--_error-focus-outline-color);

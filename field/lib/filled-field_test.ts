@@ -23,8 +23,7 @@ declare global {
 @customElement('md-test-filled-field')
 class TestFilledField extends FilledField {
   get strokeTransformOriginProp() {
-    const element =
-        this.renderRoot.querySelector('.md3-field__active-indicator');
+    const element = this.renderRoot.querySelector('.active-indicator');
     if (!element) {
       return '';
     }
