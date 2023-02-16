@@ -6,9 +6,20 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
+@use '../../sass/typography';
+
 @mixin styles() {
   .md3-autocomplete {
     display: inline-flex;
     flex: 1;
   }
+}
+
+@function resolve-typography-tokens($tokens) {
+  @return typography.resolve-tokens(
+    $tokens,
+    'input-text',
+    'label-text',
+    'supporting-text'
+  );
 }

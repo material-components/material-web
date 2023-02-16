@@ -8,21 +8,16 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../motion/animation';
-@use '../../sass/resolvers';
 @use '../../sass/shape';
 @use '../../sass/theme';
 @use './md-comp-filled-field';
-@use './shared';
 // go/keep-sorted end
 
 $_animation-duration: 150ms;
 
 @mixin theme($tokens) {
   $reference: md-comp-filled-field.values();
-  // Add resolved tokens so that $theme may specify them.
-  $reference: map.merge($reference, shared.resolve-tokens($reference));
   $tokens: theme.validate-theme($reference, $tokens);
-  $tokens: shared.resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, 'filled-field');
   $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
@@ -31,7 +26,6 @@ $_animation-duration: 150ms;
 
 @mixin styles() {
   $tokens: md-comp-filled-field.values();
-  $tokens: shared.resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, 'filled-field');
   $tokens: shape.resolve-tokens($tokens, 'container-shape');
 

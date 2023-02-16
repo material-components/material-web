@@ -15,8 +15,10 @@
 @use '../../menusurface/menu-surface';
 @use '../../sass/shape';
 @use '../../sass/theme';
+@use '../../sass/typography';
 @use '../../textfield/filled-text-field';
 @use '../../tokens';
+@use './shared';
 // go/keep-sorted end
 
 $custom-property-prefix: 'filled-autocomplete';
@@ -28,10 +30,11 @@ $dark-theme: tokens.md-comp-filled-autocomplete-values(
 );
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(
-    tokens.md-comp-filled-autocomplete-values(),
-    $tokens
+  $reference: shared.resolve-typography-tokens(
+    tokens.md-comp-filled-autocomplete-values()
   );
+  $tokens: shared.resolve-typography-tokens($tokens);
+  $tokens: theme.validate-theme($reference, $tokens);
   $tokens: elevation.resolve-tokens($tokens, 'menu-container-elevation');
   $tokens: theme.create-theme-vars($tokens, $custom-property-prefix);
   $tokens: shape.resolve-tokens($tokens, 'text-field-container-shape');
@@ -40,7 +43,9 @@ $dark-theme: tokens.md-comp-filled-autocomplete-values(
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-filled-autocomplete-values();
+  $tokens: shared.resolve-typography-tokens(
+    tokens.md-comp-filled-autocomplete-values()
+  );
   $tokens: elevation.resolve-tokens($tokens, 'menu-container-elevation');
   $tokens: theme.create-theme-vars($tokens, $custom-property-prefix);
   $tokens: shape.resolve-tokens($tokens, 'text-field-container-shape');
@@ -145,31 +150,16 @@ $dark-theme: tokens.md-comp-filled-autocomplete-values(
           var(--_text-field-hover-supporting-text-color),
         hover-trailing-icon-color: var(--_text-field-hover-trailing-icon-color),
         input-text-color: var(--_text-field-input-text-color),
-        input-text-font: var(--_text-field-input-text-font),
-        input-text-line-height: var(--_text-field-input-text-line-height),
-        input-text-size: var(--_text-field-input-text-size),
-        input-text-tracking: var(--_text-field-input-text-tracking),
         input-text-type: var(--_text-field-input-text-type),
-        input-text-weight: var(--_text-field-input-text-weight),
         label-text-color: var(--_text-field-label-text-color),
-        label-text-font: var(--_text-field-label-text-font),
-        label-text-line-height: var(--_text-field-label-text-line-height),
+        label-text-type: var(--_label-text-type),
         label-text-populated-line-height:
           var(--_text-field-label-text-populated-line-height),
         label-text-populated-size: var(--_text-field-label-text-populated-size),
-        label-text-size: var(--_text-field-label-text-size),
-        label-text-tracking: var(--_text-field-label-text-tracking),
-        label-text-type: var(--_text-field-label-text-type),
-        label-text-weight: var(--_text-field-label-text-weight),
         leading-icon-color: var(--_text-field-leading-icon-color),
         leading-icon-size: var(--_text-field-leading-icon-size),
         supporting-text-color: var(--_text-field-supporting-text-color),
-        supporting-text-font: var(--_text-field-supporting-text-font),
-        supporting-text-line-height:
-          var(--_text-field-supporting-text-line-height),
-        supporting-text-size: var(--_text-field-supporting-text-size),
-        supporting-text-tracking: var(--_text-field-supporting-text-tracking),
-        supporting-text-weight: var(--_text-field-supporting-text-weight),
+        supporting-text-type: var(--_supporting-text-type),
         trailing-icon-color: var(--_text-field-trailing-icon-color),
         trailing-icon-size: var(--_text-field-trailing-icon-size),
       )

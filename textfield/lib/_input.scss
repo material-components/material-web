@@ -52,15 +52,7 @@
   .md3-text-field__input,
   .md3-text-field__prefix,
   .md3-text-field__suffix {
-    @include typography.theme-styles(
-      (
-        font: var(--_input-text-font),
-        line-height: var(--_input-text-line-height),
-        size: var(--_input-text-size),
-        tracking: var(--_input-text-tracking),
-        weight: var(--_input-text-weight),
-      )
-    );
+    font: var(--_input-text-type);
   }
 
   .md3-text-field:not(.md3-text-field--disabled) {

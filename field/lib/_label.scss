@@ -3,10 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// go/keep-sorted start
-@use '../../sass/typography';
-// go/keep-sorted end
-
 @mixin styles() {
   .label {
     color: var(--_label-text-color);
@@ -25,14 +21,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     z-index: 1;
-
-    @include typography.theme-styles(
-      (
-        font: var(--_label-text-font),
-        tracking: var(--_label-text-tracking),
-        weight: var(--_label-text-weight),
-      )
-    );
+    font: var(--_label-text-type);
   }
 
   .label.resting {
@@ -41,22 +30,11 @@
     transform: translateY(-50%);
     /*rtl:ignore*/
     transform-origin: top left;
-
-    @include typography.theme-styles(
-      (
-        size: var(--_label-text-size),
-        line-height: var(--_label-text-line-height),
-      )
-    );
   }
 
   .label.floating {
-    @include typography.theme-styles(
-      (
-        size: var(--_label-text-populated-size),
-        line-height: var(--_label-text-populated-line-height),
-      )
-    );
+    font-size: var(--_label-text-populated-size);
+    line-height: var(--_label-text-populated-line-height);
   }
 
   .label.hidden {

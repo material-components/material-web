@@ -22,8 +22,7 @@ $_default-deps: (
     $deps,
     $exclude-hardcoded-values
   );
-  // TODO(b/203778922): Remove *-type when type composite tokens are removed
-  // Remove unused tokens.
+
   $values: map.remove(
     $text-field-values,
     caret-color,
@@ -45,8 +44,16 @@ $_default-deps: (
     input-text-placeholder-color,
     input-text-prefix-color,
     input-text-suffix-color,
-    label-text-type,
-    supporting-text-type
+    label-text-font,
+    label-text-line-height,
+    label-text-size,
+    label-text-tracking,
+    label-text-weight,
+    supporting-text-font,
+    supporting-text-line-height,
+    supporting-text-size,
+    supporting-text-tracking,
+    supporting-text-weight
   );
 
   // Add missing tokens.

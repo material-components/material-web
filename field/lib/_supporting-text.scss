@@ -3,26 +3,13 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// go/keep-sorted start
-@use '../../sass/typography';
-// go/keep-sorted end
-
 @mixin styles() {
   .supporting-text {
     color: var(--_supporting-text-color);
     display: flex;
     justify-content: space-between;
     padding: 0 var(--_supporting-text-padding);
-
-    @include typography.theme-styles(
-      (
-        font: var(--_supporting-text-font),
-        tracking: var(--_supporting-text-tracking),
-        weight: var(--_supporting-text-weight),
-        size: var(--_supporting-text-size),
-        line-height: var(--_supporting-text-line-height),
-      )
-    );
+    font: var(--_supporting-text-type);
   }
 
   .supporting-text-start,

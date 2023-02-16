@@ -7,8 +7,6 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../sass/resolvers';
-@use '../../sass/typography';
 @use './content';
 @use './label';
 @use './supporting-text';
@@ -60,16 +58,4 @@
   @include content.styles;
   @include label.styles;
   @include supporting-text.styles;
-}
-
-@function resolve-tokens($tokens) {
-  $tokens: typography.resolve-theme(
-    $tokens,
-    map.get(resolvers.$material, typography),
-    label-text,
-    label-text-populated,
-    supporting-text
-  );
-
-  @return $tokens;
 }

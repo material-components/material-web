@@ -8,9 +8,9 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../field/outlined-field';
-@use '../../sass/resolvers';
 @use '../../sass/shape';
 @use '../../sass/theme';
+@use '../../sass/typography';
 @use '../../tokens';
 @use './shared';
 // go/keep-sorted end
@@ -18,7 +18,7 @@
 @mixin theme($tokens) {
   // Add missing tokens
   $reference: map.merge(
-    tokens.md-comp-outlined-text-field-values(),
+    _resolve-tokens(tokens.md-comp-outlined-text-field-values()),
     (
       container-padding-horizontal: null,
       container-padding-vertical: null,
@@ -28,8 +28,8 @@
     )
   );
 
+  $tokens: _resolve-tokens($tokens);
   $tokens: theme.validate-theme($reference, $tokens);
-  $tokens: shared.resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, 'outlined-text-field');
   $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
@@ -37,7 +37,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-outlined-text-field-values();
+  $tokens: _resolve-tokens(tokens.md-comp-outlined-text-field-values());
   // Add missing tokens
   $tokens: map.merge(
     (
@@ -50,7 +50,6 @@
     $tokens
   );
 
-  $tokens: shared.resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, 'outlined-text-field');
   $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
@@ -116,28 +115,29 @@
         hover-trailing-icon-color: var(--_hover-trailing-icon-color),
         content-color: var(--_input-text-color),
         label-text-color: var(--_label-text-color),
-        label-text-font: var(--_label-text-font),
-        label-text-line-height: var(--_label-text-line-height),
+        label-text-type: var(--_label-text-type),
         label-text-padding-bottom: var(--_label-text-padding-bottom),
         label-text-populated-line-height:
           var(--_label-text-populated-line-height),
         label-text-populated-size: var(--_label-text-populated-size),
-        label-text-size: var(--_label-text-size),
-        label-text-tracking: var(--_label-text-tracking),
-        label-text-weight: var(--_label-text-weight),
         leading-icon-color: var(--_leading-icon-color),
         leading-icon-size: var(--_leading-icon-size),
         outline-color: var(--_outline-color),
         outline-width: var(--_outline-width),
+        supporting-text-type: var(--_supporting-text-type),
         supporting-text-color: var(--_supporting-text-color),
-        supporting-text-font: var(--_supporting-text-font),
-        supporting-text-line-height: var(--_supporting-text-line-height),
-        supporting-text-size: var(--_supporting-text-size),
-        supporting-text-tracking: var(--_supporting-text-tracking),
-        supporting-text-weight: var(--_supporting-text-weight),
         trailing-icon-color: var(--_trailing-icon-color),
         trailing-icon-size: var(--_trailing-icon-size),
       )
     );
   }
+}
+
+@function _resolve-tokens($tokens) {
+  @return typography.resolve-tokens(
+    $tokens,
+    'input-text',
+    'label-text',
+    'supporting-text'
+  );
 }

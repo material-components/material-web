@@ -10,8 +10,6 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../sass/resolvers';
-@use '../../sass/typography';
 @use './icon';
 @use './input';
 // go/keep-sorted end
@@ -43,16 +41,4 @@
 
   @include icon.styles;
   @include input.styles;
-}
-
-@function resolve-tokens($tokens) {
-  $tokens: typography.resolve-theme(
-    $tokens,
-    map.get(resolvers.$material, typography),
-    input-text,
-    label-text,
-    supporting-text
-  );
-
-  @return $tokens;
 }
