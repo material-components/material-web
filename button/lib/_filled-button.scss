@@ -7,7 +7,6 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../sass/resolvers';
 @use '../../sass/shape';
 @use '../../sass/theme';
 @use '../../sass/typography';
@@ -19,8 +18,10 @@
 $_custom-property-prefix: 'filled-button';
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-filled-button-values(), $tokens);
-  $tokens: _resolve-tokens($tokens);
+  $tokens: theme.validate-theme(
+    _resolve-tokens(tokens.md-comp-filled-button-values()),
+    _resolve-tokens($tokens)
+  );
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
   $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
@@ -51,10 +52,6 @@ $_custom-property-prefix: 'filled-button';
 @function _resolve-tokens($tokens) {
   $tokens: shared.flatten-disabled-colors($tokens);
   $tokens: shared.remove-unsupported-tokens($tokens);
-  $tokens: typography.resolve-theme(
-    $tokens,
-    map.get(resolvers.$material, 'typography'),
-    'label-text'
-  );
+  $tokens: typography.resolve-tokens($tokens, 'label-text');
   @return elevation.resolve-tokens($tokens);
 }

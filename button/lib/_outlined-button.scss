@@ -7,7 +7,6 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../sass/resolvers';
 @use '../../sass/shape';
 @use '../../sass/theme';
 @use '../../sass/typography';
@@ -22,10 +21,9 @@ $_custom-property-prefix: 'outlined-button';
 
 @mixin theme($tokens) {
   $tokens: theme.validate-theme(
-    tokens.md-comp-outlined-button-values(),
-    $tokens
+    _resolve-tokens(tokens.md-comp-outlined-button-values()),
+    _resolve-tokens($tokens)
   );
-  $tokens: _resolve-theme($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
   $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
@@ -88,10 +86,6 @@ $_custom-property-prefix: 'outlined-button';
 @function _resolve-tokens($tokens) {
   $tokens: shared.flatten-disabled-colors($tokens);
   $tokens: shared.remove-unsupported-tokens($tokens);
-  $tokens: typography.resolve-theme(
-    $tokens,
-    map.get(resolvers.$material, 'typography'),
-    'label-text'
-  );
+  $tokens: typography.resolve-tokens($tokens, 'label-text');
   @return $tokens;
 }
