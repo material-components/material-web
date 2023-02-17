@@ -45,7 +45,7 @@
     "jasmine": "^4.5.0",
     "sass": "^1.52.3",
     "sass-true": "^6.1.0",
-    "typescript": "~4.7.4",
+    "typescript": "~4.9.4",
     "web-test-runner-jasmine": "^0.0.2",
     "wireit": "^0.9.0"
   },
