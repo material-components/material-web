@@ -13,7 +13,6 @@
 @use '../../motion/animation';
 @use '../../ripple/ripple';
 @use '../../sass/color';
-@use '../../sass/resolvers';
 @use '../../sass/touch-target';
 @use '../../sass/typography';
 // go/keep-sorted end
@@ -107,10 +106,7 @@
     }
 
     .md3-segmented-button__label-text {
-      font-family: var(--_label-text-font);
-      font-size: var(--_label-text-size);
-      letter-spacing: var(--_label-text-tracking);
-      font-weight: var(--_label-text-weight);
+      font: var(--_label-text-type);
     }
 
     &.md3-segmented-button--selected:enabled {
@@ -361,11 +357,7 @@
 }
 
 @function resolve-tokens($tokens) {
-  $tokens: typography.resolve-theme(
-    $tokens,
-    map.get(resolvers.$material, 'typography'),
-    'label-text'
-  );
+  $tokens: typography.resolve-tokens($tokens, 'label-text');
   $tokens: _flatten-disabled-colors($tokens);
   @return $tokens;
 }
