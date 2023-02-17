@@ -131,9 +131,8 @@ export class TextFieldHarness extends Harness<TextField> {
     element.dispatchEvent(new Event('change'));
   }
 
-  protected override async getInteractiveElement(): Promise<HTMLInputElement> {
+  protected override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.renderRoot.querySelector('.md3-text-field__input') as
-        HTMLInputElement;
+    return this.element.renderRoot.querySelector('input')!;
   }
 }

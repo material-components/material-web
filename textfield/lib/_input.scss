@@ -3,15 +3,12 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 // go/keep-sorted start
 @use '../../sass/typography';
 // go/keep-sorted end
 
 @mixin styles() {
-  .md3-text-field__input {
+  input {
     appearance: none;
     background: none;
     border: none;
@@ -38,39 +35,39 @@
   }
 
   :focus-within {
-    .md3-text-field__input {
+    input {
       caret-color: var(--_focus-caret-color);
     }
   }
 
-  .md3-text-field--error:focus-within {
-    .md3-text-field__input {
+  .error:focus-within {
+    input {
       caret-color: var(--_error-focus-caret-color);
     }
   }
 
-  .md3-text-field__input,
-  .md3-text-field__prefix,
-  .md3-text-field__suffix {
+  input,
+  .prefix,
+  .suffix {
     font: var(--_input-text-type);
   }
 
-  .md3-text-field:not(.md3-text-field--disabled) {
-    .md3-text-field__prefix,
-    .md3-text-field__suffix {
+  .text-field:not(.disabled) {
+    .prefix,
+    .suffix {
       color: var(--_input-text-prefix-color);
     }
 
-    .md3-text-field__input::placeholder {
+    input::placeholder {
       color: var(--_input-text-placeholder-color);
     }
   }
 
-  .md3-text-field__prefix {
+  .prefix {
     padding-inline-end: var(--_input-text-prefix-padding);
   }
 
-  .md3-text-field__suffix {
+  .suffix {
     padding-inline-start: var(--_input-text-suffix-padding);
   }
 }

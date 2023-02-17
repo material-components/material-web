@@ -4,17 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ClassInfo} from 'lit/directives/class-map.js';
+import '../../field/outlined-field.js';
+
+import {literal} from 'lit/static-html.js';
 
 import {TextField} from './text-field.js';
 
-/** @soyCompatible */
-export abstract class OutlinedTextField extends TextField {
-  /** @soyTemplate */
-  protected override getRenderClasses(): ClassInfo {
-    return {
-      ...super.getRenderClasses(),
-      'md3-text-field--outlined': true,
-    };
-  }
+/**
+ * An outlined text field component
+ */
+export class OutlinedTextField extends TextField {
+  protected readonly fieldTag = literal`md-outlined-field`;
 }

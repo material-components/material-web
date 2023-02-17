@@ -4,17 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ClassInfo} from 'lit/directives/class-map.js';
+import '../../field/filled-field.js';
+
+import {literal} from 'lit/static-html.js';
 
 import {TextField} from './text-field.js';
 
-/** @soyCompatible */
-export abstract class FilledTextField extends TextField {
-  /** @soyTemplate */
-  protected override getRenderClasses(): ClassInfo {
-    return {
-      ...super.getRenderClasses(),
-      'md3-text-field--filled': true,
-    };
-  }
+/**
+ * A filled text field component.
+ */
+export class FilledTextField extends TextField {
+  protected readonly fieldTag = literal`md-filled-field`;
 }

@@ -329,8 +329,7 @@ export abstract class TextField extends LitElement {
    * `reportValidity()`.
    */
   @state() protected nativeErrorText = '';
-  @query('.md3-text-field__input')
-  protected readonly input?: HTMLInputElement|null;
+  @query('input') protected readonly input?: HTMLInputElement|null;
   protected abstract readonly fieldTag: StaticValue;
 
   /** @soyUniqueAttribute */
@@ -522,7 +521,7 @@ export abstract class TextField extends LitElement {
   /** @soyTemplate */
   override render(): TemplateResult {
     return html`
-       <span class="md3-text-field ${classMap(this.getRenderClasses())}">
+       <span class="text-field ${classMap(this.getRenderClasses())}">
          ${this.renderField()}
        </span>
      `;
@@ -531,8 +530,8 @@ export abstract class TextField extends LitElement {
   /** @soyTemplate */
   protected getRenderClasses(): ClassInfo {
     return {
-      'md3-text-field--disabled': this.disabled,
-      'md3-text-field--error': this.getError(),
+      'disabled': this.disabled,
+      'error': this.getError(),
     };
   }
 
@@ -549,7 +548,7 @@ export abstract class TextField extends LitElement {
     const inputValue = this.getInputValue();
 
     return staticHtml`<${this.fieldTag}
-      class="md3-text-field__field"
+      class="field"
       ?disabled=${this.disabled}
       ?error=${this.getError()}
       ?focused=${this.focused}
@@ -573,8 +572,7 @@ export abstract class TextField extends LitElement {
    */
   protected renderLeadingIcon(): TemplateResult {
     return html`
-       <span class="md3-text-field__icon md3-text-field__icon--leading"
-           slot="start">
+       <span class="icon leading" slot="start">
          <slot name="leadingicon" @slotchange=${this.handleIconChange}></slot>
        </span>
      `;
@@ -586,8 +584,7 @@ export abstract class TextField extends LitElement {
    */
   protected renderTrailingIcon(): TemplateResult {
     return html`
-       <span class="md3-text-field__icon md3-text-field__icon--trailing"
-           slot="end">
+       <span class="icon trailing" slot="end">
          <slot name="trailingicon" @slotchange=${this.handleIconChange}></slot>
        </span>
      `;
@@ -618,7 +615,6 @@ export abstract class TextField extends LitElement {
     // TODO(b/243805848): remove `as unknown as number` once lit analyzer is
     // fixed
     return html`<input
-       class="md3-text-field__input"
        style=${styleMap(style)}
        aria-activedescendant=${ifDefined(ariaActiveDescendantValue)}
        aria-autocomplete=${ifDefined(ariaAutoCompleteValue)}
@@ -667,7 +663,7 @@ export abstract class TextField extends LitElement {
   /** @soyTemplate */
   protected renderPrefix(): TemplateResult {
     return this.prefixText ?
-        html`<span class="md3-text-field__prefix">${this.prefixText}</span>` :
+        html`<span class="prefix">${this.prefixText}</span>` :
         html``;
 
     // TODO(b/217441842): Create shared function once argument bug is fixed
@@ -677,7 +673,7 @@ export abstract class TextField extends LitElement {
   /** @soyTemplate */
   protected renderSuffix(): TemplateResult {
     return this.suffixText ?
-        html`<span class="md3-text-field__suffix">${this.suffixText}</span>` :
+        html`<span class="suffix">${this.suffixText}</span>` :
         html``;
 
     // TODO(b/217441842): Create shared function once argument bug is fixed
@@ -691,8 +687,8 @@ export abstract class TextField extends LitElement {
   protected renderSupportingText(): TemplateResult {
     const shouldAlert = this.shouldErrorAnnounce();
     const text = this.getSupportingText();
-    const template = html`<span id=${this.supportingTextId} 
-      slot="supporting-text" 
+    const template = html`<span id=${this.supportingTextId}
+      slot="supporting-text"
       role=${ifDefined(shouldAlert ? 'alert' : undefined)}>${text}</span>`;
 
     return text ? template : html``;
@@ -724,7 +720,7 @@ export abstract class TextField extends LitElement {
    */
   protected renderCounter(): TemplateResult {
     const counter = html`<span id=${this.counterId}
-       class="md3-text-field__counter"
+       class="counter"
        slot="supporting-text-end">${this.getCounterText()}</span>`;
     // TODO(b/244473435): add aria-label and announcements
     return this.hasCounter() ? counter : html``;
