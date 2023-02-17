@@ -10,27 +10,30 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../sass/resolvers';
+@use '../../sass/shape';
 @use '../../sass/theme';
+@use '../../sass/typography';
 @use '../../tokens';
 @use './shared';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
   $tokens: theme.validate-theme(
-    tokens.md-comp-extended-fab-surface-values(),
-    $tokens
+    _resolve-typography(tokens.md-comp-extended-fab-surface-values()),
+    _resolve-typography($tokens)
   );
   $tokens: shared.resolve-tokens($tokens);
-  $tokens: theme.create-theme-vars($tokens, fab-extended);
+  $tokens: theme.create-theme-vars($tokens, 'fab-extended');
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
   @include theme.emit-theme-vars($tokens);
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-extended-fab-surface-values();
+  $tokens: _resolve-typography(tokens.md-comp-extended-fab-surface-values());
   $tokens: shared.resolve-tokens($tokens);
-  $tokens: theme.create-theme-vars($tokens, fab-extended);
+  $tokens: theme.create-theme-vars($tokens, 'fab-extended');
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
   :host {
     @each $token, $value in $tokens {
@@ -43,11 +46,7 @@
     padding-inline-start: 16px;
     padding-inline-end: 20px;
     height: var(--_container-height);
-    font-family: var(--_label-text-font);
-    line-height: var(--_label-text-line-height);
-    font-size: var(--_label-text-size);
-    font-weight: var(--_label-text-weight);
-    letter-spacing: var(--_label-text-tracking);
+    font: var(--_label-text-type);
   }
 
   .md3-fab__label {
@@ -74,4 +73,8 @@
       padding-inline-end: 19px;
     }
   }
+}
+
+@function _resolve-typography($tokens) {
+  @return typography.resolve-tokens($tokens, 'label-text');
 }

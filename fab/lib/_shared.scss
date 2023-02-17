@@ -14,6 +14,7 @@
 @use '../../elevation/lib/elevation';
 @use '../../focus/focus-ring';
 @use '../../ripple/ripple';
+@use '../../sass/shape';
 @use '../../sass/theme';
 @use '../../sass/touch-target';
 // go/keep-sorted end
@@ -52,7 +53,7 @@
 
     @include focus-ring.theme(
       (
-        shape: var(--_container-shape),
+        shape: shape.corners-to-shape-token(--_container-shape),
       )
     );
 
@@ -153,7 +154,10 @@
 
   .md3-fab,
   .md3-fab__ripple {
-    border-radius: var(--_container-shape);
+    border-start-start-radius: var(--_container-shape-start-start);
+    border-start-end-radius: var(--_container-shape-start-end);
+    border-end-start-radius: var(--_container-shape-end-start);
+    border-end-end-radius: var(--_container-shape-end-end);
   }
 
   .md3-fab__icon {
