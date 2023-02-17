@@ -1,0 +1,506 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// PUBLIC PROPERTIES
+
+// go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../../elevation/lib/elevation';
+@use '../../focus/focus-ring';
+@use '../../ripple/ripple';
+@use '../../sass/color';
+@use '../../sass/resolvers';
+@use '../../sass/shape';
+@use '../../sass/theme';
+@use '../../sass/var';
+@use './tokens';
+// go/keep-sorted end
+
+@mixin theme($tokens) {
+  $tokens: tokens.remove-unsupported-tokens($tokens);
+  $tokens: theme.validate-theme(tokens.md-comp-slider-values(), $tokens);
+  $tokens: theme.create-theme-vars($tokens, 'slider');
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: tokens.md-comp-slider-values();
+  $tokens: theme.create-theme-vars($tokens, 'slider');
+
+  :host {
+    display: inline-flex;
+    vertical-align: middle;
+
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+
+    min-inline-size: var(--_container-min-inline-size);
+
+    @include elevation.theme(
+      (
+        // TODO: replace duration with animation tokens
+        duration: 280ms,
+        level: var(--_handle-elevation),
+        shadow-color: var(--_handle-shadow-color)
+      )
+    );
+  }
+
+  @media (prefers-reduced-motion) {
+    :host {
+      --_handle-motion-duration: 0;
+      --_label-motion-duration: 0;
+    }
+  }
+
+  // Note, opacity for active track and handle controlled via host.
+  // This avoids bleed through from the handle to the track since they overlap.
+  // It also means the inactive track opacity is calc'd to compensate.
+  :host([disabled]) {
+    opacity: var(--_disabled-active-track-opacity);
+
+    @include elevation.theme(
+      (
+        level: var(--_disabled-handle-elevation),
+      )
+    );
+  }
+
+  .container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    position: relative;
+    block-size: var(--_state-layer-size);
+    // note, only the native inputs are interactive.
+    pointer-events: none;
+  }
+
+  .track {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  // inactive-track
+  .track::before,
+  // active-track
+  .track::after {
+    position: absolute;
+    content: '';
+    // pad the track inward by half the ripple size offset by the tick container size.
+    --track-padding: calc(
+      (var(--_state-layer-size) / 2) - var(--_with-tick-marks-container-size)
+    );
+    inset-inline-start: var(--track-padding);
+    inset-inline-end: var(--track-padding);
+    --tickWidth: calc(
+      (100% - var(--_with-tick-marks-container-size) * 2) / var(--tickCount)
+    );
+
+    background-image: radial-gradient(
+      circle at var(--_with-tick-marks-container-size) center,
+      var(--tickColor) 0,
+      var(--tickColor) calc(var(--_with-tick-marks-container-size) / 2),
+      transparent calc(var(--_with-tick-marks-container-size) / 2)
+    );
+    background-color: var(--trackColor);
+    background-size: var(--tickWidth) 100%;
+  }
+
+  // inactive-track
+  .track::before {
+    block-size: var(--_inactive-track-height);
+    border-radius: var(--_inactive-track-shape);
+    --trackColor: var(--_inactive-track-color);
+    // Without the "tickmarks" class, ticks are the same color as the track.
+    --tickColor: var(--_inactive-track-color);
+  }
+
+  .track.tickMarks::before {
+    --tickColor: var(--_with-tick-marks-inactive-container-color);
+  }
+
+  :host([disabled]) .track::before {
+    --trackColor: var(--_disabled-inactive-track-color);
+    --tickColor: var(--_disabled-inactive-track-color);
+    // Note, the active track opacity is applied to the entire host,
+    // so the inactive track is calc'd to compensate.
+    opacity: calc(
+      (1 / var(--_disabled-active-track-opacity)) *
+        var(--_disabled-inactive-track-opacity)
+    );
+  }
+
+  // active-track
+  .track::after {
+    transition-property: none;
+    transition-duration: var(--_handle-motion-duration);
+    transition-timing-function: linear;
+    block-size: var(--_active-track-height);
+    border-radius: var(--_active-track-shape);
+    --trackColor: var(--_active-track-color);
+    // Without the "tickmarks" class, ticks are the same color as the track.
+    --tickColor: var(--_active-track-color);
+
+    // The max clip is reduced by 1 full tick display which is 2x the container
+    // size to account for always showing the active track on the outside
+    // edge of the last tick.
+    --activeTrackMaxClip: calc(
+      100% - var(--_with-tick-marks-container-size) * 2
+    );
+    // When the lower fraction is !0, add clipping by the tick container size
+    --lowerFractionNotZero: min(var(--lowerFraction) * 1e9, 1);
+    --activeTrackStartOffset: calc(
+      var(--_with-tick-marks-container-size) * var(--lowerFractionNotZero)
+    );
+    --activeTrackStartClip: calc(
+      var(--activeTrackStartOffset) + var(--activeTrackMaxClip) *
+        var(--lowerFraction)
+    );
+
+    // When the upper fraction is !1, add clipping by the tick container size
+    --upperFractionNotOne: min((1 - var(--upperFraction)) * 1e9, 1);
+    --activeTrackEndOffset: calc(
+      var(--_with-tick-marks-container-size) * var(--upperFractionNotOne)
+    );
+    --activeTrackEndClip: calc(
+      var(--activeTrackEndOffset) + var(--activeTrackMaxClip) *
+        (1 - var(--upperFraction))
+    );
+    clip-path: inset(0 var(--activeTrackEndClip) 0 var(--activeTrackStartClip));
+  }
+
+  .interacting .track::after {
+    transition-property: clip-path;
+  }
+
+  // Support rtl via :dir for modern browsers and fallback to
+  // :host-context for older blink and :host for Safari.
+  :host-context([dir='rtl']) .track::after {
+    clip-path: inset(0 var(--activeTrackStartClip) 0 var(--activeTrackEndClip));
+  }
+
+  :host([dir='rtl']) .track::after {
+    clip-path: inset(0 var(--activeTrackStartClip) 0 var(--activeTrackEndClip));
+  }
+
+  .track:dir(rtl)::after {
+    clip-path: inset(0 var(--activeTrackStartClip) 0 var(--activeTrackEndClip));
+  }
+
+  .track.tickMarks::after {
+    --tickColor: var(--_with-tick-marks-active-container-color);
+  }
+
+  :host([disabled]) .track::after {
+    --trackColor: var(--_disabled-active-track-color);
+    --tickColor: var(--_disabled-active-track-color);
+  }
+
+  :host([disabled]) .track.tickMarks::before,
+  :host([disabled]) .track.tickMarks::after {
+    --tickColor: var(--_with-tick-marks-disabled-container-color);
+  }
+
+  // container for the handle that is inset with padding to be
+  // track-sized so that the handle container can be positioned with % only
+  // and avoid a Safari issue with not being able to transition values that
+  // are calced from different units.
+  // TODO remove when https://bugs.webkit.org/show_bug.cgi?id=23775 is
+  // addressed.
+  .handleContainerPadded {
+    position: relative;
+    block-size: 100%;
+    inline-size: 100%;
+    padding-inline: calc(var(--_state-layer-size) / 2);
+  }
+
+  .handleContainerBlock {
+    position: relative;
+    block-size: 100%;
+    inline-size: 100%;
+  }
+
+  .handleContainer {
+    position: absolute;
+    inset-block-start: 0;
+    inset-block-end: 0;
+    inset-inline-start: calc(100% * var(--lowerFraction));
+    inline-size: calc(100% * (var(--upperFraction) - var(--lowerFraction)));
+    transition-property: none;
+    transition-duration: var(--_handle-motion-duration);
+    transition-timing-function: linear;
+  }
+
+  .interacting .handleContainer {
+    transition-property: inset-inline-start, inline-size;
+  }
+
+  // handle
+  .handle {
+    position: absolute;
+    block-size: var(--_state-layer-size);
+    inline-size: var(--_state-layer-size);
+    border-radius: var(--_handle-shape);
+    display: grid;
+    place-items: center;
+  }
+
+  .handleNub {
+    position: absolute;
+    height: var(--_handle-height);
+    width: var(--_handle-width);
+    border-radius: var(--_handle-shape);
+    background: var(--_handle-color);
+  }
+
+  :host([disabled]) .handleNub {
+    background: var(--_disabled-handle-color);
+  }
+
+  .input.b:focus ~ .handleContainer .handle.b > slot > .handleNub,
+  .input.a:focus ~ .handleContainer .handle.a > slot > .handleNub {
+    background: var(--_focus-handle-color);
+  }
+
+  // prefix classes exist to overcome specificity of focus styling.
+  .container > .handleContainer .handle.hover > slot > .handleNub {
+    background: var(--_hover-handle-color);
+  }
+
+  .container > .handleContainer .handle.pressed > slot > .handleNub {
+    background: var(--_pressed-handle-color);
+  }
+
+  .onTop.isOverlapping {
+    --labelOutlineWidth: var(--_with-overlap-handle-outline-width);
+    --labelOutlineColor: var(--_with-overlap-handle-outline-color);
+  }
+
+  .handleNub,
+  .label,
+  .label::before {
+    border: var(--labelOutlineColor, transparent) solid
+      var(--labelOutlineWidth, 0);
+  }
+
+  .handle.lesser {
+    inset-inline-start: calc(0px - var(--_state-layer-size) / 2);
+  }
+  .handle:not(.lesser) {
+    inset-inline-end: calc(0px - var(--_state-layer-size) / 2);
+  }
+
+  // label
+  .label {
+    position: absolute;
+    box-sizing: border-box;
+    display: grid;
+    // TODO: make token?
+    padding: 4px;
+    place-items: center;
+    border-radius: var(--_label-container-shape);
+
+    color: var(--_label-label-text-color);
+    font-family: var(--_label-label-text-font);
+    font-size: var(--_label-label-text-size);
+    font-weight: var(--_label-label-text-weight);
+    letter-spacing: var(--_label-label-text-tracking);
+    line-height: var(--_label-label-text-line-height);
+
+    inset-block-end: 100%;
+    min-inline-size: var(--_label-container-height);
+    min-block-size: var(--_label-container-height);
+    background: var(--_label-container-color);
+    transition-property: transform;
+    transition-duration: var(--_label-motion-duration);
+    transition-timing-function: var(--_label-motion-easing);
+    transform-origin: center bottom;
+    transform: scale(0);
+  }
+
+  :host(:focus-within) .label,
+  .handleContainer.hover .label {
+    transform: scale(1);
+  }
+
+  .label::before,
+  .label::after {
+    position: absolute;
+    display: block;
+    content: '';
+    background: inherit;
+  }
+
+  // triangle below label
+  .label::before {
+    // Note, sizing carefully estimated to create an ice cream cone shape.
+    --triangleSize: calc(var(--_label-container-height) / 2);
+    --triangleOffset: calc(var(--_label-container-height) / -10);
+    inline-size: var(--triangleSize);
+    block-size: var(--triangleSize);
+    bottom: var(--triangleOffset);
+    transform: rotate(45deg);
+  }
+
+  // fits inside label and occludes top half of triangle.
+  .label::after {
+    inset: 0px;
+    border-radius: inherit;
+  }
+
+  // must stack above the label's pseudo-elements.
+  .labelContent {
+    z-index: 1;
+  }
+
+  // native input styling
+  // note, the input is what the user interacts with so it must render and
+  // be clickable, but it is visually hidden via opacity: 0 and non-clickable
+  // styled ui is shown instead and positioned accordingly.
+  input[type='range'] {
+    opacity: 0;
+    -webkit-tap-highlight-color: transparent;
+    position: absolute;
+    box-sizing: border-box;
+    // needed for firefox
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+    pointer-events: auto;
+    appearance: none;
+  }
+
+  input[type='range']:focus {
+    outline: none;
+  }
+
+  ::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+  }
+
+  ::-moz-range-track {
+    appearance: none;
+  }
+
+  ::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    block-size: var(--_state-layer-size);
+    inline-size: var(--_state-layer-size);
+    opacity: 0;
+    z-index: 2;
+  }
+
+  ::-moz-range-thumb {
+    appearance: none;
+    block-size: var(--_state-layer-size);
+    inline-size: var(--_state-layer-size);
+    opacity: 0;
+    z-index: 2;
+  }
+
+  .ranged input {
+    --valueFromStart: calc(
+      var(--_state-layer-size) / 2 + (100% - var(--_state-layer-size)) *
+        (
+          var(--lowerFraction) +
+            ((var(--upperFraction) - var(--lowerFraction)) / 2)
+        )
+    );
+    --valueFromEnd: calc(100% - var(--valueFromStart));
+    clip-path: inset(0 var(--leftClip, 0) 0 var(--rightClip, 0));
+  }
+
+  // Clip the inputs to the space left/right of the center point between the
+  // values so the right input gets pointer events.
+  .ranged input.lesser {
+    --leftClip: var(--valueFromEnd);
+    --rightClip: 0;
+  }
+
+  .ranged input:not(.lesser) {
+    --leftClip: 0;
+    --rightClip: var(--valueFromStart);
+  }
+
+  // Support rtl via :dir for modern browsers and fallback to
+  // :host-context for older blink and :host for Safari.
+  .ranged input.lesser:dir(rtl) {
+    --leftClip: 0;
+    --rightClip: var(--valueFromEnd);
+  }
+
+  :host-context([dir='rtl']) .ranged input.lesser {
+    --leftClip: 0;
+    --rightClip: var(--valueFromEnd);
+  }
+
+  :host([dir='rtl']) .ranged input.lesser {
+    --leftClip: 0;
+    --rightClip: var(--valueFromEnd);
+  }
+
+  .ranged input:not(.lesser):dir(rtl) {
+    --leftClip: var(--valueFromStart);
+    --rightClip: 0;
+  }
+
+  :host-context([dir='rtl']) .ranged input:not(.lesser) {
+    --leftClip: var(--valueFromStart);
+    --rightClip: 0;
+  }
+
+  :host([dir='rtl']) .ranged input:not(.lesser) {
+    --leftClip: var(--valueFromStart);
+    --rightClip: 0;
+  }
+
+  .onTop {
+    z-index: 1;
+  }
+
+  // Focus ring
+  md-focus-ring {
+    @include focus-ring.theme(
+      (
+        offset-vertical: -2px,
+        offset-horizontal: -2px,
+        shape: map.get(tokens.md-sys-shape-values(), corner-full),
+      )
+    );
+  }
+
+  // Ripple
+  .handle {
+    @include ripple.theme(
+      (
+        hover-color: var(--_hover-state-layer-color),
+        hover-opacity: var(--_hover-state-layer-opacity),
+        pressed-color: var(--_pressed-state-layer-color),
+        pressed-opacity: var(--_pressed-state-layer-opacity),
+      )
+    );
+  }
+
+  md-ripple {
+    height: var(--_state-layer-size);
+    width: var(--_state-layer-size);
+  }
+
+  // Elevation
+  md-elevation {
+    position: absolute;
+    inset: 0;
+  }
+}

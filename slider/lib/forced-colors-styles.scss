@@ -1,0 +1,53 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use './slider';
+// go/keep-sorted end
+
+@media (forced-colors: active) {
+  :host {
+    $container-color: CanvasText; // white
+    $color: Canvas; // black
+    $disabled-color: GrayText;
+    @include slider.theme(
+      (
+        active-track-color: $container-color,
+        disabled-active-track-color: $disabled-color,
+        disabled-active-track-opacity: 1,
+        disabled-handle-color: $disabled-color,
+        disabled-inactive-track-color: $disabled-color,
+        disabled-inactive-track-opacity: 1,
+        focus-handle-color: $container-color,
+        handle-color: $container-color,
+        handle-shadow-color: $color,
+        hover-handle-color: $container-color,
+        hover-state-layer-color: $color,
+        hover-state-layer-opacity: 1,
+        inactive-track-color: $color,
+        label-container-color: $color,
+        label-label-text-color: $container-color,
+        pressed-handle-color: $container-color,
+        pressed-state-layer-color: $color,
+        pressed-state-layer-opacity: 1,
+        with-overlap-handle-outline-color: $container-color,
+        with-tick-marks-active-container-color: $color,
+        with-tick-marks-disabled-container-color: $disabled-color,
+        with-tick-marks-inactive-container-color: $container-color,
+      )
+    );
+  }
+
+  .label,
+  .label::before {
+    --labelOutlineWidth: var(--_with-overlap-handle-outline-width);
+    --labelOutlineColor: var(--_with-overlap-handle-outline-color);
+  }
+
+  // inactive track
+  :host(:not([disabled])) .track::before {
+    border: 1px solid var(--_active-track-color);
+  }
+}

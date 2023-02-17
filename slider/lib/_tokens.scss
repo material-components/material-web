@@ -1,0 +1,62 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:map';
+@use 'sass:string';
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../../sass/color';
+@use '../../sass/shape';
+@use '../../sass/theme';
+@use '../../sass/var';
+@use '../../tokens';
+// go/keep-sorted end
+
+$baseTokens: tokens.md-comp-slider-values();
+
+$_tokens: (
+  'container-min-inline-size': 200px,
+  'label-container-shape': map.get(tokens.md-sys-shape-values(), 'corner-full'),
+  'handle-motion-duration':
+    map.get(tokens.md-sys-motion-values(), 'duration-short1'),
+  'label-motion-duration':
+    map.get(tokens.md-sys-motion-values(), 'duration-short2'),
+  'label-motion-easing':
+    map.get(tokens.md-sys-motion-values(), 'easing-emphasized'),
+);
+
+@function remove-unsupported-tokens($tokens) {
+  $unsupported-tokens: (
+    'disabled-handle-opacity',
+    'label-container-elevation',
+    // b/203778922: `*-type` used by other platforms but not web.
+    'label-label-text-type',
+    'track-elevation',
+    // for efficiency, tick marks are rendered as radial-gradients and
+    // have more limited customization
+    'with-tick-marks-active-container-opacity',
+    'with-tick-marks-container-shape',
+    'with-tick-marks-disabled-container-opacity',
+    'with-tick-marks-inactive-container-opacity',
+    // focus tokens no longer used.
+    'focus-state-layer-color',
+    'focus-state-layer-opacity'
+  );
+  @return map.remove($tokens, $unsupported-tokens...);
+}
+
+/**
+ * 
+ * Extended token set for slider. 
+ */
+@function md-comp-slider-values() {
+  $tokens: remove-unsupported-tokens($baseTokens);
+  @return map.merge($tokens, $_tokens);
+}
+
+@function md-sys-shape-values() {
+  @return tokens.md-sys-shape-values();
+}

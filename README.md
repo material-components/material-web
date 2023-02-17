@@ -51,7 +51,7 @@ Progress indicator (linear)   | 🔴     | 🔴    | 🔴
 Radio button                  | 🟢     | 🟢    | 🔴
 Ripple                        | 🟢     | 🟡    | 🔴
 Select                        | 🟡     | 🔴    | 🔴
-Slider                        | 🔴     | 🔴    | 🔴
+Slider                        | 🟢     | 🟢    | 🔴
 Switch                        | 🟢     | 🟢    | 🔴
 Tabs                          | 🔴     | 🔴    | 🔴
 Text field                    | 🟢     | 🟢    | 🟡

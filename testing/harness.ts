@@ -496,12 +496,12 @@ export class Harness<E extends HTMLElement = HTMLElement> {
       ...mouseInit,
       isPrimary: true,
       pointerType: 'mouse',
-      ...init,
     };
 
     const pointerEnterInit: PointerEventInit = {
       ...pointerInit,
       ...mouseEnterInit,
+      ...init,
     };
 
     element.dispatchEvent(new PointerEvent('pointerover', pointerInit));
