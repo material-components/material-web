@@ -42,13 +42,12 @@ export abstract class Autocomplete extends TextField {
   @state() protected selectedItem: AutocompleteItem|null = null;
 
   /** @soyTemplate */
-  override render(): TemplateResult {
+  override render() {
     return html`<div class="md3-autocomplete ${
         classMap(this.getAutocompleteRenderClasses())}"
             @click=${this.handleClicked}
-            @focusout=${this.handleFocusout}
+            @focusout=${this.handleAnyFocusout}
             @action=${this.handleAction}
-            @input=${this.handleInput}
             @keydown=${this.handleKeydown}
             @keyup=${this.handleKeyup}>
             ${super.render()}
@@ -116,13 +115,13 @@ export abstract class Autocomplete extends TextField {
     }
   }
 
-  protected override handleFocusout() {
+  protected handleAnyFocusout() {
     if (this.matches(':focus-within')) {
-      this.getInput().focus();
+      super.focus();
       return;
     }
     this.close();
-    this.focused = false;
+    this.blur();
   }
 
   protected handleAction(event: CustomEvent<{item: AutocompleteItem}>) {

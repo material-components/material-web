@@ -9,7 +9,6 @@ import '../field/filled-field.js';
 import {customElement} from 'lit/decorators.js';
 import {literal} from 'lit/static-html.js';
 
-// TODO(b/236285090): update with HCM best practices
 import {styles as filledForcedColorsStyles} from './lib/filled-forced-colors-styles.css.js';
 import {styles as filledStyles} from './lib/filled-styles.css.js';
 import {FilledTextField} from './lib/filled-text-field.js';
@@ -24,7 +23,7 @@ declare global {
 }
 
 /**
- * @soyCompatible
+ * TODO(b/228525797): Add docs
  * @final
  * @suppress {visibility}
  */

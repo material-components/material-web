@@ -25,22 +25,21 @@ declare global {
 
 @customElement('md-test-text-field')
 class TestTextField extends TextField {
-  get isDirty() {
-    return this.dirty;
-  }
-
   protected override readonly fieldTag = literal`md-filled-field`;
 
-  override getError() {
-    return super.getError();
+  getHasError() {
+    return this.renderRoot.querySelector('input')?.getAttribute(
+               'aria-invalid') === 'true';
   }
 
-  override getSupportingText() {
-    return super.getSupportingText();
+  getSupportingTextValue() {
+    return this.renderRoot.querySelector<HTMLElement>('#support')?.innerText ||
+        '';
   }
 
-  override shouldErrorAnnounce() {
-    return super.shouldErrorAnnounce();
+  didErrorAnnounce() {
+    return this.renderRoot.querySelector('#support')?.getAttribute('role') ===
+        'alert';
   }
 }
 
@@ -69,19 +68,17 @@ describe('TextField', () => {
   }
 
   describe('focusing the input', () => {
-    it('should call focus() click', async () => {
-      const {harness} = await setupTest();
-      spyOn(harness.element, 'focus').and.callThrough();
+    it('should call focus the input on click', async () => {
+      const {harness, input} = await setupTest();
 
       await harness.clickWithMouse();
 
-      expect(harness.element.focus).toHaveBeenCalled();
+      expect(input.matches(':focus')).withContext('is input:focus').toBeTrue();
     });
 
-    it('should call focus() when elements inside text field are clicked',
+    it('should focus the input when elements inside text field are clicked',
        async () => {
-         const {harness} = await setupTest();
-         spyOn(harness.element, 'focus').and.callThrough();
+         const {harness, input} = await setupTest();
          // Add a trailing icon button to click on
          render(html`<button slot="trailingicon">X</button>`, harness.element);
          const button = harness.element.querySelector('button');
@@ -90,35 +87,39 @@ describe('TextField', () => {
          const buttonHarness = new Harness(button!);
          await buttonHarness.clickWithMouse();
 
-         expect(harness.element.focus).toHaveBeenCalled();
+         expect(input.matches(':focus'))
+             .withContext('is input:focus')
+             .toBeTrue();
        });
 
-    it('focus() should not focus when disabled', async () => {
+    it('should not focus the input when disabled', async () => {
       const {harness, input} = await setupTest();
       harness.element.disabled = true;
-      spyOn(input, 'focus');
 
       harness.element.focus();
 
-      expect(input.focus).not.toHaveBeenCalled();
+      expect(input.matches(':focus'))
+          .withContext('not input:focus')
+          .toBeFalse();
     });
 
     it('focus() should focus input', async () => {
       const {harness, input} = await setupTest();
-      spyOn(input, 'focus');
 
       harness.element.focus();
 
-      expect(input.focus).toHaveBeenCalled();
+      expect(input.matches(':focus')).withContext('is input:focus').toBeTrue();
     });
 
     it('blur() should blur input', async () => {
       const {harness, input} = await setupTest();
-      spyOn(input, 'blur');
 
+      harness.element.focus();
       harness.element.blur();
 
-      expect(input.blur).toHaveBeenCalled();
+      expect(input.matches(':focus'))
+          .withContext('not input:focus')
+          .toBeFalse();
     });
   });
 
@@ -129,14 +130,6 @@ describe('TextField', () => {
       await harness.inputValue('Value');
 
       expect(harness.element.value).toEqual('Value');
-    });
-
-    it('should mark the text field as dirty', async () => {
-      const {harness, testElement} = await setupTest();
-
-      await harness.inputValue('Value');
-
-      expect(testElement.isDirty).toBeTrue();
     });
 
     it('should redispatch input events', async () => {
@@ -388,8 +381,8 @@ describe('TextField', () => {
         const valid = testElement.reportValidity();
 
         expect(valid).withContext('valid').toBeTrue();
-        expect(testElement.getError())
-            .withContext('testElement.getError()')
+        expect(testElement.getHasError())
+            .withContext('testElement.getHasError()')
             .toBeFalse();
       });
 
@@ -400,8 +393,8 @@ describe('TextField', () => {
         const valid = testElement.reportValidity();
 
         expect(valid).withContext('valid').toBeFalse();
-        expect(testElement.getError())
-            .withContext('testElement.getError()')
+        expect(testElement.getHasError())
+            .withContext('testElement.getHasError()')
             .toBeTrue();
       });
 
@@ -413,7 +406,7 @@ describe('TextField', () => {
         testElement.reportValidity();
 
         expect(testElement.validationMessage).toEqual(errorMessage);
-        expect(testElement.getSupportingText()).toEqual(errorMessage);
+        expect(testElement.getSupportingTextValue()).toEqual(errorMessage);
       });
 
       it('should not update error or supporting text if invalid event is canceled',
@@ -428,10 +421,10 @@ describe('TextField', () => {
            const valid = testElement.reportValidity();
 
            expect(valid).withContext('valid').toBeFalse();
-           expect(testElement.getError())
-               .withContext('testElement.getError()')
+           expect(testElement.getHasError())
+               .withContext('testElement.getHasError()')
                .toBeFalse();
-           expect(testElement.getSupportingText()).toEqual('');
+           expect(testElement.getSupportingTextValue()).toEqual('');
          });
 
       it('should be overridden by error and errorText', async () => {
@@ -442,10 +435,10 @@ describe('TextField', () => {
 
         const valid = testElement.reportValidity();
         expect(valid).withContext('native validity should be valid').toBeTrue();
-        expect(testElement.getError())
-            .withContext('testElement.getError()')
+        expect(testElement.getHasError())
+            .withContext('testElement.getHasError()')
             .toBeTrue();
-        expect(testElement.getSupportingText()).toEqual(errorMessage);
+        expect(testElement.getSupportingTextValue()).toEqual(errorMessage);
       });
     });
 
@@ -613,9 +606,10 @@ describe('TextField', () => {
          const {testElement} = await setupTest();
          testElement.error = true;
          testElement.errorText = 'Error message';
+         await env.waitForStability();
 
-         expect(testElement.shouldErrorAnnounce())
-             .withContext('testElement.shouldErrorAnnounce()')
+         expect(testElement.didErrorAnnounce())
+             .withContext('testElement.didErrorAnnounce()')
              .toBeTrue();
        });
 
@@ -623,9 +617,10 @@ describe('TextField', () => {
       const {testElement} = await setupTest();
       testElement.required = true;
       testElement.reportValidity();
+      await env.waitForStability();
 
-      expect(testElement.shouldErrorAnnounce())
-          .withContext('testElement.shouldErrorAnnounce()')
+      expect(testElement.didErrorAnnounce())
+          .withContext('testElement.didErrorAnnounce()')
           .toBeTrue();
     });
 
@@ -633,9 +628,10 @@ describe('TextField', () => {
       const {testElement} = await setupTest();
       testElement.error = true;
       testElement.supportingText = 'Not an error';
+      await env.waitForStability();
 
-      expect(testElement.shouldErrorAnnounce())
-          .withContext('testElement.shouldErrorAnnounce()')
+      expect(testElement.didErrorAnnounce())
+          .withContext('testElement.didErrorAnnounce()')
           .toBeFalse();
     });
 
@@ -647,14 +643,14 @@ describe('TextField', () => {
       testElement.reportValidity();
       await env.waitForStability();
       // After lit update, but before re-render refresh
-      expect(testElement.shouldErrorAnnounce())
-          .withContext('shouldErrorAnnounce() before refresh')
+      expect(testElement.didErrorAnnounce())
+          .withContext('didErrorAnnounce() before refresh')
           .toBeFalse();
 
       // After the second lit update render refresh
       await env.waitForStability();
-      expect(testElement.shouldErrorAnnounce())
-          .withContext('shouldErrorAnnounce() after refresh')
+      expect(testElement.didErrorAnnounce())
+          .withContext('didErrorAnnounce() after refresh')
           .toBeTrue();
     });
   });

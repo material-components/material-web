@@ -49,12 +49,4 @@ export class MdOutlinedAutocomplete extends Autocomplete {
       'md3-autocomplete--outlined': true,
     };
   }
-
-  /** @soyTemplate */
-  protected override getRenderClasses(): ClassInfo {
-    return {
-      ...super.getRenderClasses(),
-      'md3-text-field--outlined': true,
-    };
-  }
 }

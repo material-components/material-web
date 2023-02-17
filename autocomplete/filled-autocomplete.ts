@@ -49,12 +49,4 @@ export class MdFilledAutocomplete extends Autocomplete {
       'md3-autocomplete--filled': true,
     };
   }
-
-  /** @soyTemplate */
-  protected override getRenderClasses(): ClassInfo {
-    return {
-      ...super.getRenderClasses(),
-      'md3-text-field--filled': true,
-    };
-  }
 }

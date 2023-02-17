@@ -4,10 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
+import {html, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
+import {classMap} from 'lit/directives/class-map.js';
 import {live} from 'lit/directives/live.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
@@ -36,10 +35,12 @@ export type UnsupportedTextFieldType =
 export type InvalidTextFieldType =
     'button'|'checkbox'|'hidden'|'image'|'radio'|'range'|'reset'|'submit';
 
-/** @soyCompatible */
+/**
+ * A text field component.
+ */
 export abstract class TextField extends LitElement {
   static override shadowRootOptions:
-      ShadowRootInit = {mode: 'open', delegatesFocus: true};
+      ShadowRootInit = {...LitElement.shadowRootOptions, delegatesFocus: true};
 
   @property({type: Boolean, reflect: true}) disabled = false;
   /**
@@ -101,7 +102,6 @@ export abstract class TextField extends LitElement {
   @property({type: String}) textDirection = '';
 
   // ARIA
-  // TODO(b/210730484): replace with @soyParam annotation
   @property(
       {type: String, attribute: 'data-aria-autocomplete', noAccessor: true})
   @ariaProperty  // tslint:disable-line:no-new-decorators
@@ -127,21 +127,9 @@ export abstract class TextField extends LitElement {
   @ariaProperty  // tslint:disable-line:no-new-decorators
   override ariaLabel!: string;
 
-  /**
-   * The `aria-labelledby` of the text field's input.
-   *
-   * Note: currently only usable in SSR light DOM.
-   */
-  @property({type: String, attribute: 'data-aria-labelledby', noAccessor: true})
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  ariaLabelledBy!: string;
-
-  // tslint:disable:decorator-placement
   @property({type: String, attribute: 'data-role', noAccessor: true})
   @ariaProperty  // tslint:disable-line:no-new-decorators
-  // @ts-ignore(b/264292293): Use `override` with TS 4.9+
-  role: ARIARole|null = null;
-  // tslint:enable:decorator-placement
+  override role: ARIARole|null = null;
 
   // FormElement
   get form() {
@@ -238,10 +226,8 @@ export abstract class TextField extends LitElement {
    */
   @property({type: String}) step = '';
 
-  // TODO(b/237284412): replace with exported types
   @property({type: String, reflect: true})
-  type: 'email'|'number'|'password'|'search'|'tel'|'text'|'url'|'color'|'date'|
-      'datetime-local'|'file'|'month'|'time'|'week' = 'text';
+  type: TextFieldType|UnsupportedTextFieldType = 'text';
 
   /**
    * Returns the native validation error message that would be displayed upon
@@ -295,18 +281,20 @@ export abstract class TextField extends LitElement {
     return this.getInput().willValidate;
   }
 
+  protected abstract readonly fieldTag: StaticValue;
+
   /**
    * Returns true when the text field has been interacted with. Native
    * validation errors only display in response to user interactions.
    */
-  @state() protected dirty = false;
-  @state() protected focused = false;
+  @state() private dirty = false;
+  @state() private focused = false;
   /**
    * When set to true, the error text's `role="alert"` will be removed, then
    * re-added after an animation frame. This will re-announce an error message
    * to screen readers.
    */
-  @state() protected refreshErrorAlert = false;
+  @state() private refreshErrorAlert = false;
   /**
    * Returns true when the text field's `value` property has been changed from
    * it's initial value.
@@ -314,38 +302,36 @@ export abstract class TextField extends LitElement {
    * Setting `value` should always overwrite `defaultValue`, even when `value`
    * is an empty string. This flag ensures that behavior.
    */
-  @state() protected valueHasChanged = false;
+  @state() private valueHasChanged = false;
   /**
    * Whether or not to ignore the next `value` change when computing
    * `valueHasChanged`.
    */
-  protected ignoreNextValueChange = false;
+  private ignoreNextValueChange = false;
   /**
    * Whether or not a native error has been reported via `reportValidity()`.
    */
-  @state() protected nativeError = false;
+  @state() private nativeError = false;
   /**
    * The validation message displayed from a native error via
    * `reportValidity()`.
    */
-  @state() protected nativeErrorText = '';
-  @query('input') protected readonly input?: HTMLInputElement|null;
-  protected abstract readonly fieldTag: StaticValue;
+  @state() private nativeErrorText = '';
 
-  /** @soyUniqueAttribute */
-  private readonly counterId = 'counter';
+  private get hasError() {
+    return this.error || this.nativeError;
+  }
+
+  @query('input') private readonly input?: HTMLInputElement|null;
   @queryAssignedElements({slot: 'leadingicon'})
   private readonly leadingIcons!: Element[];
   @queryAssignedElements({slot: 'trailingicon'})
   private readonly trailingIcons!: Element[];
-  /** @soyUniqueAttribute */
-  private readonly supportingTextId = 'support';
 
   constructor() {
     super();
     this.addController(new FormController(this));
-    // TODO(b/244574653): replace this.handleClick with this.focus
-    this.addEventListener('click', this.handleClick);
+    this.addEventListener('click', this.focus);
     this.addEventListener('focusin', this.handleFocusin);
     this.addEventListener('focusout', this.handleFocusout);
   }
@@ -375,16 +361,7 @@ export abstract class TextField extends LitElement {
       return;
     }
 
-    // TODO(b/210731759): replace with super.focus() once SSR supports
-    // delegating focus
-    this.getInput().focus();
-  }
-
-  /**
-   * Unfocuses the text field.
-   */
-  override blur() {
-    this.getInput().blur();
+    super.focus();
   }
 
   /**
@@ -518,228 +495,7 @@ export abstract class TextField extends LitElement {
     this.nativeErrorText = '';
   }
 
-  /** @soyTemplate */
-  override render(): TemplateResult {
-    return html`
-       <span class="text-field ${classMap(this.getRenderClasses())}">
-         ${this.renderField()}
-       </span>
-     `;
-  }
-
-  /** @soyTemplate */
-  protected getRenderClasses(): ClassInfo {
-    return {
-      'disabled': this.disabled,
-      'error': !this.disabled && this.getError(),
-    };
-  }
-
-  /** @soyTemplate */
-  protected getError(): boolean {
-    return this.error || this.nativeError;
-  }
-
-  /** @soyTemplate */
-  protected renderField(): TemplateResult {
-    const prefix = this.renderPrefix();
-    const suffix = this.renderSuffix();
-    const input = this.renderInput();
-    const inputValue = this.getInputValue();
-
-    return staticHtml`<${this.fieldTag}
-      class="field"
-      ?disabled=${this.disabled}
-      ?error=${this.getError()}
-      ?focused=${this.focused}
-      ?hasEnd=${this.hasTrailingIcon}
-      ?hasStart=${this.hasLeadingIcon}
-      .label=${this.label}
-      ?populated=${!!inputValue}
-      ?required=${this.required}
-    >
-      ${this.renderLeadingIcon()}
-      ${prefix}${input}${suffix}
-      ${this.renderTrailingIcon()}
-      ${this.renderSupportingText()}
-      ${this.renderCounter()}
-    </${this.fieldTag}>`;
-  }
-
-  /**
-   * @soyTemplate
-   * @slotName start
-   */
-  protected renderLeadingIcon(): TemplateResult {
-    return html`
-       <span class="icon leading" slot="start">
-         <slot name="leadingicon" @slotchange=${this.handleIconChange}></slot>
-       </span>
-     `;
-  }
-
-  /**
-   * @soyTemplate
-   * @slotName end
-   */
-  protected renderTrailingIcon(): TemplateResult {
-    return html`
-       <span class="icon trailing" slot="end">
-         <slot name="trailingicon" @slotchange=${this.handleIconChange}></slot>
-       </span>
-     `;
-  }
-
-  /** @soyTemplate */
-  protected renderInput(): TemplateResult {
-    // TODO(b/237283903): remove when custom isTruthy directive is supported
-    const placeholderValue = this.placeholder || undefined;
-    const ariaActiveDescendantValue = this.ariaActiveDescendant || undefined;
-    const ariaAutoCompleteValue = this.ariaAutoComplete || undefined;
-    const ariaControlsValue = this.ariaControls || undefined;
-    const ariaDescribedByValue = this.getAriaDescribedBy() || undefined;
-    const ariaExpandedValue = this.ariaExpanded || undefined;
-    const ariaLabelValue = this.ariaLabel || this.label || undefined;
-    const ariaLabelledByValue = this.ariaLabelledBy || undefined;
-    const maxValue = this.max || undefined;
-    const maxLengthValue = this.maxLength > -1 ? this.maxLength : undefined;
-    const minValue = this.min || undefined;
-    const minLengthValue = this.minLength > -1 ? this.minLength : undefined;
-    const patternValue = this.pattern || undefined;
-    const roleValue = this.role || undefined;
-    const stepValue = this.step || undefined;
-
-    /** @styleMap */
-    const style = {direction: this.textDirection};
-
-    // TODO(b/243805848): remove `as unknown as number` once lit analyzer is
-    // fixed
-    return html`<input
-       style=${styleMap(style)}
-       aria-activedescendant=${ifDefined(ariaActiveDescendantValue)}
-       aria-autocomplete=${ifDefined(ariaAutoCompleteValue)}
-       aria-controls=${ifDefined(ariaControlsValue)}
-       aria-describedby=${ifDefined(ariaDescribedByValue)}
-       aria-expanded=${ifDefined(ariaExpandedValue)}
-       aria-invalid=${this.getError()}
-       aria-label=${ifDefined(ariaLabelValue)}
-       aria-labelledby=${ifDefined(ariaLabelledByValue)}
-       ?disabled=${this.disabled}
-       max=${ifDefined(maxValue as unknown as number)}
-       maxlength=${ifDefined(maxLengthValue)}
-       min=${ifDefined(minValue as unknown as number)}
-       minlength=${ifDefined(minLengthValue)}
-       pattern=${ifDefined(patternValue)}
-       placeholder=${ifDefined(placeholderValue)}
-       role=${ifDefined(roleValue)}
-       ?readonly=${this.readOnly}
-       ?required=${this.required}
-       step=${ifDefined(stepValue as unknown as number)}
-       type=${this.type}
-       .value=${live(this.getInputValue())}
-       @change=${this.redispatchEvent}
-       @input=${this.handleInput}
-       @select=${this.redispatchEvent}
-     >`;
-  }
-
-  /** @soyTemplate */
-  protected getInputValue(): string {
-    const alwaysShowValue = this.dirty || this.valueHasChanged;
-    return alwaysShowValue ? this.value : this.defaultValue || this.value;
-  }
-
-  /** @soyTemplate */
-  protected getAriaDescribedBy(): string {
-    const hasSupport = !!this.getSupportingText();
-    const hasCounter = this.hasCounter();
-    // TODO(b/244609052): remove parens
-    return (hasSupport || hasCounter) ?
-        `${hasSupport ? this.supportingTextId : ''} ${
-            hasCounter ? this.counterId : ''}` :
-        '';
-  }
-
-  /** @soyTemplate */
-  protected renderPrefix(): TemplateResult {
-    return this.prefixText ?
-        html`<span class="prefix">${this.prefixText}</span>` :
-        html``;
-
-    // TODO(b/217441842): Create shared function once argument bug is fixed
-    // return this.renderAffix(/* isSuffix */ false);
-  }
-
-  /** @soyTemplate */
-  protected renderSuffix(): TemplateResult {
-    return this.suffixText ?
-        html`<span class="suffix">${this.suffixText}</span>` :
-        html``;
-
-    // TODO(b/217441842): Create shared function once argument bug is fixed
-    // return this.renderAffix(/* isSuffix */ true);
-  }
-
-  /**
-   * @soyTemplate
-   * @slotName supporting-text
-   */
-  protected renderSupportingText(): TemplateResult {
-    const shouldAlert = this.shouldErrorAnnounce();
-    const text = this.getSupportingText();
-    const template = html`<span id=${this.supportingTextId}
-      slot="supporting-text"
-      role=${ifDefined(shouldAlert ? 'alert' : undefined)}>${text}</span>`;
-
-    return text ? template : html``;
-  }
-
-  /** @soyTemplate */
-  protected getSupportingText(): string {
-    const errorText = this.getErrorText();
-    return this.getError() && errorText ? errorText : this.supportingText;
-  }
-
-  /** @soyTemplate */
-  protected getErrorText(): string {
-    return this.error ? this.errorText : this.nativeErrorText;
-  }
-
-  /** @soyTemplate */
-  protected shouldErrorAnnounce(): boolean {
-    // Announce if there is an error and error text visible.
-    // If refreshErrorAlert is true, do not announce. This will remove the
-    // role="alert" attribute. Another render cycle will happen after an
-    // animation frame to re-add the role.
-    return this.getError() && !!this.getErrorText() && !this.refreshErrorAlert;
-  }
-
-  /**
-   * @soyTemplate
-   * @slotName supporting-text-end
-   */
-  protected renderCounter(): TemplateResult {
-    const counter = html`<span id=${this.counterId}
-       class="counter"
-       slot="supporting-text-end">${this.getCounterText()}</span>`;
-    // TODO(b/244473435): add aria-label and announcements
-    return this.hasCounter() ? counter : html``;
-  }
-
-  // TODO(b/244197198): replace with !!this.getCounterText()
-  /** @soyTemplate */
-  protected hasCounter(): boolean {
-    return this.maxLength > -1;
-  }
-
-  /** @soyTemplate */
-  protected getCounterText(): TemplateResult {
-    // TODO(b/244197198): replace with string return
-    const length = this.value.length;
-    return this.hasCounter() ? html`${length} / ${this.maxLength}` : html``;
-  }
-
-  protected override update(changedProperties: PropertyValues<TextField>) {
+  protected override update(changedProperties: PropertyValues) {
     // Consider a value change anything that is not the initial empty string
     // value.
     const valueHasChanged = changedProperties.has('value') &&
@@ -755,7 +511,22 @@ export abstract class TextField extends LitElement {
     super.update(changedProperties);
   }
 
+  override render() {
+    const classes = {
+      'disabled': this.disabled,
+      'error': !this.disabled && this.hasError,
+    };
+
+    return html`
+       <span class="text-field ${classMap(classes)}">
+         ${this.renderField()}
+       </span>
+     `;
+  }
+
   protected override updated(changedProperties: PropertyValues) {
+    // Keep changedProperties arg so that subclasses may call it
+
     // If a property such as `type` changes and causes the internal <input>
     // value to change without dispatching an event, re-sync it.
     const value = this.getInput().value;
@@ -778,18 +549,172 @@ export abstract class TextField extends LitElement {
     }
   }
 
-  /** @bubbleWizEvent */
-  protected handleClick() {
-    this.focus();
+  private renderField() {
+    const prefix = this.renderPrefix();
+    const suffix = this.renderSuffix();
+    const input = this.renderInput();
+
+    return staticHtml`<${this.fieldTag}
+      class="field"
+      ?disabled=${this.disabled}
+      ?error=${this.hasError}
+      ?focused=${this.focused}
+      ?hasEnd=${this.hasTrailingIcon}
+      ?hasStart=${this.hasLeadingIcon}
+      .label=${this.label}
+      ?populated=${!!this.getInputValue()}
+      ?required=${this.required}
+    >
+      ${this.renderLeadingIcon()}
+      ${prefix}${input}${suffix}
+      ${this.renderTrailingIcon()}
+      ${this.renderSupportingText()}
+      ${this.renderCounter()}
+    </${this.fieldTag}>`;
   }
 
-  /** @bubbleWizEvent */
-  protected handleFocusin(event: FocusEvent) {
+  private renderLeadingIcon() {
+    return html`
+       <span class="icon leading" slot="start">
+         <slot name="leadingicon" @slotchange=${this.handleIconChange}></slot>
+       </span>
+     `;
+  }
+
+  private renderTrailingIcon() {
+    return html`
+       <span class="icon trailing" slot="end">
+         <slot name="trailingicon" @slotchange=${this.handleIconChange}></slot>
+       </span>
+     `;
+  }
+
+  private renderInput() {
+    const style = {direction: this.textDirection};
+
+    // TODO(b/243805848): remove `as unknown as number` once lit analyzer is
+    // fixed
+    return html`<input
+       style=${styleMap(style)}
+       aria-activedescendant=${this.ariaActiveDescendant || nothing}
+       aria-autocomplete=${this.ariaAutoComplete || nothing}
+       aria-controls=${this.ariaControls || nothing}
+       aria-describedby=${this.getAriaDescribedBy() || nothing}
+       aria-expanded=${this.ariaExpanded || nothing}
+       aria-invalid=${this.hasError}
+       aria-label=${this.ariaLabel || this.label || nothing}
+       ?disabled=${this.disabled}
+       max=${(this.max || nothing) as unknown as number}
+       maxlength=${this.maxLength > -1 ? this.maxLength : nothing}
+       min=${(this.min || nothing) as unknown as number}
+       minlength=${this.minLength > -1 ? this.minLength : nothing}
+       pattern=${this.pattern || nothing}
+       placeholder=${this.placeholder || nothing}
+       role=${this.role || nothing}
+       ?readonly=${this.readOnly}
+       ?required=${this.required}
+       step=${(this.step || nothing) as unknown as number}
+       type=${this.type}
+       .value=${live(this.getInputValue())}
+       @change=${this.redispatchEvent}
+       @input=${this.handleInput}
+       @select=${this.redispatchEvent}
+     >`;
+  }
+
+  private getInputValue() {
+    const alwaysShowValue = this.dirty || this.valueHasChanged;
+    if (alwaysShowValue) {
+      return this.value;
+    }
+
+    return this.defaultValue || this.value;
+  }
+
+  private getAriaDescribedBy() {
+    const ids: string[] = [];
+    if (this.getSupportingText()) {
+      ids.push('support');
+    }
+
+    if (this.getCounterText()) {
+      ids.push('counter');
+    }
+
+    return ids.join(' ');
+  }
+
+  private renderPrefix() {
+    return this.renderAffix(this.prefixText, /* isSuffix */ false);
+  }
+
+  private renderSuffix() {
+    return this.renderAffix(this.suffixText, /* isSuffix */ true);
+  }
+
+  private renderAffix(text: string, isSuffix: boolean) {
+    if (!text) {
+      return nothing;
+    }
+
+    const classes = {
+      'suffix': isSuffix,
+      'prefix': !isSuffix,
+    };
+
+    return html`<span class="${classMap(classes)}">${text}</span>`;
+  }
+
+  private renderSupportingText() {
+    const text = this.getSupportingText();
+    if (!text) {
+      return nothing;
+    }
+
+    return html`<span id="support"
+      slot="supporting-text"
+      role=${this.shouldErrorAnnounce() ? 'alert' : nothing}>${text}</span>`;
+  }
+
+  private getSupportingText() {
+    const errorText = this.getErrorText();
+    return this.hasError && errorText ? errorText : this.supportingText;
+  }
+
+  private getErrorText() {
+    return this.error ? this.errorText : this.nativeErrorText;
+  }
+
+  private shouldErrorAnnounce() {
+    // Announce if there is an error and error text visible.
+    // If refreshErrorAlert is true, do not announce. This will remove the
+    // role="alert" attribute. Another render cycle will happen after an
+    // animation frame to re-add the role.
+    return this.hasError && !!this.getErrorText() && !this.refreshErrorAlert;
+  }
+
+  private renderCounter() {
+    const text = this.getCounterText();
+    if (!text) {
+      return nothing;
+    }
+
+    // TODO(b/244473435): add aria-label and announcements
+    return html`<span id="counter"
+       class="counter"
+       slot="supporting-text-end">${text}</span>`;
+  }
+
+  private getCounterText() {
+    return this.maxLength > -1 ? `${this.value.length} / ${this.maxLength}` :
+                                 '';
+  }
+
+  private handleFocusin() {
     this.focused = true;
   }
 
-  /** @bubbleWizEvent */
-  protected handleFocusout(event: FocusEvent) {
+  private handleFocusout() {
     if (this.matches(':focus-within')) {
       // Changing focus to another child within the text field, like a button
       return;
@@ -798,17 +723,17 @@ export abstract class TextField extends LitElement {
     this.focused = false;
   }
 
-  protected handleInput(event: InputEvent) {
+  private handleInput(event: InputEvent) {
     this.dirty = true;
     this.value = (event.target as HTMLInputElement).value;
     this.redispatchEvent(event);
   }
 
-  protected redispatchEvent(event: Event) {
+  private redispatchEvent(event: Event) {
     redispatchEvent(this, event);
   }
 
-  protected getInput() {
+  private getInput() {
     if (!this.input) {
       // If the input is not yet defined, synchronously render.
       // e.g.
