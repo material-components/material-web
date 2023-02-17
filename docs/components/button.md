@@ -155,7 +155,7 @@ Token                                   | Default value
 `--md-elevated-button-container-color`  | `--md-sys-color-surface`
 `--md-elevated-button-container-shape`  | `9999px`
 `--md-elevated-button-label-text-color` | `--md-sys-color-on-surface`
-`--md-elevated-button-label-text-font`  | `"Roboto"`
+`--md-elevated-button-label-text-type`  | `500 0.875rem/1.25rem "Roboto"`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/master/tokens/v0_152/_md-comp-elevated-button.scss)
     <!-- {.external} -->
@@ -168,7 +168,7 @@ Token                                   | Default value
 <style>
 :root {
   --md-elevated-button-container-shape: 0px;
-  --md-elevated-button-label-text-font: system-ui;
+  --md-elevated-button-label-text-type: 500 0.875rem/1.25rem system-ui;
   --md-sys-color-surface: #FAFDFC;
   --md-sys-color-on-surface: #191C1C;
 }
@@ -184,7 +184,7 @@ Token                                 | Default value
 `--md-filled-button-container-color`  | `--md-sys-color-primary`
 `--md-filled-button-container-shape`  | `9999px`
 `--md-filled-button-label-text-color` | `--md-sys-color-on-primary`
-`--md-filled-button-label-text-font`  | `"Roboto"`
+`--md-filled-button-label-text-type`  | `500 0.875rem/1.25rem "Roboto"`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/master/tokens/v0_152/_md-comp-filled-button.scss)
     <!-- {.external} -->
@@ -197,7 +197,7 @@ Token                                 | Default value
 <style>
 :root {
   --md-filled-button-container-shape: 0px;
-  --md-filled-button-label-text-font: system-ui;
+  --md-filled-button-label-text-type: 500 0.875rem/1.25rem system-ui;
   --md-sys-color-primary: #006A6A;
   --md-sys-color-on-primary: #FFFFFF;
 }
@@ -213,7 +213,7 @@ Token                                | Default value
 `--md-tonal-button-container-color`  | `--md-sys-color-secondary-container`
 `--md-tonal-button-container-shape`  | `9999px`
 `--md-tonal-button-label-text-color` | `--md-sys-color-on-secondary-container`
-`--md-tonal-button-label-text-font`  | `"Roboto"`
+`--md-tonal-button-label-text-type`  | `500 0.875rem/1.25rem "Roboto"`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/master/tokens/v0_152/_md-comp-filled-tonal-button.scss)
     <!-- {.external} -->
@@ -226,7 +226,7 @@ Token                                | Default value
 <style>
 :root {
   --md-tonal-button-container-shape: 0px;
-  --md-tonal-button-label-text-font: system-ui;
+  --md-tonal-button-label-text-type: 500 0.875rem/1.25rem system-ui;
   --md-sys-color-secondary-container: #CCE8E7;
   --md-sys-color-on-secondary-container: #051F1F;
 }
@@ -242,7 +242,7 @@ Token                                   | Default value
 `--md-outlined-button-outline-color`    | `--md-sys-color-outline`
 `--md-outlined-button-container-shape`  | `9999px`
 `--md-outlined-button-label-text-color` | `--md-sys-color-primary`
-`--md-outlined-button-label-text-font`  | `"Roboto"`
+`--md-outlined-button-label-text-type`  | `500 0.875rem/1.25rem "Roboto"`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/master/tokens/v0_152/_md-comp-outlined-button.scss)
     <!-- {.external} -->
@@ -255,7 +255,7 @@ Token                                   | Default value
 <style>
 :root {
   --md-outlined-button-container-shape: 0px;
-  --md-outlined-button-label-text-font: system-ui;
+  --md-outlined-button-label-text-type: 500 0.875rem/1.25rem system-ui;
   --md-sys-color-primary: #006A6A;
   --md-sys-color-outline: #6F7979;
 }
@@ -269,7 +269,7 @@ Token                                   | Default value
 Token                               | Default value
 ----------------------------------- | ------------------------
 `--md-text-button-label-text-color` | `--md-sys-color-primary`
-`--md-text-button-label-text-font`  | `"Roboto"`
+`--md-text-button-label-text-type`  | `500 0.875rem/1.25rem "Roboto"`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/master/tokens/v0_152/_md-comp-text-button.scss)
     <!-- {.external} -->
@@ -281,7 +281,7 @@ Token                               | Default value
 ```html
 <style>
 :root {
-  --md-text-button-label-text-font: system-ui;
+  --md-text-button-label-text-type: 500 0.875rem/1.25rem system-ui;
   --md-sys-color-primary: #006A6A;
 }
 </style>
