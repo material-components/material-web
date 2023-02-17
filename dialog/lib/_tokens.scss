@@ -12,6 +12,7 @@
 @use '../../sass/shape';
 @use '../../sass/string-ext';
 @use '../../sass/theme';
+@use '../../sass/typography';
 @use '../../sass/var';
 @use '../../tokens';
 // go/keep-sorted end
@@ -74,9 +75,7 @@ $_fullscreen-tokens: (
   $remove-prefix: 'action-';
   $tokens: _map-without-keys-with-prefix($tokens, $remove-prefix);
 
-  // b/203778922: `*-type` used by other platforms but not web.
-  $unsupported-tokens: ('headline-type', 'supporting-text-type');
-  @return map.remove($tokens, $unsupported-tokens...);
+  @return typography.resolve-tokens($tokens, 'headline', 'supporting-text');
 }
 
 /**

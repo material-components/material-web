@@ -140,11 +140,7 @@
     gap: var(--_header-spacing);
     -webkit-font-smoothing: antialiased;
     color: var(--_headline-color);
-    font-family: var(--_headline-font);
-    line-height: var(--_headline-line-height);
-    font-size: var(--_headline-size);
-    letter-spacing: var(--_headline-tracking);
-    font-weight: var(--_headline-weight);
+    font: var(--_headline-type);
   }
 
   .content {
@@ -154,11 +150,7 @@
     margin-block-end: var(--_content-block-end-spacing);
     -webkit-font-smoothing: antialiased;
     color: var(--_supporting-text-color);
-    font-family: var(--_supporting-text-font);
-    line-height: var(--_supporting-text-line-height);
-    font-size: var(--_supporting-text-size);
-    letter-spacing: var(--_supporting-text-tracking);
-    font-weight: var(--_supporting-text-weight);
+    font: var(--_supporting-text-type);
   }
 
   .footer {
