@@ -12,6 +12,7 @@
 @use '../../../ripple/ripple';
 @use '../../../sass/map-ext';
 @use '../../../sass/theme';
+@use '../../../sass/typography';
 @use '../../../tokens';
 @use '../icon/list-item-icon';
 @use '../image/list-item-image';
@@ -19,9 +20,11 @@
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-list-values(), $tokens);
-  $tokens: resolve-tokens($tokens);
-  $tokens: theme.create-theme-vars($tokens, list);
+  $tokens: theme.validate-theme(
+    resolve-tokens(tokens.md-comp-list-values()),
+    resolve-tokens($tokens)
+  );
+  $tokens: theme.create-theme-vars($tokens, 'list');
 
   @include theme.emit-theme-vars($tokens);
 }
@@ -197,11 +200,7 @@
   .label-text {
     display: flex;
     color: var(--_list-item-label-text-color);
-    font-family: var(--_list-item-label-text-font);
-    font-size: var(--_list-item-label-text-size);
-    letter-spacing: var(--_list-item-label-text-tracking);
-    font-weight: var(--_list-item-label-text-weight);
-    line-height: var(--_list-item-label-text-line-height);
+    font: var(--_list-item-label-text-type);
 
     .disabled & {
       color: var(--_list-item-disabled-label-text-color);
@@ -217,11 +216,7 @@
     overflow: hidden;
     width: 100%;
     color: var(--_list-item-supporting-text-color);
-    font-family: var(--_list-item-supporting-text-font);
-    font-size: var(--_list-item-supporting-text-size);
-    letter-spacing: var(--_list-item-supporting-text-tracking);
-    font-weight: var(--_list-item-supporting-text-weight);
-    line-height: var(--_list-item-supporting-text-line-height);
+    font: var(--_list-item-supporting-text-type);
 
     .disabled & {
       color: var(--_list-item-disabled-label-text-color);
@@ -239,11 +234,7 @@
 
   .trailing-supporting-text {
     padding-inline-start: 16px;
-    font-family: var(--_list-item-trailing-supporting-text-font);
-    font-size: var(--_list-item-trailing-supporting-text-size);
-    letter-spacing: var(--_list-item-trailing-supporting-text-tracking);
-    font-weight: var(--_list-item-trailing-supporting-text-weight);
-    line-height: var(--_list-item-trailing-supporting-text-line-height);
+    font: var(--_list-item-trailing-supporting-text-type);
 
     .list-item:not(.disabled) & {
       color: var(--_list-item-trailing-supporting-text-color);
@@ -277,18 +268,25 @@
   $list-item-tokens: ();
 
   @each $token, $value in $tokens {
-    $index: string.index($token, list-item);
+    $index: string.index($token, 'list-item');
 
     @if $index {
       $list-item-tokens: map.set($list-item-tokens, $token, $value);
     }
   }
+
+  $list-item-tokens: typography.resolve-tokens(
+    $list-item-tokens,
+    'list-item-label-text',
+    'list-item-supporting-text',
+    'list-item-trailing-supporting-text'
+  );
   @return $list-item-tokens;
 }
 
 @mixin private-props() {
   $tokens: resolve-tokens(tokens.md-comp-list-values());
-  $tokens: theme.create-theme-vars($tokens, list);
+  $tokens: theme.create-theme-vars($tokens, 'list');
 
   :host {
     @each $token, $value in $tokens {

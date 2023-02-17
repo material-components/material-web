@@ -14,16 +14,16 @@
 @use '../../../list/list-item';
 @use '../../../ripple/ripple';
 @use '../../../sass/map-ext';
-@use '../../../sass/resolvers';
 @use '../../../sass/string-ext';
 @use '../../../sass/theme';
+@use '../../../sass/typography';
 @use '../../../tokens';
 // go/keep-sorted end
 
 $_custom-property-prefix: 'menu';
 
 @mixin theme($theme) {
-  $reference: tokens.md-comp-menu-values();
+  $reference: resolve-tokens(tokens.md-comp-menu-values());
   $theme: theme.validate-theme($reference, $theme);
   $theme: resolve-tokens($theme);
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
@@ -102,6 +102,11 @@ $_custom-property-prefix: 'menu';
       $list-item-tokens: map.set($list-item-tokens, $token, $value);
     }
   }
+
+  $list-item-tokens: typography.resolve-tokens(
+    $list-item-tokens,
+    'list-item-label-text'
+  );
 
   @return $list-item-tokens;
 }
