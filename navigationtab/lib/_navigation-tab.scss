@@ -15,6 +15,7 @@
 @use '../../motion/animation';
 @use '../../ripple/ripple';
 @use '../../sass/theme';
+@use '../../sass/typography';
 @use '../../tokens';
 // go/keep-sorted end
 
@@ -23,8 +24,8 @@ $_custom-property-prefix: 'navigation-bar';
 
 @mixin theme($tokens) {
   $tokens: theme.validate-theme(
-    tokens.md-comp-navigation-bar-values(),
-    $tokens
+    _resolve-tokens(tokens.md-comp-navigation-bar-values()),
+    _resolve-tokens($tokens)
   );
 
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
@@ -33,7 +34,7 @@ $_custom-property-prefix: 'navigation-bar';
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-navigation-bar-values();
+  $tokens: _resolve-tokens(tokens.md-comp-navigation-bar-values());
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   :host {
@@ -71,11 +72,7 @@ $_custom-property-prefix: 'navigation-bar';
     position: relative;
     text-align: center;
     width: 100%;
-    font-family: var(--_label-text-font);
-    font-size: var(--_label-text-size);
-    letter-spacing: var(--_label-text-tracking);
-    font-weight: var(--_label-text-weight);
-    line-height: var(--_label-text-line-height);
+    font: var(--_label-text-type);
 
     // Firefox draws a dotted border around focused buttons unless specifically overridden.
     &::-moz-focus-inner {
@@ -263,4 +260,8 @@ $_custom-property-prefix: 'navigation-bar';
       )
     );
   }
+}
+
+@function _resolve-tokens($tokens) {
+  @return typography.resolve-tokens($tokens, 'label-text');
 }

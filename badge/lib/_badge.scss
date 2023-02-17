@@ -7,26 +7,25 @@
 // Selector '.md3-*' should only be used in this project.
 
 // go/keep-sorted start
-@use 'sass:map';
-// go/keep-sorted end
-// go/keep-sorted start
 @use '../../sass/theme';
+@use '../../sass/typography';
 @use '../../tokens';
 // go/keep-sorted end
 
 $_custom-property-prefix: 'badge';
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-badge-values(), $tokens);
-  $tokens: _resolve-tokens($tokens);
+  $tokens: theme.validate-theme(
+    _resolve-tokens(tokens.md-comp-badge-values()),
+    _resolve-tokens($tokens)
+  );
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   @include theme.emit-theme-vars($tokens);
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-badge-values();
-  $tokens: _resolve-tokens($tokens);
+  $tokens: _resolve-tokens(tokens.md-comp-badge-values());
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   :host {
@@ -69,16 +68,10 @@ $_custom-property-prefix: 'badge';
   }
 
   .md3-badge__value {
-    font-family: var(--_large-label-text-font);
-    font-size: var(--_large-label-text-size);
-    letter-spacing: var(--_large-label-text-tracking);
-    line-height: var(--_large-label-text-line-height);
-    font-weight: var(--_large-label-text-weight);
+    font: var(--_large-label-text-type);
   }
 }
 
 @function _resolve-tokens($tokens) {
-  // Remove unsupported tokens
-  $tokens: map.remove($tokens, large-label-text-type);
-  @return $tokens;
+  @return typography.resolve-tokens($tokens, 'large-label-text');
 }
