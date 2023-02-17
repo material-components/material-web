@@ -6,11 +6,11 @@
 @mixin styles() {
   .icon {
     display: flex;
+  }
 
-    ::slotted(*) {
-      // Remove excess whitespace below inline elementsxs
-      display: flex;
-    }
+  .icon ::slotted(*) {
+    // Remove excess whitespace below inline elementsxs
+    display: flex;
   }
 
   .icon.leading {
@@ -21,65 +21,53 @@
     color: var(--_trailing-icon-color);
   }
 
-  :hover {
-    .icon.leading {
-      color: var(--_hover-leading-icon-color);
-    }
-
-    .icon.trailing {
-      color: var(--_hover-trailing-icon-color);
-    }
+  :hover .icon.leading {
+    color: var(--_hover-leading-icon-color);
   }
 
-  :focus-within {
-    .icon.leading {
-      color: var(--_focus-leading-icon-color);
-    }
-
-    .icon.trailing {
-      color: var(--_focus-trailing-icon-color);
-    }
+  :hover .icon.trailing {
+    color: var(--_hover-trailing-icon-color);
   }
 
-  .disabled {
-    .icon.leading {
-      color: var(--_disabled-leading-icon-color);
-      opacity: var(--_disabled-leading-icon-opacity);
-    }
-
-    .icon.trailing {
-      color: var(--_disabled-trailing-icon-color);
-      opacity: var(--_disabled-trailing-icon-opacity);
-    }
+  :focus-within .icon.leading {
+    color: var(--_focus-leading-icon-color);
   }
 
-  .error:not(.disabled) {
-    .icon.leading {
-      color: var(--_error-leading-icon-color);
-    }
+  :focus-within .icon.trailing {
+    color: var(--_focus-trailing-icon-color);
+  }
 
-    .icon.trailing {
-      color: var(--_error-trailing-icon-color);
-    }
+  .disabled .icon.leading {
+    color: var(--_disabled-leading-icon-color);
+    opacity: var(--_disabled-leading-icon-opacity);
+  }
 
-    &:hover {
-      .icon.leading {
-        color: var(--_error-hover-leading-icon-color);
-      }
+  .disabled .icon.trailing {
+    color: var(--_disabled-trailing-icon-color);
+    opacity: var(--_disabled-trailing-icon-opacity);
+  }
 
-      .icon.trailing {
-        color: var(--_error-hover-trailing-icon-color);
-      }
-    }
+  .error .icon.leading {
+    color: var(--_error-leading-icon-color);
+  }
 
-    &:focus-within {
-      .icon.leading {
-        color: var(--_error-focus-leading-icon-color);
-      }
+  .error .icon.trailing {
+    color: var(--_error-trailing-icon-color);
+  }
 
-      .icon.trailing {
-        color: var(--_error-focus-trailing-icon-color);
-      }
-    }
+  .error:hover .icon.leading {
+    color: var(--_error-hover-leading-icon-color);
+  }
+
+  .error:hover .icon.trailing {
+    color: var(--_error-hover-trailing-icon-color);
+  }
+
+  .error:focus-within .icon.leading {
+    color: var(--_error-focus-leading-icon-color);
+  }
+
+  .error:focus-within .icon.trailing {
+    color: var(--_error-focus-trailing-icon-color);
   }
 }

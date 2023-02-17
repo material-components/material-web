@@ -531,7 +531,7 @@ export abstract class TextField extends LitElement {
   protected getRenderClasses(): ClassInfo {
     return {
       'disabled': this.disabled,
-      'error': this.getError(),
+      'error': !this.disabled && this.getError(),
     };
   }
 

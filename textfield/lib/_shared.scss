@@ -26,10 +26,10 @@
   .field {
     cursor: text;
     flex: 1;
+  }
 
-    .disabled & {
-      cursor: default;
-    }
+  .disabled .field {
+    cursor: default;
   }
 
   .counter {

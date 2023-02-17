@@ -3,10 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// go/keep-sorted start
-@use '../../sass/typography';
-// go/keep-sorted end
-
 @mixin styles() {
   input {
     appearance: none;
@@ -34,16 +30,12 @@
     }
   }
 
-  :focus-within {
-    input {
-      caret-color: var(--_focus-caret-color);
-    }
+  :focus-within input {
+    caret-color: var(--_focus-caret-color);
   }
 
-  .error:focus-within {
-    input {
-      caret-color: var(--_error-focus-caret-color);
-    }
+  .error:focus-within input {
+    caret-color: var(--_error-focus-caret-color);
   }
 
   input,
@@ -52,15 +44,13 @@
     font: var(--_input-text-type);
   }
 
-  .text-field:not(.disabled) {
-    .prefix,
-    .suffix {
-      color: var(--_input-text-prefix-color);
-    }
+  .text-field:not(.disabled) .prefix,
+  .text-field:not(.disabled) .suffix {
+    color: var(--_input-text-prefix-color);
+  }
 
-    input::placeholder {
-      color: var(--_input-text-placeholder-color);
-    }
+  .text-field:not(.disabled) input::placeholder {
+    color: var(--_input-text-placeholder-color);
   }
 
   .prefix {
