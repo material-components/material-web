@@ -7,58 +7,13 @@
 import {noChange} from 'lit';
 import {Directive, directive, DirectiveParameters, ElementPart, PartInfo, PartType} from 'lit/directive.js';
 
-import {Ripple} from './lib/ripple.js';
+import {Ripple, State} from './lib/ripple.js';
 
 /**
  * Delay reacting to touch so that we do not show the ripple for a swipe or
  * scroll interaction.
  */
 const TOUCH_DELAY_MS = 150;
-
-/**
- * Interaction states for the ripple.
- *
- * On Touch:
- *  - `INACTIVE -> TOUCH_DELAY -> WAITING_FOR_CLICK -> INACTIVE`
- *  - `INACTIVE -> TOUCH_DELAY -> HOLDING -> WAITING_FOR_CLICK -> INACTIVE`
- *
- * On Mouse or Pen:
- *   - `INACTIVE -> WAITING_FOR_CLICK -> INACTIVE`
- */
-enum State {
-  /**
-   * Initial state of the control, no touch in progress.
-   *
-   * Transitions:
-   *   - on touch down: transition to `TOUCH_DELAY`.
-   *   - on mouse down: transition to `WAITING_FOR_CLICK`.
-   */
-  INACTIVE,
-  /**
-   * Touch down has been received, waiting to determine if it's a swipe or
-   * scroll.
-   *
-   * Transitions:
-   *   - on touch up: beginPress(); transition to `WAITING_FOR_CLICK`.
-   *   - on cancel: transition to `INACTIVE`.
-   *   - after `TOUCH_DELAY_MS`: beginPress(); transition to `HOLDING`.
-   */
-  TOUCH_DELAY,
-  /**
-   * A touch has been deemed to be a press
-   *
-   * Transitions:
-   *  - on up: transition to `WAITING_FOR_CLICK`.
-   */
-  HOLDING,
-  /**
-   * The user touch has finished, transition into rest state.
-   *
-   * Transitions:
-   *   - on click endPress(); transition to `INACTIVE`.
-   */
-  WAITING_FOR_CLICK
-}
 
 /**
  * Normalized ripple accessor type.
@@ -70,7 +25,6 @@ type RippleFunction = () => Ripple|null|Promise<Ripple|null>;
 class RippleDirective extends Directive {
   private rippleGetter: RippleFunction = async () => null;
   private element?: HTMLElement;
-  private state: State = State.INACTIVE;
   private checkBoundsAfterContextMenu = false;
   private rippleStartEvent: PointerEvent|null = null;
   private touchTimer: number|null = null;
@@ -179,7 +133,7 @@ class RippleDirective extends Directive {
 
   private endPress(ripple: Ripple) {
     ripple.endPress();
-    this.state = State.INACTIVE;
+    ripple.state = State.INACTIVE;
     this.rippleStartEvent = null;
     if (this.touchTimer) {
       clearTimeout(this.touchTimer);
@@ -191,17 +145,16 @@ class RippleDirective extends Directive {
     }
   }
 
-  private waitForTouchHold() {
+  private waitForTouchHold(ripple: Ripple) {
     if (this.touchTimer !== null) {
       clearTimeout(this.touchTimer);
     }
-    this.state = State.TOUCH_DELAY;
-    this.touchTimer = setTimeout(async () => {
-      const ripple = await this.rippleGetter();
-      if (ripple === null || this.state !== State.TOUCH_DELAY) {
+    ripple.state = State.TOUCH_DELAY;
+    this.touchTimer = setTimeout(() => {
+      if (ripple.state !== State.TOUCH_DELAY) {
         return;
       }
-      this.state = State.HOLDING;
+      ripple.state = State.HOLDING;
       this.beginPress(ripple);
     }, TOUCH_DELAY_MS);
   }
@@ -212,9 +165,9 @@ class RippleDirective extends Directive {
     if (ripple.disabled) {
       return;
     }
-    if (this.state === State.WAITING_FOR_CLICK) {
+    if (ripple.state === State.WAITING_FOR_CLICK) {
       this.endPress(ripple);
-    } else if (this.state === State.INACTIVE) {
+    } else if (ripple.state === State.INACTIVE) {
       // keyboard synthesized click event
       this.beginPress(ripple);
       this.endPress(ripple);
@@ -241,9 +194,9 @@ class RippleDirective extends Directive {
         return;
       }
       this.checkBoundsAfterContextMenu = false;
-      this.waitForTouchHold();
+      this.waitForTouchHold(ripple);
     } else {
-      this.state = State.WAITING_FOR_CLICK;
+      ripple.state = State.WAITING_FOR_CLICK;
       this.beginPress(ripple);
     }
   }
@@ -252,10 +205,10 @@ class RippleDirective extends Directive {
     if (!this.isTouch(ev) || !this.shouldReactToEvent(ripple, ev)) {
       return;
     }
-    if (this.state === State.HOLDING) {
-      this.state = State.WAITING_FOR_CLICK;
-    } else if (this.state === State.TOUCH_DELAY) {
-      this.state = State.WAITING_FOR_CLICK;
+    if (ripple.state === State.HOLDING) {
+      ripple.state = State.WAITING_FOR_CLICK;
+    } else if (ripple.state === State.TOUCH_DELAY) {
+      ripple.state = State.WAITING_FOR_CLICK;
       this.beginPress(ripple);
     }
   }
@@ -270,7 +223,7 @@ class RippleDirective extends Directive {
     if (this.shouldReactToEvent(ripple, ev, true)) {
       ripple.handlePointerleave(ev);
       // release a held mouse or pen press that moves outside the element
-      if (!this.isTouch(ev) && this.state !== State.INACTIVE) {
+      if (!this.isTouch(ev) && ripple.state !== State.INACTIVE) {
         this.endPress(ripple);
       }
     }
