@@ -63,11 +63,11 @@ export class Ripple extends LitElement {
     this.hovered = false;
   }
 
-  beginFocus() {
+  handleFocusin() {
     this.focused = true;
   }
 
-  endFocus() {
+  handleFocusout() {
     this.focused = false;
   }
 
@@ -102,7 +102,7 @@ export class Ripple extends LitElement {
   protected override update(changedProps: PropertyValues<this>) {
     if (changedProps.has('disabled') && this.disabled) {
       this.hovered = false;
-      this.endFocus();
+      this.focused = false;
       this.endPress();
     }
     super.update(changedProps);

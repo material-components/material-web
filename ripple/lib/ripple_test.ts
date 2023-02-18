@@ -63,16 +63,16 @@ describe('ripple', () => {
       expect(surface).not.toHaveClass(RippleStateClasses.PRESSED);
     });
 
-    it('sets focused class on beginFocus()', async () => {
-      element.beginFocus();
+    it('sets focused class on handleFocusin()', async () => {
+      element.handleFocusin();
       await element.updateComplete;
 
       expect(surface).toHaveClass(RippleStateClasses.FOCUSED);
     });
 
-    it('removes focused class on endFocus()', async () => {
-      element.beginFocus();
-      element.endFocus();
+    it('removes focused class on handleFocusout()', async () => {
+      element.handleFocusin();
+      element.handleFocusout();
 
       expect(surface).not.toHaveClass(RippleStateClasses.FOCUSED);
     });
