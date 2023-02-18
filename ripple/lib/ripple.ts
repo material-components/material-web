@@ -47,13 +47,19 @@ export class Ripple extends LitElement {
   private growAnimation?: Animation;
   private delayedEndPressHandle?: number;
 
-  beginHover(hoverEvent?: Event) {
-    if ((hoverEvent as PointerEvent)?.pointerType !== 'touch') {
-      this.hovered = true;
+  handlePointerenter(event: PointerEvent) {
+    if (this.isTouch(event) || !this.shouldReactToEvent(event)) {
+      return;
     }
+
+    this.hovered = true;
   }
 
-  endHover() {
+  handlePointerleave(event: PointerEvent) {
+    if (!this.shouldReactToEvent(event)) {
+      return;
+    }
+
     this.hovered = false;
   }
 
@@ -95,7 +101,7 @@ export class Ripple extends LitElement {
 
   protected override update(changedProps: PropertyValues<this>) {
     if (changedProps.has('disabled') && this.disabled) {
-      this.endHover();
+      this.hovered = false;
       this.endFocus();
       this.endPress();
     }
@@ -191,5 +197,18 @@ export class Ripple extends LitElement {
           easing: EASING.STANDARD,
           fill: ANIMATION_FILL
         });
+  }
+
+  /**
+   * Returns `true` if
+   *  - the ripple element is enabled
+   *  - the pointer is primary for the input type
+   */
+  private shouldReactToEvent(event: PointerEvent) {
+    return !this.disabled && event.isPrimary;
+  }
+
+  private isTouch({pointerType}: PointerEvent) {
+    return pointerType === 'touch';
   }
 }

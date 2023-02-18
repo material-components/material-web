@@ -77,24 +77,28 @@ describe('ripple', () => {
       expect(surface).not.toHaveClass(RippleStateClasses.FOCUSED);
     });
 
-    it('sets hover class on beginHover()', async () => {
-      element.beginHover();
+    it('sets hover class on handlePointerenter()', async () => {
+      element.handlePointerenter(
+          new PointerEvent('pointerenter', {isPrimary: true}));
       await element.updateComplete;
 
       expect(surface).toHaveClass(RippleStateClasses.HOVERED);
     });
 
-    it('removes hover class on endHover()', async () => {
-      element.beginHover();
+    it('removes hover class on handlePointerleave()', async () => {
+      element.handlePointerenter(
+          new PointerEvent('pointerenter', {isPrimary: true}));
       await element.updateComplete;
-      element.endHover();
+      element.handlePointerleave(
+          new PointerEvent('pointerleave', {isPrimary: true}));
       await element.updateComplete;
 
       expect(surface).not.toHaveClass(RippleStateClasses.HOVERED);
     });
 
     it('stops hovering when disabled', async () => {
-      element.beginHover();
+      element.handlePointerenter(
+          new PointerEvent('pointerenter', {isPrimary: true}));
       await element.updateComplete;
       element.disabled = true;
       await element.updateComplete;

@@ -108,7 +108,7 @@ class RippleDirective extends Directive {
         this.pointerDown(ripple, event as PointerEvent);
         break;
       case 'pointerenter':
-        this.pointerEnter(ripple, event as PointerEvent);
+        ripple.handlePointerenter(event as PointerEvent);
         break;
       case 'pointerleave':
         this.pointerLeave(ripple, event as PointerEvent);
@@ -266,15 +266,9 @@ class RippleDirective extends Directive {
     }
   }
 
-  private pointerEnter(ripple: Ripple, ev: PointerEvent) {
-    if (this.shouldReactToEvent(ripple, ev, true)) {
-      ripple.beginHover(ev);
-    }
-  }
-
   private pointerLeave(ripple: Ripple, ev: PointerEvent) {
     if (this.shouldReactToEvent(ripple, ev, true)) {
-      ripple.endHover();
+      ripple.handlePointerleave(ev);
       // release a held mouse or pen press that moves outside the element
       if (!this.isTouch(ev) && this.state !== State.INACTIVE) {
         this.endPress(ripple);

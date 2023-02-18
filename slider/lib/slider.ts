@@ -347,13 +347,13 @@ export class Slider extends LitElement {
     };
 
     return html`
-    <div 
+    <div
       class="container ${classMap(containerClasses)}"
       style=${styleMap(containerStyles)}
     >
       ${when(this.allowRange, () => this.renderInput(inputAProps))}
       ${this.renderInput(inputBProps)}
-      ${this.renderTrack()}  
+      ${this.renderTrack()}
       <div class="handleContainerPadded">
         <div class="handleContainerBlock">
           <div class="handleContainer ${classMap(handleContainerClasses)}">
@@ -416,7 +416,7 @@ export class Slider extends LitElement {
         this.allowRange ? (lesser ? 'Lesser' : 'Greater') : ''}">
         <div class="handleNub"><md-elevation shadow></md-elevation></div>
         ${when(this.withLabel, () => this.renderLabel(label))}
-        
+
       </slot>
       ${when(showRipple, () => this.renderRipple(id))}
       ${when(focusRequested, () => this.renderFocusRing(showFocus))}
@@ -440,16 +440,16 @@ export class Slider extends LitElement {
     })}"
       @focus=${this.handleFocus}
       @blur=${this.handleBlur}
-      @pointerdown=${this.handleDown} 
-      @pointerup=${this.handleUp} 
+      @pointerdown=${this.handleDown}
+      @pointerup=${this.handleUp}
       @pointerenter=${this.handleEnter}
       @pointermove=${this.handleMove}
       @pointerleave=${this.handleLeave}
-      @input=${this.handleInput} 
+      @input=${this.handleInput}
       @change=${this.handleChange}
       .disabled=${this.disabled}
-      .min=${String(this.min)} 
-      .max=${String(this.max)} 
+      .min=${String(this.min)}
+      .max=${String(this.max)}
       .step=${String(this.step)}
       .value=${String(value)}
       .tabIndex=${lesser ? 1 : 0}
@@ -484,10 +484,13 @@ export class Slider extends LitElement {
     if (!rippleEl) {
       return;
     }
+    // TODO(b/269799771): improve slider ripple connection
     if (hovering) {
-      rippleEl.beginHover();
+      rippleEl.handlePointerenter(
+          new PointerEvent('pointerenter', {isPrimary: true}));
     } else {
-      rippleEl.endHover();
+      rippleEl.handlePointerleave(
+          new PointerEvent('pointerleave', {isPrimary: true}));
     }
   }
 

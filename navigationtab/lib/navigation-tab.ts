@@ -153,12 +153,12 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
   }
 
   protected handlePointerEnter(e: PointerEvent) {
-    this.ripple.beginHover(e);
+    this.ripple.handlePointerenter(e);
   }
 
   override handlePointerLeave(e: PointerEvent) {
     super.handlePointerLeave(e);
-    this.ripple.endHover();
+    this.ripple.handlePointerleave(e);
   }
 
   protected handleFocus() {
