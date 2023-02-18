@@ -28,7 +28,6 @@ class RippleDirective extends Directive {
   private checkBoundsAfterContextMenu = false;
   private rippleStartEvent: PointerEvent|null = null;
   private touchTimer: number|null = null;
-  private clickTimer: number|null = null;
 
   constructor(partInfo: PartInfo) {
     super(partInfo);
@@ -138,10 +137,6 @@ class RippleDirective extends Directive {
     if (this.touchTimer) {
       clearTimeout(this.touchTimer);
       this.touchTimer = null;
-    }
-    if (this.clickTimer) {
-      clearTimeout(this.clickTimer);
-      this.clickTimer = null;
     }
   }
 
