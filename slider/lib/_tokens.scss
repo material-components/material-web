@@ -11,6 +11,7 @@
 @use '../../sass/color';
 @use '../../sass/shape';
 @use '../../sass/theme';
+@use '../../sass/typography';
 @use '../../sass/var';
 @use '../../tokens';
 // go/keep-sorted end
@@ -28,12 +29,14 @@ $_tokens: (
     map.get(tokens.md-sys-motion-values(), 'easing-emphasized'),
 );
 
+@function resolve-typography($tokens) {
+  @return typography.resolve-tokens($tokens, 'label-label-text');
+}
+
 @function remove-unsupported-tokens($tokens) {
   $unsupported-tokens: (
     'disabled-handle-opacity',
     'label-container-elevation',
-    // b/203778922: `*-type` used by other platforms but not web.
-    'label-label-text-type',
     'track-elevation',
     // for efficiency, tick marks are rendered as radial-gradients and
     // have more limited customization
@@ -54,6 +57,7 @@ $_tokens: (
  */
 @function md-comp-slider-values() {
   $tokens: remove-unsupported-tokens($baseTokens);
+  $tokens: typography.resolve-tokens($tokens, 'label-label-text');
   @return map.merge($tokens, $_tokens);
 }
 

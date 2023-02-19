@@ -13,15 +13,16 @@
 @use '../../focus/focus-ring';
 @use '../../ripple/ripple';
 @use '../../sass/color';
-@use '../../sass/resolvers';
 @use '../../sass/shape';
 @use '../../sass/theme';
+@use '../../sass/typography';
 @use '../../sass/var';
 @use './tokens';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
   $tokens: tokens.remove-unsupported-tokens($tokens);
+  $tokens: typography.resolve-tokens($tokens, 'label-label-text');
   $tokens: theme.validate-theme(tokens.md-comp-slider-values(), $tokens);
   $tokens: theme.create-theme-vars($tokens, 'slider');
 
@@ -310,11 +311,7 @@
     border-radius: var(--_label-container-shape);
 
     color: var(--_label-label-text-color);
-    font-family: var(--_label-label-text-font);
-    font-size: var(--_label-label-text-size);
-    font-weight: var(--_label-label-text-weight);
-    letter-spacing: var(--_label-label-text-tracking);
-    line-height: var(--_label-label-text-line-height);
+    font: var(--_label-label-text-type);
 
     inset-block-end: 100%;
     min-inline-size: var(--_label-container-height);
