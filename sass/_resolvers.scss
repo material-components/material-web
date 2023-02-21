@@ -8,11 +8,9 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use './elevation';
-@use './typography';
 // go/keep-sorted end
 
 /// Material Design resolvers.
 $material: (
   elevation: meta.get-function('resolver', $module: 'elevation'),
-  typography: meta.get-function('resolver', $module: 'typography'),
 );
