@@ -84,12 +84,12 @@ export abstract class Action extends ActionElement {
   }
 
   override beginPress({positionEvent}: BeginPressConfig) {
-    this.ripple?.beginPress(positionEvent);
+    // TODO(b/253297063): connect to ripple
   }
 
   override endPress(options: EndPressConfig) {
     super.endPress(options);
-    this.ripple?.endPress();
+    // TODO(b/253297063): connect to ripple
     if (!options.cancelled) {
       this.dispatchCustomEvent(this.getInteractionEvent());
     }

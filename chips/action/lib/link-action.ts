@@ -52,6 +52,6 @@ export class LinkAction extends PrimaryAction {
 
   override endPress(options: EndPressConfig) {
     super.endPress(options);
-    this.ripple?.endPress();
+    // TODO(b/253297063): connect to ripple
   }
 }
