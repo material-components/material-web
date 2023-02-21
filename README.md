@@ -49,7 +49,7 @@ Menu                          | 🟢     | 🟢    | 🟡
 Progress indicator (circular) | 🔴     | 🔴    | 🔴
 Progress indicator (linear)   | 🔴     | 🔴    | 🔴
 Radio button                  | 🟢     | 🟢    | 🔴
-Ripple                        | 🟢     | 🟡    | 🔴
+Ripple                        | 🟢     | 🟢    | 🟡
 Select                        | 🟡     | 🔴    | 🔴
 Slider                        | 🟢     | 🟢    | 🔴
 Switch                        | 🟢     | 🟢    | 🔴
