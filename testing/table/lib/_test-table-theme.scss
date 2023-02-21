@@ -32,9 +32,6 @@ $_default-deps: (
     header-cell-padding: if($exclude-hardcoded-values, null, 8px),
     header-cell-text-color: map.get($deps, md-sys-color, on-surface-variant),
     header-cell-text-type: map.get($deps, 'md-sys-typescale', 'title-medium'),
-    // TODO(b/269348572): remove token after converting all components
-    header-cell-text-tracking:
-      map.get($deps, 'md-sys-typescale', 'title-medium-tracking'),
     outline-color: map.get($deps, md-sys-color, outline)
   );
 }
@@ -141,8 +138,6 @@ $dark-theme: values(
 @mixin _header-cell-text-typography($font) {
   .md3-test-table__header {
     font: map.get($font, 'type');
-    // TODO(b/269348572): remove token after converting all components
-    letter-spacing: map.get($font, 'tracking');
   }
 }
 
