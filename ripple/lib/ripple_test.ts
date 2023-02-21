@@ -4,7 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {html} from 'lit';
 import {customElement} from 'lit/decorators.js';
+import {createRef, ref} from 'lit/directives/ref.js';
+
+import {Environment} from '../../testing/environment.js';
+import {Harness} from '../../testing/harness.js';
+import {ripple} from '../directive.js';
 
 import {Ripple} from './ripple.js';
 
@@ -24,84 +30,111 @@ declare global {
 class TestRipple extends Ripple {
 }
 
-describe('ripple', () => {
-  let element: TestRipple;
-  let surface: HTMLDivElement;
-  let container: HTMLDivElement;
+describe('Ripple', () => {
+  const env = new Environment();
+
+  async function setupTest() {
+    const rippleRef = createRef<TestRipple>();
+    const root = env.render(html`
+      <div ${ripple(() => rippleRef.value || null)}
+          @focusin=${() => rippleRef.value?.handleFocusin()}
+          @focusout=${() => rippleRef.value?.handleFocusout()}>
+        <test-ripple ${ref(rippleRef)}></test-ripple>
+      </div>
+    `);
+
+    const container = root.querySelector('div');
+    if (!container) {
+      throw new Error('Could not query rendered container.');
+    }
+
+    const instance = root.querySelector('test-ripple');
+    if (!instance) {
+      throw new Error('Could not query rendered <test-ripple>.');
+    }
+
+    await env.waitForStability();
+
+    const surface = instance.renderRoot.querySelector('.surface');
+    if (!surface) {
+      throw new Error('Could not query rendered surface.');
+    }
+
+    return {
+      instance,
+      surface,
+      harness: new Harness(container),
+    };
+  }
 
   describe('basic', () => {
-    beforeEach(async () => {
-      container = document.createElement('div');
-      document.body.appendChild(container);
-
-      element = document.createElement('test-ripple');
-      container.appendChild(element);
-      await element.updateComplete;
-
-      surface = element.renderRoot.querySelector('.surface')!;
+    it('initializes as an test-ripple', async () => {
+      const {instance} = await setupTest();
+      expect(instance).toBeInstanceOf(TestRipple);
     });
 
-    afterEach(() => {
-      document.body.removeChild(container);
-    });
-
-    it('initializes as an test-ripple', () => {
-      expect(element).toBeInstanceOf(TestRipple);
-    });
-
-    it('sets pressed class on beginPress()', async () => {
-      element.beginPress();
-      await element.updateComplete;
+    it('sets pressed class on begin press', async () => {
+      const {harness, surface} = await setupTest();
+      await harness.startTap();
+      jasmine.clock().tick(150);  // touch delay
+      await env.waitForStability();
 
       expect(surface).toHaveClass(RippleStateClasses.PRESSED);
     });
 
-    it('removes pressed class on endPress()', async () => {
-      element.beginPress();
-      element.endPress();
+    it('removes pressed class on end press', async () => {
+      const {harness, surface} = await setupTest();
+      await harness.startTap();
+      jasmine.clock().tick(150);  // touch delay
+      await harness.endTap();
+      await harness.endTapClick();
+      jasmine.clock().tick(225);  // MINIMUM_PRESS_MS
+      await env.waitForStability();
 
       expect(surface).not.toHaveClass(RippleStateClasses.PRESSED);
     });
 
-    it('sets focused class on handleFocusin()', async () => {
-      element.handleFocusin();
-      await element.updateComplete;
+    it('sets focused class on focus', async () => {
+      const {harness, surface} = await setupTest();
+      await harness.focusWithKeyboard();
+      await env.waitForStability();
 
       expect(surface).toHaveClass(RippleStateClasses.FOCUSED);
     });
 
-    it('removes focused class on handleFocusout()', async () => {
-      element.handleFocusin();
-      element.handleFocusout();
+    it('removes focused class on blur', async () => {
+      const {harness, surface} = await setupTest();
+      await harness.focusWithKeyboard();
+      await harness.blur();
+      await env.waitForStability();
 
       expect(surface).not.toHaveClass(RippleStateClasses.FOCUSED);
     });
 
-    it('sets hover class on handlePointerenter()', async () => {
-      element.handlePointerenter(
-          new PointerEvent('pointerenter', {isPrimary: true}));
-      await element.updateComplete;
+    it('sets hover class on pointer enter', async () => {
+      const {harness, surface} = await setupTest();
+      await harness.startHover();
+      await env.waitForStability();
 
       expect(surface).toHaveClass(RippleStateClasses.HOVERED);
     });
 
-    it('removes hover class on handlePointerleave()', async () => {
-      element.handlePointerenter(
-          new PointerEvent('pointerenter', {isPrimary: true}));
-      await element.updateComplete;
-      element.handlePointerleave(
-          new PointerEvent('pointerleave', {isPrimary: true}));
-      await element.updateComplete;
+    it('removes hover class on pointer leave', async () => {
+      const {harness, surface} = await setupTest();
+      await harness.startHover();
+      await env.waitForStability();
+      await harness.endHover();
+      await env.waitForStability();
 
       expect(surface).not.toHaveClass(RippleStateClasses.HOVERED);
     });
 
     it('stops hovering when disabled', async () => {
-      element.handlePointerenter(
-          new PointerEvent('pointerenter', {isPrimary: true}));
-      await element.updateComplete;
-      element.disabled = true;
-      await element.updateComplete;
+      const {instance, harness, surface} = await setupTest();
+      await harness.startHover();
+      await env.waitForStability();
+      instance.disabled = true;
+      await env.waitForStability();
 
       expect(surface).not.toHaveClass(RippleStateClasses.HOVERED);
     });

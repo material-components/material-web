@@ -491,7 +491,6 @@ export class Harness<E extends HTMLElement = HTMLElement> {
       screenY: rect.top,
     };
 
-
     const pointerInit = {
       ...mouseInit,
       isPrimary: true,
@@ -611,14 +610,17 @@ export class Harness<E extends HTMLElement = HTMLElement> {
       ...init,
     };
 
-    const touch = this.createTouch(element);
     element.dispatchEvent(new PointerEvent('pointerdown', pointerInit));
-    element.dispatchEvent(new TouchEvent('touchstart', {
-      touches: [touch],
-      targetTouches: [touch],
-      changedTouches: [touch],
-      ...touchInit,
-    }));
+    // Firefox does not support TouchEvent constructor
+    if (window.TouchEvent) {
+      const touch = this.createTouch(element);
+      element.dispatchEvent(new TouchEvent('touchstart', {
+        touches: [touch],
+        targetTouches: [touch],
+        changedTouches: [touch],
+        ...touchInit,
+      }));
+    }
     this.simulatePointerFocus(element);
   }
 
@@ -640,10 +642,13 @@ export class Harness<E extends HTMLElement = HTMLElement> {
       ...init,
     };
 
-    const touch = this.createTouch(element);
     element.dispatchEvent(new PointerEvent('pointerup', pointerInit));
-    element.dispatchEvent(
-        new TouchEvent('touchend', {changedTouches: [touch], ...touchInit}));
+    // Firefox does not support TouchEvent constructor
+    if (window.TouchEvent) {
+      const touch = this.createTouch(element);
+      element.dispatchEvent(
+          new TouchEvent('touchend', {changedTouches: [touch], ...touchInit}));
+    }
   }
 
   /**
@@ -664,10 +669,13 @@ export class Harness<E extends HTMLElement = HTMLElement> {
       ...init,
     };
 
-    const touch = this.createTouch(element);
     element.dispatchEvent(new PointerEvent('pointercancel', pointerInit));
-    element.dispatchEvent(
-        new TouchEvent('touchcancel', {changedTouches: [touch], ...touchInit}));
+    // Firefox does not support TouchEvent constructor
+    if (window.TouchEvent) {
+      const touch = this.createTouch(element);
+      element.dispatchEvent(new TouchEvent(
+          'touchcancel', {changedTouches: [touch], ...touchInit}));
+    }
   }
 
   /**
