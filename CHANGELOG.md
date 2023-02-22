@@ -1,5 +1,64 @@
 # Changelog
 
+## [1.0.0-pre.3](https://github.com/material-components/material-web/compare/v1.0.0-pre.2...v1.0.0-pre.3) (2023-02-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* **slider:** fix ripple end hover state when leaving handle
+* **controller:** fix label activation utility on slotted elements
+* **dialog:** fix exception when opening when compiled with advanced closure settings
+* **ripple:** rename press methods to event handlers
+* **ripple:** rename focus methods to event handlers
+* **ripple:** rename hover methods to event handlers
+* **navigation,badge:** migrate to `-text-type` tokens
+* **fab:** move to `label-text-type` token, shape corners
+* **segementedbutton:** move to `label-text-type` token
+* **list,menu:** move to `-text-type` tokens
+* **dialog:** migrate to `header-type` and `supporting-text-type` tokens
+* **button:** replace label-text-* tokens with label-text-type
+* **field & dependents:** convert to use text-type tokens
+* **all:** checkbox container-width/height tokens have been renamed to container-size
+* **ripple:** remove "state-layer" from token names
+* **all:** use shape.resolve-tokens and remove shape.resolve-theme
+
+### Features
+
+* **shape, string-ext:** Allow shape corners to fall back to a single custom property ([1afd925](https://github.com/material-components/material-web/commit/1afd9259adacf4cdf429dd0648b82bd23b3cdad6))
+* **slider:** adds slider element ([f0f5ae5](https://github.com/material-components/material-web/commit/f0f5ae57abee9ee5324bf628b31af091c0751b17))
+* **tokens:** generate v0.160 ([20de321](https://github.com/material-components/material-web/commit/20de321c7449f100187de0663d074b34c03697f2))
+* **typography:** implement resolve-tokens function to use `-text-type` ([1550e8e](https://github.com/material-components/material-web/commit/1550e8e60833687ea7cb059e25aa677e783f14a1))
+
+
+### Bug Fixes
+
+* **all:** update tokens to 0.160 ([9025af3](https://github.com/material-components/material-web/commit/9025af316a0cee7c710e01cedbc8ce58cdd8bcef))
+* **all:** use shape.resolve-tokens and remove shape.resolve-theme ([44a8d74](https://github.com/material-components/material-web/commit/44a8d74f56bfe31a422b93675b4085e0dd4b8876))
+* **button:** replace label-text-* tokens with label-text-type ([69f9a17](https://github.com/material-components/material-web/commit/69f9a17a12fa86e1e2ba04fc35ad9b9f138b68ad))
+* **controller:** fix label activation utility on slotted elements ([8b58f98](https://github.com/material-components/material-web/commit/8b58f98a829fa93e2278ad041bf136cc9ed8b354))
+* **dialog:** fix exception when opening when compiled with advanced closure settings ([c63a1d9](https://github.com/material-components/material-web/commit/c63a1d9caf82f906d19607e46070a0bf73010c66))
+* **dialog:** migrate to `header-type` and `supporting-text-type` tokens ([66948a4](https://github.com/material-components/material-web/commit/66948a49011c30b072e645ba958a2a44ce218a8b))
+* **docs:** fix documentation to show using `-type` tokens ([c955055](https://github.com/material-components/material-web/commit/c955055ae2b1582e467f3b0902281e1724efdf49))
+* **fab:** move to `label-text-type` token, shape corners ([8c01aee](https://github.com/material-components/material-web/commit/8c01aeea08c750f3c25a60a0a2691c571f3a8996))
+* **field & dependents:** convert to use text-type tokens ([cc5a7db](https://github.com/material-components/material-web/commit/cc5a7db27d4a2ee58eab1dcd59da59847b94344c))
+* **list,menu:** move to `-text-type` tokens ([45a6d45](https://github.com/material-components/material-web/commit/45a6d45577b217148bc9d6e008c24710e4845b61))
+* **navigation,badge:** migrate to `-text-type` tokens ([7b86677](https://github.com/material-components/material-web/commit/7b8667711a17cc9f8cf30e2d9fdef61dff6d0bb2))
+* **ripple:** remove "state-layer" from token names ([ff84a66](https://github.com/material-components/material-web/commit/ff84a66f3effdd5291781321e11cbbd34001dd26))
+* **ripple:** rename focus methods to event handlers ([6e97717](https://github.com/material-components/material-web/commit/6e977178c5bb41e47e24264c47b08b7b8d3b9833))
+* **ripple:** rename hover methods to event handlers ([cde7ca0](https://github.com/material-components/material-web/commit/cde7ca0e3bbd0edaecf4dcea9226f258dae4070e))
+* **ripple:** rename press methods to event handlers ([0cc7d29](https://github.com/material-components/material-web/commit/0cc7d2959a6aca83942cf37cb95bb0dbc395258b))
+* **segementedbutton:** move to `label-text-type` token ([bd125fe](https://github.com/material-components/material-web/commit/bd125fe4562712da5ecc1b4abd559fd1e737f8cd))
+* **slider:** fix ripple end hover state when leaving handle ([535d889](https://github.com/material-components/material-web/commit/535d8897758aa72bbff41ee5f7c552bec2b4042f))
+* **slider:** use `label-label-text-type` font token ([ad889ea](https://github.com/material-components/material-web/commit/ad889ea31bb069418ab2a42d588bd99309809d0f))
+* **testing:** convert test-table to use `-type` tokens ([2046401](https://github.com/material-components/material-web/commit/20464014bb0873253bcf8f14b0e950543292ce6d))
+* **testing:** remove header-cell-text-tracking ([43ce8c1](https://github.com/material-components/material-web/commit/43ce8c1d31f118eacde8a8aa1a3e898af1dddc4c))
+* **typograph:** remove typography resolver ([2a8ba18](https://github.com/material-components/material-web/commit/2a8ba183607035cceb8776dab030ec311471ebcc))
+
+
+### Miscellaneous Chores
+
+* update next version ([77b4864](https://github.com/material-components/material-web/commit/77b48640e5d53a04ba414de77af0ca22316cccd4))
+
 ## [1.0.0-pre.2](https://github.com/material-components/material-web/compare/v1.0.0-pre.1...v1.0.0-pre.2) (2023-02-06)
 
 
