@@ -10,6 +10,7 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
+@use '../../../icon/icon';
 @use '../../../sass/map-ext';
 @use '../../../sass/theme';
 // go/keep-sorted end
@@ -42,30 +43,13 @@ $_reference: (
   }
 
   .md3-list-item__icon {
-    color: var(--_list-item-icon-color);
+    @include icon.theme(
+      (
+        color: var(--_list-item-icon-color),
+        size: var(--_list-item-icon-size),
+      )
+    );
     opacity: var(--_list-item-icon-opacity);
-    font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
-    font-size: var(--_list-item-icon-size);
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-flex;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    height: 100%;
-    width: 100%;
     padding-inline-start: 16px;
-
-    /* Support for all WebKit browsers. */
-    -webkit-font-smoothing: antialiased;
-    /* Support for Safari and Chrome. */
-    text-rendering: optimizeLegibility;
-    /* Support for Firefox. */
-    -moz-osx-font-smoothing: grayscale;
-    /* Support for IE. */
-    font-feature-settings: 'liga';
   }
 }

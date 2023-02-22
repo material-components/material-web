@@ -7,8 +7,7 @@
   $values: (
     (
       color: if($exclude-hardcoded-values, null, inherit),
-      // TODO(b/225384738): Change to 'Material Symbols Outlined'
-      font: if($exclude-hardcoded-values, null, 'Material Icons'),
+      font: if($exclude-hardcoded-values, null, 'Material Symbols Outlined'),
       font-variation-settings: if($exclude-hardcoded-values, null, inherit),
       size: if($exclude-hardcoded-values, null, 24px),
       weight: if($exclude-hardcoded-values, null, 400),
