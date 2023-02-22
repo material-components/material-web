@@ -14,15 +14,15 @@ import {Field} from './field.js';
 export class OutlinedField extends Field {
   protected override renderOutline(floatingLabel: TemplateResult) {
     return html`
-      <span class="outline">
-        <span class="outline-start"></span>
-        <span class="outline-notch">
-          <span class="outline-panel-inactive"></span>
-          <span class="outline-panel-active"></span>
+      <div class="outline">
+        <div class="outline-start"></div>
+        <div class="outline-notch">
+          <div class="outline-panel-inactive"></div>
+          <div class="outline-panel-active"></div>
           ${floatingLabel}
-        </span>
-        <span class="outline-end"></span>
-      </span>
+        </div>
+        <div class="outline-end"></div>
+      </div>
     `;
   }
 }

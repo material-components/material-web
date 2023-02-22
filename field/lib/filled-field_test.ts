@@ -23,12 +23,13 @@ declare global {
 @customElement('md-test-filled-field')
 class TestFilledField extends FilledField {
   get strokeTransformOriginProp() {
-    const element = this.renderRoot.querySelector('.active-indicator');
+    const element =
+        this.renderRoot.querySelector<HTMLElement>('.active-indicator');
     if (!element) {
       return '';
     }
 
-    return getComputedStyle(element).transformOrigin.split(' ')[0];
+    return element.style.transformOrigin.split(' ')[0];
   }
 }
 
@@ -88,7 +89,7 @@ describe('Field', () => {
         // Assertion.
         expect(instance.strokeTransformOriginProp)
             .withContext('should not update stroke transform when disabled')
-            .toBe('0px');
+            .toBe('');
       });
 
       it('should be reset when unfocused', async () => {
@@ -107,7 +108,7 @@ describe('Field', () => {
         // Assertion.
         expect(instance.strokeTransformOriginProp)
             .withContext('should rest stroke transform when unfocused')
-            .toBe('0px');
+            .toBe('');
       });
     });
   });

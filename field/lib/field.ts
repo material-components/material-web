@@ -72,35 +72,35 @@ export class Field extends LitElement {
     };
 
     return html`
-      <span class="field ${classMap(classes)}">
-        <span class="container">
+      <div class="field ${classMap(classes)}">
+        <div class="container">
           ${this.renderBackground?.()}
           ${this.renderIndicator?.()}
           ${outline}
-          <span class="start">
+          <div class="start">
             <slot name="start"></slot>
-          </span>
-          <span class="middle">
+          </div>
+          <div class="middle">
             ${restingLabel}
             ${outline ? nothing : floatingLabel}
-            <span class="content">
+            <div class="content">
               <slot></slot>
-            </span>
-          </span>
-          <span class="end">
+            </div>
+          </div>
+          <div class="end">
             <slot name="end"></slot>
-          </span>
-        </span>
+          </div>
+        </div>
 
-        <span class="supporting-text">
-          <span class="supporting-text-start">
+        <div class="supporting-text">
+          <div class="supporting-text-start">
             <slot name="supporting-text"></slot>
-          </span>
-          <span class="supporting-text-end">
+          </div>
+          <div class="supporting-text-end">
             <slot name="supporting-text-end"></slot>
-          </span>
-        </span>
-      </span>
+          </div>
+        </div>
+      </div>
     `;
   }
 

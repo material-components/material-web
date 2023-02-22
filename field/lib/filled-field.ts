@@ -27,14 +27,14 @@ export class FilledField extends Field {
 
   protected override renderBackground() {
     return html`
-      <span class="state-layer"></span>
+      <div class="state-layer"></div>
     `;
   }
 
   protected override renderIndicator() {
     const strokeStyle = {transformOrigin: this.strokeTransformOrigin};
     return html`
-      <span class="active-indicator" style="${styleMap(strokeStyle)}"></span>
+      <div class="active-indicator" style="${styleMap(strokeStyle)}"></div>
     `;
   }
 
