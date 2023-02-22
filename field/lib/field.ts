@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, PropertyValues} from 'lit';
+import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
 import {property, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
@@ -57,6 +57,9 @@ export class Field extends LitElement {
   }
 
   protected override render() {
+    const floatingLabel = this.renderLabel(/*isFloating*/ true);
+    const restingLabel = this.renderLabel(/*isFloating*/ false);
+    const outline = this.renderOutline?.(floatingLabel);
     const classes = {
       'disabled': this.disabled,
       'error': this.error && !this.disabled,
@@ -71,7 +74,22 @@ export class Field extends LitElement {
     return html`
       <span class="field ${classMap(classes)}">
         <span class="container">
-          ${this.renderContainerContents()}
+          ${this.renderBackground?.()}
+          ${this.renderIndicator?.()}
+          ${outline}
+          <span class="start">
+            <slot name="start"></slot>
+          </span>
+          <span class="middle">
+            ${restingLabel}
+            ${outline ? nothing : floatingLabel}
+            <span class="content">
+              <slot></slot>
+            </span>
+          </span>
+          <span class="end">
+            <slot name="end"></slot>
+          </span>
         </span>
 
         <span class="supporting-text">
@@ -86,31 +104,9 @@ export class Field extends LitElement {
     `;
   }
 
-  protected renderContainerContents() {
-    return html`
-      <span class="start">
-        <slot name="start"></slot>
-      </span>
-      <span class="middle">${this.renderMiddleContents()}</span>
-      <span class="end">
-        <slot name="end"></slot>
-      </span>
-    `;
-  }
-
-  protected renderMiddleContents() {
-    return html`
-      <span class="content"><slot></slot></span>
-    `;
-  }
-
-  protected renderFloatingLabel() {
-    return this.renderLabel(/*isFloating*/ true);
-  }
-
-  protected renderRestingLabel() {
-    return this.renderLabel(/*isFloating*/ false);
-  }
+  protected renderBackground?(): TemplateResult;
+  protected renderIndicator?(): TemplateResult;
+  protected renderOutline?(floatingLabel: TemplateResult): TemplateResult;
 
   private renderLabel(isFloating: boolean) {
     let visible: boolean;

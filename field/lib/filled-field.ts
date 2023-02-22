@@ -18,7 +18,24 @@ export class FilledField extends Field {
 
   constructor() {
     super();
-    this.addEventListener('click', this.handleClick);
+    this.addEventListener('click', event => {
+      if (!this.disabled) {
+        this.updateStrokeTransformOrigin(event);
+      }
+    });
+  }
+
+  protected override renderBackground() {
+    return html`
+      <span class="state-layer"></span>
+    `;
+  }
+
+  protected override renderIndicator() {
+    const strokeStyle = {transformOrigin: this.strokeTransformOrigin};
+    return html`
+      <span class="active-indicator" style="${styleMap(strokeStyle)}"></span>
+    `;
   }
 
   protected override update(props: PropertyValues<FilledField>) {
@@ -31,32 +48,6 @@ export class FilledField extends Field {
 
     super.update(props);
   }
-
-  protected override renderContainerContents() {
-    const strokeStyle = {transformOrigin: this.strokeTransformOrigin};
-    return html`
-      <span class="state-layer"></span>
-      ${super.renderContainerContents()}
-      <span class="active-indicator"
-        style="${styleMap(strokeStyle)}"></span>
-    `;
-  }
-
-  protected override renderMiddleContents() {
-    return html`
-      ${this.renderFloatingLabel()}
-      ${this.renderRestingLabel()}
-      ${super.renderMiddleContents()}
-    `;
-  }
-
-  private readonly handleClick = (event: MouseEvent|TouchEvent) => {
-    if (this.disabled) {
-      return;
-    }
-
-    this.updateStrokeTransformOrigin(event);
-  };
 
   private updateStrokeTransformOrigin(event?: MouseEvent|TouchEvent) {
     let transformOrigin = '';

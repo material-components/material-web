@@ -6,7 +6,7 @@
 
 // import 'jasmine'; (google3-only)
 
-import {html} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Environment} from '../../testing/environment.js';
@@ -27,12 +27,8 @@ class TestField extends Field {
   }
 
   // Ensure floating/resting labels are both rendered
-  protected override renderMiddleContents() {
-    return html`
-      ${this.renderFloatingLabel()}
-      ${this.renderRestingLabel()}
-      ${super.renderMiddleContents()}
-    `;
+  protected override renderOutline(floatingLabel: TemplateResult) {
+    return floatingLabel;
   }
 }
 
