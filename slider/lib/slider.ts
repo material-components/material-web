@@ -487,10 +487,10 @@ export class Slider extends LitElement {
     // TODO(b/269799771): improve slider ripple connection
     if (hovering) {
       rippleEl.handlePointerenter(
-          new PointerEvent('pointerenter', {isPrimary: true}));
+          new PointerEvent('pointerenter', {isPrimary: true, pointerId: 1}));
     } else {
       rippleEl.handlePointerleave(
-          new PointerEvent('pointerleave', {isPrimary: true}));
+          new PointerEvent('pointerleave', {isPrimary: true, pointerId: 1}));
     }
   }
 
