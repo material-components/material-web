@@ -384,9 +384,13 @@ export class Dialog extends LitElement {
     // Compute desired transition duration.
     const duration = msFromTimeCSSValue(getComputedStyle(this).getPropertyValue(
         this.open ? OPENING_TRANSITION_PROP : CLOSING_TRANSITION_PROP));
-    await new Promise(r => {
-      setTimeout(r, duration);
-    });
+    let promise = this.updateComplete;
+    if (duration > 0) {
+      promise = new Promise((r) => {
+        setTimeout(r, duration);
+      });
+    }
+    await promise;
     this.opening = false;
     this.closing = false;
     if (!this.open && this.dialogElement.open) {

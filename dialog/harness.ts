@@ -19,26 +19,29 @@ export class DialogHarness extends Harness<Dialog> {
         HTMLDialogElement;
   }
 
-  async isOpening() {
-    await this.element.updateComplete;
-    return Boolean(this.element.open && this.element.hasAttribute('opening'));
+  isOpening() {
+    // Test access to state
+    // tslint:disable-next-line:no-dict-access-on-struct-type
+    return Boolean(this.element.open && this.element['opening']);
   }
 
-  async isClosing() {
-    await this.element.updateComplete;
-    return Boolean(!this.element.open && this.element.hasAttribute('closing'));
+  isClosing() {
+    // Test access to state
+    // tslint:disable-next-line:no-dict-access-on-struct-type
+    return Boolean(!this.element.open && this.element['closing']);
   }
 
   async transitionComplete() {
+    await this.element.updateComplete;
     let resolve = () => {};
     const doneTransitioning = new Promise<void>(resolver => {
       resolve = () => {
         resolver();
       };
     });
-    if (await this.isOpening()) {
+    if (this.isOpening()) {
       this.element.addEventListener('opened', resolve, {once: true});
-    } else if (await this.isClosing()) {
+    } else if (this.isClosing()) {
       this.element.addEventListener('closed', resolve, {once: true});
     } else {
       resolve();

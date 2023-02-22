@@ -1,0 +1,13 @@
+{
+  "capabilities": {
+    "goog:chromeOptions": {
+      "args": ["--window-position=0,0", "--window-size=599,800"]
+    },
+    "moz:firefoxOptions": {
+      "args": ["-width=599","-height=800"]
+    }
+  },
+  "extension": {
+    "xvfbResolution": "599x800x24"
+  }
+}

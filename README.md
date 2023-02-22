@@ -38,7 +38,7 @@ FAB                           | 🟢     | 🔴    | 🔴
 Icon button                   | 🟢     | 🔴    | 🔴
 Checkbox                      | 🟢     | 🟢    | 🔴
 Chips                         | 🔴     | 🔴    | 🔴
-Dialog                        | 🟢     | 🔴    | 🔴
+Dialog                        | 🟢     | 🟢    | 🔴
 Divider                       | 🟢     | 🟢    | 🟡
 Elevation                     | 🟢     | 🔴    | 🔴
 Focus ring                    | 🟢     | 🔴    | 🔴
