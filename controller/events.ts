@@ -97,6 +97,10 @@ export function dispatchActivationClick(element: HTMLElement) {
  */
 export function isActivationClick(event: Event) {
   // Event must start at the event target.
+  if (event.currentTarget !== event.target) {
+    return false;
+  }
+  // Event must not be retargeted from shadowRoot.
   if (event.composedPath()[0] !== event.target) {
     return false;
   }

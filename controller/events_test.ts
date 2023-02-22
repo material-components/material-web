@@ -13,7 +13,8 @@ describe('events', () => {
 
   beforeEach(() => {
     instance = document.createElement('div');
-    instance.attachShadow({mode: 'open'});
+    instance.attachShadow({mode: 'open'})
+        .append(document.createElement('slot'));
     // To have event.target set correctly, the EventTarget instance must be
     // attached to the DOM.
     document.body.appendChild(instance);
@@ -113,7 +114,7 @@ describe('events', () => {
   });
 
   describe('isActivationClick()', () => {
-    it('should return true only if the event originated from target', () => {
+    it('returns true for click on listener', () => {
       const listener = jasmine.createSpy('listener', isActivationClick);
       listener.and.callThrough();
       instance.addEventListener('click', listener);
@@ -121,12 +122,30 @@ describe('events', () => {
           new MouseEvent('click', {bubbles: true, composed: true}));
       expect(listener).toHaveBeenCalledTimes(1);
       expect(listener.calls.mostRecent().returnValue).toBe(true);
+    });
+
+    it('returns false for click on element listener shadowRoot', () => {
+      const listener = jasmine.createSpy('listener', isActivationClick);
+      listener.and.callThrough();
+      instance.addEventListener('click', listener);
       const innerEl = document.createElement('div');
       instance.shadowRoot!.append(innerEl);
-
       innerEl.dispatchEvent(
           new MouseEvent('click', {bubbles: true, composed: true}));
-      expect(listener).toHaveBeenCalledTimes(2);
+      expect(listener).toHaveBeenCalledTimes(1);
+      expect(listener.calls.mostRecent().returnValue).toBe(false);
+    });
+
+    it('returns false for click on element listener child', () => {
+      const listener = jasmine.createSpy('listener', isActivationClick);
+      listener.and.callThrough();
+      instance.addEventListener('click', listener);
+      const slottedEl = document.createElement('div');
+      instance.append(slottedEl);
+
+      slottedEl.dispatchEvent(
+          new MouseEvent('click', {bubbles: true, composed: true}));
+      expect(listener).toHaveBeenCalledTimes(1);
       expect(listener.calls.mostRecent().returnValue).toBe(false);
     });
   });
