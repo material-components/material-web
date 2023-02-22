@@ -332,8 +332,7 @@ export class Dialog extends LitElement {
     // prevent body scrolling early only when opening to avoid layout
     // shift when closing.
     if (!this.modeless && this.open) {
-      (this.constructor as typeof Dialog)
-          .setDocumentScrollingDisabled(this.open);
+      Dialog.setDocumentScrollingDisabled(this.open);
     }
     if (this.open) {
       this.contentElement.scrollTop = 0;
@@ -410,8 +409,7 @@ export class Dialog extends LitElement {
       await closedPromise;
       // enable scrolling late to avoid layout shift when closing
       if (!this.modeless) {
-        (this.constructor as typeof Dialog)
-            .setDocumentScrollingDisabled(this.open);
+        Dialog.setDocumentScrollingDisabled(this.open);
       }
     }
     // Focus initial element.
