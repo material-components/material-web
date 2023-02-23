@@ -26,12 +26,26 @@
     writing-mode: horizontal-tb;
   }
 
+  // A separate wrapper is needed around the container for the outline, whose
+  // floating label needs overflow: visible. The container itself needs
+  // overflow: hidden for resizability.
+  .container-overflow {
+    border-start-start-radius: var(--_container-shape-start-start);
+    border-start-end-radius: var(--_container-shape-start-end);
+    border-end-end-radius: var(--_container-shape-end-end);
+    border-end-start-radius: var(--_container-shape-end-start);
+    display: flex;
+    position: relative;
+  }
+
   .container {
     align-items: center;
+    border-radius: inherit;
     box-sizing: border-box;
     display: flex;
     flex: 1;
     flex-basis: var(--_container-height);
+    overflow: hidden;
     padding-top: var(--_container-padding-vertical);
     padding-bottom: var(--_container-padding-vertical);
     position: relative;

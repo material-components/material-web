@@ -36,13 +36,6 @@ $_animation-duration: 150ms;
   }
 
   .container {
-    border-start-start-radius: var(--_container-shape-start-start);
-    border-start-end-radius: var(--_container-shape-start-end);
-    border-end-end-radius: var(--_container-shape-end-end);
-    border-end-start-radius: var(--_container-shape-end-start);
-    // If bottom corner radii are set, prevent the active indicator from
-    // overflowing.
-    overflow: hidden;
     // Needed for negative z-index below to place background and state layer
     // behind content.
     z-index: 0;

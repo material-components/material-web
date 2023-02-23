@@ -71,22 +71,24 @@ export class Field extends LitElement {
 
     return html`
       <div class="field ${classMap(classes)}">
-        <div class="container">
-          ${this.renderBackground?.()}
-          ${this.renderIndicator?.()}
+        <div class="container-overflow">
           ${outline}
-          <div class="start">
-            <slot name="start"></slot>
-          </div>
-          <div class="middle">
-            ${restingLabel}
-            ${outline ? nothing : floatingLabel}
-            <div class="content">
-              <slot></slot>
+          <div class="container">
+            ${this.renderBackground?.()}
+            ${this.renderIndicator?.()}
+            <div class="start">
+              <slot name="start"></slot>
             </div>
-          </div>
-          <div class="end">
-            <slot name="end"></slot>
+            <div class="middle">
+              ${restingLabel}
+              ${outline ? nothing : floatingLabel}
+              <div class="content">
+                <slot></slot>
+              </div>
+            </div>
+            <div class="end">
+              <slot name="end"></slot>
+            </div>
           </div>
         </div>
 
@@ -109,12 +111,12 @@ export class Field extends LitElement {
   private renderLabel(isFloating: boolean) {
     let visible: boolean;
     if (isFloating) {
-      // Floating label is visible when focused/populated. It is never visible
-      // while animating.
-      visible = (this.focused || this.populated) && !this.isAnimating;
+      // Floating label is visible when focused/populated or when animating.
+      visible = this.focused || this.populated || this.isAnimating;
     } else {
-      // Resting label is visible when unfocused or while animating.
-      visible = !(this.focused || this.populated) || this.isAnimating;
+      // Resting label is visible when unfocused. It is never visible while
+      // animating.
+      visible = !this.focused && !this.populated && !this.isAnimating;
     }
 
     const classes = {
@@ -154,9 +156,9 @@ export class Field extends LitElement {
     this.labelAnimation?.cancel();
 
     // Only one label is visible at a time for clearer text rendering.
-    // The resting label is visible and used during animation. At the end of the
-    // animation, it will either remain visible (if resting) or hide and the
-    // floating label will be shown.
+    // The floating label is visible and used during animation. At the end of
+    // the animation, it will either remain visible (if floating) or hide and
+    // the resting label will be shown.
     //
     // We don't use forward filling because if the dimensions of the text field
     // change (leading icon removed, density changes, etc), then the animation
@@ -165,7 +167,7 @@ export class Field extends LitElement {
     // Re-calculating the animation each time will prevent any visual glitches
     // from appearing.
     // TODO(b/241113345): use animation tokens
-    this.labelAnimation = this.restingLabelEl?.animate(
+    this.labelAnimation = this.floatingLabelEl?.animate(
         this.getLabelKeyframes(), {duration: 150, easing: EASING.STANDARD});
 
     this.labelAnimation?.addEventListener('finish', () => {
@@ -180,41 +182,46 @@ export class Field extends LitElement {
       return [];
     }
 
-    const {
-      x: floatingX,
-      y: floatingY,
-      width: floatingWidth,
-      height: floatingHeight
-    } = floatingLabelEl.getBoundingClientRect();
-    const {
-      x: restingX,
-      y: restingY,
-      width: restingWidth,
-      height: restingHeight
-    } = restingLabelEl.getBoundingClientRect();
+    const {x: floatingX, y: floatingY, height: floatingHeight} =
+        floatingLabelEl.getBoundingClientRect();
+    const {x: restingX, y: restingY, height: restingHeight} =
+        restingLabelEl.getBoundingClientRect();
+    const floatingScrollWidth = floatingLabelEl.scrollWidth;
+    const restingScrollWidth = restingLabelEl.scrollWidth;
     // Scale by width ratio instead of font size since letter-spacing will scale
     // incorrectly. Using the width we can better approximate the adjusted
-    // scale and compensate for tracking.
-    const scale = floatingWidth / restingWidth;
+    // scale and compensate for tracking and overflow.
+    // (use scrollWidth instead of width to account for clipped labels)
+    const scale = restingScrollWidth / floatingScrollWidth;
     const xDelta = floatingX - restingX;
     // The line-height of the resting and floating label are different. When
-    // we move the resting label up to the floating label's position, it won't
+    // we move the floating label down to the resting label's position, it won't
     // exactly match because of this. We need to adjust by half of what the
-    // final scaled resting label's height will be.
-    const yDelta = floatingY - restingY +
-        Math.round((floatingHeight - restingHeight * scale) / 2);
+    // final scaled floating label's height will be.
+    const yDelta = restingY - floatingY +
+        Math.round((restingHeight - floatingHeight * scale) / 2);
 
-    // Create the two transforms: resting to floating (using the calculations
-    // above), and floating to resting (re-setting the transform to initial
+    // Create the two transforms: floating to resting (using the calculations
+    // above), and resting to floating (re-setting the transform to initial
     // values).
-    const floatTransform = `translateX(${xDelta}px) translateY(calc(-50% + ${
-        yDelta}px)) scale(${scale})`;
-    const restTransform = `translateX(0) translateY(-50%) scale(1)`;
+    const restTransform =
+        `translateX(${xDelta}px) translateY(${yDelta}px) scale(${scale})`;
+    const floatTransform = `translateX(0) translateY(0) scale(1)`;
 
+    // Constrain the floating labels width to a scaled percentage of the
+    // resting label's width. This will prevent long clipped labels from
+    // overflowing the container.
+    const restingClientWidth = restingLabelEl.clientWidth;
+    const isRestingClipped = restingScrollWidth > restingClientWidth;
+    const width = isRestingClipped ? `${restingClientWidth / scale}px` : '';
     if (this.focused || this.populated) {
-      return [{transform: restTransform}, {transform: floatTransform}];
+      return [
+        {transform: restTransform, width}, {transform: floatTransform, width}
+      ];
     }
 
-    return [{transform: floatTransform}, {transform: restTransform}];
+    return [
+      {transform: floatTransform, width}, {transform: restTransform, width}
+    ];
   }
 }

@@ -19,7 +19,7 @@ export class OutlinedField extends Field {
         <div class="outline-notch">
           <div class="outline-panel-inactive"></div>
           <div class="outline-panel-active"></div>
-          ${floatingLabel}
+          <div class="outline-label">${floatingLabel}</div>
         </div>
         <div class="outline-end"></div>
       </div>

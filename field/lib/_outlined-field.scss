@@ -36,11 +36,8 @@ $_animation-duration: 150ms;
   }
 
   .outline {
-    border-start-start-radius: var(--_container-shape-start-start);
-    border-start-end-radius: var(--_container-shape-start-end);
-    border-end-end-radius: var(--_container-shape-end-end);
-    border-end-start-radius: var(--_container-shape-end-start);
     border-color: var(--_outline-color);
+    border-radius: inherit;
     color: var(--_outline-color); // Needed for Firefox HCM
     display: flex;
     // Allow events to target elements underneath the outline, such as icons.
@@ -180,8 +177,10 @@ $_animation-duration: 150ms;
     opacity: 1;
   }
 
-  .label.floating {
-    // Center the label within the outline stroke
+  .outline-label {
+    display: flex;
+    max-width: 100%;
+    // Center the floating label within the outline stroke
     transform: translateY(calc(-100% + var(--_label-text-padding-bottom)));
   }
 

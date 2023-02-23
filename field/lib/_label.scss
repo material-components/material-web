@@ -28,13 +28,12 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    /*rtl:ignore*/
-    transform-origin: top left;
   }
 
   .label.floating {
     font-size: var(--_label-text-populated-size);
     line-height: var(--_label-text-populated-line-height);
+    transform-origin: top left;
   }
 
   .label.hidden {
