@@ -8,7 +8,7 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../elevation/lib/elevation';
-@use '../../tokens';
+@use '../../tokens/v0_160' as tokens; // TODO(b/270568087): update to latest
 // go/keep-sorted end
 
 $_default-deps: (
