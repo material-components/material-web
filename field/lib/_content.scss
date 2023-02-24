@@ -4,14 +4,16 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
 @use 'sass:math';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../motion/animation';
+@use '../../tokens';
 // go/keep-sorted end
 
+$_md-sys-motion: tokens.md-sys-motion-values();
 // Duration of the label animation.
-$_label-duration: 150ms;
+$_label-duration: map.get($_md-sys-motion, 'duration-short3');
 // Duration of the content's visibility animation.
 $_visible-duration: math.round(math.div($_label-duration * 5, 9));
 // Short delay when entering (focusing/populating) so that the label may move
@@ -52,7 +54,8 @@ $_enter-delay: $_label-duration - $_visible-duration;
     display: flex;
     flex: 1;
     opacity: 0;
-    transition: animation.standard(opacity, $_visible-duration);
+    transition: opacity $_visible-duration
+      map.get($_md-sys-motion, 'easing-emphasized');
     // Content elements provided to the field (such as <input>) may use
     // `currentColor` to inherit this property.
     color: var(--_content-color);

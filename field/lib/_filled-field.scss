@@ -7,13 +7,13 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../motion/animation';
 @use '../../sass/shape';
 @use '../../sass/theme';
+@use '../../tokens';
 @use './md-comp-filled-field';
 // go/keep-sorted end
 
-$_animation-duration: 150ms;
+$_md-sys-motion: tokens.md-sys-motion-values();
 
 @mixin theme($tokens) {
   $reference: md-comp-filled-field.values();
@@ -82,9 +82,9 @@ $_animation-duration: 150ms;
   }
 
   .active-indicator {
+    inset: auto 0 0 0;
     // Prevent click events on the indicator element since it has no width and
     // causes bugs when handled by the foundation for updating transform-origin.
-    inset: auto 0 0 0;
     pointer-events: none;
     position: absolute;
     width: 100%;
@@ -102,23 +102,13 @@ $_animation-duration: 150ms;
     // focused indicator
     &::after {
       opacity: 0;
-      transform: scaleX(0);
-      // The element needs to update the transform-origin style attribute in
-      // response to click events. Psuedo elements cannot have their style
-      // updated, but their transform-origin can be inherited.
-      transform-origin: inherit;
-      // Add two transitions: opacity and a delayed transform. With a non-delayed
-      // transform transition on the focus selector without an opacity transition,
-      // this will result in the indicator scaling on enter and fading on exit.
-      transition: animation.standard(opacity, $_animation-duration),
-        transform 0s ease $_animation-duration;
+      transition: opacity map.get($_md-sys-motion, 'duration-short3')
+        map.get($_md-sys-motion, 'easing-emphasized');
     }
   }
 
   .focused .active-indicator::after {
     opacity: 1;
-    transform: scaleX(1);
-    transition: animation.standard(transform, $_animation-duration);
   }
 
   .field:not(.with-start) .start {
