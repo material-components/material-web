@@ -14,6 +14,7 @@ import {Field} from './field.js';
 export class FilledField extends Field {
   protected override renderBackground() {
     return html`
+      <div class="background"></div>
       <div class="state-layer"></div>
     `;
   }

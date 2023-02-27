@@ -19,6 +19,7 @@ export class Field extends LitElement {
   @property({type: Boolean}) focused = false;
   @property({type: String}) label?: string;
   @property({type: Boolean}) populated = false;
+  @property({type: Boolean}) resizable = false;
   @property({type: Boolean}) required = false;
 
   /**
@@ -65,6 +66,7 @@ export class Field extends LitElement {
       'with-start': this.hasStart,
       'with-end': this.hasEnd,
       'populated': this.populated,
+      'resizable': this.resizable,
       'required': this.required,
       'no-label': !this.label,
     };
@@ -73,9 +75,9 @@ export class Field extends LitElement {
       <div class="field ${classMap(classes)}">
         <div class="container-overflow">
           ${outline}
+          ${this.renderBackground?.()}
+          ${this.renderIndicator?.()}
           <div class="container">
-            ${this.renderBackground?.()}
-            ${this.renderIndicator?.()}
             <div class="start">
               <slot name="start"></slot>
             </div>

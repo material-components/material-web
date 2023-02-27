@@ -35,50 +35,29 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     }
   }
 
-  .container {
-    // Needed for negative z-index below to place background and state layer
-    // behind content.
-    z-index: 0;
+  .background,
+  .state-layer {
+    border-radius: inherit;
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+  }
 
-    // ::before is used for background color so that opacity may be changed
-    // without affecting content
-    &::before {
-      background: var(--_container-color);
-    }
+  .background {
+    background: var(--_container-color);
+  }
 
-    // ::after is used for the state layer color and opacity
-    &::after {
-      visibility: hidden;
-    }
+  .state-layer {
+    visibility: hidden;
+  }
 
-    &::before,
-    &::after {
-      border-radius: inherit;
-      content: '';
-      display: flex;
-      height: 100%;
-      position: absolute;
-      width: 100%;
-      z-index: -1;
-    }
+  .field:not(.disabled):hover .state-layer {
+    visibility: visible;
   }
 
   .label.floating {
     position: absolute;
     top: 0;
-  }
-
-  .state-layer {
-    border-radius: inherit;
-    height: 100%;
-    position: absolute;
-    width: 100%;
-    visibility: hidden;
-    z-index: -1;
-  }
-
-  .field:not(.disabled):hover .state-layer {
-    visibility: visible;
   }
 
   .active-indicator {
@@ -150,7 +129,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     opacity: var(--_disabled-active-indicator-opacity);
   }
 
-  .disabled .container::before {
+  .disabled .background {
     background: var(--_disabled-container-color);
     opacity: var(--_disabled-container-opacity);
   }

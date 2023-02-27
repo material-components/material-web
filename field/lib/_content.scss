@@ -25,7 +25,6 @@ $_enter-delay: $_label-duration - $_visible-duration;
   .middle,
   .end {
     display: flex;
-    align-items: center;
     box-sizing: border-box;
     height: 100%;
     // Relative position for absolutely positioned labels (to avoid interfering
@@ -43,6 +42,7 @@ $_enter-delay: $_label-duration - $_visible-duration;
 
   .start,
   .end {
+    align-items: center;
     justify-content: center;
   }
 
@@ -61,6 +61,7 @@ $_enter-delay: $_label-duration - $_visible-duration;
   }
 
   .middle {
+    align-items: stretch;
     // The container of the field aligns sections by "center". Only the middle
     // section opts in to baseline alignment.
     //

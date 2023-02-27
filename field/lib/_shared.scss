@@ -18,12 +18,13 @@
   }
 
   .field {
-    display: inline-flex;
+    display: flex;
     flex: 1;
     flex-direction: column;
     // Allow the use of block/inline reflexive RTL properties without impacting
     // structure when languages change.
     writing-mode: horizontal-tb;
+    max-width: 100%; // Do not allow field to grow beyond explicitly set width
   }
 
   // A separate wrapper is needed around the container for the outline, whose
@@ -41,13 +42,17 @@
   .container {
     align-items: center;
     border-radius: inherit;
-    box-sizing: border-box;
     display: flex;
     flex: 1;
+    min-width: min-content;
     overflow: hidden;
     padding-top: var(--_container-padding-vertical);
     padding-bottom: var(--_container-padding-vertical);
     position: relative;
+  }
+
+  .resizable .container {
+    resize: both;
   }
 
   .disabled {
