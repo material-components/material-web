@@ -11,76 +11,135 @@
 // go/keep-sorted end
 
 $_default-deps: (
-  md-sys-color: tokens.md-sys-color-values-light(),
-  md-sys-shape: tokens.md-sys-shape-values(),
-  md-sys-state: tokens.md-sys-state-values(),
-  md-sys-typescale: tokens.md-sys-typescale-values(),
+  'md-sys-color': tokens.md-sys-color-values-light(),
+  'md-sys-shape': tokens.md-sys-shape-values(),
+  'md-sys-state': tokens.md-sys-state-values(),
+  'md-sys-typescale': tokens.md-sys-typescale-values(),
 );
 
 @function values($deps: $_default-deps, $exclude-hardcoded-values: false) {
-  $text-field-values: tokens.md-comp-filled-text-field-values(
+  $text-field: tokens.md-comp-filled-text-field-values(
     $deps,
     $exclude-hardcoded-values
   );
-  // TODO(b/203778922): Remove *-type when type composite tokens are removed
-  // Remove unused tokens.
-  $values: map.remove(
-    $text-field-values,
-    caret-color,
-    disabled-input-text-color,
-    disabled-input-text-opacity,
-    error-focus-caret-color,
-    error-focus-input-text-color,
-    error-hover-input-text-color,
-    error-input-text-color,
-    focus-input-text-color,
-    hover-input-text-color,
-    input-text-color,
-    input-text-font,
-    input-text-line-height,
-    input-text-size,
-    input-text-tracking,
-    input-text-type,
-    input-text-weight,
-    input-text-placeholder-color,
-    input-text-prefix-color,
-    input-text-suffix-color,
-    label-text-font,
-    label-text-line-height,
-    label-text-size,
-    label-text-tracking,
-    label-text-weight,
-    supporting-text-font,
-    supporting-text-line-height,
-    supporting-text-size,
-    supporting-text-tracking,
-    supporting-text-weight
-  );
 
-  // Add missing tokens.
-  $values: map.merge(
-    $values,
-    (
-      container-padding-horizontal: if($exclude-hardcoded-values, null, 16px),
-      container-padding-vertical: if($exclude-hardcoded-values, null, 16px),
-      content-color: map.get($text-field-values, input-text-color),
-      disabled-content-color:
-        map.get($text-field-values, disabled-input-text-color),
-      disabled-content-opacity:
-        map.get($text-field-values, disabled-input-text-opacity),
-      error-content-color: map.get($text-field-values, error-input-text-color),
-      error-focus-content-color:
-        map.get($text-field-values, error-focus-input-text-color),
-      error-hover-content-color:
-        map.get($text-field-values, error-hover-input-text-color),
-      focus-content-color: map.get($text-field-values, focus-input-text-color),
-      hover-content-color: map.get($text-field-values, hover-input-text-color),
-      supporting-text-padding: if($exclude-hardcoded-values, null, 16px),
-      supporting-text-padding-top: if($exclude-hardcoded-values, null, 4px),
-      with-label-container-padding-vertical:
-        if($exclude-hardcoded-values, null, 8px),
-    )
+  @return (
+    // go/keep-sorted start
+    'active-indicator-color': map.get($text-field, 'active-indicator-color'),
+    'active-indicator-height': map.get($text-field, 'active-indicator-height'),
+    'container-color': map.get($text-field, 'container-color'),
+    'container-padding-horizontal': if($exclude-hardcoded-values, null, 16px),
+    'container-padding-vertical': if($exclude-hardcoded-values, null, 16px),
+    'container-shape': map.get($text-field, 'container-shape'),
+    'content-color': map.get($text-field, 'input-text-color'),
+    'content-type': map.get($text-field, 'input-text-type'),
+    'disabled-active-indicator-color':
+      map.get($text-field, 'disabled-active-indicator-color'),
+    'disabled-active-indicator-height':
+      map.get($text-field, 'disabled-active-indicator-height'),
+    'disabled-active-indicator-opacity':
+      map.get($text-field, 'disabled-active-indicator-opacity'),
+    'disabled-container-color': map.get($text-field, 'disabled-container-color'),
+    'disabled-container-opacity':
+      map.get($text-field, 'disabled-container-opacity'),
+    'disabled-content-color': map.get($text-field, 'disabled-input-text-color'),
+    'disabled-content-opacity':
+      map.get($text-field, 'disabled-input-text-opacity'),
+    'disabled-label-text-color':
+      map.get($text-field, 'disabled-label-text-color'),
+    'disabled-label-text-opacity':
+      map.get($text-field, 'disabled-label-text-opacity'),
+    'disabled-leading-content-color':
+      map.get($text-field, 'disabled-leading-icon-color'),
+    'disabled-leading-content-opacity':
+      map.get($text-field, 'disabled-leading-icon-opacity'),
+    'disabled-supporting-text-color':
+      map.get($text-field, 'disabled-supporting-text-color'),
+    'disabled-supporting-text-opacity':
+      map.get($text-field, 'disabled-supporting-text-opacity'),
+    'disabled-trailing-content-color':
+      map.get($text-field, 'disabled-trailing-icon-color'),
+    'disabled-trailing-content-opacity':
+      map.get($text-field, 'disabled-trailing-icon-opacity'),
+    'error-active-indicator-color':
+      map.get($text-field, 'error-active-indicator-color'),
+    'error-content-color': map.get($text-field, 'error-input-text-color'),
+    'error-focus-active-indicator-color':
+      map.get($text-field, 'error-focus-active-indicator-color'),
+    'error-focus-content-color':
+      map.get($text-field, 'error-focus-leading-icon-color'),
+    'error-focus-label-text-color':
+      map.get($text-field, 'error-focus-label-text-color'),
+    'error-focus-leading-content-color':
+      map.get($text-field, 'error-focus-leading-icon-color'),
+    'error-focus-supporting-text-color':
+      map.get($text-field, 'error-focus-supporting-text-color'),
+    'error-focus-trailing-content-color':
+      map.get($text-field, 'error-focus-trailing-icon-color'),
+    'error-hover-active-indicator-color':
+      map.get($text-field, 'error-hover-active-indicator-color'),
+    'error-hover-content-color':
+      map.get($text-field, 'error-hover-input-text-color'),
+    'error-hover-label-text-color':
+      map.get($text-field, 'error-hover-label-text-color'),
+    'error-hover-leading-content-color':
+      map.get($text-field, 'error-hover-leading-icon-color'),
+    'error-hover-state-layer-color':
+      map.get($text-field, 'error-hover-state-layer-color'),
+    'error-hover-state-layer-opacity':
+      map.get($text-field, 'error-hover-state-layer-opacity'),
+    'error-hover-supporting-text-color':
+      map.get($text-field, 'error-hover-supporting-text-color'),
+    'error-hover-trailing-content-color':
+      map.get($text-field, 'error-hover-trailing-icon-color'),
+    'error-label-text-color': map.get($text-field, 'error-label-text-color'),
+    'error-leading-content-color':
+      map.get($text-field, 'error-leading-icon-color'),
+    'error-supporting-text-color':
+      map.get($text-field, 'error-supporting-text-color'),
+    'error-trailing-content-color':
+      map.get($text-field, 'error-trailing-icon-color'),
+    'focus-active-indicator-color':
+      map.get($text-field, 'focus-active-indicator-color'),
+    'focus-active-indicator-height':
+      map.get($text-field, 'focus-active-indicator-height'),
+    'focus-content-color': map.get($text-field, 'focus-input-text-color'),
+    'focus-label-text-color': map.get($text-field, 'focus-label-text-color'),
+    'focus-leading-content-color':
+      map.get($text-field, 'focus-leading-icon-color'),
+    'focus-supporting-text-color':
+      map.get($text-field, 'focus-supporting-text-color'),
+    'focus-trailing-content-color':
+      map.get($text-field, 'focus-trailing-icon-color'),
+    'hover-active-indicator-color':
+      map.get($text-field, 'hover-active-indicator-color'),
+    'hover-active-indicator-height':
+      map.get($text-field, 'hover-active-indicator-height'),
+    'hover-content-color': map.get($text-field, 'hover-input-text-color'),
+    'hover-label-text-color': map.get($text-field, 'hover-label-text-color'),
+    'hover-leading-content-color':
+      map.get($text-field, 'hover-leading-icon-color'),
+    'hover-state-layer-color': map.get($text-field, 'hover-state-layer-color'),
+    'hover-state-layer-opacity':
+      map.get($text-field, 'hover-state-layer-opacity'),
+    'hover-supporting-text-color':
+      map.get($text-field, 'hover-supporting-text-color'),
+    'hover-trailing-content-color':
+      map.get($text-field, 'hover-trailing-icon-color'),
+    'label-text-color': map.get($text-field, 'label-text-color'),
+    'label-text-populated-line-height':
+      map.get($text-field, 'label-text-populated-line-height'),
+    'label-text-populated-size':
+      map.get($text-field, 'label-text-populated-size'),
+    'label-text-type': map.get($text-field, 'label-text-type'),
+    'leading-content-color': map.get($text-field, 'leading-icon-color'),
+    'supporting-text-color': map.get($text-field, 'supporting-text-color'),
+    'supporting-text-padding': if($exclude-hardcoded-values, null, 16px),
+    'supporting-text-padding-top': if($exclude-hardcoded-values, null, 4px),
+    'supporting-text-type': map.get($text-field, 'supporting-text-type'),
+    'trailing-content-color': map.get($text-field, 'trailing-icon-color'),
+    'with-label-container-padding-vertical':
+      if($exclude-hardcoded-values, null, 8px),
+    // go/keep-sorted end
   );
-
-  @return $values;
 }

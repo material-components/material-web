@@ -10,6 +10,7 @@
     border: none;
     caret-color: var(--_caret-color);
     color: currentColor;
+    font: inherit;
     outline: none;
     padding: 0;
     text-align: inherit;
@@ -38,15 +39,12 @@
     caret-color: var(--_error-focus-caret-color);
   }
 
-  input,
-  .prefix,
-  .suffix {
-    font: var(--_input-text-type);
+  .text-field:not(.disabled) .prefix {
+    color: var(--_input-text-prefix-color);
   }
 
-  .text-field:not(.disabled) .prefix,
   .text-field:not(.disabled) .suffix {
-    color: var(--_input-text-prefix-color);
+    color: var(--_input-text-suffix-color);
   }
 
   .text-field:not(.disabled) input::placeholder {

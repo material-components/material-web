@@ -5,69 +5,25 @@
 
 @mixin styles() {
   .icon {
+    color: currentColor;
     display: flex;
+    fill: currentColor;
   }
 
   .icon ::slotted(*) {
-    // Remove excess whitespace below inline elementsxs
+    // Remove excess whitespace below inline elements
     display: flex;
   }
 
-  .icon.leading {
-    color: var(--_leading-icon-color);
+  [hasstart] .icon.leading {
+    font-size: var(--_leading-icon-size);
+    height: var(--_leading-icon-size);
+    width: var(--_leading-icon-size);
   }
 
-  .icon.trailing {
-    color: var(--_trailing-icon-color);
-  }
-
-  :hover .icon.leading {
-    color: var(--_hover-leading-icon-color);
-  }
-
-  :hover .icon.trailing {
-    color: var(--_hover-trailing-icon-color);
-  }
-
-  :focus-within .icon.leading {
-    color: var(--_focus-leading-icon-color);
-  }
-
-  :focus-within .icon.trailing {
-    color: var(--_focus-trailing-icon-color);
-  }
-
-  .disabled .icon.leading {
-    color: var(--_disabled-leading-icon-color);
-    opacity: var(--_disabled-leading-icon-opacity);
-  }
-
-  .disabled .icon.trailing {
-    color: var(--_disabled-trailing-icon-color);
-    opacity: var(--_disabled-trailing-icon-opacity);
-  }
-
-  .error .icon.leading {
-    color: var(--_error-leading-icon-color);
-  }
-
-  .error .icon.trailing {
-    color: var(--_error-trailing-icon-color);
-  }
-
-  .error:hover .icon.leading {
-    color: var(--_error-hover-leading-icon-color);
-  }
-
-  .error:hover .icon.trailing {
-    color: var(--_error-hover-trailing-icon-color);
-  }
-
-  .error:focus-within .icon.leading {
-    color: var(--_error-focus-leading-icon-color);
-  }
-
-  .error:focus-within .icon.trailing {
-    color: var(--_error-focus-trailing-icon-color);
+  [hasend] .icon.trailing {
+    font-size: var(--_trailing-icon-size);
+    height: var(--_trailing-icon-size);
+    width: var(--_trailing-icon-size);
   }
 }

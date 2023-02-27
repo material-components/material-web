@@ -44,7 +44,6 @@
     box-sizing: border-box;
     display: flex;
     flex: 1;
-    flex-basis: var(--_container-height);
     overflow: hidden;
     padding-top: var(--_container-padding-vertical);
     padding-bottom: var(--_container-padding-vertical);
@@ -53,20 +52,6 @@
 
   .disabled {
     pointer-events: none;
-  }
-
-  // TODO(b/239188049): remove when layout tokens are ready
-  .with-start .start,
-  .with-end .end {
-    min-width: 48px;
-  }
-
-  .with-start .start {
-    margin-inline-end: 4px;
-  }
-
-  .with-end .end {
-    margin-inline-start: 4px;
   }
 
   @include content.styles;

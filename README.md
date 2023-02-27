@@ -42,7 +42,7 @@ Dialog                        | 🟢     | 🟢    | 🔴
 Divider                       | 🟢     | 🟢    | 🟡
 Elevation                     | 🟢     | 🔴    | 🔴
 Focus ring                    | 🟢     | 🔴    | 🔴
-Field                         | 🟢     | 🟢    | 🔴
+Field                         | 🟢     | 🟢    | 🟡
 Icon                          | 🟢     | 🟢    | 🔴
 List                          | 🟢     | 🟢    | 🟡
 Menu                          | 🟢     | 🟢    | 🟡

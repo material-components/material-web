@@ -33,9 +33,31 @@ $_enter-delay: $_label-duration - $_visible-duration;
     position: relative;
   }
 
+  .start {
+    color: var(--_leading-content-color);
+  }
+
+  .end {
+    color: var(--_trailing-content-color);
+  }
+
   .start,
   .end {
     justify-content: center;
+  }
+
+  // TODO(b/239188049): remove when layout tokens are ready
+  .with-start .start,
+  .with-end .end {
+    min-width: 48px;
+  }
+
+  .with-start .start {
+    margin-inline-end: 4px;
+  }
+
+  .with-end .end {
+    margin-inline-start: 4px;
   }
 
   .middle {
@@ -51,14 +73,16 @@ $_enter-delay: $_label-duration - $_visible-duration;
   }
 
   .content {
-    display: flex;
-    flex: 1;
-    opacity: 0;
-    transition: opacity $_visible-duration
-      map.get($_md-sys-motion, 'easing-emphasized');
     // Content elements provided to the field (such as <input>) may use
     // `currentColor` to inherit this property.
     color: var(--_content-color);
+    display: flex;
+    flex: 1;
+    // Content elements provided to the field (such as <input>) may inherit font
+    font: var(--_content-type);
+    opacity: 0;
+    transition: opacity $_visible-duration
+      map.get($_md-sys-motion, 'easing-emphasized');
   }
 
   .no-label .content,
@@ -68,33 +92,83 @@ $_enter-delay: $_label-duration - $_visible-duration;
     transition-delay: $_enter-delay;
   }
 
-  .disabled.no-label .content,
-  .disabled.focused .content,
-  .disabled.populated .content {
-    opacity: var(--_disabled-content-opacity);
-  }
-
   :hover .content {
     color: var(--_hover-content-color);
+  }
+
+  :hover .start {
+    color: var(--_hover-leading-content-color);
+  }
+
+  :hover .end {
+    color: var(--_hover-trailing-content-color);
   }
 
   .focused .content {
     color: var(--_focus-content-color);
   }
 
+  .focused .start {
+    color: var(--_focus-leading-content-color);
+  }
+
+  .focused .end {
+    color: var(--_focus-trailing-content-color);
+  }
+
   .disabled .content {
     color: var(--_disabled-content-color);
+  }
+
+  .disabled.no-label .content,
+  .disabled.focused .content,
+  .disabled.populated .content {
+    opacity: var(--_disabled-content-opacity);
+  }
+
+  .disabled .start {
+    color: var(--_disabled-leading-content-color);
+    opacity: var(--_disabled-leading-content-opacity);
+  }
+
+  .disabled .end {
+    color: var(--_disabled-trailing-content-color);
+    opacity: var(--_disabled-trailing-content-opacity);
   }
 
   .error .content {
     color: var(--_error-content-color);
   }
 
+  .error .start {
+    color: var(--_error-leading-content-color);
+  }
+
+  .error .end {
+    color: var(--_error-trailing-content-color);
+  }
+
   .error:hover .content {
     color: var(--_error-hover-content-color);
   }
 
+  .error:hover .start {
+    color: var(--_error-hover-leading-content-color);
+  }
+
+  .error:hover .end {
+    color: var(--_error-hover-trailing-content-color);
+  }
+
   .error.focused .content {
     color: var(--_error-focus-content-color);
+  }
+
+  .error.focused .start {
+    color: var(--_error-focus-leading-content-color);
+  }
+
+  .error.focused .end {
+    color: var(--_error-focus-trailing-content-color);
   }
 }

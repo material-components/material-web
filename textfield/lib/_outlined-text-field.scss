@@ -16,19 +16,8 @@
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  // Add missing tokens
-  $reference: map.merge(
-    _resolve-tokens(tokens.md-comp-outlined-text-field-values()),
-    (
-      container-padding-horizontal: null,
-      container-padding-vertical: null,
-      input-text-prefix-padding: null,
-      input-text-suffix-padding: null,
-      outline-label-padding: null,
-    )
-  );
-
-  $tokens: _resolve-tokens($tokens);
+  $reference: _resolve-tokens(tokens.md-comp-outlined-text-field-values());
+  $tokens: _resolve-tokens($tokens, $exclude-hardcoded-values: true);
   $tokens: theme.validate-theme($reference, $tokens);
   $tokens: theme.create-theme-vars($tokens, 'outlined-text-field');
   $tokens: shape.resolve-tokens($tokens, 'container-shape');
@@ -38,18 +27,6 @@
 
 @mixin styles() {
   $tokens: _resolve-tokens(tokens.md-comp-outlined-text-field-values());
-  // Add missing tokens
-  $tokens: map.merge(
-    (
-      container-padding-horizontal: 16px,
-      container-padding-vertical: 16px,
-      input-text-prefix-padding: 2px,
-      input-text-suffix-padding: 2px,
-      outline-label-padding: 4px,
-    ),
-    $tokens
-  );
-
   $tokens: theme.create-theme-vars($tokens, 'outlined-text-field');
   $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
@@ -62,78 +39,100 @@
 
     @include outlined-field.theme(
       (
-        container-padding-horizontal: var(--_container-padding-horizontal),
-        container-padding-vertical: var(--_container-padding-vertical),
-        container-shape: $container-shape,
-        disabled-content-color: var(--_disabled-input-text-color),
-        disabled-content-opacity: var(--_disabled-input-text-opacity),
-        disabled-label-text-color: var(--_disabled-label-text-color),
-        disabled-label-text-opacity: var(--_disabled-label-text-opacity),
-        disabled-leading-icon-color: var(--_disabled-leading-icon-color),
-        disabled-leading-icon-opacity: var(--_disabled-leading-icon-opacity),
-        disabled-outline-color: var(--_disabled-outline-color),
-        disabled-outline-opacity: var(--_disabled-outline-opacity),
-        disabled-outline-width: var(--_disabled-outline-width),
-        disabled-supporting-text-color: var(--_disabled-supporting-text-color),
-        disabled-supporting-text-opacity:
+        // go/keep-sorted start
+        'container-padding-horizontal': var(--_container-padding-horizontal),
+        'container-padding-vertical': var(--_container-padding-vertical),
+        'container-shape': $container-shape,
+        'content-color': var(--_input-text-color),
+        'content-type': var(--_input-text-type),
+        'disabled-content-color': var(--_disabled-input-text-color),
+        'disabled-content-opacity': var(--_disabled-input-text-opacity),
+        'disabled-label-text-color': var(--_disabled-label-text-color),
+        'disabled-label-text-opacity': var(--_disabled-label-text-opacity),
+        'disabled-leading-content-color': var(--_disabled-leading-icon-color),
+        'disabled-leading-content-opacity':
+          var(--_disabled-leading-icon-opacity),
+        'disabled-outline-color': var(--_disabled-outline-color),
+        'disabled-outline-opacity': var(--_disabled-outline-opacity),
+        'disabled-outline-width': var(--_disabled-outline-width),
+        'disabled-supporting-text-color': var(--_disabled-supporting-text-color),
+        'disabled-supporting-text-opacity':
           var(--_disabled-supporting-text-opacity),
-        disabled-trailing-icon-color: var(--_disabled-trailing-icon-color),
-        disabled-trailing-icon-opacity: var(--_disabled-trailing-icon-opacity),
-        error-focus-content-color: var(--_error-focus-input-text-color),
-        error-focus-label-text-color: var(--_error-focus-label-text-color),
-        error-focus-leading-icon-color: var(--_error-focus-leading-icon-color),
-        error-focus-outline-color: var(--_error-focus-outline-color),
-        error-focus-supporting-text-color:
+        'disabled-trailing-content-color': var(--_disabled-trailing-icon-color),
+        'disabled-trailing-content-opacity':
+          var(--_disabled-trailing-icon-opacity),
+        'error-content-color': var(--_error-input-text-color),
+        'error-focus-content-color': var(--_error-focus-input-text-color),
+        'error-focus-label-text-color': var(--_error-focus-label-text-color),
+        'error-focus-leading-content-color':
+          var(--_error-focus-leading-icon-color),
+        'error-focus-outline-color': var(--_error-focus-outline-color),
+        'error-focus-supporting-text-color':
           var(--_error-focus-supporting-text-color),
-        error-focus-trailing-icon-color: var(--_error-focus-trailing-icon-color),
-        error-hover-content-color: var(--_error-hover-input-text-color),
-        error-hover-label-text-color: var(--_error-hover-label-text-color),
-        error-hover-leading-icon-color: var(--_error-hover-leading-icon-color),
-        error-hover-outline-color: var(--_error-hover-outline-color),
-        error-hover-supporting-text-color:
+        'error-focus-trailing-content-color':
+          var(--_error-focus-trailing-icon-color),
+        'error-hover-content-color': var(--_error-hover-input-text-color),
+        'error-hover-label-text-color': var(--_error-hover-label-text-color),
+        'error-hover-leading-content-color':
+          var(--_error-hover-leading-icon-color),
+        'error-hover-outline-color': var(--_error-hover-outline-color),
+        'error-hover-supporting-text-color':
           var(--_error-hover-supporting-text-color),
-        error-hover-trailing-icon-color: var(--_error-hover-trailing-icon-color),
-        error-content-color: var(--_error-input-text-color),
-        error-label-text-color: var(--_error-label-text-color),
-        error-leading-icon-color: var(--_error-leading-icon-color),
-        error-outline-color: var(--_error-outline-color),
-        error-supporting-text-color: var(--_error-supporting-text-color),
-        error-trailing-icon-color: var(--_error-trailing-icon-color),
-        focus-content-color: var(--_focus-input-text-color),
-        focus-label-text-color: var(--_focus-label-text-color),
-        focus-leading-icon-color: var(--_focus-leading-icon-color),
-        focus-outline-color: var(--_focus-outline-color),
-        focus-outline-width: var(--_focus-outline-width),
-        focus-supporting-text-color: var(--_focus-supporting-text-color),
-        focus-trailing-icon-color: var(--_focus-trailing-icon-color),
-        hover-content-color: var(--_hover-input-text-color),
-        hover-label-text-color: var(--_hover-label-text-color),
-        hover-leading-icon-color: var(--_hover-leading-icon-color),
-        hover-outline-color: var(--_hover-outline-color),
-        hover-outline-width: var(--_hover-outline-width),
-        hover-supporting-text-color: var(--_hover-supporting-text-color),
-        hover-trailing-icon-color: var(--_hover-trailing-icon-color),
-        content-color: var(--_input-text-color),
-        label-text-color: var(--_label-text-color),
-        label-text-type: var(--_label-text-type),
-        label-text-padding-bottom: var(--_label-text-padding-bottom),
-        label-text-populated-line-height:
+        'error-hover-trailing-content-color':
+          var(--_error-hover-trailing-icon-color),
+        'error-label-text-color': var(--_error-label-text-color),
+        'error-leading-content-color': var(--_error-leading-icon-color),
+        'error-outline-color': var(--_error-outline-color),
+        'error-supporting-text-color': var(--_error-supporting-text-color),
+        'error-trailing-content-color': var(--_error-trailing-icon-color),
+        'focus-content-color': var(--_focus-input-text-color),
+        'focus-label-text-color': var(--_focus-label-text-color),
+        'focus-leading-content-color': var(--_focus-leading-icon-color),
+        'focus-outline-color': var(--_focus-outline-color),
+        'focus-outline-width': var(--_focus-outline-width),
+        'focus-supporting-text-color': var(--_focus-supporting-text-color),
+        'focus-trailing-content-color': var(--_focus-trailing-icon-color),
+        'hover-content-color': var(--_hover-input-text-color),
+        'hover-label-text-color': var(--_hover-label-text-color),
+        'hover-leading-content-color': var(--_hover-leading-icon-color),
+        'hover-outline-color': var(--_hover-outline-color),
+        'hover-outline-width': var(--_hover-outline-width),
+        'hover-supporting-text-color': var(--_hover-supporting-text-color),
+        'hover-trailing-content-color': var(--_hover-trailing-icon-color),
+        'label-text-color': var(--_label-text-color),
+        'label-text-populated-line-height':
           var(--_label-text-populated-line-height),
-        label-text-populated-size: var(--_label-text-populated-size),
-        leading-icon-color: var(--_leading-icon-color),
-        leading-icon-size: var(--_leading-icon-size),
-        outline-color: var(--_outline-color),
-        outline-width: var(--_outline-width),
-        supporting-text-type: var(--_supporting-text-type),
-        supporting-text-color: var(--_supporting-text-color),
-        trailing-icon-color: var(--_trailing-icon-color),
-        trailing-icon-size: var(--_trailing-icon-size),
+        'label-text-populated-size': var(--_label-text-populated-size),
+        'label-text-type': var(--_label-text-type),
+        'leading-content-color': var(--_leading-icon-color),
+        'outline-color': var(--_outline-color),
+        'outline-width': var(--_outline-width),
+        'supporting-text-color': var(--_supporting-text-color),
+        'supporting-text-type': var(--_supporting-text-type),
+        'trailing-content-color': var(--_trailing-icon-color),
+        // go/keep-sorted end
       )
     );
   }
 }
 
-@function _resolve-tokens($tokens) {
+@function _resolve-tokens($tokens, $exclude-hardcoded-values: false) {
+  @if not $exclude-hardcoded-values {
+    // Add missing tokens
+    $tokens: map.merge(
+      (
+        'container-padding-horizontal': 16px,
+        'container-padding-vertical': 16px,
+        'input-text-prefix-padding': 2px,
+        'input-text-suffix-padding': 2px,
+        // TODO(b/270705687): remove when focus-caret-color token added
+        'focus-caret-color':
+          map.get(tokens.md-sys-color-values-light(), 'primary'),
+      ),
+      $tokens
+    );
+  }
+
   @return typography.resolve-tokens(
     $tokens,
     'input-text',
