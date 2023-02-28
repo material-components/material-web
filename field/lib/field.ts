@@ -195,7 +195,7 @@ export class Field extends LitElement {
     // scale and compensate for tracking and overflow.
     // (use scrollWidth instead of width to account for clipped labels)
     const scale = restingScrollWidth / floatingScrollWidth;
-    const xDelta = floatingX - restingX;
+    const xDelta = restingX - floatingX;
     // The line-height of the resting and floating label are different. When
     // we move the floating label down to the resting label's position, it won't
     // exactly match because of this. We need to adjust by half of what the
