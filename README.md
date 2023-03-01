@@ -25,36 +25,36 @@ changes.
 
 **Stable** components are reviewed, documented, and API complete.
 
--   🔴 Not started
+-   ❌ Not started
 -   🟡 In progress
--   🟢 Complete
+-   ✅ Complete
 
 ### 1.0 Components
 
 Component                     | Alpha | Beta | Stable
 ----------------------------- | :---: | :--: | :----:
-Button                        | 🟢     | 🟢    | 🔴
-FAB                           | 🟢     | 🔴    | 🔴
-Icon button                   | 🟢     | 🟢    | 🔴
-Checkbox                      | 🟢     | 🟢    | 🔴
-Chips                         | 🔴     | 🔴    | 🔴
-Dialog                        | 🟢     | 🟢    | 🔴
-Divider                       | 🟢     | 🟢    | 🟡
-Elevation                     | 🟢     | 🔴    | 🔴
-Focus ring                    | 🟢     | 🔴    | 🔴
-Field                         | 🟢     | 🟢    | 🟡
-Icon                          | 🟢     | 🟢    | 🔴
-List                          | 🟢     | 🟢    | 🟡
-Menu                          | 🟢     | 🟢    | 🟡
-Progress indicator (circular) | 🔴     | 🔴    | 🔴
-Progress indicator (linear)   | 🔴     | 🔴    | 🔴
-Radio button                  | 🟢     | 🟢    | 🔴
-Ripple                        | 🟢     | 🟢    | 🟡
-Select                        | 🟡     | 🔴    | 🔴
-Slider                        | 🟢     | 🟢    | 🔴
-Switch                        | 🟢     | 🟢    | 🔴
-Tabs                          | 🔴     | 🔴    | 🔴
-Text field                    | 🟢     | 🟢    | 🟡
+Button                        | ✅     | ✅    | ❌
+FAB                           | ✅     | ❌    | ❌
+Icon button                   | ✅     | ✅    | ❌
+Checkbox                      | ✅     | ✅    | ❌
+Chips                         | ❌     | ❌    | ❌
+Dialog                        | ✅     | ✅    | ❌
+Divider                       | ✅     | ✅    | 🟡
+Elevation                     | ✅     | ❌    | ❌
+Focus ring                    | ✅     | ❌    | ❌
+Field                         | ✅     | ✅    | 🟡
+Icon                          | ✅     | ✅    | ❌
+List                          | ✅     | ✅    | 🟡
+Menu                          | ✅     | ✅    | 🟡
+Progress indicator (circular) | ❌     | ❌    | ❌
+Progress indicator (linear)   | ❌     | ❌    | ❌
+Radio button                  | ✅     | ✅    | ❌
+Ripple                        | ✅     | ✅    | 🟡
+Select                        | 🟡     | ❌    | ❌
+Slider                        | ✅     | ✅    | ❌
+Switch                        | ✅     | ✅    | ❌
+Tabs                          | ❌     | ❌    | ❌
+Text field                    | ✅     | ✅    | 🟡
 
 ### 1.1+ Components
 
@@ -62,20 +62,20 @@ These components are planned for release after 1.0.
 
 Component         | Alpha | Beta | Stable
 ----------------- | :---: | :--: | :----:
-Autocomplete      | 🟡     | 🔴    | 🔴
-Badge             | 🟡     | 🔴    | 🔴
-Banner            | 🔴     | 🔴    | 🔴
-Bottom app bar    | 🔴     | 🔴    | 🔴
-Bottom sheet      | 🔴     | 🔴    | 🔴
-Segmented button  | 🟡     | 🔴    | 🔴
-Card              | 🔴     | 🔴    | 🔴
-Data table        | 🔴     | 🔴    | 🔴
-Date picker       | 🔴     | 🔴    | 🔴
-Navigation bar    | 🟡     | 🔴    | 🔴
-Navigation drawer | 🟡     | 🔴    | 🔴
-Navigation rail   | 🔴     | 🔴    | 🔴
-Search            | 🔴     | 🔴    | 🔴
-Snackbar          | 🔴     | 🔴    | 🔴
-Time picker       | 🔴     | 🔴    | 🔴
-Tooltip           | 🔴     | 🔴    | 🔴
-Top app bar       | 🔴     | 🔴    | 🔴
+Autocomplete      | 🟡     | ❌    | ❌
+Badge             | 🟡     | ❌    | ❌
+Banner            | ❌     | ❌    | ❌
+Bottom app bar    | ❌     | ❌    | ❌
+Bottom sheet      | ❌     | ❌    | ❌
+Segmented button  | 🟡     | ❌    | ❌
+Card              | ❌     | ❌    | ❌
+Data table        | ❌     | ❌    | ❌
+Date picker       | ❌     | ❌    | ❌
+Navigation bar    | 🟡     | ❌    | ❌
+Navigation drawer | 🟡     | ❌    | ❌
+Navigation rail   | ❌     | ❌    | ❌
+Search            | ❌     | ❌    | ❌
+Snackbar          | ❌     | ❌    | ❌
+Time picker       | ❌     | ❌    | ❌
+Tooltip           | ❌     | ❌    | ❌
+Top app bar       | ❌     | ❌    | ❌
