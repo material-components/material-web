@@ -8,9 +8,8 @@ import {customElement} from 'lit/decorators.js';
 
 import {styles as listItemStyles} from '../list/lib/listitem/list-item-styles.css.js';
 
-import {MenuItemEl} from './lib/menuitem/menu-item.js';
-import {styles as privateProps} from './lib/menuitem/menu-item-private-styles.css.js';
 import {styles} from './lib/menuitem/menu-item-styles.css.js';
+import {MenuItemEl} from './lib/menuitem/menu-item.js';
 
 export {ListItem} from '../list/lib/listitem/list-item.js';
 export {CloseMenuEvent, DeactivateItemsEvent, MenuItem} from './lib/shared.js';
@@ -38,5 +37,5 @@ declare global {
  */
 @customElement('md-menu-item')
 export class MdMenuItem extends MenuItemEl {
-  static override styles = [privateProps, listItemStyles, styles];
+  static override styles = [listItemStyles, styles];
 }

@@ -120,8 +120,7 @@ export abstract class Menu extends LitElement {
   /**
    * The tabindex of the underlying list element.
    */
-  @property({type: Number, attribute: 'list-tab-index'})
-  listTabIndex = 0;
+  @property({type: Number, attribute: 'list-tab-index'}) listTabIndex = 0;
   /**
    * The max time between the keystrokes of the typeahead menu behavior before
    * it clears the typeahead buffer.
@@ -242,13 +241,14 @@ export abstract class Menu extends LitElement {
   protected renderList() {
     return html`
        <md-list
-           .ariaLabel=${this.ariaLabel}
-           role="menu"
-           listTabIndex=${this.listTabIndex}
-           @focus=${this.onListFocus}
-           @blur=${this.onListBlur}
-           @click=${this.onListClick}
-           @keydown=${this.typeaheadController.onKeydown}>
+          role="menu"
+          class="list"
+          .ariaLabel=${this.ariaLabel}
+          listTabIndex=${this.listTabIndex}
+          @focus=${this.onListFocus}
+          @blur=${this.onListBlur}
+          @click=${this.onListClick}
+          @keydown=${this.typeaheadController.onKeydown}>
          ${this.renderMenuItems()}
        </md-list>`;
   }

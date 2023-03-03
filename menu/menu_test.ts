@@ -4,7 +4,21 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
- describe('menu button tests', () => {
-  // TODO(b/265220649): unit test menu
-  it('TODO', () => {});
+// import 'jasmine'; (google3-only)
+
+import {createTokenTests} from '../testing/tokens.js';
+
+import {MdMenu} from './menu.js';
+import {MdMenuItem} from './menu-item.js';
+
+describe('<md-menu>', () => {
+  describe('.styles', () => {
+    createTokenTests(MdMenu.styles);
+  });
+});
+
+describe('<md-menu-item>', () => {
+  describe('.styles', () => {
+    createTokenTests(MdMenuItem.styles);
+  });
 });

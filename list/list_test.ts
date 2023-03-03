@@ -4,10 +4,21 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import './list.js';
-import './list-item.js';
+// import 'jasmine'; (google3-only)
 
-describe('list tests', () => {
-  // TODO(b/265211574): test list
-  it('TODO', () => {});
+import {createTokenTests} from '../testing/tokens.js';
+
+import {MdList} from './list.js';
+import {MdListItem} from './list-item.js';
+
+describe('<md-list>', () => {
+  describe('.styles', () => {
+    createTokenTests(MdList.styles);
+  });
+});
+
+describe('<md-list-item>', () => {
+  describe('.styles', () => {
+    createTokenTests(MdListItem.styles);
+  });
 });

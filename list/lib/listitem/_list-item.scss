@@ -9,14 +9,12 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../../focus/focus-ring';
+@use '../../../icon/icon';
 @use '../../../ripple/ripple';
 @use '../../../sass/map-ext';
 @use '../../../sass/theme';
 @use '../../../sass/typography';
 @use '../../../tokens';
-@use '../icon/list-item-icon';
-@use '../image/list-item-image';
-@use '../video/list-item-video';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
@@ -30,26 +28,26 @@
 }
 
 @mixin styles() {
+  $tokens: resolve-tokens(tokens.md-comp-list-values());
+  $tokens: theme.create-theme-vars($tokens, 'list');
+
+  :host {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+
+  @include _list-item;
+  @include _image;
+  @include _icon;
+  @include _avatar;
+  @include _video;
+}
+
+@mixin _list-item() {
   :host {
     color: unset;
 
-    @include list-item-image.theme(
-      (
-        list-item-leading-image-height: var(--_list-item-leading-image-height),
-        list-item-leading-image-width: var(--_list-item-leading-image-width),
-        list-item-leading-image-shape: var(--_list-item-leading-image-shape),
-      )
-    );
-    @include list-item-video.theme(
-      (
-        list-item-small-leading-video-height:
-          var(--_list-item-small-leading-video-height),
-        list-item-large-leading-video-height:
-          var(--_list-item-large-leading-video-height),
-        list-item-leading-video-width: var(--_list-item-leading-video-width),
-        list-item-leading-video-shape: var(--_list-item-leading-video-shape),
-      )
-    );
     @include focus-ring.theme(
       (
         offset-vertical: -2px,
@@ -80,13 +78,18 @@
     background-color: var(--_list-item-container-color);
     border-radius: var(--_list-item-container-shape);
 
-    &.enabled {
+    &:not(.disabled) {
       cursor: pointer;
     }
 
     &.disabled {
       pointer-events: none;
     }
+  }
+
+  .content-wrapper {
+    display: flex;
+    width: 100%;
   }
 
   .with-one-line {
@@ -102,41 +105,15 @@
   }
 
   .start {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     flex: 0 0 auto;
     z-index: 1;
 
-    @include list-item-icon.theme(
-      (
-        list-item-icon-color: var(--_list-item-leading-icon-color),
-        list-item-icon-size: var(--_list-item-leading-icon-size),
-      )
-    );
-
-    :hover & {
-      @include list-item-icon.theme(
-        (
-          list-item-icon-color: var(--_list-item-hover-leading-icon-icon-color),
-        )
-      );
-    }
-
-    :active & {
-      @include list-item-icon.theme(
-        (
-          list-item-icon-color:
-            var(--_list-item-pressed-leading-icon-icon-color),
-        )
-      );
-    }
-
-    .disabled & {
-      @include list-item-icon.theme(
-        (
-          list-item-icon-color: var(--_list-item-disabled-leading-icon-color),
-          list-item-icon-opacity:
-            var(--_list-item-disabled-leading-icon-opacity),
-        )
-      );
+    .with-three-line & {
+      justify-content: start;
     }
 
     .with-leading-thumbnail &,
@@ -150,50 +127,25 @@
   }
 
   .body {
+    display: inline-flex;
+    justify-content: center;
+    flex-direction: column;
     box-sizing: border-box;
     flex: 1 0 0;
     padding-inline-start: 16px;
-    width: 100%;
     z-index: 1;
   }
 
   .end {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
     flex: 0 0 auto;
     padding-inline-end: 24px;
     z-index: 1;
 
-    @include list-item-icon.theme(
-      (
-        list-item-icon-color: var(--_list-item-trailing-icon-color),
-        list-item-icon-size: var(--_list-item-trailing-icon-size),
-      )
-    );
-
-    :hover & {
-      @include list-item-icon.theme(
-        (
-          list-item-icon-color: var(--_list-item-hover-trailing-icon-icon-color),
-        )
-      );
-    }
-
-    :active & {
-      @include list-item-icon.theme(
-        (
-          list-item-icon-color:
-            var(--_list-item-pressed-trailing-icon-icon-color),
-        )
-      );
-    }
-
-    .disabled & {
-      @include list-item-icon.theme(
-        (
-          list-item-icon-color: var(--_list-item-disabled-trailing-icon-color),
-          list-item-icon-opacity:
-            var(--_list-item-disabled-trailing-icon-opacity),
-        )
-      );
+    .with-three-line & {
+      justify-content: start;
     }
   }
 
@@ -201,6 +153,18 @@
     display: flex;
     color: var(--_list-item-label-text-color);
     font: var(--_list-item-label-text-type);
+
+    :hover & {
+      color: var(--_list-item-hover-label-text-color);
+    }
+
+    :focus & {
+      color: var(--_list-item-focus-label-text-color);
+    }
+
+    :active & {
+      color: var(--_list-item-pressed-label-text-color);
+    }
 
     .disabled & {
       color: var(--_list-item-disabled-label-text-color);
@@ -210,7 +174,6 @@
 
   .supporting-text {
     display: block;
-    padding-block-start: 4px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -244,17 +207,216 @@
       color: var(--_list-item-disabled-label-text-color);
       opacity: var(--_list-item-disabled-label-text-opacity);
     }
-  }
 
-  .ripple {
-    display: inline-flex;
-    inset: 0;
-    position: absolute;
-    z-index: 0;
+    .with-three-line & {
+      /*
+       * In three line, trailing-supporting-text must align with the mid-line of
+       * the headline text.
+       */
+      padding-block-start: calc(
+        (
+            var(--_list-item-label-text-line-height) -
+              var(--_list-item-trailing-supporting-text-line-height)
+          ) / 2
+      );
+    }
   }
 
   .focus-ring {
     z-index: 1;
+  }
+}
+
+@mixin _image() {
+  ::slotted([data-variant='image']) {
+    display: inline-flex;
+    margin-inline-start: 16px;
+    height: var(--_list-item-leading-image-height);
+    width: var(--_list-item-leading-image-width);
+    border-radius: var(--_list-item-leading-image-shape);
+    /* Min height is two-line height */
+    padding-block: calc(
+      (
+          var(--_list-item-two-line-container-height) -
+            var(--_list-item-leading-image-height)
+        ) / 2
+    );
+
+    .with-three-line & {
+      padding-block: 0;
+    }
+  }
+}
+
+@mixin _icon() {
+  slot[name='start']::slotted([data-variant='icon']) {
+    @include icon.theme(
+      (
+        color: var(--_list-item-leading-icon-color),
+        size: var(--_list-item-leading-icon-size),
+      )
+    );
+
+    .with-three-line & {
+      /* In three line, icon must align with the mid-line of headline text */
+      padding-block-start: calc(
+        (
+            var(--_list-item-label-text-line-height) -
+              var(--_list-item-leading-icon-size)
+          ) / 2
+      );
+    }
+  }
+
+  slot[name='end']::slotted([data-variant='icon']) {
+    @include icon.theme(
+      (
+        color: var(--_list-item-trailing-icon-color),
+        size: var(--_list-item-trailing-icon-size),
+      )
+    );
+
+    .with-three-line & {
+      /* In three line, icon must align with the mid-line of headline text */
+      padding-block-start: calc(
+        (
+            var(--_list-item-label-text-line-height) -
+              var(--_list-item-trailing-icon-size)
+          ) / 2
+      );
+    }
+  }
+
+  ::slotted([data-variant='icon']) {
+    padding-inline-start: 16px;
+  }
+
+  :hover {
+    slot[name='start']::slotted([data-variant='icon']) {
+      @include icon.theme(
+        (
+          color: var(--_list-item-hover-leading-icon-icon-color),
+        )
+      );
+    }
+
+    slot[name='end']::slotted([data-variant='icon']) {
+      @include icon.theme(
+        (
+          color: var(--_list-item-hover-trailing-icon-icon-color),
+        )
+      );
+    }
+  }
+
+  :focus {
+    slot[name='start']::slotted([data-variant='icon']) {
+      @include icon.theme(
+        (
+          color: var(--_list-item-focus-leading-icon-icon-color),
+        )
+      );
+    }
+
+    slot[name='end']::slotted([data-variant='icon']) {
+      @include icon.theme(
+        (
+          color: var(--_list-item-focus-trailing-icon-icon-color),
+        )
+      );
+    }
+  }
+
+  :active {
+    slot[name='start']::slotted([data-variant='icon']) {
+      @include icon.theme(
+        (
+          color: var(--_list-item-pressed-leading-icon-icon-color),
+        )
+      );
+    }
+
+    slot[name='end']::slotted([data-variant='icon']) {
+      @include icon.theme(
+        (
+          color: var(--_list-item-pressed-trailing-icon-icon-color),
+        )
+      );
+    }
+  }
+
+  .disabled {
+    slot[name='start']::slotted([data-variant='icon']) {
+      opacity: var(--_list-item-disabled-leading-icon-opacity);
+
+      @include icon.theme(
+        (
+          color: var(--_list-item-disabled-leading-icon-color),
+        )
+      );
+    }
+
+    slot[name='end']::slotted([data-variant='icon']) {
+      opacity: var(--_list-item-disabled-trailing-icon-opacity);
+
+      @include icon.theme(
+        (
+          color: var(--_list-item-disabled-trailing-icon-color),
+        )
+      );
+    }
+  }
+}
+
+@mixin _avatar() {
+  ::slotted([data-variant='avatar']) {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-inline-start: 16px;
+    background-color: var(--_list-item-leading-avatar-color);
+    height: var(--_list-item-leading-avatar-size);
+    width: var(--_list-item-leading-avatar-size);
+    border-radius: var(--_list-item-leading-avatar-shape);
+    color: var(--_list-item-leading-avatar-label-color);
+    font: var(--_list-item-leading-avatar-label-type);
+  }
+}
+
+@mixin _video() {
+  ::slotted([data-variant='video']),
+  ::slotted([data-variant='video-large']) {
+    display: inline-flex;
+    object-fit: cover;
+    height: var(--_list-item-small-leading-video-height);
+    width: var(--_list-item-leading-video-width);
+    border-radius: var(--_list-item-leading-video-shape);
+    /* Min height is three-line height */
+    padding-block: calc(
+      (
+          var(--_list-item-three-line-container-height) -
+            var(--_list-item-small-leading-video-height)
+        ) / 2
+    );
+
+    /*
+     * Let it auto-layout so that we don't mess with the icons and supporting
+     * text that is supposed to be top-aligned in three-line.
+     */
+    .with-three-line & {
+      padding-block: 0;
+    }
+  }
+
+  ::slotted([data-variant='video-large']) {
+    /* Min height is three-line height */
+    padding-block: calc(
+      (
+          var(--_list-item-three-line-container-height) -
+            var(--_list-item-large-leading-video-height)
+        ) / 2
+    );
+    height: var(--_list-item-large-leading-video-height);
   }
 }
 
@@ -275,22 +437,51 @@
     }
   }
 
+  // Do not include list-item-trailing-supporting-text or list-item-label-text
+  // because we actually need the line-height tokens separately from the
+  // *-type tokens.
   $list-item-tokens: typography.resolve-tokens(
     $list-item-tokens,
-    'list-item-label-text',
     'list-item-supporting-text',
-    'list-item-trailing-supporting-text'
+    'list-item-leading-avatar-label',
+    'list-item-overline'
   );
+
+  $list-item-tokens: _remove-unused-tokens($list-item-tokens);
+
   @return $list-item-tokens;
 }
 
-@mixin private-props() {
-  $tokens: resolve-tokens(tokens.md-comp-list-values());
-  $tokens: theme.create-theme-vars($tokens, 'list');
+// removes unused tokens
+@function _remove-unused-tokens($tokens) {
+  $unused-tokens: (
+    'list-item-container-elevation',
+    'list-item-disabled-state-layer-color',
+    'list-item-disabled-state-layer-opacity',
+    'list-item-dragged-container-elevation',
+    'list-item-dragged-label-text-color',
+    'list-item-dragged-leading-icon-icon-color',
+    'list-item-dragged-state-layer-color',
+    'list-item-dragged-state-layer-opacity',
+    'list-item-dragged-trailing-icon-icon-color',
+    'list-item-overline-color',
+    'list-item-overline-type',
+    'list-item-selected-trailing-icon',
+    'list-item-selected-trailing-icon-color',
+    'list-item-unselected-trailing-icon-color',
+    'list-item-label-text-font',
+    'list-item-label-text-size',
+    'list-item-label-text-tracking',
+    'list-item-label-text-weight',
+    'list-item-trailing-supporting-text-font',
+    'list-item-trailing-supporting-text-size',
+    'list-item-trailing-supporting-text-tracking',
+    'list-item-trailing-supporting-text-weight'
+  );
 
-  :host {
-    @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
-    }
+  @each $token in $unused-tokens {
+    $tokens: map.remove($tokens, $token);
   }
+
+  @return $tokens;
 }

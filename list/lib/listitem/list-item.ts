@@ -51,15 +51,16 @@ export class ListItemEl extends LitElement implements ListItem {
   @property() headline = '';
 
   /**
-   * The one-line supporting text below the headline.
+   * The one-line supporting text below the headline. Set
+   * `multiLineSupportingText` to `true` to support multiple lines in the
+   * supporting text.
    */
   @property() supportingText = '';
 
   /**
-   * The multi-line supporting text below the headline. __NOTE:__ if set to a
-   * truthy value, overrides the visibility and behavior of `supportingText`.
+   * Modifies `supportingText` to support multiple lines.
    */
-  @property() multiLineSupportingText = '';
+  @property({type: Boolean}) multiLineSupportingText = false;
 
   /**
    * The supporting text placed at the end of the item. Overriden by elements
@@ -85,7 +86,7 @@ export class ListItemEl extends LitElement implements ListItem {
    * tabindex is set to 0, and in some list item variants (like md-list-item),
    * focuses the underlying item.
    */
-   @property({type: Boolean, reflect: true}) active = false;
+  @property({type: Boolean, reflect: true}) active = false;
 
   /**
    * READONLY. Sets the `md-list-item` attribute on the element.
@@ -132,13 +133,11 @@ export class ListItemEl extends LitElement implements ListItem {
 
   override render(): TemplateResult {
     return this.renderListItem(html`
-      ${this.renderStart()}
-      ${this.renderBody()}
-      ${this.renderEnd()}
-      <div class="ripple">
+      <div class="content-wrapper">
+        ${this.renderStart()}
+        ${this.renderBody()}
+        ${this.renderEnd()}
         ${this.renderRipple()}
-      </div>
-      <div class="focus-ring">
         ${this.renderFocusRing()}
       </div>`);
   }
@@ -179,7 +178,7 @@ export class ListItemEl extends LitElement implements ListItem {
    * Handles rendering of the focus ring.
    */
   protected renderFocusRing(): TemplateResult {
-    return html`<md-focus-ring .visible="${
+    return html`<md-focus-ring class="focus-ring" .visible="${
         this.showFocusRing}"></md-focus-ring>`;
   }
 
@@ -188,13 +187,12 @@ export class ListItemEl extends LitElement implements ListItem {
    */
   protected getRenderClasses(): ClassInfo {
     return {
-      'with-one-line':
-          this.supportingText === '' && this.multiLineSupportingText === '',
+      'with-one-line': this.supportingText === '',
       'with-two-line':
-          this.supportingText !== '' && this.multiLineSupportingText === '',
-      'with-three-line': this.multiLineSupportingText !== '',
-      'disabled': this.disabled,
-      'enabled': !this.disabled,
+          this.supportingText !== '' && !this.multiLineSupportingText,
+      'with-three-line':
+          this.supportingText !== '' && this.multiLineSupportingText,
+      'disabled': this.disabled
     };
   }
 
@@ -209,10 +207,8 @@ export class ListItemEl extends LitElement implements ListItem {
    * Handles rendering the headline and supporting text.
    */
   protected renderBody(): TemplateResult {
-    const supportingText = this.multiLineSupportingText !== '' ?
-        this.renderMultiLineSupportingText() :
-        this.supportingText !== '' ? this.renderSupportingText() :
-                                     '';
+    const supportingText =
+        this.supportingText !== '' ? this.renderSupportingText() : '';
 
     return html`<div class="body"
       ><span class="label-text">${this.headline}</span>${supportingText}</div>`;
@@ -222,15 +218,16 @@ export class ListItemEl extends LitElement implements ListItem {
    * Renders the one-line supporting text.
    */
   protected renderSupportingText(): TemplateResult {
-    return html`<span class="supporting-text">${this.supportingText}</span>`;
+    return html`<span
+        class="supporting-text ${classMap(this.getSupportingTextClasses())}"
+      >${this.supportingText}</span>`;
   }
 
   /**
-   * Renders the multi-line supporting text
+   * Gets the classes for the supporting text node
    */
-  protected renderMultiLineSupportingText(): TemplateResult {
-    return html`<span class="supporting-text supporting-text--multi-line"
-      >${this.multiLineSupportingText}</span>`;
+  protected getSupportingTextClasses(): ClassInfo {
+    return {'supporting-text--multi-line': this.multiLineSupportingText};
   }
 
   /**

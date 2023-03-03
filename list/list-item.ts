@@ -7,7 +7,6 @@
 import {customElement} from 'lit/decorators.js';
 
 import {ListItemEl as ListItem} from './lib/listitem/list-item.js';
-import {styles as privateProps} from './lib/listitem/list-item-private-styles.css.js';
 import {styles} from './lib/listitem/list-item-styles.css.js';
 
 declare global {
@@ -34,10 +33,29 @@ declare global {
  *   item in a collection and act on it.
  * - Lists should present icons, text, and actions in a consistent format.
  *
+ * Acceptable slottable child variants are:
+ *
+ * - `video[data-variant=video]`
+ * - `img,span[data-variant=avatar]`
+ * - `img[data-variant=image]`
+ * - `md-icon[data-variant=icon]`
+ *
+ *  @example
+ * ```html
+ * <md-list-item
+ *     headline="User Name"
+ *     supportingText="user@name.com">
+ *   <md-icon data-variant="icon" slot="start">account_circle</md-icon>
+ *   <md-icon data-variant="icon" slot="end">check</md-icon>
+ * </md-list-item>
+ * ```
+ *
+ * @example
+ *
  * @final
  * @suppress {visibility}
  */
 @customElement('md-list-item')
 export class MdListItem extends ListItem {
-  static override styles = [privateProps, styles];
+  static override styles = [styles];
 }

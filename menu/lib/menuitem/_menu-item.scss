@@ -4,47 +4,54 @@
 //
 
 // go/keep-sorted start
+@use 'sass:list';
 @use 'sass:map';
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../../elevation/lib/elevation';
-@use '../../../focus/focus-ring';
-@use '../../../list/list';
-@use '../../../list/list-item';
 @use '../../../ripple/ripple';
-@use '../../../sass/map-ext';
-@use '../../../sass/string-ext';
 @use '../../../sass/theme';
-@use '../../../sass/typography';
-@use '../../../tokens/v0_160' as tokens; // TODO(b/270568087): update to latest
+@use '../../../tokens';
 // go/keep-sorted end
 
 $_custom-property-prefix: 'menu';
 
 @mixin theme($theme) {
-  $reference: resolve-tokens(tokens.md-comp-menu-values());
-  $theme: theme.validate-theme($reference, $theme);
-  $theme: resolve-tokens($theme);
+  $theme: theme.validate-theme(tokens.md-comp-menu-values(), $theme);
+  $theme: _resolve-tokens($theme);
   $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
 
   @include theme.emit-theme-vars($theme);
 }
 
 @mixin styles() {
-  :host([active]) .list-item {
-    background-color: var(--_list-item-selected-container-color);
+  $tokens: tokens.md-comp-menu-values();
+  $tokens: _resolve-tokens($tokens);
+  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+
+  :host {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+
+  .list-item {
+    :host([active]) &,
+    :host(:active) &,
+    &:focus {
+      background-color: var(--_list-item-selected-container-color);
+    }
   }
 
   /*
-    Set the ripple opacity to 0 if there is a submenu that is hovered.
-  */
+      Set the ripple opacity to 0 if there is a submenu that is hovered.
+    */
   .list-item:has(.submenu:hover) {
     /*
-      Have to use ripple theme directly because :has selector in this case does
-      not work in this case with the :has selector, thus we cannot override the
-      custom props set in :host
-    */
+        Have to use ripple theme directly because :has selector in this case does
+        not work in this case with the :has selector, thus we cannot override the
+        custom props set in :host
+      */
     @include ripple.theme(
       (
         hover-opacity: 0,
@@ -53,71 +60,24 @@ $_custom-property-prefix: 'menu';
   }
 }
 
-@function resolve-tokens($tokens) {
-  $list-item-tokens: ();
-  $tokens: map-ext.duplicate-key(
-    $tokens,
-    list-item-container-height,
-    list-item-one-line-container-height
-  );
-
-  @each $token, $value in $tokens {
-    $index: string.index($token, list-item);
-    $with-leading-index: string.index($token, list-item-with-leading-icon-);
-    $with-trailing-index: string.index($token, list-item-with-trailing-icon-);
-
-    @if $index {
-      // Replace list-item-with-leading-icon-focus-icon-color
-      //    with list-item-focus-leading-icon-icon-color
-      // and replace list-item-with-leading-icon-leading-icon-size
-      //    with list-item-leading-icon-size
-      @if $with-leading-index {
-        $token: string-ext.replace(
-          $token,
-          list-item-with-leading-icon-,
-          list-item-
-        );
-        $leading-index: string.index($token, -leading-);
-        @if not $leading-index {
-          $token: string-ext.replace($token, -icon-, -leading-icon-icon-);
-        }
-      }
-
-      // Replace list-item-with-trailing-icon-focus-icon-color
-      //    with list-item-focus-trailing-icon-icon-color
-      // and replace list-item-with-trailing-icon-trailing-icon-size
-      //        with list-item-trailing-icon-size
-      @if $with-trailing-index {
-        $token: string-ext.replace(
-          $token,
-          list-item-with-trailing-icon-,
-          list-item-
-        );
-        $trailing-index: string.index($token, -trailing-);
-        @if not $trailing-index {
-          $token: string-ext.replace($token, -icon-, -trailing-icon-icon-);
-        }
-      }
-
-      $list-item-tokens: map.set($list-item-tokens, $token, $value);
-    }
-  }
-
-  $list-item-tokens: typography.resolve-tokens(
-    $list-item-tokens,
-    'list-item-label-text'
-  );
-
-  @return $list-item-tokens;
+@function _resolve-tokens($tokens) {
+  @return _remove-unused-tokens($tokens);
 }
 
-@mixin private-props() {
-  $tokens: resolve-tokens(tokens.md-comp-menu-values());
-  $tokens: theme.create-theme-vars($tokens, menu);
+// removes unused tokens
+@function _remove-unused-tokens($tokens) {
+  $unused-tokens: ();
+  @each $token in map-keys($tokens) {
+    $index: string.index($token, 'list-item');
 
-  :host {
-    @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+    @if not $index {
+      $unused-tokens: list.append($unused-tokens, $token);
     }
   }
+
+  @each $token in $unused-tokens {
+    $tokens: map.remove($tokens, $token);
+  }
+
+  @return $tokens;
 }

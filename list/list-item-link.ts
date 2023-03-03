@@ -6,7 +6,6 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {styles as privateProps} from './lib/listitem/list-item-private-styles.css.js';
 import {styles} from './lib/listitem/list-item-styles.css.js';
 import {ListItemLink} from './lib/listitemlink/list-item-link.js';
 
@@ -34,10 +33,28 @@ declare global {
  *   item in a collection and act on it.
  * - Lists should present icons, text, and actions in a consistent format.
  *
+ * Example slottable child variants are:
+ *
+ * - `video[data-variant=video]`
+ * - `img,span[data-variant=avatar]`
+ * - `img[data-variant=image]`
+ * - `md-icon[data-variant=icon]`
+ *
+ *  @example
+ * ```html
+ * <md-list-item-link
+ *     headline="User Name"
+ *     supportingText="user@name.com"
+ *     href="/accounts">
+ *   <md-icon data-variant="icon" slot="start">account_circle</md-icon>
+ *   <md-icon data-variant="icon" slot="end">open_in_new</md-icon>
+ * </md-list-item-link>
+ * ```
+ *
  * @final
  * @suppress {visibility}
  */
 @customElement('md-list-item-link')
 export class MdListItemLink extends ListItemLink {
-  static override styles = [privateProps, styles];
+  static override styles = [styles];
 }

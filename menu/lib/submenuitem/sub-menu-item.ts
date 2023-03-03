@@ -46,7 +46,6 @@ export class SubMenuItem extends MenuItemEl {
   protected override keepOpenOnClick = true;
   protected previousOpenTimeout = 0;
   protected previousCloseTimeout = 0;
-  protected submenuOpen = false;
 
   protected get submenuEl(): Menu|undefined {
     return this.menus[0];

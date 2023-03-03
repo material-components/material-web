@@ -4,16 +4,18 @@
 //
 
 // go/keep-sorted start
+@use 'sass:list';
 @use 'sass:map';
+@use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../elevation/lib/elevation';
 @use '../../focus/focus-ring';
-@use '../../list/list';
+@use '../../list/list' as md-list;
+@use '../../list/list-item';
 @use '../../sass/resolvers';
 @use '../../sass/theme';
-@use '../../tokens/v0_160' as tokens; // TODO(b/270568087): update to latest
-@use './menuitem/menu-item';
+@use '../../tokens';
 // go/keep-sorted end
 
 $_custom-property-prefix: 'menu';
@@ -36,9 +38,9 @@ $_custom-property-prefix: 'menu';
       --_#{$token}: #{$value};
     }
 
-    @include list.theme(
+    @include md-list.theme(
       (
-        container-color: var(--_container-color),
+        list-item-container-color: var(--_container-color),
       )
     );
 
@@ -106,5 +108,24 @@ $_custom-property-prefix: 'menu';
 }
 
 @function _resolve-tokens($tokens) {
-  @return elevation.resolve-tokens($tokens, 'elevation-key');
+  $menu-tokens: _remove-unused-tokens($tokens);
+  @return elevation.resolve-tokens($menu-tokens, 'elevation-key');
+}
+
+// removes unused tokens
+@function _remove-unused-tokens($tokens) {
+  $unused-tokens: ();
+  @each $token in map-keys($tokens) {
+    $index: string.index($token, 'list-item');
+
+    @if $index {
+      $unused-tokens: list.append($unused-tokens, $token);
+    }
+  }
+
+  @each $token in $unused-tokens {
+    $tokens: map.remove($tokens, $token);
+  }
+
+  @return $tokens;
 }

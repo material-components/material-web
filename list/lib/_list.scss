@@ -7,6 +7,7 @@
 // Selector '.md3-*' should only be used in this project.
 
 // go/keep-sorted start
+@use 'sass:list';
 @use 'sass:map';
 @use 'sass:string';
 // go/keep-sorted end
@@ -18,9 +19,9 @@
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $reference: resolve-tokens(tokens.md-comp-list-values());
-  $tokens: resolve-tokens($tokens);
+  $reference: tokens.md-comp-list-values();
   $tokens: theme.validate-theme($reference, $tokens);
+  $tokens: resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, list);
 
   @include theme.emit-theme-vars($tokens);
@@ -65,16 +66,25 @@
     container-color,
     map.get($tokens, list-item-container-color)
   );
-  $list-item-tokens: list-item.resolve-tokens($tokens);
-  $list-tokens: ();
+  $list-tokens: remove-unused-tokens($tokens);
 
-  @each $token, $value in $tokens {
-    $is-unique: not map.has-key($list-item-tokens, $token);
+  @return $list-tokens;
+}
 
-    @if $is-unique {
-      $list-tokens: map.set($list-tokens, $token, $value);
+// removes unused tokens
+@function remove-unused-tokens($tokens) {
+  $unused-tokens: ();
+  @each $token in map-keys($tokens) {
+    $index: string.index($token, 'list-item');
+
+    @if $index {
+      $unused-tokens: list.append($unused-tokens, $token);
     }
   }
 
-  @return $list-tokens;
+  @each $token in $unused-tokens {
+    $tokens: map.remove($tokens, $token);
+  }
+
+  @return $tokens;
 }
