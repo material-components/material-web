@@ -1,5 +1,35 @@
 # Changelog
 
+## [1.0.0-pre.4](https://github.com/material-components/material-web/compare/v1.0.0-pre.3...v1.0.0-pre.4) (2023-03-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* **icon,iconbutton,list:** use material symbols for icons
+
+### Features
+
+* **field:** add resizability ([fd605d5](https://github.com/material-components/material-web/commit/fd605d537ce3584c97ffca375e019615c26b748b))
+* **tokens:** generate tokens v0.161 ([e2cd832](https://github.com/material-components/material-web/commit/e2cd8327b60691f093fd389f7a259d217f1d9b89))
+
+
+### Bug Fixes
+
+* **all:** update non-menu components to v0.161 ([828d7ae](https://github.com/material-components/material-web/commit/828d7aeb4d3144e3a0229cc4fa81e7c7135c4760))
+* **icon,iconbutton,list:** use material symbols for icons ([232982e](https://github.com/material-components/material-web/commit/232982ef034872968924dbb5620f59352c4028c2))
+* **icon:** mark icon and icon button as beta ([ff3d379](https://github.com/material-components/material-web/commit/ff3d379bc874be338c5aa8a9afa1593a879fdefa))
+* **text-field:** apply suffix-color and icon size tokens ([a969fda](https://github.com/material-components/material-web/commit/a969fdadb61e2d3ffedd17ddbc9ebe019d5f054c))
+* **text-field:** remove indicator expansion animation ([d755d10](https://github.com/material-components/material-web/commit/d755d107fa487e9a06c4279dbd76a1074437e369))
+* **textfield:** outlined label jumping horizontally with leading icon ([c98f5e0](https://github.com/material-components/material-web/commit/c98f5e017d2bb74caaf88c94c2866e155b61c98e))
+* update license year and holder ([510a867](https://github.com/material-components/material-web/commit/510a867f0d4e95663a6e311b368bc879fecb8361)), closes [#3073](https://github.com/material-components/material-web/issues/3073)
+
+
+### Miscellaneous Chores
+
+* update next version ([a6176de](https://github.com/material-components/material-web/commit/a6176de68460c3e37aa74e1ffac5457eb093bba3))
+* update next version ([367e76a](https://github.com/material-components/material-web/commit/367e76aecfae9e6e3cd99094fa021e77f2d7b80a))
+* update next version ([9a36b3a](https://github.com/material-components/material-web/commit/9a36b3a9ae0c7d3181b66e36e6f27907c8565656))
+
 ## [1.0.0-pre.3](https://github.com/material-components/material-web/compare/v1.0.0-pre.2...v1.0.0-pre.3) (2023-02-22)
 
 
