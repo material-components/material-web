@@ -6,8 +6,6 @@
 
 import {ReactiveController, ReactiveControllerHost} from 'lit';
 
-import {bound} from '../decorators/bound.js';
-
 import {isFormAssociated} from './form-associated.js';
 import {shimLabelSupport, SUPPORTS_FACE_LABEL} from './shim-label-activation.js';
 
@@ -93,8 +91,7 @@ export class FormController implements ReactiveController {
     this.form?.removeEventListener('formdata', this.formDataListener);
   }
 
-  @bound
-  private formDataListener(event: FormDataEvent) {
+  private readonly formDataListener = (event: FormDataEvent) => {
     if (this.element.disabled) {
       // Check for truthiness since some elements may not support disabling.
       return;
@@ -117,5 +114,5 @@ export class FormController implements ReactiveController {
     }
 
     event.formData.append(this.element.name, value);
-  }
+  };
 }
