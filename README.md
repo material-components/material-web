@@ -46,14 +46,14 @@ Field                         | ✅     | ✅    | 🟡
 Icon                          | ✅     | ✅    | ❌
 List                          | ✅     | 🟡    | 🟡
 Menu                          | ✅     | 🟡    | 🟡
-Progress indicator (circular) | ❌     | ❌    | ❌
-Progress indicator (linear)   | ❌     | ❌    | ❌
+Progress indicator (circular) | 🟡     | ❌    | ❌
+Progress indicator (linear)   | 🟡     | ❌    | ❌
 Radio button                  | ✅     | ✅    | ❌
 Ripple                        | ✅     | ✅    | 🟡
 Select                        | 🟡     | ❌    | ❌
 Slider                        | ✅     | ✅    | ❌
 Switch                        | ✅     | ✅    | ❌
-Tabs                          | ❌     | ❌    | ❌
+Tabs                          | 🟡     | ❌    | ❌
 Text field                    | ✅     | ✅    | 🟡
 
 ### 1.1+ Components
