@@ -15,6 +15,7 @@
 @use '../../sass/color';
 @use '../../sass/dom';
 @use '../../sass/resolvers';
+@use '../../sass/shape';
 @use '../../sass/typography';
 // go/keep-sorted end
 
@@ -43,12 +44,7 @@
 
     @include focus-ring.theme(
       (
-        shape: (
-          var(--_container-shape-start-start),
-          var(--_container-shape-start-end),
-          var(--_container-shape-end-end),
-          var(--_container-shape-end-start),
-        ),
+        shape: shape.corners-to-shape-token('--_container-shape'),
       )
     );
   }

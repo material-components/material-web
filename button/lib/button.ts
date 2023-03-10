@@ -50,8 +50,11 @@ export abstract class Button extends LitElement implements ButtonState {
    */
   @property({type: Boolean, attribute: 'trailingicon'}) trailingIcon = false;
 
+  // TODO(b/272598771): remove label property
   /**
    * The button's visible label.
+   *
+   * @deprecated Set text as content of the button instead.
    */
   @property({type: String}) label = '';
 
@@ -160,7 +163,9 @@ export abstract class Button extends LitElement implements ButtonState {
   }
 
   protected renderLabel(): TemplateResult {
-    return html`<span class="md3-button__label">${this.label}</span>`;
+    // TODO(b/272598771): remove the ternary when label property is removed
+    return html`<span class="md3-button__label">${
+        this.label ? this.label : html`<slot></slot>`}</span>`;
   }
 
   protected renderLeadingIcon(): TemplateResult|string {
