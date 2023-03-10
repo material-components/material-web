@@ -57,6 +57,8 @@ $_custom-property-prefix: 'menu';
         shape: var(--_container-shape),
       )
     );
+
+    min-width: 300px;
   }
 
   .menu {
@@ -68,6 +70,7 @@ $_custom-property-prefix: 'menu';
     user-select: none;
     max-height: inherit;
     height: inherit;
+    min-width: inherit;
 
     &.fixed {
       position: fixed;
@@ -78,6 +81,7 @@ $_custom-property-prefix: 'menu';
       max-height: inherit;
       display: block;
       overflow: auto;
+      min-width: inherit;
     }
 
     &.has-overflow md-list {

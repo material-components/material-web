@@ -115,14 +115,13 @@
     .with-three-line & {
       justify-content: start;
     }
+  }
 
-    .with-leading-thumbnail &,
-    .with-leading-image & {
-      padding-inline-start: 16px;
-    }
-
-    .with-leading-video & {
-      padding-inline-start: 0;
+  slot[name='start'] {
+    &::slotted([data-variant='icon']),
+    &::slotted([data-variant='image']),
+    &::slotted([data-variant='avatar']) {
+      margin-inline-start: var(--_list-item-leading-element-leading-space);
     }
   }
 
@@ -132,7 +131,8 @@
     flex-direction: column;
     box-sizing: border-box;
     flex: 1 0 0;
-    padding-inline-start: 16px;
+    padding-inline-start: var(--_list-item-leading-space);
+    padding-inline-end: var(--_list-item-trailing-space);
     z-index: 1;
   }
 
@@ -141,12 +141,18 @@
     flex-direction: column;
     justify-content: center;
     flex: 0 0 auto;
-    padding-inline-end: 24px;
     z-index: 1;
 
     .with-three-line & {
       justify-content: start;
     }
+  }
+
+  slot[name='end']::slotted(*),
+  .trailing-supporting-text {
+    margin-inline-end: var(
+      --_list-item-trailing-element-headline-trailing-element-space
+    );
   }
 
   .label-text {
@@ -173,13 +179,20 @@
   }
 
   .supporting-text {
-    display: block;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: normal;
     overflow: hidden;
     width: 100%;
     color: var(--_list-item-supporting-text-color);
     font: var(--_list-item-supporting-text-type);
+
+    // Box is supposed to be deprecated, but line-clamp is not. It's still on
+    // standards track and can only be applied with display: -webkit-box and
+    // -webkit-box-orient: vertical. Must change once un-prefixed line-clamp
+    // ships
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    display: -webkit-box;
 
     .disabled & {
       color: var(--_list-item-disabled-label-text-color);
@@ -188,11 +201,7 @@
   }
 
   .supporting-text--multi-line {
-    -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
-    display: -webkit-box;
-    overflow: hidden;
-    white-space: normal;
   }
 
   .trailing-supporting-text {
@@ -230,7 +239,6 @@
 @mixin _image() {
   ::slotted([data-variant='image']) {
     display: inline-flex;
-    margin-inline-start: 16px;
     height: var(--_list-item-leading-image-height);
     width: var(--_list-item-leading-image-width);
     border-radius: var(--_list-item-leading-image-shape);
@@ -285,10 +293,6 @@
           ) / 2
       );
     }
-  }
-
-  ::slotted([data-variant='icon']) {
-    padding-inline-start: 16px;
   }
 
   :hover {
@@ -373,7 +377,6 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    margin-inline-start: 16px;
     background-color: var(--_list-item-leading-avatar-color);
     height: var(--_list-item-leading-avatar-size);
     width: var(--_list-item-leading-avatar-size);
@@ -391,6 +394,7 @@
     height: var(--_list-item-small-leading-video-height);
     width: var(--_list-item-leading-video-width);
     border-radius: var(--_list-item-leading-video-shape);
+    margin-inline-start: var(--_list-item-leading-video-leading-space);
     /* Min height is three-line height */
     padding-block: calc(
       (
@@ -427,7 +431,20 @@
 /// So here we resolve list-items tokens by selecting only tokens that have
 /// 'list-item' in its name.
 @function resolve-tokens($tokens) {
-  $list-item-tokens: ();
+  // Values pulled from b/198759625 spreadsheet
+  $list-item-tokens: (
+    'list-item-leading-space': 16px,
+    'list-item-trailing-space': 16px,
+    'list-item-leading-element-leading-space': 16px,
+    'list-item-leading-video-leading-space': 0px,
+    // Commented out until the comments in the spreadsheet linked above are
+    // resolved regarding vertical alignment.
+    // 'list-item-leading-item-top-space': 8px,
+    // 'list-item-leading-video-top-space': 0px,
+    // 'list-item-leading-item-bottom-space': 8px,
+    // 'list-item-leading-video-bottom-space': 0px,
+    'list-item-trailing-element-headline-trailing-element-space': 16px,
+  );
 
   @each $token, $value in $tokens {
     $index: string.index($token, 'list-item');

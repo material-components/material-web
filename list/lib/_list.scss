@@ -37,6 +37,7 @@
     }
 
     color: unset;
+    min-width: 300px;
   }
 
   .md3-list {
@@ -44,7 +45,7 @@
     display: block;
     list-style-type: none;
     margin: 0;
-    min-width: 300px;
+    min-width: inherit;
     outline: none;
     padding: 8px 0;
     // Add position so the elevation overlay (which is absolutely positioned)
