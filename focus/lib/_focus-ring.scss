@@ -37,16 +37,22 @@ $_custom-property-prefix: 'focus-ring';
     box-sizing: border-box;
     pointer-events: none;
     border: var(--_width) solid var(--_color);
-    border-start-start-radius: var(--_shape-start-start);
-    border-start-end-radius: var(--_shape-start-end);
-    border-end-start-radius: var(--_shape-end-start);
-    border-end-end-radius: var(--_shape-end-end);
+    border-start-start-radius: calc(
+      var(--_offset) + var(--_width) + var(--_shape-start-start)
+    );
+    border-start-end-radius: calc(
+      var(--_offset) + var(--_width) + var(--_shape-start-end)
+    );
+    border-end-start-radius: calc(
+      var(--_offset) + var(--_width) + var(--_shape-end-start)
+    );
+    border-end-end-radius: calc(
+      var(--_offset) + var(--_width) + var(--_shape-end-end)
+    );
     // Note that the ring will not respect its parent's border. This will not be
     // an issue as long as border is set via a sibling node, similar to ripple
     // and touch target.
-    $vertical-inset: calc(-1 * (var(--_offset-vertical) + var(--_width)));
-    $horizontal-inset: calc(-1 * (var(--_offset-horizontal) + var(--_width)));
-    inset: $vertical-inset $horizontal-inset;
+    inset: calc(-1 * (var(--_offset) + var(--_width)));
   }
 
   :host([visible]) {

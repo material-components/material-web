@@ -44,8 +44,7 @@ $_custom-property-prefix: 'navigation-bar';
 
     @include focus-ring.theme(
       (
-        offset-vertical: -2px,
-        offset-horizontal: -2px,
+        offset: -2px,
         shape: map.get(tokens.md-sys-shape-values(), corner-small),
       )
     );

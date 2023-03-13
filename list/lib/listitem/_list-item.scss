@@ -50,8 +50,7 @@
 
     @include focus-ring.theme(
       (
-        offset-vertical: -2px,
-        offset-horizontal: -3px,
+        offset: -3px,
         shape: map.get(tokens.md-sys-shape-values(), corner-extra-small),
       )
     );

@@ -23,8 +23,7 @@ $_default: (
         null,
         map.get($deps, md-sys-shape, corner-full)
       ),
-    offset-vertical: if($exclude-hardcoded-values, null, 2px),
-    offset-horizontal: if($exclude-hardcoded-values, null, 2px),
+    offset: if($exclude-hardcoded-values, null, 2px),
     width: if($exclude-hardcoded-values, null, 3px),
     color: map.get($deps, md-sys-color, secondary)
   );
