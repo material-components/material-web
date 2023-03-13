@@ -10,10 +10,10 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../focus/focus-ring';
 @use '../../ripple/ripple';
 @use '../../sass/color';
 @use '../../sass/resolvers';
+@use '../../sass/shape';
 @use '../../sass/theme';
 @use '../../tokens';
 @use './shared';
@@ -43,17 +43,6 @@ $_custom-property-prefix: 'outlined-icon-button';
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
-
-    @include focus-ring.theme(
-      (
-        shape: (
-          var(--_container-shape-start-start),
-          var(--_container-shape-start-end),
-          var(--_container-shape-end-end),
-          var(--_container-shape-end-start),
-        ),
-      )
-    );
   }
 
   .md3-icon-button--outlined {

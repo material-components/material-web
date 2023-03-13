@@ -12,6 +12,7 @@
 // go/keep-sorted start
 @use '../../focus/focus-ring';
 @use '../../ripple/ripple';
+@use '../../sass/shape';
 @use '../../sass/theme';
 @use '../../tokens';
 @use './shared';
@@ -40,17 +41,14 @@ $_shape-property: 'state-layer-shape';
       --_#{$token}: #{$value};
     }
 
-    height: max(48px, var(--_state-layer-size));
-    width: max(48px, var(--_state-layer-size));
+    height: var(--_state-layer-size);
+    width: var(--_state-layer-size);
+    // TODO(b/272824099): remove 48px miniumum size
+    margin: max(0px, (48px - var(--_state-layer-size)) / 2);
 
     @include focus-ring.theme(
       (
-        shape: (
-          var(--_state-layer-shape-start-start),
-          var(--_state-layer-shape-start-end),
-          var(--_state-layer-shape-end-end),
-          var(--_state-layer-shape-end-start),
-        ),
+        shape: shape.corners-to-shape-token('--_state-layer-shape'),
       )
     );
   }
@@ -58,8 +56,6 @@ $_shape-property: 'state-layer-shape';
   .md3-icon-button--standard {
     background-color: transparent;
     color: var(--_unselected-icon-color);
-    height: var(--_state-layer-size);
-    width: var(--_state-layer-size);
 
     @include ripple.theme(
       (
@@ -69,8 +65,7 @@ $_shape-property: 'state-layer-shape';
         hover-opacity: var(--_unselected-hover-state-layer-opacity),
         pressed-color: var(--_unselected-pressed-state-layer-color),
         pressed-opacity: var(--_unselected-pressed-state-layer-opacity),
-        // TODO(b/263517885): replace with ripple.theme(state-layer-shape)
-        shape: var(--_state-layer-shape-start-start),
+        shape: shape.corners-to-shape-token('--_state-layer-shape'),
       )
     );
 
