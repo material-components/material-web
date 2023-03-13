@@ -118,7 +118,6 @@
   md-elevation {
     position: absolute;
     inset: 0;
-    pointer-events: none;
     border-radius: inherit;
     --md-elevation-level: var(--_container-elevation);
     --md-elevation-surface-tine-color: var(
