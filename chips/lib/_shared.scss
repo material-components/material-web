@@ -1,0 +1,75 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use '../../elevation/elevation';
+@use '../../sass/typography';
+// go/keep-sorted end
+
+@mixin styles() {
+  :host {
+    border-start-start-radius: var(--_container-shape-start-start);
+    border-start-end-radius: var(--_container-shape-start-end);
+    border-end-start-radius: var(--_container-shape-end-start);
+    border-end-end-radius: var(--_container-shape-end-end);
+    display: inline-flex;
+    height: var(--_container-height);
+
+    @include elevation.theme(
+      (
+        surface-tint: var(--_container-surface-tint-layer-color),
+      )
+    );
+  }
+
+  .container {
+    align-items: center;
+    appearance: none;
+    background: none;
+    border-radius: inherit;
+    box-sizing: border-box;
+    display: flex;
+    gap: 8px;
+    height: 100%;
+    padding: 0 16px;
+    position: relative;
+    width: 100%;
+  }
+
+  .flat {
+    border: var(--_flat-outline-width) solid var(--_flat-outline-color);
+
+    @include elevation.theme(
+      (
+        level: var(--_flat-container-elevation),
+      )
+    );
+  }
+
+  .elevated {
+    border: none;
+
+    @include elevation.theme(
+      (
+        level: var(--_elevated-container-elevation),
+      )
+    );
+  }
+
+  md-elevation {
+    inset: 0;
+    position: absolute;
+  }
+
+  .label {
+    color: var(--_label-text-color);
+    font: var(--_label-text-type);
+  }
+}
+
+@function resolve-tokens($tokens) {
+  $tokens: typography.resolve-tokens($tokens, 'label-text');
+  @return $tokens;
+}
