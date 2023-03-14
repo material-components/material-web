@@ -7,13 +7,14 @@
 import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
+import {SurfacePositionTarget} from '../../menu/lib/surfacePositionController.js';
 
 import {EASING} from '../../motion/animation.js';
 
 /**
  * A field component.
  */
-export class Field extends LitElement {
+export class Field extends LitElement implements SurfacePositionTarget {
   @property({type: Boolean}) disabled = false;
   @property({type: Boolean}) error = false;
   @property({type: Boolean}) focused = false;
@@ -36,6 +37,7 @@ export class Field extends LitElement {
   private labelAnimation?: Animation;
   @query('.label.floating') private readonly floatingLabelEl!: HTMLElement|null;
   @query('.label.resting') private readonly restingLabelEl!: HTMLElement|null;
+  @query('.container') private readonly containerEl!: HTMLElement|null;
 
   protected override update(props: PropertyValues<Field>) {
     // Client-side property updates
@@ -225,5 +227,9 @@ export class Field extends LitElement {
     return [
       {transform: floatTransform, width}, {transform: restTransform, width}
     ];
+  }
+
+  getSurfacePositionClientRect() {
+    return this.containerEl!.getBoundingClientRect();
   }
 }

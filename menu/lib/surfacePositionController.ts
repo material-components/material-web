@@ -13,6 +13,15 @@ import {StyleInfo} from 'lit/directives/style-map.js';
 export type Corner = 'END_START'|'END_END'|'START_START'|'START_END';
 
 /**
+ * An interface that provides a method to customize the rect from which to
+ * calculate the anchor positioning. Useful for when you want a surface to
+ * anchor to an element in your shadow DOM rather than the host element.
+ */
+export interface SurfacePositionTarget extends HTMLElement {
+  getSurfacePositionClientRect?: () => DOMRect;
+}
+
+/**
  * The configurable options for the surface position controller.
  */
 export interface SurfacePositionControllerProperties {
@@ -27,11 +36,11 @@ export interface SurfacePositionControllerProperties {
   /**
    * The HTMLElement reference of the surface to be positioned.
    */
-  surfaceEl: HTMLElement|null;
+  surfaceEl: SurfacePositionTarget|null;
   /**
    * The HTMLElement reference of the anchor to align to.
    */
-  anchorEl: HTMLElement|null;
+  anchorEl: SurfacePositionTarget|null;
   /**
    * Whether or not the calculation should be relative to the top layer rather
    * than relative to the parent of the anchor.
@@ -147,8 +156,12 @@ export class SurfacePositionController implements ReactiveController {
     this.host.requestUpdate();
     await this.host.updateComplete;
 
-    const surfaceRect = surfaceEl.getBoundingClientRect();
-    const anchorRect = anchorEl.getBoundingClientRect();
+    const surfaceRect = surfaceEl.getSurfacePositionClientRect ?
+        surfaceEl.getSurfacePositionClientRect() :
+        surfaceEl.getBoundingClientRect();
+    const anchorRect = anchorEl.getSurfacePositionClientRect ?
+        anchorEl.getSurfacePositionClientRect() :
+        anchorEl.getBoundingClientRect();
     const [surfaceBlock, surfaceInline] =
         surfaceCorner.split('_') as Array<'START'|'END'>;
     const [anchorBlock, anchorInline] =
@@ -159,7 +172,8 @@ export class SurfacePositionController implements ReactiveController {
     // statements because it _heavily_ cuts down on nesting and readability
     const isTopLayer = topLayerRaw ? 1 : 0;
     // LTR depends on the direction of the SURFACE not the anchor.
-    const isLTR = getComputedStyle(surfaceEl).direction === 'ltr' ? 1 : 0;
+    const isLTR =
+        getComputedStyle(surfaceEl as HTMLElement).direction === 'ltr' ? 1 : 0;
     const isRTL = isLTR ? 0 : 1;
     const isSurfaceInlineStart = surfaceInline === 'START' ? 1 : 0;
     const isSurfaceInlineEnd = surfaceInline === 'END' ? 1 : 0;
