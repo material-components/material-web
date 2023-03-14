@@ -11,7 +11,7 @@ import {List} from '../../../list/lib/list.js';
 import {ARIARole} from '../../../types/aria.js';
 import {Corner, Menu} from '../menu.js';
 import {MenuItemEl} from '../menuitem/menu-item.js';
-import {CLOSE_REASON, CloseMenuEvent, DeactivateItemsEvent, KEYDOWN_CLOSE_KEYS, NAVIGABLE_KEY, SELECTION_KEY} from '../shared.js';
+import {ActivateTypeaheadEvent, CLOSE_REASON, CloseMenuEvent, DeactivateItemsEvent, DeactivateTypeaheadEvent, KEYDOWN_CLOSE_KEYS, NAVIGABLE_KEY, SELECTION_KEY} from '../shared.js';
 
 function stopPropagation(e: Event) {
   e.stopPropagation();
@@ -20,6 +20,10 @@ function stopPropagation(e: Event) {
 /**
  * @fires deactivate-items {DeactivateItemsEvent} Requests the parent menu to
  *     deselect other items when a submenu opens
+ * @fires deactivate-typeahead {DeactivateItemsEvent} Requests the parent menu
+ *     to deactivate the typeahead functionality when a submenu opens
+ * @fires activate-typeahead {DeactivateItemsEvent} Requests the parent menu to
+ *     activate the typeahead functionality when a submenu closes
  */
 export class SubMenuItem extends MenuItemEl {
   override role: ARIARole = 'menuitem';
@@ -145,6 +149,7 @@ export class SubMenuItem extends MenuItemEl {
 
   protected onCloseSubmenu(e: CloseMenuEvent) {
     e.itemPath.push(this);
+    this.dispatchEvent(new ActivateTypeaheadEvent());
     // Escape should only close one menu not all of the menus unlike space or
     // click selection which should close all menus.
     if (e.reason.kind === CLOSE_REASON.KEYDOWN &&
@@ -155,6 +160,7 @@ export class SubMenuItem extends MenuItemEl {
       this.listItemRoot.focus();
       return;
     }
+
     this.active = false;
   }
 
@@ -203,6 +209,7 @@ export class SubMenuItem extends MenuItemEl {
     // Deactivate other items. This can be the case if the user has tabbed
     // around the menu and then mouses over an md-sub-menu.
     this.dispatchEvent(new DeactivateItemsEvent());
+    this.dispatchEvent(new DeactivateTypeaheadEvent());
     this.active = true;
 
     // This is the case of mouse hovering when already opened via keyboard or
@@ -223,6 +230,7 @@ export class SubMenuItem extends MenuItemEl {
     const menu = this.submenuEl;
     if (!menu || !menu.open) return;
 
+    this.dispatchEvent(new ActivateTypeaheadEvent());
     menu.quick = true;
     menu.close();
     this.active = false;

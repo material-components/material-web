@@ -10,8 +10,8 @@ import '../../list/list.js';
 import '../../focus/focus-ring.js';
 import '../../elevation/elevation.js';
 
-import {html, LitElement} from 'lit';
-import {property, query} from 'lit/decorators.js';
+import {html, isServer, LitElement} from 'lit';
+import {eventOptions, property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 
@@ -20,12 +20,18 @@ import {MdFocusRing} from '../../focus/focus-ring.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {List} from '../../list/lib/list.js';
 import {createAnimationSignal, EASING} from '../../motion/animation.js';
+import {ARIARole} from '../../types/aria.js';
 
-import {MenuItem} from './shared.js';
-import {Corner, SurfacePositionController} from './surfacePositionController.js';
+import {ActivateTypeaheadEvent, DeactivateTypeaheadEvent, MenuItem} from './shared.js';
+import {Corner, SurfacePositionController, SurfacePositionTarget} from './surfacePositionController.js';
 import {TypeaheadController} from './typeaheadController.js';
 
 export {Corner} from './surfacePositionController.js';
+
+/**
+ * The default value for the typeahead buffer time in Milliseconds.
+ */
+export const DEFAULT_TYPEAHEAD_BUFFER_TIME = 200;
 
 /**
  * Element to focus on when menu is first opened.
@@ -55,9 +61,9 @@ function getFocusedElement(activeDoc: Document|ShadowRoot = document):
 }
 
 /**
- * @fires opening Fired before the opening animation begins (not fired on quick)
+ * @fires opening Fired before the opening animation begins
  * @fires opened Fired once the menu is open, after any animations
- * @fires closing Fired before the closing animation begins (not fired on quick)
+ * @fires closing Fired before the closing animation begins
  * @fires closed Fired once the menu is closed, after any animations
  */
 export abstract class Menu extends LitElement {
@@ -73,7 +79,8 @@ export abstract class Menu extends LitElement {
   /**
    * The element in which the menu should align to.
    */
-  @property({attribute: false}) anchor: HTMLElement|null = null;
+  @property({attribute: false})
+  anchor: HTMLElement&Partial<SurfacePositionTarget>|null = null;
   /**
    * Makes the element use `position:fixed` instead of `position:absolute`. In
    * most cases, the menu should position itself above most other
@@ -122,11 +129,17 @@ export abstract class Menu extends LitElement {
    */
   @property({type: Number, attribute: 'list-tab-index'}) listTabIndex = 0;
   /**
+   * The role of the underlying list element.
+   */
+  @ariaProperty
+  @property({type: String, attribute: 'data-role', noAccessor: true})
+  override role: ARIARole = 'list';
+  /**
    * The max time between the keystrokes of the typeahead menu behavior before
    * it clears the typeahead buffer.
    */
   @property({type: Number, attribute: 'typeahead-delay'})
-  typeaheadBufferTime = 200;
+  typeaheadBufferTime = DEFAULT_TYPEAHEAD_BUFFER_TIME;
   /**
    * The corner of the anchor which to align the menu in the standard logical
    * property style of <block>_<inline>.
@@ -156,6 +169,8 @@ export abstract class Menu extends LitElement {
   @property({type: String, attribute: 'default-focus'})
   defaultFocus: DefaultFocusState = 'LIST_ROOT';
 
+  @state() protected typeaheadActive = true;
+
   protected openCloseAnimationSignal = createAnimationSignal();
 
   /**
@@ -175,10 +190,11 @@ export abstract class Menu extends LitElement {
   /**
    * Handles typeahead navigation through the menu.
    */
-  protected typeaheadController = new TypeaheadController(() => {
+  typeaheadController = new TypeaheadController(() => {
     return {
       getItems: () => this.items,
       typeaheadBufferTime: this.typeaheadBufferTime,
+      active: this.typeaheadActive
     };
   });
 
@@ -240,17 +256,16 @@ export abstract class Menu extends LitElement {
    */
   protected renderList() {
     return html`
-       <md-list
-          role="menu"
-          class="list"
+      <md-list
           .ariaLabel=${this.ariaLabel}
+          .role=${this.role}
           listTabIndex=${this.listTabIndex}
-          @focus=${this.onListFocus}
-          @blur=${this.onListBlur}
-          @click=${this.onListClick}
-          @keydown=${this.typeaheadController.onKeydown}>
-         ${this.renderMenuItems()}
-       </md-list>`;
+          @focus=${this.handleListFocus}
+          @blur=${this.handleListBlur}
+          @click=${this.handleListClick}
+          @keydown=${this.handleListKeydown}>
+        ${this.renderMenuItems()}
+      </md-list>`;
   }
 
   /**
@@ -259,7 +274,9 @@ export abstract class Menu extends LitElement {
   protected renderMenuItems() {
     return html`<slot
         @close-menu=${this.onCloseMenu}
-        @deactivate-items=${this.onDeactivateItems}></slot>`;
+        @deactivate-items=${this.onDeactivateItems}
+        @deactivate-typeahead=${this.handleDeactivateTypeahead}
+        @activate-typeahead=${this.handleActivateTypeahead}></slot>`;
   }
 
   /**
@@ -284,16 +301,24 @@ export abstract class Menu extends LitElement {
     };
   }
 
-  protected onListFocus() {
+  protected handleListFocus() {
     this.focusRing.visible = shouldShowStrongFocus();
   }
 
-  protected onListClick() {
+  protected handleListClick() {
     pointerPress();
     this.focusRing.visible = shouldShowStrongFocus();
   }
 
-  protected onListBlur() {
+  // Capture so that we can grab the event before it reaches the list item
+  // istelf. Specifically useful for the case where typeahead encounters a space
+  // and we don't want the menu item to close the menu.
+  @eventOptions({capture: true})
+  protected handleListKeydown(e: KeyboardEvent) {
+    this.typeaheadController.onKeydown(e);
+  }
+
+  protected handleListBlur() {
     this.focusRing.visible = false;
   }
 
@@ -336,6 +361,7 @@ export abstract class Menu extends LitElement {
     }
 
     if (this.quick) {
+      this.dispatchEvent(new Event('opening'));
       this.dispatchEvent(new Event('opened'));
     } else {
       this.animateOpen();
@@ -348,6 +374,10 @@ export abstract class Menu extends LitElement {
   protected beforeClose = async () => {
     this.open = false;
 
+    if (!this.skipRestoreFocus) {
+      this.lastFocusedElement?.focus?.();
+    }
+
     if (!this.quick) {
       await this.animateClose();
     }
@@ -358,11 +388,8 @@ export abstract class Menu extends LitElement {
    */
   protected onClosed = () => {
     if (this.quick) {
+      this.dispatchEvent(new Event('closing'));
       this.dispatchEvent(new Event('closed'));
-    }
-
-    if (!this.skipRestoreFocus) {
-      this.lastFocusedElement?.focus?.();
     }
   };
 
@@ -572,15 +599,15 @@ export abstract class Menu extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
-    if (window && window.addEventListener) {
+    if (!isServer) {
       window.addEventListener('click', this.onWindowClick, {capture: true});
     }
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    if (window && window.removeEventListener) {
-      window.removeEventListener('click', this.onWindowClick);
+    if (!isServer) {
+      window.removeEventListener('click', this.onWindowClick, {capture: true});
     }
   }
 
@@ -600,6 +627,20 @@ export abstract class Menu extends LitElement {
     for (const item of items) {
       item.active = false;
     }
+  }
+
+  protected handleDeactivateTypeahead(e: DeactivateTypeaheadEvent) {
+    // stopPropagation so that this does not deactivate any typeaheads in menus
+    // nested above it e.g. md-sub-menu-item
+    e.stopPropagation();
+    this.typeaheadActive = false;
+  }
+
+  protected handleActivateTypeahead(e: ActivateTypeaheadEvent) {
+    // stopPropagation so that this does not activate any typeaheads in menus
+    // nested above it e.g. md-sub-menu-item
+    e.stopPropagation();
+    this.typeaheadActive = true;
   }
 
   override focus() {

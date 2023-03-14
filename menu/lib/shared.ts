@@ -23,6 +23,10 @@ interface MenuItemSelf {
    * If it is a sub-menu-item, a method that can close the submenu.
    */
   close?: () => void;
+  /**
+   * Focuses the item.
+   */
+  focus: () => void;
 }
 
 /**
@@ -87,6 +91,24 @@ export const DefaultCloseMenuEvent = CloseMenuEvent<DefaultReasons>;
 export class DeactivateItemsEvent extends Event {
   constructor() {
     super('deactivate-items', {bubbles: true, composed: true});
+  }
+}
+
+/**
+ * Requests the typeahead functionality of containing menu be deactivated.
+ */
+export class DeactivateTypeaheadEvent extends Event {
+  constructor() {
+    super('deactivate-typeahead', {bubbles: true, composed: true});
+  }
+}
+
+/**
+ * Requests the typeahead functionality of containing menu be activated.
+ */
+export class ActivateTypeaheadEvent extends Event {
+  constructor() {
+    super('activate-typeahead', {bubbles: true, composed: true});
   }
 }
 

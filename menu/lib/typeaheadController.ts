@@ -20,6 +20,10 @@ export interface TypeaheadControllerProperties {
    * alive.
    */
   typeaheadBufferTime: number;
+  /**
+   * Whether or not the typeahead should listen for keystrokes or not.
+   */
+  active: boolean;
 }
 
 /**
@@ -102,6 +106,10 @@ export class TypeaheadController {
     return this.getProperties().getItems();
   }
 
+  protected get active() {
+    return this.getProperties().active;
+  }
+
   /**
    * Apply this listener to the element that will receive `keydown` events that
    * should trigger this controller.
@@ -120,14 +128,15 @@ export class TypeaheadController {
    * Sets up typingahead
    */
   protected beginTypeahead(e: KeyboardEvent) {
+    if (!this.active) {
+      return;
+    }
+
     // We don't want to typeahead if the _beginning_ of the typeahead is a menu
     // navigation, or a selection. We will handle "Space" only if it's in the
     // middle of a typeahead
     if (e.code === 'Space' || e.code === 'Enter' ||
         e.code.startsWith('Arrow') || e.code === 'Escape') {
-      if (this.lastActiveRecord) {
-        this.lastActiveRecord[TYPEAHEAD_ITEM].active = false;
-      }
       return;
     }
 
@@ -197,6 +206,7 @@ export class TypeaheadController {
     // If Space is pressed, prevent it from selecting and closing the menu
     if (e.code === 'Space') {
       e.stopPropagation();
+      e.preventDefault();
     }
 
     // Start up a new keystroke buffer timeout
@@ -213,15 +223,15 @@ export class TypeaheadController {
      * Sorting function that will resort the items starting with the given index
      *
      * @example
-     * 
-     * this.typeaheadRecords = 
+     *
+     * this.typeaheadRecords =
      * 0: [0, <reference>, 'apple']
      * 1: [1, <reference>, 'apricot']
      * 2: [2, <reference>, 'banana']
      * 3: [3, <reference>, 'olive'] <-- lastActiveIndex
      * 4: [4, <reference>, 'orange']
      * 5: [5, <reference>, 'strawberry']
-     * 
+     *
      * this.typeaheadRecords.sort((a,b) => rebaseIndexOnActive(a)
      *                                       - rebaseIndexOnActive(b)) ===
      * 0: [3, <reference>, 'olive'] <-- lastActiveIndex
@@ -242,8 +252,7 @@ export class TypeaheadController {
             .filter(
                 record => !record[TYPEAHEAD_ITEM].disabled &&
                     record[TYPEAHEAD_TEXT].startsWith(this.typaheadBuffer))
-            .sort(
-                (a, b) => rebaseIndexOnActive(a) - rebaseIndexOnActive(b));
+            .sort((a, b) => rebaseIndexOnActive(a) - rebaseIndexOnActive(b));
 
     // Just leave if there's nothing that matches. Native select will just
     // choose the first thing that starts with the next letter in the alphabet

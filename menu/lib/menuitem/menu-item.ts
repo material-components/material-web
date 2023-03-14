@@ -41,7 +41,8 @@ export class MenuItemEl extends ListItemEl implements MenuItem {
   protected override onKeydown(e: KeyboardEvent) {
     if (this.keepOpen) return;
     const keyCode = e.code;
-    if (isClosableKey(keyCode)) {
+
+    if (!e.defaultPrevented && isClosableKey(keyCode)) {
       e.preventDefault();
       this.dispatchEvent(new DefaultCloseMenuEvent(
           this, {kind: CLOSE_REASON.KEYDOWN, key: keyCode}));
