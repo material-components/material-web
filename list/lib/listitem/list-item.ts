@@ -275,9 +275,13 @@ export class ListItemEl extends LitElement implements ListItem {
     // update or else it may cause the page to jump on first load.
     if (changed.has('active') && !this.isFirstUpdate && this.active &&
         this.focusOnSelection) {
-      this.listItemRoot.focus();
+      this.focus();
     }
 
     this.isFirstUpdate = false;
+  }
+
+  override focus() {
+    this.listItemRoot?.focus?.();
   }
 }
