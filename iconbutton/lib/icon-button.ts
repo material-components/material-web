@@ -87,8 +87,6 @@ export class IconButton extends LitElement {
   }
 
   protected renderIcon(): TemplateResult {
-    // Note, it's important not to render the icon property as a slot fallback
-    // to avoid any whitespace from overridding it.
     return html`<md-icon class="md3-icon-button__icon"><slot></slot></md-icon>`;
   }
 

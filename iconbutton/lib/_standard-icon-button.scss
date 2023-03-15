@@ -43,8 +43,6 @@ $_shape-property: 'state-layer-shape';
 
     height: var(--_state-layer-size);
     width: var(--_state-layer-size);
-    // TODO(b/272824099): remove 48px miniumum size
-    margin: max(0px, (48px - var(--_state-layer-size)) / 2);
 
     @include focus-ring.theme(
       (
