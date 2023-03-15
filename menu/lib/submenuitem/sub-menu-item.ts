@@ -45,7 +45,8 @@ export class SubMenuItem extends MenuItemEl {
   @property({type: Number, attribute: 'hover-close-delay'})
   hoverCloseDelay = 400;
 
-  @queryAssignedElements({slot: 'submenu'}) protected menus!: Menu[];
+  @queryAssignedElements({slot: 'submenu', flatten: true})
+  protected menus!: Menu[];
 
   protected override keepOpenOnClick = true;
   protected previousOpenTimeout = 0;
