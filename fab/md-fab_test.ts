@@ -46,7 +46,6 @@ describe('md-fab-extended', () => {
       const {harness} = await setupTest();
       expect(harness.element).toBeInstanceOf(MdFabExtended);
       expect(harness.element.lowered).toEqual(false);
-      expect(harness.element.disabled).toEqual(false);
       expect(harness.element.label).toEqual('');
       expect(harness.element.icon).toEqual('');
     });
@@ -60,20 +59,6 @@ describe('md-fab-extended', () => {
 
       expect(button.classList.contains('md3-fab--lowered')).toBeTrue();
     });
-  });
-
-  describe('disabled', () => {
-    it('get/set updates the disabled property on the native button element',
-       async () => {
-         const {harness, button} = await setupTest();
-         harness.element.disabled = true;
-         await env.waitForStability();
-
-         expect(button.disabled).toEqual(true);
-         harness.element.disabled = false;
-         await env.waitForStability();
-         expect(button.disabled).toEqual(false);
-       });
   });
 
   describe('icon', () => {

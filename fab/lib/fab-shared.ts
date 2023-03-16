@@ -24,8 +24,6 @@ export abstract class FabShared extends LitElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
-  @property({type: Boolean}) disabled = false;
-
   @property() icon = '';
 
   @property() label = '';
@@ -52,7 +50,6 @@ export abstract class FabShared extends LitElement {
     return html`
       <button
         class="md3-fab md3-surface ${classMap(this.getRenderClasses())}"
-        ?disabled="${this.disabled}"
         aria-label="${ariaLabel}"
         @focus="${this.handleFocus}"
         @blur="${this.handleBlur}"
@@ -113,7 +110,6 @@ export abstract class FabShared extends LitElement {
   }
 
   private readonly renderRipple = () => {
-    return html`<md-ripple class="md3-fab__ripple" ?disabled="${
-        this.disabled}"></md-ripple>`;
+    return html`<md-ripple class="md3-fab__ripple"></md-ripple>`;
   };
 }

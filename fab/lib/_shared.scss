@@ -32,11 +32,6 @@
     vertical-align: top;
   }
 
-  :host([disabled]) {
-    cursor: default;
-    pointer-events: none;
-  }
-
   .md3-fab {
     display: inline-flex;
     border: none;
