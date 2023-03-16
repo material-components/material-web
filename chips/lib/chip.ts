@@ -6,13 +6,17 @@
 
 import '../../elevation/elevation.js';
 import '../../focus/focus-ring.js';
+import '../../ripple/ripple.js';
 
-import {LitElement, nothing} from 'lit';
-import {property, state} from 'lit/decorators.js';
+import {html, LitElement, nothing} from 'lit';
+import {property, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
+import {when} from 'lit/directives/when.js';
 import {html as staticHtml, literal} from 'lit/static-html.js';
 
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
+import {ripple} from '../../ripple/directive.js';
+import {MdRipple} from '../../ripple/ripple.js';
 
 /**
  * A chip component.
@@ -25,6 +29,8 @@ export class Chip extends LitElement {
   @property({type: String}) target = '';
 
   @state() private showFocusRing = false;
+  @state() private showRipple = false;
+  @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
 
   override render() {
     const classes = {
@@ -40,13 +46,24 @@ export class Chip extends LitElement {
           target=${this.href ? this.target : nothing}
           @blur=${this.handleBlur}
           @focus=${this.handleFocus}
-          @pointerdown=${this.handlePointerDown}>
+          @pointerdown=${this.handlePointerDown}
+          ${ripple(this.getRipple)}>
         <md-elevation shadow=${this.elevated} surface></md-elevation>
+        ${when(this.showRipple, this.renderRipple)}
         <md-focus-ring .visible=${this.showFocusRing}></md-focus-ring>
         <div class="label">${this.label}</div>
       </${button}>
     `;
   }
+
+  private readonly getRipple = () => {  // bind to this
+    this.showRipple = true;
+    return this.ripple;
+  };
+
+  private readonly renderRipple = () => {  // bind to this
+    return html`<md-ripple ?disabled=${this.disabled}></md-ripple>`;
+  };
 
   private handleBlur() {
     this.showFocusRing = false;

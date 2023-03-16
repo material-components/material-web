@@ -4,8 +4,12 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../elevation/elevation';
 @use '../../focus/focus-ring';
+@use '../../ripple/ripple';
 @use '../../sass/shape';
 @use '../../sass/typography';
 // go/keep-sorted end
@@ -22,6 +26,17 @@
     @include elevation.theme(
       (
         surface-tint: var(--_container-surface-tint-layer-color),
+      )
+    );
+
+    @include ripple.theme(
+      (
+        focus-color: var(--_focus-state-layer-color),
+        focus-opacity: var(--_focus-state-layer-opacity),
+        hover-color: var(--_hover-state-layer-color),
+        hover-opacity: var(--_hover-state-layer-opacity),
+        pressed-color: var(--_pressed-state-layer-color),
+        pressed-opacity: var(--_pressed-state-layer-opacity),
       )
     );
   }
@@ -75,6 +90,10 @@
     );
   }
 
+  md-ripple {
+    border-radius: inherit;
+  }
+
   .label {
     color: var(--_label-text-color);
     font: var(--_label-text-type);
@@ -82,6 +101,12 @@
 }
 
 @function resolve-tokens($tokens) {
+  // Remove unsupported tokens
+  $tokens: map.remove(
+    $tokens,
+    'dragged-state-layer-color',
+    'dragged-state-layer-opacity'
+  );
   $tokens: typography.resolve-tokens($tokens, 'label-text');
   @return $tokens;
 }
