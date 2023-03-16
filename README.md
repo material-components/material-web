@@ -62,7 +62,7 @@ These components are planned for release after 1.0.
 
 Component         | Alpha | Beta | Stable
 ----------------- | :---: | :--: | :----:
-Autocomplete      | 🟡     | ❌    | ❌
+Autocomplete      | ❌     | ❌    | ❌
 Badge             | 🟡     | ❌    | ❌
 Banner            | ❌     | ❌    | ❌
 Bottom app bar    | ❌     | ❌    | ❌
