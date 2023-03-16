@@ -103,55 +103,47 @@ export function getUnusedTokens(styles: CSSResult[]) {
   return unusedTokens;
 }
 
-function getDefinedTokensFromRule(rule: CSSRule|CSSStyleSheet): Set<string> {
-  // Rule is either a CSSStylehSheet, CSSKeyframesRule, or one of the
-  // CSSGroupingRules.
+function getDefinedTokensFromRule(rule: CSSRule|CSSStyleSheet|
+                                  CSSStyleRule): Set<string> {
+  let defined = new Set<string>();
   if ('cssRules' in rule) {
-    let defined = new Set<string>();
+    // Rule is either a CSSStyleSheet, CSSKeyframesRule, or one of the
+    // CSSGroupingRules.
     for (const childRule of rule.cssRules) {
       defined = new Set([...defined, ...getDefinedTokensFromRule(childRule)]);
     }
-
-    return defined;
   }
 
-  if (!(rule instanceof CSSStyleRule || rule instanceof CSSKeyframeRule)) {
-    return new Set();
-  }
-
-  const defined = new Set<string>();
-  for (const property of rule.style) {
-    if (property.startsWith('--_')) {
-      defined.add(property);
+  if ('style' in rule) {
+    for (const property of rule.style) {
+      if (property.startsWith('--_')) {
+        defined.add(property);
+      }
     }
   }
 
   return defined;
 }
 
-function getUsedTokensFromRule(rule: CSSRule|CSSStyleSheet): Set<string> {
-  // Rule is either a CSSStylehSheet, CSSKeyframesRule, or one of the
-  // CSSGroupingRules.
+function getUsedTokensFromRule(rule: CSSRule|CSSStyleSheet|
+                               CSSStyleRule): Set<string> {
+  let used = new Set<string>();
   if ('cssRules' in rule) {
-    let used = new Set<string>();
+    // Rule is either a CSSStyleSheet, CSSKeyframesRule, or one of the
+    // CSSGroupingRules.
     for (const childRule of rule.cssRules) {
       used = new Set([...used, ...getUsedTokensFromRule(childRule)]);
     }
-
-    return used;
   }
 
-  if (!(rule instanceof CSSStyleRule || rule instanceof CSSKeyframeRule)) {
-    return new Set();
-  }
-
-  const used = new Set<string>();
-  // Shorthand properties are not included in CSSStyleDeclaration's iterator.
-  // Check them explicitly as well for properties like border-radius.
-  for (const property of [...rule.style, ...CSS_SHORTHAND_PROPERTIES]) {
-    const value = rule.style.getPropertyValue(property);
-    for (const match of value.matchAll(/--_[\w-]+/g)) {
-      used.add(match[0]);
+  if ('style' in rule) {
+    // Shorthand properties are not included in CSSStyleDeclaration's iterator.
+    // Check them explicitly as well for properties like border-radius.
+    for (const property of [...rule.style, ...CSS_SHORTHAND_PROPERTIES]) {
+      const value = rule.style.getPropertyValue(property);
+      for (const match of value.matchAll(/--_[\w-]+/g)) {
+        used.add(match[0]);
+      }
     }
   }
 
