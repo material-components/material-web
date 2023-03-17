@@ -112,7 +112,7 @@ $_custom-property-prefix: 'menu';
 
 @function _resolve-tokens($tokens) {
   $menu-tokens: _remove-unused-tokens($tokens);
-  @return elevation.resolve-tokens($menu-tokens, 'elevation-key');
+  @return elevation.resolve-tokens($menu-tokens, 'container-elevation');
 }
 
 // removes unused tokens

@@ -240,11 +240,13 @@ export abstract class Menu extends LitElement {
    * Renders the positionable surface element and its contents.
    */
   protected renderSurface() {
+    // TODO(b/274140618): elevation should be an underlay, not an overlay that
+    // tints content
     return html`
        <div
            class="menu ${classMap(this.getSurfaceClasses())}"
            style=${styleMap(this.menuPositionController.surfaceStyles)}>
-        ${this.renderList()} 
+        ${this.renderList()}
         ${this.renderElevation()}
         ${this.renderFocusRing()}
        </div>
