@@ -275,6 +275,7 @@ export class Dialog extends LitElement {
         @pointermove=${this.handlePointerMove}
         @pointerup=${this.handleDragEnd}
       >
+        <md-elevation surface></md-elevation>
         <header class="header">
           <slot name="header">
             <slot name="headline-prefix"></slot>
@@ -288,7 +289,6 @@ export class Dialog extends LitElement {
         <footer class="footer">
           <slot name="footer"></slot>
         </footer>
-        <md-elevation surface></md-elevation>
       </div>
     </dialog>`;
   }

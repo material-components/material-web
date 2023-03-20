@@ -8,6 +8,7 @@
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use '../../elevation/lib/elevation';
 @use '../../sass/color';
 @use '../../sass/shape';
 @use '../../sass/string-ext';
@@ -85,5 +86,6 @@ $_fullscreen-tokens: (
  */
 @function md-comp-dialog-values() {
   $tokens: remove-unsupported-tokens(tokens.md-comp-dialog-values());
+  $tokens: elevation.resolve-tokens($tokens, 'container-elevation');
   @return map.merge(map.merge($tokens, $_tokens), $_fullscreen-tokens);
 }

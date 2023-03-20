@@ -46,7 +46,7 @@ $_custom-property-prefix: 'text-button';
       --_#{$token}: #{$value};
     }
 
-    --_container-color: unset;
+    --_container-color: none;
   }
 }
 
