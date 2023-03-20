@@ -15,7 +15,6 @@
 @use '../../motion/animation';
 @use '../../ripple/ripple';
 @use '../../sass/theme';
-@use '../../sass/typography';
 @use '../../tokens';
 // go/keep-sorted end
 
@@ -24,8 +23,8 @@ $_custom-property-prefix: 'navigation-bar';
 
 @mixin theme($tokens) {
   $tokens: theme.validate-theme(
-    _resolve-tokens(tokens.md-comp-navigation-bar-values()),
-    _resolve-tokens($tokens)
+    tokens.md-comp-navigation-bar-values(),
+    $tokens
   );
 
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
@@ -34,7 +33,7 @@ $_custom-property-prefix: 'navigation-bar';
 }
 
 @mixin styles() {
-  $tokens: _resolve-tokens(tokens.md-comp-navigation-bar-values());
+  $tokens: tokens.md-comp-navigation-bar-values();
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   :host {
@@ -259,8 +258,4 @@ $_custom-property-prefix: 'navigation-bar';
       )
     );
   }
-}
-
-@function _resolve-tokens($tokens) {
-  @return typography.resolve-tokens($tokens, 'label-text');
 }

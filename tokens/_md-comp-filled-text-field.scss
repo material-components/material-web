@@ -4,6 +4,9 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './md-sys-state';
@@ -18,6 +21,26 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
+$_unsupported-tokens: (
+  'input-text-font',
+  'input-text-line-height',
+  'input-text-size',
+  'input-text-tracking',
+  'input-text-weight',
+  'label-text-font',
+  'label-text-line-height',
+  'label-text-size',
+  'label-text-tracking',
+  'label-text-weight',
+  'supporting-text-font',
+  'supporting-text-line-height',
+  'supporting-text-size',
+  'supporting-text-tracking',
+  'supporting-text-weight'
+);
+
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  @return md-comp-filled-text-field.values($deps, $exclude-hardcoded-values);
+  $tokens: md-comp-filled-text-field.values($deps, $exclude-hardcoded-values);
+  $tokens: map.remove($tokens, $_unsupported-tokens...);
+  @return $tokens;
 }

@@ -14,7 +14,6 @@
 @use '../../ripple/ripple';
 @use '../../sass/color';
 @use '../../sass/touch-target';
-@use '../../sass/typography';
 // go/keep-sorted end
 
 @mixin styles() {
@@ -357,7 +356,6 @@
 }
 
 @function resolve-tokens($tokens) {
-  $tokens: typography.resolve-tokens($tokens, 'label-text');
   $tokens: _flatten-disabled-colors($tokens);
   @return $tokens;
 }

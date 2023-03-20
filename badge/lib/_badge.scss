@@ -8,24 +8,20 @@
 
 // go/keep-sorted start
 @use '../../sass/theme';
-@use '../../sass/typography';
 @use '../../tokens';
 // go/keep-sorted end
 
 $_custom-property-prefix: 'badge';
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(
-    _resolve-tokens(tokens.md-comp-badge-values()),
-    _resolve-tokens($tokens)
-  );
+  $tokens: theme.validate-theme(tokens.md-comp-badge-values(), $tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   @include theme.emit-theme-vars($tokens);
 }
 
 @mixin styles() {
-  $tokens: _resolve-tokens(tokens.md-comp-badge-values());
+  $tokens: tokens.md-comp-badge-values();
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   :host {
@@ -70,8 +66,4 @@ $_custom-property-prefix: 'badge';
   .md3-badge__value {
     font: var(--_large-label-text-type);
   }
-}
-
-@function _resolve-tokens($tokens) {
-  @return typography.resolve-tokens($tokens, 'large-label-text');
 }

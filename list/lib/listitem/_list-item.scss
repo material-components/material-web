@@ -13,7 +13,6 @@
 @use '../../../ripple/ripple';
 @use '../../../sass/map-ext';
 @use '../../../sass/theme';
-@use '../../../sass/typography';
 @use '../../../tokens';
 // go/keep-sorted end
 
@@ -453,16 +452,6 @@
     }
   }
 
-  // Do not include list-item-trailing-supporting-text or list-item-label-text
-  // because we actually need the line-height tokens separately from the
-  // *-type tokens.
-  $list-item-tokens: typography.resolve-tokens(
-    $list-item-tokens,
-    'list-item-supporting-text',
-    'list-item-leading-avatar-label',
-    'list-item-overline'
-  );
-
   $list-item-tokens: _remove-unused-tokens($list-item-tokens);
 
   @return $list-item-tokens;
@@ -484,15 +473,7 @@
     'list-item-overline-type',
     'list-item-selected-trailing-icon',
     'list-item-selected-trailing-icon-color',
-    'list-item-unselected-trailing-icon-color',
-    'list-item-label-text-font',
-    'list-item-label-text-size',
-    'list-item-label-text-tracking',
-    'list-item-label-text-weight',
-    'list-item-trailing-supporting-text-font',
-    'list-item-trailing-supporting-text-size',
-    'list-item-trailing-supporting-text-tracking',
-    'list-item-trailing-supporting-text-weight'
+    'list-item-unselected-trailing-icon-color'
   );
 
   @each $token in $unused-tokens {

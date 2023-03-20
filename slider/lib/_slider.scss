@@ -15,14 +15,12 @@
 @use '../../sass/color';
 @use '../../sass/shape';
 @use '../../sass/theme';
-@use '../../sass/typography';
 @use '../../sass/var';
 @use './tokens';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
   $tokens: tokens.remove-unsupported-tokens($tokens);
-  $tokens: typography.resolve-tokens($tokens, 'label-label-text');
   $tokens: theme.validate-theme(tokens.md-comp-slider-values(), $tokens);
   $tokens: theme.create-theme-vars($tokens, 'slider');
 

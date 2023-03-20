@@ -4,6 +4,9 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use './md-sys-color';
 @use './md-sys-elevation';
 @use './md-sys-shape';
@@ -20,6 +23,16 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
+$_unsupported-tokens: (
+  'label-text-font',
+  'label-text-line-height',
+  'label-text-size',
+  'label-text-tracking',
+  'label-text-weight'
+);
+
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  @return md-comp-filled-tonal-button.values($deps, $exclude-hardcoded-values);
+  $tokens: md-comp-filled-tonal-button.values($deps, $exclude-hardcoded-values);
+  $tokens: map.remove($tokens, $_unsupported-tokens...);
+  @return $tokens;
 }

@@ -10,7 +10,6 @@
 @use '../../field/outlined-field';
 @use '../../sass/shape';
 @use '../../sass/theme';
-@use '../../sass/typography';
 @use '../../tokens';
 @use './shared';
 // go/keep-sorted end
@@ -133,10 +132,5 @@
     );
   }
 
-  @return typography.resolve-tokens(
-    $tokens,
-    'input-text',
-    'label-text',
-    'supporting-text'
-  );
+  @return $tokens;
 }

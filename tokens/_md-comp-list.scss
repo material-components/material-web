@@ -4,6 +4,9 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use './md-sys-color';
 @use './md-sys-elevation';
 @use './md-sys-shape';
@@ -20,6 +23,36 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
+$_unsupported-tokens: (
+  // Do not remove label-text-line-height since it is needed
+  'list-item-label-text-font',
+  'list-item-label-text-size',
+  'list-item-label-text-tracking',
+  'list-item-label-text-weight',
+  'list-item-leading-avatar-label-font',
+  'list-item-leading-avatar-label-line-height',
+  'list-item-leading-avatar-label-size',
+  'list-item-leading-avatar-label-tracking',
+  'list-item-leading-avatar-label-weight',
+  'list-item-supporting-text-font',
+  'list-item-supporting-text-line-height',
+  'list-item-supporting-text-size',
+  'list-item-supporting-text-tracking',
+  'list-item-supporting-text-weight',
+  'list-item-overline-font',
+  'list-item-overline-line-height',
+  'list-item-overline-size',
+  'list-item-overline-tracking',
+  'list-item-overline-weight',
+  // Do not remove trailing-supporting-text-line-height since it is needed
+  'list-item-trailing-supporting-text-font',
+  'list-item-trailing-supporting-text-size',
+  'list-item-trailing-supporting-text-tracking',
+  'list-item-trailing-supporting-text-weight'
+);
+
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  @return md-comp-list.values($deps, $exclude-hardcoded-values);
+  $tokens: md-comp-list.values($deps, $exclude-hardcoded-values);
+  $tokens: map.remove($tokens, $_unsupported-tokens...);
+  @return $tokens;
 }

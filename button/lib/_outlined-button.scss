@@ -9,7 +9,6 @@
 // go/keep-sorted start
 @use '../../sass/shape';
 @use '../../sass/theme';
-@use '../../sass/typography';
 @use '../../tokens';
 @use './shared';
 // go/keep-sorted end
@@ -86,6 +85,5 @@ $_custom-property-prefix: 'outlined-button';
 @function _resolve-tokens($tokens) {
   $tokens: shared.flatten-disabled-colors($tokens);
   $tokens: shared.remove-unsupported-tokens($tokens);
-  $tokens: typography.resolve-tokens($tokens, 'label-text');
   @return $tokens;
 }

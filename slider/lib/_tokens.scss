@@ -11,7 +11,6 @@
 @use '../../sass/color';
 @use '../../sass/shape';
 @use '../../sass/theme';
-@use '../../sass/typography';
 @use '../../sass/var';
 @use '../../tokens';
 // go/keep-sorted end
@@ -28,10 +27,6 @@ $_tokens: (
   'label-motion-easing':
     map.get(tokens.md-sys-motion-values(), 'easing-emphasized'),
 );
-
-@function resolve-typography($tokens) {
-  @return typography.resolve-tokens($tokens, 'label-label-text');
-}
 
 @function remove-unsupported-tokens($tokens) {
   $unsupported-tokens: (
@@ -52,12 +47,11 @@ $_tokens: (
 }
 
 /**
- * 
- * Extended token set for slider. 
+ *
+ * Extended token set for slider.
  */
 @function md-comp-slider-values() {
   $tokens: remove-unsupported-tokens($baseTokens);
-  $tokens: typography.resolve-tokens($tokens, 'label-label-text');
   @return map.merge($tokens, $_tokens);
 }
 

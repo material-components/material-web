@@ -4,6 +4,9 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use './md-sys-color';
 @use './md-sys-elevation';
 @use './md-sys-shape';
@@ -20,9 +23,19 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
+$_unsupported-tokens: (
+  'with-label-text-label-text-font',
+  'with-label-text-label-text-line-height',
+  'with-label-text-label-text-size',
+  'with-label-text-label-text-tracking',
+  'with-label-text-label-text-weight'
+);
+
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  @return md-comp-primary-navigation-tab.values(
+  $tokens: md-comp-primary-navigation-tab.values(
     $deps,
     $exclude-hardcoded-values
   );
+  $tokens: map.remove($tokens, $_unsupported-tokens...);
+  @return $tokens;
 }
