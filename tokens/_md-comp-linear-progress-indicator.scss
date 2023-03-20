@@ -1,0 +1,22 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use './md-sys-color';
+@use './md-sys-shape';
+@use './v0_161/md-comp-linear-progress-indicator';
+// go/keep-sorted end
+
+$_default: (
+  'md-sys-color': md-sys-color.values-light(),
+  'md-sys-shape': md-sys-shape.values(),
+);
+
+@function values($deps: $_default, $exclude-hardcoded-values: false) {
+  @return md-comp-linear-progress-indicator.values(
+    $deps,
+    $exclude-hardcoded-values
+  );
+}

@@ -1,0 +1,17 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use './md-sys-color';
+@use './v0_161/md-comp-scrim';
+// go/keep-sorted end
+
+$_default: (
+  'md-sys-color': md-sys-color.values-light(),
+);
+
+@function values($deps: $_default, $exclude-hardcoded-values: false) {
+  @return md-comp-scrim.values($deps, $exclude-hardcoded-values);
+}

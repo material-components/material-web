@@ -1,0 +1,23 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use './md-sys-color';
+@use './md-sys-elevation';
+@use './md-sys-shape';
+@use './md-sys-state';
+@use './v0_161/md-comp-fab-branded-large';
+// go/keep-sorted end
+
+$_default: (
+  'md-sys-color': md-sys-color.values-light(),
+  'md-sys-elevation': md-sys-elevation.values(),
+  'md-sys-shape': md-sys-shape.values(),
+  'md-sys-state': md-sys-state.values(),
+);
+
+@function values($deps: $_default, $exclude-hardcoded-values: false) {
+  @return md-comp-fab-branded-large.values($deps, $exclude-hardcoded-values);
+}
