@@ -10,7 +10,6 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../../sass/resolvers';
 @use '../../../sass/theme';
 @use '../../../tokens';
 // go/keep-sorted end
@@ -44,14 +43,14 @@ $dark-theme: values(
   $exclude-hardcoded-values: true
 );
 
-@mixin theme($theme, $resolvers: resolvers.$material) {
+@mixin theme($theme) {
   $theme: theme.validate-theme($light-theme, $theme);
   $theme: theme.create-theme-vars($theme, test-table);
 
   @include theme.emit-theme-vars($theme);
 }
 
-@mixin theme-styles($theme, $resolvers: resolvers.$material) {
+@mixin theme-styles($theme) {
   $theme: theme.validate-theme-styles($light-theme, $theme);
   $theme: theme.create-theme-vars($theme, test-table);
 

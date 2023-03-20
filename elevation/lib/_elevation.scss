@@ -4,7 +4,6 @@
 //
 
 // go/keep-sorted start
-@use 'sass:list';
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
@@ -13,34 +12,14 @@
 @use './md-comp-elevation';
 // go/keep-sorted end
 
-// TODO(b/261603279): remove once tokens are updated to use level instead of dp
-@function resolve-tokens($tokens, $elevation-keys...) {
-  @each $elevation-key in $elevation-keys {
-    $dp: map.get($tokens, $elevation-key);
-    @if $dp != null and not var.is-var($dp) {
-      $valid-dps: (0, 1, 3, 6, 8, 12);
-      @if list.index($valid-dps, $dp) == null {
-        @error '#{$elevation-key} must be expressed in dp values (#{$valid-dps}), but received #{$dp}. See b/261603279.';
-      }
-
-      $dp-to-level: list.index($valid-dps, $dp) - 1;
-      $tokens: map.set($tokens, $elevation-key, $dp-to-level);
-    }
-  }
-
-  @return $tokens;
-}
-
 @mixin theme($tokens) {
   $tokens: theme.validate-theme(md-comp-elevation.values(), $tokens);
-  $tokens: resolve-tokens($tokens, 'level');
   $tokens: theme.create-theme-vars($tokens, 'elevation');
   @include theme.emit-theme-vars($tokens);
 }
 
 @mixin styles() {
   $tokens: md-comp-elevation.values();
-  $tokens: resolve-tokens($tokens, 'level');
   $tokens: theme.create-theme-vars($tokens, 'elevation');
 
   :host {

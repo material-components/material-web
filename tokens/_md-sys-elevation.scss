@@ -4,9 +4,27 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use './v0_161/md-sys-elevation';
 // go/keep-sorted end
 
 @function values($exclude-hardcoded-values: false) {
-  @return md-sys-elevation.values($exclude-hardcoded-values);
+  $tokens: md-sys-elevation.values($exclude-hardcoded-values);
+  $tokens: map.merge(
+    $tokens,
+    (
+      // Elevation levels on web should use the level number, not the dp value
+      // TODO(b/261603279): remove once tokens are updated to use level
+      'level0': if($exclude-hardcoded-values, null, 0),
+      'level1': if($exclude-hardcoded-values, null, 1),
+      'level2': if($exclude-hardcoded-values, null, 2),
+      'level3': if($exclude-hardcoded-values, null, 3),
+      'level4': if($exclude-hardcoded-values, null, 4),
+      'level5': if($exclude-hardcoded-values, null, 5)
+    )
+  );
+
+  @return $tokens;
 }

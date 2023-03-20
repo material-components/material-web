@@ -9,11 +9,10 @@
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../elevation/lib/elevation';
+@use '../../elevation/elevation';
 @use '../../focus/focus-ring';
 @use '../../list/list' as md-list;
 @use '../../list/list-item';
-@use '../../sass/resolvers';
 @use '../../sass/theme';
 @use '../../tokens';
 // go/keep-sorted end
@@ -111,12 +110,7 @@ $_custom-property-prefix: 'menu';
 }
 
 @function _resolve-tokens($tokens) {
-  $menu-tokens: _remove-unused-tokens($tokens);
-  @return elevation.resolve-tokens($menu-tokens, 'container-elevation');
-}
-
-// removes unused tokens
-@function _remove-unused-tokens($tokens) {
+  // removes unused tokens
   $unused-tokens: ();
   @each $token in map-keys($tokens) {
     $index: string.index($token, 'list-item');

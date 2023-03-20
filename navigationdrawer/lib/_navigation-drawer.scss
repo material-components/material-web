@@ -11,7 +11,6 @@
 @use '../../motion/animation';
 @use '../../sass/shape';
 @use '../../sass/theme';
-@use './shared';
 // go/keep-sorted end
 
 $curve: animation.$standard-easing;
@@ -35,7 +34,6 @@ $_custom-property-prefix: 'navigation-drawer';
 
 @mixin theme($tokens) {
   $tokens: theme.validate-theme($_reference, $tokens);
-  $tokens: shared.resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
   $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
@@ -44,7 +42,6 @@ $_custom-property-prefix: 'navigation-drawer';
 
 @mixin styles() {
   $tokens: $_reference;
-  $tokens: shared.resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
   $tokens: shape.resolve-tokens($tokens, 'container-shape');
 

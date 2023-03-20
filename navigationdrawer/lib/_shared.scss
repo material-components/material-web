@@ -9,9 +9,6 @@
 // go/keep-sorted start
 @use 'sass:map';
 // go/keep-sorted end
-// go/keep-sorted start
-@use '../../elevation/lib/elevation';
-// go/keep-sorted end
 
 @mixin styles() {
   .md3-navigation-drawer-modal {
@@ -31,10 +28,4 @@
       max-inline-size: var(--_container-width);
     }
   }
-}
-
-@function resolve-tokens($tokens) {
-  $tokens: elevation.resolve-tokens($tokens, 'modal-container-elevation');
-
-  @return $tokens;
 }

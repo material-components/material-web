@@ -11,7 +11,7 @@
 @use 'sass:meta';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../elevation/lib/elevation';
+@use '../../elevation/elevation';
 @use '../../focus/focus-ring';
 @use '../../ripple/ripple';
 @use '../../sass/shape';
@@ -194,20 +194,4 @@
       border: 1px solid ButtonText;
     }
   }
-}
-
-@function resolve-tokens($tokens) {
-  $tokens: elevation.resolve-tokens(
-    $tokens,
-    'container-elevation',
-    'focus-container-elevation',
-    'hover-container-elevation',
-    'pressed-container-elevation',
-    'lowered-container-elevation',
-    'lowered-focus-container-elevation',
-    'lowered-hover-container-elevation',
-    'lowered-pressed-container-elevation'
-  );
-
-  @return $tokens;
 }

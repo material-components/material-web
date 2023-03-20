@@ -7,11 +7,7 @@
 // Selector '.md3-*' should only be used in this project.
 
 // go/keep-sorted start
-@use 'sass:map';
-@use 'sass:meta';
-// go/keep-sorted end
-// go/keep-sorted start
-@use '../../elevation/lib/elevation';
+@use '../../elevation/elevation';
 // go/keep-sorted end
 
 @mixin styles() {
@@ -65,15 +61,4 @@
       );
     }
   }
-}
-
-@function resolve-tokens($tokens) {
-  @return elevation.resolve-tokens(
-    $tokens,
-    'container-elevation',
-    'disabled-container-elevation',
-    'focus-container-elevation',
-    'hover-container-elevation',
-    'pressed-container-elevation'
-  );
 }

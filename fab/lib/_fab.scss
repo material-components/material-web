@@ -15,7 +15,6 @@
 
 @mixin theme($tokens) {
   $tokens: theme.validate-theme(tokens.md-comp-fab-surface-values(), $tokens);
-  $tokens: shared.resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, 'fab');
   $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
@@ -24,8 +23,6 @@
 
 @mixin styles() {
   $tokens: tokens.md-comp-fab-surface-values();
-
-  $tokens: shared.resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, 'fab');
   $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
