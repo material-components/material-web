@@ -44,6 +44,7 @@
     align-items: center;
     appearance: none;
     background: none;
+    border: none;
     border-radius: inherit;
     box-sizing: border-box;
     display: flex;
@@ -54,16 +55,40 @@
     position: relative;
     text-decoration: none;
     width: 100%;
+
+    // Container and outline color, separate node for disabled opacity changes
+    &::before {
+      border-radius: inherit;
+      content: '';
+      inset: 0;
+      pointer-events: none;
+      position: absolute;
+    }
+  }
+
+  .container:not(.disabled) {
+    cursor: pointer;
+  }
+
+  .container.disabled {
+    pointer-events: none;
   }
 
   .flat {
-    border: var(--_flat-outline-width) solid var(--_flat-outline-color);
-
     @include elevation.theme(
       (
         level: var(--_flat-container-elevation),
       )
     );
+
+    &::before {
+      border: var(--_flat-outline-width) solid var(--_flat-outline-color);
+    }
+  }
+
+  .flat.disabled::before {
+    border-color: var(--_flat-disabled-outline-color);
+    opacity: var(--_flat-disabled-outline-opacity);
   }
 
   .elevated {
@@ -74,6 +99,19 @@
         level: var(--_elevated-container-elevation),
       )
     );
+  }
+
+  .elevated.disabled {
+    @include elevation.theme(
+      (
+        level: var(--_elevated-disabled-container-elevation),
+      )
+    );
+  }
+
+  .elevated.disabled::before {
+    background: var(--_elevated-disabled-container-color);
+    opacity: var(--_elevated-disabled-container-opacity);
   }
 
   md-elevation {
@@ -96,6 +134,14 @@
   .label {
     color: var(--_label-text-color);
     font: var(--_label-text-type);
+    text-overflow: ellipsis;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  .disabled .label {
+    color: var(--_disabled-label-text-color);
+    opacity: var(--_disabled-label-text-opacity);
   }
 }
 

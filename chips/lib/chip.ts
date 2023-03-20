@@ -34,6 +34,7 @@ export class Chip extends LitElement {
 
   override render() {
     const classes = {
+      disabled: this.disabled,
       elevated: this.elevated,
       flat: !this.elevated,
     };
