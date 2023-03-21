@@ -1,5 +1,53 @@
 # Changelog
 
+## [1.0.0-pre.5](https://github.com/material-components/material-web/compare/v1.0.0-pre.4...v1.0.0-pre.5) (2023-03-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove old menusurface, autocomplete, and tokens v0.160
+* **fab:** remove disabled state
+* **iconbutton:** properly size iconbutton to 40x40
+* **focus:** refactor focus ring to better match component shape
+
+### Features
+
+* **button:** add label slot ([24298e6](https://github.com/material-components/material-web/commit/24298e696cb76c58a1482e770cc5548fc7c78cbd))
+* **chips:** add basic assist chip ([27762d8](https://github.com/material-components/material-web/commit/27762d855ce88bf2400082ed4c1f1d2c7d03580a))
+* **chips:** add disabled styles ([324e856](https://github.com/material-components/material-web/commit/324e8568c269271e014c130acd4f8b31aa0efdfc))
+* **chips:** add focus ring ([9eb861f](https://github.com/material-components/material-web/commit/9eb861fc835b81511652c6fd2d47aebc9854176d))
+* **chips:** add icon support ([7e02a15](https://github.com/material-components/material-web/commit/7e02a15ad89df143495b07d1d03f74f5f1077495))
+* **chips:** add link chips ([06bdb86](https://github.com/material-components/material-web/commit/06bdb86803a96e680c35132841b73879e6106434))
+* **chips:** add ripple ([9582e00](https://github.com/material-components/material-web/commit/9582e006c0fb23250a33018fffc20ca01aa2ade4))
+* **chips:** add suggestion chips ([f3fe55e](https://github.com/material-components/material-web/commit/f3fe55ec2bcc7dd3ae57f62b3dd68fbc951e747c))
+* **field,menu:** create a surface client rect api for positioning ([533ae6c](https://github.com/material-components/material-web/commit/533ae6c999558cbc8e03b90f9dd59990cac84784))
+* **icon:** add icon documentation ([912d66e](https://github.com/material-components/material-web/commit/912d66ea3058a1cf849e33024a254e6e21d62a65))
+* **list-item:** expose / override host focus ([d005d72](https://github.com/material-components/material-web/commit/d005d7265e1d980d748c8d7fe3f7f6d9d848cbb2))
+* **list:** add spacing tokens and inherit min-width ([35147b2](https://github.com/material-components/material-web/commit/35147b25b0687ae33c86dc81374d1243e697baa6))
+* **menu:** prepare menu to support md-select ([193b220](https://github.com/material-components/material-web/commit/193b220a73718226ec15171197a393008f040caa))
+
+
+### Bug Fixes
+
+* **button:** enable separate color and opacity tokens ([f90aab2](https://github.com/material-components/material-web/commit/f90aab27b4fa497ab6d320b7caa4c1e569d7d00b))
+* **button:** text button background not transparent ([6700947](https://github.com/material-components/material-web/commit/67009478065f7ac61ad83df12bbcce60bebfa7b6))
+* **dialog:** incorrect elevation layering ([028e44e](https://github.com/material-components/material-web/commit/028e44e8c932d2d7d506a6dccbfdc7957c888d12))
+* **elevation:** disable pointer-events ([6155278](https://github.com/material-components/material-web/commit/615527886b122b6532e9afdbe96ec4768c2494de))
+* **fab:** remove disabled state ([c368e7d](https://github.com/material-components/material-web/commit/c368e7d633ae1bbb560cb169293344a00e6c012f)), closes [#4045](https://github.com/material-components/material-web/issues/4045)
+* **focus:** refactor focus ring to better match component shape ([61ff279](https://github.com/material-components/material-web/commit/61ff27910eae0e0401824d03601ec252489aa83e))
+* **iconbutton:** allow icon button to be asymmetrically sized ([8a37ce2](https://github.com/material-components/material-web/commit/8a37ce2e00e7a0611819f8dadc2ea775b6a047dc))
+* **iconbutton:** properly size iconbutton to 40x40 ([567d340](https://github.com/material-components/material-web/commit/567d3406b07ab1655924a96f52b6877aa9daff08))
+* **menu:** flatten submenu slot query ([ddac76e](https://github.com/material-components/material-web/commit/ddac76e3bce71cc42fe74d4c65a1418a321aeecb))
+* **menu:** incorrect elevation ([427d33d](https://github.com/material-components/material-web/commit/427d33d979a4b41229970e9888a287160b714a64))
+* **testing:** token tests not working in Safari Chrome ([618a505](https://github.com/material-components/material-web/commit/618a505f574099519b66f0f28d231657041b5686))
+* **tokens:** add override files for all tokens ([2623c1d](https://github.com/material-components/material-web/commit/2623c1dd4e5d7a557195edfa33709b7db8993451))
+
+
+### Miscellaneous Chores
+
+* remove old menusurface, autocomplete, and tokens v0.160 ([878b914](https://github.com/material-components/material-web/commit/878b9143e790702a524b7e07b81262748e2d3818))
+* update next version ([405ec53](https://github.com/material-components/material-web/commit/405ec5399ccf2f34f956a7df06a2f39e806621a6))
+
 ## [1.0.0-pre.4](https://github.com/material-components/material-web/compare/v1.0.0-pre.3...v1.0.0-pre.4) (2023-03-08)
 
 
