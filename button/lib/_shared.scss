@@ -150,21 +150,3 @@
     inline-size: 100%;
   }
 }
-
-@function remove-unsupported-tokens($tokens) {
-  // b/193825150: Text and Outlined Button don't have `container-shadow-color`,
-  // leaving `container-elevation` useless.
-  @if not map.get($tokens, 'container-shadow-color') {
-    $tokens: map.remove($tokens, 'container-elevation');
-  }
-
-  $unsupported-tokens: (
-    // TODO(b/233225796): Clean up this removal of `dragged` tokens.
-    'dragged-container-elevation',
-    'dragged-label-text-color',
-    'dragged-state-layer-color',
-    'dragged-state-layer-opacity',
-    'with-icon-dragged-icon-color'
-  );
-  @return map.remove($tokens, $unsupported-tokens);
-}

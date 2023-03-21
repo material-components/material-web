@@ -4,6 +4,10 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../sass/shape';
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './md-sys-state';
@@ -18,6 +22,35 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
+$_unsupported-tokens: (
+  'label-text-font',
+  'label-text-line-height',
+  'label-text-size',
+  'label-text-tracking',
+  'label-text-weight'
+);
+
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  @return md-comp-text-button.values($deps, $exclude-hardcoded-values);
+  $tokens: md-comp-text-button.values($deps, $exclude-hardcoded-values);
+  @if not $exclude-hardcoded-values {
+    // TODO(b/198759625): Remove once spacing tokens are formally added
+    $tokens: map.set($tokens, 'spacing-leading', 12px);
+    $tokens: map.set($tokens, 'spacing-trailing', 12px);
+    $tokens: map.set($tokens, 'with-icon-spacing-leading', 12px);
+    $tokens: map.set($tokens, 'with-icon-spacing-trailing', 16px);
+    $tokens: map.set($tokens, 'with-trailing-icon-spacing-leading', 16px);
+    $tokens: map.set($tokens, 'with-trailing-icon-spacing-trailing', 12px);
+  }
+
+  $tokens: map.remove($tokens, $_unsupported-tokens...);
+  @each $token, $value in $tokens {
+    $tokens: map.set(
+      $tokens,
+      $token,
+      var(--md-text-button-#{$token}, #{$value})
+    );
+  }
+
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
+  @return $tokens;
 }

@@ -7,38 +7,22 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../sass/shape';
 @use '../../sass/theme';
 @use '../../tokens';
-@use './shared';
 // go/keep-sorted end
 
 $_custom-property-prefix: 'text-button';
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(
-    _resolve-tokens(tokens.md-comp-text-button-values()),
-    _resolve-tokens($tokens)
-  );
-  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
-  $tokens: shape.resolve-tokens($tokens, 'container-shape');
+  $tokens: theme.validate-theme(tokens.md-comp-text-button-values(), $tokens);
 
-  @include theme.emit-theme-vars($tokens);
+  @each $token, $value in $tokens {
+    --md-elevated-button-#{$token}: #{$value};
+  }
 }
 
 @mixin styles() {
   $tokens: tokens.md-comp-text-button-values();
-
-  // TODO(b/198759625): Remove once spacing tokens are formally added
-  $tokens: map.set($tokens, 'spacing-leading', 12px);
-  $tokens: map.set($tokens, 'spacing-trailing', 12px);
-  $tokens: map.set($tokens, 'with-icon-spacing-leading', 12px);
-  $tokens: map.set($tokens, 'with-icon-spacing-trailing', 16px);
-  $tokens: map.set($tokens, 'with-trailing-icon-spacing-leading', 16px);
-  $tokens: map.set($tokens, 'with-trailing-icon-spacing-trailing', 12px);
-  $tokens: _resolve-tokens($tokens);
-  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
-  $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
   :host {
     @each $token, $value in $tokens {
@@ -46,16 +30,7 @@ $_custom-property-prefix: 'text-button';
     }
 
     --_container-color: none;
+    --_disabled-container-color: none;
+    --_disabled-container-opacity: 0;
   }
-}
-
-@function _resolve-tokens($tokens) {
-  // TODO(b/233066105): Clean up this removal of extraneous tokens
-  $tokens: map.remove(
-    $tokens,
-    'disabled-container-color',
-    'disabled-container-opacity'
-  );
-  $tokens: shared.remove-unsupported-tokens($tokens);
-  @return $tokens;
 }

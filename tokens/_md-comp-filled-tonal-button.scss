@@ -7,6 +7,7 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
+@use '../sass/shape';
 @use './md-sys-color';
 @use './md-sys-elevation';
 @use './md-sys-shape';
@@ -33,6 +34,26 @@ $_unsupported-tokens: (
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   $tokens: md-comp-filled-tonal-button.values($deps, $exclude-hardcoded-values);
+  @if not $exclude-hardcoded-values {
+    // TODO(b/198759625): Remove once spacing tokens are formally added
+    $tokens: map.set($tokens, 'spacing-leading', 24px);
+    $tokens: map.set($tokens, 'spacing-trailing', 24px);
+    $tokens: map.set($tokens, 'with-icon-spacing-leading', 16px);
+    $tokens: map.set($tokens, 'with-icon-spacing-trailing', 24px);
+    $tokens: map.set($tokens, 'with-trailing-icon-spacing-leading', 24px);
+    $tokens: map.set($tokens, 'with-trailing-icon-spacing-trailing', 16px);
+  }
+
   $tokens: map.remove($tokens, $_unsupported-tokens...);
+  @each $token, $value in $tokens {
+    // TODO: change to filled-tonal-button
+    $tokens: map.set(
+      $tokens,
+      $token,
+      var(--md-tonal-button-#{$token}, #{$value})
+    );
+  }
+
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
   @return $tokens;
 }
