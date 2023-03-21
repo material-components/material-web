@@ -144,13 +144,3 @@
     opacity: var(--_disabled-label-text-opacity);
   }
 }
-
-@function resolve-tokens($tokens) {
-  // Remove unsupported tokens
-  $tokens: map.remove(
-    $tokens,
-    'dragged-state-layer-color',
-    'dragged-state-layer-opacity'
-  );
-  @return $tokens;
-}

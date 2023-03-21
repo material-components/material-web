@@ -7,6 +7,7 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
+@use '../sass/shape';
 @use './md-sys-color';
 @use './md-sys-elevation';
 @use './md-sys-shape';
@@ -24,6 +25,8 @@ $_default: (
 );
 
 $_unsupported-tokens: (
+  'dragged-state-layer-color',
+  'dragged-state-layer-opacity',
   'label-text-font',
   'label-text-line-height',
   'label-text-size',
@@ -34,5 +37,13 @@ $_unsupported-tokens: (
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   $tokens: md-comp-suggestion-chip.values($deps, $exclude-hardcoded-values);
   $tokens: map.remove($tokens, $_unsupported-tokens...);
+  @each $token, $value in $tokens {
+    $tokens: map.set(
+      $tokens,
+      $token,
+      var(--md-suggestion-chip-#{$token}, #{$value})
+    );
+  }
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
   @return $tokens;
 }

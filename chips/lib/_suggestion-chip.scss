@@ -4,28 +4,23 @@
 //
 
 // go/keep-sorted start
-@use '../../sass/shape';
 @use '../../sass/theme';
 @use '../../tokens';
-@use './shared';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
   $tokens: theme.validate-theme(
-    shared.resolve-tokens(tokens.md-comp-suggestion-chip-values()),
-    shared.resolve-tokens($tokens)
+    tokens.md-comp-suggestion-chip-values(),
+    $tokens
   );
-  $tokens: theme.create-theme-vars($tokens, 'suggestion-chip');
-  $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
-  @include theme.emit-theme-vars($tokens);
+  @each $token, $value in $tokens {
+    --md-suggestion-chip-#{$token}: #{$value};
+  }
 }
 
 @mixin styles() {
   $tokens: tokens.md-comp-suggestion-chip-values();
-  $tokens: shared.resolve-tokens($tokens);
-  $tokens: theme.create-theme-vars($tokens, 'suggestion-chip');
-  $tokens: shape.resolve-tokens($tokens, 'container-shape');
 
   :host {
     @each $token, $value in $tokens {
