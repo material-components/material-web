@@ -41,7 +41,7 @@
   }
 
   .container {
-    align-items: center;
+    align-items: baseline;
     appearance: none;
     background: none;
     border: none;
@@ -51,7 +51,7 @@
     gap: 8px;
     height: 100%;
     outline: none;
-    padding: 0 16px;
+    padding: 0 8px;
     position: relative;
     text-decoration: none;
     width: 100%;
@@ -132,8 +132,11 @@
   }
 
   .label {
+    align-items: center;
     color: var(--_label-text-color);
+    display: flex;
     font: var(--_label-text-type);
+    height: 100%;
     text-overflow: ellipsis;
     user-select: none;
     white-space: nowrap;
@@ -142,5 +145,39 @@
   .disabled .label {
     color: var(--_disabled-label-text-color);
     opacity: var(--_disabled-label-text-opacity);
+  }
+
+  .icon {
+    align-self: center;
+  }
+
+  .icon ::slotted(*) {
+    font-size: inherit;
+    height: 100%;
+    width: 100%;
+  }
+
+  .icon.leading {
+    color: var(--_leading-icon-color);
+    font-size: var(--_leading-icon-size);
+    max-height: var(--_leading-icon-size);
+    max-width: var(--_leading-icon-size);
+  }
+
+  :hover .icon.leading {
+    color: var(--_hover-leading-icon-color);
+  }
+
+  :focus .icon.leading {
+    color: var(--_focus-leading-icon-color);
+  }
+
+  :active .icon.leading {
+    color: var(--_pressed-leading-icon-color);
+  }
+
+  .disabled .icon.leading {
+    color: var(--_disabled-leading-icon-color);
+    opacity: var(--_disabled-leading-icon-opacity);
   }
 }

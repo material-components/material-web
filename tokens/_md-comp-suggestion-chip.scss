@@ -16,26 +16,49 @@
 @use './v0_161/md-comp-suggestion-chip';
 // go/keep-sorted end
 
-$_default: (
-  'md-sys-color': md-sys-color.values-light(),
-  'md-sys-elevation': md-sys-elevation.values(),
-  'md-sys-shape': md-sys-shape.values(),
-  'md-sys-state': md-sys-state.values(),
-  'md-sys-typescale': md-sys-typescale.values(),
-);
-
 $_unsupported-tokens: (
+  // go/keep-sorted start
+  'dragged-leading-icon-color',
   'dragged-state-layer-color',
   'dragged-state-layer-opacity',
   'label-text-font',
   'label-text-line-height',
   'label-text-size',
   'label-text-tracking',
-  'label-text-weight'
+  'label-text-weight',
+  // go/keep-sorted end
+);
+
+$_renamed-tokens: (
+  // go/keep-sorted start
+  'with-leading-icon-disabled-leading-icon-color': 'disabled-leading-icon-color',
+  'with-leading-icon-disabled-leading-icon-opacity':
+    'disabled-leading-icon-opacity',
+  'with-leading-icon-dragged-leading-icon-color': 'dragged-leading-icon-color',
+  'with-leading-icon-focus-leading-icon-color': 'focus-leading-icon-color',
+  'with-leading-icon-hover-leading-icon-color': 'hover-leading-icon-color',
+  'with-leading-icon-leading-icon-color': 'leading-icon-color',
+  'with-leading-icon-leading-icon-size': 'leading-icon-size',
+  'with-leading-icon-pressed-leading-icon-color': 'pressed-leading-icon-color',
+  // go/keep-sorted end
+);
+
+$_default: (
+  // go/keep-sorted start
+  'md-sys-color': md-sys-color.values-light(),
+  'md-sys-elevation': md-sys-elevation.values(),
+  'md-sys-shape': md-sys-shape.values(),
+  'md-sys-state': md-sys-state.values(),
+  'md-sys-typescale': md-sys-typescale.values(),
+  // go/keep-sorted end
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   $tokens: md-comp-suggestion-chip.values($deps, $exclude-hardcoded-values);
+  @each $old-token, $new-token in $_renamed-tokens {
+    $tokens: map.set($tokens, $new-token, map.get($tokens, $old-token));
+    $tokens: map.remove($tokens, $old-token);
+  }
   $tokens: map.remove($tokens, $_unsupported-tokens...);
   @each $token, $value in $tokens {
     $tokens: map.set(

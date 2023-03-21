@@ -8,7 +8,7 @@ import '../../elevation/elevation.js';
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, nothing} from 'lit';
+import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {property, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
@@ -52,10 +52,21 @@ export class Chip extends LitElement {
         <md-elevation shadow=${this.elevated} surface></md-elevation>
         ${when(this.showRipple, this.renderRipple)}
         <md-focus-ring .visible=${this.showFocusRing}></md-focus-ring>
-        <div class="label">${this.label}</div>
+        <span class="icon leading">
+          <slot name="leading-icon"></slot>
+        </span>
+        <span class="label">${this.label}</span>
+        <span class="icon trailing">
+          ${this.renderTrailingIcon?.() || nothing}
+        </span>
       </${button}>
     `;
   }
+
+  // Not all chip variants have a trailing icon. We still render a wrapper
+  // <span class="icon trailing"> to compute the correct padding + gap of the
+  // button.
+  protected renderTrailingIcon?: () => TemplateResult;
 
   private readonly getRipple = () => {  // bind to this
     this.showRipple = true;

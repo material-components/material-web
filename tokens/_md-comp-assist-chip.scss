@@ -1,6 +1,6 @@
-//
 // Copyright 2023 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+//
 //
 
 // go/keep-sorted start
@@ -16,6 +16,31 @@
 @use './v0_161/md-comp-assist-chip';
 // go/keep-sorted end
 
+$_unsupported-tokens: (
+  // go/keep-sorted start
+  'dragged-leading-icon-color',
+  'dragged-state-layer-color',
+  'dragged-state-layer-opacity',
+  'label-text-font',
+  'label-text-line-height',
+  'label-text-size',
+  'label-text-tracking',
+  'label-text-weight' // go/keep-sorted end
+);
+
+$_renamed-tokens: (
+  // go/keep-sorted start
+  'with-icon-disabled-icon-color': 'disabled-leading-icon-color',
+  'with-icon-disabled-icon-opacity': 'disabled-leading-icon-opacity',
+  'with-icon-dragged-icon-color': 'dragged-leading-icon-color',
+  'with-icon-focus-icon-color': 'focus-leading-icon-color',
+  'with-icon-hover-icon-color': 'hover-leading-icon-color',
+  'with-icon-icon-color': 'leading-icon-color',
+  'with-icon-icon-size': 'leading-icon-size',
+  'with-icon-pressed-icon-color': 'pressed-leading-icon-color',
+  // go/keep-sorted end
+);
+
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
   'md-sys-elevation': md-sys-elevation.values(),
@@ -24,18 +49,12 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
-$_unsupported-tokens: (
-  'dragged-state-layer-color',
-  'dragged-state-layer-opacity',
-  'label-text-font',
-  'label-text-line-height',
-  'label-text-size',
-  'label-text-tracking',
-  'label-text-weight'
-);
-
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   $tokens: md-comp-assist-chip.values($deps, $exclude-hardcoded-values);
+  @each $old-token, $new-token in $_renamed-tokens {
+    $tokens: map.set($tokens, $new-token, map.get($tokens, $old-token));
+    $tokens: map.remove($tokens, $old-token);
+  }
   $tokens: map.remove($tokens, $_unsupported-tokens...);
   @each $token, $value in $tokens {
     $tokens: map.set(
