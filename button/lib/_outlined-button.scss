@@ -66,6 +66,7 @@ $_custom-property-prefix: 'outlined-button';
 
     .md3-button:disabled & {
       border-color: var(--_disabled-outline-color);
+      opacity: var(--_disabled-outline-opacity);
     }
   }
 
@@ -83,7 +84,6 @@ $_custom-property-prefix: 'outlined-button';
 }
 
 @function _resolve-tokens($tokens) {
-  $tokens: shared.flatten-disabled-colors($tokens);
   $tokens: shared.remove-unsupported-tokens($tokens);
   @return $tokens;
 }

@@ -12,7 +12,6 @@
 // go/keep-sorted start
 @use '../../focus/focus-ring';
 @use '../../ripple/ripple';
-@use '../../sass/color';
 @use '../../sass/dom';
 @use '../../sass/shape';
 // go/keep-sorted end
@@ -70,12 +69,20 @@
     z-index: 0; // Place content on top of elevation and ripple
     block-size: var(--_container-height);
     font: var(--_label-text-type);
-    background-color: var(--_container-color);
     color: var(--_label-text-color);
     // TODO(b/181413732): Verify token below are named correctly
     padding-inline-start: var(--_spacing-leading);
     padding-inline-end: var(--_spacing-trailing);
     gap: 8px;
+
+    &::before {
+      // Background color. Separate node for disabled opacity styles.
+      background-color: var(--_container-color);
+      border-radius: inherit;
+      content: '';
+      inset: 0;
+      position: absolute;
+    }
 
     &::-moz-focus-inner {
       padding: 0;
@@ -96,9 +103,14 @@
       outline: none;
     }
 
-    &:disabled {
-      background-color: var(--_disabled-container-color);
+    &:disabled .md3-button__label {
       color: var(--_disabled-label-text-color);
+      opacity: var(--_disabled-label-text-opacity);
+    }
+
+    &:disabled::before {
+      background-color: var(--_disabled-container-color);
+      opacity: var(--_disabled-container-opacity);
     }
 
     @media (forced-colors: active) {
@@ -116,6 +128,8 @@
     border-end-end-radius: var(--_container-shape-end-end);
   }
 
+  .md3-button::after,
+  .md3-button::before,
   md-elevation,
   .md3-button__ripple {
     z-index: -1; // Place behind content
@@ -135,30 +149,6 @@
   .md3-link-button-wrapper {
     inline-size: 100%;
   }
-}
-
-@function flatten-disabled-colors($tokens) {
-  @return color.join-color-and-opacity-pairs(
-    $tokens,
-    (
-      (
-        color-key: 'disabled-container-color',
-        opacity-key: 'disabled-container-opacity'
-      ),
-      (
-        color-key: 'disabled-label-text-color',
-        opacity-key: 'disabled-label-text-opacity'
-      ),
-      (
-        color-key: 'with-icon-disabled-icon-color',
-        opacity-key: 'with-icon-disabled-icon-opacity'
-      ),
-      (
-        color-key: 'disabled-outline-color',
-        opacity-key: 'disabled-outline-opacity'
-      )
-    )
-  );
 }
 
 @function remove-unsupported-tokens($tokens) {

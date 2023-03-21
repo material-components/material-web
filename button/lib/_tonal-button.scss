@@ -48,7 +48,6 @@ $_custom-property-prefix: 'tonal-button';
 }
 
 @function _resolve-tokens($tokens) {
-  $tokens: shared.flatten-disabled-colors($tokens);
   $tokens: shared.remove-unsupported-tokens($tokens);
   @return $tokens;
 }

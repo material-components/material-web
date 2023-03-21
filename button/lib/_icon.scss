@@ -36,6 +36,7 @@
 
     .md3-button:disabled & {
       color: var(--_with-icon-disabled-icon-color);
+      opacity: var(--_with-icon-disabled-icon-opacity);
     }
   }
 }

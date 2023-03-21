@@ -56,7 +56,6 @@ $_custom-property-prefix: 'text-button';
     'disabled-container-color',
     'disabled-container-opacity'
   );
-  $tokens: shared.flatten-disabled-colors($tokens);
   $tokens: shared.remove-unsupported-tokens($tokens);
   @return $tokens;
 }
