@@ -20,8 +20,9 @@
 
 @mixin theme($tokens) {
   $reference: tokens.md-comp-list-values();
-  $tokens: theme.validate-theme($reference, $tokens);
+  $reference: resolve-tokens($reference);
   $tokens: resolve-tokens($tokens);
+  $tokens: theme.validate-theme($reference, $tokens);
   $tokens: theme.create-theme-vars($tokens, list);
 
   @include theme.emit-theme-vars($tokens);
@@ -61,12 +62,17 @@
 /// So here we resolve list-items tokens, and resolve the difference between
 /// the full set of tokens and the ones specific to list-item.
 @function resolve-tokens($tokens) {
-  // We need container color so rename so that we don't lose it
-  $tokens: map.set(
-    $tokens,
-    container-color,
-    map.get($tokens, list-item-container-color)
-  );
+  // Accept container-color token in the theme() mixin.
+  $container-color: map.get($tokens, container-color);
+
+  @if not $container-color {
+    // If not defined, rename the list-item-container-color token. This is
+    // useful for our styles() mixin where we simply feed this function the comp
+    // tokens from the compiler and no `container-color` token.
+    $container-color: map.get($tokens, list-item-container-color);
+    $tokens: map.set($tokens, container-color, $container-color);
+  }
+
   $list-tokens: remove-unused-tokens($tokens);
 
   @return $list-tokens;
