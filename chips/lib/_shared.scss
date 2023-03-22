@@ -86,6 +86,10 @@
     }
   }
 
+  .flat:focus::before {
+    border-color: var(--_flat-focus-outline-color);
+  }
+
   .flat.disabled::before {
     border-color: var(--_flat-disabled-outline-color);
     opacity: var(--_flat-disabled-outline-opacity);
@@ -97,6 +101,35 @@
     @include elevation.theme(
       (
         level: var(--_elevated-container-elevation),
+        shadow-color: var(--_elevated-container-shadow-color),
+      )
+    );
+  }
+
+  .elevated::before {
+    background: var(--_elevated-container-color);
+  }
+
+  .elevated:hover {
+    @include elevation.theme(
+      (
+        level: var(--_elevated-hover-container-elevation),
+      )
+    );
+  }
+
+  .elevated:focus-within {
+    @include elevation.theme(
+      (
+        level: var(--_elevated-focus-container-elevation),
+      )
+    );
+  }
+
+  .elevated:active {
+    @include elevation.theme(
+      (
+        level: var(--_elevated-pressed-container-elevation),
       )
     );
   }
@@ -131,6 +164,12 @@
     border-radius: inherit;
   }
 
+  .label,
+  .icon {
+    // Place content above background elements
+    z-index: 1;
+  }
+
   .label {
     align-items: center;
     color: var(--_label-text-color);
@@ -140,6 +179,18 @@
     text-overflow: ellipsis;
     user-select: none;
     white-space: nowrap;
+  }
+
+  :hover .label {
+    color: var(--_hover-label-text-color);
+  }
+
+  :focus .label {
+    color: var(--_focus-label-text-color);
+  }
+
+  :active .label {
+    color: var(--_pressed-label-text-color);
   }
 
   .disabled .label {
