@@ -9,13 +9,13 @@
 // go/keep-sorted start
 @use '../../sass/shape';
 @use '../../sass/theme';
-@use './md-comp-focus-ring';
+@use '../../tokens';
 // go/keep-sorted end
 
 $_custom-property-prefix: 'focus-ring';
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(md-comp-focus-ring.values(), $tokens);
+  $tokens: theme.validate-theme(tokens.md-comp-focus-ring-values(), $tokens);
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
   $tokens: shape.resolve-tokens($tokens, 'shape');
 
@@ -23,7 +23,7 @@ $_custom-property-prefix: 'focus-ring';
 }
 
 @mixin styles() {
-  $tokens: md-comp-focus-ring.values();
+  $tokens: tokens.md-comp-focus-ring-values();
   $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
   $tokens: shape.resolve-tokens($tokens, 'shape');
 
@@ -36,26 +36,36 @@ $_custom-property-prefix: 'focus-ring';
     position: absolute;
     box-sizing: border-box;
     pointer-events: none;
-    border: var(--_width) solid var(--_color);
-    border-start-start-radius: calc(
-      var(--_offset) + var(--_width) + var(--_shape-start-start)
-    );
-    border-start-end-radius: calc(
-      var(--_offset) + var(--_width) + var(--_shape-start-end)
-    );
-    border-end-start-radius: calc(
-      var(--_offset) + var(--_width) + var(--_shape-end-start)
-    );
-    border-end-end-radius: calc(
-      var(--_offset) + var(--_width) + var(--_shape-end-end)
-    );
-    // Note that the ring will not respect its parent's border. This will not be
-    // an issue as long as border is set via a sibling node, similar to ripple
-    // and touch target.
-    inset: calc(-1 * (var(--_offset) + var(--_width)));
+    border-start-start-radius: calc(var(--_offset) + var(--_shape-start-start));
+    border-start-end-radius: calc(var(--_offset) + var(--_shape-start-end));
+    border-end-start-radius: calc(var(--_offset) + var(--_shape-end-start));
+    border-end-end-radius: calc(var(--_offset) + var(--_shape-end-end));
+    box-shadow: inset 0 0 0 0 var(--_color);
+    outline: var(--_width) solid var(--_color);
+    // NOTE: this 1px offset hides a transparent ring between the outline and offset when border-radius is large
+    outline-offset: -1px;
+    inset: calc(-1 * (var(--_offset) + 1px));
   }
 
   :host([visible]) {
     display: flex;
+
+    @keyframes focus-ring {
+      from {
+        outline-width: 0px;
+      }
+      25% {
+        box-shadow: inset 0 0 0 calc(var(--_animation-width) / 2) var(--_color);
+        outline-width: calc(var(--_animation-width) / 2);
+      }
+    }
+
+    animation-name: focus-ring;
+    animation-duration: var(--_animation-duration);
+    animation-timing-function: var(--_easing);
+
+    @media (prefers-reduced-motion) {
+      animation: none;
+    }
   }
 }
