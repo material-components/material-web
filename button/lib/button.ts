@@ -20,7 +20,7 @@ import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
-import {ARIAHasPopup} from '../../types/aria.js';
+import {ARIAExpanded, ARIAHasPopup} from '../../types/aria.js';
 
 import {ButtonState} from './state.js';
 
@@ -28,6 +28,10 @@ import {ButtonState} from './state.js';
 export abstract class Button extends LitElement implements ButtonState {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
+
+  @property({type: String, attribute: 'data-aria-expanded', noAccessor: true})
+  @ariaProperty
+  override ariaExpanded!: ARIAExpanded;
 
   @property({type: String, attribute: 'data-aria-has-popup', noAccessor: true})
   @ariaProperty
@@ -115,6 +119,7 @@ export abstract class Button extends LitElement implements ButtonState {
           ?disabled="${this.disabled}"
           aria-label="${this.ariaLabel || nothing}"
           aria-haspopup="${this.ariaHasPopup || nothing}"
+          aria-expanded="${this.ariaExpanded || nothing}"
           @pointerdown="${this.handlePointerDown}"
           @focus="${this.handleFocus}"
           @blur="${this.handleBlur}"
