@@ -14,15 +14,58 @@
 @use './md-sys-state';
 @use './md-sys-typescale';
 @use './v0_161/md-comp-suggestion-chip';
+@use './values';
 // go/keep-sorted end
 
-$_unsupported-tokens: (
+$supported-tokens: (
+  // go/keep-sorted start
+  'container-height',
+  'container-shape',
+  'container-surface-tint-layer-color',
+  'disabled-label-text-color',
+  'disabled-label-text-opacity',
+  'disabled-leading-icon-color',
+  'elevated-container-color',
+  'elevated-container-elevation',
+  'elevated-container-shadow-color',
+  'elevated-disabled-container-color',
+  'elevated-disabled-container-elevation',
+  'elevated-disabled-container-opacity',
+  'elevated-focus-container-elevation',
+  'elevated-hover-container-elevation',
+  'elevated-pressed-container-elevation',
+  'flat-disabled-outline-color',
+  'flat-disabled-outline-opacity',
+  'flat-focus-outline-color',
+  'flat-outline-color',
+  'flat-outline-width',
+  'focus-label-text-color',
+  'focus-leading-icon-color',
+  'focus-state-layer-color',
+  'focus-state-layer-opacity',
+  'hover-label-text-color',
+  'hover-leading-icon-color',
+  'hover-state-layer-color',
+  'hover-state-layer-opacity',
+  'icon-size',
+  'label-text-color',
+  'label-text-type',
+  'leading-icon-color',
+  'pressed-label-text-color',
+  'pressed-leading-icon-color',
+  'pressed-state-layer-color',
+  'pressed-state-layer-opacity',
+  // go/keep-sorted end
+);
+
+$unsupported-tokens: (
   // go/keep-sorted start
   'dragged-container-elevation',
   'dragged-label-text-color',
   'dragged-leading-icon-color',
   'dragged-state-layer-color',
   'dragged-state-layer-opacity',
+  'flat-container-elevation',
   'label-text-font',
   'label-text-line-height',
   'label-text-size',
@@ -31,7 +74,7 @@ $_unsupported-tokens: (
   // go/keep-sorted end
 );
 
-$_renamed-tokens: (
+$renamed-tokens: (
   // go/keep-sorted start
   'with-leading-icon-disabled-leading-icon-color': 'disabled-leading-icon-color',
   'with-leading-icon-disabled-leading-icon-opacity':
@@ -40,28 +83,27 @@ $_renamed-tokens: (
   'with-leading-icon-focus-leading-icon-color': 'focus-leading-icon-color',
   'with-leading-icon-hover-leading-icon-color': 'hover-leading-icon-color',
   'with-leading-icon-leading-icon-color': 'leading-icon-color',
-  'with-leading-icon-leading-icon-size': 'leading-icon-size',
+  'with-leading-icon-leading-icon-size': 'icon-size',
   'with-leading-icon-pressed-leading-icon-color': 'pressed-leading-icon-color',
   // go/keep-sorted end
 );
 
 $_default: (
-  // go/keep-sorted start
   'md-sys-color': md-sys-color.values-light(),
   'md-sys-elevation': md-sys-elevation.values(),
   'md-sys-shape': md-sys-shape.values(),
   'md-sys-state': md-sys-state.values(),
   'md-sys-typescale': md-sys-typescale.values(),
-  // go/keep-sorted end
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  $tokens: md-comp-suggestion-chip.values($deps, $exclude-hardcoded-values);
-  @each $old-token, $new-token in $_renamed-tokens {
-    $tokens: map.set($tokens, $new-token, map.get($tokens, $old-token));
-    $tokens: map.remove($tokens, $old-token);
-  }
-  $tokens: map.remove($tokens, $_unsupported-tokens...);
+  $tokens: values.validate(
+    md-comp-suggestion-chip.values($deps, $exclude-hardcoded-values),
+    $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens,
+    $renamed-tokens: $renamed-tokens
+  );
+
   @each $token, $value in $tokens {
     $tokens: map.set(
       $tokens,

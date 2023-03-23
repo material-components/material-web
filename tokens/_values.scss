@@ -69,7 +69,7 @@
         @error 'values.validate($unsupported-tokens: (\'#{$unsupported-token}\')) token is not in the provided values.';
       }
 
-      $tokens: map.remove($tokens, $unsupported-token);
+      $values: map.remove($values, $unsupported-token);
     }
   }
 
@@ -103,7 +103,7 @@
 
   @each $supported-token in $supported-tokens {
     @if not map.has-key($values, $supported-token) {
-      @error 'The provided values are missing the \'#{$supported-token}\' token.';
+      @error 'The provided values are missing the supported \'#{$supported-token}\' token.';
     }
   }
 

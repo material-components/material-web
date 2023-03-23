@@ -74,16 +74,8 @@
     pointer-events: none;
   }
 
-  .flat {
-    @include elevation.theme(
-      (
-        level: var(--_flat-container-elevation),
-      )
-    );
-
-    &::before {
-      border: var(--_flat-outline-width) solid var(--_flat-outline-color);
-    }
+  .flat::before {
+    border: var(--_flat-outline-width) solid var(--_flat-outline-color);
   }
 
   .flat:focus::before {
@@ -96,8 +88,6 @@
   }
 
   .elevated {
-    border: none;
-
     @include elevation.theme(
       (
         level: var(--_elevated-container-elevation),
@@ -200,6 +190,9 @@
 
   .icon {
     align-self: center;
+    font-size: var(--_icon-size);
+    max-height: var(--_icon-size);
+    max-width: var(--_icon-size);
   }
 
   .icon ::slotted(*) {
@@ -210,9 +203,6 @@
 
   .icon.leading {
     color: var(--_leading-icon-color);
-    font-size: var(--_leading-icon-size);
-    max-height: var(--_leading-icon-size);
-    max-width: var(--_leading-icon-size);
   }
 
   :hover .icon.leading {
