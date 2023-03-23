@@ -13,6 +13,7 @@ import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
 import {ariaProperty} from '../../decorators/aria-property.js';
+import {keydownHandler} from '../../focus/strong-focus.js';
 import {ARIARole} from '../../types/aria.js';
 
 import {ListItem} from './listitem/list-item.js';
@@ -129,6 +130,7 @@ export class List extends LitElement {
       activeItemRecord.item.active = false;
     }
 
+    keydownHandler(event);
     event.preventDefault();
 
     switch (key) {
