@@ -45,6 +45,23 @@ describe('testing', () => {
           '--_unused'
         ]);
       });
+
+      it('should not consider properties starting with `--__` as tokens',
+         () => {
+           const styles = css`
+          :host {
+            --_color: var(--md-comp-foo-color);
+            --__not-a-token: 2px;
+          }
+
+          .foo {
+            color: var(--_color);
+          }
+        `;
+
+           const unusedTokens = getUnusedTokens([styles]);
+           expect(unusedTokens).withContext('unused tokens').toHaveSize(0);
+         });
     });
 
     describe('getUndefinedTokens()', () => {
@@ -80,6 +97,25 @@ describe('testing', () => {
           '--_undefined'
         ]);
       });
+
+      it('should not consider properties starting with `--__` as undefined tokens',
+         () => {
+           const styles = css`
+          :host {
+            --_color: var(--md-comp-foo-color);
+          }
+
+          .foo {
+            color: var(--_color);
+            border-radius: var(--__not-a-token);
+          }
+        `;
+
+           const undefinedTokens = getUndefinedTokens([styles]);
+           expect(undefinedTokens)
+               .withContext('undefined tokens')
+               .toHaveSize(0);
+         });
     });
   });
 });

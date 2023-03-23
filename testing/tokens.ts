@@ -116,7 +116,7 @@ function getDefinedTokensFromRule(rule: CSSRule|CSSStyleSheet|
 
   if ('style' in rule) {
     for (const property of rule.style) {
-      if (property.startsWith('--_')) {
+      if (property.match(/--_(?!_)[\w-]+/)) {
         defined.add(property);
       }
     }
@@ -141,7 +141,7 @@ function getUsedTokensFromRule(rule: CSSRule|CSSStyleSheet|
     // Check them explicitly as well for properties like border-radius.
     for (const property of [...rule.style, ...CSS_SHORTHAND_PROPERTIES]) {
       const value = rule.style.getPropertyValue(property);
-      for (const match of value.matchAll(/--_[\w-]+/g)) {
+      for (const match of value.matchAll(/--_(?!_)[\w-]+/g)) {
         used.add(match[0]);
       }
     }
