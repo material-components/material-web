@@ -28,7 +28,17 @@ let focusObject: StrongFocus = new FocusGlobal();
 const KEYBOARD_NAVIGATION_KEYS =
     new Set(['Tab', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown']);
 
-function keydownHandler(e: KeyboardEvent) {
+/**
+ * Components should call this when a user interacts with a component with a
+ * keyboard event in the very special case that the component needs to call
+ * focus inside of a keydown handler. Otherwise, this module will handle
+ * keyboard events on window.
+ *
+ * By default, this will enable the strong focus to be shown.
+ *
+ * @param e The native keyboard event.
+ */
+export function keydownHandler(e: KeyboardEvent) {
   if (KEYBOARD_NAVIGATION_KEYS.has(e.key)) {
     focusObject.setVisible(true);
   }
