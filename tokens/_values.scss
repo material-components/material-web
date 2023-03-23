@@ -1,0 +1,111 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+// go/keep-sorted end
+
+/// Validates the Map returned from `tokens.md-comp-*-values()` functions.
+///
+/// Validation requires a `$values` Map and at least the `$supported-tokens`
+/// keyword argument.
+/// @example - scss
+///   $tokens: values.validate(
+///     md-comp-foo.values($deps, $exclude-hardcoded-values),
+///     $supported-tokens: (),
+///       'foo-color',
+///       'foo-size',
+///     ),
+///   );
+///
+/// Additional keyword arguments for `$unsupported-tokens`, `$renamed-tokens`,
+/// and `$new-tokens` are optional.
+///
+/// @param {Map} $values - The values Map returned from
+///     `tokens.md-comp-*-values()` functions.
+/// @param {List} $supported-tokens - Keyword argument for every token that is
+///     supported.
+/// @param {List} $unsupported-tokens [null] - Keyword argument for every token
+///     that is not supported and should be removed.
+/// @param {Map} $renamed-tokens [null] - Keyword argument for a Map whose keys
+///     are token names and values are new token names to rename them to. The
+///     new token name must appear in the `$supported-tokens` list.
+/// @param {Map} $new-tokens [null] - Keyword argument for a Map whose keys
+///     and values are new tokens to be added. They must also appear in the
+///     `$supported-tokens` list.
+/// @return {Map} The `tokens.md-comp-*-values()` Map with any unsupported
+///     tokens removed, renamed tokens updated, and new tokens added.
+@function validate($values, $tokens...) {
+  $tokens: meta.keywords($tokens);
+
+  $renamed-tokens: map.get($tokens, 'renamed-tokens');
+  @if $renamed-tokens {
+    @if meta.type-of($renamed-tokens) != 'map' {
+      @error 'values.validate($renamed-tokens) must be a map.';
+    }
+
+    @each $old-token, $new-token in $renamed-tokens {
+      @if not map.has-key($values, $old-token) {
+        @error 'values.validate($renamed-tokens: (\'#{$old-tokens}\': \'#{$new-token}\')) old-token in not the provided values.';
+      }
+
+      $values: map.set($values, $new-token, map.get($values, $old-token));
+      $values: map.remove($values, $old-token);
+    }
+  }
+
+  $unsupported-tokens: map.get($tokens, 'unsupported-tokens');
+  @if $unsupported-tokens {
+    @if meta.type-of($unsupported-tokens) != 'list' {
+      @error 'values.validate($unsupported-tokens) must be a list.';
+    }
+
+    @each $unsupported-token in $unsupported-tokens {
+      @if not map.has-key($values, $unsupported-token) {
+        @error 'values.validate($unsupported-tokens: (\'#{$unsupported-token}\')) token is not in the provided values.';
+      }
+
+      $tokens: map.remove($tokens, $unsupported-token);
+    }
+  }
+
+  $new-tokens: map.get($tokens, 'new-tokens');
+  @if $new-tokens {
+    @if meta.type-of($new-tokens) != 'map' {
+      @error 'values.validate($new-tokens) must be a map.';
+    }
+
+    @each $new-token, $new-value in $new-tokens {
+      @if map.has-key($values, $new-token) {
+        @warn 'values.validate($new-tokens: (\'#{$new-token}\': \'#{$new-value}\')) already exists. Has it been added to tokens? If so, remove this new token.';
+      }
+
+      @if $new-value {
+        $values: map.set($values, $new-token, $new-value);
+      }
+    }
+  }
+
+  $supported-tokens: map.get($tokens, 'supported-tokens');
+  @if not $supported-tokens or meta.type-of($supported-tokens) != 'list' {
+    @error 'values.validate() must include a $supported-tokens list.';
+  }
+
+  @each $token in map.keys($values) {
+    @if list.index($supported-tokens, $token) == 0 {
+      @error 'values.validate($supported-tokens)) is missing the \'#{$token}\' token. Does it need adding to $unsupported-tokens?';
+    }
+  }
+
+  @each $supported-token in $supported-tokens {
+    @if not map.has-key($values, $supported-token) {
+      @error 'The provided values are missing the \'#{$supported-token}\' token.';
+    }
+  }
+
+  @return $values;
+}
