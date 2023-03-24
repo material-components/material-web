@@ -36,9 +36,7 @@ $_custom-property-prefix: 'menu';
   }
 
   .list-item {
-    :host([active]) &,
-    :host(:active) &,
-    &:focus {
+    :host([selected]) & {
       background-color: var(--_list-item-selected-container-color);
     }
   }

@@ -44,6 +44,10 @@ export class SubMenuItem extends MenuItemEl {
    */
   @property({type: Number, attribute: 'hover-close-delay'})
   hoverCloseDelay = 400;
+  /**
+   * Sets the item in the selected visual state when a submenu is opened.
+   */
+  @property({type: Boolean, reflect: true}) selected = false;
 
   @queryAssignedElements({slot: 'submenu', flatten: true})
   protected menus!: Menu[];
@@ -157,12 +161,14 @@ export class SubMenuItem extends MenuItemEl {
         e.reason.key === KEYDOWN_CLOSE_KEYS.ESCAPE) {
       e.stopPropagation();
       this.active = true;
+      this.selected = false;
       // It might already be active so manually focus
       this.listItemRoot.focus();
       return;
     }
 
     this.active = false;
+    this.selected = false;
   }
 
   protected async onSubMenuKeydown(e: KeyboardEvent) {
@@ -212,6 +218,7 @@ export class SubMenuItem extends MenuItemEl {
     this.dispatchEvent(new DeactivateItemsEvent());
     this.dispatchEvent(new DeactivateTypeaheadEvent());
     this.active = true;
+    this.selected = true;
 
     // This is the case of mouse hovering when already opened via keyboard or
     // vice versa
@@ -235,6 +242,7 @@ export class SubMenuItem extends MenuItemEl {
     menu.quick = true;
     menu.close();
     this.active = false;
+    this.selected = false;
     menu.addEventListener('closed', onClosed, {once: true});
   }
 
