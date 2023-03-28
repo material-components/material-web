@@ -75,7 +75,7 @@ $unsupported-tokens: (
 );
 
 $renamed-tokens: (
-  // go/keep-sorted start
+  // Remove "with-leading-icon-*" prefix (b/273534858)
   'with-leading-icon-disabled-leading-icon-color': 'disabled-leading-icon-color',
   'with-leading-icon-disabled-leading-icon-opacity':
     'disabled-leading-icon-opacity',
@@ -83,9 +83,9 @@ $renamed-tokens: (
   'with-leading-icon-focus-leading-icon-color': 'focus-leading-icon-color',
   'with-leading-icon-hover-leading-icon-color': 'hover-leading-icon-color',
   'with-leading-icon-leading-icon-color': 'leading-icon-color',
-  'with-leading-icon-leading-icon-size': 'icon-size',
   'with-leading-icon-pressed-leading-icon-color': 'pressed-leading-icon-color',
-  // go/keep-sorted end
+  // Rename "leading-icon-size" to "icon-size" (b/275577569)
+  'with-leading-icon-leading-icon-size': 'icon-size'
 );
 
 $_default: (
