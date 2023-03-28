@@ -36,6 +36,7 @@
   ],
   "dependencies": {
     "lit": "^2.3.0",
+    "safevalues": "^0.4.3",
     "tslib": "^2.4.0"
   },
   "devDependencies": {

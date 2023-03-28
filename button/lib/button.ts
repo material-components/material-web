@@ -4,9 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// This is required for @ariaProperty
-// tslint:disable:no-new-decorators
-
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
@@ -16,12 +13,11 @@ import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
 import {html as staticHtml, literal} from 'lit/static-html.js';
 
+import {delegatesAria} from '../../aria/delegation.js';
 import {dispatchActivationClick, isActivationClick} from '../../controller/events.js';
-import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
-import {ARIAExpanded, ARIAHasPopup} from '../../types/aria.js';
 
 import {ButtonState} from './state.js';
 
@@ -29,20 +25,11 @@ import {ButtonState} from './state.js';
  * A button component.
  */
 export abstract class Button extends LitElement implements ButtonState {
-  static override shadowRootOptions:
-      ShadowRootInit = {mode: 'open', delegatesFocus: true};
-
-  @property({type: String, attribute: 'data-aria-expanded', noAccessor: true})
-  @ariaProperty
-  override ariaExpanded!: ARIAExpanded;
-
-  @property({type: String, attribute: 'data-aria-has-popup', noAccessor: true})
-  @ariaProperty
-  override ariaHasPopup!: ARIAHasPopup;
-
-  @property({type: String, attribute: 'data-aria-label', noAccessor: true})
-  @ariaProperty
-  override ariaLabel!: string;
+  static override shadowRootOptions: ShadowRootInit = {
+    mode: 'open',
+    delegatesAria: 'aria-label aria-labelledby aria-haspopup aria-expanded',
+    delegatesFocus: true,
+  };
 
   /**
    * Whether or not the button is disabled.
@@ -104,6 +91,10 @@ export abstract class Button extends LitElement implements ButtonState {
     this.addEventListener('click', this.handleActivationClick);
   }
 
+  override attachShadow(init: ShadowRootInit) {
+    return delegatesAria(super.attachShadow(init), init.delegatesAria);
+  }
+
   private readonly handleActivationClick = (event: MouseEvent) => {
     if (!isActivationClick((event))) {
       return;
@@ -133,10 +124,8 @@ export abstract class Button extends LitElement implements ButtonState {
     return staticHtml`
       <${button}
         class="md3-button ${classMap(this.getRenderClasses())}"
+        delegatedaria="aria-label aria-labelledby aria-haspopup aria-expanded"
         ?disabled=${isDisabled}
-        aria-label="${this.ariaLabel || nothing}"
-        aria-haspopup="${this.ariaHasPopup || nothing}"
-        aria-expanded="${this.ariaExpanded || nothing}"
         href=${this.href || nothing}
         target=${this.target || nothing}
         @pointerdown="${this.handlePointerDown}"
