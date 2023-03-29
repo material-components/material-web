@@ -9,7 +9,9 @@ import {ClassInfo} from 'lit/directives/class-map.js';
 
 import {Button} from './button.js';
 
-// tslint:disable-next-line:enforce-comments-on-exported-symbols
+/**
+ * An outlined button component.
+ */
 export class OutlinedButton extends Button {
   protected override getRenderClasses(): ClassInfo {
     return {

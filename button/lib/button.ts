@@ -14,6 +14,7 @@ import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
+import {html as staticHtml, literal} from 'lit/static-html.js';
 
 import {dispatchActivationClick, isActivationClick} from '../../controller/events.js';
 import {ariaProperty} from '../../decorators/aria-property.js';
@@ -24,7 +25,9 @@ import {ARIAExpanded, ARIAHasPopup} from '../../types/aria.js';
 
 import {ButtonState} from './state.js';
 
-// tslint:disable-next-line:enforce-comments-on-exported-symbols
+/**
+ * A button component.
+ */
 export abstract class Button extends LitElement implements ButtonState {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
@@ -45,6 +48,17 @@ export abstract class Button extends LitElement implements ButtonState {
    * Whether or not the button is disabled.
    */
   @property({type: Boolean, reflect: true}) disabled = false;
+
+  /**
+   * The URL that the link button points to.
+   */
+  @property({type: String}) href?: string;
+
+  /**
+   * Where to display the linked `href` URL for a link button. Common options
+   * include `_blank` to open in a new tab.
+   */
+  @property({type: String}) target?: string;
 
   /**
    * Whether to render the icon at the inline end of the label rather than the
@@ -112,19 +126,25 @@ export abstract class Button extends LitElement implements ButtonState {
   };
 
   protected override render(): TemplateResult {
-    // TODO(b/237283903): Replace ifDefined(... || undefined) with ifTruthy(...)
-    return html`
-      <button
-          class="md3-button ${classMap(this.getRenderClasses())}"
-          ?disabled="${this.disabled}"
-          aria-label="${this.ariaLabel || nothing}"
-          aria-haspopup="${this.ariaHasPopup || nothing}"
-          aria-expanded="${this.ariaExpanded || nothing}"
-          @pointerdown="${this.handlePointerDown}"
-          @focus="${this.handleFocus}"
-          @blur="${this.handleBlur}"
-          @click="${this.handleClick}"
-          ${ripple(this.getRipple)}>
+    // Link buttons may not be disabled
+    const isDisabled = this.disabled && !this.href;
+
+    const button = this.href ? literal`a` : literal`button`;
+    return staticHtml`
+      <${button}
+        class="md3-button ${classMap(this.getRenderClasses())}"
+        ?disabled=${isDisabled}
+        aria-label="${this.ariaLabel || nothing}"
+        aria-haspopup="${this.ariaHasPopup || nothing}"
+        aria-expanded="${this.ariaExpanded || nothing}"
+        href=${this.href || nothing}
+        target=${this.target || nothing}
+        @pointerdown="${this.handlePointerDown}"
+        @focus="${this.handleFocus}"
+        @blur="${this.handleBlur}"
+        @click="${this.handleClick}"
+        ${ripple(this.getRipple)}
+      >
         ${this.renderFocusRing()}
         ${this.renderElevation()}
         ${when(this.showRipple, this.renderRipple)}
@@ -133,7 +153,7 @@ export abstract class Button extends LitElement implements ButtonState {
         ${this.renderLeadingIcon()}
         ${this.renderLabel()}
         ${this.renderTrailingIcon()}
-      </button>`;
+      </${button}}>`;
   }
 
   protected getRenderClasses(): ClassInfo {

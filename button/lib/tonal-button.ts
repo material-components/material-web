@@ -11,7 +11,9 @@ import {ClassInfo} from 'lit/directives/class-map.js';
 
 import {Button} from './button.js';
 
-// tslint:disable-next-line:enforce-comments-on-exported-symbols
+/**
+ * A tonal button component.
+ */
 export class TonalButton extends Button {
   protected override getRenderClasses(): ClassInfo {
     return {
@@ -20,7 +22,6 @@ export class TonalButton extends Button {
     };
   }
 
-  /** @soyTemplate */
   protected override renderElevation(): TemplateResult {
     return html`<md-elevation shadow></md-elevation>`;
   }

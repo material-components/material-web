@@ -11,7 +11,9 @@ import {ClassInfo} from 'lit/directives/class-map.js';
 
 import {Button} from './button.js';
 
-// tslint:disable-next-line:enforce-comments-on-exported-symbols
+/**
+ * An elevated button component.
+ */
 export class ElevatedButton extends Button {
   protected override getRenderClasses(): ClassInfo {
     return {

@@ -8,7 +8,9 @@ import {ClassInfo} from 'lit/directives/class-map.js';
 
 import {Button} from './button.js';
 
-// tslint:disable-next-line:enforce-comments-on-exported-symbols
+/**
+ * A text button component.
+ */
 export class TextButton extends Button {
   protected override getRenderClasses(): ClassInfo {
     return {
