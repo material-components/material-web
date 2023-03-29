@@ -21,7 +21,7 @@
   );
 
   @each $token, $value in $tokens {
-    --md-elevated-button-#{$token}: #{$value};
+    --md-outlined-button-#{$token}: #{$value};
   }
 }
 

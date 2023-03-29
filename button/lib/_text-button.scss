@@ -17,7 +17,7 @@ $_custom-property-prefix: 'text-button';
   $tokens: theme.validate-theme(tokens.md-comp-text-button-values(), $tokens);
 
   @each $token, $value in $tokens {
-    --md-elevated-button-#{$token}: #{$value};
+    --md-text-button-#{$token}: #{$value};
   }
 }
 

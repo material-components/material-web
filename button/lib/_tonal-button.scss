@@ -19,7 +19,7 @@
   );
 
   @each $token, $value in $tokens {
-    --md-elevated-button-#{$token}: #{$value};
+    --md-tonal-button-#{$token}: #{$value};
   }
 }
 
