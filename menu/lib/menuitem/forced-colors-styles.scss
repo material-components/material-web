@@ -1,0 +1,22 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@media (forced-colors: active) {
+  .list-item {
+    position: relative;
+  }
+
+  // Show double border only when selected, and the current list item does not
+  // have a focus ring on it.
+  :host([selected]) .list-item:not(:has(.focus-ring[visible]))::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    box-sizing: border-box;
+    border-radius: inherit;
+    pointer-events: none;
+    border: 3px double CanvasText;
+  }
+}

@@ -81,6 +81,7 @@ $_custom-property-prefix: 'menu';
       display: block;
       overflow: auto;
       min-width: inherit;
+      border-radius: inherit;
     }
 
     &.has-overflow md-list {

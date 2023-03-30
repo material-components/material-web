@@ -216,10 +216,8 @@
     }
 
     .with-three-line & {
-      /*
-       * In three line, trailing-supporting-text must align with the mid-line of
-       * the headline text.
-       */
+      // In three line, trailing-supporting-text must align with the mid-line of
+      // the headline text.
       padding-block-start: calc(
         (
             var(--_list-item-label-text-line-height) -
@@ -240,7 +238,7 @@
     height: var(--_list-item-leading-image-height);
     width: var(--_list-item-leading-image-width);
     border-radius: var(--_list-item-leading-image-shape);
-    /* Min height is two-line height */
+    // Min height is two-line height
     padding-block: calc(
       (
           var(--_list-item-two-line-container-height) -
@@ -264,7 +262,7 @@
     );
 
     .with-three-line & {
-      /* In three line, icon must align with the mid-line of headline text */
+      // In three line, icon must align with the mid-line of headline text
       padding-block-start: calc(
         (
             var(--_list-item-label-text-line-height) -
@@ -283,7 +281,7 @@
     );
 
     .with-three-line & {
-      /* In three line, icon must align with the mid-line of headline text */
+      // In three line, icon must align with the mid-line of headline text
       padding-block-start: calc(
         (
             var(--_list-item-label-text-line-height) -
@@ -393,7 +391,7 @@
     width: var(--_list-item-leading-video-width);
     border-radius: var(--_list-item-leading-video-shape);
     margin-inline-start: var(--_list-item-leading-video-leading-space);
-    /* Min height is three-line height */
+    // Min height is three-line height
     padding-block: calc(
       (
           var(--_list-item-three-line-container-height) -
@@ -401,17 +399,15 @@
         ) / 2
     );
 
-    /*
-     * Let it auto-layout so that we don't mess with the icons and supporting
-     * text that is supposed to be top-aligned in three-line.
-     */
+    // Let it auto-layout so that we don't mess with the icons and supporting
+    // text that is supposed to be top-aligned in three-line.
     .with-three-line & {
       padding-block: 0;
     }
   }
 
   ::slotted([data-variant='video-large']) {
-    /* Min height is three-line height */
+    // Min height is three-line height
     padding-block: calc(
       (
           var(--_list-item-three-line-container-height) -

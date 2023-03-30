@@ -6,8 +6,10 @@
 
 import {customElement} from 'lit/decorators.js';
 
+import {styles as listItemForcedColorsStyles} from '../list/lib/listitem/forced-colors-styles.css.js';
 import {styles as listItemStyles} from '../list/lib/listitem/list-item-styles.css.js';
 
+import {styles as forcedColorsStyles} from './lib/menuitem/forced-colors-styles.css.js';
 import {styles} from './lib/menuitem/menu-item-styles.css.js';
 import {SubMenuItem} from './lib/submenuitem/sub-menu-item.js';
 
@@ -66,5 +68,6 @@ declare global {
  */
 @customElement('md-sub-menu-item')
 export class MdSubMenuItem extends SubMenuItem {
-  static override styles = [listItemStyles, styles];
+  static override styles =
+      [listItemStyles, styles, listItemForcedColorsStyles, forcedColorsStyles];
 }

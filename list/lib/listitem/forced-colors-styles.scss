@@ -1,0 +1,23 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use './list-item';
+// go/keep-sorted end
+
+@media (forced-colors: active) {
+  :host {
+    @include list-item.theme(
+      (
+        list-item-disabled-label-text-color: GrayText,
+        list-item-disabled-label-text-opacity: 1,
+        list-item-disabled-leading-icon-color: GrayText,
+        list-item-disabled-leading-icon-opacity: 1,
+        list-item-disabled-trailing-icon-color: GrayText,
+        list-item-disabled-trailing-icon-opacity: 1,
+      )
+    );
+  }
+}

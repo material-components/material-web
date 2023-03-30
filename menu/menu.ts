@@ -6,6 +6,7 @@
 
 import {customElement} from 'lit/decorators.js';
 
+import {styles as forcedColors} from './lib/forced-colors-styles.css.js';
 import {Menu} from './lib/menu.js';
 import {styles} from './lib/menu-styles.css.js';
 
@@ -63,5 +64,5 @@ declare global {
  */
 @customElement('md-menu')
 export class MdMenu extends Menu {
-  static override styles = [styles];
+  static override styles = [styles, forcedColors];
 }

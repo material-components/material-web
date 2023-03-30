@@ -6,6 +6,7 @@
 
 import {customElement} from 'lit/decorators.js';
 
+import {styles as forcedColors} from './lib/listitem/forced-colors-styles.css.js';
 import {styles} from './lib/listitem/list-item-styles.css.js';
 import {ListItemLink} from './lib/listitemlink/list-item-link.js';
 
@@ -56,5 +57,5 @@ declare global {
  */
 @customElement('md-list-item-link')
 export class MdListItemLink extends ListItemLink {
-  static override styles = [styles];
+  static override styles = [styles, forcedColors];
 }
