@@ -9,6 +9,8 @@ import {Harness} from '../testing/harness.js';
 import {List} from './lib/list.js';
 import {ListItemHarness} from './lib/listitem/harness.js';
 
+export {ListItemHarness} from './lib/listitem/harness.js';
+
 /**
  * Test harness for list.
  */
