@@ -174,3 +174,30 @@ export function isSelectableKey(code: string):
     code is Values<typeof SELECTION_KEY> {
   return Object.values(SELECTION_KEY).some(value => (value === code));
 }
+
+/**
+ * Determines whether a target element is contained inside another element's
+ * composed tree.
+ *
+ * @param target The potential contained element.
+ * @param container The potential containing element of the target.
+ * @returns Whether the target element is contained inside the container's
+ * composed subtree
+ */
+export function isElementInSubtree(
+    target: EventTarget, container: EventTarget) {
+  // Dispatch a composed, bubbling event to check its path to see if the
+  // newly-focused element is contained in container's subtree
+  const focusEv = new Event('md-contains', {bubbles: true, composed: true});
+  let composedPath: EventTarget[] = [];
+  const listener = (ev: Event) => {
+    composedPath = ev.composedPath();
+  };
+
+  container.addEventListener('md-contains', listener);
+  target.dispatchEvent(focusEv);
+  container.removeEventListener('md-contains', listener);
+
+  const isContained = composedPath.length > 0;
+  return isContained;
+}

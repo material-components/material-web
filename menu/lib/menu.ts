@@ -22,7 +22,7 @@ import {List} from '../../list/lib/list.js';
 import {createAnimationSignal, EASING} from '../../motion/animation.js';
 import {ARIARole} from '../../types/aria.js';
 
-import {ActivateTypeaheadEvent, DeactivateTypeaheadEvent, MenuItem} from './shared.js';
+import {ActivateTypeaheadEvent, DeactivateTypeaheadEvent, isElementInSubtree, MenuItem} from './shared.js';
 import {Corner, SurfacePositionController, SurfacePositionTarget} from './surfacePositionController.js';
 import {TypeaheadController} from './typeaheadController.js';
 
@@ -153,10 +153,21 @@ export abstract class Menu extends LitElement {
   @property({type: String, attribute: 'menu-corner'})
   menuCorner: Corner = 'START_START';
   /**
-   * Keeps the user clicks outside the menu
+   * Keeps the user clicks outside the menu.
+   *
+   * NOTE: clicking outside may still cause focusout to close the menu so see
+   * `stayOpenOnFocusout`.
    */
   @property({type: Boolean, attribute: 'stay-open-on-outside-click'})
   stayOpenOnOutsideClick = false;
+  /**
+   * Keeps the menu open when focus leaves the menu's composed subtree.
+   *
+   * NOTE: Focusout behavior will stop propagation of the focusout event. Set
+   * this property to true to opt-out of menu's focuout handling altogether.
+   */
+  @property({type: Boolean, attribute: 'stay-open-on-focusout'})
+  stayOpenOnFocusout = false;
   /**
    * After closing, does not restore focus to the last focused element before
    * the menu was opened.
@@ -244,8 +255,9 @@ export abstract class Menu extends LitElement {
     // tints content
     return html`
        <div
-           class="menu ${classMap(this.getSurfaceClasses())}"
-           style=${styleMap(this.menuPositionController.surfaceStyles)}>
+          class="menu ${classMap(this.getSurfaceClasses())}"
+          style=${styleMap(this.menuPositionController.surfaceStyles)}
+          @focusout=${this.handleFocusout}>
         ${this.renderList()}
         ${this.renderElevation()}
         ${this.renderFocusRing()}
@@ -301,6 +313,32 @@ export abstract class Menu extends LitElement {
       fixed: this.fixed,
       'has-overflow': this.hasOverflow,
     };
+  }
+
+  protected async handleFocusout(e: FocusEvent) {
+    if (this.stayOpenOnFocusout) {
+      return;
+    }
+
+    // Stop propagation to prevent nested menus from interfering with each other
+    e.stopPropagation();
+
+    if (e.relatedTarget) {
+      // Don't close the menu if we are switching focus between menu,
+      // md-menu-item, and md-list
+      if (isElementInSubtree(e.relatedTarget, this)) {
+        return;
+      }
+    }
+
+    const oldRestoreFocus = this.skipRestoreFocus;
+    // allow focus to continue to the next focused object rather than returning
+    this.skipRestoreFocus = true;
+    this.close();
+    // await for close
+    await this.updateComplete;
+    // return to previous behavior
+    this.skipRestoreFocus = oldRestoreFocus;
   }
 
   protected handleListFocus() {
