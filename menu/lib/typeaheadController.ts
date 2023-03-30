@@ -32,10 +32,14 @@ export interface TypeaheadControllerProperties {
  * [index, item, normalized header text]
  */
 type TypeaheadRecord = [number, MenuItem, string];
-// Indicies to access the TypeaheadRecord tuple
-const TYPEAHEAD_INDEX = 0;
-const TYPEAHEAD_ITEM = 1;
-const TYPEAHEAD_TEXT = 2;
+/**
+ * Indicies to access the TypeaheadRecord tuple type.
+ */
+export const TYPEAHEAD_RECORD = {
+  INDEX: 0,
+  ITEM: 1,
+  TEXT: 2,
+} as const;
 
 /**
  * This controller listens to `keydown` events and searches the header text of
@@ -82,11 +86,11 @@ export class TypeaheadController {
   /**
    * If we are currently "typing"
    */
-  protected isTypingAhead = false;
+  isTypingAhead = false;
   /**
    * The record of the last active item.
    */
-  protected lastActiveRecord: TypeaheadRecord|null = null;
+  lastActiveRecord: TypeaheadRecord|null = null;
 
   /**
    * @param getProperties A function that returns the options of the typeahead
@@ -146,10 +150,11 @@ export class TypeaheadController {
     this.typeaheadRecords = this.items.map(
         (el, index) => [index, el, el.headline.trim().toLowerCase()]);
     this.lastActiveRecord =
-        this.typeaheadRecords.find(record => record[TYPEAHEAD_ITEM].active) ??
+        this.typeaheadRecords.find(
+            record => record[TYPEAHEAD_RECORD.ITEM].active) ??
         null;
     if (this.lastActiveRecord) {
-      this.lastActiveRecord[TYPEAHEAD_ITEM].active = false;
+      this.lastActiveRecord[TYPEAHEAD_RECORD.ITEM].active = false;
     }
     this.typeahead(e);
   }
@@ -198,7 +203,7 @@ export class TypeaheadController {
         e.code === 'Escape') {
       this.endTypeahead();
       if (this.lastActiveRecord) {
-        this.lastActiveRecord[TYPEAHEAD_ITEM].active = false;
+        this.lastActiveRecord[TYPEAHEAD_RECORD.ITEM].active = false;
       }
       return;
     }
@@ -215,8 +220,9 @@ export class TypeaheadController {
 
     this.typaheadBuffer += e.key.toLowerCase();
 
-    const lastActiveIndex =
-        this.lastActiveRecord ? this.lastActiveRecord[TYPEAHEAD_INDEX] : -1;
+    const lastActiveIndex = this.lastActiveRecord ?
+        this.lastActiveRecord[TYPEAHEAD_RECORD.INDEX] :
+        -1;
     const numRecords = this.typeaheadRecords.length;
 
     /**
@@ -242,7 +248,7 @@ export class TypeaheadController {
      * 5: [2, <reference>, 'banana']
      */
     const rebaseIndexOnActive = (record: TypeaheadRecord) => {
-      return (record[TYPEAHEAD_INDEX] + numRecords - lastActiveIndex) %
+      return (record[TYPEAHEAD_RECORD.INDEX] + numRecords - lastActiveIndex) %
           numRecords;
     };
 
@@ -250,8 +256,9 @@ export class TypeaheadController {
     const matchingRecords =
         this.typeaheadRecords
             .filter(
-                record => !record[TYPEAHEAD_ITEM].disabled &&
-                    record[TYPEAHEAD_TEXT].startsWith(this.typaheadBuffer))
+                record => !record[TYPEAHEAD_RECORD.ITEM].disabled &&
+                    record[TYPEAHEAD_RECORD.TEXT].startsWith(
+                        this.typaheadBuffer))
             .sort((a, b) => rebaseIndexOnActive(a) - rebaseIndexOnActive(b));
 
     // Just leave if there's nothing that matches. Native select will just
@@ -260,7 +267,7 @@ export class TypeaheadController {
     if (matchingRecords.length === 0) {
       clearTimeout(this.cancelTypeaheadTimeout);
       if (this.lastActiveRecord) {
-        this.lastActiveRecord[TYPEAHEAD_ITEM].active = false;
+        this.lastActiveRecord[TYPEAHEAD_RECORD.ITEM].active = false;
       }
       this.endTypeahead();
       return;
@@ -278,11 +285,11 @@ export class TypeaheadController {
     }
 
     if (this.lastActiveRecord) {
-      this.lastActiveRecord[TYPEAHEAD_ITEM].active = false;
+      this.lastActiveRecord[TYPEAHEAD_RECORD.ITEM].active = false;
     }
 
     this.lastActiveRecord = nextRecord;
-    nextRecord[TYPEAHEAD_ITEM].active = true;
+    nextRecord[TYPEAHEAD_RECORD.ITEM].active = true;
     return;
   }
 
