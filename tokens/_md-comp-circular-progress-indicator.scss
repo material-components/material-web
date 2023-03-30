@@ -4,6 +4,9 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './v0_161/md-comp-circular-progress-indicator';
@@ -14,9 +17,21 @@ $_default: (
   'md-sys-shape': md-sys-shape.values(),
 );
 
+$_unsupported-tokens: (
+  // must be circular
+  'active-indicator-shape'
+);
+
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  @return md-comp-circular-progress-indicator.values(
+  $tokens: md-comp-circular-progress-indicator.values(
     $deps,
     $exclude-hardcoded-values
   );
+  $tokens: map.remove($tokens, $_unsupported-tokens...);
+
+  // must be set as a raw % for compatibility between rendering border or svg.
+  // so the default value of 4px is converted to 8.33% by removing
+  // and re-adding the token.
+  $tokens: map.set($tokens, 'active-indicator-width', 8.33);
+  @return $tokens;
 }

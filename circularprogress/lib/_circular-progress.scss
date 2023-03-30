@@ -1,0 +1,282 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use '../../sass/theme';
+@use '../../tokens';
+// go/keep-sorted end
+
+@mixin theme($tokens) {
+  $reference: tokens.md-comp-circular-progress-indicator-values();
+  $tokens: theme.validate-theme($reference, $tokens);
+  $tokens: theme.create-theme-vars($tokens, 'circular-progress');
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: tokens.md-comp-circular-progress-indicator-values();
+  $tokens: theme.create-theme-vars($tokens, 'circular-progress');
+
+  $container-padding: 4px;
+
+  // note, these value come from the m2 version but match current gm3 values.
+  // Constants:
+  //       ARCSIZE     = 270 degrees (amount of circle the arc takes up)
+  //       ARCTIME     = 1333ms (time it takes to expand and contract arc)
+  //       ARCSTARTROT = 216 degrees (how much the start location of the arc
+  //                                 should rotate each time, 216 gives us a
+  //                                 5 pointed star shape (it's 360/5 * 3).
+  //                                 For a 7 pointed star, we might do
+  //                                 360/7 * 3 = 154.286)
+  // ARCTIME
+  $arc-duration: 1333ms;
+  // 4 * ARCTIME
+  $cycle-duration: calc(4 * $arc-duration);
+  // ARCTIME * 360 / (ARCSTARTROT + (360-ARCSIZE))
+  $linear-rotate-duration: calc($arc-duration * 360 / 306);
+
+  $indeterminate-easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  :host {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+
+    display: inline-flex;
+    vertical-align: middle;
+    min-block-size: var(--_size);
+    min-inline-size: var(--_size);
+    position: relative;
+    align-items: center;
+    justify-content: center;
+
+    // `contain` and `content-visibility` are performance optimizations
+    // important here because progress indicators are often used when a cpu
+    // intensive task is underway so it's especially important to minimize
+    // their cpu consumption.
+    contain: strict;
+    content-visibility: auto;
+  }
+
+  .circular-progress {
+    flex: 1;
+    align-self: stretch;
+    margin: $container-padding;
+  }
+
+  .circular-progress,
+  .spinner,
+  .left,
+  .right,
+  .circle,
+  svg,
+  .track,
+  .progress {
+    position: absolute;
+    inset: 0;
+  }
+
+  svg {
+    transform: rotate(-90deg);
+  }
+
+  circle {
+    cx: 50%;
+    cy: 50%;
+    r: calc(50% * (1 - var(--_active-indicator-width) / 100));
+    // match size to indeterminate border width
+    stroke-width: calc(var(--_active-indicator-width) * 1%);
+    // note, pathLength is set so this can be normalized
+    stroke-dasharray: 100;
+    fill: transparent;
+  }
+
+  .progress {
+    // note, these value come from the m2 version but match current gm3 values.
+    transition: stroke-dashoffset 500ms cubic-bezier(0, 0, 0.2, 1);
+    stroke: var(--_active-indicator-color);
+  }
+
+  .track {
+    stroke: transparent;
+  }
+
+  .circular-progress.indeterminate {
+    will-change: transform;
+    animation: linear infinite linear-rotate;
+    animation-duration: $linear-rotate-duration;
+  }
+
+  .spinner {
+    will-change: transform;
+    animation: infinite both rotate-arc;
+    animation-duration: $cycle-duration;
+    animation-timing-function: $indeterminate-easing;
+  }
+
+  .left {
+    overflow: hidden;
+    inset: 0 50% 0 0;
+  }
+
+  .right {
+    overflow: hidden;
+    inset: 0 0 0 50%;
+  }
+
+  .circle {
+    box-sizing: border-box;
+    border-radius: 50%;
+    // match size to svg stroke width, which is a fraction of the overall
+    // padding box width.
+    $_padding-box-width: calc(var(--_size) - 2 * $container-padding);
+    $_active-indicator-fraction: calc(var(--_active-indicator-width) / 100);
+    border: solid calc($_active-indicator-fraction * $_padding-box-width);
+    border-color: var(--_active-indicator-color) var(--_active-indicator-color)
+      transparent transparent;
+    will-change: transform;
+    animation: expand-arc;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+    animation-duration: $arc-duration, $cycle-duration;
+    animation-timing-function: $indeterminate-easing;
+  }
+
+  .four-color .circle {
+    animation-name: expand-arc, four-color;
+  }
+
+  .left .circle {
+    rotate: 135deg;
+    inset: 0 -100% 0 0;
+  }
+  .right .circle {
+    rotate: 100deg;
+    inset: 0 0 0 -100%;
+    animation-delay: calc(-0.5 * $arc-duration), 0ms;
+  }
+
+  @media screen and (forced-colors: active) {
+    .progress {
+      stroke: CanvasText;
+    }
+
+    .circle {
+      border-color: CanvasText CanvasText Canvas Canvas;
+    }
+  }
+
+  // Indeterminate mode is 3 animations composed together:
+  // 1. expand-arc: an arc is expanded/contracted between 10deg and 270deg.
+  // 2. rotate-arc: at the same time, the arc is rotated in increments
+  // of 270deg.
+  // 3. linear-rotate: that rotating arc is then linearly rotated to produce
+  // a spinning expanding/contracting arc.
+  //
+  // See original implementation:
+  // https://github.com/PolymerElements/paper-spinner/blob/master/paper-spinner-styles.js.
+
+  // 1. expand-arc
+  // This is used on 2 divs which each represent half the desired
+  // 270deg arc with one offset by 50%. This creates an arc which expands from
+  // 10deg to 270deg.
+  @keyframes expand-arc {
+    0% {
+      transform: rotate(265deg);
+    }
+    50% {
+      transform: rotate(130deg);
+    }
+    100% {
+      transform: rotate(265deg);
+    }
+  }
+
+  // 2. rotate-arc
+  // The arc seamlessly travels around the circle indefinitely so it needs to
+  // end at a full rotation of the circle. This rotates the 270 deg
+  // (270/360 = 3/4) arc 4x (4 * 3/4 = 3) so it ends at
+  // (3 * 360 = 1080).
+  // This is sub-divided into increments of 135deg since the arc is rendered
+  // with 2 divs acting together.
+  @keyframes rotate-arc {
+    12.5% {
+      transform: rotate(135deg);
+    }
+    25% {
+      transform: rotate(270deg);
+    }
+    37.5% {
+      transform: rotate(405deg);
+    }
+    50% {
+      transform: rotate(540deg);
+    }
+    62.5% {
+      transform: rotate(675deg);
+    }
+    75% {
+      transform: rotate(810deg);
+    }
+    87.5% {
+      transform: rotate(945deg);
+    }
+    100% {
+      transform: rotate(1080deg);
+    }
+  }
+
+  // 3. linear-rotate
+  // The traveling expanding arc is linearly rotated to produce the spinner
+  // effect.
+  @keyframes linear-rotate {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  // This animates between 4 colors which are each shown for 25% of the time.
+  // Each color is shown solid for 3/5 of that time (3/5 * 25% = 15%) and
+  // transitions to the next color for 2/5 of that time (2/5 * 25% = 10%).
+  @keyframes four-color {
+    0% {
+      border-top-color: var(--_four-color-active-indicator-one-color);
+      border-right-color: var(--_four-color-active-indicator-one-color);
+    }
+    15% {
+      border-top-color: var(--_four-color-active-indicator-one-color);
+      border-right-color: var(--_four-color-active-indicator-one-color);
+    }
+    25% {
+      border-top-color: var(--_four-color-active-indicator-two-color);
+      border-right-color: var(--_four-color-active-indicator-two-color);
+    }
+    40% {
+      border-top-color: var(--_four-color-active-indicator-two-color);
+      border-right-color: var(--_four-color-active-indicator-two-color);
+    }
+    50% {
+      border-top-color: var(--_four-color-active-indicator-three-color);
+      border-right-color: var(--_four-color-active-indicator-three-color);
+    }
+    65% {
+      border-top-color: var(--_four-color-active-indicator-three-color);
+      border-right-color: var(--_four-color-active-indicator-three-color);
+    }
+    75% {
+      border-top-color: var(--_four-color-active-indicator-four-color);
+      border-right-color: var(--_four-color-active-indicator-four-color);
+    }
+    90% {
+      border-top-color: var(--_four-color-active-indicator-four-color);
+      border-right-color: var(--_four-color-active-indicator-four-color);
+    }
+    100% {
+      border-top-color: var(--_four-color-active-indicator-one-color);
+      border-right-color: var(--_four-color-active-indicator-one-color);
+    }
+  }
+}
