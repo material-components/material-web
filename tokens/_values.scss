@@ -9,6 +9,16 @@
 @use 'sass:meta';
 // go/keep-sorted end
 
+/// Determines whether is a map or a list of length 0 which is an empty map.
+///
+/// @param {Map|List|String|Number|Bool} $value - The value to consider.
+/// @return {Bool} Whether or not the value is a Map or an empty list.
+@function is-map($value) {
+  $type: meta.type-of($value);
+
+  @return $type == 'map' or ($type == 'list' and list.length($value) == 0);
+}
+
 /// Validates the Map returned from `tokens.md-comp-*-values()` functions.
 ///
 /// Validation requires a `$values` Map and at least the `$supported-tokens`
@@ -44,7 +54,7 @@
 
   $renamed-tokens: map.get($tokens, 'renamed-tokens');
   @if $renamed-tokens {
-    @if meta.type-of($renamed-tokens) != 'map' {
+    @if not is-map($renamed-tokens) {
       @error 'values.validate($renamed-tokens) must be a map.';
     }
 
@@ -75,7 +85,7 @@
 
   $new-tokens: map.get($tokens, 'new-tokens');
   @if $new-tokens {
-    @if meta.type-of($new-tokens) != 'map' {
+    @if not is-map($new-tokens) {
       @error 'values.validate($new-tokens) must be a map.';
     }
 
