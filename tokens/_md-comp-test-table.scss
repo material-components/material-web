@@ -1,0 +1,31 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use './md-sys-color';
+@use './md-sys-typescale';
+// go/keep-sorted end
+
+$_default: (
+  'md-sys-color': md-sys-color.values-light(),
+  'md-sys-typescale': md-sys-typescale.values(),
+);
+
+@function values($deps: $_default) {
+  @return (
+    'cell-color': map.get($deps, 'md-sys-color', 'surface'),
+    'cell-text-color': map.get($deps, 'md-sys-color', 'on-surface'),
+    'cell-text-type': map.get($deps, 'md-sys-typescale', 'body-medium'),
+    'cell-grid-color': map.get($deps, 'md-sys-color', 'surface-variant'),
+    'header-cell-color': map.get($deps, 'md-sys-color', 'surface-variant'),
+    'header-cell-text-color':
+      map.get($deps, 'md-sys-color', 'on-surface-variant'),
+    'header-cell-text-type': map.get($deps, 'md-sys-typescale', 'title-medium'),
+    'outline-color': map.get($deps, 'md-sys-color', 'outline')
+  );
+}

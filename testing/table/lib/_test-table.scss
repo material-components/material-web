@@ -9,58 +9,95 @@
 // go/keep-sorted start
 @use 'sass:map';
 // go/keep-sorted end
+// go/keep-sorted start
+@use '../../../sass/theme';
+@use '../../../tokens';
+// go/keep-sorted end
 
-@mixin static-styles() {
+$light-theme: tokens.md-comp-test-table-values();
+$dark-theme: tokens.md-comp-test-table-values(
+  (
+    'md-sys-color': tokens.md-sys-color-values-dark(),
+  )
+);
+
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme(tokens.md-comp-test-table-values(), $tokens);
+  $tokens: theme.create-theme-vars($tokens, 'test-table');
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  $tokens: tokens.md-comp-test-table-values();
+  $tokens: theme.create-theme-vars($tokens, 'test-table');
+
   :host {
-    @include host;
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+
+    display: flex;
   }
 
   .md3-test-table {
-    @include table;
+    border: 1px solid;
+    border-collapse: collapse;
   }
 
   .md3-test-table__cell {
-    @include cell;
+    border: 1px solid;
+    padding: 16px;
+    position: relative;
+
+    &::before {
+      background-color: var(--_cell-color);
+      background-image: linear-gradient(
+          to right,
+          var(--_cell-grid-color) 1px,
+          transparent 1px
+        ),
+        linear-gradient(to bottom, var(--_cell-grid-color) 1px, transparent 1px);
+      background-size: 16px 16px;
+      inset: -1px 0 0 -1px;
+      content: '';
+      position: absolute;
+      z-index: -1;
+    }
   }
 
   .md3-test-table__header {
-    @include header;
+    background: var(--_header-cell-color);
+    border: 1px solid;
+    border-top: none;
+    caption-side: bottom;
+    color: var(--_header-cell-text-color);
+    font: var(--_header-cell-text-type);
+    padding: 8px;
   }
 
   .md3-test-table__text {
-    @include text;
+    align-items: center;
+    color: var(--_cell-text-color);
+    display: flex;
+    font: var(--_cell-text-type);
+    justify-content: center;
   }
-}
 
-@mixin host() {
-  display: flex;
-}
-
-@mixin table() {
-  border: 1px solid;
-  border-collapse: collapse;
-}
-
-@mixin cell() {
-  border: 1px solid;
-  position: relative;
-
-  &::before {
-    inset: -1px 0 0 -1px;
-    content: '';
-    position: absolute;
-    z-index: -1;
+  .md3-test-table,
+  .md3-test-table__cell,
+  .md3-test-table__header {
+    border-color: var(--_outline-color);
   }
-}
 
-@mixin header() {
-  border: 1px solid;
-  border-top: none;
-  caption-side: bottom;
-}
+  .md3-test-table--dark {
+    $dark: tokens.md-sys-color-values-dark();
 
-@mixin text() {
-  align-items: center;
-  display: flex;
-  justify-content: center;
+    --_cell-color: #{map.get($dark, 'surface')};
+    --_cell-text-color: #{map.get($dark, 'on-surface')};
+    --_cell-grid-color: #{map.get($dark, 'surface-variant')};
+    --_header-cell-color: #{map.get($dark, 'surface-variant')};
+    --_header-cell-text-color: #{map.get($dark, 'on-surface-variant')};
+    --_outline-color: #{map.get($dark, 'outline')};
+  }
 }
