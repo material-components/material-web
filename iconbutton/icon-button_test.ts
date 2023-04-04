@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import './standard-icon-button-toggle.js';
-import './standard-link-icon-button.js';
 import './standard-icon-button.js';
 
 import {html} from 'lit';
@@ -13,7 +11,6 @@ import {html} from 'lit';
 import {Environment} from '../testing/environment.js';
 
 import {IconButtonHarness} from './harness.js';
-import {MdStandardIconButtonToggle} from './standard-icon-button-toggle.js';
 
 const ICON_BUTTON_TEMPLATE = html`
   <md-standard-icon-button aria-label="Star">
@@ -21,15 +18,15 @@ const ICON_BUTTON_TEMPLATE = html`
   </md-standard-icon-button>
 `;
 const LINK_ICON_BUTTON_TEMPLATE = html`
-  <md-standard-link-icon-button aria-label="Star">
+  <md-standard-icon-button aria-label="Star" href="https://google.com">
     star
-  </md-standard-link-icon-button>
+  </md-standard-icon-button>
 `;
 const ICON_BUTTON_TOGGLE_TEMPLATE = html`
-  <md-standard-icon-button-toggle aria-label="Star">
+  <md-standard-icon-button toggle aria-label="Star">
       <md-icon slot="onIcon">star</md-icon>
       <md-icon slot="offIcon">star_border</md-icon>
-  </md-standard-icon-button-toggle>
+  </md-standard-icon-button>
 `;
 
 interface IconButtonInternals {
@@ -43,7 +40,7 @@ describe('icon button tests', () => {
     it('setting `disabled` updates the disabled attribute on the native ' +
            'button element',
        async () => {
-         const {element} = await setUpTest('md-standard-icon-button');
+         const {element} = await setUpTest('button');
          const button = element.shadowRoot!.querySelector('button')!;
 
          element.disabled = true;
@@ -58,7 +55,7 @@ describe('icon button tests', () => {
     it('setting `ariaLabel` updates the aria-label attribute on the native ' +
            'button element',
        async () => {
-         const {element} = await setUpTest('md-standard-icon-button');
+         const {element} = await setUpTest('button');
          const button = element.shadowRoot!.querySelector('button')!;
 
          element.ariaLabel = 'test';
@@ -67,12 +64,13 @@ describe('icon button tests', () => {
        });
   });
 
-  describe('md-standard-link-icon-button', () => {
+  describe('md-standard-icon-button link', () => {
     it('setting `ariaLabel` updates the aria-label attribute on the anchor' +
            'tag',
        async () => {
-         const {element} = await setUpTest('md-standard-link-icon-button');
+         const {element} = await setUpTest('link');
          const anchor = element.shadowRoot!.querySelector('a')!;
+         expect(anchor).not.toBeNull();
 
          element.ariaLabel = 'test';
          await element.updateComplete;
@@ -80,11 +78,11 @@ describe('icon button tests', () => {
        });
   });
 
-  describe('md-standard-icon-button-toggle', () => {
+  describe('md-standard-icon-button toggle', () => {
     it('setting `disabled` updates the disabled attribute on the native ' +
            'button element',
        async () => {
-         const {element} = await setUpTest('md-standard-icon-button-toggle');
+         const {element} = await setUpTest('toggle');
          const button = element.shadowRoot!.querySelector('button')!;
 
          element.disabled = true;
@@ -99,7 +97,7 @@ describe('icon button tests', () => {
     it('setting `ariaLabel` updates the aria-label attribute on the native ' +
            'button element',
        async () => {
-         const {element} = await setUpTest('md-standard-icon-button-toggle');
+         const {element} = await setUpTest('toggle');
          const button = element.shadowRoot!.querySelector('button')!;
 
          element.ariaLabel = 'test';
@@ -108,12 +106,7 @@ describe('icon button tests', () => {
        });
 
     it('toggles the `selected` state when button is clicked', async () => {
-      const {element, harness} =
-          await setUpTest('md-standard-icon-button-toggle');
-      if (!(element instanceof MdStandardIconButtonToggle)) {
-        throw new Error(
-            'Icon button is not instance of MdStandardIconButtonToggle.');
-      }
+      const {element, harness} = await setUpTest('toggle');
 
       expect(element.selected).toBeFalse();
       await harness.clickWithMouse();
@@ -123,12 +116,7 @@ describe('icon button tests', () => {
     });
 
     it('fires input and change events when clicked', async () => {
-      const {element, harness} =
-          await setUpTest('md-standard-icon-button-toggle');
-      if (!(element instanceof MdStandardIconButtonToggle)) {
-        throw new Error(
-            'Icon button is not instance of MdStandardIconButtonToggle.');
-      }
+      const {element, harness} = await setUpTest('toggle');
       let changeEvent = false;
       let inputEvent = false;
       element.addEventListener('input', () => inputEvent = true);
@@ -142,11 +130,7 @@ describe('icon button tests', () => {
 
     it('setting `selected` updates the aria-pressed attribute on the native button element',
        async () => {
-         const {element} = await setUpTest('md-standard-icon-button-toggle');
-         if (!(element instanceof MdStandardIconButtonToggle)) {
-           throw new Error(
-               'Icon button is not instance of MdStandardIconButtonToggle.');
-         }
+         const {element} = await setUpTest('toggle');
 
          element.selected = true;
          await element.updateComplete;
@@ -159,11 +143,7 @@ describe('icon button tests', () => {
        });
 
     it('button with toggled aria label toggles aria label', async () => {
-      const {element} = await setUpTest('md-standard-icon-button-toggle');
-      if (!(element instanceof MdStandardIconButtonToggle)) {
-        throw new Error(
-            'Icon button is not instance of MdStandardIconButtonToggle.');
-      }
+      const {element} = await setUpTest('toggle');
       element.ariaLabelSelected = 'aria label on';
       element.ariaLabel = 'aria label off';
       await element.updateComplete;
@@ -213,23 +193,24 @@ describe('icon button tests', () => {
        });
   });
 
-  async function setUpTest(tagName: string) {
+  async function setUpTest(type: string) {
     let template;
-    switch (tagName) {
-      case 'md-standard-icon-button':
+    switch (type) {
+      case 'button':
         template = ICON_BUTTON_TEMPLATE;
         break;
-      case 'md-standard-link-icon-button':
+      case 'link':
         template = LINK_ICON_BUTTON_TEMPLATE;
         break;
-      case 'md-standard-icon-button-toggle':
+      case 'toggle':
         template = ICON_BUTTON_TOGGLE_TEMPLATE;
         break;
       default:
-        throw new Error('Invalid tag name: ' + tagName);
+        throw new Error('Invalid tag name: ' + type);
     }
 
-    const element = env.render(template).querySelector(tagName)!;
+    const element =
+        env.render(template).querySelector('md-standard-icon-button')!;
     await env.waitForStability();
     return {
       element,
