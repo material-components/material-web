@@ -12,6 +12,7 @@
 // go/keep-sorted start
 @use '../../../sass/theme';
 @use '../../../tokens';
+@use '../../../tokens/v0_172' as tokens-next; // TODO(b/272526637): remove
 // go/keep-sorted end
 
 $light-theme: tokens.md-comp-test-table-values();
@@ -91,10 +92,10 @@ $dark-theme: tokens.md-comp-test-table-values(
   }
 
   .md3-test-table--dark {
-    $dark: tokens.md-sys-color-values-dark();
+    $dark: tokens-next.md-sys-color-values-dark();
 
-    --_cell-color: #{map.get($dark, 'surface')};
-    --_cell-text-color: #{map.get($dark, 'on-surface')};
+    --_cell-color: #{map.get($dark, 'surface-container-lowest')};
+    --_cell-text-color: #{map.get($dark, 'on-surface-container')};
     --_cell-grid-color: #{map.get($dark, 'surface-variant')};
     --_header-cell-color: #{map.get($dark, 'surface-variant')};
     --_header-cell-text-color: #{map.get($dark, 'on-surface-variant')};

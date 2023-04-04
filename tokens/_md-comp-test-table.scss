@@ -7,8 +7,9 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use './md-sys-color';
 @use './md-sys-typescale';
+// TODO(b/272526637): remove version when md-sys-color is updated to v0.172
+@use './v0_172/md-sys-color';
 // go/keep-sorted end
 
 $_default: (
@@ -18,8 +19,8 @@ $_default: (
 
 @function values($deps: $_default) {
   @return (
-    'cell-color': map.get($deps, 'md-sys-color', 'surface'),
-    'cell-text-color': map.get($deps, 'md-sys-color', 'on-surface'),
+    'cell-color': map.get($deps, 'md-sys-color', 'surface-container-lowest'),
+    'cell-text-color': map.get($deps, 'md-sys-color', 'on-surface-container'),
     'cell-text-type': map.get($deps, 'md-sys-typescale', 'body-medium'),
     'cell-grid-color': map.get($deps, 'md-sys-color', 'surface-variant'),
     'header-cell-color': map.get($deps, 'md-sys-color', 'surface-variant'),
