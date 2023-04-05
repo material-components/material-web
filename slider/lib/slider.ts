@@ -414,7 +414,7 @@ export class Slider extends LitElement {
     })}">
       <slot name="handle${
         this.allowRange ? (lesser ? 'Lesser' : 'Greater') : ''}">
-        <div class="handleNub"><md-elevation shadow></md-elevation></div>
+        <div class="handleNub"><md-elevation></md-elevation></div>
         ${when(this.withLabel, () => this.renderLabel(label))}
 
       </slot>

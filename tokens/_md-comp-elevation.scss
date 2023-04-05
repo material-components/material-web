@@ -1,0 +1,28 @@
+//
+// Copyright 2022 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use './md-sys-color';
+@use './md-sys-elevation';
+@use './md-sys-motion';
+// go/keep-sorted end
+
+$_default: (
+  'md-sys-color': md-sys-color.values-light(),
+  'md-sys-elevation': md-sys-elevation.values(),
+  'md-sys-motion': md-sys-motion.values(),
+);
+
+@function values($deps: $_default, $exclude-hardcoded-values: false) {
+  @return (
+    'duration': if($exclude-hardcoded-values, null, 0s),
+    'easing': map.get($deps, 'md-sys-motion', 'easing-emphasized'),
+    'level': map.get($deps, 'md-sys-elevation', 'level0'),
+    'shadow-color': map.get($deps, 'md-sys-color', 'shadow')
+  );
+}

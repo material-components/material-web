@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../elevation/elevation.js';
+import '../../elevation/elevation-surface.js';
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
@@ -49,7 +49,7 @@ export class Chip extends LitElement {
           @focus=${this.handleFocus}
           @pointerdown=${this.handlePointerDown}
           ${ripple(this.getRipple)}>
-        <md-elevation shadow=${this.elevated} surface></md-elevation>
+        <md-elevation-surface shadow=${this.elevated}></md-elevation-surface>
         ${when(this.showRipple, this.renderRipple)}
         <md-focus-ring .visible=${this.showFocusRing}></md-focus-ring>
         <span class="icon leading">

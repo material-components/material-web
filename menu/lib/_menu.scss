@@ -103,11 +103,6 @@ $_custom-property-prefix: 'menu';
       max-height: inherit;
     }
   }
-
-  md-elevation {
-    position: absolute;
-    inset: 0;
-  }
 }
 
 @function _resolve-tokens($tokens) {

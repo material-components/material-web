@@ -115,11 +115,7 @@
     padding-block-end: var(--_container-block-padding);
   }
 
-  md-elevation {
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-
+  md-elevation-surface {
     @include elevation.theme(
       (
         level: var(--_container-elevation),

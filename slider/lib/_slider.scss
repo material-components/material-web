@@ -9,7 +9,7 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../elevation/lib/elevation';
+@use '../../elevation/elevation';
 @use '../../focus/focus-ring';
 @use '../../ripple/ripple';
 @use '../../sass/color';
@@ -490,11 +490,5 @@
   md-ripple {
     height: var(--_state-layer-size);
     width: var(--_state-layer-size);
-  }
-
-  // Elevation
-  md-elevation {
-    position: absolute;
-    inset: 0;
   }
 }

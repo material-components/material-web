@@ -11,11 +11,6 @@
 // go/keep-sorted end
 
 @mixin styles() {
-  md-elevation {
-    inset: 0;
-    position: absolute;
-  }
-
   .md3-button {
     @include elevation.theme(
       (

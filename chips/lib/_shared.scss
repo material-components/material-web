@@ -137,11 +137,6 @@
     opacity: var(--_elevated-disabled-container-opacity);
   }
 
-  md-elevation {
-    inset: 0;
-    position: absolute;
-  }
-
   md-focus-ring {
     @include focus-ring.theme(
       (

@@ -9,17 +9,26 @@
 // go/keep-sorted start
 @use '../../sass/theme';
 @use '../../sass/var';
-@use './md-comp-elevation';
+@use '../../tokens';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(md-comp-elevation.values(), $tokens);
+  $tokens: theme.validate-theme(
+    map.merge(
+      tokens.md-comp-elevation-values(),
+      (
+        // TODO(b/272526637): remove after surface is removed
+        'surface-tint': null
+      )
+    ),
+    $tokens
+  );
   $tokens: theme.create-theme-vars($tokens, 'elevation');
   @include theme.emit-theme-vars($tokens);
 }
 
 @mixin styles() {
-  $tokens: md-comp-elevation.values();
+  $tokens: tokens.md-comp-elevation-values();
   $tokens: theme.create-theme-vars($tokens, 'elevation');
 
   :host {
@@ -27,28 +36,27 @@
       --_#{$token}: #{$value};
     }
 
-    border-radius: inherit;
     display: flex;
     pointer-events: none;
-    position: relative;
+    transition-duration: var(--_duration);
+    transition-timing-function: var(--_easing);
   }
 
-  :host(:not([surface])) .surface,
-  :host(:not([shadow])) .shadow {
-    display: none;
-  }
-
-  .surface,
+  :host,
   .shadow,
   .shadow::before,
   .shadow::after {
     border-radius: inherit;
-    content: '';
     inset: 0;
     position: absolute;
+  }
+
+  .shadow::before,
+  .shadow::after {
+    content: '';
+    transition-duration: inherit;
     transition-property: box-shadow, opacity;
-    transition-duration: var(--_duration);
-    transition-timing-function: var(--_easing);
+    transition-timing-function: inherit;
   }
 
   // Key box shadows
@@ -164,39 +172,5 @@
 
     opacity: 0.15;
     box-shadow: 0px $y $blur $spread var(--_shadow-color);
-  }
-
-  .surface {
-    // Surface tint opacities:
-    // level0: opacity: 0;
-    // level1: opacity: 0.05;
-    // level2: opacity: 0.08;
-    // level3: opacity: 0.11;
-    // level4: opacity: 0.12;
-    // level5: opacity: 0.14;
-
-    // Add a clamped value for each level to build the correct values.
-    // Sass will simplify nested calc()s.
-
-    // 0 + 0 = 0
-    // $level0-opacity: 0; // +0 is a no-op
-    // 0 + 0.05 = 0.05
-    $level1-opacity: clamp(0, var(--_level), 0.05);
-    // 0.05 + 0.03 = 0.08
-    $level2-opacity: clamp(0, var(--_level) - 1, 0.03);
-    // 0.08 + 0.03 = 0.11
-    $level3-opacity: clamp(0, var(--_level) - 2, 0.03);
-    // (can't simplify levels 2-3 since the value is < 1)
-    // 0.11 + 0.01 = 0.12
-    $level4-opacity: clamp(0, var(--_level) - 3, 0.01);
-    // 0.12 + 0.02 = 0.14
-    $level5-opacity: clamp(0, var(--_level) - 4, 0.02);
-    $opacity: calc(
-      $level1-opacity + $level2-opacity + $level3-opacity + $level4-opacity +
-        $level5-opacity
-    );
-
-    background: var(--_surface-tint);
-    opacity: $opacity;
   }
 }

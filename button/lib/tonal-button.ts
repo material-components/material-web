@@ -23,6 +23,6 @@ export class TonalButton extends Button {
   }
 
   protected override renderElevation(): TemplateResult {
-    return html`<md-elevation shadow></md-elevation>`;
+    return html`<md-elevation></md-elevation>`;
   }
 }
