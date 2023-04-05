@@ -4,11 +4,12 @@
 //
 
 // go/keep-sorted start
-@use './md-sys-color';
 @use './md-sys-elevation';
 @use './md-sys-shape';
 @use './md-sys-state';
+// TODO(b/272526637): tonal surface update
 @use './v0_161/md-comp-fab-branded';
+@use './v0_161/md-sys-color';
 // go/keep-sorted end
 
 $_default: (

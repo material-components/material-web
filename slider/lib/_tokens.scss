@@ -12,7 +12,8 @@
 @use '../../sass/shape';
 @use '../../sass/theme';
 @use '../../sass/var';
-@use '../../tokens';
+// TODO(b/272526637): tonal surface update
+@use '../../tokens/v0_161' as tokens;
 // go/keep-sorted end
 
 $baseTokens: tokens.md-comp-slider-values();
@@ -32,6 +33,11 @@ $_tokens: (
   $unsupported-tokens: (
     'disabled-handle-opacity',
     'label-container-elevation',
+    'label-label-text-font',
+    'label-label-text-line-height',
+    'label-label-text-size',
+    'label-label-text-tracking',
+    'label-label-text-weight',
     'track-elevation',
     // for efficiency, tick marks are rendered as radial-gradients and
     // have more limited customization

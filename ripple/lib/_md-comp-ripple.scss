@@ -7,7 +7,8 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../tokens';
+// TODO(b/272526637): tonal surface update
+@use '../../tokens/v0_161' as tokens;
 // go/keep-sorted end
 
 $_default-deps: (

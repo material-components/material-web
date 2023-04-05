@@ -8,12 +8,13 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../sass/shape';
-@use './md-sys-color';
 @use './md-sys-elevation';
 @use './md-sys-shape';
 @use './md-sys-state';
 @use './md-sys-typescale';
+// TODO(b/272526637): tonal surface update
 @use './v0_161/md-comp-elevated-button';
+@use './v0_161/md-sys-color';
 @use './values';
 // go/keep-sorted end
 
@@ -24,7 +25,6 @@ $supported-tokens: (
   'container-height',
   'container-shadow-color',
   'container-shape',
-  'container-surface-tint-layer-color',
   'disabled-container-color',
   'disabled-container-elevation',
   'disabled-container-opacity',
