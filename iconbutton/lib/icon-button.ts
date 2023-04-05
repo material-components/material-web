@@ -63,7 +63,8 @@ export class IconButton extends LitElement {
   /**
    * The `aria-label` of the button when the button is toggleable and selected.
    */
-  @property() ariaLabelSelected!: string;
+  @property({attribute: 'selected-aria-label', reflect: true})
+  selectedAriaLabel!: string;
 
   /**
    * When true, the button will toggle between selected and unselected
@@ -109,12 +110,12 @@ export class IconButton extends LitElement {
 
   protected override render(): TemplateResult {
     const tag = this.href ? literal`div` : literal`button`;
-    const hasToggledAriaLabel = this.ariaLabel && this.ariaLabelSelected;
+    const hasToggledAriaLabel = this.ariaLabel && this.selectedAriaLabel;
     const ariaPressedValue = hasToggledAriaLabel ? nothing : this.selected;
     let ariaLabelValue: string|typeof nothing = nothing;
     if (!this.href) {
       ariaLabelValue = (hasToggledAriaLabel && this.selected) ?
-          this.ariaLabelSelected :
+          this.selectedAriaLabel :
           this.ariaLabel;
     }
     return staticHtml`<${tag}
