@@ -22,20 +22,14 @@
     display: inline-flex;
     height: var(--_container-height);
 
-    @include elevation.theme(
-      (
-        surface-tint: var(--_container-surface-tint-layer-color),
-      )
-    );
-
     @include ripple.theme(
       (
-        focus-color: var(--_focus-state-layer-color),
-        focus-opacity: var(--_focus-state-layer-opacity),
-        hover-color: var(--_hover-state-layer-color),
-        hover-opacity: var(--_hover-state-layer-opacity),
-        pressed-color: var(--_pressed-state-layer-color),
-        pressed-opacity: var(--_pressed-state-layer-opacity),
+        'focus-color': var(--_focus-state-layer-color),
+        'focus-opacity': var(--_focus-state-layer-opacity),
+        'hover-color': var(--_hover-state-layer-color),
+        'hover-opacity': var(--_hover-state-layer-opacity),
+        'pressed-color': var(--_pressed-state-layer-color),
+        'pressed-opacity': var(--_pressed-state-layer-opacity),
       )
     );
   }
@@ -90,8 +84,8 @@
   .elevated {
     @include elevation.theme(
       (
-        level: var(--_elevated-container-elevation),
-        shadow-color: var(--_elevated-container-shadow-color),
+        'level': var(--_elevated-container-elevation),
+        'shadow-color': var(--_elevated-container-shadow-color),
       )
     );
   }
@@ -103,7 +97,7 @@
   .elevated:hover {
     @include elevation.theme(
       (
-        level: var(--_elevated-hover-container-elevation),
+        'level': var(--_elevated-hover-container-elevation),
       )
     );
   }
@@ -111,7 +105,7 @@
   .elevated:focus-within {
     @include elevation.theme(
       (
-        level: var(--_elevated-focus-container-elevation),
+        'level': var(--_elevated-focus-container-elevation),
       )
     );
   }
@@ -119,7 +113,7 @@
   .elevated:active {
     @include elevation.theme(
       (
-        level: var(--_elevated-pressed-container-elevation),
+        'level': var(--_elevated-pressed-container-elevation),
       )
     );
   }
@@ -127,7 +121,7 @@
   .elevated.disabled {
     @include elevation.theme(
       (
-        level: var(--_elevated-disabled-container-elevation),
+        'level': var(--_elevated-disabled-container-elevation),
       )
     );
   }
@@ -140,7 +134,7 @@
   md-focus-ring {
     @include focus-ring.theme(
       (
-        shape: shape.corners-to-shape-token('--_container-shape'),
+        'shape': shape.corners-to-shape-token('--_container-shape'),
       )
     );
   }
