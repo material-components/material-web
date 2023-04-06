@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../elevation/elevation-surface.js';
+import '../../elevation/elevation.js';
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
@@ -87,7 +87,7 @@ export abstract class FabShared extends LitElement {
 
   /** @soyTemplate */
   protected renderElevation(): TemplateResult {
-    return html`<md-elevation-surface shadow></md-elevation-surface>`;
+    return html`<md-elevation></md-elevation>`;
   }
 
   /** @soyTemplate */

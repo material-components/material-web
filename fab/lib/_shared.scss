@@ -48,35 +48,34 @@
 
     @include focus-ring.theme(
       (
-        shape: shape.corners-to-shape-token('--_container-shape'),
+        'shape': shape.corners-to-shape-token('--_container-shape'),
       )
     );
 
     @include ripple.theme(
       (
-        hover-color: var(--_hover-state-layer-color),
-        focus-color: var(--_focus-state-layer-color),
-        pressed-color: var(--_pressed-state-layer-color),
-        hover-opacity: var(--_hover-state-layer-opacity),
-        focus-opacity: var(--_focus-state-layer-opacity),
-        pressed-opacity: var(--_pressed-state-layer-opacity),
+        'hover-color': var(--_hover-state-layer-color),
+        'focus-color': var(--_focus-state-layer-color),
+        'pressed-color': var(--_pressed-state-layer-color),
+        'hover-opacity': var(--_hover-state-layer-opacity),
+        'focus-opacity': var(--_focus-state-layer-opacity),
+        'pressed-opacity': var(--_pressed-state-layer-opacity),
       )
     );
 
     @include elevation.theme(
       (
         // TODO: replace duration with animation tokens
-        duration: 280ms,
-        level: var(--_container-elevation),
-        shadow-color: var(--_container-shadow-color),
-        surface-tint: var(--_container-surface-tint-layer-color)
+        'duration': 280ms,
+        'level': var(--_container-elevation),
+        'shadow-color': var(--_container-shadow-color)
       )
     );
 
     &.md3-fab--lowered {
       @include elevation.theme(
         (
-          level: var(--_lowered-container-elevation),
+          'level': var(--_lowered-container-elevation),
         )
       );
     }
@@ -86,14 +85,14 @@
     &:focus {
       @include elevation.theme(
         (
-          level: var(--_focus-container-elevation),
+          'level': var(--_focus-container-elevation),
         )
       );
 
       &.md3-fab--lowered {
         @include elevation.theme(
           (
-            level: var(--_lowered-focus-container-elevation),
+            'level': var(--_lowered-focus-container-elevation),
           )
         );
       }
@@ -104,14 +103,14 @@
 
       @include elevation.theme(
         (
-          level: var(--_hover-container-elevation),
+          'level': var(--_hover-container-elevation),
         )
       );
 
       &.md3-fab--lowered {
         @include elevation.theme(
           (
-            level: var(--_lowered-hover-container-elevation),
+            'level': var(--_lowered-hover-container-elevation),
           )
         );
       }
@@ -122,21 +121,21 @@
 
       @include elevation.theme(
         (
-          level: var(--_pressed-container-elevation),
+          'level': var(--_pressed-container-elevation),
         )
       );
 
       &.md3-fab--lowered {
         @include elevation.theme(
           (
-            level: var(--_lowered-pressed-container-elevation),
+            'level': var(--_lowered-pressed-container-elevation),
           )
         );
       }
     }
   }
 
-  md-elevation-surface {
+  md-elevation {
     z-index: -1; // Place behind content
   }
 
@@ -186,7 +185,7 @@
       // Adjust the focus ring padding to account for the 1px border in HCM.
       @include focus-ring.theme(
         (
-          offset: 3px,
+          'offset': 3px,
         )
       );
       border: 1px solid ButtonText;
