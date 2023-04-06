@@ -12,8 +12,7 @@
 @use '../../sass/shape';
 @use '../../sass/theme';
 @use '../../sass/var';
-// TODO(b/272526637): tonal surface update
-@use '../../tokens/v0_161' as tokens;
+@use '../../tokens';
 // go/keep-sorted end
 
 $baseTokens: tokens.md-comp-slider-values();
