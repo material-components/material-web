@@ -7,9 +7,8 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './md-sys-color';
 @use './md-sys-typescale';
-// TODO(b/272526637): remove version when md-sys-color is updated to v0.172
-@use './v0_172/md-sys-color';
 // go/keep-sorted end
 
 $_default: (
