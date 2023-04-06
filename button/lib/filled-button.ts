@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../elevation/elevation-surface.js';
+import '../../elevation/elevation.js';
 
 import {html, TemplateResult} from 'lit';
 import {ClassInfo} from 'lit/directives/class-map.js';
@@ -23,6 +23,6 @@ export class FilledButton extends Button {
   }
 
   protected override renderElevation(): TemplateResult {
-    return html`<md-elevation-surface shadow></md-elevation-surface>`;
+    return html`<md-elevation></md-elevation>`;
   }
 }
