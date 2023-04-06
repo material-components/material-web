@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../elevation/elevation-surface.js';
+import '../../elevation/elevation.js';
 
 import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
@@ -56,7 +56,7 @@ export class NavigationDrawer extends LitElement {
         aria-modal="${this.ariaModal}"
         class="md3-navigation-drawer ${this.getRenderClasses()}"
         role="dialog">
-        <md-elevation-surface shadow></md-elevation-surface>
+        <md-elevation></md-elevation>
         <div class="md3-navigation-drawer__slot-content">
           <slot></slot>
         </div>

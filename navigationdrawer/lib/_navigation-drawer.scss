@@ -19,15 +19,14 @@ $delay: 0s;
 $transition-duration: 0.25s;
 
 $_reference: (
-  container-color: #fff,
-  container-height: 100%,
-  container-shape: 0 16px 16px 0,
-  container-surface-tint-layer-color: null,
-  container-width: 360px,
+  'container-color': #fff,
+  'container-height': 100%,
+  'container-shape': 0 16px 16px 0,
+  'container-width': 360px,
   // TODO(b/216384393): Temporary existing token to use for shadow color
-  divider-color: #000,
-  modal-container-elevation: 1,
-  standard-container-elevation: 0,
+  'divider-color': #000,
+  'modal-container-elevation': 1,
+  'standard-container-elevation': 0,
 );
 
 $_custom-property-prefix: 'navigation-drawer';
@@ -52,9 +51,8 @@ $_custom-property-prefix: 'navigation-drawer';
 
     @include elevation.theme(
       (
-        level: var(--_standard-container-elevation),
-        shadow-color: var(--_divider-color),
-        surface-tint: var(--_container-surface-tint-layer-color),
+        'level': var(--_standard-container-elevation),
+        'shadow-color': var(--_divider-color),
       )
     );
   }
