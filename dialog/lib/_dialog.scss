@@ -115,11 +115,10 @@
     padding-block-end: var(--_container-block-padding);
   }
 
-  md-elevation-surface {
+  md-elevation {
     @include elevation.theme(
       (
-        level: var(--_container-elevation),
-        surface-tint: var(--_container-surface-tint-layer-color),
+        'level': var(--_container-elevation),
       )
     );
   }

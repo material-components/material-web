@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../elevation/elevation-surface.js';
+import '../../elevation/elevation.js';
 
 import {html, LitElement, PropertyValues} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
@@ -275,7 +275,7 @@ export class Dialog extends LitElement {
         @pointermove=${this.handlePointerMove}
         @pointerup=${this.handleDragEnd}
       >
-        <md-elevation-surface></md-elevation-surface>
+        <md-elevation></md-elevation>
         <header class="header">
           <slot name="header">
             <slot name="headline-prefix"></slot>
