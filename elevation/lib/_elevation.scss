@@ -13,16 +13,7 @@
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(
-    map.merge(
-      tokens.md-comp-elevation-values(),
-      (
-        // TODO(b/272526637): remove after surface is removed
-        'surface-tint': null
-      )
-    ),
-    $tokens
-  );
+  $tokens: theme.validate-theme(tokens.md-comp-elevation-values(), $tokens);
   $tokens: theme.create-theme-vars($tokens, 'elevation');
   @include theme.emit-theme-vars($tokens);
 }
