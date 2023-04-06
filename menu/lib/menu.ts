@@ -8,7 +8,7 @@
 // tslint:disable:no-new-decorators
 import '../../list/list.js';
 import '../../focus/focus-ring.js';
-import '../../elevation/elevation-surface.js';
+import '../../elevation/elevation.js';
 
 import {html, isServer, LitElement} from 'lit';
 import {eventOptions, property, query, state} from 'lit/decorators.js';
@@ -297,7 +297,7 @@ export abstract class Menu extends LitElement {
    * Renders the elevation component.
    */
   protected renderElevation() {
-    return html`<md-elevation-surface shadow></md-elevation-surface>`;
+    return html`<md-elevation></md-elevation>`;
   }
 
   /**

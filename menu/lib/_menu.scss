@@ -39,21 +39,20 @@ $_custom-property-prefix: 'menu';
 
     @include md-list.theme(
       (
-        list-item-container-color: var(--_container-color),
+        'list-item-container-color': var(--_container-color),
       )
     );
 
     @include elevation.theme(
       (
-        level: var(--_container-elevation),
-        shadow-color: var(--_container-shadow-color),
-        surface-tint: var(--_container-surface-tint-layer-color),
+        'level': var(--_container-elevation),
+        'shadow-color': var(--_container-shadow-color),
       )
     );
 
     @include focus-ring.theme(
       (
-        shape: var(--_container-shape),
+        'shape': var(--_container-shape),
       )
     );
 
