@@ -40,8 +40,8 @@ npm install @material/mwc-list
 </mwc-list>
 
 <script type="module">
-  import '@material/mwc-list/mwc-list.js.js';
-  import '@material/mwc-list/mwc-list-item.js.js';
+  import '@material/mwc-list/mwc-list.js';
+  import '@material/mwc-list/mwc-list-item.js';
 </script>
 ```
 
