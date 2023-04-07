@@ -4,9 +4,31 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use './v0_172/md-ref-typeface';
 // go/keep-sorted end
 
+$supported-tokens: (
+  // go/keep-sorted start
+  'brand',
+  'plain',
+  // go/keep-sorted end
+);
+
 @function values($exclude-hardcoded-values: false) {
-  @return md-ref-typeface.values($exclude-hardcoded-values);
+  $tokens: md-ref-typeface.values($exclude-hardcoded-values);
+
+  @each $token in $supported-tokens {
+    $value: map.get($tokens, $token);
+    @if $value != null {
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-ref-typeface-#{$token}, #{$value})
+      );
+    }
+  }
+  @return $tokens;
 }
