@@ -30,5 +30,12 @@ $_unsupported-tokens: (
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   $tokens: md-comp-badge.values($deps, $exclude-hardcoded-values);
   $tokens: map.remove($tokens, $_unsupported-tokens...);
+  // TODO(b/271876162): remove when tokens compiler emits typescale tokens
+  $tokens: map.merge(
+    $tokens,
+    (
+      'large-label-text-type': map.get($deps, 'md-sys-typescale', 'label-small'),
+    )
+  );
   @return $tokens;
 }

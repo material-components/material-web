@@ -200,6 +200,14 @@ $_default: (
     $renamed-tokens: $renamed-tokens
   );
 
+  // TODO(b/271876162): remove when tokens compiler emits typescale tokens
+  $tokens: map.merge(
+    $tokens,
+    (
+      'label-text-type': map.get($deps, 'md-sys-typescale', 'label-large'),
+    )
+  );
+
   @each $token, $value in $tokens {
     $tokens: map.set(
       $tokens,
