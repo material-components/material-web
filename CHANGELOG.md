@@ -1,5 +1,59 @@
 # Changelog
 
+## [1.0.0-pre.6](https://github.com/material-components/material-web/compare/v1.0.0-pre.5...v1.0.0-pre.6) (2023-04-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* **elevation:** remove elevation surfaces
+* **iconbutton:** rename selected aria label property, add documentation
+* **elevation:** remove surface for tonal surface update
+* **iconbutton:** combine button, link, and toggle variants into single components
+* **button:** merge standard and link buttons
+
+### Features
+
+* **circular-progress:** adds circular-progress element ([3adab6a](https://github.com/material-components/material-web/commit/3adab6ae192489db5d5eb1dfd54552f69a0f0ad7))
+* **focus:** export the keydown handler ([d7fdfda](https://github.com/material-components/material-web/commit/d7fdfda16237bc7a51c5ed8fb7a85c170ce3e25f))
+* **focus:** implement focus ring animation ([85232d5](https://github.com/material-components/material-web/commit/85232d5916af04a2cdc96e059ad000cd5cc9515e))
+* **iconbutton:** combine button, link, and toggle variants into single components ([0aa39e8](https://github.com/material-components/material-web/commit/0aa39e81532dc240890f2479f7ac592169ad3070))
+* **iconbutton:** rename selected aria label property, add documentation ([5d3af37](https://github.com/material-components/material-web/commit/5d3af375f0d4a9123a2d5755d0279a2ac1c05165))
+* **list,menu:** implement forced colors ([712aab3](https://github.com/material-components/material-web/commit/712aab3efc2b3102dc089833320b013c0b83f0ed))
+* **tokens:** generate v0.170 ([2b9daea](https://github.com/material-components/material-web/commit/2b9daead7fbab0f7c355a33b10798f4193535ff7))
+* **tokens:** generate v0.172 ([189ef06](https://github.com/material-components/material-web/commit/189ef06018f27d6cd772fd5f53b5e1fd9f0c10f7))
+
+
+### Bug Fixes
+
+* **button:** incorrect theme custom properties ([2c1c80d](https://github.com/material-components/material-web/commit/2c1c80d3d65905da1071e240d352baa42508faa4)), closes [#4095](https://github.com/material-components/material-web/issues/4095)
+* **button:** merge standard and link buttons ([acfdbb4](https://github.com/material-components/material-web/commit/acfdbb4f9273fe1a62430ec7a8857cca391674cb))
+* **button:** tonal surface update ([50157e6](https://github.com/material-components/material-web/commit/50157e61a716b3a0f0a2ff0052eb65e4cb781eca))
+* **checkbox:** tonal surface update ([7279356](https://github.com/material-components/material-web/commit/72793562e2aad1e284da021cdb5a94f765dfc903))
+* **chips:** tonal surface update ([60ef2ab](https://github.com/material-components/material-web/commit/60ef2abbe7e3b9d28233c13d7de2cee87f73e073))
+* complete tonal surface update ([7368e2a](https://github.com/material-components/material-web/commit/7368e2a2e23cd4509e27860ef513dd6fc832964a))
+* **dialog:** tonal surface update ([c64f416](https://github.com/material-components/material-web/commit/c64f416ecaabb7f5867527b323abb00377cb99aa))
+* **elevation:** remove elevation surfaces ([d801a5f](https://github.com/material-components/material-web/commit/d801a5f7cdb1cd43a832e2c11d33b97ef7e67ac0))
+* **fab:** tonal surface update ([92a9071](https://github.com/material-components/material-web/commit/92a907142ce39811159c388034e7c3e27e3b6e22))
+* **iconbutton:** tonal surface update ([52b45f1](https://github.com/material-components/material-web/commit/52b45f143545c831c04ed92adaba69f8da953ade))
+* **list:** fix strong focus first keyboard nav ([6398186](https://github.com/material-components/material-web/commit/6398186d051f1b7fa309dad28a04d49ab2b4329e))
+* **menu:** close menu on focusout and make it configurable ([3445b63](https://github.com/material-components/material-web/commit/3445b631febe5d4ab93c45c3ebc1cc35177649cc))
+* **menu:** properly implement selected state ([bfa1bec](https://github.com/material-components/material-web/commit/bfa1bec320b6a73f4a4a89e508223e873920e3ac))
+* **menu:** tonal surface update ([7ccc21e](https://github.com/material-components/material-web/commit/7ccc21e0d2674b8aa16027d1c008fe73885b4530))
+* **navigationbar:** tonal surface update ([ebe666e](https://github.com/material-components/material-web/commit/ebe666eb6ad1298aab7c26d7c7fd1d8cc0c1e1e2))
+* **navigationbar:** tonal surface update ([a5fe8f3](https://github.com/material-components/material-web/commit/a5fe8f30375a56d49b94287bfb3199b0913febb7))
+* **navigationdrawer:** tonal surface update ([4f9df51](https://github.com/material-components/material-web/commit/4f9df513ddbe15219044444b9d94657823570c90))
+* **radio:** tonal surface update ([b5065a6](https://github.com/material-components/material-web/commit/b5065a68a8c3d02fe8a864f14dd6f573023ca1dc))
+* **ripple:** tonal surface update ([f08a9db](https://github.com/material-components/material-web/commit/f08a9db3d8257ceb3202a85fcf0e6c3d50ea8bdb))
+* **slider:** tonal surface update ([9a020b9](https://github.com/material-components/material-web/commit/9a020b96e8f786faad51fe9217984a664954a596))
+* **switch:** tonal surface update ([6ccc759](https://github.com/material-components/material-web/commit/6ccc7595dc4b0cfa956e278ca1901f31dbcade89))
+* **textfield:** tonal surface update ([f15d8ca](https://github.com/material-components/material-web/commit/f15d8ca2faf132a3ab1bf5b67efc9653ffa7ce1a))
+
+
+### Miscellaneous Chores
+
+* **elevation:** remove surface for tonal surface update ([d12ed3e](https://github.com/material-components/material-web/commit/d12ed3e4e3352b4dc548c4e2a34cdaee85b4cb14))
+* update next version ([a878783](https://github.com/material-components/material-web/commit/a878783d8d61dff6293556e67ee3e6cbd435b73f))
+
 ## [1.0.0-pre.5](https://github.com/material-components/material-web/compare/v1.0.0-pre.4...v1.0.0-pre.5) (2023-03-21)
 
 
