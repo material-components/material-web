@@ -39,17 +39,16 @@ export class List extends LitElement {
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
   @ariaProperty
-  @property({type: String, attribute: 'data-aria-label', noAccessor: true})
+  @property({attribute: 'data-aria-label', noAccessor: true})
   override ariaLabel!: string;
 
   @ariaProperty
-  @property(
-      {type: String, attribute: 'data-aria-activedescendant', noAccessor: true})
+  @property({attribute: 'data-aria-activedescendant', noAccessor: true})
   ariaActivedescendant!: string;
 
   @ariaProperty
   // tslint:disable-next-line
-  @property({type: String, attribute: 'data-role', noAccessor: true})
+  @property({attribute: 'data-role', noAccessor: true})
   // @ts-ignore(b/264292293): Use `override` with TS 4.9+
   role: ARIARole = 'list';
 

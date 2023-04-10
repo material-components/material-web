@@ -61,8 +61,7 @@ export class Checkbox extends LitElement {
   /**
    * The HTML name to use in form submission.
    */
-  @property({type: String, reflect: true, converter: stringConverter})
-  name = '';
+  @property({reflect: true, converter: stringConverter}) name = '';
 
   /**
    * The associated form element with which this element's value will submit.
@@ -72,7 +71,7 @@ export class Checkbox extends LitElement {
   }
 
   @ariaProperty  // tslint:disable-line:no-new-decorators
-  @property({type: String, attribute: 'data-aria-label', noAccessor: true})
+  @property({attribute: 'data-aria-label', noAccessor: true})
   override ariaLabel!: string;
 
   @state() private prevChecked = false;

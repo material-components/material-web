@@ -73,7 +73,7 @@ export abstract class Menu extends LitElement {
   @query('md-focus-ring') protected readonly focusRing!: MdFocusRing;
 
   @ariaProperty
-  @property({type: String, attribute: 'data-aria-label', noAccessor: true})
+  @property({attribute: 'data-aria-label', noAccessor: true})
   override ariaLabel!: string;
 
   /**
@@ -132,7 +132,7 @@ export abstract class Menu extends LitElement {
    * The role of the underlying list element.
    */
   @ariaProperty
-  @property({type: String, attribute: 'data-role', noAccessor: true})
+  @property({attribute: 'data-role', noAccessor: true})
   override role: ARIARole = 'list';
   /**
    * The max time between the keystrokes of the typeahead menu behavior before
@@ -144,14 +144,12 @@ export abstract class Menu extends LitElement {
    * The corner of the anchor which to align the menu in the standard logical
    * property style of <block>_<inline>.
    */
-  @property({type: String, attribute: 'anchor-corner'})
-  anchorCorner: Corner = 'END_START';
+  @property({attribute: 'anchor-corner'}) anchorCorner: Corner = 'END_START';
   /**
    * The corner of the menu which to align the anchor in the standard logical
    * property style of <block>_<inline>.
    */
-  @property({type: String, attribute: 'menu-corner'})
-  menuCorner: Corner = 'START_START';
+  @property({attribute: 'menu-corner'}) menuCorner: Corner = 'START_START';
   /**
    * Keeps the user clicks outside the menu.
    *
@@ -177,7 +175,7 @@ export abstract class Menu extends LitElement {
   /**
    * The element that should be focused by default once opened.
    */
-  @property({type: String, attribute: 'default-focus'})
+  @property({attribute: 'default-focus'})
   defaultFocus: DefaultFocusState = 'LIST_ROOT';
 
   @state() protected typeaheadActive = true;

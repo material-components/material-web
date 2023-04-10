@@ -86,7 +86,7 @@ export class Slider extends LitElement {
   static formAssociated = true;
 
   @ariaProperty  // tslint:disable-line:no-new-decorators
-  @property({type: String, attribute: 'data-aria-label', noAccessor: true})
+  @property({attribute: 'data-aria-label', noAccessor: true})
   override ariaLabel!: string;
 
   /**
@@ -115,7 +115,7 @@ export class Slider extends LitElement {
    * value itself. This can be a string or string tuple when start and end
    * values are used.
    */
-  @property({type: String, converter: tupleConverter})
+  @property({converter: tupleConverter})
   valueLabel?: string|[string, string]|undefined;
 
   /**
@@ -136,8 +136,7 @@ export class Slider extends LitElement {
   /**
    * The HTML name to use in form submission.
    */
-  @property({type: String, reflect: true, converter: stringConverter})
-  name = '';
+  @property({reflect: true, converter: stringConverter}) name = '';
 
   /**
    * The associated form element with which this element's value will submit.

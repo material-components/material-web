@@ -57,15 +57,15 @@ export abstract class TextField extends LitElement {
    * Calling `reportValidity()` will automatically update `errorText` to the
    * native `validationMessage`.
    */
-  @property({type: String}) errorText = '';
-  @property({type: String}) label?: string;
+  @property() errorText = '';
+  @property() label?: string;
   @property({type: Boolean, reflect: true}) required = false;
   /**
    * The current value of the text field. It is always a string.
    *
    * This is equal to `defaultValue` before user input.
    */
-  @property({type: String}) value = '';
+  @property() value = '';
   /**
    * The default value of the text field. Before user input, changing the
    * default value will update `value` as well.
@@ -73,15 +73,15 @@ export abstract class TextField extends LitElement {
    * When the text field is reset, its `value` will be set to this default
    * value.
    */
-  @property({type: String}) defaultValue = '';
+  @property() defaultValue = '';
   /**
    * An optional prefix to display before the input value.
    */
-  @property({type: String}) prefixText = '';
+  @property() prefixText = '';
   /**
    * An optional suffix to display after the input value.
    */
-  @property({type: String}) suffixText = '';
+  @property() suffixText = '';
   /**
    * Whether or not the text field has a leading icon. Used for SSR.
    */
@@ -94,40 +94,38 @@ export abstract class TextField extends LitElement {
    * Conveys additional information below the text field, such as how it should
    * be used.
    */
-  @property({type: String}) supportingText = '';
+  @property() supportingText = '';
   /**
    * Override the input text CSS `direction`. Useful for RTL languages that use
    * LTR notation for fractions.
    */
-  @property({type: String}) textDirection = '';
+  @property() textDirection = '';
 
   // ARIA
-  @property(
-      {type: String, attribute: 'data-aria-autocomplete', noAccessor: true})
+  @property({attribute: 'data-aria-autocomplete', noAccessor: true})
   @ariaProperty  // tslint:disable-line:no-new-decorators
   override ariaAutoComplete: ARIAAutoComplete|null = null;
 
-  @property({type: String, attribute: 'data-aria-controls', noAccessor: true})
+  @property({attribute: 'data-aria-controls', noAccessor: true})
   @ariaProperty  // tslint:disable-line:no-new-decorators
   ariaControls: string|null = null;
 
-  @property(
-      {type: String, attribute: 'data-aria-activedescendant', noAccessor: true})
+  @property({attribute: 'data-aria-activedescendant', noAccessor: true})
   @ariaProperty  // tslint:disable-line:no-new-decorators
   ariaActiveDescendant: string|null = null;
 
-  @property({type: String, attribute: 'data-aria-expanded', noAccessor: true})
+  @property({attribute: 'data-aria-expanded', noAccessor: true})
   @ariaProperty  // tslint:disable-line:no-new-decorators
   override ariaExpanded: ARIAExpanded|null = null;
 
   /**
    * The `aria-label` of the text field's input.
    */
-  @property({type: String, attribute: 'data-aria-label', noAccessor: true})
+  @property({attribute: 'data-aria-label', noAccessor: true})
   @ariaProperty  // tslint:disable-line:no-new-decorators
   override ariaLabel!: string;
 
-  @property({type: String, attribute: 'data-role', noAccessor: true})
+  @property({attribute: 'data-role', noAccessor: true})
   @ariaProperty  // tslint:disable-line:no-new-decorators
   override role: ARIARole|null = null;
 
@@ -136,8 +134,7 @@ export abstract class TextField extends LitElement {
     return this.closest('form');
   }
 
-  @property({type: String, reflect: true, converter: stringConverter})
-  name = '';
+  @property({reflect: true, converter: stringConverter}) name = '';
 
   [getFormValue]() {
     return this.value;
@@ -149,7 +146,7 @@ export abstract class TextField extends LitElement {
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max
    */
-  @property({type: String}) max = '';
+  @property() max = '';
   /**
    * The maximum number of characters a user can enter into the text field. Set
    * to -1 for none.
@@ -162,7 +159,7 @@ export abstract class TextField extends LitElement {
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min
    */
-  @property({type: String}) min = '';
+  @property() min = '';
   /**
    * The minimum number of characters a user can enter into the text field. Set
    * to -1 for none.
@@ -176,9 +173,8 @@ export abstract class TextField extends LitElement {
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#pattern
    */
-  @property({type: String}) pattern = '';
-  @property({type: String, reflect: true, converter: stringConverter})
-  placeholder = '';
+  @property() pattern = '';
+  @property({reflect: true, converter: stringConverter}) placeholder = '';
 
   /**
    * Indicates whether or not a user should be able to edit the text field's
@@ -224,9 +220,9 @@ export abstract class TextField extends LitElement {
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
    */
-  @property({type: String}) step = '';
+  @property() step = '';
 
-  @property({type: String, reflect: true})
+  @property({reflect: true})
   type: TextFieldType|UnsupportedTextFieldType = 'text';
 
   /**

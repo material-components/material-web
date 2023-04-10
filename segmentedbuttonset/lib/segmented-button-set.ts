@@ -23,7 +23,7 @@ export class SegmentedButtonSet extends LitElement {
 
   /** @soyPrefixAttribute */
   @ariaProperty  // tslint:disable-line:no-new-decorators
-  @property({type: String, attribute: 'aria-label'})
+  @property({attribute: 'aria-label'})
   override ariaLabel!: string;
 
   @queryAssignedElements({flatten: true}) buttons!: SegmentedButton[];

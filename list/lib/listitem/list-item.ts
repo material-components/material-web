@@ -35,14 +35,14 @@ export type ListItem = ListItemSelf&HTMLElement;
 export class ListItemEl extends LitElement implements ListItem {
   @ariaProperty
   // tslint:disable-next-line
-  @property({type: String, attribute: 'data-role', noAccessor: true})
+  @property({attribute: 'data-role', noAccessor: true})
   // @ts-ignore(b/264292293): Use `override` with TS 4.9+
   role: ARIARole = 'listitem';
   @ariaProperty
-  @property({type: String, attribute: 'data-aria-selected', noAccessor: true})
+  @property({attribute: 'data-aria-selected', noAccessor: true})
   override ariaSelected!: 'true'|'false';
   @ariaProperty
-  @property({type: String, attribute: 'data-aria-checked', noAccessor: true})
+  @property({attribute: 'data-aria-checked', noAccessor: true})
   override ariaChecked!: 'true'|'false';
 
   /**

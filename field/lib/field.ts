@@ -18,7 +18,7 @@ export class Field extends LitElement implements SurfacePositionTarget {
   @property({type: Boolean}) disabled = false;
   @property({type: Boolean}) error = false;
   @property({type: Boolean}) focused = false;
-  @property({type: String}) label?: string;
+  @property() label?: string;
   @property({type: Boolean}) populated = false;
   @property({type: Boolean}) resizable = false;
   @property({type: Boolean}) required = false;

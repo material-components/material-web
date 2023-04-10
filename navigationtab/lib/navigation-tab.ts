@@ -24,15 +24,15 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
   disabled = false;
   @property({type: Boolean, reflect: true}) active = false;
   @property({type: Boolean}) hideInactiveLabel = false;
-  @property({type: String}) label?: string;
-  @property({type: String}) badgeValue = '';
+  @property() label?: string;
+  @property() badgeValue = '';
   @property({type: Boolean}) showBadge = false;
 
   @state() protected showFocusRing = false;
 
   // TODO(b/210730484): replace with @soyParam annotation
   @ariaProperty  // tslint:disable-line:no-new-decorators
-  @property({type: String, attribute: 'data-aria-label', noAccessor: true})
+  @property({attribute: 'data-aria-label', noAccessor: true})
   override ariaLabel!: string;
 
   @query('button') buttonElement!: HTMLElement;

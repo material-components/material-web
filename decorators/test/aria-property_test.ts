@@ -19,7 +19,7 @@ describe('@ariaProperty', () => {
   @customElement('my-element')
   class MyElement extends LitElement {
     // TODO(b/210730484): replace with @soyParam annotation
-    @property({type: String, attribute: 'data-aria-label', noAccessor: true})
+    @property({attribute: 'data-aria-label', noAccessor: true})
     @ariaProperty  // tslint:disable-line:no-new-decorators
     override ariaLabel!: string;
 

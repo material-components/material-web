@@ -28,7 +28,7 @@ export interface TestTableTemplate<S extends string = string> {
 export class TestTable<S extends string = string> extends LitElement {
   static override shadowRootOptions: ShadowRootInit = {mode: 'open'};
 
-  @property({type: String}) override title = 'Title';
+  @property() override title = 'Title';
   @property({type: Array}) states: S[] = [];
   @property({type: Array}) templates: Array<TestTableTemplate<S>> = [];
   @property({type: Boolean}) dark = false;

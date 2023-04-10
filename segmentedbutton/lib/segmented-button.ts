@@ -26,13 +26,13 @@ import {MdRipple} from '../../ripple/ripple.js';
 export class SegmentedButton extends ActionElement {
   @property({type: Boolean}) disabled = false;
   @property({type: Boolean}) selected = false;
-  @property({type: String}) label = '';
+  @property() label = '';
   @property({type: Boolean}) noCheckmark = false;
   @property({type: Boolean}) hasIcon = false;
 
   /** @soyPrefixAttribute */
   @ariaProperty  // tslint:disable-line:no-new-decorators
-  @property({type: String, attribute: 'aria-label'})
+  @property({attribute: 'aria-label'})
   override ariaLabel!: string;
 
   @state() protected animState: string = '';

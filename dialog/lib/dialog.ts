@@ -87,8 +87,7 @@ export class Dialog extends LitElement {
    * By default, the dialog is shown fullscreen on screens less than 600px wide
    * or 400px tall.
    */
-  @property({type: String})
-  fullscreenBreakpoint = '(max-width: 600px), (max-height: 400px)';
+  @property() fullscreenBreakpoint = '(max-width: 600px), (max-height: 400px)';
 
   /**
    * Hides the dialog footer, making any content slotted into the footer
@@ -150,14 +149,14 @@ export class Dialog extends LitElement {
    * The `closing` and `closed` events this produces have an `action` property
    * which is the value of this property and defaults to `close`.
    */
-  @property({type: String}) scrimClickAction = CLOSE_ACTION;
+  @property() scrimClickAction = CLOSE_ACTION;
 
   /**
    * Pressing the `escape` key while the dialog is open closes the dialog.
    * The `closing` and `closed` events this produces have an `action` property
    * which is the value of this property and defaults to `close`.
    */
-  @property({type: String}) escapeKeyAction = CLOSE_ACTION;
+  @property() escapeKeyAction = CLOSE_ACTION;
 
   /**
    * When opened, the dialog is displayed modeless or non-modal. This

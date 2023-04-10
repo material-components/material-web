@@ -24,9 +24,9 @@ import {MdRipple} from '../../ripple/ripple.js';
 export class Chip extends LitElement {
   @property({type: Boolean}) disabled = false;
   @property({type: Boolean}) elevated = false;
-  @property({type: String}) href = '';
-  @property({type: String}) label = '';
-  @property({type: String}) target = '';
+  @property() href = '';
+  @property() label = '';
+  @property() target = '';
 
   @state() private showFocusRing = false;
   @state() private showRipple = false;

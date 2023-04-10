@@ -32,15 +32,15 @@ export abstract class Button extends LitElement implements ButtonState {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
-  @property({type: String, attribute: 'data-aria-expanded', noAccessor: true})
+  @property({attribute: 'data-aria-expanded', noAccessor: true})
   @ariaProperty
   override ariaExpanded!: ARIAExpanded;
 
-  @property({type: String, attribute: 'data-aria-has-popup', noAccessor: true})
+  @property({attribute: 'data-aria-has-popup', noAccessor: true})
   @ariaProperty
   override ariaHasPopup!: ARIAHasPopup;
 
-  @property({type: String, attribute: 'data-aria-label', noAccessor: true})
+  @property({attribute: 'data-aria-label', noAccessor: true})
   @ariaProperty
   override ariaLabel!: string;
 
@@ -52,13 +52,13 @@ export abstract class Button extends LitElement implements ButtonState {
   /**
    * The URL that the link button points to.
    */
-  @property({type: String}) href?: string;
+  @property() href?: string;
 
   /**
    * Where to display the linked `href` URL for a link button. Common options
    * include `_blank` to open in a new tab.
    */
-  @property({type: String}) target?: string;
+  @property() target?: string;
 
   /**
    * Whether to render the icon at the inline end of the label rather than the
@@ -74,7 +74,7 @@ export abstract class Button extends LitElement implements ButtonState {
    *
    * @deprecated Set text as content of the button instead.
    */
-  @property({type: String}) label = '';
+  @property() label = '';
 
   /**
    * Whether to display the icon or not.

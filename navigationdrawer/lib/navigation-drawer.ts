@@ -18,28 +18,27 @@ export class NavigationDrawer extends LitElement {
   /* aria properties */
   // tslint:disable-next-line:no-new-decorators
   @ariaProperty
-  @property(
-      {type: String, attribute: 'data-aria-describedby', noAccessor: true})
+  @property({attribute: 'data-aria-describedby', noAccessor: true})
   ariaDescribedBy: string|undefined;
 
   // tslint:disable-next-line:no-new-decorators
   @ariaProperty
-  @property({type: String, attribute: 'data-aria-label', noAccessor: true})
+  @property({attribute: 'data-aria-label', noAccessor: true})
   override ariaLabel!: string;
 
   // tslint:disable-next-line:no-new-decorators
   @ariaProperty
-  @property({attribute: 'data-aria-modal', type: String, noAccessor: true})
+  @property({attribute: 'data-aria-modal', noAccessor: true})
   override ariaModal: 'true'|'false' = 'false';
 
   // tslint:disable-next-line:no-new-decorators
   @ariaProperty
-  @property({type: String, attribute: 'data-aria-labelledby', noAccessor: true})
+  @property({attribute: 'data-aria-labelledby', noAccessor: true})
   ariaLabelledBy: string|undefined;
 
   @property({type: Boolean})  // tslint:disable-next-line:no-new-decorators
   opened = false;
-  @property({type: String}) pivot: 'start'|'end' = 'end';
+  @property() pivot: 'start'|'end' = 'end';
 
   /** @soyTemplate */
   override render(): TemplateResult {

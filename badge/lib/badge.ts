@@ -10,7 +10,7 @@ import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
 /** @soyCompatible */
 export class Badge extends LitElement {
-  @property({type: String}) value = '';
+  @property() value = '';
 
   /** @soyTemplate */
   protected override render(): TemplateResult {

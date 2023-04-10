@@ -62,12 +62,12 @@ export class Radio extends LitElement {
   /**
    * The element value to use in form submission when checked.
    */
-  @property({type: String}) value = 'on';
+  @property() value = 'on';
 
   /**
    * The HTML name to use in form submission.
    */
-  @property({type: String, reflect: true}) name = '';
+  @property({reflect: true}) name = '';
 
   @ariaProperty  // tslint:disable-line:no-new-decorators
   @property({attribute: 'data-aria-label', noAccessor: true})

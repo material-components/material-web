@@ -32,7 +32,7 @@ export class CircularProgress extends LitElement {
    */
   @property({type: Boolean, attribute: 'four-color'}) fourColor = false;
 
-  @property({type: String, attribute: 'data-aria-label', noAccessor: true})
+  @property({attribute: 'data-aria-label', noAccessor: true})
   // tslint:disable-next-line:no-new-decorators
   @ariaProperty
   override ariaLabel!: string;
