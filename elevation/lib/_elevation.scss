@@ -29,8 +29,6 @@
 
     display: flex;
     pointer-events: none;
-    transition-duration: var(--_duration);
-    transition-timing-function: var(--_easing);
   }
 
   :host,
@@ -40,17 +38,17 @@
     border-radius: inherit;
     inset: 0;
     position: absolute;
+    transition-duration: inherit;
+    transition-timing-function: inherit;
   }
 
   .shadow::before,
   .shadow::after {
     content: '';
-    transition-duration: inherit;
     transition-property: box-shadow, opacity;
-    transition-timing-function: inherit;
   }
 
-  // Key box shadows
+  // Key box shadow
   .shadow::before {
     // level0: box-shadow: 0px 0px 0px 0px;
     // level1: box-shadow: 0px 1px 2px 0px;
@@ -96,7 +94,7 @@
     opacity: 0.3;
   }
 
-  // Ambient box shadows
+  // Ambient box shadow
   .shadow::after {
     // level0: box-shadow: 0px 0px 0px 0px;
     // level1: box-shadow: 0px 1px 3px 1px;
@@ -161,7 +159,7 @@
     // Convert to px.
     $spread: calc(1px * ($level1to4-spread + $level5-spread));
 
-    opacity: 0.15;
     box-shadow: 0px $y $blur $spread var(--_shadow-color);
+    opacity: 0.15;
   }
 }

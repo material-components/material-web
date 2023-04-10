@@ -3,8 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// PUBLIC PROPERTIES
-
 // go/keep-sorted start
 @use 'sass:map';
 // go/keep-sorted end
@@ -16,19 +14,22 @@
 @use '../../sass/shape';
 @use '../../sass/theme';
 @use '../../sass/var';
-@use './tokens';
+@use '../../tokens';
+@use './tokens' as slider-tokens;
 // go/keep-sorted end
 
+$_md-sys-motion: tokens.md-sys-motion-values();
+
 @mixin theme($tokens) {
-  $tokens: tokens.remove-unsupported-tokens($tokens);
-  $tokens: theme.validate-theme(tokens.md-comp-slider-values(), $tokens);
+  $tokens: slider-tokens.remove-unsupported-tokens($tokens);
+  $tokens: theme.validate-theme(slider-tokens.md-comp-slider-values(), $tokens);
   $tokens: theme.create-theme-vars($tokens, 'slider');
 
   @include theme.emit-theme-vars($tokens);
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-slider-values();
+  $tokens: slider-tokens.md-comp-slider-values();
   $tokens: theme.create-theme-vars($tokens, 'slider');
 
   :host {
@@ -43,12 +44,16 @@
 
     @include elevation.theme(
       (
-        // TODO: replace duration with animation tokens
-        duration: 280ms,
         level: var(--_handle-elevation),
-        shadow-color: var(--_handle-shadow-color)
+        shadow-color: var(--_handle-shadow-color),
       )
     );
+  }
+
+  md-elevation {
+    // TODO: replace duration with animation tokens
+    transition-duration: 280ms;
+    transition-timing-function: map.get($_md-sys-motion, 'emphasized-easing');
   }
 
   @media (prefers-reduced-motion) {
@@ -470,7 +475,7 @@
     @include focus-ring.theme(
       (
         offset: -2px,
-        shape: map.get(tokens.md-sys-shape-values(), corner-full),
+        shape: map.get(slider-tokens.md-sys-shape-values(), corner-full),
       )
     );
   }

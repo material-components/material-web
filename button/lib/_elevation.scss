@@ -7,17 +7,27 @@
 // Selector '.md3-*' should only be used in this project.
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../elevation/elevation';
+@use '../../tokens';
 // go/keep-sorted end
 
+$_md-sys-motion: tokens.md-sys-motion-values();
+
 @mixin styles() {
+  md-elevation {
+    // TODO: replace duration with animation tokens
+    transition-duration: 280ms;
+    transition-timing-function: map.get($_md-sys-motion, 'emphasized-easing');
+  }
+
   .md3-button {
     @include elevation.theme(
       (
-        // TODO: replace duration with animation tokens
-        'duration': 280ms,
         'level': var(--_container-elevation),
-        'shadow-color': var(--_container-shadow-color)
+        'shadow-color': var(--_container-shadow-color),
       )
     );
 

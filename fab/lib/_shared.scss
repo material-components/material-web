@@ -17,7 +17,10 @@
 @use '../../sass/shape';
 @use '../../sass/theme';
 @use '../../sass/touch-target';
+@use '../../tokens';
 // go/keep-sorted end
+
+$_md-sys-motion: tokens.md-sys-motion-values();
 
 @mixin styles() {
   :host {
@@ -65,10 +68,8 @@
 
     @include elevation.theme(
       (
-        // TODO: replace duration with animation tokens
-        'duration': 280ms,
         'level': var(--_container-elevation),
-        'shadow-color': var(--_container-shadow-color)
+        'shadow-color': var(--_container-shadow-color),
       )
     );
 
@@ -136,6 +137,9 @@
   }
 
   md-elevation {
+    // TODO: replace duration with animation tokens
+    transition-duration: 280ms;
+    transition-timing-function: map.get($_md-sys-motion, 'emphasized-easing');
     z-index: -1; // Place behind content
   }
 
