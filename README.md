@@ -44,8 +44,8 @@ Elevation                     | ✅     | ❌    | ❌
 Focus ring                    | ✅     | ❌    | ❌
 Field                         | ✅     | ✅    | 🟡
 Icon                          | ✅     | ✅    | ❌
-List                          | ✅     | 🟡    | 🟡
-Menu                          | ✅     | 🟡    | 🟡
+List                          | ✅     | ✅    | ❌
+Menu                          | ✅     | ✅    | ❌
 Progress indicator (circular) | ✅     | ✅    | ❌
 Progress indicator (linear)   | 🟡     | ❌    | ❌
 Radio button                  | ✅     | ✅    | ❌
