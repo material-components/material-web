@@ -4,13 +4,127 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../sass/shape';
 @use './md-sys-color';
 @use './md-sys-elevation';
 @use './md-sys-shape';
 @use './md-sys-state';
 @use './md-sys-typescale';
 @use './v0_172/md-comp-filled-select';
+@use './values';
 // go/keep-sorted end
+
+$supported-tokens: (
+  // go/keep-sorted start
+  'text-field-active-indicator-color',
+  'text-field-active-indicator-height',
+  'text-field-container-color',
+  'text-field-container-shape',
+  'text-field-disabled-active-indicator-color',
+  'text-field-disabled-active-indicator-height',
+  'text-field-disabled-active-indicator-opacity',
+  'text-field-disabled-container-color',
+  'text-field-disabled-container-opacity',
+  'text-field-disabled-input-text-color',
+  'text-field-disabled-input-text-opacity',
+  'text-field-disabled-label-text-color',
+  'text-field-disabled-label-text-opacity',
+  'text-field-disabled-leading-icon-color',
+  'text-field-disabled-leading-icon-opacity',
+  'text-field-disabled-supporting-text-color',
+  'text-field-disabled-supporting-text-opacity',
+  'text-field-disabled-trailing-icon-color',
+  'text-field-disabled-trailing-icon-opacity',
+  'text-field-error-active-indicator-color',
+  'text-field-error-focus-active-indicator-color',
+  'text-field-error-focus-input-text-color',
+  'text-field-error-focus-label-text-color',
+  'text-field-error-focus-leading-icon-color',
+  'text-field-error-focus-supporting-text-color',
+  'text-field-error-focus-trailing-icon-color',
+  'text-field-error-hover-active-indicator-color',
+  'text-field-error-hover-input-text-color',
+  'text-field-error-hover-label-text-color',
+  'text-field-error-hover-leading-icon-color',
+  'text-field-error-hover-state-layer-color',
+  'text-field-error-hover-state-layer-opacity',
+  'text-field-error-hover-supporting-text-color',
+  'text-field-error-hover-trailing-icon-color',
+  'text-field-error-input-text-color',
+  'text-field-error-label-text-color',
+  'text-field-error-leading-icon-color',
+  'text-field-error-supporting-text-color',
+  'text-field-error-trailing-icon-color',
+  'text-field-focus-active-indicator-color',
+  'text-field-focus-active-indicator-height',
+  'text-field-focus-input-text-color',
+  'text-field-focus-label-text-color',
+  'text-field-focus-leading-icon-color',
+  'text-field-focus-supporting-text-color',
+  'text-field-focus-trailing-icon-color',
+  'text-field-hover-active-indicator-color',
+  'text-field-hover-active-indicator-height',
+  'text-field-hover-input-text-color',
+  'text-field-hover-label-text-color',
+  'text-field-hover-leading-icon-color',
+  'text-field-hover-state-layer-color',
+  'text-field-hover-state-layer-opacity',
+  'text-field-hover-supporting-text-color',
+  'text-field-hover-trailing-icon-color',
+  'text-field-input-text-color',
+  'text-field-label-text-color',
+  'text-field-label-text-populated-size',
+  'text-field-leading-icon-color',
+  'text-field-leading-icon-size',
+  'text-field-supporting-text-color',
+  'text-field-trailing-icon-color',
+  'text-field-trailing-icon-size',
+  // go/keep-sorted end
+);
+
+$unsupported-tokens: (
+  // go/keep-sorted start
+  'menu-cascading-menu-indicator-icon-color',
+  'menu-cascading-menu-indicator-icon-size',
+  'menu-container-color',
+  'menu-container-elevation',
+  'menu-container-shadow-color',
+  'menu-container-shape',
+  'menu-divider-color',
+  'menu-divider-height',
+  'menu-list-item-container-height',
+  'menu-list-item-label-text-color',
+  'menu-list-item-label-text-font',
+  'menu-list-item-label-text-line-height',
+  'menu-list-item-label-text-size',
+  'menu-list-item-label-text-tracking',
+  'menu-list-item-label-text-type',
+  'menu-list-item-label-text-weight',
+  'menu-list-item-selected-container-color',
+  'menu-list-item-with-leading-icon-leading-icon-color',
+  'menu-list-item-with-leading-icon-leading-icon-size',
+  'menu-list-item-with-trailing-icon-trailing-icon-color',
+  'menu-list-item-with-trailing-icon-trailing-icon-size',
+  'text-field-input-text-font',
+  'text-field-input-text-line-height',
+  'text-field-input-text-size',
+  'text-field-input-text-tracking',
+  'text-field-input-text-weight',
+  'text-field-label-text-font',
+  'text-field-label-text-line-height',
+  'text-field-label-text-size',
+  'text-field-label-text-tracking',
+  'text-field-label-text-weight',
+  'text-field-supporting-text-font',
+  'text-field-supporting-text-line-height',
+  'text-field-supporting-text-size',
+  'text-field-supporting-text-tracking',
+  'text-field-supporting-text-weight',
+  // go/keep-sorted end
+);
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -21,5 +135,40 @@ $_default: (
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  @return md-comp-filled-select.values($deps, $exclude-hardcoded-values);
+  $tokens: values.validate(
+    md-comp-filled-select.values($deps, $exclude-hardcoded-values),
+    $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens
+  );
+
+  @each $token, $value in $tokens {
+    $tokens: map.set(
+      $tokens,
+      $token,
+      var(--md-filled-select-#{$token}, #{$value})
+    );
+  }
+
+  $tokens: shape.resolve-tokens($tokens, 'text-field-container-shape');
+  @return $tokens;
+}
+
+// TODO(b/276957188): Remove this when we resolve issues with values fn.
+@function theme-values($deps: $_default, $exclude-hardcoded-values: false) {
+  $tokens: values.validate(
+    md-comp-filled-select.values($deps, $exclude-hardcoded-values),
+    $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens
+  );
+
+  @each $token, $value in $tokens {
+    @if $value {
+      $tokens: map.set($tokens, $token, #{$value});
+    } @else {
+      $tokens: map.remove($tokens, $token);
+    }
+  }
+
+  $tokens: shape.resolve-tokens($tokens, 'text-field-container-shape');
+  @return $tokens;
 }

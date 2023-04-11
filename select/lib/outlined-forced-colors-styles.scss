@@ -1,0 +1,29 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use './outlined-select';
+// go/keep-sorted end
+
+@media (forced-colors: active) {
+  :host {
+    @include outlined-select.theme(
+      (
+        text-field-disabled-input-text-color: GrayText,
+        text-field-disabled-input-text-opacity: 1,
+        text-field-disabled-label-text-color: GrayText,
+        text-field-disabled-label-text-opacity: 1,
+        text-field-disabled-leading-icon-color: GrayText,
+        text-field-disabled-leading-icon-opacity: 1,
+        text-field-disabled-outline-color: GrayText,
+        text-field-disabled-outline-opacity: 1,
+        text-field-disabled-supporting-text-color: GrayText,
+        text-field-disabled-supporting-text-opacity: 1,
+        text-field-disabled-trailing-icon-color: GrayText,
+        text-field-disabled-trailing-icon-opacity: 1,
+      )
+    );
+  }
+}

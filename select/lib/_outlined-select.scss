@@ -1,0 +1,146 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:string';
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../../field/outlined-field';
+@use '../../sass/shape';
+@use '../../sass/theme';
+@use '../../tokens';
+// go/keep-sorted end
+
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme(
+    tokens.md-comp-outlined-select-values(),
+    $tokens
+  );
+
+  @each $token, $value in $tokens {
+    --md-outlined-select-#{$token}: #{$value};
+  }
+}
+
+@mixin styles() {
+  $tokens: tokens.md-comp-outlined-select-values();
+
+  :host {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+
+    @include outlined-field.theme(
+      (
+        // go/keep-sorted start
+        'container-shape': var(--_text-field-container-shape),
+        'content-color': var(--_text-field-input-text-color),
+        'content-type': var(--_text-field-input-text-type),
+        'disabled-content-color': var(--_text-field-disabled-input-text-color),
+        'disabled-content-opacity':
+          var(--_text-field-disabled-input-text-opacity),
+        'disabled-label-text-color':
+          var(--_text-field-disabled-label-text-color),
+        'disabled-label-text-opacity':
+          var(--_text-field-disabled-label-text-opacity),
+        'disabled-leading-content-color':
+          var(--_text-field-disabled-leading-icon-color),
+        'disabled-leading-content-opacity':
+          var(--_text-field-disabled-leading-icon-opacity),
+        'disabled-outline-color': var(--_text-field-disabled-outline-color),
+        'disabled-outline-opacity': var(--_text-field-disabled-outline-opacity),
+        'disabled-outline-width': var(--_text-field-disabled-outline-width),
+        'disabled-supporting-text-color':
+          var(--_text-field-disabled-supporting-text-color),
+        'disabled-supporting-text-opacity':
+          var(--_text-field-disabled-supporting-text-opacity),
+        'disabled-trailing-content-color':
+          var(--_text-field-disabled-trailing-icon-color),
+        'disabled-trailing-content-opacity':
+          var(--_text-field-disabled-trailing-icon-opacity),
+        'error-content-color': var(--_text-field-error-input-text-color),
+        'error-focus-content-color':
+          var(--_text-field-error-focus-input-text-color),
+        'error-focus-label-text-color':
+          var(--_text-field-error-focus-label-text-color),
+        'error-focus-leading-content-color':
+          var(--_text-field-error-focus-leading-icon-color),
+        'error-focus-outline-color':
+          var(--_text-field-error-focus-outline-color),
+        'error-focus-supporting-text-color':
+          var(--_text-field-error-focus-supporting-text-color),
+        'error-focus-trailing-content-color':
+          var(--_text-field-error-focus-trailing-icon-color),
+        'error-hover-content-color':
+          var(--_text-field-error-hover-input-text-color),
+        'error-hover-label-text-color':
+          var(--_text-field-error-hover-label-text-color),
+        'error-hover-leading-content-color':
+          var(--_text-field-error-hover-leading-icon-color),
+        'error-hover-outline-color':
+          var(--_text-field-error-hover-outline-color),
+        'error-hover-supporting-text-color':
+          var(--_text-field-error-hover-supporting-text-color),
+        'error-hover-trailing-content-color':
+          var(--_text-field-error-hover-trailing-icon-color),
+        'error-label-text-color': var(--_text-field-error-label-text-color),
+        'error-leading-content-color':
+          var(--_text-field-error-leading-icon-color),
+        'error-outline-color': var(--_text-field-error-outline-color),
+        'error-supporting-text-color':
+          var(--_text-field-error-supporting-text-color),
+        'error-trailing-content-color':
+          var(--_text-field-error-trailing-icon-color),
+        'focus-content-color': var(--_text-field-focus-input-text-color),
+        'focus-label-text-color': var(--_text-field-focus-label-text-color),
+        'focus-leading-content-color':
+          var(--_text-field-focus-leading-icon-color),
+        'focus-outline-color': var(--_text-field-focus-outline-color),
+        'focus-outline-width': var(--_text-field-focus-outline-width),
+        'focus-supporting-text-color':
+          var(--_text-field-focus-supporting-text-color),
+        'focus-trailing-content-color':
+          var(--_text-field-focus-trailing-icon-color),
+        'hover-content-color': var(--_text-field-hover-input-text-color),
+        'hover-label-text-color': var(--_text-field-hover-label-text-color),
+        'hover-leading-content-color':
+          var(--_text-field-hover-leading-icon-color),
+        'hover-outline-color': var(--_text-field-hover-outline-color),
+        'hover-outline-width': var(--_text-field-hover-outline-width),
+        'hover-supporting-text-color':
+          var(--_text-field-hover-supporting-text-color),
+        'hover-trailing-content-color':
+          var(--_text-field-hover-trailing-icon-color),
+        'label-text-color': var(--_text-field-label-text-color),
+        'label-text-populated-line-height':
+          var(--_text-field-label-text-populated-line-height),
+        'label-text-populated-size':
+          var(--_text-field-label-text-populated-size),
+        'label-text-type': var(--_text-field-label-text-type),
+        'leading-content-color': var(--_text-field-leading-icon-color),
+        'outline-color': var(--_text-field-outline-color),
+        'outline-width': var(--_text-field-outline-width),
+        'supporting-text-color': var(--_text-field-supporting-text-color),
+        'supporting-text-type': var(--_text-field-supporting-text-type),
+        'trailing-content-color': var(--_text-field-trailing-icon-color),
+        // go/keep-sorted end
+      )
+    );
+  }
+
+  [hasstart] .icon.leading {
+    font-size: var(--_text-field-leading-icon-size);
+    height: var(--_text-field-leading-icon-size);
+    width: var(--_text-field-leading-icon-size);
+  }
+
+  [hasend] .icon.trailing {
+    font-size: var(--_text-field-trailing-icon-size);
+    height: var(--_text-field-trailing-icon-size);
+    width: var(--_text-field-trailing-icon-size);
+  }
+}
