@@ -15,10 +15,14 @@ interface MenuItemSelf {
    */
   headline: string;
   /**
-   * Whether or not the item is in the selected visual state (focuses on
-   * selection).
+   * Whether or not the item is the currently active item of interest (focuses
+   * upon activation).
    */
   active: boolean;
+  /**
+   * Whether or not the item is in the selected visual state.
+   */
+  selected?: boolean;
   /**
    * If it is a sub-menu-item, a method that can close the submenu.
    */

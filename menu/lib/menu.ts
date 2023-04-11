@@ -133,7 +133,7 @@ export abstract class Menu extends LitElement {
    */
   @ariaProperty
   @property({attribute: 'data-role', noAccessor: true})
-  override role: ARIARole = 'list';
+  override role: ARIARole = 'menu';
   /**
    * The max time between the keystrokes of the typeahead menu behavior before
    * it clears the typeahead buffer.
@@ -664,6 +664,7 @@ export abstract class Menu extends LitElement {
     const items = this.items;
     for (const item of items) {
       item.active = false;
+      item.selected = false;
     }
   }
 
