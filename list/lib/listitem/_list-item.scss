@@ -17,18 +17,15 @@
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(
-    resolve-tokens(tokens.md-comp-list-values()),
-    resolve-tokens($tokens)
-  );
-  $tokens: theme.create-theme-vars($tokens, 'list');
+  $tokens: theme.validate-theme(tokens.md-comp-list-item-values(), $tokens);
 
-  @include theme.emit-theme-vars($tokens);
+  @each $token, $value in $tokens {
+    --md-list-item-#{$token}: #{$value};
+  }
 }
 
 @mixin styles() {
-  $tokens: resolve-tokens(tokens.md-comp-list-values());
-  $tokens: theme.create-theme-vars($tokens, 'list');
+  $tokens: tokens.md-comp-list-item-values();
 
   :host {
     @each $token, $value in $tokens {
@@ -416,65 +413,4 @@
     );
     height: var(--_list-item-large-leading-video-height);
   }
-}
-
-/// Resolves the tokens that are specific to list-item.
-///
-/// The tokenset for list include list plus all of list item. We do not want to
-/// duplicate tokens and custom properties across md-list and md-list-item.
-/// So here we resolve list-items tokens by selecting only tokens that have
-/// 'list-item' in its name.
-@function resolve-tokens($tokens) {
-  // Values pulled from b/198759625 spreadsheet
-  $list-item-tokens: (
-    'list-item-leading-space': 16px,
-    'list-item-trailing-space': 16px,
-    'list-item-leading-element-leading-space': 16px,
-    'list-item-leading-video-leading-space': 0px,
-    // Commented out until the comments in the spreadsheet linked above are
-    // resolved regarding vertical alignment.
-    // 'list-item-leading-item-top-space': 8px,
-    // 'list-item-leading-video-top-space': 0px,
-    // 'list-item-leading-item-bottom-space': 8px,
-    // 'list-item-leading-video-bottom-space': 0px,
-    'list-item-trailing-element-headline-trailing-element-space': 16px,
-  );
-
-  @each $token, $value in $tokens {
-    $index: string.index($token, 'list-item');
-
-    @if $index {
-      $list-item-tokens: map.set($list-item-tokens, $token, $value);
-    }
-  }
-
-  $list-item-tokens: _remove-unused-tokens($list-item-tokens);
-
-  @return $list-item-tokens;
-}
-
-// removes unused tokens
-@function _remove-unused-tokens($tokens) {
-  $unused-tokens: (
-    'list-item-container-elevation',
-    'list-item-disabled-state-layer-color',
-    'list-item-disabled-state-layer-opacity',
-    'list-item-dragged-container-elevation',
-    'list-item-dragged-label-text-color',
-    'list-item-dragged-leading-icon-icon-color',
-    'list-item-dragged-state-layer-color',
-    'list-item-dragged-state-layer-opacity',
-    'list-item-dragged-trailing-icon-icon-color',
-    'list-item-overline-color',
-    'list-item-overline-type',
-    'list-item-selected-trailing-icon',
-    'list-item-selected-trailing-icon-color',
-    'list-item-unselected-trailing-icon-color'
-  );
-
-  @each $token in $unused-tokens {
-    $tokens: map.remove($tokens, $token);
-  }
-
-  @return $tokens;
 }

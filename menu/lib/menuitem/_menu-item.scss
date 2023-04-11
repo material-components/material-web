@@ -9,30 +9,33 @@
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use '../../../list/list-item';
 @use '../../../ripple/ripple';
 @use '../../../sass/theme';
 @use '../../../tokens';
 // go/keep-sorted end
 
-$_custom-property-prefix: 'menu';
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme(tokens.md-comp-menu-item-values(), $tokens);
 
-@mixin theme($theme) {
-  $theme: theme.validate-theme(tokens.md-comp-menu-values(), $theme);
-  $theme: _resolve-tokens($theme);
-  $theme: theme.create-theme-vars($theme, $_custom-property-prefix);
-
-  @include theme.emit-theme-vars($theme);
+  @each $token, $value in $tokens {
+    --md-menu-item-#{$token}: #{$value};
+  }
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-menu-values();
-  $tokens: _resolve-tokens($tokens);
-  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+  $tokens: tokens.md-comp-menu-item-values();
 
   :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
+
+    @include list-item.theme(
+      (
+        'list-item-container-color': var(--_list-item-container-color),
+      )
+    );
   }
 
   .list-item {
@@ -52,26 +55,4 @@ $_custom-property-prefix: 'menu';
       )
     );
   }
-}
-
-@function _resolve-tokens($tokens) {
-  @return _remove-unused-tokens($tokens);
-}
-
-// removes unused tokens
-@function _remove-unused-tokens($tokens) {
-  $unused-tokens: ();
-  @each $token in map-keys($tokens) {
-    $index: string.index($token, 'list-item');
-
-    @if not $index {
-      $unused-tokens: list.append($unused-tokens, $token);
-    }
-  }
-
-  @each $token in $unused-tokens {
-    $tokens: map.remove($tokens, $token);
-  }
-
-  @return $tokens;
 }

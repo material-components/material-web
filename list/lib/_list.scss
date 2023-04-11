@@ -18,18 +18,15 @@
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $reference: tokens.md-comp-list-values();
-  $reference: resolve-tokens($reference);
-  $tokens: resolve-tokens($tokens);
-  $tokens: theme.validate-theme($reference, $tokens);
-  $tokens: theme.create-theme-vars($tokens, list);
+  $tokens: theme.validate-theme(tokens.md-comp-list-values(), $tokens);
 
-  @include theme.emit-theme-vars($tokens);
+  @each $token, $value in $tokens {
+    --md-list-#{$token}: #{$value};
+  }
 }
 
 @mixin styles() {
-  $tokens: resolve-tokens(tokens.md-comp-list-values());
-  $tokens: theme.create-theme-vars($tokens, list);
+  $tokens: tokens.md-comp-list-values();
 
   :host {
     @each $token, $value in $tokens {
@@ -42,6 +39,7 @@
 
   .md3-list {
     background-color: var(--_container-color);
+    border-radius: inherit;
     display: block;
     list-style-type: none;
     margin: 0;
@@ -52,45 +50,4 @@
     // can be positioned relative to the list root.
     position: relative;
   }
-}
-
-/// Resolves the tokens that are specific to list.
-///
-/// The tokenset for list include list plus all of list item. We do not want to
-/// duplicate tokens and custom properties across md-list and md-list-item.
-/// So here we resolve list-items tokens, and resolve the difference between
-/// the full set of tokens and the ones specific to list-item.
-@function resolve-tokens($tokens) {
-  // Accept container-color token in the theme() mixin.
-  $container-color: map.get($tokens, container-color);
-
-  @if not $container-color {
-    // If not defined, rename the list-item-container-color token. This is
-    // useful for our styles() mixin where we simply feed this function the comp
-    // tokens from the compiler and no `container-color` token.
-    $container-color: map.get($tokens, list-item-container-color);
-    $tokens: map.set($tokens, container-color, $container-color);
-  }
-
-  $list-tokens: remove-unused-tokens($tokens);
-
-  @return $list-tokens;
-}
-
-// removes unused tokens
-@function remove-unused-tokens($tokens) {
-  $unused-tokens: ();
-  @each $token in map-keys($tokens) {
-    $index: string.index($token, 'list-item');
-
-    @if $index {
-      $unused-tokens: list.append($unused-tokens, $token);
-    }
-  }
-
-  @each $token in $unused-tokens {
-    $tokens: map.remove($tokens, $token);
-  }
-
-  @return $tokens;
 }

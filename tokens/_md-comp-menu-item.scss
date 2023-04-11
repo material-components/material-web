@@ -24,28 +24,32 @@ $_default: (
 
 $unsupported-tokens: (
   // go/keep-sorted start
-  'list-item-selected-container-color',
-  // go/keep-sorted end
-);
-
-$supported-tokens: (
-  // go/keep-sorted start
-  'container-color',
   'container-elevation',
   'container-shadow-color',
   'container-shape',
   // go/keep-sorted end
 );
 
+$supported-tokens: (
+  // go/keep-sorted start
+  'list-item-selected-container-color',
+  // go/keep-sorted end
+);
+
+$renamed-tokens: (
+  'container-color': 'list-item-container-color',
+);
+
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   $tokens: values.validate(
     md-comp-menu.values($deps),
     $supported-tokens: $supported-tokens,
-    $unsupported-tokens: $unsupported-tokens
+    $unsupported-tokens: $unsupported-tokens,
+    $renamed-tokens: $renamed-tokens
   );
 
   @each $token, $value in $tokens {
-    $tokens: map.set($tokens, $token, var(--md-menu-#{$token}, #{$value}));
+    $tokens: map.set($tokens, $token, var(--md-menu-item-#{$token}, #{$value}));
   }
 
   @return $tokens;
@@ -56,7 +60,8 @@ $supported-tokens: (
   $tokens: values.validate(
     md-comp-menu.values($deps),
     $supported-tokens: $supported-tokens,
-    $unsupported-tokens: $unsupported-tokens
+    $unsupported-tokens: $unsupported-tokens,
+    $renamed-tokens: $renamed-tokens
   );
 
   @each $token, $value in $tokens {

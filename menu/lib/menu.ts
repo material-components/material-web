@@ -256,8 +256,8 @@ export abstract class Menu extends LitElement {
           class="menu ${classMap(this.getSurfaceClasses())}"
           style=${styleMap(this.menuPositionController.surfaceStyles)}
           @focusout=${this.handleFocusout}>
-        ${this.renderList()}
         ${this.renderElevation()}
+        ${this.renderList()}
         ${this.renderFocusRing()}
        </div>
      `;

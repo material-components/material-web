@@ -1,0 +1,201 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use './md-sys-color';
+@use './md-sys-elevation';
+@use './md-sys-shape';
+@use './md-sys-state';
+@use './md-sys-typescale';
+@use './v0_172/md-comp-list';
+@use './values';
+// go/keep-sorted end
+
+$_default: (
+  'md-sys-color': md-sys-color.values-light(),
+  'md-sys-elevation': md-sys-elevation.values(),
+  'md-sys-shape': md-sys-shape.values(),
+  'md-sys-state': md-sys-state.values(),
+  'md-sys-typescale': md-sys-typescale.values(),
+);
+
+$unsupported-tokens: (
+  // go/keep-sorted start
+  'list-item-container-elevation',
+  'list-item-disabled-state-layer-color',
+  'list-item-disabled-state-layer-opacity',
+  'list-item-dragged-container-elevation',
+  'list-item-dragged-label-text-color',
+  'list-item-dragged-leading-icon-icon-color',
+  'list-item-dragged-state-layer-color',
+  'list-item-dragged-state-layer-opacity',
+  'list-item-dragged-trailing-icon-icon-color',
+  'list-item-label-text-font',
+  'list-item-label-text-size',
+  'list-item-label-text-tracking',
+  'list-item-label-text-weight',
+  'list-item-leading-avatar-label-font',
+  'list-item-leading-avatar-label-line-height',
+  'list-item-leading-avatar-label-size',
+  'list-item-leading-avatar-label-tracking',
+  'list-item-leading-avatar-label-weight',
+  'list-item-overline-color',
+  'list-item-overline-font',
+  'list-item-overline-line-height',
+  'list-item-overline-size',
+  'list-item-overline-tracking',
+  'list-item-overline-type',
+  'list-item-overline-weight',
+  'list-item-selected-trailing-icon-color',
+  'list-item-supporting-text-font',
+  'list-item-supporting-text-line-height',
+  'list-item-supporting-text-size',
+  'list-item-supporting-text-tracking',
+  'list-item-supporting-text-weight',
+  'list-item-trailing-supporting-text-font',
+  'list-item-trailing-supporting-text-size',
+  'list-item-trailing-supporting-text-tracking',
+  'list-item-trailing-supporting-text-weight',
+  'list-item-unselected-trailing-icon-color',
+  // go/keep-sorted end
+);
+
+$supported-tokens: (
+  // go/keep-sorted start
+  'list-item-container-color',
+  'list-item-container-shape',
+  'list-item-disabled-label-text-color',
+  'list-item-disabled-label-text-opacity',
+  'list-item-disabled-leading-icon-color',
+  'list-item-disabled-leading-icon-opacity',
+  'list-item-disabled-trailing-icon-color',
+  'list-item-disabled-trailing-icon-opacity',
+  'list-item-focus-label-text-color',
+  'list-item-focus-leading-icon-icon-color',
+  'list-item-focus-state-layer-color',
+  'list-item-focus-state-layer-opacity',
+  'list-item-focus-trailing-icon-icon-color',
+  'list-item-hover-label-text-color',
+  'list-item-hover-leading-icon-icon-color',
+  'list-item-hover-state-layer-color',
+  'list-item-hover-state-layer-opacity',
+  'list-item-hover-trailing-icon-icon-color',
+  'list-item-label-text-color',
+  'list-item-label-text-line-height',
+  'list-item-label-text-type',
+  'list-item-large-leading-video-height',
+  'list-item-leading-avatar-color',
+  'list-item-leading-avatar-label-color',
+  'list-item-leading-avatar-label-type',
+  'list-item-leading-avatar-shape',
+  'list-item-leading-avatar-size',
+  'list-item-leading-icon-color',
+  'list-item-leading-icon-size',
+  'list-item-leading-image-height',
+  'list-item-leading-image-shape',
+  'list-item-leading-image-width',
+  'list-item-leading-video-shape',
+  'list-item-leading-video-width',
+  'list-item-one-line-container-height',
+  'list-item-pressed-label-text-color',
+  'list-item-pressed-leading-icon-icon-color',
+  'list-item-pressed-state-layer-color',
+  'list-item-pressed-state-layer-opacity',
+  'list-item-pressed-trailing-icon-icon-color',
+  'list-item-small-leading-video-height',
+  'list-item-supporting-text-color',
+  'list-item-supporting-text-type',
+  'list-item-three-line-container-height',
+  'list-item-trailing-icon-color',
+  'list-item-trailing-icon-size',
+  'list-item-trailing-supporting-text-color',
+  'list-item-trailing-supporting-text-line-height',
+  'list-item-trailing-supporting-text-type',
+  'list-item-two-line-container-height',
+  // go/keep-sorted end
+);
+
+@function get-new-tokens($deps, $exclude-hardcoded-values) {
+  // Values pulled from b/198759625 spreadsheet
+  @return (
+    // go/keep-sorted start
+    'list-item-leading-element-leading-space':
+      if($exclude-hardcoded-values, null, 16px),
+    'list-item-leading-space': if($exclude-hardcoded-values, null, 16px),
+    'list-item-leading-video-leading-space':
+      if($exclude-hardcoded-values, null, 0px),
+    // Commented out until the comments in the spreadsheet linked above are
+    // resolved regarding vertical alignment.
+    // 'list-item-leading-item-top-space': if($exclude-hardcoded-values, null, 8px),
+    // 'list-item-leading-video-top-space': if($exclude-hardcoded-values, null, 0px),
+    // 'list-item-leading-item-bottom-space': if($exclude-hardcoded-values, null, 8px),
+    // 'list-item-leading-video-bottom-space': if($exclude-hardcoded-values, null, 0px),
+    'list-item-trailing-element-headline-trailing-element-space': 16px,
+    'list-item-trailing-space': if($exclude-hardcoded-values, null, 16px),
+    // go/keep-sorted end
+  );
+}
+
+@function get-override-tokens($deps) {
+  // TODO(b/271876162): remove when tokens compiler emits typescale tokens
+  @return (
+    // go/keep-sorted start
+    'list-item-label-text-type':
+      map.get($deps, 'md-sys-typescale', 'body-large'),
+    'list-item-leading-avatar-label-type':
+      map.get($deps, 'md-sys-typescale', 'title-medium'),
+    // unsupported token
+    // 'list-item-overline-type': map.get($deps, 'md-sys-typescale', 'label-small'),
+    'list-item-supporting-text-type':
+      map.get($deps, 'md-sys-typescale', 'body-medium'),
+    'list-item-trailing-supporting-text-type':
+      map.get($deps, 'md-sys-typescale', 'label-small'),
+    // go/keep-sorted end
+  );
+}
+
+@function values($deps: $_default, $exclude-hardcoded-values: false) {
+  $original-tokens: md-comp-list.values($deps, $exclude-hardcoded-values);
+  $original-tokens: map.merge($original-tokens, get-override-tokens($deps));
+
+  $tokens: values.validate(
+    $original-tokens,
+    $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: get-new-tokens($deps, $exclude-hardcoded-values)
+  );
+
+  @each $token, $value in $tokens {
+    $tokens: map.set($tokens, $token, var(--md-list-item-#{$token}, #{$value}));
+  }
+
+  @return $tokens;
+}
+
+// TODO(b/276957188): Remove this when we resolve issues with values fn.
+@function theme-values($deps: $_default, $exclude-hardcoded-values: false) {
+  $original-tokens: md-comp-list.values($deps, $exclude-hardcoded-values);
+  $original-tokens: map.merge($original-tokens, get-override-tokens($deps));
+
+  $tokens: values.validate(
+    md-comp-list.values($deps, $exclude-hardcoded-values),
+    $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: get-new-tokens($deps, $exclude-hardcoded-values)
+  );
+
+  @each $token, $value in $tokens {
+    @if $value {
+      $tokens: map.set($tokens, $token, #{$value});
+    } @else {
+      $tokens: map.remove($tokens, $token);
+    }
+  }
+
+  @return $tokens;
+}
