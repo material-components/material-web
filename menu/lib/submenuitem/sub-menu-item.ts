@@ -217,7 +217,6 @@ export class SubMenuItem extends MenuItemEl {
     // around the menu and then mouses over an md-sub-menu.
     this.dispatchEvent(new DeactivateItemsEvent());
     this.dispatchEvent(new DeactivateTypeaheadEvent());
-    this.active = true;
     this.selected = true;
 
     // This is the case of mouse hovering when already opened via keyboard or

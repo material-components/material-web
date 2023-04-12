@@ -105,7 +105,7 @@ export class ListItemEl extends LitElement implements ListItem {
    * so that we have control over focus on specific variants such as disabling
    * focus on <md-autocomplete-item> but enabling it for <md-menu-item>.
    */
-  protected focusOnSelection = true;
+  protected focusOnActivation = true;
 
   protected getRipple = () => {
     this.showRipple = true;
@@ -119,7 +119,7 @@ export class ListItemEl extends LitElement implements ListItem {
       if (this.active) {
         this.itemTabIndex = 0;
 
-        if (this.focusOnSelection) {
+        if (this.focusOnActivation) {
           this.showFocusRing = shouldShowStrongFocus();
         }
 
@@ -274,7 +274,7 @@ export class ListItemEl extends LitElement implements ListItem {
     // will focus the list item root if it is selected but not on the first
     // update or else it may cause the page to jump on first load.
     if (changed.has('active') && !this.isFirstUpdate && this.active &&
-        this.focusOnSelection) {
+        this.focusOnActivation) {
       this.focus();
     }
 

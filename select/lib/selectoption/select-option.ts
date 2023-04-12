@@ -42,7 +42,7 @@ export class SelectOptionEl extends MenuItemEl implements SelectOption {
       // By default active = true focuses the element. We want to prevent that
       // in this case because we set active = this.selected and that may mess
       // around with menu's restore focus function once the menu closes.
-      this.focusOnSelection = false;
+      this.focusOnActivation = false;
     }
 
     super.willUpdate(changed);
@@ -52,7 +52,7 @@ export class SelectOptionEl extends MenuItemEl implements SelectOption {
     super.updated(changed);
     // Restore the active = true focusing behavior which happens in
     // super.updated() if it was turned off.
-    this.focusOnSelection = true;
+    this.focusOnActivation = true;
 
     // Do not dispatch event on first update / boot-up.
     if (changed.has('selected') && changed.get('selected') !== undefined) {
