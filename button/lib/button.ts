@@ -153,7 +153,7 @@ export abstract class Button extends LitElement implements ButtonState {
         ${this.renderLeadingIcon()}
         ${this.renderLabel()}
         ${this.renderTrailingIcon()}
-      </${button}}>`;
+      </${button}>`;
   }
 
   protected getRenderClasses(): ClassInfo {
