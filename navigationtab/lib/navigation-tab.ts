@@ -8,21 +8,22 @@ import '../../badge/badge.js';
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, PropertyValues, TemplateResult} from 'lit';
-import {property, query, state} from 'lit/decorators.js';
+import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
+import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
+import {when} from 'lit/directives/when.js';
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '../../actionelement/action-element.js';
 import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
+import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 
 import {NavigationTabState} from './state.js';
 
 /** @soyCompatible */
-export class NavigationTab extends ActionElement implements NavigationTabState {
-  disabled = false;
+export class NavigationTab extends LitElement implements NavigationTabState {
+  @property({type: Boolean}) disabled = false;
   @property({type: Boolean, reflect: true}) active = false;
   @property({type: Boolean}) hideInactiveLabel = false;
   @property() label?: string;
@@ -30,6 +31,7 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
   @property({type: Boolean}) showBadge = false;
 
   @state() protected showFocusRing = false;
+  @state() protected showRipple = false;
 
   // TODO(b/210730484): replace with @soyParam annotation
   @ariaProperty  // tslint:disable-line:no-new-decorators
@@ -38,7 +40,7 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
 
   @query('button') buttonElement!: HTMLElement;
 
-  @query('md-ripple') ripple!: MdRipple;
+  @queryAsync('md-ripple') ripple!: Promise<MdRipple|null>;
 
   /** @soyTemplate */
   override render(): TemplateResult {
@@ -52,13 +54,9 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
         @focus="${this.handleFocus}"
         @blur="${this.handleBlur}"
         @pointerdown="${this.handlePointerDown}"
-        @pointerup="${this.handlePointerUp}"
-        @pointercancel="${this.handlePointerCancel}"
-        @pointerleave="${this.handlePointerLeave}"
-        @pointerenter="${this.handlePointerEnter}"
         @click="${this.handleClick}"
-        @contextmenu="${this.handleContextMenu}"
-      >${this.renderFocusRing()}${this.renderRipple()}
+      ${ripple(this.getRipple)}>${this.renderFocusRing()}${
+        when(this.showRipple, this.renderRipple)}
         <span aria-hidden="true" class="md3-navigation-tab__icon-content"
           ><span class="md3-navigation-tab__active-indicator"
             ></span><span class="md3-navigation-tab__icon"
@@ -85,10 +83,15 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
         this.showFocusRing}"></md-focus-ring>`;
   }
 
-  /** @soyTemplate */
-  protected renderRipple(): TemplateResult|string {
-    return html`<md-ripple class="md3-navigation-tab__ripple"></md-ripple>`;
-  }
+  protected getRipple = () => {
+    this.showRipple = true;
+    return this.ripple;
+  };
+
+  protected renderRipple = () => {
+    return html`<md-ripple ?disabled="${
+        this.disabled}" class="md3-navigation-tab__ripple"></md-ripple>`;
+  };
 
   /** @soyTemplate */
   protected renderBadge(): TemplateResult|'' {
@@ -129,37 +132,16 @@ export class NavigationTab extends ActionElement implements NavigationTabState {
     }
   }
 
-  override beginPress({positionEvent}: BeginPressConfig) {
+  handleClick() {
     // TODO(b/269772145): connect to ripple
+    this.dispatchEvent(new CustomEvent(
+        'navigation-tab-interaction',
+        {detail: {state: this}, bubbles: true, composed: true}));
   }
 
-  override endPress(options: EndPressConfig) {
-    // TODO(b/269772145): connect to ripple
-    super.endPress(options);
-    if (!options.cancelled) {
-      this.dispatchEvent(new CustomEvent(
-          'navigation-tab-interaction',
-          {detail: {state: this}, bubbles: true, composed: true}));
-    }
-  }
-
-  override handlePointerDown(e: PointerEvent) {
-    super.handlePointerDown(e);
+  handlePointerDown(e: PointerEvent) {
     pointerPress();
     this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  override handlePointerUp(e: PointerEvent) {
-    super.handlePointerUp(e);
-  }
-
-  protected handlePointerEnter(e: PointerEvent) {
-    this.ripple.handlePointerenter(e);
-  }
-
-  override handlePointerLeave(e: PointerEvent) {
-    super.handlePointerLeave(e);
-    this.ripple.handlePointerleave(e);
   }
 
   protected handleFocus() {
