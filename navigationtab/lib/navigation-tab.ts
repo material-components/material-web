@@ -6,6 +6,7 @@
 
 import '../../badge/badge.js';
 import '../../focus/focus-ring.js';
+import '../../ripple/ripple.js';
 
 import {html, PropertyValues, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
