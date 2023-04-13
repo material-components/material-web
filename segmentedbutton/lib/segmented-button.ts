@@ -5,15 +5,17 @@
  */
 
 import '../../focus/focus-ring.js';
+import '../../ripple/ripple.js';
 
-import {html, PropertyValues, TemplateResult} from 'lit';
-import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
+import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
+import {property, queryAssignedElements, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
+import {when} from 'lit/directives/when.js';
 
-import {ActionElement, BeginPressConfig, EndPressConfig} from '../../actionelement/action-element.js';
 import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
+import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 
 /**
@@ -23,7 +25,7 @@ import {MdRipple} from '../../ripple/ripple.js';
  * context.
  * @soyCompatible
  */
-export class SegmentedButton extends ActionElement {
+export class SegmentedButton extends LitElement {
   @property({type: Boolean}) disabled = false;
   @property({type: Boolean}) selected = false;
   @property() label = '';
@@ -37,9 +39,10 @@ export class SegmentedButton extends ActionElement {
 
   @state() protected animState: string = '';
   @state() protected showFocusRing = false;
+  @state() protected showRipple = false;
   @queryAssignedElements({slot: 'icon', flatten: true})
   protected iconElement!: HTMLElement[];
-  @query('md-ripple') ripple!: MdRipple;
+  @queryAsync('md-ripple') protected ripple!: Promise<MdRipple|null>;
 
   protected override update(props: PropertyValues<SegmentedButton>) {
     this.animState = this.nextAnimationState(props);
@@ -66,37 +69,15 @@ export class SegmentedButton extends ActionElement {
     return '';
   }
 
-  override beginPress({positionEvent}: BeginPressConfig) {
-    // TODO(b/261201805): connect to ripple
+  handleClick(e: MouseEvent) {
+    const event = new Event(
+        'segmented-button-interaction', {bubbles: true, composed: true});
+    this.dispatchEvent(event);
   }
 
-  override endPress(options: EndPressConfig) {
-    // TODO(b/261201805): connect to ripple
-    super.endPress(options);
-    if (!options.cancelled) {
-      const event = new Event(
-          'segmented-button-interaction', {bubbles: true, composed: true});
-      this.dispatchEvent(event);
-    }
-  }
-
-  override handlePointerDown(e: PointerEvent) {
-    super.handlePointerDown(e);
+  handlePointerDown(e: PointerEvent) {
     pointerPress();
     this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  override handlePointerUp(e: PointerEvent) {
-    super.handlePointerUp(e);
-  }
-
-  protected handlePointerEnter(e: PointerEvent) {
-    this.ripple.handlePointerenter(e);
-  }
-
-  override handlePointerLeave(e: PointerEvent) {
-    super.handlePointerLeave(e);
-    this.ripple.handlePointerleave(e);
   }
 
   protected handleFocus() {
@@ -118,15 +99,11 @@ export class SegmentedButton extends ActionElement {
         @focus="${this.handleFocus}"
         @blur="${this.handleBlur}"
         @pointerdown="${this.handlePointerDown}"
-        @pointerup="${this.handlePointerUp}"
-        @pointercancel="${this.handlePointerCancel}"
-        @pointerleave="${this.handlePointerLeave}"
-        @pointerenter="${this.handlePointerEnter}"
         @click="${this.handleClick}"
-        @contextmenu="${this.handleContextMenu}"
-        class="md3-segmented-button ${classMap(this.getRenderClasses())}">
+        class="md3-segmented-button ${classMap(this.getRenderClasses())}"
+        ${ripple(this.getRipple)}>
         ${this.renderFocusRing()}
-        ${this.renderRipple()}
+        ${when(this.showRipple, this.renderRipple)}
         ${this.renderOutline()}
         ${this.renderLeading()}
         ${this.renderLabel()}
@@ -156,11 +133,15 @@ export class SegmentedButton extends ActionElement {
         this.showFocusRing}" class="md3-segmented-button__focus-ring"></md-focus-ring>`;
   }
 
-  /** @soyTemplate */
-  protected renderRipple(): TemplateResult|string {
+  protected readonly getRipple = () => {
+    this.showRipple = true;
+    return this.ripple;
+  };
+
+  protected renderRipple = () => {
     return html`<md-ripple ?disabled="${
         this.disabled}" class="md3-segmented-button__ripple"> </md-ripple>`;
-  }
+  };
 
   /** @soyTemplate */
   protected renderOutline(): TemplateResult {
