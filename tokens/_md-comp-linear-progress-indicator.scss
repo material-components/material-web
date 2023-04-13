@@ -4,6 +4,9 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './v0_172/md-comp-linear-progress-indicator';
@@ -14,9 +17,19 @@ $_default: (
   'md-sys-shape': md-sys-shape.values(),
 );
 
+$_unsupported-tokens: (
+  // can only control track since scaling is used on buffer/progress
+  'active-indicator-shape'
+);
+
+// TODO(b/275045611) may need to update based on resolution of design
+// for buffer and background animation.
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  @return md-comp-linear-progress-indicator.values(
+  $tokens: md-comp-linear-progress-indicator.values(
     $deps,
     $exclude-hardcoded-values
   );
+  $tokens: map.remove($tokens, $_unsupported-tokens...);
+
+  @return $tokens;
 }

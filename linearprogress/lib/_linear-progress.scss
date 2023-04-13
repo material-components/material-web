@@ -1,0 +1,380 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use '../../sass/theme';
+@use '../../tokens';
+// go/keep-sorted end
+
+@mixin theme($tokens) {
+  $reference: tokens.md-comp-linear-progress-indicator-values();
+  $tokens: theme.validate-theme($reference, $tokens);
+  $tokens: theme.create-theme-vars($tokens, 'linear-progress');
+
+  @include theme.emit-theme-vars($tokens);
+}
+
+// note, transition settings match MDC
+// see https://github.com/material-components/material-components-web/blob/master/packages/mdc-linear-progress/_linear-progress.scss#L79
+$_determinate-duration: 250ms;
+$_determinate-easing: cubic-bezier(0.4, 0, 0.6, 1);
+// see https://github.com/material-components/material-components-web/blob/master/packages/mdc-linear-progress/_linear-progress.scss#L218
+$_indeterminate-duration: 2s;
+
+// Note, track background is a series of animating dots sized to fit
+// the track height. Since the dots are circular, width scales with height.
+// Background width is separated because it's also used to help animate the
+// /dots.
+$_track-dot-size: calc(var(--_track-height) / 2);
+$_track-background-width: calc($_track-dot-size * 5);
+// this is a series of sized/colored dots.
+$_track-background: 0 / $_track-background-width 100%
+  radial-gradient(
+    circle at calc($_track-dot-size * 2),
+    var(--_track-color) 0,
+    var(--_track-color) $_track-dot-size,
+    transparent $_track-dot-size
+  );
+
+// Generates a list of rtl selectors. This is done so rules can be generated
+// separately so they don't get dropped where unsupported.
+$rtl-selectors: (
+  ':host-context([dir="rtl"]) .linear-progress',
+  ':host([dir="rtl"]) .linear-progress',
+  '.linear-progress:dir(rtl)'
+);
+
+// Generates keyframes for ltr and rtl.
+@mixin directional-keyframes($dir) {
+  $is-rtl: $dir == 'rtl';
+  $sign: if($is-rtl, -1, 1);
+  $suffix: if($is-rtl, '-rtl', '');
+
+  @keyframes buffering#{$suffix} {
+    0% {
+      // the amount to animate is aligned with the default track background
+      transform: translateX(calc(#{$sign} * #{$_track-background-width}));
+    }
+  }
+
+  // note, the numbers here come directly from the mdc implementation.
+  // see https://github.com/material-components/material-components-web/blob/master/packages/mdc-linear-progress/_linear-progress.scss#L208.
+  // keyframes
+  @keyframes primary-indeterminate-translate#{$suffix} {
+    0% {
+      transform: translateX(0px);
+    }
+
+    20% {
+      animation-timing-function: cubic-bezier(0.5, 0, 0.701732, 0.495819);
+      transform: translateX(0px);
+    }
+
+    59.15% {
+      animation-timing-function: cubic-bezier(
+        0.302435,
+        0.381352,
+        0.55,
+        0.956352
+      );
+      transform: translateX(calc(#{$sign} * 83.6714%));
+    }
+
+    100% {
+      transform: translateX(calc(#{$sign} * 200.611%));
+    }
+  }
+
+  @keyframes secondary-indeterminate-translate#{$suffix} {
+    0% {
+      animation-timing-function: cubic-bezier(0.15, 0, 0.515058, 0.409685);
+      transform: translateX(0px);
+    }
+
+    25% {
+      animation-timing-function: cubic-bezier(0.31033, 0.284058, 0.8, 0.733712);
+      transform: translateX(calc(#{$sign} * 37.6519%));
+    }
+
+    48.35% {
+      animation-timing-function: cubic-bezier(0.4, 0.627035, 0.6, 0.902026);
+      transform: translateX(calc(#{$sign} * 84.3862%));
+    }
+
+    100% {
+      transform: translateX(calc(#{$sign} * 160.278%));
+    }
+  }
+}
+
+@mixin styles() {
+  $tokens: tokens.md-comp-linear-progress-indicator-values();
+  $tokens: theme.create-theme-vars($tokens, 'linear-progress');
+
+  :host {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+
+    display: block;
+    position: relative;
+    // note, this matches the `meter` element and is just done so
+    // there's a minimum width when in a container with a display like
+    // inline-flex.
+    min-inline-size: 80px;
+    block-size: var(--_track-height);
+    content-visibility: auto;
+    contain: strict;
+  }
+
+  .linear-progress,
+  .track,
+  .buffer-bar,
+  .bar,
+  .bar-inner {
+    position: absolute;
+  }
+
+  .linear-progress {
+    inset: 0;
+    outline: transparent solid 1px;
+    border-radius: var(--_track-shape);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  .bar {
+    animation: none;
+    // position is offset for indeterminate animation, so we lock the inline size here.
+    inline-size: 100%;
+    block-size: var(--_active-indicator-height);
+    transform-origin: left center;
+    will-change: transform;
+    transition: transform $_determinate-duration $_determinate-easing;
+  }
+
+  .secondary-bar {
+    display: none;
+  }
+
+  .bar-inner {
+    inset: 0;
+    animation: none;
+    background: var(--_active-indicator-color);
+  }
+
+  .buffer-bar {
+    background: var(--_track-color);
+    inset: 0;
+    will-change: transform;
+    transition: transform $_determinate-duration $_determinate-easing;
+    transform-origin: left center;
+  }
+
+  .track {
+    inset: 0;
+    will-change: transform;
+    animation: linear infinite $_determinate-duration;
+    // stylelint-disable-next-line no-unknown-animations --
+    // animation generated via mixin
+    animation-name: buffering;
+    background: $_track-background;
+  }
+
+  // indeterminate
+  .indeterminate .bar {
+    transition: none;
+  }
+
+  // note, the numbers here come directly from the mdc implementation.
+  // see https://github.com/material-components/material-components-web/blob/master/packages/mdc-linear-progress/_linear-progress.scss#L208.
+  .indeterminate .primary-bar {
+    inset-inline-start: -145.167%;
+  }
+
+  .indeterminate .secondary-bar {
+    inset-inline-start: -54.8889%;
+    // this is display none by default.
+    display: block;
+  }
+
+  .indeterminate .track {
+    display: none;
+  }
+
+  .indeterminate.animation-ready .primary-bar {
+    will-change: transform;
+    animation: linear infinite $_indeterminate-duration;
+    // stylelint-disable-next-line no-unknown-animations --
+    // animation generated via mixin
+    animation-name: primary-indeterminate-translate;
+  }
+
+  .indeterminate.animation-ready .primary-bar > .bar-inner {
+    will-change: transform;
+    animation: linear infinite $_indeterminate-duration
+      primary-indeterminate-scale;
+  }
+
+  .indeterminate.animation-ready.four-colors .primary-bar > .bar-inner {
+    animation-name: primary-indeterminate-scale, four-colors;
+    animation-duration: $_indeterminate-duration,
+      calc($_indeterminate-duration * 2);
+  }
+
+  .indeterminate.animation-ready .secondary-bar {
+    will-change: transform;
+    animation: linear infinite $_indeterminate-duration;
+    // stylelint-disable-next-line no-unknown-animations --
+    // animation generated via mixin
+    animation-name: secondary-indeterminate-translate;
+  }
+
+  .indeterminate.animation-ready .secondary-bar > .bar-inner {
+    will-change: transform;
+    animation: linear infinite $_indeterminate-duration
+      secondary-indeterminate-scale;
+  }
+
+  .indeterminate.animation-ready.four-colors .secondary-bar > .bar-inner {
+    animation-name: secondary-indeterminate-scale, four-colors;
+    animation-duration: $_indeterminate-duration,
+      calc($_indeterminate-duration * 2);
+  }
+
+  @each $selector in $rtl-selectors {
+    #{$selector} {
+      .bar {
+        transform-origin: right center;
+      }
+
+      .buffer-bar {
+        transform-origin: right center;
+      }
+
+      .track {
+        // stylelint-disable-next-line no-unknown-animations --
+        // animation generated via mixin
+        animation-name: buffering-rtl;
+      }
+
+      &.indeterminate.animation-ready .primary-bar {
+        // stylelint-disable-next-line no-unknown-animations --
+        // animation generated via mixin
+        animation-name: primary-indeterminate-translate-rtl;
+      }
+
+      &.indeterminate.animation-ready .secondary-bar {
+        // stylelint-disable-next-line no-unknown-animations --
+        // animation generated via mixin
+        animation-name: secondary-indeterminate-translate-rtl;
+      }
+    }
+  }
+
+  @keyframes primary-indeterminate-scale {
+    0% {
+      transform: scaleX(0.08);
+    }
+
+    36.65% {
+      animation-timing-function: cubic-bezier(0.334731, 0.12482, 0.785844, 1);
+      transform: scaleX(0.08);
+    }
+
+    69.15% {
+      animation-timing-function: cubic-bezier(0.06, 0.11, 0.6, 1);
+      transform: scaleX(0.661479);
+    }
+
+    100% {
+      transform: scaleX(0.08);
+    }
+  }
+
+  @keyframes secondary-indeterminate-scale {
+    0% {
+      animation-timing-function: cubic-bezier(
+        0.205028,
+        0.057051,
+        0.57661,
+        0.453971
+      );
+      transform: scaleX(0.08);
+    }
+
+    19.15% {
+      animation-timing-function: cubic-bezier(
+        0.152313,
+        0.196432,
+        0.648374,
+        1.00432
+      );
+      transform: scaleX(0.457104);
+    }
+
+    44.15% {
+      animation-timing-function: cubic-bezier(
+        0.257759,
+        -0.003163,
+        0.211762,
+        1.38179
+      );
+      transform: scaleX(0.72796);
+    }
+
+    100% {
+      transform: scaleX(0.08);
+    }
+  }
+
+  @include directional-keyframes('ltr');
+  @include directional-keyframes('rtl');
+
+  @keyframes four-colors {
+    0% {
+      background: var(--_four-color-active-indicator-one-color);
+    }
+
+    15% {
+      background: var(--_four-color-active-indicator-one-color);
+    }
+    25% {
+      background: var(--_four-color-active-indicator-two-color);
+    }
+    40% {
+      background: var(--_four-color-active-indicator-two-color);
+    }
+
+    50% {
+      background: var(--_four-color-active-indicator-three-color);
+    }
+    65% {
+      background: var(--_four-color-active-indicator-three-color);
+    }
+    75% {
+      background: var(--_four-color-active-indicator-four-color);
+    }
+    90% {
+      background: var(--_four-color-active-indicator-four-color);
+    }
+    100% {
+      background: var(--_four-color-active-indicator-one-color);
+    }
+  }
+
+  @media screen and (forced-colors: active) {
+    .linear-progress {
+      --_active-indicator-color: canvastext;
+      --_track-color: graytext;
+      border: 1px solid canvastext;
+    }
+
+    .indeterminate.linear-progress {
+      --_track-color: canvas;
+    }
+  }
+}
