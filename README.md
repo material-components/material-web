@@ -47,7 +47,7 @@ Icon                          | ✅     | ✅    | ❌
 List                          | ✅     | ✅    | ❌
 Menu                          | ✅     | ✅    | ❌
 Progress indicator (circular) | ✅     | ✅    | ❌
-Progress indicator (linear)   | ✅     | 🟡    | ❌
+Progress indicator (linear)   | ✅     | ✅    | ❌
 Radio button                  | ✅     | ✅    | ❌
 Ripple                        | ✅     | ✅    | 🟡
 Select                        | 🟡     | ❌    | ❌
