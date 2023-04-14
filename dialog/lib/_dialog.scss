@@ -44,10 +44,10 @@
     justify-content: center;
     box-sizing: border-box;
     inset: 0;
-    block-size: 100vh;
-    inline-size: 100vw;
-    max-block-size: 100vh;
-    max-inline-size: 100vw;
+    block-size: 100dvh;
+    inline-size: 100dvw;
+    max-block-size: 100dvh;
+    max-inline-size: 100dvw;
     border: none;
     background: transparent;
     padding: 0;
@@ -77,8 +77,8 @@
     position: absolute;
     z-index: -1;
     inset: 0;
-    block-size: 100vh;
-    inline-size: 100vw;
+    block-size: 100dvh;
+    inline-size: 100dvw;
     pointer-events: none;
   }
 
@@ -320,8 +320,8 @@
   }
 
   :host([showing-fullscreen]) .container {
-    block-size: 100vh;
-    inline-size: 100vw;
+    block-size: 100dvh;
+    inline-size: 100dvw;
     border-radius: 0px;
     padding-block-start: 0;
     padding-block-end: 0;
