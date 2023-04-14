@@ -21,11 +21,14 @@ $supported-tokens: (
   // go/keep-sorted start
   'container-height',
   'container-shape',
-  'container-surface-tint-layer-color',
   'disabled-label-text-color',
   'disabled-label-text-opacity',
   'disabled-leading-icon-color',
   'disabled-leading-icon-opacity',
+  'disabled-outline-color',
+  'disabled-outline-opacity',
+  'disabled-selected-container-color',
+  'disabled-selected-container-opacity',
   'disabled-trailing-icon-color',
   'disabled-trailing-icon-opacity',
   'elevated-container-color',
@@ -38,17 +41,9 @@ $supported-tokens: (
   'elevated-hover-container-elevation',
   'elevated-pressed-container-elevation',
   'elevated-selected-container-color',
-  'flat-disabled-outline-color',
-  'flat-disabled-outline-opacity',
-  'flat-disabled-selected-container-color',
-  'flat-disabled-selected-container-opacity',
-  'flat-focus-outline-color',
-  'flat-outline-color',
-  'flat-outline-width',
-  'flat-selected-container-color',
-  'flat-selected-outline-width',
   'focus-label-text-color',
   'focus-leading-icon-color',
+  'focus-outline-color',
   'focus-state-layer-color',
   'focus-state-layer-opacity',
   'focus-trailing-icon-color',
@@ -61,11 +56,14 @@ $supported-tokens: (
   'label-text-color',
   'label-text-type',
   'leading-icon-color',
+  'outline-color',
+  'outline-width',
   'pressed-label-text-color',
   'pressed-leading-icon-color',
   'pressed-state-layer-color',
   'pressed-state-layer-opacity',
   'pressed-trailing-icon-color',
+  'selected-container-color',
   'selected-focus-label-text-color',
   'selected-focus-leading-icon-color',
   'selected-focus-state-layer-color',
@@ -78,6 +76,7 @@ $supported-tokens: (
   'selected-hover-trailing-icon-color',
   'selected-label-text-color',
   'selected-leading-icon-color',
+  'selected-outline-width',
   'selected-pressed-label-text-color',
   'selected-pressed-leading-icon-color',
   'selected-pressed-state-layer-color',
@@ -90,105 +89,30 @@ $supported-tokens: (
 
 $unsupported-tokens: (
   // go/keep-sorted start
+  'container-elevation',
   'dragged-container-elevation',
   'dragged-label-text-color',
   'dragged-leading-icon-color',
   'dragged-state-layer-color',
   'dragged-state-layer-opacity',
   'dragged-trailing-icon-color',
-  'flat-container-elevation',
-  'flat-focus-container-elevation',
-  'flat-hover-container-elevation',
-  'flat-pressed-container-elevation',
-  'flat-selected-focus-container-elevation',
-  'flat-selected-hover-container-elevation',
-  'flat-selected-pressed-container-elevation',
+  'focus-container-elevation',
+  'hover-container-elevation',
   'label-text-font',
   'label-text-line-height',
   'label-text-size',
   'label-text-tracking',
   'label-text-weight',
+  'pressed-container-elevation',
   'selected-dragged-label-text-color',
   'selected-dragged-leading-icon-color',
   'selected-dragged-state-layer-color',
   'selected-dragged-state-layer-opacity',
   'selected-dragged-trailing-icon-color',
+  'selected-focus-container-elevation',
+  'selected-hover-container-elevation',
+  'selected-pressed-container-elevation',
   // go/keep-sorted end
-);
-
-$renamed-tokens: (
-  // Remove "unselected-*" prefix (b/275577569)
-  'elevated-unselected-container-color': 'elevated-container-color',
-  'flat-disabled-unselected-outline-color': 'flat-disabled-outline-color',
-  'flat-disabled-unselected-outline-opacity': 'flat-disabled-outline-opacity',
-  'flat-unselected-focus-container-elevation': 'flat-focus-container-elevation',
-  'flat-unselected-focus-outline-color': 'flat-focus-outline-color',
-  'flat-unselected-hover-container-elevation': 'flat-hover-container-elevation',
-  'flat-unselected-outline-color': 'flat-outline-color',
-  'flat-unselected-outline-width': 'flat-outline-width',
-  'flat-unselected-pressed-container-elevation':
-    'flat-pressed-container-elevation',
-  'unselected-dragged-label-text-color': 'dragged-label-text-color',
-  'unselected-dragged-state-layer-color': 'dragged-state-layer-color',
-  'unselected-dragged-state-layer-opacity': 'dragged-state-layer-opacity',
-  'unselected-focus-label-text-color': 'focus-label-text-color',
-  'unselected-focus-state-layer-color': 'focus-state-layer-color',
-  'unselected-focus-state-layer-opacity': 'focus-state-layer-opacity',
-  'unselected-hover-label-text-color': 'hover-label-text-color',
-  'unselected-hover-state-layer-color': 'hover-state-layer-color',
-  'unselected-hover-state-layer-opacity': 'hover-state-layer-opacity',
-  'unselected-label-text-color': 'label-text-color',
-  'unselected-pressed-label-text-color': 'pressed-label-text-color',
-  'unselected-pressed-state-layer-color': 'pressed-state-layer-color',
-  'unselected-pressed-state-layer-opacity': 'pressed-state-layer-opacity',
-  // Remove "with-icon-*" prefix (b/273534858)
-  'with-icon-icon-size': 'icon-size',
-  // Remove "with-leading-icon-*" prefix (b/273534858)
-  'with-leading-icon-disabled-leading-icon-color': 'disabled-leading-icon-color',
-  'with-leading-icon-disabled-leading-icon-opacity':
-    'disabled-leading-icon-opacity',
-  'with-leading-icon-selected-dragged-leading-icon-color':
-    'selected-dragged-leading-icon-color',
-  'with-leading-icon-selected-focus-leading-icon-color':
-    'selected-focus-leading-icon-color',
-  'with-leading-icon-selected-hover-leading-icon-color':
-    'selected-hover-leading-icon-color',
-  'with-leading-icon-selected-leading-icon-color': 'selected-leading-icon-color',
-  'with-leading-icon-selected-pressed-leading-icon-color':
-    'selected-pressed-leading-icon-color',
-  'with-leading-icon-unselected-dragged-leading-icon-color':
-    'dragged-leading-icon-color',
-  'with-leading-icon-unselected-focus-leading-icon-color':
-    'focus-leading-icon-color',
-  'with-leading-icon-unselected-hover-leading-icon-color':
-    'hover-leading-icon-color',
-  'with-leading-icon-unselected-leading-icon-color': 'leading-icon-color',
-  'with-leading-icon-unselected-pressed-leading-icon-color':
-    'pressed-leading-icon-color',
-  // Remove "with-trailing-icon-*" prefix (b/273534858)
-  'with-trailing-icon-disabled-trailing-icon-color':
-    'disabled-trailing-icon-color',
-  'with-trailing-icon-disabled-trailing-icon-opacity':
-    'disabled-trailing-icon-opacity',
-  'with-trailing-icon-selected-dragged-trailing-icon-color':
-    'selected-dragged-trailing-icon-color',
-  'with-trailing-icon-selected-focus-trailing-icon-color':
-    'selected-focus-trailing-icon-color',
-  'with-trailing-icon-selected-hover-trailing-icon-color':
-    'selected-hover-trailing-icon-color',
-  'with-trailing-icon-selected-pressed-trailing-icon-color':
-    'selected-pressed-trailing-icon-color',
-  'with-trailing-icon-selected-trailing-icon-color':
-    'selected-trailing-icon-color',
-  'with-trailing-icon-unselected-dragged-trailing-icon-color':
-    'dragged-trailing-icon-color',
-  'with-trailing-icon-unselected-focus-trailing-icon-color':
-    'focus-trailing-icon-color',
-  'with-trailing-icon-unselected-hover-trailing-icon-color':
-    'hover-trailing-icon-color',
-  'with-trailing-icon-unselected-pressed-trailing-icon-color':
-    'pressed-trailing-icon-color',
-  'with-trailing-icon-unselected-trailing-icon-color': 'trailing-icon-color'
 );
 
 $_default: (
@@ -204,7 +128,93 @@ $_default: (
     md-comp-filter-chip.values($deps, $exclude-hardcoded-values),
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
-    $renamed-tokens: $renamed-tokens
+    $renamed-tokens: (
+      // Remove "unselected-*" and "flat-*" prefix (b/275577569)
+      'elevated-unselected-container-color': 'elevated-container-color',
+      'flat-container-elevation': 'container-elevation',
+      'flat-disabled-unselected-outline-color': 'disabled-outline-color',
+      'flat-disabled-unselected-outline-opacity': 'disabled-outline-opacity',
+      'flat-disabled-selected-container-color':
+        'disabled-selected-container-color',
+      'flat-disabled-selected-container-opacity':
+        'disabled-selected-container-opacity',
+      'flat-unselected-focus-container-elevation': 'focus-container-elevation',
+      'flat-unselected-focus-outline-color': 'focus-outline-color',
+      'flat-unselected-hover-container-elevation': 'hover-container-elevation',
+      'flat-unselected-outline-color': 'outline-color',
+      'flat-unselected-outline-width': 'outline-width',
+      'flat-unselected-pressed-container-elevation':
+        'pressed-container-elevation',
+      'flat-selected-container-color': 'selected-container-color',
+      'flat-selected-focus-container-elevation':
+        'selected-focus-container-elevation',
+      'flat-selected-hover-container-elevation':
+        'selected-hover-container-elevation',
+      'flat-selected-outline-width': 'selected-outline-width',
+      'flat-selected-pressed-container-elevation':
+        'selected-pressed-container-elevation',
+      'unselected-dragged-label-text-color': 'dragged-label-text-color',
+      'unselected-dragged-state-layer-color': 'dragged-state-layer-color',
+      'unselected-dragged-state-layer-opacity': 'dragged-state-layer-opacity',
+      'unselected-focus-label-text-color': 'focus-label-text-color',
+      'unselected-focus-state-layer-color': 'focus-state-layer-color',
+      'unselected-focus-state-layer-opacity': 'focus-state-layer-opacity',
+      'unselected-hover-label-text-color': 'hover-label-text-color',
+      'unselected-hover-state-layer-color': 'hover-state-layer-color',
+      'unselected-hover-state-layer-opacity': 'hover-state-layer-opacity',
+      'unselected-label-text-color': 'label-text-color',
+      'unselected-pressed-label-text-color': 'pressed-label-text-color',
+      'unselected-pressed-state-layer-color': 'pressed-state-layer-color',
+      'unselected-pressed-state-layer-opacity': 'pressed-state-layer-opacity',
+      // Remove "with-*" prefixex (b/273534858)
+      'with-icon-icon-size': 'icon-size',
+      'with-leading-icon-disabled-leading-icon-color':
+        'disabled-leading-icon-color',
+      'with-leading-icon-disabled-leading-icon-opacity':
+        'disabled-leading-icon-opacity',
+      'with-leading-icon-selected-dragged-leading-icon-color':
+        'selected-dragged-leading-icon-color',
+      'with-leading-icon-selected-focus-leading-icon-color':
+        'selected-focus-leading-icon-color',
+      'with-leading-icon-selected-hover-leading-icon-color':
+        'selected-hover-leading-icon-color',
+      'with-leading-icon-selected-leading-icon-color':
+        'selected-leading-icon-color',
+      'with-leading-icon-selected-pressed-leading-icon-color':
+        'selected-pressed-leading-icon-color',
+      'with-leading-icon-unselected-dragged-leading-icon-color':
+        'dragged-leading-icon-color',
+      'with-leading-icon-unselected-focus-leading-icon-color':
+        'focus-leading-icon-color',
+      'with-leading-icon-unselected-hover-leading-icon-color':
+        'hover-leading-icon-color',
+      'with-leading-icon-unselected-leading-icon-color': 'leading-icon-color',
+      'with-leading-icon-unselected-pressed-leading-icon-color':
+        'pressed-leading-icon-color',
+      'with-trailing-icon-disabled-trailing-icon-color':
+        'disabled-trailing-icon-color',
+      'with-trailing-icon-disabled-trailing-icon-opacity':
+        'disabled-trailing-icon-opacity',
+      'with-trailing-icon-selected-dragged-trailing-icon-color':
+        'selected-dragged-trailing-icon-color',
+      'with-trailing-icon-selected-focus-trailing-icon-color':
+        'selected-focus-trailing-icon-color',
+      'with-trailing-icon-selected-hover-trailing-icon-color':
+        'selected-hover-trailing-icon-color',
+      'with-trailing-icon-selected-pressed-trailing-icon-color':
+        'selected-pressed-trailing-icon-color',
+      'with-trailing-icon-selected-trailing-icon-color':
+        'selected-trailing-icon-color',
+      'with-trailing-icon-unselected-dragged-trailing-icon-color':
+        'dragged-trailing-icon-color',
+      'with-trailing-icon-unselected-focus-trailing-icon-color':
+        'focus-trailing-icon-color',
+      'with-trailing-icon-unselected-hover-trailing-icon-color':
+        'hover-trailing-icon-color',
+      'with-trailing-icon-unselected-pressed-trailing-icon-color':
+        'pressed-trailing-icon-color',
+      'with-trailing-icon-unselected-trailing-icon-color': 'trailing-icon-color'
+    )
   );
 
   // TODO(b/271876162): remove when tokens compiler emits typescale tokens

@@ -50,7 +50,7 @@
 
     @each $old-token, $new-token in $renamed-tokens {
       @if not map.has-key($values, $old-token) {
-        @error 'values.validate($renamed-tokens: (\'#{$old-tokens}\': \'#{$new-token}\')) old-token in not the provided values.';
+        @error 'values.validate($renamed-tokens: (\'#{$old-token}\': \'#{$new-token}\')) old-token in not the provided values.';
       }
 
       $values: map.set($values, $new-token, map.get($values, $old-token));

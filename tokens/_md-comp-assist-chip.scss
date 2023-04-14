@@ -25,6 +25,8 @@ $supported-tokens: (
   'disabled-label-text-opacity',
   'disabled-leading-icon-color',
   'disabled-leading-icon-opacity',
+  'disabled-outline-color',
+  'disabled-outline-opacity',
   'elevated-container-color',
   'elevated-container-elevation',
   'elevated-container-shadow-color',
@@ -34,13 +36,9 @@ $supported-tokens: (
   'elevated-focus-container-elevation',
   'elevated-hover-container-elevation',
   'elevated-pressed-container-elevation',
-  'flat-disabled-outline-color',
-  'flat-disabled-outline-opacity',
-  'flat-focus-outline-color',
-  'flat-outline-color',
-  'flat-outline-width',
   'focus-label-text-color',
   'focus-leading-icon-color',
+  'focus-outline-color',
   'focus-state-layer-color',
   'focus-state-layer-opacity',
   'hover-label-text-color',
@@ -51,6 +49,8 @@ $supported-tokens: (
   'label-text-color',
   'label-text-type',
   'leading-icon-color',
+  'outline-color',
+  'outline-width',
   'pressed-label-text-color',
   'pressed-leading-icon-color',
   'pressed-state-layer-color',
@@ -60,31 +60,18 @@ $supported-tokens: (
 
 $unsupported-tokens: (
   // go/keep-sorted start
+  'container-elevation',
   'dragged-container-elevation',
   'dragged-label-text-color',
   'dragged-leading-icon-color',
   'dragged-state-layer-color',
   'dragged-state-layer-opacity',
-  'flat-container-elevation',
   'label-text-font',
   'label-text-line-height',
   'label-text-size',
   'label-text-tracking',
   'label-text-weight',
   // go/keep-sorted end
-);
-
-$renamed-tokens: (
-  // Remove "with-icon-*" prefix (b/273534858)
-  // Rename "icon" to "leading-icon" (b/275577569)
-  'with-icon-disabled-icon-color': 'disabled-leading-icon-color',
-  'with-icon-disabled-icon-opacity': 'disabled-leading-icon-opacity',
-  'with-icon-dragged-icon-color': 'dragged-leading-icon-color',
-  'with-icon-focus-icon-color': 'focus-leading-icon-color',
-  'with-icon-hover-icon-color': 'hover-leading-icon-color',
-  'with-icon-icon-color': 'leading-icon-color',
-  'with-icon-icon-size': 'icon-size',
-  'with-icon-pressed-icon-color': 'pressed-leading-icon-color'
 );
 
 $_default: (
@@ -100,7 +87,25 @@ $_default: (
     md-comp-assist-chip.values($deps, $exclude-hardcoded-values),
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
-    $renamed-tokens: $renamed-tokens
+    $renamed-tokens: (
+      // Remove "flat-*" prefix (b/275577569)
+      'flat-container-elevation': 'container-elevation',
+      'flat-disabled-outline-color': 'disabled-outline-color',
+      'flat-disabled-outline-opacity': 'disabled-outline-opacity',
+      'flat-focus-outline-color': 'focus-outline-color',
+      'flat-outline-color': 'outline-color',
+      'flat-outline-width': 'outline-width',
+      // Remove "with-*" prefixes (b/273534858)
+      // Rename "icon" to "leading-icon" (b/275577569)
+      'with-icon-disabled-icon-color': 'disabled-leading-icon-color',
+      'with-icon-disabled-icon-opacity': 'disabled-leading-icon-opacity',
+      'with-icon-dragged-icon-color': 'dragged-leading-icon-color',
+      'with-icon-focus-icon-color': 'focus-leading-icon-color',
+      'with-icon-hover-icon-color': 'hover-leading-icon-color',
+      'with-icon-icon-color': 'leading-icon-color',
+      'with-icon-icon-size': 'icon-size',
+      'with-icon-pressed-icon-color': 'pressed-leading-icon-color'
+    )
   );
 
   // TODO(b/271876162): remove when tokens compiler emits typescale tokens

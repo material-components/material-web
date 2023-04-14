@@ -50,7 +50,7 @@
     text-decoration: none;
     width: 100%;
 
-    // Container and outline color, separate node for disabled opacity changes
+    // Container color, separate node for disabled opacity changes
     &::before {
       border-radius: inherit;
       content: '';
@@ -68,17 +68,22 @@
     pointer-events: none;
   }
 
-  .flat::before {
-    border: var(--_flat-outline-width) solid var(--_flat-outline-color);
+  // Outline, separate node for disabled opacity changes
+  .outline {
+    border: var(--_outline-width) solid var(--_outline-color);
+    border-radius: inherit;
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
   }
 
-  .flat:focus::before {
-    border-color: var(--_flat-focus-outline-color);
+  :focus .outline {
+    border-color: var(--_focus-outline-color);
   }
 
-  .flat.disabled::before {
-    border-color: var(--_flat-disabled-outline-color);
-    opacity: var(--_flat-disabled-outline-opacity);
+  .disabled .outline {
+    border-color: var(--_disabled-outline-color);
+    opacity: var(--_disabled-outline-opacity);
   }
 
   .elevated {
@@ -179,15 +184,14 @@
 
   .icon {
     align-self: center;
-    font-size: var(--_icon-size);
-    max-height: var(--_icon-size);
-    max-width: var(--_icon-size);
+    height: var(--_icon-size);
+    position: relative;
   }
 
   .icon ::slotted(*) {
-    font-size: inherit;
-    height: 100%;
-    width: 100%;
+    font-size: var(--_icon-size);
+    height: var(--_icon-size);
+    width: var(--_icon-size);
   }
 
   .icon.leading {
