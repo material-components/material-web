@@ -34,6 +34,8 @@ $_custom-property-prefix: 'icon';
     font-size: var(--_size);
     font-variation-settings: var(--_font-variation-settings);
     line-height: 1;
+    // Avoid displaying overflowing text if font ligatures have not loaded.
+    overflow: hidden;
     letter-spacing: normal;
     text-transform: none;
     white-space: nowrap;
