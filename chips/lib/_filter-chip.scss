@@ -1,0 +1,141 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use '../../ripple/ripple';
+@use '../../sass/theme';
+@use '../../tokens';
+// go/keep-sorted end
+
+@mixin theme($tokens) {
+  $tokens: theme.validate-theme(tokens.md-comp-filter-chip-values(), $tokens);
+
+  @each $token, $value in $tokens {
+    --md-filter-chip-#{$token}: #{$value};
+  }
+}
+
+@mixin styles() {
+  $tokens: tokens.md-comp-filter-chip-values();
+
+  :host {
+    @each $token, $value in $tokens {
+      --_#{$token}: #{$value};
+    }
+  }
+
+  .selected {
+    @include ripple.theme(
+      (
+        focus-color: var(--_selected-focus-state-layer-color),
+        focus-opacity: var(--_selected-focus-state-layer-opacity),
+        hover-color: var(--_selected-hover-state-layer-color),
+        hover-opacity: var(--_selected-hover-state-layer-opacity),
+        pressed-color: var(--_selected-pressed-state-layer-color),
+        pressed-opacity: var(--_selected-pressed-state-layer-opacity),
+      )
+    );
+  }
+
+  .selected .icon.leading {
+    width: var(--_icon-size);
+  }
+
+  .checkmark {
+    inset: 0;
+    opacity: 0;
+    position: absolute;
+  }
+
+  .selected .checkmark {
+    opacity: 1;
+  }
+
+  .selected::before {
+    background: var(--_selected-container-color);
+  }
+
+  .selected .outline {
+    border-width: var(--_selected-outline-width);
+  }
+
+  .selected.elevated::before {
+    background: var(--_elevated-selected-container-color);
+  }
+
+  .selected.disabled::before {
+    background: var(--_disabled-selected-container-color);
+    opacity: var(--_disabled-selected-container-opacity);
+  }
+
+  .selected .label {
+    color: var(--_selected-label-text-color);
+  }
+
+  .selected:hover .label {
+    color: var(--_selected-hover-label-text-color);
+  }
+
+  .selected:focus .label {
+    color: var(--_selected-focus-label-text-color);
+  }
+
+  .selected:active .label {
+    color: var(--_selected-pressed-label-text-color);
+  }
+
+  .selected .icon.leading {
+    color: var(--_selected-leading-icon-color);
+  }
+
+  .selected:hover .icon.leading {
+    color: var(--_selected-hover-leading-icon-color);
+  }
+
+  .selected:focus .icon.leading {
+    color: var(--_selected-focus-leading-icon-color);
+  }
+
+  .selected:active .icon.leading {
+    color: var(--_selected-pressed-leading-icon-color);
+  }
+
+  .icon.trailing {
+    color: var(--_trailing-icon-color);
+  }
+
+  :hover .icon.trailing {
+    color: var(--_hover-trailing-icon-color);
+  }
+
+  :focus .icon.trailing {
+    color: var(--_focus-trailing-icon-color);
+  }
+
+  :active .icon.trailing {
+    color: var(--_pressed-trailing-icon-color);
+  }
+
+  .disabled .icon.trailing {
+    color: var(--_disabled-trailing-icon-color);
+    opacity: var(--_disabled-trailing-icon-opacity);
+  }
+
+  .selected .icon.trailing {
+    color: var(--_selected-trailing-icon-color);
+  }
+
+  .selected:hover .icon.trailing {
+    color: var(--_selected-hover-trailing-icon-color);
+  }
+
+  .selected:focus .icon.trailing {
+    color: var(--_selected-focus-trailing-icon-color);
+  }
+
+  .selected:active .icon.trailing {
+    color: var(--_selected-pressed-trailing-icon-color);
+  }
+}
