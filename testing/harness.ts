@@ -6,11 +6,6 @@
 
 import {defaultTransformPseudoClasses, getTransformedPseudoClass, transformPseudoClasses} from './transform-pseudo-classes.js';
 
-declare global {
-  interface DocumentOrShadowRoot {
-    adoptedStyleSheets: CSSStyleSheet[];
-  }
-}
 
 /**
  * Retrieves the element type from a `Harness` type.
