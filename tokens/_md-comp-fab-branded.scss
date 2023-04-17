@@ -4,20 +4,128 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../sass/shape';
 @use './md-sys-color';
 @use './md-sys-elevation';
 @use './md-sys-shape';
 @use './md-sys-state';
+@use './md-sys-typescale';
+@use './v0_172/md-comp-extended-fab-branded';
 @use './v0_172/md-comp-fab-branded';
+@use './v0_172/md-comp-fab-branded-large';
+@use './values';
 // go/keep-sorted end
+
+$supported-tokens: (
+  // go/keep-sorted start
+  'container-color',
+  'container-elevation',
+  'container-height',
+  'container-shadow-color',
+  'container-shape',
+  'container-width',
+  'focus-container-elevation',
+  'focus-label-text-color',
+  'focus-state-layer-color',
+  'focus-state-layer-opacity',
+  'hover-container-elevation',
+  'hover-label-text-color',
+  'hover-state-layer-color',
+  'hover-state-layer-opacity',
+  'icon-size',
+  'label-text-color',
+  'label-text-type',
+  'large-container-height',
+  'large-container-shape',
+  'large-container-width',
+  'large-icon-size',
+  'lowered-container-color',
+  'lowered-container-elevation',
+  'lowered-focus-container-elevation',
+  'lowered-hover-container-elevation',
+  'lowered-pressed-container-elevation',
+  'pressed-container-elevation',
+  'pressed-label-text-color',
+  'pressed-state-layer-color',
+  'pressed-state-layer-opacity',
+  // go/keep-sorted end
+);
+
+@function _get-new-tokens($deps, $exclude-hardcoded-values) {
+  $large-tokens: md-comp-fab-branded-large.values(
+    $deps,
+    $exclude-hardcoded-values
+  );
+  $extended-branded-tokens: md-comp-extended-fab-branded.values(
+    $deps,
+    $exclude-hardcoded-values
+  );
+
+  @return (
+    'focus-label-text-color':
+      map.get($extended-branded-tokens, 'focus-label-text-color'),
+    'hover-label-text-color':
+      map.get($extended-branded-tokens, 'hover-label-text-color'),
+    'label-text-color': map.get($extended-branded-tokens, 'label-text-color'),
+    'label-text-type': map.get($extended-branded-tokens, 'label-text-type'),
+    'large-container-height': map.get($large-tokens, 'container-height'),
+    'large-container-shape': map.get($large-tokens, 'container-shape'),
+    'large-container-width': map.get($large-tokens, 'container-width'),
+    'large-icon-size': map.get($large-tokens, 'icon-size'),
+    'pressed-label-text-color':
+      map.get($extended-branded-tokens, 'pressed-label-text-color')
+  );
+}
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
   'md-sys-elevation': md-sys-elevation.values(),
   'md-sys-shape': md-sys-shape.values(),
   'md-sys-state': md-sys-state.values(),
+  'md-sys-typescale': md-sys-typescale.values(),
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  @return md-comp-fab-branded.values($deps, $exclude-hardcoded-values);
+  $tokens: values.validate(
+    md-comp-fab-branded.values($deps, $exclude-hardcoded-values),
+    $supported-tokens: $supported-tokens,
+    $new-tokens: _get-new-tokens($deps, $exclude-hardcoded-values)
+  );
+
+  @each $token, $value in $tokens {
+    $tokens: map.set(
+      $tokens,
+      $token,
+      var(--md-fab-branded-#{$token}, #{$value})
+    );
+  }
+
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
+  $tokens: shape.resolve-tokens($tokens, 'large-container-shape');
+  @return $tokens;
+}
+
+// TODO(b/276957188): Remove this when we resolve issues with values fn.
+@function theme-values($deps: $_default, $exclude-hardcoded-values: false) {
+  $tokens: values.validate(
+    md-comp-fab-branded.values($deps, $exclude-hardcoded-values),
+    $supported-tokens: $supported-tokens,
+    $new-tokens: _get-new-tokens($deps, $exclude-hardcoded-values),
+    $is-subset: true
+  );
+
+  @each $token, $value in $tokens {
+    @if $value {
+      $tokens: map.set($tokens, $token, #{$value});
+    } @else {
+      $tokens: map.remove($tokens, $token);
+    }
+  }
+
+  $tokens: shape.resolve-tokens($tokens, 'container-shape');
+  $tokens: shape.resolve-tokens($tokens, 'large-container-shape');
+  @return $tokens;
 }

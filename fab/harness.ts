@@ -7,16 +7,14 @@
 import {Harness} from '../testing/harness.js';
 
 import {Fab} from './lib/fab.js';
-import {FabExtended} from './lib/fab-extended.js';
-
 
 /**
  * Test harness for floating action buttons.
  */
-export class FabHarness extends Harness<Fab|FabExtended> {
+export class FabHarness extends Harness<Fab> {
   override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.renderRoot.querySelector('.md3-fab') as
+    return this.element.renderRoot.querySelector('.fab') as
         HTMLButtonElement;
   }
 }

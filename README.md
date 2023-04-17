@@ -34,7 +34,7 @@ changes.
 Component                     | Alpha | Beta | Stable
 ----------------------------- | :---: | :--: | :----:
 Button                        | ✅     | ✅    | ❌
-FAB                           | ✅     | ❌    | ❌
+FAB                           | ✅     | ✅    | ❌
 Icon button                   | ✅     | ✅    | ❌
 Checkbox                      | ✅     | ✅    | ❌
 Chips                         | 🟡     | ❌    | ❌

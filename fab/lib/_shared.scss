@@ -3,196 +3,217 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 // go/keep-sorted start
 @use 'sass:map';
-@use 'sass:meta';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../elevation/elevation';
 @use '../../focus/focus-ring';
 @use '../../ripple/ripple';
 @use '../../sass/shape';
-@use '../../sass/theme';
-@use '../../sass/touch-target';
 @use '../../tokens';
+@use './fab';
 // go/keep-sorted end
 
 $_md-sys-motion: tokens.md-sys-motion-values();
 
 @mixin styles() {
   :host {
+    @include ripple.theme(
+      (
+        hover-opacity: var(--_hover-state-layer-opacity),
+        focus-opacity: var(--_focus-state-layer-opacity),
+        pressed-opacity: var(--_pressed-state-layer-opacity),
+      )
+    );
+
     display: inline-flex;
-    outline: none;
-    -webkit-tap-highlight-color: transparent;
-    /**
-     * Override vertical-align with shortest value "top". Vertical-align's default
-     * "baseline" value causes buttons to be misaligned next to each other if one
-     * button has an icon and the other does not.
-     */
-    vertical-align: top;
   }
 
-  .md3-fab {
-    display: inline-flex;
-    border: none;
-    outline: none;
-    user-select: none;
-    -webkit-appearance: none;
-    vertical-align: middle;
-    text-decoration: none;
+  .fab,
+  .icon,
+  .icon ::slotted(*) {
+    display: flex;
+  }
+
+  .fab {
     align-items: center;
     justify-content: center;
+    vertical-align: middle;
+    padding: 0;
     position: relative;
-    z-index: 0; // Needed for elevation and ripple
-    background-color: var(--_container-color);
+    height: var(--_container-height);
+    transition-property: background-color;
+    border-width: 0px;
+    outline: none;
+    // Required for elevation and ripple to stay below content
+    z-index: 0;
 
+    &.extended {
+      width: inherit;
+      box-sizing: border-box;
+      padding-inline-start: 16px;
+      padding-inline-end: 20px;
+    }
+
+    &:not(.extended) {
+      width: var(--_container-width);
+    }
+
+    &.large {
+      width: var(--_large-container-width);
+      height: var(--_large-container-height);
+
+      .icon ::slotted(*) {
+        width: var(--_large-icon-size);
+        height: var(--_large-icon-size);
+        font-size: var(--_large-icon-size);
+      }
+
+      &,
+      .ripple {
+        border-start-start-radius: var(--_large-container-shape-start-start);
+        border-start-end-radius: var(--_large-container-shape-start-end);
+        border-end-start-radius: var(--_large-container-shape-end-start);
+        border-end-end-radius: var(--_large-container-shape-end-end);
+
+        @include focus-ring.theme(
+          (
+            'shape': shape.corners-to-shape-token('--_large-container-shape'),
+          )
+        );
+      }
+    }
+
+    @include _elevation(
+      (
+        'default': var(--_container-elevation),
+        'focus': var(--_focus-container-elevation),
+        'hover': var(--_hover-container-elevation),
+        'pressed': var(--_pressed-container-elevation),
+      ),
+      var(--_container-shadow-color)
+    );
+
+    &.lowered {
+      background-color: var(--_lowered-container-color);
+
+      @include _elevation(
+        (
+          'default': var(--_lowered-container-elevation),
+          'focus': var(--_lowered-focus-container-elevation),
+          'hover': var(--_lowered-hover-container-elevation),
+          'pressed': var(--_lowered-pressed-container-elevation),
+        )
+      );
+    }
+
+    @include fab.color(
+      (
+        'container-color': var(--_container-color),
+        'focus-state-layer-color': var(--_focus-state-layer-color),
+        'hover-state-layer-color': var(--_hover-state-layer-color),
+        'pressed-state-layer-color': var(--_pressed-state-layer-color),
+        'label-text-color': var(--_label-text-color),
+        'hover-label-text-color': var(--_hover-label-text-color),
+        'focus-label-text-color': var(--_focus-label-text-color),
+        'pressed-label-text-color': var(--_pressed-label-text-color),
+      )
+    );
+  }
+
+  .label {
+    padding-inline-start: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font: var(--_label-text-type);
+  }
+
+  .ripple {
+    overflow: hidden;
+  }
+
+  .ripple,
+  md-elevation {
+    // puts both behind content
+    z-index: -1;
+  }
+
+  .touch-target {
+    position: absolute;
+    top: 50%;
+    height: 48px;
+    left: 50%;
+    width: 48px;
+    transform: translate(-50%, -50%);
+  }
+
+  md-elevation,
+  .fab {
+    // TODO: replace duration with animation tokens
+    transition-duration: 280ms;
+    transition-timing-function: map.get($_md-sys-motion, 'easing-emphasized');
+  }
+
+  .fab,
+  .ripple {
+    border-start-start-radius: var(--_container-shape-start-start);
+    border-start-end-radius: var(--_container-shape-start-end);
+    border-end-start-radius: var(--_container-shape-end-start);
+    border-end-end-radius: var(--_container-shape-end-end);
     @include focus-ring.theme(
       (
         'shape': shape.corners-to-shape-token('--_container-shape'),
       )
     );
+  }
 
-    @include ripple.theme(
-      (
-        'hover-color': var(--_hover-state-layer-color),
-        'focus-color': var(--_focus-state-layer-color),
-        'pressed-color': var(--_pressed-state-layer-color),
-        'hover-opacity': var(--_hover-state-layer-opacity),
-        'focus-opacity': var(--_focus-state-layer-opacity),
-        'pressed-opacity': var(--_pressed-state-layer-opacity),
-      )
-    );
+  .icon ::slotted(*) {
+    width: var(--_icon-size);
+    height: var(--_icon-size);
+    font-size: var(--_icon-size);
+  }
+}
 
+@mixin _elevation($states, $shadow-color: null) {
+  @include elevation.theme(
+    (
+      'level': map.get($states, 'default'),
+    )
+  );
+
+  @if $shadow-color {
     @include elevation.theme(
       (
-        'level': var(--_container-elevation),
-        'shadow-color': var(--_container-shadow-color),
+        'shadow-color': $shadow-color,
       )
     );
-
-    &.md3-fab--lowered {
-      @include elevation.theme(
-        (
-          'level': var(--_lowered-container-elevation),
-        )
-      );
-    }
-
-    // apply elevation in order of focused, hovered, pressed
-    // this ensures a button will have hover elevation after being focused
-    &:focus {
-      @include elevation.theme(
-        (
-          'level': var(--_focus-container-elevation),
-        )
-      );
-
-      &.md3-fab--lowered {
-        @include elevation.theme(
-          (
-            'level': var(--_lowered-focus-container-elevation),
-          )
-        );
-      }
-    }
-
-    &:hover {
-      cursor: pointer;
-
-      @include elevation.theme(
-        (
-          'level': var(--_hover-container-elevation),
-        )
-      );
-
-      &.md3-fab--lowered {
-        @include elevation.theme(
-          (
-            'level': var(--_lowered-hover-container-elevation),
-          )
-        );
-      }
-    }
-
-    &:active {
-      outline: none;
-
-      @include elevation.theme(
-        (
-          'level': var(--_pressed-container-elevation),
-        )
-      );
-
-      &.md3-fab--lowered {
-        @include elevation.theme(
-          (
-            'level': var(--_lowered-pressed-container-elevation),
-          )
-        );
-      }
-    }
   }
 
-  md-elevation {
-    // TODO: replace duration with animation tokens
-    transition-duration: 280ms;
-    transition-timing-function: map.get($_md-sys-motion, 'emphasized-easing');
-    z-index: -1; // Place behind content
+  // apply elevation in order of focused, hovered, pressed, disabled
+  // this ensures a button will have hover elevation after being focused
+  &:focus {
+    @include elevation.theme(
+      (
+        'level': map.get($states, 'focus'),
+      )
+    );
   }
 
-  .md3-fab__ripple {
-    overflow: hidden;
-    z-index: -1; // Place behind content
+  &:hover {
+    @include elevation.theme(
+      (
+        'level': map.get($states, 'hover'),
+      )
+    );
   }
 
-  .md3-fab,
-  .md3-fab__ripple {
-    border-start-start-radius: var(--_container-shape-start-start);
-    border-start-end-radius: var(--_container-shape-start-end);
-    border-end-start-radius: var(--_container-shape-end-start);
-    border-end-end-radius: var(--_container-shape-end-end);
-  }
-
-  .md3-fab__icon {
-    display: inline-flex;
-  }
-
-  .md3-fab__touch {
-    @include touch-target.touch-target();
-  }
-
-  .md3-fab__icon ::slotted(*),
-  .md3-fab__icon {
-    color: var(--_icon-color);
-    font-size: var(--_icon-size);
-    height: var(--_icon-size);
-    width: var(--_icon-size);
-
-    .md3-fab:hover & {
-      color: var(--_hover-icon-color);
-    }
-
-    .md3-fab:focus & {
-      color: var(--_focus-icon-color);
-    }
-
-    .md3-fab:active & {
-      color: var(--_pressed-icon-color);
-    }
-  }
-
-  @media (forced-colors: active) {
-    .md3-fab {
-      // Adjust the focus ring padding to account for the 1px border in HCM.
-      @include focus-ring.theme(
-        (
-          'offset': 3px,
-        )
-      );
-      border: 1px solid ButtonText;
-    }
+  &:active {
+    @include elevation.theme(
+      (
+        'level': map.get($states, 'pressed'),
+      )
+    );
   }
 }

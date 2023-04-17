@@ -1,28 +1,31 @@
 /**
  * @license
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {TemplateResult} from 'lit';
-import {ClassInfo} from 'lit/directives/class-map.js';
+import {property} from 'lit/decorators.js';
 
-import {FabShared} from './fab-shared.js';
+import {SharedFab} from './shared.js';
 
 /**
- * @soyCompatible
+ * The variants available to non-branded FABs.
  */
-export class Fab extends FabShared {
-  /** @soyTemplate */
-  protected override getRenderClasses(): ClassInfo {
+export type Variant = 'surface'|'primary'|'secondary'|'tertiary';
+
+// tslint:disable-next-line:enforce-comments-on-exported-symbols
+export class Fab extends SharedFab {
+  /**
+   * The FAB color variant to render.
+   */
+  @property() variant: Variant = 'surface';
+
+  override getRenderClasses() {
     return {
       ...super.getRenderClasses(),
-      'md3-fab--regular': true,
+      'primary': this.variant === 'primary',
+      'secondary': this.variant === 'secondary',
+      'tertiary': this.variant === 'tertiary',
     };
-  }
-
-  /** @soyTemplate */
-  protected override renderIcon(icon: string): TemplateResult|string {
-    return '';
   }
 }

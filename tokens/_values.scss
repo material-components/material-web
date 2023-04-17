@@ -37,6 +37,8 @@
 /// @param {Map} $new-tokens [null] - Keyword argument for a Map whose keys
 ///     and values are new tokens to be added. They must also appear in the
 ///     `$supported-tokens` list.
+/// @param {Bool} $is-subset [null] - Check if provided tokens are only a subset
+///     of the supported tokens. e.g. when generating a theme.
 /// @return {Map} The `tokens.md-comp-*-values()` Map with any unsupported
 ///     tokens removed, renamed tokens updated, and new tokens added.
 @function validate($values, $tokens...) {
@@ -102,7 +104,8 @@
   }
 
   @each $supported-token in $supported-tokens {
-    @if not map.has-key($values, $supported-token) {
+    $is-subset: map.get($tokens, 'is-subset');
+    @if not($is-subset or map.has-key($values, $supported-token)) {
       @error 'The provided values are missing the supported \'#{$supported-token}\' token.';
     }
   }
