@@ -109,11 +109,14 @@ function visitRule(
 
   try {
     let {selectorText} = rule;
-    // match :foo, ensuring it does not have an extra colon behind it
-    // (no pseudo elements like ::foo) and it does not have a parens in front
-    // of it (no pseudo class functions like :foo())
-    const regex = /(?<!:)(:(?![\w-]+\()[\w-]+)/g;
+    // match :foo, ensuring that it does not have a paren at the end
+    // (no pseudo class functions like :foo())
+    const regex = /(:(?![\w-]+\()[\w-]+)/g;
     const matches = Array.from(selectorText.matchAll(regex)).filter(match => {
+      // don't match pseudo elements like ::foo
+      if (match.index != null && selectorText[match.index - 1] === ':') {
+        return false;
+      }
       return pseudoClasses.includes(match[1]);
     });
 
