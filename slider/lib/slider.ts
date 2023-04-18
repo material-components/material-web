@@ -188,7 +188,7 @@ export class Slider extends LitElement {
 
   @state() private focusRingAShowing = false;
   @state() private focusRingBShowing = false;
-  // allows for lazy rendering of the focus ring by latchin to true when the
+  // allows for lazy rendering of the focus ring by latching to true when the
   // focus ring should be rendered.
   private focusRingARequested = false;
   private focusRingBRequested = false;
@@ -201,8 +201,8 @@ export class Slider extends LitElement {
   // interaction targets.
   @state() private handleAHover = false;
   @state() private handleBHover = false;
-  @state() private handleAPressed = false;
-  @state() private handleBPressed = false;
+  @state() private inputAPressed = false;
+  @state() private inputBPressed = false;
 
   @state() private onTopId = 'b';
   @state() private handlesOverlapping = false;
@@ -284,10 +284,10 @@ export class Slider extends LitElement {
     const isFlipped = this.isFlipped();
     const containerStyles = {
       // for clipping inputs and active track.
-      '--lowerFraction': String(lowerFraction),
-      '--upperFraction': String(upperFraction),
+      '--slider-lower-fraction': String(lowerFraction),
+      '--slider-upper-fraction': String(upperFraction),
       // for generating tick marks
-      '--tickCount': String(range / step)
+      '--slider-tick-count': String(range / step),
     };
     const containerClasses = {ranged: this.allowRange};
 
@@ -303,6 +303,7 @@ export class Slider extends LitElement {
       lesser: !isFlipped,
       value: this.valueA,
       label: labelA,
+      pressed: this.inputAPressed,
       getRipple: this.getRippleA
     };
 
@@ -311,6 +312,7 @@ export class Slider extends LitElement {
       lesser: isFlipped,
       value: this.valueB,
       label: labelB,
+      pressed: this.inputBPressed,
       getRipple: this.getRippleB
     };
 
@@ -321,7 +323,7 @@ export class Slider extends LitElement {
       focusRequested: this.focusRingARequested,
       showFocus: this.focusRingAShowing,
       hover: this.handleAHover,
-      pressed: this.handleAPressed,
+      pressed: this.inputAPressed,
       label: labelA
     };
 
@@ -332,7 +334,7 @@ export class Slider extends LitElement {
       focusRequested: this.focusRingBRequested,
       showFocus: this.focusRingBShowing,
       hover: this.handleBHover,
-      pressed: this.handleBPressed,
+      pressed: this.inputBPressed,
       label: labelB
     };
 
@@ -417,11 +419,12 @@ export class Slider extends LitElement {
     </div>`;
   }
 
-  protected renderInput({id, lesser, value, label, getRipple}: {
+  protected renderInput({id, lesser, value, label, pressed, getRipple}: {
     id: string,
     lesser: boolean,
     value: number,
     label: string,
+    pressed: boolean,
     getRipple: () => Promise<MdRipple|null>| null
   }) {
     // when ranged, ensure announcement includes value info.
@@ -430,6 +433,7 @@ export class Slider extends LitElement {
     return html`<input type="range"
       class="${classMap({
       lesser,
+      pressed,
       [id]: true
     })}"
       @focus=${this.handleFocus}
@@ -463,7 +467,6 @@ export class Slider extends LitElement {
     return this.rippleA;
   };
 
-
   private readonly getRippleB = () => {  // bind to this
     if (!this.handleBHover) {
       return null;
@@ -480,11 +483,11 @@ export class Slider extends LitElement {
     }
     // TODO(b/269799771): improve slider ripple connection
     if (hovering) {
-      rippleEl.handlePointerenter(
-          new PointerEvent('pointerenter', {isPrimary: true, pointerId: 1}));
+      rippleEl.handlePointerenter(new PointerEvent(
+          'pointerenter', {isPrimary: true, pointerId: this.ripplePointerId}));
     } else {
-      rippleEl.handlePointerleave(
-          new PointerEvent('pointerleave', {isPrimary: true, pointerId: 1}));
+      rippleEl.handlePointerleave(new PointerEvent(
+          'pointerleave', {isPrimary: true, pointerId: this.ripplePointerId}));
     }
   }
 
@@ -509,21 +512,28 @@ export class Slider extends LitElement {
     this.focusRingBShowing = false;
   }
 
+  // used in synthetic events generated to control ripple hover state.
+  private ripplePointerId = 1;
+
   protected handleDown(e: PointerEvent) {
     pointerPress();
+    this.ripplePointerId = e.pointerId;
     const isA = this.isEventOnA(e);
     const isPrimaryButton = Boolean(e.buttons & 1);
     // Since handle moves to pointer on down and there may not be a move,
     // it needs to be considered hovered..
     this.handleAHover = !this.disabled && isA && Boolean(this.handleA);
-    this.handleAPressed = isPrimaryButton && this.handleAHover;
+    this.inputAPressed = !this.disabled && isA && isPrimaryButton;
     this.handleBHover = !this.disabled && !isA && Boolean(this.handleB);
-    this.handleBPressed = isPrimaryButton && this.handleBHover;
+    this.inputBPressed = !this.disabled && !isA && isPrimaryButton;
     this.updateFocusVisible(e);
   }
 
-  protected handleUp() {
-    this.handleAPressed = this.handleBPressed = false;
+  protected handleUp(e: PointerEvent) {
+    this.inputAPressed = this.inputBPressed = false;
+    // Force Safari to focus input so the label stays displayed; note,
+    // Macs don't normally focus non-text type inputs.
+    (e.target as HTMLElement).focus();
   }
 
   /**
@@ -552,7 +562,6 @@ export class Slider extends LitElement {
     this.handleAHover = false;
     this.handleBHover = false;
   }
-
 
   private updateOnTop(e: Event) {
     this.onTopId = (e.target as Element).classList.contains('a') ? 'a' : 'b';

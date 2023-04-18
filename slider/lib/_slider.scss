@@ -20,6 +20,29 @@
 $_md-sys-motion: tokens.md-sys-motion-values();
 $_md-sys-shape: tokens.md-sys-shape-values();
 
+// Returns a list of rtl selectors to construct distinct rulesets. Seprating
+// rulesets ensure they are not dropped on browsers where one is not supported;
+// note, `:where` cannot be used to create compound selectors that contain
+// pseudo elements
+// (e.g. this does not work: `:where(:host([dir="rtl"]) .foo::after)`),
+@function _get-rtl-selectors($selector: '', $suffix: '') {
+  @return (
+    ':host-context([dir="rtl"]) #{$selector}#{$suffix}',
+    ':host([dir="rtl"]) #{$selector}#{$suffix}',
+    '#{$selector}:dir(rtl)#{$suffix}'
+  );
+}
+
+// Returns a background-image with sized circular ticks of the given color.
+@function _get-tick-image($color) {
+  @return radial-gradient(
+    circle at var(--_with-tick-marks-container-size) center,
+    #{$color} 0,
+    #{$color} calc(var(--_with-tick-marks-container-size) / 2),
+    transparent calc(var(--_with-tick-marks-container-size) / 2)
+  );
+}
+
 @mixin theme($tokens) {
   $tokens: theme.validate-theme(tokens.md-comp-slider-values(), $tokens);
   $tokens: theme.create-theme-vars($tokens, 'slider');
@@ -29,6 +52,32 @@ $_md-sys-shape: tokens.md-sys-shape-values();
 
 @mixin styles() {
   $tokens: theme.create-theme-vars(tokens.md-comp-slider-values(), 'slider');
+
+  // The max clip is reduced by 1 full tick display which is 2x the container
+  // size to account for always showing the active track on the outside
+  // edge of the last tick.
+  $_active-track-max-clip: calc(
+    100% - var(--_with-tick-marks-container-size) * 2
+  );
+  // When the lower fraction is !0, add clipping by the tick container size
+  $_lower-fraction-not-zero: min(var(--slider-lower-fraction) * 1e9, 1);
+  $_active-track-start-offset: calc(
+    var(--_with-tick-marks-container-size) * $_lower-fraction-not-zero
+  );
+  $_active-track-start-clip: calc(
+    $_active-track-start-offset + $_active-track-max-clip *
+      var(--slider-lower-fraction)
+  );
+
+  // When the upper fraction is !1, add clipping by the tick container size
+  $_upper-fraction-not-one: min((1 - var(--slider-upper-fraction)) * 1e9, 1);
+  $_active-track-end-offset: calc(
+    var(--_with-tick-marks-container-size) * $_upper-fraction-not-one
+  );
+  $_active-track-end-clip: calc(
+    $_active-track-end-offset + $_active-track-max-clip *
+      (1 - var(--slider-upper-fraction))
+  );
 
   :host {
     display: inline-flex;
@@ -95,112 +144,73 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     position: absolute;
     content: '';
     // pad the track inward by half the ripple size offset by the tick container size.
-    --track-padding: calc(
+    $_track-padding: calc(
       (var(--_state-layer-size) / 2) - var(--_with-tick-marks-container-size)
     );
-    inset-inline-start: var(--track-padding);
-    inset-inline-end: var(--track-padding);
-    --tickWidth: calc(
-      (100% - var(--_with-tick-marks-container-size) * 2) / var(--tickCount)
-    );
+    inset-inline-start: $_track-padding;
+    inset-inline-end: $_track-padding;
 
-    background-image: radial-gradient(
-      circle at var(--_with-tick-marks-container-size) center,
-      var(--tickColor) 0,
-      var(--tickColor) calc(var(--_with-tick-marks-container-size) / 2),
-      transparent calc(var(--_with-tick-marks-container-size) / 2)
-    );
-    background-color: var(--trackColor);
-    background-size: var(--tickWidth) 100%;
+    // ticks size: set here since it does not change.
+    background-size: calc(
+        (100% - var(--_with-tick-marks-container-size) * 2) /
+          var(--slider-tick-count)
+      )
+      100%;
   }
 
   // inactive-track
   .track::before {
     block-size: var(--_inactive-track-height);
     border-radius: var(--_inactive-track-shape);
-    --trackColor: var(--_inactive-track-color);
-    // Without the "tickmarks" class, ticks are the same color as the track.
-    --tickColor: var(--_inactive-track-color);
+    background-color: var(--_inactive-track-color);
   }
 
   .track.tickMarks::before {
-    --tickColor: var(--_with-tick-marks-inactive-container-color);
+    background-image: _get-tick-image(
+      'var(--_with-tick-marks-inactive-container-color)'
+    );
   }
 
   :host([disabled]) .track::before {
-    --trackColor: var(--_disabled-inactive-track-color);
-    --tickColor: var(--_disabled-inactive-track-color);
     // Note, the active track opacity is applied to the entire host,
     // so the inactive track is calc'd to compensate.
     opacity: calc(
       (1 / var(--_disabled-active-track-opacity)) *
         var(--_disabled-inactive-track-opacity)
     );
+    background-color: var(--_disabled-inactive-track-color);
   }
 
   // active-track
   .track::after {
-    transition-timing-function: linear;
     block-size: var(--_active-track-height);
     border-radius: var(--_active-track-shape);
-    --trackColor: var(--_active-track-color);
-    // Without the "tickmarks" class, ticks are the same color as the track.
-    --tickColor: var(--_active-track-color);
-
-    // The max clip is reduced by 1 full tick display which is 2x the container
-    // size to account for always showing the active track on the outside
-    // edge of the last tick.
-    --activeTrackMaxClip: calc(
-      100% - var(--_with-tick-marks-container-size) * 2
-    );
-    // When the lower fraction is !0, add clipping by the tick container size
-    --lowerFractionNotZero: min(var(--lowerFraction) * 1e9, 1);
-    --activeTrackStartOffset: calc(
-      var(--_with-tick-marks-container-size) * var(--lowerFractionNotZero)
-    );
-    --activeTrackStartClip: calc(
-      var(--activeTrackStartOffset) + var(--activeTrackMaxClip) *
-        var(--lowerFraction)
-    );
-
-    // When the upper fraction is !1, add clipping by the tick container size
-    --upperFractionNotOne: min((1 - var(--upperFraction)) * 1e9, 1);
-    --activeTrackEndOffset: calc(
-      var(--_with-tick-marks-container-size) * var(--upperFractionNotOne)
-    );
-    --activeTrackEndClip: calc(
-      var(--activeTrackEndOffset) + var(--activeTrackMaxClip) *
-        (1 - var(--upperFraction))
-    );
-    clip-path: inset(0 var(--activeTrackEndClip) 0 var(--activeTrackStartClip));
+    clip-path: inset(0 $_active-track-end-clip 0 $_active-track-start-clip);
+    background-color: var(--_active-track-color);
   }
 
-  // Support rtl via :dir for modern browsers and fallback to
-  // :host-context for older blink and :host for Safari.
-  :host-context([dir='rtl']) .track::after {
-    clip-path: inset(0 var(--activeTrackStartClip) 0 var(--activeTrackEndClip));
-  }
-
-  :host([dir='rtl']) .track::after {
-    clip-path: inset(0 var(--activeTrackStartClip) 0 var(--activeTrackEndClip));
-  }
-
-  .track:dir(rtl)::after {
-    clip-path: inset(0 var(--activeTrackStartClip) 0 var(--activeTrackEndClip));
+  // rtl for active track clipping
+  @each $_rtl-selectors in _get-rtl-selectors('.track', '::after') {
+    #{$_rtl-selectors} {
+      clip-path: inset(0 $_active-track-start-clip 0 $_active-track-end-clip);
+    }
   }
 
   .track.tickMarks::after {
-    --tickColor: var(--_with-tick-marks-active-container-color);
+    background-image: _get-tick-image(
+      'var(--_with-tick-marks-active-container-color)'
+    );
   }
 
   :host([disabled]) .track::after {
-    --trackColor: var(--_disabled-active-track-color);
-    --tickColor: var(--_disabled-active-track-color);
+    background-color: var(--_disabled-active-track-color);
   }
 
   :host([disabled]) .track.tickMarks::before,
   :host([disabled]) .track.tickMarks::after {
-    --tickColor: var(--_with-tick-marks-disabled-container-color);
+    background-image: _get-tick-image(
+      'var(--_with-tick-marks-disabled-container-color)'
+    );
   }
 
   // container for the handle that is inset with padding to be
@@ -226,8 +236,10 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     position: absolute;
     inset-block-start: 0;
     inset-block-end: 0;
-    inset-inline-start: calc(100% * var(--lowerFraction));
-    inline-size: calc(100% * (var(--upperFraction) - var(--lowerFraction)));
+    inset-inline-start: calc(100% * var(--slider-lower-fraction));
+    inline-size: calc(
+      100% * (var(--slider-upper-fraction) - var(--slider-lower-fraction))
+    );
   }
 
   // handle
@@ -267,15 +279,12 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   .onTop.isOverlapping {
-    --labelOutlineWidth: var(--_with-overlap-handle-outline-width);
-    --labelOutlineColor: var(--_with-overlap-handle-outline-color);
-  }
-
-  .handleNub,
-  .label,
-  .label::before {
-    border: var(--labelOutlineColor, transparent) solid
-      var(--labelOutlineWidth, 0);
+    .handleNub,
+    .label,
+    .label::before {
+      border: var(--_with-overlap-handle-outline-color) solid
+        var(--_with-overlap-handle-outline-width);
+    }
   }
 
   .handle.lesser {
@@ -324,11 +333,10 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   // triangle below label
   .label::before {
     // Note, sizing carefully estimated to create an ice cream cone shape.
-    --triangleSize: calc(var(--_label-container-height) / 2);
-    --triangleOffset: calc(var(--_label-container-height) / -10);
-    inline-size: var(--triangleSize);
-    block-size: var(--triangleSize);
-    bottom: var(--triangleOffset);
+    $_triangleSize: calc(var(--_label-container-height) / 2);
+    inline-size: $_triangleSize;
+    block-size: $_triangleSize;
+    bottom: calc(var(--_label-container-height) / -10);
     transform: rotate(45deg);
   }
 
@@ -391,63 +399,48 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     z-index: 2;
   }
 
-  .ranged input {
-    --valueFromStart: calc(
-      var(--_state-layer-size) / 2 + (100% - var(--_state-layer-size)) *
-        (
-          var(--lowerFraction) +
-            ((var(--upperFraction) - var(--lowerFraction)) / 2)
-        )
-    );
-    --valueFromEnd: calc(100% - var(--valueFromStart));
-    clip-path: inset(0 var(--leftClip, 0) 0 var(--rightClip, 0));
-  }
-
   // Clip the inputs to the space left/right of the center point between the
   // values so the right input gets pointer events.
-  .ranged input.lesser {
-    --leftClip: var(--valueFromEnd);
-    --rightClip: 0;
+  $_clip-to-start: calc(
+    var(--_state-layer-size) / 2 + (100% - var(--_state-layer-size)) *
+      (
+        var(--slider-lower-fraction) +
+          ((var(--slider-upper-fraction) - var(--slider-lower-fraction)) / 2)
+      )
+  );
+
+  $_clip-to-end: calc(100% - $_clip-to-start);
+
+  // clip left side of "lesser" input
+  .ranged input.lesser:not(.pressed) {
+    clip-path: inset(0 $_clip-to-end 0 0);
   }
 
-  .ranged input:not(.lesser) {
-    --leftClip: 0;
-    --rightClip: var(--valueFromStart);
+  // in 'rtl', clip right side of "lesser" input
+  @each $_rtl-selector
+    in _get-rtl-selectors('.ranged input.lesser', ':not(.pressed)')
+  {
+    #{$_rtl-selector} {
+      clip-path: inset(0 0 0 $_clip-to-end);
+    }
   }
 
-  // Support rtl via :dir for modern browsers and fallback to
-  // :host-context for older blink and :host for Safari.
-  .ranged input.lesser:dir(rtl) {
-    --leftClip: 0;
-    --rightClip: var(--valueFromEnd);
+  // clip right side of "greater" input
+  .ranged input:not(.lesser):not(.pressed) {
+    clip-path: inset(0 0 0 $_clip-to-start);
   }
 
-  :host-context([dir='rtl']) .ranged input.lesser {
-    --leftClip: 0;
-    --rightClip: var(--valueFromEnd);
+  // in 'rtl', clip left side of "greater" input
+  @each $_rtl-selector
+    in _get-rtl-selectors('.ranged input', ':not(.lesser):not(.pressed)')
+  {
+    #{$_rtl-selector} {
+      clip-path: inset(0 $_clip-to-start 0 0);
+    }
   }
 
-  :host([dir='rtl']) .ranged input.lesser {
-    --leftClip: 0;
-    --rightClip: var(--valueFromEnd);
-  }
-
-  .ranged input:not(.lesser):dir(rtl) {
-    --leftClip: var(--valueFromStart);
-    --rightClip: 0;
-  }
-
-  :host-context([dir='rtl']) .ranged input:not(.lesser) {
-    --leftClip: var(--valueFromStart);
-    --rightClip: 0;
-  }
-
-  :host([dir='rtl']) .ranged input:not(.lesser) {
-    --leftClip: var(--valueFromStart);
-    --rightClip: 0;
-  }
-
-  .onTop {
+  .onTop,
+  input.pressed {
     z-index: 1;
   }
 

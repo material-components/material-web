@@ -42,8 +42,8 @@
 
   .label,
   .label::before {
-    --labelOutlineWidth: var(--_with-overlap-handle-outline-width);
-    --labelOutlineColor: var(--_with-overlap-handle-outline-color);
+    border: var(--_with-overlap-handle-outline-color) solid
+      var(--_with-overlap-handle-outline-width);
   }
 
   // inactive track
