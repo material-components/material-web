@@ -207,8 +207,6 @@ export class Slider extends LitElement {
   @state() private onTopId = 'b';
   @state() private handlesOverlapping = false;
 
-  @state() private isInteracting = false;
-
   constructor() {
     super();
     this.addController(new FormController(this));
@@ -291,10 +289,7 @@ export class Slider extends LitElement {
       // for generating tick marks
       '--tickCount': String(range / step)
     };
-    const containerClasses = {
-      interacting: this.isInteracting,
-      ranged: this.allowRange
-    };
+    const containerClasses = {ranged: this.allowRange};
 
     // optional label values to show in place of the value.
     const labelA = String(this.valueLabel?.[isFlipped ? 1 : 0] ?? this.valueA);
@@ -516,7 +511,6 @@ export class Slider extends LitElement {
 
   protected handleDown(e: PointerEvent) {
     pointerPress();
-    this.isInteracting = true;
     const isA = this.isEventOnA(e);
     const isPrimaryButton = Boolean(e.buttons & 1);
     // Since handle moves to pointer on down and there may not be a move,
@@ -528,12 +522,8 @@ export class Slider extends LitElement {
     this.updateFocusVisible(e);
   }
 
-  protected handleUp(e: PointerEvent) {
+  protected handleUp() {
     this.handleAPressed = this.handleBPressed = false;
-    // used to remove animations after interactions...
-    this.renderRoot.addEventListener('transitionend', () => {
-      this.isInteracting = false;
-    }, {once: true});
   }
 
   /**

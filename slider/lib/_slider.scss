@@ -15,22 +15,20 @@
 @use '../../sass/theme';
 @use '../../sass/var';
 @use '../../tokens';
-@use './tokens' as slider-tokens;
 // go/keep-sorted end
 
 $_md-sys-motion: tokens.md-sys-motion-values();
+$_md-sys-shape: tokens.md-sys-shape-values();
 
 @mixin theme($tokens) {
-  $tokens: slider-tokens.remove-unsupported-tokens($tokens);
-  $tokens: theme.validate-theme(slider-tokens.md-comp-slider-values(), $tokens);
+  $tokens: theme.validate-theme(tokens.md-comp-slider-values(), $tokens);
   $tokens: theme.create-theme-vars($tokens, 'slider');
 
   @include theme.emit-theme-vars($tokens);
 }
 
 @mixin styles() {
-  $tokens: slider-tokens.md-comp-slider-values();
-  $tokens: theme.create-theme-vars($tokens, 'slider');
+  $tokens: theme.create-theme-vars(tokens.md-comp-slider-values(), 'slider');
 
   :host {
     display: inline-flex;
@@ -39,8 +37,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
-
-    min-inline-size: var(--_container-min-inline-size);
+    min-inline-size: 200px;
 
     @include elevation.theme(
       (
@@ -51,15 +48,13 @@ $_md-sys-motion: tokens.md-sys-motion-values();
   }
 
   md-elevation {
-    // TODO: replace duration with animation tokens
-    transition-duration: 280ms;
+    transition-duration: map.get($_md-sys-motion, 'duration-medium1');
     transition-timing-function: map.get($_md-sys-motion, 'emphasized-easing');
   }
 
   @media (prefers-reduced-motion) {
-    :host {
-      --_handle-motion-duration: 0;
-      --_label-motion-duration: 0;
+    .label {
+      transition-duration: 0;
     }
   }
 
@@ -145,8 +140,6 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 
   // active-track
   .track::after {
-    transition-property: none;
-    transition-duration: var(--_handle-motion-duration);
     transition-timing-function: linear;
     block-size: var(--_active-track-height);
     border-radius: var(--_active-track-shape);
@@ -180,10 +173,6 @@ $_md-sys-motion: tokens.md-sys-motion-values();
         (1 - var(--upperFraction))
     );
     clip-path: inset(0 var(--activeTrackEndClip) 0 var(--activeTrackStartClip));
-  }
-
-  .interacting .track::after {
-    transition-property: clip-path;
   }
 
   // Support rtl via :dir for modern browsers and fallback to
@@ -239,13 +228,6 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     inset-block-end: 0;
     inset-inline-start: calc(100% * var(--lowerFraction));
     inline-size: calc(100% * (var(--upperFraction) - var(--lowerFraction)));
-    transition-property: none;
-    transition-duration: var(--_handle-motion-duration);
-    transition-timing-function: linear;
-  }
-
-  .interacting .handleContainer {
-    transition-property: inset-inline-start, inline-size;
   }
 
   // handle
@@ -308,10 +290,9 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     position: absolute;
     box-sizing: border-box;
     display: grid;
-    // TODO: make token?
     padding: 4px;
     place-items: center;
-    border-radius: var(--_label-container-shape);
+    border-radius: map.get($_md-sys-shape, 'corner-full');
 
     color: var(--_label-label-text-color);
     font: var(--_label-label-text-type);
@@ -321,8 +302,8 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     min-block-size: var(--_label-container-height);
     background: var(--_label-container-color);
     transition-property: transform;
-    transition-duration: var(--_label-motion-duration);
-    transition-timing-function: var(--_label-motion-easing);
+    transition-duration: map.get($_md-sys-motion, 'duration-short2');
+    transition-timing-function: map.get($_md-sys-motion, 'easing-emphasized');
     transform-origin: center bottom;
     transform: scale(0);
   }
@@ -475,7 +456,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     @include focus-ring.theme(
       (
         offset: -2px,
-        shape: map.get(slider-tokens.md-sys-shape-values(), corner-full),
+        shape: map.get($_md-sys-shape, 'corner-full'),
       )
     );
   }

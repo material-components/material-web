@@ -24,11 +24,23 @@ $_default: (
 );
 
 $_unsupported-tokens: (
+  'disabled-handle-opacity',
+  'label-container-elevation',
   'label-label-text-font',
   'label-label-text-line-height',
   'label-label-text-size',
   'label-label-text-tracking',
-  'label-label-text-weight'
+  'label-label-text-weight',
+  'track-elevation',
+  // for efficiency, tick marks are rendered as radial-gradients and
+  // have more limited customization
+  'with-tick-marks-active-container-opacity',
+  'with-tick-marks-container-shape',
+  'with-tick-marks-disabled-container-opacity',
+  'with-tick-marks-inactive-container-opacity',
+  // focus tokens no longer used.
+  'focus-state-layer-color',
+  'focus-state-layer-opacity'
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
