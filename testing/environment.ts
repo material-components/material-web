@@ -115,7 +115,7 @@ export class Environment {
   private createNewRoot() {
     const currentRoot = this.getCurrentRoot();
     if (currentRoot) {
-      document.body.removeChild(currentRoot);
+      currentRoot.remove();
     }
 
     const root = document.createElement('div');
