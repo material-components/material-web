@@ -137,3 +137,9 @@ Scrim           | `--md-sys-color-scrim`
   --md-sys-color-scrim: #000000;
 }
 ```
+
+## Using GM3 Colors
+
+If you just want to use GM3 ([Google Material 3](go/gm3), our first-party implementation
+of Material 3), you can use [the GM3 Sass helper libraries](cs/google3/third_party/javascript/material/web/gm3),
+either to include the `sass_library` target or serve the `sass_binary` directly.
