@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, nothing, PropertyValues} from 'lit';
+import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {live} from 'lit/directives/live.js';
@@ -327,9 +327,11 @@ export abstract class TextField extends LitElement {
   constructor() {
     super();
     this.addController(new FormController(this));
-    this.addEventListener('click', this.focus);
-    this.addEventListener('focusin', this.handleFocusin);
-    this.addEventListener('focusout', this.handleFocusout);
+    if (!isServer) {
+      this.addEventListener('click', this.focus);
+      this.addEventListener('focusin', this.handleFocusin);
+      this.addEventListener('focusout', this.handleFocusout);
+    }
   }
 
   /**

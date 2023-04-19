@@ -10,7 +10,7 @@
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, nothing, TemplateResult} from 'lit';
+import {html, isServer, LitElement, nothing, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
@@ -101,7 +101,9 @@ export abstract class Button extends LitElement implements ButtonState {
 
   constructor() {
     super();
-    this.addEventListener('click', this.handleActivationClick);
+    if (!isServer) {
+      this.addEventListener('click', this.handleActivationClick);
+    }
   }
 
   private readonly handleActivationClick = (event: MouseEvent) => {

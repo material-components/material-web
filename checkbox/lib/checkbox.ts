@@ -7,7 +7,7 @@
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
+import {html, isServer, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
@@ -85,13 +85,15 @@ export class Checkbox extends LitElement {
   constructor() {
     super();
     this.addController(new FormController(this));
-    this.addEventListener('click', (event: MouseEvent) => {
-      if (!isActivationClick(event)) {
-        return;
-      }
-      this.focus();
-      dispatchActivationClick(this.input!);
-    });
+    if (!isServer) {
+      this.addEventListener('click', (event: MouseEvent) => {
+        if (!isActivationClick(event)) {
+          return;
+        }
+        this.focus();
+        dispatchActivationClick(this.input!);
+      });
+    }
   }
 
   override focus() {

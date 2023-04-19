@@ -8,7 +8,7 @@ import '../../elevation/elevation.js';
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, nothing, PropertyValues} from 'lit';
+import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
@@ -210,13 +210,15 @@ export class Slider extends LitElement {
   constructor() {
     super();
     this.addController(new FormController(this));
-    this.addEventListener('click', (event: MouseEvent) => {
-      if (!isActivationClick(event)) {
-        return;
-      }
-      this.focus();
-      dispatchActivationClick(this.inputB);
-    });
+    if (!isServer) {
+      this.addEventListener('click', (event: MouseEvent) => {
+        if (!isActivationClick(event)) {
+          return;
+        }
+        this.focus();
+        dispatchActivationClick(this.inputB);
+      });
+    }
   }
 
   override focus() {

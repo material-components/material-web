@@ -7,7 +7,7 @@
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, nothing, TemplateResult} from 'lit';
+import {html, isServer, LitElement, nothing, TemplateResult} from 'lit';
 import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {when} from 'lit/directives/when.js';
 
@@ -90,13 +90,15 @@ export class Radio extends LitElement {
     super();
     this.addController(new FormController(this));
     this.addController(this.selectionController);
-    this.addEventListener('click', (event: Event) => {
-      if (!isActivationClick(event)) {
-        return;
-      }
-      this.focus();
-      dispatchActivationClick(this.input!);
-    });
+    if (!isServer) {
+      this.addEventListener('click', (event: Event) => {
+        if (!isActivationClick(event)) {
+          return;
+        }
+        this.focus();
+        dispatchActivationClick(this.input!);
+      });
+    }
   }
 
   [getFormValue]() {

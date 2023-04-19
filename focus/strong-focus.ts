@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {isServer} from 'lit';
+
 interface StrongFocus {
   visible: boolean;
   setVisible(visible: boolean): void;
@@ -54,6 +56,12 @@ export function keydownHandler(e: KeyboardEvent) {
  */
 export function setup(focusGlobal: StrongFocus, enableKeydownHandler = false) {
   focusObject = focusGlobal;
+
+  // Server doesn't have addEventListener shimmed
+  if (isServer) {
+    return;
+  }
+
   if (enableKeydownHandler) {
     window.addEventListener('keydown', keydownHandler);
   } else {
