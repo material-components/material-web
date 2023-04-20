@@ -50,7 +50,7 @@ Progress indicator (circular) | ✅     | ✅    | ❌
 Progress indicator (linear)   | ✅     | ✅    | ❌
 Radio button                  | ✅     | ✅    | ❌
 Ripple                        | ✅     | ✅    | 🟡
-Select                        | 🟡     | ❌    | ❌
+Select                        | ✅     | ✅    | ❌
 Slider                        | ✅     | ✅    | ❌
 Switch                        | ✅     | ✅    | ❌
 Tabs                          | 🟡     | ❌    | ❌
