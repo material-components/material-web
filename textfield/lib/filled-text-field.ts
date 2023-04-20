@@ -6,7 +6,7 @@
 
 import '../../field/filled-field.js';
 
-import {literal} from 'lit/static-html.js';
+import {html} from 'lit';
 
 import {TextField} from './text-field.js';
 
@@ -14,5 +14,21 @@ import {TextField} from './text-field.js';
  * A filled text field component.
  */
 export class FilledTextField extends TextField {
-  protected readonly fieldTag = literal`md-filled-field`;
+  // LINT.IfChange
+  override renderField() {
+    return html`<md-filled-field
+        class="field"
+        ?disabled=${this.disabled}
+        ?error=${this.hasError}
+        ?focused=${this.focused}
+        ?hasEnd=${this.hasTrailingIcon}
+        ?hasStart=${this.hasLeadingIcon}
+        .label=${this.label}
+        ?populated=${!!this.getInputValue()}
+        ?required=${this.required}
+      >
+        ${this.renderRootChildren()}
+      </md-filled-field>`;
+  }
+  // LINT.ThenChange(textfield/lib/outlined-text-field.ts)
 }

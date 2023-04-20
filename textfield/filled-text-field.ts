@@ -7,7 +7,6 @@
 import '../field/filled-field.js';
 
 import {customElement} from 'lit/decorators.js';
-import {literal} from 'lit/static-html.js';
 
 import {styles as filledForcedColorsStyles} from './lib/filled-forced-colors-styles.css.js';
 import {styles as filledStyles} from './lib/filled-styles.css.js';
@@ -31,6 +30,4 @@ declare global {
 export class MdFilledTextField extends FilledTextField {
   static override styles =
       [sharedStyles, filledStyles, filledForcedColorsStyles];
-
-  protected override readonly fieldTag = literal`md-filled-field`;
 }

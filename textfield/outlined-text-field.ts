@@ -7,7 +7,6 @@
 import '../field/outlined-field.js';
 
 import {customElement} from 'lit/decorators.js';
-import {literal} from 'lit/static-html.js';
 
 import {styles as outlinedForcedColorsStyles} from './lib/outlined-forced-colors-styles.css.js';
 import {styles as outlinedStyles} from './lib/outlined-styles.css.js';
@@ -31,6 +30,4 @@ declare global {
 export class MdOutlinedTextField extends OutlinedTextField {
   static override styles =
       [sharedStyles, outlinedStyles, outlinedForcedColorsStyles];
-
-  protected override readonly fieldTag = literal`md-outlined-field`;
 }

@@ -9,13 +9,12 @@ import '../../field/filled-field.js';
 
 import {html, render} from 'lit';
 import {customElement} from 'lit/decorators.js';
-import {literal} from 'lit/static-html.js';
 
 import {Environment} from '../../testing/environment.js';
 import {Harness} from '../../testing/harness.js';
 import {TextFieldHarness} from '../harness.js';
 
-import {TextField} from './text-field.js';
+import {FilledTextField} from './filled-text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -24,9 +23,7 @@ declare global {
 }
 
 @customElement('md-test-text-field')
-class TestTextField extends TextField {
-  protected override readonly fieldTag = literal`md-filled-field`;
-
+class TestTextField extends FilledTextField {
   getHasError() {
     return this.renderRoot.querySelector('input')?.getAttribute(
                'aria-invalid') === 'true';

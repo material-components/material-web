@@ -14,7 +14,6 @@ import {html, isServer, LitElement, nothing, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
-import {html as staticHtml, literal} from 'lit/static-html.js';
 
 import {dispatchActivationClick, isActivationClick} from '../../controller/events.js';
 import {ariaProperty} from '../../decorators/aria-property.js';
@@ -128,34 +127,55 @@ export abstract class Button extends LitElement implements ButtonState {
   };
 
   protected override render(): TemplateResult {
-    // Link buttons may not be disabled
-    const isDisabled = this.disabled && !this.href;
+    return this.href ? this.renderAnchor() : this.renderButton();
+  }
 
-    const button = this.href ? literal`a` : literal`button`;
-    return staticHtml`
-      <${button}
-        class="md3-button ${classMap(this.getRenderClasses())}"
-        ?disabled=${isDisabled}
-        aria-label="${this.ariaLabel || nothing}"
-        aria-haspopup="${this.ariaHasPopup || nothing}"
-        aria-expanded="${this.ariaExpanded || nothing}"
-        href=${this.href || nothing}
-        target=${this.target || nothing}
-        @pointerdown="${this.handlePointerDown}"
-        @focus="${this.handleFocus}"
-        @blur="${this.handleBlur}"
-        @click="${this.handleClick}"
-        ${ripple(this.getRipple)}
-      >
-        ${this.renderFocusRing()}
-        ${this.renderElevation()}
-        ${when(this.showRipple, this.renderRipple)}
-        ${this.renderOutline()}
-        ${this.renderTouchTarget()}
-        ${this.renderLeadingIcon()}
-        ${this.renderLabel()}
-        ${this.renderTrailingIcon()}
-      </${button}>`;
+  protected renderRootChildren() {
+    return html`
+      ${this.renderFocusRing()}
+      ${this.renderElevation()}
+      ${when(this.showRipple, this.renderRipple)}
+      ${this.renderOutline()}
+      ${this.renderTouchTarget()}
+      ${this.renderLeadingIcon()}
+      ${this.renderLabel()}
+      ${this.renderTrailingIcon()}`;
+  }
+
+  protected renderButton() {
+    return html`
+      <button
+          class="md3-button ${classMap(this.getRenderClasses())}"
+          ?disabled=${this.disabled && !this.href}
+          aria-label="${this.ariaLabel || nothing}"
+          aria-haspopup="${this.ariaHasPopup || nothing}"
+          aria-expanded="${this.ariaExpanded || nothing}"
+          @pointerdown="${this.handlePointerDown}"
+          @focus="${this.handleFocus}"
+          @blur="${this.handleBlur}"
+          @click="${this.handleClick}"
+          ${ripple(this.getRipple)}>
+        ${this.renderRootChildren()}
+      </button>`;
+  }
+
+  protected renderAnchor() {
+    return html`
+      <button
+          class="md3-button ${classMap(this.getRenderClasses())}"
+          ?disabled=${this.disabled && !this.href}
+          aria-label="${this.ariaLabel || nothing}"
+          aria-haspopup="${this.ariaHasPopup || nothing}"
+          aria-expanded="${this.ariaExpanded || nothing}"
+          href=${this.href || nothing}
+          target=${this.target || nothing}
+          @pointerdown="${this.handlePointerDown}"
+          @focus="${this.handleFocus}"
+          @blur="${this.handleBlur}"
+          @click="${this.handleClick}"
+          ${ripple(this.getRipple)}>
+        ${this.renderRootChildren()}
+      </button>`;
   }
 
   protected getRenderClasses(): ClassInfo {

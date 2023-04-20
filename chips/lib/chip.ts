@@ -11,7 +11,6 @@ import '../../ripple/ripple.js';
 import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {property, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {html as staticHtml, literal} from 'lit/static-html.js';
 
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
@@ -32,29 +31,50 @@ export class Chip extends LitElement {
   @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
 
   override render() {
-    const button = this.href ? literal`a` : literal`button`;
-    return staticHtml`
-      <${button} class="container ${classMap(this.getContainerClasses())}"
+    return this.href ? this.renderAnchor() : this.renderButton();
+  }
+
+  protected renderButton() {
+    return html`
+      <button class="container ${classMap(this.getContainerClasses())}"
           ?disabled=${this.disabled}
-          href=${this.href || nothing}
-          target=${this.href ? this.target : nothing}
           @blur=${this.handleBlur}
           @focus=${this.handleFocus}
           @pointerdown=${this.handlePointerDown}
           ${ripple(this.getRipple)}>
-        ${!this.elevated ? html`<span class="outline"></span>` : nothing}
-        ${this.elevated ? html`<md-elevation></md-elevation>` : nothing}
-        ${this.showRipple ? this.renderRipple() : nothing}
-        <md-focus-ring .visible=${this.showFocusRing}></md-focus-ring>
-        <span class="icon leading">
-          ${this.renderLeadingIcon()}
-        </span>
-        <span class="label">${this.label}</span>
-        <span class="icon trailing">
-          ${this.renderTrailingIcon()}
-        </span>
-      </${button}>
+        ${this.renderRootChildren()}
+      </button>
     `;
+  }
+
+  protected renderAnchor() {
+    return html`
+      <a class="container ${classMap(this.getContainerClasses())}"
+          ?disabled=${this.disabled}
+          href=${(this.href || nothing) as unknown as string}
+          target=${(this.href ? this.target : nothing) as unknown as '_blank'}
+          @blur=${this.handleBlur}
+          @focus=${this.handleFocus}
+          @pointerdown=${this.handlePointerDown}
+          ${ripple(this.getRipple)}>
+        ${this.renderRootChildren()}
+      </a>
+    `;
+  }
+
+  protected renderRootChildren() {
+    return html`
+      ${!this.elevated ? html`<span class="outline"></span>` : nothing}
+      ${this.elevated ? html`<md-elevation></md-elevation>` : nothing}
+      ${this.showRipple ? this.renderRipple() : nothing}
+      <md-focus-ring .visible=${this.showFocusRing}></md-focus-ring>
+      <span class="icon leading">
+        ${this.renderLeadingIcon()}
+      </span>
+      <span class="label">${this.label}</span>
+      <span class="icon trailing">
+        ${this.renderTrailingIcon()}
+      </span>`;
   }
 
   protected getContainerClasses() {

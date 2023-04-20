@@ -15,7 +15,6 @@ import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
-import {html as staticHtml, literal} from 'lit/static-html.js';
 
 import {isRtl} from '../../controller/is-rtl.js';
 import {ariaProperty} from '../../decorators/aria-property.js';
@@ -109,7 +108,21 @@ export class IconButton extends LitElement {
   }
 
   protected override render(): TemplateResult {
-    const tag = this.href ? literal`div` : literal`button`;
+    return this.href ? this.renderDiv() : this.renderButton();
+  }
+
+  protected renderRootChildren() {
+    return html`
+      ${this.renderFocusRing()}
+      ${when(this.showRipple, this.renderRipple)}
+      ${!this.selected ? this.renderIcon() : nothing}
+      ${this.selected ? this.renderSelectedIcon() : nothing}
+      ${this.renderTouchTarget()}
+      ${this.href && this.renderLink()}
+    `;
+  }
+
+  protected getProps() {
     const hasToggledAriaLabel = this.ariaLabel && this.selectedAriaLabel;
     const ariaPressedValue = hasToggledAriaLabel ? nothing : this.selected;
     let ariaLabelValue: string|typeof nothing = nothing;
@@ -118,7 +131,12 @@ export class IconButton extends LitElement {
           this.selectedAriaLabel :
           this.ariaLabel;
     }
-    return staticHtml`<${tag}
+    return {ariaLabelValue, ariaPressedValue};
+  }
+
+  protected renderButton() {
+    const {ariaLabelValue, ariaPressedValue} = this.getProps();
+    return html`<button
         class="md3-icon-button ${classMap(this.getRenderClasses())}"
         aria-label="${ariaLabelValue || nothing}"
         aria-haspopup="${!this.href && this.ariaHasPopup || nothing}"
@@ -130,13 +148,26 @@ export class IconButton extends LitElement {
         @pointerdown="${this.handlePointerDown}"
         @click="${this.handleClick}"
         ${ripple(this.getRipple)}>
-        ${this.renderFocusRing()}
-        ${when(this.showRipple, this.renderRipple)}
-        ${!this.selected ? this.renderIcon() : nothing}
-        ${this.selected ? this.renderSelectedIcon() : nothing}
-        ${this.renderTouchTarget()}
-        ${this.href && this.renderLink()}
-  </${tag}>`;
+        ${this.renderRootChildren()}
+    </button>`;
+  }
+
+  protected renderDiv() {
+    const {ariaLabelValue, ariaPressedValue} = this.getProps();
+    return html`<div
+        class="md3-icon-button ${classMap(this.getRenderClasses())}"
+        aria-label="${ariaLabelValue || nothing}"
+        aria-haspopup="${!this.href && this.ariaHasPopup || nothing}"
+        aria-expanded="${!this.href && this.ariaExpanded || nothing}"
+        aria-pressed="${ariaPressedValue}"
+        ?disabled="${!this.href && this.disabled}"
+        @focus="${this.handleFocus}"
+        @blur="${this.handleBlur}"
+        @pointerdown="${this.handlePointerDown}"
+        @click="${this.handleClick}"
+        ${ripple(this.getRipple)}>
+        ${this.renderRootChildren()}
+    </div>`;
   }
 
   protected renderLink() {

@@ -4,12 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
+import {html, isServer, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {live} from 'lit/directives/live.js';
 import {styleMap} from 'lit/directives/style-map.js';
-import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 import {redispatchEvent} from '../../controller/events.js';
 import {FormController, getFormValue} from '../../controller/form-controller.js';
@@ -277,14 +276,12 @@ export abstract class TextField extends LitElement {
     return this.getInput().willValidate;
   }
 
-  protected abstract readonly fieldTag: StaticValue;
-
   /**
    * Returns true when the text field has been interacted with. Native
    * validation errors only display in response to user interactions.
    */
   @state() private dirty = false;
-  @state() private focused = false;
+  @state() protected focused = false;
   /**
    * When set to true, the error text's `role="alert"` will be removed, then
    * re-added after an animation frame. This will re-announce an error message
@@ -314,7 +311,7 @@ export abstract class TextField extends LitElement {
    */
   @state() private nativeErrorText = '';
 
-  private get hasError() {
+  protected get hasError() {
     return this.error || this.nativeError;
   }
 
@@ -547,28 +544,15 @@ export abstract class TextField extends LitElement {
     }
   }
 
-  private renderField() {
-    const prefix = this.renderPrefix();
-    const suffix = this.renderSuffix();
-    const input = this.renderInput();
+  protected abstract renderField(): TemplateResult;
 
-    return staticHtml`<${this.fieldTag}
-      class="field"
-      ?disabled=${this.disabled}
-      ?error=${this.hasError}
-      ?focused=${this.focused}
-      ?hasEnd=${this.hasTrailingIcon}
-      ?hasStart=${this.hasLeadingIcon}
-      .label=${this.label}
-      ?populated=${!!this.getInputValue()}
-      ?required=${this.required}
-    >
+  protected renderRootChildren() {
+    return html`
       ${this.renderLeadingIcon()}
-      ${prefix}${input}${suffix}
+      ${this.renderPrefix()}${this.renderInput()}${this.renderSuffix()}
       ${this.renderTrailingIcon()}
       ${this.renderSupportingText()}
-      ${this.renderCounter()}
-    </${this.fieldTag}>`;
+      ${this.renderCounter()}`;
   }
 
   private renderLeadingIcon() {
@@ -620,7 +604,7 @@ export abstract class TextField extends LitElement {
      >`;
   }
 
-  private getInputValue() {
+  protected getInputValue() {
     const alwaysShowValue = this.dirty || this.valueHasChanged;
     if (alwaysShowValue) {
       return this.value;

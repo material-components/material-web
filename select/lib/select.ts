@@ -9,7 +9,6 @@ import '../../menu/menu.js';
 import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
-import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 import {Field} from '../../field/lib/field.js';
 import {List} from '../../list/lib/list.js';
@@ -148,7 +147,6 @@ export abstract class Select extends LitElement {
     return (this.getSelectedOptions() ?? []).map(([option]) => option);
   }
 
-  protected abstract readonly fieldTag: StaticValue;
   // tslint:disable-next-line:enforce-name-casing
   protected _value = '';
 
@@ -189,29 +187,7 @@ export abstract class Select extends LitElement {
     };
   }
 
-  protected renderField() {
-    return staticHtml`
-      <${this.fieldTag}
-          aria-haspopup="listbox"
-          role="combobox"
-          tabindex=${this.disabled ? '-1' : '0'}
-          aria-expanded=${this.open ? 'true' : 'false'}
-          class="field"
-          label=${this.label}
-          .focused=${this.focused || this.open}
-          .populated=${!!this.displayText}
-          .disabled=${this.disabled}
-          .required=${this.required}
-          .error=${this.error}
-          .hasStart=${this.hasLeadingIcon}
-          .hasEnd=${this.hasTrailingIcon}
-          @keydown =${this.handleKeydown}
-          @click=${this.handleClick}
-          @focus=${this.handleFocus}
-          @blur=${this.handleBlur}>
-        ${this.renderFieldContent()}
-      </${this.fieldTag}>`;
-  }
+  protected abstract renderField(): TemplateResult;
 
   protected renderFieldContent() {
     return [
