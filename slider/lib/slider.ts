@@ -286,10 +286,10 @@ export class Slider extends LitElement {
     const isFlipped = this.isFlipped();
     const containerStyles = {
       // for clipping inputs and active track.
-      '--lowerFraction': String(lowerFraction),
-      '--upperFraction': String(upperFraction),
+      '--slider-lower-fraction': String(lowerFraction),
+      '--slider-upper-fraction': String(upperFraction),
       // for generating tick marks
-      '--tickCount': String(range / step)
+      '--slider-tick-count': String(range / step),
     };
     const containerClasses = {ranged: this.allowRange};
 
