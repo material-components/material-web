@@ -266,17 +266,18 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     background: var(--_disabled-handle-color);
   }
 
-  .input.b:focus ~ .handleContainer .handle.b > slot > .handleNub,
-  .input.a:focus ~ .handleContainer .handle.a > slot > .handleNub {
+  input.b:focus ~ .handleContainerPadded .handle.b > .handleNub,
+  input.a:focus ~ .handleContainerPadded .handle.a > .handleNub {
     background: var(--_focus-handle-color);
   }
 
   // prefix classes exist to overcome specificity of focus styling.
-  .container > .handleContainer .handle.hover > slot > .handleNub {
+  .container > .handleContainerPadded .handle.hover > .handleNub {
     background: var(--_hover-handle-color);
   }
 
-  .container > .handleContainer .handle.pressed > slot > .handleNub {
+  input.b:active ~ .handleContainerPadded .handle.b > .handleNub,
+  input.a:active ~ .handleContainerPadded .handle.a > .handleNub {
     background: var(--_pressed-handle-color);
   }
 
@@ -312,9 +313,8 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     min-inline-size: var(--_label-container-height);
     min-block-size: var(--_label-container-height);
     background: var(--_label-container-color);
-    transition-property: transform;
-    transition-duration: map.get($_md-sys-motion, 'duration-short2');
-    transition-timing-function: map.get($_md-sys-motion, 'easing-emphasized');
+    transition: transform map.get($_md-sys-motion, 'duration-short2')
+      map.get($_md-sys-motion, 'easing-emphasized');
     transform-origin: center bottom;
     transform: scale(0);
   }
@@ -387,8 +387,11 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   ::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
+    // note, this is sized to align with thumb but is 0 width so that
+    // fine adjustments are possible
     block-size: var(--_state-layer-size);
     inline-size: var(--_state-layer-size);
+    transform: scaleX(0);
     opacity: 0;
     z-index: 2;
   }
@@ -397,6 +400,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     appearance: none;
     block-size: var(--_state-layer-size);
     inline-size: var(--_state-layer-size);
+    transform: scaleX(0);
     opacity: 0;
     z-index: 2;
   }

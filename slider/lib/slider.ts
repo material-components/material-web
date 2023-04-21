@@ -201,8 +201,6 @@ export class Slider extends LitElement {
   // interaction targets.
   @state() private handleAHover = false;
   @state() private handleBHover = false;
-  @state() private handleAPressed = false;
-  @state() private handleBPressed = false;
 
   @state() private onTopId = 'b';
   @state() private handlesOverlapping = false;
@@ -323,7 +321,6 @@ export class Slider extends LitElement {
       focusRequested: this.focusRingARequested,
       showFocus: this.focusRingAShowing,
       hover: this.handleAHover,
-      pressed: this.handleAPressed,
       label: labelA
     };
 
@@ -334,7 +331,6 @@ export class Slider extends LitElement {
       focusRequested: this.focusRingBRequested,
       showFocus: this.focusRingBShowing,
       hover: this.handleBHover,
-      pressed: this.handleBPressed,
       label: labelB
     };
 
@@ -363,10 +359,7 @@ export class Slider extends LitElement {
 
   protected renderTrack() {
     const trackClasses = {'tickMarks': this.withTickMarks};
-    return html`
-    <slot name="track">
-      <div class="track ${classMap(trackClasses)}"></div>
-    </slot>`;
+    return html`<div class="track ${classMap(trackClasses)}"></div>`;
   }
 
   protected renderFocusRing(visible: boolean) {
@@ -379,41 +372,27 @@ export class Slider extends LitElement {
       </div>`;
   }
 
-  protected renderHandle({
-    id,
-    lesser,
-    showRipple,
-    focusRequested,
-    showFocus,
-    hover,
-    pressed,
-    label
-  }: {
-    id: string,
-    lesser: boolean,
-    focusRequested: boolean,
-    showRipple: boolean,
-    showFocus: boolean,
-    hover: boolean,
-    pressed: boolean,
-    label: string
-  }) {
+  protected renderHandle(
+      {id, lesser, showRipple, focusRequested, showFocus, hover, label}: {
+        id: string,
+        lesser: boolean,
+        focusRequested: boolean,
+        showRipple: boolean,
+        showFocus: boolean,
+        hover: boolean,
+        label: string
+      }) {
     const onTop = !this.disabled && id === this.onTopId;
     const isOverlapping = !this.disabled && this.handlesOverlapping;
     return html`<div class="handle ${classMap({
       [id]: true,
       lesser,
       hover,
-      pressed,
       onTop,
       isOverlapping
     })}">
-      <slot name="handle${
-        this.allowRange ? (lesser ? 'Lesser' : 'Greater') : ''}">
         <div class="handleNub"><md-elevation></md-elevation></div>
         ${when(this.withLabel, () => this.renderLabel(label))}
-
-      </slot>
       ${when(showRipple, () => this.renderRipple(id))}
       ${when(focusRequested, () => this.renderFocusRing(showFocus))}
     </div>`;
@@ -437,7 +416,6 @@ export class Slider extends LitElement {
       @focus=${this.handleFocus}
       @blur=${this.handleBlur}
       @pointerdown=${this.handleDown}
-      @pointerup=${this.handleUp}
       @pointerenter=${this.handleEnter}
       @pointermove=${this.handleMove}
       @pointerleave=${this.handleLeave}
@@ -517,18 +495,17 @@ export class Slider extends LitElement {
     pointerPress();
     this.ripplePointerId = e.pointerId;
     const isA = this.isEventOnA(e);
-    const isPrimaryButton = Boolean(e.buttons & 1);
     // Since handle moves to pointer on down and there may not be a move,
     // it needs to be considered hovered..
     this.handleAHover = !this.disabled && isA && Boolean(this.handleA);
-    this.handleAPressed = isPrimaryButton && this.handleAHover;
     this.handleBHover = !this.disabled && !isA && Boolean(this.handleB);
-    this.handleBPressed = isPrimaryButton && this.handleBHover;
     this.updateFocusVisible(e);
-  }
-
-  protected handleUp() {
-    this.handleAPressed = this.handleBPressed = false;
+    // Force Safari to focus input so the label stays displayed; note,
+    // Macs don't normally focus non-text type inputs.
+    const target = (e.target as HTMLElement);
+    requestAnimationFrame(() => {
+      target.focus();
+    });
   }
 
   /**
@@ -568,7 +545,7 @@ export class Slider extends LitElement {
     }
     this.valueB = this.inputB.valueAsNumber;
     this.updateOnTop(e);
-    //  update value only on interaction
+    // update value only on interaction
     const lower = Math.min(this.valueA, this.valueB);
     const upper = Math.max(this.valueA, this.valueB);
     this.value = this.allowRange ? [lower, upper] : this.valueB;

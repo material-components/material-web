@@ -70,4 +70,11 @@ export class SliderHarness extends Harness<Slider> {
     }
     super.simulateStartHover(element, init);
   }
+
+  protected override simulateMousePress(
+      element: HTMLElement, init: PointerEventInit = {}) {
+    super.simulateMousePress(element, init);
+    // advance beyond RAF, which is used by the element's pointerDown handler.
+    jasmine.clock().tick(1);
+  }
 }
