@@ -188,7 +188,7 @@ export class Slider extends LitElement {
 
   @state() private focusRingAShowing = false;
   @state() private focusRingBShowing = false;
-  // allows for lazy rendering of the focus ring by latchin to true when the
+  // allows for lazy rendering of the focus ring by latching to true when the
   // focus ring should be rendered.
   private focusRingARequested = false;
   private focusRingBRequested = false;
@@ -465,7 +465,6 @@ export class Slider extends LitElement {
     return this.rippleA;
   };
 
-
   private readonly getRippleB = () => {  // bind to this
     if (!this.handleBHover) {
       return null;
@@ -482,11 +481,11 @@ export class Slider extends LitElement {
     }
     // TODO(b/269799771): improve slider ripple connection
     if (hovering) {
-      rippleEl.handlePointerenter(
-          new PointerEvent('pointerenter', {isPrimary: true, pointerId: 1}));
+      rippleEl.handlePointerenter(new PointerEvent(
+          'pointerenter', {isPrimary: true, pointerId: this.ripplePointerId}));
     } else {
-      rippleEl.handlePointerleave(
-          new PointerEvent('pointerleave', {isPrimary: true, pointerId: 1}));
+      rippleEl.handlePointerleave(new PointerEvent(
+          'pointerleave', {isPrimary: true, pointerId: this.ripplePointerId}));
     }
   }
 
@@ -511,8 +510,12 @@ export class Slider extends LitElement {
     this.focusRingBShowing = false;
   }
 
+  // used in synthetic events generated to control ripple hover state.
+  private ripplePointerId = 1;
+
   protected handleDown(e: PointerEvent) {
     pointerPress();
+    this.ripplePointerId = e.pointerId;
     const isA = this.isEventOnA(e);
     const isPrimaryButton = Boolean(e.buttons & 1);
     // Since handle moves to pointer on down and there may not be a move,
@@ -554,7 +557,6 @@ export class Slider extends LitElement {
     this.handleAHover = false;
     this.handleBHover = false;
   }
-
 
   private updateOnTop(e: Event) {
     this.onTopId = (e.target as Element).classList.contains('a') ? 'a' : 'b';
