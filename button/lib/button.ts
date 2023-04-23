@@ -4,9 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// This is required for @ariaProperty
-// tslint:disable:no-new-decorators
-
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
@@ -16,12 +13,11 @@ import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
 import {html as staticHtml, literal} from 'lit/static-html.js';
 
+import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {dispatchActivationClick, isActivationClick} from '../../controller/events.js';
-import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
-import {ARIAExpanded, ARIAHasPopup} from '../../types/aria.js';
 
 import {ButtonState} from './state.js';
 
@@ -29,20 +25,12 @@ import {ButtonState} from './state.js';
  * A button component.
  */
 export abstract class Button extends LitElement implements ButtonState {
+  static {
+    requestUpdateOnAriaChange(this);
+  }
+
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
-
-  @property({attribute: 'data-aria-expanded', noAccessor: true})
-  @ariaProperty
-  override ariaExpanded!: ARIAExpanded;
-
-  @property({attribute: 'data-aria-has-popup', noAccessor: true})
-  @ariaProperty
-  override ariaHasPopup!: ARIAHasPopup;
-
-  @property({attribute: 'data-aria-label', noAccessor: true})
-  @ariaProperty
-  override ariaLabel!: string;
 
   /**
    * Whether or not the button is disabled.
