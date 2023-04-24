@@ -20,7 +20,7 @@ UI’s elevation story.
 
 *   [Design article](https://m3.material.io/styles/elevation) <!-- {.external} -->
 *   API Documentation (*coming soon*)
-*   [Source code](https://github.com/material-components/material-web/tree/master/elevation)
+*   [Source code](https://github.com/material-components/material-web/tree/main/elevation)
     <!-- {.external} -->
 
 ## Usage
@@ -93,7 +93,7 @@ Token                         | Default value
 `--md-elevation-level`        | `0`
 `--md-elevation-shadow-color` | `--md-sys-color-shadow`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/master/tokens/_md-comp-elevation.scss)
+*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-elevation.scss)
     <!-- {.external} -->
 
 ### Example

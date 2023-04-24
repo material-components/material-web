@@ -17,10 +17,10 @@
 }
 
 // note, transition settings match MDC
-// see https://github.com/material-components/material-components-web/blob/master/packages/mdc-linear-progress/_linear-progress.scss#L79
+// see https://github.com/material-components/material-components-web/blob/main/packages/mdc-linear-progress/_linear-progress.scss#L79
 $_determinate-duration: 250ms;
 $_determinate-easing: cubic-bezier(0.4, 0, 0.6, 1);
-// see https://github.com/material-components/material-components-web/blob/master/packages/mdc-linear-progress/_linear-progress.scss#L218
+// see https://github.com/material-components/material-components-web/blob/main/packages/mdc-linear-progress/_linear-progress.scss#L218
 $_indeterminate-duration: 2s;
 
 // Note, track background is a series of animating dots sized to fit
@@ -60,7 +60,7 @@ $rtl-selectors: (
   }
 
   // note, the numbers here come directly from the mdc implementation.
-  // see https://github.com/material-components/material-components-web/blob/master/packages/mdc-linear-progress/_linear-progress.scss#L208.
+  // see https://github.com/material-components/material-components-web/blob/main/packages/mdc-linear-progress/_linear-progress.scss#L208.
   // keyframes
   @keyframes primary-indeterminate-translate#{$suffix} {
     0% {
@@ -190,7 +190,7 @@ $rtl-selectors: (
   }
 
   // note, the numbers here come directly from the mdc implementation.
-  // see https://github.com/material-components/material-components-web/blob/master/packages/mdc-linear-progress/_linear-progress.scss#L208.
+  // see https://github.com/material-components/material-components-web/blob/main/packages/mdc-linear-progress/_linear-progress.scss#L208.
   .indeterminate .primary-bar {
     inset-inline-start: -145.167%;
   }

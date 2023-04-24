@@ -20,7 +20,7 @@ outlined, and text.
 
 *   [Design article](https://m3.material.io/components/buttons) <!-- {.external} -->
 *   API Documentation (*coming soon*)
-*   [Source code](https://github.com/material-components/material-web/tree/master/button)
+*   [Source code](https://github.com/material-components/material-web/tree/main/button)
     <!-- {.external} -->
 
 ## Types
@@ -157,7 +157,7 @@ Token                                   | Default value
 `--md-elevated-button-label-text-color` | `--md-sys-color-on-surface`
 `--md-elevated-button-label-text-type`  | `500 0.875rem/1.25rem "Roboto"`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/master/tokens/_md-comp-elevated-button.scss)
+*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-elevated-button.scss)
     <!-- {.external} -->
 
 ### Elevated button example
@@ -186,7 +186,7 @@ Token                                 | Default value
 `--md-filled-button-label-text-color` | `--md-sys-color-on-primary`
 `--md-filled-button-label-text-type`  | `500 0.875rem/1.25rem "Roboto"`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/master/tokens/_md-comp-filled-button.scss)
+*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-filled-button.scss)
     <!-- {.external} -->
 
 ### Filled button example
@@ -215,7 +215,7 @@ Token                                | Default value
 `--md-tonal-button-label-text-color` | `--md-sys-color-on-secondary-container`
 `--md-tonal-button-label-text-type`  | `500 0.875rem/1.25rem "Roboto"`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/master/tokens/_md-comp-filled-tonal-button.scss)
+*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-filled-tonal-button.scss)
     <!-- {.external} -->
 
 ### Filled tonal button example
@@ -244,7 +244,7 @@ Token                                   | Default value
 `--md-outlined-button-label-text-color` | `--md-sys-color-primary`
 `--md-outlined-button-label-text-type`  | `500 0.875rem/1.25rem "Roboto"`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/master/tokens/_md-comp-outlined-button.scss)
+*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-outlined-button.scss)
     <!-- {.external} -->
 
 ### Outlined button example
@@ -271,7 +271,7 @@ Token                               | Default value
 `--md-text-button-label-text-color` | `--md-sys-color-primary`
 `--md-text-button-label-text-type`  | `500 0.875rem/1.25rem "Roboto"`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/master/tokens/_md-comp-text-button.scss)
+*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-text-button.scss)
     <!-- {.external} -->
 
 ### Text button example

@@ -21,7 +21,7 @@ There are two types of icon buttons: standard and contained.
 
 *   [Design article](https://m3.material.io/components/icon-buttons) <!-- {.external} -->
 *   API Documentation (*coming soon*)
-*   [Source code](https://github.com/material-components/material-web/tree/master/iconbutton)
+*   [Source code](https://github.com/material-components/material-web/tree/main/iconbutton)
     <!-- {.external} -->
 
 ## Types
@@ -209,7 +209,7 @@ Token                                    | Default value
 `--md-icon-button-state-layer-shape`     | `9999px`
 `--md-icon-button-icon-size`             | `24px`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/master/tokens/v0_161/_md-comp-icon-button.scss)
+*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/v0_161/_md-comp-icon-button.scss)
     <!-- {.external} -->
 
 ### Standard Icon Button example
@@ -236,7 +236,7 @@ Token                                              | Default value
 `--md-filled-icon-button-container-size`           | `40px`
 `--md-filled-icon-button-icon-size`                | `24px`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/master/tokens/v0_161/_md-comp-filled-icon-button.scss)
+*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/v0_161/_md-comp-filled-icon-button.scss)
     <!-- {.external} -->
 
 ### Filled Icon Button example

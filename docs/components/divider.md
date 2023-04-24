@@ -19,7 +19,7 @@ define tappable regions in an accordion.
 
 *   [Design article](https://m3.material.io/components/divider) <!-- {.external} -->
 *   API Documentation (*coming soon*)
-*   [Source code](https://github.com/material-components/material-web/tree/master/divider)
+*   [Source code](https://github.com/material-components/material-web/tree/main/divider)
     <!-- {.external} -->
 
 ## Usage
@@ -90,7 +90,7 @@ Token                    | Default value
 `--md-divider-color`     | `--md-sys-color-outline-variant`
 `--md-divider-thickness` | `1px`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/master/tokens/v0_160/_md-comp-divider.scss)
+*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/v0_160/_md-comp-divider.scss)
     <!-- {.external} -->
 
 ### Example
