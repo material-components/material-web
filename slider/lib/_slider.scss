@@ -130,6 +130,8 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     block-size: var(--_state-layer-size);
     // note, only the native inputs are interactive.
     pointer-events: none;
+    // ensure scrolling is prevented on mobile.
+    touch-action: none;
   }
 
   .track {
