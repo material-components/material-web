@@ -18,8 +18,8 @@ declare global {
 }
 
 /**
- * @soyCompatible
  * @final
+ * @suppress {visibility}
  */
 @customElement('md-test-table')
 export class MdTestTable<S extends string = string> extends TestTable<S> {

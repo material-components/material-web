@@ -6,7 +6,7 @@
 
 import {LitElement, render, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {classMap} from 'lit/directives/class-map.js';
 import {guard} from 'lit/directives/guard.js';
 import {html, literal} from 'lit/static-html.js';
 
@@ -24,7 +24,9 @@ export interface TestTableTemplate<S extends string = string> {
   render(state: S): TemplateResult|null;
 }
 
-/** @soyCompatible */
+/**
+ * A test table component.
+ */
 export class TestTable<S extends string = string> extends LitElement {
   static override shadowRootOptions: ShadowRootInit = {mode: 'open'};
 
@@ -33,8 +35,7 @@ export class TestTable<S extends string = string> extends LitElement {
   @property({type: Array}) templates: Array<TestTableTemplate<S>> = [];
   @property({type: Boolean}) dark = false;
 
-  /** @soyTemplate */
-  protected override render(): TemplateResult {
+  protected override render() {
     return html`
       <table class="md3-test-table ${classMap(this.getRenderClasses())}">
         <thead>
@@ -53,15 +54,13 @@ export class TestTable<S extends string = string> extends LitElement {
     `;
   }
 
-  /** @soyTemplate */
-  protected getRenderClasses(): ClassInfo {
+  protected getRenderClasses() {
     return {
       'md3-test-table--dark': this.dark,
     };
   }
 
-  /** @soyTemplate */
-  protected renderTemplates(): TemplateResult {
+  protected renderTemplates() {
     // Render templates in the light DOM for easier styling access
     render(
         this.templates.map(

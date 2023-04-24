@@ -4,9 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, TemplateResult} from 'lit';
+import {html, LitElement} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
 import {ariaProperty} from '../../decorators/aria-property.js';
@@ -16,12 +15,10 @@ import {SegmentedButton} from '../../segmentedbutton/lib/segmented-button.js';
  * SegmentedButtonSet is the parent component for two or more
  * `SegmentedButton` components. **Only** `SegmentedButton` components may be
  * used as children.
- * @soyCompatible
  */
 export class SegmentedButtonSet extends LitElement {
   @property({type: Boolean}) multiselect = false;
 
-  /** @soyPrefixAttribute */
   @ariaProperty  // tslint:disable-line:no-new-decorators
   @property({attribute: 'aria-label'})
   override ariaLabel!: string;
@@ -93,21 +90,19 @@ export class SegmentedButtonSet extends LitElement {
     }));
   }
 
-  /** @soyTemplate */
-  override render(): TemplateResult {
+  override render() {
     return html`
      <span
        role="group"
        @segmented-button-interaction="${this.handleSegmentedButtonInteraction}"
        aria-label="${ifDefined(this.ariaLabel)}"
-       class="md3-segmented-button-set ${classMap(this.getRenderClasses())}">
+       class="md3-segmented-button-set">
        <slot></slot>
      </span>
      `;
   }
 
-  /** @soyTemplate */
-  protected getRenderClasses(): ClassInfo {
+  protected getRenderClasses() {
     return {};
   }
 }

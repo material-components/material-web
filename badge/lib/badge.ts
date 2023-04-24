@@ -4,23 +4,23 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, TemplateResult} from 'lit';
+import {html, LitElement} from 'lit';
 import {property} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {classMap} from 'lit/directives/class-map.js';
 
-/** @soyCompatible */
+/**
+ * TODO(b/265340196): add docs
+ */
 export class Badge extends LitElement {
   @property() value = '';
 
-  /** @soyTemplate */
-  protected override render(): TemplateResult {
+  protected override render() {
     return html`<div class="md3-badge ${
         classMap(this.getRenderClasses())}"><p class="md3-badge__value">${
         this.value}</p></div>`;
   }
 
-  /** @soyTemplate */
-  protected getRenderClasses(): ClassInfo {
+  protected getRenderClasses() {
     return {
       'md3-badge--large': this.value,
     };

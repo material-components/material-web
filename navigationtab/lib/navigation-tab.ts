@@ -8,9 +8,9 @@ import '../../badge/badge.js';
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
+import {html, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query, queryAsync, state} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {when} from 'lit/directives/when.js';
 
@@ -21,7 +21,9 @@ import {MdRipple} from '../../ripple/ripple.js';
 
 import {NavigationTabState} from './state.js';
 
-/** @soyCompatible */
+/**
+ * TODO(b/265346501): add docs
+ */
 export class NavigationTab extends LitElement implements NavigationTabState {
   @property({type: Boolean}) disabled = false;
   @property({type: Boolean, reflect: true}) active = false;
@@ -33,7 +35,6 @@ export class NavigationTab extends LitElement implements NavigationTabState {
   @state() protected showFocusRing = false;
   @state() protected showRipple = false;
 
-  // TODO(b/210730484): replace with @soyParam annotation
   @ariaProperty  // tslint:disable-line:no-new-decorators
   @property({attribute: 'data-aria-label', noAccessor: true})
   override ariaLabel!: string;
@@ -42,8 +43,7 @@ export class NavigationTab extends LitElement implements NavigationTabState {
 
   @queryAsync('md-ripple') ripple!: Promise<MdRipple|null>;
 
-  /** @soyTemplate */
-  override render(): TemplateResult {
+  override render() {
     return html`
       <button
         class="md3-navigation-tab ${classMap(this.getRenderClasses())}"
@@ -69,16 +69,14 @@ export class NavigationTab extends LitElement implements NavigationTabState {
       </button>`;
   }
 
-  /** @soyTemplate */
-  protected getRenderClasses(): ClassInfo {
+  protected getRenderClasses() {
     return {
       'md3-navigation-tab--hide-inactive-label': this.hideInactiveLabel,
       'md3-navigation-tab--active': this.active,
     };
   }
 
-  /** @soyTemplate */
-  protected renderFocusRing(): TemplateResult {
+  protected renderFocusRing() {
     return html`<md-focus-ring .visible="${
         this.showFocusRing}"></md-focus-ring>`;
   }
@@ -93,18 +91,16 @@ export class NavigationTab extends LitElement implements NavigationTabState {
         this.disabled}" class="md3-navigation-tab__ripple"></md-ripple>`;
   };
 
-  /** @soyTemplate */
-  protected renderBadge(): TemplateResult|'' {
+  protected renderBadge() {
     return this.showBadge ?
         html`<md-badge .value="${this.badgeValue}"></md-badge>` :
-        '';
+        nothing;
   }
 
-  /** @soyTemplate */
-  protected renderLabel(): TemplateResult|'' {
+  protected renderLabel() {
     const ariaHidden = this.ariaLabel ? 'true' : 'false';
     return !this.label ?
-        '' :
+        nothing :
         html`
         <span aria-hidden="${
             ariaHidden}" class="md3-navigation-tab__label-text">${

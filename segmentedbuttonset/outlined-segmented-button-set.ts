@@ -19,7 +19,6 @@ declare global {
 /**
  * MdOutlinedSegmentedButtonSet is the custom element for the Material
  * Design outlined segmented button set component.
- * @soyCompatible
  * @final
  * @suppress {visibility}
  */

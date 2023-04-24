@@ -4,12 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, TemplateResult} from 'lit';
+import {html, LitElement} from 'lit';
 
-/** @soyCompatible */
+/**
+ * TODO(b/265336902): add docs
+ */
 export class Icon extends LitElement {
-  /** @soyTemplate */
-  protected override render(): TemplateResult {
+  protected override render() {
     return html`<span><slot></slot></span>`;
   }
 }

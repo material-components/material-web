@@ -6,14 +6,16 @@
 
 import '../../elevation/elevation.js';
 
-import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
+import {html, LitElement, PropertyValues} from 'lit';
 import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
 import {ariaProperty} from '../../decorators/aria-property.js';
 
-/** @soyCompatible */
+/**
+ * TODO(b/265346501): add docs
+ */
 export class NavigationDrawer extends LitElement {
   /* aria properties */
   // tslint:disable-next-line:no-new-decorators
@@ -40,8 +42,7 @@ export class NavigationDrawer extends LitElement {
   opened = false;
   @property() pivot: 'start'|'end' = 'end';
 
-  /** @soyTemplate */
-  override render(): TemplateResult {
+  override render() {
     const ariaExpanded = this.opened ? 'true' : 'false';
     const ariaHidden = !this.opened ? 'true' : 'false';
 
@@ -63,7 +64,6 @@ export class NavigationDrawer extends LitElement {
     `;
   }
 
-  /** @soyTemplate classMap */
   protected getRenderClasses() {
     return classMap({
       'md3-navigation-drawer--opened': this.opened,

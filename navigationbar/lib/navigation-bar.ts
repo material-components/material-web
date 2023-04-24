@@ -6,7 +6,7 @@
 
 import '../../elevation/elevation.js';
 
-import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
+import {html, LitElement, PropertyValues} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
@@ -17,7 +17,9 @@ import {NavigationTab} from '../../navigationtab/lib/navigation-tab.js';
 import {NavigationTabInteractionEvent} from './constants.js';
 import {NavigationBarState} from './state.js';
 
-/** @soyCompatible */
+/**
+ * TODO(b/265346501): add docs
+ */
 export class NavigationBar extends LitElement implements NavigationBarState {
   @property({type: Number}) activeIndex = 0;
 
@@ -33,8 +35,7 @@ export class NavigationBar extends LitElement implements NavigationBarState {
   @property({attribute: 'data-aria-label', noAccessor: true})
   override ariaLabel!: string;
 
-  /** @soyTemplate */
-  override render(): TemplateResult {
+  override render() {
     return html`<div class="md3-navigation-bar"
             role="tablist"
             aria-label="${ifDefined(this.ariaLabel || undefined)}"

@@ -16,7 +16,6 @@ declare global {
 }
 
 /**
- * @soyCompatible
  * @final
  * @suppress {visibility}
  */

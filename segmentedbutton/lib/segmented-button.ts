@@ -7,9 +7,9 @@
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
+import {html, LitElement, PropertyValues} from 'lit';
 import {property, queryAssignedElements, queryAsync, state} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {when} from 'lit/directives/when.js';
 
@@ -23,7 +23,6 @@ import {MdRipple} from '../../ripple/ripple.js';
  * segmented button component. It is intended **only** for use as a child of a
  * `SementedButtonSet` component. It is **not** intended for use in any other
  * context.
- * @soyCompatible
  */
 export class SegmentedButton extends LitElement {
   @property({type: Boolean}) disabled = false;
@@ -32,12 +31,11 @@ export class SegmentedButton extends LitElement {
   @property({type: Boolean}) noCheckmark = false;
   @property({type: Boolean}) hasIcon = false;
 
-  /** @soyPrefixAttribute */
   @ariaProperty  // tslint:disable-line:no-new-decorators
   @property({attribute: 'aria-label'})
   override ariaLabel!: string;
 
-  @state() protected animState: string = '';
+  @state() protected animState = '';
   @state() protected showFocusRing = false;
   @state() protected showRipple = false;
   @queryAssignedElements({slot: 'icon', flatten: true})
@@ -88,8 +86,7 @@ export class SegmentedButton extends LitElement {
     this.showFocusRing = false;
   }
 
-  /** @soyTemplate */
-  override render(): TemplateResult {
+  override render() {
     return html`
       <button
         tabindex="${this.disabled ? '-1' : '0'}"
@@ -112,8 +109,7 @@ export class SegmentedButton extends LitElement {
     `;
   }
 
-  /** @soyTemplate */
-  protected getRenderClasses(): ClassInfo {
+  protected getRenderClasses() {
     return {
       'md3-segmented-button--selected': this.selected,
       'md3-segmented-button--unselected': !this.selected,
@@ -127,8 +123,7 @@ export class SegmentedButton extends LitElement {
     };
   }
 
-  /** @soyTemplate */
-  protected renderFocusRing(): TemplateResult {
+  protected renderFocusRing() {
     return html`<md-focus-ring .visible="${
         this.showFocusRing}" class="md3-segmented-button__focus-ring"></md-focus-ring>`;
   }
@@ -143,19 +138,16 @@ export class SegmentedButton extends LitElement {
         this.disabled}" class="md3-segmented-button__ripple"> </md-ripple>`;
   };
 
-  /** @soyTemplate */
-  protected renderOutline(): TemplateResult {
+  protected renderOutline() {
     return html``;
   }
 
-  /** @soyTemplate */
-  protected renderLeading(): TemplateResult {
+  protected renderLeading() {
     return this.label === '' ? this.renderLeadingWithoutLabel() :
                                this.renderLeadingWithLabel();
   }
 
-  /** @soyTemplate */
-  protected renderLeadingWithoutLabel(): TemplateResult {
+  protected renderLeadingWithoutLabel() {
     return html`
       <span class="md3-segmented-button__leading" aria-hidden="true">
         <span class="md3-segmented-button__graphic">
@@ -170,8 +162,7 @@ export class SegmentedButton extends LitElement {
     `;
   }
 
-  /** @soyTemplate */
-  protected renderLeadingWithLabel(): TemplateResult {
+  protected renderLeadingWithLabel() {
     return html`
       <span class="md3-segmented-button__leading" aria-hidden="true">
         <span class="md3-segmented-button__graphic">
@@ -186,15 +177,13 @@ export class SegmentedButton extends LitElement {
     `;
   }
 
-  /** @soyTemplate */
-  protected renderLabel(): TemplateResult {
+  protected renderLabel() {
     return html`
       <span class="md3-segmented-button__label-text">${this.label}</span>
     `;
   }
 
-  /** @soyTemplate */
-  protected renderTouchTarget(): TemplateResult {
+  protected renderTouchTarget() {
     return html`<span class="md3-segmented-button__touch"></span>`;
   }
 }

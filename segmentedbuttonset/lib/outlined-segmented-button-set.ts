@@ -4,14 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ClassInfo} from 'lit/directives/class-map.js';
-
 import {SegmentedButtonSet} from './segmented-button-set.js';
 
-/** @soyCompatible */
+/**
+ * TODO(b/265346443): add docs
+ */
 export class OutlinedSegmentedButtonSet extends SegmentedButtonSet {
-  /** @soyTemplate */
-  protected override getRenderClasses(): ClassInfo {
+  protected override getRenderClasses() {
     return {
       ...super.getRenderClasses(),
       'md3-segmented-button-set--outlined': true,
