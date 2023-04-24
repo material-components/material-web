@@ -18,6 +18,7 @@ import {dispatchActivationClick, isActivationClick} from '../../controller/event
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
+import {ARIAMixinStrict} from '../../types/aria.js';
 
 /**
  * A button component.
@@ -118,13 +119,15 @@ export abstract class Button extends LitElement {
     const isDisabled = this.disabled && !this.href;
 
     const button = this.href ? literal`a` : literal`button`;
+    // Needed for closure conformance
+    const {ariaLabel, ariaHasPopup, ariaExpanded} = this as ARIAMixinStrict;
     return staticHtml`
       <${button}
         class="md3-button ${classMap(this.getRenderClasses())}"
         ?disabled=${isDisabled}
-        aria-label="${this.ariaLabel || nothing}"
-        aria-haspopup="${this.ariaHasPopup || nothing}"
-        aria-expanded="${this.ariaExpanded || nothing}"
+        aria-label="${ariaLabel || nothing}"
+        aria-haspopup="${ariaHasPopup || nothing}"
+        aria-expanded="${ariaExpanded || nothing}"
         href=${this.href || nothing}
         target=${this.target || nothing}
         @pointerdown="${this.handlePointerDown}"
