@@ -7,7 +7,7 @@
 // Required for @ariaProperty
 // tslint:disable:no-new-decorators
 
-import {html, LitElement, TemplateResult} from 'lit';
+import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
@@ -46,11 +46,7 @@ export class List extends LitElement {
   @property({attribute: 'data-aria-activedescendant', noAccessor: true})
   ariaActivedescendant!: string;
 
-  @ariaProperty
-  // tslint:disable-next-line
-  @property({attribute: 'data-role', noAccessor: true})
-  // @ts-ignore(b/264292293): Use `override` with TS 4.9+
-  role: ARIARole = 'list';
+  @property() type: ARIARole|'' = 'list';
 
   /**
    * The tabindex of the underlying list.
@@ -82,7 +78,7 @@ export class List extends LitElement {
     <ul class="md3-list ${classMap(this.getListClasses())}"
         aria-label="${ifDefined(this.ariaLabel)}"
         tabindex=${this.listTabIndex}
-        role=${this.role}
+        role=${this.type || nothing}
         @keydown=${this.handleKeydown}
         >
       ${this.renderContent()}

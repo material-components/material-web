@@ -14,7 +14,6 @@ import {CLOSE_REASON, DefaultCloseMenuEvent, isClosableKey, MenuItem} from '../s
  * @fires close-menu {CloseMenuEvent}
  */
 export class MenuItemEl extends ListItemEl implements MenuItem {
-  override role: ARIARole = 'menuitem';
   /**
    * READONLY: self-identifies as a menu item and sets its identifying attribute
    */
@@ -30,6 +29,8 @@ export class MenuItemEl extends ListItemEl implements MenuItem {
    * Used for overriding e.g. sub-menu-item.
    */
   protected keepOpenOnClick = false;
+
+  protected override readonly listItemRole: ARIARole = 'menuitem';
 
   protected override onClick() {
     if (this.keepOpen || this.keepOpenOnClick) return;

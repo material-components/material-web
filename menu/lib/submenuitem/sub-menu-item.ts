@@ -8,7 +8,6 @@ import {html} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
 
 import {List} from '../../../list/lib/list.js';
-import {ARIARole} from '../../../types/aria.js';
 import {Corner, Menu} from '../menu.js';
 import {MenuItemEl} from '../menuitem/menu-item.js';
 import {ActivateTypeaheadEvent, CLOSE_REASON, CloseMenuEvent, DeactivateItemsEvent, DeactivateTypeaheadEvent, KEYDOWN_CLOSE_KEYS, NAVIGABLE_KEY, SELECTION_KEY} from '../shared.js';
@@ -26,7 +25,6 @@ function stopPropagation(e: Event) {
  *     activate the typeahead functionality when a submenu closes
  */
 export class SubMenuItem extends MenuItemEl {
-  override role: ARIARole = 'menuitem';
   /**
    * The anchorCorner to set on the submenu.
    */

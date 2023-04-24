@@ -7,14 +7,12 @@
 import {property} from 'lit/decorators.js';
 
 import {ListItemLink} from '../../../list/lib/listitemlink/list-item-link.js';
-import {ARIARole} from '../../../types/aria.js';
 import {CLOSE_REASON, DefaultCloseMenuEvent, isClosableKey, MenuItem, SELECTION_KEY} from '../shared.js';
 
 /**
  * @fires close-menu {CloseMenuEvent}
  */
 export class MenuItemLink extends ListItemLink implements MenuItem {
-  override role: ARIARole = 'menuitem';
   /**
    * READONLY: self-identifies as a menu item and sets its identifying attribute
    */

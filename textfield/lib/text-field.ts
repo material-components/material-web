@@ -15,7 +15,7 @@ import {redispatchEvent} from '../../controller/events.js';
 import {FormController, getFormValue} from '../../controller/form-controller.js';
 import {stringConverter} from '../../controller/string-converter.js';
 import {ariaProperty} from '../../decorators/aria-property.js';
-import {ARIAAutoComplete, ARIAExpanded, ARIARole} from '../../types/aria.js';
+import {ARIAAutoComplete, ARIAExpanded} from '../../types/aria.js';
 
 /**
  * Input types that are compatible with the text field.
@@ -124,10 +124,6 @@ export abstract class TextField extends LitElement {
   @property({attribute: 'data-aria-label', noAccessor: true})
   @ariaProperty  // tslint:disable-line:no-new-decorators
   override ariaLabel!: string;
-
-  @property({attribute: 'data-role', noAccessor: true})
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  override role: ARIARole|null = null;
 
   // FormElement
   get form() {
@@ -608,7 +604,6 @@ export abstract class TextField extends LitElement {
        minlength=${this.minLength > -1 ? this.minLength : nothing}
        pattern=${this.pattern || nothing}
        placeholder=${this.placeholder || nothing}
-       role=${this.role || nothing}
        ?readonly=${this.readOnly}
        ?required=${this.required}
        step=${(this.step || nothing) as unknown as number}

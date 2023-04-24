@@ -131,9 +131,7 @@ export abstract class Menu extends LitElement {
   /**
    * The role of the underlying list element.
    */
-  @ariaProperty
-  @property({attribute: 'data-role', noAccessor: true})
-  override role: ARIARole = 'menu';
+  @property() type: ARIARole = 'menu';
   /**
    * The max time between the keystrokes of the typeahead menu behavior before
    * it clears the typeahead buffer.
@@ -270,7 +268,7 @@ export abstract class Menu extends LitElement {
     return html`
       <md-list
           .ariaLabel=${this.ariaLabel}
-          .role=${this.role}
+          type=${this.type}
           listTabIndex=${this.listTabIndex}
           @focus=${this.handleListFocus}
           @blur=${this.handleListBlur}

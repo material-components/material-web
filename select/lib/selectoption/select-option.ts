@@ -20,8 +20,6 @@ import {RequestDeselectionEvent, RequestSelectionEvent, SelectOption} from '../s
  * md-select to deselect this element when `selected` changed to `false`.
  */
 export class SelectOptionEl extends MenuItemEl implements SelectOption {
-  override role: ARIARole = 'option';
-
   /**
    * Form value of the option.
    */
@@ -31,6 +29,8 @@ export class SelectOptionEl extends MenuItemEl implements SelectOption {
    * Whether or not this option is selected.
    */
   @property({type: Boolean, reflect: true}) selected = false;
+
+  protected override readonly listItemRole: ARIARole = 'option';
 
   override willUpdate(changed: PropertyValues<this>) {
     if (changed.has('selected')) {

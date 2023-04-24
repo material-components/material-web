@@ -275,7 +275,7 @@ export abstract class Select extends LitElement {
           id="listbox"
           default-focus="NONE"
           listTabIndex="-1"
-          list-role="listbox"
+          type="listbox"
           stay-open-on-focusout
           .anchor=${this.field}
           .open=${this.open}

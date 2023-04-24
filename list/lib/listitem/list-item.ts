@@ -34,11 +34,6 @@ export type ListItem = ListItemSelf&HTMLElement;
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class ListItemEl extends LitElement implements ListItem {
   @ariaProperty
-  // tslint:disable-next-line
-  @property({attribute: 'data-role', noAccessor: true})
-  // @ts-ignore(b/264292293): Use `override` with TS 4.9+
-  role: ARIARole = 'listitem';
-  @ariaProperty
   @property({attribute: 'data-aria-selected', noAccessor: true})
   override ariaSelected!: 'true'|'false';
   @ariaProperty
@@ -97,6 +92,7 @@ export class ListItemEl extends LitElement implements ListItem {
   @queryAsync('md-ripple') protected ripple!: Promise<MdRipple|null>;
   @query('.list-item') protected listItemRoot!: HTMLElement;
 
+  protected readonly listItemRole: ARIARole = 'listitem';
   @state() protected showFocusRing = false;
   @state() protected showRipple = false;
 
@@ -151,7 +147,7 @@ export class ListItemEl extends LitElement implements ListItem {
     return html`
       <li
           tabindex=${this.disabled ? -1 : this.itemTabIndex}
-          role=${this.role}
+          role=${this.listItemRole}
           aria-selected=${this.ariaSelected || nothing}
           aria-checked=${this.ariaChecked || nothing}
           class="list-item ${classMap(this.getRenderClasses())}"
