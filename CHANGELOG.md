@@ -1,5 +1,50 @@
 # Changelog
 
+## [1.0.0-pre.7](https://github.com/material-components/material-web/compare/v1.0.0-pre.6...v1.0.0-pre.7) (2023-04-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* **button:** remove label property
+
+### Features
+
+* **aria:** add aria delegation ([e0bbe38](https://github.com/material-components/material-web/commit/e0bbe3850cd5c0d03c8da5697ffc0f723f238e6a))
+* **chips:** add filter chips ([ae91366](https://github.com/material-components/material-web/commit/ae913666011ff1f885e9c044a6e842f60b2f906b))
+* **circular-progress:** adds screenshot tests for circular-progress element ([e4a29c6](https://github.com/material-components/material-web/commit/e4a29c6e3150e44d2cdef17164dfd4cd3ef165dd))
+* **linear-progress:** adds linear-progress element ([1c7fcf3](https://github.com/material-components/material-web/commit/1c7fcf39a502c2a1142de10efa0e59838dc8aba3))
+* **linear-progress:** adds linear-progress screenshot tests ([212601d](https://github.com/material-components/material-web/commit/212601d4dfe132f6c3a9cb5e31f1de0d68fd8497))
+* **select:** implement select ([9c202f5](https://github.com/material-components/material-web/commit/9c202f5546deac424d164cd1f657626e6741a350))
+
+
+### Bug Fixes
+
+* **actionelement:** remove actionelement ([b7af8ec](https://github.com/material-components/material-web/commit/b7af8ecda1ba6ecb248652250c299fc42a0de1bb))
+* **button:** closure conformance issue ([9e23477](https://github.com/material-components/material-web/commit/9e234770b55e2e6901a1fa6e3ef2822f130c7083))
+* **button:** fix template typo ([a44bc3a](https://github.com/material-components/material-web/commit/a44bc3a87c496ef808357e59d20b737ab1306dda))
+* **button:** remove label property ([e398099](https://github.com/material-components/material-web/commit/e39809969f5ef14b997bc308b2d6553722ea0a75))
+* **chips:** remove flat prefixes ([4fa83bf](https://github.com/material-components/material-web/commit/4fa83bf2c6a7e8eb031258c36b7862d0865bb04b))
+* **dialog:** fixes [#4080](https://github.com/material-components/material-web/issues/4080): corrects dialog fullscreen height ([b3a6dac](https://github.com/material-components/material-web/commit/b3a6dacb0e857d53bf8734498c52826e309016e2))
+* **elevation:** tidy up tokens and update roadmap ([301eb9a](https://github.com/material-components/material-web/commit/301eb9a18f3044a118fad36fcbccc00f8db1166c))
+* **icon:** hide font ligature overflowing text ([2eb914e](https://github.com/material-components/material-web/commit/2eb914e8879fce6aba41aff19a51bdda8edad09f))
+* **listitem:** border-radius token affects ripple and focus-ring ([c738f92](https://github.com/material-components/material-web/commit/c738f92144c7ca45382920f8358105a084f819f5))
+* **menu,list:** new sys token mismatch between menu and list ([55df403](https://github.com/material-components/material-web/commit/55df403768941438f252c7b825b339340ff047d4))
+* **menu:** submenus will open correctly on click ([9d7b291](https://github.com/material-components/material-web/commit/9d7b2910d721bf43fac80fa0c909d0ddbc951852))
+* **navigationtab:** remove actionelement ([6da677f](https://github.com/material-components/material-web/commit/6da677fbef9567cc915033effac76704be0a40d2))
+* remove role attribute from elements ([0a35ff5](https://github.com/material-components/material-web/commit/0a35ff504230aa1eae200afb6ea56bc3902f81c4))
+* **segmentedbutton:** remove actionelement ([9442df8](https://github.com/material-components/material-web/commit/9442df8239113e674f08805639cb411b5336e6dd))
+* **slider:** ensure scrolling is prevented on mobile browsers ([743451b](https://github.com/material-components/material-web/commit/743451b23fe906faeeb38ab0957996f22953caf6))
+* **slider:** fixes [#4061](https://github.com/material-components/material-web/issues/4061) and reduce use of private custom properties ([9312a24](https://github.com/material-components/material-web/commit/9312a241d1a2e1ac01e85784e2aeffe00fdb829e))
+* **slider:** fixes label focus and ranged handle dragging on Safari ([72b48da](https://github.com/material-components/material-web/commit/72b48da7cc3bc7dc619af3f668f95d68c6c634e5))
+* **slider:** fixes ripple hover state after interaction on Firefox ([356d1bc](https://github.com/material-components/material-web/commit/356d1bc9f86604cdec8a1605dd2500d5985a19da))
+* **ssr:** try to remove event listener calls on server ([5e1fe1c](https://github.com/material-components/material-web/commit/5e1fe1ccc71e15d2ded4540d846cd222be9d593e))
+* **testing:** remove unnecessary type def ([5553da3](https://github.com/material-components/material-web/commit/5553da3a8bc79d93c1041c2ce074f7617d534dc3))
+
+
+### Miscellaneous Chores
+
+* update next version ([c9f2f7d](https://github.com/material-components/material-web/commit/c9f2f7ddd418345c2fdbeb07e9e33620524049ef))
+
 ## [1.0.0-pre.6](https://github.com/material-components/material-web/compare/v1.0.0-pre.5...v1.0.0-pre.6) (2023-04-10)
 
 
