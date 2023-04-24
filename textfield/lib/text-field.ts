@@ -11,11 +11,11 @@ import {live} from 'lit/directives/live.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
+import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {redispatchEvent} from '../../controller/events.js';
 import {FormController, getFormValue} from '../../controller/form-controller.js';
 import {stringConverter} from '../../controller/string-converter.js';
-import {ariaProperty} from '../../decorators/aria-property.js';
-import {ARIAAutoComplete, ARIAExpanded} from '../../types/aria.js';
+import {ARIAMixinStrict} from '../../types/aria.js';
 
 /**
  * Input types that are compatible with the text field.
@@ -39,6 +39,10 @@ export type InvalidTextFieldType =
  * A text field component.
  */
 export abstract class TextField extends LitElement {
+  static {
+    requestUpdateOnAriaChange(this);
+  }
+
   static override shadowRootOptions:
       ShadowRootInit = {...LitElement.shadowRootOptions, delegatesFocus: true};
 
@@ -100,30 +104,6 @@ export abstract class TextField extends LitElement {
    * LTR notation for fractions.
    */
   @property() textDirection = '';
-
-  // ARIA
-  @property({attribute: 'data-aria-autocomplete', noAccessor: true})
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  override ariaAutoComplete: ARIAAutoComplete|null = null;
-
-  @property({attribute: 'data-aria-controls', noAccessor: true})
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  ariaControls: string|null = null;
-
-  @property({attribute: 'data-aria-activedescendant', noAccessor: true})
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  ariaActiveDescendant: string|null = null;
-
-  @property({attribute: 'data-aria-expanded', noAccessor: true})
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  override ariaExpanded: ARIAExpanded|null = null;
-
-  /**
-   * The `aria-label` of the text field's input.
-   */
-  @property({attribute: 'data-aria-label', noAccessor: true})
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  override ariaLabel!: string;
 
   // FormElement
   get form() {
@@ -590,13 +570,13 @@ export abstract class TextField extends LitElement {
     // fixed
     return html`<input
        style=${styleMap(style)}
-       aria-activedescendant=${this.ariaActiveDescendant || nothing}
-       aria-autocomplete=${this.ariaAutoComplete || nothing}
-       aria-controls=${this.ariaControls || nothing}
+       aria-autocomplete=${
+        (this as ARIAMixinStrict).ariaAutoComplete || nothing}
        aria-describedby=${this.getAriaDescribedBy() || nothing}
-       aria-expanded=${this.ariaExpanded || nothing}
+       aria-expanded=${(this as ARIAMixinStrict).ariaExpanded || nothing}
        aria-invalid=${this.hasError}
-       aria-label=${this.ariaLabel || this.label || nothing}
+       aria-label=${
+        (this as ARIAMixinStrict).ariaLabel || this.label || nothing}
        ?disabled=${this.disabled}
        max=${(this.max || nothing) as unknown as number}
        maxlength=${this.maxLength > -1 ? this.maxLength : nothing}

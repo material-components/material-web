@@ -11,12 +11,13 @@ import {html, isServer, LitElement, nothing, TemplateResult} from 'lit';
 import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {when} from 'lit/directives/when.js';
 
+import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../controller/events.js';
 import {FormController, getFormValue} from '../../controller/form-controller.js';
-import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
+import {ARIAMixinStrict} from '../../types/aria.js';
 
 import {SingleSelectionController} from './single-selection-controller.js';
 
@@ -26,6 +27,10 @@ const CHECKED = Symbol('checked');
  * A radio component.
  */
 export class Radio extends LitElement {
+  static {
+    requestUpdateOnAriaChange(this);
+  }
+
   static override shadowRootOptions:
       ShadowRootInit = {...LitElement.shadowRootOptions, delegatesFocus: true};
 
@@ -69,10 +74,6 @@ export class Radio extends LitElement {
    */
   @property({reflect: true}) name = '';
 
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  @property({attribute: 'data-aria-label', noAccessor: true})
-  override ariaLabel!: string;
-
   /**
    * The associated form element with which this element's value will submit.
    */
@@ -110,6 +111,8 @@ export class Radio extends LitElement {
   }
 
   protected override render(): TemplateResult {
+    // Needed for closure conformance
+    const {ariaLabel} = this as ARIAMixinStrict;
     return html`
       ${when(this.showRipple, this.renderRipple)}
       ${this.renderFocusRing()}
@@ -124,7 +127,7 @@ export class Radio extends LitElement {
       <input
         type="radio"
         name=${this.name}
-        aria-label=${this.ariaLabel || nothing}
+        aria-label=${ariaLabel || nothing}
         .checked=${this.checked}
         .value=${this.value}
         ?disabled=${this.disabled}

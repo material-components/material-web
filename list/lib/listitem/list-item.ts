@@ -4,9 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Required for @ariaProperty
-// tslint:disable:no-new-decorators
-
 import '../../../ripple/ripple.js';
 import '../../../focus/focus-ring.js';
 
@@ -14,11 +11,11 @@ import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
-import {ariaProperty} from '../../../decorators/aria-property.js';
+import {requestUpdateOnAriaChange} from '../../../aria/delegate.js';
 import {pointerPress, shouldShowStrongFocus} from '../../../focus/strong-focus.js';
 import {ripple} from '../../../ripple/directive.js';
 import {MdRipple} from '../../../ripple/ripple.js';
-import {ARIARole} from '../../../types/aria.js';
+import {ARIAMixinStrict, ARIARole} from '../../../types/aria.js';
 
 interface ListItemSelf {
   active: boolean;
@@ -33,12 +30,9 @@ export type ListItem = ListItemSelf&HTMLElement;
 
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class ListItemEl extends LitElement implements ListItem {
-  @ariaProperty
-  @property({attribute: 'data-aria-selected', noAccessor: true})
-  override ariaSelected!: 'true'|'false';
-  @ariaProperty
-  @property({attribute: 'data-aria-checked', noAccessor: true})
-  override ariaChecked!: 'true'|'false';
+  static {
+    requestUpdateOnAriaChange(this);
+  }
 
   /**
    * The primary, headline text of the list item.
@@ -148,8 +142,8 @@ export class ListItemEl extends LitElement implements ListItem {
       <li
           tabindex=${this.disabled ? -1 : this.itemTabIndex}
           role=${this.listItemRole}
-          aria-selected=${this.ariaSelected || nothing}
-          aria-checked=${this.ariaChecked || nothing}
+          aria-selected=${(this as ARIAMixinStrict).ariaSelected || nothing}
+          aria-checked=${(this as ARIAMixinStrict).ariaChecked || nothing}
           class="list-item ${classMap(this.getRenderClasses())}"
           @pointerdown=${this.onPointerdown}
           @focus=${this.onFocus}

@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement} from 'lit';
+import {html, LitElement, nothing} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {ariaProperty} from '../../decorators/aria-property.js';
+import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {SegmentedButton} from '../../segmentedbutton/lib/segmented-button.js';
+import {ARIAMixinStrict} from '../../types/aria.js';
 
 /**
  * SegmentedButtonSet is the parent component for two or more
@@ -17,11 +17,11 @@ import {SegmentedButton} from '../../segmentedbutton/lib/segmented-button.js';
  * used as children.
  */
 export class SegmentedButtonSet extends LitElement {
-  @property({type: Boolean}) multiselect = false;
+  static {
+    requestUpdateOnAriaChange(this);
+  }
 
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  @property({attribute: 'aria-label'})
-  override ariaLabel!: string;
+  @property({type: Boolean}) multiselect = false;
 
   @queryAssignedElements({flatten: true}) buttons!: SegmentedButton[];
 
@@ -91,11 +91,13 @@ export class SegmentedButtonSet extends LitElement {
   }
 
   override render() {
+    // Needed for closure conformance
+    const {ariaLabel} = this as ARIAMixinStrict;
     return html`
      <span
        role="group"
        @segmented-button-interaction="${this.handleSegmentedButtonInteraction}"
-       aria-label="${ifDefined(this.ariaLabel)}"
+       aria-label=${ariaLabel || nothing}
        class="md3-segmented-button-set">
        <slot></slot>
      </span>

@@ -126,16 +126,12 @@ describe('md-switch', () => {
   });
 
   describe('aria', () => {
-    it('is an empty string by default', () => {
-      expect(toggle.ariaLabel).toEqual('');
-    });
-
     it('delegates aria-label to the proper element', async () => {
       const button = toggle.shadowRoot!.querySelector('button')!;
       toggle.setAttribute('aria-label', 'foo');
       await toggle.updateComplete;
       expect(toggle.ariaLabel).toEqual('foo');
-      expect(toggle.getAttribute('aria-label')).toEqual(null);
+      expect(toggle.getAttribute('aria-label')).toEqual('foo');
       expect(button.getAttribute('aria-label')).toEqual('foo');
     });
 
@@ -144,26 +140,8 @@ describe('md-switch', () => {
       toggle.ariaLabel = 'foo';
       await toggle.updateComplete;
       expect(toggle.ariaLabel).toEqual('foo');
-      expect(toggle.getAttribute('aria-label')).toEqual(null);
+      expect(toggle.getAttribute('aria-label')).toEqual('foo');
       expect(button.getAttribute('aria-label')).toEqual('foo');
-    });
-
-    it('delegates aria-labelledby to the proper element', async () => {
-      const button = toggle.shadowRoot!.querySelector('button')!;
-      toggle.setAttribute('aria-labelledby', 'foo');
-      await toggle.updateComplete;
-      expect(toggle.ariaLabelledBy).toEqual('foo');
-      expect(toggle.getAttribute('aria-labelledby')).toEqual(null);
-      expect(button.getAttribute('aria-labelledby')).toEqual('foo');
-    });
-
-    it('delegates .ariaLabelledBy to the proper element', async () => {
-      const button = toggle.shadowRoot!.querySelector('button')!;
-      toggle.ariaLabelledBy = 'foo';
-      await toggle.updateComplete;
-      expect(toggle.ariaLabelledBy).toEqual('foo');
-      expect(toggle.getAttribute('aria-labelledby')).toEqual(null);
-      expect(button.getAttribute('aria-labelledby')).toEqual('foo');
     });
   });
 

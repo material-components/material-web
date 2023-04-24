@@ -4,58 +4,39 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, PropertyValues} from 'lit';
+import {html, LitElement, nothing, PropertyValues} from 'lit';
 import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {ariaProperty} from '../../decorators/aria-property.js';
+import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
+import {ARIAMixinStrict} from '../../types/aria.js';
 
 /**
  * TODO(b/265346501): add docs
  */
 export class NavigationDrawerModal extends LitElement {
-  /* aria properties */
-  // tslint:disable-next-line:no-new-decorators
-  @ariaProperty
-  @property({attribute: 'data-aria-describedby', noAccessor: true})
-  ariaDescribedBy: string|undefined;
+  static {
+    requestUpdateOnAriaChange(this);
+  }
 
-  // tslint:disable-next-line:no-new-decorators
-  @ariaProperty
-  @property({attribute: 'data-aria-label', noAccessor: true})
-  override ariaLabel!: string;
-
-  // tslint:disable-next-line:no-new-decorators
-  @ariaProperty
-  @property({attribute: 'data-aria-modal', noAccessor: true})
-  override ariaModal: 'true'|'false' = 'false';
-
-  // tslint:disable-next-line:no-new-decorators
-  @ariaProperty
-  @property({attribute: 'data-aria-labelledby', noAccessor: true})
-  ariaLabelledBy: string|undefined;
-
-  @property({type: Boolean})  // tslint:disable-next-line:no-new-decorators
-  opened = false;
+  @property({type: Boolean}) opened = false;
   @property() pivot: 'start'|'end' = 'end';
 
   override render() {
     const ariaExpanded = this.opened ? 'true' : 'false';
     const ariaHidden = !this.opened ? 'true' : 'false';
-
+    // Needed for closure conformance
+    const {ariaLabel, ariaModal} = this as ARIAMixinStrict;
     return html`
       <div
         class="md3-navigation-drawer-modal__scrim ${this.getScrimClasses()}"
         @click="${this.handleScrimClick}">
       </div>
       <div
-        aria-describedby="${ifDefined(this.ariaDescribedBy)}"
-        aria-expanded="${ariaExpanded}"
-        aria-hidden="${ariaHidden}"
-        aria-label="${ifDefined(this.ariaLabel)}"
-        aria-labelledby="${ifDefined(this.ariaLabelledBy)}"
-        aria-modal="${this.ariaModal}"
+        aria-expanded=${ariaExpanded}
+        aria-hidden=${ariaHidden}
+        aria-label=${ariaLabel || nothing}
+        aria-modal=${ariaModal || nothing}
         class="md3-navigation-drawer-modal ${this.getRenderClasses()}"
         @keydown="${this.handleKeyDown}"
         role="dialog"><div class="md3-elevation-overlay"

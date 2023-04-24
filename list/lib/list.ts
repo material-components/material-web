@@ -4,17 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Required for @ariaProperty
-// tslint:disable:no-new-decorators
-
 import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
 
-import {ariaProperty} from '../../decorators/aria-property.js';
+import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {keydownHandler} from '../../focus/strong-focus.js';
-import {ARIARole} from '../../types/aria.js';
+import {ARIAMixinStrict, ARIARole} from '../../types/aria.js';
 
 import {ListItem} from './listitem/list-item.js';
 
@@ -35,23 +31,19 @@ function isNavigableKey(key: string): key is NavigatableValues {
 
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class List extends LitElement {
+  static {
+    requestUpdateOnAriaChange(this);
+  }
+
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
-
-  @ariaProperty
-  @property({attribute: 'data-aria-label', noAccessor: true})
-  override ariaLabel!: string;
-
-  @ariaProperty
-  @property({attribute: 'data-aria-activedescendant', noAccessor: true})
-  ariaActivedescendant!: string;
 
   @property() type: ARIARole|'' = 'list';
 
   /**
    * The tabindex of the underlying list.
    */
-  @property({type: Number}) listTabIndex: number = 0;
+  @property({type: Number}) listTabIndex = 0;
 
   @query('.md3-list') listRoot!: HTMLElement;
 
@@ -74,9 +66,11 @@ export class List extends LitElement {
    * Renders the main list element.
    */
   protected renderList() {
+    // Needed for closure conformance
+    const {ariaLabel} = this as ARIAMixinStrict;
     return html`
     <ul class="md3-list ${classMap(this.getListClasses())}"
-        aria-label="${ifDefined(this.ariaLabel)}"
+        aria-label=${ariaLabel || nothing}
         tabindex=${this.listTabIndex}
         role=${this.type || nothing}
         @keydown=${this.handleKeydown}

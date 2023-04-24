@@ -4,23 +4,21 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Required for @ariaProperty
-// tslint:disable:no-new-decorators
 import '../../list/list.js';
 import '../../focus/focus-ring.js';
 import '../../elevation/elevation.js';
 
-import {html, isServer, LitElement} from 'lit';
+import {html, isServer, LitElement, nothing} from 'lit';
 import {eventOptions, property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 
-import {ariaProperty} from '../../decorators/aria-property.js';
+import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {MdFocusRing} from '../../focus/focus-ring.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {List} from '../../list/lib/list.js';
 import {createAnimationSignal, EASING} from '../../motion/animation.js';
-import {ARIARole} from '../../types/aria.js';
+import {ARIAMixinStrict, ARIARole} from '../../types/aria.js';
 
 import {ActivateTypeaheadEvent, DeactivateTypeaheadEvent, isElementInSubtree, MenuItem} from './shared.js';
 import {Corner, SurfacePositionController, SurfacePositionTarget} from './surfacePositionController.js';
@@ -67,14 +65,14 @@ function getFocusedElement(activeDoc: Document|ShadowRoot = document):
  * @fires closed Fired once the menu is closed, after any animations
  */
 export abstract class Menu extends LitElement {
+  static {
+    requestUpdateOnAriaChange(this);
+  }
+
   @query('md-list') protected readonly listElement!: List|null;
   @query('.menu') protected readonly surfaceEl!: HTMLElement|null;
   @query('slot') protected readonly slotEl!: HTMLSlotElement|null;
   @query('md-focus-ring') protected readonly focusRing!: MdFocusRing;
-
-  @ariaProperty
-  @property({attribute: 'data-aria-label', noAccessor: true})
-  override ariaLabel!: string;
 
   /**
    * The element in which the menu should align to.
@@ -265,9 +263,11 @@ export abstract class Menu extends LitElement {
    * Renders the List element and its items
    */
   protected renderList() {
+    // Needed for closure conformance
+    const {ariaLabel} = this as ARIAMixinStrict;
     return html`
       <md-list
-          .ariaLabel=${this.ariaLabel}
+          aria-label=${ariaLabel || nothing}
           type=${this.type}
           listTabIndex=${this.listTabIndex}
           @focus=${this.handleListFocus}

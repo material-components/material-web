@@ -14,18 +14,15 @@ import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {when} from 'lit/directives/when.js';
 
+import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../controller/events.js';
 import {FormController, getFormValue} from '../../controller/form-controller.js';
 import {stringConverter} from '../../controller/string-converter.js';
-import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
+import {ARIAMixinStrict} from '../../types/aria.js';
 
-
-
-// This is required for decorators.
-// tslint:disable:no-new-decorators
 
 // Disable warning for classMap with destructuring
 // tslint:disable:quoted-properties-on-dictionary
@@ -77,6 +74,10 @@ function isOverlapping(elA: Element, elB: Element) {
  * Slider component.
  */
 export class Slider extends LitElement {
+  static {
+    requestUpdateOnAriaChange(this);
+  }
+
   static override shadowRootOptions:
       ShadowRootInit = {...LitElement.shadowRootOptions, delegatesFocus: true};
 
@@ -84,10 +85,6 @@ export class Slider extends LitElement {
    * @nocollapse
    */
   static formAssociated = true;
-
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  @property({attribute: 'data-aria-label', noAccessor: true})
-  override ariaLabel!: string;
 
   /**
    * Whether or not the slider is disabled.
@@ -408,6 +405,8 @@ export class Slider extends LitElement {
     // when ranged, ensure announcement includes value info.
     const ariaLabelDescriptor =
         this.allowRange ? ` - ${lesser ? `start` : `end`} handle` : '';
+    // Needed for closure conformance
+    const {ariaLabel} = this as ARIAMixinStrict;
     return html`<input type="range"
       class="${classMap({
       lesser,
@@ -427,7 +426,7 @@ export class Slider extends LitElement {
       .step=${String(this.step)}
       .value=${String(value)}
       .tabIndex=${lesser ? 1 : 0}
-      aria-label=${`${this.ariaLabel}${ariaLabelDescriptor}` || nothing}
+      aria-label=${`${ariaLabel}${ariaLabelDescriptor}` || nothing}
       aria-valuetext=${label}
       ${ripple(getRipple)}>`;
   }

@@ -11,13 +11,13 @@ import '../../ripple/ripple.js';
 import {html, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
 import {when} from 'lit/directives/when.js';
 
-import {ariaProperty} from '../../decorators/aria-property.js';
+import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
+import {ARIAMixinStrict} from '../../types/aria.js';
 
 import {NavigationTabState} from './state.js';
 
@@ -25,6 +25,10 @@ import {NavigationTabState} from './state.js';
  * TODO(b/265346501): add docs
  */
 export class NavigationTab extends LitElement implements NavigationTabState {
+  static {
+    requestUpdateOnAriaChange(this);
+  }
+
   @property({type: Boolean}) disabled = false;
   @property({type: Boolean, reflect: true}) active = false;
   @property({type: Boolean}) hideInactiveLabel = false;
@@ -35,21 +39,19 @@ export class NavigationTab extends LitElement implements NavigationTabState {
   @state() protected showFocusRing = false;
   @state() protected showRipple = false;
 
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  @property({attribute: 'data-aria-label', noAccessor: true})
-  override ariaLabel!: string;
-
   @query('button') buttonElement!: HTMLElement;
 
   @queryAsync('md-ripple') ripple!: Promise<MdRipple|null>;
 
   override render() {
+    // Needed for closure conformance
+    const {ariaLabel} = this as ARIAMixinStrict;
     return html`
       <button
         class="md3-navigation-tab ${classMap(this.getRenderClasses())}"
         role="tab"
         aria-selected="${this.active}"
-        aria-label="${ifDefined(this.ariaLabel)}"
+        aria-label=${ariaLabel || nothing}
         tabindex="${this.active ? 0 : -1}"
         @focus="${this.handleFocus}"
         @blur="${this.handleBlur}"
@@ -98,7 +100,9 @@ export class NavigationTab extends LitElement implements NavigationTabState {
   }
 
   protected renderLabel() {
-    const ariaHidden = this.ariaLabel ? 'true' : 'false';
+    // Needed for closure conformance
+    const {ariaLabel} = this as ARIAMixinStrict;
+    const ariaHidden = ariaLabel ? 'true' : 'false';
     return !this.label ?
         nothing :
         html`

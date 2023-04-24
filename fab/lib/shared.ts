@@ -4,9 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// This is required for @ariaProperty
-// tslint:disable:no-new-decorators
-
 import '../../elevation/elevation.js';
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
@@ -16,10 +13,11 @@ import {property, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
 
-import {ariaProperty} from '../../decorators/aria-property.js';
+import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
+import {ARIAMixinStrict} from '../../types/aria.js';
 
 /**
  * Sizes variants available to non-extended FABs.
@@ -28,14 +26,15 @@ export type FabSize = 'medium'|'small'|'large';
 
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export abstract class SharedFab extends LitElement {
+  static {
+    requestUpdateOnAriaChange(this);
+  }
+
   static override shadowRootOptions: ShadowRootInit = {
     mode: 'open' as const,
     delegatesFocus: true,
   };
 
-  @property({attribute: 'data-aria-label', noAccessor: true})
-  @ariaProperty
-  override ariaLabel!: string;
   /**
    * The size of the FAB.
    *
@@ -71,13 +70,15 @@ export abstract class SharedFab extends LitElement {
   };
 
   protected override render(): TemplateResult {
+    // Needed for closure conformance
+    const {ariaLabel} = this as ARIAMixinStrict;
     return html`
       <button
           class="fab ${classMap(this.getRenderClasses())}"
-          aria-label="${this.ariaLabel || nothing}"
-          @focus="${this.handleFocus}"
-          @blur="${this.handleBlur}"
-          @pointerdown="${this.handlePointerDown}"
+          aria-label=${ariaLabel || nothing}
+          @focus=${this.handleFocus}
+          @blur=${this.handleBlur}
+          @pointerdown=${this.handlePointerDown}
           ${ripple(this.getRipple)}>
         ${this.renderElevation()}
         ${this.renderFocusRing()}

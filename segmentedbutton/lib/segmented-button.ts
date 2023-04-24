@@ -7,16 +7,16 @@
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, PropertyValues} from 'lit';
+import {html, LitElement, nothing, PropertyValues} from 'lit';
 import {property, queryAssignedElements, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
 import {when} from 'lit/directives/when.js';
 
-import {ariaProperty} from '../../decorators/aria-property.js';
+import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
+import {ARIAMixinStrict} from '../../types/aria.js';
 
 /**
  * SegmentedButton is a web component implementation of the Material Design
@@ -25,15 +25,15 @@ import {MdRipple} from '../../ripple/ripple.js';
  * context.
  */
 export class SegmentedButton extends LitElement {
+  static {
+    requestUpdateOnAriaChange(this);
+  }
+
   @property({type: Boolean}) disabled = false;
   @property({type: Boolean}) selected = false;
   @property() label = '';
   @property({type: Boolean}) noCheckmark = false;
   @property({type: Boolean}) hasIcon = false;
-
-  @ariaProperty  // tslint:disable-line:no-new-decorators
-  @property({attribute: 'aria-label'})
-  override ariaLabel!: string;
 
   @state() protected animState = '';
   @state() protected showFocusRing = false;
@@ -87,10 +87,12 @@ export class SegmentedButton extends LitElement {
   }
 
   override render() {
+    // Needed for closure conformance
+    const {ariaLabel} = this as ARIAMixinStrict;
     return html`
       <button
         tabindex="${this.disabled ? '-1' : '0'}"
-        aria-label="${ifDefined(this.ariaLabel)}"
+        aria-label=${ariaLabel || nothing}
         aria-pressed=${this.selected}
         ?disabled=${this.disabled}
         @focus="${this.handleFocus}"

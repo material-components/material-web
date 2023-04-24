@@ -4,9 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// This is required for @ariaProperty
-// tslint:disable:no-new-decorators
-
 import '../../focus/focus-ring.js';
 import '../../icon/icon.js';
 import '../../ripple/ripple.js';
@@ -17,17 +14,21 @@ import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
 import {html as staticHtml, literal} from 'lit/static-html.js';
 
+import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {isRtl} from '../../controller/is-rtl.js';
-import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
-import {ARIAExpanded, ARIAHasPopup} from '../../types/aria.js';
+import {ARIAMixinStrict} from '../../types/aria.js';
 
 type LinkTarget = '_blank'|'_parent'|'_self'|'_top';
 
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class IconButton extends LitElement {
+  static {
+    requestUpdateOnAriaChange(this);
+  }
+
   /**
    * Disables the icon button and makes it non-interactive.
    */
@@ -37,18 +38,6 @@ export class IconButton extends LitElement {
    * Flips the icon if it is in an RTL context at startup.
    */
   @property({type: Boolean}) flipIconInRtl = false;
-
-  @ariaProperty
-  @property({attribute: 'data-aria-label'})
-  override ariaLabel!: string;
-
-  @ariaProperty
-  @property({attribute: 'data-aria-haspopup'})
-  override ariaHasPopup!: ARIAHasPopup;
-
-  @ariaProperty
-  @property({attribute: 'data-aria-expanded'})
-  override ariaExpanded!: ARIAExpanded;
 
   /**
    * Sets the underlying `HTMLAnchorElement`'s `href` resource attribute.
@@ -110,19 +99,21 @@ export class IconButton extends LitElement {
 
   protected override render(): TemplateResult {
     const tag = this.href ? literal`div` : literal`button`;
-    const hasToggledAriaLabel = this.ariaLabel && this.selectedAriaLabel;
+    // Needed for closure conformance
+    const {ariaLabel, ariaHasPopup, ariaExpanded} = this as ARIAMixinStrict;
+    const hasToggledAriaLabel = ariaLabel && this.selectedAriaLabel;
     const ariaPressedValue = hasToggledAriaLabel ? nothing : this.selected;
-    let ariaLabelValue: string|typeof nothing = nothing;
+    let ariaLabelValue: string|null|typeof nothing = nothing;
     if (!this.href) {
       ariaLabelValue = (hasToggledAriaLabel && this.selected) ?
           this.selectedAriaLabel :
-          this.ariaLabel;
+          ariaLabel;
     }
     return staticHtml`<${tag}
         class="md3-icon-button ${classMap(this.getRenderClasses())}"
         aria-label="${ariaLabelValue || nothing}"
-        aria-haspopup="${!this.href && this.ariaHasPopup || nothing}"
-        aria-expanded="${!this.href && this.ariaExpanded || nothing}"
+        aria-haspopup="${!this.href && ariaHasPopup || nothing}"
+        aria-expanded="${!this.href && ariaExpanded || nothing}"
         aria-pressed="${ariaPressedValue}"
         ?disabled="${!this.href && this.disabled}"
         @focus="${this.handleFocus}"
@@ -140,11 +131,13 @@ export class IconButton extends LitElement {
   }
 
   protected renderLink() {
+    // Needed for closure conformance
+    const {ariaLabel} = this as ARIAMixinStrict;
     return html`<a class="md3-icon-button__link" href="${this.href}"
                   target="${this.target as LinkTarget || nothing}"
                   @focus="${this.handleFocus}"
                   @blur="${this.handleBlur}"
-                  aria-label="${this.ariaLabel || nothing}"></a>`;
+                  aria-label="${ariaLabel || nothing}"></a>`;
   }
 
   protected getRenderClasses(): ClassInfo {

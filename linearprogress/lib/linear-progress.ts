@@ -9,12 +9,17 @@ import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 
-import {ariaProperty} from '../../decorators/aria-property.js';
+import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
+import {ARIAMixinStrict} from '../../types/aria.js';
 
 /**
  * LinearProgress component.
  */
 export class LinearProgress extends LitElement {
+  static {
+    requestUpdateOnAriaChange(this);
+  }
+
   /**
    * Whether or not to render indeterminate progress in an animated state.
    */
@@ -35,11 +40,6 @@ export class LinearProgress extends LitElement {
    *
    */
   @property({type: Boolean, attribute: 'four-colors'}) fourColors = false;
-
-  @property({type: String, attribute: 'data-aria-label', noAccessor: true})
-  // tslint:disable-next-line:no-new-decorators
-  @ariaProperty
-  override ariaLabel!: string;
 
   @query('.linear-progress') protected rootEl!: HTMLElement;
 
@@ -63,11 +63,13 @@ export class LinearProgress extends LitElement {
       transform: `scaleX(${(this.indeterminate ? 1 : this.buffer) * 100}%)`
     };
 
+    // Needed for closure conformance
+    const {ariaLabel} = this as ARIAMixinStrict;
     return html`
       <div
           role="progressbar"
           class="linear-progress ${classMap(rootClasses)}"
-          aria-label="${this.ariaLabel || nothing}"
+          aria-label="${ariaLabel || nothing}"
           aria-valuemin="0"
           aria-valuemax="1"
           aria-valuenow="${this.indeterminate ? nothing : this.progress}">

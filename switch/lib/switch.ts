@@ -4,20 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// tslint:disable:no-new-decorators
-
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, isServer, LitElement, TemplateResult} from 'lit';
+import {html, isServer, LitElement, nothing, TemplateResult} from 'lit';
 import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
 import {when} from 'lit/directives/when.js';
 
+import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {dispatchActivationClick, isActivationClick} from '../../controller/events.js';
 import {FormController, getFormValue} from '../../controller/form-controller.js';
-import {ariaProperty} from '../../decorators/aria-property.js';
 import {pointerPress as focusRingPointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
@@ -29,6 +26,10 @@ import {MdRipple} from '../../ripple/ripple.js';
  * interaction (bubbles).
  */
 export class Switch extends LitElement {
+  static {
+    requestUpdateOnAriaChange(this);
+  }
+
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
@@ -58,14 +59,6 @@ export class Switch extends LitElement {
    * overrides the behavior of the `icons` property.
    */
   @property({type: Boolean}) showOnlySelectedIcon = false;
-
-  @ariaProperty
-  @property({attribute: 'data-aria-label', noAccessor: true})
-  override ariaLabel!: string;
-
-  @ariaProperty
-  @property({attribute: 'data-aria-labelledby', noAccessor: true})
-  ariaLabelledBy = '';
 
   @state() private showFocusRing = false;
   @state() private showRipple = false;
@@ -116,9 +109,6 @@ export class Switch extends LitElement {
   }
 
   protected override render(): TemplateResult {
-    const ariaLabelValue = this.ariaLabel ? this.ariaLabel : undefined;
-    const ariaLabelledByValue =
-        this.ariaLabelledBy ? this.ariaLabelledBy : undefined;
     // NOTE: buttons must use only [phrasing
     // content](https://html.spec.whatwg.org/multipage/dom.html#phrasing-content)
     // children, which includes custom elements, but not `div`s
@@ -128,8 +118,7 @@ export class Switch extends LitElement {
         class="md3-switch ${classMap(this.getRenderClasses())}"
         role="switch"
         aria-checked="${this.selected}"
-        aria-label="${ifDefined(ariaLabelValue)}"
-        aria-labelledby="${ifDefined(ariaLabelledByValue)}"
+        aria-label=${(this as ARIAMixin).ariaLabel || nothing}
         ?disabled=${this.disabled}
         @click=${this.handleClick}
         @focus="${this.handleFocus}"
