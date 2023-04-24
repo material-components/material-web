@@ -19,12 +19,10 @@ import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 
-import {ButtonState} from './state.js';
-
 /**
  * A button component.
  */
-export abstract class Button extends LitElement implements ButtonState {
+export abstract class Button extends LitElement {
   static {
     requestUpdateOnAriaChange(this);
   }
