@@ -91,7 +91,7 @@ export class Ripple extends LitElement {
   @state() private focused = false;
   @state() private pressed = false;
 
-  @query('.surface') private readonly mdRoot!: HTMLElement;
+  @query('.surface') private readonly mdRoot!: HTMLElement|null;
   private rippleSize = '';
   private rippleScale = '';
   private initialSize = 0;
@@ -302,6 +302,10 @@ export class Ripple extends LitElement {
   }
 
   private startPressAnimation(positionEvent?: Event) {
+    if (!this.mdRoot) {
+      return;
+    }
+
     this.pressed = true;
     this.growAnimation?.cancel();
     this.determineRippleSize();

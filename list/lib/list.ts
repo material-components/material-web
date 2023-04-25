@@ -4,9 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, nothing, TemplateResult} from 'lit';
+import {html, LitElement, nothing} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {keydownHandler} from '../../focus/strong-focus.js';
@@ -45,7 +44,7 @@ export class List extends LitElement {
    */
   @property({type: Number}) listTabIndex = 0;
 
-  @query('.md3-list') listRoot!: HTMLElement;
+  @query('.md3-list') listRoot!: HTMLElement|null;
 
   /**
    * An array of activatable and disableable list items. Queries every assigned
@@ -58,18 +57,18 @@ export class List extends LitElement {
   @queryAssignedElements({flatten: true, selector: '[md-list-item]'})
   items!: ListItem[];
 
-  override render(): TemplateResult {
+  protected override render() {
     return this.renderList();
   }
 
   /**
    * Renders the main list element.
    */
-  protected renderList() {
+  private renderList() {
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
-    <ul class="md3-list ${classMap(this.getListClasses())}"
+    <ul class="md3-list"
         aria-label=${ariaLabel || nothing}
         tabindex=${this.listTabIndex}
         role=${this.type || nothing}
@@ -81,16 +80,9 @@ export class List extends LitElement {
   }
 
   /**
-   * The classes to be applied to the underlying list.
-   */
-  protected getListClasses(): ClassInfo {
-    return {};
-  }
-
-  /**
    * The content to be slotted into the list.
    */
-  protected renderContent() {
+  private renderContent() {
     return html`<span><slot @click=${(e: Event) => {
       e.stopPropagation();
     }}></slot></span>`;
@@ -205,7 +197,7 @@ export class List extends LitElement {
   }
 
   override focus() {
-    this.listRoot.focus();
+    this.listRoot?.focus();
   }
 
   /**
@@ -269,7 +261,7 @@ export class List extends LitElement {
    * @param index {{index: number}} The index to search from.
    * @returns The next activatable item or `null` if none are activatable.
    */
-  protected static getNextItem<T extends ListItem>(items: T[], index: number) {
+  private static getNextItem<T extends ListItem>(items: T[], index: number) {
     for (let i = 1; i < items.length; i++) {
       const nextIndex = (i + index) % items.length;
       const item = items[nextIndex];
@@ -287,7 +279,7 @@ export class List extends LitElement {
    * @param index {{index: number}} The index to search from.
    * @returns The previous activatable item or `null` if none are activatable.
    */
-  protected static getPrevItem<T extends ListItem>(items: T[], index: number) {
+  private static getPrevItem<T extends ListItem>(items: T[], index: number) {
     for (let i = 1; i < items.length; i++) {
       const prevIndex = (index - i + items.length) % items.length;
       const item = items[prevIndex];

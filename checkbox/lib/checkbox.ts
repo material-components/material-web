@@ -7,7 +7,7 @@
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, isServer, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
+import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
@@ -117,7 +117,7 @@ export class Checkbox extends LitElement {
     super.update(changed);
   }
 
-  protected override render(): TemplateResult {
+  protected override render() {
     const prevNone = !this.prevChecked && !this.prevIndeterminate;
     const prevChecked = this.prevChecked && !this.prevIndeterminate;
     const prevIndeterminate = this.prevIndeterminate;

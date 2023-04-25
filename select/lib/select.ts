@@ -6,9 +6,9 @@
 
 import '../../menu/menu.js';
 
-import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
+import {html, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {classMap} from 'lit/directives/class-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 import {Field} from '../../field/lib/field.js';
@@ -18,6 +18,8 @@ import {DefaultCloseMenuEvent, isElementInSubtree, isSelectableKey} from '../../
 import {TYPEAHEAD_RECORD} from '../../menu/lib/typeaheadController.js';
 
 import {getSelectedItems, RequestDeselectionEvent, RequestSelectionEvent, SelectOption, SelectOptionRecord} from './shared.js';
+
+const VALUE = Symbol('value');
 
 /**
  * @fires input Fired when a selection is made by the user via mouse or keyboard
@@ -89,15 +91,15 @@ export abstract class Select extends LitElement {
    * re-added after an animation frame. This will re-announce an error message
    * to screen readers.
    */
-  @state() protected refreshErrorAlert = false;
-  @state() protected focused = false;
-  @state() protected open = false;
-  @query('.field') protected field!: Field;
-  @query('md-menu') protected menu!: Menu;
+  @state() private refreshErrorAlert = false;
+  @state() private focused = false;
+  @state() private open = false;
+  @query('.field') private readonly field!: Field|null;
+  @query('md-menu') private readonly menu!: Menu|null;
   @queryAssignedElements({slot: 'leadingicon', flatten: true})
-  protected readonly leadingIcons!: Element[];
+  private readonly leadingIcons!: Element[];
   @queryAssignedElements({slot: 'trailingicon', flatten: true})
-  protected readonly trailingIcons!: Element[];
+  private readonly trailingIcons!: Element[];
 
   /**
    * The value of the currently selected option.
@@ -107,13 +109,15 @@ export abstract class Select extends LitElement {
    */
   @property()
   get value(): string {
-    return this._value;
+    return this[VALUE];
   }
 
   set value(value: string) {
     this.lastUserSetValue = value;
     this.select(value);
   }
+
+  [VALUE] = '';
 
   get options() {
     // NOTE: this does a DOM query.
@@ -149,29 +153,27 @@ export abstract class Select extends LitElement {
   }
 
   protected abstract readonly fieldTag: StaticValue;
-  // tslint:disable-next-line:enforce-name-casing
-  protected _value = '';
 
   /**
    * Used for initializing select when the user sets the `value` directly.
    */
-  protected lastUserSetValue: string|null = null;
+  private lastUserSetValue: string|null = null;
 
   /**
    * Used for initializing select when the user sets the `selectedIndex`
    * directly.
    */
-  protected lastUserSetSelectedIndex: number|null = null;
+  private lastUserSetSelectedIndex: number|null = null;
 
   /**
    * Used for `input` and `change` event change detection.
    */
-  protected lastSelectedOption: SelectOption|null = null;
+  private lastSelectedOption: SelectOption|null = null;
 
   // tslint:disable-next-line:enforce-name-casing
-  protected _lastSelectedOptionRecords: SelectOptionRecord[] = [];
+  private lastSelectedOptionRecords: SelectOptionRecord[] = [];
 
-  override render(): TemplateResult {
+  protected override render() {
     return html`
       <span
           class="select ${classMap(this.getRenderClasses())}"
@@ -182,14 +184,14 @@ export abstract class Select extends LitElement {
     `;
   }
 
-  protected getRenderClasses(): ClassInfo {
+  private getRenderClasses() {
     return {
       'disabled': this.disabled,
       'error': this.error,
     };
   }
 
-  protected renderField() {
+  private renderField() {
     return staticHtml`
       <${this.fieldTag}
           aria-haspopup="listbox"
@@ -213,7 +215,7 @@ export abstract class Select extends LitElement {
       </${this.fieldTag}>`;
   }
 
-  protected renderFieldContent() {
+  private renderFieldContent() {
     return [
       this.renderLeadingIcon(),
       this.renderLabel(),
@@ -222,7 +224,7 @@ export abstract class Select extends LitElement {
     ];
   }
 
-  protected renderLeadingIcon() {
+  private renderLeadingIcon() {
     return html`
       <span class="icon leading" slot="start">
          <slot name="leadingicon" @slotchange=${this.handleIconChange}></slot>
@@ -230,7 +232,7 @@ export abstract class Select extends LitElement {
      `;
   }
 
-  protected renderTrailingIcon() {
+  private renderTrailingIcon() {
     return html`
       <span class="icon trailing" slot="end">
          <slot name="trailingicon" @slotchange=${this.handleIconChange}></slot>
@@ -238,7 +240,7 @@ export abstract class Select extends LitElement {
      `;
   }
 
-  protected renderLabel() {
+  private renderLabel() {
     // need to render &nbsp; so that line-height can apply and give it a
     // non-zero height
     return html`<div
@@ -246,7 +248,7 @@ export abstract class Select extends LitElement {
         class="label">${this.displayText || html`&nbsp;`}</div>`;
   }
 
-  protected renderSupportingText() {
+  private renderSupportingText() {
     const text = this.getSupportingText();
     if (!text) {
       return nothing;
@@ -257,11 +259,11 @@ export abstract class Select extends LitElement {
       role=${this.shouldErrorAnnounce() ? 'alert' : nothing}>${text}</span>`;
   }
 
-  protected getSupportingText() {
+  private getSupportingText() {
     return this.error && this.errorText ? this.errorText : this.supportingText;
   }
 
-  protected shouldErrorAnnounce() {
+  private shouldErrorAnnounce() {
     // Announce if there is an error and error text visible.
     // If refreshErrorAlert is true, do not announce. This will remove the
     // role="alert" attribute. Another render cycle will happen after an
@@ -269,7 +271,7 @@ export abstract class Select extends LitElement {
     return this.error && !!this.errorText && !this.refreshErrorAlert;
   }
 
-  protected renderMenu(): TemplateResult {
+  private renderMenu() {
     return html`
       <md-menu
           id="listbox"
@@ -291,7 +293,7 @@ export abstract class Select extends LitElement {
       </md-menu>`;
   }
 
-  protected renderMenuContent(): TemplateResult {
+  private renderMenuContent() {
     return html`<slot></slot>`;
   }
 
@@ -299,12 +301,12 @@ export abstract class Select extends LitElement {
    * Handles opening the select on keydown and typahead selection when the menu
    * is closed.
    */
-  protected handleKeydown(e: KeyboardEvent) {
-    if (this.open || this.disabled) {
+  private handleKeydown(e: KeyboardEvent) {
+    if (this.open || this.disabled || !this.menu) {
       return;
     }
 
-    const typeaheadController = this.menu?.typeaheadController;
+    const typeaheadController = this.menu.typeaheadController;
     const isOpenKey =
         e.code === 'Space' || e.code === 'ArrowDown' || e.code === 'Enter';
 
@@ -339,22 +341,22 @@ export abstract class Select extends LitElement {
     }
   }
 
-  protected handleClick() {
+  private handleClick() {
     this.open = true;
   }
 
-  protected handleFocus() {
+  private handleFocus() {
     this.focused = true;
   }
 
-  protected handleBlur() {
+  private handleBlur() {
     this.focused = false;
   }
 
   /**
    * Handles closing the menu when the focus leaves the select's subtree.
    */
-  protected handleFocusout(e: FocusEvent) {
+  private handleFocusout(e: FocusEvent) {
     // Don't close the menu if we are switching focus between menu,
     // select-option, and field
     if (e.relatedTarget && isElementInSubtree(e.relatedTarget, this)) {
@@ -369,15 +371,15 @@ export abstract class Select extends LitElement {
    *
    * @return An array of selected list option records.
    */
-  protected getSelectedOptions() {
+  private getSelectedOptions() {
     if (!this.menu) {
-      this._lastSelectedOptionRecords = [];
+      this.lastSelectedOptionRecords = [];
       return null;
     }
 
     const items = this.menu.items as SelectOption[];
-    this._lastSelectedOptionRecords = getSelectedItems(items);
-    return this._lastSelectedOptionRecords;
+    this.lastSelectedOptionRecords = getSelectedItems(items);
+    return this.lastSelectedOptionRecords;
   }
 
   override async getUpdateComplete() {
@@ -391,7 +393,7 @@ export abstract class Select extends LitElement {
    *
    * @return Whether or not the selected option has changed since last update.
    */
-  protected updateValueAndDisplayText() {
+  private updateValueAndDisplayText() {
     const selectedOptions = this.getSelectedOptions() ?? [];
     // Used to determine whether or not we need to fire an input / change event
     // which fire whenever the option element changes (value or selectedIndex)
@@ -403,20 +405,20 @@ export abstract class Select extends LitElement {
       hasSelectedOptionChanged =
           this.lastSelectedOption !== firstSelectedOption;
       this.lastSelectedOption = firstSelectedOption;
-      this._value = firstSelectedOption.value;
+      this[VALUE] = firstSelectedOption.value;
       this.displayText = firstSelectedOption.headline;
 
     } else {
       hasSelectedOptionChanged = this.lastSelectedOption !== null;
       this.lastSelectedOption = null;
-      this._value = '';
+      this[VALUE] = '';
       this.displayText = '';
     }
 
     return hasSelectedOptionChanged;
   }
 
-  override update(changed: PropertyValues<this>) {
+  protected override update(changed: PropertyValues<this>) {
     // In SSR the options will be ready to query, so try to figure out what
     // the value and display text should be.
     if (!this.hasUpdated) {
@@ -426,10 +428,10 @@ export abstract class Select extends LitElement {
     super.update(changed);
   }
 
-  override async firstUpdated(changed: PropertyValues<this>) {
-    await this.menu.updateComplete;
+  protected override async firstUpdated(changed: PropertyValues<this>) {
+    await this.menu?.updateComplete;
     // If this has been handled on update already due to SSR, try again.
-    if (!this._lastSelectedOptionRecords.length) {
+    if (!this.lastSelectedOptionRecords.length) {
       this.initUserSelection();
     }
 
@@ -452,10 +454,10 @@ export abstract class Select extends LitElement {
    * Focuses and activates the last selected item upon opening, and resets other
    * active items.
    */
-  protected async handleOpening() {
-    const items = this.menu.items;
+  private async handleOpening() {
+    const items = this.menu!.items;
     const activeItem = List.getActiveItem(items)?.item;
-    const [selectedItem] = this._lastSelectedOptionRecords[0] ?? [null];
+    const [selectedItem] = this.lastSelectedOptionRecords[0] ?? [null];
 
     // This is true if the user keys through the list but clicks out of the menu
     // thus no close-menu event is fired by an item and we can't clean up in
@@ -470,14 +472,14 @@ export abstract class Select extends LitElement {
     }
   }
 
-  protected handleClosing() {
+  private handleClosing() {
     this.open = false;
   }
 
   /**
    * Determines the reason for closing, and updates the UI accordingly.
    */
-  protected handleCloseMenu(e: InstanceType<typeof DefaultCloseMenuEvent>) {
+  private handleCloseMenu(e: InstanceType<typeof DefaultCloseMenuEvent>) {
     const reason = e.reason;
     const item = e.itemPath[0] as SelectOption;
     this.open = false;
@@ -505,8 +507,8 @@ export abstract class Select extends LitElement {
    *
    * @return Whether the last selected option has changed.
    */
-  protected selectItem(item: SelectOption) {
-    this._lastSelectedOptionRecords.forEach(([option]) => {
+  private selectItem(item: SelectOption) {
+    this.lastSelectedOptionRecords.forEach(([option]) => {
       if (item !== option) {
         option.selected = false;
       }
@@ -520,11 +522,11 @@ export abstract class Select extends LitElement {
    * Handles updating selection when an option element requests selection via
    * property / attribute change.
    */
-  protected handleRequestSelection(e: RequestSelectionEvent) {
+  private handleRequestSelection(e: RequestSelectionEvent) {
     const requestingOptionEl = e.target as SelectOption & HTMLElement;
 
     // No-op if this item is already selected.
-    if (this._lastSelectedOptionRecords.some(
+    if (this.lastSelectedOptionRecords.some(
             ([option]) => option === requestingOptionEl)) {
       return;
     }
@@ -536,11 +538,11 @@ export abstract class Select extends LitElement {
    * Handles updating selection when an option element requests deselection via
    * property / attribute change.
    */
-  protected handleRequestDeselection(e: RequestDeselectionEvent) {
+  private handleRequestDeselection(e: RequestDeselectionEvent) {
     const requestingOptionEl = e.target as SelectOption & HTMLElement;
 
     // No-op if this item is not even in the list of tracked selected items.
-    if (!this._lastSelectedOptionRecords.some(
+    if (!this.lastSelectedOptionRecords.some(
             ([option]) => option === requestingOptionEl)) {
       return;
     }
@@ -574,16 +576,16 @@ export abstract class Select extends LitElement {
    * Attempts to initialize the selected option from user-settable values like
    * SSR, setting `value`, or `selectedIndex` at startup.
    */
-  protected initUserSelection() {
+  private initUserSelection() {
     // User has set `.value` directly, but internals have not yet booted up.
-    if (this.lastUserSetValue && !this._lastSelectedOptionRecords.length) {
+    if (this.lastUserSetValue && !this.lastSelectedOptionRecords.length) {
       this.select(this.lastUserSetValue);
 
       // User has set `.selectedIndex` directly, but internals have not yet
       // booted up.
     } else if (
         this.lastUserSetSelectedIndex !== null &&
-        !this._lastSelectedOptionRecords.length) {
+        !this.lastSelectedOptionRecords.length) {
       this.selectIndex(this.lastUserSetSelectedIndex);
 
       // Regular boot up!
@@ -592,7 +594,7 @@ export abstract class Select extends LitElement {
     }
   }
 
-  protected handleIconChange() {
+  private handleIconChange() {
     this.hasLeadingIcon = this.leadingIcons.length > 0;
     this.hasTrailingIcon = this.trailingIcons.length > 0;
   }
@@ -600,7 +602,7 @@ export abstract class Select extends LitElement {
   /**
    * Dispatches the `input` and `change` events.
    */
-  protected dispatchInteractionEvents() {
+  private dispatchInteractionEvents() {
     this.dispatchEvent(new Event('input', {bubbles: true, composed: true}));
     this.dispatchEvent(new Event('change', {bubbles: true}));
   }

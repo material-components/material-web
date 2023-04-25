@@ -31,7 +31,7 @@ export class Chip extends LitElement {
   @state() private showRipple = false;
   @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
 
-  override render() {
+  protected override render() {
     const button = this.href ? literal`a` : literal`button`;
     return staticHtml`
       <${button} class="container ${classMap(this.getContainerClasses())}"

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, nothing, TemplateResult} from 'lit';
+import {html, LitElement, nothing} from 'lit';
 import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
@@ -37,7 +37,7 @@ export class CircularProgress extends LitElement {
    */
   @property({type: Boolean, attribute: 'four-color'}) fourColor = false;
 
-  protected override render(): TemplateResult {
+  protected override render() {
     const classes = {
       'indeterminate': this.indeterminate,
       'four-color': this.fourColor
@@ -62,7 +62,7 @@ export class CircularProgress extends LitElement {
 
   // Determinate mode is rendered with an svg so the progress arc can be
   // easily animated via stroke-dashoffset.
-  protected renderDeterminateContainer() {
+  private renderDeterminateContainer() {
     const dashOffset = (1 - this.progress) * 100;
     // note, dash-array/offset are relative to Setting `pathLength` but
     // Chrome seems to render this inaccurately and using a large viewbox helps.
@@ -79,7 +79,7 @@ export class CircularProgress extends LitElement {
   // animated to produce changes to the spinner arc size.
   // This approach has 4.5x the FPS of rendering via svg on Chrome 111.
   // See https://lit.dev/playground/#gist=febb773565272f75408ab06a0eb49746.
-  protected renderIndeterminateContainer() {
+  private renderIndeterminateContainer() {
     return html`
       <div class="spinner">
         <div class="left">

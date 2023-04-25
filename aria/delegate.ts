@@ -27,7 +27,7 @@ import {ARIA_PROPERTIES, ariaPropertyToAttribute} from './aria.js';
  *     requestUpdateOnAriaChange(this);
  *   }
  *
- *   override render() {
+ *   protected override render() {
  *     return html`
  *       <button aria-label=${this.ariaLabel || nothing}>
  *         <slot></slot>

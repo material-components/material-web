@@ -41,10 +41,10 @@ export class LinearProgress extends LitElement {
    */
   @property({type: Boolean, attribute: 'four-colors'}) fourColors = false;
 
-  @query('.linear-progress') protected rootEl!: HTMLElement;
+  @query('.linear-progress') private readonly rootEl!: HTMLElement|null;
 
-  @state() protected animationReady = true;
-  protected resizeObserver: ResizeObserver|null = null;
+  @state() private animationReady = true;
+  private resizeObserver: ResizeObserver|null = null;
 
   // Note, the indeterminate animation is rendered with transform %'s
   // Previously, this was optimized to use px calculated with the resizeObserver
@@ -96,7 +96,7 @@ export class LinearProgress extends LitElement {
         this.restartAnimation();
       }
     });
-    this.resizeObserver.observe(this.rootEl);
+    this.resizeObserver.observe(this.rootEl!);
   }
 
   override disconnectedCallback() {
@@ -109,7 +109,7 @@ export class LinearProgress extends LitElement {
 
   // When size changes, restart the animation
   // to avoid jank.
-  protected async restartAnimation() {
+  private async restartAnimation() {
     await this.updateComplete;
     this.animationReady = false;
     await new Promise(requestAnimationFrame);

@@ -14,20 +14,20 @@ import {Slider} from './lib/slider.js';
 export class SliderHarness extends Harness<Slider> {
   override async getInteractiveElement() {
     await this.element.updateComplete;
-    // Test access to protected property
-    // tslint:disable-next-line:no-dict-access-on-struct-type
-    return this.element['inputB'];
+    return this.element.renderRoot.querySelector<HTMLInputElement>('input.b')!;
   }
 
   getInputs() {
-    //  Test access to protected property
-    // tslint:disable-next-line:no-dict-access-on-struct-type
-    return [this.element['inputB'], this.element['inputA']];
+    return [
+      this.element.renderRoot.querySelector<HTMLInputElement>('input.b')!,
+      this.element.renderRoot.querySelector<HTMLInputElement>('input.a')!
+    ];
   }
   getHandles() {
-    //  Test access to protected property
-    // tslint:disable-next-line:no-dict-access-on-struct-type
-    return [this.element['handleB'], this.element['handleA']];
+    return [
+      this.element.renderRoot.querySelector('.handle.b')!,
+      this.element.renderRoot.querySelector('.handle.a')!
+    ];
   }
 
   getLabels() {

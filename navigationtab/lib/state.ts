@@ -22,5 +22,5 @@ export interface NavigationTabState {
    * TODO(b/229015424): Remove this when the jscompiler rename issue is
    * understood.
    */
-  buttonElement: HTMLElement;
+  buttonElement: HTMLElement|null;
 }

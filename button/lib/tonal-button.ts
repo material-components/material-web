@@ -6,8 +6,7 @@
 
 import '../../elevation/elevation.js';
 
-import {html, TemplateResult} from 'lit';
-import {ClassInfo} from 'lit/directives/class-map.js';
+import {html} from 'lit';
 
 import {Button} from './button.js';
 
@@ -15,14 +14,14 @@ import {Button} from './button.js';
  * A tonal button component.
  */
 export class TonalButton extends Button {
-  protected override getRenderClasses(): ClassInfo {
+  protected override getRenderClasses() {
     return {
       ...super.getRenderClasses(),
       'md3-button--tonal': true,
     };
   }
 
-  protected override renderElevation(): TemplateResult {
+  protected override renderElevation() {
     return html`<md-elevation></md-elevation>`;
   }
 }

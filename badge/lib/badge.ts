@@ -15,14 +15,10 @@ export class Badge extends LitElement {
   @property() value = '';
 
   protected override render() {
-    return html`<div class="md3-badge ${
-        classMap(this.getRenderClasses())}"><p class="md3-badge__value">${
-        this.value}</p></div>`;
-  }
+    const classes = {'md3-badge--large': this.value};
 
-  protected getRenderClasses() {
-    return {
-      'md3-badge--large': this.value,
-    };
+    return html`<div class="md3-badge ${classMap(classes)}">
+      <p class="md3-badge__value">${this.value}</p>
+    </div>`;
   }
 }

@@ -485,7 +485,7 @@ export abstract class TextField extends LitElement {
     super.update(changedProperties);
   }
 
-  override render() {
+  protected override render() {
     const classes = {
       'disabled': this.disabled,
       'error': !this.disabled && this.hasError,

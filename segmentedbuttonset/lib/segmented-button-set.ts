@@ -90,7 +90,7 @@ export class SegmentedButtonSet extends LitElement {
     }));
   }
 
-  override render() {
+  protected override render() {
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`

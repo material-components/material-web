@@ -59,7 +59,7 @@ function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(max, value));
 }
 
-function isOverlapping(elA: Element, elB: Element) {
+function isOverlapping(elA: Element|null, elB: Element|null) {
   if (!(elA && elB)) {
     return false;
   }
@@ -153,7 +153,7 @@ export class Slider extends LitElement {
     return this.allowRange ? [lowerFraction, upperFraction] : upperFraction;
   }
 
-  protected getMetrics() {
+  private getMetrics() {
     const step = Math.max(this.step, 1);
     const range = Math.max(this.max - this.min, step);
     const lower = Math.min(this.valueA, this.valueB);
@@ -170,18 +170,16 @@ export class Slider extends LitElement {
     };
   }
 
-  @query('input.a') protected readonly inputA!: HTMLInputElement;
-  @query('.handle.a') protected readonly handleA!: HTMLDivElement;
-  @queryAsync('md-ripple.a')
-  protected readonly rippleA!: Promise<MdRipple|null>;
+  @query('input.a') private readonly inputA!: HTMLInputElement|null;
+  @query('.handle.a') private readonly handleA!: HTMLDivElement|null;
+  @queryAsync('md-ripple.a') private readonly rippleA!: Promise<MdRipple|null>;
 
-  @query('input.b') protected readonly inputB!: HTMLInputElement;
-  @query('.handle.b') protected readonly handleB!: HTMLDivElement;
-  @queryAsync('md-ripple.b')
-  protected readonly rippleB!: Promise<MdRipple|null>;
+  @query('input.b') private readonly inputB!: HTMLInputElement|null;
+  @query('.handle.b') private readonly handleB!: HTMLDivElement|null;
+  @queryAsync('md-ripple.b') private readonly rippleB!: Promise<MdRipple|null>;
 
-  @state() protected valueA = 0;
-  @state() protected valueB = 0;
+  @state() private valueA = 0;
+  @state() private valueB = 0;
 
   @state() private focusRingAShowing = false;
   @state() private focusRingBShowing = false;
@@ -207,7 +205,7 @@ export class Slider extends LitElement {
     this.addController(new FormController(this));
     if (!isServer) {
       this.addEventListener('click', (event: MouseEvent) => {
-        if (!isActivationClick(event)) {
+        if (!isActivationClick(event) || !this.inputB) {
           return;
         }
         this.focus();
@@ -354,22 +352,22 @@ export class Slider extends LitElement {
     </div>`;
   }
 
-  protected renderTrack() {
+  private renderTrack() {
     const trackClasses = {'tickMarks': this.withTickMarks};
     return html`<div class="track ${classMap(trackClasses)}"></div>`;
   }
 
-  protected renderFocusRing(visible: boolean) {
+  private renderFocusRing(visible: boolean) {
     return html`<md-focus-ring .visible=${visible}></md-focus-ring>`;
   }
 
-  protected renderLabel(value: string) {
+  private renderLabel(value: string) {
     return html`<div class="label">
         <span class="labelContent" part="label">${value}</span>
       </div>`;
   }
 
-  protected renderHandle(
+  private renderHandle(
       {id, lesser, showRipple, focusRequested, showFocus, hover, label}: {
         id: string,
         lesser: boolean,
@@ -395,7 +393,7 @@ export class Slider extends LitElement {
     </div>`;
   }
 
-  protected renderInput({id, lesser, value, label, getRipple}: {
+  private renderInput({id, lesser, value, label, getRipple}: {
     id: string,
     lesser: boolean,
     value: number,
@@ -431,7 +429,7 @@ export class Slider extends LitElement {
       ${ripple(getRipple)}>`;
   }
 
-  protected renderRipple = (id: string) => html`<md-ripple class=${
+  private readonly renderRipple = (id: string) => html`<md-ripple class=${
       id} ?disabled=${this.disabled} unbounded></md-ripple>`;
 
   private readonly getRippleA = () => {  // bind to this
@@ -466,23 +464,23 @@ export class Slider extends LitElement {
     }
   }
 
-  protected isEventOnA({target}: Event) {
+  private isEventOnA({target}: Event) {
     return target === this.inputA;
   }
 
-  protected updateFocusVisible(e: Event) {
+  private updateFocusVisible(e: Event) {
     const isA = this.isEventOnA(e);
     const showFocus = shouldShowStrongFocus();
     this.focusRingAShowing = showFocus && isA;
     this.focusRingBShowing = showFocus && !isA;
   }
 
-  protected handleFocus(e: Event) {
+  private handleFocus(e: Event) {
     this.updateFocusVisible(e);
     this.updateOnTop(e);
   }
 
-  protected handleBlur(e: Event) {
+  private handleBlur(e: Event) {
     this.focusRingAShowing = false;
     this.focusRingBShowing = false;
   }
@@ -490,7 +488,7 @@ export class Slider extends LitElement {
   // used in synthetic events generated to control ripple hover state.
   private ripplePointerId = 1;
 
-  protected handleDown(e: PointerEvent) {
+  private handleDown(e: PointerEvent) {
     pointerPress();
     this.ripplePointerId = e.pointerId;
     const isA = this.isEventOnA(e);
@@ -520,16 +518,16 @@ export class Slider extends LitElement {
    * of the directive. This is done based on the hover state when the
    * slider is updated.
    */
-  protected handleMove(e: PointerEvent) {
+  private handleMove(e: PointerEvent) {
     this.handleAHover = !this.disabled && inBounds(e, this.handleA);
     this.handleBHover = !this.disabled && inBounds(e, this.handleB);
   }
 
-  protected handleEnter(e: PointerEvent) {
+  private handleEnter(e: PointerEvent) {
     this.handleMove(e);
   }
 
-  protected handleLeave() {
+  private handleLeave() {
     this.handleAHover = false;
     this.handleBHover = false;
   }
@@ -538,11 +536,11 @@ export class Slider extends LitElement {
     this.onTopId = (e.target as Element).classList.contains('a') ? 'a' : 'b';
   }
 
-  protected handleInput(e: InputEvent) {
+  private handleInput(e: InputEvent) {
     if (this.inputA) {
       this.valueA = this.inputA.valueAsNumber ?? 0;
     }
-    this.valueB = this.inputB.valueAsNumber;
+    this.valueB = this.inputB!.valueAsNumber;
     this.updateOnTop(e);
     // update value only on interaction
     const lower = Math.min(this.valueA, this.valueB);
@@ -550,7 +548,7 @@ export class Slider extends LitElement {
     this.value = this.allowRange ? [lower, upper] : this.valueB;
   }
 
-  protected handleChange(event: Event) {
+  private handleChange(event: Event) {
     redispatchEvent(this, event);
   }
 }

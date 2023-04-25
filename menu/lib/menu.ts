@@ -14,7 +14,6 @@ import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
-import {MdFocusRing} from '../../focus/focus-ring.js';
 import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {List} from '../../list/lib/list.js';
 import {createAnimationSignal, EASING} from '../../motion/animation.js';
@@ -69,10 +68,9 @@ export abstract class Menu extends LitElement {
     requestUpdateOnAriaChange(this);
   }
 
-  @query('md-list') protected readonly listElement!: List|null;
-  @query('.menu') protected readonly surfaceEl!: HTMLElement|null;
-  @query('slot') protected readonly slotEl!: HTMLSlotElement|null;
-  @query('md-focus-ring') protected readonly focusRing!: MdFocusRing;
+  @query('md-list') private readonly listElement!: List|null;
+  @query('.menu') private readonly surfaceEl!: HTMLElement|null;
+  @query('slot') private readonly slotEl!: HTMLSlotElement|null;
 
   /**
    * The element in which the menu should align to.
@@ -174,15 +172,15 @@ export abstract class Menu extends LitElement {
   @property({attribute: 'default-focus'})
   defaultFocus: DefaultFocusState = 'LIST_ROOT';
 
-  @state() protected typeaheadActive = true;
+  @state() private typeaheadActive = true;
 
-  protected openCloseAnimationSignal = createAnimationSignal();
+  private readonly openCloseAnimationSignal = createAnimationSignal();
 
   /**
    * Whether the menu is animating upwards or downwards when opening. This is
    * helpful for calculating some animation calculations.
    */
-  protected get openDirection(): 'UP'|'DOWN' {
+  private get openDirection(): 'UP'|'DOWN' {
     const menuCornerBlock = this.menuCorner.split('_')[0];
     return menuCornerBlock === 'START' ? 'DOWN' : 'UP';
   }
@@ -190,7 +188,9 @@ export abstract class Menu extends LitElement {
   /**
    * The element that was focused before the menu opened.
    */
-  protected lastFocusedElement: HTMLElement|null = null;
+  private lastFocusedElement: HTMLElement|null = null;
+
+  @state() private showFocusRing = false;
 
   /**
    * Handles typeahead navigation through the menu.
@@ -206,21 +206,22 @@ export abstract class Menu extends LitElement {
   /**
    * Handles positioning the surface and aligning it to the anchor.
    */
-  protected menuPositionController = new SurfacePositionController(this, () => {
-    return {
-      anchorCorner: this.anchorCorner,
-      surfaceCorner: this.menuCorner,
-      surfaceEl: this.surfaceEl,
-      anchorEl: this.anchor,
-      isTopLayer: this.fixed,
-      isOpen: this.open,
-      xOffset: this.xOffset,
-      yOffset: this.yOffset,
-      onOpen: this.onOpened,
-      beforeClose: this.beforeClose,
-      onClose: this.onClosed,
-    };
-  });
+  private readonly menuPositionController =
+      new SurfacePositionController(this, () => {
+        return {
+          anchorCorner: this.anchorCorner,
+          surfaceCorner: this.menuCorner,
+          surfaceEl: this.surfaceEl,
+          anchorEl: this.anchor,
+          isTopLayer: this.fixed,
+          isOpen: this.open,
+          xOffset: this.xOffset,
+          yOffset: this.yOffset,
+          onOpen: this.onOpened,
+          beforeClose: this.beforeClose,
+          onClose: this.onClosed,
+        };
+      });
 
   /**
    * The menu items associated with this menu. The items must be `MenuItem`s and
@@ -237,14 +238,14 @@ export abstract class Menu extends LitElement {
     return [];
   }
 
-  override render() {
+  protected override render() {
     return this.renderSurface();
   }
 
   /**
    * Renders the positionable surface element and its contents.
    */
-  protected renderSurface() {
+  private renderSurface() {
     // TODO(b/274140618): elevation should be an underlay, not an overlay that
     // tints content
     return html`
@@ -262,7 +263,7 @@ export abstract class Menu extends LitElement {
   /**
    * Renders the List element and its items
    */
-  protected renderList() {
+  private renderList() {
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
@@ -281,7 +282,7 @@ export abstract class Menu extends LitElement {
   /**
    * Renders the menu items' slot
    */
-  protected renderMenuItems() {
+  private renderMenuItems() {
     return html`<slot
         @close-menu=${this.onCloseMenu}
         @deactivate-items=${this.onDeactivateItems}
@@ -292,18 +293,18 @@ export abstract class Menu extends LitElement {
   /**
    * Renders the elevation component.
    */
-  protected renderElevation() {
+  private renderElevation() {
     return html`<md-elevation></md-elevation>`;
   }
 
   /**
    * Renders the focus ring component.
    */
-  protected renderFocusRing() {
-    return html`<md-focus-ring></md-focus-ring>`;
+  private renderFocusRing() {
+    return html`<md-focus-ring .visible=${this.showFocusRing}></md-focus-ring>`;
   }
 
-  protected getSurfaceClasses() {
+  private getSurfaceClasses() {
     return {
       open: this.open,
       fixed: this.fixed,
@@ -311,7 +312,7 @@ export abstract class Menu extends LitElement {
     };
   }
 
-  protected async handleFocusout(e: FocusEvent) {
+  private async handleFocusout(e: FocusEvent) {
     if (this.stayOpenOnFocusout) {
       return;
     }
@@ -337,32 +338,32 @@ export abstract class Menu extends LitElement {
     this.skipRestoreFocus = oldRestoreFocus;
   }
 
-  protected handleListFocus() {
-    this.focusRing.visible = shouldShowStrongFocus();
+  private handleListFocus() {
+    this.showFocusRing = shouldShowStrongFocus();
   }
 
-  protected handleListClick() {
+  private handleListClick() {
     pointerPress();
-    this.focusRing.visible = shouldShowStrongFocus();
+    this.showFocusRing = shouldShowStrongFocus();
   }
 
   // Capture so that we can grab the event before it reaches the list item
   // istelf. Specifically useful for the case where typeahead encounters a space
   // and we don't want the menu item to close the menu.
   @eventOptions({capture: true})
-  protected handleListKeydown(e: KeyboardEvent) {
+  private handleListKeydown(e: KeyboardEvent) {
     this.typeaheadController.onKeydown(e);
   }
 
-  protected handleListBlur() {
-    this.focusRing.visible = false;
+  private handleListBlur() {
+    this.showFocusRing = false;
   }
 
   /**
    * Saves the last focused element focuses the new element based on
    * `defaultFocus`, and animates open.
    */
-  protected onOpened = () => {
+  private readonly onOpened = () => {
     this.lastFocusedElement = getFocusedElement();
 
     if (!this.listElement) return;
@@ -407,7 +408,7 @@ export abstract class Menu extends LitElement {
   /**
    * Animates closed.
    */
-  protected beforeClose = async () => {
+  private readonly beforeClose = async () => {
     this.open = false;
 
     if (!this.skipRestoreFocus) {
@@ -422,7 +423,7 @@ export abstract class Menu extends LitElement {
   /**
    * Focuses the last focused element.
    */
-  protected onClosed = () => {
+  private readonly onClosed = () => {
     if (this.quick) {
       this.dispatchEvent(new Event('closing'));
       this.dispatchEvent(new Event('closed'));
@@ -434,7 +435,7 @@ export abstract class Menu extends LitElement {
    *
    * https://direct.googleplex.com/#/spec/295000003+271060003
    */
-  protected animateOpen() {
+  private animateOpen() {
     const surfaceEl = this.surfaceEl;
     const slotEl = this.slotEl;
 
@@ -519,7 +520,7 @@ export abstract class Menu extends LitElement {
    *
    * https://direct.googleplex.com/#/spec/295000003+271060003
    */
-  protected animateClose() {
+  private animateClose() {
     let resolve!: (value: unknown) => void;
     let reject!: () => void;
 
@@ -647,17 +648,17 @@ export abstract class Menu extends LitElement {
     }
   }
 
-  protected onWindowClick = (e: MouseEvent) => {
+  private readonly onWindowClick = (e: MouseEvent) => {
     if (!this.stayOpenOnOutsideClick && !e.composedPath().includes(this)) {
       this.open = false;
     }
   };
 
-  protected onCloseMenu(e: Event) {
+  private onCloseMenu() {
     this.close();
   }
 
-  protected onDeactivateItems(e: Event) {
+  private onDeactivateItems(e: Event) {
     e.stopPropagation();
     const items = this.items;
     for (const item of items) {
@@ -666,14 +667,14 @@ export abstract class Menu extends LitElement {
     }
   }
 
-  protected handleDeactivateTypeahead(e: DeactivateTypeaheadEvent) {
+  private handleDeactivateTypeahead(e: DeactivateTypeaheadEvent) {
     // stopPropagation so that this does not deactivate any typeaheads in menus
     // nested above it e.g. md-sub-menu-item
     e.stopPropagation();
     this.typeaheadActive = false;
   }
 
-  protected handleActivateTypeahead(e: ActivateTypeaheadEvent) {
+  private handleActivateTypeahead(e: ActivateTypeaheadEvent) {
     // stopPropagation so that this does not activate any typeaheads in menus
     // nested above it e.g. md-sub-menu-item
     e.stopPropagation();

@@ -5,7 +5,6 @@
  */
 
 import {customElement} from 'lit/decorators.js';
-import {ClassInfo} from 'lit/directives/class-map.js';
 
 import {styles} from './lib/filled-styles.css.js';
 import {IconButton} from './lib/icon-button.js';
@@ -36,7 +35,7 @@ declare global {
 export class MdFilledIconButton extends IconButton {
   static override styles = [sharedStyles, styles];
 
-  protected override getRenderClasses(): ClassInfo {
+  protected override getRenderClasses() {
     return {
       ...super.getRenderClasses(),
       'md3-icon-button--filled': true,

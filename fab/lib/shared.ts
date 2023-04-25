@@ -8,9 +8,9 @@ import '../../elevation/elevation.js';
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, nothing, TemplateResult} from 'lit';
+import {html, LitElement, nothing} from 'lit';
 import {property, queryAsync, state} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
 
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
@@ -64,12 +64,12 @@ export abstract class SharedFab extends LitElement {
 
   @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
 
-  protected getRipple = () => {
+  private readonly getRipple = () => {
     this.showRipple = true;
     return this.ripple;
   };
 
-  protected override render(): TemplateResult {
+  protected override render() {
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
@@ -89,7 +89,7 @@ export abstract class SharedFab extends LitElement {
       </button>`;
   }
 
-  protected getRenderClasses(): ClassInfo {
+  protected getRenderClasses() {
     const isExtended = !!this.label;
     return {
       'lowered': this.lowered,
@@ -99,31 +99,31 @@ export abstract class SharedFab extends LitElement {
     };
   }
 
-  protected renderTouchTarget(): TemplateResult {
+  private renderTouchTarget() {
     return this.reducedTouchTarget ? html`` :
                                      html`<div class="touch-target"></div>`;
   }
 
-  protected renderLabel(): TemplateResult|string {
+  private renderLabel() {
     return this.label ? html`<span class="label">${this.label}</span>` : '';
   }
 
-  protected renderIcon() {
+  private renderIcon() {
     return html`<span class="icon">
         <slot name="icon"></slot>
       </span>`;
   }
 
-  protected renderElevation(): TemplateResult {
+  private renderElevation() {
     return html`<md-elevation></md-elevation>`;
   }
 
-  protected renderFocusRing(): TemplateResult {
+  private renderFocusRing() {
     return html`<md-focus-ring .visible="${
         this.showFocusRing}"></md-focus-ring>`;
   }
 
-  private handlePointerDown(e: PointerEvent) {
+  private handlePointerDown() {
     pointerPress();
     this.showFocusRing = shouldShowStrongFocus();
   }

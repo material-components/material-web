@@ -24,7 +24,7 @@ export class NavigationDrawer extends LitElement {
   @property({type: Boolean}) opened = false;
   @property() pivot: 'start'|'end' = 'end';
 
-  override render() {
+  protected override render() {
     const ariaExpanded = this.opened ? 'true' : 'false';
     const ariaHidden = !this.opened ? 'true' : 'false';
     // Needed for closure conformance
@@ -45,7 +45,7 @@ export class NavigationDrawer extends LitElement {
     `;
   }
 
-  protected getRenderClasses() {
+  private getRenderClasses() {
     return classMap({
       'md3-navigation-drawer--opened': this.opened,
       'md3-navigation-drawer--pivot-at-start': this.pivot === 'start',

@@ -22,7 +22,7 @@ export class NavigationDrawerModal extends LitElement {
   @property({type: Boolean}) opened = false;
   @property() pivot: 'start'|'end' = 'end';
 
-  override render() {
+  protected override render() {
     const ariaExpanded = this.opened ? 'true' : 'false';
     const ariaHidden = !this.opened ? 'true' : 'false';
     // Needed for closure conformance
@@ -48,13 +48,13 @@ export class NavigationDrawerModal extends LitElement {
     `;
   }
 
-  protected getScrimClasses() {
+  private getScrimClasses() {
     return classMap({
       'md3-navigation-drawer-modal--scrim-visible': this.opened,
     });
   }
 
-  protected getRenderClasses() {
+  private getRenderClasses() {
     return classMap({
       'md3-navigation-drawer-modal--opened': this.opened,
       'md3-navigation-drawer-modal--pivot-at-start': this.pivot === 'start',

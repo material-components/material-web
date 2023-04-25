@@ -32,9 +32,9 @@ export class NavigationBar extends LitElement implements NavigationBarState {
   tabs: NavigationTab[] = [];
 
   @queryAssignedElements({flatten: true})
-  protected tabsElement!: NavigationTab[];
+  private readonly tabsElement!: NavigationTab[];
 
-  override render() {
+  protected override render() {
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`<div class="md3-navigation-bar"

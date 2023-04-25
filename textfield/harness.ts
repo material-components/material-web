@@ -13,7 +13,7 @@ import {TextField} from './lib/text-field.js';
  */
 export class TextFieldHarness extends Harness<TextField> {
   /** Used to track whether or not a change event should be dispatched. */
-  protected valueBeforeChange = '';
+  private valueBeforeChange = '';
 
   /**
    * Simulates a user typing a value one character at a time. This will fire

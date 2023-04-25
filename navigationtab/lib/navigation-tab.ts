@@ -36,14 +36,14 @@ export class NavigationTab extends LitElement implements NavigationTabState {
   @property() badgeValue = '';
   @property({type: Boolean}) showBadge = false;
 
-  @state() protected showFocusRing = false;
-  @state() protected showRipple = false;
+  @state() private showFocusRing = false;
+  @state() private showRipple = false;
 
-  @query('button') buttonElement!: HTMLElement;
+  @query('button') buttonElement!: HTMLElement|null;
 
   @queryAsync('md-ripple') ripple!: Promise<MdRipple|null>;
 
-  override render() {
+  protected override render() {
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
@@ -71,35 +71,35 @@ export class NavigationTab extends LitElement implements NavigationTabState {
       </button>`;
   }
 
-  protected getRenderClasses() {
+  private getRenderClasses() {
     return {
       'md3-navigation-tab--hide-inactive-label': this.hideInactiveLabel,
       'md3-navigation-tab--active': this.active,
     };
   }
 
-  protected renderFocusRing() {
+  private renderFocusRing() {
     return html`<md-focus-ring .visible="${
         this.showFocusRing}"></md-focus-ring>`;
   }
 
-  protected getRipple = () => {
+  private readonly getRipple = () => {
     this.showRipple = true;
     return this.ripple;
   };
 
-  protected renderRipple = () => {
+  private readonly renderRipple = () => {
     return html`<md-ripple ?disabled="${
         this.disabled}" class="md3-navigation-tab__ripple"></md-ripple>`;
   };
 
-  protected renderBadge() {
+  private renderBadge() {
     return this.showBadge ?
         html`<md-badge .value="${this.badgeValue}"></md-badge>` :
         nothing;
   }
 
-  protected renderLabel() {
+  private renderLabel() {
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
     const ariaHidden = ariaLabel ? 'true' : 'false';
@@ -144,11 +144,11 @@ export class NavigationTab extends LitElement implements NavigationTabState {
     this.showFocusRing = shouldShowStrongFocus();
   }
 
-  protected handleFocus() {
+  private handleFocus() {
     this.showFocusRing = shouldShowStrongFocus();
   }
 
-  protected handleBlur() {
+  private handleBlur() {
     this.showFocusRing = false;
   }
 }

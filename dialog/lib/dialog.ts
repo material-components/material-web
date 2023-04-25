@@ -172,7 +172,8 @@ export class Dialog extends LitElement {
 
   private readonly throttle = createThrottle();
 
-  @query('.dialog', true) private readonly dialogElement!: HTMLDialogElement;
+  @query('.dialog', true)
+  private readonly dialogElement!: HTMLDialogElement|null;
 
   // slots tracked to find focusable elements.
   @query('slot[name=footer]', true)
@@ -180,11 +181,13 @@ export class Dialog extends LitElement {
   @query('slot:not([name])', true)
   private readonly contentSlot!: HTMLSlotElement;
   // for scrolling related styling
-  @query(`.content`, true) private readonly contentElement!: HTMLDivElement;
+  @query(`.content`, true)
+  private readonly contentElement!: HTMLDivElement|null;
   // used to determine container size for dragging
-  @query(`.container`, true) private readonly containerElement!: HTMLDivElement;
+  @query(`.container`, true)
+  private readonly containerElement!: HTMLDivElement|null;
   // used to determin where users can drag from.
-  @query(`.header`, true) private readonly headerElement!: HTMLDivElement;
+  @query(`.header`, true) private readonly headerElement!: HTMLDivElement|null;
 
   /**
    * Private properties that reflect for styling manually in `updated`.
@@ -237,7 +240,7 @@ export class Dialog extends LitElement {
   }
 
   private getContentScrollInfo() {
-    if (!this.hasUpdated) {
+    if (!this.hasUpdated || !this.contentElement) {
       return {isScrollable: false, isAtScrollTop: true, isAtScrollBottom: true};
     }
     const {scrollTop, scrollHeight, offsetHeight, clientHeight} =
@@ -309,7 +312,7 @@ export class Dialog extends LitElement {
       if (this.showingOpen) {
         this.requestUpdate();
       }
-    }).observe(this.contentElement);
+    }).observe(this.contentElement!);
   }
 
   protected override updated(changed: PropertyValues) {
@@ -334,13 +337,13 @@ export class Dialog extends LitElement {
       Dialog.setDocumentScrollingDisabled(this.open);
     }
     if (this.open) {
-      this.contentElement.scrollTop = 0;
+      this.contentElement!.scrollTop = 0;
       if (this.modeless) {
-        this.dialogElement.show();
+        this.dialogElement!.show();
       } else {
         // Note, native focus handling fails when focused element is in an
         // overflow: auto container.
-        this.dialogElement.showModal();
+        this.dialogElement!.showModal();
       }
     }
     // Avoids dispatching initial state.
@@ -372,7 +375,7 @@ export class Dialog extends LitElement {
 
   private dialogClosedResolver?: () => void;
 
-  protected async performTransition(shouldDispatchAction: boolean) {
+  private async performTransition(shouldDispatchAction: boolean) {
     // TODO: pause here only to avoid a double update warning.
     await this.updateComplete;
     this.showingOpen = this.open;
@@ -391,7 +394,7 @@ export class Dialog extends LitElement {
     await promise;
     this.opening = false;
     this.closing = false;
-    if (!this.open && this.dialogElement.open) {
+    if (!this.open && this.dialogElement?.open) {
       // Closing the dialog triggers an asynchronous `close` event.
       // It's important to wait for this event to fire since it changes the
       // state of `open` to false.
@@ -404,7 +407,7 @@ export class Dialog extends LitElement {
       const closedPromise = new Promise<void>(resolve => {
         this.dialogClosedResolver = resolve;
       });
-      this.dialogElement.close(this.currentAction || this.defaultAction);
+      this.dialogElement?.close(this.currentAction || this.defaultAction);
       await closedPromise;
       // enable scrolling late to avoid layout shift when closing
       if (!this.modeless) {
@@ -421,7 +424,7 @@ export class Dialog extends LitElement {
     this.currentAction = undefined;
   }
 
-  protected dispatchActionEvent(type: string) {
+  private dispatchActionEvent(type: string) {
     const detail = {action: this.open ? 'none' : this.currentAction};
     this.dispatchEvent(new CustomEvent(type, {detail, bubbles: true}));
   }
@@ -430,7 +433,7 @@ export class Dialog extends LitElement {
   private fullscreenQuery?: MediaQueryList;
   private fullscreenQueryListener:
       ((e: MediaQueryListEvent) => void)|undefined = undefined;
-  protected updateFullscreen() {
+  private updateFullscreen() {
     if (this.fullscreenQuery !== undefined) {
       this.fullscreenQuery.removeEventListener(
           'change', this.fullscreenQueryListener!);
@@ -451,7 +454,7 @@ export class Dialog extends LitElement {
 
   // handles native close/cancel events and we just ensure
   // internal state is in sync.
-  protected handleDialogDismiss(e: Event) {
+  private handleDialogDismiss(e: Event) {
     if (e.type === 'cancel') {
       this.currentAction = this.escapeKeyAction;
     }
@@ -462,13 +465,14 @@ export class Dialog extends LitElement {
     this.closing = false;
   }
 
-  protected handleDialogClick(e: Event) {
+  private handleDialogClick(e: Event) {
     if (!this.open) {
       return;
     }
     this.currentAction =
         (e.target as Element).getAttribute(this.actionAttribute) ??
-        (!this.modeless && !e.composedPath().includes(this.containerElement) ?
+        (!this.modeless && this.containerElement &&
+                 !e.composedPath().includes(this.containerElement) ?
              this.scrimClickAction :
              '');
     if (this.currentAction !== '') {
@@ -477,13 +481,13 @@ export class Dialog extends LitElement {
   }
 
   /* This allows the dividers to dynamically show based on scrolling. */
-  protected handleContentScroll() {
+  private handleContentScroll() {
     this.throttle('scroll', () => {
       this.requestUpdate();
     });
   }
 
-  protected getFocusElement(): HTMLElement|null {
+  private getFocusElement(): HTMLElement|null {
     const selector = `[${this.focusAttribute}]`;
     const slotted = [this.footerSlot, this.contentSlot].flatMap(
         slot => slot.assignedElements({flatten: true}));
@@ -504,16 +508,16 @@ export class Dialog extends LitElement {
     this.getFocusElement()?.blur();
   }
 
-  protected canStartDrag(e: PointerEvent) {
+  private canStartDrag(e: PointerEvent) {
     if (this.draggable === false || e.defaultPrevented || !(e.buttons & 1) ||
-        !e.composedPath().includes(this.headerElement)) {
+        !this.headerElement || !e.composedPath().includes(this.headerElement)) {
       return false;
     }
     return true;
   }
 
-  protected handlePointerMove(e: PointerEvent) {
-    if (!this.dragging && !this.canStartDrag(e)) {
+  private handlePointerMove(e: PointerEvent) {
+    if (!this.dragging && !this.canStartDrag(e) || !this.containerElement) {
       return;
     }
     const {top, left, height, width} =
@@ -535,11 +539,11 @@ export class Dialog extends LitElement {
     this.style.setProperty('--_container-drag-block-start', `${t}px`);
   }
 
-  protected handleDragEnd(e: PointerEvent) {
+  private handleDragEnd(e: PointerEvent) {
     if (!this.dragging) {
       return;
     }
-    this.containerElement.releasePointerCapture(e.pointerId);
+    this.containerElement?.releasePointerCapture(e.pointerId);
     this.dragging = false;
     this.dragInfo = undefined;
   }

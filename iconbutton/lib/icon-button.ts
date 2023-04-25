@@ -8,9 +8,9 @@ import '../../focus/focus-ring.js';
 import '../../icon/icon.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, nothing, TemplateResult} from 'lit';
-import {property, query, queryAsync, state} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {html, LitElement, nothing} from 'lit';
+import {property, queryAsync, state} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
 import {html as staticHtml, literal} from 'lit/static-html.js';
 
@@ -68,22 +68,20 @@ export class IconButton extends LitElement {
    */
   @property({type: Boolean, reflect: true}) selected = false;
 
-  @query('button') protected buttonElement!: HTMLElement;
+  @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
 
-  @queryAsync('md-ripple') protected ripple!: Promise<MdRipple|null>;
+  @state() private showFocusRing = false;
 
-  @state() protected showFocusRing = false;
+  @state() private showRipple = false;
 
-  @state() protected showRipple = false;
+  @state() private flipIcon = isRtl(this, this.flipIconInRtl);
 
-  @state() protected flipIcon: boolean = isRtl(this, this.flipIconInRtl);
-
-  protected getRipple = () => {
+  private readonly getRipple = () => {
     this.showRipple = true;
     return this.ripple;
   };
 
-  protected readonly renderRipple = () => {
+  private readonly renderRipple = () => {
     return html`<md-ripple ?disabled="${
     !this.href && this.disabled}"></md-ripple>`;
   };
@@ -97,7 +95,7 @@ export class IconButton extends LitElement {
     }
   }
 
-  protected override render(): TemplateResult {
+  protected override render() {
     const tag = this.href ? literal`div` : literal`button`;
     // Needed for closure conformance
     const {ariaLabel, ariaHasPopup, ariaExpanded} = this as ARIAMixinStrict;
@@ -130,7 +128,7 @@ export class IconButton extends LitElement {
   </${tag}>`;
   }
 
-  protected renderLink() {
+  private renderLink() {
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`<a class="md3-icon-button__link" href="${this.href}"
@@ -140,27 +138,27 @@ export class IconButton extends LitElement {
                   aria-label="${ariaLabel || nothing}"></a>`;
   }
 
-  protected getRenderClasses(): ClassInfo {
+  protected getRenderClasses() {
     return {
       'md3-icon-button--flip-icon': this.flipIcon,
       'md3-icon-button--selected': this.toggle && this.selected,
     };
   }
 
-  protected renderIcon(): TemplateResult {
+  private renderIcon() {
     return html`<md-icon class="md3-icon-button__icon"><slot></slot></md-icon>`;
   }
 
-  protected renderSelectedIcon() {
+  private renderSelectedIcon() {
     // Use default slot as fallback to not require specifying multiple icons
     return html`<md-icon class="md3-icon-button__icon md3-icon-button__icon--selected"><slot name="selectedIcon"><slot></slot></slot></md-icon>`;
   }
 
-  protected renderTouchTarget(): TemplateResult {
+  private renderTouchTarget() {
     return html`<span class="md3-icon-button__touch"></span>`;
   }
 
-  protected renderFocusRing(): TemplateResult {
+  private renderFocusRing() {
     return html`<md-focus-ring .visible="${
         this.showFocusRing}"></md-focus-ring>`;
   }
@@ -175,15 +173,15 @@ export class IconButton extends LitElement {
     this.showFocusRing = shouldShowStrongFocus();
   }
 
-  protected handleFocus() {
+  private handleFocus() {
     this.showFocusRing = shouldShowStrongFocus();
   }
 
-  protected handleBlur() {
+  private handleBlur() {
     this.showFocusRing = false;
   }
 
-  protected handleClick() {
+  private handleClick() {
     if (!this.toggle || this.disabled) {
       return;
     }

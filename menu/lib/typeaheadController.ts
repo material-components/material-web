@@ -74,15 +74,15 @@ export class TypeaheadController {
   /**
    * Array of tuples that helps with indexing.
    */
-  protected typeaheadRecords: TypeaheadRecord[] = [];
+  private typeaheadRecords: TypeaheadRecord[] = [];
   /**
    * Currently-typed text since last buffer timeout
    */
-  protected typaheadBuffer = '';
+  private typaheadBuffer = '';
   /**
    * The timeout id from the current buffer's setTimeout
    */
-  protected cancelTypeaheadTimeout = 0;
+  private cancelTypeaheadTimeout = 0;
   /**
    * If we are currently "typing"
    */
@@ -103,14 +103,14 @@ export class TypeaheadController {
    * }
    */
   constructor(
-      protected getProperties: () => TypeaheadControllerProperties,
+      private readonly getProperties: () => TypeaheadControllerProperties,
   ) {}
 
-  protected get items() {
+  private get items() {
     return this.getProperties().getItems();
   }
 
-  protected get active() {
+  private get active() {
     return this.getProperties().active;
   }
 
@@ -131,7 +131,7 @@ export class TypeaheadController {
   /**
    * Sets up typingahead
    */
-  protected beginTypeahead(e: KeyboardEvent) {
+  private beginTypeahead(e: KeyboardEvent) {
     if (!this.active) {
       return;
     }
@@ -195,7 +195,7 @@ export class TypeaheadController {
    *
    * activates Olive
    */
-  protected typeahead(e: KeyboardEvent) {
+  private typeahead(e: KeyboardEvent) {
     clearTimeout(this.cancelTypeaheadTimeout);
     // Stop typingahead if one of the navigation or selection keys (except for
     // Space) are pressed
@@ -296,7 +296,7 @@ export class TypeaheadController {
   /**
    * Ends the current typeahead and clears the buffer.
    */
-  protected endTypeahead = () => {
+  private readonly endTypeahead = () => {
     this.isTypingAhead = false;
     this.typaheadBuffer = '';
     this.typeaheadRecords = [];

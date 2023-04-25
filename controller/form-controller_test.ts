@@ -56,7 +56,7 @@ class MyFormDataElement extends MyFormElement {
 class MyCheckedFormElement extends MyFormElement {
   @property({type: Boolean}) checked = false;
 
-  @query('#checked') checkedEl!: HTMLDivElement;
+  @query('#checked') checkedEl!: HTMLDivElement|null;
 
   constructor() {
     super();
@@ -65,7 +65,7 @@ class MyCheckedFormElement extends MyFormElement {
 
   setupActivationClickHandler() {
     this.addEventListener('click', (event: MouseEvent) => {
-      if (!isActivationClick(event)) {
+      if (!isActivationClick(event) || !this.checkedEl) {
         return;
       }
       this.checkedEl.focus();
@@ -77,7 +77,7 @@ class MyCheckedFormElement extends MyFormElement {
   // element contain native "interactive content" like a button or input,
   // see https://bugzilla.mozilla.org/show_bug.cgi?id=1804576.
   //
-  override render() {
+  protected override render() {
     return html`<button id="checked" @click=${
         () => this.checked = !this.checked}>
       ${this.checked}
@@ -85,7 +85,7 @@ class MyCheckedFormElement extends MyFormElement {
   }
 
   override focus() {
-    this.checkedEl.focus();
+    this.checkedEl?.focus();
   }
 }
 
@@ -97,7 +97,7 @@ class MyCheckedFormAssociatedElement extends MyCheckedFormElement {
 class CheckedFormElementHarness extends Harness<MyCheckedFormElement> {
   protected override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.checkedEl;
+    return this.element.checkedEl!;
   }
 }
 
@@ -130,8 +130,7 @@ describe('FormController', () => {
 
   it('should add form associated element\'s name/value pair to the form',
      async () => {
-       const harness = await setupTest(
-           html`
+       const harness = await setupTest(html`
         <my-checked-form-associated-element name="element" value="foo">
         </my-checked-form-associated-element>`);
 
@@ -181,8 +180,7 @@ describe('FormController', () => {
   });
 
   it('should add all entries if element returns FormData', async () => {
-    const harness = await setupTest(
-        html`
+    const harness = await setupTest(html`
       <my-form-data-element value="foo"></my-form-data-element>
     `);
 

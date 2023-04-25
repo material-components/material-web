@@ -7,7 +7,7 @@
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, nothing, PropertyValues} from 'lit';
+import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
 import {property, queryAssignedElements, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
@@ -35,12 +35,12 @@ export class SegmentedButton extends LitElement {
   @property({type: Boolean}) noCheckmark = false;
   @property({type: Boolean}) hasIcon = false;
 
-  @state() protected animState = '';
-  @state() protected showFocusRing = false;
-  @state() protected showRipple = false;
+  @state() private animState = '';
+  @state() private showFocusRing = false;
+  @state() private showRipple = false;
   @queryAssignedElements({slot: 'icon', flatten: true})
-  protected iconElement!: HTMLElement[];
-  @queryAsync('md-ripple') protected ripple!: Promise<MdRipple|null>;
+  private readonly iconElement!: HTMLElement[];
+  @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
 
   protected override update(props: PropertyValues<SegmentedButton>) {
     this.animState = this.nextAnimationState(props);
@@ -67,26 +67,26 @@ export class SegmentedButton extends LitElement {
     return '';
   }
 
-  handleClick(e: MouseEvent) {
+  private handleClick() {
     const event = new Event(
         'segmented-button-interaction', {bubbles: true, composed: true});
     this.dispatchEvent(event);
   }
 
-  handlePointerDown(e: PointerEvent) {
+  private handlePointerDown(e: PointerEvent) {
     pointerPress();
     this.showFocusRing = shouldShowStrongFocus();
   }
 
-  protected handleFocus() {
+  private handleFocus() {
     this.showFocusRing = shouldShowStrongFocus();
   }
 
-  protected handleBlur() {
+  private handleBlur() {
     this.showFocusRing = false;
   }
 
-  override render() {
+  protected override render() {
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
@@ -125,31 +125,31 @@ export class SegmentedButton extends LitElement {
     };
   }
 
-  protected renderFocusRing() {
+  private renderFocusRing() {
     return html`<md-focus-ring .visible="${
         this.showFocusRing}" class="md3-segmented-button__focus-ring"></md-focus-ring>`;
   }
 
-  protected readonly getRipple = () => {
+  private readonly getRipple = () => {
     this.showRipple = true;
     return this.ripple;
   };
 
-  protected renderRipple = () => {
+  private readonly renderRipple = () => {
     return html`<md-ripple ?disabled="${
         this.disabled}" class="md3-segmented-button__ripple"> </md-ripple>`;
   };
 
-  protected renderOutline() {
-    return html``;
+  protected renderOutline(): TemplateResult|typeof nothing {
+    return nothing;
   }
 
-  protected renderLeading() {
+  private renderLeading() {
     return this.label === '' ? this.renderLeadingWithoutLabel() :
                                this.renderLeadingWithLabel();
   }
 
-  protected renderLeadingWithoutLabel() {
+  private renderLeadingWithoutLabel() {
     return html`
       <span class="md3-segmented-button__leading" aria-hidden="true">
         <span class="md3-segmented-button__graphic">
@@ -164,7 +164,7 @@ export class SegmentedButton extends LitElement {
     `;
   }
 
-  protected renderLeadingWithLabel() {
+  private renderLeadingWithLabel() {
     return html`
       <span class="md3-segmented-button__leading" aria-hidden="true">
         <span class="md3-segmented-button__graphic">
@@ -179,13 +179,13 @@ export class SegmentedButton extends LitElement {
     `;
   }
 
-  protected renderLabel() {
+  private renderLabel() {
     return html`
       <span class="md3-segmented-button__label-text">${this.label}</span>
     `;
   }
 
-  protected renderTouchTarget() {
+  private renderTouchTarget() {
     return html`<span class="md3-segmented-button__touch"></span>`;
   }
 }

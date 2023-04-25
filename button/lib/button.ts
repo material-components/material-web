@@ -9,7 +9,7 @@ import '../../ripple/ripple.js';
 
 import {html, isServer, LitElement, nothing, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, queryAsync, state} from 'lit/decorators.js';
-import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
 import {html as staticHtml, literal} from 'lit/static-html.js';
 
@@ -67,16 +67,16 @@ export abstract class Button extends LitElement {
    */
   @property({type: Boolean}) preventClickDefault = false;
 
-  @query('.md3-button') protected buttonElement!: HTMLElement;
+  @query('.md3-button') private readonly buttonElement!: HTMLElement|null;
 
-  @queryAsync('md-ripple') protected ripple!: Promise<MdRipple|null>;
+  @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
 
-  @state() protected showFocusRing = false;
+  @state() private showFocusRing = false;
 
-  @state() protected showRipple = false;
+  @state() private showRipple = false;
 
   @queryAssignedElements({slot: 'icon', flatten: true})
-  protected assignedIcons!: HTMLElement[];
+  private readonly assignedIcons!: HTMLElement[];
 
   constructor() {
     super();
@@ -85,28 +85,15 @@ export abstract class Button extends LitElement {
     }
   }
 
-  private readonly handleActivationClick = (event: MouseEvent) => {
-    if (!isActivationClick((event))) {
-      return;
-    }
-    this.focus();
-    dispatchActivationClick(this.buttonElement);
-  };
-
   override focus() {
-    this.buttonElement.focus();
+    this.buttonElement?.focus();
   }
 
   override blur() {
-    this.buttonElement.blur();
+    this.buttonElement?.blur();
   }
 
-  protected readonly getRipple = () => {
-    this.showRipple = true;
-    return this.ripple;
-  };
-
-  protected override render(): TemplateResult {
+  protected override render() {
     // Link buttons may not be disabled
     const isDisabled = this.disabled && !this.href;
 
@@ -139,74 +126,87 @@ export abstract class Button extends LitElement {
       </${button}>`;
   }
 
-  protected getRenderClasses(): ClassInfo {
+  protected getRenderClasses() {
     return {
       'md3-button--icon-leading': !this.trailingIcon && this.hasIcon,
       'md3-button--icon-trailing': this.trailingIcon && this.hasIcon,
     };
   }
 
-  protected renderTouchTarget(): TemplateResult {
+  protected renderElevation(): TemplateResult|typeof nothing {
+    return nothing;
+  }
+
+  protected renderOutline(): TemplateResult|typeof nothing {
+    return nothing;
+  }
+
+  private renderTouchTarget() {
     return html`
       <span class="md3-button__touch"></span>
     `;
   }
 
-  protected renderElevation(): TemplateResult {
-    return html``;
-  }
+  private readonly handleActivationClick = (event: MouseEvent) => {
+    if (!isActivationClick((event)) || !this.buttonElement) {
+      return;
+    }
+    this.focus();
+    dispatchActivationClick(this.buttonElement);
+  };
 
-  protected renderRipple = () => {
+  private readonly getRipple = () => {
+    this.showRipple = true;
+    return this.ripple;
+  };
+
+  private readonly renderRipple = () => {
     return html`<md-ripple class="md3-button__ripple" ?disabled="${
         this.disabled}"></md-ripple>`;
   };
 
-  protected renderOutline(): TemplateResult {
-    return html``;
-  }
-
-  protected renderFocusRing(): TemplateResult {
+  private renderFocusRing() {
     return html`<md-focus-ring .visible="${
         this.showFocusRing}"></md-focus-ring>`;
   }
 
-  protected renderLabel(): TemplateResult {
+  private renderLabel() {
     return html`<span class="md3-button__label"><slot></slot></span>`;
   }
 
-  protected renderLeadingIcon(): TemplateResult|string {
-    return this.trailingIcon ? '' : this.renderIcon();
+  private renderLeadingIcon() {
+    return this.trailingIcon ? nothing : this.renderIcon();
   }
 
-  protected renderTrailingIcon(): TemplateResult|string {
-    return this.trailingIcon ? this.renderIcon() : '';
+  private renderTrailingIcon() {
+    return this.trailingIcon ? this.renderIcon() : nothing;
   }
 
-  protected renderIcon(): TemplateResult {
+  private renderIcon() {
     return html`<slot name="icon" @slotchange="${
         this.handleSlotChange}"></slot>`;
   }
 
-  protected handlePointerDown(e: PointerEvent) {
+  private handlePointerDown() {
     pointerPress();
     this.showFocusRing = shouldShowStrongFocus();
   }
 
-  protected handleClick(e: MouseEvent) {
+  private handleClick(e: MouseEvent) {
     if (this.preventClickDefault) {
       e.preventDefault();
     }
   }
 
-  protected handleFocus() {
+  private handleFocus() {
     this.showFocusRing = shouldShowStrongFocus();
   }
 
-  protected handleBlur() {
+  private handleBlur() {
     this.showFocusRing = false;
   }
 
-  protected handleSlotChange() {
+  private handleSlotChange() {
     this.hasIcon = this.assignedIcons.length > 0;
   }
 }

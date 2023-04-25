@@ -161,8 +161,7 @@ export class Switch extends LitElement {
     return html`<md-focus-ring visible></md-focus-ring>`;
   };
 
-  private renderHandle(): TemplateResult {
-    /** @classMap */
+  private renderHandle() {
     const classes = {
       'md3-switch__handle--big': this.icons && !this.showOnlySelectedIcon,
     };
@@ -177,7 +176,7 @@ export class Switch extends LitElement {
     `;
   }
 
-  private renderIcons(): TemplateResult {
+  private renderIcons() {
     return html`
       <div class="md3-switch__icons">
         ${this.renderOnIcon()}
@@ -189,7 +188,7 @@ export class Switch extends LitElement {
   /**
    * https://fonts.google.com/icons?selected=Material%20Symbols%20Outlined%3Acheck%3AFILL%400%3Bwght%40500%3BGRAD%400%3Bopsz%4024
    */
-  private renderOnIcon(): TemplateResult {
+  private renderOnIcon() {
     return html`
       <svg class="md3-switch__icon md3-switch__icon--on" viewBox="0 0 24 24">
         <path d="M9.55 18.2 3.65 12.3 5.275 10.675 9.55 14.95 18.725 5.775 20.35 7.4Z"/>
@@ -200,7 +199,7 @@ export class Switch extends LitElement {
   /**
    * https://fonts.google.com/icons?selected=Material%20Symbols%20Outlined%3Aclose%3AFILL%400%3Bwght%40500%3BGRAD%400%3Bopsz%4024
    */
-  private renderOffIcon(): TemplateResult {
+  private renderOffIcon() {
     return html`
       <svg class="md3-switch__icon md3-switch__icon--off" viewBox="0 0 24 24">
         <path d="M6.4 19.2 4.8 17.6 10.4 12 4.8 6.4 6.4 4.8 12 10.4 17.6 4.8 19.2 6.4 13.6 12 19.2 17.6 17.6 19.2 12 13.6Z"/>
@@ -208,7 +207,7 @@ export class Switch extends LitElement {
     `;
   }
 
-  private renderTouchTarget(): TemplateResult {
+  private renderTouchTarget() {
     return html`<span class="md3-switch__touch"></span>`;
   }
 

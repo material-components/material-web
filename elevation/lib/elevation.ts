@@ -10,7 +10,7 @@ import {html, LitElement} from 'lit';
  * A component for elevation.
  */
 export class Elevation extends LitElement {
-  override render() {
+  protected override render() {
     return html`<span class="shadow"></span>`;
   }
 }

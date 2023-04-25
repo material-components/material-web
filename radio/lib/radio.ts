@@ -7,7 +7,7 @@
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, isServer, LitElement, nothing, TemplateResult} from 'lit';
+import {html, isServer, LitElement, nothing} from 'lit';
 import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {when} from 'lit/directives/when.js';
 
@@ -110,7 +110,7 @@ export class Radio extends LitElement {
     this.input?.focus();
   }
 
-  protected override render(): TemplateResult {
+  protected override render() {
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
@@ -172,7 +172,7 @@ export class Radio extends LitElement {
     return html`<md-ripple unbounded ?disabled=${this.disabled}></md-ripple>`;
   };
 
-  private renderFocusRing(): TemplateResult {
+  private renderFocusRing() {
     return html`<md-focus-ring .visible=${this.showFocusRing}></md-focus-ring>`;
   }
 }

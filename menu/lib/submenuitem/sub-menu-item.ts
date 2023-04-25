@@ -48,13 +48,13 @@ export class SubMenuItem extends MenuItemEl {
   @property({type: Boolean, reflect: true}) selected = false;
 
   @queryAssignedElements({slot: 'submenu', flatten: true})
-  protected menus!: Menu[];
+  private readonly menus!: Menu[];
 
   protected override keepOpenOnClick = true;
-  protected previousOpenTimeout = 0;
-  protected previousCloseTimeout = 0;
+  private previousOpenTimeout = 0;
+  private previousCloseTimeout = 0;
 
-  protected get submenuEl(): Menu|undefined {
+  private get submenuEl(): Menu|undefined {
     return this.menus[0];
   }
 
@@ -140,7 +140,7 @@ export class SubMenuItem extends MenuItemEl {
   /**
    * Renders the slot for the submenu.
    */
-  protected renderSubMenu() {
+  private renderSubMenu() {
     return html`<span class="submenu"><slot
         name="submenu"
         @pointerdown=${stopPropagation}
@@ -150,7 +150,7 @@ export class SubMenuItem extends MenuItemEl {
     ></slot></span>`;
   }
 
-  protected onCloseSubmenu(e: CloseMenuEvent) {
+  private onCloseSubmenu(e: CloseMenuEvent) {
     e.itemPath.push(this);
     this.dispatchEvent(new ActivateTypeaheadEvent());
     // Escape should only close one menu not all of the menus unlike space or
@@ -161,7 +161,7 @@ export class SubMenuItem extends MenuItemEl {
       this.active = true;
       this.selected = false;
       // It might already be active so manually focus
-      this.listItemRoot.focus();
+      this.listItemRoot?.focus();
       return;
     }
 
@@ -169,7 +169,7 @@ export class SubMenuItem extends MenuItemEl {
     this.selected = false;
   }
 
-  protected async onSubMenuKeydown(e: KeyboardEvent) {
+  private async onSubMenuKeydown(e: KeyboardEvent) {
     // Stop propagation so that we don't accidentally close every parent menu.
     // Additionally, we want to isolate things like the typeahead keydowns
     // from bubbling up to the parent menu and confounding things.
@@ -180,7 +180,7 @@ export class SubMenuItem extends MenuItemEl {
 
     this.close(() => {
       List.deactivateActiveItem(this.submenuEl!.items);
-      this.listItemRoot.focus();
+      this.listItemRoot?.focus();
       this.active = true;
     });
   }
@@ -250,7 +250,7 @@ export class SubMenuItem extends MenuItemEl {
    * @param code The native KeyboardEvent code.
    * @return Whether or not the key code should open the submenu.
    */
-  protected isSubmenuOpenKey(code: string) {
+  private isSubmenuOpenKey(code: string) {
     const isRtl = getComputedStyle(this).direction === 'rtl';
     const arrowEnterKey = isRtl ? NAVIGABLE_KEY.LEFT : NAVIGABLE_KEY.RIGHT;
     switch (code) {
@@ -270,7 +270,7 @@ export class SubMenuItem extends MenuItemEl {
    * @param code The native KeyboardEvent code.
    * @return Whether or not the key code should close the submenu.
    */
-  protected isSubmenuCloseKey(code: string) {
+  private isSubmenuCloseKey(code: string) {
     const isRtl = getComputedStyle(this).direction === 'rtl';
     const arrowEnterKey = isRtl ? NAVIGABLE_KEY.RIGHT : NAVIGABLE_KEY.LEFT;
     switch (code) {
