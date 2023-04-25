@@ -41,7 +41,7 @@ Chips                         | 🟡     | ❌    | ❌
 Dialog                        | ✅     | ✅    | ❌
 Divider                       | ✅     | ✅    | 🟡
 Elevation                     | ✅     | ✅    | 🟡
-Focus ring                    | ✅     | ❌    | ❌
+Focus ring                    | ✅     | 🟡    | ❌
 Field                         | ✅     | ✅    | 🟡
 Icon                          | ✅     | ✅    | ❌
 List                          | ✅     | ✅    | ❌
