@@ -39,8 +39,8 @@ a button.
 ![Accessibility text](images/button/usage.png "Optional caption text")
 
 ```html
-<md-outlined-button label="Back"></md-outlined-button>
-<md-filled-button label="Complete"></md-filled-button>
+<md-outlined-button>Back</md-outlined-button>
+<md-filled-button>Complete</md-filled-button>
 ```
 
 ### Icon
@@ -51,11 +51,13 @@ action and help draw attention.
 ![Accessibility text](images/button/usage-icon.png "Optional caption text")
 
 ```html
-<md-tonal-button label="Send">
+<md-tonal-button>
+  Send
   <svg slot="icon" viewBox="0 0 48 48"><path d="M6 40V8l38 16Zm3-4.65L36.2 24 9 12.5v8.4L21.1 24 9 27Zm0 0V12.5 27Z"/></svg>
 </md-tonal-button>
 
-<md-text-button label="Open" trailingicon>
+<md-text-button trailingicon>
+  Open
   <svg slot="icon" viewBox="0 0 48 48"><path d="M9 42q-1.2 0-2.1-.9Q6 40.2 6 39V9q0-1.2.9-2.1Q7.8 6 9 6h13.95v3H9v30h30V25.05h3V39q0 1.2-.9 2.1-.9.9-2.1.9Zm10.1-10.95L17 28.9 36.9 9H25.95V6H42v16.05h-3v-10.9Z"/></svg>
 </md-text-button>
 ```
@@ -67,7 +69,7 @@ Add an
 attribute to buttons whose labels need a more descriptive label.
 
 ```html
-<md-elevated-button label="Add" aria-label="Add a new contact"></md-elevated-button>
+<md-elevated-button aria-label="Add a new contact">Add</md-elevated-button>
 ```
 
 ## Elevated button
@@ -82,7 +84,7 @@ separation from a patterned background.
 ![An elevated button](images/button/usage-elevated-button.png)
 
 ```html
-<md-elevated-button label="Elevated"></md-elevated-button>
+<md-elevated-button>Elevated</md-elevated-button>
 ```
 
 ## Filled button
@@ -96,7 +98,7 @@ final actions that complete a flow, like Save, Join now, or Confirm.
 ![A filled button](images/button/usage-filled-button.png)
 
 ```html
-<md-filled-button label="Filled"></md-filled-button>
+<md-filled-button>Filled</md-filled-button>
 ```
 
 ## Filled tonal button
@@ -112,7 +114,7 @@ than an outline would give, such as "Next" in an onboarding flow.
 ![A filled tonal button](images/button/usage-filled-tonal-button.png)
 
 ```html
-<md-tonal-button label="Tonal"></md-tonal-button>
+<md-tonal-button>Tonal</md-tonal-button>
 ```
 
 ## Outlined button
@@ -126,7 +128,7 @@ the primary action in an app.
 ![An outlined button](images/button/usage-outlined-button.png)
 
 ```html
-<md-outlined-button label="Outlined"></md-outlined-button>
+<md-outlined-button>Outlined</md-outlined-button>
 ```
 
 ## Text button
@@ -140,7 +142,7 @@ options.
 ![A text button](images/button/usage-text-button.png)
 
 ```html
-<md-text-button label="Text"></md-text-button>
+<md-text-button>Text</md-text-button>
 ```
 
 ## Theming
@@ -174,7 +176,7 @@ Token                                   | Default value
 }
 </style>
 
-<md-elevated-button label="Elevated"></md-elevated-button>
+<md-elevated-button>Elevated</md-elevated-button>
 ```
 
 ### Filled button tokens
@@ -203,7 +205,7 @@ Token                                 | Default value
 }
 </style>
 
-<md-filled-button label="Filled"></md-filled-button>
+<md-filled-button>Filled</md-filled-button>
 ```
 
 ### Filled tonal button tokens
@@ -232,7 +234,7 @@ Token                                | Default value
 }
 </style>
 
-<md-tonal-button label="Tonal"></md-tonal-button>
+<md-tonal-button>Tonal</md-tonal-button>
 ```
 
 ### Outlined button tokens
@@ -261,7 +263,7 @@ Token                                   | Default value
 }
 </style>
 
-<md-outlined-button label="Outlined"></md-outlined-button>
+<md-outlined-button>Outlined</md-outlined-button>
 ```
 
 ### Text button tokens
@@ -286,5 +288,5 @@ Token                               | Default value
 }
 </style>
 
-<md-text-button label="Text"></md-text-button>
+<md-text-button>Text</md-text-button>
 ```
