@@ -13,7 +13,6 @@
 @use '../../focus/focus-ring';
 @use '../../ripple/ripple';
 @use '../../sass/dom';
-@use '../../sass/shape';
 // go/keep-sorted end
 
 @mixin styles() {
@@ -41,7 +40,10 @@
 
     @include focus-ring.theme(
       (
-        shape: shape.corners-to-shape-token('--_container-shape'),
+        'shape-start-start': var(--_container-shape-start-start),
+        'shape-start-end': var(--_container-shape-start-end),
+        'shape-end-end': var(--_container-shape-end-end),
+        'shape-end-start': var(--_container-shape-end-start),
       )
     );
   }

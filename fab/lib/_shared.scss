@@ -10,7 +10,6 @@
 @use '../../elevation/elevation';
 @use '../../focus/focus-ring';
 @use '../../ripple/ripple';
-@use '../../sass/shape';
 @use '../../tokens';
 @use './fab';
 // go/keep-sorted end
@@ -79,7 +78,10 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 
         @include focus-ring.theme(
           (
-            'shape': shape.corners-to-shape-token('--_large-container-shape'),
+            'shape-start-start': var(--_large-container-shape-start-start),
+            'shape-start-end': var(--_large-container-shape-start-end),
+            'shape-end-end': var(--_large-container-shape-end-end),
+            'shape-end-start': var(--_large-container-shape-end-start),
           )
         );
       }
@@ -164,7 +166,10 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     border-end-end-radius: var(--_container-shape-end-end);
     @include focus-ring.theme(
       (
-        'shape': shape.corners-to-shape-token('--_container-shape'),
+        'shape-start-start': var(--_container-shape-start-start),
+        'shape-start-end': var(--_container-shape-start-end),
+        'shape-end-end': var(--_container-shape-end-end),
+        'shape-end-start': var(--_container-shape-end-start),
       )
     );
   }

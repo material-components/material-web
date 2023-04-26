@@ -451,8 +451,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   md-focus-ring {
     @include focus-ring.theme(
       (
-        offset: -2px,
-        shape: map.get($_md-sys-shape, 'corner-full'),
+        'offset': -2px,
       )
     );
   }

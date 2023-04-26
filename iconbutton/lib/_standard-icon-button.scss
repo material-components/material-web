@@ -46,7 +46,10 @@ $_shape-property: 'state-layer-shape';
 
     @include focus-ring.theme(
       (
-        shape: shape.corners-to-shape-token('--_state-layer-shape'),
+        'shape-start-start': var(--_state-layer-shape-start-start),
+        'shape-start-end': var(--_state-layer-shape-start-end),
+        'shape-end-end': var(--_state-layer-shape-end-end),
+        'shape-end-start': var(--_state-layer-shape-end-start),
       )
     );
   }

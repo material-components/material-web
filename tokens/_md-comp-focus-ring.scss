@@ -5,42 +5,41 @@
 
 // go/keep-sorted start
 @use 'sass:map';
+@use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
 @use './md-sys-color';
 @use './md-sys-motion';
 @use './md-sys-shape';
+@use './values';
 // go/keep-sorted end
+
+$supported-tokens: (
+  // go/keep-sorted start
+  'active-width',
+  'color',
+  'duration',
+  'offset',
+  'shape',
+  'width',
+  // go/keep-sorted end
+);
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
-  'md-sys-shape': md-sys-shape.values(),
   'md-sys-motion': md-sys-motion.values(),
+  'md-sys-shape': md-sys-shape.values(),
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  @return (
-    shape:
-      if(
-        $exclude-hardcoded-values,
-        null,
-        map.get($deps, 'md-sys-shape', 'corner-full')
-      ),
-    offset: if($exclude-hardcoded-values, null, 2px),
-    width: if($exclude-hardcoded-values, null, 3px),
-    animation-width: if($exclude-hardcoded-values, null, 8px),
-    animation-duration:
-      if(
-        $exclude-hardcoded-values,
-        null,
-        map.get($deps, 'md-sys-motion', 'duration-long4')
-      ),
-    easing:
-      if(
-        $exclude-hardcoded-values,
-        null,
-        map.get($deps, 'md-sys-motion', 'easing-emphasized')
-      ),
-    color: map.get($deps, 'md-sys-color', 'secondary')
+  $tokens: (
+    'active-width': if($exclude-hardcoded-values, null, 8px),
+    'color': map.get($deps, 'md-sys-color', 'secondary'),
+    'duration': map.get($deps, 'md-sys-motion', 'duration-long4'),
+    'offset': if($exclude-hardcoded-values, null, 2px),
+    'shape': map.get($deps, 'md-sys-shape', 'corner-full'),
+    'width': if($exclude-hardcoded-values, null, 3px),
   );
+
+  @return values.validate($tokens, $supported-tokens: $supported-tokens);
 }

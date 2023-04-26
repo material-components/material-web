@@ -4,47 +4,63 @@
 //
 
 // go/keep-sorted start
+@use 'sass:list';
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../sass/shape';
-@use '../../sass/theme';
 @use '../../tokens';
 // go/keep-sorted end
 
-$_custom-property-prefix: 'focus-ring';
+$_md-sys-motion: tokens.md-sys-motion-values();
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-focus-ring-values(), $tokens);
-  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
-  $tokens: shape.resolve-tokens($tokens, 'shape');
+  $supported-tokens: list.join(
+    tokens.$md-comp-focus-ring-supported-tokens,
+    ('shape-start-start', 'shape-start-end', 'shape-end-end', 'shape-end-start')
+  );
 
-  @include theme.emit-theme-vars($tokens);
+  @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-focus-ring-#{$token}: #{$value};
+    }
+  }
 }
 
 @mixin styles() {
   $tokens: tokens.md-comp-focus-ring-values();
-  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
-  $tokens: shape.resolve-tokens($tokens, 'shape');
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-focus-ring-#{$token}, #{$value});
     }
 
-    display: none;
-    position: absolute;
-    box-sizing: border-box;
-    pointer-events: none;
-    border-start-start-radius: calc(var(--_offset) + var(--_shape-start-start));
-    border-start-end-radius: calc(var(--_offset) + var(--_shape-start-end));
-    border-end-start-radius: calc(var(--_offset) + var(--_shape-end-start));
+    // Support logical shape properties
+    --_shape-start-start: var(--md-focus-ring-shape-start-start, var(--_shape));
+    --_shape-start-end: var(--md-focus-ring-shape-start-end, var(--_shape));
+    --_shape-end-end: var(--md-focus-ring-shape-end-end, var(--_shape));
+    --_shape-end-start: var(--md-focus-ring-shape-end-start, var(--_shape));
+
+    animation-duration: var(--_duration);
+    animation-timing-function: map.get($_md-sys-motion, 'easing-emphasized');
     border-end-end-radius: calc(var(--_offset) + var(--_shape-end-end));
-    box-shadow: inset 0 0 0 0 var(--_color);
-    outline: var(--_width) solid var(--_color);
-    // NOTE: this 1px offset hides a transparent ring between the outline and offset when border-radius is large
-    outline-offset: -1px;
+    border-end-start-radius: calc(var(--_offset) + var(--_shape-end-start));
+    border-start-end-radius: calc(var(--_offset) + var(--_shape-start-end));
+    border-start-start-radius: calc(var(--_offset) + var(--_shape-start-start));
+    box-shadow: inset 0 0 0 0 currentColor;
+    box-sizing: border-box;
+    color: var(--_color);
+    display: none;
     inset: calc(-1 * (var(--_offset) + 1px));
+    // NOTE: this 1px offset hides a transparent ring between the outline and
+    // offset when border-radius is large
+    outline-offset: -1px;
+    outline: var(--_width) solid currentColor;
+    pointer-events: none;
+    position: absolute;
   }
 
   :host([visible]) {
@@ -55,16 +71,16 @@ $_custom-property-prefix: 'focus-ring';
         outline-width: 0px;
       }
       25% {
-        box-shadow: inset 0 0 0 calc(var(--_animation-width) / 2) var(--_color);
-        outline-width: calc(var(--_animation-width) / 2);
+        box-shadow: inset 0 0 0 calc(var(--_active-width) / 2) currentColor;
+        outline-width: calc(var(--_active-width) / 2);
       }
     }
 
     animation-name: focus-ring;
-    animation-duration: var(--_animation-duration);
-    animation-timing-function: var(--_easing);
+  }
 
-    @media (prefers-reduced-motion) {
+  @media (prefers-reduced-motion) {
+    :host {
       animation: none;
     }
   }

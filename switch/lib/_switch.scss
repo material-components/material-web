@@ -79,12 +79,10 @@ $_forced-colors-theme: (
   md-focus-ring {
     @include focus-ring.theme(
       (
-        shape: (
-          var(--_track-shape-start-start),
-          var(--_track-shape-start-end),
-          var(--_track-shape-end-start),
-          var(--_track-shape-end-end),
-        ),
+        'shape-start-start': var(--_track-shape-start-start),
+        'shape-start-end': var(--_track-shape-start-end),
+        'shape-end-end': var(--_track-shape-end-end),
+        'shape-end-start': var(--_track-shape-end-start),
       )
     );
   }

@@ -46,8 +46,8 @@
 
     @include focus-ring.theme(
       (
-        offset: -3px,
-        shape: map.get(tokens.md-sys-shape-values(), corner-extra-small),
+        'offset': -3px,
+        'shape': map.get(tokens.md-sys-shape-values(), 'corner-extra-small'),
       )
     );
     @include ripple.theme(
