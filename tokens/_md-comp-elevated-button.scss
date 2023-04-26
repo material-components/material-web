@@ -105,14 +105,5 @@ $_default: (
     )
   );
 
-  @each $token, $value in $tokens {
-    $tokens: map.set(
-      $tokens,
-      $token,
-      var(--md-elevated-button-#{$token}, #{$value})
-    );
-  }
-
-  $tokens: shape.resolve-tokens($tokens, 'container-shape');
   @return $tokens;
 }

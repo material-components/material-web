@@ -7,7 +7,6 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../sass/shape';
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './md-sys-state';
@@ -94,14 +93,5 @@ $_default: (
     )
   );
 
-  @each $token, $value in $tokens {
-    $tokens: map.set(
-      $tokens,
-      $token,
-      var(--md-text-button-#{$token}, #{$value})
-    );
-  }
-
-  $tokens: shape.resolve-tokens($tokens, 'container-shape');
   @return $tokens;
 }

@@ -7,19 +7,28 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../sass/shape';
-@use '../../sass/theme';
 @use '../../tokens';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(
-    tokens.md-comp-filled-tonal-button-values(),
-    $tokens
+  $supported-tokens: list.join(
+    tokens.$md-comp-filled-button-supported-tokens,
+    (
+      'container-shape-start-start',
+      'container-shape-start-end',
+      'container-shape-end-end',
+      'container-shape-end-start'
+    )
   );
 
   @each $token, $value in $tokens {
-    --md-tonal-button-#{$token}: #{$value};
+    @if list.index($supported-tokens, $token) {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-tonal-button-#{$token}: #{$value};
+    }
   }
 }
 
@@ -28,7 +37,25 @@
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-tonal-button-#{$token}, #{$value});
     }
+
+    // Support logical shape properties
+    --_container-shape-start-start: var(
+      --md-tonal-button-container-shape-start-start,
+      var(--_container-shape)
+    );
+    --_container-shape-start-end: var(
+      --md-tonal-button-container-shape-start-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-end: var(
+      --md-tonal-button-container-shape-end-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-start: var(
+      --md-tonal-button-container-shape-end-start,
+      var(--_container-shape)
+    );
   }
 }
