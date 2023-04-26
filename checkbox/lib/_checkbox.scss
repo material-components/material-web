@@ -4,13 +4,13 @@
 //
 
 // go/keep-sorted start
+@use 'sass:list';
 @use 'sass:map';
 @use 'sass:math';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../focus/focus-ring';
 @use '../../ripple/ripple';
-@use '../../sass/theme';
 @use '../../tokens';
 // go/keep-sorted end
 
@@ -26,32 +26,69 @@ $_indeterminate-bottom-left: 4px, -10px;
 $_checkmark-bottom-left: 7px, -14px;
 
 @mixin theme($tokens) {
-  $tokens: _resolve-tokens($tokens);
-  $tokens: theme.validate-theme(
-    _resolve-tokens(tokens.md-comp-checkbox-values()),
-    $tokens
+  $supported-tokens: list.join(
+    tokens.$md-comp-checkbox-supported-tokens,
+    (
+      'container-shape-start-start',
+      'container-shape-start-end',
+      'container-shape-end-end',
+      'container-shape-end-start'
+    )
   );
-  $tokens: theme.create-theme-vars($tokens, checkbox);
 
-  @include theme.emit-theme-vars($tokens);
+  @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-checkbox-#{$token}: #{$value};
+    }
+  }
 }
 
 @mixin styles() {
-  $tokens: _resolve-tokens(tokens.md-comp-checkbox-values());
-  $tokens: theme.create-theme-vars($tokens, checkbox);
+  $tokens: tokens.md-comp-checkbox-values();
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-checkbox-#{$token}, #{$value});
     }
 
-    border-radius: var(--_container-shape);
+    // Support logical shape properties
+    --_container-shape-start-start: var(
+      --md-checkbox-shape-start-start,
+      var(--_container-shape)
+    );
+    --_container-shape-start-end: var(
+      --md-checkbox-shape-start-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-end: var(
+      --md-checkbox-shape-end-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-start: var(
+      --md-checkbox-shape-end-start,
+      var(--_container-shape)
+    );
+
+    border-start-start-radius: var(--_container-shape-start-start);
+    border-start-end-radius: var(--_container-shape-start-end);
+    border-end-end-radius: var(--_container-shape-end-end);
+    border-end-start-radius: var(--_container-shape-end-start);
     display: inline-flex;
     height: 48px;
     position: relative;
     vertical-align: top; // Fix extra space when placed inside display: block
     width: 48px;
     -webkit-tap-highlight-color: transparent;
+
+    @include focus-ring.theme(
+      (
+        'offset': -2px,
+      )
+    );
   }
 
   input {
@@ -127,17 +164,6 @@ $_checkmark-bottom-left: 7px, -14px;
       ),
       linear;
     transform: scale(1);
-  }
-
-  // Focus ring
-
-  md-focus-ring {
-    @include focus-ring.theme(
-      (
-        offset: -2px,
-        shape: map.get(tokens.md-sys-shape-values(), corner-full),
-      )
-    );
   }
 
   // Ripple
@@ -428,29 +454,4 @@ $_checkmark-bottom-left: 7px, -14px;
   :host([disabled]) .icon {
     fill: var(--_selected-disabled-icon-color);
   }
-}
-
-@function _resolve-tokens($tokens) {
-  // Remove deprecated tokens
-  $tokens: map.remove(
-    $tokens,
-    'disabled-unselected-icon-color',
-    'disabled-unselected-icon-opacity',
-    'disabled-selected-icon-color',
-    'disabled-selected-icon-opacity',
-    'unselected-icon-color',
-    'unselected-focus-icon-color',
-    'unselected-hover-icon-color',
-    'unselected-pressed-icon-color'
-  );
-  // Remove unsupported tokens
-  $tokens: map.remove(
-    $tokens,
-    'selected-disabled-container-outline-width',
-    'selected-focus-outline-width',
-    'selected-hover-outline-width',
-    'selected-outline-width',
-    'selected-pressed-outline-width'
-  );
-  @return $tokens;
 }
