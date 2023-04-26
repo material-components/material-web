@@ -72,6 +72,8 @@
     text-decoration: none;
     background-color: var(--_list-item-container-color);
     border-radius: var(--_list-item-container-shape);
+    // hide android tap color since we have ripple
+    -webkit-tap-highlight-color: transparent;
 
     &:not(.disabled) {
       cursor: pointer;
