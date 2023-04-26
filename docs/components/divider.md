@@ -3,6 +3,7 @@
 <!--*
 # Document freshness: For more information, see go/fresh-source.
 freshness: { owner: 'lizmitchell' reviewed: '2023-01-22' }
+tag: 'docType:reference'
 *-->
 
 <!-- go/md-divider -->

@@ -3,6 +3,7 @@
 <!--*
 # Document freshness: For more information, see go/fresh-source.
 freshness: { owner: 'dfreedm' reviewed: '2023-04-03' }
+tag: 'docType:reference'
 *-->
 
 <!-- go/md-icon-button -->
