@@ -4,6 +4,7 @@
 //
 
 // go/keep-sorted start
+@use 'sass:list';
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
@@ -29,6 +30,15 @@
         'hover-opacity': var(--_hover-state-layer-opacity),
         'pressed-color': var(--_pressed-state-layer-color),
         'pressed-opacity': var(--_pressed-state-layer-opacity),
+      )
+    );
+
+    @include focus-ring.theme(
+      (
+        'shape-start-start': var(--_container-shape-start-start),
+        'shape-start-end': var(--_container-shape-start-end),
+        'shape-end-end': var(--_container-shape-end-end),
+        'shape-end-start': var(--_container-shape-end-start),
       )
     );
   }
@@ -133,17 +143,6 @@
   .elevated.disabled::before {
     background: var(--_elevated-disabled-container-color);
     opacity: var(--_elevated-disabled-container-opacity);
-  }
-
-  md-focus-ring {
-    @include focus-ring.theme(
-      (
-        'shape-start-start': var(--_container-shape-start-start),
-        'shape-start-end': var(--_container-shape-start-end),
-        'shape-end-end': var(--_container-shape-end-end),
-        'shape-end-start': var(--_container-shape-end-start),
-      )
-    );
   }
 
   md-ripple {

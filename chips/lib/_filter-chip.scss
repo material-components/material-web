@@ -4,16 +4,32 @@
 //
 
 // go/keep-sorted start
+@use 'sass:list';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../ripple/ripple';
-@use '../../sass/theme';
 @use '../../tokens';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-filter-chip-values(), $tokens);
+  $supported-tokens: list.join(
+    tokens.$md-comp-filter-chip-supported-tokens,
+    (
+      'container-shape-start-start',
+      'container-shape-start-end',
+      'container-shape-end-end',
+      'container-shape-end-start'
+    )
+  );
 
   @each $token, $value in $tokens {
-    --md-filter-chip-#{$token}: #{$value};
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-filter-chip-#{$token}: #{$value};
+    }
   }
 }
 
@@ -24,6 +40,24 @@
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
+
+    // Support logical shape properties
+    --_container-shape-start-start: var(
+      --md-checkbox-shape-start-start,
+      var(--_container-shape)
+    );
+    --_container-shape-start-end: var(
+      --md-checkbox-shape-start-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-end: var(
+      --md-checkbox-shape-end-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-start: var(
+      --md-checkbox-shape-end-start,
+      var(--_container-shape)
+    );
   }
 
   .selected {
