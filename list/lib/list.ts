@@ -8,7 +8,6 @@ import {html, LitElement, nothing} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
-import {keydownHandler} from '../../focus/strong-focus.js';
 import {ARIAMixinStrict, ARIARole} from '../../types/aria.js';
 
 import {ListItem} from './listitem/list-item.js';
@@ -111,7 +110,6 @@ export class List extends LitElement {
       activeItemRecord.item.active = false;
     }
 
-    keydownHandler(event);
     event.preventDefault();
 
     switch (key) {

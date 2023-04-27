@@ -14,7 +14,6 @@ import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
-import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {List} from '../../list/lib/list.js';
 import {createAnimationSignal, EASING} from '../../motion/animation.js';
 import {ARIAMixinStrict, ARIARole} from '../../types/aria.js';
@@ -190,8 +189,6 @@ export abstract class Menu extends LitElement {
    */
   private lastFocusedElement: HTMLElement|null = null;
 
-  @state() private showFocusRing = false;
-
   /**
    * Handles typeahead navigation through the menu.
    */
@@ -268,12 +265,10 @@ export abstract class Menu extends LitElement {
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
       <md-list
+          id="list"
           aria-label=${ariaLabel || nothing}
           type=${this.type}
           listTabIndex=${this.listTabIndex}
-          @focus=${this.handleListFocus}
-          @blur=${this.handleListBlur}
-          @click=${this.handleListClick}
           @keydown=${this.handleListKeydown}>
         ${this.renderMenuItems()}
       </md-list>`;
@@ -303,7 +298,7 @@ export abstract class Menu extends LitElement {
    * Renders the focus ring component.
    */
   private renderFocusRing() {
-    return html`<md-focus-ring .visible=${this.showFocusRing}></md-focus-ring>`;
+    return html`<md-focus-ring for="list"></md-focus-ring>`;
   }
 
   private getSurfaceClasses() {
@@ -340,25 +335,12 @@ export abstract class Menu extends LitElement {
     this.skipRestoreFocus = oldRestoreFocus;
   }
 
-  private handleListFocus() {
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  private handleListClick() {
-    pointerPress();
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
   // Capture so that we can grab the event before it reaches the list item
   // istelf. Specifically useful for the case where typeahead encounters a space
   // and we don't want the menu item to close the menu.
   @eventOptions({capture: true})
   private handleListKeydown(e: KeyboardEvent) {
     this.typeaheadController.onKeydown(e);
-  }
-
-  private handleListBlur() {
-    this.showFocusRing = false;
   }
 
   /**

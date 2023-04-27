@@ -28,6 +28,7 @@ export class ListItemLink extends ListItemEl {
   protected override renderListItem(content: unknown) {
     return html`
       <a
+          id="item"
           tabindex=${this.disabled ? -1 : this.itemTabIndex}
           role=${this.listItemRole}
           aria-selected=${(this as ARIAMixinStrict).ariaSelected || nothing}
@@ -35,9 +36,6 @@ export class ListItemLink extends ListItemEl {
           class="list-item ${classMap(this.getRenderClasses())}"
           href=${this.href}
           target=${this.target as LinkTarget || nothing}
-          @pointerdown=${this.onPointerdown}
-          @focus=${this.onFocus}
-          @blur=${this.onBlur}
           @click=${this.onClick}
           @pointerenter=${this.onPointerenter}
           @pointerleave=${this.onPointerleave}

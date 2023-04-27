@@ -12,7 +12,6 @@ import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {requestUpdateOnAriaChange} from '../../../aria/delegate.js';
-import {pointerPress, shouldShowStrongFocus} from '../../../focus/strong-focus.js';
 import {ripple} from '../../../ripple/directive.js';
 import {MdRipple} from '../../../ripple/ripple.js';
 import {ARIAMixinStrict, ARIARole} from '../../../types/aria.js';
@@ -87,7 +86,6 @@ export class ListItemEl extends LitElement implements ListItem {
   @query('.list-item') protected readonly listItemRoot!: HTMLElement|null;
   protected readonly listItemRole: ARIARole = 'listitem';
 
-  @state() private showFocusRing = false;
   @state() private showRipple = false;
 
   /**
@@ -108,14 +106,9 @@ export class ListItemEl extends LitElement implements ListItem {
     if (changed.has('active') && !this.disabled) {
       if (this.active) {
         this.itemTabIndex = 0;
-
-        if (this.focusOnActivation) {
-          this.showFocusRing = shouldShowStrongFocus();
-        }
-
+      } else if (!this.isFirstUpdate) {
         // Do not reset anything if it's the first render because user could
         // have set `itemTabIndex` manually.
-      } else if (!this.isFirstUpdate) {
         this.itemTabIndex = -1;
       }
     }
@@ -140,14 +133,12 @@ export class ListItemEl extends LitElement implements ListItem {
   protected renderListItem(content: unknown) {
     return html`
       <li
+          id="item"
           tabindex=${this.disabled ? -1 : this.itemTabIndex}
           role=${this.listItemRole}
           aria-selected=${(this as ARIAMixinStrict).ariaSelected || nothing}
           aria-checked=${(this as ARIAMixinStrict).ariaChecked || nothing}
           class="list-item ${classMap(this.getRenderClasses())}"
-          @pointerdown=${this.onPointerdown}
-          @focus=${this.onFocus}
-          @blur=${this.onBlur}
           @click=${this.onClick}
           @pointerenter=${this.onPointerenter}
           @pointerleave=${this.onPointerleave}
@@ -168,8 +159,7 @@ export class ListItemEl extends LitElement implements ListItem {
    * Handles rendering of the focus ring.
    */
   private renderFocusRing() {
-    return html`<md-focus-ring class="focus-ring" .visible="${
-        this.showFocusRing}"></md-focus-ring>`;
+    return html`<md-focus-ring class="focus-ring" for="item"></md-focus-ring>`;
   }
 
   /**
@@ -237,19 +227,6 @@ export class ListItemEl extends LitElement implements ListItem {
   private renderTrailingSupportingText() {
     return html`<span class="trailing-supporting-text"
       >${this.trailingSupportingText}</span>`;
-  }
-
-  protected onPointerdown() {
-    pointerPress();
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  protected onFocus() {
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  protected onBlur() {
-    this.showFocusRing = false;
   }
 
   // For easier overriding in menu-item
