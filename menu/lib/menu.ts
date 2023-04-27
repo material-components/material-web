@@ -287,7 +287,9 @@ export abstract class Menu extends LitElement {
         @close-menu=${this.onCloseMenu}
         @deactivate-items=${this.onDeactivateItems}
         @deactivate-typeahead=${this.handleDeactivateTypeahead}
-        @activate-typeahead=${this.handleActivateTypeahead}></slot>`;
+        @activate-typeahead=${this.handleActivateTypeahead}
+        @stay-open-on-focusout=${this.handleStayOpenOnFocusout}
+        @close-on-focusout=${this.handleCloseOnFocusout}></slot>`;
   }
 
   /**
@@ -679,6 +681,16 @@ export abstract class Menu extends LitElement {
     // nested above it e.g. md-sub-menu-item
     e.stopPropagation();
     this.typeaheadActive = true;
+  }
+
+  private handleStayOpenOnFocusout(e:Event) {
+    e.stopPropagation();
+    this.stayOpenOnFocusout = true;
+  }
+
+  private handleCloseOnFocusout(e:Event) {
+    e.stopPropagation();
+    this.stayOpenOnFocusout = false;
   }
 
   override focus() {

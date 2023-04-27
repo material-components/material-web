@@ -83,6 +83,26 @@ export class CloseMenuEvent<T extends Reason = DefaultReasons> extends Event {
 }
 
 /**
+ * The event that signals to the menu that it should stay open on the focusout
+ * event.
+ */
+export class StayOpenOnFocusoutEvent extends Event {
+  constructor() {
+    super('stay-open-on-focusout', {bubbles: true, composed: true});
+  }
+}
+
+/**
+ * The event that signals to the menu that it should close open on the focusout
+ * event.
+ */
+export class CloseOnFocusoutEvent extends Event {
+  constructor() {
+    super('close-on-focusout', {bubbles: true, composed: true});
+  }
+}
+
+/**
  * The default close menu event used by md-menu. To create your own `close-menu`
  * event, you should subclass the `CloseMenuEvent` instead.
  */
