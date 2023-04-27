@@ -113,7 +113,6 @@ export class Harness<E extends HTMLElement = HTMLElement> {
     const element = await this.getInteractiveElement();
     await this.startHover();
     this.simulateMousePress(element, init);
-    this.simulatePointerFocus(element);
   }
 
   /**
