@@ -39,6 +39,7 @@ const KEYBOARD_NAVIGATION_KEYS =
  * By default, this will enable the strong focus to be shown.
  *
  * @param e The native keyboard event.
+ * @deprecated focus-ring automatically handles focus without global state.
  */
 export function keydownHandler(e: KeyboardEvent) {
   if (KEYBOARD_NAVIGATION_KEYS.has(e.key)) {
@@ -53,6 +54,7 @@ export function keydownHandler(e: KeyboardEvent) {
  *     systems
  * @param enableKeydownHandler Set to true to let StrongFocusService listen for
  *     keyboard navigation
+ * @deprecated focus-ring automatically handles focus without global state.
  */
 export function setup(focusGlobal: StrongFocus, enableKeydownHandler = false) {
   focusObject = focusGlobal;
@@ -81,6 +83,7 @@ let alwaysStrong = false;
  *
  * By default, strong focus is shown only on keyboard navigation, and not on
  * pointer interaction.
+ * @deprecated focus-ring automatically handles focus without global state.
  */
 export function shouldShowStrongFocus() {
   return alwaysStrong || focusObject.visible;
@@ -92,6 +95,7 @@ export function shouldShowStrongFocus() {
  * Defaults to `false`
  *
  * @param force Forces strong focus on the page. Disables strong focus if false.
+ * @deprecated focus-ring automatically handles focus without global state.
  */
 export function setForceStrongFocus(force: boolean) {
   alwaysStrong = force;
@@ -99,6 +103,7 @@ export function setForceStrongFocus(force: boolean) {
 
 /**
  * If `true`, strong focus is always shown
+ * @deprecated focus-ring automatically handles focus without global state.
  */
 export function isStrongFocusForced() {
   return alwaysStrong;
@@ -109,6 +114,7 @@ export function isStrongFocusForced() {
  * pointing device.
  *
  * By default, this will prevent the strong focus from being shown.
+ * @deprecated focus-ring automatically handles focus without global state.
  */
 export function pointerPress() {
   focusObject.setVisible(false);

@@ -65,18 +65,17 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 
   :host([visible]) {
     display: flex;
-
-    @keyframes focus-ring {
-      from {
-        outline-width: 0px;
-      }
-      25% {
-        box-shadow: inset 0 0 0 calc(var(--_active-width) / 2) currentColor;
-        outline-width: calc(var(--_active-width) / 2);
-      }
-    }
-
     animation-name: focus-ring;
+  }
+
+  @keyframes focus-ring {
+    from {
+      outline-width: 0px;
+    }
+    25% {
+      box-shadow: inset 0 0 0 calc(var(--_active-width) / 2) currentColor;
+      outline-width: calc(var(--_active-width) / 2);
+    }
   }
 
   @media (prefers-reduced-motion) {
