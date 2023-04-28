@@ -39,7 +39,7 @@ export class FocusRing extends LitElement {
    * </button>
    * ```
    */
-  @property({attribute: 'for', reflect: true}) htmlFor = '';
+  @property({attribute: 'for', reflect: true}) htmlFor: string|null = null;
 
   /**
    * The element that controls the visibility of the focus ring. It is one of:
@@ -74,12 +74,9 @@ export class FocusRing extends LitElement {
       return;
     }
 
-    this.detach();
-    for (const event of ['focusin', 'focusout', 'pointerdown']) {
-      control.addEventListener(event, this);
-    }
-
-    this.currentControl = control;
+    this.setCurrentControl(control);
+    // When imperatively attaching the focus ring, remove the `for` attribute so
+    // that the attached control is used instead of a referenced one.
     this.removeAttribute('for');
   }
 
@@ -87,32 +84,27 @@ export class FocusRing extends LitElement {
    * Detaches the focus ring from its current interactive element.
    */
   detach() {
-    for (const event of ['focusin', 'focusout', 'pointerdown']) {
-      this.currentControl?.removeEventListener(event, this);
-    }
-
-    this.currentControl = null;
+    this.setCurrentControl(null);
+    // When imperatively detaching, add an empty `for=""` attribute. This will
+    // ensure the control is `null` rather than the `parentElement`.
     this.setAttribute('for', '');
   }
 
   override connectedCallback() {
     super.connectedCallback();
-    const {control} = this;
-    if (control) {
-      this.attach(control);
-    }
+    this.setCurrentControl(this.control);
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    this.detach();
+    this.setCurrentControl(null);
   }
 
   protected override updated(changedProperties: PropertyValues<FocusRing>) {
     if (changedProperties.has('htmlFor')) {
       const {control} = this;
       if (control) {
-        this.attach(control);
+        this.setCurrentControl(control);
       }
     }
   }
@@ -140,6 +132,15 @@ export class FocusRing extends LitElement {
     }
 
     event[HANDLED_BY_FOCUS_RING] = true;
+  }
+
+  private setCurrentControl(control: HTMLElement|null) {
+    for (const event of ['focusin', 'focusout', 'pointerdown']) {
+      this.currentControl?.removeEventListener(event, this);
+      control?.addEventListener(event, this);
+    }
+
+    this.currentControl = control;
   }
 }
 
