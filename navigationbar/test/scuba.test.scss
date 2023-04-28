@@ -1,0 +1,30 @@
+// @license Googler-authored internal-only code
+
+// go/keep-sorted start
+@use '../../badge/badge';
+@use '../../tokens';
+@use '../navigation-bar';
+// go/keep-sorted end
+
+// Test styles
+
+.dark {
+  @include navigation-bar.theme(
+    tokens.md-comp-navigation-bar-values(
+      (
+        md-sys-color: tokens.md-sys-color-values-dark(),
+        md-sys-elevation: tokens.md-sys-elevation-values(),
+      ),
+      $exclude-hardcoded-values: true
+    )
+  );
+
+  @include badge.theme(
+    tokens.md-comp-badge-values(
+      (
+        md-sys-color: tokens.md-sys-color-values-dark(),
+      ),
+      $exclude-hardcoded-values: true
+    )
+  );
+}

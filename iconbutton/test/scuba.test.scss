@@ -1,0 +1,49 @@
+// @license Googler-authored internal-only code
+
+// go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../../tokens';
+@use '../lib/filled-icon-button';
+@use '../lib/filled-tonal-icon-button';
+@use '../lib/outlined-icon-button';
+@use '../lib/standard-icon-button';
+// go/keep-sorted end
+
+// Test styles
+
+.dark {
+  @include filled-icon-button.theme(
+    tokens.md-comp-filled-icon-button-values(
+      (
+        md-sys-color: tokens.md-sys-color-values-dark(),
+      ),
+      $exclude-hardcoded-values: true
+    )
+  );
+  @include filled-tonal-icon-button.theme(
+    tokens.md-comp-filled-tonal-icon-button-values(
+      (
+        md-sys-color: tokens.md-sys-color-values-dark(),
+      ),
+      $exclude-hardcoded-values: true
+    )
+  );
+  @include standard-icon-button.theme(
+    tokens.md-comp-icon-button-values(
+      (
+        md-sys-color: tokens.md-sys-color-values-dark(),
+      ),
+      $exclude-hardcoded-values: true
+    )
+  );
+  @include outlined-icon-button.theme(
+    tokens.md-comp-outlined-icon-button-values(
+      (
+        md-sys-color: tokens.md-sys-color-values-dark(),
+      ),
+      $exclude-hardcoded-values: true
+    )
+  );
+}

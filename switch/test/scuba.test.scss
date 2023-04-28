@@ -1,0 +1,19 @@
+// @license Googler-authored internal-only code
+
+// go/keep-sorted start
+@use '../../tokens';
+@use '../switch';
+// go/keep-sorted end
+
+// Note: don't exclude hardcoded values, since switch needs the opacities of
+// colors to flatten them.
+// This should be replaced with sys-level theming.
+$dark-theme: tokens.md-comp-switch-values(
+  (
+    md-sys-color: tokens.md-sys-color-values-dark(),
+  )
+);
+
+.dark {
+  @include switch.theme($dark-theme);
+}

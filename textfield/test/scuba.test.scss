@@ -1,0 +1,51 @@
+// @license Googler-authored internal-only code
+
+// go/keep-sorted start
+@use '../../tokens';
+@use '../filled-text-field';
+@use '../outlined-text-field';
+// go/keep-sorted end
+
+// Test styles
+
+.dark {
+  @include filled-text-field.theme(
+    tokens.md-comp-filled-text-field-values(
+      (
+        'md-sys-color': tokens.md-sys-color-values-dark(),
+      ),
+      $exclude-hardcoded-values: true
+    )
+  );
+  @include outlined-text-field.theme(
+    tokens.md-comp-outlined-text-field-values(
+      (
+        'md-sys-color': tokens.md-sys-color-values-dark(),
+      ),
+      $exclude-hardcoded-values: true
+    )
+  );
+}
+
+.shape {
+  @include filled-text-field.theme(
+    (
+      'container-shape': 28px 28px 0 0,
+    )
+  );
+  @include outlined-text-field.theme(
+    (
+      'container-shape': 28px,
+    )
+  );
+}
+
+.text-field {
+  // Use explicit width to avoid screenshot resizing as elements are added
+  // (prefix, suffix, icons, etc).
+  width: 200px;
+
+  .end-aligned & {
+    text-align: end;
+  }
+}

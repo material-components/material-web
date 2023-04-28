@@ -1,0 +1,35 @@
+// @license Googler-authored internal-only code
+
+// go/keep-sorted start
+@use '../../tokens';
+@use '../linear-progress';
+// go/keep-sorted end
+
+.dark {
+  $dark-theme: tokens.md-comp-linear-progress-indicator-values(
+    (
+      md-sys-color: tokens.md-sys-color-values-dark(),
+    ),
+    $exclude-hardcoded-values: true
+  );
+  @include linear-progress.theme($dark-theme);
+}
+
+.withCustomTheme {
+  @include linear-progress.theme(
+    (
+      active-indicator-color: pink,
+      track-color: orange,
+      track-shape: 9999px,
+    )
+  );
+}
+
+.withCustomSize {
+  @include linear-progress.theme(
+    (
+      active-indicator-height: 20px,
+      track-height: 22px,
+    )
+  );
+}

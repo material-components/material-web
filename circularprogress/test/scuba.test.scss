@@ -1,0 +1,40 @@
+// @license Googler-authored internal-only code
+
+// go/keep-sorted start
+@use '../../tokens';
+@use '../circular-progress';
+// go/keep-sorted end
+
+.dark {
+  $dark-theme: tokens.md-comp-circular-progress-indicator-values(
+    (
+      md-sys-color: tokens.md-sys-color-values-dark(),
+    ),
+    $exclude-hardcoded-values: true
+  );
+  @include circular-progress.theme($dark-theme);
+}
+
+.withCustomColor {
+  @include circular-progress.theme(
+    (
+      active-indicator-color: pink,
+    )
+  );
+}
+
+.withCustomSize {
+  @include circular-progress.theme(
+    (
+      size: 20px,
+    )
+  );
+}
+
+.withCustomWidth {
+  @include circular-progress.theme(
+    (
+      active-indicator-width: 20,
+    )
+  );
+}

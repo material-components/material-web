@@ -1,0 +1,27 @@
+// @license Googler-authored internal-only code
+
+// go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../../tokens';
+@use '../divider';
+// go/keep-sorted end
+
+section {
+  align-items: center;
+  border: 1px dashed gray;
+  display: flex;
+  height: 48px;
+  width: 256px;
+}
+
+.dark {
+  $dark-theme: tokens.md-comp-divider-values(
+    (
+      md-sys-color: tokens.md-sys-color-values-dark(),
+    ),
+    $exclude-hardcoded-values: true
+  );
+  @include divider.theme($dark-theme);
+}

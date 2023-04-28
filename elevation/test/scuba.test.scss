@@ -1,0 +1,82 @@
+// @license Googler-authored internal-only code
+
+// go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../../tokens';
+@use '../elevation';
+// go/keep-sorted end
+
+md-elevation {
+  background: map.get(tokens.md-sys-color-values-light(), 'surface-bright');
+  border-radius: 16px;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+
+$_md-sys-elevation: tokens.md-sys-elevation-values();
+
+.level0 {
+  @include elevation.theme(
+    (
+      'level': map.get($_md-sys-elevation, 'level0'),
+    )
+  );
+}
+
+.level1 {
+  @include elevation.theme(
+    (
+      'level': map.get($_md-sys-elevation, 'level1'),
+    )
+  );
+}
+
+.level2 {
+  @include elevation.theme(
+    (
+      'level': map.get($_md-sys-elevation, 'level2'),
+    )
+  );
+}
+
+.level3 {
+  @include elevation.theme(
+    (
+      'level': map.get($_md-sys-elevation, 'level3'),
+    )
+  );
+}
+
+.level4 {
+  @include elevation.theme(
+    (
+      'level': map.get($_md-sys-elevation, 'level4'),
+    )
+  );
+}
+
+.level5 {
+  @include elevation.theme(
+    (
+      'level': map.get($_md-sys-elevation, 'level5'),
+    )
+  );
+}
+
+.dark {
+  md-elevation {
+    background: map.get(tokens.md-sys-color-values-dark(), 'surface-bright');
+  }
+
+  @include elevation.theme(
+    tokens.md-comp-elevation-values(
+      (
+        'md-sys-color': tokens.md-sys-color-values-dark(),
+      ),
+      $exclude-hardcoded-values: true
+    )
+  );
+}

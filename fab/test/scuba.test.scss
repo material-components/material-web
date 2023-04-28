@@ -1,0 +1,24 @@
+// @license Googler-authored internal-only code
+
+// go/keep-sorted start
+@use '../../tokens';
+@use '../fab';
+// go/keep-sorted end
+
+$dark-deps: (
+  md-sys-color: tokens.md-sys-color-values-dark(),
+  md-sys-elevation: tokens.md-sys-elevation-values(),
+  md-sys-typescale: tokens.md-sys-typescale-values(),
+);
+
+.dark {
+  $dark-theme: tokens.md-comp-fab-theme-values($dark-deps);
+  $dark-theme-branded: tokens.md-comp-fab-branded-theme-values($dark-deps);
+
+  @include fab.theme($dark-theme);
+  @include fab.branded-theme($dark-theme-branded);
+}
+
+.fab {
+  margin: 0 5px;
+}

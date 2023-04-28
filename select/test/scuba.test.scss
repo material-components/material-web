@@ -1,0 +1,71 @@
+// @license Googler-authored internal-only code
+
+@use 'sass:map';
+
+// go/keep-sorted start
+@use '../../list/list-item';
+@use '../../menu/menu';
+@use '../../menu/menu-item';
+@use '../../tokens';
+@use '../filled-select';
+@use '../outlined-select';
+// go/keep-sorted end
+
+// Test styles
+
+.dark {
+  @include filled-select.theme(
+    tokens.md-comp-filled-select-theme-values(
+      (
+        'md-sys-color': tokens.md-sys-color-values-dark(),
+      ),
+      $exclude-hardcoded-values: true
+    )
+  );
+  @include outlined-select.theme(
+    tokens.md-comp-outlined-select-theme-values(
+      (
+        'md-sys-color': tokens.md-sys-color-values-dark(),
+      ),
+      $exclude-hardcoded-values: true
+    )
+  );
+  @include menu.theme(
+    tokens.md-comp-menu-theme-values(
+      (
+        'md-sys-color': tokens.md-sys-color-values-dark(),
+      ),
+      $exclude-hardcoded-values: true
+    )
+  );
+  @include list-item.theme(
+    tokens.md-comp-list-item-theme-values(
+      (
+        'md-sys-color': tokens.md-sys-color-values-dark(),
+      ),
+      $exclude-hardcoded-values: true
+    )
+  );
+  @include menu-item.theme(
+    tokens.md-comp-menu-item-theme-values(
+      (
+        'md-sys-color': tokens.md-sys-color-values-dark(),
+      )
+    )
+  );
+}
+
+.select {
+  // Use explicit width to avoid screenshot resizing as elements are added
+  // (prefix, suffix, icons, etc).
+  width: 200px;
+
+  &.opened {
+    margin-inline-end: 100px;
+    margin-block-end: 315px;
+  }
+
+  .end-aligned & {
+    text-align: end;
+  }
+}

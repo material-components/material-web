@@ -1,0 +1,16 @@
+// @license Googler-authored internal-only code
+
+// go/keep-sorted start
+@use '../../tokens';
+@use '../slider';
+// go/keep-sorted end
+
+.dark {
+  $dark-theme: tokens.md-comp-slider-values(
+    (
+      md-sys-color: tokens.md-sys-color-values-dark(),
+    ),
+    $exclude-hardcoded-values: true
+  );
+  @include slider.theme($dark-theme);
+}

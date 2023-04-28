@@ -1,0 +1,56 @@
+// @license Googler-authored internal-only code
+
+// go/keep-sorted start
+@use '../../tokens';
+@use '../filled-field';
+@use '../lib/md-comp-filled-field';
+@use '../lib/md-comp-outlined-field';
+@use '../outlined-field';
+// go/keep-sorted end
+
+// Implementation styles
+
+input {
+  background: none;
+  border: none;
+  box-sizing: border-box;
+  color: currentColor;
+  font: inherit;
+  outline: 1px dashed currentColor;
+  padding: 0;
+  margin: 0;
+}
+
+// Test styles
+
+.dark {
+  @include filled-field.theme(
+    md-comp-filled-field.values(
+      (
+        'md-sys-color': tokens.md-sys-color-values-dark(),
+      ),
+      $exclude-hardcoded-values: true
+    )
+  );
+  @include outlined-field.theme(
+    md-comp-outlined-field.values(
+      (
+        'md-sys-color': tokens.md-sys-color-values-dark(),
+      ),
+      $exclude-hardcoded-values: true
+    )
+  );
+}
+
+.shape {
+  @include filled-field.theme(
+    (
+      'container-shape': 28px 28px 0 0,
+    )
+  );
+  @include outlined-field.theme(
+    (
+      'container-shape': 28px,
+    )
+  );
+}

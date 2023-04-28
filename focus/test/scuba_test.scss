@@ -1,0 +1,17 @@
+// @license Googler-authored internal-only code
+
+// go/keep-sorted start
+@use '../focus-ring';
+// go/keep-sorted end
+
+// Default button has 1px border and 1px margin. This plus the 2px padding
+// means the padding it set to 4px
+$_focus-ring-padding: 4px;
+
+.test-button {
+  @include focus-ring.theme(
+    (
+      offset: $_focus-ring-padding,
+    )
+  );
+}
