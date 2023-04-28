@@ -30,6 +30,10 @@ declare global {
 class TestRipple extends Ripple {
 }
 
+interface WithState {
+  state: number;
+}
+
 describe('Ripple', () => {
   const env = new Environment();
 
@@ -137,6 +141,16 @@ describe('Ripple', () => {
       await env.waitForStability();
 
       expect(surface).not.toHaveClass(RippleStateClasses.HOVERED);
+    });
+    it('responds to keyboard click after mouse click', async () => {
+      const {instance, harness} = await setupTest();
+      const STATE_INACTIVE = 0;
+      await harness.clickWithMouse();
+      await env.waitForStability();
+      expect((instance as unknown as WithState).state).toBe(STATE_INACTIVE);
+      await harness.clickWithKeyboard();
+      await env.waitForStability();
+      expect((instance as unknown as WithState).state).toBe(STATE_INACTIVE);
     });
   });
 });

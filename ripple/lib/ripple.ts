@@ -334,6 +334,7 @@ export class Ripple extends LitElement {
   }
 
   private async endPressAnimation() {
+    this.state = State.INACTIVE;
     const animation = this.growAnimation;
     const pressAnimationPlayState = animation?.currentTime ?? Infinity;
     if (pressAnimationPlayState >= MINIMUM_PRESS_MS) {
