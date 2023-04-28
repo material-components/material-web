@@ -278,9 +278,11 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     background: var(--_hover-handle-color);
   }
 
-  input.b:active ~ .handleContainerPadded .handle.b > .handleNub,
-  input.a:active ~ .handleContainerPadded .handle.a > .handleNub {
-    background: var(--_pressed-handle-color);
+  :host(:not([disabled])) {
+    input.b:active ~ .handleContainerPadded .handle.b > .handleNub,
+    input.a:active ~ .handleContainerPadded .handle.a > .handleNub {
+      background: var(--_pressed-handle-color);
+    }
   }
 
   .onTop.isOverlapping {
