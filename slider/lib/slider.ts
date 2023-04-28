@@ -18,11 +18,9 @@ import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../controller/events.js';
 import {FormController, getFormValue} from '../../controller/form-controller.js';
 import {stringConverter} from '../../controller/string-converter.js';
-import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 import {ARIAMixinStrict} from '../../types/aria.js';
-
 
 // Disable warning for classMap with destructuring
 // tslint:disable:quoted-properties-on-dictionary
@@ -181,13 +179,6 @@ export class Slider extends LitElement {
   @state() private valueA = 0;
   @state() private valueB = 0;
 
-  @state() private focusRingAShowing = false;
-  @state() private focusRingBShowing = false;
-  // allows for lazy rendering of the focus ring by latching to true when the
-  // focus ring should be rendered.
-  private focusRingARequested = false;
-  private focusRingBRequested = false;
-
   @state() private rippleAShowing = false;
   @state() private rippleBShowing = false;
 
@@ -260,10 +251,6 @@ export class Slider extends LitElement {
       this.rippleBShowing = true;
       this.toggleRippleHover(this.rippleB, this.handleBHover);
     }
-
-    // facilitates lazy rendering of the focus ring.
-    this.focusRingARequested ||= this.focusRingAShowing;
-    this.focusRingBRequested ||= this.focusRingBShowing;
   }
 
   protected override async updated(changed: PropertyValues) {
@@ -313,8 +300,6 @@ export class Slider extends LitElement {
       id: 'a',
       lesser: !isFlipped,
       showRipple: this.rippleAShowing,
-      focusRequested: this.focusRingARequested,
-      showFocus: this.focusRingAShowing,
       hover: this.handleAHover,
       label: labelA
     };
@@ -323,8 +308,6 @@ export class Slider extends LitElement {
       id: 'b',
       lesser: isFlipped,
       showRipple: this.rippleBShowing,
-      focusRequested: this.focusRingBRequested,
-      showFocus: this.focusRingBShowing,
       hover: this.handleBHover,
       label: labelB
     };
@@ -334,31 +317,27 @@ export class Slider extends LitElement {
     };
 
     return html`
-    <div
-      class="container ${classMap(containerClasses)}"
-      style=${styleMap(containerStyles)}
-    >
-      ${when(this.allowRange, () => this.renderInput(inputAProps))}
-      ${this.renderInput(inputBProps)}
-      ${this.renderTrack()}
-      <div class="handleContainerPadded">
-        <div class="handleContainerBlock">
-          <div class="handleContainer ${classMap(handleContainerClasses)}">
-            ${when(this.allowRange, () => this.renderHandle(handleAProps))}
-            ${this.renderHandle(handleBProps)}
+      <div
+        class="container ${classMap(containerClasses)}"
+        style=${styleMap(containerStyles)}
+      >
+        ${when(this.allowRange, () => this.renderInput(inputAProps))}
+        ${this.renderInput(inputBProps)}
+        ${this.renderTrack()}
+        <div class="handleContainerPadded">
+          <div class="handleContainerBlock">
+            <div class="handleContainer ${classMap(handleContainerClasses)}">
+              ${when(this.allowRange, () => this.renderHandle(handleAProps))}
+              ${this.renderHandle(handleBProps)}
+            </div>
           </div>
         </div>
-      </div>
-    </div>`;
+      </div>`;
   }
 
   private renderTrack() {
     const trackClasses = {'tickMarks': this.withTickMarks};
     return html`<div class="track ${classMap(trackClasses)}"></div>`;
-  }
-
-  private renderFocusRing(visible: boolean) {
-    return html`<md-focus-ring .visible=${visible}></md-focus-ring>`;
   }
 
   private renderLabel(value: string) {
@@ -367,16 +346,13 @@ export class Slider extends LitElement {
       </div>`;
   }
 
-  private renderHandle(
-      {id, lesser, showRipple, focusRequested, showFocus, hover, label}: {
-        id: string,
-        lesser: boolean,
-        focusRequested: boolean,
-        showRipple: boolean,
-        showFocus: boolean,
-        hover: boolean,
-        label: string
-      }) {
+  private renderHandle({id, lesser, showRipple, hover, label}: {
+    id: string,
+    lesser: boolean,
+    showRipple: boolean,
+    hover: boolean,
+    label: string
+  }) {
     const onTop = !this.disabled && id === this.onTopId;
     const isOverlapping = !this.disabled && this.handlesOverlapping;
     return html`<div class="handle ${classMap({
@@ -389,7 +365,7 @@ export class Slider extends LitElement {
         <div class="handleNub"><md-elevation></md-elevation></div>
         ${when(this.withLabel, () => this.renderLabel(label))}
       ${when(showRipple, () => this.renderRipple(id))}
-      ${when(focusRequested, () => this.renderFocusRing(showFocus))}
+      <md-focus-ring for=${id}></md-focus-ring>
     </div>`;
   }
 
@@ -411,13 +387,13 @@ export class Slider extends LitElement {
       [id]: true
     })}"
       @focus=${this.handleFocus}
-      @blur=${this.handleBlur}
       @pointerdown=${this.handleDown}
       @pointerenter=${this.handleEnter}
       @pointermove=${this.handleMove}
       @pointerleave=${this.handleLeave}
       @input=${this.handleInput}
       @change=${this.handleChange}
+      id=${id}
       .disabled=${this.disabled}
       .min=${String(this.min)}
       .max=${String(this.max)}
@@ -468,35 +444,20 @@ export class Slider extends LitElement {
     return target === this.inputA;
   }
 
-  private updateFocusVisible(e: Event) {
-    const isA = this.isEventOnA(e);
-    const showFocus = shouldShowStrongFocus();
-    this.focusRingAShowing = showFocus && isA;
-    this.focusRingBShowing = showFocus && !isA;
-  }
-
   private handleFocus(e: Event) {
-    this.updateFocusVisible(e);
     this.updateOnTop(e);
-  }
-
-  private handleBlur(e: Event) {
-    this.focusRingAShowing = false;
-    this.focusRingBShowing = false;
   }
 
   // used in synthetic events generated to control ripple hover state.
   private ripplePointerId = 1;
 
   private handleDown(e: PointerEvent) {
-    pointerPress();
     this.ripplePointerId = e.pointerId;
     const isA = this.isEventOnA(e);
     // Since handle moves to pointer on down and there may not be a move,
     // it needs to be considered hovered..
     this.handleAHover = !this.disabled && isA && Boolean(this.handleA);
     this.handleBHover = !this.disabled && !isA && Boolean(this.handleB);
-    this.updateFocusVisible(e);
     // Force Safari to focus input so the label stays displayed; note,
     // Macs don't normally focus non-text type inputs.
     const target = (e.target as HTMLElement);
