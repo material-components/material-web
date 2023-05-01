@@ -8,7 +8,47 @@
 @use './md-sys-shape';
 @use './md-sys-state';
 @use './v0_172/md-comp-filled-icon-button';
+@use './values';
 // go/keep-sorted end
+
+$supported-tokens: (
+  // go/keep-sorted start
+  'container-color',
+  'container-shape',
+  'container-size',
+  'disabled-container-color',
+  'disabled-container-opacity',
+  'disabled-icon-color',
+  'disabled-icon-opacity',
+  'focus-icon-color',
+  'focus-state-layer-color',
+  'focus-state-layer-opacity',
+  'hover-icon-color',
+  'hover-state-layer-color',
+  'hover-state-layer-opacity',
+  'icon-color',
+  'icon-size',
+  'pressed-icon-color',
+  'pressed-state-layer-color',
+  'pressed-state-layer-opacity',
+  'selected-container-color',
+  'toggle-selected-focus-icon-color',
+  'toggle-selected-focus-state-layer-color',
+  'toggle-selected-hover-icon-color',
+  'toggle-selected-hover-state-layer-color',
+  'toggle-selected-icon-color',
+  'toggle-selected-pressed-icon-color',
+  'toggle-selected-pressed-state-layer-color',
+  'toggle-unselected-focus-icon-color',
+  'toggle-unselected-focus-state-layer-color',
+  'toggle-unselected-hover-icon-color',
+  'toggle-unselected-hover-state-layer-color',
+  'toggle-unselected-icon-color',
+  'toggle-unselected-pressed-icon-color',
+  'toggle-unselected-pressed-state-layer-color',
+  'unselected-container-color',
+  // go/keep-sorted end
+);
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -17,5 +57,10 @@ $_default: (
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  @return md-comp-filled-icon-button.values($deps, $exclude-hardcoded-values);
+  $tokens: values.validate(
+    md-comp-filled-icon-button.values($deps, $exclude-hardcoded-values),
+    $supported-tokens: $supported-tokens
+  );
+
+  @return $tokens;
 }

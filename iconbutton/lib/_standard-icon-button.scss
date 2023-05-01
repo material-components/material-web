@@ -7,38 +7,38 @@
 // Selector '.md3-*' should only be used in this project.
 
 // go/keep-sorted start
+@use 'sass:list';
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../focus/focus-ring';
 @use '../../ripple/ripple';
-@use '../../sass/shape';
-@use '../../sass/theme';
 @use '../../tokens';
 @use './shared';
 // go/keep-sorted end
 
-$_custom-property-prefix: 'icon-button';
-$_shape-property: 'state-layer-shape';
-
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-icon-button-values(), $tokens);
+  $supported-tokens: tokens.$md-comp-icon-button-supported-tokens;
   $tokens: shared.flatten-disabled-colors($tokens);
-  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
-  $tokens: shared.resolve-shape-tokens($tokens, $property: $_shape-property);
 
-  @include theme.emit-theme-vars($tokens);
+  @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-icon-button-#{$token}: #{$value};
+    }
+  }
 }
 
 @mixin styles() {
   $tokens: tokens.md-comp-icon-button-values();
   $tokens: shared.flatten-disabled-colors($tokens);
-  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
-  $tokens: shared.resolve-shape-tokens($tokens, $property: $_shape-property);
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-icon-button-#{$token}, #{$value});
     }
 
     height: var(--_state-layer-size);
@@ -46,10 +46,7 @@ $_shape-property: 'state-layer-shape';
 
     @include focus-ring.theme(
       (
-        'shape-start-start': var(--_state-layer-shape-start-start),
-        'shape-start-end': var(--_state-layer-shape-start-end),
-        'shape-end-end': var(--_state-layer-shape-end-end),
-        'shape-end-start': var(--_state-layer-shape-end-start),
+        'shape': var(--_state-layer-shape),
       )
     );
   }
@@ -66,7 +63,7 @@ $_shape-property: 'state-layer-shape';
         hover-opacity: var(--_unselected-hover-state-layer-opacity),
         pressed-color: var(--_unselected-pressed-state-layer-color),
         pressed-opacity: var(--_unselected-pressed-state-layer-opacity),
-        shape: shape.corners-to-shape-token('--_state-layer-shape'),
+        shape: var(--_state-layer-shape),
       )
     );
 

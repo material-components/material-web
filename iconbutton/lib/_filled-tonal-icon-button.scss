@@ -7,12 +7,11 @@
 // Selector '.md3-*' should only be used in this project.
 
 // go/keep-sorted start
+@use 'sass:list';
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../ripple/ripple';
-@use '../../sass/shape';
-@use '../../sass/theme';
 @use '../../tokens';
 @use './shared';
 // go/keep-sorted end
@@ -20,27 +19,55 @@
 $_custom-property-prefix: 'filled-tonal-icon-button';
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(
-    tokens.md-comp-filled-tonal-icon-button-values(),
-    $tokens
+  $supported-tokens: list.join(
+    tokens.$md-comp-filled-tonal-icon-button-supported-tokens,
+    (
+      'container-shape-start-start',
+      'container-shape-start-end',
+      'container-shape-end-end',
+      'container-shape-end-start'
+    )
   );
-  $tokens: shared.flatten-disabled-colors($tokens, $variant: 'filled-tonal');
-  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
-  $tokens: shared.resolve-shape-tokens($tokens);
 
-  @include theme.emit-theme-vars($tokens);
+  $tokens: shared.flatten-disabled-colors($tokens, $variant: 'filled-tonal');
+
+  @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-filled-tonal-icon-button-#{$token}: #{$value};
+    }
+  }
 }
 
 @mixin styles() {
   $tokens: tokens.md-comp-filled-tonal-icon-button-values();
   $tokens: shared.flatten-disabled-colors($tokens, $variant: 'filled-tonal');
-  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
-  $tokens: shared.resolve-shape-tokens($tokens);
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-filled-tonal-icon-button-#{$token}, #{$value});
     }
+
+    // Support logical shape properties
+    --_container-shape-start-start: var(
+      --md-filled-tonal-icon-button-container-shape-start-start,
+      var(--_container-shape)
+    );
+    --_container-shape-start-end: var(
+      --md-filled-tonal-icon-button-container-shape-start-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-end: var(
+      --md-filled-tonal-icon-button-container-shape-end-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-start: var(
+      --md-filled-tonal-icon-button-container-shape-end-start,
+      var(--_container-shape)
+    );
   }
 
   .md3-icon-button {

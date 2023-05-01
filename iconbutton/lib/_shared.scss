@@ -16,7 +16,6 @@
 @use '../../focus/focus-ring';
 @use '../../icon/icon';
 @use '../../sass/color';
-@use '../../sass/shape';
 @use '../../sass/touch-target';
 @use '../../tokens';
 // go/keep-sorted end
@@ -161,8 +160,4 @@
       )
     )
   );
-}
-
-@function resolve-shape-tokens($tokens, $property: 'container-shape') {
-  @return shape.resolve-tokens($tokens, $property);
 }
