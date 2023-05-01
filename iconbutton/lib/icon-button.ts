@@ -16,7 +16,6 @@ import {html as staticHtml, literal} from 'lit/static-html.js';
 
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {isRtl} from '../../controller/is-rtl.js';
-import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 import {ARIAMixinStrict} from '../../types/aria.js';
@@ -70,8 +69,6 @@ export class IconButton extends LitElement {
 
   @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
 
-  @state() private showFocusRing = false;
-
   @state() private showRipple = false;
 
   @state() private flipIcon = isRtl(this, this.flipIconInRtl);
@@ -109,14 +106,12 @@ export class IconButton extends LitElement {
     }
     return staticHtml`<${tag}
         class="md3-icon-button ${classMap(this.getRenderClasses())}"
+        id="button"
         aria-label="${ariaLabelValue || nothing}"
         aria-haspopup="${!this.href && ariaHasPopup || nothing}"
         aria-expanded="${!this.href && ariaExpanded || nothing}"
         aria-pressed="${ariaPressedValue}"
         ?disabled="${!this.href && this.disabled}"
-        @focus="${this.handleFocus}"
-        @blur="${this.handleBlur}"
-        @pointerdown="${this.handlePointerDown}"
         @click="${this.handleClick}"
         ${ripple(this.getRipple)}>
         ${this.renderFocusRing()}
@@ -131,11 +126,15 @@ export class IconButton extends LitElement {
   private renderLink() {
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
-    return html`<a class="md3-icon-button__link" href="${this.href}"
-                  target="${this.target as LinkTarget || nothing}"
-                  @focus="${this.handleFocus}"
-                  @blur="${this.handleBlur}"
-                  aria-label="${ariaLabel || nothing}"></a>`;
+    return html`
+      <a class="md3-icon-button__link"
+        id="link"
+        href="${this.href}"
+        target="${this.target as LinkTarget || nothing}"
+        aria-label="${ariaLabel || nothing}"
+        ${ripple(this.getRipple)}
+      ></a>
+    `;
   }
 
   protected getRenderClasses() {
@@ -159,26 +158,13 @@ export class IconButton extends LitElement {
   }
 
   private renderFocusRing() {
-    return html`<md-focus-ring .visible="${
-        this.showFocusRing}"></md-focus-ring>`;
+    return html`<md-focus-ring for=${
+        this.href ? 'link' : 'button'}></md-focus-ring>`;
   }
 
   override connectedCallback() {
     this.flipIcon = isRtl(this, this.flipIconInRtl);
     super.connectedCallback();
-  }
-
-  handlePointerDown() {
-    pointerPress();
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  private handleFocus() {
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  private handleBlur() {
-    this.showFocusRing = false;
   }
 
   private handleClick() {

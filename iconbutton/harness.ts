@@ -14,7 +14,10 @@ import {IconButton} from './lib/icon-button.js';
 export class IconButtonHarness extends Harness<IconButton> {
   protected override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.renderRoot.querySelector('.md3-icon-button') as
-        HTMLElement;
+    if (this.element.href) {
+      return this.element.renderRoot.querySelector('a')!;
+    }
+
+    return this.element.renderRoot.querySelector('button')!;
   }
 }
