@@ -13,10 +13,7 @@
 @mixin styles() {
   .md3-navigation-drawer-modal {
     background-color: var(--_container-color);
-    border-start-start-radius: var(--_container-shape-start-start);
-    border-start-end-radius: var(--_container-shape-start-end);
-    border-end-end-radius: var(--_container-shape-end-end);
-    border-end-start-radius: var(--_container-shape-end-start);
+    border-radius: var(--_container-shape);
     height: var(--_container-height);
 
     &.md3-navigation-drawer-modal--opened {
