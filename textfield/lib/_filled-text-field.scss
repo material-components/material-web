@@ -4,34 +4,87 @@
 //
 
 // go/keep-sorted start
+@use 'sass:list';
 @use 'sass:map';
+@use 'sass:meta';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../field/filled-field';
-@use '../../sass/shape';
-@use '../../sass/theme';
 @use '../../tokens';
-@use './shared';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $reference: _resolve-tokens(tokens.md-comp-filled-text-field-values());
-  $tokens: _resolve-tokens($tokens, $exclude-hardcoded-values: true);
-  $tokens: theme.validate-theme($reference, $tokens);
-  $tokens: theme.create-theme-vars($tokens, 'filled-text-field');
-  $tokens: shape.resolve-tokens($tokens, 'container-shape');
+  $supported-tokens: list.join(
+    tokens.$md-comp-filled-text-field-supported-tokens,
+    (
+      'container-shape-start-start',
+      'container-shape-start-end',
+      'container-shape-end-end',
+      'container-shape-end-start',
+      'container-padding-horizontal',
+      'container-padding-vertical',
+      'input-text-prefix-padding',
+      'input-text-suffix-padding',
+      'focus-caret-color'
+    )
+  );
 
-  @include theme.emit-theme-vars($tokens);
+  @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
+    @if $token == 'container-shape' and meta.type-of($value) == 'list' {
+      @error 'Filled text field `container-shape` may not be specified as a list. Use logical (`*-start-start`) tokens instead.';
+    }
+
+    @if $value {
+      --md-filled-text-field-#{$token}: #{$value};
+    }
+  }
 }
 
 @mixin styles() {
-  $tokens: _resolve-tokens(tokens.md-comp-filled-text-field-values());
-  $tokens: theme.create-theme-vars($tokens, 'filled-text-field');
-  $tokens: shape.resolve-tokens($tokens, 'container-shape');
+  $tokens: tokens.md-comp-filled-text-field-values();
+  // Add missing tokens
+  $tokens: map.merge(
+    (
+      'container-padding-horizontal': 16px,
+      'container-padding-vertical': 16px,
+      'input-text-prefix-padding': 2px,
+      'input-text-suffix-padding': 2px,
+      'with-label-container-padding-vertical': 8px,
+      // TODO(b/270705687): remove when focus-caret-color token added
+      'focus-caret-color':
+        map.get(tokens.md-sys-color-values-light(), 'primary'),
+    ),
+    $tokens
+  );
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      @if $token == 'container-shape' {
+        // Support logical shape properties. Filled text field has a default
+        // oblong shape, which is why the fallback value is unique per corner.
+        --_container-shape-start-start: var(
+          --md-filled-text-field-container-shape-start-start,
+          var(--md-filled-text-field-container-shape, #{list.nth($value, 1)})
+        );
+        --_container-shape-start-end: var(
+          --md-filled-text-field-container-shape-start-end,
+          var(--md-filled-text-field-container-shape, #{list.nth($value, 2)})
+        );
+        --_container-shape-end-end: var(
+          --md-filled-text-field-container-shape-end-end,
+          var(--md-filled-text-field-container-shape, #{list.nth($value, 3)})
+        );
+        --_container-shape-end-start: var(
+          --md-filled-text-field-container-shape-end-start,
+          var(--md-filled-text-field-container-shape, #{list.nth($value, 4)})
+        );
+      } @else {
+        --_#{$token}: var(--md-filled-text-field-#{$token}, #{$value});
+      }
     }
 
     @include filled-field.theme(
@@ -42,7 +95,10 @@
         'container-color': var(--_container-color),
         'container-padding-horizontal': var(--_container-padding-horizontal),
         'container-padding-vertical': var(--_container-padding-vertical),
-        'container-shape': shape.corners-to-shape-token('--_container-shape'),
+        'container-shape-end-end': var(--_container-shape-end-end),
+        'container-shape-end-start': var(--_container-shape-end-start),
+        'container-shape-start-end': var(--_container-shape-start-end),
+        'container-shape-start-start': var(--_container-shape-start-start),
         'content-color': var(--_input-text-color),
         'content-type': var(--_input-text-type),
         'disabled-active-indicator-color':

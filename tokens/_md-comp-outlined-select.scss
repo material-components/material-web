@@ -151,6 +151,7 @@ $_default: (
     );
   }
 
+  $tokens: shape.resolve-tokens($tokens, 'text-field-container-shape');
   @return $tokens;
 }
 

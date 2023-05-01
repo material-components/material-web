@@ -7,23 +7,103 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../tokens';
+@use './md-sys-color';
+@use './md-sys-shape';
+@use './md-sys-state';
+@use './md-sys-typescale';
+@use './v0_172/md-comp-filled-text-field';
+@use './values';
 // go/keep-sorted end
 
-$_default-deps: (
-  'md-sys-color': tokens.md-sys-color-values-light(),
-  'md-sys-shape': tokens.md-sys-shape-values(),
-  'md-sys-state': tokens.md-sys-state-values(),
-  'md-sys-typescale': tokens.md-sys-typescale-values(),
+$supported-tokens: (
+  // go/keep-sorted start
+  'active-indicator-color',
+  'active-indicator-height',
+  'container-color',
+  'container-padding-horizontal',
+  'container-padding-vertical',
+  'container-shape',
+  'content-color',
+  'content-type',
+  'disabled-active-indicator-color',
+  'disabled-active-indicator-height',
+  'disabled-active-indicator-opacity',
+  'disabled-container-color',
+  'disabled-container-opacity',
+  'disabled-content-color',
+  'disabled-content-opacity',
+  'disabled-label-text-color',
+  'disabled-label-text-opacity',
+  'disabled-leading-content-color',
+  'disabled-leading-content-opacity',
+  'disabled-supporting-text-color',
+  'disabled-supporting-text-opacity',
+  'disabled-trailing-content-color',
+  'disabled-trailing-content-opacity',
+  'error-active-indicator-color',
+  'error-content-color',
+  'error-focus-active-indicator-color',
+  'error-focus-content-color',
+  'error-focus-label-text-color',
+  'error-focus-leading-content-color',
+  'error-focus-supporting-text-color',
+  'error-focus-trailing-content-color',
+  'error-hover-active-indicator-color',
+  'error-hover-content-color',
+  'error-hover-label-text-color',
+  'error-hover-leading-content-color',
+  'error-hover-state-layer-color',
+  'error-hover-state-layer-opacity',
+  'error-hover-supporting-text-color',
+  'error-hover-trailing-content-color',
+  'error-label-text-color',
+  'error-leading-content-color',
+  'error-supporting-text-color',
+  'error-trailing-content-color',
+  'focus-active-indicator-color',
+  'focus-active-indicator-height',
+  'focus-content-color',
+  'focus-label-text-color',
+  'focus-leading-content-color',
+  'focus-supporting-text-color',
+  'focus-trailing-content-color',
+  'hover-active-indicator-color',
+  'hover-active-indicator-height',
+  'hover-content-color',
+  'hover-label-text-color',
+  'hover-leading-content-color',
+  'hover-state-layer-color',
+  'hover-state-layer-opacity',
+  'hover-supporting-text-color',
+  'hover-trailing-content-color',
+  'label-text-color',
+  'label-text-populated-line-height',
+  'label-text-populated-size',
+  'label-text-type',
+  'leading-content-color',
+  'supporting-text-color',
+  'supporting-text-padding',
+  'supporting-text-padding-top',
+  'supporting-text-type',
+  'trailing-content-color',
+  'with-label-container-padding-vertical',
+  // go/keep-sorted end
 );
 
-@function values($deps: $_default-deps, $exclude-hardcoded-values: false) {
-  $text-field: tokens.md-comp-filled-text-field-values(
+$_default: (
+  'md-sys-color': md-sys-color.values-light(),
+  'md-sys-shape': md-sys-shape.values(),
+  'md-sys-state': md-sys-state.values(),
+  'md-sys-typescale': md-sys-typescale.values(),
+);
+
+@function values($deps: $_default, $exclude-hardcoded-values: false) {
+  $text-field: md-comp-filled-text-field.values(
     $deps,
     $exclude-hardcoded-values
   );
 
-  @return (
+  $tokens: (
     // go/keep-sorted start
     'active-indicator-color': map.get($text-field, 'active-indicator-color'),
     'active-indicator-height': map.get($text-field, 'active-indicator-height'),
@@ -142,4 +222,6 @@ $_default-deps: (
       if($exclude-hardcoded-values, null, 8px),
     // go/keep-sorted end
   );
+
+  @return values.validate($tokens, $supported-tokens: $supported-tokens);
 }

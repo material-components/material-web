@@ -12,16 +12,87 @@
 @use './md-sys-state';
 @use './md-sys-typescale';
 @use './v0_172/md-comp-filled-text-field';
+@use './values';
 // go/keep-sorted end
 
-$_default: (
-  'md-sys-color': md-sys-color.values-light(),
-  'md-sys-shape': md-sys-shape.values(),
-  'md-sys-state': md-sys-state.values(),
-  'md-sys-typescale': md-sys-typescale.values(),
+$supported-tokens: (
+  // go/keep-sorted start
+  'active-indicator-color',
+  'active-indicator-height',
+  'caret-color',
+  'container-color',
+  'container-shape',
+  'disabled-active-indicator-color',
+  'disabled-active-indicator-height',
+  'disabled-active-indicator-opacity',
+  'disabled-container-color',
+  'disabled-container-opacity',
+  'disabled-input-text-color',
+  'disabled-input-text-opacity',
+  'disabled-label-text-color',
+  'disabled-label-text-opacity',
+  'disabled-leading-icon-color',
+  'disabled-leading-icon-opacity',
+  'disabled-supporting-text-color',
+  'disabled-supporting-text-opacity',
+  'disabled-trailing-icon-color',
+  'disabled-trailing-icon-opacity',
+  'error-active-indicator-color',
+  'error-focus-active-indicator-color',
+  'error-focus-caret-color',
+  'error-focus-input-text-color',
+  'error-focus-label-text-color',
+  'error-focus-leading-icon-color',
+  'error-focus-supporting-text-color',
+  'error-focus-trailing-icon-color',
+  'error-hover-active-indicator-color',
+  'error-hover-input-text-color',
+  'error-hover-label-text-color',
+  'error-hover-leading-icon-color',
+  'error-hover-state-layer-color',
+  'error-hover-state-layer-opacity',
+  'error-hover-supporting-text-color',
+  'error-hover-trailing-icon-color',
+  'error-input-text-color',
+  'error-label-text-color',
+  'error-leading-icon-color',
+  'error-supporting-text-color',
+  'error-trailing-icon-color',
+  'focus-active-indicator-color',
+  'focus-active-indicator-height',
+  'focus-input-text-color',
+  'focus-label-text-color',
+  'focus-leading-icon-color',
+  'focus-supporting-text-color',
+  'focus-trailing-icon-color',
+  'hover-active-indicator-color',
+  'hover-active-indicator-height',
+  'hover-input-text-color',
+  'hover-label-text-color',
+  'hover-leading-icon-color',
+  'hover-state-layer-color',
+  'hover-state-layer-opacity',
+  'hover-supporting-text-color',
+  'hover-trailing-icon-color',
+  'input-text-color',
+  'input-text-placeholder-color',
+  'input-text-prefix-color',
+  'input-text-suffix-color',
+  'input-text-type',
+  'label-text-color',
+  'label-text-populated-line-height',
+  'label-text-populated-size',
+  'label-text-type',
+  'leading-icon-color',
+  'leading-icon-size',
+  'supporting-text-color',
+  'supporting-text-type',
+  'trailing-icon-color',
+  'trailing-icon-size' // go/keep-sorted end
 );
 
-$_unsupported-tokens: (
+$unsupported-tokens: (
+  // go/keep-sorted start
   'input-text-font',
   'input-text-line-height',
   'input-text-size',
@@ -36,12 +107,24 @@ $_unsupported-tokens: (
   'supporting-text-line-height',
   'supporting-text-size',
   'supporting-text-tracking',
-  'supporting-text-weight'
+  'supporting-text-weight',
+  // go/keep-sorted end
+);
+
+$_default: (
+  'md-sys-color': md-sys-color.values-light(),
+  'md-sys-shape': md-sys-shape.values(),
+  'md-sys-state': md-sys-state.values(),
+  'md-sys-typescale': md-sys-typescale.values(),
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  $tokens: md-comp-filled-text-field.values($deps, $exclude-hardcoded-values);
-  $tokens: map.remove($tokens, $_unsupported-tokens...);
+  $tokens: values.validate(
+    md-comp-filled-text-field.values($deps, $exclude-hardcoded-values),
+    $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens
+  );
+
   // TODO(b/271876162): remove when tokens compiler emits typescale tokens
   $tokens: map.merge(
     $tokens,
@@ -51,5 +134,6 @@ $_unsupported-tokens: (
       'supporting-text-type': map.get($deps, 'md-sys-typescale', 'body-small'),
     )
   );
+
   @return $tokens;
 }

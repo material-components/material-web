@@ -4,35 +4,62 @@
 //
 
 // go/keep-sorted start
+@use 'sass:list';
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../sass/shape';
-@use '../../sass/theme';
 @use '../../tokens';
-@use './md-comp-outlined-field';
 // go/keep-sorted end
 
 $_md-sys-motion: tokens.md-sys-motion-values();
 
 @mixin theme($tokens) {
-  $reference: md-comp-outlined-field.values();
-  $tokens: theme.validate-theme($reference, $tokens);
-  $tokens: theme.create-theme-vars($tokens, 'outlined-field');
-  $tokens: shape.resolve-tokens($tokens, 'container-shape');
+  $supported-tokens: list.join(
+    tokens.$md-comp-outlined-field-supported-tokens,
+    (
+      'container-shape-start-start',
+      'container-shape-start-end',
+      'container-shape-end-end',
+      'container-shape-end-start'
+    )
+  );
 
-  @include theme.emit-theme-vars($tokens);
+  @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-outlined-field-#{$token}: #{$value};
+    }
+  }
 }
 
 @mixin styles() {
-  $tokens: md-comp-outlined-field.values();
-  $tokens: theme.create-theme-vars($tokens, 'outlined-field');
-  $tokens: shape.resolve-tokens($tokens, 'container-shape');
+  $tokens: tokens.md-comp-outlined-field-values();
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-outlined-field-#{$token}, #{$value});
     }
+
+    // Support logical shape properties
+    --_container-shape-start-start: var(
+      --md-outlined-field-container-shape-start-start,
+      var(--_container-shape)
+    );
+    --_container-shape-start-end: var(
+      --md-outlined-field-container-shape-start-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-end: var(
+      --md-outlined-field-container-shape-end-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-start: var(
+      --md-outlined-field-container-shape-end-start,
+      var(--_container-shape)
+    );
   }
 
   .outline {

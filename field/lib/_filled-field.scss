@@ -4,34 +4,69 @@
 //
 
 // go/keep-sorted start
+@use 'sass:list';
 @use 'sass:map';
+@use 'sass:meta';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../sass/shape';
-@use '../../sass/theme';
 @use '../../tokens';
-@use './md-comp-filled-field';
 // go/keep-sorted end
 
 $_md-sys-motion: tokens.md-sys-motion-values();
 
 @mixin theme($tokens) {
-  $reference: md-comp-filled-field.values();
-  $tokens: theme.validate-theme($reference, $tokens);
-  $tokens: theme.create-theme-vars($tokens, 'filled-field');
-  $tokens: shape.resolve-tokens($tokens, 'container-shape');
+  $supported-tokens: list.join(
+    tokens.$md-comp-filled-field-supported-tokens,
+    (
+      'container-shape-start-start',
+      'container-shape-start-end',
+      'container-shape-end-end',
+      'container-shape-end-start'
+    )
+  );
 
-  @include theme.emit-theme-vars($tokens);
+  @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
+    @if $token == 'container-shape' and meta.type-of($value) == 'list' {
+      @error 'Filled field `container-shape` may not be specified as a list. Use logical (`*-start-start`) tokens instead.';
+    }
+
+    @if $value {
+      --md-filled-field-#{$token}: #{$value};
+    }
+  }
 }
 
 @mixin styles() {
-  $tokens: md-comp-filled-field.values();
-  $tokens: theme.create-theme-vars($tokens, 'filled-field');
-  $tokens: shape.resolve-tokens($tokens, 'container-shape');
+  $tokens: tokens.md-comp-filled-field-values();
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      @if $token == 'container-shape' {
+        // Support logical shape properties. Filled field has a default oblong
+        // shape, which is why the fallback value is unique per corner.
+        --_container-shape-start-start: var(
+          --md-filled-field-container-shape-start-start,
+          var(--md-filled-field-container-shape, #{list.nth($value, 1)})
+        );
+        --_container-shape-start-end: var(
+          --md-filled-field-container-shape-start-end,
+          var(--md-filled-field-container-shape, #{list.nth($value, 2)})
+        );
+        --_container-shape-end-end: var(
+          --md-filled-field-container-shape-end-end,
+          var(--md-filled-field-container-shape, #{list.nth($value, 3)})
+        );
+        --_container-shape-end-start: var(
+          --md-filled-field-container-shape-end-start,
+          var(--md-filled-field-container-shape, #{list.nth($value, 4)})
+        );
+      } @else {
+        --_#{$token}: var(--md-filled-field-#{$token}, #{$value});
+      }
     }
   }
 

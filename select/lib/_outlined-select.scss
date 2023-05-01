@@ -37,7 +37,13 @@
     @include outlined-field.theme(
       (
         // go/keep-sorted start
-        'container-shape': var(--_text-field-container-shape),
+        'container-shape-end-end': var(--_text-field-container-shape-end-end),
+        'container-shape-end-start':
+          var(--_text-field-container-shape-end-start),
+        'container-shape-start-end':
+          var(--_text-field-container-shape-start-end),
+        'container-shape-start-start':
+          var(--_text-field-container-shape-start-start),
         'content-color': var(--_text-field-input-text-color),
         'content-type': var(--_text-field-input-text-type),
         'disabled-content-color': var(--_text-field-disabled-input-text-color),
