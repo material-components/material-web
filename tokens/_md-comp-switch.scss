@@ -8,7 +8,82 @@
 @use './md-sys-shape';
 @use './md-sys-state';
 @use './v0_172/md-comp-switch';
+@use './values';
 // go/keep-sorted end
+
+$supported-tokens: (
+  // go/keep-sorted start
+  'disabled-selected-handle-color',
+  'disabled-selected-handle-opacity',
+  'disabled-selected-icon-color',
+  'disabled-selected-icon-opacity',
+  'disabled-selected-track-color',
+  'disabled-track-opacity',
+  'disabled-unselected-handle-color',
+  'disabled-unselected-handle-opacity',
+  'disabled-unselected-icon-color',
+  'disabled-unselected-icon-opacity',
+  'disabled-unselected-track-color',
+  'disabled-unselected-track-outline-color',
+  'handle-shape',
+  'pressed-handle-height',
+  'pressed-handle-width',
+  'selected-focus-handle-color',
+  'selected-focus-icon-color',
+  'selected-focus-state-layer-color',
+  'selected-focus-state-layer-opacity',
+  'selected-focus-track-color',
+  'selected-handle-color',
+  'selected-handle-height',
+  'selected-handle-width',
+  'selected-hover-handle-color',
+  'selected-hover-icon-color',
+  'selected-hover-state-layer-color',
+  'selected-hover-state-layer-opacity',
+  'selected-hover-track-color',
+  'selected-icon-color',
+  'selected-icon-size',
+  'selected-pressed-handle-color',
+  'selected-pressed-icon-color',
+  'selected-pressed-state-layer-color',
+  'selected-pressed-state-layer-opacity',
+  'selected-pressed-track-color',
+  'selected-track-color',
+  'state-layer-shape',
+  'state-layer-size',
+  'track-height',
+  'track-outline-width',
+  'track-shape',
+  'track-width',
+  'unselected-focus-handle-color',
+  'unselected-focus-icon-color',
+  'unselected-focus-state-layer-color',
+  'unselected-focus-state-layer-opacity',
+  'unselected-focus-track-color',
+  'unselected-focus-track-outline-color',
+  'unselected-handle-color',
+  'unselected-handle-height',
+  'unselected-handle-width',
+  'unselected-hover-handle-color',
+  'unselected-hover-icon-color',
+  'unselected-hover-state-layer-color',
+  'unselected-hover-state-layer-opacity',
+  'unselected-hover-track-color',
+  'unselected-hover-track-outline-color',
+  'unselected-icon-color',
+  'unselected-icon-size',
+  'unselected-pressed-handle-color',
+  'unselected-pressed-icon-color',
+  'unselected-pressed-state-layer-color',
+  'unselected-pressed-state-layer-opacity',
+  'unselected-pressed-track-color',
+  'unselected-pressed-track-outline-color',
+  'unselected-track-color',
+  'unselected-track-outline-color',
+  'with-icon-handle-height',
+  'with-icon-handle-width',
+  // go/keep-sorted end
+);
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -17,5 +92,10 @@ $_default: (
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  @return md-comp-switch.values($deps, $exclude-hardcoded-values);
+  $tokens: values.validate(
+    md-comp-switch.values($deps, $exclude-hardcoded-values),
+    $supported-tokens: $supported-tokens
+  );
+
+  @return $tokens;
 }

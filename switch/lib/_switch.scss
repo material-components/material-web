@@ -6,18 +6,14 @@
 // stylelint-disable selector-class-pattern --
 // Selector '.md3-*' should only be used in this project.
 
-// PUBLIC PROPERTIES
-
 // go/keep-sorted start
+@use 'sass:list';
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../focus/focus-ring';
 @use '../../sass/color';
-@use '../../sass/shape';
-@use '../../sass/theme';
 @use '../../sass/touch-target';
-@use '../../sass/var';
 @use '../../tokens';
 @use './handle';
 @use './icon';
@@ -46,24 +42,75 @@ $_forced-colors-theme: (
 );
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-switch-values(), $tokens);
-  $tokens: _flatten-disable-colors($tokens);
-  $tokens: theme.create-theme-vars($tokens, 'switch');
-  $tokens: shape.resolve-tokens($tokens, 'track-shape', 'handle-shape');
+  $supported-tokens: list.join(
+    tokens.$md-comp-switch-supported-tokens,
+    (
+      'handle-shape-start-start',
+      'handle-shape-start-end',
+      'handle-shape-end-end',
+      'handle-shape-end-start',
+      'track-shape-start-start',
+      'track-shape-start-end',
+      'track-shape-end-end',
+      'track-shape-end-start'
+    )
+  );
 
-  @include theme.emit-theme-vars($tokens);
+  $tokens: _flatten-disable-colors($tokens);
+
+  @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-switch-#{$token}: #{$value};
+    }
+  }
 }
 
 @mixin styles() {
   $tokens: tokens.md-comp-switch-values();
   $tokens: _flatten-disable-colors($tokens);
-  $tokens: theme.create-theme-vars($tokens, 'switch');
-  $tokens: shape.resolve-tokens($tokens, 'track-shape', 'handle-shape');
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-switch-#{$token}, #{$value});
     }
+
+    // Support logical shape properties
+    --_handle-shape-start-start: var(
+      --md-switch-handle-shape-start-start,
+      var(--_handle-shape)
+    );
+    --_handle-shape-start-end: var(
+      --md-switch-handle-shape-start-end,
+      var(--_handle-shape)
+    );
+    --_handle-shape-end-end: var(
+      --md-switch-handle-shape-end-end,
+      var(--_handle-shape)
+    );
+    --_handle-shape-end-start: var(
+      --md-switch-handle-shape-end-start,
+      var(--_handle-shape)
+    );
+    --_track-shape-start-start: var(
+      --md-switch-track-shape-start-start,
+      var(--_track-shape)
+    );
+    --_track-shape-start-end: var(
+      --md-switch-track-shape-start-end,
+      var(--_track-shape)
+    );
+    --_track-shape-end-end: var(
+      --md-switch-track-shape-end-end,
+      var(--_track-shape)
+    );
+    --_track-shape-end-start: var(
+      --md-switch-track-shape-end-start,
+      var(--_track-shape)
+    );
 
     // TODO(b/230630968): create a forced-colors-mode mixin
     @media screen and (forced-colors: active) {
