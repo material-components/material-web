@@ -30,14 +30,8 @@ describe('<md-fab>', () => {
       throw new Error('Could not query rendered <button>.');
     }
 
-    const focusRing = element.renderRoot.querySelector('md-focus-ring');
-    if (!focusRing) {
-      throw new Error('Could not query rendered <md-focus-ring>.');
-    }
-
     return {
       button,
-      focusRing,
       harness: new FabHarness(element),
     };
   }
@@ -155,30 +149,6 @@ describe('<md-fab>', () => {
       await env.waitForStability();
 
       expect(button.getAttribute('aria-label')).toEqual('foo');
-    });
-  });
-
-  describe('focus ring', () => {
-    it('hidden on non-keyboard focus', async () => {
-      const {harness, focusRing} = await setupTest();
-      await harness.clickWithMouse();
-      expect(focusRing.visible).toBeFalse();
-    });
-
-    it('visible on keyboard focus and hides on blur', async () => {
-      const {harness, focusRing} = await setupTest();
-      await harness.focusWithKeyboard();
-      expect(focusRing.visible).toBeTrue();
-      await harness.blur();
-      expect(focusRing.visible).toBeFalse();
-    });
-
-    it('hidden after pointer interaction', async () => {
-      const {harness, focusRing} = await setupTest();
-      await harness.focusWithKeyboard();
-      expect(focusRing.visible).toBeTrue();
-      await harness.clickWithMouse();
-      expect(focusRing.visible).toBeFalse();
     });
   });
 });

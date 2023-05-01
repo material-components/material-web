@@ -14,7 +14,6 @@ import {classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
 
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
-import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 import {ARIAMixinStrict} from '../../types/aria.js';
@@ -36,7 +35,6 @@ export class NavigationTab extends LitElement implements NavigationTabState {
   @property() badgeValue = '';
   @property({type: Boolean}) showBadge = false;
 
-  @state() private showFocusRing = false;
   @state() private showRipple = false;
 
   @query('button') buttonElement!: HTMLElement|null;
@@ -53,12 +51,10 @@ export class NavigationTab extends LitElement implements NavigationTabState {
         aria-selected="${this.active}"
         aria-label=${ariaLabel || nothing}
         tabindex="${this.active ? 0 : -1}"
-        @focus="${this.handleFocus}"
-        @blur="${this.handleBlur}"
-        @pointerdown="${this.handlePointerDown}"
         @click="${this.handleClick}"
-      ${ripple(this.getRipple)}>${this.renderFocusRing()}${
-        when(this.showRipple, this.renderRipple)}
+      ${ripple(this.getRipple)}>
+        <md-focus-ring></md-focus-ring>
+        ${when(this.showRipple, this.renderRipple)}
         <span aria-hidden="true" class="md3-navigation-tab__icon-content"
           ><span class="md3-navigation-tab__active-indicator"
             ></span><span class="md3-navigation-tab__icon"
@@ -76,11 +72,6 @@ export class NavigationTab extends LitElement implements NavigationTabState {
       'md3-navigation-tab--hide-inactive-label': this.hideInactiveLabel,
       'md3-navigation-tab--active': this.active,
     };
-  }
-
-  private renderFocusRing() {
-    return html`<md-focus-ring .visible="${
-        this.showFocusRing}"></md-focus-ring>`;
   }
 
   private readonly getRipple = () => {
@@ -137,18 +128,5 @@ export class NavigationTab extends LitElement implements NavigationTabState {
     this.dispatchEvent(new CustomEvent(
         'navigation-tab-interaction',
         {detail: {state: this}, bubbles: true, composed: true}));
-  }
-
-  handlePointerDown(e: PointerEvent) {
-    pointerPress();
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  private handleFocus() {
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  private handleBlur() {
-    this.showFocusRing = false;
   }
 }

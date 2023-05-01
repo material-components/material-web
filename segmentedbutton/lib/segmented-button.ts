@@ -13,7 +13,6 @@ import {classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
 
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
-import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 import {ARIAMixinStrict} from '../../types/aria.js';
@@ -36,7 +35,6 @@ export class SegmentedButton extends LitElement {
   @property({type: Boolean}) hasIcon = false;
 
   @state() private animState = '';
-  @state() private showFocusRing = false;
   @state() private showRipple = false;
   @queryAssignedElements({slot: 'icon', flatten: true})
   private readonly iconElement!: HTMLElement[];
@@ -73,19 +71,6 @@ export class SegmentedButton extends LitElement {
     this.dispatchEvent(event);
   }
 
-  private handlePointerDown(e: PointerEvent) {
-    pointerPress();
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  private handleFocus() {
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  private handleBlur() {
-    this.showFocusRing = false;
-  }
-
   protected override render() {
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
@@ -95,13 +80,10 @@ export class SegmentedButton extends LitElement {
         aria-label=${ariaLabel || nothing}
         aria-pressed=${this.selected}
         ?disabled=${this.disabled}
-        @focus="${this.handleFocus}"
-        @blur="${this.handleBlur}"
-        @pointerdown="${this.handlePointerDown}"
         @click="${this.handleClick}"
         class="md3-segmented-button ${classMap(this.getRenderClasses())}"
         ${ripple(this.getRipple)}>
-        ${this.renderFocusRing()}
+        <md-focus-ring class="md3-segmented-button__focus-ring"></md-focus-ring>
         ${when(this.showRipple, this.renderRipple)}
         ${this.renderOutline()}
         ${this.renderLeading()}
@@ -123,11 +105,6 @@ export class SegmentedButton extends LitElement {
       'md3-segmented-button--selecting': this.animState === 'selecting',
       'md3-segmented-button--deselecting': this.animState === 'deselecting',
     };
-  }
-
-  private renderFocusRing() {
-    return html`<md-focus-ring .visible="${
-        this.showFocusRing}" class="md3-segmented-button__focus-ring"></md-focus-ring>`;
   }
 
   private readonly getRipple = () => {

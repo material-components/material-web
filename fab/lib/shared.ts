@@ -14,7 +14,6 @@ import {classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
 
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
-import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 import {ARIAMixinStrict} from '../../types/aria.js';
@@ -59,7 +58,6 @@ export abstract class SharedFab extends LitElement {
    */
   @property({type: Boolean}) reducedTouchTarget = false;
 
-  @state() private showFocusRing = false;
   @state() private showRipple = false;
 
   @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
@@ -76,12 +74,9 @@ export abstract class SharedFab extends LitElement {
       <button
           class="fab ${classMap(this.getRenderClasses())}"
           aria-label=${ariaLabel || nothing}
-          @focus=${this.handleFocus}
-          @blur=${this.handleBlur}
-          @pointerdown=${this.handlePointerDown}
           ${ripple(this.getRipple)}>
-        ${this.renderElevation()}
-        ${this.renderFocusRing()}
+        <md-elevation></md-elevation>
+        <md-focus-ring></md-focus-ring>
         ${when(this.showRipple, this.renderRipple)}
         ${this.renderTouchTarget()}
         ${this.renderIcon()}
@@ -112,28 +107,6 @@ export abstract class SharedFab extends LitElement {
     return html`<span class="icon">
         <slot name="icon"></slot>
       </span>`;
-  }
-
-  private renderElevation() {
-    return html`<md-elevation></md-elevation>`;
-  }
-
-  private renderFocusRing() {
-    return html`<md-focus-ring .visible="${
-        this.showFocusRing}"></md-focus-ring>`;
-  }
-
-  private handlePointerDown() {
-    pointerPress();
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  private handleFocus() {
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  private handleBlur() {
-    this.showFocusRing = false;
   }
 
   private readonly renderRipple = () => {

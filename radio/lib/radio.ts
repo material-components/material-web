@@ -14,7 +14,6 @@ import {when} from 'lit/directives/when.js';
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../controller/events.js';
 import {FormController, getFormValue} from '../../controller/form-controller.js';
-import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 import {ARIAMixinStrict} from '../../types/aria.js';
@@ -84,7 +83,6 @@ export class Radio extends LitElement {
   @query('input') private readonly input!: HTMLInputElement|null;
   @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
   private readonly selectionController = new SingleSelectionController(this);
-  @state() private showFocusRing = false;
   @state() private showRipple = false;
 
   constructor() {
@@ -115,7 +113,7 @@ export class Radio extends LitElement {
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
       ${when(this.showRipple, this.renderRipple)}
-      ${this.renderFocusRing()}
+      <md-focus-ring for="input"></md-focus-ring>
       <svg class="icon" viewBox="0 0 20 20">
         <mask id="cutout">
           <rect width="100%" height="100%" fill="white" />
@@ -125,6 +123,7 @@ export class Radio extends LitElement {
         <circle class="inner circle" cx="10" cy="10" r="5" />
       </svg>
       <input
+        id="input"
         type="radio"
         name=${this.name}
         aria-label=${ariaLabel || nothing}
@@ -132,20 +131,9 @@ export class Radio extends LitElement {
         .value=${this.value}
         ?disabled=${this.disabled}
         @change=${this.handleChange}
-        @focus=${this.handleFocus}
-        @blur=${this.handleBlur}
-        @pointerdown=${this.handlePointerDown}
         ${ripple(this.getRipple)}
       >
     `;
-  }
-
-  private handleBlur() {
-    this.showFocusRing = false;
-  }
-
-  private handleFocus() {
-    this.showFocusRing = shouldShowStrongFocus();
   }
 
   private handleChange(event: Event) {
@@ -158,11 +146,6 @@ export class Radio extends LitElement {
     redispatchEvent(this, event);
   }
 
-  private handlePointerDown() {
-    pointerPress();
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
   private readonly getRipple = () => {
     this.showRipple = true;
     return this.ripple;
@@ -171,8 +154,4 @@ export class Radio extends LitElement {
   private readonly renderRipple = () => {
     return html`<md-ripple unbounded ?disabled=${this.disabled}></md-ripple>`;
   };
-
-  private renderFocusRing() {
-    return html`<md-focus-ring .visible=${this.showFocusRing}></md-focus-ring>`;
-  }
 }

@@ -15,7 +15,6 @@ import {html as staticHtml, literal} from 'lit/static-html.js';
 
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {dispatchActivationClick, isActivationClick} from '../../controller/events.js';
-import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 import {ARIAMixinStrict} from '../../types/aria.js';
@@ -71,8 +70,6 @@ export abstract class Button extends LitElement {
 
   @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
 
-  @state() private showFocusRing = false;
-
   @state() private showRipple = false;
 
   @queryAssignedElements({slot: 'icon', flatten: true})
@@ -109,9 +106,6 @@ export abstract class Button extends LitElement {
         aria-expanded="${ariaExpanded || nothing}"
         href=${this.href || nothing}
         target=${this.target || nothing}
-        @pointerdown="${this.handlePointerDown}"
-        @focus="${this.handleFocus}"
-        @blur="${this.handleBlur}"
         @click="${this.handleClick}"
         ${ripple(this.getRipple)}
       >
@@ -166,8 +160,7 @@ export abstract class Button extends LitElement {
   };
 
   private renderFocusRing() {
-    return html`<md-focus-ring .visible="${
-        this.showFocusRing}"></md-focus-ring>`;
+    return html`<md-focus-ring></md-focus-ring>`;
   }
 
   private renderLabel() {
@@ -187,23 +180,10 @@ export abstract class Button extends LitElement {
         this.handleSlotChange}"></slot>`;
   }
 
-  private handlePointerDown() {
-    pointerPress();
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
   private handleClick(e: MouseEvent) {
     if (this.preventClickDefault) {
       e.preventDefault();
     }
-  }
-
-  private handleFocus() {
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  private handleBlur() {
-    this.showFocusRing = false;
   }
 
   private handleSlotChange() {

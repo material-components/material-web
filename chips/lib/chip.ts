@@ -13,7 +13,6 @@ import {property, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {html as staticHtml, literal} from 'lit/static-html.js';
 
-import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 
@@ -27,7 +26,6 @@ export class Chip extends LitElement {
   @property() label = '';
   @property() target = '';
 
-  @state() private showFocusRing = false;
   @state() private showRipple = false;
   @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
 
@@ -38,14 +36,11 @@ export class Chip extends LitElement {
           ?disabled=${this.disabled}
           href=${this.href || nothing}
           target=${this.href ? this.target : nothing}
-          @blur=${this.handleBlur}
-          @focus=${this.handleFocus}
-          @pointerdown=${this.handlePointerDown}
           ${ripple(this.getRipple)}>
         ${!this.elevated ? html`<span class="outline"></span>` : nothing}
         ${this.elevated ? html`<md-elevation></md-elevation>` : nothing}
         ${this.showRipple ? this.renderRipple() : nothing}
-        <md-focus-ring .visible=${this.showFocusRing}></md-focus-ring>
+        <md-focus-ring></md-focus-ring>
         <span class="icon leading">
           ${this.renderLeadingIcon()}
         </span>
@@ -80,17 +75,4 @@ export class Chip extends LitElement {
     this.showRipple = true;
     return this.ripple;
   };
-
-  private handleBlur() {
-    this.showFocusRing = false;
-  }
-
-  private handleFocus() {
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  private handlePointerDown() {
-    pointerPress();
-    this.showFocusRing = shouldShowStrongFocus();
-  }
 }

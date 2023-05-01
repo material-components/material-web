@@ -6,7 +6,6 @@
 
 import {html} from 'lit';
 
-import {MdFocusRing} from '../focus/focus-ring.js';
 import {Environment} from '../testing/environment.js';
 import {createTokenTests} from '../testing/tokens.js';
 
@@ -376,39 +375,6 @@ describe('<md-radio>', () => {
       a2.checked = false;
       expect(a1.checked).toBeFalse();
       expect(a2.checked).toBeFalse();
-    });
-  });
-
-  describe('focus ring', () => {
-    let element: MdRadio;
-    let focusRing: MdFocusRing;
-    let harness: RadioHarness;
-
-    beforeEach(async () => {
-      const root = env.render(defaultRadio);
-      await env.waitForStability();
-      element = root.querySelector('md-radio')!;
-      focusRing = element.shadowRoot!.querySelector('md-focus-ring')!;
-      harness = new RadioHarness(element);
-    });
-
-    it('hidden on non-keyboard focus', async () => {
-      await harness.clickWithMouse();
-      expect(focusRing.visible).toBeFalse();
-    });
-
-    it('visible on keyboard focus and hides on blur', async () => {
-      await harness.focusWithKeyboard();
-      expect(focusRing.visible).toBeTrue();
-      await harness.blur();
-      expect(focusRing.visible).toBeFalse();
-    });
-
-    it('hidden after pointer interaction', async () => {
-      await harness.focusWithKeyboard();
-      expect(focusRing.visible).toBeTrue();
-      await harness.clickWithMouse();
-      expect(focusRing.visible).toBeFalse();
     });
   });
 

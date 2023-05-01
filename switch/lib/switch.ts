@@ -8,14 +8,13 @@ import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
 import {html, isServer, LitElement, nothing, TemplateResult} from 'lit';
-import {eventOptions, property, query, queryAsync, state} from 'lit/decorators.js';
+import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
 
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {dispatchActivationClick, isActivationClick} from '../../controller/events.js';
 import {FormController, getFormValue} from '../../controller/form-controller.js';
-import {pointerPress as focusRingPointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 
@@ -60,7 +59,6 @@ export class Switch extends LitElement {
    */
   @property({type: Boolean}) showOnlySelectedIcon = false;
 
-  @state() private showFocusRing = false;
   @state() private showRipple = false;
 
   // Ripple
@@ -121,12 +119,9 @@ export class Switch extends LitElement {
         aria-label=${(this as ARIAMixin).ariaLabel || nothing}
         ?disabled=${this.disabled}
         @click=${this.handleClick}
-        @focus="${this.handleFocus}"
-        @blur="${this.handleBlur}"
-        @pointerdown=${this.handlePointerDown}
         ${ripple(this.getRipple)}
       >
-        ${when(this.showFocusRing, this.renderFocusRing)}
+        <md-focus-ring></md-focus-ring>
         <span class="md3-switch__track">
           ${this.renderHandle()}
         </span>
@@ -155,10 +150,6 @@ export class Switch extends LitElement {
   private readonly getRipple = () => {
     this.showRipple = true;
     return this.ripple;
-  };
-
-  private readonly renderFocusRing = () => {
-    return html`<md-focus-ring visible></md-focus-ring>`;
   };
 
   private renderHandle() {
@@ -226,19 +217,5 @@ export class Switch extends LitElement {
     // Bubbles but does not compose to mimic native browser <input> & <select>
     // Additionally, native change event is not an InputEvent.
     this.dispatchEvent(new Event('change', {bubbles: true}));
-  }
-
-  private handleFocus() {
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  private handleBlur() {
-    this.showFocusRing = false;
-  }
-
-  @eventOptions({passive: true})
-  private handlePointerDown() {
-    focusRingPointerPress();
-    this.showFocusRing = false;
   }
 }

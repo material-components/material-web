@@ -16,7 +16,6 @@ import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../controller/events.js';
 import {FormController, getFormValue} from '../../controller/form-controller.js';
 import {stringConverter} from '../../controller/string-converter.js';
-import {pointerPress, shouldShowStrongFocus} from '../../focus/strong-focus.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 import {ARIAMixinStrict} from '../../types/aria.js';
@@ -80,7 +79,6 @@ export class Checkbox extends LitElement {
   @state() private prevIndeterminate = false;
   @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
   @query('input') private readonly input!: HTMLInputElement|null;
-  @state() private showFocusRing = false;
   @state() private showRipple = false;
 
   constructor() {
@@ -142,7 +140,7 @@ export class Checkbox extends LitElement {
       <div class="container ${containerClasses}">
         <div class="outline"></div>
         <div class="background"></div>
-        <md-focus-ring .visible=${this.showFocusRing}></md-focus-ring>
+        <md-focus-ring for="input"></md-focus-ring>
         ${when(this.showRipple, this.renderRipple)}
         <svg class="icon" viewBox="0 0 18 18">
           <rect class="mark short" />
@@ -150,22 +148,16 @@ export class Checkbox extends LitElement {
         </svg>
       </div>
       <input type="checkbox"
+        id="input"
         aria-checked=${isIndeterminate ? 'mixed' : nothing}
         aria-label=${ariaLabel || nothing}
         ?disabled=${this.disabled}
         .indeterminate=${this.indeterminate}
         .checked=${this.checked}
-        @blur=${this.handleBlur}
         @change=${this.handleChange}
-        @focus=${this.handleFocus}
-        @pointerdown=${this.handlePointerDown}
         ${ripple(this.getRipple)}
       >
-     `;
-  }
-
-  private handleBlur() {
-    this.showFocusRing = false;
+    `;
   }
 
   private handleChange(event: Event) {
@@ -174,15 +166,6 @@ export class Checkbox extends LitElement {
     this.indeterminate = target.indeterminate;
 
     redispatchEvent(this, event);
-  }
-
-  private handleFocus() {
-    this.showFocusRing = shouldShowStrongFocus();
-  }
-
-  private handlePointerDown() {
-    pointerPress();
-    this.showFocusRing = shouldShowStrongFocus();
   }
 
   private readonly getRipple = () => {  // bind to this
