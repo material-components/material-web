@@ -10,6 +10,7 @@
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './v0_172/md-comp-linear-progress-indicator';
+@use './values';
 // go/keep-sorted end
 
 $_default: (
@@ -17,19 +18,33 @@ $_default: (
   'md-sys-shape': md-sys-shape.values(),
 );
 
-$_unsupported-tokens: (
+$supported-tokens: (
+  // go/keep-sorted start
+  'active-indicator-color',
+  'active-indicator-height',
+  'four-color-active-indicator-four-color',
+  'four-color-active-indicator-one-color',
+  'four-color-active-indicator-three-color',
+  'four-color-active-indicator-two-color',
+  'track-color',
+  'track-height',
+  'track-shape',
+  // go/keep-sorted end
+);
+
+$unsupported-tokens: (
+  // go/keep-sorted start
   // can only control track since scaling is used on buffer/progress
-  'active-indicator-shape'
+  'active-indicator-shape',
+  // go/keep-sorted end
 );
 
 // TODO(b/275045611) may need to update based on resolution of design
 // for buffer and background animation.
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  $tokens: md-comp-linear-progress-indicator.values(
-    $deps,
-    $exclude-hardcoded-values
+  @return values.validate(
+    md-comp-linear-progress-indicator.values($deps, $exclude-hardcoded-values),
+    $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens
   );
-  $tokens: map.remove($tokens, $_unsupported-tokens...);
-
-  @return $tokens;
 }

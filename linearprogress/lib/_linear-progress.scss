@@ -4,16 +4,23 @@
 //
 
 // go/keep-sorted start
-@use '../../sass/theme';
+@use 'sass:list';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../tokens';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $reference: tokens.md-comp-linear-progress-indicator-values();
-  $tokens: theme.validate-theme($reference, $tokens);
-  $tokens: theme.create-theme-vars($tokens, 'linear-progress');
+  $supported-tokens: tokens.$md-comp-linear-progress-indicator-supported-tokens;
+  @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
 
-  @include theme.emit-theme-vars($tokens);
+    @if $value {
+      --md-linear-progress-#{$token}: #{$value};
+    }
+  }
 }
 
 // note, transition settings match MDC
@@ -46,76 +53,12 @@ $rtl-selectors: (
   '.linear-progress:dir(rtl)'
 );
 
-// Generates keyframes for ltr and rtl.
-@mixin directional-keyframes($dir) {
-  $is-rtl: $dir == 'rtl';
-  $sign: if($is-rtl, -1, 1);
-  $suffix: if($is-rtl, '-rtl', '');
-
-  @keyframes buffering#{$suffix} {
-    0% {
-      // the amount to animate is aligned with the default track background
-      transform: translateX(calc(#{$sign} * #{$_track-background-width}));
-    }
-  }
-
-  // note, the numbers here come directly from the mdc implementation.
-  // see https://github.com/material-components/material-components-web/blob/main/packages/mdc-linear-progress/_linear-progress.scss#L208.
-  // keyframes
-  @keyframes primary-indeterminate-translate#{$suffix} {
-    0% {
-      transform: translateX(0px);
-    }
-
-    20% {
-      animation-timing-function: cubic-bezier(0.5, 0, 0.701732, 0.495819);
-      transform: translateX(0px);
-    }
-
-    59.15% {
-      animation-timing-function: cubic-bezier(
-        0.302435,
-        0.381352,
-        0.55,
-        0.956352
-      );
-      transform: translateX(calc(#{$sign} * 83.6714%));
-    }
-
-    100% {
-      transform: translateX(calc(#{$sign} * 200.611%));
-    }
-  }
-
-  @keyframes secondary-indeterminate-translate#{$suffix} {
-    0% {
-      animation-timing-function: cubic-bezier(0.15, 0, 0.515058, 0.409685);
-      transform: translateX(0px);
-    }
-
-    25% {
-      animation-timing-function: cubic-bezier(0.31033, 0.284058, 0.8, 0.733712);
-      transform: translateX(calc(#{$sign} * 37.6519%));
-    }
-
-    48.35% {
-      animation-timing-function: cubic-bezier(0.4, 0.627035, 0.6, 0.902026);
-      transform: translateX(calc(#{$sign} * 84.3862%));
-    }
-
-    100% {
-      transform: translateX(calc(#{$sign} * 160.278%));
-    }
-  }
-}
-
 @mixin styles() {
   $tokens: tokens.md-comp-linear-progress-indicator-values();
-  $tokens: theme.create-theme-vars($tokens, 'linear-progress');
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-linear-progress-#{$token}, #{$value});
     }
 
     display: block;
@@ -331,8 +274,8 @@ $rtl-selectors: (
     }
   }
 
-  @include directional-keyframes('ltr');
-  @include directional-keyframes('rtl');
+  @include _directional-keyframes('ltr');
+  @include _directional-keyframes('rtl');
 
   @keyframes four-colors {
     0% {
@@ -375,6 +318,69 @@ $rtl-selectors: (
 
     .indeterminate.linear-progress {
       --_track-color: canvas;
+    }
+  }
+}
+
+// Generates keyframes for ltr and rtl.
+@mixin _directional-keyframes($dir) {
+  $is-rtl: $dir == 'rtl';
+  $sign: if($is-rtl, -1, 1);
+  $suffix: if($is-rtl, '-rtl', '');
+
+  @keyframes buffering#{$suffix} {
+    0% {
+      // the amount to animate is aligned with the default track background
+      transform: translateX(calc(#{$sign} * #{$_track-background-width}));
+    }
+  }
+
+  // note, the numbers here come directly from the mdc implementation.
+  // see https://github.com/material-components/material-components-web/blob/main/packages/mdc-linear-progress/_linear-progress.scss#L208.
+  // keyframes
+  @keyframes primary-indeterminate-translate#{$suffix} {
+    0% {
+      transform: translateX(0px);
+    }
+
+    20% {
+      animation-timing-function: cubic-bezier(0.5, 0, 0.701732, 0.495819);
+      transform: translateX(0px);
+    }
+
+    59.15% {
+      animation-timing-function: cubic-bezier(
+        0.302435,
+        0.381352,
+        0.55,
+        0.956352
+      );
+      transform: translateX(calc(#{$sign} * 83.6714%));
+    }
+
+    100% {
+      transform: translateX(calc(#{$sign} * 200.611%));
+    }
+  }
+
+  @keyframes secondary-indeterminate-translate#{$suffix} {
+    0% {
+      animation-timing-function: cubic-bezier(0.15, 0, 0.515058, 0.409685);
+      transform: translateX(0px);
+    }
+
+    25% {
+      animation-timing-function: cubic-bezier(0.31033, 0.284058, 0.8, 0.733712);
+      transform: translateX(calc(#{$sign} * 37.6519%));
+    }
+
+    48.35% {
+      animation-timing-function: cubic-bezier(0.4, 0.627035, 0.6, 0.902026);
+      transform: translateX(calc(#{$sign} * 84.3862%));
+    }
+
+    100% {
+      transform: translateX(calc(#{$sign} * 160.278%));
     }
   }
 }
