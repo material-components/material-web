@@ -13,7 +13,7 @@ import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {ARIAMixinStrict} from '../../types/aria.js';
 
 /**
- * LinearProgress component.
+ * A linear progress component.
  */
 export class LinearProgress extends LitElement {
   static {
