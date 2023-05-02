@@ -4,21 +4,27 @@
 //
 
 // go/keep-sorted start
-@use '../../sass/theme';
+@use 'sass:list';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../tokens';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $reference: tokens.md-comp-circular-progress-indicator-values();
-  $tokens: theme.validate-theme($reference, $tokens);
-  $tokens: theme.create-theme-vars($tokens, 'circular-progress');
+  $supported-tokens: tokens.$md-comp-circular-progress-indicator-supported-tokens;
+  @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
 
-  @include theme.emit-theme-vars($tokens);
+    @if $value {
+      --md-circular-progress-#{$token}: #{$value};
+    }
+  }
 }
 
 @mixin styles() {
   $tokens: tokens.md-comp-circular-progress-indicator-values();
-  $tokens: theme.create-theme-vars($tokens, 'circular-progress');
 
   $container-padding: 4px;
 
@@ -42,7 +48,7 @@
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-circular-progress-#{$token}, #{$value});
     }
 
     display: inline-flex;
