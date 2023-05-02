@@ -7,7 +7,6 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../sass/shape';
 @use './md-sys-color';
 @use './md-sys-elevation';
 @use './md-sys-shape';
@@ -147,6 +146,7 @@ $supported-tokens: (
     'hover-label-text-color':
       map.get($extended-surface-tokens, 'hover-label-text-color'),
     'label-text-color': map.get($extended-surface-tokens, 'label-text-color'),
+    'label-text-type': map.get($extended-surface-tokens, 'label-text-type'),
     'large-container-height': map.get($large-tokens, 'container-height'),
     'large-container-shape': map.get($large-tokens, 'container-shape'),
     'large-container-width': map.get($large-tokens, 'container-width'),
@@ -220,15 +220,6 @@ $supported-tokens: (
   );
 }
 
-@function _get-override-tokens($deps) {
-  // TODO(b/271876162): remove when tokens compiler emits typescale tokens
-  @return (
-    // go/keep-sorted start
-    'label-text-type': map.get($deps, 'md-sys-typescale', 'label-large'),
-    // go/keep-sorted end
-  );
-}
-
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
   'md-sys-elevation': md-sys-elevation.values(),
@@ -238,53 +229,21 @@ $_default: (
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  $original-tokens: md-comp-fab-surface.values(
-    $deps,
-    $exclude-hardcoded-values
-  );
-  $original-tokens: map.merge($original-tokens, _get-override-tokens($deps));
+  $tokens: md-comp-fab-surface.values($deps, $exclude-hardcoded-values);
 
   $tokens: values.validate(
-    $original-tokens,
+    $tokens,
     $supported-tokens: $supported-tokens,
     $new-tokens: _get-new-tokens($deps, $exclude-hardcoded-values)
   );
 
-  @each $token, $value in $tokens {
-    $tokens: map.set($tokens, $token, var(--md-fab-#{$token}, #{$value}));
-  }
-
-  $tokens: shape.resolve-tokens($tokens, 'container-shape');
-  $tokens: shape.resolve-tokens($tokens, 'large-container-shape');
-  $tokens: shape.resolve-tokens($tokens, 'small-container-shape');
-  @return $tokens;
-}
-
-// TODO(b/276957188): Remove this when we resolve issues with values fn.
-@function theme-values($deps: $_default, $exclude-hardcoded-values: false) {
-  $original-tokens: md-comp-fab-surface.values(
-    $deps,
-    $exclude-hardcoded-values
-  );
-  $original-tokens: map.merge($original-tokens, _get-override-tokens($deps));
-
-  $tokens: values.validate(
-    $original-tokens,
-    $supported-tokens: $supported-tokens,
-    $new-tokens: _get-new-tokens($deps, $exclude-hardcoded-values),
-    $is-subset: true
+  // TODO(b/271876162): remove when tokens compiler emits typescale tokens
+  $tokens: map.merge(
+    $tokens,
+    (
+      'label-text-type': map.get($deps, 'md-sys-typescale', 'label-large'),
+    )
   );
 
-  @each $token, $value in $tokens {
-    @if $value {
-      $tokens: map.set($tokens, $token, #{$value});
-    } @else {
-      $tokens: map.remove($tokens, $token);
-    }
-  }
-
-  $tokens: shape.resolve-tokens($tokens, 'container-shape');
-  $tokens: shape.resolve-tokens($tokens, 'large-container-shape');
-  $tokens: shape.resolve-tokens($tokens, 'small-container-shape');
   @return $tokens;
 }

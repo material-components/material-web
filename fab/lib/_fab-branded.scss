@@ -4,15 +4,35 @@
 //
 
 // go/keep-sorted start
-@use '../../sass/theme';
+@use 'sass:list';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../tokens';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-fab-branded-values(), $tokens);
+  $supported-tokens: list.join(
+    tokens.$md-comp-fab-branded-supported-tokens,
+    (
+      'container-shape-start-start',
+      'container-shape-start-end',
+      'container-shape-end-end',
+      'container-shape-end-start',
+      'large-container-shape-start-start',
+      'large-container-shape-start-end',
+      'large-container-shape-end-end',
+      'large-container-shape-end-start'
+    )
+  );
 
   @each $token, $value in $tokens {
-    --md-fab-branded-#{$token}: #{$value};
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-fab-branded-#{$token}: #{$value};
+    }
   }
 }
 
@@ -21,7 +41,41 @@
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-fab-branded-#{$token}, #{$value});
     }
+
+    // Support logical shape properties
+    --_container-shape-start-start: var(
+      --md-fab-branded-container-shape-start-start,
+      var(--_container-shape)
+    );
+    --_container-shape-start-end: var(
+      --md-fab-branded-container-shape-start-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-end: var(
+      --md-fab-branded-container-shape-end-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-start: var(
+      --md-fab-branded-container-shape-end-start,
+      var(--_container-shape)
+    );
+    --_large-container-shape-start-start: var(
+      --md-fab-branded-large-container-shape-start-start,
+      var(--_large-container-shape)
+    );
+    --_large-container-shape-start-end: var(
+      --md-fab-branded-large-container-shape-start-end,
+      var(--_large-container-shape)
+    );
+    --_large-container-shape-end-end: var(
+      --md-fab-branded-large-container-shape-end-end,
+      var(--_large-container-shape)
+    );
+    --_large-container-shape-end-start: var(
+      --md-fab-branded-large-container-shape-end-start,
+      var(--_large-container-shape)
+    );
   }
 }

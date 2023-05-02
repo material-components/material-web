@@ -4,20 +4,42 @@
 //
 
 // go/keep-sorted start
+@use 'sass:list';
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../focus/focus-ring';
 @use '../../ripple/ripple';
-@use '../../sass/theme';
 @use '../../tokens';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-fab-values(), $tokens);
+  $supported-tokens: list.join(
+    tokens.$md-comp-fab-supported-tokens,
+    (
+      'container-shape-start-start',
+      'container-shape-start-end',
+      'container-shape-end-end',
+      'container-shape-end-start',
+      'large-container-shape-start-start',
+      'large-container-shape-start-end',
+      'large-container-shape-end-end',
+      'large-container-shape-end-start',
+      'small-container-shape-start-start',
+      'small-container-shape-start-end',
+      'small-container-shape-end-end',
+      'small-container-shape-end-start'
+    )
+  );
 
   @each $token, $value in $tokens {
-    --md-fab-#{$token}: #{$value};
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-fab-#{$token}: #{$value};
+    }
   }
 }
 
@@ -26,8 +48,58 @@
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-fab-#{$token}, #{$value});
     }
+
+    // Support logical shape properties
+    --_container-shape-start-start: var(
+      --md-fab-container-shape-start-start,
+      var(--_container-shape)
+    );
+    --_container-shape-start-end: var(
+      --md-fab-container-shape-start-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-end: var(
+      --md-fab-container-shape-end-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-start: var(
+      --md-fab-container-shape-end-start,
+      var(--_container-shape)
+    );
+    --_large-container-shape-start-start: var(
+      --md-fab-large-container-shape-start-start,
+      var(--_large-container-shape)
+    );
+    --_large-container-shape-start-end: var(
+      --md-fab-large-container-shape-start-end,
+      var(--_large-container-shape)
+    );
+    --_large-container-shape-end-end: var(
+      --md-fab-large-container-shape-end-end,
+      var(--_large-container-shape)
+    );
+    --_large-container-shape-end-start: var(
+      --md-fab-large-container-shape-end-start,
+      var(--_large-container-shape)
+    );
+    --_small-container-shape-start-start: var(
+      --md-fab-small-container-shape-start-start,
+      var(--_small-container-shape)
+    );
+    --_small-container-shape-start-end: var(
+      --md-fab-small-container-shape-start-end,
+      var(--_small-container-shape)
+    );
+    --_small-container-shape-end-end: var(
+      --md-fab-small-container-shape-end-end,
+      var(--_small-container-shape)
+    );
+    --_small-container-shape-end-start: var(
+      --md-fab-small-container-shape-end-start,
+      var(--_small-container-shape)
+    );
   }
 
   .fab {
