@@ -7,7 +7,6 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../sass/shape';
 @use './md-sys-color';
 @use './md-sys-elevation';
 @use './md-sys-shape';
@@ -75,11 +74,15 @@ $supported-tokens: (
   'text-field-hover-supporting-text-color',
   'text-field-hover-trailing-icon-color',
   'text-field-input-text-color',
+  'text-field-input-text-type',
   'text-field-label-text-color',
+  'text-field-label-text-populated-line-height',
   'text-field-label-text-populated-size',
+  'text-field-label-text-type',
   'text-field-leading-icon-color',
   'text-field-leading-icon-size',
   'text-field-supporting-text-color',
+  'text-field-supporting-text-type',
   'text-field-trailing-icon-color',
   'text-field-trailing-icon-size',
   // go/keep-sorted end
@@ -141,34 +144,5 @@ $_default: (
     $unsupported-tokens: $unsupported-tokens
   );
 
-  @each $token, $value in $tokens {
-    $tokens: map.set(
-      $tokens,
-      $token,
-      var(--md-filled-select-#{$token}, #{$value})
-    );
-  }
-
-  $tokens: shape.resolve-tokens($tokens, 'text-field-container-shape');
-  @return $tokens;
-}
-
-// TODO(b/276957188): Remove this when we resolve issues with values fn.
-@function theme-values($deps: $_default, $exclude-hardcoded-values: false) {
-  $tokens: values.validate(
-    md-comp-filled-select.values($deps, $exclude-hardcoded-values),
-    $supported-tokens: $supported-tokens,
-    $unsupported-tokens: $unsupported-tokens
-  );
-
-  @each $token, $value in $tokens {
-    @if $value {
-      $tokens: map.set($tokens, $token, #{$value});
-    } @else {
-      $tokens: map.remove($tokens, $token);
-    }
-  }
-
-  $tokens: shape.resolve-tokens($tokens, 'text-field-container-shape');
   @return $tokens;
 }

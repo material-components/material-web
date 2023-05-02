@@ -6,7 +6,7 @@
 // go/keep-sorted start
 @use 'sass:list';
 @use 'sass:map';
-@use 'sass:string';
+@use 'sass:meta';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../field/filled-field';
@@ -15,10 +15,32 @@
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-filled-select-values(), $tokens);
+  $supported-tokens: list.join(
+    tokens.$md-comp-filled-select-supported-tokens,
+    (
+      'text-field-container-shape-start-start',
+      'text-field-container-shape-start-end',
+      'text-field-container-shape-end-end',
+      'text-field-container-shape-end-start'
+    )
+  );
 
   @each $token, $value in $tokens {
-    --md-filled-select-#{$token}: #{$value};
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
+    @if $token ==
+      'text-field-container-shape' and
+      meta.type-of($value) ==
+      'list'
+    {
+      @error 'Filled select `text-field-container-shape` may not be specified as a list. Use logical (`*-start-start`) tokens instead.';
+    }
+
+    @if $value {
+      --md-filled-select-#{$token}: #{$value};
+    }
   }
 }
 
@@ -27,7 +49,40 @@
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      @if $token == 'text-field-container-shape' {
+        // Support logical shape properties. Filled text field has a default
+        // oblong shape, which is why the fallback value is unique per corner.
+        --_text-field-container-shape-start-start: var(
+          --md-filled-select-text-field-container-shape-start-start,
+          var(
+            --md-filled-select-text-field-container-shape,
+            #{list.nth($value, 1)}
+          )
+        );
+        --_text-field-container-shape-start-end: var(
+          --md-filled-select-text-field-container-shape-start-end,
+          var(
+            --md-filled-select-text-field-container-shape,
+            #{list.nth($value, 2)}
+          )
+        );
+        --_text-field-container-shape-end-end: var(
+          --md-filled-select-text-field-container-shape-end-end,
+          var(
+            --md-filled-select-text-field-container-shape,
+            #{list.nth($value, 3)}
+          )
+        );
+        --_text-field-container-shape-end-start: var(
+          --md-filled-select-text-field-container-shape-end-start,
+          var(
+            --md-filled-select-text-field-container-shape,
+            #{list.nth($value, 4)}
+          )
+        );
+      } @else {
+        --_#{$token}: var(--md-filled-select-#{$token}, #{$value});
+      }
     }
 
     @include filled-field.theme(
