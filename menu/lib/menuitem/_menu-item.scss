@@ -19,7 +19,9 @@
   $tokens: theme.validate-theme(tokens.md-comp-menu-item-values(), $tokens);
 
   @each $token, $value in $tokens {
-    --md-menu-item-#{$token}: #{$value};
+    @if $value {
+      --md-menu-item-#{$token}: #{$value};
+    }
   }
 }
 
@@ -28,7 +30,7 @@
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-menu-item-#{$token}, #{$value});
     }
 
     @include list-item.theme(

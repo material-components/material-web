@@ -20,7 +20,9 @@
   $tokens: theme.validate-theme(tokens.md-comp-list-item-values(), $tokens);
 
   @each $token, $value in $tokens {
-    --md-list-item-#{$token}: #{$value};
+    @if $value {
+      --md-list-item-#{$token}: #{$value};
+    }
   }
 }
 
@@ -29,7 +31,7 @@
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-list-item-#{$token}, #{$value});
     }
   }
 
