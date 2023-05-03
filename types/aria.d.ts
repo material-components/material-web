@@ -32,7 +32,6 @@ export interface ARIAMixinStrict extends ARIAMixin {
   ariaChecked: 'true'|'false'|null;
   ariaColCount: `${number}`|null;
   ariaColIndex: `${number}`|null;
-  ariaColIndexText: string|null;
   ariaColSpan: `${number}`|null;
   ariaCurrent: 'page'|'step'|'location'|'date'|'time'|'true'|'false'|null;
   ariaDisabled: 'true'|'false'|null;
@@ -56,7 +55,6 @@ export interface ARIAMixinStrict extends ARIAMixin {
   ariaRoleDescription: string|null;
   ariaRowCount: `${number}`|null;
   ariaRowIndex: `${number}`|null;
-  ariaRowIndexText: string|null;
   ariaRowSpan: `${number}`|null;
   ariaSelected: 'true'|'false'|null;
   ariaSetSize: `${number}`|null;
