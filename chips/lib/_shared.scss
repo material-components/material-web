@@ -44,19 +44,11 @@
   }
 
   .container {
-    align-items: baseline;
-    appearance: none;
-    background: none;
-    border: none;
     border-radius: inherit;
     box-sizing: border-box;
     display: flex;
-    gap: 8px;
     height: 100%;
-    outline: none;
-    padding: 0 8px;
     position: relative;
-    text-decoration: none;
     width: 100%;
 
     // Container color, separate node for disabled opacity changes
@@ -75,6 +67,26 @@
 
   .container.disabled {
     pointer-events: none;
+  }
+
+  .action {
+    align-items: baseline;
+    appearance: none;
+    background: none;
+    border: none;
+    border-radius: inherit;
+    display: flex;
+    outline: none;
+    padding: 0;
+    text-decoration: none;
+  }
+
+  .action:first-of-type {
+    padding-inline-start: 8px;
+  }
+
+  .action:last-of-type {
+    padding-inline-end: 8px;
   }
 
   // Outline, separate node for disabled opacity changes
@@ -161,6 +173,7 @@
     display: flex;
     font: var(--_label-text-type);
     height: 100%;
+    padding: 0 8px;
     text-overflow: ellipsis;
     user-select: none;
     white-space: nowrap;
@@ -185,6 +198,7 @@
 
   .icon {
     align-self: center;
+    color: var(--_leading-icon-color);
     height: var(--_icon-size);
     position: relative;
   }
@@ -195,23 +209,19 @@
     width: var(--_icon-size);
   }
 
-  .icon.leading {
-    color: var(--_leading-icon-color);
-  }
-
-  :hover .icon.leading {
+  :hover .icon {
     color: var(--_hover-leading-icon-color);
   }
 
-  :focus .icon.leading {
+  :focus .icon {
     color: var(--_focus-leading-icon-color);
   }
 
-  :active .icon.leading {
+  :active .icon {
     color: var(--_pressed-leading-icon-color);
   }
 
-  .disabled .icon.leading {
+  .disabled .icon {
     color: var(--_disabled-leading-icon-color);
     opacity: var(--_disabled-leading-icon-opacity);
   }

@@ -4,9 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {Chip} from './chip.js';
+import {AssistChip} from './assist-chip.js';
 
 /**
  * A suggestion chip component.
  */
-export class SuggestionChip extends Chip {}
+export class SuggestionChip extends AssistChip {}
+
+// Note: assist and suggestion chips are functionally identical with different
+// tokens.

@@ -73,7 +73,7 @@
     );
   }
 
-  .selected .icon.leading {
+  .selected .icon {
     width: var(--_icon-size);
   }
 
@@ -120,19 +120,19 @@
     color: var(--_selected-pressed-label-text-color);
   }
 
-  .selected .icon.leading {
+  .selected .icon {
     color: var(--_selected-leading-icon-color);
   }
 
-  .selected:hover .icon.leading {
+  .selected:hover .icon {
     color: var(--_selected-hover-leading-icon-color);
   }
 
-  .selected:focus .icon.leading {
+  .selected:focus .icon {
     color: var(--_selected-focus-leading-icon-color);
   }
 
-  .selected:active .icon.leading {
+  .selected:active .icon {
     color: var(--_selected-pressed-leading-icon-color);
   }
 
