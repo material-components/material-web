@@ -12,7 +12,7 @@ import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {ARIAMixinStrict} from '../../types/aria.js';
 
 /**
- * Circular Progress component.
+ * A circular progress component.
  */
 export class CircularProgress extends LitElement {
   static {
@@ -24,7 +24,6 @@ export class CircularProgress extends LitElement {
    */
   @property({type: Number}) progress = 0;
 
-
   /**
    * Whether or not to display an animated spinner representing indeterminate
    * progress.
@@ -33,7 +32,6 @@ export class CircularProgress extends LitElement {
 
   /**
    * Whether or not to render indeterminate mode using 4 colors instead of one.
-   *
    */
   @property({type: Boolean, attribute: 'four-color'}) fourColor = false;
 
