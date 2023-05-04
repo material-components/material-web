@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import '../../elevation/elevation.js';
+
 import {html, nothing} from 'lit';
 import {property} from 'lit/decorators.js';
 
@@ -16,6 +18,7 @@ import {Chip} from './chip.js';
  * An assist chip component.
  */
 export class AssistChip extends Chip {
+  @property({type: Boolean}) elevated = false;
   @property() href = '';
   @property() target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
 
@@ -33,6 +36,7 @@ export class AssistChip extends Chip {
       ...super.getContainerClasses(),
       // Link chips cannot be disabled
       disabled: !this.href && this.disabled,
+      elevated: this.elevated,
     };
   }
 
@@ -59,5 +63,13 @@ export class AssistChip extends Chip {
         ${ripple(this.getPrimaryRipple)}
       >${this.renderContent()}</button>
     `;
+  }
+
+  protected override renderOutline() {
+    if (this.elevated) {
+      return html`<md-elevation></md-elevation>`;
+    }
+
+    return super.renderOutline();
   }
 }

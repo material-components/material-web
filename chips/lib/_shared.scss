@@ -8,7 +8,6 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../elevation/elevation';
 @use '../../focus/focus-ring';
 @use '../../ripple/ripple';
 // go/keep-sorted end
@@ -105,56 +104,6 @@
   .disabled .outline {
     border-color: var(--_disabled-outline-color);
     opacity: var(--_disabled-outline-opacity);
-  }
-
-  .elevated {
-    @include elevation.theme(
-      (
-        'level': var(--_elevated-container-elevation),
-        'shadow-color': var(--_elevated-container-shadow-color),
-      )
-    );
-  }
-
-  .elevated::before {
-    background: var(--_elevated-container-color);
-  }
-
-  .elevated:hover {
-    @include elevation.theme(
-      (
-        'level': var(--_elevated-hover-container-elevation),
-      )
-    );
-  }
-
-  .elevated:focus-within {
-    @include elevation.theme(
-      (
-        'level': var(--_elevated-focus-container-elevation),
-      )
-    );
-  }
-
-  .elevated:active {
-    @include elevation.theme(
-      (
-        'level': var(--_elevated-pressed-container-elevation),
-      )
-    );
-  }
-
-  .elevated.disabled {
-    @include elevation.theme(
-      (
-        'level': var(--_elevated-disabled-container-elevation),
-      )
-    );
-  }
-
-  .elevated.disabled::before {
-    background: var(--_elevated-disabled-container-color);
-    opacity: var(--_elevated-disabled-container-opacity);
   }
 
   md-ripple {

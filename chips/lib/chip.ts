@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../elevation/elevation.js';
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
@@ -24,7 +23,6 @@ export abstract class Chip extends LitElement {
   }
 
   @property({type: Boolean}) disabled = false;
-  @property({type: Boolean}) elevated = false;
   @property() label = '';
 
   /**
@@ -54,8 +52,7 @@ export abstract class Chip extends LitElement {
 
     return html`
       <div class="container ${classMap(this.getContainerClasses())}">
-        ${!this.elevated ? html`<span class="outline"></span>` : nothing}
-        ${this.elevated ? html`<md-elevation></md-elevation>` : nothing}
+        ${this.renderOutline()}
         ${primaryFocus}
         ${primaryRipple}
         ${this.renderPrimaryAction()}
@@ -67,7 +64,6 @@ export abstract class Chip extends LitElement {
   protected getContainerClasses() {
     return {
       disabled: this.disabled,
-      elevated: this.elevated,
     };
   }
 
@@ -84,6 +80,10 @@ export abstract class Chip extends LitElement {
 
   protected renderTrailingAction(): TemplateResult|typeof nothing {
     return nothing;
+  }
+
+  protected renderOutline() {
+    return html`<span class="outline"></span>`;
   }
 
   protected renderLeadingIcon(): TemplateResult {

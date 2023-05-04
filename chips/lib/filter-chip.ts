@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import '../../elevation/elevation.js';
+
 import {html, nothing, PropertyValues, svg} from 'lit';
 import {property} from 'lit/decorators.js';
 
@@ -16,6 +18,7 @@ import {Chip} from './chip.js';
  * A filter chip component.
  */
 export class FilterChip extends Chip {
+  @property({type: Boolean}) elevated = false;
   @property({type: Boolean}) selected = false;
 
   protected get primaryFocusFor() {
@@ -44,6 +47,7 @@ export class FilterChip extends Chip {
   protected override getContainerClasses() {
     return {
       ...super.getContainerClasses(),
+      elevated: this.elevated,
       selected: this.selected,
     };
   }
@@ -72,5 +76,13 @@ export class FilterChip extends Chip {
         <path d="M6.75012 12.1274L3.62262 8.99988L2.55762 10.0574L6.75012 14.2499L15.7501 5.24988L14.6926 4.19238L6.75012 12.1274Z" />
       </svg>
     `;
+  }
+
+  protected override renderOutline() {
+    if (this.elevated) {
+      return html`<md-elevation></md-elevation>`;
+    }
+
+    return super.renderOutline();
   }
 }

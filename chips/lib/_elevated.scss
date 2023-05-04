@@ -1,0 +1,60 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use '../../elevation/elevation';
+// go/keep-sorted end
+
+@mixin styles() {
+  .elevated {
+    @include elevation.theme(
+      (
+        'level': var(--_elevated-container-elevation),
+        'shadow-color': var(--_elevated-container-shadow-color),
+      )
+    );
+  }
+
+  .elevated::before {
+    background: var(--_elevated-container-color);
+  }
+
+  .elevated:hover {
+    @include elevation.theme(
+      (
+        'level': var(--_elevated-hover-container-elevation),
+      )
+    );
+  }
+
+  .elevated:focus-within {
+    @include elevation.theme(
+      (
+        'level': var(--_elevated-focus-container-elevation),
+      )
+    );
+  }
+
+  .elevated:active {
+    @include elevation.theme(
+      (
+        'level': var(--_elevated-pressed-container-elevation),
+      )
+    );
+  }
+
+  .elevated.disabled {
+    @include elevation.theme(
+      (
+        'level': var(--_elevated-disabled-container-elevation),
+      )
+    );
+  }
+
+  .elevated.disabled::before {
+    background: var(--_elevated-disabled-container-color);
+    opacity: var(--_elevated-disabled-container-opacity);
+  }
+}
