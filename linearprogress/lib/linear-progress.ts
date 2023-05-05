@@ -39,7 +39,7 @@ export class LinearProgress extends LitElement {
    * Whether or not to render indeterminate mode using 4 colors instead of one.
    *
    */
-  @property({type: Boolean, attribute: 'four-colors'}) fourColors = false;
+  @property({type: Boolean, attribute: 'four-color'}) fourColor = false;
 
   @query('.linear-progress') private readonly rootEl!: HTMLElement|null;
 
@@ -53,7 +53,7 @@ export class LinearProgress extends LitElement {
     const rootClasses = {
       'indeterminate': this.indeterminate,
       'animation-ready': this.animationReady,
-      'four-colors': this.fourColors
+      'four-color': this.fourColor
     };
 
     const progressStyles = {
