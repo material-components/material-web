@@ -122,7 +122,7 @@ export class Dialog extends LitElement {
    *
    *   <md-dialog>
    *    Content
-   *     <md-filled-button slot="footer"dialogAction="buy">
+   *     <md-filled-button slot="footer" dialogAction="buy">
    *       Buy
    *     </md-filled-button>
    *   </md-dialog>
