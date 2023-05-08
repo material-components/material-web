@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.0.0-pre.8](https://github.com/material-components/material-web/compare/v1.0.0-pre.7...v1.0.0-pre.8) (2023-05-04)
+
+
+### Features
+
+* **focus:** improve usability ([34d8db0](https://github.com/material-components/material-web/commit/34d8db09aa196507fca73c452b0bedc864bc2ccd))
+
+
+### Bug Fixes
+
+* **checkbox:** incorrect logical shape var names ([c2ca4f8](https://github.com/material-components/material-web/commit/c2ca4f8795b1a3f7f489bed02431a66ba13ea3ba))
+* **checkbox:** support logical shapes ([e62b16b](https://github.com/material-components/material-web/commit/e62b16b9a60402c92f732fa4d744fe3602c380cc))
+* **focus:** control not working when `for` reflects as empty ([f83db36](https://github.com/material-components/material-web/commit/f83db369c22dba754733bc605394f24a6aa87641))
+* **focus:** update focus-ring tokens ([5934de0](https://github.com/material-components/material-web/commit/5934de06037203b01dc7dd532abe2ee89fec109a))
+* **listitem:** hide android tap color since we have ripple ([0d3d032](https://github.com/material-components/material-web/commit/0d3d032a4c0869346f06b2182c29d59ea7b46cde))
+* **menu:** fix submenu closing when already opened and all menus closing when hovering over menuitem ([f6d72f9](https://github.com/material-components/material-web/commit/f6d72f9c3ff141389f5116a95e6393e410644978))
+* **ripple:** ensure ripple occurs when a keyboard generated click happens after a pointer click ([016b851](https://github.com/material-components/material-web/commit/016b8513e71bff04e2ec41a07f1d05cfd1d2762d))
+* **slider:** disabled slider no longer displays pressed handle color when pressed ([4c229d9](https://github.com/material-components/material-web/commit/4c229d98727a0ebc6dad4cb5efc77a487dd2710d))
+* **testing:** don't fire focus events twice ([04d3496](https://github.com/material-components/material-web/commit/04d3496a71e9fcc838eb496c3572d6ab57dd4503))
+* **tokens:** bugs with component values() functions ([beb5f81](https://github.com/material-components/material-web/commit/beb5f816eaa5fe364d7563596f9bd82006d7c1d1))
+
+
+### Miscellaneous Chores
+
+* update next version ([60afab6](https://github.com/material-components/material-web/commit/60afab619ed9a8dff567b9ae21261501ab9998e9))
+
 ## [1.0.0-pre.7](https://github.com/material-components/material-web/compare/v1.0.0-pre.6...v1.0.0-pre.7) (2023-04-24)
 
 
