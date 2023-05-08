@@ -42,19 +42,19 @@
 
     // Support logical shape properties
     --_container-shape-start-start: var(
-      --md-checkbox-shape-start-start,
+      --md-assist-chip-container-shape-start-start,
       var(--_container-shape)
     );
     --_container-shape-start-end: var(
-      --md-checkbox-shape-start-end,
+      --md-assist-chip-container-shape-start-end,
       var(--_container-shape)
     );
     --_container-shape-end-end: var(
-      --md-checkbox-shape-end-end,
+      --md-assist-chip-container-shape-end-end,
       var(--_container-shape)
     );
     --_container-shape-end-start: var(
-      --md-checkbox-shape-end-start,
+      --md-assist-chip-container-shape-end-start,
       var(--_container-shape)
     );
   }
