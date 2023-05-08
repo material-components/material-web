@@ -1,3 +1,8 @@
+<!-- catalog-only-start --><!-- ---
+name: Elevation
+dirname: elevation
+-----><!-- catalog-only-end -->
+
 # Elevation
 
 <!--*

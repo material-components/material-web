@@ -1,3 +1,8 @@
+<!-- catalog-only-start --><!-- ---
+name: Linear Progress
+dirname: linearprogress
+-----><!-- catalog-only-end -->
+
 # Linear progress
 
 <!--*

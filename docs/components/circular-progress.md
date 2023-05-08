@@ -1,3 +1,8 @@
+<!-- catalog-only-start --><!-- ---
+name: Circular Progress
+dirname: circularprogress
+-----><!-- catalog-only-end -->
+
 # Circular progress
 
 <!--*

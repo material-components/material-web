@@ -1,3 +1,8 @@
+<!-- catalog-only-start --><!-- ---
+name: Icon Button
+dirname: iconbutton
+-----><!-- catalog-only-end -->
+
 # Icon Button
 
 <!--*

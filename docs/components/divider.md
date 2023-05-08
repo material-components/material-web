@@ -1,3 +1,8 @@
+<!-- catalog-only-start --><!-- ---
+name: Divider
+dirname: divider
+-----><!-- catalog-only-end -->
+
 # Divider
 
 <!--*
