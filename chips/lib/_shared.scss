@@ -88,6 +88,14 @@
     padding-inline-end: 8px;
   }
 
+  .touch {
+    height: 48px;
+    inset: 50% 0 0;
+    position: absolute;
+    transform: translateY(-50%);
+    width: 100%;
+  }
+
   // Outline, separate node for disabled opacity changes
   .outline {
     border: var(--_outline-width) solid var(--_outline-color);
@@ -111,7 +119,8 @@
   }
 
   .label,
-  .icon {
+  .icon,
+  .touch {
     // Place content above background elements
     z-index: 1;
   }
