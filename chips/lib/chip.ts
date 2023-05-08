@@ -28,33 +28,29 @@ export abstract class Chip extends LitElement {
   /**
    * The `id` of the action the primary focus ring is for.
    */
-  protected abstract readonly primaryFocusFor: string;
+  protected abstract readonly focusFor: string;
 
   /**
    * Whether or not the primary ripple is disabled (defaults to `disabled`).
    * Some chip actions such as links cannot be disabled.
    */
-  protected get primaryRippleDisabled() {
+  protected get rippleDisabled() {
     return this.disabled;
   }
 
-  @state() private showPrimaryRipple = false;
-  @queryAsync('md-ripple')
-  private readonly primaryRipple!: Promise<MdRipple|null>;
+  @state() private showRipple = false;
+  @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
 
   protected override render() {
-    const primaryRipple = this.showPrimaryRipple ?
-        html`<md-ripple ?disabled=${this.primaryRippleDisabled}></md-ripple>` :
+    const ripple = this.showRipple ?
+        html`<md-ripple ?disabled=${this.rippleDisabled}></md-ripple>` :
         nothing;
-
-    const primaryFocus =
-        html`<md-focus-ring for=${this.primaryFocusFor}></md-focus-ring>`;
 
     return html`
       <div class="container ${classMap(this.getContainerClasses())}">
         ${this.renderOutline()}
-        ${primaryFocus}
-        ${primaryRipple}
+        <md-focus-ring for=${this.focusFor}></md-focus-ring>
+        ${ripple}
         ${this.renderPrimaryAction()}
         ${this.renderTrailingAction()}
       </div>
@@ -91,8 +87,8 @@ export abstract class Chip extends LitElement {
     return html`<slot name="icon"></slot>`;
   }
 
-  protected getPrimaryRipple = () => {
-    this.showPrimaryRipple = true;
-    return this.primaryRipple;
+  protected getRipple = () => {
+    this.showRipple = true;
+    return this.ripple;
   };
 }

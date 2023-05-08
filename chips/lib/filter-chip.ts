@@ -21,7 +21,7 @@ export class FilterChip extends Chip {
   @property({type: Boolean}) elevated = false;
   @property({type: Boolean}) selected = false;
 
-  protected get primaryFocusFor() {
+  protected get focusFor() {
     return 'option';
   }
 
@@ -61,7 +61,7 @@ export class FilterChip extends Chip {
         aria-selected=${this.selected}
         ?disabled=${this.disabled || nothing}
         role="option"
-        ${ripple(this.getPrimaryRipple)}
+        ${ripple(this.getRipple)}
       >${this.renderContent()}</button>
     `;
   }
