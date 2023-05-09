@@ -154,30 +154,33 @@
 
   .icon {
     align-self: center;
-    color: var(--_leading-icon-color);
-    height: var(--_icon-size);
+    display: flex;
     position: relative;
   }
 
-  .icon ::slotted(*) {
+  .icon ::slotted(:first-child) {
     font-size: var(--_icon-size);
     height: var(--_icon-size);
     width: var(--_icon-size);
   }
 
-  :hover .icon {
+  .leading.icon {
+    color: var(--_leading-icon-color);
+  }
+
+  :hover .leading.icon {
     color: var(--_hover-leading-icon-color);
   }
 
-  :focus .icon {
+  :focus .leading.icon {
     color: var(--_focus-leading-icon-color);
   }
 
-  :active .icon {
+  :active .leading.icon {
     color: var(--_pressed-leading-icon-color);
   }
 
-  .disabled .icon {
+  .disabled .leading.icon {
     color: var(--_disabled-leading-icon-color);
     opacity: var(--_disabled-leading-icon-opacity);
   }

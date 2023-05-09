@@ -50,19 +50,19 @@
     color: var(--_selected-pressed-label-text-color);
   }
 
-  .selected .icon {
+  .selected .leading.icon {
     color: var(--_selected-leading-icon-color);
   }
 
-  .selected:hover .icon {
+  .selected:hover .leading.icon {
     color: var(--_selected-hover-leading-icon-color);
   }
 
-  .selected:focus .icon {
+  .selected:focus .leading.icon {
     color: var(--_selected-focus-leading-icon-color);
   }
 
-  .selected:active .icon {
+  .selected:active .leading.icon {
     color: var(--_selected-pressed-leading-icon-color);
   }
 }

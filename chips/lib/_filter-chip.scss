@@ -63,17 +63,12 @@
     background: var(--_elevated-selected-container-color);
   }
 
-  .selected .icon {
+  .checkmark {
+    height: var(--_icon-size);
     width: var(--_icon-size);
   }
 
-  .checkmark {
-    inset: 0;
-    opacity: 0;
-    position: absolute;
-  }
-
-  .selected .checkmark {
-    opacity: 1;
+  .disabled .checkmark {
+    opacity: var(--_disabled-leading-icon-opacity);
   }
 }

@@ -37,40 +37,42 @@
     padding-inline-end: 0;
   }
 
-  .trailing .icon {
+  .trailing.icon {
     color: var(--_trailing-icon-color);
+    height: var(--_icon-size);
+    width: var(--_icon-size);
   }
 
-  :hover .trailing .icon {
+  :hover .trailing.icon {
     color: var(--_hover-trailing-icon-color);
   }
 
-  :focus .trailing .icon {
+  :focus .trailing.icon {
     color: var(--_focus-trailing-icon-color);
   }
 
-  :active .trailing .icon {
+  :active .trailing.icon {
     color: var(--_pressed-trailing-icon-color);
   }
 
-  .disabled .trailing .icon {
+  .disabled .trailing.icon {
     color: var(--_disabled-trailing-icon-color);
     opacity: var(--_disabled-trailing-icon-opacity);
   }
 
-  .selected .trailing .icon {
+  .selected .trailing.icon {
     color: var(--_selected-trailing-icon-color);
   }
 
-  .selected:hover .trailing .icon {
+  .selected:hover .trailing.icon {
     color: var(--_selected-hover-trailing-icon-color);
   }
 
-  .selected:focus .trailing .icon {
+  .selected:focus .trailing.icon {
     color: var(--_selected-focus-trailing-icon-color);
   }
 
-  .selected:active .trailing .icon {
+  .selected:active .trailing.icon {
     color: var(--_selected-pressed-trailing-icon-color);
   }
 }

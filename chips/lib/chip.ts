@@ -65,7 +65,7 @@ export abstract class Chip extends LitElement {
 
   protected renderContent() {
     return html`
-      <span class="icon">
+      <span class="leading icon">
         ${this.renderLeadingIcon()}
       </span>
       <span class="label">${this.label}</span>

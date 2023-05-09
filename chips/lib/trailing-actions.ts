@@ -26,7 +26,7 @@ export function renderRemoveButton({disabled}: {disabled: boolean}) {
     >
       <md-focus-ring></md-focus-ring>
       <md-ripple ${ref(rippleRef)} unbounded></md-ripple>
-      <svg class="icon" viewBox="0 96 960 960">
+      <svg class="trailing icon" viewBox="0 96 960 960">
         <path d="m249 849-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z" />
       </svg>
       <span class="touch"></span>
