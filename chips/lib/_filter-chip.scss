@@ -135,41 +135,4 @@
   .selected:active .icon {
     color: var(--_selected-pressed-leading-icon-color);
   }
-
-  .icon.trailing {
-    color: var(--_trailing-icon-color);
-  }
-
-  :hover .icon.trailing {
-    color: var(--_hover-trailing-icon-color);
-  }
-
-  :focus .icon.trailing {
-    color: var(--_focus-trailing-icon-color);
-  }
-
-  :active .icon.trailing {
-    color: var(--_pressed-trailing-icon-color);
-  }
-
-  .disabled .icon.trailing {
-    color: var(--_disabled-trailing-icon-color);
-    opacity: var(--_disabled-trailing-icon-opacity);
-  }
-
-  .selected .icon.trailing {
-    color: var(--_selected-trailing-icon-color);
-  }
-
-  .selected:hover .icon.trailing {
-    color: var(--_selected-hover-trailing-icon-color);
-  }
-
-  .selected:focus .icon.trailing {
-    color: var(--_selected-focus-trailing-icon-color);
-  }
-
-  .selected:active .icon.trailing {
-    color: var(--_selected-pressed-trailing-icon-color);
-  }
 }
