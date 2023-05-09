@@ -44,7 +44,7 @@ export class AssistChip extends Chip {
     const {ariaLabel} = this as ARIAMixinStrict;
     if (this.href) {
       return html`
-        <a class="action"
+        <a class="primary action"
           id="link"
           aria-label=${ariaLabel || nothing}
           href=${this.href}
@@ -55,7 +55,7 @@ export class AssistChip extends Chip {
     }
 
     return html`
-      <button class="action"
+      <button class="primary action"
         id="button"
         aria-label=${ariaLabel || nothing}
         ?disabled=${this.disabled}

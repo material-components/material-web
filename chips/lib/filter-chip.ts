@@ -13,12 +13,14 @@ import {ripple} from '../../ripple/directive.js';
 import {ARIAMixinStrict} from '../../types/aria.js';
 
 import {Chip} from './chip.js';
+import {renderRemoveButton} from './trailing-actions.js';
 
 /**
  * A filter chip component.
  */
 export class FilterChip extends Chip {
   @property({type: Boolean}) elevated = false;
+  @property({type: Boolean}) removable = false;
   @property({type: Boolean}) selected = false;
 
   protected get focusFor() {
@@ -55,7 +57,7 @@ export class FilterChip extends Chip {
   protected override renderPrimaryAction() {
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
-      <button class="action"
+      <button class="primary action"
         id="option"
         aria-label=${ariaLabel || nothing}
         aria-selected=${this.selected}
@@ -76,6 +78,14 @@ export class FilterChip extends Chip {
         <path d="M6.75012 12.1274L3.62262 8.99988L2.55762 10.0574L6.75012 14.2499L15.7501 5.24988L14.6926 4.19238L6.75012 12.1274Z" />
       </svg>
     `;
+  }
+
+  protected override renderTrailingAction() {
+    if (this.removable) {
+      return renderRemoveButton({disabled: this.disabled});
+    }
+
+    return nothing;
   }
 
   protected override renderOutline() {

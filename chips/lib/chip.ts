@@ -52,7 +52,7 @@ export abstract class Chip extends LitElement {
         <md-focus-ring for=${this.focusFor}></md-focus-ring>
         ${ripple}
         ${this.renderPrimaryAction()}
-        ${this.renderTrailingAction()}
+        ${this.renderTrailingAction?.() || nothing}
       </div>
     `;
   }
@@ -75,9 +75,7 @@ export abstract class Chip extends LitElement {
 
   protected abstract renderPrimaryAction(): TemplateResult;
 
-  protected renderTrailingAction(): TemplateResult|typeof nothing {
-    return nothing;
-  }
+  protected renderTrailingAction?(): TemplateResult|typeof nothing;
 
   protected renderOutline() {
     return html`<span class="outline"></span>`;

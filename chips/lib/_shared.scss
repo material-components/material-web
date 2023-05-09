@@ -75,17 +75,16 @@
     border: none;
     border-radius: inherit;
     display: flex;
+    gap: 8px;
     outline: none;
     padding: 0;
+    position: relative;
     text-decoration: none;
   }
 
-  .action:first-of-type {
+  .primary.action {
     padding-inline-start: 8px;
-  }
-
-  .action:last-of-type {
-    padding-inline-end: 8px;
+    padding-inline-end: 16px;
   }
 
   .touch {
@@ -131,7 +130,6 @@
     display: flex;
     font: var(--_label-text-type);
     height: 100%;
-    padding: 0 8px;
     text-overflow: ellipsis;
     user-select: none;
     white-space: nowrap;
