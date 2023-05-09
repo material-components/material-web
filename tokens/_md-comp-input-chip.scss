@@ -20,7 +20,6 @@ $supported-tokens: (
   // go/keep-sorted start
   'avatar-shape',
   'avatar-size',
-  'container-elevation',
   'container-height',
   'container-shape',
   'disabled-avatar-opacity',
@@ -82,6 +81,7 @@ $supported-tokens: (
 
 $unsupported-tokens: (
   // go/keep-sorted start
+  'container-elevation',
   'dragged-container-elevation',
   'dragged-label-text-color',
   'dragged-leading-icon-color',

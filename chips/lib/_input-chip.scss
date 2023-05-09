@@ -1,0 +1,75 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:list';
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../../tokens';
+// go/keep-sorted end
+
+@mixin theme($tokens) {
+  $supported-tokens: list.join(
+    tokens.$md-comp-input-chip-supported-tokens,
+    (
+      'container-shape-start-start',
+      'container-shape-start-end',
+      'container-shape-end-end',
+      'container-shape-end-start'
+    )
+  );
+
+  @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-input-chip-#{$token}: #{$value};
+    }
+  }
+}
+
+@mixin styles() {
+  $tokens: tokens.md-comp-input-chip-values();
+
+  :host {
+    @each $token, $value in $tokens {
+      --_#{$token}: var(--md-input-chip-#{$token}, #{$value});
+    }
+
+    // Support logical shape properties
+    --_container-shape-start-start: var(
+      --md-input-chip-container-shape-start-start,
+      var(--_container-shape)
+    );
+    --_container-shape-start-end: var(
+      --md-input-chip-container-shape-start-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-end: var(
+      --md-input-chip-container-shape-end-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-start: var(
+      --md-input-chip-container-shape-end-start,
+      var(--_container-shape)
+    );
+  }
+
+  .avatar .primary.action {
+    padding-inline-start: 4px;
+  }
+
+  .avatar .leading.icon ::slotted(:first-child) {
+    border-radius: var(--_avatar-shape);
+    height: var(--_avatar-size);
+    width: var(--_avatar-size);
+  }
+
+  .disabled.avatar .leading.icon {
+    opacity: var(--_disabled-avatar-opacity);
+  }
+}
