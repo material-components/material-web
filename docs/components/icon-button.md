@@ -47,10 +47,18 @@ the icon font.
 ![A row of icon buttons](images/iconbutton/usage.png "Icon buttons can be used within other components, such as a bottom app bar")
 
 ```html
-  <md-standard-icon-button>check</md-standard-icon-button>
-  <md-filled-icon-button>check</md-filled-icon-button>
-  <md-filled-tonal-icon-button>check</md-filled-tonal-icon-button>
-  <md-outlined-icon-button>check</md-outlined-icon-button>
+  <md-standard-icon-button>
+    <md-icon>check</md-icon>
+  </md-standard-icon-button>
+  <md-filled-icon-button>
+    <md-icon>check</md-icon>
+  </md-filled-icon-button>
+  <md-filled-tonal-icon-button>
+    <md-icon>check</md-icon>
+  </md-filled-tonal-icon-button>
+  <md-outlined-icon-button>
+    <md-icon>check</md-icon>
+  </md-outlined-icon-button>
 ```
 
 ### Links
@@ -62,7 +70,9 @@ and optionally a
 attribute to turn the icon button into a link.
 
 ```html
-<md-standard-icon-button href="https://google.com">check</md-standard-icon-button>
+<md-standard-icon-button href="https://google.com">
+  <md-icon>check</md-icon>
+</md-standard-icon-button>
 ```
 
 ### Toggle
@@ -77,38 +87,38 @@ adding or removing something from favorites.
 ```html
 <div>
   <md-standard-icon-button toggle>
-    <span>close</span>
-    <span slot="selectedIcon">check</span>
+    <md-icon>close</md-icon>
+    <md-icon slot="selectedIcon">check</md-icon>
   </md-standard-icon-button>
   <md-filled-icon-button toggle>
-    <span>close</span>
-    <span slot="selectedIcon">check</span>
+    <md-icon>close</md-icon>
+    <md-icon slot="selectedIcon">check</md-icon>
   </md-filled-icon-button>
   <md-filled-tonal-icon-button toggle>
-    <span>close</span>
-    <span slot="selectedIcon">check</span>
+    <md-icon>close</md-icon>
+    <md-icon slot="selectedIcon">check</md-icon>
   </md-filled-tonal-icon-button>
   <md-outlined-icon-button toggle>
-    <span>close</span>
-    <span slot="selectedIcon">check</span>
+    <md-icon>close</md-icon>
+    <md-icon slot="selectedIcon">check</md-icon>
   </md-outlined-icon-button>
 </div>
 <div>
   <md-standard-icon-button toggle selected>
-    <span>close</span>
-    <span slot="selectedIcon">check</span>
+    <md-icon>close</md-icon>
+    <md-icon slot="selectedIcon">check</md-icon>
   </md-standard-icon-button>
   <md-filled-icon-button toggle selected>
-    <span>close</span>
-    <span slot="selectedIcon">check</span>
+    <md-icon>close</md-icon>
+    <md-icon slot="selectedIcon">check</md-icon>
   </md-filled-icon-button>
   <md-filled-tonal-icon-button toggle selected>
-    <span>close</span>
-    <span slot="selectedIcon">check</span>
+    <md-icon>close</md-icon>
+    <md-icon slot="selectedIcon">check</md-icon>
   </md-filled-tonal-icon-button>
   <md-outlined-icon-button toggle selected>
-    <span>close</span>
-    <span slot="selectedIcon">check</span>
+    <md-icon>close</md-icon>
+    <md-icon slot="selectedIcon">check</md-icon>
   </md-outlined-icon-button>
 </div>
 ```
@@ -120,7 +130,9 @@ Add an
 attribute to buttons whose labels need a more descriptive label.
 
 ```html
-<md-standard-icon-button aria-label="Search for Contact">search</md-standard-icon-button>
+<md-standard-icon-button aria-label="Search for Contact">
+  <md-icon>search</md-icon>
+</md-standard-icon-button>
 ```
 
 ### Toggle
@@ -132,8 +144,8 @@ descriptive label when selected.
 <md-standard-icon-button toggle
   aria-label="Unselected"
   selected-aria-label="Selected">
-  <span>close</span>
-  <span slot="selectedIcon">check</span>
+  <md-icon>close</md-icon>
+  <md-icon slot="selectedIcon">check</md-icon>
 </md-standard-icon-button>
 ```
 
@@ -152,7 +164,9 @@ Icon buttons can be grouped together or they can stand alone.
 ![A check icon](images/iconbutton/usage-standard.png "Standard Icon Button with Check icon")
 
 ```html
-<md-standard-icon-button>check</md-standard-icon-button>
+<md-standard-icon-button>
+  <md-icon>check</md-icon>
+</md-standard-icon-button>
 ```
 
 ## Filled Icon Button
@@ -165,7 +179,9 @@ Filled icon buttons have higher visual impact and are best for high emphasis
 actions.
 
 ```html
-<md-filled-icon-button>check</md-filled-icon-button>
+<md-filled-icon-button>
+  <md-icon>check</md-icon>
+</md-filled-icon-button>
 ```
 
 ## Filled Tonal Icon Button
@@ -180,7 +196,9 @@ emphasis than an outline would give, such as a secondary action paired with a
 high emphasis action.
 
 ```html
-<md-filled-tonal-icon-button>check</md-filled-tonal-icon-button>
+<md-filled-tonal-icon-button>
+  <md-icon>check</md-icon>
+</md-filled-tonal-icon-button>
 ```
 
 ## Outlined Icon Button
@@ -194,7 +212,9 @@ button needs more emphasis than a standard icon button but less than a filled or
 filled tonal icon button.
 
 ```html
-<md-outlined-icon-button>check</md-outlined-icon-button>
+<md-outlined-icon-button>
+  <md-icon>check</md-icon>
+</md-outlined-icon-button>
 ```
 
 ## Theming
@@ -225,7 +245,9 @@ Token                                    | Default value
 }
 </style>
 
-<md-standard-icon-button></md-standard-icon-button>
+<md-standard-icon-button>
+  <md-icon>check</md-icon>
+</md-standard-icon-button>
 ```
 
 ### Filled Icon Button tokens
@@ -253,7 +275,9 @@ Token                                              | Default value
   --md-sys-color-primary: #dc362e;
 }
 </style>
-<md-filled-icon-button></md-filled-icon-button>
+<md-filled-icon-button>
+  <md-icon>check</md-icon>
+</md-filled-icon-button>
 ```
 
 ### Filled Tonal Icon Button tokens
@@ -278,7 +302,9 @@ Token                                                    | Default value
   --md-sys-color-secondary-container: #006A6A;
 }
 </style>
-<md-filled-tonal-icon-button></md-filled-tonal-icon-button>
+<md-filled-tonal-icon-button>
+  <md-icon>check</md-icon>
+</md-filled-tonal-icon-button>
 ```
 
 ### Outlined Icon Button tokens
@@ -305,5 +331,7 @@ Token                                                | Default value
   --md-sys-color-outline: #006A6A;
 }
 </style>
-<md-outlined-icon-button></md-outlined-icon-button>
+<md-outlined-icon-button>
+  <md-icon>check</md-icon>
+</md-outlined-icon-button>
 ```

@@ -5,7 +5,6 @@
  */
 
 import '../../focus/focus-ring.js';
-import '../../icon/icon.js';
 import '../../ripple/ripple.js';
 
 import {html, LitElement, nothing} from 'lit';
@@ -145,12 +144,12 @@ export class IconButton extends LitElement {
   }
 
   private renderIcon() {
-    return html`<md-icon class="icon"><slot></slot></md-icon>`;
+    return html`<span class="icon"><slot></slot></span>`;
   }
 
   private renderSelectedIcon() {
     // Use default slot as fallback to not require specifying multiple icons
-    return html`<md-icon class="icon icon--selected"><slot name="selectedIcon"><slot></slot></slot></md-icon>`;
+    return html`<span class="icon icon--selected"><slot name="selectedIcon"><slot></slot></slot></span>`;
   }
 
   private renderTouchTarget() {

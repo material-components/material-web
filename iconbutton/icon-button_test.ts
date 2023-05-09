@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import '../icon/icon.js';
 import './standard-icon-button.js';
 
 import {html} from 'lit';
@@ -14,18 +15,18 @@ import {IconButtonHarness} from './harness.js';
 
 const ICON_BUTTON_TEMPLATE = html`
   <md-standard-icon-button aria-label="Star">
-    star
+    <md-icon>star</md-icon>
   </md-standard-icon-button>
 `;
 const LINK_ICON_BUTTON_TEMPLATE = html`
   <md-standard-icon-button aria-label="Star" href="https://google.com">
-    star
+    <md-icon>star</md-icon>
   </md-standard-icon-button>
 `;
 const ICON_BUTTON_TOGGLE_TEMPLATE = html`
   <md-standard-icon-button toggle aria-label="Star">
-      <md-icon slot="onIcon">star</md-icon>
-      <md-icon slot="offIcon">star_border</md-icon>
+    <md-icon slot="onIcon">star</md-icon>
+    <md-icon slot="offIcon">star_border</md-icon>
   </md-standard-icon-button>
 `;
 

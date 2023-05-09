@@ -60,6 +60,9 @@
   }
 
   .icon {
+    height: var(--_icon-size);
+    width: var(--_icon-size);
+
     @include icon.theme(
       (
         size: var(--_icon-size),
