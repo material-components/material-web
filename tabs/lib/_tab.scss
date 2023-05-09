@@ -1,0 +1,289 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../../elevation/elevation';
+@use '../../focus/focus-ring';
+@use '../../ripple/ripple';
+@use '../../sass/string-ext';
+@use '../../sass/theme';
+@use '../../tokens';
+// go/keep-sorted end
+
+@mixin theme($tokens) {
+  $reference: tokens.md-comp-tab-values();
+  $tokens: theme.validate-theme($reference, $tokens);
+  $tokens: theme.create-theme-vars($tokens, '');
+  @include theme.emit-theme-vars($tokens);
+}
+
+@mixin styles() {
+  // contains tokens for all variants and applied where needed
+  $tokens: theme.create-theme-vars(tokens.md-comp-tab-values(), '');
+
+  :host {
+    // apply primary-tokens by default
+    $primary-prefix: 'primary-tab-';
+    @each $token, $value in $tokens {
+      @if string-ext.has-prefix($token, $primary-prefix) {
+        $token: string-ext.trim-prefix(#{$token}, $primary-prefix);
+        --_#{$token}: #{$value};
+      }
+    }
+
+    display: inline-flex;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    vertical-align: middle;
+
+    @include ripple.theme(
+      (
+        focus-color: var(--_focus-state-layer-color),
+        focus-opacity: var(--_focus-state-layer-opacity),
+        hover-color: var(--_hover-state-layer-color),
+        hover-opacity: var(--_hover-state-layer-opacity),
+        pressed-color: var(--_pressed-state-layer-color),
+        pressed-opacity: var(--_pressed-state-layer-opacity),
+      )
+    );
+
+    @include focus-ring.theme(
+      (
+        shape: 8px,
+        offset: -7px,
+      )
+    );
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    user-select: none;
+    -webkit-appearance: none;
+    vertical-align: middle;
+    background: transparent;
+    text-decoration: none;
+    width: 100%;
+    position: relative;
+    padding: 0;
+    margin: 0;
+    z-index: 0; // Ensure this is a stacking context so the indicator displays
+    font: var(--_label-text-type);
+    background-color: var(--_container-color);
+    border-bottom: var(--_divider-thickness) solid var(--_divider-color);
+    color: var(--_label-text-color);
+
+    &::-moz-focus-inner {
+      padding: 0;
+      border: 0;
+    }
+  }
+
+  .button,
+  md-ripple {
+    border-radius: var(--_container-shape);
+  }
+
+  .touch {
+    position: absolute;
+    top: 50%;
+    height: 48px;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+  }
+
+  .content {
+    position: relative;
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    // TODO (b/261201556) replace with spacing token
+    $_content-padding: 8px;
+    // tabs are naturally sized up to their max height.
+    max-height: calc(var(--_container-height) + 2 * $_content-padding);
+    padding: $_content-padding;
+    gap: 4px;
+  }
+
+  .content.inline-icon {
+    flex-direction: row;
+  }
+
+  .indicator {
+    position: absolute;
+    box-sizing: border-box;
+    z-index: -1;
+    transform-origin: bottom left;
+    background: var(--_active-indicator-color);
+    border-radius: var(--_active-indicator-shape);
+    height: var(--_active-indicator-height);
+    inset: auto 0 0 0;
+    // hidden unless the tab is selected
+    opacity: 0;
+  }
+
+  // unselected states
+  .button ::slotted([slot='icon']) {
+    display: inline-flex;
+    position: relative;
+    writing-mode: horizontal-tb;
+    fill: currentColor;
+    color: var(--_icon-color);
+    font-size: var(--_icon-size);
+    width: var(--_icon-size);
+    height: var(--_icon-size);
+  }
+
+  .button:hover {
+    color: var(--_hover-label-text-color);
+    cursor: pointer;
+  }
+
+  .button:hover ::slotted([slot='icon']) {
+    color: var(--_hover-icon-color);
+  }
+
+  .button:focus {
+    color: var(--_focus-label-text-color);
+  }
+
+  .button:focus ::slotted([slot='icon']) {
+    color: var(--_focus-icon-color);
+  }
+
+  .button:active {
+    color: var(--_pressed-label-text-color);
+    outline: none;
+  }
+
+  .button:active ::slotted([slot='icon']) {
+    color: var(--_pressed-icon-color);
+  }
+
+  // selected styling
+  :host([selected]) .indicator {
+    opacity: 1;
+  }
+  :host([selected]) .button {
+    color: var(--_active-label-text-color);
+    @include elevation.theme(
+      (
+        level: var(--_container-elevation),
+      )
+    );
+
+    @include ripple.theme(
+      (
+        focus-color: var(--_active-focus-state-layer-color),
+        focus-opacity: var(--_active-focus-state-layer-opacity),
+        hover-color: var(--_active-hover-state-layer-color),
+        hover-opacity: var(--_active-hover-state-layer-opacity),
+        pressed-color: var(--_active-pressed-state-layer-color),
+        pressed-opacity: var(--_active-pressed-state-layer-opacity),
+      )
+    );
+  }
+
+  :host([selected]) .button ::slotted([slot='icon']) {
+    color: var(--_active-icon-color);
+  }
+
+  // selected states
+  :host([selected]) .button:hover {
+    color: var(--_active-hover-label-text-color);
+  }
+
+  :host([selected]) .button:hover ::slotted([slot='icon']) {
+    color: var(--_active-hover-icon-color);
+  }
+
+  :host([selected]) .button:focus {
+    color: var(--_active-focus-label-text-color);
+  }
+
+  :host([selected]) .button:focus ::slotted([slot='icon']) {
+    color: var(--_active-focus-icon-color);
+  }
+
+  :host([selected]) .button:active {
+    color: var(--_active-pressed-label-text-color);
+  }
+
+  :host([selected]) .button:active ::slotted([slot='icon']) {
+    color: var(--_active-pressed-icon-color);
+  }
+
+  // TODO (b/261201556) implement disabled and high contrast mode
+  // styling in beta version.
+  // disabled state
+  :host([disabled]) {
+    cursor: default;
+    pointer-events: none;
+    // TODO (b/261201556) implement disabled styling in beta version.
+    opacity: 0.38;
+  }
+
+  // secondary
+  :host([variant~='secondary']) {
+    // apply secondary-tab tokens
+    $secondary-prefix: 'secondary-tab-';
+    @each $token, $value in $tokens {
+      @if string-ext.has-prefix($token, $secondary-prefix) {
+        $token: string-ext.trim-prefix(#{$token}, $secondary-prefix);
+        --_#{$token}: #{$value};
+      }
+    }
+  }
+
+  :host([variant~='secondary']) .content {
+    width: 100%;
+  }
+
+  :host([variant~='secondary']) .indicator {
+    min-width: 100%;
+  }
+
+  // vertical (no tokens for vertical as yet)
+  :host([variant~='vertical']) {
+    flex: 0;
+  }
+
+  :host([variant~='vertical']) .button {
+    width: 100%;
+    flex-direction: row;
+    border-bottom: none;
+    border-right: var(--_divider-thickness) solid var(--_divider-color);
+  }
+
+  :host([variant~='vertical']) .content {
+    width: 100%;
+  }
+
+  :host([variant~='vertical']) .indicator {
+    height: 100%;
+    min-width: var(--_active-indicator-height);
+    inset: 0 0 0 auto;
+  }
+
+  :host([variant~='vertical'][variant~='primary']) {
+    --_active-indicator-shape: 9999px 0 0 9999px;
+  }
+
+  :host,
+  ::slotted(*) {
+    white-space: nowrap;
+  }
+}

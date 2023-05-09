@@ -1,0 +1,44 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Note, there are currently no tokens for tabs. Instead, tabs are entirely
+// themed via primary/secondary tab.
+@mixin styles() {
+  :host {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    position: relative;
+  }
+
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host([variant~='vertical']:not([hidden])) {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0px;
+  }
+
+  :host::-webkit-scrollbar {
+    display: none;
+  }
+
+  ::slotted(*) {
+    flex: 1;
+  }
+
+  // draw selected on top so its indicator can be transitioned from the
+  // previously selected tab, on top of it
+  ::slotted([selected]) {
+    z-index: 1;
+  }
+}

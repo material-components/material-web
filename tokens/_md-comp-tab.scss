@@ -1,0 +1,292 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use './md-comp-divider';
+@use './md-sys-color';
+@use './md-sys-elevation';
+@use './md-sys-shape';
+@use './md-sys-state';
+@use './md-sys-typescale';
+@use './v0_172/md-comp-primary-navigation-tab';
+@use './v0_172/md-comp-secondary-navigation-tab';
+@use './values';
+// go/keep-sorted end
+
+$_default: (
+  'md-sys-color': md-sys-color.values-light(),
+  'md-sys-elevation': md-sys-elevation.values(),
+  'md-sys-shape': md-sys-shape.values(),
+  'md-sys-state': md-sys-state.values(),
+  'md-sys-typescale': md-sys-typescale.values(),
+  'md-comp-divider': md-comp-divider.values(),
+);
+
+$supported-tokens: (
+  // go/keep-sorted start
+  'primary-tab-active-focus-icon-color',
+  'primary-tab-active-focus-label-text-color',
+  'primary-tab-active-focus-state-layer-color',
+  'primary-tab-active-focus-state-layer-opacity',
+  'primary-tab-active-hover-icon-color',
+  'primary-tab-active-hover-label-text-color',
+  'primary-tab-active-hover-state-layer-color',
+  'primary-tab-active-hover-state-layer-opacity',
+  'primary-tab-active-icon-color',
+  'primary-tab-active-indicator-color',
+  'primary-tab-active-indicator-height',
+  'primary-tab-active-indicator-shape',
+  'primary-tab-active-label-text-color',
+  'primary-tab-active-pressed-icon-color',
+  'primary-tab-active-pressed-label-text-color',
+  'primary-tab-active-pressed-state-layer-color',
+  'primary-tab-active-pressed-state-layer-opacity',
+  'primary-tab-container-color',
+  'primary-tab-container-elevation',
+  'primary-tab-container-height',
+  'primary-tab-container-shape',
+  'primary-tab-divider-color',
+  'primary-tab-divider-thickness',
+  'primary-tab-focus-icon-color',
+  'primary-tab-focus-label-text-color',
+  'primary-tab-focus-state-layer-color',
+  'primary-tab-focus-state-layer-opacity',
+  'primary-tab-hover-icon-color',
+  'primary-tab-hover-label-text-color',
+  'primary-tab-hover-state-layer-color',
+  'primary-tab-hover-state-layer-opacity',
+  'primary-tab-icon-color',
+  'primary-tab-icon-size',
+  'primary-tab-label-text-color',
+  'primary-tab-label-text-type',
+  'primary-tab-pressed-icon-color',
+  'primary-tab-pressed-label-text-color',
+  'primary-tab-pressed-state-layer-color',
+  'primary-tab-pressed-state-layer-opacity',
+  'secondary-tab-active-focus-icon-color',
+  'secondary-tab-active-focus-label-text-color',
+  'secondary-tab-active-focus-state-layer-color',
+  'secondary-tab-active-focus-state-layer-opacity',
+  'secondary-tab-active-hover-icon-color',
+  'secondary-tab-active-hover-label-text-color',
+  'secondary-tab-active-hover-state-layer-color',
+  'secondary-tab-active-hover-state-layer-opacity',
+  'secondary-tab-active-icon-color',
+  'secondary-tab-active-indicator-color',
+  'secondary-tab-active-indicator-height',
+  'secondary-tab-active-indicator-shape',
+  'secondary-tab-active-label-text-color',
+  'secondary-tab-active-pressed-icon-color',
+  'secondary-tab-active-pressed-label-text-color',
+  'secondary-tab-active-pressed-state-layer-color',
+  'secondary-tab-active-pressed-state-layer-opacity',
+  'secondary-tab-container-color',
+  'secondary-tab-container-elevation',
+  'secondary-tab-container-height',
+  'secondary-tab-container-shape',
+  'secondary-tab-divider-color',
+  'secondary-tab-divider-thickness',
+  'secondary-tab-focus-icon-color',
+  'secondary-tab-focus-label-text-color',
+  'secondary-tab-focus-state-layer-color',
+  'secondary-tab-focus-state-layer-opacity',
+  'secondary-tab-hover-icon-color',
+  'secondary-tab-hover-label-text-color',
+  'secondary-tab-hover-state-layer-color',
+  'secondary-tab-hover-state-layer-opacity',
+  'secondary-tab-icon-color',
+  'secondary-tab-icon-size',
+  'secondary-tab-label-text-color',
+  'secondary-tab-label-text-type',
+  'secondary-tab-pressed-icon-color',
+  'secondary-tab-pressed-label-text-color',
+  'secondary-tab-pressed-state-layer-color',
+  'secondary-tab-pressed-state-layer-opacity',
+  // go/keep-sorted end
+);
+
+$unsupported-tokens: (
+  // include an icon and the size will adjust;
+  // height is 48 and it's 64 with icon
+  'primary-tab-with-icon-and-label-text-container-height',
+  'primary-tab-with-label-text-label-text-font',
+  'primary-tab-with-label-text-label-text-line-height',
+  'primary-tab-with-label-text-label-text-size',
+  'primary-tab-with-label-text-label-text-tracking',
+  'primary-tab-with-label-text-label-text-weight',
+  'secondary-tab-container-shadow-color',
+  'secondary-tab-label-text-font',
+  'secondary-tab-label-text-line-height',
+  'secondary-tab-label-text-size',
+  'secondary-tab-label-text-tracking',
+  'secondary-tab-label-text-weight'
+);
+
+// Note, this combines the raw primary and secondary tab variant tokens
+// into a single set prefixed with `primary-tab` or `secondary-tab`.
+// Tokens are normalized between the variants, added or removed and renamed
+// as needed.
+@function values($deps: $_default, $exclude-hardcoded-values: false) {
+  // prepare token values by normalizing and combinding primary/secondary
+  // generated tokens *before* fixing up names and limiting to supported tokens.
+  // 1. for primary
+  //   a. add divider/text tokens
+  //   b. prefix with `primary-tab`
+  // 2. for secondary
+  //   a. add divider/text tokens
+  //   b. add missing secondary tokens to match primary
+  //   c. prefix with `secondary-tab`
+
+  $primary-tokens: md-comp-primary-navigation-tab.values(
+    $deps,
+    $exclude-hardcoded-values
+  );
+  $primary-tokens: _add-missing-tokens($primary-tokens, $deps);
+  $primary-tokens: _prefix-tokens($primary-tokens, 'primary-tab');
+  $secondary-tokens: md-comp-secondary-navigation-tab.values(
+    $deps,
+    $exclude-hardcoded-values
+  );
+  $secondary-tokens: _add-missing-tokens($secondary-tokens, $deps);
+  $secondary-tokens: _add-missing-secondary-tokens($secondary-tokens);
+  $secondary-tokens: _prefix-tokens($secondary-tokens, 'secondary-tab');
+
+  $base-tokens: map.merge($primary-tokens, $secondary-tokens);
+
+  // now refine the normalized generated tokens to only renamed/supported tokens.
+  $tokens: values.validate(
+    $base-tokens,
+    $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens,
+    $renamed-tokens: (
+      // rename primary inactive-
+      'primary-tab-inactive-focus-state-layer-color':
+        'primary-tab-focus-state-layer-color',
+      'primary-tab-inactive-focus-state-layer-opacity':
+        'primary-tab-focus-state-layer-opacity',
+      'primary-tab-inactive-hover-state-layer-color':
+        'primary-tab-hover-state-layer-color',
+      'primary-tab-inactive-hover-state-layer-opacity':
+        'primary-tab-hover-state-layer-opacity',
+      'primary-tab-inactive-pressed-state-layer-color':
+        'primary-tab-pressed-state-layer-color',
+      'primary-tab-inactive-pressed-state-layer-opacity':
+        'primary-tab-pressed-state-layer-opacity',
+      // rename primary with-icon- and inactive-
+      'primary-tab-with-icon-active-focus-icon-color':
+        'primary-tab-active-focus-icon-color',
+      'primary-tab-with-icon-active-hover-icon-color':
+        'primary-tab-active-hover-icon-color',
+      'primary-tab-with-icon-active-icon-color': 'primary-tab-active-icon-color',
+      'primary-tab-with-icon-active-pressed-icon-color':
+        'primary-tab-active-pressed-icon-color',
+      'primary-tab-with-icon-icon-size': 'primary-tab-icon-size',
+      'primary-tab-with-icon-inactive-focus-icon-color':
+        'primary-tab-focus-icon-color',
+      'primary-tab-with-icon-inactive-hover-icon-color':
+        'primary-tab-hover-icon-color',
+      'primary-tab-with-icon-inactive-icon-color': 'primary-tab-icon-color',
+      'primary-tab-with-icon-inactive-pressed-icon-color':
+        'primary-tab-pressed-icon-color',
+      // rename primary with-label-text- and inactive-
+      'primary-tab-with-label-text-active-focus-label-text-color':
+        'primary-tab-active-focus-label-text-color',
+      'primary-tab-with-label-text-active-hover-label-text-color':
+        'primary-tab-active-hover-label-text-color',
+      'primary-tab-with-label-text-active-label-text-color':
+        'primary-tab-active-label-text-color',
+      'primary-tab-with-label-text-active-pressed-label-text-color':
+        'primary-tab-active-pressed-label-text-color',
+      'primary-tab-with-label-text-inactive-focus-label-text-color':
+        'primary-tab-focus-label-text-color',
+      'primary-tab-with-label-text-inactive-hover-label-text-color':
+        'primary-tab-hover-label-text-color',
+      'primary-tab-with-label-text-inactive-label-text-color':
+        'primary-tab-label-text-color',
+      'primary-tab-with-label-text-inactive-pressed-label-text-color':
+        'primary-tab-pressed-label-text-color',
+      'primary-tab-with-label-text-label-text-type':
+        'primary-tab-label-text-type',
+      // rename secondary with-icon- and inactive-
+      'secondary-tab-inactive-label-text-color':
+        'secondary-tab-label-text-color',
+      'secondary-tab-with-icon-active-icon-color':
+        'secondary-tab-active-icon-color',
+      'secondary-tab-with-icon-focus-icon-color':
+        'secondary-tab-focus-icon-color',
+      'secondary-tab-with-icon-hover-icon-color':
+        'secondary-tab-hover-icon-color',
+      'secondary-tab-with-icon-icon-size': 'secondary-tab-icon-size',
+      'secondary-tab-with-icon-inactive-icon-color': 'secondary-tab-icon-color',
+      'secondary-tab-with-icon-pressed-icon-color':
+        'secondary-tab-pressed-icon-color'
+    )
+  );
+
+  @return $tokens;
+}
+
+@function _prefix-tokens($tokens, $prefix: '') {
+  @each $key, $value in $tokens {
+    $tokens: map.remove($tokens, $key);
+    $key: '#{$prefix}-#{$key}';
+    $tokens: map.set($tokens, $key, $value);
+  }
+  @return $tokens;
+}
+
+// add tokens for divider / label-text
+@function _add-missing-tokens($tokens, $deps) {
+  $divider-tokens: map.get($deps, 'md-comp-divider');
+  @each $key, $value in $divider-tokens {
+    $key: 'divider-#{$key}';
+    $tokens: map.set($tokens, $key, $value);
+  }
+
+  // TODO(b/271876162): remove when tokens compiler emits typescale tokens
+  $tokens: map.merge(
+    $tokens,
+    (
+      'label-text-type': map.get($deps, 'md-sys-typescale', 'title-small'),
+    )
+  );
+  @return $tokens;
+}
+
+// add missing secondary tokens to match primary variant.
+@function _add-missing-secondary-tokens($tokens) {
+  $tokens: map.merge(
+    $tokens,
+    (
+      'active-focus-icon-color': map.get($tokens, 'icon-color'),
+      'active-focus-label-text-color':
+        map.get($tokens, 'active-label-text-color'),
+      'active-focus-state-layer-color':
+        map.get($tokens, 'focus-state-layer-color'),
+      'active-focus-state-layer-opacity':
+        map.get($tokens, 'focus-state-layer-opacity'),
+      'active-hover-icon-color': map.get($tokens, 'icon-color'),
+      'active-hover-label-text-color':
+        map.get($tokens, 'active-label-text-color'),
+      'active-hover-state-layer-color':
+        map.get($tokens, 'hover-state-layer-color'),
+      'active-hover-state-layer-opacity':
+        map.get($tokens, 'hover-state-layer-opacity'),
+      'active-icon-color': map.get($tokens, 'icon-color'),
+      'active-indicator-shape': 0,
+      'active-pressed-icon-color': map.get($tokens, 'icon-color'),
+      'active-pressed-label-text-color':
+        map.get($tokens, 'active-label-text-color'),
+      'active-pressed-state-layer-color':
+        map.get($tokens, 'pressed-state-layer-color'),
+      'active-pressed-state-layer-opacity':
+        map.get($tokens, 'pressed-state-layer-opacity'),
+    )
+  );
+  @return $tokens;
+}
