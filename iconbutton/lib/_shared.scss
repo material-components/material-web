@@ -6,9 +6,6 @@
 // This file contains common static styles that are shared across icon button
 // variants.
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 // go/keep-sorted start
 @use 'sass:map';
 // go/keep-sorted end
@@ -43,7 +40,7 @@
     pointer-events: none;
   }
 
-  .md3-icon-button {
+  .icon-button {
     align-items: center;
     border: none;
     box-sizing: border-box;
@@ -62,7 +59,7 @@
     border-end-end-radius: var(--_container-shape-end-end);
   }
 
-  .md3-icon-button__icon {
+  .icon {
     @include icon.theme(
       (
         size: var(--_icon-size),
@@ -80,22 +77,22 @@
     border-end-end-radius: var(--_container-shape-end-end);
   }
 
-  .md3-icon-button--flip-icon .md3-icon-button__icon {
+  .flip-icon .icon {
     transform: scaleX(-1);
   }
 
-  .md3-icon-button__icon {
+  .icon {
     display: inline-flex;
   }
 
-  .md3-icon-button__link {
+  .link {
     height: 100%;
     outline: none;
     position: absolute;
     width: 100%;
   }
 
-  .md3-icon-button__touch {
+  .touch {
     @include touch-target.touch-target;
   }
 }

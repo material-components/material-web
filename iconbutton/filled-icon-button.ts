@@ -38,8 +38,8 @@ export class MdFilledIconButton extends IconButton {
   protected override getRenderClasses() {
     return {
       ...super.getRenderClasses(),
-      'md3-icon-button--filled': true,
-      'md3-icon-button--toggle-filled': this.toggle,
+      'filled': true,
+      'toggle-filled': this.toggle,
     };
   }
 }

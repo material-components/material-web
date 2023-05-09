@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 // go/keep-sorted start
 @use 'sass:list';
 @use 'sass:map';
@@ -69,7 +66,7 @@
     );
   }
 
-  .md3-icon-button--outlined {
+  .outlined {
     background-color: transparent;
     color: var(--_unselected-icon-color);
 
@@ -111,7 +108,7 @@
     }
   }
 
-  .md3-icon-button--outlined::before {
+  .outlined::before {
     block-size: 100%;
     border-style: solid;
     border-radius: inherit;
@@ -124,12 +121,12 @@
   }
 
   // Selected toggle buttons have no outline.
-  .md3-icon-button--outlined.md3-icon-button--selected::before {
+  .outlined.selected::before {
     border-width: 0;
   }
 
   // Selected icon button toggle.
-  .md3-icon-button--selected {
+  .selected {
     &:not(:disabled) {
       background-color: var(--_selected-container-color);
       color: var(--_selected-icon-color);
@@ -165,7 +162,7 @@
 
   @media (forced-colors: active) {
     // Selected button in HCM has an outline.
-    .md3-icon-button--selected {
+    .selected {
       &::before {
         border-color: var(--_unselected-outline-color);
         border-width: var(--_unselected-outline-width);

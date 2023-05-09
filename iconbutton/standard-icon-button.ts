@@ -38,7 +38,7 @@ export class MdStandardIconButton extends IconButton {
   protected override getRenderClasses() {
     return {
       ...super.getRenderClasses(),
-      'md3-icon-button--standard': true,
+      'standard': true,
     };
   }
 }

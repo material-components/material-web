@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 // go/keep-sorted start
 @use 'sass:list';
 @use 'sass:map';
@@ -68,7 +65,7 @@
     );
   }
 
-  .md3-icon-button {
+  .icon-button {
     background-color: var(--_container-color);
     color: var(--_icon-color);
 
@@ -101,7 +98,7 @@
     );
   }
 
-  .md3-icon-button--toggle-filled {
+  .toggle-filled {
     &:not(:disabled) {
       background-color: var(--_unselected-container-color);
       color: var(--_toggle-unselected-icon-color);
@@ -128,7 +125,7 @@
     );
   }
 
-  .md3-icon-button--selected {
+  .selected {
     &:not(:disabled) {
       background-color: var(--_selected-container-color);
       color: var(--_toggle-selected-icon-color);

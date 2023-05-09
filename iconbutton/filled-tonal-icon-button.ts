@@ -38,8 +38,8 @@ export class MdFilledTonalIconButton extends IconButton {
   protected override getRenderClasses() {
     return {
       ...super.getRenderClasses(),
-      'md3-icon-button--filled-tonal': true,
-      'md3-icon-button--toggle-filled-tonal': this.toggle,
+      'filled-tonal': true,
+      'toggle-filled-tonal': this.toggle,
     };
   }
 }

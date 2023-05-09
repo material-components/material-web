@@ -38,7 +38,7 @@ export class MdOutlinedIconButton extends IconButton {
   protected override getRenderClasses() {
     return {
       ...super.getRenderClasses(),
-      'md3-icon-button--outlined': true,
+      'outlined': true,
     };
   }
 }
