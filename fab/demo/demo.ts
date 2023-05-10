@@ -11,7 +11,7 @@ import {KnobTypesToKnobs, MaterialCollection, materialInitsToStoryInits, setUpDe
 import {FabSize, Variant} from '@material/web/fab/fab.js';
 import {boolInput, Knob, selectDropdown, textInput} from './index.js';
 
-import {stories, StoryKnobs} from './stories.js.js';
+import {stories, StoryKnobs} from './stories.js';
 
 const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('Fab', [
   new Knob('icon', {defaultValue: 'edit', ui: textInput()}),

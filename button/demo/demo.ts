@@ -10,7 +10,7 @@ import './material-collection.js';
 import {KnobTypesToKnobs, MaterialCollection, materialInitsToStoryInits, setUpDemo} from './material-collection.js';
 import {boolInput, Knob, textInput} from './index.js';
 
-import {stories, StoryKnobs} from './stories.js.js';
+import {stories, StoryKnobs} from './stories.js';
 
 const collection =
     new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('Button', [

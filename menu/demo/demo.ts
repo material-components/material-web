@@ -11,7 +11,7 @@ import {KnobTypesToKnobs, MaterialCollection, materialInitsToStoryInits, setUpDe
 import {Corner, DefaultFocusState} from '@material/web/menu/menu.js';
 import {boolInput, Knob, numberInput, selectDropdown, textInput} from './index.js';
 
-import {stories, StoryKnobs} from './stories.js.js';
+import {stories, StoryKnobs} from './stories.js';
 
 const collection =
     new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('Menu', [

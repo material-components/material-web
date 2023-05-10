@@ -10,7 +10,7 @@ import './material-collection.js';
 import {KnobTypesToKnobs, MaterialCollection, materialInitsToStoryInits, setUpDemo, title} from './material-collection.js';
 import {boolInput, Knob, numberInput, textInput} from './index.js';
 
-import {stories, StoryKnobs} from './stories.js.js';
+import {stories, StoryKnobs} from './stories.js';
 
 /**
  * User avatar as a dataurl.
