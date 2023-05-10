@@ -10,7 +10,7 @@ import './material-collection.js';
 import {KnobTypesToKnobs, MaterialCollection, materialInitsToStoryInits, setUpDemo} from './material-collection.js';
 import {boolInput, Knob, numberInput} from './index.js';
 
-import {stories, StoryKnobs} from './stories.js.js';
+import {stories, StoryKnobs} from './stories.js';
 
 function cssWire<T = string>(prop: string, unit = '') {
   return (knob: Knob<T>) => {

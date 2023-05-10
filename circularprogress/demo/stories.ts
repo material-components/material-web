@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../circular-progress.js';
 import '@material/web/button/tonal-button.js';
 import '@material/web/iconbutton/standard-icon-button.js';
 import '@material/web/circularprogress/circular-progress.js';
