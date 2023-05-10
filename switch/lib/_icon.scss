@@ -44,23 +44,25 @@ $_easing-standard: map.get($_md-sys-motion, easing-standard);
     transform: rotate(-45deg);
   }
 
-  .switch--selected .icon {
+  .icon--on {
     width: var(--_selected-icon-size);
     height: var(--_selected-icon-size);
     fill: var(--_selected-icon-color);
   }
 
-  .switch--unselected .icon {
+  .icon--off {
     width: var(--_unselected-icon-size);
     height: var(--_unselected-icon-size);
     fill: var(--_unselected-icon-color);
   }
 
-  .switch--selected:disabled .icon {
+  .switch--selected:disabled .icon--on {
     fill: var(--_disabled-selected-icon-color);
+    opacity: var(--_disabled-selected-icon-opacity);
   }
 
-  .switch--unselected:disabled .icon {
+  .switch--unselected:disabled .icon--off {
     fill: var(--_disabled-unselected-icon-color);
+    opacity: var(--_disabled-unselected-icon-opacity);
   }
 }

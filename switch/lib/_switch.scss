@@ -205,15 +205,6 @@ $_forced-colors-theme: (
       (
         color-key: disabled-unselected-track-outline-color,
         opacity-key: disabled-track-opacity
-      ),
-      // Disabled Icon
-      (
-          color-key: disabled-selected-icon-color,
-          opacity-key: disabled-selected-icon-opacity
-        ),
-      (
-        color-key: disabled-unselected-icon-color,
-        opacity-key: disabled-unselected-icon-opacity
       )
     )
   );
