@@ -40,7 +40,7 @@ Checkbox                      | ✅     | ✅    | ❌
 Chips                         | 🟡     | ❌    | ❌
 Dialog                        | ✅     | ✅    | ❌
 Divider                       | ✅     | ✅    | 🟡
-Elevation                     | ✅     | ✅    | 🟡
+Elevation                     | ✅     | ✅    | ✅
 Focus ring                    | ✅     | ✅    | 🟡
 Field                         | ✅     | ✅    | 🟡
 Icon                          | ✅     | ✅    | ❌
