@@ -98,6 +98,10 @@
     );
   }
 
+  .icon-button:disabled .icon {
+    opacity: var(--_disabled-icon-opacity);
+  }
+
   .toggle-filled {
     &:not(:disabled) {
       background-color: var(--_unselected-container-color);

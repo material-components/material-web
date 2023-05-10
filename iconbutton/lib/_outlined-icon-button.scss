@@ -108,6 +108,10 @@
     }
   }
 
+  .outlined:disabled .icon {
+    opacity: var(--_disabled-icon-opacity);
+  }
+
   .outlined::before {
     block-size: 100%;
     border-style: solid;

@@ -100,6 +100,10 @@ $_custom-property-prefix: 'filled-tonal-icon-button';
     );
   }
 
+  .icon-button:disabled .icon {
+    opacity: var(--_disabled-icon-opacity);
+  }
+
   .toggle-filled-tonal {
     &:not(:disabled) {
       background-color: var(--_unselected-container-color);

@@ -110,7 +110,7 @@
   // changes, so the opacity value is null), use the default opacity value.
   // Otherwise, the color is not flattened, meaning that the color would
   // be applied without any opacity, which is incorrect.
-  $opacity-keys: [ 'disabled-container-opacity', 'disabled-icon-opacity',
+  $opacity-keys: [ 'disabled-container-opacity',
     'disabled-selected-container-opacity' ];
 
   @each $opacity-key in $opacity-keys {
@@ -153,7 +153,6 @@
         color-key: 'disabled-container-color',
         opacity-key: 'disabled-container-opacity'
       ),
-      (color-key: 'disabled-icon-color', opacity-key: 'disabled-icon-opacity'),
       (
         color-key: 'disabled-selected-container-color',
         opacity-key: 'disabled-selected-container-opacity'
