@@ -25,5 +25,8 @@
     "strictNullChecks": false,
     "target": "es2020",
     "types": ["lit", "jasmine"]
-  }
+  },
+  "exclude": [
+    "*/demo"
+  ]
 }
