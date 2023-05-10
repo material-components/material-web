@@ -28,10 +28,10 @@ $_easing-standard: map.get($_md-sys-motion, easing-standard);
     transition: fill 67ms linear, opacity 33ms linear,
       transform 167ms $_easing-standard;
     opacity: 0;
+  }
 
-    .switch:disabled & {
-      transition: none;
-    }
+  .switch:disabled .icon {
+    transition: none;
   }
 
   .switch--selected .icon--on,
@@ -44,25 +44,23 @@ $_easing-standard: map.get($_md-sys-motion, easing-standard);
     transform: rotate(-45deg);
   }
 
-  .icon {
-    .switch--selected & {
-      width: var(--_selected-icon-size);
-      height: var(--_selected-icon-size);
-      fill: var(--_selected-icon-color);
-    }
+  .switch--selected .icon {
+    width: var(--_selected-icon-size);
+    height: var(--_selected-icon-size);
+    fill: var(--_selected-icon-color);
+  }
 
-    .switch--unselected & {
-      width: var(--_unselected-icon-size);
-      height: var(--_unselected-icon-size);
-      fill: var(--_unselected-icon-color);
-    }
+  .switch--unselected .icon {
+    width: var(--_unselected-icon-size);
+    height: var(--_unselected-icon-size);
+    fill: var(--_unselected-icon-color);
+  }
 
-    .switch--selected:disabled & {
-      fill: var(--_disabled-selected-icon-color);
-    }
+  .switch--selected:disabled .icon {
+    fill: var(--_disabled-selected-icon-color);
+  }
 
-    .switch--unselected:disabled & {
-      fill: var(--_disabled-unselected-icon-color);
-    }
+  .switch--unselected:disabled .icon {
+    fill: var(--_disabled-unselected-icon-color);
   }
 }

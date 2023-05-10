@@ -118,9 +118,7 @@ $_forced-colors-theme: (
     outline: none;
     vertical-align: top;
     -webkit-tap-highlight-color: transparent;
-  }
 
-  md-focus-ring {
     @include focus-ring.theme(
       (
         'shape-start-start': var(--_track-shape-start-start),
@@ -164,18 +162,17 @@ $_forced-colors-theme: (
   }
 
   // Disabled - Track
-  .track {
-    .switch:disabled & {
-      background-color: transparent;
-      border-color: transparent;
+  .switch:disabled .track {
+    background-color: transparent;
+    border-color: transparent;
+  }
 
-      &::before {
-        background-clip: content-box;
-      }
-    }
-    .switch--selected:disabled & {
-      background-clip: border-box;
-    }
+  .switch:disabled .track::before {
+    background-clip: content-box;
+  }
+
+  .switch--selected:disabled .track {
+    background-clip: border-box;
   }
 
   @include track.styles();

@@ -23,73 +23,71 @@
 
     transition: background-color 67ms linear;
     background-color: var(--_selected-track-color);
+  }
+  .switch:disabled .track {
+    transition: none;
+  }
 
-    .switch:disabled & {
-      transition: none;
-    }
+  .switch--selected:hover .track {
+    background-color: var(--_selected-hover-track-color);
+  }
 
-    .switch--selected:hover & {
-      background-color: var(--_selected-hover-track-color);
-    }
+  .switch--selected:focus-visible .track {
+    background-color: var(--_selected-focus-track-color);
+  }
 
-    .switch--selected:focus-visible & {
-      background-color: var(--_selected-focus-track-color);
-    }
+  .switch--selected:active .track {
+    background-color: var(--_selected-pressed-track-color);
+  }
 
-    .switch--selected:active & {
-      background-color: var(--_selected-pressed-track-color);
-    }
+  .switch--selected:disabled .track {
+    background-color: var(--_disabled-selected-track-color);
+  }
 
-    .switch--selected:disabled & {
-      background-color: var(--_disabled-selected-track-color);
-    }
+  .track::before {
+    content: '';
+    display: flex;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: inherit;
+    box-sizing: border-box;
+    border-style: solid;
 
-    &::before {
-      content: '';
-      display: flex;
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      border-radius: inherit;
-      box-sizing: border-box;
-      border-style: solid;
+    transition-property: opacity, background-color;
+    transition-timing-function: linear;
+    transition-duration: 67ms;
 
-      transition-property: opacity, background-color;
-      transition-timing-function: linear;
-      transition-duration: 67ms;
+    border-width: var(--_track-outline-width);
+    background-color: var(--_unselected-track-color);
+    border-color: var(--_unselected-track-outline-color);
+  }
+  .switch:disabled .track::before {
+    transition: none;
+  }
 
-      border-width: var(--_track-outline-width);
-      background-color: var(--_unselected-track-color);
-      border-color: var(--_unselected-track-outline-color);
+  .switch--selected .track::before {
+    // When selected, turn off ::before
+    opacity: 0;
+  }
 
-      .switch:disabled & {
-        transition: none;
-      }
+  .switch--unselected:hover .track::before {
+    background-color: var(--_unselected-hover-track-color);
+    border-color: var(--_unselected-hover-track-outline-color);
+  }
 
-      .switch--selected & {
-        // When selected, turn off ::before
-        opacity: 0;
-      }
+  .switch--unselected:focus-visible .track::before {
+    background-color: var(--_unselected-focus-track-color);
+    border-color: var(--_unselected-focus-track-outline-color);
+  }
 
-      .switch--unselected:hover & {
-        background-color: var(--_unselected-hover-track-color);
-        border-color: var(--_unselected-hover-track-outline-color);
-      }
+  .switch--unselected:active .track::before {
+    background-color: var(--_unselected-pressed-track-color);
+    border-color: var(--_unselected-pressed-track-outline-color);
+  }
 
-      .switch--unselected:focus-visible & {
-        background-color: var(--_unselected-focus-track-color);
-        border-color: var(--_unselected-focus-track-outline-color);
-      }
-
-      .switch--unselected:active & {
-        background-color: var(--_unselected-pressed-track-color);
-        border-color: var(--_unselected-pressed-track-outline-color);
-      }
-
-      .switch--unselected:disabled & {
-        background-color: var(--_disabled-unselected-track-color);
-        border-color: var(--_disabled-unselected-track-outline-color);
-      }
-    }
+  .switch--unselected:disabled .track::before {
+    background-color: var(--_disabled-unselected-track-color);
+    border-color: var(--_disabled-unselected-track-outline-color);
   }
 }
