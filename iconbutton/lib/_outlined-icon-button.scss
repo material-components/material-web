@@ -9,7 +9,6 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../ripple/ripple';
-@use '../../sass/color';
 @use '../../tokens';
 @use './shared';
 // go/keep-sorted end
@@ -25,8 +24,6 @@
     )
   );
 
-  $tokens: shared.flatten-disabled-colors($tokens, $variant: 'outlined');
-
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
       @error 'Token `#{$token}` is not a supported token.';
@@ -40,7 +37,6 @@
 
 @mixin styles() {
   $tokens: tokens.md-comp-outlined-icon-button-values();
-  $tokens: shared.flatten-disabled-colors($tokens, $variant: 'outlined');
 
   :host {
     @each $token, $value in $tokens {
@@ -122,6 +118,7 @@
     inset: 0;
     pointer-events: none;
     position: absolute;
+    z-index: -1; // place behind content
   }
 
   // Selected toggle buttons have no outline.
@@ -132,7 +129,6 @@
   // Selected icon button toggle.
   .selected {
     &:not(:disabled) {
-      background-color: var(--_selected-container-color);
       color: var(--_selected-icon-color);
 
       &:hover {
@@ -148,10 +144,6 @@
       }
     }
 
-    &:disabled {
-      background-color: var(--_disabled-selected-container-color);
-    }
-
     @include ripple.theme(
       (
         focus-color: var(--_selected-focus-state-layer-color),
@@ -162,6 +154,15 @@
         pressed-opacity: var(--_pressed-state-layer-opacity),
       )
     );
+  }
+
+  .selected:not(:disabled)::before {
+    background-color: var(--_selected-container-color);
+  }
+
+  .selected:disabled::before {
+    background-color: var(--_disabled-selected-container-color);
+    opacity: var(--_disabled-selected-container-opacity);
   }
 
   @media (forced-colors: active) {

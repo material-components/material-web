@@ -11,12 +11,10 @@
 @use '../../focus/focus-ring';
 @use '../../ripple/ripple';
 @use '../../tokens';
-@use './shared';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
   $supported-tokens: tokens.$md-comp-icon-button-supported-tokens;
-  $tokens: shared.flatten-disabled-colors($tokens);
 
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
@@ -31,7 +29,6 @@
 
 @mixin styles() {
   $tokens: tokens.md-comp-icon-button-values();
-  $tokens: shared.flatten-disabled-colors($tokens);
 
   :host {
     @each $token, $value in $tokens {

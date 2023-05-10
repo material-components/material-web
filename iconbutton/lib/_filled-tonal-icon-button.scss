@@ -10,7 +10,6 @@
 // go/keep-sorted start
 @use '../../ripple/ripple';
 @use '../../tokens';
-@use './shared';
 // go/keep-sorted end
 
 $_custom-property-prefix: 'filled-tonal-icon-button';
@@ -26,8 +25,6 @@ $_custom-property-prefix: 'filled-tonal-icon-button';
     )
   );
 
-  $tokens: shared.flatten-disabled-colors($tokens, $variant: 'filled-tonal');
-
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
       @error 'Token `#{$token}` is not a supported token.';
@@ -41,7 +38,6 @@ $_custom-property-prefix: 'filled-tonal-icon-button';
 
 @mixin styles() {
   $tokens: tokens.md-comp-filled-tonal-icon-button-values();
-  $tokens: shared.flatten-disabled-colors($tokens, $variant: 'filled-tonal');
 
   :host {
     @each $token, $value in $tokens {
@@ -68,7 +64,6 @@ $_custom-property-prefix: 'filled-tonal-icon-button';
   }
 
   .icon-button {
-    background-color: var(--_container-color);
     color: var(--_icon-color);
 
     &:hover {
@@ -84,7 +79,6 @@ $_custom-property-prefix: 'filled-tonal-icon-button';
     }
 
     &:disabled {
-      background-color: var(--_disabled-container-color);
       color: var(--_disabled-icon-color);
     }
 
@@ -100,13 +94,27 @@ $_custom-property-prefix: 'filled-tonal-icon-button';
     );
   }
 
+  .icon-button::before {
+    // Background color, separate node for opacity changes
+    background-color: var(--_container-color);
+    border-radius: inherit;
+    content: '';
+    inset: 0;
+    position: absolute;
+    z-index: -1; // place behind content
+  }
+
+  .icon-button:disabled::before {
+    background-color: var(--_disabled-container-color);
+    opacity: var(--_disabled-container-opacity);
+  }
+
   .icon-button:disabled .icon {
     opacity: var(--_disabled-icon-opacity);
   }
 
   .toggle-filled-tonal {
     &:not(:disabled) {
-      background-color: var(--_unselected-container-color);
       color: var(--_toggle-unselected-icon-color);
 
       &:hover {
@@ -131,9 +139,12 @@ $_custom-property-prefix: 'filled-tonal-icon-button';
     );
   }
 
+  .toggle-filled-tonal:not(:disabled)::before {
+    background-color: var(--_unselected-container-color);
+  }
+
   .selected {
     &:not(:disabled) {
-      background-color: var(--_selected-container-color);
       color: var(--_toggle-selected-icon-color);
 
       &:hover {
@@ -156,5 +167,9 @@ $_custom-property-prefix: 'filled-tonal-icon-button';
         pressed-color: var(--_toggle-selected-pressed-state-layer-color),
       )
     );
+  }
+
+  .selected:not(:disabled)::before {
+    background-color: var(--_selected-container-color);
   }
 }

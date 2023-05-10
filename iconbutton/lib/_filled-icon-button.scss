@@ -10,7 +10,6 @@
 // go/keep-sorted start
 @use '../../ripple/ripple';
 @use '../../tokens';
-@use './shared';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
@@ -23,8 +22,6 @@
       'container-shape-end-start'
     )
   );
-
-  $tokens: shared.flatten-disabled-colors($tokens, $variant: 'filled');
 
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
@@ -39,7 +36,6 @@
 
 @mixin styles() {
   $tokens: tokens.md-comp-filled-icon-button-values();
-  $tokens: shared.flatten-disabled-colors($tokens, $variant: 'filled');
 
   :host {
     @each $token, $value in $tokens {
@@ -66,7 +62,6 @@
   }
 
   .icon-button {
-    background-color: var(--_container-color);
     color: var(--_icon-color);
 
     &:hover {
@@ -82,7 +77,6 @@
     }
 
     &:disabled {
-      background-color: var(--_disabled-container-color);
       color: var(--_disabled-icon-color);
     }
 
@@ -98,13 +92,27 @@
     );
   }
 
+  .icon-button::before {
+    // Background color, separate node for opacity changes
+    background-color: var(--_container-color);
+    border-radius: inherit;
+    content: '';
+    inset: 0;
+    position: absolute;
+    z-index: -1; // place behind content
+  }
+
+  .icon-button:disabled::before {
+    background-color: var(--_disabled-container-color);
+    opacity: var(--_disabled-container-opacity);
+  }
+
   .icon-button:disabled .icon {
     opacity: var(--_disabled-icon-opacity);
   }
 
   .toggle-filled {
     &:not(:disabled) {
-      background-color: var(--_unselected-container-color);
       color: var(--_toggle-unselected-icon-color);
 
       &:hover {
@@ -129,9 +137,12 @@
     );
   }
 
+  .toggle-filled:not(:disabled)::before {
+    background-color: var(--_unselected-container-color);
+  }
+
   .selected {
     &:not(:disabled) {
-      background-color: var(--_selected-container-color);
       color: var(--_toggle-selected-icon-color);
 
       &:hover {
@@ -154,5 +165,9 @@
         pressed-color: var(--_toggle-selected-pressed-state-layer-color),
       )
     );
+  }
+
+  .selected:not(:disabled)::before {
+    background-color: var(--_selected-container-color);
   }
 }
