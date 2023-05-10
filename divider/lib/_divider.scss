@@ -4,24 +4,32 @@
 //
 
 // go/keep-sorted start
-@use '../../sass/theme';
+@use 'sass:list';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../tokens';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-divider-values(), $tokens);
-  $tokens: theme.create-theme-vars($tokens, 'divider');
+  $supported-tokens: tokens.$md-comp-divider-supported-tokens;
 
-  @include theme.emit-theme-vars($tokens);
+  @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-divider-#{$token}: #{$value};
+    }
+  }
 }
 
 @mixin styles() {
   $tokens: tokens.md-comp-divider-values();
-  $tokens: theme.create-theme-vars($tokens, 'divider');
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-divider-#{$token}, #{$value});
     }
 
     box-sizing: border-box;

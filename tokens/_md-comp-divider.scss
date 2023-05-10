@@ -6,12 +6,23 @@
 // go/keep-sorted start
 @use './md-sys-color';
 @use './v0_172/md-comp-divider';
+@use './values';
 // go/keep-sorted end
+
+$supported-tokens: (
+  // go/keep-sorted start
+  'color',
+  'thickness',
+  // go/keep-sorted end
+);
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  @return md-comp-divider.values($deps, $exclude-hardcoded-values);
+  @return values.validate(
+    md-comp-divider.values($deps, $exclude-hardcoded-values),
+    $supported-tokens: $supported-tokens
+  );
 }
