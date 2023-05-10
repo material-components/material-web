@@ -162,8 +162,8 @@ $rtl-selectors: (
       primary-indeterminate-scale;
   }
 
-  .indeterminate.animation-ready.four-colors .primary-bar > .bar-inner {
-    animation-name: primary-indeterminate-scale, four-colors;
+  .indeterminate.animation-ready.four-color .primary-bar > .bar-inner {
+    animation-name: primary-indeterminate-scale, four-color;
     animation-duration: $_indeterminate-duration,
       calc($_indeterminate-duration * 2);
   }
@@ -182,8 +182,8 @@ $rtl-selectors: (
       secondary-indeterminate-scale;
   }
 
-  .indeterminate.animation-ready.four-colors .secondary-bar > .bar-inner {
-    animation-name: secondary-indeterminate-scale, four-colors;
+  .indeterminate.animation-ready.four-color .secondary-bar > .bar-inner {
+    animation-name: secondary-indeterminate-scale, four-color;
     animation-duration: $_indeterminate-duration,
       calc($_indeterminate-duration * 2);
   }
@@ -277,7 +277,7 @@ $rtl-selectors: (
   @include _directional-keyframes('ltr');
   @include _directional-keyframes('rtl');
 
-  @keyframes four-colors {
+  @keyframes four-color {
     0% {
       background: var(--_four-color-active-indicator-one-color);
     }
