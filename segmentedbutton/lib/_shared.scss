@@ -12,7 +12,6 @@
 // go/keep-sorted start
 @use '../../motion/animation';
 @use '../../ripple/ripple';
-@use '../../sass/color';
 @use '../../sass/touch-target';
 // go/keep-sorted end
 
@@ -353,30 +352,4 @@
       animation-fill-mode: forwards;
     }
   }
-}
-
-@function resolve-tokens($tokens) {
-  $tokens: _flatten-disabled-colors($tokens);
-  @return $tokens;
-}
-
-@function _flatten-disabled-colors($tokens) {
-  @return color.join-color-and-opacity-pairs(
-    $tokens,
-    (
-      (
-        color-key: 'disabled-container-color',
-        opacity-key: 'disabled-container-opacity'
-      ),
-      (
-        color-key: 'disabled-label-text-color',
-        opacity-key: 'disabled-label-text-opacity'
-      ),
-      (color-key: 'disabled-icon-color', opacity-key: 'disabled-icon-opacity'),
-      (
-        color-key: 'disabled-outline-color',
-        opacity-key: 'disabled-outline-opacity'
-      )
-    )
-  );
 }

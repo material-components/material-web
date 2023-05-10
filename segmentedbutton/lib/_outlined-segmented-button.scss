@@ -12,7 +12,6 @@
 // go/keep-sorted start
 @use '../../sass/theme';
 @use '../../tokens';
-@use './shared';
 // go/keep-sorted end
 
 @mixin styles() {
@@ -25,7 +24,6 @@
       'spacing-trailing': 12px,
     )
   );
-  $tokens: shared.resolve-tokens($tokens);
   $tokens: theme.create-theme-vars($tokens, 'segmented-button');
 
   :host {
