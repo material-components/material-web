@@ -113,7 +113,7 @@ export class Switch extends LitElement {
     return html`
       <button
         type="button"
-        class="md3-switch ${classMap(this.getRenderClasses())}"
+        class="switch ${classMap(this.getRenderClasses())}"
         role="switch"
         aria-checked="${this.selected}"
         aria-label=${(this as ARIAMixin).ariaLabel || nothing}
@@ -122,7 +122,7 @@ export class Switch extends LitElement {
         ${ripple(this.getRipple)}
       >
         <md-focus-ring></md-focus-ring>
-        <span class="md3-switch__track">
+        <span class="track">
           ${this.renderHandle()}
         </span>
       </button>
@@ -131,14 +131,14 @@ export class Switch extends LitElement {
 
   private getRenderClasses(): ClassInfo {
     return {
-      'md3-switch--selected': this.selected,
-      'md3-switch--unselected': !this.selected,
+      'switch--selected': this.selected,
+      'switch--unselected': !this.selected,
     };
   }
 
   private readonly renderRipple = () => {
     return html`
-      <span class="md3-switch__ripple">
+      <span class="ripple">
         <md-ripple
           ?disabled="${this.disabled}"
           unbounded>
@@ -154,12 +154,12 @@ export class Switch extends LitElement {
 
   private renderHandle() {
     const classes = {
-      'md3-switch__handle--big': this.icons && !this.showOnlySelectedIcon,
+      'handle--big': this.icons && !this.showOnlySelectedIcon,
     };
     return html`
-      <span class="md3-switch__handle-container">
+      <span class="handle-container">
         ${when(this.showRipple, this.renderRipple)}
-        <span class="md3-switch__handle ${classMap(classes)}">
+        <span class="handle ${classMap(classes)}">
           ${this.shouldShowIcons() ? this.renderIcons() : html``}
         </span>
         ${this.renderTouchTarget()}
@@ -169,7 +169,7 @@ export class Switch extends LitElement {
 
   private renderIcons() {
     return html`
-      <div class="md3-switch__icons">
+      <div class="icons">
         ${this.renderOnIcon()}
         ${this.showOnlySelectedIcon ? html`` : this.renderOffIcon()}
       </div>
@@ -181,7 +181,7 @@ export class Switch extends LitElement {
    */
   private renderOnIcon() {
     return html`
-      <svg class="md3-switch__icon md3-switch__icon--on" viewBox="0 0 24 24">
+      <svg class="icon icon--on" viewBox="0 0 24 24">
         <path d="M9.55 18.2 3.65 12.3 5.275 10.675 9.55 14.95 18.725 5.775 20.35 7.4Z"/>
       </svg>
     `;
@@ -192,14 +192,14 @@ export class Switch extends LitElement {
    */
   private renderOffIcon() {
     return html`
-      <svg class="md3-switch__icon md3-switch__icon--off" viewBox="0 0 24 24">
+      <svg class="icon icon--off" viewBox="0 0 24 24">
         <path d="M6.4 19.2 4.8 17.6 10.4 12 4.8 6.4 6.4 4.8 12 10.4 17.6 4.8 19.2 6.4 13.6 12 19.2 17.6 17.6 19.2 12 13.6Z"/>
       </svg>
     `;
   }
 
   private renderTouchTarget() {
-    return html`<span class="md3-switch__touch"></span>`;
+    return html`<span class="touch"></span>`;
   }
 
   private shouldShowIcons(): boolean {

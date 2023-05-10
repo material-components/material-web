@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 // go/keep-sorted start
 @use 'sass:list';
 @use 'sass:map';
@@ -134,7 +131,7 @@ $_forced-colors-theme: (
     );
   }
 
-  .md3-switch {
+  .switch {
     align-items: center;
     background: none;
     border: none;
@@ -156,19 +153,19 @@ $_forced-colors-theme: (
   }
 
   // Touch target
-  .md3-switch__touch {
+  .touch {
     @include touch-target.touch-target();
   }
 
   // Disabled
-  .md3-switch:disabled {
+  .switch:disabled {
     cursor: default;
     pointer-events: none;
   }
 
   // Disabled - Track
-  .md3-switch__track {
-    .md3-switch:disabled & {
+  .track {
+    .switch:disabled & {
       background-color: transparent;
       border-color: transparent;
 
@@ -176,7 +173,7 @@ $_forced-colors-theme: (
         background-clip: content-box;
       }
     }
-    .md3-switch--selected:disabled & {
+    .switch--selected:disabled & {
       background-clip: border-box;
     }
   }

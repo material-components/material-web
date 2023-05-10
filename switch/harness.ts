@@ -14,6 +14,6 @@ import {Switch} from './lib/switch.js';
 export class SwitchHarness extends Harness<Switch> {
   protected override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.renderRoot.querySelector<HTMLElement>('.md3-switch')!;
+    return this.element.renderRoot.querySelector<HTMLElement>('.switch')!;
   }
 }

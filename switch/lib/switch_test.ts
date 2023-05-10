@@ -84,24 +84,22 @@ describe('md-switch', () => {
       expect(selectedButton.getAttribute('aria-checked')).toEqual('true');
     });
 
-    it('adds md3-switch--selected class when true', () => {
-      const toggleRoot = toggle.shadowRoot!.querySelector('.md3-switch')!;
+    it('adds switch--selected class when true', () => {
+      const toggleRoot = toggle.shadowRoot!.querySelector('.switch')!;
       expect(Array.from(toggleRoot.classList))
-          .not.toContain('md3-switch--selected');
+          .not.toContain('switch--selected');
 
-      const selectedRoot = selected.shadowRoot!.querySelector('.md3-switch')!;
-      expect(Array.from(selectedRoot.classList))
-          .toContain('md3-switch--selected');
+      const selectedRoot = selected.shadowRoot!.querySelector('.switch')!;
+      expect(Array.from(selectedRoot.classList)).toContain('switch--selected');
     });
 
-    it('adds md3-switch--unselected class when false', () => {
-      const toggleRoot = toggle.shadowRoot!.querySelector('.md3-switch')!;
-      expect(Array.from(toggleRoot.classList))
-          .toContain('md3-switch--unselected');
+    it('adds switch--unselected class when false', () => {
+      const toggleRoot = toggle.shadowRoot!.querySelector('.switch')!;
+      expect(Array.from(toggleRoot.classList)).toContain('switch--unselected');
 
-      const selectedRoot = selected.shadowRoot!.querySelector('.md3-switch')!;
+      const selectedRoot = selected.shadowRoot!.querySelector('.switch')!;
       expect(Array.from(selectedRoot.classList))
-          .not.toContain('md3-switch--unselected');
+          .not.toContain('switch--unselected');
     });
   });
 

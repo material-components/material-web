@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 // go/keep-sorted start
 @use 'sass:map';
 // go/keep-sorted end
@@ -18,27 +15,27 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 $_easing-standard: map.get($_md-sys-motion, easing-standard);
 
 @mixin styles() {
-  .md3-switch__handle-container {
+  .handle-container {
     position: relative;
     // this easing is custom to perform the "overshoot" animation
     transition: margin 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: flex;
     $margin: calc(var(--_track-width) - var(--_track-height));
 
-    .md3-switch--selected & {
+    .switch--selected & {
       margin-inline-start: $margin;
     }
 
-    .md3-switch--unselected & {
+    .switch--unselected & {
       margin-inline-end: $margin;
     }
 
-    .md3-switch:disabled & {
+    .switch:disabled & {
       transition: none;
     }
   }
 
-  .md3-switch__handle {
+  .handle {
     // Handle shape
     border-start-start-radius: var(--_handle-shape-start-start);
     border-start-end-radius: var(--_handle-shape-start-end);
@@ -65,72 +62,72 @@ $_easing-standard: map.get($_md-sys-motion, easing-standard);
 
       transition: opacity 67ms linear;
 
-      .md3-switch--selected & {
+      .switch--selected & {
         // When selected, turn off ::before
         opacity: 0;
       }
 
-      .md3-switch:disabled & {
+      .switch:disabled & {
         transition: none;
       }
     }
 
-    .md3-switch:disabled & {
+    .switch:disabled & {
       transition: none;
     }
 
-    .md3-switch--selected &,
-    .md3-switch--unselected &.md3-switch__handle--big {
+    .switch--selected &,
+    .switch--unselected &.handle--big {
       height: var(--_selected-handle-height);
       width: var(--_selected-handle-width);
     }
 
-    .md3-switch--selected:enabled:active &,
-    .md3-switch--unselected:enabled:active & {
+    .switch--selected:enabled:active &,
+    .switch--unselected:enabled:active & {
       height: var(--_pressed-handle-height);
       width: var(--_pressed-handle-width);
       transition-timing-function: linear;
       transition-duration: 100ms;
     }
 
-    .md3-switch--selected:hover & {
+    .switch--selected:hover & {
       background-color: var(--_selected-hover-handle-color);
     }
 
-    .md3-switch--selected:focus-visible & {
+    .switch--selected:focus-visible & {
       background-color: var(--_selected-focus-handle-color);
     }
 
-    .md3-switch--selected:active & {
+    .switch--selected:active & {
       background-color: var(--_selected-pressed-handle-color);
     }
 
-    .md3-switch--selected:disabled & {
+    .switch--selected:disabled & {
       background-color: var(--_disabled-selected-handle-color);
     }
 
     &::before {
       background-color: var(--_unselected-handle-color);
 
-      .md3-switch--unselected:hover & {
+      .switch--unselected:hover & {
         background-color: var(--_unselected-hover-handle-color);
       }
 
-      .md3-switch--unselected:focus-visible & {
+      .switch--unselected:focus-visible & {
         background-color: var(--_unselected-focus-handle-color);
       }
 
-      .md3-switch--unselected:active & {
+      .switch--unselected:active & {
         background-color: var(--_unselected-pressed-handle-color);
       }
 
-      .md3-switch--unselected:disabled & {
+      .switch--unselected:disabled & {
         background-color: var(--_disabled-unselected-handle-color);
       }
     }
   }
 
-  .md3-switch__ripple {
+  .ripple {
     position: absolute;
     display: inline-flex;
     top: 50%;
@@ -139,7 +136,7 @@ $_easing-standard: map.get($_md-sys-motion, easing-standard);
     height: var(--_state-layer-size);
     width: var(--_state-layer-size);
 
-    .md3-switch--selected & {
+    .switch--selected & {
       @include ripple.theme(
         (
           hover-color: var(--_selected-hover-state-layer-color),
@@ -152,7 +149,7 @@ $_easing-standard: map.get($_md-sys-motion, easing-standard);
       );
     }
 
-    .md3-switch--unselected & {
+    .switch--unselected & {
       @include ripple.theme(
         (
           hover-color: var(--_unselected-hover-state-layer-color),
