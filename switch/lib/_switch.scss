@@ -192,19 +192,6 @@ $_forced-colors-theme: (
       (
         color-key: disabled-unselected-handle-color,
         opacity-key: disabled-unselected-handle-opacity
-      ),
-      // Disabled Track
-      (
-          color-key: disabled-selected-track-color,
-          opacity-key: disabled-track-opacity
-        ),
-      (
-        color-key: disabled-unselected-track-color,
-        opacity-key: disabled-track-opacity
-      ),
-      (
-        color-key: disabled-unselected-track-outline-color,
-        opacity-key: disabled-track-opacity
       )
     )
   );

@@ -20,30 +20,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-    transition: background-color 67ms linear;
-    background-color: var(--_selected-track-color);
-  }
-  .switch:disabled .track {
-    transition: none;
   }
 
-  .switch--selected:hover .track {
-    background-color: var(--_selected-hover-track-color);
-  }
-
-  .switch--selected:focus-visible .track {
-    background-color: var(--_selected-focus-track-color);
-  }
-
-  .switch--selected:active .track {
-    background-color: var(--_selected-pressed-track-color);
-  }
-
-  .switch--selected:disabled .track {
-    background-color: var(--_disabled-selected-track-color);
-  }
-
+  // Separate node for background/outline colors to support opacity changes.
   .track::before {
     content: '';
     display: flex;
@@ -52,23 +31,42 @@
     width: 100%;
     border-radius: inherit;
     box-sizing: border-box;
-    border-style: solid;
-
     transition-property: opacity, background-color;
     transition-timing-function: linear;
     transition-duration: 67ms;
-
-    border-width: var(--_track-outline-width);
-    background-color: var(--_unselected-track-color);
-    border-color: var(--_unselected-track-outline-color);
   }
-  .switch:disabled .track::before {
+
+  .switch:disabled .track::before,
+  .switch:disabled .track::after {
     transition: none;
+    opacity: var(--_disabled-track-opacity);
   }
 
   .switch--selected .track::before {
-    // When selected, turn off ::before
-    opacity: 0;
+    background-color: var(--_selected-track-color);
+  }
+
+  .switch--selected:hover .track::before {
+    background-color: var(--_selected-hover-track-color);
+  }
+
+  .switch--selected:focus-visible .track::before {
+    background-color: var(--_selected-focus-track-color);
+  }
+
+  .switch--selected:active .track::before {
+    background-color: var(--_selected-pressed-track-color);
+  }
+
+  .switch--selected:disabled .track::before {
+    background-color: var(--_disabled-selected-track-color);
+  }
+
+  .switch--unselected .track::before {
+    background-color: var(--_unselected-track-color);
+    border-color: var(--_unselected-track-outline-color);
+    border-style: solid;
+    border-width: var(--_track-outline-width);
   }
 
   .switch--unselected:hover .track::before {
