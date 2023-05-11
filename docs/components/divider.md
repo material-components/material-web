@@ -66,16 +66,21 @@ Use `inset-start` or `inset-end` to change this.
 
 ## Accessibility
 
+Dividers are decorative by default and not announced by assistive technology.
+
 Add a
 [`role="separator"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/separator_role)<!-- {.external} -->
-attribute to non-decorative dividers that separate sections of content or groups
-of menuitems.
+attribute to non-decorative dividers that should be announced.
 
 ```html
 <ul>
   <li>Item one</li>
-  <md-divider role="separator"></md-divider>
+  <md-divider inset></md-divider>
   <li>Item two</li>
+  <md-divider role="separator"></md-divider>
+  <li>Item three</li>
+  <md-divider inset></md-divider>
+  <li>Item four</li>
 </ul>
 ```
 

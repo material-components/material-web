@@ -19,28 +19,39 @@ export interface StoryKnobs {
 const standard: MaterialStoryInit<StoryKnobs> = {
   name: 'Divider',
   styles: css`
-    section {
-      border: 1px solid var(--md-sys-color-on-background);
+    ul {
+      border: 1px solid var(--md-sys-color-outline);
+      margin: 0;
+      padding: 0;
       width: 256px;
     }
 
-    p {
+    li {
       color: var(--md-sys-color-on-background);
       font-family: system-ui;
+      list-style: none;
       margin: 16px;
     }
   `,
   render(knobs) {
     return html`
-      <section>
-        <p>Material 2</p>
+      <ul aria-label="A list of items with decorative and non-decorative separators">
+        <li>List item one</li>
         <md-divider
           ?inset=${knobs.inset}
           ?inset-start=${knobs['inset (start)']}
           ?inset-end=${knobs['inset (end)']}
         ></md-divider>
-        <p>Material 3</p>
-      </section>
+        <li>List item two</li>
+        <md-divider role="separator"></md-divider>
+        <li>List item three</li>
+        <md-divider
+          ?inset=${knobs.inset}
+          ?inset-start=${knobs['inset (start)']}
+          ?inset-end=${knobs['inset (end)']}
+        ></md-divider>
+        <li>List item four</li>
+      </ul>
     `;
   }
 };
