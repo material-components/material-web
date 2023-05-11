@@ -11,12 +11,6 @@
 @use './values';
 // go/keep-sorted end
 
-$_default: (
-  'md-sys-color': md-sys-color.values-light(),
-  'md-sys-shape': md-sys-shape.values(),
-  'md-sys-state': md-sys-state.values(),
-);
-
 $supported-tokens: (
   // go/keep-sorted start
   'container-shape',
@@ -80,11 +74,18 @@ $supported-tokens: (
 );
 
 $unsupported-tokens: (
+  // go/keep-sorted start
   'selected-disabled-container-outline-width',
   'selected-focus-outline-width',
   'selected-hover-outline-width',
   'selected-outline-width',
-  'selected-pressed-outline-width'
+  'selected-pressed-outline-width' // go/keep-sorted end
+);
+
+$_default: (
+  'md-sys-color': md-sys-color.values-light(),
+  'md-sys-shape': md-sys-shape.values(),
+  'md-sys-state': md-sys-state.values(),
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
