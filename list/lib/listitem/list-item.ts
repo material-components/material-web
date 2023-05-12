@@ -19,6 +19,7 @@ import {ARIAMixinStrict, ARIARole} from '../../../types/aria.js';
 interface ListItemSelf {
   active: boolean;
   disabled: boolean;
+  interactive: boolean;
 }
 
 /**
@@ -62,6 +63,11 @@ export class ListItemEl extends LitElement implements ListItem {
   @property({type: Boolean}) disabled = false;
 
   /**
+   * Makes the item non-selectable and non-interactive when true but doesn't apply diabled styling
+   */
+  @property({type: Boolean}) interactive = true;
+
+  /**
    * The tabindex of the underlying item.
    *
    * __NOTE:__ this is overriden by the keyboard behavior of `md-list` and by
@@ -96,14 +102,14 @@ export class ListItemEl extends LitElement implements ListItem {
   protected focusOnActivation = true;
 
   protected readonly getRipple = () => {
-    this.showRipple = true;
+    this.showRipple = this.interactive ? true : false;
     return this.ripple;
   };
 
   private isFirstUpdate = true;
 
   protected override willUpdate(changed: PropertyValues<this>) {
-    if (changed.has('active') && !this.disabled) {
+    if (changed.has('active') && !this.disabled && this.interactive) {
       if (this.active) {
         this.itemTabIndex = 0;
       } else if (!this.isFirstUpdate) {
@@ -134,7 +140,7 @@ export class ListItemEl extends LitElement implements ListItem {
     return html`
       <li
           id="item"
-          tabindex=${this.disabled ? -1 : this.itemTabIndex}
+          tabindex=${this.disabled || !this.interactive  ? -1 : this.itemTabIndex}
           role=${this.listItemRole}
           aria-selected=${(this as ARIAMixinStrict).ariaSelected || nothing}
           aria-checked=${(this as ARIAMixinStrict).ariaChecked || nothing}
@@ -241,7 +247,7 @@ export class ListItemEl extends LitElement implements ListItem {
     // will focus the list item root if it is selected but not on the first
     // update or else it may cause the page to jump on first load.
     if (changed.has('active') && !this.isFirstUpdate && this.active &&
-        this.focusOnActivation) {
+      this.focusOnActivation && this.interactive) {
       this.focus();
     }
 

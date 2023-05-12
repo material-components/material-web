@@ -83,6 +83,10 @@
     &.disabled {
       pointer-events: none;
     }
+
+    &:not(.interactive) {
+      cursor: default;
+    }
   }
 
   .content-wrapper {
