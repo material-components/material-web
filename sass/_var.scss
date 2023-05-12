@@ -9,38 +9,30 @@
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
-@use './feature-flags';
 @use './string-ext';
 // go/keep-sorted end
 
-/// Creates a custom property `var()` string according to the configured
-/// `var-fallbacks` feature flag.
+/// Creates a custom property `var()` string.
 ///
 /// @param {String} $name - The name of the custom property.
 /// @param {*} $fallback [null] - Optional `var()` fallback value.
 /// @return {String} A custom property `var()` string.
 @function create($name, $fallback: null) {
   $name: create-name($name);
-  $fallback-config: feature-flags.get(var-fallbacks);
-  @if $fallback-config == none or $fallback == null {
+  @if $fallback == null {
     @return var(#{$name});
   }
 
   @if is-var($fallback) {
     $fallback-name: name($fallback);
-    $fallback-fallback: null;
-    @if $fallback-config == all {
-      $fallback-fallback: fallback($fallback);
-    }
-
+    $fallback-fallback: fallback($fallback);
     @return var(#{$name}, create($fallback-name, $fallback-fallback));
   }
 
   @return var(#{$name}, $fallback);
 }
 
-/// Create a custom property variable name using the configured
-/// `var-name-prefix` feature flag.
+/// Create a custom property variable name.
 ///
 /// Providing a custom property name with `--*` will ignore the global prefix.
 ///
@@ -63,7 +55,7 @@
     @return $name;
   }
 
-  @return string.unquote('--#{feature-flags.get(var-name-prefix)}-#{$name}');
+  @return string.unquote('--md-#{$name}');
 }
 
 /// Returns the custom property variable name of `var()` string.

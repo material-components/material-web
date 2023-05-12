@@ -12,7 +12,6 @@
 // go/keep-sorted start
 @use '../../focus/focus-ring';
 @use '../../ripple/ripple';
-@use '../../sass/dom';
 // go/keep-sorted end
 
 @mixin styles() {
@@ -117,7 +116,13 @@
 
     @media (forced-colors: active) {
       &::before {
-        @include dom.transparent-border();
+        content: '';
+        box-sizing: border-box;
+        border: 1px solid transparent;
+        border-radius: inherit;
+        inset: 0;
+        pointer-events: none;
+        position: absolute;
       }
     }
   }

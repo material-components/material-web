@@ -12,7 +12,6 @@
 // go/keep-sorted start
 @use '../../motion/animation';
 @use '../../ripple/ripple';
-@use '../../sass/touch-target';
 // go/keep-sorted end
 
 @mixin styles() {
@@ -264,7 +263,12 @@
   }
 
   .md3-segmented-button__touch {
-    @include touch-target.touch-target($width: 100%);
+    position: absolute;
+    top: 50%;
+    height: 48px;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
   }
 
   .md3-segmented-button__leading,
