@@ -1,14 +1,28 @@
+<!-- catalog-only-start --><!-- ---
+name: Checkbox
+dirname: checkbox
+-----><!-- catalog-only-end -->
+
 # Checkbox
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2023-01-25' }
+freshness: { owner: 'emarquez' reviewed: '2023-05-03' }
 tag: 'docType:reference'
 *-->
+
+<!-- github-only-start -->
 
 <!-- go/md-checkbox -->
 
 <!-- [TOC] -->
+
+TODO: update link to live site
+
+**This documentation is fully rendered on the
+[Material Web catalog](https://github.com/material-components/material-web/tree/main)<!-- {.external} -->.**
+
+<!-- github-only-end -->
 
 [Checkboxes](https://m3.material.io/components/checkbox)<!-- {.external} --> allow users
 to select one or more items from a set. Checkboxes can turn an option on or off.
@@ -23,11 +37,44 @@ user needs to select one or more options from a list.
 *   [Source code](https://github.com/material-components/material-web/tree/main/checkbox)
     <!-- {.external} -->
 
+<!-- catalog-only-start -->
+
+<!--
+
+## Live Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
+
 ## Usage
 
 Checkboxes may be standalone, pre-checked, or indeterminate.
 
+<!-- github-only-start -->
+
 ![Three checkboxes in a row that are unselected, selected, and indeterminate](images/checkbox/usage.png "Unselected, selected, and indeterminate checkboxes.")
+
+<!-- github-only-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      style="justify-content:center;"
+      aria-label="Three checkboxes in a row that are unselected, selected, and indeterminate">
+    <md-checkbox inert></md-checkbox>
+    <md-checkbox inert checked></md-checkbox>
+    <md-checkbox inert indeterminate></md-checkbox>
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
 
 ```html
 <md-checkbox></md-checkbox>
@@ -39,7 +86,31 @@ Checkboxes may be standalone, pre-checked, or indeterminate.
 
 Associate a label with a checkbox using the `<label>` element.
 
+<!-- github-only-start -->
+
 ![Two checkboxes with labels](images/checkbox/usage-label.png "Labeled checkboxes.")
+
+<!-- github-only-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      style="justify-content:center;align-items:center;"
+      aria-label="Two checkboxes with labels">
+    <label inert style="display:flex;align-items:center;">
+      <md-checkbox></md-checkbox>
+      Checkbox one
+    </label>
+    <md-checkbox inert id="checkbox-two"></md-checkbox>
+    <label inert for="checkbox-two">Checkbox two</label>
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
 
 ```html
 <label>
@@ -86,16 +157,56 @@ Token                                    | Default value
 
 ### Example
 
+<!-- github-only-start -->
+
 ![Image of a checkbox with a different theme applied](images/checkbox/theming.png "Checkbox theming example.")
+
+<!-- github-only-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      style="justify-content:center;align-items:center;"
+      class="styled-example"
+      aria-label="Image of a checkbox with a different theme applied">
+  <style>
+    .styled-example {
+      background-color: white;
+      border-radius: 28px;
+
+      /* System tokens */
+      --md-sys-color-primary: #006a6a;
+      --md-sys-color-on-primary: #ffffff;
+      --md-sys-color-on-surface-variant: #3f4948;
+
+      /* Component tokens */
+      --md-checkbox-container-shape: 0px;
+    }
+  </style>
+
+<md-checkbox inert></md-checkbox>
+<md-checkbox inert checked></md-checkbox>
+
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
 
 ```html
 <style>
-:root {
-  --md-sys-color-primary: #006A6A;
-  --md-sys-color-on-primary: #FFFFFF;
-  --md-sys-color-on-surface-variant: #3F4948;
-  --md-checkbox-container-shape: 0px;
-}
+  :root {
+    /* System tokens */
+    --md-sys-color-primary: #006a6a;
+    --md-sys-color-on-primary: #ffffff;
+    --md-sys-color-on-surface-variant: #3f4948;
+
+    /* Component tokens */
+    --md-checkbox-container-shape: 0px;
+  }
 </style>
 
 <md-checkbox></md-checkbox>
