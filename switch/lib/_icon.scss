@@ -11,7 +11,7 @@
 // go/keep-sorted end
 
 $_md-sys-motion: tokens.md-sys-motion-values();
-$_easing-standard: map.get($_md-sys-motion, easing-standard);
+$_easing-standard: map.get($_md-sys-motion, 'easing-standard');
 
 @mixin styles() {
   .icons {

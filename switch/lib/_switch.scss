@@ -9,7 +9,6 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../focus/focus-ring';
-@use '../../sass/color';
 @use '../../sass/touch-target';
 @use '../../tokens';
 @use './handle';
@@ -53,8 +52,6 @@ $_forced-colors-theme: (
     )
   );
 
-  $tokens: _flatten-disable-colors($tokens);
-
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
       @error 'Token `#{$token}` is not a supported token.';
@@ -68,7 +65,6 @@ $_forced-colors-theme: (
 
 @mixin styles() {
   $tokens: tokens.md-comp-switch-values();
-  $tokens: _flatten-disable-colors($tokens);
 
   :host {
     @each $token, $value in $tokens {
@@ -178,21 +174,4 @@ $_forced-colors-theme: (
   @include track.styles();
   @include handle.styles();
   @include icon.styles();
-}
-
-@function _flatten-disable-colors($theme) {
-  @return color.join-color-and-opacity-pairs(
-    $theme,
-    (
-      // Disabled Handle
-      (
-          color-key: disabled-selected-handle-color,
-          opacity-key: disabled-selected-handle-opacity
-        ),
-      (
-        color-key: disabled-unselected-handle-color,
-        opacity-key: disabled-unselected-handle-opacity
-      )
-    )
-  );
 }

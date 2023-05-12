@@ -12,7 +12,7 @@
 // go/keep-sorted end
 
 $_md-sys-motion: tokens.md-sys-motion-values();
-$_easing-standard: map.get($_md-sys-motion, easing-standard);
+$_easing-standard: map.get($_md-sys-motion, 'easing-standard');
 
 @mixin styles() {
   .handle-container {
@@ -44,30 +44,22 @@ $_easing-standard: map.get($_md-sys-motion, easing-standard);
     border-end-start-radius: var(--_handle-shape-end-start);
     height: var(--_unselected-handle-height);
     width: var(--_unselected-handle-width);
-    background-color: var(--_selected-handle-color);
 
     transform-origin: center;
-    transition-property: height, width, background-color;
-    transition-duration: 250ms, 250ms, 67ms;
-    transition-timing-function: $_easing-standard, $_easing-standard, linear;
+    transition-property: height, width;
+    transition-duration: 250ms, 250ms;
+    transition-timing-function: $_easing-standard, $_easing-standard;
     z-index: 0;
   }
 
   .handle::before {
     content: '';
     display: flex;
+    inset: 0;
     position: absolute;
-    height: 100%;
-    width: 100%;
     border-radius: inherit;
     box-sizing: border-box;
-
-    transition: opacity 67ms linear;
-  }
-
-  .switch--selected .handle::before {
-    // When selected, turn off ::before
-    opacity: 0;
+    transition: background-color 67ms linear;
   }
 
   .switch:disabled .handle,
@@ -89,23 +81,28 @@ $_easing-standard: map.get($_md-sys-motion, easing-standard);
     transition-duration: 100ms;
   }
 
-  .switch--selected:hover .handle {
+  .switch--selected .handle::before {
+    background-color: var(--_selected-handle-color);
+  }
+
+  .switch--selected:hover .handle::before {
     background-color: var(--_selected-hover-handle-color);
   }
 
-  .switch--selected:focus-visible .handle {
+  .switch--selected:focus-visible .handle::before {
     background-color: var(--_selected-focus-handle-color);
   }
 
-  .switch--selected:active .handle {
+  .switch--selected:active .handle::before {
     background-color: var(--_selected-pressed-handle-color);
   }
 
-  .switch--selected:disabled .handle {
+  .switch--selected:disabled .handle::before {
     background-color: var(--_disabled-selected-handle-color);
+    opacity: var(--_disabled-selected-handle-opacity);
   }
 
-  .handle::before {
+  .switch--unselected .handle::before {
     background-color: var(--_unselected-handle-color);
   }
 
@@ -123,6 +120,7 @@ $_easing-standard: map.get($_md-sys-motion, easing-standard);
 
   .switch--unselected:disabled .handle::before {
     background-color: var(--_disabled-unselected-handle-color);
+    opacity: var(--_disabled-unselected-handle-opacity);
   }
 
   .ripple {
