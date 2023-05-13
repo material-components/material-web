@@ -1,0 +1,10 @@
+<!-- this is an example layout -->
+{% extends 'default.html' %}
+
+{% block head %}
+  <script type="module" src="/material-web/js/pages/components.js"></script>
+  <link rel="stylesheet" href="/material-web/css/components.css" />
+  <link rel="stylesheet" href="/material-web/css/syntax-highlight.css" />
+{% endblock %}
+
+{% block content %}{{ content | safe }}{% endblock %}

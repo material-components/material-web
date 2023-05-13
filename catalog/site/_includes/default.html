@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes"
+    />
+    <!-- Use the 11ty data system to set the title -->
+    <title>{% if title %}{{ title }}{% endif %}</title>
+
+    <!-- inlines the global css in site/css/global.css -->
+    {% inlinecss "global.css" %}
+    <!-- MUST be loaded before any lit bundle. allows hydration of SSRd components -->
+    <script type="module" src="/material-web/js/ssr-utils/lit-hydrate-support.js"></script>
+    <!-- Loads definition for <lit-island>. See docs for @11ty/is-land for usage -->
+    <script type="module" src="/material-web/js/ssr-utils/is-land.js"></script>
+    {% inlinejs "inline/theme.js" %}
+    <script type="module" src="/material-web/js/pages/global.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+    />
+    <!-- if JS is disabled just show the contents without the polyfill -->
+    <noscript
+      ><style>
+        body[dsd-pending] {
+          display: block !important;
+        }
+      </style></noscript
+    >
+    <!-- allows sub-templates to insert into the head -->
+    {% block head %}{% endblock %}
+  </head>
+  <!-- dsd-pending hides body until the polyfill has run on browsers that do not support DSD -->
+  <body dsd-pending>
+    <!-- inlines the declarative shadow dom polyfill for FF -->
+    {% inlinejs "ssr-utils/dsd-polyfill.js" %}
+    <lit-island on:idle import="/material-web/js/hydration-entrypoints/navigation.js">
+      <nav-drawer>
+        <top-app-bar slot="top-app-bar" baseURI="/material-web"></top-app-bar>
+        <main slot="app-content">
+          <!-- this is the content of the page -->
+          <!-- unrelated change to components -->
+          {% block content %}{{ content | safe }}{% endblock %}
+        </main>
+          <md-list listtabindex="-1">
+            {% for component in collections.component|filtersort('data.name') %}
+              <li>
+                <md-list-item-link
+                  href="/material-web{{ component.url }}"
+                  headline="{{ component.data.name }}"
+                  {% if component.url == page.url %}selected{% endif %}
+                  data-role=""
+                  itemtabindex="0"
+                ></md-list-item-link>
+              </li>
+            {% endfor %}
+          </md-list>
+      </nav-drawer>
+    </lit-island>
+  </body>
+</html>

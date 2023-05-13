@@ -8,3 +8,16 @@ node_modules
 *.d.ts
 !types/*.d.ts
 .wireit/
+
+!catalog/**/*.css
+catalog/_dev
+catalog/_prod
+catalog/node_modules
+catalog/.wireit
+catalog/lib/
+catalog/build/
+catalog/site/components/*.md
+catalog/site/components/images
+catalog/*.tsbuildinfo
+catalog/stories/*/
+!catalog/stories/components/

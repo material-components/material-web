@@ -1,0 +1,149 @@
+h1 {
+  text-align: center;
+  font-size: 48px;
+}
+
+img,
+figure {
+  max-width: 100%;
+  border-radius: 28px;
+  min-height: 56px;
+}
+
+.figure-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+figure {
+  border: 1px solid var(--md-sys-color-outline);
+  display: inline-flex;
+  padding-inline: 28px;
+  align-items: center;
+}
+
+div:has(> table) {
+  display: flex;
+  justify-content: center;
+}
+
+p:has(>img) {
+  display: flex;
+  justify-content: center;
+}
+
+main>* {
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+  display: block;
+}
+
+table {
+  border-spacing: 0;
+}
+
+td,
+th {
+  border-block-start: 1px solid var(--md-sys-color-outline-variant);
+  border-inline-start: 1px solid var(--md-sys-color-outline-variant);
+  padding: 8px 16px;
+}
+
+tr:last-of-type td,
+tr:last-of-type th {
+  border-block-end: 1px solid var(--md-sys-color-outline-variant);
+}
+
+tr td:last-of-type,
+tr th:last-of-type {
+  border-inline-end: 1px solid var(--md-sys-color-outline-variant);
+}
+
+th {
+  background-color: var(--md-sys-color-surface-container);
+  text-shadow: 0 1px 1px var(--md-sys-color-surface-container-lowest);
+  color: var(--md-sys-color-on-surface-container);
+  font-size: 1.25em;
+}
+
+:not(pre)>code {
+  display: inline-flex;
+  background-color: var(--md-sys-color-surface-variant);
+  text-shadow: 0 1px 1px var(--md-sys-color-surface-variant);
+  color: var(--md-sys-color-on-surface);
+  padding: 4px;
+  border-radius: 8px;
+}
+
+tr th:first-of-type {
+  border-start-start-radius: 28px;
+}
+
+tr th:last-of-type {
+  border-start-end-radius: 28px;
+}
+
+tr:last-of-type td:first-of-type {
+  border-end-start-radius: 28px;
+}
+
+tr:last-of-type td:last-of-type {
+  border-end-end-radius: 28px;
+}
+
+/* Hides offscreen accesible text */
+a .offscreen {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.heading {
+  align-items: center;
+  position: relative;
+  overflow-x: visible;
+}
+
+.heading.h2 {
+  font-size: 1.5em;
+}
+
+.heading.h3 {
+  font-size: 1.33em;
+}
+
+.heading.h4 {
+  font-size: 1.17em;
+}
+
+.heading a {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  inset: 0;
+  inset-inline-start: calc(-1 * var(--_content-padding) + 4px);
+  opacity: 0;
+  font-size: calc(1.5em - 4px);
+  transition: opacity 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.heading:hover a,
+.heading:focus-within a {
+  text-decoration: none;
+  opacity: 1;
+}
+
+.example *:defined > md-circular-progress {
+  display: none;
+}
+
+.example :is(playground-preview, playground-file-editor):not(:defined) {
+  display: flex;
+  box-sizing: border-box;
+  background-color: var(--md-sys-color-surface-variant);
+  justify-content: center;
+  align-items: center;
+}

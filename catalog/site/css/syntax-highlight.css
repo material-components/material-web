@@ -1,0 +1,141 @@
+:root {
+  --__code-block-font-size: 16px;
+}
+
+.example {
+  --playground-highlight-color: var(--md-sys-color-primary);
+  --playground-code-font-size: var(--__code-block-font-size);
+  --playground-code-background: var(--md-sys-color-surface-variant);
+  --playground-code-default-color: var(--md-sys-color-on-surface-variant);
+  --playground-code-font-family: 'Google Sans Mono', Menlo, Monaco, "Courier New", monospace;
+  --playground-code-callee-color: var(--md-sys-color-primary);
+  --playground-code-comment-color: var(--md-sys-color-on-surface-dim);
+  --playground-code-operator-color: var(--md-sys-color-on-surface);
+  --playground-code-tag-color: var(--md-sys-color-primary);
+  --playground-code-number-color: var(--md-sys-color-primary);
+  --playground-code-atom-color: var(--md-sys-color-primary);
+  --playground-code-string-color: var(--md-sys-color-secondary);
+  --playground-code-attribute-color: var(--md-sys-color-tertiary);
+  --playground-code-string-2-color: var(--md-sys-color-on-surface-variant);
+  --playground-code-keyword-color: var(--md-sys-color-tertiary);
+  --playground-code-variable-2-color: var(--md-sys-color-secondary);
+  --playground-code-def-color: var(--md-sys-color-on-surface-variant);
+  --playground-code-property-color: var(--md-sys-color-on-surface-variant);
+  --playground-code-variable-color: var(--md-sys-color-on-surface-variant);
+  --playground-code-type-color: var(--md-sys-color-error);
+  --playground-code-linenumber-color: var(--md-sys-color-outline);
+  --playground-code-qualifier-color: var(--md-sys-color-tertiary);
+  --playground-code-cursor-color: var(--md-sys-color-on-surface-variant);
+  --playground-preview-toolbar-background: var(--md-sys-color-surface-container-high);
+  --playground-preview-toolbar-foreground-color: var(--md-sys-color-on-surface);
+}
+
+.example playground-file-editor {
+  margin-block: 1em;
+  background-color: var(--md-sys-color-surface-variant);
+  text-shadow: 0 1px 1px var(--md-sys-color-surface-variant);
+}
+
+code,
+code[class*="language-"],
+pre[class*="language-"] {
+  color: var(--md-sys-color-on-surface-variant);
+  text-shadow: 0 1px 1px var(--md-sys-color-background);
+  font-family: 'Google Sans Mono', Menlo, Monaco, "Courier New", monospace;
+  direction: ltr;
+  text-align: left;
+  word-spacing: normal;
+  white-space: pre;
+  word-wrap: normal;
+  line-height: 1.5;
+  font-size: var(--__code-block-font-size);
+  background: none;
+  border: 0;
+  tab-size: 2;
+  hyphens: none;
+}
+
+pre[class*="language-"],
+:not(pre)>code[class*="language-"] {
+  background: var(--md-sys-color-surface-container);
+  border: 1px solid var(--md-sys-color-outline);
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  margin: 1em 0;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.example playground-file-editor,
+pre[class*="language-"] {
+  padding: var(--__code-block-font-size);
+  /* Remove the extra hard coded 3px from line number padding. */
+  padding-inline-start: calc(var(--__code-block-font-size) - 3px);
+  /* perfect circle of one line is (padding * 2 + (line-height: 1.5x font size)) / 2 */
+  border-radius: calc((2 * var(--__code-block-font-size) + 1.5 * var(--__code-block-font-size))/2);
+}
+
+/* Inline code */
+:not(pre)>code[class*="language-"] {
+  padding: 5px 10px;
+  line-height: 1;
+  border-radius: 3px;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--md-sys-color-on-surface-dim);
+}
+
+.token.selector,
+.token.operator,
+.token.punctuation {
+  color: var(--md-sys-color-on-surface-bright);
+}
+
+.token.namespace {
+  opacity: .7;
+}
+
+.token.tag,
+.token.boolean,
+.token.number {
+  color: var(--md-sys-color-primary);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.hex,
+.token.string {
+  color: var(--md-sys-color-secondary);
+}
+
+.token.property,
+.token.entity,
+.token.url,
+.token.attr-name,
+.token.keyword {
+  color: var(--md-sys-color-tertiary);
+}
+
+.token.regex {
+  color: var(--md-sys-color-on-tertiary-container);
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.function,
+.token.constant {
+  color: var(--md-sys-color-error);
+}
+
+.token.important,
+.token.deliminator {
+  color: var(--md-sys-color-error);
+}
