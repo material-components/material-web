@@ -232,10 +232,6 @@ export class Tabs extends LitElement {
   }
 
   protected override async updated(changed: PropertyValues) {
-    // if there's no items, they may not be ready, so wait before syncronizing
-    if (this.items.length === 0) {
-      await new Promise(requestAnimationFrame);
-    }
     const itemsOrVariantChanged =
         changed.has('items') || changed.has('variant');
     // sync variant with items.
@@ -296,13 +292,20 @@ export class Tabs extends LitElement {
     this.requestUpdate();
   }
 
+  private async itemsUpdateComplete() {
+    for (const item of this.items) {
+      await item.updateComplete;
+    }
+    return true;
+  }
+
   // ensures the given item is visible in view; defaults to the selected item
   private async scrollItemIntoView(item = this.selectedItem) {
     if (!item) {
       return;
     }
     // wait for items to render.
-    await new Promise(requestAnimationFrame);
+    await this.itemsUpdateComplete();
     const isVertical = this.orientation === 'vertical';
     const offset = isVertical ? item.offsetTop : item.offsetLeft;
     const extent = isVertical ? item.offsetHeight : item.offsetWidth;
@@ -311,8 +314,11 @@ export class Tabs extends LitElement {
     const min = offset - this.scrollMargin;
     const max = offset + extent - hostExtent + this.scrollMargin;
     const to = Math.min(min, Math.max(max, scroll));
+    const behavior =
+        // type annotation because `instant` is valid but not included in type.
+        this.focusedItem !== undefined ? 'smooth' : 'instant' as ScrollBehavior;
     this.scrollTo({
-      behavior: 'smooth',
+      behavior,
       [isVertical ? 'left' : 'top']: 0,
       [isVertical ? 'top' : 'left']: to
     });

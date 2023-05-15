@@ -15,12 +15,20 @@ import {Tabs} from './lib/tabs.js';
 export class TabHarness extends Harness<Tab> {
   override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.querySelector<HTMLButtonElement|HTMLLinkElement>(
-        '.button')!;
+    return this.element.renderRoot
+        .querySelector<HTMLButtonElement|HTMLLinkElement>('.button')!;
+  }
+
+  private async completeIndicatorAnimation() {
+    await this.element.updateComplete;
+    const animations = this.element.indicator.getAnimations();
+    for (const animation of animations) {
+      animation.finish();
+    }
   }
 
   async isIndicatorShowing() {
-    await this.element.updateComplete;
+    await this.completeIndicatorAnimation();
     const opacity = getComputedStyle(this.element.indicator)['opacity'];
     return opacity === '1';
   }
@@ -30,6 +38,17 @@ export class TabHarness extends Harness<Tab> {
  * Test harness for Tabs.
  */
 export class TabsHarness extends Harness<Tabs> {
+  // Note, Tabs interactive element is the interactive element of the
+  // selected tab.
+  override async getInteractiveElement() {
+    await this.element.updateComplete;
+    const selectedItemHarness =
+        (this.element.selectedItem as ElementWithHarness<Tab>).harness as
+            TabHarness ??
+        new TabHarness(this.element.selectedItem);
+    return await selectedItemHarness.getInteractiveElement();
+  }
+
   get harnessedItems() {
     // Test access to protected property
     // tslint:disable-next-line:no-dict-access-on-struct-type

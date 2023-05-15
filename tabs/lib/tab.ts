@@ -81,10 +81,6 @@ export class Tab extends LitElement {
 
   @state() private showRipple = false;
 
-  // whether or not selection state can be animated; used to avoid initial
-  // animation and becomes true one task after first update.
-  private canAnimate = false;
-
   constructor() {
     super();
     if (!isServer) {
@@ -125,13 +121,8 @@ export class Tab extends LitElement {
       </button>`;
   }
 
-  protected override async firstUpdated() {
-    await new Promise(requestAnimationFrame);
-    this.canAnimate = true;
-  }
-
   protected override updated(changed: PropertyValues) {
-    if (changed.has('selected') && this.shouldAnimate()) {
+    if (changed.has('selected') && !this.disabled) {
       this.animateSelected();
     }
   }
@@ -143,10 +134,6 @@ export class Tab extends LitElement {
     this.focus();
     dispatchActivationClick(this.button);
   };
-
-  private shouldAnimate() {
-    return this.canAnimate && !this.disabled;
-  }
 
   private readonly getRipple = () => {
     this.showRipple = true;
