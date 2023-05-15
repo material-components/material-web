@@ -9,8 +9,8 @@ import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 
+import {ARIAMixinStrict} from '../../aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
-import {ARIAMixinStrict} from '../../types/aria.js';
 
 /**
  * A linear progress component.

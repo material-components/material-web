@@ -7,8 +7,8 @@
 import {html, LitElement, nothing} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 
+import {ARIAMixinStrict, ARIARole} from '../../aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
-import {ARIAMixinStrict, ARIARole} from '../../types/aria.js';
 
 import {ListItem} from './listitem/list-item.js';
 

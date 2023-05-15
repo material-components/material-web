@@ -10,8 +10,8 @@ import {html, LitElement, nothing, PropertyValues} from 'lit';
 import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
+import {ARIAMixinStrict} from '../../aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
-import {ARIAMixinStrict} from '../../types/aria.js';
 
 /**
  * TODO(b/265346501): add docs

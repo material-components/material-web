@@ -11,10 +11,10 @@ import {html, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
+import {ARIAMixinStrict, ARIARole} from '../../../aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../../aria/delegate.js';
 import {ripple} from '../../../ripple/directive.js';
 import {MdRipple} from '../../../ripple/ripple.js';
-import {ARIAMixinStrict, ARIARole} from '../../../types/aria.js';
 
 interface ListItemSelf {
   active: boolean;

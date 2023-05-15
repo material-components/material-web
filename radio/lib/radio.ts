@@ -11,12 +11,12 @@ import {html, isServer, LitElement, nothing} from 'lit';
 import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {when} from 'lit/directives/when.js';
 
+import {ARIAMixinStrict} from '../../aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../controller/events.js';
 import {FormController, getFormValue} from '../../controller/form-controller.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
-import {ARIAMixinStrict} from '../../types/aria.js';
 
 import {SingleSelectionController} from './single-selection-controller.js';
 
