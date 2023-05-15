@@ -147,14 +147,15 @@ describe('TextField', () => {
   describe('resetting the input', () => {
     it('should set value back to default value', async () => {
       const {harness} = await setupTest();
-      harness.element.defaultValue = 'Default';
+      harness.element.setAttribute('value', 'Default');
       await env.waitForStability();
 
+      expect(harness.element.value).toBe('Default');
       await harness.deleteValue();
       await harness.inputValue('Value');
+      expect(harness.element.value).toBe('Value');
       harness.element.reset();
 
-      expect(harness.element.defaultValue).toBe('Default');
       expect(harness.element.value).toBe('Default');
     });
 
@@ -164,29 +165,7 @@ describe('TextField', () => {
       await harness.inputValue('Value');
       harness.element.reset();
 
-      expect(harness.element.defaultValue).toBe('');
       expect(harness.element.value).toBe('');
-    });
-
-    it('should allow defaultValue to update value again', async () => {
-      const {harness} = await setupTest();
-
-      // defaultValue changes value
-      harness.element.defaultValue = 'First default';
-      await env.waitForStability();
-      expect(harness.element.value).toBe('First default');
-
-      // Setting value programmatically causes it to stick
-      harness.element.value = 'Value';
-      harness.element.defaultValue = 'Second default';
-      await env.waitForStability();
-      expect(harness.element.value).toBe('Value');
-
-      // Resetting should return to original functionality
-      harness.element.reset();
-      harness.element.defaultValue = 'Third default';
-      await env.waitForStability();
-      expect(harness.element.value).toBe('Third default');
     });
   });
 
@@ -194,7 +173,7 @@ describe('TextField', () => {
     it('should update `value` before user input', async () => {
       const {harness} = await setupTest();
 
-      harness.element.defaultValue = 'Default';
+      harness.element.setAttribute('value', 'Default');
       await env.waitForStability();
 
       expect(harness.element.value).toBe('Default');
@@ -203,9 +182,9 @@ describe('TextField', () => {
     it('should update `value` multiple times', async () => {
       const {harness} = await setupTest();
 
-      harness.element.defaultValue = 'First default';
+      harness.element.setAttribute('value', 'First default');
       await env.waitForStability();
-      harness.element.defaultValue = 'Second default';
+      harness.element.setAttribute('value', 'Second default');
       await env.waitForStability();
 
       expect(harness.element.value).toBe('Second default');
@@ -214,22 +193,22 @@ describe('TextField', () => {
     it('should NOT update `value` after user input', async () => {
       const {harness} = await setupTest();
 
-      harness.element.defaultValue = 'First default';
+      harness.element.setAttribute('value', 'First default');
       await env.waitForStability();
       await harness.deleteValue();
       await harness.inputValue('Value');
 
-      harness.element.defaultValue = 'Second default';
+      harness.element.setAttribute('value', 'Second default');
       await env.waitForStability();
 
       expect(harness.element.value).toBe('Value');
     });
 
-    it('should render `value` instead of `defaultValue` when `value` changes',
+    it('should render `value` instead of default value attribute when `value` changes',
        async () => {
          const {harness, input} = await setupTest();
 
-         harness.element.defaultValue = 'Default';
+         harness.element.setAttribute('value', 'Default');
          await env.waitForStability();
          expect(input.value).toBe('Default');
 
@@ -240,7 +219,7 @@ describe('TextField', () => {
          harness.element.value = '';
          await env.waitForStability();
          expect(input.value).toBe('');
-         expect(harness.element.defaultValue).toBe('Default');
+         expect(harness.element.getAttribute('value')).toBe('Default');
        });
   });
 
