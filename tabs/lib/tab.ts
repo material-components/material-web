@@ -145,8 +145,7 @@ export class Tab extends LitElement {
   };
 
   private shouldAnimate() {
-    return this.canAnimate && !this.disabled &&
-        !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    return this.canAnimate && !this.disabled;
   }
 
   private readonly getRipple = () => {
@@ -173,8 +172,9 @@ export class Tab extends LitElement {
   }
 
   private getKeyframes() {
+    const reduceMotion = shouldReduceMotion();
     if (!this.selected) {
-      return null;
+      return reduceMotion ? [{'opacity': 1}, {'transform': 'none'}] : null;
     }
     const from: Keyframe = {};
     const isVertical = this.variant.includes('vertical');
@@ -189,7 +189,8 @@ export class Tab extends LitElement {
     const toExtent = isVertical ? toRect.height : toRect.width;
     const axis = isVertical ? 'Y' : 'X';
     const scale = fromExtent / toExtent;
-    if (fromPos !== undefined && toPos !== undefined && !isNaN(scale)) {
+    if (!reduceMotion && fromPos !== undefined && toPos !== undefined &&
+        !isNaN(scale)) {
       from['transform'] = `translate${axis}(${
           (fromPos - toPos).toFixed(4)}px) scale${axis}(${scale.toFixed(4)})`;
     } else {
@@ -199,4 +200,8 @@ export class Tab extends LitElement {
     // that can hide the animation.
     return [from, {'transform': 'none'}];
   }
+}
+
+function shouldReduceMotion() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }

@@ -286,4 +286,11 @@
   ::slotted(*) {
     white-space: nowrap;
   }
+
+  @media (forced-colors: active) {
+    :host,
+    :host([variant]) {
+      --_active-indicator-color: CanvasText;
+    }
+  }
 }

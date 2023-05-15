@@ -5,18 +5,9 @@
  */
 
 import {html, isServer, LitElement, PropertyValues} from 'lit';
-import {property, state} from 'lit/decorators.js';
+import {property, query} from 'lit/decorators.js';
 
-import {Variant} from './tab.js';
-
-/**
- * Type for list items.
- */
-export interface Tab extends HTMLElement {
-  disabled?: boolean;
-  selected?: boolean;
-  variant?: string;
-}
+import {Tab, Variant} from './tab.js';
 
 const NAVIGATION_KEYS = new Map([
   ['default', new Set(['Home', 'End', 'Space'])],
@@ -76,11 +67,15 @@ export class Tabs extends LitElement {
    */
   @property({type: Boolean}) selectOnFocus = false;
 
+  @query('slot') private readonly itemsSlot?: HTMLSlotElement;
+
   private previousSelected = -1;
   private orientation = 'horizontal';
   private readonly scrollMargin = 48;
-  // note, populated via slotchange.
-  @state() private items: Tab[] = [];
+
+  private get items() {
+    return this.itemsSlot?.assignedElements({flatten: true}) as Tab[] ?? [];
+  }
 
   private readonly selectedAttribute = `selected`;
 
@@ -298,9 +293,7 @@ export class Tabs extends LitElement {
   }
 
   private handleSlotChange(e: Event) {
-    this.items =
-        (e.target as HTMLSlotElement).assignedElements({flatten: true}) as
-        Tab[];
+    this.requestUpdate();
   }
 
   // ensures the given item is visible in view; defaults to the selected item
