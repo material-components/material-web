@@ -15,7 +15,7 @@
     "build:prod": "wireit",
     "build:prod:eleventy": "wireit",
     "build:prod:ts": "wireit",
-    "build:readmes:copy": "wireit",
+    "build:copy-readmes": "wireit",
     "build:copy-stories": "wireit"
   },
   "wireit": {
