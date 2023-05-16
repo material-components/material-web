@@ -6,6 +6,7 @@
 
 import {customElement} from 'lit/decorators.js';
 
+import {styles as forcedColorsStyles} from './lib/forced-colors-styles.css.js';
 import {Switch} from './lib/switch.js';
 import {styles} from './lib/switch-styles.css.js';
 
@@ -27,5 +28,5 @@ declare global {
  */
 @customElement('md-switch')
 export class MdSwitch extends Switch {
-  static override styles = [styles];
+  static override styles = [styles, forcedColorsStyles];
 }

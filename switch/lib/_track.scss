@@ -50,7 +50,7 @@
     background-color: var(--_selected-hover-track-color);
   }
 
-  .switch--selected:focus-visible .track::before {
+  .switch--selected:focus-within .track::before {
     background-color: var(--_selected-focus-track-color);
   }
 

@@ -15,27 +15,6 @@
 @use './track';
 // go/keep-sorted end
 
-$_forced-colors-theme: (
-  disabled-selected-icon-color: GrayText,
-  disabled-selected-icon-opacity: 1,
-  disabled-selected-track-color: GrayText,
-  disabled-track-opacity: 1,
-  disabled-unselected-handle-color: GrayText,
-  disabled-unselected-handle-opacity: 1,
-  disabled-unselected-icon-color: Canvas,
-  disabled-unselected-icon-opacity: 1,
-  selected-focus-track-color: ButtonText,
-  selected-hover-track-color: ButtonText,
-  selected-icon-color: ButtonText,
-  selected-pressed-track-color: ButtonText,
-  selected-track-color: ButtonText,
-  unselected-focus-handle-color: ButtonText,
-  unselected-handle-color: ButtonText,
-  unselected-hover-handle-color: ButtonText,
-  unselected-icon-color: Canvas,
-  unselected-pressed-handle-color: ButtonText,
-);
-
 @mixin theme($tokens) {
   $supported-tokens: list.join(
     tokens.$md-comp-switch-supported-tokens,
@@ -103,11 +82,6 @@ $_forced-colors-theme: (
       --md-switch-track-shape-end-start,
       var(--_track-shape)
     );
-
-    // TODO(b/230630968): create a forced-colors-mode mixin
-    @media screen and (forced-colors: active) {
-      @include theme($_forced-colors-theme);
-    }
 
     display: inline-flex;
     outline: none;

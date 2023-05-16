@@ -154,7 +154,7 @@ export class Switch extends LitElement {
 
   private renderHandle() {
     const classes = {
-      'handle--big': this.icons && !this.showOnlySelectedIcon,
+      'with-icon': this.icons || (this.showOnlySelectedIcon && this.selected),
     };
     return html`
       <span class="handle-container">
