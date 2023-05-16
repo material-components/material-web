@@ -81,5 +81,28 @@ describe('<md-tabs>', () => {
       expect(harness.element.previousSelectedItem)
           .toBe(harness.harnessedItems[1].element);
     });
+
+    it('maintains selection when tabs are mutated', async () => {
+      const {harness} = await setupTest({selected: 1});
+      expect(harness.element.selectedItem.textContent).toBe('B');
+      const tab = document.createElement('md-tab');
+      tab.textContent = 'tab';
+      // add before selected
+      harness.element.prepend(tab);
+      await env.waitForStability();
+      expect(harness.element.selectedItem.textContent).toBe('A');
+      // move after selected
+      harness.element.selectedItem.after(tab);
+      await env.waitForStability();
+      expect(harness.element.selectedItem.textContent).toBe('tab');
+      // move before selected
+      harness.element.prepend(tab);
+      await env.waitForStability();
+      expect(harness.element.selectedItem.textContent).toBe('A');
+      // remove
+      tab.remove();
+      await env.waitForStability();
+      expect(harness.element.selectedItem.textContent).toBe('B');
+    });
   });
 });

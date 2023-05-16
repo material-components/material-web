@@ -5,7 +5,7 @@
  */
 
 import {html, isServer, LitElement, PropertyValues} from 'lit';
-import {property, query} from 'lit/decorators.js';
+import {property, queryAssignedElements, state} from 'lit/decorators.js';
 
 import {Tab, Variant} from './tab.js';
 
@@ -67,15 +67,16 @@ export class Tabs extends LitElement {
    */
   @property({type: Boolean}) selectOnFocus = false;
 
-  @query('slot') private readonly itemsSlot?: HTMLSlotElement;
-
   private previousSelected = -1;
   private orientation = 'horizontal';
   private readonly scrollMargin = 48;
 
-  private get items() {
-    return this.itemsSlot?.assignedElements({flatten: true}) as Tab[] ?? [];
-  }
+  @queryAssignedElements({selector: 'md-tab', flatten: true})
+  private readonly items!: Tab[];
+
+  // this tracks if items have changed, which triggers rendering so they can
+  // be kept in sync
+  @state() private itemsDirty = false;
 
   private readonly selectedAttribute = `selected`;
 
@@ -229,16 +230,21 @@ export class Tabs extends LitElement {
       this.orientation =
           this.variant.includes('vertical') ? 'vertical' : 'horizontal';
     }
+    if (this.itemsDirty) {
+      this.itemsDirty = false;
+      this.previousSelected = -1;
+    }
   }
 
   protected override async updated(changed: PropertyValues) {
     const itemsOrVariantChanged =
-        changed.has('items') || changed.has('variant');
-    // sync variant with items.
+        changed.has('itemsDirty') || changed.has('variant');
+    // sync state with items.
     if (itemsOrVariantChanged || changed.has('disabled')) {
-      this.items.forEach(i => {
-        i.variant = this.variant;
-        i.disabled = this.disabled;
+      this.items.forEach((item, i) => {
+        item.selected = this.selected === i;
+        item.variant = this.variant;
+        item.disabled = this.disabled;
       });
     }
     if (itemsOrVariantChanged || changed.has('selected')) {
@@ -253,15 +259,15 @@ export class Tabs extends LitElement {
     }
   }
 
-  private updateFocusableItem(item: HTMLElement|null) {
+  private updateFocusableItem(focusableItem: HTMLElement|null) {
     const tabIndex = 'tabindex';
-    this.items.forEach(e => {
-      if (e === item) {
-        e.removeAttribute(tabIndex);
+    for (const item of this.items) {
+      if (item === focusableItem) {
+        item.removeAttribute(tabIndex);
       } else {
-        e.setAttribute(tabIndex, '-1');
+        item.setAttribute(tabIndex, '-1');
       }
-    });
+    }
   }
 
   protected override render() {
@@ -289,7 +295,7 @@ export class Tabs extends LitElement {
   }
 
   private handleSlotChange(e: Event) {
-    this.requestUpdate();
+    this.itemsDirty = true;
   }
 
   private async itemsUpdateComplete() {

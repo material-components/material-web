@@ -226,13 +226,10 @@
     color: var(--_active-pressed-icon-color);
   }
 
-  // TODO (b/261201556) implement disabled and high contrast mode
-  // styling in beta version.
   // disabled state
   :host([disabled]) {
     cursor: default;
     pointer-events: none;
-    // TODO (b/261201556) implement disabled styling in beta version.
     opacity: 0.38;
   }
 
