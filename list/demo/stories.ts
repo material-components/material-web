@@ -19,6 +19,7 @@ export interface StoryKnobs {
 
   'md-list-item': void;
   disabled: boolean;
+  noninteractive: boolean;
   active: boolean;
   multiLineSupportingText: boolean;
   headline: string;
@@ -65,6 +66,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
     const {
       listTabIndex,
       disabled,
+      noninteractive,
       active,
       multiLineSupportingText,
       headline,
@@ -86,6 +88,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
+              .noninteractive=${noninteractive}
               .itemTabIndex=${itemTabIndex}
               .active=${active}>
           </md-list-item>
@@ -96,6 +99,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
+              .noninteractive=${noninteractive}
               .itemTabIndex=${itemTabIndex}
               .active=${active}>
             <md-icon data-variant="icon" slot="start">
@@ -112,6 +116,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
+              .noninteractive=${noninteractive}
               .itemTabIndex=${itemTabIndex}
               .href=${href}
               .target=${target}
@@ -128,6 +133,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
+              .noninteractive=${noninteractive}
               .itemTabIndex=${itemTabIndex}
               .active=${active}>
             <img src=${knobs['avatar img']} slot="start" data-variant="avatar">
@@ -139,6 +145,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
+              .noninteractive=${noninteractive}
               .itemTabIndex=${itemTabIndex}
               .active=${active}>
             <span slot="start" data-variant="avatar">
@@ -152,6 +159,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
+              .noninteractive=${noninteractive}
               .itemTabIndex=${itemTabIndex}
               .active=${active}>
             <img .src=${image} data-variant="image" slot="start">
@@ -163,6 +171,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
+              .noninteractive=${noninteractive}
               .itemTabIndex=${itemTabIndex}
               .active=${active}>
             <video

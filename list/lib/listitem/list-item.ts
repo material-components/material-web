@@ -100,7 +100,7 @@ export class ListItemEl extends LitElement implements ListItem {
     return this.ripple;
   };
 
-  private isFirstUpdate = true;
+  protected isFirstUpdate = true;
 
   protected override willUpdate(changed: PropertyValues<this>) {
     if (changed.has('active') && !this.disabled) {
@@ -149,7 +149,7 @@ export class ListItemEl extends LitElement implements ListItem {
   /**
    * Handles rendering of the ripple element.
    */
-  private renderRipple() {
+  protected renderRipple() {
     return this.showRipple ?
         html`<md-ripple ?disabled="${this.disabled}"></md-ripple>` :
         nothing;
@@ -158,7 +158,7 @@ export class ListItemEl extends LitElement implements ListItem {
   /**
    * Handles rendering of the focus ring.
    */
-  private renderFocusRing() {
+  protected renderFocusRing() {
     return html`<md-focus-ring class="focus-ring" for="item"></md-focus-ring>`;
   }
 
@@ -179,14 +179,14 @@ export class ListItemEl extends LitElement implements ListItem {
   /**
    * The content rendered at the start of the list item.
    */
-  private renderStart() {
+  protected renderStart() {
     return html`<div class="start"><slot name="start"></slot></div>`;
   }
 
   /**
    * Handles rendering the headline and supporting text.
    */
-  private renderBody() {
+  protected renderBody() {
     const supportingText =
         this.supportingText !== '' ? this.renderSupportingText() : '';
 
@@ -197,7 +197,7 @@ export class ListItemEl extends LitElement implements ListItem {
   /**
    * Renders the one-line supporting text.
    */
-  private renderSupportingText() {
+  protected renderSupportingText() {
     return html`<span
         class="supporting-text ${classMap(this.getSupportingTextClasses())}"
       >${this.supportingText}</span>`;
@@ -206,7 +206,7 @@ export class ListItemEl extends LitElement implements ListItem {
   /**
    * Gets the classes for the supporting text node
    */
-  private getSupportingTextClasses() {
+  protected getSupportingTextClasses() {
     return {'supporting-text--multi-line': this.multiLineSupportingText};
   }
 
@@ -224,7 +224,7 @@ export class ListItemEl extends LitElement implements ListItem {
   /**
    * Renders the supporting text at the end of the list item.
    */
-  private renderTrailingSupportingText() {
+  protected renderTrailingSupportingText() {
     return html`<span class="trailing-supporting-text"
       >${this.trailingSupportingText}</span>`;
   }
