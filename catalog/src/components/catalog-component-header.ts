@@ -47,7 +47,9 @@ export class CatalogComponentHeader extends LitElement {
       width: 100%;
     }
 
-    @container host (width > 1200px) {
+    /* clean-css ignore:start */
+    @container (width > 1200px) {
+    /* clean-css ignore:end */
       div {
         display: grid;
         grid-gap: 8px;
@@ -72,6 +74,8 @@ export class CatalogComponentHeader extends LitElement {
       .image::slotted(*) {
         max-height: 544px;
       }
+    /* clean-css ignore:start */
     }
+    /* clean-css ignore:end */
   `;
 }
