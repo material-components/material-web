@@ -26,12 +26,12 @@
       ]
     },
     "build:dev:eleventy": {
-      "command": "NODE_ENV=DEV eleventy --config=eleventy.cjs",
+      "command": "NODE_ENV=DEV eleventy",
       "files": [
         "site",
         "lib",
         "eleventy-helpers",
-        "eleventy.cjs",
+        "eleventy.config.cjs",
         "stories"
       ],
       "output": [
@@ -75,12 +75,12 @@
       ]
     },
     "build:prod:eleventy": {
-      "command": "NODE_ENV=PROD eleventy --config=eleventy.cjs",
+      "command": "NODE_ENV=PROD eleventy",
       "files": [
         "site",
         "build",
         "eleventy-helpers",
-        "eleventy.cjs",
+        "eleventy.config.cjs",
         "stories/"
       ],
       "output": [
