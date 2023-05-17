@@ -6,9 +6,6 @@
 
 import {ReactiveController, ReactiveControllerHost} from 'lit';
 
-import {isFormAssociated} from './form-associated.js';
-import {shimLabelSupport, SUPPORTS_FACE_LABEL} from './shim-label-activation.js';
-
 declare global {
   interface Window {
     ShadyDOM?: {inUse: boolean;};
@@ -79,12 +76,6 @@ export class FormController implements ReactiveController {
     // null if the child was removed.
     this.form = this.element.form;
     this.form?.addEventListener('formdata', this.formDataListener);
-
-    // TODO(b/261871554) Label activation shim is currently only needed for
-    // Safari. Remove it when no longer needed.
-    if (isFormAssociated(this.element) && !SUPPORTS_FACE_LABEL) {
-      shimLabelSupport(this.element.getRootNode() as Document | ShadowRoot);
-    }
   }
 
   hostDisconnected() {
