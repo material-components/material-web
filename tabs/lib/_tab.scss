@@ -112,7 +112,6 @@
     align-items: center;
     justify-content: center;
 
-    // TODO (b/261201556) replace with spacing token
     $_content-padding: 8px;
     // tabs are naturally sized up to their max height.
     max-height: calc(var(--_container-height) + 2 * $_content-padding);
