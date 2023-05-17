@@ -128,7 +128,7 @@
       ]
     },
     "serve": {
-      "command": "npm run build:prod && wds -b /material-web/ --watch --root-dir _prod",
+      "command": "wds -b /material-web/ --watch --root-dir _prod",
       "service": true,
       "dependencies": [
         {
