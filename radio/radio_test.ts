@@ -7,6 +7,7 @@
 import {html} from 'lit';
 
 import {Environment} from '../testing/environment.js';
+import {createFormTests} from '../testing/forms.js';
 import {createTokenTests} from '../testing/tokens.js';
 
 import {RadioHarness} from './harness.js';
@@ -378,86 +379,6 @@ describe('<md-radio>', () => {
     });
   });
 
-  describe('form submission', () => {
-    async function setupFormTest() {
-      const root = env.render(html`
-        <form>
-          <md-radio id="first" name="a" value="first"></md-radio>
-          <md-radio id="disabled" name="a" value="disabled" disabled></md-radio>
-          <md-radio id="unNamed" value="unnamed"></md-radio>
-          <md-radio id="ownGroup" name="b" value="ownGroup"></md-radio>
-          <md-radio id="last" name="a" value="last"></md-radio>
-        </form>`);
-      await env.waitForStability();
-      const harnesses = new Map<string, RadioHarness>();
-      Array.from(root.querySelectorAll('md-radio')).forEach((el: MdRadio) => {
-        harnesses.set(el.id, new RadioHarness(el));
-      });
-      return harnesses;
-    }
-
-    it('does not submit if not checked', async () => {
-      const harness = (await setupFormTest()).get('first')!;
-      const formData = await harness.submitForm();
-      const keys = Array.from(formData.keys());
-      expect(keys.length).toEqual(0);
-    });
-
-    it('does not submit if disabled', async () => {
-      const harness = (await setupFormTest()).get('disabled')!;
-      expect(harness.element.disabled).toBeTrue();
-      harness.element.checked = true;
-      const formData = await harness.submitForm();
-      const keys = Array.from(formData.keys());
-      expect(keys.length).toEqual(0);
-    });
-
-    it('does not submit if name is not provided', async () => {
-      const harness = (await setupFormTest()).get('unNamed')!;
-      expect(harness.element.name).toBe('');
-      const formData = await harness.submitForm();
-      const keys = Array.from(formData.keys());
-      expect(keys.length).toEqual(0);
-    });
-
-    it('submits under correct conditions', async () => {
-      const harness = (await setupFormTest()).get('first')!;
-      harness.element.checked = true;
-      const formData = await harness.submitForm();
-      const {name, value} = harness.element;
-      const keys = Array.from(formData.keys());
-      expect(keys.length).toEqual(1);
-      expect(formData.get(name)).toEqual(value);
-    });
-
-    it('submits changes to group value under correct conditions', async () => {
-      const harnesses = await setupFormTest();
-      const first = harnesses.get('first')!;
-      const last = harnesses.get('last')!;
-      const ownGroup = harnesses.get('ownGroup')!;
-
-      // check first and submit
-      first.element.checked = true;
-      let formData = await first.submitForm();
-      expect(Array.from(formData.keys()).length).toEqual(1);
-      expect(formData.get(first.element.name)).toEqual(first.element.value);
-
-      // check last and submit
-      last.element.checked = true;
-      formData = await last.submitForm();
-      expect(Array.from(formData.keys()).length).toEqual(1);
-      expect(formData.get(last.element.name)).toEqual(last.element.value);
-
-      // check ownGroup and submit
-      ownGroup.element.checked = true;
-      formData = await ownGroup.submitForm();
-      expect(Array.from(formData.keys()).length).toEqual(2);
-      expect(formData.get(last.element.name)).toEqual(last.element.value);
-      expect(formData.get(ownGroup.element.name))
-          .toEqual(ownGroup.element.value);
-    });
-  });
-
   describe('label activation', () => {
     async function setupLabelTest() {
       const root = env.render(html`
@@ -482,6 +403,128 @@ describe('<md-radio>', () => {
       await env.waitForStability();
       expect(radio1.checked).toBeFalse();
       expect(radio2.checked).toBeTrue();
+    });
+  });
+
+  describe('forms', () => {
+    createFormTests({
+      queryControl: root => root.querySelector('md-radio'),
+      valueTests: [
+        {
+          name: 'unnamed',
+          render: () => html`
+            <md-radio value="One" checked></md-radio>
+            <md-radio value="Two"></md-radio>
+          `,
+          assertValue(formData) {
+            expect(formData)
+                .withContext('should not add anything to form without a name')
+                .toHaveSize(0);
+          }
+        },
+        {
+          name: 'unchecked',
+          render: () => html`
+            <md-radio name="radio" value="One"></md-radio>
+            <md-radio name="radio" value="Two"></md-radio>
+          `,
+          assertValue(formData) {
+            expect(formData)
+                .withContext('should not add anything to form when unchecked')
+                .toHaveSize(0);
+          }
+        },
+        {
+          name: 'checked first value',
+          render: () => html`
+            <md-radio name="radio" value="One" checked></md-radio>
+            <md-radio name="radio" value="Two"></md-radio>
+          `,
+          assertValue(formData) {
+            expect(formData.get('radio')).toBe('One');
+          }
+        },
+        {
+          name: 'checked second value',
+          render: () => html`
+            <md-radio name="radio" value="One"></md-radio>
+            <md-radio name="radio" value="Two" checked></md-radio>
+          `,
+          assertValue(formData) {
+            expect(formData.get('radio')).toBe('Two');
+          }
+        },
+        {
+          name: 'disabled',
+          render: () => html`
+            <md-radio name="radio" value="One" checked disabled></md-radio>
+            <md-radio name="radio" value="Two" disabled></md-radio>
+          `,
+          assertValue(formData) {
+            expect(formData)
+                .withContext('should not add anything to form when disabled')
+                .toHaveSize(0);
+          }
+        }
+      ],
+      resetTests: [
+        {
+          name: 'reset to unchecked',
+          render: () => html`
+            <md-radio name="radio" value="One"></md-radio>
+            <md-radio name="radio" value="Two"></md-radio>
+          `,
+          change(radio) {
+            radio.checked = true;
+          },
+          assertReset(radio) {
+            expect(radio.checked)
+                .withContext('radio.checked after reset')
+                .toBeFalse();
+          }
+        },
+        {
+          name: 'reset to checked',
+          render: () => html`
+            <md-radio name="radio" value="One" checked></md-radio>
+            <md-radio name="radio" value="Two"></md-radio>
+          `,
+          change(radio) {
+            radio.checked = false;
+          },
+          assertReset(radio) {
+            expect(radio.checked)
+                .withContext('radio.checked after reset')
+                .toBeTrue();
+          }
+        },
+      ],
+      restoreTests: [
+        {
+          name: 'restore unchecked',
+          render: () => html`
+            <md-radio name="radio" value="One"></md-radio>
+            <md-radio name="radio" value="Two"></md-radio>
+          `,
+          assertRestored(radio) {
+            expect(radio.checked)
+                .withContext('radio.checked after restore')
+                .toBeFalse();
+          }
+        },
+        {
+          name: 'restore checked',
+          render: () => html`
+            <md-radio name="radio" value="One" checked></md-radio>
+            <md-radio name="radio" value="Two"></md-radio>
+          `,
+          assertRestored(radio) {
+            expect(radio.checked)
+                .withContext('radio.checked after restore')
+                .toBeTrue();
+          }
+        },
+      ]
     });
   });
 });
