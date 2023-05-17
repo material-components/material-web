@@ -27,6 +27,7 @@
     "types": ["lit", "jasmine"]
   },
   "exclude": [
+    "catalog",
     "*/demo"
   ]
 }

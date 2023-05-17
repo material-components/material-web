@@ -1,0 +1,200 @@
+{
+  "name": "material-web-catalog",
+  "version": "0.0.1",
+  "description": "The Material Web Catalog.",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run serve",
+    "dev": "npm run serve:dev --watch",
+    "serve": "wireit",
+    "serve:dev": "wireit",
+    "build:dev": "wireit",
+    "build:dev:eleventy": "wireit",
+    "build:dev:ts": "wireit",
+    "build:type-check": "wireit",
+    "build:prod": "wireit",
+    "build:prod:eleventy": "wireit",
+    "build:prod:ts": "wireit",
+    "build:copy-readmes": "wireit",
+    "build:copy-stories": "wireit"
+  },
+  "wireit": {
+    "build:dev": {
+      "dependencies": [
+        "build:dev:eleventy",
+        "build:dev:ts"
+      ]
+    },
+    "build:dev:eleventy": {
+      "command": "NODE_ENV=DEV eleventy --config=eleventy.cjs",
+      "files": [
+        "site",
+        "lib",
+        "eleventy-helpers",
+        "eleventy.cjs",
+        "stories"
+      ],
+      "output": [
+        "_dev"
+      ],
+      "dependencies": [
+        "build:dev:ts",
+        "build:copy-readmes",
+        "build:copy-stories"
+      ]
+    },
+    "build:dev:ts": {
+      "command": "NODE_ENV=DEV node esbuild.config.mjs",
+      "files": [
+        "src",
+        "tsconfig.json",
+        "esbuild.config.mjs"
+      ],
+      "output": [
+        "lib"
+      ],
+      "dependencies": [
+        "..:build"
+      ]
+    },
+    "build:type-check": {
+      "command": "tsc -p tsconfig.json --pretty --incremental",
+      "files": [
+        "src",
+        "tsconfig.json"
+      ],
+      "clean": "if-file-deleted",
+      "output": [
+        "tsconfig.tsbuildinfo"
+      ]
+    },
+    "build:prod": {
+      "dependencies": [
+        "build:prod:eleventy",
+        "build:prod:ts"
+      ]
+    },
+    "build:prod:eleventy": {
+      "command": "NODE_ENV=PROD eleventy --config=eleventy.cjs",
+      "files": [
+        "site",
+        "build",
+        "eleventy-helpers",
+        "eleventy.cjs",
+        "stories/"
+      ],
+      "output": [
+        "_prod/"
+      ],
+      "dependencies": [
+        "build:prod:ts",
+        "build:copy-readmes",
+        "build:copy-stories"
+      ]
+    },
+    "build:prod:ts": {
+      "command": "NODE_ENV=PROD node esbuild.config.mjs",
+      "files": [
+        "src",
+        "tsconfig.json",
+        "esbuild.config.mjs"
+      ],
+      "output": [
+        "build"
+      ],
+      "dependencies": [
+        "..:build"
+      ]
+    },
+    "build:copy-readmes": {
+      "command": "node scripts/copy-readmes.mjs",
+      "files": [
+        "../docs/components",
+        "scripts/copy-readmes.mjs"
+      ],
+      "output": [
+        "site/components/**/*.md",
+        "site/components/images"
+      ]
+    },
+    "serve:dev": {
+      "command": "wds -b /material-web/ --watch --root-dir _dev --open",
+      "service": true,
+      "dependencies": [
+        {
+          "script": "build:dev",
+          "cascade": false
+        }
+      ]
+    },
+    "serve": {
+      "command": "npm run build:prod && wds -b /material-web/ --watch --root-dir _prod",
+      "service": true,
+      "dependencies": [
+        {
+          "script": "build:prod",
+          "cascade": false
+        }
+      ]
+    },
+    "build:copy-stories": {
+      "command": "node scripts/copy-stories.mjs",
+      "files": [
+        "scripts/copy-stories.mjs",
+        "../*/demo"
+      ],
+      "output": [
+        "stories/*/**/*",
+        "!stories/components"
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/e111077/11ty-lit.git"
+  },
+  "keywords": [
+    "11ty",
+    "eleventy",
+    "lit",
+    "lit-element",
+    "SSR"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/e111077/11ty-lit/issues"
+  },
+  "homepage": "https://github.com/e111077/11ty-lit#readme",
+  "dependencies": {
+    "@11ty/is-land": "^3.0.0",
+    "@lit-labs/ssr-client": "^1.1.1",
+    "@material/material-color-utilities": "^0.2.5",
+    "@material/mwc-drawer": "^0.27.0",
+    "@material/web": "^1.0.0-pre.6",
+    "@preact/signals-core": "^1.3.0",
+    "lit": "^2.7.4",
+    "playground-elements": "^0.17.0",
+    "postdoc-lib": "^1.0.3"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
+    "@lit-labs/eleventy-plugin-lit": "^1.0.0",
+    "@lit-labs/motion": "^1.0.3",
+    "@luncheon/esbuild-plugin-gzip": "^0.1.0",
+    "@web/dev-server": "^0.1.35",
+    "@webcomponents/template-shadowroot": "^0.2.1",
+    "clean-css": "^5.3.1",
+    "eleventy-plugin-nesting-toc": "^1.3.0",
+    "esbuild": "^0.17.14",
+    "esbuild-plugin-minify-html-literals": "^1.0.1",
+    "html-minifier": "^4.0.0",
+    "markdown-it": "^13.0.1",
+    "markdown-it-anchor": "^8.6.7",
+    "slugify": "^1.6.6",
+    "tiny-glob": "^0.2.9",
+    "typescript": "~4.9.5",
+    "wireit": "^0.9.5"
+  }
+}

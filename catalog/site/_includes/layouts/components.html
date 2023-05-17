@@ -1,0 +1,34 @@
+<!-- this is an example layout -->
+{% extends 'default.html' %}
+
+{% block head %}
+  <script type="module" src="/material-web/js/pages/components.js"></script>
+  <link rel="stylesheet" href="/material-web/css/components.css" />
+  <link rel="stylesheet" href="/material-web/css/syntax-highlight.css" />
+{% endblock %}
+
+{% set isDemo = page.fileSlug == "demo" %}
+{% set componentUrl = '/material-web' + page.url %}
+
+{% if isDemo %}
+  {% set componentUrl = '/material-web' + page.url %}
+{% else %}
+  {% set componentUrl = '/material-web' + page.filePathStem + "/" %}
+{% endif %}
+
+{% block content %}
+  {{ content | safe }}
+  <lit-island
+    id="top-app-bar-nav"
+    on:interaction="pointerenter,focusin,pointerdown"
+    import="/material-web/js/hydration-entrypoints/top-app-bar-nav.js">
+  <md-tabs variant="primary">
+      <md-tab {% if not isDemo %}selected{% endif %}>
+        <a href="{{componentUrl}}">Docs</a>
+      </md-tab>
+      <md-tab {% if isDemo %}selected{% endif %}>
+        <a href="{{componentUrl}}demo/">Demo</a>
+      </md-tab>
+    </md-tabs>
+  </lit-island>
+{% endblock %}

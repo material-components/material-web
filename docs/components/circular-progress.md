@@ -1,3 +1,11 @@
+<!-- catalog-only-start --><!-- ---
+name: Circular Progress
+dirname: circularprogress
+-----><!-- catalog-only-end -->
+
+<catalog-component-header image-align="end">
+<catalog-component-header-title slot="title">
+
 # Circular progress
 
 <!--*
@@ -19,7 +27,11 @@ There are two types of progress indicators: Linear and circular.
 Circular progress indicators display progress by animating along an invisible
 circular track in a clockwise direction.
 
-![An animated image of an indeterminate circular progress indicator.](images/circularprogress/hero.gif "Circular progress indicators are composed of an invisible track and an indicator")
+</catalog-component-header-title>
+
+![An animated image of an indeterminate circular progress indicator.](images/circularprogress/hero.png "Circular progress indicators are composed of an invisible track and an indicator")
+
+</catalog-component-header>
 
 *   [Design article](https://m3.material.io/components/progress-indicators)
     <!-- {.external} -->
@@ -32,9 +44,30 @@ circular track in a clockwise direction.
 Circular progress indicators may be determinate to show progress, or
 indeterminate for an unspecified amount of progress.
 
+<!-- github-only-start -->
+
 ![Two circular progress indicators, one with three quarters of the track full
 and the other
 indeterminate.](images/circularprogress/usage.gif "Determinate and indeterminate circular progress indicators.")
+
+<!-- github-only-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      style="justify-content:center;"
+      aria-label="Three checkboxes in a row that are unselected, selected, and indeterminate">
+    <md-circular-progress progress="0.75"></md-circular-progress>
+
+    <md-circular-progress indeterminate></md-circular-progress>
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
 
 ```html
 <md-circular-progress progress="0.75"></md-circular-progress>
