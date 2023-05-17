@@ -8,8 +8,8 @@ import {html, nothing} from 'lit';
 import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
+import {ARIAMixinStrict} from '../../../aria/aria.js';
 import {ripple} from '../../../ripple/directive.js';
-import {ARIAMixinStrict} from '../../../types/aria.js';
 import {ListItemEl} from '../listitem/list-item.js';
 
 type LinkTarget = '_blank'|'_parent'|'_self'|'_top';

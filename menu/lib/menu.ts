@@ -13,10 +13,10 @@ import {eventOptions, property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 
+import {ARIAMixinStrict, ARIARole} from '../../aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {List} from '../../list/lib/list.js';
 import {createAnimationSignal, EASING} from '../../motion/animation.js';
-import {ARIAMixinStrict, ARIARole} from '../../types/aria.js';
 
 import {ActivateTypeaheadEvent, DeactivateTypeaheadEvent, isElementInSubtree, MenuItem} from './shared.js';
 import {Corner, SurfacePositionController, SurfacePositionTarget} from './surfacePositionController.js';

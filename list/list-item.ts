@@ -7,7 +7,7 @@
 import {customElement} from 'lit/decorators.js';
 
 import {styles as forcedColors} from './lib/listitem/forced-colors-styles.css.js';
-import {ListItemEl as ListItem} from './lib/listitem/list-item.js';
+import {ListItemOnly as ListItem} from './lib/listitem/list-item-only.js';
 import {styles} from './lib/listitem/list-item-styles.css.js';
 
 declare global {

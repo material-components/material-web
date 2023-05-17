@@ -13,11 +13,11 @@ import {classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
 import {html as staticHtml, literal} from 'lit/static-html.js';
 
+import {ARIAMixinStrict} from '../../aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {isRtl} from '../../controller/is-rtl.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
-import {ARIAMixinStrict} from '../../types/aria.js';
 
 type LinkTarget = '_blank'|'_parent'|'_self'|'_top';
 

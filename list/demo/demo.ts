@@ -40,6 +40,7 @@ const collection =
 
       new Knob('md-list-item', {ui: title()}),
       new Knob('disabled', {ui: boolInput(), defaultValue: false}),
+      new Knob('noninteractive', {ui: boolInput(), defaultValue: false}),
       new Knob('active', {ui: boolInput(), defaultValue: false}),
       new Knob(
           'multiLineSupportingText', {ui: boolInput(), defaultValue: false}),

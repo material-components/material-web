@@ -5,6 +5,7 @@
  */
 
 import '@material/web/icon/icon.js';
+import '@material/web/iconbutton/standard-icon-button.js';
 import '@material/web/tabs/tabs.js';
 
 import {MaterialStoryInit} from './material-collection.js';
@@ -48,7 +49,12 @@ const styles = css`
 
   md-tabs[variant~="vertical"].scrolling {
     block-size: 50vh;
-  }`;
+  }
+
+  .controls {
+    height: 48px;
+  }
+  `;
 
 const primary: MaterialStoryInit<StoryKnobs> = {
   name: 'Primary Tabs',
@@ -322,15 +328,106 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
   }
 };
 
+const dynamic: MaterialStoryInit<StoryKnobs> = {
+  name: 'Dynamic Tabs',
+  styles,
+  render(knobs) {
+    const inlineIcon = knobs.inlineIcon;
+    const vertical = knobs.vertical ? 'vertical' : '';
+    const variant = `primary ${vertical}` as Variant;
+    const classes = {vertical, scrolling: true};
+
+    function getTabs(e: Event) {
+      return ((e.target! as Element).getRootNode() as ShadowRoot)
+          .querySelector('md-tabs')!;
+    }
+
+    function addTab(e: Event) {
+      const tabs = getTabs(e);
+      const count = tabs.childElementCount;
+      const tab = document.createElement('md-tab');
+      tab.textContent = `Tab ${count + 1}`;
+      if (tabs.selectedItem !== undefined) {
+        tabs.selectedItem.after(tab);
+        tabs.selected++;
+      } else {
+        tabs.append(tab);
+        tabs.selected = count;
+      }
+    }
+    function removeTab(e: Event) {
+      const tabs = getTabs(e);
+      if (tabs.selectedItem === undefined) {
+        return;
+      }
+      tabs.selectedItem?.remove();
+      const count = tabs.childElementCount;
+      tabs.selected = Math.min(count - 1, tabs.selected);
+    }
+
+    function moveTabTowardsEnd(e: Event) {
+      const tabs = getTabs(e);
+      const next = tabs.selectedItem?.nextElementSibling;
+      if (next) {
+        next.after(tabs.selectedItem);
+        tabs.selected++;
+      }
+    }
+
+    function moveTabTowardsStart(e: Event) {
+      const tabs = getTabs(e);
+      const previous = tabs.selectedItem?.previousElementSibling;
+      if (previous) {
+        previous.before(tabs.selectedItem);
+        tabs.selected--;
+      }
+    }
+
+    return html`
+      <div class="controls">
+        <md-standard-icon-button @click=${
+        addTab}><md-icon>add</md-icon></md-standard-icon-button>
+        <md-standard-icon-button @click=${
+        removeTab}><md-icon>remove</md-icon></md-standard-icon-button>
+        <md-standard-icon-button @click=${
+        moveTabTowardsStart}><md-icon>chevron_left</md-icon></md-standard-icon-button>
+        <md-standard-icon-button @click=${
+        moveTabTowardsEnd}><md-icon>chevron_right</md-icon></md-standard-icon-button>
+      </div>
+      <md-tabs
+          class=${classMap(classes)}
+          .variant=${variant}
+          .selected=${knobs.selected}
+          .disabled=${knobs.disabled}
+          .selectOnFocus=${knobs.selectOnFocus}
+      >
+        <md-tab .inlineIcon=${inlineIcon}>
+          Tab 1
+        </md-tab>
+        <md-tab .inlineIcon=${inlineIcon}>
+          Tab 2
+        </md-tab>
+        <md-tab .inlineIcon=${inlineIcon}>
+          Tab 3
+        </md-tab>
+      </md-tabs>`;
+  }
+};
+
 function getTabContentGenerator(knobs: StoryKnobs) {
   const contentKnob = knobs.content;
   const useIcon = contentKnob !== 'label';
   const useLabel = contentKnob !== 'icon';
-  return (icon: string, label: string) => html`
-        ${useIcon ? html`<md-icon slot="icon">${icon}</md-icon>` : nothing}
-        ${useLabel ? html`${label}` : nothing}`;
+  return (icon: string, label: string) => {
+    const iconTemplate =
+        html`<md-icon aria-hidden="true" slot="icon">${icon}</md-icon>`;
+    return html`
+      ${useIcon ? iconTemplate : nothing}
+      ${useLabel ? html`${label}` : nothing}
+    `;
+  };
 }
 
 /** Tabs stories. */
 export const stories =
-    [primary, secondary, scrolling, custom, primaryAndSecondary];
+    [primary, secondary, scrolling, custom, primaryAndSecondary, dynamic];

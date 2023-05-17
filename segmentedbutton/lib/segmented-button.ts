@@ -12,10 +12,10 @@ import {property, queryAssignedElements, queryAsync, state} from 'lit/decorators
 import {classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
 
+import {ARIAMixinStrict} from '../../aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
-import {ARIAMixinStrict} from '../../types/aria.js';
 
 /**
  * SegmentedButton is a web component implementation of the Material Design

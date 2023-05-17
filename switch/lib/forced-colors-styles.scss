@@ -1,0 +1,41 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use './switch';
+// go/keep-sorted end
+
+@media (forced-colors: active) {
+  :host {
+    @include switch.theme(
+      (
+        'disabled-selected-icon-color': GrayText,
+        'disabled-selected-icon-opacity': 1,
+        'disabled-selected-track-color': GrayText,
+        'disabled-track-opacity': 1,
+        'disabled-unselected-handle-color': GrayText,
+        'disabled-unselected-handle-opacity': 1,
+        'disabled-unselected-icon-color': Canvas,
+        'disabled-unselected-icon-opacity': 1,
+        'selected-focus-track-color': ButtonText,
+        'selected-hover-track-color': ButtonText,
+        'selected-icon-color': ButtonText,
+        'selected-hover-icon-color': ButtonText,
+        'selected-focus-icon-color': ButtonText,
+        'selected-pressed-icon-color': ButtonText,
+        'selected-pressed-track-color': ButtonText,
+        'selected-track-color': ButtonText,
+        'unselected-focus-handle-color': ButtonText,
+        'unselected-handle-color': ButtonText,
+        'unselected-hover-handle-color': ButtonText,
+        'unselected-icon-color': Canvas,
+        'unselected-hover-icon-color': Canvas,
+        'unselected-focus-icon-color': Canvas,
+        'unselected-pressed-icon-color': Canvas,
+        'unselected-pressed-handle-color': ButtonText,
+      )
+    );
+  }
+}

@@ -7,8 +7,8 @@
 import {html, nothing} from 'lit';
 import {property} from 'lit/decorators.js';
 
+import {ARIAMixinStrict} from '../../aria/aria.js';
 import {ripple} from '../../ripple/directive.js';
-import {ARIAMixinStrict} from '../../types/aria.js';
 
 import {Chip} from './chip.js';
 import {renderRemoveButton} from './trailing-actions.js';

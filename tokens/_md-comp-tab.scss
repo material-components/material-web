@@ -24,7 +24,6 @@ $_default: (
   'md-sys-shape': md-sys-shape.values(),
   'md-sys-state': md-sys-state.values(),
   'md-sys-typescale': md-sys-typescale.values(),
-  'md-comp-divider': md-comp-divider.values(),
 );
 
 $supported-tokens: (
@@ -242,7 +241,7 @@ $unsupported-tokens: (
 
 // add tokens for divider / label-text
 @function _add-missing-tokens($tokens, $deps) {
-  $divider-tokens: map.get($deps, 'md-comp-divider');
+  $divider-tokens: md-comp-divider.values();
   @each $key, $value in $divider-tokens {
     $key: 'divider-#{$key}';
     $tokens: map.set($tokens, $key, $value);

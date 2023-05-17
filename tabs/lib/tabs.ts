@@ -5,21 +5,12 @@
  */
 
 import {html, isServer, LitElement, PropertyValues} from 'lit';
-import {property, state} from 'lit/decorators.js';
+import {property, queryAssignedElements, state} from 'lit/decorators.js';
 
-import {Variant} from './tab.js';
-
-/**
- * Type for list items.
- */
-export interface Tab extends HTMLElement {
-  disabled?: boolean;
-  selected?: boolean;
-  variant?: string;
-}
+import {Tab, Variant} from './tab.js';
 
 const NAVIGATION_KEYS = new Map([
-  ['default', new Set(['Home', 'End', 'Space'])],
+  ['default', new Set(['Home', 'End'])],
   ['horizontal', new Set(['ArrowLeft', 'ArrowRight'])],
   ['vertical', new Set(['ArrowUp', 'ArrowDown'])]
 ]);
@@ -79,8 +70,13 @@ export class Tabs extends LitElement {
   private previousSelected = -1;
   private orientation = 'horizontal';
   private readonly scrollMargin = 48;
-  // note, populated via slotchange.
-  @state() private items: Tab[] = [];
+
+  @queryAssignedElements({selector: 'md-tab', flatten: true})
+  private readonly items!: Tab[];
+
+  // this tracks if items have changed, which triggers rendering so they can
+  // be kept in sync
+  @state() private itemsDirty = false;
 
   private readonly selectedAttribute = `selected`;
 
@@ -114,6 +110,11 @@ export class Tabs extends LitElement {
     }
   }
 
+  override connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute('role', 'tablist');
+  }
+
   // focus item on keydown and optionally select it
   private readonly handleKeydown = async (event: KeyboardEvent) => {
     const {key} = event;
@@ -128,31 +129,24 @@ export class Tabs extends LitElement {
     const focused = this.focusedItem ?? this.selectedItem;
     const itemCount = this.items.length;
     const isPrevKey = key === 'ArrowLeft' || key === 'ArrowUp';
-    const isNextKey = key === 'ArrowRight' || key === 'ArrowDown';
     if (key === 'Home') {
       indexToFocus = 0;
     } else if (key === 'End') {
       indexToFocus = itemCount - 1;
-    } else if (key === 'Space') {
-      indexToFocus = this.items.indexOf(focused);
-    } else if (isPrevKey || isNextKey) {
-      const d = (this.items.indexOf(focused) || 0) +
-          (isPrevKey     ? -1 :
-               isNextKey ? 1 :
-                           0);
-      indexToFocus = d < 0 ? itemCount - 1 : d % itemCount;
+    } else {
+      const focusedIndex = this.items.indexOf(focused) || 0;
+      indexToFocus = focusedIndex + (isPrevKey ? -1 : 1);
+      indexToFocus =
+          indexToFocus < 0 ? itemCount - 1 : indexToFocus % itemCount;
     }
     const itemToFocus =
         this.findFocusableItem(indexToFocus, key === 'End' || isPrevKey);
     indexToFocus = this.items.indexOf(itemToFocus!);
     if (itemToFocus !== null && itemToFocus !== focused) {
-      const shouldSelect = this.selectOnFocus || key === 'Space';
-      if (shouldSelect) {
-        this.selected = indexToFocus;
-      }
       this.updateFocusableItem(itemToFocus);
       itemToFocus.focus();
-      if (shouldSelect) {
+      if (this.selectOnFocus) {
+        this.selected = indexToFocus;
         await this.dispatchInteraction();
       }
     }
@@ -234,20 +228,21 @@ export class Tabs extends LitElement {
       this.orientation =
           this.variant.includes('vertical') ? 'vertical' : 'horizontal';
     }
+    if (this.itemsDirty) {
+      this.itemsDirty = false;
+      this.previousSelected = -1;
+    }
   }
 
   protected override async updated(changed: PropertyValues) {
-    // if there's no items, they may not be ready, so wait before syncronizing
-    if (this.items.length === 0) {
-      await new Promise(requestAnimationFrame);
-    }
     const itemsOrVariantChanged =
-        changed.has('items') || changed.has('variant');
-    // sync variant with items.
+        changed.has('itemsDirty') || changed.has('variant');
+    // sync state with items.
     if (itemsOrVariantChanged || changed.has('disabled')) {
-      this.items.forEach(i => {
-        i.variant = this.variant;
-        i.disabled = this.disabled;
+      this.items.forEach((item, i) => {
+        item.selected = this.selected === i;
+        item.variant = this.variant;
+        item.disabled = this.disabled;
       });
     }
     if (itemsOrVariantChanged || changed.has('selected')) {
@@ -262,15 +257,10 @@ export class Tabs extends LitElement {
     }
   }
 
-  private updateFocusableItem(item: HTMLElement|null) {
-    const tabIndex = 'tabindex';
-    this.items.forEach(e => {
-      if (e === item) {
-        e.removeAttribute(tabIndex);
-      } else {
-        e.setAttribute(tabIndex, '-1');
-      }
-    });
+  private updateFocusableItem(focusableItem: HTMLElement|null) {
+    for (const item of this.items) {
+      item.focusable = item === focusableItem;
+    }
   }
 
   protected override render() {
@@ -297,10 +287,15 @@ export class Tabs extends LitElement {
     }
   }
 
-  private handleSlotChange(e: Event) {
-    this.items =
-        (e.target as HTMLSlotElement).assignedElements({flatten: true}) as
-        Tab[];
+  private handleSlotChange() {
+    this.itemsDirty = true;
+  }
+
+  private async itemsUpdateComplete() {
+    for (const item of this.items) {
+      await item.updateComplete;
+    }
+    return true;
   }
 
   // ensures the given item is visible in view; defaults to the selected item
@@ -309,7 +304,7 @@ export class Tabs extends LitElement {
       return;
     }
     // wait for items to render.
-    await new Promise(requestAnimationFrame);
+    await this.itemsUpdateComplete();
     const isVertical = this.orientation === 'vertical';
     const offset = isVertical ? item.offsetTop : item.offsetLeft;
     const extent = isVertical ? item.offsetHeight : item.offsetWidth;
@@ -318,8 +313,11 @@ export class Tabs extends LitElement {
     const min = offset - this.scrollMargin;
     const max = offset + extent - hostExtent + this.scrollMargin;
     const to = Math.min(min, Math.max(max, scroll));
+    const behavior =
+        // type annotation because `instant` is valid but not included in type.
+        this.focusedItem !== undefined ? 'smooth' : 'instant' as ScrollBehavior;
     this.scrollTo({
-      behavior: 'smooth',
+      behavior,
       [isVertical ? 'left' : 'top']: 0,
       [isVertical ? 'top' : 'left']: to
     });

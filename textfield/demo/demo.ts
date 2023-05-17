@@ -13,7 +13,7 @@ import {boolInput, Knob, numberInput, textInput} from './index.js';
 import {stories, StoryKnobs} from './stories.js';
 
 const collection =
-    new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('Texfield', [
+    new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('Textfield', [
       new Knob('label', {ui: textInput(), defaultValue: 'Label'}),
       new Knob('disabled', {ui: boolInput(), defaultValue: false}),
       new Knob('required', {ui: boolInput(), defaultValue: false}),

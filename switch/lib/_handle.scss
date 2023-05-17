@@ -67,10 +67,14 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
     transition: none;
   }
 
-  .switch--selected .handle,
-  .switch--unselected .handle.handle--big {
+  .switch--selected .handle {
     height: var(--_selected-handle-height);
     width: var(--_selected-handle-width);
+  }
+
+  .handle.with-icon {
+    height: var(--_with-icon-handle-height);
+    width: var(--_with-icon-handle-width);
   }
 
   .switch--selected:enabled:active .handle,
@@ -89,7 +93,7 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
     background-color: var(--_selected-hover-handle-color);
   }
 
-  .switch--selected:focus-visible .handle::before {
+  .switch--selected:focus-within .handle::before {
     background-color: var(--_selected-focus-handle-color);
   }
 
@@ -110,7 +114,7 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
     background-color: var(--_unselected-hover-handle-color);
   }
 
-  .switch--unselected:focus-visible .handle::before {
+  .switch--unselected:focus-within .handle::before {
     background-color: var(--_unselected-focus-handle-color);
   }
 
@@ -131,17 +135,23 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
     transform: translate(-50%, -50%);
     height: var(--_state-layer-size);
     width: var(--_state-layer-size);
+
+    @include ripple.theme(
+      (
+        'shape': var(--_state-layer-shape),
+      )
+    );
   }
 
   .switch--selected .ripple {
     @include ripple.theme(
       (
-        hover-color: var(--_selected-hover-state-layer-color),
-        focus-color: var(--_selected-focus-state-layer-color),
-        pressed-color: var(--_selected-pressed-state-layer-color),
-        hover-opacity: var(--_selected-hover-state-layer-opacity),
-        focus-opacity: var(--_selected-focus-state-layer-opacity),
-        pressed-opacity: var(--_selected-pressed-state-layer-opacity),
+        'hover-color': var(--_selected-hover-state-layer-color),
+        'focus-color': var(--_selected-focus-state-layer-color),
+        'pressed-color': var(--_selected-pressed-state-layer-color),
+        'hover-opacity': var(--_selected-hover-state-layer-opacity),
+        'focus-opacity': var(--_selected-focus-state-layer-opacity),
+        'pressed-opacity': var(--_selected-pressed-state-layer-opacity),
       )
     );
   }
@@ -149,12 +159,12 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
   .switch--unselected .ripple {
     @include ripple.theme(
       (
-        hover-color: var(--_unselected-hover-state-layer-color),
-        focus-color: var(--_unselected-focus-state-layer-color),
-        pressed-color: var(--_unselected-pressed-state-layer-color),
-        hover-opacity: var(--_unselected-hover-state-layer-opacity),
-        focus-opacity: var(--_unselected-focus-state-layer-opacity),
-        pressed-opacity: var(--_unselected-pressed-state-layer-opacity),
+        'hover-color': var(--_unselected-hover-state-layer-color),
+        'focus-color': var(--_unselected-focus-state-layer-color),
+        'pressed-color': var(--_unselected-pressed-state-layer-color),
+        'hover-opacity': var(--_unselected-hover-state-layer-opacity),
+        'focus-opacity': var(--_unselected-focus-state-layer-opacity),
+        'pressed-opacity': var(--_unselected-pressed-state-layer-opacity),
       )
     );
   }

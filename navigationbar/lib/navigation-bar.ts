@@ -9,10 +9,10 @@ import '../../elevation/elevation.js';
 import {html, LitElement, nothing, PropertyValues} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
 
+import {ARIAMixinStrict} from '../../aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {isRtl} from '../../controller/is-rtl.js';
 import {NavigationTab} from '../../navigationtab/lib/navigation-tab.js';
-import {ARIAMixinStrict} from '../../types/aria.js';
 
 import {NavigationTabInteractionEvent} from './constants.js';
 import {NavigationBarState} from './state.js';

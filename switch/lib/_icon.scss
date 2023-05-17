@@ -40,14 +40,8 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
   }
 
   // rotate selected icon into view when there is no unselected icon
-  .switch--unselected .handle:not(.handle--big) .icon--on {
+  .switch--unselected .handle:not(.with-icon) .icon--on {
     transform: rotate(-45deg);
-  }
-
-  .icon--on {
-    width: var(--_selected-icon-size);
-    height: var(--_selected-icon-size);
-    fill: var(--_selected-icon-color);
   }
 
   .icon--off {
@@ -56,13 +50,43 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
     fill: var(--_unselected-icon-color);
   }
 
-  .switch--selected:disabled .icon--on {
-    fill: var(--_disabled-selected-icon-color);
-    opacity: var(--_disabled-selected-icon-opacity);
+  .switch--unselected:hover .icon--off {
+    fill: var(--_unselected-hover-icon-color);
+  }
+
+  .switch--unselected:focus-within .icon--off {
+    fill: var(--_unselected-focus-icon-color);
+  }
+
+  .switch--unselected:active .icon--off {
+    fill: var(--_unselected-pressed-icon-color);
   }
 
   .switch--unselected:disabled .icon--off {
     fill: var(--_disabled-unselected-icon-color);
     opacity: var(--_disabled-unselected-icon-opacity);
+  }
+
+  .icon--on {
+    width: var(--_selected-icon-size);
+    height: var(--_selected-icon-size);
+    fill: var(--_selected-icon-color);
+  }
+
+  .switch--selected:hover .icon--on {
+    fill: var(--_selected-hover-icon-color);
+  }
+
+  .switch--selected:focus-within .icon--on {
+    fill: var(--_selected-focus-icon-color);
+  }
+
+  .switch--selected:active .icon--on {
+    fill: var(--_selected-pressed-icon-color);
+  }
+
+  .switch--selected:disabled .icon--on {
+    fill: var(--_disabled-selected-icon-color);
+    opacity: var(--_disabled-selected-icon-opacity);
   }
 }
