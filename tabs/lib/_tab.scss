@@ -54,8 +54,10 @@
 
     @include focus-ring.theme(
       (
-        shape: 8px,
-        offset: -7px,
+        // desired border-radius is 8px and it's internally calc'd as sum
+        // of shape + offset (-7 + 15)
+        shape: 15px,
+        offset: -7px
       )
     );
   }
@@ -114,7 +116,9 @@
     $_content-padding: 8px;
     // tabs are naturally sized up to their max height.
     max-height: calc(var(--_container-height) + 2 * $_content-padding);
-    padding: $_content-padding;
+    // min-height of touch target
+    min-height: 48px;
+    padding: $_content-padding calc(2 * $_content-padding);
     gap: 4px;
   }
 

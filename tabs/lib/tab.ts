@@ -21,7 +21,7 @@ import {MdRipple} from '../../ripple/ripple.js';
 /**
  * An element that can select items.
  */
-export interface SelectionGroupElement extends HTMLElement {
+export interface Tabs extends HTMLElement {
   selected?: number;
   selectedItem?: Tab;
   previousSelectedItem?: Tab;
@@ -55,14 +55,19 @@ export class Tab extends LitElement {
   @property({reflect: true}) variant: Variant = 'primary';
 
   /**
-   * Whether or not the item is `disabled`.
+   * Whether or not the tab is `disabled`.
    */
   @property({type: Boolean, reflect: true}) disabled = false;
 
   /**
-   * Whether or not the item is `selected`.
+   * Whether or not the tab is `selected`.
    **/
   @property({type: Boolean, reflect: true}) selected = false;
+
+  /**
+   * Whether or not the tab is `focusable`.
+   */
+  @property({type: Boolean}) focusable = false;
 
   /**
    * Whether or not the icon renders inline with label or stacked vertically.
@@ -102,7 +107,10 @@ export class Tab extends LitElement {
     };
     return html`
       <button
-        class="button md3-button"
+        class="button"
+        role="tab"
+        .tabIndex=${this.focusable && !this.disabled ? 0 : -1}
+        aria-selected=${this.selected ? 'true' : 'false'}
         ?disabled=${this.disabled}
         aria-label=${this.ariaLabel || nothing}
         ${ripple(this.getRipple)}
@@ -144,8 +152,8 @@ export class Tab extends LitElement {
     return html`<md-ripple ?disabled="${this.disabled}"></md-ripple>`;
   };
 
-  private get selectionGroup() {
-    return this.parentElement as SelectionGroupElement;
+  private get tabs() {
+    return this.parentElement as Tabs;
   }
 
   private animateSelected() {
@@ -166,8 +174,7 @@ export class Tab extends LitElement {
     const from: Keyframe = {};
     const isVertical = this.variant.includes('vertical');
     const fromRect =
-        (this.selectionGroup?.previousSelectedItem?.indicator
-             .getBoundingClientRect() ??
+        (this.tabs?.previousSelectedItem?.indicator.getBoundingClientRect() ??
          ({} as DOMRect));
     const fromPos = isVertical ? fromRect.top : fromRect.left;
     const fromExtent = isVertical ? fromRect.height : fromRect.width;

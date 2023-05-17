@@ -49,7 +49,12 @@ const styles = css`
 
   md-tabs[variant~="vertical"].scrolling {
     block-size: 50vh;
-  }`;
+  }
+
+  .controls {
+    height: 48px;
+  }
+  `;
 
 const primary: MaterialStoryInit<StoryKnobs> = {
   name: 'Primary Tabs',
@@ -379,7 +384,7 @@ const dynamic: MaterialStoryInit<StoryKnobs> = {
     }
 
     return html`
-      <div>
+      <div class="controls">
         <md-standard-icon-button @click=${
         addTab}><md-icon>add</md-icon></md-standard-icon-button>
         <md-standard-icon-button @click=${
@@ -413,9 +418,14 @@ function getTabContentGenerator(knobs: StoryKnobs) {
   const contentKnob = knobs.content;
   const useIcon = contentKnob !== 'label';
   const useLabel = contentKnob !== 'icon';
-  return (icon: string, label: string) => html`
-        ${useIcon ? html`<md-icon slot="icon">${icon}</md-icon>` : nothing}
-        ${useLabel ? html`${label}` : nothing}`;
+  return (icon: string, label: string) => {
+    const iconTemplate =
+        html`<md-icon aria-hidden="true" slot="icon">${icon}</md-icon>`;
+    return html`
+      ${useIcon ? iconTemplate : nothing}
+      ${useLabel ? html`${label}` : nothing}
+    `;
+  };
 }
 
 /** Tabs stories. */

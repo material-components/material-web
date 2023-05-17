@@ -10,7 +10,7 @@ import {property, queryAssignedElements, state} from 'lit/decorators.js';
 import {Tab, Variant} from './tab.js';
 
 const NAVIGATION_KEYS = new Map([
-  ['default', new Set(['Home', 'End', 'Space'])],
+  ['default', new Set(['Home', 'End'])],
   ['horizontal', new Set(['ArrowLeft', 'ArrowRight'])],
   ['vertical', new Set(['ArrowUp', 'ArrowDown'])]
 ]);
@@ -110,6 +110,11 @@ export class Tabs extends LitElement {
     }
   }
 
+  override connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute('role', 'tablist');
+  }
+
   // focus item on keydown and optionally select it
   private readonly handleKeydown = async (event: KeyboardEvent) => {
     const {key} = event;
@@ -124,31 +129,24 @@ export class Tabs extends LitElement {
     const focused = this.focusedItem ?? this.selectedItem;
     const itemCount = this.items.length;
     const isPrevKey = key === 'ArrowLeft' || key === 'ArrowUp';
-    const isNextKey = key === 'ArrowRight' || key === 'ArrowDown';
     if (key === 'Home') {
       indexToFocus = 0;
     } else if (key === 'End') {
       indexToFocus = itemCount - 1;
-    } else if (key === 'Space') {
-      indexToFocus = this.items.indexOf(focused);
-    } else if (isPrevKey || isNextKey) {
-      const d = (this.items.indexOf(focused) || 0) +
-          (isPrevKey     ? -1 :
-               isNextKey ? 1 :
-                           0);
-      indexToFocus = d < 0 ? itemCount - 1 : d % itemCount;
+    } else {
+      const focusedIndex = this.items.indexOf(focused) || 0;
+      indexToFocus = focusedIndex + (isPrevKey ? -1 : 1);
+      indexToFocus =
+          indexToFocus < 0 ? itemCount - 1 : indexToFocus % itemCount;
     }
     const itemToFocus =
         this.findFocusableItem(indexToFocus, key === 'End' || isPrevKey);
     indexToFocus = this.items.indexOf(itemToFocus!);
     if (itemToFocus !== null && itemToFocus !== focused) {
-      const shouldSelect = this.selectOnFocus || key === 'Space';
-      if (shouldSelect) {
-        this.selected = indexToFocus;
-      }
       this.updateFocusableItem(itemToFocus);
       itemToFocus.focus();
-      if (shouldSelect) {
+      if (this.selectOnFocus) {
+        this.selected = indexToFocus;
         await this.dispatchInteraction();
       }
     }
@@ -260,13 +258,8 @@ export class Tabs extends LitElement {
   }
 
   private updateFocusableItem(focusableItem: HTMLElement|null) {
-    const tabIndex = 'tabindex';
     for (const item of this.items) {
-      if (item === focusableItem) {
-        item.removeAttribute(tabIndex);
-      } else {
-        item.setAttribute(tabIndex, '-1');
-      }
+      item.focusable = item === focusableItem;
     }
   }
 
@@ -294,7 +287,7 @@ export class Tabs extends LitElement {
     }
   }
 
-  private handleSlotChange(e: Event) {
+  private handleSlotChange() {
     this.itemsDirty = true;
   }
 
