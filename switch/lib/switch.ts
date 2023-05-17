@@ -7,14 +7,13 @@
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, isServer, LitElement, nothing, TemplateResult} from 'lit';
+import {html, isServer, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAsync, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {when} from 'lit/directives/when.js';
 
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {dispatchActivationClick, isActivationClick} from '../../controller/events.js';
-import {FormController, getFormValue} from '../../controller/form-controller.js';
 import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 
@@ -68,30 +67,40 @@ export class Switch extends LitElement {
   @query('button') private readonly button!: HTMLButtonElement|null;
 
   /**
-   * The associated form element with which this element's value will submit.
-   */
-  get form() {
-    return this.closest('form');
-  }
-
-  /**
-   * The HTML name to use in form submission.
-   */
-  @property({reflect: true}) name = '';
-
-  /**
    * The value associated with this switch on form submission. `null` is
    * submitted when `selected` is `false`.
    */
   @property() value = 'on';
 
-  [getFormValue]() {
-    return this.selected ? this.value : null;
+  /**
+   * The HTML name to use in form submission.
+   */
+  get name() {
+    return this.getAttribute('name') ?? '';
   }
+  set name(name: string) {
+    this.setAttribute('name', name);
+  }
+
+  /**
+   * The associated form element with which this element's value will submit.
+   */
+  get form() {
+    return this.internals.form;
+  }
+
+  /**
+   * The labels this element is associated with.
+   */
+  get labels() {
+    return this.internals.labels;
+  }
+
+  private readonly internals =
+      (this as HTMLElement /* needed for closure */).attachInternals();
 
   constructor() {
     super();
-    this.addController(new FormController(this));
     if (!isServer) {
       this.addEventListener('click', (event: MouseEvent) => {
         if (!isActivationClick(event)) {
@@ -104,6 +113,12 @@ export class Switch extends LitElement {
         }
       });
     }
+  }
+
+  protected override update(changed: PropertyValues<Switch>) {
+    const state = String(this.selected);
+    this.internals.setFormValue(this.selected ? this.value : null, state);
+    super.update(changed);
   }
 
   protected override render(): TemplateResult {
@@ -217,5 +232,17 @@ export class Switch extends LitElement {
     // Bubbles but does not compose to mimic native browser <input> & <select>
     // Additionally, native change event is not an InputEvent.
     this.dispatchEvent(new Event('change', {bubbles: true}));
+  }
+
+  /** @private */
+  formResetCallback() {
+    // The selected property does not reflect, so the original attribute set by
+    // the user is used to determine the default value.
+    this.selected = this.hasAttribute('selected');
+  }
+
+  /** @private */
+  formStateRestoreCallback(state: string) {
+    this.selected = state === 'true';
   }
 }
