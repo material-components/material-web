@@ -3,6 +3,9 @@ name: Checkbox
 dirname: checkbox
 -----><!-- catalog-only-end -->
 
+<catalog-component-header>
+<catalog-component-header-title slot="title">
+
 # Checkbox
 
 <!--*
@@ -30,7 +33,15 @@ to select one or more items from a set. Checkboxes can turn an option on or off.
 There's one type of checkbox in Material. Use this selection control when the
 user needs to select one or more options from a list.
 
-![A list of burger additions represented with checkboxes](images/checkbox/hero.png "Checkboxes in a list of items.")
+</catalog-component-header-title>
+
+<img
+    class="hero"
+    src="images/checkbox/hero.png"
+    alt="A list of burger additions represented with checkboxes"
+    title="Checkboxes in a list of items.">
+
+</catalog-component-header>
 
 *   [Design article](https://m3.material.io/components/checkbox) <!-- {.external} -->
 *   API Documentation (*coming soon*)
@@ -41,7 +52,7 @@ user needs to select one or more options from a list.
 
 <!--
 
-## Live Demo
+## Interactive Demo
 
 {% playgroundexample dirname=dirname %}
 
