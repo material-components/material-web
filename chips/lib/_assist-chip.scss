@@ -37,7 +37,7 @@
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-assist-chip-#{$token}, #{$value});
     }
 
     // Support logical shape properties
