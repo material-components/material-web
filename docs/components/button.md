@@ -155,9 +155,9 @@ a button.
 
 <div class="figure-wrapper">
   <figure
-      style="justify-content:center;
+      style="justify-content:center;"
       title="Outlined and filled buttons."
-      aria-label="An outlined button with the text \"Back\" next to a filled button with the text \"Complete\"">
+      aria-label="An outlined button with the text 'Back' next to a filled button with the text 'Complete'">
     <md-outlined-button inert style="margin-inline-end:8px;">Back</md-outlined-button>
     <md-filled-button inert>Complete</md-filled-button>
   </figure>
@@ -188,9 +188,9 @@ action and help draw attention.
 
 <div class="figure-wrapper">
   <figure
-      style="justify-content:center;
+      style="justify-content:center;"
       title="Outlined and filled buttons."
-      aria-label="An outlined button with the text \"Back\" next to a filled button with the text \"Complete\"">
+      aria-label="An outlined button with the text 'Back' next to a filled button with the text 'Complete'">
     <md-tonal-button inert style="margin-inline-end: 8px;">
       Send
       <svg slot="icon" viewBox="0 0 48 48"><path d="M6 40V8l38 16Zm3-4.65L36.2 24 9 12.5v8.4L21.1 24 9 27Zm0 0V12.5 27Z"/></svg>
