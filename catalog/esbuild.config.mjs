@@ -58,16 +58,17 @@ if (DEV) {
     treeShaking: true,
     legalComments: 'external',
     plugins: [
-      minifyHTMLLiteralsPlugin({
-        shouldMinify: (template) => {
-          const tag = template.tag && template.tag.toLowerCase();
-          return (
-            !!tag &&
-            (tag.includes('html') || tag.includes('svg')) &&
-            tag !== 'statichtml'
-          );
-        },
-      }),
+      // TODO: this plugin currently breaks certain css props for SVGs (circularprogress)
+      // minifyHTMLLiteralsPlugin({
+      //   shouldMinify: (template) => {
+      //     const tag = template.tag && template.tag.toLowerCase();
+      //     return (
+      //       !!tag &&
+      //       (tag.includes('html') || tag.includes('svg')) &&
+      //       tag !== 'statichtml'
+      //     );
+      //   },
+      // }),
       gzipPlugin({
         gzip: true,
       }),
