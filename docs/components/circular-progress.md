@@ -29,7 +29,7 @@ circular track in a clockwise direction.
 
 </catalog-component-header-title>
 
-![An animated image of an indeterminate circular progress indicator.](images/circularprogress/hero.png "Circular progress indicators are composed of an invisible track and an indicator")
+![A circular progress indicator at the end of an image feed.](images/circularprogress/hero.png "Circular progress indicators are composed of an invisible track and an indicator")
 
 </catalog-component-header>
 
